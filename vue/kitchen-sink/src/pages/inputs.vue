@@ -196,7 +196,7 @@
       <f7-list-item>
         <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
         <f7-label>Fruit</f7-label>
-        <f7-input type="text" placeholder="Type 'apple' or 'banana'" required validate clear-button>
+        <f7-input type="text" placeholder="Type 'apple' or 'banana'" required validate pattern="apple|banana" clear-button>
           <span slot="info">Pattern validation (<b>apple|banana</b>)</span>
         </f7-input>
       </f7-list-item>

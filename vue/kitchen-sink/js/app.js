@@ -38238,17 +38238,14 @@
     name: 'f7-accordion-content',
     render: function render() {
       var _h = this.$createElement;
+      var classes = Utils$1.classNames(this.props.className, { 'accordion-item-content': true }, Mixins.colorClasses(this));
       return _h('div', {
         style: this.props.style,
-        class: this.classes,
+        class: classes,
         attrs: { id: this.props.id }
       }, [this.$slots['default']]);
     },
     computed: {
-      classes: function classes() {
-        var self = this;
-        return Utils$1.classNames(self.props.className, { 'accordion-item-content': true }, Mixins.colorClasses(self));
-      },
       props: function props() {
         return __vueComponentProps(this, __vueComponentPropsKeys);
       }
@@ -38270,10 +38267,10 @@
     __vueComponentPropsKeys$1 = Object.keys(props);
     return props;
   }
-  var AccordionItemProps = Utils$1.extend({ opened: Boolean }, Mixins.colorProps);
   var f7AccordionItem = {
     name: 'f7-accordion-item',
-    props: __vueComponentGetPropKeys$1(AccordionItemProps),
+    props: __vueComponentGetPropKeys$1(Object.assign({}, {opened: Boolean},
+      Mixins.colorProps)),
     mounted: function mounted() {
       var self = this;
       var el = self.$el;
@@ -38300,23 +38297,15 @@
     },
     render: function render() {
       var _h = this.$createElement;
+      var classes = Utils$1.classNames(this.props.className, {
+        'accordion-item': true,
+        'accordion-item-opened': this.props.opened
+      }, Mixins.colorClasses(this));
       return _h('div', {
         style: this.props.style,
-        class: this.classes,
+        class: classes,
         attrs: { id: this.props.id }
       }, [this.$slots['default']]);
-    },
-    computed: {
-      classes: function classes() {
-        var self = this;
-        return Utils$1.classNames(self.props.className, {
-          'accordion-item': true,
-          'accordion-item-opened': self.props.opened
-        }, Mixins.colorClasses(self));
-      },
-      props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$1);
-      }
     },
     methods: {
       onOpen: function onOpen(event) {
@@ -38337,6 +38326,11 @@
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+    },
+    computed: {
+      props: function props() {
+        return __vueComponentProps(this, __vueComponentPropsKeys$1);
+      }
     }
   };
 
@@ -38350,17 +38344,14 @@
     name: 'f7-accordion-toggle',
     render: function render() {
       var _h = this.$createElement;
+      var classes = Utils$1.classNames(this.props.className, { 'accordion-item-toggle': true }, Mixins.colorClasses(this));
       return _h('div', {
         style: this.props.style,
-        class: this.classes,
+        class: classes,
         attrs: { id: this.props.id }
       }, [this.$slots['default']]);
     },
     computed: {
-      classes: function classes() {
-        var self = this;
-        return Utils$1.classNames(self.props.className, { 'accordion-item-toggle': true }, Mixins.colorClasses(self));
-      },
       props: function props() {
         return __vueComponentProps(this, __vueComponentPropsKeys$2);
       }
@@ -38372,16 +38363,14 @@
     __vueComponentPropsKeys$4 = Object.keys(props);
     return props;
   }
-  var ActionsButtonProps = Utils$1.extend({
-    bold: Boolean,
-    close: {
-      type: Boolean,
-      default: true
-    }
-  }, Mixins.colorProps);
   var f7ActionsButton = {
     name: 'f7-actions-button',
-    props: __vueComponentGetPropKeys$4(ActionsButtonProps),
+    props: __vueComponentGetPropKeys$4(Object.assign({}, {bold: Boolean,
+      close: {
+        type: Boolean,
+        default: true
+      }},
+      Mixins.colorProps)),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -38436,7 +38425,7 @@
   }
   var f7ActionsGroup = {
     name: 'f7-actions-group',
-    props: __vueComponentGetPropKeys$5(Object.assign({}, Mixins.colorProps)),
+    props: __vueComponentGetPropKeys$5(Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -38459,10 +38448,10 @@
     __vueComponentPropsKeys$6 = Object.keys(props);
     return props;
   }
-  var ActionsLabelProps = Utils$1.extend({ bold: Boolean }, Mixins.colorProps);
   var f7ActionsLabel = {
     name: 'f7-actions-label',
-    props: __vueComponentGetPropKeys$6(ActionsLabelProps),
+    props: __vueComponentGetPropKeys$6(Object.assign({}, {bold: Boolean},
+      Mixins.colorProps)),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -38500,19 +38489,17 @@
     __vueComponentPropsKeys$7 = Object.keys(props);
     return props;
   }
-  var ActionsProps = Utils$1.extend({
-    opened: Boolean,
-    grid: Boolean,
-    convertToPopover: Boolean,
-    forceToPopover: Boolean,
-    target: [
-      String,
-      Object
-    ]
-  }, Mixins.colorProps);
   var f7Actions = {
     name: 'f7-actions',
-    props: __vueComponentGetPropKeys$7(ActionsProps),
+    props: __vueComponentGetPropKeys$7(Object.assign({}, {opened: Boolean,
+      grid: Boolean,
+      convertToPopover: Boolean,
+      forceToPopover: Boolean,
+      target: [
+        String,
+        Object
+      ]},
+      Mixins.colorProps)),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -39046,11 +39033,11 @@
     render: function render() {
       var _h = this.$createElement;
       var self = this;
-      var classes = Utils$1.classNames(self.props.className, { 'framework7-root': true }, Mixins.colorClasses(self));
+      var classes = Utils$1.classNames(self.props.className, 'framework7-root', Mixins.colorClasses(self));
       return _h('div', {
         ref: 'el',
         class: classes,
-        attrs: { id: 'framework7-root' }
+        attrs: { id: self.props.id || 'framework7-root' }
       }, [this.$slots['default']]);
     },
     mounted: function mounted() {
@@ -39082,17 +39069,14 @@
     props: __vueComponentGetPropKeys$9(Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
+      var classes = Utils$1.classNames(this.props.className, 'badge', Mixins.colorClasses(this));
       return _h('span', {
         style: this.props.style,
-        class: this.classes,
+        class: classes,
         attrs: { id: this.props.id }
       }, [this.$slots['default']]);
     },
     computed: {
-      classes: function classes() {
-        var self = this;
-        return Utils$1.classNames(self.props.className, { badge: true }, Mixins.colorClasses(self));
-      },
       props: function props() {
         return __vueComponentProps(this, __vueComponentPropsKeys$9);
       }
@@ -39109,17 +39093,14 @@
     props: __vueComponentGetPropKeys$10(Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
+      var classes = Utils$1.classNames(this.props.className, 'block-footer', Mixins.colorClasses(this));
       return _h('div', {
         style: this.props.style,
-        class: this.classes,
+        class: classes,
         attrs: { id: this.props.id }
       }, [this.$slots['default']]);
     },
     computed: {
-      classes: function classes() {
-        var self = this;
-        return Utils$1.classNames(self.props.className, { 'block-footer': true }, Mixins.colorClasses(self));
-      },
       props: function props() {
         return __vueComponentProps(this, __vueComponentPropsKeys$10);
       }
@@ -39136,17 +39117,14 @@
     props: __vueComponentGetPropKeys$11(Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
+      var classes = Utils$1.classNames(this.props.className, 'block-header', Mixins.colorClasses(this));
       return _h('div', {
         style: this.props.style,
-        class: this.classes,
+        class: classes,
         attrs: { id: this.props.id }
       }, [this.$slots['default']]);
     },
     computed: {
-      classes: function classes() {
-        var self = this;
-        return Utils$1.classNames(self.props.className, { 'block-header': true }, Mixins.colorClasses(self));
-      },
       props: function props() {
         return __vueComponentProps(this, __vueComponentPropsKeys$11);
       }
@@ -39163,17 +39141,14 @@
     props: __vueComponentGetPropKeys$12(Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
+      var classes = Utils$1.classNames(this.props.className, 'block-title', Mixins.colorClasses(this));
       return _h('div', {
         style: this.props.style,
-        class: this.classes,
+        class: classes,
         attrs: { id: this.props.id }
       }, [this.$slots['default']]);
     },
     computed: {
-      classes: function classes() {
-        var self = this;
-        return Utils$1.classNames(self.props.className, { 'block-title': true }, Mixins.colorClasses(self));
-      },
       props: function props() {
         return __vueComponentProps(this, __vueComponentPropsKeys$12);
       }
@@ -39185,21 +39160,19 @@
     __vueComponentPropsKeys$13 = Object.keys(props);
     return props;
   }
-  var BlockProps = Utils$1.extend({
-    inset: Boolean,
-    tabletInset: Boolean,
-    strong: Boolean,
-    tabs: Boolean,
-    tab: Boolean,
-    tabActive: Boolean,
-    accordionList: Boolean,
-    noHairlines: Boolean,
-    noHairlinesMd: Boolean,
-    noHairlinesIos: Boolean
-  }, Mixins.colorProps);
   var f7Block = {
     name: 'f7-block',
-    props: __vueComponentGetPropKeys$13(BlockProps),
+    props: __vueComponentGetPropKeys$13(Object.assign({}, {inset: Boolean,
+      tabletInset: Boolean,
+      strong: Boolean,
+      tabs: Boolean,
+      tab: Boolean,
+      tabActive: Boolean,
+      accordionList: Boolean,
+      noHairlines: Boolean,
+      noHairlinesMd: Boolean,
+      noHairlinesIos: Boolean},
+      Mixins.colorProps)),
     mounted: function mounted() {
       var el = this.$el;
       if (!el)
@@ -39218,32 +39191,38 @@
     },
     render: function render() {
       var _h = this.$createElement;
+      var self = this;
+      var ref = self.props;
+      var className = ref.className;
+      var inset = ref.inset;
+      var strong = ref.strong;
+      var accordionList = ref.accordionList;
+      var tabletInset = ref.tabletInset;
+      var tabs = ref.tabs;
+      var tab = ref.tab;
+      var tabActive = ref.tabActive;
+      var noHairlines = ref.noHairlines;
+      var noHairlinesIos = ref.noHairlinesIos;
+      var noHairlinesMd = ref.noHairlinesMd;
+      var id = ref.id;
+      var style = ref.style;
+      var classes = Utils$1.classNames(className, 'block', {
+        inset: inset,
+        'block-strong': strong,
+        'accordion-list': accordionList,
+        'tablet-inset': tabletInset,
+        tabs: tabs,
+        tab: tab,
+        'tab-active': tabActive,
+        'no-hairlines': noHairlines,
+        'no-hairlines-md': noHairlinesMd,
+        'no-hairlines-ios': noHairlinesIos
+      }, Mixins.colorClasses(self));
       return _h('div', {
-        style: this.props.style,
-        class: this.classes,
-        attrs: { id: this.props.id }
+        style: style,
+        class: classes,
+        attrs: { id: id }
       }, [this.$slots['default']]);
-    },
-    computed: {
-      classes: function classes() {
-        var self = this;
-        return Utils$1.classNames(self.props.className, {
-          block: true,
-          inset: self.props.inset,
-          'block-strong': self.props.strong,
-          'accordion-list': self.props.accordionList,
-          'tablet-inset': self.props.tabletInset,
-          tabs: self.props.tabs,
-          tab: self.props.tab,
-          'tab-active': self.props.tabActive,
-          'no-hairlines': self.props.noHairlines,
-          'no-hairlines-md': self.props.noHairlinesMd,
-          'no-hairlines-ios': self.props.noHairlinesIos
-        }, Mixins.colorClasses(self));
-      },
-      props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$13);
-      }
     },
     methods: {
       onTabShow: function onTabShow(e) {
@@ -39257,6 +39236,11 @@
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+      }
+    },
+    computed: {
+      props: function props() {
+        return __vueComponentProps(this, __vueComponentPropsKeys$13);
       }
     }
   };
@@ -39406,42 +39390,43 @@
     __vueComponentPropsKeys$15 = Object.keys(props);
     return props;
   }
-  var ButtonProps = Utils$1.extend({
-    noFastclick: Boolean,
-    noFastClick: Boolean,
-    text: String,
-    tabLink: [
-      Boolean,
-      String
-    ],
-    tabLinkActive: Boolean,
-    href: {
-      type: [
-        String,
-        Boolean
-      ],
-      default: '#'
-    },
-    round: Boolean,
-    roundMd: Boolean,
-    roundIos: Boolean,
-    fill: Boolean,
-    fillMd: Boolean,
-    fillIos: Boolean,
-    big: Boolean,
-    bigMd: Boolean,
-    bigIos: Boolean,
-    small: Boolean,
-    smallMd: Boolean,
-    smallIos: Boolean,
-    raised: Boolean,
-    outline: Boolean,
-    active: Boolean,
-    disabled: Boolean
-  }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps);
   var f7Button = {
     name: 'f7-button',
-    props: __vueComponentGetPropKeys$15(ButtonProps),
+    props: __vueComponentGetPropKeys$15(Object.assign({}, {noFastclick: Boolean,
+      noFastClick: Boolean,
+      text: String,
+      tabLink: [
+        Boolean,
+        String
+      ],
+      tabLinkActive: Boolean,
+      href: {
+        type: [
+          String,
+          Boolean
+        ],
+        default: '#'
+      },
+      round: Boolean,
+      roundMd: Boolean,
+      roundIos: Boolean,
+      fill: Boolean,
+      fillMd: Boolean,
+      fillIos: Boolean,
+      big: Boolean,
+      bigMd: Boolean,
+      bigIos: Boolean,
+      small: Boolean,
+      smallMd: Boolean,
+      smallIos: Boolean,
+      raised: Boolean,
+      outline: Boolean,
+      active: Boolean,
+      disabled: Boolean},
+      Mixins.colorProps,
+      Mixins.linkIconProps,
+      Mixins.linkRouterProps,
+      Mixins.linkActionsProps)),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -39527,8 +39512,8 @@
         var active = ref.active;
         var outline = ref.outline;
         var disabled = ref.disabled;
-        return Utils$1.classNames(self.props.className, {
-          button: true,
+        var className = ref.className;
+        return Utils$1.classNames(className, 'button', {
           'tab-link': tabLink || tabLink === '',
           'tab-link-active': tabLinkActive,
           'no-fastclick': noFastclick || noFastClick,
@@ -39572,31 +39557,31 @@
     __vueComponentPropsKeys$16 = Object.keys(props);
     return props;
   }
-  var CardContentProps = Utils$1.extend({
-    padding: {
-      type: Boolean,
-      default: true
-    }
-  }, Mixins.colorProps);
   var f7CardContent = {
     name: 'f7-card-content',
-    props: __vueComponentGetPropKeys$16(CardContentProps),
+    props: __vueComponentGetPropKeys$16(Object.assign({}, {padding: {
+        type: Boolean,
+        default: true
+      }},
+      Mixins.colorProps)),
     render: function render() {
       var _h = this.$createElement;
+      var ref = this.props;
+      var id = ref.id;
+      var className = ref.className;
+      var style = ref.style;
+      var padding = ref.padding;
+      var classes = Utils$1.classNames(className, {
+        'card-content': true,
+        'card-content-padding': padding
+      }, Mixins.colorClasses(this));
       return _h('div', {
-        style: this.props.style,
-        class: this.classes,
-        attrs: { id: this.props.id }
+        style: style,
+        class: classes,
+        attrs: { id: id }
       }, [this.$slots['default']]);
     },
     computed: {
-      classes: function classes() {
-        var self = this;
-        return Utils$1.classNames(self.props.className, {
-          'card-content': true,
-          'card-content-padding': self.props.padding
-        }, Mixins.colorClasses(self));
-      },
       props: function props() {
         return __vueComponentProps(this, __vueComponentPropsKeys$16);
       }
@@ -39613,17 +39598,14 @@
     props: __vueComponentGetPropKeys$17(Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
+      var classes = Utils$1.classNames(this.props.className, 'card-footer', Mixins.colorClasses(this));
       return _h('div', {
         style: this.props.style,
-        class: this.classes,
+        class: classes,
         attrs: { id: this.props.id }
       }, [this.$slots['default']]);
     },
     computed: {
-      classes: function classes() {
-        var self = this;
-        return Utils$1.classNames(self.props.className, { 'card-footer': true }, Mixins.colorClasses(self));
-      },
       props: function props() {
         return __vueComponentProps(this, __vueComponentPropsKeys$17);
       }
@@ -39640,17 +39622,14 @@
     props: __vueComponentGetPropKeys$18(Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
+      var classes = Utils$1.classNames(this.props.className, 'card-header', Mixins.colorClasses(this));
       return _h('div', {
         style: this.props.style,
-        class: this.classes,
+        class: classes,
         attrs: { id: this.props.id }
       }, [this.$slots['default']]);
     },
     computed: {
-      classes: function classes() {
-        var self = this;
-        return Utils$1.classNames(self.props.className, { 'card-header': true }, Mixins.colorClasses(self));
-      },
       props: function props() {
         return __vueComponentProps(this, __vueComponentPropsKeys$18);
       }
@@ -40265,6 +40244,8 @@
       ],
       resizable: Boolean,
       clearButton: Boolean,
+      noFormStoreData: Boolean,
+      noStoreData: Boolean,
       errorMessage: String,
       info: String,
       wrap: {
@@ -40310,11 +40291,13 @@
       var wrap = ref.wrap;
       var style = ref.style;
       var className = ref.className;
+      var noStoreData = ref.noStoreData;
+      var noFormStoreData = ref.noFormStoreData;
       var inputEl;
-      function renderInput(tag, children) {
+      function createInput(tag, children) {
         var InputTag = tag;
         var needsValue = !(type === 'select' || type === 'textarea' || type === 'file');
-        var inputClassName = Utils$1.classNames(type === 'textarea' && resizable ? 'resizable' : '', !wrap && className);
+        var inputClassName = Utils$1.classNames(type === 'textarea' && resizable && 'resizable', !wrap && className, (noFormStoreData || noStoreData) && 'no-store-data');
         return _h(InputTag, {
           ref: 'inputEl',
           style: inputStyle,
@@ -40355,11 +40338,11 @@
       var slotsInfo = ref$1.info;
       if (type === 'select' || self.type === 'textarea' || self.type === 'file') {
         if (self.type === 'select') {
-          inputEl = renderInput('select', slotsDefault);
+          inputEl = createInput('select', slotsDefault);
         } else if (self.type === 'file') {
-          inputEl = renderInput('input');
+          inputEl = createInput('input');
         } else {
-          inputEl = renderInput('textarea', slotsDefault);
+          inputEl = createInput('textarea', slotsDefault);
         }
       } else if (slotsDefault && slotsDefault.length > 0 || !type) {
         inputEl = slotsDefault;
@@ -40386,18 +40369,7 @@
           }
         });
       } else {
-        inputEl = renderInput('input');
-      }
-      var clearButtonEl;
-      if (clearButton) {
-        clearButtonEl = _h('span', { class: 'input-clear-button' });
-      }
-      var infoEl;
-      if (info || slotsInfo && slotsInfo.length) {
-        infoEl = _h('div', { class: 'item-input-info' }, [
-          info,
-          this.$slots['info']
-        ]);
+        inputEl = createInput('input');
       }
       if (wrap) {
         var wrapClasses = Utils$1.classNames(className, 'item-input-wrap', Mixins.colorClasses(self));
@@ -40407,8 +40379,11 @@
           style: style
         }, [
           inputEl,
-          clearButtonEl,
-          infoEl
+          clearButton && _h('span', { class: 'input-clear-button' }),
+          (info || slotsInfo && slotsInfo.length) && _h('div', { class: 'item-input-info' }, [
+            info,
+            this.$slots['info']
+          ])
         ]);
       }
       return inputEl;
@@ -40444,6 +40419,7 @@
         var validate = ref.validate;
         var resizable = ref.resizable;
         var type = ref.type;
+        var clearButton = ref.clearButton;
         if (type === 'range' || type === 'toggle')
           { return; }
         var inputEl = self.$refs.inputEl;
@@ -40453,10 +40429,14 @@
         inputEl.addEventListener('blur', self.onBlurBound, false);
         inputEl.addEventListener('input', self.onInputBound, false);
         inputEl.addEventListener('change', self.onChangeBound, false);
-        inputEl.addEventListener('textarea:resze', self.onTextareaResizeBound, false);
         inputEl.addEventListener('input:notempty', self.onInputNotEmptyBound, false);
-        inputEl.addEventListener('input:empty', self.onInputEmptyBound, false);
-        inputEl.addEventListener('input:clear', self.onInputClearBound, false);
+        if (type === 'textarea' && resizable) {
+          inputEl.addEventListener('textarea:resze', self.onTextareaResizeBound, false);
+        }
+        if (clearButton) {
+          inputEl.addEventListener('input:empty', self.onInputEmptyBound, false);
+          inputEl.addEventListener('input:clear', self.onInputClearBound, false);
+        }
         f7.input.checkEmptyState(inputEl);
         if (validate) {
           f7.input.validate(inputEl);
@@ -40492,6 +40472,8 @@
       var self = this;
       var ref = self.props;
       var type = ref.type;
+      var resizable = ref.resizable;
+      var clearButton = ref.clearButton;
       if (type === 'range' || type === 'toggle')
         { return; }
       var inputEl = self.$refs.inputEl;
@@ -40501,10 +40483,14 @@
       inputEl.removeEventListener('blur', self.onBlurBound, false);
       inputEl.removeEventListener('input', self.onInputBound, false);
       inputEl.removeEventListener('change', self.onChangeBound, false);
-      inputEl.removeEventListener('textarea:resze', self.onTextareaResizeBound, false);
       inputEl.removeEventListener('input:notempty', self.onInputNotEmptyBound, false);
-      inputEl.removeEventListener('input:empty', self.onInputEmptyBound, false);
-      inputEl.removeEventListener('input:clear', self.onInputClearBound, false);
+      if (type === 'textarea' && resizable) {
+        inputEl.removeEventListener('textarea:resze', self.onTextareaResizeBound, false);
+      }
+      if (clearButton) {
+        inputEl.removeEventListener('input:empty', self.onInputEmptyBound, false);
+        inputEl.removeEventListener('input:clear', self.onInputClearBound, false);
+      }
     },
     methods: {
       onTextareaResize: function onTextareaResize(event) {
@@ -40565,6 +40551,7 @@
       var className = ref.className;
       var floating = ref.floating;
       var classes = Utils$1.classNames(className, 'item-title', {
+        'item-label-inline': inline,
         'item-label': !floating,
         'item-floating-label': floating
       }, Mixins.colorClasses(self));
@@ -40869,26 +40856,31 @@
     __vueComponentPropsKeys$32 = Object.keys(props);
     return props;
   }
-  var ListGroupProps = Utils$1.extend({
-    mediaList: Boolean,
-    sortable: Boolean
-  }, Mixins.colorProps);
   var f7ListGroup = {
     name: 'f7-list-group',
-    props: __vueComponentGetPropKeys$32(ListGroupProps),
+    props: __vueComponentGetPropKeys$32(Object.assign({}, {mediaList: Boolean,
+      sortable: Boolean},
+      Mixins.colorProps)),
     render: function render() {
       var _h = this.$createElement;
+      var self = this;
+      var ref = self.props;
+      var className = ref.className;
+      var id = ref.id;
+      var style = ref.style;
+      var mediaList = ref.mediaList;
+      var sortable = ref.sortable;
+      var classes = Utils$1.classNames(className, 'list-group', {
+        'media-list': mediaList,
+        sortable: sortable
+      }, Mixins.colorClasses(self));
       return _h('div', {
-        style: this.props.style,
-        class: this.classes,
-        attrs: { id: this.props.id }
+        style: style,
+        class: classes,
+        attrs: { id: id }
       }, [_h('ul', [this.$slots['default']])]);
     },
     computed: {
-      classes: function classes() {
-        var self = this;
-        return Utils$1.classNames(this.props.className, 'list-group', Mixins.colorClasses(self));
-      },
       props: function props() {
         return __vueComponentProps(this, __vueComponentPropsKeys$32);
       }
@@ -41028,17 +41020,14 @@
     props: __vueComponentGetPropKeys$34(Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
+      var classes = Utils$1.classNames(this.props.className, 'item-cell', Mixins.colorClasses(this));
       return _h('div', {
         style: this.props.style,
-        class: this.classes,
+        class: classes,
         attrs: { id: this.props.id }
       }, [this.$slots['default']]);
     },
     computed: {
-      classes: function classes() {
-        var self = this;
-        return Utils$1.classNames('item-cell', self.props.className, Mixins.colorClasses(self));
-      },
       props: function props() {
         return __vueComponentProps(this, __vueComponentPropsKeys$34);
       }
@@ -41050,65 +41039,63 @@
     __vueComponentPropsKeys$35 = Object.keys(props);
     return props;
   }
-  var ListItemContentProps = Utils$1.extend({
-    title: [
-      String,
-      Number
-    ],
-    text: [
-      String,
-      Number
-    ],
-    media: String,
-    subtitle: [
-      String,
-      Number
-    ],
-    header: [
-      String,
-      Number
-    ],
-    footer: [
-      String,
-      Number
-    ],
-    after: [
-      String,
-      Number
-    ],
-    badge: [
-      String,
-      Number
-    ],
-    badgeColor: String,
-    mediaList: Boolean,
-    mediaItem: Boolean,
-    itemInput: Boolean,
-    itemInputWithInfo: Boolean,
-    inlineLabel: Boolean,
-    checkbox: Boolean,
-    checked: Boolean,
-    radio: Boolean,
-    name: String,
-    value: [
-      String,
-      Number,
-      Array
-    ],
-    readonly: Boolean,
-    required: Boolean,
-    disabled: Boolean
-  }, Mixins.colorProps);
   var F7ListItemContent = {
     name: 'f7-list-item-content',
-    props: __vueComponentGetPropKeys$35(ListItemContentProps),
+    props: __vueComponentGetPropKeys$35(Object.assign({}, {title: [
+        String,
+        Number
+      ],
+      text: [
+        String,
+        Number
+      ],
+      media: String,
+      subtitle: [
+        String,
+        Number
+      ],
+      header: [
+        String,
+        Number
+      ],
+      footer: [
+        String,
+        Number
+      ],
+      after: [
+        String,
+        Number
+      ],
+      badge: [
+        String,
+        Number
+      ],
+      badgeColor: String,
+      mediaList: Boolean,
+      mediaItem: Boolean,
+      itemInput: Boolean,
+      itemInputWithInfo: Boolean,
+      inlineLabel: Boolean,
+      checkbox: Boolean,
+      checked: Boolean,
+      radio: Boolean,
+      name: String,
+      value: [
+        String,
+        Number,
+        Array
+      ],
+      readonly: Boolean,
+      required: Boolean,
+      disabled: Boolean},
+      Mixins.colorProps)),
     data: function data() {
       var props = __vueComponentProps(this, __vueComponentPropsKeys$35);
       var state = (function () {
         return {
-          itemInputForced: false,
-          inlineLabelForced: false,
-          itemInputWithInfoForced: false
+          hasInput: false,
+          hasInlineLabel: false,
+          hasInputInfo: false
         };
       })();
       return { state: state };
@@ -41116,6 +41103,32 @@
     render: function render() {
       var _h = this.$createElement;
       var self = this;
+      var ref = self.props;
+      var radio = ref.radio;
+      var checkbox = ref.checkbox;
+      var value = ref.value;
+      var name = ref.name;
+      var checked = ref.checked;
+      var readonly = ref.readonly;
+      var disabled = ref.disabled;
+      var required = ref.required;
+      var media = ref.media;
+      var header = ref.header;
+      var footer = ref.footer;
+      var title = ref.title;
+      var subtitle = ref.subtitle;
+      var text = ref.text;
+      var after = ref.after;
+      var badge = ref.badge;
+      var mediaList = ref.mediaList;
+      var mediaItem = ref.mediaItem;
+      var badgeColor = ref.badgeColor;
+      var itemInput = ref.itemInput;
+      var inlineLabel = ref.inlineLabel;
+      var itemInputWithInfo = ref.itemInputWithInfo;
+      var hasInput = itemInput || self.state.hasInput;
+      var hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
+      var hasInputInfo = itemInputWithInfo || self.state.hasInputInfo;
       var slotsContentStart = [];
       var slotsContent = [];
       var slotsContentEnd = [];
@@ -41188,15 +41201,6 @@
             { slotsFooter.push(slotEl); }
         }
       }
-      var ref = self.props;
-      var radio = ref.radio;
-      var checkbox = ref.checkbox;
-      var value = ref.value;
-      var name = ref.name;
-      var checked = ref.checked;
-      var readonly = ref.readonly;
-      var disabled = ref.disabled;
-      var required = ref.required;
       if (radio || checkbox) {
         inputEl = _h('input', {
           on: { change: self.onChange.bind(self) },
@@ -41212,8 +41216,6 @@
         });
         inputIconEl = _h('i', { class: ("icon icon-" + (radio ? 'radio' : 'checkbox')) });
       }
-      var ref$1 = self.props;
-      var media = ref$1.media;
       if (media || slotsMedia.length) {
         var mediaImgEl;
         if (media) {
@@ -41224,17 +41226,7 @@
           slotsMedia
         ]);
       }
-      var ref$2 = self.props;
-      var header = ref$2.header;
-      var footer = ref$2.footer;
-      var title = ref$2.title;
-      var subtitle = ref$2.subtitle;
-      var text = ref$2.text;
-      var after = ref$2.after;
-      var badge = ref$2.badge;
-      var mediaList = ref$2.mediaList;
-      var mediaItem = ref$2.mediaItem;
-      var badgeColor = ref$2.badgeColor;
+      var isMedia = mediaItem || mediaList;
       if (header || slotsHeader.length) {
         headerEl = _h('div', { class: 'item-header' }, [
           header,
@@ -41249,7 +41241,7 @@
       }
       if (title || slotsTitle.length) {
         titleEl = _h('div', { class: 'item-title' }, [
-          !mediaList && !mediaItem && headerEl,
+          !isMedia && headerEl,
           title,
           slotsTitle
         ]);
@@ -41281,16 +41273,17 @@
           slotsAfterEnd
         ]);
       }
-      if (mediaList || mediaItem) {
+      if (isMedia) {
         titleRowEl = _h('div', { class: 'item-title-row' }, [
           slotsBeforeTitle,
           titleEl,
           slotsAfterTitle,
           afterWrapEl
         ]);
-      }
-      if (mediaList || mediaItem) {
-        innerEl = _h('div', { class: 'item-inner' }, [
+        innerEl = _h('div', {
+          ref: 'innerEl',
+          class: 'item-inner'
+        }, [
           slotsInnerStart,
           headerEl,
           titleRowEl,
@@ -41301,7 +41294,10 @@
           slotsInnerEnd
         ]);
       } else {
-        innerEl = _h('div', { class: 'item-inner' }, [
+        innerEl = _h('div', {
+          ref: 'innerEl',
+          class: 'item-inner'
+        }, [
           slotsInnerStart,
           slotsBeforeTitle,
           titleEl,
@@ -41312,22 +41308,15 @@
         ]);
       }
       var ItemContentTag = checkbox || radio ? 'label' : 'div';
-      var ref$3 = self.props;
-      var itemInput = ref$3.itemInput;
-      var inlineLabel = ref$3.inlineLabel;
-      var itemInputWithInfo = ref$3.itemInputWithInfo;
-      var ref$4 = self.state;
-      var itemInputForced = ref$4.itemInputForced;
-      var inlineLabelForced = ref$4.inlineLabelForced;
-      var itemInputWithInfoForced = ref$4.itemInputWithInfoForced;
       var classes = Utils$1.classNames(self.props.className, 'item-content', {
         'item-checkbox': checkbox,
         'item-radio': radio,
-        'item-input': itemInput || itemInputForced,
-        'inline-label': inlineLabel || inlineLabelForced,
-        'item-input-with-info': itemInputWithInfo || itemInputWithInfoForced
+        'item-input': hasInput,
+        'inline-label': hasInlineLabel,
+        'item-input-with-info': hasInputInfo
       }, Mixins.colorClasses(self));
       return _h(ItemContentTag, {
+        ref: 'el',
         style: self.props.style,
         class: classes,
         on: { click: self.onClick.bind(self) },
@@ -41342,6 +41331,34 @@
         slotsContentEnd
       ]);
     },
+    mounted: function mounted() {
+      var self = this;
+      var innerEl = self.$refs.innerEl;
+      if (!innerEl)
+        { return; }
+      var $innerEl = self.$$(innerEl);
+      var $labelEl = $innerEl.children('.item-title.item-label');
+      var $inputEl = $innerEl.children('.item-input-wrap');
+      self.setState({
+        hasInlineLabel: $labelEl.hasClass('item-label-inline'),
+        hasInput: $inputEl.length > 0,
+        hasInputInfo: $inputEl.children('.item-input-info').length > 0
+      });
+    },
+    updated: function updated() {
+      var self = this;
+      var innerEl = self.$refs.innerEl;
+      if (!innerEl)
+        { return; }
+      var $innerEl = self.$$(innerEl);
+      var $labelEl = $innerEl.children('.item-title.item-label');
+      var $inputEl = $innerEl.children('.item-input-wrap');
+      self.setState({
+        hasInlineLabel: $labelEl.hasClass('item-label-inline'),
+        hasInput: $inputEl.length > 0,
+        hasInputInfo: $inputEl.children('.item-input-info').length > 0
+      });
+    },
     methods: {
       onClick: function onClick(event) {
         this.dispatchEvent('click', event);
@@ -41354,6 +41371,9 @@
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+      },
+      setState: function setState(updater, callback) {
+        __vueComponentSetState(this, updater, callback);
       }
     },
     computed: {
@@ -41373,17 +41393,14 @@
     props: __vueComponentGetPropKeys$36(Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
+      var classes = Utils$1.classNames(this.props.className, 'item-row', Mixins.colorClasses(this));
       return _h('div', {
         style: this.props.style,
-        class: this.classes,
+        class: classes,
         attrs: { id: this.props.id }
       }, [this.$slots['default']]);
     },
     computed: {
-      classes: function classes() {
-        var self = this;
-        return Utils$1.classNames('item-row', self.props.className, Mixins.colorClasses(self));
-      },
       props: function props() {
         return __vueComponentProps(this, __vueComponentPropsKeys$36);
       }
@@ -41395,73 +41412,84 @@
     __vueComponentPropsKeys$37 = Object.keys(props);
     return props;
   }
-  var ListItemProps = Utils$1.extend({
-    title: [
-      String,
-      Number
-    ],
-    text: [
-      String,
-      Number
-    ],
-    media: String,
-    subtitle: [
-      String,
-      Number
-    ],
-    header: [
-      String,
-      Number
-    ],
-    footer: [
-      String,
-      Number
-    ],
-    link: [
-      Boolean,
-      String
-    ],
-    target: String,
-    noFastclick: Boolean,
-    noFastClick: Boolean,
-    after: [
-      String,
-      Number
-    ],
-    badge: [
-      String,
-      Number
-    ],
-    badgeColor: String,
-    mediaItem: Boolean,
-    mediaList: Boolean,
-    divider: Boolean,
-    groupTitle: Boolean,
-    swipeout: Boolean,
-    sortable: Boolean,
-    accordionItem: Boolean,
-    accordionItemOpened: Boolean,
-    smartSelect: Boolean,
-    smartSelectParams: Object,
-    checkbox: Boolean,
-    radio: Boolean,
-    checked: Boolean,
-    name: String,
-    value: [
-      String,
-      Number,
-      Array
-    ],
-    readonly: Boolean,
-    required: Boolean,
-    disabled: Boolean,
-    itemInput: Boolean,
-    itemInputWithInfo: Boolean,
-    inlineLabel: Boolean
-  }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps);
   var f7ListItem = {
     name: 'f7-list-item',
-    props: __vueComponentGetPropKeys$37(ListItemProps),
+    props: __vueComponentGetPropKeys$37(Object.assign({}, {title: [
+        String,
+        Number
+      ],
+      text: [
+        String,
+        Number
+      ],
+      media: String,
+      subtitle: [
+        String,
+        Number
+      ],
+      header: [
+        String,
+        Number
+      ],
+      footer: [
+        String,
+        Number
+      ],
+      link: [
+        Boolean,
+        String
+      ],
+      target: String,
+      noFastclick: Boolean,
+      noFastClick: Boolean,
+      after: [
+        String,
+        Number
+      ],
+      badge: [
+        String,
+        Number
+      ],
+      badgeColor: String,
+      mediaItem: Boolean,
+      mediaList: Boolean,
+      divider: Boolean,
+      groupTitle: Boolean,
+      swipeout: Boolean,
+      sortable: Boolean,
+      accordionItem: Boolean,
+      accordionItemOpened: Boolean,
+      smartSelect: Boolean,
+      smartSelectParams: Object,
+      checkbox: Boolean,
+      radio: Boolean,
+      checked: Boolean,
+      name: String,
+      value: [
+        String,
+        Number,
+        Array
+      ],
+      readonly: Boolean,
+      required: Boolean,
+      disabled: Boolean,
+      itemInput: Boolean,
+      itemInputWithInfo: Boolean,
+      inlineLabel: Boolean},
+      Mixins.colorProps,
+      Mixins.linkRouterProps,
+      Mixins.linkActionsProps)),
+    data: function data() {
+      var props = __vueComponentProps(this, __vueComponentPropsKeys$37);
+      var state = (function () {
+        return {
+          isMedia: props.mediaItem || props.mediaList,
+          isSortable: props.sortable,
+          isSimple: false
+        };
+      })();
+      return { state: state };
+    },
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -41501,7 +41529,11 @@
       var itemInput = ref.itemInput;
       var itemInputWithInfo = ref.itemInputWithInfo;
       var inlineLabel = ref.inlineLabel;
-      if (!self.simpleListComputed) {
+      var sortable = ref.sortable;
+      var isMedia = mediaItem || mediaList || self.state.isMedia;
+      var isSortable = sortable || self.state.isSortable;
+      var isSimple = self.state.isSimple;
+      if (!isSimple) {
         var needsEvents = !(link || href || accordionItem || smartSelect);
         itemContentEl = _h(F7ListItemContent, {
           on: needsEvents ? {
@@ -41518,7 +41550,7 @@
             footer: footer,
             badge: badge,
             badgeColor: badgeColor,
-            mediaList: self.mediaListComputed,
+            mediaList: isMedia,
             accordionItem: accordionItem,
             checkbox: checkbox,
             checked: checked,
@@ -41528,9 +41560,9 @@
             readonly: readonly,
             required: required,
             disabled: disabled,
-            itemInput: itemInput || self.itemInputForced,
-            itemInputWithInfo: itemInputWithInfo || self.itemInputWithInfoForced,
-            inlineLabel: inlineLabel || self.inlineLabelForced
+            itemInput: itemInput,
+            itemInputWithInfo: itemInputWithInfo,
+            inlineLabel: inlineLabel
           }
         }, [
           this.$slots['content-start'],
@@ -41570,7 +41602,7 @@
       var liClasses = Utils$1.classNames(self.props.className, {
         'item-divider': divider,
         'list-group-title': groupTitle,
-        'media-item': mediaItem || mediaList,
+        'media-item': isMedia,
         swipeout: swipeout,
         'accordion-item': accordionItem,
         'accordion-item-opened': accordionItemOpened
@@ -41582,7 +41614,7 @@
           class: liClasses,
           attrs: { id: self.props.id }
         }, [_h('span', [this.$slots['default'] || [title]])]);
-      } else if (self.simpleListComputed) {
+      } else if (isSimple) {
         return _h('li', {
           ref: 'el',
           style: self.props.style,
@@ -41602,27 +41634,11 @@
       }, [
         this.$slots['root-start'],
         swipeout ? _h('div', { class: 'swipeout-content' }, [linkItemEl]) : linkItemEl,
-        self.sortableComputed && _h('div', { class: 'sortable-handler' }),
+        isSortable && _h('div', { class: 'sortable-handler' }),
         (swipeout || accordionItem) && self.$slots.default,
         this.$slots['root'],
         this.$slots['root-end']
       ]);
-    },
-    data: function data() {
-      var props = __vueComponentProps(this, __vueComponentPropsKeys$37);
-      var state = (function () {
-        return {
-          itemInputForced: false,
-          inlineLabelForced: false,
-          itemInputWithInfoForced: false
-        };
-      })();
-      return { state: state };
-    },
-    computed: {
-      props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$37);
-      }
     },
     created: function created() {
       var self = this;
@@ -41645,17 +41661,29 @@
       var el = self.$refs.el;
       if (!el)
         { return; }
-      el.addEventListener('swipeout:open', self.onSwipeoutOpenBound);
-      el.addEventListener('swipeout:opened', self.onSwipeoutOpenedBound);
-      el.addEventListener('swipeout:close', self.onSwipeoutCloseBound);
-      el.addEventListener('swipeout:closed', self.onSwipeoutClosedBound);
-      el.addEventListener('swipeout:delete', self.onSwipeoutDeleteBound);
-      el.addEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
-      el.addEventListener('swipeout', self.onSwipeoutBound);
-      el.addEventListener('accordion:open', self.onAccOpenBound);
-      el.addEventListener('accordion:opened', self.onAccOpenedBound);
-      el.addEventListener('accordion:close', self.onAccCloseBound);
-      el.addEventListener('accordion:closed', self.onAccClosedBound);
+      self.$listEl = self.$$(el).parents('.list, .list-group').eq(0);
+      if (self.$listEl.length) {
+        self.setState({
+          isMedia: self.$listEl.hasClass('media-list'),
+          isSimple: self.$listEl.hasClass('simple-list'),
+          isSortable: self.$listEl.hasClass('sortable')
+        });
+      }
+      if (self.props.swipeout) {
+        el.addEventListener('swipeout:open', self.onSwipeoutOpenBound);
+        el.addEventListener('swipeout:opened', self.onSwipeoutOpenedBound);
+        el.addEventListener('swipeout:close', self.onSwipeoutCloseBound);
+        el.addEventListener('swipeout:closed', self.onSwipeoutClosedBound);
+        el.addEventListener('swipeout:delete', self.onSwipeoutDeleteBound);
+        el.addEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
+        el.addEventListener('swipeout', self.onSwipeoutBound);
+      }
+      if (self.props.accordionItem) {
+        el.addEventListener('accordion:open', self.onAccOpenBound);
+        el.addEventListener('accordion:opened', self.onAccOpenedBound);
+        el.addEventListener('accordion:close', self.onAccCloseBound);
+        el.addEventListener('accordion:closed', self.onAccClosedBound);
+      }
       if (!self.props.smartSelect)
         { return; }
       self.$f7ready(function (f7) {
@@ -41663,21 +41691,36 @@
         self.f7SmartSelect = f7.smartSelect.create(smartSelectParams);
       });
     },
+    updated: function updated() {
+      var self = this;
+      var $listEl = self.$listEl;
+      if (!$listEl || $listEl && $listEl.length === 0)
+        { return; }
+      self.setState({
+        isMedia: $listEl.hasClass('media-list'),
+        isSimple: $listEl.hasClass('simple-list'),
+        isSortable: $listEl.hasClass('sortable')
+      });
+    },
     beforeDestroy: function beforeDestroy() {
       var self = this;
       var el = self.$refs.el;
       if (el) {
-        el.removeEventListener('swipeout:open', self.onSwipeoutOpenBound);
-        el.removeEventListener('swipeout:opened', self.onSwipeoutOpenedBound);
-        el.removeEventListener('swipeout:close', self.onSwipeoutCloseBound);
-        el.removeEventListener('swipeout:closed', self.onSwipeoutClosedBound);
-        el.removeEventListener('swipeout:delete', self.onSwipeoutDeleteBound);
-        el.removeEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
-        el.removeEventListener('swipeout', self.onSwipeoutBound);
-        el.removeEventListener('accordion:open', self.onAccOpenBound);
-        el.removeEventListener('accordion:opened', self.onAccOpenedBound);
-        el.removeEventListener('accordion:close', self.onAccCloseBound);
-        el.removeEventListener('accordion:closed', self.onAccClosedBound);
+        if (self.props.swipeout) {
+          el.removeEventListener('swipeout:open', self.onSwipeoutOpenBound);
+          el.removeEventListener('swipeout:opened', self.onSwipeoutOpenedBound);
+          el.removeEventListener('swipeout:close', self.onSwipeoutCloseBound);
+          el.removeEventListener('swipeout:closed', self.onSwipeoutClosedBound);
+          el.removeEventListener('swipeout:delete', self.onSwipeoutDeleteBound);
+          el.removeEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
+          el.removeEventListener('swipeout', self.onSwipeoutBound);
+        }
+        if (self.props.accordionItem) {
+          el.removeEventListener('accordion:open', self.onAccOpenBound);
+          el.removeEventListener('accordion:opened', self.onAccOpenedBound);
+          el.removeEventListener('accordion:close', self.onAccCloseBound);
+          el.removeEventListener('accordion:closed', self.onAccClosedBound);
+        }
       }
       if (self.props.smartSelect && self.f7SmartSelect) {
         self.f7SmartSelect.destroy();
@@ -41737,6 +41780,14 @@
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+      },
+      setState: function setState(updater, callback) {
+        __vueComponentSetState(this, updater, callback);
+      }
+    },
+    computed: {
+      props: function props() {
+        return __vueComponentProps(this, __vueComponentPropsKeys$37);
       }
     }
   };
@@ -41746,39 +41797,41 @@
     __vueComponentPropsKeys$38 = Object.keys(props);
     return props;
   }
-  var ListProps = Utils$1.extend({
-    inset: Boolean,
-    tabletInset: Boolean,
-    mediaList: Boolean,
-    sortable: Boolean,
-    sortableEnabled: Boolean,
-    accordionList: Boolean,
-    contactsList: Boolean,
-    simpleList: Boolean,
-    linksList: Boolean,
-    noHairlines: Boolean,
-    noHairlinesBetween: Boolean,
-    noHairlinesMd: Boolean,
-    noHairlinesBetweenMd: Boolean,
-    noHairlinesIos: Boolean,
-    noHairlinesBetweenIos: Boolean,
-    tab: Boolean,
-    tabActive: Boolean,
-    form: Boolean,
-    formStoreData: Boolean,
-    inlineLabels: Boolean,
-    virtualList: Boolean,
-    virtualListParams: Object
-  }, Mixins.colorProps);
   var f7List = {
     name: 'f7-list',
-    props: __vueComponentGetPropKeys$38(ListProps),
+    props: __vueComponentGetPropKeys$38(Object.assign({}, {inset: Boolean,
+      tabletInset: Boolean,
+      mediaList: Boolean,
+      sortable: Boolean,
+      sortableEnabled: Boolean,
+      accordionList: Boolean,
+      contactsList: Boolean,
+      simpleList: Boolean,
+      linksList: Boolean,
+      noHairlines: Boolean,
+      noHairlinesBetween: Boolean,
+      noHairlinesMd: Boolean,
+      noHairlinesBetweenMd: Boolean,
+      noHairlinesIos: Boolean,
+      noHairlinesBetweenIos: Boolean,
+      tab: Boolean,
+      tabActive: Boolean,
+      form: Boolean,
+      formStoreData: Boolean,
+      inlineLabels: Boolean,
+      virtualList: Boolean,
+      virtualListParams: Object},
+      Mixins.colorProps)),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
-      var ref = self.$slots;
-      var slotsList = ref.list;
-      var slotsDefault = ref.default;
+      var ref = self.props;
+      var id = ref.id;
+      var style = ref.style;
+      var form = ref.form;
+      var ref$1 = self.$slots;
+      var slotsList = ref$1.list;
+      var slotsDefault = ref$1.default;
       var rootChildren = [];
       var ulChildren = slotsList || [];
       slotsDefault.forEach(function (child) {
@@ -41792,13 +41845,13 @@
           ulChildren.push(child);
         }
       });
-      var ListTag = self.props.form ? 'form' : 'div';
+      var ListTag = form ? 'form' : 'div';
       if (ulChildren.length > 0) {
         return _h(ListTag, {
           ref: 'el',
-          style: self.props.style,
+          style: style,
           class: self.classes,
-          attrs: { id: self.props.id }
+          attrs: { id: id }
         }, [
           self.$slots['before-list'],
           _h('ul', [ulChildren]),
@@ -41808,9 +41861,9 @@
       } else {
         return _h(ListTag, {
           ref: 'el',
-          style: self.props.style,
+          style: style,
           class: self.classes,
-          attrs: { id: self.props.id }
+          attrs: { id: id }
         }, [
           self.$slots['before-list'],
           rootChildren,
@@ -41974,17 +42027,14 @@
     props: __vueComponentGetPropKeys$39(Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
+      var classes = Utils$1.classNames(this.props.className, 'login-screen-title', Mixins.colorClasses(this));
       return _h('div', {
         style: this.props.style,
-        class: this.classes,
+        class: classes,
         attrs: { id: this.props.id }
       }, [this.$slots['default']]);
     },
     computed: {
-      classes: function classes() {
-        var self = this;
-        return Utils$1.classNames('login-screen-title', self.props.className, Mixins.colorClasses(self));
-      },
       props: function props() {
         return __vueComponentProps(this, __vueComponentPropsKeys$39);
       }
@@ -42345,17 +42395,14 @@
     props: __vueComponentGetPropKeys$43(Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
+      var classes = Utils$1.classNames(this.props.className, 'messagebar-attachments', Mixins.colorClasses(this));
       return _h('div', {
         style: this.props.style,
-        class: this.classes,
+        class: classes,
         attrs: { id: this.props.id }
       }, [this.$slots['default']]);
     },
     computed: {
-      classes: function classes() {
-        var self = this;
-        return Utils$1.classNames('messagebar-attachments', self.props.className, Mixins.colorClasses(self));
-      },
       props: function props() {
         return __vueComponentProps(this, __vueComponentPropsKeys$43);
       }
@@ -42434,17 +42481,14 @@
     props: __vueComponentGetPropKeys$46(Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
+      var classes = Utils$1.classNames(this.props.className, 'messagebar-sheet', Mixins.colorClasses(this));
       return _h('div', {
         style: this.props.style,
-        class: this.classes,
+        class: classes,
         attrs: { id: this.props.id }
       }, [this.$slots['default']]);
     },
     computed: {
-      classes: function classes() {
-        var self = this;
-        return Utils$1.classNames('messagebar-sheet', self.props.className, Mixins.colorClasses(self));
-      },
       props: function props() {
         return __vueComponentProps(this, __vueComponentPropsKeys$46);
       }
@@ -42832,17 +42876,14 @@
     props: __vueComponentGetPropKeys$48(Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
+      var classes = Utils$1.classNames(this.props.className, 'messages-title', Mixins.colorClasses(this));
       return _h('div', {
         style: this.props.style,
-        class: this.classes,
+        class: classes,
         attrs: { id: this.props.id }
       }, [this.$slots['default']]);
     },
     computed: {
-      classes: function classes() {
-        var self = this;
-        return Utils$1.classNames('messages-title', self.props.className, Mixins.colorClasses(self));
-      },
       props: function props() {
         return __vueComponentProps(this, __vueComponentPropsKeys$48);
       }
@@ -45030,17 +45071,14 @@
     props: __vueComponentGetPropKeys$67(Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
+      var classes = Utils$1.classNames(this.props.className, 'statusbar', Mixins.colorClasses(this));
       return _h('div', {
         style: this.props.style,
-        class: this.classes,
+        class: classes,
         attrs: { id: this.props.id }
-      });
+      }, [this.$slots['default']]);
     },
     computed: {
-      classes: function classes() {
-        var self = this;
-        return Utils$1.classNames(self.props.className, 'statusbar', Mixins.colorClasses(self));
-      },
       props: function props() {
         return __vueComponentProps(this, __vueComponentPropsKeys$67);
       }
@@ -45859,7 +45897,31 @@
     }
   };
 
-  var ViewsProps = Utils$1.extend({ tabs: Boolean }, Mixins.colorProps);
+  var __vueComponentPropsKeys$78;
+  function __vueComponentGetPropKeys$78(props) {
+    __vueComponentPropsKeys$78 = Object.keys(props);
+    return props;
+  }
+  ({
+    name: 'f7-views',
+    props: __vueComponentGetPropKeys$78(Object.assign({}, {tabs: Boolean},
+      Mixins.colorProps)),
+    render: function render() {
+      var _h = this.$createElement;
+      var self = this;
+      var classes = Utils$1.classNames(self.props.className, 'views', { tabs: self.props.tabs }, Mixins.colorClasses(self));
+      return _h('div', {
+        style: self.props.style,
+        class: classes,
+        attrs: { id: self.props.id }
+      }, [this.$slots['default']]);
+    },
+    computed: {
+      props: function props() {
+        return __vueComponentProps(this, __vueComponentPropsKeys$78);
+      }
+    }
+  });
 
   //
 
@@ -57060,6 +57122,7 @@
                       placeholder: "Type 'apple' or 'banana'",
                       required: "",
                       validate: "",
+                      pattern: "apple|banana",
                       "clear-button": ""
                     }
                   },
@@ -57985,6 +58048,7 @@
         _vm._v(" "),
         _c(
           "f7-list",
+          { attrs: { "simple-list": "" } },
           [
             _c("f7-list-item", { attrs: { title: "Item 1" } }),
             _vm._v(" "),

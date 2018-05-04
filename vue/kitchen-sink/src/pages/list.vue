@@ -5,7 +5,7 @@
       <p>Framework7 allows you to be flexible with list views (table views). You can make them as navigation menus, you can use there icons, inputs, and any elements inside of the list, and even make them nested:</p>
     </f7-block>
     <f7-block-title>Simple List</f7-block-title>
-    <f7-list>
+    <f7-list simple-list>
       <f7-list-item title="Item 1"></f7-list-item>
       <f7-list-item title="Item 2"></f7-list-item>
       <f7-list-item title="Item 3"></f7-list-item>
