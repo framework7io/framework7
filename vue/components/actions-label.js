@@ -7,10 +7,12 @@ function __vueComponentGetPropKeys(props) {
   __vueComponentPropsKeys = Object.keys(props);
   return props;
 }
-const ActionsLabelProps = Utils.extend({ bold: Boolean }, Mixins.colorProps);
 export default {
   name: 'f7-actions-label',
-  props: __vueComponentGetPropKeys(ActionsLabelProps),
+  props: __vueComponentGetPropKeys({
+    bold: Boolean,
+    ...Mixins.colorProps
+  }),
   render() {
     var _h = this.$createElement;
     const self = this;

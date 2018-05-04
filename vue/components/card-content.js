@@ -6,31 +6,29 @@ function __vueComponentGetPropKeys(props) {
   __vueComponentPropsKeys = Object.keys(props);
   return props;
 }
-const CardContentProps = Utils.extend({
-  padding: {
-    type: Boolean,
-    default: true
-  }
-}, Mixins.colorProps);
 export default {
   name: 'f7-card-content',
-  props: __vueComponentGetPropKeys(CardContentProps),
+  props: __vueComponentGetPropKeys({
+    padding: {
+      type: Boolean,
+      default: true
+    },
+    ...Mixins.colorProps
+  }),
   render() {
     var _h = this.$createElement;
+    const {id, className, style, padding} = this.props;
+    const classes = Utils.classNames(className, {
+      'card-content': true,
+      'card-content-padding': padding
+    }, Mixins.colorClasses(this));
     return _h('div', {
-      style: this.props.style,
-      class: this.classes,
-      attrs: { id: this.props.id }
+      style: style,
+      class: classes,
+      attrs: { id: id }
     }, [this.$slots['default']]);
   },
   computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(self.props.className, {
-        'card-content': true,
-        'card-content-padding': self.props.padding
-      }, Mixins.colorClasses(self));
-    },
     props() {
       return __vueComponentProps(this, __vueComponentPropsKeys);
     }

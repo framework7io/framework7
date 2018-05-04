@@ -6,26 +6,28 @@ function __vueComponentGetPropKeys(props) {
   __vueComponentPropsKeys = Object.keys(props);
   return props;
 }
-const ListGroupProps = Utils.extend({
-  mediaList: Boolean,
-  sortable: Boolean
-}, Mixins.colorProps);
 export default {
   name: 'f7-list-group',
-  props: __vueComponentGetPropKeys(ListGroupProps),
+  props: __vueComponentGetPropKeys({
+    mediaList: Boolean,
+    sortable: Boolean,
+    ...Mixins.colorProps
+  }),
   render() {
     var _h = this.$createElement;
+    const self = this;
+    const {className, id, style, mediaList, sortable} = self.props;
+    const classes = Utils.classNames(className, 'list-group', {
+      'media-list': mediaList,
+      sortable
+    }, Mixins.colorClasses(self));
     return _h('div', {
-      style: this.props.style,
-      class: this.classes,
-      attrs: { id: this.props.id }
+      style: style,
+      class: classes,
+      attrs: { id: id }
     }, [_h('ul', [this.$slots['default']])]);
   },
   computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(this.props.className, 'list-group', Mixins.colorClasses(self));
-    },
     props() {
       return __vueComponentProps(this, __vueComponentPropsKeys);
     }

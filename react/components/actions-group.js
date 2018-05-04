@@ -20,5 +20,5 @@ class F7ActionsGroup extends React.Component {
     return __reactComponentSlots(this);
   }
 }
-__reactComponentSetProps(F7ActionsGroup, { ...Mixins.colorProps });
+__reactComponentSetProps(F7ActionsGroup, Mixins.colorProps);
 export default F7ActionsGroup;

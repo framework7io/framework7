@@ -9,42 +9,45 @@ function __vueComponentGetPropKeys(props) {
   __vueComponentPropsKeys = Object.keys(props);
   return props;
 }
-const ButtonProps = Utils.extend({
-  noFastclick: Boolean,
-  noFastClick: Boolean,
-  text: String,
-  tabLink: [
-    Boolean,
-    String
-  ],
-  tabLinkActive: Boolean,
-  href: {
-    type: [
-      String,
-      Boolean
-    ],
-    default: '#'
-  },
-  round: Boolean,
-  roundMd: Boolean,
-  roundIos: Boolean,
-  fill: Boolean,
-  fillMd: Boolean,
-  fillIos: Boolean,
-  big: Boolean,
-  bigMd: Boolean,
-  bigIos: Boolean,
-  small: Boolean,
-  smallMd: Boolean,
-  smallIos: Boolean,
-  raised: Boolean,
-  outline: Boolean,
-  active: Boolean,
-  disabled: Boolean
-}, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps);
 export default {
   name: 'f7-button',
-  props: __vueComponentGetPropKeys(ButtonProps),
+  props: __vueComponentGetPropKeys({
+    noFastclick: Boolean,
+    noFastClick: Boolean,
+    text: String,
+    tabLink: [
+      Boolean,
+      String
+    ],
+    tabLinkActive: Boolean,
+    href: {
+      type: [
+        String,
+        Boolean
+      ],
+      default: '#'
+    },
+    round: Boolean,
+    roundMd: Boolean,
+    roundIos: Boolean,
+    fill: Boolean,
+    fillMd: Boolean,
+    fillIos: Boolean,
+    big: Boolean,
+    bigMd: Boolean,
+    bigIos: Boolean,
+    small: Boolean,
+    smallMd: Boolean,
+    smallIos: Boolean,
+    raised: Boolean,
+    outline: Boolean,
+    active: Boolean,
+    disabled: Boolean,
+    ...Mixins.colorProps,
+    ...Mixins.linkIconProps,
+    ...Mixins.linkRouterProps,
+    ...Mixins.linkActionsProps
+  }),
   render() {
     var _h = this.$createElement;
     const self = this;
@@ -98,9 +101,8 @@ export default {
     },
     classes() {
       const self = this;
-      const {noFastclick, noFastClick, tabLink, tabLinkActive, round, roundIos, roundMd, fill, fillIos, fillMd, big, bigIos, bigMd, small, smallIos, smallMd, raised, active, outline, disabled} = self.props;
-      return Utils.classNames(self.props.className, {
-        button: true,
+      const {noFastclick, noFastClick, tabLink, tabLinkActive, round, roundIos, roundMd, fill, fillIos, fillMd, big, bigIos, bigMd, small, smallIos, smallMd, raised, active, outline, disabled, className} = self.props;
+      return Utils.classNames(className, 'button', {
         'tab-link': tabLink || tabLink === '',
         'tab-link-active': tabLinkActive,
         'no-fastclick': noFastclick || noFastClick,

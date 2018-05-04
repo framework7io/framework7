@@ -4,13 +4,6 @@ import Utils from '../utils/utils';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
-const ActionsButtonProps = Utils.extend({
-  bold: Boolean,
-  close: {
-    type: Boolean,
-    default: true
-  }
-}, Mixins.colorProps);
 class F7ActionsButton extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -50,5 +43,12 @@ class F7ActionsButton extends React.Component {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
 }
-__reactComponentSetProps(F7ActionsButton, ActionsButtonProps);
+__reactComponentSetProps(F7ActionsButton, {
+  bold: Boolean,
+  close: {
+    type: Boolean,
+    default: true
+  },
+  ...Mixins.colorProps
+});
 export default F7ActionsButton;

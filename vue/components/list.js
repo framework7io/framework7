@@ -7,36 +7,37 @@ function __vueComponentGetPropKeys(props) {
   __vueComponentPropsKeys = Object.keys(props);
   return props;
 }
-const ListProps = Utils.extend({
-  inset: Boolean,
-  tabletInset: Boolean,
-  mediaList: Boolean,
-  sortable: Boolean,
-  sortableEnabled: Boolean,
-  accordionList: Boolean,
-  contactsList: Boolean,
-  simpleList: Boolean,
-  linksList: Boolean,
-  noHairlines: Boolean,
-  noHairlinesBetween: Boolean,
-  noHairlinesMd: Boolean,
-  noHairlinesBetweenMd: Boolean,
-  noHairlinesIos: Boolean,
-  noHairlinesBetweenIos: Boolean,
-  tab: Boolean,
-  tabActive: Boolean,
-  form: Boolean,
-  formStoreData: Boolean,
-  inlineLabels: Boolean,
-  virtualList: Boolean,
-  virtualListParams: Object
-}, Mixins.colorProps);
 export default {
   name: 'f7-list',
-  props: __vueComponentGetPropKeys(ListProps),
+  props: __vueComponentGetPropKeys({
+    inset: Boolean,
+    tabletInset: Boolean,
+    mediaList: Boolean,
+    sortable: Boolean,
+    sortableEnabled: Boolean,
+    accordionList: Boolean,
+    contactsList: Boolean,
+    simpleList: Boolean,
+    linksList: Boolean,
+    noHairlines: Boolean,
+    noHairlinesBetween: Boolean,
+    noHairlinesMd: Boolean,
+    noHairlinesBetweenMd: Boolean,
+    noHairlinesIos: Boolean,
+    noHairlinesBetweenIos: Boolean,
+    tab: Boolean,
+    tabActive: Boolean,
+    form: Boolean,
+    formStoreData: Boolean,
+    inlineLabels: Boolean,
+    virtualList: Boolean,
+    virtualListParams: Object,
+    ...Mixins.colorProps
+  }),
   render() {
     var _h = this.$createElement;
     const self = this;
+    const {id, style, form} = self.props;
     const {
       list: slotsList,
       default: slotsDefault
@@ -54,13 +55,13 @@ export default {
         ulChildren.push(child);
       }
     });
-    const ListTag = self.props.form ? 'form' : 'div';
+    const ListTag = form ? 'form' : 'div';
     if (ulChildren.length > 0) {
       return _h(ListTag, {
         ref: 'el',
-        style: self.props.style,
+        style: style,
         class: self.classes,
-        attrs: { id: self.props.id }
+        attrs: { id: id }
       }, [
         self.$slots['before-list'],
         _h('ul', [ulChildren]),
@@ -70,9 +71,9 @@ export default {
     } else {
       return _h(ListTag, {
         ref: 'el',
-        style: self.props.style,
+        style: style,
         class: self.classes,
-        attrs: { id: self.props.id }
+        attrs: { id: id }
       }, [
         self.$slots['before-list'],
         rootChildren,

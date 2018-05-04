@@ -8,15 +8,12 @@ class F7ListItemCell extends React.Component {
     super(props, context);
   }
   render() {
+    const classes = Utils.classNames(this.props.className, 'item-cell', Mixins.colorClasses(this));
     return React.createElement('div', {
       id: this.props.id,
       style: this.props.style,
-      className: this.classes
+      className: classes
     }, this.slots['default']);
-  }
-  get classes() {
-    const self = this;
-    return Utils.classNames('item-cell', self.props.className, Mixins.colorClasses(self));
   }
   get slots() {
     return __reactComponentSlots(this);

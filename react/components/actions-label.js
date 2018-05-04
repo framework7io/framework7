@@ -4,7 +4,6 @@ import Utils from '../utils/utils';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
-const ActionsLabelProps = Utils.extend({ bold: Boolean }, Mixins.colorProps);
 class F7ActionsLabel extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -32,5 +31,8 @@ class F7ActionsLabel extends React.Component {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
 }
-__reactComponentSetProps(F7ActionsLabel, ActionsLabelProps);
+__reactComponentSetProps(F7ActionsLabel, {
+  bold: Boolean,
+  ...Mixins.colorProps
+});
 export default F7ActionsLabel;

@@ -5,39 +5,6 @@ import F7Icon from './icon';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
-const ButtonProps = Utils.extend({
-  noFastclick: Boolean,
-  noFastClick: Boolean,
-  text: String,
-  tabLink: [
-    Boolean,
-    String
-  ],
-  tabLinkActive: Boolean,
-  href: {
-    type: [
-      String,
-      Boolean
-    ],
-    default: '#'
-  },
-  round: Boolean,
-  roundMd: Boolean,
-  roundIos: Boolean,
-  fill: Boolean,
-  fillMd: Boolean,
-  fillIos: Boolean,
-  big: Boolean,
-  bigMd: Boolean,
-  bigIos: Boolean,
-  small: Boolean,
-  smallMd: Boolean,
-  smallIos: Boolean,
-  raised: Boolean,
-  outline: Boolean,
-  active: Boolean,
-  disabled: Boolean
-}, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps);
 class F7Button extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -87,9 +54,8 @@ class F7Button extends React.Component {
   }
   get classes() {
     const self = this;
-    const {noFastclick, noFastClick, tabLink, tabLinkActive, round, roundIos, roundMd, fill, fillIos, fillMd, big, bigIos, bigMd, small, smallIos, smallMd, raised, active, outline, disabled} = self.props;
-    return Utils.classNames(self.props.className, {
-      button: true,
+    const {noFastclick, noFastClick, tabLink, tabLinkActive, round, roundIos, roundMd, fill, fillIos, fillMd, big, bigIos, bigMd, small, smallIos, smallMd, raised, active, outline, disabled, className} = self.props;
+    return Utils.classNames(className, 'button', {
       'tab-link': tabLink || tabLink === '',
       'tab-link-active': tabLinkActive,
       'no-fastclick': noFastclick || noFastClick,
@@ -121,5 +87,41 @@ class F7Button extends React.Component {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
 }
-__reactComponentSetProps(F7Button, ButtonProps);
+__reactComponentSetProps(F7Button, {
+  noFastclick: Boolean,
+  noFastClick: Boolean,
+  text: String,
+  tabLink: [
+    Boolean,
+    String
+  ],
+  tabLinkActive: Boolean,
+  href: {
+    type: [
+      String,
+      Boolean
+    ],
+    default: '#'
+  },
+  round: Boolean,
+  roundMd: Boolean,
+  roundIos: Boolean,
+  fill: Boolean,
+  fillMd: Boolean,
+  fillIos: Boolean,
+  big: Boolean,
+  bigMd: Boolean,
+  bigIos: Boolean,
+  small: Boolean,
+  smallMd: Boolean,
+  smallIos: Boolean,
+  raised: Boolean,
+  outline: Boolean,
+  active: Boolean,
+  disabled: Boolean,
+  ...Mixins.colorProps,
+  ...Mixins.linkIconProps,
+  ...Mixins.linkRouterProps,
+  ...Mixins.linkActionsProps
+});
 export default F7Button;

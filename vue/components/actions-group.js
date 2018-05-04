@@ -8,7 +8,7 @@ function __vueComponentGetPropKeys(props) {
 }
 export default {
   name: 'f7-actions-group',
-  props: __vueComponentGetPropKeys({ ...Mixins.colorProps }),
+  props: __vueComponentGetPropKeys(Mixins.colorProps),
   render() {
     var _h = this.$createElement;
     const self = this;

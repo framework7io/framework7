@@ -16,11 +16,11 @@ export default {
   render() {
     var _h = this.$createElement;
     const self = this;
-    const classes = Utils.classNames(self.props.className, { 'framework7-root': true }, Mixins.colorClasses(self));
+    const classes = Utils.classNames(self.props.className, 'framework7-root', Mixins.colorClasses(self));
     return _h('div', {
       ref: 'el',
       class: classes,
-      attrs: { id: 'framework7-root' }
+      attrs: { id: self.props.id || 'framework7-root' }
     }, [this.$slots['default']]);
   },
   mounted() {

@@ -6,16 +6,6 @@ import __reactComponentEl from '../runtime-helpers/react-component-el.js';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
-const ActionsProps = Utils.extend({
-  opened: Boolean,
-  grid: Boolean,
-  convertToPopover: Boolean,
-  forceToPopover: Boolean,
-  target: [
-    String,
-    Object
-  ]
-}, Mixins.colorProps);
 class F7Actions extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -91,7 +81,17 @@ class F7Actions extends React.Component {
     });
   }
 }
-__reactComponentSetProps(F7Actions, ActionsProps);
+__reactComponentSetProps(F7Actions, {
+  opened: Boolean,
+  grid: Boolean,
+  convertToPopover: Boolean,
+  forceToPopover: Boolean,
+  target: [
+    String,
+    Object
+  ],
+  ...Mixins.colorProps
+});
 F7Actions.componetDidMount = function () {
   const self = this;
   const el = self.refs.el;

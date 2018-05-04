@@ -7,10 +7,12 @@ function __vueComponentGetPropKeys(props) {
   __vueComponentPropsKeys = Object.keys(props);
   return props;
 }
-const AccordionItemProps = Utils.extend({ opened: Boolean }, Mixins.colorProps);
 export default {
   name: 'f7-accordion-item',
-  props: __vueComponentGetPropKeys(AccordionItemProps),
+  props: __vueComponentGetPropKeys({
+    opened: Boolean,
+    ...Mixins.colorProps
+  }),
   mounted() {
     const self = this;
     const el = self.$el;
@@ -37,23 +39,15 @@ export default {
   },
   render() {
     var _h = this.$createElement;
+    const classes = Utils.classNames(this.props.className, {
+      'accordion-item': true,
+      'accordion-item-opened': this.props.opened
+    }, Mixins.colorClasses(this));
     return _h('div', {
       style: this.props.style,
-      class: this.classes,
+      class: classes,
       attrs: { id: this.props.id }
     }, [this.$slots['default']]);
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(self.props.className, {
-        'accordion-item': true,
-        'accordion-item-opened': self.props.opened
-      }, Mixins.colorClasses(self));
-    },
-    props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
-    }
   },
   methods: {
     onOpen(event) {
@@ -70,6 +64,11 @@ export default {
     },
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
+    }
+  },
+  computed: {
+    props() {
+      return __vueComponentProps(this, __vueComponentPropsKeys);
     }
   }
 };

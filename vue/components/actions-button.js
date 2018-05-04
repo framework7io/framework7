@@ -7,16 +7,16 @@ function __vueComponentGetPropKeys(props) {
   __vueComponentPropsKeys = Object.keys(props);
   return props;
 }
-const ActionsButtonProps = Utils.extend({
-  bold: Boolean,
-  close: {
-    type: Boolean,
-    default: true
-  }
-}, Mixins.colorProps);
 export default {
   name: 'f7-actions-button',
-  props: __vueComponentGetPropKeys(ActionsButtonProps),
+  props: __vueComponentGetPropKeys({
+    bold: Boolean,
+    close: {
+      type: Boolean,
+      default: true
+    },
+    ...Mixins.colorProps
+  }),
   render() {
     var _h = this.$createElement;
     const self = this;

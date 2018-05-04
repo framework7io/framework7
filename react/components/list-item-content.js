@@ -5,68 +5,23 @@ import F7Badge from './badge';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
-const ListItemContentProps = Utils.extend({
-  title: [
-    String,
-    Number
-  ],
-  text: [
-    String,
-    Number
-  ],
-  media: String,
-  subtitle: [
-    String,
-    Number
-  ],
-  header: [
-    String,
-    Number
-  ],
-  footer: [
-    String,
-    Number
-  ],
-  after: [
-    String,
-    Number
-  ],
-  badge: [
-    String,
-    Number
-  ],
-  badgeColor: String,
-  mediaList: Boolean,
-  mediaItem: Boolean,
-  itemInput: Boolean,
-  itemInputWithInfo: Boolean,
-  inlineLabel: Boolean,
-  checkbox: Boolean,
-  checked: Boolean,
-  radio: Boolean,
-  name: String,
-  value: [
-    String,
-    Number,
-    Array
-  ],
-  readonly: Boolean,
-  required: Boolean,
-  disabled: Boolean
-}, Mixins.colorProps);
 class F7ListItemContent extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = (() => {
       return {
-        itemInputForced: false,
-        inlineLabelForced: false,
-        itemInputWithInfoForced: false
+        hasInput: false,
+        hasInlineLabel: false,
+        hasInputInfo: false
       };
     })();
   }
   render() {
     const self = this;
+    const {radio, checkbox, value, name, checked, readonly, disabled, required, media, header, footer, title, subtitle, text, after, badge, mediaList, mediaItem, badgeColor, itemInput, inlineLabel, itemInputWithInfo} = self.props;
+    const hasInput = itemInput || self.state.hasInput;
+    const hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
+    const hasInputInfo = itemInputWithInfo || self.state.hasInputInfo;
     const slotsContentStart = [];
     const slotsContent = [];
     const slotsContentEnd = [];
@@ -139,7 +94,6 @@ class F7ListItemContent extends React.Component {
           slotsFooter.push(slotEl);
       }
     }
-    const {radio, checkbox, value, name, checked, readonly, disabled, required} = self.props;
     if (radio || checkbox) {
       inputEl = React.createElement('input', {
         value: value,
@@ -153,7 +107,6 @@ class F7ListItemContent extends React.Component {
       });
       inputIconEl = React.createElement('i', { className: `icon icon-${ radio ? 'radio' : 'checkbox' }` });
     }
-    const {media} = self.props;
     if (media || slotsMedia.length) {
       let mediaImgEl;
       if (media) {
@@ -161,7 +114,7 @@ class F7ListItemContent extends React.Component {
       }
       mediaEl = React.createElement('div', { className: 'item-media' }, mediaImgEl, slotsMedia);
     }
-    const {header, footer, title, subtitle, text, after, badge, mediaList, mediaItem, badgeColor} = self.props;
+    const isMedia = mediaItem || mediaList;
     if (header || slotsHeader.length) {
       headerEl = React.createElement('div', { className: 'item-header' }, header, slotsHeader);
     }
@@ -169,7 +122,7 @@ class F7ListItemContent extends React.Component {
       footerEl = React.createElement('div', { className: 'item-footer' }, footer, slotsFooter);
     }
     if (title || slotsTitle.length) {
-      titleEl = React.createElement('div', { className: 'item-title' }, !mediaList && !mediaItem && headerEl, title, slotsTitle);
+      titleEl = React.createElement('div', { className: 'item-title' }, !isMedia && headerEl, title, slotsTitle);
     }
     if (subtitle || slotsSubtitle.length) {
       subtitleEl = React.createElement('div', { className: 'item-subtitle' }, subtitle, slotsSubtitle);
@@ -186,30 +139,61 @@ class F7ListItemContent extends React.Component {
       }
       afterWrapEl = React.createElement('div', { className: 'item-after' }, slotsAfterStart, afterEl, badgeEl, slotsAfter, slotsAfterEnd);
     }
-    if (mediaList || mediaItem) {
+    if (isMedia) {
       titleRowEl = React.createElement('div', { className: 'item-title-row' }, slotsBeforeTitle, titleEl, slotsAfterTitle, afterWrapEl);
-    }
-    if (mediaList || mediaItem) {
-      innerEl = React.createElement('div', { className: 'item-inner' }, slotsInnerStart, headerEl, titleRowEl, subtitleEl, textEl, slotsInner, footerEl, slotsInnerEnd);
+      innerEl = React.createElement('div', {
+        ref: 'innerEl',
+        className: 'item-inner'
+      }, slotsInnerStart, headerEl, titleRowEl, subtitleEl, textEl, slotsInner, footerEl, slotsInnerEnd);
     } else {
-      innerEl = React.createElement('div', { className: 'item-inner' }, slotsInnerStart, slotsBeforeTitle, titleEl, slotsAfterTitle, afterWrapEl, slotsInner, slotsInnerEnd);
+      innerEl = React.createElement('div', {
+        ref: 'innerEl',
+        className: 'item-inner'
+      }, slotsInnerStart, slotsBeforeTitle, titleEl, slotsAfterTitle, afterWrapEl, slotsInner, slotsInnerEnd);
     }
     const ItemContentTag = checkbox || radio ? 'label' : 'div';
-    const {itemInput, inlineLabel, itemInputWithInfo} = self.props;
-    const {itemInputForced, inlineLabelForced, itemInputWithInfoForced} = self.state;
     const classes = Utils.classNames(self.props.className, 'item-content', {
       'item-checkbox': checkbox,
       'item-radio': radio,
-      'item-input': itemInput || itemInputForced,
-      'inline-label': inlineLabel || inlineLabelForced,
-      'item-input-with-info': itemInputWithInfo || itemInputWithInfoForced
+      'item-input': hasInput,
+      'inline-label': hasInlineLabel,
+      'item-input-with-info': hasInputInfo
     }, Mixins.colorClasses(self));
     return React.createElement(ItemContentTag, {
+      ref: 'el',
       id: self.props.id,
       style: self.props.style,
       className: classes,
       onClick: self.onClick.bind(self)
     }, slotsContentStart, inputEl, inputIconEl, mediaEl, innerEl, slotsContent, slotsContentEnd);
+  }
+  componentDidMount() {
+    const self = this;
+    const innerEl = self.refs.innerEl;
+    if (!innerEl)
+      return;
+    const $innerEl = self.$$(innerEl);
+    const $labelEl = $innerEl.children('.item-title.item-label');
+    const $inputEl = $innerEl.children('.item-input-wrap');
+    self.setState({
+      hasInlineLabel: $labelEl.hasClass('item-label-inline'),
+      hasInput: $inputEl.length > 0,
+      hasInputInfo: $inputEl.children('.item-input-info').length > 0
+    });
+  }
+  componentDidUpdate() {
+    const self = this;
+    const innerEl = self.refs.innerEl;
+    if (!innerEl)
+      return;
+    const $innerEl = self.$$(innerEl);
+    const $labelEl = $innerEl.children('.item-title.item-label');
+    const $inputEl = $innerEl.children('.item-input-wrap');
+    self.setState({
+      hasInlineLabel: $labelEl.hasClass('item-label-inline'),
+      hasInput: $inputEl.length > 0,
+      hasInputInfo: $inputEl.children('.item-input-info').length > 0
+    });
   }
   onClick(event) {
     this.dispatchEvent('click', event);
@@ -224,5 +208,54 @@ class F7ListItemContent extends React.Component {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
 }
-__reactComponentSetProps(F7ListItemContent, ListItemContentProps);
+__reactComponentSetProps(F7ListItemContent, {
+  title: [
+    String,
+    Number
+  ],
+  text: [
+    String,
+    Number
+  ],
+  media: String,
+  subtitle: [
+    String,
+    Number
+  ],
+  header: [
+    String,
+    Number
+  ],
+  footer: [
+    String,
+    Number
+  ],
+  after: [
+    String,
+    Number
+  ],
+  badge: [
+    String,
+    Number
+  ],
+  badgeColor: String,
+  mediaList: Boolean,
+  mediaItem: Boolean,
+  itemInput: Boolean,
+  itemInputWithInfo: Boolean,
+  inlineLabel: Boolean,
+  checkbox: Boolean,
+  checked: Boolean,
+  radio: Boolean,
+  name: String,
+  value: [
+    String,
+    Number,
+    Array
+  ],
+  readonly: Boolean,
+  required: Boolean,
+  disabled: Boolean,
+  ...Mixins.colorProps
+});
 export default F7ListItemContent;

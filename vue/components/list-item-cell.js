@@ -11,17 +11,14 @@ export default {
   props: __vueComponentGetPropKeys(Mixins.colorProps),
   render() {
     var _h = this.$createElement;
+    const classes = Utils.classNames(this.props.className, 'item-cell', Mixins.colorClasses(this));
     return _h('div', {
       style: this.props.style,
-      class: this.classes,
+      class: classes,
       attrs: { id: this.props.id }
     }, [this.$slots['default']]);
   },
   computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames('item-cell', self.props.className, Mixins.colorClasses(self));
-    },
     props() {
       return __vueComponentProps(this, __vueComponentPropsKeys);
     }

@@ -5,7 +5,6 @@ import __reactComponentEl from '../runtime-helpers/react-component-el.js';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
-const AccordionItemProps = Utils.extend({ opened: Boolean }, Mixins.colorProps);
 class F7AccordionItem extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -35,18 +34,15 @@ class F7AccordionItem extends React.Component {
     el.removeEventListener('accordion:closed', self.onClosedBound);
   }
   render() {
+    const classes = Utils.classNames(this.props.className, {
+      'accordion-item': true,
+      'accordion-item-opened': this.props.opened
+    }, Mixins.colorClasses(this));
     return React.createElement('div', {
       id: this.props.id,
       style: this.props.style,
-      className: this.classes
+      className: classes
     }, this.slots['default']);
-  }
-  get classes() {
-    const self = this;
-    return Utils.classNames(self.props.className, {
-      'accordion-item': true,
-      'accordion-item-opened': self.props.opened
-    }, Mixins.colorClasses(self));
   }
   onOpen(event) {
     this.dispatchEvent('accordionOpen accordion:open', event);
@@ -70,5 +66,8 @@ class F7AccordionItem extends React.Component {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
 }
-__reactComponentSetProps(F7AccordionItem, AccordionItemProps);
+__reactComponentSetProps(F7AccordionItem, {
+  opened: Boolean,
+  ...Mixins.colorProps
+});
 export default F7AccordionItem;

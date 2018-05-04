@@ -5,7 +5,243 @@ import Mixins from '../utils/mixins';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
-const ListItemProps = Utils.extend({
+class F7ListItem extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+    this.state = (() => {
+      return {
+        isMedia: props.mediaItem || props.mediaList,
+        isSortable: props.sortable,
+        isSimple: false
+      };
+    })();
+    (() => {
+      const self = this;
+      self.onClickBound = self.onClick.bind(self);
+      self.onChangeBound = self.onChange.bind(self);
+      self.onSwipeoutOpenBound = self.onSwipeoutOpen.bind(self);
+      self.onSwipeoutOpenedBound = self.onSwipeoutOpened.bind(self);
+      self.onSwipeoutCloseBound = self.onSwipeoutClose.bind(self);
+      self.onSwipeoutClosedBound = self.onSwipeoutClosed.bind(self);
+      self.onSwipeoutDeleteBound = self.onSwipeoutDelete.bind(self);
+      self.onSwipeoutDeletedBound = self.onSwipeoutDeleted.bind(self);
+      self.onSwipeoutBound = self.onSwipeout.bind(self);
+      self.onAccOpenBound = self.onAccOpen.bind(self);
+      self.onAccOpenedBound = self.onAccOpened.bind(self);
+      self.onAccCloseBound = self.onAccClose.bind(self);
+      self.onAccClosedBound = self.onAccClosed.bind(self);
+    })();
+  }
+  render() {
+    const self = this;
+    let linkEl;
+    let itemContentEl;
+    const {title, text, media, subtitle, header, footer, link, href, target, noFastclick, noFastClick, after, badge, badgeColor, mediaItem, mediaList, divider, groupTitle, swipeout, accordionItem, accordionItemOpened, smartSelect, checkbox, radio, checked, name, value, readonly, required, disabled, itemInput, itemInputWithInfo, inlineLabel, sortable} = self.props;
+    const isMedia = mediaItem || mediaList || self.state.isMedia;
+    const isSortable = sortable || self.state.isSortable;
+    const isSimple = self.state.isSimple;
+    if (!isSimple) {
+      const needsEvents = !(link || href || accordionItem || smartSelect);
+      itemContentEl = React.createElement(F7ListItemContent, {
+        title: title,
+        text: text,
+        media: media,
+        subtitle: subtitle,
+        after: after,
+        header: header,
+        footer: footer,
+        badge: badge,
+        badgeColor: badgeColor,
+        mediaList: isMedia,
+        accordionItem: accordionItem,
+        checkbox: checkbox,
+        checked: checked,
+        radio: radio,
+        name: name,
+        value: value,
+        readonly: readonly,
+        required: required,
+        disabled: disabled,
+        itemInput: itemInput,
+        itemInputWithInfo: itemInputWithInfo,
+        inlineLabel: inlineLabel,
+        onClick: needsEvents ? self.onClickBound : null,
+        onChange: needsEvents ? self.onChangeBound : null
+      }, this.slots['content-start'], this.slots['content'], this.slots['content-end'], this.slots['media'], this.slots['inner-start'], this.slots['inner'], this.slots['inner-end'], this.slots['after-start'], this.slots['after'], this.slots['after-end'], this.slots['header'], this.slots['footer'], this.slots['before-title'], this.slots['title'], this.slots['after-title'], this.slots['subtitle'], this.slots['text'], swipeout || accordionItem ? null : self.slots.default);
+      if (link || href || accordionItem || smartSelect) {
+        const linkAttrs = Utils.extend({
+          href: link === true || accordionItem || smartSelect ? '#' : link || href,
+          target
+        }, Mixins.linkRouterAttrs(self), Mixins.linkActionsAttrs(self));
+        const linkClasses = Utils.classNames({
+          'item-link': true,
+          'no-fastclick': noFastclick || noFastClick,
+          'smart-select': smartSelect
+        }, Mixins.linkRouterClasses(self), Mixins.linkActionsClasses(self));
+        linkEl = React.createElement('a', {
+          className: linkClasses,
+          onClick: self.onClick.bind(self),
+          ...linkAttrs
+        }, itemContentEl);
+      }
+    }
+    const liClasses = Utils.classNames(self.props.className, {
+      'item-divider': divider,
+      'list-group-title': groupTitle,
+      'media-item': isMedia,
+      swipeout,
+      'accordion-item': accordionItem,
+      'accordion-item-opened': accordionItemOpened
+    }, Mixins.colorClasses(self));
+    if (divider || groupTitle) {
+      return React.createElement('li', {
+        ref: 'el',
+        id: self.props.id,
+        style: self.props.style,
+        className: liClasses
+      }, React.createElement('span', null, this.slots['default'], !this.slots.default && title));
+    } else if (isSimple) {
+      return React.createElement('li', {
+        ref: 'el',
+        id: self.props.id,
+        style: self.props.style,
+        className: liClasses
+      }, title, this.slots['default']);
+    }
+    const linkItemEl = link || href || smartSelect || accordionItem ? linkEl : itemContentEl;
+    return React.createElement('li', {
+      ref: 'el',
+      id: self.props.id,
+      style: self.props.style,
+      className: liClasses
+    }, this.slots['root-start'], swipeout ? React.createElement('div', { className: 'swipeout-content' }, linkItemEl) : linkItemEl, isSortable && React.createElement('div', { className: 'sortable-handler' }), (swipeout || accordionItem) && self.slots.default, this.slots['root'], this.slots['root-end']);
+  }
+  componentDidMount() {
+    const self = this;
+    const el = self.refs.el;
+    if (!el)
+      return;
+    self.$listEl = self.$$(el).parents('.list, .list-group').eq(0);
+    if (self.$listEl.length) {
+      self.setState({
+        isMedia: self.$listEl.hasClass('media-list'),
+        isSimple: self.$listEl.hasClass('simple-list'),
+        isSortable: self.$listEl.hasClass('sortable')
+      });
+    }
+    if (self.props.swipeout) {
+      el.addEventListener('swipeout:open', self.onSwipeoutOpenBound);
+      el.addEventListener('swipeout:opened', self.onSwipeoutOpenedBound);
+      el.addEventListener('swipeout:close', self.onSwipeoutCloseBound);
+      el.addEventListener('swipeout:closed', self.onSwipeoutClosedBound);
+      el.addEventListener('swipeout:delete', self.onSwipeoutDeleteBound);
+      el.addEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
+      el.addEventListener('swipeout', self.onSwipeoutBound);
+    }
+    if (self.props.accordionItem) {
+      el.addEventListener('accordion:open', self.onAccOpenBound);
+      el.addEventListener('accordion:opened', self.onAccOpenedBound);
+      el.addEventListener('accordion:close', self.onAccCloseBound);
+      el.addEventListener('accordion:closed', self.onAccClosedBound);
+    }
+    if (!self.props.smartSelect)
+      return;
+    self.$f7ready(f7 => {
+      const smartSelectParams = Utils.extend({ el: el.querySelector('a.smart-select') }, self.props.smartSelectParams || {});
+      self.f7SmartSelect = f7.smartSelect.create(smartSelectParams);
+    });
+  }
+  componentDidUpdate() {
+    const self = this;
+    const {$listEl} = self;
+    if (!$listEl || $listEl && $listEl.length === 0)
+      return;
+    self.setState({
+      isMedia: $listEl.hasClass('media-list'),
+      isSimple: $listEl.hasClass('simple-list'),
+      isSortable: $listEl.hasClass('sortable')
+    });
+  }
+  componentWillUnmount() {
+    const self = this;
+    const el = self.refs.el;
+    if (el) {
+      if (self.props.swipeout) {
+        el.removeEventListener('swipeout:open', self.onSwipeoutOpenBound);
+        el.removeEventListener('swipeout:opened', self.onSwipeoutOpenedBound);
+        el.removeEventListener('swipeout:close', self.onSwipeoutCloseBound);
+        el.removeEventListener('swipeout:closed', self.onSwipeoutClosedBound);
+        el.removeEventListener('swipeout:delete', self.onSwipeoutDeleteBound);
+        el.removeEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
+        el.removeEventListener('swipeout', self.onSwipeoutBound);
+      }
+      if (self.props.accordionItem) {
+        el.removeEventListener('accordion:open', self.onAccOpenBound);
+        el.removeEventListener('accordion:opened', self.onAccOpenedBound);
+        el.removeEventListener('accordion:close', self.onAccCloseBound);
+        el.removeEventListener('accordion:closed', self.onAccClosedBound);
+      }
+    }
+    if (self.props.smartSelect && self.f7SmartSelect) {
+      self.f7SmartSelect.destroy();
+    }
+  }
+  onClick(event) {
+    const self = this;
+    if (self.props.smartSelect && self.f7SmartSelect) {
+      self.f7SmartSelect.open();
+    }
+    if (event.target.tagName.toLowerCase() !== 'input') {
+      self.dispatchEvent('click', event);
+    }
+  }
+  onSwipeoutDeleted(event) {
+    this.dispatchEvent('swipeout:deleted swipeoutDeleted', event);
+  }
+  onSwipeoutDelete(event) {
+    this.dispatchEvent('swipeout:delete swipeoutDelete', event);
+  }
+  onSwipeoutClose(event) {
+    this.dispatchEvent('swipeout:close swipeoutClose', event);
+  }
+  onSwipeoutClosed(event) {
+    this.dispatchEvent('swipeout:closed swipeoutClosed', event);
+  }
+  onSwipeoutOpen(event) {
+    this.dispatchEvent('swipeout:open swipeoutOpen', event);
+  }
+  onSwipeoutOpened(event) {
+    this.dispatchEvent('swipeout:opened swipeoutOpened', event);
+  }
+  onSwipeout(event) {
+    this.dispatchEvent('swipeout', event);
+  }
+  onAccClose(event) {
+    this.dispatchEvent('accordion:close accordionClose', event);
+  }
+  onAccClosed(event) {
+    this.dispatchEvent('accordion:closed accordionClosed', event);
+  }
+  onAccOpen(event) {
+    this.dispatchEvent('accordion:open accordionOpen', event);
+  }
+  onAccOpened(event) {
+    this.dispatchEvent('accordion:opened accordionOpened', event);
+  }
+  onChange(event) {
+    this.dispatchEvent('change', event);
+  }
+  onInput(event) {
+    this.dispatchEvent('input', event);
+  }
+  get slots() {
+    return __reactComponentSlots(this);
+  }
+  dispatchEvent(events, ...args) {
+    return __reactComponentDispatchEvent(this, events, ...args);
+  }
+}
+__reactComponentSetProps(F7ListItem, {
   title: [
     String,
     Number
@@ -67,213 +303,9 @@ const ListItemProps = Utils.extend({
   disabled: Boolean,
   itemInput: Boolean,
   itemInputWithInfo: Boolean,
-  inlineLabel: Boolean
-}, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps);
-class F7ListItem extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-    this.state = (() => {
-      return {
-        itemInputForced: false,
-        inlineLabelForced: false,
-        itemInputWithInfoForced: false
-      };
-    })();
-    (() => {
-      const self = this;
-      self.onClickBound = self.onClick.bind(self);
-      self.onChangeBound = self.onChange.bind(self);
-      self.onSwipeoutOpenBound = self.onSwipeoutOpen.bind(self);
-      self.onSwipeoutOpenedBound = self.onSwipeoutOpened.bind(self);
-      self.onSwipeoutCloseBound = self.onSwipeoutClose.bind(self);
-      self.onSwipeoutClosedBound = self.onSwipeoutClosed.bind(self);
-      self.onSwipeoutDeleteBound = self.onSwipeoutDelete.bind(self);
-      self.onSwipeoutDeletedBound = self.onSwipeoutDeleted.bind(self);
-      self.onSwipeoutBound = self.onSwipeout.bind(self);
-      self.onAccOpenBound = self.onAccOpen.bind(self);
-      self.onAccOpenedBound = self.onAccOpened.bind(self);
-      self.onAccCloseBound = self.onAccClose.bind(self);
-      self.onAccClosedBound = self.onAccClosed.bind(self);
-    })();
-  }
-  render() {
-    const self = this;
-    let linkEl;
-    let itemContentEl;
-    const {title, text, media, subtitle, header, footer, link, href, target, noFastclick, noFastClick, after, badge, badgeColor, mediaItem, mediaList, divider, groupTitle, swipeout, accordionItem, accordionItemOpened, smartSelect, checkbox, radio, checked, name, value, readonly, required, disabled, itemInput, itemInputWithInfo, inlineLabel} = self.props;
-    if (!self.simpleListComputed) {
-      const needsEvents = !(link || href || accordionItem || smartSelect);
-      itemContentEl = React.createElement(F7ListItemContent, {
-        title: title,
-        text: text,
-        media: media,
-        subtitle: subtitle,
-        after: after,
-        header: header,
-        footer: footer,
-        badge: badge,
-        badgeColor: badgeColor,
-        mediaList: self.mediaListComputed,
-        accordionItem: accordionItem,
-        checkbox: checkbox,
-        checked: checked,
-        radio: radio,
-        name: name,
-        value: value,
-        readonly: readonly,
-        required: required,
-        disabled: disabled,
-        itemInput: itemInput || self.itemInputForced,
-        itemInputWithInfo: itemInputWithInfo || self.itemInputWithInfoForced,
-        inlineLabel: inlineLabel || self.inlineLabelForced,
-        onClick: needsEvents ? self.onClickBound : null,
-        onChange: needsEvents ? self.onChangeBound : null
-      }, this.slots['content-start'], this.slots['content'], this.slots['content-end'], this.slots['media'], this.slots['inner-start'], this.slots['inner'], this.slots['inner-end'], this.slots['after-start'], this.slots['after'], this.slots['after-end'], this.slots['header'], this.slots['footer'], this.slots['before-title'], this.slots['title'], this.slots['after-title'], this.slots['subtitle'], this.slots['text'], swipeout || accordionItem ? null : self.slots.default);
-      if (link || href || accordionItem || smartSelect) {
-        const linkAttrs = Utils.extend({
-          href: link === true || accordionItem || smartSelect ? '#' : link || href,
-          target
-        }, Mixins.linkRouterAttrs(self), Mixins.linkActionsAttrs(self));
-        const linkClasses = Utils.classNames({
-          'item-link': true,
-          'no-fastclick': noFastclick || noFastClick,
-          'smart-select': smartSelect
-        }, Mixins.linkRouterClasses(self), Mixins.linkActionsClasses(self));
-        linkEl = React.createElement('a', {
-          className: linkClasses,
-          onClick: self.onClick.bind(self),
-          ...linkAttrs
-        }, itemContentEl);
-      }
-    }
-    const liClasses = Utils.classNames(self.props.className, {
-      'item-divider': divider,
-      'list-group-title': groupTitle,
-      'media-item': mediaItem || mediaList,
-      swipeout,
-      'accordion-item': accordionItem,
-      'accordion-item-opened': accordionItemOpened
-    }, Mixins.colorClasses(self));
-    if (divider || groupTitle) {
-      return React.createElement('li', {
-        ref: 'el',
-        id: self.props.id,
-        style: self.props.style,
-        className: liClasses
-      }, React.createElement('span', null, this.slots['default'], !this.slots.default && title));
-    } else if (self.simpleListComputed) {
-      return React.createElement('li', {
-        ref: 'el',
-        id: self.props.id,
-        style: self.props.style,
-        className: liClasses
-      }, title, this.slots['default']);
-    }
-    const linkItemEl = link || href || smartSelect || accordionItem ? linkEl : itemContentEl;
-    return React.createElement('li', {
-      ref: 'el',
-      id: self.props.id,
-      style: self.props.style,
-      className: liClasses
-    }, this.slots['root-start'], swipeout ? React.createElement('div', { className: 'swipeout-content' }, linkItemEl) : linkItemEl, self.sortableComputed && React.createElement('div', { className: 'sortable-handler' }), (swipeout || accordionItem) && self.slots.default, this.slots['root'], this.slots['root-end']);
-  }
-  componentDidMount() {
-    const self = this;
-    const el = self.refs.el;
-    if (!el)
-      return;
-    el.addEventListener('swipeout:open', self.onSwipeoutOpenBound);
-    el.addEventListener('swipeout:opened', self.onSwipeoutOpenedBound);
-    el.addEventListener('swipeout:close', self.onSwipeoutCloseBound);
-    el.addEventListener('swipeout:closed', self.onSwipeoutClosedBound);
-    el.addEventListener('swipeout:delete', self.onSwipeoutDeleteBound);
-    el.addEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
-    el.addEventListener('swipeout', self.onSwipeoutBound);
-    el.addEventListener('accordion:open', self.onAccOpenBound);
-    el.addEventListener('accordion:opened', self.onAccOpenedBound);
-    el.addEventListener('accordion:close', self.onAccCloseBound);
-    el.addEventListener('accordion:closed', self.onAccClosedBound);
-    if (!self.props.smartSelect)
-      return;
-    self.$f7ready(f7 => {
-      const smartSelectParams = Utils.extend({ el: el.querySelector('a.smart-select') }, self.props.smartSelectParams || {});
-      self.f7SmartSelect = f7.smartSelect.create(smartSelectParams);
-    });
-  }
-  componentWillUnmount() {
-    const self = this;
-    const el = self.refs.el;
-    if (el) {
-      el.removeEventListener('swipeout:open', self.onSwipeoutOpenBound);
-      el.removeEventListener('swipeout:opened', self.onSwipeoutOpenedBound);
-      el.removeEventListener('swipeout:close', self.onSwipeoutCloseBound);
-      el.removeEventListener('swipeout:closed', self.onSwipeoutClosedBound);
-      el.removeEventListener('swipeout:delete', self.onSwipeoutDeleteBound);
-      el.removeEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
-      el.removeEventListener('swipeout', self.onSwipeoutBound);
-      el.removeEventListener('accordion:open', self.onAccOpenBound);
-      el.removeEventListener('accordion:opened', self.onAccOpenedBound);
-      el.removeEventListener('accordion:close', self.onAccCloseBound);
-      el.removeEventListener('accordion:closed', self.onAccClosedBound);
-    }
-    if (self.props.smartSelect && self.f7SmartSelect) {
-      self.f7SmartSelect.destroy();
-    }
-  }
-  onClick(event) {
-    const self = this;
-    if (self.props.smartSelect && self.f7SmartSelect) {
-      self.f7SmartSelect.open();
-    }
-    if (event.target.tagName.toLowerCase() !== 'input') {
-      self.dispatchEvent('click', event);
-    }
-  }
-  onSwipeoutDeleted(event) {
-    this.dispatchEvent('swipeout:deleted swipeoutDeleted', event);
-  }
-  onSwipeoutDelete(event) {
-    this.dispatchEvent('swipeout:delete swipeoutDelete', event);
-  }
-  onSwipeoutClose(event) {
-    this.dispatchEvent('swipeout:close swipeoutClose', event);
-  }
-  onSwipeoutClosed(event) {
-    this.dispatchEvent('swipeout:closed swipeoutClosed', event);
-  }
-  onSwipeoutOpen(event) {
-    this.dispatchEvent('swipeout:open swipeoutOpen', event);
-  }
-  onSwipeoutOpened(event) {
-    this.dispatchEvent('swipeout:opened swipeoutOpened', event);
-  }
-  onSwipeout(event) {
-    this.dispatchEvent('swipeout', event);
-  }
-  onAccClose(event) {
-    this.dispatchEvent('accordion:close accordionClose', event);
-  }
-  onAccClosed(event) {
-    this.dispatchEvent('accordion:closed accordionClosed', event);
-  }
-  onAccOpen(event) {
-    this.dispatchEvent('accordion:open accordionOpen', event);
-  }
-  onAccOpened(event) {
-    this.dispatchEvent('accordion:opened accordionOpened', event);
-  }
-  onChange(event) {
-    this.dispatchEvent('change', event);
-  }
-  onInput(event) {
-    this.dispatchEvent('input', event);
-  }
-  get slots() {
-    return __reactComponentSlots(this);
-  }
-  dispatchEvent(events, ...args) {
-    return __reactComponentDispatchEvent(this, events, ...args);
-  }
-}
-__reactComponentSetProps(F7ListItem, ListItemProps);
+  inlineLabel: Boolean,
+  ...Mixins.colorProps,
+  ...Mixins.linkRouterProps,
+  ...Mixins.linkActionsProps
+});
 export default F7ListItem;

@@ -8,15 +8,12 @@ class F7CardFooter extends React.Component {
     super(props, context);
   }
   render() {
+    const classes = Utils.classNames(this.props.className, 'card-footer', Mixins.colorClasses(this));
     return React.createElement('div', {
       id: this.props.id,
       style: this.props.style,
-      className: this.classes
+      className: classes
     }, this.slots['default']);
-  }
-  get classes() {
-    const self = this;
-    return Utils.classNames(self.props.className, { 'card-footer': true }, Mixins.colorClasses(self));
   }
   get slots() {
     return __reactComponentSlots(this);

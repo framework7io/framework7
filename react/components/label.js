@@ -10,9 +10,8 @@ class F7Label extends React.Component {
   render() {
     const self = this;
     const {inline, id, style, className, floating} = self.props;
-    if (inline) {
-    }
     const classes = Utils.classNames(className, 'item-title', {
+      'item-label-inline': inline,
       'item-label': !floating,
       'item-floating-label': floating
     }, Mixins.colorClasses(self));

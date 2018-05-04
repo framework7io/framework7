@@ -7,19 +7,19 @@ function __vueComponentGetPropKeys(props) {
   __vueComponentPropsKeys = Object.keys(props);
   return props;
 }
-const ActionsProps = Utils.extend({
-  opened: Boolean,
-  grid: Boolean,
-  convertToPopover: Boolean,
-  forceToPopover: Boolean,
-  target: [
-    String,
-    Object
-  ]
-}, Mixins.colorProps);
 export default {
   name: 'f7-actions',
-  props: __vueComponentGetPropKeys(ActionsProps),
+  props: __vueComponentGetPropKeys({
+    opened: Boolean,
+    grid: Boolean,
+    convertToPopover: Boolean,
+    forceToPopover: Boolean,
+    target: [
+      String,
+      Object
+    ],
+    ...Mixins.colorProps
+  }),
   render() {
     var _h = this.$createElement;
     const self = this;

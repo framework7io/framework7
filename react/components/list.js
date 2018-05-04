@@ -4,36 +4,13 @@ import Mixins from '../utils/mixins';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
-const ListProps = Utils.extend({
-  inset: Boolean,
-  tabletInset: Boolean,
-  mediaList: Boolean,
-  sortable: Boolean,
-  sortableEnabled: Boolean,
-  accordionList: Boolean,
-  contactsList: Boolean,
-  simpleList: Boolean,
-  linksList: Boolean,
-  noHairlines: Boolean,
-  noHairlinesBetween: Boolean,
-  noHairlinesMd: Boolean,
-  noHairlinesBetweenMd: Boolean,
-  noHairlinesIos: Boolean,
-  noHairlinesBetweenIos: Boolean,
-  tab: Boolean,
-  tabActive: Boolean,
-  form: Boolean,
-  formStoreData: Boolean,
-  inlineLabels: Boolean,
-  virtualList: Boolean,
-  virtualListParams: Object
-}, Mixins.colorProps);
 class F7List extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
   render() {
     const self = this;
+    const {id, style, form} = self.props;
     const {
       list: slotsList,
       default: slotsDefault
@@ -54,19 +31,19 @@ class F7List extends React.Component {
         ulChildren.push(child);
       }
     });
-    const ListTag = self.props.form ? 'form' : 'div';
+    const ListTag = form ? 'form' : 'div';
     if (ulChildren.length > 0) {
       return React.createElement(ListTag, {
-        id: self.props.id,
+        id: id,
         ref: 'el',
-        style: self.props.style,
+        style: style,
         className: self.classes
       }, self.slots['before-list'], React.createElement('ul', null, ulChildren), self.slots['after-list'], rootChildren);
     } else {
       return React.createElement(ListTag, {
-        id: self.props.id,
+        id: id,
         ref: 'el',
-        style: self.props.style,
+        style: style,
         className: self.classes
       }, self.slots['before-list'], rootChildren, self.slots['after-list']);
     }
@@ -189,5 +166,29 @@ class F7List extends React.Component {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
 }
-__reactComponentSetProps(F7List, ListProps);
+__reactComponentSetProps(F7List, {
+  inset: Boolean,
+  tabletInset: Boolean,
+  mediaList: Boolean,
+  sortable: Boolean,
+  sortableEnabled: Boolean,
+  accordionList: Boolean,
+  contactsList: Boolean,
+  simpleList: Boolean,
+  linksList: Boolean,
+  noHairlines: Boolean,
+  noHairlinesBetween: Boolean,
+  noHairlinesMd: Boolean,
+  noHairlinesBetweenMd: Boolean,
+  noHairlinesIos: Boolean,
+  noHairlinesBetweenIos: Boolean,
+  tab: Boolean,
+  tabActive: Boolean,
+  form: Boolean,
+  formStoreData: Boolean,
+  inlineLabels: Boolean,
+  virtualList: Boolean,
+  virtualListParams: Object,
+  ...Mixins.colorProps
+});
 export default F7List;

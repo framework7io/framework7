@@ -1,6 +1,7 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import F7Badge from './badge';
+import __vueComponentSetState from '../runtime-helpers/vue-component-set-state.js';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
 let __vueComponentPropsKeys;
@@ -8,65 +9,65 @@ function __vueComponentGetPropKeys(props) {
   __vueComponentPropsKeys = Object.keys(props);
   return props;
 }
-const ListItemContentProps = Utils.extend({
-  title: [
-    String,
-    Number
-  ],
-  text: [
-    String,
-    Number
-  ],
-  media: String,
-  subtitle: [
-    String,
-    Number
-  ],
-  header: [
-    String,
-    Number
-  ],
-  footer: [
-    String,
-    Number
-  ],
-  after: [
-    String,
-    Number
-  ],
-  badge: [
-    String,
-    Number
-  ],
-  badgeColor: String,
-  mediaList: Boolean,
-  mediaItem: Boolean,
-  itemInput: Boolean,
-  itemInputWithInfo: Boolean,
-  inlineLabel: Boolean,
-  checkbox: Boolean,
-  checked: Boolean,
-  radio: Boolean,
-  name: String,
-  value: [
-    String,
-    Number,
-    Array
-  ],
-  readonly: Boolean,
-  required: Boolean,
-  disabled: Boolean
-}, Mixins.colorProps);
 export default {
   name: 'f7-list-item-content',
-  props: __vueComponentGetPropKeys(ListItemContentProps),
+  props: __vueComponentGetPropKeys({
+    title: [
+      String,
+      Number
+    ],
+    text: [
+      String,
+      Number
+    ],
+    media: String,
+    subtitle: [
+      String,
+      Number
+    ],
+    header: [
+      String,
+      Number
+    ],
+    footer: [
+      String,
+      Number
+    ],
+    after: [
+      String,
+      Number
+    ],
+    badge: [
+      String,
+      Number
+    ],
+    badgeColor: String,
+    mediaList: Boolean,
+    mediaItem: Boolean,
+    itemInput: Boolean,
+    itemInputWithInfo: Boolean,
+    inlineLabel: Boolean,
+    checkbox: Boolean,
+    checked: Boolean,
+    radio: Boolean,
+    name: String,
+    value: [
+      String,
+      Number,
+      Array
+    ],
+    readonly: Boolean,
+    required: Boolean,
+    disabled: Boolean,
+    ...Mixins.colorProps
+  }),
   data() {
     const props = __vueComponentProps(this, __vueComponentPropsKeys);
     const state = (() => {
       return {
-        itemInputForced: false,
-        inlineLabelForced: false,
-        itemInputWithInfoForced: false
+        hasInput: false,
+        hasInlineLabel: false,
+        hasInputInfo: false
       };
     })();
     return { state };
@@ -74,6 +75,10 @@ export default {
   render() {
     var _h = this.$createElement;
     const self = this;
+    const {radio, checkbox, value, name, checked, readonly, disabled, required, media, header, footer, title, subtitle, text, after, badge, mediaList, mediaItem, badgeColor, itemInput, inlineLabel, itemInputWithInfo} = self.props;
+    const hasInput = itemInput || self.state.hasInput;
+    const hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
+    const hasInputInfo = itemInputWithInfo || self.state.hasInputInfo;
     const slotsContentStart = [];
     const slotsContent = [];
     const slotsContentEnd = [];
@@ -146,7 +151,6 @@ export default {
           slotsFooter.push(slotEl);
       }
     }
-    const {radio, checkbox, value, name, checked, readonly, disabled, required} = self.props;
     if (radio || checkbox) {
       inputEl = _h('input', {
         on: { change: self.onChange.bind(self) },
@@ -162,7 +166,6 @@ export default {
       });
       inputIconEl = _h('i', { class: `icon icon-${ radio ? 'radio' : 'checkbox' }` });
     }
-    const {media} = self.props;
     if (media || slotsMedia.length) {
       let mediaImgEl;
       if (media) {
@@ -173,7 +176,7 @@ export default {
         slotsMedia
       ]);
     }
-    const {header, footer, title, subtitle, text, after, badge, mediaList, mediaItem, badgeColor} = self.props;
+    const isMedia = mediaItem || mediaList;
     if (header || slotsHeader.length) {
       headerEl = _h('div', { class: 'item-header' }, [
         header,
@@ -188,7 +191,7 @@ export default {
     }
     if (title || slotsTitle.length) {
       titleEl = _h('div', { class: 'item-title' }, [
-        !mediaList && !mediaItem && headerEl,
+        !isMedia && headerEl,
         title,
         slotsTitle
       ]);
@@ -220,16 +223,17 @@ export default {
         slotsAfterEnd
       ]);
     }
-    if (mediaList || mediaItem) {
+    if (isMedia) {
       titleRowEl = _h('div', { class: 'item-title-row' }, [
         slotsBeforeTitle,
         titleEl,
         slotsAfterTitle,
         afterWrapEl
       ]);
-    }
-    if (mediaList || mediaItem) {
-      innerEl = _h('div', { class: 'item-inner' }, [
+      innerEl = _h('div', {
+        ref: 'innerEl',
+        class: 'item-inner'
+      }, [
         slotsInnerStart,
         headerEl,
         titleRowEl,
@@ -240,7 +244,10 @@ export default {
         slotsInnerEnd
       ]);
     } else {
-      innerEl = _h('div', { class: 'item-inner' }, [
+      innerEl = _h('div', {
+        ref: 'innerEl',
+        class: 'item-inner'
+      }, [
         slotsInnerStart,
         slotsBeforeTitle,
         titleEl,
@@ -251,16 +258,15 @@ export default {
       ]);
     }
     const ItemContentTag = checkbox || radio ? 'label' : 'div';
-    const {itemInput, inlineLabel, itemInputWithInfo} = self.props;
-    const {itemInputForced, inlineLabelForced, itemInputWithInfoForced} = self.state;
     const classes = Utils.classNames(self.props.className, 'item-content', {
       'item-checkbox': checkbox,
       'item-radio': radio,
-      'item-input': itemInput || itemInputForced,
-      'inline-label': inlineLabel || inlineLabelForced,
-      'item-input-with-info': itemInputWithInfo || itemInputWithInfoForced
+      'item-input': hasInput,
+      'inline-label': hasInlineLabel,
+      'item-input-with-info': hasInputInfo
     }, Mixins.colorClasses(self));
     return _h(ItemContentTag, {
+      ref: 'el',
       style: self.props.style,
       class: classes,
       on: { click: self.onClick.bind(self) },
@@ -275,6 +281,34 @@ export default {
       slotsContentEnd
     ]);
   },
+  mounted() {
+    const self = this;
+    const innerEl = self.$refs.innerEl;
+    if (!innerEl)
+      return;
+    const $innerEl = self.$$(innerEl);
+    const $labelEl = $innerEl.children('.item-title.item-label');
+    const $inputEl = $innerEl.children('.item-input-wrap');
+    self.setState({
+      hasInlineLabel: $labelEl.hasClass('item-label-inline'),
+      hasInput: $inputEl.length > 0,
+      hasInputInfo: $inputEl.children('.item-input-info').length > 0
+    });
+  },
+  updated() {
+    const self = this;
+    const innerEl = self.$refs.innerEl;
+    if (!innerEl)
+      return;
+    const $innerEl = self.$$(innerEl);
+    const $labelEl = $innerEl.children('.item-title.item-label');
+    const $inputEl = $innerEl.children('.item-input-wrap');
+    self.setState({
+      hasInlineLabel: $labelEl.hasClass('item-label-inline'),
+      hasInput: $inputEl.length > 0,
+      hasInputInfo: $inputEl.children('.item-input-info').length > 0
+    });
+  },
   methods: {
     onClick(event) {
       this.dispatchEvent('click', event);
@@ -284,6 +318,9 @@ export default {
     },
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
+    },
+    setState(updater, callback) {
+      __vueComponentSetState(this, updater, callback);
     }
   },
   computed: {

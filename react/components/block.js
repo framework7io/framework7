@@ -5,18 +5,6 @@ import __reactComponentEl from '../runtime-helpers/react-component-el.js';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
-const BlockProps = Utils.extend({
-  inset: Boolean,
-  tabletInset: Boolean,
-  strong: Boolean,
-  tabs: Boolean,
-  tab: Boolean,
-  tabActive: Boolean,
-  accordionList: Boolean,
-  noHairlines: Boolean,
-  noHairlinesMd: Boolean,
-  noHairlinesIos: Boolean
-}, Mixins.colorProps);
 class F7Block extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -38,27 +26,25 @@ class F7Block extends React.Component {
     el.removeEventListener('tab:hide', this.onTabHideBound);
   }
   render() {
-    return React.createElement('div', {
-      id: this.props.id,
-      style: this.props.style,
-      className: this.classes
-    }, this.slots['default']);
-  }
-  get classes() {
     const self = this;
-    return Utils.classNames(self.props.className, {
-      block: true,
-      inset: self.props.inset,
-      'block-strong': self.props.strong,
-      'accordion-list': self.props.accordionList,
-      'tablet-inset': self.props.tabletInset,
-      tabs: self.props.tabs,
-      tab: self.props.tab,
-      'tab-active': self.props.tabActive,
-      'no-hairlines': self.props.noHairlines,
-      'no-hairlines-md': self.props.noHairlinesMd,
-      'no-hairlines-ios': self.props.noHairlinesIos
+    const {className, inset, strong, accordionList, tabletInset, tabs, tab, tabActive, noHairlines, noHairlinesIos, noHairlinesMd, id, style} = self.props;
+    const classes = Utils.classNames(className, 'block', {
+      inset,
+      'block-strong': strong,
+      'accordion-list': accordionList,
+      'tablet-inset': tabletInset,
+      tabs,
+      tab,
+      'tab-active': tabActive,
+      'no-hairlines': noHairlines,
+      'no-hairlines-md': noHairlinesMd,
+      'no-hairlines-ios': noHairlinesIos
     }, Mixins.colorClasses(self));
+    return React.createElement('div', {
+      id: id,
+      style: style,
+      className: classes
+    }, this.slots['default']);
   }
   onTabShow(e) {
     this.dispatchEvent('tabShow tab:show', e);
@@ -76,5 +62,17 @@ class F7Block extends React.Component {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
 }
-__reactComponentSetProps(F7Block, BlockProps);
+__reactComponentSetProps(F7Block, {
+  inset: Boolean,
+  tabletInset: Boolean,
+  strong: Boolean,
+  tabs: Boolean,
+  tab: Boolean,
+  tabActive: Boolean,
+  accordionList: Boolean,
+  noHairlines: Boolean,
+  noHairlinesMd: Boolean,
+  noHairlinesIos: Boolean,
+  ...Mixins.colorProps
+});
 export default F7Block;

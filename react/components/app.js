@@ -10,10 +10,10 @@ class F7App extends React.Component {
   }
   render() {
     const self = this;
-    const classes = Utils.classNames(self.props.className, { 'framework7-root': true }, Mixins.colorClasses(self));
+    const classes = Utils.classNames(self.props.className, 'framework7-root', Mixins.colorClasses(self));
     return React.createElement('div', {
       ref: 'el',
-      id: 'framework7-root',
+      id: self.props.id || 'framework7-root',
       className: classes
     }, this.slots['default']);
   }

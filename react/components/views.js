@@ -3,17 +3,13 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
-const ViewsProps = Utils.extend({ tabs: Boolean }, Mixins.colorProps);
 class F7Views extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
   render() {
     const self = this;
-    const classes = Utils.classNames(self.props.className, {
-      views: true,
-      tabs: self.props.tabs
-    }, Mixins.colorClasses(self));
+    const classes = Utils.classNames(self.props.className, 'views', { tabs: self.props.tabs }, Mixins.colorClasses(self));
     return React.createElement('div', {
       id: self.props.id,
       style: self.props.style,
@@ -24,5 +20,8 @@ class F7Views extends React.Component {
     return __reactComponentSlots(this);
   }
 }
-__reactComponentSetProps(F7Views, ViewsProps);
+__reactComponentSetProps(F7Views, {
+  tabs: Boolean,
+  ...Mixins.colorProps
+});
 export default F7Views;
