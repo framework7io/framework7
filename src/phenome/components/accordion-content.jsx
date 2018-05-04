@@ -5,22 +5,17 @@ export default {
   props: Mixins.colorProps,
   name: 'f7-accordion-content',
   render() {
+    const classes = Utils.classNames(
+      this.props.className,
+      {
+        'accordion-item-content': true,
+      },
+      Mixins.colorClasses(this),
+    );
     return (
-      <div id={this.props.id} style={this.props.style} className={this.classes}>
+      <div id={this.props.id} style={this.props.style} className={classes}>
         <slot />
       </div>
     );
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(
-        self.props.className,
-        {
-          'accordion-item-content': true,
-        },
-        Mixins.colorClasses(self),
-      );
-    },
   },
 };

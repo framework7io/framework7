@@ -1,22 +1,18 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
-const ViewsProps = Utils.extend(
-  {
-    tabs: Boolean,
-  },
-  Mixins.colorProps,
-);
-
 export default {
   name: 'f7-views',
-  props: ViewsProps,
+  props: {
+    tabs: Boolean,
+    ...Mixins.colorProps,
+  },
   render() {
     const self = this;
     const classes = Utils.classNames(
       self.props.className,
+      'views',
       {
-        views: true,
         tabs: self.props.tabs,
       },
       Mixins.colorClasses(self),

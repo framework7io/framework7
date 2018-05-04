@@ -4,8 +4,9 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import F7Icon from './icon';
 
-const ButtonProps = Utils.extend(
-  {
+export default {
+  name: 'f7-button',
+  props: {
     noFastclick: Boolean,
     noFastClick: Boolean,
     text: String,
@@ -31,16 +32,11 @@ const ButtonProps = Utils.extend(
     outline: Boolean,
     active: Boolean,
     disabled: Boolean,
+    ...Mixins.colorProps,
+    ...Mixins.linkIconProps,
+    ...Mixins.linkRouterProps,
+    ...Mixins.linkActionsProps,
   },
-  Mixins.colorProps,
-  Mixins.linkIconProps,
-  Mixins.linkRouterProps,
-  Mixins.linkActionsProps,
-);
-
-export default {
-  name: 'f7-button',
-  props: ButtonProps,
   render() {
     const self = this;
     let iconEl;
@@ -131,12 +127,13 @@ export default {
         active,
         outline,
         disabled,
+        className,
       } = self.props;
 
       return Utils.classNames(
-        self.props.className,
+        className,
+        'button',
         {
-          button: true,
           'tab-link': tabLink || tabLink === '',
           'tab-link-active': tabLinkActive,
           'no-fastclick': noFastclick || noFastClick,

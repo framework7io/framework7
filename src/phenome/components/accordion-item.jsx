@@ -1,16 +1,12 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
-const AccordionItemProps = Utils.extend(
-  {
-    opened: Boolean,
-  },
-  Mixins.colorProps,
-);
-
 export default {
   name: 'f7-accordion-item',
-  props: AccordionItemProps,
+  props: {
+    opened: Boolean,
+    ...Mixins.colorProps,
+  },
   componentDidMount() {
     const self = this;
     const el = self.el;
@@ -34,24 +30,19 @@ export default {
     el.removeEventListener('accordion:closed', self.onClosedBound);
   },
   render() {
+    const classes = Utils.classNames(
+      this.props.className,
+      {
+        'accordion-item': true,
+        'accordion-item-opened': this.props.opened,
+      },
+      Mixins.colorClasses(this),
+    );
     return (
-      <div id={this.props.id} style={this.props.style} className={this.classes}>
+      <div id={this.props.id} style={this.props.style} className={classes}>
         <slot />
       </div>
     );
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(
-        self.props.className,
-        {
-          'accordion-item': true,
-          'accordion-item-opened': self.props.opened,
-        },
-        Mixins.colorClasses(self),
-      );
-    },
   },
   methods: {
     onOpen(event) {

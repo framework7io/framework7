@@ -5,8 +5,9 @@ import Mixins from '../utils/mixins';
 
 import F7Badge from './badge';
 
-const ListItemContentProps = Utils.extend(
-  {
+export default {
+  name: 'f7-list-item-content',
+  props: {
     title: [String, Number],
     text: [String, Number],
     media: String,
@@ -30,22 +31,47 @@ const ListItemContentProps = Utils.extend(
     readonly: Boolean,
     required: Boolean,
     disabled: Boolean,
+    ...Mixins.colorProps,
   },
-  Mixins.colorProps,
-);
-
-export default {
-  name: 'f7-list-item-content',
-  props: ListItemContentProps,
   state() {
     return {
-      itemInputForced: false,
-      inlineLabelForced: false,
-      itemInputWithInfoForced: false,
+      hasInput: false,
+      hasInlineLabel: false,
+      hasInputInfo: false,
     };
   },
   render() {
     const self = this;
+
+    const {
+      radio,
+      checkbox,
+      value,
+      name,
+      checked,
+      readonly,
+      disabled,
+      required,
+      media,
+      header,
+      footer,
+      title,
+      subtitle,
+      text,
+      after,
+      badge,
+      mediaList,
+      mediaItem,
+      badgeColor,
+      itemInput,
+      inlineLabel,
+      itemInputWithInfo,
+    } = self.props;
+
+    const hasInput = itemInput || self.state.hasInput;
+    const hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
+    const hasInputInfo = itemInputWithInfo || self.state.hasInputInfo;
+
     const slotsContentStart = [];
     const slotsContent = [];
     const slotsContentEnd = [];
@@ -109,10 +135,6 @@ export default {
     }
 
     // Input
-    const {
-      radio, checkbox, value, name, checked, readonly, disabled, required,
-    } = self.props;
-
     if (radio || checkbox) {
       inputEl = (
         <input
@@ -131,10 +153,6 @@ export default {
       );
     }
     // Media
-    const {
-      media,
-    } = self.props;
-
     if (media || slotsMedia.length) {
       let mediaImgEl;
       if (media) {
@@ -150,9 +168,7 @@ export default {
       );
     }
     // Inner Elements
-    const {
-      header, footer, title, subtitle, text, after, badge, mediaList, mediaItem, badgeColor,
-    } = self.props;
+    const isMedia = mediaItem || mediaList;
 
     if (header || slotsHeader.length) {
       headerEl = (
@@ -173,7 +189,7 @@ export default {
     if (title || slotsTitle.length) {
       titleEl = (
         <div className="item-title">
-          {!mediaList && !mediaItem && headerEl}
+          {!isMedia && headerEl}
           {title}
           {slotsTitle}
         </div>
@@ -212,7 +228,7 @@ export default {
         </div>
       );
     }
-    if (mediaList || mediaItem) {
+    if (isMedia) {
       titleRowEl = (
         <div className="item-title-row">
           {slotsBeforeTitle}
@@ -221,10 +237,8 @@ export default {
           {afterWrapEl}
         </div>
       );
-    }
-    if (mediaList || mediaItem) {
       innerEl = (
-        <div className="item-inner">
+        <div ref="innerEl" className="item-inner">
           {slotsInnerStart}
           {headerEl}
           {titleRowEl}
@@ -237,7 +251,7 @@ export default {
       );
     } else {
       innerEl = (
-        <div className="item-inner">
+        <div ref="innerEl" className="item-inner">
           {slotsInnerStart}
           {slotsBeforeTitle}
           {titleEl}
@@ -251,22 +265,22 @@ export default {
 
     // Finalize
     const ItemContentTag = checkbox || radio ? 'label' : 'div';
-    const { itemInput, inlineLabel, itemInputWithInfo } = self.props;
-    const { itemInputForced, inlineLabelForced, itemInputWithInfoForced } = self.state;
+
     const classes = Utils.classNames(
       self.props.className,
       'item-content',
       {
         'item-checkbox': checkbox,
         'item-radio': radio,
-        'item-input': itemInput || itemInputForced,
-        'inline-label': inlineLabel || inlineLabelForced,
-        'item-input-with-info': itemInputWithInfo || itemInputWithInfoForced,
+        'item-input': hasInput,
+        'inline-label': hasInlineLabel,
+        'item-input-with-info': hasInputInfo,
       },
       Mixins.colorClasses(self),
     );
     return (
       <ItemContentTag
+        ref="el"
         id={self.props.id}
         style={self.props.style}
         className={classes}
@@ -281,6 +295,32 @@ export default {
         {slotsContentEnd}
       </ItemContentTag>
     );
+  },
+  componentDidMount() {
+    const self = this;
+    const innerEl = self.refs.innerEl;
+    if (!innerEl) return;
+    const $innerEl = self.$$(innerEl);
+    const $labelEl = $innerEl.children('.item-title.item-label');
+    const $inputEl = $innerEl.children('.item-input-wrap');
+    self.setState({
+      hasInlineLabel: $labelEl.hasClass('item-label-inline'),
+      hasInput: $inputEl.length > 0,
+      hasInputInfo: $inputEl.children('.item-input-info').length > 0,
+    });
+  },
+  componentDidUpdate() {
+    const self = this;
+    const innerEl = self.refs.innerEl;
+    if (!innerEl) return;
+    const $innerEl = self.$$(innerEl);
+    const $labelEl = $innerEl.children('.item-title.item-label');
+    const $inputEl = $innerEl.children('.item-input-wrap');
+    self.setState({
+      hasInlineLabel: $labelEl.hasClass('item-label-inline'),
+      hasInput: $inputEl.length > 0,
+      hasInputInfo: $inputEl.children('.item-input-info').length > 0,
+    });
   },
   methods: {
     onClick(event) {

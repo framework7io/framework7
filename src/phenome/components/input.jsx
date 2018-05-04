@@ -38,6 +38,10 @@ export default {
     resizable: Boolean,
     clearButton: Boolean,
 
+    // Form
+    noFormStoreData: Boolean,
+    noStoreData: Boolean,
+
     // Error, Info
     errorMessage: String,
     info: String,
@@ -88,16 +92,19 @@ export default {
       wrap,
       style,
       className,
+      noStoreData,
+      noFormStoreData,
     } = self.props;
 
     let inputEl;
 
-    function renderInput(tag, children) {
+    function createInput(tag, children) {
       const InputTag = tag;
       const needsValue = !(type === 'select' || type === 'textarea' || type === 'file');
       const inputClassName = Utils.classNames(
-        (type === 'textarea' && resizable ? 'resizable' : ''),
-        (!wrap && className),
+        type === 'textarea' && resizable && 'resizable',
+        !wrap && className,
+        (noFormStoreData || noStoreData) && 'no-store-data',
       );
       return (
         <InputTag
@@ -140,51 +147,40 @@ export default {
     const { default: slotsDefault, info: slotsInfo } = self.slots;
     if (type === 'select' || self.type === 'textarea' || self.type === 'file') {
       if (self.type === 'select') {
-        inputEl = renderInput('select', slotsDefault);
+        inputEl = createInput('select', slotsDefault);
       } else if (self.type === 'file') {
-        inputEl = renderInput('input');
+        inputEl = createInput('input');
       } else {
-        inputEl = renderInput('textarea', slotsDefault);
+        inputEl = createInput('textarea', slotsDefault);
       }
     } else if ((slotsDefault && slotsDefault.length > 0) || !type) {
       inputEl = slotsDefault;
     } else if (type === 'toggle') {
-      inputEl = <F7Toggle checked={checked} readOnly={readonly} name={name} value={value} disabled={disabled} onChange={self.onChangeBound} />;
-    } else if (self.type === 'range') {
-      inputEl = <F7Range value={value} disabled={disabled} min={min} max={max} step={step} onRangeChange={self.onChangeBound} />;
-    } else {
-      inputEl = renderInput('input');
-    }
-
-    let clearButtonEl;
-    if (clearButton) {
-      clearButtonEl = <span className="input-clear-button" />;
-    }
-
-    /*
-    TODO: force parent info
-    let $parent = self.$parent;
-    let foundItemContent;
-    while ($parent && !foundItemContent) {
-      const tag = $parent.$vnode && $parent.$vnode.tag;
-      if (tag && (tag.indexOf('list-item') > 0 || tag.indexOf('list-item-content') > 0)) {
-        foundItemContent = $parent;
-      }
-      $parent = $parent.$parent;
-    }
-    if (foundItemContent) foundItemContent.itemInputForced = true;
-    if (foundItemContent && (self.info || (self.$slots.info && self.$slots.info.length))) foundItemContent.itemInputWithInfoForced = true;
-    */
-
-    let infoEl;
-    if (info || (slotsInfo && slotsInfo.length)) {
-      infoEl = (
-        <div className="item-input-info">
-          {info}
-          <slot name="info" />
-        </div>
+      inputEl = (
+        <F7Toggle
+          checked={checked}
+          readOnly={readonly}
+          name={name}
+          value={value}
+          disabled={disabled}
+          onChange={self.onChangeBound}
+        />
       );
+    } else if (self.type === 'range') {
+      inputEl = (
+        <F7Range
+          value={value}
+          disabled={disabled}
+          min={min}
+          max={max}
+          step={step}
+          onRangeChange={self.onChangeBound}
+        />
+      );
+    } else {
+      inputEl = createInput('input');
     }
+
     if (wrap) {
       const wrapClasses = Utils.classNames(
         className,
@@ -194,8 +190,15 @@ export default {
       return (
         <div ref="wrapEl" className={wrapClasses} style={style}>
           {inputEl}
-          {clearButtonEl}
-          {infoEl}
+          {clearButton &&
+            <span className="input-clear-button" />
+          }
+          {(info || (slotsInfo && slotsInfo.length)) &&
+            <div className="item-input-info">
+              {info}
+              <slot name="info" />
+            </div>
+          }
         </div>
       );
     }
@@ -230,7 +233,7 @@ export default {
   componentDidMount() {
     const self = this;
     self.$f7ready((f7) => {
-      const { validate, resizable, type } = self.props;
+      const { validate, resizable, type, clearButton } = self.props;
       if (type === 'range' || type === 'toggle') return;
 
       const inputEl = self.refs.inputEl;
@@ -240,10 +243,14 @@ export default {
       inputEl.addEventListener('blur', self.onBlurBound, false);
       inputEl.addEventListener('input', self.onInputBound, false);
       inputEl.addEventListener('change', self.onChangeBound, false);
-      inputEl.addEventListener('textarea:resze', self.onTextareaResizeBound, false);
       inputEl.addEventListener('input:notempty', self.onInputNotEmptyBound, false);
-      inputEl.addEventListener('input:empty', self.onInputEmptyBound, false);
-      inputEl.addEventListener('input:clear', self.onInputClearBound, false);
+      if (type === 'textarea' && resizable) {
+        inputEl.addEventListener('textarea:resze', self.onTextareaResizeBound, false);
+      }
+      if (clearButton) {
+        inputEl.addEventListener('input:empty', self.onInputEmptyBound, false);
+        inputEl.addEventListener('input:clear', self.onInputClearBound, false);
+      }
 
       f7.input.checkEmptyState(inputEl);
       if (validate) {
@@ -275,7 +282,7 @@ export default {
   componentWillUnmount() {
     const self = this;
 
-    const { type } = self.props;
+    const { type, resizable, clearButton } = self.props;
     if (type === 'range' || type === 'toggle') return;
 
     const inputEl = self.refs.inputEl;
@@ -285,12 +292,16 @@ export default {
     inputEl.removeEventListener('blur', self.onBlurBound, false);
     inputEl.removeEventListener('input', self.onInputBound, false);
     inputEl.removeEventListener('change', self.onChangeBound, false);
-    inputEl.removeEventListener('textarea:resze', self.onTextareaResizeBound, false);
     inputEl.removeEventListener('input:notempty', self.onInputNotEmptyBound, false);
-    inputEl.removeEventListener('input:empty', self.onInputEmptyBound, false);
-    inputEl.removeEventListener('input:clear', self.onInputClearBound, false);
-  },
 
+    if (type === 'textarea' && resizable) {
+      inputEl.removeEventListener('textarea:resze', self.onTextareaResizeBound, false);
+    }
+    if (clearButton) {
+      inputEl.removeEventListener('input:empty', self.onInputEmptyBound, false);
+      inputEl.removeEventListener('input:clear', self.onInputClearBound, false);
+    }
+  },
   methods: {
     onTextareaResize(event) {
       this.dispatchEvent('textarea:resize textareaResize', event);

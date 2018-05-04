@@ -1,15 +1,12 @@
 import Mixins from '../utils/mixins';
 import Utils from '../utils/utils';
 
-const ActionsLabelProps = Utils.extend(
-  {
-    bold: Boolean,
-  },
-  Mixins.colorProps,
-);
 export default {
   name: 'f7-actions-label',
-  props: ActionsLabelProps,
+  props: {
+    bold: Boolean,
+    ...Mixins.colorProps,
+  },
   render() {
     const self = this;
 

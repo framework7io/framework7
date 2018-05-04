@@ -1,8 +1,9 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
-const ListProps = Utils.extend(
-  {
+export default {
+  name: 'f7-list',
+  props: {
     inset: Boolean,
     tabletInset: Boolean,
     mediaList: Boolean,
@@ -32,15 +33,16 @@ const ListProps = Utils.extend(
     // Virtual List
     virtualList: Boolean,
     virtualListParams: Object,
+    ...Mixins.colorProps,
   },
-  Mixins.colorProps,
-);
-
-export default {
-  name: 'f7-list',
-  props: ListProps,
   render() {
     const self = this;
+
+    const {
+      id,
+      style,
+      form,
+    } = self.props;
 
     const { list: slotsList, default: slotsDefault } = self.slots;
     const rootChildren = [];
@@ -73,14 +75,13 @@ export default {
         ulChildren.push(child);
       }
     });
-
-    const ListTag = self.props.form ? 'form' : 'div';
+    const ListTag = form ? 'form' : 'div';
     if (ulChildren.length > 0) {
       return (
         <ListTag
-          id={self.props.id}
+          id={id}
           ref="el"
-          style={self.props.style}
+          style={style}
           className={self.classes}
         >
           {self.slots['before-list']}
@@ -94,9 +95,9 @@ export default {
     } else { // eslint-disable-line
       return (
         <ListTag
-          id={self.props.id}
+          id={id}
           ref="el"
-          style={self.props.style}
+          style={style}
           className={self.classes}
         >
           {self.slots['before-list']}

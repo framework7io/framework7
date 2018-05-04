@@ -1,35 +1,39 @@
-
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
-const ListGroupProps = Utils.extend(
-  {
-    mediaList: Boolean,
-    sortable: Boolean,
-  },
-  Mixins.colorProps,
-);
-
 export default {
   name: 'f7-list-group',
-  props: ListGroupProps,
+  props: {
+    mediaList: Boolean,
+    sortable: Boolean,
+    ...Mixins.colorProps,
+  },
   render() {
+    const self = this;
+    const {
+      className,
+      id,
+      style,
+      mediaList,
+      sortable,
+    } = self.props;
+
+    const classes = Utils.classNames(
+      className,
+      'list-group',
+      {
+        'media-list': mediaList,
+        sortable,
+      },
+      Mixins.colorClasses(self),
+    );
+
     return (
-      <div id={this.props.id} style={this.props.style} className={this.classes}>
+      <div id={id} style={style} className={classes}>
         <ul>
           <slot />
         </ul>
       </div>
     );
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(
-        this.props.className,
-        'list-group',
-        Mixins.colorClasses(self),
-      );
-    },
   },
 };

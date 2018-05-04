@@ -1,20 +1,16 @@
 import Mixins from '../utils/mixins';
 import Utils from '../utils/utils';
 
-const ActionsProps = Utils.extend(
-  {
+export default {
+  name: 'f7-actions',
+  props: {
     opened: Boolean,
     grid: Boolean,
     convertToPopover: Boolean,
     forceToPopover: Boolean,
     target: [String, Object],
+    ...Mixins.colorProps,
   },
-  Mixins.colorProps,
-);
-
-export default {
-  name: 'f7-actions',
-  props: ActionsProps,
   render() {
     const self = this;
 
@@ -114,5 +110,4 @@ export default {
       return self.$f7.actions.close(self.refs.el, animate);
     },
   },
-
 };

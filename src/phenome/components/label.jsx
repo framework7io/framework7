@@ -19,26 +19,11 @@ export default {
       floating,
     } = self.props;
 
-    if (inline) {
-      /*
-      TODO: SET inlineLabelForced
-      let $parent = self.$parent;
-      let foundItemContent;
-      while ($parent && !foundItemContent) {
-        const tag = $parent.$vnode && $parent.$vnode.tag;
-        if (tag && (tag.indexOf('list-item') > 0 || tag.indexOf('list-item-content') > 0)) {
-          foundItemContent = $parent;
-        }
-        $parent = $parent.$parent;
-      }
-      if (foundItemContent) foundItemContent.inlineLabelForced = true;
-      */
-    }
-
     const classes = Utils.classNames(
       className,
       'item-title',
       {
+        'item-label-inline': inline,
         'item-label': !floating,
         'item-floating-label': floating,
       },

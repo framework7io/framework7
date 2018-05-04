@@ -13,14 +13,12 @@ export default {
 
     const classes = Utils.classNames(
       self.props.className,
-      {
-        'framework7-root': true,
-      },
+      'framework7-root',
       Mixins.colorClasses(self),
     );
 
     return (
-      <div ref="el" id="framework7-root" className={classes}>
+      <div ref="el" id={self.props.id || 'framework7-root'} className={classes}>
         <slot />
       </div>
     );

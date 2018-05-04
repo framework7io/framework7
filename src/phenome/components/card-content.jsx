@@ -1,33 +1,32 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
-const CardContentProps = Utils.extend(
-  {
+export default {
+  name: 'f7-card-content',
+  props: {
     padding: {
       type: Boolean,
       default: true,
     },
+    ...Mixins.colorProps,
   },
-  Mixins.colorProps,
-);
-
-export default {
-  name: 'f7-card-content',
-  props: CardContentProps,
   render() {
-    return (<div id={this.props.id} style={this.props.style} className={this.classes}><slot /></div>);
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(
-        self.props.className,
-        {
-          'card-content': true,
-          'card-content-padding': self.props.padding,
-        },
-        Mixins.colorClasses(self),
-      );
-    },
+    const {
+      id,
+      className,
+      style,
+      padding,
+    } = this.props;
+
+    const classes = Utils.classNames(
+      className,
+      {
+        'card-content': true,
+        'card-content-padding': padding,
+      },
+      Mixins.colorClasses(this),
+    );
+
+    return (<div id={id} style={style} className={classes}><slot /></div>);
   },
 };

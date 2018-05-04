@@ -1,8 +1,9 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
-const BlockProps = Utils.extend(
-  {
+export default {
+  name: 'f7-block',
+  props: {
     inset: Boolean,
     tabletInset: Boolean,
     strong: Boolean,
@@ -13,13 +14,8 @@ const BlockProps = Utils.extend(
     noHairlines: Boolean,
     noHairlinesMd: Boolean,
     noHairlinesIos: Boolean,
+    ...Mixins.colorProps,
   },
-  Mixins.colorProps,
-);
-
-export default {
-  name: 'f7-block',
-  props: BlockProps,
   componentDidMount() {
     const el = this.el;
     if (!el) return;
@@ -35,37 +31,48 @@ export default {
     el.removeEventListener('tab:hide', this.onTabHideBound);
   },
   render() {
+    const self = this;
+    const {
+      className,
+      inset,
+      strong,
+      accordionList,
+      tabletInset,
+      tabs,
+      tab,
+      tabActive,
+      noHairlines,
+      noHairlinesIos,
+      noHairlinesMd,
+      id,
+      style,
+    } = self.props;
+    const classes = Utils.classNames(
+      className,
+      'block',
+      {
+        inset,
+        'block-strong': strong,
+        'accordion-list': accordionList,
+        'tablet-inset': tabletInset,
+        tabs,
+        tab,
+        'tab-active': tabActive,
+        'no-hairlines': noHairlines,
+        'no-hairlines-md': noHairlinesMd,
+        'no-hairlines-ios': noHairlinesIos,
+      },
+      Mixins.colorClasses(self),
+    );
     return (
       <div
-        id={this.props.id}
-        style={this.props.style}
-        className={this.classes}
+        id={id}
+        style={style}
+        className={classes}
       >
         <slot />
       </div>
     );
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(
-        self.props.className,
-        {
-          block: true,
-          inset: self.props.inset,
-          'block-strong': self.props.strong,
-          'accordion-list': self.props.accordionList,
-          'tablet-inset': self.props.tabletInset,
-          tabs: self.props.tabs,
-          tab: self.props.tab,
-          'tab-active': self.props.tabActive,
-          'no-hairlines': self.props.noHairlines,
-          'no-hairlines-md': self.props.noHairlinesMd,
-          'no-hairlines-ios': self.props.noHairlinesIos,
-        },
-        Mixins.colorClasses(self),
-      );
-    },
   },
   methods: {
     onTabShow(e) {

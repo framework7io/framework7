@@ -1,20 +1,16 @@
 import Mixins from '../utils/mixins';
 import Utils from '../utils/utils';
 
-const ActionsButtonProps = Utils.extend(
-  {
+export default {
+  name: 'f7-actions-button',
+  props: {
     bold: Boolean,
     close: {
       type: Boolean,
       default: true,
     },
+    ...Mixins.colorProps,
   },
-  Mixins.colorProps,
-);
-
-export default {
-  name: 'f7-actions-button',
-  props: ActionsButtonProps,
   render() {
     const self = this;
     let mediaEl;

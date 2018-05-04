@@ -5,18 +5,11 @@ export default {
   name: 'f7-card-footer',
   props: Mixins.colorProps,
   render() {
-    return (<div id={this.props.id} style={this.props.style} className={this.classes}><slot /></div>);
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(
-        self.props.className,
-        {
-          'card-footer': true,
-        },
-        Mixins.colorClasses(self),
-      );
-    },
+    const classes = Utils.classNames(
+      this.props.className,
+      'card-footer',
+      Mixins.colorClasses(this),
+    );
+    return (<div id={this.props.id} style={this.props.style} className={classes}><slot /></div>);
   },
 };
