@@ -110,7 +110,6 @@ export default {
     if (!isSimple) {
       // Item Content
       const needsEvents = !(link || href || accordionItem || smartSelect);
-
       itemContentEl = (
         <F7ListItemContent
           title={title}
@@ -293,11 +292,18 @@ export default {
     const self = this;
     const { $listEl } = self;
     if (!$listEl || ($listEl && $listEl.length === 0)) return;
-    self.setState({
-      isMedia: $listEl.hasClass('media-list'),
-      isSimple: $listEl.hasClass('simple-list'),
-      isSortable: $listEl.hasClass('sortable'),
-    });
+    const isMedia = $listEl.hasClass('media-list');
+    const isSimple = $listEl.hasClass('simple-list');
+    const isSortable = $listEl.hasClass('sortable');
+    if (isMedia !== self.state.isMedia) {
+      self.setState({ isMedia });
+    }
+    if (isSimple !== self.state.isSimple) {
+      self.setState({ isSimple });
+    }
+    if (isSortable !== self.state.isSortable) {
+      self.setState({ isSortable });
+    }
   },
   componentWillUnmount() {
     const self = this;
