@@ -79,86 +79,245 @@ import F7View from './components/view';
 import F7Views from './components/views';
 import Framework7React from './utils/plugin';
 
+const AccordionContent = F7AccordionContent;
+const AccordionItem = F7AccordionItem;
+const AccordionToggle = F7AccordionToggle;
+const Accordion = F7Accordion;
+const ActionsButton = F7ActionsButton;
+const ActionsGroup = F7ActionsGroup;
+const ActionsLabel = F7ActionsLabel;
+const Actions = F7Actions;
+const App = F7App;
+const Badge = F7Badge;
+const BlockFooter = F7BlockFooter;
+const BlockHeader = F7BlockHeader;
+const BlockTitle = F7BlockTitle;
+const Block = F7Block;
+const Button = F7Button;
+const CardContent = F7CardContent;
+const CardFooter = F7CardFooter;
+const CardHeader = F7CardHeader;
+const Card = F7Card;
+const Checkbox = F7Checkbox;
+const Chip = F7Chip;
+const Col = F7Col;
+const FabButton = F7FabButton;
+const FabButtons = F7FabButtons;
+const Fab = F7Fab;
+const Icon = F7Icon;
+const Input = F7Input;
+const Label = F7Label;
+const Link = F7Link;
+const ListButton = F7ListButton;
+const ListGroup = F7ListGroup;
+const ListIndex = F7ListIndex;
+const ListItemCell = F7ListItemCell;
+const ListItemContent = F7ListItemContent;
+const ListItemRow = F7ListItemRow;
+const ListItem = F7ListItem;
+const List = F7List;
+const LoginScreenTitle = F7LoginScreenTitle;
+const LoginScreen = F7LoginScreen;
+const Message = F7Message;
+const MessagebarAttachment = F7MessagebarAttachment;
+const MessagebarAttachments = F7MessagebarAttachments;
+const MessagebarSheetImage = F7MessagebarSheetImage;
+const MessagebarSheetItem = F7MessagebarSheetItem;
+const MessagebarSheet = F7MessagebarSheet;
+const Messagebar = F7Messagebar;
+const MessagesTitle = F7MessagesTitle;
+const Messages = F7Messages;
+const NavLeft = F7NavLeft;
+const NavRight = F7NavRight;
+const NavTitle = F7NavTitle;
+const Navbar = F7Navbar;
+const PageContent = F7PageContent;
+const Page = F7Page;
+const Panel = F7Panel;
+const PhotoBrowser = F7PhotoBrowser;
+const Popover = F7Popover;
+const Popup = F7Popup;
+const Preloader = F7Preloader;
+const Progressbar = F7Progressbar;
+const Radio = F7Radio;
+const Range = F7Range;
+const Row = F7Row;
+const Searchbar = F7Searchbar;
+const Segmented = F7Segmented;
+const Sheet = F7Sheet;
+const Statusbar = F7Statusbar;
+const Stepper = F7Stepper;
+const Subnavbar = F7Subnavbar;
+const SwipeoutActions = F7SwipeoutActions;
+const SwipeoutButton = F7SwipeoutButton;
+const SwiperSlide = F7SwiperSlide;
+const Swiper = F7Swiper;
+const Tab = F7Tab;
+const Tabs = F7Tabs;
+const Toggle = F7Toggle;
+const Toolbar = F7Toolbar;
+const View = F7View;
+const Views = F7Views;
+
 export {
   F7AccordionContent,
+  AccordionContent,
   F7AccordionItem,
+  AccordionItem,
   F7AccordionToggle,
+  AccordionToggle,
   F7Accordion,
+  Accordion,
   F7ActionsButton,
+  ActionsButton,
   F7ActionsGroup,
+  ActionsGroup,
   F7ActionsLabel,
+  ActionsLabel,
   F7Actions,
+  Actions,
   F7App,
+  App,
   F7Badge,
+  Badge,
   F7BlockFooter,
+  BlockFooter,
   F7BlockHeader,
+  BlockHeader,
   F7BlockTitle,
+  BlockTitle,
   F7Block,
+  Block,
   F7Button,
+  Button,
   F7CardContent,
+  CardContent,
   F7CardFooter,
+  CardFooter,
   F7CardHeader,
+  CardHeader,
   F7Card,
+  Card,
   F7Checkbox,
+  Checkbox,
   F7Chip,
+  Chip,
   F7Col,
+  Col,
   F7FabButton,
+  FabButton,
   F7FabButtons,
+  FabButtons,
   F7Fab,
+  Fab,
   F7Icon,
+  Icon,
   F7Input,
+  Input,
   F7Label,
+  Label,
   F7Link,
+  Link,
   F7ListButton,
+  ListButton,
   F7ListGroup,
+  ListGroup,
   F7ListIndex,
+  ListIndex,
   F7ListItemCell,
+  ListItemCell,
   F7ListItemContent,
+  ListItemContent,
   F7ListItemRow,
+  ListItemRow,
   F7ListItem,
+  ListItem,
   F7List,
+  List,
   F7LoginScreenTitle,
+  LoginScreenTitle,
   F7LoginScreen,
+  LoginScreen,
   F7Message,
+  Message,
   F7MessagebarAttachment,
+  MessagebarAttachment,
   F7MessagebarAttachments,
+  MessagebarAttachments,
   F7MessagebarSheetImage,
+  MessagebarSheetImage,
   F7MessagebarSheetItem,
+  MessagebarSheetItem,
   F7MessagebarSheet,
+  MessagebarSheet,
   F7Messagebar,
+  Messagebar,
   F7MessagesTitle,
+  MessagesTitle,
   F7Messages,
+  Messages,
   F7NavLeft,
+  NavLeft,
   F7NavRight,
+  NavRight,
   F7NavTitle,
+  NavTitle,
   F7Navbar,
+  Navbar,
   F7PageContent,
+  PageContent,
   F7Page,
+  Page,
   F7Panel,
+  Panel,
   F7PhotoBrowser,
+  PhotoBrowser,
   F7Popover,
+  Popover,
   F7Popup,
+  Popup,
   F7Preloader,
+  Preloader,
   F7Progressbar,
+  Progressbar,
   F7Radio,
+  Radio,
   F7Range,
+  Range,
   F7Row,
+  Row,
   F7Searchbar,
+  Searchbar,
   F7Segmented,
+  Segmented,
   F7Sheet,
+  Sheet,
   F7Statusbar,
+  Statusbar,
   F7Stepper,
+  Stepper,
   F7Subnavbar,
+  Subnavbar,
   F7SwipeoutActions,
+  SwipeoutActions,
   F7SwipeoutButton,
+  SwipeoutButton,
   F7SwiperSlide,
+  SwiperSlide,
   F7Swiper,
+  Swiper,
   F7Tab,
+  Tab,
   F7Tabs,
+  Tabs,
   F7Toggle,
+  Toggle,
   F7Toolbar,
+  Toolbar,
   F7View,
-  F7Views
+  View,
+  F7Views,
+  Views
 };
 
 export default Framework7React;

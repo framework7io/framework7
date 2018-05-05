@@ -110,9 +110,18 @@ export default {
     let headerEl;
     let footerEl;
     const slots = self.$slots.default;
-    if (slots && slots.length > 0) {
-      for (let i = 0; i < slots.length; i += 1) {
-        const slotEl = slots[i];
+    const flattenSlots = [];
+    if (slots && slots.length) {
+      slots.forEach(slot => {
+        if (Array.isArray(slot))
+          flattenSlots.push(...slot);
+        else
+          flattenSlots.push(slot);
+      });
+    }
+    if (flattenSlots.length) {
+      for (let i = 0; i < flattenSlots.length; i += 1) {
+        const slotEl = flattenSlots[i];
         let slotName;
         slotName = slotEl.data ? slotEl.data.slot : undefined;
         if (!slotName || slotName === 'inner')
@@ -289,11 +298,18 @@ export default {
     const $innerEl = self.$$(innerEl);
     const $labelEl = $innerEl.children('.item-title.item-label');
     const $inputEl = $innerEl.children('.item-input-wrap');
-    self.setState({
-      hasInlineLabel: $labelEl.hasClass('item-label-inline'),
-      hasInput: $inputEl.length > 0,
-      hasInputInfo: $inputEl.children('.item-input-info').length > 0
-    });
+    const hasInlineLabel = $labelEl.hasClass('item-label-inline');
+    const hasInput = $inputEl.length > 0;
+    const hasInputInfo = $inputEl.children('.item-input-info').length > 0;
+    if (hasInlineLabel !== self.state.hasInlineLabel) {
+      self.setState({ hasInlineLabel });
+    }
+    if (hasInput !== self.state.hasInput) {
+      self.setState({ hasInput });
+    }
+    if (hasInputInfo !== self.state.hasInputInfo) {
+      self.setState({ hasInputInfo });
+    }
   },
   updated() {
     const self = this;
@@ -303,11 +319,18 @@ export default {
     const $innerEl = self.$$(innerEl);
     const $labelEl = $innerEl.children('.item-title.item-label');
     const $inputEl = $innerEl.children('.item-input-wrap');
-    self.setState({
-      hasInlineLabel: $labelEl.hasClass('item-label-inline'),
-      hasInput: $inputEl.length > 0,
-      hasInputInfo: $inputEl.children('.item-input-info').length > 0
-    });
+    const hasInlineLabel = $labelEl.hasClass('item-label-inline');
+    const hasInput = $inputEl.length > 0;
+    const hasInputInfo = $inputEl.children('.item-input-info').length > 0;
+    if (hasInlineLabel !== self.state.hasInlineLabel) {
+      self.setState({ hasInlineLabel });
+    }
+    if (hasInput !== self.state.hasInput) {
+      self.setState({ hasInput });
+    }
+    if (hasInputInfo !== self.state.hasInputInfo) {
+      self.setState({ hasInputInfo });
+    }
   },
   methods: {
     onClick(event) {
