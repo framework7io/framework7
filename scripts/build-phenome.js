@@ -43,24 +43,25 @@ export default Framework7Vue;
 function buildReactIndex() {
   const files = fs.readdirSync('./react/components');
   const componentImports = [];
+  const componentAliases = [];
   const componentExports = [];
 
   files.forEach((fileName) => {
     const componentName = fileName
       .replace('.js', '')
       .split('-')
-      .map((word, index) => {
-        const capitalized = word[0].toUpperCase() + word.substr(1);
-        return index === 0 ? `F7${capitalized}` : capitalized;
-      })
+      .map(word => word[0].toUpperCase() + word.substr(1))
       .join('');
-    componentImports.push(`import ${componentName} from './components/${fileName.replace('.js', '')}';`);
-    componentExports.push(`  ${componentName}`);
+    componentImports.push(`import F7${componentName} from './components/${fileName.replace('.js', '')}';`);
+    componentAliases.push(`const ${componentName} = F7${componentName};`);
+    componentExports.push(`  F7${componentName}`, `  ${componentName}`);
   });
   componentImports.push("import Framework7React from './utils/plugin';");
 
   const componentsContent = `
 ${componentImports.join('\n')}
+
+${componentAliases.join('\n')}
 
 export {\n${componentExports.join(',\n')}\n};
 
