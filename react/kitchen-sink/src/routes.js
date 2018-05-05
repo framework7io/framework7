@@ -2,9 +2,9 @@ import Home from './pages/home.jsx';
 import PanelLeft from './pages/panel-left.jsx';
 import PanelRight from './pages/panel-right.jsx';
 import About from './pages/about.jsx';
+import Accordion from './pages/accordion.jsx';
 
 /*
-import Accordion from './pages/accordion.jsx';
 import ActionSheet from './pages/action-sheet.jsx';
 import Autocomplete from './pages/autocomplete.jsx';
 import Badge from './pages/badge.jsx';
@@ -164,12 +164,13 @@ export default [
       </div>
     `,
   },
-
+  */
   // Components
   {
     path: '/accordion/',
     component: Accordion,
   },
+  /*
   {
     path: '/action-sheet/',
     component: ActionSheet,
