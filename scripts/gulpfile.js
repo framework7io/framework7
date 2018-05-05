@@ -5,6 +5,7 @@ const gopen = require('gulp-open');
 
 const buildKsCore = require('./build-ks-core.js');
 const buildKsVue = require('./build-ks-vue.js');
+const buildKsReact = require('./build-ks-react.js');
 const buildJs = require('./build-js.js');
 const buildLess = require('./build-less.js');
 const buildComponents = require('./build-components.js');
@@ -17,14 +18,15 @@ gulp.task('ks-core', (cb) => {
 gulp.task('ks-vue', (cb) => {
   buildKsVue(cb);
 });
+gulp.task('ks-react', (cb) => {
+  buildKsReact(cb);
+});
 gulp.task('js', (cb) => {
   buildJs(cb);
 });
-
 gulp.task('less', (cb) => {
   buildLess(cb);
 });
-
 gulp.task('components', (cb) => {
   buildComponents(cb);
 });
@@ -39,7 +41,10 @@ gulp.task('watch', () => {
   gulp.watch('./src/**/**/*.less', ['less']);
 
   gulp.watch(['./src/phenome/**/*.js', './src/phenome/**/*.jsx'], ['phenome', 'ks-vue']);
+  gulp.watch(['./src/phenome/**/*.js', './src/phenome/**/*.jsx'], ['phenome', 'ks-react']);
+
   gulp.watch(['./vue/kitchen-sink/src/**/*.js', './vue/kitchen-sink/src/**/*.vue'], ['ks-vue']);
+  gulp.watch(['./react/kitchen-sink/src/**/*.js', './react/kitchen-sink/src/**/*.jsx'], ['ks-react']);
 });
 
 gulp.task('connect', () => {
