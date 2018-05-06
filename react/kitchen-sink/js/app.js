@@ -57592,9 +57592,14 @@
 	var AccordionContent = F7AccordionContent;
 	var AccordionItem = F7AccordionItem;
 	var AccordionToggle = F7AccordionToggle;
+	var ActionsButton = F7ActionsButton;
+	var ActionsGroup = F7ActionsGroup;
+	var ActionsLabel = F7ActionsLabel;
+	var Actions$2 = F7Actions;
 	var App = F7App;
 	var BlockTitle = F7BlockTitle;
 	var Block = F7Block;
+	var Button = F7Button;
 	var Icon = F7Icon;
 	var Link = F7Link;
 	var ListItem = F7ListItem;
@@ -57933,8 +57938,156 @@
 	  )
 	); }
 
+	var ActionSheet = (function (superclass) {
+	  function ActionSheet() {
+	    superclass.call(this);
+
+	    this.state = {
+	      actionGridOpened: false,
+	      oneGroupOpened: false
+	    };
+	  }
+
+	  if ( superclass ) ActionSheet.__proto__ = superclass;
+	  ActionSheet.prototype = Object.create( superclass && superclass.prototype );
+	  ActionSheet.prototype.constructor = ActionSheet;
+
+	  ActionSheet.prototype.render = function render () {
+	    var this$1 = this;
+
+	    return (
+	      react.createElement( Page, null,
+	        react.createElement( Navbar$2, { title: "Action Sheet", backLink: "Back" }),
+	        react.createElement( Block, { strong: true },
+	          react.createElement( 'p', { className: "row" }
+	            /* One group, open by changing oneGroupOpened state property */,
+	            react.createElement( Button, { className: "col", raised: true, onClick: function () { return this$1.setOneGroupOpened(true); } }, "One group")
+	            /*  Two groups, open by "actionsOpen" attribute */,
+	            react.createElement( Button, { className: "col", raised: true, actionsOpen: "#actions-two-groups" }, "Two groups")
+	          ),
+	          react.createElement( 'p', null
+	            /* Actions Grid, open by changing actionGridOpened state property */,
+	            react.createElement( Button, { raised: true, onClick: function () { return this$1.setActionsGridOpened(true); } }, "Action Grid")
+	          )
+	        ),
+
+	        react.createElement( BlockTitle, null, "Action Sheet To Popover" ),
+	        react.createElement( Block, { strong: true },
+	          react.createElement( 'p', { ref: function (e) { return this$1.buttonToPopoverWrapper = e; } }, "Action Sheet can be automatically converted to Popover (for tablets). This button will open Popover on tablets and Action Sheet on phones: ", react.createElement( Button, {
+	              style: { display: 'inline-block' }, className: "button-to-popover", onClick: this.openActionsPopover.bind(this) }, "Actions")
+	          )
+	        )
+
+	        /* One Group */,
+	        react.createElement( Actions$2, { opened: this.state.oneGroupOpened, actionsClosed: function () { return this$1.setActionsGridOpened(false); } },
+	          react.createElement( ActionsGroup, null,
+	            react.createElement( ActionsLabel, null, "Do something" ),
+	            react.createElement( ActionsButton, { bold: true }, "Button 1"),
+	            react.createElement( ActionsButton, null, "Button 2" ),
+	            react.createElement( ActionsButton, { color: "red" }, "Cancel")
+	          )
+	        )
+
+	        /* Two Groups */,
+	        react.createElement( Actions$2, { id: "actions-two-groups" },
+	          react.createElement( ActionsGroup, null,
+	            react.createElement( ActionsLabel, null, "Do something" ),
+	            react.createElement( ActionsButton, { bold: true }, "Button 1"),
+	            react.createElement( ActionsButton, null, "Button 2" )
+	          ),
+	          react.createElement( ActionsGroup, null,
+	            react.createElement( ActionsButton, { color: "red" }, "Cancel")
+	          )
+	        )
+
+	        /* Grid */,
+	        react.createElement( Actions$2, { grid: true, opened: this.state.actionGridOpened, actionsClosed: function () { return this$1.setActionsGridOpened(false); } },
+	          react.createElement( ActionsGroup, null,
+	            react.createElement( ActionsButton, null,
+	              react.createElement( 'img', { slot: "media", src: "http://lorempixel.com/96/96/people/1", width: "48" }),
+	              react.createElement( 'span', null, "Button 1" )
+	            ),
+	            react.createElement( ActionsButton, null,
+	              react.createElement( 'img', { slot: "media", src: "http://lorempixel.com/96/96/people/2", width: "48" }),
+	              react.createElement( 'span', null, "Button 2" )
+	            ),
+	            react.createElement( ActionsButton, null,
+	              react.createElement( 'img', { slot: "media", src: "http://lorempixel.com/96/96/people/3", width: "48" }),
+	              react.createElement( 'span', null, "Button 3" )
+	            )
+	          ),
+	          react.createElement( ActionsGroup, null,
+	            react.createElement( ActionsButton, null,
+	              react.createElement( 'img', { slot: "media", src: "http://lorempixel.com/96/96/fashion/4", width: "48" }),
+	              react.createElement( 'span', null, "Button 4" )
+	            ),
+	            react.createElement( ActionsButton, null,
+	              react.createElement( 'img', { slot: "media", src: "http://lorempixel.com/96/96/fashion/5", width: "48" }),
+	              react.createElement( 'span', null, "Button 5" )
+	            ),
+	            react.createElement( ActionsButton, null,
+	              react.createElement( 'img', { slot: "media", src: "http://lorempixel.com/96/96/fashion/6", width: "48" }),
+	              react.createElement( 'span', null, "Button 6" )
+	            )
+	          )
+	        )
+
+	      )
+	    )
+	  };
+
+	  ActionSheet.prototype.componentWillUnmount = function componentWillUnmount () {
+	    if (this.actionsToPopover) {
+	      this.actionsToPopover.destroy();
+	    }
+	  };
+
+	  ActionSheet.prototype.openActionsPopover = function openActionsPopover () {
+	    var app = this.$f7;
+
+	    if (!this.actionsToPopover) {
+	      this.actionsToPopover = app.actions.create({
+	        buttons: [
+	          {
+	            text: 'Do something',
+	            label: true,
+	          },
+	          {
+	            text: 'Button 1',
+	            bold: true,
+	          },
+	          {
+	            text: 'Button 2',
+	          },
+	          {
+	            text: 'Cancel',
+	            color: 'red',
+	          } ],
+	        // Need to specify popover target
+	        targetEl: this.buttonToPopoverWrapper.querySelector('.button-to-popover'),
+	      });
+	    }
+
+	    // Open
+	    this.actionsToPopover.open();
+	  };
+
+	  ActionSheet.prototype.setOneGroupOpened = function setOneGroupOpened (oneGroupOpened) {
+	    this.setState({
+	      oneGroupOpened: oneGroupOpened
+	    });
+	  };
+
+	  ActionSheet.prototype.setActionsGridOpened = function setActionsGridOpened (actionGridOpened) {
+	    this.setState({
+	      actionGridOpened: actionGridOpened
+	    });
+	  };
+
+	  return ActionSheet;
+	}(react.Component));
+
 	/*
-	import ActionSheet from './pages/action-sheet.jsx';
 	import Autocomplete from './pages/autocomplete.jsx';
 	import Badge from './pages/badge.jsx';
 	import Buttons from './pages/buttons.jsx';
@@ -58098,6 +58251,10 @@
 	  {
 	    path: '/accordion/',
 	    component: Accordion$3,
+	  },
+	  {
+	    path: '/action-sheet/',
+	    component: ActionSheet,
 	  } ];
 
 	function App$1 (props) {

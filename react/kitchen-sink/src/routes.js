@@ -3,9 +3,8 @@ import PanelLeft from './pages/panel-left.jsx';
 import PanelRight from './pages/panel-right.jsx';
 import About from './pages/about.jsx';
 import Accordion from './pages/accordion.jsx';
-
-/*
 import ActionSheet from './pages/action-sheet.jsx';
+/*
 import Autocomplete from './pages/autocomplete.jsx';
 import Badge from './pages/badge.jsx';
 import Buttons from './pages/buttons.jsx';
@@ -170,11 +169,11 @@ export default [
     path: '/accordion/',
     component: Accordion,
   },
-  /*
   {
     path: '/action-sheet/',
     component: ActionSheet,
   },
+  /*
   {
     path: '/autocomplete/',
     component: Autocomplete,
