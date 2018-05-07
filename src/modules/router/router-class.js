@@ -886,6 +886,10 @@ class Router extends Framework7Class {
         pageFrom = $pageFromEl[0].f7Page;
       }
     }
+    pageFrom = currentPage.pageFrom || pageFrom;
+    if (pageFrom && pageFrom.pageFrom) {
+      pageFrom.pageFrom = null;
+    }
     const page = {
       app: router.app,
       view: router.view,
@@ -902,7 +906,7 @@ class Router extends Framework7Class {
       to,
       direction,
       route: currentPage.route ? currentPage.route : route,
-      // pageFrom: currentPage.pageFrom || pageFrom,
+      pageFrom,
     };
 
     if ($navbarEl && $navbarEl[0]) {
