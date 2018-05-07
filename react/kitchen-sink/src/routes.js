@@ -4,9 +4,12 @@ import PanelRight from './pages/panel-right.jsx';
 import About from './pages/about.jsx';
 import Accordion from './pages/accordion.jsx';
 import ActionSheet from './pages/action-sheet.jsx';
-/*
-import Autocomplete from './pages/autocomplete.jsx';
+
+//import Autocomplete from './pages/autocomplete.jsx';
+
 import Badge from './pages/badge.jsx';
+
+/*
 import Buttons from './pages/buttons.jsx';
 import Calendar from './pages/calendar.jsx';
 import CalendarPage from './pages/calendar-page.jsx';
@@ -178,10 +181,12 @@ export default [
     path: '/autocomplete/',
     component: Autocomplete,
   },
+  */
   {
     path: '/badge/',
     component: Badge,
   },
+  /*
   {
     path: '/buttons/',
     component: Buttons,

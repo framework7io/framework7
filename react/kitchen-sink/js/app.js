@@ -57597,6 +57597,7 @@
 	var ActionsLabel = F7ActionsLabel;
 	var Actions$2 = F7Actions;
 	var App = F7App;
+	var Badge = F7Badge;
 	var BlockTitle = F7BlockTitle;
 	var Block = F7Block;
 	var Button = F7Button;
@@ -57612,6 +57613,7 @@
 	var Panel$2 = F7Panel;
 	var Searchbar$2 = F7Searchbar;
 	var Statusbar$2 = F7Statusbar;
+	var Toolbar$2 = F7Toolbar;
 	var View$2 = F7View;
 
 	function Home () {
@@ -58087,9 +58089,56 @@
 	  return ActionSheet;
 	}(react.Component));
 
+	function Badge$1 () { return (
+	  react.createElement( Page, null,
+	    react.createElement( Navbar$2, { sliding: true, backLink: "Back", title: "Badge" },
+	      react.createElement( NavRight, null,
+	        react.createElement( Link, { iconOnly: true },
+	          react.createElement( Icon, { ifIos: "f7:person_fill", ifMd: "material:person", className: "icon Icons ios-only" },
+	            react.createElement( Badge, { color: "red" }, "5")
+	          )
+	        )
+	      )
+	    ),
+	    react.createElement( Toolbar$2, { tabbar: true, labels: true },
+	      react.createElement( Link, { tabLink: "#tab-1", tabLinkActive: true },
+	        react.createElement( Icon, { className: "icon-fill", ifIos: "f7:email_fill", ifMd: "material:email" },
+	          react.createElement( Badge, { color: "green" }, "5")
+	        ),
+	        react.createElement( 'span', { className: "tabbar-label" }, "Inbox")
+	      ),
+	      react.createElement( Link, { tabLink: "#tab-2" },
+	        react.createElement( Icon, { ifIos: "f7:today", ifMd: "material:today" },
+	          react.createElement( Badge, { color: "red" }, "7")
+	        ),
+	        react.createElement( 'span', { className: "tabbar-label" }, "Calendar")
+	      ),
+	      react.createElement( Link, { tabLink: "#tab-3" },
+	        react.createElement( Icon, { ifIos: "f7:cloud", ifMd: "material:file_upload" },
+	          react.createElement( Badge, { color: "red" }, "1")
+	        ),
+	        react.createElement( 'span', { className: "tabbar-label" }, "Upload")
+	      )
+	    ),
+
+	    react.createElement( List, null,
+	      react.createElement( ListItem, { title: "Foo Bar", badge: "0" },
+	        react.createElement( Icon, { slot: "media", icon: "icon-f7" })
+	      ),
+	      react.createElement( ListItem, { title: "Ivan Petrov", badge: "CEO", badgeColor: "blue" },
+	        react.createElement( Icon, { slot: "media", icon: "icon-f7" })
+	      ),
+	      react.createElement( ListItem, { title: "John Doe", badge: "5", badgeColor: "green" },
+	        react.createElement( Icon, { slot: "media", icon: "icon-f7" })
+	      ),
+	      react.createElement( ListItem, { title: "Jane Doe", badge: "NEW", badgeColor: "orange" },
+	        react.createElement( Icon, { slot: "media", icon: "icon-f7" })
+	      )
+	    )
+	  )
+	); }
+
 	/*
-	import Autocomplete from './pages/autocomplete.jsx';
-	import Badge from './pages/badge.jsx';
 	import Buttons from './pages/buttons.jsx';
 	import Calendar from './pages/calendar.jsx';
 	import CalendarPage from './pages/calendar-page.jsx';
@@ -58255,6 +58304,16 @@
 	  {
 	    path: '/action-sheet/',
 	    component: ActionSheet,
+	  },
+	  /*
+	  {
+	    path: '/autocomplete/',
+	    component: Autocomplete,
+	  },
+	  */
+	  {
+	    path: '/badge/',
+	    component: Badge$1,
 	  } ];
 
 	function App$1 (props) {
