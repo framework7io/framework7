@@ -57601,8 +57601,15 @@
 	var BlockTitle = F7BlockTitle;
 	var Block = F7Block;
 	var Button = F7Button;
+	var CardContent = F7CardContent;
+	var CardFooter = F7CardFooter;
+	var CardHeader = F7CardHeader;
+	var Card$1 = F7Card;
+	var Checkbox$1 = F7Checkbox;
+	var Col = F7Col;
 	var Icon = F7Icon;
 	var Link = F7Link;
+	var ListButton = F7ListButton;
 	var ListItem = F7ListItem;
 	var List = F7List;
 	var NavLeft = F7NavLeft;
@@ -57611,7 +57618,9 @@
 	var Navbar$2 = F7Navbar;
 	var Page = F7Page;
 	var Panel$2 = F7Panel;
+	var Row = F7Row;
 	var Searchbar$2 = F7Searchbar;
+	var Segmented = F7Segmented;
 	var Statusbar$2 = F7Statusbar;
 	var Toolbar$2 = F7Toolbar;
 	var View$2 = F7View;
@@ -58138,13 +58147,336 @@
 	  )
 	); }
 
+	function Buttons () { return (
+	  react.createElement( Page, null,
+	    react.createElement( Navbar$2, { title: "Buttons", backLink: "Back" }),
+
+	    react.createElement( BlockTitle, null, "Usual Buttons" ),
+	    react.createElement( Block, null,
+	      react.createElement( Row, null,
+	        react.createElement( Col, null,
+	          react.createElement( Button, null, "Button" )
+	        ),
+	        react.createElement( Col, null,
+	          react.createElement( Button, null, "Button" )
+	        ),
+	        react.createElement( Col, null,
+	          react.createElement( Button, { round: true }, "Round")
+	        )
+	      )
+	    ),
+
+	    react.createElement( BlockTitle, null, "Fill Buttons" ),
+	    react.createElement( Block, null,
+	      react.createElement( Row, null,
+	        react.createElement( Col, null,
+	          react.createElement( Button, { fill: true }, "Button")
+	        ),
+	        react.createElement( Col, null,
+	          react.createElement( Button, { fill: true }, "Button")
+	        ),
+	        react.createElement( Col, null,
+	          react.createElement( Button, { fill: true, round: true }, "Round")
+	        )
+	      )
+	    ),
+
+	    react.createElement( BlockTitle, null, "Outline Buttons (MD-theme only)" ),
+	    react.createElement( Block, null,
+	      react.createElement( Row, null,
+	        react.createElement( Col, null,
+	          react.createElement( Button, { outline: true }, "Button")
+	        ),
+	        react.createElement( Col, null,
+	          react.createElement( Button, { outline: true }, "Button")
+	        ),
+	        react.createElement( Col, null,
+	          react.createElement( Button, { outline: true, round: true }, "Round")
+	        )
+	      )
+	    ),
+
+	    react.createElement( BlockTitle, null, "Raised Buttons (MD-theme only)" ),
+	    react.createElement( Block, null,
+	      react.createElement( Row, { tag: "p" },
+	        react.createElement( Col, null,
+	          react.createElement( Button, { raised: true }, "Button")
+	        ),
+	        react.createElement( Col, null,
+	          react.createElement( Button, { raised: true, fill: true }, "Fill")
+	        ),
+	        react.createElement( Col, null,
+	          react.createElement( Button, { raised: true, outline: true }, "Outline")
+	        )
+	      ),
+	      react.createElement( Row, { tag: "p" },
+	        react.createElement( Col, null,
+	          react.createElement( Button, { raised: true, round: true }, "Round")
+	        ),
+	        react.createElement( Col, null,
+	          react.createElement( Button, { raised: true, fill: true, round: true }, "Fill")
+	        ),
+	        react.createElement( Col, null,
+	          react.createElement( Button, { raised: true, outline: true, round: true }, "Outline")
+	        )
+	      )
+	    ),
+
+	    react.createElement( BlockTitle, null, "Segmented" ),
+	    react.createElement( Block, null,
+	      react.createElement( Segmented, { raised: true, tag: "p" },
+	        react.createElement( Button, null, "Button" ),
+	        react.createElement( Button, null, "Button" ),
+	        react.createElement( Button, { active: true }, "Active")
+	      ),
+	      react.createElement( Segmented, { raised: true, tag: "p" },
+	        react.createElement( Button, { outline: true }, "Outline"),
+	        react.createElement( Button, { outline: true }, "Outline"),
+	        react.createElement( Button, { outline: true, active: true }, "Active")
+	      ),
+	      react.createElement( Segmented, { raised: true, round: true, tag: "p" },
+	        react.createElement( Button, { round: true }, "Button"),
+	        react.createElement( Button, { round: true }, "Button"),
+	        react.createElement( Button, { round: true, active: true }, "Active")
+	      ),
+	      react.createElement( Segmented, { round: true, round: true, tag: "p" },
+	        react.createElement( Button, { round: true, outline: true }, "Outline"),
+	        react.createElement( Button, { round: true, outline: true }, "Outline"),
+	        react.createElement( Button, { round: true, outline: true, active: true }, "Active")
+	      )
+	    ),
+
+	    react.createElement( BlockTitle, null, "Big Buttons" ),
+	    react.createElement( Block, null,
+	      react.createElement( Row, { tag: "p" },
+	        react.createElement( Col, null,
+	          react.createElement( Button, { big: true }, "Button")
+	        ),
+	        react.createElement( Col, null,
+	          react.createElement( Button, { big: true, fill: true }, "Fill")
+	        )
+	      ),
+	      react.createElement( Row, { tag: "p" },
+	        react.createElement( Col, null,
+	          react.createElement( Button, { big: true, raised: true }, "Raised")
+	        ),
+	        react.createElement( Col, null,
+	          react.createElement( Button, { big: true, raised: true, fill: true }, "Raised Fill")
+	        )
+	      )
+	    ),
+
+	    react.createElement( BlockTitle, null, "Small Buttons" ),
+	    react.createElement( Block, null,
+	      react.createElement( Row, { tag: "p" },
+	        react.createElement( Col, null,
+	          react.createElement( Button, { big: true, small: true }, "Button")
+	        ),
+	        react.createElement( Col, null,
+	          react.createElement( Button, { big: true, small: true, outline: true }, "Outline")
+	        ),
+	        react.createElement( Col, null,
+	          react.createElement( Button, { big: true, small: true, fill: true }, "Fill")
+	        )
+	      ),
+	      react.createElement( Row, { tag: "p" },
+	        react.createElement( Col, null,
+	          react.createElement( Button, { big: true, small: true, round: true }, "Button")
+	        ),
+	        react.createElement( Col, null,
+	          react.createElement( Button, { big: true, small: true, outline: true, round: true }, "Outline")
+	        ),
+	        react.createElement( Col, null,
+	          react.createElement( Button, { big: true, small: true, fill: true, round: true }, "Fill")
+	        )
+	      )
+	    ),
+
+	    react.createElement( BlockTitle, null, "Color Buttons" ),
+	    react.createElement( Block, null,
+	      react.createElement( Row, null,
+	        react.createElement( Col, null,
+	          react.createElement( Button, { color: "red" }, "Red")
+	        ),
+	        react.createElement( Col, null,
+	          react.createElement( Button, { color: "green" }, "Green")
+	        ),
+	        react.createElement( Col, null,
+	          react.createElement( Button, { color: "blue" }, "Blue")
+	        )
+	      )
+	    ),
+
+	    react.createElement( BlockTitle, null, "Color Fill Buttons" ),
+	    react.createElement( Block, null,
+	      react.createElement( Row, null,
+	        react.createElement( Col, null,
+	          react.createElement( Button, { fill: true, color: "red" }, "Red")
+	        ),
+	        react.createElement( Col, null,
+	          react.createElement( Button, { fill: true, color: "green" }, "Green")
+	        ),
+	        react.createElement( Col, null,
+	          react.createElement( Button, { fill: true, color: "blue" }, "Blue")
+	        )
+	      )
+	    ),
+
+	    react.createElement( BlockTitle, null, "List-Block Buttons" ),
+	    react.createElement( List, { inset: true },
+	      react.createElement( ListButton, { title: "List Button 1" }),
+	      react.createElement( ListButton, { title: "List Button 2" }),
+	      react.createElement( ListButton, { title: "List Button 3" })
+	    ),
+	    react.createElement( List, { inset: true },
+	      react.createElement( ListButton, { title: "Big Red Button", color: "red" })
+	    )
+	  )
+	); }
+
+	function Cards () { return (
+	  react.createElement( Page, null,
+	    react.createElement( Navbar$2, { title: "Cards", backLink: "Back" }),
+
+	    react.createElement( Block, null,
+	      react.createElement( 'p', null, "Cards are a great way to contain and organize your information, especially when combined with List Views. Cards can contain unique related data, like for example photos, text or links about a particular subject. Cards are typically an entry point to more complex and detailed information." )
+	    ),
+	    react.createElement( BlockTitle, null, "Simple Cards" ),
+	    react.createElement( Card$1, {
+	      content: "This is a simple card with plain text, but cards can also contain their own header, footer, list view, image, or any other element." }),
+	    react.createElement( Card$1, {
+	      title: "Card header", content: "Card with header and footer. Card headers are used to display card titles and footers for additional information or just for custom actions.", footer: "Card footer" }),
+	    react.createElement( Card$1, {
+	      content: "Another card. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse feugiat sem est, non tincidunt ligula volutpat sit amet. Mauris aliquet magna justo. " }),
+
+	    react.createElement( BlockTitle, null, "Styled Cards" ),
+	    react.createElement( Card$1, { className: "demo-CardHeader-pic" },
+	      react.createElement( CardHeader, {
+	        className: "no-border", valign: "bottom", style: { backgroundImage: 'url(http://lorempixel.com/1000/600/nature/3/)' } }, "Journey To Mountains"),
+	      react.createElement( CardContent, null,
+	        react.createElement( 'p', { className: "date" }, "Posted on January 21, 2015"),
+	        react.createElement( 'p', null, "Quisque eget vestibulum nulla. Quisque quis dui quis ex ultricies efficitur vitae non felis. Phasellus quis nibh hendrerit..." )
+	      ),
+	      react.createElement( CardFooter, null,
+	        react.createElement( Link, null, "Like" ),
+	        react.createElement( Link, null, "Read more" )
+	      )
+	    ),
+	    react.createElement( Card$1, { className: "demo-CardHeader-pic" },
+	      react.createElement( CardHeader, {
+	        className: "no-border", valign: "bottom", style: { backgroundImage: 'url(http://lorempixel.com/1000/600/people/6/)' } }, "Journey To Mountains"),
+	      react.createElement( CardContent, null,
+	        react.createElement( 'p', { className: "date" }, "Posted on January 21, 2015"),
+	        react.createElement( 'p', null, "Quisque eget vestibulum nulla. Quisque quis dui quis ex ultricies efficitur vitae non felis. Phasellus quis nibh hendrerit..." )
+	      ),
+	      react.createElement( CardFooter, null,
+	        react.createElement( Link, null, "Like" ),
+	        react.createElement( Link, null, "Read more" )
+	      )
+	    ),
+
+	    react.createElement( BlockTitle, null, "Facebook Cards" ),
+	    react.createElement( Card$1, { className: "demo-facebook-card" },
+	      react.createElement( CardHeader, { className: "no-border" },
+	        react.createElement( 'div', { className: "demo-facebook-avatar" }, react.createElement( 'img', { src: "http://lorempixel.com/68/68/people/1/", width: "34", height: "34" })),
+	        react.createElement( 'div', { className: "demo-facebook-name" }, "John Doe"),
+	        react.createElement( 'div', { className: "demo-facebook-date" }, "Monday at 3:47 PM")
+	      ),
+	      react.createElement( CardContent, { padding: false },
+	        react.createElement( 'img', { src: "http://lorempixel.com/1000/700/nature/8/", width: "100%" })
+	      ),
+	      react.createElement( CardFooter, { className: "no-border" },
+	        react.createElement( Link, null, "Like" ),
+	        react.createElement( Link, null, "Comment" ),
+	        react.createElement( Link, null, "Share" )
+	      )
+	    ),
+	    react.createElement( Card$1, { className: "demo-facebook-card" },
+	      react.createElement( CardHeader, { className: "no-border" },
+	        react.createElement( 'div', { className: "demo-facebook-avatar" }, react.createElement( 'img', { src: "http://lorempixel.com/68/68/people/1/", width: "34", height: "34" })),
+	        react.createElement( 'div', { className: "demo-facebook-name" }, "John Doe"),
+	        react.createElement( 'div', { className: "demo-facebook-date" }, "Monday at 2:15 PM")
+	      ),
+	      react.createElement( CardContent, null,
+	        react.createElement( 'p', null, "What a nice photo i took yesterday!" ), react.createElement( 'img', { src: "http://lorempixel.com/1000/700/nature/8/", width: "100%" }),
+	        react.createElement( 'p', { className: "likes" }, "Likes: 112 &nbsp;&nbsp; Comments: 43")
+	      ),
+	      react.createElement( CardFooter, { className: "no-border" },
+	        react.createElement( Link, null, "Like" ),
+	        react.createElement( Link, null, "Comment" ),
+	        react.createElement( Link, null, "Share" )
+	      )
+	    ),
+
+	    react.createElement( BlockTitle, null, "Cards With List View" ),
+	    react.createElement( Card$1, null,
+	      react.createElement( CardContent, { padding: false },
+	        react.createElement( List, null,
+	          react.createElement( ListItem, { link: "#" }, "Link 1"),
+	          react.createElement( ListItem, { link: "#" }, "Link 2"),
+	          react.createElement( ListItem, { link: "#" }, "Link 3"),
+	          react.createElement( ListItem, { link: "#" }, "Link 4"),
+	          react.createElement( ListItem, { link: "#" }, "Link 5")
+	        )
+	      )
+	    ),
+	    react.createElement( Card$1, { title: "New Reelases" },
+	      react.createElement( CardContent, { padding: false },
+	        react.createElement( List, { 'medial-list': true },
+	          react.createElement( ListItem, {
+	            title: "Yellow Submarine", subtitle: "Beatles" },
+	            react.createElement( 'img', { slot: "media", src: "http://lorempixel.com/88/88/fashion/4", width: "44" })
+	          ),
+	          react.createElement( ListItem, {
+	            title: "Don't Stop Me Now", subtitle: "Queen" },
+	            react.createElement( 'img', { slot: "media", src: "http://lorempixel.com/88/88/fashion/5", width: "44" })
+	          ),
+	          react.createElement( ListItem, {
+	            title: "Billie Jean", subtitle: "Michael Jackson" },
+	            react.createElement( 'img', { slot: "media", src: "http://lorempixel.com/88/88/fashion/6", width: "44" })
+	          )
+	        )
+	      ),
+	      react.createElement( CardFooter, null,
+	        react.createElement( 'span', null, "January 20, 2015" ),
+	        react.createElement( 'span', null, "5 comments" )
+	      )
+	    )
+	  )
+	); }
+
+	function Checkbox$2 () { return (
+	  react.createElement( Page, null,
+	    react.createElement( Navbar$2, { title: "Checkbox", backLink: "Back" }),
+	    react.createElement( BlockTitle, null, "Inline" ),
+	    react.createElement( Block, { strong: true },
+	      react.createElement( 'p', null, "Lorem ", react.createElement( Checkbox$1, { name: "checkbox-1" }), " ipsum dolor sit amet, consectetur adipisicing elit. Alias beatae illo nihil aut eius commodi sint eveniet aliquid eligendi ", react.createElement( Checkbox$1, { name: "checkbox-2", checked: true }), " ad delectus impedit tempore nemo, enim vel praesentium consequatur nulla mollitia!" )
+	    ),
+
+	    react.createElement( BlockTitle, null, "Checkbox Group" ),
+	    react.createElement( List, null,
+	      react.createElement( ListItem, { checkbox: true, title: "Books", name: "demo-checkbox", checked: true }),
+	      react.createElement( ListItem, { checkbox: true, title: "Movies", name: "demo-checkbox" }),
+	      react.createElement( ListItem, { checkbox: true, title: "Food", name: "demo-checkbox" }),
+	      react.createElement( ListItem, { checkbox: true, title: "Drinks", name: "demo-checkbox" })
+	    ),
+
+	    react.createElement( BlockTitle, null, "With Media Lists" ),
+	    react.createElement( List, { mediaList: true },
+	      react.createElement( ListItem, {
+	        checkbox: true, checked: true, name: "demo-media-checkbox", title: "Facebook", after: "17:14", subtitle: "New messages from John Doe", text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus." }),
+	      react.createElement( ListItem, {
+	        checkbox: true, name: "demo-media-checkbox", title: "John Doe (via Twitter)", after: "17:11", subtitle: "John Doe (@_johndoe) mentioned you on Twitter!", text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus." }),
+	      react.createElement( ListItem, {
+	        checkbox: true, name: "demo-media-checkbox", title: "Facebook", after: "16:48", subtitle: "New messages from John Doe", text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus." }),
+	      react.createElement( ListItem, {
+	        checkbox: true, name: "demo-media-checkbox", title: "John Doe (via Twitter)", after: "15:32", subtitle: "John Doe (@_johndoe) mentioned you on Twitter!", text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus." })
+	    )
+	  )
+	); }
+
+	//import Chips from './pages/chips.jsx';
 	/*
-	import Buttons from './pages/buttons.jsx';
-	import Calendar from './pages/calendar.jsx';
-	import CalendarPage from './pages/calendar-page.jsx';
-	import Cards from './pages/cards.jsx';
-	import Checkbox from './pages/checkbox.jsx';
-	import Chips from './pages/chips.jsx';
 	import ContactsList from './pages/contacts-list.jsx';
 	import ContentBlock from './pages/content-block.jsx';
 	import DataTable from './pages/data-table.jsx';
@@ -58314,6 +58646,28 @@
 	  {
 	    path: '/badge/',
 	    component: Badge$1,
+	  },
+	  {
+	    path: '/buttons/',
+	    component: Buttons,
+	  },
+	  /*
+	  {
+	    path: '/calendar/',
+	    component: Calendar,
+	  },
+	  {
+	    path: '/calendar-page/',
+	    component: CalendarPage,
+	  },
+	  */
+	  {
+	    path: '/cards/',
+	    component: Cards,
+	  },
+	  {
+	    path: '/checkbox/',
+	    component: Checkbox$2,
 	  } ];
 
 	function App$1 (props) {

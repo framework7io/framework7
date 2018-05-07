@@ -1,4 +1,6 @@
-<template>
+import { Navbar, Page, BlockTitle, Chip, Block, Icon } from 'framework7-react';
+
+export default () => (
   <f7-page>
     <f7-navbar title="Chips" back-link="Back"></f7-navbar>
     <f7-block-title>Chips With Text</f7-block-title>
@@ -58,9 +60,10 @@
       <f7-chip text="Pink Chip" color="pink"></f7-chip>
     </f7-block>
   </f7-page>
-</template>
+);
+
 <script>
-  import { f7Navbar, f7Page, f7BlockTitle, f7Chip, f7Block, f7Icon } from 'framework7-vue';
+
 
   export default {
     components: {

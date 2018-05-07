@@ -4,18 +4,15 @@ import PanelRight from './pages/panel-right.jsx';
 import About from './pages/about.jsx';
 import Accordion from './pages/accordion.jsx';
 import ActionSheet from './pages/action-sheet.jsx';
-
 //import Autocomplete from './pages/autocomplete.jsx';
-
 import Badge from './pages/badge.jsx';
-
-/*
 import Buttons from './pages/buttons.jsx';
-import Calendar from './pages/calendar.jsx';
-import CalendarPage from './pages/calendar-page.jsx';
+//import Calendar from './pages/calendar.jsx';
+//import CalendarPage from './pages/calendar-page.jsx';
 import Cards from './pages/cards.jsx';
 import Checkbox from './pages/checkbox.jsx';
-import Chips from './pages/chips.jsx';
+//import Chips from './pages/chips.jsx';
+/*
 import ContactsList from './pages/contacts-list.jsx';
 import ContentBlock from './pages/content-block.jsx';
 import DataTable from './pages/data-table.jsx';
@@ -186,11 +183,11 @@ export default [
     path: '/badge/',
     component: Badge,
   },
-  /*
   {
     path: '/buttons/',
     component: Buttons,
   },
+  /*
   {
     path: '/calendar/',
     component: Calendar,
@@ -199,6 +196,7 @@ export default [
     path: '/calendar-page/',
     component: CalendarPage,
   },
+  */
   {
     path: '/cards/',
     component: Cards,
@@ -207,6 +205,7 @@ export default [
     path: '/checkbox/',
     component: Checkbox,
   },
+  /*
   {
     path: '/chips/',
     component: Chips,
