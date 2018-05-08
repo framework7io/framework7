@@ -89,13 +89,15 @@ export default {
     },
     open(animate) {
       const self = this;
-      if (!self.$f7) return undefined;
-      return self.$f7.loginScreen.open(self.$el, animate);
+      const el = self.refs.el;
+      if (!self.$f7 || !el) return undefined;
+      return self.$f7.loginScreen.open(el, animate);
     },
     close(animate) {
       const self = this;
-      if (!self.$f7) return undefined;
-      return self.$f7.loginScreen.close(self.$el, animate);
+      const el = self.refs.el;
+      if (!self.$f7 || !el) return undefined;
+      return self.$f7.loginScreen.close(el, animate);
     },
   },
 };
