@@ -4,7 +4,7 @@
     <f7-block strong>
       <p class="row">
         <!-- One group, open by direct accessing instance .open() method -->
-        <f7-button class="col" raised @click="$refs.actionsOneGroup.f7Actions.open()">One group</f7-button>
+        <f7-button class="col" raised @click="$refs.actionsOneGroup.open()">One group</f7-button>
         <!-- Two groups, open by "actions-open" attribute -->
         <f7-button class="col" raised actions-open="#actions-two-groups">Two groups</f7-button>
       </p>

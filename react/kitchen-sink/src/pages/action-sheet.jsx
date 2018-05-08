@@ -17,8 +17,8 @@ export default class ActionSheet extends React.Component {
         <Navbar title="Action Sheet" backLink="Back"></Navbar>
         <Block strong>
           <p className="row">
-            {/* One group, open by changing oneGroupOpened state property */}
-            <Button className="col" raised onClick={() => this.setOneGroupOpened(true)}>One group</Button>
+            {/* One group, open by direct accessing instance .open() method */}
+            <Button className="col" raised onClick={() => this.refs.actionsOneGroup.open()}>One group</Button>
             {/*  Two groups, open by "actionsOpen" attribute */}
             <Button className="col" raised actionsOpen="#actions-two-groups">Two groups</Button>
           </p>
@@ -42,7 +42,7 @@ export default class ActionSheet extends React.Component {
         </Block>
 
         {/* One Group */}
-        <Actions opened={this.state.oneGroupOpened} actionsClosed={() => this.setActionsGridOpened(false)}>
+        <Actions ref="actionsOneGroup">
           <ActionsGroup>
             <ActionsLabel>Do something</ActionsLabel>
             <ActionsButton bold>Button 1</ActionsButton>
