@@ -1,18 +1,18 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
-const SegmentedProps = Utils.extend({
-  raised: Boolean,
-  round: Boolean,
-  tag: {
-    type: String,
-    default: 'div',
-  },
-}, Mixins.colorProps);
-
 export default {
   name: 'f7-segmented',
-  props: SegmentedProps,
+  props: {
+    id: [String, Number],
+    raised: Boolean,
+    round: Boolean,
+    tag: {
+      type: String,
+      default: 'div',
+    },
+    ...Mixins.colorProps,
+  },
   render() {
     const self = this;
     const classNames = Utils.classNames(

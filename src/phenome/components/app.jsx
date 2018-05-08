@@ -5,6 +5,7 @@ import f7Plugin from '../utils/plugin';
 export default {
   name: 'f7-app',
   props: {
+    id: [String, Number],
     params: Object,
     routes: Array,
   },

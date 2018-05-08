@@ -4,6 +4,7 @@ import Mixins from '../utils/mixins';
 export default {
   name: 'f7-accordion-item',
   props: {
+    id: [String, Number],
     opened: Boolean,
     ...Mixins.colorProps,
   },

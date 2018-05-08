@@ -4,6 +4,7 @@ import Utils from '../utils/utils';
 export default {
   name: 'f7-actions-button',
   props: {
+    id: [String, Number],
     bold: Boolean,
     close: {
       type: Boolean,

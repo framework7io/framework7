@@ -1,18 +1,18 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
-const SubnavbarProps = Utils.extend({
-  sliding: Boolean,
-  title: String,
-  inner: {
-    type: Boolean,
-    default: true,
-  },
-}, Mixins.colorProps);
-
 export default {
   name: 'f7-subnavbar',
-  props: SubnavbarProps,
+  props: {
+    id: [String, Number],
+    sliding: Boolean,
+    title: String,
+    inner: {
+      type: Boolean,
+      default: true,
+    },
+    ...Mixins.colorProps,
+  },
   render() {
     const self = this;
     const { inner, title } = self.props;

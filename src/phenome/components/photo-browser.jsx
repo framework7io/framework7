@@ -3,6 +3,7 @@ import Utils from '../utils/utils';
 export default {
   name: 'f7-photo-browser',
   props: {
+    id: [String, Number],
     init: {
       type: Boolean,
       default: true,

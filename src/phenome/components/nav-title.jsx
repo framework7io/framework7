@@ -1,15 +1,15 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
-const NavTitleProps = Utils.extend({
-  title: String,
-  subtitle: String,
-  sliding: Boolean,
-}, Mixins.colorProps);
-
 export default {
   name: 'f7-nav-title',
-  props: NavTitleProps,
+  props: {
+    id: [String, Number],
+    title: String,
+    subtitle: String,
+    sliding: Boolean,
+    ...Mixins.colorProps,
+  },
   render() {
     const self = this;
     const { title, subtitle, id, style } = self.props;

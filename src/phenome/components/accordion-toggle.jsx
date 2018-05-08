@@ -2,7 +2,10 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
 export default {
-  props: Mixins.colorProps,
+  props: {
+    id: [String, Number],
+    ...Mixins.colorProps,
+  },
   name: 'f7-accordion-toggle',
   render() {
     const classes = Utils.classNames(

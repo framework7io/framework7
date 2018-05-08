@@ -4,7 +4,8 @@ import Utils from '../utils/utils';
 export default {
   name: 'f7-popup',
   props: {
-    'tablet-fullscreen': Boolean,
+    id: [String, Number],
+    tabletFullscreen: Boolean,
     opened: Boolean,
     ...Mixins.colorProps,
   },

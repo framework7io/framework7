@@ -1,20 +1,20 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
-const SwiperProps = Utils.extend({
-  params: Object,
-  pagination: Boolean,
-  scrollbar: Boolean,
-  navigation: Boolean,
-  init: {
-    type: Boolean,
-    default: true,
-  },
-}, Mixins.colorProps);
-
 export default {
   name: 'f7-swiper',
-  props: SwiperProps,
+  props: {
+    id: [String, Number],
+    params: Object,
+    pagination: Boolean,
+    scrollbar: Boolean,
+    navigation: Boolean,
+    init: {
+      type: Boolean,
+      default: true,
+    },
+    ...Mixins.colorProps,
+  },
   render() {
     const self = this;
     let paginationEl;

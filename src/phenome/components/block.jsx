@@ -4,6 +4,7 @@ import Mixins from '../utils/mixins';
 export default {
   name: 'f7-block',
   props: {
+    id: [String, Number],
     inset: Boolean,
     tabletInset: Boolean,
     strong: Boolean,

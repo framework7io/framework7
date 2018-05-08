@@ -4,6 +4,7 @@ import Mixins from '../utils/mixins';
 export default {
   name: 'f7-stepper',
   props: {
+    id: [String, Number],
     init: {
       type: Boolean,
       default: true,

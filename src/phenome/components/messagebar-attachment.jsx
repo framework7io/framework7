@@ -4,6 +4,7 @@ import Mixins from '../utils/mixins';
 export default {
   name: 'f7-messagebar-attachment',
   props: {
+    id: [String, Number],
     image: String,
     deletable: {
       type: Boolean,

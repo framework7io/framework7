@@ -7,6 +7,8 @@ import Mixins from '../utils/mixins';
 export default {
   name: 'f7-list-item',
   props: {
+    id: [String, Number],
+
     title: [String, Number],
     text: [String, Number],
     media: String,

@@ -1,8 +1,10 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
-const IconProps = Utils.extend(
-  {
+export default {
+  name: 'f7-icon',
+  props: {
+    id: [String, Number],
     material: String, // Material Icons
     f7: String, // Framework7 Icons
     ion: String, // Ionicons
@@ -11,13 +13,8 @@ const IconProps = Utils.extend(
     ifMd: String,
     ifIos: String,
     size: [String, Number],
+    ...Mixins.colorProps,
   },
-  Mixins.colorProps,
-);
-
-export default {
-  name: 'f7-icon',
-  props: IconProps,
   render() {
     const self = this;
 

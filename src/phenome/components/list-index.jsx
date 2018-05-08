@@ -2,8 +2,10 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
-const ListIndexProps = Utils.extend(
-  {
+export default {
+  name: 'f7-list-index',
+  props: {
+    id: [String, Number],
     init: {
       type: Boolean,
       default: true,
@@ -29,13 +31,8 @@ const ListIndexProps = Utils.extend(
       type: Number,
       default: 14,
     },
+    ...Mixins.colorProps,
   },
-  Mixins.colorProps,
-);
-
-export default {
-  name: 'f7-list-index',
-  props: ListIndexProps,
   render() {
     return (
       <div ref="el" id={this.props.id} style={this.props.style} className={this.classes}>

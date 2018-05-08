@@ -7,8 +7,10 @@ import F7CardHeader from './card-header';
 import F7CardContent from './card-content';
 import F7CardFooter from './card-footer';
 
-const CardProps = Utils.extend(
-  {
+export default {
+  name: 'f7-card',
+  props: {
+    id: [String, Number],
     title: [String, Number],
     content: [String, Number],
     footer: [String, Number],
@@ -16,13 +18,8 @@ const CardProps = Utils.extend(
       type: Boolean,
       default: true,
     },
+    ...Mixins.colorProps,
   },
-  Mixins.colorProps,
-);
-
-export default {
-  name: 'f7-card',
-  props: CardProps,
   render() {
     const self = this;
     let headerEl;

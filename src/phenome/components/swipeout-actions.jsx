@@ -1,15 +1,15 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
-const SwipeoutActionsProps = Utils.extend({
-  left: Boolean,
-  right: Boolean,
-  side: String,
-}, Mixins.colorProps);
-
 export default {
   name: 'f7-swipeout-actions',
-  props: SwipeoutActionsProps,
+  props: {
+    id: [String, Number],
+    left: Boolean,
+    right: Boolean,
+    side: String,
+    ...Mixins.colorProps,
+  },
   render() {
     return (
       <div

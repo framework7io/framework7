@@ -1,15 +1,15 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
-const TabsProps = Utils.extend({
-  animated: Boolean,
-  swipeable: Boolean,
-  routable: Boolean,
-}, Mixins.colorProps);
-
 export default {
   name: 'f7-tabs',
-  props: TabsProps,
+  props: {
+    id: [String, Number],
+    animated: Boolean,
+    swipeable: Boolean,
+    routable: Boolean,
+    ...Mixins.colorProps,
+  },
   render() {
     const self = this;
     const { animated, swipeable, id, style } = self.props;

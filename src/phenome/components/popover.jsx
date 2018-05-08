@@ -1,17 +1,14 @@
 import Mixins from '../utils/mixins';
 import Utils from '../utils/utils';
 
-const PopoverProps = Utils.extend(
-  {
-    opened: Boolean,
-    target: [String, Object],
-  },
-  Mixins.colorProps,
-);
-
 export default {
   name: 'f7-popover',
-  props: PopoverProps,
+  props: {
+    id: [String, Number],
+    opened: Boolean,
+    target: [String, Object],
+    ...Mixins.colorProps,
+  },
   render() {
     const self = this;
     return (

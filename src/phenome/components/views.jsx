@@ -4,6 +4,7 @@ import Mixins from '../utils/mixins';
 export default {
   name: 'f7-views',
   props: {
+    id: [String, Number],
     tabs: Boolean,
     ...Mixins.colorProps,
   },

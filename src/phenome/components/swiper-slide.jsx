@@ -2,6 +2,10 @@ import Utils from '../utils/utils';
 
 export default {
   name: 'f7-swiper-slide',
+  props: {
+    id: [String, Number],
+    zoom: Boolean,
+  },
   render() {
     const classes = Utils.classNames(
       this.props.className,
@@ -20,7 +24,5 @@ export default {
       </div>
     );
   },
-  props: {
-    zoom: Boolean,
-  },
+
 };

@@ -1,18 +1,18 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
-const ChipProps = Utils.extend({
-  media: String,
-  text: [String, Number],
-  deleteable: Boolean,
-  mediaBgColor: String,
-  mediaTextColor: String,
-  onDelete: Function,
-}, Mixins.colorProps);
-
 export default {
   name: 'f7-chip',
-  props: ChipProps,
+  props: {
+    id: [String, Number],
+    media: String,
+    text: [String, Number],
+    deleteable: Boolean,
+    mediaBgColor: String,
+    mediaTextColor: String,
+    onDelete: Function,
+    ...Mixins.colorProps,
+  },
   render() {
     const self = this;
     let mediaEl;

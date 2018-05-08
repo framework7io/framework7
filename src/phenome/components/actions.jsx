@@ -4,7 +4,7 @@ import Utils from '../utils/utils';
 export default {
   name: 'f7-actions',
   props: {
-    id: String,
+    id: [String, Number],
     opened: Boolean,
     grid: Boolean,
     convertToPopover: Boolean,

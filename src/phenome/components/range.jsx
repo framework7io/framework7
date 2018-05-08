@@ -1,45 +1,45 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
-const RangeProps = Utils.extend({
-  init: {
-    type: Boolean,
-    default: true,
-  },
-  value: {
-    type: [Number, Array, String],
-    default: 0,
-  },
-  min: {
-    type: [Number, String],
-    default: 0,
-  },
-  max: {
-    type: [Number, String],
-    default: 100,
-  },
-  step: {
-    type: [Number, String],
-    default: 1,
-  },
-  label: {
-    type: Boolean,
-    default: false,
-  },
-  dual: {
-    type: Boolean,
-    default: false,
-  },
-  disabled: Boolean,
-  draggableBar: {
-    type: Boolean,
-    default: true,
-  },
-}, Mixins.colorProps);
-
 export default {
   name: 'f7-range',
-  props: RangeProps,
+  props: {
+    id: [String, Number],
+    init: {
+      type: Boolean,
+      default: true,
+    },
+    value: {
+      type: [Number, Array, String],
+      default: 0,
+    },
+    min: {
+      type: [Number, String],
+      default: 0,
+    },
+    max: {
+      type: [Number, String],
+      default: 100,
+    },
+    step: {
+      type: [Number, String],
+      default: 1,
+    },
+    label: {
+      type: Boolean,
+      default: false,
+    },
+    dual: {
+      type: Boolean,
+      default: false,
+    },
+    disabled: Boolean,
+    draggableBar: {
+      type: Boolean,
+      default: true,
+    },
+    ...Mixins.colorProps,
+  },
   render() {
     const self = this;
 

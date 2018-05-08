@@ -8,6 +8,8 @@ import F7Badge from './badge';
 export default {
   name: 'f7-list-item-content',
   props: {
+    id: [String, Number],
+
     title: [String, Number],
     text: [String, Number],
     media: String,

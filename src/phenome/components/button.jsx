@@ -7,6 +7,7 @@ import F7Icon from './icon';
 export default {
   name: 'f7-button',
   props: {
+    id: [String, Number],
     noFastclick: Boolean,
     noFastClick: Boolean,
     text: String,

@@ -5,8 +5,10 @@ import Mixins from '../utils/mixins';
 import F7Badge from './badge';
 import F7Icon from './icon';
 
-const LinkProps = Utils.extend(
-  {
+export default {
+  name: 'f7-link',
+  props: {
+    id: [String, Number],
     noLinkClass: Boolean,
     noFastClick: Boolean,
     noFastclick: Boolean,
@@ -22,16 +24,11 @@ const LinkProps = Utils.extend(
       type: [String, Boolean],
       default: '#',
     },
+    ...Mixins.colorProps,
+    ...Mixins.linkIconProps,
+    ...Mixins.linkRouterProps,
+    ...Mixins.linkActionsProps,
   },
-  Mixins.colorProps,
-  Mixins.linkIconProps,
-  Mixins.linkRouterProps,
-  Mixins.linkActionsProps,
-);
-
-export default {
-  name: 'f7-link',
-  props: LinkProps,
   state(props) {
     return {
       isTabbarLabel: props.tabbarLabel,

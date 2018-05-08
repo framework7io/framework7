@@ -1,21 +1,21 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
-const ToggleProps = Utils.extend({
-  init: {
-    type: Boolean,
-    default: true,
-  },
-  checked: Boolean,
-  disabled: Boolean,
-  readonly: Boolean,
-  name: String,
-  value: [String, Number, Array],
-}, Mixins.colorProps);
-
 export default {
   name: 'f7-toggle',
-  props: ToggleProps,
+  props: {
+    id: [String, Number],
+    init: {
+      type: Boolean,
+      default: true,
+    },
+    checked: Boolean,
+    disabled: Boolean,
+    readonly: Boolean,
+    name: String,
+    value: [String, Number, Array],
+    ...Mixins.colorProps,
+  },
   render() {
     const self = this;
 

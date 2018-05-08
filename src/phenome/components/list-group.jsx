@@ -4,6 +4,7 @@ import Mixins from '../utils/mixins';
 export default {
   name: 'f7-list-group',
   props: {
+    id: [String, Number],
     mediaList: Boolean,
     sortable: Boolean,
     ...Mixins.colorProps,

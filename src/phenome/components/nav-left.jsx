@@ -3,15 +3,15 @@ import Mixins from '../utils/mixins';
 
 import F7Link from './link';
 
-const NavLeftProps = Utils.extend({
-  backLink: [Boolean, String],
-  backLinkUrl: String,
-  sliding: Boolean,
-}, Mixins.colorProps);
-
 export default {
   name: 'f7-nav-left',
-  props: NavLeftProps,
+  props: {
+    id: [String, Number],
+    backLink: [Boolean, String],
+    backLinkUrl: String,
+    sliding: Boolean,
+    ...Mixins.colorProps,
+  },
   render() {
     const {
       backLink,

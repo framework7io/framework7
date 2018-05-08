@@ -1,8 +1,10 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
-const ListButtonProps = Utils.extend(
-  {
+export default {
+  name: 'f7-list-button',
+  props: {
+    id: [String, Number],
     noFastclick: Boolean,
     noFastClick: Boolean,
     title: [String, Number],
@@ -12,15 +14,10 @@ const ListButtonProps = Utils.extend(
     link: [Boolean, String],
     href: [Boolean, String],
     target: String,
+    ...Mixins.colorProps,
+    ...Mixins.linkRouterProps,
+    ...Mixins.linkActionsProps,
   },
-  Mixins.colorProps,
-  Mixins.linkRouterProps,
-  Mixins.linkActionsProps,
-);
-
-export default {
-  name: 'f7-list-button',
-  props: ListButtonProps,
   render() {
     const self = this;
     return (

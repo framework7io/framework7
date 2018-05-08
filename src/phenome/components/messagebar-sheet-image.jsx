@@ -5,6 +5,7 @@ import Mixins from '../utils/mixins';
 export default {
   name: 'f7-messagebar-sheet-image',
   props: {
+    id: [String, Number],
     image: String,
     checked: Boolean,
     ...Mixins.colorProps,

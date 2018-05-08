@@ -1,9 +1,10 @@
-
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
-const PanelProps = Utils.extend(
-  {
+export default {
+  name: 'f7-panel',
+  props: {
+    id: [String, Number],
     side: String,
     effect: String,
     cover: Boolean,
@@ -11,13 +12,8 @@ const PanelProps = Utils.extend(
     left: Boolean,
     right: Boolean,
     opened: Boolean,
+    ...Mixins.colorProps,
   },
-  Mixins.colorProps,
-);
-
-export default {
-  name: 'f7-panel',
-  props: PanelProps,
   render() {
     return (
       <div

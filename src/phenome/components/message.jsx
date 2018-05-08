@@ -4,6 +4,7 @@ import Mixins from '../utils/mixins';
 export default {
   name: 'f7-message',
   props: {
+    id: [String, Number],
     text: String,
     name: String,
     avatar: String,

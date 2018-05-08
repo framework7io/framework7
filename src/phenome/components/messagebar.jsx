@@ -9,6 +9,8 @@ import F7Link from './link';
 export default {
   name: 'f7-messagebar',
   props: {
+    id: [String, Number],
+
     sheetVisible: Boolean,
     attachmentsVisible: Boolean,
     top: Boolean,

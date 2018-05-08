@@ -3,8 +3,11 @@ import events from '../utils/events';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
-const ViewProps = Utils.extend(
-  {
+export default {
+  name: 'f7-view',
+  props: {
+    id: [String, Number],
+
     tab: Boolean,
     tabActive: Boolean,
 
@@ -59,13 +62,9 @@ const ViewProps = Utils.extend(
       type: Boolean,
       default: true,
     },
-  },
-  Mixins.colorProps,
-);
 
-export default {
-  name: 'f7-view',
-  props: ViewProps,
+    ...Mixins.colorProps,
+  },
   state() {
     return {
       pages: [],

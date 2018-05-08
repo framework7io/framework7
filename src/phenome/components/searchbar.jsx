@@ -4,6 +4,7 @@ import Mixins from '../utils/mixins';
 export default {
   name: 'f7-searchbar',
   props: {
+    id: [String, Number],
     noShadow: Boolean,
     noHairline: Boolean,
     form: {

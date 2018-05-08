@@ -4,6 +4,7 @@ import Utils from '../utils/utils';
 export default {
   name: 'f7-login-screen',
   props: {
+    id: [String, Number],
     opened: Boolean,
     ...Mixins.colorProps,
   },

@@ -4,6 +4,8 @@ import Mixins from '../utils/mixins';
 export default {
   name: 'f7-list',
   props: {
+    id: [String, Number],
+
     inset: Boolean,
     tabletInset: Boolean,
     mediaList: Boolean,

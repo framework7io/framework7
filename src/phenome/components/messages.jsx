@@ -4,6 +4,8 @@ import Mixins from '../utils/mixins';
 export default {
   name: 'f7-messages',
   props: {
+    id: [String, Number],
+
     autoLayout: {
       type: Boolean,
       default: false,

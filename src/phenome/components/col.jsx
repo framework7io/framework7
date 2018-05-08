@@ -1,8 +1,10 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
-const ColProps = Utils.extend(
-  {
+export default {
+  name: 'f7-col',
+  props: {
+    id: [String, Number],
     tag: {
       type: String,
       default: 'div',
@@ -17,13 +19,8 @@ const ColProps = Utils.extend(
     desktopWidth: {
       type: [Number, String],
     },
+    ...Mixins.colorProps,
   },
-  Mixins.colorProps,
-);
-
-export default {
-  name: 'f7-col',
-  props: ColProps,
   render() {
     const self = this;
 

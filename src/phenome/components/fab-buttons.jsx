@@ -2,19 +2,16 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
-const FabButtonsProps = Utils.extend(
-  {
+export default {
+  name: 'f7-fab-buttons',
+  props: {
+    id: [String, Number],
     position: {
       type: String,
       default: 'top',
     },
+    ...Mixins.colorProps,
   },
-  Mixins.colorProps,
-);
-
-export default {
-  name: 'f7-fab-buttons',
-  props: FabButtonsProps,
   render() {
     return (
       <div

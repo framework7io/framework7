@@ -4,6 +4,7 @@ import Utils from '../utils/utils';
 export default {
   name: 'f7-actions-label',
   props: {
+    id: [String, Number],
     bold: Boolean,
     ...Mixins.colorProps,
   },

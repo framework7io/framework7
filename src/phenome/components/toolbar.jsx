@@ -1,23 +1,23 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
-const ToolbarProps = Utils.extend({
-  bottomMd: Boolean,
-  tabbar: Boolean,
-  labels: Boolean,
-  scrollable: Boolean,
-  hidden: Boolean,
-  noShadow: Boolean,
-  noHairline: Boolean,
-  inner: {
-    type: Boolean,
-    default: true,
-  },
-}, Mixins.colorProps);
-
 export default {
   name: 'f7-toolbar',
-  props: ToolbarProps,
+  props: {
+    id: [String, Number],
+    bottomMd: Boolean,
+    tabbar: Boolean,
+    labels: Boolean,
+    scrollable: Boolean,
+    hidden: Boolean,
+    noShadow: Boolean,
+    noHairline: Boolean,
+    inner: {
+      type: Boolean,
+      default: true,
+    },
+    ...Mixins.colorProps,
+  },
   render() {
     const self = this;
     return (

@@ -1,17 +1,14 @@
 import Mixins from '../utils/mixins';
 import Utils from '../utils/utils';
 
-const SheetProps = Utils.extend(
-  {
-    opened: Boolean,
-    backdrop: Boolean,
-  },
-  Mixins.colorProps,
-);
-
 export default {
   name: 'f7-sheet',
-  props: SheetProps,
+  props: {
+    id: [String, Number],
+    opened: Boolean,
+    backdrop: Boolean,
+    ...Mixins.colorProps,
+  },
   render() {
     const self = this;
     const fixedList = [];

@@ -4,27 +4,27 @@ import Mixins from '../utils/mixins';
 import F7NavLeft from './nav-left';
 import F7NavTitle from './nav-title';
 
-const NavbarProps = Utils.extend({
-  backLink: [Boolean, String],
-  backLinkUrl: String,
-  sliding: {
-    type: Boolean,
-    default: true,
-  },
-  title: String,
-  subtitle: String,
-  hidden: Boolean,
-  noShadow: Boolean,
-  noHairline: Boolean,
-  inner: {
-    type: Boolean,
-    default: true,
-  },
-}, Mixins.colorProps);
-
 export default {
   name: 'f7-navbar',
-  props: NavbarProps,
+  props: {
+    id: [String, Number],
+    backLink: [Boolean, String],
+    backLinkUrl: String,
+    sliding: {
+      type: Boolean,
+      default: true,
+    },
+    title: String,
+    subtitle: String,
+    hidden: Boolean,
+    noShadow: Boolean,
+    noHairline: Boolean,
+    inner: {
+      type: Boolean,
+      default: true,
+    },
+    ...Mixins.colorProps,
+  },
   render() {
     const self = this;
     const {

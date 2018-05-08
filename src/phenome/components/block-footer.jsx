@@ -3,7 +3,10 @@ import Mixins from '../utils/mixins';
 
 export default {
   name: 'f7-block-footer',
-  props: Mixins.colorProps,
+  props: {
+    id: [String, Number],
+    ...Mixins.colorProps,
+  },
   render() {
     const classes = Utils.classNames(
       this.props.className,

@@ -4,6 +4,7 @@ import Mixins from '../utils/mixins';
 export default {
   name: 'f7-label',
   props: {
+    id: [String, Number],
     floating: Boolean,
     inline: Boolean,
     ...Mixins.colorProps,
