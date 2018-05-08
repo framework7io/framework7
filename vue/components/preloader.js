@@ -1,22 +1,21 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const PreloaderProps = Utils.extend({
-  size: [
-    Number,
-    String
-  ]
-}, Mixins.colorProps);
 export default {
   name: 'f7-preloader',
-  props: __vueComponentGetPropKeys(PreloaderProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    size: [
+      Number,
+      String
+    ],
+    ...Mixins.colorProps
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const {classes, sizeComputed} = this;
     const {id, style} = this.props;
     const preloaderStyle = {};
@@ -52,7 +51,7 @@ export default {
       return s;
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   }
 };

@@ -10,31 +10,6 @@ class F7Actions extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
-  render() {
-    const self = this;
-    const classes = Utils.classNames(self.props.className, {
-      'actions-modal': true,
-      'actions-grid': self.props.grid
-    }, Mixins.colorClasses(self));
-    return React.createElement('div', {
-      id: this.props.id,
-      style: this.props.style,
-      ref: 'el',
-      className: classes
-    }, this.slots['default']);
-  }
-  componentWillUnmount() {
-    const self = this;
-    if (self.f7Actions)
-      self.f7Actions.destroy();
-    const el = self.el;
-    if (!el)
-      return;
-    el.removeEventListener('actions:open', self.onOpenBound);
-    el.removeEventListener('actions:opened', self.onOpenedBound);
-    el.removeEventListener('actions:close', self.onCloseBound);
-    el.removeEventListener('actions:closed', self.onClosedBound);
-  }
   onOpen(event) {
     this.dispatchEvent('actions:open actionsOpen', event);
   }
@@ -59,8 +34,63 @@ class F7Actions extends React.Component {
       return undefined;
     return self.$f7.actions.close(self.refs.el, animate);
   }
+  componentWillUnmount() {
+    const self = this;
+    if (self.f7Actions)
+      self.f7Actions.destroy();
+    const el = self.el;
+    if (!el)
+      return;
+    el.removeEventListener('actions:open', self.onOpenBound);
+    el.removeEventListener('actions:opened', self.onOpenedBound);
+    el.removeEventListener('actions:close', self.onCloseBound);
+    el.removeEventListener('actions:closed', self.onClosedBound);
+  }
+  componentDidMount() {
+    const self = this;
+    const el = self.refs.el;
+    if (!el)
+      return;
+    self.onOpenBound = self.onOpen.bind(self);
+    self.onOpenedBound = self.onOpened.bind(self);
+    self.onCloseBound = self.onClose.bind(self);
+    self.onClosedBound = self.onClosed.bind(self);
+    el.addEventListener('actions:open', self.onOpenBound);
+    el.addEventListener('actions:opened', self.onOpenedBound);
+    el.addEventListener('actions:close', self.onCloseBound);
+    el.addEventListener('actions:closed', self.onClosedBound);
+    self.$f7ready(() => {
+      const actionsParams = {
+        el: self.refs.el,
+        grid: self.props.grid
+      };
+      if (self.props.target)
+        actionsParams.targetEl = self.props.target;
+      if ('convertToPopover' in self.props)
+        actionsParams.convertToPopover = self.props.convertToPopover;
+      if ('forceToPopover' in self.props)
+        actionsParams.forceToPopover = self.props.forceToPopover;
+      self.f7Actions = self.$f7.actions.create(actionsParams);
+      if (self.props.opened) {
+        self.f7Actions.open(false);
+      }
+    });
+  }
+  render() {
+    const self = this;
+    const classes = Utils.classNames(self.props.className, {
+      'actions-modal': true,
+      'actions-grid': self.props.grid
+    }, Mixins.colorClasses(self));
+    return React.createElement('div', {
+      id: self.props.id,
+      style: self.props.style,
+      ref: 'el',
+      className: classes
+    }, this.slots['default']);
+  }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
   get el() {
     return __reactComponentEl(this);
@@ -82,6 +112,10 @@ class F7Actions extends React.Component {
   }
 }
 __reactComponentSetProps(F7Actions, {
+  id: [
+    String,
+    Number
+  ],
   opened: Boolean,
   grid: Boolean,
   convertToPopover: Boolean,
@@ -92,34 +126,4 @@ __reactComponentSetProps(F7Actions, {
   ],
   ...Mixins.colorProps
 });
-F7Actions.componetDidMount = function () {
-  const self = this;
-  const el = self.refs.el;
-  if (!el)
-    return;
-  self.onOpenBound = self.onOpen.bind(self);
-  self.onOpenedBound = self.onOpened.bind(self);
-  self.onCloseBound = self.onClose.bind(self);
-  self.onClosedBound = self.onClosed.bind(self);
-  el.addEventListener('actions:open', self.onOpenBound);
-  el.addEventListener('actions:opened', self.onOpenedBound);
-  el.addEventListener('actions:close', self.onCloseBound);
-  el.addEventListener('actions:closed', self.onClosedBound);
-  self.$f7ready(() => {
-    const actionsParams = {
-      el: self.refs.el,
-      grid: self.props.grid
-    };
-    if (self.props.target)
-      actionsParams.targetEl = self.props.target;
-    if ('convertToPopover' in self.props)
-      actionsParams.convertToPopover = self.props.convertToPopover;
-    if ('forceToPopover' in self.props)
-      actionsParams.forceToPopover = self.props.forceToPopover;
-    self.f7Actions = self.$f7.actions.create(actionsParams);
-    if (self.props.opened) {
-      self.f7Actions.open(false);
-    }
-  });
-};
 export default F7Actions;

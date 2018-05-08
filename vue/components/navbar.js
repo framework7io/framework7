@@ -4,36 +4,35 @@ import F7NavLeft from './nav-left';
 import F7NavTitle from './nav-title';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const NavbarProps = Utils.extend({
-  backLink: [
-    Boolean,
-    String
-  ],
-  backLinkUrl: String,
-  sliding: {
-    type: Boolean,
-    default: true
-  },
-  title: String,
-  subtitle: String,
-  hidden: Boolean,
-  noShadow: Boolean,
-  noHairline: Boolean,
-  inner: {
-    type: Boolean,
-    default: true
-  }
-}, Mixins.colorProps);
 export default {
   name: 'f7-navbar',
-  props: __vueComponentGetPropKeys(NavbarProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    backLink: [
+      Boolean,
+      String
+    ],
+    backLinkUrl: String,
+    sliding: {
+      type: Boolean,
+      default: true
+    },
+    title: String,
+    subtitle: String,
+    hidden: Boolean,
+    noShadow: Boolean,
+    noHairline: Boolean,
+    inner: {
+      type: Boolean,
+      default: true
+    },
+    ...Mixins.colorProps
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     const {backLink, backLinkUrl, sliding, title, subtitle, inner} = self.props;
     let innerEl;
@@ -99,7 +98,7 @@ export default {
       }, Mixins.colorClasses(self));
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   },
   methods: {

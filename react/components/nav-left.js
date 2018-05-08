@@ -5,17 +5,18 @@ import F7Link from './link';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
-const NavLeftProps = Utils.extend({
-  backLink: [
-    Boolean,
-    String
-  ],
-  backLinkUrl: String,
-  sliding: Boolean
-}, Mixins.colorProps);
 class F7NavLeft extends React.Component {
   constructor(props, context) {
     super(props, context);
+  }
+  onBackClick(e) {
+    this.dispatchEvent('back-click backClick click:back clickBack', e);
+  }
+  get classes() {
+    return Utils.classNames(this.props.className, {
+      left: true,
+      sliding: this.props.slidng
+    }, Mixins.colorClasses(this));
   }
   render() {
     const {backLink, backLinkUrl} = this.props;
@@ -36,21 +37,24 @@ class F7NavLeft extends React.Component {
       className: this.classes
     }, linkEl, this.slots['default']);
   }
-  get classes() {
-    return Utils.classNames(this.props.className, {
-      left: true,
-      sliding: this.props.slidng
-    }, Mixins.colorClasses(this));
-  }
-  onBackClick(e) {
-    this.dispatchEvent('back-click backClick click:back clickBack', e);
-  }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
 }
-__reactComponentSetProps(F7NavLeft, NavLeftProps);
+__reactComponentSetProps(F7NavLeft, {
+  id: [
+    String,
+    Number
+  ],
+  backLink: [
+    Boolean,
+    String
+  ],
+  backLinkUrl: String,
+  sliding: Boolean,
+  ...Mixins.colorProps
+});
 export default F7NavLeft;

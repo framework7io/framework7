@@ -9,34 +9,8 @@ class F7Button extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
-  render() {
-    const self = this;
-    let iconEl;
-    let textEl;
-    const {text, icon, iconMaterial, iconIon, iconFa, iconF7, iconIfMd, iconIfIos, iconColor, iconSize} = self.props;
-    if (text) {
-      textEl = React.createElement('span', null, text);
-    }
-    if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconIfMd || iconIfIos) {
-      iconEl = React.createElement(F7Icon, {
-        material: iconMaterial,
-        ion: iconIon,
-        fa: iconFa,
-        f7: iconF7,
-        icon: icon,
-        ifMd: iconIfMd,
-        ifIos: iconIfIos,
-        color: iconColor,
-        size: iconSize
-      });
-    }
-    return React.createElement('a', {
-      id: self.props.id,
-      style: self.props.style,
-      className: self.classes,
-      onClick: self.onClick.bind(self),
-      ...self.attrs
-    }, iconEl, textEl, this.slots['default']);
+  onClick(event) {
+    this.dispatchEvent('click', event);
   }
   get attrs() {
     const self = this;
@@ -77,17 +51,47 @@ class F7Button extends React.Component {
       disabled
     }, Mixins.colorClasses(self), Mixins.linkRouterClasses(self), Mixins.linkActionsClasses(self));
   }
-  onClick(event) {
-    this.dispatchEvent('click', event);
+  render() {
+    const self = this;
+    let iconEl;
+    let textEl;
+    const {text, icon, iconMaterial, iconIon, iconFa, iconF7, iconIfMd, iconIfIos, iconColor, iconSize} = self.props;
+    if (text) {
+      textEl = React.createElement('span', null, text);
+    }
+    if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconIfMd || iconIfIos) {
+      iconEl = React.createElement(F7Icon, {
+        material: iconMaterial,
+        ion: iconIon,
+        fa: iconFa,
+        f7: iconF7,
+        icon: icon,
+        ifMd: iconIfMd,
+        ifIos: iconIfIos,
+        color: iconColor,
+        size: iconSize
+      });
+    }
+    return React.createElement('a', {
+      id: self.props.id,
+      style: self.props.style,
+      className: self.classes,
+      onClick: self.onClick.bind(self),
+      ...self.attrs
+    }, iconEl, textEl, this.slots['default']);
   }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
 }
 __reactComponentSetProps(F7Button, {
+  id: [
+    String,
+    Number
+  ],
   noFastclick: Boolean,
   noFastClick: Boolean,
   text: String,

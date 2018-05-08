@@ -1,16 +1,17 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
 export default {
   name: 'f7-messagebar-sheet',
-  props: __vueComponentGetPropKeys(Mixins.colorProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    ...Mixins.colorProps
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const classes = Utils.classNames(this.props.className, 'messagebar-sheet', Mixins.colorClasses(this));
     return _h('div', {
       style: this.props.style,
@@ -20,7 +21,7 @@ export default {
   },
   computed: {
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   }
 };

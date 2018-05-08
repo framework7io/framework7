@@ -2,27 +2,26 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const FabProps = Utils.extend({
-  morphTo: String,
-  href: [
-    Boolean,
-    String
-  ],
-  position: {
-    type: String,
-    default: 'right-bottom'
-  }
-}, Mixins.colorProps);
 export default {
   name: 'f7-fab',
-  props: __vueComponentGetPropKeys(FabProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    morphTo: String,
+    href: [
+      Boolean,
+      String
+    ],
+    position: {
+      type: String,
+      default: 'right-bottom'
+    },
+    ...Mixins.colorProps
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     const {morphTo} = self.props;
     let href = self.props.href;
@@ -85,7 +84,7 @@ export default {
       }, Mixins.colorClasses(self));
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   },
   methods: {

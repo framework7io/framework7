@@ -11,6 +11,13 @@ class F7MessagebarSheetImage extends React.Component {
       this.onChangeBound = this.onChange.bind(this);
     })();
   }
+  onChange(e) {
+    if (this.props.checked)
+      this.dispatchEvent('checked', e);
+    else
+      this.dispatchEvent('unchecked', e);
+    this.dispatchEvent('change', e);
+  }
   render() {
     const self = this;
     const {image, checked, id, className, style} = self.props;
@@ -26,21 +33,18 @@ class F7MessagebarSheetImage extends React.Component {
       onChange: self.onChangeBound
     }), React.createElement('i', { className: 'icon icon-checkbox' }), this.slots['default']);
   }
-  onChange(e) {
-    if (this.props.checked)
-      this.dispatchEvent('checked', e);
-    else
-      this.dispatchEvent('unchecked', e);
-    this.dispatchEvent('change', e);
-  }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
 }
 __reactComponentSetProps(F7MessagebarSheetImage, {
+  id: [
+    String,
+    Number
+  ],
   image: String,
   checked: Boolean,
   ...Mixins.colorProps

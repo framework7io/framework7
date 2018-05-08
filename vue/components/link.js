@@ -6,52 +6,54 @@ import __vueComponentTransformJSXProps from '../runtime-helpers/vue-component-tr
 import __vueComponentSetState from '../runtime-helpers/vue-component-set-state.js';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const LinkProps = Utils.extend({
-  noLinkClass: Boolean,
-  noFastClick: Boolean,
-  noFastclick: Boolean,
-  text: String,
-  tabLink: [
-    Boolean,
-    String
-  ],
-  tabLinkActive: Boolean,
-  tabbarLabel: Boolean,
-  iconOnly: Boolean,
-  badge: [
-    String,
-    Number
-  ],
-  badgeColor: [String],
-  iconBadge: [
-    String,
-    Number
-  ],
-  href: {
-    type: [
-      String,
-      Boolean
-    ],
-    default: '#'
-  }
-}, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps);
 export default {
   name: 'f7-link',
-  props: __vueComponentGetPropKeys(LinkProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    noLinkClass: Boolean,
+    noFastClick: Boolean,
+    noFastclick: Boolean,
+    text: String,
+    tabLink: [
+      Boolean,
+      String
+    ],
+    tabLinkActive: Boolean,
+    tabbarLabel: Boolean,
+    iconOnly: Boolean,
+    badge: [
+      String,
+      Number
+    ],
+    badgeColor: [String],
+    iconBadge: [
+      String,
+      Number
+    ],
+    href: {
+      type: [
+        String,
+        Boolean
+      ],
+      default: '#'
+    },
+    ...Mixins.colorProps,
+    ...Mixins.linkIconProps,
+    ...Mixins.linkRouterProps,
+    ...Mixins.linkActionsProps
+  },
   data() {
-    const props = __vueComponentProps(this, __vueComponentPropsKeys);
+    const props = __vueComponentProps(this);
     const state = (() => {
       return { isTabbarLabel: props.tabbarLabel };
     })();
     return { state };
   },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     const {text, badge, badgeColor, iconOnly, iconBadge, icon, iconColor, iconSize, iconMaterial, iconIon, iconFa, iconF7, iconIfMd, iconIfIos, id, style} = self.props;
     const defaultSlots = self.$slots.default;
@@ -140,7 +142,7 @@ export default {
       }, Mixins.colorClasses(self), Mixins.linkRouterClasses(self), Mixins.linkActionsClasses(self));
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   },
   methods: {

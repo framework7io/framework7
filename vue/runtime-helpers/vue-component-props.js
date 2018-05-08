@@ -1,7 +1,8 @@
-export default function (component, keys) {
+export default function (component) {
   const props = {};
-  keys.forEach((propKey) => {
-    if (typeof component[propKey] !== 'undefined') props[propKey] = component[propKey];
+  const $props = component.$props;
+  Object.keys($props).forEach((propKey) => {
+    if (typeof $props[propKey] !== 'undefined') props[propKey] = $props[propKey];
   });
 
   const children = [];

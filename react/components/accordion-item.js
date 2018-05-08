@@ -9,6 +9,39 @@ class F7AccordionItem extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
+  onOpen(event) {
+    this.dispatchEvent('accordionOpen accordion:open', event);
+  }
+  onOpened(event) {
+    this.dispatchEvent('accordionOpened accordion:opened', event);
+  }
+  onClose(event) {
+    this.dispatchEvent('accordionClose accordion:close', event);
+  }
+  onClosed(event) {
+    this.dispatchEvent('accordionClosed accordion:closed', event);
+  }
+  render() {
+    const classes = Utils.classNames(this.props.className, {
+      'accordion-item': true,
+      'accordion-item-opened': this.props.opened
+    }, Mixins.colorClasses(this));
+    return React.createElement('div', {
+      id: this.props.id,
+      style: this.props.style,
+      className: classes
+    }, this.slots['default']);
+  }
+  componentWillUnmount() {
+    const self = this;
+    const el = self.el;
+    if (!el)
+      return;
+    el.removeEventListener('accordion:open', self.onOpenBound);
+    el.removeEventListener('accordion:opened', self.onOpenedBound);
+    el.removeEventListener('accordion:close', self.onCloseBound);
+    el.removeEventListener('accordion:closed', self.onClosedBound);
+  }
   componentDidMount() {
     const self = this;
     const el = self.el;
@@ -23,41 +56,8 @@ class F7AccordionItem extends React.Component {
     el.addEventListener('accordion:close', self.onCloseBound);
     el.addEventListener('accordion:closed', self.onClosedBound);
   }
-  componentWillUnmount() {
-    const self = this;
-    const el = self.el;
-    if (!el)
-      return;
-    el.removeEventListener('accordion:open', self.onOpenBound);
-    el.removeEventListener('accordion:opened', self.onOpenedBound);
-    el.removeEventListener('accordion:close', self.onCloseBound);
-    el.removeEventListener('accordion:closed', self.onClosedBound);
-  }
-  render() {
-    const classes = Utils.classNames(this.props.className, {
-      'accordion-item': true,
-      'accordion-item-opened': this.props.opened
-    }, Mixins.colorClasses(this));
-    return React.createElement('div', {
-      id: this.props.id,
-      style: this.props.style,
-      className: classes
-    }, this.slots['default']);
-  }
-  onOpen(event) {
-    this.dispatchEvent('accordionOpen accordion:open', event);
-  }
-  onOpened(event) {
-    this.dispatchEvent('accordionOpened accordion:opened', event);
-  }
-  onClose(event) {
-    this.dispatchEvent('accordionClose accordion:close', event);
-  }
-  onClosed(event) {
-    this.dispatchEvent('accordionClosed accordion:closed', event);
-  }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
   get el() {
     return __reactComponentEl(this);
@@ -67,6 +67,10 @@ class F7AccordionItem extends React.Component {
   }
 }
 __reactComponentSetProps(F7AccordionItem, {
+  id: [
+    String,
+    Number
+  ],
   opened: Boolean,
   ...Mixins.colorProps
 });

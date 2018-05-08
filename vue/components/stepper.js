@@ -2,14 +2,13 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
 export default {
   name: 'f7-stepper',
-  props: __vueComponentGetPropKeys({
+  props: {
+    id: [
+      String,
+      Number
+    ],
     init: {
       type: Boolean,
       default: true
@@ -71,9 +70,9 @@ export default {
     smallIos: Boolean,
     raised: Boolean,
     ...Mixins.colorProps
-  }),
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     const {input, buttonsOnly, inputType, value, inputReadonly, min, max, step} = self.props;
     let inputWrapEl;
@@ -134,7 +133,7 @@ export default {
       }, Mixins.colorClasses(self));
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   },
   created() {

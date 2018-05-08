@@ -6,27 +6,25 @@ import __vueComponentTransformJSXProps from '../runtime-helpers/vue-component-tr
 import __vueComponentSetState from '../runtime-helpers/vue-component-set-state.js';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const TabProps = Utils.extend({
-  tabActive: Boolean,
-  id: String
-}, Mixins.colorProps);
 export default {
   name: 'f7-tab',
-  props: __vueComponentGetPropKeys(TabProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    tabActive: Boolean,
+    ...Mixins.colorProps
+  },
   data() {
-    const props = __vueComponentProps(this, __vueComponentPropsKeys);
+    const props = __vueComponentProps(this);
     const state = (() => {
       return { tabContent: null };
     })();
     return { state };
   },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     const {tabActive, id, className, style} = self.props;
     const tabContent = self.state.tabContent;
@@ -102,7 +100,7 @@ export default {
   },
   computed: {
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   }
 };

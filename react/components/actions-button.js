@@ -8,6 +8,22 @@ class F7ActionsButton extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
+  onClick(event) {
+    const self = this;
+    const $$ = self.$$;
+    const el = self.refs.el;
+    if (self.props.close && self.$f7 && el) {
+      self.$f7.actions.close($$(el).parents('.actions-modal'));
+    }
+    self.dispatchEvent('click', event);
+  }
+  get classes() {
+    const self = this;
+    return Utils.classNames(self.props.className, {
+      'actions-button': true,
+      'actions-button-bold': self.props.bold
+    }, Mixins.colorClasses(self));
+  }
   render() {
     const self = this;
     let mediaEl;
@@ -17,33 +33,23 @@ class F7ActionsButton extends React.Component {
     return React.createElement('div', {
       id: self.props.id,
       style: self.props.style,
-      className: self.className,
-      onClick: self.onClick.bind(self)
+      className: self.classes,
+      onClick: self.onClick.bind(self),
+      ref: 'el'
     }, mediaEl, React.createElement('div', { className: 'actions-button-text' }, this.slots['default']));
   }
-  get classes() {
-    const self = this;
-    return Utils.classNames(self.props.className, {
-      'actions-button': true,
-      'actions-button-bold': self.props.bold
-    }, Mixins.colorClasses(self));
-  }
-  onClick(event) {
-    const self = this;
-    const $$ = self.$$;
-    if (self.props.close && self.$f7) {
-      self.$f7.actions.close($$(self.$el).parents('.actions-modal'));
-    }
-    self.dispatchEvent('click', event);
-  }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
 }
 __reactComponentSetProps(F7ActionsButton, {
+  id: [
+    String,
+    Number
+  ],
   bold: Boolean,
   close: {
     type: Boolean,

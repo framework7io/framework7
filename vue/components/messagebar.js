@@ -4,14 +4,13 @@ import F7Input from './input';
 import F7Link from './link';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
 export default {
   name: 'f7-messagebar',
-  props: __vueComponentGetPropKeys({
+  props: {
+    id: [
+      String,
+      Number
+    ],
     sheetVisible: Boolean,
     attachmentsVisible: Boolean,
     top: Boolean,
@@ -46,7 +45,7 @@ export default {
       default: true
     },
     ...Mixins.colorProps
-  }),
+  },
   created() {
     this.onChangeBound = this.onChange.bind(this);
     this.onInputBound = this.onInput.bind(this);
@@ -58,7 +57,7 @@ export default {
     this.onResizePageBound = this.onResizePage.bind(this);
   },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     const {placeholder, disabled, name, readonly, resizable, value, sendLink, id, style} = self.props;
     const {
@@ -138,7 +137,7 @@ export default {
       }, Mixins.colorClasses(self));
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   },
   watch: {

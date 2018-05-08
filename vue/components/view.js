@@ -6,73 +6,72 @@ import __vueComponentTransformJSXProps from '../runtime-helpers/vue-component-tr
 import __vueComponentSetState from '../runtime-helpers/vue-component-set-state.js';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const ViewProps = Utils.extend({
-  tab: Boolean,
-  tabActive: Boolean,
-  name: String,
-  router: Boolean,
-  linksView: [
-    Object,
-    String
-  ],
-  url: String,
-  main: Boolean,
-  stackPages: Boolean,
-  xhrCache: String,
-  xhrCacheIgnore: Array,
-  xhrCacheIgnoreGetParameters: Boolean,
-  xhrCacheDuration: Number,
-  preloadPreviousPage: Boolean,
-  uniqueHistory: Boolean,
-  uniqueHistoryIgnoreGetParameters: Boolean,
-  allowDuplicateUrls: Boolean,
-  reloadPages: Boolean,
-  removeElements: Boolean,
-  removeElementsWithTimeout: Boolean,
-  removeElementsTimeout: Number,
-  restoreScrollTopOnBack: Boolean,
-  iosSwipeBack: Boolean,
-  iosSwipeBackAnimateShadow: Boolean,
-  iosSwipeBackAnimateOpacity: Boolean,
-  iosSwipeBackActiveArea: Number,
-  iosSwipeBackThreshold: Number,
-  pushState: Boolean,
-  pushStateRoot: String,
-  pushStateAnimate: Boolean,
-  pushStateAnimateOnLoad: Boolean,
-  pushStateSeparator: String,
-  pushStateOnLoad: Boolean,
-  animate: Boolean,
-  iosDynamicNavbar: Boolean,
-  iosSeparateDynamicNavbar: Boolean,
-  iosAnimateNavbarBackIcon: Boolean,
-  materialPageLoadDelay: Number,
-  passRouteQueryToRequest: Boolean,
-  passRouteParamsToRequest: Boolean,
-  routes: Array,
-  routesAdd: Array,
-  init: {
-    type: Boolean,
-    default: true
-  }
-}, Mixins.colorProps);
 export default {
   name: 'f7-view',
-  props: __vueComponentGetPropKeys(ViewProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    tab: Boolean,
+    tabActive: Boolean,
+    name: String,
+    router: Boolean,
+    linksView: [
+      Object,
+      String
+    ],
+    url: String,
+    main: Boolean,
+    stackPages: Boolean,
+    xhrCache: String,
+    xhrCacheIgnore: Array,
+    xhrCacheIgnoreGetParameters: Boolean,
+    xhrCacheDuration: Number,
+    preloadPreviousPage: Boolean,
+    uniqueHistory: Boolean,
+    uniqueHistoryIgnoreGetParameters: Boolean,
+    allowDuplicateUrls: Boolean,
+    reloadPages: Boolean,
+    removeElements: Boolean,
+    removeElementsWithTimeout: Boolean,
+    removeElementsTimeout: Number,
+    restoreScrollTopOnBack: Boolean,
+    iosSwipeBack: Boolean,
+    iosSwipeBackAnimateShadow: Boolean,
+    iosSwipeBackAnimateOpacity: Boolean,
+    iosSwipeBackActiveArea: Number,
+    iosSwipeBackThreshold: Number,
+    pushState: Boolean,
+    pushStateRoot: String,
+    pushStateAnimate: Boolean,
+    pushStateAnimateOnLoad: Boolean,
+    pushStateSeparator: String,
+    pushStateOnLoad: Boolean,
+    animate: Boolean,
+    iosDynamicNavbar: Boolean,
+    iosSeparateDynamicNavbar: Boolean,
+    iosAnimateNavbarBackIcon: Boolean,
+    materialPageLoadDelay: Number,
+    passRouteQueryToRequest: Boolean,
+    passRouteParamsToRequest: Boolean,
+    routes: Array,
+    routesAdd: Array,
+    init: {
+      type: Boolean,
+      default: true
+    },
+    ...Mixins.colorProps
+  },
   data() {
-    const props = __vueComponentProps(this, __vueComponentPropsKeys);
+    const props = __vueComponentProps(this);
     const state = (() => {
       return { pages: [] };
     })();
     return { state };
   },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     return _h('div', {
       ref: 'el',
@@ -157,7 +156,7 @@ export default {
       }, Mixins.colorClasses(this));
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   },
   methods: {

@@ -21,10 +21,14 @@ class F7ListGroup extends React.Component {
     }, React.createElement('ul', null, this.slots['default']));
   }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
 }
 __reactComponentSetProps(F7ListGroup, {
+  id: [
+    String,
+    Number
+  ],
   mediaList: Boolean,
   sortable: Boolean,
   ...Mixins.colorProps

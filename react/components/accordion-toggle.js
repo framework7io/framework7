@@ -16,8 +16,14 @@ class F7AccordionToggle extends React.Component {
     }, this.slots['default']);
   }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
 }
-__reactComponentSetProps(F7AccordionToggle, Mixins.colorProps);
+__reactComponentSetProps(F7AccordionToggle, {
+  id: [
+    String,
+    Number
+  ],
+  ...Mixins.colorProps
+});
 export default F7AccordionToggle;

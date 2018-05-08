@@ -2,27 +2,26 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
 export default {
   name: 'f7-messagebar-attachment',
-  props: __vueComponentGetPropKeys({
+  props: {
+    id: [
+      String,
+      Number
+    ],
     image: String,
     deletable: {
       type: Boolean,
       default: true
     },
     ...Mixins.colorProps
-  }),
+  },
   created() {
     this.onClickBound = this.onClick.bind(this);
     this.onDeleteClickBound = this.onDeleteClick.bind(this);
   },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     const {deletable, image, className, id, style} = self.props;
     const classes = Utils.classNames(className, 'messagebar-attachment', Mixins.colorClasses(self));
@@ -53,7 +52,7 @@ export default {
   },
   computed: {
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   }
 };

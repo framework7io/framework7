@@ -2,27 +2,26 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const ChipProps = Utils.extend({
-  media: String,
-  text: [
-    String,
-    Number
-  ],
-  deleteable: Boolean,
-  mediaBgColor: String,
-  mediaTextColor: String,
-  onDelete: Function
-}, Mixins.colorProps);
 export default {
   name: 'f7-chip',
-  props: __vueComponentGetPropKeys(ChipProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    media: String,
+    text: [
+      String,
+      Number
+    ],
+    deleteable: Boolean,
+    mediaBgColor: String,
+    mediaTextColor: String,
+    onDelete: Function,
+    ...Mixins.colorProps
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     let mediaEl;
     let labelEl;
@@ -68,7 +67,7 @@ export default {
       return Utils.classNames(c);
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   },
   methods: {

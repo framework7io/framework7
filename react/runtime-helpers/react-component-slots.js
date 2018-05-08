@@ -1,7 +1,7 @@
-export default function (component) {
-  const self = component;
+export default function (props) {
   const slots = {};
-  const children = self.props.children;
+  if (!props) return slots;
+  const children = props.children;
 
   if (!children || children.length === 0) {
     return slots;

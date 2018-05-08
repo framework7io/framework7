@@ -1,29 +1,28 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const ToolbarProps = Utils.extend({
-  bottomMd: Boolean,
-  tabbar: Boolean,
-  labels: Boolean,
-  scrollable: Boolean,
-  hidden: Boolean,
-  noShadow: Boolean,
-  noHairline: Boolean,
-  inner: {
-    type: Boolean,
-    default: true
-  }
-}, Mixins.colorProps);
 export default {
   name: 'f7-toolbar',
-  props: __vueComponentGetPropKeys(ToolbarProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    bottomMd: Boolean,
+    tabbar: Boolean,
+    labels: Boolean,
+    scrollable: Boolean,
+    hidden: Boolean,
+    noShadow: Boolean,
+    noHairline: Boolean,
+    inner: {
+      type: Boolean,
+      default: true
+    },
+    ...Mixins.colorProps
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     return _h('div', {
       ref: 'el',
@@ -62,7 +61,7 @@ export default {
       }, Mixins.colorClasses(self));
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   },
   methods: {

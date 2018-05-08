@@ -3,42 +3,21 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
-const ToolbarProps = Utils.extend({
-  bottomMd: Boolean,
-  tabbar: Boolean,
-  labels: Boolean,
-  scrollable: Boolean,
-  hidden: Boolean,
-  noShadow: Boolean,
-  noHairline: Boolean,
-  inner: {
-    type: Boolean,
-    default: true
-  }
-}, Mixins.colorProps);
 class F7Toolbar extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
-  render() {
+  hide(animate) {
     const self = this;
-    return React.createElement('div', {
-      ref: 'el',
-      className: self.classes
-    }, this.slots['before-inner'], self.props.inner ? React.createElement('div', { className: 'toolbar-inner' }, this.slots['default']) : this.slots['default'], this.slots['after-inner']);
+    if (!self.$f7)
+      return;
+    self.$f7.toolbar.hide(this.refs.el, animate);
   }
-  componentDidUpdate() {
+  show(animate) {
     const self = this;
-    if (self.props.tabbar && self.$f7) {
-      self.$f7.toolbar.setHighlight(self.refs.el);
-    }
-  }
-  componentDidMount() {
-    const self = this;
-    self.$f7ready(f7 => {
-      if (self.props.tabbar)
-        f7.toolbar.setHighlight(self.refs.el);
-    });
+    if (!self.$f7)
+      return;
+    self.$f7.toolbar.show(this.refs.el, animate);
   }
   get classes() {
     const self = this;
@@ -53,21 +32,46 @@ class F7Toolbar extends React.Component {
       'no-hairline': self.props.noHairline
     }, Mixins.colorClasses(self));
   }
-  hide(animate) {
+  componentDidMount() {
     const self = this;
-    if (!self.$f7)
-      return;
-    self.$f7.toolbar.hide(this.refs.el, animate);
+    self.$f7ready(f7 => {
+      if (self.props.tabbar)
+        f7.toolbar.setHighlight(self.refs.el);
+    });
   }
-  show(animate) {
+  componentDidUpdate() {
     const self = this;
-    if (!self.$f7)
-      return;
-    self.$f7.toolbar.show(this.refs.el, animate);
+    if (self.props.tabbar && self.$f7) {
+      self.$f7.toolbar.setHighlight(self.refs.el);
+    }
+  }
+  render() {
+    const self = this;
+    return React.createElement('div', {
+      ref: 'el',
+      className: self.classes
+    }, this.slots['before-inner'], self.props.inner ? React.createElement('div', { className: 'toolbar-inner' }, this.slots['default']) : this.slots['default'], this.slots['after-inner']);
   }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
 }
-__reactComponentSetProps(F7Toolbar, ToolbarProps);
+__reactComponentSetProps(F7Toolbar, {
+  id: [
+    String,
+    Number
+  ],
+  bottomMd: Boolean,
+  tabbar: Boolean,
+  labels: Boolean,
+  scrollable: Boolean,
+  hidden: Boolean,
+  noShadow: Boolean,
+  noHairline: Boolean,
+  inner: {
+    type: Boolean,
+    default: true
+  },
+  ...Mixins.colorProps
+});
 export default F7Toolbar;

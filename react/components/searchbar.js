@@ -8,50 +8,51 @@ class F7Searchbar extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
-  render() {
-    const self = this;
-    let clearEl;
-    let disableEl;
-    const {placeholder, clearButton, disableButton, disableButtonText, form, noShadow, noHairline, expandable, className, style, id} = self.props;
-    if (clearButton) {
-      clearEl = React.createElement('span', {
-        className: 'input-clear-button',
-        onClick: self.onClearButtonClick.bind(self)
-      });
-    }
-    if (disableButton) {
-      disableEl = React.createElement('span', {
-        className: 'searchbar-disable-button',
-        onClick: self.onDisableButtonClick.bind(self)
-      }, disableButtonText);
-    }
-    const SearchbarTag = form ? 'form' : 'div';
-    const classes = Utils.classNames(className, 'searchbar', {
-      'no-shadow': noShadow,
-      'no-hairline': noHairline,
-      'searchbar-expandable': expandable
-    }, Mixins.colorClasses(self));
-    return React.createElement(SearchbarTag, {
-      ref: 'el',
-      id: id,
-      style: style,
-      className: classes
-    }, this.slots['before-inner'], React.createElement('div', { className: 'searchbar-inner' }, this.slots['inner-start'], React.createElement('div', { className: 'searchbar-input-wrap' }, this.slots['input-wrap-start'], React.createElement('input', {
-      placeholder: placeholder,
-      type: 'search',
-      onInput: self.onInput.bind(self),
-      onChange: self.onChange.bind(self),
-      onFocus: self.onFocus.bind(self),
-      onBlur: self.onBlur.bind(self)
-    }), React.createElement('i', { className: 'searchbar-icon' }), clearEl, this.slots['input-wrap-end']), disableEl, this.slots['inner-end'], this.slots['default']), this.slots['after-inner']);
+  search(query) {
+    if (!this.f7Searchbar)
+      return undefined;
+    return this.f7Searchbar.search(query);
   }
-  componentWillUnmount() {
-    const self = this;
-    if (self.props.form && self.refs.el) {
-      self.refs.el.removeEventListener('submit', self.onSubmitBound, false);
-    }
-    if (self.f7Searchbar && self.f7Searchbar.destroy)
-      self.f7Searchbar.destroy();
+  enable() {
+    if (!this.f7Searchbar)
+      return undefined;
+    return this.f7Searchbar.enable();
+  }
+  disable() {
+    if (!this.f7Searchbar)
+      return undefined;
+    return this.f7Searchbar.disable();
+  }
+  toggle() {
+    if (!this.f7Searchbar)
+      return undefined;
+    return this.toggle.disable();
+  }
+  clear() {
+    if (!this.f7Searchbar)
+      return undefined;
+    return this.f7Searchbar.clear();
+  }
+  onChange(event) {
+    this.dispatchEvent('change', event);
+  }
+  onInput(event) {
+    this.dispatchEvent('input', event);
+  }
+  onFocus(event) {
+    this.dispatchEvent('focus', event);
+  }
+  onBlur(event) {
+    this.dispatchEvent('blur', event);
+  }
+  onSubmit(event) {
+    this.dispatchEvent('submit', event);
+  }
+  onClearButtonClick(event) {
+    this.dispatchEvent('click:clear clickClear', event);
+  }
+  onDisableButtonClick(event) {
+    this.dispatchEvent('click:disable clickDisable', event);
   }
   componentDidMount() {
     const self = this;
@@ -104,60 +105,63 @@ class F7Searchbar extends React.Component {
       self.f7Searchbar = self.$f7.searchbar.create(params);
     });
   }
-  search(query) {
-    if (!this.f7Searchbar)
-      return undefined;
-    return this.f7Searchbar.search(query);
+  componentWillUnmount() {
+    const self = this;
+    if (self.props.form && self.refs.el) {
+      self.refs.el.removeEventListener('submit', self.onSubmitBound, false);
+    }
+    if (self.f7Searchbar && self.f7Searchbar.destroy)
+      self.f7Searchbar.destroy();
   }
-  enable() {
-    if (!this.f7Searchbar)
-      return undefined;
-    return this.f7Searchbar.enable();
-  }
-  disable() {
-    if (!this.f7Searchbar)
-      return undefined;
-    return this.f7Searchbar.disable();
-  }
-  toggle() {
-    if (!this.f7Searchbar)
-      return undefined;
-    return this.toggle.disable();
-  }
-  clear() {
-    if (!this.f7Searchbar)
-      return undefined;
-    return this.f7Searchbar.clear();
-  }
-  onChange(event) {
-    this.dispatchEvent('change', event);
-  }
-  onInput(event) {
-    this.dispatchEvent('input', event);
-  }
-  onFocus(event) {
-    this.dispatchEvent('focus', event);
-  }
-  onBlur(event) {
-    this.dispatchEvent('blur', event);
-  }
-  onSubmit(event) {
-    this.dispatchEvent('submit', event);
-  }
-  onClearButtonClick(event) {
-    this.dispatchEvent('click:clear clickClear', event);
-  }
-  onDisableButtonClick(event) {
-    this.dispatchEvent('click:disable clickDisable', event);
+  render() {
+    const self = this;
+    let clearEl;
+    let disableEl;
+    const {placeholder, clearButton, disableButton, disableButtonText, form, noShadow, noHairline, expandable, className, style, id} = self.props;
+    if (clearButton) {
+      clearEl = React.createElement('span', {
+        className: 'input-clear-button',
+        onClick: self.onClearButtonClick.bind(self)
+      });
+    }
+    if (disableButton) {
+      disableEl = React.createElement('span', {
+        className: 'searchbar-disable-button',
+        onClick: self.onDisableButtonClick.bind(self)
+      }, disableButtonText);
+    }
+    const SearchbarTag = form ? 'form' : 'div';
+    const classes = Utils.classNames(className, 'searchbar', {
+      'no-shadow': noShadow,
+      'no-hairline': noHairline,
+      'searchbar-expandable': expandable
+    }, Mixins.colorClasses(self));
+    return React.createElement(SearchbarTag, {
+      ref: 'el',
+      id: id,
+      style: style,
+      className: classes
+    }, this.slots['before-inner'], React.createElement('div', { className: 'searchbar-inner' }, this.slots['inner-start'], React.createElement('div', { className: 'searchbar-input-wrap' }, this.slots['input-wrap-start'], React.createElement('input', {
+      placeholder: placeholder,
+      type: 'search',
+      onInput: self.onInput.bind(self),
+      onChange: self.onChange.bind(self),
+      onFocus: self.onFocus.bind(self),
+      onBlur: self.onBlur.bind(self)
+    }), React.createElement('i', { className: 'searchbar-icon' }), clearEl, this.slots['input-wrap-end']), disableEl, this.slots['inner-end'], this.slots['default']), this.slots['after-inner']);
   }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
 }
 __reactComponentSetProps(F7Searchbar, {
+  id: [
+    String,
+    Number
+  ],
   noShadow: Boolean,
   noHairline: Boolean,
   form: {

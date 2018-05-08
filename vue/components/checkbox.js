@@ -2,30 +2,29 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const CheckboxProps = Utils.extend({
-  checked: Boolean,
-  name: [
-    Number,
-    String
-  ],
-  value: [
-    Number,
-    String,
-    Boolean
-  ],
-  disabled: Boolean,
-  readonly: Boolean
-}, Mixins.colorProps);
 export default {
   name: 'f7-checkbox',
-  props: __vueComponentGetPropKeys(CheckboxProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    checked: Boolean,
+    name: [
+      Number,
+      String
+    ],
+    value: [
+      Number,
+      String,
+      Boolean
+    ],
+    disabled: Boolean,
+    readonly: Boolean,
+    ...Mixins.colorProps
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     const {name, value, disabled, readonly, checked} = self;
     const inputEl = _h('input', {
@@ -59,7 +58,7 @@ export default {
       }, Mixins.colorClasses(self));
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   },
   methods: {

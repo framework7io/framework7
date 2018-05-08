@@ -1,17 +1,18 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const NavRightProps = Utils.extend({ sliding: Boolean }, Mixins.colorProps);
 export default {
   name: 'f7-nav-right',
-  props: __vueComponentGetPropKeys(NavRightProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    sliding: Boolean,
+    ...Mixins.colorProps
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     return _h('div', {
       style: this.props.style,
       class: this.classes,
@@ -26,7 +27,7 @@ export default {
       }, Mixins.colorClasses(this));
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   }
 };

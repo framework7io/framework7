@@ -4,20 +4,27 @@ import Mixins from '../utils/mixins';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
-const ChipProps = Utils.extend({
-  media: String,
-  text: [
-    String,
-    Number
-  ],
-  deleteable: Boolean,
-  mediaBgColor: String,
-  mediaTextColor: String,
-  onDelete: Function
-}, Mixins.colorProps);
 class F7Chip extends React.Component {
   constructor(props, context) {
     super(props, context);
+  }
+  onClick(event) {
+    this.dispatchEvent('click', event);
+  }
+  onDeleteClick(event) {
+    this.dispatchEvent('delete', event);
+  }
+  get classes() {
+    const self = this;
+    return Utils.classNames(self.props.className, { chip: true }, Mixins.colorClasses(self));
+  }
+  get mediaClasses() {
+    const c = { 'chip-media': true };
+    if (this.props.mediaTextColor)
+      c[`text-color-${ this.props.mediaTextColor }`] = true;
+    if (this.props.mediaBgColor)
+      c[`bg-color-${ this.props.mediaBgColor }`] = true;
+    return Utils.classNames(c);
   }
   render() {
     const self = this;
@@ -44,30 +51,27 @@ class F7Chip extends React.Component {
       onClick: self.onClick.bind(self)
     }, mediaEl, labelEl, deleteEl);
   }
-  get classes() {
-    const self = this;
-    return Utils.classNames(self.props.className, { chip: true }, Mixins.colorClasses(self));
-  }
-  get mediaClasses() {
-    const c = { 'chip-media': true };
-    if (this.props.mediaTextColor)
-      c[`text-color-${ this.props.mediaTextColor }`] = true;
-    if (this.props.mediaBgColor)
-      c[`bg-color-${ this.props.mediaBgColor }`] = true;
-    return Utils.classNames(c);
-  }
-  onClick(event) {
-    this.dispatchEvent('click', event);
-  }
-  onDeleteClick(event) {
-    this.dispatchEvent('delete', event);
-  }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
 }
-__reactComponentSetProps(F7Chip, ChipProps);
+__reactComponentSetProps(F7Chip, {
+  id: [
+    String,
+    Number
+  ],
+  media: String,
+  text: [
+    String,
+    Number
+  ],
+  deleteable: Boolean,
+  mediaBgColor: String,
+  mediaTextColor: String,
+  onDelete: Function,
+  ...Mixins.colorProps
+});
 export default F7Chip;

@@ -4,20 +4,21 @@ import Mixins from '../utils/mixins';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
-const FabProps = Utils.extend({
-  morphTo: String,
-  href: [
-    Boolean,
-    String
-  ],
-  position: {
-    type: String,
-    default: 'right-bottom'
-  }
-}, Mixins.colorProps);
 class F7Fab extends React.Component {
   constructor(props, context) {
     super(props, context);
+  }
+  onClick(event) {
+    const self = this;
+    self.dispatchEvent('click', event);
+  }
+  get classes() {
+    const self = this;
+    return Utils.classNames(self.props.className, {
+      fab: true,
+      'fab-morph': self.morphTo,
+      [`fab-${ self.props.position }`]: true
+    }, Mixins.colorClasses(self));
   }
   render() {
     const self = this;
@@ -64,24 +65,27 @@ class F7Fab extends React.Component {
       'data-morph-to': morphTo
     }, linkEl, rootChildren, rootSlots);
   }
-  get classes() {
-    const self = this;
-    return Utils.classNames(self.props.className, {
-      fab: true,
-      'fab-morph': self.morphTo,
-      [`fab-${ self.props.position }`]: true
-    }, Mixins.colorClasses(self));
-  }
-  onClick(event) {
-    const self = this;
-    self.dispatchEvent('click', event);
-  }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
 }
-__reactComponentSetProps(F7Fab, FabProps);
+__reactComponentSetProps(F7Fab, {
+  id: [
+    String,
+    Number
+  ],
+  morphTo: String,
+  href: [
+    Boolean,
+    String
+  ],
+  position: {
+    type: String,
+    default: 'right-bottom'
+  },
+  ...Mixins.colorProps
+});
 export default F7Fab;

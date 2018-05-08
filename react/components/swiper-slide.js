@@ -15,8 +15,14 @@ class F7SwiperSlide extends React.Component {
     }, this.props.zoom ? React.createElement('div', { className: 'swiper-zoom-container' }, this.slots['default']) : this.slots['default']);
   }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
 }
-__reactComponentSetProps(F7SwiperSlide, { zoom: Boolean });
+__reactComponentSetProps(F7SwiperSlide, {
+  id: [
+    String,
+    Number
+  ],
+  zoom: Boolean
+});
 export default F7SwiperSlide;

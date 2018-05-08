@@ -2,25 +2,24 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const PanelProps = Utils.extend({
-  side: String,
-  effect: String,
-  cover: Boolean,
-  reveal: Boolean,
-  left: Boolean,
-  right: Boolean,
-  opened: Boolean
-}, Mixins.colorProps);
 export default {
   name: 'f7-panel',
-  props: __vueComponentGetPropKeys(PanelProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    side: String,
+    effect: String,
+    cover: Boolean,
+    reveal: Boolean,
+    left: Boolean,
+    right: Boolean,
+    opened: Boolean,
+    ...Mixins.colorProps
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     return _h('div', {
       ref: 'el',
       style: this.props.style,
@@ -43,7 +42,7 @@ export default {
       }, Mixins.colorClasses(self));
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   },
   watch: {

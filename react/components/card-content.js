@@ -20,10 +20,14 @@ class F7CardContent extends React.Component {
     }, this.slots['default']);
   }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
 }
 __reactComponentSetProps(F7CardContent, {
+  id: [
+    String,
+    Number
+  ],
   padding: {
     type: Boolean,
     default: true

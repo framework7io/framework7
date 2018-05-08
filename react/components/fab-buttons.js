@@ -3,22 +3,9 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
-const FabButtonsProps = Utils.extend({
-  position: {
-    type: String,
-    default: 'top'
-  }
-}, Mixins.colorProps);
 class F7FabButtons extends React.Component {
   constructor(props, context) {
     super(props, context);
-  }
-  render() {
-    return React.createElement('div', {
-      id: this.props.id,
-      style: this.props.style,
-      className: this.classes
-    }, this.slots['default']);
   }
   get classes() {
     const self = this;
@@ -27,9 +14,26 @@ class F7FabButtons extends React.Component {
       [`fab-buttons-${ self.props.position }`]: true
     }, Mixins.colorClasses(self));
   }
+  render() {
+    return React.createElement('div', {
+      id: this.props.id,
+      style: this.props.style,
+      className: this.classes
+    }, this.slots['default']);
+  }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
 }
-__reactComponentSetProps(F7FabButtons, FabButtonsProps);
+__reactComponentSetProps(F7FabButtons, {
+  id: [
+    String,
+    Number
+  ],
+  position: {
+    type: String,
+    default: 'top'
+  },
+  ...Mixins.colorProps
+});
 export default F7FabButtons;

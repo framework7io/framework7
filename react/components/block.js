@@ -9,21 +9,11 @@ class F7Block extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
-  componentDidMount() {
-    const el = this.el;
-    if (!el)
-      return;
-    this.onTabShowBound = this.onTabShow.bind(this);
-    this.onTabHideBound = this.onTabHide.bind(this);
-    el.addEventListener('tab:show', this.onTabShowBound);
-    el.addEventListener('tab:hide', this.onTabHideBound);
+  onTabShow(e) {
+    this.dispatchEvent('tabShow tab:show', e);
   }
-  componentWillUnmount() {
-    const el = this.el;
-    if (!el)
-      return;
-    el.removeEventListener('tab:show', this.onTabShowBound);
-    el.removeEventListener('tab:hide', this.onTabHideBound);
+  onTabHide(e) {
+    this.dispatchEvent('tabShow tab:hide', e);
   }
   render() {
     const self = this;
@@ -46,14 +36,24 @@ class F7Block extends React.Component {
       className: classes
     }, this.slots['default']);
   }
-  onTabShow(e) {
-    this.dispatchEvent('tabShow tab:show', e);
+  componentWillUnmount() {
+    const el = this.el;
+    if (!el)
+      return;
+    el.removeEventListener('tab:show', this.onTabShowBound);
+    el.removeEventListener('tab:hide', this.onTabHideBound);
   }
-  onTabHide(e) {
-    this.dispatchEvent('tabShow tab:hide', e);
+  componentDidMount() {
+    const el = this.el;
+    if (!el)
+      return;
+    this.onTabShowBound = this.onTabShow.bind(this);
+    this.onTabHideBound = this.onTabHide.bind(this);
+    el.addEventListener('tab:show', this.onTabShowBound);
+    el.addEventListener('tab:hide', this.onTabHideBound);
   }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
   get el() {
     return __reactComponentEl(this);
@@ -63,6 +63,10 @@ class F7Block extends React.Component {
   }
 }
 __reactComponentSetProps(F7Block, {
+  id: [
+    String,
+    Number
+  ],
   inset: Boolean,
   tabletInset: Boolean,
   strong: Boolean,

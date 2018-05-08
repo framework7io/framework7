@@ -17,6 +17,43 @@ class F7Message extends React.Component {
       this.onBubbleClickBound = this.onBubbleClick.bind(this);
     })();
   }
+  onClick(event) {
+    this.dispatchEvent('click', event);
+  }
+  onNameClick(event) {
+    this.dispatchEvent('click:name clickName', event);
+  }
+  onTextClick(event) {
+    this.dispatchEvent('click:text clickText', event);
+  }
+  onAvatarClick(event) {
+    this.dispatchEvent('click:avatar clickAvatar', event);
+  }
+  onHeaderClick(event) {
+    this.dispatchEvent('click:header clickHeader', event);
+  }
+  onFooterClick(event) {
+    this.dispatchEvent('click:footer clickFooter', event);
+  }
+  onBubbleClick(event) {
+    this.dispatchEvent('click:bubble clickBubble', event);
+  }
+  get classes() {
+    const self = this;
+    const {type, typing, first, last, tail, sameName, sameHeader, sameFooter, sameAvatar} = self.props;
+    return Utils.classNames(self.props.classNames, 'message', {
+      'message-sent': type === 'sent',
+      'message-received': type === 'received',
+      'message-typing': typing,
+      'message-first': first,
+      'message-last': last,
+      'message-tail': tail,
+      'message-same-name': sameName,
+      'message-same-header': sameHeader,
+      'message-same-footer': sameFooter,
+      'message-same-avatar': sameAvatar
+    }, Mixins.colorClasses(self));
+  }
   render() {
     const self = this;
     const {text, name, avatar, image, header, footer, textHeader, textFooter, typing, id, style} = self.props;
@@ -63,51 +100,18 @@ class F7Message extends React.Component {
       onClick: self.onFooterClickBound
     }, slotsFooter || footer), slotsContentEnd), slotsEnd);
   }
-  get classes() {
-    const self = this;
-    const {type, typing, first, last, tail, sameName, sameHeader, sameFooter, sameAvatar} = self.props;
-    return Utils.classNames(self.props.classNames, 'message', {
-      'message-sent': type === 'sent',
-      'message-received': type === 'received',
-      'message-typing': typing,
-      'message-first': first,
-      'message-last': last,
-      'message-tail': tail,
-      'message-same-name': sameName,
-      'message-same-header': sameHeader,
-      'message-same-footer': sameFooter,
-      'message-same-avatar': sameAvatar
-    }, Mixins.colorClasses(self));
-  }
-  onClick(event) {
-    this.dispatchEvent('click', event);
-  }
-  onNameClick(event) {
-    this.dispatchEvent('click:name clickName', event);
-  }
-  onTextClick(event) {
-    this.dispatchEvent('click:text clickText', event);
-  }
-  onAvatarClick(event) {
-    this.dispatchEvent('click:avatar clickAvatar', event);
-  }
-  onHeaderClick(event) {
-    this.dispatchEvent('click:header clickHeader', event);
-  }
-  onFooterClick(event) {
-    this.dispatchEvent('click:footer clickFooter', event);
-  }
-  onBubbleClick(event) {
-    this.dispatchEvent('click:bubble clickBubble', event);
-  }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
 }
 __reactComponentSetProps(F7Message, {
+  id: [
+    String,
+    Number
+  ],
   text: String,
   name: String,
   avatar: String,

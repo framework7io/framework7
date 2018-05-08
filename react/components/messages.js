@@ -7,83 +7,6 @@ class F7Messages extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
-  render() {
-    const self = this;
-    const {id, style, className} = self.props;
-    const classes = Utils.classNames(className, 'messages', Mixins.colorClasses(self));
-    return React.createElement('div', {
-      ref: 'el',
-      id: id,
-      style: style,
-      className: classes
-    }, this.slots['default']);
-  }
-  componentWillUpdate() {
-    const self = this;
-    if (!self.props.init)
-      return;
-    const el = self.refs.el;
-    if (!el)
-      return;
-    const children = el.children;
-    if (!children)
-      return;
-    for (let i = 0; i < children.length; i += 1) {
-      children[i].classList.add('message-appeared');
-    }
-  }
-  componentDidUpdate() {
-    const self = this;
-    const {init, autoLayout, scrollMessages} = self.props;
-    if (!init)
-      return;
-    const el = self.refs.el;
-    if (!el)
-      return;
-    const children = el.children;
-    if (!children)
-      return;
-    for (let i = 0; i < children.length; i += 1) {
-      if (!children[i].classList.contains('message-appeared')) {
-        children[i].classList.add('message-appear-from-bottom');
-      }
-    }
-    if (self.f7Messages && self.f7Messages.layout && autoLayout) {
-      self.f7Messages.layout();
-    }
-    if (self.f7Messages && self.f7Messages.scroll && scrollMessages) {
-      self.f7Messages.scroll();
-    }
-  }
-  componentDidMount() {
-    const self = this;
-    const {init, autoLayout, messages, newMessagesFirst, scrollMessages, scrollMessagesOnEdge, firstMessageRule, lastMessageRule, tailMessageRule, sameNameMessageRule, sameHeaderMessageRule, sameFooterMessageRule, sameAvatarMessageRule, customClassMessageRule, renderMessage} = self.props;
-    if (!init)
-      return;
-    self.$f7ready(f7 => {
-      self.f7Messages = f7.messages.create({
-        el: self.refs.el,
-        autoLayout,
-        messages,
-        newMessagesFirst,
-        scrollMessages,
-        scrollMessagesOnEdge,
-        firstMessageRule,
-        lastMessageRule,
-        tailMessageRule,
-        sameNameMessageRule,
-        sameHeaderMessageRule,
-        sameFooterMessageRule,
-        sameAvatarMessageRule,
-        customClassMessageRule,
-        renderMessage
-      });
-    });
-  }
-  componentWillUnmount() {
-    if (this.f7Messages && this.f7Messages.destroy)
-      this.f7Messages.destroy();
-  }
   renderMessages(messagesToRender, method) {
     if (!this.f7Messages)
       return undefined;
@@ -139,11 +62,92 @@ class F7Messages extends React.Component {
       return undefined;
     return this.f7Messages.destroy();
   }
+  componentWillUnmount() {
+    if (this.f7Messages && this.f7Messages.destroy)
+      this.f7Messages.destroy();
+  }
+  componentDidMount() {
+    const self = this;
+    const {init, autoLayout, messages, newMessagesFirst, scrollMessages, scrollMessagesOnEdge, firstMessageRule, lastMessageRule, tailMessageRule, sameNameMessageRule, sameHeaderMessageRule, sameFooterMessageRule, sameAvatarMessageRule, customClassMessageRule, renderMessage} = self.props;
+    if (!init)
+      return;
+    self.$f7ready(f7 => {
+      self.f7Messages = f7.messages.create({
+        el: self.refs.el,
+        autoLayout,
+        messages,
+        newMessagesFirst,
+        scrollMessages,
+        scrollMessagesOnEdge,
+        firstMessageRule,
+        lastMessageRule,
+        tailMessageRule,
+        sameNameMessageRule,
+        sameHeaderMessageRule,
+        sameFooterMessageRule,
+        sameAvatarMessageRule,
+        customClassMessageRule,
+        renderMessage
+      });
+    });
+  }
+  componentDidUpdate() {
+    const self = this;
+    const {init, autoLayout, scrollMessages} = self.props;
+    if (!init)
+      return;
+    const el = self.refs.el;
+    if (!el)
+      return;
+    const children = el.children;
+    if (!children)
+      return;
+    for (let i = 0; i < children.length; i += 1) {
+      if (!children[i].classList.contains('message-appeared')) {
+        children[i].classList.add('message-appear-from-bottom');
+      }
+    }
+    if (self.f7Messages && self.f7Messages.layout && autoLayout) {
+      self.f7Messages.layout();
+    }
+    if (self.f7Messages && self.f7Messages.scroll && scrollMessages) {
+      self.f7Messages.scroll();
+    }
+  }
+  componentWillUpdate() {
+    const self = this;
+    if (!self.props.init)
+      return;
+    const el = self.refs.el;
+    if (!el)
+      return;
+    const children = el.children;
+    if (!children)
+      return;
+    for (let i = 0; i < children.length; i += 1) {
+      children[i].classList.add('message-appeared');
+    }
+  }
+  render() {
+    const self = this;
+    const {id, style, className} = self.props;
+    const classes = Utils.classNames(className, 'messages', Mixins.colorClasses(self));
+    return React.createElement('div', {
+      ref: 'el',
+      id: id,
+      style: style,
+      className: classes
+    }, this.slots['default']);
+  }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
 }
 __reactComponentSetProps(F7Messages, {
+  id: [
+    String,
+    Number
+  ],
   autoLayout: {
     type: Boolean,
     default: false

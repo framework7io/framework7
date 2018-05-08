@@ -4,10 +4,16 @@ import Mixins from '../utils/mixins';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
-const FabButtonProps = Utils.extend({ fabClose: Boolean }, Mixins.colorProps);
 class F7FabButton extends React.Component {
   constructor(props, context) {
     super(props, context);
+  }
+  onClick(event) {
+    this.dispatchEvent('click', event);
+  }
+  get classes() {
+    const self = this;
+    return Utils.classNames(self.props.className, { 'fab-close': self.fabClose }, Mixins.colorClasses(self));
   }
   render() {
     return React.createElement('a', {
@@ -17,19 +23,19 @@ class F7FabButton extends React.Component {
       onClick: this.onClick.bind(this)
     }, this.slots['default']);
   }
-  get classes() {
-    const self = this;
-    return Utils.classNames(self.props.className, { 'fab-close': self.fabClose }, Mixins.colorClasses(self));
-  }
-  onClick(event) {
-    this.dispatchEvent('click', event);
-  }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
 }
-__reactComponentSetProps(F7FabButton, FabButtonProps);
+__reactComponentSetProps(F7FabButton, {
+  id: [
+    String,
+    Number
+  ],
+  fabClose: Boolean,
+  ...Mixins.colorProps
+});
 export default F7FabButton;

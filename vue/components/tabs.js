@@ -1,21 +1,20 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const TabsProps = Utils.extend({
-  animated: Boolean,
-  swipeable: Boolean,
-  routable: Boolean
-}, Mixins.colorProps);
 export default {
   name: 'f7-tabs',
-  props: __vueComponentGetPropKeys(TabsProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    animated: Boolean,
+    swipeable: Boolean,
+    routable: Boolean,
+    ...Mixins.colorProps
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     const {animated, swipeable, id, style} = self.props;
     if (animated || swipeable) {
@@ -36,7 +35,7 @@ export default {
       }, Mixins.colorClasses(this));
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   }
 };

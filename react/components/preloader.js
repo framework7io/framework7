@@ -2,15 +2,19 @@ import React from 'react';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
-const PreloaderProps = Utils.extend({
-  size: [
-    Number,
-    String
-  ]
-}, Mixins.colorProps);
 class F7Preloader extends React.Component {
   constructor(props, context) {
     super(props, context);
+  }
+  get classes() {
+    return Utils.classNames(this.props.className, 'preloader', Mixins.colorClasses(this));
+  }
+  get sizeComputed() {
+    let s = this.props.size;
+    if (s && typeof s === 'string' && s.indexOf('px') >= 0) {
+      s = s.replace('px', '');
+    }
+    return s;
   }
   render() {
     const {classes, sizeComputed} = this;
@@ -32,16 +36,16 @@ class F7Preloader extends React.Component {
       className: classes
     }, innerEl);
   }
-  get classes() {
-    return Utils.classNames(this.props.className, 'preloader', Mixins.colorClasses(this));
-  }
-  get sizeComputed() {
-    let s = this.props.size;
-    if (s && typeof s === 'string' && s.indexOf('px') >= 0) {
-      s = s.replace('px', '');
-    }
-    return s;
-  }
 }
-__reactComponentSetProps(F7Preloader, PreloaderProps);
+__reactComponentSetProps(F7Preloader, {
+  id: [
+    String,
+    Number
+  ],
+  size: [
+    Number,
+    String
+  ],
+  ...Mixins.colorProps
+});
 export default F7Preloader;

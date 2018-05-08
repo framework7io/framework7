@@ -2,64 +2,63 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const RangeProps = Utils.extend({
-  init: {
-    type: Boolean,
-    default: true
-  },
-  value: {
-    type: [
-      Number,
-      Array,
-      String
-    ],
-    default: 0
-  },
-  min: {
-    type: [
-      Number,
-      String
-    ],
-    default: 0
-  },
-  max: {
-    type: [
-      Number,
-      String
-    ],
-    default: 100
-  },
-  step: {
-    type: [
-      Number,
-      String
-    ],
-    default: 1
-  },
-  label: {
-    type: Boolean,
-    default: false
-  },
-  dual: {
-    type: Boolean,
-    default: false
-  },
-  disabled: Boolean,
-  draggableBar: {
-    type: Boolean,
-    default: true
-  }
-}, Mixins.colorProps);
 export default {
   name: 'f7-range',
-  props: __vueComponentGetPropKeys(RangeProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    init: {
+      type: Boolean,
+      default: true
+    },
+    value: {
+      type: [
+        Number,
+        Array,
+        String
+      ],
+      default: 0
+    },
+    min: {
+      type: [
+        Number,
+        String
+      ],
+      default: 0
+    },
+    max: {
+      type: [
+        Number,
+        String
+      ],
+      default: 100
+    },
+    step: {
+      type: [
+        Number,
+        String
+      ],
+      default: 1
+    },
+    label: {
+      type: Boolean,
+      default: false
+    },
+    dual: {
+      type: Boolean,
+      default: false
+    },
+    disabled: Boolean,
+    draggableBar: {
+      type: Boolean,
+      default: true
+    },
+    ...Mixins.colorProps
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     const classes = Utils.classNames(self.props.className, 'range-slider', { disabled: self.props.disabled }, Mixins.colorClasses(self));
     return _h('div', {
@@ -126,7 +125,7 @@ export default {
   },
   computed: {
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   }
 };

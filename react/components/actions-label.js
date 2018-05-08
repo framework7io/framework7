@@ -8,6 +8,9 @@ class F7ActionsLabel extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
+  onClick(event) {
+    this.dispatchEvent('click', event);
+  }
   render() {
     const self = this;
     const classes = Utils.classNames(self.props.className, {
@@ -21,17 +24,18 @@ class F7ActionsLabel extends React.Component {
       onClick: self.onClick.bind(self)
     }, this.slots['default']);
   }
-  onClick(event) {
-    this.dispatchEvent('click', event);
-  }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
 }
 __reactComponentSetProps(F7ActionsLabel, {
+  id: [
+    String,
+    Number
+  ],
   bold: Boolean,
   ...Mixins.colorProps
 });

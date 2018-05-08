@@ -8,15 +8,6 @@ class F7App extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
-  render() {
-    const self = this;
-    const classes = Utils.classNames(self.props.className, 'framework7-root', Mixins.colorClasses(self));
-    return React.createElement('div', {
-      ref: 'el',
-      id: self.props.id || 'framework7-root',
-      className: classes
-    }, this.slots['default']);
-  }
   componentDidMount() {
     const self = this;
     const {params = {}, routes} = self.props;
@@ -27,11 +18,24 @@ class F7App extends React.Component {
     }
     f7Plugin.init(el, params, routes);
   }
+  render() {
+    const self = this;
+    const classes = Utils.classNames(self.props.className, 'framework7-root', Mixins.colorClasses(self));
+    return React.createElement('div', {
+      ref: 'el',
+      id: self.props.id || 'framework7-root',
+      className: classes
+    }, this.slots['default']);
+  }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
 }
 __reactComponentSetProps(F7App, {
+  id: [
+    String,
+    Number
+  ],
   params: Object,
   routes: Array
 });

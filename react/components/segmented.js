@@ -3,14 +3,6 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
-const SegmentedProps = Utils.extend({
-  raised: Boolean,
-  round: Boolean,
-  tag: {
-    type: String,
-    default: 'div'
-  }
-}, Mixins.colorProps);
 class F7Segmented extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -30,8 +22,20 @@ class F7Segmented extends React.Component {
     }, this.slots['default']);
   }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
 }
-__reactComponentSetProps(F7Segmented, SegmentedProps);
+__reactComponentSetProps(F7Segmented, {
+  id: [
+    String,
+    Number
+  ],
+  raised: Boolean,
+  round: Boolean,
+  tag: {
+    type: String,
+    default: 'div'
+  },
+  ...Mixins.colorProps
+});
 export default F7Segmented;

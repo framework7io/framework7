@@ -8,18 +8,43 @@ class F7LoginScreen extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
-  render() {
-    const self = this;
-    return React.createElement('div', {
-      ref: 'el',
-      id: self.props.id,
-      style: self.props.style,
-      className: self.classes
-    }, this.slots['default']);
+  onOpen(event) {
+    this.$emit('loginscreen:open loginScreenOpen', event);
   }
-  get classes() {
+  onOpened(event) {
+    this.$emit('loginscreen:opened loginScreenOpened', event);
+  }
+  onClose(event) {
+    this.$emit('loginscreen:close loginScreenClose', event);
+  }
+  onClosed(event) {
+    this.$emit('loginscreen:closed loginScreenClosed', event);
+  }
+  open(animate) {
     const self = this;
-    return Utils.classNames(self.props.className, 'login-screen', Mixins.colorClasses(self));
+    const el = self.refs.el;
+    if (!self.$f7 || !el)
+      return undefined;
+    return self.$f7.loginScreen.open(el, animate);
+  }
+  close(animate) {
+    const self = this;
+    const el = self.refs.el;
+    if (!self.$f7 || !el)
+      return undefined;
+    return self.$f7.loginScreen.close(el, animate);
+  }
+  componentWillUnmount() {
+    const self = this;
+    const el = self.refs.el;
+    if (self.f7LoginScreen)
+      self.f7LoginScreen.destroy();
+    if (!el)
+      return;
+    el.removeEventListener('loginscreen:open', self.onOpenBound);
+    el.removeEventListener('loginscreen:opened', self.onOpenedBound);
+    el.removeEventListener('loginscreen:close', self.onCloseBound);
+    el.removeEventListener('loginscreen:closed', self.onClosedBound);
   }
   componentDidMount() {
     const self = this;
@@ -41,44 +66,21 @@ class F7LoginScreen extends React.Component {
       }
     });
   }
-  componentWillUnmount() {
+  get classes() {
     const self = this;
-    const el = self.refs.el;
-    if (self.f7LoginScreen)
-      self.f7LoginScreen.destroy();
-    if (!el)
-      return;
-    el.removeEventListener('loginscreen:open', self.onOpenBound);
-    el.removeEventListener('loginscreen:opened', self.onOpenedBound);
-    el.removeEventListener('loginscreen:close', self.onCloseBound);
-    el.removeEventListener('loginscreen:closed', self.onClosedBound);
+    return Utils.classNames(self.props.className, 'login-screen', Mixins.colorClasses(self));
   }
-  onOpen(event) {
-    this.$emit('loginscreen:open loginScreenOpen', event);
-  }
-  onOpened(event) {
-    this.$emit('loginscreen:opened loginScreenOpened', event);
-  }
-  onClose(event) {
-    this.$emit('loginscreen:close loginScreenClose', event);
-  }
-  onClosed(event) {
-    this.$emit('loginscreen:closed loginScreenClosed', event);
-  }
-  open(animate) {
+  render() {
     const self = this;
-    if (!self.$f7)
-      return undefined;
-    return self.$f7.loginScreen.open(self.$el, animate);
-  }
-  close(animate) {
-    const self = this;
-    if (!self.$f7)
-      return undefined;
-    return self.$f7.loginScreen.close(self.$el, animate);
+    return React.createElement('div', {
+      ref: 'el',
+      id: self.props.id,
+      style: self.props.style,
+      className: self.classes
+    }, this.slots['default']);
   }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
   componentDidUpdate(prevProps, prevState) {
     __reactComponentWatch(this, 'props.opened', prevProps, prevState, opened => {
@@ -94,6 +96,10 @@ class F7LoginScreen extends React.Component {
   }
 }
 __reactComponentSetProps(F7LoginScreen, {
+  id: [
+    String,
+    Number
+  ],
   opened: Boolean,
   ...Mixins.colorProps
 });

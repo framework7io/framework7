@@ -1,23 +1,22 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const RowProps = Utils.extend({
-  noGap: Boolean,
-  tag: {
-    type: String,
-    default: 'div'
-  }
-}, Mixins.colorProps);
 export default {
   name: 'f7-row',
-  props: __vueComponentGetPropKeys(RowProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    noGap: Boolean,
+    tag: {
+      type: String,
+      default: 'div'
+    },
+    ...Mixins.colorProps
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     const RowTag = self.props.tag;
     return _h(RowTag, {
@@ -35,7 +34,7 @@ export default {
       }, Mixins.colorClasses(self));
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   }
 };

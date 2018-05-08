@@ -1,29 +1,28 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const IconProps = Utils.extend({
-  material: String,
-  f7: String,
-  ion: String,
-  fa: String,
-  icon: String,
-  ifMd: String,
-  ifIos: String,
-  size: [
-    String,
-    Number
-  ]
-}, Mixins.colorProps);
 export default {
   name: 'f7-icon',
-  props: __vueComponentGetPropKeys(IconProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    material: String,
+    f7: String,
+    ion: String,
+    fa: String,
+    icon: String,
+    ifMd: String,
+    ifIos: String,
+    size: [
+      String,
+      Number
+    ],
+    ...Mixins.colorProps
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     return _h('i', {
       style: Utils.extend({ fontSize: self.sizeComputed }, this.props.style),
@@ -90,7 +89,7 @@ export default {
       return Utils.classNames(self.props.className, classes, Mixins.colorClasses(self));
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   }
 };

@@ -4,14 +4,13 @@ import F7Badge from './badge';
 import __vueComponentSetState from '../runtime-helpers/vue-component-set-state.js';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
 export default {
   name: 'f7-list-item-content',
-  props: __vueComponentGetPropKeys({
+  props: {
+    id: [
+      String,
+      Number
+    ],
     title: [
       String,
       Number
@@ -60,9 +59,9 @@ export default {
     required: Boolean,
     disabled: Boolean,
     ...Mixins.colorProps
-  }),
+  },
   data() {
-    const props = __vueComponentProps(this, __vueComponentPropsKeys);
+    const props = __vueComponentProps(this);
     const state = (() => {
       return {
         hasInput: false,
@@ -73,7 +72,7 @@ export default {
     return { state };
   },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     const {radio, checkbox, value, name, checked, readonly, disabled, required, media, header, footer, title, subtitle, text, after, badge, mediaList, mediaItem, badgeColor, itemInput, inlineLabel, itemInputWithInfo} = self.props;
     const hasInput = itemInput || self.state.hasInput;
@@ -348,7 +347,7 @@ export default {
   },
   computed: {
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   }
 };

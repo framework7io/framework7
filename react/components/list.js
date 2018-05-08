@@ -8,86 +8,20 @@ class F7List extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
-  render() {
-    const self = this;
-    const {id, style, form} = self.props;
-    const {
-      list: slotsList,
-      default: slotsDefault
-    } = self.slots;
-    const rootChildren = [];
-    const ulChildren = slotsList || [];
-    slotsDefault.forEach(child => {
-      let tag;
-      {
-        tag = child.type && child.type.name;
-        if (!tag && typeof child.type === 'string') {
-          tag = child.type;
-        }
-      }
-      if (!tag && 'react' === 'react' || tag && !(tag === 'li' || tag === 'F7ListItem' || tag === 'F7ListButton' || tag.indexOf('list-item') >= 0 || tag.indexOf('list-button') >= 0)) {
-        rootChildren.push(child);
-      } else if (tag) {
-        ulChildren.push(child);
-      }
-    });
-    const ListTag = form ? 'form' : 'div';
-    if (ulChildren.length > 0) {
-      return React.createElement(ListTag, {
-        id: id,
-        ref: 'el',
-        style: style,
-        className: self.classes
-      }, self.slots['before-list'], React.createElement('ul', null, ulChildren), self.slots['after-list'], rootChildren);
-    } else {
-      return React.createElement(ListTag, {
-        id: id,
-        ref: 'el',
-        style: style,
-        className: self.classes
-      }, self.slots['before-list'], rootChildren, self.slots['after-list']);
-    }
+  onSortableEnable(event) {
+    this.dispatchEvent('sortable:enable sortableEnable', event);
   }
-  get classes() {
-    const self = this;
-    const {inset, tabletInset, mediaList, simpleList, linksList, sortable, accordionList, contactsList, virtualList, sortableEnabled, tab, tabActive, noHairlines, noHairlinesIos, noHairlinesMd, noHairlinesBetween, noHairlinesBetweenIos, noHairlinesBetweenMd, formStoreData, inlineLabels} = self.props;
-    return Utils.classNames(self.props.className, 'list', {
-      inset,
-      'tablet-inset': tabletInset,
-      'media-list': mediaList,
-      'simple-list': simpleList,
-      'links-list': linksList,
-      sortable,
-      'accordion-list': accordionList,
-      'contacts-list': contactsList,
-      'virtual-list': virtualList,
-      'sortable-enabled': sortableEnabled,
-      tab,
-      'tab-active': tabActive,
-      'no-hairlines': noHairlines,
-      'no-hairlines-between': noHairlinesBetween,
-      'no-hairlines-md': noHairlinesMd,
-      'no-hairlines-between-md': noHairlinesBetweenMd,
-      'no-hairlines-ios': noHairlinesIos,
-      'no-hairlines-between-ios': noHairlinesBetweenIos,
-      'form-store-data': formStoreData,
-      'inline-labels': inlineLabels
-    }, Mixins.colorClasses(self));
+  onSortableDisable(event) {
+    this.dispatchEvent('sortable:disable sortableDisable', event);
   }
-  componentWillUnmount() {
-    const self = this;
-    const el = self.refs.el;
-    if (el) {
-      el.removeEventListener('sortable:enable', self.onSortableEnableBound);
-      el.removeEventListener('sortable:disable', self.onSortableDisableBound);
-      el.removeEventListener('sortable:sort', self.onSortableSortBound);
-      el.removeEventListener('tab:show', self.onTabShowBound);
-      el.removeEventListener('tab:hide', self.onTabHideBound);
-    }
-    if (!(self.virtualList && self.f7VirtualList))
-      return;
-    if (self.f7VirtualList.destroy)
-      self.f7VirtualList.destroy();
+  onSortableSort(event) {
+    this.dispatchEvent('sortable:sort sortableSort', event, event.detail);
+  }
+  onTabShow(e) {
+    this.dispatchEvent('tab:show tabShow', e);
+  }
+  onTabHide(e) {
+    this.dispatchEvent('tab:hide tabHide', e);
   }
   componentDidMount() {
     const self = this;
@@ -144,29 +78,99 @@ class F7List extends React.Component {
       }, vlParams));
     });
   }
-  onSortableEnable(event) {
-    this.dispatchEvent('sortable:enable sortableEnable', event);
+  componentWillUnmount() {
+    const self = this;
+    const el = self.refs.el;
+    if (el) {
+      el.removeEventListener('sortable:enable', self.onSortableEnableBound);
+      el.removeEventListener('sortable:disable', self.onSortableDisableBound);
+      el.removeEventListener('sortable:sort', self.onSortableSortBound);
+      el.removeEventListener('tab:show', self.onTabShowBound);
+      el.removeEventListener('tab:hide', self.onTabHideBound);
+    }
+    if (!(self.virtualList && self.f7VirtualList))
+      return;
+    if (self.f7VirtualList.destroy)
+      self.f7VirtualList.destroy();
   }
-  onSortableDisable(event) {
-    this.dispatchEvent('sortable:disable sortableDisable', event);
+  get classes() {
+    const self = this;
+    const {inset, tabletInset, mediaList, simpleList, linksList, sortable, accordionList, contactsList, virtualList, sortableEnabled, tab, tabActive, noHairlines, noHairlinesIos, noHairlinesMd, noHairlinesBetween, noHairlinesBetweenIos, noHairlinesBetweenMd, formStoreData, inlineLabels} = self.props;
+    return Utils.classNames(self.props.className, 'list', {
+      inset,
+      'tablet-inset': tabletInset,
+      'media-list': mediaList,
+      'simple-list': simpleList,
+      'links-list': linksList,
+      sortable,
+      'accordion-list': accordionList,
+      'contacts-list': contactsList,
+      'virtual-list': virtualList,
+      'sortable-enabled': sortableEnabled,
+      tab,
+      'tab-active': tabActive,
+      'no-hairlines': noHairlines,
+      'no-hairlines-between': noHairlinesBetween,
+      'no-hairlines-md': noHairlinesMd,
+      'no-hairlines-between-md': noHairlinesBetweenMd,
+      'no-hairlines-ios': noHairlinesIos,
+      'no-hairlines-between-ios': noHairlinesBetweenIos,
+      'form-store-data': formStoreData,
+      'inline-labels': inlineLabels
+    }, Mixins.colorClasses(self));
   }
-  onSortableSort(event) {
-    this.dispatchEvent('sortable:sort sortableSort', event, event.detail);
-  }
-  onTabShow(e) {
-    this.dispatchEvent('tab:show tabShow', e);
-  }
-  onTabHide(e) {
-    this.dispatchEvent('tab:hide tabHide', e);
+  render() {
+    const self = this;
+    const {id, style, form} = self.props;
+    const {
+      list: slotsList,
+      default: slotsDefault
+    } = self.slots;
+    const rootChildren = [];
+    const ulChildren = slotsList || [];
+    slotsDefault.forEach(child => {
+      let tag;
+      {
+        tag = child.type && child.type.name;
+        if (!tag && typeof child.type === 'string') {
+          tag = child.type;
+        }
+      }
+      if (!tag && 'react' === 'react' || tag && !(tag === 'li' || tag === 'F7ListItem' || tag === 'F7ListButton' || tag.indexOf('list-item') >= 0 || tag.indexOf('list-button') >= 0)) {
+        rootChildren.push(child);
+      } else if (tag) {
+        ulChildren.push(child);
+      }
+    });
+    const ListTag = form ? 'form' : 'div';
+    if (ulChildren.length > 0) {
+      return React.createElement(ListTag, {
+        id: id,
+        ref: 'el',
+        style: style,
+        className: self.classes
+      }, self.slots['before-list'], React.createElement('ul', null, ulChildren), self.slots['after-list'], rootChildren);
+    } else {
+      return React.createElement(ListTag, {
+        id: id,
+        ref: 'el',
+        style: style,
+        className: self.classes
+      }, self.slots['before-list'], rootChildren, self.slots['after-list']);
+    }
   }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
 }
 __reactComponentSetProps(F7List, {
+  id: [
+    String,
+    Number
+  ],
   inset: Boolean,
   tabletInset: Boolean,
   mediaList: Boolean,

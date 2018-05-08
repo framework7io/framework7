@@ -4,23 +4,19 @@ import Mixins from '../utils/mixins';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
-const RadioProps = Utils.extend({
-  checked: Boolean,
-  name: [
-    Number,
-    String
-  ],
-  value: [
-    Number,
-    String,
-    Boolean
-  ],
-  disabled: Boolean,
-  readonly: Boolean
-}, Mixins.colorProps);
 class F7Radio extends React.Component {
   constructor(props, context) {
     super(props, context);
+  }
+  onChange(event) {
+    this.dispatchEvent('change', event);
+  }
+  get classes() {
+    const self = this;
+    return Utils.classNames(self.props.className, {
+      radio: true,
+      disabled: self.disabled
+    }, Mixins.colorClasses(self));
   }
   render() {
     const self = this;
@@ -41,22 +37,30 @@ class F7Radio extends React.Component {
       className: self.classes
     }, inputEl, iconEl, this.slots['default']);
   }
-  get classes() {
-    const self = this;
-    return Utils.classNames(self.props.className, {
-      radio: true,
-      disabled: self.disabled
-    }, Mixins.colorClasses(self));
-  }
-  onChange(event) {
-    this.dispatchEvent('change', event);
-  }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
 }
-__reactComponentSetProps(F7Radio, RadioProps);
+__reactComponentSetProps(F7Radio, {
+  id: [
+    String,
+    Number
+  ],
+  checked: Boolean,
+  name: [
+    Number,
+    String
+  ],
+  value: [
+    Number,
+    String,
+    Boolean
+  ],
+  disabled: Boolean,
+  readonly: Boolean,
+  ...Mixins.colorProps
+});
 export default F7Radio;

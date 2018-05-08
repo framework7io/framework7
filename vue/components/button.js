@@ -4,14 +4,13 @@ import F7Icon from './icon';
 import __vueComponentTransformJSXProps from '../runtime-helpers/vue-component-transform-jsx-props.js';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
 export default {
   name: 'f7-button',
-  props: __vueComponentGetPropKeys({
+  props: {
+    id: [
+      String,
+      Number
+    ],
     noFastclick: Boolean,
     noFastClick: Boolean,
     text: String,
@@ -47,9 +46,9 @@ export default {
     ...Mixins.linkIconProps,
     ...Mixins.linkRouterProps,
     ...Mixins.linkActionsProps
-  }),
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     let iconEl;
     let textEl;
@@ -125,7 +124,7 @@ export default {
       }, Mixins.colorClasses(self), Mixins.linkRouterClasses(self), Mixins.linkActionsClasses(self));
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   },
   methods: {

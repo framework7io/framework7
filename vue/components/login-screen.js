@@ -1,19 +1,18 @@
 import Mixins from '../utils/mixins';
 import Utils from '../utils/utils';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
 export default {
   name: 'f7-login-screen',
-  props: __vueComponentGetPropKeys({
+  props: {
+    id: [
+      String,
+      Number
+    ],
     opened: Boolean,
     ...Mixins.colorProps
-  }),
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     return _h('div', {
       ref: 'el',
@@ -40,7 +39,7 @@ export default {
       return Utils.classNames(self.props.className, 'login-screen', Mixins.colorClasses(self));
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   },
   mounted() {
@@ -90,15 +89,17 @@ export default {
     },
     open(animate) {
       const self = this;
-      if (!self.$f7)
+      const el = self.$refs.el;
+      if (!self.$f7 || !el)
         return undefined;
-      return self.$f7.loginScreen.open(self.$el, animate);
+      return self.$f7.loginScreen.open(el, animate);
     },
     close(animate) {
       const self = this;
-      if (!self.$f7)
+      const el = self.$refs.el;
+      if (!self.$f7 || !el)
         return undefined;
-      return self.$f7.loginScreen.close(self.$el, animate);
+      return self.$f7.loginScreen.close(el, animate);
     }
   }
 };

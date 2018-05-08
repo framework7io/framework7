@@ -2,31 +2,30 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const ToggleProps = Utils.extend({
-  init: {
-    type: Boolean,
-    default: true
-  },
-  checked: Boolean,
-  disabled: Boolean,
-  readonly: Boolean,
-  name: String,
-  value: [
-    String,
-    Number,
-    Array
-  ]
-}, Mixins.colorProps);
 export default {
   name: 'f7-toggle',
-  props: __vueComponentGetPropKeys(ToggleProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    init: {
+      type: Boolean,
+      default: true
+    },
+    checked: Boolean,
+    disabled: Boolean,
+    readonly: Boolean,
+    name: String,
+    value: [
+      String,
+      Number,
+      Array
+    ],
+    ...Mixins.colorProps
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     const labelClasses = Utils.classNames('toggle', self.props.className, { disabled: self.props.disabled }, Mixins.colorClasses(self));
     return _h('label', {
@@ -93,7 +92,7 @@ export default {
   },
   computed: {
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   }
 };

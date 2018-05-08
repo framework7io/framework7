@@ -16,8 +16,14 @@ class F7BlockTitle extends React.Component {
     }, this.slots['default']);
   }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
 }
-__reactComponentSetProps(F7BlockTitle, Mixins.colorProps);
+__reactComponentSetProps(F7BlockTitle, {
+  id: [
+    String,
+    Number
+  ],
+  ...Mixins.colorProps
+});
 export default F7BlockTitle;

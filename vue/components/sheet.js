@@ -2,20 +2,19 @@ import Mixins from '../utils/mixins';
 import Utils from '../utils/utils';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const SheetProps = Utils.extend({
-  opened: Boolean,
-  backdrop: Boolean
-}, Mixins.colorProps);
 export default {
   name: 'f7-sheet',
-  props: __vueComponentGetPropKeys(SheetProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    opened: Boolean,
+    backdrop: Boolean,
+    ...Mixins.colorProps
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     const fixedList = [];
     const staticList = [];
@@ -71,7 +70,7 @@ export default {
       return Utils.classNames(self.props.className, 'sheet-modal', Mixins.colorClasses(self));
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   },
   beforeDestroy() {

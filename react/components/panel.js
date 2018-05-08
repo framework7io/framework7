@@ -5,98 +5,9 @@ import __reactComponentWatch from '../runtime-helpers/react-component-watch.js';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
-const PanelProps = Utils.extend({
-  side: String,
-  effect: String,
-  cover: Boolean,
-  reveal: Boolean,
-  left: Boolean,
-  right: Boolean,
-  opened: Boolean
-}, Mixins.colorProps);
 class F7Panel extends React.Component {
   constructor(props, context) {
     super(props, context);
-  }
-  render() {
-    return React.createElement('div', {
-      ref: 'el',
-      id: this.props.id,
-      style: this.props.style,
-      className: this.classes
-    }, this.slots['default']);
-  }
-  get classes() {
-    const self = this;
-    const {left, reveal, className, opened} = self.props;
-    let {side, effect} = self.props;
-    side = side || (left ? 'left' : 'right');
-    effect = effect || (reveal ? 'reveal' : 'cover');
-    return Utils.classNames(className, {
-      panel: true,
-      'panel-active': opened,
-      [`panel-${ side }`]: side,
-      [`panel-${ effect }`]: effect
-    }, Mixins.colorClasses(self));
-  }
-  componentWillUnmount() {
-    const self = this;
-    if (self.f7Panel)
-      self.f7Panel.destroy();
-    const el = self.refs.el;
-    if (!el)
-      return;
-    self.onOpenBound = self.onOpen.bind(self);
-    self.onOpenedBound = self.onOpened.bind(self);
-    self.onCloseBound = self.onClose.bind(self);
-    self.onClosedBound = self.onClosed.bind(self);
-    self.onBackdropClickBound = self.onBackdropClick.bind(self);
-    self.onPanelSwipeBound = self.onPanelSwipe.bind(self);
-    self.onPanelSwipeOpenBound = self.onPanelSwipeOpen.bind(self);
-    self.onBreakpointBound = self.onBreakpoint.bind(self);
-    el.addEventListener('panel:open', self.onOpenBound);
-    el.addEventListener('panel:opened', self.onOpenedBound);
-    el.addEventListener('panel:close', self.onCloseBound);
-    el.addEventListener('panel:closed', self.onClosedBound);
-    el.addEventListener('panel:backdrop-click', self.onBackdropClickBound);
-    el.addEventListener('panel:swipe', self.onPanelSwipeBound);
-    el.addEventListener('panel:swipeopen', self.onPanelSwipeOpenBound);
-    el.addEventListener('panel:breakpoint', self.onBreakpointBound);
-  }
-  componentDidMount() {
-    const self = this;
-    const el = self.refs.el;
-    const {side, effect, opened, left, reveal} = self.props;
-    if (el) {
-      el.removeEventListener('panel:open', self.onOpenBound);
-      el.removeEventListener('panel:opened', self.onOpenedBound);
-      el.removeEventListener('panel:close', self.onCloseBound);
-      el.removeEventListener('panel:closed', self.onClosedBound);
-      el.removeEventListener('panel:backdrop-click', self.onBackdropClickBound);
-      el.removeEventListener('panel:swipe', self.onPanelSwipeBound);
-      el.removeEventListener('panel:swipeopen', self.onPanelSwipeOpenBound);
-      el.removeEventListener('panel:breakpoint', self.onBreakpointBound);
-    }
-    self.$f7ready(() => {
-      const $ = self.$$;
-      if (!$)
-        return;
-      if ($('.panel-backdrop').length === 0) {
-        $('<div class="panel-backdrop"></div>').insertBefore(el);
-      }
-      self.f7Panel = self.$f7.panel.create({ el });
-    });
-    if (opened) {
-      el.style.display = 'block';
-    }
-    const $ = self.$$;
-    if (!$)
-      return;
-    const panelSide = side || (left ? 'left' : 'right');
-    const panelEffect = effect || (reveal ? 'reveal' : 'cover');
-    if (opened) {
-      $('html').addClass(`with-panel-${ panelSide }-${ panelEffect }`);
-    }
   }
   onOpen(event) {
     this.dispatchEvent('panel:open panelOpen', event);
@@ -136,8 +47,88 @@ class F7Panel extends React.Component {
     const side = self.props.side || (self.props.left ? 'left' : 'right');
     self.$f7.panel.close(side, animate);
   }
+  componentDidMount() {
+    const self = this;
+    const el = self.refs.el;
+    const {side, effect, opened, left, reveal} = self.props;
+    if (el) {
+      el.removeEventListener('panel:open', self.onOpenBound);
+      el.removeEventListener('panel:opened', self.onOpenedBound);
+      el.removeEventListener('panel:close', self.onCloseBound);
+      el.removeEventListener('panel:closed', self.onClosedBound);
+      el.removeEventListener('panel:backdrop-click', self.onBackdropClickBound);
+      el.removeEventListener('panel:swipe', self.onPanelSwipeBound);
+      el.removeEventListener('panel:swipeopen', self.onPanelSwipeOpenBound);
+      el.removeEventListener('panel:breakpoint', self.onBreakpointBound);
+    }
+    self.$f7ready(() => {
+      const $ = self.$$;
+      if (!$)
+        return;
+      if ($('.panel-backdrop').length === 0) {
+        $('<div class="panel-backdrop"></div>').insertBefore(el);
+      }
+      self.f7Panel = self.$f7.panel.create({ el });
+    });
+    if (opened) {
+      el.style.display = 'block';
+    }
+    const $ = self.$$;
+    if (!$)
+      return;
+    const panelSide = side || (left ? 'left' : 'right');
+    const panelEffect = effect || (reveal ? 'reveal' : 'cover');
+    if (opened) {
+      $('html').addClass(`with-panel-${ panelSide }-${ panelEffect }`);
+    }
+  }
+  componentWillUnmount() {
+    const self = this;
+    if (self.f7Panel)
+      self.f7Panel.destroy();
+    const el = self.refs.el;
+    if (!el)
+      return;
+    self.onOpenBound = self.onOpen.bind(self);
+    self.onOpenedBound = self.onOpened.bind(self);
+    self.onCloseBound = self.onClose.bind(self);
+    self.onClosedBound = self.onClosed.bind(self);
+    self.onBackdropClickBound = self.onBackdropClick.bind(self);
+    self.onPanelSwipeBound = self.onPanelSwipe.bind(self);
+    self.onPanelSwipeOpenBound = self.onPanelSwipeOpen.bind(self);
+    self.onBreakpointBound = self.onBreakpoint.bind(self);
+    el.addEventListener('panel:open', self.onOpenBound);
+    el.addEventListener('panel:opened', self.onOpenedBound);
+    el.addEventListener('panel:close', self.onCloseBound);
+    el.addEventListener('panel:closed', self.onClosedBound);
+    el.addEventListener('panel:backdrop-click', self.onBackdropClickBound);
+    el.addEventListener('panel:swipe', self.onPanelSwipeBound);
+    el.addEventListener('panel:swipeopen', self.onPanelSwipeOpenBound);
+    el.addEventListener('panel:breakpoint', self.onBreakpointBound);
+  }
+  get classes() {
+    const self = this;
+    const {left, reveal, className, opened} = self.props;
+    let {side, effect} = self.props;
+    side = side || (left ? 'left' : 'right');
+    effect = effect || (reveal ? 'reveal' : 'cover');
+    return Utils.classNames(className, {
+      panel: true,
+      'panel-active': opened,
+      [`panel-${ side }`]: side,
+      [`panel-${ effect }`]: effect
+    }, Mixins.colorClasses(self));
+  }
+  render() {
+    return React.createElement('div', {
+      ref: 'el',
+      id: this.props.id,
+      style: this.props.style,
+      className: this.classes
+    }, this.slots['default']);
+  }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
@@ -156,5 +147,18 @@ class F7Panel extends React.Component {
     });
   }
 }
-__reactComponentSetProps(F7Panel, PanelProps);
+__reactComponentSetProps(F7Panel, {
+  id: [
+    String,
+    Number
+  ],
+  side: String,
+  effect: String,
+  cover: Boolean,
+  reveal: Boolean,
+  left: Boolean,
+  right: Boolean,
+  opened: Boolean,
+  ...Mixins.colorProps
+});
 export default F7Panel;

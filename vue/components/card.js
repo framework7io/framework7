@@ -4,34 +4,33 @@ import F7CardHeader from './card-header';
 import F7CardContent from './card-content';
 import F7CardFooter from './card-footer';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const CardProps = Utils.extend({
-  title: [
-    String,
-    Number
-  ],
-  content: [
-    String,
-    Number
-  ],
-  footer: [
-    String,
-    Number
-  ],
-  padding: {
-    type: Boolean,
-    default: true
-  }
-}, Mixins.colorProps);
 export default {
   name: 'f7-card',
-  props: __vueComponentGetPropKeys(CardProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    title: [
+      String,
+      Number
+    ],
+    content: [
+      String,
+      Number
+    ],
+    footer: [
+      String,
+      Number
+    ],
+    padding: {
+      type: Boolean,
+      default: true
+    },
+    ...Mixins.colorProps
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     let headerEl;
     let contentEl;
@@ -71,7 +70,7 @@ export default {
       return Utils.classNames(self.props.className, { card: true }, Mixins.colorClasses(self));
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   }
 };

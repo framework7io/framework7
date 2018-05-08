@@ -22,10 +22,14 @@ class F7Label extends React.Component {
     }, this.slots['default']);
   }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
 }
 __reactComponentSetProps(F7Label, {
+  id: [
+    String,
+    Number
+  ],
   floating: Boolean,
   inline: Boolean,
   ...Mixins.colorProps

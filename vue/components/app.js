@@ -2,19 +2,18 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import f7Plugin from '../utils/plugin';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
 export default {
   name: 'f7-app',
-  props: __vueComponentGetPropKeys({
+  props: {
+    id: [
+      String,
+      Number
+    ],
     params: Object,
     routes: Array
-  }),
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     const classes = Utils.classNames(self.props.className, 'framework7-root', Mixins.colorClasses(self));
     return _h('div', {
@@ -35,7 +34,7 @@ export default {
   },
   computed: {
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   }
 };

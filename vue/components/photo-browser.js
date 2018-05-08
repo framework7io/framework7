@@ -1,14 +1,13 @@
 import Utils from '../utils/utils';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
 export default {
   name: 'f7-photo-browser',
-  props: __vueComponentGetPropKeys({
+  props: {
+    id: [
+      String,
+      Number
+    ],
     init: {
       type: Boolean,
       default: true
@@ -64,9 +63,9 @@ export default {
     renderPage: Function,
     renderPopup: Function,
     renderStandalone: Function
-  }),
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
   },
   watch: {
     'props.photos': function watchPhotos(newValue) {
@@ -143,7 +142,7 @@ export default {
   },
   computed: {
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   }
 };

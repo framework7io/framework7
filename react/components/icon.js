@@ -3,30 +3,9 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
-const IconProps = Utils.extend({
-  material: String,
-  f7: String,
-  ion: String,
-  fa: String,
-  icon: String,
-  ifMd: String,
-  ifIos: String,
-  size: [
-    String,
-    Number
-  ]
-}, Mixins.colorProps);
 class F7Icon extends React.Component {
   constructor(props, context) {
     super(props, context);
-  }
-  render() {
-    const self = this;
-    return React.createElement('i', {
-      id: this.props.id,
-      style: Utils.extend({ fontSize: self.sizeComputed }, this.props.style),
-      className: self.classes
-    }, self.iconTextComputed, this.slots['default']);
   }
   get sizeComputed() {
     const self = this;
@@ -82,9 +61,34 @@ class F7Icon extends React.Component {
     }
     return Utils.classNames(self.props.className, classes, Mixins.colorClasses(self));
   }
+  render() {
+    const self = this;
+    return React.createElement('i', {
+      id: this.props.id,
+      style: Utils.extend({ fontSize: self.sizeComputed }, this.props.style),
+      className: self.classes
+    }, self.iconTextComputed, this.slots['default']);
+  }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
 }
-__reactComponentSetProps(F7Icon, IconProps);
+__reactComponentSetProps(F7Icon, {
+  id: [
+    String,
+    Number
+  ],
+  material: String,
+  f7: String,
+  ion: String,
+  fa: String,
+  icon: String,
+  ifMd: String,
+  ifIos: String,
+  size: [
+    String,
+    Number
+  ],
+  ...Mixins.colorProps
+});
 export default F7Icon;

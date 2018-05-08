@@ -2,38 +2,37 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const PageContentProps = Utils.extend({
-  tab: Boolean,
-  tabActive: Boolean,
-  ptr: Boolean,
-  ptrDistance: Number,
-  ptrPreloader: {
-    type: Boolean,
-    default: true
-  },
-  infinite: Boolean,
-  infiniteTop: Boolean,
-  infiniteDistance: Number,
-  infinitePreloader: {
-    type: Boolean,
-    default: true
-  },
-  hideBarsOnScroll: Boolean,
-  hideNavbarOnScroll: Boolean,
-  hideToolbarOnScroll: Boolean,
-  messagesContent: Boolean,
-  loginScreen: Boolean
-}, Mixins.colorProps);
 export default {
   name: 'f7-page-content',
-  props: __vueComponentGetPropKeys(PageContentProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    tab: Boolean,
+    tabActive: Boolean,
+    ptr: Boolean,
+    ptrDistance: Number,
+    ptrPreloader: {
+      type: Boolean,
+      default: true
+    },
+    infinite: Boolean,
+    infiniteTop: Boolean,
+    infiniteDistance: Number,
+    infinitePreloader: {
+      type: Boolean,
+      default: true
+    },
+    hideBarsOnScroll: Boolean,
+    hideNavbarOnScroll: Boolean,
+    hideToolbarOnScroll: Boolean,
+    messagesContent: Boolean,
+    loginScreen: Boolean,
+    ...Mixins.colorProps
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     let ptrEl;
     let infiniteEl;
@@ -79,7 +78,7 @@ export default {
       }, Mixins.colorClasses(self));
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   },
   mounted() {

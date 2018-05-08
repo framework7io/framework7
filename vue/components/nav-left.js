@@ -3,24 +3,23 @@ import Mixins from '../utils/mixins';
 import F7Link from './link';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const NavLeftProps = Utils.extend({
-  backLink: [
-    Boolean,
-    String
-  ],
-  backLinkUrl: String,
-  sliding: Boolean
-}, Mixins.colorProps);
 export default {
   name: 'f7-nav-left',
-  props: __vueComponentGetPropKeys(NavLeftProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    backLink: [
+      Boolean,
+      String
+    ],
+    backLinkUrl: String,
+    sliding: Boolean,
+    ...Mixins.colorProps
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const {backLink, backLinkUrl} = this.props;
     let linkEl;
     if (backLink) {
@@ -52,7 +51,7 @@ export default {
       }, Mixins.colorClasses(this));
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   },
   methods: {

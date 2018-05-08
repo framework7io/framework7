@@ -16,8 +16,14 @@ class F7BlockFooter extends React.Component {
     }, this.slots['default']);
   }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
 }
-__reactComponentSetProps(F7BlockFooter, Mixins.colorProps);
+__reactComponentSetProps(F7BlockFooter, {
+  id: [
+    String,
+    Number
+  ],
+  ...Mixins.colorProps
+});
 export default F7BlockFooter;

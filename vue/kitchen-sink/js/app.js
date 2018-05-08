@@ -38131,6 +38131,10 @@
       popupOpen: [Boolean, String],
       popupClose: [Boolean, String],
 
+      // Actions
+      actionsOpen: [Boolean, String],
+      actionsClose: [Boolean, String],
+
       // Popover
       popoverOpen: [Boolean, String],
       popoverClose: [Boolean, String],
@@ -38154,6 +38158,8 @@
       var panelClose = ref.panelClose;
       var popupOpen = ref.popupOpen;
       var popupClose = ref.popupClose;
+      var actionsOpen = ref.actionsOpen;
+      var actionsClose = ref.actionsClose;
       var popoverOpen = ref.popoverOpen;
       var popoverClose = ref.popoverClose;
       var loginScreenOpen = ref.loginScreenOpen;
@@ -38169,6 +38175,8 @@
                       (Utils$1.isStringProp(panelClose) && panelClose) || undefined,
         'data-popup': (Utils$1.isStringProp(popupOpen) && popupOpen) ||
                       (Utils$1.isStringProp(popupClose) && popupClose) || undefined,
+        'data-actions': (Utils$1.isStringProp(actionsOpen) && actionsOpen) ||
+                      (Utils$1.isStringProp(actionsClose) && actionsClose) || undefined,
         'data-popover': (Utils$1.isStringProp(popoverOpen) && popoverOpen) ||
                         (Utils$1.isStringProp(popoverClose) && popoverClose) || undefined,
         'data-sheet': (Utils$1.isStringProp(sheetOpen) && sheetOpen) ||
@@ -38186,6 +38194,8 @@
       var panelClose = ref.panelClose;
       var popupOpen = ref.popupOpen;
       var popupClose = ref.popupClose;
+      var actionsClose = ref.actionsClose;
+      var actionsOpen = ref.actionsOpen;
       var popoverOpen = ref.popoverOpen;
       var popoverClose = ref.popoverClose;
       var loginScreenOpen = ref.loginScreenOpen;
@@ -38195,11 +38205,14 @@
       var sortableEnable = ref.sortableEnable;
       var sortableDisable = ref.sortableDisable;
       var sortableToggle = ref.sortableToggle;
+
       return {
         'panel-close': Utils$1.isTrueProp(panelClose),
         'panel-open': panelOpen || panelOpen === '',
         'popup-close': Utils$1.isTrueProp(popupClose),
         'popup-open': popupOpen || popupOpen === '',
+        'actions-close': Utils$1.isTrueProp(actionsClose),
+        'actions-open': actionsOpen || actionsOpen === '',
         'popover-close': Utils$1.isTrueProp(popoverClose),
         'popover-open': popoverOpen || popoverOpen === '',
         'sheet-close': Utils$1.isTrueProp(sheetClose),
@@ -38213,10 +38226,11 @@
     },
   };
 
-  function __vueComponentProps (component, keys) {
+  function __vueComponentProps (component) {
     var props = {};
-    keys.forEach(function (propKey) {
-      if (typeof component[propKey] !== 'undefined') { props[propKey] = component[propKey]; }
+    var $props = component.$props;
+    Object.keys($props).forEach(function (propKey) {
+      if (typeof $props[propKey] !== 'undefined') { props[propKey] = $props[propKey]; }
     });
 
     var children = [];
@@ -38228,13 +38242,12 @@
     return props;
   }
 
-  var __vueComponentPropsKeys;
-  function __vueComponentGetPropKeys(props) {
-    __vueComponentPropsKeys = Object.keys(props);
-    return props;
-  }
   var f7AccordionContent = {
-    props: __vueComponentGetPropKeys(Mixins.colorProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ]},
+      Mixins.colorProps),
     name: 'f7-accordion-content',
     render: function render() {
       var _h = this.$createElement;
@@ -38247,7 +38260,7 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys);
+        return __vueComponentProps(this);
       }
     }
   };
@@ -38262,15 +38275,14 @@
     });
   }
 
-  var __vueComponentPropsKeys$1;
-  function __vueComponentGetPropKeys$1(props) {
-    __vueComponentPropsKeys$1 = Object.keys(props);
-    return props;
-  }
   var f7AccordionItem = {
     name: 'f7-accordion-item',
-    props: __vueComponentGetPropKeys$1(Object.assign({}, {opened: Boolean},
-      Mixins.colorProps)),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      opened: Boolean},
+      Mixins.colorProps),
     mounted: function mounted() {
       var self = this;
       var el = self.$el;
@@ -38329,18 +38341,17 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$1);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$2;
-  function __vueComponentGetPropKeys$2(props) {
-    __vueComponentPropsKeys$2 = Object.keys(props);
-    return props;
-  }
   var f7AccordionToggle = {
-    props: __vueComponentGetPropKeys$2(Mixins.colorProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ]},
+      Mixins.colorProps),
     name: 'f7-accordion-toggle',
     render: function render() {
       var _h = this.$createElement;
@@ -38353,24 +38364,46 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$2);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$4;
-  function __vueComponentGetPropKeys$4(props) {
-    __vueComponentPropsKeys$4 = Object.keys(props);
-    return props;
-  }
+  ({
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ]},
+      Mixins.colorProps),
+    name: 'f7-accordion',
+    render: function render() {
+      var _h = this.$createElement;
+      var classes = Utils$1.classNames(this.props.className, { 'accordion-list': true }, Mixins.colorClasses(this));
+      return _h('div', {
+        style: this.props.style,
+        class: classes,
+        attrs: { id: this.props.id }
+      }, [this.$slots['default']]);
+    },
+    computed: {
+      props: function props() {
+        return __vueComponentProps(this);
+      }
+    }
+  });
+
   var f7ActionsButton = {
     name: 'f7-actions-button',
-    props: __vueComponentGetPropKeys$4(Object.assign({}, {bold: Boolean,
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      bold: Boolean,
       close: {
         type: Boolean,
         default: true
       }},
-      Mixins.colorProps)),
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -38380,7 +38413,8 @@
       }
       return _h('div', {
         style: self.props.style,
-        class: self.className,
+        class: self.classes,
+        ref: 'el',
         on: { click: self.onClick.bind(self) },
         attrs: { id: self.props.id }
       }, [
@@ -38397,15 +38431,16 @@
         }, Mixins.colorClasses(self));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$4);
+        return __vueComponentProps(this);
       }
     },
     methods: {
       onClick: function onClick(event) {
         var self = this;
         var $$ = self.$$;
-        if (self.props.close && self.$f7) {
-          self.$f7.actions.close($$(self.$el).parents('.actions-modal'));
+        var el = self.$refs.el;
+        if (self.props.close && self.$f7 && el) {
+          self.$f7.actions.close($$(el).parents('.actions-modal'));
         }
         self.dispatchEvent('click', event);
       },
@@ -38418,14 +38453,13 @@
     }
   };
 
-  var __vueComponentPropsKeys$5;
-  function __vueComponentGetPropKeys$5(props) {
-    __vueComponentPropsKeys$5 = Object.keys(props);
-    return props;
-  }
   var f7ActionsGroup = {
     name: 'f7-actions-group',
-    props: __vueComponentGetPropKeys$5(Mixins.colorProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ]},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -38438,20 +38472,19 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$5);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$6;
-  function __vueComponentGetPropKeys$6(props) {
-    __vueComponentPropsKeys$6 = Object.keys(props);
-    return props;
-  }
   var f7ActionsLabel = {
     name: 'f7-actions-label',
-    props: __vueComponentGetPropKeys$6(Object.assign({}, {bold: Boolean},
-      Mixins.colorProps)),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      bold: Boolean},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -38479,19 +38512,18 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$6);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$7;
-  function __vueComponentGetPropKeys$7(props) {
-    __vueComponentPropsKeys$7 = Object.keys(props);
-    return props;
-  }
   var f7Actions = {
     name: 'f7-actions',
-    props: __vueComponentGetPropKeys$7(Object.assign({}, {opened: Boolean,
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      opened: Boolean,
       grid: Boolean,
       convertToPopover: Boolean,
       forceToPopover: Boolean,
@@ -38499,7 +38531,7 @@
         String,
         Object
       ]},
-      Mixins.colorProps)),
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -38508,10 +38540,10 @@
         'actions-grid': self.props.grid
       }, Mixins.colorClasses(self));
       return _h('div', {
-        style: this.props.style,
+        style: self.props.style,
         ref: 'el',
         class: classes,
-        attrs: { id: this.props.id }
+        attrs: { id: self.props.id }
       }, [this.$slots['default']]);
     },
     watch: {
@@ -38526,7 +38558,7 @@
         }
       }
     },
-    componetDidMount: function componetDidMount() {
+    mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
       if (!el)
@@ -38602,7 +38634,7 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$7);
+        return __vueComponentProps(this);
       }
     }
   };
@@ -39019,17 +39051,16 @@
     },
   };
 
-  var __vueComponentPropsKeys$8;
-  function __vueComponentGetPropKeys$8(props) {
-    __vueComponentPropsKeys$8 = Object.keys(props);
-    return props;
-  }
   var f7App = {
     name: 'f7-app',
-    props: __vueComponentGetPropKeys$8({
+    props: {
+      id: [
+        String,
+        Number
+      ],
       params: Object,
       routes: Array
-    }),
+    },
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -39054,19 +39085,18 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$8);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$9;
-  function __vueComponentGetPropKeys$9(props) {
-    __vueComponentPropsKeys$9 = Object.keys(props);
-    return props;
-  }
   var f7Badge = {
     name: 'f7-badge',
-    props: __vueComponentGetPropKeys$9(Mixins.colorProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ]},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var classes = Utils$1.classNames(this.props.className, 'badge', Mixins.colorClasses(this));
@@ -39078,19 +39108,18 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$9);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$10;
-  function __vueComponentGetPropKeys$10(props) {
-    __vueComponentPropsKeys$10 = Object.keys(props);
-    return props;
-  }
   var f7BlockFooter = {
     name: 'f7-block-footer',
-    props: __vueComponentGetPropKeys$10(Mixins.colorProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ]},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var classes = Utils$1.classNames(this.props.className, 'block-footer', Mixins.colorClasses(this));
@@ -39102,19 +39131,18 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$10);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$11;
-  function __vueComponentGetPropKeys$11(props) {
-    __vueComponentPropsKeys$11 = Object.keys(props);
-    return props;
-  }
   var f7BlockHeader = {
     name: 'f7-block-header',
-    props: __vueComponentGetPropKeys$11(Mixins.colorProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ]},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var classes = Utils$1.classNames(this.props.className, 'block-header', Mixins.colorClasses(this));
@@ -39126,19 +39154,18 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$11);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$12;
-  function __vueComponentGetPropKeys$12(props) {
-    __vueComponentPropsKeys$12 = Object.keys(props);
-    return props;
-  }
   var f7BlockTitle = {
     name: 'f7-block-title',
-    props: __vueComponentGetPropKeys$12(Mixins.colorProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ]},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var classes = Utils$1.classNames(this.props.className, 'block-title', Mixins.colorClasses(this));
@@ -39150,19 +39177,18 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$12);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$13;
-  function __vueComponentGetPropKeys$13(props) {
-    __vueComponentPropsKeys$13 = Object.keys(props);
-    return props;
-  }
   var f7Block = {
     name: 'f7-block',
-    props: __vueComponentGetPropKeys$13(Object.assign({}, {inset: Boolean,
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      inset: Boolean,
       tabletInset: Boolean,
       strong: Boolean,
       tabs: Boolean,
@@ -39172,7 +39198,7 @@
       noHairlines: Boolean,
       noHairlinesMd: Boolean,
       noHairlinesIos: Boolean},
-      Mixins.colorProps)),
+      Mixins.colorProps),
     mounted: function mounted() {
       var el = this.$el;
       if (!el)
@@ -39240,32 +39266,29 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$13);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$14;
-  function __vueComponentGetPropKeys$14(props) {
-    __vueComponentPropsKeys$14 = Object.keys(props);
-    return props;
-  }
-  var IconProps = Utils$1.extend({
-    material: String,
-    f7: String,
-    ion: String,
-    fa: String,
-    icon: String,
-    ifMd: String,
-    ifIos: String,
-    size: [
-      String,
-      Number
-    ]
-  }, Mixins.colorProps);
   var f7Icon = {
     name: 'f7-icon',
-    props: __vueComponentGetPropKeys$14(IconProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      material: String,
+      f7: String,
+      ion: String,
+      fa: String,
+      icon: String,
+      ifMd: String,
+      ifIos: String,
+      size: [
+        String,
+        Number
+      ]},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -39345,7 +39368,7 @@
         return Utils$1.classNames(self.props.className, classes, Mixins.colorClasses(self));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$14);
+        return __vueComponentProps(this);
       }
     }
   };
@@ -39385,14 +39408,13 @@
     return props;
   }
 
-  var __vueComponentPropsKeys$15;
-  function __vueComponentGetPropKeys$15(props) {
-    __vueComponentPropsKeys$15 = Object.keys(props);
-    return props;
-  }
   var f7Button = {
     name: 'f7-button',
-    props: __vueComponentGetPropKeys$15(Object.assign({}, {noFastclick: Boolean,
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      noFastclick: Boolean,
       noFastClick: Boolean,
       text: String,
       tabLink: [
@@ -39426,7 +39448,7 @@
       Mixins.colorProps,
       Mixins.linkIconProps,
       Mixins.linkRouterProps,
-      Mixins.linkActionsProps)),
+      Mixins.linkActionsProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -39536,7 +39558,7 @@
         }, Mixins.colorClasses(self), Mixins.linkRouterClasses(self), Mixins.linkActionsClasses(self));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$15);
+        return __vueComponentProps(this);
       }
     },
     methods: {
@@ -39552,18 +39574,17 @@
     }
   };
 
-  var __vueComponentPropsKeys$16;
-  function __vueComponentGetPropKeys$16(props) {
-    __vueComponentPropsKeys$16 = Object.keys(props);
-    return props;
-  }
   var f7CardContent = {
     name: 'f7-card-content',
-    props: __vueComponentGetPropKeys$16(Object.assign({}, {padding: {
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      padding: {
         type: Boolean,
         default: true
       }},
-      Mixins.colorProps)),
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var ref = this.props;
@@ -39583,19 +39604,18 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$16);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$17;
-  function __vueComponentGetPropKeys$17(props) {
-    __vueComponentPropsKeys$17 = Object.keys(props);
-    return props;
-  }
   var f7CardFooter = {
     name: 'f7-card-footer',
-    props: __vueComponentGetPropKeys$17(Mixins.colorProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ]},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var classes = Utils$1.classNames(this.props.className, 'card-footer', Mixins.colorClasses(this));
@@ -39607,19 +39627,18 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$17);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$18;
-  function __vueComponentGetPropKeys$18(props) {
-    __vueComponentPropsKeys$18 = Object.keys(props);
-    return props;
-  }
   var f7CardHeader = {
     name: 'f7-card-header',
-    props: __vueComponentGetPropKeys$18(Mixins.colorProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ]},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var classes = Utils$1.classNames(this.props.className, 'card-header', Mixins.colorClasses(this));
@@ -39631,37 +39650,34 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$18);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$19;
-  function __vueComponentGetPropKeys$19(props) {
-    __vueComponentPropsKeys$19 = Object.keys(props);
-    return props;
-  }
-  var CardProps = Utils$1.extend({
-    title: [
-      String,
-      Number
-    ],
-    content: [
-      String,
-      Number
-    ],
-    footer: [
-      String,
-      Number
-    ],
-    padding: {
-      type: Boolean,
-      default: true
-    }
-  }, Mixins.colorProps);
   var f7Card = {
     name: 'f7-card',
-    props: __vueComponentGetPropKeys$19(CardProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      title: [
+        String,
+        Number
+      ],
+      content: [
+        String,
+        Number
+      ],
+      footer: [
+        String,
+        Number
+      ],
+      padding: {
+        type: Boolean,
+        default: true
+      }},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -39703,33 +39719,30 @@
         return Utils$1.classNames(self.props.className, { card: true }, Mixins.colorClasses(self));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$19);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$20;
-  function __vueComponentGetPropKeys$20(props) {
-    __vueComponentPropsKeys$20 = Object.keys(props);
-    return props;
-  }
-  var CheckboxProps = Utils$1.extend({
-    checked: Boolean,
-    name: [
-      Number,
-      String
-    ],
-    value: [
-      Number,
-      String,
-      Boolean
-    ],
-    disabled: Boolean,
-    readonly: Boolean
-  }, Mixins.colorProps);
   var f7Checkbox = {
     name: 'f7-checkbox',
-    props: __vueComponentGetPropKeys$20(CheckboxProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      checked: Boolean,
+      name: [
+        Number,
+        String
+      ],
+      value: [
+        Number,
+        String,
+        Boolean
+      ],
+      disabled: Boolean,
+      readonly: Boolean},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -39769,7 +39782,7 @@
         }, Mixins.colorClasses(self));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$20);
+        return __vueComponentProps(this);
       }
     },
     methods: {
@@ -39785,25 +39798,22 @@
     }
   };
 
-  var __vueComponentPropsKeys$21;
-  function __vueComponentGetPropKeys$21(props) {
-    __vueComponentPropsKeys$21 = Object.keys(props);
-    return props;
-  }
-  var ChipProps = Utils$1.extend({
-    media: String,
-    text: [
-      String,
-      Number
-    ],
-    deleteable: Boolean,
-    mediaBgColor: String,
-    mediaTextColor: String,
-    onDelete: Function
-  }, Mixins.colorProps);
   var f7Chip = {
     name: 'f7-chip',
-    props: __vueComponentGetPropKeys$21(ChipProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      media: String,
+      text: [
+        String,
+        Number
+      ],
+      deleteable: Boolean,
+      mediaBgColor: String,
+      mediaTextColor: String,
+      onDelete: Function},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -39851,7 +39861,7 @@
         return Utils$1.classNames(c);
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$21);
+        return __vueComponentProps(this);
       }
     },
     methods: {
@@ -39870,39 +39880,36 @@
     }
   };
 
-  var __vueComponentPropsKeys$22;
-  function __vueComponentGetPropKeys$22(props) {
-    __vueComponentPropsKeys$22 = Object.keys(props);
-    return props;
-  }
-  var ColProps = Utils$1.extend({
-    tag: {
-      type: String,
-      default: 'div'
-    },
-    width: {
-      type: [
-        Number,
-        String
-      ],
-      default: 'auto'
-    },
-    tabletWidth: {
-      type: [
-        Number,
-        String
-      ]
-    },
-    desktopWidth: {
-      type: [
-        Number,
-        String
-      ]
-    }
-  }, Mixins.colorProps);
   var f7Col = {
     name: 'f7-col',
-    props: __vueComponentGetPropKeys$22(ColProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      tag: {
+        type: String,
+        default: 'div'
+      },
+      width: {
+        type: [
+          Number,
+          String
+        ],
+        default: 'auto'
+      },
+      tabletWidth: {
+        type: [
+          Number,
+          String
+        ]
+      },
+      desktopWidth: {
+        type: [
+          Number,
+          String
+        ]
+      }},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -39923,55 +39930,202 @@
         }, obj[("col-" + (self.props.width))] = self.props.width !== 'auto', obj[("tablet-" + (self.props.tabletWidth))] = self.props.tabletWidth, obj[("desktop-" + (self.props.desktopWidth))] = self.props.desktopWidth, obj ), Mixins.colorClasses(self));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$22);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var FabButtonProps = Utils$1.extend({ fabClose: Boolean }, Mixins.colorProps);
-
-  var FabButtonsProps = Utils$1.extend({
-    position: {
-      type: String,
-      default: 'top'
-    }
-  }, Mixins.colorProps);
-
-  var FabProps = Utils$1.extend({
-    morphTo: String,
-    href: [
-      Boolean,
-      String
-    ],
-    position: {
-      type: String,
-      default: 'right-bottom'
-    }
-  }, Mixins.colorProps);
-
-  var __vueComponentPropsKeys$26;
-  function __vueComponentGetPropKeys$26(props) {
-    __vueComponentPropsKeys$26 = Object.keys(props);
-    return props;
-  }
-  var ToggleProps = Utils$1.extend({
-    init: {
-      type: Boolean,
-      default: true
+  ({
+    name: 'f7-fab-button',
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      fabClose: Boolean},
+      Mixins.colorProps),
+    render: function render() {
+      var _h = this.$createElement;
+      return _h('a', {
+        style: this.props.style,
+        class: this.classes,
+        on: { click: this.onClick.bind(this) },
+        attrs: { id: this.props.id }
+      }, [this.$slots['default']]);
     },
-    checked: Boolean,
-    disabled: Boolean,
-    readonly: Boolean,
-    name: String,
-    value: [
-      String,
-      Number,
-      Array
-    ]
-  }, Mixins.colorProps);
+    computed: {
+      classes: function classes() {
+        var self = this;
+        return Utils$1.classNames(self.props.className, { 'fab-close': self.fabClose }, Mixins.colorClasses(self));
+      },
+      props: function props() {
+        return __vueComponentProps(this);
+      }
+    },
+    methods: {
+      onClick: function onClick(event) {
+        this.dispatchEvent('click', event);
+      },
+      dispatchEvent: function dispatchEvent(events) {
+        var args = [], len = arguments.length - 1;
+        while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+
+        __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+      }
+    }
+  });
+
+  ({
+    name: 'f7-fab-buttons',
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      position: {
+        type: String,
+        default: 'top'
+      }},
+      Mixins.colorProps),
+    render: function render() {
+      var _h = this.$createElement;
+      return _h('div', {
+        style: this.props.style,
+        class: this.classes,
+        attrs: { id: this.props.id }
+      }, [this.$slots['default']]);
+    },
+    computed: {
+      classes: function classes() {
+        var obj;
+
+        var self = this;
+        return Utils$1.classNames(self.props.className, ( obj = {
+          'fab-buttons': true
+        }, obj[("fab-buttons-" + (self.props.position))] = true, obj ), Mixins.colorClasses(self));
+      },
+      props: function props() {
+        return __vueComponentProps(this);
+      }
+    }
+  });
+
+  ({
+    name: 'f7-fab',
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      morphTo: String,
+      href: [
+        Boolean,
+        String
+      ],
+      position: {
+        type: String,
+        default: 'right-bottom'
+      }},
+      Mixins.colorProps),
+    render: function render() {
+      var _h = this.$createElement;
+      var self = this;
+      var ref = self.props;
+      var morphTo = ref.morphTo;
+      var href = self.props.href;
+      if (href === true)
+        { href = '#'; }
+      if (href === false)
+        { href = undefined; }
+      var linkChildren = [];
+      var rootChildren = [];
+      var ref$1 = self.$slots;
+      var linkSlots = ref$1.link;
+      var defaultSlots = ref$1.default;
+      var rootSlots = ref$1.root;
+      if (defaultSlots) {
+        for (var i = 0; i < defaultSlots.length; i += 1) {
+          var child = defaultSlots[i];
+          var isRoot = (void 0);
+          {
+            if (child.tag && child.tag.indexOf('fab-buttons') >= 0)
+              { isRoot = true; }
+          }
+          if (isRoot)
+            { rootChildren.push(child); }
+          else
+            { linkChildren.push(child); }
+        }
+      }
+      var linkEl;
+      if (linkChildren.length || linkSlots.length) {
+        linkEl = _h('a', {
+          key: 'f7-fab-link',
+          on: { click: self.onClick.bind(self) },
+          attrs: { href: href }
+        }, [
+          linkChildren,
+          linkSlots
+        ]);
+      }
+      return _h('div', {
+        style: self.props.style,
+        class: self.classes,
+        attrs: {
+          id: self.props.id,
+          'data-morph-to': morphTo
+        }
+      }, [
+        linkEl,
+        rootChildren,
+        rootSlots
+      ]);
+    },
+    computed: {
+      classes: function classes() {
+        var obj;
+
+        var self = this;
+        return Utils$1.classNames(self.props.className, ( obj = {
+          fab: true,
+          'fab-morph': self.morphTo
+        }, obj[("fab-" + (self.props.position))] = true, obj ), Mixins.colorClasses(self));
+      },
+      props: function props() {
+        return __vueComponentProps(this);
+      }
+    },
+    methods: {
+      onClick: function onClick(event) {
+        var self = this;
+        self.dispatchEvent('click', event);
+      },
+      dispatchEvent: function dispatchEvent(events) {
+        var args = [], len = arguments.length - 1;
+        while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+
+        __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+      }
+    }
+  });
+
   var f7Toggle = {
     name: 'f7-toggle',
-    props: __vueComponentGetPropKeys$26(ToggleProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      init: {
+        type: Boolean,
+        default: true
+      },
+      checked: Boolean,
+      disabled: Boolean,
+      readonly: Boolean,
+      name: String,
+      value: [
+        String,
+        Number,
+        Array
+      ]},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -40043,67 +40197,64 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$26);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$27;
-  function __vueComponentGetPropKeys$27(props) {
-    __vueComponentPropsKeys$27 = Object.keys(props);
-    return props;
-  }
-  var RangeProps = Utils$1.extend({
-    init: {
-      type: Boolean,
-      default: true
-    },
-    value: {
-      type: [
-        Number,
-        Array,
-        String
-      ],
-      default: 0
-    },
-    min: {
-      type: [
-        Number,
-        String
-      ],
-      default: 0
-    },
-    max: {
-      type: [
-        Number,
-        String
-      ],
-      default: 100
-    },
-    step: {
-      type: [
-        Number,
-        String
-      ],
-      default: 1
-    },
-    label: {
-      type: Boolean,
-      default: false
-    },
-    dual: {
-      type: Boolean,
-      default: false
-    },
-    disabled: Boolean,
-    draggableBar: {
-      type: Boolean,
-      default: true
-    }
-  }, Mixins.colorProps);
   var f7Range = {
     name: 'f7-range',
-    props: __vueComponentGetPropKeys$27(RangeProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      init: {
+        type: Boolean,
+        default: true
+      },
+      value: {
+        type: [
+          Number,
+          Array,
+          String
+        ],
+        default: 0
+      },
+      min: {
+        type: [
+          Number,
+          String
+        ],
+        default: 0
+      },
+      max: {
+        type: [
+          Number,
+          String
+        ],
+        default: 100
+      },
+      step: {
+        type: [
+          Number,
+          String
+        ],
+        default: 1
+      },
+      label: {
+        type: Boolean,
+        default: false
+      },
+      dual: {
+        type: Boolean,
+        default: false
+      },
+      disabled: Boolean,
+      draggableBar: {
+        type: Boolean,
+        default: true
+      }},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -40175,19 +40326,14 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$27);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$28;
-  function __vueComponentGetPropKeys$28(props) {
-    __vueComponentPropsKeys$28 = Object.keys(props);
-    return props;
-  }
   var f7Input = {
     name: 'f7-input',
-    props: __vueComponentGetPropKeys$28(Object.assign({}, {type: String,
+    props: Object.assign({}, {type: String,
       name: String,
       value: [
         String,
@@ -40195,7 +40341,14 @@
         Array
       ],
       placeholder: String,
-      id: String,
+      id: [
+        String,
+        Number
+      ],
+      inputId: [
+        String,
+        Number
+      ],
       size: [
         String,
         Number
@@ -40252,7 +40405,7 @@
         type: Boolean,
         default: true
       }},
-      Mixins.colorProps)),
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -40262,6 +40415,7 @@
       var value = ref.value;
       var placeholder = ref.placeholder;
       var id = ref.id;
+      var inputId = ref.inputId;
       var size = ref.size;
       var accept = ref.accept;
       var autocomplete = ref.autocomplete;
@@ -40306,7 +40460,7 @@
             name: name,
             type: type,
             placeholder: placeholder,
-            id: id,
+            id: inputId,
             value: needsValue ? value : undefined,
             size: size,
             accept: accept,
@@ -40354,7 +40508,8 @@
             readonly: readonly,
             name: name,
             value: value,
-            disabled: disabled
+            disabled: disabled,
+            id: inputId
           }
         });
       } else if (self.type === 'range') {
@@ -40365,7 +40520,8 @@
             disabled: disabled,
             min: min,
             max: max,
-            step: step
+            step: step,
+            id: inputId
           }
         });
       } else {
@@ -40376,7 +40532,8 @@
         return _h('div', {
           ref: 'wrapEl',
           class: wrapClasses,
-          style: style
+          style: style,
+          attrs: { id: id }
         }, [
           inputEl,
           clearButton && _h('span', { class: 'input-clear-button' }),
@@ -40526,21 +40683,20 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$28);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$29;
-  function __vueComponentGetPropKeys$29(props) {
-    __vueComponentPropsKeys$29 = Object.keys(props);
-    return props;
-  }
   var f7Label = {
     name: 'f7-label',
-    props: __vueComponentGetPropKeys$29(Object.assign({}, {floating: Boolean,
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      floating: Boolean,
       inline: Boolean},
-      Mixins.colorProps)),
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -40563,7 +40719,7 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$29);
+        return __vueComponentProps(this);
       }
     }
   };
@@ -40582,45 +40738,45 @@
     if (typeof callback === 'function') { callback(); }
   }
 
-  var __vueComponentPropsKeys$30;
-  function __vueComponentGetPropKeys$30(props) {
-    __vueComponentPropsKeys$30 = Object.keys(props);
-    return props;
-  }
-  var LinkProps = Utils$1.extend({
-    noLinkClass: Boolean,
-    noFastClick: Boolean,
-    noFastclick: Boolean,
-    text: String,
-    tabLink: [
-      Boolean,
-      String
-    ],
-    tabLinkActive: Boolean,
-    tabbarLabel: Boolean,
-    iconOnly: Boolean,
-    badge: [
-      String,
-      Number
-    ],
-    badgeColor: [String],
-    iconBadge: [
-      String,
-      Number
-    ],
-    href: {
-      type: [
-        String,
-        Boolean
-      ],
-      default: '#'
-    }
-  }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps);
   var f7Link = {
     name: 'f7-link',
-    props: __vueComponentGetPropKeys$30(LinkProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      noLinkClass: Boolean,
+      noFastClick: Boolean,
+      noFastclick: Boolean,
+      text: String,
+      tabLink: [
+        Boolean,
+        String
+      ],
+      tabLinkActive: Boolean,
+      tabbarLabel: Boolean,
+      iconOnly: Boolean,
+      badge: [
+        String,
+        Number
+      ],
+      badgeColor: [String],
+      iconBadge: [
+        String,
+        Number
+      ],
+      href: {
+        type: [
+          String,
+          Boolean
+        ],
+        default: '#'
+      }},
+      Mixins.colorProps,
+      Mixins.linkIconProps,
+      Mixins.linkRouterProps,
+      Mixins.linkActionsProps),
     data: function data() {
-      var props = __vueComponentProps(this, __vueComponentPropsKeys$30);
+      var props = __vueComponentProps(this);
       var state = (function () {
         return { isTabbarLabel: props.tabbarLabel };
       })();
@@ -40741,7 +40897,7 @@
         }, Mixins.colorClasses(self), Mixins.linkRouterClasses(self), Mixins.linkActionsClasses(self));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$30);
+        return __vueComponentProps(this);
       }
     },
     methods: {
@@ -40760,40 +40916,39 @@
     }
   };
 
-  var __vueComponentPropsKeys$31;
-  function __vueComponentGetPropKeys$31(props) {
-    __vueComponentPropsKeys$31 = Object.keys(props);
-    return props;
-  }
-  var ListButtonProps = Utils$1.extend({
-    noFastclick: Boolean,
-    noFastClick: Boolean,
-    title: [
-      String,
-      Number
-    ],
-    text: [
-      String,
-      Number
-    ],
-    tabLink: [
-      Boolean,
-      String
-    ],
-    tabLinkActive: Boolean,
-    link: [
-      Boolean,
-      String
-    ],
-    href: [
-      Boolean,
-      String
-    ],
-    target: String
-  }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps);
   var f7ListButton = {
     name: 'f7-list-button',
-    props: __vueComponentGetPropKeys$31(ListButtonProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      noFastclick: Boolean,
+      noFastClick: Boolean,
+      title: [
+        String,
+        Number
+      ],
+      text: [
+        String,
+        Number
+      ],
+      tabLink: [
+        Boolean,
+        String
+      ],
+      tabLinkActive: Boolean,
+      link: [
+        Boolean,
+        String
+      ],
+      href: [
+        Boolean,
+        String
+      ],
+      target: String},
+      Mixins.colorProps,
+      Mixins.linkRouterProps,
+      Mixins.linkActionsProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -40835,7 +40990,7 @@
         }, Mixins.colorClasses(self), Mixins.linkRouterClasses(self), Mixins.linkActionsClasses(self));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$31);
+        return __vueComponentProps(this);
       }
     },
     methods: {
@@ -40851,16 +41006,15 @@
     }
   };
 
-  var __vueComponentPropsKeys$32;
-  function __vueComponentGetPropKeys$32(props) {
-    __vueComponentPropsKeys$32 = Object.keys(props);
-    return props;
-  }
   var f7ListGroup = {
     name: 'f7-list-group',
-    props: __vueComponentGetPropKeys$32(Object.assign({}, {mediaList: Boolean,
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      mediaList: Boolean,
       sortable: Boolean},
-      Mixins.colorProps)),
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -40882,52 +41036,49 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$32);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$33;
-  function __vueComponentGetPropKeys$33(props) {
-    __vueComponentPropsKeys$33 = Object.keys(props);
-    return props;
-  }
-  var ListIndexProps = Utils$1.extend({
-    init: {
-      type: Boolean,
-      default: true
-    },
-    listEl: [
-      String,
-      Object
-    ],
-    indexes: {
-      type: [
-        String,
-        Array
-      ],
-      default: 'auto'
-    },
-    scrollList: {
-      type: Boolean,
-      default: true
-    },
-    label: {
-      type: Boolean,
-      default: false
-    },
-    iosItemHeight: {
-      type: Number,
-      default: 14
-    },
-    mdItemHeight: {
-      type: Number,
-      default: 14
-    }
-  }, Mixins.colorProps);
   var f7ListIndex = {
     name: 'f7-list-index',
-    props: __vueComponentGetPropKeys$33(ListIndexProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      init: {
+        type: Boolean,
+        default: true
+      },
+      listEl: [
+        String,
+        Object
+      ],
+      indexes: {
+        type: [
+          String,
+          Array
+        ],
+        default: 'auto'
+      },
+      scrollList: {
+        type: Boolean,
+        default: true
+      },
+      label: {
+        type: Boolean,
+        default: false
+      },
+      iosItemHeight: {
+        type: Number,
+        default: 14
+      },
+      mdItemHeight: {
+        type: Number,
+        default: 14
+      }},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       return _h('div', {
@@ -40943,7 +41094,7 @@
         return Utils$1.classNames(this.props.className, 'list-index', Mixins.colorClasses(self));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$33);
+        return __vueComponentProps(this);
       }
     },
     beforeDestroy: function beforeDestroy() {
@@ -41010,14 +41161,13 @@
     }
   };
 
-  var __vueComponentPropsKeys$34;
-  function __vueComponentGetPropKeys$34(props) {
-    __vueComponentPropsKeys$34 = Object.keys(props);
-    return props;
-  }
   var f7ListItemCell = {
     name: 'f7-list-item-cell',
-    props: __vueComponentGetPropKeys$34(Mixins.colorProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ]},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var classes = Utils$1.classNames(this.props.className, 'item-cell', Mixins.colorClasses(this));
@@ -41029,19 +41179,18 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$34);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$35;
-  function __vueComponentGetPropKeys$35(props) {
-    __vueComponentPropsKeys$35 = Object.keys(props);
-    return props;
-  }
   var F7ListItemContent = {
     name: 'f7-list-item-content',
-    props: __vueComponentGetPropKeys$35(Object.assign({}, {title: [
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      title: [
         String,
         Number
       ],
@@ -41088,9 +41237,9 @@
       readonly: Boolean,
       required: Boolean,
       disabled: Boolean},
-      Mixins.colorProps)),
+      Mixins.colorProps),
     data: function data() {
-      var props = __vueComponentProps(this, __vueComponentPropsKeys$35);
+      var props = __vueComponentProps(this);
       var state = (function () {
         return {
           hasInput: false,
@@ -41160,9 +41309,18 @@
       var headerEl;
       var footerEl;
       var slots = self.$slots.default;
-      if (slots && slots.length > 0) {
-        for (var i = 0; i < slots.length; i += 1) {
-          var slotEl = slots[i];
+      var flattenSlots = [];
+      if (slots && slots.length) {
+        slots.forEach(function (slot) {
+          if (Array.isArray(slot))
+            { flattenSlots.push.apply(flattenSlots, slot); }
+          else
+            { flattenSlots.push(slot); }
+        });
+      }
+      if (flattenSlots.length) {
+        for (var i = 0; i < flattenSlots.length; i += 1) {
+          var slotEl = flattenSlots[i];
           var slotName = (void 0);
           slotName = slotEl.data ? slotEl.data.slot : undefined;
           if (!slotName || slotName === 'inner')
@@ -41339,11 +41497,18 @@
       var $innerEl = self.$$(innerEl);
       var $labelEl = $innerEl.children('.item-title.item-label');
       var $inputEl = $innerEl.children('.item-input-wrap');
-      self.setState({
-        hasInlineLabel: $labelEl.hasClass('item-label-inline'),
-        hasInput: $inputEl.length > 0,
-        hasInputInfo: $inputEl.children('.item-input-info').length > 0
-      });
+      var hasInlineLabel = $labelEl.hasClass('item-label-inline');
+      var hasInput = $inputEl.length > 0;
+      var hasInputInfo = $inputEl.children('.item-input-info').length > 0;
+      if (hasInlineLabel !== self.state.hasInlineLabel) {
+        self.setState({ hasInlineLabel: hasInlineLabel });
+      }
+      if (hasInput !== self.state.hasInput) {
+        self.setState({ hasInput: hasInput });
+      }
+      if (hasInputInfo !== self.state.hasInputInfo) {
+        self.setState({ hasInputInfo: hasInputInfo });
+      }
     },
     updated: function updated() {
       var self = this;
@@ -41353,11 +41518,18 @@
       var $innerEl = self.$$(innerEl);
       var $labelEl = $innerEl.children('.item-title.item-label');
       var $inputEl = $innerEl.children('.item-input-wrap');
-      self.setState({
-        hasInlineLabel: $labelEl.hasClass('item-label-inline'),
-        hasInput: $inputEl.length > 0,
-        hasInputInfo: $inputEl.children('.item-input-info').length > 0
-      });
+      var hasInlineLabel = $labelEl.hasClass('item-label-inline');
+      var hasInput = $inputEl.length > 0;
+      var hasInputInfo = $inputEl.children('.item-input-info').length > 0;
+      if (hasInlineLabel !== self.state.hasInlineLabel) {
+        self.setState({ hasInlineLabel: hasInlineLabel });
+      }
+      if (hasInput !== self.state.hasInput) {
+        self.setState({ hasInput: hasInput });
+      }
+      if (hasInputInfo !== self.state.hasInputInfo) {
+        self.setState({ hasInputInfo: hasInputInfo });
+      }
     },
     methods: {
       onClick: function onClick(event) {
@@ -41378,19 +41550,18 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$35);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$36;
-  function __vueComponentGetPropKeys$36(props) {
-    __vueComponentPropsKeys$36 = Object.keys(props);
-    return props;
-  }
   var f7ListItemRow = {
     name: 'f7-list-item-row',
-    props: __vueComponentGetPropKeys$36(Mixins.colorProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ]},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var classes = Utils$1.classNames(this.props.className, 'item-row', Mixins.colorClasses(this));
@@ -41402,19 +41573,18 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$36);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$37;
-  function __vueComponentGetPropKeys$37(props) {
-    __vueComponentPropsKeys$37 = Object.keys(props);
-    return props;
-  }
   var f7ListItem = {
     name: 'f7-list-item',
-    props: __vueComponentGetPropKeys$37(Object.assign({}, {title: [
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      title: [
         String,
         Number
       ],
@@ -41478,9 +41648,9 @@
       inlineLabel: Boolean},
       Mixins.colorProps,
       Mixins.linkRouterProps,
-      Mixins.linkActionsProps)),
+      Mixins.linkActionsProps),
     data: function data() {
-      var props = __vueComponentProps(this, __vueComponentPropsKeys$37);
+      var props = __vueComponentProps(this);
       var state = (function () {
         return {
           isMedia: props.mediaItem || props.mediaList,
@@ -41696,11 +41866,18 @@
       var $listEl = self.$listEl;
       if (!$listEl || $listEl && $listEl.length === 0)
         { return; }
-      self.setState({
-        isMedia: $listEl.hasClass('media-list'),
-        isSimple: $listEl.hasClass('simple-list'),
-        isSortable: $listEl.hasClass('sortable')
-      });
+      var isMedia = $listEl.hasClass('media-list');
+      var isSimple = $listEl.hasClass('simple-list');
+      var isSortable = $listEl.hasClass('sortable');
+      if (isMedia !== self.state.isMedia) {
+        self.setState({ isMedia: isMedia });
+      }
+      if (isSimple !== self.state.isSimple) {
+        self.setState({ isSimple: isSimple });
+      }
+      if (isSortable !== self.state.isSortable) {
+        self.setState({ isSortable: isSortable });
+      }
     },
     beforeDestroy: function beforeDestroy() {
       var self = this;
@@ -41787,19 +41964,18 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$37);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$38;
-  function __vueComponentGetPropKeys$38(props) {
-    __vueComponentPropsKeys$38 = Object.keys(props);
-    return props;
-  }
   var f7List = {
     name: 'f7-list',
-    props: __vueComponentGetPropKeys$38(Object.assign({}, {inset: Boolean,
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      inset: Boolean,
       tabletInset: Boolean,
       mediaList: Boolean,
       sortable: Boolean,
@@ -41821,7 +41997,7 @@
       inlineLabels: Boolean,
       virtualList: Boolean,
       virtualListParams: Object},
-      Mixins.colorProps)),
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -41919,7 +42095,7 @@
         }, Mixins.colorClasses(self));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$38);
+        return __vueComponentProps(this);
       }
     },
     beforeDestroy: function beforeDestroy() {
@@ -42017,14 +42193,13 @@
     }
   };
 
-  var __vueComponentPropsKeys$39;
-  function __vueComponentGetPropKeys$39(props) {
-    __vueComponentPropsKeys$39 = Object.keys(props);
-    return props;
-  }
   var f7LoginScreenTitle = {
     name: 'f7-login-screen-title',
-    props: __vueComponentGetPropKeys$39(Mixins.colorProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ]},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var classes = Utils$1.classNames(this.props.className, 'login-screen-title', Mixins.colorClasses(this));
@@ -42036,20 +42211,19 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$39);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$40;
-  function __vueComponentGetPropKeys$40(props) {
-    __vueComponentPropsKeys$40 = Object.keys(props);
-    return props;
-  }
   var f7LoginScreen = {
     name: 'f7-login-screen',
-    props: __vueComponentGetPropKeys$40(Object.assign({}, {opened: Boolean},
-      Mixins.colorProps)),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      opened: Boolean},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -42078,7 +42252,7 @@
         return Utils$1.classNames(self.props.className, 'login-screen', Mixins.colorClasses(self));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$40);
+        return __vueComponentProps(this);
       }
     },
     mounted: function mounted() {
@@ -42128,27 +42302,28 @@
       },
       open: function open(animate) {
         var self = this;
-        if (!self.$f7)
+        var el = self.$refs.el;
+        if (!self.$f7 || !el)
           { return undefined; }
-        return self.$f7.loginScreen.open(self.$el, animate);
+        return self.$f7.loginScreen.open(el, animate);
       },
       close: function close(animate) {
         var self = this;
-        if (!self.$f7)
+        var el = self.$refs.el;
+        if (!self.$f7 || !el)
           { return undefined; }
-        return self.$f7.loginScreen.close(self.$el, animate);
+        return self.$f7.loginScreen.close(el, animate);
       }
     }
   };
 
-  var __vueComponentPropsKeys$41;
-  function __vueComponentGetPropKeys$41(props) {
-    __vueComponentPropsKeys$41 = Object.keys(props);
-    return props;
-  }
   var f7Message = {
     name: 'f7-message',
-    props: __vueComponentGetPropKeys$41(Object.assign({}, {text: String,
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      text: String,
       name: String,
       avatar: String,
       type: {
@@ -42168,7 +42343,7 @@
       sameFooter: Boolean,
       sameAvatar: Boolean,
       typing: Boolean},
-      Mixins.colorProps)),
+      Mixins.colorProps),
     created: function created() {
       this.onClickBound = this.onClick.bind(this);
       this.onNameClickBound = this.onNameClick.bind(this);
@@ -42289,7 +42464,7 @@
         }, Mixins.colorClasses(self));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$41);
+        return __vueComponentProps(this);
       }
     },
     methods: {
@@ -42323,19 +42498,18 @@
     }
   };
 
-  var __vueComponentPropsKeys$42;
-  function __vueComponentGetPropKeys$42(props) {
-    __vueComponentPropsKeys$42 = Object.keys(props);
-    return props;
-  }
   var f7MessagebarAttachment = {
     name: 'f7-messagebar-attachment',
-    props: __vueComponentGetPropKeys$42(Object.assign({}, {image: String,
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      image: String,
       deletable: {
         type: Boolean,
         default: true
       }},
-      Mixins.colorProps)),
+      Mixins.colorProps),
     created: function created() {
       this.onClickBound = this.onClick.bind(this);
       this.onDeleteClickBound = this.onDeleteClick.bind(this);
@@ -42380,19 +42554,18 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$42);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$43;
-  function __vueComponentGetPropKeys$43(props) {
-    __vueComponentPropsKeys$43 = Object.keys(props);
-    return props;
-  }
   var f7MessagebarAttachments = {
     name: 'f7-messagebar-attachments',
-    props: __vueComponentGetPropKeys$43(Mixins.colorProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ]},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var classes = Utils$1.classNames(this.props.className, 'messagebar-attachments', Mixins.colorClasses(this));
@@ -42404,21 +42577,20 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$43);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$44;
-  function __vueComponentGetPropKeys$44(props) {
-    __vueComponentPropsKeys$44 = Object.keys(props);
-    return props;
-  }
   var f7MessagebarSheetImage = {
     name: 'f7-messagebar-sheet-image',
-    props: __vueComponentGetPropKeys$44(Object.assign({}, {image: String,
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      image: String,
       checked: Boolean},
-      Mixins.colorProps)),
+      Mixins.colorProps),
     created: function created() {
       this.onChangeBound = this.onChange.bind(this);
     },
@@ -42466,19 +42638,41 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$44);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$46;
-  function __vueComponentGetPropKeys$46(props) {
-    __vueComponentPropsKeys$46 = Object.keys(props);
-    return props;
-  }
+  ({
+    name: 'f7-messagebar-sheet-item',
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ]},
+      Mixins.colorProps),
+    render: function render() {
+      var _h = this.$createElement;
+      var classes = Utils$1.classNames(this.props.className, 'messagebar-sheet-item', Mixins.colorClasses(this));
+      return _h('div', {
+        style: this.props.style,
+        class: classes,
+        attrs: { id: this.props.id }
+      }, [this.$slots['default']]);
+    },
+    computed: {
+      props: function props() {
+        return __vueComponentProps(this);
+      }
+    }
+  });
+
   var f7MessagebarSheet = {
     name: 'f7-messagebar-sheet',
-    props: __vueComponentGetPropKeys$46(Mixins.colorProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ]},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var classes = Utils$1.classNames(this.props.className, 'messagebar-sheet', Mixins.colorClasses(this));
@@ -42490,19 +42684,18 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$46);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$47;
-  function __vueComponentGetPropKeys$47(props) {
-    __vueComponentPropsKeys$47 = Object.keys(props);
-    return props;
-  }
   var f7Messagebar = {
     name: 'f7-messagebar',
-    props: __vueComponentGetPropKeys$47(Object.assign({}, {sheetVisible: Boolean,
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      sheetVisible: Boolean,
       attachmentsVisible: Boolean,
       top: Boolean,
       resizable: {
@@ -42535,7 +42728,7 @@
         type: Boolean,
         default: true
       }},
-      Mixins.colorProps)),
+      Mixins.colorProps),
     created: function created() {
       this.onChangeBound = this.onChange.bind(this);
       this.onInputBound = this.onInput.bind(this);
@@ -42638,7 +42831,7 @@
         }, Mixins.colorClasses(self));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$47);
+        return __vueComponentProps(this);
       }
     },
     watch: {
@@ -42866,14 +43059,13 @@
     }
   };
 
-  var __vueComponentPropsKeys$48;
-  function __vueComponentGetPropKeys$48(props) {
-    __vueComponentPropsKeys$48 = Object.keys(props);
-    return props;
-  }
   var f7MessagesTitle = {
     name: 'f7-messages-title',
-    props: __vueComponentGetPropKeys$48(Mixins.colorProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ]},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var classes = Utils$1.classNames(this.props.className, 'messages-title', Mixins.colorClasses(this));
@@ -42885,19 +43077,18 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$48);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$49;
-  function __vueComponentGetPropKeys$49(props) {
-    __vueComponentPropsKeys$49 = Object.keys(props);
-    return props;
-  }
   var f7Messages = {
     name: 'f7-messages',
-    props: __vueComponentGetPropKeys$49(Object.assign({}, {autoLayout: {
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      autoLayout: {
         type: Boolean,
         default: false
       },
@@ -42932,7 +43123,7 @@
         type: Boolean,
         default: true
       }},
-      Mixins.colorProps)),
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -43099,27 +43290,24 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$49);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$50;
-  function __vueComponentGetPropKeys$50(props) {
-    __vueComponentPropsKeys$50 = Object.keys(props);
-    return props;
-  }
-  var NavLeftProps = Utils$1.extend({
-    backLink: [
-      Boolean,
-      String
-    ],
-    backLinkUrl: String,
-    sliding: Boolean
-  }, Mixins.colorProps);
   var f7NavLeft = {
     name: 'f7-nav-left',
-    props: __vueComponentGetPropKeys$50(NavLeftProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      backLink: [
+        Boolean,
+        String
+      ],
+      backLinkUrl: String,
+      sliding: Boolean},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var ref = this.props;
@@ -43155,7 +43343,7 @@
         }, Mixins.colorClasses(this));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$50);
+        return __vueComponentProps(this);
       }
     },
     methods: {
@@ -43171,15 +43359,14 @@
     }
   };
 
-  var __vueComponentPropsKeys$51;
-  function __vueComponentGetPropKeys$51(props) {
-    __vueComponentPropsKeys$51 = Object.keys(props);
-    return props;
-  }
-  var NavRightProps = Utils$1.extend({ sliding: Boolean }, Mixins.colorProps);
   var f7NavRight = {
     name: 'f7-nav-right',
-    props: __vueComponentGetPropKeys$51(NavRightProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      sliding: Boolean},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       return _h('div', {
@@ -43196,24 +43383,21 @@
         }, Mixins.colorClasses(this));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$51);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$52;
-  function __vueComponentGetPropKeys$52(props) {
-    __vueComponentPropsKeys$52 = Object.keys(props);
-    return props;
-  }
-  var NavTitleProps = Utils$1.extend({
-    title: String,
-    subtitle: String,
-    sliding: Boolean
-  }, Mixins.colorProps);
   var f7NavTitle = {
     name: 'f7-nav-title',
-    props: __vueComponentGetPropKeys$52(NavTitleProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      title: String,
+      subtitle: String,
+      sliding: Boolean},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -43243,39 +43427,36 @@
         }, Mixins.colorClasses(this));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$52);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$53;
-  function __vueComponentGetPropKeys$53(props) {
-    __vueComponentPropsKeys$53 = Object.keys(props);
-    return props;
-  }
-  var NavbarProps = Utils$1.extend({
-    backLink: [
-      Boolean,
-      String
-    ],
-    backLinkUrl: String,
-    sliding: {
-      type: Boolean,
-      default: true
-    },
-    title: String,
-    subtitle: String,
-    hidden: Boolean,
-    noShadow: Boolean,
-    noHairline: Boolean,
-    inner: {
-      type: Boolean,
-      default: true
-    }
-  }, Mixins.colorProps);
   var f7Navbar = {
     name: 'f7-navbar',
-    props: __vueComponentGetPropKeys$53(NavbarProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      backLink: [
+        Boolean,
+        String
+      ],
+      backLinkUrl: String,
+      sliding: {
+        type: Boolean,
+        default: true
+      },
+      title: String,
+      subtitle: String,
+      hidden: Boolean,
+      noShadow: Boolean,
+      noHairline: Boolean,
+      inner: {
+        type: Boolean,
+        default: true
+      }},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -43349,7 +43530,7 @@
         }, Mixins.colorClasses(self));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$53);
+        return __vueComponentProps(this);
       }
     },
     methods: {
@@ -43383,36 +43564,33 @@
     }
   };
 
-  var __vueComponentPropsKeys$54;
-  function __vueComponentGetPropKeys$54(props) {
-    __vueComponentPropsKeys$54 = Object.keys(props);
-    return props;
-  }
-  var PageContentProps = Utils$1.extend({
-    tab: Boolean,
-    tabActive: Boolean,
-    ptr: Boolean,
-    ptrDistance: Number,
-    ptrPreloader: {
-      type: Boolean,
-      default: true
-    },
-    infinite: Boolean,
-    infiniteTop: Boolean,
-    infiniteDistance: Number,
-    infinitePreloader: {
-      type: Boolean,
-      default: true
-    },
-    hideBarsOnScroll: Boolean,
-    hideNavbarOnScroll: Boolean,
-    hideToolbarOnScroll: Boolean,
-    messagesContent: Boolean,
-    loginScreen: Boolean
-  }, Mixins.colorProps);
   var f7PageContent = {
     name: 'f7-page-content',
-    props: __vueComponentGetPropKeys$54(PageContentProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      tab: Boolean,
+      tabActive: Boolean,
+      ptr: Boolean,
+      ptrDistance: Number,
+      ptrPreloader: {
+        type: Boolean,
+        default: true
+      },
+      infinite: Boolean,
+      infiniteTop: Boolean,
+      infiniteDistance: Number,
+      infinitePreloader: {
+        type: Boolean,
+        default: true
+      },
+      hideBarsOnScroll: Boolean,
+      hideNavbarOnScroll: Boolean,
+      hideToolbarOnScroll: Boolean,
+      messagesContent: Boolean,
+      loginScreen: Boolean},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -43460,7 +43638,7 @@
         }, Mixins.colorClasses(self));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$54);
+        return __vueComponentProps(this);
       }
     },
     mounted: function mounted() {
@@ -43529,48 +43707,45 @@
     }
   };
 
-  var __vueComponentPropsKeys$55;
-  function __vueComponentGetPropKeys$55(props) {
-    __vueComponentPropsKeys$55 = Object.keys(props);
-    return props;
-  }
-  var PageProps = Utils$1.extend({
-    name: String,
-    stacked: Boolean,
-    withSubnavbar: Boolean,
-    subnavbar: Boolean,
-    noNavbar: Boolean,
-    noToolbar: Boolean,
-    tabs: Boolean,
-    pageContent: {
-      type: Boolean,
-      default: true
-    },
-    noSwipeback: Boolean,
-    ptr: Boolean,
-    ptrDistance: Number,
-    ptrPreloader: {
-      type: Boolean,
-      default: true
-    },
-    infinite: Boolean,
-    infiniteTop: Boolean,
-    infiniteDistance: Number,
-    infinitePreloader: {
-      type: Boolean,
-      default: true
-    },
-    hideBarsOnScroll: Boolean,
-    hideNavbarOnScroll: Boolean,
-    hideToolbarOnScroll: Boolean,
-    messagesContent: Boolean,
-    loginScreen: Boolean
-  }, Mixins.colorProps);
   var f7Page = {
     name: 'f7-page',
-    props: __vueComponentGetPropKeys$55(PageProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      name: String,
+      stacked: Boolean,
+      withSubnavbar: Boolean,
+      subnavbar: Boolean,
+      noNavbar: Boolean,
+      noToolbar: Boolean,
+      tabs: Boolean,
+      pageContent: {
+        type: Boolean,
+        default: true
+      },
+      noSwipeback: Boolean,
+      ptr: Boolean,
+      ptrDistance: Number,
+      ptrPreloader: {
+        type: Boolean,
+        default: true
+      },
+      infinite: Boolean,
+      infiniteTop: Boolean,
+      infiniteDistance: Number,
+      infinitePreloader: {
+        type: Boolean,
+        default: true
+      },
+      hideBarsOnScroll: Boolean,
+      hideNavbarOnScroll: Boolean,
+      hideToolbarOnScroll: Boolean,
+      messagesContent: Boolean,
+      loginScreen: Boolean},
+      Mixins.colorProps),
     data: function data() {
-      var props = __vueComponentProps(this, __vueComponentPropsKeys$55);
+      var props = __vueComponentProps(this);
       var state = (function () {
         return { hasSubnavbar: false };
       })();
@@ -43681,7 +43856,7 @@
         }, Mixins.colorClasses(this));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$55);
+        return __vueComponentProps(this);
       }
     },
     mounted: function mounted() {
@@ -43786,23 +43961,20 @@
     }
   };
 
-  var __vueComponentPropsKeys$56;
-  function __vueComponentGetPropKeys$56(props) {
-    __vueComponentPropsKeys$56 = Object.keys(props);
-    return props;
-  }
-  var PanelProps = Utils$1.extend({
-    side: String,
-    effect: String,
-    cover: Boolean,
-    reveal: Boolean,
-    left: Boolean,
-    right: Boolean,
-    opened: Boolean
-  }, Mixins.colorProps);
   var f7Panel = {
     name: 'f7-panel',
-    props: __vueComponentGetPropKeys$56(PanelProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      side: String,
+      effect: String,
+      cover: Boolean,
+      reveal: Boolean,
+      left: Boolean,
+      right: Boolean,
+      opened: Boolean},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       return _h('div', {
@@ -43833,7 +44005,7 @@
         }, obj[("panel-" + side)] = side, obj[("panel-" + effect)] = effect, obj ), Mixins.colorClasses(self));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$56);
+        return __vueComponentProps(this);
       }
     },
     watch: {
@@ -43961,14 +44133,13 @@
     }
   };
 
-  var __vueComponentPropsKeys$57;
-  function __vueComponentGetPropKeys$57(props) {
-    __vueComponentPropsKeys$57 = Object.keys(props);
-    return props;
-  }
   var f7PhotoBrowser = {
     name: 'f7-photo-browser',
-    props: __vueComponentGetPropKeys$57({
+    props: {
+      id: [
+        String,
+        Number
+      ],
       init: {
         type: Boolean,
         default: true
@@ -44024,7 +44195,7 @@
       renderPage: Function,
       renderPopup: Function,
       renderStandalone: Function
-    }),
+    },
     render: function render() {
       var _h = this.$createElement;
     },
@@ -44106,26 +44277,23 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$57);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$58;
-  function __vueComponentGetPropKeys$58(props) {
-    __vueComponentPropsKeys$58 = Object.keys(props);
-    return props;
-  }
-  var PopoverProps = Utils$1.extend({
-    opened: Boolean,
-    target: [
-      String,
-      Object
-    ]
-  }, Mixins.colorProps);
   var f7Popover = {
     name: 'f7-popover',
-    props: __vueComponentGetPropKeys$58(PopoverProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      opened: Boolean,
+      target: [
+        String,
+        Object
+      ]},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -44157,7 +44325,7 @@
         return Utils$1.classNames(self.props.className, 'popover', Mixins.colorClasses(self));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$58);
+        return __vueComponentProps(this);
       }
     },
     mounted: function mounted() {
@@ -44229,16 +44397,15 @@
     }
   };
 
-  var __vueComponentPropsKeys$59;
-  function __vueComponentGetPropKeys$59(props) {
-    __vueComponentPropsKeys$59 = Object.keys(props);
-    return props;
-  }
   var f7Popup = {
     name: 'f7-popup',
-    props: __vueComponentGetPropKeys$59(Object.assign({}, {'tablet-fullscreen': Boolean,
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      tabletFullscreen: Boolean,
       opened: Boolean},
-      Mixins.colorProps)),
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -44267,7 +44434,7 @@
         return Utils$1.classNames(self.props.className, 'popup', { 'popup-tablet-fullscreen': self.props.tabletFullscreen }, Mixins.colorClasses(self));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$59);
+        return __vueComponentProps(this);
       }
     },
     mounted: function mounted() {
@@ -44336,20 +44503,17 @@
     }
   };
 
-  var __vueComponentPropsKeys$60;
-  function __vueComponentGetPropKeys$60(props) {
-    __vueComponentPropsKeys$60 = Object.keys(props);
-    return props;
-  }
-  var PreloaderProps = Utils$1.extend({
-    size: [
-      Number,
-      String
-    ]
-  }, Mixins.colorProps);
   var f7Preloader = {
     name: 'f7-preloader',
-    props: __vueComponentGetPropKeys$60(PreloaderProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      size: [
+        Number,
+        String
+      ]},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var ref = this;
@@ -44391,23 +44555,20 @@
         return s;
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$60);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$61;
-  function __vueComponentGetPropKeys$61(props) {
-    __vueComponentPropsKeys$61 = Object.keys(props);
-    return props;
-  }
-  var ProgressbarProps = Utils$1.extend({
-    progress: Number,
-    infinite: Boolean
-  }, Mixins.colorProps);
   var f7Progressbar = {
     name: 'f7-progressbar',
-    props: __vueComponentGetPropKeys$61(ProgressbarProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      progress: Number,
+      infinite: Boolean},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -44437,7 +44598,7 @@
         }, Mixins.colorClasses(this));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$61);
+        return __vueComponentProps(this);
       }
     },
     methods: {
@@ -44450,28 +44611,25 @@
     }
   };
 
-  var __vueComponentPropsKeys$62;
-  function __vueComponentGetPropKeys$62(props) {
-    __vueComponentPropsKeys$62 = Object.keys(props);
-    return props;
-  }
-  var RadioProps = Utils$1.extend({
-    checked: Boolean,
-    name: [
-      Number,
-      String
-    ],
-    value: [
-      Number,
-      String,
-      Boolean
-    ],
-    disabled: Boolean,
-    readonly: Boolean
-  }, Mixins.colorProps);
   var f7Radio = {
     name: 'f7-radio',
-    props: __vueComponentGetPropKeys$62(RadioProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      checked: Boolean,
+      name: [
+        Number,
+        String
+      ],
+      value: [
+        Number,
+        String,
+        Boolean
+      ],
+      disabled: Boolean,
+      readonly: Boolean},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -44511,7 +44669,7 @@
         }, Mixins.colorClasses(self));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$62);
+        return __vueComponentProps(this);
       }
     },
     methods: {
@@ -44527,21 +44685,18 @@
     }
   };
 
-  var __vueComponentPropsKeys$63;
-  function __vueComponentGetPropKeys$63(props) {
-    __vueComponentPropsKeys$63 = Object.keys(props);
-    return props;
-  }
-  var RowProps = Utils$1.extend({
-    noGap: Boolean,
-    tag: {
-      type: String,
-      default: 'div'
-    }
-  }, Mixins.colorProps);
   var f7Row = {
     name: 'f7-row',
-    props: __vueComponentGetPropKeys$63(RowProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      noGap: Boolean,
+      tag: {
+        type: String,
+        default: 'div'
+      }},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -44561,19 +44716,18 @@
         }, Mixins.colorClasses(self));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$63);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$64;
-  function __vueComponentGetPropKeys$64(props) {
-    __vueComponentPropsKeys$64 = Object.keys(props);
-    return props;
-  }
   var f7Searchbar = {
     name: 'f7-searchbar',
-    props: __vueComponentGetPropKeys$64(Object.assign({}, {noShadow: Boolean,
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      noShadow: Boolean,
       noHairline: Boolean,
       form: {
         type: Boolean,
@@ -44668,7 +44822,7 @@
         type: Boolean,
         default: true
       }},
-      Mixins.colorProps)),
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -44870,27 +45024,24 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$64);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$65;
-  function __vueComponentGetPropKeys$65(props) {
-    __vueComponentPropsKeys$65 = Object.keys(props);
-    return props;
-  }
-  var SegmentedProps = Utils$1.extend({
-    raised: Boolean,
-    round: Boolean,
-    tag: {
-      type: String,
-      default: 'div'
-    }
-  }, Mixins.colorProps);
   var f7Segmented = {
     name: 'f7-segmented',
-    props: __vueComponentGetPropKeys$65(SegmentedProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      raised: Boolean,
+      round: Boolean,
+      tag: {
+        type: String,
+        default: 'div'
+      }},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -44908,23 +45059,20 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$65);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$66;
-  function __vueComponentGetPropKeys$66(props) {
-    __vueComponentPropsKeys$66 = Object.keys(props);
-    return props;
-  }
-  var SheetProps = Utils$1.extend({
-    opened: Boolean,
-    backdrop: Boolean
-  }, Mixins.colorProps);
   var f7Sheet = {
     name: 'f7-sheet',
-    props: __vueComponentGetPropKeys$66(SheetProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      opened: Boolean,
+      backdrop: Boolean},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -44982,7 +45130,7 @@
         return Utils$1.classNames(self.props.className, 'sheet-modal', Mixins.colorClasses(self));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$66);
+        return __vueComponentProps(this);
       }
     },
     beforeDestroy: function beforeDestroy() {
@@ -45061,14 +45209,13 @@
     }
   };
 
-  var __vueComponentPropsKeys$67;
-  function __vueComponentGetPropKeys$67(props) {
-    __vueComponentPropsKeys$67 = Object.keys(props);
-    return props;
-  }
   var f7Statusbar = {
     name: 'f7-statusbar',
-    props: __vueComponentGetPropKeys$67(Mixins.colorProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ]},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var classes = Utils$1.classNames(this.props.className, 'statusbar', Mixins.colorClasses(this));
@@ -45080,19 +45227,18 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$67);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$68;
-  function __vueComponentGetPropKeys$68(props) {
-    __vueComponentPropsKeys$68 = Object.keys(props);
-    return props;
-  }
   var f7Stepper = {
     name: 'f7-stepper',
-    props: __vueComponentGetPropKeys$68(Object.assign({}, {init: {
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      init: {
         type: Boolean,
         default: true
       },
@@ -45152,7 +45298,7 @@
       smallMd: Boolean,
       smallIos: Boolean,
       raised: Boolean},
-      Mixins.colorProps)),
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -45237,7 +45383,7 @@
         }, Mixins.colorClasses(self));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$68);
+        return __vueComponentProps(this);
       }
     },
     created: function created() {
@@ -45328,22 +45474,19 @@
     }
   };
 
-  var __vueComponentPropsKeys$69;
-  function __vueComponentGetPropKeys$69(props) {
-    __vueComponentPropsKeys$69 = Object.keys(props);
-    return props;
-  }
-  var SubnavbarProps = Utils$1.extend({
-    sliding: Boolean,
-    title: String,
-    inner: {
-      type: Boolean,
-      default: true
-    }
-  }, Mixins.colorProps);
   var f7Subnavbar = {
     name: 'f7-subnavbar',
-    props: __vueComponentGetPropKeys$69(SubnavbarProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      sliding: Boolean,
+      title: String,
+      inner: {
+        type: Boolean,
+        default: true
+      }},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -45363,24 +45506,21 @@
         }, Mixins.colorClasses(this));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$69);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$70;
-  function __vueComponentGetPropKeys$70(props) {
-    __vueComponentPropsKeys$70 = Object.keys(props);
-    return props;
-  }
-  var SwipeoutActionsProps = Utils$1.extend({
-    left: Boolean,
-    right: Boolean,
-    side: String
-  }, Mixins.colorProps);
   var f7SwipeoutActions = {
     name: 'f7-swipeout-actions',
-    props: __vueComponentGetPropKeys$70(SwipeoutActionsProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      left: Boolean,
+      right: Boolean,
+      side: String},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       return _h('div', {
@@ -45410,27 +45550,24 @@
         return side;
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$70);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$71;
-  function __vueComponentGetPropKeys$71(props) {
-    __vueComponentPropsKeys$71 = Object.keys(props);
-    return props;
-  }
-  var SwipeoutButtonProps = Utils$1.extend({
-    text: String,
-    confirmText: String,
-    overswipe: Boolean,
-    close: Boolean,
-    delete: Boolean,
-    href: String
-  }, Mixins.colorProps);
   var f7SwipeoutButton = {
     name: 'f7-swipeout-button',
-    props: __vueComponentGetPropKeys$71(SwipeoutButtonProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      text: String,
+      confirmText: String,
+      overswipe: Boolean,
+      close: Boolean,
+      delete: Boolean,
+      href: String},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       this.onClick = this.onClick.bind(this);
@@ -45454,7 +45591,7 @@
         }, Mixins.colorClasses(this));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$71);
+        return __vueComponentProps(this);
       }
     },
     methods: {
@@ -45470,31 +45607,140 @@
     }
   };
 
-  var SwiperProps = Utils$1.extend({
-    params: Object,
-    pagination: Boolean,
-    scrollbar: Boolean,
-    navigation: Boolean,
-    init: {
-      type: Boolean,
-      default: true
-    }
-  }, Mixins.colorProps);
+  ({
+    name: 'f7-swiper',
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      params: Object,
+      pagination: Boolean,
+      scrollbar: Boolean,
+      navigation: Boolean,
+      init: {
+        type: Boolean,
+        default: true
+      }},
+      Mixins.colorProps),
+    render: function render() {
+      var _h = this.$createElement;
+      var self = this;
+      var paginationEl;
+      var scrollbarEl;
+      var buttonNextEl;
+      var buttonPrevEl;
+      if (self.paginationComputed) {
+        paginationEl = _h('div', { class: 'swiper-pagination' });
+      }
+      if (self.scrollbarComputed) {
+        scrollbarEl = _h('div', { class: 'swiper-scrollbar' });
+      }
+      if (self.navigationComputed) {
+        buttonNextEl = _h('div', { class: 'swiper-button-next' });
+        buttonPrevEl = _h('div', { class: 'swiper-button-prev' });
+      }
+      return _h('div', {
+        style: self.props.style,
+        ref: 'el',
+        class: self.classes,
+        attrs: { id: self.props.id }
+      }, [
+        this.$slots['before-wrapper'],
+        _h('div', { class: 'swiper-wrapper' }, [this.$slots['default']]),
+        paginationEl,
+        scrollbarEl,
+        buttonPrevEl,
+        buttonNextEl,
+        this.$slots['after-wrapper']
+      ]);
+    },
+    computed: {
+      classes: function classes() {
+        return Utils$1.classNames(this.props.className, 'swiper-container', Mixins.colorClasses(this));
+      },
+      paginationComputed: function paginationComputed() {
+        var self = this;
+        if (self.props.pagination === true || self.props.params && self.props.params.pagination && !self.props.params.pagination.el) {
+          return true;
+        }
+        return false;
+      },
+      scrollbarComputed: function scrollbarComputed() {
+        var self = this;
+        if (self.props.scrollbar === true || self.props.params && self.props.params.scrollbar && !self.props.params.scrollbar.el) {
+          return true;
+        }
+        return false;
+      },
+      navigationComputed: function navigationComputed() {
+        var self = this;
+        if (self.props.navigation === true || self.props.params && self.props.params.navigation && !self.props.params.navigation.nextEl && !self.props.params.navigation.prevEl) {
+          return true;
+        }
+        return false;
+      },
+      props: function props() {
+        return __vueComponentProps(this);
+      }
+    },
+    beforeDestroy: function beforeDestroy() {
+      var self = this;
+      if (!self.props.init)
+        { return; }
+      if (self.swiper && self.swiper.destroy)
+        { self.swiper.destroy(); }
+    },
+    updated: function updated() {
+      var self = this;
+      if (!self.initialUpdate) {
+        self.initialUpdate = true;
+        return;
+      }
+      if (self.swiper && self.swiper.update)
+        { self.swiper.update(); }
+    },
+    mounted: function mounted() {
+      var this$1 = this;
 
-  var __vueComponentPropsKeys$74;
-  function __vueComponentGetPropKeys$74(props) {
-    __vueComponentPropsKeys$74 = Object.keys(props);
-    return props;
-  }
-  var TabProps = Utils$1.extend({
-    tabActive: Boolean,
-    id: String
-  }, Mixins.colorProps);
+      var self = this;
+      if (!self.props.init)
+        { return; }
+      self.$f7ready(function (f7) {
+        var newParams = {
+          pagination: {},
+          navigation: {},
+          scrollbar: {}
+        };
+        var ref = self.props;
+        var params = ref.params;
+        var pagination = ref.pagination;
+        var navigation = ref.navigation;
+        var scrollbar = ref.scrollbar;
+        if (params)
+          { Utils$1.extend(newParams, params); }
+        if (pagination && !newParams.pagination.el)
+          { newParams.pagination.el = '.swiper-pagination'; }
+        if (navigation && !newParams.navigation.nextEl && !newParams.navigation.prevEl) {
+          newParams.navigation.nextEl = '.swiper-button-next';
+          newParams.navigation.prevEl = '.swiper-button-prev';
+        }
+        if (scrollbar && !newParams.scrollbar.el)
+          { newParams.scrollbar.el = '.swiper-scrollbar'; }
+        self.swiper = f7.swiper.create(this$1.$refs.el, newParams);
+      });
+    }
+  });
+
   var f7Tab = {
     name: 'f7-tab',
-    props: __vueComponentGetPropKeys$74(TabProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      tabActive: Boolean},
+      Mixins.colorProps),
     data: function data() {
-      var props = __vueComponentProps(this, __vueComponentPropsKeys$74);
+      var props = __vueComponentProps(this);
       var state = (function () {
         return { tabContent: null };
       })();
@@ -45582,24 +45828,21 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$74);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$75;
-  function __vueComponentGetPropKeys$75(props) {
-    __vueComponentPropsKeys$75 = Object.keys(props);
-    return props;
-  }
-  var TabsProps = Utils$1.extend({
-    animated: Boolean,
-    swipeable: Boolean,
-    routable: Boolean
-  }, Mixins.colorProps);
   var f7Tabs = {
     name: 'f7-tabs',
-    props: __vueComponentGetPropKeys$75(TabsProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      animated: Boolean,
+      swipeable: Boolean,
+      routable: Boolean},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -45626,32 +45869,29 @@
         }, Mixins.colorClasses(this));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$75);
+        return __vueComponentProps(this);
       }
     }
   };
 
-  var __vueComponentPropsKeys$76;
-  function __vueComponentGetPropKeys$76(props) {
-    __vueComponentPropsKeys$76 = Object.keys(props);
-    return props;
-  }
-  var ToolbarProps = Utils$1.extend({
-    bottomMd: Boolean,
-    tabbar: Boolean,
-    labels: Boolean,
-    scrollable: Boolean,
-    hidden: Boolean,
-    noShadow: Boolean,
-    noHairline: Boolean,
-    inner: {
-      type: Boolean,
-      default: true
-    }
-  }, Mixins.colorProps);
   var f7Toolbar = {
     name: 'f7-toolbar',
-    props: __vueComponentGetPropKeys$76(ToolbarProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      bottomMd: Boolean,
+      tabbar: Boolean,
+      labels: Boolean,
+      scrollable: Boolean,
+      hidden: Boolean,
+      noShadow: Boolean,
+      noHairline: Boolean,
+      inner: {
+        type: Boolean,
+        default: true
+      }},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -45692,7 +45932,7 @@
         }, Mixins.colorClasses(self));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$76);
+        return __vueComponentProps(this);
       }
     },
     methods: {
@@ -45711,66 +45951,63 @@
     }
   };
 
-  var __vueComponentPropsKeys$77;
-  function __vueComponentGetPropKeys$77(props) {
-    __vueComponentPropsKeys$77 = Object.keys(props);
-    return props;
-  }
-  var ViewProps = Utils$1.extend({
-    tab: Boolean,
-    tabActive: Boolean,
-    name: String,
-    router: Boolean,
-    linksView: [
-      Object,
-      String
-    ],
-    url: String,
-    main: Boolean,
-    stackPages: Boolean,
-    xhrCache: String,
-    xhrCacheIgnore: Array,
-    xhrCacheIgnoreGetParameters: Boolean,
-    xhrCacheDuration: Number,
-    preloadPreviousPage: Boolean,
-    uniqueHistory: Boolean,
-    uniqueHistoryIgnoreGetParameters: Boolean,
-    allowDuplicateUrls: Boolean,
-    reloadPages: Boolean,
-    removeElements: Boolean,
-    removeElementsWithTimeout: Boolean,
-    removeElementsTimeout: Number,
-    restoreScrollTopOnBack: Boolean,
-    iosSwipeBack: Boolean,
-    iosSwipeBackAnimateShadow: Boolean,
-    iosSwipeBackAnimateOpacity: Boolean,
-    iosSwipeBackActiveArea: Number,
-    iosSwipeBackThreshold: Number,
-    pushState: Boolean,
-    pushStateRoot: String,
-    pushStateAnimate: Boolean,
-    pushStateAnimateOnLoad: Boolean,
-    pushStateSeparator: String,
-    pushStateOnLoad: Boolean,
-    animate: Boolean,
-    iosDynamicNavbar: Boolean,
-    iosSeparateDynamicNavbar: Boolean,
-    iosAnimateNavbarBackIcon: Boolean,
-    materialPageLoadDelay: Number,
-    passRouteQueryToRequest: Boolean,
-    passRouteParamsToRequest: Boolean,
-    routes: Array,
-    routesAdd: Array,
-    init: {
-      type: Boolean,
-      default: true
-    }
-  }, Mixins.colorProps);
   var f7View = {
     name: 'f7-view',
-    props: __vueComponentGetPropKeys$77(ViewProps),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      tab: Boolean,
+      tabActive: Boolean,
+      name: String,
+      router: Boolean,
+      linksView: [
+        Object,
+        String
+      ],
+      url: String,
+      main: Boolean,
+      stackPages: Boolean,
+      xhrCache: String,
+      xhrCacheIgnore: Array,
+      xhrCacheIgnoreGetParameters: Boolean,
+      xhrCacheDuration: Number,
+      preloadPreviousPage: Boolean,
+      uniqueHistory: Boolean,
+      uniqueHistoryIgnoreGetParameters: Boolean,
+      allowDuplicateUrls: Boolean,
+      reloadPages: Boolean,
+      removeElements: Boolean,
+      removeElementsWithTimeout: Boolean,
+      removeElementsTimeout: Number,
+      restoreScrollTopOnBack: Boolean,
+      iosSwipeBack: Boolean,
+      iosSwipeBackAnimateShadow: Boolean,
+      iosSwipeBackAnimateOpacity: Boolean,
+      iosSwipeBackActiveArea: Number,
+      iosSwipeBackThreshold: Number,
+      pushState: Boolean,
+      pushStateRoot: String,
+      pushStateAnimate: Boolean,
+      pushStateAnimateOnLoad: Boolean,
+      pushStateSeparator: String,
+      pushStateOnLoad: Boolean,
+      animate: Boolean,
+      iosDynamicNavbar: Boolean,
+      iosSeparateDynamicNavbar: Boolean,
+      iosAnimateNavbarBackIcon: Boolean,
+      materialPageLoadDelay: Number,
+      passRouteQueryToRequest: Boolean,
+      passRouteParamsToRequest: Boolean,
+      routes: Array,
+      routesAdd: Array,
+      init: {
+        type: Boolean,
+        default: true
+      }},
+      Mixins.colorProps),
     data: function data() {
-      var props = __vueComponentProps(this, __vueComponentPropsKeys$77);
+      var props = __vueComponentProps(this);
       var state = (function () {
         return { pages: [] };
       })();
@@ -45860,7 +46097,7 @@
         }, Mixins.colorClasses(this));
       },
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$77);
+        return __vueComponentProps(this);
       }
     },
     methods: {
@@ -45897,15 +46134,14 @@
     }
   };
 
-  var __vueComponentPropsKeys$78;
-  function __vueComponentGetPropKeys$78(props) {
-    __vueComponentPropsKeys$78 = Object.keys(props);
-    return props;
-  }
   ({
     name: 'f7-views',
-    props: __vueComponentGetPropKeys$78(Object.assign({}, {tabs: Boolean},
-      Mixins.colorProps)),
+    props: Object.assign({}, {id: [
+        String,
+        Number
+      ],
+      tabs: Boolean},
+      Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -45918,7 +46154,7 @@
     },
     computed: {
       props: function props() {
-        return __vueComponentProps(this, __vueComponentPropsKeys$78);
+        return __vueComponentProps(this);
       }
     }
   });
@@ -47781,7 +48017,7 @@
           attrs: { title: "Action Sheet", "back-link": "Back" }
         }),
         _vm._v(" "),
-        _c("f7-block", { attrs: { strong: "" } }, [
+        _c("f7-block", { attrs: { id: "fuck-you", strong: "" } }, [
           _c(
             "p",
             { staticClass: "row" },

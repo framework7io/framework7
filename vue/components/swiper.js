@@ -1,26 +1,25 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const SwiperProps = Utils.extend({
-  params: Object,
-  pagination: Boolean,
-  scrollbar: Boolean,
-  navigation: Boolean,
-  init: {
-    type: Boolean,
-    default: true
-  }
-}, Mixins.colorProps);
 export default {
   name: 'f7-swiper',
-  props: __vueComponentGetPropKeys(SwiperProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    params: Object,
+    pagination: Boolean,
+    scrollbar: Boolean,
+    navigation: Boolean,
+    init: {
+      type: Boolean,
+      default: true
+    },
+    ...Mixins.colorProps
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     let paginationEl;
     let scrollbarEl;
@@ -77,7 +76,7 @@ export default {
       return false;
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   },
   beforeDestroy() {

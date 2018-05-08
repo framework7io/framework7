@@ -4,14 +4,9 @@ import F7Toggle from './toggle';
 import F7Range from './range';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
 export default {
   name: 'f7-input',
-  props: __vueComponentGetPropKeys({
+  props: {
     type: String,
     name: String,
     value: [
@@ -20,7 +15,14 @@ export default {
       Array
     ],
     placeholder: String,
-    id: String,
+    id: [
+      String,
+      Number
+    ],
+    inputId: [
+      String,
+      Number
+    ],
     size: [
       String,
       Number
@@ -78,11 +80,11 @@ export default {
       default: true
     },
     ...Mixins.colorProps
-  }),
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
-    const {type, name, value, placeholder, id, size, accept, autocomplete, autocorrect, autocapitalize, spellcheck, autofocus, autosave, checked, disabled, max, min, step, maxlength, minlength, multiple, readonly, required, inputStyle, pattern, validate, tabindex, resizable, clearButton, errorMessage, info, wrap, style, className, noStoreData, noFormStoreData} = self.props;
+    const {type, name, value, placeholder, id, inputId, size, accept, autocomplete, autocorrect, autocapitalize, spellcheck, autofocus, autosave, checked, disabled, max, min, step, maxlength, minlength, multiple, readonly, required, inputStyle, pattern, validate, tabindex, resizable, clearButton, errorMessage, info, wrap, style, className, noStoreData, noFormStoreData} = self.props;
     let inputEl;
     function createInput(tag, children) {
       const InputTag = tag;
@@ -96,7 +98,7 @@ export default {
           name: name,
           type: type,
           placeholder: placeholder,
-          id: id,
+          id: inputId,
           value: needsValue ? value : undefined,
           size: size,
           accept: accept,
@@ -145,7 +147,8 @@ export default {
           readonly: readonly,
           name: name,
           value: value,
-          disabled: disabled
+          disabled: disabled,
+          id: inputId
         }
       });
     } else if (self.type === 'range') {
@@ -156,7 +159,8 @@ export default {
           disabled: disabled,
           min: min,
           max: max,
-          step: step
+          step: step,
+          id: inputId
         }
       });
     } else {
@@ -167,7 +171,8 @@ export default {
       return _h('div', {
         ref: 'wrapEl',
         class: wrapClasses,
-        style: style
+        style: style,
+        attrs: { id: id }
       }, [
         inputEl,
         clearButton && _h('span', { class: 'input-clear-button' }),
@@ -304,7 +309,7 @@ export default {
   },
   computed: {
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   }
 };

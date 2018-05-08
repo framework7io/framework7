@@ -2,14 +2,13 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
 export default {
   name: 'f7-block',
-  props: __vueComponentGetPropKeys({
+  props: {
+    id: [
+      String,
+      Number
+    ],
     inset: Boolean,
     tabletInset: Boolean,
     strong: Boolean,
@@ -21,7 +20,7 @@ export default {
     noHairlinesMd: Boolean,
     noHairlinesIos: Boolean,
     ...Mixins.colorProps
-  }),
+  },
   mounted() {
     const el = this.$el;
     if (!el)
@@ -39,7 +38,7 @@ export default {
     el.removeEventListener('tab:hide', this.onTabHideBound);
   },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     const {className, inset, strong, accordionList, tabletInset, tabs, tab, tabActive, noHairlines, noHairlinesIos, noHairlinesMd, id, style} = self.props;
     const classes = Utils.classNames(className, 'block', {
@@ -73,7 +72,7 @@ export default {
   },
   computed: {
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   }
 };

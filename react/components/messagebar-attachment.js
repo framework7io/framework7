@@ -12,6 +12,12 @@ class F7MessagebarAttachment extends React.Component {
       this.onDeleteClickBound = this.onDeleteClick.bind(this);
     })();
   }
+  onClick(e) {
+    this.dispatchEvent('attachment:click attachmentClick', e);
+  }
+  onDeleteClick(e) {
+    this.dispatchEvent('attachment:delete attachmentDelete', e);
+  }
   render() {
     const self = this;
     const {deletable, image, className, id, style} = self.props;
@@ -26,20 +32,18 @@ class F7MessagebarAttachment extends React.Component {
       onClick: self.onDeleteClickBound
     }), this.slots['default']);
   }
-  onClick(e) {
-    this.dispatchEvent('attachment:click attachmentClick', e);
-  }
-  onDeleteClick(e) {
-    this.dispatchEvent('attachment:delete attachmentDelete', e);
-  }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
 }
 __reactComponentSetProps(F7MessagebarAttachment, {
+  id: [
+    String,
+    Number
+  ],
   image: String,
   deletable: {
     type: Boolean,

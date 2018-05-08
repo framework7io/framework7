@@ -7,12 +7,20 @@ class F7PhotoBrowser extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
-  render() {
+  open(index) {
+    return this.f7PhotoBrowser.open(index);
   }
-  componentWillUnmount() {
-    const self = this;
-    if (self.f7PhotoBrowser && self.f7PhotoBrowser.destroy)
-      self.f7PhotoBrowser.destroy();
+  close() {
+    return this.f7PhotoBrowser.close();
+  }
+  expositionToggle() {
+    return this.f7PhotoBrowser.expositionToggle();
+  }
+  expositionEnable() {
+    return this.f7PhotoBrowser.expositionEnable();
+  }
+  expositionDisable() {
+    return this.f7PhotoBrowser.expositionDisable();
   }
   componentDidMount() {
     const self = this;
@@ -50,20 +58,12 @@ class F7PhotoBrowser extends React.Component {
       self.f7PhotoBrowser = f7.photoBrowser.create(params);
     });
   }
-  open(index) {
-    return this.f7PhotoBrowser.open(index);
+  componentWillUnmount() {
+    const self = this;
+    if (self.f7PhotoBrowser && self.f7PhotoBrowser.destroy)
+      self.f7PhotoBrowser.destroy();
   }
-  close() {
-    return this.f7PhotoBrowser.close();
-  }
-  expositionToggle() {
-    return this.f7PhotoBrowser.expositionToggle();
-  }
-  expositionEnable() {
-    return this.f7PhotoBrowser.expositionEnable();
-  }
-  expositionDisable() {
-    return this.f7PhotoBrowser.expositionDisable();
+  render() {
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
@@ -82,6 +82,10 @@ class F7PhotoBrowser extends React.Component {
   }
 }
 __reactComponentSetProps(F7PhotoBrowser, {
+  id: [
+    String,
+    Number
+  ],
   init: {
     type: Boolean,
     default: true

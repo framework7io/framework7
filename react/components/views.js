@@ -17,10 +17,14 @@ class F7Views extends React.Component {
     }, this.slots['default']);
   }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
 }
 __reactComponentSetProps(F7Views, {
+  id: [
+    String,
+    Number
+  ],
   tabs: Boolean,
   ...Mixins.colorProps
 });

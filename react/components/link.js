@@ -6,41 +6,50 @@ import F7Icon from './icon';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
-const LinkProps = Utils.extend({
-  noLinkClass: Boolean,
-  noFastClick: Boolean,
-  noFastclick: Boolean,
-  text: String,
-  tabLink: [
-    Boolean,
-    String
-  ],
-  tabLinkActive: Boolean,
-  tabbarLabel: Boolean,
-  iconOnly: Boolean,
-  badge: [
-    String,
-    Number
-  ],
-  badgeColor: [String],
-  iconBadge: [
-    String,
-    Number
-  ],
-  href: {
-    type: [
-      String,
-      Boolean
-    ],
-    default: '#'
-  }
-}, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps);
 class F7Link extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = (() => {
       return { isTabbarLabel: props.tabbarLabel };
     })();
+  }
+  onClick(event) {
+    this.dispatchEvent('click', event);
+  }
+  get attrs() {
+    const self = this;
+    const {href, target, tabLink} = self.props;
+    let hrefComputed = href;
+    if (href === true)
+      hrefComputed = '#';
+    if (href === false)
+      hrefComputed = undefined;
+    return Utils.extend({
+      href: hrefComputed,
+      target,
+      'data-tab': Utils.isStringProp(tabLink) && tabLink || undefined
+    }, Mixins.linkRouterAttrs(self), Mixins.linkActionsAttrs(self));
+  }
+  get classes() {
+    const self = this;
+    const {noFastclick, noFastClick, tabLink, tabLinkActive, noLinkClass, className} = self.props;
+    return Utils.classNames(className, {
+      link: !(noLinkClass || self.state.isTabbarLabel),
+      'icon-only': self.iconOnlyComputed,
+      'tab-link': tabLink || tabLink === '',
+      'tab-link-active': tabLinkActive,
+      'no-fastclick': noFastclick || noFastClick
+    }, Mixins.colorClasses(self), Mixins.linkRouterClasses(self), Mixins.linkActionsClasses(self));
+  }
+  componentDidMount() {
+    const self = this;
+    const el = self.refs.el;
+    const {tabbarLabel, tabLink} = self.props;
+    let isTabbarLabel = false;
+    if (tabbarLabel || (tabLink || tabLink === '') && self.$$(el).parents('.tabbar-labels').length) {
+      isTabbarLabel = true;
+    }
+    self.setState({ isTabbarLabel });
   }
   render() {
     const self = this;
@@ -85,50 +94,48 @@ class F7Link extends React.Component {
       ...self.attrs
     }, iconEl, textEl, defaultSlots);
   }
-  componentDidMount() {
-    const self = this;
-    const el = self.refs.el;
-    const {tabbarLabel, tabLink} = self.props;
-    let isTabbarLabel = false;
-    if (tabbarLabel || (tabLink || tabLink === '') && self.$$(el).parents('.tabbar-labels').length) {
-      isTabbarLabel = true;
-    }
-    self.setState({ isTabbarLabel });
-  }
-  get attrs() {
-    const self = this;
-    const {href, target, tabLink} = self.props;
-    let hrefComputed = href;
-    if (href === true)
-      hrefComputed = '#';
-    if (href === false)
-      hrefComputed = undefined;
-    return Utils.extend({
-      href: hrefComputed,
-      target,
-      'data-tab': Utils.isStringProp(tabLink) && tabLink || undefined
-    }, Mixins.linkRouterAttrs(self), Mixins.linkActionsAttrs(self));
-  }
-  get classes() {
-    const self = this;
-    const {noFastclick, noFastClick, tabLink, tabLinkActive, noLinkClass, className} = self.props;
-    return Utils.classNames(className, {
-      link: !(noLinkClass || self.state.isTabbarLabel),
-      'icon-only': self.iconOnlyComputed,
-      'tab-link': tabLink || tabLink === '',
-      'tab-link-active': tabLinkActive,
-      'no-fastclick': noFastclick || noFastClick
-    }, Mixins.colorClasses(self), Mixins.linkRouterClasses(self), Mixins.linkActionsClasses(self));
-  }
-  onClick(event) {
-    this.dispatchEvent('click', event);
-  }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
 }
-__reactComponentSetProps(F7Link, LinkProps);
+__reactComponentSetProps(F7Link, {
+  id: [
+    String,
+    Number
+  ],
+  noLinkClass: Boolean,
+  noFastClick: Boolean,
+  noFastclick: Boolean,
+  text: String,
+  tabLink: [
+    Boolean,
+    String
+  ],
+  tabLinkActive: Boolean,
+  tabbarLabel: Boolean,
+  iconOnly: Boolean,
+  badge: [
+    String,
+    Number
+  ],
+  badgeColor: [String],
+  iconBadge: [
+    String,
+    Number
+  ],
+  href: {
+    type: [
+      String,
+      Boolean
+    ],
+    default: '#'
+  },
+  ...Mixins.colorProps,
+  ...Mixins.linkIconProps,
+  ...Mixins.linkRouterProps,
+  ...Mixins.linkActionsProps
+});
 export default F7Link;

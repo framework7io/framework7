@@ -16,6 +16,54 @@ class F7ListItemContent extends React.Component {
       };
     })();
   }
+  onClick(event) {
+    this.dispatchEvent('click', event);
+  }
+  onChange(event) {
+    this.dispatchEvent('change', event);
+  }
+  componentDidUpdate() {
+    const self = this;
+    const innerEl = self.refs.innerEl;
+    if (!innerEl)
+      return;
+    const $innerEl = self.$$(innerEl);
+    const $labelEl = $innerEl.children('.item-title.item-label');
+    const $inputEl = $innerEl.children('.item-input-wrap');
+    const hasInlineLabel = $labelEl.hasClass('item-label-inline');
+    const hasInput = $inputEl.length > 0;
+    const hasInputInfo = $inputEl.children('.item-input-info').length > 0;
+    if (hasInlineLabel !== self.state.hasInlineLabel) {
+      self.setState({ hasInlineLabel });
+    }
+    if (hasInput !== self.state.hasInput) {
+      self.setState({ hasInput });
+    }
+    if (hasInputInfo !== self.state.hasInputInfo) {
+      self.setState({ hasInputInfo });
+    }
+  }
+  componentDidMount() {
+    const self = this;
+    const innerEl = self.refs.innerEl;
+    if (!innerEl)
+      return;
+    const $innerEl = self.$$(innerEl);
+    const $labelEl = $innerEl.children('.item-title.item-label');
+    const $inputEl = $innerEl.children('.item-input-wrap');
+    const hasInlineLabel = $labelEl.hasClass('item-label-inline');
+    const hasInput = $inputEl.length > 0;
+    const hasInputInfo = $inputEl.children('.item-input-info').length > 0;
+    if (hasInlineLabel !== self.state.hasInlineLabel) {
+      self.setState({ hasInlineLabel });
+    }
+    if (hasInput !== self.state.hasInput) {
+      self.setState({ hasInput });
+    }
+    if (hasInputInfo !== self.state.hasInputInfo) {
+      self.setState({ hasInputInfo });
+    }
+  }
   render() {
     const self = this;
     const {radio, checkbox, value, name, checked, readonly, disabled, required, media, header, footer, title, subtitle, text, after, badge, mediaList, mediaItem, badgeColor, itemInput, inlineLabel, itemInputWithInfo} = self.props;
@@ -176,62 +224,18 @@ class F7ListItemContent extends React.Component {
       onClick: self.onClick.bind(self)
     }, slotsContentStart, inputEl, inputIconEl, mediaEl, innerEl, slotsContent, slotsContentEnd);
   }
-  componentDidMount() {
-    const self = this;
-    const innerEl = self.refs.innerEl;
-    if (!innerEl)
-      return;
-    const $innerEl = self.$$(innerEl);
-    const $labelEl = $innerEl.children('.item-title.item-label');
-    const $inputEl = $innerEl.children('.item-input-wrap');
-    const hasInlineLabel = $labelEl.hasClass('item-label-inline');
-    const hasInput = $inputEl.length > 0;
-    const hasInputInfo = $inputEl.children('.item-input-info').length > 0;
-    if (hasInlineLabel !== self.state.hasInlineLabel) {
-      self.setState({ hasInlineLabel });
-    }
-    if (hasInput !== self.state.hasInput) {
-      self.setState({ hasInput });
-    }
-    if (hasInputInfo !== self.state.hasInputInfo) {
-      self.setState({ hasInputInfo });
-    }
-  }
-  componentDidUpdate() {
-    const self = this;
-    const innerEl = self.refs.innerEl;
-    if (!innerEl)
-      return;
-    const $innerEl = self.$$(innerEl);
-    const $labelEl = $innerEl.children('.item-title.item-label');
-    const $inputEl = $innerEl.children('.item-input-wrap');
-    const hasInlineLabel = $labelEl.hasClass('item-label-inline');
-    const hasInput = $inputEl.length > 0;
-    const hasInputInfo = $inputEl.children('.item-input-info').length > 0;
-    if (hasInlineLabel !== self.state.hasInlineLabel) {
-      self.setState({ hasInlineLabel });
-    }
-    if (hasInput !== self.state.hasInput) {
-      self.setState({ hasInput });
-    }
-    if (hasInputInfo !== self.state.hasInputInfo) {
-      self.setState({ hasInputInfo });
-    }
-  }
-  onClick(event) {
-    this.dispatchEvent('click', event);
-  }
-  onChange(event) {
-    this.dispatchEvent('change', event);
-  }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
 }
 __reactComponentSetProps(F7ListItemContent, {
+  id: [
+    String,
+    Number
+  ],
   title: [
     String,
     Number

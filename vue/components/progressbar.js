@@ -1,20 +1,19 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const ProgressbarProps = Utils.extend({
-  progress: Number,
-  infinite: Boolean
-}, Mixins.colorProps);
 export default {
   name: 'f7-progressbar',
-  props: __vueComponentGetPropKeys(ProgressbarProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    progress: Number,
+    infinite: Boolean,
+    ...Mixins.colorProps
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     const {progress, id, style} = self.props;
     const transformStyle = {
@@ -39,7 +38,7 @@ export default {
       }, Mixins.colorClasses(this));
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   },
   methods: {

@@ -2,23 +2,22 @@ import Mixins from '../utils/mixins';
 import Utils from '../utils/utils';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const PopoverProps = Utils.extend({
-  opened: Boolean,
-  target: [
-    String,
-    Object
-  ]
-}, Mixins.colorProps);
 export default {
   name: 'f7-popover',
-  props: __vueComponentGetPropKeys(PopoverProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    opened: Boolean,
+    target: [
+      String,
+      Object
+    ],
+    ...Mixins.colorProps
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     return _h('div', {
       ref: 'el',
@@ -48,7 +47,7 @@ export default {
       return Utils.classNames(self.props.className, 'popover', Mixins.colorClasses(self));
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   },
   mounted() {

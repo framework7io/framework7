@@ -3,55 +3,54 @@ import Mixins from '../utils/mixins';
 import F7PageContent from './page-content';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const PageProps = Utils.extend({
-  name: String,
-  stacked: Boolean,
-  withSubnavbar: Boolean,
-  subnavbar: Boolean,
-  noNavbar: Boolean,
-  noToolbar: Boolean,
-  tabs: Boolean,
-  pageContent: {
-    type: Boolean,
-    default: true
-  },
-  noSwipeback: Boolean,
-  ptr: Boolean,
-  ptrDistance: Number,
-  ptrPreloader: {
-    type: Boolean,
-    default: true
-  },
-  infinite: Boolean,
-  infiniteTop: Boolean,
-  infiniteDistance: Number,
-  infinitePreloader: {
-    type: Boolean,
-    default: true
-  },
-  hideBarsOnScroll: Boolean,
-  hideNavbarOnScroll: Boolean,
-  hideToolbarOnScroll: Boolean,
-  messagesContent: Boolean,
-  loginScreen: Boolean
-}, Mixins.colorProps);
 export default {
   name: 'f7-page',
-  props: __vueComponentGetPropKeys(PageProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    name: String,
+    stacked: Boolean,
+    withSubnavbar: Boolean,
+    subnavbar: Boolean,
+    noNavbar: Boolean,
+    noToolbar: Boolean,
+    tabs: Boolean,
+    pageContent: {
+      type: Boolean,
+      default: true
+    },
+    noSwipeback: Boolean,
+    ptr: Boolean,
+    ptrDistance: Number,
+    ptrPreloader: {
+      type: Boolean,
+      default: true
+    },
+    infinite: Boolean,
+    infiniteTop: Boolean,
+    infiniteDistance: Number,
+    infinitePreloader: {
+      type: Boolean,
+      default: true
+    },
+    hideBarsOnScroll: Boolean,
+    hideNavbarOnScroll: Boolean,
+    hideToolbarOnScroll: Boolean,
+    messagesContent: Boolean,
+    loginScreen: Boolean,
+    ...Mixins.colorProps
+  },
   data() {
-    const props = __vueComponentProps(this, __vueComponentPropsKeys);
+    const props = __vueComponentProps(this);
     const state = (() => {
       return { hasSubnavbar: false };
     })();
     return { state };
   },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     const fixedList = [];
     const staticList = [];
@@ -156,7 +155,7 @@ export default {
       }, Mixins.colorClasses(this));
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   },
   mounted() {

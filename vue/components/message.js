@@ -2,14 +2,13 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
 export default {
   name: 'f7-message',
-  props: __vueComponentGetPropKeys({
+  props: {
+    id: [
+      String,
+      Number
+    ],
     text: String,
     name: String,
     avatar: String,
@@ -31,7 +30,7 @@ export default {
     sameAvatar: Boolean,
     typing: Boolean,
     ...Mixins.colorProps
-  }),
+  },
   created() {
     this.onClickBound = this.onClick.bind(this);
     this.onNameClickBound = this.onNameClick.bind(this);
@@ -42,7 +41,7 @@ export default {
     this.onBubbleClickBound = this.onBubbleClick.bind(this);
   },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     const {text, name, avatar, image, header, footer, textHeader, textFooter, typing, id, style} = self.props;
     const {
@@ -133,7 +132,7 @@ export default {
       }, Mixins.colorClasses(self));
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   },
   methods: {

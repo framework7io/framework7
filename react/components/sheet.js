@@ -6,13 +6,79 @@ import __reactComponentEl from '../runtime-helpers/react-component-el.js';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
-const SheetProps = Utils.extend({
-  opened: Boolean,
-  backdrop: Boolean
-}, Mixins.colorProps);
 class F7Sheet extends React.Component {
   constructor(props, context) {
     super(props, context);
+  }
+  onOpen(event) {
+    this.dispatchEvent('sheet:open sheetOpen', event);
+  }
+  onOpened(event) {
+    this.dispatchEvent('sheet:opened sheetOpened', event);
+  }
+  onClose(event) {
+    this.dispatchEvent('sheet:close sheetClose', event);
+  }
+  onClosed(event) {
+    this.dispatchEvent('sheet:closed sheetClosed', event);
+  }
+  open(animate) {
+    const self = this;
+    if (!self.$f7)
+      return undefined;
+    return self.$f7.sheet.open(self.refs.el, animate);
+  }
+  close(animate) {
+    const self = this;
+    if (!self.$f7)
+      return undefined;
+    return self.$f7.sheet.close(self.refs.el, animate);
+  }
+  componentDidMount() {
+    const self = this;
+    const el = self.refs.el;
+    if (!el)
+      return;
+    self.onOpenBound = self.onOpen.bind(self);
+    self.onOpenedBound = self.onOpened.bind(self);
+    self.onCloseBound = self.onClose.bind(self);
+    self.onClosedBound = self.onClosed.bind(self);
+    el.addEventListener('sheet:open', self.onOpenBound);
+    el.addEventListener('sheet:opened', self.onOpenedBound);
+    el.addEventListener('sheet:close', self.onCloseBound);
+    el.addEventListener('sheet:closed', self.onClosedBound);
+    self.$f7ready(() => {
+      let backdrop;
+      let useDefaultBackdrop;
+      useDefaultBackdrop = typeof self.props.backdrop === 'undefined';
+      if (useDefaultBackdrop) {
+        const app = self.$f7;
+        backdrop = app.params.sheet && app.params.sheet.backdrop !== undefined ? app.params.sheet.backdrop : self.$theme.md;
+      }
+      self.f7Sheet = self.$f7.sheet.create({
+        el: self.refs.el,
+        backdrop
+      });
+      if (self.props.opened) {
+        self.f7Sheet.open(false);
+      }
+    });
+  }
+  componentWillUnmount() {
+    const self = this;
+    if (self.f7Sheet)
+      self.f7Sheet.destroy();
+    const el = self.el;
+    if (!el)
+      return;
+    el.removeEventListener('popup:open', self.onOpenBound);
+    el.removeEventListener('popup:opened', self.onOpenedBound);
+    el.removeEventListener('popup:close', self.onCloseBound);
+    el.removeEventListener('popup:closed', self.onClosedBound);
+  }
+  get classes() {
+    const self = this;
+    return Utils.classNames(self.props.className, 'sheet-modal', Mixins.colorClasses(self));
   }
   render() {
     const self = this;
@@ -47,78 +113,8 @@ class F7Sheet extends React.Component {
       className: self.classes
     }, fixedList, innerEl);
   }
-  get classes() {
-    const self = this;
-    return Utils.classNames(self.props.className, 'sheet-modal', Mixins.colorClasses(self));
-  }
-  componentWillUnmount() {
-    const self = this;
-    if (self.f7Sheet)
-      self.f7Sheet.destroy();
-    const el = self.el;
-    if (!el)
-      return;
-    el.removeEventListener('popup:open', self.onOpenBound);
-    el.removeEventListener('popup:opened', self.onOpenedBound);
-    el.removeEventListener('popup:close', self.onCloseBound);
-    el.removeEventListener('popup:closed', self.onClosedBound);
-  }
-  componentDidMount() {
-    const self = this;
-    const el = self.refs.el;
-    if (!el)
-      return;
-    self.onOpenBound = self.onOpen.bind(self);
-    self.onOpenedBound = self.onOpened.bind(self);
-    self.onCloseBound = self.onClose.bind(self);
-    self.onClosedBound = self.onClosed.bind(self);
-    el.addEventListener('sheet:open', self.onOpenBound);
-    el.addEventListener('sheet:opened', self.onOpenedBound);
-    el.addEventListener('sheet:close', self.onCloseBound);
-    el.addEventListener('sheet:closed', self.onClosedBound);
-    self.$f7ready(() => {
-      let backdrop;
-      let useDefaultBackdrop;
-      useDefaultBackdrop = typeof self.props.backdrop === 'undefined';
-      if (useDefaultBackdrop) {
-        const app = self.$f7;
-        backdrop = app.params.sheet && app.params.sheet.backdrop !== undefined ? app.params.sheet.backdrop : self.$theme.md;
-      }
-      self.f7Sheet = self.$f7.sheet.create({
-        el: self.refs.el,
-        backdrop
-      });
-      if (self.props.opened) {
-        self.f7Sheet.open(false);
-      }
-    });
-  }
-  onOpen(event) {
-    this.dispatchEvent('sheet:open sheetOpen', event);
-  }
-  onOpened(event) {
-    this.dispatchEvent('sheet:opened sheetOpened', event);
-  }
-  onClose(event) {
-    this.dispatchEvent('sheet:close sheetClose', event);
-  }
-  onClosed(event) {
-    this.dispatchEvent('sheet:closed sheetClosed', event);
-  }
-  open(animate) {
-    const self = this;
-    if (!self.$f7)
-      return undefined;
-    return self.$f7.sheet.open(self.refs.el, animate);
-  }
-  close(animate) {
-    const self = this;
-    if (!self.$f7)
-      return undefined;
-    return self.$f7.sheet.close(self.refs.el, animate);
-  }
   get slots() {
-    return __reactComponentSlots(this);
+    return __reactComponentSlots(this.props);
   }
   get el() {
     return __reactComponentEl(this);
@@ -139,5 +135,13 @@ class F7Sheet extends React.Component {
     });
   }
 }
-__reactComponentSetProps(F7Sheet, SheetProps);
+__reactComponentSetProps(F7Sheet, {
+  id: [
+    String,
+    Number
+  ],
+  opened: Boolean,
+  backdrop: Boolean,
+  ...Mixins.colorProps
+});
 export default F7Sheet;

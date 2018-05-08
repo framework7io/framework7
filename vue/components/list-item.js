@@ -5,14 +5,13 @@ import __vueComponentTransformJSXProps from '../runtime-helpers/vue-component-tr
 import __vueComponentSetState from '../runtime-helpers/vue-component-set-state.js';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
 export default {
   name: 'f7-list-item',
-  props: __vueComponentGetPropKeys({
+  props: {
+    id: [
+      String,
+      Number
+    ],
     title: [
       String,
       Number
@@ -78,9 +77,9 @@ export default {
     ...Mixins.colorProps,
     ...Mixins.linkRouterProps,
     ...Mixins.linkActionsProps
-  }),
+  },
   data() {
-    const props = __vueComponentProps(this, __vueComponentPropsKeys);
+    const props = __vueComponentProps(this);
     const state = (() => {
       return {
         isMedia: props.mediaItem || props.mediaList,
@@ -91,7 +90,7 @@ export default {
     return { state };
   },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     const self = this;
     let linkEl;
     let itemContentEl;
@@ -359,7 +358,7 @@ export default {
   },
   computed: {
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   }
 };

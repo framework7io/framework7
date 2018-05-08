@@ -4,24 +4,38 @@ import Mixins from '../utils/mixins';
 import __reactComponentWatch from '../runtime-helpers/react-component-watch.js';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
-const ToggleProps = Utils.extend({
-  init: {
-    type: Boolean,
-    default: true
-  },
-  checked: Boolean,
-  disabled: Boolean,
-  readonly: Boolean,
-  name: String,
-  value: [
-    String,
-    Number,
-    Array
-  ]
-}, Mixins.colorProps);
 class F7Toggle extends React.Component {
   constructor(props, context) {
     super(props, context);
+  }
+  toggle() {
+    const self = this;
+    if (self.f7Toggle && self.f7Toggle.toggle)
+      self.f7Toggle.toggle();
+  }
+  onChange(e) {
+    const self = this;
+    self.dispatchEvent('change', e);
+  }
+  componentWillUnmount() {
+    const self = this;
+    if (self.f7Toggle && self.f7Toggle.destroy && self.f7Toggle.$el)
+      self.f7Toggle.destroy();
+  }
+  componentDidMount() {
+    const self = this;
+    if (!self.props.init)
+      return;
+    self.$f7ready(f7 => {
+      self.f7Toggle = f7.toggle.create({
+        el: self.refs.el,
+        on: {
+          change(toggle) {
+            self.dispatchEvent('toggle:change toggleChange', toggle.checked);
+          }
+        }
+      });
+    });
   }
   render() {
     const self = this;
@@ -41,35 +55,6 @@ class F7Toggle extends React.Component {
       onChange: self.onChange.bind(self)
     }), React.createElement('span', { className: 'toggle-icon' }));
   }
-  componentDidMount() {
-    const self = this;
-    if (!self.props.init)
-      return;
-    self.$f7ready(f7 => {
-      self.f7Toggle = f7.toggle.create({
-        el: self.refs.el,
-        on: {
-          change(toggle) {
-            self.dispatchEvent('toggle:change toggleChange', toggle.checked);
-          }
-        }
-      });
-    });
-  }
-  componentWillUnmount() {
-    const self = this;
-    if (self.f7Toggle && self.f7Toggle.destroy && self.f7Toggle.$el)
-      self.f7Toggle.destroy();
-  }
-  toggle() {
-    const self = this;
-    if (self.f7Toggle && self.f7Toggle.toggle)
-      self.f7Toggle.toggle();
-  }
-  onChange(e) {
-    const self = this;
-    self.dispatchEvent('change', e);
-  }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
@@ -82,5 +67,24 @@ class F7Toggle extends React.Component {
     });
   }
 }
-__reactComponentSetProps(F7Toggle, ToggleProps);
+__reactComponentSetProps(F7Toggle, {
+  id: [
+    String,
+    Number
+  ],
+  init: {
+    type: Boolean,
+    default: true
+  },
+  checked: Boolean,
+  disabled: Boolean,
+  readonly: Boolean,
+  name: String,
+  value: [
+    String,
+    Number,
+    Array
+  ],
+  ...Mixins.colorProps
+});
 export default F7Toggle;

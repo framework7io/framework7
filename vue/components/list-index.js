@@ -2,49 +2,48 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
-let __vueComponentPropsKeys;
-function __vueComponentGetPropKeys(props) {
-  __vueComponentPropsKeys = Object.keys(props);
-  return props;
-}
-const ListIndexProps = Utils.extend({
-  init: {
-    type: Boolean,
-    default: true
-  },
-  listEl: [
-    String,
-    Object
-  ],
-  indexes: {
-    type: [
-      String,
-      Array
-    ],
-    default: 'auto'
-  },
-  scrollList: {
-    type: Boolean,
-    default: true
-  },
-  label: {
-    type: Boolean,
-    default: false
-  },
-  iosItemHeight: {
-    type: Number,
-    default: 14
-  },
-  mdItemHeight: {
-    type: Number,
-    default: 14
-  }
-}, Mixins.colorProps);
 export default {
   name: 'f7-list-index',
-  props: __vueComponentGetPropKeys(ListIndexProps),
+  props: {
+    id: [
+      String,
+      Number
+    ],
+    init: {
+      type: Boolean,
+      default: true
+    },
+    listEl: [
+      String,
+      Object
+    ],
+    indexes: {
+      type: [
+        String,
+        Array
+      ],
+      default: 'auto'
+    },
+    scrollList: {
+      type: Boolean,
+      default: true
+    },
+    label: {
+      type: Boolean,
+      default: false
+    },
+    iosItemHeight: {
+      type: Number,
+      default: 14
+    },
+    mdItemHeight: {
+      type: Number,
+      default: 14
+    },
+    ...Mixins.colorProps
+  },
   render() {
-    var _h = this.$createElement;
+    const _h = this.$createElement;
     return _h('div', {
       ref: 'el',
       style: this.props.style,
@@ -58,7 +57,7 @@ export default {
       return Utils.classNames(this.props.className, 'list-index', Mixins.colorClasses(self));
     },
     props() {
-      return __vueComponentProps(this, __vueComponentPropsKeys);
+      return __vueComponentProps(this);
     }
   },
   beforeDestroy() {
