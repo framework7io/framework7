@@ -53,7 +53,12 @@ export default {
     );
 
     return (
-      <div ref="el" id={self.props.id} style={self.props.style} className={classes} />
+      <div
+        ref="el"
+        id={self.props.id}
+        style={self.props.style}
+        className={classes}
+      />
     );
   },
   watch: {
