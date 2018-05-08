@@ -24,7 +24,7 @@ export default {
     }
 
     return (
-      <div id={self.props.id} style={self.props.style} className={self.className} onClick={self.onClick.bind(self)}>
+      <div id={self.props.id} style={self.props.style} className={self.classes} onClick={self.onClick.bind(self)} ref="el">
         { mediaEl }
         <div className="actions-button-text">
           <slot />
@@ -50,8 +50,9 @@ export default {
     onClick(event) {
       const self = this;
       const $$ = self.$$;
-      if (self.props.close && self.$f7) {
-        self.$f7.actions.close($$(self.$el).parents('.actions-modal'));
+      const el = self.refs.el;
+      if (self.props.close && self.$f7 && el) {
+        self.$f7.actions.close($$(el).parents('.actions-modal'));
       }
       self.dispatchEvent('click', event);
     },

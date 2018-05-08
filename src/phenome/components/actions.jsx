@@ -4,6 +4,7 @@ import Utils from '../utils/utils';
 export default {
   name: 'f7-actions',
   props: {
+    id: String,
     opened: Boolean,
     grid: Boolean,
     convertToPopover: Boolean,
@@ -23,7 +24,7 @@ export default {
       Mixins.colorClasses(self),
     );
     return (
-      <div id={this.props.id} style={this.props.style} ref="el" className={classes}>
+      <div id={self.props.id} style={self.props.style} ref="el" className={classes}>
         <slot />
       </div>
     );
@@ -39,7 +40,7 @@ export default {
       }
     },
   },
-  componetDidMount() {
+  componentDidMount() {
     const self = this;
     const el = self.refs.el;
     if (!el) return;
@@ -51,7 +52,6 @@ export default {
     el.addEventListener('actions:opened', self.onOpenedBound);
     el.addEventListener('actions:close', self.onCloseBound);
     el.addEventListener('actions:closed', self.onClosedBound);
-
     self.$f7ready(() => {
       const actionsParams = {
         el: self.refs.el,
