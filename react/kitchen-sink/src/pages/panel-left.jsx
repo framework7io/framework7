@@ -1,7 +1,7 @@
 import React from 'react';
 import { Page, BlockTitle, Block, List, ListItem, Link } from 'framework7-react';
 
-export default function () {
+export default () => {
   return (
     <Page>
       <BlockTitle>Left Panel</BlockTitle>

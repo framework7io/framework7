@@ -1,7 +1,7 @@
 import React from 'react';
 import { Page, Navbar, BlockTitle, Block, List, ListItem, Link } from 'framework7-react';
 
-export default function () {
+export default () => {
   return (
     <Page>
       <Navbar title="Right Panel"></Navbar>

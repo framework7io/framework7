@@ -1,7 +1,7 @@
 import React from 'react';
 import { Page, Navbar, NavLeft, NavTitle, NavRight, BlockTitle, List, ListItem, Link, Searchbar, Icon } from 'framework7-react';
 
-export default function () {
+export default () => {
   return (
     <Page>
       <Navbar>
