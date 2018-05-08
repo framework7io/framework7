@@ -7,3 +7,5 @@ npm-debug.log
 .vscode
 scripts/build-config-custom.js
 scripts/build-config-*.js
+vue/kitchen-sink/js/app.js
+react/kitchen-sink/js/app.js
