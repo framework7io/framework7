@@ -11,7 +11,7 @@ import Buttons from './pages/buttons.jsx';
 //import CalendarPage from './pages/calendar-page.jsx';
 import Cards from './pages/cards.jsx';
 import Checkbox from './pages/checkbox.jsx';
-//import Chips from './pages/chips.jsx';
+import Chips from './pages/chips.jsx';
 /*
 import ContactsList from './pages/contacts-list.jsx';
 import ContentBlock from './pages/content-block.jsx';
@@ -205,11 +205,11 @@ export default [
     path: '/checkbox/',
     component: Checkbox,
   },
-  /*
   {
     path: '/chips/',
     component: Chips,
   },
+  /*
   {
     path: '/contacts-list/',
     component: ContactsList,
