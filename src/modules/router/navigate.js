@@ -68,7 +68,7 @@ function forward(el, forwardOptions = {}) {
 
   // Pages In View
   const $pagesInView = $viewEl
-    .children('.page:not(.stacked), .page-current:not(.stacked), .page-previous:not(.stacked), .page-next:not(.stacked)')
+    .children('.page:not(.stacked)')
     .filter((index, pageInView) => pageInView !== $newPage[0]);
 
   // Navbars In View
@@ -142,7 +142,7 @@ function forward(el, forwardOptions = {}) {
       }
     }
     $oldPage = $viewEl
-      .children('.page:not(.stacked), .page-current:not(.stacked), .page-previous:not(.stacked), .page-next:not(.stacked)')
+      .children('.page:not(.stacked)')
       .filter((index, page) => page !== $newPage[0]);
     if (separateNavbar) {
       $oldNavbarInner = $navbarEl
