@@ -13,6 +13,7 @@ export default {
     value: [String, Number, Array],
     placeholder: String,
     id: String,
+    inputId: String,
     size: [String, Number],
     accept: [String, Number],
     autocomplete: [String],
@@ -63,6 +64,7 @@ export default {
       value,
       placeholder,
       id,
+      inputId,
       size,
       accept,
       autocomplete,
@@ -113,7 +115,7 @@ export default {
           name={name}
           type={type}
           placeholder={placeholder}
-          id={id}
+          id={inputId}
           value={needsValue ? value : undefined}
           size={size}
           accept={accept}
@@ -163,6 +165,7 @@ export default {
           name={name}
           value={value}
           disabled={disabled}
+          id={inputId}
           onChange={self.onChangeBound}
         />
       );
@@ -174,6 +177,7 @@ export default {
           min={min}
           max={max}
           step={step}
+          id={inputId}
           onRangeChange={self.onChangeBound}
         />
       );
@@ -188,7 +192,7 @@ export default {
         Mixins.colorClasses(self),
       );
       return (
-        <div ref="wrapEl" className={wrapClasses} style={style}>
+        <div id={id} ref="wrapEl" className={wrapClasses} style={style}>
           {inputEl}
           {clearButton &&
             <span className="input-clear-button" />
