@@ -22,6 +22,8 @@ class F7PhotoBrowser extends React.Component {
   expositionDisable() {
     return this.f7PhotoBrowser.expositionDisable();
   }
+  render() {
+  }
   componentDidMount() {
     const self = this;
     if (!self.props.init)
@@ -62,8 +64,6 @@ class F7PhotoBrowser extends React.Component {
     const self = this;
     if (self.f7PhotoBrowser && self.f7PhotoBrowser.destroy)
       self.f7PhotoBrowser.destroy();
-  }
-  render() {
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);

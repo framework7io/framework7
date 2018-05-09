@@ -5,6 +5,7 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7Progressbar extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
   }
   set(progress, speed) {
     const self = this;
@@ -26,12 +27,19 @@ class F7Progressbar extends React.Component {
       webkitTransform: progress ? `translate3d(${ -100 + progress }%, 0, 0)` : ''
     };
     return React.createElement('span', {
-      ref: 'el',
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
       id: id,
       style: style,
       className: self.classes,
       'data-progress': progress
     }, React.createElement('span', { style: transformStyle }));
+  }
+  get refs() {
+    return this.__reactRefs;
+  }
+  set refs(refs) {
   }
 }
 __reactComponentSetProps(F7Progressbar, {

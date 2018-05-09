@@ -8,6 +8,14 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7ListItem extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
+    this.state = (() => {
+      return {
+        isMedia: props.mediaItem || props.mediaList,
+        isSortable: props.sortable,
+        isSimple: false
+      };
+    })();
     (() => {
       const self = this;
       self.onClickBound = self.onClick.bind(self);
@@ -23,13 +31,6 @@ class F7ListItem extends React.Component {
       self.onAccOpenedBound = self.onAccOpened.bind(self);
       self.onAccCloseBound = self.onAccClose.bind(self);
       self.onAccClosedBound = self.onAccClosed.bind(self);
-    })();
-    this.state = (() => {
-      return {
-        isMedia: props.mediaItem || props.mediaList,
-        isSortable: props.sortable,
-        isSimple: false
-      };
     })();
   }
   onClick(event) {
@@ -79,6 +80,96 @@ class F7ListItem extends React.Component {
   }
   onInput(event) {
     this.dispatchEvent('input', event);
+  }
+  render() {
+    const self = this;
+    let linkEl;
+    let itemContentEl;
+    const {title, text, media, subtitle, header, footer, link, href, target, noFastclick, noFastClick, after, badge, badgeColor, mediaItem, mediaList, divider, groupTitle, swipeout, accordionItem, accordionItemOpened, smartSelect, checkbox, radio, checked, name, value, readonly, required, disabled, itemInput, itemInputWithInfo, inlineLabel, sortable} = self.props;
+    const isMedia = mediaItem || mediaList || self.state.isMedia;
+    const isSortable = sortable || self.state.isSortable;
+    const isSimple = self.state.isSimple;
+    if (!isSimple) {
+      const needsEvents = !(link || href || accordionItem || smartSelect);
+      itemContentEl = React.createElement(F7ListItemContent, {
+        title: title,
+        text: text,
+        media: media,
+        subtitle: subtitle,
+        after: after,
+        header: header,
+        footer: footer,
+        badge: badge,
+        badgeColor: badgeColor,
+        mediaList: isMedia,
+        accordionItem: accordionItem,
+        checkbox: checkbox,
+        checked: checked,
+        radio: radio,
+        name: name,
+        value: value,
+        readonly: readonly,
+        required: required,
+        disabled: disabled,
+        itemInput: itemInput,
+        itemInputWithInfo: itemInputWithInfo,
+        inlineLabel: inlineLabel,
+        onClick: needsEvents ? self.onClickBound : null,
+        onChange: needsEvents ? self.onChangeBound : null
+      }, this.slots['content-start'], this.slots['content'], this.slots['content-end'], this.slots['media'], this.slots['inner-start'], this.slots['inner'], this.slots['inner-end'], this.slots['after-start'], this.slots['after'], this.slots['after-end'], this.slots['header'], this.slots['footer'], this.slots['before-title'], this.slots['title'], this.slots['after-title'], this.slots['subtitle'], this.slots['text'], swipeout || accordionItem ? null : self.slots.default);
+      if (link || href || accordionItem || smartSelect) {
+        const linkAttrs = Utils.extend({
+          href: link === true || accordionItem || smartSelect ? '#' : link || href,
+          target
+        }, Mixins.linkRouterAttrs(self), Mixins.linkActionsAttrs(self));
+        const linkClasses = Utils.classNames({
+          'item-link': true,
+          'no-fastclick': noFastclick || noFastClick,
+          'smart-select': smartSelect
+        }, Mixins.linkRouterClasses(self), Mixins.linkActionsClasses(self));
+        linkEl = React.createElement('a', {
+          className: linkClasses,
+          onClick: self.onClick.bind(self),
+          ...linkAttrs
+        }, itemContentEl);
+      }
+    }
+    const liClasses = Utils.classNames(self.props.className, {
+      'item-divider': divider,
+      'list-group-title': groupTitle,
+      'media-item': isMedia,
+      swipeout,
+      'accordion-item': accordionItem,
+      'accordion-item-opened': accordionItemOpened
+    }, Mixins.colorClasses(self));
+    if (divider || groupTitle) {
+      return React.createElement('li', {
+        ref: __reactNode => {
+          this.__reactRefs['el'] = __reactNode;
+        },
+        id: self.props.id,
+        style: self.props.style,
+        className: liClasses
+      }, React.createElement('span', null, this.slots['default'], !this.slots.default && title));
+    } else if (isSimple) {
+      return React.createElement('li', {
+        ref: __reactNode => {
+          this.__reactRefs['el'] = __reactNode;
+        },
+        id: self.props.id,
+        style: self.props.style,
+        className: liClasses
+      }, title, this.slots['default']);
+    }
+    const linkItemEl = link || href || smartSelect || accordionItem ? linkEl : itemContentEl;
+    return React.createElement('li', {
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
+      id: self.props.id,
+      style: self.props.style,
+      className: liClasses
+    }, this.slots['root-start'], swipeout ? React.createElement('div', { className: 'swipeout-content' }, linkItemEl) : linkItemEl, isSortable && React.createElement('div', { className: 'sortable-handler' }), (swipeout || accordionItem) && self.slots.default, this.slots['root'], this.slots['root-end']);
   }
   componentWillUnmount() {
     const self = this;
@@ -157,95 +248,16 @@ class F7ListItem extends React.Component {
       self.f7SmartSelect = f7.smartSelect.create(smartSelectParams);
     });
   }
-  render() {
-    const self = this;
-    let linkEl;
-    let itemContentEl;
-    const {title, text, media, subtitle, header, footer, link, href, target, noFastclick, noFastClick, after, badge, badgeColor, mediaItem, mediaList, divider, groupTitle, swipeout, accordionItem, accordionItemOpened, smartSelect, checkbox, radio, checked, name, value, readonly, required, disabled, itemInput, itemInputWithInfo, inlineLabel, sortable} = self.props;
-    const isMedia = mediaItem || mediaList || self.state.isMedia;
-    const isSortable = sortable || self.state.isSortable;
-    const isSimple = self.state.isSimple;
-    if (!isSimple) {
-      const needsEvents = !(link || href || accordionItem || smartSelect);
-      itemContentEl = React.createElement(F7ListItemContent, {
-        title: title,
-        text: text,
-        media: media,
-        subtitle: subtitle,
-        after: after,
-        header: header,
-        footer: footer,
-        badge: badge,
-        badgeColor: badgeColor,
-        mediaList: isMedia,
-        accordionItem: accordionItem,
-        checkbox: checkbox,
-        checked: checked,
-        radio: radio,
-        name: name,
-        value: value,
-        readonly: readonly,
-        required: required,
-        disabled: disabled,
-        itemInput: itemInput,
-        itemInputWithInfo: itemInputWithInfo,
-        inlineLabel: inlineLabel,
-        onClick: needsEvents ? self.onClickBound : null,
-        onChange: needsEvents ? self.onChangeBound : null
-      }, this.slots['content-start'], this.slots['content'], this.slots['content-end'], this.slots['media'], this.slots['inner-start'], this.slots['inner'], this.slots['inner-end'], this.slots['after-start'], this.slots['after'], this.slots['after-end'], this.slots['header'], this.slots['footer'], this.slots['before-title'], this.slots['title'], this.slots['after-title'], this.slots['subtitle'], this.slots['text'], swipeout || accordionItem ? null : self.slots.default);
-      if (link || href || accordionItem || smartSelect) {
-        const linkAttrs = Utils.extend({
-          href: link === true || accordionItem || smartSelect ? '#' : link || href,
-          target
-        }, Mixins.linkRouterAttrs(self), Mixins.linkActionsAttrs(self));
-        const linkClasses = Utils.classNames({
-          'item-link': true,
-          'no-fastclick': noFastclick || noFastClick,
-          'smart-select': smartSelect
-        }, Mixins.linkRouterClasses(self), Mixins.linkActionsClasses(self));
-        linkEl = React.createElement('a', {
-          className: linkClasses,
-          onClick: self.onClick.bind(self),
-          ...linkAttrs
-        }, itemContentEl);
-      }
-    }
-    const liClasses = Utils.classNames(self.props.className, {
-      'item-divider': divider,
-      'list-group-title': groupTitle,
-      'media-item': isMedia,
-      swipeout,
-      'accordion-item': accordionItem,
-      'accordion-item-opened': accordionItemOpened
-    }, Mixins.colorClasses(self));
-    if (divider || groupTitle) {
-      return React.createElement('li', {
-        ref: 'el',
-        id: self.props.id,
-        style: self.props.style,
-        className: liClasses
-      }, React.createElement('span', null, this.slots['default'], !this.slots.default && title));
-    } else if (isSimple) {
-      return React.createElement('li', {
-        ref: 'el',
-        id: self.props.id,
-        style: self.props.style,
-        className: liClasses
-      }, title, this.slots['default']);
-    }
-    const linkItemEl = link || href || smartSelect || accordionItem ? linkEl : itemContentEl;
-    return React.createElement('li', {
-      ref: 'el',
-      id: self.props.id,
-      style: self.props.style,
-      className: liClasses
-    }, this.slots['root-start'], swipeout ? React.createElement('div', { className: 'swipeout-content' }, linkItemEl) : linkItemEl, isSortable && React.createElement('div', { className: 'sortable-handler' }), (swipeout || accordionItem) && self.slots.default, this.slots['root'], this.slots['root-end']);
-  }
   get slots() {
     return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
+  }
+  get refs() {
+    return this.__reactRefs;
+  }
+  set refs(refs) {
   }
 }
 __reactComponentSetProps(F7ListItem, {

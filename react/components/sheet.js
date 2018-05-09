@@ -9,6 +9,7 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7Sheet extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
   }
   onOpen(event) {
     this.dispatchEvent('sheet:open sheetOpen', event);
@@ -33,6 +34,45 @@ class F7Sheet extends React.Component {
     if (!self.$f7)
       return undefined;
     return self.$f7.sheet.close(self.refs.el, animate);
+  }
+  get classes() {
+    const self = this;
+    return Utils.classNames(self.props.className, 'sheet-modal', Mixins.colorClasses(self));
+  }
+  render() {
+    const self = this;
+    const fixedList = [];
+    const staticList = [];
+    let fixedTags;
+    fixedTags = 'Navbar Toolbar Tabbar Subnavbar Searchbar Messagebar Fab ListIndex'.split(' ').map(tagName => `F7${ tagName }`);
+    const slotsDefault = self.slots.default;
+    if (slotsDefault && slotsDefault.length) {
+      slotsDefault.forEach(child => {
+        let isFixedTag = false;
+        {
+          const tag = child.type && child.type.name;
+          if (!tag) {
+            return;
+          }
+          if (fixedTags.indexOf(tag) >= 0) {
+            isFixedTag = true;
+          }
+        }
+        if (isFixedTag)
+          fixedList.push(child);
+        else
+          staticList.push(child);
+      });
+    }
+    const innerEl = React.createElement('div', { className: 'sheet-modal-inner' }, staticList);
+    return React.createElement('div', {
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
+      id: self.props.id,
+      style: self.props.style,
+      className: self.classes
+    }, fixedList, innerEl);
   }
   componentDidMount() {
     const self = this;
@@ -76,43 +116,6 @@ class F7Sheet extends React.Component {
     el.removeEventListener('popup:close', self.onCloseBound);
     el.removeEventListener('popup:closed', self.onClosedBound);
   }
-  get classes() {
-    const self = this;
-    return Utils.classNames(self.props.className, 'sheet-modal', Mixins.colorClasses(self));
-  }
-  render() {
-    const self = this;
-    const fixedList = [];
-    const staticList = [];
-    let fixedTags;
-    fixedTags = 'Navbar Toolbar Tabbar Subnavbar Searchbar Messagebar Fab ListIndex'.split(' ').map(tagName => `F7${ tagName }`);
-    const slotsDefault = self.slots.default;
-    if (slotsDefault && slotsDefault.length) {
-      slotsDefault.forEach(child => {
-        let isFixedTag = false;
-        {
-          const tag = child.type && child.type.name;
-          if (!tag) {
-            return;
-          }
-          if (fixedTags.indexOf(tag) >= 0) {
-            isFixedTag = true;
-          }
-        }
-        if (isFixedTag)
-          fixedList.push(child);
-        else
-          staticList.push(child);
-      });
-    }
-    const innerEl = React.createElement('div', { className: 'sheet-modal-inner' }, staticList);
-    return React.createElement('div', {
-      ref: 'el',
-      id: self.props.id,
-      style: self.props.style,
-      className: self.classes
-    }, fixedList, innerEl);
-  }
   get slots() {
     return __reactComponentSlots(this.props);
   }
@@ -121,6 +124,11 @@ class F7Sheet extends React.Component {
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
+  }
+  get refs() {
+    return this.__reactRefs;
+  }
+  set refs(refs) {
   }
   componentDidUpdate(prevProps, prevState) {
     __reactComponentWatch(this, 'props.opened', prevProps, prevState, opened => {

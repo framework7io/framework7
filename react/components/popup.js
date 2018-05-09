@@ -8,6 +8,7 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7Popup extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
   }
   onOpen(event) {
     this.dispatchEvent('popup:open', event);
@@ -32,6 +33,21 @@ class F7Popup extends React.Component {
     if (!self.$f7)
       return undefined;
     return self.$f7.popup.close(self.refs.el, animate);
+  }
+  get classes() {
+    const self = this;
+    return Utils.classNames(self.props.className, 'popup', { 'popup-tablet-fullscreen': self.props.tabletFullscreen }, Mixins.colorClasses(self));
+  }
+  render() {
+    const self = this;
+    return React.createElement('div', {
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
+      id: self.props.id,
+      style: self.props.style,
+      className: self.classes
+    }, this.slots['default']);
   }
   componentWillUnmount() {
     const self = this;
@@ -65,24 +81,16 @@ class F7Popup extends React.Component {
       }
     });
   }
-  get classes() {
-    const self = this;
-    return Utils.classNames(self.props.className, 'popup', { 'popup-tablet-fullscreen': self.props.tabletFullscreen }, Mixins.colorClasses(self));
-  }
-  render() {
-    const self = this;
-    return React.createElement('div', {
-      ref: 'el',
-      id: self.props.id,
-      style: self.props.style,
-      className: self.classes
-    }, this.slots['default']);
-  }
   get slots() {
     return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
+  }
+  get refs() {
+    return this.__reactRefs;
+  }
+  set refs(refs) {
   }
   componentDidUpdate(prevProps, prevState) {
     __reactComponentWatch(this, 'props.opened', prevProps, prevState, opened => {

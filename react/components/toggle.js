@@ -7,6 +7,7 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7Toggle extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
   }
   toggle() {
     const self = this;
@@ -16,6 +17,26 @@ class F7Toggle extends React.Component {
   onChange(e) {
     const self = this;
     self.dispatchEvent('change', e);
+  }
+  render() {
+    const self = this;
+    const labelClasses = Utils.classNames('toggle', self.props.className, { disabled: self.props.disabled }, Mixins.colorClasses(self));
+    return React.createElement('label', {
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
+      id: self.props.id,
+      style: self.props.style,
+      className: labelClasses
+    }, React.createElement('input', {
+      type: 'checkbox',
+      name: self.props.name,
+      disabled: self.props.disabled,
+      readOnly: self.props.readonly,
+      checked: self.props.checked,
+      value: self.props.value,
+      onChange: self.onChange.bind(self)
+    }), React.createElement('span', { className: 'toggle-icon' }));
   }
   componentWillUnmount() {
     const self = this;
@@ -37,26 +58,13 @@ class F7Toggle extends React.Component {
       });
     });
   }
-  render() {
-    const self = this;
-    const labelClasses = Utils.classNames('toggle', self.props.className, { disabled: self.props.disabled }, Mixins.colorClasses(self));
-    return React.createElement('label', {
-      ref: 'el',
-      id: self.props.id,
-      style: self.props.style,
-      className: labelClasses
-    }, React.createElement('input', {
-      type: 'checkbox',
-      name: self.props.name,
-      disabled: self.props.disabled,
-      readOnly: self.props.readonly,
-      checked: self.props.checked,
-      value: self.props.value,
-      onChange: self.onChange.bind(self)
-    }), React.createElement('span', { className: 'toggle-icon' }));
-  }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
+  }
+  get refs() {
+    return this.__reactRefs;
+  }
+  set refs(refs) {
   }
   componentDidUpdate(prevProps, prevState) {
     __reactComponentWatch(this, 'props.checked', prevProps, prevState, newValue => {

@@ -9,6 +9,10 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7View extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
+    this.state = (() => {
+      return { pages: [] };
+    })();
     (() => {
       const self = this;
       self.onSwipeBackMoveBound = self.onSwipeBackMove.bind(self);
@@ -18,9 +22,6 @@ class F7View extends React.Component {
       self.onSwipeBackAfterResetBound = self.onSwipeBackAfterReset.bind(self);
       self.onTabShowBound = self.onTabShow.bind(self);
       self.onTabHideBound = self.onTabHide.bind(self);
-    })();
-    this.state = (() => {
-      return { pages: [] };
     })();
   }
   onSwipeBackMove(event) {
@@ -51,6 +52,23 @@ class F7View extends React.Component {
       'tab-active': this.props.tabActive,
       tab: this.props.tab
     }, Mixins.colorClasses(this));
+  }
+  render() {
+    const self = this;
+    return React.createElement('div', {
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
+      id: self.props.id,
+      style: self.props.style,
+      className: self.classes
+    }, this.slots['default'], self.state.pages.map(page => {
+      const PageComponent = page.component;
+      return React.createElement(PageComponent, {
+        key: page.id,
+        ...page.props
+      });
+    }));
   }
   componentDidUpdate() {
     const self = this;
@@ -99,26 +117,16 @@ class F7View extends React.Component {
       self.f7View = self.routerData.instance;
     });
   }
-  render() {
-    const self = this;
-    return React.createElement('div', {
-      ref: 'el',
-      id: self.props.id,
-      style: self.props.style,
-      className: self.classes
-    }, this.slots['default'], self.state.pages.map(page => {
-      const PageComponent = page.component;
-      return React.createElement(PageComponent, {
-        key: page.id,
-        ...page.props
-      });
-    }));
-  }
   get slots() {
     return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
+  }
+  get refs() {
+    return this.__reactRefs;
+  }
+  set refs(refs) {
   }
 }
 __reactComponentSetProps(F7View, {

@@ -10,6 +10,7 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7Messagebar extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
     (() => {
       this.onChangeBound = this.onChange.bind(this);
       this.onInputBound = this.onInput.bind(this);
@@ -116,54 +117,6 @@ class F7Messagebar extends React.Component {
   onResizePage(e) {
     this.dispatchEvent('messagebar:resizepage messagebarResizePage', e);
   }
-  componentWillUnmount() {
-    const self = this;
-    if (self.f7Messagebar && self.f7Messagebar.destroy)
-      self.f7Messagebar.destroy();
-    const el = self.refs.el;
-    if (!el)
-      return;
-    el.removeEventListener('messagebar:attachmentdelete', self.onDeleteAttachmentBound);
-    el.removeEventListener('messagebar:attachmentclick', self.onClickAttachmentBound);
-    el.removeEventListener('messagebar:resizepage', self.onResizePageBound);
-  }
-  componentDidUpdate() {
-    const self = this;
-    if (!self.f7Messagebar)
-      return;
-    if (self.updateSheetVisible) {
-      self.updateSheetVisible = false;
-      self.f7Messagebar.sheetVisible = self.props.sheetVisible;
-      self.f7Messagebar.resizePage();
-    }
-    if (self.updateAttachmentsVisible) {
-      self.updateAttachmentsVisible = false;
-      self.f7Messagebar.attachmentsVisible = self.props.attachmentsVisible;
-      self.f7Messagebar.resizePage();
-    }
-  }
-  componentDidMount() {
-    const self = this;
-    const {init, top, resizePage, bottomOffset, topOffset, maxHeight} = self.props;
-    if (!init)
-      return;
-    const el = self.refs.el;
-    if (!el)
-      return;
-    el.addEventListener('messagebar:attachmentdelete', self.onDeleteAttachmentBound);
-    el.addEventListener('messagebar:attachmentclick', self.onClickAttachmentBound);
-    el.addEventListener('messagebar:resizepage', self.onResizePageBound);
-    self.$f7ready(() => {
-      self.f7Messagebar = self.$f7.messagebar.create({
-        el,
-        top,
-        resizePage,
-        bottomOffset,
-        topOffset,
-        maxHeight
-      });
-    });
-  }
   get classes() {
     const self = this;
     const {className, attachmentsVisible, sheetVisible} = self.props;
@@ -202,12 +155,16 @@ class F7Messagebar extends React.Component {
       });
     }
     return React.createElement('div', {
-      ref: 'el',
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
       id: id,
       style: style,
       className: self.classes
     }, slotsBeforeInner, React.createElement('div', { className: 'toolbar-inner' }, slotsInnerStart, React.createElement('div', { className: 'messagebar-area' }, slotsBeforeArea, messagebarAttachmentsEl, React.createElement(F7Input, {
-      ref: 'area',
+      ref: __reactNode => {
+        this.__reactRefs['area'] = __reactNode;
+      },
       type: 'textarea',
       wrap: false,
       placeholder: placeholder,
@@ -222,11 +179,16 @@ class F7Messagebar extends React.Component {
       onBlur: self.onBlurBound
     }), slotsAfterArea), (sendLink && sendLink.length > 0 || slotsSendLink) && React.createElement(F7Link, { onClick: self.onClickBound }, slotsSendLink || sendLink), slotsInnerEnd, innerEndEls), slotsAfterInner, messagebarSheetEl);
   }
-  get slots() {
-    return __reactComponentSlots(this.props);
-  }
-  dispatchEvent(events, ...args) {
-    return __reactComponentDispatchEvent(this, events, ...args);
+  componentWillUnmount() {
+    const self = this;
+    if (self.f7Messagebar && self.f7Messagebar.destroy)
+      self.f7Messagebar.destroy();
+    const el = self.refs.el;
+    if (!el)
+      return;
+    el.removeEventListener('messagebar:attachmentdelete', self.onDeleteAttachmentBound);
+    el.removeEventListener('messagebar:attachmentclick', self.onClickAttachmentBound);
+    el.removeEventListener('messagebar:resizepage', self.onResizePageBound);
   }
   componentDidUpdate(prevProps, prevState) {
     __reactComponentWatch(this, 'props.sheetVisible', prevProps, prevState, () => {
@@ -241,6 +203,52 @@ class F7Messagebar extends React.Component {
         return;
       self.updateAttachmentsVisible = true;
     });
+    const self = this;
+    if (!self.f7Messagebar)
+      return;
+    if (self.updateSheetVisible) {
+      self.updateSheetVisible = false;
+      self.f7Messagebar.sheetVisible = self.props.sheetVisible;
+      self.f7Messagebar.resizePage();
+    }
+    if (self.updateAttachmentsVisible) {
+      self.updateAttachmentsVisible = false;
+      self.f7Messagebar.attachmentsVisible = self.props.attachmentsVisible;
+      self.f7Messagebar.resizePage();
+    }
+  }
+  componentDidMount() {
+    const self = this;
+    const {init, top, resizePage, bottomOffset, topOffset, maxHeight} = self.props;
+    if (!init)
+      return;
+    const el = self.refs.el;
+    if (!el)
+      return;
+    el.addEventListener('messagebar:attachmentdelete', self.onDeleteAttachmentBound);
+    el.addEventListener('messagebar:attachmentclick', self.onClickAttachmentBound);
+    el.addEventListener('messagebar:resizepage', self.onResizePageBound);
+    self.$f7ready(() => {
+      self.f7Messagebar = self.$f7.messagebar.create({
+        el,
+        top,
+        resizePage,
+        bottomOffset,
+        topOffset,
+        maxHeight
+      });
+    });
+  }
+  get slots() {
+    return __reactComponentSlots(this.props);
+  }
+  dispatchEvent(events, ...args) {
+    return __reactComponentDispatchEvent(this, events, ...args);
+  }
+  get refs() {
+    return this.__reactRefs;
+  }
+  set refs(refs) {
   }
 }
 __reactComponentSetProps(F7Messagebar, {

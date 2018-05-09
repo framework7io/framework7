@@ -6,6 +6,7 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7Stepper extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
     (() => {
       this.onInputBound = this.onInput.bind(this);
       this.onMinusClickBound = this.onMinusClick.bind(this);
@@ -42,40 +43,6 @@ class F7Stepper extends React.Component {
   }
   onPlusClick(e) {
     this.dispatchEvent('stepper:plusclick stepperPlusClick', e, this.f7Stepper);
-  }
-  componentWillUnmount() {
-    if (!this.props.init)
-      return;
-    if (this.f7Stepper && this.f7Stepper.destroy) {
-      this.f7Stepper.destroy();
-    }
-  }
-  componentDidMount() {
-    const self = this;
-    if (!self.props.init)
-      return;
-    self.$f7ready(f7 => {
-      const {min, max, value, step, formatValue, autorepeat, autorepeatDynamic, wraps} = self.props;
-      const el = self.refs.el;
-      if (!el)
-        return;
-      self.f7Stepper = f7.stepper.create({
-        el,
-        min,
-        max,
-        value,
-        step,
-        formatValue,
-        autorepeat,
-        autorepeatDynamic,
-        wraps,
-        on: {
-          change(stepper, newValue) {
-            self.dispatchEvent('stepper:change stepperChange', newValue);
-          }
-        }
-      });
-    });
   }
   get classes() {
     const self = this;
@@ -117,7 +84,9 @@ class F7Stepper extends React.Component {
       valueEl = React.createElement('div', { className: 'stepper-value' }, value);
     }
     return React.createElement('div', {
-      ref: 'el',
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
       id: self.props.id,
       style: self.props.style,
       className: self.classes
@@ -129,8 +98,47 @@ class F7Stepper extends React.Component {
       onClick: self.onPlusClickBound
     }));
   }
+  componentWillUnmount() {
+    if (!this.props.init)
+      return;
+    if (this.f7Stepper && this.f7Stepper.destroy) {
+      this.f7Stepper.destroy();
+    }
+  }
+  componentDidMount() {
+    const self = this;
+    if (!self.props.init)
+      return;
+    self.$f7ready(f7 => {
+      const {min, max, value, step, formatValue, autorepeat, autorepeatDynamic, wraps} = self.props;
+      const el = self.refs.el;
+      if (!el)
+        return;
+      self.f7Stepper = f7.stepper.create({
+        el,
+        min,
+        max,
+        value,
+        step,
+        formatValue,
+        autorepeat,
+        autorepeatDynamic,
+        wraps,
+        on: {
+          change(stepper, newValue) {
+            self.dispatchEvent('stepper:change stepperChange', newValue);
+          }
+        }
+      });
+    });
+  }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
+  }
+  get refs() {
+    return this.__reactRefs;
+  }
+  set refs(refs) {
   }
 }
 __reactComponentSetProps(F7Stepper, {

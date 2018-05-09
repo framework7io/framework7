@@ -6,46 +6,7 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7Swiper extends React.Component {
   constructor(props, context) {
     super(props, context);
-  }
-  componentDidMount() {
-    const self = this;
-    if (!self.props.init)
-      return;
-    self.$f7ready(f7 => {
-      const newParams = {
-        pagination: {},
-        navigation: {},
-        scrollbar: {}
-      };
-      const {params, pagination, navigation, scrollbar} = self.props;
-      if (params)
-        Utils.extend(newParams, params);
-      if (pagination && !newParams.pagination.el)
-        newParams.pagination.el = '.swiper-pagination';
-      if (navigation && !newParams.navigation.nextEl && !newParams.navigation.prevEl) {
-        newParams.navigation.nextEl = '.swiper-button-next';
-        newParams.navigation.prevEl = '.swiper-button-prev';
-      }
-      if (scrollbar && !newParams.scrollbar.el)
-        newParams.scrollbar.el = '.swiper-scrollbar';
-      self.swiper = f7.swiper.create(this.refs.el, newParams);
-    });
-  }
-  componentDidUpdate() {
-    const self = this;
-    if (!self.initialUpdate) {
-      self.initialUpdate = true;
-      return;
-    }
-    if (self.swiper && self.swiper.update)
-      self.swiper.update();
-  }
-  componentWillUnmount() {
-    const self = this;
-    if (!self.props.init)
-      return;
-    if (self.swiper && self.swiper.destroy)
-      self.swiper.destroy();
+    this.__reactRefs = {};
   }
   get classes() {
     return Utils.classNames(this.props.className, 'swiper-container', Mixins.colorClasses(this));
@@ -90,12 +51,59 @@ class F7Swiper extends React.Component {
     return React.createElement('div', {
       id: self.props.id,
       style: self.props.style,
-      ref: 'el',
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
       className: self.classes
     }, this.slots['before-wrapper'], React.createElement('div', { className: 'swiper-wrapper' }, this.slots['default']), paginationEl, scrollbarEl, buttonPrevEl, buttonNextEl, this.slots['after-wrapper']);
   }
+  componentDidMount() {
+    const self = this;
+    if (!self.props.init)
+      return;
+    self.$f7ready(f7 => {
+      const newParams = {
+        pagination: {},
+        navigation: {},
+        scrollbar: {}
+      };
+      const {params, pagination, navigation, scrollbar} = self.props;
+      if (params)
+        Utils.extend(newParams, params);
+      if (pagination && !newParams.pagination.el)
+        newParams.pagination.el = '.swiper-pagination';
+      if (navigation && !newParams.navigation.nextEl && !newParams.navigation.prevEl) {
+        newParams.navigation.nextEl = '.swiper-button-next';
+        newParams.navigation.prevEl = '.swiper-button-prev';
+      }
+      if (scrollbar && !newParams.scrollbar.el)
+        newParams.scrollbar.el = '.swiper-scrollbar';
+      self.swiper = f7.swiper.create(this.refs.el, newParams);
+    });
+  }
+  componentDidUpdate() {
+    const self = this;
+    if (!self.initialUpdate) {
+      self.initialUpdate = true;
+      return;
+    }
+    if (self.swiper && self.swiper.update)
+      self.swiper.update();
+  }
+  componentWillUnmount() {
+    const self = this;
+    if (!self.props.init)
+      return;
+    if (self.swiper && self.swiper.destroy)
+      self.swiper.destroy();
+  }
   get slots() {
     return __reactComponentSlots(this.props);
+  }
+  get refs() {
+    return this.__reactRefs;
+  }
+  set refs(refs) {
   }
 }
 __reactComponentSetProps(F7Swiper, {

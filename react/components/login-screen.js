@@ -7,6 +7,7 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7LoginScreen extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
   }
   onOpen(event) {
     this.$emit('loginscreen:open loginScreenOpen', event);
@@ -33,6 +34,21 @@ class F7LoginScreen extends React.Component {
     if (!self.$f7 || !el)
       return undefined;
     return self.$f7.loginScreen.close(el, animate);
+  }
+  get classes() {
+    const self = this;
+    return Utils.classNames(self.props.className, 'login-screen', Mixins.colorClasses(self));
+  }
+  render() {
+    const self = this;
+    return React.createElement('div', {
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
+      id: self.props.id,
+      style: self.props.style,
+      className: self.classes
+    }, this.slots['default']);
   }
   componentWillUnmount() {
     const self = this;
@@ -66,21 +82,13 @@ class F7LoginScreen extends React.Component {
       }
     });
   }
-  get classes() {
-    const self = this;
-    return Utils.classNames(self.props.className, 'login-screen', Mixins.colorClasses(self));
-  }
-  render() {
-    const self = this;
-    return React.createElement('div', {
-      ref: 'el',
-      id: self.props.id,
-      style: self.props.style,
-      className: self.classes
-    }, this.slots['default']);
-  }
   get slots() {
     return __reactComponentSlots(this.props);
+  }
+  get refs() {
+    return this.__reactRefs;
+  }
+  set refs(refs) {
   }
   componentDidUpdate(prevProps, prevState) {
     __reactComponentWatch(this, 'props.opened', prevProps, prevState, opened => {

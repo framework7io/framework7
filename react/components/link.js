@@ -9,6 +9,7 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7Link extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
     this.state = (() => {
       return { isTabbarLabel: props.tabbarLabel };
     })();
@@ -40,16 +41,6 @@ class F7Link extends React.Component {
       'tab-link-active': tabLinkActive,
       'no-fastclick': noFastclick || noFastClick
     }, Mixins.colorClasses(self), Mixins.linkRouterClasses(self), Mixins.linkActionsClasses(self));
-  }
-  componentDidMount() {
-    const self = this;
-    const el = self.refs.el;
-    const {tabbarLabel, tabLink} = self.props;
-    let isTabbarLabel = false;
-    if (tabbarLabel || (tabLink || tabLink === '') && self.$$(el).parents('.tabbar-labels').length) {
-      isTabbarLabel = true;
-    }
-    self.setState({ isTabbarLabel });
   }
   render() {
     const self = this;
@@ -86,7 +77,9 @@ class F7Link extends React.Component {
       self.iconOnlyComputed = false;
     }
     return React.createElement('a', {
-      ref: 'el',
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
       id: id,
       style: style,
       className: self.classes,
@@ -94,11 +87,26 @@ class F7Link extends React.Component {
       ...self.attrs
     }, iconEl, textEl, defaultSlots);
   }
+  componentDidMount() {
+    const self = this;
+    const el = self.refs.el;
+    const {tabbarLabel, tabLink} = self.props;
+    let isTabbarLabel = false;
+    if (tabbarLabel || (tabLink || tabLink === '') && self.$$(el).parents('.tabbar-labels').length) {
+      isTabbarLabel = true;
+    }
+    self.setState({ isTabbarLabel });
+  }
   get slots() {
     return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
+  }
+  get refs() {
+    return this.__reactRefs;
+  }
+  set refs(refs) {
   }
 }
 __reactComponentSetProps(F7Link, {

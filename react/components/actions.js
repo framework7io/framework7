@@ -9,6 +9,7 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7Actions extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
   }
   onOpen(event) {
     this.dispatchEvent('actions:open actionsOpen', event);
@@ -33,6 +34,21 @@ class F7Actions extends React.Component {
     if (!self.$f7)
       return undefined;
     return self.$f7.actions.close(self.refs.el, animate);
+  }
+  render() {
+    const self = this;
+    const classes = Utils.classNames(self.props.className, {
+      'actions-modal': true,
+      'actions-grid': self.props.grid
+    }, Mixins.colorClasses(self));
+    return React.createElement('div', {
+      id: self.props.id,
+      style: self.props.style,
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
+      className: classes
+    }, this.slots['default']);
   }
   componentWillUnmount() {
     const self = this;
@@ -76,19 +92,6 @@ class F7Actions extends React.Component {
       }
     });
   }
-  render() {
-    const self = this;
-    const classes = Utils.classNames(self.props.className, {
-      'actions-modal': true,
-      'actions-grid': self.props.grid
-    }, Mixins.colorClasses(self));
-    return React.createElement('div', {
-      id: self.props.id,
-      style: self.props.style,
-      ref: 'el',
-      className: classes
-    }, this.slots['default']);
-  }
   get slots() {
     return __reactComponentSlots(this.props);
   }
@@ -97,6 +100,11 @@ class F7Actions extends React.Component {
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
+  }
+  get refs() {
+    return this.__reactRefs;
+  }
+  set refs(refs) {
   }
   componentDidUpdate(prevProps, prevState) {
     __reactComponentWatch(this, 'props.opened', prevProps, prevState, opened => {

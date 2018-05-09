@@ -7,6 +7,7 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7ActionsButton extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
   }
   onClick(event) {
     const self = this;
@@ -35,7 +36,9 @@ class F7ActionsButton extends React.Component {
       style: self.props.style,
       className: self.classes,
       onClick: self.onClick.bind(self),
-      ref: 'el'
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      }
     }, mediaEl, React.createElement('div', { className: 'actions-button-text' }, this.slots['default']));
   }
   get slots() {
@@ -43,6 +46,11 @@ class F7ActionsButton extends React.Component {
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
+  }
+  get refs() {
+    return this.__reactRefs;
+  }
+  set refs(refs) {
   }
 }
 __reactComponentSetProps(F7ActionsButton, {

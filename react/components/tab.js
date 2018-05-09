@@ -9,12 +9,13 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7Tab extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
+    this.state = (() => {
+      return { tabContent: null };
+    })();
     (() => {
       this.onTabShowBound = this.onTabShow.bind(this);
       this.onTabHideBound = this.onTabHide.bind(this);
-    })();
-    this.state = (() => {
-      return { tabContent: null };
     })();
   }
   show(animate) {
@@ -27,6 +28,26 @@ class F7Tab extends React.Component {
   }
   onTabHide(e) {
     this.dispatchEvent('tab:hide tabHide', e);
+  }
+  render() {
+    const self = this;
+    const {tabActive, id, className, style} = self.props;
+    const tabContent = self.state.tabContent;
+    const classes = Utils.classNames(className, 'tab', { 'tab-active': tabActive }, Mixins.colorClasses(self));
+    let TabContent;
+    if (tabContent)
+      TabContent = tabContent.component;
+    return React.createElement('div', {
+      id: id,
+      style: style,
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
+      className: classes
+    }, tabContent ? React.createElement(TabContent, {
+      key: tabContent.id,
+      ...tabContent.params
+    }) : this.slots['default']);
   }
   componentDidMount() {
     const self = this;
@@ -61,29 +82,16 @@ class F7Tab extends React.Component {
       return;
     events.emit('tabRouterDidUpdate', self.routerData);
   }
-  render() {
-    const self = this;
-    const {tabActive, id, className, style} = self.props;
-    const tabContent = self.state.tabContent;
-    const classes = Utils.classNames(className, 'tab', { 'tab-active': tabActive }, Mixins.colorClasses(self));
-    let TabContent;
-    if (tabContent)
-      TabContent = tabContent.component;
-    return React.createElement('div', {
-      id: id,
-      style: style,
-      ref: 'el',
-      className: classes
-    }, tabContent ? React.createElement(TabContent, {
-      key: tabContent.id,
-      ...tabContent.params
-    }) : this.slots['default']);
-  }
   get slots() {
     return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
+  }
+  get refs() {
+    return this.__reactRefs;
+  }
+  set refs(refs) {
   }
 }
 __reactComponentSetProps(F7Tab, {

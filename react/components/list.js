@@ -7,6 +7,7 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7List extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
   }
   onSortableEnable(event) {
     this.dispatchEvent('sortable:enable sortableEnable', event);
@@ -22,6 +23,76 @@ class F7List extends React.Component {
   }
   onTabHide(e) {
     this.dispatchEvent('tab:hide tabHide', e);
+  }
+  get classes() {
+    const self = this;
+    const {inset, tabletInset, mediaList, simpleList, linksList, sortable, accordionList, contactsList, virtualList, sortableEnabled, tab, tabActive, noHairlines, noHairlinesIos, noHairlinesMd, noHairlinesBetween, noHairlinesBetweenIos, noHairlinesBetweenMd, formStoreData, inlineLabels} = self.props;
+    return Utils.classNames(self.props.className, 'list', {
+      inset,
+      'tablet-inset': tabletInset,
+      'media-list': mediaList,
+      'simple-list': simpleList,
+      'links-list': linksList,
+      sortable,
+      'accordion-list': accordionList,
+      'contacts-list': contactsList,
+      'virtual-list': virtualList,
+      'sortable-enabled': sortableEnabled,
+      tab,
+      'tab-active': tabActive,
+      'no-hairlines': noHairlines,
+      'no-hairlines-between': noHairlinesBetween,
+      'no-hairlines-md': noHairlinesMd,
+      'no-hairlines-between-md': noHairlinesBetweenMd,
+      'no-hairlines-ios': noHairlinesIos,
+      'no-hairlines-between-ios': noHairlinesBetweenIos,
+      'form-store-data': formStoreData,
+      'inline-labels': inlineLabels
+    }, Mixins.colorClasses(self));
+  }
+  render() {
+    const self = this;
+    const {id, style, form} = self.props;
+    const {
+      list: slotsList,
+      default: slotsDefault
+    } = self.slots;
+    const rootChildren = [];
+    const ulChildren = slotsList || [];
+    slotsDefault.forEach(child => {
+      let tag;
+      {
+        tag = child.type && child.type.name;
+        if (!tag && typeof child.type === 'string') {
+          tag = child.type;
+        }
+      }
+      if (!tag && 'react' === 'react' || tag && !(tag === 'li' || tag === 'F7ListItem' || tag === 'F7ListButton' || tag.indexOf('list-item') >= 0 || tag.indexOf('list-button') >= 0)) {
+        rootChildren.push(child);
+      } else if (tag) {
+        ulChildren.push(child);
+      }
+    });
+    const ListTag = form ? 'form' : 'div';
+    if (ulChildren.length > 0) {
+      return React.createElement(ListTag, {
+        id: id,
+        ref: __reactNode => {
+          this.__reactRefs['el'] = __reactNode;
+        },
+        style: style,
+        className: self.classes
+      }, self.slots['before-list'], React.createElement('ul', null, ulChildren), self.slots['after-list'], rootChildren);
+    } else {
+      return React.createElement(ListTag, {
+        id: id,
+        ref: __reactNode => {
+          this.__reactRefs['el'] = __reactNode;
+        },
+        style: style,
+        className: self.classes
+      }, self.slots['before-list'], rootChildren, self.slots['after-list']);
+    }
   }
   componentDidMount() {
     const self = this;
@@ -93,77 +164,16 @@ class F7List extends React.Component {
     if (self.f7VirtualList.destroy)
       self.f7VirtualList.destroy();
   }
-  get classes() {
-    const self = this;
-    const {inset, tabletInset, mediaList, simpleList, linksList, sortable, accordionList, contactsList, virtualList, sortableEnabled, tab, tabActive, noHairlines, noHairlinesIos, noHairlinesMd, noHairlinesBetween, noHairlinesBetweenIos, noHairlinesBetweenMd, formStoreData, inlineLabels} = self.props;
-    return Utils.classNames(self.props.className, 'list', {
-      inset,
-      'tablet-inset': tabletInset,
-      'media-list': mediaList,
-      'simple-list': simpleList,
-      'links-list': linksList,
-      sortable,
-      'accordion-list': accordionList,
-      'contacts-list': contactsList,
-      'virtual-list': virtualList,
-      'sortable-enabled': sortableEnabled,
-      tab,
-      'tab-active': tabActive,
-      'no-hairlines': noHairlines,
-      'no-hairlines-between': noHairlinesBetween,
-      'no-hairlines-md': noHairlinesMd,
-      'no-hairlines-between-md': noHairlinesBetweenMd,
-      'no-hairlines-ios': noHairlinesIos,
-      'no-hairlines-between-ios': noHairlinesBetweenIos,
-      'form-store-data': formStoreData,
-      'inline-labels': inlineLabels
-    }, Mixins.colorClasses(self));
-  }
-  render() {
-    const self = this;
-    const {id, style, form} = self.props;
-    const {
-      list: slotsList,
-      default: slotsDefault
-    } = self.slots;
-    const rootChildren = [];
-    const ulChildren = slotsList || [];
-    slotsDefault.forEach(child => {
-      let tag;
-      {
-        tag = child.type && child.type.name;
-        if (!tag && typeof child.type === 'string') {
-          tag = child.type;
-        }
-      }
-      if (!tag && 'react' === 'react' || tag && !(tag === 'li' || tag === 'F7ListItem' || tag === 'F7ListButton' || tag.indexOf('list-item') >= 0 || tag.indexOf('list-button') >= 0)) {
-        rootChildren.push(child);
-      } else if (tag) {
-        ulChildren.push(child);
-      }
-    });
-    const ListTag = form ? 'form' : 'div';
-    if (ulChildren.length > 0) {
-      return React.createElement(ListTag, {
-        id: id,
-        ref: 'el',
-        style: style,
-        className: self.classes
-      }, self.slots['before-list'], React.createElement('ul', null, ulChildren), self.slots['after-list'], rootChildren);
-    } else {
-      return React.createElement(ListTag, {
-        id: id,
-        ref: 'el',
-        style: style,
-        className: self.classes
-      }, self.slots['before-list'], rootChildren, self.slots['after-list']);
-    }
-  }
   get slots() {
     return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
+  }
+  get refs() {
+    return this.__reactRefs;
+  }
+  set refs(refs) {
   }
 }
 __reactComponentSetProps(F7List, {

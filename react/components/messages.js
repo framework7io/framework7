@@ -6,6 +6,7 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7Messages extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
   }
   renderMessages(messagesToRender, method) {
     if (!this.f7Messages)
@@ -61,6 +62,19 @@ class F7Messages extends React.Component {
     if (!this.f7Messages)
       return undefined;
     return this.f7Messages.destroy();
+  }
+  render() {
+    const self = this;
+    const {id, style, className} = self.props;
+    const classes = Utils.classNames(className, 'messages', Mixins.colorClasses(self));
+    return React.createElement('div', {
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
+      id: id,
+      style: style,
+      className: classes
+    }, this.slots['default']);
   }
   componentWillUnmount() {
     if (this.f7Messages && this.f7Messages.destroy)
@@ -128,19 +142,13 @@ class F7Messages extends React.Component {
       children[i].classList.add('message-appeared');
     }
   }
-  render() {
-    const self = this;
-    const {id, style, className} = self.props;
-    const classes = Utils.classNames(className, 'messages', Mixins.colorClasses(self));
-    return React.createElement('div', {
-      ref: 'el',
-      id: id,
-      style: style,
-      className: classes
-    }, this.slots['default']);
-  }
   get slots() {
     return __reactComponentSlots(this.props);
+  }
+  get refs() {
+    return this.__reactRefs;
+  }
+  set refs(refs) {
   }
 }
 __reactComponentSetProps(F7Messages, {

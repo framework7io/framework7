@@ -7,6 +7,18 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7App extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
+  }
+  render() {
+    const self = this;
+    const classes = Utils.classNames(self.props.className, 'framework7-root', Mixins.colorClasses(self));
+    return React.createElement('div', {
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
+      id: self.props.id || 'framework7-root',
+      className: classes
+    }, this.slots['default']);
   }
   componentDidMount() {
     const self = this;
@@ -18,17 +30,13 @@ class F7App extends React.Component {
     }
     f7Plugin.init(el, params, routes);
   }
-  render() {
-    const self = this;
-    const classes = Utils.classNames(self.props.className, 'framework7-root', Mixins.colorClasses(self));
-    return React.createElement('div', {
-      ref: 'el',
-      id: self.props.id || 'framework7-root',
-      className: classes
-    }, this.slots['default']);
-  }
   get slots() {
     return __reactComponentSlots(this.props);
+  }
+  get refs() {
+    return this.__reactRefs;
+  }
+  set refs(refs) {
   }
 }
 __reactComponentSetProps(F7App, {

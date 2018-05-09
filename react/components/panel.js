@@ -8,6 +8,7 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7Panel extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
   }
   onOpen(event) {
     this.dispatchEvent('panel:open panelOpen', event);
@@ -46,6 +47,29 @@ class F7Panel extends React.Component {
       return;
     const side = self.props.side || (self.props.left ? 'left' : 'right');
     self.$f7.panel.close(side, animate);
+  }
+  get classes() {
+    const self = this;
+    const {left, reveal, className, opened} = self.props;
+    let {side, effect} = self.props;
+    side = side || (left ? 'left' : 'right');
+    effect = effect || (reveal ? 'reveal' : 'cover');
+    return Utils.classNames(className, {
+      panel: true,
+      'panel-active': opened,
+      [`panel-${ side }`]: side,
+      [`panel-${ effect }`]: effect
+    }, Mixins.colorClasses(self));
+  }
+  render() {
+    return React.createElement('div', {
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
+      id: this.props.id,
+      style: this.props.style,
+      className: this.classes
+    }, this.slots['default']);
   }
   componentDidMount() {
     const self = this;
@@ -106,32 +130,16 @@ class F7Panel extends React.Component {
     el.addEventListener('panel:swipeopen', self.onPanelSwipeOpenBound);
     el.addEventListener('panel:breakpoint', self.onBreakpointBound);
   }
-  get classes() {
-    const self = this;
-    const {left, reveal, className, opened} = self.props;
-    let {side, effect} = self.props;
-    side = side || (left ? 'left' : 'right');
-    effect = effect || (reveal ? 'reveal' : 'cover');
-    return Utils.classNames(className, {
-      panel: true,
-      'panel-active': opened,
-      [`panel-${ side }`]: side,
-      [`panel-${ effect }`]: effect
-    }, Mixins.colorClasses(self));
-  }
-  render() {
-    return React.createElement('div', {
-      ref: 'el',
-      id: this.props.id,
-      style: this.props.style,
-      className: this.classes
-    }, this.slots['default']);
-  }
   get slots() {
     return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
+  }
+  get refs() {
+    return this.__reactRefs;
+  }
+  set refs(refs) {
   }
   componentDidUpdate(prevProps, prevState) {
     __reactComponentWatch(this, 'props.opened', prevProps, prevState, opened => {

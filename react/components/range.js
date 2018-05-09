@@ -7,6 +7,7 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7Range extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
   }
   setValue(newValue) {
     const self = this;
@@ -19,6 +20,18 @@ class F7Range extends React.Component {
       return self.f7Range.getValue();
     }
     return undefined;
+  }
+  render() {
+    const self = this;
+    const classes = Utils.classNames(self.props.className, 'range-slider', { disabled: self.props.disabled }, Mixins.colorClasses(self));
+    return React.createElement('div', {
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
+      id: self.props.id,
+      style: self.props.style,
+      className: classes
+    });
   }
   componentDidMount() {
     const self = this;
@@ -50,18 +63,13 @@ class F7Range extends React.Component {
     if (self.f7Range && self.f7Range.destroy)
       self.f7Range.destroy();
   }
-  render() {
-    const self = this;
-    const classes = Utils.classNames(self.props.className, 'range-slider', { disabled: self.props.disabled }, Mixins.colorClasses(self));
-    return React.createElement('div', {
-      ref: 'el',
-      id: self.props.id,
-      style: self.props.style,
-      className: classes
-    });
-  }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
+  }
+  get refs() {
+    return this.__reactRefs;
+  }
+  set refs(refs) {
   }
   componentDidUpdate(prevProps, prevState) {
     __reactComponentWatch(this, 'props.value', prevProps, prevState, newValue => {

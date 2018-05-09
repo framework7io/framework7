@@ -9,6 +9,7 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7Navbar extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
   }
   hide(animate) {
     const self = this;
@@ -40,17 +41,6 @@ class F7Navbar extends React.Component {
       'no-hairline': self.props.noHairline
     }, Mixins.colorClasses(self));
   }
-  componentDidUpdate() {
-    const self = this;
-    if (!self.$f7)
-      return;
-    const el = self.refs.el;
-    if (el && el.children && el.children.length) {
-      self.$f7.navbar.size(el);
-    } else if (self.refs.inner) {
-      self.$f7.navbar.size(self.refs.inner);
-    }
-  }
   render() {
     const self = this;
     const {backLink, backLinkUrl, sliding, title, subtitle, inner} = self.props;
@@ -72,22 +62,42 @@ class F7Navbar extends React.Component {
         });
       }
       innerEl = React.createElement('div', {
-        ref: 'inner',
+        ref: __reactNode => {
+          this.__reactRefs['inner'] = __reactNode;
+        },
         className: Utils.classNames('navbar-inner', { sliding })
       }, leftEl, titleEl, this.slots['default']);
     }
     return React.createElement('div', {
-      ref: 'el',
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
       id: this.props.id,
       style: this.props.style,
       className: this.classes
     }, this.slots['before-inner'], innerEl, this.slots['after-inner']);
+  }
+  componentDidUpdate() {
+    const self = this;
+    if (!self.$f7)
+      return;
+    const el = self.refs.el;
+    if (el && el.children && el.children.length) {
+      self.$f7.navbar.size(el);
+    } else if (self.refs.inner) {
+      self.$f7.navbar.size(self.refs.inner);
+    }
   }
   get slots() {
     return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
+  }
+  get refs() {
+    return this.__reactRefs;
+  }
+  set refs(refs) {
   }
 }
 __reactComponentSetProps(F7Navbar, {

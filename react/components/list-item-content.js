@@ -8,6 +8,7 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7ListItemContent extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
     this.state = (() => {
       return {
         hasInput: false,
@@ -21,48 +22,6 @@ class F7ListItemContent extends React.Component {
   }
   onChange(event) {
     this.dispatchEvent('change', event);
-  }
-  componentDidUpdate() {
-    const self = this;
-    const innerEl = self.refs.innerEl;
-    if (!innerEl)
-      return;
-    const $innerEl = self.$$(innerEl);
-    const $labelEl = $innerEl.children('.item-title.item-label');
-    const $inputEl = $innerEl.children('.item-input-wrap');
-    const hasInlineLabel = $labelEl.hasClass('item-label-inline');
-    const hasInput = $inputEl.length > 0;
-    const hasInputInfo = $inputEl.children('.item-input-info').length > 0;
-    if (hasInlineLabel !== self.state.hasInlineLabel) {
-      self.setState({ hasInlineLabel });
-    }
-    if (hasInput !== self.state.hasInput) {
-      self.setState({ hasInput });
-    }
-    if (hasInputInfo !== self.state.hasInputInfo) {
-      self.setState({ hasInputInfo });
-    }
-  }
-  componentDidMount() {
-    const self = this;
-    const innerEl = self.refs.innerEl;
-    if (!innerEl)
-      return;
-    const $innerEl = self.$$(innerEl);
-    const $labelEl = $innerEl.children('.item-title.item-label');
-    const $inputEl = $innerEl.children('.item-input-wrap');
-    const hasInlineLabel = $labelEl.hasClass('item-label-inline');
-    const hasInput = $inputEl.length > 0;
-    const hasInputInfo = $inputEl.children('.item-input-info').length > 0;
-    if (hasInlineLabel !== self.state.hasInlineLabel) {
-      self.setState({ hasInlineLabel });
-    }
-    if (hasInput !== self.state.hasInput) {
-      self.setState({ hasInput });
-    }
-    if (hasInputInfo !== self.state.hasInputInfo) {
-      self.setState({ hasInputInfo });
-    }
   }
   render() {
     const self = this;
@@ -199,12 +158,16 @@ class F7ListItemContent extends React.Component {
     if (isMedia) {
       titleRowEl = React.createElement('div', { className: 'item-title-row' }, slotsBeforeTitle, titleEl, slotsAfterTitle, afterWrapEl);
       innerEl = React.createElement('div', {
-        ref: 'innerEl',
+        ref: __reactNode => {
+          this.__reactRefs['innerEl'] = __reactNode;
+        },
         className: 'item-inner'
       }, slotsInnerStart, headerEl, titleRowEl, subtitleEl, textEl, slotsInner, footerEl, slotsInnerEnd);
     } else {
       innerEl = React.createElement('div', {
-        ref: 'innerEl',
+        ref: __reactNode => {
+          this.__reactRefs['innerEl'] = __reactNode;
+        },
         className: 'item-inner'
       }, slotsInnerStart, slotsBeforeTitle, titleEl, slotsAfterTitle, afterWrapEl, slotsInner, slotsInnerEnd);
     }
@@ -217,18 +180,67 @@ class F7ListItemContent extends React.Component {
       'item-input-with-info': hasInputInfo
     }, Mixins.colorClasses(self));
     return React.createElement(ItemContentTag, {
-      ref: 'el',
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
       id: self.props.id,
       style: self.props.style,
       className: classes,
       onClick: self.onClick.bind(self)
     }, slotsContentStart, inputEl, inputIconEl, mediaEl, innerEl, slotsContent, slotsContentEnd);
   }
+  componentDidUpdate() {
+    const self = this;
+    const innerEl = self.refs.innerEl;
+    if (!innerEl)
+      return;
+    const $innerEl = self.$$(innerEl);
+    const $labelEl = $innerEl.children('.item-title.item-label');
+    const $inputEl = $innerEl.children('.item-input-wrap');
+    const hasInlineLabel = $labelEl.hasClass('item-label-inline');
+    const hasInput = $inputEl.length > 0;
+    const hasInputInfo = $inputEl.children('.item-input-info').length > 0;
+    if (hasInlineLabel !== self.state.hasInlineLabel) {
+      self.setState({ hasInlineLabel });
+    }
+    if (hasInput !== self.state.hasInput) {
+      self.setState({ hasInput });
+    }
+    if (hasInputInfo !== self.state.hasInputInfo) {
+      self.setState({ hasInputInfo });
+    }
+  }
+  componentDidMount() {
+    const self = this;
+    const innerEl = self.refs.innerEl;
+    if (!innerEl)
+      return;
+    const $innerEl = self.$$(innerEl);
+    const $labelEl = $innerEl.children('.item-title.item-label');
+    const $inputEl = $innerEl.children('.item-input-wrap');
+    const hasInlineLabel = $labelEl.hasClass('item-label-inline');
+    const hasInput = $inputEl.length > 0;
+    const hasInputInfo = $inputEl.children('.item-input-info').length > 0;
+    if (hasInlineLabel !== self.state.hasInlineLabel) {
+      self.setState({ hasInlineLabel });
+    }
+    if (hasInput !== self.state.hasInput) {
+      self.setState({ hasInput });
+    }
+    if (hasInputInfo !== self.state.hasInputInfo) {
+      self.setState({ hasInputInfo });
+    }
+  }
   get slots() {
     return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
+  }
+  get refs() {
+    return this.__reactRefs;
+  }
+  set refs(refs) {
   }
 }
 __reactComponentSetProps(F7ListItemContent, {

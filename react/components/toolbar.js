@@ -6,6 +6,7 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7Toolbar extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
   }
   hide(animate) {
     const self = this;
@@ -32,6 +33,15 @@ class F7Toolbar extends React.Component {
       'no-hairline': self.props.noHairline
     }, Mixins.colorClasses(self));
   }
+  render() {
+    const self = this;
+    return React.createElement('div', {
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
+      className: self.classes
+    }, this.slots['before-inner'], self.props.inner ? React.createElement('div', { className: 'toolbar-inner' }, this.slots['default']) : this.slots['default'], this.slots['after-inner']);
+  }
   componentDidMount() {
     const self = this;
     self.$f7ready(f7 => {
@@ -45,15 +55,13 @@ class F7Toolbar extends React.Component {
       self.$f7.toolbar.setHighlight(self.refs.el);
     }
   }
-  render() {
-    const self = this;
-    return React.createElement('div', {
-      ref: 'el',
-      className: self.classes
-    }, this.slots['before-inner'], self.props.inner ? React.createElement('div', { className: 'toolbar-inner' }, this.slots['default']) : this.slots['default'], this.slots['after-inner']);
-  }
   get slots() {
     return __reactComponentSlots(this.props);
+  }
+  get refs() {
+    return this.__reactRefs;
+  }
+  set refs(refs) {
   }
 }
 __reactComponentSetProps(F7Toolbar, {
