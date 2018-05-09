@@ -9,7 +9,7 @@ export default class extends React.Component {
   render() {
     return (
       <Page>
-        <Navbar title="Chips" back-link="Back"></Navbar>
+        <Navbar title="Chips" backLink="Back"></Navbar>
         <BlockTitle>Chips With Text</BlockTitle>
         <Block strong>
           <Chip text="Example Chip" />
@@ -48,7 +48,7 @@ export default class extends React.Component {
         <BlockTitle>Deletable Chips / Tags</BlockTitle>
         <Block strong>
           <Chip text="Example Chip" deleteable onClick={ this.deleteChipBound } />
-          <Chip text="Chris" media="C" mediaBgColor="orange" text-color="black" deleteable onClick={ this.deleteChipBound } />
+          <Chip text="Chris" media="C" mediaBgColor="orange" textColor="black" deleteable onClick={ this.deleteChipBound } />
           <Chip text="Jane Doe" deleteable onClick={ this.deleteChipBound }>
             <img slot="media" src="http://lorempixel.com/100/100/people/9/"/>
           </Chip>
