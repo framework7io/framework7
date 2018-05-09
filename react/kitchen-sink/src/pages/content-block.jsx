@@ -1,73 +1,62 @@
-<template>
-  <f7-page>
-    <f7-navbar title="Content Block" back-link="Back"></f7-navbar>
+import React from 'react';
+import { Navbar, Page, BlockTitle, Block, BlockHeader, BlockFooter } from 'framework7-react';
+
+export default () => (
+  <Page>
+    <Navbar title="Content Block" backLink="Back"></Navbar>
     <p>This paragraph is outside of content block. Not cool, but useful for any custom elements with custom styling.</p>
 
-    <f7-block>
+    <Block>
       <p>Here comes paragraph within content block. Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis. </p>
-    </f7-block>
+    </Block>
 
-    <f7-block strong>
+    <Block strong>
       <p>Here comes another text block with additional "block-strong" class. Praesent nec imperdiet diam. Maecenas vel lectus porttitor, consectetur magna nec, viverra sem. Aliquam sed risus dolor. Morbi tincidunt ut libero id sodales. Integer blandit varius nisi quis consectetur. </p>
-    </f7-block>
+    </Block>
 
-    <f7-block-title>Block title</f7-block-title>
-    <f7-block>
+    <BlockTitle>Block title</BlockTitle>
+    <Block>
       <p>Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis. </p>
-    </f7-block>
+    </Block>
 
-    <f7-block-title>Another ultra long content block title</f7-block-title>
-    <f7-block strong>
+    <BlockTitle>Another ultra long content block title</BlockTitle>
+    <Block strong>
       <p>Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis. </p>
-    </f7-block>
+    </Block>
 
-    <f7-block-title>Inset</f7-block-title>
-    <f7-block strong inset>
+    <BlockTitle>Inset</BlockTitle>
+    <Block strong inset>
       <p>Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis. </p>
-    </f7-block>
+    </Block>
 
-    <f7-block-title>Tablet Inset</f7-block-title>
-    <f7-block strong tablet-inset>
+    <BlockTitle>Tablet Inset</BlockTitle>
+    <Block strong tabletInset>
       <p>Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis. </p>
-    </f7-block>
+    </Block>
 
-    <f7-block-title>With Header & Footer</f7-block-title>
-    <f7-block>
-      <f7-block-header>Block Header</f7-block-header>
+    <BlockTitle>With Header & Footer</BlockTitle>
+    <Block>
+      <BlockHeader>Block Header</BlockHeader>
       <p>Here comes paragraph within content block. Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis. </p>
-      <f7-block-footer>Block Footer</f7-block-footer>
-    </f7-block>
+      <BlockFooter>Block Footer</BlockFooter>
+    </Block>
 
-    <f7-block-header>Block Header</f7-block-header>
-    <f7-block>
+    <BlockHeader>Block Header</BlockHeader>
+    <Block>
       <p>Here comes paragraph within content block. Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis. </p>
-    </f7-block>
-    <f7-block-footer>Block Footer</f7-block-footer>
+    </Block>
+    <BlockFooter>Block Footer</BlockFooter>
 
-    <f7-block strong>
-      <f7-block-header>Block Header</f7-block-header>
+    <Block strong>
+      <BlockHeader>Block Header</BlockHeader>
       <p>Here comes paragraph within content block. Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis. </p>
-      <f7-block-footer>Block Footer</f7-block-footer>
-    </f7-block>
+      <BlockFooter>Block Footer</BlockFooter>
+    </Block>
 
-    <f7-block-header>Block Header</f7-block-header>
-    <f7-block strong>
+    <BlockHeader>Block Header</BlockHeader>
+    <Block strong>
       <p>Here comes paragraph within content block. Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis. </p>
-    </f7-block>
-    <f7-block-footer>Block Footer</f7-block-footer>
-  </f7-page>
-</template>
-<script>
-  import { f7Navbar, f7Page, f7BlockTitle, f7Block, f7BlockHeader, f7BlockFooter } from 'framework7-vue';
-
-  export default {
-    components: {
-      f7Navbar,
-      f7Page,
-      f7BlockTitle,
-      f7Block,
-      f7BlockHeader,
-      f7BlockFooter,
-    },
-  };
-</script>
+    </Block>
+    <BlockFooter>Block Footer</BlockFooter>
+  </Page>
+);
