@@ -1,28 +1,29 @@
 <template>
-  <f7-page>
-    <f7-navbar title="Subnavbar" back-link="Back">
-      <f7-subnavbar>
-        <f7-segmented raised>
-          <f7-button>Link 1</f7-button>
-          <f7-button>Link 2</f7-button>
-          <f7-button>Link 3</f7-button>
-        </f7-segmented>
-      </f7-subnavbar>
-    </f7-navbar>
-    <f7-block>
+  <Page>
+    <Navbar title="Subnavbar" backLink="Back">
+      <Subnavbar>
+        <Segmented raised>
+          <Button>Link 1</Button>
+          <Button>Link 2</Button>
+          <Button>Link 3</Button>
+        </Segmented>
+      </Subnavbar>
+    </Navbar>
+    <Block>
       <p>Subnavbar is useful when you need to put any additional elements into Navbar, like Tab Links or Search Bar. It also remains visible when Navbar hidden.</p>
-    </f7-block>
-    <f7-list>
-      <f7-list-item link="/subnavbar-title/" title="Subnavbar Title"></f7-list-item>
-    </f7-list>
-  </f7-page>
+    </Block>
+    <List>
+      <ListItem link="/subnavbar-title/" title="Subnavbar Title"></ListItem>
+    </List>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7Subnavbar, f7Segmented, f7Button, f7Block, f7List, f7ListItem } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, Subnavbar, Segmented, Button, Block, List, ListItem } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar, f7Page, f7Subnavbar, f7Segmented, f7Button, f7Block, f7List, f7ListItem,
+      Navbar, Page, Subnavbar, Segmented, Button, Block, List, ListItem,
     },
   };
 </script>

@@ -1,40 +1,41 @@
 <template>
-  <f7-page>
-    <f7-navbar title="Slider Lazy Loading" back-link="Back"></f7-navbar>
-    <div data-pagination='{"el": ".swiper-pagination"}' data-navigation='{"nextEl": ".swiper-button-next", "prevEl": ".swiper-button-prev"}' data-lazy='{"enabled": true}' class="swiper-container swiper-init demo-swiper-lazy">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide"><img data-src="http://lorempixel.com/1600/1200/nature/1/" class="swiper-lazy"/>
-          <div class="preloader swiper-lazy-preloader"></div>
+  <Page>
+    <Navbar title="Slider Lazy Loading" backLink="Back"></Navbar>
+    <div data-pagination='{"el": ".swiper-pagination"}' data-navigation='{"nextEl": ".swiper-button-next", "prevEl": ".swiper-button-prev"}' data-lazy='{"enabled": true}' className="swiper-container swiper-init demo-swiper-lazy">
+      <div className="swiper-wrapper">
+        <div className="swiper-slide"><img data-src="http://lorempixel.com/1600/1200/nature/1/" className="swiper-lazy"/>
+          <div className="preloader swiper-lazy-preloader"></div>
         </div>
-        <div class="swiper-slide"><img data-src="http://lorempixel.com/1600/1200/nature/2/" class="swiper-lazy"/>
-          <div class="preloader swiper-lazy-preloader"></div>
+        <div className="swiper-slide"><img data-src="http://lorempixel.com/1600/1200/nature/2/" className="swiper-lazy"/>
+          <div className="preloader swiper-lazy-preloader"></div>
         </div>
-        <div class="swiper-slide"><img data-src="http://lorempixel.com/1600/1200/nature/3/" class="swiper-lazy"/>
-          <div class="preloader swiper-lazy-preloader"></div>
+        <div className="swiper-slide"><img data-src="http://lorempixel.com/1600/1200/nature/3/" className="swiper-lazy"/>
+          <div className="preloader swiper-lazy-preloader"></div>
         </div>
-        <div class="swiper-slide"><img data-src="http://lorempixel.com/1600/1200/nature/4/" class="swiper-lazy"/>
-          <div class="preloader swiper-lazy-preloader"></div>
+        <div className="swiper-slide"><img data-src="http://lorempixel.com/1600/1200/nature/4/" className="swiper-lazy"/>
+          <div className="preloader swiper-lazy-preloader"></div>
         </div>
-        <div class="swiper-slide"><img data-src="http://lorempixel.com/1600/1200/nature/5/" class="swiper-lazy"/>
-          <div class="preloader swiper-lazy-preloader"></div>
+        <div className="swiper-slide"><img data-src="http://lorempixel.com/1600/1200/nature/5/" className="swiper-lazy"/>
+          <div className="preloader swiper-lazy-preloader"></div>
         </div>
-        <div class="swiper-slide"><img data-src="http://lorempixel.com/1600/1200/nature/6/" class="swiper-lazy"/>
-          <div class="preloader swiper-lazy-preloader"></div>
+        <div className="swiper-slide"><img data-src="http://lorempixel.com/1600/1200/nature/6/" className="swiper-lazy"/>
+          <div className="preloader swiper-lazy-preloader"></div>
         </div>
       </div>
-      <div class="swiper-pagination"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
+      <div className="swiper-pagination"></div>
+      <div className="swiper-button-prev"></div>
+      <div className="swiper-button-next"></div>
     </div>
-  </f7-page>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
+      Navbar,
+      Page,
     },
   };
 </script>

@@ -1,24 +1,24 @@
 <template>
-  <f7-page>
-    <f7-navbar title="Radio" back-link="Back"></f7-navbar>
-    <f7-block-title>Inline</f7-block-title>
+  <Page>
+    <Navbar title="Radio" backLink="Back"></Navbar>
+    <BlockTitle>Inline</BlockTitle>
 
-    <f7-block strong>
-      <p>Lorem <f7-radio name="demo-radio-inline"></f7-radio> ipsum dolor sit amet, consectetur adipisicing elit. Alias beatae illo nihil aut eius commodi sint eveniet aliquid eligendi <f7-radio name="demo-radio-inline" checked></f7-radio> ad delectus impedit tempore nemo, enim vel praesentium consequatur nulla mollitia!</p>
-    </f7-block>
+    <Block strong>
+      <p>Lorem Radio name="demo-radio-inline"></f7-radio> ipsum dolor sit amet, consectetur adipisicing elit. Alias beatae illo nihil aut eius commodi sint eveniet aliquid eligendi Radio name="demo-radio-inline" checked></f7-radio> ad delectus impedit tempore nemo, enim vel praesentium consequatur nulla mollitia!</p>
+    </Block>
 
-    <f7-block-title>Radio Group</f7-block-title>
-    <f7-list>
-      <f7-list-item radio checked title="Books" name="demo-radio" checked></f7-list-item>
-      <f7-list-item radio title="Movies" name="demo-radio"></f7-list-item>
-      <f7-list-item radio title="Food" name="demo-radio"></f7-list-item>
-      <f7-list-item radio title="Drinks" name="demo-radio"></f7-list-item>
-    </f7-list>
+    <BlockTitle>Radio Group</BlockTitle>
+    <List>
+      <ListItem radio checked title="Books" name="demo-radio" checked></ListItem>
+      <ListItem radio title="Movies" name="demo-radio"></ListItem>
+      <ListItem radio title="Food" name="demo-radio"></ListItem>
+      <ListItem radio title="Drinks" name="demo-radio"></ListItem>
+    </List>
 
 
-    <f7-block-title>With Media Lists</f7-block-title>
-      <f7-list media-list>
-        <f7-list-item
+    <BlockTitle>With Media Lists</BlockTitle>
+      <List mediaList>
+        <ListItem
           radio
           checked
           name="demo-media-radio"
@@ -27,8 +27,8 @@
           after="17:14"
           subtitle="New messages from John Doe"
           text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
-        ></f7-list-item>
-        <f7-list-item
+        ></ListItem>
+        <ListItem
           radio
           name="demo-media-radio"
           value="2"
@@ -36,8 +36,8 @@
           after="17:11"
           subtitle="John Doe (@_johndoe) mentioned you on Twitter!"
           text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
-        ></f7-list-item>
-        <f7-list-item
+        ></ListItem>
+        <ListItem
           radio
           name="demo-media-radio"
           value="3"
@@ -45,8 +45,8 @@
           after="16:48"
           subtitle="New messages from John Doe"
           text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
-        ></f7-list-item>
-        <f7-list-item
+        ></ListItem>
+        <ListItem
           radio
           name="demo-media-radio"
           value="4"
@@ -54,22 +54,23 @@
           after="15:32"
           subtitle="John Doe (@_johndoe) mentioned you on Twitter!"
           text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
-        ></f7-list-item>
-      </f7-list>
-  </f7-page>
+        ></ListItem>
+      </List>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7BlockTitle, f7Block, f7List, f7ListItem, f7Radio } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, BlockTitle, Block, List, ListItem, Radio } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
-      f7BlockTitle,
-      f7Block,
-      f7List,
-      f7ListItem,
-      f7Radio,
+      Navbar,
+      Page,
+      BlockTitle,
+      Block,
+      List,
+      ListItem,
+      Radio,
     },
   };
 </script>

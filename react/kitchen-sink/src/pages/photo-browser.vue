@@ -1,7 +1,7 @@
 <template>
-  <f7-page>
-    <f7-navbar title="Photo Browser" back-link="Back"></f7-navbar>
-    <f7-block>
+  <Page>
+    <Navbar title="Photo Browser" backLink="Back"></Navbar>
+    <Block>
       <p>Photo Browser is a standalone and highly configurable component that allows to open window with photo viewer and navigation elements with the following features:</p>
       <ul>
         <li>Swiper between photos</li>
@@ -9,55 +9,56 @@
         <li>Toggle zoom by double tap on photo</li>
         <li>Single click on photo to toggle Exposition mode</li>
       </ul>
-    </f7-block>
-    <f7-block>
+    </Block>
+    <Block>
       <p>Photo Browser could be opened in a three ways - as a Standalone component (Popup modification), in Popup, and as separate Page:</p>
-      <f7-row>
-        <f7-col>
-          <f7-photo-browser :photos="photos" ref="standalone"></f7-photo-browser>
-          <f7-button raised @click="$refs.standalone.open()">Standalone</f7-button>
-        </f7-col>
-        <f7-col>
-          <f7-photo-browser :photos="photos" type="popup" ref="popup"></f7-photo-browser>
-          <f7-button raised @click="$refs.popup.open()">Popup</f7-button>
-        </f7-col>
-        <f7-col>
-          <f7-photo-browser :photos="photos" type="page" back-link-text="Back" ref="page"></f7-photo-browser>
-          <f7-button raised @click="$refs.page.open()">Page</f7-button>
-        </f7-col>
-      </f7-row>
-    </f7-block>
-    <f7-block>
+      <Row>
+        <Col>
+          <PhotoBrowser photos={photos} ref="standalone"></PhotoBrowser>
+          <Button raised @click={$refs.standalone.open()}>Standalone</Button>
+        </Col>
+        <Col>
+          <PhotoBrowser photos={photos} type="popup" ref="popup"></PhotoBrowser>
+          <Button raised @click={$refs.popup.open()}>Popup</Button>
+        </Col>
+        <Col>
+          <PhotoBrowser photos={photos} type="page" back-link-text="Back" ref="page"></PhotoBrowser>
+          <Button raised @click={$refs.page.open()}>Page</Button>
+        </Col>
+      </Row>
+    </Block>
+    <Block>
       <p>Photo Browser suppots 2 default themes - default Light (like in previous examples) and Dark theme. Here is a Dark theme examples:</p>
-      <f7-row>
-        <f7-col>
-          <f7-photo-browser :photos="photos" theme="dark" ref="standaloneDark"></f7-photo-browser>
-          <f7-button raised @click="$refs.standaloneDark.open()">Standalone</f7-button>
-        </f7-col>
-        <f7-col>
-          <f7-photo-browser :photos="photos" theme="dark" type="popup" ref="popupDark"></f7-photo-browser>
-          <f7-button raised @click="$refs.popupDark.open()">Popup</f7-button>
-        </f7-col>
-        <f7-col>
-          <f7-photo-browser :photos="photos" theme="dark" type="page" back-link-text="Back" ref="pageDark"></f7-photo-browser>
-          <f7-button raised @click="$refs.pageDark.open()">Page</f7-button>
-        </f7-col>
-      </f7-row>
-    </f7-block>
-  </f7-page>
+      <Row>
+        <Col>
+          <PhotoBrowser photos={photos} theme="dark" ref="standaloneDark"></PhotoBrowser>
+          <Button raised @click={$refs.standaloneDark.open()}>Standalone</Button>
+        </Col>
+        <Col>
+          <PhotoBrowser photos={photos} theme="dark" type="popup" ref="popupDark"></PhotoBrowser>
+          <Button raised @click={$refs.popupDark.open()}>Popup</Button>
+        </Col>
+        <Col>
+          <PhotoBrowser photos={photos} theme="dark" type="page" back-link-text="Back" ref="pageDark"></PhotoBrowser>
+          <Button raised @click={$refs.pageDark.open()}>Page</Button>
+        </Col>
+      </Row>
+    </Block>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7PhotoBrowser, f7Block, f7Row, f7Col, f7Button } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, PhotoBrowser, Block, Row, Col, Button } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
-      f7PhotoBrowser,
-      f7Block,
-      f7Row,
-      f7Col,
-      f7Button,
+      Navbar,
+      Page,
+      PhotoBrowser,
+      Block,
+      Row,
+      Col,
+      Button,
     },
     data() {
       console.log('aha?!');

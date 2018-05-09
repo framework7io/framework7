@@ -1,10 +1,10 @@
 <template>
-  <f7-page hide-navbar-on-scroll>
-    <f7-navbar title="Hide Navbar On Scroll" back-link="Back"></f7-navbar>
-    <f7-block strong>
+  <Page hide-navbar-on-scroll>
+    <Navbar title="Hide Navbar On Scroll" backLink="Back"></Navbar>
+    <Block strong>
       <p>Navbar will be hidden if you scroll bottom</p>
-    </f7-block>
-    <f7-block>
+    </Block>
+    <Block>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos maxime incidunt id ab culpa ipsa omnis eos, vel excepturi officiis neque illum perferendis dolorum magnam rerum natus dolore nulla ex.</p>
       <p>Eum dolore, amet enim quaerat omnis. Modi minus voluptatum quam veritatis assumenda, eligendi minima dolore in autem delectus sequi accusantium? Cupiditate praesentium autem eius, esse ratione consequuntur dolor minus error.</p>
       <p>Repellendus ipsa sint quisquam delectus dolore quidem odio, praesentium, sequi temporibus amet architecto? Commodi molestiae, in repellat fugit! Laudantium, fuga quia officiis error. Provident inventore iusto quas iure, expedita optio.</p>
@@ -35,17 +35,18 @@
       <p>Aperiam velit sed sit quaerat, expedita tempore aspernatur iusto nobis ipsam error ut sapiente delectus in minima recusandae dolore alias, cumque labore. Doloribus veritatis magni nisi odio voluptatum perferendis placeat!</p>
       <p>Eaque laboriosam iusto corporis iure nemo ab deleniti ut facere laborum, blanditiis neque nihil dignissimos fuga praesentium illo facilis eos beatae accusamus cumque molestiae asperiores cupiditate? Provident laborum officiis suscipit!</p>
       <p>Exercitationem odio nulla rerum soluta aspernatur fugit, illo iusto ullam similique. Recusandae consectetur rem, odio autem voluptate similique atque, alias possimus quis vitae in, officiis labore deserunt aspernatur rerum sunt?</p>
-    </f7-block>
-  </f7-page>
+    </Block>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7Block } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, Block } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
-      f7Block,
+      Navbar,
+      Page,
+      Block,
     },
   };
 </script>

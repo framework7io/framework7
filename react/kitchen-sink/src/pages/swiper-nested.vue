@@ -1,33 +1,34 @@
 <template>
-  <f7-page>
-    <f7-navbar title="Nested Swipers" back-link="Back"></f7-navbar>
-    <div data-pagination='{"el": ".swiper-pagination-h"}' class="swiper-container swiper-init demo-swiper">
-      <div class="swiper-pagination swiper-pagination-h"></div>
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">Horizontal Slide 1</div>
-        <div class="swiper-slide">
-          <div data-pagination='{"el": ".swiper-pagination-v"}' data-direction="vertical" class="swiper-container swiper-init demo-swiper">
-            <div class="swiper-pagination swiper-pagination-v"></div>
-            <div class="swiper-wrapper">
-              <div class="swiper-slide">Vertical Slide 1</div>
-              <div class="swiper-slide">Vertical Slide 2</div>
-              <div class="swiper-slide">Vertical Slide 3</div>
+  <Page>
+    <Navbar title="Nested Swipers" backLink="Back"></Navbar>
+    <div data-pagination='{"el": ".swiper-pagination-h"}' className="swiper-container swiper-init demo-swiper">
+      <div className="swiper-pagination swiper-pagination-h"></div>
+      <div className="swiper-wrapper">
+        <div className="swiper-slide">Horizontal Slide 1</div>
+        <div className="swiper-slide">
+          <div data-pagination='{"el": ".swiper-pagination-v"}' data-direction="vertical" className="swiper-container swiper-init demo-swiper">
+            <div className="swiper-pagination swiper-pagination-v"></div>
+            <div className="swiper-wrapper">
+              <div className="swiper-slide">Vertical Slide 1</div>
+              <div className="swiper-slide">Vertical Slide 2</div>
+              <div className="swiper-slide">Vertical Slide 3</div>
             </div>
           </div>
         </div>
-        <div class="swiper-slide">Horizontal Slide 3</div>
-        <div class="swiper-slide">Horizontal Slide 4</div>
+        <div className="swiper-slide">Horizontal Slide 3</div>
+        <div className="swiper-slide">Horizontal Slide 4</div>
       </div>
     </div>
-  </f7-page>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
+      Navbar,
+      Page,
     },
   };
 </script>

@@ -1,61 +1,62 @@
 <template>
-  <f7-page>
-    <f7-navbar title="Login Screen" back-link="Back"></f7-navbar>
-    <f7-block>
+  <Page>
+    <Navbar title="Login Screen" backLink="Back"></Navbar>
+    <Block>
       <p>Framework7 comes with ready to use Login Screen layout. It could be used inside of page or inside of popup (Embedded) or as a standalone overlay:</p>
-    </f7-block>
+    </Block>
 
-    <f7-list>
-      <f7-list-item link="/login-screen-page/" title="As Separate Page"></f7-list-item>
-    </f7-list>
+    <List>
+      <ListItem link="/login-screen-page/" title="As Separate Page"></ListItem>
+    </List>
 
-    <f7-block>
-      <f7-button raised big fill login-screen-open=".demo-login-screen">As Overlay</f7-button>
-    </f7-block>
+    <Block>
+      <Button raised big fill login-screen-open=".demo-login-screen">As Overlay</Button>
+    </Block>
 
-    <f7-block>
-      <f7-button raised big fill @click="loginScreenOpened = true">Open Via Prop Change</f7-button>
-    </f7-block>
+    <Block>
+      <Button raised big fill @click={loginScreenOpened = true}>Open Via Prop Change</Button>
+    </Block>
 
-    <f7-login-screen class="demo-login-screen" :opened="loginScreenOpened" @loginscreen:closed="loginScreenOpened = false">
-      <f7-page login-screen>
-        <f7-login-screen-title>Framework7</f7-login-screen-title>
-        <f7-list form>
-          <f7-list-item>
-            <f7-label>Username</f7-label>
-            <f7-input type="text" placeholder="Your username" @input="username = $event.target.value"></f7-input>
-          </f7-list-item>
-          <f7-list-item>
-            <f7-label>Password</f7-label>
-            <f7-input type="password" placeholder="Your password" @input="password = $event.target.value"></f7-input>
-          </f7-list-item>
-        </f7-list>
-        <f7-list>
-          <f7-list-button @click="signIn">Sign In</f7-list-button>
-          <f7-block-footer>Some text about login information.<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</f7-block-footer>
-        </f7-list>
-      </f7-page>
-    </f7-login-screen>
-  </f7-page>
+    <LoginScreen className="demo-login-screen" opened={loginScreenOpened} @loginscreen:closed="loginScreenOpened = false">
+      <Page login-screen>
+        <LoginScreenTitle>Framework7</LoginScreenTitle>
+        <List form>
+          <ListItem>
+            <Label>Username</Label>
+            <Input type="text" placeholder="Your username" @input={username = $event.target.value}></Input>
+          </ListItem>
+          <ListItem>
+            <Label>Password</Label>
+            <Input type="password" placeholder="Your password" @input={password = $event.target.value}></Input>
+          </ListItem>
+        </List>
+        <List>
+          <ListButton @click={signIn}>Sign In</ListButton>
+          <BlockFooter>Some text about login information.<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</BlockFooter>
+        </List>
+      </Page>
+    </LoginScreen>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7Link, f7LoginScreen, f7Input, f7List, f7ListItem, f7Block, f7Button, f7LoginScreenTitle, f7BlockFooter, f7Label, f7ListButton } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, Link, LoginScreen, Input, List, ListItem, Block, Button, LoginScreenTitle, BlockFooter, Label, ListButton } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
-      f7Link,
-      f7LoginScreen,
-      f7Input,
-      f7List,
-      f7ListItem,
-      f7Block,
-      f7Button,
-      f7LoginScreenTitle,
-      f7BlockFooter,
-      f7Label,
-      f7ListButton,
+      Navbar,
+      Page,
+      Link,
+      LoginScreen,
+      Input,
+      List,
+      ListItem,
+      Block,
+      Button,
+      LoginScreenTitle,
+      BlockFooter,
+      Label,
+      ListButton,
     },
     data() {
       return {

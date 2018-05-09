@@ -1,98 +1,99 @@
 <template>
-  <f7-page>
-    <f7-navbar title="Progress Bar" back-link="Back"></f7-navbar>
-    <f7-block>
+  <Page>
+    <Navbar title="Progress Bar" backLink="Back"></Navbar>
+    <Block>
       <p>In addition to <a href="/preloader/">Preloader</a>, Framework7 also comes with fancy animated determinate and infinite/indeterminate progress bars to indicate some activity.</p>
-    </f7-block>
-    <f7-block-title>Determinate Progress Bar</f7-block-title>
-    <f7-block strong>
+    </Block>
+    <BlockTitle>Determinate Progress Bar</BlockTitle>
+    <Block strong>
       <p>When progress bar is determinate it indicates how long an operation will take when the percentage complete is detectable.</p>
       <p>Inline determinate progress bar:</p>
       <div>
-        <p><f7-progressbar :progress="10" id="demo-inline-progressbar"></f7-progressbar></p>
-        <f7-segmented raised>
-          <f7-button @click="setInlineProgress(10)">10%</f7-button>
-          <f7-button @click="setInlineProgress(30)">30%</f7-button>
-          <f7-button @click="setInlineProgress(50)">50%</f7-button>
-          <f7-button @click="setInlineProgress(100)">100%</f7-button>
-        </f7-segmented>
+        <p><Progressbar progress={10} id="demo-inline-progressbar"></Progressbar></p>
+        <Segmented raised>
+          <Button @click={setInlineProgress(10)}>10%</Button>
+          <Button @click={setInlineProgress(30)}>30%</Button>
+          <Button @click={setInlineProgress(50)}>50%</Button>
+          <Button @click={setInlineProgress(100)}>100%</Button>
+        </Segmented>
       </div>
       <div>
         <p>Inline determinate load & hide:</p>
         <p id="demo-determinate-container"></p>
         <p>
-          <f7-button raised @click="showDeterminate(true)">Start Loading</f7-button>
+          <Button raised @click={showDeterminate(true)}>Start Loading</Button>
         </p>
       </div>
       <div>
         <p>Overlay with determinate progress bar on top of the app:</p>
         <p>
-          <f7-button raised @click="showDeterminate(false)">Start Loading</f7-button>
+          <Button raised @click={showDeterminate(false)}>Start Loading</Button>
         </p>
       </div>
-    </f7-block>
-    <f7-block-title>Infinite Progress Bar</f7-block-title>
-    <f7-block strong>
+    </Block>
+    <BlockTitle>Infinite Progress Bar</BlockTitle>
+    <Block strong>
       <p>When progress bar is infinite/indeterminate it requests that the user wait while something finishes when it’s not necessary to indicate how long it will take.</p>
       <p>Inline infinite progress bar</p>
       <p>
-        <f7-progressbar infinite></f7-progressbar>
+        <Progressbar infinite></Progressbar>
       </p>
       <p>Multi-color infinite progress bar</p>
       <p>
-        <f7-progressbar infinite color="multi"></f7-progressbar>
+        <Progressbar infinite color="multi"></Progressbar>
       </p>
       <div>
         <p>Overlay with infinite progress bar on top of the app</p>
         <p id="demo-infinite-container"></p>
         <p>
-          <f7-button raised @click="showInfinite(false)">Start Loading</f7-button>
+          <Button raised @click={showInfinite(false)}>Start Loading</Button>
         </p>
       </div>
       <div>
         <p>Overlay with infinite multi-color progress bar on top of the app</p>
         <p>
-          <f7-button raised @click="showInfinite(true)">Start Loading</f7-button>
+          <Button raised @click={showInfinite(true)}>Start Loading</Button>
         </p>
       </div>
-    </f7-block>
-    <f7-block-title>Colors</f7-block-title>
-    <div class="list simple-list">
+    </Block>
+    <BlockTitle>Colors</BlockTitle>
+    <div className="list simple-list">
       <ul>
         <li>
-          <f7-progressbar color="blue" :progress="10"></f7-progressbar>
+          <Progressbar color="blue" progress={10}></Progressbar>
         </li>
         <li>
-          <f7-progressbar color="red" :progress="20"></f7-progressbar>
+          <Progressbar color="red" progress={20}></Progressbar>
         </li>
         <li>
-          <f7-progressbar color="pink" :progress="30"></f7-progressbar>
+          <Progressbar color="pink" progress={30}></Progressbar>
         </li>
         <li>
-          <f7-progressbar color="green" :progress="80"></f7-progressbar>
+          <Progressbar color="green" progress={80}></Progressbar>
         </li>
         <li>
-          <f7-progressbar color="yellow" :progress="90"></f7-progressbar>
+          <Progressbar color="yellow" progress={90}></Progressbar>
         </li>
         <li>
-          <f7-progressbar color="orange" :progress="100"></f7-progressbar>
+          <Progressbar color="orange" progress={100}></Progressbar>
         </li>
       </ul>
     </div>
-  </f7-page>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7BlockTitle, f7Block, f7Progressbar, f7Button, f7Segmented } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, BlockTitle, Block, Progressbar, Button, Segmented } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
-      f7BlockTitle,
-      f7Block,
-      f7Progressbar,
-      f7Button,
-      f7Segmented,
+      Navbar,
+      Page,
+      BlockTitle,
+      Block,
+      Progressbar,
+      Button,
+      Segmented,
     },
     methods: {
       setInlineProgress(value) {

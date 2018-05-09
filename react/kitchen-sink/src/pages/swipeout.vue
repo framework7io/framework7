@@ -1,226 +1,227 @@
 <template>
-  <f7-page>
-    <f7-navbar title="Swipeout" back-link="Back"></f7-navbar>
+  <Page>
+    <Navbar title="Swipeout" backLink="Back"></Navbar>
 
-    <f7-block>
+    <Block>
       <p>
         Swipe out actions on list elements is one of the most awesome F7 features. It allows you to call hidden menu for each list element where you can put default ready-to use delete button or any other buttons for some required actions.
       </p>
-    </f7-block>
+    </Block>
 
-    <f7-block-title>Swipe to delete with confirm modal</f7-block-title>
-    <f7-list>
-      <f7-list-item
+    <BlockTitle>Swipe to delete with confirm modal</BlockTitle>
+    <List>
+      <ListItem
         swipeout
         title="Swipe left on me please">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
-        <f7-swipeout-actions right>
-          <f7-swipeout-button delete confirm-text="Are you sure you want to delete this item?">Delete</f7-swipeout-button>
-        </f7-swipeout-actions>
-      </f7-list-item>
-      <f7-list-item
+        <Icon slot="media" icon="icon-f7"></Icon>
+        <SwipeoutActions right>
+          <SwipeoutButton delete confirm-text="Are you sure you want to delete this item?">Delete</SwipeoutButton>
+        </SwipeoutActions>
+      </ListItem>
+      <ListItem
         swipeout
         title="Swipe left on me too">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
-        <f7-swipeout-actions right>
-          <f7-swipeout-button delete confirm-text="Are you sure you want to delete this item?">Delete</f7-swipeout-button>
-        </f7-swipeout-actions>
-      </f7-list-item>
-      <f7-list-item
+        <Icon slot="media" icon="icon-f7"></Icon>
+        <SwipeoutActions right>
+          <SwipeoutButton delete confirm-text="Are you sure you want to delete this item?">Delete</SwipeoutButton>
+        </SwipeoutActions>
+      </ListItem>
+      <ListItem
         title="I am not removable">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
-      </f7-list-item>
-    </f7-list>
+        <Icon slot="media" icon="icon-f7"></Icon>
+      </ListItem>
+    </List>
 
-    <f7-block-title>Swipe to delete without confirm</f7-block-title>
-    <f7-list>
-      <f7-list-item
+    <BlockTitle>Swipe to delete without confirm</BlockTitle>
+    <List>
+      <ListItem
         swipeout
         title="Swipe left on me please">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
-        <f7-swipeout-actions right>
-          <f7-swipeout-button delete>Delete</f7-swipeout-button>
-        </f7-swipeout-actions>
-      </f7-list-item>
-      <f7-list-item
+        <Icon slot="media" icon="icon-f7"></Icon>
+        <SwipeoutActions right>
+          <SwipeoutButton delete>Delete</SwipeoutButton>
+        </SwipeoutActions>
+      </ListItem>
+      <ListItem
         swipeout
         title="Swipe left on me too">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
-        <f7-swipeout-actions right>
-          <f7-swipeout-button delete>Delete</f7-swipeout-button>
-        </f7-swipeout-actions>
-      </f7-list-item>
-      <f7-list-item
+        <Icon slot="media" icon="icon-f7"></Icon>
+        <SwipeoutActions right>
+          <SwipeoutButton delete>Delete</SwipeoutButton>
+        </SwipeoutActions>
+      </ListItem>
+      <ListItem
         title="I am not removable">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
-      </f7-list-item>
-    </f7-list>
+        <Icon slot="media" icon="icon-f7"></Icon>
+      </ListItem>
+    </List>
 
-    <f7-block-title>Swipe for actions</f7-block-title>
-    <f7-list>
-      <f7-list-item
+    <BlockTitle>Swipe for actions</BlockTitle>
+    <List>
+      <ListItem
         swipeout
         title="Swipe left on me please">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
-        <f7-swipeout-actions right>
-          <f7-swipeout-button @click="more">More</f7-swipeout-button>
-          <f7-swipeout-button delete>Delete</f7-swipeout-button>
-        </f7-swipeout-actions>
-      </f7-list-item>
-      <f7-list-item
+        <Icon slot="media" icon="icon-f7"></Icon>
+        <SwipeoutActions right>
+          <SwipeoutButton @click={more}>More</SwipeoutButton>
+          <SwipeoutButton delete>Delete</SwipeoutButton>
+        </SwipeoutActions>
+      </ListItem>
+      <ListItem
         swipeout
         title="Swipe left on me too">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
-        <f7-swipeout-actions right>
-          <f7-swipeout-button @click="more">More</f7-swipeout-button>
-          <f7-swipeout-button delete>Delete</f7-swipeout-button>
-        </f7-swipeout-actions>
-      </f7-list-item>
-      <f7-list-item
+        <Icon slot="media" icon="icon-f7"></Icon>
+        <SwipeoutActions right>
+          <SwipeoutButton @click={more}>More</SwipeoutButton>
+          <SwipeoutButton delete>Delete</SwipeoutButton>
+        </SwipeoutActions>
+      </ListItem>
+      <ListItem
         swipeout
         title="You can't delete me">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
-        <f7-swipeout-actions right>
-          <f7-swipeout-button @click="more">More</f7-swipeout-button>
-        </f7-swipeout-actions>
-      </f7-list-item>
-    </f7-list>
+        <Icon slot="media" icon="icon-f7"></Icon>
+        <SwipeoutActions right>
+          <SwipeoutButton @click={more}>More</SwipeoutButton>
+        </SwipeoutActions>
+      </ListItem>
+    </List>
 
-    <f7-block-title>With callback on remove</f7-block-title>
-    <f7-list>
-      <f7-list-item
+    <BlockTitle>With callback on remove</BlockTitle>
+    <List>
+      <ListItem
         swipeout
         @swipeout:deleted="onDeleted"
         title="Swipe left on me please">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
-        <f7-swipeout-actions right>
-          <f7-swipeout-button delete>Delete</f7-swipeout-button>
-        </f7-swipeout-actions>
-      </f7-list-item>
-      <f7-list-item
+        <Icon slot="media" icon="icon-f7"></Icon>
+        <SwipeoutActions right>
+          <SwipeoutButton delete>Delete</SwipeoutButton>
+        </SwipeoutActions>
+      </ListItem>
+      <ListItem
         swipeout
         @swipeout:deleted="onDeleted"
         title="Swipe left on me too">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
-        <f7-swipeout-actions right>
-          <f7-swipeout-button delete>Delete</f7-swipeout-button>
-        </f7-swipeout-actions>
-      </f7-list-item>
-      <f7-list-item
+        <Icon slot="media" icon="icon-f7"></Icon>
+        <SwipeoutActions right>
+          <SwipeoutButton delete>Delete</SwipeoutButton>
+        </SwipeoutActions>
+      </ListItem>
+      <ListItem
         title="I am not removable">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
-      </f7-list-item>
-    </f7-list>
+        <Icon slot="media" icon="icon-f7"></Icon>
+      </ListItem>
+    </List>
 
-    <f7-block-title>With actions on left side (swipe to right)</f7-block-title>
-    <f7-list>
-      <f7-list-item
+    <BlockTitle>With actions on left side (swipe to right)</BlockTitle>
+    <List>
+      <ListItem
         swipeout
         title="Swipe right on me please">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
-        <f7-swipeout-actions left>
-          <f7-swipeout-button color="green" @click="reply">Reply</f7-swipeout-button>
-          <f7-swipeout-button color="blue" @click="forward">Forward</f7-swipeout-button>
-        </f7-swipeout-actions>
-      </f7-list-item>
-      <f7-list-item
+        <Icon slot="media" icon="icon-f7"></Icon>
+        <SwipeoutActions left>
+          <SwipeoutButton color="green" @click={reply}>Reply</SwipeoutButton>
+          <SwipeoutButton color="blue" @click={forward}>Forward</SwipeoutButton>
+        </SwipeoutActions>
+      </ListItem>
+      <ListItem
         swipeout
         title="Swipe right on me too">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
-        <f7-swipeout-actions left>
-          <f7-swipeout-button color="green" @click="reply">Reply</f7-swipeout-button>
-          <f7-swipeout-button color="blue" @click="forward">Forward</f7-swipeout-button>
-        </f7-swipeout-actions>
-      </f7-list-item>
-    </f7-list>
+        <Icon slot="media" icon="icon-f7"></Icon>
+        <SwipeoutActions left>
+          <SwipeoutButton color="green" @click={reply}>Reply</SwipeoutButton>
+          <SwipeoutButton color="blue" @click={forward}>Forward</SwipeoutButton>
+        </SwipeoutActions>
+      </ListItem>
+    </List>
 
-    <f7-block-title>On both sides with overswipes</f7-block-title>
-    <f7-list media-list>
-      <f7-list-item
+    <BlockTitle>On both sides with overswipes</BlockTitle>
+    <List mediaList>
+      <ListItem
         swipeout
         title="Facebook"
         after="17:14"
         subtitle="New messages from John Doe"
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
       >
-        <f7-swipeout-actions left>
-          <f7-swipeout-button overswipe color="green" @click="reply">Reply</f7-swipeout-button>
-          <f7-swipeout-button color="blue" @click="forward">Forward</f7-swipeout-button>
-        </f7-swipeout-actions>
-        <f7-swipeout-actions right>
-          <f7-swipeout-button @click="more">More</f7-swipeout-button>
-          <f7-swipeout-button color="orange" @click="mark">Mark</f7-swipeout-button>
-          <f7-swipeout-button delete overswipe confirm-text="Are you sure you want to delete this item?">Delete</f7-swipeout-button>
-        </f7-swipeout-actions>
-      </f7-list-item>
-      <f7-list-item
+        <SwipeoutActions left>
+          <SwipeoutButton overswipe color="green" @click={reply}>Reply</SwipeoutButton>
+          <SwipeoutButton color="blue" @click={forward}>Forward</SwipeoutButton>
+        </SwipeoutActions>
+        <SwipeoutActions right>
+          <SwipeoutButton @click={more}>More</SwipeoutButton>
+          <SwipeoutButton color="orange" @click={mark}>Mark</SwipeoutButton>
+          <SwipeoutButton delete overswipe confirm-text="Are you sure you want to delete this item?">Delete</SwipeoutButton>
+        </SwipeoutActions>
+      </ListItem>
+      <ListItem
         swipeout
         title="John Doe (via Twitter)"
         after="17:11"
         subtitle="John Doe (@_johndoe) mentioned you on Twitter!"
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
       >
-        <f7-swipeout-actions left>
-          <f7-swipeout-button overswipe color="green" @click="reply">Reply</f7-swipeout-button>
-          <f7-swipeout-button color="blue" @click="forward">Forward</f7-swipeout-button>
-        </f7-swipeout-actions>
-        <f7-swipeout-actions right>
-          <f7-swipeout-button @click="more">More</f7-swipeout-button>
-          <f7-swipeout-button color="orange" @click="mark">Mark</f7-swipeout-button>
-          <f7-swipeout-button delete overswipe confirm-text="Are you sure you want to delete this item?">Delete</f7-swipeout-button>
-        </f7-swipeout-actions>
-      </f7-list-item>
-      <f7-list-item
+        <SwipeoutActions left>
+          <SwipeoutButton overswipe color="green" @click={reply}>Reply</SwipeoutButton>
+          <SwipeoutButton color="blue" @click={forward}>Forward</SwipeoutButton>
+        </SwipeoutActions>
+        <SwipeoutActions right>
+          <SwipeoutButton @click={more}>More</SwipeoutButton>
+          <SwipeoutButton color="orange" @click={mark}>Mark</SwipeoutButton>
+          <SwipeoutButton delete overswipe confirm-text="Are you sure you want to delete this item?">Delete</SwipeoutButton>
+        </SwipeoutActions>
+      </ListItem>
+      <ListItem
         swipeout
         title="Facebook"
         after="16:48"
         subtitle="New messages from John Doe"
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
       >
-        <f7-swipeout-actions left>
-          <f7-swipeout-button overswipe color="green" @click="reply">Reply</f7-swipeout-button>
-          <f7-swipeout-button color="blue" @click="forward">Forward</f7-swipeout-button>
-        </f7-swipeout-actions>
-        <f7-swipeout-actions right>
-          <f7-swipeout-button @click="more">More</f7-swipeout-button>
-          <f7-swipeout-button color="orange" @click="mark">Mark</f7-swipeout-button>
-          <f7-swipeout-button delete overswipe confirm-text="Are you sure you want to delete this item?">Delete</f7-swipeout-button>
-        </f7-swipeout-actions>
-      </f7-list-item>
-      <f7-list-item
+        <SwipeoutActions left>
+          <SwipeoutButton overswipe color="green" @click={reply}>Reply</SwipeoutButton>
+          <SwipeoutButton color="blue" @click={forward}>Forward</SwipeoutButton>
+        </SwipeoutActions>
+        <SwipeoutActions right>
+          <SwipeoutButton @click={more}>More</SwipeoutButton>
+          <SwipeoutButton color="orange" @click={mark}>Mark</SwipeoutButton>
+          <SwipeoutButton delete overswipe confirm-text="Are you sure you want to delete this item?">Delete</SwipeoutButton>
+        </SwipeoutActions>
+      </ListItem>
+      <ListItem
         swipeout
         title="John Doe (via Twitter)"
         after="15:32"
         subtitle="John Doe (@_johndoe) mentioned you on Twitter!"
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
       >
-        <f7-swipeout-actions left>
-          <f7-swipeout-button overswipe color="green" @click="reply">Reply</f7-swipeout-button>
-          <f7-swipeout-button color="blue" @click="forward">Forward</f7-swipeout-button>
-        </f7-swipeout-actions>
-        <f7-swipeout-actions right>
-          <f7-swipeout-button @click="more">More</f7-swipeout-button>
-          <f7-swipeout-button color="orange" @click="mark">Mark</f7-swipeout-button>
-          <f7-swipeout-button delete overswipe confirm-text="Are you sure you want to delete this item?">Delete</f7-swipeout-button>
-        </f7-swipeout-actions>
-      </f7-list-item>
-    </f7-list>
-  </f7-page>
+        <SwipeoutActions left>
+          <SwipeoutButton overswipe color="green" @click={reply}>Reply</SwipeoutButton>
+          <SwipeoutButton color="blue" @click={forward}>Forward</SwipeoutButton>
+        </SwipeoutActions>
+        <SwipeoutActions right>
+          <SwipeoutButton @click={more}>More</SwipeoutButton>
+          <SwipeoutButton color="orange" @click={mark}>Mark</SwipeoutButton>
+          <SwipeoutButton delete overswipe confirm-text="Are you sure you want to delete this item?">Delete</SwipeoutButton>
+        </SwipeoutActions>
+      </ListItem>
+    </List>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7BlockTitle, f7List, f7ListItem, f7Icon, f7SwipeoutActions, f7SwipeoutButton, f7Block } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, BlockTitle, List, ListItem, Icon, SwipeoutActions, SwipeoutButton, Block } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
-      f7BlockTitle,
-      f7List,
-      f7ListItem,
-      f7Icon,
-      f7SwipeoutActions,
-      f7SwipeoutButton,
-      f7Block,
+      Navbar,
+      Page,
+      BlockTitle,
+      List,
+      ListItem,
+      Icon,
+      SwipeoutActions,
+      SwipeoutButton,
+      Block,
     },
     methods: {
       more() {

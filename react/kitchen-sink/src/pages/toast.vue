@@ -1,41 +1,42 @@
 <template>
-  <f7-page>
-    <f7-navbar title="Toast" back-link="Back"></f7-navbar>
-    <f7-block>
+  <Page>
+    <Navbar title="Toast" backLink="Back"></Navbar>
+    <Block>
       <p>Toasts provide brief feedback about an operation through a message on the screen.</p>
       <p>
-        <f7-button raised @click="showToastBottom">Toast on Bottom</f7-button>
+        <Button raised @click={showToastBottom}>Toast on Bottom</Button>
       </p>
       <p>
-        <f7-button raised @click="showToastTop">Toast on Top</f7-button>
+        <Button raised @click={showToastTop}>Toast on Top</Button>
       </p>
       <p>
-        <f7-button raised @click="showToastCenter">Toast on Center</f7-button>
+        <Button raised @click={showToastCenter}>Toast on Center</Button>
       </p>
       <p>
-        <f7-button raised @click="showToastIcon">Toast with icon</f7-button>
+        <Button raised @click={showToastIcon}>Toast with icon</Button>
       </p>
       <p>
-        <f7-button raised @click="showToastLargeMessage">Toast with large message</f7-button>
+        <Button raised @click={showToastLargeMessage}>Toast with large message</Button>
       </p>
       <p>
-        <f7-button raised @click="showToastWithButton">Toast with close button</f7-button>
+        <Button raised @click={showToastWithButton}>Toast with close button</Button>
       </p>
       <p>
-        <f7-button raised @click="showToastWithCustomButton">Toast with custom button</f7-button>
+        <Button raised @click={showToastWithCustomButton}>Toast with custom button</Button>
       </p>
       <p>
-        <f7-button raised @click="showToastWithCallback">Toast with callback on close</f7-button>
+        <Button raised @click={showToastWithCallback}>Toast with callback on close</Button>
       </p>
-    </f7-block>
-  </f7-page>
+    </Block>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7Block, f7Button } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, Block, Button } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar, f7Page, f7Block, f7Button,
+      Navbar, Page, Block, Button,
     },
     methods: {
       showToastBottom() {

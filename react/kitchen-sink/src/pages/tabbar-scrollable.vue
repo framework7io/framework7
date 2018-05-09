@@ -1,46 +1,47 @@
 <template>
-  <f7-page :page-content="false">
-    <f7-navbar title="Tabbar Scrollable" back-link="Back">
-      <f7-nav-right v-if="$theme.md">
-        <f7-link icon="material:compare_arrows" @click="toggleToolbarPosition">
-          <i class="icon material-icons rotate-icon">compare_arrows</i>
-        </f7-link>
-      </f7-nav-right>
-    </f7-navbar>
-    <f7-toolbar tabbar scrollable>
-      <f7-link
+  <Page page-content={false}>
+    <Navbar title="Tabbar Scrollable" backLink="Back">
+      <NavRight v-if="$theme.md">
+        <Link icon="material:compare_arrows" @click={toggleToolbarPosition}>
+          <i className="icon material-icons rotate-icon">compare_arrows</i>
+        </Link>
+      </NavRight>
+    </Navbar>
+    <Toolbar tabbar scrollable>
+      <Link
         v-for="(tab, index) in tabs"
-        :key="tab"
-        :tab-link="`#tab-${tab}`"
-        :tab-link-active="index === 0"
-        >Tab {{tab}}</f7-link>
-    </f7-toolbar>
-    <f7-tabs>
-      <f7-tab
+        key={tab}
+        :tabLink="`#tab-${tab}`"
+        tabLinkActive={index === 0}
+        >Tab {{tab}}</Link>
+    </Toolbar>
+    <Tabs>
+      <Tab
         v-for="(tab, index) in tabs"
-        :key="tab"
+        key={tab}
         :id="`tab-${tab}`"
-        class="page-content"
-        :tab-active="index === 0"
+        className="page-content"
+        tabActive={index === 0}
       >
-        <f7-block>
+        <Block>
           <p><b>Tab {{tab}} content</b></p>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque corrupti, quos asperiores unde aspernatur illum odio, eveniet. Fugiat magnam perspiciatis ex dignissimos, rerum modi ea nesciunt praesentium iusto optio rem?</p>
           <p>Illo debitis et recusandae, ipsum nisi nostrum vero delectus quasi. Quasi, consequatur! Corrupti, explicabo maxime incidunt fugit sint dicta saepe officiis sed expedita, minima porro! Ipsa dolores quia, delectus labore!</p>
           <p>At similique minima placeat magni molestias sunt deleniti repudiandae voluptatibus magnam quam esse reprehenderit dolor enim qui sed alias, laboriosam quaerat laborum iure repellat praesentium pariatur dolorum possimus veniam! Consectetur.</p>
           <p>Sunt, sed, magnam! Qui, suscipit. Beatae cum ullam necessitatibus eligendi, culpa rem excepturi consequatur quidem totam eum voluptates nihil, enim pariatur incidunt corporis sed facere magni earum tenetur rerum ea.</p>
           <p>Veniam nulla quis molestias voluptatem inventore consectetur iusto voluptatibus perferendis quisquam, cupiditate voluptates, tenetur vero magnam nisi animi praesentium atque adipisci optio quod aliquid vel delectus ad? Dicta deleniti, recusandae.</p>
-        </f7-block>
-      </f7-tab>
-    </f7-tabs>
-  </f7-page>
+        </Block>
+      </Tab>
+    </Tabs>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7Block, f7Tabs, f7Tab, f7Link, f7Toolbar, f7NavRight } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, Block, Tabs, Tab, Link, Toolbar, f7NavRight } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar, f7Page, f7Block, f7Tabs, f7Tab, f7Link, f7Toolbar, f7NavRight,
+      Navbar, Page, Block, Tabs, Tab, Link, Toolbar, f7NavRight,
     },
     data() {
       return {

@@ -1,261 +1,262 @@
 <template>
-  <f7-page>
-    <f7-navbar title="Stepper" back-link="Back"></f7-navbar>
-    <f7-block-title>Shape and size</f7-block-title>
-    <f7-block strong class="text-align-center">
-      <f7-row>
-        <f7-col>
-          <small class="display-block">Default</small>
-          <f7-stepper></f7-stepper>
-        </f7-col>
-        <f7-col>
-          <small class="display-block">Round</small>
-          <f7-stepper round></f7-stepper>
-        </f7-col>
-      </f7-row>
+  <Page>
+    <Navbar title="Stepper" backLink="Back"></Navbar>
+    <BlockTitle>Shape and size</BlockTitle>
+    <Block strong className="text-align-center">
+      <Row>
+        <Col>
+          <small className="display-block">Default</small>
+          <Stepper></Stepper>
+        </Col>
+        <Col>
+          <small className="display-block">Round</small>
+          <Stepper round></Stepper>
+        </Col>
+      </Row>
 
-      <f7-row class="margin-top">
-        <f7-col>
-          <small class="display-block">Fill</small>
-          <f7-stepper fill></f7-stepper>
-        </f7-col>
-        <f7-col>
-          <small class="display-block">Round Fill</small>
-          <f7-stepper fill round></f7-stepper>
-        </f7-col>
-      </f7-row>
+      <Row className="margin-top">
+        <Col>
+          <small className="display-block">Fill</small>
+          <Stepper fill></Stepper>
+        </Col>
+        <Col>
+          <small className="display-block">Round Fill</small>
+          <Stepper fill round></Stepper>
+        </Col>
+      </Row>
 
-      <f7-row class="margin-top">
-        <f7-col>
-          <small class="display-block">Small</small>
-          <f7-stepper small></f7-stepper>
-        </f7-col>
-        <f7-col>
-          <small class="display-block">Small Round</small>
-          <f7-stepper small round></f7-stepper>
-        </f7-col>
-      </f7-row>
+      <Row className="margin-top">
+        <Col>
+          <small className="display-block">Small</small>
+          <Stepper small></Stepper>
+        </Col>
+        <Col>
+          <small className="display-block">Small Round</small>
+          <Stepper small round></Stepper>
+        </Col>
+      </Row>
 
-      <f7-row class="margin-top">
-        <f7-col>
-          <small class="display-block">Small Fill</small>
-          <f7-stepper small fill></f7-stepper>
-        </f7-col>
-        <f7-col>
-          <small class="display-block">Small Round Fill</small>
-          <f7-stepper small round fill></f7-stepper>
-        </f7-col>
-      </f7-row>
+      <Row className="margin-top">
+        <Col>
+          <small className="display-block">Small Fill</small>
+          <Stepper small fill></Stepper>
+        </Col>
+        <Col>
+          <small className="display-block">Small Round Fill</small>
+          <Stepper small round fill></Stepper>
+        </Col>
+      </Row>
 
-      <f7-row class="margin-top">
-        <f7-col>
-          <small class="display-block">Big</small>
-          <f7-stepper big></f7-stepper>
-        </f7-col>
-        <f7-col>
-          <small class="display-block">Big Round</small>
-          <f7-stepper big round></f7-stepper>
-        </f7-col>
-      </f7-row>
+      <Row className="margin-top">
+        <Col>
+          <small className="display-block">Big</small>
+          <Stepper big></Stepper>
+        </Col>
+        <Col>
+          <small className="display-block">Big Round</small>
+          <Stepper big round></Stepper>
+        </Col>
+      </Row>
 
-      <f7-row class="margin-top">
-        <f7-col>
-          <small class="display-block">Big Fill</small>
-          <f7-stepper big fill></f7-stepper>
-        </f7-col>
-        <f7-col>
-          <small class="display-block">Big Round Fill</small>
-          <f7-stepper big round fill></f7-stepper>
-        </f7-col>
-      </f7-row>
-    </f7-block>
+      <Row className="margin-top">
+        <Col>
+          <small className="display-block">Big Fill</small>
+          <Stepper big fill></Stepper>
+        </Col>
+        <Col>
+          <small className="display-block">Big Round Fill</small>
+          <Stepper big round fill></Stepper>
+        </Col>
+      </Row>
+    </Block>
 
-    <f7-block-title>Raised (MD-theme only)</f7-block-title>
-    <f7-block strong class="text-align-center">
-      <f7-row>
-        <f7-col>
-          <small class="display-block">Default</small>
-          <f7-stepper raised></f7-stepper>
-        </f7-col>
-        <f7-col>
-          <small class="display-block">Round</small>
-          <f7-stepper raised round></f7-stepper>
-        </f7-col>
-      </f7-row>
+    <BlockTitle>Raised (MD-theme only)</BlockTitle>
+    <Block strong className="text-align-center">
+      <Row>
+        <Col>
+          <small className="display-block">Default</small>
+          <Stepper raised></Stepper>
+        </Col>
+        <Col>
+          <small className="display-block">Round</small>
+          <Stepper raised round></Stepper>
+        </Col>
+      </Row>
 
-      <f7-row class="margin-top">
-        <f7-col>
-          <small class="display-block">Fill</small>
-          <f7-stepper raised fill></f7-stepper>
-        </f7-col>
-        <f7-col>
-          <small class="display-block">Round Fill</small>
-          <f7-stepper raised fill round></f7-stepper>
-        </f7-col>
-      </f7-row>
+      <Row className="margin-top">
+        <Col>
+          <small className="display-block">Fill</small>
+          <Stepper raised fill></Stepper>
+        </Col>
+        <Col>
+          <small className="display-block">Round Fill</small>
+          <Stepper raised fill round></Stepper>
+        </Col>
+      </Row>
 
-      <f7-row class="margin-top">
-        <f7-col>
-          <small class="display-block">Small</small>
-          <f7-stepper raised small></f7-stepper>
-        </f7-col>
-        <f7-col>
-          <small class="display-block">Small Round</small>
-          <f7-stepper raised small round></f7-stepper>
-        </f7-col>
-      </f7-row>
+      <Row className="margin-top">
+        <Col>
+          <small className="display-block">Small</small>
+          <Stepper raised small></Stepper>
+        </Col>
+        <Col>
+          <small className="display-block">Small Round</small>
+          <Stepper raised small round></Stepper>
+        </Col>
+      </Row>
 
-      <f7-row class="margin-top">
-        <f7-col>
-          <small class="display-block">Small Fill</small>
-          <f7-stepper raised small fill></f7-stepper>
-        </f7-col>
-        <f7-col>
-          <small class="display-block">Small Round Fill</small>
-          <f7-stepper raised small round fill></f7-stepper>
-        </f7-col>
-      </f7-row>
+      <Row className="margin-top">
+        <Col>
+          <small className="display-block">Small Fill</small>
+          <Stepper raised small fill></Stepper>
+        </Col>
+        <Col>
+          <small className="display-block">Small Round Fill</small>
+          <Stepper raised small round fill></Stepper>
+        </Col>
+      </Row>
 
-      <f7-row class="margin-top">
-        <f7-col>
-          <small class="display-block">Big</small>
-          <f7-stepper raised big></f7-stepper>
-        </f7-col>
-        <f7-col>
-          <small class="display-block">Big Round</small>
-          <f7-stepper raised big round></f7-stepper>
-        </f7-col>
-      </f7-row>
+      <Row className="margin-top">
+        <Col>
+          <small className="display-block">Big</small>
+          <Stepper raised big></Stepper>
+        </Col>
+        <Col>
+          <small className="display-block">Big Round</small>
+          <Stepper raised big round></Stepper>
+        </Col>
+      </Row>
 
-      <f7-row class="margin-top">
-        <f7-col>
-          <small class="display-block">Big Fill</small>
-          <f7-stepper raised big fill></f7-stepper>
-        </f7-col>
-        <f7-col>
-          <small class="display-block">Big Round Fill</small>
-          <f7-stepper raised big round fill></f7-stepper>
-        </f7-col>
-      </f7-row>
-    </f7-block>
-    <f7-block-title>Colors</f7-block-title>
-    <f7-block strong class="text-align-center">
-      <f7-row>
-        <f7-col>
-          <f7-stepper fill color="red"></f7-stepper>
-        </f7-col>
-        <f7-col>
-          <f7-stepper fill round color="green"></f7-stepper>
-        </f7-col>
-      </f7-row>
+      <Row className="margin-top">
+        <Col>
+          <small className="display-block">Big Fill</small>
+          <Stepper raised big fill></Stepper>
+        </Col>
+        <Col>
+          <small className="display-block">Big Round Fill</small>
+          <Stepper raised big round fill></Stepper>
+        </Col>
+      </Row>
+    </Block>
+    <BlockTitle>Colors</BlockTitle>
+    <Block strong className="text-align-center">
+      <Row>
+        <Col>
+          <Stepper fill color="red"></Stepper>
+        </Col>
+        <Col>
+          <Stepper fill round color="green"></Stepper>
+        </Col>
+      </Row>
 
-      <f7-row class="margin-top">
-        <f7-col>
-          <f7-stepper fill color="blue"></f7-stepper>
-        </f7-col>
-        <f7-col>
-          <f7-stepper fill round color="pink"></f7-stepper>
-        </f7-col>
-      </f7-row>
+      <Row className="margin-top">
+        <Col>
+          <Stepper fill color="blue"></Stepper>
+        </Col>
+        <Col>
+          <Stepper fill round color="pink"></Stepper>
+        </Col>
+      </Row>
 
-      <f7-row class="margin-top">
-        <f7-col>
-          <f7-stepper fill small color="yellow"></f7-stepper>
-        </f7-col>
-        <f7-col>
-          <f7-stepper fill small round color="orange"></f7-stepper>
-        </f7-col>
-      </f7-row>
+      <Row className="margin-top">
+        <Col>
+          <Stepper fill small color="yellow"></Stepper>
+        </Col>
+        <Col>
+          <Stepper fill small round color="orange"></Stepper>
+        </Col>
+      </Row>
 
-      <f7-row class="margin-top">
-        <f7-col>
-          <f7-stepper fill small color="gray"></f7-stepper>
-        </f7-col>
-        <f7-col>
-          <f7-stepper fill small round color="black"></f7-stepper>
-        </f7-col>
-      </f7-row>
-    </f7-block>
-    <f7-block-title>Without input element</f7-block-title>
-    <f7-block strong class="text-align-center">
-      <f7-row>
-        <f7-col>
-          <f7-stepper :input="false"></f7-stepper>
-        </f7-col>
-        <f7-col>
-          <f7-stepper :input="false" round></f7-stepper>
-        </f7-col>
-      </f7-row>
-    </f7-block>
-    <f7-block-title>Min, max, step</f7-block-title>
-    <f7-block strong class="text-align-center">
-      <f7-row>
-        <f7-col>
-          <f7-stepper :value="100" :min="0" :max="1000" :step="100"></f7-stepper>
-        </f7-col>
-        <f7-col>
-          <f7-stepper :input="false" :value="5" :min="0" :max="10" :step="0.5"></f7-stepper>
-        </f7-col>
-      </f7-row>
-    </f7-block>
+      <Row className="margin-top">
+        <Col>
+          <Stepper fill small color="gray"></Stepper>
+        </Col>
+        <Col>
+          <Stepper fill small round color="black"></Stepper>
+        </Col>
+      </Row>
+    </Block>
+    <BlockTitle>Without input element</BlockTitle>
+    <Block strong className="text-align-center">
+      <Row>
+        <Col>
+          <Stepper input={false}></Stepper>
+        </Col>
+        <Col>
+          <Stepper input={false} round></Stepper>
+        </Col>
+      </Row>
+    </Block>
+    <BlockTitle>Min, max, step</BlockTitle>
+    <Block strong className="text-align-center">
+      <Row>
+        <Col>
+          <Stepper value={100} min={0} max={1000} step={100}></Stepper>
+        </Col>
+        <Col>
+          <Stepper input={false} value={5} min={0} max={10} step={0.5}></Stepper>
+        </Col>
+      </Row>
+    </Block>
 
-    <f7-block>Autorepeat (Tap & hold)</f7-block>
-    <f7-block-header>Pressing and holding one of its buttons increments or decrements the stepper’s value repeatedly. With dynamic autorepeat, the rate of change depends on how long the user continues pressing the control.</f7-block-header>
-    <f7-block strong class="text-align-center">
-      <f7-row>
-        <f7-col>
-          <small class="display-block">Default</small>
-          <f7-stepper :value="0" :min="0" :max="100" :step="1" :autorepeat="true"></f7-stepper>
-        </f7-col>
-        <f7-col>
-          <small class="display-block">Default</small>
-          <f7-stepper :value="0" :min="0" :max="100" :step="1" :autorepeat="true" :autorepeat-dynamic="true"></f7-stepper>
-        </f7-col>
-      </f7-row>
-    </f7-block>
+    <Block>Autorepeat (Tap & hold)</Block>
+    <BlockHeader>Pressing and holding one of its buttons increments or decrements the stepper’s value repeatedly. With dynamic autorepeat, the rate of change depends on how long the user continues pressing the control.</BlockHeader>
+    <Block strong className="text-align-center">
+      <Row>
+        <Col>
+          <small className="display-block">Default</small>
+          <Stepper value={0} min={0} max={100} step={1} autorepeat={true}></Stepper>
+        </Col>
+        <Col>
+          <small className="display-block">Default</small>
+          <Stepper value={0} min={0} max={100} step={1} autorepeat={true} autorepeat-dynamic={true}></Stepper>
+        </Col>
+      </Row>
+    </Block>
 
-    <f7-block>Wraps</f7-block>
-    <f7-block-header>In wraps mode incrementing beyond maximum value sets value to minimum value, likewise, decrementing below minimum value sets value to maximum value</f7-block-header>
-    <f7-block strong class="text-align-center">
-      <f7-row>
-        <f7-col>
-          <f7-stepper :value="0" :min="0" :max="10" :step="1" :autorepeat="true" :wraps="true"></f7-stepper>
-        </f7-col>
-      </f7-row>
-    </f7-block>
+    <Block>Wraps</Block>
+    <BlockHeader>In wraps mode incrementing beyond maximum value sets value to minimum value, likewise, decrementing below minimum value sets value to maximum value</BlockHeader>
+    <Block strong className="text-align-center">
+      <Row>
+        <Col>
+          <Stepper value={0} min={0} max={10} step={1} autorepeat={true} wraps={true}></Stepper>
+        </Col>
+      </Row>
+    </Block>
 
-    <f7-block-title>Custom value element</f7-block-title>
-    <f7-list>
-      <f7-list-item :title="`Apples ${applesCount}`">
-        <f7-stepper :buttons-only="true" small raised slot="after" @stepper:change="setApples"></f7-stepper>
-      </f7-list-item>
-      <f7-list-item :title="`Oranges ${orangesCount}`">
-        <f7-stepper :buttons-only="true" small raised slot="after" @stepper:change="setOranges"></f7-stepper>
-      </f7-list-item>
-    </f7-list>
+    <BlockTitle>Custom value element</BlockTitle>
+    <List>
+      <ListItem title={`Apples ${applesCount}`}>
+        <Stepper buttons-only={true} small raised slot="after" @stepper:change="setApples"></Stepper>
+      </ListItem>
+      <ListItem title={`Oranges ${orangesCount}`}>
+        <Stepper buttons-only={true} small raised slot="after" @stepper:change="setOranges"></Stepper>
+      </ListItem>
+    </List>
 
-    <f7-block-title>Custom value format</f7-block-title>
-    <f7-list>
-      <f7-list-item header="Meeting starts in" :title="meetingTimeComputed">
-        <f7-stepper
-          :min="15"
-          :max="240"
-          :step="15"
-          :value="meetingTime"
-          :buttons-only="true"
+    <BlockTitle>Custom value format</BlockTitle>
+    <List>
+      <ListItem header="Meeting starts in" title={meetingTimeComputed}>
+        <Stepper
+          min={15}
+          max={240}
+          step={15}
+          value={meetingTime}
+          buttons-only={true}
           small
           slot="after"
           @stepper:change="setMeetingTime"
-        ></f7-stepper>
-      </f7-list-item>
-    </f7-list>
-  </f7-page>
+        ></Stepper>
+      </ListItem>
+    </List>
+  </Page>
 </template>
 <script>
-  import { f7Page, f7Navbar, f7BlockTitle, f7Block, f7BlockHeader, f7Row, f7Col, f7List, f7ListItem, f7Stepper } from 'framework7-vue';
+  import React from 'react';
+  import { Page, Navbar, BlockTitle, Block, BlockHeader, Row, Col, List, ListItem, Stepper } from 'framework7-react';
   export default {
     components: {
-      f7Page, f7Navbar, f7BlockTitle, f7Block, f7BlockHeader, f7Row, f7Col, f7List, f7ListItem, f7Stepper
+      Page, Navbar, BlockTitle, Block, BlockHeader, Row, Col, List, ListItem, Stepper
     },
     data() {
       return {

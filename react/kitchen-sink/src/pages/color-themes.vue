@@ -1,40 +1,41 @@
 <template>
-  <f7-page>
-    <f7-navbar title="Color Themes" back-link="Back"></f7-navbar>
-    <f7-block-title>Layout Themes</f7-block-title>
-    <f7-block>
+  <Page>
+    <Navbar title="Color Themes" backLink="Back"></Navbar>
+    <BlockTitle>Layout Themes</BlockTitle>
+    <Block>
       <p>Framework7 comes with 2 main layout themes: Light (default) and Dark:</p>
-      <f7-row>
-        <f7-col width="50" class="bg-color-white" @click.native="setLayoutTheme('light')" style="cursor: pointer; padding: 30px; border: 1px solid rgba(0,0,0,0.1)"></f7-col>
-        <f7-col width="50" class="bg-color-black" @click.native="setLayoutTheme('dark')" style="cursor: pointer; padding: 30px; border: 1px solid rgba(255,255,255,0.1)"></f7-col>
-      </f7-row>
-    </f7-block>
-    <f7-block-title>Choose Color Theme</f7-block-title>
-    <f7-block>
+      <Row>
+        <Col width="50" className="bg-color-white" @click.native="setLayoutTheme('light')" style="cursor: pointer; padding: 30px; border: 1px solid rgba(0,0,0,0.1)"></Col>
+        <Col width="50" className="bg-color-black" @click.native="setLayoutTheme('dark')" style="cursor: pointer; padding: 30px; border: 1px solid rgba(255,255,255,0.1)"></Col>
+      </Row>
+    </Block>
+    <BlockTitle>Choose Color Theme</BlockTitle>
+    <Block>
       <p>Framework7 comes with {{colorsAmount}} color themes set.</p>
-      <f7-row>
-        <f7-col width="33" v-for="color in colors" :key="color">
-          <f7-button style="margin-bottom:1em; text-transform: capitalize;" fill round raised :color="color" @click="setColorTheme(color)">
+      <Row>
+        <Col width="33" v-for="color in colors" key={color}>
+          <Button style="margin-bottom:1em; text-transform: capitalize;" fill round raised color={color} @click={setColorTheme(color)}>
             {{ color }}
-          </f7-button>
-        </f7-col>
-        <f7-col width="33"></f7-col>
-      </f7-row>
-    </f7-block>
-  </f7-page>
+          </Button>
+        </Col>
+        <Col width="33"></Col>
+      </Row>
+    </Block>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7BlockTitle, f7Button, f7Row, f7Col, f7Block } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, BlockTitle, Button, Row, Col, Block } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
-      f7BlockTitle,
-      f7Button,
-      f7Row,
-      f7Col,
-      f7Block,
+      Navbar,
+      Page,
+      BlockTitle,
+      Button,
+      Row,
+      Col,
+      Block,
     },
     data() {
       const colors = [

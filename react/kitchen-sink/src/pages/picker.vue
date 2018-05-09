@@ -1,18 +1,18 @@
 <template>
-  <f7-page :page-content="false">
-    <f7-navbar title="Picker" back-link="Back"></f7-navbar>
-    <div class="page-content">
-      <div class="block">
+  <Page page-content={false}>
+    <Navbar title="Picker" backLink="Back"></Navbar>
+    <div className="page-content">
+      <div className="block">
         <p>Picker is a powerful component that allows you to create custom overlay pickers which looks like native picker.</p>
         <p>Picker could be used as inline component or as overlay. Overlay Picker will be automatically converted to Popover on tablets (iPad).</p>
       </div>
-      <div class="block-title">Picker with single value</div>
-      <div class="list no-hairlines-md">
+      <div className="block-title">Picker with single value</div>
+      <div className="list no-hairlines-md">
         <ul>
           <li>
-            <div class="item-content item-input">
-              <div class="item-inner">
-                <div class="item-input-wrap">
+            <div className="item-content item-input">
+              <div className="item-inner">
+                <div className="item-input-wrap">
                   <input type="text" placeholder="Your iOS device" readonly="readonly" id="demo-picker-device"/>
                 </div>
               </div>
@@ -20,13 +20,13 @@
           </li>
         </ul>
       </div>
-      <div class="block-title">2 values and 3d-rotate effect</div>
-      <div class="list no-hairlines-md">
+      <div className="block-title">2 values and 3d-rotate effect</div>
+      <div className="list no-hairlines-md">
         <ul>
           <li>
-            <div class="item-content item-input">
-              <div class="item-inner">
-                <div class="item-input-wrap">
+            <div className="item-content item-input">
+              <div className="item-inner">
+                <div className="item-input-wrap">
                   <input type="text" placeholder="Describe yourself" readonly="readonly" id="demo-picker-describe"/>
                 </div>
               </div>
@@ -34,13 +34,13 @@
           </li>
         </ul>
       </div>
-      <div class="block-title">Dependent values</div>
-      <div class="list no-hairlines-md">
+      <div className="block-title">Dependent values</div>
+      <div className="list no-hairlines-md">
         <ul>
           <li>
-            <div class="item-content item-input">
-              <div class="item-inner">
-                <div class="item-input-wrap">
+            <div className="item-content item-input">
+              <div className="item-inner">
+                <div className="item-input-wrap">
                   <input type="text" placeholder="Your car" readonly="readonly" id="demo-picker-dependent"/>
                 </div>
               </div>
@@ -48,13 +48,13 @@
           </li>
         </ul>
       </div>
-      <div class="block-title">Custom toolbar</div>
-      <div class="list no-hairlines-md">
+      <div className="block-title">Custom toolbar</div>
+      <div className="list no-hairlines-md">
         <ul>
           <li>
-            <div class="item-content item-input">
-              <div class="item-inner">
-                <div class="item-input-wrap">
+            <div className="item-content item-input">
+              <div className="item-inner">
+                <div className="item-input-wrap">
                   <input type="text" placeholder="Describe yourself" readonly="readonly" id="demo-picker-custom-toolbar"/>
                 </div>
               </div>
@@ -62,13 +62,13 @@
           </li>
         </ul>
       </div>
-      <div class="block-title">Inline Picker / Date-time</div>
-      <div class="list no-margin">
+      <div className="block-title">Inline Picker / Date-time</div>
+      <div className="list no-margin">
         <ul>
           <li>
-            <div class="item-content item-input">
-              <div class="item-inner">
-                <div class="item-input-wrap">
+            <div className="item-content item-input">
+              <div className="item-inner">
+                <div className="item-input-wrap">
                   <input type="text" placeholder="Date Time" readonly="readonly" id="demo-picker-date"/>
                 </div>
               </div>
@@ -76,19 +76,20 @@
           </li>
         </ul>
       </div>
-      <div class="block block-strong no-padding no-margin margin-bottom">
+      <div className="block block-strong no-padding no-margin margin-bottom">
         <div id="demo-picker-date-container"></div>
       </div>
     </div>
-  </f7-page>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
+      Navbar,
+      Page,
     },
     on: {
       pageInit(e) {
@@ -155,13 +156,13 @@
           inputEl: '#demo-picker-custom-toolbar',
           rotateEffect: true,
           renderToolbar() {
-            return '<div class="toolbar">' +
-          '<div class="toolbar-inner">' +
-            '<div class="left">' +
-              '<a href="#" class="link toolbar-randomize-link">Randomize</a>' +
+            return '<div className="toolbar">' +
+          '<div className="toolbar-inner">' +
+            '<div className="left">' +
+              '<a href="#" className="link toolbar-randomize-link">Randomize</a>' +
             '</div>' +
-            '<div class="right">' +
-              '<a href="#" class="link sheet-close popover-close">That\'s me</a>' +
+            '<div className="right">' +
+              '<a href="#" className="link sheet-close popover-close">That\'s me</a>' +
             '</div>' +
           '</div>' +
         '</div>';

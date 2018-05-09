@@ -1,114 +1,114 @@
 <template>
-  <f7-page>
-    <f7-navbar title="Data Table" back-link="Back"></f7-navbar>
-    <f7-block-title>Plain table</f7-block-title>
-    <div class="data-table">
+  <Page>
+    <Navbar title="Data Table" backLink="Back"></Navbar>
+    <BlockTitle>Plain table</BlockTitle>
+    <div className="data-table">
       <table>
         <thead>
           <tr>
-            <th class="label-cell">Desert (100g serving)</th>
-            <th class="numeric-cell">Calories</th>
-            <th class="numeric-cell">Fat (g)</th>
-            <th class="numeric-cell">Carbs</th>
-            <th class="numeric-cell">Protein (g)</th>
+            <th className="label-cell">Desert (100g serving)</th>
+            <th className="numeric-cell">Calories</th>
+            <th className="numeric-cell">Fat (g)</th>
+            <th className="numeric-cell">Carbs</th>
+            <th className="numeric-cell">Protein (g)</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="label-cell">Frozen yogurt</td>
-            <td class="numeric-cell">159</td>
-            <td class="numeric-cell">6.0</td>
-            <td class="numeric-cell">24</td>
-            <td class="numeric-cell">4.0</td>
+            <td className="label-cell">Frozen yogurt</td>
+            <td className="numeric-cell">159</td>
+            <td className="numeric-cell">6.0</td>
+            <td className="numeric-cell">24</td>
+            <td className="numeric-cell">4.0</td>
           </tr>
           <tr>
-            <td class="label-cell">Ice cream sandwich</td>
-            <td class="numeric-cell">237</td>
-            <td class="numeric-cell">9.0</td>
-            <td class="numeric-cell">37</td>
-            <td class="numeric-cell">4.4</td>
+            <td className="label-cell">Ice cream sandwich</td>
+            <td className="numeric-cell">237</td>
+            <td className="numeric-cell">9.0</td>
+            <td className="numeric-cell">37</td>
+            <td className="numeric-cell">4.4</td>
           </tr>
           <tr>
-            <td class="label-cell">Eclair</td>
-            <td class="numeric-cell">262</td>
-            <td class="numeric-cell">16.0</td>
-            <td class="numeric-cell">24</td>
-            <td class="numeric-cell">6.0</td>
+            <td className="label-cell">Eclair</td>
+            <td className="numeric-cell">262</td>
+            <td className="numeric-cell">16.0</td>
+            <td className="numeric-cell">24</td>
+            <td className="numeric-cell">6.0</td>
           </tr>
           <tr>
-            <td class="label-cell">Cupcake</td>
-            <td class="numeric-cell">305</td>
-            <td class="numeric-cell">3.7</td>
-            <td class="numeric-cell">67</td>
-            <td class="numeric-cell">4.3</td>
+            <td className="label-cell">Cupcake</td>
+            <td className="numeric-cell">305</td>
+            <td className="numeric-cell">3.7</td>
+            <td className="numeric-cell">67</td>
+            <td className="numeric-cell">4.3</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <f7-block-title>Within card</f7-block-title>
-    <div class="card data-table">
+    <BlockTitle>Within card</BlockTitle>
+    <div className="card data-table">
       <table>
         <thead>
           <tr>
-            <th class="label-cell">Desert (100g serving)</th>
-            <th class="numeric-cell">Calories</th>
-            <th class="numeric-cell">Fat (g)</th>
-            <th class="numeric-cell">Carbs</th>
-            <th class="numeric-cell">Protein (g)</th>
+            <th className="label-cell">Desert (100g serving)</th>
+            <th className="numeric-cell">Calories</th>
+            <th className="numeric-cell">Fat (g)</th>
+            <th className="numeric-cell">Carbs</th>
+            <th className="numeric-cell">Protein (g)</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="label-cell">Frozen yogurt</td>
-            <td class="numeric-cell">159</td>
-            <td class="numeric-cell">6.0</td>
-            <td class="numeric-cell">24</td>
-            <td class="numeric-cell">4.0</td>
+            <td className="label-cell">Frozen yogurt</td>
+            <td className="numeric-cell">159</td>
+            <td className="numeric-cell">6.0</td>
+            <td className="numeric-cell">24</td>
+            <td className="numeric-cell">4.0</td>
           </tr>
           <tr>
-            <td class="label-cell">Ice cream sandwich</td>
-            <td class="numeric-cell">237</td>
-            <td class="numeric-cell">9.0</td>
-            <td class="numeric-cell">37</td>
-            <td class="numeric-cell">4.4</td>
+            <td className="label-cell">Ice cream sandwich</td>
+            <td className="numeric-cell">237</td>
+            <td className="numeric-cell">9.0</td>
+            <td className="numeric-cell">37</td>
+            <td className="numeric-cell">4.4</td>
           </tr>
           <tr>
-            <td class="label-cell">Eclair</td>
-            <td class="numeric-cell">262</td>
-            <td class="numeric-cell">16.0</td>
-            <td class="numeric-cell">24</td>
-            <td class="numeric-cell">6.0</td>
+            <td className="label-cell">Eclair</td>
+            <td className="numeric-cell">262</td>
+            <td className="numeric-cell">16.0</td>
+            <td className="numeric-cell">24</td>
+            <td className="numeric-cell">6.0</td>
           </tr>
           <tr>
-            <td class="label-cell">Cupcake</td>
-            <td class="numeric-cell">305</td>
-            <td class="numeric-cell">3.7</td>
-            <td class="numeric-cell">67</td>
-            <td class="numeric-cell">4.3</td>
+            <td className="label-cell">Cupcake</td>
+            <td className="numeric-cell">305</td>
+            <td className="numeric-cell">3.7</td>
+            <td className="numeric-cell">67</td>
+            <td className="numeric-cell">4.3</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <f7-block-title>Selectable rows</f7-block-title>
-    <div class="data-table data-table-init card">
+    <BlockTitle>Selectable rows</BlockTitle>
+    <div className="data-table data-table-init card">
       <table>
         <thead>
           <tr>
-            <th class="checkbox-cell">
-              <label class="checkbox">
+            <th className="checkbox-cell">
+              <label className="checkbox">
                 <input type="checkbox"/>
-                <i class="icon-checkbox"></i>
+                <i className="icon-checkbox"></i>
               </label>
             </th>
-            <th class="label-cell">Desert (100g serving)</th>
-            <th class="numeric-cell">Calories</th>
-            <th class="numeric-cell">Fat (g)</th>
-            <th class="numeric-cell">Carbs</th>
-            <th class="numeric-cell">Protein (g)</th>
-            <th class="checkbox-cell">
-              <label class="checkbox">
+            <th className="label-cell">Desert (100g serving)</th>
+            <th className="numeric-cell">Calories</th>
+            <th className="numeric-cell">Fat (g)</th>
+            <th className="numeric-cell">Carbs</th>
+            <th className="numeric-cell">Protein (g)</th>
+            <th className="checkbox-cell">
+              <label className="checkbox">
                 <input type="checkbox"/>
-                <i class="icon-checkbox"></i>
+                <i className="icon-checkbox"></i>
               </label>
               <span>In Stock</span>
             </th>
@@ -116,193 +116,193 @@
         </thead>
         <tbody>
           <tr>
-            <td class="checkbox-cell">
-              <label class="checkbox">
+            <td className="checkbox-cell">
+              <label className="checkbox">
                 <input type="checkbox"/>
-                <i class="icon-checkbox"></i>
+                <i className="icon-checkbox"></i>
               </label>
             </td>
-            <td class="label-cell">Frozen yogurt</td>
-            <td class="numeric-cell">159</td>
-            <td class="numeric-cell">6.0</td>
-            <td class="numeric-cell">24</td>
-            <td class="numeric-cell">4.0</td>
-            <td class="checkbox-cell">
-              <label class="checkbox">
+            <td className="label-cell">Frozen yogurt</td>
+            <td className="numeric-cell">159</td>
+            <td className="numeric-cell">6.0</td>
+            <td className="numeric-cell">24</td>
+            <td className="numeric-cell">4.0</td>
+            <td className="checkbox-cell">
+              <label className="checkbox">
                 <input type="checkbox"/>
-                <i class="icon-checkbox"></i>
-              </label>
-            </td>
-          </tr>
-          <tr>
-            <td class="checkbox-cell">
-              <label class="checkbox">
-                <input type="checkbox"/>
-                <i class="icon-checkbox"></i>
-              </label>
-            </td>
-            <td class="label-cell">Ice cream sandwich</td>
-            <td class="numeric-cell">237</td>
-            <td class="numeric-cell">9.0</td>
-            <td class="numeric-cell">37</td>
-            <td class="numeric-cell">4.4</td>
-            <td class="checkbox-cell">
-              <label class="checkbox">
-                <input type="checkbox"/>
-                <i class="icon-checkbox"></i>
+                <i className="icon-checkbox"></i>
               </label>
             </td>
           </tr>
           <tr>
-            <td class="checkbox-cell">
-              <label class="checkbox">
+            <td className="checkbox-cell">
+              <label className="checkbox">
                 <input type="checkbox"/>
-                <i class="icon-checkbox"></i>
+                <i className="icon-checkbox"></i>
               </label>
             </td>
-            <td class="label-cell">Eclair</td>
-            <td class="numeric-cell">262</td>
-            <td class="numeric-cell">16.0</td>
-            <td class="numeric-cell">24</td>
-            <td class="numeric-cell">6.0</td>
-            <td class="checkbox-cell">
-              <label class="checkbox">
+            <td className="label-cell">Ice cream sandwich</td>
+            <td className="numeric-cell">237</td>
+            <td className="numeric-cell">9.0</td>
+            <td className="numeric-cell">37</td>
+            <td className="numeric-cell">4.4</td>
+            <td className="checkbox-cell">
+              <label className="checkbox">
                 <input type="checkbox"/>
-                <i class="icon-checkbox"></i>
+                <i className="icon-checkbox"></i>
               </label>
             </td>
           </tr>
           <tr>
-            <td class="checkbox-cell">
-              <label class="checkbox">
+            <td className="checkbox-cell">
+              <label className="checkbox">
                 <input type="checkbox"/>
-                <i class="icon-checkbox"></i>
+                <i className="icon-checkbox"></i>
               </label>
             </td>
-            <td class="label-cell">Cupcake</td>
-            <td class="numeric-cell">305</td>
-            <td class="numeric-cell">3.7</td>
-            <td class="numeric-cell">67</td>
-            <td class="numeric-cell">4.3</td>
-            <td class="checkbox-cell">
-              <label class="checkbox">
+            <td className="label-cell">Eclair</td>
+            <td className="numeric-cell">262</td>
+            <td className="numeric-cell">16.0</td>
+            <td className="numeric-cell">24</td>
+            <td className="numeric-cell">6.0</td>
+            <td className="checkbox-cell">
+              <label className="checkbox">
                 <input type="checkbox"/>
-                <i class="icon-checkbox"></i>
+                <i className="icon-checkbox"></i>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td className="checkbox-cell">
+              <label className="checkbox">
+                <input type="checkbox"/>
+                <i className="icon-checkbox"></i>
+              </label>
+            </td>
+            <td className="label-cell">Cupcake</td>
+            <td className="numeric-cell">305</td>
+            <td className="numeric-cell">3.7</td>
+            <td className="numeric-cell">67</td>
+            <td className="numeric-cell">4.3</td>
+            <td className="checkbox-cell">
+              <label className="checkbox">
+                <input type="checkbox"/>
+                <i className="icon-checkbox"></i>
               </label>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <f7-block-title>Tablet-only columns</f7-block-title>
-    <div class="block-header">
+    <BlockTitle>Tablet-only columns</BlockTitle>
+    <div className="block-header">
       <p>"Comments" column will be visible only on large screen devices (tablets)</p>
     </div>
-    <div class="data-table data-table-init card">
+    <div className="data-table data-table-init card">
       <table>
         <thead>
           <tr>
-            <th class="checkbox-cell">
-              <label class="checkbox">
+            <th className="checkbox-cell">
+              <label className="checkbox">
                 <input type="checkbox"/>
-                <i class="icon-checkbox"></i>
+                <i className="icon-checkbox"></i>
               </label>
             </th>
-            <th class="label-cell">Desert (100g serving)</th>
-            <th class="numeric-cell">Calories</th>
-            <th class="numeric-cell">Fat (g)</th>
-            <th class="numeric-cell">Carbs</th>
-            <th class="numeric-cell">Protein (g)</th>
-            <th class="tablet-only"><f7-icon if-ios="f7:chat_fill" if-md="material:message"></f7-icon> Comments</th>
+            <th className="label-cell">Desert (100g serving)</th>
+            <th className="numeric-cell">Calories</th>
+            <th className="numeric-cell">Fat (g)</th>
+            <th className="numeric-cell">Carbs</th>
+            <th className="numeric-cell">Protein (g)</th>
+            <th className="tablet-only"><Icon if-ios="f7:chat_fill" if-md="material:message"></Icon> Comments</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="checkbox-cell">
-              <label class="checkbox">
+            <td className="checkbox-cell">
+              <label className="checkbox">
                 <input type="checkbox"/>
-                <i class="icon-checkbox"></i>
+                <i className="icon-checkbox"></i>
               </label>
             </td>
-            <td class="label-cell">Frozen yogurt</td>
-            <td class="numeric-cell">159</td>
-            <td class="numeric-cell">6.0</td>
-            <td class="numeric-cell">24</td>
-            <td class="numeric-cell">4.0</td>
-            <td class="tablet-only">I like frozen yogurt</td>
+            <td className="label-cell">Frozen yogurt</td>
+            <td className="numeric-cell">159</td>
+            <td className="numeric-cell">6.0</td>
+            <td className="numeric-cell">24</td>
+            <td className="numeric-cell">4.0</td>
+            <td className="tablet-only">I like frozen yogurt</td>
           </tr>
           <tr>
-            <td class="checkbox-cell">
-              <label class="checkbox">
+            <td className="checkbox-cell">
+              <label className="checkbox">
                 <input type="checkbox"/>
-                <i class="icon-checkbox"></i>
+                <i className="icon-checkbox"></i>
               </label>
             </td>
-            <td class="label-cell">Ice cream sandwich</td>
-            <td class="numeric-cell">237</td>
-            <td class="numeric-cell">9.0</td>
-            <td class="numeric-cell">37</td>
-            <td class="numeric-cell">4.4</td>
-            <td class="tablet-only">But like ice cream more</td>
+            <td className="label-cell">Ice cream sandwich</td>
+            <td className="numeric-cell">237</td>
+            <td className="numeric-cell">9.0</td>
+            <td className="numeric-cell">37</td>
+            <td className="numeric-cell">4.4</td>
+            <td className="tablet-only">But like ice cream more</td>
           </tr>
           <tr>
-            <td class="checkbox-cell">
-              <label class="checkbox">
+            <td className="checkbox-cell">
+              <label className="checkbox">
                 <input type="checkbox"/>
-                <i class="icon-checkbox"></i>
+                <i className="icon-checkbox"></i>
               </label>
             </td>
-            <td class="label-cell">Eclair</td>
-            <td class="numeric-cell">262</td>
-            <td class="numeric-cell">16.0</td>
-            <td class="numeric-cell">24</td>
-            <td class="numeric-cell">6.0</td>
-            <td class="tablet-only">Super tasty</td>
+            <td className="label-cell">Eclair</td>
+            <td className="numeric-cell">262</td>
+            <td className="numeric-cell">16.0</td>
+            <td className="numeric-cell">24</td>
+            <td className="numeric-cell">6.0</td>
+            <td className="tablet-only">Super tasty</td>
           </tr>
           <tr>
-            <td class="checkbox-cell">
-              <label class="checkbox">
+            <td className="checkbox-cell">
+              <label className="checkbox">
                 <input type="checkbox"/>
-                <i class="icon-checkbox"></i>
+                <i className="icon-checkbox"></i>
               </label>
             </td>
-            <td class="label-cell">Cupcake</td>
-            <td class="numeric-cell">305</td>
-            <td class="numeric-cell">3.7</td>
-            <td class="numeric-cell">67</td>
-            <td class="numeric-cell">4.3</td>
-            <td class="tablet-only">Don't like it</td>
+            <td className="label-cell">Cupcake</td>
+            <td className="numeric-cell">305</td>
+            <td className="numeric-cell">3.7</td>
+            <td className="numeric-cell">67</td>
+            <td className="numeric-cell">4.3</td>
+            <td className="tablet-only">Don't like it</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <f7-block-title>With inputs</f7-block-title>
-    <div class="block-header">Such tables are widely used in admin interfaces for filtering or search data</div>
-    <div class="card data-table">
+    <BlockTitle>With inputs</BlockTitle>
+    <div className="block-header">Such tables are widely used in admin interfaces for filtering or search data</div>
+    <div className="card data-table">
       <table>
         <thead>
           <tr>
-            <th class="input-cell">
-              <span class="table-head-label">ID</span>
-              <div class="input" style="width: 50px">
+            <th className="input-cell">
+              <span className="table-head-label">ID</span>
+              <div className="input" style="width: 50px">
                 <input type="number" placeholder="Filter">
               </div>
             </th>
-            <th class="input-cell">
-              <span class="table-head-label">Name</span>
-              <div class="input">
+            <th className="input-cell">
+              <span className="table-head-label">Name</span>
+              <div className="input">
                 <input type="text" placeholder="Filter">
               </div>
             </th>
-            <th class="input-cell">
-              <span class="table-head-label">Email</span>
-              <div class="input">
+            <th className="input-cell">
+              <span className="table-head-label">Email</span>
+              <div className="input">
                 <input type="email" placeholder="Filter">
               </div>
             </th>
-            <th class="input-cell">
-              <span class="table-head-label">Gender</span>
-              <div class="input input-dropdown">
+            <th className="input-cell">
+              <span className="table-head-label">Gender</span>
+              <div className="input input-dropdown">
                 <select>
                   <option value="All">All</option>
                   <option value="Male">Male</option>
@@ -340,452 +340,453 @@
         </tbody>
       </table>
     </div>
-    <f7-block-title>Within card with title and actions</f7-block-title>
-    <div class="data-table data-table-init card">
-      <div class="card-header">
-        <div class="data-table-title">Nutrition</div>
-        <div class="data-table-actions">
-          <f7-link icon-if-ios="f7:sort" icon-if-md="material:sort"></f7-link>
-          <f7-link icon-if-ios="f7:more_vertical_round" icon-if-md="material:more_vert"></f7-link>
+    <BlockTitle>Within card with title and actions</BlockTitle>
+    <div className="data-table data-table-init card">
+      <div className="card-header">
+        <div className="data-table-title">Nutrition</div>
+        <div className="data-table-actions">
+          <Link icon-if-ios="f7:sort" icon-if-md="material:sort"></Link>
+          <Link icon-if-ios="f7:more_vertical_round" icon-if-md="material:more_vert"></Link>
         </div>
       </div>
-      <div class="card-content">
+      <div className="card-content">
         <table>
           <thead>
             <tr>
-              <th class="checkbox-cell">
-                <label class="checkbox">
+              <th className="checkbox-cell">
+                <label className="checkbox">
                   <input type="checkbox"/>
-                  <i class="icon-checkbox"></i>
+                  <i className="icon-checkbox"></i>
                 </label>
               </th>
-              <th class="label-cell">Desert (100g serving)</th>
-              <th class="numeric-cell">Calories</th>
-              <th class="numeric-cell">Fat (g)</th>
-              <th class="numeric-cell">Carbs</th>
-              <th class="numeric-cell">Protein (g)</th>
-              <th class="tablet-only"><f7-icon if-ios="f7:chat_fill" if-md="material:message"></f7-icon> Comments</th>
+              <th className="label-cell">Desert (100g serving)</th>
+              <th className="numeric-cell">Calories</th>
+              <th className="numeric-cell">Fat (g)</th>
+              <th className="numeric-cell">Carbs</th>
+              <th className="numeric-cell">Protein (g)</th>
+              <th className="tablet-only"><Icon if-ios="f7:chat_fill" if-md="material:message"></Icon> Comments</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="checkbox-cell">
-                <label class="checkbox">
+              <td className="checkbox-cell">
+                <label className="checkbox">
                   <input type="checkbox"/>
-                  <i class="icon-checkbox"></i>
+                  <i className="icon-checkbox"></i>
                 </label>
               </td>
-              <td class="label-cell">Frozen yogurt</td>
-              <td class="numeric-cell">159</td>
-              <td class="numeric-cell">6.0</td>
-              <td class="numeric-cell">24</td>
-              <td class="numeric-cell">4.0</td>
-              <td class="tablet-only">I like frozen yogurt</td>
+              <td className="label-cell">Frozen yogurt</td>
+              <td className="numeric-cell">159</td>
+              <td className="numeric-cell">6.0</td>
+              <td className="numeric-cell">24</td>
+              <td className="numeric-cell">4.0</td>
+              <td className="tablet-only">I like frozen yogurt</td>
             </tr>
             <tr>
-              <td class="checkbox-cell">
-                <label class="checkbox">
+              <td className="checkbox-cell">
+                <label className="checkbox">
                   <input type="checkbox"/>
-                  <i class="icon-checkbox"></i>
+                  <i className="icon-checkbox"></i>
                 </label>
               </td>
-              <td class="label-cell">Ice cream sandwich</td>
-              <td class="numeric-cell">237</td>
-              <td class="numeric-cell">9.0</td>
-              <td class="numeric-cell">37</td>
-              <td class="numeric-cell">4.4</td>
-              <td class="tablet-only">But like ice cream more</td>
+              <td className="label-cell">Ice cream sandwich</td>
+              <td className="numeric-cell">237</td>
+              <td className="numeric-cell">9.0</td>
+              <td className="numeric-cell">37</td>
+              <td className="numeric-cell">4.4</td>
+              <td className="tablet-only">But like ice cream more</td>
             </tr>
             <tr>
-              <td class="checkbox-cell">
-                <label class="checkbox">
+              <td className="checkbox-cell">
+                <label className="checkbox">
                   <input type="checkbox"/>
-                  <i class="icon-checkbox"></i>
+                  <i className="icon-checkbox"></i>
                 </label>
               </td>
-              <td class="label-cell">Eclair</td>
-              <td class="numeric-cell">262</td>
-              <td class="numeric-cell">16.0</td>
-              <td class="numeric-cell">24</td>
-              <td class="numeric-cell">6.0</td>
-              <td class="tablet-only">Super tasty</td>
+              <td className="label-cell">Eclair</td>
+              <td className="numeric-cell">262</td>
+              <td className="numeric-cell">16.0</td>
+              <td className="numeric-cell">24</td>
+              <td className="numeric-cell">6.0</td>
+              <td className="tablet-only">Super tasty</td>
             </tr>
             <tr>
-              <td class="checkbox-cell">
-                <label class="checkbox">
+              <td className="checkbox-cell">
+                <label className="checkbox">
                   <input type="checkbox"/>
-                  <i class="icon-checkbox"></i>
+                  <i className="icon-checkbox"></i>
                 </label>
               </td>
-              <td class="label-cell">Cupcake</td>
-              <td class="numeric-cell">305</td>
-              <td class="numeric-cell">3.7</td>
-              <td class="numeric-cell">67</td>
-              <td class="numeric-cell">4.3</td>
-              <td class="tablet-only">Don't like it</td>
+              <td className="label-cell">Cupcake</td>
+              <td className="numeric-cell">305</td>
+              <td className="numeric-cell">3.7</td>
+              <td className="numeric-cell">67</td>
+              <td className="numeric-cell">4.3</td>
+              <td className="tablet-only">Don't like it</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-    <f7-block-title>Sortable columns</f7-block-title>
-    <div class="data-table data-table-init card">
-      <div class="card-header">
-        <div class="data-table-title">Nutrition</div>
-        <div class="data-table-actions">
-          <f7-link icon-if-ios="f7:sort" icon-if-md="material:sort"></f7-link>
-          <f7-link icon-if-ios="f7:more_vertical_round" icon-if-md="material:more_vert"></f7-link>
+    <BlockTitle>Sortable columns</BlockTitle>
+    <div className="data-table data-table-init card">
+      <div className="card-header">
+        <div className="data-table-title">Nutrition</div>
+        <div className="data-table-actions">
+          <Link icon-if-ios="f7:sort" icon-if-md="material:sort"></Link>
+          <Link icon-if-ios="f7:more_vertical_round" icon-if-md="material:more_vert"></Link>
         </div>
       </div>
-      <div class="card-content">
+      <div className="card-content">
         <table>
           <thead>
             <tr>
-              <th class="checkbox-cell">
-                <label class="checkbox">
+              <th className="checkbox-cell">
+                <label className="checkbox">
                   <input type="checkbox"/>
-                  <i class="icon-checkbox"></i>
+                  <i className="icon-checkbox"></i>
                 </label>
               </th>
-              <th class="label-cell sortable-cell sortable-cell-active">Desert (100g serving)</th>
-              <th class="numeric-cell sortable-cell">Calories</th>
-              <th class="numeric-cell sortable-cell">Fat (g)</th>
-              <th class="numeric-cell sortable-cell">Carbs</th>
-              <th class="numeric-cell sortable-cell">Protein (g)</th>
-              <th class="tablet-only"><f7-icon if-ios="f7:chat_fill" if-md="material:message"></f7-icon> Comments</th>
+              <th className="label-cell sortable-cell sortable-cell-active">Desert (100g serving)</th>
+              <th className="numeric-cell sortable-cell">Calories</th>
+              <th className="numeric-cell sortable-cell">Fat (g)</th>
+              <th className="numeric-cell sortable-cell">Carbs</th>
+              <th className="numeric-cell sortable-cell">Protein (g)</th>
+              <th className="tablet-only"><Icon if-ios="f7:chat_fill" if-md="material:message"></Icon> Comments</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="checkbox-cell">
-                <label class="checkbox">
+              <td className="checkbox-cell">
+                <label className="checkbox">
                   <input type="checkbox"/>
-                  <i class="icon-checkbox"></i>
+                  <i className="icon-checkbox"></i>
                 </label>
               </td>
-              <td class="label-cell">Frozen yogurt</td>
-              <td class="numeric-cell">159</td>
-              <td class="numeric-cell">6.0</td>
-              <td class="numeric-cell">24</td>
-              <td class="numeric-cell">4.0</td>
-              <td class="tablet-only">I like frozen yogurt</td>
+              <td className="label-cell">Frozen yogurt</td>
+              <td className="numeric-cell">159</td>
+              <td className="numeric-cell">6.0</td>
+              <td className="numeric-cell">24</td>
+              <td className="numeric-cell">4.0</td>
+              <td className="tablet-only">I like frozen yogurt</td>
             </tr>
             <tr>
-              <td class="checkbox-cell">
-                <label class="checkbox">
+              <td className="checkbox-cell">
+                <label className="checkbox">
                   <input type="checkbox"/>
-                  <i class="icon-checkbox"></i>
+                  <i className="icon-checkbox"></i>
                 </label>
               </td>
-              <td class="label-cell">Ice cream sandwich</td>
-              <td class="numeric-cell">237</td>
-              <td class="numeric-cell">9.0</td>
-              <td class="numeric-cell">37</td>
-              <td class="numeric-cell">4.4</td>
-              <td class="tablet-only">But like ice cream more</td>
+              <td className="label-cell">Ice cream sandwich</td>
+              <td className="numeric-cell">237</td>
+              <td className="numeric-cell">9.0</td>
+              <td className="numeric-cell">37</td>
+              <td className="numeric-cell">4.4</td>
+              <td className="tablet-only">But like ice cream more</td>
             </tr>
             <tr>
-              <td class="checkbox-cell">
-                <label class="checkbox">
+              <td className="checkbox-cell">
+                <label className="checkbox">
                   <input type="checkbox"/>
-                  <i class="icon-checkbox"></i>
+                  <i className="icon-checkbox"></i>
                 </label>
               </td>
-              <td class="label-cell">Eclair</td>
-              <td class="numeric-cell">262</td>
-              <td class="numeric-cell">16.0</td>
-              <td class="numeric-cell">24</td>
-              <td class="numeric-cell">6.0</td>
-              <td class="tablet-only">Super tasty</td>
+              <td className="label-cell">Eclair</td>
+              <td className="numeric-cell">262</td>
+              <td className="numeric-cell">16.0</td>
+              <td className="numeric-cell">24</td>
+              <td className="numeric-cell">6.0</td>
+              <td className="tablet-only">Super tasty</td>
             </tr>
             <tr>
-              <td class="checkbox-cell">
-                <label class="checkbox">
+              <td className="checkbox-cell">
+                <label className="checkbox">
                   <input type="checkbox"/>
-                  <i class="icon-checkbox"></i>
+                  <i className="icon-checkbox"></i>
                 </label>
               </td>
-              <td class="label-cell">Cupcake</td>
-              <td class="numeric-cell">305</td>
-              <td class="numeric-cell">3.7</td>
-              <td class="numeric-cell">67</td>
-              <td class="numeric-cell">4.3</td>
-              <td class="tablet-only">Don't like it</td>
+              <td className="label-cell">Cupcake</td>
+              <td className="numeric-cell">305</td>
+              <td className="numeric-cell">3.7</td>
+              <td className="numeric-cell">67</td>
+              <td className="numeric-cell">4.3</td>
+              <td className="tablet-only">Don't like it</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-    <f7-block-title>With title and different actions on select</f7-block-title>
-    <div class="data-table data-table-init card">
-      <div class="card-header">
-        <div class="data-table-header">
-          <div class="data-table-title">Nutrition</div>
-          <div class="data-table-actions">
-            <f7-link icon-if-ios="f7:sort" icon-if-md="material:sort"></f7-link>
-            <f7-link icon-if-ios="f7:more_vertical_round" icon-if-md="material:more_vert"></f7-link>
+    <BlockTitle>With title and different actions on select</BlockTitle>
+    <div className="data-table data-table-init card">
+      <div className="card-header">
+        <div className="data-table-header">
+          <div className="data-table-title">Nutrition</div>
+          <div className="data-table-actions">
+            <Link icon-if-ios="f7:sort" icon-if-md="material:sort"></Link>
+            <Link icon-if-ios="f7:more_vertical_round" icon-if-md="material:more_vert"></Link>
           </div>
         </div>
-        <div class="data-table-header-selected">
-          <div class="data-table-title-selected"><span class="data-table-selected-count"></span> items selected</div>
-          <div class="data-table-actions">
-            <f7-link icon-if-ios="f7:trash" icon-if-md="material:delete"></f7-link>
-            <f7-link icon-if-ios="f7:more_vertical_round" icon-if-md="material:more_vert"></f7-link>
+        <div className="data-table-header-selected">
+          <div className="data-table-title-selected"><span className="data-table-selected-count"></span> items selected</div>
+          <div className="data-table-actions">
+            <Link icon-if-ios="f7:trash" icon-if-md="material:delete"></Link>
+            <Link icon-if-ios="f7:more_vertical_round" icon-if-md="material:more_vert"></Link>
           </div>
         </div>
       </div>
-      <div class="card-content">
+      <div className="card-content">
         <table>
           <thead>
             <tr>
-              <th class="checkbox-cell">
-                <label class="checkbox">
+              <th className="checkbox-cell">
+                <label className="checkbox">
                   <input type="checkbox"/>
-                  <i class="icon-checkbox"></i>
+                  <i className="icon-checkbox"></i>
                 </label>
               </th>
-              <th class="label-cell">Desert (100g serving)</th>
-              <th class="numeric-cell">Calories</th>
-              <th class="numeric-cell">Fat (g)</th>
-              <th class="numeric-cell">Carbs</th>
-              <th class="numeric-cell">Protein (g)</th>
-              <th class="tablet-only"><f7-icon if-ios="f7:chat_fill" if-md="material:message"></f7-icon> Comments</th>
+              <th className="label-cell">Desert (100g serving)</th>
+              <th className="numeric-cell">Calories</th>
+              <th className="numeric-cell">Fat (g)</th>
+              <th className="numeric-cell">Carbs</th>
+              <th className="numeric-cell">Protein (g)</th>
+              <th className="tablet-only"><Icon if-ios="f7:chat_fill" if-md="material:message"></Icon> Comments</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="checkbox-cell">
-                <label class="checkbox">
+              <td className="checkbox-cell">
+                <label className="checkbox">
                   <input type="checkbox"/>
-                  <i class="icon-checkbox"></i>
+                  <i className="icon-checkbox"></i>
                 </label>
               </td>
-              <td class="label-cell">Frozen yogurt</td>
-              <td class="numeric-cell">159</td>
-              <td class="numeric-cell">6.0</td>
-              <td class="numeric-cell">24</td>
-              <td class="numeric-cell">4.0</td>
-              <td class="tablet-only">I like frozen yogurt</td>
+              <td className="label-cell">Frozen yogurt</td>
+              <td className="numeric-cell">159</td>
+              <td className="numeric-cell">6.0</td>
+              <td className="numeric-cell">24</td>
+              <td className="numeric-cell">4.0</td>
+              <td className="tablet-only">I like frozen yogurt</td>
             </tr>
             <tr>
-              <td class="checkbox-cell">
-                <label class="checkbox">
+              <td className="checkbox-cell">
+                <label className="checkbox">
                   <input type="checkbox"/>
-                  <i class="icon-checkbox"></i>
+                  <i className="icon-checkbox"></i>
                 </label>
               </td>
-              <td class="label-cell">Ice cream sandwich</td>
-              <td class="numeric-cell">237</td>
-              <td class="numeric-cell">9.0</td>
-              <td class="numeric-cell">37</td>
-              <td class="numeric-cell">4.4</td>
-              <td class="tablet-only">But like ice cream more</td>
+              <td className="label-cell">Ice cream sandwich</td>
+              <td className="numeric-cell">237</td>
+              <td className="numeric-cell">9.0</td>
+              <td className="numeric-cell">37</td>
+              <td className="numeric-cell">4.4</td>
+              <td className="tablet-only">But like ice cream more</td>
             </tr>
             <tr>
-              <td class="checkbox-cell">
-                <label class="checkbox">
+              <td className="checkbox-cell">
+                <label className="checkbox">
                   <input type="checkbox"/>
-                  <i class="icon-checkbox"></i>
+                  <i className="icon-checkbox"></i>
                 </label>
               </td>
-              <td class="label-cell">Eclair</td>
-              <td class="numeric-cell">262</td>
-              <td class="numeric-cell">16.0</td>
-              <td class="numeric-cell">24</td>
-              <td class="numeric-cell">6.0</td>
-              <td class="tablet-only">Super tasty</td>
+              <td className="label-cell">Eclair</td>
+              <td className="numeric-cell">262</td>
+              <td className="numeric-cell">16.0</td>
+              <td className="numeric-cell">24</td>
+              <td className="numeric-cell">6.0</td>
+              <td className="tablet-only">Super tasty</td>
             </tr>
             <tr>
-              <td class="checkbox-cell">
-                <label class="checkbox">
+              <td className="checkbox-cell">
+                <label className="checkbox">
                   <input type="checkbox"/>
-                  <i class="icon-checkbox"></i>
+                  <i className="icon-checkbox"></i>
                 </label>
               </td>
-              <td class="label-cell">Cupcake</td>
-              <td class="numeric-cell">305</td>
-              <td class="numeric-cell">3.7</td>
-              <td class="numeric-cell">67</td>
-              <td class="numeric-cell">4.3</td>
-              <td class="tablet-only">Don't like it</td>
+              <td className="label-cell">Cupcake</td>
+              <td className="numeric-cell">305</td>
+              <td className="numeric-cell">3.7</td>
+              <td className="numeric-cell">67</td>
+              <td className="numeric-cell">4.3</td>
+              <td className="tablet-only">Don't like it</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-    <f7-block-title>Alternate header with actions</f7-block-title>
-    <div class="data-table data-table-init card">
-      <div class="card-header">
-        <div class="data-table-links"><a class="link">Add</a><a class="link">Remove</a></div>
-        <div class="data-table-actions">
-          <f7-link icon-if-ios="f7:sort" icon-if-md="material:sort"></f7-link>
-          <f7-link icon-if-ios="f7:more_vertical_round" icon-if-md="material:more_vert"></f7-link>
+    <BlockTitle>Alternate header with actions</BlockTitle>
+    <div className="data-table data-table-init card">
+      <div className="card-header">
+        <div className="data-table-links"><a className="link">Add</a><a className="link">Remove</a></div>
+        <div className="data-table-actions">
+          <Link icon-if-ios="f7:sort" icon-if-md="material:sort"></Link>
+          <Link icon-if-ios="f7:more_vertical_round" icon-if-md="material:more_vert"></Link>
         </div>
       </div>
-      <div class="card-content">
+      <div className="card-content">
         <table>
           <thead>
             <tr>
-              <th class="checkbox-cell">
-                <label class="checkbox">
+              <th className="checkbox-cell">
+                <label className="checkbox">
                   <input type="checkbox"/>
-                  <i class="icon-checkbox"></i>
+                  <i className="icon-checkbox"></i>
                 </label>
               </th>
-              <th class="label-cell">Desert (100g serving)</th>
-              <th class="numeric-cell">Calories</th>
-              <th class="numeric-cell">Fat (g)</th>
-              <th class="numeric-cell">Carbs</th>
-              <th class="numeric-cell">Protein (g)</th>
-              <th class="tablet-only"><f7-icon if-ios="f7:chat_fill" if-md="material:message"></f7-icon> Comments</th>
+              <th className="label-cell">Desert (100g serving)</th>
+              <th className="numeric-cell">Calories</th>
+              <th className="numeric-cell">Fat (g)</th>
+              <th className="numeric-cell">Carbs</th>
+              <th className="numeric-cell">Protein (g)</th>
+              <th className="tablet-only"><Icon if-ios="f7:chat_fill" if-md="material:message"></Icon> Comments</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="checkbox-cell">
-                <label class="checkbox">
+              <td className="checkbox-cell">
+                <label className="checkbox">
                   <input type="checkbox"/>
-                  <i class="icon-checkbox"></i>
+                  <i className="icon-checkbox"></i>
                 </label>
               </td>
-              <td class="label-cell">Frozen yogurt</td>
-              <td class="numeric-cell">159</td>
-              <td class="numeric-cell">6.0</td>
-              <td class="numeric-cell">24</td>
-              <td class="numeric-cell">4.0</td>
-              <td class="tablet-only">I like frozen yogurt</td>
-              <td class="actions-cell">
-                <f7-link icon-if-ios="f7:compose" icon-if-md="material:edit"></f7-link>
-                <f7-link icon-if-ios="f7:trash" icon-if-md="material:delete"></f7-link>
+              <td className="label-cell">Frozen yogurt</td>
+              <td className="numeric-cell">159</td>
+              <td className="numeric-cell">6.0</td>
+              <td className="numeric-cell">24</td>
+              <td className="numeric-cell">4.0</td>
+              <td className="tablet-only">I like frozen yogurt</td>
+              <td className="actions-cell">
+                <Link icon-if-ios="f7:compose" icon-if-md="material:edit"></Link>
+                <Link icon-if-ios="f7:trash" icon-if-md="material:delete"></Link>
               </td>
             </tr>
             <tr>
-              <td class="checkbox-cell">
-                <label class="checkbox">
+              <td className="checkbox-cell">
+                <label className="checkbox">
                   <input type="checkbox"/>
-                  <i class="icon-checkbox"></i>
+                  <i className="icon-checkbox"></i>
                 </label>
               </td>
-              <td class="label-cell">Ice cream sandwich</td>
-              <td class="numeric-cell">237</td>
-              <td class="numeric-cell">9.0</td>
-              <td class="numeric-cell">37</td>
-              <td class="numeric-cell">4.4</td>
-              <td class="tablet-only">But like ice cream more</td>
-              <td class="actions-cell">
-                <f7-link icon-if-ios="f7:compose" icon-if-md="material:edit"></f7-link>
-                <f7-link icon-if-ios="f7:trash" icon-if-md="material:delete"></f7-link>
+              <td className="label-cell">Ice cream sandwich</td>
+              <td className="numeric-cell">237</td>
+              <td className="numeric-cell">9.0</td>
+              <td className="numeric-cell">37</td>
+              <td className="numeric-cell">4.4</td>
+              <td className="tablet-only">But like ice cream more</td>
+              <td className="actions-cell">
+                <Link icon-if-ios="f7:compose" icon-if-md="material:edit"></Link>
+                <Link icon-if-ios="f7:trash" icon-if-md="material:delete"></Link>
               </td>
             </tr>
             <tr>
-              <td class="checkbox-cell">
-                <label class="checkbox">
+              <td className="checkbox-cell">
+                <label className="checkbox">
                   <input type="checkbox"/>
-                  <i class="icon-checkbox"></i>
+                  <i className="icon-checkbox"></i>
                 </label>
               </td>
-              <td class="label-cell">Eclair</td>
-              <td class="numeric-cell">262</td>
-              <td class="numeric-cell">16.0</td>
-              <td class="numeric-cell">24</td>
-              <td class="numeric-cell">6.0</td>
-              <td class="tablet-only">Super tasty</td>
-              <td class="actions-cell">
-                <f7-link icon-if-ios="f7:compose" icon-if-md="material:edit"></f7-link>
-                <f7-link icon-if-ios="f7:trash" icon-if-md="material:delete"></f7-link>
+              <td className="label-cell">Eclair</td>
+              <td className="numeric-cell">262</td>
+              <td className="numeric-cell">16.0</td>
+              <td className="numeric-cell">24</td>
+              <td className="numeric-cell">6.0</td>
+              <td className="tablet-only">Super tasty</td>
+              <td className="actions-cell">
+                <Link icon-if-ios="f7:compose" icon-if-md="material:edit"></Link>
+                <Link icon-if-ios="f7:trash" icon-if-md="material:delete"></Link>
               </td>
             </tr>
             <tr>
-              <td class="checkbox-cell">
-                <label class="checkbox">
+              <td className="checkbox-cell">
+                <label className="checkbox">
                   <input type="checkbox"/>
-                  <i class="icon-checkbox"></i>
+                  <i className="icon-checkbox"></i>
                 </label>
               </td>
-              <td class="label-cell">Cupcake</td>
-              <td class="numeric-cell">305</td>
-              <td class="numeric-cell">3.7</td>
-              <td class="numeric-cell">67</td>
-              <td class="numeric-cell">4.3</td>
-              <td class="tablet-only">Don't like it</td>
-              <td class="actions-cell">
-                <f7-link icon-if-ios="f7:compose" icon-if-md="material:edit"></f7-link>
-                <f7-link icon-if-ios="f7:trash" icon-if-md="material:delete"></f7-link>
+              <td className="label-cell">Cupcake</td>
+              <td className="numeric-cell">305</td>
+              <td className="numeric-cell">3.7</td>
+              <td className="numeric-cell">67</td>
+              <td className="numeric-cell">4.3</td>
+              <td className="tablet-only">Don't like it</td>
+              <td className="actions-cell">
+                <Link icon-if-ios="f7:compose" icon-if-md="material:edit"></Link>
+                <Link icon-if-ios="f7:trash" icon-if-md="material:delete"></Link>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-    <f7-block-title>Collapsible</f7-block-title>
-    <div class="block-header">
+    <BlockTitle>Collapsible</BlockTitle>
+    <div className="block-header">
       <p>The following table will be collapsed to kind of List View on small screens:</p>
     </div>
-    <div class="card data-table data-table-collapsible data-table-init">
-      <div class="card-header">
-        <div class="data-table-title">Nutrition</div>
-        <div class="data-table-actions">
-          <f7-link icon-if-ios="f7:sort" icon-if-md="material:sort"></f7-link>
-          <f7-link icon-if-ios="f7:more_vertical_round" icon-if-md="material:more_vert"></f7-link>
+    <div className="card data-table data-table-collapsible data-table-init">
+      <div className="card-header">
+        <div className="data-table-title">Nutrition</div>
+        <div className="data-table-actions">
+          <Link icon-if-ios="f7:sort" icon-if-md="material:sort"></Link>
+          <Link icon-if-ios="f7:more_vertical_round" icon-if-md="material:more_vert"></Link>
         </div>
       </div>
-      <div class="card-content">
+      <div className="card-content">
         <table>
           <thead>
             <tr>
-              <th class="label-cell">Desert (100g serving)</th>
-              <th class="numeric-cell">Calories</th>
-              <th class="numeric-cell">Fat (g)</th>
-              <th class="numeric-cell">Carbs</th>
-              <th class="numeric-cell">Protein (g)</th>
+              <th className="label-cell">Desert (100g serving)</th>
+              <th className="numeric-cell">Calories</th>
+              <th className="numeric-cell">Fat (g)</th>
+              <th className="numeric-cell">Carbs</th>
+              <th className="numeric-cell">Protein (g)</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="label-cell">Frozen yogurt</td>
-              <td class="numeric-cell">159</td>
-              <td class="numeric-cell">6.0</td>
-              <td class="numeric-cell">24</td>
-              <td class="numeric-cell">4.0</td>
+              <td className="label-cell">Frozen yogurt</td>
+              <td className="numeric-cell">159</td>
+              <td className="numeric-cell">6.0</td>
+              <td className="numeric-cell">24</td>
+              <td className="numeric-cell">4.0</td>
             </tr>
             <tr>
-              <td class="label-cell">Ice cream sandwich</td>
-              <td class="numeric-cell">237</td>
-              <td class="numeric-cell">9.0</td>
-              <td class="numeric-cell">37</td>
-              <td class="numeric-cell">4.4</td>
+              <td className="label-cell">Ice cream sandwich</td>
+              <td className="numeric-cell">237</td>
+              <td className="numeric-cell">9.0</td>
+              <td className="numeric-cell">37</td>
+              <td className="numeric-cell">4.4</td>
             </tr>
             <tr>
-              <td class="label-cell">Eclair</td>
-              <td class="numeric-cell">262</td>
-              <td class="numeric-cell">16.0</td>
-              <td class="numeric-cell">24</td>
-              <td class="numeric-cell">6.0</td>
+              <td className="label-cell">Eclair</td>
+              <td className="numeric-cell">262</td>
+              <td className="numeric-cell">16.0</td>
+              <td className="numeric-cell">24</td>
+              <td className="numeric-cell">6.0</td>
             </tr>
             <tr>
-              <td class="label-cell">Cupcake</td>
-              <td class="numeric-cell">305</td>
-              <td class="numeric-cell">3.7</td>
-              <td class="numeric-cell">67</td>
-              <td class="numeric-cell">4.3</td>
+              <td className="label-cell">Cupcake</td>
+              <td className="numeric-cell">305</td>
+              <td className="numeric-cell">3.7</td>
+              <td className="numeric-cell">67</td>
+              <td className="numeric-cell">4.3</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-  </f7-page>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7BlockTitle, f7Link, f7Icon } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, BlockTitle, Link, Icon } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
-      f7BlockTitle,
-      f7Link,
-      f7Icon,
+      Navbar,
+      Page,
+      BlockTitle,
+      Link,
+      Icon,
     },
   };
 </script>

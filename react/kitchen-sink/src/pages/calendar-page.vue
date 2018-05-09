@@ -1,24 +1,25 @@
 <template>
-  <f7-page :page-content="false">
-    <f7-navbar back-link="Back">
-      <f7-nav-title class="navbar-calendar-title"></f7-nav-title>
-    </f7-navbar>
+  <Page page-content={false}>
+    <Navbar backLink="Back">
+      <NavTitle class="navbar-calendar-title"></NavTitle>
+    </Navbar>
     <div class="page-content">
       <div id="calendar" class="block block-strong no-padding no-margin no-hairline-top"></div>
       <div id="calendar-events" class="list no-margin no-hairlines no-ios-left-edge">
         <ul></ul>
       </div>
     </div>
-  </f7-page>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7NavTitle } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, NavTitle } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
-      f7NavTitle,
+      Navbar,
+      Page,
+      NavTitle,
     },
     data() {
       const date = new Date();

@@ -1,54 +1,55 @@
 <template>
-  <f7-page>
-    <f7-navbar title="Toggle" back-link="Back"></f7-navbar>
-    <f7-block-title>Super Heroes</f7-block-title>
-    <f7-list simple-list>
-      <f7-list-item>
+  <Page>
+    <Navbar title="Toggle" backLink="Back"></Navbar>
+    <BlockTitle>Super Heroes</BlockTitle>
+    <List simpleList>
+      <ListItem>
         <span>Batman</span>
-        <f7-toggle checked></f7-toggle>
-      </f7-list-item>
-      <f7-list-item>
+        <Toggle checked></Toggle>
+      </ListItem>
+      <ListItem>
         <span>Aquaman</span>
-        <f7-toggle checked color="blue"></f7-toggle>
-      </f7-list-item>
-      <f7-list-item>
+        <Toggle checked color="blue"></Toggle>
+      </ListItem>
+      <ListItem>
         <span>Superman</span>
-        <f7-toggle checked color="red"></f7-toggle>
-      </f7-list-item>
-      <f7-list-item>
+        <Toggle checked color="red"></Toggle>
+      </ListItem>
+      <ListItem>
         <span>Hulk</span>
-        <f7-toggle color="green"></f7-toggle>
-      </f7-list-item>
-      <f7-list-item>
+        <Toggle color="green"></Toggle>
+      </ListItem>
+      <ListItem>
         <span>Spiderman (Disabled)</span>
-        <f7-toggle disabled></f7-toggle>
-      </f7-list-item>
-      <f7-list-item>
+        <Toggle disabled></Toggle>
+      </ListItem>
+      <ListItem>
         <span>Ironman (Disabled)</span>
-        <f7-toggle checked disabled></f7-toggle>
-      </f7-list-item>
-      <f7-list-item>
+        <Toggle checked disabled></Toggle>
+      </ListItem>
+      <ListItem>
         <span>Thor</span>
-        <f7-toggle checked color="orange"></f7-toggle>
-      </f7-list-item>
-      <f7-list-item>
+        <Toggle checked color="orange"></Toggle>
+      </ListItem>
+      <ListItem>
         <span>Wonder Woman</span>
-        <f7-toggle color="pink"></f7-toggle>
-      </f7-list-item>
-    </f7-list>
-  </f7-page>
+        <Toggle color="pink"></Toggle>
+      </ListItem>
+    </List>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7BlockTitle, f7List, f7ListItem, f7Toggle } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, BlockTitle, List, ListItem, Toggle } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
-      f7BlockTitle,
-      f7List,
-      f7ListItem,
-      f7Toggle,
+      Navbar,
+      Page,
+      BlockTitle,
+      List,
+      ListItem,
+      Toggle,
     },
   };
 </script>

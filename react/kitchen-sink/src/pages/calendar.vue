@@ -1,18 +1,18 @@
 <template>
-  <f7-page :page-content="false">
-    <f7-navbar title="Calendar" back-link="Back"></f7-navbar>
-    <div class="page-content">
-      <div class="block">
+  <Page page-content={false}>
+    <Navbar title="Calendar" backLink="Back"></Navbar>
+    <div className="page-content">
+      <div className="block">
         <p>Calendar is a touch optimized component that provides an easy way to handle dates.</p>
         <p>Calendar could be used as inline component or as overlay. Overlay Calendar will be automatically converted to Popover on tablets (iPad).</p>
       </div>
-      <div class="block-title">Default setup</div>
-      <div class="list no-hairlines-md">
+      <div className="block-title">Default setup</div>
+      <div className="list no-hairlines-md">
         <ul>
           <li>
-            <div class="item-content item-input">
-              <div class="item-inner">
-                <div class="item-input-wrap">
+            <div className="item-content item-input">
+              <div className="item-inner">
+                <div className="item-input-wrap">
                   <input type="text" placeholder="Your birth date" readonly="readonly" id="demo-calendar-default"/>
                 </div>
               </div>
@@ -20,13 +20,13 @@
           </li>
         </ul>
       </div>
-      <div class="block-title">Custom date format</div>
-      <div class="list no-hairlines-md">
+      <div className="block-title">Custom date format</div>
+      <div className="list no-hairlines-md">
         <ul>
           <li>
-            <div class="item-content item-input">
-              <div class="item-inner">
-                <div class="item-input-wrap">
+            <div className="item-content item-input">
+              <div className="item-inner">
+                <div className="item-input-wrap">
                   <input type="text" placeholder="Select date" readonly="readonly" id="demo-calendar-date-format"/>
                 </div>
               </div>
@@ -34,13 +34,13 @@
           </li>
         </ul>
       </div>
-      <div class="block-title">Multiple Values</div>
-      <div class="list no-hairlines-md">
+      <div className="block-title">Multiple Values</div>
+      <div className="list no-hairlines-md">
         <ul>
           <li>
-            <div class="item-content item-input">
-              <div class="item-inner">
-                <div class="item-input-wrap">
+            <div className="item-content item-input">
+              <div className="item-inner">
+                <div className="item-input-wrap">
                   <input type="text" placeholder="Select multiple dates" readonly="readonly" id="demo-calendar-multiple"/>
                 </div>
               </div>
@@ -48,13 +48,13 @@
           </li>
         </ul>
       </div>
-      <div class="block-title">Range Picker</div>
-      <div class="list no-hairlines-md">
+      <div className="block-title">Range Picker</div>
+      <div className="list no-hairlines-md">
         <ul>
           <li>
-            <div class="item-content item-input">
-              <div class="item-inner">
-                <div class="item-input-wrap">
+            <div className="item-content item-input">
+              <div className="item-inner">
+                <div className="item-input-wrap">
                   <input type="text" placeholder="Select date range" readonly="readonly" id="demo-calendar-range"/>
                 </div>
               </div>
@@ -62,13 +62,13 @@
           </li>
         </ul>
       </div>
-      <div class="block-title">Open in Mondal</div>
-      <div class="list no-hairlines-md">
+      <div className="block-title">Open in Mondal</div>
+      <div className="list no-hairlines-md">
         <ul>
           <li>
-            <div class="item-content item-input">
-              <div class="item-inner">
-                <div class="item-input-wrap">
+            <div className="item-content item-input">
+              <div className="item-inner">
+                <div className="item-input-wrap">
                   <input type="text" placeholder="Select date" readonly="readonly" id="demo-calendar-modal"/>
                 </div>
               </div>
@@ -76,32 +76,33 @@
           </li>
         </ul>
       </div>
-      <div class="block-title">Calendar Page</div>
-      <div class="list">
+      <div className="block-title">Calendar Page</div>
+      <div className="list">
         <ul>
           <li>
-            <a href="/calendar-page/" class="item-content item-link">
-              <div class="item-inner">
-                <div class="item-title">Open Calendar Page</div>
+            <a href="/calendar-page/" className="item-content item-link">
+              <div className="item-inner">
+                <div className="item-title">Open Calendar Page</div>
               </div>
             </a>
           </li>
         </ul>
       </div>
-      <div class="block-title">Inline with custom toolbar</div>
-      <div class="block block-strong no-padding">
+      <div className="block-title">Inline with custom toolbar</div>
+      <div className="block block-strong no-padding">
         <div id="demo-calendar-inline-container"></div>
       </div>
     </div>
-  </f7-page>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
+      Navbar,
+      Page,
     },
     on: {
       pageInit(e) {
@@ -143,14 +144,14 @@
           containerEl: '#demo-calendar-inline-container',
           value: [new Date()],
           renderToolbar() {
-            return `${'<div class="toolbar calendar-custom-toolbar no-shadow">' +
-        '<div class="toolbar-inner">' +
-          '<div class="left">' +
-            '<a href="#" class="link icon-only"><i class="icon icon-back '}${self.$theme.md ? 'color-black' : ''}"></i></a>` +
+            return `${'<div className="toolbar calendar-custom-toolbar no-shadow">' +
+        '<div className="toolbar-inner">' +
+          '<div className="left">' +
+            '<a href="#" className="link icon-only"><i className="icon icon-back '}${self.$theme.md ? 'color-black' : ''}"></i></a>` +
           '</div>' +
-          '<div class="center"></div>' +
-          '<div class="right">' +
-            `<a href="#" class="link icon-only"><i class="icon icon-forward ${self.$theme.md ? 'color-black' : ''}"></i></a>` +
+          '<div className="center"></div>' +
+          '<div className="right">' +
+            `<a href="#" className="link icon-only"><i className="icon icon-forward ${self.$theme.md ? 'color-black' : ''}"></i></a>` +
           '</div>' +
         '</div>' +
       '</div>';

@@ -1,23 +1,24 @@
 <template>
-  <f7-page>
-    <f7-navbar title="Tabs" back-link="Back"></f7-navbar>
-    <f7-list>
-      <f7-list-item link="/tabs-static/" title="Static Tabs"></f7-list-item>
-      <f7-list-item link="/tabs-animated/" title="Animated Tabs"></f7-list-item>
-      <f7-list-item link="/tabs-swipeable/" title="Swipeable Tabs"></f7-list-item>
-      <f7-list-item link="/tabs-routable/" title="Routable Tabs"></f7-list-item>
-    </f7-list>
-  </f7-page>
+  <Page>
+    <Navbar title="Tabs" backLink="Back"></Navbar>
+    <List>
+      <ListItem link="/tabs-static/" title="Static Tabs"></ListItem>
+      <ListItem link="/tabs-animated/" title="Animated Tabs"></ListItem>
+      <ListItem link="/tabs-swipeable/" title="Swipeable Tabs"></ListItem>
+      <ListItem link="/tabs-routable/" title="Routable Tabs"></ListItem>
+    </List>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7List, f7ListItem } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, List, ListItem } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
-      f7List,
-      f7ListItem,
+      Navbar,
+      Page,
+      List,
+      ListItem,
     },
   };
 </script>

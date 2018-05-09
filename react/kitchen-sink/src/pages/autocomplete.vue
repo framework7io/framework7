@@ -1,185 +1,186 @@
 <template>
-  <f7-page>
-    <f7-navbar title="Autocomplete" back-link="Back">
-      <div class="subnavbar">
-        <form class="searchbar" id="searchbar-autocomplete">
-          <div class="searchbar-inner">
-            <div class="searchbar-input-wrap">
+  <Page>
+    <Navbar title="Autocomplete" backLink="Back">
+      <div className="subnavbar">
+        <form className="searchbar" id="searchbar-autocomplete">
+          <div className="searchbar-inner">
+            <div className="searchbar-input-wrap">
               <input type="search" placeholder="Search"/>
-              <i class="searchbar-icon"></i>
-              <span class="input-clear-button"></span>
+              <i className="searchbar-icon"></i>
+              <span className="input-clear-button"></span>
             </div>
-            <span class="searchbar-disable-button">Cancel</span>
+            <span className="searchbar-disable-button">Cancel</span>
           </div>
         </form>
       </div>
-    </f7-navbar>
+    </Navbar>
 
-    <f7-block-title>Dropdown Autocomplete</f7-block-title>
-    <div class="block">
+    <BlockTitle>Dropdown Autocomplete</BlockTitle>
+    <div className="block">
       <p>Dropdown autocomplete is good to use as a quick and simple solution to provide more options in addition to free-type value.</p>
     </div>
-    <div class="list no-hairlines-md">
-      <div class="block-header">Simple Dropdown Autocomplete</div>
+    <div className="list no-hairlines-md">
+      <div className="block-header">Simple Dropdown Autocomplete</div>
       <ul>
-        <li class="item-content item-input inline-label">
-          <div class="item-inner">
-            <div class="item-title item-label">Fruit</div>
-            <div class="item-input-wrap">
+        <li className="item-content item-input inline-label">
+          <div className="item-inner">
+            <div className="item-title item-label">Fruit</div>
+            <div className="item-input-wrap">
               <input type="text" placeholder="Fruit" id="autocomplete-dropdown"/>
             </div>
           </div>
         </li>
       </ul>
     </div>
-    <div class="list no-hairlines-md">
-      <div class="block-header">Dropdown With Input Expand</div>
+    <div className="list no-hairlines-md">
+      <div className="block-header">Dropdown With Input Expand</div>
       <ul>
-        <li class="item-content item-input inline-label">
-          <div class="item-inner">
-            <div class="item-title item-label">Fruit</div>
-            <div class="item-input-wrap">
+        <li className="item-content item-input inline-label">
+          <div className="item-inner">
+            <div className="item-title item-label">Fruit</div>
+            <div className="item-input-wrap">
               <input type="text" placeholder="Fruit" id="autocomplete-dropdown-expand"/>
             </div>
           </div>
         </li>
       </ul>
     </div>
-    <div class="list no-hairlines-md">
-      <div class="block-header">Dropdown With All Values</div>
+    <div className="list no-hairlines-md">
+      <div className="block-header">Dropdown With All Values</div>
       <ul>
-        <li class="item-content item-input">
-          <div class="item-inner">
-            <div class="item-title item-label">Fruit</div>
-            <div class="item-input-wrap">
+        <li className="item-content item-input">
+          <div className="item-inner">
+            <div className="item-title item-label">Fruit</div>
+            <div className="item-input-wrap">
               <input type="text" placeholder="Fruit" id="autocomplete-dropdown-all"/>
             </div>
           </div>
         </li>
       </ul>
     </div>
-    <div class="list no-hairlines-md">
-      <div class="block-header">Dropdown With Placeholder</div>
+    <div className="list no-hairlines-md">
+      <div className="block-header">Dropdown With Placeholder</div>
       <ul>
-        <li class="item-content item-input">
-          <div class="item-inner">
-            <div class="item-title item-label">Fruit</div>
-            <div class="item-input-wrap">
+        <li className="item-content item-input">
+          <div className="item-inner">
+            <div className="item-title item-label">Fruit</div>
+            <div className="item-input-wrap">
               <input type="text" placeholder="Fruit" id="autocomplete-dropdown-placeholder"/>
             </div>
           </div>
         </li>
       </ul>
     </div>
-    <div class="list no-hairlines-md">
-      <div class="block-header">Dropdown With Typeahead</div>
+    <div className="list no-hairlines-md">
+      <div className="block-header">Dropdown With Typeahead</div>
       <ul>
-        <li class="item-content item-input">
-          <div class="item-inner">
-            <div class="item-title item-label">Fruit</div>
-            <div class="item-input-wrap">
+        <li className="item-content item-input">
+          <div className="item-inner">
+            <div className="item-title item-label">Fruit</div>
+            <div className="item-input-wrap">
               <input type="text" placeholder="Fruit" id="autocomplete-dropdown-typeahead"/>
             </div>
           </div>
         </li>
       </ul>
     </div>
-    <div class="list no-hairlines-md">
-      <div class="block-header">Dropdown With Ajax-Data</div>
+    <div className="list no-hairlines-md">
+      <div className="block-header">Dropdown With Ajax-Data</div>
       <ul>
-        <li class="item-content item-input">
-          <div class="item-inner">
-            <div class="item-title item-label">Language</div>
-            <div class="item-input-wrap">
+        <li className="item-content item-input">
+          <div className="item-inner">
+            <div className="item-title item-label">Language</div>
+            <div className="item-input-wrap">
               <input type="text" placeholder="Language" id="autocomplete-dropdown-ajax"/>
             </div>
           </div>
         </li>
       </ul>
     </div>
-    <div class="list no-hairlines-md">
-      <div class="block-header">Dropdown With Ajax-Data + Typeahead</div>
+    <div className="list no-hairlines-md">
+      <div className="block-header">Dropdown With Ajax-Data + Typeahead</div>
       <ul>
-        <li class="item-content item-input">
-          <div class="item-inner">
-            <div class="item-title item-label">Language</div>
-            <div class="item-input-wrap">
+        <li className="item-content item-input">
+          <div className="item-inner">
+            <div className="item-title item-label">Language</div>
+            <div className="item-input-wrap">
               <input type="text" placeholder="Language" id="autocomplete-dropdown-ajax-typeahead"/>
             </div>
           </div>
         </li>
       </ul>
     </div>
-    <f7-block-title>Standalone Autocomplete</f7-block-title>
-    <div class="block">
+    <BlockTitle>Standalone Autocomplete</BlockTitle>
+    <div className="block">
       <p>Standalone autocomplete provides better mobile UX by opening it in a new page or popup. Good to use when you need to get strict values without allowing free-type values.</p>
     </div>
-    <div class="list">
-      <div class="block-header">Simple Standalone Autocomplete</div>
+    <div className="list">
+      <div className="block-header">Simple Standalone Autocomplete</div>
       <ul>
         <li>
-          <a href="#" id="autocomplete-standalone" class="item-link item-content autocomplete-opener">
+          <a href="#" id="autocomplete-standalone" className="item-link item-content autocomplete-opener">
             <input type="hidden"/>
-            <div class="item-inner">
-              <div class="item-title">Favorite Fruite</div>
-              <div class="item-after"></div>
+            <div className="item-inner">
+              <div className="item-title">Favorite Fruite</div>
+              <div className="item-after"></div>
             </div>
           </a>
         </li>
       </ul>
     </div>
-    <div class="list">
-      <div class="block-header">Popup Autocomplete</div>
+    <div className="list">
+      <div className="block-header">Popup Autocomplete</div>
       <ul>
         <li>
-          <a href="#" id="autocomplete-standalone-popup" class="item-link item-content autocomplete-opener">
+          <a href="#" id="autocomplete-standalone-popup" className="item-link item-content autocomplete-opener">
             <input type="hidden"/>
-            <div class="item-inner">
-              <div class="item-title">Favorite Fruite</div>
-              <div class="item-after"></div>
+            <div className="item-inner">
+              <div className="item-title">Favorite Fruite</div>
+              <div className="item-after"></div>
             </div>
           </a>
         </li>
       </ul>
     </div>
-    <div class="list">
-      <div class="block-header">Multiple Values</div>
+    <div className="list">
+      <div className="block-header">Multiple Values</div>
       <ul>
         <li>
-          <a href="#" id="autocomplete-standalone-multiple" class="item-link item-content autocomplete-opener">
+          <a href="#" id="autocomplete-standalone-multiple" className="item-link item-content autocomplete-opener">
             <input type="hidden"/>
-            <div class="item-inner">
-              <div class="item-title">Favorite Fruite</div>
-              <div class="item-after"></div>
+            <div className="item-inner">
+              <div className="item-title">Favorite Fruite</div>
+              <div className="item-after"></div>
             </div>
           </a>
         </li>
       </ul>
     </div>
-    <div class="list">
-      <div class="block-header">With Ajax-Data</div>
+    <div className="list">
+      <div className="block-header">With Ajax-Data</div>
       <ul>
         <li>
-          <a href="#" id="autocomplete-standalone-ajax" class="item-link item-content autocomplete-opener">
+          <a href="#" id="autocomplete-standalone-ajax" className="item-link item-content autocomplete-opener">
             <input type="hidden"/>
-            <div class="item-inner">
-              <div class="item-title">Language</div>
-              <div class="item-after"></div>
+            <div className="item-inner">
+              <div className="item-title">Language</div>
+              <div className="item-after"></div>
             </div>
           </a>
         </li>
       </ul>
     </div>
-  </f7-page>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7BlockTitle } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, BlockTitle } from 'framework7-react';
 
   export default {
     components: {
-      f7Page,
-      f7Navbar,
-      f7BlockTitle,
+      Page,
+      Navbar,
+      BlockTitle,
     },
     data() {
       return {

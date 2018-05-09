@@ -1,24 +1,25 @@
 <template>
-  <f7-page>
-    <f7-navbar title="Notifications" back-link="Back"></f7-navbar>
-    <f7-block>
+  <Page>
+    <Navbar title="Notifications" backLink="Back"></Navbar>
+    <Block>
       <p>Framework7 comes with simple Notifications component that allows you to show some useful messages to user and request basic actions.</p>
-      <p><f7-button raised @click="showNotificationFull">Full layout notification</f7-button></p>
-      <p><f7-button raised @click="showNotificationWithButton">With close button</f7-button></p>
-      <p><f7-button raised @click="showNotificationCloseOnClick">Click to close</f7-button></p>
-      <p><f7-button raised @click="showNotificationCallbackOnClose">Callback on close</f7-button></p>
-    </f7-block>
-  </f7-page>
+      <p><Button raised @click={showNotificationFull}>Full layout notification</Button></p>
+      <p><Button raised @click={showNotificationWithButton}>With close button</Button></p>
+      <p><Button raised @click={showNotificationCloseOnClick}>Click to close</Button></p>
+      <p><Button raised @click={showNotificationCallbackOnClose}>Callback on close</Button></p>
+    </Block>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7Block, f7Button } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, Block, Button } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
-      f7Button,
-      f7Block,
+      Navbar,
+      Page,
+      Button,
+      Block,
     },
     methods: {
       showNotificationFull() {

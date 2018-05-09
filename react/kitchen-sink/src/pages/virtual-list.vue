@@ -1,47 +1,48 @@
 <template>
-  <f7-page>
-    <f7-navbar title="Virtual List" back-link="Back">
-      <f7-subnavbar :inner="false">
-        <f7-searchbar
+  <Page>
+    <Navbar title="Virtual List" backLink="Back">
+      <Subnavbar inner={false}>
+        <Searchbar
           search-container=".virtual-list"
           search-item="li"
           search-in=".item-title"
-        ></f7-searchbar>
-      </f7-subnavbar>
-    </f7-navbar>
-    <f7-block>
+        ></Searchbar>
+      </Subnavbar>
+    </Navbar>
+    <Block>
       <p>Virtual List allows to render lists with huge amount of elements without loss of performance. And it is fully compatible with all Framework7 list components such as Search Bar, Infinite Scroll, Pull To Refresh, Swipeouts (swipe-to-delete) and Sortable.</p>
       <p>Here is the example of virtual list with 10 000 items:</p>
-    </f7-block>
-    <f7-list class="searchbar-not-found">
-      <f7-list-item title="Nothing found"></f7-list-item>
-    </f7-list>
-    <f7-list
-      class="searchbar-found"
+    </Block>
+    <List className="searchbar-not-found">
+      <ListItem title="Nothing found"></ListItem>
+    </List>
+    <List
+      className="searchbar-found"
       medial-list
       virtual-list
       :virtual-list-params="{ items, searchAll, renderExternal, height: $theme.ios ? 63 : 73}"
     >
       <ul>
-        <f7-list-item
+        <ListItem
           v-for="(item, index) in vlData.items"
-          :key="index"
+          key={index}
           media-item
           link="#"
-          :title="item.title"
-          :subtitle="item.subtitle"
+          title={item.title}
+          subtitle={item.subtitle}
           :style="`top: ${vlData.topPosition}px`"
-        ></f7-list-item>
+        ></ListItem>
       </ul>
-    </f7-list>
-  </f7-page>
+    </List>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7List, f7ListItem, f7Subnavbar, f7Searchbar, f7Block } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, List, ListItem, Subnavbar, Searchbar, Block } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar, f7Page, f7List, f7ListItem, f7Subnavbar, f7Searchbar, f7Block,
+      Navbar, Page, List, ListItem, Subnavbar, Searchbar, Block,
     },
     data() {
       const items = [];

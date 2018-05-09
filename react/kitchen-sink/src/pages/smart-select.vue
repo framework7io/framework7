@@ -1,11 +1,11 @@
 <template>
-  <f7-page>
-    <f7-navbar title="Smart Select" back-link="Back"></f7-navbar>
-    <f7-block>
+  <Page>
+    <Navbar title="Smart Select" backLink="Back"></Navbar>
+    <Block>
       Framework7 allows you to easily convert your usual form selects to dynamic pages with radios:
-    </f7-block>
-    <f7-list>
-      <f7-list-item title="Fruit" smart-select>
+    </Block>
+    <List>
+      <ListItem title="Fruit" smart-select>
         <select name="fruits">
           <option value="apple" selected>Apple</option>
           <option value="pineapple">Pineapple</option>
@@ -15,8 +15,8 @@
           <option value="peach">Peach</option>
           <option value="banana">Banana</option>
         </select>
-      </f7-list-item>
-      <f7-list-item title="Car" smart-select :smart-select-params="{openIn: 'popup', searchbar: true, searchbarPlaceholder: 'Search car'}">
+      </ListItem>
+      <ListItem title="Car" smart-select :smart-select-params="{openIn: 'popup', searchbar: true, searchbarPlaceholder: 'Search car'}">
         <select name="car" multiple>
           <optgroup label="Japanese">
             <option value="honda" selected>Honda</option>
@@ -39,14 +39,14 @@
             <option value="ford" selected>Ford</option>
           </optgroup>
         </select>
-      </f7-list-item>
-      <f7-list-item title="Mac or Windows" smart-select :smart-select-params="{openIn: 'sheet'}">
+      </ListItem>
+      <ListItem title="Mac or Windows" smart-select :smart-select-params="{openIn: 'sheet'}">
         <select name="mac-windows">
           <option value="mac" selected>Mac</option>
           <option value="windows">Windows</option>
         </select>
-      </f7-list-item>
-      <f7-list-item title="Super Hero" smart-select :smart-select-params="{openIn: 'popover'}">
+      </ListItem>
+      <ListItem title="Super Hero" smart-select :smart-select-params="{openIn: 'popover'}">
         <select name="superhero" multiple>
           <option value="Batman" selected>Batman</option>
           <option value="Superman">Superman</option>
@@ -56,20 +56,21 @@
           <option value="Thor">Thor</option>
           <option value="Wonder Woman">Wonder Woman</option>
         </select>
-      </f7-list-item>
-    </f7-list>
-  </f7-page>
+      </ListItem>
+    </List>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7List, f7Block, f7ListItem } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, List, Block, List } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
-      f7List,
-      f7Block,
-      f7ListItem,
+      Navbar,
+      Page,
+      List,
+      Block,
+      ListItem,
     },
   };
 </script>

@@ -1,75 +1,76 @@
 <template>
-  <f7-page>
-    <f7-navbar title="Preloader" back-link="Back"></f7-navbar>
-    <f7-block>
+  <Page>
+    <Navbar title="Preloader" backLink="Back"></Navbar>
+    <Block>
       <p>How about an activity indicator? Framework 7 has a nice one. The F7 Preloader is made with SVG and animated with CSS so it can be easily resized.</p>
-    </f7-block>
+    </Block>
 
-    <f7-block-title>Default</f7-block-title>
-    <f7-block class="row demo-preloaders align-items-stretch text-align-center">
-      <f7-col>
-        <f7-preloader></f7-preloader>
-      </f7-col>
-      <f7-col style="background: #000">
-        <f7-preloader color="white"></f7-preloader>
-      </f7-col>
-      <f7-col>
-        <f7-preloader :size="42"></f7-preloader>
-      </f7-col>
-      <f7-col style="background: #000">
-        <f7-preloader :size="42" color="white"></f7-preloader>
-      </f7-col>
-    </f7-block>
+    <BlockTitle>Default</BlockTitle>
+    <Block className="row demo-preloaders align-items-stretch text-align-center">
+      <Col>
+        <Preloader></Preloader>
+      </Col>
+      <Col style="background: #000">
+        <Preloader color="white"></Preloader>
+      </Col>
+      <Col>
+        <Preloader size={42}></Preloader>
+      </Col>
+      <Col style="background: #000">
+        <Preloader size={42} color="white"></Preloader>
+      </Col>
+    </Block>
 
-    <f7-block-title>Color Preloaders</f7-block-title>
-    <f7-block class="row text-align-center">
-      <f7-col>
-        <f7-preloader color="red"></f7-preloader>
-      </f7-col>
-      <f7-col>
-        <f7-preloader color="green"></f7-preloader>
-      </f7-col>
-      <f7-col>
-        <f7-preloader color="orange"></f7-preloader>
-      </f7-col>
-      <f7-col>
-        <f7-preloader color="blue"></f7-preloader>
-      </f7-col>
-    </f7-block>
+    <BlockTitle>Color Preloaders</BlockTitle>
+    <Block className="row text-align-center">
+      <Col>
+        <Preloader color="red"></Preloader>
+      </Col>
+      <Col>
+        <Preloader color="green"></Preloader>
+      </Col>
+      <Col>
+        <Preloader color="orange"></Preloader>
+      </Col>
+      <Col>
+        <Preloader color="blue"></Preloader>
+      </Col>
+    </Block>
 
-    <f7-block-title>Multi-color (MD-theme only)</f7-block-title>
-    <f7-block class="text-align-center">
-      <f7-preloader color="multi"></f7-preloader>
-    </f7-block>
+    <BlockTitle>Multi-color (MD-theme only)</BlockTitle>
+    <Block className="text-align-center">
+      <Preloader color="multi"></Preloader>
+    </Block>
 
-    <f7-block-title>Preloader Modals</f7-block-title>
-    <f7-block>
+    <BlockTitle>Preloader Modals</BlockTitle>
+    <Block>
       <p>With <b>app.preloader.show()</b> you can show small overlay with preloader indicator.</p>
       <p>
-        <a class="button button-raised" @click="openIndicator">Open Small Indicator</a>
+        <a className="button button-raised" @click={openIndicator}>Open Small Indicator</a>
       </p>
       <p>With <b>app.dialog.preloader()</b> you can show dialog modal with preloader indicator.</p>
       <p>
-        <a class="button button-raised" @click="openDialog">Open Dialog Preloader</a>
+        <a className="button button-raised" @click={openDialog}>Open Dialog Preloader</a>
       </p>
       <p>With <b>app.dialog.preloader('My text...')</b> you can show dialog preloader modal with custom title.</p>
       <p>
-        <a class="button button-raised" @click="openCustomDialog">Open Dialog Preloader</a>
+        <a className="button button-raised" @click={openCustomDialog}>Open Dialog Preloader</a>
       </p>
-    </f7-block>
-  </f7-page>
+    </Block>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7BlockTitle, f7Block, f7Preloader, f7Col } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, BlockTitle, Block, Preloader, Col } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
-      f7BlockTitle,
-      f7Block,
-      f7Preloader,
-      f7Col,
+      Navbar,
+      Page,
+      BlockTitle,
+      Block,
+      Preloader,
+      Col,
     },
     methods: {
       openIndicator() {

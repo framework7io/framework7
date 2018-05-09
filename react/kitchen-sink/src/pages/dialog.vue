@@ -1,58 +1,59 @@
 <template>
-  <f7-page>
-    <f7-navbar title="Dialog" back-link="Back"></f7-navbar>
-    <f7-block strong>
+  <Page>
+    <Navbar title="Dialog" backLink="Back"></Navbar>
+    <Block strong>
       <p>There are 1:1 replacements of native Alert, Prompt and Confirm modals. They support callbacks, have very easy api and can be combined with each other. Check these examples:</p>
-      <f7-row tag="p">
-        <f7-button raised class="col" @click="openAlert">Alert</f7-button>
-        <f7-button raised class="col" @click="openConfirm">Confirm</f7-button>
-        <f7-button raised class="col" @click="openPrompt">Prompt</f7-button>
-      </f7-row>
-      <f7-row tag="p">
-        <f7-button raised class="col" @click="openLogin">Login</f7-button>
-        <f7-button raised class="col" @click="openPassword">Password</f7-button>
-      </f7-row>
-    </f7-block>
-    <f7-block-title>Vertical Buttons</f7-block-title>
-    <f7-block strong>
+      <Row tag="p">
+        <Button raised className="col" @click={openAlert}>Alert</Button>
+        <Button raised className="col" @click={openConfirm}>Confirm</Button>
+        <Button raised className="col" @click={openPrompt}>Prompt</Button>
+      </Row>
+      <Row tag="p">
+        <Button raised className="col" @click={openLogin}>Login</Button>
+        <Button raised className="col" @click={openPassword}>Password</Button>
+      </Row>
+    </Block>
+    <BlockTitle>Vertical Buttons</BlockTitle>
+    <Block strong>
       <p>
-        <f7-button raised @click="openVerticalButtons">Vertical Buttons</f7-button>
+        <Button raised @click={openVerticalButtons}>Vertical Buttons</Button>
       </p>
-    </f7-block>
-    <f7-block-title>Preloader Dialog</f7-block-title>
-    <f7-block strong>
-      <f7-row tag="p">
-        <f7-button raised class="col" @click="openPreloader">Preloader</f7-button>
-        <f7-button raised class="col" @click="openCustomPreloader">Custom Text</f7-button>
-      </f7-row>
-    </f7-block>
-    <f7-block-title>Progress Dialog</f7-block-title>
-    <f7-block strong>
-      <f7-row tag="p">
-        <f7-button raised class="col" @click="openInfiniteProgress">Infinite</f7-button>
-        <f7-button raised class="col" @click="openDeterminedProgress">Determined</f7-button>
-      </f7-row>
-    </f7-block>
-    <f7-block-title>Dialogs Stack</f7-block-title>
-    <f7-block strong>
+    </Block>
+    <BlockTitle>Preloader Dialog</BlockTitle>
+    <Block strong>
+      <Row tag="p">
+        <Button raised className="col" @click={openPreloader}>Preloader</Button>
+        <Button raised className="col" @click={openCustomPreloader}>Custom Text</Button>
+      </Row>
+    </Block>
+    <BlockTitle>Progress Dialog</BlockTitle>
+    <Block strong>
+      <Row tag="p">
+        <Button raised className="col" @click={openInfiniteProgress}>Infinite</Button>
+        <Button raised className="col" @click={openDeterminedProgress}>Determined</Button>
+      </Row>
+    </Block>
+    <BlockTitle>Dialogs Stack</BlockTitle>
+    <Block strong>
       <p>This feature doesn't allow to open multiple dialogs at the same time, and will automatically open next dialog when you close the current one. Such behavior is similar to browser native dialogs: </p>
       <p>
-        <f7-button raised @click="openAlerts">Open Multiple Alerts</f7-button>
+        <Button raised @click={openAlerts}>Open Multiple Alerts</Button>
       </p>
-    </f7-block>
-  </f7-page>
+    </Block>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7BlockTitle, f7Block, f7Button, f7Row } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, BlockTitle, Block, Button, Row } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
-      f7BlockTitle,
-      f7Block,
-      f7Button,
-      f7Row,
+      Navbar,
+      Page,
+      BlockTitle,
+      Block,
+      Button,
+      Row,
     },
     methods: {
       openAlert() {

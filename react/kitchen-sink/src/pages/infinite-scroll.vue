@@ -1,22 +1,23 @@
 <template>
-  <f7-page infinite :infinite-distance="50" :infinite-preloader="showPreloader" @infinite="loadMore">
-    <f7-navbar title="Infinite Scroll" back-link="Back"></f7-navbar>
-    <f7-block-title>Scroll bottom</f7-block-title>
-    <f7-list>
-      <f7-list-item v-for="(item, index) in items" :title="`Item ${item}`" :key="index"></f7-list-item>
-    </f7-list>
-  </f7-page>
+  <Page infinite infinite-distance={50} infinite-preloader={showPreloader} @infinite={loadMore}>
+    <Navbar title="Infinite Scroll" backLink="Back"></Navbar>
+    <BlockTitle>Scroll bottom</BlockTitle>
+    <List>
+      <ListItem v-for="(item, index) in items" title={`Item ${item}`} key={index}></ListItem>
+    </List>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7BlockTitle, f7List, f7ListItem } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, BlockTitle, List, ListItem } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
-      f7BlockTitle,
-      f7List,
-      f7ListItem,
+      Navbar,
+      Page,
+      BlockTitle,
+      List,
+      ListItem,
     },
     data() {
       return {

@@ -1,14 +1,14 @@
 <template>
-  <f7-page>
-    <f7-navbar title="Swiper Slider" back-link="Back"></f7-navbar>
-    <div class="block">
+  <Page>
+    <Navbar title="Swiper Slider" backLink="Back"></Navbar>
+    <div className="block">
       <p>
         Framework7 comes with powerful and most modern touch slider ever -
-        <a href="http://idangero.us/swiper" class="external" target="_blank">Swiper Slider</a>
+        <a href="http://idangero.us/swiper" className="external" target="_blank">Swiper Slider</a>
         with super flexible configuration and lot, lot of features. Just check the following demos:
       </p>
     </div>
-    <div class="list links-list">
+    <div className="list links-list">
       <ul>
         <li>
           <a href="swiper-horizontal/">Swiper Horizontal</a>
@@ -66,15 +66,16 @@
         </li>
       </ul>
     </div>
-  </f7-page>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
+      Navbar,
+      Page,
     },
   };
 </script>

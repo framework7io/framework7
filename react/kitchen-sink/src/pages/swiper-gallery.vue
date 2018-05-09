@@ -1,49 +1,50 @@
 <template>
-  <f7-page style="background: #000">
-    <f7-navbar title="Two Way Control Gallery" back-link="Back"></f7-navbar>
-    <div class="swiper-container demo-swiper-gallery-top">
-      <div class="swiper-wrapper">
-        <div style="background-image:url(http://lorempixel.com/800/800/nature/1/)" class="swiper-slide"></div>
-        <div style="background-image:url(http://lorempixel.com/800/800/nature/2/)" class="swiper-slide"></div>
-        <div style="background-image:url(http://lorempixel.com/800/800/nature/3/)" class="swiper-slide"></div>
-        <div style="background-image:url(http://lorempixel.com/800/800/nature/4/)" class="swiper-slide"></div>
-        <div style="background-image:url(http://lorempixel.com/800/800/nature/5/)" class="swiper-slide"></div>
-        <div style="background-image:url(http://lorempixel.com/800/800/nature/6/)" class="swiper-slide"></div>
+  <Page style="background: #000">
+    <Navbar title="Two Way Control Gallery" backLink="Back"></Navbar>
+    <div className="swiper-container demo-swiper-gallery-top">
+      <div className="swiper-wrapper">
+        <div style="background-image:url(http://lorempixel.com/800/800/nature/1/)" className="swiper-slide"></div>
+        <div style="background-image:url(http://lorempixel.com/800/800/nature/2/)" className="swiper-slide"></div>
+        <div style="background-image:url(http://lorempixel.com/800/800/nature/3/)" className="swiper-slide"></div>
+        <div style="background-image:url(http://lorempixel.com/800/800/nature/4/)" className="swiper-slide"></div>
+        <div style="background-image:url(http://lorempixel.com/800/800/nature/5/)" className="swiper-slide"></div>
+        <div style="background-image:url(http://lorempixel.com/800/800/nature/6/)" className="swiper-slide"></div>
       </div>
-      <div class="swiper-button-next color-white"></div>
-      <div class="swiper-button-prev color-white"></div>
+      <div className="swiper-button-next color-white"></div>
+      <div className="swiper-button-prev color-white"></div>
     </div>
-    <div class="swiper-container demo-swiper-gallery-thumbs">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">
-          <div style="background-image:url(http://lorempixel.com/800/800/nature/1/)" class="swiper-slide-pic"></div>
+    <div className="swiper-container demo-swiper-gallery-thumbs">
+      <div className="swiper-wrapper">
+        <div className="swiper-slide">
+          <div style="background-image:url(http://lorempixel.com/800/800/nature/1/)" className="swiper-slide-pic"></div>
         </div>
-        <div class="swiper-slide">
-          <div style="background-image:url(http://lorempixel.com/800/800/nature/2/)" class="swiper-slide-pic"></div>
+        <div className="swiper-slide">
+          <div style="background-image:url(http://lorempixel.com/800/800/nature/2/)" className="swiper-slide-pic"></div>
         </div>
-        <div class="swiper-slide">
-          <div style="background-image:url(http://lorempixel.com/800/800/nature/3/)" class="swiper-slide-pic"></div>
+        <div className="swiper-slide">
+          <div style="background-image:url(http://lorempixel.com/800/800/nature/3/)" className="swiper-slide-pic"></div>
         </div>
-        <div class="swiper-slide">
-          <div style="background-image:url(http://lorempixel.com/800/800/nature/4/)" class="swiper-slide-pic"></div>
+        <div className="swiper-slide">
+          <div style="background-image:url(http://lorempixel.com/800/800/nature/4/)" className="swiper-slide-pic"></div>
         </div>
-        <div class="swiper-slide">
-          <div style="background-image:url(http://lorempixel.com/800/800/nature/5/)" class="swiper-slide-pic"></div>
+        <div className="swiper-slide">
+          <div style="background-image:url(http://lorempixel.com/800/800/nature/5/)" className="swiper-slide-pic"></div>
         </div>
-        <div class="swiper-slide">
-          <div style="background-image:url(http://lorempixel.com/800/800/nature/6/)" class="swiper-slide-pic"></div>
+        <div className="swiper-slide">
+          <div style="background-image:url(http://lorempixel.com/800/800/nature/6/)" className="swiper-slide-pic"></div>
         </div>
       </div>
     </div>
-  </f7-page>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
+      Navbar,
+      Page,
     },
     on: {
       pageBeforeRemove() {

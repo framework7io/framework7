@@ -1,35 +1,36 @@
 <template>
-  <f7-page no-toolbar no-navbar no-swipeback login-screen>
-    <f7-login-screen-title>Framework7</f7-login-screen-title>
-    <f7-list form>
-      <f7-list-item>
-        <f7-label>Username</f7-label>
-        <f7-input type="text" placeholder="Your username" @input="username = $event.target.value"></f7-input>
-      </f7-list-item>
-      <f7-list-item>
-        <f7-label>Password</f7-label>
-        <f7-input type="password" placeholder="Your password" @input="password = $event.target.value"></f7-input>
-      </f7-list-item>
-    </f7-list>
-    <f7-list>
-      <f7-list-button @click="signIn">Sign In</f7-list-button>
-      <f7-block-footer>Some text about login information.<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</f7-block-footer>
-    </f7-list>
-  </f7-page>
+  <Page no-toolbar no-navbar no-swipeback login-screen>
+    <LoginScreenTitle>Framework7</LoginScreenTitle>
+    <List form>
+      <ListItem>
+        <Label>Username</Label>
+        <Input type="text" placeholder="Your username" @input={username = $event.target.value}></Input>
+      </ListItem>
+      <ListItem>
+        <Label>Password</Label>
+        <Input type="password" placeholder="Your password" @input={password = $event.target.value}></Input>
+      </ListItem>
+    </List>
+    <List>
+      <ListButton @click={signIn}>Sign In</ListButton>
+      <BlockFooter>Some text about login information.<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</BlockFooter>
+    </List>
+  </Page>
 </template>
 <script>
-  import { f7Page, f7LoginScreenTitle, f7List, f7ListItem, f7Label, f7Input, f7ListButton, f7BlockFooter } from 'framework7-vue';
+  import React from 'react';
+  import { Page, LoginScreenTitle, List, ListItem, Label, Input, ListButton, BlockFooter } from 'framework7-react';
 
   export default {
     components: {
-      f7Page,
-      f7LoginScreenTitle,
-      f7List,
-      f7ListItem,
-      f7Label,
-      f7Input,
-      f7ListButton,
-      f7BlockFooter,
+      Page,
+      LoginScreenTitle,
+      List,
+      ListItem,
+      Label,
+      Input,
+      ListButton,
+      BlockFooter,
     },
     data() {
       return {

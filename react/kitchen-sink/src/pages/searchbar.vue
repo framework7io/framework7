@@ -1,71 +1,72 @@
 <template>
-  <f7-page>
-    <f7-navbar back-link="Back" title="Searchbar">
-      <f7-subnavbar :inner="false">
-        <f7-searchbar
+  <Page>
+    <Navbar backLink="Back" title="Searchbar">
+      <Subnavbar inner={false}>
+        <Searchbar
           search-container=".search-list"
           search-in=".item-title"
-        ></f7-searchbar>
-      </f7-subnavbar>
-    </f7-navbar>
-    <f7-list class="searchbar-not-found">
-      <f7-list-item title="Nothing found"></f7-list-item>
-    </f7-list>
-    <f7-list class="search-list searchbar-found">
-      <f7-list-item title="Acura"></f7-list-item>
-      <f7-list-item title="Audi"></f7-list-item>
-      <f7-list-item title="BMW"></f7-list-item>
-      <f7-list-item title="Cadillac "></f7-list-item>
-      <f7-list-item title="Chevrolet "></f7-list-item>
-      <f7-list-item title="Chrysler "></f7-list-item>
-      <f7-list-item title="Dodge "></f7-list-item>
-      <f7-list-item title="Ferrari "></f7-list-item>
-      <f7-list-item title="Ford "></f7-list-item>
-      <f7-list-item title="GMC "></f7-list-item>
-      <f7-list-item title="Honda"></f7-list-item>
-      <f7-list-item title="Hummer"></f7-list-item>
-      <f7-list-item title="Hyundai"></f7-list-item>
-      <f7-list-item title="Infiniti "></f7-list-item>
-      <f7-list-item title="Isuzu "></f7-list-item>
-      <f7-list-item title="Jaguar "></f7-list-item>
-      <f7-list-item title="Jeep "></f7-list-item>
-      <f7-list-item title="Kia"></f7-list-item>
-      <f7-list-item title="Lamborghini "></f7-list-item>
-      <f7-list-item title="Land Rover"></f7-list-item>
-      <f7-list-item title="Lexus "></f7-list-item>
-      <f7-list-item title="Lincoln "></f7-list-item>
-      <f7-list-item title="Lotus "></f7-list-item>
-      <f7-list-item title="Mazda"></f7-list-item>
-      <f7-list-item title="Mercedes-Benz"></f7-list-item>
-      <f7-list-item title="Mercury "></f7-list-item>
-      <f7-list-item title="Mitsubishi"></f7-list-item>
-      <f7-list-item title="Nissan "></f7-list-item>
-      <f7-list-item title="Oldsmobile "></f7-list-item>
-      <f7-list-item title="Peugeot "></f7-list-item>
-      <f7-list-item title="Pontiac "></f7-list-item>
-      <f7-list-item title="Porsche"></f7-list-item>
-      <f7-list-item title="Regal"></f7-list-item>
-      <f7-list-item title="Saab "></f7-list-item>
-      <f7-list-item title="Saturn "></f7-list-item>
-      <f7-list-item title="Subaru "></f7-list-item>
-      <f7-list-item title="Suzuki "></f7-list-item>
-      <f7-list-item title="Toyota"></f7-list-item>
-      <f7-list-item title="Volkswagen"></f7-list-item>
-      <f7-list-item title="Volvo"></f7-list-item>
-    </f7-list>
-  </f7-page>
+        ></Searchbar>
+      </Subnavbar>
+    </Navbar>
+    <List className="searchbar-not-found">
+      <ListItem title="Nothing found"></ListItem>
+    </List>
+    <List className="search-list searchbar-found">
+      <ListItem title="Acura"></ListItem>
+      <ListItem title="Audi"></ListItem>
+      <ListItem title="BMW"></ListItem>
+      <ListItem title="Cadillac "></ListItem>
+      <ListItem title="Chevrolet "></ListItem>
+      <ListItem title="Chrysler "></ListItem>
+      <ListItem title="Dodge "></ListItem>
+      <ListItem title="Ferrari "></ListItem>
+      <ListItem title="Ford "></ListItem>
+      <ListItem title="GMC "></ListItem>
+      <ListItem title="Honda"></ListItem>
+      <ListItem title="Hummer"></ListItem>
+      <ListItem title="Hyundai"></ListItem>
+      <ListItem title="Infiniti "></ListItem>
+      <ListItem title="Isuzu "></ListItem>
+      <ListItem title="Jaguar "></ListItem>
+      <ListItem title="Jeep "></ListItem>
+      <ListItem title="Kia"></ListItem>
+      <ListItem title="Lamborghini "></ListItem>
+      <ListItem title="Land Rover"></ListItem>
+      <ListItem title="Lexus "></ListItem>
+      <ListItem title="Lincoln "></ListItem>
+      <ListItem title="Lotus "></ListItem>
+      <ListItem title="Mazda"></ListItem>
+      <ListItem title="Mercedes-Benz"></ListItem>
+      <ListItem title="Mercury "></ListItem>
+      <ListItem title="Mitsubishi"></ListItem>
+      <ListItem title="Nissan "></ListItem>
+      <ListItem title="Oldsmobile "></ListItem>
+      <ListItem title="Peugeot "></ListItem>
+      <ListItem title="Pontiac "></ListItem>
+      <ListItem title="Porsche"></ListItem>
+      <ListItem title="Regal"></ListItem>
+      <ListItem title="Saab "></ListItem>
+      <ListItem title="Saturn "></ListItem>
+      <ListItem title="Subaru "></ListItem>
+      <ListItem title="Suzuki "></ListItem>
+      <ListItem title="Toyota"></ListItem>
+      <ListItem title="Volkswagen"></ListItem>
+      <ListItem title="Volvo"></ListItem>
+    </List>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7Searchbar, f7Subnavbar, f7List, f7ListItem } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, Searchbar, Subnavbar, List, ListItem } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
-      f7Searchbar,
-      f7Subnavbar,
-      f7List,
-      f7ListItem,
+      Navbar,
+      Page,
+      Searchbar,
+      Subnavbar,
+      List,
+      ListItem,
     },
   }
 </script>

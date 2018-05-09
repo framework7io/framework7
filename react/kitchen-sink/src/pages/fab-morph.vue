@@ -1,74 +1,74 @@
 <template>
-  <f7-page :page-content="false">
-    <f7-navbar title="Floating Action Button Morph" back-link="Back"></f7-navbar>
-    <div class="toolbar tabbar tabbar-labels toolbar-bottom-md fab-morph-target">
-      <div class="toolbar-inner">
-        <a class="tab-link tab-link-active">
-          <i class="icon f7-icons ios-only">email</i>
-          <i class="icon icon-fill f7-icons ios-only">email_fill</i>
-          <i class="icon material-icons md-only">email</i>
-          <span class="tabbar-label">Inbox</span>
+  <Page page-content={false}>
+    <Navbar title="Floating Action Button Morph" backLink="Back"></Navbar>
+    <div className="toolbar tabbar tabbar-labels toolbar-bottom-md fab-morph-target">
+      <div className="toolbar-inner">
+        <a className="tab-link tabLinkActive">
+          <i className="icon f7-icons ios-only">email</i>
+          <i className="icon icon-fill f7-icons ios-only">email_fill</i>
+          <i className="icon material-icons md-only">email</i>
+          <span className="tabbar-label">Inbox</span>
         </a>
-        <a class="tab-link">
-          <i class="icon f7-icons ios-only">today</i>
-          <i class="icon icon-fill f7-icons ios-only">today_fill</i>
-          <i class="icon material-icons md-only">today</i>
-          <span class="tabbar-label">Calendar</span>
+        <a className="tab-link">
+          <i className="icon f7-icons ios-only">today</i>
+          <i className="icon icon-fill f7-icons ios-only">today_fill</i>
+          <i className="icon material-icons md-only">today</i>
+          <span className="tabbar-label">Calendar</span>
         </a>
-        <a class="tab-link">
-          <i class="icon f7-icons ios-only">cloud</i>
-          <i class="icon icon-fill f7-icons ios-only">cloud_fill</i>
-          <i class="icon material-icons md-only">file_upload</i>
-          <span class="tabbar-label">Upload</span>
+        <a className="tab-link">
+          <i className="icon f7-icons ios-only">cloud</i>
+          <i className="icon icon-fill f7-icons ios-only">cloud_fill</i>
+          <i className="icon material-icons md-only">file_upload</i>
+          <span className="tabbar-label">Upload</span>
         </a>
       </div>
     </div>
-    <div class="fab fab-right-bottom fab-morph" data-morph-to=".toolbar.fab-morph-target">
+    <div className="fab fab-right-bottom fab-morph" data-morph-to=".toolbar.fab-morph-target">
       <a href="#">
-        <i class="icon f7-icons ios-only">add</i>
-        <i class="icon material-icons md-only">add</i>
+        <i className="icon f7-icons ios-only">add</i>
+        <i className="icon material-icons md-only">add</i>
       </a>
     </div>
-    <div class="fab fab-left-bottom fab-morph" data-morph-to=".demo-fab-sheet.fab-morph-target">
+    <div className="fab fab-left-bottom fab-morph" data-morph-to=".demo-fab-sheet.fab-morph-target">
       <a href="#">
-        <i class="icon f7-icons ios-only">add</i>
-        <i class="icon material-icons md-only">add</i>
+        <i className="icon f7-icons ios-only">add</i>
+        <i className="icon material-icons md-only">add</i>
       </a>
     </div>
-    <div class="fab fab-center-bottom fab-morph" data-morph-to=".demo-fab-fullscreen-sheet.fab-morph-target">
+    <div className="fab fab-center-bottom fab-morph" data-morph-to=".demo-fab-fullscreen-sheet.fab-morph-target">
       <a href="#">
-        <i class="icon f7-icons ios-only">add</i>
-        <i class="icon material-icons md-only">add</i>
+        <i className="icon f7-icons ios-only">add</i>
+        <i className="icon material-icons md-only">add</i>
       </a>
     </div>
-    <div class="list links-list demo-fab-sheet fab-morph-target">
+    <div className="list links-list demo-fab-sheet fab-morph-target">
       <ul>
-        <li><a href="#" class="fab-close">Link 1</a></li>
-        <li><a href="#" class="fab-close">Link 2</a></li>
-        <li><a href="#" class="fab-close">Link 3</a></li>
-        <li><a href="#" class="fab-close">Link 4</a></li>
+        <li><a href="#" className="fab-close">Link 1</a></li>
+        <li><a href="#" className="fab-close">Link 2</a></li>
+        <li><a href="#" className="fab-close">Link 3</a></li>
+        <li><a href="#" className="fab-close">Link 4</a></li>
       </ul>
     </div>
-    <div class="demo-fab-fullscreen-sheet fab-morph-target">
-      <f7-block-title>Choose Something</f7-block-title>
-      <div class="list links-list">
+    <div className="demo-fab-fullscreen-sheet fab-morph-target">
+      <BlockTitle>Choose Something</BlockTitle>
+      <div className="list links-list">
         <ul>
-          <li><a href="#" class="fab-close">Link 1</a></li>
-          <li><a href="#" class="fab-close">Link 2</a></li>
-          <li><a href="#" class="fab-close">Link 3</a></li>
-          <li><a href="#" class="fab-close">Link 4</a></li>
+          <li><a href="#" className="fab-close">Link 1</a></li>
+          <li><a href="#" className="fab-close">Link 2</a></li>
+          <li><a href="#" className="fab-close">Link 3</a></li>
+          <li><a href="#" className="fab-close">Link 4</a></li>
         </ul>
       </div>
     </div>
-    <div class="page-content">
-      <div class="block">
+    <div className="page-content">
+      <div className="block">
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia, quo rem beatae, delectus eligendi est saepe molestias perferendis suscipit, commodi labore ipsa non quasi eum magnam neque ducimus! Quasi, numquam.</p>
         <p>Maiores culpa, itaque! Eaque natus ab cum ipsam numquam blanditiis a, quia, molestiae aut laudantium recusandae ipsa. Ad iste ex asperiores ipsa, mollitia perferendis consectetur quam eaque, voluptate laboriosam unde.</p>
         <p>Sed odit quis aperiam temporibus vitae necessitatibus, laboriosam, exercitationem dolores odio sapiente provident. Accusantium id, itaque aliquam libero ipsum eos fugiat distinctio laboriosam exercitationem sequi facere quas quidem magnam reprehenderit.</p>
         <p>Pariatur corporis illo, amet doloremque. Ab veritatis sunt nisi consectetur error modi, nam illo et nostrum quia aliquam ipsam vitae facere voluptates atque similique odit mollitia, rerum placeat nobis est.</p>
         <p>Et impedit soluta minus a autem adipisci cupiditate eius dignissimos nihil officia dolore voluptatibus aperiam reprehenderit esse facilis labore qui, officiis consectetur. Ipsa obcaecati aspernatur odio assumenda veniam, ipsum alias.</p>
       </div>
-      <div class="block">
+      <div className="block">
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa ipsa debitis sed nihil eaque dolore cum iste quibusdam, accusamus doloribus, tempora quia quos voluptatibus corporis officia at quas dolorem earum!</p>
         <p>Quod soluta eos inventore magnam suscipit enim at hic in maiores temporibus pariatur tempora minima blanditiis vero autem est perspiciatis totam dolorum, itaque repellat? Nobis necessitatibus aut odit aliquam adipisci.</p>
         <p>Tenetur delectus perspiciatis ex numquam, unde corrupti velit! Quam aperiam, animi fuga veritatis consectetur, voluptatibus atque consequuntur dignissimos itaque, sint impedit cum cumque at. Adipisci sint, iusto blanditiis ullam? Vel?</p>
@@ -78,16 +78,17 @@
         <p>Atque qui quaerat quasi officia molestiae, molestias totam incidunt reprehenderit laboriosam facilis veritatis, non iusto! Dolore ipsam obcaecati voluptates minima maxime minus qui mollitia facere. Nostrum esse recusandae voluptatibus eligendi.</p>
       </div>
     </div>
-  </f7-page>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7BlockTitle } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, BlockTitle } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
-      f7BlockTitle,
+      Navbar,
+      Page,
+      BlockTitle,
     },
   };
 </script>

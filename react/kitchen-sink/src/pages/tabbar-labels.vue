@@ -1,21 +1,21 @@
 <template>
-  <f7-page :page-content="false">
-    <f7-navbar title="Tabbar Labels" back-link="Back">
-      <f7-nav-right v-if="$theme.md">
-        <f7-link icon="material:compare_arrows" @click="toggleToolbarPosition">
-          <i class="icon material-icons rotate-icon">compare_arrows</i>
-        </f7-link>
-      </f7-nav-right>
-    </f7-navbar>
-    <f7-toolbar tabbar labels>
-      <f7-link tab-link="#tab-1" tab-link-active text="Tab 1" icon-if-ios="f7:email_fill" icon-if-md="material:email"></f7-link>
-      <f7-link tab-link="#tab-2" text="Tab 2" icon-if-ios="f7:today_fill" icon-if-md="material:today"></f7-link>
-      <f7-link tab-link="#tab-3" text="Tab 3" icon-if-ios="f7:cloud_fill" icon-if-md="material:file_upload"></f7-link>
-    </f7-toolbar>
+  <Page page-content={false}>
+    <Navbar title="Tabbar Labels" backLink="Back">
+      <NavRight v-if="$theme.md">
+        <Link icon="material:compare_arrows" @click={toggleToolbarPosition}>
+          <i className="icon material-icons rotate-icon">compare_arrows</i>
+        </Link>
+      </NavRight>
+    </Navbar>
+    <Toolbar tabbar labels>
+      <Link tabLink="#tab-1" tabLinkActive text="Tab 1" icon-if-ios="f7:email_fill" icon-if-md="material:email"></Link>
+      <Link tabLink="#tab-2" text="Tab 2" icon-if-ios="f7:today_fill" icon-if-md="material:today"></Link>
+      <Link tabLink="#tab-3" text="Tab 3" icon-if-ios="f7:cloud_fill" icon-if-md="material:file_upload"></Link>
+    </Toolbar>
 
-    <f7-tabs>
-      <f7-tab id="tab-1" class="page-content" tab-active>
-        <f7-block>
+    <Tabs>
+      <Tab id="tab-1" className="page-content" tabActive>
+        <Block>
           <p>Tab 1 content</p>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae facilis laudantium voluptates obcaecati officia cum, sit libero commodi. Ratione illo suscipit temporibus sequi iure ad laboriosam accusamus?</p>
           <p>Saepe explicabo voluptas ducimus provident, doloremque quo totam molestias! Suscipit blanditiis eaque exercitationem praesentium reprehenderit, fuga accusamus possimus sed, sint facilis ratione quod, qui dignissimos voluptas! Aliquam rerum consequuntur deleniti.</p>
@@ -24,10 +24,10 @@
           <p>Suscipit, facere quasi atque totam. Repudiandae facilis at optio atque, rem nam, natus ratione cum enim voluptatem suscipit veniam! Repellat, est debitis. Modi nam mollitia explicabo, unde aliquid impedit! Adipisci!</p>
           <p>Deserunt adipisci tempora asperiores, quo, nisi ex delectus vitae consectetur iste fugiat iusto dolorem autem. Itaque, ipsa voluptas, a assumenda rem, dolorum porro accusantium, officiis veniam nostrum cum cumque impedit.</p>
           <p>Laborum illum ipsa voluptatibus possimus nesciunt ex consequatur rem, natus ad praesentium rerum libero consectetur temporibus cupiditate atque aspernatur, eaque provident eligendi quaerat ea soluta doloremque. Iure fugit, minima facere.</p>
-        </f7-block>
-      </f7-tab>
-      <f7-tab id="tab-2" class="page-content">
-        <f7-block>
+        </Block>
+      </Tab>
+      <Tab id="tab-2" className="page-content">
+        <Block>
           <p>Tab 2 content</p>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae facilis laudantium voluptates obcaecati officia cum, sit libero commodi. Ratione illo suscipit temporibus sequi iure ad laboriosam accusamus?</p>
           <p>Saepe explicabo voluptas ducimus provident, doloremque quo totam molestias! Suscipit blanditiis eaque exercitationem praesentium reprehenderit, fuga accusamus possimus sed, sint facilis ratione quod, qui dignissimos voluptas! Aliquam rerum consequuntur deleniti.</p>
@@ -36,10 +36,10 @@
           <p>Suscipit, facere quasi atque totam. Repudiandae facilis at optio atque, rem nam, natus ratione cum enim voluptatem suscipit veniam! Repellat, est debitis. Modi nam mollitia explicabo, unde aliquid impedit! Adipisci!</p>
           <p>Deserunt adipisci tempora asperiores, quo, nisi ex delectus vitae consectetur iste fugiat iusto dolorem autem. Itaque, ipsa voluptas, a assumenda rem, dolorum porro accusantium, officiis veniam nostrum cum cumque impedit.</p>
           <p>Laborum illum ipsa voluptatibus possimus nesciunt ex consequatur rem, natus ad praesentium rerum libero consectetur temporibus cupiditate atque aspernatur, eaque provident eligendi quaerat ea soluta doloremque. Iure fugit, minima facere.</p>
-        </f7-block>
-      </f7-tab>
-      <f7-tab id="tab-3" class="page-content">
-        <f7-block>
+        </Block>
+      </Tab>
+      <Tab id="tab-3" className="page-content">
+        <Block>
           <p>Tab 3 content</p>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae facilis laudantium voluptates obcaecati officia cum, sit libero commodi. Ratione illo suscipit temporibus sequi iure ad laboriosam accusamus?</p>
           <p>Saepe explicabo voluptas ducimus provident, doloremque quo totam molestias! Suscipit blanditiis eaque exercitationem praesentium reprehenderit, fuga accusamus possimus sed, sint facilis ratione quod, qui dignissimos voluptas! Aliquam rerum consequuntur deleniti.</p>
@@ -48,17 +48,18 @@
           <p>Suscipit, facere quasi atque totam. Repudiandae facilis at optio atque, rem nam, natus ratione cum enim voluptatem suscipit veniam! Repellat, est debitis. Modi nam mollitia explicabo, unde aliquid impedit! Adipisci!</p>
           <p>Deserunt adipisci tempora asperiores, quo, nisi ex delectus vitae consectetur iste fugiat iusto dolorem autem. Itaque, ipsa voluptas, a assumenda rem, dolorum porro accusantium, officiis veniam nostrum cum cumque impedit.</p>
           <p>Laborum illum ipsa voluptatibus possimus nesciunt ex consequatur rem, natus ad praesentium rerum libero consectetur temporibus cupiditate atque aspernatur, eaque provident eligendi quaerat ea soluta doloremque. Iure fugit, minima facere.</p>
-        </f7-block>
-      </f7-tab>
-    </f7-tabs>
-  </f7-page>
+        </Block>
+      </Tab>
+    </Tabs>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7Block, f7Tabs, f7Tab, f7Link, f7Toolbar, f7NavRight } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, Block, Tabs, Tab, Link, Toolbar, f7NavRight } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar, f7Page, f7Block, f7Tabs, f7Tab, f7Link, f7Toolbar, f7NavRight,
+      Navbar, Page, Block, Tabs, Tab, Link, Toolbar, f7NavRight,
     },
     methods: {
       toggleToolbarPosition() {

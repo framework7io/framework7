@@ -1,31 +1,32 @@
 <template>
-  <f7-page ptr @ptr:refresh="loadMore">
-    <f7-navbar title="Pull To Refresh" back-link="Back"></f7-navbar>
-    <f7-list media-list>
-      <f7-list-item
+  <Page ptr @ptr:refresh="loadMore">
+    <Navbar title="Pull To Refresh" backLink="Back"></Navbar>
+    <List mediaList>
+      <ListItem
         v-for="(item, index) in items"
-        :key="index"
-        :title="item.title"
-        :subtitle="item.author">
-        <img slot="media" :src="item.cover" width="44" />
-      </f7-list-item>
+        key={index}
+        title={item.title}
+        subtitle={item.author}>
+        <img slot="media" src={item.cover} width="44" />
+      </ListItem>
 
-      <f7-block-footer>
+      <BlockFooter>
         <p>Just pull page down to let the magic happen.<br>Note that pull-to-refresh feature is optimised for touch and native scrolling so it may not work on desktop browser.</p>
-      </f7-block-footer>
-    </f7-list>
-  </f7-page>
+      </BlockFooter>
+    </List>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7List, f7ListItem, f7BlockFooter } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, List, ListItem, BlockFooter } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
-      f7List,
-      f7ListItem,
-      f7BlockFooter,
+      Navbar,
+      Page,
+      List,
+      ListItem,
+      BlockFooter,
     },
     data() {
       return {

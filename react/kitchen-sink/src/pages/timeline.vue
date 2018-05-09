@@ -1,19 +1,20 @@
 <template>
-  <f7-page>
-    <f7-navbar title="Timeline" back-link="Back"></f7-navbar>
-    <f7-list>
-      <f7-list-item link="/timeline-vertical/" title="Vertical Timeline"></f7-list-item>
-      <f7-list-item link="/timeline-horizontal/" title="Horizontal Timeline"></f7-list-item>
-      <f7-list-item link="/timeline-horizontal-calendar/" title="Calendar Timeline"></f7-list-item>
-    </f7-list>
-  </f7-page>
+  <Page>
+    <Navbar title="Timeline" backLink="Back"></Navbar>
+    <List>
+      <ListItem link="/timeline-vertical/" title="Vertical Timeline"></ListItem>
+      <ListItem link="/timeline-horizontal/" title="Horizontal Timeline"></ListItem>
+      <ListItem link="/timeline-horizontal-calendar/" title="Calendar Timeline"></ListItem>
+    </List>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7List, f7ListItem } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, List, ListItem } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar, f7Page, f7List, f7ListItem,
+      Navbar, Page, List, ListItem,
     },
   };
 </script>

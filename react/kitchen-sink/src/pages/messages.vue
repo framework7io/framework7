@@ -1,87 +1,88 @@
 <template>
-  <f7-page>
-    <f7-navbar title="Messsages" back-link="Back"></f7-navbar>
+  <Page>
+    <Navbar title="Messsages" backLink="Back"></Navbar>
 
-    <f7-messagebar
-      :placeholder="placeholder"
+    <Messagebar
+      placeholder={placeholder}
       ref="messagebar"
-      :attachmentsVisible="attachmentsVisible"
-      :sheetVisible="sheetVisible"
+      attachmentsVisible={attachmentsVisible}
+      sheetVisible={sheetVisible}
     >
-      <f7-link
+      <Link
         icon-if-ios="f7:camera_fill"
         icon-if-md="material:camera_alt"
         slot="inner-start"
         @click="sheetVisible = !sheetVisible"
-      ></f7-link>
-      <f7-link
+      ></Link>
+      <Link
         icon-if-ios="f7:arrow_up_fill"
         icon-if-md="material:send"
         slot="inner-end"
-        @click="sendMessage"
-      ></f7-link>
-      <f7-messagebar-attachments>
-        <f7-messagebar-attachment
+        @click={sendMessage}
+      ></Link>
+      <MessagebarAttachments>
+        <MessagebarAttachment
           v-for="(image, index) in attachments"
-          :key="index"
-          :image="image"
+          key={index}
+          image={image}
           @attachment:delete="deleteAttachment(image)"
-        ></f7-messagebar-attachment>
-      </f7-messagebar-attachments>
-      <f7-messagebar-sheet>
-        <f7-messagebar-sheet-image
+        ></MessagebarAttachment>
+      </MessagebarAttachments>
+      <MessagebarSheet>
+        <MessagebarSheetImage
           v-for="(image, index) in images"
-          :key="index"
-          :image="image"
-          :checked="attachments.indexOf(image) >= 0"
-          @change="handleAttachment"
-        ></f7-messagebar-sheet-image>
-      </f7-messagebar-sheet>
-    </f7-messagebar>
+          key={index}
+          image={image}
+          checked={attachments.indexOf(image) >= 0}
+          @change={handleAttachment}
+        ></MessagebarSheetImage>
+      </MessagebarSheet>
+    </Messagebar>
 
-    <f7-messages ref="messages">
-      <f7-messages-title><b>Sunday, Feb 9,</b> 12:58</f7-messages-title>
-      <f7-message
+    <Messages ref="messages">
+      <MessagesTitle><b>Sunday, Feb 9,</b> 12:58</MessagesTitle>
+      <Message
         v-for="(message, index) in messagesData"
-        :key="index"
-        :type="message.type"
-        :image="message.image"
-        :name="message.name"
-        :avatar="message.avatar"
-        :first="isFirstMessage(message, index)"
-        :last="isLastMessage(message, index)"
-        :tail="isTailMessage(message, index)"
+        key={index}
+        type={message.type}
+        image={message.image}
+        name={message.name}
+        avatar={message.avatar}
+        first={isFirstMessage(message, index)}
+        last={isLastMessage(message, index)}
+        tail={isTailMessage(message, index)}
       >
         <span slot="text" v-if="message.text" v-html="message.text"></span>
-      </f7-message>
-      <f7-message v-if="typingMessage"
+      </Message>
+      <Message v-if="typingMessage"
         type="received"
-        :typing="true"
-        :first="true"
-        :last="true"
-        :tail="true"
-        :header="`${typingMessage.name} is typing`"
-        :avatar="typingMessage.avatar"
-      ></f7-message>
-    </f7-messages>
-  </f7-page>
+        typing={true}
+        first={true}
+        last={true}
+        tail={true}
+        header={`${typingMessage.name} is typing`}
+        avatar={typingMessage.avatar}
+      ></Message>
+    </Messages>
+  </Page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7Messages, f7MessagesTitle, f7Message, f7Messagebar, f7Link, f7MessagebarAttachments, f7MessagebarAttachment, f7MessagebarSheet, f7MessagebarSheetImage } from 'framework7-vue';
+  import React from 'react';
+  import { Navbar, Page, Messages, MessagesTitle, Message, Messagebar, Link, MessagebarAttachments, MessagebarAttachment, MessagebarSheet, MessagebarSheetImage } from 'framework7-react';
 
   export default {
     components: {
-      f7Navbar,
-      f7Page,
-      f7Messages,
-      f7MessagesTitle,
-      f7Message,
-      f7Messagebar,
-      f7MessagebarAttachments,
-      f7MessagebarAttachment,
-      f7MessagebarSheet,
-      f7MessagebarSheetImage,
-      f7Link,
+      Navbar,
+      Page,
+      Messages,
+      MessagesTitle,
+      Message,
+      Messagebar,
+      MessagebarAttachments,
+      MessagebarAttachment,
+      MessagebarSheet,
+      MessagebarSheetImage,
+      Link,
     },
     data() {
       return {
@@ -193,8 +194,8 @@
     mounted() {
       const self = this;
       self.$f7ready(() => {
-        self.messagebar = self.$refs.messagebar.f7Messagebar;
-        self.messages = self.$refs.messages.f7Messages;
+        self.messagebar = self.$refs.messagebar.Messagebar;
+        self.messages = self.$refs.messages.Messages;
       });
     },
     methods: {
