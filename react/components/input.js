@@ -51,9 +51,10 @@ class F7Input extends React.Component {
     const self = this;
     const {type, name, value, placeholder, id, inputId, size, accept, autocomplete, autocorrect, autocapitalize, spellcheck, autofocus, autosave, checked, disabled, max, min, step, maxlength, minlength, multiple, readonly, required, inputStyle, pattern, validate, tabindex, resizable, clearButton, errorMessage, info, wrap, style, className, noStoreData, noFormStoreData} = self.props;
     let inputEl;
-    function createInput(tag, children) {
+    const createInput = (tag, children) => {
       const InputTag = tag;
-      const needsValue = !(type === 'select' || type === 'textarea' || type === 'file');
+      const needsValue = !(type === 'select' || type === 'file');
+      const needsType = tag === 'input';
       const inputClassName = Utils.classNames(type === 'textarea' && resizable && 'resizable', !wrap && className, (noFormStoreData || noStoreData) && 'no-store-data');
       return React.createElement(InputTag, {
         ref: __reactNode => {
@@ -61,7 +62,7 @@ class F7Input extends React.Component {
         },
         style: inputStyle,
         name: name,
-        type: type,
+        type: needsType ? type : undefined,
         placeholder: placeholder,
         id: inputId,
         value: needsValue ? value : undefined,
@@ -84,23 +85,28 @@ class F7Input extends React.Component {
         readOnly: readonly,
         required: required,
         pattern: pattern,
-        validate: validate,
+        validate: typeof validate === 'string' && validate.length ? validate : undefined,
+        'data-validate': validate === true || validate === '',
         tabIndex: tabindex,
         'data-error-message': errorMessage,
-        className: inputClassName
+        className: inputClassName,
+        onFocus: self.onFocusBound,
+        onBlur: self.onBlurBound,
+        onInput: self.onInputBound,
+        onChange: self.onChangeBound
       }, children);
-    }
+    };
     const {
       default: slotsDefault,
       info: slotsInfo
     } = self.slots;
-    if (type === 'select' || self.type === 'textarea' || self.type === 'file') {
-      if (self.type === 'select') {
+    if (type === 'select' || type === 'textarea' || type === 'file') {
+      if (type === 'select') {
         inputEl = createInput('select', slotsDefault);
-      } else if (self.type === 'file') {
+      } else if (type === 'file') {
         inputEl = createInput('input');
       } else {
-        inputEl = createInput('textarea', slotsDefault);
+        inputEl = createInput('textarea');
       }
     } else if (slotsDefault && slotsDefault.length > 0 || !type) {
       inputEl = slotsDefault;
@@ -114,7 +120,7 @@ class F7Input extends React.Component {
         id: inputId,
         onChange: self.onChangeBound
       });
-    } else if (self.type === 'range') {
+    } else if (type === 'range') {
       inputEl = React.createElement(F7Range, {
         value: value,
         disabled: disabled,
@@ -148,10 +154,6 @@ class F7Input extends React.Component {
     const inputEl = self.refs.inputEl;
     if (!inputEl)
       return;
-    inputEl.removeEventListener('focus', self.onFocusBound, false);
-    inputEl.removeEventListener('blur', self.onBlurBound, false);
-    inputEl.removeEventListener('input', self.onInputBound, false);
-    inputEl.removeEventListener('change', self.onChangeBound, false);
     inputEl.removeEventListener('input:notempty', self.onInputNotEmptyBound, false);
     if (type === 'textarea' && resizable) {
       inputEl.removeEventListener('textarea:resze', self.onTextareaResizeBound, false);
@@ -200,10 +202,6 @@ class F7Input extends React.Component {
       const inputEl = self.refs.inputEl;
       if (!inputEl)
         return;
-      inputEl.addEventListener('focus', self.onFocusBound, false);
-      inputEl.addEventListener('blur', self.onBlurBound, false);
-      inputEl.addEventListener('input', self.onInputBound, false);
-      inputEl.addEventListener('change', self.onChangeBound, false);
       inputEl.addEventListener('input:notempty', self.onInputNotEmptyBound, false);
       if (type === 'textarea' && resizable) {
         inputEl.addEventListener('textarea:resze', self.onTextareaResizeBound, false);
@@ -291,7 +289,10 @@ __reactComponentSetProps(F7Input, {
   required: Boolean,
   inputStyle: String,
   pattern: String,
-  validate: Boolean,
+  validate: [
+    Boolean,
+    String
+  ],
   tabindex: [
     String,
     Number
