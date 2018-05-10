@@ -1,0 +1,20 @@
+From 9e427ae269cc48e74dd59a1a165d5424475de214 Mon Sep 17 00:00:00 2001
+From: Matt Kirkland <mkirkland616@gmail.com>
+Date: Thu, 10 May 2018 12:11:06 -0500
+Subject: Revert "Issue #2379"
+
+This reverts commit 89c33e0786d6dc63350521436b2af72a4b09ccd0.
+
+diff --git a/dist/js/framework7.js b/dist/js/framework7.js
+index 784818f4..dccffda3 100644
+--- a/dist/js/framework7.js
++++ b/dist/js/framework7.js
+@@ -14803,7 +14803,7 @@
+               panels = [app.panel.left, app.panel.right];
+             } else {
+               side = panel;
+-              panels.push(app.panel[side]);
++              panels = app.panel[side];
+             }
+           } else {
+             panels = [panel];
