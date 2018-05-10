@@ -14803,7 +14803,7 @@
               panels = [app.panel.left, app.panel.right];
             } else {
               side = panel;
-              panels.push(app.panel[side]);
+              panels = app.panel[side];
             }
           } else {
             panels = [panel];
