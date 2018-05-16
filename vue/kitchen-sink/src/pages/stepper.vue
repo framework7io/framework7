@@ -208,7 +208,7 @@
           <f7-stepper :value="0" :min="0" :max="100" :step="1" :autorepeat="true"></f7-stepper>
         </f7-col>
         <f7-col>
-          <small class="display-block">Default</small>
+          <small class="display-block">Dynamic</small>
           <f7-stepper :value="0" :min="0" :max="100" :step="1" :autorepeat="true" :autorepeat-dynamic="true"></f7-stepper>
         </f7-col>
       </f7-row>

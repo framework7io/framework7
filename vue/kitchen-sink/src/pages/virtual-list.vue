@@ -53,7 +53,9 @@
       }
       return {
         items,
-        vlData: {},
+        vlData: {
+          items: [],
+        },
       };
     },
     methods: {
