@@ -197,7 +197,7 @@ export default {
       el.addEventListener('tab:hide', self.onTabHideBound);
     }
 
-    if (!self.virtualList) return;
+    if (!self.props.virtualList) return;
 
     self.$f7ready((f7) => {
       const $$ = self.$$;
