@@ -1,5 +1,8 @@
-<template>
-  <Page page-content={false}>
+import React from 'react';
+import { Navbar, Page, Block, Tabs, Tab, Link, Toolbar } from 'framework7-react';
+
+export default () => (
+  <Page pageContent={false}>
     <Navbar title="Tabs Routable" backLink="Back"></Navbar>
     <Toolbar tabbar>
       <Link tabLink href="./" route-tab-id="tab1">Tab 1</Link>
@@ -12,14 +15,4 @@
       <Tab className="page-content" id="tab3"></Tab>
     </Tabs>
   </Page>
-</template>
-<script>
-  import React from 'react';
-  import { Navbar, Page, Block, Tabs, Tab, Link, Toolbar } from 'framework7-react';
-
-  export default {
-    components: {
-      Navbar, Page, Block, Tabs, Tab, Link, Toolbar,
-    },
-  };
-</script>
+)

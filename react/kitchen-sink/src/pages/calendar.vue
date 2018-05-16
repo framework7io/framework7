@@ -1,5 +1,5 @@
 <template>
-  <Page page-content={false}>
+  <Page pageContent={false}>
     <Navbar title="Calendar" backLink="Back"></Navbar>
     <div className="page-content">
       <div className="block">

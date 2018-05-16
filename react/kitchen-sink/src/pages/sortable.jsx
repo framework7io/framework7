@@ -1,8 +1,11 @@
-<template>
+import React from 'react';
+import { Navbar, Page, Block, List, ListItem, NavRight, Link, Icon } from 'framework7-react';
+
+export default () => (
   <Page>
     <Navbar title="Sortable List" backLink="Back">
       <NavRight>
-        <Link sortable-toggle=".sortable">Toggle</Link>
+        <Link sortableToggle=".sortable">Toggle</Link>
       </NavRight>
     </Navbar>
 
@@ -73,21 +76,4 @@
       </ListItem>
     </List>
   </Page>
-</template>
-<script>
-  import React from 'react';
-  import { Navbar, Page, Block, List, ListItem, f7NavRight, Link, Icon } from 'framework7-react';
-
-  export default {
-    components: {
-      Navbar,
-      Page,
-      Block,
-      List,
-      ListItem,
-      f7NavRight,
-      Link,
-      Icon,
-    },
-  };
-</script>
+);

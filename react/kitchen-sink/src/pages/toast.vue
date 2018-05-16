@@ -4,28 +4,28 @@
     <Block>
       <p>Toasts provide brief feedback about an operation through a message on the screen.</p>
       <p>
-        <Button raised @click={showToastBottom}>Toast on Bottom</Button>
+        <Button raised onClick={showToastBottom}>Toast on Bottom</Button>
       </p>
       <p>
-        <Button raised @click={showToastTop}>Toast on Top</Button>
+        <Button raised onClick={showToastTop}>Toast on Top</Button>
       </p>
       <p>
-        <Button raised @click={showToastCenter}>Toast on Center</Button>
+        <Button raised onClick={showToastCenter}>Toast on Center</Button>
       </p>
       <p>
-        <Button raised @click={showToastIcon}>Toast with icon</Button>
+        <Button raised onClick={showToastIcon}>Toast with icon</Button>
       </p>
       <p>
-        <Button raised @click={showToastLargeMessage}>Toast with large message</Button>
+        <Button raised onClick={showToastLargeMessage}>Toast with large message</Button>
       </p>
       <p>
-        <Button raised @click={showToastWithButton}>Toast with close button</Button>
+        <Button raised onClick={showToastWithButton}>Toast with close button</Button>
       </p>
       <p>
-        <Button raised @click={showToastWithCustomButton}>Toast with custom button</Button>
+        <Button raised onClick={showToastWithCustomButton}>Toast with custom button</Button>
       </p>
       <p>
-        <Button raised @click={showToastWithCallback}>Toast with callback on close</Button>
+        <Button raised onClick={showToastWithCallback}>Toast with callback on close</Button>
       </p>
     </Block>
   </Page>

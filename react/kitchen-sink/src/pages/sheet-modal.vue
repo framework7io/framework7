@@ -5,10 +5,10 @@
       <p>Sheet Modals slide up from the bottom of the screen to reveal more content. Such modals allow to create custom overlays with custom content.</p>
       <Row tag="p">
         <Button className="col" raised sheet-open=".demo-sheet">Open Sheet</Button>
-        <Button className="col" raised @click={createSheet}>Create Dynamic Sheet</Button>
+        <Button className="col" raised onClick={createSheet}>Create Dynamic Sheet</Button>
       </Row>
       <p>
-        <Button className="col" raised @click={sheetOpened = true}>Open Via Prop Change</Button>
+        <Button className="col" raised onClick={sheetOpened = true}>Open Via Prop Change</Button>
       </p>
     </Block>
     <Sheet className="demo-sheet" opened={sheetOpened} @sheet:closed="sheetOpened = false">

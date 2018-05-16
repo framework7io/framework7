@@ -7,10 +7,10 @@
         <Button raised popup-open=".demo-popup">Open Popup</Button>
       </p>
       <p>
-        <Button raised @click={popupOpened = true}>Open Via Prop Change</Button>
+        <Button raised onClick={popupOpened = true}>Open Via Prop Change</Button>
       </p>
       <p>
-        <Button raised @click={createPopup}>Create Dynamic Popup</Button>
+        <Button raised onClick={createPopup}>Create Dynamic Popup</Button>
       </p>
     </Block>
     <Popup className="demo-popup" opened={popupOpened} @popup:closed="popupOpened = false">
@@ -31,7 +31,7 @@
 </template>
 <script>
   import React from 'react';
-  import { Navbar, Page, Popup, Block, f7NavRight, Link, Button } from 'framework7-react';
+  import { Navbar, Page, Popup, Block, NavRight, Link, Button } from 'framework7-react';
 
   export default {
     components: {
@@ -39,7 +39,7 @@
       Page,
       Popup,
       Block,
-      f7NavRight,
+      NavRight,
       Link,
       Button,
     },

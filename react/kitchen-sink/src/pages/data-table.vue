@@ -213,7 +213,7 @@
             <th className="numeric-cell">Fat (g)</th>
             <th className="numeric-cell">Carbs</th>
             <th className="numeric-cell">Protein (g)</th>
-            <th className="tablet-only"><Icon if-ios="f7:chat_fill" if-md="material:message"></Icon> Comments</th>
+            <th className="tablet-only"><Icon ifIos="f7:chat_fill" ifIMd="material:message"></Icon> Comments</th>
           </tr>
         </thead>
         <tbody>
@@ -345,8 +345,8 @@
       <div className="card-header">
         <div className="data-table-title">Nutrition</div>
         <div className="data-table-actions">
-          <Link icon-if-ios="f7:sort" icon-if-md="material:sort"></Link>
-          <Link icon-if-ios="f7:more_vertical_round" icon-if-md="material:more_vert"></Link>
+          <Link iconIfIos="f7:sort" iconIfMd="material:sort"></Link>
+          <Link iconIfIos="f7:more_vertical_round" iconIfMd="material:more_vert"></Link>
         </div>
       </div>
       <div className="card-content">
@@ -364,7 +364,7 @@
               <th className="numeric-cell">Fat (g)</th>
               <th className="numeric-cell">Carbs</th>
               <th className="numeric-cell">Protein (g)</th>
-              <th className="tablet-only"><Icon if-ios="f7:chat_fill" if-md="material:message"></Icon> Comments</th>
+              <th className="tablet-only"><Icon ifIos="f7:chat_fill" ifIMd="material:message"></Icon> Comments</th>
             </tr>
           </thead>
           <tbody>
@@ -433,8 +433,8 @@
       <div className="card-header">
         <div className="data-table-title">Nutrition</div>
         <div className="data-table-actions">
-          <Link icon-if-ios="f7:sort" icon-if-md="material:sort"></Link>
-          <Link icon-if-ios="f7:more_vertical_round" icon-if-md="material:more_vert"></Link>
+          <Link iconIfIos="f7:sort" iconIfMd="material:sort"></Link>
+          <Link iconIfIos="f7:more_vertical_round" iconIfMd="material:more_vert"></Link>
         </div>
       </div>
       <div className="card-content">
@@ -452,7 +452,7 @@
               <th className="numeric-cell sortable-cell">Fat (g)</th>
               <th className="numeric-cell sortable-cell">Carbs</th>
               <th className="numeric-cell sortable-cell">Protein (g)</th>
-              <th className="tablet-only"><Icon if-ios="f7:chat_fill" if-md="material:message"></Icon> Comments</th>
+              <th className="tablet-only"><Icon ifIos="f7:chat_fill" ifIMd="material:message"></Icon> Comments</th>
             </tr>
           </thead>
           <tbody>
@@ -522,15 +522,15 @@
         <div className="data-table-header">
           <div className="data-table-title">Nutrition</div>
           <div className="data-table-actions">
-            <Link icon-if-ios="f7:sort" icon-if-md="material:sort"></Link>
-            <Link icon-if-ios="f7:more_vertical_round" icon-if-md="material:more_vert"></Link>
+            <Link iconIfIos="f7:sort" iconIfMd="material:sort"></Link>
+            <Link iconIfIos="f7:more_vertical_round" iconIfMd="material:more_vert"></Link>
           </div>
         </div>
         <div className="data-table-header-selected">
           <div className="data-table-title-selected"><span className="data-table-selected-count"></span> items selected</div>
           <div className="data-table-actions">
-            <Link icon-if-ios="f7:trash" icon-if-md="material:delete"></Link>
-            <Link icon-if-ios="f7:more_vertical_round" icon-if-md="material:more_vert"></Link>
+            <Link iconIfIos="f7:trash" iconIfMd="material:delete"></Link>
+            <Link iconIfIos="f7:more_vertical_round" iconIfMd="material:more_vert"></Link>
           </div>
         </div>
       </div>
@@ -549,7 +549,7 @@
               <th className="numeric-cell">Fat (g)</th>
               <th className="numeric-cell">Carbs</th>
               <th className="numeric-cell">Protein (g)</th>
-              <th className="tablet-only"><Icon if-ios="f7:chat_fill" if-md="material:message"></Icon> Comments</th>
+              <th className="tablet-only"><Icon ifIos="f7:chat_fill" ifIMd="material:message"></Icon> Comments</th>
             </tr>
           </thead>
           <tbody>
@@ -618,8 +618,8 @@
       <div className="card-header">
         <div className="data-table-links"><a className="link">Add</a><a className="link">Remove</a></div>
         <div className="data-table-actions">
-          <Link icon-if-ios="f7:sort" icon-if-md="material:sort"></Link>
-          <Link icon-if-ios="f7:more_vertical_round" icon-if-md="material:more_vert"></Link>
+          <Link iconIfIos="f7:sort" iconIfMd="material:sort"></Link>
+          <Link iconIfIos="f7:more_vertical_round" iconIfMd="material:more_vert"></Link>
         </div>
       </div>
       <div className="card-content">
@@ -637,7 +637,7 @@
               <th className="numeric-cell">Fat (g)</th>
               <th className="numeric-cell">Carbs</th>
               <th className="numeric-cell">Protein (g)</th>
-              <th className="tablet-only"><Icon if-ios="f7:chat_fill" if-md="material:message"></Icon> Comments</th>
+              <th className="tablet-only"><Icon ifIos="f7:chat_fill" ifIMd="material:message"></Icon> Comments</th>
               <th></th>
             </tr>
           </thead>
@@ -656,8 +656,8 @@
               <td className="numeric-cell">4.0</td>
               <td className="tablet-only">I like frozen yogurt</td>
               <td className="actions-cell">
-                <Link icon-if-ios="f7:compose" icon-if-md="material:edit"></Link>
-                <Link icon-if-ios="f7:trash" icon-if-md="material:delete"></Link>
+                <Link iconIfIos="f7:compose" iconIfMd="material:edit"></Link>
+                <Link iconIfIos="f7:trash" iconIfMd="material:delete"></Link>
               </td>
             </tr>
             <tr>
@@ -674,8 +674,8 @@
               <td className="numeric-cell">4.4</td>
               <td className="tablet-only">But like ice cream more</td>
               <td className="actions-cell">
-                <Link icon-if-ios="f7:compose" icon-if-md="material:edit"></Link>
-                <Link icon-if-ios="f7:trash" icon-if-md="material:delete"></Link>
+                <Link iconIfIos="f7:compose" iconIfMd="material:edit"></Link>
+                <Link iconIfIos="f7:trash" iconIfMd="material:delete"></Link>
               </td>
             </tr>
             <tr>
@@ -692,8 +692,8 @@
               <td className="numeric-cell">6.0</td>
               <td className="tablet-only">Super tasty</td>
               <td className="actions-cell">
-                <Link icon-if-ios="f7:compose" icon-if-md="material:edit"></Link>
-                <Link icon-if-ios="f7:trash" icon-if-md="material:delete"></Link>
+                <Link iconIfIos="f7:compose" iconIfMd="material:edit"></Link>
+                <Link iconIfIos="f7:trash" iconIfMd="material:delete"></Link>
               </td>
             </tr>
             <tr>
@@ -710,8 +710,8 @@
               <td className="numeric-cell">4.3</td>
               <td className="tablet-only">Don't like it</td>
               <td className="actions-cell">
-                <Link icon-if-ios="f7:compose" icon-if-md="material:edit"></Link>
-                <Link icon-if-ios="f7:trash" icon-if-md="material:delete"></Link>
+                <Link iconIfIos="f7:compose" iconIfMd="material:edit"></Link>
+                <Link iconIfIos="f7:trash" iconIfMd="material:delete"></Link>
               </td>
             </tr>
           </tbody>
@@ -726,8 +726,8 @@
       <div className="card-header">
         <div className="data-table-title">Nutrition</div>
         <div className="data-table-actions">
-          <Link icon-if-ios="f7:sort" icon-if-md="material:sort"></Link>
-          <Link icon-if-ios="f7:more_vertical_round" icon-if-md="material:more_vert"></Link>
+          <Link iconIfIos="f7:sort" iconIfMd="material:sort"></Link>
+          <Link iconIfIos="f7:more_vertical_round" iconIfMd="material:more_vert"></Link>
         </div>
       </div>
       <div className="card-content">

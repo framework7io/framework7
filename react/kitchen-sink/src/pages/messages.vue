@@ -9,16 +9,16 @@
       sheetVisible={sheetVisible}
     >
       <Link
-        icon-if-ios="f7:camera_fill"
-        icon-if-md="material:camera_alt"
+        iconIfIos="f7:camera_fill"
+        iconIfMd="material:camera_alt"
         slot="inner-start"
-        @click="sheetVisible = !sheetVisible"
+        onClick="sheetVisible = !sheetVisible"
       ></Link>
       <Link
-        icon-if-ios="f7:arrow_up_fill"
-        icon-if-md="material:send"
+        iconIfIos="f7:arrow_up_fill"
+        iconIfMd="material:send"
         slot="inner-end"
-        @click={sendMessage}
+        onClick={sendMessage}
       ></Link>
       <MessagebarAttachments>
         <MessagebarAttachment

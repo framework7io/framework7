@@ -1,4 +1,7 @@
-<template>
+import React from 'react';
+import { Navbar, Page, BlockTitle } from 'framework7-react';
+
+export default () => (
   <Page>
     <Navbar title="Vertical Timeline" backLink="Back"></Navbar>
     <BlockTitle>Default</BlockTitle>
@@ -221,16 +224,4 @@
       </div>
     </div>
   </Page>
-</template>
-<script>
-  import React from 'react';
-  import { Navbar, Page, BlockTitle } from 'framework7-react';
-
-  export default {
-    components: {
-      Navbar,
-      Page,
-      BlockTitle,
-    },
-  };
-</script>
+);

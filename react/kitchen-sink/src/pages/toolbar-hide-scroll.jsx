@@ -1,5 +1,8 @@
-<template>
-  <Page hide-toolbar-on-scroll>
+import React from 'react';
+import { Navbar, Page, Toolbar, Link, Block } from 'framework7-react';
+
+export default () => (
+  <Page hideToolbarOnScroll>
     <Navbar title="Hide Toolbar On Scroll" backLink="Back"></Navbar>
     <Toolbar bottom-md>
       <Link>Left Link</Link>
@@ -41,14 +44,4 @@
       <p>Exercitationem odio nulla rerum soluta aspernatur fugit, illo iusto ullam similique. Recusandae consectetur rem, odio autem voluptate similique atque, alias possimus quis vitae in, officiis labore deserunt aspernatur rerum sunt?</p>
     </Block>
   </Page>
-</template>
-<script>
-  import React from 'react';
-  import { Navbar, Page, Toolbar, Link, Block } from 'framework7-react';
-
-  export default {
-    components: {
-      Navbar, Page, Toolbar, Link, Block,
-    },
-  };
-</script>
+);

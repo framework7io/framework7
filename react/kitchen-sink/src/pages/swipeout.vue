@@ -63,7 +63,7 @@
         title="Swipe left on me please">
         <Icon slot="media" icon="icon-f7"></Icon>
         <SwipeoutActions right>
-          <SwipeoutButton @click={more}>More</SwipeoutButton>
+          <SwipeoutButton onClick={more}>More</SwipeoutButton>
           <SwipeoutButton delete>Delete</SwipeoutButton>
         </SwipeoutActions>
       </ListItem>
@@ -72,7 +72,7 @@
         title="Swipe left on me too">
         <Icon slot="media" icon="icon-f7"></Icon>
         <SwipeoutActions right>
-          <SwipeoutButton @click={more}>More</SwipeoutButton>
+          <SwipeoutButton onClick={more}>More</SwipeoutButton>
           <SwipeoutButton delete>Delete</SwipeoutButton>
         </SwipeoutActions>
       </ListItem>
@@ -81,7 +81,7 @@
         title="You can't delete me">
         <Icon slot="media" icon="icon-f7"></Icon>
         <SwipeoutActions right>
-          <SwipeoutButton @click={more}>More</SwipeoutButton>
+          <SwipeoutButton onClick={more}>More</SwipeoutButton>
         </SwipeoutActions>
       </ListItem>
     </List>
@@ -119,8 +119,8 @@
         title="Swipe right on me please">
         <Icon slot="media" icon="icon-f7"></Icon>
         <SwipeoutActions left>
-          <SwipeoutButton color="green" @click={reply}>Reply</SwipeoutButton>
-          <SwipeoutButton color="blue" @click={forward}>Forward</SwipeoutButton>
+          <SwipeoutButton color="green" onClick={reply}>Reply</SwipeoutButton>
+          <SwipeoutButton color="blue" onClick={forward}>Forward</SwipeoutButton>
         </SwipeoutActions>
       </ListItem>
       <ListItem
@@ -128,8 +128,8 @@
         title="Swipe right on me too">
         <Icon slot="media" icon="icon-f7"></Icon>
         <SwipeoutActions left>
-          <SwipeoutButton color="green" @click={reply}>Reply</SwipeoutButton>
-          <SwipeoutButton color="blue" @click={forward}>Forward</SwipeoutButton>
+          <SwipeoutButton color="green" onClick={reply}>Reply</SwipeoutButton>
+          <SwipeoutButton color="blue" onClick={forward}>Forward</SwipeoutButton>
         </SwipeoutActions>
       </ListItem>
     </List>
@@ -144,12 +144,12 @@
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
       >
         <SwipeoutActions left>
-          <SwipeoutButton overswipe color="green" @click={reply}>Reply</SwipeoutButton>
-          <SwipeoutButton color="blue" @click={forward}>Forward</SwipeoutButton>
+          <SwipeoutButton overswipe color="green" onClick={reply}>Reply</SwipeoutButton>
+          <SwipeoutButton color="blue" onClick={forward}>Forward</SwipeoutButton>
         </SwipeoutActions>
         <SwipeoutActions right>
-          <SwipeoutButton @click={more}>More</SwipeoutButton>
-          <SwipeoutButton color="orange" @click={mark}>Mark</SwipeoutButton>
+          <SwipeoutButton onClick={more}>More</SwipeoutButton>
+          <SwipeoutButton color="orange" onClick={mark}>Mark</SwipeoutButton>
           <SwipeoutButton delete overswipe confirm-text="Are you sure you want to delete this item?">Delete</SwipeoutButton>
         </SwipeoutActions>
       </ListItem>
@@ -161,12 +161,12 @@
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
       >
         <SwipeoutActions left>
-          <SwipeoutButton overswipe color="green" @click={reply}>Reply</SwipeoutButton>
-          <SwipeoutButton color="blue" @click={forward}>Forward</SwipeoutButton>
+          <SwipeoutButton overswipe color="green" onClick={reply}>Reply</SwipeoutButton>
+          <SwipeoutButton color="blue" onClick={forward}>Forward</SwipeoutButton>
         </SwipeoutActions>
         <SwipeoutActions right>
-          <SwipeoutButton @click={more}>More</SwipeoutButton>
-          <SwipeoutButton color="orange" @click={mark}>Mark</SwipeoutButton>
+          <SwipeoutButton onClick={more}>More</SwipeoutButton>
+          <SwipeoutButton color="orange" onClick={mark}>Mark</SwipeoutButton>
           <SwipeoutButton delete overswipe confirm-text="Are you sure you want to delete this item?">Delete</SwipeoutButton>
         </SwipeoutActions>
       </ListItem>
@@ -178,12 +178,12 @@
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
       >
         <SwipeoutActions left>
-          <SwipeoutButton overswipe color="green" @click={reply}>Reply</SwipeoutButton>
-          <SwipeoutButton color="blue" @click={forward}>Forward</SwipeoutButton>
+          <SwipeoutButton overswipe color="green" onClick={reply}>Reply</SwipeoutButton>
+          <SwipeoutButton color="blue" onClick={forward}>Forward</SwipeoutButton>
         </SwipeoutActions>
         <SwipeoutActions right>
-          <SwipeoutButton @click={more}>More</SwipeoutButton>
-          <SwipeoutButton color="orange" @click={mark}>Mark</SwipeoutButton>
+          <SwipeoutButton onClick={more}>More</SwipeoutButton>
+          <SwipeoutButton color="orange" onClick={mark}>Mark</SwipeoutButton>
           <SwipeoutButton delete overswipe confirm-text="Are you sure you want to delete this item?">Delete</SwipeoutButton>
         </SwipeoutActions>
       </ListItem>
@@ -195,12 +195,12 @@
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
       >
         <SwipeoutActions left>
-          <SwipeoutButton overswipe color="green" @click={reply}>Reply</SwipeoutButton>
-          <SwipeoutButton color="blue" @click={forward}>Forward</SwipeoutButton>
+          <SwipeoutButton overswipe color="green" onClick={reply}>Reply</SwipeoutButton>
+          <SwipeoutButton color="blue" onClick={forward}>Forward</SwipeoutButton>
         </SwipeoutActions>
         <SwipeoutActions right>
-          <SwipeoutButton @click={more}>More</SwipeoutButton>
-          <SwipeoutButton color="orange" @click={mark}>Mark</SwipeoutButton>
+          <SwipeoutButton onClick={more}>More</SwipeoutButton>
+          <SwipeoutButton color="orange" onClick={mark}>Mark</SwipeoutButton>
           <SwipeoutButton delete overswipe confirm-text="Are you sure you want to delete this item?">Delete</SwipeoutButton>
         </SwipeoutActions>
       </ListItem>

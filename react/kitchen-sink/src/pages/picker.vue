@@ -1,5 +1,5 @@
 <template>
-  <Page page-content={false}>
+  <Page pageContent={false}>
     <Navbar title="Picker" backLink="Back"></Navbar>
     <div className="page-content">
       <div className="block">

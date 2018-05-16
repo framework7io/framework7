@@ -4,40 +4,40 @@
     <Block strong>
       <p>There are 1:1 replacements of native Alert, Prompt and Confirm modals. They support callbacks, have very easy api and can be combined with each other. Check these examples:</p>
       <Row tag="p">
-        <Button raised className="col" @click={openAlert}>Alert</Button>
-        <Button raised className="col" @click={openConfirm}>Confirm</Button>
-        <Button raised className="col" @click={openPrompt}>Prompt</Button>
+        <Button raised className="col" onClick={openAlert}>Alert</Button>
+        <Button raised className="col" onClick={openConfirm}>Confirm</Button>
+        <Button raised className="col" onClick={openPrompt}>Prompt</Button>
       </Row>
       <Row tag="p">
-        <Button raised className="col" @click={openLogin}>Login</Button>
-        <Button raised className="col" @click={openPassword}>Password</Button>
+        <Button raised className="col" onClick={openLogin}>Login</Button>
+        <Button raised className="col" onClick={openPassword}>Password</Button>
       </Row>
     </Block>
     <BlockTitle>Vertical Buttons</BlockTitle>
     <Block strong>
       <p>
-        <Button raised @click={openVerticalButtons}>Vertical Buttons</Button>
+        <Button raised onClick={openVerticalButtons}>Vertical Buttons</Button>
       </p>
     </Block>
     <BlockTitle>Preloader Dialog</BlockTitle>
     <Block strong>
       <Row tag="p">
-        <Button raised className="col" @click={openPreloader}>Preloader</Button>
-        <Button raised className="col" @click={openCustomPreloader}>Custom Text</Button>
+        <Button raised className="col" onClick={openPreloader}>Preloader</Button>
+        <Button raised className="col" onClick={openCustomPreloader}>Custom Text</Button>
       </Row>
     </Block>
     <BlockTitle>Progress Dialog</BlockTitle>
     <Block strong>
       <Row tag="p">
-        <Button raised className="col" @click={openInfiniteProgress}>Infinite</Button>
-        <Button raised className="col" @click={openDeterminedProgress}>Determined</Button>
+        <Button raised className="col" onClick={openInfiniteProgress}>Infinite</Button>
+        <Button raised className="col" onClick={openDeterminedProgress}>Determined</Button>
       </Row>
     </Block>
     <BlockTitle>Dialogs Stack</BlockTitle>
     <Block strong>
       <p>This feature doesn't allow to open multiple dialogs at the same time, and will automatically open next dialog when you close the current one. Such behavior is similar to browser native dialogs: </p>
       <p>
-        <Button raised @click={openAlerts}>Open Multiple Alerts</Button>
+        <Button raised onClick={openAlerts}>Open Multiple Alerts</Button>
       </p>
     </Block>
   </Page>

@@ -2,7 +2,7 @@
   <Page>
     <Navbar backLink="Back" title="Searchbar">
       <NavRight>
-        <Link className="searchbar-enable" data-searchbar=".searchbar-demo" icon-if-ios="f7:search_strong" icon-if-md="material:search"></Link>
+        <Link className="searchbar-enable" data-searchbar=".searchbar-demo" iconIfIos="f7:search_strong" iconIfMd="material:search"></Link>
       </NavRight>
       <Searchbar
         className="searchbar-demo"
@@ -60,7 +60,7 @@
 </template>
 <script>
   import React from 'react';
-  import { Navbar, Page, Searchbar, Subnavbar, List, ListItem, Link, f7NavRight } from 'framework7-react';
+  import { Navbar, Page, Searchbar, Subnavbar, List, ListItem, Link, NavRight } from 'framework7-react';
 
   export default {
     components: {
@@ -71,7 +71,7 @@
       List,
       ListItem,
       Link,
-      f7NavRight,
+      NavRight,
     },
   }
 </script>

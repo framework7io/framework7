@@ -14,7 +14,7 @@
     </Block>
 
     <Block>
-      <Button raised big fill @click={loginScreenOpened = true}>Open Via Prop Change</Button>
+      <Button raised big fill onClick={loginScreenOpened = true}>Open Via Prop Change</Button>
     </Block>
 
     <LoginScreen className="demo-login-screen" opened={loginScreenOpened} @loginscreen:closed="loginScreenOpened = false">
@@ -31,7 +31,7 @@
           </ListItem>
         </List>
         <List>
-          <ListButton @click={signIn}>Sign In</ListButton>
+          <ListButton onClick={signIn}>Sign In</ListButton>
           <BlockFooter>Some text about login information.<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</BlockFooter>
         </List>
       </Page>

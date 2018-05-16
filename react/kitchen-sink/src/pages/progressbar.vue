@@ -11,23 +11,23 @@
       <div>
         <p><Progressbar progress={10} id="demo-inline-progressbar"></Progressbar></p>
         <Segmented raised>
-          <Button @click={setInlineProgress(10)}>10%</Button>
-          <Button @click={setInlineProgress(30)}>30%</Button>
-          <Button @click={setInlineProgress(50)}>50%</Button>
-          <Button @click={setInlineProgress(100)}>100%</Button>
+          <Button onClick={setInlineProgress(10)}>10%</Button>
+          <Button onClick={setInlineProgress(30)}>30%</Button>
+          <Button onClick={setInlineProgress(50)}>50%</Button>
+          <Button onClick={setInlineProgress(100)}>100%</Button>
         </Segmented>
       </div>
       <div>
         <p>Inline determinate load & hide:</p>
         <p id="demo-determinate-container"></p>
         <p>
-          <Button raised @click={showDeterminate(true)}>Start Loading</Button>
+          <Button raised onClick={showDeterminate(true)}>Start Loading</Button>
         </p>
       </div>
       <div>
         <p>Overlay with determinate progress bar on top of the app:</p>
         <p>
-          <Button raised @click={showDeterminate(false)}>Start Loading</Button>
+          <Button raised onClick={showDeterminate(false)}>Start Loading</Button>
         </p>
       </div>
     </Block>
@@ -46,13 +46,13 @@
         <p>Overlay with infinite progress bar on top of the app</p>
         <p id="demo-infinite-container"></p>
         <p>
-          <Button raised @click={showInfinite(false)}>Start Loading</Button>
+          <Button raised onClick={showInfinite(false)}>Start Loading</Button>
         </p>
       </div>
       <div>
         <p>Overlay with infinite multi-color progress bar on top of the app</p>
         <p>
-          <Button raised @click={showInfinite(true)}>Start Loading</Button>
+          <Button raised onClick={showInfinite(true)}>Start Loading</Button>
         </p>
       </div>
     </Block>

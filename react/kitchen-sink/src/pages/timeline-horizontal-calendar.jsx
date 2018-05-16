@@ -1,6 +1,9 @@
-<template>
+import React from 'react';
+import { Navbar, Page, BlockTitle } from 'framework7-react';
+
+export default () => (
   <Page>
-    <Navbar no-shadow title="Horizontal Timeline Calendar" backLink="Back"></Navbar>
+    <Navbar noShadow title="Horizontal Timeline Calendar" backLink="Back"></Navbar>
     <div className="timeline timeline-horizontal col-33 tablet-15">
       <div className="timeline-year">
         <div className="timeline-year-title"><span>2016</span></div>
@@ -746,16 +749,4 @@
       </div>
     </div>
   </Page>
-</template>
-<script>
-  import React from 'react';
-  import { Navbar, Page, BlockTitle } from 'framework7-react';
-
-  export default {
-    components: {
-      Navbar,
-      Page,
-      BlockTitle,
-    },
-  };
-</script>
+);

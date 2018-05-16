@@ -1,18 +1,14 @@
-<template>
-  <Page page-content={false}>
-    <Navbar title="Tabbar Labels" backLink="Back">
-      <NavRight v-if="$theme.md">
-        <Link icon="material:compare_arrows" @click={toggleToolbarPosition}>
-          <i className="icon material-icons rotate-icon">compare_arrows</i>
-        </Link>
-      </NavRight>
-    </Navbar>
-    <Toolbar tabbar labels>
-      <Link tabLink="#tab-1" tabLinkActive text="Tab 1" icon-if-ios="f7:email_fill" icon-if-md="material:email"></Link>
-      <Link tabLink="#tab-2" text="Tab 2" icon-if-ios="f7:today_fill" icon-if-md="material:today"></Link>
-      <Link tabLink="#tab-3" text="Tab 3" icon-if-ios="f7:cloud_fill" icon-if-md="material:file_upload"></Link>
-    </Toolbar>
+import React from 'react';
+import { Navbar, Page, Block, Tabs, Tab, Link, Toolbar } from 'framework7-react';
 
+export default () => (
+  <Page pageContent={false}>
+    <Navbar title="Static Tabs" backLink="Back"></Navbar>
+    <Toolbar tabbar>
+      <Link tabLink="#tab-1" tabLinkActive>Tab 1</Link>
+      <Link tabLink="#tab-2">Tab 2</Link>
+      <Link tabLink="#tab-3">Tab 3</Link>
+    </Toolbar>
     <Tabs>
       <Tab id="tab-1" className="page-content" tabActive>
         <Block>
@@ -52,19 +48,4 @@
       </Tab>
     </Tabs>
   </Page>
-</template>
-<script>
-  import React from 'react';
-  import { Navbar, Page, Block, Tabs, Tab, Link, Toolbar, f7NavRight } from 'framework7-react';
-
-  export default {
-    components: {
-      Navbar, Page, Block, Tabs, Tab, Link, Toolbar, f7NavRight,
-    },
-    methods: {
-      toggleToolbarPosition() {
-        this.$$(this.$el).find('.toolbar, .tabbar').toggleClass('toolbar-bottom-md');
-      },
-    },
-  };
-</script>
+);

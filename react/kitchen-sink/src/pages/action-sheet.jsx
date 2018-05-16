@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navbar, Page, BlockTitle, Block, Link, Button, Actions, ActionsGroup, ActionsLabel, ActionsButton } from 'framework7-react';
 
-export default class ActionSheet extends React.Component {
+export default class extends React.Component {
   constructor() {
     super();
 

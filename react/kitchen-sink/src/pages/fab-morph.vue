@@ -1,5 +1,5 @@
 <template>
-  <Page page-content={false}>
+  <Page pageContent={false}>
     <Navbar title="Floating Action Button Morph" backLink="Back"></Navbar>
     <div className="toolbar tabbar tabbar-labels toolbar-bottom-md fab-morph-target">
       <div className="toolbar-inner">

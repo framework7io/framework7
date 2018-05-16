@@ -15,15 +15,15 @@
       <Row>
         <Col>
           <PhotoBrowser photos={photos} ref="standalone"></PhotoBrowser>
-          <Button raised @click={$refs.standalone.open()}>Standalone</Button>
+          <Button raised onClick={$refs.standalone.open()}>Standalone</Button>
         </Col>
         <Col>
           <PhotoBrowser photos={photos} type="popup" ref="popup"></PhotoBrowser>
-          <Button raised @click={$refs.popup.open()}>Popup</Button>
+          <Button raised onClick={$refs.popup.open()}>Popup</Button>
         </Col>
         <Col>
           <PhotoBrowser photos={photos} type="page" back-link-text="Back" ref="page"></PhotoBrowser>
-          <Button raised @click={$refs.page.open()}>Page</Button>
+          <Button raised onClick={$refs.page.open()}>Page</Button>
         </Col>
       </Row>
     </Block>
@@ -32,15 +32,15 @@
       <Row>
         <Col>
           <PhotoBrowser photos={photos} theme="dark" ref="standaloneDark"></PhotoBrowser>
-          <Button raised @click={$refs.standaloneDark.open()}>Standalone</Button>
+          <Button raised onClick={$refs.standaloneDark.open()}>Standalone</Button>
         </Col>
         <Col>
           <PhotoBrowser photos={photos} theme="dark" type="popup" ref="popupDark"></PhotoBrowser>
-          <Button raised @click={$refs.popupDark.open()}>Popup</Button>
+          <Button raised onClick={$refs.popupDark.open()}>Popup</Button>
         </Col>
         <Col>
           <PhotoBrowser photos={photos} theme="dark" type="page" back-link-text="Back" ref="pageDark"></PhotoBrowser>
-          <Button raised @click={$refs.pageDark.open()}>Page</Button>
+          <Button raised onClick={$refs.pageDark.open()}>Page</Button>
         </Col>
       </Row>
     </Block>

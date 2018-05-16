@@ -21,11 +21,11 @@ import ContentBlock from './pages/content-block.jsx';
 // import FormStorage from './pages/form-storage.jsx';
 import Grid from './pages/grid.jsx';
 import Icons from './pages/icons.jsx';
-// import InfiniteScroll from './pages/infinite-scroll.jsx';
+import InfiniteScroll from './pages/infinite-scroll.jsx';
 import Inputs from './pages/inputs.jsx';
 // import LazyLoad from './pages/lazy-load.jsx';
 import List from './pages/list.jsx';
-// import ListIndex from './pages/list-index.jsx';
+import ListIndex from './pages/list-index.jsx';
 // import LoginScreen from './pages/login-screen.jsx';
 // import LoginScreenPage from './pages/login-screen-page.jsx';
 // import Messages from './pages/messages.jsx';
@@ -40,15 +40,15 @@ import List from './pages/list.jsx';
 // import Preloader from './pages/preloader.jsx';
 // import Progressbar from './pages/progressbar.jsx';
 // import PullToRefresh from './pages/pull-to-refresh.jsx';
-// import Radio from './pages/radio.jsx';
-// import Range from './pages/range.jsx';
+import Radio from './pages/radio.jsx';
+import Range from './pages/range.jsx';
 // import Searchbar from './pages/searchbar.jsx';
 // import SearchbarExpandable from './pages/searchbar-expandable.jsx';
 // import SheetModal from './pages/sheet-modal.jsx';
 // import SmartSelect from './pages/smart-select.jsx';
-// import Sortable from './pages/sortable.jsx';
-// import Statusbar from './pages/statusbar.jsx';
-// import Stepper from './pages/stepper.jsx';
+import Sortable from './pages/sortable.jsx';
+import Statusbar from './pages/statusbar.jsx';
+import Stepper from './pages/stepper.jsx';
 // import Subnavbar from './pages/subnavbar.jsx';
 // import SubnavbarTitle from './pages/subnavbar-title.jsx';
 // import Swiper from './pages/swiper.jsx';
@@ -71,23 +71,23 @@ import List from './pages/list.jsx';
 // import SwiperPaginationFraction from './pages/swiper-pagination-fraction.jsx';
 // import SwiperZoom from './pages/swiper-zoom.jsx';
 // import Swipeout from './pages/swipeout.jsx';
-// import Tabs from './pages/tabs.jsx';
-// import TabsStatic from './pages/tabs-static.jsx';
-// import TabsAnimated from './pages/tabs-animated.jsx';
-// import TabsSwipeable from './pages/tabs-swipeable.jsx';
-// import TabsRoutable from './pages/tabs-routable.jsx';
+import Tabs from './pages/tabs.jsx';
+import TabsStatic from './pages/tabs-static.jsx';
+import TabsAnimated from './pages/tabs-animated.jsx';
+import TabsSwipeable from './pages/tabs-swipeable.jsx';
+import TabsRoutable from './pages/tabs-routable.jsx';
 // import Toast from './pages/toast.jsx';
-// import Toggle from './pages/toggle.jsx';
-// import ToolbarTabbar from './pages/toolbar-tabbar.jsx';
-// import Tabbar from './pages/tabbar.jsx';
-// import TabbarLabels from './pages/tabbar-labels.jsx';
-// import TabbarScrollable from './pages/tabbar-scrollable.jsx';
-// import ToolbarHideScroll from './pages/toolbar-hide-scroll.jsx';
-// import Timeline from './pages/timeline.jsx';
-// import TimelineVertical from './pages/timeline-vertical.jsx';
-// import TimelineHorizontal from './pages/timeline-horizontal.jsx';
-// import TimelineHorizontalCalendar from './pages/timeline-horizontal-calendar.jsx';
-// import VirtualList from './pages/virtual-list.jsx';
+import Toggle from './pages/toggle.jsx';
+import ToolbarTabbar from './pages/toolbar-tabbar.jsx';
+import Tabbar from './pages/tabbar.jsx';
+import TabbarLabels from './pages/tabbar-labels.jsx';
+import TabbarScrollable from './pages/tabbar-scrollable.jsx';
+import ToolbarHideScroll from './pages/toolbar-hide-scroll.jsx';
+import Timeline from './pages/timeline.jsx';
+import TimelineVertical from './pages/timeline-vertical.jsx';
+import TimelineHorizontal from './pages/timeline-horizontal.jsx';
+import TimelineHorizontalCalendar from './pages/timeline-horizontal-calendar.jsx';
+import VirtualList from './pages/virtual-list.jsx';
 // import ColorThemes from './pages/color-themes.jsx';
 // Pages
 export default [
@@ -239,10 +239,10 @@ export default [
     path: '/icons/',
     component: Icons,
   },
-  // {
-  //   path: '/infinite-scroll/',
-  //   component: InfiniteScroll,
-  // },
+  {
+    path: '/infinite-scroll/',
+    component: InfiniteScroll,
+  },
   {
     path: '/inputs/',
     component: Inputs,
@@ -255,10 +255,10 @@ export default [
     path: '/list/',
     component: List,
   },
-  // {
-  //   path: '/list-index/',
-  //   component: ListIndex,
-  // },
+  {
+    path: '/list-index/',
+    component: ListIndex,
+  },
   // {
   //   path: '/login-screen/',
   //   component: LoginScreen,
@@ -315,14 +315,14 @@ export default [
   //   path: '/pull-to-refresh/',
   //   component: PullToRefresh,
   // },
-  // {
-  //   path: '/radio/',
-  //   component: Radio,
-  // },
-  // {
-  //   path: '/range/',
-  //   component: Range,
-  // },
+  {
+    path: '/radio/',
+    component: Radio,
+  },
+  {
+    path: '/range/',
+    component: Range,
+  },
   // {
   //   path: '/searchbar/',
   //   component: Searchbar,
@@ -339,18 +339,18 @@ export default [
   //   path: '/smart-select/',
   //   component: SmartSelect,
   // },
-  // {
-  //   path: '/sortable/',
-  //   component: Sortable,
-  // },
-  // {
-  //   path: '/statusbar/',
-  //   component: Statusbar,
-  // },
-  // {
-  //   path: '/stepper/',
-  //   component: Stepper,
-  // },
+  {
+    path: '/sortable/',
+    component: Sortable,
+  },
+  {
+    path: '/statusbar/',
+    component: Statusbar,
+  },
+  {
+    path: '/stepper/',
+    component: Stepper,
+  },
   // {
   //   path: '/subnavbar/',
   //   component: Subnavbar,
@@ -441,114 +441,114 @@ export default [
   //   path: '/swipeout/',
   //   component: Swipeout,
   // },
-  // {
-  //   path: '/tabs/',
-  //   component: Tabs,
-  // },
-  // {
-  //   path: '/tabs-static/',
-  //   component: TabsStatic,
-  // },
-  // {
-  //   path: '/tabs-animated/',
-  //   component: TabsAnimated,
-  // },
-  // {
-  //   path: '/tabs-swipeable/',
-  //   component: TabsSwipeable,
-  // },
-  // {
-  //   path: '/tabs-routable/',
-  //   component: TabsRoutable,
-  //   tabs: [
-  //     {
-  //       path: '/',
-  //       id: 'tab1',
-  //       content: `
-  //       <div class="block">
-  //         <p>Tab 1 content</p>
-  //         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae facilis laudantium voluptates obcaecati officia cum, sit libero commodi. Ratione illo suscipit temporibus sequi iure ad laboriosam accusamus?</p>
-  //         <p>Saepe explicabo voluptas ducimus provident, doloremque quo totam molestias! Suscipit blanditiis eaque exercitationem praesentium reprehenderit, fuga accusamus possimus sed, sint facilis ratione quod, qui dignissimos voluptas! Aliquam rerum consequuntur deleniti.</p>
-  //         <p>Totam reprehenderit amet commodi ipsum nam provident doloremque possimus odio itaque, est animi culpa modi consequatur reiciendis corporis libero laudantium sed eveniet unde delectus a maiores nihil dolores? Natus, perferendis.</p>
-  //       </div>
-  //       `,
-  //     },
-  //     {
-  //       path: '/tab2/',
-  //       id: 'tab2',
-  //       content: `
-  //       <div class="block">
-  //         <p>Tab 2 content</p>
-  //         <p>Suscipit, facere quasi atque totam. Repudiandae facilis at optio atque, rem nam, natus ratione cum enim voluptatem suscipit veniam! Repellat, est debitis. Modi nam mollitia explicabo, unde aliquid impedit! Adipisci!</p>
-  //         <p>Deserunt adipisci tempora asperiores, quo, nisi ex delectus vitae consectetur iste fugiat iusto dolorem autem. Itaque, ipsa voluptas, a assumenda rem, dolorum porro accusantium, officiis veniam nostrum cum cumque impedit.</p>
-  //         <p>Laborum illum ipsa voluptatibus possimus nesciunt ex consequatur rem, natus ad praesentium rerum libero consectetur temporibus cupiditate atque aspernatur, eaque provident eligendi quaerat ea soluta doloremque. Iure fugit, minima facere.</p>
-  //       </div>
-  //       `,
-  //     },
-  //     {
-  //       path: '/tab3/',
-  //       id: 'tab3',
-  //       content: `
-  //       <div class="block">
-  //         <p>Tab 3 content</p>
-  //         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae facilis laudantium voluptates obcaecati officia cum, sit libero commodi. Ratione illo suscipit temporibus sequi iure ad laboriosam accusamus?</p>
-  //         <p>Deserunt adipisci tempora asperiores, quo, nisi ex delectus vitae consectetur iste fugiat iusto dolorem autem. Itaque, ipsa voluptas, a assumenda rem, dolorum porro accusantium, officiis veniam nostrum cum cumque impedit.</p>
-  //         <p>Laborum illum ipsa voluptatibus possimus nesciunt ex consequatur rem, natus ad praesentium rerum libero consectetur temporibus cupiditate atque aspernatur, eaque provident eligendi quaerat ea soluta doloremque. Iure fugit, minima facere.</p>
-  //       </div>
-  //       `,
-  //     },
-  //   ],
-  // },
+  {
+    path: '/tabs/',
+    component: Tabs,
+  },
+  {
+    path: '/tabs-static/',
+    component: TabsStatic,
+  },
+  {
+    path: '/tabs-animated/',
+    component: TabsAnimated,
+  },
+  {
+    path: '/tabs-swipeable/',
+    component: TabsSwipeable,
+  },
+  {
+    path: '/tabs-routable/',
+    component: TabsRoutable,
+    tabs: [
+      {
+        path: '/',
+        id: 'tab1',
+        content: `
+        <div class="block">
+          <p>Tab 1 content</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae facilis laudantium voluptates obcaecati officia cum, sit libero commodi. Ratione illo suscipit temporibus sequi iure ad laboriosam accusamus?</p>
+          <p>Saepe explicabo voluptas ducimus provident, doloremque quo totam molestias! Suscipit blanditiis eaque exercitationem praesentium reprehenderit, fuga accusamus possimus sed, sint facilis ratione quod, qui dignissimos voluptas! Aliquam rerum consequuntur deleniti.</p>
+          <p>Totam reprehenderit amet commodi ipsum nam provident doloremque possimus odio itaque, est animi culpa modi consequatur reiciendis corporis libero laudantium sed eveniet unde delectus a maiores nihil dolores? Natus, perferendis.</p>
+        </div>
+        `,
+      },
+      {
+        path: '/tab2/',
+        id: 'tab2',
+        content: `
+        <div class="block">
+          <p>Tab 2 content</p>
+          <p>Suscipit, facere quasi atque totam. Repudiandae facilis at optio atque, rem nam, natus ratione cum enim voluptatem suscipit veniam! Repellat, est debitis. Modi nam mollitia explicabo, unde aliquid impedit! Adipisci!</p>
+          <p>Deserunt adipisci tempora asperiores, quo, nisi ex delectus vitae consectetur iste fugiat iusto dolorem autem. Itaque, ipsa voluptas, a assumenda rem, dolorum porro accusantium, officiis veniam nostrum cum cumque impedit.</p>
+          <p>Laborum illum ipsa voluptatibus possimus nesciunt ex consequatur rem, natus ad praesentium rerum libero consectetur temporibus cupiditate atque aspernatur, eaque provident eligendi quaerat ea soluta doloremque. Iure fugit, minima facere.</p>
+        </div>
+        `,
+      },
+      {
+        path: '/tab3/',
+        id: 'tab3',
+        content: `
+        <div class="block">
+          <p>Tab 3 content</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam enim quia molestiae facilis laudantium voluptates obcaecati officia cum, sit libero commodi. Ratione illo suscipit temporibus sequi iure ad laboriosam accusamus?</p>
+          <p>Deserunt adipisci tempora asperiores, quo, nisi ex delectus vitae consectetur iste fugiat iusto dolorem autem. Itaque, ipsa voluptas, a assumenda rem, dolorum porro accusantium, officiis veniam nostrum cum cumque impedit.</p>
+          <p>Laborum illum ipsa voluptatibus possimus nesciunt ex consequatur rem, natus ad praesentium rerum libero consectetur temporibus cupiditate atque aspernatur, eaque provident eligendi quaerat ea soluta doloremque. Iure fugit, minima facere.</p>
+        </div>
+        `,
+      },
+    ],
+  },
   // {
   //   path: '/toast/',
   //   component: Toast,
   // },
-  // {
-  //   path: '/toggle/',
-  //   component: Toggle,
-  // },
-  // {
-  //   path: '/toolbar-tabbar/',
-  //   component: ToolbarTabbar,
-  //   routes: [
-  //     {
-  //       path: 'tabbar/',
-  //       component: Tabbar,
-  //     },
-  //     {
-  //       path: 'tabbar-labels/',
-  //       component: TabbarLabels,
-  //     },
-  //     {
-  //       path: 'tabbar-scrollable/',
-  //       component: TabbarScrollable,
-  //     },
-  //     {
-  //       path: 'toolbar-hide-scroll/',
-  //       component: ToolbarHideScroll,
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: '/timeline/',
-  //   component: Timeline,
-  // },
-  // {
-  //   path: '/timeline-vertical/',
-  //   component: TimelineVertical,
-  // },
-  // {
-  //   path: '/timeline-horizontal/',
-  //   component: TimelineHorizontal,
-  // },
-  // {
-  //   path: '/timeline-horizontal-calendar/',
-  //   component: TimelineHorizontalCalendar,
-  // },
-  // {
-  //   path: '/virtual-list/',
-  //   component: VirtualList,
-  // },
+  {
+    path: '/toggle/',
+    component: Toggle,
+  },
+  {
+    path: '/toolbar-tabbar/',
+    component: ToolbarTabbar,
+    routes: [
+      {
+        path: 'tabbar/',
+        component: Tabbar,
+      },
+      {
+        path: 'tabbar-labels/',
+        component: TabbarLabels,
+      },
+      {
+        path: 'tabbar-scrollable/',
+        component: TabbarScrollable,
+      },
+      {
+        path: 'toolbar-hide-scroll/',
+        component: ToolbarHideScroll,
+      },
+    ],
+  },
+  {
+    path: '/timeline/',
+    component: Timeline,
+  },
+  {
+    path: '/timeline-vertical/',
+    component: TimelineVertical,
+  },
+  {
+    path: '/timeline-horizontal/',
+    component: TimelineHorizontal,
+  },
+  {
+    path: '/timeline-horizontal-calendar/',
+    component: TimelineHorizontalCalendar,
+  },
+  {
+    path: '/virtual-list/',
+    component: VirtualList,
+  },
 
   // // Color Themes
   // {

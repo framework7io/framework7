@@ -1,19 +1,15 @@
-<template>
-  <Page page-content={false}>
-    <Navbar title="Tabbar" backLink="Back">
-      <NavRight v-if="$theme.md">
-        <Link icon="material:compare_arrows" @click={toggleToolbarPosition}>
-          <i className="icon material-icons rotate-icon">compare_arrows</i>
-        </Link>
-      </NavRight>
-    </Navbar>
+import React from 'react';
+import { Navbar, Page, Block, Tabs, Tab, Link, Toolbar } from 'framework7-react';
+
+export default () => (
+  <Page pageContent={false}>
+    <Navbar title="Swipeable Tabs" backLink="Back"></Navbar>
     <Toolbar tabbar>
       <Link tabLink="#tab-1" tabLinkActive>Tab 1</Link>
       <Link tabLink="#tab-2">Tab 2</Link>
       <Link tabLink="#tab-3">Tab 3</Link>
     </Toolbar>
-
-    <Tabs>
+    <Tabs swipeable>
       <Tab id="tab-1" className="page-content" tabActive>
         <Block>
           <p>Tab 1 content</p>
@@ -52,19 +48,4 @@
       </Tab>
     </Tabs>
   </Page>
-</template>
-<script>
-  import React from 'react';
-  import { Navbar, Page, Block, Tabs, Tab, Link, Toolbar, f7NavRight } from 'framework7-react';
-
-  export default {
-    components: {
-      Navbar, Page, Block, Tabs, Tab, Link, Toolbar, f7NavRight,
-    },
-    methods: {
-      toggleToolbarPosition() {
-        this.$$(this.$el).find('.toolbar, .tabbar').toggleClass('toolbar-bottom-md');
-      },
-    },
-  };
-</script>
+);

@@ -46,15 +46,15 @@
     <Block>
       <p>With <b>app.preloader.show()</b> you can show small overlay with preloader indicator.</p>
       <p>
-        <a className="button button-raised" @click={openIndicator}>Open Small Indicator</a>
+        <a className="button button-raised" onClick={openIndicator}>Open Small Indicator</a>
       </p>
       <p>With <b>app.dialog.preloader()</b> you can show dialog modal with preloader indicator.</p>
       <p>
-        <a className="button button-raised" @click={openDialog}>Open Dialog Preloader</a>
+        <a className="button button-raised" onClick={openDialog}>Open Dialog Preloader</a>
       </p>
       <p>With <b>app.dialog.preloader('My text...')</b> you can show dialog preloader modal with custom title.</p>
       <p>
-        <a className="button button-raised" @click={openCustomDialog}>Open Dialog Preloader</a>
+        <a className="button button-raised" onClick={openCustomDialog}>Open Dialog Preloader</a>
       </p>
     </Block>
   </Page>

@@ -14,7 +14,7 @@
       <p>Framework7 comes with {{colorsAmount}} color themes set.</p>
       <Row>
         <Col width="33" v-for="color in colors" key={color}>
-          <Button style="margin-bottom:1em; text-transform: capitalize;" fill round raised color={color} @click={setColorTheme(color)}>
+          <Button style="margin-bottom:1em; text-transform: capitalize;" fill round raised color={color} onClick={setColorTheme(color)}>
             {{ color }}
           </Button>
         </Col>

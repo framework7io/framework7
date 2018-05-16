@@ -12,7 +12,7 @@
       </ListItem>
     </List>
     <List>
-      <ListButton @click={signIn}>Sign In</ListButton>
+      <ListButton onClick={signIn}>Sign In</ListButton>
       <BlockFooter>Some text about login information.<br>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</BlockFooter>
     </List>
   </Page>

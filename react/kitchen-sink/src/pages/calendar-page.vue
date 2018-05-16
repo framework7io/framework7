@@ -1,5 +1,5 @@
 <template>
-  <Page page-content={false}>
+  <Page pageContent={false}>
     <Navbar backLink="Back">
       <NavTitle class="navbar-calendar-title"></NavTitle>
     </Navbar>

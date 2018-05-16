@@ -3,10 +3,10 @@
     <Navbar title="Notifications" backLink="Back"></Navbar>
     <Block>
       <p>Framework7 comes with simple Notifications component that allows you to show some useful messages to user and request basic actions.</p>
-      <p><Button raised @click={showNotificationFull}>Full layout notification</Button></p>
-      <p><Button raised @click={showNotificationWithButton}>With close button</Button></p>
-      <p><Button raised @click={showNotificationCloseOnClick}>Click to close</Button></p>
-      <p><Button raised @click={showNotificationCallbackOnClose}>Callback on close</Button></p>
+      <p><Button raised onClick={showNotificationFull}>Full layout notification</Button></p>
+      <p><Button raised onClick={showNotificationWithButton}>With close button</Button></p>
+      <p><Button raised onClick={showNotificationCloseOnClick}>Click to close</Button></p>
+      <p><Button raised onClick={showNotificationCallbackOnClose}>Callback on close</Button></p>
     </Block>
   </Page>
 </template>

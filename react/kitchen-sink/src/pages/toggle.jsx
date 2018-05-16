@@ -1,19 +1,22 @@
-<template>
+import React from 'react';
+import { Navbar, Page, BlockTitle, List, ListItem, Toggle } from 'framework7-react';
+
+export default () => (
   <Page>
     <Navbar title="Toggle" backLink="Back"></Navbar>
     <BlockTitle>Super Heroes</BlockTitle>
     <List simpleList>
       <ListItem>
         <span>Batman</span>
-        <Toggle checked></Toggle>
+        <Toggle defaultChecked></Toggle>
       </ListItem>
       <ListItem>
         <span>Aquaman</span>
-        <Toggle checked color="blue"></Toggle>
+        <Toggle defaultChecked color="blue"></Toggle>
       </ListItem>
       <ListItem>
         <span>Superman</span>
-        <Toggle checked color="red"></Toggle>
+        <Toggle defaultChecked color="red"></Toggle>
       </ListItem>
       <ListItem>
         <span>Hulk</span>
@@ -25,11 +28,11 @@
       </ListItem>
       <ListItem>
         <span>Ironman (Disabled)</span>
-        <Toggle checked disabled></Toggle>
+        <Toggle defaultChecked disabled></Toggle>
       </ListItem>
       <ListItem>
         <span>Thor</span>
-        <Toggle checked color="orange"></Toggle>
+        <Toggle defaultChecked color="orange"></Toggle>
       </ListItem>
       <ListItem>
         <span>Wonder Woman</span>
@@ -37,19 +40,4 @@
       </ListItem>
     </List>
   </Page>
-</template>
-<script>
-  import React from 'react';
-  import { Navbar, Page, BlockTitle, List, ListItem, Toggle } from 'framework7-react';
-
-  export default {
-    components: {
-      Navbar,
-      Page,
-      BlockTitle,
-      List,
-      ListItem,
-      Toggle,
-    },
-  };
-</script>
+);

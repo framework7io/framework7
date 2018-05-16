@@ -16,7 +16,7 @@
 </template>
 <script>
   import React from 'react';
-  import { Navbar, Page, Block, List, ListItem, f7NavRight, Link } from 'framework7-react';
+  import { Navbar, Page, Block, List, ListItem, NavRight, Link } from 'framework7-react';
 
   export default {
     components: {
@@ -25,7 +25,7 @@
       Block,
       List,
       ListItem,
-      f7NavRight,
+      NavRight,
       Link,
     },
   };
