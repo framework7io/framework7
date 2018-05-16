@@ -130,6 +130,7 @@ class Actions extends Modal {
             });
           });
         }
+        actions.el = actions.$el[0];
         originalOpen.call(actions, animate);
       }
       return actions;
