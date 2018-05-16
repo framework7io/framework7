@@ -10,11 +10,12 @@ export default {
     value: [Number, String, Boolean],
     disabled: Boolean,
     readonly: Boolean,
+    defaultChecked: Boolean,
     ...Mixins.colorProps,
   },
   render() {
     const self = this;
-    const { name, value, disabled, readonly, checked } = self;
+    const { name, value, disabled, readonly, checked, defaultChecked, id, style } = self.props;
 
     const inputEl = (
       <input
@@ -24,13 +25,14 @@ export default {
         disabled={disabled}
         readOnly={readonly}
         checked={checked}
+        defaultChecked={defaultChecked}
         onChange={self.onChange.bind(self)}
       />
     );
     const iconEl = (<i className="icon-radio" />);
 
     return (
-      <label id={self.props.id} style={self.props.style} className={self.classes}>
+      <label id={id} style={style} className={self.classes}>
         {inputEl}
         {iconEl}
         <slot />
@@ -44,7 +46,7 @@ export default {
         self.props.className,
         {
           radio: true,
-          disabled: self.disabled,
+          disabled: self.props.disabled,
         },
         Mixins.colorClasses(self),
       );
