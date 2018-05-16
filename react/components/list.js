@@ -109,7 +109,7 @@ class F7List extends React.Component {
       el.addEventListener('tab:show', self.onTabShowBound);
       el.addEventListener('tab:hide', self.onTabHideBound);
     }
-    if (!self.virtualList)
+    if (!self.props.virtualList)
       return;
     self.$f7ready(f7 => {
       const $$ = self.$$;

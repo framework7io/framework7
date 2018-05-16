@@ -21,12 +21,13 @@ export default {
     ],
     disabled: Boolean,
     readonly: Boolean,
+    defaultChecked: Boolean,
     ...Mixins.colorProps
   },
   render() {
     const _h = this.$createElement;
     const self = this;
-    const {name, value, disabled, readonly, checked} = self;
+    const {name, value, disabled, readonly, checked, defaultChecked, id, style} = self.props;
     const inputEl = _h('input', {
       on: { change: self.onChange.bind(self) },
       attrs: {
@@ -35,14 +36,15 @@ export default {
         value: value,
         disabled: disabled,
         readonly: readonly,
-        checked: checked
+        checked: checked,
+        defaultChecked: defaultChecked
       }
     });
     const iconEl = _h('i', { class: 'icon-radio' });
     return _h('label', {
-      style: self.props.style,
+      style: style,
       class: self.classes,
-      attrs: { id: self.props.id }
+      attrs: { id: id }
     }, [
       inputEl,
       iconEl,
@@ -54,7 +56,7 @@ export default {
       const self = this;
       return Utils.classNames(self.props.className, {
         radio: true,
-        disabled: self.disabled
+        disabled: self.props.disabled
       }, Mixins.colorClasses(self));
     },
     props() {

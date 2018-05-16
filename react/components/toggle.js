@@ -34,6 +34,7 @@ class F7Toggle extends React.Component {
       disabled: self.props.disabled,
       readOnly: self.props.readonly,
       checked: self.props.checked,
+      defaultChecked: self.props.defaultChecked,
       value: self.props.value,
       onChange: self.onChange.bind(self)
     }), React.createElement('span', { className: 'toggle-icon' }));
@@ -85,6 +86,7 @@ __reactComponentSetProps(F7Toggle, {
     default: true
   },
   checked: Boolean,
+  defaultChecked: Boolean,
   disabled: Boolean,
   readonly: Boolean,
   name: String,

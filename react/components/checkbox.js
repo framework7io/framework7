@@ -15,12 +15,12 @@ class F7Checkbox extends React.Component {
     const self = this;
     return Utils.classNames(self.props.className, {
       checkbox: true,
-      disabled: self.disabled
+      disabled: self.props.disabled
     }, Mixins.colorClasses(self));
   }
   render() {
     const self = this;
-    const {name, value, disabled, readonly, checked} = self;
+    const {name, value, disabled, readonly, checked, defaultChecked, id, style} = self.props;
     const inputEl = React.createElement('input', {
       type: 'checkbox',
       name: name,
@@ -28,12 +28,13 @@ class F7Checkbox extends React.Component {
       disabled: disabled,
       readOnly: readonly,
       checked: checked,
+      defaultChecked: defaultChecked,
       onChange: self.onChange.bind(self)
     });
     const iconEl = React.createElement('i', { className: 'icon-checkbox' });
     return React.createElement('label', {
-      id: self.props.id,
-      style: self.props.style,
+      id: id,
+      style: style,
       className: self.classes
     }, inputEl, iconEl, this.slots['default']);
   }
@@ -61,6 +62,7 @@ __reactComponentSetProps(F7Checkbox, {
   ],
   disabled: Boolean,
   readonly: Boolean,
+  defaultChecked: Boolean,
   ...Mixins.colorProps
 });
 export default F7Checkbox;

@@ -14,6 +14,7 @@ export default {
       default: true
     },
     checked: Boolean,
+    defaultChecked: Boolean,
     disabled: Boolean,
     readonly: Boolean,
     name: String,
@@ -42,6 +43,7 @@ export default {
           disabled: self.props.disabled,
           readonly: self.props.readonly,
           checked: self.props.checked,
+          defaultChecked: self.props.defaultChecked,
           value: self.props.value
         }
       }),
