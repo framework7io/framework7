@@ -49,8 +49,9 @@ export default {
     const { list: slotsList, default: slotsDefault } = self.slots;
     const rootChildren = [];
     const ulChildren = slotsList || [];
+    const flattenSlots = Utils.flattenArray(slotsDefault);
 
-    slotsDefault.forEach((child) => {
+    flattenSlots.forEach((child) => {
       let tag;
       if (process.env.COMPILER === 'react') {
         tag = child.type && child.type.name;

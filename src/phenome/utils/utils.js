@@ -48,6 +48,14 @@ const Utils = {
     }
     return to;
   },
+  flattenArray(...args) {
+    const arr = [];
+    args.forEach((arg) => {
+      if (Array.isArray(arg)) arr.push(...Utils.flattenArray(...arg));
+      else arr.push(arg);
+    });
+    return arr;
+  },
   classNames(...args) {
     const classes = [];
     args.forEach((arg) => {
