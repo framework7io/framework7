@@ -18,7 +18,7 @@ export default {
     const {progress, id, style} = self.props;
     const transformStyle = {
       transform: progress ? `translate3d(${ -100 + progress }%, 0, 0)` : '',
-      webkitTransform: progress ? `translate3d(${ -100 + progress }%, 0, 0)` : ''
+      WebkitTransform: progress ? `translate3d(${ -100 + progress }%, 0, 0)` : ''
     };
     return _h('span', {
       ref: 'el',

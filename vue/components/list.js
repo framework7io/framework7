@@ -43,7 +43,8 @@ export default {
     } = self.$slots;
     const rootChildren = [];
     const ulChildren = slotsList || [];
-    slotsDefault.forEach(child => {
+    const flattenSlots = Utils.flattenArray(slotsDefault);
+    flattenSlots.forEach(child => {
       let tag;
       {
         tag = child.tag;
