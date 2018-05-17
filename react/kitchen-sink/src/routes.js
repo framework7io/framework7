@@ -7,8 +7,8 @@ import ActionSheet from './pages/action-sheet.jsx';
 //import Autocomplete from './pages/autocomplete.jsx';
 import Badge from './pages/badge.jsx';
 import Buttons from './pages/buttons.jsx';
-//import Calendar from './pages/calendar.jsx';
-//import CalendarPage from './pages/calendar-page.jsx';
+import Calendar from './pages/calendar.jsx';
+import CalendarPage from './pages/calendar-page.jsx';
 import Cards from './pages/cards.jsx';
 import Checkbox from './pages/checkbox.jsx';
 import Chips from './pages/chips.jsx';
@@ -37,8 +37,8 @@ import ListIndex from './pages/list-index.jsx';
 // import Picker from './pages/picker.jsx';
 // import Popup from './pages/popup.jsx';
 // import Popover from './pages/popover.jsx';
-// import Preloader from './pages/preloader.jsx';
-// import Progressbar from './pages/progressbar.jsx';
+import Preloader from './pages/preloader.jsx';
+import Progressbar from './pages/progressbar.jsx';
 // import PullToRefresh from './pages/pull-to-refresh.jsx';
 import Radio from './pages/radio.jsx';
 import Range from './pages/range.jsx';
@@ -183,14 +183,14 @@ export default [
     path: '/buttons/',
     component: Buttons,
   },
-  // {
-  //   path: '/calendar/',
-  //   component: Calendar,
-  // },
-  // {
-  //   path: '/calendar-page/',
-  //   component: CalendarPage,
-  // },
+  {
+    path: '/calendar/',
+    component: Calendar,
+  },
+  {
+    path: '/calendar-page/',
+    component: CalendarPage,
+  },
   {
     path: '/cards/',
     component: Cards,
@@ -303,14 +303,14 @@ export default [
   //   path: '/popover/',
   //   component: Popover,
   // },
-  // {
-  //   path: '/preloader/',
-  //   component: Preloader,
-  // },
-  // {
-  //   path: '/progressbar/',
-  //   component: Progressbar,
-  // },
+  {
+    path: '/preloader/',
+    component: Preloader,
+  },
+  {
+    path: '/progressbar/',
+    component: Progressbar,
+  },
   // {
   //   path: '/pull-to-refresh/',
   //   component: PullToRefresh,
