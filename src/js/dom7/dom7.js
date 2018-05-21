@@ -1875,7 +1875,7 @@ function ajax(options) {
           responseData = JSON.parse(xhr.responseText);
           fireAjaxCallback('ajaxSuccess ajax:success', { xhr: xhr }, 'success', responseData, xhr.status, xhr);
         } catch (err) {
-          fireAjaxCallback('ajaxError ajax:error', { xhr: xhr, parseerror: true }, 'error', xhr, 'parseerror');
+          fireAjaxCallback('ajaxError ajax:error', { xhr: xhr, error: true }, 'error', xhr, err.message);
         }
       } else {
         responseData = xhr.responseType === 'text' || xhr.responseType === '' ? xhr.responseText : xhr.response;
