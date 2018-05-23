@@ -214,7 +214,7 @@ const Input = {
       const previousValue = $inputEl.val();
       $inputEl
         .val('')
-        .trigger('change')
+        .trigger('change input')
         .focus()
         .trigger('input:clear', previousValue);
     }
