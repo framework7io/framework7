@@ -18,7 +18,7 @@ export default {
     const RowTag = self.props.tag;
 
     return (
-      <RowTag id={this.props.id} style={this.props.style} className={self.classes}>
+      <RowTag id={this.props.id} style={this.props.style} className={self.classes} onClick={self.onClick.bind(self)}>
         <slot />
       </RowTag>
     );
@@ -35,5 +35,10 @@ export default {
         Mixins.colorClasses(self),
       );
     },
+  },
+  methods: {
+    onClick(e) {
+      this.dispatchEvent('click', e);
+    }
   },
 };
