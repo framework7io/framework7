@@ -1,10 +1,13 @@
-<template>
+import React from 'react';
+import { Navbar, Page, Searchbar, Subnavbar, List, ListItem } from 'framework7-react';
+
+export default () => (
   <Page>
     <Navbar backLink="Back" title="Searchbar">
       <Subnavbar inner={false}>
         <Searchbar
-          search-container=".search-list"
-          search-in=".item-title"
+          searchContainer=".search-list"
+          searchIn=".item-title"
         ></Searchbar>
       </Subnavbar>
     </Navbar>
@@ -54,19 +57,4 @@
       <ListItem title="Volvo"></ListItem>
     </List>
   </Page>
-</template>
-<script>
-  import React from 'react';
-  import { Navbar, Page, Searchbar, Subnavbar, List, ListItem } from 'framework7-react';
-
-  export default {
-    components: {
-      Navbar,
-      Page,
-      Searchbar,
-      Subnavbar,
-      List,
-      ListItem,
-    },
-  }
-</script>
+);

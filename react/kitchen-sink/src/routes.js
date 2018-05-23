@@ -42,10 +42,10 @@ import Progressbar from './pages/progressbar.jsx';
 // import PullToRefresh from './pages/pull-to-refresh.jsx';
 import Radio from './pages/radio.jsx';
 import Range from './pages/range.jsx';
-// import Searchbar from './pages/searchbar.jsx';
+import Searchbar from './pages/searchbar.jsx';
 // import SearchbarExpandable from './pages/searchbar-expandable.jsx';
 // import SheetModal from './pages/sheet-modal.jsx';
-// import SmartSelect from './pages/smart-select.jsx';
+import SmartSelect from './pages/smart-select.jsx';
 import Sortable from './pages/sortable.jsx';
 import Statusbar from './pages/statusbar.jsx';
 import Stepper from './pages/stepper.jsx';
@@ -88,7 +88,7 @@ import TimelineVertical from './pages/timeline-vertical.jsx';
 import TimelineHorizontal from './pages/timeline-horizontal.jsx';
 import TimelineHorizontalCalendar from './pages/timeline-horizontal-calendar.jsx';
 import VirtualList from './pages/virtual-list.jsx';
-// import ColorThemes from './pages/color-themes.jsx';
+import ColorThemes from './pages/color-themes.jsx';
 // Pages
 export default [
   // Index page
@@ -323,10 +323,10 @@ export default [
     path: '/range/',
     component: Range,
   },
-  // {
-  //   path: '/searchbar/',
-  //   component: Searchbar,
-  // },
+  {
+    path: '/searchbar/',
+    component: Searchbar,
+  },
   // {
   //   path: '/searchbar-expandable/',
   //   component: SearchbarExpandable,
@@ -335,10 +335,10 @@ export default [
   //   path: '/sheet-modal/',
   //   component: SheetModal,
   // },
-  // {
-  //   path: '/smart-select/',
-  //   component: SmartSelect,
-  // },
+  {
+    path: '/smart-select/',
+    component: SmartSelect,
+  },
   {
     path: '/sortable/',
     component: Sortable,
@@ -550,9 +550,9 @@ export default [
     component: VirtualList,
   },
 
-  // // Color Themes
-  // {
-  //   path: '/color-themes/',
-  //   component: ColorThemes,
-  // },
+  // Color Themes
+  {
+    path: '/color-themes/',
+    component: ColorThemes,
+  },
 ];
