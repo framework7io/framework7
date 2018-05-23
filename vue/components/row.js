@@ -1,5 +1,6 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
+import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
 export default {
   name: 'f7-row',
@@ -22,6 +23,7 @@ export default {
     return _h(RowTag, {
       style: this.props.style,
       class: self.classes,
+      on: { click: self.onClick.bind(self) },
       attrs: { id: this.props.id }
     }, [this.$slots['default']]);
   },
@@ -35,6 +37,14 @@ export default {
     },
     props() {
       return __vueComponentProps(this);
+    }
+  },
+  methods: {
+    onClick(e) {
+      this.dispatchEvent('click', e);
+    },
+    dispatchEvent(events, ...args) {
+      __vueComponentDispatchEvent(this, events, ...args);
     }
   }
 };
