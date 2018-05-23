@@ -95,6 +95,8 @@ const Statusbar = {
     if (params.overlay === 'auto') {
       if (Device.needsStatusbarOverlay()) {
         $('html').addClass('with-statusbar');
+      } else {
+        $('html').removeClass('with-statusbar');
       }
 
       if (Device.ios && (Device.cordova || Device.webView)) {
@@ -108,7 +110,7 @@ const Statusbar = {
           Statusbar.checkOverlay();
         }, false);
 
-        app.on('orientationchange resize', () => {
+        app.on(Device.ios ? 'orientationchange' : 'orientationchange resize', () => {
           Statusbar.checkOverlay();
         });
       }
