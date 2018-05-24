@@ -11,34 +11,30 @@ export default {
     ...Mixins.colorProps,
   },
   render() {
+    const { left, right, side, className, id, style } = this.props;
+
+    let sideComputed = side;
+    if (!sideComputed) {
+      if (left) sideComputed = 'left';
+      if (right) sideComputed = 'right';
+    }
+
+    const classes = Utils.classNames(
+      className,
+      {
+        [`swipeout-actions-${sideComputed}`]: true,
+      },
+      Mixins.colorClasses(this),
+    );
+
     return (
       <div
-        id={this.props.id}
-        style={this.props.style}
-        className={this.classes}
+        id={id}
+        style={style}
+        className={classes}
       >
         <slot />
       </div>
     );
-  },
-  computed: {
-    classes() {
-      return Utils.classNames(
-        this.props.className,
-        {
-          [`swipeout-actions-${this.sideComputed}`]: true,
-        },
-        Mixins.colorClasses(this),
-      );
-    },
-    sideComputed() {
-      const { left, right, side } = this;
-      if (!side) {
-        if (left) return 'left';
-        if (right) return 'right';
-        return 'right';
-      }
-      return side;
-    },
   },
 };
