@@ -35,6 +35,7 @@ export default {
     let headerEl;
     let contentEl;
     let footerEl;
+    const classes = Utils.classNames(self.props.className, 'card', Mixins.colorClasses(self));
     if (self.title || self.$slots && self.$slots.header) {
       headerEl = _h(F7CardHeader, [
         self.props.title,
@@ -55,7 +56,7 @@ export default {
     }
     return _h('div', {
       style: this.props.style,
-      class: this.classes,
+      class: classes,
       attrs: { id: this.props.id }
     }, [
       headerEl,
@@ -65,10 +66,6 @@ export default {
     ]);
   },
   computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(self.props.className, { card: true }, Mixins.colorClasses(self));
-    },
     props() {
       return __vueComponentProps(this);
     }

@@ -23,6 +23,7 @@ class F7PhotoBrowser extends React.Component {
     return this.f7PhotoBrowser.expositionDisable();
   }
   render() {
+    return null;
   }
   componentDidMount() {
     const self = this;

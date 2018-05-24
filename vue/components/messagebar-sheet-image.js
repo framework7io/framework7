@@ -21,7 +21,7 @@ export default {
     const self = this;
     const {image, checked, id, className, style} = self.props;
     const classes = Utils.classNames(className, 'messagebar-sheet-image', 'checkbox', Mixins.colorClasses(self));
-    const styles = Utils.extend({ 'background-image': image && `url(${ image })` }, style || {});
+    const styles = Utils.extend({ backgroundImage: image && `url(${ image })` }, style || {});
     return _h('label', {
       class: classes,
       style: styles,

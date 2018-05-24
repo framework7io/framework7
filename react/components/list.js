@@ -57,9 +57,11 @@ class F7List extends React.Component {
       list: slotsList,
       default: slotsDefault
     } = self.slots;
-    const rootChildren = [];
+    const rootChildrenBeforeList = [];
+    const rootChildrenAfterList = [];
     const ulChildren = slotsList || [];
     const flattenSlots = Utils.flattenArray(slotsDefault);
+    let wasUlChild = false;
     flattenSlots.forEach(child => {
       let tag;
       {
@@ -69,8 +71,12 @@ class F7List extends React.Component {
         }
       }
       if (!tag && 'react' === 'react' || tag && !(tag === 'li' || tag === 'F7ListItem' || tag === 'F7ListButton' || tag.indexOf('list-item') >= 0 || tag.indexOf('list-button') >= 0)) {
-        rootChildren.push(child);
+        if (wasUlChild)
+          rootChildrenAfterList.push(child);
+        else
+          rootChildrenBeforeList.push(child);
       } else if (tag) {
+        wasUlChild = true;
         ulChildren.push(child);
       }
     });
@@ -83,7 +89,7 @@ class F7List extends React.Component {
         },
         style: style,
         className: self.classes
-      }, self.slots['before-list'], React.createElement('ul', null, ulChildren), self.slots['after-list'], rootChildren);
+      }, self.slots['before-list'], rootChildrenBeforeList, React.createElement('ul', null, ulChildren), self.slots['after-list'], rootChildrenAfterList);
     } else {
       return React.createElement(ListTag, {
         id: id,
@@ -92,7 +98,7 @@ class F7List extends React.Component {
         },
         style: style,
         className: self.classes
-      }, self.slots['before-list'], rootChildren, self.slots['after-list']);
+      }, self.slots['before-list'], rootChildrenBeforeList, self.slots['after-list'], rootChildrenAfterList);
     }
   }
   componentDidMount() {

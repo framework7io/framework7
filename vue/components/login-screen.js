@@ -1,5 +1,6 @@
 import Mixins from '../utils/mixins';
 import Utils from '../utils/utils';
+import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
 export default {
   name: 'f7-login-screen',
@@ -76,16 +77,16 @@ export default {
   },
   methods: {
     onOpen(event) {
-      this.$emit('loginscreen:open loginScreenOpen', event);
+      this.dispatchEvent('loginscreen:open loginScreenOpen', event);
     },
     onOpened(event) {
-      this.$emit('loginscreen:opened loginScreenOpened', event);
+      this.dispatchEvent('loginscreen:opened loginScreenOpened', event);
     },
     onClose(event) {
-      this.$emit('loginscreen:close loginScreenClose', event);
+      this.dispatchEvent('loginscreen:close loginScreenClose', event);
     },
     onClosed(event) {
-      this.$emit('loginscreen:closed loginScreenClosed', event);
+      this.dispatchEvent('loginscreen:closed loginScreenClosed', event);
     },
     open(animate) {
       const self = this;
@@ -100,6 +101,9 @@ export default {
       if (!self.$f7 || !el)
         return undefined;
       return self.$f7.loginScreen.close(el, animate);
+    },
+    dispatchEvent(events, ...args) {
+      __vueComponentDispatchEvent(this, events, ...args);
     }
   }
 };

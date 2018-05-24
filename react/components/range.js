@@ -3,6 +3,7 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __reactComponentWatch from '../runtime-helpers/react-component-watch.js';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
+import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
 class F7Range extends React.Component {
   constructor(props, context) {
@@ -23,15 +24,25 @@ class F7Range extends React.Component {
   }
   render() {
     const self = this;
-    const classes = Utils.classNames(self.props.className, 'range-slider', { disabled: self.props.disabled }, Mixins.colorClasses(self));
+    const {id, disabled, className, style, input, inputId, name} = self.props;
+    const classes = Utils.classNames(className, 'range-slider', { disabled }, Mixins.colorClasses(self));
     return React.createElement('div', {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
       },
-      id: self.props.id,
-      style: self.props.style,
+      id: id,
+      style: style,
       className: classes
-    });
+    }, input && React.createElement('input', {
+      type: 'range',
+      name: name,
+      id: inputId
+    }), this.slots['default']);
+  }
+  componentWillUnmount() {
+    const self = this;
+    if (self.f7Range && self.f7Range.destroy)
+      self.f7Range.destroy();
   }
   componentDidMount() {
     const self = this;
@@ -58,10 +69,8 @@ class F7Range extends React.Component {
       });
     });
   }
-  componentWillUnmount() {
-    const self = this;
-    if (self.f7Range && self.f7Range.destroy)
-      self.f7Range.destroy();
+  get slots() {
+    return __reactComponentSlots(this.props);
   }
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
@@ -126,6 +135,9 @@ __reactComponentSetProps(F7Range, {
     type: Boolean,
     default: false
   },
+  name: String,
+  inputId: String,
+  input: Boolean,
   disabled: Boolean,
   draggableBar: {
     type: Boolean,

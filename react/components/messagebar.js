@@ -228,15 +228,20 @@ class F7Messagebar extends React.Component {
     el.addEventListener('messagebar:attachmentdelete', self.onDeleteAttachmentBound);
     el.addEventListener('messagebar:attachmentclick', self.onClickAttachmentBound);
     el.addEventListener('messagebar:resizepage', self.onResizePageBound);
+    const params = {
+      el,
+      top,
+      resizePage,
+      bottomOffset,
+      topOffset,
+      maxHeight
+    };
+    Object.keys(params).forEach(key => {
+      if (typeof params[key] === 'undefined')
+        delete params[key];
+    });
     self.$f7ready(() => {
-      self.f7Messagebar = self.$f7.messagebar.create({
-        el,
-        top,
-        resizePage,
-        bottomOffset,
-        topOffset,
-        maxHeight
-      });
+      self.f7Messagebar = self.$f7.messagebar.create(params);
     });
   }
   get slots() {

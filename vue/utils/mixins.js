@@ -96,6 +96,12 @@ const Mixins = {
     };
   },
   linkActionsProps: {
+    searchbarEnable: [Boolean, String],
+    searchbarDisable: [Boolean, String],
+
+    searchbarClear: [Boolean, String],
+    searchbarToggle: [Boolean, String],
+
     // Panel
     panelOpen: [Boolean, String],
     panelClose: [Boolean, String],
@@ -127,6 +133,10 @@ const Mixins = {
   },
   linkActionsAttrs(self) {
     const {
+      searchbarEnable,
+      searchbarDisable,
+      searchbarClear,
+      searchbarToggle,
       panelOpen,
       panelClose,
       popupOpen,
@@ -145,6 +155,10 @@ const Mixins = {
     } = self.props;
 
     return {
+      'data-searchbar': (Utils.isStringProp(searchbarEnable) && searchbarEnable) ||
+                        (Utils.isStringProp(searchbarDisable) && searchbarDisable) ||
+                        (Utils.isStringProp(searchbarClear) && searchbarClear) ||
+                        (Utils.isStringProp(searchbarToggle) && searchbarToggle) || undefined,
       'data-panel': (Utils.isStringProp(panelOpen) && panelOpen) ||
                     (Utils.isStringProp(panelClose) && panelClose) || undefined,
       'data-popup': (Utils.isStringProp(popupOpen) && popupOpen) ||
@@ -164,6 +178,10 @@ const Mixins = {
   },
   linkActionsClasses(self) {
     const {
+      searchbarEnable,
+      searchbarDisable,
+      searchbarClear,
+      searchbarToggle,
       panelOpen,
       panelClose,
       popupOpen,
@@ -182,6 +200,10 @@ const Mixins = {
     } = self.props;
 
     return {
+      'searchbar-enable': searchbarEnable || searchbarEnable === '',
+      'searchbar-disable': searchbarDisable || searchbarDisable === '',
+      'searchbar-clear': searchbarClear || searchbarClear === '',
+      'searchbar-toggle': searchbarToggle || searchbarToggle === '',
       'panel-close': Utils.isTrueProp(panelClose),
       'panel-open': panelOpen || panelOpen === '',
       'popup-close': Utils.isTrueProp(popupClose),

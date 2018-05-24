@@ -15,27 +15,22 @@ export default {
   },
   render() {
     const _h = this.$createElement;
+    const {left, right, side, className, id, style} = this.props;
+    let sideComputed = side;
+    if (!sideComputed) {
+      if (left)
+        sideComputed = 'left';
+      if (right)
+        sideComputed = 'right';
+    }
+    const classes = Utils.classNames(className, { [`swipeout-actions-${ sideComputed }`]: true }, Mixins.colorClasses(this));
     return _h('div', {
-      style: this.props.style,
-      class: this.classes,
-      attrs: { id: this.props.id }
+      style: style,
+      class: classes,
+      attrs: { id: id }
     }, [this.$slots['default']]);
   },
   computed: {
-    classes() {
-      return Utils.classNames(this.props.className, { [`swipeout-actions-${ this.sideComputed }`]: true }, Mixins.colorClasses(this));
-    },
-    sideComputed() {
-      const {left, right, side} = this;
-      if (!side) {
-        if (left)
-          return 'left';
-        if (right)
-          return 'right';
-        return 'right';
-      }
-      return side;
-    },
     props() {
       return __vueComponentProps(this);
     }

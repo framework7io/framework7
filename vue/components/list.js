@@ -41,17 +41,23 @@ export default {
       list: slotsList,
       default: slotsDefault
     } = self.$slots;
-    const rootChildren = [];
+    const rootChildrenBeforeList = [];
+    const rootChildrenAfterList = [];
     const ulChildren = slotsList || [];
     const flattenSlots = Utils.flattenArray(slotsDefault);
+    let wasUlChild = false;
     flattenSlots.forEach(child => {
       let tag;
       {
         tag = child.tag;
       }
       if (!tag && 'vue' === 'react' || tag && !(tag === 'li' || tag === 'F7ListItem' || tag === 'F7ListButton' || tag.indexOf('list-item') >= 0 || tag.indexOf('list-button') >= 0)) {
-        rootChildren.push(child);
+        if (wasUlChild)
+          rootChildrenAfterList.push(child);
+        else
+          rootChildrenBeforeList.push(child);
       } else if (tag) {
+        wasUlChild = true;
         ulChildren.push(child);
       }
     });
@@ -64,9 +70,10 @@ export default {
         attrs: { id: id }
       }, [
         self.$slots['before-list'],
+        rootChildrenBeforeList,
         _h('ul', [ulChildren]),
         self.$slots['after-list'],
-        rootChildren
+        rootChildrenAfterList
       ]);
     } else {
       return _h(ListTag, {
@@ -76,8 +83,9 @@ export default {
         attrs: { id: id }
       }, [
         self.$slots['before-list'],
-        rootChildren,
-        self.$slots['after-list']
+        rootChildrenBeforeList,
+        self.$slots['after-list'],
+        rootChildrenAfterList
       ]);
     }
   },

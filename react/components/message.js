@@ -81,7 +81,7 @@ class F7Message extends React.Component {
       onClick: self.onClickBound
     }, slotsStart, (avatar || slotsAvatar) && React.createElement('div', {
       className: 'message-avatar',
-      style: { 'background-image': avatar && `url(${ avatar })` },
+      style: { backgroundImage: avatar && `url(${ avatar })` },
       onClick: self.onAvatarClickBound
     }, slotsAvatar), React.createElement('div', { className: 'message-content' }, slotsContentStart, (slotsName || name) && React.createElement('div', {
       className: 'message-name',

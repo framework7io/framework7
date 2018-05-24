@@ -7,25 +7,20 @@ class F7SwipeoutActions extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
-  get classes() {
-    return Utils.classNames(this.props.className, { [`swipeout-actions-${ this.sideComputed }`]: true }, Mixins.colorClasses(this));
-  }
-  get sideComputed() {
-    const {left, right, side} = this;
-    if (!side) {
-      if (left)
-        return 'left';
-      if (right)
-        return 'right';
-      return 'right';
-    }
-    return side;
-  }
   render() {
+    const {left, right, side, className, id, style} = this.props;
+    let sideComputed = side;
+    if (!sideComputed) {
+      if (left)
+        sideComputed = 'left';
+      if (right)
+        sideComputed = 'right';
+    }
+    const classes = Utils.classNames(className, { [`swipeout-actions-${ sideComputed }`]: true }, Mixins.colorClasses(this));
     return React.createElement('div', {
-      id: this.props.id,
-      style: this.props.style,
-      className: this.classes
+      id: id,
+      style: style,
+      className: classes
     }, this.slots['default']);
   }
   get slots() {

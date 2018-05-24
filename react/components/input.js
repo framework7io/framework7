@@ -49,11 +49,11 @@ class F7Input extends React.Component {
   }
   render() {
     const self = this;
-    const {type, name, value, placeholder, id, inputId, size, accept, autocomplete, autocorrect, autocapitalize, spellcheck, autofocus, autosave, checked, disabled, max, min, step, maxlength, minlength, multiple, readonly, required, inputStyle, pattern, validate, tabindex, resizable, clearButton, errorMessage, info, wrap, style, className, noStoreData, noFormStoreData} = self.props;
+    const {type, name, value, defaultValue, placeholder, id, inputId, size, accept, autocomplete, autocorrect, autocapitalize, spellcheck, autofocus, autosave, checked, disabled, max, min, step, maxlength, minlength, multiple, readonly, required, inputStyle, pattern, validate, tabindex, resizable, clearButton, errorMessage, info, wrap, style, className, noStoreData, noFormStoreData} = self.props;
     let inputEl;
     const createInput = (tag, children) => {
       const InputTag = tag;
-      const needsValue = !(type === 'select' || type === 'file');
+      const needsValue = type !== 'file';
       const needsType = tag === 'input';
       const inputClassName = Utils.classNames(type === 'textarea' && resizable && 'resizable', !wrap && className, (noFormStoreData || noStoreData) && 'no-store-data');
       return React.createElement(InputTag, {
@@ -66,6 +66,7 @@ class F7Input extends React.Component {
         placeholder: placeholder,
         id: inputId,
         value: needsValue ? value : undefined,
+        defaultValue: defaultValue,
         size: size,
         accept: accept,
         autoComplete: autocomplete,
@@ -86,7 +87,7 @@ class F7Input extends React.Component {
         required: required,
         pattern: pattern,
         validate: typeof validate === 'string' && validate.length ? validate : undefined,
-        'data-validate': validate === true || validate === '',
+        'data-validate': validate === true || validate === '' ? true : undefined,
         tabIndex: tabindex,
         'data-error-message': errorMessage,
         className: inputClassName,
@@ -127,7 +128,9 @@ class F7Input extends React.Component {
         min: min,
         max: max,
         step: step,
+        name: name,
         id: inputId,
+        input: true,
         onRangeChange: self.onChangeBound
       });
     } else {
@@ -235,6 +238,11 @@ __reactComponentSetProps(F7Input, {
   type: String,
   name: String,
   value: [
+    String,
+    Number,
+    Array
+  ],
+  defaultValue: [
     String,
     Number,
     Array

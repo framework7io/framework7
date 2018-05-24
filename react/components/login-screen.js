@@ -2,6 +2,7 @@ import React from 'react';
 import Mixins from '../utils/mixins';
 import Utils from '../utils/utils';
 import __reactComponentWatch from '../runtime-helpers/react-component-watch.js';
+import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
 class F7LoginScreen extends React.Component {
@@ -10,16 +11,16 @@ class F7LoginScreen extends React.Component {
     this.__reactRefs = {};
   }
   onOpen(event) {
-    this.$emit('loginscreen:open loginScreenOpen', event);
+    this.dispatchEvent('loginscreen:open loginScreenOpen', event);
   }
   onOpened(event) {
-    this.$emit('loginscreen:opened loginScreenOpened', event);
+    this.dispatchEvent('loginscreen:opened loginScreenOpened', event);
   }
   onClose(event) {
-    this.$emit('loginscreen:close loginScreenClose', event);
+    this.dispatchEvent('loginscreen:close loginScreenClose', event);
   }
   onClosed(event) {
-    this.$emit('loginscreen:closed loginScreenClosed', event);
+    this.dispatchEvent('loginscreen:closed loginScreenClosed', event);
   }
   open(animate) {
     const self = this;
@@ -84,6 +85,9 @@ class F7LoginScreen extends React.Component {
   }
   get slots() {
     return __reactComponentSlots(this.props);
+  }
+  dispatchEvent(events, ...args) {
+    return __reactComponentDispatchEvent(this, events, ...args);
   }
   get refs() {
     return this.__reactRefs;

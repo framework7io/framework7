@@ -26,14 +26,26 @@ export default {
     let buttonNextEl;
     let buttonPrevEl;
     if (self.paginationComputed) {
-      paginationEl = _h('div', { class: 'swiper-pagination' });
+      paginationEl = _h('div', {
+        ref: 'paginationEl',
+        class: 'swiper-pagination'
+      });
     }
     if (self.scrollbarComputed) {
-      scrollbarEl = _h('div', { class: 'swiper-scrollbar' });
+      scrollbarEl = _h('div', {
+        ref: 'scrollbarEl',
+        class: 'swiper-scrollbar'
+      });
     }
     if (self.navigationComputed) {
-      buttonNextEl = _h('div', { class: 'swiper-button-next' });
-      buttonPrevEl = _h('div', { class: 'swiper-button-prev' });
+      buttonNextEl = _h('div', {
+        ref: 'nextEl',
+        class: 'swiper-button-next'
+      });
+      buttonPrevEl = _h('div', {
+        ref: 'prevEl',
+        class: 'swiper-button-prev'
+      });
     }
     return _h('div', {
       style: self.props.style,
@@ -109,14 +121,14 @@ export default {
       if (params)
         Utils.extend(newParams, params);
       if (pagination && !newParams.pagination.el)
-        newParams.pagination.el = '.swiper-pagination';
+        newParams.pagination.el = self.$refs.paginationEl;
       if (navigation && !newParams.navigation.nextEl && !newParams.navigation.prevEl) {
-        newParams.navigation.nextEl = '.swiper-button-next';
-        newParams.navigation.prevEl = '.swiper-button-prev';
+        newParams.navigation.nextEl = self.$refs.nextEl;
+        newParams.navigation.prevEl = self.$refs.prevEl;
       }
       if (scrollbar && !newParams.scrollbar.el)
-        newParams.scrollbar.el = '.swiper-scrollbar';
-      self.swiper = f7.swiper.create(this.$refs.el, newParams);
+        newParams.scrollbar.el = self.$refs.scrollbarEl;
+      self.swiper = f7.swiper.create(self.$refs.el, newParams);
     });
   }
 };

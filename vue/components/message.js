@@ -70,7 +70,7 @@ export default {
       slotsStart,
       (avatar || slotsAvatar) && _h('div', {
         class: 'message-avatar',
-        style: { 'background-image': avatar && `url(${ avatar })` },
+        style: { backgroundImage: avatar && `url(${ avatar })` },
         on: { click: self.onAvatarClickBound }
       }, [slotsAvatar]),
       _h('div', { class: 'message-content' }, [

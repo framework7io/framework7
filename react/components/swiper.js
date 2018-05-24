@@ -39,14 +39,34 @@ class F7Swiper extends React.Component {
     let buttonNextEl;
     let buttonPrevEl;
     if (self.paginationComputed) {
-      paginationEl = React.createElement('div', { className: 'swiper-pagination' });
+      paginationEl = React.createElement('div', {
+        ref: __reactNode => {
+          this.__reactRefs['paginationEl'] = __reactNode;
+        },
+        className: 'swiper-pagination'
+      });
     }
     if (self.scrollbarComputed) {
-      scrollbarEl = React.createElement('div', { className: 'swiper-scrollbar' });
+      scrollbarEl = React.createElement('div', {
+        ref: __reactNode => {
+          this.__reactRefs['scrollbarEl'] = __reactNode;
+        },
+        className: 'swiper-scrollbar'
+      });
     }
     if (self.navigationComputed) {
-      buttonNextEl = React.createElement('div', { className: 'swiper-button-next' });
-      buttonPrevEl = React.createElement('div', { className: 'swiper-button-prev' });
+      buttonNextEl = React.createElement('div', {
+        ref: __reactNode => {
+          this.__reactRefs['nextEl'] = __reactNode;
+        },
+        className: 'swiper-button-next'
+      });
+      buttonPrevEl = React.createElement('div', {
+        ref: __reactNode => {
+          this.__reactRefs['prevEl'] = __reactNode;
+        },
+        className: 'swiper-button-prev'
+      });
     }
     return React.createElement('div', {
       id: self.props.id,
@@ -71,14 +91,14 @@ class F7Swiper extends React.Component {
       if (params)
         Utils.extend(newParams, params);
       if (pagination && !newParams.pagination.el)
-        newParams.pagination.el = '.swiper-pagination';
+        newParams.pagination.el = self.refs.paginationEl;
       if (navigation && !newParams.navigation.nextEl && !newParams.navigation.prevEl) {
-        newParams.navigation.nextEl = '.swiper-button-next';
-        newParams.navigation.prevEl = '.swiper-button-prev';
+        newParams.navigation.nextEl = self.refs.nextEl;
+        newParams.navigation.prevEl = self.refs.prevEl;
       }
       if (scrollbar && !newParams.scrollbar.el)
-        newParams.scrollbar.el = '.swiper-scrollbar';
-      self.swiper = f7.swiper.create(this.refs.el, newParams);
+        newParams.scrollbar.el = self.refs.scrollbarEl;
+      self.swiper = f7.swiper.create(self.refs.el, newParams);
     });
   }
   componentDidUpdate() {

@@ -50,6 +50,9 @@ export default {
       type: Boolean,
       default: false
     },
+    name: String,
+    inputId: String,
+    input: Boolean,
     disabled: Boolean,
     draggableBar: {
       type: Boolean,
@@ -60,13 +63,23 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
-    const classes = Utils.classNames(self.props.className, 'range-slider', { disabled: self.props.disabled }, Mixins.colorClasses(self));
+    const {id, disabled, className, style, input, inputId, name} = self.props;
+    const classes = Utils.classNames(className, 'range-slider', { disabled }, Mixins.colorClasses(self));
     return _h('div', {
       ref: 'el',
-      style: self.props.style,
+      style: style,
       class: classes,
-      attrs: { id: self.props.id }
-    });
+      attrs: { id: id }
+    }, [
+      input && _h('input', {
+        attrs: {
+          type: 'range',
+          name: name,
+          id: inputId
+        }
+      }),
+      this.$slots['default']
+    ]);
   },
   watch: {
     'props.value': function watchValue(newValue) {
@@ -75,11 +88,6 @@ export default {
         return;
       self.f7Range.setValue(newValue);
     }
-  },
-  beforeDestroy() {
-    const self = this;
-    if (self.f7Range && self.f7Range.destroy)
-      self.f7Range.destroy();
   },
   mounted() {
     const self = this;
@@ -105,6 +113,11 @@ export default {
         }
       });
     });
+  },
+  beforeDestroy() {
+    const self = this;
+    if (self.f7Range && self.f7Range.destroy)
+      self.f7Range.destroy();
   },
   methods: {
     setValue(newValue) {

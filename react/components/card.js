@@ -10,15 +10,12 @@ class F7Card extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
-  get classes() {
-    const self = this;
-    return Utils.classNames(self.props.className, { card: true }, Mixins.colorClasses(self));
-  }
   render() {
     const self = this;
     let headerEl;
     let contentEl;
     let footerEl;
+    const classes = Utils.classNames(self.props.className, 'card', Mixins.colorClasses(self));
     if (self.title || self.slots && self.slots.header) {
       headerEl = React.createElement(F7CardHeader, null, self.props.title, this.slots['header']);
     }
@@ -31,7 +28,7 @@ class F7Card extends React.Component {
     return React.createElement('div', {
       id: this.props.id,
       style: this.props.style,
-      className: this.classes
+      className: classes
     }, headerEl, contentEl, footerEl, this.slots['default']);
   }
   get slots() {

@@ -11,16 +11,16 @@ class F7Popup extends React.Component {
     this.__reactRefs = {};
   }
   onOpen(event) {
-    this.dispatchEvent('popup:open', event);
+    this.dispatchEvent('popup:open popupOpen', event);
   }
   onOpened(event) {
-    this.dispatchEvent('popup:opened', event);
+    this.dispatchEvent('popup:opened popupOpened', event);
   }
   onClose(event) {
-    this.dispatchEvent('popup:close', event);
+    this.dispatchEvent('popup:close popupClose', event);
   }
   onClosed(event) {
-    this.dispatchEvent('popup:closed', event);
+    this.dispatchEvent('popup:closed popupClosed', event);
   }
   open(animate) {
     const self = this;

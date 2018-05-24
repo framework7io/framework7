@@ -66,6 +66,7 @@ export default {
   },
   render() {
     const _h = this.$createElement;
+    return null;
   },
   watch: {
     'props.photos': function watchPhotos(newValue) {
