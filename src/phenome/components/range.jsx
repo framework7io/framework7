@@ -33,6 +33,9 @@ export default {
       type: Boolean,
       default: false,
     },
+    name: String,
+    inputId: String,
+    input: Boolean,
     disabled: Boolean,
     draggableBar: {
       type: Boolean,
@@ -42,12 +45,21 @@ export default {
   },
   render() {
     const self = this;
+    const {
+      id,
+      disabled,
+      className,
+      style,
+      input,
+      inputId,
+      name,
+    } = self.props;
 
     const classes = Utils.classNames(
-      self.props.className,
+      className,
       'range-slider',
       {
-        disabled: self.props.disabled,
+        disabled,
       },
       Mixins.colorClasses(self),
     );
@@ -55,10 +67,15 @@ export default {
     return (
       <div
         ref="el"
-        id={self.props.id}
-        style={self.props.style}
+        id={id}
+        style={style}
         className={classes}
-      />
+      >
+        {input && (
+          <input type="range" name={name} id={inputId} />
+        )}
+        <slot />
+      </div>
     );
   },
   watch: {
@@ -67,10 +84,6 @@ export default {
       if (!self.f7Range) return;
       self.f7Range.setValue(newValue);
     },
-  },
-  componentWillUnmount() {
-    const self = this;
-    if (self.f7Range && self.f7Range.destroy) self.f7Range.destroy();
   },
   componentDidMount() {
     const self = this;
@@ -95,6 +108,10 @@ export default {
         },
       });
     });
+  },
+  componentWillUnmount() {
+    const self = this;
+    if (self.f7Range && self.f7Range.destroy) self.f7Range.destroy();
   },
   methods: {
     setValue(newValue) {
