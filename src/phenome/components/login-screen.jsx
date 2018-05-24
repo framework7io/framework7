@@ -77,16 +77,16 @@ export default {
   },
   methods: {
     onOpen(event) {
-      this.$emit('loginscreen:open loginScreenOpen', event);
+      this.dispatchEvent('loginscreen:open loginScreenOpen', event);
     },
     onOpened(event) {
-      this.$emit('loginscreen:opened loginScreenOpened', event);
+      this.dispatchEvent('loginscreen:opened loginScreenOpened', event);
     },
     onClose(event) {
-      this.$emit('loginscreen:close loginScreenClose', event);
+      this.dispatchEvent('loginscreen:close loginScreenClose', event);
     },
     onClosed(event) {
-      this.$emit('loginscreen:closed loginScreenClosed', event);
+      this.dispatchEvent('loginscreen:closed loginScreenClosed', event);
     },
     open(animate) {
       const self = this;
