@@ -5,9 +5,9 @@ export default () => (
   <Page pageContent={false}>
     <Navbar title="Tabs Routable" backLink="Back"></Navbar>
     <Toolbar tabbar>
-      <Link tabLink href="./" route-tab-id="tab1">Tab 1</Link>
-      <Link tabLink href="tab2/" route-tab-id="tab2">Tab 2</Link>
-      <Link tabLink href="tab3/" route-tab-id="tab3">Tab 3</Link>
+      <Link tabLink href="./" routeTabId="tab1">Tab 1</Link>
+      <Link tabLink href="tab2/" routeTabId="tab2">Tab 2</Link>
+      <Link tabLink href="tab3/" routeTabId="tab3">Tab 3</Link>
     </Toolbar>
     <Tabs routable>
       <Tab className="page-content" id="tab1"></Tab>

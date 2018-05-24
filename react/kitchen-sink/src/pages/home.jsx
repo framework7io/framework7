@@ -9,7 +9,7 @@ export default () => (
       </NavLeft>
       <NavTitle>Framework7</NavTitle>
       <NavRight>
-        <Link className="searchbar-enable" data-searchbar=".searchbar-components" iconIfIos="f7:search_strong" iconIfMd="material:search"></Link>
+        <Link searchbarEnable=".searchbar-components" iconIfIos="f7:search_strong" iconIfMd="material:search"></Link>
       </NavRight>
       <Searchbar className="searchbar-components" searchContainer=".components-list" searchIn="a" expandable></Searchbar>
     </Navbar>

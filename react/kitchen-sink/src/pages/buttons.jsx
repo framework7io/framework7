@@ -53,24 +53,24 @@ export default () => (
     <BlockTitle>Raised Buttons (MD-theme only)</BlockTitle>
     <Block>
       <Row tag="p">
-        <Col>
+        <Col tag="span">
           <Button raised>Button</Button>
         </Col>
-        <Col>
+        <Col tag="span">
           <Button raised fill>Fill</Button>
         </Col>
-        <Col>
+        <Col tag="span">
           <Button raised outline>Outline</Button>
         </Col>
       </Row>
       <Row tag="p">
-        <Col>
+        <Col tag="span">
           <Button raised round>Round</Button>
         </Col>
-        <Col>
+        <Col tag="span">
           <Button raised fill round>Fill</Button>
         </Col>
-        <Col>
+        <Col tag="span">
           <Button raised outline round>Outline</Button>
         </Col>
       </Row>
@@ -103,18 +103,18 @@ export default () => (
     <BlockTitle>Big Buttons</BlockTitle>
     <Block>
       <Row tag="p">
-        <Col>
+        <Col tag="span">
           <Button big>Button</Button>
         </Col>
-        <Col>
+        <Col tag="span">
           <Button big fill>Fill</Button>
         </Col>
       </Row>
       <Row tag="p">
-        <Col>
+        <Col tag="span">
           <Button big raised>Raised</Button>
         </Col>
-        <Col>
+        <Col tag="span">
           <Button big raised fill>Raised Fill</Button>
         </Col>
       </Row>
@@ -123,24 +123,24 @@ export default () => (
     <BlockTitle>Small Buttons</BlockTitle>
     <Block>
       <Row tag="p">
-        <Col>
+        <Col tag="span">
           <Button big small>Button</Button>
         </Col>
-        <Col>
+        <Col tag="span">
           <Button big small outline>Outline</Button>
         </Col>
-        <Col>
+        <Col tag="span">
           <Button big small fill>Fill</Button>
         </Col>
       </Row>
       <Row tag="p">
-        <Col>
+        <Col tag="span">
           <Button big small round>Button</Button>
         </Col>
-        <Col>
+        <Col tag="span">
           <Button big small outline round>Outline</Button>
         </Col>
-        <Col>
+        <Col tag="span">
           <Button big small fill round>Fill</Button>
         </Col>
       </Row>

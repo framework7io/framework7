@@ -4,7 +4,7 @@ import PanelRight from './pages/panel-right.jsx';
 import About from './pages/about.jsx';
 import Accordion from './pages/accordion.jsx';
 import ActionSheet from './pages/action-sheet.jsx';
-//import Autocomplete from './pages/autocomplete.jsx';
+import Autocomplete from './pages/autocomplete.jsx';
 import Badge from './pages/badge.jsx';
 import Buttons from './pages/buttons.jsx';
 import Calendar from './pages/calendar.jsx';
@@ -14,69 +14,69 @@ import Checkbox from './pages/checkbox.jsx';
 import Chips from './pages/chips.jsx';
 import ContactsList from './pages/contacts-list.jsx';
 import ContentBlock from './pages/content-block.jsx';
-// import DataTable from './pages/data-table.jsx';
-// import Dialog from './pages/dialog.jsx';
-// import Fab from './pages/fab.jsx';
-// import FabMorph from './pages/fab-morph.jsx';
-// import FormStorage from './pages/form-storage.jsx';
+import DataTable from './pages/data-table.jsx';
+import Dialog from './pages/dialog.jsx';
+import Fab from './pages/fab.jsx';
+import FabMorph from './pages/fab-morph.jsx';
+import FormStorage from './pages/form-storage.jsx';
 import Grid from './pages/grid.jsx';
 import Icons from './pages/icons.jsx';
 import InfiniteScroll from './pages/infinite-scroll.jsx';
 import Inputs from './pages/inputs.jsx';
-// import LazyLoad from './pages/lazy-load.jsx';
+import LazyLoad from './pages/lazy-load.jsx';
 import List from './pages/list.jsx';
 import ListIndex from './pages/list-index.jsx';
-// import LoginScreen from './pages/login-screen.jsx';
-// import LoginScreenPage from './pages/login-screen-page.jsx';
-// import Messages from './pages/messages.jsx';
-// import Navbar from './pages/navbar.jsx';
-// import NavbarHideScroll from './pages/navbar-hide-scroll.jsx';
-// import Notifications from './pages/notifications.jsx';
-// import Panel from './pages/panel.jsx';
-// import PhotoBrowser from './pages/photo-browser.jsx';
-// import Picker from './pages/picker.jsx';
-// import Popup from './pages/popup.jsx';
-// import Popover from './pages/popover.jsx';
+import LoginScreen from './pages/login-screen.jsx';
+import LoginScreenPage from './pages/login-screen-page.jsx';
+import Messages from './pages/messages.jsx';
+import Navbar from './pages/navbar.jsx';
+import NavbarHideScroll from './pages/navbar-hide-scroll.jsx';
+import Notifications from './pages/notifications.jsx';
+import Panel from './pages/panel.jsx';
+import PhotoBrowser from './pages/photo-browser.jsx';
+import Picker from './pages/picker.jsx';
+import Popup from './pages/popup.jsx';
+import Popover from './pages/popover.jsx';
 import Preloader from './pages/preloader.jsx';
 import Progressbar from './pages/progressbar.jsx';
-// import PullToRefresh from './pages/pull-to-refresh.jsx';
+import PullToRefresh from './pages/pull-to-refresh.jsx';
 import Radio from './pages/radio.jsx';
 import Range from './pages/range.jsx';
 import Searchbar from './pages/searchbar.jsx';
-// import SearchbarExpandable from './pages/searchbar-expandable.jsx';
-// import SheetModal from './pages/sheet-modal.jsx';
+import SearchbarExpandable from './pages/searchbar-expandable.jsx';
+import SheetModal from './pages/sheet-modal.jsx';
 import SmartSelect from './pages/smart-select.jsx';
 import Sortable from './pages/sortable.jsx';
 import Statusbar from './pages/statusbar.jsx';
 import Stepper from './pages/stepper.jsx';
-// import Subnavbar from './pages/subnavbar.jsx';
-// import SubnavbarTitle from './pages/subnavbar-title.jsx';
-// import Swiper from './pages/swiper.jsx';
-// import SwiperHorizontal from './pages/swiper-horizontal.jsx';
-// import SwiperVertical from './pages/swiper-vertical.jsx';
-// import SwiperSpaceBetween from './pages/swiper-space-between.jsx';
-// import SwiperMultiple from './pages/swiper-multiple.jsx';
-// import SwiperNested from './pages/swiper-nested.jsx';
-// import SwiperLoop from './pages/swiper-loop.jsx';
-// import Swiper3dCube from './pages/swiper-3d-cube.jsx';
-// import Swiper3dCoverflow from './pages/swiper-3d-coverflow.jsx';
-// import Swiper3dFlip from './pages/swiper-3d-flip.jsx';
-// import SwiperFade from './pages/swiper-fade.jsx';
-// import SwiperScrollbar from './pages/swiper-scrollbar.jsx';
-// import SwiperGallery from './pages/swiper-gallery.jsx';
-// import SwiperCustomControls from './pages/swiper-custom-controls.jsx';
-// import SwiperParallax from './pages/swiper-parallax.jsx';
-// import SwiperLazy from './pages/swiper-lazy.jsx';
-// import SwiperPaginationProgress from './pages/swiper-pagination-progress.jsx';
-// import SwiperPaginationFraction from './pages/swiper-pagination-fraction.jsx';
-// import SwiperZoom from './pages/swiper-zoom.jsx';
-// import Swipeout from './pages/swipeout.jsx';
+import Subnavbar from './pages/subnavbar.jsx';
+import SubnavbarTitle from './pages/subnavbar-title.jsx';
+import Swiper from './pages/swiper.jsx';
+import SwiperHorizontal from './pages/swiper-horizontal.jsx';
+import SwiperVertical from './pages/swiper-vertical.jsx';
+import SwiperSpaceBetween from './pages/swiper-space-between.jsx';
+import SwiperMultiple from './pages/swiper-multiple.jsx';
+import SwiperNested from './pages/swiper-nested.jsx';
+import SwiperLoop from './pages/swiper-loop.jsx';
+import Swiper3dCube from './pages/swiper-3d-cube.jsx';
+import Swiper3dCoverflow from './pages/swiper-3d-coverflow.jsx';
+import Swiper3dFlip from './pages/swiper-3d-flip.jsx';
+import SwiperFade from './pages/swiper-fade.jsx';
+import SwiperScrollbar from './pages/swiper-scrollbar.jsx';
+import SwiperGallery from './pages/swiper-gallery.jsx';
+import SwiperCustomControls from './pages/swiper-custom-controls.jsx';
+import SwiperParallax from './pages/swiper-parallax.jsx';
+import SwiperLazy from './pages/swiper-lazy.jsx';
+import SwiperPaginationProgress from './pages/swiper-pagination-progress.jsx';
+import SwiperPaginationFraction from './pages/swiper-pagination-fraction.jsx';
+import SwiperZoom from './pages/swiper-zoom.jsx';
+import Swipeout from './pages/swipeout.jsx';
 import Tabs from './pages/tabs.jsx';
 import TabsStatic from './pages/tabs-static.jsx';
 import TabsAnimated from './pages/tabs-animated.jsx';
 import TabsSwipeable from './pages/tabs-swipeable.jsx';
 import TabsRoutable from './pages/tabs-routable.jsx';
-// import Toast from './pages/toast.jsx';
+import Toast from './pages/toast.jsx';
 import Toggle from './pages/toggle.jsx';
 import ToolbarTabbar from './pages/toolbar-tabbar.jsx';
 import Tabbar from './pages/tabbar.jsx';
@@ -169,12 +169,10 @@ export default [
     path: '/action-sheet/',
     component: ActionSheet,
   },
-  /*
   {
     path: '/autocomplete/',
     component: Autocomplete,
   },
-  */
   {
     path: '/badge/',
     component: Badge,
@@ -211,26 +209,26 @@ export default [
     path: '/content-block/',
     component: ContentBlock,
   },
-  // {
-  //   path: '/data-table/',
-  //   component: DataTable,
-  // },
-  // {
-  //   path: '/dialog/',
-  //   component: Dialog,
-  // },
-  // {
-  //   path: '/fab/',
-  //   component: Fab,
-  // },
-  // {
-  //   path: '/fab-morph/',
-  //   component: FabMorph,
-  // },
-  // {
-  //   path: '/form-storage/',
-  //   component: FormStorage,
-  // },
+  {
+    path: '/data-table/',
+    component: DataTable,
+  },
+  {
+    path: '/dialog/',
+    component: Dialog,
+  },
+  {
+    path: '/fab/',
+    component: Fab,
+  },
+  {
+    path: '/fab-morph/',
+    component: FabMorph,
+  },
+  {
+    path: '/form-storage/',
+    component: FormStorage,
+  },
   {
     path: '/grid/',
     component: Grid,
@@ -247,10 +245,10 @@ export default [
     path: '/inputs/',
     component: Inputs,
   },
-  // {
-  //   path: '/lazy-load/',
-  //   component: LazyLoad,
-  // },
+  {
+    path: '/lazy-load/',
+    component: LazyLoad,
+  },
   {
     path: '/list/',
     component: List,
@@ -259,50 +257,50 @@ export default [
     path: '/list-index/',
     component: ListIndex,
   },
-  // {
-  //   path: '/login-screen/',
-  //   component: LoginScreen,
-  // },
-  // {
-  //   path: '/login-screen-page/',
-  //   component: LoginScreenPage,
-  // },
-  // {
-  //   path: '/messages/',
-  //   component: Messages,
-  // },
-  // {
-  //   path: '/navbar/',
-  //   component: Navbar,
-  // },
-  // {
-  //   path: '/navbar-hide-scroll/',
-  //   component: NavbarHideScroll,
-  // },
-  // {
-  //   path: '/notifications/',
-  //   component: Notifications,
-  // },
-  // {
-  //   path: '/panel/',
-  //   component: Panel,
-  // },
-  // {
-  //   path: '/photo-browser/',
-  //   component: PhotoBrowser,
-  // },
-  // {
-  //   path: '/picker/',
-  //   component: Picker,
-  // },
-  // {
-  //   path: '/popup/',
-  //   component: Popup,
-  // },
-  // {
-  //   path: '/popover/',
-  //   component: Popover,
-  // },
+  {
+    path: '/login-screen/',
+    component: LoginScreen,
+  },
+  {
+    path: '/login-screen-page/',
+    component: LoginScreenPage,
+  },
+  {
+    path: '/messages/',
+    component: Messages,
+  },
+  {
+    path: '/navbar/',
+    component: Navbar,
+  },
+  {
+    path: '/navbar-hide-scroll/',
+    component: NavbarHideScroll,
+  },
+  {
+    path: '/notifications/',
+    component: Notifications,
+  },
+  {
+    path: '/panel/',
+    component: Panel,
+  },
+  {
+    path: '/photo-browser/',
+    component: PhotoBrowser,
+  },
+  {
+    path: '/picker/',
+    component: Picker,
+  },
+  {
+    path: '/popup/',
+    component: Popup,
+  },
+  {
+    path: '/popover/',
+    component: Popover,
+  },
   {
     path: '/preloader/',
     component: Preloader,
@@ -311,10 +309,10 @@ export default [
     path: '/progressbar/',
     component: Progressbar,
   },
-  // {
-  //   path: '/pull-to-refresh/',
-  //   component: PullToRefresh,
-  // },
+  {
+    path: '/pull-to-refresh/',
+    component: PullToRefresh,
+  },
   {
     path: '/radio/',
     component: Radio,
@@ -327,14 +325,14 @@ export default [
     path: '/searchbar/',
     component: Searchbar,
   },
-  // {
-  //   path: '/searchbar-expandable/',
-  //   component: SearchbarExpandable,
-  // },
-  // {
-  //   path: '/sheet-modal/',
-  //   component: SheetModal,
-  // },
+  {
+    path: '/searchbar-expandable/',
+    component: SearchbarExpandable,
+  },
+  {
+    path: '/sheet-modal/',
+    component: SheetModal,
+  },
   {
     path: '/smart-select/',
     component: SmartSelect,
@@ -351,96 +349,96 @@ export default [
     path: '/stepper/',
     component: Stepper,
   },
-  // {
-  //   path: '/subnavbar/',
-  //   component: Subnavbar,
-  // },
-  // {
-  //   path: '/subnavbar-title/',
-  //   component: SubnavbarTitle,
-  // },
-  // {
-  //   path: '/swiper/',
-  //   component: Swiper,
-  //   routes: [
-  //     {
-  //       path: 'swiper-horizontal/',
-  //       component: SwiperHorizontal,
-  //     },
-  //     {
-  //       path: 'swiper-vertical/',
-  //       component: SwiperVertical,
-  //     },
-  //     {
-  //       path: 'swiper-space-between/',
-  //       component: SwiperSpaceBetween,
-  //     },
-  //     {
-  //       path: 'swiper-multiple/',
-  //       component: SwiperMultiple,
-  //     },
-  //     {
-  //       path: 'swiper-nested/',
-  //       component: SwiperNested,
-  //     },
-  //     {
-  //       path: 'swiper-loop/',
-  //       component: SwiperLoop,
-  //     },
-  //     {
-  //       path: 'swiper-3d-cube/',
-  //       component: Swiper3dCube,
-  //     },
-  //     {
-  //       path: 'swiper-3d-coverflow/',
-  //       component: Swiper3dCoverflow,
-  //     },
-  //     {
-  //       path: 'swiper-3d-flip/',
-  //       component: Swiper3dFlip,
-  //     },
-  //     {
-  //       path: 'swiper-fade/',
-  //       component: SwiperFade,
-  //     },
-  //     {
-  //       path: 'swiper-scrollbar/',
-  //       component: SwiperScrollbar,
-  //     },
-  //     {
-  //       path: 'swiper-gallery/',
-  //       component: SwiperGallery,
-  //     },
-  //     {
-  //       path: 'swiper-custom-controls/',
-  //       component: SwiperCustomControls,
-  //     },
-  //     {
-  //       path: 'swiper-parallax/',
-  //       component: SwiperParallax,
-  //     },
-  //     {
-  //       path: 'swiper-lazy/',
-  //       component: SwiperLazy,
-  //     },
-  //     {
-  //       path: 'swiper-pagination-progress/',
-  //       component: SwiperPaginationProgress,
-  //     },
-  //     {
-  //       path: 'swiper-pagination-fraction/',
-  //       component: SwiperPaginationFraction,
-  //     },
-  //     {
-  //       path: 'swiper-zoom/',
-  //       component: SwiperZoom,
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: '/swipeout/',
-  //   component: Swipeout,
-  // },
+  {
+    path: '/subnavbar/',
+    component: Subnavbar,
+  },
+  {
+    path: '/subnavbar-title/',
+    component: SubnavbarTitle,
+  },
+  {
+    path: '/swiper/',
+    component: Swiper,
+    routes: [
+      {
+        path: 'swiper-horizontal/',
+        component: SwiperHorizontal,
+      },
+      {
+        path: 'swiper-vertical/',
+        component: SwiperVertical,
+      },
+      {
+        path: 'swiper-space-between/',
+        component: SwiperSpaceBetween,
+      },
+      {
+        path: 'swiper-multiple/',
+        component: SwiperMultiple,
+      },
+      {
+        path: 'swiper-nested/',
+        component: SwiperNested,
+      },
+      {
+        path: 'swiper-loop/',
+        component: SwiperLoop,
+      },
+      {
+        path: 'swiper-3d-cube/',
+        component: Swiper3dCube,
+      },
+      {
+        path: 'swiper-3d-coverflow/',
+        component: Swiper3dCoverflow,
+      },
+      {
+        path: 'swiper-3d-flip/',
+        component: Swiper3dFlip,
+      },
+      {
+        path: 'swiper-fade/',
+        component: SwiperFade,
+      },
+      {
+        path: 'swiper-scrollbar/',
+        component: SwiperScrollbar,
+      },
+      {
+        path: 'swiper-gallery/',
+        component: SwiperGallery,
+      },
+      {
+        path: 'swiper-custom-controls/',
+        component: SwiperCustomControls,
+      },
+      {
+        path: 'swiper-parallax/',
+        component: SwiperParallax,
+      },
+      {
+        path: 'swiper-lazy/',
+        component: SwiperLazy,
+      },
+      {
+        path: 'swiper-pagination-progress/',
+        component: SwiperPaginationProgress,
+      },
+      {
+        path: 'swiper-pagination-fraction/',
+        component: SwiperPaginationFraction,
+      },
+      {
+        path: 'swiper-zoom/',
+        component: SwiperZoom,
+      },
+    ],
+  },
+  {
+    path: '/swipeout/',
+    component: Swipeout,
+  },
   {
     path: '/tabs/',
     component: Tabs,
@@ -499,10 +497,10 @@ export default [
       },
     ],
   },
-  // {
-  //   path: '/toast/',
-  //   component: Toast,
-  // },
+  {
+    path: '/toast/',
+    component: Toast,
+  },
   {
     path: '/toggle/',
     component: Toggle,
