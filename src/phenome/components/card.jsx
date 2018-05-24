@@ -26,6 +26,12 @@ export default {
     let contentEl;
     let footerEl;
 
+    const classes = Utils.classNames(
+      self.props.className,
+      'card',
+      Mixins.colorClasses(self),
+    );
+
     if (self.title || (self.slots && self.slots.header)) {
       headerEl = (
         <F7CardHeader>
@@ -52,23 +58,12 @@ export default {
     }
 
     return (
-      <div id={this.props.id} style={this.props.style} className={this.classes}>
+      <div id={this.props.id} style={this.props.style} className={classes}>
         {headerEl}
         {contentEl}
         {footerEl}
         <slot />
       </div>
     );
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(
-        self.props.className,
-        {
-          card: true,
-        }, Mixins.colorClasses(self),
-      );
-    },
   },
 };
