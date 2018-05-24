@@ -22,14 +22,14 @@ export default {
     let buttonNextEl;
     let buttonPrevEl;
     if (self.paginationComputed) {
-      paginationEl = <div className="swiper-pagination" />;
+      paginationEl = <div ref="paginationEl" className="swiper-pagination" />;
     }
     if (self.scrollbarComputed) {
-      scrollbarEl = <div className="swiper-scrollbar" />;
+      scrollbarEl = <div ref="scrollbarEl" className="swiper-scrollbar" />;
     }
     if (self.navigationComputed) {
-      buttonNextEl = <div className="swiper-button-next" />;
-      buttonPrevEl = <div className="swiper-button-prev" />;
+      buttonNextEl = <div ref="nextEl" className="swiper-button-next" />;
+      buttonPrevEl = <div ref="prevEl" className="swiper-button-prev" />;
     }
     return (
       <div id={self.props.id} style={self.props.style} ref="el" className={self.classes}>
@@ -99,14 +99,14 @@ export default {
       };
       const { params, pagination, navigation, scrollbar } = self.props;
       if (params) Utils.extend(newParams, params);
-      if (pagination && !newParams.pagination.el) newParams.pagination.el = '.swiper-pagination';
+      if (pagination && !newParams.pagination.el) newParams.pagination.el = self.refs.paginationEl;
       if (navigation && !newParams.navigation.nextEl && !newParams.navigation.prevEl) {
-        newParams.navigation.nextEl = '.swiper-button-next';
-        newParams.navigation.prevEl = '.swiper-button-prev';
+        newParams.navigation.nextEl = self.refs.nextEl;
+        newParams.navigation.prevEl = self.refs.prevEl;
       }
-      if (scrollbar && !newParams.scrollbar.el) newParams.scrollbar.el = '.swiper-scrollbar';
+      if (scrollbar && !newParams.scrollbar.el) newParams.scrollbar.el = self.refs.scrollbarEl;
 
-      self.swiper = f7.swiper.create(this.refs.el, newParams);
+      self.swiper = f7.swiper.create(self.refs.el, newParams);
     });
   },
 };
