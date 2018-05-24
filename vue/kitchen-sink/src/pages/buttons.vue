@@ -50,24 +50,24 @@
     <f7-block-title>Raised Buttons (MD-theme only)</f7-block-title>
     <f7-block>
       <f7-row tag="p">
-        <f7-col>
+        <f7-col tag="span">
           <f7-button raised>Button</f7-button>
         </f7-col>
-        <f7-col>
+        <f7-col tag="span">
           <f7-button raised fill>Fill</f7-button>
         </f7-col>
-        <f7-col>
+        <f7-col tag="span">
           <f7-button raised outline>Outline</f7-button>
         </f7-col>
       </f7-row>
       <f7-row tag="p">
-        <f7-col>
+        <f7-col tag="span">
           <f7-button raised round>Round</f7-button>
         </f7-col>
-        <f7-col>
+        <f7-col tag="span">
           <f7-button raised fill round>Fill</f7-button>
         </f7-col>
-        <f7-col>
+        <f7-col tag="span">
           <f7-button raised outline round>Outline</f7-button>
         </f7-col>
       </f7-row>
@@ -100,18 +100,18 @@
     <f7-block-title>Big Buttons</f7-block-title>
     <f7-block>
       <f7-row tag="p">
-        <f7-col>
+        <f7-col tag="span">
           <f7-button big>Button</f7-button>
         </f7-col>
-        <f7-col>
+        <f7-col tag="span">
           <f7-button big fill>Fill</f7-button>
         </f7-col>
       </f7-row>
       <f7-row tag="p">
-        <f7-col>
+        <f7-col tag="span">
           <f7-button big raised>Raised</f7-button>
         </f7-col>
-        <f7-col>
+        <f7-col tag="span">
           <f7-button big raised fill>Raised Fill</f7-button>
         </f7-col>
       </f7-row>
@@ -120,24 +120,24 @@
     <f7-block-title>Small Buttons</f7-block-title>
     <f7-block>
       <f7-row tag="p">
-        <f7-col>
+        <f7-col tag="span">
           <f7-button big small>Button</f7-button>
         </f7-col>
-        <f7-col>
+        <f7-col tag="span">
           <f7-button big small outline>Outline</f7-button>
         </f7-col>
-        <f7-col>
+        <f7-col tag="span">
           <f7-button big small fill>Fill</f7-button>
         </f7-col>
       </f7-row>
       <f7-row tag="p">
-        <f7-col>
+        <f7-col tag="span">
           <f7-button big small round>Button</f7-button>
         </f7-col>
-        <f7-col>
+        <f7-col tag="span">
           <f7-button big small outline round>Outline</f7-button>
         </f7-col>
-        <f7-col>
+        <f7-col tag="span">
           <f7-button big small fill round>Fill</f7-button>
         </f7-col>
       </f7-row>
