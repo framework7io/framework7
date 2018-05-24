@@ -73,7 +73,9 @@ export default {
     renderPopup: Function,
     renderStandalone: Function,
   },
-  render() {},
+  render() {
+    return null;
+  },
   watch: {
     'props.photos': function watchPhotos(newValue) {
       const self = this;
