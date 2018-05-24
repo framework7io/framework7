@@ -11,6 +11,7 @@ export default {
     type: String,
     name: String,
     value: [String, Number, Array],
+    defaultValue: [String, Number, Array],
     placeholder: String,
     id: [String, Number],
     inputId: [String, Number],
@@ -62,6 +63,7 @@ export default {
       type,
       name,
       value,
+      defaultValue,
       placeholder,
       id,
       inputId,
@@ -102,7 +104,7 @@ export default {
 
     const createInput = (tag, children) => {
       const InputTag = tag;
-      const needsValue = !(type === 'select' || type === 'file');
+      const needsValue = type !== 'file';
       const needsType = tag === 'input';
       const inputClassName = Utils.classNames(
         type === 'textarea' && resizable && 'resizable',
@@ -119,6 +121,7 @@ export default {
           placeholder={placeholder}
           id={inputId}
           value={needsValue ? value : undefined}
+          defaultValue={defaultValue}
           size={size}
           accept={accept}
           autoComplete={autocomplete}
@@ -139,7 +142,7 @@ export default {
           required={required}
           pattern={pattern}
           validate={typeof validate === 'string' && validate.length ? validate : undefined}
-          data-validate={validate === true || validate === ''}
+          data-validate={validate === true || validate === '' ? true : undefined}
           tabIndex={tabindex}
           data-error-message={errorMessage}
           className={inputClassName}
@@ -184,7 +187,9 @@ export default {
           min={min}
           max={max}
           step={step}
+          name={name}
           id={inputId}
+          input={true}
           onRangeChange={self.onChangeBound}
         />
       );
