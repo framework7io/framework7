@@ -77,7 +77,7 @@ export default {
         {(avatar || slotsAvatar) &&
           <div
             className="message-avatar"
-            style={{ 'background-image': avatar && `url(${avatar})` }}
+            style={{ backgroundImage: avatar && `url(${avatar})` }}
             onClick={self.onAvatarClickBound}
           >{slotsAvatar}</div>
         }
