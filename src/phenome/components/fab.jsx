@@ -71,7 +71,7 @@ export default {
         self.props.className,
         {
           fab: true,
-          'fab-morph': self.morphTo,
+          'fab-morph': self.props.morphTo,
           [`fab-${self.props.position}`]: true,
         },
         Mixins.colorClasses(self),
