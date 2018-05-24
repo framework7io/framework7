@@ -30,7 +30,7 @@ export default {
       Mixins.colorClasses(self),
     );
     const styles = Utils.extend({
-      'background-image': image && `url(${image})`,
+      backgroundImage: image && `url(${image})`,
     }, style || {});
 
     return (
