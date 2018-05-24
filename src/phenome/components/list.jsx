@@ -47,10 +47,12 @@ export default {
     } = self.props;
 
     const { list: slotsList, default: slotsDefault } = self.slots;
-    const rootChildren = [];
+    const rootChildrenBeforeList = [];
+    const rootChildrenAfterList = [];
     const ulChildren = slotsList || [];
     const flattenSlots = Utils.flattenArray(slotsDefault);
 
+    let wasUlChild = false;
     flattenSlots.forEach((child) => {
       let tag;
       if (process.env.COMPILER === 'react') {
@@ -73,8 +75,10 @@ export default {
           tag.indexOf('list-button') >= 0
         ))
       ) {
-        rootChildren.push(child);
+        if (wasUlChild) rootChildrenAfterList.push(child);
+        else rootChildrenBeforeList.push(child);
       } else if (tag) {
+        wasUlChild = true;
         ulChildren.push(child);
       }
     });
@@ -88,11 +92,12 @@ export default {
           className={self.classes}
         >
           {self.slots['before-list']}
+          {rootChildrenBeforeList}
           <ul>
             {ulChildren}
           </ul>
           {self.slots['after-list']}
-          {rootChildren}
+          {rootChildrenAfterList}
         </ListTag>
       );
     } else { // eslint-disable-line
@@ -104,8 +109,9 @@ export default {
           className={self.classes}
         >
           {self.slots['before-list']}
-          {rootChildren}
+          {rootChildrenBeforeList}
           {self.slots['after-list']}
+          {rootChildrenAfterList}
         </ListTag>
       );
     }
