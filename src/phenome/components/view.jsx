@@ -1,3 +1,5 @@
+/* eslint array-callback-return: "off" */
+/* eslint consistent-return: "off" */
 import routers from '../utils/routers';
 import events from '../utils/events';
 import Utils from '../utils/utils';
@@ -98,9 +100,16 @@ export default {
         <slot />
         {self.state.pages.map((page) => {
           const PageComponent = page.component;
-          return (
-            <PageComponent key={page.id} {...page.props} />
-          );
+          if (process.env.COMPILER === 'react') {
+            return (
+              <PageComponent key={page.id} {...page.props} />
+            );
+          }
+          if (process.env.COMPILER === 'vue') {
+            return (
+              <PageComponent key={page.id} props={page.props} />
+            );
+          }
         })}
       </div>
     );

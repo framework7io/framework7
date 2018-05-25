@@ -1,3 +1,5 @@
+/* eslint array-callback-return: "off" */
+/* eslint consistent-return: "off" */
 import events from '../utils/events';
 import routers from '../utils/routers';
 import Utils from '../utils/utils';
@@ -32,15 +34,28 @@ export default {
 
     let TabContent;
     if (tabContent) TabContent = tabContent.component;
-    return (
-      <div id={id} style={style} ref="el" className={classes}>
-        {tabContent ? (
-          <TabContent key={tabContent.id} {...tabContent.props} />
-        ) : (
-          <slot />
-        )}
-      </div>
-    );
+    if (process.env.COMPILER === 'react') {
+      return (
+        <div id={id} style={style} ref="el" className={classes}>
+          {tabContent ? (
+            <TabContent key={tabContent.id} {...tabContent.props} />
+          ) : (
+            <slot />
+          )}
+        </div>
+      );
+    }
+    if (process.env.COMPILER === 'vue') {
+      return (
+        <div id={id} style={style} ref="el" className={classes}>
+          {tabContent ? (
+            <TabContent key={tabContent.id} props={tabContent.props} />
+          ) : (
+            <slot />
+          )}
+        </div>
+      );
+    }
   },
   componentDidCreate() {
     this.onTabShowBound = this.onTabShow.bind(this);

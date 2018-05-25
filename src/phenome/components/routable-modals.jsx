@@ -1,3 +1,5 @@
+/* eslint array-callback-return: "off" */
+/* eslint consistent-return: "off" */
 import routers from '../utils/routers';
 import events from '../utils/events';
 
@@ -13,9 +15,16 @@ export default {
       <div ref="el" className="framework7-modals">
         {this.state.modals.map((modal) => {
           const ModalComponent = modal.component;
-          return (
-            <ModalComponent key={modal.id} {...modal.props} />
-          );
+          if (process.env.COMPILER === 'react') {
+            return (
+              <ModalComponent key={modal.id} {...modal.props} />
+            );
+          }
+          if (process.env.COMPILER === 'vue') {
+            return (
+              <ModalComponent key={modal.id} props={modal.props} />
+            );
+          }
         })}
       </div>
     );
