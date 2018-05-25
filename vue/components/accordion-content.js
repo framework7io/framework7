@@ -12,11 +12,13 @@ export default {
   name: 'f7-accordion-content',
   render() {
     const _h = this.$createElement;
-    const classes = Utils.classNames(this.props.className, { 'accordion-item-content': true }, Mixins.colorClasses(this));
+    const props = this.props;
+    const {className, id, style} = props;
+    const classes = Utils.classNames(className, 'accordion-item-content', Mixins.colorClasses(props));
     return _h('div', {
-      style: this.props.style,
+      style: style,
       class: classes,
-      attrs: { id: this.props.id }
+      attrs: { id: id }
     }, [this.$slots['default']]);
   },
   computed: {

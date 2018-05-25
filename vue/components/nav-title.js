@@ -16,14 +16,16 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
-    const {title, subtitle, id, style} = self.props;
+    const props = self.props;
+    const {title, subtitle, id, style, sliding, className} = props;
     let subtitleEl;
     if (self.subtitle) {
       subtitleEl = _h('span', { class: 'subtitle' }, [subtitle]);
     }
+    const classes = Utils.classNames(className, 'title', { sliding }, Mixins.colorClasses(props));
     return _h('div', {
       style: style,
-      class: self.classes,
+      class: classes,
       attrs: { id: id }
     }, [this.$slots['default'] || [
         title,
@@ -31,12 +33,6 @@ export default {
       ]]);
   },
   computed: {
-    classes() {
-      return Utils.classNames(this.props.className, {
-        title: true,
-        sliding: this.props.sliding
-      }, Mixins.colorClasses(this));
-    },
     props() {
       return __vueComponentProps(this);
     }

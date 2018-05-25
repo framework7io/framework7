@@ -14,40 +14,32 @@ class F7Chip extends React.Component {
   onDeleteClick(event) {
     this.dispatchEvent('delete', event);
   }
-  get classes() {
-    const self = this;
-    return Utils.classNames(self.props.className, { chip: true }, Mixins.colorClasses(self));
-  }
-  get mediaClasses() {
-    const c = { 'chip-media': true };
-    if (this.props.mediaTextColor)
-      c[`text-color-${ this.props.mediaTextColor }`] = true;
-    if (this.props.mediaBgColor)
-      c[`bg-color-${ this.props.mediaBgColor }`] = true;
-    return Utils.classNames(c);
-  }
   render() {
     const self = this;
+    const props = self.props;
+    const {media, text, deleteable, className, id, style, mediaTextColor, mediaBgColor} = props;
     let mediaEl;
     let labelEl;
     let deleteEl;
-    if (self.props.media || self.slots && self.slots.media) {
-      mediaEl = React.createElement('div', { className: self.mediaClasses }, self.props.media ? self.props.media : this.slots['media']);
+    if (media || self.slots && self.slots.media) {
+      const mediaClasses = Utils.classNames('chip-media', mediaTextColor && `text-color-${ mediaTextColor }`, mediaBgColor && `bg-color-${ mediaBgColor }`);
+      mediaEl = React.createElement('div', { className: mediaClasses }, media || this.slots['media']);
     }
-    if (self.props.text || self.slots && self.slots.text) {
-      labelEl = React.createElement('div', { className: 'chip-label' }, self.props.text, this.slots['text']);
+    if (text || self.slots && self.slots.text) {
+      labelEl = React.createElement('div', { className: 'chip-label' }, text, this.slots['text']);
     }
-    if (self.props.deleteable) {
+    if (deleteable) {
       deleteEl = React.createElement('a', {
         href: '#',
         className: 'chip-delete',
         onClick: self.onDeleteClick.bind(self)
       });
     }
+    const classes = Utils.classNames(className, 'chip', Mixins.colorClasses(props));
     return React.createElement('div', {
-      id: this.props.id,
-      style: this.props.style,
-      className: self.classes,
+      id: id,
+      style: style,
+      className: classes,
       onClick: self.onClick.bind(self)
     }, mediaEl, labelEl, deleteEl);
   }

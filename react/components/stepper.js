@@ -46,7 +46,8 @@ class F7Stepper extends React.Component {
   }
   get classes() {
     const self = this;
-    const {round, roundIos, roundMd, fill, fillIos, fillMd, big, bigIos, bigMd, small, smallIos, smallMd, raised, disabled} = self.props;
+    const props = self.props;
+    const {round, roundIos, roundMd, fill, fillIos, fillMd, big, bigIos, bigMd, small, smallIos, smallMd, raised, disabled} = props;
     return Utils.classNames(self.props.className, 'stepper', {
       disabled,
       'stepper-round': round,
@@ -62,11 +63,12 @@ class F7Stepper extends React.Component {
       'stepper-small-ios': smallIos,
       'stepper-small-md': smallMd,
       'stepper-raised': raised
-    }, Mixins.colorClasses(self));
+    }, Mixins.colorClasses(props));
   }
   render() {
     const self = this;
-    const {input, buttonsOnly, inputType, value, inputReadonly, min, max, step} = self.props;
+    const props = self.props;
+    const {input, buttonsOnly, inputType, value, inputReadonly, min, max, step, id, style} = props;
     let inputWrapEl;
     let valueEl;
     if (input && !buttonsOnly) {
@@ -87,8 +89,8 @@ class F7Stepper extends React.Component {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
       },
-      id: self.props.id,
-      style: self.props.style,
+      id: id,
+      style: style,
       className: self.classes
     }, React.createElement('div', {
       className: 'stepper-button-minus',
@@ -114,7 +116,7 @@ class F7Stepper extends React.Component {
       const el = self.refs.el;
       if (!el)
         return;
-      self.f7Stepper = f7.stepper.create({
+      self.f7Stepper = f7.stepper.create(Utils.noUndefinedProps({
         el,
         min,
         max,
@@ -129,7 +131,7 @@ class F7Stepper extends React.Component {
             self.dispatchEvent('stepper:change stepperChange', newValue);
           }
         }
-      });
+      }));
     });
   }
   dispatchEvent(events, ...args) {

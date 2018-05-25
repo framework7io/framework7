@@ -23,8 +23,9 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
-    const {deletable, image, className, id, style} = self.props;
-    const classes = Utils.classNames(className, 'messagebar-attachment', Mixins.colorClasses(self));
+    const props = self.props;
+    const {deletable, image, className, id, style} = props;
+    const classes = Utils.classNames(className, 'messagebar-attachment', Mixins.colorClasses(props));
     return _h('div', {
       style: style,
       class: classes,

@@ -15,11 +15,14 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
+    const props = self.props;
+    const {className, id, style} = props;
+    const classes = Utils.classNames(className, 'login-screen', Mixins.colorClasses(props));
     return _h('div', {
       ref: 'el',
-      style: self.props.style,
-      class: self.classes,
-      attrs: { id: self.props.id }
+      style: style,
+      class: classes,
+      attrs: { id: id }
     }, [this.$slots['default']]);
   },
   watch: {
@@ -32,15 +35,6 @@ export default {
       } else {
         self.f7LoginScreen.close();
       }
-    }
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(self.props.className, 'login-screen', Mixins.colorClasses(self));
-    },
-    props() {
-      return __vueComponentProps(this);
     }
   },
   mounted() {
@@ -104,6 +98,11 @@ export default {
     },
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
+    }
+  },
+  computed: {
+    props() {
+      return __vueComponentProps(this);
     }
   }
 };

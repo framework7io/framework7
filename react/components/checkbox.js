@@ -13,14 +13,17 @@ class F7Checkbox extends React.Component {
   }
   get classes() {
     const self = this;
-    return Utils.classNames(self.props.className, {
+    const props = self.props;
+    const {className, disabled} = props;
+    return Utils.classNames(className, {
       checkbox: true,
-      disabled: self.props.disabled
-    }, Mixins.colorClasses(self));
+      disabled
+    }, Mixins.colorClasses(props));
   }
   render() {
     const self = this;
-    const {name, value, disabled, readonly, checked, defaultChecked, id, style} = self.props;
+    const props = self.props;
+    const {name, value, disabled, readonly, checked, defaultChecked, id, style} = props;
     const inputEl = React.createElement('input', {
       type: 'checkbox',
       name: name,

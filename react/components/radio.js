@@ -11,16 +11,10 @@ class F7Radio extends React.Component {
   onChange(event) {
     this.dispatchEvent('change', event);
   }
-  get classes() {
-    const self = this;
-    return Utils.classNames(self.props.className, {
-      radio: true,
-      disabled: self.props.disabled
-    }, Mixins.colorClasses(self));
-  }
   render() {
     const self = this;
-    const {name, value, disabled, readonly, checked, defaultChecked, id, style} = self.props;
+    const props = self.props;
+    const {name, value, disabled, readonly, checked, defaultChecked, id, style, className} = props;
     const inputEl = React.createElement('input', {
       type: 'radio',
       name: name,
@@ -32,10 +26,11 @@ class F7Radio extends React.Component {
       onChange: self.onChange.bind(self)
     });
     const iconEl = React.createElement('i', { className: 'icon-radio' });
+    const classes = Utils.classNames(className, 'radio', { disabled }, Mixins.colorClasses(props));
     return React.createElement('label', {
       id: id,
       style: style,
-      className: self.classes
+      className: classes
     }, inputEl, iconEl, this.slots['default']);
   }
   get slots() {

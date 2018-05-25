@@ -111,7 +111,8 @@ export default {
     const self = this;
     let clearEl;
     let disableEl;
-    const {placeholder, clearButton, disableButton, disableButtonText, form, noShadow, noHairline, expandable, className, style, id} = self.props;
+    const props = self.props;
+    const {placeholder, clearButton, disableButton, disableButtonText, form, noShadow, noHairline, expandable, className, style, id} = props;
     if (clearButton) {
       clearEl = _h('span', {
         class: 'input-clear-button',
@@ -129,7 +130,7 @@ export default {
       'no-shadow': noShadow,
       'no-hairline': noHairline,
       'searchbar-expandable': expandable
-    }, Mixins.colorClasses(self));
+    }, Mixins.colorClasses(props));
     return _h(SearchbarTag, {
       ref: 'el',
       style: style,
@@ -183,7 +184,7 @@ export default {
       el.addEventListener('submit', self.onSubmitBound, false);
     }
     self.$f7ready(() => {
-      const params = {
+      const params = Utils.noUndefinedProps({
         el: self.$refs.el,
         searchContainer,
         searchIn,
@@ -214,9 +215,9 @@ export default {
             self.dispatchEvent('searchbar:disable searchbarDisable', searchbar);
           }
         }
-      };
+      });
       Object.keys(params).forEach(key => {
-        if (typeof params[key] === 'undefined' || params[key] === '') {
+        if (params[key] === '') {
           delete params[key];
         }
       });

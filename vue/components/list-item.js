@@ -94,7 +94,8 @@ export default {
     const self = this;
     let linkEl;
     let itemContentEl;
-    const {title, text, media, subtitle, header, footer, link, href, target, noFastclick, noFastClick, after, badge, badgeColor, mediaItem, mediaList, divider, groupTitle, swipeout, accordionItem, accordionItemOpened, smartSelect, checkbox, radio, checked, name, value, readonly, required, disabled, itemInput, itemInputWithInfo, inlineLabel, sortable} = self.props;
+    const props = self.props;
+    const {id, style, className, title, text, media, subtitle, header, footer, link, href, target, noFastclick, noFastClick, after, badge, badgeColor, mediaItem, mediaList, divider, groupTitle, swipeout, accordionItem, accordionItemOpened, smartSelect, checkbox, radio, checked, name, value, readonly, required, disabled, itemInput, itemInputWithInfo, inlineLabel, sortable} = props;
     const isMedia = mediaItem || mediaList || self.state.isMedia;
     const isSortable = sortable || self.state.isSortable;
     const isSimple = self.state.isSimple;
@@ -153,12 +154,12 @@ export default {
         const linkAttrs = Utils.extend({
           href: link === true || accordionItem || smartSelect ? '#' : link || href,
           target
-        }, Mixins.linkRouterAttrs(self), Mixins.linkActionsAttrs(self));
+        }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
         const linkClasses = Utils.classNames({
           'item-link': true,
           'no-fastclick': noFastclick || noFastClick,
           'smart-select': smartSelect
-        }, Mixins.linkRouterClasses(self), Mixins.linkActionsClasses(self));
+        }, Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
         linkEl = _h('a', __vueComponentTransformJSXProps({
           class: linkClasses,
           ...linkAttrs,
@@ -166,27 +167,27 @@ export default {
         }), [itemContentEl]);
       }
     }
-    const liClasses = Utils.classNames(self.props.className, {
+    const liClasses = Utils.classNames(className, {
       'item-divider': divider,
       'list-group-title': groupTitle,
       'media-item': isMedia,
       swipeout,
       'accordion-item': accordionItem,
       'accordion-item-opened': accordionItemOpened
-    }, Mixins.colorClasses(self));
+    }, Mixins.colorClasses(props));
     if (divider || groupTitle) {
       return _h('li', {
         ref: 'el',
-        style: self.props.style,
+        style: style,
         class: liClasses,
-        attrs: { id: self.props.id }
+        attrs: { id: id }
       }, [_h('span', [this.$slots['default'] || [title]])]);
     } else if (isSimple) {
       return _h('li', {
         ref: 'el',
-        style: self.props.style,
+        style: style,
         class: liClasses,
-        attrs: { id: self.props.id }
+        attrs: { id: id }
       }, [
         title,
         this.$slots['default']
@@ -195,9 +196,9 @@ export default {
     const linkItemEl = link || href || smartSelect || accordionItem ? linkEl : itemContentEl;
     return _h('li', {
       ref: 'el',
-      style: self.props.style,
+      style: style,
       class: liClasses,
-      attrs: { id: self.props.id }
+      attrs: { id: id }
     }, [
       this.$slots['root-start'],
       swipeout ? _h('div', { class: 'swipeout-content' }, [linkItemEl]) : linkItemEl,
@@ -236,7 +237,8 @@ export default {
         isSortable: self.$listEl.hasClass('sortable')
       });
     }
-    if (self.props.swipeout) {
+    const {swipeout, accordionItem, smartSelect, smartSelectParams} = self.props;
+    if (swipeout) {
       el.addEventListener('swipeout:open', self.onSwipeoutOpenBound);
       el.addEventListener('swipeout:opened', self.onSwipeoutOpenedBound);
       el.addEventListener('swipeout:close', self.onSwipeoutCloseBound);
@@ -245,17 +247,17 @@ export default {
       el.addEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
       el.addEventListener('swipeout', self.onSwipeoutBound);
     }
-    if (self.props.accordionItem) {
+    if (accordionItem) {
       el.addEventListener('accordion:open', self.onAccOpenBound);
       el.addEventListener('accordion:opened', self.onAccOpenedBound);
       el.addEventListener('accordion:close', self.onAccCloseBound);
       el.addEventListener('accordion:closed', self.onAccClosedBound);
     }
-    if (!self.props.smartSelect)
+    if (!smartSelect)
       return;
     self.$f7ready(f7 => {
-      const smartSelectParams = Utils.extend({ el: el.querySelector('a.smart-select') }, self.props.smartSelectParams || {});
-      self.f7SmartSelect = f7.smartSelect.create(smartSelectParams);
+      const ssParams = Utils.extend({ el: el.querySelector('a.smart-select') }, smartSelectParams || {});
+      self.f7SmartSelect = f7.smartSelect.create(ssParams);
     });
   },
   updated() {
@@ -279,8 +281,9 @@ export default {
   beforeDestroy() {
     const self = this;
     const el = self.$refs.el;
+    const {swipeout, accordionItem, smartSelect} = self.props;
     if (el) {
-      if (self.props.swipeout) {
+      if (swipeout) {
         el.removeEventListener('swipeout:open', self.onSwipeoutOpenBound);
         el.removeEventListener('swipeout:opened', self.onSwipeoutOpenedBound);
         el.removeEventListener('swipeout:close', self.onSwipeoutCloseBound);
@@ -289,14 +292,14 @@ export default {
         el.removeEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
         el.removeEventListener('swipeout', self.onSwipeoutBound);
       }
-      if (self.props.accordionItem) {
+      if (accordionItem) {
         el.removeEventListener('accordion:open', self.onAccOpenBound);
         el.removeEventListener('accordion:opened', self.onAccOpenedBound);
         el.removeEventListener('accordion:close', self.onAccCloseBound);
         el.removeEventListener('accordion:closed', self.onAccClosedBound);
       }
     }
-    if (self.props.smartSelect && self.f7SmartSelect) {
+    if (smartSelect && self.f7SmartSelect) {
       self.f7SmartSelect.destroy();
     }
   },

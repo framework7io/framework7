@@ -11,12 +11,14 @@ export default {
   },
   render() {
     const _h = this.$createElement;
-    const classes = Utils.classNames(this.props.className, 'swiper-slide');
+    const props = this.props;
+    const {className, id, style, zoom} = props;
+    const classes = Utils.classNames(className, 'swiper-slide');
     return _h('div', {
-      style: this.props.style,
+      style: style,
       class: classes,
-      attrs: { id: this.props.id }
-    }, [this.props.zoom ? _h('div', { class: 'swiper-zoom-container' }, [this.$slots['default']]) : this.$slots['default']]);
+      attrs: { id: id }
+    }, [zoom ? _h('div', { class: 'swiper-zoom-container' }, [this.$slots['default']]) : this.$slots['default']]);
   },
   computed: {
     props() {

@@ -34,19 +34,18 @@ class F7Popover extends React.Component {
       return undefined;
     return self.$f7.sheet.close(self.refs.el, animate);
   }
-  get classes() {
-    const self = this;
-    return Utils.classNames(self.props.className, 'popover', Mixins.colorClasses(self));
-  }
   render() {
     const self = this;
+    const props = self.props;
+    const {className, id, style} = props;
+    const classes = Utils.classNames(className, 'popover', Mixins.colorClasses(props));
     return React.createElement('div', {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
       },
-      id: self.props.id,
-      style: self.props.style,
-      className: self.classes
+      id: id,
+      style: style,
+      className: classes
     }, React.createElement('div', { className: 'popover-angle' }), React.createElement('div', { className: 'popover-inner' }, this.slots['default']));
   }
   componentWillUnmount() {
@@ -74,13 +73,14 @@ class F7Popover extends React.Component {
     el.addEventListener('popover:opened', self.onOpenedBound);
     el.addEventListener('popover:close', self.onCloseBound);
     el.addEventListener('popover:closed', self.onClosedBound);
+    const {target, opened} = self.props;
     self.$f7ready(() => {
       const popoverParams = { el };
-      if (self.props.target)
-        popoverParams.targetEl = self.props.target;
+      if (target)
+        popoverParams.targetEl = target;
       self.f7Popover = self.$f7.popover.create(popoverParams);
-      if (self.props.opened && self.props.target) {
-        self.f7Popover.open(self.props.target, false);
+      if (opened && target) {
+        self.f7Popover.open(target, false);
       }
     });
   }

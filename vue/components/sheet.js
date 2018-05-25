@@ -18,6 +18,8 @@ export default {
     const self = this;
     const fixedList = [];
     const staticList = [];
+    const props = self.props;
+    const {id, style, className} = props;
     let fixedTags;
     fixedTags = 'navbar toolbar tabbar subnavbar searchbar messagebar fab list-index'.split(' ');
     const slotsDefault = self.$slots.default;
@@ -42,11 +44,12 @@ export default {
       });
     }
     const innerEl = _h('div', { class: 'sheet-modal-inner' }, [staticList]);
+    const classes = Utils.classNames(className, 'sheet-modal', Mixins.colorClasses(props));
     return _h('div', {
       ref: 'el',
-      style: self.props.style,
-      class: self.classes,
-      attrs: { id: self.props.id }
+      style: style,
+      class: classes,
+      attrs: { id: id }
     }, [
       fixedList,
       innerEl
@@ -64,27 +67,6 @@ export default {
       }
     }
   },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(self.props.className, 'sheet-modal', Mixins.colorClasses(self));
-    },
-    props() {
-      return __vueComponentProps(this);
-    }
-  },
-  beforeDestroy() {
-    const self = this;
-    if (self.f7Sheet)
-      self.f7Sheet.destroy();
-    const el = self.$el;
-    if (!el)
-      return;
-    el.removeEventListener('popup:open', self.onOpenBound);
-    el.removeEventListener('popup:opened', self.onOpenedBound);
-    el.removeEventListener('popup:close', self.onCloseBound);
-    el.removeEventListener('popup:closed', self.onClosedBound);
-  },
   mounted() {
     const self = this;
     const el = self.$refs.el;
@@ -99,21 +81,34 @@ export default {
     el.addEventListener('sheet:close', self.onCloseBound);
     el.addEventListener('sheet:closed', self.onClosedBound);
     self.$f7ready(() => {
-      let backdrop;
+      let useBackdrop;
       let useDefaultBackdrop;
+      const {opened, backdrop} = self.props;
       useDefaultBackdrop = self.$options.propsData.backdrop === undefined;
       if (useDefaultBackdrop) {
         const app = self.$f7;
-        backdrop = app.params.sheet && app.params.sheet.backdrop !== undefined ? app.params.sheet.backdrop : self.$theme.md;
+        useBackdrop = app.params.sheet && app.params.sheet.backdrop !== undefined ? app.params.sheet.backdrop : self.$theme.md;
       }
       self.f7Sheet = self.$f7.sheet.create({
         el: self.$refs.el,
-        backdrop
+        backdrop: useBackdrop
       });
-      if (self.props.opened) {
+      if (opened) {
         self.f7Sheet.open(false);
       }
     });
+  },
+  beforeDestroy() {
+    const self = this;
+    if (self.f7Sheet)
+      self.f7Sheet.destroy();
+    const el = self.$el;
+    if (!el)
+      return;
+    el.removeEventListener('popup:open', self.onOpenBound);
+    el.removeEventListener('popup:opened', self.onOpenedBound);
+    el.removeEventListener('popup:close', self.onCloseBound);
+    el.removeEventListener('popup:closed', self.onClosedBound);
   },
   methods: {
     onOpen(event) {
@@ -142,6 +137,11 @@ export default {
     },
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
+    }
+  },
+  computed: {
+    props() {
+      return __vueComponentProps(this);
     }
   }
 };

@@ -38,14 +38,13 @@ export default {
   },
   render() {
     const _h = this.$createElement;
-    const classes = Utils.classNames(this.props.className, {
-      'accordion-item': true,
-      'accordion-item-opened': this.props.opened
-    }, Mixins.colorClasses(this));
+    const props = this.props;
+    const {className, id, style, opened} = props;
+    const classes = Utils.classNames(className, 'accordion-item', { 'accordion-item-opened': opened }, Mixins.colorClasses(props));
     return _h('div', {
-      style: this.props.style,
+      style: style,
       class: classes,
-      attrs: { id: this.props.id }
+      attrs: { id: id }
     }, [this.$slots['default']]);
   },
   methods: {

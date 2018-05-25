@@ -14,7 +14,8 @@ class F7Button extends React.Component {
   }
   get attrs() {
     const self = this;
-    const {href, target, tabLink} = self.props;
+    const props = self.props;
+    const {href, target, tabLink} = props;
     let hrefComputed = href;
     if (href === true)
       hrefComputed = '#';
@@ -24,11 +25,12 @@ class F7Button extends React.Component {
       href: hrefComputed,
       target,
       'data-tab': Utils.isStringProp(tabLink) && tabLink || undefined
-    }, Mixins.linkRouterAttrs(self), Mixins.linkActionsAttrs(self));
+    }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
   }
   get classes() {
     const self = this;
-    const {noFastclick, noFastClick, tabLink, tabLinkActive, round, roundIos, roundMd, fill, fillIos, fillMd, big, bigIos, bigMd, small, smallIos, smallMd, raised, active, outline, disabled, className} = self.props;
+    const props = self.props;
+    const {noFastclick, noFastClick, tabLink, tabLinkActive, round, roundIos, roundMd, fill, fillIos, fillMd, big, bigIos, bigMd, small, smallIos, smallMd, raised, active, outline, disabled, className} = props;
     return Utils.classNames(className, 'button', {
       'tab-link': tabLink || tabLink === '',
       'tab-link-active': tabLinkActive,
@@ -49,13 +51,14 @@ class F7Button extends React.Component {
       'button-active': active,
       'button-outline': outline,
       disabled
-    }, Mixins.colorClasses(self), Mixins.linkRouterClasses(self), Mixins.linkActionsClasses(self));
+    }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
   }
   render() {
     const self = this;
     let iconEl;
     let textEl;
-    const {text, icon, iconMaterial, iconIon, iconFa, iconF7, iconIfMd, iconIfIos, iconColor, iconSize} = self.props;
+    const props = self.props;
+    const {text, icon, iconMaterial, iconIon, iconFa, iconF7, iconIfMd, iconIfIos, iconColor, iconSize, id, style} = props;
     if (text) {
       textEl = React.createElement('span', null, text);
     }
@@ -73,8 +76,8 @@ class F7Button extends React.Component {
       });
     }
     return React.createElement('a', {
-      id: self.props.id,
-      style: self.props.style,
+      id: id,
+      style: style,
       className: self.classes,
       onClick: self.onClick.bind(self),
       ...self.attrs

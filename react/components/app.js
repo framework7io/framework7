@@ -11,12 +11,15 @@ class F7App extends React.Component {
   }
   render() {
     const self = this;
-    const classes = Utils.classNames(self.props.className, 'framework7-root', Mixins.colorClasses(self));
+    const props = self.props;
+    const {id, style, className} = props;
+    const classes = Utils.classNames(className, 'framework7-root', Mixins.colorClasses(props));
     return React.createElement('div', {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
       },
-      id: self.props.id || 'framework7-root',
+      id: id || 'framework7-root',
+      style: style,
       className: classes
     }, this.slots['default']);
   }
@@ -45,6 +48,7 @@ __reactComponentSetProps(F7App, {
     Number
   ],
   params: Object,
-  routes: Array
+  routes: Array,
+  ...Mixins.colorProps
 });
 export default F7App;

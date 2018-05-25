@@ -15,11 +15,12 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
-    const {className, id, style, mediaList, sortable} = self.props;
+    const props = self.props;
+    const {className, id, style, mediaList, sortable} = props;
     const classes = Utils.classNames(className, 'list-group', {
       'media-list': mediaList,
       sortable
-    }, Mixins.colorClasses(self));
+    }, Mixins.colorClasses(props));
     return _h('div', {
       style: style,
       class: classes,

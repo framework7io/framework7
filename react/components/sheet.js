@@ -35,14 +35,12 @@ class F7Sheet extends React.Component {
       return undefined;
     return self.$f7.sheet.close(self.refs.el, animate);
   }
-  get classes() {
-    const self = this;
-    return Utils.classNames(self.props.className, 'sheet-modal', Mixins.colorClasses(self));
-  }
   render() {
     const self = this;
     const fixedList = [];
     const staticList = [];
+    const props = self.props;
+    const {id, style, className} = props;
     let fixedTags;
     fixedTags = 'Navbar Toolbar Tabbar Subnavbar Searchbar Messagebar Fab ListIndex'.split(' ').map(tagName => `F7${ tagName }`);
     const slotsDefault = self.slots.default;
@@ -65,14 +63,27 @@ class F7Sheet extends React.Component {
       });
     }
     const innerEl = React.createElement('div', { className: 'sheet-modal-inner' }, staticList);
+    const classes = Utils.classNames(className, 'sheet-modal', Mixins.colorClasses(props));
     return React.createElement('div', {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
       },
-      id: self.props.id,
-      style: self.props.style,
-      className: self.classes
+      id: id,
+      style: style,
+      className: classes
     }, fixedList, innerEl);
+  }
+  componentWillUnmount() {
+    const self = this;
+    if (self.f7Sheet)
+      self.f7Sheet.destroy();
+    const el = self.el;
+    if (!el)
+      return;
+    el.removeEventListener('popup:open', self.onOpenBound);
+    el.removeEventListener('popup:opened', self.onOpenedBound);
+    el.removeEventListener('popup:close', self.onCloseBound);
+    el.removeEventListener('popup:closed', self.onClosedBound);
   }
   componentDidMount() {
     const self = this;
@@ -88,33 +99,22 @@ class F7Sheet extends React.Component {
     el.addEventListener('sheet:close', self.onCloseBound);
     el.addEventListener('sheet:closed', self.onClosedBound);
     self.$f7ready(() => {
-      let backdrop;
+      let useBackdrop;
       let useDefaultBackdrop;
-      useDefaultBackdrop = typeof self.props.backdrop === 'undefined';
+      const {opened, backdrop} = self.props;
+      useDefaultBackdrop = typeof backdrop === 'undefined';
       if (useDefaultBackdrop) {
         const app = self.$f7;
-        backdrop = app.params.sheet && app.params.sheet.backdrop !== undefined ? app.params.sheet.backdrop : self.$theme.md;
+        useBackdrop = app.params.sheet && app.params.sheet.backdrop !== undefined ? app.params.sheet.backdrop : self.$theme.md;
       }
       self.f7Sheet = self.$f7.sheet.create({
         el: self.refs.el,
-        backdrop
+        backdrop: useBackdrop
       });
-      if (self.props.opened) {
+      if (opened) {
         self.f7Sheet.open(false);
       }
     });
-  }
-  componentWillUnmount() {
-    const self = this;
-    if (self.f7Sheet)
-      self.f7Sheet.destroy();
-    const el = self.el;
-    if (!el)
-      return;
-    el.removeEventListener('popup:open', self.onOpenBound);
-    el.removeEventListener('popup:opened', self.onOpenedBound);
-    el.removeEventListener('popup:close', self.onCloseBound);
-    el.removeEventListener('popup:closed', self.onClosedBound);
   }
   get slots() {
     return __reactComponentSlots(this.props);

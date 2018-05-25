@@ -15,12 +15,13 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
-    const {inline, id, style, className, floating} = self.props;
+    const props = self.props;
+    const {inline, id, style, className, floating} = props;
     const classes = Utils.classNames(className, 'item-title', {
       'item-label-inline': inline,
       'item-label': !floating,
       'item-floating-label': floating
-    }, Mixins.colorClasses(self));
+    }, Mixins.colorClasses(props));
     return _h('div', {
       style: style,
       class: classes,

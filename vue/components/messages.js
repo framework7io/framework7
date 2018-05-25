@@ -48,8 +48,9 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
-    const {id, style, className} = self.props;
-    const classes = Utils.classNames(className, 'messages', Mixins.colorClasses(self));
+    const props = self.props;
+    const {id, style, className} = props;
+    const classes = Utils.classNames(className, 'messages', Mixins.colorClasses(props));
     return _h('div', {
       ref: 'el',
       style: style,
@@ -100,7 +101,7 @@ export default {
     if (!init)
       return;
     self.$f7ready(f7 => {
-      self.f7Messages = f7.messages.create({
+      self.f7Messages = f7.messages.create(Utils.noUndefinedProps({
         el: self.$refs.el,
         autoLayout,
         messages,
@@ -116,7 +117,7 @@ export default {
         sameAvatarMessageRule,
         customClassMessageRule,
         renderMessage
-      });
+      }));
     });
   },
   beforeDestroy() {

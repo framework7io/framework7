@@ -11,15 +11,14 @@ class F7FabButton extends React.Component {
   onClick(event) {
     this.dispatchEvent('click', event);
   }
-  get classes() {
-    const self = this;
-    return Utils.classNames(self.props.className, { 'fab-close': self.fabClose }, Mixins.colorClasses(self));
-  }
   render() {
+    const props = this.props;
+    const {className, id, style, fabClose} = props;
+    const classes = Utils.classNames(className, { 'fab-close': fabClose }, Mixins.colorClasses(props));
     return React.createElement('a', {
-      id: this.props.id,
-      style: this.props.style,
-      className: this.classes,
+      id: id,
+      style: style,
+      className: classes,
       onClick: this.onClick.bind(this)
     }, this.slots['default']);
   }

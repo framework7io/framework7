@@ -19,25 +19,16 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
-    const RowTag = self.props.tag;
+    const props = self.props;
+    const {className, id, style, tag, noGap} = props;
+    const RowTag = tag;
+    const classes = Utils.classNames(className, 'row', { 'no-gap': noGap }, Mixins.colorClasses(props));
     return _h(RowTag, {
-      style: this.props.style,
-      class: self.classes,
+      style: style,
+      class: classes,
       on: { click: self.onClick.bind(self) },
-      attrs: { id: this.props.id }
+      attrs: { id: id }
     }, [this.$slots['default']]);
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(self.props.className, {
-        row: true,
-        'no-gap': self.props.noGap
-      }, Mixins.colorClasses(self));
-    },
-    props() {
-      return __vueComponentProps(this);
-    }
   },
   methods: {
     onClick(e) {
@@ -45,6 +36,11 @@ export default {
     },
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
+    }
+  },
+  computed: {
+    props() {
+      return __vueComponentProps(this);
     }
   }
 };

@@ -8,7 +8,8 @@ class F7SwipeoutActions extends React.Component {
     super(props, context);
   }
   render() {
-    const {left, right, side, className, id, style} = this.props;
+    const props = this.props;
+    const {left, right, side, className, id, style} = props;
     let sideComputed = side;
     if (!sideComputed) {
       if (left)
@@ -16,7 +17,7 @@ class F7SwipeoutActions extends React.Component {
       if (right)
         sideComputed = 'right';
     }
-    const classes = Utils.classNames(className, { [`swipeout-actions-${ sideComputed }`]: true }, Mixins.colorClasses(this));
+    const classes = Utils.classNames(className, `swipeout-actions-${ sideComputed }`, Mixins.colorClasses(props));
     return React.createElement('div', {
       id: id,
       style: style,

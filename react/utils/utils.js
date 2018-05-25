@@ -1,4 +1,11 @@
 const Utils = {
+  noUndefinedProps(obj) {
+    const o = {};
+    Object.keys(obj).forEach((key) => {
+      if (typeof obj[key] !== 'undefined') o[key] = obj[key];
+    });
+    return o;
+  },
   isTrueProp(val) {
     return val === true || val === '';
   },

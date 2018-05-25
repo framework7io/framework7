@@ -16,11 +16,9 @@ export default {
   },
   render() {
     const _h = this.$createElement;
-    const {id, className, style, padding} = this.props;
-    const classes = Utils.classNames(className, {
-      'card-content': true,
-      'card-content-padding': padding
-    }, Mixins.colorClasses(this));
+    const props = this.props;
+    const {id, className, style, padding} = props;
+    const classes = Utils.classNames(className, 'card-content', { 'card-content-padding': padding }, Mixins.colorClasses(props));
     return _h('div', {
       style: style,
       class: classes,

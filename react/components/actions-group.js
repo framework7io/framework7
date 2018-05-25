@@ -9,10 +9,12 @@ class F7ActionsGroup extends React.Component {
   }
   render() {
     const self = this;
-    const classes = Utils.classNames(self.props.className, { 'actions-group': true });
+    const props = self.props;
+    const {className, id, style} = props;
+    const classes = Utils.classNames(className, 'actions-group', ...Mixins.colorClasses(props));
     return React.createElement('div', {
-      id: self.props.id,
-      style: self.props.style,
+      id: id,
+      style: style,
       className: classes
     }, this.slots['default']);
   }

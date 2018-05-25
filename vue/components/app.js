@@ -10,16 +10,20 @@ export default {
       Number
     ],
     params: Object,
-    routes: Array
+    routes: Array,
+    ...Mixins.colorProps
   },
   render() {
     const _h = this.$createElement;
     const self = this;
-    const classes = Utils.classNames(self.props.className, 'framework7-root', Mixins.colorClasses(self));
+    const props = self.props;
+    const {id, style, className} = props;
+    const classes = Utils.classNames(className, 'framework7-root', Mixins.colorClasses(props));
     return _h('div', {
       ref: 'el',
+      style: style,
       class: classes,
-      attrs: { id: self.props.id || 'framework7-root' }
+      attrs: { id: id || 'framework7-root' }
     }, [this.$slots['default']]);
   },
   mounted() {

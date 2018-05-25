@@ -52,9 +52,11 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
+    const props = self.props;
+    const {id, style, name, pageContent, messagesContent, ptr, ptrDistance, ptrPreloader, infinite, infiniteDistance, infinitePreloader, infiniteTop, hideBarsOnScroll, hideNavbarOnScroll, hideToolbarOnScroll, loginScreen, className, stacked, tabs, subnavbar, withSubnavbar, noNavbar, noToolbar, noSwipeback} = props;
     const fixedList = [];
     const staticList = [];
-    const needsPageContent = self.props.pageContent;
+    const needsPageContent = pageContent;
     const {
       static: slotsStatic,
       fixed: slotsFixed,
@@ -93,15 +95,22 @@ export default {
         }
       });
     }
-    self.hasSubnavbar = hasSubnavbar;
+    const classes = Utils.classNames(className, 'page', {
+      stacked,
+      tabs,
+      'page-with-subnavbar': subnavbar || withSubnavbar || hasSubnavbar,
+      'no-navbar': noNavbar,
+      'no-toolbar': noToolbar,
+      'no-swipeback': noSwipeback
+    }, Mixins.colorClasses(props));
     if (!needsPageContent) {
       return _h('div', {
         ref: 'el',
-        style: self.props.style,
-        class: self.classes,
+        style: style,
+        class: classes,
         attrs: {
-          id: self.props.id,
-          'data-name': self.props.name
+          id: id,
+          'data-name': name
         }
       }, [
         slotsFixed,
@@ -111,18 +120,18 @@ export default {
     }
     const pageContentEl = _h(F7PageContent, {
       attrs: {
-        ptr: self.props.ptr,
-        ptrDistance: self.props.ptrDistance,
-        ptrPreloader: self.props.ptrPreloader,
-        infinite: self.props.infinite,
-        infiniteTop: self.props.infiniteTop,
-        infiniteDistance: self.props.infiniteDistance,
-        infinitePreloader: self.props.infinitePreloader,
-        hideBarsOnScroll: self.props.hideBarsOnScroll,
-        hideNavbarOnScroll: self.props.hideNavbarOnScroll,
-        hideToolbarOnScroll: self.props.hideToolbarOnScroll,
-        messagesContent: self.props.messagesContent || hasMessages,
-        loginScreen: self.props.loginScreen
+        ptr: ptr,
+        ptrDistance: ptrDistance,
+        ptrPreloader: ptrPreloader,
+        infinite: infinite,
+        infiniteTop: infiniteTop,
+        infiniteDistance: infiniteDistance,
+        infinitePreloader: infinitePreloader,
+        hideBarsOnScroll: hideBarsOnScroll,
+        hideNavbarOnScroll: hideNavbarOnScroll,
+        hideToolbarOnScroll: hideToolbarOnScroll,
+        messagesContent: messagesContent || hasMessages,
+        loginScreen: loginScreen
       }
     }, [
       slotsStatic,
@@ -130,11 +139,11 @@ export default {
     ]);
     return _h('div', {
       ref: 'el',
-      style: self.props.style,
-      class: self.classes,
+      style: style,
+      class: classes,
       attrs: {
-        id: self.props.id,
-        'data-name': self.props.name
+        id: id,
+        'data-name': name
       }
     }, [
       fixedList,
@@ -142,25 +151,10 @@ export default {
       pageContentEl
     ]);
   },
-  computed: {
-    classes() {
-      return Utils.classNames(this.props.className, {
-        page: true,
-        stacked: this.props.stacked,
-        tabs: this.props.tabs,
-        'page-with-subnavbar': this.props.subnavbar || this.props.withSubnavbar || this.hasSubnavbar,
-        'no-navbar': this.props.noNavbar,
-        'no-toolbar': this.props.noToolbar,
-        'no-swipeback': this.props.noSwipeback
-      }, Mixins.colorClasses(this));
-    },
-    props() {
-      return __vueComponentProps(this);
-    }
-  },
   mounted() {
     const self = this;
     const el = self.$refs.el;
+    const {ptr, infinite} = self.props;
     self.onPtrPullStart = self.onPtrPullStart.bind(self);
     self.onPtrPullMove = self.onPtrPullMove.bind(self);
     self.onPtrPullEnd = self.onPtrPullEnd.bind(self);
@@ -175,12 +169,16 @@ export default {
     self.onPageAfterOut = self.onPageAfterOut.bind(self);
     self.onPageAfterIn = self.onPageAfterIn.bind(self);
     self.onPageBeforeRemove = self.onPageBeforeRemove.bind(self);
-    el.addEventListener('ptr:pullstart', self.onPtrPullStart);
-    el.addEventListener('ptr:pullmove', self.onPtrPullMove);
-    el.addEventListener('ptr:pullend', self.onPtrPullEnd);
-    el.addEventListener('ptr:refresh', self.onPtrRefresh);
-    el.addEventListener('ptr:done', self.onPtrDone);
-    el.addEventListener('infinite', self.onInfinite);
+    if (ptr) {
+      el.addEventListener('ptr:pullstart', self.onPtrPullStart);
+      el.addEventListener('ptr:pullmove', self.onPtrPullMove);
+      el.addEventListener('ptr:pullend', self.onPtrPullEnd);
+      el.addEventListener('ptr:refresh', self.onPtrRefresh);
+      el.addEventListener('ptr:done', self.onPtrDone);
+    }
+    if (infinite) {
+      el.addEventListener('infinite', self.onInfinite);
+    }
     el.addEventListener('page:mounted', self.onPageMounted);
     el.addEventListener('page:init', self.onPageInit);
     el.addEventListener('page:reinit', self.onPageReinit);
@@ -253,6 +251,11 @@ export default {
     },
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
+    }
+  },
+  computed: {
+    props() {
+      return __vueComponentProps(this);
     }
   }
 };

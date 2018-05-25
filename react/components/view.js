@@ -45,23 +45,22 @@ class F7View extends React.Component {
   onTabHide(e) {
     this.dispatchEvent('tab:hide tabHide', e);
   }
-  get classes() {
-    return Utils.classNames(this.props.className, {
-      view: true,
-      'view-main': this.props.main,
-      'tab-active': this.props.tabActive,
-      tab: this.props.tab
-    }, Mixins.colorClasses(this));
-  }
   render() {
     const self = this;
+    const props = self.props;
+    const {id, style, tab, main, tabActive, className} = props;
+    const classes = Utils.classNames(className, 'view', {
+      'view-main': main,
+      'tab-active': tabActive,
+      tab
+    }, Mixins.colorClasses(props));
     return React.createElement('div', {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
       },
-      id: self.props.id,
-      style: self.props.style,
-      className: self.classes
+      id: id,
+      style: style,
+      className: classes
     }, this.slots['default'], self.state.pages.map(page => {
       const PageComponent = page.component;
       return React.createElement(PageComponent, {
@@ -113,7 +112,7 @@ class F7View extends React.Component {
         instance: null
       };
       routers.views.push(self.routerData);
-      self.routerData.instance = f7.views.create(el, self.props);
+      self.routerData.instance = f7.views.create(el, Utils.noUndefinedProps(self.props));
       self.f7View = self.routerData.instance;
     });
   }

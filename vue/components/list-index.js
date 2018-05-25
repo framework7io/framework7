@@ -44,21 +44,15 @@ export default {
   },
   render() {
     const _h = this.$createElement;
+    const props = this.props;
+    const {className, id, style} = props;
+    const classes = Utils.classNames(className, 'list-index', Mixins.colorClasses(props));
     return _h('div', {
       ref: 'el',
-      style: this.props.style,
-      class: this.classes,
-      attrs: { id: this.props.id }
+      style: style,
+      class: classes,
+      attrs: { id: id }
     }, [this.$slots['default']]);
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(this.props.className, 'list-index', Mixins.colorClasses(self));
-    },
-    props() {
-      return __vueComponentProps(this);
-    }
   },
   beforeDestroy() {
     if (!this.props.init)
@@ -111,6 +105,11 @@ export default {
     },
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
+    }
+  },
+  computed: {
+    props() {
+      return __vueComponentProps(this);
     }
   }
 };

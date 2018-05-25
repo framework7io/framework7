@@ -34,48 +34,51 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
+    const props = self.props;
+    const {ptr, ptrPreloader, infinite, infinitePreloader, id, style, ptrDistance, infiniteDistance, infiniteTop} = props;
     let ptrEl;
     let infiniteEl;
-    if (self.props.ptr && self.props.ptrPreloader) {
+    if (ptr && ptrPreloader) {
       ptrEl = _h('div', { class: 'ptr-preloader' }, [
         _h('div', { class: 'preloader' }),
         _h('div', { class: 'ptr-arrow' })
       ]);
     }
-    if (self.props.infinite && self.props.infinitePreloader) {
+    if (infinite && infinitePreloader) {
       infiniteEl = _h('div', { class: 'preloader infinite-scroll-preloader' });
     }
     return _h('div', {
-      style: self.props.style,
+      style: style,
       class: self.classes,
       ref: 'el',
       attrs: {
-        id: self.props.id,
-        'data-ptr-distance': self.props.ptrDistance || undefined,
-        'data-infinite-distance': self.props.infiniteDistance || undefined
+        id: id,
+        'data-ptr-distance': ptrDistance || undefined,
+        'data-infinite-distance': infiniteDistance || undefined
       }
     }, [
       ptrEl,
-      self.props.infiniteTop ? infiniteEl : self.$slots.default,
-      self.props.infiniteTop ? self.$slots.default : infiniteEl
+      infiniteTop ? infiniteEl : self.$slots.default,
+      infiniteTop ? self.$slots.default : infiniteEl
     ]);
   },
   computed: {
     classes() {
       const self = this;
-      return Utils.classNames(self.props.className, {
-        tab: self.props.tab,
-        'page-content': true,
-        'tab-active': self.props.tabActive,
-        'ptr-content': self.props.ptr,
-        'infinite-scroll-content': self.props.infinite,
-        'infinite-scroll-top': self.props.infiniteTop,
-        'hide-bars-on-scroll': self.props.hideBarsOnScroll,
-        'hide-navbar-on-scroll': self.props.hideNavbarOnScroll,
-        'hide-toolbar-on-scroll': self.props.hideToolbarOnScroll,
-        'messages-content': self.props.messagesContent,
-        'login-screen-content': self.props.loginScreen
-      }, Mixins.colorClasses(self));
+      const props = self.props;
+      const {className, tab, tabActive, ptr, infinite, infiniteTop, hideBarsOnScroll, hideNavbarOnScroll, hideToolbarOnScroll, messagesContent, loginScreen} = props;
+      return Utils.classNames(className, 'page-content', {
+        tab,
+        'tab-active': tabActive,
+        'ptr-content': ptr,
+        'infinite-scroll-content': infinite,
+        'infinite-scroll-top': infiniteTop,
+        'hide-bars-on-scroll': hideBarsOnScroll,
+        'hide-navbar-on-scroll': hideNavbarOnScroll,
+        'hide-toolbar-on-scroll': hideToolbarOnScroll,
+        'messages-content': messagesContent,
+        'login-screen-content': loginScreen
+      }, Mixins.colorClasses(props));
     },
     props() {
       return __vueComponentProps(this);
@@ -84,6 +87,7 @@ export default {
   mounted() {
     const self = this;
     const el = self.$refs.el;
+    const {ptr, infinite, tab} = self.props;
     self.onPtrPullStart = self.onPtrPullStart.bind(self);
     self.onPtrPullMove = self.onPtrPullMove.bind(self);
     self.onPtrPullEnd = self.onPtrPullEnd.bind(self);
@@ -92,14 +96,20 @@ export default {
     self.onInfinite = self.onInfinite.bind(self);
     self.onTabShow = self.onTabShow.bind(self);
     self.onTabHide = self.onTabHide.bind(self);
-    el.addEventListener('ptr:pullstart', self.onPtrPullStart);
-    el.addEventListener('ptr:pullmove', self.onPtrPullMove);
-    el.addEventListener('ptr:pullend', self.onPtrPullEnd);
-    el.addEventListener('ptr:refresh', self.onPtrRefresh);
-    el.addEventListener('ptr:done', self.onPtrDone);
-    el.addEventListener('infinite', self.onInfinite);
-    el.addEventListener('tab:show', self.onTabShow);
-    el.addEventListener('tab:hide', self.onTabHide);
+    if (ptr) {
+      el.addEventListener('ptr:pullstart', self.onPtrPullStart);
+      el.addEventListener('ptr:pullmove', self.onPtrPullMove);
+      el.addEventListener('ptr:pullend', self.onPtrPullEnd);
+      el.addEventListener('ptr:refresh', self.onPtrRefresh);
+      el.addEventListener('ptr:done', self.onPtrDone);
+    }
+    if (infinite) {
+      el.addEventListener('infinite', self.onInfinite);
+    }
+    if (tab) {
+      el.addEventListener('tab:show', self.onTabShow);
+      el.addEventListener('tab:hide', self.onTabHide);
+    }
   },
   beforeDestroy() {
     const self = this;

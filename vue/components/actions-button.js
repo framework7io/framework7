@@ -19,32 +19,26 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
+    const props = self.props;
+    const {id, className, style, bold} = props;
     let mediaEl;
     if (self.$slots.media && self.$slots.media.length) {
       mediaEl = _h('div', { class: 'actions-button-media' }, [this.$slots['media']]);
     }
+    const classes = Utils.classNames(className, {
+      'actions-button': true,
+      'actions-button-bold': bold
+    }, Mixins.colorClasses(props));
     return _h('div', {
-      style: self.props.style,
-      class: self.classes,
+      style: style,
+      class: classes,
       ref: 'el',
       on: { click: self.onClick.bind(self) },
-      attrs: { id: self.props.id }
+      attrs: { id: id }
     }, [
       mediaEl,
       _h('div', { class: 'actions-button-text' }, [this.$slots['default']])
     ]);
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(self.props.className, {
-        'actions-button': true,
-        'actions-button-bold': self.props.bold
-      }, Mixins.colorClasses(self));
-    },
-    props() {
-      return __vueComponentProps(this);
-    }
   },
   methods: {
     onClick(event) {
@@ -58,6 +52,11 @@ export default {
     },
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
+    }
+  },
+  computed: {
+    props() {
+      return __vueComponentProps(this);
     }
   }
 };

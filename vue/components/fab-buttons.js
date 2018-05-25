@@ -16,20 +16,16 @@ export default {
   },
   render() {
     const _h = this.$createElement;
+    const props = this.props;
+    const {className, id, style, position} = props;
+    const classes = Utils.classNames(className, 'fab-buttons', `fab-buttons-${ position }`, Mixins.colorClasses(props));
     return _h('div', {
-      style: this.props.style,
-      class: this.classes,
-      attrs: { id: this.props.id }
+      style: style,
+      class: classes,
+      attrs: { id: id }
     }, [this.$slots['default']]);
   },
   computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(self.props.className, {
-        'fab-buttons': true,
-        [`fab-buttons-${ self.props.position }`]: true
-      }, Mixins.colorClasses(self));
-    },
     props() {
       return __vueComponentProps(this);
     }

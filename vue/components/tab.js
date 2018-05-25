@@ -26,9 +26,10 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
-    const {tabActive, id, className, style} = self.props;
+    const props = self.props;
+    const {tabActive, id, className, style} = props;
     const tabContent = self.state.tabContent;
-    const classes = Utils.classNames(className, 'tab', { 'tab-active': tabActive }, Mixins.colorClasses(self));
+    const classes = Utils.classNames(className, 'tab', { 'tab-active': tabActive }, Mixins.colorClasses(props));
     let TabContent;
     if (tabContent)
       TabContent = tabContent.component;

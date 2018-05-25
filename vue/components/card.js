@@ -32,32 +32,34 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
+    const props = self.props;
+    const {className, id, style, title, content, footer, padding} = props;
     let headerEl;
     let contentEl;
     let footerEl;
-    const classes = Utils.classNames(self.props.className, 'card', Mixins.colorClasses(self));
-    if (self.title || self.$slots && self.$slots.header) {
+    const classes = Utils.classNames(className, 'card', Mixins.colorClasses(props));
+    if (title || self.$slots && self.$slots.header) {
       headerEl = _h(F7CardHeader, [
-        self.props.title,
+        title,
         this.$slots['header']
       ]);
     }
-    if (self.content || self.$slots && self.$slots.content) {
-      contentEl = _h(F7CardContent, { attrs: { padding: this.props.padding } }, [
-        self.props.content,
+    if (content || self.$slots && self.$slots.content) {
+      contentEl = _h(F7CardContent, { attrs: { padding: padding } }, [
+        content,
         this.$slots['content']
       ]);
     }
-    if (self.footer || self.$slots && self.$slots.footer) {
+    if (footer || self.$slots && self.$slots.footer) {
       footerEl = _h(F7CardFooter, [
-        self.props.title,
+        footer,
         this.$slots['footer']
       ]);
     }
     return _h('div', {
-      style: this.props.style,
+      style: style,
       class: classes,
-      attrs: { id: this.props.id }
+      attrs: { id: id }
     }, [
       headerEl,
       contentEl,

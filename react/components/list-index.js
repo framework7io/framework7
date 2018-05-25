@@ -20,18 +20,17 @@ class F7ListIndex extends React.Component {
       return;
     this.f7ListIndex.scrollListToIndex(indexContent);
   }
-  get classes() {
-    const self = this;
-    return Utils.classNames(this.props.className, 'list-index', Mixins.colorClasses(self));
-  }
   render() {
+    const props = this.props;
+    const {className, id, style} = props;
+    const classes = Utils.classNames(className, 'list-index', Mixins.colorClasses(props));
     return React.createElement('div', {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
       },
-      id: this.props.id,
-      style: this.props.style,
-      className: this.classes
+      id: id,
+      style: style,
+      className: classes
     }, this.slots['default']);
   }
   componentDidMount() {

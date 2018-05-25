@@ -13,19 +13,19 @@ export default {
   },
   render() {
     const _h = this.$createElement;
+    const props = this.props;
+    const {className, id, style, sliding} = props;
+    const classes = Utils.classNames(className, 'right', {
+      right: true,
+      sliding
+    }, Mixins.colorClasses(props));
     return _h('div', {
-      style: this.props.style,
-      class: this.classes,
-      attrs: { id: this.props.id }
+      style: style,
+      class: classes,
+      attrs: { id: id }
     }, [this.$slots['default']]);
   },
   computed: {
-    classes() {
-      return Utils.classNames(this.props.className, {
-        right: true,
-        sliding: this.props.slidng
-      }, Mixins.colorClasses(this));
-    },
     props() {
       return __vueComponentProps(this);
     }

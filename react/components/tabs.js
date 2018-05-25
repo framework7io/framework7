@@ -7,23 +7,26 @@ class F7Tabs extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
-  get classes() {
-    return Utils.classNames(this.props.className, {
-      'tabs-animated-wrap': this.props.animated,
-      'tabs-swipeable-wrap': this.props.swipeable,
-      'tabs-routable': this.props.routable
-    }, Mixins.colorClasses(this));
-  }
   render() {
     const self = this;
-    const {animated, swipeable, id, style} = self.props;
+    const props = self.props;
+    const {animated, swipeable, id, style, className, routable} = props;
+    const classes = Utils.classNames(className, {
+      'tabs-animated-wrap': animated,
+      'tabs-swipeable-wrap': swipeable,
+      'tabs-routable': routable
+    }, Mixins.colorClasses(props));
     if (animated || swipeable) {
-      return React.createElement('div', { className: self.classes }, React.createElement('div', { className: 'tabs' }, this.slots['default']));
+      return React.createElement('div', {
+        id: id,
+        style: style,
+        className: classes
+      }, React.createElement('div', { className: 'tabs' }, this.slots['default']));
     }
     return React.createElement('div', {
       id: id,
       style: style,
-      className: Utils.classNames('tabs', this.classes)
+      className: Utils.classNames('tabs', classes)
     }, this.slots['default']);
   }
   get slots() {

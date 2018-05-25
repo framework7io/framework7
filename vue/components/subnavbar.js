@@ -19,19 +19,19 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
-    const {inner, title} = self.props;
-    return _h('div', { class: self.classes }, [inner ? _h('div', { class: 'subnavbar-inner' }, [
+    const props = self.props;
+    const {inner, title, style, id, className, sliding} = props;
+    const classes = Utils.classNames(className, 'subnavbar', { sliding }, Mixins.colorClasses(props));
+    return _h('div', {
+      class: classes,
+      style: style,
+      attrs: { id: id }
+    }, [inner ? _h('div', { class: 'subnavbar-inner' }, [
         title && _h('div', { class: 'title' }, [title]),
         this.$slots['default']
       ]) : this.$slots['default']]);
   },
   computed: {
-    classes() {
-      return Utils.classNames(this.props.className, {
-        subnavbar: true,
-        sliding: this.props.sliding
-      }, Mixins.colorClasses(this));
-    },
     props() {
       return __vueComponentProps(this);
     }

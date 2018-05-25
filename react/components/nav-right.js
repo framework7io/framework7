@@ -7,17 +7,17 @@ class F7NavRight extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
-  get classes() {
-    return Utils.classNames(this.props.className, {
-      right: true,
-      sliding: this.props.slidng
-    }, Mixins.colorClasses(this));
-  }
   render() {
+    const props = this.props;
+    const {className, id, style, sliding} = props;
+    const classes = Utils.classNames(className, 'right', {
+      right: true,
+      sliding
+    }, Mixins.colorClasses(props));
     return React.createElement('div', {
-      id: this.props.id,
-      style: this.props.style,
-      className: this.classes
+      id: id,
+      style: style,
+      className: classes
     }, this.slots['default']);
   }
   get slots() {

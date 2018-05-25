@@ -19,29 +19,33 @@ export default {
   },
   render() {
     const _h = this.$createElement;
-    this.onClick = this.onClick.bind(this);
+    const props = this.props;
+    const {
+      className,
+      id,
+      style,
+      overswipe,
+      delete: deleteProp,
+      close,
+      href,
+      confirmText,
+      text
+    } = props;
+    const classes = Utils.classNames(className, {
+      'swipeout-overswipe': overswipe,
+      'swipeout-delete': deleteProp,
+      'swipeout-close': close
+    }, Mixins.colorClasses(props));
     return _h('a', {
-      style: this.props.style,
-      class: this.classes,
-      on: { click: this.onClick },
+      style: style,
+      class: classes,
+      on: { click: this.onClick.bind(this) },
       attrs: {
-        href: this.props.href || '#',
-        id: this.props.id,
-        'data-confirm': this.props.confirmText || undefined
+        href: href || '#',
+        id: id,
+        'data-confirm': confirmText || undefined
       }
-    }, [this.$slots['default'] || [this.props.text]]);
-  },
-  computed: {
-    classes() {
-      return Utils.classNames(this.props.className, {
-        'swipeout-overswipe': this.props.overswipe,
-        'swipeout-delete': this.props.delete,
-        'swipeout-close': this.props.close
-      }, Mixins.colorClasses(this));
-    },
-    props() {
-      return __vueComponentProps(this);
-    }
+    }, [this.$slots['default'] || [text]]);
   },
   methods: {
     onClick(event) {
@@ -49,6 +53,11 @@ export default {
     },
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
+    }
+  },
+  computed: {
+    props() {
+      return __vueComponentProps(this);
     }
   }
 };

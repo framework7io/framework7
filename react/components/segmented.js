@@ -9,15 +9,17 @@ class F7Segmented extends React.Component {
   }
   render() {
     const self = this;
-    const classNames = Utils.classNames(self.props.className, {
+    const props = self.props;
+    const {className, raised, round, id, style, tag} = props;
+    const classNames = Utils.classNames(className, {
       segmented: true,
-      'segmented-raised': self.props.raised,
-      'segmented-round': self.props.round
-    }, Mixins.colorClasses(self));
-    const SegmentedTag = self.props.tag;
+      'segmented-raised': raised,
+      'segmented-round': round
+    }, Mixins.colorClasses(props));
+    const SegmentedTag = tag;
     return React.createElement(SegmentedTag, {
-      id: self.props.id,
-      style: self.props.style,
+      id: id,
+      style: style,
       className: classNames
     }, this.slots['default']);
   }

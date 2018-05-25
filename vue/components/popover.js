@@ -19,11 +19,14 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
+    const props = self.props;
+    const {className, id, style} = props;
+    const classes = Utils.classNames(className, 'popover', Mixins.colorClasses(props));
     return _h('div', {
       ref: 'el',
-      style: self.props.style,
-      class: self.classes,
-      attrs: { id: self.props.id }
+      style: style,
+      class: classes,
+      attrs: { id: id }
     }, [
       _h('div', { class: 'popover-angle' }),
       _h('div', { class: 'popover-inner' }, [this.$slots['default']])
@@ -41,15 +44,6 @@ export default {
       }
     }
   },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(self.props.className, 'popover', Mixins.colorClasses(self));
-    },
-    props() {
-      return __vueComponentProps(this);
-    }
-  },
   mounted() {
     const self = this;
     const el = self.$refs.el;
@@ -63,13 +57,14 @@ export default {
     el.addEventListener('popover:opened', self.onOpenedBound);
     el.addEventListener('popover:close', self.onCloseBound);
     el.addEventListener('popover:closed', self.onClosedBound);
+    const {target, opened} = self.props;
     self.$f7ready(() => {
       const popoverParams = { el };
-      if (self.props.target)
-        popoverParams.targetEl = self.props.target;
+      if (target)
+        popoverParams.targetEl = target;
       self.f7Popover = self.$f7.popover.create(popoverParams);
-      if (self.props.opened && self.props.target) {
-        self.f7Popover.open(self.props.target, false);
+      if (opened && target) {
+        self.f7Popover.open(target, false);
       }
     });
   },
@@ -112,6 +107,11 @@ export default {
     },
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
+    }
+  },
+  computed: {
+    props() {
+      return __vueComponentProps(this);
     }
   }
 };

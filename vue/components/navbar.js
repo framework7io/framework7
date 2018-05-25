@@ -16,6 +16,7 @@ export default {
       String
     ],
     backLinkUrl: String,
+    backLinkForce: Boolean,
     sliding: {
       type: Boolean,
       default: true
@@ -34,7 +35,8 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
-    const {backLink, backLinkUrl, sliding, title, subtitle, inner} = self.props;
+    const props = self.props;
+    const {backLink, backLinkUrl, backLinkForce, sliding, title, subtitle, inner, className, id, style, hidden, noShadow, noHairline} = props;
     let innerEl;
     let leftEl;
     let titleEl;
@@ -44,7 +46,8 @@ export default {
           on: { backClick: self.onBackClick.bind(self) },
           attrs: {
             backLink: backLink,
-            backLinkUrl: backLinkUrl
+            backLinkUrl: backLinkUrl,
+            backLinkForce: backLinkForce
           }
         });
       }
@@ -65,11 +68,16 @@ export default {
         this.$slots['default']
       ]);
     }
+    const classes = Utils.classNames(className, 'navbar', {
+      'navbar-hidden': hidden,
+      'no-shadow': noShadow,
+      'no-hairline': noHairline
+    }, Mixins.colorClasses(props));
     return _h('div', {
       ref: 'el',
-      style: this.props.style,
-      class: this.classes,
-      attrs: { id: this.props.id }
+      style: style,
+      class: classes,
+      attrs: { id: id }
     }, [
       this.$slots['before-inner'],
       innerEl,
@@ -85,20 +93,6 @@ export default {
       self.$f7.navbar.size(el);
     } else if (self.$refs.inner) {
       self.$f7.navbar.size(self.$refs.inner);
-    }
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(self.props.className, {
-        navbar: true,
-        'navbar-hidden': self.props.hidden,
-        'no-shadow': self.props.noShadow,
-        'no-hairline': self.props.noHairline
-      }, Mixins.colorClasses(self));
-    },
-    props() {
-      return __vueComponentProps(this);
     }
   },
   methods: {
@@ -125,6 +119,11 @@ export default {
     },
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
+    }
+  },
+  computed: {
+    props() {
+      return __vueComponentProps(this);
     }
   }
 };

@@ -85,7 +85,8 @@ class F7ListItem extends React.Component {
     const self = this;
     let linkEl;
     let itemContentEl;
-    const {title, text, media, subtitle, header, footer, link, href, target, noFastclick, noFastClick, after, badge, badgeColor, mediaItem, mediaList, divider, groupTitle, swipeout, accordionItem, accordionItemOpened, smartSelect, checkbox, radio, checked, name, value, readonly, required, disabled, itemInput, itemInputWithInfo, inlineLabel, sortable} = self.props;
+    const props = self.props;
+    const {id, style, className, title, text, media, subtitle, header, footer, link, href, target, noFastclick, noFastClick, after, badge, badgeColor, mediaItem, mediaList, divider, groupTitle, swipeout, accordionItem, accordionItemOpened, smartSelect, checkbox, radio, checked, name, value, readonly, required, disabled, itemInput, itemInputWithInfo, inlineLabel, sortable} = props;
     const isMedia = mediaItem || mediaList || self.state.isMedia;
     const isSortable = sortable || self.state.isSortable;
     const isSimple = self.state.isSimple;
@@ -121,12 +122,12 @@ class F7ListItem extends React.Component {
         const linkAttrs = Utils.extend({
           href: link === true || accordionItem || smartSelect ? '#' : link || href,
           target
-        }, Mixins.linkRouterAttrs(self), Mixins.linkActionsAttrs(self));
+        }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
         const linkClasses = Utils.classNames({
           'item-link': true,
           'no-fastclick': noFastclick || noFastClick,
           'smart-select': smartSelect
-        }, Mixins.linkRouterClasses(self), Mixins.linkActionsClasses(self));
+        }, Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
         linkEl = React.createElement('a', {
           className: linkClasses,
           onClick: self.onClick.bind(self),
@@ -134,21 +135,21 @@ class F7ListItem extends React.Component {
         }, itemContentEl);
       }
     }
-    const liClasses = Utils.classNames(self.props.className, {
+    const liClasses = Utils.classNames(className, {
       'item-divider': divider,
       'list-group-title': groupTitle,
       'media-item': isMedia,
       swipeout,
       'accordion-item': accordionItem,
       'accordion-item-opened': accordionItemOpened
-    }, Mixins.colorClasses(self));
+    }, Mixins.colorClasses(props));
     if (divider || groupTitle) {
       return React.createElement('li', {
         ref: __reactNode => {
           this.__reactRefs['el'] = __reactNode;
         },
-        id: self.props.id,
-        style: self.props.style,
+        id: id,
+        style: style,
         className: liClasses
       }, React.createElement('span', null, this.slots['default'], !this.slots.default && title));
     } else if (isSimple) {
@@ -156,8 +157,8 @@ class F7ListItem extends React.Component {
         ref: __reactNode => {
           this.__reactRefs['el'] = __reactNode;
         },
-        id: self.props.id,
-        style: self.props.style,
+        id: id,
+        style: style,
         className: liClasses
       }, title, this.slots['default']);
     }
@@ -166,16 +167,17 @@ class F7ListItem extends React.Component {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
       },
-      id: self.props.id,
-      style: self.props.style,
+      id: id,
+      style: style,
       className: liClasses
     }, this.slots['root-start'], swipeout ? React.createElement('div', { className: 'swipeout-content' }, linkItemEl) : linkItemEl, isSortable && React.createElement('div', { className: 'sortable-handler' }), (swipeout || accordionItem) && self.slots.default, this.slots['root'], this.slots['root-end']);
   }
   componentWillUnmount() {
     const self = this;
     const el = self.refs.el;
+    const {swipeout, accordionItem, smartSelect} = self.props;
     if (el) {
-      if (self.props.swipeout) {
+      if (swipeout) {
         el.removeEventListener('swipeout:open', self.onSwipeoutOpenBound);
         el.removeEventListener('swipeout:opened', self.onSwipeoutOpenedBound);
         el.removeEventListener('swipeout:close', self.onSwipeoutCloseBound);
@@ -184,14 +186,14 @@ class F7ListItem extends React.Component {
         el.removeEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
         el.removeEventListener('swipeout', self.onSwipeoutBound);
       }
-      if (self.props.accordionItem) {
+      if (accordionItem) {
         el.removeEventListener('accordion:open', self.onAccOpenBound);
         el.removeEventListener('accordion:opened', self.onAccOpenedBound);
         el.removeEventListener('accordion:close', self.onAccCloseBound);
         el.removeEventListener('accordion:closed', self.onAccClosedBound);
       }
     }
-    if (self.props.smartSelect && self.f7SmartSelect) {
+    if (smartSelect && self.f7SmartSelect) {
       self.f7SmartSelect.destroy();
     }
   }
@@ -226,7 +228,8 @@ class F7ListItem extends React.Component {
         isSortable: self.$listEl.hasClass('sortable')
       });
     }
-    if (self.props.swipeout) {
+    const {swipeout, accordionItem, smartSelect, smartSelectParams} = self.props;
+    if (swipeout) {
       el.addEventListener('swipeout:open', self.onSwipeoutOpenBound);
       el.addEventListener('swipeout:opened', self.onSwipeoutOpenedBound);
       el.addEventListener('swipeout:close', self.onSwipeoutCloseBound);
@@ -235,17 +238,17 @@ class F7ListItem extends React.Component {
       el.addEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
       el.addEventListener('swipeout', self.onSwipeoutBound);
     }
-    if (self.props.accordionItem) {
+    if (accordionItem) {
       el.addEventListener('accordion:open', self.onAccOpenBound);
       el.addEventListener('accordion:opened', self.onAccOpenedBound);
       el.addEventListener('accordion:close', self.onAccCloseBound);
       el.addEventListener('accordion:closed', self.onAccClosedBound);
     }
-    if (!self.props.smartSelect)
+    if (!smartSelect)
       return;
     self.$f7ready(f7 => {
-      const smartSelectParams = Utils.extend({ el: el.querySelector('a.smart-select') }, self.props.smartSelectParams || {});
-      self.f7SmartSelect = f7.smartSelect.create(smartSelectParams);
+      const ssParams = Utils.extend({ el: el.querySelector('a.smart-select') }, smartSelectParams || {});
+      self.f7SmartSelect = f7.smartSelect.create(ssParams);
     });
   }
   get slots() {

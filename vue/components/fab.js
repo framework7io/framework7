@@ -23,8 +23,16 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
-    const {morphTo} = self.props;
-    let href = self.props.href;
+    const props = self.props;
+    const {
+      className,
+      id,
+      style,
+      morphTo,
+      href: initialHref,
+      position
+    } = props;
+    let href = initialHref;
     if (href === true)
       href = '#';
     if (href === false)
@@ -61,11 +69,12 @@ export default {
         linkSlots
       ]);
     }
+    const classes = Utils.classNames(className, 'fab', `fab-${ position }`, { 'fab-morph': morphTo }, Mixins.colorClasses(props));
     return _h('div', {
-      style: self.props.style,
-      class: self.classes,
+      style: style,
+      class: classes,
       attrs: {
-        id: self.props.id,
+        id: id,
         'data-morph-to': morphTo
       }
     }, [
@@ -74,19 +83,6 @@ export default {
       rootSlots
     ]);
   },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(self.props.className, {
-        fab: true,
-        'fab-morph': self.props.morphTo,
-        [`fab-${ self.props.position }`]: true
-      }, Mixins.colorClasses(self));
-    },
-    props() {
-      return __vueComponentProps(this);
-    }
-  },
   methods: {
     onClick(event) {
       const self = this;
@@ -94,6 +90,11 @@ export default {
     },
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
+    }
+  },
+  computed: {
+    props() {
+      return __vueComponentProps(this);
     }
   }
 };

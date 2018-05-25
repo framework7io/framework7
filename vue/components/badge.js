@@ -12,11 +12,13 @@ export default {
   },
   render() {
     const _h = this.$createElement;
-    const classes = Utils.classNames(this.props.className, 'badge', Mixins.colorClasses(this));
+    const props = this.props;
+    const {className, id, style} = props;
+    const classes = Utils.classNames(className, 'badge', Mixins.colorClasses(props));
     return _h('span', {
-      style: this.props.style,
+      style: style,
       class: classes,
-      attrs: { id: this.props.id }
+      attrs: { id: id }
     }, [this.$slots['default']]);
   },
   computed: {

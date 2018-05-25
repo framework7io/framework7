@@ -65,8 +65,9 @@ class F7Messages extends React.Component {
   }
   render() {
     const self = this;
-    const {id, style, className} = self.props;
-    const classes = Utils.classNames(className, 'messages', Mixins.colorClasses(self));
+    const props = self.props;
+    const {id, style, className} = props;
+    const classes = Utils.classNames(className, 'messages', Mixins.colorClasses(props));
     return React.createElement('div', {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
@@ -86,7 +87,7 @@ class F7Messages extends React.Component {
     if (!init)
       return;
     self.$f7ready(f7 => {
-      self.f7Messages = f7.messages.create({
+      self.f7Messages = f7.messages.create(Utils.noUndefinedProps({
         el: self.refs.el,
         autoLayout,
         messages,
@@ -102,7 +103,7 @@ class F7Messages extends React.Component {
         sameAvatarMessageRule,
         customClassMessageRule,
         renderMessage
-      });
+      }));
     });
   }
   componentDidUpdate() {

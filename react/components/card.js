@@ -12,22 +12,24 @@ class F7Card extends React.Component {
   }
   render() {
     const self = this;
+    const props = self.props;
+    const {className, id, style, title, content, footer, padding} = props;
     let headerEl;
     let contentEl;
     let footerEl;
-    const classes = Utils.classNames(self.props.className, 'card', Mixins.colorClasses(self));
-    if (self.title || self.slots && self.slots.header) {
-      headerEl = React.createElement(F7CardHeader, null, self.props.title, this.slots['header']);
+    const classes = Utils.classNames(className, 'card', Mixins.colorClasses(props));
+    if (title || self.slots && self.slots.header) {
+      headerEl = React.createElement(F7CardHeader, null, title, this.slots['header']);
     }
-    if (self.content || self.slots && self.slots.content) {
-      contentEl = React.createElement(F7CardContent, { padding: this.props.padding }, self.props.content, this.slots['content']);
+    if (content || self.slots && self.slots.content) {
+      contentEl = React.createElement(F7CardContent, { padding: padding }, content, this.slots['content']);
     }
-    if (self.footer || self.slots && self.slots.footer) {
-      footerEl = React.createElement(F7CardFooter, null, self.props.title, this.slots['footer']);
+    if (footer || self.slots && self.slots.footer) {
+      footerEl = React.createElement(F7CardFooter, null, footer, this.slots['footer']);
     }
     return React.createElement('div', {
-      id: this.props.id,
-      style: this.props.style,
+      id: id,
+      style: style,
       className: classes
     }, headerEl, contentEl, footerEl, this.slots['default']);
   }

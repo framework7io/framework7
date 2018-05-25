@@ -9,10 +9,12 @@ class F7Views extends React.Component {
   }
   render() {
     const self = this;
-    const classes = Utils.classNames(self.props.className, 'views', { tabs: self.props.tabs }, Mixins.colorClasses(self));
+    const props = self.props;
+    const {className, id, style, tabs} = props;
+    const classes = Utils.classNames(className, 'views', { tabs }, Mixins.colorClasses(props));
     return React.createElement('div', {
-      id: self.props.id,
-      style: self.props.style,
+      id: id,
+      style: style,
       className: classes
     }, this.slots['default']);
   }

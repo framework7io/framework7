@@ -32,18 +32,10 @@ class F7Navbar extends React.Component {
   onBackClick(e) {
     this.dispatchEvent('back-click backClick click:back clickBack', e);
   }
-  get classes() {
-    const self = this;
-    return Utils.classNames(self.props.className, {
-      navbar: true,
-      'navbar-hidden': self.props.hidden,
-      'no-shadow': self.props.noShadow,
-      'no-hairline': self.props.noHairline
-    }, Mixins.colorClasses(self));
-  }
   render() {
     const self = this;
-    const {backLink, backLinkUrl, sliding, title, subtitle, inner} = self.props;
+    const props = self.props;
+    const {backLink, backLinkUrl, backLinkForce, sliding, title, subtitle, inner, className, id, style, hidden, noShadow, noHairline} = props;
     let innerEl;
     let leftEl;
     let titleEl;
@@ -52,6 +44,7 @@ class F7Navbar extends React.Component {
         leftEl = React.createElement(F7NavLeft, {
           backLink: backLink,
           backLinkUrl: backLinkUrl,
+          backLinkForce: backLinkForce,
           onBackClick: self.onBackClick.bind(self)
         });
       }
@@ -68,13 +61,18 @@ class F7Navbar extends React.Component {
         className: Utils.classNames('navbar-inner', { sliding })
       }, leftEl, titleEl, this.slots['default']);
     }
+    const classes = Utils.classNames(className, 'navbar', {
+      'navbar-hidden': hidden,
+      'no-shadow': noShadow,
+      'no-hairline': noHairline
+    }, Mixins.colorClasses(props));
     return React.createElement('div', {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
       },
-      id: this.props.id,
-      style: this.props.style,
-      className: this.classes
+      id: id,
+      style: style,
+      className: classes
     }, this.slots['before-inner'], innerEl, this.slots['after-inner']);
   }
   componentDidUpdate() {
@@ -110,6 +108,7 @@ __reactComponentSetProps(F7Navbar, {
     String
   ],
   backLinkUrl: String,
+  backLinkForce: Boolean,
   sliding: {
     type: Boolean,
     default: true

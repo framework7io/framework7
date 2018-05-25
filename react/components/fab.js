@@ -12,18 +12,18 @@ class F7Fab extends React.Component {
     const self = this;
     self.dispatchEvent('click', event);
   }
-  get classes() {
-    const self = this;
-    return Utils.classNames(self.props.className, {
-      fab: true,
-      'fab-morph': self.props.morphTo,
-      [`fab-${ self.props.position }`]: true
-    }, Mixins.colorClasses(self));
-  }
   render() {
     const self = this;
-    const {morphTo} = self.props;
-    let href = self.props.href;
+    const props = self.props;
+    const {
+      className,
+      id,
+      style,
+      morphTo,
+      href: initialHref,
+      position
+    } = props;
+    let href = initialHref;
     if (href === true)
       href = '#';
     if (href === false)
@@ -58,10 +58,11 @@ class F7Fab extends React.Component {
         key: 'f7-fab-link'
       }, linkChildren, linkSlots);
     }
+    const classes = Utils.classNames(className, 'fab', `fab-${ position }`, { 'fab-morph': morphTo }, Mixins.colorClasses(props));
     return React.createElement('div', {
-      id: self.props.id,
-      style: self.props.style,
-      className: self.classes,
+      id: id,
+      style: style,
+      className: classes,
       'data-morph-to': morphTo
     }, linkEl, rootChildren, rootSlots);
   }

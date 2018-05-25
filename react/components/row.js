@@ -11,20 +11,16 @@ class F7Row extends React.Component {
   onClick(e) {
     this.dispatchEvent('click', e);
   }
-  get classes() {
-    const self = this;
-    return Utils.classNames(self.props.className, {
-      row: true,
-      'no-gap': self.props.noGap
-    }, Mixins.colorClasses(self));
-  }
   render() {
     const self = this;
-    const RowTag = self.props.tag;
+    const props = self.props;
+    const {className, id, style, tag, noGap} = props;
+    const RowTag = tag;
+    const classes = Utils.classNames(className, 'row', { 'no-gap': noGap }, Mixins.colorClasses(props));
     return React.createElement(RowTag, {
-      id: this.props.id,
-      style: this.props.style,
-      className: self.classes,
+      id: id,
+      style: style,
+      className: classes,
       onClick: self.onClick.bind(self)
     }, this.slots['default']);
   }

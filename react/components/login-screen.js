@@ -36,19 +36,18 @@ class F7LoginScreen extends React.Component {
       return undefined;
     return self.$f7.loginScreen.close(el, animate);
   }
-  get classes() {
-    const self = this;
-    return Utils.classNames(self.props.className, 'login-screen', Mixins.colorClasses(self));
-  }
   render() {
     const self = this;
+    const props = self.props;
+    const {className, id, style} = props;
+    const classes = Utils.classNames(className, 'login-screen', Mixins.colorClasses(props));
     return React.createElement('div', {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
       },
-      id: self.props.id,
-      style: self.props.style,
-      className: self.classes
+      id: id,
+      style: style,
+      className: classes
     }, this.slots['default']);
   }
   componentWillUnmount() {

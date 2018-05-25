@@ -92,7 +92,8 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
-    const {type, name, value, defaultValue, placeholder, id, inputId, size, accept, autocomplete, autocorrect, autocapitalize, spellcheck, autofocus, autosave, checked, disabled, max, min, step, maxlength, minlength, multiple, readonly, required, inputStyle, pattern, validate, tabindex, resizable, clearButton, errorMessage, info, wrap, style, className, noStoreData, noFormStoreData} = self.props;
+    const props = self.props;
+    const {type, name, value, defaultValue, placeholder, id, inputId, size, accept, autocomplete, autocorrect, autocapitalize, spellcheck, autofocus, autosave, checked, disabled, max, min, step, maxlength, minlength, multiple, readonly, required, inputStyle, pattern, validate, tabindex, resizable, clearButton, errorMessage, info, wrap, style, className, noStoreData, noFormStoreData} = props;
     let inputEl;
     const createInput = (tag, children) => {
       const InputTag = tag;
@@ -186,7 +187,7 @@ export default {
       inputEl = createInput('input');
     }
     if (wrap) {
-      const wrapClasses = Utils.classNames(className, 'item-input-wrap', Mixins.colorClasses(self));
+      const wrapClasses = Utils.classNames(className, 'item-input-wrap', Mixins.colorClasses(props));
       return _h('div', {
         ref: 'wrapEl',
         class: wrapClasses,
@@ -209,8 +210,7 @@ export default {
       const {type} = self.props;
       if (type === 'range' || type === 'toggle')
         return;
-      const f7 = self.$f7;
-      if (!f7)
+      if (!self.$f7)
         return;
       self.updateInputOnDidUpdate = true;
     }

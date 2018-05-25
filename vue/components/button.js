@@ -52,7 +52,8 @@ export default {
     const self = this;
     let iconEl;
     let textEl;
-    const {text, icon, iconMaterial, iconIon, iconFa, iconF7, iconIfMd, iconIfIos, iconColor, iconSize} = self.props;
+    const props = self.props;
+    const {text, icon, iconMaterial, iconIon, iconFa, iconF7, iconIfMd, iconIfIos, iconColor, iconSize, id, style} = props;
     if (text) {
       textEl = _h('span', [text]);
     }
@@ -72,11 +73,11 @@ export default {
       });
     }
     return _h('a', __vueComponentTransformJSXProps({
-      style: self.props.style,
+      style: style,
       class: self.classes,
       ...self.attrs,
       on: { click: self.onClick.bind(self) },
-      attrs: { id: self.props.id }
+      attrs: { id: id }
     }), [
       iconEl,
       textEl,
@@ -86,7 +87,8 @@ export default {
   computed: {
     attrs() {
       const self = this;
-      const {href, target, tabLink} = self.props;
+      const props = self.props;
+      const {href, target, tabLink} = props;
       let hrefComputed = href;
       if (href === true)
         hrefComputed = '#';
@@ -96,11 +98,12 @@ export default {
         href: hrefComputed,
         target,
         'data-tab': Utils.isStringProp(tabLink) && tabLink || undefined
-      }, Mixins.linkRouterAttrs(self), Mixins.linkActionsAttrs(self));
+      }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
     },
     classes() {
       const self = this;
-      const {noFastclick, noFastClick, tabLink, tabLinkActive, round, roundIos, roundMd, fill, fillIos, fillMd, big, bigIos, bigMd, small, smallIos, smallMd, raised, active, outline, disabled, className} = self.props;
+      const props = self.props;
+      const {noFastclick, noFastClick, tabLink, tabLinkActive, round, roundIos, roundMd, fill, fillIos, fillMd, big, bigIos, bigMd, small, smallIos, smallMd, raised, active, outline, disabled, className} = props;
       return Utils.classNames(className, 'button', {
         'tab-link': tabLink || tabLink === '',
         'tab-link-active': tabLinkActive,
@@ -121,7 +124,7 @@ export default {
         'button-active': active,
         'button-outline': outline,
         disabled
-      }, Mixins.colorClasses(self), Mixins.linkRouterClasses(self), Mixins.linkActionsClasses(self));
+      }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
     },
     props() {
       return __vueComponentProps(this);

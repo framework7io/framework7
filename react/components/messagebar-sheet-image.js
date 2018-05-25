@@ -20,8 +20,9 @@ class F7MessagebarSheetImage extends React.Component {
   }
   render() {
     const self = this;
-    const {image, checked, id, className, style} = self.props;
-    const classes = Utils.classNames(className, 'messagebar-sheet-image', 'checkbox', Mixins.colorClasses(self));
+    const props = self.props;
+    const {image, checked, id, className, style} = props;
+    const classes = Utils.classNames(className, 'messagebar-sheet-image', 'checkbox', Mixins.colorClasses(props));
     const styles = Utils.extend({ backgroundImage: image && `url(${ image })` }, style || {});
     return React.createElement('label', {
       id: id,

@@ -20,26 +20,28 @@ export default {
   },
   render() {
     const _h = this.$createElement;
+    const props = this.props;
+    const {id, style} = props;
     return _h('div', {
       ref: 'el',
-      style: this.props.style,
+      style: style,
       class: this.classes,
-      attrs: { id: this.props.id }
+      attrs: { id: id }
     }, [this.$slots['default']]);
   },
   computed: {
     classes() {
       const self = this;
-      const {left, reveal, className, opened} = self.props;
-      let {side, effect} = self.props;
+      const props = self.props;
+      const {left, reveal, className, opened} = props;
+      let {side, effect} = props;
       side = side || (left ? 'left' : 'right');
       effect = effect || (reveal ? 'reveal' : 'cover');
-      return Utils.classNames(className, {
-        panel: true,
+      return Utils.classNames(className, 'panel', {
         'panel-active': opened,
         [`panel-${ side }`]: side,
         [`panel-${ effect }`]: effect
-      }, Mixins.colorClasses(self));
+      }, Mixins.colorClasses(props));
     },
     props() {
       return __vueComponentProps(this);
@@ -58,13 +60,10 @@ export default {
       }
     }
   },
-  beforeDestroy() {
+  mounted() {
     const self = this;
-    if (self.f7Panel)
-      self.f7Panel.destroy();
     const el = self.$refs.el;
-    if (!el)
-      return;
+    const {side, effect, opened, left, reveal} = self.props;
     self.onOpenBound = self.onOpen.bind(self);
     self.onOpenedBound = self.onOpened.bind(self);
     self.onCloseBound = self.onClose.bind(self);
@@ -73,28 +72,15 @@ export default {
     self.onPanelSwipeBound = self.onPanelSwipe.bind(self);
     self.onPanelSwipeOpenBound = self.onPanelSwipeOpen.bind(self);
     self.onBreakpointBound = self.onBreakpoint.bind(self);
-    el.addEventListener('panel:open', self.onOpenBound);
-    el.addEventListener('panel:opened', self.onOpenedBound);
-    el.addEventListener('panel:close', self.onCloseBound);
-    el.addEventListener('panel:closed', self.onClosedBound);
-    el.addEventListener('panel:backdrop-click', self.onBackdropClickBound);
-    el.addEventListener('panel:swipe', self.onPanelSwipeBound);
-    el.addEventListener('panel:swipeopen', self.onPanelSwipeOpenBound);
-    el.addEventListener('panel:breakpoint', self.onBreakpointBound);
-  },
-  mounted() {
-    const self = this;
-    const el = self.$refs.el;
-    const {side, effect, opened, left, reveal} = self.props;
     if (el) {
-      el.removeEventListener('panel:open', self.onOpenBound);
-      el.removeEventListener('panel:opened', self.onOpenedBound);
-      el.removeEventListener('panel:close', self.onCloseBound);
-      el.removeEventListener('panel:closed', self.onClosedBound);
-      el.removeEventListener('panel:backdrop-click', self.onBackdropClickBound);
-      el.removeEventListener('panel:swipe', self.onPanelSwipeBound);
-      el.removeEventListener('panel:swipeopen', self.onPanelSwipeOpenBound);
-      el.removeEventListener('panel:breakpoint', self.onBreakpointBound);
+      el.addEventListener('panel:open', self.onOpenBound);
+      el.addEventListener('panel:opened', self.onOpenedBound);
+      el.addEventListener('panel:close', self.onCloseBound);
+      el.addEventListener('panel:closed', self.onClosedBound);
+      el.addEventListener('panel:backdrop-click', self.onBackdropClickBound);
+      el.addEventListener('panel:swipe', self.onPanelSwipeBound);
+      el.addEventListener('panel:swipeopen', self.onPanelSwipeOpenBound);
+      el.addEventListener('panel:breakpoint', self.onBreakpointBound);
     }
     self.$f7ready(() => {
       const $ = self.$$;
@@ -116,6 +102,22 @@ export default {
     if (opened) {
       $('html').addClass(`with-panel-${ panelSide }-${ panelEffect }`);
     }
+  },
+  beforeDestroy() {
+    const self = this;
+    if (self.f7Panel)
+      self.f7Panel.destroy();
+    const el = self.$refs.el;
+    if (!el)
+      return;
+    el.removeEventListener('panel:open', self.onOpenBound);
+    el.removeEventListener('panel:opened', self.onOpenedBound);
+    el.removeEventListener('panel:close', self.onCloseBound);
+    el.removeEventListener('panel:closed', self.onClosedBound);
+    el.removeEventListener('panel:backdrop-click', self.onBackdropClickBound);
+    el.removeEventListener('panel:swipe', self.onPanelSwipeBound);
+    el.removeEventListener('panel:swipeopen', self.onPanelSwipeOpenBound);
+    el.removeEventListener('panel:breakpoint', self.onBreakpointBound);
   },
   methods: {
     onOpen(event) {

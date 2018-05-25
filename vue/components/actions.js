@@ -22,15 +22,14 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
-    const classes = Utils.classNames(self.props.className, {
-      'actions-modal': true,
-      'actions-grid': self.props.grid
-    }, Mixins.colorClasses(self));
+    const props = self.props;
+    const {className, id, style, grid} = props;
+    const classes = Utils.classNames(className, 'actions-modal', { 'actions-grid': grid }, Mixins.colorClasses(props));
     return _h('div', {
-      style: self.props.style,
+      style: style,
       ref: 'el',
       class: classes,
-      attrs: { id: self.props.id }
+      attrs: { id: id }
     }, [this.$slots['default']]);
   },
   watch: {
@@ -50,6 +49,8 @@ export default {
     const el = self.$refs.el;
     if (!el)
       return;
+    const props = self.props;
+    const {grid, target, convertToPopover, forceToPopover, opened} = props;
     self.onOpenBound = self.onOpen.bind(self);
     self.onOpenedBound = self.onOpened.bind(self);
     self.onCloseBound = self.onClose.bind(self);
@@ -61,16 +62,16 @@ export default {
     self.$f7ready(() => {
       const actionsParams = {
         el: self.$refs.el,
-        grid: self.props.grid
+        grid
       };
-      if (self.props.target)
-        actionsParams.targetEl = self.props.target;
+      if (target)
+        actionsParams.targetEl = target;
       if (typeof self.$options.propsData.convertToPopover !== 'undefined')
-        actionsParams.convertToPopover = self.props.convertToPopover;
+        actionsParams.convertToPopover = convertToPopover;
       if (typeof self.$options.propsData.forceToPopover !== 'undefined')
-        actionsParams.forceToPopover = self.props.forceToPopover;
+        actionsParams.forceToPopover = forceToPopover;
       self.f7Actions = self.$f7.actions.create(actionsParams);
-      if (self.props.opened) {
+      if (opened) {
         self.f7Actions.open(false);
       }
     });

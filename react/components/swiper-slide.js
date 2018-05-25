@@ -7,12 +7,14 @@ class F7SwiperSlide extends React.Component {
     super(props, context);
   }
   render() {
-    const classes = Utils.classNames(this.props.className, 'swiper-slide');
+    const props = this.props;
+    const {className, id, style, zoom} = props;
+    const classes = Utils.classNames(className, 'swiper-slide');
     return React.createElement('div', {
-      id: this.props.id,
-      style: this.props.style,
+      id: id,
+      style: style,
       className: classes
-    }, this.props.zoom ? React.createElement('div', { className: 'swiper-zoom-container' }, this.slots['default']) : this.slots['default']);
+    }, zoom ? React.createElement('div', { className: 'swiper-zoom-container' }, this.slots['default']) : this.slots['default']);
   }
   get slots() {
     return __reactComponentSlots(this.props);

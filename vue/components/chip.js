@@ -23,52 +23,39 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
+    const props = self.props;
+    const {media, text, deleteable, className, id, style, mediaTextColor, mediaBgColor} = props;
     let mediaEl;
     let labelEl;
     let deleteEl;
-    if (self.props.media || self.$slots && self.$slots.media) {
-      mediaEl = _h('div', { class: self.mediaClasses }, [self.props.media ? self.props.media : this.$slots['media']]);
+    if (media || self.$slots && self.$slots.media) {
+      const mediaClasses = Utils.classNames('chip-media', mediaTextColor && `text-color-${ mediaTextColor }`, mediaBgColor && `bg-color-${ mediaBgColor }`);
+      mediaEl = _h('div', { class: mediaClasses }, [media || this.$slots['media']]);
     }
-    if (self.props.text || self.$slots && self.$slots.text) {
+    if (text || self.$slots && self.$slots.text) {
       labelEl = _h('div', { class: 'chip-label' }, [
-        self.props.text,
+        text,
         this.$slots['text']
       ]);
     }
-    if (self.props.deleteable) {
+    if (deleteable) {
       deleteEl = _h('a', {
         class: 'chip-delete',
         on: { click: self.onDeleteClick.bind(self) },
         attrs: { href: '#' }
       });
     }
+    const classes = Utils.classNames(className, 'chip', Mixins.colorClasses(props));
     return _h('div', {
-      style: this.props.style,
-      class: self.classes,
+      style: style,
+      class: classes,
       on: { click: self.onClick.bind(self) },
-      attrs: { id: this.props.id }
+      attrs: { id: id }
     }, [
       mediaEl,
       labelEl,
       deleteEl
     ]);
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(self.props.className, { chip: true }, Mixins.colorClasses(self));
-    },
-    mediaClasses() {
-      const c = { 'chip-media': true };
-      if (this.props.mediaTextColor)
-        c[`text-color-${ this.props.mediaTextColor }`] = true;
-      if (this.props.mediaBgColor)
-        c[`bg-color-${ this.props.mediaBgColor }`] = true;
-      return Utils.classNames(c);
-    },
-    props() {
-      return __vueComponentProps(this);
-    }
   },
   methods: {
     onClick(event) {
@@ -79,6 +66,11 @@ export default {
     },
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
+    }
+  },
+  computed: {
+    props() {
+      return __vueComponentProps(this);
     }
   }
 };

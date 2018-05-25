@@ -16,24 +16,27 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
-    const {animated, swipeable, id, style} = self.props;
+    const props = self.props;
+    const {animated, swipeable, id, style, className, routable} = props;
+    const classes = Utils.classNames(className, {
+      'tabs-animated-wrap': animated,
+      'tabs-swipeable-wrap': swipeable,
+      'tabs-routable': routable
+    }, Mixins.colorClasses(props));
     if (animated || swipeable) {
-      return _h('div', { class: self.classes }, [_h('div', { class: 'tabs' }, [this.$slots['default']])]);
+      return _h('div', {
+        style: style,
+        class: classes,
+        attrs: { id: id }
+      }, [_h('div', { class: 'tabs' }, [this.$slots['default']])]);
     }
     return _h('div', {
       style: style,
-      class: Utils.classNames('tabs', this.classes),
+      class: Utils.classNames('tabs', classes),
       attrs: { id: id }
     }, [this.$slots['default']]);
   },
   computed: {
-    classes() {
-      return Utils.classNames(this.props.className, {
-        'tabs-animated-wrap': this.props.animated,
-        'tabs-swipeable-wrap': this.props.swipeable,
-        'tabs-routable': this.props.routable
-      }, Mixins.colorClasses(this));
-    },
     props() {
       return __vueComponentProps(this);
     }

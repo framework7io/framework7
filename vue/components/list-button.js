@@ -41,36 +41,40 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
+    const props = this.props;
+    const {className, id, style, title, text} = props;
     return _h('li', {
-      style: self.props.style,
-      class: self.props.className,
-      attrs: { id: self.props.id }
+      style: style,
+      class: className,
+      attrs: { id: id }
     }, [_h('a', __vueComponentTransformJSXProps({
         class: self.classes,
         ...self.attrs,
         on: { click: self.onClick.bind(self) }
-      }), [this.$slots['default'] || [self.props.title || self.props.text]])]);
+      }), [this.$slots['default'] || [title || text]])]);
   },
   computed: {
     attrs() {
       const self = this;
-      const {link, href, target, tabLink} = self.props;
+      const props = self.props;
+      const {link, href, target, tabLink} = props;
       return Utils.extend({
         href: typeof link === 'boolean' && typeof href === 'boolean' ? '#' : link || href,
         target,
         'data-tab': Utils.isStringProp(tabLink) && tabLink
-      }, Mixins.linkRouterAttrs(self), Mixins.linkActionsAttrs(self));
+      }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
     },
     classes() {
       const self = this;
-      const {noFastclick, noFastClick, tabLink, tabLinkActive} = self.props;
+      const props = self.props;
+      const {noFastclick, noFastClick, tabLink, tabLinkActive} = props;
       return Utils.classNames({
         'item-link': true,
         'list-button': true,
         'tab-link': tabLink || tabLink === '',
         'tab-link-active': tabLinkActive,
         'no-fastclick': noFastclick || noFastClick
-      }, Mixins.colorClasses(self), Mixins.linkRouterClasses(self), Mixins.linkActionsClasses(self));
+      }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
     },
     props() {
       return __vueComponentProps(this);

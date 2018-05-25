@@ -26,8 +26,9 @@ class F7List extends React.Component {
   }
   get classes() {
     const self = this;
-    const {inset, tabletInset, mediaList, simpleList, linksList, sortable, accordionList, contactsList, virtualList, sortableEnabled, tab, tabActive, noHairlines, noHairlinesIos, noHairlinesMd, noHairlinesBetween, noHairlinesBetweenIos, noHairlinesBetweenMd, formStoreData, inlineLabels} = self.props;
-    return Utils.classNames(self.props.className, 'list', {
+    const props = self.props;
+    const {inset, tabletInset, mediaList, simpleList, linksList, sortable, accordionList, contactsList, virtualList, sortableEnabled, tab, tabActive, noHairlines, noHairlinesIos, noHairlinesMd, noHairlinesBetween, noHairlinesBetweenIos, noHairlinesBetweenMd, formStoreData, inlineLabels, className} = props;
+    return Utils.classNames(className, 'list', {
       inset,
       'tablet-inset': tabletInset,
       'media-list': mediaList,
@@ -48,11 +49,12 @@ class F7List extends React.Component {
       'no-hairlines-between-ios': noHairlinesBetweenIos,
       'form-store-data': formStoreData,
       'inline-labels': inlineLabels
-    }, Mixins.colorClasses(self));
+    }, Mixins.colorClasses(props));
   }
   render() {
     const self = this;
-    const {id, style, form} = self.props;
+    const props = self.props;
+    const {id, style, form} = props;
     const {
       list: slotsList,
       default: slotsDefault
@@ -104,6 +106,7 @@ class F7List extends React.Component {
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
+    const {virtualList, virtualListParams} = self.props;
     if (el) {
       self.onSortableEnableBound = self.onSortableEnable.bind(self);
       self.onSortableDisableBound = self.onSortableDisable.bind(self);
@@ -116,7 +119,7 @@ class F7List extends React.Component {
       el.addEventListener('tab:show', self.onTabShowBound);
       el.addEventListener('tab:hide', self.onTabHideBound);
     }
-    if (!self.props.virtualList)
+    if (!virtualList)
       return;
     self.$f7ready(f7 => {
       const $$ = self.$$;
@@ -127,7 +130,7 @@ class F7List extends React.Component {
         template = templateScript[0].outerHTML;
         template = /\<script type="text\/template7"\>(.*)<\/script>/.exec(template)[1];
       }
-      const vlParams = self.props.virtualListParams || {};
+      const vlParams = virtualListParams || {};
       if (!template && !vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal)
         return;
       if (template)

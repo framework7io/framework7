@@ -13,35 +13,39 @@ class F7ListButton extends React.Component {
   }
   get attrs() {
     const self = this;
-    const {link, href, target, tabLink} = self.props;
+    const props = self.props;
+    const {link, href, target, tabLink} = props;
     return Utils.extend({
       href: typeof link === 'boolean' && typeof href === 'boolean' ? '#' : link || href,
       target,
       'data-tab': Utils.isStringProp(tabLink) && tabLink
-    }, Mixins.linkRouterAttrs(self), Mixins.linkActionsAttrs(self));
+    }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
   }
   get classes() {
     const self = this;
-    const {noFastclick, noFastClick, tabLink, tabLinkActive} = self.props;
+    const props = self.props;
+    const {noFastclick, noFastClick, tabLink, tabLinkActive} = props;
     return Utils.classNames({
       'item-link': true,
       'list-button': true,
       'tab-link': tabLink || tabLink === '',
       'tab-link-active': tabLinkActive,
       'no-fastclick': noFastclick || noFastClick
-    }, Mixins.colorClasses(self), Mixins.linkRouterClasses(self), Mixins.linkActionsClasses(self));
+    }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
   }
   render() {
     const self = this;
+    const props = this.props;
+    const {className, id, style, title, text} = props;
     return React.createElement('li', {
-      id: self.props.id,
-      style: self.props.style,
-      className: self.props.className
+      id: id,
+      style: style,
+      className: className
     }, React.createElement('a', {
       className: self.classes,
       ...self.attrs,
       onClick: self.onClick.bind(self)
-    }, this.slots['default'], !this.slots.default && (self.props.title || self.props.text)));
+    }, this.slots['default'], !this.slots.default && (title || text)));
   }
   get slots() {
     return __reactComponentSlots(this.props);

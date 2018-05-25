@@ -73,11 +73,18 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
+    const props = self.props;
+    const {id, style, tab, main, tabActive, className} = props;
+    const classes = Utils.classNames(className, 'view', {
+      'view-main': main,
+      'tab-active': tabActive,
+      tab
+    }, Mixins.colorClasses(props));
     return _h('div', {
       ref: 'el',
-      style: self.props.style,
-      class: self.classes,
-      attrs: { id: self.props.id }
+      style: style,
+      class: classes,
+      attrs: { id: id }
     }, [
       this.$slots['default'],
       self.state.pages.map(page => {
@@ -119,7 +126,7 @@ export default {
         instance: null
       };
       routers.views.push(self.routerData);
-      self.routerData.instance = f7.views.create(el, self.$options.propsData || {});
+      self.routerData.instance = f7.views.create(el, Utils.noUndefinedProps(self.$options.propsData || {}));
       self.f7View = self.routerData.instance;
     });
   },
@@ -145,19 +152,6 @@ export default {
     if (!self.routerData)
       return;
     events.emit('viewRouterDidUpdate', self.routerData);
-  },
-  computed: {
-    classes() {
-      return Utils.classNames(this.props.className, {
-        view: true,
-        'view-main': this.props.main,
-        'tab-active': this.props.tabActive,
-        tab: this.props.tab
-      }, Mixins.colorClasses(this));
-    },
-    props() {
-      return __vueComponentProps(this);
-    }
   },
   methods: {
     onSwipeBackMove(event) {
@@ -186,6 +180,11 @@ export default {
     },
     setState(updater, callback) {
       __vueComponentSetState(this, updater, callback);
+    }
+  },
+  computed: {
+    props() {
+      return __vueComponentProps(this);
     }
   }
 };

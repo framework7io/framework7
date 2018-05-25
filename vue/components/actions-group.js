@@ -13,11 +13,13 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
-    const classes = Utils.classNames(self.props.className, { 'actions-group': true });
+    const props = self.props;
+    const {className, id, style} = props;
+    const classes = Utils.classNames(className, 'actions-group', ...Mixins.colorClasses(props));
     return _h('div', {
-      style: self.props.style,
+      style: style,
       class: classes,
-      attrs: { id: self.props.id }
+      attrs: { id: id }
     }, [this.$slots['default']]);
   },
   computed: {

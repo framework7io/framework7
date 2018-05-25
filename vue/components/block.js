@@ -40,7 +40,8 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
-    const {className, inset, strong, accordionList, tabletInset, tabs, tab, tabActive, noHairlines, noHairlinesIos, noHairlinesMd, id, style} = self.props;
+    const props = self.props;
+    const {className, inset, strong, accordionList, tabletInset, tabs, tab, tabActive, noHairlines, noHairlinesIos, noHairlinesMd, id, style} = props;
     const classes = Utils.classNames(className, 'block', {
       inset,
       'block-strong': strong,
@@ -52,7 +53,7 @@ export default {
       'no-hairlines': noHairlines,
       'no-hairlines-md': noHairlinesMd,
       'no-hairlines-ios': noHairlinesIos
-    }, Mixins.colorClasses(self));
+    }, Mixins.colorClasses(props));
     return _h('div', {
       style: style,
       class: classes,

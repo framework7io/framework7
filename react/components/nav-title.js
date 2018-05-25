@@ -7,23 +7,19 @@ class F7NavTitle extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
-  get classes() {
-    return Utils.classNames(this.props.className, {
-      title: true,
-      sliding: this.props.sliding
-    }, Mixins.colorClasses(this));
-  }
   render() {
     const self = this;
-    const {title, subtitle, id, style} = self.props;
+    const props = self.props;
+    const {title, subtitle, id, style, sliding, className} = props;
     let subtitleEl;
     if (self.subtitle) {
       subtitleEl = React.createElement('span', { className: 'subtitle' }, subtitle);
     }
+    const classes = Utils.classNames(className, 'title', { sliding }, Mixins.colorClasses(props));
     return React.createElement('div', {
       id: id,
       style: style,
-      className: self.classes
+      className: classes
     }, this.slots['default'], !this.slots.default && title, !this.slots.default && subtitleEl);
   }
   get slots() {

@@ -8,10 +8,12 @@ class F7Badge extends React.Component {
     super(props, context);
   }
   render() {
-    const classes = Utils.classNames(this.props.className, 'badge', Mixins.colorClasses(this));
+    const props = this.props;
+    const {className, id, style} = props;
+    const classes = Utils.classNames(className, 'badge', Mixins.colorClasses(props));
     return React.createElement('span', {
-      id: this.props.id,
-      style: this.props.style,
+      id: id,
+      style: style,
       className: classes
     }, this.slots['default']);
   }

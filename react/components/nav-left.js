@@ -12,29 +12,26 @@ class F7NavLeft extends React.Component {
   onBackClick(e) {
     this.dispatchEvent('back-click backClick click:back clickBack', e);
   }
-  get classes() {
-    return Utils.classNames(this.props.className, {
-      left: true,
-      sliding: this.props.slidng
-    }, Mixins.colorClasses(this));
-  }
   render() {
-    const {backLink, backLinkUrl} = this.props;
+    const props = this.props;
+    const {backLink, backLinkUrl, backLinkForce, sliding, className, style, id} = props;
     let linkEl;
     if (backLink) {
       linkEl = React.createElement(F7Link, {
         href: backLinkUrl || '#',
         back: true,
         icon: 'icon-back',
+        force: backLinkForce || undefined,
         className: backLink === true || backLink && this.$theme.md ? 'icon-only' : undefined,
         text: backLink !== true && !this.$theme.md ? backLink : undefined,
         onClick: this.onBackClick.bind(this)
       });
     }
+    const classes = Utils.classNames(className, 'left', { sliding }, Mixins.colorClasses(props));
     return React.createElement('div', {
-      id: this.props.id,
-      style: this.props.style,
-      className: this.classes
+      id: id,
+      style: style,
+      className: classes
     }, linkEl, this.slots['default']);
   }
   get slots() {
@@ -54,6 +51,7 @@ __reactComponentSetProps(F7NavLeft, {
     String
   ],
   backLinkUrl: String,
+  backLinkForce: Boolean,
   sliding: Boolean,
   ...Mixins.colorProps
 });

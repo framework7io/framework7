@@ -37,27 +37,21 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
-    const ColTag = self.props.tag;
+    const props = self.props;
+    const {className, id, style, tag, width, tabletWidth, desktopWidth} = props;
+    const ColTag = tag;
+    const classes = Utils.classNames(className, {
+      col: width === 'auto',
+      [`col-${ width }`]: width !== 'auto',
+      [`tablet-${ tabletWidth }`]: tabletWidth,
+      [`desktop-${ desktopWidth }`]: desktopWidth
+    }, Mixins.colorClasses(props));
     return _h(ColTag, {
-      style: this.props.style,
-      class: self.classes,
+      style: style,
+      class: classes,
       on: { click: self.onClick.bind(self) },
-      attrs: { id: this.props.id }
+      attrs: { id: id }
     }, [this.$slots['default']]);
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(self.props.className, {
-        col: self.props.width === 'auto',
-        [`col-${ self.props.width }`]: self.props.width !== 'auto',
-        [`tablet-${ self.props.tabletWidth }`]: self.props.tabletWidth,
-        [`desktop-${ self.props.desktopWidth }`]: self.props.desktopWidth
-      }, Mixins.colorClasses(self));
-    },
-    props() {
-      return __vueComponentProps(this);
-    }
   },
   methods: {
     onClick(e) {
@@ -65,6 +59,11 @@ export default {
     },
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
+    }
+  },
+  computed: {
+    props() {
+      return __vueComponentProps(this);
     }
   }
 };

@@ -11,23 +11,32 @@ class F7SwipeoutButton extends React.Component {
   onClick(event) {
     this.dispatchEvent('click', event);
   }
-  get classes() {
-    return Utils.classNames(this.props.className, {
-      'swipeout-overswipe': this.props.overswipe,
-      'swipeout-delete': this.props.delete,
-      'swipeout-close': this.props.close
-    }, Mixins.colorClasses(this));
-  }
   render() {
-    this.onClick = this.onClick.bind(this);
+    const props = this.props;
+    const {
+      className,
+      id,
+      style,
+      overswipe,
+      delete: deleteProp,
+      close,
+      href,
+      confirmText,
+      text
+    } = props;
+    const classes = Utils.classNames(className, {
+      'swipeout-overswipe': overswipe,
+      'swipeout-delete': deleteProp,
+      'swipeout-close': close
+    }, Mixins.colorClasses(props));
     return React.createElement('a', {
-      href: this.props.href || '#',
-      id: this.props.id,
-      style: this.props.style,
-      'data-confirm': this.props.confirmText || undefined,
-      className: this.classes,
-      onClick: this.onClick
-    }, this.slots['default'], !this.slots.default && this.props.text);
+      href: href || '#',
+      id: id,
+      style: style,
+      'data-confirm': confirmText || undefined,
+      className: classes,
+      onClick: this.onClick.bind(this)
+    }, this.slots['default'], !this.slots.default && text);
   }
   get slots() {
     return __reactComponentSlots(this.props);

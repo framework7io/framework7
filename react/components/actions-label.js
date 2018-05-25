@@ -13,13 +13,12 @@ class F7ActionsLabel extends React.Component {
   }
   render() {
     const self = this;
-    const classes = Utils.classNames(self.props.className, {
-      'actions-label': true,
-      'actions-button-bold': self.props.bold
-    }, Mixins.colorClasses(self));
+    const props = self.props;
+    const {className, id, style, bold} = props;
+    const classes = Utils.classNames(className, 'actions-label', { 'actions-button-bold': bold }, Mixins.colorClasses(props));
     return React.createElement('div', {
-      id: self.props.id,
-      style: self.props.style,
+      id: id,
+      style: style,
       className: classes,
       onClick: self.onClick.bind(self)
     }, this.slots['default']);

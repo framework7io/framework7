@@ -7,16 +7,16 @@ class F7Subnavbar extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
-  get classes() {
-    return Utils.classNames(this.props.className, {
-      subnavbar: true,
-      sliding: this.props.sliding
-    }, Mixins.colorClasses(this));
-  }
   render() {
     const self = this;
-    const {inner, title} = self.props;
-    return React.createElement('div', { className: self.classes }, inner ? React.createElement('div', { className: 'subnavbar-inner' }, title && React.createElement('div', { className: 'title' }, title), this.slots['default']) : this.slots['default']);
+    const props = self.props;
+    const {inner, title, style, id, className, sliding} = props;
+    const classes = Utils.classNames(className, 'subnavbar', { sliding }, Mixins.colorClasses(props));
+    return React.createElement('div', {
+      className: classes,
+      id: id,
+      style: style
+    }, inner ? React.createElement('div', { className: 'subnavbar-inner' }, title && React.createElement('div', { className: 'title' }, title), this.slots['default']) : this.slots['default']);
   }
   get slots() {
     return __reactComponentSlots(this.props);

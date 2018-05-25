@@ -74,7 +74,8 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
-    const {input, buttonsOnly, inputType, value, inputReadonly, min, max, step} = self.props;
+    const props = self.props;
+    const {input, buttonsOnly, inputType, value, inputReadonly, min, max, step, id, style} = props;
     let inputWrapEl;
     let valueEl;
     if (input && !buttonsOnly) {
@@ -95,9 +96,9 @@ export default {
     }
     return _h('div', {
       ref: 'el',
-      style: self.props.style,
+      style: style,
       class: self.classes,
-      attrs: { id: self.props.id }
+      attrs: { id: id }
     }, [
       _h('div', {
         class: 'stepper-button-minus',
@@ -114,7 +115,8 @@ export default {
   computed: {
     classes() {
       const self = this;
-      const {round, roundIos, roundMd, fill, fillIos, fillMd, big, bigIos, bigMd, small, smallIos, smallMd, raised, disabled} = self.props;
+      const props = self.props;
+      const {round, roundIos, roundMd, fill, fillIos, fillMd, big, bigIos, bigMd, small, smallIos, smallMd, raised, disabled} = props;
       return Utils.classNames(self.props.className, 'stepper', {
         disabled,
         'stepper-round': round,
@@ -130,7 +132,7 @@ export default {
         'stepper-small-ios': smallIos,
         'stepper-small-md': smallMd,
         'stepper-raised': raised
-      }, Mixins.colorClasses(self));
+      }, Mixins.colorClasses(props));
     },
     props() {
       return __vueComponentProps(this);
@@ -150,7 +152,7 @@ export default {
       const el = self.$refs.el;
       if (!el)
         return;
-      self.f7Stepper = f7.stepper.create({
+      self.f7Stepper = f7.stepper.create(Utils.noUndefinedProps({
         el,
         min,
         max,
@@ -165,7 +167,7 @@ export default {
             self.dispatchEvent('stepper:change stepperChange', newValue);
           }
         }
-      });
+      }));
     });
   },
   beforeDestroy() {

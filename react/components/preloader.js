@@ -6,9 +6,6 @@ class F7Preloader extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
-  get classes() {
-    return Utils.classNames(this.props.className, 'preloader', Mixins.colorClasses(this));
-  }
   get sizeComputed() {
     let s = this.props.size;
     if (s && typeof s === 'string' && s.indexOf('px') >= 0) {
@@ -17,8 +14,10 @@ class F7Preloader extends React.Component {
     return s;
   }
   render() {
-    const {classes, sizeComputed} = this;
-    const {id, style} = this.props;
+    const self = this;
+    const {sizeComputed} = self;
+    const props = self.props;
+    const {id, style, className} = props;
     const preloaderStyle = {};
     if (sizeComputed) {
       preloaderStyle.width = `${ sizeComputed }px`;
@@ -27,9 +26,10 @@ class F7Preloader extends React.Component {
     if (style)
       Utils.extend(preloaderStyle, style || {});
     let innerEl;
-    if (this.$theme.md) {
+    if (self.$theme.md) {
       innerEl = React.createElement('span', { className: 'preloader-inner' }, React.createElement('span', { className: 'preloader-inner-gap' }), React.createElement('span', { className: 'preloader-inner-left' }, React.createElement('span', { className: 'preloader-inner-half-circle' })), React.createElement('span', { className: 'preloader-inner-right' }, React.createElement('span', { className: 'preloader-inner-half-circle' })));
     }
+    const classes = Utils.classNames(className, 'preloader', Mixins.colorClasses(props));
     return React.createElement('span', {
       id: id,
       style: preloaderStyle,

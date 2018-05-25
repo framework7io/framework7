@@ -74,7 +74,8 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
-    const {radio, checkbox, value, name, checked, readonly, disabled, required, media, header, footer, title, subtitle, text, after, badge, mediaList, mediaItem, badgeColor, itemInput, inlineLabel, itemInputWithInfo} = self.props;
+    const props = self.props;
+    const {id, className, style, radio, checkbox, value, name, checked, readonly, disabled, required, media, header, footer, title, subtitle, text, after, badge, mediaList, mediaItem, badgeColor, itemInput, inlineLabel, itemInputWithInfo} = props;
     const hasInput = itemInput || self.state.hasInput;
     const hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
     const hasInputInfo = itemInputWithInfo || self.state.hasInputInfo;
@@ -197,11 +198,12 @@ export default {
         slotsFooter
       ]);
     }
-    if (title || slotsTitle.length) {
+    if (title || slotsTitle.length || !isMedia && headerEl || !isMedia && footerEl) {
       titleEl = _h('div', { class: 'item-title' }, [
         !isMedia && headerEl,
         title,
-        slotsTitle
+        slotsTitle,
+        !isMedia && footerEl
       ]);
     }
     if (subtitle || slotsSubtitle.length) {
@@ -266,19 +268,19 @@ export default {
       ]);
     }
     const ItemContentTag = checkbox || radio ? 'label' : 'div';
-    const classes = Utils.classNames(self.props.className, 'item-content', {
+    const classes = Utils.classNames(className, 'item-content', {
       'item-checkbox': checkbox,
       'item-radio': radio,
       'item-input': hasInput,
       'inline-label': hasInlineLabel,
       'item-input-with-info': hasInputInfo
-    }, Mixins.colorClasses(self));
+    }, Mixins.colorClasses(props));
     return _h(ItemContentTag, {
       ref: 'el',
-      style: self.props.style,
+      style: style,
       class: classes,
       on: { click: self.onClick.bind(self) },
-      attrs: { id: self.props.id }
+      attrs: { id: id }
     }, [
       slotsContentStart,
       inputEl,

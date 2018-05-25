@@ -40,8 +40,9 @@ class F7Message extends React.Component {
   }
   get classes() {
     const self = this;
-    const {type, typing, first, last, tail, sameName, sameHeader, sameFooter, sameAvatar} = self.props;
-    return Utils.classNames(self.props.classNames, 'message', {
+    const props = self.props;
+    const {type, typing, first, last, tail, sameName, sameHeader, sameFooter, sameAvatar, className} = props;
+    return Utils.classNames(className, 'message', {
       'message-sent': type === 'sent',
       'message-received': type === 'received',
       'message-typing': typing,
@@ -52,11 +53,12 @@ class F7Message extends React.Component {
       'message-same-header': sameHeader,
       'message-same-footer': sameFooter,
       'message-same-avatar': sameAvatar
-    }, Mixins.colorClasses(self));
+    }, Mixins.colorClasses(props));
   }
   render() {
     const self = this;
-    const {text, name, avatar, image, header, footer, textHeader, textFooter, typing, id, style} = self.props;
+    const props = self.props;
+    const {text, name, avatar, image, header, footer, textHeader, textFooter, typing, id, style} = props;
     const {
       start: slotsStart,
       end: slotsEnd,

@@ -27,7 +27,8 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
-    const {name, value, disabled, readonly, checked, defaultChecked, id, style} = self.props;
+    const props = self.props;
+    const {name, value, disabled, readonly, checked, defaultChecked, id, style} = props;
     const inputEl = _h('input', {
       on: { change: self.onChange.bind(self) },
       attrs: {
@@ -54,10 +55,12 @@ export default {
   computed: {
     classes() {
       const self = this;
-      return Utils.classNames(self.props.className, {
+      const props = self.props;
+      const {className, disabled} = props;
+      return Utils.classNames(className, {
         checkbox: true,
-        disabled: self.props.disabled
-      }, Mixins.colorClasses(self));
+        disabled
+      }, Mixins.colorClasses(props));
     },
     props() {
       return __vueComponentProps(this);

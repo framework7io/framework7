@@ -19,16 +19,18 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
-    const classNames = Utils.classNames(self.props.className, {
+    const props = self.props;
+    const {className, raised, round, id, style, tag} = props;
+    const classNames = Utils.classNames(className, {
       segmented: true,
-      'segmented-raised': self.props.raised,
-      'segmented-round': self.props.round
-    }, Mixins.colorClasses(self));
-    const SegmentedTag = self.props.tag;
+      'segmented-raised': raised,
+      'segmented-round': round
+    }, Mixins.colorClasses(props));
+    const SegmentedTag = tag;
     return _h(SegmentedTag, {
-      style: self.props.style,
+      style: style,
       class: classNames,
-      attrs: { id: self.props.id }
+      attrs: { id: id }
     }, [this.$slots['default']]);
   },
   computed: {

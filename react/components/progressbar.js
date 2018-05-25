@@ -13,26 +13,22 @@ class F7Progressbar extends React.Component {
       return;
     self.$f7.progressbar.set(self.refs.el, progress, speed);
   }
-  get classes() {
-    return Utils.classNames(this.props.className, {
-      progressbar: true,
-      'progressbar-infinite': this.props.infinite
-    }, Mixins.colorClasses(this));
-  }
   render() {
     const self = this;
-    const {progress, id, style} = self.props;
+    const props = self.props;
+    const {progress, id, style, infinite, className} = props;
     const transformStyle = {
       transform: progress ? `translate3d(${ -100 + progress }%, 0, 0)` : '',
       WebkitTransform: progress ? `translate3d(${ -100 + progress }%, 0, 0)` : ''
     };
+    const classes = Utils.classNames(className, 'progressbar', { 'progressbar-infinite': infinite }, Mixins.colorClasses(props));
     return React.createElement('span', {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
       },
       id: id,
       style: style,
-      className: self.classes,
+      className: classes,
       'data-progress': progress
     }, React.createElement('span', { style: transformStyle }));
   }

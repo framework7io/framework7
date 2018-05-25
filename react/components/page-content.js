@@ -35,40 +35,43 @@ class F7PageContent extends React.Component {
   }
   get classes() {
     const self = this;
-    return Utils.classNames(self.props.className, {
-      tab: self.props.tab,
-      'page-content': true,
-      'tab-active': self.props.tabActive,
-      'ptr-content': self.props.ptr,
-      'infinite-scroll-content': self.props.infinite,
-      'infinite-scroll-top': self.props.infiniteTop,
-      'hide-bars-on-scroll': self.props.hideBarsOnScroll,
-      'hide-navbar-on-scroll': self.props.hideNavbarOnScroll,
-      'hide-toolbar-on-scroll': self.props.hideToolbarOnScroll,
-      'messages-content': self.props.messagesContent,
-      'login-screen-content': self.props.loginScreen
-    }, Mixins.colorClasses(self));
+    const props = self.props;
+    const {className, tab, tabActive, ptr, infinite, infiniteTop, hideBarsOnScroll, hideNavbarOnScroll, hideToolbarOnScroll, messagesContent, loginScreen} = props;
+    return Utils.classNames(className, 'page-content', {
+      tab,
+      'tab-active': tabActive,
+      'ptr-content': ptr,
+      'infinite-scroll-content': infinite,
+      'infinite-scroll-top': infiniteTop,
+      'hide-bars-on-scroll': hideBarsOnScroll,
+      'hide-navbar-on-scroll': hideNavbarOnScroll,
+      'hide-toolbar-on-scroll': hideToolbarOnScroll,
+      'messages-content': messagesContent,
+      'login-screen-content': loginScreen
+    }, Mixins.colorClasses(props));
   }
   render() {
     const self = this;
+    const props = self.props;
+    const {ptr, ptrPreloader, infinite, infinitePreloader, id, style, ptrDistance, infiniteDistance, infiniteTop} = props;
     let ptrEl;
     let infiniteEl;
-    if (self.props.ptr && self.props.ptrPreloader) {
+    if (ptr && ptrPreloader) {
       ptrEl = React.createElement('div', { className: 'ptr-preloader' }, React.createElement('div', { className: 'preloader' }), React.createElement('div', { className: 'ptr-arrow' }));
     }
-    if (self.props.infinite && self.props.infinitePreloader) {
+    if (infinite && infinitePreloader) {
       infiniteEl = React.createElement('div', { className: 'preloader infinite-scroll-preloader' });
     }
     return React.createElement('div', {
-      id: self.props.id,
-      style: self.props.style,
+      id: id,
+      style: style,
       className: self.classes,
-      'data-ptr-distance': self.props.ptrDistance || undefined,
-      'data-infinite-distance': self.props.infiniteDistance || undefined,
+      'data-ptr-distance': ptrDistance || undefined,
+      'data-infinite-distance': infiniteDistance || undefined,
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
       }
-    }, ptrEl, self.props.infiniteTop ? infiniteEl : self.slots.default, self.props.infiniteTop ? self.slots.default : infiniteEl);
+    }, ptrEl, infiniteTop ? infiniteEl : self.slots.default, infiniteTop ? self.slots.default : infiniteEl);
   }
   componentWillUnmount() {
     const self = this;
@@ -85,6 +88,7 @@ class F7PageContent extends React.Component {
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
+    const {ptr, infinite, tab} = self.props;
     self.onPtrPullStart = self.onPtrPullStart.bind(self);
     self.onPtrPullMove = self.onPtrPullMove.bind(self);
     self.onPtrPullEnd = self.onPtrPullEnd.bind(self);
@@ -93,14 +97,20 @@ class F7PageContent extends React.Component {
     self.onInfinite = self.onInfinite.bind(self);
     self.onTabShow = self.onTabShow.bind(self);
     self.onTabHide = self.onTabHide.bind(self);
-    el.addEventListener('ptr:pullstart', self.onPtrPullStart);
-    el.addEventListener('ptr:pullmove', self.onPtrPullMove);
-    el.addEventListener('ptr:pullend', self.onPtrPullEnd);
-    el.addEventListener('ptr:refresh', self.onPtrRefresh);
-    el.addEventListener('ptr:done', self.onPtrDone);
-    el.addEventListener('infinite', self.onInfinite);
-    el.addEventListener('tab:show', self.onTabShow);
-    el.addEventListener('tab:hide', self.onTabHide);
+    if (ptr) {
+      el.addEventListener('ptr:pullstart', self.onPtrPullStart);
+      el.addEventListener('ptr:pullmove', self.onPtrPullMove);
+      el.addEventListener('ptr:pullend', self.onPtrPullEnd);
+      el.addEventListener('ptr:refresh', self.onPtrRefresh);
+      el.addEventListener('ptr:done', self.onPtrDone);
+    }
+    if (infinite) {
+      el.addEventListener('infinite', self.onInfinite);
+    }
+    if (tab) {
+      el.addEventListener('tab:show', self.onTabShow);
+      el.addEventListener('tab:hide', self.onTabHide);
+    }
   }
   get slots() {
     return __reactComponentSlots(this.props);

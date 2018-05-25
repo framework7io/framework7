@@ -15,12 +15,14 @@ export default {
       String
     ],
     backLinkUrl: String,
+    backLinkForce: Boolean,
     sliding: Boolean,
     ...Mixins.colorProps
   },
   render() {
     const _h = this.$createElement;
-    const {backLink, backLinkUrl} = this.props;
+    const props = this.props;
+    const {backLink, backLinkUrl, backLinkForce, sliding, className, style, id} = props;
     let linkEl;
     if (backLink) {
       linkEl = _h(F7Link, {
@@ -30,29 +32,20 @@ export default {
           href: backLinkUrl || '#',
           back: true,
           icon: 'icon-back',
+          force: backLinkForce || undefined,
           text: backLink !== true && !this.$theme.md ? backLink : undefined
         }
       });
     }
+    const classes = Utils.classNames(className, 'left', { sliding }, Mixins.colorClasses(props));
     return _h('div', {
-      style: this.props.style,
-      class: this.classes,
-      attrs: { id: this.props.id }
+      style: style,
+      class: classes,
+      attrs: { id: id }
     }, [
       linkEl,
       this.$slots['default']
     ]);
-  },
-  computed: {
-    classes() {
-      return Utils.classNames(this.props.className, {
-        left: true,
-        sliding: this.props.slidng
-      }, Mixins.colorClasses(this));
-    },
-    props() {
-      return __vueComponentProps(this);
-    }
   },
   methods: {
     onBackClick(e) {
@@ -60,6 +53,11 @@ export default {
     },
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
+    }
+  },
+  computed: {
+    props() {
+      return __vueComponentProps(this);
     }
   }
 };

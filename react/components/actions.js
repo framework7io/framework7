@@ -37,13 +37,12 @@ class F7Actions extends React.Component {
   }
   render() {
     const self = this;
-    const classes = Utils.classNames(self.props.className, {
-      'actions-modal': true,
-      'actions-grid': self.props.grid
-    }, Mixins.colorClasses(self));
+    const props = self.props;
+    const {className, id, style, grid} = props;
+    const classes = Utils.classNames(className, 'actions-modal', { 'actions-grid': grid }, Mixins.colorClasses(props));
     return React.createElement('div', {
-      id: self.props.id,
-      style: self.props.style,
+      id: id,
+      style: style,
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
       },
@@ -67,6 +66,8 @@ class F7Actions extends React.Component {
     const el = self.refs.el;
     if (!el)
       return;
+    const props = self.props;
+    const {grid, target, convertToPopover, forceToPopover, opened} = props;
     self.onOpenBound = self.onOpen.bind(self);
     self.onOpenedBound = self.onOpened.bind(self);
     self.onCloseBound = self.onClose.bind(self);
@@ -78,16 +79,16 @@ class F7Actions extends React.Component {
     self.$f7ready(() => {
       const actionsParams = {
         el: self.refs.el,
-        grid: self.props.grid
+        grid
       };
-      if (self.props.target)
-        actionsParams.targetEl = self.props.target;
-      if ('convertToPopover' in self.props)
-        actionsParams.convertToPopover = self.props.convertToPopover;
-      if ('forceToPopover' in self.props)
-        actionsParams.forceToPopover = self.props.forceToPopover;
+      if (target)
+        actionsParams.targetEl = target;
+      if ('convertToPopover' in props)
+        actionsParams.convertToPopover = convertToPopover;
+      if ('forceToPopover' in props)
+        actionsParams.forceToPopover = forceToPopover;
       self.f7Actions = self.$f7.actions.create(actionsParams);
-      if (self.props.opened) {
+      if (opened) {
         self.f7Actions.open(false);
       }
     });

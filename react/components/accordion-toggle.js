@@ -8,10 +8,12 @@ class F7AccordionToggle extends React.Component {
     super(props, context);
   }
   render() {
-    const classes = Utils.classNames(this.props.className, { 'accordion-item-toggle': true }, Mixins.colorClasses(this));
+    const props = this.props;
+    const {className, id, style} = props;
+    const classes = Utils.classNames(className, 'accordion-item-toggle', Mixins.colorClasses(props));
     return React.createElement('div', {
-      id: this.props.id,
-      style: this.props.style,
+      id: id,
+      style: style,
       className: classes
     }, this.slots['default']);
   }

@@ -12,11 +12,13 @@ export default {
   },
   render() {
     const _h = this.$createElement;
-    const classes = Utils.classNames(this.props.className, 'block-header', Mixins.colorClasses(this));
+    const props = this.props;
+    const {className, id, style} = props;
+    const classes = Utils.classNames(className, 'block-header', Mixins.colorClasses(props));
     return _h('div', {
-      style: this.props.style,
+      style: style,
       class: classes,
-      attrs: { id: this.props.id }
+      attrs: { id: id }
     }, [this.$slots['default']]);
   },
   computed: {

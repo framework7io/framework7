@@ -16,8 +16,10 @@ export default {
   },
   render() {
     const _h = this.$createElement;
-    const {classes, sizeComputed} = this;
-    const {id, style} = this.props;
+    const self = this;
+    const {sizeComputed} = self;
+    const props = self.props;
+    const {id, style, className} = props;
     const preloaderStyle = {};
     if (sizeComputed) {
       preloaderStyle.width = `${ sizeComputed }px`;
@@ -26,13 +28,14 @@ export default {
     if (style)
       Utils.extend(preloaderStyle, style || {});
     let innerEl;
-    if (this.$theme.md) {
+    if (self.$theme.md) {
       innerEl = _h('span', { class: 'preloader-inner' }, [
         _h('span', { class: 'preloader-inner-gap' }),
         _h('span', { class: 'preloader-inner-left' }, [_h('span', { class: 'preloader-inner-half-circle' })]),
         _h('span', { class: 'preloader-inner-right' }, [_h('span', { class: 'preloader-inner-half-circle' })])
       ]);
     }
+    const classes = Utils.classNames(className, 'preloader', Mixins.colorClasses(props));
     return _h('span', {
       style: preloaderStyle,
       class: classes,
@@ -40,9 +43,6 @@ export default {
     }, [innerEl]);
   },
   computed: {
-    classes() {
-      return Utils.classNames(this.props.className, 'preloader', Mixins.colorClasses(this));
-    },
     sizeComputed() {
       let s = this.props.size;
       if (s && typeof s === 'string' && s.indexOf('px') >= 0) {

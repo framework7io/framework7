@@ -28,23 +28,25 @@ export default {
   render() {
     const _h = this.$createElement;
     const self = this;
-    const labelClasses = Utils.classNames('toggle', self.props.className, { disabled: self.props.disabled }, Mixins.colorClasses(self));
+    const props = self.props;
+    const {className, disabled, id, style, name, readonly, checked, defaultChecked, value} = props;
+    const labelClasses = Utils.classNames('toggle', className, { disabled }, Mixins.colorClasses(props));
     return _h('label', {
       ref: 'el',
-      style: self.props.style,
+      style: style,
       class: labelClasses,
-      attrs: { id: self.props.id }
+      attrs: { id: id }
     }, [
       _h('input', {
         on: { change: self.onChange.bind(self) },
         attrs: {
           type: 'checkbox',
-          name: self.props.name,
-          disabled: self.props.disabled,
-          readonly: self.props.readonly,
-          checked: self.props.checked,
-          defaultChecked: self.props.defaultChecked,
-          value: self.props.value
+          name: name,
+          disabled: disabled,
+          readonly: readonly,
+          checked: checked,
+          defaultChecked: defaultChecked,
+          value: value
         }
       }),
       _h('span', { class: 'toggle-icon' })

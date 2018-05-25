@@ -11,22 +11,21 @@ class F7Col extends React.Component {
   onClick(e) {
     this.dispatchEvent('click', e);
   }
-  get classes() {
-    const self = this;
-    return Utils.classNames(self.props.className, {
-      col: self.props.width === 'auto',
-      [`col-${ self.props.width }`]: self.props.width !== 'auto',
-      [`tablet-${ self.props.tabletWidth }`]: self.props.tabletWidth,
-      [`desktop-${ self.props.desktopWidth }`]: self.props.desktopWidth
-    }, Mixins.colorClasses(self));
-  }
   render() {
     const self = this;
-    const ColTag = self.props.tag;
+    const props = self.props;
+    const {className, id, style, tag, width, tabletWidth, desktopWidth} = props;
+    const ColTag = tag;
+    const classes = Utils.classNames(className, {
+      col: width === 'auto',
+      [`col-${ width }`]: width !== 'auto',
+      [`tablet-${ tabletWidth }`]: tabletWidth,
+      [`desktop-${ desktopWidth }`]: desktopWidth
+    }, Mixins.colorClasses(props));
     return React.createElement(ColTag, {
-      id: this.props.id,
-      style: this.props.style,
-      className: self.classes,
+      id: id,
+      style: style,
+      className: classes,
       onClick: self.onClick.bind(self)
     }, this.slots['default']);
   }

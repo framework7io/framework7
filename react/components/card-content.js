@@ -8,11 +8,9 @@ class F7CardContent extends React.Component {
     super(props, context);
   }
   render() {
-    const {id, className, style, padding} = this.props;
-    const classes = Utils.classNames(className, {
-      'card-content': true,
-      'card-content-padding': padding
-    }, Mixins.colorClasses(this));
+    const props = this.props;
+    const {id, className, style, padding} = props;
+    const classes = Utils.classNames(className, 'card-content', { 'card-content-padding': padding }, Mixins.colorClasses(props));
     return React.createElement('div', {
       id: id,
       style: style,

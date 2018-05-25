@@ -14,21 +14,15 @@ export default {
   },
   render() {
     const _h = this.$createElement;
+    const props = this.props;
+    const {className, id, style, fabClose} = props;
+    const classes = Utils.classNames(className, { 'fab-close': fabClose }, Mixins.colorClasses(props));
     return _h('a', {
-      style: this.props.style,
-      class: this.classes,
+      style: style,
+      class: classes,
       on: { click: this.onClick.bind(this) },
-      attrs: { id: this.props.id }
+      attrs: { id: id }
     }, [this.$slots['default']]);
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(self.props.className, { 'fab-close': self.fabClose }, Mixins.colorClasses(self));
-    },
-    props() {
-      return __vueComponentProps(this);
-    }
   },
   methods: {
     onClick(event) {
@@ -36,6 +30,11 @@ export default {
     },
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
+    }
+  },
+  computed: {
+    props() {
+      return __vueComponentProps(this);
     }
   }
 };

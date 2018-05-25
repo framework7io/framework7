@@ -19,7 +19,8 @@ class F7Link extends React.Component {
   }
   get attrs() {
     const self = this;
-    const {href, target, tabLink} = self.props;
+    const props = self.props;
+    const {href, target, tabLink} = props;
     let hrefComputed = href;
     if (href === true)
       hrefComputed = '#';
@@ -29,22 +30,24 @@ class F7Link extends React.Component {
       href: hrefComputed,
       target,
       'data-tab': Utils.isStringProp(tabLink) && tabLink || undefined
-    }, Mixins.linkRouterAttrs(self), Mixins.linkActionsAttrs(self));
+    }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
   }
   get classes() {
     const self = this;
-    const {noFastclick, noFastClick, tabLink, tabLinkActive, noLinkClass, className} = self.props;
+    const props = self.props;
+    const {noFastclick, noFastClick, tabLink, tabLinkActive, noLinkClass, className} = props;
     return Utils.classNames(className, {
       link: !(noLinkClass || self.state.isTabbarLabel),
       'icon-only': self.iconOnlyComputed,
       'tab-link': tabLink || tabLink === '',
       'tab-link-active': tabLinkActive,
       'no-fastclick': noFastclick || noFastClick
-    }, Mixins.colorClasses(self), Mixins.linkRouterClasses(self), Mixins.linkActionsClasses(self));
+    }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
   }
   render() {
     const self = this;
-    const {text, badge, badgeColor, iconOnly, iconBadge, icon, iconColor, iconSize, iconMaterial, iconIon, iconFa, iconF7, iconIfMd, iconIfIos, id, style} = self.props;
+    const props = self.props;
+    const {text, badge, badgeColor, iconOnly, iconBadge, icon, iconColor, iconSize, iconMaterial, iconIon, iconFa, iconF7, iconIfMd, iconIfIos, id, style} = props;
     const defaultSlots = self.slots.default;
     let iconEl;
     let textEl;

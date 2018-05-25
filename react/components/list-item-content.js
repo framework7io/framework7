@@ -25,7 +25,8 @@ class F7ListItemContent extends React.Component {
   }
   render() {
     const self = this;
-    const {radio, checkbox, value, name, checked, readonly, disabled, required, media, header, footer, title, subtitle, text, after, badge, mediaList, mediaItem, badgeColor, itemInput, inlineLabel, itemInputWithInfo} = self.props;
+    const props = self.props;
+    const {id, className, style, radio, checkbox, value, name, checked, readonly, disabled, required, media, header, footer, title, subtitle, text, after, badge, mediaList, mediaItem, badgeColor, itemInput, inlineLabel, itemInputWithInfo} = props;
     const hasInput = itemInput || self.state.hasInput;
     const hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
     const hasInputInfo = itemInputWithInfo || self.state.hasInputInfo;
@@ -137,8 +138,8 @@ class F7ListItemContent extends React.Component {
     if (footer || slotsFooter.length) {
       footerEl = React.createElement('div', { className: 'item-footer' }, footer, slotsFooter);
     }
-    if (title || slotsTitle.length) {
-      titleEl = React.createElement('div', { className: 'item-title' }, !isMedia && headerEl, title, slotsTitle);
+    if (title || slotsTitle.length || !isMedia && headerEl || !isMedia && footerEl) {
+      titleEl = React.createElement('div', { className: 'item-title' }, !isMedia && headerEl, title, slotsTitle, !isMedia && footerEl);
     }
     if (subtitle || slotsSubtitle.length) {
       subtitleEl = React.createElement('div', { className: 'item-subtitle' }, subtitle, slotsSubtitle);
@@ -172,19 +173,19 @@ class F7ListItemContent extends React.Component {
       }, slotsInnerStart, slotsBeforeTitle, titleEl, slotsAfterTitle, afterWrapEl, slotsInner, slotsInnerEnd);
     }
     const ItemContentTag = checkbox || radio ? 'label' : 'div';
-    const classes = Utils.classNames(self.props.className, 'item-content', {
+    const classes = Utils.classNames(className, 'item-content', {
       'item-checkbox': checkbox,
       'item-radio': radio,
       'item-input': hasInput,
       'inline-label': hasInlineLabel,
       'item-input-with-info': hasInputInfo
-    }, Mixins.colorClasses(self));
+    }, Mixins.colorClasses(props));
     return React.createElement(ItemContentTag, {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
       },
-      id: self.props.id,
-      style: self.props.style,
+      id: id,
+      style: style,
       className: classes,
       onClick: self.onClick.bind(self)
     }, slotsContentStart, inputEl, inputIconEl, mediaEl, innerEl, slotsContent, slotsContentEnd);

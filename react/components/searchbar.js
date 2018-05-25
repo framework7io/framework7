@@ -59,7 +59,8 @@ class F7Searchbar extends React.Component {
     const self = this;
     let clearEl;
     let disableEl;
-    const {placeholder, clearButton, disableButton, disableButtonText, form, noShadow, noHairline, expandable, className, style, id} = self.props;
+    const props = self.props;
+    const {placeholder, clearButton, disableButton, disableButtonText, form, noShadow, noHairline, expandable, className, style, id} = props;
     if (clearButton) {
       clearEl = React.createElement('span', {
         className: 'input-clear-button',
@@ -77,7 +78,7 @@ class F7Searchbar extends React.Component {
       'no-shadow': noShadow,
       'no-hairline': noHairline,
       'searchbar-expandable': expandable
-    }, Mixins.colorClasses(self));
+    }, Mixins.colorClasses(props));
     return React.createElement(SearchbarTag, {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
@@ -105,7 +106,7 @@ class F7Searchbar extends React.Component {
       el.addEventListener('submit', self.onSubmitBound, false);
     }
     self.$f7ready(() => {
-      const params = {
+      const params = Utils.noUndefinedProps({
         el: self.refs.el,
         searchContainer,
         searchIn,
@@ -136,9 +137,9 @@ class F7Searchbar extends React.Component {
             self.dispatchEvent('searchbar:disable searchbarDisable', searchbar);
           }
         }
-      };
+      });
       Object.keys(params).forEach(key => {
-        if (typeof params[key] === 'undefined' || params[key] === '') {
+        if (params[key] === '') {
           delete params[key];
         }
       });
