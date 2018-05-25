@@ -13,6 +13,12 @@ export default {
     const self = this;
     const fixedList = [];
     const staticList = [];
+    const props = self.props;
+    const {
+      id,
+      style,
+      className,
+    } = props;
 
     let fixedTags;
     // phenome-vue-next-line
@@ -53,12 +59,18 @@ export default {
       <div className="sheet-modal-inner">{staticList}</div>
     );
 
+    const classes = Utils.classNames(
+      className,
+      'sheet-modal',
+      Mixins.colorClasses(props),
+    );
+
     return (
       <div
         ref="el"
-        id={self.props.id}
-        style={self.props.style}
-        className={self.classes}
+        id={id}
+        style={style}
+        className={classes}
       >
         {fixedList}
         {innerEl}
@@ -76,27 +88,6 @@ export default {
       }
     },
   },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(
-        self.props.className,
-        'sheet-modal',
-        Mixins.colorClasses(self),
-      );
-    },
-  },
-  componentWillUnmount() {
-    const self = this;
-    if (self.f7Sheet) self.f7Sheet.destroy();
-
-    const el = self.el;
-    if (!el) return;
-    el.removeEventListener('popup:open', self.onOpenBound);
-    el.removeEventListener('popup:opened', self.onOpenedBound);
-    el.removeEventListener('popup:close', self.onCloseBound);
-    el.removeEventListener('popup:closed', self.onClosedBound);
-  },
   componentDidMount() {
     const self = this;
 
@@ -112,25 +103,37 @@ export default {
     el.addEventListener('sheet:closed', self.onClosedBound);
 
     self.$f7ready(() => {
-      let backdrop;
+      let useBackdrop;
       let useDefaultBackdrop;
+      const { opened, backdrop } = self.props;
       // phenome-vue-next-line
       useDefaultBackdrop = self.$options.propsData.backdrop === undefined;
       // phenome-react-next-line
-      useDefaultBackdrop = typeof self.props.backdrop === 'undefined';
+      useDefaultBackdrop = typeof backdrop === 'undefined';
 
       if (useDefaultBackdrop) {
         const app = self.$f7;
-        backdrop = app.params.sheet && app.params.sheet.backdrop !== undefined ? app.params.sheet.backdrop : self.$theme.md;
+        useBackdrop = app.params.sheet && app.params.sheet.backdrop !== undefined ? app.params.sheet.backdrop : self.$theme.md;
       }
       self.f7Sheet = self.$f7.sheet.create({
         el: self.refs.el,
-        backdrop,
+        backdrop: useBackdrop,
       });
-      if (self.props.opened) {
+      if (opened) {
         self.f7Sheet.open(false);
       }
     });
+  },
+  componentWillUnmount() {
+    const self = this;
+    if (self.f7Sheet) self.f7Sheet.destroy();
+
+    const el = self.el;
+    if (!el) return;
+    el.removeEventListener('popup:open', self.onOpenBound);
+    el.removeEventListener('popup:opened', self.onOpenedBound);
+    el.removeEventListener('popup:close', self.onCloseBound);
+    el.removeEventListener('popup:closed', self.onClosedBound);
   },
   methods: {
     onOpen(event) {

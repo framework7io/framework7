@@ -15,9 +15,17 @@ export default {
   },
   render() {
     const self = this;
-    const { morphTo } = self.props;
+    const props = self.props;
+    const {
+      className,
+      id,
+      style,
+      morphTo,
+      href: initialHref,
+      position,
+    } = props;
 
-    let href = self.props.href;
+    let href = initialHref;
     if (href === true) href = '#';
     if (href === false) href = undefined; // no href attribute
 
@@ -51,11 +59,20 @@ export default {
       );
     }
 
+    const classes = Utils.classNames(
+      className,
+      'fab',
+      `fab-${position}`,
+      {
+        'fab-morph': morphTo,
+      },
+      Mixins.colorClasses(props),
+    );
     return (
       <div
-        id={self.props.id}
-        style={self.props.style}
-        className={self.classes}
+        id={id}
+        style={style}
+        className={classes}
         data-morph-to={morphTo}
       >
         {linkEl}
@@ -63,20 +80,6 @@ export default {
         {rootSlots}
       </div>
     );
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(
-        self.props.className,
-        {
-          fab: true,
-          'fab-morph': self.props.morphTo,
-          [`fab-${self.props.position}`]: true,
-        },
-        Mixins.colorClasses(self),
-      );
-    },
   },
   methods: {
     onClick(event) {

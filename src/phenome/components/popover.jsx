@@ -11,12 +11,23 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
+    const {
+      className,
+      id,
+      style,
+    } = props;
+    const classes = Utils.classNames(
+      className,
+      'popover',
+      Mixins.colorClasses(props),
+    );
     return (
       <div
         ref="el"
-        id={self.props.id}
-        style={self.props.style}
-        className={self.classes}
+        id={id}
+        style={style}
+        className={classes}
       >
         <div className="popover-angle" />
         <div className="popover-inner">
@@ -36,16 +47,6 @@ export default {
       }
     },
   },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(
-        self.props.className,
-        'popover',
-        Mixins.colorClasses(self),
-      );
-    },
-  },
   componentDidMount() {
     const self = this;
 
@@ -60,14 +61,15 @@ export default {
     el.addEventListener('popover:close', self.onCloseBound);
     el.addEventListener('popover:closed', self.onClosedBound);
 
+    const { target, opened } = self.props;
     self.$f7ready(() => {
       const popoverParams = {
         el,
       };
-      if (self.props.target) popoverParams.targetEl = self.props.target;
+      if (target) popoverParams.targetEl = target;
       self.f7Popover = self.$f7.popover.create(popoverParams);
-      if (self.props.opened && self.props.target) {
-        self.f7Popover.open(self.props.target, false);
+      if (opened && target) {
+        self.f7Popover.open(target, false);
       }
     });
   },

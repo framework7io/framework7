@@ -44,8 +44,12 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
 
     const {
+      id,
+      className,
+      style,
       radio,
       checkbox,
       value,
@@ -68,7 +72,7 @@ export default {
       itemInput,
       inlineLabel,
       itemInputWithInfo,
-    } = self.props;
+    } = props;
 
     const hasInput = itemInput || self.state.hasInput;
     const hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
@@ -195,12 +199,13 @@ export default {
         </div>
       );
     }
-    if (title || slotsTitle.length) {
+    if (title || slotsTitle.length || (!isMedia && headerEl) || (!isMedia && footerEl)) {
       titleEl = (
         <div className="item-title">
           {!isMedia && headerEl}
           {title}
           {slotsTitle}
+          {!isMedia && footerEl}
         </div>
       );
     }
@@ -276,7 +281,7 @@ export default {
     const ItemContentTag = checkbox || radio ? 'label' : 'div';
 
     const classes = Utils.classNames(
-      self.props.className,
+      className,
       'item-content',
       {
         'item-checkbox': checkbox,
@@ -285,13 +290,13 @@ export default {
         'inline-label': hasInlineLabel,
         'item-input-with-info': hasInputInfo,
       },
-      Mixins.colorClasses(self),
+      Mixins.colorClasses(props),
     );
     return (
       <ItemContentTag
         ref="el"
-        id={self.props.id}
-        style={self.props.style}
+        id={id}
+        style={style}
         className={classes}
         onClick={self.onClick.bind(self)}
       >

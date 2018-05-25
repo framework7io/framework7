@@ -17,6 +17,13 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
+    const {
+      id,
+      style,
+      className,
+    } = props;
+
     let paginationEl;
     let scrollbarEl;
     let buttonNextEl;
@@ -31,8 +38,14 @@ export default {
       buttonNextEl = <div ref="nextEl" className="swiper-button-next" />;
       buttonPrevEl = <div ref="prevEl" className="swiper-button-prev" />;
     }
+
+    const classes = Utils.classNames(
+      className,
+      'swiper-container',
+      Mixins.colorClasses(props),
+    );
     return (
-      <div id={self.props.id} style={self.props.style} ref="el" className={self.classes}>
+      <div id={id} style={style} ref="el" className={classes}>
         <slot name="before-wrapper" />
         <div className="swiper-wrapper">
           <slot />
@@ -46,39 +59,30 @@ export default {
     );
   },
   computed: {
-    classes() {
-      return Utils.classNames(
-        this.props.className,
-        'swiper-container',
-        Mixins.colorClasses(this),
-      );
-    },
     paginationComputed() {
       const self = this;
-      if (self.props.pagination === true || (self.props.params && self.props.params.pagination && !self.props.params.pagination.el)) {
+      const { pagination, params } = self.props;
+      if (pagination === true || (params && params.pagination && !params.pagination.el)) {
         return true;
       }
       return false;
     },
     scrollbarComputed() {
       const self = this;
-      if (self.props.scrollbar === true || (self.props.params && self.props.params.scrollbar && !self.props.params.scrollbar.el)) {
+      const { scrollbar, params } = self.props;
+      if (scrollbar === true || (params && params.scrollbar && !params.scrollbar.el)) {
         return true;
       }
       return false;
     },
     navigationComputed() {
       const self = this;
-      if (self.props.navigation === true || (self.props.params && self.props.params.navigation && !self.props.params.navigation.nextEl && !self.props.params.navigation.prevEl)) {
+      const { navigation, params } = self.props;
+      if (navigation === true || (params && params.navigation && !params.navigation.nextEl && !params.navigation.prevEl)) {
         return true;
       }
       return false;
     },
-  },
-  componentWillUnmount() {
-    const self = this;
-    if (!self.props.init) return;
-    if (self.swiper && self.swiper.destroy) self.swiper.destroy();
   },
   componentDidUpdate() {
     const self = this;
@@ -108,5 +112,10 @@ export default {
 
       self.swiper = f7.swiper.create(self.refs.el, newParams);
     });
+  },
+  componentWillUnmount() {
+    const self = this;
+    if (!self.props.init) return;
+    if (self.swiper && self.swiper.destroy) self.swiper.destroy();
   },
 };

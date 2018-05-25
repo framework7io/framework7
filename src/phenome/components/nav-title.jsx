@@ -12,27 +12,25 @@ export default {
   },
   render() {
     const self = this;
-    const { title, subtitle, id, style } = self.props;
+    const props = self.props;
+    const { title, subtitle, id, style, sliding, className } = props;
     let subtitleEl;
     if (self.subtitle) {
       subtitleEl = (<span className="subtitle">{subtitle}</span>);
     }
+
+    const classes = Utils.classNames(
+      className,
+      'title',
+      {
+        sliding,
+      },
+      Mixins.colorClasses(props),
+    );
     return (
-      <div id={id} style={style} className={self.classes}>
+      <div id={id} style={style} className={classes}>
         <slot>{title}{subtitleEl}</slot>
       </div>
     );
-  },
-  computed: {
-    classes() {
-      return Utils.classNames(
-        this.props.className,
-        {
-          title: true,
-          sliding: this.props.sliding,
-        },
-        Mixins.colorClasses(this),
-      );
-    },
   },
 };

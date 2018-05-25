@@ -10,16 +10,24 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
+    const {
+      className,
+      id,
+      style,
+      tabs,
+    } = props;
+
     const classes = Utils.classNames(
-      self.props.className,
+      className,
       'views',
       {
-        tabs: self.props.tabs,
+        tabs,
       },
-      Mixins.colorClasses(self),
+      Mixins.colorClasses(props),
     );
     return (
-      <div id={self.props.id} style={self.props.style} className={classes}>
+      <div id={id} style={style} className={classes}>
         <slot />
       </div>
     );

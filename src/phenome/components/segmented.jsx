@@ -15,21 +15,30 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
+    const {
+      className,
+      raised,
+      round,
+      id,
+      style,
+      tag,
+    } = props;
     const classNames = Utils.classNames(
-      self.props.className,
+      className,
       {
         segmented: true,
-        'segmented-raised': self.props.raised,
-        'segmented-round': self.props.round,
+        'segmented-raised': raised,
+        'segmented-round': round,
       },
-      Mixins.colorClasses(self),
+      Mixins.colorClasses(props),
     );
-    const SegmentedTag = self.props.tag;
+    const SegmentedTag = tag;
 
     return (
       <SegmentedTag
-        id={self.props.id}
-        style={self.props.style}
+        id={id}
+        style={style}
         className={classNames}
       >
         <slot />

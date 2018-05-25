@@ -14,32 +14,41 @@ export default {
     ...Mixins.colorProps,
   },
   render() {
-    this.onClick = this.onClick.bind(this);
+    const props = this.props;
+    const {
+      className,
+      id,
+      style,
+      overswipe,
+      delete: deleteProp,
+      close,
+      href,
+      confirmText,
+      text,
+    } = props;
+
+    const classes = Utils.classNames(
+      className,
+      {
+        'swipeout-overswipe': overswipe,
+        'swipeout-delete': deleteProp,
+        'swipeout-close': close,
+      },
+      Mixins.colorClasses(props),
+    );
+
     return (
       <a
-        href={this.props.href || '#'}
-        id={this.props.id}
-        style={this.props.style}
-        data-confirm={this.props.confirmText || undefined}
-        className={this.classes}
-        onClick={this.onClick}
+        href={href || '#'}
+        id={id}
+        style={style}
+        data-confirm={confirmText || undefined}
+        className={classes}
+        onClick={this.onClick.bind(this)}
       >
-        <slot>{this.props.text}</slot>
+        <slot>{text}</slot>
       </a>
     );
-  },
-  computed: {
-    classes() {
-      return Utils.classNames(
-        this.props.className,
-        {
-          'swipeout-overswipe': this.props.overswipe,
-          'swipeout-delete': this.props.delete,
-          'swipeout-close': this.props.close,
-        },
-        Mixins.colorClasses(this),
-      );
-    },
   },
   methods: {
     onClick(event) {

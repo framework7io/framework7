@@ -14,6 +14,14 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
+    const {
+      id,
+      className,
+      style,
+      bold,
+    } = props;
+
     let mediaEl;
 
     if (self.slots.media && self.slots.media.length) {
@@ -24,28 +32,23 @@ export default {
       );
     }
 
+    const classes = Utils.classNames(
+      className,
+      {
+        'actions-button': true,
+        'actions-button-bold': bold,
+      },
+      Mixins.colorClasses(props),
+    );
+
     return (
-      <div id={self.props.id} style={self.props.style} className={self.classes} onClick={self.onClick.bind(self)} ref="el">
+      <div id={id} style={style} className={classes} onClick={self.onClick.bind(self)} ref="el">
         { mediaEl }
         <div className="actions-button-text">
           <slot />
         </div>
       </div>
     );
-  },
-  computed: {
-    classes() {
-      const self = this;
-
-      return Utils.classNames(
-        self.props.className,
-        {
-          'actions-button': true,
-          'actions-button-bold': self.props.bold,
-        },
-        Mixins.colorClasses(self),
-      );
-    },
   },
   methods: {
     onClick(event) {

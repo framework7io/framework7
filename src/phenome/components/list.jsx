@@ -39,12 +39,12 @@ export default {
   },
   render() {
     const self = this;
-
+    const props = self.props;
     const {
       id,
       style,
       form,
-    } = self.props;
+    } = props;
 
     const { list: slotsList, default: slotsDefault } = self.slots;
     const rootChildrenBeforeList = [];
@@ -119,7 +119,7 @@ export default {
   computed: {
     classes() {
       const self = this;
-
+      const props = self.props;
       const {
         inset,
         tabletInset,
@@ -141,10 +141,11 @@ export default {
         noHairlinesBetweenMd,
         formStoreData,
         inlineLabels,
-      } = self.props;
+        className,
+      } = props;
 
       return Utils.classNames(
-        self.props.className,
+        className,
         'list',
         {
           inset,
@@ -168,7 +169,7 @@ export default {
           'form-store-data': formStoreData,
           'inline-labels': inlineLabels,
         },
-        Mixins.colorClasses(self),
+        Mixins.colorClasses(props),
       );
     },
   },
@@ -189,7 +190,7 @@ export default {
     const self = this;
     // Init Virtual List
     const el = self.refs.el;
-
+    const { virtualList, virtualListParams } = self.props;
     if (el) {
       self.onSortableEnableBound = self.onSortableEnable.bind(self);
       self.onSortableDisableBound = self.onSortableDisable.bind(self);
@@ -204,7 +205,7 @@ export default {
       el.addEventListener('tab:hide', self.onTabHideBound);
     }
 
-    if (!self.props.virtualList) return;
+    if (!virtualList) return;
 
     self.$f7ready((f7) => {
       const $$ = self.$$;
@@ -216,7 +217,7 @@ export default {
         // eslint-disable-next-line
         template = /\<script type="text\/template7"\>(.*)<\/script>/.exec(template)[1];
       }
-      const vlParams = self.props.virtualListParams || {};
+      const vlParams = virtualListParams || {};
       if (!template && !vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal) return;
       if (template) template = self.$t7.compile(template);
 

@@ -22,43 +22,54 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
+    const {
+      className,
+      id,
+      style,
+      title,
+      content,
+      footer,
+      padding,
+    } = props;
+
     let headerEl;
     let contentEl;
     let footerEl;
 
     const classes = Utils.classNames(
-      self.props.className,
+      className,
       'card',
-      Mixins.colorClasses(self),
+      Mixins.colorClasses(props),
     );
 
-    if (self.title || (self.slots && self.slots.header)) {
+    if (title || (self.slots && self.slots.header)) {
       headerEl = (
         <F7CardHeader>
-          {self.props.title}
+          {title}
           <slot name="header" />
         </F7CardHeader>
       );
     }
-    if (self.content || (self.slots && self.slots.content)) {
+    if (content || (self.slots && self.slots.content)) {
       contentEl = (
-        <F7CardContent padding={this.props.padding}>
-          {self.props.content}
+        <F7CardContent padding={padding}>
+          {content}
           <slot name="content" />
         </F7CardContent>
       );
     }
-    if (self.footer || (self.slots && self.slots.footer)) {
+    if (footer || (self.slots && self.slots.footer)) {
       footerEl = (
         <F7CardFooter>
-          {self.props.title}
+          {footer}
           <slot name="footer" />
         </F7CardFooter>
       );
     }
 
     return (
-      <div id={this.props.id} style={this.props.style} className={classes}>
+      <div id={id} style={style} className={classes}>
         {headerEl}
         {contentEl}
         {footerEl}

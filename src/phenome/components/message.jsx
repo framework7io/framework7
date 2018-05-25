@@ -38,7 +38,7 @@ export default {
   },
   render() {
     const self = this;
-
+    const props = self.props;
     const {
       text,
       name,
@@ -51,7 +51,7 @@ export default {
       typing,
       id,
       style,
-    } = self.props;
+    } = props;
 
     const {
       start: slotsStart,
@@ -139,6 +139,7 @@ export default {
   computed: {
     classes() {
       const self = this;
+      const props = self.props;
       const {
         type,
         typing,
@@ -149,10 +150,11 @@ export default {
         sameHeader,
         sameFooter,
         sameAvatar,
-      } = self.props;
+        className,
+      } = props;
 
       return Utils.classNames(
-        self.props.classNames,
+        className,
         'message',
         {
           'message-sent': type === 'sent',
@@ -166,7 +168,7 @@ export default {
           'message-same-footer': sameFooter,
           'message-same-avatar': sameAvatar,
         },
-        Mixins.colorClasses(self),
+        Mixins.colorClasses(props),
       );
     },
   },

@@ -10,17 +10,24 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
+    const {
+      className,
+      id,
+      style,
+      bold,
+    } = props;
 
     const classes = Utils.classNames(
-      self.props.className,
+      className,
+      'actions-label',
       {
-        'actions-label': true,
-        'actions-button-bold': self.props.bold,
+        'actions-button-bold': bold,
       },
-      Mixins.colorClasses(self),
+      Mixins.colorClasses(props),
     );
     return (
-      <div id={self.props.id} style={self.props.style} className={classes} onClick={self.onClick.bind(self)}>
+      <div id={id} style={style} className={classes} onClick={self.onClick.bind(self)}>
         <slot />
       </div>
     );

@@ -11,7 +11,8 @@ export default {
     ...Mixins.colorProps,
   },
   render() {
-    const { left, right, side, className, id, style } = this.props;
+    const props = this.props;
+    const { left, right, side, className, id, style } = props;
 
     let sideComputed = side;
     if (!sideComputed) {
@@ -21,10 +22,8 @@ export default {
 
     const classes = Utils.classNames(
       className,
-      {
-        [`swipeout-actions-${sideComputed}`]: true,
-      },
-      Mixins.colorClasses(this),
+      `swipeout-actions-${sideComputed}`,
+      Mixins.colorClasses(props),
     );
 
     return (

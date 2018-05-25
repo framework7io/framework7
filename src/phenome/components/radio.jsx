@@ -15,7 +15,10 @@ export default {
   },
   render() {
     const self = this;
-    const { name, value, disabled, readonly, checked, defaultChecked, id, style } = self.props;
+    const props = self.props;
+    const {
+      name, value, disabled, readonly, checked, defaultChecked, id, style, className,
+    } = props;
 
     const inputEl = (
       <input
@@ -31,26 +34,22 @@ export default {
     );
     const iconEl = (<i className="icon-radio" />);
 
+    const classes = Utils.classNames(
+      className,
+      'radio',
+      {
+        disabled,
+      },
+      Mixins.colorClasses(props),
+    );
+
     return (
-      <label id={id} style={style} className={self.classes}>
+      <label id={id} style={style} className={classes}>
         {inputEl}
         {iconEl}
         <slot />
       </label>
     );
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(
-        self.props.className,
-        {
-          radio: true,
-          disabled: self.props.disabled,
-        },
-        Mixins.colorClasses(self),
-      );
-    },
   },
   methods: {
     onChange(event) {

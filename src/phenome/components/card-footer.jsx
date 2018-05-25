@@ -8,11 +8,18 @@ export default {
     ...Mixins.colorProps,
   },
   render() {
+    const props = this.props;
+    const {
+      className,
+      id,
+      style,
+    } = props;
+
     const classes = Utils.classNames(
-      this.props.className,
+      className,
       'card-footer',
-      Mixins.colorClasses(this),
+      Mixins.colorClasses(props),
     );
-    return (<div id={this.props.id} style={this.props.style} className={classes}><slot /></div>);
+    return (<div id={id} style={style} className={classes}><slot /></div>);
   },
 };

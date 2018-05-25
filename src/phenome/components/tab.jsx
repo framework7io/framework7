@@ -17,7 +17,8 @@ export default {
   },
   render() {
     const self = this;
-    const { tabActive, id, className, style } = self.props;
+    const props = self.props;
+    const { tabActive, id, className, style } = props;
     const tabContent = self.state.tabContent;
 
     const classes = Utils.classNames(
@@ -26,7 +27,7 @@ export default {
       {
         'tab-active': tabActive,
       },
-      Mixins.colorClasses(self),
+      Mixins.colorClasses(props),
     );
 
     let TabContent;

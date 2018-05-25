@@ -13,25 +13,27 @@ export default {
     ...Mixins.colorProps,
   },
   render() {
+    const props = this.props;
+    const {
+      className,
+      id,
+      style,
+      position,
+    } = props;
+
+    const classes = Utils.classNames(
+      className,
+      'fab-buttons',
+      `fab-buttons-${position}`,
+      Mixins.colorClasses(props),
+    );
+
     return (
       <div
-        id={this.props.id}
-        style={this.props.style}
-        className={this.classes}
+        id={id}
+        style={style}
+        className={classes}
       ><slot /></div>
     );
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(
-        self.props.className,
-        {
-          'fab-buttons': true,
-          [`fab-buttons-${self.props.position}`]: true,
-        },
-        Mixins.colorClasses(self),
-      );
-    },
   },
 };

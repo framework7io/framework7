@@ -15,7 +15,8 @@ export default {
   },
   render() {
     const self = this;
-    const { name, value, disabled, readonly, checked, defaultChecked, id, style } = self.props;
+    const props = self.props;
+    const { name, value, disabled, readonly, checked, defaultChecked, id, style } = props;
 
     const inputEl = (
       <input
@@ -42,13 +43,15 @@ export default {
   computed: {
     classes() {
       const self = this;
+      const props = self.props;
+      const { className, disabled } = props;
       return Utils.classNames(
-        self.props.className,
+        className,
         {
           checkbox: true,
-          disabled: self.props.disabled,
+          disabled,
         },
-        Mixins.colorClasses(self),
+        Mixins.colorClasses(props),
       );
     },
   },

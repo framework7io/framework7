@@ -19,26 +19,38 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
+    const {
+      className,
+      disabled,
+      id,
+      style,
+      name,
+      readonly,
+      checked,
+      defaultChecked,
+      value,
+    } = props;
 
     const labelClasses = Utils.classNames(
       'toggle',
-      self.props.className,
+      className,
       {
-        disabled: self.props.disabled,
+        disabled,
       },
-      Mixins.colorClasses(self),
+      Mixins.colorClasses(props),
     );
 
     return (
-      <label ref="el" id={self.props.id} style={self.props.style} className={labelClasses}>
+      <label ref="el" id={id} style={style} className={labelClasses}>
         <input
           type="checkbox"
-          name={self.props.name}
-          disabled={self.props.disabled}
-          readOnly={self.props.readonly}
-          checked={self.props.checked}
-          defaultChecked={self.props.defaultChecked}
-          value={self.props.value}
+          name={name}
+          disabled={disabled}
+          readOnly={readonly}
+          checked={checked}
+          defaultChecked={defaultChecked}
+          value={value}
           onChange={self.onChange.bind(self)}
         />
         <span className="toggle-icon" />

@@ -70,9 +70,10 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
     const {
-      input, buttonsOnly, inputType, value, inputReadonly, min, max, step,
-    } = self.props;
+      input, buttonsOnly, inputType, value, inputReadonly, min, max, step, id, style,
+    } = props;
 
     let inputWrapEl;
     let valueEl;
@@ -97,7 +98,7 @@ export default {
       );
     }
     return (
-      <div ref="el" id={self.props.id} style={self.props.style} className={self.classes}>
+      <div ref="el" id={id} style={style} className={self.classes}>
         <div className="stepper-button-minus" onClick={self.onMinusClickBound} />
         {inputWrapEl}
         {valueEl}
@@ -108,6 +109,7 @@ export default {
   computed: {
     classes() {
       const self = this;
+      const props = self.props;
       const {
         round,
         roundIos,
@@ -123,7 +125,7 @@ export default {
         smallMd,
         raised,
         disabled,
-      } = self.props;
+      } = props;
 
       return Utils.classNames(
         self.props.className,
@@ -144,7 +146,7 @@ export default {
           'stepper-small-md': smallMd,
           'stepper-raised': raised,
         },
-        Mixins.colorClasses(self),
+        Mixins.colorClasses(props),
       );
     },
   },
@@ -162,7 +164,7 @@ export default {
       } = self.props;
       const el = self.refs.el;
       if (!el) return;
-      self.f7Stepper = f7.stepper.create({
+      self.f7Stepper = f7.stepper.create(Utils.noUndefinedProps({
         el,
         min,
         max,
@@ -177,7 +179,7 @@ export default {
             self.dispatchEvent('stepper:change stepperChange', newValue);
           },
         },
-      });
+      }));
     });
   },
   componentWillUnmount() {

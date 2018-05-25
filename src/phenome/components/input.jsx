@@ -58,7 +58,7 @@ export default {
 
   render() {
     const self = this;
-
+    const props = self.props;
     const {
       type,
       name,
@@ -98,7 +98,7 @@ export default {
       className,
       noStoreData,
       noFormStoreData,
-    } = self.props;
+    } = props;
 
     let inputEl;
 
@@ -201,7 +201,7 @@ export default {
       const wrapClasses = Utils.classNames(
         className,
         'item-input-wrap',
-        Mixins.colorClasses(self),
+        Mixins.colorClasses(props),
       );
       return (
         <div id={id} ref="wrapEl" className={wrapClasses} style={style}>
@@ -229,8 +229,7 @@ export default {
 
       if (type === 'range' || type === 'toggle') return;
 
-      const f7 = self.$f7;
-      if (!f7) return;
+      if (!self.$f7) return;
 
       self.updateInputOnDidUpdate = true;
     },

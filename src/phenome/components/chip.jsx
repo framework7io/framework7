@@ -15,57 +15,60 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
+    const {
+      media,
+      text,
+      deleteable,
+      className,
+      id,
+      style,
+      mediaTextColor,
+      mediaBgColor,
+    } = props;
+
     let mediaEl;
     let labelEl;
     let deleteEl;
-    if (self.props.media || (self.slots && self.slots.media)) {
+    if (media || (self.slots && self.slots.media)) {
+      const mediaClasses = Utils.classNames(
+        'chip-media',
+        mediaTextColor && `text-color-${mediaTextColor}`,
+        mediaBgColor && `bg-color-${mediaBgColor}`,
+      );
       mediaEl = (
-        <div className={self.mediaClasses}>
-          {self.props.media ? self.props.media : (<slot name="media" />)}
+        <div className={mediaClasses}>
+          {media || (<slot name="media" />)}
         </div>
       );
     }
-    if (self.props.text || (self.slots && self.slots.text)) {
+    if (text || (self.slots && self.slots.text)) {
       labelEl = (
         <div className="chip-label">
-          {self.props.text}
+          {text}
           <slot name="text" />
         </div>
       );
     }
-    if (self.props.deleteable) {
+    if (deleteable) {
       deleteEl = (
         <a href="#" className="chip-delete" onClick={self.onDeleteClick.bind(self)} />
       );
     }
 
+    const classes = Utils.classNames(
+      className,
+      'chip',
+      Mixins.colorClasses(props),
+    );
+
     return (
-      <div id={this.props.id} style={this.props.style} className={self.classes} onClick={self.onClick.bind(self)}>
+      <div id={id} style={style} className={classes} onClick={self.onClick.bind(self)}>
         {mediaEl}
         {labelEl}
         {deleteEl}
       </div>
     );
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(
-        self.props.className,
-        {
-          chip: true,
-        },
-        Mixins.colorClasses(self),
-      );
-    },
-    mediaClasses() {
-      const c = {
-        'chip-media': true,
-      };
-      if (this.props.mediaTextColor) c[`text-color-${this.props.mediaTextColor}`] = true;
-      if (this.props.mediaBgColor) c[`bg-color-${this.props.mediaBgColor}`] = true;
-      return Utils.classNames(c);
-    },
   },
   methods: {
     onClick(event) {

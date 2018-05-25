@@ -43,6 +43,7 @@ export default {
     let iconEl;
     let textEl;
 
+    const props = self.props;
     const {
       text,
       icon,
@@ -54,7 +55,9 @@ export default {
       iconIfIos,
       iconColor,
       iconSize,
-    } = self.props;
+      id,
+      style,
+    } = props;
 
     if (text) {
       textEl = (<span>{text}</span>);
@@ -76,8 +79,8 @@ export default {
     }
     return (
       <a
-        id={self.props.id}
-        style={self.props.style}
+        id={id}
+        style={style}
         className={self.classes}
         onClick={self.onClick.bind(self)}
         {...self.attrs}
@@ -91,7 +94,8 @@ export default {
   computed: {
     attrs() {
       const self = this;
-      const { href, target, tabLink } = self.props;
+      const props = self.props;
+      const { href, target, tabLink } = props;
       let hrefComputed = href;
       if (href === true) hrefComputed = '#';
       if (href === false) hrefComputed = undefined; // no href attribute
@@ -101,12 +105,13 @@ export default {
           target,
           'data-tab': (Utils.isStringProp(tabLink) && tabLink) || undefined,
         },
-        Mixins.linkRouterAttrs(self),
-        Mixins.linkActionsAttrs(self),
+        Mixins.linkRouterAttrs(props),
+        Mixins.linkActionsAttrs(props),
       );
     },
     classes() {
       const self = this;
+      const props = self.props;
       const {
         noFastclick,
         noFastClick,
@@ -129,7 +134,7 @@ export default {
         outline,
         disabled,
         className,
-      } = self.props;
+      } = props;
 
       return Utils.classNames(
         className,
@@ -157,9 +162,9 @@ export default {
 
           disabled,
         },
-        Mixins.colorClasses(self),
-        Mixins.linkRouterClasses(self),
-        Mixins.linkActionsClasses(self),
+        Mixins.colorClasses(props),
+        Mixins.linkRouterClasses(props),
+        Mixins.linkActionsClasses(props),
       );
     },
   },

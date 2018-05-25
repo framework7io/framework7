@@ -20,10 +20,20 @@ export default {
   },
   render() {
     const self = this;
+    const props = this.props;
+
+    const {
+      className,
+      id,
+      style,
+      title,
+      text,
+    } = props;
+
     return (
-      <li id={self.props.id} style={self.props.style} className={self.props.className}>
+      <li id={id} style={style} className={className}>
         <a className={self.classes} {...self.attrs} onClick={self.onClick.bind(self)}>
-          <slot>{self.props.title || self.props.text}</slot>
+          <slot>{title || text}</slot>
         </a>
       </li>
     );
@@ -31,13 +41,13 @@ export default {
   computed: {
     attrs() {
       const self = this;
-      // Link Props
+      const props = self.props;
       const {
         link,
         href,
         target,
         tabLink,
-      } = self.props;
+      } = props;
 
       return Utils.extend(
         {
@@ -45,19 +55,19 @@ export default {
           target,
           'data-tab': Utils.isStringProp(tabLink) && tabLink,
         },
-        Mixins.linkRouterAttrs(self),
-        Mixins.linkActionsAttrs(self),
+        Mixins.linkRouterAttrs(props),
+        Mixins.linkActionsAttrs(props),
       );
     },
     classes() {
       const self = this;
-
+      const props = self.props;
       const {
         noFastclick,
         noFastClick,
         tabLink,
         tabLinkActive,
-      } = self.props;
+      } = props;
 
       return Utils.classNames(
         {
@@ -67,9 +77,9 @@ export default {
           'tab-link-active': tabLinkActive,
           'no-fastclick': noFastclick || noFastClick,
         },
-        Mixins.colorClasses(self),
-        Mixins.linkRouterClasses(self),
-        Mixins.linkActionsClasses(self),
+        Mixins.colorClasses(props),
+        Mixins.linkRouterClasses(props),
+        Mixins.linkActionsClasses(props),
       );
     },
   },

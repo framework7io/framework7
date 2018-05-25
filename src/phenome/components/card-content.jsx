@@ -12,20 +12,21 @@ export default {
     ...Mixins.colorProps,
   },
   render() {
+    const props = this.props;
     const {
       id,
       className,
       style,
       padding,
-    } = this.props;
+    } = props;
 
     const classes = Utils.classNames(
       className,
+      'card-content',
       {
-        'card-content': true,
         'card-content-padding': padding,
       },
-      Mixins.colorClasses(this),
+      Mixins.colorClasses(props),
     );
 
     return (<div id={id} style={style} className={classes}><slot /></div>);

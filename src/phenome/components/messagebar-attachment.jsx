@@ -18,17 +18,19 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
     const {
       deletable,
       image,
       className,
       id,
       style,
-    } = self.props;
+    } = props;
+
     const classes = Utils.classNames(
       className,
       'messagebar-attachment',
-      Mixins.colorClasses(self),
+      Mixins.colorClasses(props),
     );
 
     return (

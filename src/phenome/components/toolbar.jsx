@@ -20,10 +20,40 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
+    const {
+      id,
+      style,
+      className,
+      inner,
+      bottomMd,
+      tabbar,
+      labels,
+      scrollable,
+      hidden,
+      noShadow,
+      noHairline,
+    } = props;
+
+    const classes = Utils.classNames(
+      className,
+      'toolbar',
+      {
+        'toolbar-bottom-md': bottomMd,
+        tabbar,
+        'tabbar-labels': labels,
+        'tabbar-scrollable': scrollable,
+        'toolbar-hidden': hidden,
+        'no-shadow': noShadow,
+        'no-hairline': noHairline,
+      },
+      Mixins.colorClasses(props),
+    );
+
     return (
-      <div ref="el" className={self.classes}>
+      <div id={id} style={style} ref="el" className={classes}>
         <slot name="before-inner" />
-        {self.props.inner ? (
+        {inner ? (
           <div className="toolbar-inner">
             <slot />
           </div>
@@ -45,25 +75,6 @@ export default {
     self.$f7ready((f7) => {
       if (self.props.tabbar) f7.toolbar.setHighlight(self.refs.el);
     });
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(
-        self.props.className,
-        {
-          toolbar: true,
-          'toolbar-bottom-md': self.props.bottomMd,
-          tabbar: self.props.tabbar,
-          'tabbar-labels': self.props.labels,
-          'tabbar-scrollable': self.props.scrollable,
-          'toolbar-hidden': self.props.hidden,
-          'no-shadow': self.props.noShadow,
-          'no-hairline': self.props.noHairline,
-        },
-        Mixins.colorClasses(self),
-      );
-    },
   },
   methods: {
     hide(animate) {

@@ -9,14 +9,21 @@ export default {
     id: [String, Number],
     backLink: [Boolean, String],
     backLinkUrl: String,
+    backLinkForce: Boolean,
     sliding: Boolean,
     ...Mixins.colorProps,
   },
   render() {
+    const props = this.props;
     const {
       backLink,
       backLinkUrl,
-    } = this.props;
+      backLinkForce,
+      sliding,
+      className,
+      style,
+      id,
+    } = props;
 
     let linkEl;
     if (backLink) {
@@ -25,30 +32,27 @@ export default {
           href={backLinkUrl || '#'}
           back
           icon="icon-back"
+          force={backLinkForce || undefined}
           className={(backLink === true || (backLink && this.$theme.md)) ? 'icon-only' : undefined}
           text={backLink !== true && !this.$theme.md ? backLink : undefined}
           onClick={this.onBackClick.bind(this)}
         />
       );
     }
+    const classes = Utils.classNames(
+      className,
+      'left',
+      {
+        sliding,
+      },
+      Mixins.colorClasses(props),
+    );
     return (
-      <div id={this.props.id} style={this.props.style} className={this.classes}>
+      <div id={id} style={style} className={classes}>
         {linkEl}
         <slot />
       </div>
     );
-  },
-  computed: {
-    classes() {
-      return Utils.classNames(
-        this.props.className,
-        {
-          left: true,
-          sliding: this.props.slidng,
-        },
-        Mixins.colorClasses(this),
-      );
-    },
   },
   methods: {
     onBackClick(e) {

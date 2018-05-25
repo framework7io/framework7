@@ -90,7 +90,7 @@ export default {
     const self = this;
     let clearEl;
     let disableEl;
-
+    const props = self.props;
     const {
       placeholder,
       clearButton,
@@ -103,7 +103,7 @@ export default {
       className,
       style,
       id,
-    } = self.props;
+    } = props;
 
     if (clearButton) {
       clearEl = (
@@ -126,7 +126,7 @@ export default {
         'no-hairline': noHairline,
         'searchbar-expandable': expandable,
       },
-      Mixins.colorClasses(self),
+      Mixins.colorClasses(props),
     );
 
     return (
@@ -196,7 +196,7 @@ export default {
     }
 
     self.$f7ready(() => {
-      const params = {
+      const params = Utils.noUndefinedProps({
         el: self.refs.el,
         searchContainer,
         searchIn,
@@ -227,9 +227,9 @@ export default {
             self.dispatchEvent('searchbar:disable searchbarDisable', searchbar);
           },
         },
-      };
+      });
       Object.keys(params).forEach((key) => {
-        if (typeof params[key] === 'undefined' || params[key] === '') {
+        if (params[key] === '') {
           delete params[key];
         }
       });

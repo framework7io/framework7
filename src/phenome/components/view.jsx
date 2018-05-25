@@ -72,8 +72,29 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
+    const {
+      id,
+      style,
+      tab,
+      main,
+      tabActive,
+      className,
+    } = props;
+
+    const classes = Utils.classNames(
+      className,
+      'view',
+      {
+        'view-main': main,
+        'tab-active': tabActive,
+        tab,
+      },
+      Mixins.colorClasses(props),
+    );
+
     return (
-      <div ref="el" id={self.props.id} style={self.props.style} className={self.classes}>
+      <div ref="el" id={id} style={style} className={classes}>
         <slot />
         {self.state.pages.map((page) => {
           const PageComponent = page.component;
@@ -117,9 +138,9 @@ export default {
       };
       routers.views.push(self.routerData);
       // phenome-vue-next-line
-      self.routerData.instance = f7.views.create(el, self.$options.propsData || {});
+      self.routerData.instance = f7.views.create(el, Utils.noUndefinedProps(self.$options.propsData || {}));
       // phenome-react-next-line
-      self.routerData.instance = f7.views.create(el, self.props);
+      self.routerData.instance = f7.views.create(el, Utils.noUndefinedProps(self.props));
       self.f7View = self.routerData.instance;
     });
   },
@@ -144,20 +165,6 @@ export default {
     const self = this;
     if (!self.routerData) return;
     events.emit('viewRouterDidUpdate', self.routerData);
-  },
-  computed: {
-    classes() {
-      return Utils.classNames(
-        this.props.className,
-        {
-          view: true,
-          'view-main': this.props.main,
-          'tab-active': this.props.tabActive,
-          tab: this.props.tab,
-        },
-        Mixins.colorClasses(this),
-      );
-    },
   },
   methods: {
     onSwipeBackMove(event) {

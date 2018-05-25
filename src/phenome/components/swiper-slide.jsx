@@ -7,14 +7,22 @@ export default {
     zoom: Boolean,
   },
   render() {
+    const props = this.props;
+    const {
+      className,
+      id,
+      style,
+      zoom,
+    } = props;
+
     const classes = Utils.classNames(
-      this.props.className,
+      className,
       'swiper-slide',
     );
 
     return (
-      <div id={this.props.id} style={this.props.style} className={classes}>
-        {this.props.zoom ? (
+      <div id={id} style={style} className={classes}>
+        {zoom ? (
           <div className="swiper-zoom-container">
             <slot />
           </div>

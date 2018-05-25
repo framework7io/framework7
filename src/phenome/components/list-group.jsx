@@ -11,13 +11,14 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
     const {
       className,
       id,
       style,
       mediaList,
       sortable,
-    } = self.props;
+    } = props;
 
     const classes = Utils.classNames(
       className,
@@ -26,7 +27,7 @@ export default {
         'media-list': mediaList,
         sortable,
       },
-      Mixins.colorClasses(self),
+      Mixins.colorClasses(props),
     );
 
     return (

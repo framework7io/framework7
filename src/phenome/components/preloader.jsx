@@ -9,8 +9,10 @@ export default {
     ...Mixins.colorProps,
   },
   render() {
-    const { classes, sizeComputed } = this;
-    const { id, style } = this.props;
+    const self = this;
+    const { sizeComputed } = self;
+    const props = self.props;
+    const { id, style, className } = props;
 
     const preloaderStyle = {};
     if (sizeComputed) {
@@ -20,7 +22,7 @@ export default {
     if (style) Utils.extend(preloaderStyle, style || {});
 
     let innerEl;
-    if (this.$theme.md) {
+    if (self.$theme.md) {
       innerEl = (
         <span className="preloader-inner">
           <span className="preloader-inner-gap" />
@@ -33,6 +35,12 @@ export default {
         </span>
       );
     }
+
+    const classes = Utils.classNames(
+      className,
+      'preloader',
+      Mixins.colorClasses(props),
+    );
     return (
       <span id={id} style={preloaderStyle} className={classes}>
         {innerEl}
@@ -40,13 +48,6 @@ export default {
     );
   },
   computed: {
-    classes() {
-      return Utils.classNames(
-        this.props.className,
-        'preloader',
-        Mixins.colorClasses(this),
-      );
-    },
     sizeComputed() {
       let s = this.props.size;
       if (s && typeof s === 'string' && s.indexOf('px') >= 0) {

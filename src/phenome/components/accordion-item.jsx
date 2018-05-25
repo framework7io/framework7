@@ -31,16 +31,23 @@ export default {
     el.removeEventListener('accordion:closed', self.onClosedBound);
   },
   render() {
+    const props = this.props;
+    const {
+      className,
+      id,
+      style,
+      opened,
+    } = props;
     const classes = Utils.classNames(
-      this.props.className,
+      className,
+      'accordion-item',
       {
-        'accordion-item': true,
-        'accordion-item-opened': this.props.opened,
+        'accordion-item-opened': opened,
       },
-      Mixins.colorClasses(this),
+      Mixins.colorClasses(props),
     );
     return (
-      <div id={this.props.id} style={this.props.style} className={classes}>
+      <div id={id} style={style} className={classes}>
         <slot />
       </div>
     );

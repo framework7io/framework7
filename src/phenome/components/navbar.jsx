@@ -10,6 +10,7 @@ export default {
     id: [String, Number],
     backLink: [Boolean, String],
     backLinkUrl: String,
+    backLinkForce: Boolean,
     sliding: {
       type: Boolean,
       default: true,
@@ -27,14 +28,22 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
     const {
       backLink,
       backLinkUrl,
+      backLinkForce,
       sliding,
       title,
       subtitle,
       inner,
-    } = self.props;
+      className,
+      id,
+      style,
+      hidden,
+      noShadow,
+      noHairline,
+    } = props;
 
     let innerEl;
     let leftEl;
@@ -46,6 +55,7 @@ export default {
           <F7NavLeft
             backLink={backLink}
             backLinkUrl={backLinkUrl}
+            backLinkForce={backLinkForce}
             onBackClick={self.onBackClick.bind(self)}
           />
         );
@@ -69,8 +79,19 @@ export default {
         </div>
       );
     }
+    const classes = Utils.classNames(
+      className,
+      'navbar',
+      {
+        'navbar-hidden': hidden,
+        'no-shadow': noShadow,
+        'no-hairline': noHairline,
+      },
+      Mixins.colorClasses(props),
+    );
+
     return (
-      <div ref="el" id={this.props.id} style={this.props.style} className={this.classes}>
+      <div ref="el" id={id} style={style} className={classes}>
         <slot name="before-inner" />
         {innerEl}
         <slot name="after-inner" />
@@ -86,21 +107,6 @@ export default {
     } else if (self.refs.inner) {
       self.$f7.navbar.size(self.refs.inner);
     }
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(
-        self.props.className,
-        {
-          navbar: true,
-          'navbar-hidden': self.props.hidden,
-          'no-shadow': self.props.noShadow,
-          'no-hairline': self.props.noHairline,
-        },
-        Mixins.colorClasses(self),
-      );
-    },
   },
   methods: {
     hide(animate) {

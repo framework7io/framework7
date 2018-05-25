@@ -45,6 +45,7 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
     const {
       id,
       disabled,
@@ -61,7 +62,7 @@ export default {
       {
         disabled,
       },
-      Mixins.colorClasses(self),
+      Mixins.colorClasses(props),
     );
 
     return (
@@ -89,24 +90,34 @@ export default {
     const self = this;
     self.$f7ready((f7) => {
       if (!self.props.init) return;
-      self.f7Range = f7.range.create({
+      const props = self.props;
+      const {
+        value,
+        min,
+        max,
+        step,
+        label,
+        dual,
+        draggableBar,
+      } = props;
+      self.f7Range = f7.range.create(Utils.noUndefinedProps({
         el: self.refs.el,
-        value: self.props.value,
-        min: self.props.min,
-        max: self.props.max,
-        step: self.props.step,
-        label: self.props.label,
-        dual: self.props.dual,
-        draggableBar: self.props.draggableBar,
+        value,
+        min,
+        max,
+        step,
+        label,
+        dual,
+        draggableBar,
         on: {
-          change(range, value) {
-            self.dispatchEvent('range:change rangeChange', value);
+          change(range, val) {
+            self.dispatchEvent('range:change rangeChange', val);
           },
-          changed(range, value) {
-            self.dispatchEvent('range:changed rangeChanged', value);
+          changed(range, val) {
+            self.dispatchEvent('range:changed rangeChanged', val);
           },
         },
-      });
+      }));
     });
   },
   componentWillUnmount() {

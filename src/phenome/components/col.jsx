@@ -23,29 +23,35 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
+    const {
+      className,
+      id,
+      style,
+      tag,
+      width,
+      tabletWidth,
+      desktopWidth,
+    } = props;
 
-    const ColTag = self.props.tag;
+    const ColTag = tag;
+
+    const classes = Utils.classNames(
+      className,
+      {
+        col: width === 'auto',
+        [`col-${width}`]: width !== 'auto',
+        [`tablet-${tabletWidth}`]: tabletWidth,
+        [`desktop-${desktopWidth}`]: desktopWidth,
+      },
+      Mixins.colorClasses(props),
+    );
 
     return (
-      <ColTag id={this.props.id} style={this.props.style} className={self.classes} onClick={self.onClick.bind(self)}>
+      <ColTag id={id} style={style} className={classes} onClick={self.onClick.bind(self)}>
         <slot />
       </ColTag>
     );
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(
-        self.props.className,
-        {
-          col: self.props.width === 'auto',
-          [`col-${self.props.width}`]: self.props.width !== 'auto',
-          [`tablet-${self.props.tabletWidth}`]: self.props.tabletWidth,
-          [`desktop-${self.props.desktopWidth}`]: self.props.desktopWidth,
-        },
-        Mixins.colorClasses(self),
-      );
-    },
   },
   methods: {
     onClick(e) {

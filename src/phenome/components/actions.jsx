@@ -14,17 +14,24 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
+    const {
+      className,
+      id,
+      style,
+      grid,
+    } = props;
 
     const classes = Utils.classNames(
-      self.props.className,
+      className,
+      'actions-modal',
       {
-        'actions-modal': true,
-        'actions-grid': self.props.grid,
+        'actions-grid': grid,
       },
-      Mixins.colorClasses(self),
+      Mixins.colorClasses(props),
     );
     return (
-      <div id={self.props.id} style={self.props.style} ref="el" className={classes}>
+      <div id={id} style={style} ref="el" className={classes}>
         <slot />
       </div>
     );
@@ -44,6 +51,14 @@ export default {
     const self = this;
     const el = self.refs.el;
     if (!el) return;
+    const props = self.props;
+    const {
+      grid,
+      target,
+      convertToPopover,
+      forceToPopover,
+      opened,
+    } = props;
     self.onOpenBound = self.onOpen.bind(self);
     self.onOpenedBound = self.onOpened.bind(self);
     self.onCloseBound = self.onClose.bind(self);
@@ -55,23 +70,23 @@ export default {
     self.$f7ready(() => {
       const actionsParams = {
         el: self.refs.el,
-        grid: self.props.grid,
+        grid,
       };
-      if (self.props.target) actionsParams.targetEl = self.props.target;
+      if (target) actionsParams.targetEl = target;
 
       // phenome-vue-next-line
-      if (typeof self.$options.propsData.convertToPopover !== 'undefined') actionsParams.convertToPopover = self.props.convertToPopover;
+      if (typeof self.$options.propsData.convertToPopover !== 'undefined') actionsParams.convertToPopover = convertToPopover;
       // phenome-vue-next-line
-      if (typeof self.$options.propsData.forceToPopover !== 'undefined') actionsParams.forceToPopover = self.props.forceToPopover;
+      if (typeof self.$options.propsData.forceToPopover !== 'undefined') actionsParams.forceToPopover = forceToPopover;
 
       // phenome-react-next-line
-      if ('convertToPopover' in self.props) actionsParams.convertToPopover = self.props.convertToPopover;
+      if ('convertToPopover' in props) actionsParams.convertToPopover = convertToPopover;
       // phenome-react-next-line
-      if ('forceToPopover' in self.props) actionsParams.forceToPopover = self.props.forceToPopover;
+      if ('forceToPopover' in props) actionsParams.forceToPopover = forceToPopover;
 
       self.f7Actions = self.$f7.actions.create(actionsParams);
 
-      if (self.props.opened) {
+      if (opened) {
         self.f7Actions.open(false);
       }
     });

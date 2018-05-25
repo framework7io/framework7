@@ -140,12 +140,12 @@ export default {
   computed: {
     classes() {
       const self = this;
-
+      const props = self.props;
       const {
         className,
         attachmentsVisible,
         sheetVisible,
-      } = self.props;
+      } = props;
 
       return Utils.classNames(
         className,
@@ -155,7 +155,7 @@ export default {
           'messagebar-attachments-visible': attachmentsVisible,
           'messagebar-sheet-visible': sheetVisible,
         },
-        Mixins.colorClasses(self),
+        Mixins.colorClasses(props),
       );
     },
   },
@@ -193,17 +193,13 @@ export default {
     el.addEventListener('messagebar:attachmentclick', self.onClickAttachmentBound);
     el.addEventListener('messagebar:resizepage', self.onResizePageBound);
 
-    const params = {
+    const params = Utils.noUndefinedProps({
       el,
       top,
       resizePage,
       bottomOffset,
       topOffset,
       maxHeight,
-    };
-
-    Object.keys(params).forEach((key) => {
-      if (typeof params[key] === 'undefined') delete params[key];
     });
 
     self.$f7ready(() => {
@@ -213,14 +209,15 @@ export default {
   componentDidUpdate() {
     const self = this;
     if (!self.f7Messagebar) return;
+    const { sheetVisible, attachmentsVisible } = self.props;
     if (self.updateSheetVisible) {
       self.updateSheetVisible = false;
-      self.f7Messagebar.sheetVisible = self.props.sheetVisible;
+      self.f7Messagebar.sheetVisible = sheetVisible;
       self.f7Messagebar.resizePage();
     }
     if (self.updateAttachmentsVisible) {
       self.updateAttachmentsVisible = false;
-      self.f7Messagebar.attachmentsVisible = self.props.attachmentsVisible;
+      self.f7Messagebar.attachmentsVisible = attachmentsVisible;
       self.f7Messagebar.resizePage();
     }
   },

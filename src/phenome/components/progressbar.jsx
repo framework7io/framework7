@@ -11,34 +11,33 @@ export default {
   },
   render() {
     const self = this;
-    const { progress, id, style } = self.props;
+    const props = self.props;
+    const { progress, id, style, infinite, className } = props;
     const transformStyle = {
       transform: progress ? `translate3d(${-100 + progress}%, 0, 0)` : '',
       WebkitTransform: progress ? `translate3d(${-100 + progress}%, 0, 0)` : '',
     };
+
+    const classes = Utils.classNames(
+      className,
+      'progressbar',
+      {
+        'progressbar-infinite': infinite,
+      },
+      Mixins.colorClasses(props),
+    );
+
     return (
       <span
         ref="el"
         id={id}
         style={style}
-        className={self.classes}
+        className={classes}
         data-progress={progress}
       >
         <span style={transformStyle} />
       </span>
     );
-  },
-  computed: {
-    classes() {
-      return Utils.classNames(
-        this.props.className,
-        {
-          progressbar: true,
-          'progressbar-infinite': this.props.infinite,
-        },
-        Mixins.colorClasses(this),
-      );
-    },
   },
   methods: {
     set(progress, speed) {

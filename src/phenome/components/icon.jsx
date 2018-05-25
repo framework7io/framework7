@@ -12,16 +12,23 @@ export default {
     icon: String, // Custom
     ifMd: String,
     ifIos: String,
+    ios: String,
+    md: String,
     size: [String, Number],
     ...Mixins.colorProps,
   },
   render() {
     const self = this;
+    const props = self.props;
+    const {
+      id,
+      style,
+    } = props;
 
     return (
       <i
-        id={this.props.id}
-        style={Utils.extend({ fontSize: self.sizeComputed }, this.props.style)}
+        id={id}
+        style={Utils.extend({ fontSize: self.sizeComputed }, style)}
         className={self.classes}
       >
         {self.iconTextComputed}
@@ -40,12 +47,14 @@ export default {
     },
     iconTextComputed() {
       const self = this;
-      const { material, f7, ifMd, ifIos } = self.props;
+      const { material, f7, ifMd, ifIos, md, ios } = self.props;
       let text = material || f7;
-      if (ifMd && self.$theme.md && (ifMd.indexOf('material:') >= 0 || ifMd.indexOf('f7:') >= 0)) {
-        text = ifMd.split(':')[1];
-      } else if (ifIos && self.$theme.ios && (ifIos.indexOf('material:') >= 0 || ifIos.indexOf('f7:') >= 0)) {
-        text = ifIos.split(':')[1];
+      const mdIcon = ifMd || md;
+      const iosIcon = ifIos || ios;
+      if (mdIcon && self.$theme.md && (mdIcon.indexOf('material:') >= 0 || mdIcon.indexOf('f7:') >= 0)) {
+        text = mdIcon.split(':')[1];
+      } else if (iosIcon && self.$theme.ios && (iosIcon.indexOf('material:') >= 0 || iosIcon.indexOf('f7:') >= 0)) {
+        text = iosIcon.split(':')[1];
       }
       return text;
     },
@@ -54,11 +63,14 @@ export default {
         icon: true,
       };
       const self = this;
+      const props = self.props;
       const {
-        ifMd, ifIos, material, f7, fa, ion, icon,
-      } = self.props;
-      if (ifMd || ifIos) {
-        const parts = (self.$theme.md ? ifMd : ifIos).split(':');
+        ifMd, ifIos, material, f7, fa, ion, icon, md, ios, className,
+      } = props;
+      const mdIcon = ifMd || md;
+      const iosIcon = ifIos || ios;
+      if (mdIcon || iosIcon) {
+        const parts = (self.$theme.md ? mdIcon : iosIcon).split(':');
         const prop = parts[0];
         const value = parts[1];
         if (prop === 'material' || prop === 'fa' || prop === 'f7') {
@@ -84,9 +96,9 @@ export default {
         if (icon) classes[icon] = true;
       }
       return Utils.classNames(
-        self.props.className,
+        className,
         classes,
-        Mixins.colorClasses(self),
+        Mixins.colorClasses(props),
       );
     },
   },

@@ -47,9 +47,36 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
+    const {
+      id,
+      style,
+      name,
+      pageContent,
+      messagesContent,
+      ptr,
+      ptrDistance,
+      ptrPreloader,
+      infinite,
+      infiniteDistance,
+      infinitePreloader,
+      infiniteTop,
+      hideBarsOnScroll,
+      hideNavbarOnScroll,
+      hideToolbarOnScroll,
+      loginScreen,
+      className,
+      stacked,
+      tabs,
+      subnavbar,
+      withSubnavbar,
+      noNavbar,
+      noToolbar,
+      noSwipeback,
+    } = props;
     const fixedList = [];
     const staticList = [];
-    const needsPageContent = self.props.pageContent;
+    const needsPageContent = pageContent;
 
     const { static: slotsStatic, fixed: slotsFixed, default: slotsDefault } = self.slots;
 
@@ -61,7 +88,7 @@ export default {
 
     let hasSubnavbar;
     let hasMessages;
-    hasMessages = self.props.messagesContent; // phenome-react-line
+    hasMessages = messagesContent; // phenome-react-line
     hasMessages = self.$options.propsData.messagesContent; // phenome-vue-line
 
     if (slotsDefault) {
@@ -100,11 +127,23 @@ export default {
       });
     }
 
-    self.hasSubnavbar = hasSubnavbar;
+    const classes = Utils.classNames(
+      className,
+      'page',
+      {
+        stacked,
+        tabs,
+        'page-with-subnavbar': subnavbar || withSubnavbar || hasSubnavbar,
+        'no-navbar': noNavbar,
+        'no-toolbar': noToolbar,
+        'no-swipeback': noSwipeback,
+      },
+      Mixins.colorClasses(props),
+    );
 
     if (!needsPageContent) {
       return (
-        <div ref="el" id={self.props.id} style={self.props.style} className={self.classes} data-name={self.props.name}>
+        <div ref="el" id={id} style={style} className={classes} data-name={name}>
           {slotsFixed}
           {slotsStatic}
           {slotsDefault}
@@ -114,18 +153,18 @@ export default {
 
     const pageContentEl = (
       <F7PageContent
-        ptr={self.props.ptr}
-        ptrDistance={self.props.ptrDistance}
-        ptrPreloader={self.props.ptrPreloader}
-        infinite={self.props.infinite}
-        infiniteTop={self.props.infiniteTop}
-        infiniteDistance={self.props.infiniteDistance}
-        infinitePreloader={self.props.infinitePreloader}
-        hideBarsOnScroll={self.props.hideBarsOnScroll}
-        hideNavbarOnScroll={self.props.hideNavbarOnScroll}
-        hideToolbarOnScroll={self.props.hideToolbarOnScroll}
-        messagesContent={self.props.messagesContent || hasMessages}
-        loginScreen={self.props.loginScreen}
+        ptr={ptr}
+        ptrDistance={ptrDistance}
+        ptrPreloader={ptrPreloader}
+        infinite={infinite}
+        infiniteTop={infiniteTop}
+        infiniteDistance={infiniteDistance}
+        infinitePreloader={infinitePreloader}
+        hideBarsOnScroll={hideBarsOnScroll}
+        hideNavbarOnScroll={hideNavbarOnScroll}
+        hideToolbarOnScroll={hideToolbarOnScroll}
+        messagesContent={messagesContent || hasMessages}
+        loginScreen={loginScreen}
       >
         {slotsStatic}
         {staticList}
@@ -133,33 +172,17 @@ export default {
     );
 
     return (
-      <div ref="el" id={self.props.id} style={self.props.style} className={self.classes} data-name={self.props.name}>
+      <div ref="el" id={id} style={style} className={classes} data-name={name}>
         {fixedList}
         {slotsFixed}
         {pageContentEl}
       </div>
     );
   },
-  computed: {
-    classes() {
-      return Utils.classNames(
-        this.props.className,
-        {
-          page: true,
-          stacked: this.props.stacked,
-          tabs: this.props.tabs,
-          'page-with-subnavbar': this.props.subnavbar || this.props.withSubnavbar || this.hasSubnavbar,
-          'no-navbar': this.props.noNavbar,
-          'no-toolbar': this.props.noToolbar,
-          'no-swipeback': this.props.noSwipeback,
-        },
-        Mixins.colorClasses(this),
-      );
-    },
-  },
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
+    const { ptr, infinite } = self.props;
 
     self.onPtrPullStart = self.onPtrPullStart.bind(self);
     self.onPtrPullMove = self.onPtrPullMove.bind(self);
@@ -176,12 +199,16 @@ export default {
     self.onPageAfterIn = self.onPageAfterIn.bind(self);
     self.onPageBeforeRemove = self.onPageBeforeRemove.bind(self);
 
-    el.addEventListener('ptr:pullstart', self.onPtrPullStart);
-    el.addEventListener('ptr:pullmove', self.onPtrPullMove);
-    el.addEventListener('ptr:pullend', self.onPtrPullEnd);
-    el.addEventListener('ptr:refresh', self.onPtrRefresh);
-    el.addEventListener('ptr:done', self.onPtrDone);
-    el.addEventListener('infinite', self.onInfinite);
+    if (ptr) {
+      el.addEventListener('ptr:pullstart', self.onPtrPullStart);
+      el.addEventListener('ptr:pullmove', self.onPtrPullMove);
+      el.addEventListener('ptr:pullend', self.onPtrPullEnd);
+      el.addEventListener('ptr:refresh', self.onPtrRefresh);
+      el.addEventListener('ptr:done', self.onPtrDone);
+    }
+    if (infinite) {
+      el.addEventListener('infinite', self.onInfinite);
+    }
     el.addEventListener('page:mounted', self.onPageMounted);
     el.addEventListener('page:init', self.onPageInit);
     el.addEventListener('page:reinit', self.onPageReinit);

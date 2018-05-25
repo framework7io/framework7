@@ -10,12 +10,25 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
+    const {
+      className,
+      id,
+      style,
+    } = props;
+
+    const classes = Utils.classNames(
+      className,
+      'login-screen',
+      Mixins.colorClasses(props),
+    );
+
     return (
       <div
         ref="el"
-        id={self.props.id}
-        style={self.props.style}
-        className={self.classes}
+        id={id}
+        style={style}
+        className={classes}
       >
         <slot />
       </div>
@@ -30,16 +43,6 @@ export default {
       } else {
         self.f7LoginScreen.close();
       }
-    },
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(
-        self.props.className,
-        'login-screen',
-        Mixins.colorClasses(self),
-      );
     },
   },
   componentDidMount() {

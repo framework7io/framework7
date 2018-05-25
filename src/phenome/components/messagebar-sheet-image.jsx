@@ -15,19 +15,20 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
     const {
       image,
       checked,
       id,
       className,
       style,
-    } = self.props;
+    } = props;
 
     const classes = Utils.classNames(
       className,
       'messagebar-sheet-image',
       'checkbox',
-      Mixins.colorClasses(self),
+      Mixins.colorClasses(props),
     );
     const styles = Utils.extend({
       backgroundImage: image && `url(${image})`,

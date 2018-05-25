@@ -15,9 +15,19 @@ export default {
   },
   render() {
     const self = this;
-    const { inner, title } = self.props;
+    const props = self.props;
+    const { inner, title, style, id, className, sliding } = props;
+
+    const classes = Utils.classNames(
+      className,
+      'subnavbar',
+      {
+        sliding,
+      },
+      Mixins.colorClasses(props),
+    );
     return (
-      <div className={self.classes}>
+      <div className={classes} id={id} style={style}>
         {inner ? (
           <div className="subnavbar-inner">
             {title && <div className="title">{title}</div>}
@@ -28,17 +38,5 @@ export default {
         )}
       </div>
     );
-  },
-  computed: {
-    classes() {
-      return Utils.classNames(
-        this.props.className,
-        {
-          subnavbar: true,
-          sliding: this.props.sliding,
-        },
-        Mixins.colorClasses(this),
-      );
-    },
   },
 };

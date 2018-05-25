@@ -10,7 +10,7 @@ const Mixins = {
     rippleColor: String,
     themeDark: Boolean,
   },
-  colorClasses(self) {
+  colorClasses(props) {
     const {
       color,
       colorTheme,
@@ -19,7 +19,7 @@ const Mixins = {
       borderColor,
       rippleColor,
       themeDark,
-    } = self.props;
+    } = props;
 
     return {
       'theme-dark': themeDark,
@@ -39,6 +39,8 @@ const Mixins = {
     iconF7: String,
     iconIfMd: String,
     iconIfIos: String,
+    iconIos: String,
+    iconMd: String,
     iconColor: String,
     iconSize: [String, Number],
   },
@@ -55,7 +57,7 @@ const Mixins = {
     routeTabId: String,
     view: String,
   },
-  linkRouterAttrs(self) {
+  linkRouterAttrs(props) {
     const {
       force,
       reloadCurrent,
@@ -65,14 +67,10 @@ const Mixins = {
       ignoreCache,
       routeTabId,
       view,
-    } = self.props;
+    } = props;
 
     let dataAnimate;
-    if (self.$options && 'propsData' in self.$options) {
-      if ('animate' in self.$options.propsData) {
-        dataAnimate = animate.toString();
-      }
-    } else if ('animate' in self.props) {
+    if ('animate' in props && typeof animate !== 'undefined') {
       dataAnimate = animate.toString();
     }
 
@@ -87,8 +85,8 @@ const Mixins = {
       'data-view': Utils.isStringProp(view) ? view : undefined,
     };
   },
-  linkRouterClasses(self) {
-    const { back, linkBack, external } = self.props;
+  linkRouterClasses(props) {
+    const { back, linkBack, external } = props;
 
     return {
       back: back || linkBack,
@@ -131,7 +129,7 @@ const Mixins = {
     sortableDisable: [Boolean, String],
     sortableToggle: [Boolean, String],
   },
-  linkActionsAttrs(self) {
+  linkActionsAttrs(props) {
     const {
       searchbarEnable,
       searchbarDisable,
@@ -152,7 +150,7 @@ const Mixins = {
       sortableEnable,
       sortableDisable,
       sortableToggle,
-    } = self.props;
+    } = props;
 
     return {
       'data-searchbar': (Utils.isStringProp(searchbarEnable) && searchbarEnable) ||
@@ -176,7 +174,7 @@ const Mixins = {
                        (Utils.isStringProp(sortableToggle) && sortableToggle) || undefined,
     };
   },
-  linkActionsClasses(self) {
+  linkActionsClasses(props) {
     const {
       searchbarEnable,
       searchbarDisable,
@@ -197,7 +195,7 @@ const Mixins = {
       sortableEnable,
       sortableDisable,
       sortableToggle,
-    } = self.props;
+    } = props;
 
     return {
       'searchbar-enable': searchbarEnable || searchbarEnable === '',

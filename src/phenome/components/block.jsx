@@ -33,6 +33,7 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
     const {
       className,
       inset,
@@ -47,7 +48,7 @@ export default {
       noHairlinesMd,
       id,
       style,
-    } = self.props;
+    } = props;
     const classes = Utils.classNames(
       className,
       'block',
@@ -63,7 +64,7 @@ export default {
         'no-hairlines-md': noHairlinesMd,
         'no-hairlines-ios': noHairlinesIos,
       },
-      Mixins.colorClasses(self),
+      Mixins.colorClasses(props),
     );
     return (
       <div

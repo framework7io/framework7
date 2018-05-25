@@ -11,14 +11,14 @@ export default {
   },
   render() {
     const self = this;
-
+    const props = self.props;
     const {
       inline,
       id,
       style,
       className,
       floating,
-    } = self.props;
+    } = props;
 
     const classes = Utils.classNames(
       className,
@@ -28,7 +28,7 @@ export default {
         'item-label': !floating,
         'item-floating-label': floating,
       },
-      Mixins.colorClasses(self),
+      Mixins.colorClasses(props),
     );
 
     return (

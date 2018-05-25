@@ -9,26 +9,29 @@ export default {
     ...Mixins.colorProps,
   },
   render() {
+    const props = this.props;
+    const {
+      className,
+      id,
+      style,
+      fabClose,
+    } = props;
+
+    const classes = Utils.classNames(
+      className,
+      {
+        'fab-close': fabClose,
+      },
+      Mixins.colorClasses(props),
+    );
     return (
       <a
-        id={this.props.id}
-        style={this.props.style}
-        className={this.classes}
+        id={id}
+        style={style}
+        className={classes}
         onClick={this.onClick.bind(this)}
       ><slot /></a>
     );
-  },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(
-        self.props.className,
-        {
-          'fab-close': self.fabClose,
-        },
-        Mixins.colorClasses(self),
-      );
-    },
   },
   methods: {
     onClick(event) {

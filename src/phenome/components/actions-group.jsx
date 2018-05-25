@@ -9,14 +9,21 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
+    const {
+      className,
+      id,
+      style,
+    } = props;
 
     const classes = Utils.classNames(
-      self.props.className,
-      { 'actions-group': true },
+      className,
+      'actions-group',
+      ...Mixins.colorClasses(props),
     );
 
     return (
-      <div id={self.props.id} style={self.props.style} className={classes}>
+      <div id={id} style={style} className={classes}>
         <slot />
       </div>
     );

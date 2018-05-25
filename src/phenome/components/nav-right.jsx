@@ -9,22 +9,27 @@ export default {
     ...Mixins.colorProps,
   },
   render() {
+    const props = this.props;
+    const {
+      className,
+      id,
+      style,
+      sliding,
+    } = props;
+
+    const classes = Utils.classNames(
+      className,
+      'right',
+      {
+        right: true,
+        sliding,
+      },
+      Mixins.colorClasses(props),
+    );
     return (
-      <div id={this.props.id} style={this.props.style} className={this.classes}>
+      <div id={id} style={style} className={classes}>
         <slot />
       </div>
     );
-  },
-  computed: {
-    classes() {
-      return Utils.classNames(
-        this.props.className,
-        {
-          right: true,
-          sliding: this.props.slidng,
-        },
-        Mixins.colorClasses(this),
-      );
-    },
   },
 };

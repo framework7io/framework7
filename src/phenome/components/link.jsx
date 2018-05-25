@@ -36,6 +36,7 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
     const {
       text,
       badge,
@@ -53,7 +54,7 @@ export default {
       iconIfIos,
       id,
       style,
-    } = self.props;
+    } = props;
 
     const defaultSlots = self.slots.default;
 
@@ -132,7 +133,8 @@ export default {
   computed: {
     attrs() {
       const self = this;
-      const { href, target, tabLink } = self.props;
+      const props = self.props;
+      const { href, target, tabLink } = props;
       let hrefComputed = href;
       if (href === true) hrefComputed = '#';
       if (href === false) hrefComputed = undefined; // no href attribute
@@ -142,12 +144,13 @@ export default {
           target,
           'data-tab': (Utils.isStringProp(tabLink) && tabLink) || undefined,
         },
-        Mixins.linkRouterAttrs(self),
-        Mixins.linkActionsAttrs(self),
+        Mixins.linkRouterAttrs(props),
+        Mixins.linkActionsAttrs(props),
       );
     },
     classes() {
       const self = this;
+      const props = self.props;
       const {
         noFastclick,
         noFastClick,
@@ -155,7 +158,7 @@ export default {
         tabLinkActive,
         noLinkClass,
         className,
-      } = self.props;
+      } = props;
 
       return Utils.classNames(
         className,
@@ -166,9 +169,9 @@ export default {
           'tab-link-active': tabLinkActive,
           'no-fastclick': noFastclick || noFastClick,
         },
-        Mixins.colorClasses(self),
-        Mixins.linkRouterClasses(self),
-        Mixins.linkActionsClasses(self),
+        Mixins.colorClasses(props),
+        Mixins.linkRouterClasses(props),
+        Mixins.linkActionsClasses(props),
       );
     },
   },

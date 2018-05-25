@@ -8,18 +8,25 @@ export default {
     id: [String, Number],
     params: Object,
     routes: Array,
+    ...Mixins.colorProps,
   },
   render() {
     const self = this;
+    const props = self.props;
+    const {
+      id,
+      style,
+      className,
+    } = props;
 
     const classes = Utils.classNames(
-      self.props.className,
+      className,
       'framework7-root',
-      Mixins.colorClasses(self),
+      Mixins.colorClasses(props),
     );
 
     return (
-      <div ref="el" id={self.props.id || 'framework7-root'} className={classes}>
+      <div ref="el" id={id || 'framework7-root'} style={style} className={classes}>
         <slot />
       </div>
     );

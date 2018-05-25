@@ -34,22 +34,26 @@ export default {
     ...Mixins.colorProps,
   },
   render() {
+    const props = this.props;
+    const {
+      className,
+      id,
+      style,
+    } = props;
+
+    const classes = Utils.classNames(
+      className,
+      'list-index',
+      Mixins.colorClasses(props),
+    );
+
     return (
-      <div ref="el" id={this.props.id} style={this.props.style} className={this.classes}>
+      <div ref="el" id={id} style={style} className={classes}>
         <slot />
       </div>
     );
   },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(
-        this.props.className,
-        'list-index',
-        Mixins.colorClasses(self),
-      );
-    },
-  },
+
   componentWillUnmount() {
     if (!this.props.init) return;
     if (this.f7ListIndex && this.f7ListIndex.destroy) {

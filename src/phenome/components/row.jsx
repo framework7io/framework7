@@ -14,31 +14,35 @@ export default {
   },
   render() {
     const self = this;
+    const props = self.props;
+    const {
+      className,
+      id,
+      style,
+      tag,
+      noGap,
+    } = props;
 
-    const RowTag = self.props.tag;
+    const RowTag = tag;
+
+    const classes = Utils.classNames(
+      className,
+      'row',
+      {
+        'no-gap': noGap,
+      },
+      Mixins.colorClasses(props),
+    );
 
     return (
-      <RowTag id={this.props.id} style={this.props.style} className={self.classes} onClick={self.onClick.bind(self)}>
+      <RowTag id={id} style={style} className={classes} onClick={self.onClick.bind(self)}>
         <slot />
       </RowTag>
     );
   },
-  computed: {
-    classes() {
-      const self = this;
-      return Utils.classNames(
-        self.props.className,
-        {
-          row: true,
-          'no-gap': self.props.noGap,
-        },
-        Mixins.colorClasses(self),
-      );
-    },
-  },
   methods: {
     onClick(e) {
       this.dispatchEvent('click', e);
-    }
+    },
   },
 };
