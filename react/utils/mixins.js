@@ -48,7 +48,10 @@ const Mixins = {
     back: Boolean,
     external: Boolean,
     force: Boolean,
-    animate: Boolean,
+    animate: {
+      type: Boolean,
+      default: undefined,
+    },
     ignoreCache: Boolean,
     pageName: String,
     reloadCurrent: Boolean,
