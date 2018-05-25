@@ -35,7 +35,7 @@ export default {
     return (
       <div id={id} style={style} ref="el" className={classes}>
         {tabContent ? (
-          <TabContent key={tabContent.id} {...tabContent.params} />
+          <TabContent key={tabContent.id} {...tabContent.props} />
         ) : (
           <slot />
         )}
