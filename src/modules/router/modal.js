@@ -51,7 +51,7 @@ function modalLoad(modalType, route, loadOptions = {}) {
         modalComponent.$destroy();
       }
       Utils.nextTick(() => {
-        if (modalComponent) {
+        if (modalComponent || modalParams.component) {
           router.removeModal(modal.el);
         }
         modal.destroy();
@@ -159,14 +159,14 @@ function modalLoad(modalType, route, loadOptions = {}) {
     }
   }
 
-  let needsToLoad;
+  let foundLoadProp;
   ('url content component el componentUrl template templateUrl').split(' ').forEach((modalLoadProp) => {
-    if (modalParams[modalLoadProp]) {
-      needsToLoad = true;
+    if (modalParams[modalLoadProp] && !foundLoadProp) {
+      foundLoadProp = true;
       loadModal({ [modalLoadProp]: modalParams[modalLoadProp] }, options);
     }
   });
-  if (!needsToLoad && modalType === 'actions') {
+  if (!foundLoadProp && modalType === 'actions') {
     onModalLoaded();
   }
 
