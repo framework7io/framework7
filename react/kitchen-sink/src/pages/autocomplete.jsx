@@ -27,7 +27,6 @@ export default class extends React.Component {
             <Label inline>Fruit</Label>
             <Input type="text" placeholder="Fruit" id="autocomplete-dropdown" />
           </ListItem>
-          <BlockHeader>After list Dropdown Autocomplete</BlockHeader>
         </List>
 
         <List noHairlinesMd>
@@ -468,7 +467,7 @@ export default class extends React.Component {
       el: '#searchbar-autocomplete',
       customSearch: true,
       on: {
-        search(query) {
+        search(sb, query) {
           console.log(query);
         },
       },

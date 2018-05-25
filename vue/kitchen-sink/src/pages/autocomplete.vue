@@ -553,7 +553,7 @@
           el: '#searchbar-autocomplete',
           customSearch: true,
           on: {
-            search(query) {
+            search(sb, query) {
               console.log(query);
             },
           },

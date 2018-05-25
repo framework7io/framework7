@@ -3,7 +3,7 @@ import { Navbar, Page, BlockTitle, Block, List, ListItem, Label, Input, Range } 
 
 export default () => (
   <Page>
-    <Navbar title="About Framework7" backLink="Back"></Navbar>
+    <Navbar title="Form Storage" backLink="Back"></Navbar>
     <Block strong>
       <p>With forms storage it is easy to store and parse form data, especially on Ajax loaded pages. All you need to make it work is to add "form-store-data" class to your &lt;form&gt; and Framework7 will store form data with every input change. And the most awesome part is that when you load this page again Framework7 will parse this data and fill all form fields automatically!</p>
       <p>Just try to fill the form below and then go to any other page, or even you may close this site, and when you return here form fields will have kept your data.</p>
