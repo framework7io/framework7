@@ -90,6 +90,7 @@ class F7View extends React.Component {
     if (self.f7View && self.f7View.destroy)
       self.f7View.destroy();
     routers.views.splice(routers.views.indexOf(self.routerData), 1);
+    self.routerData = null;
     delete self.routerData;
   }
   componentDidMount() {

@@ -156,14 +156,10 @@ export default {
     },
     modalComponentLoader(rootEl, component, componentUrl, options, resolve, reject) {
       const router = this;
-      const modalsEl = document.querySelector('.framework7-modals');
-      if (!modalsEl) {
-        reject();
-        return;
-      }
+      const modalsComponent = routers.modals && routers.modals.component;
+      const modalsComponentEl = routers.modals && routers.modals.el;
 
-      const modalsVue = modalsEl.__vue__;
-      if (!modalsVue) {
+      if (!modalsComponent || !modalsComponent.state.modals) {
         reject();
         return;
       }
@@ -174,59 +170,37 @@ export default {
         id,
         params: Utils.extend({}, options.route.params),
       };
-      modalsVue.$f7route = options.route;
-      modalsVue.modals.push(modalData);
+      modalsComponent.$f7router = router;
+      modalsComponent.$f7route = options.route;
 
-      modalsVue.$nextTick(() => {
-        const modalEl = modalsEl.children[modalsEl.children.length - 1];
+      let resolved;
+      function onDidUpdate(componentRouterData) {
+        if (componentRouterData.component !== modalsComponent || resolved) return;
+        events.off('modalsRouterDidUpdate', onDidUpdate);
+
+        const modalEl = modalsComponentEl.children[modalsComponentEl.children.length - 1];
         modalData.el = modalEl;
 
-        let modalEvents;
-        let modalVueFound;
-        let modalVue = modalEl.__vue__;
-        while (modalVue.$parent && !modalVueFound) {
-          if (modalVue.$parent.$el === modalEl) {
-            modalVue = modalVue.$parent;
-          } else {
-            modalVueFound = true;
-          }
-        }
-        if (component.on && modalVue) {
-          modalEvents = Utils.extend({}, component.on);
-          Object.keys(modalEvents).forEach((pageEvent) => {
-            modalEvents[pageEvent] = modalEvents[pageEvent].bind(modalVue);
-          });
-        }
-
-        modalEl.addEventListener('modal:closed', () => {
-          modalsVue.$nextTick(() => {
-            router.removeModal(modalEl, modalVue);
-          });
-        });
-
-        resolve(modalEl, { on: modalEvents });
-      });
-    },
-    removeModal(modalEl, modalVue) {
-      if (!modalVue) return;
-
-      const modalsEl = document.querySelector('.framework7-modals');
-      if (!modalsEl) return;
-
-      const modalsVue = modalsEl.__vue__;
-      if (!modalsVue) return;
-
-      let modalVueFound;
-      modalsVue.modals.forEach((modal, index) => {
-        if (modal.el === modalEl) {
-          modalVueFound = true;
-          modalsVue.modals.splice(index, 1);
-        }
-      });
-
-      if (!modalVueFound) {
-        modalEl.parentNode.removeChild(modalEl);
+        resolve(modalEl);
+        resolved = true;
       }
+
+      events.on('modalsRouterDidUpdate', onDidUpdate);
+
+      modalsComponent.state.modals.push(modalData);
+      modalsComponent.setState({ modals: modalsComponent.state.modals });
+    },
+    removeModal(modalEl) {
+      const modalsComponent = routers.modals && routers.modals.component;
+      if (!modalsComponent) return;
+
+      let modalDataToRemove;
+      modalsComponent.state.modals.forEach((modalData) => {
+        if (modalData.el === modalEl) modalDataToRemove = modalData;
+      });
+
+      modalsComponent.state.modals.splice(modalsComponent.state.modals.indexOf(modalDataToRemove), 1);
+      modalsComponent.setState({ modals: modalsComponent.state.modals });
     },
   },
 };

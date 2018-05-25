@@ -191,5 +191,10 @@ export default () => (
       <ListItem title="Material (MD) Theme" external link="./index.html?theme=md"></ListItem>
       <ListItem title="Color Themes" link="/color-themes/"></ListItem>
     </List>
+    <BlockTitle className="searchbar-hide-on-search">Page Loaders & Router</BlockTitle>
+    <List className="searchbar-hide-on-search">
+      <ListItem title="Routable Modals" link="/routable-modals/"></ListItem>
+      <ListItem title="Default Route (404)" link="/load-something-that-doesnt-exist/"></ListItem>
+    </List>
   </Page>
 )

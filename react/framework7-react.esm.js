@@ -60,6 +60,7 @@ import F7Preloader from './components/preloader';
 import F7Progressbar from './components/progressbar';
 import F7Radio from './components/radio';
 import F7Range from './components/range';
+import F7RoutableModals from './components/routable-modals';
 import F7Row from './components/row';
 import F7Searchbar from './components/searchbar';
 import F7Segmented from './components/segmented';
@@ -141,6 +142,7 @@ const Preloader = F7Preloader;
 const Progressbar = F7Progressbar;
 const Radio = F7Radio;
 const Range = F7Range;
+const RoutableModals = F7RoutableModals;
 const Row = F7Row;
 const Searchbar = F7Searchbar;
 const Segmented = F7Segmented;
@@ -284,6 +286,8 @@ export {
   Radio,
   F7Range,
   Range,
+  F7RoutableModals,
+  RoutableModals,
   F7Row,
   Row,
   F7Searchbar,

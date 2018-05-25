@@ -89,6 +89,9 @@ import TimelineHorizontal from './pages/timeline-horizontal.jsx';
 import TimelineHorizontalCalendar from './pages/timeline-horizontal-calendar.jsx';
 import VirtualList from './pages/virtual-list.jsx';
 import ColorThemes from './pages/color-themes.jsx';
+
+import RoutableModals from './pages/routable-modals.jsx';
+import RoutablePopup from './pages/routable-popup.jsx';
 // Pages
 export default [
   // Index page
@@ -552,5 +555,22 @@ export default [
   {
     path: '/color-themes/',
     component: ColorThemes,
+  },
+
+  // Routable Modals
+  {
+    path: '/routable-modals/',
+    component: RoutableModals,
+    routes: [
+      {
+
+      },
+    ],
+  },
+  {
+    path: '/routable-popup/',
+    popup: {
+      component: RoutablePopup,
+    },
   },
 ];

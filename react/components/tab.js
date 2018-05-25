@@ -76,6 +76,8 @@ class F7Tab extends React.Component {
     if (!self.routerData)
       return;
     routers.tabs.splice(routers.tabs.indexOf(self.routerData), 1);
+    self.routerData = null;
+    delete self.routerData;
   }
   componentDidUpdate() {
     const self = this;

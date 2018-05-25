@@ -1,6 +1,7 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import f7Plugin from '../utils/plugin';
+import RoutableModals from './routable-modals';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
 export default {
   name: 'f7-app',
@@ -13,6 +14,13 @@ export default {
     routes: Array,
     ...Mixins.colorProps
   },
+  data() {
+    const props = __vueComponentProps(this);
+    const state = (() => {
+      return { modals: [] };
+    })();
+    return { state };
+  },
   render() {
     const _h = this.$createElement;
     const self = this;
@@ -24,7 +32,10 @@ export default {
       style: style,
       class: classes,
       attrs: { id: id || 'framework7-root' }
-    }, [this.$slots['default']]);
+    }, [
+      this.$slots['default'],
+      _h(RoutableModals)
+    ]);
   },
   mounted() {
     const self = this;

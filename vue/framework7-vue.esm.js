@@ -60,6 +60,7 @@ import f7Preloader from './components/preloader';
 import f7Progressbar from './components/progressbar';
 import f7Radio from './components/radio';
 import f7Range from './components/range';
+import f7RoutableModals from './components/routable-modals';
 import f7Row from './components/row';
 import f7Searchbar from './components/searchbar';
 import f7Segmented from './components/segmented';
@@ -142,6 +143,7 @@ export {
   f7Progressbar,
   f7Radio,
   f7Range,
+  f7RoutableModals,
   f7Row,
   f7Searchbar,
   f7Segmented,

@@ -2,12 +2,16 @@ import React from 'react';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import f7Plugin from '../utils/plugin';
+import RoutableModals from './routable-modals';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
 class F7App extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.__reactRefs = {};
+    this.state = (() => {
+      return { modals: [] };
+    })();
   }
   render() {
     const self = this;
@@ -21,7 +25,7 @@ class F7App extends React.Component {
       id: id || 'framework7-root',
       style: style,
       className: classes
-    }, this.slots['default']);
+    }, this.slots['default'], React.createElement(RoutableModals, null));
   }
   componentDidMount() {
     const self = this;
