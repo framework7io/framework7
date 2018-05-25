@@ -35,7 +35,7 @@ export default {
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
-
+    self.setState({ modals: [] });
     self.routerData = {
       el,
       component: self,
