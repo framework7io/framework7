@@ -197,7 +197,7 @@ class Autocomplete extends Framework7Class {
       ac.close();
     }
     function onResize() {
-      ac.positionDropDown();
+      ac.positionDropdown();
     }
 
     function onKeyDown(e) {
@@ -291,7 +291,7 @@ class Autocomplete extends Framework7Class {
 
     return ac;
   }
-  positionDropDown() {
+  positionDropdown() {
     const ac = this;
     const { $inputEl, app, $dropdownEl } = ac;
 
@@ -301,9 +301,17 @@ class Autocomplete extends Framework7Class {
     const inputOffsetWidth = $inputEl[0].offsetWidth;
     const inputOffsetHeight = $inputEl[0].offsetHeight;
     const $listEl = $inputEl.parents('.list');
+
+    let $listParent;
+    $listEl.parents().each((index, parentEl) => {
+      if ($listParent) return;
+      const $parentEl = $(parentEl);
+      if ($parentEl.parent($pageContentEl).length) $listParent = $parentEl;
+    });
+
     const listOffset = $listEl.offset();
     const paddingBottom = parseInt($pageContentEl.css('padding-bottom'), 10);
-    const listOffsetLeft = $listEl.length > 0 ? listOffset.left - $listEl.parent().offset().left : 0;
+    const listOffsetLeft = $listEl.length > 0 ? listOffset.left - $pageContentEl.offset().left : 0;
     const inputOffsetLeft = inputOffset.left - ($listEl.length > 0 ? listOffset.left : 0) - (app.rtl ? 0 : 0);
     const inputOffsetTop = inputOffset.top - ($pageContentEl.offset().top - $pageContentEl[0].scrollTop);
 
@@ -314,7 +322,6 @@ class Autocomplete extends Framework7Class {
     if ($listEl.length && !ac.params.expandInput) {
       paddingValue = (app.rtl ? $listEl[0].offsetWidth - inputOffsetLeft - inputOffsetWidth : inputOffsetLeft) - (app.theme === 'md' ? 16 : 15);
     }
-
 
     $dropdownEl.css({
       left: `${$listEl.length > 0 ? listOffsetLeft : inputOffsetLeft}px`,
@@ -711,13 +718,14 @@ class Autocomplete extends Framework7Class {
     if ($listEl.length && ac.$inputEl.parents('.item-content').length > 0 && ac.params.expandInput) {
       ac.$inputEl.parents('.item-content').addClass('item-content-dropdown-expanded');
     }
-    ac.positionDropDown();
+
     const $pageContentEl = ac.$inputEl.parents('.page-content');
-    if (ac.params.dropdownel) {
-      $(ac.params.dropdownel).append(ac.$dropdownEl);
+    if (ac.params.dropdownContainerEl) {
+      $(ac.params.dropdownContainerEl).append(ac.$dropdownEl);
     } else if ($pageContentEl.length === 0) {
       ac.$dropdownEl.insertAfter(ac.$inputEl);
     } else {
+      ac.positionDropdown();
       $pageContentEl.append(ac.$dropdownEl);
     }
     ac.onOpen('dropdown', ac.$dropdownEl);
