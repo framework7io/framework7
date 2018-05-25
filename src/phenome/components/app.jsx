@@ -1,6 +1,7 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import f7Plugin from '../utils/plugin';
+import RoutableModals from './routable-modals';
 
 export default {
   name: 'f7-app',
@@ -9,6 +10,11 @@ export default {
     params: Object,
     routes: Array,
     ...Mixins.colorProps,
+  },
+  state() {
+    return {
+      modals: [],
+    };
   },
   render() {
     const self = this;
@@ -28,6 +34,7 @@ export default {
     return (
       <div ref="el" id={id || 'framework7-root'} style={style} className={classes}>
         <slot />
+        <RoutableModals />
       </div>
     );
   },
@@ -40,6 +47,7 @@ export default {
     if (parentEl && parentEl !== document.body && parentEl.parentNode === document.body) {
       parentEl.style.height = '100%';
     }
+
     f7Plugin.init(el, params, routes);
   },
 };

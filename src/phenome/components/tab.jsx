@@ -60,6 +60,8 @@ export default {
     }
     if (!self.routerData) return;
     routers.tabs.splice(routers.tabs.indexOf(self.routerData), 1);
+    self.routerData = null;
+    delete self.routerData;
   },
   componentDidMount() {
     const self = this;
