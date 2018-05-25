@@ -17,15 +17,18 @@ class F7RoutableModals extends React.Component {
       className: 'framework7-modals'
     }, this.state.modals.map(modal => {
       const ModalComponent = modal.component;
-      return React.createElement(ModalComponent, {
-        key: modal.id,
-        ...modal.props
-      });
+      {
+        return React.createElement(ModalComponent, {
+          key: modal.id,
+          ...modal.props
+        });
+      }
     }));
   }
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
+    self.setState({ modals: [] });
     self.routerData = {
       el,
       component: self

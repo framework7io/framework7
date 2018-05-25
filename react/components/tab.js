@@ -38,17 +38,19 @@ class F7Tab extends React.Component {
     let TabContent;
     if (tabContent)
       TabContent = tabContent.component;
-    return React.createElement('div', {
-      id: id,
-      style: style,
-      ref: __reactNode => {
-        this.__reactRefs['el'] = __reactNode;
-      },
-      className: classes
-    }, tabContent ? React.createElement(TabContent, {
-      key: tabContent.id,
-      ...tabContent.params
-    }) : this.slots['default']);
+    {
+      return React.createElement('div', {
+        id: id,
+        style: style,
+        ref: __reactNode => {
+          this.__reactRefs['el'] = __reactNode;
+        },
+        className: classes
+      }, tabContent ? React.createElement(TabContent, {
+        key: tabContent.id,
+        ...tabContent.props
+      }) : this.slots['default']);
+    }
   }
   componentDidMount() {
     const self = this;

@@ -1,6 +1,6 @@
 import routers from '../utils/routers';
 import events from '../utils/events';
-import __vueComponentTransformJSXProps from '../runtime-helpers/vue-component-transform-jsx-props.js';
+import __vueComponentSetState from '../runtime-helpers/vue-component-set-state.js';
 export default {
   name: 'f7-routable-modals',
   data() {
@@ -16,10 +16,12 @@ export default {
       class: 'framework7-modals'
     }, [this.state.modals.map(modal => {
         const ModalComponent = modal.component;
-        return _h(ModalComponent, __vueComponentTransformJSXProps({
-          key: modal.id,
-          ...modal.props
-        }));
+        {
+          return _h(ModalComponent, {
+            key: modal.id,
+            props: modal.props
+          });
+        }
       })]);
   },
   updated() {
@@ -39,10 +41,16 @@ export default {
   mounted() {
     const self = this;
     const el = self.$refs.el;
+    self.setState({ modals: [] });
     self.routerData = {
       el,
       component: self
     };
     routers.modals = self.routerData;
+  },
+  methods: {
+    setState(updater, callback) {
+      __vueComponentSetState(this, updater, callback);
+    }
   }
 };

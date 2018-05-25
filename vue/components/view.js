@@ -2,7 +2,6 @@ import routers from '../utils/routers';
 import events from '../utils/events';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
-import __vueComponentTransformJSXProps from '../runtime-helpers/vue-component-transform-jsx-props.js';
 import __vueComponentSetState from '../runtime-helpers/vue-component-set-state.js';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
@@ -89,10 +88,12 @@ export default {
       this.$slots['default'],
       self.state.pages.map(page => {
         const PageComponent = page.component;
-        return _h(PageComponent, __vueComponentTransformJSXProps({
-          key: page.id,
-          ...page.props
-        }));
+        {
+          return _h(PageComponent, {
+            key: page.id,
+            props: page.props
+          });
+        }
       })
     ]);
   },

@@ -1,6 +1,6 @@
 export default (props) => {
   if (!props) return props;
-  const nestedPropsKeys = ('style class domProps slot key ref attrs on').split(' ');
+  const nestedPropsKeys = ('style class domProps slot key ref attrs on props').split(' ');
   Object.keys(props).forEach((key) => {
     if (key === 'className') {
       props.class = props.className;

@@ -26,7 +26,7 @@ export default {
       const pageData = {
         component,
         id,
-        params: Utils.extend({}, options.route.params),
+        props: Utils.extend({}, options.route.params),
       };
       routerComponent.$f7router = router;
       routerComponent.$f7route = options.route;
@@ -109,7 +109,7 @@ export default {
       const tabContent = {
         id,
         component,
-        params: Utils.extend({}, options.route.params),
+        props: Utils.extend({}, options.route.params),
       };
 
       tabsComponent.$f7router = router;
@@ -168,7 +168,7 @@ export default {
       const modalData = {
         component,
         id,
-        params: Utils.extend({}, options.route.params),
+        props: Utils.extend({}, options.route.params),
       };
       modalsComponent.$f7router = router;
       modalsComponent.$f7route = options.route;

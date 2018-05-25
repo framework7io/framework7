@@ -2,7 +2,6 @@ import events from '../utils/events';
 import routers from '../utils/routers';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
-import __vueComponentTransformJSXProps from '../runtime-helpers/vue-component-transform-jsx-props.js';
 import __vueComponentSetState from '../runtime-helpers/vue-component-set-state.js';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
@@ -33,15 +32,17 @@ export default {
     let TabContent;
     if (tabContent)
       TabContent = tabContent.component;
-    return _h('div', {
-      style: style,
-      ref: 'el',
-      class: classes,
-      attrs: { id: id }
-    }, [tabContent ? _h(TabContent, __vueComponentTransformJSXProps({
-        key: tabContent.id,
-        ...tabContent.params
-      })) : this.$slots['default']]);
+    {
+      return _h('div', {
+        style: style,
+        ref: 'el',
+        class: classes,
+        attrs: { id: id }
+      }, [tabContent ? _h(TabContent, {
+          key: tabContent.id,
+          props: tabContent.props
+        }) : this.$slots['default']]);
+    }
   },
   created() {
     this.onTabShowBound = this.onTabShow.bind(this);

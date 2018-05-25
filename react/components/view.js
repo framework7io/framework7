@@ -63,10 +63,12 @@ class F7View extends React.Component {
       className: classes
     }, this.slots['default'], self.state.pages.map(page => {
       const PageComponent = page.component;
-      return React.createElement(PageComponent, {
-        key: page.id,
-        ...page.props
-      });
+      {
+        return React.createElement(PageComponent, {
+          key: page.id,
+          ...page.props
+        });
+      }
     }));
   }
   componentDidUpdate() {
