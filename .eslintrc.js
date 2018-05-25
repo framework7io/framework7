@@ -40,5 +40,6 @@ module.exports = {
     'prefer-destructuring': ['off'],
     'react/react-in-jsx-scope': ['off'],
     'react/no-string-refs': ['off'],
+    'react/prop-types': ['off'],
   },
 };
