@@ -91,6 +91,12 @@ import TimelineHorizontalCalendar from './pages/timeline-horizontal-calendar.vue
 import VirtualList from './pages/virtual-list.vue';
 import ColorThemes from './pages/color-themes.vue';
 
+import RoutableModals from './pages/routable-modals.vue';
+import RoutablePopup from './pages/routable-popup.vue';
+import RoutableActions from './pages/routable-actions.vue';
+
+import NotFound from './pages/404.vue';
+
 // Pages
 export default [
   // Index page
@@ -557,4 +563,28 @@ export default [
     component: ColorThemes,
   },
 
+  // Routable Modals
+  {
+    path: '/routable-modals/',
+    component: RoutableModals,
+    routes: [
+      {
+        path: 'popup/',
+        popup: {
+          component: RoutablePopup,
+        },
+      },
+      {
+        path: 'actions/',
+        popup: {
+          component: RoutableActions,
+        },
+      },
+    ],
+  },
+  // Default route (404 page). MUST BE THE LAST
+  {
+    path: '(.*)',
+    component: NotFound,
+  },
 ];

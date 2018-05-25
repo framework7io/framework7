@@ -79,6 +79,9 @@
 import { f7Navbar, f7Page, f7BlockTitle, f7Block, f7Link, f7Button, f7Actions, f7ActionsGroup, f7ActionsLabel, f7ActionsButton } from 'framework7-vue';
 
 export default {
+  props: {
+    id: String,
+  },
   components: {
     f7Page,
     f7Navbar,

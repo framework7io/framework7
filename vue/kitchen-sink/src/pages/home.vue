@@ -188,6 +188,12 @@
       <f7-list-item title="Material (MD) Theme" external link="./index.html?theme=md"></f7-list-item>
       <f7-list-item title="Color Themes" link="/color-themes/"></f7-list-item>
     </f7-list>
+
+    <f7-block-title class="searchbar-hide-on-search">Page Loaders & Router</f7-block-title>
+    <f7-list class="searchbar-hide-on-search">
+      <f7-list-item title="Routable Modals" link="/routable-modals/"></f7-list-item>
+      <f7-list-item title="Default Route (404)" link="/load-something-that-doesnt-exist/"></f7-list-item>
+    </f7-list>
   </f7-page>
 </template>
 <script>

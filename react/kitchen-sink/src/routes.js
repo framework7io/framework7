@@ -92,6 +92,10 @@ import ColorThemes from './pages/color-themes.jsx';
 
 import RoutableModals from './pages/routable-modals.jsx';
 import RoutablePopup from './pages/routable-popup.jsx';
+import RoutableActions from './pages/routable-actions.jsx';
+
+import NotFound from './pages/404.jsx';
+
 // Pages
 export default [
   // Index page
@@ -563,14 +567,22 @@ export default [
     component: RoutableModals,
     routes: [
       {
-
+        path: 'popup/',
+        popup: {
+          component: RoutablePopup,
+        },
+      },
+      {
+        path: 'actions/',
+        popup: {
+          component: RoutableActions,
+        },
       },
     ],
   },
+  // Default route (404 page). MUST BE THE LAST
   {
-    path: '/routable-popup/',
-    popup: {
-      component: RoutablePopup,
-    },
+    path: '(.*)',
+    component: NotFound,
   },
 ];
