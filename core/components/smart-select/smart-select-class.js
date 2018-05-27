@@ -19,6 +19,9 @@ class SmartSelect extends Framework7Class {
 
     let $valueEl = $(params.valueEl);
     if ($valueEl.length === 0) {
+      $valueEl = $el.find('.item-after');
+    }
+    if ($valueEl.length === 0) {
       $valueEl = $('<div class="item-after"></div>');
       $valueEl.insertAfter($el.find('.item-title'));
     }

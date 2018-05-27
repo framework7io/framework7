@@ -1,5 +1,5 @@
 /**
- * Framework7 2.2.5
+ * Framework7 2.3.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 29, 2018
+ * Released on: May 27, 2018
  */
 
 (function (global, factory) {
@@ -717,7 +717,7 @@
   var win = w;
 
   /**
-   * Dom7 2.0.5
+   * Dom7 2.0.6
    * Minimalistic JavaScript library for DOM manipulation, with a jQuery-compatible API
    * http://framework7.io/docs/dom.html
    *
@@ -727,7 +727,7 @@
    *
    * Licensed under MIT
    *
-   * Released on: April 20, 2018
+   * Released on: May 27, 2018
    */
 
   var Dom7 = function Dom7(arr) {
@@ -1135,14 +1135,16 @@
         } else if (targetSelector && el.dom7LiveListeners) {
           handlers = el.dom7LiveListeners[event];
         }
-        for (var k = handlers.length - 1; k >= 0; k -= 1) {
-          var handler = handlers[k];
-          if (listener && handler.listener === listener) {
-            el.removeEventListener(event, handler.proxyListener, capture);
-            handlers.splice(k, 1);
-          } else if (!listener) {
-            el.removeEventListener(event, handler.proxyListener, capture);
-            handlers.splice(k, 1);
+        if (handlers && handlers.length) {
+          for (var k = handlers.length - 1; k >= 0; k -= 1) {
+            var handler = handlers[k];
+            if (listener && handler.listener === listener) {
+              el.removeEventListener(event, handler.proxyListener, capture);
+              handlers.splice(k, 1);
+            } else if (!listener) {
+              el.removeEventListener(event, handler.proxyListener, capture);
+              handlers.splice(k, 1);
+            }
           }
         }
       }
@@ -2938,7 +2940,7 @@
 
     // Check for status bar and fullscreen app mode
     device.needsStatusbarOverlay = function needsStatusbarOverlay() {
-      if (device.webView && (win.innerWidth * win.innerHeight === win.screen.width * win.screen.height)) {
+      if ((device.webView || (device.android && device.cordova)) && (win.innerWidth * win.innerHeight === win.screen.width * win.screen.height)) {
         if (device.iphoneX && (win.orientation === 90 || win.orientation === -90)) {
           return false;
         }
@@ -3330,11 +3332,8 @@
         } else if (Device.desktop) {
           classNames.push('device-desktop');
         }
-        // Status bar classes
-        if (Device.statusbar) {
-          classNames.push('with-statusbar');
-        } else {
-          html.classList.remove('with-statusbar');
+        if (Device.cordova || Device.phonegap) {
+          classNames.push('device-cordova');
         }
 
         // Add html classes
@@ -6594,10 +6593,20 @@
       var modal = app[modalType].create(modalParams);
       modalRoute.modalInstance = modal;
 
+      var hasEl = modal.el;
+
       function closeOnSwipeBack() {
         modal.close();
       }
       modal.on('modalOpen', function () {
+        if (!hasEl) {
+          // Remove theme elements
+          router.removeThemeElements(modal.el);
+
+          // Emit events
+          modal.$el.trigger(((modalType.toLowerCase()) + ":init " + (modalType.toLowerCase()) + ":mounted"), route, modal);
+          router.emit(("modalInit " + modalType + "Init " + modalType + "Mounted"), modal.el, route, modal);
+        }
         router.once('swipeBackMove', closeOnSwipeBack);
       });
       modal.on('modalClose', function () {
@@ -6615,7 +6624,7 @@
           modalComponent.$destroy();
         }
         Utils.nextTick(function () {
-          if (modalComponent) {
+          if (modalComponent || modalParams.component) {
             router.removeModal(modal.el);
           }
           modal.destroy();
@@ -6648,12 +6657,15 @@
         }
       }
 
-      // Remove theme elements
-      router.removeThemeElements(modal.el);
+      if (hasEl) {
+        // Remove theme elements
+        router.removeThemeElements(modal.el);
 
-      // Emit events
-      modal.$el.trigger(((modalType.toLowerCase()) + ":init " + (modalType.toLowerCase()) + ":mounted"), route, modal);
-      router.emit(("modalInit " + modalType + "Init " + modalType + "Mounted"), modal.el, route, modal);
+        // Emit events
+        modal.$el.trigger(((modalType.toLowerCase()) + ":init " + (modalType.toLowerCase()) + ":mounted"), route, modal);
+        router.emit(("modalInit " + modalType + "Init " + modalType + "Mounted"), modal.el, route, modal);
+      }
+
       // Open
       modal.open();
     }
@@ -6725,13 +6737,18 @@
       }
     }
 
+    var foundLoadProp;
     ('url content component el componentUrl template templateUrl').split(' ').forEach(function (modalLoadProp) {
       var obj;
 
-      if (modalParams[modalLoadProp]) {
+      if (modalParams[modalLoadProp] && !foundLoadProp) {
+        foundLoadProp = true;
         loadModal(( obj = {}, obj[modalLoadProp] = modalParams[modalLoadProp], obj ), options);
       }
     });
+    if (!foundLoadProp && modalType === 'actions') {
+      onModalLoaded();
+    }
 
     // Async
     function asyncResolve(resolveParams, resolveOptions) {
@@ -8217,6 +8234,10 @@
           pageFrom = $pageFromEl[0].f7Page;
         }
       }
+      pageFrom = currentPage.pageFrom || pageFrom;
+      if (pageFrom && pageFrom.pageFrom) {
+        pageFrom.pageFrom = null;
+      }
       var page = {
         app: router.app,
         view: router.view,
@@ -8233,7 +8254,7 @@
         to: to,
         direction: direction,
         route: currentPage.route ? currentPage.route : route,
-        pageFrom: currentPage.pageFrom || pageFrom,
+        pageFrom: pageFrom,
       };
 
       if ($navbarEl && $navbarEl[0]) {
@@ -8408,7 +8429,7 @@
       var initUrl = router.params.url;
       var documentUrl = doc.location.href.split(doc.location.origin)[1];
       var historyRestored;
-      if (!router.params.pushState) {
+      if (!router.params.pushState || !router.params.pushStateOnLoad) {
         if (!initUrl) {
           initUrl = documentUrl;
         }
@@ -8547,7 +8568,7 @@
           router.saveHistory();
         }
       }
-      if (initUrl && router.params.pushState && (!History.state || !History.state[view.id])) {
+      if (initUrl && router.params.pushState && router.params.pushStateOnLoad && (!History.state || !History.state[view.id])) {
         History.initViewState(view.id, {
           url: initUrl,
         });
@@ -8824,7 +8845,7 @@
     }
     if (Support.touch && !Device.android) {
       var activeListener = Support.passiveListener ? { passive: false, capture: false } : false;
-      $$1(doc).on((app.params.fastClicks ? 'touchstart' : 'touchmove'), '.panel-backdrop, .dialog-backdrop, .preloader-backdrop, .popup-backdrop, .searchbar-backdrop', preventScrolling, activeListener);
+      $$1(doc).on((app.params.touch.fastClicks ? 'touchstart' : 'touchmove'), '.panel-backdrop, .dialog-backdrop, .preloader-backdrop, .popup-backdrop, .searchbar-backdrop', preventScrolling, activeListener);
     }
   }
   var ClicksModule = {
@@ -9026,6 +9047,8 @@
       if (params.overlay === 'auto') {
         if (Device.needsStatusbarOverlay()) {
           $$1('html').addClass('with-statusbar');
+        } else {
+          $$1('html').removeClass('with-statusbar');
         }
 
         if (Device.ios && (Device.cordova || Device.webView)) {
@@ -9039,7 +9062,7 @@
             Statusbar.checkOverlay();
           }, false);
 
-          app.on('orientationchange resize', function () {
+          app.on(Device.ios ? 'orientationchange' : 'orientationchange resize', function () {
             Statusbar.checkOverlay();
           });
         }
@@ -11429,6 +11452,7 @@
               });
             });
           }
+          actions.el = actions.$el[0];
           originalOpen.call(actions, animate);
         }
         return actions;
@@ -13518,7 +13542,7 @@
       vl.deleteItems([index]);
     };
     // Clear cache
-    VirtualList.prototype.clearCachefunction = function clearCachefunction () {
+    VirtualList.prototype.clearCache = function clearCache () {
       var vl = this;
       vl.domCache = {};
     };
@@ -14803,7 +14827,7 @@
               panels = [app.panel.left, app.panel.right];
             } else {
               side = panel;
-              panels = app.panel[side];
+              panels.push(app.panel[side]);
             }
           } else {
             panels = [panel];
@@ -15394,7 +15418,7 @@
         $inputEl.trigger('input:empty');
       }
     },
-    scrollIntoView: function scrollIntoView(inputEl, duration, centered) {
+    scrollIntoView: function scrollIntoView(inputEl, duration, centered, force) {
       if ( duration === void 0 ) duration = 0;
 
       var $inputEl = $$1(inputEl);
@@ -15421,6 +15445,8 @@
       } else if (contentScrollTop < max) {
         $scrollableEl.scrollTop(centered ? centeredPosition : max, duration);
         return true;
+      } else if (force) {
+        $scrollableEl.scrollTop(centered ? centeredPosition : max, duration);
       }
       return false;
     },
@@ -15433,11 +15459,11 @@
           if (Device.android) {
             $$1(win).once('resize', function () {
               if (doc && doc.activeElement === inputEl) {
-                app.input.scrollIntoView(inputEl, 0, app.params.input.scrollIntoViewCentered);
+                app.input.scrollIntoView(inputEl, app.params.input.scrollIntoViewDuration, app.params.input.scrollIntoViewCentered, app.params.input.scrollIntoViewAlways);
               }
             });
           } else {
-            app.input.scrollIntoView(inputEl, 0, app.params.input.scrollIntoViewCentered);
+            app.input.scrollIntoView(inputEl, app.params.input.scrollIntoViewDuration, app.params.input.scrollIntoViewCentered, app.params.input.scrollIntoViewAlways);
           }
         }
         app.input.focus(inputEl);
@@ -15486,7 +15512,7 @@
         var previousValue = $inputEl.val();
         $inputEl
           .val('')
-          .trigger('change')
+          .trigger('change input')
           .focus()
           .trigger('input:clear', previousValue);
       }
@@ -15504,6 +15530,8 @@
       input: {
         scrollIntoViewOnFocus: Device.android,
         scrollIntoViewCentered: false,
+        scrollIntoViewDuration: 0,
+        scrollIntoViewAlways: false,
       },
     },
     create: function create() {
@@ -16660,6 +16688,9 @@
       if ($selectEl.length === 0) { return ss; }
 
       var $valueEl = $$1(params.valueEl);
+      if ($valueEl.length === 0) {
+        $valueEl = $el.find('.item-after');
+      }
       if ($valueEl.length === 0) {
         $valueEl = $$1('<div class="item-after"></div>');
         $valueEl.insertAfter($el.find('.item-title'));
@@ -20915,7 +20946,7 @@
       } else {
         if (needsFocus) { sb.$inputEl.focus(); }
         if (app.theme === 'md' && sb.expandable) {
-          sb.$el.parents('.navbar-inner').scrollLeft(0);
+          sb.$el.parents('.page, .view, .navbar-inner').scrollLeft(0);
         }
         enable();
       }
@@ -22256,8 +22287,12 @@
       if (params.slidesPerView === 'auto') {
         var slideStyles = win.getComputedStyle(slide[0], null);
         var currentTransform = slide[0].style.transform;
+        var currentWebKitTransform = slide[0].style.webkitTransform;
         if (currentTransform) {
           slide[0].style.transform = 'none';
+        }
+        if (currentWebKitTransform) {
+          slide[0].style.webkitTransform = 'none';
         }
         if (swiper.isHorizontal()) {
           slideSize = slide[0].getBoundingClientRect().width +
@@ -22270,6 +22305,9 @@
         }
         if (currentTransform) {
           slide[0].style.transform = currentTransform;
+        }
+        if (currentWebKitTransform) {
+          slide[0].style.webkitTransform = currentWebKitTransform;
         }
         if (params.roundLengths) { slideSize = Math.floor(slideSize); }
       } else {
@@ -22986,11 +23024,15 @@
       swiper._clientLeft = swiper.$wrapperEl[0].clientLeft;
     }
     var translate = rtlTranslate ? swiper.translate : -swiper.translate;
-    var currentSnap = snapGrid[snapGrid.indexOf(translate)];
-    var prevSnap = snapGrid[snapGrid.indexOf(translate) - 1];
-    var prevIndex;
 
-    if (prevSnap) {
+    var normalizedTranslate = translate < 0 ? -Math.floor(Math.abs(translate)) : Math.floor(translate);
+    var normalizedSnapGrid = snapGrid.map(function (val) { return Math.floor(val); });
+    var normalizedSlidesGrid = slidesGrid.map(function (val) { return Math.floor(val); });
+
+    var currentSnap = snapGrid[normalizedSnapGrid.indexOf(normalizedTranslate)];
+    var prevSnap = snapGrid[normalizedSnapGrid.indexOf(normalizedTranslate) - 1];
+    var prevIndex;
+    if (typeof prevSnap !== 'undefined') {
       prevIndex = slidesGrid.indexOf(prevSnap);
       if (prevIndex < 0) { prevIndex = swiper.activeIndex - 1; }
     }
@@ -23343,8 +23385,8 @@
       Device.ios &&
       !Device.cordova &&
       params.iOSEdgeSwipeDetection &&
-      (startX <= params.iOSEdgeSwipeThreshold) &&
-      (startX >= win.screen.width - params.iOSEdgeSwipeThreshold)
+      ((startX <= params.iOSEdgeSwipeThreshold) ||
+      (startX >= win.screen.width - params.iOSEdgeSwipeThreshold))
     ) {
       return;
     }
@@ -23959,7 +24001,7 @@
     }
 
     // Resize handler
-    swiper.on('resize observerUpdate', onResize, true);
+    swiper.on((Device.ios || Device.android ? 'resize orientationchange observerUpdate' : 'resize observerUpdate'), onResize, true);
   }
 
   function detachEvents() {
@@ -23999,7 +24041,7 @@
     }
 
     // Resize handler
-    swiper.off('resize observerUpdate', onResize);
+    swiper.off((Device.ios || Device.android ? 'resize orientationchange observerUpdate' : 'resize observerUpdate'), onResize);
   }
 
   var events = {
@@ -28259,13 +28301,13 @@
 
             pb.emit.apply(pb, [ 'local::transitionEnd' ].concat( args ));
           },
-          slideChangeStart: function slideChangeStart() {
+          slideChangeTransitionStart: function slideChangeTransitionStart() {
             var args = [], len = arguments.length;
             while ( len-- ) args[ len ] = arguments[ len ];
 
             pb.emit.apply(pb, [ 'local::slideChangeTransitionStart' ].concat( args ));
           },
-          slideChangeEnd: function slideChangeEnd() {
+          slideChangeTransitionEnd: function slideChangeTransitionEnd() {
             var args = [], len = arguments.length;
             while ( len-- ) args[ len ] = arguments[ len ];
 
@@ -29071,7 +29113,7 @@
         ac.close();
       }
       function onResize() {
-        ac.positionDropDown();
+        ac.positionDropdown();
       }
 
       function onKeyDown(e) {
@@ -29169,7 +29211,7 @@
     if ( Framework7Class$$1 ) Autocomplete.__proto__ = Framework7Class$$1;
     Autocomplete.prototype = Object.create( Framework7Class$$1 && Framework7Class$$1.prototype );
     Autocomplete.prototype.constructor = Autocomplete;
-    Autocomplete.prototype.positionDropDown = function positionDropDown () {
+    Autocomplete.prototype.positionDropdown = function positionDropdown () {
       var obj;
 
       var ac = this;
@@ -29183,9 +29225,17 @@
       var inputOffsetWidth = $inputEl[0].offsetWidth;
       var inputOffsetHeight = $inputEl[0].offsetHeight;
       var $listEl = $inputEl.parents('.list');
+
+      var $listParent;
+      $listEl.parents().each(function (index, parentEl) {
+        if ($listParent) { return; }
+        var $parentEl = $$1(parentEl);
+        if ($parentEl.parent($pageContentEl).length) { $listParent = $parentEl; }
+      });
+
       var listOffset = $listEl.offset();
       var paddingBottom = parseInt($pageContentEl.css('padding-bottom'), 10);
-      var listOffsetLeft = $listEl.length > 0 ? listOffset.left - $listEl.parent().offset().left : 0;
+      var listOffsetLeft = $listEl.length > 0 ? listOffset.left - $pageContentEl.offset().left : 0;
       var inputOffsetLeft = inputOffset.left - ($listEl.length > 0 ? listOffset.left : 0) - (app.rtl ? 0 : 0);
       var inputOffsetTop = inputOffset.top - ($pageContentEl.offset().top - $pageContentEl[0].scrollTop);
 
@@ -29196,7 +29246,6 @@
       if ($listEl.length && !ac.params.expandInput) {
         paddingValue = (app.rtl ? $listEl[0].offsetWidth - inputOffsetLeft - inputOffsetWidth : inputOffsetLeft) - (app.theme === 'md' ? 16 : 15);
       }
-
 
       $dropdownEl.css({
         left: (($listEl.length > 0 ? listOffsetLeft : inputOffsetLeft) + "px"),
@@ -29502,13 +29551,14 @@
       if ($listEl.length && ac.$inputEl.parents('.item-content').length > 0 && ac.params.expandInput) {
         ac.$inputEl.parents('.item-content').addClass('item-content-dropdown-expanded');
       }
-      ac.positionDropDown();
+
       var $pageContentEl = ac.$inputEl.parents('.page-content');
-      if (ac.params.dropdownel) {
-        $$1(ac.params.dropdownel).append(ac.$dropdownEl);
+      if (ac.params.dropdownContainerEl) {
+        $$1(ac.params.dropdownContainerEl).append(ac.$dropdownEl);
       } else if ($pageContentEl.length === 0) {
         ac.$dropdownEl.insertAfter(ac.$inputEl);
       } else {
+        ac.positionDropdown();
         $pageContentEl.append(ac.$dropdownEl);
       }
       ac.onOpen('dropdown', ac.$dropdownEl);

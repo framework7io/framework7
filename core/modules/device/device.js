@@ -38,11 +38,8 @@ export default {
       } else if (Device.desktop) {
         classNames.push('device-desktop');
       }
-      // Status bar classes
-      if (Device.statusbar) {
-        classNames.push('with-statusbar');
-      } else {
-        html.classList.remove('with-statusbar');
+      if (Device.cordova || Device.phonegap) {
+        classNames.push('device-cordova');
       }
 
       // Add html classes

@@ -20,10 +20,20 @@ function modalLoad(modalType, route, loadOptions = {}) {
     const modal = app[modalType].create(modalParams);
     modalRoute.modalInstance = modal;
 
+    const hasEl = modal.el;
+
     function closeOnSwipeBack() {
       modal.close();
     }
     modal.on('modalOpen', () => {
+      if (!hasEl) {
+        // Remove theme elements
+        router.removeThemeElements(modal.el);
+
+        // Emit events
+        modal.$el.trigger(`${modalType.toLowerCase()}:init ${modalType.toLowerCase()}:mounted`, route, modal);
+        router.emit(`modalInit ${modalType}Init ${modalType}Mounted`, modal.el, route, modal);
+      }
       router.once('swipeBackMove', closeOnSwipeBack);
     });
     modal.on('modalClose', () => {
@@ -41,7 +51,7 @@ function modalLoad(modalType, route, loadOptions = {}) {
         modalComponent.$destroy();
       }
       Utils.nextTick(() => {
-        if (modalComponent) {
+        if (modalComponent || modalParams.component) {
           router.removeModal(modal.el);
         }
         modal.destroy();
@@ -74,12 +84,15 @@ function modalLoad(modalType, route, loadOptions = {}) {
       }
     }
 
-    // Remove theme elements
-    router.removeThemeElements(modal.el);
+    if (hasEl) {
+      // Remove theme elements
+      router.removeThemeElements(modal.el);
 
-    // Emit events
-    modal.$el.trigger(`${modalType.toLowerCase()}:init ${modalType.toLowerCase()}:mounted`, route, modal);
-    router.emit(`modalInit ${modalType}Init ${modalType}Mounted`, modal.el, route, modal);
+      // Emit events
+      modal.$el.trigger(`${modalType.toLowerCase()}:init ${modalType.toLowerCase()}:mounted`, route, modal);
+      router.emit(`modalInit ${modalType}Init ${modalType}Mounted`, modal.el, route, modal);
+    }
+
     // Open
     modal.open();
   }
@@ -146,11 +159,16 @@ function modalLoad(modalType, route, loadOptions = {}) {
     }
   }
 
+  let foundLoadProp;
   ('url content component el componentUrl template templateUrl').split(' ').forEach((modalLoadProp) => {
-    if (modalParams[modalLoadProp]) {
+    if (modalParams[modalLoadProp] && !foundLoadProp) {
+      foundLoadProp = true;
       loadModal({ [modalLoadProp]: modalParams[modalLoadProp] }, options);
     }
   });
+  if (!foundLoadProp && modalType === 'actions') {
+    onModalLoaded();
+  }
 
   // Async
   function asyncResolve(resolveParams, resolveOptions) {

@@ -2,6 +2,33 @@
 
 # Change Log
 
+# [v2.3.0](https://github.com/framework7io/framework7/compare/v2.2.5...v2.3.0) - May 27, 2018
+  * View/Router
+    * Fixed missing `pushStateOnLoad` parameter
+    * Added support for routable Action Sheet
+  * Searchbar
+    * Fixed issue with exapandable Searchbar missplace in MD theme when used with Subnavbar
+  * Input
+    * New `scrollIntoViewDuration` app.input parameter to set duration for scrolling input into view
+    * New `scrollIntoViewAlways` app.input parameter to scroll input into view no matter is it outside of view or not
+    * `app.input.scrollIntoView` now has additional `force` argument to scroll input into view no matter is it outside of view or not: `app.input.scrollIntoView(inputEl, duration, centered, force)`
+    * Clicking input's clear button now also triggers `input` event in addition to `change` event
+  * Statusbar
+    * Improved statusbar overlay detection for iOS devices
+  * Autocomplete
+    * New `dropdownContainerEl` parameter to define place where dropdown need to be inserted
+    * Imporved dropdown positioning
+  * Dom7 update to latest v2.0.6:
+    * Fixed issue with remove event listeners when they was not added
+  * Swiper update to latest v4.3.0:
+    * Core
+      * Fixed issue when `swipeBack` sometimes slides to wrong slide
+      * Fixed issue when window resizing can break Coverflow effect layout
+      * Fixed issue with wrong detection of iOSEdgeSwipeDetection
+    * Dom7 update to latest v2.0.6:
+      * Fixed issue with remove event listeners when they was not added
+  * Lots of minor fixes
+
 # [v2.2.5](https://github.com/framework7io/framework7/compare/v2.2.1...v2.2.5) - April 29, 2018
   * Router
     * Fixed issue with not loaded routable tabs content after swipe-back to page with these routable tabs

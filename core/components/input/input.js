@@ -122,7 +122,7 @@ const Input = {
       $inputEl.trigger('input:empty');
     }
   },
-  scrollIntoView(inputEl, duration = 0, centered) {
+  scrollIntoView(inputEl, duration = 0, centered, force) {
     const $inputEl = $(inputEl);
     const $scrollableEl = $inputEl.parents('.page-content, .panel').eq(0);
     if (!$scrollableEl.length) {
@@ -147,6 +147,8 @@ const Input = {
     } else if (contentScrollTop < max) {
       $scrollableEl.scrollTop(centered ? centeredPosition : max, duration);
       return true;
+    } else if (force) {
+      $scrollableEl.scrollTop(centered ? centeredPosition : max, duration);
     }
     return false;
   },
@@ -159,11 +161,11 @@ const Input = {
         if (Device.android) {
           $(window).once('resize', () => {
             if (document && document.activeElement === inputEl) {
-              app.input.scrollIntoView(inputEl, 0, app.params.input.scrollIntoViewCentered);
+              app.input.scrollIntoView(inputEl, app.params.input.scrollIntoViewDuration, app.params.input.scrollIntoViewCentered, app.params.input.scrollIntoViewAlways);
             }
           });
         } else {
-          app.input.scrollIntoView(inputEl, 0, app.params.input.scrollIntoViewCentered);
+          app.input.scrollIntoView(inputEl, app.params.input.scrollIntoViewDuration, app.params.input.scrollIntoViewCentered, app.params.input.scrollIntoViewAlways);
         }
       }
       app.input.focus(inputEl);
@@ -212,7 +214,7 @@ const Input = {
       const previousValue = $inputEl.val();
       $inputEl
         .val('')
-        .trigger('change')
+        .trigger('change input')
         .focus()
         .trigger('input:clear', previousValue);
     }
@@ -230,6 +232,8 @@ export default {
     input: {
       scrollIntoViewOnFocus: Device.android,
       scrollIntoViewCentered: false,
+      scrollIntoViewDuration: 0,
+      scrollIntoViewAlways: false,
     },
   },
   create() {

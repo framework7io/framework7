@@ -517,7 +517,7 @@ class VirtualList extends Framework7Class {
     vl.deleteItems([index]);
   }
   // Clear cache
-  clearCachefunction() {
+  clearCache() {
     const vl = this;
     vl.domCache = {};
   }
