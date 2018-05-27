@@ -1,5 +1,5 @@
 /**
- * Framework7 2.2.5
+ * Framework7 2.3.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 29, 2018
+ * Released on: May 27, 2018
  */
 
 import { window as window$1, document } from 'ssr-window';
@@ -585,7 +585,7 @@ const Device = (function Device() {
 
   // Check for status bar and fullscreen app mode
   device.needsStatusbarOverlay = function needsStatusbarOverlay() {
-    if (device.webView && (window$1.innerWidth * window$1.innerHeight === window$1.screen.width * window$1.screen.height)) {
+    if ((device.webView || (device.android && device.cordova)) && (window$1.innerWidth * window$1.innerHeight === window$1.screen.width * window$1.screen.height)) {
       if (device.iphoneX && (window$1.orientation === 90 || window$1.orientation === -90)) {
         return false;
       }
@@ -1333,11 +1333,8 @@ var DeviceModule = {
       } else if (Device.desktop) {
         classNames.push('device-desktop');
       }
-      // Status bar classes
-      if (Device.statusbar) {
-        classNames.push('with-statusbar');
-      } else {
-        html.classList.remove('with-statusbar');
+      if (Device.cordova || Device.phonegap) {
+        classNames.push('device-cordova');
       }
 
       // Add html classes
@@ -3761,10 +3758,20 @@ function modalLoad(modalType, route, loadOptions = {}) {
     const modal = app[modalType].create(modalParams);
     modalRoute.modalInstance = modal;
 
+    const hasEl = modal.el;
+
     function closeOnSwipeBack() {
       modal.close();
     }
     modal.on('modalOpen', () => {
+      if (!hasEl) {
+        // Remove theme elements
+        router.removeThemeElements(modal.el);
+
+        // Emit events
+        modal.$el.trigger(`${modalType.toLowerCase()}:init ${modalType.toLowerCase()}:mounted`, route, modal);
+        router.emit(`modalInit ${modalType}Init ${modalType}Mounted`, modal.el, route, modal);
+      }
       router.once('swipeBackMove', closeOnSwipeBack);
     });
     modal.on('modalClose', () => {
@@ -3782,7 +3789,7 @@ function modalLoad(modalType, route, loadOptions = {}) {
         modalComponent.$destroy();
       }
       Utils.nextTick(() => {
-        if (modalComponent) {
+        if (modalComponent || modalParams.component) {
           router.removeModal(modal.el);
         }
         modal.destroy();
@@ -3815,12 +3822,15 @@ function modalLoad(modalType, route, loadOptions = {}) {
       }
     }
 
-    // Remove theme elements
-    router.removeThemeElements(modal.el);
+    if (hasEl) {
+      // Remove theme elements
+      router.removeThemeElements(modal.el);
 
-    // Emit events
-    modal.$el.trigger(`${modalType.toLowerCase()}:init ${modalType.toLowerCase()}:mounted`, route, modal);
-    router.emit(`modalInit ${modalType}Init ${modalType}Mounted`, modal.el, route, modal);
+      // Emit events
+      modal.$el.trigger(`${modalType.toLowerCase()}:init ${modalType.toLowerCase()}:mounted`, route, modal);
+      router.emit(`modalInit ${modalType}Init ${modalType}Mounted`, modal.el, route, modal);
+    }
+
     // Open
     modal.open();
   }
@@ -3887,11 +3897,16 @@ function modalLoad(modalType, route, loadOptions = {}) {
     }
   }
 
+  let foundLoadProp;
   ('url content component el componentUrl template templateUrl').split(' ').forEach((modalLoadProp) => {
-    if (modalParams[modalLoadProp]) {
+    if (modalParams[modalLoadProp] && !foundLoadProp) {
+      foundLoadProp = true;
       loadModal({ [modalLoadProp]: modalParams[modalLoadProp] }, options);
     }
   });
+  if (!foundLoadProp && modalType === 'actions') {
+    onModalLoaded();
+  }
 
   // Async
   function asyncResolve(resolveParams, resolveOptions) {
@@ -5340,6 +5355,10 @@ class Router extends Framework7Class {
         pageFrom = $pageFromEl[0].f7Page;
       }
     }
+    pageFrom = currentPage.pageFrom || pageFrom;
+    if (pageFrom && pageFrom.pageFrom) {
+      pageFrom.pageFrom = null;
+    }
     const page = {
       app: router.app,
       view: router.view,
@@ -5356,7 +5375,7 @@ class Router extends Framework7Class {
       to,
       direction,
       route: currentPage.route ? currentPage.route : route,
-      pageFrom: currentPage.pageFrom || pageFrom,
+      pageFrom,
     };
 
     if ($navbarEl && $navbarEl[0]) {
@@ -5526,7 +5545,7 @@ class Router extends Framework7Class {
     let initUrl = router.params.url;
     let documentUrl = document.location.href.split(document.location.origin)[1];
     let historyRestored;
-    if (!router.params.pushState) {
+    if (!router.params.pushState || !router.params.pushStateOnLoad) {
       if (!initUrl) {
         initUrl = documentUrl;
       }
@@ -5665,7 +5684,7 @@ class Router extends Framework7Class {
         router.saveHistory();
       }
     }
-    if (initUrl && router.params.pushState && (!History.state || !History.state[view.id])) {
+    if (initUrl && router.params.pushState && router.params.pushStateOnLoad && (!History.state || !History.state[view.id])) {
       History.initViewState(view.id, {
         url: initUrl,
       });
@@ -5932,7 +5951,7 @@ function initClicks(app) {
   }
   if (Support.touch && !Device.android) {
     const activeListener = Support.passiveListener ? { passive: false, capture: false } : false;
-    $(document).on((app.params.fastClicks ? 'touchstart' : 'touchmove'), '.panel-backdrop, .dialog-backdrop, .preloader-backdrop, .popup-backdrop, .searchbar-backdrop', preventScrolling, activeListener);
+    $(document).on((app.params.touch.fastClicks ? 'touchstart' : 'touchmove'), '.panel-backdrop, .dialog-backdrop, .preloader-backdrop, .popup-backdrop, .searchbar-backdrop', preventScrolling, activeListener);
   }
 }
 var ClicksModule = {
@@ -6132,6 +6151,8 @@ const Statusbar = {
     if (params.overlay === 'auto') {
       if (Device.needsStatusbarOverlay()) {
         $('html').addClass('with-statusbar');
+      } else {
+        $('html').removeClass('with-statusbar');
       }
 
       if (Device.ios && (Device.cordova || Device.webView)) {
@@ -6145,7 +6166,7 @@ const Statusbar = {
           Statusbar.checkOverlay();
         }, false);
 
-        app.on('orientationchange resize', () => {
+        app.on(Device.ios ? 'orientationchange' : 'orientationchange resize', () => {
           Statusbar.checkOverlay();
         });
       }
@@ -8435,6 +8456,7 @@ class Actions extends Modal {
             });
           });
         }
+        actions.el = actions.$el[0];
         originalOpen.call(actions, animate);
       }
       return actions;
@@ -10494,7 +10516,7 @@ class VirtualList extends Framework7Class {
     vl.deleteItems([index]);
   }
   // Clear cache
-  clearCachefunction() {
+  clearCache() {
     const vl = this;
     vl.domCache = {};
   }
@@ -11734,7 +11756,7 @@ var Panel$1 = {
             panels = [app.panel.left, app.panel.right];
           } else {
             side = panel;
-            panels = app.panel[side];
+            panels.push(app.panel[side]);
           }
         } else {
           panels = [panel];
@@ -12319,7 +12341,7 @@ const Input = {
       $inputEl.trigger('input:empty');
     }
   },
-  scrollIntoView(inputEl, duration = 0, centered) {
+  scrollIntoView(inputEl, duration = 0, centered, force) {
     const $inputEl = $(inputEl);
     const $scrollableEl = $inputEl.parents('.page-content, .panel').eq(0);
     if (!$scrollableEl.length) {
@@ -12344,6 +12366,8 @@ const Input = {
     } else if (contentScrollTop < max) {
       $scrollableEl.scrollTop(centered ? centeredPosition : max, duration);
       return true;
+    } else if (force) {
+      $scrollableEl.scrollTop(centered ? centeredPosition : max, duration);
     }
     return false;
   },
@@ -12356,11 +12380,11 @@ const Input = {
         if (Device.android) {
           $(window$1).once('resize', () => {
             if (document && document.activeElement === inputEl) {
-              app.input.scrollIntoView(inputEl, 0, app.params.input.scrollIntoViewCentered);
+              app.input.scrollIntoView(inputEl, app.params.input.scrollIntoViewDuration, app.params.input.scrollIntoViewCentered, app.params.input.scrollIntoViewAlways);
             }
           });
         } else {
-          app.input.scrollIntoView(inputEl, 0, app.params.input.scrollIntoViewCentered);
+          app.input.scrollIntoView(inputEl, app.params.input.scrollIntoViewDuration, app.params.input.scrollIntoViewCentered, app.params.input.scrollIntoViewAlways);
         }
       }
       app.input.focus(inputEl);
@@ -12409,7 +12433,7 @@ const Input = {
       const previousValue = $inputEl.val();
       $inputEl
         .val('')
-        .trigger('change')
+        .trigger('change input')
         .focus()
         .trigger('input:clear', previousValue);
     }
@@ -12427,6 +12451,8 @@ var Input$1 = {
     input: {
       scrollIntoViewOnFocus: Device.android,
       scrollIntoViewCentered: false,
+      scrollIntoViewDuration: 0,
+      scrollIntoViewAlways: false,
     },
   },
   create() {
@@ -13547,6 +13573,9 @@ class SmartSelect extends Framework7Class {
     if ($selectEl.length === 0) return ss;
 
     let $valueEl = $(params.valueEl);
+    if ($valueEl.length === 0) {
+      $valueEl = $el.find('.item-after');
+    }
     if ($valueEl.length === 0) {
       $valueEl = $('<div class="item-after"></div>');
       $valueEl.insertAfter($el.find('.item-title'));
@@ -17893,7 +17922,7 @@ class Searchbar extends Framework7Class {
     } else {
       if (needsFocus) sb.$inputEl.focus();
       if (app.theme === 'md' && sb.expandable) {
-        sb.$el.parents('.navbar-inner').scrollLeft(0);
+        sb.$el.parents('.page, .view, .navbar-inner').scrollLeft(0);
       }
       enable();
     }
@@ -19166,8 +19195,12 @@ function updateSlides () {
     if (params.slidesPerView === 'auto') {
       const slideStyles = window$1.getComputedStyle(slide[0], null);
       const currentTransform = slide[0].style.transform;
+      const currentWebKitTransform = slide[0].style.webkitTransform;
       if (currentTransform) {
         slide[0].style.transform = 'none';
+      }
+      if (currentWebKitTransform) {
+        slide[0].style.webkitTransform = 'none';
       }
       if (swiper.isHorizontal()) {
         slideSize = slide[0].getBoundingClientRect().width +
@@ -19180,6 +19213,9 @@ function updateSlides () {
       }
       if (currentTransform) {
         slide[0].style.transform = currentTransform;
+      }
+      if (currentWebKitTransform) {
+        slide[0].style.webkitTransform = currentWebKitTransform;
       }
       if (params.roundLengths) slideSize = Math.floor(slideSize);
     } else {
@@ -19853,11 +19889,15 @@ function slidePrev (speed = this.params.speed, runCallbacks = true, internal) {
     swiper._clientLeft = swiper.$wrapperEl[0].clientLeft;
   }
   const translate = rtlTranslate ? swiper.translate : -swiper.translate;
-  const currentSnap = snapGrid[snapGrid.indexOf(translate)];
-  const prevSnap = snapGrid[snapGrid.indexOf(translate) - 1];
-  let prevIndex;
 
-  if (prevSnap) {
+  const normalizedTranslate = translate < 0 ? -Math.floor(Math.abs(translate)) : Math.floor(translate);
+  const normalizedSnapGrid = snapGrid.map(val => Math.floor(val));
+  const normalizedSlidesGrid = slidesGrid.map(val => Math.floor(val));
+
+  const currentSnap = snapGrid[normalizedSnapGrid.indexOf(normalizedTranslate)];
+  const prevSnap = snapGrid[normalizedSnapGrid.indexOf(normalizedTranslate) - 1];
+  let prevIndex;
+  if (typeof prevSnap !== 'undefined') {
     prevIndex = slidesGrid.indexOf(prevSnap);
     if (prevIndex < 0) prevIndex = swiper.activeIndex - 1;
   }
@@ -20189,8 +20229,8 @@ function onTouchStart (event) {
     Device.ios &&
     !Device.cordova &&
     params.iOSEdgeSwipeDetection &&
-    (startX <= params.iOSEdgeSwipeThreshold) &&
-    (startX >= window$1.screen.width - params.iOSEdgeSwipeThreshold)
+    ((startX <= params.iOSEdgeSwipeThreshold) ||
+    (startX >= window$1.screen.width - params.iOSEdgeSwipeThreshold))
   ) {
     return;
   }
@@ -20796,7 +20836,7 @@ function attachEvents() {
   }
 
   // Resize handler
-  swiper.on('resize observerUpdate', onResize, true);
+  swiper.on((Device.ios || Device.android ? 'resize orientationchange observerUpdate' : 'resize observerUpdate'), onResize, true);
 }
 
 function detachEvents() {
@@ -20835,7 +20875,7 @@ function detachEvents() {
   }
 
   // Resize handler
-  swiper.off('resize observerUpdate', onResize);
+  swiper.off((Device.ios || Device.android ? 'resize orientationchange observerUpdate' : 'resize observerUpdate'), onResize);
 }
 
 var events = {
@@ -25067,10 +25107,10 @@ class PhotoBrowser extends Framework7Class {
         transitionEnd(...args) {
           pb.emit('local::transitionEnd', ...args);
         },
-        slideChangeStart(...args) {
+        slideChangeTransitionStart(...args) {
           pb.emit('local::slideChangeTransitionStart', ...args);
         },
-        slideChangeEnd(...args) {
+        slideChangeTransitionEnd(...args) {
           pb.emit('local::slideChangeTransitionEnd', ...args);
         },
         lazyImageLoad(...args) {
@@ -25864,7 +25904,7 @@ class Autocomplete extends Framework7Class {
       ac.close();
     }
     function onResize() {
-      ac.positionDropDown();
+      ac.positionDropdown();
     }
 
     function onKeyDown(e) {
@@ -25958,7 +25998,7 @@ class Autocomplete extends Framework7Class {
 
     return ac;
   }
-  positionDropDown() {
+  positionDropdown() {
     const ac = this;
     const { $inputEl, app, $dropdownEl } = ac;
 
@@ -25968,9 +26008,17 @@ class Autocomplete extends Framework7Class {
     const inputOffsetWidth = $inputEl[0].offsetWidth;
     const inputOffsetHeight = $inputEl[0].offsetHeight;
     const $listEl = $inputEl.parents('.list');
+
+    let $listParent;
+    $listEl.parents().each((index, parentEl) => {
+      if ($listParent) return;
+      const $parentEl = $(parentEl);
+      if ($parentEl.parent($pageContentEl).length) $listParent = $parentEl;
+    });
+
     const listOffset = $listEl.offset();
     const paddingBottom = parseInt($pageContentEl.css('padding-bottom'), 10);
-    const listOffsetLeft = $listEl.length > 0 ? listOffset.left - $listEl.parent().offset().left : 0;
+    const listOffsetLeft = $listEl.length > 0 ? listOffset.left - $pageContentEl.offset().left : 0;
     const inputOffsetLeft = inputOffset.left - ($listEl.length > 0 ? listOffset.left : 0) - (app.rtl ? 0 : 0);
     const inputOffsetTop = inputOffset.top - ($pageContentEl.offset().top - $pageContentEl[0].scrollTop);
 
@@ -25981,7 +26029,6 @@ class Autocomplete extends Framework7Class {
     if ($listEl.length && !ac.params.expandInput) {
       paddingValue = (app.rtl ? $listEl[0].offsetWidth - inputOffsetLeft - inputOffsetWidth : inputOffsetLeft) - (app.theme === 'md' ? 16 : 15);
     }
-
 
     $dropdownEl.css({
       left: `${$listEl.length > 0 ? listOffsetLeft : inputOffsetLeft}px`,
@@ -26378,13 +26425,14 @@ class Autocomplete extends Framework7Class {
     if ($listEl.length && ac.$inputEl.parents('.item-content').length > 0 && ac.params.expandInput) {
       ac.$inputEl.parents('.item-content').addClass('item-content-dropdown-expanded');
     }
-    ac.positionDropDown();
+
     const $pageContentEl = ac.$inputEl.parents('.page-content');
-    if (ac.params.dropdownel) {
-      $(ac.params.dropdownel).append(ac.$dropdownEl);
+    if (ac.params.dropdownContainerEl) {
+      $(ac.params.dropdownContainerEl).append(ac.$dropdownEl);
     } else if ($pageContentEl.length === 0) {
       ac.$dropdownEl.insertAfter(ac.$inputEl);
     } else {
+      ac.positionDropdown();
       $pageContentEl.append(ac.$dropdownEl);
     }
     ac.onOpen('dropdown', ac.$dropdownEl);
