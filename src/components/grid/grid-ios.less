@@ -22,8 +22,6 @@
     .-;
 
     .--(@j: 1) when (@j < length(@cols)) {
-      @divider: e(extract(@cols, @j));
-      @className: `Math.floor(@{divider})`;
       .col:nth-last-child(@{j}), .col:nth-last-child(@{j}) ~ .col {
         @j-1: @j - 1;
         width: 100% / @j;
