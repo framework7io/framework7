@@ -1,16 +1,19 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 /* eslint no-console: "off" */
-/* eslint import/no-unresolved: "off" */
 /* eslint global-require: "off" */
 /* eslint no-param-reassign: ["error", { "props": false }] */
 
 // const phenome = require('phenome');
 const fs = require('fs');
 const phenome = require('../../phenome/lib/compiler-io/index.js');
+const bannerVue = require('./banner-vue');
+const bannerReact = require('./banner-react');
 
 // Build Vue
 function buildVueIndex() {
-  const files = fs.readdirSync('./vue/components');
+  const env = process.env.NODE_ENV || 'development';
+  const buildPath = env === 'development' ? './build' : './dist';
+  const files = fs.readdirSync(`${buildPath}/vue/components`);
   const componentImports = [];
   const componentExports = [];
 
@@ -29,6 +32,8 @@ function buildVueIndex() {
   componentImports.push("import Framework7Vue from './utils/plugin';");
 
   const componentsContent = `
+${bannerVue.trim()}
+
 ${componentImports.join('\n')}
 
 export {\n${componentExports.join(',\n')}\n};
@@ -36,12 +41,14 @@ export {\n${componentExports.join(',\n')}\n};
 export default Framework7Vue;
 `.trim();
 
-  fs.writeFileSync('./vue/framework7-vue.esm.js', componentsContent);
+  fs.writeFileSync(`${buildPath}/vue/framework7-vue.esm.js`, componentsContent);
 }
 
 // Build React
 function buildReactIndex() {
-  const files = fs.readdirSync('./react/components');
+  const env = process.env.NODE_ENV || 'development';
+  const buildPath = env === 'development' ? './build' : './dist';
+  const files = fs.readdirSync(`${buildPath}/react/components`);
   const componentImports = [];
   const componentAliases = [];
   const componentExports = [];
@@ -59,6 +66,8 @@ function buildReactIndex() {
   componentImports.push("import Framework7React from './utils/plugin';");
 
   const componentsContent = `
+${bannerReact.trim()}
+
 ${componentImports.join('\n')}
 
 ${componentAliases.join('\n')}
@@ -68,15 +77,17 @@ export {\n${componentExports.join(',\n')}\n};
 export default Framework7React;
 `.trim();
 
-  fs.writeFileSync('./react/framework7-react.esm.js', componentsContent);
+  fs.writeFileSync(`${buildPath}/react/framework7-react.esm.js`, componentsContent);
 }
 
 // Phenome
 function build(cb) {
+  const env = process.env.NODE_ENV || 'development';
+  const buildPath = env === 'development' ? './build' : './dist';
   phenome({
     paths: ['./src/phenome/**/*.js', './src/phenome/**/*.jsx'],
     react: {
-      out: './react/',
+      out: `${buildPath}/react/`,
       helpers: {
         el: 'auto',
         slots: 'auto',
@@ -89,7 +100,7 @@ function build(cb) {
       },
     },
     vue: {
-      out: './vue/',
+      out: `${buildPath}/vue/`,
       helpers: {
         el: 'auto',
         slots: 'auto',

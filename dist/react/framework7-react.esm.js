@@ -1,3 +1,15 @@
+/**
+ * Framework7 React 3.0.0-beta.1
+ * Build full featured iOS & Android apps using Framework7 & React
+ * http://framework7.io/react/
+ *
+ * Copyright 2014-2018 Vladimir Kharlampidi
+ *
+ * Released under the MIT License
+ *
+ * Released on: May 30, 2018
+ */
+
 import F7AccordionContent from './components/accordion-content';
 import F7AccordionItem from './components/accordion-item';
 import F7AccordionToggle from './components/accordion-toggle';

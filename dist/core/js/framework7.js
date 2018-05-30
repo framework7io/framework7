@@ -1,5 +1,5 @@
 /**
- * Framework7 2.3.0
+ * Framework7 3.0.0-beta.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: May 27, 2018
+ * Released on: May 30, 2018
  */
 
 (function (global, factory) {
@@ -7943,6 +7943,7 @@
 
         if (matched) {
           keys.forEach(function (keyObj, index) {
+            if (typeof keyObj.name === 'number') { return; }
             var paramValue = matched[index + 1];
             params[keyObj.name] = paramValue;
           });
@@ -12276,22 +12277,27 @@
         var virtualList;
         var oldIndex;
         var newIndex;
-        if ($insertAfterEl) {
-          $sortingEl.insertAfter($insertAfterEl);
-        }
-        if ($insertBeforeEl) {
-          $sortingEl.insertBefore($insertBeforeEl);
+        if (app.params.sortable.moveElements) {
+          if ($insertAfterEl) {
+            $sortingEl.insertAfter($insertAfterEl);
+          }
+          if ($insertBeforeEl) {
+            $sortingEl.insertBefore($insertBeforeEl);
+          }
         }
 
-        $sortingEl.trigger('sortable:sort', { from: indexFrom, to: $sortingEl.index() });
-        app.emit('sortableSort', $sortingEl[0], { from: indexFrom, to: $sortingEl.index() });
-
-        if (($insertAfterEl || $insertBeforeEl) && $sortableContainer.hasClass('virtual-list')) {
+        if (($insertAfterEl || $insertBeforeEl) &&
+           $sortableContainer.hasClass('virtual-list')
+        ) {
           virtualList = $sortableContainer[0].f7VirtualList;
           oldIndex = $sortingEl[0].f7VirtualListIndex;
           newIndex = $insertBeforeEl ? $insertBeforeEl[0].f7VirtualListIndex : $insertAfterEl[0].f7VirtualListIndex;
           if (virtualList) { virtualList.moveItem(oldIndex, newIndex); }
         }
+
+        $sortingEl.trigger('sortable:sort', { from: indexFrom, to: $sortingEl.index() });
+        app.emit('sortableSort', $sortingEl[0], { from: indexFrom, to: $sortingEl.index() });
+
         $insertBeforeEl = undefined;
         $insertAfterEl = undefined;
         isTouched = false;
@@ -12340,7 +12346,9 @@
   var Sortable$1 = {
     name: 'sortable',
     params: {
-      sortable: true,
+      sortable: {
+        moveElements: true,
+      },
     },
     create: function create() {
       var app = this;
@@ -12356,7 +12364,8 @@
     on: {
       init: function init() {
         var app = this;
-        if (app.params.sortable) { app.sortable.init(); }
+        if (!app.params.sortable) { return; }
+        app.sortable.init();
       },
     },
     clicks: {

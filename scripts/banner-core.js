@@ -1,4 +1,4 @@
-const pkg = require('../package.json');
+const pkg = require('../dist/core/package.json');
 
 const date = {
   day: new Date().getDate(),

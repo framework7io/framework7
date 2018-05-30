@@ -1,3 +1,15 @@
+/**
+ * Framework7 Vue 3.0.0-beta.1
+ * Build full featured iOS & Android apps using Framework7 & Vue
+ * http://framework7.io/vue/
+ *
+ * Copyright 2014-2018 Vladimir Kharlampidi
+ *
+ * Released under the MIT License
+ *
+ * Released on: May 30, 2018
+ */
+
 import f7AccordionContent from './components/accordion-content';
 import f7AccordionItem from './components/accordion-item';
 import f7AccordionToggle from './components/accordion-toggle';

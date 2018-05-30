@@ -9,6 +9,9 @@ export default (props) => {
     } else if (key === 'dangerouslySetInnerHTML') {
       if (!props.domProps) props.domProps = {};
       props.domProps.innerHTML = props[key];
+      if (props.domProps.innerHTML && props.domProps.innerHTML.__html) {
+        props.domProps.innerHTML = props.domProps.innerHTML.__html;
+      }
       delete props.dangerouslySetInnerHTML;
       return;
     } else if (key.match(/^on?([A-Z])/)) {

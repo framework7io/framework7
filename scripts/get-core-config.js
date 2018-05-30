@@ -1,4 +1,3 @@
-/* eslint import/no-unresolved: "off" */
 /* eslint global-require: "off" */
 /* eslint no-console: ["error", { allow: ["log"] }] */
 
@@ -7,6 +6,7 @@ let config = require('./build-config.js');
 
 // Overwrite with local config
 try {
+  // eslint-disable-next-line
   const customConfig = require('./build-config-custom.js');
   config = Object.assign({}, config, customConfig);
 } catch (err) {
