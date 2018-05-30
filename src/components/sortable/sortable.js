@@ -138,22 +138,27 @@ const Sortable = {
       let virtualList;
       let oldIndex;
       let newIndex;
-      if ($insertAfterEl) {
-        $sortingEl.insertAfter($insertAfterEl);
-      }
-      if ($insertBeforeEl) {
-        $sortingEl.insertBefore($insertBeforeEl);
+      if (app.params.sortable.moveElements) {
+        if ($insertAfterEl) {
+          $sortingEl.insertAfter($insertAfterEl);
+        }
+        if ($insertBeforeEl) {
+          $sortingEl.insertBefore($insertBeforeEl);
+        }
       }
 
-      $sortingEl.trigger('sortable:sort', { from: indexFrom, to: $sortingEl.index() });
-      app.emit('sortableSort', $sortingEl[0], { from: indexFrom, to: $sortingEl.index() });
-
-      if (($insertAfterEl || $insertBeforeEl) && $sortableContainer.hasClass('virtual-list')) {
+      if (($insertAfterEl || $insertBeforeEl) &&
+         $sortableContainer.hasClass('virtual-list')
+      ) {
         virtualList = $sortableContainer[0].f7VirtualList;
         oldIndex = $sortingEl[0].f7VirtualListIndex;
         newIndex = $insertBeforeEl ? $insertBeforeEl[0].f7VirtualListIndex : $insertAfterEl[0].f7VirtualListIndex;
         if (virtualList) virtualList.moveItem(oldIndex, newIndex);
       }
+
+      $sortingEl.trigger('sortable:sort', { from: indexFrom, to: $sortingEl.index() });
+      app.emit('sortableSort', $sortingEl[0], { from: indexFrom, to: $sortingEl.index() });
+
       $insertBeforeEl = undefined;
       $insertAfterEl = undefined;
       isTouched = false;
@@ -196,7 +201,9 @@ const Sortable = {
 export default {
   name: 'sortable',
   params: {
-    sortable: true,
+    sortable: {
+      moveElements: true,
+    },
   },
   create() {
     const app = this;
@@ -212,7 +219,8 @@ export default {
   on: {
     init() {
       const app = this;
-      if (app.params.sortable) app.sortable.init();
+      if (!app.params.sortable) return;
+      app.sortable.init();
     },
   },
   clicks: {
