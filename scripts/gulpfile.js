@@ -40,32 +40,31 @@ gulp.task('phenome', (cb) => {
 gulp.task('build-core', ['core-js', 'core-less', 'core-components']);
 
 // Watchers
-gulp.task('watch', () => {
-  gulp.watch(['./src/**/**/*.js', '!./src/phenome/**/*.js'], ['core-js', 'ks-react', 'ks-vue']);
-  gulp.watch('./src/**/**/*.less', ['core-less']);
-  gulp.watch(['./src/phenome/**/*.js', './src/phenome/**/*.jsx'], ['phenome', 'ks-react', 'ks-vue']);
-  gulp.watch(['./react/kitchen-sink/src/**/*.js', './react/kitchen-sink/src/**/*.jsx'], ['ks-react']);
-  gulp.watch(['./vue/kitchen-sink/src/**/*.js', './vue/kitchen-sink/src/**/*.jsx'], ['ks-vue']);
-});
-
-gulp.task('watch-core', () => {
-  gulp.watch(['./src/**/**/*.js', '!./src/phenome/**/*.js'], ['core-js']);
-  gulp.watch('./src/**/**/*.less', ['core-less']);
-});
-
-gulp.task('watch-react', () => {
-  gulp.watch(['./src/**/**/*.js', '!./src/phenome/**/*.js'], ['core-js', 'ks-react']);
-  gulp.watch('./src/**/**/*.less', ['core-less']);
-  gulp.watch(['./src/phenome/**/*.js', './src/phenome/**/*.jsx'], ['phenome', 'ks-react']);
-  gulp.watch(['./react/kitchen-sink/src/**/*.js', './react/kitchen-sink/src/**/*.jsx'], ['ks-react']);
-});
-
-gulp.task('watch-vue', () => {
-  gulp.watch(['./src/**/**/*.js', '!./src/phenome/**/*.js'], ['core-js', 'ks-vue']);
-  gulp.watch('./src/**/**/*.less', ['core-less']);
-  gulp.watch(['./src/phenome/**/*.js', './src/phenome/**/*.jsx'], ['phenome', 'ks-vue']);
-  gulp.watch(['./vue/kitchen-sink/src/**/*.js', './vue/kitchen-sink/src/**/*.jsx'], ['ks-vue']);
-});
+const watch = {
+  all() {
+    gulp.watch(['./src/**/**/*.js', '!./src/phenome/**/*.js'], ['core-js', 'ks-react', 'ks-vue']);
+    gulp.watch('./src/**/**/*.less', ['core-less']);
+    gulp.watch(['./src/phenome/**/*.js', './src/phenome/**/*.jsx'], ['phenome', 'ks-react', 'ks-vue']);
+    gulp.watch(['./react/kitchen-sink/src/**/*.js', './react/kitchen-sink/src/**/*.jsx'], ['ks-react']);
+    gulp.watch(['./vue/kitchen-sink/src/**/*.js', './vue/kitchen-sink/src/**/*.jsx'], ['ks-vue']);
+  },
+  core() {
+    gulp.watch(['./src/**/**/*.js', '!./src/phenome/**/*.js'], ['core-js']);
+    gulp.watch('./src/**/**/*.less', ['core-less']);
+  },
+  react() {
+    gulp.watch(['./src/**/**/*.js', '!./src/phenome/**/*.js'], ['core-js', 'ks-react']);
+    gulp.watch('./src/**/**/*.less', ['core-less']);
+    gulp.watch(['./src/phenome/**/*.js', './src/phenome/**/*.jsx'], ['phenome', 'ks-react']);
+    gulp.watch(['./react/kitchen-sink/src/**/*.js', './react/kitchen-sink/src/**/*.jsx'], ['ks-react']);
+  },
+  vue() {
+    gulp.watch(['./src/**/**/*.js', '!./src/phenome/**/*.js'], ['core-js', 'ks-vue']);
+    gulp.watch('./src/**/**/*.less', ['core-less']);
+    gulp.watch(['./src/phenome/**/*.js', './src/phenome/**/*.jsx'], ['phenome', 'ks-vue']);
+    gulp.watch(['./vue/kitchen-sink/src/**/*.js', './vue/kitchen-sink/src/**/*.jsx'], ['ks-vue']);
+  },
+};
 
 // Server
 function server() {
@@ -76,18 +75,22 @@ function server() {
   });
 }
 gulp.task('server', () => {
+  watch.all();
   server();
   gulp.src('./kitchen-sink/core/index.html').pipe(gopen({ uri: 'http://localhost:3000/kitchen-sink/core/' }));
 });
 gulp.task('server-core', () => {
+  watch.core();
   server();
   gulp.src('./kitchen-sink/core/index.html').pipe(gopen({ uri: 'http://localhost:3000/kitchen-sink/core/' }));
 });
 gulp.task('server-react', () => {
+  watch.react();
   server();
   gulp.src('./kitchen-sink/react/index.html').pipe(gopen({ uri: 'http://localhost:3000/kitchen-sink/react/' }));
 });
 gulp.task('server-vue', () => {
+  watch.vue();
   server();
   gulp.src('./kitchen-sink/vue/index.html').pipe(gopen({ uri: 'http://localhost:3000/kitchen-sink/vue/' }));
 });
