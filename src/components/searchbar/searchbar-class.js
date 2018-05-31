@@ -393,10 +393,15 @@ class Searchbar extends FrameworkClass {
       $hideOnSearchEl.removeClass('hidden-by-searchbar');
     }
     // Add active/inactive classes on overlay
-    if (query.length === 0) {
-      if ($searchContainer && $searchContainer.length && $el.hasClass('searchbar-enabled') && $backdropEl) sb.backdropShow();
-    } else if ($searchContainer && $searchContainer.length && $el.hasClass('searchbar-enabled')) {
-      sb.backdropHide();
+    if (
+      ($searchContainer && $searchContainer.length && $el.hasClass('searchbar-enabled')) ||
+      (sb.params.customSearch && $el.hasClass('searchbar-enabled'))
+    ) {
+      if (query.length === 0) {
+        sb.backdropShow();
+      } else {
+        sb.backdropHide();
+      }
     }
 
     if (sb.params.customSearch) {
