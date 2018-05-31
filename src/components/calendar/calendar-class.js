@@ -9,7 +9,7 @@ class Calendar extends Framework7Class {
             const calendar = this;
             if (params.calendarType == 'jalali') {
                 params.monthNames = params.monthNames || ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
-                params.monthNamesShort = params.monthNamesShort || ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+                params.monthNamesShort = params.monthNamesShort || ['فر', 'اد', 'خر', 'تیر', 'مر', 'شه', 'مهر', 'آب', 'آذر', 'دی', 'به', 'اس'];
                 params.dayNames = params.dayNames || ['یک‌شنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه', 'شنبه'];
                 params.dayNamesShort = params.dayNamesShort || ['1ش', '۲ش', '۳ش', '۴ش', '۵ش', 'ج', 'ش'];
                 params.firstDay = params.firstDay || 6; // Saturday
@@ -384,16 +384,15 @@ class Calendar extends Framework7Class {
             if (calendar.value.length === 2 || calendar.value.length === 0) {
                 calendar.value = [];
             }
+
             if ((calendar.value.length == 0 ||
                     (
-                        (Math.abs(calendar.value[0].getTime() - newValue.getTime()) > (minimumDaysInRange - 1) * 60 * 60 * 24) &&
-                        (maximumDaysInRange == 0 || Math.abs(calendar.value[0].getTime() - newValue.getTime()) < (maximumDaysInRange - 1) * 60 * 60 * 24)
+                        (Math.abs(calendar.value[0].getTime() - newValue.getTime()) >= (minimumDaysInRange - 1) * 60 * 60 * 24 * 1000) &&
+                        (maximumDaysInRange == 0 || Math.abs(calendar.value[0].getTime() - newValue.getTime()) <= (maximumDaysInRange - 1) * 60 * 60 * 24 * 1000)
                     )
                 )) calendar.value.push(newValue);
             else calendar.value = [];
-            if (calendar.value.length === 2) {
-                console.log(Math.abs(calendar.value[0].getTime() - newValue.getTime()) > (minimumDaysInRange - 1) * 60 * 60 * 24);
-            }
+
             // if (calendar.value[0] !== newValue) calendar.value.push(newValue);
             // else calendar.value = [];
             calendar.value.sort((a, b) => a - b);
