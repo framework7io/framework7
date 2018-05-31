@@ -5,7 +5,6 @@
 
 const gulp = require('gulp');
 const getConfig = require('./get-core-config.js');
-const banner = require('./banner-core.js');
 const modifyFile = require('gulp-modify-file');
 const getOutput = require('./get-core-output.js');
 

@@ -5,7 +5,7 @@
 
 // const phenome = require('phenome');
 const fs = require('fs');
-const phenome = require('../../phenome/lib/compiler-io/index.js');
+const phenome = require('phenome');
 const bannerVue = require('./banner-vue');
 const bannerReact = require('./banner-react');
 
