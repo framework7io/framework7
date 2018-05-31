@@ -384,7 +384,7 @@ class Searchbar extends FrameworkClass {
     sb.query = query;
     sb.value = query;
 
-    const { $searchContainer, $el, $backdropEl, $foundEl, $notFoundEl, $hideOnSearchEl, isVirtualList } = sb;
+    const { $searchContainer, $el, $foundEl, $notFoundEl, $hideOnSearchEl, isVirtualList } = sb;
 
     // Hide on search element
     if (query.length > 0 && $hideOnSearchEl) {
