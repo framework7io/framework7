@@ -12,41 +12,30 @@ const buildCoreLess = require('./build-core-less.js');
 const buildCoreComponents = require('./build-core-components.js');
 
 const buildPhenome = require('./build-phenome.js');
+const buildVue = require('./build-vue');
+const buildReact = require('./build-react');
 
 const env = process.env.NODE_ENV || 'development';
 
 // Tasks
-gulp.task('ks-core', (cb) => {
-  buildKsCore(cb);
-});
-gulp.task('ks-vue', (cb) => {
-  buildKsVue(cb);
-});
-gulp.task('ks-react', (cb) => {
-  buildKsReact(cb);
-});
-gulp.task('core-js', (cb) => {
-  buildCoreJs(cb);
-});
-gulp.task('core-less', (cb) => {
-  buildCoreLess(cb);
-});
-gulp.task('core-components', (cb) => {
-  buildCoreComponents(cb);
-});
-gulp.task('phenome', (cb) => {
-  buildPhenome(cb);
-});
+gulp.task('ks-core', buildKsCore);
+gulp.task('ks-vue', buildKsVue);
+gulp.task('ks-react', buildKsReact);
+gulp.task('core-js', buildCoreJs);
+gulp.task('core-less', buildCoreLess);
+gulp.task('core-components', buildCoreComponents);
+gulp.task('phenome', buildPhenome);
 
-// Build Core
 gulp.task('build-core', ['core-js', 'core-less', 'core-components']);
+gulp.task('build-react', buildReact);
+gulp.task('build-vue', buildVue);
 
 // Watchers
 const watch = {
   all() {
     gulp.watch(['./src/**/**/*.js', '!./src/phenome/**/*.js'], ['core-js', 'ks-react', 'ks-vue']);
     gulp.watch('./src/**/**/*.less', ['core-less']);
-    gulp.watch(['./src/phenome/**/*.js', './src/phenome/**/*.jsx'], ['phenome', 'ks-react', 'ks-vue']);
+    gulp.watch(['./src/phenome/**/*.js', './src/phenome/**/*.jsx'], ['phenome', 'build-react', 'build-vue', 'ks-react', 'ks-vue']);
     gulp.watch(['./react/kitchen-sink/src/**/*.js', './react/kitchen-sink/src/**/*.jsx'], ['ks-react']);
     gulp.watch(['./vue/kitchen-sink/src/**/*.js', './vue/kitchen-sink/src/**/*.jsx'], ['ks-vue']);
   },
@@ -57,13 +46,13 @@ const watch = {
   react() {
     gulp.watch(['./src/**/**/*.js', '!./src/phenome/**/*.js'], ['core-js', 'ks-react']);
     gulp.watch('./src/**/**/*.less', ['core-less']);
-    gulp.watch(['./src/phenome/**/*.js', './src/phenome/**/*.jsx'], ['phenome', 'ks-react']);
+    gulp.watch(['./src/phenome/**/*.js', './src/phenome/**/*.jsx'], ['phenome', 'build-react', 'ks-react']);
     gulp.watch(['./react/kitchen-sink/src/**/*.js', './react/kitchen-sink/src/**/*.jsx'], ['ks-react']);
   },
   vue() {
     gulp.watch(['./src/**/**/*.js', '!./src/phenome/**/*.js'], ['core-js', 'ks-vue']);
     gulp.watch('./src/**/**/*.less', ['core-less']);
-    gulp.watch(['./src/phenome/**/*.js', './src/phenome/**/*.jsx'], ['phenome', 'ks-vue']);
+    gulp.watch(['./src/phenome/**/*.js', './src/phenome/**/*.jsx'], ['phenome', 'build-vue', 'ks-vue']);
     gulp.watch(['./vue/kitchen-sink/src/**/*.js', './vue/kitchen-sink/src/**/*.jsx'], ['ks-vue']);
   },
 };

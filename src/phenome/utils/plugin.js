@@ -1,41 +1,40 @@
-/* eslint no-param-reassign: "off" */
+// IMPORT_LIBRARY
+// IMPORT_COMPONENTS
 /* eslint no-underscore-dangle: "off" */
-import Utils from '../utils/utils';
+import Utils from './utils';
 import componentsRouter from './components-router';
 import routers from './routers';
 import events from './events';
 
-const f7Plugin = {
+const Plugin = {
   name: 'phenomePlugin',
   Framework7: null,
   instance: null,
   events,
   routers,
   init(rootEl, params = {}, routes) {
-    const f7Params = Utils.extend({}, params, { root: rootEl });
+    const f7Params = Utils.extend({}, params, {
+      root: rootEl,
+    });
     if (routes && routes.length && !f7Params.routes) f7Params.routes = routes;
 
-    f7Plugin.instance = new f7Plugin.Framework7(f7Params);
-    f7Plugin.events.emit('ready', f7Plugin.instance);
+    Plugin.instance = new Plugin.Framework7(f7Params);
+    Plugin.events.emit('ready', Plugin.instance);
   },
   install(params) {
     const Framework7 = this;
-    const { Vue, React } = params;
-    f7Plugin.Framework7 = Framework7;
-    let Extend = Vue || (React && React.Component);
+    Plugin.Framework7 = Framework7;
 
-    if (typeof Extend === 'undefined') {
-      if (typeof window.Vue !== 'undefined') Extend = window.Vue;
-      else if (typeof window.React !== 'undefined') Extend = window.React.Component;
-    }
+    const Extend = EXTEND; // eslint-disable-line
+    const compiler = COMPILER; // eslint-disable-line
+    const refs = REFS_PROP; // eslint-disable-line
 
-    const lib = Vue ? 'vue' : 'react';
-    const refsProp = Vue ? '$refs' : 'refs';
+    // REGISTER_COMPONENTS
 
     // Define protos
     Object.defineProperty(Extend.prototype, '$f7', {
       get() {
-        return f7Plugin.instance;
+        return Plugin.instance;
       },
     });
 
@@ -50,13 +49,14 @@ const f7Plugin = {
     Object.defineProperty(Extend.prototype, '$theme', {
       get() {
         return {
-          ios: f7Plugin.instance ? f7Plugin.instance.theme === 'ios' : $theme.ios,
-          md: f7Plugin.instance ? f7Plugin.instance.theme === 'md' : $theme.md,
+          ios: Plugin.instance ? Plugin.instance.theme === 'ios' : $theme.ios,
+          md: Plugin.instance ? Plugin.instance.theme === 'md' : $theme.md,
         };
       },
     });
+
     function f7ready(callback) {
-      f7Plugin.ready(callback);
+      Plugin.ready(callback);
     }
     Extend.prototype.Dom7 = Framework7.$;
     Extend.prototype.$$ = Framework7.$;
@@ -74,7 +74,7 @@ const f7Plugin = {
         if (self._f7route) route = self._f7route;
         while (parent && !route) {
           if (parent._f7route) route = parent._f7route;
-          if (lib === 'vue') {
+          if (compiler === 'vue') {
             parent = parent.$parent;
           } else {
             parent = parent._reactInternalFiber._debugOwner.stateNode;
@@ -97,10 +97,10 @@ const f7Plugin = {
           if (parent._f7router) router = parent._f7router;
           else if (parent.f7View) {
             router = parent.f7View.router;
-          } else if (parent[refsProp] && parent[refsProp].el && parent[refsProp].el.f7View) {
-            router = parent[refsProp].el.f7View.router;
+          } else if (parent[refs] && parent[refs].el && parent[refs].el.f7View) {
+            router = parent[refs].el.f7View.router;
           }
-          if (lib === 'vue') {
+          if (compiler === 'vue') {
             parent = parent.$parent;
           } else {
             parent = parent._reactInternalFiber._debugOwner.stateNode;
@@ -119,11 +119,11 @@ const f7Plugin = {
   },
   ready(callback) {
     if (!callback) return;
-    if (f7Plugin.instance) callback(f7Plugin.instance);
+    if (Plugin.instance) callback(Plugin.instance);
     else {
       events.once('ready', callback);
     }
   },
 };
 
-export default f7Plugin;
+export default Plugin;

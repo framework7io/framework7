@@ -384,7 +384,7 @@ class Searchbar extends FrameworkClass {
     sb.query = query;
     sb.value = query;
 
-    const { $searchContainer, $el, $backdropEl, $foundEl, $notFoundEl, $hideOnSearchEl, isVirtualList } = sb;
+    const { $searchContainer, $el, $foundEl, $notFoundEl, $hideOnSearchEl, isVirtualList } = sb;
 
     // Hide on search element
     if (query.length > 0 && $hideOnSearchEl) {
@@ -393,10 +393,15 @@ class Searchbar extends FrameworkClass {
       $hideOnSearchEl.removeClass('hidden-by-searchbar');
     }
     // Add active/inactive classes on overlay
-    if (query.length === 0) {
-      if ($searchContainer && $searchContainer.length && $el.hasClass('searchbar-enabled') && $backdropEl) sb.backdropShow();
-    } else if ($searchContainer && $searchContainer.length && $el.hasClass('searchbar-enabled')) {
-      sb.backdropHide();
+    if (
+      ($searchContainer && $searchContainer.length && $el.hasClass('searchbar-enabled')) ||
+      (sb.params.customSearch && $el.hasClass('searchbar-enabled'))
+    ) {
+      if (query.length === 0) {
+        sb.backdropShow();
+      } else {
+        sb.backdropHide();
+      }
     }
 
     if (sb.params.customSearch) {

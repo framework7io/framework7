@@ -3,7 +3,7 @@ import Framework7 from 'framework7/framework7.esm.bundle';
 import Framework7Vue from 'framework7-vue';
 import App from './app.vue';
 
-Framework7.use(Framework7Vue, { Vue });
+Framework7.use(Framework7Vue);
 
 // Init Vue App
 export default new Vue({

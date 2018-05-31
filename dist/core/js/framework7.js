@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: May 30, 2018
+ * Released on: May 31, 2018
  */
 
 (function (global, factory) {
@@ -21023,7 +21023,6 @@
 
       var $searchContainer = sb.$searchContainer;
       var $el = sb.$el;
-      var $backdropEl = sb.$backdropEl;
       var $foundEl = sb.$foundEl;
       var $notFoundEl = sb.$notFoundEl;
       var $hideOnSearchEl = sb.$hideOnSearchEl;
@@ -21036,10 +21035,15 @@
         $hideOnSearchEl.removeClass('hidden-by-searchbar');
       }
       // Add active/inactive classes on overlay
-      if (query.length === 0) {
-        if ($searchContainer && $searchContainer.length && $el.hasClass('searchbar-enabled') && $backdropEl) { sb.backdropShow(); }
-      } else if ($searchContainer && $searchContainer.length && $el.hasClass('searchbar-enabled')) {
-        sb.backdropHide();
+      if (
+        ($searchContainer && $searchContainer.length && $el.hasClass('searchbar-enabled')) ||
+        (sb.params.customSearch && $el.hasClass('searchbar-enabled'))
+      ) {
+        if (query.length === 0) {
+          sb.backdropShow();
+        } else {
+          sb.backdropHide();
+        }
       }
 
       if (sb.params.customSearch) {
