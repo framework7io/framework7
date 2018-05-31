@@ -3,7 +3,6 @@
 /* eslint global-require: "off" */
 /* eslint no-param-reassign: ["error", { "props": false }] */
 
-// const phenome = require('phenome');
 const fs = require('fs');
 const phenome = require('phenome');
 const bannerVue = require('./banner-vue');
