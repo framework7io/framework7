@@ -14713,16 +14713,15 @@ class Calendar extends Framework7Class {
             if (calendar.value.length === 2 || calendar.value.length === 0) {
                 calendar.value = [];
             }
+
             if ((calendar.value.length == 0 ||
                     (
-                        (Math.abs(calendar.value[0].getTime() - newValue.getTime()) > (minimumDaysInRange - 1) * 60 * 60 * 24) &&
-                        (maximumDaysInRange == 0 || Math.abs(calendar.value[0].getTime() - newValue.getTime()) < (maximumDaysInRange - 1) * 60 * 60 * 24)
+                        (Math.abs(calendar.value[0].getTime() - newValue.getTime()) >= (minimumDaysInRange - 1) * 60 * 60 * 24 * 1000) &&
+                        (maximumDaysInRange == 0 || Math.abs(calendar.value[0].getTime() - newValue.getTime()) <= (maximumDaysInRange - 1) * 60 * 60 * 24 * 1000)
                     )
                 )) calendar.value.push(newValue);
             else calendar.value = [];
-            if (calendar.value.length === 2) {
-                console.log(Math.abs(calendar.value[0].getTime() - newValue.getTime()) > (minimumDaysInRange - 1) * 60 * 60 * 24);
-            }
+
             // if (calendar.value[0] !== newValue) calendar.value.push(newValue);
             // else calendar.value = [];
             calendar.value.sort((a, b) => a - b);
