@@ -13,6 +13,8 @@ const buildCoreComponents = require('./build-core-components.js');
 
 const buildPhenome = require('./build-phenome.js');
 
+const env = process.env.NODE_ENV || 'development';
+
 // Tasks
 gulp.task('ks-core', (cb) => {
   buildKsCore(cb);
@@ -75,22 +77,22 @@ function server() {
   });
 }
 gulp.task('server', () => {
-  watch.all();
+  if (env === 'development') watch.all();
   server();
   gulp.src('./kitchen-sink/core/index.html').pipe(gopen({ uri: 'http://localhost:3000/kitchen-sink/core/' }));
 });
 gulp.task('server-core', () => {
-  watch.core();
+  if (env === 'development') watch.core();
   server();
   gulp.src('./kitchen-sink/core/index.html').pipe(gopen({ uri: 'http://localhost:3000/kitchen-sink/core/' }));
 });
 gulp.task('server-react', () => {
-  watch.react();
+  if (env === 'development') watch.react();
   server();
   gulp.src('./kitchen-sink/react/index.html').pipe(gopen({ uri: 'http://localhost:3000/kitchen-sink/react/' }));
 });
 gulp.task('server-vue', () => {
-  watch.vue();
+  if (env === 'development') watch.vue();
   server();
   gulp.src('./kitchen-sink/vue/index.html').pipe(gopen({ uri: 'http://localhost:3000/kitchen-sink/vue/' }));
 });
