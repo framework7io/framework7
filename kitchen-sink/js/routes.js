@@ -91,6 +91,14 @@ var routes = [
     componentUrl: './pages/calendar-page.html',
   },
   {
+    path: '/calendar-jalali/',
+    componentUrl: './pages/calendar-jalali.html',
+  },
+  {
+    path: '/jcalendar-page/',
+    componentUrl: './pages/jcalendar-page.html',
+  },
+  {
     path: '/cards/',
     url: './pages/cards.html',
   },
