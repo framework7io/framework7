@@ -1,5 +1,5 @@
 /**
- * Framework7 2.3.0
+ * Framework7 2.3.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: May 27, 2018
+ * Released on: June 1, 2018
  */
 
 import { window as window$1, document } from 'ssr-window';
@@ -9275,22 +9275,27 @@ const Sortable = {
       let virtualList;
       let oldIndex;
       let newIndex;
-      if ($insertAfterEl) {
-        $sortingEl.insertAfter($insertAfterEl);
-      }
-      if ($insertBeforeEl) {
-        $sortingEl.insertBefore($insertBeforeEl);
+      if (app.params.sortable.moveElements) {
+        if ($insertAfterEl) {
+          $sortingEl.insertAfter($insertAfterEl);
+        }
+        if ($insertBeforeEl) {
+          $sortingEl.insertBefore($insertBeforeEl);
+        }
       }
 
-      $sortingEl.trigger('sortable:sort', { from: indexFrom, to: $sortingEl.index() });
-      app.emit('sortableSort', $sortingEl[0], { from: indexFrom, to: $sortingEl.index() });
-
-      if (($insertAfterEl || $insertBeforeEl) && $sortableContainer.hasClass('virtual-list')) {
+      if (($insertAfterEl || $insertBeforeEl) &&
+         $sortableContainer.hasClass('virtual-list')
+      ) {
         virtualList = $sortableContainer[0].f7VirtualList;
         oldIndex = $sortingEl[0].f7VirtualListIndex;
         newIndex = $insertBeforeEl ? $insertBeforeEl[0].f7VirtualListIndex : $insertAfterEl[0].f7VirtualListIndex;
         if (virtualList) virtualList.moveItem(oldIndex, newIndex);
       }
+
+      $sortingEl.trigger('sortable:sort', { from: indexFrom, to: $sortingEl.index() });
+      app.emit('sortableSort', $sortingEl[0], { from: indexFrom, to: $sortingEl.index() });
+
       $insertBeforeEl = undefined;
       $insertAfterEl = undefined;
       isTouched = false;
@@ -9333,7 +9338,9 @@ const Sortable = {
 var Sortable$1 = {
   name: 'sortable',
   params: {
-    sortable: true,
+    sortable: {
+      moveElements: true,
+    },
   },
   create() {
     const app = this;
@@ -9349,7 +9356,8 @@ var Sortable$1 = {
   on: {
     init() {
       const app = this;
-      if (app.params.sortable) app.sortable.init();
+      if (!app.params.sortable) return;
+      app.sortable.init();
     },
   },
   clicks: {
@@ -17988,7 +17996,7 @@ class Searchbar extends Framework7Class {
     sb.query = query;
     sb.value = query;
 
-    const { $searchContainer, $el, $backdropEl, $foundEl, $notFoundEl, $hideOnSearchEl, isVirtualList } = sb;
+    const { $searchContainer, $el, $foundEl, $notFoundEl, $hideOnSearchEl, isVirtualList } = sb;
 
     // Hide on search element
     if (query.length > 0 && $hideOnSearchEl) {
@@ -17997,10 +18005,15 @@ class Searchbar extends Framework7Class {
       $hideOnSearchEl.removeClass('hidden-by-searchbar');
     }
     // Add active/inactive classes on overlay
-    if (query.length === 0) {
-      if ($searchContainer && $searchContainer.length && $el.hasClass('searchbar-enabled') && $backdropEl) sb.backdropShow();
-    } else if ($searchContainer && $searchContainer.length && $el.hasClass('searchbar-enabled')) {
-      sb.backdropHide();
+    if (
+      ($searchContainer && $searchContainer.length && $el.hasClass('searchbar-enabled')) ||
+      (sb.params.customSearch && $el.hasClass('searchbar-enabled'))
+    ) {
+      if (query.length === 0) {
+        sb.backdropShow();
+      } else {
+        sb.backdropHide();
+      }
     }
 
     if (sb.params.customSearch) {
@@ -19096,8 +19109,9 @@ function updateSlides () {
   const {
     $wrapperEl, size: swiperSize, rtlTranslate: rtl, wrongRTL,
   } = swiper;
-  const slides = $wrapperEl.children(`.${swiper.params.slideClass}`);
   const isVirtual = swiper.virtual && params.virtual.enabled;
+  const previousSlidesLength = isVirtual ? swiper.virtual.slides.length : swiper.slides.length;
+  const slides = $wrapperEl.children(`.${swiper.params.slideClass}`);
   const slidesLength = isVirtual ? swiper.virtual.slides.length : slides.length;
   let snapGrid = [];
   const slidesGrid = [];
@@ -19113,7 +19127,6 @@ function updateSlides () {
     offsetAfter = params.slidesOffsetAfter.call(swiper);
   }
 
-  const previousSlidesLength = slidesLength;
   const previousSnapGridLength = swiper.snapGrid.length;
   const previousSlidesGridLength = swiper.snapGrid.length;
 
@@ -20049,7 +20062,7 @@ function loopFix () {
     if (slideChanged && diff !== 0) {
       swiper.setTranslate((rtl ? -swiper.translate : swiper.translate) - diff);
     }
-  } else if ((params.slidesPerView === 'auto' && activeIndex >= loopedSlides * 2) || (activeIndex > slides.length - (params.slidesPerView * 2))) {
+  } else if ((params.slidesPerView === 'auto' && activeIndex >= loopedSlides * 2) || (activeIndex >= slides.length - loopedSlides)) {
     // Fix For Positive Oversliding
     newIndex = -slides.length + activeIndex + loopedSlides;
     newIndex += loopedSlides;
@@ -20142,15 +20155,69 @@ function prependSlide (slides) {
   swiper.slideTo(newActiveIndex, 0, false);
 }
 
+function addSlide (index, slides) {
+  const swiper = this;
+  const { $wrapperEl, params, activeIndex } = swiper;
+  let activeIndexBuffer = activeIndex;
+  if (params.loop) {
+    activeIndexBuffer -= swiper.loopedSlides;
+    swiper.loopDestroy();
+    swiper.slides = $wrapperEl.children(`.${params.slideClass}`);
+  }
+  const baseLength = swiper.slides.length;
+  if (index <= 0) {
+    swiper.prependSlide(slides);
+    return;
+  } else if (index >= baseLength) {
+    swiper.appendSlide(slides);
+    return;
+  }
+  let newActiveIndex = activeIndexBuffer > index ? activeIndexBuffer + 1 : activeIndexBuffer;
+
+  const slidesBuffer = [];
+  for (let i = baseLength - 1; i >= index; i -= 1) {
+    const currentSlide = swiper.slides.eq(i);
+    currentSlide.remove();
+    slidesBuffer.unshift(currentSlide);
+  }
+
+  if (typeof slides === 'object' && 'length' in slides) {
+    for (let i = 0; i < slides.length; i += 1) {
+      if (slides[i]) $wrapperEl.append(slides[i]);
+    }
+    newActiveIndex = activeIndexBuffer > index ? activeIndexBuffer + slides.length : activeIndexBuffer;
+  } else {
+    $wrapperEl.append(slides);
+  }
+
+  for (let i = 0; i < slidesBuffer.length; i += 1) {
+    $wrapperEl.append(slidesBuffer[i]);
+  }
+
+  if (params.loop) {
+    swiper.loopCreate();
+  }
+  if (!(params.observer && Support.observer)) {
+    swiper.update();
+  }
+  if (params.loop) {
+    swiper.slideTo(newActiveIndex + swiper.loopedSlides, 0, false);
+  } else {
+    swiper.slideTo(newActiveIndex, 0, false);
+  }
+}
+
 function removeSlide (slidesIndexes) {
   const swiper = this;
   const { params, $wrapperEl, activeIndex } = swiper;
 
+  let activeIndexBuffer = activeIndex;
   if (params.loop) {
+    activeIndexBuffer -= swiper.loopedSlides;
     swiper.loopDestroy();
     swiper.slides = $wrapperEl.children(`.${params.slideClass}`);
   }
-  let newActiveIndex = activeIndex;
+  let newActiveIndex = activeIndexBuffer;
   let indexToRemove;
 
   if (typeof slidesIndexes === 'object' && 'length' in slidesIndexes) {
@@ -20194,6 +20261,7 @@ function removeAllSlides () {
 var manipulation = {
   appendSlide,
   prependSlide,
+  addSlide,
   removeSlide,
   removeAllSlides,
 };
@@ -22193,8 +22261,8 @@ const Pagination = {
       }
     }
     if (params.type === 'fraction') {
-      $el.find(`.${params.currentClass}`).text(current + 1);
-      $el.find(`.${params.totalClass}`).text(total);
+      $el.find(`.${params.currentClass}`).text(params.formatFractionCurrent(current + 1));
+      $el.find(`.${params.totalClass}`).text(params.formatFractionTotal(total));
     }
     if (params.type === 'progressbar') {
       let progressbarDirection;
@@ -22344,6 +22412,8 @@ var Pagination$1 = {
       type: 'bullets', // 'bullets' or 'progressbar' or 'fraction' or 'custom'
       dynamicBullets: false,
       dynamicMainBullets: 1,
+      formatFractionCurrent: number => number,
+      formatFractionTotal: number => number,
       bulletClass: 'swiper-pagination-bullet',
       bulletActiveClass: 'swiper-pagination-bullet-active',
       modifierClass: 'swiper-pagination-', // NEW
