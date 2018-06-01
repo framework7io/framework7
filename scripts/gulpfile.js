@@ -37,8 +37,8 @@ const watch = {
     gulp.watch(['./src/core/**/*.js'], () => runSequence('core-js', 'core-components', 'ks-react', 'ks-vue'));
     gulp.watch('./src/core/**/*.less', () => runSequence('core-less', 'core-components'));
     gulp.watch(['./src/phenome/**/*.js', './src/phenome/**/*.jsx'], () => runSequence('phenome', 'build-react', 'build-vue', 'ks-react', 'ks-vue'));
-    gulp.watch(['./react/kitchen-sink/src/**/*.js', './react/kitchen-sink/src/**/*.jsx'], () => runSequence('ks-react'));
-    gulp.watch(['./vue/kitchen-sink/src/**/*.js', './vue/kitchen-sink/src/**/*.jsx'], () => runSequence('ks-vue'));
+    gulp.watch(['./kitchen-sink/react/src/**/*.js', './kitchen-sink/react/src/**/*.jsx'], () => runSequence('ks-react'));
+    gulp.watch(['./kitchen-sink/vue/src/**/*.js', './kitchen-sink/vue/src/**/*.vue'], () => runSequence('ks-vue'));
   },
   core() {
     gulp.watch(['./src/core/**/*.js'], () => runSequence('core-js', 'core-components'));
@@ -48,13 +48,13 @@ const watch = {
     gulp.watch(['./src/core/**/*.js'], () => runSequence('core-js', 'core-components', 'ks-react'));
     gulp.watch('./src/core/**/*.less', () => runSequence('core-less', 'core-components'));
     gulp.watch(['./src/phenome/**/*.js', './src/phenome/**/*.jsx'], () => runSequence('phenome', 'build-react', 'ks-react'));
-    gulp.watch(['./react/kitchen-sink/src/**/*.js', './react/kitchen-sink/src/**/*.jsx'], () => runSequence('ks-react'));
+    gulp.watch(['./kitchen-sink/react/src/**/*.js', './kitchen-sink/react/src/**/*.jsx'], () => runSequence('ks-react'));
   },
   vue() {
     gulp.watch(['./src/core/**/*.js'], () => runSequence('core-js', 'core-components', 'ks-vue'));
     gulp.watch('./src/core/**/*.less', () => runSequence('core-less', 'core-components'));
     gulp.watch(['./src/phenome/**/*.js', './src/phenome/**/*.jsx'], () => runSequence('phenome', 'build-vue', 'ks-vue'));
-    gulp.watch(['./vue/kitchen-sink/src/**/*.js', './vue/kitchen-sink/src/**/*.jsx'], () => runSequence('ks-vue'));
+    gulp.watch(['./kitchen-sink/vue/src/**/*.js', './kitchen-sink/vue/src/**/*.vue'], () => runSequence('ks-vue'));
   },
 };
 
