@@ -1,6 +1,6 @@
 const pkg = require('../packages/core/package.json');
 
-const version = pkg.version || process.env.VERSION;
+const version = process.env.VERSION || pkg.version;
 
 const date = {
   day: new Date().getDate(),
