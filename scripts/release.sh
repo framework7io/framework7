@@ -62,11 +62,40 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 
   # commit
   git add -A
-  git add -f \
-    packages/**/*.*
+  git add -f packages/**/*.*
   git commit -m "$VERSION Release"
 
   # publish
   git push origin refs/tags/v"$VERSION"
   git push
+
+  # Create assets
+  (
+    (
+      cd packages/core
+      tar -zcvf ../framework7.tar.gz ./*
+      zip -r ../framework7.zip ./*
+    )
+    (
+      cd packages/react
+      tar -zcvf ../framework7-react.tar.gz ./*
+      zip -r ../framework7-react.zip ./*
+    )
+    (
+      cd packages/vue
+      tar -zcvf ../framework7-vue.tar.gz ./*
+      zip -r ../framework7-vue.zip ./*
+    )
+  )
+
+  # Read TOKEN
+  token=$(<./.github-access-token)
+
+  # Upload assets
+  source "scripts/release-asset.sh" github_api_token=$token tag=v$VERSION filename=../packages/framework7.tar.gz
+  source "scripts/release-asset.sh" github_api_token=$token tag=v$VERSION filename=../packages/framework7.zip
+  source "scripts/release-asset.sh" github_api_token=$token tag=v$VERSION filename=../packages/framework7-react.tar.gz
+  source "scripts/release-asset.sh" github_api_token=$token tag=v$VERSION filename=../packages/framework7-react.zip
+  source "scripts/release-asset.sh" github_api_token=$token tag=v$VERSION filename=../packages/framework7-vue.tar.gz
+  source "scripts/release-asset.sh" github_api_token=$token tag=v$VERSION filename=../packages/framework7-vue.zip
 fi
