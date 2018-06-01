@@ -2,7 +2,7 @@ import Template7 from 'template7';
 import $ from 'dom7';
 
 // F7 Class
-import Framework7 from './components/core/core-class';
+import Framework7 from './components/app/app-class';
 
 // Import Helpers
 //ES_IMPORT_HELPERS
