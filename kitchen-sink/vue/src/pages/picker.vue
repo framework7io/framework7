@@ -1,5 +1,5 @@
 <template>
-  <f7-page :page-content="false">
+  <f7-page :page-content="false" @page:beforeremove="onPageBeforeRemove" @page:init="onPageInit">
     <f7-navbar title="Picker" back-link="Back"></f7-navbar>
     <div class="page-content">
       <div class="block">
@@ -90,8 +90,8 @@
       f7Navbar,
       f7Page,
     },
-    on: {
-      pageInit(e) {
+    methods: {
+      onPageInit(e) {
         const self = this;
         const today = new Date();
         const app = self.$f7;
@@ -267,7 +267,7 @@
           },
         });
       },
-      pageBeforeRemove() {
+      onPageBeforeRemove() {
         const self = this;
         self.pickerDevice.destroy();
         self.pickerDescribe.destroy();

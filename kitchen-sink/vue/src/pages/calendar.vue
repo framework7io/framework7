@@ -1,5 +1,5 @@
 <template>
-  <f7-page :page-content="false">
+  <f7-page :page-content="false" @page:beforeremove="onPageBeforeRemove" @page:init="onPageInit">
     <f7-navbar title="Calendar" back-link="Back"></f7-navbar>
     <div class="page-content">
       <div class="block">
@@ -103,8 +103,8 @@
       f7Navbar,
       f7Page,
     },
-    on: {
-      pageInit(e) {
+    methods: {
+      onPageInit(e) {
         const self = this;
         const app = self.$f7;
         const $ = self.$$;
@@ -171,7 +171,7 @@
           },
         });
       },
-      pageBeforeRemove() {
+      onPageBeforeRemove() {
         const self = this;
         self.calendarDefault.destroy();
         self.calendarDateFormat.destroy();

@@ -1,5 +1,5 @@
 <template>
-  <f7-page>
+  <f7-page @page:beforeremove="onPageBeforeRemove" @page:init="onPageInit">
     <f7-navbar title="Swipeout" back-link="Back"></f7-navbar>
 
     <f7-block>
@@ -243,13 +243,11 @@
         const app = this.$f7;
         app.dialog.alert('Thanks, item removed!');
       },
-    },
-    on: {
-      pageBeforeRemove() {
+      onPageBeforeRemove() {
         const self = this;
         self.actions.destroy();
       },
-      pageInit() {
+      onPageInit() {
         const self = this;
         const app = self.$f7;
         self.actions = app.actions.create({

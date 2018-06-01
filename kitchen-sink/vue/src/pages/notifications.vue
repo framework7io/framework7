@@ -1,5 +1,5 @@
 <template>
-  <f7-page>
+  <f7-page @page:beforeremove="onPageBeforeRemove" @page:beforeout="onPageBeforeOut">
     <f7-navbar title="Notifications" back-link="Back"></f7-navbar>
     <f7-block>
       <p>Framework7 comes with simple Notifications component that allows you to show some useful messages to user and request basic actions.</p>
@@ -89,13 +89,11 @@
         // Open it
         self.notificationCallbackOnClose.open();
       },
-    },
-    on: {
-      pageBeforeOut() {
+      onPageBeforeOut() {
         const self = this;
         self.$f7.notification.close();
       },
-      pageBeforeRemove() {
+      onPageBeforeRemove() {
         const self = this;
         // Destroy toasts when page removed
         if (self.notificationFull) self.notificationFull.destroy();

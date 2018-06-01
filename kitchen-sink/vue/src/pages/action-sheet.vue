@@ -1,5 +1,5 @@
 <template>
-  <f7-page>
+  <f7-page @page:beforeremove="onPageBeforeRemove">
     <f7-navbar title="Action Sheet" back-link="Back"></f7-navbar>
     <f7-block strong>
       <p class="row">
@@ -130,14 +130,12 @@ export default {
       // Open
       self.actionsToPopover.open();
     },
-  },
-  on: {
-    pageBeforeRemove() {
+    onPageBeforeRemove() {
       const self = this;
       if (self.actionsToPopover) {
         self.actionsToPopover.destroy();
       }
-    },
+    }
   },
 };
 </script>

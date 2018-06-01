@@ -1,5 +1,5 @@
 <template>
-  <f7-page>
+  <f7-page @page:beforeremove="onPageBeforeRemove" @page:init="onPageInit">
     <f7-navbar title="Autocomplete" back-link="Back">
       <div class="subnavbar">
         <form class="searchbar" id="searchbar-autocomplete">
@@ -186,8 +186,8 @@
         fruits: 'Apple Apricot Avocado Banana Melon Orange Peach Pear Pineapple'.split(' '),
       };
     },
-    on: {
-      pageBeforeRemove() {
+    methods: {
+      onPageBeforeRemove() {
         const self = this;
         // Destroy all autocompletes
         self.autocompleteDropdownSimple.destroy();
@@ -202,7 +202,7 @@
         self.autocompleteStandaloneMultiple.destroy();
         self.autocompleteStandaloneAjax.destroy();
       },
-      pageInit() {
+      onPageInit() {
         const self = this;
         const app = self.$f7;
         const fruits = self.fruits;

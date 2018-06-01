@@ -1,5 +1,5 @@
 <template>
-  <f7-page>
+  <f7-page  @page:beforeremove="onPageBeforeRemove" @page:beforeout="onPageBeforeOut">
     <f7-navbar title="Toast" back-link="Back"></f7-navbar>
     <f7-block>
       <p>Toasts provide brief feedback about an operation through a message on the screen.</p>
@@ -145,13 +145,11 @@
         // Open it
         self.toastWithCallback.open();
       },
-    },
-    on: {
-      pageBeforeOut() {
+      onPageBeforeOut() {
         const self = this;
         self.$f7.toast.close();
       },
-      pageBeforeRemove() {
+      onPageBeforeRemove() {
         const self = this;
         // Destroy toasts when page removed
         if (self.toastBottom) self.toastBottom.destroy();

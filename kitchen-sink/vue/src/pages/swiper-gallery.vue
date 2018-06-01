@@ -1,5 +1,5 @@
 <template>
-  <f7-page style="background: #000">
+  <f7-page style="background: #000" @page:beforeremove="onPageBeforeRemove" @page:init="onPageInit">
     <f7-navbar title="Two Way Control Gallery" back-link="Back"></f7-navbar>
     <div class="swiper-container demo-swiper-gallery-top">
       <div class="swiper-wrapper">
@@ -45,13 +45,13 @@
       f7Navbar,
       f7Page,
     },
-    on: {
-      pageBeforeRemove() {
+    methods: {
+      onPageBeforeRemove() {
         const self = this;
         self.swiperTop.destroy();
         self.swiperThumbs.destroy();
       },
-      pageInit() {
+      onPageInit() {
         const self = this;
         const swiperTop = self.$f7.swiper.create('.demo-swiper-gallery-top', {
           spaceBetween: 10,

@@ -1,5 +1,5 @@
 <template>
-  <f7-page>
+  <f7-page @page:beforeremove="onPageBeforeRemove" @page:beforeout="onPageBeforeOut">
     <f7-navbar title="Sheet Modal" back-link="Back"></f7-navbar>
     <f7-block>
       <p>Sheet Modals slide up from the bottom of the screen to reveal more content. Such modals allow to create custom overlays with custom content.</p>
@@ -82,14 +82,12 @@ export default {
       // Open it
       self.sheet.open();
     },
-  },
-  on: {
-    pageBeforeOut() {
+    onPageBeforeOut() {
       const self = this;
       // Close opened sheets on page out
       self.$f7.sheet.close();
     },
-    pageBeforeRemove() {
+    onPageBeforeRemove() {
       const self = this;
       // Destroy sheet modal when page removed
       if (self.sheet) self.sheet.destroy();

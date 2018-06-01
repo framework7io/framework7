@@ -1,5 +1,5 @@
 <template>
-  <f7-page :page-content="false">
+  <f7-page :page-content="false" @page:beforeremove="onPageBeforeRemove" @page:init="onPageInit">
     <f7-navbar back-link="Back">
       <f7-nav-title class="navbar-calendar-title"></f7-nav-title>
     </f7-navbar>
@@ -85,9 +85,7 @@
 
         self.$el.querySelector('.list ul').innerHTML = eventsHtml;
       },
-    },
-    on: {
-      pageInit(e, page) {
+      onPageInit(e, page) {
         const self = this;
         const app = self.$f7;
         const $ = self.$$;
@@ -114,7 +112,7 @@
           },
         });
       },
-      pageBeforeRemove() {
+      onPageBeforeRemove() {
         const self = this;
         self.calendar.destroy();
       },
