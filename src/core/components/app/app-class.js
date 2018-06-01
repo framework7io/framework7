@@ -30,7 +30,6 @@ class Framework7 extends Framework7Class {
     // Extend defaults with modules params
     app.useModulesParams(defaults);
 
-
     // Extend defaults with passed params
     app.params = Utils.extend(defaults, params);
 
@@ -80,13 +79,12 @@ class Framework7 extends Framework7Class {
         app.init();
       }
     }
-
     // Return app instance
     return app;
   }
   init() {
     const app = this;
-    if (app.initialized) return;
+    if (app.initialized) return app;
 
     app.root.addClass('framework7-initializing');
 
@@ -111,7 +109,13 @@ class Framework7 extends Framework7Class {
     // Methods
     app.methods = {};
     if (app.params.methods) {
-      Utils.extend(app.methods, app.params.methods);
+      Object.keys(app.params.methods).forEach((methodName) => {
+        if (typeof app.params.methods[methodName] === 'function') {
+          app.methods[methodName] = app.params.methods[methodName].bind(app);
+        } else {
+          app.methods[methodName] = app.params.methods[methodName];
+        }
+      });
     }
     // Init class
     Utils.nextFrame(() => {
@@ -120,6 +124,8 @@ class Framework7 extends Framework7Class {
     // Emit, init other modules
     app.initialized = true;
     app.emit('init');
+
+    return app;
   }
   // eslint-disable-next-line
   get $() {
