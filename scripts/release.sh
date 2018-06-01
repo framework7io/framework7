@@ -17,6 +17,26 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     npm run lint
   fi
 
+  # remove old builds
+  rm -rf ./packages/core/components
+  rm -rf ./packages/core/css
+  rm -rf ./packages/core/js
+  rm -rf ./packages/core/less
+  rm -rf ./packages/core/modules
+  rm -rf ./packages/core/utils
+  rm -rf ./packages/core/*.js
+  rm -rf ./packages/core/*.less
+  rm -rf ./packages/react/components
+  rm -rf ./packages/react/runtime-helpers
+  rm -rf ./packages/react/utils
+  rm -rf ./packages/react/*.js
+  rm -rf ./packages/react/*.map
+  rm -rf ./packages/vue/components
+  rm -rf ./packages/vue/runtime-helpers
+  rm -rf ./packages/vue/utils
+  rm -rf ./packages/vue/*.js
+  rm -rf ./packages/vue/*.map
+
   # build
   VERSION=$VERSION npm run build:prod
 
