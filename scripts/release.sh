@@ -101,7 +101,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   source "scripts/release-asset.sh" github_api_token=$token tag=v$VERSION filename=./packages/framework7-vue.tar.gz
 
   # Remove generated assets
-  rm -rf /packages/*.tar.gz
+  rm -rf ./packages/*.tar.gz
 
   echo "Done"
 
