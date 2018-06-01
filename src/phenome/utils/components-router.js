@@ -38,18 +38,8 @@ export default {
 
         const pageEl = el.children[el.children.length - 1];
         pageData.el = pageEl;
-        let pageEvents;
-        if (component.on) {
-          const componentInstance = routerComponent.$children[routerComponent.$children.length - 1];
-          if (componentInstance && componentInstance.$el === pageEl) {
-            pageEvents = Utils.extend({}, component.on);
-            Object.keys(pageEvents).forEach((pageEvent) => {
-              pageEvents[pageEvent] = pageEvents[pageEvent].bind(componentInstance);
-            });
-          }
-        }
 
-        resolve(pageEl, { on: pageEvents });
+        resolve(pageEl);
         resolved = true;
       }
 
@@ -120,16 +110,8 @@ export default {
         if (componentRouterData.component !== tabsComponent || resolved) return;
         events.off('tabRouterDidUpdate', onDidUpdate);
 
-        let tabEvents;
-        if (component.on) {
-          tabEvents = Utils.extend({}, component.on);
-          Object.keys(tabEvents).forEach((pageEvent) => {
-            tabEvents[pageEvent] = tabEvents[pageEvent].bind(tabsComponent);
-          });
-        }
-
         const tabContentEl = tabEl.children[0];
-        resolve(tabContentEl, { on: tabEvents });
+        resolve(tabContentEl);
 
         resolved = true;
       }
