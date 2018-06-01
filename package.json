@@ -1,6 +1,5 @@
 {
   "name": "framework7",
-  "version": "3.0.0-beta.1",
   "scripts": {
     "build:dev": "cross-env-shell NODE_ENV=development \"gulp build-core && gulp phenome && gulp build-vue && gulp build-react\"",
     "build:prod": "cross-env-shell NODE_ENV=production \"gulp build-core && gulp phenome && gulp build-vue && gulp build-react\"",
@@ -21,6 +20,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "npm run build:prod && eslint .",
+    "release": "bash ./scripts/release.sh",
     "postinstall": "node -e \"console.log('\\u001b[35m\\u001b[1mLove Framework7? Support project by donating or pledging on patreon:\\u001b[22m\\u001b[39m\\n > \\u001b[32mhttps://patreon.com/vladimirkharlampidi\\u001b[0m\\n')\""
   },
   "repository": {
@@ -46,6 +46,7 @@
     "template7": "^1.3.5"
   },
   "devDependencies": {
+    "conventional-changelog": "^2.0.0",
     "cross-env": "^5.1.6",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",

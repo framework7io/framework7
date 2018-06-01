@@ -44,6 +44,7 @@ function buildVue(cb) {
     .replace(/EXTEND/g, 'Vue')
     .replace(/COMPILER/, '\'vue\'')
     .replace(/REFS_PROP/, '\'$refs\'');
+
   fs.writeFileSync(`${buildPath}/vue/utils/plugin.js`, newPluginContent);
 
   /* Build main components esm module: framework7-vue.esm.js */
@@ -116,7 +117,7 @@ function buildVue(cb) {
       strict: true,
       file: `${buildPath}/vue/framework7-vue.js`,
       format: 'umd',
-      name: 'Framework7',
+      name: 'Framework7Vue',
       sourcemap: env === 'development',
       sourcemapFile: `${buildPath}/vue/framework7-vue.js.map`,
       banner: bannerVue,

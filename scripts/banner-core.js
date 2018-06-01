@@ -1,5 +1,7 @@
 const pkg = require('../dist/core/package.json');
 
+const version = pkg.version || process.env.VERSION;
+
 const date = {
   day: new Date().getDate(),
   month: ('January February March April May June July August September October November December').split(' ')[new Date().getMonth()],
@@ -8,7 +10,7 @@ const date = {
 
 module.exports = `${`
 /**
- * Framework7 ${pkg.version}
+ * Framework7 ${version}
  * ${pkg.description}
  * ${pkg.homepage}
  *

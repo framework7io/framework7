@@ -32,7 +32,7 @@ function es(components, cb) {
   const expectCbs = 2;
 
   // Bundle
-  gulp.src('./src/framework7.js')
+  gulp.src('./src/core/framework7.js')
     .pipe(modifyFile((content) => {
       let newContent = content
         .replace('process.env.NODE_ENV', JSON.stringify(env))
@@ -54,7 +54,7 @@ function es(components, cb) {
     });
 
   // Core
-  gulp.src('./src/framework7.js')
+  gulp.src('./src/core/framework7.js')
     .pipe(modifyFile((content) => {
       let newContent = content
         .replace('process.env.NODE_ENV', JSON.stringify(env))
@@ -83,7 +83,7 @@ function umd(components, cb) {
   const output = getOutput();
 
   rollup.rollup({
-    input: './src/framework7.js',
+    input: './src/core/framework7.js',
     cache,
     plugins: [
       replace({
@@ -146,7 +146,7 @@ function buildJs(cb) {
         return char;
       }).join('');
     }).join('');
-    const jsFilePath = `./src/components/${name}/${name}.js`;
+    const jsFilePath = `./src/core/components/${name}/${name}.js`;
     if (fs.existsSync(jsFilePath)) {
       components.push({ name, capitalized });
     }

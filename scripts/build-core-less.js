@@ -25,7 +25,7 @@ function copyLess(config, cb) {
   const includeDarkTheme = config.darkTheme;
   const rtl = config.rtl;
 
-  gulp.src(['src/framework7.less'])
+  gulp.src(['src/core/framework7.less'])
     .pipe(modifyFile((content) => {
       let newContent = content;
       newContent = `${banner}\n${newContent}`;
@@ -57,7 +57,7 @@ function build(config, components, themes, rtl, cb) {
   const outputFileName = `framework7${rtl ? '.rtl' : ''}${currentTheme ? `.${currentTheme}` : ''}`;
   const output = getOutput();
 
-  gulp.src('./src/framework7.less')
+  gulp.src('./src/core/framework7.less')
     .pipe(modifyFile((content) => {
       const newContent = content
         .replace('//IMPORT_COMPONENTS', components.map(component => `@import url('./components/${component}/${component}.less');`).join('\n'))
@@ -116,7 +116,7 @@ function buildLess(cb) {
 
   const components = [];
   config.components.forEach((name) => {
-    const lessFilePath = `./src/components/${name}/${name}.less`;
+    const lessFilePath = `./src/core/components/${name}/${name}.less`;
     if (fs.existsSync(lessFilePath)) {
       components.push(name);
     }

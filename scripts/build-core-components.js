@@ -15,7 +15,7 @@ function build(cb) {
   const format = 'es';
   const output = getOutput();
 
-  gulp.src(['./src/**/*.*', '!./src/framework7.less', '!./src/framework7.js', '!./src/phenome/**/*.js', '!./src/phenome/**/*.jsx'])
+  gulp.src(['./src/core/**/*.*', '!./src/core/framework7.less', '!./src/core/framework7.js'])
     .pipe(modifyFile((content) => {
       const newContent = content
         .replace('process.env.NODE_ENV', JSON.stringify(env))
