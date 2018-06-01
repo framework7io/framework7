@@ -1,4 +1,4 @@
-const pkg = require('../dist/vue/package.json');
+const pkg = require('../packages/vue/package.json');
 
 const version = pkg.version || process.env.VERSION;
 

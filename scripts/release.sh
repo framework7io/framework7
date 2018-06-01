@@ -24,32 +24,29 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   # using subshells to avoid having to cd back
   (
     (
-      cd dist/core
+      cd packages/core
       npm version "$VERSION"
-      # npm publish
+      npm publish
     )
     (
-      cd dist/vue
+      cd packages/vue
       npm version "$VERSION"
-      # npm publish
+      npm publish
     )
     (
-      cd dist/react
+      cd packages/react
       npm version "$VERSION"
-      # npm publish
+      npm publish
     )
   )
 
   # commit
-  # git add -A
-  # git add -f \
-  #   dist/**/*.*
-  # git commit -m "$VERSION Release"
+  git add -A
+  git add -f \
+    packages/**/*.*
+  git commit -m "$VERSION Release"
 
-  # # tag version
-  # npm version "$VERSION" --message "build: release $VERSION"
-
-  # # publish
-  # git push origin refs/tags/v"$VERSION"
-  # git push
+  # publish
+  git push origin refs/tags/v"$VERSION"
+  git push
 fi

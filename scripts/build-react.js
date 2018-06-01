@@ -38,7 +38,7 @@ export default Framework7React;
 // Build React
 function buildReact(cb) {
   const env = process.env.NODE_ENV || 'development';
-  const buildPath = env === 'development' ? './build' : './dist';
+  const buildPath = env === 'development' ? './build' : './packages';
   const pluginContent = fs.readFileSync(`./${buildPath}/react/utils/plugin.js`, 'utf-8');
 
   /* Replace plugin vars: utils/plugin.js */

@@ -33,7 +33,7 @@ export default Framework7Vue;
 
 function buildVue(cb) {
   const env = process.env.NODE_ENV || 'development';
-  const buildPath = env === 'development' ? './build' : './dist';
+  const buildPath = env === 'development' ? './build' : './packages';
   const pluginContent = fs.readFileSync(`./${buildPath}/vue/utils/plugin.js`, 'utf-8');
 
   /* Replace plugin vars: utils/plugin.js */

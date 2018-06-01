@@ -14,7 +14,7 @@ let cache;
 function buildKs(cb) {
   const env = process.env.NODE_ENV || 'development';
   const target = process.env.TARGET || 'universal';
-  const buildPath = env === 'development' ? './build' : './dist';
+  const buildPath = env === 'development' ? './build' : './packages';
 
   const f7ReactPath = path.resolve(__dirname, `../${buildPath}/react/framework7-react.esm.js`);
   const f7Path = path.resolve(__dirname, `../${buildPath}/core/framework7.esm.bundle`);
@@ -23,12 +23,12 @@ function buildKs(cb) {
     .pipe(modifyFile((content) => {
       if (env === 'development') {
         return content
-          .replace('../../dist/core/css/framework7.min.css', '../../build/core/css/framework7.css')
-          .replace('../../dist/core/js/framework7.min.js', '../../build/core/js/framework7.js');
+          .replace('../../packages/core/css/framework7.min.css', '../../build/core/css/framework7.css')
+          .replace('../../packages/core/js/framework7.min.js', '../../build/core/js/framework7.js');
       }
       return content
-        .replace('../../build/core/css/framework7.css', '../../dist/core/css/framework7.min.css')
-        .replace('../../build/core/js/framework7.js', '../../dist/core/js/framework7.min.js');
+        .replace('../../build/core/css/framework7.css', '../../packages/core/css/framework7.min.css')
+        .replace('../../build/core/js/framework7.js', '../../packages/core/js/framework7.min.js');
     }))
     .pipe(gulp.dest('./kitchen-sink/react'));
 

@@ -7,13 +7,13 @@
  *
  * Released under the MIT License
  *
- * Released on: May 31, 2018
+ * Released on: June 1, 2018
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('vue')) :
   typeof define === 'function' && define.amd ? define(['vue'], factory) :
-  (global.Framework7 = factory(global.Vue));
+  (global.Framework7Vue = factory(global.Vue));
 }(this, (function (Vue) { 'use strict';
 
   Vue = Vue && Vue.hasOwnProperty('default') ? Vue['default'] : Vue;
@@ -8710,7 +8710,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: May 31, 2018
+   * Released on: June 1, 2018
    */
 
   var Plugin$1 = {

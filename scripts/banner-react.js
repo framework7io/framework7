@@ -1,4 +1,4 @@
-const pkg = require('../dist/react/package.json');
+const pkg = require('../packages/react/package.json');
 
 const version = pkg.version || process.env.VERSION;
 

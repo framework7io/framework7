@@ -7,7 +7,7 @@ const phenome = require('phenome');
 // Phenome
 function build(cb) {
   const env = process.env.NODE_ENV || 'development';
-  const buildPath = env === 'development' ? './build' : './dist';
+  const buildPath = env === 'development' ? './build' : './packages';
   phenome({
     paths: ['./src/phenome/**/*.js', './src/phenome/**/*.jsx'],
     react: {
