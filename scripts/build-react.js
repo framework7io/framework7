@@ -93,7 +93,7 @@ function buildReact(cb) {
     .replace('// IMPORT_LIBRARY', 'import React from \'react\';')
     .replace('// IMPORT_COMPONENTS', `${componentImports.join('\n')}\n`)
     .replace('// REGISTER_COMPONENTS', registerComponents)
-    .replace(/EXTEND/g, 'React')
+    .replace(/EXTEND/g, 'React.Component')
     .replace(/COMPILER/, '\'react\'')
     .replace(/REFS_PROP/, '\'refs\'');
 
