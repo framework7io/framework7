@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.0.0-beta.2
+ * Framework7 Vue 3.0.0-beta.3
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *

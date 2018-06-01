@@ -71,32 +71,38 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   git push origin --tags
 
   # Create assets
+  echo "Generate assets"
   (
     (
       cd packages/core
       tar -zcvf ../framework7.tar.gz ./*
-      zip -r ../framework7.zip ./*
     )
     (
       cd packages/react
       tar -zcvf ../framework7-react.tar.gz ./*
-      zip -r ../framework7-react.zip ./*
     )
     (
       cd packages/vue
       tar -zcvf ../framework7-vue.tar.gz ./*
-      zip -r ../framework7-vue.zip ./*
     )
   )
 
   # Read TOKEN
   token=$(<./.github-access-token)
 
+  echo "Creating release"
+  API_JSON=$(printf '{"tag_name": "v%s","name": "v%s","body": "Release of version %s","draft": false,"prerelease": false}' $VERSION $VERSION $VERSION)
+  curl --data "$API_JSON" https://api.github.com/repos/framework7io/framework7/releases?access_token=$token
+
   # Upload assets
-  source "scripts/release-asset.sh" github_api_token=$token tag=v$VERSION filename=../packages/framework7.tar.gz
-  source "scripts/release-asset.sh" github_api_token=$token tag=v$VERSION filename=../packages/framework7.zip
-  source "scripts/release-asset.sh" github_api_token=$token tag=v$VERSION filename=../packages/framework7-react.tar.gz
-  source "scripts/release-asset.sh" github_api_token=$token tag=v$VERSION filename=../packages/framework7-react.zip
-  source "scripts/release-asset.sh" github_api_token=$token tag=v$VERSION filename=../packages/framework7-vue.tar.gz
-  source "scripts/release-asset.sh" github_api_token=$token tag=v$VERSION filename=../packages/framework7-vue.zip
+  echo "Uploading release assets"
+  source "scripts/release-asset.sh" github_api_token=$token tag=v$VERSION filename=./packages/framework7.tar.gz
+  source "scripts/release-asset.sh" github_api_token=$token tag=v$VERSION filename=./packages/framework7-react.tar.gz
+  source "scripts/release-asset.sh" github_api_token=$token tag=v$VERSION filename=./packages/framework7-vue.tar.gz
+
+  # Remove generated assets
+  rm -rf /packages/*.tar.gz
+
+  echo "Done"
+
 fi
