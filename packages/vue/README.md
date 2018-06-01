@@ -4,7 +4,7 @@
 
 Framework7 Vue combines power and simplicity of great Vue.js framework with flexibility and UI of Framework7 mobile framework to build mobile apps in even more easy and quick way.
 
-## Getting Started
+## Getting Started with Framework7 Vue
   * [Installation Guide](http://framework7.io/vue/installation.html)
   * [Starter App Templates](http://framework7.io/vue/templates.html)
   * [App Layout](http://framework7.io/vue/app-layout.html)
