@@ -1,6 +1,6 @@
 {
   "name": "framework7-vue",
-  "version": "3.0.0-beta.1",
+  "version": "3.0.0-alpha.1",
   "description": "Build full featured iOS & Android apps using Framework7 & Vue",
   "main": "framework7-vue.js",
   "jsnext:main": "framework7-vue.esm.js",
@@ -39,5 +39,8 @@
   "bugs": {
     "url": "https://github.com/framework7io/framework7/issues"
   },
-  "homepage": "http://framework7.io/vue/"
+  "homepage": "http://framework7.io/vue/",
+  "peerDependencies": {
+    "vue": "2.x"
+  }
 }

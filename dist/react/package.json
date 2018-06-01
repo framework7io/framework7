@@ -1,6 +1,6 @@
 {
   "name": "framework7-react",
-  "version": "3.0.0-beta.1",
+  "version": "3.0.0-alpha.1",
   "description": "Build full featured iOS & Android apps using Framework7 & React",
   "main": "framework7-react.js",
   "jsnext:main": "framework7-react.esm.js",
@@ -39,5 +39,9 @@
   "bugs": {
     "url": "https://github.com/framework7io/framework7/issues"
   },
-  "homepage": "http://framework7.io/react/"
+  "homepage": "http://framework7.io/react/",
+  "peerDependencies": {
+    "react": "16.x",
+    "prop-types": "15.x"
+  }
 }
