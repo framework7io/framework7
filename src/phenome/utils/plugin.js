@@ -1,29 +1,14 @@
 // IMPORT_LIBRARY
 // IMPORT_COMPONENTS
 /* eslint no-underscore-dangle: "off" */
-import Utils from './utils';
 import componentsRouter from './components-router';
-import routers from './routers';
-import events from './events';
+import f7 from './f7';
 
 const Plugin = {
   name: 'phenomePlugin',
-  Framework7: null,
-  instance: null,
-  events,
-  routers,
-  init(rootEl, params = {}, routes) {
-    const f7Params = Utils.extend({}, params, {
-      root: rootEl,
-    });
-    if (routes && routes.length && !f7Params.routes) f7Params.routes = routes;
-
-    Plugin.instance = new Plugin.Framework7(f7Params);
-    Plugin.events.emit('ready', Plugin.instance);
-  },
-  install(params) {
+  install(params = {}) {
     const Framework7 = this;
-    Plugin.Framework7 = Framework7;
+    f7.Framework7 = Framework7;
 
     const Extend = EXTEND; // eslint-disable-line
     const compiler = COMPILER; // eslint-disable-line
@@ -34,7 +19,7 @@ const Plugin = {
     // Define protos
     Object.defineProperty(Extend.prototype, '$f7', {
       get() {
-        return Plugin.instance;
+        return f7.instance;
       },
     });
 
@@ -49,14 +34,14 @@ const Plugin = {
     Object.defineProperty(Extend.prototype, '$theme', {
       get() {
         return {
-          ios: Plugin.instance ? Plugin.instance.theme === 'ios' : $theme.ios,
-          md: Plugin.instance ? Plugin.instance.theme === 'md' : $theme.md,
+          ios: f7.instance ? f7.instance.theme === 'ios' : $theme.ios,
+          md: f7.instance ? f7.instance.theme === 'md' : $theme.md,
         };
       },
     });
 
     function f7ready(callback) {
-      Plugin.ready(callback);
+      f7.ready(callback);
     }
     Extend.prototype.Dom7 = Framework7.$;
     Extend.prototype.$$ = Framework7.$;
@@ -116,13 +101,6 @@ const Plugin = {
 
     // Extend F7 Router
     Framework7.Router.use(componentsRouter);
-  },
-  ready(callback) {
-    if (!callback) return;
-    if (Plugin.instance) callback(Plugin.instance);
-    else {
-      events.once('ready', callback);
-    }
   },
 };
 

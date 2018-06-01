@@ -1,6 +1,6 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
-import f7Plugin from '../utils/plugin';
+import f7 from '../utils/f7';
 import RoutableModals from './routable-modals';
 
 export default {
@@ -48,6 +48,6 @@ export default {
       parentEl.style.height = '100%';
     }
 
-    f7Plugin.init(el, params, routes);
+    f7.init(el, params, routes);
   },
 };

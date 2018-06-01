@@ -1,6 +1,6 @@
 /* eslint array-callback-return: "off" */
 /* eslint consistent-return: "off" */
-import routers from '../utils/routers';
+import f7 from '../utils/f7';
 import events from '../utils/events';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
@@ -138,18 +138,18 @@ export default {
 
     self.setState({ pages: [] });
 
-    self.$f7ready((f7) => {
+    self.$f7ready((f7Instance) => {
       if (!self.props.init) return;
       self.routerData = {
         el,
         component: self,
         instance: null,
       };
-      routers.views.push(self.routerData);
+      f7.routers.views.push(self.routerData);
       // phenome-vue-next-line
-      self.routerData.instance = f7.views.create(el, Utils.noUndefinedProps(self.$options.propsData || {}));
+      self.routerData.instance = f7Instance.views.create(el, Utils.noUndefinedProps(self.$options.propsData || {}));
       // phenome-react-next-line
-      self.routerData.instance = f7.views.create(el, Utils.noUndefinedProps(self.props));
+      self.routerData.instance = f7Instance.views.create(el, Utils.noUndefinedProps(self.props));
       self.f7View = self.routerData.instance;
     });
   },
@@ -167,7 +167,7 @@ export default {
 
     if (!self.props.init) return;
     if (self.f7View && self.f7View.destroy) self.f7View.destroy();
-    routers.views.splice(routers.views.indexOf(self.routerData), 1);
+    f7.routers.views.splice(f7.routers.views.indexOf(self.routerData), 1);
     self.routerData = null;
     delete self.routerData;
   },

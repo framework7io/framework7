@@ -1,6 +1,6 @@
 /* eslint array-callback-return: "off" */
 /* eslint consistent-return: "off" */
-import routers from '../utils/routers';
+import f7 from '../utils/f7';
 import events from '../utils/events';
 
 export default {
@@ -37,7 +37,7 @@ export default {
   componentWillUnmount() {
     const self = this;
     if (!self.routerData) return;
-    routers.modals = null;
+    f7.routers.modals = null;
     self.routerData = null;
     delete self.routerData;
   },
@@ -49,6 +49,6 @@ export default {
       el,
       component: self,
     };
-    routers.modals = self.routerData;
+    f7.routers.modals = self.routerData;
   },
 };

@@ -1,7 +1,7 @@
 /* eslint array-callback-return: "off" */
 /* eslint consistent-return: "off" */
 import events from '../utils/events';
-import routers from '../utils/routers';
+import f7 from '../utils/f7';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
@@ -74,7 +74,7 @@ export default {
       el.removeEventListener('tab:hide', self.onTabHideBound);
     }
     if (!self.routerData) return;
-    routers.tabs.splice(routers.tabs.indexOf(self.routerData), 1);
+    f7.routers.tabs.splice(f7.routers.tabs.indexOf(self.routerData), 1);
     self.routerData = null;
     delete self.routerData;
   },
@@ -93,7 +93,7 @@ export default {
         el,
         component: self,
       };
-      routers.tabs.push(self.routerData);
+      f7.routers.tabs.push(self.routerData);
     });
   },
   methods: {

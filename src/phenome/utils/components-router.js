@@ -1,5 +1,5 @@
 /* eslint no-underscore-dangle: "off" */
-import routers from './routers';
+import f7 from './f7';
 import events from './events';
 import Utils from './utils';
 
@@ -11,7 +11,7 @@ export default {
       const router = this;
       const el = routerEl;
       let routerComponent;
-      routers.views.forEach((data) => {
+      f7.routers.views.forEach((data) => {
         if (data.el && data.el === routerEl) {
           routerComponent = data.component;
         }
@@ -52,7 +52,7 @@ export default {
       if (!$pageEl) return;
       const router = this;
       let routerComponent;
-      routers.views.forEach((data) => {
+      f7.routers.views.forEach((data) => {
         if (data.el && data.el === router.el) {
           routerComponent = data.component;
         }
@@ -85,7 +85,7 @@ export default {
       if (!tabEl) reject();
 
       let tabsComponent;
-      routers.tabs.forEach((tabData) => {
+      f7.routers.tabs.forEach((tabData) => {
         if (tabData.el && tabData.el === tabEl) {
           tabsComponent = tabData.component;
         }
@@ -124,7 +124,7 @@ export default {
       if (!tabEl) return;
 
       let tabComponent;
-      routers.tabs.forEach((tabData) => {
+      f7.routers.tabs.forEach((tabData) => {
         if (tabData.el && tabData.el === tabEl) {
           tabComponent = tabData.component;
         }
@@ -138,8 +138,8 @@ export default {
     },
     modalComponentLoader(rootEl, component, componentUrl, options, resolve, reject) {
       const router = this;
-      const modalsComponent = routers.modals && routers.modals.component;
-      const modalsComponentEl = routers.modals && routers.modals.el;
+      const modalsComponent = f7.routers.modals && f7.routers.modals.component;
+      const modalsComponentEl = f7.routers.modals && f7.routers.modals.el;
 
       if (!modalsComponent || !modalsComponent.state.modals) {
         reject();
@@ -173,7 +173,7 @@ export default {
       modalsComponent.setState({ modals: modalsComponent.state.modals });
     },
     removeModal(modalEl) {
-      const modalsComponent = routers.modals && routers.modals.component;
+      const modalsComponent = f7.routers.modals && f7.routers.modals.component;
       if (!modalsComponent) return;
 
       let modalDataToRemove;
