@@ -1,0 +1,41 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  .autocomplete-page {
+    .navbar .autocomplete-preloader {
+      .ltr({ margin-right: 16px; });
+      .rtl({ margin-left: 16px; });
+    }
+  }
+  .autocomplete-dropdown {
+    box-shadow: 0 2px 2px rgba(0,0,0,0.25);
+    .autocomplete-preloader {
+      .ltr({ right: 16px; });
+      .rtl({ left: 16px; });
+      margin-bottom: 8px;
+      .preloader-inner-gap, .preloader-inner-half-circle {
+        border-width: 3px;
+      }
+    }
+    .list {
+      color: rgba(0,0,0,0.54);
+      b {
+        font-weight: normal;
+        color: #212121;
+      }
+    }
+  }
+  .searchbar-input-wrap .autocomplete-dropdown {
+    .item-content {
+      .ltr({ padding-left: 73px; });
+      .rtl({ padding-right: 73px; });
+    }
+    li:last-child {
+      border-radius: 0 0 8px 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    .autocomplete-dropdown-placeholder {
+      color: #939398;
+    }
+  }
+}

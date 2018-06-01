@@ -1,0 +1,59 @@
+/* === Stepper === */
+.stepper {
+  display: inline-flex;
+  align-items: stretch;
+}
+.stepper-button, .stepper-button-minus, .stepper-button-plus {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  position: relative;
+  cursor: pointer;
+  .icon {
+    pointer-events: none;
+  }
+}
+.stepper-value {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}
+.stepper-input-wrap, .stepper-value {
+  flex-shrink: 1;
+  text-align: center;
+}
+.stepper-button-plus, .stepper-button-minus {
+  user-select: none;
+  &:after, &:before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  &:after {
+    width: 15px;
+    height: 2px;
+  }
+}
+.stepper-button-plus {
+  &:before {
+    height: 15px;
+    width: 2px;
+  }
+}
+.stepper .stepper-input-wrap input,
+.stepper .stepper-value {
+  width: 45px;
+}
+& when (@includeIosTheme) {
+  @import url('./stepper-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./stepper-md.less');
+}

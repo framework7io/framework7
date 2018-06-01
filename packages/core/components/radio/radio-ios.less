@@ -1,0 +1,125 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  .icon-radio {
+    width: 22px;
+    height: 22px;
+    position: relative;
+    box-sizing: border-box;
+    display: block;
+  }
+  .radio .icon-radio {
+    border-radius: 50%;
+    border: 1px solid #c7c7cc;
+  }
+  label.item-radio input[type="radio"] ~ .icon-radio {
+    position: absolute;
+    top: 50%;
+    margin-top: -11px;
+    .ltr({
+      right: 10px;
+    });
+    .rtl({
+      left: 10px;;
+    })
+  }
+  label.item-radio {
+    .item-inner {
+      .ltr({
+        padding-right: 35px;
+      });
+      .rtl({
+        padding-left: 35px;
+      });
+    }
+  }
+  label.item-radio input[type="radio"]:checked ~ .icon-radio,
+  label.item-radio input[type="radio"]:checked ~ * .icon-radio,
+  .radio input[type="radio"]:checked ~ .icon-radio {
+    background: no-repeat center;
+    .svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 10'><polygon fill='@{themeColor}' points='11.6,0 4.4,7.2 1.4,4.2 0,5.6 4.4,10 4.4,10 4.4,10 13,1.4 '/></svg>");
+    background-size: 13px 10px;
+  }
+  .radio input[type="radio"]:checked ~ .icon-radio {
+    border-color: @themeColor;
+  }
+  label.item-radio {
+    .item-content, &.item-content {
+      .item-media {
+        align-self: center;
+      }
+    }
+    &.active-state {
+      transition-duration: 0ms;
+      background-color: #d9d9d9;
+    }
+  }
+
+  .safe-areas-landscape({
+    .safe-area-left({
+      label.item-radio input[type="radio"] ~ .icon-radio {
+        .rtl({
+          left: ~"calc(10px + constant(safe-area-inset-left))";
+          left: ~"calc(10px + env(safe-area-inset-left))";
+        })
+      }
+      label.item-radio {
+        .list:not(.inset):not(.tablet-inset) {
+          .item-inner {
+            .rtl({
+              padding-left: ~"calc(35px + constant(safe-area-inset-left))";;
+              padding-left: ~"calc(35px + env(safe-area-inset-left))";;
+            });
+          }
+        }
+      }
+    });
+    .safe-area-right({
+      label.item-radio input[type="radio"] ~ .icon-radio {
+        .ltr({
+          right: ~"calc(10px + constant(safe-area-inset-right))";
+          right: ~"calc(10px + env(safe-area-inset-right))";
+        });
+      }
+      .list:not(.inset):not(.tablet-inset) {
+        label.item-radio {
+          .item-inner {
+            .ltr({
+              padding-right: ~"calc(35px + constant(safe-area-inset-right))" !important;
+              padding-right: ~"calc(35px + env(safe-area-inset-right))";
+            });
+          }
+        }
+      }
+    });
+  });
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      label.item-radio.active-state {
+        background-color: #363636;
+      }
+    }
+  }
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      label.item-radio input[type="radio"]:checked ~ .icon-radio,
+      label.item-radio input[type="radio"]:checked ~ * .icon-radio,
+      .radio input[type="radio"]:checked ~ .icon-radio {
+        .svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 10'><polygon fill='@{colorThemeValue}' points='11.6,0 4.4,7.2 1.4,4.2 0,5.6 4.4,10 4.4,10 4.4,10 13,1.4 '/></svg>");
+      }
+      .radio input[type="radio"]:checked ~ .icon-radio {
+        border-color: @colorThemeValue;
+      }
+    }
+  });
+  .color-loop({
+    label.item-radio.color-@{colorName} input[type="radio"]:checked ~ .icon-radio,
+    label.item-radio.color-@{colorName} input[type="radio"]:checked ~ * .icon-radio,
+    .radio.color-@{colorName} input[type="radio"]:checked ~ .icon-radio {
+      .svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 10'><polygon fill='@{colorValue}' points='11.6,0 4.4,7.2 1.4,4.2 0,5.6 4.4,10 4.4,10 4.4,10 13,1.4 '/></svg>");
+    }
+    .radio.color-@{colorName} input[type="radio"]:checked ~ .icon-radio {
+      border-color: @colorValue;
+    }
+  });
+}

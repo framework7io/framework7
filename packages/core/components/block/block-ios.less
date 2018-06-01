@@ -1,0 +1,145 @@
+/* === Content Block === */
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  @import (multiple) '../../less/vars-ios.less';
+  .block {
+    margin: 35px 0;
+    padding: 0 15px;
+    color: #6d6d72;
+  }
+  .block-title {
+    text-transform: uppercase;
+    color: #6d6d72;
+    margin: 35px 15px 10px;
+    line-height: 17px;
+    + .list, + .block, + .card, + .timeline, + .block-header {
+      margin-top: 10px;
+    }
+  }
+  .block-strong {
+    color: #000;
+    background: #fff;
+    padding: 15px 15px;
+  }
+  .hairline-root('.block-strong', top, @blockBorderColor);
+  .hairline-root('.block-strong', bottom, @blockBorderColor);
+  .block.inset {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+  .block-strong-inset {
+    border-radius: 7px;
+  }
+
+  // Header/Footer
+  .block-header, .block-footer {
+    padding: 0 15px;
+    color: #8f8f94;
+  }
+  .block {
+    .block-header, .block-footer {
+      padding: 0 !important;
+    }
+  }
+  .block-header {
+    margin-top: 35px;
+    + .list, + .block, + .card, + .timeline {
+      margin-top: 10px;
+    }
+  }
+  .block-footer {
+    margin-bottom: 35px;
+  }
+  .list, .block, .card, .timeline {
+    .block-header {
+      margin-top: 0;
+    }
+    .block-footer {
+      margin-bottom: 0;
+    }
+    + .block-footer {
+      margin-top: -25px;
+    }
+  }
+  .block + .block-footer {
+    margin-top: -25px;
+    margin-bottom: 35px;
+  }
+  @media all and (min-width:768px) {
+    .block.tablet-inset {
+      margin-left: 15px;
+      margin-right: 15px;
+      border-radius: 7px
+    }
+    .block-strong.tablet-inset {
+      border-radius: 7px;
+    }
+  }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .block-title, .block-header, .block-footer {
+        color: #8E8E93;
+      }
+      .block {
+        color: #8E8E93;
+      }
+      .block-strong, &.block-strong {
+        background-color: @blockBgDark;
+        color: #fff;
+        .hairline-color(top, @blockBorderColorDark);
+        .hairline-color(bottom, @blockBorderColorDark);
+      }
+    }
+  }
+  .safe-areas-landscape({
+    .safe-area-left({
+      .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-left-edge),
+      .block-header,
+      .block-footer {
+        padding-left: ~"calc(15px + constant(safe-area-inset-left))";
+        padding-left: ~"calc(15px + env(safe-area-inset-left))";
+      }
+      .block:not(.no-ios-edges):not(.no-ios-left-edge) {
+        .block-header, .block-footer {
+          padding-left: 0;
+        }
+      }
+      .block.inset:not(.no-ios-edges):not(.no-ios-left-edge),
+      .block-title:not(.no-ios-edges):not(.no-ios-left-edge) {
+        margin-left: ~"calc(15px + constant(safe-area-inset-left))";
+        margin-left: ~"calc(15px + env(safe-area-inset-left))";
+      }
+      @media all and (min-width:768px) {
+        .block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge) {
+          margin-left: ~"calc(15px + constant(safe-area-inset-left))";
+          margin-left: ~"calc(15px + env(safe-area-inset-left))";
+        }
+      }
+    });
+    .safe-area-right({
+      .block:not(.inset):not(.tablet-inset):not(.no-ios-edges):not(.no-ios-right-edge),
+      .block-header,
+      .block-footer {
+        padding-right: ~"calc(15px + constant(safe-area-inset-right))";
+        padding-right: ~"calc(15px + env(safe-area-inset-right))";
+      }
+      .block:not(.no-ios-edges):not(.no-ios-right-edge) {
+        .block-header, .block-footer {
+          padding-right: 0;
+        }
+      }
+      .block.inset:not(.no-ios-edges):not(.no-ios-right-edge),
+      .block-title:not(.no-ios-edges):not(.no-ios-right-edge) {
+        margin-right: ~"calc(15px + constant(safe-area-inset-right))";
+        margin-right: ~"calc(15px + env(safe-area-inset-right))";
+      }
+      @media all and (min-width:768px) {
+        .block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge) {
+          margin-right: ~"calc(15px + constant(safe-area-inset-right))";
+          margin-right: ~"calc(15px + env(safe-area-inset-right))";
+        }
+      }
+    });
+  });
+}

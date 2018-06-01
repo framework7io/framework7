@@ -1,0 +1,194 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  // Buttons
+  .button {
+    color:@themeColor;
+    border-radius: 2px;
+    line-height: 36px;
+    height: 36px;
+    text-transform: uppercase;
+    min-width: 64px;
+    padding: 0 8px;
+    border: none;
+    transition-duration: 300ms;
+    transform: translate3d(0,0,0);
+    &.active-state {
+      background: rgba(0,0,0,0.1);
+    }
+
+    &.button-fill, &.button-fill-md, &.button-active, &.tab-link-active {
+      background-color: @themeColor;
+      color: #fff;
+      &.active-state {
+        background: darken(@themeColor, 8%);
+      }
+    }
+    &.button-big, &.button-big-md {
+      height: 48px;
+      line-height: 48px;
+      border-radius: 3px;
+    }
+    &.button-round, &.button-round-md {
+      border-radius: 36px;
+    }
+    &.button-outline {
+      border: 1px solid @themeColor;
+      line-height: 34px;
+      &.button-big, &.button-big-md {
+        line-height: 46px;
+      }
+    }
+    &.button-small, &.button-small-md {
+      height: 28px;
+      line-height: 28px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      &.button-outline {
+        border-width: 2px;
+        line-height: 25px;
+      }
+    }
+    > i.icon + span,
+    > span:not(.ripple-wave) + span,
+    > span:not(.ripple-wave) + i.icon,
+    > i.icon + i.icon {
+      .ltr({
+        margin-left: 8px;
+      });
+      .rtl({
+        margin-right: 8px;
+      });
+    }
+
+    // Raised (with shadow) buttons
+    &.button-raised {
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+      &.active-state {
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+      }
+    }
+
+  }
+  .navbar, .subnavbar, .toolbar {
+    .button:not(.button-fill):not(.button-fill-md) {
+      color: #fff;
+      &.active-state {
+        background: rgba(255,255,255,0.15);
+      }
+    }
+  }
+  .toast {
+    .button:not(.button-fill):not(.button-fill-md) {
+      &.active-state {
+        background: rgba(255,255,255,0.15);
+      }
+    }
+  }
+
+  // Segmented Control
+  .segmented {
+    border-radius: 3px;
+    &.segmented-raised {
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    }
+    &.segmented-round {
+      border-radius: 36px;
+    }
+    .button {
+      border-radius: 0;
+      .ltr({
+        border-left: 1px solid rgba(0,0,0,0.1);
+        &:first-child {
+          border-radius: 3px 0 0 3px;
+          border-left: none;
+        }
+        &.button-outline {
+          border: 1px solid @themeColor;
+          &:nth-child(n + 2) {
+            border-left: none;
+          }
+        }
+        &:last-child {
+          border-radius: 0 3px 3px 0;
+        }
+        &:first-child:last-child {
+          border-radius: 5px;
+        }
+        &.button-round:first-child {
+          border-radius: 36px 0 0 36px;
+        }
+        &.button-round:last-child {
+          border-radius: 0 36px 36px 0;
+        }
+      });
+      .rtl({
+        border-right: 1px solid rgba(0,0,0,0.1);
+        &:first-child {
+          border-radius: 0 3px 3px 0;
+          border-right: none;
+        }
+        &.button-outline {
+          border: 1px solid @themeColor;
+          &:nth-child(n + 2) {
+            border-right: none;
+          }
+        }
+        &:last-child {
+          border-radius: 3px 0 0 3px;
+        }
+        &:first-child:last-child {
+          border-radius: 5px;
+        }
+        &.button-round:first-child {
+          border-radius: 0 36px 36px 0;
+        }
+        &.button-round:last-child {
+          border-radius: 36px 0 0 36px;
+        }
+      });
+    }
+  }
+
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .button:not(.button-fill):not(.button-fill-md):not(.button-active):not(.tab-link-active).active-state {
+        background-color: rgba(255,255,255,0.1);
+      }
+    }
+  }
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName}, .color-@{colorThemeName} {
+      .button {
+        color:@colorThemeValue;
+        &.button-fill, &.button-fill-md, &.button-active, &.tab-link-active {
+          background-color: @colorThemeValue;
+          color: #fff;
+          &.active-state {
+            background: darken(@colorThemeValue, 8%);
+          }
+        }
+        &.button-outline {
+          border-color: @colorThemeValue;
+        }
+      }
+    }
+  });
+  .color-loop({
+    .button.color-@{colorName} {
+      color:@colorValue;
+      &.button-fill, &.button-fill-md, &.button-active, &.tab-link-active {
+        background-color: @colorValue;
+        color: #fff;
+        &.active-state {
+          background: darken(@colorValue, 8%);
+        }
+      }
+      &.button-outline {
+        border-color: @colorValue;
+      }
+    }
+  });
+}

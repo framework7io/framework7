@@ -1,0 +1,176 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  //Buttons
+  .button {
+    border: 1px solid @themeColor;
+    color: @themeColor;
+    border-radius: 5px;
+    line-height: 27px;
+    height: 29px;
+
+    &.active-state {
+      background: rgba(red(@themeColor), green(@themeColor), blue(@themeColor), .15);
+    }
+    &.button-round, &.button-round-ios {
+      border-radius: 29px;
+    }
+    &.button-active, &.tab-link-active {
+      background: @themeColor;
+      color: #fff;
+    }
+    &.button-big, &.button-big-ios {
+      font-size: 17px;
+      height: 44px;
+      line-height: 42px;
+    }
+    &.button-small, &.button-small-ios {
+      height: 26px;
+      line-height: 22px;
+      border-width: 2px;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      transition-duration: 200ms;
+      &.button-fill.active-state, &.button-fill-ios.active-state {
+        color: @themeColor;
+        border: 2px solid @themeColor;
+        background-color: transparent;
+        opacity: 1;
+      }
+    }
+    &.button-fill, &.button-fill-ios {
+      color: #fff;
+      background: @themeColor;
+      border-color: transparent;
+      &.active-state {
+        opacity: 0.8;
+      }
+    }
+    i.icon {
+      .ltr({
+        &:first-child {
+          margin-right: 10px;
+        }
+        &:last-child {
+          margin-left: 10px;
+        }
+      });
+      .rtl({
+        &:first-child {
+          margin-left: 10px;
+        }
+        &:last-child {
+          margin-right: 10px;
+        }
+      });
+      &:first-child:last-child {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+  }
+
+  // Segmented Control
+  .segmented {
+    .button {
+      border-radius: 0;
+      .ltr({
+        border-left-width: 0;
+        &:first-child {
+          border-radius: 5px 0 0 5px;
+          border-left-width: 1px;
+          border-left-style: solid;
+        }
+        &:last-child {
+          border-radius: 0 5px 5px 0;
+        }
+      });
+      .rtl({
+        border-right-width: 0;
+        &:first-child {
+          border-radius: 0 5px 5px 0;
+          border-right-width: 1px;
+          border-right-style: solid;
+        }
+        &:last-child {
+          border-radius: 5px 0 0 5px;
+        }
+      });
+      &:first-child:last-child {
+        border-radius: 5px;
+      }
+      &.button-round:first-child, &.button-round-ios:first-child {
+        .ltr({
+          border-radius: 29px 0 0 29px;
+        });
+        .rtl({
+          border-radius: 0 29px 29px 0;
+        });
+      }
+      &.button-round:last-child, &.button-round-ios:last-child {
+        border-radius: 0 29px 29px 0;
+        .ltr({
+          border-radius: 0 29px 29px 0;
+        });
+        .rtl({
+          border-radius: 29px 0 0 29px;
+        });
+      }
+    }
+  }
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      .button {
+        border-color: @colorThemeValue;
+        color: @colorThemeValue;
+        &.active-state {
+          background: rgba(red(@colorThemeValue), green(@colorThemeValue), blue(@colorThemeValue), .15);
+        }
+        &.button-active, &.tab-link-active, &.button-fill, &.button-fill-ios {
+          color: #fff;
+        }
+        &.button-active, &.tab-link-active {
+          background: @colorThemeValue;
+        }
+        &.button-fill, &.button-fill-ios {
+          background: @colorThemeValue;
+          border-color: transparent;
+        }
+        &.button-small, &.button-small-ios {
+          &.button-fill.active-state, &.button-fill-ios.active-state {
+            color: @colorThemeValue;
+            border: 2px solid @colorThemeValue;
+            background-color: transparent;
+          }
+        }
+      }
+    }
+  });
+  .color-loop({
+    .button.color-@{colorName} {
+      border-color: @colorValue;
+      color: @colorValue;
+      &.active-state {
+        background: rgba(red(@colorValue), green(@colorValue), blue(@colorValue), .15);
+      }
+      &.button-active, &.tab-link-active, &.button-fill, &.button-fill-ios {
+        color: #fff;
+      }
+      &.button-active, &.tab-link-active {
+        background: @colorValue;
+      }
+      &.button-fill, &.button-fill-ios {
+        background: @colorValue;
+        border-color: transparent;
+      }
+      &.button-small, &.button-small-ios {
+        &.button-fill.active-state, &.button-fill-ios.active-state {
+          color: @colorValue;
+          border: 2px solid @colorValue;
+          background-color: transparent;
+        }
+      }
+    }
+  });
+}

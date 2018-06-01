@@ -1,0 +1,122 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  @import (multiple) '../../less/vars-md.less';
+  @duration: 400ms;
+  .navbar {
+    height: @navbarSize;
+    background: @navbarBg;
+    color: #fff;
+    font-size: 20px;
+    .md-bar-shadow-to-bottom();
+    &.no-shadow {
+      .md-bar-no-shadow();
+    }
+    a {
+      color: inherit;
+    }
+    a.link {
+      justify-content: center;
+      padding: 0 16px;
+      min-width: 48px;
+      height: @navbarSize;
+      line-height: @navbarSize;
+      .md-link-highlight();
+    }
+    a.icon-only {
+      min-width: 0;
+      flex-shrink: 0;
+    }
+    .title {
+      margin: 0 16px;
+      line-height: 1.2;
+      text-align: left;
+    }
+    .subtitle {
+      line-height: 1.2;
+      font-size: 14px;
+      font-weight: normal;
+      color: rgba(255,255,255,0.85);
+    }
+    .right {
+      .ltr({
+        margin-left: auto;
+      });
+      .rtl({
+        margin-right: auto;
+      });
+    }
+    .right:first-child {
+      .ltr({
+        right: 16px;
+      });
+      .rtl({
+        left: 16px;
+      });
+    }
+  }
+  .navbar-inner {
+    justify-content: flex-start;
+    overflow: hidden;
+  }
+  .page-with-subnavbar .navbar-inner {
+    overflow: visible;
+  }
+
+  // Relation with page
+  .navbar ~ * .page-content, .navbar ~ .page-content {
+    padding-top: @navbarSize;
+  }
+
+  @media (min-width: 768px) {
+    .navbar {
+      height: @navbarSizeTablet;
+      a.link {
+        height: @navbarSizeTablet;
+        line-height: @navbarSizeTablet;
+      }
+    }
+    // Relation with page
+    .navbar ~ * .page-content, .navbar ~ .page-content {
+      padding-top: @navbarSizeTablet;
+    }
+  }
+
+  // Transitions
+  .navbar-transitioning {
+    transition-duration: @duration;
+  }
+
+  // Hidden
+  .navbar-hidden {
+    .md-bar-no-shadow();
+    transform: translate3d(0, -100%, 0);
+  }
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      .navbar, &.navbar {
+        background: @colorThemeValue;
+      }
+    }
+  });
+  .color-loop({
+    .navbar.color-@{colorName} {
+      background: @colorValue;
+    }
+  });
+
+  .safe-areas-landscape({
+    .safe-area-left({
+      .navbar-inner {
+        padding-left: constant(safe-area-inset-left);
+        padding-left: env(safe-area-inset-left);
+      }
+    });
+    .safe-area-right({
+      .navbar-inner {
+        padding-right: constant(safe-area-inset-right);
+        padding-right: env(safe-area-inset-right);
+      }
+    });
+  });
+}

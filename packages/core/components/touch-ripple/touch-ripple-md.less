@@ -1,0 +1,73 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  // Ripple Elements
+  .ripple, .fab a, a.link, a.item-link, .button, .dialog-button, .tab-link, .radio, .checkbox, .actions-button, .speed-dial-buttons a {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  // Ripple
+  .ripple-wave {
+    left: 0;
+    top: 0;
+    position: absolute !important;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index:-1;
+    background: rgba(0,0,0,0.1);
+    padding: 0;
+    margin: 0;
+    font-size: 0;
+    transform: translate3d(0px, 0px, 0) scale(0);
+    transition-duration: 1400ms;
+    &.ripple-wave-fill {
+      transition-duration: 300ms;
+      opacity: 0.35;
+    }
+    &.ripple-wave-out {
+      transition-duration: 600ms;
+      opacity: 0;
+    }
+    .button-fill &, .picker-calendar-day & {
+      z-index: 1;
+    }
+  }
+  .button-fill, .button-active, .navbar, .toolbar, .subnavbar, .toast, .fab a, .stepper-fill {
+    .ripple-wave {
+      background: rgba(255,255,255,0.3);
+    }
+  }
+  .messagebar, .searchbar {
+    .ripple-wave {
+      background: rgba(0,0,0,0.1);
+    }
+  }
+  .data-table .sortable-cell {
+    .ripple-wave {
+      z-index: 0;
+    }
+  }
+  .checkbox, .radio {
+    .ripple-wave {
+      background: rgba(red(@themeColor), green(@themeColor), blue(@themeColor), 0.5);
+      z-index: 0;
+    }
+  }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .page-content, .messagebar, .popover, .calendar, .calendar& {
+        .ripple-wave {
+          background-color: rgba(255,255,255,0.3);
+        }
+      }
+    }
+  }
+
+  // Color Themes
+  .color-loop({
+    .ripple-color-@{colorName} .ripple-wave,
+    .ripple-@{colorName} .ripple-wave {
+      background-color: rgba(red(@colorValue), green(@colorValue), blue(@colorValue), 0.3);
+    }
+  });
+}

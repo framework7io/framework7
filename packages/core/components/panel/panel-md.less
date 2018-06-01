@@ -1,0 +1,32 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  .panel-backdrop {
+    transition-duration: 300ms;
+    background: rgba(0,0,0,0.2);
+  }
+  .panel {
+    transition-duration: 300ms;
+  }
+  .panel-visible {
+    display: block;
+  }
+  .panel-visible-by-breakpoint {
+    box-shadow: none;
+  }
+  &.with-panel-left-cover, &.with-panel-right-cover {
+    .panel-cover {
+      box-shadow: 0px 0px 20px rgba(0,0,0,0.5);
+    }
+  }
+  &.with-panel-left-reveal, &.with-panel-right-reveal {
+    .views, .framework7-root > .view {
+      box-shadow: 0px 0px 20px rgba(0,0,0,0.5);
+    }
+  }
+  &.with-panel-left-reveal, &.with-panel-right-reveal, &.with-panel-transitioning {
+    .views, .framework7-root > .view {
+      transition-duration: 300ms;
+      transition-property: transform, box-shadow;
+    }
+  }
+}

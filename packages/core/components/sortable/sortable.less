@@ -1,0 +1,64 @@
+/* === Sortable === */
+.sortable {
+  .sortable-handler {
+    position: absolute;
+    top: 0;
+    bottom: 1px;
+    z-index: 10;
+    background-repeat: no-repeat;
+    background-size: 18px 12px;
+    .svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 12' fill='#c7c7cc'><path d='M0,2V0h22v2H0z'/><path d='M0,7V5h22v2H0z'/><path d='M0,12v-2h22v2H0z'/></svg>");
+    opacity: 0;
+    pointer-events: none;
+    cursor: move;
+    transition-duration: 300ms;
+    .ltr({
+      right: 0;
+      background-position: 100% 50%;
+    });
+    .rtl({
+      left: 0;
+      background-position: 0% 50%;
+    });
+  }
+  .item-inner {
+    transition-duration: 300ms;
+  }
+  li.sorting {
+    z-index: 50;
+    background: rgba(255,255,255,0.8);
+    transition-duration: 0ms;
+    .item-inner {
+      .hairline-remove(bottom);
+    }
+  }
+}
+.sortable-sorting li {
+  transition-duration: 300ms;
+}
+.sortable-enabled {
+  .sortable-handler {
+    pointer-events: auto;
+    opacity: 1;
+    background-position: 50% 50%;
+  }
+  .item-link .item-inner, .item-link .item-title-row {
+    background-image: none !important;
+  }
+}
+// Dark Theme
+& when (@includeDarkTheme) {
+  .theme-dark {
+    .sortable, .sortable& {
+      li.sorting {
+        background-color: rgba(50, 50, 50, 0.8)
+      }
+    }
+  }
+}
+& when (@includeIosTheme) {
+  @import url('./sortable-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./sortable-md.less');
+}

@@ -1,0 +1,11 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  .statusbar {
+    background: darken(@themeColor, 15%);
+  }
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} .statusbar {
+      background: darken(@colorThemeValue, 15%);
+    }
+  });
+}

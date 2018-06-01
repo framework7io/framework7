@@ -1,0 +1,112 @@
+.md {
+  @duration: 250ms;
+  @durationSwipeBack: 400ms;
+  .fake-shadow() {
+    position: absolute;
+    top: 0;
+    width: 16px;
+    bottom: 0;
+    z-index: -1;
+    content: '';
+    opacity: 0;
+    .rtl({
+      left: 100%;
+      background: linear-gradient(to left, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%);
+    });
+    .ltr({
+      right: 100%;
+      background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%);
+    });
+  }
+  .fake-opacity() {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: rgba(0,0,0,0.1);
+    width: 100%;
+    bottom: 0;
+    content: '';
+    opacity: 0;
+    z-index: 10000;
+  }
+  .page-shadow-effect {
+    .fake-shadow();
+  }
+  .page-opacity-effect {
+    .fake-opacity();
+  }
+  .page {
+    background: #fff;
+  }
+  .page-next {
+    transform: translate3d(0, 56px, 0);
+    opacity: 0;
+    pointer-events: none;
+    &.page-next-on-right {
+      transform: translate3d(100%, 0, 0);
+    }
+  }
+
+  // Animations
+  .page-transitioning {
+    &, .page-shadow-effect, .page-opacity-effect {
+      transition-duration: @duration;
+    }
+  }
+  .page-transitioning-swipeback {
+    &, .page-shadow-effect, .page-opacity-effect {
+      transition-duration: @durationSwipeBack;
+    }
+  }
+
+  .router-transition-forward, .router-transition-backward {
+    .page {
+      pointer-events: none;
+    }
+  }
+
+  .router-transition-css-forward {
+    .page-next {
+      animation: md-page-next-to-current @duration forwards;
+    }
+    .page-current {
+      animation: none;
+    }
+  }
+  .router-transition-css-backward {
+    .page-current {
+      animation: md-page-current-to-next @duration forwards;
+    }
+    .page-previous {
+      animation: none;
+    }
+  }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .page, .page& {
+        background: #171717;
+      }
+    }
+  }
+}
+@keyframes md-page-next-to-current {
+  from {
+    transform: translate3d(0, 56px, 0);
+    opacity: 0;
+  }
+  to {
+    transform: translate3d(0, 0px, 0);
+    opacity: 1;
+  }
+}
+@keyframes md-page-current-to-next {
+  from {
+    transform: translate3d(0,0,0);
+    opacity: 1;
+  }
+  to {
+    transform: translate3d(0, 56px, 0);
+    opacity: 0;
+  }
+}

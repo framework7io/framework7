@@ -1,0 +1,16 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  .panel-backdrop {
+    transition-duration: 400ms;
+    background: rgba(0,0,0,0);
+  }
+  .panel {
+    transition-duration: 400ms;
+  }
+  &.with-panel-left-reveal, &.with-panel-right-reveal, &.with-panel-transitioning {
+    .views, .framework7-root > .view {
+      transition-duration: 400ms;
+      transition-property: transform;
+    }
+  }
+}

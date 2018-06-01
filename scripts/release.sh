@@ -66,8 +66,9 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   git commit -m "$VERSION Release"
 
   # publish
-  git push origin refs/tags/v"$VERSION"
   git push
+  git tag v"$VERSION"
+  git push origin --tags
 
   # Create assets
   (

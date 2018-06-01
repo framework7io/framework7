@@ -1,0 +1,73 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  @import (multiple) '../../less/vars-md.less';
+  .messagebar {
+    font-size: 16px;
+    .md-bar-no-shadow();
+    textarea {
+      padding: 5px 8px;
+      height: 32px;
+      color: #333;
+      font-size: 16px;
+      line-height: 22px;
+    }
+    a.link {
+      color: #333;
+      .md-link-highlight(rgba(0,0,0,0.1));
+    }
+  }
+  .hairline-root('.messagebar', top, #d1d1d1);
+  .messagebar-attachments {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+  }
+  .messagebar-area {
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+  .messagebar-sheet {
+    background: #fff;
+  }
+  .messagebar-sheet-image, .messagebar-sheet-item {
+    .icon-checkbox {
+      border-color: #fff;
+      background: rgba(255,255,255,0.25);
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+    }
+  }
+  .messagebar-attachment-delete {
+    right: 8px;
+    top: 8px;
+    width: 24px;
+    height: 24px;
+    background: @themeColor;
+    cursor: pointer;
+    border-radius: 2px;
+    &:after, &:before {
+      width: 14px;
+      height: 2px;
+      background: #fff;
+      margin-left: -7px;
+      margin-top: -1px;
+    }
+  }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .messagebar, .messagebar& {
+        background: #000;
+        .hairline-color(top, rgba(255,255,255,0.2));
+        a.link {
+          .md-link-highlight(rgba(255,255,255,0.15));
+          color: rgba(255,255,255,0.87);
+        }
+        textarea {
+          color: rgba(255,255,255,0.87);
+        }
+      }
+      .messagebar-attachments {
+        border-bottom-color: rgba(255,255,255,0.2);
+      }
+    }
+  }
+}

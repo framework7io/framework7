@@ -1,0 +1,45 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  @import (multiple) '../../less/vars-ios.less';
+  .picker-columns {
+    font-size: 24px;
+  }
+  .picker-column-divider {
+    color: #000;
+  }
+
+  .picker-item {
+    color:#707274;
+    &.picker-item-selected {
+      color: #000;
+    }
+  }
+  .picker-popover .toolbar {
+    background: none;
+    .hairline-remove(top);
+  }
+  .picker-popover .picker > .toolbar + .picker-columns {
+    height: ~"calc(100% - @{toolbarSize})";
+  }
+  .hairline-root('.picker-popover .toolbar', bottom, @toolbarBorderColor);
+  .hairline-root('.picker-center-highlight', top, #a8abb0);
+  .hairline-root('.picker-center-highlight', bottom, #a8abb0);
+
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .picker-item.picker-item-selected {
+        color: #fff;
+      }
+      .picker-popover, .picker-popover& {
+        .toolbar {
+          .hairline-color(bottom, @toolbarBorderColorDark);
+        }
+      }
+      .picker-center-highlight {
+        .hairline-color(top, @blockBorderColorDark);
+        .hairline-color(bottom, @blockBorderColorDark);
+      }
+    }
+  }
+}

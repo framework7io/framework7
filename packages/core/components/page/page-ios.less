@@ -1,0 +1,245 @@
+.ios {
+  @duration: 400ms;
+  .fake-shadow() {
+    position: absolute;
+    top: 0;
+    width: 16px;
+    bottom: 0;
+    z-index: -1;
+    content: '';
+    opacity: 0;
+    .rtl({
+      left: 100%;
+      background: linear-gradient(to left, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%);
+    });
+    .ltr({
+      right: 100%;
+      background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.01) 50%, rgba(0,0,0,0.2) 100%);
+    });
+  }
+  .fake-opacity() {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: rgba(0,0,0,0.1);
+    width: 100%;
+    bottom: 0;
+    content: '';
+    opacity: 0;
+    z-index: 10000;
+  }
+  .page-shadow-effect {
+    .fake-shadow();
+  }
+  .page-opacity-effect {
+    .fake-opacity();
+  }
+  .router-dynamic-navbar-inside {
+    .page-shadow-effect, .page-opacity-effect {
+      top: 44px;
+    }
+  }
+  .page {
+    background: #efeff4;
+  }
+  .rtl({
+    .page-previous {
+      transform: translate3d(20%, 0, 0);
+    }
+    .page-next {
+      transform: translate3d(-100%, 0, 0);
+    }
+  });
+  .ltr({
+    .page-previous {
+      transform: translate3d(-20%, 0, 0);
+    }
+    .page-next {
+      transform: translate3d(100%, 0, 0);
+    }
+  });
+  .page-previous {
+    .page-opacity-effect {
+      opacity: 1;
+    }
+    &:after {
+      opacity: 1;
+    }
+  }
+  .page-current {
+    .page-shadow-effect {
+      opacity: 1;
+    }
+  }
+
+  .page-transitioning {
+    &, .page-shadow-effect, .page-opacity-effect {
+      transition-duration: @duration;
+    }
+  }
+  .router-transition-forward, .router-transition-backward {
+    .page-next, .page-current, .page-previous:not(.stacked) {
+      pointer-events: none;
+    }
+  }
+  .router-transition-css-forward {
+    .page-next {
+      animation: ios-page-next-to-current @duration forwards;
+      &:before {
+        // Fake opacity
+        .fake-shadow();
+        animation: ios-page-next-to-current-shadow @duration forwards;
+      }
+    }
+    .page-current {
+      // From current to previous
+      animation: ios-page-current-to-previous @duration forwards;
+      &:after {
+        // Fake opacity
+        .fake-opacity();
+        animation: ios-page-current-to-previous-opacity @duration forwards;
+      }
+    }
+    &.router-dynamic-navbar-inside {
+      .page-next:before, .page-current:after {
+        top: 44px;
+      }
+    }
+  }
+  .router-transition-css-backward {
+    .page-previous, .page-current {
+      pointer-events: none;
+    }
+    .page-previous {
+      // From previous to current
+      animation: ios-page-previous-to-current @duration forwards;
+      &:after {
+        // Fake opacity
+        .fake-opacity();
+        animation: ios-page-previous-to-current-opacity @duration forwards;
+      }
+    }
+    .page-current {
+      // From current to next
+      animation: ios-page-current-to-next @duration forwards;
+      &:before {
+        .fake-shadow();
+        animation: ios-page-current-to-next-shadow @duration forwards;
+      }
+    }
+    &.router-dynamic-navbar-inside {
+      .page-current:before, .page-previous:after {
+        top: 44px;
+      }
+    }
+  }
+
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .page, .page& {
+        background: #171717;
+      }
+    }
+  }
+}
+.ltr({
+  @keyframes ios-page-next-to-current {
+    from {
+      transform: translate3d(100%,0,0);
+    }
+    to {
+      transform: translate3d(0%,0,0);
+    }
+  }
+  @keyframes ios-page-previous-to-current {
+    from {
+      transform: translate3d(-20%,0,0);
+    }
+    to {
+      transform: translate3d(0%,0,0);
+    }
+  }
+  @keyframes ios-page-current-to-previous {
+    from {
+      transform: translate3d(0,0,0);
+    }
+    to {
+      transform: translate3d(-20%,0,0);
+    }
+  }
+  @keyframes ios-page-current-to-next {
+    from {
+      transform: translate3d(0,0,0);
+    }
+    to {
+      transform: translate3d(100%,0,0);
+    }
+  }
+});
+.rtl({
+  @keyframes ios-page-next-to-current {
+    from {
+      transform: translate3d(-100%,0,0);
+    }
+    to {
+      transform: translate3d(0%,0,0);
+    }
+  }
+  @keyframes ios-page-previous-to-current {
+    from {
+      transform: translate3d(20%,0,0);
+    }
+    to {
+      transform: translate3d(0%,0,0);
+    }
+  }
+  @keyframes ios-page-current-to-previous {
+    from {
+      transform: translate3d(0,0,0);
+    }
+    to {
+      transform: translate3d(20%,0,0);
+    }
+  }
+  @keyframes ios-page-current-to-next {
+    from {
+      transform: translate3d(0,0,0);
+    }
+    to {
+      transform: translate3d(-100%,0,0);
+    }
+  }
+});
+@keyframes ios-page-next-to-current-shadow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes ios-page-previous-to-current-opacity {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes ios-page-current-to-previous-opacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes ios-page-current-to-next-shadow {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

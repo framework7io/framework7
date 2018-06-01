@@ -1,0 +1,36 @@
+/* === Pages === */
+.pages {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.page {
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transform: translate3d(0,0,0);
+  &.stacked {
+    display: none;
+  }
+}
+.page-previous {
+  pointer-events: none;
+}
+.page-content {
+  .scrollable();
+  box-sizing: border-box;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+& when (@includeIosTheme) {
+  @import url('./page-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./page-md.less');
+}

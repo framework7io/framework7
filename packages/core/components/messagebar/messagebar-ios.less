@@ -1,0 +1,87 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  @import (multiple) '../../less/vars-ios.less';
+  .messagebar {
+    background: #fff;
+    .hairline-remove(top);
+    min-height: 44px;
+    textarea {
+      background: #fff;
+      border-radius: 17px;
+      padding: 6px 15px;
+      height: 34px;
+      line-height: 20px;
+      font-size: 17px;
+      border: 1px solid #c8c8cd;
+    }
+    a.link.icon-only:first-child {
+      margin-left: -8px;
+    }
+    a.link.icon-only:last-child {
+      margin-right: -8px;
+    }
+    a.link:not(.icon-only) + .messagebar-area {
+      margin-left: 8px;
+    }
+    .messagebar-area + a.link:not(.icon-only) {
+      margin-left: 8px;
+    }
+  }
+  .messagebar-area {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  .messagebar-attachments {
+    padding: 5px;
+    border-radius: 17px 17px 0 0;
+    border: 1px solid #c8c8cd;
+    border-bottom: none;
+  }
+  .messagebar-attachments-visible {
+    .messagebar-attachments + textarea {
+      border-radius: 0 0 17px 17px;
+    }
+  }
+  .messagebar-attachment {
+    border-radius: 12px;
+    font-size: 14px;
+    img {
+      border-radius: 12px;
+    }
+  }
+  .messagebar-sheet {
+    background: #d1d5da;
+  }
+  .messagebar-attachment-delete {
+    right: 5px;
+    top: 5px;
+    width: 20px;
+    height: 20px;
+    background: #7d7e80;
+    border: 2px solid #fff;
+    cursor: pointer;
+    &:after, &:before {
+      width: 10px;
+      height: 2px;
+      background: #fff;
+      margin-left: -5px;
+      margin-top: -1px;
+    }
+  }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .messagebar, .messagebar& {
+        textarea {
+          background-color: #000;
+          border-color: @barsBorderColorDark;
+          color: #fff;
+        }
+      }
+      .messagebar-attachments {
+        border-color: @barsBorderColorDark;
+        background-color: #000;
+      }
+    }
+  }
+}

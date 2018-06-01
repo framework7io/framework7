@@ -1,0 +1,36 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  .sheet-modal {
+    background: #fff;
+    .toolbar {
+      top: 0;
+      .md-bar-shadow-remove();
+      + .sheet-modal-inner {
+        height: ~"calc(100% - 48px)";
+      }
+      a.link:not(.tab-link) {
+        flex-shrink: 0;
+      }
+    }
+    .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .sheet-modal-inner .page-content {
+      padding-top: 0;
+    }
+  }
+  .safe-areas({
+    .sheet-modal {
+      .toolbar ~ .sheet-modal-inner .page-content,
+      .sheet-modal-inner > .page-content {
+        padding-bottom: constant(safe-area-inset-bottom);
+        padding-bottom: env(safe-area-inset-bottom);
+      }
+    }
+  });
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .sheet-modal {
+        background-color: #202020;
+      }
+    }
+  }
+}

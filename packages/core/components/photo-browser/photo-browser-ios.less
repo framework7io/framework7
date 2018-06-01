@@ -1,0 +1,50 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  @import (multiple) '../../less/vars-ios.less';
+  .toolbar ~ .photo-browser-captions {
+    bottom: @toolbarSize;
+    transform: translate3d(0, 0px, 0);
+    &.photo-browser-captions-exposed {
+      transform: translate3d(0, 0px, 0);
+    }
+  }
+  .photo-browser-exposed .toolbar ~ .photo-browser-captions {
+    transform: translate3d(0, @toolbarSize, 0);
+  }
+  .photo-browser-page .toolbar {
+    transform: none;
+  }
+  .view.with-photo-browser-page-exposed {
+    .navbar {
+      opacity: 0;
+    }
+  }
+  .photo-browser-page, .view.with-photo-browser-page {
+    .navbar, .toolbar {
+      background: rgba(red(@barsBg), green(@barsBg) , blue(@barsBg),0.95);
+      transition: 400ms;
+    }
+  }
+  .photo-browser-dark, .photo-browser-page-dark, .view.with-photo-browser-page-dark {
+    .navbar, .toolbar {
+      background: rgba(30,30,30,0.8);
+      .hairline-remove(top);
+      .hairline-remove(bottom);
+      color: #fff;
+      a {
+        color: #fff;
+      }
+    }
+  }
+
+  .safe-areas({
+    .photo-browser-captions {
+      bottom: constant(safe-area-inset-bottom);
+      bottom: env(safe-area-inset-bottom);
+    }
+    .toolbar ~ .photo-browser-captions {
+      bottom: ~"calc(@{toolbarSize} + constant(safe-area-inset-bottom))";
+      bottom: ~"calc(@{toolbarSize} + env(safe-area-inset-bottom))";
+    }
+  });
+}

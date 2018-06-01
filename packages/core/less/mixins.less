@@ -1,0 +1,435 @@
+// Colors Loop
+.color-theme-loop(@ruleset) when (length( @colors ) >= 1) {
+  @length: length( @colors ) ;
+  .looper( 1 ) ;
+  .looper( @index ) when ( @index <= @length ) and (length(extract( @colors, @index )) = 2) {
+    @pairTheme: extract( @colors, @index );
+    @colorThemeName: extract( @pairTheme, 1 ) ;
+    @colorThemeValue: extract( @pairTheme, 2 ) ;
+    @ruleset();
+    .looper( @index + 1 ) ;
+  }
+}
+.color-loop(@ruleset) when (length( @colors ) >= 1) {
+  @length: length( @colors ) ;
+  .looper( 1 ) ;
+  .looper( @index ) when ( @index <= @length ) and (length(extract( @colors, @index )) = 2) {
+    @pair: extract( @colors, @index );
+    @colorName: extract( @pair, 1 ) ;
+    @colorValue: extract( @pair, 2 ) ;
+    @ruleset();
+    .looper( @index + 1 ) ;
+  }
+}
+
+// RTL, LTR
+.ltr(@ruleset) {
+  & when not (@rtl) {
+    @ruleset();
+  }
+}
+.rtl(@ruleset) {
+  & when (@rtl) {
+    @ruleset();
+  }
+}
+
+// iPhone X
+.safe-areas(@ruleset) {
+  &.device-iphone-x {
+    @ruleset();
+  }
+}
+.safe-areas-portrait(@ruleset) {
+  @media(orientation: portrait) {
+    &.device-iphone-x {
+      @ruleset();
+    }
+  }
+}
+.safe-areas-landscape(@ruleset) {
+  @media(orientation: landscape) {
+    &.device-iphone-x {
+      @ruleset();
+    }
+  }
+}
+.safe-area-left(@ruleset) {
+  .ios-left-edge,
+  .ios-edges,
+  .popup,
+  .sheet-modal,
+  .panel-left {
+    @ruleset();
+  }
+}
+.safe-area-right(@ruleset) {
+  .ios-right-edge,
+  .ios-edges,
+  .popup,
+  .sheet-modal,
+  .panel-right {
+    @ruleset();
+  }
+}
+
+// Scrollable
+.scrollable() {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.not-scrollable() {
+  overflow: hidden;
+  -webkit-overflow-scrolling: auto;
+}
+// Disabled
+.disabled() {
+  opacity: 0.55;
+  pointer-events: none;
+}
+// Modal Backdrops
+.modal-backdrop() {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  z-index: 13000;
+  visibility: hidden;
+  opacity: 0;
+  transition-duration: 400ms;
+  &.not-animated {
+    transition-duration: 0ms;
+  }
+  &.backdrop-in {
+    visibility: visible;
+    opacity: 1;
+  }
+
+}
+// No Hairlines
+.no-hairlines() {
+  &.no-hairlines, &.no-hairlines ul, .md &.no-hairlines-md, .md &.no-hairlines-md ul, .ios &.no-hairlines-ios, .ios &.no-hairlines-ios ul {
+    .hairline-remove(top);
+    .hairline-remove(bottom);
+  }
+  &.no-hairline-top, &.no-hairline-top ul, .md &.no-hairline-top-md, .md &.no-hairline-top-md ul, .ios &.no-hairline-top-ios, .ios &.no-hairline-top-ios ul {
+    .hairline-remove(top);
+  }
+  &.no-hairline-bottom, &.no-hairline-bottom ul, .md &.no-hairline-bottom-md, .md &.no-hairline-bottom-md ul, .ios &.no-hairline-bottom-ios, .ios &.no-hairline-bottom-ios ul {
+    .hairline-remove(bottom);
+  }
+}
+.no-hairlines-between() {
+  &.no-hairlines-between, .md &.no-hairlines-between-md, .ios &.no-hairlines-between-ios {
+    .item-inner, .list-button, .item-divider, .list-group-title, .list-group-title {
+      .hairline-remove(bottom);
+    }
+    &.simple-list li {
+      .hairline-remove(bottom);
+    }
+    &.links-list a {
+      .hairline-remove(bottom);
+    }
+  }
+}
+// Hairlines
+.hairline-pseudo(@color, @top, @right, @bottom, @left) {
+  content: '';
+  position: absolute;
+  background-color: @color;
+  display: block;
+  z-index: 15;
+  top: @top;
+  right: @right;
+  bottom: @bottom;
+  left: @left;
+}
+.hairline(@position, @color) when (@position = top) {
+  &:before {
+    .hairline-pseudo(@color, 0, auto, auto, 0);
+    height: 1px;
+    width: 100%;
+    transform-origin: 50% 0%;
+    html.device-pixel-ratio-2 & {
+      transform: scaleY(0.5);
+    }
+    html.device-pixel-ratio-3 & {
+      transform: scaleY(0.33);
+    }
+  }
+}
+.hairline-root(@selector, @position, @color) when (@position = top) {
+  @selectorEscaped: e(@selector);
+  @{selectorEscaped}:before {
+    .hairline-pseudo(@color, 0, auto, auto, 0);
+    height: 1px;
+    width: 100%;
+    transform-origin: 50% 0%;
+  }
+  &.device-pixel-ratio-2 @{selectorEscaped}:before {
+    transform: scaleY(0.5);
+  }
+  &.device-pixel-ratio-3 @{selectorEscaped}:before {
+    transform: scaleY(0.33);
+  }
+}
+.hairline(@position, @color) when (@position = left) {
+  &:before {
+    .hairline-pseudo(@color, 0, auto, auto, 0);
+    width: 1px;
+    height: 100%;
+    transform-origin: 0% 50%;
+    html.device-pixel-ratio-2 & {
+      transform: scaleX(0.5);
+    }
+    html.device-pixel-ratio-3 & {
+      transform: scaleX(0.33);
+    }
+  }
+}
+.hairline-root(@selector, @position, @color) when (@position = left) {
+  @selectorEscaped: e(@selector);
+  @{selectorEscaped}:before {
+    .hairline-pseudo(@color, 0, auto, auto, 0);
+    width: 1px;
+    height: 100%;
+    transform-origin: 0% 50%;
+  }
+  &.device-pixel-ratio-2 @{selectorEscaped}:before {
+    transform: scaleX(0.5);
+  }
+  &.device-pixel-ratio-3 @{selectorEscaped}:before {
+    transform: scaleX(0.33);
+  }
+}
+.hairline(@position, @color) when (@position = bottom) {
+  &:after {
+    .hairline-pseudo(@color, auto, auto, 0, 0);
+    height: 1px;
+    width: 100%;
+    transform-origin: 50% 100%;
+    html.device-pixel-ratio-2 & {
+      transform: scaleY(0.5);
+    }
+    html.device-pixel-ratio-3 & {
+      transform: scaleY(0.33);
+    }
+  }
+}
+.hairline-root(@selector, @position, @color) when (@position = bottom) {
+  @selectorEscaped: e(@selector);
+  @{selectorEscaped}:after {
+    .hairline-pseudo(@color, auto, auto, 0, 0);
+    height: 1px;
+    width: 100%;
+    transform-origin: 50% 100%;
+  }
+  &.device-pixel-ratio-2 @{selectorEscaped}:after {
+    transform: scaleY(0.5);
+  }
+  &.device-pixel-ratio-3 @{selectorEscaped}:after {
+    transform: scaleY(0.33);
+  }
+}
+.hairline(@position, @color) when (@position = right) {
+  &:after {
+    .hairline-pseudo(@color, 0, 0, auto, auto);
+    width: 1px;
+    height: 100%;
+    transform-origin: 100% 50%;
+    html.device-pixel-ratio-2 & {
+      transform: scaleX(0.5);
+    }
+    html.device-pixel-ratio-3 & {
+      transform: scaleX(0.33);
+    }
+  }
+}
+.hairline-root(@selector, @position, @color) when (@position = right) {
+  @selectorEscaped: e(@selector);
+  @{selectorEscaped}:after {
+    .hairline-pseudo(@color, 0, 0, auto, auto);
+    width: 1px;
+    height: 100%;
+    transform-origin: 100% 50%;
+  }
+  &.device-pixel-ratio-2 @{selectorEscaped}:after {
+    transform: scaleX(0.5);
+  }
+  &.device-pixel-ratio-3 @{selectorEscaped}:after {
+    transform: scaleX(0.33);
+  }
+}
+// For right and bottom
+.hairline-remove(@position) when not (@position = left) and not (@position = top) {
+  &:after {
+    display: none !important;
+  }
+}
+// For left and top
+.hairline-remove(@position) when not (@position = right) and not (@position = bottom) {
+  &:before {
+    display: none !important;
+  }
+}
+// For right and bottom
+.hairline-color(@position, @color) when not (@position = left) and not (@position = top) {
+  &:after {
+    background-color: @color;
+  }
+}
+// For left and top
+.hairline-color(@position, @color) when not (@position = right) and not (@position = bottom) {
+  &:before {
+    background-color: @color;
+  }
+}
+// SVG BG
+.svg-background(@svg) {
+  @url: `encodeURIComponent(@{svg})`;
+  background-image: url("data:image/svg+xml;charset=utf-8,@{url}");
+}
+// MD Active Active Links Highlights
+.md-link-highlight(@color:rgba(255,255,255,0.15)) {
+  &:before {
+    content: '';
+    width: 152%;
+    height: 152%;
+    position: absolute;
+    left: -26%;
+    top: -26%;
+    background-image: radial-gradient(circle at center, @color 66%, rgba(red(@color),green(@color),blue(@color),0) 66%);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition-duration: 600ms;
+  }
+  &.active-state:before {
+    opacity: 1;
+    transition-duration: 150ms;
+  }
+}
+.md-link-highlight-color(@color) {
+  &:before {
+    background-image: radial-gradient(circle at center, @color 66%, rgba(red(@color),green(@color),blue(@color),0) 66%);
+  }
+}
+
+// MD Button
+.md-button() {
+  color:@themeColor;
+  border-radius: 2px;
+  line-height: 36px;
+  height: 36px;
+  text-transform: uppercase;
+  min-width: 64px;
+  padding: 0 8px;
+  border: none;
+  transition-duration: 300ms;
+  transform: translate3d(0,0,0);
+  &.active-state {
+    background: rgba(0,0,0,0.1);
+  }
+  &.button-fill, &.button-active, &.tab-link-active {
+    background-color: @themeColor;
+    color: #fff;
+    &.active-state {
+      background: darken(@themeColor, 8%);
+    }
+  }
+  &.button-big {
+    height: 48px;
+    line-height: 48px;
+    border-radius: 3px;
+  }
+  &.button-round {
+    border-radius: 36px;
+  }
+  i.icon + span,
+  span:not(.ripple-wave) + span,
+  span:not(.ripple-wave) + i.icon,
+  i.icon + i.icon {
+    margin-left: 8px;
+  }
+
+  // Raised (with shadow) buttons
+  &.button-raised {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    &.active-state {
+      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    }
+  }
+}
+
+// MD Shadows
+.md-depth(@level:1) {
+  & when (@level = 1) {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  }
+  & when (@level = 2) {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  }
+  & when (@level = 3) {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  }
+  & when (@level = 4) {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  }
+  & when (@level = 5) {
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  }
+}
+
+// MD Bars Shadow
+.md-bar-shadow-remove() {
+  &:after {
+    display: none;
+  }
+}
+.md-bar-shadow-to-bottom() {
+  &:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    width: 100%;
+    top: 100%;
+    bottom: auto;
+    height: 10px;
+    pointer-events: none;
+    background: linear-gradient(to bottom,
+      rgba(0,0,0,0.3) 0%,
+      rgba(0,0,0,0.1) 40%,
+      rgba(0,0,0,0.05) 50%,
+      rgba(0,0,0,0) 80%,
+      rgba(0,0,0,0) 100%
+      );
+  }
+}
+.md-bar-shadow-to-top() {
+  &:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    width: 100%;
+    bottom: 100%;
+    height: 10px;
+    top: auto;
+    pointer-events: none;
+    background: linear-gradient(to top,
+      rgba(0,0,0,0.3) 0%,
+      rgba(0,0,0,0.1) 40%,
+      rgba(0,0,0,0.05) 50%,
+      rgba(0,0,0,0) 80%,
+      rgba(0,0,0,0) 100%
+      );
+  }
+}
+.md-bar-no-shadow() {
+  &:after {
+    display: none;
+  }
+}

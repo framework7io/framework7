@@ -1,0 +1,274 @@
+/* === Data Table === */
+.data-table {
+  overflow-x: auto;
+  table {
+    width: 100%;
+    border: none;
+    padding: 0;
+    margin: 0;
+    border-collapse: collapse;
+    .ltr({ text-align: left; });
+    .rtl({ text-align: right; });
+  }
+  thead {
+    font-size: 12px;
+    th, td {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      line-height: 16px;
+    }
+    i.icon, i.f7-icons, i.material-icons {
+      vertical-align: top;
+    }
+  }
+  th, td {
+    padding: 0;
+    position: relative;
+    &.numeric-cell {
+      .ltr({ text-align: right; });
+      .rtl({ text-align: left; });
+    }
+    &.checkbox-cell {
+      overflow: visible;
+      label + span {
+        .ltr({ margin-left: 8px; });
+        .rtl({ margin-right: 8px; });
+      }
+    }
+    &.actions-cell {
+      .ltr({ text-align: right; });
+      .rtl({ text-align: left; });
+      white-space: nowrap;
+    }
+    a.icon-only, .card & a.icon-only, .card& a.icon-only {
+      display: inline-block;
+      vertical-align: middle;
+      text-align: center;
+      font-size: 0;
+      min-width: 0;
+      i {
+        font-size: 18px;
+        vertical-align: middle;
+      }
+    }
+  }
+  // Sortable
+  .sortable-cell:not(.input-cell) {
+    cursor: pointer;
+    position: relative;
+  }
+  .sortable-cell.input-cell .table-head-label {
+    cursor: pointer;
+    position: relative;
+  }
+  .sortable-cell:not(.numeric-cell):not(.input-cell):after,
+  .sortable-cell.numeric-cell:not(.input-cell):before,
+  .sortable-cell:not(.numeric-cell).input-cell > .table-head-label:after,
+  .sortable-cell.numeric-cell.input-cell > .table-head-label:before {
+    content: '';
+    display: inline-block;
+    vertical-align: top;
+    width: 16px;
+    height: 16px;
+    .svg-background("<svg fill='#000000' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M0 0h24v24H0V0z' fill='none'/><path d='M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z' fill='#000000'/></svg>");
+    background-size: 100% auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-size: 0;
+    transition-duration: 300ms;
+    transform: rotate(0);
+    opacity: 0;
+  }
+  html.device-desktop & {
+    .sortable-cell:not(.sortable-cell-active):hover,
+    .sortable-cell:not(.sortable-cell-active) .table-head-label:hover {
+      &:after, &:before {
+        opacity: 0.54;
+      }
+    }
+  }
+  .sortable-cell.sortable-cell-active,
+  .sortable-cell.sortable-cell-active .table-head-label {
+    &:after, &:before {
+      opacity: 0.87 !important;
+    }
+  }
+  .sortable-cell.sortable-asc {
+
+  }
+  .sortable-cell.sortable-desc,
+  .sortable-cell.sortable-desc,
+  .table-head-label {
+    &:after, &:before {
+      transform: rotate(180deg) !important;
+    }
+  }
+  &.card, .card & {
+    .card-header {
+      height: 64px;
+    }
+    .card-content {
+      overflow-x: auto;
+    }
+  }
+  .data-table-links, .data-table-actions {
+    display: flex;
+  }
+  .data-table-actions {
+    .ltr({ margin-left: auto; });
+    .rtl({ margin-right: auto; });
+    align-items: center;
+    a.link {
+      min-width: 0;
+    }
+    a.link.icon-only {
+      line-height: 1;
+      justify-content: center;
+      padding: 0;
+    }
+  }
+  .data-table-header, .data-table-header-selected {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  .data-table-header-selected {
+    display: none;
+  }
+  &.data-table-has-checked {
+    .data-table-header {
+      display: none;
+    }
+    .data-table-header-selected {
+      display: flex;
+    }
+  }
+  .data-table-title-selected {
+    font-size: 14px;
+  }
+
+  // Footer
+  .data-table-footer {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    position: relative;
+    font-size: 12px;
+    overflow: hidden;
+    .ltr({
+      justify-content: flex-end;
+    });
+    .rtl({
+      justify-content: flex-start;
+    });
+
+  }
+  .data-table-rows-select,
+  .data-table-pagination {
+    display: flex;
+    align-items: center;
+  }
+
+  // Collapsible
+  @media (max-width:480px) and (orientation:portrait) {
+    &.data-table-collapsible {
+      thead {
+        display: none;
+      }
+      tbody, tr, td {
+        display: block;
+      }
+      tr {
+        position: relative;
+      }
+      tr:hover {
+        background-color: inherit;
+      }
+      td {
+        .hairline-remove(top);
+        display: flex;
+        align-content: center;
+        align-items: center;
+        justify-content: flex-start;
+        .ltr({
+          text-align: left;
+        });
+        .rtl({
+          text-align: right;
+        });
+      }
+      td:not(.checkbox-cell) {
+        &:before {
+          width: 40%;
+          display: block !important;
+          content: attr(data-collapsible-title);
+          position: relative;
+          height: auto;
+          background: none !important;
+          transform: none !important;
+          font-size: 12px;
+          .ltr({ margin-right: 16px; });
+          .rtl({ margin-left: 16px; });
+          flex-shrink: 0;
+        }
+      }
+      td.checkbox-cell {
+        position: absolute;
+        top: 0;
+        .ltr({
+          left: 0;
+          + td {
+            padding-left: 16px;
+          }
+          ~ td {
+            margin-left: 16px + 16px;
+          }
+        });
+        .rtl({
+          right: 0;
+          + td {
+            padding-right: 16px;
+          }
+          ~ td {
+            margin-right: 16px + 16px;
+          }
+        });
+      }
+    }
+  }
+  // Responsive queries
+  .tablet-only, .tablet-landscape-only {
+    display: none;
+  }
+  @media (min-width: 768px) {
+    .tablet-only {
+      display: table-cell;
+    }
+  }
+  @media (min-width: 768px) and (orientation:landscape) {
+    .tablet-landscape-only {
+      display: table-cell;
+    }
+  }
+}
+// Dark Theme
+& when (@includeDarkTheme) {
+  .theme-dark {
+    .data-table {
+      .sortable-cell:not(.numeric-cell):not(.input-cell):after,
+      .sortable-cell.numeric-cell:not(.input-cell):before,
+      .sortable-cell:not(.numeric-cell).input-cell > .table-head-label:after,
+      .sortable-cell.numeric-cell.input-cell > .table-head-label:before {
+        .svg-background("<svg fill='#fff' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M0 0h24v24H0V0z' fill='none'/><path d='M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z' fill='#fff'/></svg>");
+      }
+    }
+  }
+}
+& when (@includeIosTheme) {
+  @import url('./data-table-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./data-table-md.less');
+}
