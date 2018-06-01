@@ -2,6 +2,20 @@
 
 # Change Log
 
+# [v2.3.1](https://github.com/framework7io/framework7/compare/v2.3.0...v2.3.1) - June 1, 2018
+  * Searchbar
+    * Fixed issue with not hiding/showing backdrop when `customSearch` is enabled
+  * Sortable
+    * New app parameter `sortable.moveElements` by default is `true`. Useful to disable when you use for DOM manipulation other library like Vue or React
+  * Swiper update to latest v4.3.2:
+    * Core
+      * Added `addSlide(index, slide)` method to add slide at required position. Thanks to @kochizufan
+      * Fixed issue with loop #2647. Thanks to @kochizufan
+    * Pagination
+      * New `formatFractionCurrent(number)` parameter to format current number in Fraction pagination
+      * New `formatFractionTotal(number)` parameter to format total number in Fraction pagination
+  * Minor fixes
+
 # [v2.3.0](https://github.com/framework7io/framework7/compare/v2.2.5...v2.3.0) - May 27, 2018
   * View/Router
     * Fixed missing `pushStateOnLoad` parameter
