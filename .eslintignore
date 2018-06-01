@@ -2,9 +2,9 @@ build
 .git
 .github
 custom
-dist
+packages
 node_modules
 kitchen-sink
-src/framework7.js
-src/modules/demo-module.js
-src/components/swiper/swiper-class
+src/core/framework7.js
+src/core/modules/demo-module.js
+src/core/components/swiper/swiper-class
