@@ -31,6 +31,7 @@ export default {
     divider: Boolean,
     groupTitle: Boolean,
     swipeout: Boolean,
+    swipeoutOpened: Boolean,
     sortable: Boolean,
     accordionItem: Boolean,
     accordionItemOpened: Boolean,
@@ -240,6 +241,18 @@ export default {
       </li>
     );
   },
+  watch: {
+    'props.swipeoutOpened': function watchSwipeoutOpened(opened) {
+      const self = this;
+      if (!self.props.swipeout) return;
+      const el = self.refs.el;
+      if (opened) {
+        self.$f7.swipeout.open(el);
+      } else {
+        self.$f7.swipeout.close(el);
+      }
+    },
+  },
   componentDidCreate() {
     const self = this;
     self.onClickBound = self.onClick.bind(self);
@@ -269,7 +282,7 @@ export default {
         isSortable: self.$listEl.hasClass('sortable'),
       });
     }
-    const { swipeout, accordionItem, smartSelect, smartSelectParams } = self.props;
+    const { swipeout, swipeoutOpened, accordionItem, smartSelect, smartSelectParams } = self.props;
     if (swipeout) {
       el.addEventListener('swipeout:open', self.onSwipeoutOpenBound);
       el.addEventListener('swipeout:opened', self.onSwipeoutOpenedBound);
@@ -286,13 +299,17 @@ export default {
       el.addEventListener('accordion:closed', self.onAccClosedBound);
     }
 
-    if (!smartSelect) return;
     self.$f7ready((f7) => {
-      const ssParams = Utils.extend(
-        { el: el.querySelector('a.smart-select') },
-        smartSelectParams || {},
-      );
-      self.f7SmartSelect = f7.smartSelect.create(ssParams);
+      if (smartSelect) {
+        const ssParams = Utils.extend(
+          { el: el.querySelector('a.smart-select') },
+          smartSelectParams || {},
+        );
+        self.f7SmartSelect = f7.smartSelect.create(ssParams);
+      }
+      if (swipeoutOpened) {
+        f7.swipeout.open(el);
+      }
     });
   },
   componentDidUpdate() {
