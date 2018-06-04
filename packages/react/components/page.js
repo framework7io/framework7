@@ -74,6 +74,8 @@ class F7Page extends React.Component {
     hasMessages = messagesContent;
     if (slotsDefault) {
       slotsDefault.forEach(child => {
+        if (typeof child === 'undefined')
+          return;
         let isFixedTag = false;
         {
           const tag = child.type && child.type.name;

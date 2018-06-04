@@ -144,6 +144,8 @@ class F7Messagebar extends React.Component {
     let messagebarSheetEl;
     if (slotsDefault) {
       slotsDefault.forEach(child => {
+        if (typeof child === 'undefined')
+          return;
         let tag;
         tag = child.type && child.type.name;
         if (tag && (tag.indexOf('messagebar-attachments') >= 0 || tag === 'F7MessagebarAttachments')) {

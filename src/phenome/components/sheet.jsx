@@ -30,6 +30,7 @@ export default {
 
     if (slotsDefault && slotsDefault.length) {
       slotsDefault.forEach((child) => {
+        if (typeof child === 'undefined') return;
         let isFixedTag = false;
         if (process.env.COMPILER === 'react') {
           const tag = child.type && child.type.name;

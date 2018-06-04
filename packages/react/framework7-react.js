@@ -1,5 +1,5 @@
 /**
- * Framework7 React 3.0.0-beta.4
+ * Framework7 React 3.0.0-beta.5
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -4557,6 +4557,8 @@
       var flattenSlots = Utils.flattenArray(slotsDefault);
       var wasUlChild = false;
       flattenSlots.forEach(function (child) {
+        if (typeof child === 'undefined')
+          { return; }
         var tag;
         {
           tag = child.type && child.type.name;
@@ -5493,6 +5495,8 @@
       var messagebarSheetEl;
       if (slotsDefault) {
         slotsDefault.forEach(function (child) {
+          if (typeof child === 'undefined')
+            { return; }
           var tag;
           tag = child.type && child.type.name;
           if (tag && (tag.indexOf('messagebar-attachments') >= 0 || tag === 'F7MessagebarAttachments')) {
@@ -6506,6 +6510,8 @@
       hasMessages = messagesContent;
       if (slotsDefault) {
         slotsDefault.forEach(function (child) {
+          if (typeof child === 'undefined')
+            { return; }
           var isFixedTag = false;
           {
             var tag = child.type && child.type.name;
@@ -7948,6 +7954,8 @@
       var slotsDefault = self.slots.default;
       if (slotsDefault && slotsDefault.length) {
         slotsDefault.forEach(function (child) {
+          if (typeof child === 'undefined')
+            { return; }
           var isFixedTag = false;
           {
             var tag = child.type && child.type.name;
@@ -9416,7 +9424,7 @@
   };
 
   /**
-   * Framework7 React 3.0.0-beta.4
+   * Framework7 React 3.0.0-beta.5
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *

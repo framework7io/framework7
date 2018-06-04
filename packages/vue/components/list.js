@@ -48,6 +48,8 @@ export default {
     const flattenSlots = Utils.flattenArray(slotsDefault);
     let wasUlChild = false;
     flattenSlots.forEach(child => {
+      if (typeof child === 'undefined')
+        return;
       let tag;
       {
         tag = child.tag;

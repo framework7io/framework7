@@ -69,6 +69,8 @@ export default {
     hasMessages = self.$options.propsData.messagesContent;
     if (slotsDefault) {
       slotsDefault.forEach(child => {
+        if (typeof child === 'undefined')
+          return;
         let isFixedTag = false;
         {
           const tag = child.tag;

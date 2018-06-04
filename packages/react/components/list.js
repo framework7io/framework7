@@ -65,6 +65,8 @@ class F7List extends React.Component {
     const flattenSlots = Utils.flattenArray(slotsDefault);
     let wasUlChild = false;
     flattenSlots.forEach(child => {
+      if (typeof child === 'undefined')
+        return;
       let tag;
       {
         tag = child.type && child.type.name;

@@ -25,6 +25,8 @@ export default {
     const slotsDefault = self.$slots.default;
     if (slotsDefault && slotsDefault.length) {
       slotsDefault.forEach(child => {
+        if (typeof child === 'undefined')
+          return;
         let isFixedTag = false;
         {
           const tag = child.tag;

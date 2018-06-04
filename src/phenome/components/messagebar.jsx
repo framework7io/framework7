@@ -85,6 +85,7 @@ export default {
 
     if (slotsDefault) {
       slotsDefault.forEach((child) => {
+        if (typeof child === 'undefined') return;
         let tag;
         tag = child.tag; // phenome-vue-line
         tag = child.type && child.type.name; // phenome-react-line

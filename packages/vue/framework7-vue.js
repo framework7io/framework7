@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.0.0-beta.4
+ * Framework7 Vue 3.0.0-beta.5
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -4059,6 +4059,8 @@
       var flattenSlots = Utils.flattenArray(slotsDefault);
       var wasUlChild = false;
       flattenSlots.forEach(function (child) {
+        if (typeof child === 'undefined')
+          { return; }
         var tag;
         {
           tag = child.tag;
@@ -4843,6 +4845,8 @@
       var messagebarSheetEl;
       if (slotsDefault) {
         slotsDefault.forEach(function (child) {
+          if (typeof child === 'undefined')
+            { return; }
           var tag;
           tag = child.tag;
           if (tag && (tag.indexOf('messagebar-attachments') >= 0 || tag === 'F7MessagebarAttachments')) {
@@ -5916,6 +5920,8 @@
       hasMessages = self.$options.propsData.messagesContent;
       if (slotsDefault) {
         slotsDefault.forEach(function (child) {
+          if (typeof child === 'undefined')
+            { return; }
           var isFixedTag = false;
           {
             var tag = child.tag;
@@ -7265,6 +7271,8 @@
       var slotsDefault = self.$slots.default;
       if (slotsDefault && slotsDefault.length) {
         slotsDefault.forEach(function (child) {
+          if (typeof child === 'undefined')
+            { return; }
           var isFixedTag = false;
           {
             var tag = child.tag;
@@ -8631,7 +8639,7 @@
   };
 
   /**
-   * Framework7 Vue 3.0.0-beta.4
+   * Framework7 Vue 3.0.0-beta.5
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *

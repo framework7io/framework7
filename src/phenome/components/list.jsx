@@ -54,6 +54,7 @@ export default {
 
     let wasUlChild = false;
     flattenSlots.forEach((child) => {
+      if (typeof child === 'undefined') return;
       let tag;
       if (process.env.COMPILER === 'react') {
         tag = child.type && child.type.name;
