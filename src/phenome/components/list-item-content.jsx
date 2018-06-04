@@ -149,18 +149,30 @@ export default {
 
     // Input
     if (radio || checkbox) {
-      inputEl = (
-        <input
-          value={value}
-          name={name}
-          checked={checked}
-          readOnly={readonly}
-          disabled={disabled}
-          required={required}
-          type={radio ? 'radio' : 'checkbox'}
-          onChange={self.onChange.bind(self)}
-        />
-      );
+      if (process.env.COMPILER === 'vue') {
+        inputEl = (
+          <input
+            name={name}
+            type={radio ? 'radio' : 'checkbox'}
+            domProps={{ checked, readonly, disabled, required, value }}
+            onChange={self.onChange.bind(self)}
+          />
+        );
+      } else {
+        inputEl = (
+          <input
+            value={value}
+            name={name}
+            checked={checked}
+            readOnly={readonly}
+            disabled={disabled}
+            required={required}
+            type={radio ? 'radio' : 'checkbox'}
+            onChange={self.onChange.bind(self)}
+          />
+        );
+      }
+
       inputIconEl = (
         <i className={`icon icon-${radio ? 'radio' : 'checkbox'}`} />
       );

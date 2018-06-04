@@ -40,9 +40,9 @@ export default {
       },
       Mixins.colorClasses(props),
     );
-
-    return (
-      <label ref="el" id={id} style={style} className={labelClasses}>
+    let inputEl;
+    if (process.env.COMPILER === 'react') {
+      inputEl = (
         <input
           type="checkbox"
           name={name}
@@ -53,6 +53,26 @@ export default {
           value={value}
           onChange={self.onChange.bind(self)}
         />
+      );
+    }
+    if (process.env.COMPILER === 'vue') {
+      inputEl = (
+        <input
+          type="checkbox"
+          name={name}
+          onChange={self.onChange.bind(self)}
+          domProps={{
+            disabled,
+            readonly,
+            value,
+            checked,
+          }}
+        />
+      );
+    }
+    return (
+      <label ref="el" id={id} style={style} className={labelClasses}>
+        {inputEl}
         <span className="toggle-icon" />
       </label>
     );

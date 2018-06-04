@@ -34,9 +34,20 @@ export default {
       backgroundImage: image && `url(${image})`,
     }, style || {});
 
+    let inputEl;
+    if (process.env.COMPILER === 'react') {
+      inputEl = (
+        <input type="checkbox" checked={checked} onChange={self.onChangeBound} />
+      );
+    }
+    if (process.env.COMPILER === 'vye') {
+      inputEl = (
+        <input type="checkbox" domProps={{ checked }} onChange={self.onChangeBound} />
+      );
+    }
     return (
       <label id={id} className={classes} style={styles}>
-        <input type="checkbox" checked={checked} onChange={self.onChangeBound} />
+        {inputEl}
         <i className="icon icon-checkbox" />
         <slot />
       </label>

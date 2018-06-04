@@ -78,8 +78,9 @@ export default {
     let inputWrapEl;
     let valueEl;
     if (input && !buttonsOnly) {
-      inputWrapEl = (
-        <div className="stepper-input-wrap">
+      let inputEl;
+      if (process.env.COMPILER === 'react') {
+        inputEl = (
           <input
             type={inputType}
             min={inputType === 'number' ? min : undefined}
@@ -89,6 +90,26 @@ export default {
             readOnly={inputReadonly}
             onInput={self.onInput.bind(self)}
           />
+        );
+      }
+      if (process.env.COMPILER === 'vue') {
+        inputEl = (
+          <input
+            type={inputType}
+            min={inputType === 'number' ? min : undefined}
+            max={inputType === 'number' ? max : undefined}
+            step={inputType === 'number' ? step : undefined}
+            onInput={self.onInput.bind(self)}
+            domProps={{
+              readonly: inputReadonly,
+              value,
+            }}
+          />
+        );
+      }
+      inputWrapEl = (
+        <div className="stepper-input-wrap">
+          {inputEl}
         </div>
       );
     }

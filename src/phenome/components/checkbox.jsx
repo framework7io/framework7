@@ -18,18 +18,36 @@ export default {
     const props = self.props;
     const { name, value, disabled, readonly, checked, defaultChecked, id, style } = props;
 
-    const inputEl = (
-      <input
-        type="checkbox"
-        name={name}
-        value={value}
-        disabled={disabled}
-        readOnly={readonly}
-        checked={checked}
-        defaultChecked={defaultChecked}
-        onChange={self.onChange.bind(self)}
-      />
-    );
+    let inputEl;
+    if (process.env.COMPILER === 'react') {
+      inputEl = (
+        <input
+          type="checkbox"
+          name={name}
+          value={value}
+          disabled={disabled}
+          readOnly={readonly}
+          checked={checked}
+          defaultChecked={defaultChecked}
+          onChange={self.onChange.bind(self)}
+        />
+      );
+    }
+    if (process.env.COMPILER === 'vue') {
+      inputEl = (
+        <input
+          type="checkbox"
+          name={name}
+          onChange={self.onChange.bind(self)}
+          domProps={{
+            value,
+            disabled,
+            readonly,
+            checked,
+          }}
+        />
+      );
+    }
     const iconEl = (<i className="icon-checkbox" />);
 
     return (

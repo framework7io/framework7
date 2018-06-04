@@ -20,18 +20,36 @@ export default {
       name, value, disabled, readonly, checked, defaultChecked, id, style, className,
     } = props;
 
-    const inputEl = (
-      <input
-        type="radio"
-        name={name}
-        value={value}
-        disabled={disabled}
-        readOnly={readonly}
-        checked={checked}
-        defaultChecked={defaultChecked}
-        onChange={self.onChange.bind(self)}
-      />
-    );
+    let inputEl;
+    if (process.env.COMPILER === 'react') {
+      inputEl = (
+        <input
+          type="radio"
+          name={name}
+          value={value}
+          disabled={disabled}
+          readOnly={readonly}
+          checked={checked}
+          defaultChecked={defaultChecked}
+          onChange={self.onChange.bind(self)}
+        />
+      );
+    }
+    if (process.env.COMPILER === 'vue') {
+      inputEl = (
+        <input
+          type="radio"
+          name={name}
+          onChange={self.onChange.bind(self)}
+          domProps={{
+            value,
+            disabled,
+            readonly,
+            checked,
+          }}
+        />
+      );
+    }
     const iconEl = (<i className="icon-radio" />);
 
     const classes = Utils.classNames(

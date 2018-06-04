@@ -111,49 +111,97 @@ export default {
         !wrap && className,
         (noFormStoreData || noStoreData) && 'no-store-data',
       );
-
-      return (
-        <InputTag
-          ref="inputEl"
-          style={inputStyle}
-          name={name}
-          type={needsType ? type : undefined}
-          placeholder={placeholder}
-          id={inputId}
-          value={needsValue ? value : undefined}
-          defaultValue={defaultValue}
-          size={size}
-          accept={accept}
-          autoComplete={autocomplete}
-          autoCorrect={autocorrect}
-          autoCapitalize={autocapitalize}
-          spellCheck={spellcheck}
-          autoFocus={autofocus}
-          autoSave={autosave}
-          checked={checked}
-          disabled={disabled}
-          max={max}
-          maxLength={maxlength}
-          min={min}
-          minLength={minlength}
-          step={step}
-          multiple={multiple}
-          readOnly={readonly}
-          required={required}
-          pattern={pattern}
-          validate={typeof validate === 'string' && validate.length ? validate : undefined}
-          data-validate={validate === true || validate === '' ? true : undefined}
-          tabIndex={tabindex}
-          data-error-message={errorMessage}
-          className={inputClassName}
-          onFocus={self.onFocusBound}
-          onBlur={self.onBlurBound}
-          onInput={self.onInputBound}
-          onChange={self.onChangeBound}
-        >
-          {children}
-        </InputTag>
-      );
+      let input;
+      if (process.env.COMPILER === 'react') {
+        input = (
+          <InputTag
+            ref="inputEl"
+            style={inputStyle}
+            name={name}
+            type={needsType ? type : undefined}
+            placeholder={placeholder}
+            id={inputId}
+            value={needsValue ? value : undefined}
+            defaultValue={defaultValue}
+            size={size}
+            accept={accept}
+            autoComplete={autocomplete}
+            autoCorrect={autocorrect}
+            autoCapitalize={autocapitalize}
+            spellCheck={spellcheck}
+            autoFocus={autofocus}
+            autoSave={autosave}
+            checked={checked}
+            disabled={disabled}
+            max={max}
+            maxLength={maxlength}
+            min={min}
+            minLength={minlength}
+            step={step}
+            multiple={multiple}
+            readOnly={readonly}
+            required={required}
+            pattern={pattern}
+            validate={typeof validate === 'string' && validate.length ? validate : undefined}
+            data-validate={validate === true || validate === '' ? true : undefined}
+            tabIndex={tabindex}
+            data-error-message={errorMessage}
+            className={inputClassName}
+            onFocus={self.onFocusBound}
+            onBlur={self.onBlurBound}
+            onInput={self.onInputBound}
+            onChange={self.onChangeBound}
+          >
+            {children}
+          </InputTag>
+        );
+      }
+      if (process.env.COMPILER === 'vue') {
+        input = (
+          <InputTag
+            ref="inputEl"
+            style={inputStyle}
+            name={name}
+            type={needsType ? type : undefined}
+            placeholder={placeholder}
+            id={inputId}
+            size={size}
+            accept={accept}
+            autoComplete={autocomplete}
+            autoCorrect={autocorrect}
+            autoCapitalize={autocapitalize}
+            spellCheck={spellcheck}
+            autoFocus={autofocus}
+            autoSave={autosave}
+            max={max}
+            maxLength={maxlength}
+            min={min}
+            minLength={minlength}
+            step={step}
+            pattern={pattern}
+            validate={typeof validate === 'string' && validate.length ? validate : undefined}
+            data-validate={validate === true || validate === '' ? true : undefined}
+            tabIndex={tabindex}
+            data-error-message={errorMessage}
+            className={inputClassName}
+            onFocus={self.onFocusBound}
+            onBlur={self.onBlurBound}
+            onInput={self.onInputBound}
+            onChange={self.onChangeBound}
+            domProps={{
+              value: needsValue ? value : undefined,
+              checked,
+              disabled,
+              readonly,
+              multiple,
+              required,
+            }}
+          >
+            {children}
+          </InputTag>
+        );
+      }
+      return input;
     };
 
     const { default: slotsDefault, info: slotsInfo } = self.slots;
