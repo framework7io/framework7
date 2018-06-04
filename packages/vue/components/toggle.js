@@ -31,24 +31,29 @@ export default {
     const props = self.props;
     const {className, disabled, id, style, name, readonly, checked, defaultChecked, value} = props;
     const labelClasses = Utils.classNames('toggle', className, { disabled }, Mixins.colorClasses(props));
+    let inputEl;
+    {
+      inputEl = _h('input', {
+        domProps: {
+          disabled,
+          readonly,
+          value,
+          checked
+        },
+        on: { change: self.onChange.bind(self) },
+        attrs: {
+          type: 'checkbox',
+          name: name
+        }
+      });
+    }
     return _h('label', {
       ref: 'el',
       style: style,
       class: labelClasses,
       attrs: { id: id }
     }, [
-      _h('input', {
-        on: { change: self.onChange.bind(self) },
-        attrs: {
-          type: 'checkbox',
-          name: name,
-          disabled: disabled,
-          readonly: readonly,
-          checked: checked,
-          defaultChecked: defaultChecked,
-          value: value
-        }
-      }),
+      inputEl,
       _h('span', { class: 'toggle-icon' })
     ]);
   },

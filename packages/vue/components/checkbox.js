@@ -29,18 +29,22 @@ export default {
     const self = this;
     const props = self.props;
     const {name, value, disabled, readonly, checked, defaultChecked, id, style} = props;
-    const inputEl = _h('input', {
-      on: { change: self.onChange.bind(self) },
-      attrs: {
-        type: 'checkbox',
-        name: name,
-        value: value,
-        disabled: disabled,
-        readonly: readonly,
-        checked: checked,
-        defaultChecked: defaultChecked
-      }
-    });
+    let inputEl;
+    {
+      inputEl = _h('input', {
+        domProps: {
+          value,
+          disabled,
+          readonly,
+          checked
+        },
+        on: { change: self.onChange.bind(self) },
+        attrs: {
+          type: 'checkbox',
+          name: name
+        }
+      });
+    }
     const iconEl = _h('i', { class: 'icon-checkbox' });
     return _h('label', {
       style: style,

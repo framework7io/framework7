@@ -112,16 +112,18 @@ class F7ListItemContent extends React.Component {
       }
     }
     if (radio || checkbox) {
-      inputEl = React.createElement('input', {
-        value: value,
-        name: name,
-        checked: checked,
-        readOnly: readonly,
-        disabled: disabled,
-        required: required,
-        type: radio ? 'radio' : 'checkbox',
-        onChange: self.onChange.bind(self)
-      });
+      {
+        inputEl = React.createElement('input', {
+          value: value,
+          name: name,
+          checked: checked,
+          readOnly: readonly,
+          disabled: disabled,
+          required: required,
+          type: radio ? 'radio' : 'checkbox',
+          onChange: self.onChange.bind(self)
+        });
+      }
       inputIconEl = React.createElement('i', { className: `icon icon-${ radio ? 'radio' : 'checkbox' }` });
     }
     if (media || slotsMedia.length) {

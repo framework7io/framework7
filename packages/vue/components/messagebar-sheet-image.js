@@ -23,18 +23,15 @@ export default {
     const {image, checked, id, className, style} = props;
     const classes = Utils.classNames(className, 'messagebar-sheet-image', 'checkbox', Mixins.colorClasses(props));
     const styles = Utils.extend({ backgroundImage: image && `url(${ image })` }, style || {});
+    let inputEl;
+    {
+    }
     return _h('label', {
       class: classes,
       style: styles,
       attrs: { id: id }
     }, [
-      _h('input', {
-        on: { change: self.onChangeBound },
-        attrs: {
-          type: 'checkbox',
-          checked: checked
-        }
-      }),
+      inputEl,
       _h('i', { class: 'icon icon-checkbox' }),
       this.$slots['default']
     ]);

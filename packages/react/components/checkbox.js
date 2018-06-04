@@ -24,16 +24,19 @@ class F7Checkbox extends React.Component {
     const self = this;
     const props = self.props;
     const {name, value, disabled, readonly, checked, defaultChecked, id, style} = props;
-    const inputEl = React.createElement('input', {
-      type: 'checkbox',
-      name: name,
-      value: value,
-      disabled: disabled,
-      readOnly: readonly,
-      checked: checked,
-      defaultChecked: defaultChecked,
-      onChange: self.onChange.bind(self)
-    });
+    let inputEl;
+    {
+      inputEl = React.createElement('input', {
+        type: 'checkbox',
+        name: name,
+        value: value,
+        disabled: disabled,
+        readOnly: readonly,
+        checked: checked,
+        defaultChecked: defaultChecked,
+        onChange: self.onChange.bind(self)
+      });
+    }
     const iconEl = React.createElement('i', { className: 'icon-checkbox' });
     return React.createElement('label', {
       id: id,

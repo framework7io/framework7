@@ -79,17 +79,23 @@ export default {
     let inputWrapEl;
     let valueEl;
     if (input && !buttonsOnly) {
-      inputWrapEl = _h('div', { class: 'stepper-input-wrap' }, [_h('input', {
+      let inputEl;
+      {
+        inputEl = _h('input', {
+          domProps: {
+            readonly: inputReadonly,
+            value
+          },
           on: { input: self.onInput.bind(self) },
           attrs: {
             type: inputType,
             min: inputType === 'number' ? min : undefined,
             max: inputType === 'number' ? max : undefined,
-            step: inputType === 'number' ? step : undefined,
-            value: value,
-            readonly: inputReadonly
+            step: inputType === 'number' ? step : undefined
           }
-        })]);
+        });
+      }
+      inputWrapEl = _h('div', { class: 'stepper-input-wrap' }, [inputEl]);
     }
     if (!input && !buttonsOnly) {
       valueEl = _h('div', { class: 'stepper-value' }, [value]);

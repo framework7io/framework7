@@ -24,15 +24,19 @@ class F7MessagebarSheetImage extends React.Component {
     const {image, checked, id, className, style} = props;
     const classes = Utils.classNames(className, 'messagebar-sheet-image', 'checkbox', Mixins.colorClasses(props));
     const styles = Utils.extend({ backgroundImage: image && `url(${ image })` }, style || {});
+    let inputEl;
+    {
+      inputEl = React.createElement('input', {
+        type: 'checkbox',
+        checked: checked,
+        onChange: self.onChangeBound
+      });
+    }
     return React.createElement('label', {
       id: id,
       className: classes,
       style: styles
-    }, React.createElement('input', {
-      type: 'checkbox',
-      checked: checked,
-      onChange: self.onChangeBound
-    }), React.createElement('i', { className: 'icon icon-checkbox' }), this.slots['default']);
+    }, inputEl, React.createElement('i', { className: 'icon icon-checkbox' }), this.slots['default']);
   }
   get slots() {
     return __reactComponentSlots(this.props);

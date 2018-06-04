@@ -1,5 +1,5 @@
 /**
- * Framework7 React 3.0.0-beta.3
+ * Framework7 React 3.0.0-beta.4
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 1, 2018
+ * Released on: June 4, 2018
  */
 
 (function (global, factory) {
@@ -2078,16 +2078,19 @@
       var defaultChecked = props.defaultChecked;
       var id = props.id;
       var style = props.style;
-      var inputEl = React.createElement('input', {
-        type: 'checkbox',
-        name: name,
-        value: value,
-        disabled: disabled,
-        readOnly: readonly,
-        checked: checked,
-        defaultChecked: defaultChecked,
-        onChange: self.onChange.bind(self)
-      });
+      var inputEl;
+      {
+        inputEl = React.createElement('input', {
+          type: 'checkbox',
+          name: name,
+          value: value,
+          disabled: disabled,
+          readOnly: readonly,
+          checked: checked,
+          defaultChecked: defaultChecked,
+          onChange: self.onChange.bind(self)
+        });
+      }
       var iconEl = React.createElement('i', { className: 'icon-checkbox' });
       return React.createElement('label', {
         id: id,
@@ -2506,6 +2509,19 @@
       var defaultChecked = props.defaultChecked;
       var value = props.value;
       var labelClasses = Utils.classNames('toggle', className, { disabled: disabled }, Mixins.colorClasses(props));
+      var inputEl;
+      {
+        inputEl = React.createElement('input', {
+          type: 'checkbox',
+          name: name,
+          disabled: disabled,
+          readOnly: readonly,
+          checked: checked,
+          defaultChecked: defaultChecked,
+          value: value,
+          onChange: self.onChange.bind(self)
+        });
+      }
       return React.createElement('label', {
         ref: function (__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
@@ -2513,16 +2529,7 @@
         id: id,
         style: style,
         className: labelClasses
-      }, React.createElement('input', {
-        type: 'checkbox',
-        name: name,
-        disabled: disabled,
-        readOnly: readonly,
-        checked: checked,
-        defaultChecked: defaultChecked,
-        value: value,
-        onChange: self.onChange.bind(self)
-      }), React.createElement('span', { className: 'toggle-icon' }));
+      }, inputEl, React.createElement('span', { className: 'toggle-icon' }));
     };
     F7Toggle.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
@@ -2859,46 +2866,50 @@
         var needsValue = type !== 'file';
         var needsType = tag === 'input';
         var inputClassName = Utils.classNames(type === 'textarea' && resizable && 'resizable', !wrap && className, (noFormStoreData || noStoreData) && 'no-store-data');
-        return React.createElement(InputTag, {
-          ref: function (__reactNode) {
-            this$1.__reactRefs['inputEl'] = __reactNode;
-          },
-          style: inputStyle,
-          name: name,
-          type: needsType ? type : undefined,
-          placeholder: placeholder,
-          id: inputId,
-          value: needsValue ? value : undefined,
-          defaultValue: defaultValue,
-          size: size,
-          accept: accept,
-          autoComplete: autocomplete,
-          autoCorrect: autocorrect,
-          autoCapitalize: autocapitalize,
-          spellCheck: spellcheck,
-          autoFocus: autofocus,
-          autoSave: autosave,
-          checked: checked,
-          disabled: disabled,
-          max: max,
-          maxLength: maxlength,
-          min: min,
-          minLength: minlength,
-          step: step,
-          multiple: multiple,
-          readOnly: readonly,
-          required: required,
-          pattern: pattern,
-          validate: typeof validate === 'string' && validate.length ? validate : undefined,
-          'data-validate': validate === true || validate === '' ? true : undefined,
-          tabIndex: tabindex,
-          'data-error-message': errorMessage,
-          className: inputClassName,
-          onFocus: self.onFocusBound,
-          onBlur: self.onBlurBound,
-          onInput: self.onInputBound,
-          onChange: self.onChangeBound
-        }, children);
+        var input;
+        {
+          input = React.createElement(InputTag, {
+            ref: function (__reactNode) {
+              this$1.__reactRefs['inputEl'] = __reactNode;
+            },
+            style: inputStyle,
+            name: name,
+            type: needsType ? type : undefined,
+            placeholder: placeholder,
+            id: inputId,
+            value: needsValue ? value : undefined,
+            defaultValue: defaultValue,
+            size: size,
+            accept: accept,
+            autoComplete: autocomplete,
+            autoCorrect: autocorrect,
+            autoCapitalize: autocapitalize,
+            spellCheck: spellcheck,
+            autoFocus: autofocus,
+            autoSave: autosave,
+            checked: checked,
+            disabled: disabled,
+            max: max,
+            maxLength: maxlength,
+            min: min,
+            minLength: minlength,
+            step: step,
+            multiple: multiple,
+            readOnly: readonly,
+            required: required,
+            pattern: pattern,
+            validate: typeof validate === 'string' && validate.length ? validate : undefined,
+            'data-validate': validate === true || validate === '' ? true : undefined,
+            tabIndex: tabindex,
+            'data-error-message': errorMessage,
+            className: inputClassName,
+            onFocus: self.onFocusBound,
+            onBlur: self.onBlurBound,
+            onInput: self.onInputBound,
+            onChange: self.onChangeBound
+          }, children);
+        }
+        return input;
       };
       var ref = self.slots;
       var slotsDefault = ref.default;
@@ -3822,16 +3833,18 @@
         }
       }
       if (radio || checkbox) {
-        inputEl = React.createElement('input', {
-          value: value,
-          name: name,
-          checked: checked,
-          readOnly: readonly,
-          disabled: disabled,
-          required: required,
-          type: radio ? 'radio' : 'checkbox',
-          onChange: self.onChange.bind(self)
-        });
+        {
+          inputEl = React.createElement('input', {
+            value: value,
+            name: name,
+            checked: checked,
+            readOnly: readonly,
+            disabled: disabled,
+            required: required,
+            type: radio ? 'radio' : 'checkbox',
+            onChange: self.onChange.bind(self)
+          });
+        }
         inputIconEl = React.createElement('i', { className: ("icon icon-" + (radio ? 'radio' : 'checkbox')) });
       }
       if (media || slotsMedia.length) {
@@ -4289,7 +4302,20 @@
         self.f7SmartSelect.destroy();
       }
     };
-    F7ListItem.prototype.componentDidUpdate = function componentDidUpdate () {
+    F7ListItem.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+      var this$1 = this;
+
+      __reactComponentWatch(this, 'props.swipeoutOpened', prevProps, prevState, function (opened) {
+        var self = this$1;
+        if (!self.props.swipeout)
+          { return; }
+        var el = self.refs.el;
+        if (opened) {
+          self.$f7.swipeout.open(el);
+        } else {
+          self.$f7.swipeout.close(el);
+        }
+      });
       var self = this;
       var $listEl = self.$listEl;
       if (!$listEl || $listEl && $listEl.length === 0)
@@ -4322,6 +4348,7 @@
       }
       var ref = self.props;
       var swipeout = ref.swipeout;
+      var swipeoutOpened = ref.swipeoutOpened;
       var accordionItem = ref.accordionItem;
       var smartSelect = ref.smartSelect;
       var smartSelectParams = ref.smartSelectParams;
@@ -4340,11 +4367,14 @@
         el.addEventListener('accordion:close', self.onAccCloseBound);
         el.addEventListener('accordion:closed', self.onAccClosedBound);
       }
-      if (!smartSelect)
-        { return; }
       self.$f7ready(function (f7) {
-        var ssParams = Utils.extend({ el: el.querySelector('a.smart-select') }, smartSelectParams || {});
-        self.f7SmartSelect = f7.smartSelect.create(ssParams);
+        if (smartSelect) {
+          var ssParams = Utils.extend({ el: el.querySelector('a.smart-select') }, smartSelectParams || {});
+          self.f7SmartSelect = f7.smartSelect.create(ssParams);
+        }
+        if (swipeoutOpened) {
+          f7.swipeout.open(el);
+        }
       });
     };
     prototypeAccessors.slots.get = function () {
@@ -4412,6 +4442,7 @@
     divider: Boolean,
     groupTitle: Boolean,
     swipeout: Boolean,
+    swipeoutOpened: Boolean,
     sortable: Boolean,
     accordionItem: Boolean,
     accordionItemOpened: Boolean,
@@ -5145,15 +5176,19 @@
       var style = props.style;
       var classes = Utils.classNames(className, 'messagebar-sheet-image', 'checkbox', Mixins.colorClasses(props));
       var styles = Utils.extend({ backgroundImage: image && ("url(" + image + ")") }, style || {});
+      var inputEl;
+      {
+        inputEl = React.createElement('input', {
+          type: 'checkbox',
+          checked: checked,
+          onChange: self.onChangeBound
+        });
+      }
       return React.createElement('label', {
         id: id,
         className: classes,
         style: styles
-      }, React.createElement('input', {
-        type: 'checkbox',
-        checked: checked,
-        onChange: self.onChangeBound
-      }), React.createElement('i', { className: 'icon icon-checkbox' }), this.slots['default']);
+      }, inputEl, React.createElement('i', { className: 'icon icon-checkbox' }), this.slots['default']);
     };
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
@@ -7398,16 +7433,19 @@
       var id = props.id;
       var style = props.style;
       var className = props.className;
-      var inputEl = React.createElement('input', {
-        type: 'radio',
-        name: name,
-        value: value,
-        disabled: disabled,
-        readOnly: readonly,
-        checked: checked,
-        defaultChecked: defaultChecked,
-        onChange: self.onChange.bind(self)
-      });
+      var inputEl;
+      {
+        inputEl = React.createElement('input', {
+          type: 'radio',
+          name: name,
+          value: value,
+          disabled: disabled,
+          readOnly: readonly,
+          checked: checked,
+          defaultChecked: defaultChecked,
+          onChange: self.onChange.bind(self)
+        });
+      }
       var iconEl = React.createElement('i', { className: 'icon-radio' });
       var classes = Utils.classNames(className, 'radio', { disabled: disabled }, Mixins.colorClasses(props));
       return React.createElement('label', {
@@ -8163,15 +8201,19 @@
       var inputWrapEl;
       var valueEl;
       if (input && !buttonsOnly) {
-        inputWrapEl = React.createElement('div', { className: 'stepper-input-wrap' }, React.createElement('input', {
-          type: inputType,
-          min: inputType === 'number' ? min : undefined,
-          max: inputType === 'number' ? max : undefined,
-          step: inputType === 'number' ? step : undefined,
-          value: value,
-          readOnly: inputReadonly,
-          onInput: self.onInput.bind(self)
-        }));
+        var inputEl;
+        {
+          inputEl = React.createElement('input', {
+            type: inputType,
+            min: inputType === 'number' ? min : undefined,
+            max: inputType === 'number' ? max : undefined,
+            step: inputType === 'number' ? step : undefined,
+            value: value,
+            readOnly: inputReadonly,
+            onInput: self.onInput.bind(self)
+          });
+        }
+        inputWrapEl = React.createElement('div', { className: 'stepper-input-wrap' }, inputEl);
       }
       if (!input && !buttonsOnly) {
         valueEl = React.createElement('div', { className: 'stepper-value' }, value);
@@ -9374,7 +9416,7 @@
   };
 
   /**
-   * Framework7 React 3.0.0-beta.3
+   * Framework7 React 3.0.0-beta.4
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -9382,7 +9424,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: June 1, 2018
+   * Released on: June 4, 2018
    */
 
   var Plugin = {

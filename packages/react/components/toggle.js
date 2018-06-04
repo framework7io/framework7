@@ -23,6 +23,19 @@ class F7Toggle extends React.Component {
     const props = self.props;
     const {className, disabled, id, style, name, readonly, checked, defaultChecked, value} = props;
     const labelClasses = Utils.classNames('toggle', className, { disabled }, Mixins.colorClasses(props));
+    let inputEl;
+    {
+      inputEl = React.createElement('input', {
+        type: 'checkbox',
+        name: name,
+        disabled: disabled,
+        readOnly: readonly,
+        checked: checked,
+        defaultChecked: defaultChecked,
+        value: value,
+        onChange: self.onChange.bind(self)
+      });
+    }
     return React.createElement('label', {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
@@ -30,16 +43,7 @@ class F7Toggle extends React.Component {
       id: id,
       style: style,
       className: labelClasses
-    }, React.createElement('input', {
-      type: 'checkbox',
-      name: name,
-      disabled: disabled,
-      readOnly: readonly,
-      checked: checked,
-      defaultChecked: defaultChecked,
-      value: value,
-      onChange: self.onChange.bind(self)
-    }), React.createElement('span', { className: 'toggle-icon' }));
+    }, inputEl, React.createElement('span', { className: 'toggle-icon' }));
   }
   componentWillUnmount() {
     const self = this;

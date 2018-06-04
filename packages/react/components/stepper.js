@@ -72,15 +72,19 @@ class F7Stepper extends React.Component {
     let inputWrapEl;
     let valueEl;
     if (input && !buttonsOnly) {
-      inputWrapEl = React.createElement('div', { className: 'stepper-input-wrap' }, React.createElement('input', {
-        type: inputType,
-        min: inputType === 'number' ? min : undefined,
-        max: inputType === 'number' ? max : undefined,
-        step: inputType === 'number' ? step : undefined,
-        value: value,
-        readOnly: inputReadonly,
-        onInput: self.onInput.bind(self)
-      }));
+      let inputEl;
+      {
+        inputEl = React.createElement('input', {
+          type: inputType,
+          min: inputType === 'number' ? min : undefined,
+          max: inputType === 'number' ? max : undefined,
+          step: inputType === 'number' ? step : undefined,
+          value: value,
+          readOnly: inputReadonly,
+          onInput: self.onInput.bind(self)
+        });
+      }
+      inputWrapEl = React.createElement('div', { className: 'stepper-input-wrap' }, inputEl);
     }
     if (!input && !buttonsOnly) {
       valueEl = React.createElement('div', { className: 'stepper-value' }, value);

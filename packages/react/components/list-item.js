@@ -2,6 +2,7 @@ import React from 'react';
 import Utils from '../utils/utils';
 import F7ListItemContent from './list-item-content';
 import Mixins from '../utils/mixins';
+import __reactComponentWatch from '../runtime-helpers/react-component-watch.js';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
@@ -197,7 +198,18 @@ class F7ListItem extends React.Component {
       self.f7SmartSelect.destroy();
     }
   }
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
+    __reactComponentWatch(this, 'props.swipeoutOpened', prevProps, prevState, opened => {
+      const self = this;
+      if (!self.props.swipeout)
+        return;
+      const el = self.refs.el;
+      if (opened) {
+        self.$f7.swipeout.open(el);
+      } else {
+        self.$f7.swipeout.close(el);
+      }
+    });
     const self = this;
     const {$listEl} = self;
     if (!$listEl || $listEl && $listEl.length === 0)
@@ -228,7 +240,7 @@ class F7ListItem extends React.Component {
         isSortable: self.$listEl.hasClass('sortable')
       });
     }
-    const {swipeout, accordionItem, smartSelect, smartSelectParams} = self.props;
+    const {swipeout, swipeoutOpened, accordionItem, smartSelect, smartSelectParams} = self.props;
     if (swipeout) {
       el.addEventListener('swipeout:open', self.onSwipeoutOpenBound);
       el.addEventListener('swipeout:opened', self.onSwipeoutOpenedBound);
@@ -244,11 +256,14 @@ class F7ListItem extends React.Component {
       el.addEventListener('accordion:close', self.onAccCloseBound);
       el.addEventListener('accordion:closed', self.onAccClosedBound);
     }
-    if (!smartSelect)
-      return;
     self.$f7ready(f7 => {
-      const ssParams = Utils.extend({ el: el.querySelector('a.smart-select') }, smartSelectParams || {});
-      self.f7SmartSelect = f7.smartSelect.create(ssParams);
+      if (smartSelect) {
+        const ssParams = Utils.extend({ el: el.querySelector('a.smart-select') }, smartSelectParams || {});
+        self.f7SmartSelect = f7.smartSelect.create(ssParams);
+      }
+      if (swipeoutOpened) {
+        f7.swipeout.open(el);
+      }
     });
   }
   get slots() {
@@ -310,6 +325,7 @@ __reactComponentSetProps(F7ListItem, {
   divider: Boolean,
   groupTitle: Boolean,
   swipeout: Boolean,
+  swipeoutOpened: Boolean,
   sortable: Boolean,
   accordionItem: Boolean,
   accordionItemOpened: Boolean,

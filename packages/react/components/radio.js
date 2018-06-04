@@ -15,16 +15,19 @@ class F7Radio extends React.Component {
     const self = this;
     const props = self.props;
     const {name, value, disabled, readonly, checked, defaultChecked, id, style, className} = props;
-    const inputEl = React.createElement('input', {
-      type: 'radio',
-      name: name,
-      value: value,
-      disabled: disabled,
-      readOnly: readonly,
-      checked: checked,
-      defaultChecked: defaultChecked,
-      onChange: self.onChange.bind(self)
-    });
+    let inputEl;
+    {
+      inputEl = React.createElement('input', {
+        type: 'radio',
+        name: name,
+        value: value,
+        disabled: disabled,
+        readOnly: readonly,
+        checked: checked,
+        defaultChecked: defaultChecked,
+        onChange: self.onChange.bind(self)
+      });
+    }
     const iconEl = React.createElement('i', { className: 'icon-radio' });
     const classes = Utils.classNames(className, 'radio', { disabled }, Mixins.colorClasses(props));
     return React.createElement('label', {

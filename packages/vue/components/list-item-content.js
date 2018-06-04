@@ -161,18 +161,22 @@ export default {
       }
     }
     if (radio || checkbox) {
-      inputEl = _h('input', {
-        on: { change: self.onChange.bind(self) },
-        attrs: {
-          value: value,
-          name: name,
-          checked: checked,
-          readonly: readonly,
-          disabled: disabled,
-          required: required,
-          type: radio ? 'radio' : 'checkbox'
-        }
-      });
+      {
+        inputEl = _h('input', {
+          domProps: {
+            checked,
+            readonly,
+            disabled,
+            required,
+            value
+          },
+          on: { change: self.onChange.bind(self) },
+          attrs: {
+            name: name,
+            type: radio ? 'radio' : 'checkbox'
+          }
+        });
+      }
       inputIconEl = _h('i', { class: `icon icon-${ radio ? 'radio' : 'checkbox' }` });
     }
     if (media || slotsMedia.length) {

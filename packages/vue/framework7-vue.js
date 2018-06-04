@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.0.0-beta.3
+ * Framework7 Vue 3.0.0-beta.4
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 1, 2018
+ * Released on: June 4, 2018
  */
 
 (function (global, factory) {
@@ -1674,18 +1674,22 @@
       var defaultChecked = props.defaultChecked;
       var id = props.id;
       var style = props.style;
-      var inputEl = _h('input', {
-        on: { change: self.onChange.bind(self) },
-        attrs: {
-          type: 'checkbox',
-          name: name,
-          value: value,
-          disabled: disabled,
-          readonly: readonly,
-          checked: checked,
-          defaultChecked: defaultChecked
-        }
-      });
+      var inputEl;
+      {
+        inputEl = _h('input', {
+          domProps: {
+            value: value,
+            disabled: disabled,
+            readonly: readonly,
+            checked: checked
+          },
+          on: { change: self.onChange.bind(self) },
+          attrs: {
+            type: 'checkbox',
+            name: name
+          }
+        });
+      }
       var iconEl = _h('i', { class: 'icon-checkbox' });
       return _h('label', {
         style: style,
@@ -2081,24 +2085,29 @@
       var defaultChecked = props.defaultChecked;
       var value = props.value;
       var labelClasses = Utils.classNames('toggle', className, { disabled: disabled }, Mixins.colorClasses(props));
+      var inputEl;
+      {
+        inputEl = _h('input', {
+          domProps: {
+            disabled: disabled,
+            readonly: readonly,
+            value: value,
+            checked: checked
+          },
+          on: { change: self.onChange.bind(self) },
+          attrs: {
+            type: 'checkbox',
+            name: name
+          }
+        });
+      }
       return _h('label', {
         ref: 'el',
         style: style,
         class: labelClasses,
         attrs: { id: id }
       }, [
-        _h('input', {
-          on: { change: self.onChange.bind(self) },
-          attrs: {
-            type: 'checkbox',
-            name: name,
-            disabled: disabled,
-            readonly: readonly,
-            checked: checked,
-            defaultChecked: defaultChecked,
-            value: value
-          }
-        }),
+        inputEl,
         _h('span', { class: 'toggle-icon' })
       ]);
     },
@@ -2443,48 +2452,53 @@
         var needsValue = type !== 'file';
         var needsType = tag === 'input';
         var inputClassName = Utils.classNames(type === 'textarea' && resizable && 'resizable', !wrap && className, (noFormStoreData || noStoreData) && 'no-store-data');
-        return _h(InputTag, {
-          ref: 'inputEl',
-          style: inputStyle,
-          class: inputClassName,
-          on: {
-            focus: self.onFocusBound,
-            blur: self.onBlurBound,
-            input: self.onInputBound,
-            change: self.onChangeBound
-          },
-          attrs: {
-            name: name,
-            type: needsType ? type : undefined,
-            placeholder: placeholder,
-            id: inputId,
-            value: needsValue ? value : undefined,
-            defaultValue: defaultValue,
-            size: size,
-            accept: accept,
-            autocomplete: autocomplete,
-            autocorrect: autocorrect,
-            autocapitalize: autocapitalize,
-            spellcheck: spellcheck,
-            autofocus: autofocus,
-            autoSave: autosave,
-            checked: checked,
-            disabled: disabled,
-            max: max,
-            maxlength: maxlength,
-            min: min,
-            minlength: minlength,
-            step: step,
-            multiple: multiple,
-            readonly: readonly,
-            required: required,
-            pattern: pattern,
-            validate: typeof validate === 'string' && validate.length ? validate : undefined,
-            'data-validate': validate === true || validate === '' ? true : undefined,
-            tabindex: tabindex,
-            'data-error-message': errorMessage
-          }
-        }, [children]);
+        var input;
+        {
+          input = _h(InputTag, {
+            ref: 'inputEl',
+            style: inputStyle,
+            class: inputClassName,
+            domProps: {
+              value: needsValue ? value : undefined,
+              checked: checked,
+              disabled: disabled,
+              readonly: readonly,
+              multiple: multiple,
+              required: required
+            },
+            on: {
+              focus: self.onFocusBound,
+              blur: self.onBlurBound,
+              input: self.onInputBound,
+              change: self.onChangeBound
+            },
+            attrs: {
+              name: name,
+              type: needsType ? type : undefined,
+              placeholder: placeholder,
+              id: inputId,
+              size: size,
+              accept: accept,
+              autocomplete: autocomplete,
+              autocorrect: autocorrect,
+              autocapitalize: autocapitalize,
+              spellcheck: spellcheck,
+              autofocus: autofocus,
+              autoSave: autosave,
+              max: max,
+              maxlength: maxlength,
+              min: min,
+              minlength: minlength,
+              step: step,
+              pattern: pattern,
+              validate: typeof validate === 'string' && validate.length ? validate : undefined,
+              'data-validate': validate === true || validate === '' ? true : undefined,
+              tabindex: tabindex,
+              'data-error-message': errorMessage
+            }
+          }, [children]);
+        }
+        return input;
       };
       var ref = self.$slots;
       var slotsDefault = ref.default;
@@ -3352,18 +3366,22 @@
         }
       }
       if (radio || checkbox) {
-        inputEl = _h('input', {
-          on: { change: self.onChange.bind(self) },
-          attrs: {
-            value: value,
-            name: name,
-            checked: checked,
-            readonly: readonly,
-            disabled: disabled,
-            required: required,
-            type: radio ? 'radio' : 'checkbox'
-          }
-        });
+        {
+          inputEl = _h('input', {
+            domProps: {
+              checked: checked,
+              readonly: readonly,
+              disabled: disabled,
+              required: required,
+              value: value
+            },
+            on: { change: self.onChange.bind(self) },
+            attrs: {
+              name: name,
+              type: radio ? 'radio' : 'checkbox'
+            }
+          });
+        }
         inputIconEl = _h('i', { class: ("icon icon-" + (radio ? 'radio' : 'checkbox')) });
       }
       if (media || slotsMedia.length) {
@@ -3623,6 +3641,7 @@
       divider: Boolean,
       groupTitle: Boolean,
       swipeout: Boolean,
+      swipeoutOpened: Boolean,
       sortable: Boolean,
       accordionItem: Boolean,
       accordionItemOpened: Boolean,
@@ -3810,6 +3829,19 @@
         this.$slots['root-end']
       ]);
     },
+    watch: {
+      'props.swipeoutOpened': function watchSwipeoutOpened(opened) {
+        var self = this;
+        if (!self.props.swipeout)
+          { return; }
+        var el = self.$refs.el;
+        if (opened) {
+          self.$f7.swipeout.open(el);
+        } else {
+          self.$f7.swipeout.close(el);
+        }
+      }
+    },
     created: function created() {
       var self = this;
       self.onClickBound = self.onClick.bind(self);
@@ -3841,6 +3873,7 @@
       }
       var ref = self.props;
       var swipeout = ref.swipeout;
+      var swipeoutOpened = ref.swipeoutOpened;
       var accordionItem = ref.accordionItem;
       var smartSelect = ref.smartSelect;
       var smartSelectParams = ref.smartSelectParams;
@@ -3859,11 +3892,14 @@
         el.addEventListener('accordion:close', self.onAccCloseBound);
         el.addEventListener('accordion:closed', self.onAccClosedBound);
       }
-      if (!smartSelect)
-        { return; }
       self.$f7ready(function (f7) {
-        var ssParams = Utils.extend({ el: el.querySelector('a.smart-select') }, smartSelectParams || {});
-        self.f7SmartSelect = f7.smartSelect.create(ssParams);
+        if (smartSelect) {
+          var ssParams = Utils.extend({ el: el.querySelector('a.smart-select') }, smartSelectParams || {});
+          self.f7SmartSelect = f7.smartSelect.create(ssParams);
+        }
+        if (swipeoutOpened) {
+          f7.swipeout.open(el);
+        }
       });
     },
     updated: function updated() {
@@ -4643,18 +4679,13 @@
       var style = props.style;
       var classes = Utils.classNames(className, 'messagebar-sheet-image', 'checkbox', Mixins.colorClasses(props));
       var styles = Utils.extend({ backgroundImage: image && ("url(" + image + ")") }, style || {});
+      var inputEl;
       return _h('label', {
         class: classes,
         style: styles,
         attrs: { id: id }
       }, [
-        _h('input', {
-          on: { change: self.onChangeBound },
-          attrs: {
-            type: 'checkbox',
-            checked: checked
-          }
-        }),
+        inputEl,
         _h('i', { class: 'icon icon-checkbox' }),
         this.$slots['default']
       ]);
@@ -6767,18 +6798,22 @@
       var id = props.id;
       var style = props.style;
       var className = props.className;
-      var inputEl = _h('input', {
-        on: { change: self.onChange.bind(self) },
-        attrs: {
-          type: 'radio',
-          name: name,
-          value: value,
-          disabled: disabled,
-          readonly: readonly,
-          checked: checked,
-          defaultChecked: defaultChecked
-        }
-      });
+      var inputEl;
+      {
+        inputEl = _h('input', {
+          domProps: {
+            value: value,
+            disabled: disabled,
+            readonly: readonly,
+            checked: checked
+          },
+          on: { change: self.onChange.bind(self) },
+          attrs: {
+            type: 'radio',
+            name: name
+          }
+        });
+      }
       var iconEl = _h('i', { class: 'icon-radio' });
       var classes = Utils.classNames(className, 'radio', { disabled: disabled }, Mixins.colorClasses(props));
       return _h('label', {
@@ -7467,17 +7502,23 @@
       var inputWrapEl;
       var valueEl;
       if (input && !buttonsOnly) {
-        inputWrapEl = _h('div', { class: 'stepper-input-wrap' }, [_h('input', {
+        var inputEl;
+        {
+          inputEl = _h('input', {
+            domProps: {
+              readonly: inputReadonly,
+              value: value
+            },
             on: { input: self.onInput.bind(self) },
             attrs: {
               type: inputType,
               min: inputType === 'number' ? min : undefined,
               max: inputType === 'number' ? max : undefined,
-              step: inputType === 'number' ? step : undefined,
-              value: value,
-              readonly: inputReadonly
+              step: inputType === 'number' ? step : undefined
             }
-          })]);
+          });
+        }
+        inputWrapEl = _h('div', { class: 'stepper-input-wrap' }, [inputEl]);
       }
       if (!input && !buttonsOnly) {
         valueEl = _h('div', { class: 'stepper-value' }, [value]);
@@ -8590,7 +8631,7 @@
   };
 
   /**
-   * Framework7 Vue 3.0.0-beta.3
+   * Framework7 Vue 3.0.0-beta.4
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -8598,7 +8639,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: June 1, 2018
+   * Released on: June 4, 2018
    */
 
   var Plugin = {

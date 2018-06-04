@@ -100,48 +100,53 @@ export default {
       const needsValue = type !== 'file';
       const needsType = tag === 'input';
       const inputClassName = Utils.classNames(type === 'textarea' && resizable && 'resizable', !wrap && className, (noFormStoreData || noStoreData) && 'no-store-data');
-      return _h(InputTag, {
-        ref: 'inputEl',
-        style: inputStyle,
-        class: inputClassName,
-        on: {
-          focus: self.onFocusBound,
-          blur: self.onBlurBound,
-          input: self.onInputBound,
-          change: self.onChangeBound
-        },
-        attrs: {
-          name: name,
-          type: needsType ? type : undefined,
-          placeholder: placeholder,
-          id: inputId,
-          value: needsValue ? value : undefined,
-          defaultValue: defaultValue,
-          size: size,
-          accept: accept,
-          autocomplete: autocomplete,
-          autocorrect: autocorrect,
-          autocapitalize: autocapitalize,
-          spellcheck: spellcheck,
-          autofocus: autofocus,
-          autoSave: autosave,
-          checked: checked,
-          disabled: disabled,
-          max: max,
-          maxlength: maxlength,
-          min: min,
-          minlength: minlength,
-          step: step,
-          multiple: multiple,
-          readonly: readonly,
-          required: required,
-          pattern: pattern,
-          validate: typeof validate === 'string' && validate.length ? validate : undefined,
-          'data-validate': validate === true || validate === '' ? true : undefined,
-          tabindex: tabindex,
-          'data-error-message': errorMessage
-        }
-      }, [children]);
+      let input;
+      {
+        input = _h(InputTag, {
+          ref: 'inputEl',
+          style: inputStyle,
+          class: inputClassName,
+          domProps: {
+            value: needsValue ? value : undefined,
+            checked,
+            disabled,
+            readonly,
+            multiple,
+            required
+          },
+          on: {
+            focus: self.onFocusBound,
+            blur: self.onBlurBound,
+            input: self.onInputBound,
+            change: self.onChangeBound
+          },
+          attrs: {
+            name: name,
+            type: needsType ? type : undefined,
+            placeholder: placeholder,
+            id: inputId,
+            size: size,
+            accept: accept,
+            autocomplete: autocomplete,
+            autocorrect: autocorrect,
+            autocapitalize: autocapitalize,
+            spellcheck: spellcheck,
+            autofocus: autofocus,
+            autoSave: autosave,
+            max: max,
+            maxlength: maxlength,
+            min: min,
+            minlength: minlength,
+            step: step,
+            pattern: pattern,
+            validate: typeof validate === 'string' && validate.length ? validate : undefined,
+            'data-validate': validate === true || validate === '' ? true : undefined,
+            tabindex: tabindex,
+            'data-error-message': errorMessage
+          }
+        }, [children]);
+      }
+      return input;
     };
     const {
       default: slotsDefault,
