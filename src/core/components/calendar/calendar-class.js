@@ -585,7 +585,7 @@ class Calendar extends Framework7Class {
   }
   prevMonth(transition) {
     const calendar = this;
-    const { params, $wrapperEl, inverter, isHorizontal: isH } = calendar;
+    const { params, $wrapperEl, inverter, isHorizontal: isH, currentYear, currentMonth } = calendar;
     if (typeof transition === 'undefined' || typeof transition === 'object') {
       transition = ''; // eslint-disable-line
       if (!params.animate) transition = 0; // eslint-disable-line
@@ -596,7 +596,9 @@ class Calendar extends Framework7Class {
     const prevDateTime = prevDate.getTime();
     const transitionEndCallback = !calendar.animating;
     if (params.minDate) {
-      if (prevDateTime < new Date(params.minDate).getTime()) {
+      let minDate = new Date(params.minDate);
+      minDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
+      if (prevDateTime < minDate.getTime()) {
         calendar.resetMonth();
         return;
       }
@@ -660,8 +662,12 @@ class Calendar extends Framework7Class {
     if (params.maxDate && targetDate > new Date(params.maxDate).getTime()) {
       return false;
     }
-    if (params.minDate && targetDate < new Date(params.minDate).getTime()) {
-      return false;
+    if (params.minDate) {
+      let minDate = new Date(params.minDate);
+      minDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
+      if (targetDate < minDate.getTime()) {
+        return false;
+      }
     }
     const currentDate = new Date(calendar.currentYear, calendar.currentMonth).getTime();
     const dir = targetDate > currentDate ? 'next' : 'prev';
