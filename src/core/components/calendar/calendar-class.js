@@ -585,7 +585,7 @@ class Calendar extends Framework7Class {
   }
   prevMonth(transition) {
     const calendar = this;
-    const { params, $wrapperEl, inverter, isHorizontal: isH, currentYear, currentMonth } = calendar;
+    const { params, $wrapperEl, inverter, isHorizontal: isH } = calendar;
     if (typeof transition === 'undefined' || typeof transition === 'object') {
       transition = ''; // eslint-disable-line
       if (!params.animate) transition = 0; // eslint-disable-line
