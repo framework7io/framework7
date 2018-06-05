@@ -147,7 +147,7 @@ class F7ListItemContent extends React.Component {
       subtitleEl = React.createElement('div', { className: 'item-subtitle' }, subtitle, slotsSubtitle);
     }
     if (text || slotsText.length) {
-      subtitleEl = React.createElement('div', { className: 'item-text' }, text, slotsText);
+      textEl = React.createElement('div', { className: 'item-text' }, text, slotsText);
     }
     if (after || badge || slotsAfter.length) {
       if (after) {

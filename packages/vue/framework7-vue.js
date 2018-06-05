@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.0.0-beta.5
+ * Framework7 Vue 3.0.0-beta.6
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 4, 2018
+ * Released on: June 5, 2018
  */
 
 (function (global, factory) {
@@ -3422,7 +3422,7 @@
         ]);
       }
       if (text || slotsText.length) {
-        subtitleEl = _h('div', { class: 'item-text' }, [
+        textEl = _h('div', { class: 'item-text' }, [
           text,
           slotsText
         ]);
@@ -8639,7 +8639,7 @@
   };
 
   /**
-   * Framework7 Vue 3.0.0-beta.5
+   * Framework7 Vue 3.0.0-beta.6
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -8647,7 +8647,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: June 4, 2018
+   * Released on: June 5, 2018
    */
 
   var Plugin = {

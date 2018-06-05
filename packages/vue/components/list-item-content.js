@@ -217,7 +217,7 @@ export default {
       ]);
     }
     if (text || slotsText.length) {
-      subtitleEl = _h('div', { class: 'item-text' }, [
+      textEl = _h('div', { class: 'item-text' }, [
         text,
         slotsText
       ]);
