@@ -230,7 +230,7 @@ export default {
       );
     }
     if (text || slotsText.length) {
-      subtitleEl = (
+      textEl = (
         <div className="item-text">
           {text}
           {slotsText}
