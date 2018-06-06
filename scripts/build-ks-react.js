@@ -52,17 +52,14 @@ function buildKs(cb) {
         objectAssign: 'Object.assign',
       }),
     ],
-  }).then((bundle) => {
-    // cache = bundle;
-    return bundle.write({
-      format: 'umd',
-      name: 'app',
-      strict: true,
-      sourcemap: false,
-      // cache,
-      file: './kitchen-sink/react/js/app.js',
-    });
-  }).then(() => {
+  }).then(bundle => bundle.write({
+    format: 'umd',
+    name: 'app',
+    strict: true,
+    sourcemap: false,
+    // cache,
+    file: './kitchen-sink/react/js/app.js',
+  })).then(() => {
     if (cb) cb();
   }).catch((err) => {
     console.log(err);
