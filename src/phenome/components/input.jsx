@@ -46,6 +46,7 @@ export default {
 
     // Error, Info
     errorMessage: String,
+    errorMessageForce: Boolean,
     info: String,
 
     // Components
@@ -92,6 +93,7 @@ export default {
       resizable,
       clearButton,
       errorMessage,
+      errorMessageForce,
       info,
       wrap,
       style,
@@ -110,6 +112,7 @@ export default {
         type === 'textarea' && resizable && 'resizable',
         !wrap && className,
         (noFormStoreData || noStoreData) && 'no-store-data',
+        errorMessage && errorMessageForce && 'input-invalid'
       );
       let input;
       if (process.env.COMPILER === 'react') {
@@ -145,7 +148,7 @@ export default {
             validate={typeof validate === 'string' && validate.length ? validate : undefined}
             data-validate={validate === true || validate === '' ? true : undefined}
             tabIndex={tabindex}
-            data-error-message={errorMessage}
+            data-error-message={errorMessageForce ? undefined : errorMessage}
             className={inputClassName}
             onFocus={self.onFocusBound}
             onBlur={self.onBlurBound}
@@ -182,7 +185,7 @@ export default {
             validate={typeof validate === 'string' && validate.length ? validate : undefined}
             data-validate={validate === true || validate === '' ? true : undefined}
             tabIndex={tabindex}
-            data-error-message={errorMessage}
+            data-error-message={errorMessageForce ? undefined : errorMessage}
             className={inputClassName}
             onFocus={self.onFocusBound}
             onBlur={self.onBlurBound}
@@ -254,6 +257,9 @@ export default {
       return (
         <div id={id} ref="wrapEl" className={wrapClasses} style={style}>
           {inputEl}
+          {errorMessage && errorMessageForce && (
+            <div className="item-input-error-message">{errorMessage}</div>
+          )}
           {clearButton &&
             <span className="input-clear-button" />
           }

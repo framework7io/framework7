@@ -40,6 +40,7 @@ export default {
       hasInput: false,
       hasInlineLabel: false,
       hasInputInfo: false,
+      hasInputErrorMessage: false,
     };
   },
   render() {
@@ -77,6 +78,7 @@ export default {
     let hasInput = itemInput || self.state.hasInput;
     let hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
     let hasInputInfo = itemInputWithInfo || self.state.hasInputInfo;
+    let hasInputErrorMessage = self.state.hasInputErrorMessage;
 
     const slotsContentStart = [];
     const slotsContent = [];
@@ -125,6 +127,7 @@ export default {
         if (tag === 'F7Input') {
           hasInput = true;
           if (child.props && child.props.info) hasInputInfo = true;
+          if (child.props && child.props.errorMessage && child.props.errorMessageForce) hasInputErrorMessage = true;
         }
         if (tag === 'F7Label') {
           if (child.props && child.props.inline) hasInlineLabel = true;
@@ -135,6 +138,7 @@ export default {
         if (tag && tag.indexOf('f7-input') >= 0) {
           hasInput = true;
           if (child.data && child.data.info) hasInputInfo = true;
+          if (child.data && child.data.errorMessage && child.data.errorMessageForce) hasInputErrorMessage = true;
         }
         if (tag && tag.indexOf('f7-label') >= 0) {
           if (child.data && child.data.inline) hasInlineLabel = true;
@@ -174,6 +178,12 @@ export default {
       self.setState({ hasInputInfo });
     } else if (!hasInputInfo) {
       self.hasInputInfoSet = false;
+    }
+    if (hasInputErrorMessage && !self.state.hasInputErrorMessage) {
+      self.hasInputErrorMessageSet = true;
+      self.setState({ hasInputErrorMessage });
+    } else if (!hasInputInfo) {
+      self.hasInputErrorMessageSet = false;
     }
     if (hasInlineLabel && !self.state.hasInlineLabel) {
       self.hasInlineLabelSet = true;
@@ -336,6 +346,8 @@ export default {
         'item-input': hasInput,
         'inline-label': hasInlineLabel,
         'item-input-with-info': hasInputInfo,
+        'item-input-with-error-message': hasInputErrorMessage,
+        'item-input-invalid': hasInputErrorMessage,
       },
       Mixins.colorClasses(props),
     );
@@ -367,6 +379,7 @@ export default {
     const hasInlineLabel = $labelEl.hasClass('item-label-inline');
     const hasInput = $inputEl.length > 0;
     const hasInputInfo = $inputEl.children('.item-input-info').length > 0;
+    const hasInputErrorMessage = $inputEl.children('.item-input-error-message').length > 0;
     if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {
       self.setState({ hasInlineLabel });
     }
@@ -375,6 +388,9 @@ export default {
     }
     if (!self.hasInputInfoSet && hasInputInfo !== self.state.hasInputInfo) {
       self.setState({ hasInputInfo });
+    }
+    if (!self.hasInputErrorMessageSet && hasInputErrorMessage !== self.state.hasInputErrorMessage) {
+      self.setState({ hasInputErrorMessage });
     }
   },
   componentDidUpdate() {
@@ -387,6 +403,7 @@ export default {
     const hasInlineLabel = $labelEl.hasClass('item-label-inline');
     const hasInput = $inputEl.length > 0;
     const hasInputInfo = $inputEl.children('.item-input-info').length > 0;
+    const hasInputErrorMessage = $inputEl.children('.item-input-error-message').length > 0;
     if (hasInlineLabel !== self.state.hasInlineLabel) {
       self.setState({ hasInlineLabel });
     }
@@ -395,6 +412,9 @@ export default {
     }
     if (hasInputInfo !== self.state.hasInputInfo) {
       self.setState({ hasInputInfo });
+    }
+    if (!self.hasInputErrorMessageSet && hasInputErrorMessage !== self.state.hasInputErrorMessage) {
+      self.setState({ hasInputErrorMessage });
     }
   },
   methods: {
