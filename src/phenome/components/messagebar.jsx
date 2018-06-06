@@ -10,7 +10,6 @@ export default {
   name: 'f7-messagebar',
   props: {
     id: [String, Number],
-
     sheetVisible: Boolean,
     attachmentsVisible: Boolean,
     top: Boolean,
@@ -27,6 +26,7 @@ export default {
       default: 0,
     },
     maxHeight: Number,
+    resizePage: Boolean,
     sendLink: String,
     value: [String, Number, Array],
     disabled: Boolean,
@@ -250,7 +250,7 @@ export default {
       if (!this.f7Messagebar) return undefined;
       return this.f7Messagebar.setPlaceholder(...args);
     },
-    resizePage(...args) {
+    resize(...args) {
       if (!this.f7Messagebar) return undefined;
       return this.f7Messagebar.resizePage(...args);
     },
