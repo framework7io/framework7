@@ -271,9 +271,7 @@ export default {
   watch: {
     'props.value': function watchValue() {
       const self = this;
-      const {
-        type,
-      } = self.props;
+      const { type } = self.props;
 
       if (type === 'range' || type === 'toggle') return;
 
@@ -296,7 +294,7 @@ export default {
   componentDidMount() {
     const self = this;
     self.$f7ready((f7) => {
-      const { validate, resizable, type, clearButton } = self.props;
+      const { validate, resizable, type, clearButton, value, defaultValue } = self.props;
       if (type === 'range' || type === 'toggle') return;
 
       const inputEl = self.refs.inputEl;
@@ -312,8 +310,10 @@ export default {
       }
 
       f7.input.checkEmptyState(inputEl);
-      if (validate) {
-        f7.input.validate(inputEl);
+      if (validate && (typeof value !== 'undefined' || typeof defaultValue !== 'undefined')) {
+        setTimeout(() => {
+          f7.input.validate(inputEl);
+        }, 0);
       }
       if (resizable) {
         f7.input.resizeTextarea(inputEl);
