@@ -18,8 +18,6 @@ const uglify = require('gulp-uglify');
 const sourcemaps = require('gulp-sourcemaps');
 const rename = require('gulp-rename');
 
-let cache;
-
 function esm({ banner, componentImports, componentAliases, componentExports }) {
   return `
 ${banner}
@@ -102,7 +100,6 @@ function buildReact(cb) {
   /* Build UMD from esm bundle: framework7-react.esm.bundle.js -> framework7-react.js */
   rollup.rollup({
     input: `${buildPath}/react/framework7-react.esm.bundle.js`,
-    cache,
     external: ['react'],
     plugins: [
       replace({
@@ -115,21 +112,18 @@ function buildReact(cb) {
         objectAssign: 'Object.assign',
       }),
     ],
-  }).then((bundle) => {
-    cache = bundle;
-    return bundle.write({
-      globals: {
-        react: 'React',
-      },
-      strict: true,
-      file: `${buildPath}/react/framework7-react.js`,
-      format: 'umd',
-      name: 'Framework7React',
-      sourcemap: env === 'development',
-      sourcemapFile: `${buildPath}/react/framework7-react.js.map`,
-      banner: bannerReact,
-    });
-  }).then(() => {
+  }).then(bundle => bundle.write({
+    globals: {
+      react: 'React',
+    },
+    strict: true,
+    file: `${buildPath}/react/framework7-react.js`,
+    format: 'umd',
+    name: 'Framework7React',
+    sourcemap: env === 'development',
+    sourcemapFile: `${buildPath}/react/framework7-react.js.map`,
+    banner: bannerReact,
+  })).then(() => {
     // Remove esm.bundle
     fs.unlinkSync(`${buildPath}/react/framework7-react.esm.bundle.js`);
 

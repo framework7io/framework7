@@ -16,8 +16,6 @@ const uglify = require('gulp-uglify');
 const sourcemaps = require('gulp-sourcemaps');
 const rename = require('gulp-rename');
 
-let cache;
-
 function esm({ banner, componentImports, componentExports }) {
   return `
 ${banner}
@@ -97,7 +95,6 @@ function buildVue(cb) {
   /* Build UMD from esm bundle: framework7-vue.esm.bundle.js -> framework7-vue.js */
   rollup.rollup({
     input: `${buildPath}/vue/framework7-vue.esm.bundle.js`,
-    cache,
     external: ['vue'],
     plugins: [
       replace({
@@ -108,21 +105,18 @@ function buildVue(cb) {
         objectAssign: 'Object.assign',
       }),
     ],
-  }).then((bundle) => {
-    cache = bundle;
-    return bundle.write({
-      globals: {
-        vue: 'Vue',
-      },
-      strict: true,
-      file: `${buildPath}/vue/framework7-vue.js`,
-      format: 'umd',
-      name: 'Framework7Vue',
-      sourcemap: env === 'development',
-      sourcemapFile: `${buildPath}/vue/framework7-vue.js.map`,
-      banner: bannerVue,
-    });
-  }).then(() => {
+  }).then(bundle => bundle.write({
+    globals: {
+      vue: 'Vue',
+    },
+    strict: true,
+    file: `${buildPath}/vue/framework7-vue.js`,
+    format: 'umd',
+    name: 'Framework7Vue',
+    sourcemap: env === 'development',
+    sourcemapFile: `${buildPath}/vue/framework7-vue.js.map`,
+    banner: bannerVue,
+  })).then(() => {
     if (env === 'development') {
       if (cb) cb();
       return;

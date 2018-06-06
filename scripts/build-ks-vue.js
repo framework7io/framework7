@@ -10,8 +10,6 @@ const commonjs = require('rollup-plugin-commonjs');
 const resolve = require('rollup-plugin-node-resolve');
 const vue = require('rollup-plugin-vue');
 
-let cache;
-
 function buildKs(cb) {
   const env = process.env.NODE_ENV || 'development';
   const target = process.env.TARGET || 'universal';
@@ -35,7 +33,6 @@ function buildKs(cb) {
 
   rollup.rollup({
     input: './kitchen-sink/vue/src/app.js',
-    cache,
     plugins: [
       replace({
         delimiters: ['', ''],
@@ -51,17 +48,13 @@ function buildKs(cb) {
         objectAssign: 'Object.assign',
       }),
     ],
-  }).then((bundle) => {
-    cache = bundle;
-    return bundle.write({
-      format: 'umd',
-      name: 'app',
-      strict: true,
-      sourcemap: false,
-      cache,
-      file: './kitchen-sink/vue/js/app.js',
-    });
-  }).then(() => {
+  }).then(bundle => bundle.write({
+    format: 'umd',
+    name: 'app',
+    strict: true,
+    sourcemap: false,
+    file: './kitchen-sink/vue/js/app.js',
+  })).then(() => {
     if (cb) cb();
   }).catch((err) => {
     console.log(err);

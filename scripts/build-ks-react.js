@@ -9,7 +9,7 @@ const replace = require('rollup-plugin-replace');
 const commonjs = require('rollup-plugin-commonjs');
 const resolve = require('rollup-plugin-node-resolve');
 
-let cache;
+// let cache;
 
 function buildKs(cb) {
   const env = process.env.NODE_ENV || 'development';
@@ -30,11 +30,14 @@ function buildKs(cb) {
         .replace('../../build/core/css/framework7.css', '../../packages/core/css/framework7.min.css')
         .replace('../../build/core/js/framework7.js', '../../packages/core/js/framework7.min.js');
     }))
-    .pipe(gulp.dest('./kitchen-sink/react'));
+    .pipe(gulp.dest('./kitchen-sink/react'))
+    .on('error', (err) => {
+      console.log(err);
+    });
 
   rollup.rollup({
     input: './kitchen-sink/react/src/app.js',
-    cache,
+    // cache,
     plugins: [
       replace({
         delimiters: ['', ''],
@@ -50,13 +53,13 @@ function buildKs(cb) {
       }),
     ],
   }).then((bundle) => {
-    cache = bundle;
+    // cache = bundle;
     return bundle.write({
       format: 'umd',
       name: 'app',
       strict: true,
       sourcemap: false,
-      cache,
+      // cache,
       file: './kitchen-sink/react/js/app.js',
     });
   }).then(() => {
