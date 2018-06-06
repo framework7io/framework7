@@ -301,7 +301,9 @@ export default {
     onClick(event) {
       const self = this;
       const value = self.refs.area.refs.inputEl.value;
-      const clear = self.f7Messagebar ? self.f7Messagebar.clear : () => {};
+      const clear = self.f7Messagebar
+        ? () => { self.f7Messagebar.clear(); }
+        : () => {};
       this.dispatchEvent('submit', value, clear);
       this.dispatchEvent('send', value, clear);
       this.dispatchEvent('click', event);
