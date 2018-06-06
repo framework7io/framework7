@@ -74,9 +74,9 @@ export default {
       itemInputWithInfo,
     } = props;
 
-    const hasInput = itemInput || self.state.hasInput;
-    const hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
-    const hasInputInfo = itemInputWithInfo || self.state.hasInputInfo;
+    let hasInput = itemInput || self.state.hasInput;
+    let hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
+    let hasInputInfo = itemInputWithInfo || self.state.hasInputInfo;
 
     const slotsContentStart = [];
     const slotsContent = [];
@@ -118,33 +118,68 @@ export default {
         else flattenSlots.push(slot);
       });
     }
-
-    if (flattenSlots.length) {
-      for (let i = 0; i < flattenSlots.length; i += 1) {
-        const slotEl = flattenSlots[i];
-        let slotName;
-        // phenome-vue-next-line
-        slotName = slotEl.data ? slotEl.data.slot : undefined;
-        // phenome-react-next-line
-        slotName = slotEl.props ? slotEl.props.slot : undefined;
-        if (!slotName || (slotName === 'inner')) slotsInner.push(slotEl);
-        if (slotName === 'content-start') slotsContentStart.push(slotEl);
-        if (slotName === 'content') slotsContent.push(slotEl);
-        if (slotName === 'content-end') slotsContentEnd.push(slotEl);
-        if (slotName === 'after-start') slotsAfterStart.push(slotEl);
-        if (slotName === 'after') slotsAfter.push(slotEl);
-        if (slotName === 'after-end') slotsAfterEnd.push(slotEl);
-        if (slotName === 'media') slotsMedia.push(slotEl);
-        if (slotName === 'inner-start') slotsInnerStart.push(slotEl);
-        if (slotName === 'inner-end') slotsInnerEnd.push(slotEl);
-        if (slotName === 'before-title') slotsBeforeTitle.push(slotEl);
-        if (slotName === 'title') slotsTitle.push(slotEl);
-        if (slotName === 'after-title') slotsAfterTitle.push(slotEl);
-        if (slotName === 'subtitle') slotsSubtitle.push(slotEl);
-        if (slotName === 'text') slotsText.push(slotEl);
-        if (slotName === 'header') slotsHeader.push(slotEl);
-        if (slotName === 'footer') slotsFooter.push(slotEl);
+    flattenSlots.forEach((child) => {
+      if (typeof child === 'undefined') return;
+      if (process.env.COMPILER === 'react') {
+        const tag = child.type && child.type.name;
+        if (tag === 'F7Input') {
+          hasInput = true;
+          if (child.props && child.props.info) hasInputInfo = true;
+        }
+        if (tag === 'F7Label') {
+          if (child.props && child.props.inline) hasInlineLabel = true;
+        }
       }
+      if (process.env.COMPILER === 'vue') {
+        const tag = child.tag;
+        if (tag && tag.indexOf('f7-input') >= 0) {
+          hasInput = true;
+          if (child.data && child.data.info) hasInputInfo = true;
+        }
+        if (tag && tag.indexOf('f7-label') >= 0) {
+          if (child.data && child.data.inline) hasInlineLabel = true;
+        }
+      }
+      let slotName;
+      // phenome-vue-next-line
+      slotName = child.data ? child.data.slot : undefined;
+      // phenome-react-next-line
+      slotName = child.props ? child.props.slot : undefined;
+      if (!slotName || (slotName === 'inner')) slotsInner.push(child);
+      if (slotName === 'content-start') slotsContentStart.push(child);
+      if (slotName === 'content') slotsContent.push(child);
+      if (slotName === 'content-end') slotsContentEnd.push(child);
+      if (slotName === 'after-start') slotsAfterStart.push(child);
+      if (slotName === 'after') slotsAfter.push(child);
+      if (slotName === 'after-end') slotsAfterEnd.push(child);
+      if (slotName === 'media') slotsMedia.push(child);
+      if (slotName === 'inner-start') slotsInnerStart.push(child);
+      if (slotName === 'inner-end') slotsInnerEnd.push(child);
+      if (slotName === 'before-title') slotsBeforeTitle.push(child);
+      if (slotName === 'title') slotsTitle.push(child);
+      if (slotName === 'after-title') slotsAfterTitle.push(child);
+      if (slotName === 'subtitle') slotsSubtitle.push(child);
+      if (slotName === 'text') slotsText.push(child);
+      if (slotName === 'header') slotsHeader.push(child);
+      if (slotName === 'footer') slotsFooter.push(child);
+    });
+    if (hasInput && !self.state.hasInput) {
+      self.hasInputSet = true;
+      self.setState({ hasInput });
+    } else if (!hasInput) {
+      self.hasInputSet = false;
+    }
+    if (hasInputInfo && !self.state.hasInputInfo) {
+      self.hasInputInfoSet = true;
+      self.setState({ hasInputInfo });
+    } else if (!hasInputInfo) {
+      self.hasInputInfoSet = false;
+    }
+    if (hasInlineLabel && !self.state.hasInlineLabel) {
+      self.hasInlineLabelSet = true;
+      self.setState({ hasInlineLabel });
+    } else if (!hasInlineLabel) {
+      self.hasInlineLabelSet = false;
     }
 
     // Input
@@ -332,13 +367,13 @@ export default {
     const hasInlineLabel = $labelEl.hasClass('item-label-inline');
     const hasInput = $inputEl.length > 0;
     const hasInputInfo = $inputEl.children('.item-input-info').length > 0;
-    if (hasInlineLabel !== self.state.hasInlineLabel) {
+    if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {
       self.setState({ hasInlineLabel });
     }
-    if (hasInput !== self.state.hasInput) {
+    if (!self.hasInputSet && hasInput !== self.state.hasInput) {
       self.setState({ hasInput });
     }
-    if (hasInputInfo !== self.state.hasInputInfo) {
+    if (!self.hasInputInfoSet && hasInputInfo !== self.state.hasInputInfo) {
       self.setState({ hasInputInfo });
     }
   },
