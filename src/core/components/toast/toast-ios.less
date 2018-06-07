@@ -2,8 +2,11 @@
   @import (multiple) '../../less/colors-ios.less';
 
   .toast {
+    transition-duration: 450ms;
     background: rgba(0,0,0,0.75);
     opacity: 0;
+    width: 100%;
+    left: 0;
 
     @supports (backdrop-filter: blur(10px)) {
       background: rgba(0,0,0,0.65);
@@ -11,7 +14,37 @@
     }
 
     &.toast-center {
+      width: auto;
+      left: 50%;
       border-radius: 8px;
+      transform: translate3d(-50%, -50%, 0);
+      &.modal-in {
+        transform: translate3d(-50%, -50%, 0);
+        opacity: 1;
+      }
+    }
+    &.toast-top {
+      top: 0;
+      transform: translate3d(0, -100%, 0);
+      &.modal-in {
+        transform: translate3d(0, 0%, 0);
+        opacity: 1;
+      }
+    }
+    &.toast-bottom {
+      bottom: 0;
+      transform: translate3d(0, 100%, 0);
+      &.modal-in {
+        transform: translate3d(0, 0%, 0);
+        opacity: 1;
+      }
+    }
+    @media (min-width: 569px) {
+      left: 50%;
+      margin-left: -568px / 2;
+      &.toast-center {
+        margin-left: 0;
+      }
     }
 
     @media (min-width: 569px) {
@@ -24,6 +57,8 @@
       }
     }
     @media (min-width: 1024px) {
+      margin-left: 0;
+      width: auto;
       &.toast-bottom, &.toast-top {
         left: 15px;
       }

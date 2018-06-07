@@ -1,16 +1,15 @@
 /* === Toast === */
 .toast {
-  transition-duration: 450ms;
   transition-property: transform, opacity;
   position: absolute;
-  width: 100%;
   max-width: 568px;
-  left: 0;
   z-index: 20000;
   color: #fff;
   font-size: 14px;
   box-sizing: border-box;
-
+  &.modal-in {
+    opacity: 1;
+  }
   .toast-content {
     display: flex;
     justify-content: space-between;
@@ -46,46 +45,11 @@
   }
   &.toast-center {
     top: 50%;
-    left: 50%;
-    width: auto;
     opacity: 0;
-    transform: translate3d(-50%, -50%, 0);
-    &.modal-in {
-      transform: translate3d(-50%, -50%, 0);
-      opacity: 1;
-    }
-  }
-  &.toast-top {
-    top: 0;
-    transform: translate3d(0, -100%, 0);
-    &.modal-in {
-      transform: translate3d(0, 0%, 0);
-      opacity: 1;
-    }
-  }
-  &.toast-bottom {
-    bottom: 0;
-    transform: translate3d(0, 100%, 0);
-    &.modal-in {
-      transform: translate3d(0, 0%, 0);
-      opacity: 1;
-    }
   }
 
-  @media (min-width: 569px) {
-    left: 50%;
-    margin-left: -568px / 2;
-    &.toast-center {
-      margin-left: 0;
-    }
-  }
   @media (min-width: 1024px) {
     opacity: 0;
-    margin-left: auto;
-    width: auto;
-    &.toast-center {
-      margin-left: 0;
-    }
   }
 }
 
