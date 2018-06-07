@@ -34,7 +34,7 @@ class SmartSelect extends Framework7Class {
     if (!view) {
       view = $el.parents('.view').length && $el.parents('.view')[0].f7View;
     }
-    if (!view) {
+    if (!view && (params.openIn === 'page' || (params.openIn !== 'page' && params.routableModals === true))) {
       throw Error('Smart Select requires initialized View');
     }
 
