@@ -53,6 +53,8 @@ export default {
       iconF7,
       iconIfMd,
       iconIfIos,
+      iconMd,
+      iconIos,
       iconColor,
       iconSize,
       id,
@@ -62,7 +64,9 @@ export default {
     if (text) {
       textEl = (<span>{text}</span>);
     }
-    if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconIfMd || iconIfIos) {
+    const mdThemeIcon = iconIfMd || iconMd;
+    const iosThemeIcon = iconIfIos || iconIos;
+    if (icon || iconMaterial || iconIon || iconFa || iconF7 || mdThemeIcon || iosThemeIcon) {
       iconEl = (
         <F7Icon
           material={iconMaterial}
@@ -70,8 +74,8 @@ export default {
           fa={iconFa}
           f7={iconF7}
           icon={icon}
-          ifMd={iconIfMd}
-          ifIos={iconIfIos}
+          md={mdThemeIcon}
+          ios={iosThemeIcon}
           color={iconColor}
           size={iconSize}
         />

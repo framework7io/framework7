@@ -52,6 +52,8 @@ export default {
       iconF7,
       iconIfMd,
       iconIfIos,
+      iconMd,
+      iconIos,
       id,
       style,
     } = props;
@@ -72,7 +74,9 @@ export default {
         </span>
       );
     }
-    if (icon || iconMaterial || iconIon || iconFa || iconF7 || (iconIfMd && self.$theme.md) || (iconIfIos && self.$theme.ios)) {
+    const mdThemeIcon = iconIfMd || iconMd;
+    const iosThemeIcon = iconIfIos || iconIos;
+    if (icon || iconMaterial || iconIon || iconFa || iconF7 || mdThemeIcon || iosThemeIcon) {
       if (iconBadge) {
         iconBadgeEl = <F7Badge color={badgeColor}>{iconBadge}</F7Badge>;
       }
@@ -83,8 +87,8 @@ export default {
           fa={iconFa}
           ion={iconIon}
           icon={icon}
-          ifMd={iconIfMd}
-          ifIos={iconIfIos}
+          md={mdThemeIcon}
+          ios={iosThemeIcon}
           color={iconColor}
           size={iconSize}
         >{iconBadgeEl}</F7Icon>
