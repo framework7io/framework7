@@ -21,13 +21,13 @@ export default class extends React.Component {
         <BlockTitle>Icon Chips</BlockTitle>
         <Block strong>
           <Chip text="Add Contact" mediaBgColor={this.$theme.md ? 'blue' : undefined}>
-            <Icon slot="media" ifIos="f7:add_round" ifMd="material:add_circle"></Icon>
+            <Icon slot="media" ios="f7:add_round" md="material:add_circle"></Icon>
           </Chip>
           <Chip text="London" mediaBgColor={this.$theme.md ? 'green' : undefined}>
-            <Icon slot="media" ifIos="f7:compass" ifMd="material:location_on"></Icon>
+            <Icon slot="media" ios="f7:compass" md="material:location_on"></Icon>
           </Chip>
           <Chip text="John Doe" mediaBgColor={this.$theme.md ? 'red' : undefined}>
-            <Icon slot="media" ifIos="f7:person" ifMd="material:person"></Icon>
+            <Icon slot="media" ios="f7:person" md="material:person"></Icon>
           </Chip>
         </Block>
         <BlockTitle>Contact Chips</BlockTitle>

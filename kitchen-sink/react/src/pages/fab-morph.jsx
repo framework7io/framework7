@@ -5,18 +5,18 @@ export default () => (
   <Page>
     <Navbar title="Floating Action Button Morph" backLink="Back"></Navbar>
     <Toolbar tabbar labels bottomMd className="fab-morph-target">
-      <Link tabLink tabLinkActive iconIfIos="f7:email_fill" iconIfMd="material:email" text="Inbox"/>
-      <Link tabLink iconIfIos="f7:today" iconIfMd="material:today" text="Calendar"/>
-      <Link tabLink iconIfIos="f7:cloud" iconIfMd="material:file_upload" text="Upload"/>
+      <Link tabLink tabLinkActive iconIos="f7:email_fill" iconMd="material:email" text="Inbox"/>
+      <Link tabLink iconIos="f7:today" iconMd="material:today" text="Calendar"/>
+      <Link tabLink iconIos="f7:cloud" iconMd="material:file_upload" text="Upload"/>
     </Toolbar>
     <Fab position="right-bottom" morphTo=".toolbar.fab-morph-target">
-      <Icon ifIos="f7:add" ifMd="material:add"></Icon>
+      <Icon ios="f7:add" md="material:add"></Icon>
     </Fab>
     <Fab position="left-bottom" morphTo=".demo-fab-sheet.fab-morph-target">
-      <Icon ifIos="f7:add" ifMd="material:add"></Icon>
+      <Icon ios="f7:add" md="material:add"></Icon>
     </Fab>
     <Fab position="center-bottom" morphTo=".demo-fab-fullscreen-sheet.fab-morph-target">
-      <Icon ifIos="f7:add" ifMd="material:add"></Icon>
+      <Icon ios="f7:add" md="material:add"></Icon>
     </Fab>
     <div className="list links-list demo-fab-sheet fab-morph-target" slot="fixed">
       <ul>

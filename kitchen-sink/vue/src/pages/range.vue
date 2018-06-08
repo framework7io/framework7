@@ -6,7 +6,7 @@
     <f7-list simple-list>
       <f7-list-item>
         <f7-list-item-cell class="width-auto flex-shrink-0">
-          <f7-icon if-ios="f7:volume_mute_fill" if-md="material:volume_mute"></f7-icon>
+          <f7-icon ios="f7:volume_mute_fill" md="material:volume_mute"></f7-icon>
         </f7-list-item-cell>
         <f7-list-item-cell class="flex-shrink-3">
           <f7-range
@@ -17,7 +17,7 @@
           ></f7-range>
         </f7-list-item-cell>
         <f7-list-item-cell class="width-auto flex-shrink-0">
-          <f7-icon if-ios="f7:volume_fill" if-md="material:volume_up"></f7-icon>
+          <f7-icon ios="f7:volume_fill" md="material:volume_up"></f7-icon>
         </f7-list-item-cell>
       </f7-list-item>
     </f7-list>
@@ -26,7 +26,7 @@
     <f7-list simple-list>
       <f7-list-item>
         <f7-list-item-cell class="width-auto flex-shrink-0">
-          <f7-icon if-ios="f7:circle" if-md="material:brightness_low"></f7-icon>
+          <f7-icon ios="f7:circle" md="material:brightness_low"></f7-icon>
         </f7-list-item-cell>
         <f7-list-item-cell class="flex-shrink-3">
           <f7-range
@@ -39,7 +39,7 @@
           ></f7-range>
         </f7-list-item-cell>
         <f7-list-item-cell class="width-auto flex-shrink-0">
-          <f7-icon if-ios="f7:circle_half" if-md="material:brightness_high"></f7-icon>
+          <f7-icon ios="f7:circle_half" md="material:brightness_high"></f7-icon>
         </f7-list-item-cell>
       </f7-list-item>
     </f7-list>
@@ -48,7 +48,7 @@
     <f7-list simple-list>
       <f7-list-item>
         <f7-list-item-cell class="width-auto flex-shrink-0">
-          <f7-icon if-ios="f7:circle" if-md="material:brightness_low"></f7-icon>
+          <f7-icon ios="f7:circle" md="material:brightness_low"></f7-icon>
         </f7-list-item-cell>
         <f7-list-item-cell class="flex-shrink-3">
           <f7-range
@@ -63,7 +63,7 @@
           ></f7-range>
         </f7-list-item-cell>
         <f7-list-item-cell class="width-auto flex-shrink-0">
-          <f7-icon if-ios="f7:circle_half" if-md="material:brightness_high"></f7-icon>
+          <f7-icon ios="f7:circle_half" md="material:brightness_high"></f7-icon>
         </f7-list-item-cell>
       </f7-list-item>
     </f7-list>

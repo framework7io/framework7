@@ -19,7 +19,7 @@ export default class extends React.Component {
         <List simpleList>
           <ListItem>
             <ListItemCell className="width-auto flex-shrink-0">
-              <Icon ifIos="f7:volume_mute_fill" ifMd="material:volume_mute"></Icon>
+              <Icon ios="f7:volume_mute_fill" md="material:volume_mute"></Icon>
             </ListItemCell>
             <ListItemCell className="flex-shrink-3">
               <Range
@@ -30,7 +30,7 @@ export default class extends React.Component {
               ></Range>
             </ListItemCell>
             <ListItemCell className="width-auto flex-shrink-0">
-              <Icon ifIos="f7:volume_fill" ifMd="material:volume_up"></Icon>
+              <Icon ios="f7:volume_fill" md="material:volume_up"></Icon>
             </ListItemCell>
           </ListItem>
         </List>
@@ -39,7 +39,7 @@ export default class extends React.Component {
         <List simpleList>
           <ListItem>
             <ListItemCell className="width-auto flex-shrink-0">
-              <Icon ifIos="f7:circle" ifMd="material:brightness_low"></Icon>
+              <Icon ios="f7:circle" md="material:brightness_low"></Icon>
             </ListItemCell>
             <ListItemCell className="flex-shrink-3">
               <Range
@@ -52,7 +52,7 @@ export default class extends React.Component {
               ></Range>
             </ListItemCell>
             <ListItemCell className="width-auto flex-shrink-0">
-              <Icon ifIos="f7:circle_half" ifMd="material:brightness_high"></Icon>
+              <Icon ios="f7:circle_half" md="material:brightness_high"></Icon>
             </ListItemCell>
           </ListItem>
         </List>
@@ -61,7 +61,7 @@ export default class extends React.Component {
         <List simpleList>
           <ListItem>
             <ListItemCell className="width-auto flex-shrink-0">
-              <Icon ifIos="f7:circle" ifMd="material:brightness_low"></Icon>
+              <Icon ios="f7:circle" md="material:brightness_low"></Icon>
             </ListItemCell>
             <ListItemCell className="flex-shrink-3">
               <Range
@@ -76,7 +76,7 @@ export default class extends React.Component {
               ></Range>
             </ListItemCell>
             <ListItemCell className="width-auto flex-shrink-0">
-              <Icon ifIos="f7:circle_half" ifMd="material:brightness_high"></Icon>
+              <Icon ios="f7:circle_half" md="material:brightness_high"></Icon>
             </ListItemCell>
           </ListItem>
         </List>

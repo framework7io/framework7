@@ -5,7 +5,7 @@ export default () => (
   <Page>
     <Navbar backLink="Back" title="Searchbar">
       <NavRight>
-        <Link searchbarEnable=".searchbar-demo" iconIfIos="f7:search_strong" iconIfMd="material:search"></Link>
+        <Link searchbarEnable=".searchbar-demo" iconIos="f7:search_strong" iconMd="material:search"></Link>
       </NavRight>
       <Searchbar
         className="searchbar-demo"

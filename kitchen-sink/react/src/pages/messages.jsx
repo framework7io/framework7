@@ -113,14 +113,14 @@ export default class extends React.Component {
           sheetVisible={this.state.sheetVisible}
         >
           <Link
-            iconIfIos="f7:camera_fill"
-            iconIfMd="material:camera_alt"
+            iconIos="f7:camera_fill"
+            iconMd="material:camera_alt"
             slot="inner-start"
             onClick={() => {this.setState({sheetVisible: !this.state.sheetVisible})}}
           ></Link>
           <Link
-            iconIfIos="f7:arrow_up_fill"
-            iconIfMd="material:send"
+            iconIos="f7:arrow_up_fill"
+            iconMd="material:send"
             slot="inner-end"
             onClick={this.sendMessage.bind(this)}
           ></Link>

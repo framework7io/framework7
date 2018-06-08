@@ -6,7 +6,7 @@ export default () => (
     <Navbar sliding backLink="Back" title="Badge">
       <NavRight>
         <Link iconOnly>
-          <Icon ifIos="f7:person_fill" ifMd="material:person" className="icon Icons ios-only">
+          <Icon ios="f7:person_fill" md="material:person" className="icon Icons ios-only">
             <Badge color="red">5</Badge>
           </Icon>
         </Link>
@@ -14,19 +14,19 @@ export default () => (
     </Navbar>
     <Toolbar tabbar labels>
       <Link tabLink="#tab-1" tabLinkActive>
-        <Icon className="icon-fill" ifIos="f7:email_fill" ifMd="material:email">
+        <Icon className="icon-fill" ios="f7:email_fill" md="material:email">
           <Badge color="green">5</Badge>
         </Icon>
         <span className="tabbar-label">Inbox</span>
       </Link>
       <Link tabLink="#tab-2">
-        <Icon ifIos="f7:today" ifMd="material:today">
+        <Icon ios="f7:today" md="material:today">
           <Badge color="red">7</Badge>
         </Icon>
         <span className="tabbar-label">Calendar</span>
       </Link>
       <Link tabLink="#tab-3">
-        <Icon ifIos="f7:cloud" ifMd="material:file_upload">
+        <Icon ios="f7:cloud" md="material:file_upload">
           <Badge color="red">1</Badge>
         </Icon>
         <span className="tabbar-label">Upload</span>

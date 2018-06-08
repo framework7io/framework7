@@ -12,13 +12,13 @@
     <f7-block-title>Icon Chips</f7-block-title>
     <f7-block strong>
       <f7-chip text="Add Contact" :media-bg-color="$theme.md ? 'blue' : undefined">
-        <f7-icon slot="media" if-ios="f7:add_round" if-md="material:add_circle"></f7-icon>
+        <f7-icon slot="media" ios="f7:add_round" md="material:add_circle"></f7-icon>
       </f7-chip>
       <f7-chip text="London" :media-bg-color="$theme.md ? 'green' : undefined">
-        <f7-icon slot="media" if-ios="f7:compass" if-md="material:location_on"></f7-icon>
+        <f7-icon slot="media" ios="f7:compass" md="material:location_on"></f7-icon>
       </f7-chip>
       <f7-chip text="John Doe" :media-bg-color="$theme.md ? 'red' : undefined">
-        <f7-icon slot="media" if-ios="f7:person" if-md="material:person"></f7-icon>
+        <f7-icon slot="media" ios="f7:person" md="material:person"></f7-icon>
       </f7-chip>
     </f7-block>
     <f7-block-title>Contact Chips</f7-block-title>

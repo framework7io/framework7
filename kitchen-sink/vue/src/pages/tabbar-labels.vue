@@ -8,9 +8,9 @@
       </f7-nav-right>
     </f7-navbar>
     <f7-toolbar tabbar labels>
-      <f7-link tab-link="#tab-1" tab-link-active text="Tab 1" icon-if-ios="f7:email_fill" icon-if-md="material:email"></f7-link>
-      <f7-link tab-link="#tab-2" text="Tab 2" icon-if-ios="f7:today_fill" icon-if-md="material:today"></f7-link>
-      <f7-link tab-link="#tab-3" text="Tab 3" icon-if-ios="f7:cloud_fill" icon-if-md="material:file_upload"></f7-link>
+      <f7-link tab-link="#tab-1" tab-link-active text="Tab 1" icon-ios="f7:email_fill" icon-md="material:email"></f7-link>
+      <f7-link tab-link="#tab-2" text="Tab 2" icon-ios="f7:today_fill" icon-md="material:today"></f7-link>
+      <f7-link tab-link="#tab-3" text="Tab 3" icon-ios="f7:cloud_fill" icon-md="material:file_upload"></f7-link>
     </f7-toolbar>
 
     <f7-tabs>

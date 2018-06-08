@@ -19,9 +19,9 @@ export default class extends React.Component {
           </NavRight>
         </Navbar>
         <Toolbar tabbar labels bottomMd={this.state.toolbarBottom}>
-          <Link tabLink="#tab-1" tabLinkActive text="Tab 1" iconIfIos="f7:email_fill" iconIfMd="material:email"></Link>
-          <Link tabLink="#tab-2" text="Tab 2" iconIfIos="f7:today_fill" iconIfMd="material:today"></Link>
-          <Link tabLink="#tab-3" text="Tab 3" iconIfIos="f7:cloud_fill" iconIfMd="material:file_upload"></Link>
+          <Link tabLink="#tab-1" tabLinkActive text="Tab 1" iconIos="f7:email_fill" iconMd="material:email"></Link>
+          <Link tabLink="#tab-2" text="Tab 2" iconIos="f7:today_fill" iconMd="material:today"></Link>
+          <Link tabLink="#tab-3" text="Tab 3" iconIos="f7:cloud_fill" iconMd="material:file_upload"></Link>
         </Toolbar>
 
         <Tabs>

@@ -2,11 +2,11 @@
   <f7-page>
     <f7-navbar>
       <f7-nav-left>
-        <f7-link panel-open="left" icon-if-ios="f7:menu" icon-if-md="material:menu"></f7-link>
+        <f7-link panel-open="left" icon-ios="f7:menu" icon-md="material:menu"></f7-link>
       </f7-nav-left>
       <f7-nav-title>Framework7</f7-nav-title>
       <f7-nav-right>
-        <f7-link class="searchbar-enable" data-searchbar=".searchbar-components" icon-if-ios="f7:search_strong" icon-if-md="material:search"></f7-link>
+        <f7-link class="searchbar-enable" data-searchbar=".searchbar-components" icon-ios="f7:search_strong" icon-md="material:search"></f7-link>
       </f7-nav-right>
       <f7-searchbar class="searchbar-components" search-container=".components-list" search-in="a" expandable></f7-searchbar>
     </f7-navbar>

@@ -5,11 +5,11 @@ export default () => (
   <Page>
     <Navbar>
       <NavLeft>
-        <Link panelOpen="left" iconIfIos="f7:menu" iconIfMd="material:menu"></Link>
+        <Link panelOpen="left" iconIos="f7:menu" iconMd="material:menu"></Link>
       </NavLeft>
       <NavTitle>Framework7</NavTitle>
       <NavRight>
-        <Link searchbarEnable=".searchbar-components" iconIfIos="f7:search_strong" iconIfMd="material:search"></Link>
+        <Link searchbarEnable=".searchbar-components" iconIos="f7:search_strong" iconMd="material:search"></Link>
       </NavRight>
       <Searchbar className="searchbar-components" searchContainer=".components-list" searchIn="a" expandable></Searchbar>
     </Navbar>
