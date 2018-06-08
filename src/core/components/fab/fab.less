@@ -201,6 +201,48 @@
   display: none;
 }
 
+// Extended
+.fab-extended {
+  width: auto;
+  > a {
+    width: 100% !important;
+  }
+}
+.fab-text {
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+// Labels
+.fab-label-button {
+  overflow: visible !important;
+}
+.fab-label {
+  position: absolute;
+  top: 50%;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: #fff;
+  color: #666;
+  white-space: nowrap;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.fab[class*="fab-right-"] {
+  .fab-label {
+    right: 100%;
+    margin-right: 8px;
+  }
+}
+.fab[class*="fab-left-"] {
+  .fab-label {
+    left: 100%;
+    margin-left: 8px;
+  }
+}
+
 & when (@includeIosTheme) {
   @import url('./fab-ios.less');
 }
