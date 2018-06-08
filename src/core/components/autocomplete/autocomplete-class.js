@@ -436,6 +436,7 @@ class Autocomplete extends Framework7Class {
     const ac = this;
     if (ac.params.renderItem) return ac.params.renderItem.call(ac, item, index);
     let itemHtml;
+    item.value = item.value.replace(/"/g, '&quot;');
     if (ac.params.openIn !== 'dropdown') {
       itemHtml = `
         <li>
