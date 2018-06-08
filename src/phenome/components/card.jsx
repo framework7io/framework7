@@ -14,6 +14,7 @@ export default {
     title: [String, Number],
     content: [String, Number],
     footer: [String, Number],
+    outline: Boolean,
     padding: {
       type: Boolean,
       default: true,
@@ -31,6 +32,7 @@ export default {
       content,
       footer,
       padding,
+      outline,
     } = props;
 
     let headerEl;
@@ -40,6 +42,9 @@ export default {
     const classes = Utils.classNames(
       className,
       'card',
+      {
+        'card-outline': outline,
+      },
       Mixins.colorClasses(props),
     );
 

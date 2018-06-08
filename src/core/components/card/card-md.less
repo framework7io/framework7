@@ -10,6 +10,10 @@
     margin: 8px;
     .elevation(1);
   }
+  .card-outline {
+    box-shadow: none;
+    border: 1px solid rgba(0,0,0,0.12);
+  }
   .card-header, .card-footer {
     a.link {
       .button;
@@ -60,6 +64,9 @@
     .theme-dark {
       .card {
         background-color: @blockBgDark;
+      }
+      .card-outline {
+        border-color: #282829;
       }
       .card-header {
         .hairline-color(bottom, @blockBorderColorDark);
