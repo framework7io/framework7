@@ -6,6 +6,7 @@ export default {
   props: {
     id: [String, Number],
     fabClose: Boolean,
+    label: String,
     ...Mixins.colorProps,
   },
   render() {
@@ -15,22 +16,35 @@ export default {
       id,
       style,
       fabClose,
+      label,
     } = props;
 
     const classes = Utils.classNames(
       className,
       {
         'fab-close': fabClose,
+        'fab-label-button': label,
       },
       Mixins.colorClasses(props),
     );
+
+    let labelEl;
+    if (label) {
+      labelEl = (
+        <span className="fab-label">{label}</span>
+      );
+    }
+
     return (
       <a
         id={id}
         style={style}
         className={classes}
         onClick={this.onClick.bind(this)}
-      ><slot /></a>
+      >
+        <slot />
+        {labelEl}
+      </a>
     );
   },
   methods: {

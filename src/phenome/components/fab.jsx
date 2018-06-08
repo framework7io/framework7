@@ -7,6 +7,7 @@ export default {
     id: [String, Number],
     morphTo: String,
     href: [Boolean, String],
+    text: String,
     position: {
       type: String,
       default: 'right-bottom',
@@ -23,6 +24,7 @@ export default {
       morphTo,
       href: initialHref,
       position,
+      text,
     } = props;
 
     let href = initialHref;
@@ -32,7 +34,7 @@ export default {
     const linkChildren = [];
     const rootChildren = [];
 
-    const { link: linkSlots, default: defaultSlots, root: rootSlots } = self.slots;
+    const { link: linkSlots, default: defaultSlots, root: rootSlots, text: textSlots } = self.slots;
 
     if (defaultSlots) {
       for (let i = 0; i < defaultSlots.length; i += 1) {
@@ -49,11 +51,18 @@ export default {
         else linkChildren.push(child);
       }
     }
+    let textEl;
+    if (text || (textSlots && textSlots.length)) {
+      textEl = (
+        <div className="fab-text">{text || textSlots}</div>
+      );
+    }
     let linkEl;
-    if (linkChildren.length || linkSlots.length) {
+    if (linkChildren.length || (linkSlots && linkSlots.length)) {
       linkEl = (
         <a href={href} onClick={self.onClick.bind(self)} key="f7-fab-link">
           {linkChildren}
+          {textEl}
           {linkSlots}
         </a>
       );
@@ -65,6 +74,7 @@ export default {
       `fab-${position}`,
       {
         'fab-morph': morphTo,
+        'fab-extended': typeof textEl !== 'undefined',
       },
       Mixins.colorClasses(props),
     );

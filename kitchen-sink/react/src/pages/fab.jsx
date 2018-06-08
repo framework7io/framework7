@@ -19,16 +19,16 @@ export default () => (
       <Icon ifIos="f7:add" ifMd="material:add"></Icon>
       <Icon ifIos="f7:close" ifMd="material:close"></Icon>
       <FabButtons position="top">
-        <FabButton>1</FabButton>
-        <FabButton>2</FabButton>
-        <FabButton>3</FabButton>
+        <FabButton label="Action 1">1</FabButton>
+        <FabButton label="Action 2">2</FabButton>
+        <FabButton label="Third Action">3</FabButton>
       </FabButtons>
     </Fab>
 
     <Fab position="left-bottom" slot="fixed">
       <Icon ifIos="f7:add" ifMd="material:add"></Icon>
       <Icon ifIos="f7:close" ifMd="material:close"></Icon>
-      <FabButtons position="right">
+      <FabButtons position="top">
         <FabButton>1</FabButton>
         <FabButton>2</FabButton>
         <FabButton>3</FabButton>
@@ -54,6 +54,10 @@ export default () => (
         <FabButton>3</FabButton>
         <FabButton>4</FabButton>
       </FabButtons>
+    </Fab>
+
+    <Fab position="center-bottom" slot="fixed" text="Create">
+      <Icon ios="f7:add" md="material:add"></Icon>
     </Fab>
 
     <Block>
