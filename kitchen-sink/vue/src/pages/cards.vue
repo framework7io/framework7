@@ -18,6 +18,22 @@
       content="Another card. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse feugiat sem est, non tincidunt ligula volutpat sit amet. Mauris aliquet magna justo. "
     ></f7-card>
 
+    <f7-block-title>Outline Cards</f7-block-title>
+    <f7-card
+      outline
+      content="This is a simple card with plain text, but cards can also contain their own header, footer, list view, image, or any other element."
+    ></f7-card>
+    <f7-card
+      outline
+      title="Card header"
+      content="Card with header and footer. Card headers are used to display card titles and footers for additional information or just for custom actions."
+      footer="Card footer"
+    ></f7-card>
+    <f7-card
+      outline
+      content="Another card. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse feugiat sem est, non tincidunt ligula volutpat sit amet. Mauris aliquet magna justo. "
+    ></f7-card>
+
     <f7-block-title>Styled Cards</f7-block-title>
     <f7-card class="demo-card-header-pic">
       <f7-card-header

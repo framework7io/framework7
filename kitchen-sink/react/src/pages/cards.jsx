@@ -21,6 +21,22 @@ export default () => (
       content="Another card. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse feugiat sem est, non tincidunt ligula volutpat sit amet. Mauris aliquet magna justo. "
     ></Card>
 
+    <BlockTitle>Outline Cards</BlockTitle>
+    <Card
+      outline
+      content="This is a simple card with plain text, but cards can also contain their own header, footer, list view, image, or any other element."
+    ></Card>
+    <Card
+      outline
+      title="Card header"
+      content="Card with header and footer. Card headers are used to display card titles and footers for additional information or just for custom actions."
+      footer="Card footer"
+    ></Card>
+    <Card
+      outline
+      content="Another card. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse feugiat sem est, non tincidunt ligula volutpat sit amet. Mauris aliquet magna justo. "
+    ></Card>
+
     <BlockTitle>Styled Cards</BlockTitle>
     <Card className="demo-CardHeader-pic">
       <CardHeader
