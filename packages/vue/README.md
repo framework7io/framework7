@@ -6,7 +6,7 @@ Framework7 Vue combines power and simplicity of great Vue.js framework with flex
 
 ## Getting Started with Framework7 Vue
   * [Installation Guide](http://framework7.io/vue/installation.html)
-  * [Starter App Templates](http://framework7.io/vue/templates.html)
+  * [Starter App Templates](http://framework7.io/templates/)
   * [App Layout](http://framework7.io/vue/app-layout.html)
   * [Initialize App](http://framework7.io/vue/init-app.html)
   * [Navigation Router](http://framework7.io/vue/navigation-router.html)

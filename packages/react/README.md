@@ -6,7 +6,7 @@ Framework7 React combines power of React framework with flexibility and UI of Fr
 
 ## Getting Started with Framework7 React
   * [Installation Guide](http://framework7.io/react/installation.html)
-  * [Starter App Templates](http://framework7.io/react/templates.html)
+  * [Starter App Templates](http://framework7.io/templates/)
   * [App Layout](http://framework7.io/react/app-layout.html)
   * [Initialize App](http://framework7.io/react/init-app.html)
   * [Navigation Router](http://framework7.io/react/navigation-router.html)
