@@ -2,17 +2,20 @@
   @import (multiple) '../../less/colors-ios.less';
 
   .chip {
-    font-size: 14px;
-    color: #fff;
-    background: rgba(0, 0, 0, 0.37);
-    height: 23px;
-    line-height: 23px;
+    font-size: 13px;
+    color: #000;
+    background: rgba(0, 0, 0, 0.12);
+    height: 24px;
     border-radius: 12px;
-    padding: 0 6px;
+    padding: 0 10px;
+  }
+  .chip-outline {
+    background: none;
+    border: 1px solid rgba(0, 0, 0, 0.12);
   }
   .chip-media {
-    width: 23px;
-    height: 23px;
+    width: 24px;
+    height: 24px;
     vertical-align: middle;
     border-radius: 50%;
     text-align: center;
@@ -21,13 +24,13 @@
     font-size: 12px;
     box-sizing: border-box;
     .ltr({
-      margin-left: -6px;
+      margin-left: -10px;
       + .chip-label {
         margin-left: 4px;
       }
     });
     .rtl({
-      margin-right: -6px;
+      margin-right: -10px;
       + .chip-label {
         margin-right: 4px;
       }
@@ -39,18 +42,18 @@
     }
   }
   .chip-delete {
-    width: 23px;
-    height: 23px;
-    line-height: 23px;
-    .svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'><circle cx='14' cy='14' r='14' fill='#fff'/><line stroke='#000' stroke-width='2' stroke-miterlimit='10' x1='8' y1='8' x2='20' y2='20'/><line fill='none' stroke='#000' stroke-width='2' stroke-miterlimit='10' x1='20' y1='8' x2='8' y2='20'/></svg>");
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    .svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'><circle cx='14' cy='14' r='14' fill='#000'/><line stroke='#fff' stroke-width='3' stroke-miterlimit='10' x1='8' y1='8' x2='20' y2='20'/><line fill='none' stroke='#fff' stroke-width='3' stroke-miterlimit='10' x1='20' y1='8' x2='8' y2='20'/></svg>");
     background-position: center;
-    background-size: 13px 13px;
-    opacity: 0.7;
+    background-size: 14px 14px;
+    opacity: 0.54;
     .ltr({
-      margin-right: -6px;
+      margin-right: -10px;
     });
     .rtl({
-      margin-left: -6px;
+      margin-left: -10px;
     });
   }
   // Dark Theme
@@ -58,12 +61,26 @@
     .theme-dark {
       .chip {
         background-color: #333;
+        color: #fff;
+      }
+      .chip-outline {
+        background: none;
+        border-color: #333;
+      }
+      .chip-delete {
+        .svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'><circle cx='14' cy='14' r='14' fill='#fff'/><line stroke='#000' stroke-width='3' stroke-miterlimit='10' x1='8' y1='8' x2='20' y2='20'/><line fill='none' stroke='#000' stroke-width='3' stroke-miterlimit='10' x1='20' y1='8' x2='8' y2='20'/></svg>");
       }
     }
   }
   .color-loop({
     .chip.color-@{colorName} {
       background: @colorValue;
+      color: #fff;
+      &.chip-outline {
+        background: none;
+        border-color: @colorValue;
+        color: @colorValue;
+      }
     }
   });
 }
