@@ -2,6 +2,65 @@
 
 # Change Log
 
+# [v3.0.0-beta.7](https://github.com/framework7io/framework7/compare/v3.0.0-beta.6...v3.0.0-beta.7) - June 9, 2018
+  * Core
+    * Cards
+      * New outline cards style
+    * Chips
+      * New outline style + tweaked iOS chips styles
+    * FAB
+      * New FAB-Extended style with addtional text label support inside of FAB
+      * Support for FAB actions label
+    * Typography
+      * New Elevation styles, can be configured with `elevation-1`, `elevation-2`,  ..., `elevation-24` classes
+    * Dialog
+      * Preloader dialog now supports preloader color as second argument: `app.dialog.preloader(title, color)`
+    * Smart Select
+      * Will not error anymore about required View if it is actually not required (e.g. for SS opened in Popup, Popover or Sheet)
+    * Picker - fixed issues with touch/swipe areas in RTL layout
+    * Calendar
+      * Fixed issue when not possible to switch calendar to previous month when min date is the last date of previous month
+      * Fixed issue when double click behind calendar could cause router to go to the previous page
+    * Swiper - updated to latest
+      * Fixed issue when slidePrev goes to wrong slide #2650
+      * Fixed issue when roundLength was not considered for grids calculation #2656
+  * Phenome
+    * Card
+      * New `outline` prop to make card outline
+    * Chip
+      * New `outline` prop to make card outline
+    * Fab
+      * New `text` prop to add text to FAB and make it as Extended FAB
+      * New `label` prop for `FabButton` to add label for fab button
+    * Simplified conditional icon props for Icon, Link and Button components: `if-ios` -> `is`, `if-md` -> `md`, `icon-if-ios` -> `icon-ios`, `icon-if-md` -> `icon-md`
+    * Input
+      * New `error-message-force` prop to force error message to show. Works in case of `validate` is omitted
+    * Messagebar
+      * New `resizePage` prop that will resize messages page with messagebar
+      * New `resizePage()` method renamed to `resize()`
+
+# [v3.0.0-beta.6](https://github.com/framework7io/framework7/compare/v3.0.0-beta.5...v3.0.0-beta.6) - June 5, 2018
+  * Phenome
+    * ListItem - fixed `subtitle` slot being ignored
+
+# [v3.0.0-beta.5](https://github.com/framework7io/framework7/compare/v3.0.0-beta.4...v3.0.0-beta.5) - June 4, 2018
+  * Phenome - fix issue when passing `undefined` child to the component
+
+# [v3.0.0-beta.4](https://github.com/framework7io/framework7/compare/v3.0.0-beta.3...v3.0.0-beta.4) - June 4, 2018
+  * Core
+    * App methods (specified in `methods` params) are now bound to app context (initialized F7 instance)
+    * Swiper - updated to latest 4.3.2
+      * Core
+        * Added `addSlide(index, slide)` method to add slide at required position. Thanks to @kochizufan
+        * Fixed issue with loop #2647. Thanks to @kochizufan
+      * Pagination
+        * New `formatFractionCurrent(number)` parameter to format current number in Fraction pagination
+        * New `formatFractionTotal(number)` parameter to format total number in Fraction pagination
+  * Phenome
+    * Use `domProps` for Vue input components
+    * ListItem
+      * New `swipeoutOpened` prop to control (open/close) swipeout item by prop
+
 # [v2.3.1](https://github.com/framework7io/framework7/compare/v2.3.0...v2.3.1) - June 1, 2018
   * Searchbar
     * Fixed issue with not hiding/showing backdrop when `customSearch` is enabled
