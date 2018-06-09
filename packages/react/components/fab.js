@@ -21,7 +21,8 @@ class F7Fab extends React.Component {
       style,
       morphTo,
       href: initialHref,
-      position
+      position,
+      text
     } = props;
     let href = initialHref;
     if (href === true)
@@ -33,7 +34,8 @@ class F7Fab extends React.Component {
     const {
       link: linkSlots,
       default: defaultSlots,
-      root: rootSlots
+      root: rootSlots,
+      text: textSlots
     } = self.slots;
     if (defaultSlots) {
       for (let i = 0; i < defaultSlots.length; i += 1) {
@@ -50,15 +52,22 @@ class F7Fab extends React.Component {
           linkChildren.push(child);
       }
     }
+    let textEl;
+    if (text || textSlots && textSlots.length) {
+      textEl = React.createElement('div', { className: 'fab-text' }, text || textSlots);
+    }
     let linkEl;
-    if (linkChildren.length || linkSlots.length) {
+    if (linkChildren.length || linkSlots && linkSlots.length) {
       linkEl = React.createElement('a', {
         href: href,
         onClick: self.onClick.bind(self),
         key: 'f7-fab-link'
-      }, linkChildren, linkSlots);
+      }, linkChildren, textEl, linkSlots);
     }
-    const classes = Utils.classNames(className, 'fab', `fab-${ position }`, { 'fab-morph': morphTo }, Mixins.colorClasses(props));
+    const classes = Utils.classNames(className, 'fab', `fab-${ position }`, {
+      'fab-morph': morphTo,
+      'fab-extended': typeof textEl !== 'undefined'
+    }, Mixins.colorClasses(props));
     return React.createElement('div', {
       id: id,
       style: style,
@@ -83,6 +92,7 @@ __reactComponentSetProps(F7Fab, {
     Boolean,
     String
   ],
+  text: String,
   position: {
     type: String,
     default: 'right-bottom'

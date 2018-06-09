@@ -17,7 +17,7 @@ class F7Chip extends React.Component {
   render() {
     const self = this;
     const props = self.props;
-    const {media, text, deleteable, className, id, style, mediaTextColor, mediaBgColor} = props;
+    const {media, text, deleteable, className, id, style, mediaTextColor, mediaBgColor, outline} = props;
     let mediaEl;
     let labelEl;
     let deleteEl;
@@ -35,7 +35,7 @@ class F7Chip extends React.Component {
         onClick: self.onDeleteClick.bind(self)
       });
     }
-    const classes = Utils.classNames(className, 'chip', Mixins.colorClasses(props));
+    const classes = Utils.classNames(className, 'chip', { 'chip-outline': outline }, Mixins.colorClasses(props));
     return React.createElement('div', {
       id: id,
       style: style,
@@ -63,7 +63,7 @@ __reactComponentSetProps(F7Chip, {
   deleteable: Boolean,
   mediaBgColor: String,
   mediaTextColor: String,
-  onDelete: Function,
+  outline: Boolean,
   ...Mixins.colorProps
 });
 export default F7Chip;

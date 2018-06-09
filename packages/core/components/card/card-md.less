@@ -8,13 +8,17 @@
   }
   .card {
     margin: 8px;
-    .md-depth(1);
+    .elevation(1);
+  }
+  .card-outline {
+    box-shadow: none;
+    border: 1px solid rgba(0,0,0,0.12);
   }
   .card-header, .card-footer {
     a.link {
       .button;
       color:@themeColor;
-      border-radius: 2px;
+      border-radius: 4px;
       line-height: 36px;
       height: 36px;
       text-transform: uppercase;
@@ -23,6 +27,8 @@
       border: none;
       transition-duration: 300ms;
       transform: translate3d(0,0,0);
+      font-weight: 500;
+      letter-spacing: 0.03em;
       &.active-state {
         background: rgba(0,0,0,0.1);
       }
@@ -60,6 +66,9 @@
     .theme-dark {
       .card {
         background-color: @blockBgDark;
+      }
+      .card-outline {
+        border-color: #282829;
       }
       .card-header {
         .hairline-color(bottom, @blockBorderColorDark);

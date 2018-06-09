@@ -13,11 +13,11 @@ class F7Card extends React.Component {
   render() {
     const self = this;
     const props = self.props;
-    const {className, id, style, title, content, footer, padding} = props;
+    const {className, id, style, title, content, footer, padding, outline} = props;
     let headerEl;
     let contentEl;
     let footerEl;
-    const classes = Utils.classNames(className, 'card', Mixins.colorClasses(props));
+    const classes = Utils.classNames(className, 'card', { 'card-outline': outline }, Mixins.colorClasses(props));
     if (title || self.slots && self.slots.header) {
       headerEl = React.createElement(F7CardHeader, null, title, this.slots['header']);
     }
@@ -54,6 +54,7 @@ __reactComponentSetProps(F7Card, {
     String,
     Number
   ],
+  outline: Boolean,
   padding: {
     type: Boolean,
     default: true

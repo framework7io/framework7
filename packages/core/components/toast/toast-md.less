@@ -1,15 +1,50 @@
 .md {
   @import (multiple) '../../less/colors-md.less';
   .toast {
+    transition-duration: 200ms;
+    border-radius: 4px;
     background: #323232;
-    &.toast-center {
-      border-radius: 2px;
-      background: rgba(0,0,0,0.75);
+    opacity: 0;
+    left: 8px;
+    width: ~"calc(100% - 16px)";
+    transform: scale(0.9);
+    &.modal-in {
+      transform: scale(1);
+      opacity: 1;
     }
-    @media (min-width: 569px) {
-      border-radius: 2px;
+    &.modal-out {
+      transform: scale(1);
+      opacity: 0;
+    }
+    &.toast-center {
+      left: 50%;
+      width: auto;
+      background: rgba(0,0,0,0.75);
+      transform: scale(0.9) translate3d(-55%, -55%, 0);
+      &.modal-in {
+        transform: scale(1) translate3d(-50%, -50%, 0);
+      }
+      &.modal-out {
+        transform: scale(1) translate3d(-50%, -50%, 0);
+      }
+    }
+    &.toast-bottom {
+      bottom: 8px;
+    }
+    &.toast-top {
+      top: 8px;
+    }
+    // 568 + 16
+    @media (min-width: 584px) {
+      left: 50%;
+      margin-left: -568px / 2;
+      &.toast-center {
+        margin-left: 0;
+      }
     }
     @media (min-width: 1024px) {
+      margin-left: 0;
+      width: auto;
       &.toast-bottom, &.toast-top {
         left: 24px;
       }
@@ -47,8 +82,8 @@
       }
       @media (min-width: 1024px) {
         &.modal-in {
-          transform: translate3d(0, ~"calc(0px - constant(safe-area-inset-bottom))", 0);
-          transform: translate3d(0, ~"calc(0px - env(safe-area-inset-bottom))", 0);
+          margin-bottom: constant(safe-area-inset-bottom);
+          margin-bottom: env(safe-area-inset-bottom);
         }
       }
     }

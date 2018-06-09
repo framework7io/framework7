@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.0.0-beta.6
+ * Framework7 Vue 3.0.0-beta.7
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 5, 2018
+ * Released on: June 9, 2018
  */
 
 (function (global, factory) {
@@ -1369,6 +1369,8 @@
       var iconF7 = props.iconF7;
       var iconIfMd = props.iconIfMd;
       var iconIfIos = props.iconIfIos;
+      var iconMd = props.iconMd;
+      var iconIos = props.iconIos;
       var iconColor = props.iconColor;
       var iconSize = props.iconSize;
       var id = props.id;
@@ -1376,7 +1378,9 @@
       if (text) {
         textEl = _h('span', [text]);
       }
-      if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconIfMd || iconIfIos) {
+      var mdThemeIcon = iconIfMd || iconMd;
+      var iosThemeIcon = iconIfIos || iconIos;
+      if (icon || iconMaterial || iconIon || iconFa || iconF7 || mdThemeIcon || iosThemeIcon) {
         iconEl = _h(F7Icon, {
           attrs: {
             material: iconMaterial,
@@ -1384,8 +1388,8 @@
             fa: iconFa,
             f7: iconF7,
             icon: icon,
-            ifMd: iconIfMd,
-            ifIos: iconIfIos,
+            md: mdThemeIcon,
+            ios: iosThemeIcon,
             color: iconColor,
             size: iconSize
           }
@@ -1586,6 +1590,7 @@
         String,
         Number
       ],
+      outline: Boolean,
       padding: {
         type: Boolean,
         default: true
@@ -1602,10 +1607,11 @@
       var content = props.content;
       var footer = props.footer;
       var padding = props.padding;
+      var outline = props.outline;
       var headerEl;
       var contentEl;
       var footerEl;
-      var classes = Utils.classNames(className, 'card', Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'card', { 'card-outline': outline }, Mixins.colorClasses(props));
       if (title || self.$slots && self.$slots.header) {
         headerEl = _h(F7CardHeader, [
           title,
@@ -1743,7 +1749,7 @@
       deleteable: Boolean,
       mediaBgColor: String,
       mediaTextColor: String,
-      onDelete: Function},
+      outline: Boolean},
       Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
@@ -1757,6 +1763,7 @@
       var style = props.style;
       var mediaTextColor = props.mediaTextColor;
       var mediaBgColor = props.mediaBgColor;
+      var outline = props.outline;
       var mediaEl;
       var labelEl;
       var deleteEl;
@@ -1777,7 +1784,7 @@
           attrs: { href: '#' }
         });
       }
-      var classes = Utils.classNames(className, 'chip', Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'chip', { 'chip-outline': outline }, Mixins.colorClasses(props));
       return _h('div', {
         style: style,
         class: classes,
@@ -1888,7 +1895,8 @@
         String,
         Number
       ],
-      fabClose: Boolean},
+      fabClose: Boolean,
+      label: String},
       Mixins.colorProps),
     render: function render() {
       var _h = this.$createElement;
@@ -1897,13 +1905,24 @@
       var id = props.id;
       var style = props.style;
       var fabClose = props.fabClose;
-      var classes = Utils.classNames(className, { 'fab-close': fabClose }, Mixins.colorClasses(props));
+      var label = props.label;
+      var classes = Utils.classNames(className, {
+        'fab-close': fabClose,
+        'fab-label-button': label
+      }, Mixins.colorClasses(props));
+      var labelEl;
+      if (label) {
+        labelEl = _h('span', { class: 'fab-label' }, [label]);
+      }
       return _h('a', {
         style: style,
         class: classes,
         on: { click: this.onClick.bind(this) },
         attrs: { id: id }
-      }, [this.$slots['default']]);
+      }, [
+        this.$slots['default'],
+        labelEl
+      ]);
     },
     methods: {
       onClick: function onClick(event) {
@@ -1966,6 +1985,7 @@
         Boolean,
         String
       ],
+      text: String,
       position: {
         type: String,
         default: 'right-bottom'
@@ -1981,6 +2001,7 @@
       var morphTo = props.morphTo;
       var initialHref = props.href;
       var position = props.position;
+      var text = props.text;
       var href = initialHref;
       if (href === true)
         { href = '#'; }
@@ -1992,6 +2013,7 @@
       var linkSlots = ref.link;
       var defaultSlots = ref.default;
       var rootSlots = ref.root;
+      var textSlots = ref.text;
       if (defaultSlots) {
         for (var i = 0; i < defaultSlots.length; i += 1) {
           var child = defaultSlots[i];
@@ -2006,18 +2028,26 @@
             { linkChildren.push(child); }
         }
       }
+      var textEl;
+      if (text || textSlots && textSlots.length) {
+        textEl = _h('div', { class: 'fab-text' }, [text || textSlots]);
+      }
       var linkEl;
-      if (linkChildren.length || linkSlots.length) {
+      if (linkChildren.length || linkSlots && linkSlots.length) {
         linkEl = _h('a', {
           key: 'f7-fab-link',
           on: { click: self.onClick.bind(self) },
           attrs: { href: href }
         }, [
           linkChildren,
+          textEl,
           linkSlots
         ]);
       }
-      var classes = Utils.classNames(className, 'fab', ("fab-" + position), { 'fab-morph': morphTo }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'fab', ("fab-" + position), {
+        'fab-morph': morphTo,
+        'fab-extended': typeof textEl !== 'undefined'
+      }, Mixins.colorClasses(props));
       return _h('div', {
         style: style,
         class: classes,
@@ -2398,6 +2428,7 @@
       noFormStoreData: Boolean,
       noStoreData: Boolean,
       errorMessage: String,
+      errorMessageForce: Boolean,
       info: String,
       wrap: {
         type: Boolean,
@@ -2440,6 +2471,7 @@
       var resizable = props.resizable;
       var clearButton = props.clearButton;
       var errorMessage = props.errorMessage;
+      var errorMessageForce = props.errorMessageForce;
       var info = props.info;
       var wrap = props.wrap;
       var style = props.style;
@@ -2451,7 +2483,7 @@
         var InputTag = tag;
         var needsValue = type !== 'file';
         var needsType = tag === 'input';
-        var inputClassName = Utils.classNames(type === 'textarea' && resizable && 'resizable', !wrap && className, (noFormStoreData || noStoreData) && 'no-store-data');
+        var inputClassName = Utils.classNames(type === 'textarea' && resizable && 'resizable', !wrap && className, (noFormStoreData || noStoreData) && 'no-store-data', errorMessage && errorMessageForce && 'input-invalid');
         var input;
         {
           input = _h(InputTag, {
@@ -2494,7 +2526,7 @@
               validate: typeof validate === 'string' && validate.length ? validate : undefined,
               'data-validate': validate === true || validate === '' ? true : undefined,
               tabindex: tabindex,
-              'data-error-message': errorMessage
+              'data-error-message': errorMessageForce ? undefined : errorMessage
             }
           }, [children]);
         }
@@ -2551,6 +2583,7 @@
           attrs: { id: id }
         }, [
           inputEl,
+          errorMessage && errorMessageForce && _h('div', { class: 'item-input-error-message' }, [errorMessage]),
           clearButton && _h('span', { class: 'input-clear-button' }),
           (info || slotsInfo && slotsInfo.length) && _h('div', { class: 'item-input-info' }, [
             info,
@@ -2591,6 +2624,8 @@
         var resizable = ref.resizable;
         var type = ref.type;
         var clearButton = ref.clearButton;
+        var value = ref.value;
+        var defaultValue = ref.defaultValue;
         if (type === 'range' || type === 'toggle')
           { return; }
         var inputEl = self.$refs.inputEl;
@@ -2605,8 +2640,10 @@
           inputEl.addEventListener('input:clear', self.onInputClearBound, false);
         }
         f7.input.checkEmptyState(inputEl);
-        if (validate) {
-          f7.input.validate(inputEl);
+        if (validate && (typeof value !== 'undefined' || typeof defaultValue !== 'undefined')) {
+          setTimeout(function () {
+            f7.input.validate(inputEl);
+          }, 0);
         }
         if (resizable) {
           f7.input.resizeTextarea(inputEl);
@@ -2792,6 +2829,8 @@
       var iconF7 = props.iconF7;
       var iconIfMd = props.iconIfMd;
       var iconIfIos = props.iconIfIos;
+      var iconMd = props.iconMd;
+      var iconIos = props.iconIos;
       var id = props.id;
       var style = props.style;
       var defaultSlots = self.$slots.default;
@@ -2807,7 +2846,9 @@
           badgeEl
         ]);
       }
-      if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconIfMd && self.$theme.md || iconIfIos && self.$theme.ios) {
+      var mdThemeIcon = iconIfMd || iconMd;
+      var iosThemeIcon = iconIfIos || iconIos;
+      if (icon || iconMaterial || iconIon || iconFa || iconF7 || mdThemeIcon || iosThemeIcon) {
         if (iconBadge) {
           iconBadgeEl = _h(F7Badge, { attrs: { color: badgeColor } }, [iconBadge]);
         }
@@ -2818,8 +2859,8 @@
             fa: iconFa,
             ion: iconIon,
             icon: icon,
-            ifMd: iconIfMd,
-            ifIos: iconIfIos,
+            md: mdThemeIcon,
+            ios: iosThemeIcon,
             color: iconColor,
             size: iconSize
           }
@@ -3247,7 +3288,8 @@
         return {
           hasInput: false,
           hasInlineLabel: false,
-          hasInputInfo: false
+          hasInputInfo: false,
+          hasInputErrorMessage: false
         };
       })();
       return { state: state };
@@ -3284,6 +3326,7 @@
       var hasInput = itemInput || self.state.hasInput;
       var hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
       var hasInputInfo = itemInputWithInfo || self.state.hasInputInfo;
+      var hasInputErrorMessage = self.state.hasInputErrorMessage;
       var slotsContentStart = [];
       var slotsContent = [];
       var slotsContentEnd = [];
@@ -3324,46 +3367,83 @@
             { flattenSlots.push(slot); }
         });
       }
-      if (flattenSlots.length) {
-        for (var i = 0; i < flattenSlots.length; i += 1) {
-          var slotEl = flattenSlots[i];
-          var slotName = (void 0);
-          slotName = slotEl.data ? slotEl.data.slot : undefined;
-          if (!slotName || slotName === 'inner')
-            { slotsInner.push(slotEl); }
-          if (slotName === 'content-start')
-            { slotsContentStart.push(slotEl); }
-          if (slotName === 'content')
-            { slotsContent.push(slotEl); }
-          if (slotName === 'content-end')
-            { slotsContentEnd.push(slotEl); }
-          if (slotName === 'after-start')
-            { slotsAfterStart.push(slotEl); }
-          if (slotName === 'after')
-            { slotsAfter.push(slotEl); }
-          if (slotName === 'after-end')
-            { slotsAfterEnd.push(slotEl); }
-          if (slotName === 'media')
-            { slotsMedia.push(slotEl); }
-          if (slotName === 'inner-start')
-            { slotsInnerStart.push(slotEl); }
-          if (slotName === 'inner-end')
-            { slotsInnerEnd.push(slotEl); }
-          if (slotName === 'before-title')
-            { slotsBeforeTitle.push(slotEl); }
-          if (slotName === 'title')
-            { slotsTitle.push(slotEl); }
-          if (slotName === 'after-title')
-            { slotsAfterTitle.push(slotEl); }
-          if (slotName === 'subtitle')
-            { slotsSubtitle.push(slotEl); }
-          if (slotName === 'text')
-            { slotsText.push(slotEl); }
-          if (slotName === 'header')
-            { slotsHeader.push(slotEl); }
-          if (slotName === 'footer')
-            { slotsFooter.push(slotEl); }
+      flattenSlots.forEach(function (child) {
+        if (typeof child === 'undefined')
+          { return; }
+        {
+          var tag = child.tag;
+          if (tag && tag.indexOf('f7-input') >= 0) {
+            hasInput = true;
+            if (child.data && child.data.info)
+              { hasInputInfo = true; }
+            if (child.data && child.data.errorMessage && child.data.errorMessageForce)
+              { hasInputErrorMessage = true; }
+          }
+          if (tag && tag.indexOf('f7-label') >= 0) {
+            if (child.data && child.data.inline)
+              { hasInlineLabel = true; }
+          }
         }
+        var slotName;
+        slotName = child.data ? child.data.slot : undefined;
+        if (!slotName || slotName === 'inner')
+          { slotsInner.push(child); }
+        if (slotName === 'content-start')
+          { slotsContentStart.push(child); }
+        if (slotName === 'content')
+          { slotsContent.push(child); }
+        if (slotName === 'content-end')
+          { slotsContentEnd.push(child); }
+        if (slotName === 'after-start')
+          { slotsAfterStart.push(child); }
+        if (slotName === 'after')
+          { slotsAfter.push(child); }
+        if (slotName === 'after-end')
+          { slotsAfterEnd.push(child); }
+        if (slotName === 'media')
+          { slotsMedia.push(child); }
+        if (slotName === 'inner-start')
+          { slotsInnerStart.push(child); }
+        if (slotName === 'inner-end')
+          { slotsInnerEnd.push(child); }
+        if (slotName === 'before-title')
+          { slotsBeforeTitle.push(child); }
+        if (slotName === 'title')
+          { slotsTitle.push(child); }
+        if (slotName === 'after-title')
+          { slotsAfterTitle.push(child); }
+        if (slotName === 'subtitle')
+          { slotsSubtitle.push(child); }
+        if (slotName === 'text')
+          { slotsText.push(child); }
+        if (slotName === 'header')
+          { slotsHeader.push(child); }
+        if (slotName === 'footer')
+          { slotsFooter.push(child); }
+      });
+      if (hasInput && !self.state.hasInput) {
+        self.hasInputSet = true;
+        self.setState({ hasInput: hasInput });
+      } else if (!hasInput) {
+        self.hasInputSet = false;
+      }
+      if (hasInputInfo && !self.state.hasInputInfo) {
+        self.hasInputInfoSet = true;
+        self.setState({ hasInputInfo: hasInputInfo });
+      } else if (!hasInputInfo) {
+        self.hasInputInfoSet = false;
+      }
+      if (hasInputErrorMessage && !self.state.hasInputErrorMessage) {
+        self.hasInputErrorMessageSet = true;
+        self.setState({ hasInputErrorMessage: hasInputErrorMessage });
+      } else if (!hasInputInfo) {
+        self.hasInputErrorMessageSet = false;
+      }
+      if (hasInlineLabel && !self.state.hasInlineLabel) {
+        self.hasInlineLabelSet = true;
+        self.setState({ hasInlineLabel: hasInlineLabel });
+      } else if (!hasInlineLabel) {
+        self.hasInlineLabelSet = false;
       }
       if (radio || checkbox) {
         {
@@ -3482,7 +3562,9 @@
         'item-radio': radio,
         'item-input': hasInput,
         'inline-label': hasInlineLabel,
-        'item-input-with-info': hasInputInfo
+        'item-input-with-info': hasInputInfo,
+        'item-input-with-error-message': hasInputErrorMessage,
+        'item-input-invalid': hasInputErrorMessage
       }, Mixins.colorClasses(props));
       return _h(ItemContentTag, {
         ref: 'el',
@@ -3511,14 +3593,18 @@
       var hasInlineLabel = $labelEl.hasClass('item-label-inline');
       var hasInput = $inputEl.length > 0;
       var hasInputInfo = $inputEl.children('.item-input-info').length > 0;
-      if (hasInlineLabel !== self.state.hasInlineLabel) {
+      var hasInputErrorMessage = $inputEl.children('.item-input-error-message').length > 0;
+      if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {
         self.setState({ hasInlineLabel: hasInlineLabel });
       }
-      if (hasInput !== self.state.hasInput) {
+      if (!self.hasInputSet && hasInput !== self.state.hasInput) {
         self.setState({ hasInput: hasInput });
       }
-      if (hasInputInfo !== self.state.hasInputInfo) {
+      if (!self.hasInputInfoSet && hasInputInfo !== self.state.hasInputInfo) {
         self.setState({ hasInputInfo: hasInputInfo });
+      }
+      if (!self.hasInputErrorMessageSet && hasInputErrorMessage !== self.state.hasInputErrorMessage) {
+        self.setState({ hasInputErrorMessage: hasInputErrorMessage });
       }
     },
     updated: function updated() {
@@ -3532,6 +3618,7 @@
       var hasInlineLabel = $labelEl.hasClass('item-label-inline');
       var hasInput = $inputEl.length > 0;
       var hasInputInfo = $inputEl.children('.item-input-info').length > 0;
+      var hasInputErrorMessage = $inputEl.children('.item-input-error-message').length > 0;
       if (hasInlineLabel !== self.state.hasInlineLabel) {
         self.setState({ hasInlineLabel: hasInlineLabel });
       }
@@ -3540,6 +3627,9 @@
       }
       if (hasInputInfo !== self.state.hasInputInfo) {
         self.setState({ hasInputInfo: hasInputInfo });
+      }
+      if (!self.hasInputErrorMessageSet && hasInputErrorMessage !== self.state.hasInputErrorMessage) {
+        self.setState({ hasInputErrorMessage: hasInputErrorMessage });
       }
     },
     methods: {
@@ -4790,6 +4880,7 @@
         default: 0
       },
       maxHeight: Number,
+      resizePage: Boolean,
       sendLink: String,
       value: [
         String,
@@ -5024,7 +5115,7 @@
           { return undefined; }
         return (ref = this.f7Messagebar).setPlaceholder.apply(ref, args);
       },
-      resizePage: function resizePage() {
+      resize: function resize() {
         var ref;
 
         var args = [], len = arguments.length;
@@ -5120,7 +5211,9 @@
       onClick: function onClick(event) {
         var self = this;
         var value = self.$refs.area.refs.inputEl.value;
-        var clear = self.f7Messagebar ? self.f7Messagebar.clear : function () {
+        var clear = self.f7Messagebar ? function () {
+          self.f7Messagebar.clear();
+        } : function () {
         };
         this.dispatchEvent('submit', value, clear);
         this.dispatchEvent('send', value, clear);
@@ -8639,7 +8732,7 @@
   };
 
   /**
-   * Framework7 Vue 3.0.0-beta.6
+   * Framework7 Vue 3.0.0-beta.7
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -8647,7 +8740,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: June 5, 2018
+   * Released on: June 9, 2018
    */
 
   var Plugin = {

@@ -10,19 +10,30 @@ export default {
       Number
     ],
     fabClose: Boolean,
+    label: String,
     ...Mixins.colorProps
   },
   render() {
     const _h = this.$createElement;
     const props = this.props;
-    const {className, id, style, fabClose} = props;
-    const classes = Utils.classNames(className, { 'fab-close': fabClose }, Mixins.colorClasses(props));
+    const {className, id, style, fabClose, label} = props;
+    const classes = Utils.classNames(className, {
+      'fab-close': fabClose,
+      'fab-label-button': label
+    }, Mixins.colorClasses(props));
+    let labelEl;
+    if (label) {
+      labelEl = _h('span', { class: 'fab-label' }, [label]);
+    }
     return _h('a', {
       style: style,
       class: classes,
       on: { click: this.onClick.bind(this) },
       attrs: { id: id }
-    }, [this.$slots['default']]);
+    }, [
+      this.$slots['default'],
+      labelEl
+    ]);
   },
   methods: {
     onClick(event) {

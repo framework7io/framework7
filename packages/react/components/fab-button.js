@@ -13,14 +13,21 @@ class F7FabButton extends React.Component {
   }
   render() {
     const props = this.props;
-    const {className, id, style, fabClose} = props;
-    const classes = Utils.classNames(className, { 'fab-close': fabClose }, Mixins.colorClasses(props));
+    const {className, id, style, fabClose, label} = props;
+    const classes = Utils.classNames(className, {
+      'fab-close': fabClose,
+      'fab-label-button': label
+    }, Mixins.colorClasses(props));
+    let labelEl;
+    if (label) {
+      labelEl = React.createElement('span', { className: 'fab-label' }, label);
+    }
     return React.createElement('a', {
       id: id,
       style: style,
       className: classes,
       onClick: this.onClick.bind(this)
-    }, this.slots['default']);
+    }, this.slots['default'], labelEl);
   }
   get slots() {
     return __reactComponentSlots(this.props);
@@ -35,6 +42,7 @@ __reactComponentSetProps(F7FabButton, {
     Number
   ],
   fabClose: Boolean,
+  label: String,
   ...Mixins.colorProps
 });
 export default F7FabButton;

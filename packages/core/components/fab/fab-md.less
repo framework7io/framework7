@@ -7,7 +7,7 @@
     height: 56px;
     border-radius: 28px;
     color: #fff;
-    .md-depth(3);
+    .elevation(6);
     &.active-state {
       background: darken(@themeColor, 8%);
     }
@@ -75,12 +75,34 @@
   .fab-morph {
     border-radius: 28px;
     background: @themeColor;
-    .md-depth(3);
+    .elevation(6);
     > a {
       box-shadow: none;
       background: none !important;
     }
   }
+  // Extended
+  .fab-extended {
+    min-width: 48px;
+    > a {
+      height: 48px;
+      i {
+        left: 48px / 2;
+      }
+    }
+    i ~ .fab-text {
+      padding-left: 48px;
+    }
+  }
+  .fab-text {
+    font-weight: 500;
+    letter-spacing: 0.03em;
+  }
+  // Labels
+  .fab-label {
+    .elevation(3);
+  }
+
   .color-theme-loop({
     .color-theme-@{colorThemeName} {
       .fab > a, .fab-buttons a, &.fab > a, &.fab-buttons a {

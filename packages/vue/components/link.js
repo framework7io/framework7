@@ -56,7 +56,7 @@ export default {
     const _h = this.$createElement;
     const self = this;
     const props = self.props;
-    const {text, badge, badgeColor, iconOnly, iconBadge, icon, iconColor, iconSize, iconMaterial, iconIon, iconFa, iconF7, iconIfMd, iconIfIos, id, style} = props;
+    const {text, badge, badgeColor, iconOnly, iconBadge, icon, iconColor, iconSize, iconMaterial, iconIon, iconFa, iconF7, iconIfMd, iconIfIos, iconMd, iconIos, id, style} = props;
     const defaultSlots = self.$slots.default;
     let iconEl;
     let textEl;
@@ -70,7 +70,9 @@ export default {
         badgeEl
       ]);
     }
-    if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconIfMd && self.$theme.md || iconIfIos && self.$theme.ios) {
+    const mdThemeIcon = iconIfMd || iconMd;
+    const iosThemeIcon = iconIfIos || iconIos;
+    if (icon || iconMaterial || iconIon || iconFa || iconF7 || mdThemeIcon || iosThemeIcon) {
       if (iconBadge) {
         iconBadgeEl = _h(F7Badge, { attrs: { color: badgeColor } }, [iconBadge]);
       }
@@ -81,8 +83,8 @@ export default {
           fa: iconFa,
           ion: iconIon,
           icon: icon,
-          ifMd: iconIfMd,
-          ifIos: iconIfIos,
+          md: mdThemeIcon,
+          ios: iosThemeIcon,
           color: iconColor,
           size: iconSize
         }

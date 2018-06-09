@@ -6,11 +6,11 @@
   .dialog {
     width: 280px;
     margin-left: -140px;
-    border-radius: 3px;
+    border-radius: 4px;
     color: #757575;
     background: #fff;
     font-size: 16px;
-    .md-depth(5);
+    .elevation(24);
     &.modal-in {
       opacity: 1;
       transform: translate3d(0,0,0) scale(1);
@@ -57,7 +57,7 @@
   .dialog-button {
     .button;
     color:@themeColor;
-    border-radius: 2px;
+    border-radius: 4px;
     line-height: 36px;
     height: 36px;
     text-transform: uppercase;
@@ -66,6 +66,8 @@
     border: none;
     transition-duration: 300ms;
     transform: translate3d(0,0,0);
+    letter-spacing: 0.03em;
+    font-weight: 500;
     &.active-state {
       background: rgba(0,0,0,0.1);
     }

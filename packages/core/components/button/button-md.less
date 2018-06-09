@@ -3,7 +3,7 @@
   // Buttons
   .button {
     color:@themeColor;
-    border-radius: 2px;
+    border-radius: 4px;
     line-height: 36px;
     height: 36px;
     text-transform: uppercase;
@@ -12,6 +12,8 @@
     border: none;
     transition-duration: 300ms;
     transform: translate3d(0,0,0);
+    font-weight: 500;
+    letter-spacing: 0.03em;
     &.active-state {
       background: rgba(0,0,0,0.1);
     }
@@ -26,16 +28,16 @@
     &.button-big, &.button-big-md {
       height: 48px;
       line-height: 48px;
-      border-radius: 3px;
+      border-radius: 4px;
     }
     &.button-round, &.button-round-md {
       border-radius: 36px;
     }
     &.button-outline {
-      border: 1px solid @themeColor;
-      line-height: 34px;
+      border: 2px solid @themeColor;
+      line-height: 32px;
       &.button-big, &.button-big-md {
-        line-height: 46px;
+        line-height: 44px;
       }
     }
     &.button-small, &.button-small-md {
@@ -46,7 +48,7 @@
       letter-spacing: 0.03em;
       &.button-outline {
         border-width: 2px;
-        line-height: 25px;
+        line-height: 24px;
       }
     }
     > i.icon + span,
@@ -88,7 +90,7 @@
 
   // Segmented Control
   .segmented {
-    border-radius: 3px;
+    border-radius: 4px;
     &.segmented-raised {
       box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     }
@@ -100,20 +102,20 @@
       .ltr({
         border-left: 1px solid rgba(0,0,0,0.1);
         &:first-child {
-          border-radius: 3px 0 0 3px;
+          border-radius: 4px 0 0 4px;
           border-left: none;
         }
         &.button-outline {
-          border: 1px solid @themeColor;
+          border: 2px solid @themeColor;
           &:nth-child(n + 2) {
             border-left: none;
           }
         }
         &:last-child {
-          border-radius: 0 3px 3px 0;
+          border-radius: 0 4px 4px 0;
         }
         &:first-child:last-child {
-          border-radius: 5px;
+          border-radius: 4px;
         }
         &.button-round:first-child {
           border-radius: 36px 0 0 36px;
@@ -125,20 +127,20 @@
       .rtl({
         border-right: 1px solid rgba(0,0,0,0.1);
         &:first-child {
-          border-radius: 0 3px 3px 0;
+          border-radius: 0 4px 4px 0;
           border-right: none;
         }
         &.button-outline {
-          border: 1px solid @themeColor;
+          border: 2px solid @themeColor;
           &:nth-child(n + 2) {
             border-right: none;
           }
         }
         &:last-child {
-          border-radius: 3px 0 0 3px;
+          border-radius: 4px 0 0 4px;
         }
         &:first-child:last-child {
-          border-radius: 5px;
+          border-radius: 4px;
         }
         &.button-round:first-child {
           border-radius: 0 36px 36px 0;

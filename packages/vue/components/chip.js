@@ -17,14 +17,14 @@ export default {
     deleteable: Boolean,
     mediaBgColor: String,
     mediaTextColor: String,
-    onDelete: Function,
+    outline: Boolean,
     ...Mixins.colorProps
   },
   render() {
     const _h = this.$createElement;
     const self = this;
     const props = self.props;
-    const {media, text, deleteable, className, id, style, mediaTextColor, mediaBgColor} = props;
+    const {media, text, deleteable, className, id, style, mediaTextColor, mediaBgColor, outline} = props;
     let mediaEl;
     let labelEl;
     let deleteEl;
@@ -45,7 +45,7 @@ export default {
         attrs: { href: '#' }
       });
     }
-    const classes = Utils.classNames(className, 'chip', Mixins.colorClasses(props));
+    const classes = Utils.classNames(className, 'chip', { 'chip-outline': outline }, Mixins.colorClasses(props));
     return _h('div', {
       style: style,
       class: classes,

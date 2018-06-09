@@ -14,6 +14,7 @@ export default {
       Boolean,
       String
     ],
+    text: String,
     position: {
       type: String,
       default: 'right-bottom'
@@ -30,7 +31,8 @@ export default {
       style,
       morphTo,
       href: initialHref,
-      position
+      position,
+      text
     } = props;
     let href = initialHref;
     if (href === true)
@@ -42,7 +44,8 @@ export default {
     const {
       link: linkSlots,
       default: defaultSlots,
-      root: rootSlots
+      root: rootSlots,
+      text: textSlots
     } = self.$slots;
     if (defaultSlots) {
       for (let i = 0; i < defaultSlots.length; i += 1) {
@@ -58,18 +61,26 @@ export default {
           linkChildren.push(child);
       }
     }
+    let textEl;
+    if (text || textSlots && textSlots.length) {
+      textEl = _h('div', { class: 'fab-text' }, [text || textSlots]);
+    }
     let linkEl;
-    if (linkChildren.length || linkSlots.length) {
+    if (linkChildren.length || linkSlots && linkSlots.length) {
       linkEl = _h('a', {
         key: 'f7-fab-link',
         on: { click: self.onClick.bind(self) },
         attrs: { href: href }
       }, [
         linkChildren,
+        textEl,
         linkSlots
       ]);
     }
-    const classes = Utils.classNames(className, 'fab', `fab-${ position }`, { 'fab-morph': morphTo }, Mixins.colorClasses(props));
+    const classes = Utils.classNames(className, 'fab', `fab-${ position }`, {
+      'fab-morph': morphTo,
+      'fab-extended': typeof textEl !== 'undefined'
+    }, Mixins.colorClasses(props));
     return _h('div', {
       style: style,
       class: classes,

@@ -58,19 +58,21 @@ class F7Button extends React.Component {
     let iconEl;
     let textEl;
     const props = self.props;
-    const {text, icon, iconMaterial, iconIon, iconFa, iconF7, iconIfMd, iconIfIos, iconColor, iconSize, id, style} = props;
+    const {text, icon, iconMaterial, iconIon, iconFa, iconF7, iconIfMd, iconIfIos, iconMd, iconIos, iconColor, iconSize, id, style} = props;
     if (text) {
       textEl = React.createElement('span', null, text);
     }
-    if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconIfMd || iconIfIos) {
+    const mdThemeIcon = iconIfMd || iconMd;
+    const iosThemeIcon = iconIfIos || iconIos;
+    if (icon || iconMaterial || iconIon || iconFa || iconF7 || mdThemeIcon || iosThemeIcon) {
       iconEl = React.createElement(F7Icon, {
         material: iconMaterial,
         ion: iconIon,
         fa: iconFa,
         f7: iconF7,
         icon: icon,
-        ifMd: iconIfMd,
-        ifIos: iconIfIos,
+        md: mdThemeIcon,
+        ios: iosThemeIcon,
         color: iconColor,
         size: iconSize
       });

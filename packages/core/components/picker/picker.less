@@ -35,10 +35,20 @@
     top: 0;
   }
   &.picker-column-first:before {
-    right: 100%;
+    .ltr({
+      right: 100%;
+    });
+    .rtl({
+      left: 100%;
+    });
   }
   &.picker-column-last:after {
-    left: 100%;
+    .ltr({
+      left: 100%;
+    });
+    .rtl({
+      right: 100%;
+    });
   }
   &.picker-column-left {
     text-align: left;

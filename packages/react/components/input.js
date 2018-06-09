@@ -50,13 +50,13 @@ class F7Input extends React.Component {
   render() {
     const self = this;
     const props = self.props;
-    const {type, name, value, defaultValue, placeholder, id, inputId, size, accept, autocomplete, autocorrect, autocapitalize, spellcheck, autofocus, autosave, checked, disabled, max, min, step, maxlength, minlength, multiple, readonly, required, inputStyle, pattern, validate, tabindex, resizable, clearButton, errorMessage, info, wrap, style, className, noStoreData, noFormStoreData} = props;
+    const {type, name, value, defaultValue, placeholder, id, inputId, size, accept, autocomplete, autocorrect, autocapitalize, spellcheck, autofocus, autosave, checked, disabled, max, min, step, maxlength, minlength, multiple, readonly, required, inputStyle, pattern, validate, tabindex, resizable, clearButton, errorMessage, errorMessageForce, info, wrap, style, className, noStoreData, noFormStoreData} = props;
     let inputEl;
     const createInput = (tag, children) => {
       const InputTag = tag;
       const needsValue = type !== 'file';
       const needsType = tag === 'input';
-      const inputClassName = Utils.classNames(type === 'textarea' && resizable && 'resizable', !wrap && className, (noFormStoreData || noStoreData) && 'no-store-data');
+      const inputClassName = Utils.classNames(type === 'textarea' && resizable && 'resizable', !wrap && className, (noFormStoreData || noStoreData) && 'no-store-data', errorMessage && errorMessageForce && 'input-invalid');
       let input;
       {
         input = React.createElement(InputTag, {
@@ -92,7 +92,7 @@ class F7Input extends React.Component {
           validate: typeof validate === 'string' && validate.length ? validate : undefined,
           'data-validate': validate === true || validate === '' ? true : undefined,
           tabIndex: tabindex,
-          'data-error-message': errorMessage,
+          'data-error-message': errorMessageForce ? undefined : errorMessage,
           className: inputClassName,
           onFocus: self.onFocusBound,
           onBlur: self.onBlurBound,
@@ -150,7 +150,7 @@ class F7Input extends React.Component {
         },
         className: wrapClasses,
         style: style
-      }, inputEl, clearButton && React.createElement('span', { className: 'input-clear-button' }), (info || slotsInfo && slotsInfo.length) && React.createElement('div', { className: 'item-input-info' }, info, this.slots['info']));
+      }, inputEl, errorMessage && errorMessageForce && React.createElement('div', { className: 'item-input-error-message' }, errorMessage), clearButton && React.createElement('span', { className: 'input-clear-button' }), (info || slotsInfo && slotsInfo.length) && React.createElement('div', { className: 'item-input-info' }, info, this.slots['info']));
     }
     return inputEl;
   }
@@ -203,7 +203,7 @@ class F7Input extends React.Component {
   componentDidMount() {
     const self = this;
     self.$f7ready(f7 => {
-      const {validate, resizable, type, clearButton} = self.props;
+      const {validate, resizable, type, clearButton, value, defaultValue} = self.props;
       if (type === 'range' || type === 'toggle')
         return;
       const inputEl = self.refs.inputEl;
@@ -218,8 +218,10 @@ class F7Input extends React.Component {
         inputEl.addEventListener('input:clear', self.onInputClearBound, false);
       }
       f7.input.checkEmptyState(inputEl);
-      if (validate) {
-        f7.input.validate(inputEl);
+      if (validate && (typeof value !== 'undefined' || typeof defaultValue !== 'undefined')) {
+        setTimeout(() => {
+          f7.input.validate(inputEl);
+        }, 0);
       }
       if (resizable) {
         f7.input.resizeTextarea(inputEl);
@@ -314,6 +316,7 @@ __reactComponentSetProps(F7Input, {
   noFormStoreData: Boolean,
   noStoreData: Boolean,
   errorMessage: String,
+  errorMessageForce: Boolean,
   info: String,
   wrap: {
     type: Boolean,

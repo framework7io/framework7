@@ -1,5 +1,5 @@
 /**
- * Framework7 3.0.0-beta.6
+ * Framework7 3.0.0-beta.7
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 5, 2018
+ * Released on: June 9, 2018
  */
 
 (function (global, factory) {
@@ -10760,11 +10760,11 @@
               destroyOnClose: destroyOnClose,
             }).open();
           },
-          preloader: function preloader(title) {
+          preloader: function preloader(title, color) {
             var preloaderInner = app.theme !== 'md' ? '' : Utils.mdPreloaderContent;
             return new Dialog(app, {
-              title: typeof title === 'undefined' ? app.params.dialog.preloaderTitle : title,
-              content: ("<div class=\"preloader\">" + preloaderInner + "</div>"),
+              title: typeof title === 'undefined' || title === null ? app.params.dialog.preloaderTitle : title,
+              content: ("<div class=\"preloader" + (color ? (" color-" + color) : '') + "\">" + preloaderInner + "</div>"),
               cssClass: 'dialog-preloader',
               destroyOnClose: destroyOnClose,
             }).open();
@@ -16719,7 +16719,7 @@
       if (!view) {
         view = $el.parents('.view').length && $el.parents('.view')[0].f7View;
       }
-      if (!view) {
+      if (!view && (params.openIn === 'page' || (params.openIn !== 'page' && params.routableModals === true))) {
         throw Error('Smart Select requires initialized View');
       }
 
@@ -17407,7 +17407,7 @@
       function onHtmlClick(e) {
         var $targetEl = $$1(e.target);
         if (calendar.isPopover()) { return; }
-        if (!calendar.opened) { return; }
+        if (!calendar.opened || calendar.closing) { return; }
         if ($targetEl.closest('[class*="backdrop"]').length) { return; }
         if ($inputEl && $inputEl.length > 0) {
           if ($targetEl[0] !== $inputEl[0] && $targetEl.closest('.sheet-modal, .calendar-modal').length === 0) {
@@ -17975,7 +17975,9 @@
       var prevDateTime = prevDate.getTime();
       var transitionEndCallback = !calendar.animating;
       if (params.minDate) {
-        if (prevDateTime < new Date(params.minDate).getTime()) {
+        var minDate = new Date(params.minDate);
+        minDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
+        if (prevDateTime < minDate.getTime()) {
           calendar.resetMonth();
           return;
         }
@@ -18047,8 +18049,12 @@
       if (params.maxDate && targetDate > new Date(params.maxDate).getTime()) {
         return false;
       }
-      if (params.minDate && targetDate < new Date(params.minDate).getTime()) {
-        return false;
+      if (params.minDate) {
+        var minDate = new Date(params.minDate);
+        minDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
+        if (targetDate < minDate.getTime()) {
+          return false;
+        }
       }
       var currentDate = new Date(calendar.currentYear, calendar.currentMonth).getTime();
       var dir = targetDate > currentDate ? 'next' : 'prev';
@@ -18452,7 +18458,9 @@
       var inline = calendar.inline;
       var value = calendar.value;
       var params = calendar.params;
+      calendar.closing = false;
       calendar.opened = true;
+      calendar.opening = true;
 
       // Init main events
       calendar.attachCalendarEvents();
@@ -18504,6 +18512,7 @@
     };
     Calendar.prototype.onOpened = function onOpened () {
       var calendar = this;
+      calendar.opening = false;
       if (calendar.$el) {
         calendar.$el.trigger('calendar:opened', calendar);
       }
@@ -18515,6 +18524,8 @@
     Calendar.prototype.onClose = function onClose () {
       var calendar = this;
       var app = calendar.app;
+      calendar.opening = false;
+      calendar.closing = true;
 
       if (calendar.$inputEl && app.theme === 'md') {
         calendar.$inputEl.trigger('blur');
@@ -18534,6 +18545,7 @@
     Calendar.prototype.onClosed = function onClosed () {
       var calendar = this;
       calendar.opened = false;
+      calendar.closing = false;
 
       if (!calendar.inline) {
         Utils.nextTick(function () {
@@ -22352,9 +22364,11 @@
         if (prevSlideSize === 0 && i !== 0) { slidePosition = slidePosition - (swiperSize / 2) - spaceBetween; }
         if (i === 0) { slidePosition = slidePosition - (swiperSize / 2) - spaceBetween; }
         if (Math.abs(slidePosition) < 1 / 1000) { slidePosition = 0; }
+        if (params.roundLengths) { slidePosition = Math.floor(slidePosition); }
         if ((index) % params.slidesPerGroup === 0) { snapGrid.push(slidePosition); }
         slidesGrid.push(slidePosition);
       } else {
+        if (params.roundLengths) { slidePosition = Math.floor(slidePosition); }
         if ((index) % params.slidesPerGroup === 0) { snapGrid.push(slidePosition); }
         slidesGrid.push(slidePosition);
         slidePosition = slidePosition + slideSize + spaceBetween;
@@ -22386,7 +22400,9 @@
       if (params.centeredSlides) {
         newSlidesGrid = [];
         for (var i$1 = 0; i$1 < snapGrid.length; i$1 += 1) {
-          if (snapGrid[i$1] < swiper.virtualSize + snapGrid[0]) { newSlidesGrid.push(snapGrid[i$1]); }
+          var slidesGridItem = snapGrid[i$1];
+          if (params.roundLengths) { slidesGridItem = Math.floor(slidesGridItem); }
+          if (snapGrid[i$1] < swiper.virtualSize + snapGrid[0]) { newSlidesGrid.push(slidesGridItem); }
         }
         snapGrid = newSlidesGrid;
       }
@@ -22396,8 +22412,10 @@
     if (!params.centeredSlides) {
       newSlidesGrid = [];
       for (var i$2 = 0; i$2 < snapGrid.length; i$2 += 1) {
+        var slidesGridItem$1 = snapGrid[i$2];
+        if (params.roundLengths) { slidesGridItem$1 = Math.floor(slidesGridItem$1); }
         if (snapGrid[i$2] <= swiper.virtualSize - swiperSize) {
-          newSlidesGrid.push(snapGrid[i$2]);
+          newSlidesGrid.push(slidesGridItem$1);
         }
       }
       snapGrid = newSlidesGrid;
@@ -22772,7 +22790,7 @@
       if (Support.transforms3d) { $wrapperEl.transform(("translate3d(" + x + "px, " + y + "px, " + z + "px)")); }
       else { $wrapperEl.transform(("translate(" + x + "px, " + y + "px)")); }
     }
-
+    swiper.previousTranslate = swiper.translate;
     swiper.translate = swiper.isHorizontal() ? x : y;
 
     // Check if we need to update progress
@@ -23043,10 +23061,13 @@
       swiper._clientLeft = swiper.$wrapperEl[0].clientLeft;
     }
     var translate = rtlTranslate ? swiper.translate : -swiper.translate;
-
-    var normalizedTranslate = translate < 0 ? -Math.floor(Math.abs(translate)) : Math.floor(translate);
-    var normalizedSnapGrid = snapGrid.map(function (val) { return Math.floor(val); });
-    var normalizedSlidesGrid = slidesGrid.map(function (val) { return Math.floor(val); });
+    function normalize(val) {
+      if (val < 0) { return -Math.floor(Math.abs(val)); }
+      return Math.floor(val);
+    }
+    var normalizedTranslate = normalize(translate);
+    var normalizedSnapGrid = snapGrid.map(function (val) { return normalize(val); });
+    var normalizedSlidesGrid = slidesGrid.map(function (val) { return normalize(val); });
 
     var currentSnap = snapGrid[normalizedSnapGrid.indexOf(normalizedTranslate)];
     var prevSnap = snapGrid[normalizedSnapGrid.indexOf(normalizedTranslate) - 1];
@@ -24590,6 +24611,7 @@
 
         // Props
         translate: 0,
+        previousTranslate: 0,
         progress: 0,
         velocity: 0,
         animating: false,
@@ -29424,11 +29446,12 @@
       var ac = this;
       if (ac.params.renderItem) { return ac.params.renderItem.call(ac, item, index); }
       var itemHtml;
+      var itemValue = item.value.replace(/"/g, '&quot;');
       if (ac.params.openIn !== 'dropdown') {
-        itemHtml = "\n        <li>\n          <label class=\"item-" + (item.inputType) + " item-content\">\n            <input type=\"" + (item.inputType) + "\" name=\"" + (item.inputName) + "\" value=\"" + (item.value) + "\" " + (item.selected ? 'checked' : '') + ">\n            <i class=\"icon icon-" + (item.inputType) + "\"></i>\n            <div class=\"item-inner\">\n              <div class=\"item-title\">" + (item.text) + "</div>\n            </div>\n          </label>\n        </li>\n      ";
+        itemHtml = "\n        <li>\n          <label class=\"item-" + (item.inputType) + " item-content\">\n            <input type=\"" + (item.inputType) + "\" name=\"" + (item.inputName) + "\" value=\"" + itemValue + "\" " + (item.selected ? 'checked' : '') + ">\n            <i class=\"icon icon-" + (item.inputType) + "\"></i>\n            <div class=\"item-inner\">\n              <div class=\"item-title\">" + (item.text) + "</div>\n            </div>\n          </label>\n        </li>\n      ";
       } else if (!item.placeholder) {
         // Dropdown
-        itemHtml = "\n        <li>\n          <label class=\"item-radio item-content\" data-value=\"" + (item.value) + "\">\n            <div class=\"item-inner\">\n              <div class=\"item-title\">" + (item.text) + "</div>\n            </div>\n          </label>\n        </li>\n      ";
+        itemHtml = "\n        <li>\n          <label class=\"item-radio item-content\" data-value=\"" + itemValue + "\">\n            <div class=\"item-inner\">\n              <div class=\"item-title\">" + (item.text) + "</div>\n            </div>\n          </label>\n        </li>\n      ";
       } else {
         // Dropwdown placeholder
         itemHtml = "\n        <li class=\"autocomplete-dropdown-placeholder\">\n          <div class=\"item-content\">\n            <div class=\"item-inner\">\n              <div class=\"item-title\">" + (item.text) + "</div>\n            </div>\n          </label>\n        </li>\n      ";

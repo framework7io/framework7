@@ -27,6 +27,7 @@ export default {
       default: 0
     },
     maxHeight: Number,
+    resizePage: Boolean,
     sendLink: String,
     value: [
       String,
@@ -228,7 +229,7 @@ export default {
         return undefined;
       return this.f7Messagebar.setPlaceholder(...args);
     },
-    resizePage(...args) {
+    resize(...args) {
       if (!this.f7Messagebar)
         return undefined;
       return this.f7Messagebar.resizePage(...args);
@@ -288,7 +289,9 @@ export default {
     onClick(event) {
       const self = this;
       const value = self.$refs.area.refs.inputEl.value;
-      const clear = self.f7Messagebar ? self.f7Messagebar.clear : () => {
+      const clear = self.f7Messagebar ? () => {
+        self.f7Messagebar.clear();
+      } : () => {
       };
       this.dispatchEvent('submit', value, clear);
       this.dispatchEvent('send', value, clear);

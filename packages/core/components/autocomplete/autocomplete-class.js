@@ -436,11 +436,12 @@ class Autocomplete extends Framework7Class {
     const ac = this;
     if (ac.params.renderItem) return ac.params.renderItem.call(ac, item, index);
     let itemHtml;
+    const itemValue = item.value.replace(/"/g, '&quot;');
     if (ac.params.openIn !== 'dropdown') {
       itemHtml = `
         <li>
           <label class="item-${item.inputType} item-content">
-            <input type="${item.inputType}" name="${item.inputName}" value="${item.value}" ${item.selected ? 'checked' : ''}>
+            <input type="${item.inputType}" name="${item.inputName}" value="${itemValue}" ${item.selected ? 'checked' : ''}>
             <i class="icon icon-${item.inputType}"></i>
             <div class="item-inner">
               <div class="item-title">${item.text}</div>
@@ -452,7 +453,7 @@ class Autocomplete extends Framework7Class {
       // Dropdown
       itemHtml = `
         <li>
-          <label class="item-radio item-content" data-value="${item.value}">
+          <label class="item-radio item-content" data-value="${itemValue}">
             <div class="item-inner">
               <div class="item-title">${item.text}</div>
             </div>
