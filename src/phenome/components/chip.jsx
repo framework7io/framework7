@@ -10,7 +10,7 @@ export default {
     deleteable: Boolean,
     mediaBgColor: String,
     mediaTextColor: String,
-    onDelete: Function,
+    outline: Boolean,
     ...Mixins.colorProps,
   },
   render() {
@@ -25,6 +25,7 @@ export default {
       style,
       mediaTextColor,
       mediaBgColor,
+      outline,
     } = props;
 
     let mediaEl;
@@ -59,6 +60,9 @@ export default {
     const classes = Utils.classNames(
       className,
       'chip',
+      {
+        'chip-outline': outline,
+      },
       Mixins.colorClasses(props),
     );
 
