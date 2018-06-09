@@ -18,15 +18,23 @@ export default class extends React.Component {
           <Chip text="Fourth Chip" />
           <Chip text="Last One" />
         </Block>
+        <BlockTitle>Outline Chips</BlockTitle>
+        <Block strong>
+          <Chip outline text="Example Chip" />
+          <Chip outline text="Another Chip" />
+          <Chip outline text="One More Chip" />
+          <Chip outline text="Fourth Chip" />
+          <Chip outline text="Last One" />
+        </Block>
         <BlockTitle>Icon Chips</BlockTitle>
         <Block strong>
-          <Chip text="Add Contact" mediaBgColor={this.$theme.md ? 'blue' : undefined}>
+          <Chip text="Add Contact" mediaBgColor="blue">
             <Icon slot="media" ios="f7:add_round" md="material:add_circle"></Icon>
           </Chip>
-          <Chip text="London" mediaBgColor={this.$theme.md ? 'green' : undefined}>
+          <Chip text="London" mediaBgColor="green">
             <Icon slot="media" ios="f7:compass" md="material:location_on"></Icon>
           </Chip>
-          <Chip text="John Doe" mediaBgColor={this.$theme.md ? 'red' : undefined}>
+          <Chip text="John Doe" mediaBgColor="red">
             <Icon slot="media" ios="f7:person" md="material:person"></Icon>
           </Chip>
         </Block>
@@ -65,6 +73,11 @@ export default class extends React.Component {
           <Chip text="Blue Chip" color="blue" />
           <Chip text="Orange Chip" color="orange" />
           <Chip text="Pink Chip" color="pink" />
+          <Chip outline text="Red Chip" color="red" />
+          <Chip outline text="Green Chip" color="green" />
+          <Chip outline text="Blue Chip" color="blue" />
+          <Chip outline text="Orange Chip" color="orange" />
+          <Chip outline text="Pink Chip" color="pink" />
         </Block>
       </Page>
     )

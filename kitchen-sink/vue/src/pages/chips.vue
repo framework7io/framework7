@@ -9,15 +9,23 @@
       <f7-chip text="Fourth Chip"></f7-chip>
       <f7-chip text="Last One"></f7-chip>
     </f7-block>
+    <f7-block-title>Outline Chips</f7-block-title>
+    <f7-block strong>
+      <f7-chip outline text="Example Chip"></f7-chip>
+      <f7-chip outline text="Another Chip"></f7-chip>
+      <f7-chip outline text="One More Chip"></f7-chip>
+      <f7-chip outline text="Fourth Chip"></f7-chip>
+      <f7-chip outline text="Last One"></f7-chip>
+    </f7-block>
     <f7-block-title>Icon Chips</f7-block-title>
     <f7-block strong>
-      <f7-chip text="Add Contact" :media-bg-color="$theme.md ? 'blue' : undefined">
+      <f7-chip text="Add Contact" media-bg-color="blue">
         <f7-icon slot="media" ios="f7:add_round" md="material:add_circle"></f7-icon>
       </f7-chip>
-      <f7-chip text="London" :media-bg-color="$theme.md ? 'green' : undefined">
+      <f7-chip text="London" media-bg-color="green">
         <f7-icon slot="media" ios="f7:compass" md="material:location_on"></f7-icon>
       </f7-chip>
-      <f7-chip text="John Doe" :media-bg-color="$theme.md ? 'red' : undefined">
+      <f7-chip text="John Doe" media-bg-color="red">
         <f7-icon slot="media" ios="f7:person" md="material:person"></f7-icon>
       </f7-chip>
     </f7-block>
@@ -56,6 +64,11 @@
       <f7-chip text="Blue Chip" color="blue"></f7-chip>
       <f7-chip text="Orange Chip" color="orange"></f7-chip>
       <f7-chip text="Pink Chip" color="pink"></f7-chip>
+      <f7-chip outline text="Red Chip" color="red"></f7-chip>
+      <f7-chip outline text="Green Chip" color="green"></f7-chip>
+      <f7-chip outline text="Blue Chip" color="blue"></f7-chip>
+      <f7-chip outline text="Orange Chip" color="orange"></f7-chip>
+      <f7-chip outline text="Pink Chip" color="pink"></f7-chip>
     </f7-block>
   </f7-page>
 </template>
