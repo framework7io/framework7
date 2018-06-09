@@ -65,7 +65,7 @@
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.0",
     "hoek": "^5.0.3",
-    "phenome": "0.0.9",
+    "phenome": "0.0.10",
     "prettier-eslint": "^8.8.1",
     "prop-types": "^15.6.1",
     "react": "^16.4.0",
