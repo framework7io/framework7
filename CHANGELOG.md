@@ -4,6 +4,7 @@
 
 # [v3.0.0-beta.7](https://github.com/framework7io/framework7/compare/v3.0.0-beta.6...v3.0.0-beta.7) - June 9, 2018
   * Core
+    * Lots of MD styles updated to new Material Design specification
     * Cards
       * New outline cards style
     * Chips
