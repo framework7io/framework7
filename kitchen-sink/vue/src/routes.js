@@ -17,6 +17,7 @@ import ContactsList from './pages/contacts-list.vue';
 import ContentBlock from './pages/content-block.vue';
 import DataTable from './pages/data-table.vue';
 import Dialog from './pages/dialog.vue';
+import Elevation from './pages/elevation.vue';
 import Fab from './pages/fab.vue';
 import FabMorph from './pages/fab-morph.vue';
 import FormStorage from './pages/form-storage.vue';
@@ -225,6 +226,10 @@ export default [
   {
     path: '/dialog/',
     component: Dialog,
+  },
+  {
+    path: '/elevation/',
+    component: Elevation,
   },
   {
     path: '/fab/',

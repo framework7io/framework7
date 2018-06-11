@@ -494,3 +494,11 @@ code {
     border-left-color: #282828;
   }
 }
+.elevation-demo {
+  height: 100px;
+  margin: 30px 10px;
+  background: #fff;
+  font-size: 18px;
+  text-align: center;
+  line-height: 100px;
+}

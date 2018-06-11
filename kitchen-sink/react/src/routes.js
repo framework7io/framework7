@@ -16,6 +16,7 @@ import ContactsList from './pages/contacts-list.jsx';
 import ContentBlock from './pages/content-block.jsx';
 import DataTable from './pages/data-table.jsx';
 import Dialog from './pages/dialog.jsx';
+import Elevation from './pages/elevation.jsx';
 import Fab from './pages/fab.jsx';
 import FabMorph from './pages/fab-morph.jsx';
 import FormStorage from './pages/form-storage.jsx';
@@ -223,6 +224,10 @@ export default [
   {
     path: '/dialog/',
     component: Dialog,
+  },
+  {
+    path: '/elevation/',
+    component: Elevation,
   },
   {
     path: '/fab/',

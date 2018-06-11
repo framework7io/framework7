@@ -119,6 +119,10 @@ var routes = [
     componentUrl: './pages/dialog.html',
   },
   {
+    path: '/elevation/',
+    url: './pages/elevation.html',
+  },
+  {
     path: '/fab/',
     url: './pages/fab.html',
   },

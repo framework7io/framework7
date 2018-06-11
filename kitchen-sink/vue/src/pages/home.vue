@@ -58,6 +58,9 @@
       <f7-list-item link="/dialog/" title="Dialog">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>
+      <f7-list-item link="/elevation/" title="Elevation">
+        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+      </f7-list-item>
       <f7-list-item link="/fab/" title="FAB">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>

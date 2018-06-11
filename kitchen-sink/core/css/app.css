@@ -465,3 +465,12 @@ code {
 .theme-dark .demo-icon .demo-icon-name {
   color: #aaa;
 }
+
+.elevation-demo {
+  height: 100px;
+  margin: 30px 10px;
+  background: #fff;
+  font-size: 18px;
+  text-align: center;
+  line-height: 100px;
+}

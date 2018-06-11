@@ -61,6 +61,9 @@ export default () => (
       <ListItem link="/dialog/" title="Dialog">
         <Icon slot="media" icon="icon-f7" />
       </ListItem>
+      <ListItem link="/elevation/" title="Elevation">
+        <Icon slot="media" icon="icon-f7" />
+      </ListItem>
       <ListItem link="/fab/" title="FAB">
         <Icon slot="media" icon="icon-f7" />
       </ListItem>
