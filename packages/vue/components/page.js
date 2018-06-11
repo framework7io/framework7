@@ -5,11 +5,8 @@ import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispat
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
 export default {
   name: 'f7-page',
-  props: {
-    id: [
-      String,
-      Number
-    ],
+  props: Object.assign({
+    id: [String, Number],
     name: String,
     stacked: Boolean,
     withSubnavbar: Boolean,
@@ -39,21 +36,53 @@ export default {
     hideNavbarOnScroll: Boolean,
     hideToolbarOnScroll: Boolean,
     messagesContent: Boolean,
-    loginScreen: Boolean,
-    ...Mixins.colorProps
-  },
+    loginScreen: Boolean
+  }, Mixins.colorProps),
+
   data() {
     const props = __vueComponentProps(this);
+
     const state = (() => {
-      return { hasSubnavbar: false };
+      return {
+        hasSubnavbar: false
+      };
     })();
-    return { state };
+
+    return {
+      state
+    };
   },
+
   render() {
     const _h = this.$createElement;
     const self = this;
     const props = self.props;
-    const {id, style, name, pageContent, messagesContent, ptr, ptrDistance, ptrPreloader, infinite, infiniteDistance, infinitePreloader, infiniteTop, hideBarsOnScroll, hideNavbarOnScroll, hideToolbarOnScroll, loginScreen, className, stacked, tabs, subnavbar, withSubnavbar, noNavbar, noToolbar, noSwipeback} = props;
+    const {
+      id,
+      style,
+      name,
+      pageContent,
+      messagesContent,
+      ptr,
+      ptrDistance,
+      ptrPreloader,
+      infinite,
+      infiniteDistance,
+      infinitePreloader,
+      infiniteTop,
+      hideBarsOnScroll,
+      hideNavbarOnScroll,
+      hideToolbarOnScroll,
+      loginScreen,
+      className,
+      stacked,
+      tabs,
+      subnavbar,
+      withSubnavbar,
+      noNavbar,
+      noToolbar,
+      noSwipeback
+    } = props;
     const fixedList = [];
     const staticList = [];
     const needsPageContent = pageContent;
@@ -67,36 +96,35 @@ export default {
     let hasSubnavbar;
     let hasMessages;
     hasMessages = self.$options.propsData.messagesContent;
+
     if (slotsDefault) {
       slotsDefault.forEach(child => {
-        if (typeof child === 'undefined')
-          return;
+        if (typeof child === 'undefined') return;
         let isFixedTag = false;
         {
           const tag = child.tag;
+
           if (!tag) {
-            if (needsPageContent)
-              staticList.push(child);
+            if (needsPageContent) staticList.push(child);
             return;
           }
-          if (tag.indexOf('subnavbar') >= 0)
-            hasSubnavbar = true;
-          if (typeof hasMessages === 'undefined' && tag.indexOf('messages') >= 0)
-            hasMessages = true;
+
+          if (tag.indexOf('subnavbar') >= 0) hasSubnavbar = true;
+          if (typeof hasMessages === 'undefined' && tag.indexOf('messages') >= 0) hasMessages = true;
+
           for (let j = 0; j < fixedTags.length; j += 1) {
             if (tag.indexOf(fixedTags[j]) >= 0) {
               isFixedTag = true;
             }
           }
         }
+
         if (needsPageContent) {
-          if (isFixedTag)
-            fixedList.push(child);
-          else
-            staticList.push(child);
+          if (isFixedTag) fixedList.push(child);else staticList.push(child);
         }
       });
     }
+
     const classes = Utils.classNames(className, 'page', {
       stacked,
       tabs,
@@ -105,6 +133,7 @@ export default {
       'no-toolbar': noToolbar,
       'no-swipeback': noSwipeback
     }, Mixins.colorClasses(props));
+
     if (!needsPageContent) {
       return _h('div', {
         ref: 'el',
@@ -114,12 +143,9 @@ export default {
           id: id,
           'data-name': name
         }
-      }, [
-        slotsFixed,
-        slotsStatic,
-        slotsDefault
-      ]);
+      }, [slotsFixed, slotsStatic, slotsDefault]);
     }
+
     const pageContentEl = _h(F7PageContent, {
       attrs: {
         ptr: ptr,
@@ -135,10 +161,8 @@ export default {
         messagesContent: messagesContent || hasMessages,
         loginScreen: loginScreen
       }
-    }, [
-      slotsStatic,
-      staticList
-    ]);
+    }, [slotsStatic, staticList]);
+
     return _h('div', {
       ref: 'el',
       style: style,
@@ -147,16 +171,16 @@ export default {
         id: id,
         'data-name': name
       }
-    }, [
-      fixedList,
-      slotsFixed,
-      pageContentEl
-    ]);
+    }, [fixedList, slotsFixed, pageContentEl]);
   },
+
   mounted() {
     const self = this;
     const el = self.$refs.el;
-    const {ptr, infinite} = self.props;
+    const {
+      ptr,
+      infinite
+    } = self.props;
     self.onPtrPullStart = self.onPtrPullStart.bind(self);
     self.onPtrPullMove = self.onPtrPullMove.bind(self);
     self.onPtrPullEnd = self.onPtrPullEnd.bind(self);
@@ -171,6 +195,7 @@ export default {
     self.onPageAfterOut = self.onPageAfterOut.bind(self);
     self.onPageAfterIn = self.onPageAfterIn.bind(self);
     self.onPageBeforeRemove = self.onPageBeforeRemove.bind(self);
+
     if (ptr) {
       el.addEventListener('ptr:pullstart', self.onPtrPullStart);
       el.addEventListener('ptr:pullmove', self.onPtrPullMove);
@@ -178,9 +203,11 @@ export default {
       el.addEventListener('ptr:refresh', self.onPtrRefresh);
       el.addEventListener('ptr:done', self.onPtrDone);
     }
+
     if (infinite) {
       el.addEventListener('infinite', self.onInfinite);
     }
+
     el.addEventListener('page:mounted', self.onPageMounted);
     el.addEventListener('page:init', self.onPageInit);
     el.addEventListener('page:reinit', self.onPageReinit);
@@ -190,6 +217,7 @@ export default {
     el.addEventListener('page:afterin', self.onPageAfterIn);
     el.addEventListener('page:beforeremove', self.onPageBeforeRemove);
   },
+
   beforeDestroy() {
     const self = this;
     const el = self.$refs.el;
@@ -208,56 +236,73 @@ export default {
     el.removeEventListener('page:afterin', self.onPageAfterIn);
     el.removeEventListener('page:beforeremove', self.onPageBeforeRemove);
   },
+
   methods: {
     onPtrPullStart(event) {
       this.dispatchEvent('ptr:pullstart ptrPullStart', event);
     },
+
     onPtrPullMove(event) {
       this.dispatchEvent('ptr:pullmove ptrPullMove', event);
     },
+
     onPtrPullEnd(event) {
       this.dispatchEvent('ptr:pullend ptrPullEnd', event);
     },
+
     onPtrRefresh(event) {
       this.dispatchEvent('ptr:refresh ptrRefresh', event, event.detail);
     },
+
     onPtrDone(event) {
       this.dispatchEvent('ptr:done ptrDone', event);
     },
+
     onInfinite(event) {
       this.dispatchEvent('infinite', event);
     },
+
     onPageMounted(event) {
       this.dispatchEvent('page:mounted pageMounted', event, event.detail);
     },
+
     onPageInit(event) {
       this.dispatchEvent('page:init pageInit', event, event.detail);
     },
+
     onPageReinit(event) {
       this.dispatchEvent('page:reinit pageReinit', event, event.detail);
     },
+
     onPageBeforeIn(event) {
       this.dispatchEvent('page:beforein pageBeforeIn', event, event.detail);
     },
+
     onPageBeforeOut(event) {
       this.dispatchEvent('page:beforeout pageBeforeOut', event, event.detail);
     },
+
     onPageAfterOut(event) {
       this.dispatchEvent('page:afterout pageAfterOut', event, event.detail);
     },
+
     onPageAfterIn(event) {
       this.dispatchEvent('page:afterin pageAfterIn', event, event.detail);
     },
+
     onPageBeforeRemove(event) {
       this.dispatchEvent('page:beforeremove pageBeforeRemove', event, event.detail);
     },
+
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
     }
+
   },
   computed: {
     props() {
       return __vueComponentProps(this);
     }
+
   }
 };

@@ -7,10 +7,12 @@ import __reactComponentWatch from '../runtime-helpers/react-component-watch.js';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
+
 class F7Input extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.__reactRefs = {};
+
     (() => {
       const self = this;
       self.onFocusBound = self.onFocus.bind(self);
@@ -23,35 +25,85 @@ class F7Input extends React.Component {
       self.onInputClearBound = self.onInputClear.bind(self);
     })();
   }
+
   onTextareaResize(event) {
     this.dispatchEvent('textarea:resize textareaResize', event);
   }
+
   onInputNotEmpty(event) {
     this.dispatchEvent('input:notempty inputNotEmpty', event);
   }
+
   onInputEmpty(event) {
     this.dispatchEvent('input:empty inputEmpty', event);
   }
+
   onInputClear(event) {
     this.dispatchEvent('input:clear inputClear', event);
   }
+
   onInput(event) {
     this.dispatchEvent('input', event);
   }
+
   onFocus(event) {
     this.dispatchEvent('focus', event);
   }
+
   onBlur(event) {
     this.dispatchEvent('blur', event);
   }
+
   onChange(event) {
     this.dispatchEvent('change', event);
   }
+
   render() {
     const self = this;
     const props = self.props;
-    const {type, name, value, defaultValue, placeholder, id, inputId, size, accept, autocomplete, autocorrect, autocapitalize, spellcheck, autofocus, autosave, checked, disabled, max, min, step, maxlength, minlength, multiple, readonly, required, inputStyle, pattern, validate, tabindex, resizable, clearButton, errorMessage, errorMessageForce, info, wrap, style, className, noStoreData, noFormStoreData} = props;
+    const {
+      type,
+      name,
+      value,
+      defaultValue,
+      placeholder,
+      id,
+      inputId,
+      size,
+      accept,
+      autocomplete,
+      autocorrect,
+      autocapitalize,
+      spellcheck,
+      autofocus,
+      autosave,
+      checked,
+      disabled,
+      max,
+      min,
+      step,
+      maxlength,
+      minlength,
+      multiple,
+      readonly,
+      required,
+      inputStyle,
+      pattern,
+      validate,
+      tabindex,
+      resizable,
+      clearButton,
+      errorMessage,
+      errorMessageForce,
+      info,
+      wrap,
+      style,
+      className,
+      noStoreData,
+      noFormStoreData
+    } = props;
     let inputEl;
+
     const createInput = (tag, children) => {
       const InputTag = tag;
       const needsValue = type !== 'file';
@@ -102,10 +154,12 @@ class F7Input extends React.Component {
       }
       return input;
     };
+
     const {
       default: slotsDefault,
       info: slotsInfo
     } = self.slots;
+
     if (type === 'select' || type === 'textarea' || type === 'file') {
       if (type === 'select') {
         inputEl = createInput('select', slotsDefault);
@@ -141,6 +195,7 @@ class F7Input extends React.Component {
     } else {
       inputEl = createInput('input');
     }
+
     if (wrap) {
       const wrapClasses = Utils.classNames(className, 'item-input-wrap', Mixins.colorClasses(props));
       return React.createElement('div', {
@@ -150,126 +205,140 @@ class F7Input extends React.Component {
         },
         className: wrapClasses,
         style: style
-      }, inputEl, errorMessage && errorMessageForce && React.createElement('div', { className: 'item-input-error-message' }, errorMessage), clearButton && React.createElement('span', { className: 'input-clear-button' }), (info || slotsInfo && slotsInfo.length) && React.createElement('div', { className: 'item-input-info' }, info, this.slots['info']));
+      }, inputEl, errorMessage && errorMessageForce && React.createElement('div', {
+        className: 'item-input-error-message'
+      }, errorMessage), clearButton && React.createElement('span', {
+        className: 'input-clear-button'
+      }), (info || slotsInfo && slotsInfo.length) && React.createElement('div', {
+        className: 'item-input-info'
+      }, info, this.slots['info']));
     }
+
     return inputEl;
   }
+
   componentWillUnmount() {
     const self = this;
-    const {type, resizable, clearButton} = self.props;
-    if (type === 'range' || type === 'toggle')
-      return;
+    const {
+      type,
+      resizable,
+      clearButton
+    } = self.props;
+    if (type === 'range' || type === 'toggle') return;
     const inputEl = self.refs.inputEl;
-    if (!inputEl)
-      return;
+    if (!inputEl) return;
     inputEl.removeEventListener('input:notempty', self.onInputNotEmptyBound, false);
+
     if (type === 'textarea' && resizable) {
       inputEl.removeEventListener('textarea:resze', self.onTextareaResizeBound, false);
     }
+
     if (clearButton) {
       inputEl.removeEventListener('input:empty', self.onInputEmptyBound, false);
       inputEl.removeEventListener('input:clear', self.onInputClearBound, false);
     }
   }
+
   componentDidUpdate(prevProps, prevState) {
     __reactComponentWatch(this, 'props.value', prevProps, prevState, () => {
       const self = this;
-      const {type} = self.props;
-      if (type === 'range' || type === 'toggle')
-        return;
-      if (!self.$f7)
-        return;
+      const {
+        type
+      } = self.props;
+      if (type === 'range' || type === 'toggle') return;
+      if (!self.$f7) return;
       self.updateInputOnDidUpdate = true;
     });
+
     const self = this;
-    const {validate, resizable} = self.props;
+    const {
+      validate,
+      resizable
+    } = self.props;
     const f7 = self.$f7;
-    if (!f7)
-      return;
+    if (!f7) return;
+
     if (self.updateInputOnDidUpdate) {
       const inputEl = self.refs.inputEl;
-      if (!inputEl)
-        return;
+      if (!inputEl) return;
       self.updateInputOnDidUpdate = false;
       f7.input.checkEmptyState(inputEl);
+
       if (validate) {
         f7.input.validate(inputEl);
       }
+
       if (resizable) {
         f7.input.resizeTextarea(inputEl);
       }
     }
   }
+
   componentDidMount() {
     const self = this;
     self.$f7ready(f7 => {
-      const {validate, resizable, type, clearButton, value, defaultValue} = self.props;
-      if (type === 'range' || type === 'toggle')
-        return;
+      const {
+        validate,
+        resizable,
+        type,
+        clearButton,
+        value,
+        defaultValue
+      } = self.props;
+      if (type === 'range' || type === 'toggle') return;
       const inputEl = self.refs.inputEl;
-      if (!inputEl)
-        return;
+      if (!inputEl) return;
       inputEl.addEventListener('input:notempty', self.onInputNotEmptyBound, false);
+
       if (type === 'textarea' && resizable) {
         inputEl.addEventListener('textarea:resze', self.onTextareaResizeBound, false);
       }
+
       if (clearButton) {
         inputEl.addEventListener('input:empty', self.onInputEmptyBound, false);
         inputEl.addEventListener('input:clear', self.onInputClearBound, false);
       }
+
       f7.input.checkEmptyState(inputEl);
+
       if (validate && (typeof value !== 'undefined' || typeof defaultValue !== 'undefined')) {
         setTimeout(() => {
           f7.input.validate(inputEl);
         }, 0);
       }
+
       if (resizable) {
         f7.input.resizeTextarea(inputEl);
       }
     });
   }
+
   get slots() {
     return __reactComponentSlots(this.props);
   }
+
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
+
   get refs() {
     return this.__reactRefs;
   }
-  set refs(refs) {
-  }
+
+  set refs(refs) {}
+
 }
-__reactComponentSetProps(F7Input, {
+
+__reactComponentSetProps(F7Input, Object.assign({
   type: String,
   name: String,
-  value: [
-    String,
-    Number,
-    Array
-  ],
-  defaultValue: [
-    String,
-    Number,
-    Array
-  ],
+  value: [String, Number, Array],
+  defaultValue: [String, Number, Array],
   placeholder: String,
-  id: [
-    String,
-    Number
-  ],
-  inputId: [
-    String,
-    Number
-  ],
-  size: [
-    String,
-    Number
-  ],
-  accept: [
-    String,
-    Number
-  ],
+  id: [String, Number],
+  inputId: [String, Number],
+  size: [String, Number],
+  accept: [String, Number],
   autocomplete: [String],
   autocorrect: [String],
   autocapitalize: [String],
@@ -278,39 +347,18 @@ __reactComponentSetProps(F7Input, {
   autosave: String,
   checked: Boolean,
   disabled: Boolean,
-  max: [
-    String,
-    Number
-  ],
-  min: [
-    String,
-    Number
-  ],
-  step: [
-    String,
-    Number
-  ],
-  maxlength: [
-    String,
-    Number
-  ],
-  minlength: [
-    String,
-    Number
-  ],
+  max: [String, Number],
+  min: [String, Number],
+  step: [String, Number],
+  maxlength: [String, Number],
+  minlength: [String, Number],
   multiple: Boolean,
   readonly: Boolean,
   required: Boolean,
   inputStyle: String,
   pattern: String,
-  validate: [
-    Boolean,
-    String
-  ],
-  tabindex: [
-    String,
-    Number
-  ],
+  validate: [Boolean, String],
+  tabindex: [String, Number],
   resizable: Boolean,
   clearButton: Boolean,
   noFormStoreData: Boolean,
@@ -321,7 +369,7 @@ __reactComponentSetProps(F7Input, {
   wrap: {
     type: Boolean,
     default: true
-  },
-  ...Mixins.colorProps
-});
+  }
+}, Mixins.colorProps));
+
 export default F7Input;

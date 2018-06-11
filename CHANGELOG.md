@@ -2,6 +2,10 @@
 
 # Change Log
 
+# [v3.0.0-beta.8](https://github.com/framework7io/framework7/compare/v3.0.0-beta.7...v3.0.0-beta.8) - June 11, 2018
+  * Phenome
+    * Transform object rest spread syntax to Object.assign in Vue/React components
+
 # [v3.0.0-beta.7](https://github.com/framework7io/framework7/compare/v3.0.0-beta.6...v3.0.0-beta.7) - June 9, 2018
   * Core
     * Lots of MD styles updated to new Material Design specification

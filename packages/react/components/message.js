@@ -4,9 +4,11 @@ import Mixins from '../utils/mixins';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
+
 class F7Message extends React.Component {
   constructor(props, context) {
     super(props, context);
+
     (() => {
       this.onClickBound = this.onClick.bind(this);
       this.onNameClickBound = this.onNameClick.bind(this);
@@ -17,31 +19,50 @@ class F7Message extends React.Component {
       this.onBubbleClickBound = this.onBubbleClick.bind(this);
     })();
   }
+
   onClick(event) {
     this.dispatchEvent('click', event);
   }
+
   onNameClick(event) {
     this.dispatchEvent('click:name clickName', event);
   }
+
   onTextClick(event) {
     this.dispatchEvent('click:text clickText', event);
   }
+
   onAvatarClick(event) {
     this.dispatchEvent('click:avatar clickAvatar', event);
   }
+
   onHeaderClick(event) {
     this.dispatchEvent('click:header clickHeader', event);
   }
+
   onFooterClick(event) {
     this.dispatchEvent('click:footer clickFooter', event);
   }
+
   onBubbleClick(event) {
     this.dispatchEvent('click:bubble clickBubble', event);
   }
+
   get classes() {
     const self = this;
     const props = self.props;
-    const {type, typing, first, last, tail, sameName, sameHeader, sameFooter, sameAvatar, className} = props;
+    const {
+      type,
+      typing,
+      first,
+      last,
+      tail,
+      sameName,
+      sameHeader,
+      sameFooter,
+      sameAvatar,
+      className
+    } = props;
     return Utils.classNames(className, 'message', {
       'message-sent': type === 'sent',
       'message-received': type === 'received',
@@ -55,10 +76,23 @@ class F7Message extends React.Component {
       'message-same-avatar': sameAvatar
     }, Mixins.colorClasses(props));
   }
+
   render() {
     const self = this;
     const props = self.props;
-    const {text, name, avatar, image, header, footer, textHeader, textFooter, typing, id, style} = props;
+    const {
+      text,
+      name,
+      avatar,
+      image,
+      header,
+      footer,
+      textHeader,
+      textFooter,
+      typing,
+      id,
+      style
+    } = props;
     const {
       start: slotsStart,
       end: slotsEnd,
@@ -83,9 +117,13 @@ class F7Message extends React.Component {
       onClick: self.onClickBound
     }, slotsStart, (avatar || slotsAvatar) && React.createElement('div', {
       className: 'message-avatar',
-      style: { backgroundImage: avatar && `url(${ avatar })` },
+      style: {
+        backgroundImage: avatar && `url(${avatar})`
+      },
       onClick: self.onAvatarClickBound
-    }, slotsAvatar), React.createElement('div', { className: 'message-content' }, slotsContentStart, (slotsName || name) && React.createElement('div', {
+    }, slotsAvatar), React.createElement('div', {
+      className: 'message-content'
+    }, slotsContentStart, (slotsName || name) && React.createElement('div', {
       className: 'message-name',
       onClick: self.onNameClickBound
     }, slotsName || name), (slotsHeader || header) && React.createElement('div', {
@@ -94,26 +132,37 @@ class F7Message extends React.Component {
     }, slotsHeader || header), React.createElement('div', {
       className: 'message-bubble',
       onClick: self.onBubbleClickBound
-    }, slotsBubbleStart, (slotsImage || image) && React.createElement('div', { className: 'message-image' }, slotsImage || React.createElement('img', { src: image })), (slotsTextHeader || textHeader) && React.createElement('div', { className: 'message-text-header' }, slotsTextHeader || textHeader), (slotsText || text || typing) && React.createElement('div', {
+    }, slotsBubbleStart, (slotsImage || image) && React.createElement('div', {
+      className: 'message-image'
+    }, slotsImage || React.createElement('img', {
+      src: image
+    })), (slotsTextHeader || textHeader) && React.createElement('div', {
+      className: 'message-text-header'
+    }, slotsTextHeader || textHeader), (slotsText || text || typing) && React.createElement('div', {
       className: 'message-text',
       onClick: self.onTextClickBound
-    }, slotsText || text, typing && React.createElement('div', { className: 'message-typing-indicator' }, React.createElement('div', null), React.createElement('div', null), React.createElement('div', null))), (slotsTextFooter || textFooter) && React.createElement('div', { className: 'message-text-footer' }, slotsTextFooter || textFooter), slotsBubbleEnd, slotsDefault), (slotsFooter || footer) && React.createElement('div', {
+    }, slotsText || text, typing && React.createElement('div', {
+      className: 'message-typing-indicator'
+    }, React.createElement('div', null), React.createElement('div', null), React.createElement('div', null))), (slotsTextFooter || textFooter) && React.createElement('div', {
+      className: 'message-text-footer'
+    }, slotsTextFooter || textFooter), slotsBubbleEnd, slotsDefault), (slotsFooter || footer) && React.createElement('div', {
       className: 'message-footer',
       onClick: self.onFooterClickBound
     }, slotsFooter || footer), slotsContentEnd), slotsEnd);
   }
+
   get slots() {
     return __reactComponentSlots(this.props);
   }
+
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
+
 }
-__reactComponentSetProps(F7Message, {
-  id: [
-    String,
-    Number
-  ],
+
+__reactComponentSetProps(F7Message, Object.assign({
+  id: [String, Number],
   text: String,
   name: String,
   avatar: String,
@@ -133,7 +182,7 @@ __reactComponentSetProps(F7Message, {
   sameHeader: Boolean,
   sameFooter: Boolean,
   sameAvatar: Boolean,
-  typing: Boolean,
-  ...Mixins.colorProps
-});
+  typing: Boolean
+}, Mixins.colorProps));
+
 export default F7Message;

@@ -4,39 +4,61 @@ import Mixins from '../utils/mixins';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
+
 class F7PageContent extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.__reactRefs = {};
   }
+
   onPtrPullStart(event) {
     this.dispatchEvent('ptr:pullstart ptrPullStart', event);
   }
+
   onPtrPullMove(event) {
     this.dispatchEvent('ptr:pullmove ptrPullMove', event);
   }
+
   onPtrPullEnd(event) {
     this.dispatchEvent('ptr:pullend ptrPullEnd', event);
   }
+
   onPtrRefresh(event) {
     this.dispatchEvent('ptr:refresh ptrRefresh', event, event.detail);
   }
+
   onPtrDone(event) {
     this.dispatchEvent('ptr:done ptrDone', event);
   }
+
   onInfinite(event) {
     this.dispatchEvent('infinite', event);
   }
+
   onTabShow(e) {
     this.dispatchEvent('tab:show tabShow', e);
   }
+
   onTabHide(e) {
     this.dispatchEvent('tab:hide tabHide', e);
   }
+
   get classes() {
     const self = this;
     const props = self.props;
-    const {className, tab, tabActive, ptr, infinite, infiniteTop, hideBarsOnScroll, hideNavbarOnScroll, hideToolbarOnScroll, messagesContent, loginScreen} = props;
+    const {
+      className,
+      tab,
+      tabActive,
+      ptr,
+      infinite,
+      infiniteTop,
+      hideBarsOnScroll,
+      hideNavbarOnScroll,
+      hideToolbarOnScroll,
+      messagesContent,
+      loginScreen
+    } = props;
     return Utils.classNames(className, 'page-content', {
       tab,
       'tab-active': tabActive,
@@ -50,18 +72,40 @@ class F7PageContent extends React.Component {
       'login-screen-content': loginScreen
     }, Mixins.colorClasses(props));
   }
+
   render() {
     const self = this;
     const props = self.props;
-    const {ptr, ptrPreloader, infinite, infinitePreloader, id, style, ptrDistance, infiniteDistance, infiniteTop} = props;
+    const {
+      ptr,
+      ptrPreloader,
+      infinite,
+      infinitePreloader,
+      id,
+      style,
+      ptrDistance,
+      infiniteDistance,
+      infiniteTop
+    } = props;
     let ptrEl;
     let infiniteEl;
+
     if (ptr && ptrPreloader) {
-      ptrEl = React.createElement('div', { className: 'ptr-preloader' }, React.createElement('div', { className: 'preloader' }), React.createElement('div', { className: 'ptr-arrow' }));
+      ptrEl = React.createElement('div', {
+        className: 'ptr-preloader'
+      }, React.createElement('div', {
+        className: 'preloader'
+      }), React.createElement('div', {
+        className: 'ptr-arrow'
+      }));
     }
+
     if (infinite && infinitePreloader) {
-      infiniteEl = React.createElement('div', { className: 'preloader infinite-scroll-preloader' });
+      infiniteEl = React.createElement('div', {
+        className: 'preloader infinite-scroll-preloader'
+      });
     }
+
     return React.createElement('div', {
       id: id,
       style: style,
@@ -73,6 +117,7 @@ class F7PageContent extends React.Component {
       }
     }, ptrEl, infiniteTop ? infiniteEl : self.slots.default, infiniteTop ? self.slots.default : infiniteEl);
   }
+
   componentWillUnmount() {
     const self = this;
     const el = self.refs.el;
@@ -85,10 +130,15 @@ class F7PageContent extends React.Component {
     el.removeEventListener('tab:show', self.onTabShow);
     el.removeEventListener('tab:hide', self.onTabHide);
   }
+
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
-    const {ptr, infinite, tab} = self.props;
+    const {
+      ptr,
+      infinite,
+      tab
+    } = self.props;
     self.onPtrPullStart = self.onPtrPullStart.bind(self);
     self.onPtrPullMove = self.onPtrPullMove.bind(self);
     self.onPtrPullEnd = self.onPtrPullEnd.bind(self);
@@ -97,6 +147,7 @@ class F7PageContent extends React.Component {
     self.onInfinite = self.onInfinite.bind(self);
     self.onTabShow = self.onTabShow.bind(self);
     self.onTabHide = self.onTabHide.bind(self);
+
     if (ptr) {
       el.addEventListener('ptr:pullstart', self.onPtrPullStart);
       el.addEventListener('ptr:pullmove', self.onPtrPullMove);
@@ -104,31 +155,35 @@ class F7PageContent extends React.Component {
       el.addEventListener('ptr:refresh', self.onPtrRefresh);
       el.addEventListener('ptr:done', self.onPtrDone);
     }
+
     if (infinite) {
       el.addEventListener('infinite', self.onInfinite);
     }
+
     if (tab) {
       el.addEventListener('tab:show', self.onTabShow);
       el.addEventListener('tab:hide', self.onTabHide);
     }
   }
+
   get slots() {
     return __reactComponentSlots(this.props);
   }
+
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
+
   get refs() {
     return this.__reactRefs;
   }
-  set refs(refs) {
-  }
+
+  set refs(refs) {}
+
 }
-__reactComponentSetProps(F7PageContent, {
-  id: [
-    String,
-    Number
-  ],
+
+__reactComponentSetProps(F7PageContent, Object.assign({
+  id: [String, Number],
   tab: Boolean,
   tabActive: Boolean,
   ptr: Boolean,
@@ -148,7 +203,7 @@ __reactComponentSetProps(F7PageContent, {
   hideNavbarOnScroll: Boolean,
   hideToolbarOnScroll: Boolean,
   messagesContent: Boolean,
-  loginScreen: Boolean,
-  ...Mixins.colorProps
-});
+  loginScreen: Boolean
+}, Mixins.colorProps));
+
 export default F7PageContent;

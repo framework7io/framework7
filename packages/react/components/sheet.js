@@ -6,65 +6,77 @@ import __reactComponentEl from '../runtime-helpers/react-component-el.js';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
+
 class F7Sheet extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.__reactRefs = {};
   }
+
   onOpen(event) {
     this.dispatchEvent('sheet:open sheetOpen', event);
   }
+
   onOpened(event) {
     this.dispatchEvent('sheet:opened sheetOpened', event);
   }
+
   onClose(event) {
     this.dispatchEvent('sheet:close sheetClose', event);
   }
+
   onClosed(event) {
     this.dispatchEvent('sheet:closed sheetClosed', event);
   }
+
   open(animate) {
     const self = this;
-    if (!self.$f7)
-      return undefined;
+    if (!self.$f7) return undefined;
     return self.$f7.sheet.open(self.refs.el, animate);
   }
+
   close(animate) {
     const self = this;
-    if (!self.$f7)
-      return undefined;
+    if (!self.$f7) return undefined;
     return self.$f7.sheet.close(self.refs.el, animate);
   }
+
   render() {
     const self = this;
     const fixedList = [];
     const staticList = [];
     const props = self.props;
-    const {id, style, className} = props;
+    const {
+      id,
+      style,
+      className
+    } = props;
     let fixedTags;
-    fixedTags = 'Navbar Toolbar Tabbar Subnavbar Searchbar Messagebar Fab ListIndex'.split(' ').map(tagName => `F7${ tagName }`);
+    fixedTags = 'Navbar Toolbar Tabbar Subnavbar Searchbar Messagebar Fab ListIndex'.split(' ').map(tagName => `F7${tagName}`);
     const slotsDefault = self.slots.default;
+
     if (slotsDefault && slotsDefault.length) {
       slotsDefault.forEach(child => {
-        if (typeof child === 'undefined')
-          return;
+        if (typeof child === 'undefined') return;
         let isFixedTag = false;
         {
           const tag = child.type && child.type.name;
+
           if (!tag) {
             return;
           }
+
           if (fixedTags.indexOf(tag) >= 0) {
             isFixedTag = true;
           }
         }
-        if (isFixedTag)
-          fixedList.push(child);
-        else
-          staticList.push(child);
+        if (isFixedTag) fixedList.push(child);else staticList.push(child);
       });
     }
-    const innerEl = React.createElement('div', { className: 'sheet-modal-inner' }, staticList);
+
+    const innerEl = React.createElement('div', {
+      className: 'sheet-modal-inner'
+    }, staticList);
     const classes = Utils.classNames(className, 'sheet-modal', Mixins.colorClasses(props));
     return React.createElement('div', {
       ref: __reactNode => {
@@ -75,23 +87,22 @@ class F7Sheet extends React.Component {
       className: classes
     }, fixedList, innerEl);
   }
+
   componentWillUnmount() {
     const self = this;
-    if (self.f7Sheet)
-      self.f7Sheet.destroy();
+    if (self.f7Sheet) self.f7Sheet.destroy();
     const el = self.el;
-    if (!el)
-      return;
+    if (!el) return;
     el.removeEventListener('popup:open', self.onOpenBound);
     el.removeEventListener('popup:opened', self.onOpenedBound);
     el.removeEventListener('popup:close', self.onCloseBound);
     el.removeEventListener('popup:closed', self.onClosedBound);
   }
+
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
-    if (!el)
-      return;
+    if (!el) return;
     self.onOpenBound = self.onOpen.bind(self);
     self.onOpenedBound = self.onOpened.bind(self);
     self.onCloseBound = self.onClose.bind(self);
@@ -103,40 +114,51 @@ class F7Sheet extends React.Component {
     self.$f7ready(() => {
       let useBackdrop;
       let useDefaultBackdrop;
-      const {opened, backdrop} = self.props;
+      const {
+        opened,
+        backdrop
+      } = self.props;
       useDefaultBackdrop = typeof backdrop === 'undefined';
+
       if (useDefaultBackdrop) {
         const app = self.$f7;
         useBackdrop = app.params.sheet && app.params.sheet.backdrop !== undefined ? app.params.sheet.backdrop : self.$theme.md;
       }
+
       self.f7Sheet = self.$f7.sheet.create({
         el: self.refs.el,
         backdrop: useBackdrop
       });
+
       if (opened) {
         self.f7Sheet.open(false);
       }
     });
   }
+
   get slots() {
     return __reactComponentSlots(this.props);
   }
+
   get el() {
     return __reactComponentEl(this);
   }
+
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
+
   get refs() {
     return this.__reactRefs;
   }
-  set refs(refs) {
-  }
+
+  set refs(refs) {}
+
   componentDidUpdate(prevProps, prevState) {
     __reactComponentWatch(this, 'props.opened', prevProps, prevState, opened => {
       const self = this;
-      if (!self.f7Sheet)
-        return;
+      if (!self.f7Sheet) return;
+
       if (opened) {
         self.f7Sheet.open();
       } else {
@@ -144,14 +166,13 @@ class F7Sheet extends React.Component {
       }
     });
   }
+
 }
-__reactComponentSetProps(F7Sheet, {
-  id: [
-    String,
-    Number
-  ],
+
+__reactComponentSetProps(F7Sheet, Object.assign({
+  id: [String, Number],
   opened: Boolean,
-  backdrop: Boolean,
-  ...Mixins.colorProps
-});
+  backdrop: Boolean
+}, Mixins.colorProps));
+
 export default F7Sheet;

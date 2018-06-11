@@ -6,39 +6,57 @@ import F7NavTitle from './nav-title';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
+
 class F7Navbar extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.__reactRefs = {};
   }
+
   hide(animate) {
     const self = this;
-    if (!self.$f7)
-      return;
+    if (!self.$f7) return;
     self.$f7.navbar.hide(self.refs.el, animate);
   }
+
   show(animate) {
     const self = this;
-    if (!self.$f7)
-      return;
+    if (!self.$f7) return;
     self.$f7.navbar.show(self.refs.el, animate);
   }
+
   size() {
     const self = this;
-    if (!self.$f7)
-      return;
+    if (!self.$f7) return;
     self.$f7.navbar.size(self.refs.el);
   }
+
   onBackClick(e) {
     this.dispatchEvent('back-click backClick click:back clickBack', e);
   }
+
   render() {
     const self = this;
     const props = self.props;
-    const {backLink, backLinkUrl, backLinkForce, sliding, title, subtitle, inner, className, id, style, hidden, noShadow, noHairline} = props;
+    const {
+      backLink,
+      backLinkUrl,
+      backLinkForce,
+      sliding,
+      title,
+      subtitle,
+      inner,
+      className,
+      id,
+      style,
+      hidden,
+      noShadow,
+      noHairline
+    } = props;
     let innerEl;
     let leftEl;
     let titleEl;
+
     if (inner) {
       if (backLink) {
         leftEl = React.createElement(F7NavLeft, {
@@ -48,19 +66,24 @@ class F7Navbar extends React.Component {
           onBackClick: self.onBackClick.bind(self)
         });
       }
+
       if (title || subtitle) {
         titleEl = React.createElement(F7NavTitle, {
           title: title,
           subtitle: subtitle
         });
       }
+
       innerEl = React.createElement('div', {
         ref: __reactNode => {
           this.__reactRefs['inner'] = __reactNode;
         },
-        className: Utils.classNames('navbar-inner', { sliding })
+        className: Utils.classNames('navbar-inner', {
+          sliding
+        })
       }, leftEl, titleEl, this.slots['default']);
     }
+
     const classes = Utils.classNames(className, 'navbar', {
       'navbar-hidden': hidden,
       'no-shadow': noShadow,
@@ -75,38 +98,38 @@ class F7Navbar extends React.Component {
       className: classes
     }, this.slots['before-inner'], innerEl, this.slots['after-inner']);
   }
+
   componentDidUpdate() {
     const self = this;
-    if (!self.$f7)
-      return;
+    if (!self.$f7) return;
     const el = self.refs.el;
+
     if (el && el.children && el.children.length) {
       self.$f7.navbar.size(el);
     } else if (self.refs.inner) {
       self.$f7.navbar.size(self.refs.inner);
     }
   }
+
   get slots() {
     return __reactComponentSlots(this.props);
   }
+
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
+
   get refs() {
     return this.__reactRefs;
   }
-  set refs(refs) {
-  }
+
+  set refs(refs) {}
+
 }
-__reactComponentSetProps(F7Navbar, {
-  id: [
-    String,
-    Number
-  ],
-  backLink: [
-    Boolean,
-    String
-  ],
+
+__reactComponentSetProps(F7Navbar, Object.assign({
+  id: [String, Number],
+  backLink: [Boolean, String],
   backLinkUrl: String,
   backLinkForce: Boolean,
   sliding: {
@@ -121,7 +144,7 @@ __reactComponentSetProps(F7Navbar, {
   inner: {
     type: Boolean,
     default: true
-  },
-  ...Mixins.colorProps
-});
+  }
+}, Mixins.colorProps));
+
 export default F7Navbar;

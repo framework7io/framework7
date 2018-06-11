@@ -4,17 +4,30 @@ import Mixins from '../utils/mixins';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
+
 class F7Radio extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
+
   onChange(event) {
     this.dispatchEvent('change', event);
   }
+
   render() {
     const self = this;
     const props = self.props;
-    const {name, value, disabled, readonly, checked, defaultChecked, id, style, className} = props;
+    const {
+      name,
+      value,
+      disabled,
+      readonly,
+      checked,
+      defaultChecked,
+      id,
+      style,
+      className
+    } = props;
     let inputEl;
     {
       inputEl = React.createElement('input', {
@@ -28,39 +41,37 @@ class F7Radio extends React.Component {
         onChange: self.onChange.bind(self)
       });
     }
-    const iconEl = React.createElement('i', { className: 'icon-radio' });
-    const classes = Utils.classNames(className, 'radio', { disabled }, Mixins.colorClasses(props));
+    const iconEl = React.createElement('i', {
+      className: 'icon-radio'
+    });
+    const classes = Utils.classNames(className, 'radio', {
+      disabled
+    }, Mixins.colorClasses(props));
     return React.createElement('label', {
       id: id,
       style: style,
       className: classes
     }, inputEl, iconEl, this.slots['default']);
   }
+
   get slots() {
     return __reactComponentSlots(this.props);
   }
+
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
+
 }
-__reactComponentSetProps(F7Radio, {
-  id: [
-    String,
-    Number
-  ],
+
+__reactComponentSetProps(F7Radio, Object.assign({
+  id: [String, Number],
   checked: Boolean,
-  name: [
-    Number,
-    String
-  ],
-  value: [
-    Number,
-    String,
-    Boolean
-  ],
+  name: [Number, String],
+  value: [Number, String, Boolean],
   disabled: Boolean,
   readonly: Boolean,
-  defaultChecked: Boolean,
-  ...Mixins.colorProps
-});
+  defaultChecked: Boolean
+}, Mixins.colorProps));
+
 export default F7Radio;

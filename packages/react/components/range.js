@@ -5,28 +5,43 @@ import __reactComponentWatch from '../runtime-helpers/react-component-watch.js';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
+
 class F7Range extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.__reactRefs = {};
   }
+
   setValue(newValue) {
     const self = this;
-    if (self.f7Range && self.f7Range.setValue)
-      self.f7Range.setValue(newValue);
+    if (self.f7Range && self.f7Range.setValue) self.f7Range.setValue(newValue);
   }
+
   getValue() {
     const self = this;
+
     if (self.f7Range && self.f7Range.getValue) {
       return self.f7Range.getValue();
     }
+
     return undefined;
   }
+
   render() {
     const self = this;
     const props = self.props;
-    const {id, disabled, className, style, input, inputId, name} = self.props;
-    const classes = Utils.classNames(className, 'range-slider', { disabled }, Mixins.colorClasses(props));
+    const {
+      id,
+      disabled,
+      className,
+      style,
+      input,
+      inputId,
+      name
+    } = self.props;
+    const classes = Utils.classNames(className, 'range-slider', {
+      disabled
+    }, Mixins.colorClasses(props));
     return React.createElement('div', {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
@@ -40,18 +55,26 @@ class F7Range extends React.Component {
       id: inputId
     }), this.slots['default']);
   }
+
   componentWillUnmount() {
     const self = this;
-    if (self.f7Range && self.f7Range.destroy)
-      self.f7Range.destroy();
+    if (self.f7Range && self.f7Range.destroy) self.f7Range.destroy();
   }
+
   componentDidMount() {
     const self = this;
     self.$f7ready(f7 => {
-      if (!self.props.init)
-        return;
+      if (!self.props.init) return;
       const props = self.props;
-      const {value, min, max, step, label, dual, draggableBar} = props;
+      const {
+        value,
+        min,
+        max,
+        step,
+        label,
+        dual,
+        draggableBar
+      } = props;
       self.f7Range = f7.range.create(Utils.noUndefinedProps({
         el: self.refs.el,
         value,
@@ -65,69 +88,60 @@ class F7Range extends React.Component {
           change(range, val) {
             self.dispatchEvent('range:change rangeChange', val);
           },
+
           changed(range, val) {
             self.dispatchEvent('range:changed rangeChanged', val);
           }
+
         }
       }));
     });
   }
+
   get slots() {
     return __reactComponentSlots(this.props);
   }
+
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
+
   get refs() {
     return this.__reactRefs;
   }
-  set refs(refs) {
-  }
+
+  set refs(refs) {}
+
   componentDidUpdate(prevProps, prevState) {
     __reactComponentWatch(this, 'props.value', prevProps, prevState, newValue => {
       const self = this;
-      if (!self.f7Range)
-        return;
+      if (!self.f7Range) return;
       self.f7Range.setValue(newValue);
     });
   }
+
 }
-__reactComponentSetProps(F7Range, {
-  id: [
-    String,
-    Number
-  ],
+
+__reactComponentSetProps(F7Range, Object.assign({
+  id: [String, Number],
   init: {
     type: Boolean,
     default: true
   },
   value: {
-    type: [
-      Number,
-      Array,
-      String
-    ],
+    type: [Number, Array, String],
     default: 0
   },
   min: {
-    type: [
-      Number,
-      String
-    ],
+    type: [Number, String],
     default: 0
   },
   max: {
-    type: [
-      Number,
-      String
-    ],
+    type: [Number, String],
     default: 100
   },
   step: {
-    type: [
-      Number,
-      String
-    ],
+    type: [Number, String],
     default: 1
   },
   label: {
@@ -145,7 +159,7 @@ __reactComponentSetProps(F7Range, {
   draggableBar: {
     type: Boolean,
     default: true
-  },
-  ...Mixins.colorProps
-});
+  }
+}, Mixins.colorProps));
+
 export default F7Range;

@@ -3,14 +3,22 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
+
 class F7Label extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
+
   render() {
     const self = this;
     const props = self.props;
-    const {inline, id, style, className, floating} = props;
+    const {
+      inline,
+      id,
+      style,
+      className,
+      floating
+    } = props;
     const classes = Utils.classNames(className, 'item-title', {
       'item-label-inline': inline,
       'item-label': !floating,
@@ -22,17 +30,17 @@ class F7Label extends React.Component {
       className: classes
     }, this.slots['default']);
   }
+
   get slots() {
     return __reactComponentSlots(this.props);
   }
+
 }
-__reactComponentSetProps(F7Label, {
-  id: [
-    String,
-    Number
-  ],
+
+__reactComponentSetProps(F7Label, Object.assign({
+  id: [String, Number],
   floating: Boolean,
-  inline: Boolean,
-  ...Mixins.colorProps
-});
+  inline: Boolean
+}, Mixins.colorProps));
+
 export default F7Label;

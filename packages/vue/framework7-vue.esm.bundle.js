@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.0.0-beta.7
+ * Framework7 Vue 3.0.0-beta.8
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 9, 2018
+ * Released on: June 11, 2018
  */
 import Vue from 'vue';
 import f7AccordionContent from './components/accordion-content';

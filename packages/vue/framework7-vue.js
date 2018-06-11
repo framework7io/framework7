@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.0.0-beta.7
+ * Framework7 Vue 3.0.0-beta.8
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 9, 2018
+ * Released on: June 11, 2018
  */
 
 (function (global, factory) {
@@ -337,12 +337,11 @@
   }
 
   var f7AccordionContent = {
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ]},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number]
+    }, Mixins.colorProps),
     name: 'f7-accordion-content',
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -353,13 +352,17 @@
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
@@ -375,17 +378,15 @@
 
   var f7AccordionItem = {
     name: 'f7-accordion-item',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
-      opened: Boolean},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number],
+      opened: Boolean
+    }, Mixins.colorProps),
+
     mounted: function mounted() {
       var self = this;
       var el = self.$el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       self.onOpenBound = self.onOpen.bind(self);
       self.onOpenedBound = self.onOpened.bind(self);
       self.onCloseBound = self.onClose.bind(self);
@@ -395,16 +396,17 @@
       el.addEventListener('accordion:close', self.onCloseBound);
       el.addEventListener('accordion:closed', self.onClosedBound);
     },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
       var el = self.$el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       el.removeEventListener('accordion:open', self.onOpenBound);
       el.removeEventListener('accordion:opened', self.onOpenedBound);
       el.removeEventListener('accordion:close', self.onCloseBound);
       el.removeEventListener('accordion:closed', self.onClosedBound);
     },
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -412,47 +414,57 @@
       var id = props.id;
       var style = props.style;
       var opened = props.opened;
-      var classes = Utils.classNames(className, 'accordion-item', { 'accordion-item-opened': opened }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'accordion-item', {
+        'accordion-item-opened': opened
+      }, Mixins.colorClasses(props));
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     methods: {
       onOpen: function onOpen(event) {
         this.dispatchEvent('accordionOpen accordion:open', event);
       },
+
       onOpened: function onOpened(event) {
         this.dispatchEvent('accordionOpened accordion:opened', event);
       },
+
       onClose: function onClose(event) {
         this.dispatchEvent('accordionClose accordion:close', event);
       },
+
       onClosed: function onClosed(event) {
         this.dispatchEvent('accordionClosed accordion:closed', event);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7AccordionToggle = {
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ]},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number]
+    }, Mixins.colorProps),
     name: 'f7-accordion-toggle',
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -463,23 +475,26 @@
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Accordion = {
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ]},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number]
+    }, Mixins.colorProps),
     name: 'f7-accordion',
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -490,28 +505,31 @@
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7ActionsButton = {
     name: 'f7-actions-button',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       bold: Boolean,
       close: {
         type: Boolean,
         default: true
-      }},
-      Mixins.colorProps),
+      }
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -521,9 +539,13 @@
       var style = props.style;
       var bold = props.bold;
       var mediaEl;
+
       if (self.$slots.media && self.$slots.media.length) {
-        mediaEl = _h('div', { class: 'actions-button-media' }, [this.$slots['media']]);
+        mediaEl = _h('div', {
+          class: 'actions-button-media'
+        }, [this.$slots['media']]);
       }
+
       var classes = Utils.classNames(className, {
         'actions-button': true,
         'actions-button-bold': bold
@@ -532,44 +554,52 @@
         style: style,
         class: classes,
         ref: 'el',
-        on: { click: self.onClick.bind(self) },
-        attrs: { id: id }
-      }, [
-        mediaEl,
-        _h('div', { class: 'actions-button-text' }, [this.$slots['default']])
-      ]);
+        on: {
+          click: self.onClick.bind(self)
+        },
+        attrs: {
+          id: id
+        }
+      }, [mediaEl, _h('div', {
+        class: 'actions-button-text'
+      }, [this.$slots['default']])]);
     },
+
     methods: {
       onClick: function onClick(event) {
         var self = this;
         var $$ = self.$$;
         var el = self.$refs.el;
+
         if (self.props.close && self.$f7 && el) {
           self.$f7.actions.close($$(el).parents('.actions-modal'));
         }
+
         self.dispatchEvent('click', event);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7ActionsGroup = {
     name: 'f7-actions-group',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ]},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number]
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -581,24 +611,27 @@
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7ActionsLabel = {
     name: 'f7-actions-label',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
-      bold: Boolean},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number],
+      bold: Boolean
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -607,47 +640,53 @@
       var id = props.id;
       var style = props.style;
       var bold = props.bold;
-      var classes = Utils.classNames(className, 'actions-label', { 'actions-button-bold': bold }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'actions-label', {
+        'actions-button-bold': bold
+      }, Mixins.colorClasses(props));
       return _h('div', {
         style: style,
         class: classes,
-        on: { click: self.onClick.bind(self) },
-        attrs: { id: id }
+        on: {
+          click: self.onClick.bind(self)
+        },
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     methods: {
       onClick: function onClick(event) {
         this.dispatchEvent('click', event);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Actions = {
     name: 'f7-actions',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       opened: Boolean,
       grid: Boolean,
       convertToPopover: Boolean,
       forceToPopover: Boolean,
-      target: [
-        String,
-        Object
-      ]},
-      Mixins.colorProps),
+      target: [String, Object]
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -656,19 +695,24 @@
       var id = props.id;
       var style = props.style;
       var grid = props.grid;
-      var classes = Utils.classNames(className, 'actions-modal', { 'actions-grid': grid }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'actions-modal', {
+        'actions-grid': grid
+      }, Mixins.colorClasses(props));
       return _h('div', {
         style: style,
         ref: 'el',
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     watch: {
       'props.opened': function watchOpened(opened) {
         var self = this;
-        if (!self.f7Actions)
-          { return; }
+        if (!self.f7Actions) { return; }
+
         if (opened) {
           self.f7Actions.open();
         } else {
@@ -676,11 +720,11 @@
         }
       }
     },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       var props = self.props;
       var grid = props.grid;
       var target = props.target;
@@ -700,66 +744,70 @@
           el: self.$refs.el,
           grid: grid
         };
-        if (target)
-          { actionsParams.targetEl = target; }
-        if (typeof self.$options.propsData.convertToPopover !== 'undefined')
-          { actionsParams.convertToPopover = convertToPopover; }
-        if (typeof self.$options.propsData.forceToPopover !== 'undefined')
-          { actionsParams.forceToPopover = forceToPopover; }
+        if (target) { actionsParams.targetEl = target; }
+        if (typeof self.$options.propsData.convertToPopover !== 'undefined') { actionsParams.convertToPopover = convertToPopover; }
+        if (typeof self.$options.propsData.forceToPopover !== 'undefined') { actionsParams.forceToPopover = forceToPopover; }
         self.f7Actions = self.$f7.actions.create(actionsParams);
+
         if (opened) {
           self.f7Actions.open(false);
         }
       });
     },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
-      if (self.f7Actions)
-        { self.f7Actions.destroy(); }
+      if (self.f7Actions) { self.f7Actions.destroy(); }
       var el = self.$el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       el.removeEventListener('actions:open', self.onOpenBound);
       el.removeEventListener('actions:opened', self.onOpenedBound);
       el.removeEventListener('actions:close', self.onCloseBound);
       el.removeEventListener('actions:closed', self.onClosedBound);
     },
+
     methods: {
       onOpen: function onOpen(event) {
         this.dispatchEvent('actions:open actionsOpen', event);
       },
+
       onOpened: function onOpened(event) {
         this.dispatchEvent('actions:opened actionsOpened', event);
       },
+
       onClose: function onClose(event) {
         this.dispatchEvent('actions:close actionsClose', event);
       },
+
       onClosed: function onClosed(event) {
         this.dispatchEvent('actions:closed actionsClosed', event);
       },
+
       open: function open(animate) {
         var self = this;
-        if (!self.$f7)
-          { return undefined; }
+        if (!self.$f7) { return undefined; }
         return self.$f7.actions.open(self.$refs.el, animate);
       },
+
       close: function close(animate) {
         var self = this;
-        if (!self.$f7)
-          { return undefined; }
+        if (!self.$f7) { return undefined; }
         return self.$f7.actions.close(self.$refs.el, animate);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
@@ -858,74 +906,92 @@
 
   var RoutableModals = {
     name: 'f7-routable-modals',
+
     data: function data() {
       var state = (function () {
-        return { modals: [] };
+        return {
+          modals: []
+        };
       })();
-      return { state: state };
+
+      return {
+        state: state
+      };
     },
+
     render: function render() {
       var _h = this.$createElement;
       return _h('div', {
         ref: 'el',
         class: 'framework7-modals'
       }, [this.state.modals.map(function (modal) {
-          var ModalComponent = modal.component;
-          {
-            return _h(ModalComponent, {
-              key: modal.id,
-              props: modal.props
-            });
-          }
-        })]);
+        var ModalComponent = modal.component;
+        {
+          return _h(ModalComponent, {
+            key: modal.id,
+            props: modal.props
+          });
+        }
+      })]);
     },
+
     updated: function updated() {
       var self = this;
-      if (!self.routerData)
-        { return; }
+      if (!self.routerData) { return; }
       eventsEmitter.emit('modalsRouterDidUpdate', self.routerData);
     },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
-      if (!self.routerData)
-        { return; }
+      if (!self.routerData) { return; }
       f7.routers.modals = null;
       self.routerData = null;
       delete self.routerData;
     },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
-      self.setState({ modals: [] });
+      self.setState({
+        modals: []
+      });
       self.routerData = {
         el: el,
         component: self
       };
       f7.routers.modals = self.routerData;
     },
+
     methods: {
       setState: function setState(updater, callback) {
         __vueComponentSetState(this, updater, callback);
       }
+
     }
   };
 
   var f7App = {
     name: 'f7-app',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       params: Object,
-      routes: Array},
-      Mixins.colorProps),
+      routes: Array
+    }, Mixins.colorProps),
+
     data: function data() {
       var props = __vueComponentProps(this);
+
       var state = (function () {
-        return { modals: [] };
+        return {
+          modals: []
+        };
       })();
-      return { state: state };
+
+      return {
+        state: state
+      };
     },
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -938,12 +1004,12 @@
         ref: 'el',
         style: style,
         class: classes,
-        attrs: { id: id || 'framework7-root' }
-      }, [
-        this.$slots['default'],
-        _h(RoutableModals)
-      ]);
+        attrs: {
+          id: id || 'framework7-root'
+        }
+      }, [this.$slots['default'], _h(RoutableModals)]);
     },
+
     mounted: function mounted() {
       var self = this;
       var ref = self.props;
@@ -951,25 +1017,28 @@
       var routes = ref.routes;
       var el = self.$refs.el;
       var parentEl = el.parentNode;
+
       if (parentEl && parentEl !== document.body && parentEl.parentNode === document.body) {
         parentEl.style.height = '100%';
       }
+
       f7.init(el, params, routes);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var F7Badge = {
     name: 'f7-badge',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ]},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number]
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -980,23 +1049,26 @@
       return _h('span', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7BlockFooter = {
     name: 'f7-block-footer',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ]},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number]
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -1007,23 +1079,26 @@
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7BlockHeader = {
     name: 'f7-block-header',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ]},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number]
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -1034,23 +1109,26 @@
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7BlockTitle = {
     name: 'f7-block-title',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ]},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number]
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -1061,22 +1139,24 @@
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Block = {
     name: 'f7-block',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       inset: Boolean,
       tabletInset: Boolean,
       strong: Boolean,
@@ -1086,24 +1166,25 @@
       accordionList: Boolean,
       noHairlines: Boolean,
       noHairlinesMd: Boolean,
-      noHairlinesIos: Boolean},
-      Mixins.colorProps),
+      noHairlinesIos: Boolean
+    }, Mixins.colorProps),
+
     mounted: function mounted() {
       var el = this.$el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       this.onTabShowBound = this.onTabShow.bind(this);
       this.onTabHideBound = this.onTabHide.bind(this);
       el.addEventListener('tab:show', this.onTabShowBound);
       el.addEventListener('tab:hide', this.onTabHideBound);
     },
+
     beforeDestroy: function beforeDestroy() {
       var el = this.$el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       el.removeEventListener('tab:show', this.onTabShowBound);
       el.removeEventListener('tab:hide', this.onTabHideBound);
     },
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -1136,36 +1217,41 @@
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     methods: {
       onTabShow: function onTabShow(e) {
         this.dispatchEvent('tabShow tab:show', e);
       },
+
       onTabHide: function onTabHide(e) {
         this.dispatchEvent('tabShow tab:hide', e);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var F7Icon = {
     name: 'f7-icon',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       material: String,
       f7: String,
       ion: String,
@@ -1175,11 +1261,9 @@
       ifIos: String,
       ios: String,
       md: String,
-      size: [
-        String,
-        Number
-      ]},
-      Mixins.colorProps),
+      size: [String, Number]
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -1187,23 +1271,28 @@
       var id = props.id;
       var style = props.style;
       return _h('i', {
-        style: Utils.extend({ fontSize: self.sizeComputed }, style),
+        style: Utils.extend({
+          fontSize: self.sizeComputed
+        }, style),
         class: self.classes,
-        attrs: { id: id }
-      }, [
-        self.iconTextComputed,
-        this.$slots['default']
-      ]);
+        attrs: {
+          id: id
+        }
+      }, [self.iconTextComputed, this.$slots['default']]);
     },
+
     computed: {
       sizeComputed: function sizeComputed() {
         var self = this;
         var size = self.props.size;
+
         if (typeof size === 'number' || parseFloat(size) === size * 1) {
           size = size + "px";
         }
+
         return size;
       },
+
       iconTextComputed: function iconTextComputed() {
         var self = this;
         var ref = self.props;
@@ -1216,15 +1305,20 @@
         var text = material || f7;
         var mdIcon = ifMd || md;
         var iosIcon = ifIos || ios;
+
         if (mdIcon && self.$theme.md && (mdIcon.indexOf('material:') >= 0 || mdIcon.indexOf('f7:') >= 0)) {
           text = mdIcon.split(':')[1];
         } else if (iosIcon && self.$theme.ios && (iosIcon.indexOf('material:') >= 0 || iosIcon.indexOf('f7:') >= 0)) {
           text = iosIcon.split(':')[1];
         }
+
         return text;
       },
+
       classes: function classes() {
-        var classes = { icon: true };
+        var classes = {
+          icon: true
+        };
         var self = this;
         var props = self.props;
         var ifMd = props.ifMd;
@@ -1239,18 +1333,22 @@
         var className = props.className;
         var mdIcon = ifMd || md;
         var iosIcon = ifIos || ios;
+
         if (mdIcon || iosIcon) {
           var parts = (self.$theme.md ? mdIcon : iosIcon).split(':');
           var prop = parts[0];
           var value = parts[1];
+
           if (prop === 'material' || prop === 'fa' || prop === 'f7') {
             classes.fa = prop === 'fa';
             classes['material-icons'] = prop === 'material';
             classes['f7-icons'] = prop === 'f7';
           }
+
           if (prop === 'fa' || prop === 'ion') {
             classes[(prop + "-" + value)] = true;
           }
+
           if (prop === 'icon') {
             classes[value] = true;
           }
@@ -1261,18 +1359,18 @@
             'f7-icons': f7,
             fa: fa
           };
-          if (ion)
-            { classes[("ion-" + ion)] = true; }
-          if (fa)
-            { classes[("fa-" + fa)] = true; }
-          if (icon)
-            { classes[icon] = true; }
+          if (ion) { classes[("ion-" + ion)] = true; }
+          if (fa) { classes[("fa-" + fa)] = true; }
+          if (icon) { classes[icon] = true; }
         }
+
         return Utils.classNames(className, classes, Mixins.colorClasses(props));
       },
+
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
@@ -1316,23 +1414,15 @@
 
   var f7Button = {
     name: 'f7-button',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       noFastclick: Boolean,
       noFastClick: Boolean,
       text: String,
-      tabLink: [
-        Boolean,
-        String
-      ],
+      tabLink: [Boolean, String],
       tabLinkActive: Boolean,
       href: {
-        type: [
-          String,
-          Boolean
-        ],
+        type: [String, Boolean],
         default: '#'
       },
       round: Boolean,
@@ -1350,11 +1440,9 @@
       raised: Boolean,
       outline: Boolean,
       active: Boolean,
-      disabled: Boolean},
-      Mixins.colorProps,
-      Mixins.linkIconProps,
-      Mixins.linkRouterProps,
-      Mixins.linkActionsProps),
+      disabled: Boolean
+    }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -1375,11 +1463,14 @@
       var iconSize = props.iconSize;
       var id = props.id;
       var style = props.style;
+
       if (text) {
         textEl = _h('span', [text]);
       }
+
       var mdThemeIcon = iconIfMd || iconMd;
       var iosThemeIcon = iconIfIos || iconIos;
+
       if (icon || iconMaterial || iconIon || iconFa || iconF7 || mdThemeIcon || iosThemeIcon) {
         iconEl = _h(F7Icon, {
           attrs: {
@@ -1395,16 +1486,20 @@
           }
         });
       }
-      return _h('a', __vueComponentTransformJSXProps(Object.assign({}, {style: style,
-        class: self.classes},
-        self.attrs,
-        {on: { click: self.onClick.bind(self) },
-        attrs: { id: id }})), [
-        iconEl,
-        textEl,
-        this.$slots['default']
-      ]);
+
+      return _h('a', __vueComponentTransformJSXProps(Object.assign({
+        style: style,
+        class: self.classes
+      }, self.attrs, {
+        on: {
+          click: self.onClick.bind(self)
+        },
+        attrs: {
+          id: id
+        }
+      })), [iconEl, textEl, this.$slots['default']]);
     },
+
     computed: {
       attrs: function attrs() {
         var self = this;
@@ -1413,16 +1508,15 @@
         var target = props.target;
         var tabLink = props.tabLink;
         var hrefComputed = href;
-        if (href === true)
-          { hrefComputed = '#'; }
-        if (href === false)
-          { hrefComputed = undefined; }
+        if (href === true) { hrefComputed = '#'; }
+        if (href === false) { hrefComputed = undefined; }
         return Utils.extend({
           href: hrefComputed,
           target: target,
           'data-tab': Utils.isStringProp(tabLink) && tabLink || undefined
         }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
       },
+
       classes: function classes() {
         var self = this;
         var props = self.props;
@@ -1469,34 +1563,37 @@
           disabled: disabled
         }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
       },
+
       props: function props() {
         return __vueComponentProps(this);
       }
+
     },
     methods: {
       onClick: function onClick(event) {
         this.dispatchEvent('click', event);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     }
   };
 
   var F7CardContent = {
     name: 'f7-card-content',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       padding: {
         type: Boolean,
         default: true
-      }},
-      Mixins.colorProps),
+      }
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -1504,27 +1601,32 @@
       var className = props.className;
       var style = props.style;
       var padding = props.padding;
-      var classes = Utils.classNames(className, 'card-content', { 'card-content-padding': padding }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'card-content', {
+        'card-content-padding': padding
+      }, Mixins.colorClasses(props));
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var F7CardFooter = {
     name: 'f7-card-footer',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ]},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number]
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -1535,23 +1637,26 @@
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var F7CardHeader = {
     name: 'f7-card-header',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ]},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number]
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -1562,40 +1667,34 @@
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Card = {
     name: 'f7-card',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
-      title: [
-        String,
-        Number
-      ],
-      content: [
-        String,
-        Number
-      ],
-      footer: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
+      title: [String, Number],
+      content: [String, Number],
+      footer: [String, Number],
       outline: Boolean,
       padding: {
         type: Boolean,
         default: true
-      }},
-      Mixins.colorProps),
+      }
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -1611,63 +1710,55 @@
       var headerEl;
       var contentEl;
       var footerEl;
-      var classes = Utils.classNames(className, 'card', { 'card-outline': outline }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'card', {
+        'card-outline': outline
+      }, Mixins.colorClasses(props));
+
       if (title || self.$slots && self.$slots.header) {
-        headerEl = _h(F7CardHeader, [
-          title,
-          this.$slots['header']
-        ]);
+        headerEl = _h(F7CardHeader, [title, this.$slots['header']]);
       }
+
       if (content || self.$slots && self.$slots.content) {
-        contentEl = _h(F7CardContent, { attrs: { padding: padding } }, [
-          content,
-          this.$slots['content']
-        ]);
+        contentEl = _h(F7CardContent, {
+          attrs: {
+            padding: padding
+          }
+        }, [content, this.$slots['content']]);
       }
+
       if (footer || self.$slots && self.$slots.footer) {
-        footerEl = _h(F7CardFooter, [
-          footer,
-          this.$slots['footer']
-        ]);
+        footerEl = _h(F7CardFooter, [footer, this.$slots['footer']]);
       }
+
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
-      }, [
-        headerEl,
-        contentEl,
-        footerEl,
-        this.$slots['default']
-      ]);
+        attrs: {
+          id: id
+        }
+      }, [headerEl, contentEl, footerEl, this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Checkbox = {
     name: 'f7-checkbox',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       checked: Boolean,
-      name: [
-        Number,
-        String
-      ],
-      value: [
-        Number,
-        String,
-        Boolean
-      ],
+      name: [Number, String],
+      value: [Number, String, Boolean],
       disabled: Boolean,
       readonly: Boolean,
-      defaultChecked: Boolean},
-      Mixins.colorProps),
+      defaultChecked: Boolean
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -1689,24 +1780,29 @@
             readonly: readonly,
             checked: checked
           },
-          on: { change: self.onChange.bind(self) },
+          on: {
+            change: self.onChange.bind(self)
+          },
           attrs: {
             type: 'checkbox',
             name: name
           }
         });
       }
-      var iconEl = _h('i', { class: 'icon-checkbox' });
+
+      var iconEl = _h('i', {
+        class: 'icon-checkbox'
+      });
+
       return _h('label', {
         style: style,
         class: self.classes,
-        attrs: { id: id }
-      }, [
-        inputEl,
-        iconEl,
-        this.$slots['default']
-      ]);
+        attrs: {
+          id: id
+        }
+      }, [inputEl, iconEl, this.$slots['default']]);
     },
+
     computed: {
       classes: function classes() {
         var self = this;
@@ -1718,39 +1814,39 @@
           disabled: disabled
         }, Mixins.colorClasses(props));
       },
+
       props: function props() {
         return __vueComponentProps(this);
       }
+
     },
     methods: {
       onChange: function onChange(event) {
         this.dispatchEvent('change', event);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     }
   };
 
   var f7Chip = {
     name: 'f7-chip',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       media: String,
-      text: [
-        String,
-        Number
-      ],
+      text: [String, Number],
       deleteable: Boolean,
       mediaBgColor: String,
       mediaTextColor: String,
-      outline: Boolean},
-      Mixins.colorProps),
+      outline: Boolean
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -1767,86 +1863,92 @@
       var mediaEl;
       var labelEl;
       var deleteEl;
+
       if (media || self.$slots && self.$slots.media) {
         var mediaClasses = Utils.classNames('chip-media', mediaTextColor && ("text-color-" + mediaTextColor), mediaBgColor && ("bg-color-" + mediaBgColor));
-        mediaEl = _h('div', { class: mediaClasses }, [media || this.$slots['media']]);
+        mediaEl = _h('div', {
+          class: mediaClasses
+        }, [media || this.$slots['media']]);
       }
+
       if (text || self.$slots && self.$slots.text) {
-        labelEl = _h('div', { class: 'chip-label' }, [
-          text,
-          this.$slots['text']
-        ]);
+        labelEl = _h('div', {
+          class: 'chip-label'
+        }, [text, this.$slots['text']]);
       }
+
       if (deleteable) {
         deleteEl = _h('a', {
           class: 'chip-delete',
-          on: { click: self.onDeleteClick.bind(self) },
-          attrs: { href: '#' }
+          on: {
+            click: self.onDeleteClick.bind(self)
+          },
+          attrs: {
+            href: '#'
+          }
         });
       }
-      var classes = Utils.classNames(className, 'chip', { 'chip-outline': outline }, Mixins.colorClasses(props));
+
+      var classes = Utils.classNames(className, 'chip', {
+        'chip-outline': outline
+      }, Mixins.colorClasses(props));
       return _h('div', {
         style: style,
         class: classes,
-        on: { click: self.onClick.bind(self) },
-        attrs: { id: id }
-      }, [
-        mediaEl,
-        labelEl,
-        deleteEl
-      ]);
+        on: {
+          click: self.onClick.bind(self)
+        },
+        attrs: {
+          id: id
+        }
+      }, [mediaEl, labelEl, deleteEl]);
     },
+
     methods: {
       onClick: function onClick(event) {
         this.dispatchEvent('click', event);
       },
+
       onDeleteClick: function onDeleteClick(event) {
         this.dispatchEvent('delete', event);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Col = {
     name: 'f7-col',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       tag: {
         type: String,
         default: 'div'
       },
       width: {
-        type: [
-          Number,
-          String
-        ],
+        type: [Number, String],
         default: 'auto'
       },
       tabletWidth: {
-        type: [
-          Number,
-          String
-        ]
+        type: [Number, String]
       },
       desktopWidth: {
-        type: [
-          Number,
-          String
-        ]
-      }},
-      Mixins.colorProps),
+        type: [Number, String]
+      }
+    }, Mixins.colorProps),
+
     render: function render() {
       var obj;
 
@@ -1867,37 +1969,44 @@
       return _h(ColTag, {
         style: style,
         class: classes,
-        on: { click: self.onClick.bind(self) },
-        attrs: { id: id }
+        on: {
+          click: self.onClick.bind(self)
+        },
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     methods: {
       onClick: function onClick(e) {
         this.dispatchEvent('click', e);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7FabButton = {
     name: 'f7-fab-button',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       fabClose: Boolean,
-      label: String},
-      Mixins.colorProps),
+      label: String
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -1911,48 +2020,56 @@
         'fab-label-button': label
       }, Mixins.colorClasses(props));
       var labelEl;
+
       if (label) {
-        labelEl = _h('span', { class: 'fab-label' }, [label]);
+        labelEl = _h('span', {
+          class: 'fab-label'
+        }, [label]);
       }
+
       return _h('a', {
         style: style,
         class: classes,
-        on: { click: this.onClick.bind(this) },
-        attrs: { id: id }
-      }, [
-        this.$slots['default'],
-        labelEl
-      ]);
+        on: {
+          click: this.onClick.bind(this)
+        },
+        attrs: {
+          id: id
+        }
+      }, [this.$slots['default'], labelEl]);
     },
+
     methods: {
       onClick: function onClick(event) {
         this.dispatchEvent('click', event);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7FabButtons = {
     name: 'f7-fab-buttons',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       position: {
         type: String,
         default: 'top'
-      }},
-      Mixins.colorProps),
+      }
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -1964,33 +2081,33 @@
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Fab = {
     name: 'f7-fab',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       morphTo: String,
-      href: [
-        Boolean,
-        String
-      ],
+      href: [Boolean, String],
       text: String,
       position: {
         type: String,
         default: 'right-bottom'
-      }},
-      Mixins.colorProps),
+      }
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -2003,10 +2120,8 @@
       var position = props.position;
       var text = props.text;
       var href = initialHref;
-      if (href === true)
-        { href = '#'; }
-      if (href === false)
-        { href = undefined; }
+      if (href === true) { href = '#'; }
+      if (href === false) { href = undefined; }
       var linkChildren = [];
       var rootChildren = [];
       var ref = self.$slots;
@@ -2014,36 +2129,40 @@
       var defaultSlots = ref.default;
       var rootSlots = ref.root;
       var textSlots = ref.text;
+
       if (defaultSlots) {
         for (var i = 0; i < defaultSlots.length; i += 1) {
           var child = defaultSlots[i];
           var isRoot = (void 0);
           {
-            if (child.tag && child.tag.indexOf('fab-buttons') >= 0)
-              { isRoot = true; }
+            if (child.tag && child.tag.indexOf('fab-buttons') >= 0) { isRoot = true; }
           }
-          if (isRoot)
-            { rootChildren.push(child); }
-          else
-            { linkChildren.push(child); }
+          if (isRoot) { rootChildren.push(child); }else { linkChildren.push(child); }
         }
       }
+
       var textEl;
+
       if (text || textSlots && textSlots.length) {
-        textEl = _h('div', { class: 'fab-text' }, [text || textSlots]);
+        textEl = _h('div', {
+          class: 'fab-text'
+        }, [text || textSlots]);
       }
+
       var linkEl;
+
       if (linkChildren.length || linkSlots && linkSlots.length) {
         linkEl = _h('a', {
           key: 'f7-fab-link',
-          on: { click: self.onClick.bind(self) },
-          attrs: { href: href }
-        }, [
-          linkChildren,
-          textEl,
-          linkSlots
-        ]);
+          on: {
+            click: self.onClick.bind(self)
+          },
+          attrs: {
+            href: href
+          }
+        }, [linkChildren, textEl, linkSlots]);
       }
+
       var classes = Utils.classNames(className, 'fab', ("fab-" + position), {
         'fab-morph': morphTo,
         'fab-extended': typeof textEl !== 'undefined'
@@ -2055,37 +2174,35 @@
           id: id,
           'data-morph-to': morphTo
         }
-      }, [
-        linkEl,
-        rootChildren,
-        rootSlots
-      ]);
+      }, [linkEl, rootChildren, rootSlots]);
     },
+
     methods: {
       onClick: function onClick(event) {
         var self = this;
         self.dispatchEvent('click', event);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var F7Toggle = {
     name: 'f7-toggle',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       init: {
         type: Boolean,
         default: true
@@ -2095,12 +2212,9 @@
       disabled: Boolean,
       readonly: Boolean,
       name: String,
-      value: [
-        String,
-        Number,
-        Array
-      ]},
-      Mixins.colorProps),
+      value: [String, Number, Array]
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -2114,7 +2228,9 @@
       var checked = props.checked;
       var defaultChecked = props.defaultChecked;
       var value = props.value;
-      var labelClasses = Utils.classNames('toggle', className, { disabled: disabled }, Mixins.colorClasses(props));
+      var labelClasses = Utils.classNames('toggle', className, {
+        disabled: disabled
+      }, Mixins.colorClasses(props));
       var inputEl;
       {
         inputEl = _h('input', {
@@ -2124,7 +2240,9 @@
             value: value,
             checked: checked
           },
-          on: { change: self.onChange.bind(self) },
+          on: {
+            change: self.onChange.bind(self)
+          },
           attrs: {
             type: 'checkbox',
             name: name
@@ -2135,24 +2253,25 @@
         ref: 'el',
         style: style,
         class: labelClasses,
-        attrs: { id: id }
-      }, [
-        inputEl,
-        _h('span', { class: 'toggle-icon' })
-      ]);
+        attrs: {
+          id: id
+        }
+      }, [inputEl, _h('span', {
+        class: 'toggle-icon'
+      })]);
     },
+
     watch: {
       'props.checked': function watchChecked(newValue) {
         var self = this;
-        if (!self.f7Toggle)
-          { return; }
+        if (!self.f7Toggle) { return; }
         self.f7Toggle.checked = newValue;
       }
     },
+
     mounted: function mounted() {
       var self = this;
-      if (!self.props.init)
-        { return; }
+      if (!self.props.init) { return; }
       self.$f7ready(function (f7) {
         self.f7Toggle = f7.toggle.create({
           el: self.$refs.el,
@@ -2160,76 +2279,66 @@
             change: function change(toggle) {
               self.dispatchEvent('toggle:change toggleChange', toggle.checked);
             }
+
           }
         });
       });
     },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
-      if (self.f7Toggle && self.f7Toggle.destroy && self.f7Toggle.$el)
-        { self.f7Toggle.destroy(); }
+      if (self.f7Toggle && self.f7Toggle.destroy && self.f7Toggle.$el) { self.f7Toggle.destroy(); }
     },
+
     methods: {
       toggle: function toggle() {
         var self = this;
-        if (self.f7Toggle && self.f7Toggle.toggle)
-          { self.f7Toggle.toggle(); }
+        if (self.f7Toggle && self.f7Toggle.toggle) { self.f7Toggle.toggle(); }
       },
+
       onChange: function onChange(e) {
         var self = this;
         self.dispatchEvent('change', e);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var F7Range = {
     name: 'f7-range',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       init: {
         type: Boolean,
         default: true
       },
       value: {
-        type: [
-          Number,
-          Array,
-          String
-        ],
+        type: [Number, Array, String],
         default: 0
       },
       min: {
-        type: [
-          Number,
-          String
-        ],
+        type: [Number, String],
         default: 0
       },
       max: {
-        type: [
-          Number,
-          String
-        ],
+        type: [Number, String],
         default: 100
       },
       step: {
-        type: [
-          Number,
-          String
-        ],
+        type: [Number, String],
         default: 1
       },
       label: {
@@ -2247,8 +2356,9 @@
       draggableBar: {
         type: Boolean,
         default: true
-      }},
-      Mixins.colorProps),
+      }
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -2261,36 +2371,37 @@
       var input = ref.input;
       var inputId = ref.inputId;
       var name = ref.name;
-      var classes = Utils.classNames(className, 'range-slider', { disabled: disabled }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'range-slider', {
+        disabled: disabled
+      }, Mixins.colorClasses(props));
       return _h('div', {
         ref: 'el',
         style: style,
         class: classes,
-        attrs: { id: id }
-      }, [
-        input && _h('input', {
-          attrs: {
-            type: 'range',
-            name: name,
-            id: inputId
-          }
-        }),
-        this.$slots['default']
-      ]);
+        attrs: {
+          id: id
+        }
+      }, [input && _h('input', {
+        attrs: {
+          type: 'range',
+          name: name,
+          id: inputId
+        }
+      }), this.$slots['default']]);
     },
+
     watch: {
       'props.value': function watchValue(newValue) {
         var self = this;
-        if (!self.f7Range)
-          { return; }
+        if (!self.f7Range) { return; }
         self.f7Range.setValue(newValue);
       }
     },
+
     mounted: function mounted() {
       var self = this;
       self.$f7ready(function (f7) {
-        if (!self.props.init)
-          { return; }
+        if (!self.props.init) { return; }
         var props = self.props;
         var value = props.value;
         var min = props.min;
@@ -2312,76 +2423,65 @@
             change: function change(range, val) {
               self.dispatchEvent('range:change rangeChange', val);
             },
+
             changed: function changed(range, val) {
               self.dispatchEvent('range:changed rangeChanged', val);
             }
+
           }
         }));
       });
     },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
-      if (self.f7Range && self.f7Range.destroy)
-        { self.f7Range.destroy(); }
+      if (self.f7Range && self.f7Range.destroy) { self.f7Range.destroy(); }
     },
+
     methods: {
       setValue: function setValue(newValue) {
         var self = this;
-        if (self.f7Range && self.f7Range.setValue)
-          { self.f7Range.setValue(newValue); }
+        if (self.f7Range && self.f7Range.setValue) { self.f7Range.setValue(newValue); }
       },
+
       getValue: function getValue() {
         var self = this;
+
         if (self.f7Range && self.f7Range.getValue) {
           return self.f7Range.getValue();
         }
+
         return undefined;
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var F7Input = {
     name: 'f7-input',
-    props: Object.assign({}, {type: String,
+    props: Object.assign({
+      type: String,
       name: String,
-      value: [
-        String,
-        Number,
-        Array
-      ],
-      defaultValue: [
-        String,
-        Number,
-        Array
-      ],
+      value: [String, Number, Array],
+      defaultValue: [String, Number, Array],
       placeholder: String,
-      id: [
-        String,
-        Number
-      ],
-      inputId: [
-        String,
-        Number
-      ],
-      size: [
-        String,
-        Number
-      ],
-      accept: [
-        String,
-        Number
-      ],
+      id: [String, Number],
+      inputId: [String, Number],
+      size: [String, Number],
+      accept: [String, Number],
       autocomplete: [String],
       autocorrect: [String],
       autocapitalize: [String],
@@ -2390,39 +2490,18 @@
       autosave: String,
       checked: Boolean,
       disabled: Boolean,
-      max: [
-        String,
-        Number
-      ],
-      min: [
-        String,
-        Number
-      ],
-      step: [
-        String,
-        Number
-      ],
-      maxlength: [
-        String,
-        Number
-      ],
-      minlength: [
-        String,
-        Number
-      ],
+      max: [String, Number],
+      min: [String, Number],
+      step: [String, Number],
+      maxlength: [String, Number],
+      minlength: [String, Number],
       multiple: Boolean,
       readonly: Boolean,
       required: Boolean,
       inputStyle: String,
       pattern: String,
-      validate: [
-        Boolean,
-        String
-      ],
-      tabindex: [
-        String,
-        Number
-      ],
+      validate: [Boolean, String],
+      tabindex: [String, Number],
       resizable: Boolean,
       clearButton: Boolean,
       noFormStoreData: Boolean,
@@ -2433,8 +2512,9 @@
       wrap: {
         type: Boolean,
         default: true
-      }},
-      Mixins.colorProps),
+      }
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -2479,6 +2559,7 @@
       var noStoreData = props.noStoreData;
       var noFormStoreData = props.noFormStoreData;
       var inputEl;
+
       var createInput = function (tag, children) {
         var InputTag = tag;
         var needsValue = type !== 'file';
@@ -2532,9 +2613,11 @@
         }
         return input;
       };
+
       var ref = self.$slots;
       var slotsDefault = ref.default;
       var slotsInfo = ref.info;
+
       if (type === 'select' || type === 'textarea' || type === 'file') {
         if (type === 'select') {
           inputEl = createInput('select', slotsDefault);
@@ -2547,7 +2630,9 @@
         inputEl = slotsDefault;
       } else if (type === 'toggle') {
         inputEl = _h(F7Toggle, {
-          on: { change: self.onChangeBound },
+          on: {
+            change: self.onChangeBound
+          },
           attrs: {
             checked: checked,
             readonly: readonly,
@@ -2559,7 +2644,9 @@
         });
       } else if (type === 'range') {
         inputEl = _h(F7Range, {
-          on: { rangeChange: self.onChangeBound },
+          on: {
+            rangeChange: self.onChangeBound
+          },
           attrs: {
             value: value,
             disabled: disabled,
@@ -2574,37 +2661,39 @@
       } else {
         inputEl = createInput('input');
       }
+
       if (wrap) {
         var wrapClasses = Utils.classNames(className, 'item-input-wrap', Mixins.colorClasses(props));
         return _h('div', {
           ref: 'wrapEl',
           class: wrapClasses,
           style: style,
-          attrs: { id: id }
-        }, [
-          inputEl,
-          errorMessage && errorMessageForce && _h('div', { class: 'item-input-error-message' }, [errorMessage]),
-          clearButton && _h('span', { class: 'input-clear-button' }),
-          (info || slotsInfo && slotsInfo.length) && _h('div', { class: 'item-input-info' }, [
-            info,
-            this.$slots['info']
-          ])
-        ]);
+          attrs: {
+            id: id
+          }
+        }, [inputEl, errorMessage && errorMessageForce && _h('div', {
+          class: 'item-input-error-message'
+        }, [errorMessage]), clearButton && _h('span', {
+          class: 'input-clear-button'
+        }), (info || slotsInfo && slotsInfo.length) && _h('div', {
+          class: 'item-input-info'
+        }, [info, this.$slots['info']])]);
       }
+
       return inputEl;
     },
+
     watch: {
       'props.value': function watchValue() {
         var self = this;
         var ref = self.props;
         var type = ref.type;
-        if (type === 'range' || type === 'toggle')
-          { return; }
-        if (!self.$f7)
-          { return; }
+        if (type === 'range' || type === 'toggle') { return; }
+        if (!self.$f7) { return; }
         self.updateInputOnDidUpdate = true;
       }
     },
+
     created: function created() {
       var self = this;
       self.onFocusBound = self.onFocus.bind(self);
@@ -2616,6 +2705,7 @@
       self.onInputEmptyBound = self.onInputEmpty.bind(self);
       self.onInputClearBound = self.onInputClear.bind(self);
     },
+
     mounted: function mounted() {
       var self = this;
       self.$f7ready(function (f7) {
@@ -2626,120 +2716,136 @@
         var clearButton = ref.clearButton;
         var value = ref.value;
         var defaultValue = ref.defaultValue;
-        if (type === 'range' || type === 'toggle')
-          { return; }
+        if (type === 'range' || type === 'toggle') { return; }
         var inputEl = self.$refs.inputEl;
-        if (!inputEl)
-          { return; }
+        if (!inputEl) { return; }
         inputEl.addEventListener('input:notempty', self.onInputNotEmptyBound, false);
+
         if (type === 'textarea' && resizable) {
           inputEl.addEventListener('textarea:resze', self.onTextareaResizeBound, false);
         }
+
         if (clearButton) {
           inputEl.addEventListener('input:empty', self.onInputEmptyBound, false);
           inputEl.addEventListener('input:clear', self.onInputClearBound, false);
         }
+
         f7.input.checkEmptyState(inputEl);
+
         if (validate && (typeof value !== 'undefined' || typeof defaultValue !== 'undefined')) {
           setTimeout(function () {
             f7.input.validate(inputEl);
           }, 0);
         }
+
         if (resizable) {
           f7.input.resizeTextarea(inputEl);
         }
       });
     },
+
     updated: function updated() {
       var self = this;
       var ref = self.props;
       var validate = ref.validate;
       var resizable = ref.resizable;
       var f7 = self.$f7;
-      if (!f7)
-        { return; }
+      if (!f7) { return; }
+
       if (self.updateInputOnDidUpdate) {
         var inputEl = self.$refs.inputEl;
-        if (!inputEl)
-          { return; }
+        if (!inputEl) { return; }
         self.updateInputOnDidUpdate = false;
         f7.input.checkEmptyState(inputEl);
+
         if (validate) {
           f7.input.validate(inputEl);
         }
+
         if (resizable) {
           f7.input.resizeTextarea(inputEl);
         }
       }
     },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
       var ref = self.props;
       var type = ref.type;
       var resizable = ref.resizable;
       var clearButton = ref.clearButton;
-      if (type === 'range' || type === 'toggle')
-        { return; }
+      if (type === 'range' || type === 'toggle') { return; }
       var inputEl = self.$refs.inputEl;
-      if (!inputEl)
-        { return; }
+      if (!inputEl) { return; }
       inputEl.removeEventListener('input:notempty', self.onInputNotEmptyBound, false);
+
       if (type === 'textarea' && resizable) {
         inputEl.removeEventListener('textarea:resze', self.onTextareaResizeBound, false);
       }
+
       if (clearButton) {
         inputEl.removeEventListener('input:empty', self.onInputEmptyBound, false);
         inputEl.removeEventListener('input:clear', self.onInputClearBound, false);
       }
     },
+
     methods: {
       onTextareaResize: function onTextareaResize(event) {
         this.dispatchEvent('textarea:resize textareaResize', event);
       },
+
       onInputNotEmpty: function onInputNotEmpty(event) {
         this.dispatchEvent('input:notempty inputNotEmpty', event);
       },
+
       onInputEmpty: function onInputEmpty(event) {
         this.dispatchEvent('input:empty inputEmpty', event);
       },
+
       onInputClear: function onInputClear(event) {
         this.dispatchEvent('input:clear inputClear', event);
       },
+
       onInput: function onInput(event) {
         this.dispatchEvent('input', event);
       },
+
       onFocus: function onFocus(event) {
         this.dispatchEvent('focus', event);
       },
+
       onBlur: function onBlur(event) {
         this.dispatchEvent('blur', event);
       },
+
       onChange: function onChange(event) {
         this.dispatchEvent('change', event);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Label = {
     name: 'f7-label',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       floating: Boolean,
-      inline: Boolean},
-      Mixins.colorProps),
+      inline: Boolean
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -2757,60 +2863,55 @@
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var F7Link = {
     name: 'f7-link',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       noLinkClass: Boolean,
       noFastClick: Boolean,
       noFastclick: Boolean,
       text: String,
-      tabLink: [
-        Boolean,
-        String
-      ],
+      tabLink: [Boolean, String],
       tabLinkActive: Boolean,
       tabbarLabel: Boolean,
       iconOnly: Boolean,
-      badge: [
-        String,
-        Number
-      ],
+      badge: [String, Number],
       badgeColor: [String],
-      iconBadge: [
-        String,
-        Number
-      ],
+      iconBadge: [String, Number],
       href: {
-        type: [
-          String,
-          Boolean
-        ],
+        type: [String, Boolean],
         default: '#'
-      }},
-      Mixins.colorProps,
-      Mixins.linkIconProps,
-      Mixins.linkRouterProps,
-      Mixins.linkActionsProps),
+      }
+    }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
+
     data: function data() {
       var props = __vueComponentProps(this);
+
       var state = (function () {
-        return { isTabbarLabel: props.tabbarLabel };
+        return {
+          isTabbarLabel: props.tabbarLabel
+        };
       })();
-      return { state: state };
+
+      return {
+        state: state
+      };
     },
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -2838,20 +2939,30 @@
       var textEl;
       var badgeEl;
       var iconBadgeEl;
+
       if (text) {
-        if (badge)
-          { badgeEl = _h(F7Badge, { attrs: { color: badgeColor } }, [badge]); }
-        textEl = _h('span', { class: self.state.isTabbarLabel ? 'tabbar-label' : '' }, [
-          text,
-          badgeEl
-        ]);
+        if (badge) { badgeEl = _h(F7Badge, {
+          attrs: {
+            color: badgeColor
+          }
+        }, [badge]); }
+        textEl = _h('span', {
+          class: self.state.isTabbarLabel ? 'tabbar-label' : ''
+        }, [text, badgeEl]);
       }
+
       var mdThemeIcon = iconIfMd || iconMd;
       var iosThemeIcon = iconIfIos || iconIos;
+
       if (icon || iconMaterial || iconIon || iconFa || iconF7 || mdThemeIcon || iosThemeIcon) {
         if (iconBadge) {
-          iconBadgeEl = _h(F7Badge, { attrs: { color: badgeColor } }, [iconBadge]);
+          iconBadgeEl = _h(F7Badge, {
+            attrs: {
+              color: badgeColor
+            }
+          }, [iconBadge]);
         }
+
         iconEl = _h(F7Icon, {
           attrs: {
             material: iconMaterial,
@@ -2866,22 +2977,27 @@
           }
         }, [iconBadgeEl]);
       }
+
       if (iconOnly || !text && defaultSlots && defaultSlots.length === 0 || !text && !defaultSlots) {
         self.iconOnlyComputed = true;
       } else {
         self.iconOnlyComputed = false;
       }
-      return _h('a', __vueComponentTransformJSXProps(Object.assign({}, {ref: 'el',
+
+      return _h('a', __vueComponentTransformJSXProps(Object.assign({
+        ref: 'el',
         style: style,
-        class: self.classes},
-        self.attrs,
-        {on: { click: self.onClick.bind(self) },
-        attrs: { id: id }})), [
-        iconEl,
-        textEl,
-        defaultSlots
-      ]);
+        class: self.classes
+      }, self.attrs, {
+        on: {
+          click: self.onClick.bind(self)
+        },
+        attrs: {
+          id: id
+        }
+      })), [iconEl, textEl, defaultSlots]);
     },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
@@ -2889,11 +3005,16 @@
       var tabbarLabel = ref.tabbarLabel;
       var tabLink = ref.tabLink;
       var isTabbarLabel = false;
+
       if (tabbarLabel || (tabLink || tabLink === '') && self.$$(el).parents('.tabbar-labels').length) {
         isTabbarLabel = true;
       }
-      self.setState({ isTabbarLabel: isTabbarLabel });
+
+      self.setState({
+        isTabbarLabel: isTabbarLabel
+      });
     },
+
     computed: {
       attrs: function attrs() {
         var self = this;
@@ -2902,16 +3023,15 @@
         var target = props.target;
         var tabLink = props.tabLink;
         var hrefComputed = href;
-        if (href === true)
-          { hrefComputed = '#'; }
-        if (href === false)
-          { hrefComputed = undefined; }
+        if (href === true) { hrefComputed = '#'; }
+        if (href === false) { hrefComputed = undefined; }
         return Utils.extend({
           href: hrefComputed,
           target: target,
           'data-tab': Utils.isStringProp(tabLink) && tabLink || undefined
         }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
       },
+
       classes: function classes() {
         var self = this;
         var props = self.props;
@@ -2929,59 +3049,46 @@
           'no-fastclick': noFastclick || noFastClick
         }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
       },
+
       props: function props() {
         return __vueComponentProps(this);
       }
+
     },
     methods: {
       onClick: function onClick(event) {
         this.dispatchEvent('click', event);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       },
+
       setState: function setState(updater, callback) {
         __vueComponentSetState(this, updater, callback);
       }
+
     }
   };
 
   var f7ListButton = {
     name: 'f7-list-button',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       noFastclick: Boolean,
       noFastClick: Boolean,
-      title: [
-        String,
-        Number
-      ],
-      text: [
-        String,
-        Number
-      ],
-      tabLink: [
-        Boolean,
-        String
-      ],
+      title: [String, Number],
+      text: [String, Number],
+      tabLink: [Boolean, String],
       tabLinkActive: Boolean,
-      link: [
-        Boolean,
-        String
-      ],
-      href: [
-        Boolean,
-        String
-      ],
-      target: String},
-      Mixins.colorProps,
-      Mixins.linkRouterProps,
-      Mixins.linkActionsProps),
+      link: [Boolean, String],
+      href: [Boolean, String],
+      target: String
+    }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -2994,11 +3101,18 @@
       return _h('li', {
         style: style,
         class: className,
-        attrs: { id: id }
-      }, [_h('a', __vueComponentTransformJSXProps(Object.assign({}, {class: self.classes},
-          self.attrs,
-          {on: { click: self.onClick.bind(self) }})), [this.$slots['default'] || [title || text]])]);
+        attrs: {
+          id: id
+        }
+      }, [_h('a', __vueComponentTransformJSXProps(Object.assign({
+        class: self.classes
+      }, self.attrs, {
+        on: {
+          click: self.onClick.bind(self)
+        }
+      })), [this.$slots['default'] || [title || text]])]);
     },
+
     computed: {
       attrs: function attrs() {
         var self = this;
@@ -3013,6 +3127,7 @@
           'data-tab': Utils.isStringProp(tabLink) && tabLink
         }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
       },
+
       classes: function classes() {
         var self = this;
         var props = self.props;
@@ -3028,32 +3143,35 @@
           'no-fastclick': noFastclick || noFastClick
         }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
       },
+
       props: function props() {
         return __vueComponentProps(this);
       }
+
     },
     methods: {
       onClick: function onClick(event) {
         this.dispatchEvent('click', event);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     }
   };
 
   var f7ListGroup = {
     name: 'f7-list-group',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       mediaList: Boolean,
-      sortable: Boolean},
-      Mixins.colorProps),
+      sortable: Boolean
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -3070,35 +3188,31 @@
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [_h('ul', [this.$slots['default']])]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7ListIndex = {
     name: 'f7-list-index',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       init: {
         type: Boolean,
         default: true
       },
-      listEl: [
-        String,
-        Object
-      ],
+      listEl: [String, Object],
       indexes: {
-        type: [
-          String,
-          Array
-        ],
+        type: [String, Array],
         default: 'auto'
       },
       scrollList: {
@@ -3116,8 +3230,9 @@
       mdItemHeight: {
         type: Number,
         default: 14
-      }},
-      Mixins.colorProps),
+      }
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -3129,20 +3244,23 @@
         ref: 'el',
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     beforeDestroy: function beforeDestroy() {
-      if (!this.props.init)
-        { return; }
+      if (!this.props.init) { return; }
+
       if (this.f7ListIndex && this.f7ListIndex.destroy) {
         this.f7ListIndex.destroy();
       }
     },
+
     mounted: function mounted() {
       var self = this;
-      if (!self.props.init)
-        { return; }
+      if (!self.props.init) { return; }
       self.$f7ready(function (f7) {
         var el = self.$refs.el;
         var ref = self.props;
@@ -3164,50 +3282,52 @@
             select: function select(index, itemContent, itemIndex) {
               self.dispatchEvent('listindex:select listIndexSelect', itemContent, itemIndex);
             }
+
           }
         });
       });
     },
+
     watch: {
       'props.indexes': function watchIndexes() {
-        if (!this.f7ListIndex)
-          { return; }
+        if (!this.f7ListIndex) { return; }
         this.f7ListIndex.params.indexes = this.indexes;
         this.update();
       }
     },
     methods: {
       update: function update() {
-        if (!this.f7ListIndex)
-          { return; }
+        if (!this.f7ListIndex) { return; }
         this.f7ListIndex.update();
       },
+
       scrollListToIndex: function scrollListToIndex(indexContent) {
-        if (!this.f7ListIndex)
-          { return; }
+        if (!this.f7ListIndex) { return; }
         this.f7ListIndex.scrollListToIndex(indexContent);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7ListItemCell = {
     name: 'f7-list-item-cell',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ]},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number]
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -3218,51 +3338,32 @@
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var F7ListItemContent = {
     name: 'f7-list-item-content',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
-      title: [
-        String,
-        Number
-      ],
-      text: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
+      title: [String, Number],
+      text: [String, Number],
       media: String,
-      subtitle: [
-        String,
-        Number
-      ],
-      header: [
-        String,
-        Number
-      ],
-      footer: [
-        String,
-        Number
-      ],
-      after: [
-        String,
-        Number
-      ],
-      badge: [
-        String,
-        Number
-      ],
+      subtitle: [String, Number],
+      header: [String, Number],
+      footer: [String, Number],
+      after: [String, Number],
+      badge: [String, Number],
       badgeColor: String,
       mediaList: Boolean,
       mediaItem: Boolean,
@@ -3273,17 +3374,15 @@
       checked: Boolean,
       radio: Boolean,
       name: String,
-      value: [
-        String,
-        Number,
-        Array
-      ],
+      value: [String, Number, Array],
       readonly: Boolean,
       required: Boolean,
-      disabled: Boolean},
-      Mixins.colorProps),
+      disabled: Boolean
+    }, Mixins.colorProps),
+
     data: function data() {
       var props = __vueComponentProps(this);
+
       var state = (function () {
         return {
           hasInput: false,
@@ -3292,8 +3391,12 @@
           hasInputErrorMessage: false
         };
       })();
-      return { state: state };
+
+      return {
+        state: state
+      };
     },
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -3359,92 +3462,85 @@
       var footerEl;
       var slots = self.$slots.default;
       var flattenSlots = [];
+
       if (slots && slots.length) {
         slots.forEach(function (slot) {
-          if (Array.isArray(slot))
-            { flattenSlots.push.apply(flattenSlots, slot); }
-          else
-            { flattenSlots.push(slot); }
+          if (Array.isArray(slot)) { flattenSlots.push.apply(flattenSlots, slot); }else { flattenSlots.push(slot); }
         });
       }
+
       flattenSlots.forEach(function (child) {
-        if (typeof child === 'undefined')
-          { return; }
+        if (typeof child === 'undefined') { return; }
         {
           var tag = child.tag;
+
           if (tag && tag.indexOf('f7-input') >= 0) {
             hasInput = true;
-            if (child.data && child.data.info)
-              { hasInputInfo = true; }
-            if (child.data && child.data.errorMessage && child.data.errorMessageForce)
-              { hasInputErrorMessage = true; }
+            if (child.data && child.data.info) { hasInputInfo = true; }
+            if (child.data && child.data.errorMessage && child.data.errorMessageForce) { hasInputErrorMessage = true; }
           }
+
           if (tag && tag.indexOf('f7-label') >= 0) {
-            if (child.data && child.data.inline)
-              { hasInlineLabel = true; }
+            if (child.data && child.data.inline) { hasInlineLabel = true; }
           }
         }
         var slotName;
         slotName = child.data ? child.data.slot : undefined;
-        if (!slotName || slotName === 'inner')
-          { slotsInner.push(child); }
-        if (slotName === 'content-start')
-          { slotsContentStart.push(child); }
-        if (slotName === 'content')
-          { slotsContent.push(child); }
-        if (slotName === 'content-end')
-          { slotsContentEnd.push(child); }
-        if (slotName === 'after-start')
-          { slotsAfterStart.push(child); }
-        if (slotName === 'after')
-          { slotsAfter.push(child); }
-        if (slotName === 'after-end')
-          { slotsAfterEnd.push(child); }
-        if (slotName === 'media')
-          { slotsMedia.push(child); }
-        if (slotName === 'inner-start')
-          { slotsInnerStart.push(child); }
-        if (slotName === 'inner-end')
-          { slotsInnerEnd.push(child); }
-        if (slotName === 'before-title')
-          { slotsBeforeTitle.push(child); }
-        if (slotName === 'title')
-          { slotsTitle.push(child); }
-        if (slotName === 'after-title')
-          { slotsAfterTitle.push(child); }
-        if (slotName === 'subtitle')
-          { slotsSubtitle.push(child); }
-        if (slotName === 'text')
-          { slotsText.push(child); }
-        if (slotName === 'header')
-          { slotsHeader.push(child); }
-        if (slotName === 'footer')
-          { slotsFooter.push(child); }
+        if (!slotName || slotName === 'inner') { slotsInner.push(child); }
+        if (slotName === 'content-start') { slotsContentStart.push(child); }
+        if (slotName === 'content') { slotsContent.push(child); }
+        if (slotName === 'content-end') { slotsContentEnd.push(child); }
+        if (slotName === 'after-start') { slotsAfterStart.push(child); }
+        if (slotName === 'after') { slotsAfter.push(child); }
+        if (slotName === 'after-end') { slotsAfterEnd.push(child); }
+        if (slotName === 'media') { slotsMedia.push(child); }
+        if (slotName === 'inner-start') { slotsInnerStart.push(child); }
+        if (slotName === 'inner-end') { slotsInnerEnd.push(child); }
+        if (slotName === 'before-title') { slotsBeforeTitle.push(child); }
+        if (slotName === 'title') { slotsTitle.push(child); }
+        if (slotName === 'after-title') { slotsAfterTitle.push(child); }
+        if (slotName === 'subtitle') { slotsSubtitle.push(child); }
+        if (slotName === 'text') { slotsText.push(child); }
+        if (slotName === 'header') { slotsHeader.push(child); }
+        if (slotName === 'footer') { slotsFooter.push(child); }
       });
+
       if (hasInput && !self.state.hasInput) {
         self.hasInputSet = true;
-        self.setState({ hasInput: hasInput });
+        self.setState({
+          hasInput: hasInput
+        });
       } else if (!hasInput) {
         self.hasInputSet = false;
       }
+
       if (hasInputInfo && !self.state.hasInputInfo) {
         self.hasInputInfoSet = true;
-        self.setState({ hasInputInfo: hasInputInfo });
+        self.setState({
+          hasInputInfo: hasInputInfo
+        });
       } else if (!hasInputInfo) {
         self.hasInputInfoSet = false;
       }
+
       if (hasInputErrorMessage && !self.state.hasInputErrorMessage) {
         self.hasInputErrorMessageSet = true;
-        self.setState({ hasInputErrorMessage: hasInputErrorMessage });
+        self.setState({
+          hasInputErrorMessage: hasInputErrorMessage
+        });
       } else if (!hasInputInfo) {
         self.hasInputErrorMessageSet = false;
       }
+
       if (hasInlineLabel && !self.state.hasInlineLabel) {
         self.hasInlineLabelSet = true;
-        self.setState({ hasInlineLabel: hasInlineLabel });
+        self.setState({
+          hasInlineLabel: hasInlineLabel
+        });
       } else if (!hasInlineLabel) {
         self.hasInlineLabelSet = false;
       }
+
       if (radio || checkbox) {
         {
           inputEl = _h('input', {
@@ -3455,107 +3551,101 @@
               required: required,
               value: value
             },
-            on: { change: self.onChange.bind(self) },
+            on: {
+              change: self.onChange.bind(self)
+            },
             attrs: {
               name: name,
               type: radio ? 'radio' : 'checkbox'
             }
           });
         }
-        inputIconEl = _h('i', { class: ("icon icon-" + (radio ? 'radio' : 'checkbox')) });
+        inputIconEl = _h('i', {
+          class: ("icon icon-" + (radio ? 'radio' : 'checkbox'))
+        });
       }
+
       if (media || slotsMedia.length) {
         var mediaImgEl;
+
         if (media) {
-          mediaImgEl = _h('img', { attrs: { src: media } });
+          mediaImgEl = _h('img', {
+            attrs: {
+              src: media
+            }
+          });
         }
-        mediaEl = _h('div', { class: 'item-media' }, [
-          mediaImgEl,
-          slotsMedia
-        ]);
+
+        mediaEl = _h('div', {
+          class: 'item-media'
+        }, [mediaImgEl, slotsMedia]);
       }
+
       var isMedia = mediaItem || mediaList;
+
       if (header || slotsHeader.length) {
-        headerEl = _h('div', { class: 'item-header' }, [
-          header,
-          slotsHeader
-        ]);
+        headerEl = _h('div', {
+          class: 'item-header'
+        }, [header, slotsHeader]);
       }
+
       if (footer || slotsFooter.length) {
-        footerEl = _h('div', { class: 'item-footer' }, [
-          footer,
-          slotsFooter
-        ]);
+        footerEl = _h('div', {
+          class: 'item-footer'
+        }, [footer, slotsFooter]);
       }
+
       if (title || slotsTitle.length || !isMedia && headerEl || !isMedia && footerEl) {
-        titleEl = _h('div', { class: 'item-title' }, [
-          !isMedia && headerEl,
-          title,
-          slotsTitle,
-          !isMedia && footerEl
-        ]);
+        titleEl = _h('div', {
+          class: 'item-title'
+        }, [!isMedia && headerEl, title, slotsTitle, !isMedia && footerEl]);
       }
+
       if (subtitle || slotsSubtitle.length) {
-        subtitleEl = _h('div', { class: 'item-subtitle' }, [
-          subtitle,
-          slotsSubtitle
-        ]);
+        subtitleEl = _h('div', {
+          class: 'item-subtitle'
+        }, [subtitle, slotsSubtitle]);
       }
+
       if (text || slotsText.length) {
-        textEl = _h('div', { class: 'item-text' }, [
-          text,
-          slotsText
-        ]);
+        textEl = _h('div', {
+          class: 'item-text'
+        }, [text, slotsText]);
       }
+
       if (after || badge || slotsAfter.length) {
         if (after) {
           afterEl = _h('span', [after]);
         }
+
         if (badge) {
-          badgeEl = _h(F7Badge, { attrs: { color: badgeColor } }, [badge]);
+          badgeEl = _h(F7Badge, {
+            attrs: {
+              color: badgeColor
+            }
+          }, [badge]);
         }
-        afterWrapEl = _h('div', { class: 'item-after' }, [
-          slotsAfterStart,
-          afterEl,
-          badgeEl,
-          slotsAfter,
-          slotsAfterEnd
-        ]);
+
+        afterWrapEl = _h('div', {
+          class: 'item-after'
+        }, [slotsAfterStart, afterEl, badgeEl, slotsAfter, slotsAfterEnd]);
       }
+
       if (isMedia) {
-        titleRowEl = _h('div', { class: 'item-title-row' }, [
-          slotsBeforeTitle,
-          titleEl,
-          slotsAfterTitle,
-          afterWrapEl
-        ]);
+        titleRowEl = _h('div', {
+          class: 'item-title-row'
+        }, [slotsBeforeTitle, titleEl, slotsAfterTitle, afterWrapEl]);
         innerEl = _h('div', {
           ref: 'innerEl',
           class: 'item-inner'
-        }, [
-          slotsInnerStart,
-          headerEl,
-          titleRowEl,
-          subtitleEl,
-          textEl,
-          slotsInner,
-          footerEl,
-          slotsInnerEnd
-        ]);
+        }, [slotsInnerStart, headerEl, titleRowEl, subtitleEl, textEl, slotsInner, footerEl, slotsInnerEnd]);
       } else {
         innerEl = _h('div', {
           ref: 'innerEl',
           class: 'item-inner'
-        }, [
-          slotsInnerStart,
-          slotsBeforeTitle,
-          titleEl,
-          slotsAfterTitle,
-          afterWrapEl,
-          slotsInner,
-          slotsInnerEnd
-        ]);
+        }, [slotsInnerStart, slotsBeforeTitle, titleEl, slotsAfterTitle, afterWrapEl, slotsInner, slotsInnerEnd]);
       }
+
       var ItemContentTag = checkbox || radio ? 'label' : 'div';
       var classes = Utils.classNames(className, 'item-content', {
         'item-checkbox': checkbox,
@@ -3570,23 +3660,19 @@
         ref: 'el',
         style: style,
         class: classes,
-        on: { click: self.onClick.bind(self) },
-        attrs: { id: id }
-      }, [
-        slotsContentStart,
-        inputEl,
-        inputIconEl,
-        mediaEl,
-        innerEl,
-        slotsContent,
-        slotsContentEnd
-      ]);
+        on: {
+          click: self.onClick.bind(self)
+        },
+        attrs: {
+          id: id
+        }
+      }, [slotsContentStart, inputEl, inputIconEl, mediaEl, innerEl, slotsContent, slotsContentEnd]);
     },
+
     mounted: function mounted() {
       var self = this;
       var innerEl = self.$refs.innerEl;
-      if (!innerEl)
-        { return; }
+      if (!innerEl) { return; }
       var $innerEl = self.$$(innerEl);
       var $labelEl = $innerEl.children('.item-title.item-label');
       var $inputEl = $innerEl.children('.item-input-wrap');
@@ -3594,24 +3680,36 @@
       var hasInput = $inputEl.length > 0;
       var hasInputInfo = $inputEl.children('.item-input-info').length > 0;
       var hasInputErrorMessage = $inputEl.children('.item-input-error-message').length > 0;
+
       if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {
-        self.setState({ hasInlineLabel: hasInlineLabel });
+        self.setState({
+          hasInlineLabel: hasInlineLabel
+        });
       }
+
       if (!self.hasInputSet && hasInput !== self.state.hasInput) {
-        self.setState({ hasInput: hasInput });
+        self.setState({
+          hasInput: hasInput
+        });
       }
+
       if (!self.hasInputInfoSet && hasInputInfo !== self.state.hasInputInfo) {
-        self.setState({ hasInputInfo: hasInputInfo });
+        self.setState({
+          hasInputInfo: hasInputInfo
+        });
       }
+
       if (!self.hasInputErrorMessageSet && hasInputErrorMessage !== self.state.hasInputErrorMessage) {
-        self.setState({ hasInputErrorMessage: hasInputErrorMessage });
+        self.setState({
+          hasInputErrorMessage: hasInputErrorMessage
+        });
       }
     },
+
     updated: function updated() {
       var self = this;
       var innerEl = self.$refs.innerEl;
-      if (!innerEl)
-        { return; }
+      if (!innerEl) { return; }
       var $innerEl = self.$$(innerEl);
       var $labelEl = $innerEl.children('.item-title.item-label');
       var $inputEl = $innerEl.children('.item-input-wrap');
@@ -3619,50 +3717,67 @@
       var hasInput = $inputEl.length > 0;
       var hasInputInfo = $inputEl.children('.item-input-info').length > 0;
       var hasInputErrorMessage = $inputEl.children('.item-input-error-message').length > 0;
+
       if (hasInlineLabel !== self.state.hasInlineLabel) {
-        self.setState({ hasInlineLabel: hasInlineLabel });
+        self.setState({
+          hasInlineLabel: hasInlineLabel
+        });
       }
+
       if (hasInput !== self.state.hasInput) {
-        self.setState({ hasInput: hasInput });
+        self.setState({
+          hasInput: hasInput
+        });
       }
+
       if (hasInputInfo !== self.state.hasInputInfo) {
-        self.setState({ hasInputInfo: hasInputInfo });
+        self.setState({
+          hasInputInfo: hasInputInfo
+        });
       }
+
       if (!self.hasInputErrorMessageSet && hasInputErrorMessage !== self.state.hasInputErrorMessage) {
-        self.setState({ hasInputErrorMessage: hasInputErrorMessage });
+        self.setState({
+          hasInputErrorMessage: hasInputErrorMessage
+        });
       }
     },
+
     methods: {
       onClick: function onClick(event) {
         this.dispatchEvent('click', event);
       },
+
       onChange: function onChange(event) {
         this.dispatchEvent('change', event);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       },
+
       setState: function setState(updater, callback) {
         __vueComponentSetState(this, updater, callback);
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7ListItemRow = {
     name: 'f7-list-item-row',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ]},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number]
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -3673,58 +3788,36 @@
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7ListItem = {
     name: 'f7-list-item',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
-      title: [
-        String,
-        Number
-      ],
-      text: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
+      title: [String, Number],
+      text: [String, Number],
       media: String,
-      subtitle: [
-        String,
-        Number
-      ],
-      header: [
-        String,
-        Number
-      ],
-      footer: [
-        String,
-        Number
-      ],
-      link: [
-        Boolean,
-        String
-      ],
+      subtitle: [String, Number],
+      header: [String, Number],
+      footer: [String, Number],
+      link: [Boolean, String],
       target: String,
       noFastclick: Boolean,
       noFastClick: Boolean,
-      after: [
-        String,
-        Number
-      ],
-      badge: [
-        String,
-        Number
-      ],
+      after: [String, Number],
+      badge: [String, Number],
       badgeColor: String,
       mediaItem: Boolean,
       mediaList: Boolean,
@@ -3741,22 +3834,18 @@
       radio: Boolean,
       checked: Boolean,
       name: String,
-      value: [
-        String,
-        Number,
-        Array
-      ],
+      value: [String, Number, Array],
       readonly: Boolean,
       required: Boolean,
       disabled: Boolean,
       itemInput: Boolean,
       itemInputWithInfo: Boolean,
-      inlineLabel: Boolean},
-      Mixins.colorProps,
-      Mixins.linkRouterProps,
-      Mixins.linkActionsProps),
+      inlineLabel: Boolean
+    }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
+
     data: function data() {
       var props = __vueComponentProps(this);
+
       var state = (function () {
         return {
           isMedia: props.mediaItem || props.mediaList,
@@ -3764,8 +3853,12 @@
           isSimple: false
         };
       })();
-      return { state: state };
+
+      return {
+        state: state
+      };
     },
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -3812,6 +3905,7 @@
       var isMedia = mediaItem || mediaList || self.state.isMedia;
       var isSortable = sortable || self.state.isSortable;
       var isSimple = self.state.isSimple;
+
       if (!isSimple) {
         var needsEvents = !(link || href || accordionItem || smartSelect);
         itemContentEl = _h(F7ListItemContent, {
@@ -3843,26 +3937,8 @@
             itemInputWithInfo: itemInputWithInfo,
             inlineLabel: inlineLabel
           }
-        }, [
-          this.$slots['content-start'],
-          this.$slots['content'],
-          this.$slots['content-end'],
-          this.$slots['media'],
-          this.$slots['inner-start'],
-          this.$slots['inner'],
-          this.$slots['inner-end'],
-          this.$slots['after-start'],
-          this.$slots['after'],
-          this.$slots['after-end'],
-          this.$slots['header'],
-          this.$slots['footer'],
-          this.$slots['before-title'],
-          this.$slots['title'],
-          this.$slots['after-title'],
-          this.$slots['subtitle'],
-          this.$slots['text'],
-          swipeout || accordionItem ? null : self.$slots.default
-        ]);
+        }, [this.$slots['content-start'], this.$slots['content'], this.$slots['content-end'], this.$slots['media'], this.$slots['inner-start'], this.$slots['inner'], this.$slots['inner-end'], this.$slots['after-start'], this.$slots['after'], this.$slots['after-end'], this.$slots['header'], this.$slots['footer'], this.$slots['before-title'], this.$slots['title'], this.$slots['after-title'], this.$slots['subtitle'], this.$slots['text'], swipeout || accordionItem ? null : self.$slots.default]);
+
         if (link || href || accordionItem || smartSelect) {
           var linkAttrs = Utils.extend({
             href: link === true || accordionItem || smartSelect ? '#' : link || href,
@@ -3873,11 +3949,16 @@
             'no-fastclick': noFastclick || noFastClick,
             'smart-select': smartSelect
           }, Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
-          linkEl = _h('a', __vueComponentTransformJSXProps(Object.assign({}, {class: linkClasses},
-            linkAttrs,
-            {on: { click: self.onClick.bind(self) }})), [itemContentEl]);
+          linkEl = _h('a', __vueComponentTransformJSXProps(Object.assign({
+            class: linkClasses
+          }, linkAttrs, {
+            on: {
+              click: self.onClick.bind(self)
+            }
+          })), [itemContentEl]);
         }
       }
+
       var liClasses = Utils.classNames(className, {
         'item-divider': divider,
         'list-group-title': groupTitle,
@@ -3886,45 +3967,48 @@
         'accordion-item': accordionItem,
         'accordion-item-opened': accordionItemOpened
       }, Mixins.colorClasses(props));
+
       if (divider || groupTitle) {
         return _h('li', {
           ref: 'el',
           style: style,
           class: liClasses,
-          attrs: { id: id }
+          attrs: {
+            id: id
+          }
         }, [_h('span', [this.$slots['default'] || [title]])]);
       } else if (isSimple) {
         return _h('li', {
           ref: 'el',
           style: style,
           class: liClasses,
-          attrs: { id: id }
-        }, [
-          title,
-          this.$slots['default']
-        ]);
+          attrs: {
+            id: id
+          }
+        }, [title, this.$slots['default']]);
       }
+
       var linkItemEl = link || href || smartSelect || accordionItem ? linkEl : itemContentEl;
       return _h('li', {
         ref: 'el',
         style: style,
         class: liClasses,
-        attrs: { id: id }
-      }, [
-        this.$slots['root-start'],
-        swipeout ? _h('div', { class: 'swipeout-content' }, [linkItemEl]) : linkItemEl,
-        isSortable && _h('div', { class: 'sortable-handler' }),
-        (swipeout || accordionItem) && self.$slots.default,
-        this.$slots['root'],
-        this.$slots['root-end']
-      ]);
+        attrs: {
+          id: id
+        }
+      }, [this.$slots['root-start'], swipeout ? _h('div', {
+        class: 'swipeout-content'
+      }, [linkItemEl]) : linkItemEl, isSortable && _h('div', {
+        class: 'sortable-handler'
+      }), (swipeout || accordionItem) && self.$slots.default, this.$slots['root'], this.$slots['root-end']]);
     },
+
     watch: {
       'props.swipeoutOpened': function watchSwipeoutOpened(opened) {
         var self = this;
-        if (!self.props.swipeout)
-          { return; }
+        if (!self.props.swipeout) { return; }
         var el = self.$refs.el;
+
         if (opened) {
           self.$f7.swipeout.open(el);
         } else {
@@ -3932,6 +4016,7 @@
         }
       }
     },
+
     created: function created() {
       var self = this;
       self.onClickBound = self.onClick.bind(self);
@@ -3948,12 +4033,13 @@
       self.onAccCloseBound = self.onAccClose.bind(self);
       self.onAccClosedBound = self.onAccClosed.bind(self);
     },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       self.$listEl = self.$$(el).parents('.list, .list-group').eq(0);
+
       if (self.$listEl.length) {
         self.setState({
           isMedia: self.$listEl.hasClass('media-list'),
@@ -3961,12 +4047,14 @@
           isSortable: self.$listEl.hasClass('sortable')
         });
       }
+
       var ref = self.props;
       var swipeout = ref.swipeout;
       var swipeoutOpened = ref.swipeoutOpened;
       var accordionItem = ref.accordionItem;
       var smartSelect = ref.smartSelect;
       var smartSelectParams = ref.smartSelectParams;
+
       if (swipeout) {
         el.addEventListener('swipeout:open', self.onSwipeoutOpenBound);
         el.addEventListener('swipeout:opened', self.onSwipeoutOpenedBound);
@@ -3976,40 +4064,55 @@
         el.addEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
         el.addEventListener('swipeout', self.onSwipeoutBound);
       }
+
       if (accordionItem) {
         el.addEventListener('accordion:open', self.onAccOpenBound);
         el.addEventListener('accordion:opened', self.onAccOpenedBound);
         el.addEventListener('accordion:close', self.onAccCloseBound);
         el.addEventListener('accordion:closed', self.onAccClosedBound);
       }
+
       self.$f7ready(function (f7) {
         if (smartSelect) {
-          var ssParams = Utils.extend({ el: el.querySelector('a.smart-select') }, smartSelectParams || {});
+          var ssParams = Utils.extend({
+            el: el.querySelector('a.smart-select')
+          }, smartSelectParams || {});
           self.f7SmartSelect = f7.smartSelect.create(ssParams);
         }
+
         if (swipeoutOpened) {
           f7.swipeout.open(el);
         }
       });
     },
+
     updated: function updated() {
       var self = this;
       var $listEl = self.$listEl;
-      if (!$listEl || $listEl && $listEl.length === 0)
-        { return; }
+      if (!$listEl || $listEl && $listEl.length === 0) { return; }
       var isMedia = $listEl.hasClass('media-list');
       var isSimple = $listEl.hasClass('simple-list');
       var isSortable = $listEl.hasClass('sortable');
+
       if (isMedia !== self.state.isMedia) {
-        self.setState({ isMedia: isMedia });
+        self.setState({
+          isMedia: isMedia
+        });
       }
+
       if (isSimple !== self.state.isSimple) {
-        self.setState({ isSimple: isSimple });
+        self.setState({
+          isSimple: isSimple
+        });
       }
+
       if (isSortable !== self.state.isSortable) {
-        self.setState({ isSortable: isSortable });
+        self.setState({
+          isSortable: isSortable
+        });
       }
     },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
       var el = self.$refs.el;
@@ -4017,6 +4120,7 @@
       var swipeout = ref.swipeout;
       var accordionItem = ref.accordionItem;
       var smartSelect = ref.smartSelect;
+
       if (el) {
         if (swipeout) {
           el.removeEventListener('swipeout:open', self.onSwipeoutOpenBound);
@@ -4027,6 +4131,7 @@
           el.removeEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
           el.removeEventListener('swipeout', self.onSwipeoutBound);
         }
+
         if (accordionItem) {
           el.removeEventListener('accordion:open', self.onAccOpenBound);
           el.removeEventListener('accordion:opened', self.onAccOpenedBound);
@@ -4034,82 +4139,101 @@
           el.removeEventListener('accordion:closed', self.onAccClosedBound);
         }
       }
+
       if (smartSelect && self.f7SmartSelect) {
         self.f7SmartSelect.destroy();
       }
     },
+
     methods: {
       onClick: function onClick(event) {
         var self = this;
+
         if (self.props.smartSelect && self.f7SmartSelect) {
           self.f7SmartSelect.open();
         }
+
         if (event.target.tagName.toLowerCase() !== 'input') {
           self.dispatchEvent('click', event);
         }
       },
+
       onSwipeoutDeleted: function onSwipeoutDeleted(event) {
         this.dispatchEvent('swipeout:deleted swipeoutDeleted', event);
       },
+
       onSwipeoutDelete: function onSwipeoutDelete(event) {
         this.dispatchEvent('swipeout:delete swipeoutDelete', event);
       },
+
       onSwipeoutClose: function onSwipeoutClose(event) {
         this.dispatchEvent('swipeout:close swipeoutClose', event);
       },
+
       onSwipeoutClosed: function onSwipeoutClosed(event) {
         this.dispatchEvent('swipeout:closed swipeoutClosed', event);
       },
+
       onSwipeoutOpen: function onSwipeoutOpen(event) {
         this.dispatchEvent('swipeout:open swipeoutOpen', event);
       },
+
       onSwipeoutOpened: function onSwipeoutOpened(event) {
         this.dispatchEvent('swipeout:opened swipeoutOpened', event);
       },
+
       onSwipeout: function onSwipeout(event) {
         this.dispatchEvent('swipeout', event);
       },
+
       onAccClose: function onAccClose(event) {
         this.dispatchEvent('accordion:close accordionClose', event);
       },
+
       onAccClosed: function onAccClosed(event) {
         this.dispatchEvent('accordion:closed accordionClosed', event);
       },
+
       onAccOpen: function onAccOpen(event) {
         this.dispatchEvent('accordion:open accordionOpen', event);
       },
+
       onAccOpened: function onAccOpened(event) {
         this.dispatchEvent('accordion:opened accordionOpened', event);
       },
+
       onChange: function onChange(event) {
         this.dispatchEvent('change', event);
       },
+
       onInput: function onInput(event) {
         this.dispatchEvent('input', event);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       },
+
       setState: function setState(updater, callback) {
         __vueComponentSetState(this, updater, callback);
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7List = {
     name: 'f7-list',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       inset: Boolean,
       tabletInset: Boolean,
       mediaList: Boolean,
@@ -4131,8 +4255,9 @@
       formStoreData: Boolean,
       inlineLabels: Boolean,
       virtualList: Boolean,
-      virtualListParams: Object},
-      Mixins.colorProps),
+      virtualListParams: Object
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -4149,50 +4274,42 @@
       var flattenSlots = Utils.flattenArray(slotsDefault);
       var wasUlChild = false;
       flattenSlots.forEach(function (child) {
-        if (typeof child === 'undefined')
-          { return; }
+        if (typeof child === 'undefined') { return; }
         var tag;
         {
           tag = child.tag;
         }
+
         if (!tag && 'vue' === 'react' || tag && !(tag === 'li' || tag === 'F7ListItem' || tag === 'F7ListButton' || tag.indexOf('list-item') >= 0 || tag.indexOf('list-button') >= 0)) {
-          if (wasUlChild)
-            { rootChildrenAfterList.push(child); }
-          else
-            { rootChildrenBeforeList.push(child); }
+          if (wasUlChild) { rootChildrenAfterList.push(child); }else { rootChildrenBeforeList.push(child); }
         } else if (tag) {
           wasUlChild = true;
           ulChildren.push(child);
         }
       });
       var ListTag = form ? 'form' : 'div';
+
       if (ulChildren.length > 0) {
         return _h(ListTag, {
           ref: 'el',
           style: style,
           class: self.classes,
-          attrs: { id: id }
-        }, [
-          self.$slots['before-list'],
-          rootChildrenBeforeList,
-          _h('ul', [ulChildren]),
-          self.$slots['after-list'],
-          rootChildrenAfterList
-        ]);
+          attrs: {
+            id: id
+          }
+        }, [self.$slots['before-list'], rootChildrenBeforeList, _h('ul', [ulChildren]), self.$slots['after-list'], rootChildrenAfterList]);
       } else {
         return _h(ListTag, {
           ref: 'el',
           style: style,
           class: self.classes,
-          attrs: { id: id }
-        }, [
-          self.$slots['before-list'],
-          rootChildrenBeforeList,
-          self.$slots['after-list'],
-          rootChildrenAfterList
-        ]);
+          attrs: {
+            id: id
+          }
+        }, [self.$slots['before-list'], rootChildrenBeforeList, self.$slots['after-list'], rootChildrenAfterList]);
       }
     },
+
     computed: {
       classes: function classes() {
         var self = this;
@@ -4241,13 +4358,17 @@
           'inline-labels': inlineLabels
         }, Mixins.colorClasses(props));
       },
+
       props: function props() {
         return __vueComponentProps(this);
       }
+
     },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
       var el = self.$refs.el;
+
       if (el) {
         el.removeEventListener('sortable:enable', self.onSortableEnableBound);
         el.removeEventListener('sortable:disable', self.onSortableDisableBound);
@@ -4255,17 +4376,18 @@
         el.removeEventListener('tab:show', self.onTabShowBound);
         el.removeEventListener('tab:hide', self.onTabHideBound);
       }
-      if (!(self.virtualList && self.f7VirtualList))
-        { return; }
-      if (self.f7VirtualList.destroy)
-        { self.f7VirtualList.destroy(); }
+
+      if (!(self.virtualList && self.f7VirtualList)) { return; }
+      if (self.f7VirtualList.destroy) { self.f7VirtualList.destroy(); }
     },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
       var ref = self.props;
       var virtualList = ref.virtualList;
       var virtualListParams = ref.virtualListParams;
+
       if (el) {
         self.onSortableEnableBound = self.onSortableEnable.bind(self);
         self.onSortableDisableBound = self.onSortableDisable.bind(self);
@@ -4278,22 +4400,22 @@
         el.addEventListener('tab:show', self.onTabShowBound);
         el.addEventListener('tab:hide', self.onTabHideBound);
       }
-      if (!virtualList)
-        { return; }
+
+      if (!virtualList) { return; }
       self.$f7ready(function (f7) {
         var $$ = self.$$;
         var $el = $$(el);
         var templateScript = $el.find('script');
         var template = templateScript.html();
+
         if (!template && templateScript.length > 0) {
           template = templateScript[0].outerHTML;
           template = /\<script type="text\/template7"\>(.*)<\/script>/.exec(template)[1];
         }
+
         var vlParams = virtualListParams || {};
-        if (!template && !vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal)
-          { return; }
-        if (template)
-          { template = self.$t7.compile(template); }
+        if (!template && !vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal) { return; }
+        if (template) { template = self.$t7.compile(template); }
         self.f7VirtualList = f7.virtualList.create(Utils.extend({
           el: el,
           itemTemplate: template,
@@ -4302,54 +4424,64 @@
               var vl = this;
               self.dispatchEvent('virtual:itembeforeinsert virtualItemBeforeInsert', vl, itemEl, item);
             },
+
             beforeClear: function beforeClear(fragment) {
               var vl = this;
               self.dispatchEvent('virtual:beforeclear virtualBeforeClear', vl, fragment);
             },
+
             itemsBeforeInsert: function itemsBeforeInsert(fragment) {
               var vl = this;
               self.dispatchEvent('virtual:itemsbeforeinsert virtualItemsBeforeInsert', vl, fragment);
             },
+
             itemsAfterInsert: function itemsAfterInsert(fragment) {
               var vl = this;
               self.dispatchEvent('virtual:itemsafterinsert virtualItemsAfterInsert', vl, fragment);
             }
+
           }
         }, vlParams));
       });
     },
+
     methods: {
       onSortableEnable: function onSortableEnable(event) {
         this.dispatchEvent('sortable:enable sortableEnable', event);
       },
+
       onSortableDisable: function onSortableDisable(event) {
         this.dispatchEvent('sortable:disable sortableDisable', event);
       },
+
       onSortableSort: function onSortableSort(event) {
         this.dispatchEvent('sortable:sort sortableSort', event, event.detail);
       },
+
       onTabShow: function onTabShow(e) {
         this.dispatchEvent('tab:show tabShow', e);
       },
+
       onTabHide: function onTabHide(e) {
         this.dispatchEvent('tab:hide tabHide', e);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     }
   };
 
   var f7LoginScreenTitle = {
     name: 'f7-login-screen-title',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ]},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number]
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -4360,24 +4492,27 @@
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7LoginScreen = {
     name: 'f7-login-screen',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
-      opened: Boolean},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number],
+      opened: Boolean
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -4390,14 +4525,17 @@
         ref: 'el',
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     watch: {
       'props.opened': function watchOpened(opened) {
         var self = this;
-        if (!self.f7LoginScreen)
-          { return; }
+        if (!self.f7LoginScreen) { return; }
+
         if (opened) {
           self.f7LoginScreen.open();
         } else {
@@ -4405,11 +4543,11 @@
         }
       }
     },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       self.onOpenBound = self.onOpen.bind(self);
       self.onOpenedBound = self.onOpened.bind(self);
       self.onCloseBound = self.onClose.bind(self);
@@ -4419,71 +4557,78 @@
       el.addEventListener('loginscreen:close', self.onCloseBound);
       el.addEventListener('loginscreen:closed', self.onClosedBound);
       self.$f7ready(function () {
-        self.f7LoginScreen = self.$f7.loginScreen.create({ el: el });
+        self.f7LoginScreen = self.$f7.loginScreen.create({
+          el: el
+        });
+
         if (self.props.opened) {
           self.f7LoginScreen.open(false);
         }
       });
     },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
       var el = self.$refs.el;
-      if (self.f7LoginScreen)
-        { self.f7LoginScreen.destroy(); }
-      if (!el)
-        { return; }
+      if (self.f7LoginScreen) { self.f7LoginScreen.destroy(); }
+      if (!el) { return; }
       el.removeEventListener('loginscreen:open', self.onOpenBound);
       el.removeEventListener('loginscreen:opened', self.onOpenedBound);
       el.removeEventListener('loginscreen:close', self.onCloseBound);
       el.removeEventListener('loginscreen:closed', self.onClosedBound);
     },
+
     methods: {
       onOpen: function onOpen(event) {
         this.dispatchEvent('loginscreen:open loginScreenOpen', event);
       },
+
       onOpened: function onOpened(event) {
         this.dispatchEvent('loginscreen:opened loginScreenOpened', event);
       },
+
       onClose: function onClose(event) {
         this.dispatchEvent('loginscreen:close loginScreenClose', event);
       },
+
       onClosed: function onClosed(event) {
         this.dispatchEvent('loginscreen:closed loginScreenClosed', event);
       },
+
       open: function open(animate) {
         var self = this;
         var el = self.$refs.el;
-        if (!self.$f7 || !el)
-          { return undefined; }
+        if (!self.$f7 || !el) { return undefined; }
         return self.$f7.loginScreen.open(el, animate);
       },
+
       close: function close(animate) {
         var self = this;
         var el = self.$refs.el;
-        if (!self.$f7 || !el)
-          { return undefined; }
+        if (!self.$f7 || !el) { return undefined; }
         return self.$f7.loginScreen.close(el, animate);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Message = {
     name: 'f7-message',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       text: String,
       name: String,
       avatar: String,
@@ -4503,8 +4648,9 @@
       sameHeader: Boolean,
       sameFooter: Boolean,
       sameAvatar: Boolean,
-      typing: Boolean},
-      Mixins.colorProps),
+      typing: Boolean
+    }, Mixins.colorProps),
+
     created: function created() {
       this.onClickBound = this.onClick.bind(this);
       this.onNameClickBound = this.onNameClick.bind(this);
@@ -4514,6 +4660,7 @@
       this.onFooterClickBound = this.onFooterClick.bind(this);
       this.onBubbleClickBound = this.onBubbleClick.bind(this);
     },
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -4548,56 +4695,62 @@
       return _h('div', {
         style: style,
         class: self.classes,
-        on: { click: self.onClickBound },
-        attrs: { id: id }
-      }, [
-        slotsStart,
-        (avatar || slotsAvatar) && _h('div', {
-          class: 'message-avatar',
-          style: { backgroundImage: avatar && ("url(" + avatar + ")") },
-          on: { click: self.onAvatarClickBound }
-        }, [slotsAvatar]),
-        _h('div', { class: 'message-content' }, [
-          slotsContentStart,
-          (slotsName || name) && _h('div', {
-            class: 'message-name',
-            on: { click: self.onNameClickBound }
-          }, [slotsName || name]),
-          (slotsHeader || header) && _h('div', {
-            class: 'message-header',
-            on: { click: self.onHeaderClickBound }
-          }, [slotsHeader || header]),
-          _h('div', {
-            class: 'message-bubble',
-            on: { click: self.onBubbleClickBound }
-          }, [
-            slotsBubbleStart,
-            (slotsImage || image) && _h('div', { class: 'message-image' }, [slotsImage || _h('img', { attrs: { src: image } })]),
-            (slotsTextHeader || textHeader) && _h('div', { class: 'message-text-header' }, [slotsTextHeader || textHeader]),
-            (slotsText || text || typing) && _h('div', {
-              class: 'message-text',
-              on: { click: self.onTextClickBound }
-            }, [
-              slotsText || text,
-              typing && _h('div', { class: 'message-typing-indicator' }, [
-                _h('div'),
-                _h('div'),
-                _h('div')
-              ])
-            ]),
-            (slotsTextFooter || textFooter) && _h('div', { class: 'message-text-footer' }, [slotsTextFooter || textFooter]),
-            slotsBubbleEnd,
-            slotsDefault
-          ]),
-          (slotsFooter || footer) && _h('div', {
-            class: 'message-footer',
-            on: { click: self.onFooterClickBound }
-          }, [slotsFooter || footer]),
-          slotsContentEnd
-        ]),
-        slotsEnd
-      ]);
+        on: {
+          click: self.onClickBound
+        },
+        attrs: {
+          id: id
+        }
+      }, [slotsStart, (avatar || slotsAvatar) && _h('div', {
+        class: 'message-avatar',
+        style: {
+          backgroundImage: avatar && ("url(" + avatar + ")")
+        },
+        on: {
+          click: self.onAvatarClickBound
+        }
+      }, [slotsAvatar]), _h('div', {
+        class: 'message-content'
+      }, [slotsContentStart, (slotsName || name) && _h('div', {
+        class: 'message-name',
+        on: {
+          click: self.onNameClickBound
+        }
+      }, [slotsName || name]), (slotsHeader || header) && _h('div', {
+        class: 'message-header',
+        on: {
+          click: self.onHeaderClickBound
+        }
+      }, [slotsHeader || header]), _h('div', {
+        class: 'message-bubble',
+        on: {
+          click: self.onBubbleClickBound
+        }
+      }, [slotsBubbleStart, (slotsImage || image) && _h('div', {
+        class: 'message-image'
+      }, [slotsImage || _h('img', {
+        attrs: {
+          src: image
+        }
+      })]), (slotsTextHeader || textHeader) && _h('div', {
+        class: 'message-text-header'
+      }, [slotsTextHeader || textHeader]), (slotsText || text || typing) && _h('div', {
+        class: 'message-text',
+        on: {
+          click: self.onTextClickBound
+        }
+      }, [slotsText || text, typing && _h('div', {
+        class: 'message-typing-indicator'
+      }, [_h('div'), _h('div'), _h('div')])]), (slotsTextFooter || textFooter) && _h('div', {
+        class: 'message-text-footer'
+      }, [slotsTextFooter || textFooter]), slotsBubbleEnd, slotsDefault]), (slotsFooter || footer) && _h('div', {
+        class: 'message-footer',
+        on: {
+          click: self.onFooterClickBound
+        }
+      }, [slotsFooter || footer]), slotsContentEnd]), slotsEnd]);
     },
+
     computed: {
       classes: function classes() {
         var self = this;
@@ -4625,57 +4778,67 @@
           'message-same-avatar': sameAvatar
         }, Mixins.colorClasses(props));
       },
+
       props: function props() {
         return __vueComponentProps(this);
       }
+
     },
     methods: {
       onClick: function onClick(event) {
         this.dispatchEvent('click', event);
       },
+
       onNameClick: function onNameClick(event) {
         this.dispatchEvent('click:name clickName', event);
       },
+
       onTextClick: function onTextClick(event) {
         this.dispatchEvent('click:text clickText', event);
       },
+
       onAvatarClick: function onAvatarClick(event) {
         this.dispatchEvent('click:avatar clickAvatar', event);
       },
+
       onHeaderClick: function onHeaderClick(event) {
         this.dispatchEvent('click:header clickHeader', event);
       },
+
       onFooterClick: function onFooterClick(event) {
         this.dispatchEvent('click:footer clickFooter', event);
       },
+
       onBubbleClick: function onBubbleClick(event) {
         this.dispatchEvent('click:bubble clickBubble', event);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     }
   };
 
   var f7MessagebarAttachment = {
     name: 'f7-messagebar-attachment',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       image: String,
       deletable: {
         type: Boolean,
         default: true
-      }},
-      Mixins.colorProps),
+      }
+    }, Mixins.colorProps),
+
     created: function created() {
       this.onClickBound = this.onClick.bind(this);
       this.onDeleteClickBound = this.onDeleteClick.bind(this);
     },
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -4689,45 +4852,55 @@
       return _h('div', {
         style: style,
         class: classes,
-        on: { click: self.onClickBound },
-        attrs: { id: id }
-      }, [
-        image && _h('img', { attrs: { src: image } }),
-        deletable && _h('span', {
-          class: 'messagebar-attachment-delete',
-          on: { click: self.onDeleteClickBound }
-        }),
-        this.$slots['default']
-      ]);
+        on: {
+          click: self.onClickBound
+        },
+        attrs: {
+          id: id
+        }
+      }, [image && _h('img', {
+        attrs: {
+          src: image
+        }
+      }), deletable && _h('span', {
+        class: 'messagebar-attachment-delete',
+        on: {
+          click: self.onDeleteClickBound
+        }
+      }), this.$slots['default']]);
     },
+
     methods: {
       onClick: function onClick(e) {
         this.dispatchEvent('attachment:click attachmentClick', e);
       },
+
       onDeleteClick: function onDeleteClick(e) {
         this.dispatchEvent('attachment:delete attachmentDelete', e);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7MessagebarAttachments = {
     name: 'f7-messagebar-attachments',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ]},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number]
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -4738,28 +4911,32 @@
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7MessagebarSheetImage = {
     name: 'f7-messagebar-sheet-image',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       image: String,
-      checked: Boolean},
-      Mixins.colorProps),
+      checked: Boolean
+    }, Mixins.colorProps),
+
     created: function created() {
       this.onChangeBound = this.onChange.bind(this);
     },
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -4770,47 +4947,49 @@
       var className = props.className;
       var style = props.style;
       var classes = Utils.classNames(className, 'messagebar-sheet-image', 'checkbox', Mixins.colorClasses(props));
-      var styles = Utils.extend({ backgroundImage: image && ("url(" + image + ")") }, style || {});
+      var styles = Utils.extend({
+        backgroundImage: image && ("url(" + image + ")")
+      }, style || {});
       var inputEl;
       return _h('label', {
         class: classes,
         style: styles,
-        attrs: { id: id }
-      }, [
-        inputEl,
-        _h('i', { class: 'icon icon-checkbox' }),
-        this.$slots['default']
-      ]);
+        attrs: {
+          id: id
+        }
+      }, [inputEl, _h('i', {
+        class: 'icon icon-checkbox'
+      }), this.$slots['default']]);
     },
+
     methods: {
       onChange: function onChange(e) {
-        if (this.props.checked)
-          { this.dispatchEvent('checked', e); }
-        else
-          { this.dispatchEvent('unchecked', e); }
+        if (this.props.checked) { this.dispatchEvent('checked', e); }else { this.dispatchEvent('unchecked', e); }
         this.dispatchEvent('change', e);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7MessagebarSheetItem = {
     name: 'f7-messagebar-sheet-item',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ]},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number]
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -4821,23 +5000,26 @@
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7MessagebarSheet = {
     name: 'f7-messagebar-sheet',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ]},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number]
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -4848,22 +5030,24 @@
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Messagebar = {
     name: 'f7-messagebar',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       sheetVisible: Boolean,
       attachmentsVisible: Boolean,
       top: Boolean,
@@ -4882,11 +5066,7 @@
       maxHeight: Number,
       resizePage: Boolean,
       sendLink: String,
-      value: [
-        String,
-        Number,
-        Array
-      ],
+      value: [String, Number, Array],
       disabled: Boolean,
       readonly: Boolean,
       name: String,
@@ -4897,8 +5077,9 @@
       init: {
         type: Boolean,
         default: true
-      }},
-      Mixins.colorProps),
+      }
+    }, Mixins.colorProps),
+
     created: function created() {
       this.onChangeBound = this.onChange.bind(this);
       this.onInputBound = this.onInput.bind(this);
@@ -4909,6 +5090,7 @@
       this.onClickAttachmentBound = this.onClickAttachment.bind(this);
       this.onResizePageBound = this.onResizePage.bind(this);
     },
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -4934,12 +5116,13 @@
       var innerEndEls = [];
       var messagebarAttachmentsEl;
       var messagebarSheetEl;
+
       if (slotsDefault) {
         slotsDefault.forEach(function (child) {
-          if (typeof child === 'undefined')
-            { return; }
+          if (typeof child === 'undefined') { return; }
           var tag;
           tag = child.tag;
+
           if (tag && (tag.indexOf('messagebar-attachments') >= 0 || tag === 'F7MessagebarAttachments')) {
             messagebarAttachmentsEl = child;
           } else if (tag && (tag.indexOf('messagebar-sheet') >= 0 || tag === 'F7MessagebarSheet')) {
@@ -4949,47 +5132,43 @@
           }
         });
       }
+
       return _h('div', {
         ref: 'el',
         style: style,
         class: self.classes,
-        attrs: { id: id }
-      }, [
-        slotsBeforeInner,
-        _h('div', { class: 'toolbar-inner' }, [
-          slotsInnerStart,
-          _h('div', { class: 'messagebar-area' }, [
-            slotsBeforeArea,
-            messagebarAttachmentsEl,
-            _h(F7Input, {
-              ref: 'area',
-              on: {
-                input: self.onInputBound,
-                change: self.onChangeBound,
-                focus: self.onFocusBound,
-                blur: self.onBlurBound
-              },
-              attrs: {
-                type: 'textarea',
-                wrap: false,
-                placeholder: placeholder,
-                disabled: disabled,
-                name: name,
-                readonly: readonly,
-                resizable: resizable,
-                value: value
-              }
-            }),
-            slotsAfterArea
-          ]),
-          (sendLink && sendLink.length > 0 || slotsSendLink) && _h(F7Link, { on: { click: self.onClickBound } }, [slotsSendLink || sendLink]),
-          slotsInnerEnd,
-          innerEndEls
-        ]),
-        slotsAfterInner,
-        messagebarSheetEl
-      ]);
+        attrs: {
+          id: id
+        }
+      }, [slotsBeforeInner, _h('div', {
+        class: 'toolbar-inner'
+      }, [slotsInnerStart, _h('div', {
+        class: 'messagebar-area'
+      }, [slotsBeforeArea, messagebarAttachmentsEl, _h(F7Input, {
+        ref: 'area',
+        on: {
+          input: self.onInputBound,
+          change: self.onChangeBound,
+          focus: self.onFocusBound,
+          blur: self.onBlurBound
+        },
+        attrs: {
+          type: 'textarea',
+          wrap: false,
+          placeholder: placeholder,
+          disabled: disabled,
+          name: name,
+          readonly: readonly,
+          resizable: resizable,
+          value: value
+        }
+      }), slotsAfterArea]), (sendLink && sendLink.length > 0 || slotsSendLink) && _h(F7Link, {
+        on: {
+          click: self.onClickBound
+        }
+      }, [slotsSendLink || sendLink]), slotsInnerEnd, innerEndEls]), slotsAfterInner, messagebarSheetEl]);
     },
+
     computed: {
       classes: function classes() {
         var self = this;
@@ -5002,24 +5181,25 @@
           'messagebar-sheet-visible': sheetVisible
         }, Mixins.colorClasses(props));
       },
+
       props: function props() {
         return __vueComponentProps(this);
       }
+
     },
     watch: {
       'props.sheetVisible': function watchSheetVisible() {
         var self = this;
-        if (!self.props.resizable || !self.f7Messagebar)
-          { return; }
+        if (!self.props.resizable || !self.f7Messagebar) { return; }
         self.updateSheetVisible = true;
       },
       'props.attachmentsVisible': function watchAttachmentsVisible() {
         var self = this;
-        if (!self.props.resizable || !self.f7Messagebar)
-          { return; }
+        if (!self.props.resizable || !self.f7Messagebar) { return; }
         self.updateAttachmentsVisible = true;
       }
     },
+
     mounted: function mounted() {
       var self = this;
       var ref = self.props;
@@ -5029,11 +5209,9 @@
       var bottomOffset = ref.bottomOffset;
       var topOffset = ref.topOffset;
       var maxHeight = ref.maxHeight;
-      if (!init)
-        { return; }
+      if (!init) { return; }
       var el = self.$refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       el.addEventListener('messagebar:attachmentdelete', self.onDeleteAttachmentBound);
       el.addEventListener('messagebar:attachmentclick', self.onClickAttachmentBound);
       el.addEventListener('messagebar:resizepage', self.onResizePageBound);
@@ -5049,201 +5227,210 @@
         self.f7Messagebar = self.$f7.messagebar.create(params);
       });
     },
+
     updated: function updated() {
       var self = this;
-      if (!self.f7Messagebar)
-        { return; }
+      if (!self.f7Messagebar) { return; }
       var ref = self.props;
       var sheetVisible = ref.sheetVisible;
       var attachmentsVisible = ref.attachmentsVisible;
+
       if (self.updateSheetVisible) {
         self.updateSheetVisible = false;
         self.f7Messagebar.sheetVisible = sheetVisible;
         self.f7Messagebar.resizePage();
       }
+
       if (self.updateAttachmentsVisible) {
         self.updateAttachmentsVisible = false;
         self.f7Messagebar.attachmentsVisible = attachmentsVisible;
         self.f7Messagebar.resizePage();
       }
     },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
-      if (self.f7Messagebar && self.f7Messagebar.destroy)
-        { self.f7Messagebar.destroy(); }
+      if (self.f7Messagebar && self.f7Messagebar.destroy) { self.f7Messagebar.destroy(); }
       var el = self.$refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       el.removeEventListener('messagebar:attachmentdelete', self.onDeleteAttachmentBound);
       el.removeEventListener('messagebar:attachmentclick', self.onClickAttachmentBound);
       el.removeEventListener('messagebar:resizepage', self.onResizePageBound);
     },
+
     methods: {
       clear: function clear() {
         var ref;
 
         var args = [], len = arguments.length;
         while ( len-- ) args[ len ] = arguments[ len ];
-        if (!this.f7Messagebar)
-          { return undefined; }
+        if (!this.f7Messagebar) { return undefined; }
         return (ref = this.f7Messagebar).clear.apply(ref, args);
       },
+
       getValue: function getValue() {
         var ref;
 
         var args = [], len = arguments.length;
         while ( len-- ) args[ len ] = arguments[ len ];
-        if (!this.f7Messagebar)
-          { return undefined; }
+        if (!this.f7Messagebar) { return undefined; }
         return (ref = this.f7Messagebar).getValue.apply(ref, args);
       },
+
       setValue: function setValue() {
         var ref;
 
         var args = [], len = arguments.length;
         while ( len-- ) args[ len ] = arguments[ len ];
-        if (!this.f7Messagebar)
-          { return undefined; }
+        if (!this.f7Messagebar) { return undefined; }
         return (ref = this.f7Messagebar).setValue.apply(ref, args);
       },
+
       setPlaceholder: function setPlaceholder() {
         var ref;
 
         var args = [], len = arguments.length;
         while ( len-- ) args[ len ] = arguments[ len ];
-        if (!this.f7Messagebar)
-          { return undefined; }
+        if (!this.f7Messagebar) { return undefined; }
         return (ref = this.f7Messagebar).setPlaceholder.apply(ref, args);
       },
+
       resize: function resize() {
         var ref;
 
         var args = [], len = arguments.length;
         while ( len-- ) args[ len ] = arguments[ len ];
-        if (!this.f7Messagebar)
-          { return undefined; }
+        if (!this.f7Messagebar) { return undefined; }
         return (ref = this.f7Messagebar).resizePage.apply(ref, args);
       },
+
       focus: function focus() {
         var ref;
 
         var args = [], len = arguments.length;
         while ( len-- ) args[ len ] = arguments[ len ];
-        if (!this.f7Messagebar)
-          { return undefined; }
+        if (!this.f7Messagebar) { return undefined; }
         return (ref = this.f7Messagebar).focus.apply(ref, args);
       },
+
       blur: function blur() {
         var ref;
 
         var args = [], len = arguments.length;
         while ( len-- ) args[ len ] = arguments[ len ];
-        if (!this.f7Messagebar)
-          { return undefined; }
+        if (!this.f7Messagebar) { return undefined; }
         return (ref = this.f7Messagebar).blur.apply(ref, args);
       },
+
       attachmentsShow: function attachmentsShow() {
         var ref;
 
         var args = [], len = arguments.length;
         while ( len-- ) args[ len ] = arguments[ len ];
-        if (!this.f7Messagebar)
-          { return undefined; }
+        if (!this.f7Messagebar) { return undefined; }
         return (ref = this.f7Messagebar).attachmentsShow.apply(ref, args);
       },
+
       attachmentsHide: function attachmentsHide() {
         var ref;
 
         var args = [], len = arguments.length;
         while ( len-- ) args[ len ] = arguments[ len ];
-        if (!this.f7Messagebar)
-          { return undefined; }
+        if (!this.f7Messagebar) { return undefined; }
         return (ref = this.f7Messagebar).attachmentsHide.apply(ref, args);
       },
+
       attachmentsToggle: function attachmentsToggle() {
         var ref;
 
         var args = [], len = arguments.length;
         while ( len-- ) args[ len ] = arguments[ len ];
-        if (!this.f7Messagebar)
-          { return undefined; }
+        if (!this.f7Messagebar) { return undefined; }
         return (ref = this.f7Messagebar).attachmentsToggle.apply(ref, args);
       },
+
       sheetShow: function sheetShow() {
         var ref;
 
         var args = [], len = arguments.length;
         while ( len-- ) args[ len ] = arguments[ len ];
-        if (!this.f7Messagebar)
-          { return undefined; }
+        if (!this.f7Messagebar) { return undefined; }
         return (ref = this.f7Messagebar).sheetShow.apply(ref, args);
       },
+
       sheetHide: function sheetHide() {
         var ref;
 
         var args = [], len = arguments.length;
         while ( len-- ) args[ len ] = arguments[ len ];
-        if (!this.f7Messagebar)
-          { return undefined; }
+        if (!this.f7Messagebar) { return undefined; }
         return (ref = this.f7Messagebar).sheetHide.apply(ref, args);
       },
+
       sheetToggle: function sheetToggle() {
         var ref;
 
         var args = [], len = arguments.length;
         while ( len-- ) args[ len ] = arguments[ len ];
-        if (!this.f7Messagebar)
-          { return undefined; }
+        if (!this.f7Messagebar) { return undefined; }
         return (ref = this.f7Messagebar).sheetToggle.apply(ref, args);
       },
+
       onChange: function onChange(event) {
         this.dispatchEvent('change', event);
       },
+
       onInput: function onInput(event) {
         this.dispatchEvent('input', event);
       },
+
       onFocus: function onFocus(event) {
         this.dispatchEvent('focus', event);
       },
+
       onBlur: function onBlur(event) {
         this.dispatchEvent('blur', event);
       },
+
       onClick: function onClick(event) {
         var self = this;
         var value = self.$refs.area.refs.inputEl.value;
         var clear = self.f7Messagebar ? function () {
           self.f7Messagebar.clear();
-        } : function () {
-        };
+        } : function () {};
         this.dispatchEvent('submit', value, clear);
         this.dispatchEvent('send', value, clear);
         this.dispatchEvent('click', event);
       },
+
       onDeleteAttachment: function onDeleteAttachment(e) {
         this.dispatchEvent('messagebar:attachmentdelete messagebarAttachmentDelete', e);
       },
+
       onClickAttachment: function onClickAttachment(e) {
         this.dispatchEvent('messagebar:attachmentclick messagebarAttachmentClick', e);
       },
+
       onResizePage: function onResizePage(e) {
         this.dispatchEvent('messagebar:resizepage messagebarResizePage', e);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     }
   };
 
   var f7MessagesTitle = {
     name: 'f7-messages-title',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ]},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number]
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -5254,31 +5441,35 @@
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Messages = {
     name: 'f7-messages',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       autoLayout: {
         type: Boolean,
         default: false
       },
       messages: {
         type: Array,
+
         default: function default$1() {
           return [];
         }
+
       },
       newMessagesFirst: {
         type: Boolean,
@@ -5304,8 +5495,9 @@
       init: {
         type: Boolean,
         default: true
-      }},
-      Mixins.colorProps),
+      }
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -5318,49 +5510,52 @@
         ref: 'el',
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     beforeUpdate: function beforeUpdate() {
       var self = this;
-      if (!self.props.init)
-        { return; }
+      if (!self.props.init) { return; }
       var el = self.$refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       var children = el.children;
-      if (!children)
-        { return; }
+      if (!children) { return; }
+
       for (var i = 0; i < children.length; i += 1) {
         children[i].classList.add('message-appeared');
       }
     },
+
     updated: function updated() {
       var self = this;
       var ref = self.props;
       var init = ref.init;
       var autoLayout = ref.autoLayout;
       var scrollMessages = ref.scrollMessages;
-      if (!init)
-        { return; }
+      if (!init) { return; }
       var el = self.$refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       var children = el.children;
-      if (!children)
-        { return; }
+      if (!children) { return; }
+
       for (var i = 0; i < children.length; i += 1) {
         if (!children[i].classList.contains('message-appeared')) {
           children[i].classList.add('message-appear-from-bottom');
         }
       }
+
       if (self.f7Messages && self.f7Messages.layout && autoLayout) {
         self.f7Messages.layout();
       }
+
       if (self.f7Messages && self.f7Messages.scroll && scrollMessages) {
         self.f7Messages.scroll();
       }
     },
+
     mounted: function mounted() {
       var self = this;
       var ref = self.props;
@@ -5379,8 +5574,7 @@
       var sameAvatarMessageRule = ref.sameAvatarMessageRule;
       var customClassMessageRule = ref.customClassMessageRule;
       var renderMessage = ref.renderMessage;
-      if (!init)
-        { return; }
+      if (!init) { return; }
       self.$f7ready(function (f7) {
         self.f7Messages = f7.messages.create(Utils.noUndefinedProps({
           el: self.$refs.el,
@@ -5401,96 +5595,94 @@
         }));
       });
     },
+
     beforeDestroy: function beforeDestroy() {
-      if (this.f7Messages && this.f7Messages.destroy)
-        { this.f7Messages.destroy(); }
+      if (this.f7Messages && this.f7Messages.destroy) { this.f7Messages.destroy(); }
     },
+
     methods: {
       renderMessages: function renderMessages(messagesToRender, method) {
-        if (!this.f7Messages)
-          { return undefined; }
+        if (!this.f7Messages) { return undefined; }
         return this.f7Messages.renderMessages(messagesToRender, method);
       },
+
       layout: function layout() {
-        if (!this.f7Messages)
-          { return undefined; }
+        if (!this.f7Messages) { return undefined; }
         return this.f7Messages.layout();
       },
+
       scroll: function scroll(duration, scrollTop) {
-        if (!this.f7Messages)
-          { return undefined; }
+        if (!this.f7Messages) { return undefined; }
         return this.f7Messages.scroll(duration, scrollTop);
       },
+
       clear: function clear() {
-        if (!this.f7Messages)
-          { return undefined; }
+        if (!this.f7Messages) { return undefined; }
         return this.f7Messages.clear();
       },
+
       removeMessage: function removeMessage(messageToRemove, layout) {
-        if (!this.f7Messages)
-          { return undefined; }
+        if (!this.f7Messages) { return undefined; }
         return this.f7Messages.removeMessage(messageToRemove, layout);
       },
+
       removeMessages: function removeMessages(messagesToRemove, layout) {
-        if (!this.f7Messages)
-          { return undefined; }
+        if (!this.f7Messages) { return undefined; }
         return this.f7Messages.removeMessages(messagesToRemove, layout);
       },
+
       addMessage: function addMessage() {
         var ref;
 
         var args = [], len = arguments.length;
         while ( len-- ) args[ len ] = arguments[ len ];
-        if (!this.f7Messages)
-          { return undefined; }
+        if (!this.f7Messages) { return undefined; }
         return (ref = this.f7Messages).addMessage.apply(ref, args);
       },
+
       addMessages: function addMessages() {
         var ref;
 
         var args = [], len = arguments.length;
         while ( len-- ) args[ len ] = arguments[ len ];
-        if (!this.f7Messages)
-          { return undefined; }
+        if (!this.f7Messages) { return undefined; }
         return (ref = this.f7Messages).addMessages.apply(ref, args);
       },
+
       showTyping: function showTyping(message) {
-        if (!this.f7Messages)
-          { return undefined; }
+        if (!this.f7Messages) { return undefined; }
         return this.f7Messages.showTyping(message);
       },
+
       hideTyping: function hideTyping() {
-        if (!this.f7Messages)
-          { return undefined; }
+        if (!this.f7Messages) { return undefined; }
         return this.f7Messages.hideTyping();
       },
+
       destroy: function destroy() {
-        if (!this.f7Messages)
-          { return undefined; }
+        if (!this.f7Messages) { return undefined; }
         return this.f7Messages.destroy();
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var F7NavLeft = {
     name: 'f7-nav-left',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
-      backLink: [
-        Boolean,
-        String
-      ],
+    props: Object.assign({
+      id: [String, Number],
+      backLink: [Boolean, String],
       backLinkUrl: String,
       backLinkForce: Boolean,
-      sliding: Boolean},
-      Mixins.colorProps),
+      sliding: Boolean
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -5502,10 +5694,13 @@
       var style = props.style;
       var id = props.id;
       var linkEl;
+
       if (backLink) {
         linkEl = _h(F7Link, {
           class: backLink === true || backLink && this.$theme.md ? 'icon-only' : undefined,
-          on: { click: this.onBackClick.bind(this) },
+          on: {
+            click: this.onBackClick.bind(this)
+          },
           attrs: {
             href: backLinkUrl || '#',
             back: true,
@@ -5515,42 +5710,47 @@
           }
         });
       }
-      var classes = Utils.classNames(className, 'left', { sliding: sliding }, Mixins.colorClasses(props));
+
+      var classes = Utils.classNames(className, 'left', {
+        sliding: sliding
+      }, Mixins.colorClasses(props));
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
-      }, [
-        linkEl,
-        this.$slots['default']
-      ]);
+        attrs: {
+          id: id
+        }
+      }, [linkEl, this.$slots['default']]);
     },
+
     methods: {
       onBackClick: function onBackClick(e) {
         this.dispatchEvent('back-click backClick click:back clickBack', e);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7NavRight = {
     name: 'f7-nav-right',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
-      sliding: Boolean},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number],
+      sliding: Boolean
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -5565,26 +5765,29 @@
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var F7NavTitle = {
     name: 'f7-nav-title',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       title: String,
       subtitle: String,
-      sliding: Boolean},
-      Mixins.colorProps),
+      sliding: Boolean
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -5596,36 +5799,38 @@
       var sliding = props.sliding;
       var className = props.className;
       var subtitleEl;
+
       if (self.subtitle) {
-        subtitleEl = _h('span', { class: 'subtitle' }, [subtitle]);
+        subtitleEl = _h('span', {
+          class: 'subtitle'
+        }, [subtitle]);
       }
-      var classes = Utils.classNames(className, 'title', { sliding: sliding }, Mixins.colorClasses(props));
+
+      var classes = Utils.classNames(className, 'title', {
+        sliding: sliding
+      }, Mixins.colorClasses(props));
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
-      }, [this.$slots['default'] || [
-          title,
-          subtitleEl
-        ]]);
+        attrs: {
+          id: id
+        }
+      }, [this.$slots['default'] || [title, subtitleEl]]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Navbar = {
     name: 'f7-navbar',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
-      backLink: [
-        Boolean,
-        String
-      ],
+    props: Object.assign({
+      id: [String, Number],
+      backLink: [Boolean, String],
       backLinkUrl: String,
       backLinkForce: Boolean,
       sliding: {
@@ -5640,8 +5845,9 @@
       inner: {
         type: Boolean,
         default: true
-      }},
-      Mixins.colorProps),
+      }
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -5662,10 +5868,13 @@
       var innerEl;
       var leftEl;
       var titleEl;
+
       if (inner) {
         if (backLink) {
           leftEl = _h(F7NavLeft, {
-            on: { backClick: self.onBackClick.bind(self) },
+            on: {
+              backClick: self.onBackClick.bind(self)
+            },
             attrs: {
               backLink: backLink,
               backLinkUrl: backLinkUrl,
@@ -5673,6 +5882,7 @@
             }
           });
         }
+
         if (title || subtitle) {
           titleEl = _h(F7NavTitle, {
             attrs: {
@@ -5681,15 +5891,15 @@
             }
           });
         }
+
         innerEl = _h('div', {
           ref: 'inner',
-          class: Utils.classNames('navbar-inner', { sliding: sliding })
-        }, [
-          leftEl,
-          titleEl,
-          this.$slots['default']
-        ]);
+          class: Utils.classNames('navbar-inner', {
+            sliding: sliding
+          })
+        }, [leftEl, titleEl, this.$slots['default']]);
       }
+
       var classes = Utils.classNames(className, 'navbar', {
         'navbar-hidden': hidden,
         'no-shadow': noShadow,
@@ -5699,66 +5909,67 @@
         ref: 'el',
         style: style,
         class: classes,
-        attrs: { id: id }
-      }, [
-        this.$slots['before-inner'],
-        innerEl,
-        this.$slots['after-inner']
-      ]);
+        attrs: {
+          id: id
+        }
+      }, [this.$slots['before-inner'], innerEl, this.$slots['after-inner']]);
     },
+
     updated: function updated() {
       var self = this;
-      if (!self.$f7)
-        { return; }
+      if (!self.$f7) { return; }
       var el = self.$refs.el;
+
       if (el && el.children && el.children.length) {
         self.$f7.navbar.size(el);
       } else if (self.$refs.inner) {
         self.$f7.navbar.size(self.$refs.inner);
       }
     },
+
     methods: {
       hide: function hide(animate) {
         var self = this;
-        if (!self.$f7)
-          { return; }
+        if (!self.$f7) { return; }
         self.$f7.navbar.hide(self.$refs.el, animate);
       },
+
       show: function show(animate) {
         var self = this;
-        if (!self.$f7)
-          { return; }
+        if (!self.$f7) { return; }
         self.$f7.navbar.show(self.$refs.el, animate);
       },
+
       size: function size() {
         var self = this;
-        if (!self.$f7)
-          { return; }
+        if (!self.$f7) { return; }
         self.$f7.navbar.size(self.$refs.el);
       },
+
       onBackClick: function onBackClick(e) {
         this.dispatchEvent('back-click backClick click:back clickBack', e);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var F7PageContent = {
     name: 'f7-page-content',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       tab: Boolean,
       tabActive: Boolean,
       ptr: Boolean,
@@ -5778,8 +5989,9 @@
       hideNavbarOnScroll: Boolean,
       hideToolbarOnScroll: Boolean,
       messagesContent: Boolean,
-      loginScreen: Boolean},
-      Mixins.colorProps),
+      loginScreen: Boolean
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -5795,15 +6007,23 @@
       var infiniteTop = props.infiniteTop;
       var ptrEl;
       var infiniteEl;
+
       if (ptr && ptrPreloader) {
-        ptrEl = _h('div', { class: 'ptr-preloader' }, [
-          _h('div', { class: 'preloader' }),
-          _h('div', { class: 'ptr-arrow' })
-        ]);
+        ptrEl = _h('div', {
+          class: 'ptr-preloader'
+        }, [_h('div', {
+          class: 'preloader'
+        }), _h('div', {
+          class: 'ptr-arrow'
+        })]);
       }
+
       if (infinite && infinitePreloader) {
-        infiniteEl = _h('div', { class: 'preloader infinite-scroll-preloader' });
+        infiniteEl = _h('div', {
+          class: 'preloader infinite-scroll-preloader'
+        });
       }
+
       return _h('div', {
         style: style,
         class: self.classes,
@@ -5813,12 +6033,9 @@
           'data-ptr-distance': ptrDistance || undefined,
           'data-infinite-distance': infiniteDistance || undefined
         }
-      }, [
-        ptrEl,
-        infiniteTop ? infiniteEl : self.$slots.default,
-        infiniteTop ? self.$slots.default : infiniteEl
-      ]);
+      }, [ptrEl, infiniteTop ? infiniteEl : self.$slots.default, infiniteTop ? self.$slots.default : infiniteEl]);
     },
+
     computed: {
       classes: function classes() {
         var self = this;
@@ -5847,10 +6064,13 @@
           'login-screen-content': loginScreen
         }, Mixins.colorClasses(props));
       },
+
       props: function props() {
         return __vueComponentProps(this);
       }
+
     },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
@@ -5866,6 +6086,7 @@
       self.onInfinite = self.onInfinite.bind(self);
       self.onTabShow = self.onTabShow.bind(self);
       self.onTabHide = self.onTabHide.bind(self);
+
       if (ptr) {
         el.addEventListener('ptr:pullstart', self.onPtrPullStart);
         el.addEventListener('ptr:pullmove', self.onPtrPullMove);
@@ -5873,14 +6094,17 @@
         el.addEventListener('ptr:refresh', self.onPtrRefresh);
         el.addEventListener('ptr:done', self.onPtrDone);
       }
+
       if (infinite) {
         el.addEventListener('infinite', self.onInfinite);
       }
+
       if (tab) {
         el.addEventListener('tab:show', self.onTabShow);
         el.addEventListener('tab:hide', self.onTabHide);
       }
     },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
       var el = self.$refs.el;
@@ -5893,46 +6117,54 @@
       el.removeEventListener('tab:show', self.onTabShow);
       el.removeEventListener('tab:hide', self.onTabHide);
     },
+
     methods: {
       onPtrPullStart: function onPtrPullStart(event) {
         this.dispatchEvent('ptr:pullstart ptrPullStart', event);
       },
+
       onPtrPullMove: function onPtrPullMove(event) {
         this.dispatchEvent('ptr:pullmove ptrPullMove', event);
       },
+
       onPtrPullEnd: function onPtrPullEnd(event) {
         this.dispatchEvent('ptr:pullend ptrPullEnd', event);
       },
+
       onPtrRefresh: function onPtrRefresh(event) {
         this.dispatchEvent('ptr:refresh ptrRefresh', event, event.detail);
       },
+
       onPtrDone: function onPtrDone(event) {
         this.dispatchEvent('ptr:done ptrDone', event);
       },
+
       onInfinite: function onInfinite(event) {
         this.dispatchEvent('infinite', event);
       },
+
       onTabShow: function onTabShow(e) {
         this.dispatchEvent('tab:show tabShow', e);
       },
+
       onTabHide: function onTabHide(e) {
         this.dispatchEvent('tab:hide tabHide', e);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     }
   };
 
   var f7Page = {
     name: 'f7-page',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       name: String,
       stacked: Boolean,
       withSubnavbar: Boolean,
@@ -5962,15 +6194,23 @@
       hideNavbarOnScroll: Boolean,
       hideToolbarOnScroll: Boolean,
       messagesContent: Boolean,
-      loginScreen: Boolean},
-      Mixins.colorProps),
+      loginScreen: Boolean
+    }, Mixins.colorProps),
+
     data: function data() {
       var props = __vueComponentProps(this);
+
       var state = (function () {
-        return { hasSubnavbar: false };
+        return {
+          hasSubnavbar: false
+        };
       })();
-      return { state: state };
+
+      return {
+        state: state
+      };
     },
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -6011,36 +6251,35 @@
       var hasSubnavbar;
       var hasMessages;
       hasMessages = self.$options.propsData.messagesContent;
+
       if (slotsDefault) {
         slotsDefault.forEach(function (child) {
-          if (typeof child === 'undefined')
-            { return; }
+          if (typeof child === 'undefined') { return; }
           var isFixedTag = false;
           {
             var tag = child.tag;
+
             if (!tag) {
-              if (needsPageContent)
-                { staticList.push(child); }
+              if (needsPageContent) { staticList.push(child); }
               return;
             }
-            if (tag.indexOf('subnavbar') >= 0)
-              { hasSubnavbar = true; }
-            if (typeof hasMessages === 'undefined' && tag.indexOf('messages') >= 0)
-              { hasMessages = true; }
+
+            if (tag.indexOf('subnavbar') >= 0) { hasSubnavbar = true; }
+            if (typeof hasMessages === 'undefined' && tag.indexOf('messages') >= 0) { hasMessages = true; }
+
             for (var j = 0; j < fixedTags.length; j += 1) {
               if (tag.indexOf(fixedTags[j]) >= 0) {
                 isFixedTag = true;
               }
             }
           }
+
           if (needsPageContent) {
-            if (isFixedTag)
-              { fixedList.push(child); }
-            else
-              { staticList.push(child); }
+            if (isFixedTag) { fixedList.push(child); }else { staticList.push(child); }
           }
         });
       }
+
       var classes = Utils.classNames(className, 'page', {
         stacked: stacked,
         tabs: tabs,
@@ -6049,6 +6288,7 @@
         'no-toolbar': noToolbar,
         'no-swipeback': noSwipeback
       }, Mixins.colorClasses(props));
+
       if (!needsPageContent) {
         return _h('div', {
           ref: 'el',
@@ -6058,12 +6298,9 @@
             id: id,
             'data-name': name
           }
-        }, [
-          slotsFixed,
-          slotsStatic,
-          slotsDefault
-        ]);
+        }, [slotsFixed, slotsStatic, slotsDefault]);
       }
+
       var pageContentEl = _h(F7PageContent, {
         attrs: {
           ptr: ptr,
@@ -6079,10 +6316,8 @@
           messagesContent: messagesContent || hasMessages,
           loginScreen: loginScreen
         }
-      }, [
-        slotsStatic,
-        staticList
-      ]);
+      }, [slotsStatic, staticList]);
+
       return _h('div', {
         ref: 'el',
         style: style,
@@ -6091,12 +6326,9 @@
           id: id,
           'data-name': name
         }
-      }, [
-        fixedList,
-        slotsFixed,
-        pageContentEl
-      ]);
+      }, [fixedList, slotsFixed, pageContentEl]);
     },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
@@ -6117,6 +6349,7 @@
       self.onPageAfterOut = self.onPageAfterOut.bind(self);
       self.onPageAfterIn = self.onPageAfterIn.bind(self);
       self.onPageBeforeRemove = self.onPageBeforeRemove.bind(self);
+
       if (ptr) {
         el.addEventListener('ptr:pullstart', self.onPtrPullStart);
         el.addEventListener('ptr:pullmove', self.onPtrPullMove);
@@ -6124,9 +6357,11 @@
         el.addEventListener('ptr:refresh', self.onPtrRefresh);
         el.addEventListener('ptr:done', self.onPtrDone);
       }
+
       if (infinite) {
         el.addEventListener('infinite', self.onInfinite);
       }
+
       el.addEventListener('page:mounted', self.onPageMounted);
       el.addEventListener('page:init', self.onPageInit);
       el.addEventListener('page:reinit', self.onPageReinit);
@@ -6136,6 +6371,7 @@
       el.addEventListener('page:afterin', self.onPageAfterIn);
       el.addEventListener('page:beforeremove', self.onPageBeforeRemove);
     },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
       var el = self.$refs.el;
@@ -6154,77 +6390,93 @@
       el.removeEventListener('page:afterin', self.onPageAfterIn);
       el.removeEventListener('page:beforeremove', self.onPageBeforeRemove);
     },
+
     methods: {
       onPtrPullStart: function onPtrPullStart(event) {
         this.dispatchEvent('ptr:pullstart ptrPullStart', event);
       },
+
       onPtrPullMove: function onPtrPullMove(event) {
         this.dispatchEvent('ptr:pullmove ptrPullMove', event);
       },
+
       onPtrPullEnd: function onPtrPullEnd(event) {
         this.dispatchEvent('ptr:pullend ptrPullEnd', event);
       },
+
       onPtrRefresh: function onPtrRefresh(event) {
         this.dispatchEvent('ptr:refresh ptrRefresh', event, event.detail);
       },
+
       onPtrDone: function onPtrDone(event) {
         this.dispatchEvent('ptr:done ptrDone', event);
       },
+
       onInfinite: function onInfinite(event) {
         this.dispatchEvent('infinite', event);
       },
+
       onPageMounted: function onPageMounted(event) {
         this.dispatchEvent('page:mounted pageMounted', event, event.detail);
       },
+
       onPageInit: function onPageInit(event) {
         this.dispatchEvent('page:init pageInit', event, event.detail);
       },
+
       onPageReinit: function onPageReinit(event) {
         this.dispatchEvent('page:reinit pageReinit', event, event.detail);
       },
+
       onPageBeforeIn: function onPageBeforeIn(event) {
         this.dispatchEvent('page:beforein pageBeforeIn', event, event.detail);
       },
+
       onPageBeforeOut: function onPageBeforeOut(event) {
         this.dispatchEvent('page:beforeout pageBeforeOut', event, event.detail);
       },
+
       onPageAfterOut: function onPageAfterOut(event) {
         this.dispatchEvent('page:afterout pageAfterOut', event, event.detail);
       },
+
       onPageAfterIn: function onPageAfterIn(event) {
         this.dispatchEvent('page:afterin pageAfterIn', event, event.detail);
       },
+
       onPageBeforeRemove: function onPageBeforeRemove(event) {
         this.dispatchEvent('page:beforeremove pageBeforeRemove', event, event.detail);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Panel = {
     name: 'f7-panel',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       side: String,
       effect: String,
       cover: Boolean,
       reveal: Boolean,
       left: Boolean,
       right: Boolean,
-      opened: Boolean},
-      Mixins.colorProps),
+      opened: Boolean
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -6234,9 +6486,12 @@
         ref: 'el',
         style: style,
         class: this.classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       classes: function classes() {
         var obj;
@@ -6255,16 +6510,18 @@
           'panel-active': opened
         }, obj[("panel-" + side)] = side, obj[("panel-" + effect)] = effect, obj ), Mixins.colorClasses(props));
       },
+
       props: function props() {
         return __vueComponentProps(this);
       }
+
     },
     watch: {
       'props.opened': function watchOpened(opened) {
         var self = this;
-        if (!self.$f7)
-          { return; }
+        if (!self.$f7) { return; }
         var side = self.props.side || (self.props.left ? 'left' : 'right');
+
         if (opened) {
           self.$f7.panel.open(side);
         } else {
@@ -6272,6 +6529,7 @@
         }
       }
     },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
@@ -6289,6 +6547,7 @@
       self.onPanelSwipeBound = self.onPanelSwipe.bind(self);
       self.onPanelSwipeOpenBound = self.onPanelSwipeOpen.bind(self);
       self.onBreakpointBound = self.onBreakpoint.bind(self);
+
       if (el) {
         el.addEventListener('panel:open', self.onOpenBound);
         el.addEventListener('panel:opened', self.onOpenedBound);
@@ -6299,34 +6558,39 @@
         el.addEventListener('panel:swipeopen', self.onPanelSwipeOpenBound);
         el.addEventListener('panel:breakpoint', self.onBreakpointBound);
       }
+
       self.$f7ready(function () {
         var $ = self.$$;
-        if (!$)
-          { return; }
+        if (!$) { return; }
+
         if ($('.panel-backdrop').length === 0) {
           $('<div class="panel-backdrop"></div>').insertBefore(el);
         }
-        self.f7Panel = self.$f7.panel.create({ el: el });
+
+        self.f7Panel = self.$f7.panel.create({
+          el: el
+        });
       });
+
       if (opened) {
         el.style.display = 'block';
       }
+
       var $ = self.$$;
-      if (!$)
-        { return; }
+      if (!$) { return; }
       var panelSide = side || (left ? 'left' : 'right');
       var panelEffect = effect || (reveal ? 'reveal' : 'cover');
+
       if (opened) {
         $('html').addClass(("with-panel-" + panelSide + "-" + panelEffect));
       }
     },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
-      if (self.f7Panel)
-        { self.f7Panel.destroy(); }
+      if (self.f7Panel) { self.f7Panel.destroy(); }
       var el = self.$refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       el.removeEventListener('panel:open', self.onOpenBound);
       el.removeEventListener('panel:opened', self.onOpenedBound);
       el.removeEventListener('panel:close', self.onCloseBound);
@@ -6336,61 +6600,68 @@
       el.removeEventListener('panel:swipeopen', self.onPanelSwipeOpenBound);
       el.removeEventListener('panel:breakpoint', self.onBreakpointBound);
     },
+
     methods: {
       onOpen: function onOpen(event) {
         this.dispatchEvent('panel:open panelOpen', event);
       },
+
       onOpened: function onOpened(event) {
         this.dispatchEvent('panel:opened panelOpened', event);
       },
+
       onClose: function onClose(event) {
         this.dispatchEvent('panel:close panelClose', event);
       },
+
       onClosed: function onClosed(event) {
         this.dispatchEvent('panel:closed panelClosed', event);
       },
+
       onBackdropClick: function onBackdropClick(event) {
         this.dispatchEvent('panel:backdrop-click panelBackdropClick', event);
       },
+
       onPanelSwipe: function onPanelSwipe(event) {
         this.dispatchEvent('panel:swipe panelSwipe', event);
       },
+
       onPanelSwipeOpen: function onPanelSwipeOpen(event) {
         this.dispatchEvent('panel:swipeopen panelSwipeOpen', event);
       },
+
       onBreakpoint: function onBreakpoint(event) {
         this.dispatchEvent('panel:breakpoint panelBreakpoint', event);
       },
+
       open: function open(animate) {
         var self = this;
-        if (!self.$f7)
-          { return; }
+        if (!self.$f7) { return; }
         var side = self.props.side || (self.props.left ? 'left' : 'right');
         self.$f7.panel.open(side, animate);
       },
+
       close: function close(animate) {
         var self = this;
-        if (!self.$f7)
-          { return; }
+        if (!self.$f7) { return; }
         var side = self.props.side || (self.props.left ? 'left' : 'right');
         self.$f7.panel.close(side, animate);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     }
   };
 
   var f7PhotoBrowser = {
     name: 'f7-photo-browser',
     props: {
-      id: [
-        String,
-        Number
-      ],
+      id: [String, Number],
       init: {
         type: Boolean,
         default: true
@@ -6405,7 +6676,9 @@
         type: Boolean,
         default: false
       },
-      type: { type: String },
+      type: {
+        type: String
+      },
       navbar: {
         type: Boolean,
         default: true
@@ -6414,17 +6687,31 @@
         type: Boolean,
         default: true
       },
-      theme: { type: String },
-      captionsTheme: { type: String },
-      iconsColor: { type: String },
+      theme: {
+        type: String
+      },
+      captionsTheme: {
+        type: String
+      },
+      iconsColor: {
+        type: String
+      },
       swipeToClose: {
         type: Boolean,
         default: true
       },
-      backLinkText: { type: String },
-      navbarOfText: { type: String },
-      swiper: { type: Object },
-      url: { type: String },
+      backLinkText: {
+        type: String
+      },
+      navbarOfText: {
+        type: String
+      },
+      swiper: {
+        type: Object
+      },
+      url: {
+        type: String
+      },
       routableModals: {
         type: Boolean,
         default: true
@@ -6433,10 +6720,7 @@
         type: Boolean,
         default: true
       },
-      view: [
-        String,
-        Object
-      ],
+      view: [String, Object],
       renderNavbar: Function,
       renderToolbar: Function,
       renderCaption: Function,
@@ -6447,105 +6731,112 @@
       renderPopup: Function,
       renderStandalone: Function
     },
+
     render: function render() {
       var _h = this.$createElement;
       return null;
     },
+
     watch: {
       'props.photos': function watchPhotos(newValue) {
         var self = this;
         var pb = self.f7PhotoBrowser;
-        if (!pb)
-          { return; }
+        if (!pb) { return; }
         self.f7PhotoBrowser.photos = newValue;
+
         if (pb.opened && pb.swiper) {
           pb.swiper.update();
         }
       }
     },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
-      if (self.f7PhotoBrowser && self.f7PhotoBrowser.destroy)
-        { self.f7PhotoBrowser.destroy(); }
+      if (self.f7PhotoBrowser && self.f7PhotoBrowser.destroy) { self.f7PhotoBrowser.destroy(); }
     },
+
     mounted: function mounted() {
       var self = this;
-      if (!self.props.init)
-        { return; }
+      if (!self.props.init) { return; }
       self.$f7ready(function (f7) {
         var params;
-        if (typeof self.props.params !== 'undefined')
-          { params = self.props.params; }
-        else
-          { params = Object.assign({}, self.props); }
+        if (typeof self.props.params !== 'undefined') { params = self.props.params; }else { params = Object.assign({}, self.props); }
         Object.keys(params).forEach(function (param) {
-          if (typeof params[param] === 'undefined' || params[param] === '')
-            { delete params[param]; }
+          if (typeof params[param] === 'undefined' || params[param] === '') { delete params[param]; }
         });
         params = Utils.extend({}, params, {
           on: {
             open: function open() {
               self.dispatchEvent('photobrowser:open photoBrowserOpen');
             },
+
             close: function close() {
               self.dispatchEvent('photobrowser:close photoBrowserClose');
             },
+
             opened: function opened() {
               self.dispatchEvent('photobrowser:opened photoBrowserOpened');
             },
+
             closed: function closed() {
               self.dispatchEvent('photobrowser:closed photoBrowserClosed');
             },
+
             swipeToClose: function swipeToClose() {
               self.dispatchEvent('photobrowser:swipetoclose photoBrowserSwipeToClose');
             }
+
           }
         });
         self.f7PhotoBrowser = f7.photoBrowser.create(params);
       });
     },
+
     methods: {
       open: function open(index) {
         return this.f7PhotoBrowser.open(index);
       },
+
       close: function close() {
         return this.f7PhotoBrowser.close();
       },
+
       expositionToggle: function expositionToggle() {
         return this.f7PhotoBrowser.expositionToggle();
       },
+
       expositionEnable: function expositionEnable() {
         return this.f7PhotoBrowser.expositionEnable();
       },
+
       expositionDisable: function expositionDisable() {
         return this.f7PhotoBrowser.expositionDisable();
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Popover = {
     name: 'f7-popover',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       opened: Boolean,
-      target: [
-        String,
-        Object
-      ]},
-      Mixins.colorProps),
+      target: [String, Object]
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -6558,17 +6849,21 @@
         ref: 'el',
         style: style,
         class: classes,
-        attrs: { id: id }
-      }, [
-        _h('div', { class: 'popover-angle' }),
-        _h('div', { class: 'popover-inner' }, [this.$slots['default']])
-      ]);
+        attrs: {
+          id: id
+        }
+      }, [_h('div', {
+        class: 'popover-angle'
+      }), _h('div', {
+        class: 'popover-inner'
+      }, [this.$slots['default']])]);
     },
+
     watch: {
       'props.opened': function watchOpened(opened) {
         var self = this;
-        if (!self.f7Popover)
-          { return; }
+        if (!self.f7Popover) { return; }
+
         if (opened) {
           self.f7Popover.open();
         } else {
@@ -6576,11 +6871,11 @@
         }
       }
     },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       self.onOpenBound = self.onOpen.bind(self);
       self.onOpenedBound = self.onOpened.bind(self);
       self.onCloseBound = self.onClose.bind(self);
@@ -6593,75 +6888,82 @@
       var target = ref.target;
       var opened = ref.opened;
       self.$f7ready(function () {
-        var popoverParams = { el: el };
-        if (target)
-          { popoverParams.targetEl = target; }
+        var popoverParams = {
+          el: el
+        };
+        if (target) { popoverParams.targetEl = target; }
         self.f7Popover = self.$f7.popover.create(popoverParams);
+
         if (opened && target) {
           self.f7Popover.open(target, false);
         }
       });
     },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
-      if (self.f7Popover)
-        { self.f7Popover.destroy(); }
+      if (self.f7Popover) { self.f7Popover.destroy(); }
       var el = self.$refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       el.removeEventListener('popover:open', self.onOpenBound);
       el.removeEventListener('popover:opened', self.onOpenedBound);
       el.removeEventListener('popover:close', self.onCloseBound);
       el.removeEventListener('popover:closed', self.onClosedBound);
     },
+
     methods: {
       onOpen: function onOpen(event) {
         this.dispatchEvent('popover:open popoverOpen', event);
       },
+
       onOpened: function onOpened(event) {
         this.dispatchEvent('popover:opened popoverOpened', event);
       },
+
       onClose: function onClose(event) {
         this.dispatchEvent('popover:close popoverClose', event);
       },
+
       onClosed: function onClosed(event) {
         this.dispatchEvent('popover:closed popoverClosed', event);
       },
+
       open: function open(target, animate) {
         var self = this;
-        if (!self.$f7)
-          { return undefined; }
+        if (!self.$f7) { return undefined; }
         return self.$f7.popover.open(self.$refs.el, target, animate);
       },
+
       close: function close(animate) {
         var self = this;
-        if (!self.$f7)
-          { return undefined; }
+        if (!self.$f7) { return undefined; }
         return self.$f7.sheet.close(self.$refs.el, animate);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Popup = {
     name: 'f7-popup',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       tabletFullscreen: Boolean,
-      opened: Boolean},
-      Mixins.colorProps),
+      opened: Boolean
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -6670,19 +6972,24 @@
       var id = props.id;
       var style = props.style;
       var tabletFullscreen = props.tabletFullscreen;
-      var classes = Utils.classNames(className, 'popup', { 'popup-tablet-fullscreen': tabletFullscreen }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'popup', {
+        'popup-tablet-fullscreen': tabletFullscreen
+      }, Mixins.colorClasses(props));
       return _h('div', {
         ref: 'el',
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     watch: {
       'props.opened': function watchOpened(opened) {
         var self = this;
-        if (!self.f7Popup)
-          { return; }
+        if (!self.f7Popup) { return; }
+
         if (opened) {
           self.f7Popup.open();
         } else {
@@ -6690,11 +6997,11 @@
         }
       }
     },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       self.onOpenBound = self.onOpen.bind(self);
       self.onOpenedBound = self.onOpened.bind(self);
       self.onCloseBound = self.onClose.bind(self);
@@ -6704,74 +7011,79 @@
       el.addEventListener('popup:close', self.onCloseBound);
       el.addEventListener('popup:closed', self.onClosedBound);
       self.$f7ready(function () {
-        self.f7Popup = self.$f7.popup.create({ el: el });
+        self.f7Popup = self.$f7.popup.create({
+          el: el
+        });
+
         if (self.props.opened) {
           self.f7Popup.open(false);
         }
       });
     },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
-      if (self.f7Popup)
-        { self.f7Popup.destroy(); }
+      if (self.f7Popup) { self.f7Popup.destroy(); }
       var el = self.$refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       el.removeEventListener('popup:open', self.onOpenBound);
       el.removeEventListener('popup:opened', self.onOpenedBound);
       el.removeEventListener('popup:close', self.onCloseBound);
       el.removeEventListener('popup:closed', self.onClosedBound);
     },
+
     methods: {
       onOpen: function onOpen(event) {
         this.dispatchEvent('popup:open popupOpen', event);
       },
+
       onOpened: function onOpened(event) {
         this.dispatchEvent('popup:opened popupOpened', event);
       },
+
       onClose: function onClose(event) {
         this.dispatchEvent('popup:close popupClose', event);
       },
+
       onClosed: function onClosed(event) {
         this.dispatchEvent('popup:closed popupClosed', event);
       },
+
       open: function open(animate) {
         var self = this;
-        if (!self.$f7)
-          { return undefined; }
+        if (!self.$f7) { return undefined; }
         return self.$f7.popup.open(self.$refs.el, animate);
       },
+
       close: function close(animate) {
         var self = this;
-        if (!self.$f7)
-          { return undefined; }
+        if (!self.$f7) { return undefined; }
         return self.$f7.popup.close(self.$refs.el, animate);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Preloader = {
     name: 'f7-preloader',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
-      size: [
-        Number,
-        String
-      ]},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number],
+      size: [Number, String]
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -6781,50 +7093,67 @@
       var style = props.style;
       var className = props.className;
       var preloaderStyle = {};
+
       if (sizeComputed) {
         preloaderStyle.width = sizeComputed + "px";
         preloaderStyle.height = sizeComputed + "px";
       }
-      if (style)
-        { Utils.extend(preloaderStyle, style || {}); }
+
+      if (style) { Utils.extend(preloaderStyle, style || {}); }
       var innerEl;
+
       if (self.$theme.md) {
-        innerEl = _h('span', { class: 'preloader-inner' }, [
-          _h('span', { class: 'preloader-inner-gap' }),
-          _h('span', { class: 'preloader-inner-left' }, [_h('span', { class: 'preloader-inner-half-circle' })]),
-          _h('span', { class: 'preloader-inner-right' }, [_h('span', { class: 'preloader-inner-half-circle' })])
-        ]);
+        innerEl = _h('span', {
+          class: 'preloader-inner'
+        }, [_h('span', {
+          class: 'preloader-inner-gap'
+        }), _h('span', {
+          class: 'preloader-inner-left'
+        }, [_h('span', {
+          class: 'preloader-inner-half-circle'
+        })]), _h('span', {
+          class: 'preloader-inner-right'
+        }, [_h('span', {
+          class: 'preloader-inner-half-circle'
+        })])]);
       }
+
       var classes = Utils.classNames(className, 'preloader', Mixins.colorClasses(props));
       return _h('span', {
         style: preloaderStyle,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [innerEl]);
     },
+
     computed: {
       sizeComputed: function sizeComputed() {
         var s = this.props.size;
+
         if (s && typeof s === 'string' && s.indexOf('px') >= 0) {
           s = s.replace('px', '');
         }
+
         return s;
       },
+
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Progressbar = {
     name: 'f7-progressbar',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       progress: Number,
-      infinite: Boolean},
-      Mixins.colorProps),
+      infinite: Boolean
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -6838,7 +7167,9 @@
         transform: progress ? ("translate3d(" + (-100 + progress) + "%, 0, 0)") : '',
         WebkitTransform: progress ? ("translate3d(" + (-100 + progress) + "%, 0, 0)") : ''
       };
-      var classes = Utils.classNames(className, 'progressbar', { 'progressbar-infinite': infinite }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'progressbar', {
+        'progressbar-infinite': infinite
+      }, Mixins.colorClasses(props));
       return _h('span', {
         ref: 'el',
         style: style,
@@ -6847,43 +7178,39 @@
           id: id,
           'data-progress': progress
         }
-      }, [_h('span', { style: transformStyle })]);
+      }, [_h('span', {
+        style: transformStyle
+      })]);
     },
+
     methods: {
       set: function set(progress, speed) {
         var self = this;
-        if (!self.$f7)
-          { return; }
+        if (!self.$f7) { return; }
         self.$f7.progressbar.set(self.$refs.el, progress, speed);
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Radio = {
     name: 'f7-radio',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       checked: Boolean,
-      name: [
-        Number,
-        String
-      ],
-      value: [
-        Number,
-        String,
-        Boolean
-      ],
+      name: [Number, String],
+      value: [Number, String, Boolean],
       disabled: Boolean,
       readonly: Boolean,
-      defaultChecked: Boolean},
-      Mixins.colorProps),
+      defaultChecked: Boolean
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -6906,55 +7233,64 @@
             readonly: readonly,
             checked: checked
           },
-          on: { change: self.onChange.bind(self) },
+          on: {
+            change: self.onChange.bind(self)
+          },
           attrs: {
             type: 'radio',
             name: name
           }
         });
       }
-      var iconEl = _h('i', { class: 'icon-radio' });
-      var classes = Utils.classNames(className, 'radio', { disabled: disabled }, Mixins.colorClasses(props));
+
+      var iconEl = _h('i', {
+        class: 'icon-radio'
+      });
+
+      var classes = Utils.classNames(className, 'radio', {
+        disabled: disabled
+      }, Mixins.colorClasses(props));
       return _h('label', {
         style: style,
         class: classes,
-        attrs: { id: id }
-      }, [
-        inputEl,
-        iconEl,
-        this.$slots['default']
-      ]);
+        attrs: {
+          id: id
+        }
+      }, [inputEl, iconEl, this.$slots['default']]);
     },
+
     methods: {
       onChange: function onChange(event) {
         this.dispatchEvent('change', event);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Row = {
     name: 'f7-row',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       noGap: Boolean,
       tag: {
         type: String,
         default: 'div'
-      }},
-      Mixins.colorProps),
+      }
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -6965,38 +7301,46 @@
       var tag = props.tag;
       var noGap = props.noGap;
       var RowTag = tag;
-      var classes = Utils.classNames(className, 'row', { 'no-gap': noGap }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'row', {
+        'no-gap': noGap
+      }, Mixins.colorClasses(props));
       return _h(RowTag, {
         style: style,
         class: classes,
-        on: { click: self.onClick.bind(self) },
-        attrs: { id: id }
+        on: {
+          click: self.onClick.bind(self)
+        },
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     methods: {
       onClick: function onClick(e) {
         this.dispatchEvent('click', e);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Searchbar = {
     name: 'f7-searchbar',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       noShadow: Boolean,
       noHairline: Boolean,
       form: {
@@ -7020,10 +7364,7 @@
         default: true
       },
       expandable: Boolean,
-      searchContainer: [
-        String,
-        Object
-      ],
+      searchContainer: [String, Object],
       searchIn: {
         type: String,
         default: '.item-title'
@@ -7033,39 +7374,24 @@
         default: 'li'
       },
       foundEl: {
-        type: [
-          String,
-          Object
-        ],
+        type: [String, Object],
         default: '.searchbar-found'
       },
       notFoundEl: {
-        type: [
-          String,
-          Object
-        ],
+        type: [String, Object],
         default: '.searchbar-not-found'
       },
       backdrop: {
         type: Boolean,
         default: true
       },
-      backdropEl: [
-        String,
-        Object
-      ],
+      backdropEl: [String, Object],
       hideOnEnableEl: {
-        type: [
-          String,
-          Object
-        ],
+        type: [String, Object],
         default: '.searchbar-hide-on-enable'
       },
       hideOnSearchEl: {
-        type: [
-          String,
-          Object
-        ],
+        type: [String, Object],
         default: '.searchbar-hide-on-search'
       },
       ignore: {
@@ -7091,8 +7417,9 @@
       init: {
         type: Boolean,
         default: true
-      }},
-      Mixins.colorProps),
+      }
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -7110,18 +7437,25 @@
       var className = props.className;
       var style = props.style;
       var id = props.id;
+
       if (clearButton) {
         clearEl = _h('span', {
           class: 'input-clear-button',
-          on: { click: self.onClearButtonClick.bind(self) }
+          on: {
+            click: self.onClearButtonClick.bind(self)
+          }
         });
       }
+
       if (disableButton) {
         disableEl = _h('span', {
           class: 'searchbar-disable-button',
-          on: { click: self.onDisableButtonClick.bind(self) }
+          on: {
+            click: self.onDisableButtonClick.bind(self)
+          }
         }, [disableButtonText]);
       }
+
       var SearchbarTag = form ? 'form' : 'div';
       var classes = Utils.classNames(className, 'searchbar', {
         'no-shadow': noShadow,
@@ -7132,44 +7466,39 @@
         ref: 'el',
         style: style,
         class: classes,
-        attrs: { id: id }
-      }, [
-        this.$slots['before-inner'],
-        _h('div', { class: 'searchbar-inner' }, [
-          this.$slots['inner-start'],
-          _h('div', { class: 'searchbar-input-wrap' }, [
-            this.$slots['input-wrap-start'],
-            _h('input', {
-              on: {
-                input: self.onInput.bind(self),
-                change: self.onChange.bind(self),
-                focus: self.onFocus.bind(self),
-                blur: self.onBlur.bind(self)
-              },
-              attrs: {
-                placeholder: placeholder,
-                type: 'search'
-              }
-            }),
-            _h('i', { class: 'searchbar-icon' }),
-            clearEl,
-            this.$slots['input-wrap-end']
-          ]),
-          disableEl,
-          this.$slots['inner-end'],
-          this.$slots['default']
-        ]),
-        this.$slots['after-inner']
-      ]);
+        attrs: {
+          id: id
+        }
+      }, [this.$slots['before-inner'], _h('div', {
+        class: 'searchbar-inner'
+      }, [this.$slots['inner-start'], _h('div', {
+        class: 'searchbar-input-wrap'
+      }, [this.$slots['input-wrap-start'], _h('input', {
+        on: {
+          input: self.onInput.bind(self),
+          change: self.onChange.bind(self),
+          focus: self.onFocus.bind(self),
+          blur: self.onBlur.bind(self)
+        },
+        attrs: {
+          placeholder: placeholder,
+          type: 'search'
+        }
+      }), _h('i', {
+        class: 'searchbar-icon'
+      }), clearEl, this.$slots['input-wrap-end']]), disableEl, this.$slots['inner-end'], this.$slots['default']]), this.$slots['after-inner']]);
     },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
+
       if (self.props.form && self.$refs.el) {
         self.$refs.el.removeEventListener('submit', self.onSubmitBound, false);
       }
-      if (self.f7Searchbar && self.f7Searchbar.destroy)
-        { self.f7Searchbar.destroy(); }
+
+      if (self.f7Searchbar && self.f7Searchbar.destroy) { self.f7Searchbar.destroy(); }
     },
+
     mounted: function mounted() {
       var self = this;
       var ref = self.props;
@@ -7190,13 +7519,14 @@
       var hideDividers = ref.hideDividers;
       var hideGroups = ref.hideGroups;
       var form = ref.form;
-      if (!init)
-        { return; }
+      if (!init) { return; }
       var el = self.$refs.el;
+
       if (form && el) {
         self.onSubmitBound = self.onSubmit.bind(self);
         el.addEventListener('submit', self.onSubmitBound, false);
       }
+
       self.$f7ready(function () {
         var params = Utils.noUndefinedProps({
           el: self.$refs.el,
@@ -7219,15 +7549,19 @@
             search: function search(searchbar, query, previousQuery) {
               self.dispatchEvent('searchbar:search searchbarSearch', searchbar, query, previousQuery);
             },
+
             clear: function clear(searchbar, previousQuery) {
               self.dispatchEvent('searchbar:clear searchbarClear', searchbar, previousQuery);
             },
+
             enable: function enable(searchbar) {
               self.dispatchEvent('searchbar:enable searchbarEnable', searchbar);
             },
+
             disable: function disable(searchbar) {
               self.dispatchEvent('searchbar:disable searchbarDisable', searchbar);
             }
+
           }
         });
         Object.keys(params).forEach(function (key) {
@@ -7238,80 +7572,89 @@
         self.f7Searchbar = self.$f7.searchbar.create(params);
       });
     },
+
     methods: {
       search: function search(query) {
-        if (!this.f7Searchbar)
-          { return undefined; }
+        if (!this.f7Searchbar) { return undefined; }
         return this.f7Searchbar.search(query);
       },
+
       enable: function enable() {
-        if (!this.f7Searchbar)
-          { return undefined; }
+        if (!this.f7Searchbar) { return undefined; }
         return this.f7Searchbar.enable();
       },
+
       disable: function disable() {
-        if (!this.f7Searchbar)
-          { return undefined; }
+        if (!this.f7Searchbar) { return undefined; }
         return this.f7Searchbar.disable();
       },
+
       toggle: function toggle() {
-        if (!this.f7Searchbar)
-          { return undefined; }
+        if (!this.f7Searchbar) { return undefined; }
         return this.toggle.disable();
       },
+
       clear: function clear() {
-        if (!this.f7Searchbar)
-          { return undefined; }
+        if (!this.f7Searchbar) { return undefined; }
         return this.f7Searchbar.clear();
       },
+
       onChange: function onChange(event) {
         this.dispatchEvent('change', event);
       },
+
       onInput: function onInput(event) {
         this.dispatchEvent('input', event);
       },
+
       onFocus: function onFocus(event) {
         this.dispatchEvent('focus', event);
       },
+
       onBlur: function onBlur(event) {
         this.dispatchEvent('blur', event);
       },
+
       onSubmit: function onSubmit(event) {
         this.dispatchEvent('submit', event);
       },
+
       onClearButtonClick: function onClearButtonClick(event) {
         this.dispatchEvent('click:clear clickClear', event);
       },
+
       onDisableButtonClick: function onDisableButtonClick(event) {
         this.dispatchEvent('click:disable clickDisable', event);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Segmented = {
     name: 'f7-segmented',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       raised: Boolean,
       round: Boolean,
       tag: {
         type: String,
         default: 'div'
-      }},
-      Mixins.colorProps),
+      }
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -7331,25 +7674,28 @@
       return _h(SegmentedTag, {
         style: style,
         class: classNames,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Sheet = {
     name: 'f7-sheet',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       opened: Boolean,
-      backdrop: Boolean},
-      Mixins.colorProps),
+      backdrop: Boolean
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -7362,45 +7708,48 @@
       var fixedTags;
       fixedTags = 'navbar toolbar tabbar subnavbar searchbar messagebar fab list-index'.split(' ');
       var slotsDefault = self.$slots.default;
+
       if (slotsDefault && slotsDefault.length) {
         slotsDefault.forEach(function (child) {
-          if (typeof child === 'undefined')
-            { return; }
+          if (typeof child === 'undefined') { return; }
           var isFixedTag = false;
           {
             var tag = child.tag;
+
             if (!tag) {
               return;
             }
+
             for (var j = 0; j < fixedTags.length; j += 1) {
               if (tag.indexOf(fixedTags[j]) >= 0) {
                 isFixedTag = true;
               }
             }
           }
-          if (isFixedTag)
-            { fixedList.push(child); }
-          else
-            { staticList.push(child); }
+          if (isFixedTag) { fixedList.push(child); }else { staticList.push(child); }
         });
       }
-      var innerEl = _h('div', { class: 'sheet-modal-inner' }, [staticList]);
+
+      var innerEl = _h('div', {
+        class: 'sheet-modal-inner'
+      }, [staticList]);
+
       var classes = Utils.classNames(className, 'sheet-modal', Mixins.colorClasses(props));
       return _h('div', {
         ref: 'el',
         style: style,
         class: classes,
-        attrs: { id: id }
-      }, [
-        fixedList,
-        innerEl
-      ]);
+        attrs: {
+          id: id
+        }
+      }, [fixedList, innerEl]);
     },
+
     watch: {
       'props.opened': function watchOpened(opened) {
         var self = this;
-        if (!self.f7Sheet)
-          { return; }
+        if (!self.f7Sheet) { return; }
+
         if (opened) {
           self.f7Sheet.open();
         } else {
@@ -7408,11 +7757,11 @@
         }
       }
     },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       self.onOpenBound = self.onOpen.bind(self);
       self.onOpenedBound = self.onOpened.bind(self);
       self.onCloseBound = self.onClose.bind(self);
@@ -7428,77 +7777,85 @@
         var opened = ref.opened;
         var backdrop = ref.backdrop;
         useDefaultBackdrop = self.$options.propsData.backdrop === undefined;
+
         if (useDefaultBackdrop) {
           var app = self.$f7;
           useBackdrop = app.params.sheet && app.params.sheet.backdrop !== undefined ? app.params.sheet.backdrop : self.$theme.md;
         }
+
         self.f7Sheet = self.$f7.sheet.create({
           el: self.$refs.el,
           backdrop: useBackdrop
         });
+
         if (opened) {
           self.f7Sheet.open(false);
         }
       });
     },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
-      if (self.f7Sheet)
-        { self.f7Sheet.destroy(); }
+      if (self.f7Sheet) { self.f7Sheet.destroy(); }
       var el = self.$el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       el.removeEventListener('popup:open', self.onOpenBound);
       el.removeEventListener('popup:opened', self.onOpenedBound);
       el.removeEventListener('popup:close', self.onCloseBound);
       el.removeEventListener('popup:closed', self.onClosedBound);
     },
+
     methods: {
       onOpen: function onOpen(event) {
         this.dispatchEvent('sheet:open sheetOpen', event);
       },
+
       onOpened: function onOpened(event) {
         this.dispatchEvent('sheet:opened sheetOpened', event);
       },
+
       onClose: function onClose(event) {
         this.dispatchEvent('sheet:close sheetClose', event);
       },
+
       onClosed: function onClosed(event) {
         this.dispatchEvent('sheet:closed sheetClosed', event);
       },
+
       open: function open(animate) {
         var self = this;
-        if (!self.$f7)
-          { return undefined; }
+        if (!self.$f7) { return undefined; }
         return self.$f7.sheet.open(self.$refs.el, animate);
       },
+
       close: function close(animate) {
         var self = this;
-        if (!self.$f7)
-          { return undefined; }
+        if (!self.$f7) { return undefined; }
         return self.$f7.sheet.close(self.$refs.el, animate);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Statusbar = {
     name: 'f7-statusbar',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ]},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number]
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -7509,22 +7866,24 @@
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Stepper = {
     name: 'f7-stepper',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       init: {
         type: Boolean,
         default: true
@@ -7584,8 +7943,9 @@
       small: Boolean,
       smallMd: Boolean,
       smallIos: Boolean,
-      raised: Boolean},
-      Mixins.colorProps),
+      raised: Boolean
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -7602,6 +7962,7 @@
       var style = props.style;
       var inputWrapEl;
       var valueEl;
+
       if (input && !buttonsOnly) {
         var inputEl;
         {
@@ -7610,7 +7971,9 @@
               readonly: inputReadonly,
               value: value
             },
-            on: { input: self.onInput.bind(self) },
+            on: {
+              input: self.onInput.bind(self)
+            },
             attrs: {
               type: inputType,
               min: inputType === 'number' ? min : undefined,
@@ -7619,29 +7982,37 @@
             }
           });
         }
-        inputWrapEl = _h('div', { class: 'stepper-input-wrap' }, [inputEl]);
+        inputWrapEl = _h('div', {
+          class: 'stepper-input-wrap'
+        }, [inputEl]);
       }
+
       if (!input && !buttonsOnly) {
-        valueEl = _h('div', { class: 'stepper-value' }, [value]);
+        valueEl = _h('div', {
+          class: 'stepper-value'
+        }, [value]);
       }
+
       return _h('div', {
         ref: 'el',
         style: style,
         class: self.classes,
-        attrs: { id: id }
-      }, [
-        _h('div', {
-          class: 'stepper-button-minus',
-          on: { click: self.onMinusClickBound }
-        }),
-        inputWrapEl,
-        valueEl,
-        _h('div', {
-          class: 'stepper-button-plus',
-          on: { click: self.onPlusClickBound }
-        })
-      ]);
+        attrs: {
+          id: id
+        }
+      }, [_h('div', {
+        class: 'stepper-button-minus',
+        on: {
+          click: self.onMinusClickBound
+        }
+      }), inputWrapEl, valueEl, _h('div', {
+        class: 'stepper-button-plus',
+        on: {
+          click: self.onPlusClickBound
+        }
+      })]);
     },
+
     computed: {
       classes: function classes() {
         var self = this;
@@ -7677,19 +8048,22 @@
           'stepper-raised': raised
         }, Mixins.colorClasses(props));
       },
+
       props: function props() {
         return __vueComponentProps(this);
       }
+
     },
+
     created: function created() {
       this.onInputBound = this.onInput.bind(this);
       this.onMinusClickBound = this.onMinusClick.bind(this);
       this.onPlusClickBound = this.onPlusClick.bind(this);
     },
+
     mounted: function mounted() {
       var self = this;
-      if (!self.props.init)
-        { return; }
+      if (!self.props.init) { return; }
       self.$f7ready(function (f7) {
         var ref = self.props;
         var min = ref.min;
@@ -7701,8 +8075,7 @@
         var autorepeatDynamic = ref.autorepeatDynamic;
         var wraps = ref.wraps;
         var el = self.$refs.el;
-        if (!el)
-          { return; }
+        if (!el) { return; }
         self.f7Stepper = f7.stepper.create(Utils.noUndefinedProps({
           el: el,
           min: min,
@@ -7717,71 +8090,80 @@
             change: function change(stepper, newValue) {
               self.dispatchEvent('stepper:change stepperChange', newValue);
             }
+
           }
         }));
       });
     },
+
     beforeDestroy: function beforeDestroy() {
-      if (!this.props.init)
-        { return; }
+      if (!this.props.init) { return; }
+
       if (this.f7Stepper && this.f7Stepper.destroy) {
         this.f7Stepper.destroy();
       }
     },
+
     methods: {
       increment: function increment() {
-        if (!this.f7Stepper)
-          { return; }
+        if (!this.f7Stepper) { return; }
         this.f7Stepper.increment();
       },
+
       decrement: function decrement() {
-        if (!this.f7Stepper)
-          { return; }
+        if (!this.f7Stepper) { return; }
         this.f7Stepper.decrement();
       },
+
       setValue: function setValue(newValue) {
         var self = this;
-        if (self.f7Stepper && self.f7Stepper.setValue)
-          { self.f7Stepper.setValue(newValue); }
+        if (self.f7Stepper && self.f7Stepper.setValue) { self.f7Stepper.setValue(newValue); }
       },
+
       getValue: function getValue() {
         var self = this;
+
         if (self.f7Stepper && self.f7Stepper.getValue) {
           return self.f7Stepper.getValue();
         }
+
         return undefined;
       },
+
       onInput: function onInput(e) {
         this.dispatchEvent('input', e, this.f7Stepper);
       },
+
       onMinusClick: function onMinusClick(e) {
         this.dispatchEvent('stepper:minusclick stepperMinusClick', e, this.f7Stepper);
       },
+
       onPlusClick: function onPlusClick(e) {
         this.dispatchEvent('stepper:plusclick stepperPlusClick', e, this.f7Stepper);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     }
   };
 
   var f7Subnavbar = {
     name: 'f7-subnavbar',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       sliding: Boolean,
       title: String,
       inner: {
         type: Boolean,
         default: true
-      }},
-      Mixins.colorProps),
+      }
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -7792,33 +8174,39 @@
       var id = props.id;
       var className = props.className;
       var sliding = props.sliding;
-      var classes = Utils.classNames(className, 'subnavbar', { sliding: sliding }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'subnavbar', {
+        sliding: sliding
+      }, Mixins.colorClasses(props));
       return _h('div', {
         class: classes,
         style: style,
-        attrs: { id: id }
-      }, [inner ? _h('div', { class: 'subnavbar-inner' }, [
-          title && _h('div', { class: 'title' }, [title]),
-          this.$slots['default']
-        ]) : this.$slots['default']]);
+        attrs: {
+          id: id
+        }
+      }, [inner ? _h('div', {
+        class: 'subnavbar-inner'
+      }, [title && _h('div', {
+        class: 'title'
+      }, [title]), this.$slots['default']]) : this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7SwipeoutActions = {
     name: 'f7-swipeout-actions',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       left: Boolean,
       right: Boolean,
-      side: String},
-      Mixins.colorProps),
+      side: String
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -7829,39 +8217,42 @@
       var id = props.id;
       var style = props.style;
       var sideComputed = side;
+
       if (!sideComputed) {
-        if (left)
-          { sideComputed = 'left'; }
-        if (right)
-          { sideComputed = 'right'; }
+        if (left) { sideComputed = 'left'; }
+        if (right) { sideComputed = 'right'; }
       }
+
       var classes = Utils.classNames(className, ("swipeout-actions-" + sideComputed), Mixins.colorClasses(props));
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7SwipeoutButton = {
     name: 'f7-swipeout-button',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       text: String,
       confirmText: String,
       overswipe: Boolean,
       close: Boolean,
       delete: Boolean,
-      href: String},
-      Mixins.colorProps),
+      href: String
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -7882,7 +8273,9 @@
       return _h('a', {
         style: style,
         class: classes,
-        on: { click: this.onClick.bind(this) },
+        on: {
+          click: this.onClick.bind(this)
+        },
         attrs: {
           href: href || '#',
           id: id,
@@ -7890,33 +8283,35 @@
         }
       }, [this.$slots['default'] || [text]]);
     },
+
     methods: {
       onClick: function onClick(event) {
         this.dispatchEvent('click', event);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7SwiperSlide = {
     name: 'f7-swiper-slide',
     props: {
-      id: [
-        String,
-        Number
-      ],
+      id: [String, Number],
       zoom: Boolean
     },
+
     render: function render() {
       var _h = this.$createElement;
       var props = this.props;
@@ -7928,22 +8323,26 @@
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
-      }, [zoom ? _h('div', { class: 'swiper-zoom-container' }, [this.$slots['default']]) : this.$slots['default']]);
+        attrs: {
+          id: id
+        }
+      }, [zoom ? _h('div', {
+        class: 'swiper-zoom-container'
+      }, [this.$slots['default']]) : this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Swiper = {
     name: 'f7-swiper',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       params: Object,
       pagination: Boolean,
       scrollbar: Boolean,
@@ -7951,8 +8350,9 @@
       init: {
         type: Boolean,
         default: true
-      }},
-      Mixins.colorProps),
+      }
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -7964,18 +8364,21 @@
       var scrollbarEl;
       var buttonNextEl;
       var buttonPrevEl;
+
       if (self.paginationComputed) {
         paginationEl = _h('div', {
           ref: 'paginationEl',
           class: 'swiper-pagination'
         });
       }
+
       if (self.scrollbarComputed) {
         scrollbarEl = _h('div', {
           ref: 'scrollbarEl',
           class: 'swiper-scrollbar'
         });
       }
+
       if (self.navigationComputed) {
         buttonNextEl = _h('div', {
           ref: 'nextEl',
@@ -7986,70 +8389,80 @@
           class: 'swiper-button-prev'
         });
       }
+
       var classes = Utils.classNames(className, 'swiper-container', Mixins.colorClasses(props));
       return _h('div', {
         style: style,
         ref: 'el',
         class: classes,
-        attrs: { id: id }
-      }, [
-        this.$slots['before-wrapper'],
-        _h('div', { class: 'swiper-wrapper' }, [this.$slots['default']]),
-        paginationEl,
-        scrollbarEl,
-        buttonPrevEl,
-        buttonNextEl,
-        this.$slots['after-wrapper']
-      ]);
+        attrs: {
+          id: id
+        }
+      }, [this.$slots['before-wrapper'], _h('div', {
+        class: 'swiper-wrapper'
+      }, [this.$slots['default']]), paginationEl, scrollbarEl, buttonPrevEl, buttonNextEl, this.$slots['after-wrapper']]);
     },
+
     computed: {
       paginationComputed: function paginationComputed() {
         var self = this;
         var ref = self.props;
         var pagination = ref.pagination;
         var params = ref.params;
+
         if (pagination === true || params && params.pagination && !params.pagination.el) {
           return true;
         }
+
         return false;
       },
+
       scrollbarComputed: function scrollbarComputed() {
         var self = this;
         var ref = self.props;
         var scrollbar = ref.scrollbar;
         var params = ref.params;
+
         if (scrollbar === true || params && params.scrollbar && !params.scrollbar.el) {
           return true;
         }
+
         return false;
       },
+
       navigationComputed: function navigationComputed() {
         var self = this;
         var ref = self.props;
         var navigation = ref.navigation;
         var params = ref.params;
+
         if (navigation === true || params && params.navigation && !params.navigation.nextEl && !params.navigation.prevEl) {
           return true;
         }
+
         return false;
       },
+
       props: function props() {
         return __vueComponentProps(this);
       }
+
     },
+
     updated: function updated() {
       var self = this;
+
       if (!self.initialUpdate) {
         self.initialUpdate = true;
         return;
       }
-      if (self.swiper && self.swiper.update)
-        { self.swiper.update(); }
+
+      if (self.swiper && self.swiper.update) { self.swiper.update(); }
     },
+
     mounted: function mounted() {
       var self = this;
-      if (!self.props.init)
-        { return; }
+      if (!self.props.init) { return; }
       self.$f7ready(function (f7) {
         var newParams = {
           pagination: {},
@@ -8061,43 +8474,48 @@
         var pagination = ref.pagination;
         var navigation = ref.navigation;
         var scrollbar = ref.scrollbar;
-        if (params)
-          { Utils.extend(newParams, params); }
-        if (pagination && !newParams.pagination.el)
-          { newParams.pagination.el = self.$refs.paginationEl; }
+        if (params) { Utils.extend(newParams, params); }
+        if (pagination && !newParams.pagination.el) { newParams.pagination.el = self.$refs.paginationEl; }
+
         if (navigation && !newParams.navigation.nextEl && !newParams.navigation.prevEl) {
           newParams.navigation.nextEl = self.$refs.nextEl;
           newParams.navigation.prevEl = self.$refs.prevEl;
         }
-        if (scrollbar && !newParams.scrollbar.el)
-          { newParams.scrollbar.el = self.$refs.scrollbarEl; }
+
+        if (scrollbar && !newParams.scrollbar.el) { newParams.scrollbar.el = self.$refs.scrollbarEl; }
         self.swiper = f7.swiper.create(self.$refs.el, newParams);
       });
     },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
-      if (!self.props.init)
-        { return; }
-      if (self.swiper && self.swiper.destroy)
-        { self.swiper.destroy(); }
+      if (!self.props.init) { return; }
+      if (self.swiper && self.swiper.destroy) { self.swiper.destroy(); }
     }
+
   };
 
   var f7Tab = {
     name: 'f7-tab',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
-      tabActive: Boolean},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number],
+      tabActive: Boolean
+    }, Mixins.colorProps),
+
     data: function data() {
       var props = __vueComponentProps(this);
+
       var state = (function () {
-        return { tabContent: null };
+        return {
+          tabContent: null
+        };
       })();
-      return { state: state };
+
+      return {
+        state: state
+      };
     },
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -8107,53 +8525,64 @@
       var className = props.className;
       var style = props.style;
       var tabContent = self.state.tabContent;
-      var classes = Utils.classNames(className, 'tab', { 'tab-active': tabActive }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'tab', {
+        'tab-active': tabActive
+      }, Mixins.colorClasses(props));
       var TabContent;
-      if (tabContent)
-        { TabContent = tabContent.component; }
+      if (tabContent) { TabContent = tabContent.component; }
       {
         return _h('div', {
           style: style,
           ref: 'el',
           class: classes,
-          attrs: { id: id }
+          attrs: {
+            id: id
+          }
         }, [tabContent ? _h(TabContent, {
-            key: tabContent.id,
-            props: tabContent.props
-          }) : this.$slots['default']]);
+          key: tabContent.id,
+          props: tabContent.props
+        }) : this.$slots['default']]);
       }
     },
+
     created: function created() {
       this.onTabShowBound = this.onTabShow.bind(this);
       this.onTabHideBound = this.onTabHide.bind(this);
     },
+
     updated: function updated() {
       var self = this;
-      if (!self.routerData)
-        { return; }
+      if (!self.routerData) { return; }
       eventsEmitter.emit('tabRouterDidUpdate', self.routerData);
     },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
       var el = self.$refs.el;
+
       if (el) {
         el.removeEventListener('tab:show', self.onTabShowBound);
         el.removeEventListener('tab:hide', self.onTabHideBound);
       }
-      if (!self.routerData)
-        { return; }
+
+      if (!self.routerData) { return; }
       f7.routers.tabs.splice(f7.routers.tabs.indexOf(self.routerData), 1);
       self.routerData = null;
       delete self.routerData;
     },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
+
       if (el) {
         el.addEventListener('tab:show', self.onTabShowBound);
         el.addEventListener('tab:hide', self.onTabHideBound);
       }
-      self.setState({ tabContent: null });
+
+      self.setState({
+        tabContent: null
+      });
       self.$f7ready(function () {
         self.routerData = {
           el: el,
@@ -8162,45 +8591,50 @@
         f7.routers.tabs.push(self.routerData);
       });
     },
+
     methods: {
       show: function show(animate) {
-        if (!this.$f7)
-          { return; }
+        if (!this.$f7) { return; }
         this.$f7.tab.show(this.$refs.el, animate);
       },
+
       onTabShow: function onTabShow(e) {
         this.dispatchEvent('tab:show tabShow', e);
       },
+
       onTabHide: function onTabHide(e) {
         this.dispatchEvent('tab:hide tabHide', e);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       },
+
       setState: function setState(updater, callback) {
         __vueComponentSetState(this, updater, callback);
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Tabs = {
     name: 'f7-tabs',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       animated: Boolean,
       swipeable: Boolean,
-      routable: Boolean},
-      Mixins.colorProps),
+      routable: Boolean
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -8216,32 +8650,40 @@
         'tabs-swipeable-wrap': swipeable,
         'tabs-routable': routable
       }, Mixins.colorClasses(props));
+
       if (animated || swipeable) {
         return _h('div', {
           style: style,
           class: classes,
-          attrs: { id: id }
-        }, [_h('div', { class: 'tabs' }, [this.$slots['default']])]);
+          attrs: {
+            id: id
+          }
+        }, [_h('div', {
+          class: 'tabs'
+        }, [this.$slots['default']])]);
       }
+
       return _h('div', {
         style: style,
         class: Utils.classNames('tabs', classes),
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Toolbar = {
     name: 'f7-toolbar',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       bottomMd: Boolean,
       tabbar: Boolean,
       labels: Boolean,
@@ -8252,8 +8694,9 @@
       inner: {
         type: Boolean,
         default: true
-      }},
-      Mixins.colorProps),
+      }
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -8282,61 +8725,60 @@
         style: style,
         ref: 'el',
         class: classes,
-        attrs: { id: id }
-      }, [
-        this.$slots['before-inner'],
-        inner ? _h('div', { class: 'toolbar-inner' }, [this.$slots['default']]) : this.$slots['default'],
-        this.$slots['after-inner']
-      ]);
+        attrs: {
+          id: id
+        }
+      }, [this.$slots['before-inner'], inner ? _h('div', {
+        class: 'toolbar-inner'
+      }, [this.$slots['default']]) : this.$slots['default'], this.$slots['after-inner']]);
     },
+
     updated: function updated() {
       var self = this;
+
       if (self.props.tabbar && self.$f7) {
         self.$f7.toolbar.setHighlight(self.$refs.el);
       }
     },
+
     mounted: function mounted() {
       var self = this;
       self.$f7ready(function (f7) {
-        if (self.props.tabbar)
-          { f7.toolbar.setHighlight(self.$refs.el); }
+        if (self.props.tabbar) { f7.toolbar.setHighlight(self.$refs.el); }
       });
     },
+
     methods: {
       hide: function hide(animate) {
         var self = this;
-        if (!self.$f7)
-          { return; }
+        if (!self.$f7) { return; }
         self.$f7.toolbar.hide(this.$refs.el, animate);
       },
+
       show: function show(animate) {
         var self = this;
-        if (!self.$f7)
-          { return; }
+        if (!self.$f7) { return; }
         self.$f7.toolbar.show(this.$refs.el, animate);
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7View = {
     name: 'f7-view',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
+    props: Object.assign({
+      id: [String, Number],
       tab: Boolean,
       tabActive: Boolean,
       name: String,
       router: Boolean,
-      linksView: [
-        Object,
-        String
-      ],
+      linksView: [Object, String],
       url: String,
       main: Boolean,
       stackPages: Boolean,
@@ -8376,15 +8818,23 @@
       init: {
         type: Boolean,
         default: true
-      }},
-      Mixins.colorProps),
+      }
+    }, Mixins.colorProps),
+
     data: function data() {
       var props = __vueComponentProps(this);
+
       var state = (function () {
-        return { pages: [] };
+        return {
+          pages: []
+        };
       })();
-      return { state: state };
+
+      return {
+        state: state
+      };
     },
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -8404,20 +8854,20 @@
         ref: 'el',
         style: style,
         class: classes,
-        attrs: { id: id }
-      }, [
-        this.$slots['default'],
-        self.state.pages.map(function (page) {
-          var PageComponent = page.component;
-          {
-            return _h(PageComponent, {
-              key: page.id,
-              props: page.props
-            });
-          }
-        })
-      ]);
+        attrs: {
+          id: id
+        }
+      }, [this.$slots['default'], self.state.pages.map(function (page) {
+        var PageComponent = page.component;
+        {
+          return _h(PageComponent, {
+            key: page.id,
+            props: page.props
+          });
+        }
+      })]);
     },
+
     created: function created() {
       var self = this;
       self.onSwipeBackMoveBound = self.onSwipeBackMove.bind(self);
@@ -8428,6 +8878,7 @@
       self.onTabShowBound = self.onTabShow.bind(self);
       self.onTabHideBound = self.onTabHide.bind(self);
     },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
@@ -8438,10 +8889,11 @@
       el.addEventListener('swipeback:afterreset', self.onSwipeBackAfterResetBound);
       el.addEventListener('tab:show', self.onTabShowBound);
       el.addEventListener('tab:hide', self.onTabHideBound);
-      self.setState({ pages: [] });
+      self.setState({
+        pages: []
+      });
       self.$f7ready(function (f7Instance) {
-        if (!self.props.init)
-          { return; }
+        if (!self.props.init) { return; }
         self.routerData = {
           el: el,
           component: self,
@@ -8452,6 +8904,7 @@
         self.f7View = self.routerData.instance;
       });
     },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
       var el = self.$refs.el;
@@ -8462,67 +8915,75 @@
       el.removeEventListener('swipeback:afterreset', self.onSwipeBackAfterResetBound);
       el.removeEventListener('tab:show', self.onTabShowBound);
       el.removeEventListener('tab:hide', self.onTabHideBound);
-      if (!self.props.init)
-        { return; }
-      if (self.f7View && self.f7View.destroy)
-        { self.f7View.destroy(); }
+      if (!self.props.init) { return; }
+      if (self.f7View && self.f7View.destroy) { self.f7View.destroy(); }
       f7.routers.views.splice(f7.routers.views.indexOf(self.routerData), 1);
       self.routerData = null;
       delete self.routerData;
     },
+
     updated: function updated() {
       var self = this;
-      if (!self.routerData)
-        { return; }
+      if (!self.routerData) { return; }
       eventsEmitter.emit('viewRouterDidUpdate', self.routerData);
     },
+
     methods: {
       onSwipeBackMove: function onSwipeBackMove(event) {
         this.dispatchEvent('swipeback:move swipeBackMove', event, event.detail);
       },
+
       onSwipeBackBeforeChange: function onSwipeBackBeforeChange(event) {
         this.dispatchEvent('swipeback:beforechange swipeBackBeforeChange', event, event.detail);
       },
+
       onSwipeBackAfterChange: function onSwipeBackAfterChange(event) {
         this.dispatchEvent('swipeback:afterchange swipeBackAfterChange', event, event.detail);
       },
+
       onSwipeBackBeforeReset: function onSwipeBackBeforeReset(event) {
         this.dispatchEvent('swipeback:beforereset swipeBackBeforeReset', event, event.detail);
       },
+
       onSwipeBackAfterReset: function onSwipeBackAfterReset(event) {
         this.dispatchEvent('swipeback:afterreset swipeBackAfterReset', event, event.detail);
       },
+
       onTabShow: function onTabShow(e) {
         this.dispatchEvent('tab:show tabShow', e);
       },
+
       onTabHide: function onTabHide(e) {
         this.dispatchEvent('tab:hide tabHide', e);
       },
+
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       },
+
       setState: function setState(updater, callback) {
         __vueComponentSetState(this, updater, callback);
       }
+
     },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
   var f7Views = {
     name: 'f7-views',
-    props: Object.assign({}, {id: [
-        String,
-        Number
-      ],
-      tabs: Boolean},
-      Mixins.colorProps),
+    props: Object.assign({
+      id: [String, Number],
+      tabs: Boolean
+    }, Mixins.colorProps),
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -8531,17 +8992,23 @@
       var id = props.id;
       var style = props.style;
       var tabs = props.tabs;
-      var classes = Utils.classNames(className, 'views', { tabs: tabs }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'views', {
+        tabs: tabs
+      }, Mixins.colorClasses(props));
       return _h('div', {
         style: style,
         class: classes,
-        attrs: { id: id }
+        attrs: {
+          id: id
+        }
       }, [this.$slots['default']]);
     },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
       }
+
     }
   };
 
@@ -8732,7 +9199,7 @@
   };
 
   /**
-   * Framework7 Vue 3.0.0-beta.7
+   * Framework7 Vue 3.0.0-beta.8
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -8740,7 +9207,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: June 9, 2018
+   * Released on: June 11, 2018
    */
 
   var Plugin = {

@@ -6,36 +6,16 @@ import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispat
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
 export default {
   name: 'f7-input',
-  props: {
+  props: Object.assign({
     type: String,
     name: String,
-    value: [
-      String,
-      Number,
-      Array
-    ],
-    defaultValue: [
-      String,
-      Number,
-      Array
-    ],
+    value: [String, Number, Array],
+    defaultValue: [String, Number, Array],
     placeholder: String,
-    id: [
-      String,
-      Number
-    ],
-    inputId: [
-      String,
-      Number
-    ],
-    size: [
-      String,
-      Number
-    ],
-    accept: [
-      String,
-      Number
-    ],
+    id: [String, Number],
+    inputId: [String, Number],
+    size: [String, Number],
+    accept: [String, Number],
     autocomplete: [String],
     autocorrect: [String],
     autocapitalize: [String],
@@ -44,39 +24,18 @@ export default {
     autosave: String,
     checked: Boolean,
     disabled: Boolean,
-    max: [
-      String,
-      Number
-    ],
-    min: [
-      String,
-      Number
-    ],
-    step: [
-      String,
-      Number
-    ],
-    maxlength: [
-      String,
-      Number
-    ],
-    minlength: [
-      String,
-      Number
-    ],
+    max: [String, Number],
+    min: [String, Number],
+    step: [String, Number],
+    maxlength: [String, Number],
+    minlength: [String, Number],
     multiple: Boolean,
     readonly: Boolean,
     required: Boolean,
     inputStyle: String,
     pattern: String,
-    validate: [
-      Boolean,
-      String
-    ],
-    tabindex: [
-      String,
-      Number
-    ],
+    validate: [Boolean, String],
+    tabindex: [String, Number],
     resizable: Boolean,
     clearButton: Boolean,
     noFormStoreData: Boolean,
@@ -87,15 +46,56 @@ export default {
     wrap: {
       type: Boolean,
       default: true
-    },
-    ...Mixins.colorProps
-  },
+    }
+  }, Mixins.colorProps),
+
   render() {
     const _h = this.$createElement;
     const self = this;
     const props = self.props;
-    const {type, name, value, defaultValue, placeholder, id, inputId, size, accept, autocomplete, autocorrect, autocapitalize, spellcheck, autofocus, autosave, checked, disabled, max, min, step, maxlength, minlength, multiple, readonly, required, inputStyle, pattern, validate, tabindex, resizable, clearButton, errorMessage, errorMessageForce, info, wrap, style, className, noStoreData, noFormStoreData} = props;
+    const {
+      type,
+      name,
+      value,
+      defaultValue,
+      placeholder,
+      id,
+      inputId,
+      size,
+      accept,
+      autocomplete,
+      autocorrect,
+      autocapitalize,
+      spellcheck,
+      autofocus,
+      autosave,
+      checked,
+      disabled,
+      max,
+      min,
+      step,
+      maxlength,
+      minlength,
+      multiple,
+      readonly,
+      required,
+      inputStyle,
+      pattern,
+      validate,
+      tabindex,
+      resizable,
+      clearButton,
+      errorMessage,
+      errorMessageForce,
+      info,
+      wrap,
+      style,
+      className,
+      noStoreData,
+      noFormStoreData
+    } = props;
     let inputEl;
+
     const createInput = (tag, children) => {
       const InputTag = tag;
       const needsValue = type !== 'file';
@@ -149,10 +149,12 @@ export default {
       }
       return input;
     };
+
     const {
       default: slotsDefault,
       info: slotsInfo
     } = self.$slots;
+
     if (type === 'select' || type === 'textarea' || type === 'file') {
       if (type === 'select') {
         inputEl = createInput('select', slotsDefault);
@@ -165,7 +167,9 @@ export default {
       inputEl = slotsDefault;
     } else if (type === 'toggle') {
       inputEl = _h(F7Toggle, {
-        on: { change: self.onChangeBound },
+        on: {
+          change: self.onChangeBound
+        },
         attrs: {
           checked: checked,
           readonly: readonly,
@@ -177,7 +181,9 @@ export default {
       });
     } else if (type === 'range') {
       inputEl = _h(F7Range, {
-        on: { rangeChange: self.onChangeBound },
+        on: {
+          rangeChange: self.onChangeBound
+        },
         attrs: {
           value: value,
           disabled: disabled,
@@ -192,36 +198,40 @@ export default {
     } else {
       inputEl = createInput('input');
     }
+
     if (wrap) {
       const wrapClasses = Utils.classNames(className, 'item-input-wrap', Mixins.colorClasses(props));
       return _h('div', {
         ref: 'wrapEl',
         class: wrapClasses,
         style: style,
-        attrs: { id: id }
-      }, [
-        inputEl,
-        errorMessage && errorMessageForce && _h('div', { class: 'item-input-error-message' }, [errorMessage]),
-        clearButton && _h('span', { class: 'input-clear-button' }),
-        (info || slotsInfo && slotsInfo.length) && _h('div', { class: 'item-input-info' }, [
-          info,
-          this.$slots['info']
-        ])
-      ]);
+        attrs: {
+          id: id
+        }
+      }, [inputEl, errorMessage && errorMessageForce && _h('div', {
+        class: 'item-input-error-message'
+      }, [errorMessage]), clearButton && _h('span', {
+        class: 'input-clear-button'
+      }), (info || slotsInfo && slotsInfo.length) && _h('div', {
+        class: 'item-input-info'
+      }, [info, this.$slots['info']])]);
     }
+
     return inputEl;
   },
+
   watch: {
     'props.value': function watchValue() {
       const self = this;
-      const {type} = self.props;
-      if (type === 'range' || type === 'toggle')
-        return;
-      if (!self.$f7)
-        return;
+      const {
+        type
+      } = self.props;
+      if (type === 'range' || type === 'toggle') return;
+      if (!self.$f7) return;
       self.updateInputOnDidUpdate = true;
     }
   },
+
   created() {
     const self = this;
     self.onFocusBound = self.onFocus.bind(self);
@@ -233,103 +243,135 @@ export default {
     self.onInputEmptyBound = self.onInputEmpty.bind(self);
     self.onInputClearBound = self.onInputClear.bind(self);
   },
+
   mounted() {
     const self = this;
     self.$f7ready(f7 => {
-      const {validate, resizable, type, clearButton, value, defaultValue} = self.props;
-      if (type === 'range' || type === 'toggle')
-        return;
+      const {
+        validate,
+        resizable,
+        type,
+        clearButton,
+        value,
+        defaultValue
+      } = self.props;
+      if (type === 'range' || type === 'toggle') return;
       const inputEl = self.$refs.inputEl;
-      if (!inputEl)
-        return;
+      if (!inputEl) return;
       inputEl.addEventListener('input:notempty', self.onInputNotEmptyBound, false);
+
       if (type === 'textarea' && resizable) {
         inputEl.addEventListener('textarea:resze', self.onTextareaResizeBound, false);
       }
+
       if (clearButton) {
         inputEl.addEventListener('input:empty', self.onInputEmptyBound, false);
         inputEl.addEventListener('input:clear', self.onInputClearBound, false);
       }
+
       f7.input.checkEmptyState(inputEl);
+
       if (validate && (typeof value !== 'undefined' || typeof defaultValue !== 'undefined')) {
         setTimeout(() => {
           f7.input.validate(inputEl);
         }, 0);
       }
+
       if (resizable) {
         f7.input.resizeTextarea(inputEl);
       }
     });
   },
+
   updated() {
     const self = this;
-    const {validate, resizable} = self.props;
+    const {
+      validate,
+      resizable
+    } = self.props;
     const f7 = self.$f7;
-    if (!f7)
-      return;
+    if (!f7) return;
+
     if (self.updateInputOnDidUpdate) {
       const inputEl = self.$refs.inputEl;
-      if (!inputEl)
-        return;
+      if (!inputEl) return;
       self.updateInputOnDidUpdate = false;
       f7.input.checkEmptyState(inputEl);
+
       if (validate) {
         f7.input.validate(inputEl);
       }
+
       if (resizable) {
         f7.input.resizeTextarea(inputEl);
       }
     }
   },
+
   beforeDestroy() {
     const self = this;
-    const {type, resizable, clearButton} = self.props;
-    if (type === 'range' || type === 'toggle')
-      return;
+    const {
+      type,
+      resizable,
+      clearButton
+    } = self.props;
+    if (type === 'range' || type === 'toggle') return;
     const inputEl = self.$refs.inputEl;
-    if (!inputEl)
-      return;
+    if (!inputEl) return;
     inputEl.removeEventListener('input:notempty', self.onInputNotEmptyBound, false);
+
     if (type === 'textarea' && resizable) {
       inputEl.removeEventListener('textarea:resze', self.onTextareaResizeBound, false);
     }
+
     if (clearButton) {
       inputEl.removeEventListener('input:empty', self.onInputEmptyBound, false);
       inputEl.removeEventListener('input:clear', self.onInputClearBound, false);
     }
   },
+
   methods: {
     onTextareaResize(event) {
       this.dispatchEvent('textarea:resize textareaResize', event);
     },
+
     onInputNotEmpty(event) {
       this.dispatchEvent('input:notempty inputNotEmpty', event);
     },
+
     onInputEmpty(event) {
       this.dispatchEvent('input:empty inputEmpty', event);
     },
+
     onInputClear(event) {
       this.dispatchEvent('input:clear inputClear', event);
     },
+
     onInput(event) {
       this.dispatchEvent('input', event);
     },
+
     onFocus(event) {
       this.dispatchEvent('focus', event);
     },
+
     onBlur(event) {
       this.dispatchEvent('blur', event);
     },
+
     onChange(event) {
       this.dispatchEvent('change', event);
     },
+
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
     }
+
   },
   computed: {
     props() {
       return __vueComponentProps(this);
     }
+
   }
 };

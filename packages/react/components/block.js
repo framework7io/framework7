@@ -5,20 +5,38 @@ import __reactComponentEl from '../runtime-helpers/react-component-el.js';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
+
 class F7Block extends React.Component {
   constructor(props, context) {
     super(props, context);
   }
+
   onTabShow(e) {
     this.dispatchEvent('tabShow tab:show', e);
   }
+
   onTabHide(e) {
     this.dispatchEvent('tabShow tab:hide', e);
   }
+
   render() {
     const self = this;
     const props = self.props;
-    const {className, inset, strong, accordionList, tabletInset, tabs, tab, tabActive, noHairlines, noHairlinesIos, noHairlinesMd, id, style} = props;
+    const {
+      className,
+      inset,
+      strong,
+      accordionList,
+      tabletInset,
+      tabs,
+      tab,
+      tabActive,
+      noHairlines,
+      noHairlinesIos,
+      noHairlinesMd,
+      id,
+      style
+    } = props;
     const classes = Utils.classNames(className, 'block', {
       inset,
       'block-strong': strong,
@@ -37,37 +55,39 @@ class F7Block extends React.Component {
       className: classes
     }, this.slots['default']);
   }
+
   componentWillUnmount() {
     const el = this.el;
-    if (!el)
-      return;
+    if (!el) return;
     el.removeEventListener('tab:show', this.onTabShowBound);
     el.removeEventListener('tab:hide', this.onTabHideBound);
   }
+
   componentDidMount() {
     const el = this.el;
-    if (!el)
-      return;
+    if (!el) return;
     this.onTabShowBound = this.onTabShow.bind(this);
     this.onTabHideBound = this.onTabHide.bind(this);
     el.addEventListener('tab:show', this.onTabShowBound);
     el.addEventListener('tab:hide', this.onTabHideBound);
   }
+
   get slots() {
     return __reactComponentSlots(this.props);
   }
+
   get el() {
     return __reactComponentEl(this);
   }
+
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
+
 }
-__reactComponentSetProps(F7Block, {
-  id: [
-    String,
-    Number
-  ],
+
+__reactComponentSetProps(F7Block, Object.assign({
+  id: [String, Number],
   inset: Boolean,
   tabletInset: Boolean,
   strong: Boolean,
@@ -77,7 +97,7 @@ __reactComponentSetProps(F7Block, {
   accordionList: Boolean,
   noHairlines: Boolean,
   noHairlinesMd: Boolean,
-  noHairlinesIos: Boolean,
-  ...Mixins.colorProps
-});
+  noHairlinesIos: Boolean
+}, Mixins.colorProps));
+
 export default F7Block;

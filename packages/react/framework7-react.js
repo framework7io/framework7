@@ -1,5 +1,5 @@
 /**
- * Framework7 React 3.0.0-beta.7
+ * Framework7 React 3.0.0-beta.8
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 9, 2018
+ * Released on: June 11, 2018
  */
 
 (function (global, factory) {
@@ -558,6 +558,7 @@
     F7AccordionContent.prototype.constructor = F7AccordionContent;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7AccordionContent.prototype.render = function render () {
       var props = this.props;
       var className = props.className;
@@ -570,6 +571,7 @@
         className: classes
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -578,11 +580,10 @@
 
     return F7AccordionContent;
   }(React.Component));
-  __reactComponentSetProps(F7AccordionContent, Object.assign({}, {id: [
-      String,
-      Number
-    ]},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7AccordionContent, Object.assign({
+    id: [String, Number]
+  }, Mixins.colorProps));
 
   function __reactComponentEl (component) {
     var self = component;
@@ -631,46 +632,53 @@
     F7AccordionItem.prototype.constructor = F7AccordionItem;
 
     var prototypeAccessors = { slots: { configurable: true },el: { configurable: true } };
+
     F7AccordionItem.prototype.onOpen = function onOpen (event) {
       this.dispatchEvent('accordionOpen accordion:open', event);
     };
+
     F7AccordionItem.prototype.onOpened = function onOpened (event) {
       this.dispatchEvent('accordionOpened accordion:opened', event);
     };
+
     F7AccordionItem.prototype.onClose = function onClose (event) {
       this.dispatchEvent('accordionClose accordion:close', event);
     };
+
     F7AccordionItem.prototype.onClosed = function onClosed (event) {
       this.dispatchEvent('accordionClosed accordion:closed', event);
     };
+
     F7AccordionItem.prototype.render = function render () {
       var props = this.props;
       var className = props.className;
       var id = props.id;
       var style = props.style;
       var opened = props.opened;
-      var classes = Utils.classNames(className, 'accordion-item', { 'accordion-item-opened': opened }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'accordion-item', {
+        'accordion-item-opened': opened
+      }, Mixins.colorClasses(props));
       return React.createElement('div', {
         id: id,
         style: style,
         className: classes
       }, this.slots['default']);
     };
+
     F7AccordionItem.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
       var el = self.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       el.removeEventListener('accordion:open', self.onOpenBound);
       el.removeEventListener('accordion:opened', self.onOpenedBound);
       el.removeEventListener('accordion:close', self.onCloseBound);
       el.removeEventListener('accordion:closed', self.onClosedBound);
     };
+
     F7AccordionItem.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var el = self.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       self.onOpenBound = self.onOpen.bind(self);
       self.onOpenedBound = self.onOpened.bind(self);
       self.onCloseBound = self.onClose.bind(self);
@@ -680,12 +688,15 @@
       el.addEventListener('accordion:close', self.onCloseBound);
       el.addEventListener('accordion:closed', self.onClosedBound);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     prototypeAccessors.el.get = function () {
       return __reactComponentEl(this);
     };
+
     F7AccordionItem.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
@@ -697,12 +708,11 @@
 
     return F7AccordionItem;
   }(React.Component));
-  __reactComponentSetProps(F7AccordionItem, Object.assign({}, {id: [
-      String,
-      Number
-    ],
-    opened: Boolean},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7AccordionItem, Object.assign({
+    id: [String, Number],
+    opened: Boolean
+  }, Mixins.colorProps));
 
   var F7AccordionToggle = (function (superclass) {
     function F7AccordionToggle(props, context) {
@@ -714,6 +724,7 @@
     F7AccordionToggle.prototype.constructor = F7AccordionToggle;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7AccordionToggle.prototype.render = function render () {
       var props = this.props;
       var className = props.className;
@@ -726,6 +737,7 @@
         className: classes
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -734,11 +746,10 @@
 
     return F7AccordionToggle;
   }(React.Component));
-  __reactComponentSetProps(F7AccordionToggle, Object.assign({}, {id: [
-      String,
-      Number
-    ]},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7AccordionToggle, Object.assign({
+    id: [String, Number]
+  }, Mixins.colorProps));
 
   var F7Accordion = (function (superclass) {
     function F7Accordion(props, context) {
@@ -750,6 +761,7 @@
     F7Accordion.prototype.constructor = F7Accordion;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7Accordion.prototype.render = function render () {
       var props = this.props;
       var className = props.className;
@@ -762,6 +774,7 @@
         className: classes
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -770,11 +783,10 @@
 
     return F7Accordion;
   }(React.Component));
-  __reactComponentSetProps(F7Accordion, Object.assign({}, {id: [
-      String,
-      Number
-    ]},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7Accordion, Object.assign({
+    id: [String, Number]
+  }, Mixins.colorProps));
 
   var F7ActionsButton = (function (superclass) {
     function F7ActionsButton(props, context) {
@@ -787,15 +799,19 @@
     F7ActionsButton.prototype.constructor = F7ActionsButton;
 
     var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+
     F7ActionsButton.prototype.onClick = function onClick (event) {
       var self = this;
       var $$ = self.$$;
       var el = self.refs.el;
+
       if (self.props.close && self.$f7 && el) {
         self.$f7.actions.close($$(el).parents('.actions-modal'));
       }
+
       self.dispatchEvent('click', event);
     };
+
     F7ActionsButton.prototype.render = function render () {
       var this$1 = this;
 
@@ -806,9 +822,13 @@
       var style = props.style;
       var bold = props.bold;
       var mediaEl;
+
       if (self.slots.media && self.slots.media.length) {
-        mediaEl = React.createElement('div', { className: 'actions-button-media' }, this.slots['media']);
+        mediaEl = React.createElement('div', {
+          className: 'actions-button-media'
+        }, this.slots['media']);
       }
+
       var classes = Utils.classNames(className, {
         'actions-button': true,
         'actions-button-bold': bold
@@ -821,37 +841,41 @@
         ref: function (__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         }
-      }, mediaEl, React.createElement('div', { className: 'actions-button-text' }, this.slots['default']));
+      }, mediaEl, React.createElement('div', {
+        className: 'actions-button-text'
+      }, this.slots['default']));
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7ActionsButton.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
 
     Object.defineProperties( F7ActionsButton.prototype, prototypeAccessors );
 
     return F7ActionsButton;
   }(React.Component));
-  __reactComponentSetProps(F7ActionsButton, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7ActionsButton, Object.assign({
+    id: [String, Number],
     bold: Boolean,
     close: {
       type: Boolean,
       default: true
-    }},
-    Mixins.colorProps));
+    }
+  }, Mixins.colorProps));
 
   var F7ActionsGroup = (function (superclass) {
     function F7ActionsGroup(props, context) {
@@ -863,6 +887,7 @@
     F7ActionsGroup.prototype.constructor = F7ActionsGroup;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7ActionsGroup.prototype.render = function render () {
       var self = this;
       var props = self.props;
@@ -876,6 +901,7 @@
         className: classes
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -884,11 +910,10 @@
 
     return F7ActionsGroup;
   }(React.Component));
-  __reactComponentSetProps(F7ActionsGroup, Object.assign({}, {id: [
-      String,
-      Number
-    ]},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7ActionsGroup, Object.assign({
+    id: [String, Number]
+  }, Mixins.colorProps));
 
   var F7ActionsLabel = (function (superclass) {
     function F7ActionsLabel(props, context) {
@@ -900,9 +925,11 @@
     F7ActionsLabel.prototype.constructor = F7ActionsLabel;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7ActionsLabel.prototype.onClick = function onClick (event) {
       this.dispatchEvent('click', event);
     };
+
     F7ActionsLabel.prototype.render = function render () {
       var self = this;
       var props = self.props;
@@ -910,7 +937,9 @@
       var id = props.id;
       var style = props.style;
       var bold = props.bold;
-      var classes = Utils.classNames(className, 'actions-label', { 'actions-button-bold': bold }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'actions-label', {
+        'actions-button-bold': bold
+      }, Mixins.colorClasses(props));
       return React.createElement('div', {
         id: id,
         style: style,
@@ -918,9 +947,11 @@
         onClick: self.onClick.bind(self)
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7ActionsLabel.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
@@ -932,12 +963,11 @@
 
     return F7ActionsLabel;
   }(React.Component));
-  __reactComponentSetProps(F7ActionsLabel, Object.assign({}, {id: [
-      String,
-      Number
-    ],
-    bold: Boolean},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7ActionsLabel, Object.assign({
+    id: [String, Number],
+    bold: Boolean
+  }, Mixins.colorProps));
 
   function __reactComponentWatch (component, watchFor, prevProps, prevState, callback) {
     if (!callback) { return; }
@@ -978,30 +1008,35 @@
     F7Actions.prototype.constructor = F7Actions;
 
     var prototypeAccessors = { slots: { configurable: true },el: { configurable: true },refs: { configurable: true } };
+
     F7Actions.prototype.onOpen = function onOpen (event) {
       this.dispatchEvent('actions:open actionsOpen', event);
     };
+
     F7Actions.prototype.onOpened = function onOpened (event) {
       this.dispatchEvent('actions:opened actionsOpened', event);
     };
+
     F7Actions.prototype.onClose = function onClose (event) {
       this.dispatchEvent('actions:close actionsClose', event);
     };
+
     F7Actions.prototype.onClosed = function onClosed (event) {
       this.dispatchEvent('actions:closed actionsClosed', event);
     };
+
     F7Actions.prototype.open = function open (animate) {
       var self = this;
-      if (!self.$f7)
-        { return undefined; }
+      if (!self.$f7) { return undefined; }
       return self.$f7.actions.open(self.refs.el, animate);
     };
+
     F7Actions.prototype.close = function close (animate) {
       var self = this;
-      if (!self.$f7)
-        { return undefined; }
+      if (!self.$f7) { return undefined; }
       return self.$f7.actions.close(self.refs.el, animate);
     };
+
     F7Actions.prototype.render = function render () {
       var this$1 = this;
 
@@ -1011,7 +1046,9 @@
       var id = props.id;
       var style = props.style;
       var grid = props.grid;
-      var classes = Utils.classNames(className, 'actions-modal', { 'actions-grid': grid }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'actions-modal', {
+        'actions-grid': grid
+      }, Mixins.colorClasses(props));
       return React.createElement('div', {
         id: id,
         style: style,
@@ -1021,23 +1058,22 @@
         className: classes
       }, this.slots['default']);
     };
+
     F7Actions.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
-      if (self.f7Actions)
-        { self.f7Actions.destroy(); }
+      if (self.f7Actions) { self.f7Actions.destroy(); }
       var el = self.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       el.removeEventListener('actions:open', self.onOpenBound);
       el.removeEventListener('actions:opened', self.onOpenedBound);
       el.removeEventListener('actions:close', self.onCloseBound);
       el.removeEventListener('actions:closed', self.onClosedBound);
     };
+
     F7Actions.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var el = self.refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       var props = self.props;
       var grid = props.grid;
       var target = props.target;
@@ -1057,42 +1093,45 @@
           el: self.refs.el,
           grid: grid
         };
-        if (target)
-          { actionsParams.targetEl = target; }
-        if ('convertToPopover' in props)
-          { actionsParams.convertToPopover = convertToPopover; }
-        if ('forceToPopover' in props)
-          { actionsParams.forceToPopover = forceToPopover; }
+        if (target) { actionsParams.targetEl = target; }
+        if ('convertToPopover' in props) { actionsParams.convertToPopover = convertToPopover; }
+        if ('forceToPopover' in props) { actionsParams.forceToPopover = forceToPopover; }
         self.f7Actions = self.$f7.actions.create(actionsParams);
+
         if (opened) {
           self.f7Actions.open(false);
         }
       });
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     prototypeAccessors.el.get = function () {
       return __reactComponentEl(this);
     };
+
     F7Actions.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
+
     F7Actions.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.opened', prevProps, prevState, function (opened) {
         var self = this$1;
-        if (!self.f7Actions)
-          { return; }
+        if (!self.f7Actions) { return; }
+
         if (opened) {
           self.f7Actions.open();
         } else {
@@ -1105,19 +1144,15 @@
 
     return F7Actions;
   }(React.Component));
-  __reactComponentSetProps(F7Actions, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Actions, Object.assign({
+    id: [String, Number],
     opened: Boolean,
     grid: Boolean,
     convertToPopover: Boolean,
     forceToPopover: Boolean,
-    target: [
-      String,
-      Object
-    ]},
-    Mixins.colorProps));
+    target: [String, Object]
+  }, Mixins.colorProps));
 
   var eventsEmitter = {
     listeners: {},
@@ -1202,8 +1237,11 @@
     function F7RoutableModals(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
+
       this.state = (function () {
-        return { modals: [] };
+        return {
+          modals: []
+        };
       })();
     }
 
@@ -1212,6 +1250,7 @@
     F7RoutableModals.prototype.constructor = F7RoutableModals;
 
     var prototypeAccessors = { refs: { configurable: true } };
+
     F7RoutableModals.prototype.render = function render () {
       var this$1 = this;
 
@@ -1223,40 +1262,45 @@
       }, this.state.modals.map(function (modal) {
         var ModalComponent = modal.component;
         {
-          return React.createElement(ModalComponent, Object.assign({}, {key: modal.id},
-            modal.props));
+          return React.createElement(ModalComponent, Object.assign({
+            key: modal.id
+          }, modal.props));
         }
       }));
     };
+
     F7RoutableModals.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var el = self.refs.el;
-      self.setState({ modals: [] });
+      self.setState({
+        modals: []
+      });
       self.routerData = {
         el: el,
         component: self
       };
       f7.routers.modals = self.routerData;
     };
+
     F7RoutableModals.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
-      if (!self.routerData)
-        { return; }
+      if (!self.routerData) { return; }
       f7.routers.modals = null;
       self.routerData = null;
       delete self.routerData;
     };
+
     F7RoutableModals.prototype.componentDidUpdate = function componentDidUpdate () {
       var self = this;
-      if (!self.routerData)
-        { return; }
+      if (!self.routerData) { return; }
       eventsEmitter.emit('modalsRouterDidUpdate', self.routerData);
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
 
     Object.defineProperties( F7RoutableModals.prototype, prototypeAccessors );
 
@@ -1267,8 +1311,11 @@
     function F7App(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
+
       this.state = (function () {
-        return { modals: [] };
+        return {
+          modals: []
+        };
       })();
     }
 
@@ -1277,6 +1324,7 @@
     F7App.prototype.constructor = F7App;
 
     var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+
     F7App.prototype.render = function render () {
       var this$1 = this;
 
@@ -1295,6 +1343,7 @@
         className: classes
       }, this.slots['default'], React.createElement(F7RoutableModals, null));
     };
+
     F7App.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var ref = self.props;
@@ -1302,31 +1351,34 @@
       var routes = ref.routes;
       var el = self.refs.el;
       var parentEl = el.parentNode;
+
       if (parentEl && parentEl !== document.body && parentEl.parentNode === document.body) {
         parentEl.style.height = '100%';
       }
+
       f7.init(el, params, routes);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
 
     Object.defineProperties( F7App.prototype, prototypeAccessors );
 
     return F7App;
   }(React.Component));
-  __reactComponentSetProps(F7App, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7App, Object.assign({
+    id: [String, Number],
     params: Object,
-    routes: Array},
-    Mixins.colorProps));
+    routes: Array
+  }, Mixins.colorProps));
 
   var F7Badge = (function (superclass) {
     function F7Badge(props, context) {
@@ -1338,6 +1390,7 @@
     F7Badge.prototype.constructor = F7Badge;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7Badge.prototype.render = function render () {
       var props = this.props;
       var className = props.className;
@@ -1350,6 +1403,7 @@
         className: classes
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -1358,11 +1412,10 @@
 
     return F7Badge;
   }(React.Component));
-  __reactComponentSetProps(F7Badge, Object.assign({}, {id: [
-      String,
-      Number
-    ]},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7Badge, Object.assign({
+    id: [String, Number]
+  }, Mixins.colorProps));
 
   var F7BlockFooter = (function (superclass) {
     function F7BlockFooter(props, context) {
@@ -1374,6 +1427,7 @@
     F7BlockFooter.prototype.constructor = F7BlockFooter;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7BlockFooter.prototype.render = function render () {
       var props = this.props;
       var className = props.className;
@@ -1386,6 +1440,7 @@
         className: classes
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -1394,11 +1449,10 @@
 
     return F7BlockFooter;
   }(React.Component));
-  __reactComponentSetProps(F7BlockFooter, Object.assign({}, {id: [
-      String,
-      Number
-    ]},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7BlockFooter, Object.assign({
+    id: [String, Number]
+  }, Mixins.colorProps));
 
   var F7BlockHeader = (function (superclass) {
     function F7BlockHeader(props, context) {
@@ -1410,6 +1464,7 @@
     F7BlockHeader.prototype.constructor = F7BlockHeader;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7BlockHeader.prototype.render = function render () {
       var props = this.props;
       var className = props.className;
@@ -1422,6 +1477,7 @@
         className: classes
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -1430,11 +1486,10 @@
 
     return F7BlockHeader;
   }(React.Component));
-  __reactComponentSetProps(F7BlockHeader, Object.assign({}, {id: [
-      String,
-      Number
-    ]},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7BlockHeader, Object.assign({
+    id: [String, Number]
+  }, Mixins.colorProps));
 
   var F7BlockTitle = (function (superclass) {
     function F7BlockTitle(props, context) {
@@ -1446,6 +1501,7 @@
     F7BlockTitle.prototype.constructor = F7BlockTitle;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7BlockTitle.prototype.render = function render () {
       var props = this.props;
       var className = props.className;
@@ -1458,6 +1514,7 @@
         className: classes
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -1466,11 +1523,10 @@
 
     return F7BlockTitle;
   }(React.Component));
-  __reactComponentSetProps(F7BlockTitle, Object.assign({}, {id: [
-      String,
-      Number
-    ]},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7BlockTitle, Object.assign({
+    id: [String, Number]
+  }, Mixins.colorProps));
 
   var F7Block = (function (superclass) {
     function F7Block(props, context) {
@@ -1482,12 +1538,15 @@
     F7Block.prototype.constructor = F7Block;
 
     var prototypeAccessors = { slots: { configurable: true },el: { configurable: true } };
+
     F7Block.prototype.onTabShow = function onTabShow (e) {
       this.dispatchEvent('tabShow tab:show', e);
     };
+
     F7Block.prototype.onTabHide = function onTabHide (e) {
       this.dispatchEvent('tabShow tab:hide', e);
     };
+
     F7Block.prototype.render = function render () {
       var self = this;
       var props = self.props;
@@ -1522,28 +1581,31 @@
         className: classes
       }, this.slots['default']);
     };
+
     F7Block.prototype.componentWillUnmount = function componentWillUnmount () {
       var el = this.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       el.removeEventListener('tab:show', this.onTabShowBound);
       el.removeEventListener('tab:hide', this.onTabHideBound);
     };
+
     F7Block.prototype.componentDidMount = function componentDidMount () {
       var el = this.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       this.onTabShowBound = this.onTabShow.bind(this);
       this.onTabHideBound = this.onTabHide.bind(this);
       el.addEventListener('tab:show', this.onTabShowBound);
       el.addEventListener('tab:hide', this.onTabHideBound);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     prototypeAccessors.el.get = function () {
       return __reactComponentEl(this);
     };
+
     F7Block.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
@@ -1555,10 +1617,9 @@
 
     return F7Block;
   }(React.Component));
-  __reactComponentSetProps(F7Block, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Block, Object.assign({
+    id: [String, Number],
     inset: Boolean,
     tabletInset: Boolean,
     strong: Boolean,
@@ -1568,8 +1629,8 @@
     accordionList: Boolean,
     noHairlines: Boolean,
     noHairlinesMd: Boolean,
-    noHairlinesIos: Boolean},
-    Mixins.colorProps));
+    noHairlinesIos: Boolean
+  }, Mixins.colorProps));
 
   var F7Icon = (function (superclass) {
     function F7Icon(props, context) {
@@ -1581,14 +1642,18 @@
     F7Icon.prototype.constructor = F7Icon;
 
     var prototypeAccessors = { sizeComputed: { configurable: true },iconTextComputed: { configurable: true },classes: { configurable: true },slots: { configurable: true } };
+
     prototypeAccessors.sizeComputed.get = function () {
       var self = this;
       var size = self.props.size;
+
       if (typeof size === 'number' || parseFloat(size) === size * 1) {
         size = size + "px";
       }
+
       return size;
     };
+
     prototypeAccessors.iconTextComputed.get = function () {
       var self = this;
       var ref = self.props;
@@ -1601,15 +1666,20 @@
       var text = material || f7;
       var mdIcon = ifMd || md;
       var iosIcon = ifIos || ios;
+
       if (mdIcon && self.$theme.md && (mdIcon.indexOf('material:') >= 0 || mdIcon.indexOf('f7:') >= 0)) {
         text = mdIcon.split(':')[1];
       } else if (iosIcon && self.$theme.ios && (iosIcon.indexOf('material:') >= 0 || iosIcon.indexOf('f7:') >= 0)) {
         text = iosIcon.split(':')[1];
       }
+
       return text;
     };
+
     prototypeAccessors.classes.get = function () {
-      var classes = { icon: true };
+      var classes = {
+        icon: true
+      };
       var self = this;
       var props = self.props;
       var ifMd = props.ifMd;
@@ -1624,18 +1694,22 @@
       var className = props.className;
       var mdIcon = ifMd || md;
       var iosIcon = ifIos || ios;
+
       if (mdIcon || iosIcon) {
         var parts = (self.$theme.md ? mdIcon : iosIcon).split(':');
         var prop = parts[0];
         var value = parts[1];
+
         if (prop === 'material' || prop === 'fa' || prop === 'f7') {
           classes.fa = prop === 'fa';
           classes['material-icons'] = prop === 'material';
           classes['f7-icons'] = prop === 'f7';
         }
+
         if (prop === 'fa' || prop === 'ion') {
           classes[(prop + "-" + value)] = true;
         }
+
         if (prop === 'icon') {
           classes[value] = true;
         }
@@ -1646,15 +1720,14 @@
           'f7-icons': f7,
           fa: fa
         };
-        if (ion)
-          { classes[("ion-" + ion)] = true; }
-        if (fa)
-          { classes[("fa-" + fa)] = true; }
-        if (icon)
-          { classes[icon] = true; }
+        if (ion) { classes[("ion-" + ion)] = true; }
+        if (fa) { classes[("fa-" + fa)] = true; }
+        if (icon) { classes[icon] = true; }
       }
+
       return Utils.classNames(className, classes, Mixins.colorClasses(props));
     };
+
     F7Icon.prototype.render = function render () {
       var self = this;
       var props = self.props;
@@ -1662,10 +1735,13 @@
       var style = props.style;
       return React.createElement('i', {
         id: id,
-        style: Utils.extend({ fontSize: self.sizeComputed }, style),
+        style: Utils.extend({
+          fontSize: self.sizeComputed
+        }, style),
         className: self.classes
       }, self.iconTextComputed, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -1674,10 +1750,9 @@
 
     return F7Icon;
   }(React.Component));
-  __reactComponentSetProps(F7Icon, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Icon, Object.assign({
+    id: [String, Number],
     material: String,
     f7: String,
     ion: String,
@@ -1687,11 +1762,8 @@
     ifIos: String,
     ios: String,
     md: String,
-    size: [
-      String,
-      Number
-    ]},
-    Mixins.colorProps));
+    size: [String, Number]
+  }, Mixins.colorProps));
 
   var F7Button = (function (superclass) {
     function F7Button(props, context) {
@@ -1703,9 +1775,11 @@
     F7Button.prototype.constructor = F7Button;
 
     var prototypeAccessors = { attrs: { configurable: true },classes: { configurable: true },slots: { configurable: true } };
+
     F7Button.prototype.onClick = function onClick (event) {
       this.dispatchEvent('click', event);
     };
+
     prototypeAccessors.attrs.get = function () {
       var self = this;
       var props = self.props;
@@ -1713,16 +1787,15 @@
       var target = props.target;
       var tabLink = props.tabLink;
       var hrefComputed = href;
-      if (href === true)
-        { hrefComputed = '#'; }
-      if (href === false)
-        { hrefComputed = undefined; }
+      if (href === true) { hrefComputed = '#'; }
+      if (href === false) { hrefComputed = undefined; }
       return Utils.extend({
         href: hrefComputed,
         target: target,
         'data-tab': Utils.isStringProp(tabLink) && tabLink || undefined
       }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
     };
+
     prototypeAccessors.classes.get = function () {
       var self = this;
       var props = self.props;
@@ -1769,6 +1842,7 @@
         disabled: disabled
       }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
     };
+
     F7Button.prototype.render = function render () {
       var self = this;
       var iconEl;
@@ -1788,11 +1862,14 @@
       var iconSize = props.iconSize;
       var id = props.id;
       var style = props.style;
+
       if (text) {
         textEl = React.createElement('span', null, text);
       }
+
       var mdThemeIcon = iconIfMd || iconMd;
       var iosThemeIcon = iconIfIos || iconIos;
+
       if (icon || iconMaterial || iconIon || iconFa || iconF7 || mdThemeIcon || iosThemeIcon) {
         iconEl = React.createElement(F7Icon, {
           material: iconMaterial,
@@ -1806,15 +1883,19 @@
           size: iconSize
         });
       }
-      return React.createElement('a', Object.assign({}, {id: id,
+
+      return React.createElement('a', Object.assign({
+        id: id,
         style: style,
         className: self.classes,
-        onClick: self.onClick.bind(self)},
-        self.attrs), iconEl, textEl, this.slots['default']);
+        onClick: self.onClick.bind(self)
+      }, self.attrs), iconEl, textEl, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7Button.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
@@ -1826,23 +1907,16 @@
 
     return F7Button;
   }(React.Component));
-  __reactComponentSetProps(F7Button, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Button, Object.assign({
+    id: [String, Number],
     noFastclick: Boolean,
     noFastClick: Boolean,
     text: String,
-    tabLink: [
-      Boolean,
-      String
-    ],
+    tabLink: [Boolean, String],
     tabLinkActive: Boolean,
     href: {
-      type: [
-        String,
-        Boolean
-      ],
+      type: [String, Boolean],
       default: '#'
     },
     round: Boolean,
@@ -1860,11 +1934,8 @@
     raised: Boolean,
     outline: Boolean,
     active: Boolean,
-    disabled: Boolean},
-    Mixins.colorProps,
-    Mixins.linkIconProps,
-    Mixins.linkRouterProps,
-    Mixins.linkActionsProps));
+    disabled: Boolean
+  }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
 
   var F7CardContent = (function (superclass) {
     function F7CardContent(props, context) {
@@ -1876,19 +1947,23 @@
     F7CardContent.prototype.constructor = F7CardContent;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7CardContent.prototype.render = function render () {
       var props = this.props;
       var id = props.id;
       var className = props.className;
       var style = props.style;
       var padding = props.padding;
-      var classes = Utils.classNames(className, 'card-content', { 'card-content-padding': padding }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'card-content', {
+        'card-content-padding': padding
+      }, Mixins.colorClasses(props));
       return React.createElement('div', {
         id: id,
         style: style,
         className: classes
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -1897,15 +1972,14 @@
 
     return F7CardContent;
   }(React.Component));
-  __reactComponentSetProps(F7CardContent, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7CardContent, Object.assign({
+    id: [String, Number],
     padding: {
       type: Boolean,
       default: true
-    }},
-    Mixins.colorProps));
+    }
+  }, Mixins.colorProps));
 
   var F7CardFooter = (function (superclass) {
     function F7CardFooter(props, context) {
@@ -1917,6 +1991,7 @@
     F7CardFooter.prototype.constructor = F7CardFooter;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7CardFooter.prototype.render = function render () {
       var props = this.props;
       var className = props.className;
@@ -1929,6 +2004,7 @@
         className: classes
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -1937,11 +2013,10 @@
 
     return F7CardFooter;
   }(React.Component));
-  __reactComponentSetProps(F7CardFooter, Object.assign({}, {id: [
-      String,
-      Number
-    ]},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7CardFooter, Object.assign({
+    id: [String, Number]
+  }, Mixins.colorProps));
 
   var F7CardHeader = (function (superclass) {
     function F7CardHeader(props, context) {
@@ -1953,6 +2028,7 @@
     F7CardHeader.prototype.constructor = F7CardHeader;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7CardHeader.prototype.render = function render () {
       var props = this.props;
       var className = props.className;
@@ -1965,6 +2041,7 @@
         className: classes
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -1973,11 +2050,10 @@
 
     return F7CardHeader;
   }(React.Component));
-  __reactComponentSetProps(F7CardHeader, Object.assign({}, {id: [
-      String,
-      Number
-    ]},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7CardHeader, Object.assign({
+    id: [String, Number]
+  }, Mixins.colorProps));
 
   var F7Card = (function (superclass) {
     function F7Card(props, context) {
@@ -1989,6 +2065,7 @@
     F7Card.prototype.constructor = F7Card;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7Card.prototype.render = function render () {
       var self = this;
       var props = self.props;
@@ -2003,22 +2080,31 @@
       var headerEl;
       var contentEl;
       var footerEl;
-      var classes = Utils.classNames(className, 'card', { 'card-outline': outline }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'card', {
+        'card-outline': outline
+      }, Mixins.colorClasses(props));
+
       if (title || self.slots && self.slots.header) {
         headerEl = React.createElement(F7CardHeader, null, title, this.slots['header']);
       }
+
       if (content || self.slots && self.slots.content) {
-        contentEl = React.createElement(F7CardContent, { padding: padding }, content, this.slots['content']);
+        contentEl = React.createElement(F7CardContent, {
+          padding: padding
+        }, content, this.slots['content']);
       }
+
       if (footer || self.slots && self.slots.footer) {
         footerEl = React.createElement(F7CardFooter, null, footer, this.slots['footer']);
       }
+
       return React.createElement('div', {
         id: id,
         style: style,
         className: classes
       }, headerEl, contentEl, footerEl, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -2027,28 +2113,18 @@
 
     return F7Card;
   }(React.Component));
-  __reactComponentSetProps(F7Card, Object.assign({}, {id: [
-      String,
-      Number
-    ],
-    title: [
-      String,
-      Number
-    ],
-    content: [
-      String,
-      Number
-    ],
-    footer: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Card, Object.assign({
+    id: [String, Number],
+    title: [String, Number],
+    content: [String, Number],
+    footer: [String, Number],
     outline: Boolean,
     padding: {
       type: Boolean,
       default: true
-    }},
-    Mixins.colorProps));
+    }
+  }, Mixins.colorProps));
 
   var F7Checkbox = (function (superclass) {
     function F7Checkbox(props, context) {
@@ -2060,9 +2136,11 @@
     F7Checkbox.prototype.constructor = F7Checkbox;
 
     var prototypeAccessors = { classes: { configurable: true },slots: { configurable: true } };
+
     F7Checkbox.prototype.onChange = function onChange (event) {
       this.dispatchEvent('change', event);
     };
+
     prototypeAccessors.classes.get = function () {
       var self = this;
       var props = self.props;
@@ -2073,6 +2151,7 @@
         disabled: disabled
       }, Mixins.colorClasses(props));
     };
+
     F7Checkbox.prototype.render = function render () {
       var self = this;
       var props = self.props;
@@ -2097,16 +2176,20 @@
           onChange: self.onChange.bind(self)
         });
       }
-      var iconEl = React.createElement('i', { className: 'icon-checkbox' });
+      var iconEl = React.createElement('i', {
+        className: 'icon-checkbox'
+      });
       return React.createElement('label', {
         id: id,
         style: style,
         className: self.classes
       }, inputEl, iconEl, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7Checkbox.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
@@ -2118,24 +2201,16 @@
 
     return F7Checkbox;
   }(React.Component));
-  __reactComponentSetProps(F7Checkbox, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Checkbox, Object.assign({
+    id: [String, Number],
     checked: Boolean,
-    name: [
-      Number,
-      String
-    ],
-    value: [
-      Number,
-      String,
-      Boolean
-    ],
+    name: [Number, String],
+    value: [Number, String, Boolean],
     disabled: Boolean,
     readonly: Boolean,
-    defaultChecked: Boolean},
-    Mixins.colorProps));
+    defaultChecked: Boolean
+  }, Mixins.colorProps));
 
   var F7Chip = (function (superclass) {
     function F7Chip(props, context) {
@@ -2147,12 +2222,15 @@
     F7Chip.prototype.constructor = F7Chip;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7Chip.prototype.onClick = function onClick (event) {
       this.dispatchEvent('click', event);
     };
+
     F7Chip.prototype.onDeleteClick = function onDeleteClick (event) {
       this.dispatchEvent('delete', event);
     };
+
     F7Chip.prototype.render = function render () {
       var self = this;
       var props = self.props;
@@ -2168,13 +2246,20 @@
       var mediaEl;
       var labelEl;
       var deleteEl;
+
       if (media || self.slots && self.slots.media) {
         var mediaClasses = Utils.classNames('chip-media', mediaTextColor && ("text-color-" + mediaTextColor), mediaBgColor && ("bg-color-" + mediaBgColor));
-        mediaEl = React.createElement('div', { className: mediaClasses }, media || this.slots['media']);
+        mediaEl = React.createElement('div', {
+          className: mediaClasses
+        }, media || this.slots['media']);
       }
+
       if (text || self.slots && self.slots.text) {
-        labelEl = React.createElement('div', { className: 'chip-label' }, text, this.slots['text']);
+        labelEl = React.createElement('div', {
+          className: 'chip-label'
+        }, text, this.slots['text']);
       }
+
       if (deleteable) {
         deleteEl = React.createElement('a', {
           href: '#',
@@ -2182,7 +2267,10 @@
           onClick: self.onDeleteClick.bind(self)
         });
       }
-      var classes = Utils.classNames(className, 'chip', { 'chip-outline': outline }, Mixins.colorClasses(props));
+
+      var classes = Utils.classNames(className, 'chip', {
+        'chip-outline': outline
+      }, Mixins.colorClasses(props));
       return React.createElement('div', {
         id: id,
         style: style,
@@ -2190,9 +2278,11 @@
         onClick: self.onClick.bind(self)
       }, mediaEl, labelEl, deleteEl);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7Chip.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
@@ -2204,20 +2294,16 @@
 
     return F7Chip;
   }(React.Component));
-  __reactComponentSetProps(F7Chip, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Chip, Object.assign({
+    id: [String, Number],
     media: String,
-    text: [
-      String,
-      Number
-    ],
+    text: [String, Number],
     deleteable: Boolean,
     mediaBgColor: String,
     mediaTextColor: String,
-    outline: Boolean},
-    Mixins.colorProps));
+    outline: Boolean
+  }, Mixins.colorProps));
 
   var F7Col = (function (superclass) {
     function F7Col(props, context) {
@@ -2229,9 +2315,11 @@
     F7Col.prototype.constructor = F7Col;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7Col.prototype.onClick = function onClick (e) {
       this.dispatchEvent('click', e);
     };
+
     F7Col.prototype.render = function render () {
       var obj;
 
@@ -2255,9 +2343,11 @@
         onClick: self.onClick.bind(self)
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7Col.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
@@ -2269,34 +2359,24 @@
 
     return F7Col;
   }(React.Component));
-  __reactComponentSetProps(F7Col, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Col, Object.assign({
+    id: [String, Number],
     tag: {
       type: String,
       default: 'div'
     },
     width: {
-      type: [
-        Number,
-        String
-      ],
+      type: [Number, String],
       default: 'auto'
     },
     tabletWidth: {
-      type: [
-        Number,
-        String
-      ]
+      type: [Number, String]
     },
     desktopWidth: {
-      type: [
-        Number,
-        String
-      ]
-    }},
-    Mixins.colorProps));
+      type: [Number, String]
+    }
+  }, Mixins.colorProps));
 
   var F7FabButton = (function (superclass) {
     function F7FabButton(props, context) {
@@ -2308,9 +2388,11 @@
     F7FabButton.prototype.constructor = F7FabButton;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7FabButton.prototype.onClick = function onClick (event) {
       this.dispatchEvent('click', event);
     };
+
     F7FabButton.prototype.render = function render () {
       var props = this.props;
       var className = props.className;
@@ -2323,9 +2405,13 @@
         'fab-label-button': label
       }, Mixins.colorClasses(props));
       var labelEl;
+
       if (label) {
-        labelEl = React.createElement('span', { className: 'fab-label' }, label);
+        labelEl = React.createElement('span', {
+          className: 'fab-label'
+        }, label);
       }
+
       return React.createElement('a', {
         id: id,
         style: style,
@@ -2333,9 +2419,11 @@
         onClick: this.onClick.bind(this)
       }, this.slots['default'], labelEl);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7FabButton.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
@@ -2347,13 +2435,12 @@
 
     return F7FabButton;
   }(React.Component));
-  __reactComponentSetProps(F7FabButton, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7FabButton, Object.assign({
+    id: [String, Number],
     fabClose: Boolean,
-    label: String},
-    Mixins.colorProps));
+    label: String
+  }, Mixins.colorProps));
 
   var F7FabButtons = (function (superclass) {
     function F7FabButtons(props, context) {
@@ -2365,6 +2452,7 @@
     F7FabButtons.prototype.constructor = F7FabButtons;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7FabButtons.prototype.render = function render () {
       var props = this.props;
       var className = props.className;
@@ -2378,6 +2466,7 @@
         className: classes
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -2386,15 +2475,14 @@
 
     return F7FabButtons;
   }(React.Component));
-  __reactComponentSetProps(F7FabButtons, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7FabButtons, Object.assign({
+    id: [String, Number],
     position: {
       type: String,
       default: 'top'
-    }},
-    Mixins.colorProps));
+    }
+  }, Mixins.colorProps));
 
   var F7Fab = (function (superclass) {
     function F7Fab(props, context) {
@@ -2406,10 +2494,12 @@
     F7Fab.prototype.constructor = F7Fab;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7Fab.prototype.onClick = function onClick (event) {
       var self = this;
       self.dispatchEvent('click', event);
     };
+
     F7Fab.prototype.render = function render () {
       var self = this;
       var props = self.props;
@@ -2421,10 +2511,8 @@
       var position = props.position;
       var text = props.text;
       var href = initialHref;
-      if (href === true)
-        { href = '#'; }
-      if (href === false)
-        { href = undefined; }
+      if (href === true) { href = '#'; }
+      if (href === false) { href = undefined; }
       var linkChildren = [];
       var rootChildren = [];
       var ref = self.slots;
@@ -2432,26 +2520,29 @@
       var defaultSlots = ref.default;
       var rootSlots = ref.root;
       var textSlots = ref.text;
+
       if (defaultSlots) {
         for (var i = 0; i < defaultSlots.length; i += 1) {
           var child = defaultSlots[i];
           var isRoot = (void 0);
           {
             var tag = child.type && child.type.name;
-            if (tag === 'F7FabButtons')
-              { isRoot = true; }
+            if (tag === 'F7FabButtons') { isRoot = true; }
           }
-          if (isRoot)
-            { rootChildren.push(child); }
-          else
-            { linkChildren.push(child); }
+          if (isRoot) { rootChildren.push(child); }else { linkChildren.push(child); }
         }
       }
+
       var textEl;
+
       if (text || textSlots && textSlots.length) {
-        textEl = React.createElement('div', { className: 'fab-text' }, text || textSlots);
+        textEl = React.createElement('div', {
+          className: 'fab-text'
+        }, text || textSlots);
       }
+
       var linkEl;
+
       if (linkChildren.length || linkSlots && linkSlots.length) {
         linkEl = React.createElement('a', {
           href: href,
@@ -2459,6 +2550,7 @@
           key: 'f7-fab-link'
         }, linkChildren, textEl, linkSlots);
       }
+
       var classes = Utils.classNames(className, 'fab', ("fab-" + position), {
         'fab-morph': morphTo,
         'fab-extended': typeof textEl !== 'undefined'
@@ -2470,9 +2562,11 @@
         'data-morph-to': morphTo
       }, linkEl, rootChildren, rootSlots);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7Fab.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
@@ -2484,21 +2578,17 @@
 
     return F7Fab;
   }(React.Component));
-  __reactComponentSetProps(F7Fab, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Fab, Object.assign({
+    id: [String, Number],
     morphTo: String,
-    href: [
-      Boolean,
-      String
-    ],
+    href: [Boolean, String],
     text: String,
     position: {
       type: String,
       default: 'right-bottom'
-    }},
-    Mixins.colorProps));
+    }
+  }, Mixins.colorProps));
 
   var F7Toggle = (function (superclass) {
     function F7Toggle(props, context) {
@@ -2511,15 +2601,17 @@
     F7Toggle.prototype.constructor = F7Toggle;
 
     var prototypeAccessors = { refs: { configurable: true } };
+
     F7Toggle.prototype.toggle = function toggle () {
       var self = this;
-      if (self.f7Toggle && self.f7Toggle.toggle)
-        { self.f7Toggle.toggle(); }
+      if (self.f7Toggle && self.f7Toggle.toggle) { self.f7Toggle.toggle(); }
     };
+
     F7Toggle.prototype.onChange = function onChange (e) {
       var self = this;
       self.dispatchEvent('change', e);
     };
+
     F7Toggle.prototype.render = function render () {
       var this$1 = this;
 
@@ -2534,7 +2626,9 @@
       var checked = props.checked;
       var defaultChecked = props.defaultChecked;
       var value = props.value;
-      var labelClasses = Utils.classNames('toggle', className, { disabled: disabled }, Mixins.colorClasses(props));
+      var labelClasses = Utils.classNames('toggle', className, {
+        disabled: disabled
+      }, Mixins.colorClasses(props));
       var inputEl;
       {
         inputEl = React.createElement('input', {
@@ -2555,17 +2649,19 @@
         id: id,
         style: style,
         className: labelClasses
-      }, inputEl, React.createElement('span', { className: 'toggle-icon' }));
+      }, inputEl, React.createElement('span', {
+        className: 'toggle-icon'
+      }));
     };
+
     F7Toggle.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
-      if (self.f7Toggle && self.f7Toggle.destroy && self.f7Toggle.$el)
-        { self.f7Toggle.destroy(); }
+      if (self.f7Toggle && self.f7Toggle.destroy && self.f7Toggle.$el) { self.f7Toggle.destroy(); }
     };
+
     F7Toggle.prototype.componentDidMount = function componentDidMount () {
       var self = this;
-      if (!self.props.init)
-        { return; }
+      if (!self.props.init) { return; }
       self.$f7ready(function (f7) {
         self.f7Toggle = f7.toggle.create({
           el: self.refs.el,
@@ -2573,28 +2669,31 @@
             change: function change(toggle) {
               self.dispatchEvent('toggle:change toggleChange', toggle.checked);
             }
+
           }
         });
       });
     };
+
     F7Toggle.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
+
     F7Toggle.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.checked', prevProps, prevState, function (newValue) {
         var self = this$1;
-        if (!self.f7Toggle)
-          { return; }
+        if (!self.f7Toggle) { return; }
         self.f7Toggle.checked = newValue;
       });
     };
@@ -2603,10 +2702,9 @@
 
     return F7Toggle;
   }(React.Component));
-  __reactComponentSetProps(F7Toggle, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Toggle, Object.assign({
+    id: [String, Number],
     init: {
       type: Boolean,
       default: true
@@ -2616,12 +2714,8 @@
     disabled: Boolean,
     readonly: Boolean,
     name: String,
-    value: [
-      String,
-      Number,
-      Array
-    ]},
-    Mixins.colorProps));
+    value: [String, Number, Array]
+  }, Mixins.colorProps));
 
   var F7Range = (function (superclass) {
     function F7Range(props, context) {
@@ -2634,18 +2728,22 @@
     F7Range.prototype.constructor = F7Range;
 
     var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+
     F7Range.prototype.setValue = function setValue (newValue) {
       var self = this;
-      if (self.f7Range && self.f7Range.setValue)
-        { self.f7Range.setValue(newValue); }
+      if (self.f7Range && self.f7Range.setValue) { self.f7Range.setValue(newValue); }
     };
+
     F7Range.prototype.getValue = function getValue () {
       var self = this;
+
       if (self.f7Range && self.f7Range.getValue) {
         return self.f7Range.getValue();
       }
+
       return undefined;
     };
+
     F7Range.prototype.render = function render () {
       var this$1 = this;
 
@@ -2659,7 +2757,9 @@
       var input = ref.input;
       var inputId = ref.inputId;
       var name = ref.name;
-      var classes = Utils.classNames(className, 'range-slider', { disabled: disabled }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'range-slider', {
+        disabled: disabled
+      }, Mixins.colorClasses(props));
       return React.createElement('div', {
         ref: function (__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
@@ -2673,16 +2773,16 @@
         id: inputId
       }), this.slots['default']);
     };
+
     F7Range.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
-      if (self.f7Range && self.f7Range.destroy)
-        { self.f7Range.destroy(); }
+      if (self.f7Range && self.f7Range.destroy) { self.f7Range.destroy(); }
     };
+
     F7Range.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       self.$f7ready(function (f7) {
-        if (!self.props.init)
-          { return; }
+        if (!self.props.init) { return; }
         var props = self.props;
         var value = props.value;
         var min = props.min;
@@ -2704,34 +2804,39 @@
             change: function change(range, val) {
               self.dispatchEvent('range:change rangeChange', val);
             },
+
             changed: function changed(range, val) {
               self.dispatchEvent('range:changed rangeChanged', val);
             }
+
           }
         }));
       });
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7Range.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
+
     F7Range.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.value', prevProps, prevState, function (newValue) {
         var self = this$1;
-        if (!self.f7Range)
-          { return; }
+        if (!self.f7Range) { return; }
         self.f7Range.setValue(newValue);
       });
     };
@@ -2740,41 +2845,27 @@
 
     return F7Range;
   }(React.Component));
-  __reactComponentSetProps(F7Range, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Range, Object.assign({
+    id: [String, Number],
     init: {
       type: Boolean,
       default: true
     },
     value: {
-      type: [
-        Number,
-        Array,
-        String
-      ],
+      type: [Number, Array, String],
       default: 0
     },
     min: {
-      type: [
-        Number,
-        String
-      ],
+      type: [Number, String],
       default: 0
     },
     max: {
-      type: [
-        Number,
-        String
-      ],
+      type: [Number, String],
       default: 100
     },
     step: {
-      type: [
-        Number,
-        String
-      ],
+      type: [Number, String],
       default: 1
     },
     label: {
@@ -2792,8 +2883,8 @@
     draggableBar: {
       type: Boolean,
       default: true
-    }},
-    Mixins.colorProps));
+    }
+  }, Mixins.colorProps));
 
   var F7Input = (function (superclass) {
     function F7Input(props, context) {
@@ -2801,6 +2892,7 @@
 
       superclass.call(this, props, context);
       this.__reactRefs = {};
+
       (function () {
         var self = this$1;
         self.onFocusBound = self.onFocus.bind(self);
@@ -2819,30 +2911,39 @@
     F7Input.prototype.constructor = F7Input;
 
     var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+
     F7Input.prototype.onTextareaResize = function onTextareaResize (event) {
       this.dispatchEvent('textarea:resize textareaResize', event);
     };
+
     F7Input.prototype.onInputNotEmpty = function onInputNotEmpty (event) {
       this.dispatchEvent('input:notempty inputNotEmpty', event);
     };
+
     F7Input.prototype.onInputEmpty = function onInputEmpty (event) {
       this.dispatchEvent('input:empty inputEmpty', event);
     };
+
     F7Input.prototype.onInputClear = function onInputClear (event) {
       this.dispatchEvent('input:clear inputClear', event);
     };
+
     F7Input.prototype.onInput = function onInput (event) {
       this.dispatchEvent('input', event);
     };
+
     F7Input.prototype.onFocus = function onFocus (event) {
       this.dispatchEvent('focus', event);
     };
+
     F7Input.prototype.onBlur = function onBlur (event) {
       this.dispatchEvent('blur', event);
     };
+
     F7Input.prototype.onChange = function onChange (event) {
       this.dispatchEvent('change', event);
     };
+
     F7Input.prototype.render = function render () {
       var this$1 = this;
 
@@ -2888,6 +2989,7 @@
       var noStoreData = props.noStoreData;
       var noFormStoreData = props.noFormStoreData;
       var inputEl;
+
       var createInput = function (tag, children) {
         var InputTag = tag;
         var needsValue = type !== 'file';
@@ -2938,9 +3040,11 @@
         }
         return input;
       };
+
       var ref = self.slots;
       var slotsDefault = ref.default;
       var slotsInfo = ref.info;
+
       if (type === 'select' || type === 'textarea' || type === 'file') {
         if (type === 'select') {
           inputEl = createInput('select', slotsDefault);
@@ -2976,6 +3080,7 @@
       } else {
         inputEl = createInput('input');
       }
+
       if (wrap) {
         var wrapClasses = Utils.classNames(className, 'item-input-wrap', Mixins.colorClasses(props));
         return React.createElement('div', {
@@ -2985,30 +3090,39 @@
           },
           className: wrapClasses,
           style: style
-        }, inputEl, errorMessage && errorMessageForce && React.createElement('div', { className: 'item-input-error-message' }, errorMessage), clearButton && React.createElement('span', { className: 'input-clear-button' }), (info || slotsInfo && slotsInfo.length) && React.createElement('div', { className: 'item-input-info' }, info, this.slots['info']));
+        }, inputEl, errorMessage && errorMessageForce && React.createElement('div', {
+          className: 'item-input-error-message'
+        }, errorMessage), clearButton && React.createElement('span', {
+          className: 'input-clear-button'
+        }), (info || slotsInfo && slotsInfo.length) && React.createElement('div', {
+          className: 'item-input-info'
+        }, info, this.slots['info']));
       }
+
       return inputEl;
     };
+
     F7Input.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
       var ref = self.props;
       var type = ref.type;
       var resizable = ref.resizable;
       var clearButton = ref.clearButton;
-      if (type === 'range' || type === 'toggle')
-        { return; }
+      if (type === 'range' || type === 'toggle') { return; }
       var inputEl = self.refs.inputEl;
-      if (!inputEl)
-        { return; }
+      if (!inputEl) { return; }
       inputEl.removeEventListener('input:notempty', self.onInputNotEmptyBound, false);
+
       if (type === 'textarea' && resizable) {
         inputEl.removeEventListener('textarea:resze', self.onTextareaResizeBound, false);
       }
+
       if (clearButton) {
         inputEl.removeEventListener('input:empty', self.onInputEmptyBound, false);
         inputEl.removeEventListener('input:clear', self.onInputClearBound, false);
       }
     };
+
     F7Input.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
       var this$1 = this;
 
@@ -3016,33 +3130,34 @@
         var self = this$1;
         var ref = self.props;
         var type = ref.type;
-        if (type === 'range' || type === 'toggle')
-          { return; }
-        if (!self.$f7)
-          { return; }
+        if (type === 'range' || type === 'toggle') { return; }
+        if (!self.$f7) { return; }
         self.updateInputOnDidUpdate = true;
       });
+
       var self = this;
       var ref = self.props;
       var validate = ref.validate;
       var resizable = ref.resizable;
       var f7 = self.$f7;
-      if (!f7)
-        { return; }
+      if (!f7) { return; }
+
       if (self.updateInputOnDidUpdate) {
         var inputEl = self.refs.inputEl;
-        if (!inputEl)
-          { return; }
+        if (!inputEl) { return; }
         self.updateInputOnDidUpdate = false;
         f7.input.checkEmptyState(inputEl);
+
         if (validate) {
           f7.input.validate(inputEl);
         }
+
         if (resizable) {
           f7.input.resizeTextarea(inputEl);
         }
       }
     };
+
     F7Input.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       self.$f7ready(function (f7) {
@@ -3053,78 +3168,66 @@
         var clearButton = ref.clearButton;
         var value = ref.value;
         var defaultValue = ref.defaultValue;
-        if (type === 'range' || type === 'toggle')
-          { return; }
+        if (type === 'range' || type === 'toggle') { return; }
         var inputEl = self.refs.inputEl;
-        if (!inputEl)
-          { return; }
+        if (!inputEl) { return; }
         inputEl.addEventListener('input:notempty', self.onInputNotEmptyBound, false);
+
         if (type === 'textarea' && resizable) {
           inputEl.addEventListener('textarea:resze', self.onTextareaResizeBound, false);
         }
+
         if (clearButton) {
           inputEl.addEventListener('input:empty', self.onInputEmptyBound, false);
           inputEl.addEventListener('input:clear', self.onInputClearBound, false);
         }
+
         f7.input.checkEmptyState(inputEl);
+
         if (validate && (typeof value !== 'undefined' || typeof defaultValue !== 'undefined')) {
           setTimeout(function () {
             f7.input.validate(inputEl);
           }, 0);
         }
+
         if (resizable) {
           f7.input.resizeTextarea(inputEl);
         }
       });
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7Input.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
 
     Object.defineProperties( F7Input.prototype, prototypeAccessors );
 
     return F7Input;
   }(React.Component));
-  __reactComponentSetProps(F7Input, Object.assign({}, {type: String,
+
+  __reactComponentSetProps(F7Input, Object.assign({
+    type: String,
     name: String,
-    value: [
-      String,
-      Number,
-      Array
-    ],
-    defaultValue: [
-      String,
-      Number,
-      Array
-    ],
+    value: [String, Number, Array],
+    defaultValue: [String, Number, Array],
     placeholder: String,
-    id: [
-      String,
-      Number
-    ],
-    inputId: [
-      String,
-      Number
-    ],
-    size: [
-      String,
-      Number
-    ],
-    accept: [
-      String,
-      Number
-    ],
+    id: [String, Number],
+    inputId: [String, Number],
+    size: [String, Number],
+    accept: [String, Number],
     autocomplete: [String],
     autocorrect: [String],
     autocapitalize: [String],
@@ -3133,39 +3236,18 @@
     autosave: String,
     checked: Boolean,
     disabled: Boolean,
-    max: [
-      String,
-      Number
-    ],
-    min: [
-      String,
-      Number
-    ],
-    step: [
-      String,
-      Number
-    ],
-    maxlength: [
-      String,
-      Number
-    ],
-    minlength: [
-      String,
-      Number
-    ],
+    max: [String, Number],
+    min: [String, Number],
+    step: [String, Number],
+    maxlength: [String, Number],
+    minlength: [String, Number],
     multiple: Boolean,
     readonly: Boolean,
     required: Boolean,
     inputStyle: String,
     pattern: String,
-    validate: [
-      Boolean,
-      String
-    ],
-    tabindex: [
-      String,
-      Number
-    ],
+    validate: [Boolean, String],
+    tabindex: [String, Number],
     resizable: Boolean,
     clearButton: Boolean,
     noFormStoreData: Boolean,
@@ -3176,8 +3258,8 @@
     wrap: {
       type: Boolean,
       default: true
-    }},
-    Mixins.colorProps));
+    }
+  }, Mixins.colorProps));
 
   var F7Label = (function (superclass) {
     function F7Label(props, context) {
@@ -3189,6 +3271,7 @@
     F7Label.prototype.constructor = F7Label;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7Label.prototype.render = function render () {
       var self = this;
       var props = self.props;
@@ -3208,6 +3291,7 @@
         className: classes
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -3216,20 +3300,22 @@
 
     return F7Label;
   }(React.Component));
-  __reactComponentSetProps(F7Label, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Label, Object.assign({
+    id: [String, Number],
     floating: Boolean,
-    inline: Boolean},
-    Mixins.colorProps));
+    inline: Boolean
+  }, Mixins.colorProps));
 
   var F7Link = (function (superclass) {
     function F7Link(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
+
       this.state = (function () {
-        return { isTabbarLabel: props.tabbarLabel };
+        return {
+          isTabbarLabel: props.tabbarLabel
+        };
       })();
     }
 
@@ -3238,9 +3324,11 @@
     F7Link.prototype.constructor = F7Link;
 
     var prototypeAccessors = { attrs: { configurable: true },classes: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
+
     F7Link.prototype.onClick = function onClick (event) {
       this.dispatchEvent('click', event);
     };
+
     prototypeAccessors.attrs.get = function () {
       var self = this;
       var props = self.props;
@@ -3248,16 +3336,15 @@
       var target = props.target;
       var tabLink = props.tabLink;
       var hrefComputed = href;
-      if (href === true)
-        { hrefComputed = '#'; }
-      if (href === false)
-        { hrefComputed = undefined; }
+      if (href === true) { hrefComputed = '#'; }
+      if (href === false) { hrefComputed = undefined; }
       return Utils.extend({
         href: hrefComputed,
         target: target,
         'data-tab': Utils.isStringProp(tabLink) && tabLink || undefined
       }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
     };
+
     prototypeAccessors.classes.get = function () {
       var self = this;
       var props = self.props;
@@ -3275,6 +3362,7 @@
         'no-fastclick': noFastclick || noFastClick
       }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
     };
+
     F7Link.prototype.render = function render () {
       var this$1 = this;
 
@@ -3303,17 +3391,26 @@
       var textEl;
       var badgeEl;
       var iconBadgeEl;
+
       if (text) {
-        if (badge)
-          { badgeEl = React.createElement(F7Badge, { color: badgeColor }, badge); }
-        textEl = React.createElement('span', { className: self.state.isTabbarLabel ? 'tabbar-label' : '' }, text, badgeEl);
+        if (badge) { badgeEl = React.createElement(F7Badge, {
+          color: badgeColor
+        }, badge); }
+        textEl = React.createElement('span', {
+          className: self.state.isTabbarLabel ? 'tabbar-label' : ''
+        }, text, badgeEl);
       }
+
       var mdThemeIcon = iconIfMd || iconMd;
       var iosThemeIcon = iconIfIos || iconIos;
+
       if (icon || iconMaterial || iconIon || iconFa || iconF7 || mdThemeIcon || iosThemeIcon) {
         if (iconBadge) {
-          iconBadgeEl = React.createElement(F7Badge, { color: badgeColor }, iconBadge);
+          iconBadgeEl = React.createElement(F7Badge, {
+            color: badgeColor
+          }, iconBadge);
         }
+
         iconEl = React.createElement(F7Icon, {
           material: iconMaterial,
           f7: iconF7,
@@ -3326,20 +3423,24 @@
           size: iconSize
         }, iconBadgeEl);
       }
+
       if (iconOnly || !text && defaultSlots && defaultSlots.length === 0 || !text && !defaultSlots) {
         self.iconOnlyComputed = true;
       } else {
         self.iconOnlyComputed = false;
       }
-      return React.createElement('a', Object.assign({}, {ref: function (__reactNode) {
+
+      return React.createElement('a', Object.assign({
+        ref: function (__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         id: id,
         style: style,
         className: self.classes,
-        onClick: self.onClick.bind(self)},
-        self.attrs), iconEl, textEl, defaultSlots);
+        onClick: self.onClick.bind(self)
+      }, self.attrs), iconEl, textEl, defaultSlots);
     };
+
     F7Link.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var el = self.refs.el;
@@ -3347,65 +3448,56 @@
       var tabbarLabel = ref.tabbarLabel;
       var tabLink = ref.tabLink;
       var isTabbarLabel = false;
+
       if (tabbarLabel || (tabLink || tabLink === '') && self.$$(el).parents('.tabbar-labels').length) {
         isTabbarLabel = true;
       }
-      self.setState({ isTabbarLabel: isTabbarLabel });
+
+      self.setState({
+        isTabbarLabel: isTabbarLabel
+      });
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7Link.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
 
     Object.defineProperties( F7Link.prototype, prototypeAccessors );
 
     return F7Link;
   }(React.Component));
-  __reactComponentSetProps(F7Link, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Link, Object.assign({
+    id: [String, Number],
     noLinkClass: Boolean,
     noFastClick: Boolean,
     noFastclick: Boolean,
     text: String,
-    tabLink: [
-      Boolean,
-      String
-    ],
+    tabLink: [Boolean, String],
     tabLinkActive: Boolean,
     tabbarLabel: Boolean,
     iconOnly: Boolean,
-    badge: [
-      String,
-      Number
-    ],
+    badge: [String, Number],
     badgeColor: [String],
-    iconBadge: [
-      String,
-      Number
-    ],
+    iconBadge: [String, Number],
     href: {
-      type: [
-        String,
-        Boolean
-      ],
+      type: [String, Boolean],
       default: '#'
-    }},
-    Mixins.colorProps,
-    Mixins.linkIconProps,
-    Mixins.linkRouterProps,
-    Mixins.linkActionsProps));
+    }
+  }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
 
   var F7ListButton = (function (superclass) {
     function F7ListButton(props, context) {
@@ -3417,9 +3509,11 @@
     F7ListButton.prototype.constructor = F7ListButton;
 
     var prototypeAccessors = { attrs: { configurable: true },classes: { configurable: true },slots: { configurable: true } };
+
     F7ListButton.prototype.onClick = function onClick (event) {
       this.dispatchEvent('click', event);
     };
+
     prototypeAccessors.attrs.get = function () {
       var self = this;
       var props = self.props;
@@ -3433,6 +3527,7 @@
         'data-tab': Utils.isStringProp(tabLink) && tabLink
       }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
     };
+
     prototypeAccessors.classes.get = function () {
       var self = this;
       var props = self.props;
@@ -3448,6 +3543,7 @@
         'no-fastclick': noFastclick || noFastClick
       }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
     };
+
     F7ListButton.prototype.render = function render () {
       var self = this;
       var props = this.props;
@@ -3460,13 +3556,17 @@
         id: id,
         style: style,
         className: className
-      }, React.createElement('a', Object.assign({}, {className: self.classes},
-        self.attrs,
-        {onClick: self.onClick.bind(self)}), this.slots['default'], !this.slots.default && (title || text)));
+      }, React.createElement('a', Object.assign({
+        className: self.classes
+      }, self.attrs, {
+        onClick: self.onClick.bind(self)
+      }), this.slots['default'], !this.slots.default && (title || text)));
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7ListButton.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
@@ -3478,37 +3578,19 @@
 
     return F7ListButton;
   }(React.Component));
-  __reactComponentSetProps(F7ListButton, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7ListButton, Object.assign({
+    id: [String, Number],
     noFastclick: Boolean,
     noFastClick: Boolean,
-    title: [
-      String,
-      Number
-    ],
-    text: [
-      String,
-      Number
-    ],
-    tabLink: [
-      Boolean,
-      String
-    ],
+    title: [String, Number],
+    text: [String, Number],
+    tabLink: [Boolean, String],
     tabLinkActive: Boolean,
-    link: [
-      Boolean,
-      String
-    ],
-    href: [
-      Boolean,
-      String
-    ],
-    target: String},
-    Mixins.colorProps,
-    Mixins.linkRouterProps,
-    Mixins.linkActionsProps));
+    link: [Boolean, String],
+    href: [Boolean, String],
+    target: String
+  }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
 
   var F7ListGroup = (function (superclass) {
     function F7ListGroup(props, context) {
@@ -3520,6 +3602,7 @@
     F7ListGroup.prototype.constructor = F7ListGroup;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7ListGroup.prototype.render = function render () {
       var self = this;
       var props = self.props;
@@ -3538,6 +3621,7 @@
         className: classes
       }, React.createElement('ul', null, this.slots['default']));
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -3546,13 +3630,12 @@
 
     return F7ListGroup;
   }(React.Component));
-  __reactComponentSetProps(F7ListGroup, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7ListGroup, Object.assign({
+    id: [String, Number],
     mediaList: Boolean,
-    sortable: Boolean},
-    Mixins.colorProps));
+    sortable: Boolean
+  }, Mixins.colorProps));
 
   var F7ListIndex = (function (superclass) {
     function F7ListIndex(props, context) {
@@ -3565,16 +3648,17 @@
     F7ListIndex.prototype.constructor = F7ListIndex;
 
     var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+
     F7ListIndex.prototype.update = function update () {
-      if (!this.f7ListIndex)
-        { return; }
+      if (!this.f7ListIndex) { return; }
       this.f7ListIndex.update();
     };
+
     F7ListIndex.prototype.scrollListToIndex = function scrollListToIndex (indexContent) {
-      if (!this.f7ListIndex)
-        { return; }
+      if (!this.f7ListIndex) { return; }
       this.f7ListIndex.scrollListToIndex(indexContent);
     };
+
     F7ListIndex.prototype.render = function render () {
       var this$1 = this;
 
@@ -3592,10 +3676,10 @@
         className: classes
       }, this.slots['default']);
     };
+
     F7ListIndex.prototype.componentDidMount = function componentDidMount () {
       var self = this;
-      if (!self.props.init)
-        { return; }
+      if (!self.props.init) { return; }
       self.$f7ready(function (f7) {
         var el = self.refs.el;
         var ref = self.props;
@@ -3617,37 +3701,42 @@
             select: function select(index, itemContent, itemIndex) {
               self.dispatchEvent('listindex:select listIndexSelect', itemContent, itemIndex);
             }
+
           }
         });
       });
     };
+
     F7ListIndex.prototype.componentWillUnmount = function componentWillUnmount () {
-      if (!this.props.init)
-        { return; }
+      if (!this.props.init) { return; }
+
       if (this.f7ListIndex && this.f7ListIndex.destroy) {
         this.f7ListIndex.destroy();
       }
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7ListIndex.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
+
     F7ListIndex.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.indexes', prevProps, prevState, function () {
-        if (!this$1.f7ListIndex)
-          { return; }
+        if (!this$1.f7ListIndex) { return; }
         this$1.f7ListIndex.params.indexes = this$1.indexes;
         this$1.update();
       });
@@ -3657,23 +3746,16 @@
 
     return F7ListIndex;
   }(React.Component));
-  __reactComponentSetProps(F7ListIndex, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7ListIndex, Object.assign({
+    id: [String, Number],
     init: {
       type: Boolean,
       default: true
     },
-    listEl: [
-      String,
-      Object
-    ],
+    listEl: [String, Object],
     indexes: {
-      type: [
-        String,
-        Array
-      ],
+      type: [String, Array],
       default: 'auto'
     },
     scrollList: {
@@ -3691,8 +3773,8 @@
     mdItemHeight: {
       type: Number,
       default: 14
-    }},
-    Mixins.colorProps));
+    }
+  }, Mixins.colorProps));
 
   var F7ListItemCell = (function (superclass) {
     function F7ListItemCell(props, context) {
@@ -3704,6 +3786,7 @@
     F7ListItemCell.prototype.constructor = F7ListItemCell;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7ListItemCell.prototype.render = function render () {
       var props = this.props;
       var className = props.className;
@@ -3716,6 +3799,7 @@
         className: classes
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -3724,16 +3808,16 @@
 
     return F7ListItemCell;
   }(React.Component));
-  __reactComponentSetProps(F7ListItemCell, Object.assign({}, {id: [
-      String,
-      Number
-    ]},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7ListItemCell, Object.assign({
+    id: [String, Number]
+  }, Mixins.colorProps));
 
   var F7ListItemContent = (function (superclass) {
     function F7ListItemContent(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
+
       this.state = (function () {
         return {
           hasInput: false,
@@ -3749,12 +3833,15 @@
     F7ListItemContent.prototype.constructor = F7ListItemContent;
 
     var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+
     F7ListItemContent.prototype.onClick = function onClick (event) {
       this.dispatchEvent('click', event);
     };
+
     F7ListItemContent.prototype.onChange = function onChange (event) {
       this.dispatchEvent('change', event);
     };
+
     F7ListItemContent.prototype.render = function render () {
       var this$1 = this;
 
@@ -3821,92 +3908,85 @@
       var footerEl;
       var slots = self.slots.default;
       var flattenSlots = [];
+
       if (slots && slots.length) {
         slots.forEach(function (slot) {
-          if (Array.isArray(slot))
-            { flattenSlots.push.apply(flattenSlots, slot); }
-          else
-            { flattenSlots.push(slot); }
+          if (Array.isArray(slot)) { flattenSlots.push.apply(flattenSlots, slot); }else { flattenSlots.push(slot); }
         });
       }
+
       flattenSlots.forEach(function (child) {
-        if (typeof child === 'undefined')
-          { return; }
+        if (typeof child === 'undefined') { return; }
         {
           var tag = child.type && child.type.name;
+
           if (tag === 'F7Input') {
             hasInput = true;
-            if (child.props && child.props.info)
-              { hasInputInfo = true; }
-            if (child.props && child.props.errorMessage && child.props.errorMessageForce)
-              { hasInputErrorMessage = true; }
+            if (child.props && child.props.info) { hasInputInfo = true; }
+            if (child.props && child.props.errorMessage && child.props.errorMessageForce) { hasInputErrorMessage = true; }
           }
+
           if (tag === 'F7Label') {
-            if (child.props && child.props.inline)
-              { hasInlineLabel = true; }
+            if (child.props && child.props.inline) { hasInlineLabel = true; }
           }
         }
         var slotName;
         slotName = child.props ? child.props.slot : undefined;
-        if (!slotName || slotName === 'inner')
-          { slotsInner.push(child); }
-        if (slotName === 'content-start')
-          { slotsContentStart.push(child); }
-        if (slotName === 'content')
-          { slotsContent.push(child); }
-        if (slotName === 'content-end')
-          { slotsContentEnd.push(child); }
-        if (slotName === 'after-start')
-          { slotsAfterStart.push(child); }
-        if (slotName === 'after')
-          { slotsAfter.push(child); }
-        if (slotName === 'after-end')
-          { slotsAfterEnd.push(child); }
-        if (slotName === 'media')
-          { slotsMedia.push(child); }
-        if (slotName === 'inner-start')
-          { slotsInnerStart.push(child); }
-        if (slotName === 'inner-end')
-          { slotsInnerEnd.push(child); }
-        if (slotName === 'before-title')
-          { slotsBeforeTitle.push(child); }
-        if (slotName === 'title')
-          { slotsTitle.push(child); }
-        if (slotName === 'after-title')
-          { slotsAfterTitle.push(child); }
-        if (slotName === 'subtitle')
-          { slotsSubtitle.push(child); }
-        if (slotName === 'text')
-          { slotsText.push(child); }
-        if (slotName === 'header')
-          { slotsHeader.push(child); }
-        if (slotName === 'footer')
-          { slotsFooter.push(child); }
+        if (!slotName || slotName === 'inner') { slotsInner.push(child); }
+        if (slotName === 'content-start') { slotsContentStart.push(child); }
+        if (slotName === 'content') { slotsContent.push(child); }
+        if (slotName === 'content-end') { slotsContentEnd.push(child); }
+        if (slotName === 'after-start') { slotsAfterStart.push(child); }
+        if (slotName === 'after') { slotsAfter.push(child); }
+        if (slotName === 'after-end') { slotsAfterEnd.push(child); }
+        if (slotName === 'media') { slotsMedia.push(child); }
+        if (slotName === 'inner-start') { slotsInnerStart.push(child); }
+        if (slotName === 'inner-end') { slotsInnerEnd.push(child); }
+        if (slotName === 'before-title') { slotsBeforeTitle.push(child); }
+        if (slotName === 'title') { slotsTitle.push(child); }
+        if (slotName === 'after-title') { slotsAfterTitle.push(child); }
+        if (slotName === 'subtitle') { slotsSubtitle.push(child); }
+        if (slotName === 'text') { slotsText.push(child); }
+        if (slotName === 'header') { slotsHeader.push(child); }
+        if (slotName === 'footer') { slotsFooter.push(child); }
       });
+
       if (hasInput && !self.state.hasInput) {
         self.hasInputSet = true;
-        self.setState({ hasInput: hasInput });
+        self.setState({
+          hasInput: hasInput
+        });
       } else if (!hasInput) {
         self.hasInputSet = false;
       }
+
       if (hasInputInfo && !self.state.hasInputInfo) {
         self.hasInputInfoSet = true;
-        self.setState({ hasInputInfo: hasInputInfo });
+        self.setState({
+          hasInputInfo: hasInputInfo
+        });
       } else if (!hasInputInfo) {
         self.hasInputInfoSet = false;
       }
+
       if (hasInputErrorMessage && !self.state.hasInputErrorMessage) {
         self.hasInputErrorMessageSet = true;
-        self.setState({ hasInputErrorMessage: hasInputErrorMessage });
+        self.setState({
+          hasInputErrorMessage: hasInputErrorMessage
+        });
       } else if (!hasInputInfo) {
         self.hasInputErrorMessageSet = false;
       }
+
       if (hasInlineLabel && !self.state.hasInlineLabel) {
         self.hasInlineLabelSet = true;
-        self.setState({ hasInlineLabel: hasInlineLabel });
+        self.setState({
+          hasInlineLabel: hasInlineLabel
+        });
       } else if (!hasInlineLabel) {
         self.hasInlineLabelSet = false;
       }
+
       if (radio || checkbox) {
         {
           inputEl = React.createElement('input', {
@@ -3920,42 +4000,77 @@
             onChange: self.onChange.bind(self)
           });
         }
-        inputIconEl = React.createElement('i', { className: ("icon icon-" + (radio ? 'radio' : 'checkbox')) });
+        inputIconEl = React.createElement('i', {
+          className: ("icon icon-" + (radio ? 'radio' : 'checkbox'))
+        });
       }
+
       if (media || slotsMedia.length) {
         var mediaImgEl;
+
         if (media) {
-          mediaImgEl = React.createElement('img', { src: media });
+          mediaImgEl = React.createElement('img', {
+            src: media
+          });
         }
-        mediaEl = React.createElement('div', { className: 'item-media' }, mediaImgEl, slotsMedia);
+
+        mediaEl = React.createElement('div', {
+          className: 'item-media'
+        }, mediaImgEl, slotsMedia);
       }
+
       var isMedia = mediaItem || mediaList;
+
       if (header || slotsHeader.length) {
-        headerEl = React.createElement('div', { className: 'item-header' }, header, slotsHeader);
+        headerEl = React.createElement('div', {
+          className: 'item-header'
+        }, header, slotsHeader);
       }
+
       if (footer || slotsFooter.length) {
-        footerEl = React.createElement('div', { className: 'item-footer' }, footer, slotsFooter);
+        footerEl = React.createElement('div', {
+          className: 'item-footer'
+        }, footer, slotsFooter);
       }
+
       if (title || slotsTitle.length || !isMedia && headerEl || !isMedia && footerEl) {
-        titleEl = React.createElement('div', { className: 'item-title' }, !isMedia && headerEl, title, slotsTitle, !isMedia && footerEl);
+        titleEl = React.createElement('div', {
+          className: 'item-title'
+        }, !isMedia && headerEl, title, slotsTitle, !isMedia && footerEl);
       }
+
       if (subtitle || slotsSubtitle.length) {
-        subtitleEl = React.createElement('div', { className: 'item-subtitle' }, subtitle, slotsSubtitle);
+        subtitleEl = React.createElement('div', {
+          className: 'item-subtitle'
+        }, subtitle, slotsSubtitle);
       }
+
       if (text || slotsText.length) {
-        textEl = React.createElement('div', { className: 'item-text' }, text, slotsText);
+        textEl = React.createElement('div', {
+          className: 'item-text'
+        }, text, slotsText);
       }
+
       if (after || badge || slotsAfter.length) {
         if (after) {
           afterEl = React.createElement('span', null, after);
         }
+
         if (badge) {
-          badgeEl = React.createElement(F7Badge, { color: badgeColor }, badge);
+          badgeEl = React.createElement(F7Badge, {
+            color: badgeColor
+          }, badge);
         }
-        afterWrapEl = React.createElement('div', { className: 'item-after' }, slotsAfterStart, afterEl, badgeEl, slotsAfter, slotsAfterEnd);
+
+        afterWrapEl = React.createElement('div', {
+          className: 'item-after'
+        }, slotsAfterStart, afterEl, badgeEl, slotsAfter, slotsAfterEnd);
       }
+
       if (isMedia) {
-        titleRowEl = React.createElement('div', { className: 'item-title-row' }, slotsBeforeTitle, titleEl, slotsAfterTitle, afterWrapEl);
+        titleRowEl = React.createElement('div', {
+          className: 'item-title-row'
+        }, slotsBeforeTitle, titleEl, slotsAfterTitle, afterWrapEl);
         innerEl = React.createElement('div', {
           ref: function (__reactNode) {
             this$1.__reactRefs['innerEl'] = __reactNode;
@@ -3970,6 +4085,7 @@
           className: 'item-inner'
         }, slotsInnerStart, slotsBeforeTitle, titleEl, slotsAfterTitle, afterWrapEl, slotsInner, slotsInnerEnd);
       }
+
       var ItemContentTag = checkbox || radio ? 'label' : 'div';
       var classes = Utils.classNames(className, 'item-content', {
         'item-checkbox': checkbox,
@@ -3990,11 +4106,11 @@
         onClick: self.onClick.bind(self)
       }, slotsContentStart, inputEl, inputIconEl, mediaEl, innerEl, slotsContent, slotsContentEnd);
     };
+
     F7ListItemContent.prototype.componentDidUpdate = function componentDidUpdate () {
       var self = this;
       var innerEl = self.refs.innerEl;
-      if (!innerEl)
-        { return; }
+      if (!innerEl) { return; }
       var $innerEl = self.$$(innerEl);
       var $labelEl = $innerEl.children('.item-title.item-label');
       var $inputEl = $innerEl.children('.item-input-wrap');
@@ -4002,24 +4118,36 @@
       var hasInput = $inputEl.length > 0;
       var hasInputInfo = $inputEl.children('.item-input-info').length > 0;
       var hasInputErrorMessage = $inputEl.children('.item-input-error-message').length > 0;
+
       if (hasInlineLabel !== self.state.hasInlineLabel) {
-        self.setState({ hasInlineLabel: hasInlineLabel });
+        self.setState({
+          hasInlineLabel: hasInlineLabel
+        });
       }
+
       if (hasInput !== self.state.hasInput) {
-        self.setState({ hasInput: hasInput });
+        self.setState({
+          hasInput: hasInput
+        });
       }
+
       if (hasInputInfo !== self.state.hasInputInfo) {
-        self.setState({ hasInputInfo: hasInputInfo });
+        self.setState({
+          hasInputInfo: hasInputInfo
+        });
       }
+
       if (!self.hasInputErrorMessageSet && hasInputErrorMessage !== self.state.hasInputErrorMessage) {
-        self.setState({ hasInputErrorMessage: hasInputErrorMessage });
+        self.setState({
+          hasInputErrorMessage: hasInputErrorMessage
+        });
       }
     };
+
     F7ListItemContent.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var innerEl = self.refs.innerEl;
-      if (!innerEl)
-        { return; }
+      if (!innerEl) { return; }
       var $innerEl = self.$$(innerEl);
       var $labelEl = $innerEl.children('.item-title.item-label');
       var $inputEl = $innerEl.children('.item-input-wrap');
@@ -4027,71 +4155,64 @@
       var hasInput = $inputEl.length > 0;
       var hasInputInfo = $inputEl.children('.item-input-info').length > 0;
       var hasInputErrorMessage = $inputEl.children('.item-input-error-message').length > 0;
+
       if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {
-        self.setState({ hasInlineLabel: hasInlineLabel });
+        self.setState({
+          hasInlineLabel: hasInlineLabel
+        });
       }
+
       if (!self.hasInputSet && hasInput !== self.state.hasInput) {
-        self.setState({ hasInput: hasInput });
+        self.setState({
+          hasInput: hasInput
+        });
       }
+
       if (!self.hasInputInfoSet && hasInputInfo !== self.state.hasInputInfo) {
-        self.setState({ hasInputInfo: hasInputInfo });
+        self.setState({
+          hasInputInfo: hasInputInfo
+        });
       }
+
       if (!self.hasInputErrorMessageSet && hasInputErrorMessage !== self.state.hasInputErrorMessage) {
-        self.setState({ hasInputErrorMessage: hasInputErrorMessage });
+        self.setState({
+          hasInputErrorMessage: hasInputErrorMessage
+        });
       }
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7ListItemContent.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
 
     Object.defineProperties( F7ListItemContent.prototype, prototypeAccessors );
 
     return F7ListItemContent;
   }(React.Component));
-  __reactComponentSetProps(F7ListItemContent, Object.assign({}, {id: [
-      String,
-      Number
-    ],
-    title: [
-      String,
-      Number
-    ],
-    text: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7ListItemContent, Object.assign({
+    id: [String, Number],
+    title: [String, Number],
+    text: [String, Number],
     media: String,
-    subtitle: [
-      String,
-      Number
-    ],
-    header: [
-      String,
-      Number
-    ],
-    footer: [
-      String,
-      Number
-    ],
-    after: [
-      String,
-      Number
-    ],
-    badge: [
-      String,
-      Number
-    ],
+    subtitle: [String, Number],
+    header: [String, Number],
+    footer: [String, Number],
+    after: [String, Number],
+    badge: [String, Number],
     badgeColor: String,
     mediaList: Boolean,
     mediaItem: Boolean,
@@ -4102,15 +4223,11 @@
     checked: Boolean,
     radio: Boolean,
     name: String,
-    value: [
-      String,
-      Number,
-      Array
-    ],
+    value: [String, Number, Array],
     readonly: Boolean,
     required: Boolean,
-    disabled: Boolean},
-    Mixins.colorProps));
+    disabled: Boolean
+  }, Mixins.colorProps));
 
   var F7ListItemRow = (function (superclass) {
     function F7ListItemRow(props, context) {
@@ -4122,6 +4239,7 @@
     F7ListItemRow.prototype.constructor = F7ListItemRow;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7ListItemRow.prototype.render = function render () {
       var props = this.props;
       var className = props.className;
@@ -4134,6 +4252,7 @@
         className: classes
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -4142,11 +4261,10 @@
 
     return F7ListItemRow;
   }(React.Component));
-  __reactComponentSetProps(F7ListItemRow, Object.assign({}, {id: [
-      String,
-      Number
-    ]},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7ListItemRow, Object.assign({
+    id: [String, Number]
+  }, Mixins.colorProps));
 
   var F7ListItem = (function (superclass) {
     function F7ListItem(props, context) {
@@ -4154,6 +4272,7 @@
 
       superclass.call(this, props, context);
       this.__reactRefs = {};
+
       this.state = (function () {
         return {
           isMedia: props.mediaItem || props.mediaList,
@@ -4161,6 +4280,7 @@
           isSimple: false
         };
       })();
+
       (function () {
         var self = this$1;
         self.onClickBound = self.onClick.bind(self);
@@ -4184,54 +4304,71 @@
     F7ListItem.prototype.constructor = F7ListItem;
 
     var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+
     F7ListItem.prototype.onClick = function onClick (event) {
       var self = this;
+
       if (self.props.smartSelect && self.f7SmartSelect) {
         self.f7SmartSelect.open();
       }
+
       if (event.target.tagName.toLowerCase() !== 'input') {
         self.dispatchEvent('click', event);
       }
     };
+
     F7ListItem.prototype.onSwipeoutDeleted = function onSwipeoutDeleted (event) {
       this.dispatchEvent('swipeout:deleted swipeoutDeleted', event);
     };
+
     F7ListItem.prototype.onSwipeoutDelete = function onSwipeoutDelete (event) {
       this.dispatchEvent('swipeout:delete swipeoutDelete', event);
     };
+
     F7ListItem.prototype.onSwipeoutClose = function onSwipeoutClose (event) {
       this.dispatchEvent('swipeout:close swipeoutClose', event);
     };
+
     F7ListItem.prototype.onSwipeoutClosed = function onSwipeoutClosed (event) {
       this.dispatchEvent('swipeout:closed swipeoutClosed', event);
     };
+
     F7ListItem.prototype.onSwipeoutOpen = function onSwipeoutOpen (event) {
       this.dispatchEvent('swipeout:open swipeoutOpen', event);
     };
+
     F7ListItem.prototype.onSwipeoutOpened = function onSwipeoutOpened (event) {
       this.dispatchEvent('swipeout:opened swipeoutOpened', event);
     };
+
     F7ListItem.prototype.onSwipeout = function onSwipeout (event) {
       this.dispatchEvent('swipeout', event);
     };
+
     F7ListItem.prototype.onAccClose = function onAccClose (event) {
       this.dispatchEvent('accordion:close accordionClose', event);
     };
+
     F7ListItem.prototype.onAccClosed = function onAccClosed (event) {
       this.dispatchEvent('accordion:closed accordionClosed', event);
     };
+
     F7ListItem.prototype.onAccOpen = function onAccOpen (event) {
       this.dispatchEvent('accordion:open accordionOpen', event);
     };
+
     F7ListItem.prototype.onAccOpened = function onAccOpened (event) {
       this.dispatchEvent('accordion:opened accordionOpened', event);
     };
+
     F7ListItem.prototype.onChange = function onChange (event) {
       this.dispatchEvent('change', event);
     };
+
     F7ListItem.prototype.onInput = function onInput (event) {
       this.dispatchEvent('input', event);
     };
+
     F7ListItem.prototype.render = function render () {
       var this$1 = this;
 
@@ -4279,6 +4416,7 @@
       var isMedia = mediaItem || mediaList || self.state.isMedia;
       var isSortable = sortable || self.state.isSortable;
       var isSimple = self.state.isSimple;
+
       if (!isSimple) {
         var needsEvents = !(link || href || accordionItem || smartSelect);
         itemContentEl = React.createElement(F7ListItemContent, {
@@ -4307,6 +4445,7 @@
           onClick: needsEvents ? self.onClickBound : null,
           onChange: needsEvents ? self.onChangeBound : null
         }, this.slots['content-start'], this.slots['content'], this.slots['content-end'], this.slots['media'], this.slots['inner-start'], this.slots['inner'], this.slots['inner-end'], this.slots['after-start'], this.slots['after'], this.slots['after-end'], this.slots['header'], this.slots['footer'], this.slots['before-title'], this.slots['title'], this.slots['after-title'], this.slots['subtitle'], this.slots['text'], swipeout || accordionItem ? null : self.slots.default);
+
         if (link || href || accordionItem || smartSelect) {
           var linkAttrs = Utils.extend({
             href: link === true || accordionItem || smartSelect ? '#' : link || href,
@@ -4317,11 +4456,13 @@
             'no-fastclick': noFastclick || noFastClick,
             'smart-select': smartSelect
           }, Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
-          linkEl = React.createElement('a', Object.assign({}, {className: linkClasses,
-            onClick: self.onClick.bind(self)},
-            linkAttrs), itemContentEl);
+          linkEl = React.createElement('a', Object.assign({
+            className: linkClasses,
+            onClick: self.onClick.bind(self)
+          }, linkAttrs), itemContentEl);
         }
       }
+
       var liClasses = Utils.classNames(className, {
         'item-divider': divider,
         'list-group-title': groupTitle,
@@ -4330,6 +4471,7 @@
         'accordion-item': accordionItem,
         'accordion-item-opened': accordionItemOpened
       }, Mixins.colorClasses(props));
+
       if (divider || groupTitle) {
         return React.createElement('li', {
           ref: function (__reactNode) {
@@ -4349,6 +4491,7 @@
           className: liClasses
         }, title, this.slots['default']);
       }
+
       var linkItemEl = link || href || smartSelect || accordionItem ? linkEl : itemContentEl;
       return React.createElement('li', {
         ref: function (__reactNode) {
@@ -4357,8 +4500,13 @@
         id: id,
         style: style,
         className: liClasses
-      }, this.slots['root-start'], swipeout ? React.createElement('div', { className: 'swipeout-content' }, linkItemEl) : linkItemEl, isSortable && React.createElement('div', { className: 'sortable-handler' }), (swipeout || accordionItem) && self.slots.default, this.slots['root'], this.slots['root-end']);
+      }, this.slots['root-start'], swipeout ? React.createElement('div', {
+        className: 'swipeout-content'
+      }, linkItemEl) : linkItemEl, isSortable && React.createElement('div', {
+        className: 'sortable-handler'
+      }), (swipeout || accordionItem) && self.slots.default, this.slots['root'], this.slots['root-end']);
     };
+
     F7ListItem.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
       var el = self.refs.el;
@@ -4366,6 +4514,7 @@
       var swipeout = ref.swipeout;
       var accordionItem = ref.accordionItem;
       var smartSelect = ref.smartSelect;
+
       if (el) {
         if (swipeout) {
           el.removeEventListener('swipeout:open', self.onSwipeoutOpenBound);
@@ -4376,6 +4525,7 @@
           el.removeEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
           el.removeEventListener('swipeout', self.onSwipeoutBound);
         }
+
         if (accordionItem) {
           el.removeEventListener('accordion:open', self.onAccOpenBound);
           el.removeEventListener('accordion:opened', self.onAccOpenedBound);
@@ -4383,47 +4533,59 @@
           el.removeEventListener('accordion:closed', self.onAccClosedBound);
         }
       }
+
       if (smartSelect && self.f7SmartSelect) {
         self.f7SmartSelect.destroy();
       }
     };
+
     F7ListItem.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.swipeoutOpened', prevProps, prevState, function (opened) {
         var self = this$1;
-        if (!self.props.swipeout)
-          { return; }
+        if (!self.props.swipeout) { return; }
         var el = self.refs.el;
+
         if (opened) {
           self.$f7.swipeout.open(el);
         } else {
           self.$f7.swipeout.close(el);
         }
       });
+
       var self = this;
       var $listEl = self.$listEl;
-      if (!$listEl || $listEl && $listEl.length === 0)
-        { return; }
+      if (!$listEl || $listEl && $listEl.length === 0) { return; }
       var isMedia = $listEl.hasClass('media-list');
       var isSimple = $listEl.hasClass('simple-list');
       var isSortable = $listEl.hasClass('sortable');
+
       if (isMedia !== self.state.isMedia) {
-        self.setState({ isMedia: isMedia });
+        self.setState({
+          isMedia: isMedia
+        });
       }
+
       if (isSimple !== self.state.isSimple) {
-        self.setState({ isSimple: isSimple });
+        self.setState({
+          isSimple: isSimple
+        });
       }
+
       if (isSortable !== self.state.isSortable) {
-        self.setState({ isSortable: isSortable });
+        self.setState({
+          isSortable: isSortable
+        });
       }
     };
+
     F7ListItem.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var el = self.refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       self.$listEl = self.$$(el).parents('.list, .list-group').eq(0);
+
       if (self.$listEl.length) {
         self.setState({
           isMedia: self.$listEl.hasClass('media-list'),
@@ -4431,12 +4593,14 @@
           isSortable: self.$listEl.hasClass('sortable')
         });
       }
+
       var ref = self.props;
       var swipeout = ref.swipeout;
       var swipeoutOpened = ref.swipeoutOpened;
       var accordionItem = ref.accordionItem;
       var smartSelect = ref.smartSelect;
       var smartSelectParams = ref.smartSelectParams;
+
       if (swipeout) {
         el.addEventListener('swipeout:open', self.onSwipeoutOpenBound);
         el.addEventListener('swipeout:opened', self.onSwipeoutOpenedBound);
@@ -4446,81 +4610,64 @@
         el.addEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
         el.addEventListener('swipeout', self.onSwipeoutBound);
       }
+
       if (accordionItem) {
         el.addEventListener('accordion:open', self.onAccOpenBound);
         el.addEventListener('accordion:opened', self.onAccOpenedBound);
         el.addEventListener('accordion:close', self.onAccCloseBound);
         el.addEventListener('accordion:closed', self.onAccClosedBound);
       }
+
       self.$f7ready(function (f7) {
         if (smartSelect) {
-          var ssParams = Utils.extend({ el: el.querySelector('a.smart-select') }, smartSelectParams || {});
+          var ssParams = Utils.extend({
+            el: el.querySelector('a.smart-select')
+          }, smartSelectParams || {});
           self.f7SmartSelect = f7.smartSelect.create(ssParams);
         }
+
         if (swipeoutOpened) {
           f7.swipeout.open(el);
         }
       });
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7ListItem.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
 
     Object.defineProperties( F7ListItem.prototype, prototypeAccessors );
 
     return F7ListItem;
   }(React.Component));
-  __reactComponentSetProps(F7ListItem, Object.assign({}, {id: [
-      String,
-      Number
-    ],
-    title: [
-      String,
-      Number
-    ],
-    text: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7ListItem, Object.assign({
+    id: [String, Number],
+    title: [String, Number],
+    text: [String, Number],
     media: String,
-    subtitle: [
-      String,
-      Number
-    ],
-    header: [
-      String,
-      Number
-    ],
-    footer: [
-      String,
-      Number
-    ],
-    link: [
-      Boolean,
-      String
-    ],
+    subtitle: [String, Number],
+    header: [String, Number],
+    footer: [String, Number],
+    link: [Boolean, String],
     target: String,
     noFastclick: Boolean,
     noFastClick: Boolean,
-    after: [
-      String,
-      Number
-    ],
-    badge: [
-      String,
-      Number
-    ],
+    after: [String, Number],
+    badge: [String, Number],
     badgeColor: String,
     mediaItem: Boolean,
     mediaList: Boolean,
@@ -4537,20 +4684,14 @@
     radio: Boolean,
     checked: Boolean,
     name: String,
-    value: [
-      String,
-      Number,
-      Array
-    ],
+    value: [String, Number, Array],
     readonly: Boolean,
     required: Boolean,
     disabled: Boolean,
     itemInput: Boolean,
     itemInputWithInfo: Boolean,
-    inlineLabel: Boolean},
-    Mixins.colorProps,
-    Mixins.linkRouterProps,
-    Mixins.linkActionsProps));
+    inlineLabel: Boolean
+  }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
 
   var F7List = (function (superclass) {
     function F7List(props, context) {
@@ -4563,21 +4704,27 @@
     F7List.prototype.constructor = F7List;
 
     var prototypeAccessors = { classes: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
+
     F7List.prototype.onSortableEnable = function onSortableEnable (event) {
       this.dispatchEvent('sortable:enable sortableEnable', event);
     };
+
     F7List.prototype.onSortableDisable = function onSortableDisable (event) {
       this.dispatchEvent('sortable:disable sortableDisable', event);
     };
+
     F7List.prototype.onSortableSort = function onSortableSort (event) {
       this.dispatchEvent('sortable:sort sortableSort', event, event.detail);
     };
+
     F7List.prototype.onTabShow = function onTabShow (e) {
       this.dispatchEvent('tab:show tabShow', e);
     };
+
     F7List.prototype.onTabHide = function onTabHide (e) {
       this.dispatchEvent('tab:hide tabHide', e);
     };
+
     prototypeAccessors.classes.get = function () {
       var self = this;
       var props = self.props;
@@ -4625,6 +4772,7 @@
         'inline-labels': inlineLabels
       }, Mixins.colorClasses(props));
     };
+
     F7List.prototype.render = function render () {
       var this$1 = this;
 
@@ -4642,26 +4790,25 @@
       var flattenSlots = Utils.flattenArray(slotsDefault);
       var wasUlChild = false;
       flattenSlots.forEach(function (child) {
-        if (typeof child === 'undefined')
-          { return; }
+        if (typeof child === 'undefined') { return; }
         var tag;
         {
           tag = child.type && child.type.name;
+
           if (!tag && typeof child.type === 'string') {
             tag = child.type;
           }
         }
+
         if (!tag && 'react' === 'react' || tag && !(tag === 'li' || tag === 'F7ListItem' || tag === 'F7ListButton' || tag.indexOf('list-item') >= 0 || tag.indexOf('list-button') >= 0)) {
-          if (wasUlChild)
-            { rootChildrenAfterList.push(child); }
-          else
-            { rootChildrenBeforeList.push(child); }
+          if (wasUlChild) { rootChildrenAfterList.push(child); }else { rootChildrenBeforeList.push(child); }
         } else if (tag) {
           wasUlChild = true;
           ulChildren.push(child);
         }
       });
       var ListTag = form ? 'form' : 'div';
+
       if (ulChildren.length > 0) {
         return React.createElement(ListTag, {
           id: id,
@@ -4682,12 +4829,14 @@
         }, self.slots['before-list'], rootChildrenBeforeList, self.slots['after-list'], rootChildrenAfterList);
       }
     };
+
     F7List.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var el = self.refs.el;
       var ref = self.props;
       var virtualList = ref.virtualList;
       var virtualListParams = ref.virtualListParams;
+
       if (el) {
         self.onSortableEnableBound = self.onSortableEnable.bind(self);
         self.onSortableDisableBound = self.onSortableDisable.bind(self);
@@ -4700,22 +4849,22 @@
         el.addEventListener('tab:show', self.onTabShowBound);
         el.addEventListener('tab:hide', self.onTabHideBound);
       }
-      if (!virtualList)
-        { return; }
+
+      if (!virtualList) { return; }
       self.$f7ready(function (f7) {
         var $$ = self.$$;
         var $el = $$(el);
         var templateScript = $el.find('script');
         var template = templateScript.html();
+
         if (!template && templateScript.length > 0) {
           template = templateScript[0].outerHTML;
           template = /\<script type="text\/template7"\>(.*)<\/script>/.exec(template)[1];
         }
+
         var vlParams = virtualListParams || {};
-        if (!template && !vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal)
-          { return; }
-        if (template)
-          { template = self.$t7.compile(template); }
+        if (!template && !vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal) { return; }
+        if (template) { template = self.$t7.compile(template); }
         self.f7VirtualList = f7.virtualList.create(Utils.extend({
           el: el,
           itemTemplate: template,
@@ -4724,25 +4873,31 @@
               var vl = this;
               self.dispatchEvent('virtual:itembeforeinsert virtualItemBeforeInsert', vl, itemEl, item);
             },
+
             beforeClear: function beforeClear(fragment) {
               var vl = this;
               self.dispatchEvent('virtual:beforeclear virtualBeforeClear', vl, fragment);
             },
+
             itemsBeforeInsert: function itemsBeforeInsert(fragment) {
               var vl = this;
               self.dispatchEvent('virtual:itemsbeforeinsert virtualItemsBeforeInsert', vl, fragment);
             },
+
             itemsAfterInsert: function itemsAfterInsert(fragment) {
               var vl = this;
               self.dispatchEvent('virtual:itemsafterinsert virtualItemsAfterInsert', vl, fragment);
             }
+
           }
         }, vlParams));
       });
     };
+
     F7List.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
       var el = self.refs.el;
+
       if (el) {
         el.removeEventListener('sortable:enable', self.onSortableEnableBound);
         el.removeEventListener('sortable:disable', self.onSortableDisableBound);
@@ -4750,34 +4905,35 @@
         el.removeEventListener('tab:show', self.onTabShowBound);
         el.removeEventListener('tab:hide', self.onTabHideBound);
       }
-      if (!(self.virtualList && self.f7VirtualList))
-        { return; }
-      if (self.f7VirtualList.destroy)
-        { self.f7VirtualList.destroy(); }
+
+      if (!(self.virtualList && self.f7VirtualList)) { return; }
+      if (self.f7VirtualList.destroy) { self.f7VirtualList.destroy(); }
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7List.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
 
     Object.defineProperties( F7List.prototype, prototypeAccessors );
 
     return F7List;
   }(React.Component));
-  __reactComponentSetProps(F7List, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7List, Object.assign({
+    id: [String, Number],
     inset: Boolean,
     tabletInset: Boolean,
     mediaList: Boolean,
@@ -4799,8 +4955,8 @@
     formStoreData: Boolean,
     inlineLabels: Boolean,
     virtualList: Boolean,
-    virtualListParams: Object},
-    Mixins.colorProps));
+    virtualListParams: Object
+  }, Mixins.colorProps));
 
   var F7LoginScreenTitle = (function (superclass) {
     function F7LoginScreenTitle(props, context) {
@@ -4812,6 +4968,7 @@
     F7LoginScreenTitle.prototype.constructor = F7LoginScreenTitle;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7LoginScreenTitle.prototype.render = function render () {
       var props = this.props;
       var className = props.className;
@@ -4824,6 +4981,7 @@
         className: classes
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -4832,11 +4990,10 @@
 
     return F7LoginScreenTitle;
   }(React.Component));
-  __reactComponentSetProps(F7LoginScreenTitle, Object.assign({}, {id: [
-      String,
-      Number
-    ]},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7LoginScreenTitle, Object.assign({
+    id: [String, Number]
+  }, Mixins.colorProps));
 
   var F7LoginScreen = (function (superclass) {
     function F7LoginScreen(props, context) {
@@ -4849,32 +5006,37 @@
     F7LoginScreen.prototype.constructor = F7LoginScreen;
 
     var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+
     F7LoginScreen.prototype.onOpen = function onOpen (event) {
       this.dispatchEvent('loginscreen:open loginScreenOpen', event);
     };
+
     F7LoginScreen.prototype.onOpened = function onOpened (event) {
       this.dispatchEvent('loginscreen:opened loginScreenOpened', event);
     };
+
     F7LoginScreen.prototype.onClose = function onClose (event) {
       this.dispatchEvent('loginscreen:close loginScreenClose', event);
     };
+
     F7LoginScreen.prototype.onClosed = function onClosed (event) {
       this.dispatchEvent('loginscreen:closed loginScreenClosed', event);
     };
+
     F7LoginScreen.prototype.open = function open (animate) {
       var self = this;
       var el = self.refs.el;
-      if (!self.$f7 || !el)
-        { return undefined; }
+      if (!self.$f7 || !el) { return undefined; }
       return self.$f7.loginScreen.open(el, animate);
     };
+
     F7LoginScreen.prototype.close = function close (animate) {
       var self = this;
       var el = self.refs.el;
-      if (!self.$f7 || !el)
-        { return undefined; }
+      if (!self.$f7 || !el) { return undefined; }
       return self.$f7.loginScreen.close(el, animate);
     };
+
     F7LoginScreen.prototype.render = function render () {
       var this$1 = this;
 
@@ -4893,23 +5055,22 @@
         className: classes
       }, this.slots['default']);
     };
+
     F7LoginScreen.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
       var el = self.refs.el;
-      if (self.f7LoginScreen)
-        { self.f7LoginScreen.destroy(); }
-      if (!el)
-        { return; }
+      if (self.f7LoginScreen) { self.f7LoginScreen.destroy(); }
+      if (!el) { return; }
       el.removeEventListener('loginscreen:open', self.onOpenBound);
       el.removeEventListener('loginscreen:opened', self.onOpenedBound);
       el.removeEventListener('loginscreen:close', self.onCloseBound);
       el.removeEventListener('loginscreen:closed', self.onClosedBound);
     };
+
     F7LoginScreen.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var el = self.refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       self.onOpenBound = self.onOpen.bind(self);
       self.onOpenedBound = self.onOpened.bind(self);
       self.onCloseBound = self.onClose.bind(self);
@@ -4919,33 +5080,40 @@
       el.addEventListener('loginscreen:close', self.onCloseBound);
       el.addEventListener('loginscreen:closed', self.onClosedBound);
       self.$f7ready(function () {
-        self.f7LoginScreen = self.$f7.loginScreen.create({ el: el });
+        self.f7LoginScreen = self.$f7.loginScreen.create({
+          el: el
+        });
+
         if (self.props.opened) {
           self.f7LoginScreen.open(false);
         }
       });
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7LoginScreen.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
+
     F7LoginScreen.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.opened', prevProps, prevState, function (opened) {
         var self = this$1;
-        if (!self.f7LoginScreen)
-          { return; }
+        if (!self.f7LoginScreen) { return; }
+
         if (opened) {
           self.f7LoginScreen.open();
         } else {
@@ -4958,18 +5126,18 @@
 
     return F7LoginScreen;
   }(React.Component));
-  __reactComponentSetProps(F7LoginScreen, Object.assign({}, {id: [
-      String,
-      Number
-    ],
-    opened: Boolean},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7LoginScreen, Object.assign({
+    id: [String, Number],
+    opened: Boolean
+  }, Mixins.colorProps));
 
   var F7Message = (function (superclass) {
     function F7Message(props, context) {
       var this$1 = this;
 
       superclass.call(this, props, context);
+
       (function () {
         this$1.onClickBound = this$1.onClick.bind(this$1);
         this$1.onNameClickBound = this$1.onNameClick.bind(this$1);
@@ -4986,27 +5154,35 @@
     F7Message.prototype.constructor = F7Message;
 
     var prototypeAccessors = { classes: { configurable: true },slots: { configurable: true } };
+
     F7Message.prototype.onClick = function onClick (event) {
       this.dispatchEvent('click', event);
     };
+
     F7Message.prototype.onNameClick = function onNameClick (event) {
       this.dispatchEvent('click:name clickName', event);
     };
+
     F7Message.prototype.onTextClick = function onTextClick (event) {
       this.dispatchEvent('click:text clickText', event);
     };
+
     F7Message.prototype.onAvatarClick = function onAvatarClick (event) {
       this.dispatchEvent('click:avatar clickAvatar', event);
     };
+
     F7Message.prototype.onHeaderClick = function onHeaderClick (event) {
       this.dispatchEvent('click:header clickHeader', event);
     };
+
     F7Message.prototype.onFooterClick = function onFooterClick (event) {
       this.dispatchEvent('click:footer clickFooter', event);
     };
+
     F7Message.prototype.onBubbleClick = function onBubbleClick (event) {
       this.dispatchEvent('click:bubble clickBubble', event);
     };
+
     prototypeAccessors.classes.get = function () {
       var self = this;
       var props = self.props;
@@ -5033,6 +5209,7 @@
         'message-same-avatar': sameAvatar
       }, Mixins.colorClasses(props));
     };
+
     F7Message.prototype.render = function render () {
       var self = this;
       var props = self.props;
@@ -5070,9 +5247,13 @@
         onClick: self.onClickBound
       }, slotsStart, (avatar || slotsAvatar) && React.createElement('div', {
         className: 'message-avatar',
-        style: { backgroundImage: avatar && ("url(" + avatar + ")") },
+        style: {
+          backgroundImage: avatar && ("url(" + avatar + ")")
+        },
         onClick: self.onAvatarClickBound
-      }, slotsAvatar), React.createElement('div', { className: 'message-content' }, slotsContentStart, (slotsName || name) && React.createElement('div', {
+      }, slotsAvatar), React.createElement('div', {
+        className: 'message-content'
+      }, slotsContentStart, (slotsName || name) && React.createElement('div', {
         className: 'message-name',
         onClick: self.onNameClickBound
       }, slotsName || name), (slotsHeader || header) && React.createElement('div', {
@@ -5081,17 +5262,29 @@
       }, slotsHeader || header), React.createElement('div', {
         className: 'message-bubble',
         onClick: self.onBubbleClickBound
-      }, slotsBubbleStart, (slotsImage || image) && React.createElement('div', { className: 'message-image' }, slotsImage || React.createElement('img', { src: image })), (slotsTextHeader || textHeader) && React.createElement('div', { className: 'message-text-header' }, slotsTextHeader || textHeader), (slotsText || text || typing) && React.createElement('div', {
+      }, slotsBubbleStart, (slotsImage || image) && React.createElement('div', {
+        className: 'message-image'
+      }, slotsImage || React.createElement('img', {
+        src: image
+      })), (slotsTextHeader || textHeader) && React.createElement('div', {
+        className: 'message-text-header'
+      }, slotsTextHeader || textHeader), (slotsText || text || typing) && React.createElement('div', {
         className: 'message-text',
         onClick: self.onTextClickBound
-      }, slotsText || text, typing && React.createElement('div', { className: 'message-typing-indicator' }, React.createElement('div', null), React.createElement('div', null), React.createElement('div', null))), (slotsTextFooter || textFooter) && React.createElement('div', { className: 'message-text-footer' }, slotsTextFooter || textFooter), slotsBubbleEnd, slotsDefault), (slotsFooter || footer) && React.createElement('div', {
+      }, slotsText || text, typing && React.createElement('div', {
+        className: 'message-typing-indicator'
+      }, React.createElement('div', null), React.createElement('div', null), React.createElement('div', null))), (slotsTextFooter || textFooter) && React.createElement('div', {
+        className: 'message-text-footer'
+      }, slotsTextFooter || textFooter), slotsBubbleEnd, slotsDefault), (slotsFooter || footer) && React.createElement('div', {
         className: 'message-footer',
         onClick: self.onFooterClickBound
       }, slotsFooter || footer), slotsContentEnd), slotsEnd);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7Message.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
@@ -5103,10 +5296,9 @@
 
     return F7Message;
   }(React.Component));
-  __reactComponentSetProps(F7Message, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Message, Object.assign({
+    id: [String, Number],
     text: String,
     name: String,
     avatar: String,
@@ -5126,14 +5318,15 @@
     sameHeader: Boolean,
     sameFooter: Boolean,
     sameAvatar: Boolean,
-    typing: Boolean},
-    Mixins.colorProps));
+    typing: Boolean
+  }, Mixins.colorProps));
 
   var F7MessagebarAttachment = (function (superclass) {
     function F7MessagebarAttachment(props, context) {
       var this$1 = this;
 
       superclass.call(this, props, context);
+
       (function () {
         this$1.onClickBound = this$1.onClick.bind(this$1);
         this$1.onDeleteClickBound = this$1.onDeleteClick.bind(this$1);
@@ -5145,12 +5338,15 @@
     F7MessagebarAttachment.prototype.constructor = F7MessagebarAttachment;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7MessagebarAttachment.prototype.onClick = function onClick (e) {
       this.dispatchEvent('attachment:click attachmentClick', e);
     };
+
     F7MessagebarAttachment.prototype.onDeleteClick = function onDeleteClick (e) {
       this.dispatchEvent('attachment:delete attachmentDelete', e);
     };
+
     F7MessagebarAttachment.prototype.render = function render () {
       var self = this;
       var props = self.props;
@@ -5165,14 +5361,18 @@
         style: style,
         className: classes,
         onClick: self.onClickBound
-      }, image && React.createElement('img', { src: image }), deletable && React.createElement('span', {
+      }, image && React.createElement('img', {
+        src: image
+      }), deletable && React.createElement('span', {
         className: 'messagebar-attachment-delete',
         onClick: self.onDeleteClickBound
       }), this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7MessagebarAttachment.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
@@ -5184,16 +5384,15 @@
 
     return F7MessagebarAttachment;
   }(React.Component));
-  __reactComponentSetProps(F7MessagebarAttachment, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7MessagebarAttachment, Object.assign({
+    id: [String, Number],
     image: String,
     deletable: {
       type: Boolean,
       default: true
-    }},
-    Mixins.colorProps));
+    }
+  }, Mixins.colorProps));
 
   var F7MessagebarAttachments = (function (superclass) {
     function F7MessagebarAttachments(props, context) {
@@ -5205,6 +5404,7 @@
     F7MessagebarAttachments.prototype.constructor = F7MessagebarAttachments;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7MessagebarAttachments.prototype.render = function render () {
       var props = this.props;
       var className = props.className;
@@ -5217,6 +5417,7 @@
         className: classes
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -5225,17 +5426,17 @@
 
     return F7MessagebarAttachments;
   }(React.Component));
-  __reactComponentSetProps(F7MessagebarAttachments, Object.assign({}, {id: [
-      String,
-      Number
-    ]},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7MessagebarAttachments, Object.assign({
+    id: [String, Number]
+  }, Mixins.colorProps));
 
   var F7MessagebarSheetImage = (function (superclass) {
     function F7MessagebarSheetImage(props, context) {
       var this$1 = this;
 
       superclass.call(this, props, context);
+
       (function () {
         this$1.onChangeBound = this$1.onChange.bind(this$1);
       })();
@@ -5246,13 +5447,12 @@
     F7MessagebarSheetImage.prototype.constructor = F7MessagebarSheetImage;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7MessagebarSheetImage.prototype.onChange = function onChange (e) {
-      if (this.props.checked)
-        { this.dispatchEvent('checked', e); }
-      else
-        { this.dispatchEvent('unchecked', e); }
+      if (this.props.checked) { this.dispatchEvent('checked', e); }else { this.dispatchEvent('unchecked', e); }
       this.dispatchEvent('change', e);
     };
+
     F7MessagebarSheetImage.prototype.render = function render () {
       var self = this;
       var props = self.props;
@@ -5262,7 +5462,9 @@
       var className = props.className;
       var style = props.style;
       var classes = Utils.classNames(className, 'messagebar-sheet-image', 'checkbox', Mixins.colorClasses(props));
-      var styles = Utils.extend({ backgroundImage: image && ("url(" + image + ")") }, style || {});
+      var styles = Utils.extend({
+        backgroundImage: image && ("url(" + image + ")")
+      }, style || {});
       var inputEl;
       {
         inputEl = React.createElement('input', {
@@ -5275,11 +5477,15 @@
         id: id,
         className: classes,
         style: styles
-      }, inputEl, React.createElement('i', { className: 'icon icon-checkbox' }), this.slots['default']);
+      }, inputEl, React.createElement('i', {
+        className: 'icon icon-checkbox'
+      }), this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7MessagebarSheetImage.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
@@ -5291,13 +5497,12 @@
 
     return F7MessagebarSheetImage;
   }(React.Component));
-  __reactComponentSetProps(F7MessagebarSheetImage, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7MessagebarSheetImage, Object.assign({
+    id: [String, Number],
     image: String,
-    checked: Boolean},
-    Mixins.colorProps));
+    checked: Boolean
+  }, Mixins.colorProps));
 
   var F7MessagebarSheetItem = (function (superclass) {
     function F7MessagebarSheetItem(props, context) {
@@ -5309,6 +5514,7 @@
     F7MessagebarSheetItem.prototype.constructor = F7MessagebarSheetItem;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7MessagebarSheetItem.prototype.render = function render () {
       var props = this.props;
       var className = props.className;
@@ -5321,6 +5527,7 @@
         className: classes
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -5329,11 +5536,10 @@
 
     return F7MessagebarSheetItem;
   }(React.Component));
-  __reactComponentSetProps(F7MessagebarSheetItem, Object.assign({}, {id: [
-      String,
-      Number
-    ]},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7MessagebarSheetItem, Object.assign({
+    id: [String, Number]
+  }, Mixins.colorProps));
 
   var F7MessagebarSheet = (function (superclass) {
     function F7MessagebarSheet(props, context) {
@@ -5345,6 +5551,7 @@
     F7MessagebarSheet.prototype.constructor = F7MessagebarSheet;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7MessagebarSheet.prototype.render = function render () {
       var props = this.props;
       var className = props.className;
@@ -5357,6 +5564,7 @@
         className: classes
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -5365,11 +5573,10 @@
 
     return F7MessagebarSheet;
   }(React.Component));
-  __reactComponentSetProps(F7MessagebarSheet, Object.assign({}, {id: [
-      String,
-      Number
-    ]},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7MessagebarSheet, Object.assign({
+    id: [String, Number]
+  }, Mixins.colorProps));
 
   var F7Messagebar = (function (superclass) {
     function F7Messagebar(props, context) {
@@ -5377,6 +5584,7 @@
 
       superclass.call(this, props, context);
       this.__reactRefs = {};
+
       (function () {
         this$1.onChangeBound = this$1.onChange.bind(this$1);
         this$1.onInputBound = this$1.onInput.bind(this$1);
@@ -5394,155 +5602,163 @@
     F7Messagebar.prototype.constructor = F7Messagebar;
 
     var prototypeAccessors = { classes: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
+
     F7Messagebar.prototype.clear = function clear () {
       var ref;
 
       var args = [], len = arguments.length;
       while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar)
-        { return undefined; }
+      if (!this.f7Messagebar) { return undefined; }
       return (ref = this.f7Messagebar).clear.apply(ref, args);
     };
+
     F7Messagebar.prototype.getValue = function getValue () {
       var ref;
 
       var args = [], len = arguments.length;
       while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar)
-        { return undefined; }
+      if (!this.f7Messagebar) { return undefined; }
       return (ref = this.f7Messagebar).getValue.apply(ref, args);
     };
+
     F7Messagebar.prototype.setValue = function setValue () {
       var ref;
 
       var args = [], len = arguments.length;
       while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar)
-        { return undefined; }
+      if (!this.f7Messagebar) { return undefined; }
       return (ref = this.f7Messagebar).setValue.apply(ref, args);
     };
+
     F7Messagebar.prototype.setPlaceholder = function setPlaceholder () {
       var ref;
 
       var args = [], len = arguments.length;
       while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar)
-        { return undefined; }
+      if (!this.f7Messagebar) { return undefined; }
       return (ref = this.f7Messagebar).setPlaceholder.apply(ref, args);
     };
+
     F7Messagebar.prototype.resize = function resize () {
       var ref;
 
       var args = [], len = arguments.length;
       while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar)
-        { return undefined; }
+      if (!this.f7Messagebar) { return undefined; }
       return (ref = this.f7Messagebar).resizePage.apply(ref, args);
     };
+
     F7Messagebar.prototype.focus = function focus () {
       var ref;
 
       var args = [], len = arguments.length;
       while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar)
-        { return undefined; }
+      if (!this.f7Messagebar) { return undefined; }
       return (ref = this.f7Messagebar).focus.apply(ref, args);
     };
+
     F7Messagebar.prototype.blur = function blur () {
       var ref;
 
       var args = [], len = arguments.length;
       while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar)
-        { return undefined; }
+      if (!this.f7Messagebar) { return undefined; }
       return (ref = this.f7Messagebar).blur.apply(ref, args);
     };
+
     F7Messagebar.prototype.attachmentsShow = function attachmentsShow () {
       var ref;
 
       var args = [], len = arguments.length;
       while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar)
-        { return undefined; }
+      if (!this.f7Messagebar) { return undefined; }
       return (ref = this.f7Messagebar).attachmentsShow.apply(ref, args);
     };
+
     F7Messagebar.prototype.attachmentsHide = function attachmentsHide () {
       var ref;
 
       var args = [], len = arguments.length;
       while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar)
-        { return undefined; }
+      if (!this.f7Messagebar) { return undefined; }
       return (ref = this.f7Messagebar).attachmentsHide.apply(ref, args);
     };
+
     F7Messagebar.prototype.attachmentsToggle = function attachmentsToggle () {
       var ref;
 
       var args = [], len = arguments.length;
       while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar)
-        { return undefined; }
+      if (!this.f7Messagebar) { return undefined; }
       return (ref = this.f7Messagebar).attachmentsToggle.apply(ref, args);
     };
+
     F7Messagebar.prototype.sheetShow = function sheetShow () {
       var ref;
 
       var args = [], len = arguments.length;
       while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar)
-        { return undefined; }
+      if (!this.f7Messagebar) { return undefined; }
       return (ref = this.f7Messagebar).sheetShow.apply(ref, args);
     };
+
     F7Messagebar.prototype.sheetHide = function sheetHide () {
       var ref;
 
       var args = [], len = arguments.length;
       while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar)
-        { return undefined; }
+      if (!this.f7Messagebar) { return undefined; }
       return (ref = this.f7Messagebar).sheetHide.apply(ref, args);
     };
+
     F7Messagebar.prototype.sheetToggle = function sheetToggle () {
       var ref;
 
       var args = [], len = arguments.length;
       while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar)
-        { return undefined; }
+      if (!this.f7Messagebar) { return undefined; }
       return (ref = this.f7Messagebar).sheetToggle.apply(ref, args);
     };
+
     F7Messagebar.prototype.onChange = function onChange (event) {
       this.dispatchEvent('change', event);
     };
+
     F7Messagebar.prototype.onInput = function onInput (event) {
       this.dispatchEvent('input', event);
     };
+
     F7Messagebar.prototype.onFocus = function onFocus (event) {
       this.dispatchEvent('focus', event);
     };
+
     F7Messagebar.prototype.onBlur = function onBlur (event) {
       this.dispatchEvent('blur', event);
     };
+
     F7Messagebar.prototype.onClick = function onClick (event) {
       var self = this;
       var value = self.refs.area.refs.inputEl.value;
       var clear = self.f7Messagebar ? function () {
         self.f7Messagebar.clear();
-      } : function () {
-      };
+      } : function () {};
       this.dispatchEvent('submit', value, clear);
       this.dispatchEvent('send', value, clear);
       this.dispatchEvent('click', event);
     };
+
     F7Messagebar.prototype.onDeleteAttachment = function onDeleteAttachment (e) {
       this.dispatchEvent('messagebar:attachmentdelete messagebarAttachmentDelete', e);
     };
+
     F7Messagebar.prototype.onClickAttachment = function onClickAttachment (e) {
       this.dispatchEvent('messagebar:attachmentclick messagebarAttachmentClick', e);
     };
+
     F7Messagebar.prototype.onResizePage = function onResizePage (e) {
       this.dispatchEvent('messagebar:resizepage messagebarResizePage', e);
     };
+
     prototypeAccessors.classes.get = function () {
       var self = this;
       var props = self.props;
@@ -5554,6 +5770,7 @@
         'messagebar-sheet-visible': sheetVisible
       }, Mixins.colorClasses(props));
     };
+
     F7Messagebar.prototype.render = function render () {
       var this$1 = this;
 
@@ -5580,12 +5797,13 @@
       var innerEndEls = [];
       var messagebarAttachmentsEl;
       var messagebarSheetEl;
+
       if (slotsDefault) {
         slotsDefault.forEach(function (child) {
-          if (typeof child === 'undefined')
-            { return; }
+          if (typeof child === 'undefined') { return; }
           var tag;
           tag = child.type && child.type.name;
+
           if (tag && (tag.indexOf('messagebar-attachments') >= 0 || tag === 'F7MessagebarAttachments')) {
             messagebarAttachmentsEl = child;
           } else if (tag && (tag.indexOf('messagebar-sheet') >= 0 || tag === 'F7MessagebarSheet')) {
@@ -5595,6 +5813,7 @@
           }
         });
       }
+
       return React.createElement('div', {
         ref: function (__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
@@ -5602,7 +5821,11 @@
         id: id,
         style: style,
         className: self.classes
-      }, slotsBeforeInner, React.createElement('div', { className: 'toolbar-inner' }, slotsInnerStart, React.createElement('div', { className: 'messagebar-area' }, slotsBeforeArea, messagebarAttachmentsEl, React.createElement(F7Input, {
+      }, slotsBeforeInner, React.createElement('div', {
+        className: 'toolbar-inner'
+      }, slotsInnerStart, React.createElement('div', {
+        className: 'messagebar-area'
+      }, slotsBeforeArea, messagebarAttachmentsEl, React.createElement(F7Input, {
         ref: function (__reactNode) {
           this$1.__reactRefs['area'] = __reactNode;
         },
@@ -5618,51 +5841,55 @@
         onChange: self.onChangeBound,
         onFocus: self.onFocusBound,
         onBlur: self.onBlurBound
-      }), slotsAfterArea), (sendLink && sendLink.length > 0 || slotsSendLink) && React.createElement(F7Link, { onClick: self.onClickBound }, slotsSendLink || sendLink), slotsInnerEnd, innerEndEls), slotsAfterInner, messagebarSheetEl);
+      }), slotsAfterArea), (sendLink && sendLink.length > 0 || slotsSendLink) && React.createElement(F7Link, {
+        onClick: self.onClickBound
+      }, slotsSendLink || sendLink), slotsInnerEnd, innerEndEls), slotsAfterInner, messagebarSheetEl);
     };
+
     F7Messagebar.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
-      if (self.f7Messagebar && self.f7Messagebar.destroy)
-        { self.f7Messagebar.destroy(); }
+      if (self.f7Messagebar && self.f7Messagebar.destroy) { self.f7Messagebar.destroy(); }
       var el = self.refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       el.removeEventListener('messagebar:attachmentdelete', self.onDeleteAttachmentBound);
       el.removeEventListener('messagebar:attachmentclick', self.onClickAttachmentBound);
       el.removeEventListener('messagebar:resizepage', self.onResizePageBound);
     };
+
     F7Messagebar.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.sheetVisible', prevProps, prevState, function () {
         var self = this$1;
-        if (!self.props.resizable || !self.f7Messagebar)
-          { return; }
+        if (!self.props.resizable || !self.f7Messagebar) { return; }
         self.updateSheetVisible = true;
       });
+
       __reactComponentWatch(this, 'props.attachmentsVisible', prevProps, prevState, function () {
         var self = this$1;
-        if (!self.props.resizable || !self.f7Messagebar)
-          { return; }
+        if (!self.props.resizable || !self.f7Messagebar) { return; }
         self.updateAttachmentsVisible = true;
       });
+
       var self = this;
-      if (!self.f7Messagebar)
-        { return; }
+      if (!self.f7Messagebar) { return; }
       var ref = self.props;
       var sheetVisible = ref.sheetVisible;
       var attachmentsVisible = ref.attachmentsVisible;
+
       if (self.updateSheetVisible) {
         self.updateSheetVisible = false;
         self.f7Messagebar.sheetVisible = sheetVisible;
         self.f7Messagebar.resizePage();
       }
+
       if (self.updateAttachmentsVisible) {
         self.updateAttachmentsVisible = false;
         self.f7Messagebar.attachmentsVisible = attachmentsVisible;
         self.f7Messagebar.resizePage();
       }
     };
+
     F7Messagebar.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var ref = self.props;
@@ -5672,11 +5899,9 @@
       var bottomOffset = ref.bottomOffset;
       var topOffset = ref.topOffset;
       var maxHeight = ref.maxHeight;
-      if (!init)
-        { return; }
+      if (!init) { return; }
       var el = self.refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       el.addEventListener('messagebar:attachmentdelete', self.onDeleteAttachmentBound);
       el.addEventListener('messagebar:attachmentclick', self.onClickAttachmentBound);
       el.addEventListener('messagebar:resizepage', self.onResizePageBound);
@@ -5692,29 +5917,31 @@
         self.f7Messagebar = self.$f7.messagebar.create(params);
       });
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7Messagebar.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
 
     Object.defineProperties( F7Messagebar.prototype, prototypeAccessors );
 
     return F7Messagebar;
   }(React.Component));
-  __reactComponentSetProps(F7Messagebar, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Messagebar, Object.assign({
+    id: [String, Number],
     sheetVisible: Boolean,
     attachmentsVisible: Boolean,
     top: Boolean,
@@ -5733,11 +5960,7 @@
     maxHeight: Number,
     resizePage: Boolean,
     sendLink: String,
-    value: [
-      String,
-      Number,
-      Array
-    ],
+    value: [String, Number, Array],
     disabled: Boolean,
     readonly: Boolean,
     name: String,
@@ -5748,8 +5971,8 @@
     init: {
       type: Boolean,
       default: true
-    }},
-    Mixins.colorProps));
+    }
+  }, Mixins.colorProps));
 
   var F7MessagesTitle = (function (superclass) {
     function F7MessagesTitle(props, context) {
@@ -5761,6 +5984,7 @@
     F7MessagesTitle.prototype.constructor = F7MessagesTitle;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7MessagesTitle.prototype.render = function render () {
       var props = this.props;
       var className = props.className;
@@ -5773,6 +5997,7 @@
         className: classes
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -5781,11 +6006,10 @@
 
     return F7MessagesTitle;
   }(React.Component));
-  __reactComponentSetProps(F7MessagesTitle, Object.assign({}, {id: [
-      String,
-      Number
-    ]},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7MessagesTitle, Object.assign({
+    id: [String, Number]
+  }, Mixins.colorProps));
 
   var F7Messages = (function (superclass) {
     function F7Messages(props, context) {
@@ -5798,69 +6022,70 @@
     F7Messages.prototype.constructor = F7Messages;
 
     var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+
     F7Messages.prototype.renderMessages = function renderMessages (messagesToRender, method) {
-      if (!this.f7Messages)
-        { return undefined; }
+      if (!this.f7Messages) { return undefined; }
       return this.f7Messages.renderMessages(messagesToRender, method);
     };
+
     F7Messages.prototype.layout = function layout () {
-      if (!this.f7Messages)
-        { return undefined; }
+      if (!this.f7Messages) { return undefined; }
       return this.f7Messages.layout();
     };
+
     F7Messages.prototype.scroll = function scroll (duration, scrollTop) {
-      if (!this.f7Messages)
-        { return undefined; }
+      if (!this.f7Messages) { return undefined; }
       return this.f7Messages.scroll(duration, scrollTop);
     };
+
     F7Messages.prototype.clear = function clear () {
-      if (!this.f7Messages)
-        { return undefined; }
+      if (!this.f7Messages) { return undefined; }
       return this.f7Messages.clear();
     };
+
     F7Messages.prototype.removeMessage = function removeMessage (messageToRemove, layout) {
-      if (!this.f7Messages)
-        { return undefined; }
+      if (!this.f7Messages) { return undefined; }
       return this.f7Messages.removeMessage(messageToRemove, layout);
     };
+
     F7Messages.prototype.removeMessages = function removeMessages (messagesToRemove, layout) {
-      if (!this.f7Messages)
-        { return undefined; }
+      if (!this.f7Messages) { return undefined; }
       return this.f7Messages.removeMessages(messagesToRemove, layout);
     };
+
     F7Messages.prototype.addMessage = function addMessage () {
       var ref;
 
       var args = [], len = arguments.length;
       while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messages)
-        { return undefined; }
+      if (!this.f7Messages) { return undefined; }
       return (ref = this.f7Messages).addMessage.apply(ref, args);
     };
+
     F7Messages.prototype.addMessages = function addMessages () {
       var ref;
 
       var args = [], len = arguments.length;
       while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messages)
-        { return undefined; }
+      if (!this.f7Messages) { return undefined; }
       return (ref = this.f7Messages).addMessages.apply(ref, args);
     };
+
     F7Messages.prototype.showTyping = function showTyping (message) {
-      if (!this.f7Messages)
-        { return undefined; }
+      if (!this.f7Messages) { return undefined; }
       return this.f7Messages.showTyping(message);
     };
+
     F7Messages.prototype.hideTyping = function hideTyping () {
-      if (!this.f7Messages)
-        { return undefined; }
+      if (!this.f7Messages) { return undefined; }
       return this.f7Messages.hideTyping();
     };
+
     F7Messages.prototype.destroy = function destroy () {
-      if (!this.f7Messages)
-        { return undefined; }
+      if (!this.f7Messages) { return undefined; }
       return this.f7Messages.destroy();
     };
+
     F7Messages.prototype.render = function render () {
       var this$1 = this;
 
@@ -5879,10 +6104,11 @@
         className: classes
       }, this.slots['default']);
     };
+
     F7Messages.prototype.componentWillUnmount = function componentWillUnmount () {
-      if (this.f7Messages && this.f7Messages.destroy)
-        { this.f7Messages.destroy(); }
+      if (this.f7Messages && this.f7Messages.destroy) { this.f7Messages.destroy(); }
     };
+
     F7Messages.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var ref = self.props;
@@ -5901,8 +6127,7 @@
       var sameAvatarMessageRule = ref.sameAvatarMessageRule;
       var customClassMessageRule = ref.customClassMessageRule;
       var renderMessage = ref.renderMessage;
-      if (!init)
-        { return; }
+      if (!init) { return; }
       self.$f7ready(function (f7) {
         self.f7Messages = f7.messages.create(Utils.noUndefinedProps({
           el: self.refs.el,
@@ -5923,72 +6148,75 @@
         }));
       });
     };
+
     F7Messages.prototype.componentDidUpdate = function componentDidUpdate () {
       var self = this;
       var ref = self.props;
       var init = ref.init;
       var autoLayout = ref.autoLayout;
       var scrollMessages = ref.scrollMessages;
-      if (!init)
-        { return; }
+      if (!init) { return; }
       var el = self.refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       var children = el.children;
-      if (!children)
-        { return; }
+      if (!children) { return; }
+
       for (var i = 0; i < children.length; i += 1) {
         if (!children[i].classList.contains('message-appeared')) {
           children[i].classList.add('message-appear-from-bottom');
         }
       }
+
       if (self.f7Messages && self.f7Messages.layout && autoLayout) {
         self.f7Messages.layout();
       }
+
       if (self.f7Messages && self.f7Messages.scroll && scrollMessages) {
         self.f7Messages.scroll();
       }
     };
+
     F7Messages.prototype.componentWillUpdate = function componentWillUpdate () {
       var self = this;
-      if (!self.props.init)
-        { return; }
+      if (!self.props.init) { return; }
       var el = self.refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       var children = el.children;
-      if (!children)
-        { return; }
+      if (!children) { return; }
+
       for (var i = 0; i < children.length; i += 1) {
         children[i].classList.add('message-appeared');
       }
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
 
     Object.defineProperties( F7Messages.prototype, prototypeAccessors );
 
     return F7Messages;
   }(React.Component));
-  __reactComponentSetProps(F7Messages, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Messages, Object.assign({
+    id: [String, Number],
     autoLayout: {
       type: Boolean,
       default: false
     },
     messages: {
       type: Array,
+
       default: function default$1() {
         return [];
       }
+
     },
     newMessagesFirst: {
       type: Boolean,
@@ -6014,8 +6242,8 @@
     init: {
       type: Boolean,
       default: true
-    }},
-    Mixins.colorProps));
+    }
+  }, Mixins.colorProps));
 
   var F7NavLeft = (function (superclass) {
     function F7NavLeft(props, context) {
@@ -6027,9 +6255,11 @@
     F7NavLeft.prototype.constructor = F7NavLeft;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7NavLeft.prototype.onBackClick = function onBackClick (e) {
       this.dispatchEvent('back-click backClick click:back clickBack', e);
     };
+
     F7NavLeft.prototype.render = function render () {
       var props = this.props;
       var backLink = props.backLink;
@@ -6040,6 +6270,7 @@
       var style = props.style;
       var id = props.id;
       var linkEl;
+
       if (backLink) {
         linkEl = React.createElement(F7Link, {
           href: backLinkUrl || '#',
@@ -6051,16 +6282,21 @@
           onClick: this.onBackClick.bind(this)
         });
       }
-      var classes = Utils.classNames(className, 'left', { sliding: sliding }, Mixins.colorClasses(props));
+
+      var classes = Utils.classNames(className, 'left', {
+        sliding: sliding
+      }, Mixins.colorClasses(props));
       return React.createElement('div', {
         id: id,
         style: style,
         className: classes
       }, linkEl, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7NavLeft.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
@@ -6072,18 +6308,14 @@
 
     return F7NavLeft;
   }(React.Component));
-  __reactComponentSetProps(F7NavLeft, Object.assign({}, {id: [
-      String,
-      Number
-    ],
-    backLink: [
-      Boolean,
-      String
-    ],
+
+  __reactComponentSetProps(F7NavLeft, Object.assign({
+    id: [String, Number],
+    backLink: [Boolean, String],
     backLinkUrl: String,
     backLinkForce: Boolean,
-    sliding: Boolean},
-    Mixins.colorProps));
+    sliding: Boolean
+  }, Mixins.colorProps));
 
   var F7NavRight = (function (superclass) {
     function F7NavRight(props, context) {
@@ -6095,6 +6327,7 @@
     F7NavRight.prototype.constructor = F7NavRight;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7NavRight.prototype.render = function render () {
       var props = this.props;
       var className = props.className;
@@ -6111,6 +6344,7 @@
         className: classes
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -6119,12 +6353,11 @@
 
     return F7NavRight;
   }(React.Component));
-  __reactComponentSetProps(F7NavRight, Object.assign({}, {id: [
-      String,
-      Number
-    ],
-    sliding: Boolean},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7NavRight, Object.assign({
+    id: [String, Number],
+    sliding: Boolean
+  }, Mixins.colorProps));
 
   var F7NavTitle = (function (superclass) {
     function F7NavTitle(props, context) {
@@ -6136,6 +6369,7 @@
     F7NavTitle.prototype.constructor = F7NavTitle;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7NavTitle.prototype.render = function render () {
       var self = this;
       var props = self.props;
@@ -6146,16 +6380,23 @@
       var sliding = props.sliding;
       var className = props.className;
       var subtitleEl;
+
       if (self.subtitle) {
-        subtitleEl = React.createElement('span', { className: 'subtitle' }, subtitle);
+        subtitleEl = React.createElement('span', {
+          className: 'subtitle'
+        }, subtitle);
       }
-      var classes = Utils.classNames(className, 'title', { sliding: sliding }, Mixins.colorClasses(props));
+
+      var classes = Utils.classNames(className, 'title', {
+        sliding: sliding
+      }, Mixins.colorClasses(props));
       return React.createElement('div', {
         id: id,
         style: style,
         className: classes
       }, this.slots['default'], !this.slots.default && title, !this.slots.default && subtitleEl);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -6164,14 +6405,13 @@
 
     return F7NavTitle;
   }(React.Component));
-  __reactComponentSetProps(F7NavTitle, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7NavTitle, Object.assign({
+    id: [String, Number],
     title: String,
     subtitle: String,
-    sliding: Boolean},
-    Mixins.colorProps));
+    sliding: Boolean
+  }, Mixins.colorProps));
 
   var F7Navbar = (function (superclass) {
     function F7Navbar(props, context) {
@@ -6184,27 +6424,29 @@
     F7Navbar.prototype.constructor = F7Navbar;
 
     var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+
     F7Navbar.prototype.hide = function hide (animate) {
       var self = this;
-      if (!self.$f7)
-        { return; }
+      if (!self.$f7) { return; }
       self.$f7.navbar.hide(self.refs.el, animate);
     };
+
     F7Navbar.prototype.show = function show (animate) {
       var self = this;
-      if (!self.$f7)
-        { return; }
+      if (!self.$f7) { return; }
       self.$f7.navbar.show(self.refs.el, animate);
     };
+
     F7Navbar.prototype.size = function size () {
       var self = this;
-      if (!self.$f7)
-        { return; }
+      if (!self.$f7) { return; }
       self.$f7.navbar.size(self.refs.el);
     };
+
     F7Navbar.prototype.onBackClick = function onBackClick (e) {
       this.dispatchEvent('back-click backClick click:back clickBack', e);
     };
+
     F7Navbar.prototype.render = function render () {
       var this$1 = this;
 
@@ -6226,6 +6468,7 @@
       var innerEl;
       var leftEl;
       var titleEl;
+
       if (inner) {
         if (backLink) {
           leftEl = React.createElement(F7NavLeft, {
@@ -6235,19 +6478,24 @@
             onBackClick: self.onBackClick.bind(self)
           });
         }
+
         if (title || subtitle) {
           titleEl = React.createElement(F7NavTitle, {
             title: title,
             subtitle: subtitle
           });
         }
+
         innerEl = React.createElement('div', {
           ref: function (__reactNode) {
             this$1.__reactRefs['inner'] = __reactNode;
           },
-          className: Utils.classNames('navbar-inner', { sliding: sliding })
+          className: Utils.classNames('navbar-inner', {
+            sliding: sliding
+          })
         }, leftEl, titleEl, this.slots['default']);
       }
+
       var classes = Utils.classNames(className, 'navbar', {
         'navbar-hidden': hidden,
         'no-shadow': noShadow,
@@ -6262,44 +6510,44 @@
         className: classes
       }, this.slots['before-inner'], innerEl, this.slots['after-inner']);
     };
+
     F7Navbar.prototype.componentDidUpdate = function componentDidUpdate () {
       var self = this;
-      if (!self.$f7)
-        { return; }
+      if (!self.$f7) { return; }
       var el = self.refs.el;
+
       if (el && el.children && el.children.length) {
         self.$f7.navbar.size(el);
       } else if (self.refs.inner) {
         self.$f7.navbar.size(self.refs.inner);
       }
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7Navbar.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
 
     Object.defineProperties( F7Navbar.prototype, prototypeAccessors );
 
     return F7Navbar;
   }(React.Component));
-  __reactComponentSetProps(F7Navbar, Object.assign({}, {id: [
-      String,
-      Number
-    ],
-    backLink: [
-      Boolean,
-      String
-    ],
+
+  __reactComponentSetProps(F7Navbar, Object.assign({
+    id: [String, Number],
+    backLink: [Boolean, String],
     backLinkUrl: String,
     backLinkForce: Boolean,
     sliding: {
@@ -6314,8 +6562,8 @@
     inner: {
       type: Boolean,
       default: true
-    }},
-    Mixins.colorProps));
+    }
+  }, Mixins.colorProps));
 
   var F7PageContent = (function (superclass) {
     function F7PageContent(props, context) {
@@ -6328,30 +6576,39 @@
     F7PageContent.prototype.constructor = F7PageContent;
 
     var prototypeAccessors = { classes: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
+
     F7PageContent.prototype.onPtrPullStart = function onPtrPullStart (event) {
       this.dispatchEvent('ptr:pullstart ptrPullStart', event);
     };
+
     F7PageContent.prototype.onPtrPullMove = function onPtrPullMove (event) {
       this.dispatchEvent('ptr:pullmove ptrPullMove', event);
     };
+
     F7PageContent.prototype.onPtrPullEnd = function onPtrPullEnd (event) {
       this.dispatchEvent('ptr:pullend ptrPullEnd', event);
     };
+
     F7PageContent.prototype.onPtrRefresh = function onPtrRefresh (event) {
       this.dispatchEvent('ptr:refresh ptrRefresh', event, event.detail);
     };
+
     F7PageContent.prototype.onPtrDone = function onPtrDone (event) {
       this.dispatchEvent('ptr:done ptrDone', event);
     };
+
     F7PageContent.prototype.onInfinite = function onInfinite (event) {
       this.dispatchEvent('infinite', event);
     };
+
     F7PageContent.prototype.onTabShow = function onTabShow (e) {
       this.dispatchEvent('tab:show tabShow', e);
     };
+
     F7PageContent.prototype.onTabHide = function onTabHide (e) {
       this.dispatchEvent('tab:hide tabHide', e);
     };
+
     prototypeAccessors.classes.get = function () {
       var self = this;
       var props = self.props;
@@ -6379,6 +6636,7 @@
         'login-screen-content': loginScreen
       }, Mixins.colorClasses(props));
     };
+
     F7PageContent.prototype.render = function render () {
       var this$1 = this;
 
@@ -6395,12 +6653,23 @@
       var infiniteTop = props.infiniteTop;
       var ptrEl;
       var infiniteEl;
+
       if (ptr && ptrPreloader) {
-        ptrEl = React.createElement('div', { className: 'ptr-preloader' }, React.createElement('div', { className: 'preloader' }), React.createElement('div', { className: 'ptr-arrow' }));
+        ptrEl = React.createElement('div', {
+          className: 'ptr-preloader'
+        }, React.createElement('div', {
+          className: 'preloader'
+        }), React.createElement('div', {
+          className: 'ptr-arrow'
+        }));
       }
+
       if (infinite && infinitePreloader) {
-        infiniteEl = React.createElement('div', { className: 'preloader infinite-scroll-preloader' });
+        infiniteEl = React.createElement('div', {
+          className: 'preloader infinite-scroll-preloader'
+        });
       }
+
       return React.createElement('div', {
         id: id,
         style: style,
@@ -6412,6 +6681,7 @@
         }
       }, ptrEl, infiniteTop ? infiniteEl : self.slots.default, infiniteTop ? self.slots.default : infiniteEl);
     };
+
     F7PageContent.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
       var el = self.refs.el;
@@ -6424,6 +6694,7 @@
       el.removeEventListener('tab:show', self.onTabShow);
       el.removeEventListener('tab:hide', self.onTabHide);
     };
+
     F7PageContent.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var el = self.refs.el;
@@ -6439,6 +6710,7 @@
       self.onInfinite = self.onInfinite.bind(self);
       self.onTabShow = self.onTabShow.bind(self);
       self.onTabHide = self.onTabHide.bind(self);
+
       if (ptr) {
         el.addEventListener('ptr:pullstart', self.onPtrPullStart);
         el.addEventListener('ptr:pullmove', self.onPtrPullMove);
@@ -6446,37 +6718,41 @@
         el.addEventListener('ptr:refresh', self.onPtrRefresh);
         el.addEventListener('ptr:done', self.onPtrDone);
       }
+
       if (infinite) {
         el.addEventListener('infinite', self.onInfinite);
       }
+
       if (tab) {
         el.addEventListener('tab:show', self.onTabShow);
         el.addEventListener('tab:hide', self.onTabHide);
       }
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7PageContent.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
 
     Object.defineProperties( F7PageContent.prototype, prototypeAccessors );
 
     return F7PageContent;
   }(React.Component));
-  __reactComponentSetProps(F7PageContent, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7PageContent, Object.assign({
+    id: [String, Number],
     tab: Boolean,
     tabActive: Boolean,
     ptr: Boolean,
@@ -6496,15 +6772,18 @@
     hideNavbarOnScroll: Boolean,
     hideToolbarOnScroll: Boolean,
     messagesContent: Boolean,
-    loginScreen: Boolean},
-    Mixins.colorProps));
+    loginScreen: Boolean
+  }, Mixins.colorProps));
 
   var F7Page = (function (superclass) {
     function F7Page(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
+
       this.state = (function () {
-        return { hasSubnavbar: false };
+        return {
+          hasSubnavbar: false
+        };
       })();
     }
 
@@ -6513,48 +6792,63 @@
     F7Page.prototype.constructor = F7Page;
 
     var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+
     F7Page.prototype.onPtrPullStart = function onPtrPullStart (event) {
       this.dispatchEvent('ptr:pullstart ptrPullStart', event);
     };
+
     F7Page.prototype.onPtrPullMove = function onPtrPullMove (event) {
       this.dispatchEvent('ptr:pullmove ptrPullMove', event);
     };
+
     F7Page.prototype.onPtrPullEnd = function onPtrPullEnd (event) {
       this.dispatchEvent('ptr:pullend ptrPullEnd', event);
     };
+
     F7Page.prototype.onPtrRefresh = function onPtrRefresh (event) {
       this.dispatchEvent('ptr:refresh ptrRefresh', event, event.detail);
     };
+
     F7Page.prototype.onPtrDone = function onPtrDone (event) {
       this.dispatchEvent('ptr:done ptrDone', event);
     };
+
     F7Page.prototype.onInfinite = function onInfinite (event) {
       this.dispatchEvent('infinite', event);
     };
+
     F7Page.prototype.onPageMounted = function onPageMounted (event) {
       this.dispatchEvent('page:mounted pageMounted', event, event.detail);
     };
+
     F7Page.prototype.onPageInit = function onPageInit (event) {
       this.dispatchEvent('page:init pageInit', event, event.detail);
     };
+
     F7Page.prototype.onPageReinit = function onPageReinit (event) {
       this.dispatchEvent('page:reinit pageReinit', event, event.detail);
     };
+
     F7Page.prototype.onPageBeforeIn = function onPageBeforeIn (event) {
       this.dispatchEvent('page:beforein pageBeforeIn', event, event.detail);
     };
+
     F7Page.prototype.onPageBeforeOut = function onPageBeforeOut (event) {
       this.dispatchEvent('page:beforeout pageBeforeOut', event, event.detail);
     };
+
     F7Page.prototype.onPageAfterOut = function onPageAfterOut (event) {
       this.dispatchEvent('page:afterout pageAfterOut', event, event.detail);
     };
+
     F7Page.prototype.onPageAfterIn = function onPageAfterIn (event) {
       this.dispatchEvent('page:afterin pageAfterIn', event, event.detail);
     };
+
     F7Page.prototype.onPageBeforeRemove = function onPageBeforeRemove (event) {
       this.dispatchEvent('page:beforeremove pageBeforeRemove', event, event.detail);
     };
+
     F7Page.prototype.render = function render () {
       var this$1 = this;
 
@@ -6596,34 +6890,33 @@
       var hasSubnavbar;
       var hasMessages;
       hasMessages = messagesContent;
+
       if (slotsDefault) {
         slotsDefault.forEach(function (child) {
-          if (typeof child === 'undefined')
-            { return; }
+          if (typeof child === 'undefined') { return; }
           var isFixedTag = false;
           {
             var tag = child.type && child.type.name;
+
             if (!tag) {
-              if (needsPageContent)
-                { staticList.push(child); }
+              if (needsPageContent) { staticList.push(child); }
               return;
             }
-            if (tag === 'F7Subnavbar')
-              { hasSubnavbar = true; }
-            if (typeof hasMessages === 'undefined' && tag === 'F7Messages')
-              { hasMessages = true; }
+
+            if (tag === 'F7Subnavbar') { hasSubnavbar = true; }
+            if (typeof hasMessages === 'undefined' && tag === 'F7Messages') { hasMessages = true; }
+
             if (fixedTags.indexOf(tag) >= 0) {
               isFixedTag = true;
             }
           }
+
           if (needsPageContent) {
-            if (isFixedTag)
-              { fixedList.push(child); }
-            else
-              { staticList.push(child); }
+            if (isFixedTag) { fixedList.push(child); }else { staticList.push(child); }
           }
         });
       }
+
       var classes = Utils.classNames(className, 'page', {
         stacked: stacked,
         tabs: tabs,
@@ -6632,6 +6925,7 @@
         'no-toolbar': noToolbar,
         'no-swipeback': noSwipeback
       }, Mixins.colorClasses(props));
+
       if (!needsPageContent) {
         return React.createElement('div', {
           ref: function (__reactNode) {
@@ -6643,6 +6937,7 @@
           'data-name': name
         }, slotsFixed, slotsStatic, slotsDefault);
       }
+
       var pageContentEl = React.createElement(F7PageContent, {
         ptr: ptr,
         ptrDistance: ptrDistance,
@@ -6667,6 +6962,7 @@
         'data-name': name
       }, fixedList, slotsFixed, pageContentEl);
     };
+
     F7Page.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
       var el = self.refs.el;
@@ -6685,6 +6981,7 @@
       el.removeEventListener('page:afterin', self.onPageAfterIn);
       el.removeEventListener('page:beforeremove', self.onPageBeforeRemove);
     };
+
     F7Page.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var el = self.refs.el;
@@ -6705,6 +7002,7 @@
       self.onPageAfterOut = self.onPageAfterOut.bind(self);
       self.onPageAfterIn = self.onPageAfterIn.bind(self);
       self.onPageBeforeRemove = self.onPageBeforeRemove.bind(self);
+
       if (ptr) {
         el.addEventListener('ptr:pullstart', self.onPtrPullStart);
         el.addEventListener('ptr:pullmove', self.onPtrPullMove);
@@ -6712,9 +7010,11 @@
         el.addEventListener('ptr:refresh', self.onPtrRefresh);
         el.addEventListener('ptr:done', self.onPtrDone);
       }
+
       if (infinite) {
         el.addEventListener('infinite', self.onInfinite);
       }
+
       el.addEventListener('page:mounted', self.onPageMounted);
       el.addEventListener('page:init', self.onPageInit);
       el.addEventListener('page:reinit', self.onPageReinit);
@@ -6724,29 +7024,31 @@
       el.addEventListener('page:afterin', self.onPageAfterIn);
       el.addEventListener('page:beforeremove', self.onPageBeforeRemove);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7Page.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
 
     Object.defineProperties( F7Page.prototype, prototypeAccessors );
 
     return F7Page;
   }(React.Component));
-  __reactComponentSetProps(F7Page, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Page, Object.assign({
+    id: [String, Number],
     name: String,
     stacked: Boolean,
     withSubnavbar: Boolean,
@@ -6776,8 +7078,8 @@
     hideNavbarOnScroll: Boolean,
     hideToolbarOnScroll: Boolean,
     messagesContent: Boolean,
-    loginScreen: Boolean},
-    Mixins.colorProps));
+    loginScreen: Boolean
+  }, Mixins.colorProps));
 
   var F7Panel = (function (superclass) {
     function F7Panel(props, context) {
@@ -6790,44 +7092,53 @@
     F7Panel.prototype.constructor = F7Panel;
 
     var prototypeAccessors = { classes: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
+
     F7Panel.prototype.onOpen = function onOpen (event) {
       this.dispatchEvent('panel:open panelOpen', event);
     };
+
     F7Panel.prototype.onOpened = function onOpened (event) {
       this.dispatchEvent('panel:opened panelOpened', event);
     };
+
     F7Panel.prototype.onClose = function onClose (event) {
       this.dispatchEvent('panel:close panelClose', event);
     };
+
     F7Panel.prototype.onClosed = function onClosed (event) {
       this.dispatchEvent('panel:closed panelClosed', event);
     };
+
     F7Panel.prototype.onBackdropClick = function onBackdropClick (event) {
       this.dispatchEvent('panel:backdrop-click panelBackdropClick', event);
     };
+
     F7Panel.prototype.onPanelSwipe = function onPanelSwipe (event) {
       this.dispatchEvent('panel:swipe panelSwipe', event);
     };
+
     F7Panel.prototype.onPanelSwipeOpen = function onPanelSwipeOpen (event) {
       this.dispatchEvent('panel:swipeopen panelSwipeOpen', event);
     };
+
     F7Panel.prototype.onBreakpoint = function onBreakpoint (event) {
       this.dispatchEvent('panel:breakpoint panelBreakpoint', event);
     };
+
     F7Panel.prototype.open = function open (animate) {
       var self = this;
-      if (!self.$f7)
-        { return; }
+      if (!self.$f7) { return; }
       var side = self.props.side || (self.props.left ? 'left' : 'right');
       self.$f7.panel.open(side, animate);
     };
+
     F7Panel.prototype.close = function close (animate) {
       var self = this;
-      if (!self.$f7)
-        { return; }
+      if (!self.$f7) { return; }
       var side = self.props.side || (self.props.left ? 'left' : 'right');
       self.$f7.panel.close(side, animate);
     };
+
     prototypeAccessors.classes.get = function () {
       var obj;
 
@@ -6845,6 +7156,7 @@
         'panel-active': opened
       }, obj[("panel-" + side)] = side, obj[("panel-" + effect)] = effect, obj ), Mixins.colorClasses(props));
     };
+
     F7Panel.prototype.render = function render () {
       var this$1 = this;
 
@@ -6860,13 +7172,12 @@
         className: this.classes
       }, this.slots['default']);
     };
+
     F7Panel.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
-      if (self.f7Panel)
-        { self.f7Panel.destroy(); }
+      if (self.f7Panel) { self.f7Panel.destroy(); }
       var el = self.refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       el.removeEventListener('panel:open', self.onOpenBound);
       el.removeEventListener('panel:opened', self.onOpenedBound);
       el.removeEventListener('panel:close', self.onCloseBound);
@@ -6876,6 +7187,7 @@
       el.removeEventListener('panel:swipeopen', self.onPanelSwipeOpenBound);
       el.removeEventListener('panel:breakpoint', self.onBreakpointBound);
     };
+
     F7Panel.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var el = self.refs.el;
@@ -6893,6 +7205,7 @@
       self.onPanelSwipeBound = self.onPanelSwipe.bind(self);
       self.onPanelSwipeOpenBound = self.onPanelSwipeOpen.bind(self);
       self.onBreakpointBound = self.onBreakpoint.bind(self);
+
       if (el) {
         el.addEventListener('panel:open', self.onOpenBound);
         el.addEventListener('panel:opened', self.onOpenedBound);
@@ -6903,49 +7216,59 @@
         el.addEventListener('panel:swipeopen', self.onPanelSwipeOpenBound);
         el.addEventListener('panel:breakpoint', self.onBreakpointBound);
       }
+
       self.$f7ready(function () {
         var $ = self.$$;
-        if (!$)
-          { return; }
+        if (!$) { return; }
+
         if ($('.panel-backdrop').length === 0) {
           $('<div class="panel-backdrop"></div>').insertBefore(el);
         }
-        self.f7Panel = self.$f7.panel.create({ el: el });
+
+        self.f7Panel = self.$f7.panel.create({
+          el: el
+        });
       });
+
       if (opened) {
         el.style.display = 'block';
       }
+
       var $ = self.$$;
-      if (!$)
-        { return; }
+      if (!$) { return; }
       var panelSide = side || (left ? 'left' : 'right');
       var panelEffect = effect || (reveal ? 'reveal' : 'cover');
+
       if (opened) {
         $('html').addClass(("with-panel-" + panelSide + "-" + panelEffect));
       }
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7Panel.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
+
     F7Panel.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.opened', prevProps, prevState, function (opened) {
         var self = this$1;
-        if (!self.$f7)
-          { return; }
+        if (!self.$f7) { return; }
         var side = self.props.side || (self.props.left ? 'left' : 'right');
+
         if (opened) {
           self.$f7.panel.open(side);
         } else {
@@ -6958,18 +7281,17 @@
 
     return F7Panel;
   }(React.Component));
-  __reactComponentSetProps(F7Panel, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Panel, Object.assign({
+    id: [String, Number],
     side: String,
     effect: String,
     cover: Boolean,
     reveal: Boolean,
     left: Boolean,
     right: Boolean,
-    opened: Boolean},
-    Mixins.colorProps));
+    opened: Boolean
+  }, Mixins.colorProps));
 
   var F7PhotoBrowser = (function (superclass) {
     function F7PhotoBrowser(props, context) {
@@ -6979,80 +7301,89 @@
     if ( superclass ) F7PhotoBrowser.__proto__ = superclass;
     F7PhotoBrowser.prototype = Object.create( superclass && superclass.prototype );
     F7PhotoBrowser.prototype.constructor = F7PhotoBrowser;
+
     F7PhotoBrowser.prototype.open = function open (index) {
       return this.f7PhotoBrowser.open(index);
     };
+
     F7PhotoBrowser.prototype.close = function close () {
       return this.f7PhotoBrowser.close();
     };
+
     F7PhotoBrowser.prototype.expositionToggle = function expositionToggle () {
       return this.f7PhotoBrowser.expositionToggle();
     };
+
     F7PhotoBrowser.prototype.expositionEnable = function expositionEnable () {
       return this.f7PhotoBrowser.expositionEnable();
     };
+
     F7PhotoBrowser.prototype.expositionDisable = function expositionDisable () {
       return this.f7PhotoBrowser.expositionDisable();
     };
+
     F7PhotoBrowser.prototype.render = function render () {
       return null;
     };
+
     F7PhotoBrowser.prototype.componentDidMount = function componentDidMount () {
       var self = this;
-      if (!self.props.init)
-        { return; }
+      if (!self.props.init) { return; }
       self.$f7ready(function (f7) {
         var params;
-        if (typeof self.props.params !== 'undefined')
-          { params = self.props.params; }
-        else
-          { params = Object.assign({}, self.props); }
+        if (typeof self.props.params !== 'undefined') { params = self.props.params; }else { params = Object.assign({}, self.props); }
         Object.keys(params).forEach(function (param) {
-          if (typeof params[param] === 'undefined' || params[param] === '')
-            { delete params[param]; }
+          if (typeof params[param] === 'undefined' || params[param] === '') { delete params[param]; }
         });
         params = Utils.extend({}, params, {
           on: {
             open: function open() {
               self.dispatchEvent('photobrowser:open photoBrowserOpen');
             },
+
             close: function close() {
               self.dispatchEvent('photobrowser:close photoBrowserClose');
             },
+
             opened: function opened() {
               self.dispatchEvent('photobrowser:opened photoBrowserOpened');
             },
+
             closed: function closed() {
               self.dispatchEvent('photobrowser:closed photoBrowserClosed');
             },
+
             swipeToClose: function swipeToClose() {
               self.dispatchEvent('photobrowser:swipetoclose photoBrowserSwipeToClose');
             }
+
           }
         });
         self.f7PhotoBrowser = f7.photoBrowser.create(params);
       });
     };
+
     F7PhotoBrowser.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
-      if (self.f7PhotoBrowser && self.f7PhotoBrowser.destroy)
-        { self.f7PhotoBrowser.destroy(); }
+      if (self.f7PhotoBrowser && self.f7PhotoBrowser.destroy) { self.f7PhotoBrowser.destroy(); }
     };
+
     F7PhotoBrowser.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
     F7PhotoBrowser.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.photos', prevProps, prevState, function (newValue) {
         var self = this$1;
         var pb = self.f7PhotoBrowser;
-        if (!pb)
-          { return; }
+        if (!pb) { return; }
         self.f7PhotoBrowser.photos = newValue;
+
         if (pb.opened && pb.swiper) {
           pb.swiper.update();
         }
@@ -7061,11 +7392,9 @@
 
     return F7PhotoBrowser;
   }(React.Component));
+
   __reactComponentSetProps(F7PhotoBrowser, {
-    id: [
-      String,
-      Number
-    ],
+    id: [String, Number],
     init: {
       type: Boolean,
       default: true
@@ -7080,7 +7409,9 @@
       type: Boolean,
       default: false
     },
-    type: { type: String },
+    type: {
+      type: String
+    },
     navbar: {
       type: Boolean,
       default: true
@@ -7089,17 +7420,31 @@
       type: Boolean,
       default: true
     },
-    theme: { type: String },
-    captionsTheme: { type: String },
-    iconsColor: { type: String },
+    theme: {
+      type: String
+    },
+    captionsTheme: {
+      type: String
+    },
+    iconsColor: {
+      type: String
+    },
     swipeToClose: {
       type: Boolean,
       default: true
     },
-    backLinkText: { type: String },
-    navbarOfText: { type: String },
-    swiper: { type: Object },
-    url: { type: String },
+    backLinkText: {
+      type: String
+    },
+    navbarOfText: {
+      type: String
+    },
+    swiper: {
+      type: Object
+    },
+    url: {
+      type: String
+    },
     routableModals: {
       type: Boolean,
       default: true
@@ -7108,10 +7453,7 @@
       type: Boolean,
       default: true
     },
-    view: [
-      String,
-      Object
-    ],
+    view: [String, Object],
     renderNavbar: Function,
     renderToolbar: Function,
     renderCaption: Function,
@@ -7134,30 +7476,35 @@
     F7Popover.prototype.constructor = F7Popover;
 
     var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+
     F7Popover.prototype.onOpen = function onOpen (event) {
       this.dispatchEvent('popover:open popoverOpen', event);
     };
+
     F7Popover.prototype.onOpened = function onOpened (event) {
       this.dispatchEvent('popover:opened popoverOpened', event);
     };
+
     F7Popover.prototype.onClose = function onClose (event) {
       this.dispatchEvent('popover:close popoverClose', event);
     };
+
     F7Popover.prototype.onClosed = function onClosed (event) {
       this.dispatchEvent('popover:closed popoverClosed', event);
     };
+
     F7Popover.prototype.open = function open (target, animate) {
       var self = this;
-      if (!self.$f7)
-        { return undefined; }
+      if (!self.$f7) { return undefined; }
       return self.$f7.popover.open(self.refs.el, target, animate);
     };
+
     F7Popover.prototype.close = function close (animate) {
       var self = this;
-      if (!self.$f7)
-        { return undefined; }
+      if (!self.$f7) { return undefined; }
       return self.$f7.sheet.close(self.refs.el, animate);
     };
+
     F7Popover.prototype.render = function render () {
       var this$1 = this;
 
@@ -7174,25 +7521,28 @@
         id: id,
         style: style,
         className: classes
-      }, React.createElement('div', { className: 'popover-angle' }), React.createElement('div', { className: 'popover-inner' }, this.slots['default']));
+      }, React.createElement('div', {
+        className: 'popover-angle'
+      }), React.createElement('div', {
+        className: 'popover-inner'
+      }, this.slots['default']));
     };
+
     F7Popover.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
-      if (self.f7Popover)
-        { self.f7Popover.destroy(); }
+      if (self.f7Popover) { self.f7Popover.destroy(); }
       var el = self.refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       el.removeEventListener('popover:open', self.onOpenBound);
       el.removeEventListener('popover:opened', self.onOpenedBound);
       el.removeEventListener('popover:close', self.onCloseBound);
       el.removeEventListener('popover:closed', self.onClosedBound);
     };
+
     F7Popover.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var el = self.refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       self.onOpenBound = self.onOpen.bind(self);
       self.onOpenedBound = self.onOpened.bind(self);
       self.onCloseBound = self.onClose.bind(self);
@@ -7205,36 +7555,42 @@
       var target = ref.target;
       var opened = ref.opened;
       self.$f7ready(function () {
-        var popoverParams = { el: el };
-        if (target)
-          { popoverParams.targetEl = target; }
+        var popoverParams = {
+          el: el
+        };
+        if (target) { popoverParams.targetEl = target; }
         self.f7Popover = self.$f7.popover.create(popoverParams);
+
         if (opened && target) {
           self.f7Popover.open(target, false);
         }
       });
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7Popover.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
+
     F7Popover.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.opened', prevProps, prevState, function (opened) {
         var self = this$1;
-        if (!self.f7Popover)
-          { return; }
+        if (!self.f7Popover) { return; }
+
         if (opened) {
           self.f7Popover.open();
         } else {
@@ -7247,16 +7603,12 @@
 
     return F7Popover;
   }(React.Component));
-  __reactComponentSetProps(F7Popover, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Popover, Object.assign({
+    id: [String, Number],
     opened: Boolean,
-    target: [
-      String,
-      Object
-    ]},
-    Mixins.colorProps));
+    target: [String, Object]
+  }, Mixins.colorProps));
 
   var F7Popup = (function (superclass) {
     function F7Popup(props, context) {
@@ -7269,30 +7621,35 @@
     F7Popup.prototype.constructor = F7Popup;
 
     var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+
     F7Popup.prototype.onOpen = function onOpen (event) {
       this.dispatchEvent('popup:open popupOpen', event);
     };
+
     F7Popup.prototype.onOpened = function onOpened (event) {
       this.dispatchEvent('popup:opened popupOpened', event);
     };
+
     F7Popup.prototype.onClose = function onClose (event) {
       this.dispatchEvent('popup:close popupClose', event);
     };
+
     F7Popup.prototype.onClosed = function onClosed (event) {
       this.dispatchEvent('popup:closed popupClosed', event);
     };
+
     F7Popup.prototype.open = function open (animate) {
       var self = this;
-      if (!self.$f7)
-        { return undefined; }
+      if (!self.$f7) { return undefined; }
       return self.$f7.popup.open(self.refs.el, animate);
     };
+
     F7Popup.prototype.close = function close (animate) {
       var self = this;
-      if (!self.$f7)
-        { return undefined; }
+      if (!self.$f7) { return undefined; }
       return self.$f7.popup.close(self.refs.el, animate);
     };
+
     F7Popup.prototype.render = function render () {
       var this$1 = this;
 
@@ -7302,7 +7659,9 @@
       var id = props.id;
       var style = props.style;
       var tabletFullscreen = props.tabletFullscreen;
-      var classes = Utils.classNames(className, 'popup', { 'popup-tablet-fullscreen': tabletFullscreen }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'popup', {
+        'popup-tablet-fullscreen': tabletFullscreen
+      }, Mixins.colorClasses(props));
       return React.createElement('div', {
         ref: function (__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
@@ -7312,23 +7671,22 @@
         className: classes
       }, this.slots['default']);
     };
+
     F7Popup.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
-      if (self.f7Popup)
-        { self.f7Popup.destroy(); }
+      if (self.f7Popup) { self.f7Popup.destroy(); }
       var el = self.refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       el.removeEventListener('popup:open', self.onOpenBound);
       el.removeEventListener('popup:opened', self.onOpenedBound);
       el.removeEventListener('popup:close', self.onCloseBound);
       el.removeEventListener('popup:closed', self.onClosedBound);
     };
+
     F7Popup.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var el = self.refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       self.onOpenBound = self.onOpen.bind(self);
       self.onOpenedBound = self.onOpened.bind(self);
       self.onCloseBound = self.onClose.bind(self);
@@ -7338,33 +7696,40 @@
       el.addEventListener('popup:close', self.onCloseBound);
       el.addEventListener('popup:closed', self.onClosedBound);
       self.$f7ready(function () {
-        self.f7Popup = self.$f7.popup.create({ el: el });
+        self.f7Popup = self.$f7.popup.create({
+          el: el
+        });
+
         if (self.props.opened) {
           self.f7Popup.open(false);
         }
       });
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7Popup.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
+
     F7Popup.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.opened', prevProps, prevState, function (opened) {
         var self = this$1;
-        if (!self.f7Popup)
-          { return; }
+        if (!self.f7Popup) { return; }
+
         if (opened) {
           self.f7Popup.open();
         } else {
@@ -7377,13 +7742,12 @@
 
     return F7Popup;
   }(React.Component));
-  __reactComponentSetProps(F7Popup, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Popup, Object.assign({
+    id: [String, Number],
     tabletFullscreen: Boolean,
-    opened: Boolean},
-    Mixins.colorProps));
+    opened: Boolean
+  }, Mixins.colorProps));
 
   var F7Preloader = (function (superclass) {
     function F7Preloader(props, context) {
@@ -7395,13 +7759,17 @@
     F7Preloader.prototype.constructor = F7Preloader;
 
     var prototypeAccessors = { sizeComputed: { configurable: true } };
+
     prototypeAccessors.sizeComputed.get = function () {
       var s = this.props.size;
+
       if (s && typeof s === 'string' && s.indexOf('px') >= 0) {
         s = s.replace('px', '');
       }
+
       return s;
     };
+
     F7Preloader.prototype.render = function render () {
       var self = this;
       var sizeComputed = self.sizeComputed;
@@ -7410,16 +7778,31 @@
       var style = props.style;
       var className = props.className;
       var preloaderStyle = {};
+
       if (sizeComputed) {
         preloaderStyle.width = sizeComputed + "px";
         preloaderStyle.height = sizeComputed + "px";
       }
-      if (style)
-        { Utils.extend(preloaderStyle, style || {}); }
+
+      if (style) { Utils.extend(preloaderStyle, style || {}); }
       var innerEl;
+
       if (self.$theme.md) {
-        innerEl = React.createElement('span', { className: 'preloader-inner' }, React.createElement('span', { className: 'preloader-inner-gap' }), React.createElement('span', { className: 'preloader-inner-left' }, React.createElement('span', { className: 'preloader-inner-half-circle' })), React.createElement('span', { className: 'preloader-inner-right' }, React.createElement('span', { className: 'preloader-inner-half-circle' })));
+        innerEl = React.createElement('span', {
+          className: 'preloader-inner'
+        }, React.createElement('span', {
+          className: 'preloader-inner-gap'
+        }), React.createElement('span', {
+          className: 'preloader-inner-left'
+        }, React.createElement('span', {
+          className: 'preloader-inner-half-circle'
+        })), React.createElement('span', {
+          className: 'preloader-inner-right'
+        }, React.createElement('span', {
+          className: 'preloader-inner-half-circle'
+        })));
       }
+
       var classes = Utils.classNames(className, 'preloader', Mixins.colorClasses(props));
       return React.createElement('span', {
         id: id,
@@ -7432,15 +7815,11 @@
 
     return F7Preloader;
   }(React.Component));
-  __reactComponentSetProps(F7Preloader, Object.assign({}, {id: [
-      String,
-      Number
-    ],
-    size: [
-      Number,
-      String
-    ]},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7Preloader, Object.assign({
+    id: [String, Number],
+    size: [Number, String]
+  }, Mixins.colorProps));
 
   var F7Progressbar = (function (superclass) {
     function F7Progressbar(props, context) {
@@ -7453,12 +7832,13 @@
     F7Progressbar.prototype.constructor = F7Progressbar;
 
     var prototypeAccessors = { refs: { configurable: true } };
+
     F7Progressbar.prototype.set = function set (progress, speed) {
       var self = this;
-      if (!self.$f7)
-        { return; }
+      if (!self.$f7) { return; }
       self.$f7.progressbar.set(self.refs.el, progress, speed);
     };
+
     F7Progressbar.prototype.render = function render () {
       var this$1 = this;
 
@@ -7473,7 +7853,9 @@
         transform: progress ? ("translate3d(" + (-100 + progress) + "%, 0, 0)") : '',
         WebkitTransform: progress ? ("translate3d(" + (-100 + progress) + "%, 0, 0)") : ''
       };
-      var classes = Utils.classNames(className, 'progressbar', { 'progressbar-infinite': infinite }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'progressbar', {
+        'progressbar-infinite': infinite
+      }, Mixins.colorClasses(props));
       return React.createElement('span', {
         ref: function (__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
@@ -7482,25 +7864,27 @@
         style: style,
         className: classes,
         'data-progress': progress
-      }, React.createElement('span', { style: transformStyle }));
+      }, React.createElement('span', {
+        style: transformStyle
+      }));
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
 
     Object.defineProperties( F7Progressbar.prototype, prototypeAccessors );
 
     return F7Progressbar;
   }(React.Component));
-  __reactComponentSetProps(F7Progressbar, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Progressbar, Object.assign({
+    id: [String, Number],
     progress: Number,
-    infinite: Boolean},
-    Mixins.colorProps));
+    infinite: Boolean
+  }, Mixins.colorProps));
 
   var F7Radio = (function (superclass) {
     function F7Radio(props, context) {
@@ -7512,9 +7896,11 @@
     F7Radio.prototype.constructor = F7Radio;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7Radio.prototype.onChange = function onChange (event) {
       this.dispatchEvent('change', event);
     };
+
     F7Radio.prototype.render = function render () {
       var self = this;
       var props = self.props;
@@ -7540,17 +7926,23 @@
           onChange: self.onChange.bind(self)
         });
       }
-      var iconEl = React.createElement('i', { className: 'icon-radio' });
-      var classes = Utils.classNames(className, 'radio', { disabled: disabled }, Mixins.colorClasses(props));
+      var iconEl = React.createElement('i', {
+        className: 'icon-radio'
+      });
+      var classes = Utils.classNames(className, 'radio', {
+        disabled: disabled
+      }, Mixins.colorClasses(props));
       return React.createElement('label', {
         id: id,
         style: style,
         className: classes
       }, inputEl, iconEl, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7Radio.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
@@ -7562,24 +7954,16 @@
 
     return F7Radio;
   }(React.Component));
-  __reactComponentSetProps(F7Radio, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Radio, Object.assign({
+    id: [String, Number],
     checked: Boolean,
-    name: [
-      Number,
-      String
-    ],
-    value: [
-      Number,
-      String,
-      Boolean
-    ],
+    name: [Number, String],
+    value: [Number, String, Boolean],
     disabled: Boolean,
     readonly: Boolean,
-    defaultChecked: Boolean},
-    Mixins.colorProps));
+    defaultChecked: Boolean
+  }, Mixins.colorProps));
 
   var F7Row = (function (superclass) {
     function F7Row(props, context) {
@@ -7591,9 +7975,11 @@
     F7Row.prototype.constructor = F7Row;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7Row.prototype.onClick = function onClick (e) {
       this.dispatchEvent('click', e);
     };
+
     F7Row.prototype.render = function render () {
       var self = this;
       var props = self.props;
@@ -7603,7 +7989,9 @@
       var tag = props.tag;
       var noGap = props.noGap;
       var RowTag = tag;
-      var classes = Utils.classNames(className, 'row', { 'no-gap': noGap }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'row', {
+        'no-gap': noGap
+      }, Mixins.colorClasses(props));
       return React.createElement(RowTag, {
         id: id,
         style: style,
@@ -7611,9 +7999,11 @@
         onClick: self.onClick.bind(self)
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7Row.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
@@ -7625,16 +8015,15 @@
 
     return F7Row;
   }(React.Component));
-  __reactComponentSetProps(F7Row, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Row, Object.assign({
+    id: [String, Number],
     noGap: Boolean,
     tag: {
       type: String,
       default: 'div'
-    }},
-    Mixins.colorProps));
+    }
+  }, Mixins.colorProps));
 
   var F7Searchbar = (function (superclass) {
     function F7Searchbar(props, context) {
@@ -7647,52 +8036,60 @@
     F7Searchbar.prototype.constructor = F7Searchbar;
 
     var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+
     F7Searchbar.prototype.search = function search (query) {
-      if (!this.f7Searchbar)
-        { return undefined; }
+      if (!this.f7Searchbar) { return undefined; }
       return this.f7Searchbar.search(query);
     };
+
     F7Searchbar.prototype.enable = function enable () {
-      if (!this.f7Searchbar)
-        { return undefined; }
+      if (!this.f7Searchbar) { return undefined; }
       return this.f7Searchbar.enable();
     };
+
     F7Searchbar.prototype.disable = function disable () {
-      if (!this.f7Searchbar)
-        { return undefined; }
+      if (!this.f7Searchbar) { return undefined; }
       return this.f7Searchbar.disable();
     };
+
     F7Searchbar.prototype.toggle = function toggle () {
-      if (!this.f7Searchbar)
-        { return undefined; }
+      if (!this.f7Searchbar) { return undefined; }
       return this.toggle.disable();
     };
+
     F7Searchbar.prototype.clear = function clear () {
-      if (!this.f7Searchbar)
-        { return undefined; }
+      if (!this.f7Searchbar) { return undefined; }
       return this.f7Searchbar.clear();
     };
+
     F7Searchbar.prototype.onChange = function onChange (event) {
       this.dispatchEvent('change', event);
     };
+
     F7Searchbar.prototype.onInput = function onInput (event) {
       this.dispatchEvent('input', event);
     };
+
     F7Searchbar.prototype.onFocus = function onFocus (event) {
       this.dispatchEvent('focus', event);
     };
+
     F7Searchbar.prototype.onBlur = function onBlur (event) {
       this.dispatchEvent('blur', event);
     };
+
     F7Searchbar.prototype.onSubmit = function onSubmit (event) {
       this.dispatchEvent('submit', event);
     };
+
     F7Searchbar.prototype.onClearButtonClick = function onClearButtonClick (event) {
       this.dispatchEvent('click:clear clickClear', event);
     };
+
     F7Searchbar.prototype.onDisableButtonClick = function onDisableButtonClick (event) {
       this.dispatchEvent('click:disable clickDisable', event);
     };
+
     F7Searchbar.prototype.render = function render () {
       var this$1 = this;
 
@@ -7711,18 +8108,21 @@
       var className = props.className;
       var style = props.style;
       var id = props.id;
+
       if (clearButton) {
         clearEl = React.createElement('span', {
           className: 'input-clear-button',
           onClick: self.onClearButtonClick.bind(self)
         });
       }
+
       if (disableButton) {
         disableEl = React.createElement('span', {
           className: 'searchbar-disable-button',
           onClick: self.onDisableButtonClick.bind(self)
         }, disableButtonText);
       }
+
       var SearchbarTag = form ? 'form' : 'div';
       var classes = Utils.classNames(className, 'searchbar', {
         'no-shadow': noShadow,
@@ -7736,15 +8136,22 @@
         id: id,
         style: style,
         className: classes
-      }, this.slots['before-inner'], React.createElement('div', { className: 'searchbar-inner' }, this.slots['inner-start'], React.createElement('div', { className: 'searchbar-input-wrap' }, this.slots['input-wrap-start'], React.createElement('input', {
+      }, this.slots['before-inner'], React.createElement('div', {
+        className: 'searchbar-inner'
+      }, this.slots['inner-start'], React.createElement('div', {
+        className: 'searchbar-input-wrap'
+      }, this.slots['input-wrap-start'], React.createElement('input', {
         placeholder: placeholder,
         type: 'search',
         onInput: self.onInput.bind(self),
         onChange: self.onChange.bind(self),
         onFocus: self.onFocus.bind(self),
         onBlur: self.onBlur.bind(self)
-      }), React.createElement('i', { className: 'searchbar-icon' }), clearEl, this.slots['input-wrap-end']), disableEl, this.slots['inner-end'], this.slots['default']), this.slots['after-inner']);
+      }), React.createElement('i', {
+        className: 'searchbar-icon'
+      }), clearEl, this.slots['input-wrap-end']), disableEl, this.slots['inner-end'], this.slots['default']), this.slots['after-inner']);
     };
+
     F7Searchbar.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var ref = self.props;
@@ -7765,13 +8172,14 @@
       var hideDividers = ref.hideDividers;
       var hideGroups = ref.hideGroups;
       var form = ref.form;
-      if (!init)
-        { return; }
+      if (!init) { return; }
       var el = self.refs.el;
+
       if (form && el) {
         self.onSubmitBound = self.onSubmit.bind(self);
         el.addEventListener('submit', self.onSubmitBound, false);
       }
+
       self.$f7ready(function () {
         var params = Utils.noUndefinedProps({
           el: self.refs.el,
@@ -7794,15 +8202,19 @@
             search: function search(searchbar, query, previousQuery) {
               self.dispatchEvent('searchbar:search searchbarSearch', searchbar, query, previousQuery);
             },
+
             clear: function clear(searchbar, previousQuery) {
               self.dispatchEvent('searchbar:clear searchbarClear', searchbar, previousQuery);
             },
+
             enable: function enable(searchbar) {
               self.dispatchEvent('searchbar:enable searchbarEnable', searchbar);
             },
+
             disable: function disable(searchbar) {
               self.dispatchEvent('searchbar:disable searchbarDisable', searchbar);
             }
+
           }
         });
         Object.keys(params).forEach(function (key) {
@@ -7813,37 +8225,41 @@
         self.f7Searchbar = self.$f7.searchbar.create(params);
       });
     };
+
     F7Searchbar.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
+
       if (self.props.form && self.refs.el) {
         self.refs.el.removeEventListener('submit', self.onSubmitBound, false);
       }
-      if (self.f7Searchbar && self.f7Searchbar.destroy)
-        { self.f7Searchbar.destroy(); }
+
+      if (self.f7Searchbar && self.f7Searchbar.destroy) { self.f7Searchbar.destroy(); }
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7Searchbar.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
 
     Object.defineProperties( F7Searchbar.prototype, prototypeAccessors );
 
     return F7Searchbar;
   }(React.Component));
-  __reactComponentSetProps(F7Searchbar, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Searchbar, Object.assign({
+    id: [String, Number],
     noShadow: Boolean,
     noHairline: Boolean,
     form: {
@@ -7867,10 +8283,7 @@
       default: true
     },
     expandable: Boolean,
-    searchContainer: [
-      String,
-      Object
-    ],
+    searchContainer: [String, Object],
     searchIn: {
       type: String,
       default: '.item-title'
@@ -7880,39 +8293,24 @@
       default: 'li'
     },
     foundEl: {
-      type: [
-        String,
-        Object
-      ],
+      type: [String, Object],
       default: '.searchbar-found'
     },
     notFoundEl: {
-      type: [
-        String,
-        Object
-      ],
+      type: [String, Object],
       default: '.searchbar-not-found'
     },
     backdrop: {
       type: Boolean,
       default: true
     },
-    backdropEl: [
-      String,
-      Object
-    ],
+    backdropEl: [String, Object],
     hideOnEnableEl: {
-      type: [
-        String,
-        Object
-      ],
+      type: [String, Object],
       default: '.searchbar-hide-on-enable'
     },
     hideOnSearchEl: {
-      type: [
-        String,
-        Object
-      ],
+      type: [String, Object],
       default: '.searchbar-hide-on-search'
     },
     ignore: {
@@ -7938,8 +8336,8 @@
     init: {
       type: Boolean,
       default: true
-    }},
-    Mixins.colorProps));
+    }
+  }, Mixins.colorProps));
 
   var F7Segmented = (function (superclass) {
     function F7Segmented(props, context) {
@@ -7951,6 +8349,7 @@
     F7Segmented.prototype.constructor = F7Segmented;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7Segmented.prototype.render = function render () {
       var self = this;
       var props = self.props;
@@ -7972,6 +8371,7 @@
         className: classNames
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -7980,17 +8380,16 @@
 
     return F7Segmented;
   }(React.Component));
-  __reactComponentSetProps(F7Segmented, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Segmented, Object.assign({
+    id: [String, Number],
     raised: Boolean,
     round: Boolean,
     tag: {
       type: String,
       default: 'div'
-    }},
-    Mixins.colorProps));
+    }
+  }, Mixins.colorProps));
 
   var F7Sheet = (function (superclass) {
     function F7Sheet(props, context) {
@@ -8003,30 +8402,35 @@
     F7Sheet.prototype.constructor = F7Sheet;
 
     var prototypeAccessors = { slots: { configurable: true },el: { configurable: true },refs: { configurable: true } };
+
     F7Sheet.prototype.onOpen = function onOpen (event) {
       this.dispatchEvent('sheet:open sheetOpen', event);
     };
+
     F7Sheet.prototype.onOpened = function onOpened (event) {
       this.dispatchEvent('sheet:opened sheetOpened', event);
     };
+
     F7Sheet.prototype.onClose = function onClose (event) {
       this.dispatchEvent('sheet:close sheetClose', event);
     };
+
     F7Sheet.prototype.onClosed = function onClosed (event) {
       this.dispatchEvent('sheet:closed sheetClosed', event);
     };
+
     F7Sheet.prototype.open = function open (animate) {
       var self = this;
-      if (!self.$f7)
-        { return undefined; }
+      if (!self.$f7) { return undefined; }
       return self.$f7.sheet.open(self.refs.el, animate);
     };
+
     F7Sheet.prototype.close = function close (animate) {
       var self = this;
-      if (!self.$f7)
-        { return undefined; }
+      if (!self.$f7) { return undefined; }
       return self.$f7.sheet.close(self.refs.el, animate);
     };
+
     F7Sheet.prototype.render = function render () {
       var this$1 = this;
 
@@ -8040,27 +8444,29 @@
       var fixedTags;
       fixedTags = 'Navbar Toolbar Tabbar Subnavbar Searchbar Messagebar Fab ListIndex'.split(' ').map(function (tagName) { return ("F7" + tagName); });
       var slotsDefault = self.slots.default;
+
       if (slotsDefault && slotsDefault.length) {
         slotsDefault.forEach(function (child) {
-          if (typeof child === 'undefined')
-            { return; }
+          if (typeof child === 'undefined') { return; }
           var isFixedTag = false;
           {
             var tag = child.type && child.type.name;
+
             if (!tag) {
               return;
             }
+
             if (fixedTags.indexOf(tag) >= 0) {
               isFixedTag = true;
             }
           }
-          if (isFixedTag)
-            { fixedList.push(child); }
-          else
-            { staticList.push(child); }
+          if (isFixedTag) { fixedList.push(child); }else { staticList.push(child); }
         });
       }
-      var innerEl = React.createElement('div', { className: 'sheet-modal-inner' }, staticList);
+
+      var innerEl = React.createElement('div', {
+        className: 'sheet-modal-inner'
+      }, staticList);
       var classes = Utils.classNames(className, 'sheet-modal', Mixins.colorClasses(props));
       return React.createElement('div', {
         ref: function (__reactNode) {
@@ -8071,23 +8477,22 @@
         className: classes
       }, fixedList, innerEl);
     };
+
     F7Sheet.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
-      if (self.f7Sheet)
-        { self.f7Sheet.destroy(); }
+      if (self.f7Sheet) { self.f7Sheet.destroy(); }
       var el = self.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       el.removeEventListener('popup:open', self.onOpenBound);
       el.removeEventListener('popup:opened', self.onOpenedBound);
       el.removeEventListener('popup:close', self.onCloseBound);
       el.removeEventListener('popup:closed', self.onClosedBound);
     };
+
     F7Sheet.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var el = self.refs.el;
-      if (!el)
-        { return; }
+      if (!el) { return; }
       self.onOpenBound = self.onOpen.bind(self);
       self.onOpenedBound = self.onOpened.bind(self);
       self.onCloseBound = self.onClose.bind(self);
@@ -8103,43 +8508,51 @@
         var opened = ref.opened;
         var backdrop = ref.backdrop;
         useDefaultBackdrop = typeof backdrop === 'undefined';
+
         if (useDefaultBackdrop) {
           var app = self.$f7;
           useBackdrop = app.params.sheet && app.params.sheet.backdrop !== undefined ? app.params.sheet.backdrop : self.$theme.md;
         }
+
         self.f7Sheet = self.$f7.sheet.create({
           el: self.refs.el,
           backdrop: useBackdrop
         });
+
         if (opened) {
           self.f7Sheet.open(false);
         }
       });
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     prototypeAccessors.el.get = function () {
       return __reactComponentEl(this);
     };
+
     F7Sheet.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
+
     F7Sheet.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.opened', prevProps, prevState, function (opened) {
         var self = this$1;
-        if (!self.f7Sheet)
-          { return; }
+        if (!self.f7Sheet) { return; }
+
         if (opened) {
           self.f7Sheet.open();
         } else {
@@ -8152,13 +8565,12 @@
 
     return F7Sheet;
   }(React.Component));
-  __reactComponentSetProps(F7Sheet, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Sheet, Object.assign({
+    id: [String, Number],
     opened: Boolean,
-    backdrop: Boolean},
-    Mixins.colorProps));
+    backdrop: Boolean
+  }, Mixins.colorProps));
 
   var F7Statusbar = (function (superclass) {
     function F7Statusbar(props, context) {
@@ -8170,6 +8582,7 @@
     F7Statusbar.prototype.constructor = F7Statusbar;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7Statusbar.prototype.render = function render () {
       var props = this.props;
       var className = props.className;
@@ -8182,6 +8595,7 @@
         className: classes
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -8190,11 +8604,10 @@
 
     return F7Statusbar;
   }(React.Component));
-  __reactComponentSetProps(F7Statusbar, Object.assign({}, {id: [
-      String,
-      Number
-    ]},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7Statusbar, Object.assign({
+    id: [String, Number]
+  }, Mixins.colorProps));
 
   var F7Stepper = (function (superclass) {
     function F7Stepper(props, context) {
@@ -8202,6 +8615,7 @@
 
       superclass.call(this, props, context);
       this.__reactRefs = {};
+
       (function () {
         this$1.onInputBound = this$1.onInput.bind(this$1);
         this$1.onMinusClickBound = this$1.onMinusClick.bind(this$1);
@@ -8214,37 +8628,44 @@
     F7Stepper.prototype.constructor = F7Stepper;
 
     var prototypeAccessors = { classes: { configurable: true },refs: { configurable: true } };
+
     F7Stepper.prototype.increment = function increment () {
-      if (!this.f7Stepper)
-        { return; }
+      if (!this.f7Stepper) { return; }
       this.f7Stepper.increment();
     };
+
     F7Stepper.prototype.decrement = function decrement () {
-      if (!this.f7Stepper)
-        { return; }
+      if (!this.f7Stepper) { return; }
       this.f7Stepper.decrement();
     };
+
     F7Stepper.prototype.setValue = function setValue (newValue) {
       var self = this;
-      if (self.f7Stepper && self.f7Stepper.setValue)
-        { self.f7Stepper.setValue(newValue); }
+      if (self.f7Stepper && self.f7Stepper.setValue) { self.f7Stepper.setValue(newValue); }
     };
+
     F7Stepper.prototype.getValue = function getValue () {
       var self = this;
+
       if (self.f7Stepper && self.f7Stepper.getValue) {
         return self.f7Stepper.getValue();
       }
+
       return undefined;
     };
+
     F7Stepper.prototype.onInput = function onInput (e) {
       this.dispatchEvent('input', e, this.f7Stepper);
     };
+
     F7Stepper.prototype.onMinusClick = function onMinusClick (e) {
       this.dispatchEvent('stepper:minusclick stepperMinusClick', e, this.f7Stepper);
     };
+
     F7Stepper.prototype.onPlusClick = function onPlusClick (e) {
       this.dispatchEvent('stepper:plusclick stepperPlusClick', e, this.f7Stepper);
     };
+
     prototypeAccessors.classes.get = function () {
       var self = this;
       var props = self.props;
@@ -8279,6 +8700,7 @@
         'stepper-raised': raised
       }, Mixins.colorClasses(props));
     };
+
     F7Stepper.prototype.render = function render () {
       var this$1 = this;
 
@@ -8296,6 +8718,7 @@
       var style = props.style;
       var inputWrapEl;
       var valueEl;
+
       if (input && !buttonsOnly) {
         var inputEl;
         {
@@ -8309,11 +8732,17 @@
             onInput: self.onInput.bind(self)
           });
         }
-        inputWrapEl = React.createElement('div', { className: 'stepper-input-wrap' }, inputEl);
+        inputWrapEl = React.createElement('div', {
+          className: 'stepper-input-wrap'
+        }, inputEl);
       }
+
       if (!input && !buttonsOnly) {
-        valueEl = React.createElement('div', { className: 'stepper-value' }, value);
+        valueEl = React.createElement('div', {
+          className: 'stepper-value'
+        }, value);
       }
+
       return React.createElement('div', {
         ref: function (__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
@@ -8329,17 +8758,18 @@
         onClick: self.onPlusClickBound
       }));
     };
+
     F7Stepper.prototype.componentWillUnmount = function componentWillUnmount () {
-      if (!this.props.init)
-        { return; }
+      if (!this.props.init) { return; }
+
       if (this.f7Stepper && this.f7Stepper.destroy) {
         this.f7Stepper.destroy();
       }
     };
+
     F7Stepper.prototype.componentDidMount = function componentDidMount () {
       var self = this;
-      if (!self.props.init)
-        { return; }
+      if (!self.props.init) { return; }
       self.$f7ready(function (f7) {
         var ref = self.props;
         var min = ref.min;
@@ -8351,8 +8781,7 @@
         var autorepeatDynamic = ref.autorepeatDynamic;
         var wraps = ref.wraps;
         var el = self.refs.el;
-        if (!el)
-          { return; }
+        if (!el) { return; }
         self.f7Stepper = f7.stepper.create(Utils.noUndefinedProps({
           el: el,
           min: min,
@@ -8367,30 +8796,32 @@
             change: function change(stepper, newValue) {
               self.dispatchEvent('stepper:change stepperChange', newValue);
             }
+
           }
         }));
       });
     };
+
     F7Stepper.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
 
     Object.defineProperties( F7Stepper.prototype, prototypeAccessors );
 
     return F7Stepper;
   }(React.Component));
-  __reactComponentSetProps(F7Stepper, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Stepper, Object.assign({
+    id: [String, Number],
     init: {
       type: Boolean,
       default: true
@@ -8450,8 +8881,8 @@
     small: Boolean,
     smallMd: Boolean,
     smallIos: Boolean,
-    raised: Boolean},
-    Mixins.colorProps));
+    raised: Boolean
+  }, Mixins.colorProps));
 
   var F7Subnavbar = (function (superclass) {
     function F7Subnavbar(props, context) {
@@ -8463,6 +8894,7 @@
     F7Subnavbar.prototype.constructor = F7Subnavbar;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7Subnavbar.prototype.render = function render () {
       var self = this;
       var props = self.props;
@@ -8472,13 +8904,20 @@
       var id = props.id;
       var className = props.className;
       var sliding = props.sliding;
-      var classes = Utils.classNames(className, 'subnavbar', { sliding: sliding }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'subnavbar', {
+        sliding: sliding
+      }, Mixins.colorClasses(props));
       return React.createElement('div', {
         className: classes,
         id: id,
         style: style
-      }, inner ? React.createElement('div', { className: 'subnavbar-inner' }, title && React.createElement('div', { className: 'title' }, title), this.slots['default']) : this.slots['default']);
+      }, inner ? React.createElement('div', {
+        className: 'subnavbar-inner'
+      }, title && React.createElement('div', {
+        className: 'title'
+      }, title), this.slots['default']) : this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -8487,17 +8926,16 @@
 
     return F7Subnavbar;
   }(React.Component));
-  __reactComponentSetProps(F7Subnavbar, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Subnavbar, Object.assign({
+    id: [String, Number],
     sliding: Boolean,
     title: String,
     inner: {
       type: Boolean,
       default: true
-    }},
-    Mixins.colorProps));
+    }
+  }, Mixins.colorProps));
 
   var F7SwipeoutActions = (function (superclass) {
     function F7SwipeoutActions(props, context) {
@@ -8509,6 +8947,7 @@
     F7SwipeoutActions.prototype.constructor = F7SwipeoutActions;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7SwipeoutActions.prototype.render = function render () {
       var props = this.props;
       var left = props.left;
@@ -8518,12 +8957,12 @@
       var id = props.id;
       var style = props.style;
       var sideComputed = side;
+
       if (!sideComputed) {
-        if (left)
-          { sideComputed = 'left'; }
-        if (right)
-          { sideComputed = 'right'; }
+        if (left) { sideComputed = 'left'; }
+        if (right) { sideComputed = 'right'; }
       }
+
       var classes = Utils.classNames(className, ("swipeout-actions-" + sideComputed), Mixins.colorClasses(props));
       return React.createElement('div', {
         id: id,
@@ -8531,6 +8970,7 @@
         className: classes
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -8539,14 +8979,13 @@
 
     return F7SwipeoutActions;
   }(React.Component));
-  __reactComponentSetProps(F7SwipeoutActions, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7SwipeoutActions, Object.assign({
+    id: [String, Number],
     left: Boolean,
     right: Boolean,
-    side: String},
-    Mixins.colorProps));
+    side: String
+  }, Mixins.colorProps));
 
   var F7SwipeoutButton = (function (superclass) {
     function F7SwipeoutButton(props, context) {
@@ -8558,9 +8997,11 @@
     F7SwipeoutButton.prototype.constructor = F7SwipeoutButton;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7SwipeoutButton.prototype.onClick = function onClick (event) {
       this.dispatchEvent('click', event);
     };
+
     F7SwipeoutButton.prototype.render = function render () {
       var props = this.props;
       var className = props.className;
@@ -8586,9 +9027,11 @@
         onClick: this.onClick.bind(this)
       }, this.slots['default'], !this.slots.default && text);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7SwipeoutButton.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
@@ -8600,17 +9043,16 @@
 
     return F7SwipeoutButton;
   }(React.Component));
-  __reactComponentSetProps(F7SwipeoutButton, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7SwipeoutButton, Object.assign({
+    id: [String, Number],
     text: String,
     confirmText: String,
     overswipe: Boolean,
     close: Boolean,
     delete: Boolean,
-    href: String},
-    Mixins.colorProps));
+    href: String
+  }, Mixins.colorProps));
 
   var F7SwiperSlide = (function (superclass) {
     function F7SwiperSlide(props, context) {
@@ -8622,6 +9064,7 @@
     F7SwiperSlide.prototype.constructor = F7SwiperSlide;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7SwiperSlide.prototype.render = function render () {
       var props = this.props;
       var className = props.className;
@@ -8633,8 +9076,11 @@
         id: id,
         style: style,
         className: classes
-      }, zoom ? React.createElement('div', { className: 'swiper-zoom-container' }, this.slots['default']) : this.slots['default']);
+      }, zoom ? React.createElement('div', {
+        className: 'swiper-zoom-container'
+      }, this.slots['default']) : this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -8643,11 +9089,9 @@
 
     return F7SwiperSlide;
   }(React.Component));
+
   __reactComponentSetProps(F7SwiperSlide, {
-    id: [
-      String,
-      Number
-    ],
+    id: [String, Number],
     zoom: Boolean
   });
 
@@ -8662,36 +9106,46 @@
     F7Swiper.prototype.constructor = F7Swiper;
 
     var prototypeAccessors = { paginationComputed: { configurable: true },scrollbarComputed: { configurable: true },navigationComputed: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
+
     prototypeAccessors.paginationComputed.get = function () {
       var self = this;
       var ref = self.props;
       var pagination = ref.pagination;
       var params = ref.params;
+
       if (pagination === true || params && params.pagination && !params.pagination.el) {
         return true;
       }
+
       return false;
     };
+
     prototypeAccessors.scrollbarComputed.get = function () {
       var self = this;
       var ref = self.props;
       var scrollbar = ref.scrollbar;
       var params = ref.params;
+
       if (scrollbar === true || params && params.scrollbar && !params.scrollbar.el) {
         return true;
       }
+
       return false;
     };
+
     prototypeAccessors.navigationComputed.get = function () {
       var self = this;
       var ref = self.props;
       var navigation = ref.navigation;
       var params = ref.params;
+
       if (navigation === true || params && params.navigation && !params.navigation.nextEl && !params.navigation.prevEl) {
         return true;
       }
+
       return false;
     };
+
     F7Swiper.prototype.render = function render () {
       var this$1 = this;
 
@@ -8704,6 +9158,7 @@
       var scrollbarEl;
       var buttonNextEl;
       var buttonPrevEl;
+
       if (self.paginationComputed) {
         paginationEl = React.createElement('div', {
           ref: function (__reactNode) {
@@ -8712,6 +9167,7 @@
           className: 'swiper-pagination'
         });
       }
+
       if (self.scrollbarComputed) {
         scrollbarEl = React.createElement('div', {
           ref: function (__reactNode) {
@@ -8720,6 +9176,7 @@
           className: 'swiper-scrollbar'
         });
       }
+
       if (self.navigationComputed) {
         buttonNextEl = React.createElement('div', {
           ref: function (__reactNode) {
@@ -8734,6 +9191,7 @@
           className: 'swiper-button-prev'
         });
       }
+
       var classes = Utils.classNames(className, 'swiper-container', Mixins.colorClasses(props));
       return React.createElement('div', {
         id: id,
@@ -8742,19 +9200,20 @@
           this$1.__reactRefs['el'] = __reactNode;
         },
         className: classes
-      }, this.slots['before-wrapper'], React.createElement('div', { className: 'swiper-wrapper' }, this.slots['default']), paginationEl, scrollbarEl, buttonPrevEl, buttonNextEl, this.slots['after-wrapper']);
+      }, this.slots['before-wrapper'], React.createElement('div', {
+        className: 'swiper-wrapper'
+      }, this.slots['default']), paginationEl, scrollbarEl, buttonPrevEl, buttonNextEl, this.slots['after-wrapper']);
     };
+
     F7Swiper.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
-      if (!self.props.init)
-        { return; }
-      if (self.swiper && self.swiper.destroy)
-        { self.swiper.destroy(); }
+      if (!self.props.init) { return; }
+      if (self.swiper && self.swiper.destroy) { self.swiper.destroy(); }
     };
+
     F7Swiper.prototype.componentDidMount = function componentDidMount () {
       var self = this;
-      if (!self.props.init)
-        { return; }
+      if (!self.props.init) { return; }
       self.$f7ready(function (f7) {
         var newParams = {
           pagination: {},
@@ -8766,45 +9225,47 @@
         var pagination = ref.pagination;
         var navigation = ref.navigation;
         var scrollbar = ref.scrollbar;
-        if (params)
-          { Utils.extend(newParams, params); }
-        if (pagination && !newParams.pagination.el)
-          { newParams.pagination.el = self.refs.paginationEl; }
+        if (params) { Utils.extend(newParams, params); }
+        if (pagination && !newParams.pagination.el) { newParams.pagination.el = self.refs.paginationEl; }
+
         if (navigation && !newParams.navigation.nextEl && !newParams.navigation.prevEl) {
           newParams.navigation.nextEl = self.refs.nextEl;
           newParams.navigation.prevEl = self.refs.prevEl;
         }
-        if (scrollbar && !newParams.scrollbar.el)
-          { newParams.scrollbar.el = self.refs.scrollbarEl; }
+
+        if (scrollbar && !newParams.scrollbar.el) { newParams.scrollbar.el = self.refs.scrollbarEl; }
         self.swiper = f7.swiper.create(self.refs.el, newParams);
       });
     };
+
     F7Swiper.prototype.componentDidUpdate = function componentDidUpdate () {
       var self = this;
+
       if (!self.initialUpdate) {
         self.initialUpdate = true;
         return;
       }
-      if (self.swiper && self.swiper.update)
-        { self.swiper.update(); }
+
+      if (self.swiper && self.swiper.update) { self.swiper.update(); }
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
 
     Object.defineProperties( F7Swiper.prototype, prototypeAccessors );
 
     return F7Swiper;
   }(React.Component));
-  __reactComponentSetProps(F7Swiper, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Swiper, Object.assign({
+    id: [String, Number],
     params: Object,
     pagination: Boolean,
     scrollbar: Boolean,
@@ -8812,8 +9273,8 @@
     init: {
       type: Boolean,
       default: true
-    }},
-    Mixins.colorProps));
+    }
+  }, Mixins.colorProps));
 
   var F7Tab = (function (superclass) {
     function F7Tab(props, context) {
@@ -8821,9 +9282,13 @@
 
       superclass.call(this, props, context);
       this.__reactRefs = {};
+
       this.state = (function () {
-        return { tabContent: null };
+        return {
+          tabContent: null
+        };
       })();
+
       (function () {
         this$1.onTabShowBound = this$1.onTabShow.bind(this$1);
         this$1.onTabHideBound = this$1.onTabHide.bind(this$1);
@@ -8835,17 +9300,20 @@
     F7Tab.prototype.constructor = F7Tab;
 
     var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+
     F7Tab.prototype.show = function show (animate) {
-      if (!this.$f7)
-        { return; }
+      if (!this.$f7) { return; }
       this.$f7.tab.show(this.refs.el, animate);
     };
+
     F7Tab.prototype.onTabShow = function onTabShow (e) {
       this.dispatchEvent('tab:show tabShow', e);
     };
+
     F7Tab.prototype.onTabHide = function onTabHide (e) {
       this.dispatchEvent('tab:hide tabHide', e);
     };
+
     F7Tab.prototype.render = function render () {
       var this$1 = this;
 
@@ -8856,10 +9324,11 @@
       var className = props.className;
       var style = props.style;
       var tabContent = self.state.tabContent;
-      var classes = Utils.classNames(className, 'tab', { 'tab-active': tabActive }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'tab', {
+        'tab-active': tabActive
+      }, Mixins.colorClasses(props));
       var TabContent;
-      if (tabContent)
-        { TabContent = tabContent.component; }
+      if (tabContent) { TabContent = tabContent.component; }
       {
         return React.createElement('div', {
           id: id,
@@ -8868,18 +9337,24 @@
             this$1.__reactRefs['el'] = __reactNode;
           },
           className: classes
-        }, tabContent ? React.createElement(TabContent, Object.assign({}, {key: tabContent.id},
-          tabContent.props)) : this.slots['default']);
+        }, tabContent ? React.createElement(TabContent, Object.assign({
+          key: tabContent.id
+        }, tabContent.props)) : this.slots['default']);
       }
     };
+
     F7Tab.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var el = self.refs.el;
+
       if (el) {
         el.addEventListener('tab:show', self.onTabShowBound);
         el.addEventListener('tab:hide', self.onTabHideBound);
       }
-      self.setState({ tabContent: null });
+
+      self.setState({
+        tabContent: null
+      });
       self.$f7ready(function () {
         self.routerData = {
           el: el,
@@ -8888,50 +9363,54 @@
         f7.routers.tabs.push(self.routerData);
       });
     };
+
     F7Tab.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
       var el = self.refs.el;
+
       if (el) {
         el.removeEventListener('tab:show', self.onTabShowBound);
         el.removeEventListener('tab:hide', self.onTabHideBound);
       }
-      if (!self.routerData)
-        { return; }
+
+      if (!self.routerData) { return; }
       f7.routers.tabs.splice(f7.routers.tabs.indexOf(self.routerData), 1);
       self.routerData = null;
       delete self.routerData;
     };
+
     F7Tab.prototype.componentDidUpdate = function componentDidUpdate () {
       var self = this;
-      if (!self.routerData)
-        { return; }
+      if (!self.routerData) { return; }
       eventsEmitter.emit('tabRouterDidUpdate', self.routerData);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7Tab.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
 
     Object.defineProperties( F7Tab.prototype, prototypeAccessors );
 
     return F7Tab;
   }(React.Component));
-  __reactComponentSetProps(F7Tab, Object.assign({}, {id: [
-      String,
-      Number
-    ],
-    tabActive: Boolean},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7Tab, Object.assign({
+    id: [String, Number],
+    tabActive: Boolean
+  }, Mixins.colorProps));
 
   var F7Tabs = (function (superclass) {
     function F7Tabs(props, context) {
@@ -8943,6 +9422,7 @@
     F7Tabs.prototype.constructor = F7Tabs;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7Tabs.prototype.render = function render () {
       var self = this;
       var props = self.props;
@@ -8957,19 +9437,24 @@
         'tabs-swipeable-wrap': swipeable,
         'tabs-routable': routable
       }, Mixins.colorClasses(props));
+
       if (animated || swipeable) {
         return React.createElement('div', {
           id: id,
           style: style,
           className: classes
-        }, React.createElement('div', { className: 'tabs' }, this.slots['default']));
+        }, React.createElement('div', {
+          className: 'tabs'
+        }, this.slots['default']));
       }
+
       return React.createElement('div', {
         id: id,
         style: style,
         className: Utils.classNames('tabs', classes)
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -8978,14 +9463,13 @@
 
     return F7Tabs;
   }(React.Component));
-  __reactComponentSetProps(F7Tabs, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Tabs, Object.assign({
+    id: [String, Number],
     animated: Boolean,
     swipeable: Boolean,
-    routable: Boolean},
-    Mixins.colorProps));
+    routable: Boolean
+  }, Mixins.colorProps));
 
   var F7Toolbar = (function (superclass) {
     function F7Toolbar(props, context) {
@@ -8998,18 +9482,19 @@
     F7Toolbar.prototype.constructor = F7Toolbar;
 
     var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+
     F7Toolbar.prototype.hide = function hide (animate) {
       var self = this;
-      if (!self.$f7)
-        { return; }
+      if (!self.$f7) { return; }
       self.$f7.toolbar.hide(this.refs.el, animate);
     };
+
     F7Toolbar.prototype.show = function show (animate) {
       var self = this;
-      if (!self.$f7)
-        { return; }
+      if (!self.$f7) { return; }
       self.$f7.toolbar.show(this.refs.el, animate);
     };
+
     F7Toolbar.prototype.render = function render () {
       var this$1 = this;
 
@@ -9042,38 +9527,43 @@
           this$1.__reactRefs['el'] = __reactNode;
         },
         className: classes
-      }, this.slots['before-inner'], inner ? React.createElement('div', { className: 'toolbar-inner' }, this.slots['default']) : this.slots['default'], this.slots['after-inner']);
+      }, this.slots['before-inner'], inner ? React.createElement('div', {
+        className: 'toolbar-inner'
+      }, this.slots['default']) : this.slots['default'], this.slots['after-inner']);
     };
+
     F7Toolbar.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       self.$f7ready(function (f7) {
-        if (self.props.tabbar)
-          { f7.toolbar.setHighlight(self.refs.el); }
+        if (self.props.tabbar) { f7.toolbar.setHighlight(self.refs.el); }
       });
     };
+
     F7Toolbar.prototype.componentDidUpdate = function componentDidUpdate () {
       var self = this;
+
       if (self.props.tabbar && self.$f7) {
         self.$f7.toolbar.setHighlight(self.refs.el);
       }
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
 
     Object.defineProperties( F7Toolbar.prototype, prototypeAccessors );
 
     return F7Toolbar;
   }(React.Component));
-  __reactComponentSetProps(F7Toolbar, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7Toolbar, Object.assign({
+    id: [String, Number],
     bottomMd: Boolean,
     tabbar: Boolean,
     labels: Boolean,
@@ -9084,8 +9574,8 @@
     inner: {
       type: Boolean,
       default: true
-    }},
-    Mixins.colorProps));
+    }
+  }, Mixins.colorProps));
 
   var F7View = (function (superclass) {
     function F7View(props, context) {
@@ -9093,9 +9583,13 @@
 
       superclass.call(this, props, context);
       this.__reactRefs = {};
+
       this.state = (function () {
-        return { pages: [] };
+        return {
+          pages: []
+        };
       })();
+
       (function () {
         var self = this$1;
         self.onSwipeBackMoveBound = self.onSwipeBackMove.bind(self);
@@ -9113,27 +9607,35 @@
     F7View.prototype.constructor = F7View;
 
     var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+
     F7View.prototype.onSwipeBackMove = function onSwipeBackMove (event) {
       this.dispatchEvent('swipeback:move swipeBackMove', event, event.detail);
     };
+
     F7View.prototype.onSwipeBackBeforeChange = function onSwipeBackBeforeChange (event) {
       this.dispatchEvent('swipeback:beforechange swipeBackBeforeChange', event, event.detail);
     };
+
     F7View.prototype.onSwipeBackAfterChange = function onSwipeBackAfterChange (event) {
       this.dispatchEvent('swipeback:afterchange swipeBackAfterChange', event, event.detail);
     };
+
     F7View.prototype.onSwipeBackBeforeReset = function onSwipeBackBeforeReset (event) {
       this.dispatchEvent('swipeback:beforereset swipeBackBeforeReset', event, event.detail);
     };
+
     F7View.prototype.onSwipeBackAfterReset = function onSwipeBackAfterReset (event) {
       this.dispatchEvent('swipeback:afterreset swipeBackAfterReset', event, event.detail);
     };
+
     F7View.prototype.onTabShow = function onTabShow (e) {
       this.dispatchEvent('tab:show tabShow', e);
     };
+
     F7View.prototype.onTabHide = function onTabHide (e) {
       this.dispatchEvent('tab:hide tabHide', e);
     };
+
     F7View.prototype.render = function render () {
       var this$1 = this;
 
@@ -9160,17 +9662,19 @@
       }, this.slots['default'], self.state.pages.map(function (page) {
         var PageComponent = page.component;
         {
-          return React.createElement(PageComponent, Object.assign({}, {key: page.id},
-            page.props));
+          return React.createElement(PageComponent, Object.assign({
+            key: page.id
+          }, page.props));
         }
       }));
     };
+
     F7View.prototype.componentDidUpdate = function componentDidUpdate () {
       var self = this;
-      if (!self.routerData)
-        { return; }
+      if (!self.routerData) { return; }
       eventsEmitter.emit('viewRouterDidUpdate', self.routerData);
     };
+
     F7View.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
       var el = self.refs.el;
@@ -9181,14 +9685,13 @@
       el.removeEventListener('swipeback:afterreset', self.onSwipeBackAfterResetBound);
       el.removeEventListener('tab:show', self.onTabShowBound);
       el.removeEventListener('tab:hide', self.onTabHideBound);
-      if (!self.props.init)
-        { return; }
-      if (self.f7View && self.f7View.destroy)
-        { self.f7View.destroy(); }
+      if (!self.props.init) { return; }
+      if (self.f7View && self.f7View.destroy) { self.f7View.destroy(); }
       f7.routers.views.splice(f7.routers.views.indexOf(self.routerData), 1);
       self.routerData = null;
       delete self.routerData;
     };
+
     F7View.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var el = self.refs.el;
@@ -9199,10 +9702,11 @@
       el.addEventListener('swipeback:afterreset', self.onSwipeBackAfterResetBound);
       el.addEventListener('tab:show', self.onTabShowBound);
       el.addEventListener('tab:hide', self.onTabHideBound);
-      self.setState({ pages: [] });
+      self.setState({
+        pages: []
+      });
       self.$f7ready(function (f7Instance) {
-        if (!self.props.init)
-          { return; }
+        if (!self.props.init) { return; }
         self.routerData = {
           el: el,
           component: self,
@@ -9213,37 +9717,36 @@
         self.f7View = self.routerData.instance;
       });
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
+
     F7View.prototype.dispatchEvent = function dispatchEvent (events) {
       var args = [], len = arguments.length - 1;
       while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
     prototypeAccessors.refs.get = function () {
       return this.__reactRefs;
     };
-    prototypeAccessors.refs.set = function (refs) {
-    };
+
+    prototypeAccessors.refs.set = function (refs) {};
 
     Object.defineProperties( F7View.prototype, prototypeAccessors );
 
     return F7View;
   }(React.Component));
-  __reactComponentSetProps(F7View, Object.assign({}, {id: [
-      String,
-      Number
-    ],
+
+  __reactComponentSetProps(F7View, Object.assign({
+    id: [String, Number],
     tab: Boolean,
     tabActive: Boolean,
     name: String,
     router: Boolean,
-    linksView: [
-      Object,
-      String
-    ],
+    linksView: [Object, String],
     url: String,
     main: Boolean,
     stackPages: Boolean,
@@ -9283,8 +9786,8 @@
     init: {
       type: Boolean,
       default: true
-    }},
-    Mixins.colorProps));
+    }
+  }, Mixins.colorProps));
 
   var F7Views = (function (superclass) {
     function F7Views(props, context) {
@@ -9296,6 +9799,7 @@
     F7Views.prototype.constructor = F7Views;
 
     var prototypeAccessors = { slots: { configurable: true } };
+
     F7Views.prototype.render = function render () {
       var self = this;
       var props = self.props;
@@ -9303,13 +9807,16 @@
       var id = props.id;
       var style = props.style;
       var tabs = props.tabs;
-      var classes = Utils.classNames(className, 'views', { tabs: tabs }, Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'views', {
+        tabs: tabs
+      }, Mixins.colorClasses(props));
       return React.createElement('div', {
         id: id,
         style: style,
         className: classes
       }, this.slots['default']);
     };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -9318,12 +9825,11 @@
 
     return F7Views;
   }(React.Component));
-  __reactComponentSetProps(F7Views, Object.assign({}, {id: [
-      String,
-      Number
-    ],
-    tabs: Boolean},
-    Mixins.colorProps));
+
+  __reactComponentSetProps(F7Views, Object.assign({
+    id: [String, Number],
+    tabs: Boolean
+  }, Mixins.colorProps));
 
   /* eslint no-underscore-dangle: "off" */
 
@@ -9512,7 +10018,7 @@
   };
 
   /**
-   * Framework7 React 3.0.0-beta.7
+   * Framework7 React 3.0.0-beta.8
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -9520,7 +10026,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: June 9, 2018
+   * Released on: June 11, 2018
    */
 
   var Plugin = {

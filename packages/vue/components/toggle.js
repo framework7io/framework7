@@ -4,11 +4,8 @@ import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispat
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
 export default {
   name: 'f7-toggle',
-  props: {
-    id: [
-      String,
-      Number
-    ],
+  props: Object.assign({
+    id: [String, Number],
     init: {
       type: Boolean,
       default: true
@@ -18,19 +15,27 @@ export default {
     disabled: Boolean,
     readonly: Boolean,
     name: String,
-    value: [
-      String,
-      Number,
-      Array
-    ],
-    ...Mixins.colorProps
-  },
+    value: [String, Number, Array]
+  }, Mixins.colorProps),
+
   render() {
     const _h = this.$createElement;
     const self = this;
     const props = self.props;
-    const {className, disabled, id, style, name, readonly, checked, defaultChecked, value} = props;
-    const labelClasses = Utils.classNames('toggle', className, { disabled }, Mixins.colorClasses(props));
+    const {
+      className,
+      disabled,
+      id,
+      style,
+      name,
+      readonly,
+      checked,
+      defaultChecked,
+      value
+    } = props;
+    const labelClasses = Utils.classNames('toggle', className, {
+      disabled
+    }, Mixins.colorClasses(props));
     let inputEl;
     {
       inputEl = _h('input', {
@@ -40,7 +45,9 @@ export default {
           value,
           checked
         },
-        on: { change: self.onChange.bind(self) },
+        on: {
+          change: self.onChange.bind(self)
+        },
         attrs: {
           type: 'checkbox',
           name: name
@@ -51,24 +58,25 @@ export default {
       ref: 'el',
       style: style,
       class: labelClasses,
-      attrs: { id: id }
-    }, [
-      inputEl,
-      _h('span', { class: 'toggle-icon' })
-    ]);
+      attrs: {
+        id: id
+      }
+    }, [inputEl, _h('span', {
+      class: 'toggle-icon'
+    })]);
   },
+
   watch: {
     'props.checked': function watchChecked(newValue) {
       const self = this;
-      if (!self.f7Toggle)
-        return;
+      if (!self.f7Toggle) return;
       self.f7Toggle.checked = newValue;
     }
   },
+
   mounted() {
     const self = this;
-    if (!self.props.init)
-      return;
+    if (!self.props.init) return;
     self.$f7ready(f7 => {
       self.f7Toggle = f7.toggle.create({
         el: self.$refs.el,
@@ -76,32 +84,37 @@ export default {
           change(toggle) {
             self.dispatchEvent('toggle:change toggleChange', toggle.checked);
           }
+
         }
       });
     });
   },
+
   beforeDestroy() {
     const self = this;
-    if (self.f7Toggle && self.f7Toggle.destroy && self.f7Toggle.$el)
-      self.f7Toggle.destroy();
+    if (self.f7Toggle && self.f7Toggle.destroy && self.f7Toggle.$el) self.f7Toggle.destroy();
   },
+
   methods: {
     toggle() {
       const self = this;
-      if (self.f7Toggle && self.f7Toggle.toggle)
-        self.f7Toggle.toggle();
+      if (self.f7Toggle && self.f7Toggle.toggle) self.f7Toggle.toggle();
     },
+
     onChange(e) {
       const self = this;
       self.dispatchEvent('change', e);
     },
+
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
     }
+
   },
   computed: {
     props() {
       return __vueComponentProps(this);
     }
+
   }
 };

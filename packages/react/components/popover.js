@@ -5,39 +5,49 @@ import __reactComponentWatch from '../runtime-helpers/react-component-watch.js';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
+
 class F7Popover extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.__reactRefs = {};
   }
+
   onOpen(event) {
     this.dispatchEvent('popover:open popoverOpen', event);
   }
+
   onOpened(event) {
     this.dispatchEvent('popover:opened popoverOpened', event);
   }
+
   onClose(event) {
     this.dispatchEvent('popover:close popoverClose', event);
   }
+
   onClosed(event) {
     this.dispatchEvent('popover:closed popoverClosed', event);
   }
+
   open(target, animate) {
     const self = this;
-    if (!self.$f7)
-      return undefined;
+    if (!self.$f7) return undefined;
     return self.$f7.popover.open(self.refs.el, target, animate);
   }
+
   close(animate) {
     const self = this;
-    if (!self.$f7)
-      return undefined;
+    if (!self.$f7) return undefined;
     return self.$f7.sheet.close(self.refs.el, animate);
   }
+
   render() {
     const self = this;
     const props = self.props;
-    const {className, id, style} = props;
+    const {
+      className,
+      id,
+      style
+    } = props;
     const classes = Utils.classNames(className, 'popover', Mixins.colorClasses(props));
     return React.createElement('div', {
       ref: __reactNode => {
@@ -46,25 +56,28 @@ class F7Popover extends React.Component {
       id: id,
       style: style,
       className: classes
-    }, React.createElement('div', { className: 'popover-angle' }), React.createElement('div', { className: 'popover-inner' }, this.slots['default']));
+    }, React.createElement('div', {
+      className: 'popover-angle'
+    }), React.createElement('div', {
+      className: 'popover-inner'
+    }, this.slots['default']));
   }
+
   componentWillUnmount() {
     const self = this;
-    if (self.f7Popover)
-      self.f7Popover.destroy();
+    if (self.f7Popover) self.f7Popover.destroy();
     const el = self.refs.el;
-    if (!el)
-      return;
+    if (!el) return;
     el.removeEventListener('popover:open', self.onOpenBound);
     el.removeEventListener('popover:opened', self.onOpenedBound);
     el.removeEventListener('popover:close', self.onCloseBound);
     el.removeEventListener('popover:closed', self.onClosedBound);
   }
+
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
-    if (!el)
-      return;
+    if (!el) return;
     self.onOpenBound = self.onOpen.bind(self);
     self.onOpenedBound = self.onOpened.bind(self);
     self.onCloseBound = self.onClose.bind(self);
@@ -73,33 +86,42 @@ class F7Popover extends React.Component {
     el.addEventListener('popover:opened', self.onOpenedBound);
     el.addEventListener('popover:close', self.onCloseBound);
     el.addEventListener('popover:closed', self.onClosedBound);
-    const {target, opened} = self.props;
+    const {
+      target,
+      opened
+    } = self.props;
     self.$f7ready(() => {
-      const popoverParams = { el };
-      if (target)
-        popoverParams.targetEl = target;
+      const popoverParams = {
+        el
+      };
+      if (target) popoverParams.targetEl = target;
       self.f7Popover = self.$f7.popover.create(popoverParams);
+
       if (opened && target) {
         self.f7Popover.open(target, false);
       }
     });
   }
+
   get slots() {
     return __reactComponentSlots(this.props);
   }
+
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
+
   get refs() {
     return this.__reactRefs;
   }
-  set refs(refs) {
-  }
+
+  set refs(refs) {}
+
   componentDidUpdate(prevProps, prevState) {
     __reactComponentWatch(this, 'props.opened', prevProps, prevState, opened => {
       const self = this;
-      if (!self.f7Popover)
-        return;
+      if (!self.f7Popover) return;
+
       if (opened) {
         self.f7Popover.open();
       } else {
@@ -107,17 +129,13 @@ class F7Popover extends React.Component {
       }
     });
   }
+
 }
-__reactComponentSetProps(F7Popover, {
-  id: [
-    String,
-    Number
-  ],
+
+__reactComponentSetProps(F7Popover, Object.assign({
+  id: [String, Number],
   opened: Boolean,
-  target: [
-    String,
-    Object
-  ],
-  ...Mixins.colorProps
-});
+  target: [String, Object]
+}, Mixins.colorProps));
+
 export default F7Popover;

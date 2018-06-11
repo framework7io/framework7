@@ -4,19 +4,16 @@ import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispat
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
 export default {
   name: 'f7-swipeout-button',
-  props: {
-    id: [
-      String,
-      Number
-    ],
+  props: Object.assign({
+    id: [String, Number],
     text: String,
     confirmText: String,
     overswipe: Boolean,
     close: Boolean,
     delete: Boolean,
-    href: String,
-    ...Mixins.colorProps
-  },
+    href: String
+  }, Mixins.colorProps),
+
   render() {
     const _h = this.$createElement;
     const props = this.props;
@@ -39,7 +36,9 @@ export default {
     return _h('a', {
       style: style,
       class: classes,
-      on: { click: this.onClick.bind(this) },
+      on: {
+        click: this.onClick.bind(this)
+      },
       attrs: {
         href: href || '#',
         id: id,
@@ -47,17 +46,21 @@ export default {
       }
     }, [this.$slots['default'] || [text]]);
   },
+
   methods: {
     onClick(event) {
       this.dispatchEvent('click', event);
     },
+
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
     }
+
   },
   computed: {
     props() {
       return __vueComponentProps(this);
     }
+
   }
 };

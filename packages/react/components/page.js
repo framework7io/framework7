@@ -5,60 +5,104 @@ import F7PageContent from './page-content';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
+
 class F7Page extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.__reactRefs = {};
+
     this.state = (() => {
-      return { hasSubnavbar: false };
+      return {
+        hasSubnavbar: false
+      };
     })();
   }
+
   onPtrPullStart(event) {
     this.dispatchEvent('ptr:pullstart ptrPullStart', event);
   }
+
   onPtrPullMove(event) {
     this.dispatchEvent('ptr:pullmove ptrPullMove', event);
   }
+
   onPtrPullEnd(event) {
     this.dispatchEvent('ptr:pullend ptrPullEnd', event);
   }
+
   onPtrRefresh(event) {
     this.dispatchEvent('ptr:refresh ptrRefresh', event, event.detail);
   }
+
   onPtrDone(event) {
     this.dispatchEvent('ptr:done ptrDone', event);
   }
+
   onInfinite(event) {
     this.dispatchEvent('infinite', event);
   }
+
   onPageMounted(event) {
     this.dispatchEvent('page:mounted pageMounted', event, event.detail);
   }
+
   onPageInit(event) {
     this.dispatchEvent('page:init pageInit', event, event.detail);
   }
+
   onPageReinit(event) {
     this.dispatchEvent('page:reinit pageReinit', event, event.detail);
   }
+
   onPageBeforeIn(event) {
     this.dispatchEvent('page:beforein pageBeforeIn', event, event.detail);
   }
+
   onPageBeforeOut(event) {
     this.dispatchEvent('page:beforeout pageBeforeOut', event, event.detail);
   }
+
   onPageAfterOut(event) {
     this.dispatchEvent('page:afterout pageAfterOut', event, event.detail);
   }
+
   onPageAfterIn(event) {
     this.dispatchEvent('page:afterin pageAfterIn', event, event.detail);
   }
+
   onPageBeforeRemove(event) {
     this.dispatchEvent('page:beforeremove pageBeforeRemove', event, event.detail);
   }
+
   render() {
     const self = this;
     const props = self.props;
-    const {id, style, name, pageContent, messagesContent, ptr, ptrDistance, ptrPreloader, infinite, infiniteDistance, infinitePreloader, infiniteTop, hideBarsOnScroll, hideNavbarOnScroll, hideToolbarOnScroll, loginScreen, className, stacked, tabs, subnavbar, withSubnavbar, noNavbar, noToolbar, noSwipeback} = props;
+    const {
+      id,
+      style,
+      name,
+      pageContent,
+      messagesContent,
+      ptr,
+      ptrDistance,
+      ptrPreloader,
+      infinite,
+      infiniteDistance,
+      infinitePreloader,
+      infiniteTop,
+      hideBarsOnScroll,
+      hideNavbarOnScroll,
+      hideToolbarOnScroll,
+      loginScreen,
+      className,
+      stacked,
+      tabs,
+      subnavbar,
+      withSubnavbar,
+      noNavbar,
+      noToolbar,
+      noSwipeback
+    } = props;
     const fixedList = [];
     const staticList = [];
     const needsPageContent = pageContent;
@@ -68,38 +112,37 @@ class F7Page extends React.Component {
       default: slotsDefault
     } = self.slots;
     let fixedTags;
-    fixedTags = 'Navbar Toolbar Tabbar Subnavbar Searchbar Messagebar Fab ListIndex'.split(' ').map(tagName => `F7${ tagName }`);
+    fixedTags = 'Navbar Toolbar Tabbar Subnavbar Searchbar Messagebar Fab ListIndex'.split(' ').map(tagName => `F7${tagName}`);
     let hasSubnavbar;
     let hasMessages;
     hasMessages = messagesContent;
+
     if (slotsDefault) {
       slotsDefault.forEach(child => {
-        if (typeof child === 'undefined')
-          return;
+        if (typeof child === 'undefined') return;
         let isFixedTag = false;
         {
           const tag = child.type && child.type.name;
+
           if (!tag) {
-            if (needsPageContent)
-              staticList.push(child);
+            if (needsPageContent) staticList.push(child);
             return;
           }
-          if (tag === 'F7Subnavbar')
-            hasSubnavbar = true;
-          if (typeof hasMessages === 'undefined' && tag === 'F7Messages')
-            hasMessages = true;
+
+          if (tag === 'F7Subnavbar') hasSubnavbar = true;
+          if (typeof hasMessages === 'undefined' && tag === 'F7Messages') hasMessages = true;
+
           if (fixedTags.indexOf(tag) >= 0) {
             isFixedTag = true;
           }
         }
+
         if (needsPageContent) {
-          if (isFixedTag)
-            fixedList.push(child);
-          else
-            staticList.push(child);
+          if (isFixedTag) fixedList.push(child);else staticList.push(child);
         }
       });
     }
+
     const classes = Utils.classNames(className, 'page', {
       stacked,
       tabs,
@@ -108,6 +151,7 @@ class F7Page extends React.Component {
       'no-toolbar': noToolbar,
       'no-swipeback': noSwipeback
     }, Mixins.colorClasses(props));
+
     if (!needsPageContent) {
       return React.createElement('div', {
         ref: __reactNode => {
@@ -119,6 +163,7 @@ class F7Page extends React.Component {
         'data-name': name
       }, slotsFixed, slotsStatic, slotsDefault);
     }
+
     const pageContentEl = React.createElement(F7PageContent, {
       ptr: ptr,
       ptrDistance: ptrDistance,
@@ -143,6 +188,7 @@ class F7Page extends React.Component {
       'data-name': name
     }, fixedList, slotsFixed, pageContentEl);
   }
+
   componentWillUnmount() {
     const self = this;
     const el = self.refs.el;
@@ -161,10 +207,14 @@ class F7Page extends React.Component {
     el.removeEventListener('page:afterin', self.onPageAfterIn);
     el.removeEventListener('page:beforeremove', self.onPageBeforeRemove);
   }
+
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
-    const {ptr, infinite} = self.props;
+    const {
+      ptr,
+      infinite
+    } = self.props;
     self.onPtrPullStart = self.onPtrPullStart.bind(self);
     self.onPtrPullMove = self.onPtrPullMove.bind(self);
     self.onPtrPullEnd = self.onPtrPullEnd.bind(self);
@@ -179,6 +229,7 @@ class F7Page extends React.Component {
     self.onPageAfterOut = self.onPageAfterOut.bind(self);
     self.onPageAfterIn = self.onPageAfterIn.bind(self);
     self.onPageBeforeRemove = self.onPageBeforeRemove.bind(self);
+
     if (ptr) {
       el.addEventListener('ptr:pullstart', self.onPtrPullStart);
       el.addEventListener('ptr:pullmove', self.onPtrPullMove);
@@ -186,9 +237,11 @@ class F7Page extends React.Component {
       el.addEventListener('ptr:refresh', self.onPtrRefresh);
       el.addEventListener('ptr:done', self.onPtrDone);
     }
+
     if (infinite) {
       el.addEventListener('infinite', self.onInfinite);
     }
+
     el.addEventListener('page:mounted', self.onPageMounted);
     el.addEventListener('page:init', self.onPageInit);
     el.addEventListener('page:reinit', self.onPageReinit);
@@ -198,23 +251,25 @@ class F7Page extends React.Component {
     el.addEventListener('page:afterin', self.onPageAfterIn);
     el.addEventListener('page:beforeremove', self.onPageBeforeRemove);
   }
+
   get slots() {
     return __reactComponentSlots(this.props);
   }
+
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
+
   get refs() {
     return this.__reactRefs;
   }
-  set refs(refs) {
-  }
+
+  set refs(refs) {}
+
 }
-__reactComponentSetProps(F7Page, {
-  id: [
-    String,
-    Number
-  ],
+
+__reactComponentSetProps(F7Page, Object.assign({
+  id: [String, Number],
   name: String,
   stacked: Boolean,
   withSubnavbar: Boolean,
@@ -244,7 +299,7 @@ __reactComponentSetProps(F7Page, {
   hideNavbarOnScroll: Boolean,
   hideToolbarOnScroll: Boolean,
   messagesContent: Boolean,
-  loginScreen: Boolean,
-  ...Mixins.colorProps
-});
+  loginScreen: Boolean
+}, Mixins.colorProps));
+
 export default F7Page;
