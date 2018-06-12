@@ -33,6 +33,7 @@ export default {
     outline: Boolean,
     active: Boolean,
     disabled: Boolean,
+    tooltip: String,
     ...Mixins.colorProps,
     ...Mixins.linkIconProps,
     ...Mixins.linkRouterProps,
@@ -83,6 +84,7 @@ export default {
     }
     return (
       <a
+        ref="el"
         id={id}
         style={style}
         className={self.classes}
@@ -176,5 +178,24 @@ export default {
     onClick(event) {
       this.dispatchEvent('click', event);
     },
+  },
+  componentDidMount() {
+    const self = this;
+    const { tooltip } = self.props;
+    if (!tooltip) return;
+    self.$f7ready((f7) => {
+      self.f7Tooltip = f7.tooltip.create({
+        el: self.refs.el,
+        text: tooltip,
+      });
+    });
+  },
+  componentWillUnmount() {
+    const self = this;
+    if (self.f7Tooltip && self.f7Tooltip.destroy) {
+      self.f7Tooltip.destroy();
+      self.f7Tooltip = null;
+      delete self.f7Tooltip;
+    }
   },
 };

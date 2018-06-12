@@ -24,6 +24,7 @@ export default {
       type: [String, Boolean],
       default: '#',
     },
+    tooltip: String,
     ...Mixins.colorProps,
     ...Mixins.linkIconProps,
     ...Mixins.linkRouterProps,
@@ -122,7 +123,7 @@ export default {
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
-    const { tabbarLabel, tabLink } = self.props;
+    const { tabbarLabel, tabLink, tooltip } = self.props;
     let isTabbarLabel = false;
     if (tabbarLabel ||
       (
@@ -133,6 +134,21 @@ export default {
       isTabbarLabel = true;
     }
     self.setState({ isTabbarLabel });
+    if (!tooltip) return;
+    self.$f7ready((f7) => {
+      self.f7Tooltip = f7.tooltip.create({
+        el: self.refs.el,
+        text: tooltip,
+      });
+    });
+  },
+  componentWillUnmount() {
+    const self = this;
+    if (self.f7Tooltip && self.f7Tooltip.destroy) {
+      self.f7Tooltip.destroy();
+      self.f7Tooltip = null;
+      delete self.f7Tooltip;
+    }
   },
   computed: {
     attrs() {
