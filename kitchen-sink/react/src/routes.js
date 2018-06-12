@@ -84,6 +84,7 @@ import Tabbar from './pages/tabbar.jsx';
 import TabbarLabels from './pages/tabbar-labels.jsx';
 import TabbarScrollable from './pages/tabbar-scrollable.jsx';
 import ToolbarHideScroll from './pages/toolbar-hide-scroll.jsx';
+import Tooltip from './pages/tooltip.jsx';
 import Timeline from './pages/timeline.jsx';
 import TimelineVertical from './pages/timeline-vertical.jsx';
 import TimelineHorizontal from './pages/timeline-horizontal.jsx';
@@ -538,6 +539,10 @@ export default [
         component: ToolbarHideScroll,
       },
     ],
+  },
+  {
+    path: '/tooltip/',
+    component: Tooltip,
   },
   {
     path: '/timeline/',

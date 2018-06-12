@@ -181,6 +181,9 @@ export default () => (
       <ListItem link="/toolbar-tabbar/" title="Toolbar & Tabbar">
         <Icon slot="media" icon="icon-f7" />
       </ListItem>
+      <ListItem link="/tooltip/" title="Tooltip">
+        <Icon slot="media" icon="icon-f7" />
+      </ListItem>
       <ListItem link="/virtual-list/" title="Virtual List">
         <Icon slot="media" icon="icon-f7" />
       </ListItem>

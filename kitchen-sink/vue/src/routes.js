@@ -85,6 +85,7 @@ import Tabbar from './pages/tabbar.vue';
 import TabbarLabels from './pages/tabbar-labels.vue';
 import TabbarScrollable from './pages/tabbar-scrollable.vue';
 import ToolbarHideScroll from './pages/toolbar-hide-scroll.vue';
+import Tooltip from './pages/tooltip.vue';
 import Timeline from './pages/timeline.vue';
 import TimelineVertical from './pages/timeline-vertical.vue';
 import TimelineHorizontal from './pages/timeline-horizontal.vue';
@@ -540,6 +541,10 @@ export default [
         component: ToolbarHideScroll,
       },
     ],
+  },
+  {
+    path: '/tooltip/',
+    component: Tooltip,
   },
   {
     path: '/timeline/',
