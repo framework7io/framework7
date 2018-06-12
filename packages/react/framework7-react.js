@@ -1,5 +1,5 @@
 /**
- * Framework7 React 3.0.0-beta.8
+ * Framework7 React 3.0.0-beta.9
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 11, 2018
+ * Released on: June 12, 2018
  */
 
 (function (global, factory) {
@@ -1768,13 +1768,14 @@
   var F7Button = (function (superclass) {
     function F7Button(props, context) {
       superclass.call(this, props, context);
+      this.__reactRefs = {};
     }
 
     if ( superclass ) F7Button.__proto__ = superclass;
     F7Button.prototype = Object.create( superclass && superclass.prototype );
     F7Button.prototype.constructor = F7Button;
 
-    var prototypeAccessors = { attrs: { configurable: true },classes: { configurable: true },slots: { configurable: true } };
+    var prototypeAccessors = { attrs: { configurable: true },classes: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
 
     F7Button.prototype.onClick = function onClick (event) {
       this.dispatchEvent('click', event);
@@ -1844,6 +1845,8 @@
     };
 
     F7Button.prototype.render = function render () {
+      var this$1 = this;
+
       var self = this;
       var iconEl;
       var textEl;
@@ -1885,11 +1888,37 @@
       }
 
       return React.createElement('a', Object.assign({
+        ref: function (__reactNode) {
+          this$1.__reactRefs['el'] = __reactNode;
+        },
         id: id,
         style: style,
         className: self.classes,
         onClick: self.onClick.bind(self)
       }, self.attrs), iconEl, textEl, this.slots['default']);
+    };
+
+    F7Button.prototype.componentWillUnmount = function componentWillUnmount () {
+      var self = this;
+
+      if (self.f7Tooltip && self.f7Tooltip.destroy) {
+        self.f7Tooltip.destroy();
+        self.f7Tooltip = null;
+        delete self.f7Tooltip;
+      }
+    };
+
+    F7Button.prototype.componentDidMount = function componentDidMount () {
+      var self = this;
+      var ref = self.props;
+      var tooltip = ref.tooltip;
+      if (!tooltip) { return; }
+      self.$f7ready(function (f7) {
+        self.f7Tooltip = f7.tooltip.create({
+          el: self.refs.el,
+          text: tooltip
+        });
+      });
     };
 
     prototypeAccessors.slots.get = function () {
@@ -1902,6 +1931,12 @@
 
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
+
+    prototypeAccessors.refs.get = function () {
+      return this.__reactRefs;
+    };
+
+    prototypeAccessors.refs.set = function (refs) {};
 
     Object.defineProperties( F7Button.prototype, prototypeAccessors );
 
@@ -1934,7 +1969,8 @@
     raised: Boolean,
     outline: Boolean,
     active: Boolean,
-    disabled: Boolean
+    disabled: Boolean,
+    tooltip: String
   }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
 
   var F7CardContent = (function (superclass) {
@@ -3441,12 +3477,23 @@
       }, self.attrs), iconEl, textEl, defaultSlots);
     };
 
+    F7Link.prototype.componentWillUnmount = function componentWillUnmount () {
+      var self = this;
+
+      if (self.f7Tooltip && self.f7Tooltip.destroy) {
+        self.f7Tooltip.destroy();
+        self.f7Tooltip = null;
+        delete self.f7Tooltip;
+      }
+    };
+
     F7Link.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var el = self.refs.el;
       var ref = self.props;
       var tabbarLabel = ref.tabbarLabel;
       var tabLink = ref.tabLink;
+      var tooltip = ref.tooltip;
       var isTabbarLabel = false;
 
       if (tabbarLabel || (tabLink || tabLink === '') && self.$$(el).parents('.tabbar-labels').length) {
@@ -3455,6 +3502,13 @@
 
       self.setState({
         isTabbarLabel: isTabbarLabel
+      });
+      if (!tooltip) { return; }
+      self.$f7ready(function (f7) {
+        self.f7Tooltip = f7.tooltip.create({
+          el: self.refs.el,
+          text: tooltip
+        });
       });
     };
 
@@ -3496,7 +3550,8 @@
     href: {
       type: [String, Boolean],
       default: '#'
-    }
+    },
+    tooltip: String
   }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
 
   var F7ListButton = (function (superclass) {
@@ -9856,7 +9911,13 @@
         var pageData = {
           component: component,
           id: id,
-          props: Utils.extend({}, options.route.params),
+          props: Utils.extend(
+            {
+              f7route: options.route,
+              f7router: router,
+            },
+            options.route.params
+          ),
         };
         routerComponent.$f7router = router;
         routerComponent.$f7route = options.route;
@@ -9929,7 +9990,13 @@
         var tabContent = {
           id: id,
           component: component,
-          props: Utils.extend({}, options.route.params),
+          props: Utils.extend(
+            {
+              f7route: options.route,
+              f7router: router,
+            },
+            options.route.params
+          ),
         };
 
         tabsComponent.$f7router = router;
@@ -9980,7 +10047,13 @@
         var modalData = {
           component: component,
           id: id,
-          props: Utils.extend({}, options.route.params),
+          props: Utils.extend(
+            {
+              f7route: options.route,
+              f7router: router,
+            },
+            options.route.params
+          ),
         };
         modalsComponent.$f7router = router;
         modalsComponent.$f7route = options.route;
@@ -10018,7 +10091,7 @@
   };
 
   /**
-   * Framework7 React 3.0.0-beta.8
+   * Framework7 React 3.0.0-beta.9
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -10026,7 +10099,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: June 11, 2018
+   * Released on: June 12, 2018
    */
 
   var Plugin = {
@@ -10159,9 +10232,11 @@
       Object.defineProperty(Extend.prototype, '$f7route', {
         get: function get() {
           var self = this;
+          if (self.props && self.props.f7route) { return self.props.f7route; }
+          if (self.f7route) { return self.f7route; }
+          if (self._f7route) { return self._f7route; }
           var route;
           var parent = self;
-          if (self._f7route) { route = self._f7route; }
           while (parent && !route) {
             if (parent._f7route) { route = parent._f7route; }
             {
@@ -10178,9 +10253,11 @@
       Object.defineProperty(Extend.prototype, '$f7router', {
         get: function get() {
           var self = this;
+          if (self.props && self.props.f7router) { return self.props.f7router; }
+          if (self.f7router) { return self.f7router; }
+          if (self._f7router) { return self._f7router; }
           var router;
           var parent = self;
-          if (self._f7router) { router = self._f7router; }
           while (parent && !router) {
             if (parent._f7router) { router = parent._f7router; }
             else if (parent.f7View) {

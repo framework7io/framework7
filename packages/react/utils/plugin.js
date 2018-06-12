@@ -52,9 +52,11 @@ const Plugin = {
     Object.defineProperty(Extend.prototype, '$f7route', {
       get() {
         const self = this;
+        if (self.props && self.props.f7route) return self.props.f7route;
+        if (self.f7route) return self.f7route;
+        if (self._f7route) return self._f7route;
         let route;
         let parent = self;
-        if (self._f7route) route = self._f7route;
         while (parent && !route) {
           if (parent._f7route) route = parent._f7route;
           if (compiler === 'vue') {
@@ -73,9 +75,11 @@ const Plugin = {
     Object.defineProperty(Extend.prototype, '$f7router', {
       get() {
         const self = this;
+        if (self.props && self.props.f7router) return self.props.f7router;
+        if (self.f7router) return self.f7router;
+        if (self._f7router) return self._f7router;
         let router;
         let parent = self;
-        if (self._f7router) router = self._f7router;
         while (parent && !router) {
           if (parent._f7router) router = parent._f7router;
           else if (parent.f7View) {

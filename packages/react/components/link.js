@@ -139,12 +139,23 @@ class F7Link extends React.Component {
     }, self.attrs), iconEl, textEl, defaultSlots);
   }
 
+  componentWillUnmount() {
+    const self = this;
+
+    if (self.f7Tooltip && self.f7Tooltip.destroy) {
+      self.f7Tooltip.destroy();
+      self.f7Tooltip = null;
+      delete self.f7Tooltip;
+    }
+  }
+
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
     const {
       tabbarLabel,
-      tabLink
+      tabLink,
+      tooltip
     } = self.props;
     let isTabbarLabel = false;
 
@@ -154,6 +165,13 @@ class F7Link extends React.Component {
 
     self.setState({
       isTabbarLabel
+    });
+    if (!tooltip) return;
+    self.$f7ready(f7 => {
+      self.f7Tooltip = f7.tooltip.create({
+        el: self.refs.el,
+        text: tooltip
+      });
     });
   }
 
@@ -189,7 +207,8 @@ __reactComponentSetProps(F7Link, Object.assign({
   href: {
     type: [String, Boolean],
     default: '#'
-  }
+  },
+  tooltip: String
 }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
 
 export default F7Link;

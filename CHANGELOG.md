@@ -2,6 +2,16 @@
 
 # Change Log
 
+# [v3.0.0-beta.9](https://github.com/framework7io/framework7/compare/v3.0.0-beta.8...v3.0.0-beta.9) - June 12, 2018
+  * Core
+    * All new Tooltip component
+    * Template7 update to latest 1.3.6
+      * Better `@global` parsing in `js` and `js_if` helpers
+  * Phenome
+    * Now `f7route` and `f7router` are passed as props for components loaded by router (Page, Routable Tabs, Routable Modals).
+    * `$f7route` and `$f7router` are now also available only on components loaded by router (Page, Routable Tabs, Routable Modals) and may not be available in custom children components. For children components they must be passed done using props
+    * Added `tooltip` support for `Link` and `Button` components
+
 # [v3.0.0-beta.8](https://github.com/framework7io/framework7/compare/v3.0.0-beta.7...v3.0.0-beta.8) - June 11, 2018
   * Phenome
     * Transform object rest spread syntax to Object.assign in Vue/React components

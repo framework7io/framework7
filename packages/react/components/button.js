@@ -9,6 +9,7 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7Button extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
   }
 
   onClick(event) {
@@ -126,11 +127,38 @@ class F7Button extends React.Component {
     }
 
     return React.createElement('a', Object.assign({
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
       id: id,
       style: style,
       className: self.classes,
       onClick: self.onClick.bind(self)
     }, self.attrs), iconEl, textEl, this.slots['default']);
+  }
+
+  componentWillUnmount() {
+    const self = this;
+
+    if (self.f7Tooltip && self.f7Tooltip.destroy) {
+      self.f7Tooltip.destroy();
+      self.f7Tooltip = null;
+      delete self.f7Tooltip;
+    }
+  }
+
+  componentDidMount() {
+    const self = this;
+    const {
+      tooltip
+    } = self.props;
+    if (!tooltip) return;
+    self.$f7ready(f7 => {
+      self.f7Tooltip = f7.tooltip.create({
+        el: self.refs.el,
+        text: tooltip
+      });
+    });
   }
 
   get slots() {
@@ -140,6 +168,12 @@ class F7Button extends React.Component {
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
+
+  get refs() {
+    return this.__reactRefs;
+  }
+
+  set refs(refs) {}
 
 }
 
@@ -169,7 +203,8 @@ __reactComponentSetProps(F7Button, Object.assign({
   raised: Boolean,
   outline: Boolean,
   active: Boolean,
-  disabled: Boolean
+  disabled: Boolean,
+  tooltip: String
 }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
 
 export default F7Button;

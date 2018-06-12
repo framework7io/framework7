@@ -24,7 +24,8 @@ export default {
     href: {
       type: [String, Boolean],
       default: '#'
-    }
+    },
+    tooltip: String
   }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
 
   data() {
@@ -134,7 +135,8 @@ export default {
     const el = self.$refs.el;
     const {
       tabbarLabel,
-      tabLink
+      tabLink,
+      tooltip
     } = self.props;
     let isTabbarLabel = false;
 
@@ -145,6 +147,23 @@ export default {
     self.setState({
       isTabbarLabel
     });
+    if (!tooltip) return;
+    self.$f7ready(f7 => {
+      self.f7Tooltip = f7.tooltip.create({
+        el: self.$refs.el,
+        text: tooltip
+      });
+    });
+  },
+
+  beforeDestroy() {
+    const self = this;
+
+    if (self.f7Tooltip && self.f7Tooltip.destroy) {
+      self.f7Tooltip.destroy();
+      self.f7Tooltip = null;
+      delete self.f7Tooltip;
+    }
   },
 
   computed: {

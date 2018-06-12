@@ -1,5 +1,5 @@
 /**
- * Framework7 3.0.0-beta.8
+ * Framework7 3.0.0-beta.9
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 11, 2018
+ * Released on: June 12, 2018
  */
 
 (function (global, factory) {
@@ -17,7 +17,7 @@
 }(this, (function () { 'use strict';
 
   /**
-   * Template7 1.3.5
+   * Template7 1.3.6
    * Mobile-first HTML template engine
    * 
    * http://www.idangero.us/template7/
@@ -28,7 +28,7 @@
    * 
    * Licensed under MIT
    * 
-   * Released on: January 22, 2018
+   * Released on: June 11, 2018
    */
   var t7ctx;
   if (typeof window !== 'undefined') {
@@ -244,11 +244,15 @@
         var variable = object;
         if (part.indexOf((replace + ".")) >= 0) {
           part.split((replace + "."))[1].split('.').forEach(function (partName) {
-            if (variable[partName]) { variable = variable[partName]; }
-            else { variable = 'undefined'; }
+            if (partName in variable) { variable = variable[partName]; }
+            else { variable = undefined; }
           });
         }
-        return JSON.stringify(variable);
+        if (typeof variable === 'string') {
+          variable = JSON.stringify(variable);
+        }
+        if (variable === undefined) { variable = 'undefined'; }
+        return variable;
       }).join('');
     },
     parseJsParents: function parseJsParents(expression, parents) {
@@ -443,7 +447,7 @@
         execute = Template7Utils.parseJsVariable(execute, '@root', options.root);
       }
       if (execute.indexOf('@global') >= 0) {
-        execute = Template7Utils.parseJsVariable(execute, '@global', Template7Class.global);
+        execute = Template7Utils.parseJsVariable(execute, '@global', Template7Context.Template7.global);
       }
       if (execute.indexOf('../') >= 0) {
         execute = Template7Utils.parseJsParents(execute, options.parents);
@@ -9987,6 +9991,7 @@
       modal.useModulesParams(defaults);
 
       modal.params = Utils.extend(defaults, params);
+      modal.opened = false;
 
       // Install Modules
       modal.useModules();
@@ -9999,6 +10004,7 @@
     Modal.prototype.constructor = Modal;
     Modal.prototype.onOpen = function onOpen () {
       var modal = this;
+      modal.opened = true;
       openedModals.push(modal);
       $$1('html').addClass(("with-modal-" + (modal.type.toLowerCase())));
       modal.$el.trigger(("modal:open " + (modal.type.toLowerCase()) + ":open"), modal);
@@ -10011,6 +10017,7 @@
     };
     Modal.prototype.onClose = function onClose () {
       var modal = this;
+      modal.opened = false;
       if (!modal.type || !modal.$el) { return; }
       openedModals.splice(openedModals.indexOf(modal), 1);
       $$1('html').removeClass(("with-modal-" + (modal.type.toLowerCase())));
@@ -29804,6 +29811,310 @@
     },
   };
 
+  var Tooltip = (function (Framework7Class$$1) {
+    function Tooltip(app, params) {
+      if ( params === void 0 ) params = {};
+
+      // Extends with open/close Modal methods;
+      Framework7Class$$1.call(this, app, params);
+
+      var tooltip = this;
+
+      var defaults = {};
+
+      // Extend defaults with modules params
+      tooltip.useModulesParams(defaults);
+
+      tooltip.params = Utils.extend(defaults, params);
+
+      var ref = tooltip.params;
+      var el = ref.el;
+      if (!el) { return tooltip; }
+
+      var $el = $$1(el);
+      if ($el.length === 0) { return tooltip; }
+
+      var $tooltipEl = $$1(tooltip.render()).eq(0);
+
+      Utils.extend(tooltip, {
+        app: app,
+        $el: $el,
+        el: $el && $el[0],
+        $tooltipEl: $tooltipEl,
+        tooltipEl: $tooltipEl && $tooltipEl[0],
+        text: tooltip.params.text || '',
+      });
+
+      $el[0].f7Tooltip = tooltip;
+
+      var touchesStart = {};
+      var isTouched;
+      function handleTouchStart(e) {
+        if (isTouched) { return; }
+        isTouched = true;
+        touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+        touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+        tooltip.show(this);
+      }
+      function handleTouchMove(e) {
+        if (!isTouched) { return; }
+        var x = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+        var y = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+        var distance = Math.pow( (
+          (Math.pow( (x - touchesStart.x), 2 )) +
+          (Math.pow( (y - touchesStart.y), 2 ))
+        ), 0.5 );
+        if (distance > 50) {
+          isTouched = false;
+          tooltip.hide();
+        }
+      }
+      function handleTouchEnd() {
+        if (!isTouched) { return; }
+        isTouched = false;
+        tooltip.hide();
+      }
+      function handleMouseEnter() {
+        tooltip.show(this);
+      }
+      function handleMouseLeave() {
+        tooltip.hide();
+      }
+      function handleTransitionEnd() {
+        if (!$tooltipEl.hasClass('tooltip-in')) {
+          $tooltipEl.removeClass('tooltip-out').remove();
+        }
+      }
+
+      tooltip.attachEvents = function attachEvents() {
+        if (Support.touch) {
+          var passive = Support.passiveListener ? { passive: true } : false;
+          $el.on(app.touchEvents.start, handleTouchStart, passive);
+          app.on('touchmove', handleTouchMove);
+          app.on('touchend:passive', handleTouchEnd);
+          return;
+        }
+        $tooltipEl.on('transitionend webkitTransitionEnd', handleTransitionEnd);
+        $el.on('mouseenter', handleMouseEnter);
+        $el.on('mouseleave', handleMouseLeave);
+      };
+      tooltip.detachEvents = function detachEvents() {
+        if (Support.touch) {
+          var passive = Support.passiveListener ? { passive: true } : false;
+          $el.off(app.touchEvents.start, handleTouchStart, passive);
+          app.off('touchmove', handleTouchMove);
+          app.off('touchend:passive', handleTouchEnd);
+          return;
+        }
+        $tooltipEl.off('transitionend webkitTransitionEnd', handleTransitionEnd);
+        $el.off('mouseenter', handleMouseEnter);
+        $el.off('mouseleave', handleMouseLeave);
+      };
+
+      // Install Modules
+      tooltip.useModules();
+
+      tooltip.init();
+
+      return tooltip;
+    }
+
+    if ( Framework7Class$$1 ) Tooltip.__proto__ = Framework7Class$$1;
+    Tooltip.prototype = Object.create( Framework7Class$$1 && Framework7Class$$1.prototype );
+    Tooltip.prototype.constructor = Tooltip;
+    Tooltip.prototype.position = function position (targetEl) {
+      var tooltip = this;
+      var $tooltipEl = tooltip.$tooltipEl;
+      var app = tooltip.app;
+      $tooltipEl.css({ left: '', top: '' });
+      var $targetEl = $$1(targetEl || tooltip.el);
+      var ref = [$tooltipEl.width(), $tooltipEl.height()];
+      var width = ref[0];
+      var height = ref[1];
+
+      $tooltipEl.css({ left: '', top: '' });
+
+      var targetWidth;
+      var targetHeight;
+      var targetOffsetLeft;
+      var targetOffsetTop;
+      if ($targetEl && $targetEl.length > 0) {
+        targetWidth = $targetEl.outerWidth();
+        targetHeight = $targetEl.outerHeight();
+
+        var targetOffset = $targetEl.offset();
+        targetOffsetLeft = targetOffset.left - app.left;
+        targetOffsetTop = targetOffset.top - app.top;
+
+        var targetParentPage = $targetEl.parents('.page');
+        if (targetParentPage.length > 0) {
+          targetOffsetTop -= targetParentPage[0].scrollTop;
+        }
+      }
+      var ref$1 = [0, 0, 0];
+      var left = ref$1[0];
+      var top = ref$1[1];
+
+      // Top Position
+      var position = 'top';
+
+      if (height < targetOffsetTop) {
+        // On top
+        top = targetOffsetTop - height;
+      } else if (height < app.height - targetOffsetTop - targetHeight) {
+        // On bottom
+        position = 'bottom';
+        top = targetOffsetTop + targetHeight;
+      } else {
+        // On middle
+        position = 'middle';
+        top = ((targetHeight / 2) + targetOffsetTop) - (height / 2);
+        if (top <= 0) {
+          top = 8;
+        } else if (top + height >= app.height) {
+          top = app.height - height - 8;
+        }
+      }
+
+      // Horizontal Position
+      if (position === 'top' || position === 'bottom') {
+        left = ((targetWidth / 2) + targetOffsetLeft) - (width / 2);
+        if (left < 8) { left = 8; }
+        if (left + width > app.width) { left = app.width - width - 8; }
+        if (left < 0) { left = 0; }
+      } else if (position === 'middle') {
+        left = targetOffsetLeft - width;
+        if (left < 8 || (left + width > app.width)) {
+          if (left < 8) { left = targetOffsetLeft + targetWidth; }
+          if (left + width > app.width) { left = app.width - width - 8; }
+        }
+      }
+
+      // Apply Styles
+      $tooltipEl.css({ top: (top + "px"), left: (left + "px") });
+    };
+    Tooltip.prototype.show = function show (aroundEl) {
+      var tooltip = this;
+      var app = tooltip.app;
+      var $tooltipEl = tooltip.$tooltipEl;
+      var $el = tooltip.$el;
+      app.root.append($tooltipEl);
+      tooltip.position(aroundEl);
+      var $aroundEl = $$1(aroundEl);
+      $el.trigger('tooltip:show', tooltip);
+      $tooltipEl.trigger('tooltip:show', tooltip);
+      if ($aroundEl.length && $aroundEl[0] !== $el[0]) {
+        $aroundEl.trigger('tooltip:show', tooltip);
+      }
+      tooltip.emit('local::show tooltipShow', tooltip);
+      $tooltipEl.removeClass('tooltip-out').addClass('tooltip-in');
+      return tooltip;
+    };
+    Tooltip.prototype.hide = function hide () {
+      var tooltip = this;
+      var $tooltipEl = tooltip.$tooltipEl;
+      var $el = tooltip.$el;
+      $el.trigger('tooltip:hide', tooltip);
+      $tooltipEl.trigger('tooltip:hide', tooltip);
+      tooltip.emit('local::hide tooltipHide', tooltip);
+      $tooltipEl.addClass('tooltip-out').removeClass('tooltip-in');
+      return tooltip;
+    };
+    Tooltip.prototype.render = function render () {
+      var tooltip = this;
+      if (tooltip.params.render) { return tooltip.params.render.call(tooltip, tooltip); }
+      var ref = tooltip.params;
+      var cssClass = ref.cssClass;
+      var text = ref.text;
+      return ("\n      <div class=\"tooltip " + (cssClass || '') + "\">\n        <div class=\"tooltip-content\">" + (text || '') + "</div>\n      </div>\n    ").trim();
+    };
+    Tooltip.prototype.init = function init () {
+      var tooltip = this;
+      tooltip.attachEvents();
+    };
+    Tooltip.prototype.destroy = function destroy () {
+      var tooltip = this;
+      if (!tooltip.$el || tooltip.destroyed) { return; }
+      tooltip.$el.trigger('tooltip:beforedestroy', tooltip);
+      tooltip.emit('local::beforeDestroy tooltipBeforeDestroy', tooltip);
+      tooltip.$tooltipEl.remove();
+      delete tooltip.$el[0].f7Tooltip;
+      tooltip.detachEvents();
+      Utils.deleteProps(tooltip);
+      tooltip.destroyed = true;
+    };
+
+    return Tooltip;
+  }(Framework7Class));
+
+  var Tooltip$1 = {
+    name: 'tooltip',
+    static: {
+      Tooltip: Tooltip,
+    },
+    create: function create() {
+      var app = this;
+      app.tooltip = ConstructorMethods({
+        defaultSelector: '.tooltip',
+        constructor: Tooltip,
+        app: app,
+        domProp: 'f7Tooltip',
+      });
+      app.tooltip.show = function show(el) {
+        var $el = $$1(el);
+        if ($el.length === 0) { return undefined; }
+        var tooltip = $el[0].f7Tooltip;
+        if (!tooltip) { return undefined; }
+        tooltip.show($el[0]);
+        return tooltip;
+      };
+      app.tooltip.hide = function hide(el) {
+        var $el = $$1(el);
+        if ($el.length === 0) { return undefined; }
+        var tooltip = $el[0].f7Tooltip;
+        if (!tooltip) { return undefined; }
+        tooltip.hide();
+        return tooltip;
+      };
+    },
+    params: {
+      tooltip: {
+        el: null,
+        text: null,
+        cssClass: null,
+        render: null,
+      },
+    },
+    on: {
+      tabMounted: function tabMounted(tabEl) {
+        var app = this;
+        $$1(tabEl).find('.tooltip-init').each(function (index, el) {
+          var text = $$1(el).attr('data-tooltip');
+          if (!text) { return; }
+          app.tooltip.create({ el: el, text: text });
+        });
+      },
+      tabBeforeRemove: function tabBeforeRemove(tabEl) {
+        $$1(tabEl).find('.tooltip-init').each(function (index, el) {
+          if (el.f7Tooltip) { el.f7Tooltip.destroy(); }
+        });
+      },
+      pageInit: function pageInit(page) {
+        var app = this;
+        page.$el.find('.tooltip-init').each(function (index, el) {
+          var text = $$1(el).attr('data-tooltip');
+          if (!text) { return; }
+          app.tooltip.create({ el: el, text: text });
+        });
+      },
+      pageBeforeRemove: function pageBeforeRemove(page) {
+        page.$el.find('.tooltip-init').each(function (index, el) {
+          if (el.f7Tooltip) { el.f7Tooltip.destroy(); }
+        });
+      },
+    },
+  };
+
   var ViAd = (function (Framework7Class$$1) {
     function ViAd(app, params) {
       if ( params === void 0 ) params = {};
@@ -30123,6 +30434,7 @@
     PhotoBrowser$1,
     Notification$1,
     Autocomplete$1,
+    Tooltip$1,
     Vi,
     Typography
   ]);

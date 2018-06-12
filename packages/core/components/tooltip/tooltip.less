@@ -1,0 +1,38 @@
+/* === Tooltip === */
+.tooltip {
+  position: absolute;
+  z-index: 20000;
+  background: rgba(0,0,0,0.87);
+  border-radius: 4px;
+  padding: 8px 16px;
+  color: #fff;
+  font-size: 14px;
+  box-sizing: border-box;
+  line-height: 1.2;
+  opacity: 0;
+  transform: scale(0.9);
+  transition-duration: 150ms;
+  transition-property: opacity, transform;
+  z-index: 99000;
+  font-weight: 500;
+  font-weight: 500;
+  &.tooltip-in {
+    transform: scale(1);
+    opacity: 1;
+  }
+  &.tooltip-out {
+    opacity: 0;
+    transform: scale(1);
+  }
+  .device-desktop & {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+}
+
+& when (@includeIosTheme) {
+  @import url('./tooltip-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./tooltip-md.less');
+}

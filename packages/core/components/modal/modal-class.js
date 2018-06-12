@@ -22,6 +22,7 @@ class Modal extends Framework7Class {
     modal.useModulesParams(defaults);
 
     modal.params = Utils.extend(defaults, params);
+    modal.opened = false;
 
     // Install Modules
     modal.useModules();
@@ -30,6 +31,7 @@ class Modal extends Framework7Class {
   }
   onOpen() {
     const modal = this;
+    modal.opened = true;
     openedModals.push(modal);
     $('html').addClass(`with-modal-${modal.type.toLowerCase()}`);
     modal.$el.trigger(`modal:open ${modal.type.toLowerCase()}:open`, modal);
@@ -42,6 +44,7 @@ class Modal extends Framework7Class {
   }
   onClose() {
     const modal = this;
+    modal.opened = false;
     if (!modal.type || !modal.$el) return;
     openedModals.splice(openedModals.indexOf(modal), 1);
     $('html').removeClass(`with-modal-${modal.type.toLowerCase()}`);

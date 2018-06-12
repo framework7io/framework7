@@ -32,7 +32,8 @@ export default {
     raised: Boolean,
     outline: Boolean,
     active: Boolean,
-    disabled: Boolean
+    disabled: Boolean,
+    tooltip: String
   }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
 
   render() {
@@ -82,6 +83,7 @@ export default {
     }
 
     return _h('a', __vueComponentTransformJSXProps(Object.assign({
+      ref: 'el',
       style: style,
       class: self.classes
     }, self.attrs, {
@@ -176,5 +178,30 @@ export default {
       __vueComponentDispatchEvent(this, events, ...args);
     }
 
+  },
+
+  mounted() {
+    const self = this;
+    const {
+      tooltip
+    } = self.props;
+    if (!tooltip) return;
+    self.$f7ready(f7 => {
+      self.f7Tooltip = f7.tooltip.create({
+        el: self.$refs.el,
+        text: tooltip
+      });
+    });
+  },
+
+  beforeDestroy() {
+    const self = this;
+
+    if (self.f7Tooltip && self.f7Tooltip.destroy) {
+      self.f7Tooltip.destroy();
+      self.f7Tooltip = null;
+      delete self.f7Tooltip;
+    }
   }
+
 };
