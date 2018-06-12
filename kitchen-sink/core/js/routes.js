@@ -433,6 +433,10 @@ var routes = [
     ],
   },
   {
+    path: '/tooltip/',
+    componentUrl: './pages/tooltip.html',
+  },
+  {
     path: '/timeline/',
     url: './pages/timeline.html',
   },
