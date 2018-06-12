@@ -92,6 +92,9 @@ const config = {
     // Autocomplete
     'autocomplete',
 
+    // Tooltip
+    'tooltip',
+
     // VI Video Ads
     'vi',
 
