@@ -28,6 +28,73 @@ class F7ListItemContent extends React.Component {
   onChange(event) {
     this.dispatchEvent('change', event);
   }
+  
+  checkHasInputState(){
+    const self = this;
+    const props = self.props;
+    const {
+      id,
+      className,
+      style,
+      radio,
+      checkbox,
+      value,
+      name,
+      checked,
+      readonly,
+      disabled,
+      required,
+      media,
+      header,
+      footer,
+      title,
+      subtitle,
+      text,
+      after,
+      badge,
+      mediaList,
+      mediaItem,
+      badgeColor,
+      itemInput,
+      inlineLabel,
+      itemInputWithInfo
+    } = props;
+    let hasInput = itemInput || self.state.hasInput;
+    let hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
+    let hasInputInfo = itemInputWithInfo || self.state.hasInputInfo;
+    let hasInputErrorMessage = self.state.hasInputErrorMessage;
+    if (hasInput && !self.state.hasInput) {
+      self.hasInputSet = true;
+      self.setState({ hasInput });
+    } else if (!hasInput) {
+      self.hasInputSet = false;
+    }
+    if (hasInputInfo && !self.state.hasInputInfo) {
+      self.hasInputInfoSet = true;
+      self.setState({ hasInputInfo });
+    } else if (!hasInputInfo) {
+      self.hasInputInfoSet = false;
+    }
+    if (hasInputErrorMessage && !self.state.hasInputErrorMessage) {
+      self.hasInputErrorMessageSet = true;
+      self.setState({ hasInputErrorMessage });
+    } else if (!hasInputInfo) {
+      self.hasInputErrorMessageSet = false;
+    }
+    if (hasInlineLabel && !self.state.hasInlineLabel) {
+      self.hasInlineLabelSet = true;
+      self.setState({ hasInlineLabel });
+    } else if (!hasInlineLabel) {
+      self.hasInlineLabelSet = false;
+    }
+  }
+
+  componentWillMount(){
+    this.checkHasInputState.call(this);
+  }
+  componentWillUpdate(){
+    this.checkHasInputState.call(this);
+  }
 
   render() {
     const self = this;
@@ -137,42 +204,6 @@ class F7ListItemContent extends React.Component {
       if (slotName === 'header') slotsHeader.push(child);
       if (slotName === 'footer') slotsFooter.push(child);
     });
-
-    if (hasInput && !self.state.hasInput) {
-      self.hasInputSet = true;
-      self.setState({
-        hasInput
-      });
-    } else if (!hasInput) {
-      self.hasInputSet = false;
-    }
-
-    if (hasInputInfo && !self.state.hasInputInfo) {
-      self.hasInputInfoSet = true;
-      self.setState({
-        hasInputInfo
-      });
-    } else if (!hasInputInfo) {
-      self.hasInputInfoSet = false;
-    }
-
-    if (hasInputErrorMessage && !self.state.hasInputErrorMessage) {
-      self.hasInputErrorMessageSet = true;
-      self.setState({
-        hasInputErrorMessage
-      });
-    } else if (!hasInputInfo) {
-      self.hasInputErrorMessageSet = false;
-    }
-
-    if (hasInlineLabel && !self.state.hasInlineLabel) {
-      self.hasInlineLabelSet = true;
-      self.setState({
-        hasInlineLabel
-      });
-    } else if (!hasInlineLabel) {
-      self.hasInlineLabelSet = false;
-    }
 
     if (radio || checkbox) {
       {
