@@ -15,8 +15,12 @@ function buildKs(cb) {
   const target = process.env.TARGET || 'universal';
   const buildPath = env === 'development' ? './build' : './packages';
 
-  const f7VuePath = path.resolve(__dirname, `../${buildPath}/vue/framework7-vue.esm.js`);
-  const f7Path = path.resolve(__dirname, `../${buildPath}/core/framework7.esm.bundle`);
+  let f7VuePath = path.resolve(__dirname, `../${buildPath}/vue/framework7-vue.esm.js`);
+  let f7Path = path.resolve(__dirname, `../${buildPath}/core/framework7.esm.bundle`);
+  if (process.platform.indexOf('win') === 0) {
+    f7VuePath = f7VuePath.replace(/\\/g, '/');
+    f7Path = f7Path.replace(/\\/g, '/');
+  }
 
   gulp.src('./kitchen-sink/vue/index.html')
     .pipe(modifyFile((content) => {
