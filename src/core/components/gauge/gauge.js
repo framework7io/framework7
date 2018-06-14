@@ -31,7 +31,6 @@ export default {
       type: 'circle',
       value: 0,
       size: 200,
-      thickness: 10,
       bgColor: 'transparent',
       borderBgColor: '#eeeeee',
       borderColor: '#000000',
