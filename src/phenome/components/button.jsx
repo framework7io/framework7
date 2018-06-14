@@ -180,6 +180,13 @@ export default {
       this.dispatchEvent('click', event);
     },
   },
+  watch: {
+    'props.tooltip': function watchTooltip(newText) {
+      const self = this;
+      if (!newText || !self.f7Tooltip) return;
+      self.f7Tooltip.setText(newText);
+    },
+  },
   componentDidMount() {
     const self = this;
     const { tooltip } = self.props;
