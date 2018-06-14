@@ -53,7 +53,6 @@
           </div>
         </div>
       </div>
-
       <div class="block-title">Semicircle Gauges</div>
       <div class="block block-strong">
         <div class="row">
@@ -76,7 +75,7 @@
               data-value-text-color="#e91e63"
               data-border-color="#e91e63"
               data-label-text="of 60kg total"
-              data-label-color="#333"
+              data-label-text-color="#333"
             ></div>
           </div>
         </div>
@@ -154,7 +153,7 @@
     methods: {
       setGaugeValue: function(value) {
         var self = this;
-        self.demoGauge1.update({
+        self.demoGauge.update({
           value: value / 100,
           valueText: value + '%',
         });
@@ -164,7 +163,7 @@
       pageInit: function (e, page) {
         var self = this;
         var app = self.$app;
-        self.demoGauge1 = app.gauge.create({
+        self.demoGauge = app.gauge.create({
           el: '.demo-gauge',
           type: 'circle',
           value: 0.5,
@@ -176,7 +175,10 @@
           valueTextColor: '#2196f3',
           labelText: 'amount of something',
         });
-      }
+      },
+      pageBeforeRemove: function (e, page) {
+        if (this.demoGauge) this.demoGauge.destroy();
+      },
     }
   }
 </script>
