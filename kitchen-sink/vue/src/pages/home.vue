@@ -79,6 +79,9 @@
       <f7-list-item link="/inputs/" title="Inputs">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>
+      <f7-list-item link="/gauge/" title="Gauge">
+        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+      </f7-list-item>
       <f7-list-item link="/grid/" title="Grid / Layout Grid">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>

@@ -82,6 +82,9 @@ export default () => (
       <ListItem link="/inputs/" title="Inputs">
         <Icon slot="media" icon="icon-f7" />
       </ListItem>
+      <ListItem link="/gauge/" title="Gauge">
+        <Icon slot="media" icon="icon-f7" />
+      </ListItem>
       <ListItem link="/grid/" title="Grid / Layout Grid">
         <Icon slot="media" icon="icon-f7" />
       </ListItem>

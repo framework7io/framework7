@@ -20,6 +20,7 @@ import Elevation from './pages/elevation.jsx';
 import Fab from './pages/fab.jsx';
 import FabMorph from './pages/fab-morph.jsx';
 import FormStorage from './pages/form-storage.jsx';
+import Gauge from './pages/gauge.jsx';
 import Grid from './pages/grid.jsx';
 import Icons from './pages/icons.jsx';
 import InfiniteScroll from './pages/infinite-scroll.jsx';
@@ -241,6 +242,10 @@ export default [
   {
     path: '/form-storage/',
     component: FormStorage,
+  },
+  {
+    path: '/gauge/',
+    component: Gauge,
   },
   {
     path: '/grid/',
