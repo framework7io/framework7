@@ -39,9 +39,9 @@
   },
   "homepage": "http://framework7.io/",
   "dependencies": {
-    "dom7": "^2.0.6",
+    "dom7": "^2.0.7",
     "path-to-regexp": "^2.1.0",
     "ssr-window": "^1.0.0",
-    "template7": "^1.3.5"
+    "template7": "^1.3.6"
   }
 }
