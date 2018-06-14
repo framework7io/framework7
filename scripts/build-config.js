@@ -95,6 +95,9 @@ const config = {
     // Tooltip
     'tooltip',
 
+    // Gauge
+    'gauge',
+
     // VI Video Ads
     'vi',
 
