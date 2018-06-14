@@ -5,12 +5,11 @@ import Framework7Class from '../../utils/class';
 
 class Tooltip extends Framework7Class {
   constructor(app, params = {}) {
-    // Extends with open/close Modal methods;
     super(app, params);
 
     const tooltip = this;
 
-    const defaults = {};
+    const defaults = Utils.extend({}, app.params.tooltip);
 
     // Extend defaults with modules params
     tooltip.useModulesParams(defaults);
