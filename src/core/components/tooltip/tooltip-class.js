@@ -32,6 +32,8 @@ class Tooltip extends Framework7Class {
       $tooltipEl,
       tooltipEl: $tooltipEl && $tooltipEl[0],
       text: tooltip.params.text || '',
+      visible: false,
+      opened: false,
     });
 
     $el[0].f7Tooltip = tooltip;
@@ -179,6 +181,8 @@ class Tooltip extends Framework7Class {
     app.root.append($tooltipEl);
     tooltip.position(aroundEl);
     const $aroundEl = $(aroundEl);
+    tooltip.visible = true;
+    tooltip.opened = true;
     $el.trigger('tooltip:show', tooltip);
     $tooltipEl.trigger('tooltip:show', tooltip);
     if ($aroundEl.length && $aroundEl[0] !== $el[0]) {
@@ -191,6 +195,8 @@ class Tooltip extends Framework7Class {
   hide() {
     const tooltip = this;
     const { $tooltipEl, $el } = tooltip;
+    tooltip.visible = false;
+    tooltip.opened = false;
     $el.trigger('tooltip:hide', tooltip);
     $tooltipEl.trigger('tooltip:hide', tooltip);
     tooltip.emit('local::hide tooltipHide', tooltip);
@@ -206,6 +212,21 @@ class Tooltip extends Framework7Class {
         <div class="tooltip-content">${text || ''}</div>
       </div>
     `.trim();
+  }
+  setText(newText) {
+    const tooltip = this;
+    if (typeof newText === 'undefined') {
+      return tooltip;
+    }
+    tooltip.params.text = newText;
+    tooltip.text = newText;
+    if (tooltip.$tooltipEl) {
+      tooltip.$tooltipEl.children('.tooltip-content').html(newText);
+    }
+    if (tooltip.opened) {
+      tooltip.position();
+    }
+    return tooltip;
   }
   init() {
     const tooltip = this;
