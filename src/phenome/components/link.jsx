@@ -24,6 +24,7 @@ export default {
       type: [String, Boolean],
       default: '#',
     },
+    target: String,
     tooltip: String,
     ...Mixins.colorProps,
     ...Mixins.linkIconProps,

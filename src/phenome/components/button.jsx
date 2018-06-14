@@ -17,6 +17,7 @@ export default {
       type: [String, Boolean],
       default: '#',
     },
+    target: String,
     round: Boolean,
     roundMd: Boolean,
     roundIos: Boolean,

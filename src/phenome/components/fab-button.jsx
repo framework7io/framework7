@@ -7,6 +7,7 @@ export default {
     id: [String, Number],
     fabClose: Boolean,
     label: String,
+    target: String,
     ...Mixins.colorProps,
   },
   render() {
@@ -17,6 +18,7 @@ export default {
       style,
       fabClose,
       label,
+      target,
     } = props;
 
     const classes = Utils.classNames(
@@ -39,6 +41,7 @@ export default {
       <a
         id={id}
         style={style}
+        target={target}
         className={classes}
         onClick={this.onClick.bind(this)}
       >

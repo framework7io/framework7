@@ -7,6 +7,7 @@ export default {
     id: [String, Number],
     morphTo: String,
     href: [Boolean, String],
+    target: String,
     text: String,
     position: {
       type: String,
@@ -25,6 +26,7 @@ export default {
       href: initialHref,
       position,
       text,
+      target,
     } = props;
 
     let href = initialHref;
@@ -60,7 +62,7 @@ export default {
     let linkEl;
     if (linkChildren.length || (linkSlots && linkSlots.length)) {
       linkEl = (
-        <a href={href} onClick={self.onClick.bind(self)} key="f7-fab-link">
+        <a target={target} href={href} onClick={self.onClick.bind(self)} key="f7-fab-link">
           {linkChildren}
           {textEl}
           {linkSlots}
