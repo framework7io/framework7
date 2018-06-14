@@ -135,6 +135,10 @@ var routes = [
     url: './pages/form-storage.html',
   },
   {
+    path: '/gauge/',
+    componentUrl: './pages/gauge.html',
+  },
+  {
     path: '/grid/',
     url: './pages/grid.html',
   },
