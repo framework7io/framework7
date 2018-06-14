@@ -134,8 +134,7 @@ class Toggle extends Framework7Class {
       toggle.emit('local::change toggleChange', toggle);
     }
     toggle.attachEvents = function attachEvents() {
-      if (process.env.TARGET !== 'desktop') {
-        if (!Support.touch) return;
+      if (process.env.TARGET !== 'desktop' && Support.touch) {
         const passive = Support.passiveListener ? { passive: true } : false;
         $el.on(app.touchEvents.start, handleTouchStart, passive);
         app.on('touchmove', handleTouchMove);
@@ -144,8 +143,7 @@ class Toggle extends Framework7Class {
       toggle.$inputEl.on('change', handleInputChange);
     };
     toggle.detachEvents = function detachEvents() {
-      if (process.env.TARGET !== 'desktop') {
-        if (!Support.touch) return;
+      if (process.env.TARGET !== 'desktop' && Support.touch) {
         const passive = Support.passiveListener ? { passive: true } : false;
         $el.off(app.touchEvents.start, handleTouchStart, passive);
         app.off('touchmove', handleTouchMove);
@@ -153,7 +151,6 @@ class Toggle extends Framework7Class {
       }
       toggle.$inputEl.off('change', handleInputChange);
     };
-
 
     // Install Modules
     toggle.useModules();
