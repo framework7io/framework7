@@ -234,8 +234,8 @@ class Searchbar extends FrameworkClass {
         sb.$backdropEl.off('click', disableOnClick);
       }
       if (sb.expandable && app.theme === 'ios' && sb.view && $navbarEl && sb.$pageEl) {
-        sb.$pageEl.on('page:beforeout', onPageBeforeOut);
-        sb.$pageEl.on('page:beforein', onPageBeforeIn);
+        sb.$pageEl.off('page:beforeout', onPageBeforeOut);
+        sb.$pageEl.off('page:beforein', onPageBeforeIn);
       }
       sb.$inputEl.off('focus', onInputFocus);
       sb.$inputEl.off('blur', onInputBlur);
