@@ -26,11 +26,11 @@ export default {
     },
     target: String,
     tooltip: String,
-    
+
     // Smart Select
     smartSelect: Boolean,
     smartSelectParams: Object,
-    
+
     ...Mixins.colorProps,
     ...Mixins.linkIconProps,
     ...Mixins.linkRouterProps,
@@ -63,7 +63,6 @@ export default {
       iconIos,
       id,
       style,
-      smartSelect,
     } = props;
 
     const defaultSlots = self.slots.default;
@@ -148,11 +147,11 @@ export default {
       isTabbarLabel = true;
     }
     self.setState({ isTabbarLabel });
-    
+
     self.$f7ready((f7) => {
       if (smartSelect) {
         const ssParams = Utils.extend(
-          { el: el },
+          { el },
           smartSelectParams || {},
         );
         self.f7SmartSelect = f7.smartSelect.create(ssParams);
