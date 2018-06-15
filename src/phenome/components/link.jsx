@@ -26,6 +26,11 @@ export default {
     },
     target: String,
     tooltip: String,
+    
+    // Smart Select
+    smartSelect: Boolean,
+    smartSelectParams: Object,
+    
     ...Mixins.colorProps,
     ...Mixins.linkIconProps,
     ...Mixins.linkRouterProps,
@@ -58,6 +63,7 @@ export default {
       iconIos,
       id,
       style,
+      smartSelect,
     } = props;
 
     const defaultSlots = self.slots.default;
@@ -131,7 +137,7 @@ export default {
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
-    const { tabbarLabel, tabLink, tooltip } = self.props;
+    const { tabbarLabel, tabLink, tooltip, smartSelect, smartSelectParams } = self.props;
     let isTabbarLabel = false;
     if (tabbarLabel ||
       (
@@ -142,16 +148,28 @@ export default {
       isTabbarLabel = true;
     }
     self.setState({ isTabbarLabel });
-    if (!tooltip) return;
+    
     self.$f7ready((f7) => {
-      self.f7Tooltip = f7.tooltip.create({
-        el: self.refs.el,
-        text: tooltip,
-      });
+      if (smartSelect) {
+        const ssParams = Utils.extend(
+          { el: el },
+          smartSelectParams || {},
+        );
+        self.f7SmartSelect = f7.smartSelect.create(ssParams);
+      }
+      if (tooltip) {
+        self.f7Tooltip = f7.tooltip.create({
+          el: self.refs.el,
+          text: tooltip,
+        });
+      }
     });
   },
   componentWillUnmount() {
     const self = this;
+    if (self.f7SmartSelect && self.f7SmartSelect.destroy) {
+      self.f7SmartSelect.destroy();
+    }
     if (self.f7Tooltip && self.f7Tooltip.destroy) {
       self.f7Tooltip.destroy();
       self.f7Tooltip = null;
@@ -185,6 +203,7 @@ export default {
         tabLink,
         tabLinkActive,
         noLinkClass,
+        smartSelect,
         className,
       } = props;
 
@@ -196,6 +215,7 @@ export default {
           'tab-link': tabLink || tabLink === '',
           'tab-link-active': tabLinkActive,
           'no-fastclick': noFastclick || noFastClick,
+          'smart-select': smartSelect,
         },
         Mixins.colorClasses(props),
         Mixins.linkRouterClasses(props),
@@ -205,6 +225,10 @@ export default {
   },
   methods: {
     onClick(event) {
+      const self = this;
+      if (self.props.smartSelect && self.f7SmartSelect) {
+        self.f7SmartSelect.open();
+      }
       this.dispatchEvent('click', event);
     },
   },
