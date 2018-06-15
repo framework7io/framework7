@@ -8,11 +8,13 @@ export default {
     id: [String, Number],
     morphTo: String,
     href: [Boolean, String],
+    target: String,
     text: String,
     position: {
       type: String,
       default: 'right-bottom'
-    }
+    },
+    tooltip: String
   }, Mixins.colorProps),
 
   render() {
@@ -26,7 +28,8 @@ export default {
       morphTo,
       href: initialHref,
       position,
-      text
+      text,
+      target
     } = props;
     let href = initialHref;
     if (href === true) href = '#';
@@ -68,6 +71,7 @@ export default {
           click: self.onClick.bind(self)
         },
         attrs: {
+          target: target,
           href: href
         }
       }, [linkChildren, textEl, linkSlots]);
@@ -98,6 +102,38 @@ export default {
     }
 
   },
+  watch: {
+    'props.tooltip': function watchTooltip(newText) {
+      const self = this;
+      if (!newText || !self.f7Tooltip) return;
+      self.f7Tooltip.setText(newText);
+    }
+  },
+
+  mounted() {
+    const self = this;
+    const {
+      tooltip
+    } = self.props;
+    if (!tooltip) return;
+    self.$f7ready(f7 => {
+      self.f7Tooltip = f7.tooltip.create({
+        el: self.$refs.el,
+        text: tooltip
+      });
+    });
+  },
+
+  beforeDestroy() {
+    const self = this;
+
+    if (self.f7Tooltip && self.f7Tooltip.destroy) {
+      self.f7Tooltip.destroy();
+      self.f7Tooltip = null;
+      delete self.f7Tooltip;
+    }
+  },
+
   computed: {
     props() {
       return __vueComponentProps(this);

@@ -3,6 +3,7 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import F7Badge from './badge';
 import F7Icon from './icon';
+import __reactComponentWatch from '../runtime-helpers/react-component-watch.js';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
@@ -20,6 +21,12 @@ class F7Link extends React.Component {
   }
 
   onClick(event) {
+    const self = this;
+
+    if (self.props.smartSelect && self.f7SmartSelect) {
+      self.f7SmartSelect.open();
+    }
+
     this.dispatchEvent('click', event);
   }
 
@@ -50,6 +57,7 @@ class F7Link extends React.Component {
       tabLink,
       tabLinkActive,
       noLinkClass,
+      smartSelect,
       className
     } = props;
     return Utils.classNames(className, {
@@ -57,7 +65,8 @@ class F7Link extends React.Component {
       'icon-only': self.iconOnlyComputed,
       'tab-link': tabLink || tabLink === '',
       'tab-link-active': tabLinkActive,
-      'no-fastclick': noFastclick || noFastClick
+      'no-fastclick': noFastclick || noFastClick,
+      'smart-select': smartSelect
     }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
   }
 
@@ -142,6 +151,10 @@ class F7Link extends React.Component {
   componentWillUnmount() {
     const self = this;
 
+    if (self.f7SmartSelect && self.f7SmartSelect.destroy) {
+      self.f7SmartSelect.destroy();
+    }
+
     if (self.f7Tooltip && self.f7Tooltip.destroy) {
       self.f7Tooltip.destroy();
       self.f7Tooltip = null;
@@ -155,7 +168,9 @@ class F7Link extends React.Component {
     const {
       tabbarLabel,
       tabLink,
-      tooltip
+      tooltip,
+      smartSelect,
+      smartSelectParams
     } = self.props;
     let isTabbarLabel = false;
 
@@ -166,12 +181,20 @@ class F7Link extends React.Component {
     self.setState({
       isTabbarLabel
     });
-    if (!tooltip) return;
     self.$f7ready(f7 => {
-      self.f7Tooltip = f7.tooltip.create({
-        el: self.refs.el,
-        text: tooltip
-      });
+      if (smartSelect) {
+        const ssParams = Utils.extend({
+          el
+        }, smartSelectParams || {});
+        self.f7SmartSelect = f7.smartSelect.create(ssParams);
+      }
+
+      if (tooltip) {
+        self.f7Tooltip = f7.tooltip.create({
+          el: self.refs.el,
+          text: tooltip
+        });
+      }
     });
   }
 
@@ -188,6 +211,14 @@ class F7Link extends React.Component {
   }
 
   set refs(refs) {}
+
+  componentDidUpdate(prevProps, prevState) {
+    __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, newText => {
+      const self = this;
+      if (!newText || !self.f7Tooltip) return;
+      self.f7Tooltip.setText(newText);
+    });
+  }
 
 }
 
@@ -208,7 +239,10 @@ __reactComponentSetProps(F7Link, Object.assign({
     type: [String, Boolean],
     default: '#'
   },
-  tooltip: String
+  target: String,
+  tooltip: String,
+  smartSelect: Boolean,
+  smartSelectParams: Object
 }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
 
 export default F7Link;

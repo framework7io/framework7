@@ -2,6 +2,7 @@ import React from 'react';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import F7Icon from './icon';
+import __reactComponentWatch from '../runtime-helpers/react-component-watch.js';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
@@ -175,6 +176,14 @@ class F7Button extends React.Component {
 
   set refs(refs) {}
 
+  componentDidUpdate(prevProps, prevState) {
+    __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, newText => {
+      const self = this;
+      if (!newText || !self.f7Tooltip) return;
+      self.f7Tooltip.setText(newText);
+    });
+  }
+
 }
 
 __reactComponentSetProps(F7Button, Object.assign({
@@ -188,6 +197,7 @@ __reactComponentSetProps(F7Button, Object.assign({
     type: [String, Boolean],
     default: '#'
   },
+  target: String,
   round: Boolean,
   roundMd: Boolean,
   roundIos: Boolean,

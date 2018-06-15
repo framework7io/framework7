@@ -17,6 +17,7 @@ export default {
       type: [String, Boolean],
       default: '#'
     },
+    target: String,
     round: Boolean,
     roundMd: Boolean,
     roundIos: Boolean,
@@ -178,6 +179,13 @@ export default {
       __vueComponentDispatchEvent(this, events, ...args);
     }
 
+  },
+  watch: {
+    'props.tooltip': function watchTooltip(newText) {
+      const self = this;
+      if (!newText || !self.f7Tooltip) return;
+      self.f7Tooltip.setText(newText);
+    }
   },
 
   mounted() {

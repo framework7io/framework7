@@ -1,5 +1,5 @@
 /**
- * Framework7 3.0.0-beta.9
+ * Framework7 3.0.0-beta.10
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 12, 2018
+ * Released on: June 15, 2018
  */
 
 (function (global, factory) {
@@ -721,7 +721,7 @@
   var win = w;
 
   /**
-   * Dom7 2.0.6
+   * Dom7 2.0.7
    * Minimalistic JavaScript library for DOM manipulation, with a jQuery-compatible API
    * http://framework7.io/docs/dom.html
    *
@@ -731,7 +731,7 @@
    *
    * Licensed under MIT
    *
-   * Released on: May 27, 2018
+   * Released on: June 14, 2018
    */
 
   var Dom7 = function Dom7(arr) {
@@ -832,7 +832,7 @@
     var classes = className.split(' ');
     for (var i = 0; i < classes.length; i += 1) {
       for (var j = 0; j < this.length; j += 1) {
-        if (typeof this$1[j].classList !== 'undefined') { this$1[j].classList.add(classes[i]); }
+        if (typeof this$1[j] !== 'undefined' && typeof this$1[j].classList !== 'undefined') { this$1[j].classList.add(classes[i]); }
       }
     }
     return this;
@@ -843,7 +843,7 @@
     var classes = className.split(' ');
     for (var i = 0; i < classes.length; i += 1) {
       for (var j = 0; j < this.length; j += 1) {
-        if (typeof this$1[j].classList !== 'undefined') { this$1[j].classList.remove(classes[i]); }
+        if (typeof this$1[j] !== 'undefined' && typeof this$1[j].classList !== 'undefined') { this$1[j].classList.remove(classes[i]); }
       }
     }
     return this;
@@ -858,7 +858,7 @@
     var classes = className.split(' ');
     for (var i = 0; i < classes.length; i += 1) {
       for (var j = 0; j < this.length; j += 1) {
-        if (typeof this$1[j].classList !== 'undefined') { this$1[j].classList.toggle(classes[i]); }
+        if (typeof this$1[j] !== 'undefined' && typeof this$1[j].classList !== 'undefined') { this$1[j].classList.toggle(classes[i]); }
       }
     }
     return this;
@@ -5771,6 +5771,44 @@
     return router[direction](redirect, options);
   }
 
+  function preRoute (routePreRoute, to, from, resolve, reject) {
+    var router = this;
+    var preRoutes = [];
+    if (Array.isArray(routePreRoute)) {
+      preRoutes.push.apply(preRoutes, routePreRoute);
+    } else if (routePreRoute && typeof routePreRoute === 'function') {
+      preRoutes.push(routePreRoute);
+    }
+    if (router.params.preRoute) {
+      if (Array.isArray(router.params.preRoute)) {
+        preRoutes.push.apply(preRoutes, router.params.preRoute);
+      } else {
+        preRoutes.push(router.params.preRoute);
+      }
+    }
+
+    function next() {
+      if (preRoutes.length === 0) {
+        resolve();
+        return;
+      }
+      var preRoute = preRoutes.shift();
+
+      preRoute.call(
+        router,
+        to,
+        from,
+        function () {
+          next();
+        },
+        function () {
+          reject();
+        }
+      );
+    }
+    next();
+  }
+
   function refreshPage() {
     var router = this;
     return router.navigate(router.currentRoute.url, {
@@ -6320,56 +6358,88 @@
       return redirect.call(router, 'navigate', route, navigateOptions);
     }
 
+
     var options = {};
     if (route.route.options) {
       Utils.extend(options, route.route.options, navigateOptions, { route: route });
     } else {
       Utils.extend(options, navigateOptions, { route: route });
     }
+
     if (options && options.context) {
       route.context = options.context;
       options.route.context = options.context;
     }
-    ('popup popover sheet loginScreen actions customModal').split(' ').forEach(function (modalLoadProp) {
-      if (route.route[modalLoadProp]) {
-        router.modalLoad(modalLoadProp, route, options);
-      }
-    });
-    ('url content component pageName el componentUrl template templateUrl').split(' ').forEach(function (pageLoadProp) {
-      var obj;
 
-      if (route.route[pageLoadProp]) {
-        router.load(( obj = {}, obj[pageLoadProp] = route.route[pageLoadProp], obj ), options);
-      }
-    });
-    // Async
-    function asyncResolve(resolveParams, resolveOptions) {
-      router.allowPageChange = false;
-      var resolvedAsModal = false;
-      if (resolveOptions && resolveOptions.context) {
-        if (!route.context) { route.context = resolveOptions.context; }
-        else { route.context = Utils.extend({}, route.context, resolveOptions.context); }
-        options.route.context = route.context;
-      }
+    function resolve() {
+      var routerLoaded = false;
       ('popup popover sheet loginScreen actions customModal').split(' ').forEach(function (modalLoadProp) {
-        if (resolveParams[modalLoadProp]) {
-          resolvedAsModal = true;
-          var modalRoute = Utils.extend({}, route, { route: resolveParams });
-          router.allowPageChange = true;
-          router.modalLoad(modalLoadProp, modalRoute, Utils.extend(options, resolveOptions));
+        if (route.route[modalLoadProp] && !routerLoaded) {
+          routerLoaded = true;
+          router.modalLoad(modalLoadProp, route, options);
         }
       });
-      if (resolvedAsModal) { return; }
-      router.load(resolveParams, Utils.extend(options, resolveOptions), true);
+      ('url content component pageName el componentUrl template templateUrl').split(' ').forEach(function (pageLoadProp) {
+        var obj;
+
+        if (route.route[pageLoadProp] && !routerLoaded) {
+          routerLoaded = true;
+          router.load(( obj = {}, obj[pageLoadProp] = route.route[pageLoadProp], obj ), options);
+        }
+      });
+      if (routerLoaded) { return; }
+      // Async
+      function asyncResolve(resolveParams, resolveOptions) {
+        router.allowPageChange = false;
+        var resolvedAsModal = false;
+        if (resolveOptions && resolveOptions.context) {
+          if (!route.context) { route.context = resolveOptions.context; }
+          else { route.context = Utils.extend({}, route.context, resolveOptions.context); }
+          options.route.context = route.context;
+        }
+        ('popup popover sheet loginScreen actions customModal').split(' ').forEach(function (modalLoadProp) {
+          if (resolveParams[modalLoadProp]) {
+            resolvedAsModal = true;
+            var modalRoute = Utils.extend({}, route, { route: resolveParams });
+            router.allowPageChange = true;
+            router.modalLoad(modalLoadProp, modalRoute, Utils.extend(options, resolveOptions));
+          }
+        });
+        if (resolvedAsModal) { return; }
+        router.load(resolveParams, Utils.extend(options, resolveOptions), true);
+      }
+      function asyncReject() {
+        router.allowPageChange = true;
+      }
+      if (route.route.async) {
+        router.allowPageChange = false;
+
+        route.route.async.call(router, route, router.currentRoute, asyncResolve, asyncReject);
+      }
     }
-    function asyncReject() {
+    function reject() {
       router.allowPageChange = true;
     }
-    if (route.route.async) {
-      router.allowPageChange = false;
 
-      route.route.async.call(router, route, router.currentRoute, asyncResolve, asyncReject);
+    if (router.params.preRoute || route.route.preRoute) {
+      router.allowPageChange = false;
+      preRoute.call(
+        router,
+        route.route.preRoute,
+        route,
+        router.currentRoute,
+        function () {
+          router.allowPageChange = true;
+          resolve();
+        },
+        function () {
+          reject();
+        }
+      );
+    } else {
+      resolve();
     }
+
     // Return Router
     return router;
   }
@@ -7275,39 +7345,71 @@
       options.route.context = options.context;
     }
 
+    var backForceLoaded;
     if (options.force && router.params.stackPages) {
       router.$el.children('.page-previous.stacked').each(function (index, pageEl) {
         if (pageEl.f7Page && pageEl.f7Page.route && pageEl.f7Page.route.url === route.url) {
+          backForceLoaded = true;
           router.loadBack({ el: pageEl }, options);
         }
       });
-    }
-
-    ('url content component pageName el componentUrl template templateUrl').split(' ').forEach(function (pageLoadProp) {
-      var obj;
-
-      if (route.route[pageLoadProp]) {
-        router.loadBack(( obj = {}, obj[pageLoadProp] = route.route[pageLoadProp], obj ), options);
+      if (backForceLoaded) {
+        return router;
       }
-    });
-    // Async
-    function asyncResolve(resolveParams, resolveOptions) {
-      router.allowPageChange = false;
-      if (resolveOptions && resolveOptions.context) {
-        if (!route.context) { route.context = resolveOptions.context; }
-        else { route.context = Utils.extend({}, route.context, resolveOptions.context); }
-        options.route.context = route.context;
-      }
-      router.loadBack(resolveParams, Utils.extend(options, resolveOptions), true);
     }
-    function asyncReject() {
+    function resolve() {
+      var routerLoaded = false;
+      ('url content component pageName el componentUrl template templateUrl').split(' ').forEach(function (pageLoadProp) {
+        var obj;
+
+        if (route.route[pageLoadProp] && !routerLoaded) {
+          routerLoaded = true;
+          router.loadBack(( obj = {}, obj[pageLoadProp] = route.route[pageLoadProp], obj ), options);
+        }
+      });
+      if (routerLoaded) { return; }
+      // Async
+      function asyncResolve(resolveParams, resolveOptions) {
+        router.allowPageChange = false;
+        if (resolveOptions && resolveOptions.context) {
+          if (!route.context) { route.context = resolveOptions.context; }
+          else { route.context = Utils.extend({}, route.context, resolveOptions.context); }
+          options.route.context = route.context;
+        }
+        router.loadBack(resolveParams, Utils.extend(options, resolveOptions), true);
+      }
+      function asyncReject() {
+        router.allowPageChange = true;
+      }
+      if (route.route.async) {
+        router.allowPageChange = false;
+
+        route.route.async.call(router, route, router.currentRoute, asyncResolve, asyncReject);
+      }
+    }
+    function reject() {
       router.allowPageChange = true;
     }
-    if (route.route.async) {
-      router.allowPageChange = false;
 
-      route.route.async.call(router, route, router.currentRoute, asyncResolve, asyncReject);
+    if (router.params.preRoute || route.route.preRoute) {
+      router.allowPageChange = false;
+      preRoute.call(
+        router,
+        route.route.preRoute,
+        route,
+        router.currentRoute,
+        function () {
+          router.allowPageChange = true;
+          resolve();
+        },
+        function () {
+          reject();
+        }
+      );
+    } else {
+      resolve();
     }
+
     // Return Router
     return router;
   }
@@ -8440,7 +8542,20 @@
       var initUrl = router.params.url;
       var documentUrl = doc.location.href.split(doc.location.origin)[1];
       var historyRestored;
-      if (!router.params.pushState || !router.params.pushStateOnLoad) {
+      var ref = router.params;
+      var pushState = ref.pushState;
+      var pushStateOnLoad = ref.pushStateOnLoad;
+      var pushStateSeparator = ref.pushStateSeparator;
+      var pushStateAnimateOnLoad = ref.pushStateAnimateOnLoad;
+      var ref$1 = router.params;
+      var pushStateRoot = ref$1.pushStateRoot;
+      if (win.cordova && pushState && !pushStateSeparator && !pushStateRoot && doc.location.pathname.indexOf('index.html')) {
+        // eslint-disable-next-line
+        console.warn('Framework7: wrong or not complete pushState configuration, trying to guess pushStateRoot');
+        pushStateRoot = doc.location.pathname.split('index.html')[0];
+      }
+
+      if (!pushState || !pushStateOnLoad) {
         if (!initUrl) {
           initUrl = documentUrl;
         }
@@ -8451,12 +8566,12 @@
           initUrl += doc.location.hash;
         }
       } else {
-        if (router.params.pushStateRoot && documentUrl.indexOf(router.params.pushStateRoot) >= 0) {
-          documentUrl = documentUrl.split(router.params.pushStateRoot)[1];
+        if (pushStateRoot && documentUrl.indexOf(pushStateRoot) >= 0) {
+          documentUrl = documentUrl.split(pushStateRoot)[1];
           if (documentUrl === '') { documentUrl = '/'; }
         }
-        if (router.params.pushStateSeparator.length > 0 && documentUrl.indexOf(router.params.pushStateSeparator) >= 0) {
-          initUrl = documentUrl.split(router.params.pushStateSeparator)[1];
+        if (pushStateSeparator.length > 0 && documentUrl.indexOf(pushStateSeparator) >= 0) {
+          initUrl = documentUrl.split(pushStateSeparator)[1];
         } else {
           initUrl = documentUrl;
         }
@@ -8468,7 +8583,7 @@
         } else if (History.state && History.state[view.id] && History.state[view.id].url === router.history[router.history.length - 1]) {
           initUrl = router.history[router.history.length - 1];
         } else {
-          router.history = [documentUrl.split(router.params.pushStateSeparator)[0] || '/', initUrl];
+          router.history = [documentUrl.split(pushStateSeparator)[0] || '/', initUrl];
         }
         if (router.history.length > 1) {
           historyRestored = true;
@@ -8564,7 +8679,7 @@
             initial: true,
             pushState: false,
             history: false,
-            animate: router.params.pushStateAnimateOnLoad,
+            animate: pushStateAnimateOnLoad,
             once: {
               pageAfterIn: function pageAfterIn() {
                 if (router.history.length > 2) {
@@ -8579,7 +8694,7 @@
           router.saveHistory();
         }
       }
-      if (initUrl && router.params.pushState && router.params.pushStateOnLoad && (!History.state || !History.state[view.id])) {
+      if (initUrl && pushState && pushStateOnLoad && (!History.state || !History.state[view.id])) {
         History.initViewState(view.id, {
           url: initUrl,
         });
@@ -15750,8 +15865,7 @@
         toggle.emit('local::change toggleChange', toggle);
       }
       toggle.attachEvents = function attachEvents() {
-        {
-          if (!Support.touch) { return; }
+        if (Support.touch) {
           var passive = Support.passiveListener ? { passive: true } : false;
           $el.on(app.touchEvents.start, handleTouchStart, passive);
           app.on('touchmove', handleTouchMove);
@@ -15760,8 +15874,7 @@
         toggle.$inputEl.on('change', handleInputChange);
       };
       toggle.detachEvents = function detachEvents() {
-        {
-          if (!Support.touch) { return; }
+        if (Support.touch) {
           var passive = Support.passiveListener ? { passive: true } : false;
           $el.off(app.touchEvents.start, handleTouchStart, passive);
           app.off('touchmove', handleTouchMove);
@@ -15769,7 +15882,6 @@
         }
         toggle.$inputEl.off('change', handleInputChange);
       };
-
 
       // Install Modules
       toggle.useModules();
@@ -16765,6 +16877,9 @@
         ss.open();
       }
       function onChange() {
+        var value = ss.$selectEl.val();
+        ss.$el.trigger('smartselect:change', ss, value);
+        ss.emit('local::change smartSelectChange', ss, value);
         ss.setValue();
       }
       ss.attachEvents = function attachEvents() {
@@ -20892,8 +21007,8 @@
           sb.$backdropEl.off('click', disableOnClick);
         }
         if (sb.expandable && app.theme === 'ios' && sb.view && $navbarEl && sb.$pageEl) {
-          sb.$pageEl.on('page:beforeout', onPageBeforeOut);
-          sb.$pageEl.on('page:beforein', onPageBeforeIn);
+          sb.$pageEl.off('page:beforeout', onPageBeforeOut);
+          sb.$pageEl.off('page:beforein', onPageBeforeIn);
         }
         sb.$inputEl.off('focus', onInputFocus);
         sb.$inputEl.off('blur', onInputBlur);
@@ -29453,7 +29568,7 @@
       var ac = this;
       if (ac.params.renderItem) { return ac.params.renderItem.call(ac, item, index); }
       var itemHtml;
-      var itemValue = item.value.replace(/"/g, '&quot;');
+      var itemValue = item.value ? item.value.replace(/"/g, '&quot;') : item.value;
       if (ac.params.openIn !== 'dropdown') {
         itemHtml = "\n        <li>\n          <label class=\"item-" + (item.inputType) + " item-content\">\n            <input type=\"" + (item.inputType) + "\" name=\"" + (item.inputName) + "\" value=\"" + itemValue + "\" " + (item.selected ? 'checked' : '') + ">\n            <i class=\"icon icon-" + (item.inputType) + "\"></i>\n            <div class=\"item-inner\">\n              <div class=\"item-title\">" + (item.text) + "</div>\n            </div>\n          </label>\n        </li>\n      ";
       } else if (!item.placeholder) {
@@ -29520,7 +29635,7 @@
           backdropEl: $el.find('.searchbar-backdrop'),
           customSearch: true,
           on: {
-            searchbarSearch: function searchbarSearch(sb, query) {
+            search: function search(sb, query) {
               if (query.length === 0 && ac.searchbar.enabled) {
                 ac.searchbar.backdropShow();
               } else {
@@ -29815,12 +29930,11 @@
     function Tooltip(app, params) {
       if ( params === void 0 ) params = {};
 
-      // Extends with open/close Modal methods;
       Framework7Class$$1.call(this, app, params);
 
       var tooltip = this;
 
-      var defaults = {};
+      var defaults = Utils.extend({}, app.params.tooltip);
 
       // Extend defaults with modules params
       tooltip.useModulesParams(defaults);
@@ -29843,6 +29957,8 @@
         $tooltipEl: $tooltipEl,
         tooltipEl: $tooltipEl && $tooltipEl[0],
         text: tooltip.params.text || '',
+        visible: false,
+        opened: false,
       });
 
       $el[0].f7Tooltip = tooltip;
@@ -30001,6 +30117,8 @@
       app.root.append($tooltipEl);
       tooltip.position(aroundEl);
       var $aroundEl = $$1(aroundEl);
+      tooltip.visible = true;
+      tooltip.opened = true;
       $el.trigger('tooltip:show', tooltip);
       $tooltipEl.trigger('tooltip:show', tooltip);
       if ($aroundEl.length && $aroundEl[0] !== $el[0]) {
@@ -30014,6 +30132,8 @@
       var tooltip = this;
       var $tooltipEl = tooltip.$tooltipEl;
       var $el = tooltip.$el;
+      tooltip.visible = false;
+      tooltip.opened = false;
       $el.trigger('tooltip:hide', tooltip);
       $tooltipEl.trigger('tooltip:hide', tooltip);
       tooltip.emit('local::hide tooltipHide', tooltip);
@@ -30027,6 +30147,21 @@
       var cssClass = ref.cssClass;
       var text = ref.text;
       return ("\n      <div class=\"tooltip " + (cssClass || '') + "\">\n        <div class=\"tooltip-content\">" + (text || '') + "</div>\n      </div>\n    ").trim();
+    };
+    Tooltip.prototype.setText = function setText (newText) {
+      var tooltip = this;
+      if (typeof newText === 'undefined') {
+        return tooltip;
+      }
+      tooltip.params.text = newText;
+      tooltip.text = newText;
+      if (tooltip.$tooltipEl) {
+        tooltip.$tooltipEl.children('.tooltip-content').html(newText);
+      }
+      if (tooltip.opened) {
+        tooltip.position();
+      }
+      return tooltip;
     };
     Tooltip.prototype.init = function init () {
       var tooltip = this;
@@ -30076,6 +30211,14 @@
         tooltip.hide();
         return tooltip;
       };
+      app.tooltip.setText = function text(el, newText) {
+        var $el = $$1(el);
+        if ($el.length === 0) { return undefined; }
+        var tooltip = $el[0].f7Tooltip;
+        if (!tooltip) { return undefined; }
+        tooltip.setText(newText);
+        return tooltip;
+      };
     },
     params: {
       tooltip: {
@@ -30115,6 +30258,318 @@
     },
   };
 
+  /* eslint no-nested-ternary: off */
+
+  var Gauge = (function (Framework7Class$$1) {
+    function Gauge(app, params) {
+      if ( params === void 0 ) params = {};
+
+      // Extends with open/close Modal methods;
+      Framework7Class$$1.call(this, app, params);
+
+      var gauge = this;
+
+      var defaults = Utils.extend({}, app.params.gauge);
+
+      // Extend defaults with modules params
+      gauge.useModulesParams(defaults);
+
+      gauge.params = Utils.extend(defaults, params);
+
+      var ref = gauge.params;
+      var el = ref.el;
+      if (!el) { return gauge; }
+
+      var $el = $$1(el);
+      if ($el.length === 0) { return gauge; }
+
+
+      Utils.extend(gauge, {
+        app: app,
+        $el: $el,
+        el: $el && $el[0],
+      });
+
+      $el[0].f7Gauge = gauge;
+
+      // Install Modules
+      gauge.useModules();
+
+      gauge.init();
+
+      return gauge;
+    }
+
+    if ( Framework7Class$$1 ) Gauge.__proto__ = Framework7Class$$1;
+    Gauge.prototype = Object.create( Framework7Class$$1 && Framework7Class$$1.prototype );
+    Gauge.prototype.constructor = Gauge;
+    Gauge.prototype.calcRadius = function calcRadius () {
+      var gauge = this;
+      var ref = gauge.params;
+      var size = ref.size;
+      var borderWidth = ref.borderWidth;
+      return (size / 2) - (borderWidth / 2);
+    };
+    Gauge.prototype.calcBorderLength = function calcBorderLength () {
+      var gauge = this;
+      var radius = gauge.calcRadius();
+      return 2 * Math.PI * radius;
+    };
+    Gauge.prototype.render = function render () {
+      var gauge = this;
+      if (gauge.params.render) { return gauge.params.render.call(gauge, gauge); }
+
+      var ref = gauge.params;
+      var type = ref.type;
+      var value = ref.value;
+      var size = ref.size;
+      var bgColor = ref.bgColor;
+      var borderBgColor = ref.borderBgColor;
+      var borderColor = ref.borderColor;
+      var borderWidth = ref.borderWidth;
+      var valueText = ref.valueText;
+      var valueTextColor = ref.valueTextColor;
+      var valueFontSize = ref.valueFontSize;
+      var valueFontWeight = ref.valueFontWeight;
+      var labelText = ref.labelText;
+      var labelTextColor = ref.labelTextColor;
+      var labelFontSize = ref.labelFontSize;
+      var labelFontWeight = ref.labelFontWeight;
+
+      var semiCircle = type === 'semicircle';
+      var radius = gauge.calcRadius();
+      var length = gauge.calcBorderLength();
+      var progress = Math.max(Math.min(value, 1), 0);
+
+      return ("\n      <svg class=\"gauge-svg\" width=\"" + size + "px\" height=\"" + (semiCircle ? size / 2 : size) + "px\" viewBox=\"0 0 " + size + " " + (semiCircle ? size / 2 : size) + "\">\n        " + (semiCircle ? ("\n          <path\n            class=\"gauge-back-semi\"\n            d=\"M" + (size - (borderWidth / 2)) + "," + (size / 2) + " a1,1 0 0,0 -" + (size - borderWidth) + ",0\"\n            stroke=\"" + borderBgColor + "\"\n            stroke-width=\"" + borderWidth + "\"\n            fill=\"" + (bgColor || 'none') + "\"\n          />\n          <path\n            class=\"gauge-front-semi\"\n            d=\"M" + (size - (borderWidth / 2)) + "," + (size / 2) + " a1,1 0 0,0 -" + (size - borderWidth) + ",0\"\n            stroke=\"" + borderColor + "\"\n            stroke-width=\"" + borderWidth + "\"\n            stroke-dasharray=\"" + (length / 2) + "\"\n            stroke-dashoffset=\"" + ((length / 2) * (progress - 1)) + "\"\n            fill=\"" + (borderBgColor ? 'none' : (bgColor || 'none')) + "\"\n          />\n        ") : ("\n          " + (borderBgColor ? ("\n            <circle\n              class=\"gauge-back-circle\"\n              stroke=\"" + borderBgColor + "\"\n              stroke-width=\"" + borderWidth + "\"\n              fill=\"" + (bgColor || 'none') + "\"\n              cx=\"" + (size / 2) + "\"\n              cy=\"" + (size / 2) + "\"\n              r=\"" + radius + "\"\n            ></circle>\n          ") : '') + "\n          <circle\n            class=\"gauge-front-circle\"\n            transform=\"" + ("rotate(-90 " + (size / 2) + " " + (size / 2) + ")") + "\"\n            stroke=\"" + borderColor + "\"\n            stroke-width=\"" + borderWidth + "\"\n            stroke-dasharray=\"" + length + "\"\n            stroke-dashoffset=\"" + (length * (1 - progress)) + "\"\n            fill=\"" + (borderBgColor ? 'none' : bgColor || 'none') + "\"\n            cx=\"" + (size / 2) + "\"\n            cy=\"" + (size / 2) + "\"\n            r=\"" + radius + "\"\n          ></circle>\n        ")) + "\n        " + (valueText ? ("\n          <text\n            class=\"gauge-value-text\"\n            x=\"50%\"\n            y=\"" + (semiCircle ? '100%' : '50%') + "\"\n            font-weight=\"" + valueFontWeight + "\"\n            font-size=\"" + valueFontSize + "\"\n            fill=\"" + valueTextColor + "\"\n            dy=\"" + (semiCircle ? (labelText ? -labelFontSize - 15 : -5) : 0) + "\"\n            text-anchor=\"middle\"\n            dominant-baseline=\"" + (!semiCircle && 'middle') + "\"\n          >" + valueText + "</text>\n        ") : '') + "\n        " + (labelText ? ("\n          <text\n            class=\"gauge-label-text\"\n            x=\"50%\"\n            y=\"" + (semiCircle ? '100%' : '50%') + "\"\n            font-weight=\"" + labelFontWeight + "\"\n            font-size=\"" + labelFontSize + "\"\n            fill=\"" + labelTextColor + "\"\n            dy=\"" + (semiCircle ? -5 : (valueText ? ((valueFontSize / 2) + 10) : 0)) + "\"\n            text-anchor=\"middle\"\n            dominant-baseline=\"" + (!semiCircle && 'middle') + "\"\n          >" + labelText + "</text>\n        ") : '') + "\n      </svg>\n    ").trim();
+    };
+    Gauge.prototype.update = function update (newParams) {
+      if ( newParams === void 0 ) newParams = {};
+
+      var gauge = this;
+      var params = gauge.params;
+      var $gaugeSvgEl = gauge.$gaugeSvgEl;
+
+      Object.keys(newParams).forEach(function (param) {
+        if (typeof newParams[param] !== 'undefined') {
+          params[param] = newParams[param];
+        }
+      });
+      if ($gaugeSvgEl.length === 0) { return gauge; }
+
+      var value = params.value;
+      var size = params.size;
+      var bgColor = params.bgColor;
+      var borderBgColor = params.borderBgColor;
+      var borderColor = params.borderColor;
+      var borderWidth = params.borderWidth;
+      var valueText = params.valueText;
+      var valueTextColor = params.valueTextColor;
+      var valueFontSize = params.valueFontSize;
+      var valueFontWeight = params.valueFontWeight;
+      var labelText = params.labelText;
+      var labelTextColor = params.labelTextColor;
+      var labelFontSize = params.labelFontSize;
+      var labelFontWeight = params.labelFontWeight;
+
+      var length = gauge.calcBorderLength();
+      var progress = Math.max(Math.min(value, 1), 0);
+      var radius = gauge.calcRadius();
+      var semiCircle = params.type === 'semicircle';
+
+      var svgAttrs = {
+        width: (size + "px"),
+        height: ((semiCircle ? size / 2 : size) + "px"),
+        viewBox: ("0 0 " + size + " " + (semiCircle ? size / 2 : size)),
+      };
+      Object.keys(svgAttrs).forEach(function (attr) {
+        $gaugeSvgEl.attr(attr, svgAttrs[attr]);
+      });
+      if (semiCircle) {
+        var backAttrs = {
+          d: ("M" + (size - (borderWidth / 2)) + "," + (size / 2) + " a1,1 0 0,0 -" + (size - borderWidth) + ",0"),
+          stroke: borderBgColor,
+          'stroke-width': borderWidth,
+          fill: bgColor || 'none',
+        };
+        var frontAttrs = {
+          d: ("M" + (size - (borderWidth / 2)) + "," + (size / 2) + " a1,1 0 0,0 -" + (size - borderWidth) + ",0"),
+          stroke: borderColor,
+          'stroke-width': borderWidth,
+          'stroke-dasharray': length / 2,
+          'stroke-dashoffset': (length / 2) * (progress - 1),
+          fill: borderBgColor ? 'none' : (bgColor || 'none'),
+        };
+        Object.keys(backAttrs).forEach(function (attr) {
+          $gaugeSvgEl.find('.gauge-back-semi').attr(attr, backAttrs[attr]);
+        });
+        Object.keys(frontAttrs).forEach(function (attr) {
+          $gaugeSvgEl.find('.gauge-front-semi').attr(attr, frontAttrs[attr]);
+        });
+      } else {
+        var backAttrs$1 = {
+          stroke: borderBgColor,
+          'stroke-width': borderWidth,
+          fill: bgColor || 'none',
+          cx: size / 2,
+          cy: size / 2,
+          r: radius,
+        };
+        var frontAttrs$1 = {
+          transform: ("rotate(-90 " + (size / 2) + " " + (size / 2) + ")"),
+          stroke: borderColor,
+          'stroke-width': borderWidth,
+          'stroke-dasharray': length,
+          'stroke-dashoffset': length * (1 - progress),
+          fill: borderBgColor ? 'none' : bgColor || 'none',
+          cx: size / 2,
+          cy: size / 2,
+          r: radius,
+        };
+        Object.keys(backAttrs$1).forEach(function (attr) {
+          $gaugeSvgEl.find('.gauge-back-circle').attr(attr, backAttrs$1[attr]);
+        });
+        Object.keys(frontAttrs$1).forEach(function (attr) {
+          $gaugeSvgEl.find('.gauge-front-circle').attr(attr, frontAttrs$1[attr]);
+        });
+      }
+      if (valueText) {
+        if (!$gaugeSvgEl.find('.gauge-value-text').length) {
+          $gaugeSvgEl.append('<text class="gauge-value-text"></text>');
+        }
+        var textAttrs = {
+          x: '50%',
+          y: semiCircle ? '100%' : '50%',
+          'font-weight': valueFontWeight,
+          'font-size': valueFontSize,
+          fill: valueTextColor,
+          dy: semiCircle ? (labelText ? -labelFontSize - 15 : -5) : 0,
+          'text-anchor': 'middle',
+          'dominant-baseline': !semiCircle && 'middle',
+        };
+        Object.keys(textAttrs).forEach(function (attr) {
+          $gaugeSvgEl.find('.gauge-value-text').attr(attr, textAttrs[attr]);
+        });
+        $gaugeSvgEl.find('.gauge-value-text').text(valueText);
+      } else {
+        $gaugeSvgEl.find('.gauge-value-text').remove();
+      }
+      if (labelText) {
+        if (!$gaugeSvgEl.find('.gauge-label-text').length) {
+          $gaugeSvgEl.append('<text class="gauge-label-text"></text>');
+        }
+        var labelAttrs = {
+          x: '50%',
+          y: semiCircle ? '100%' : '50%',
+          'font-weight': labelFontWeight,
+          'font-size': labelFontSize,
+          fill: labelTextColor,
+          dy: semiCircle ? -5 : (valueText ? ((valueFontSize / 2) + 10) : 0),
+          'text-anchor': 'middle',
+          'dominant-baseline': !semiCircle && 'middle',
+        };
+        Object.keys(labelAttrs).forEach(function (attr) {
+          $gaugeSvgEl.find('.gauge-label-text').attr(attr, labelAttrs[attr]);
+        });
+        $gaugeSvgEl.find('.gauge-label-text').text(labelText);
+      } else {
+        $gaugeSvgEl.find('.gauge-label-text').remove();
+      }
+      return gauge;
+    };
+    Gauge.prototype.init = function init () {
+      var gauge = this;
+      var $gaugeSvgEl = $$1(gauge.render()).eq(0);
+      $gaugeSvgEl.f7Gauge = gauge;
+      Utils.extend(gauge, {
+        $gaugeSvgEl: $gaugeSvgEl,
+        gaugeSvgEl: $gaugeSvgEl && $gaugeSvgEl[0],
+      });
+      gauge.$el.append($gaugeSvgEl);
+      return gauge;
+    };
+    Gauge.prototype.destroy = function destroy () {
+      var gauge = this;
+      if (!gauge.$el || gauge.destroyed) { return; }
+      gauge.$el.trigger('gauge:beforedestroy', gauge);
+      gauge.emit('local::beforeDestroy gaugeBeforeDestroy', gauge);
+      gauge.$gaugeSvgEl.remove();
+      delete gauge.$el[0].f7Gauge;
+      Utils.deleteProps(gauge);
+      gauge.destroyed = true;
+    };
+
+    return Gauge;
+  }(Framework7Class));
+
+  var Gauge$1 = {
+    name: 'gauge',
+    static: {
+      Gauge: Gauge,
+    },
+    create: function create() {
+      var app = this;
+      app.gauge = ConstructorMethods({
+        defaultSelector: '.gauge',
+        constructor: Gauge,
+        app: app,
+        domProp: 'f7Gauge',
+      });
+      app.gauge.update = function update(el, newParams) {
+        var $el = $$1(el);
+        if ($el.length === 0) { return undefined; }
+        var gauge = app.gauge.get(el);
+        if (!gauge) { return undefined; }
+        gauge.update(newParams);
+        return gauge;
+      };
+    },
+    params: {
+      gauge: {
+        el: null,
+        type: 'circle',
+        value: 0,
+        size: 200,
+        bgColor: 'transparent',
+        borderBgColor: '#eeeeee',
+        borderColor: '#000000',
+        borderWidth: 10,
+        valueText: null,
+        valueTextColor: '#000000',
+        valueFontSize: 31,
+        valueFontWeight: 500,
+        labelText: null,
+        labelTextColor: '#888888',
+        labelFontSize: 14,
+        labelFontWeight: 400,
+      },
+    },
+    on: {
+      tabMounted: function tabMounted(tabEl) {
+        var app = this;
+        $$1(tabEl).find('.gauge-init').each(function (index, el) {
+          app.gauge.create(Utils.extend({ el: el }, $$1(el).dataset() || {}));
+        });
+      },
+      tabBeforeRemove: function tabBeforeRemove(tabEl) {
+        $$1(tabEl).find('.gauge-init').each(function (index, el) {
+          if (el.f7Gauge) { el.f7Gauge.destroy(); }
+        });
+      },
+      pageInit: function pageInit(page) {
+        var app = this;
+        page.$el.find('.gauge-init').each(function (index, el) {
+          app.gauge.create(Utils.extend({ el: el }, $$1(el).dataset() || {}));
+        });
+      },
+      pageBeforeRemove: function pageBeforeRemove(page) {
+        page.$el.find('.gauge-init').each(function (index, el) {
+          if (el.f7Gauge) { el.f7Gauge.destroy(); }
+        });
+      },
+    },
+  };
+
   var ViAd = (function (Framework7Class$$1) {
     function ViAd(app, params) {
       if ( params === void 0 ) params = {};
@@ -30122,7 +30577,7 @@
       Framework7Class$$1.call(this, params, [app]);
       var vi = this;
       if (!win.vi) {
-        throw new Error('f7:vi SDK not found.');
+        throw new Error('Framework7: vi SDK not found.');
       }
 
       var orientation;
@@ -30159,10 +30614,10 @@
       });
 
       if (!vi.params.appId) {
-        throw new Error('Framework7:"app.id" is required to display an ad. Make sure you have specified it on app initialization.');
+        throw new Error('Framework7: "app.id" is required to display an ad. Make sure you have specified it on app initialization.');
       }
       if (!vi.params.placementId) {
-        throw new Error('Framework7:"placementId" is required to display an ad.');
+        throw new Error('Framework7: "placementId" is required to display an ad.');
       }
 
       function onResize() {
@@ -30435,6 +30890,7 @@
     Notification$1,
     Autocomplete$1,
     Tooltip$1,
+    Gauge$1,
     Vi,
     Typography
   ]);

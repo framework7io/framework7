@@ -21,6 +21,56 @@ class F7ListItemContent extends React.Component {
     })();
   }
 
+  checkHasInputState() {
+    const self = this;
+    const props = self.props;
+    const {
+      itemInput,
+      inlineLabel,
+      itemInputWithInfo
+    } = props;
+    const hasInput = itemInput || self.state.hasInput;
+    const hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
+    const hasInputInfo = itemInputWithInfo || self.state.hasInputInfo;
+    const hasInputErrorMessage = self.state.hasInputErrorMessage;
+
+    if (hasInput && !self.state.hasInput) {
+      self.hasInputSet = true;
+      self.setState({
+        hasInput
+      });
+    } else if (!hasInput) {
+      self.hasInputSet = false;
+    }
+
+    if (hasInputInfo && !self.state.hasInputInfo) {
+      self.hasInputInfoSet = true;
+      self.setState({
+        hasInputInfo
+      });
+    } else if (!hasInputInfo) {
+      self.hasInputInfoSet = false;
+    }
+
+    if (hasInputErrorMessage && !self.state.hasInputErrorMessage) {
+      self.hasInputErrorMessageSet = true;
+      self.setState({
+        hasInputErrorMessage
+      });
+    } else if (!hasInputInfo) {
+      self.hasInputErrorMessageSet = false;
+    }
+
+    if (hasInlineLabel && !self.state.hasInlineLabel) {
+      self.hasInlineLabelSet = true;
+      self.setState({
+        hasInlineLabel
+      });
+    } else if (!hasInlineLabel) {
+      self.hasInlineLabelSet = false;
+    }
+  }
+
   onClick(event) {
     this.dispatchEvent('click', event);
   }
@@ -137,42 +187,6 @@ class F7ListItemContent extends React.Component {
       if (slotName === 'header') slotsHeader.push(child);
       if (slotName === 'footer') slotsFooter.push(child);
     });
-
-    if (hasInput && !self.state.hasInput) {
-      self.hasInputSet = true;
-      self.setState({
-        hasInput
-      });
-    } else if (!hasInput) {
-      self.hasInputSet = false;
-    }
-
-    if (hasInputInfo && !self.state.hasInputInfo) {
-      self.hasInputInfoSet = true;
-      self.setState({
-        hasInputInfo
-      });
-    } else if (!hasInputInfo) {
-      self.hasInputInfoSet = false;
-    }
-
-    if (hasInputErrorMessage && !self.state.hasInputErrorMessage) {
-      self.hasInputErrorMessageSet = true;
-      self.setState({
-        hasInputErrorMessage
-      });
-    } else if (!hasInputInfo) {
-      self.hasInputErrorMessageSet = false;
-    }
-
-    if (hasInlineLabel && !self.state.hasInlineLabel) {
-      self.hasInlineLabelSet = true;
-      self.setState({
-        hasInlineLabel
-      });
-    } else if (!hasInlineLabel) {
-      self.hasInlineLabelSet = false;
-    }
 
     if (radio || checkbox) {
       {
@@ -366,6 +380,14 @@ class F7ListItemContent extends React.Component {
         hasInputErrorMessage
       });
     }
+  }
+
+  componentWillUpdate() {
+    this.checkHasInputState();
+  }
+
+  componentWillMount() {
+    this.checkHasInputState();
   }
 
   get slots() {

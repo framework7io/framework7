@@ -25,7 +25,10 @@ export default {
       type: [String, Boolean],
       default: '#'
     },
-    tooltip: String
+    target: String,
+    tooltip: String,
+    smartSelect: Boolean,
+    smartSelectParams: Object
   }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
 
   data() {
@@ -130,13 +133,23 @@ export default {
     })), [iconEl, textEl, defaultSlots]);
   },
 
+  watch: {
+    'props.tooltip': function watchTooltip(newText) {
+      const self = this;
+      if (!newText || !self.f7Tooltip) return;
+      self.f7Tooltip.setText(newText);
+    }
+  },
+
   mounted() {
     const self = this;
     const el = self.$refs.el;
     const {
       tabbarLabel,
       tabLink,
-      tooltip
+      tooltip,
+      smartSelect,
+      smartSelectParams
     } = self.props;
     let isTabbarLabel = false;
 
@@ -147,17 +160,29 @@ export default {
     self.setState({
       isTabbarLabel
     });
-    if (!tooltip) return;
     self.$f7ready(f7 => {
-      self.f7Tooltip = f7.tooltip.create({
-        el: self.$refs.el,
-        text: tooltip
-      });
+      if (smartSelect) {
+        const ssParams = Utils.extend({
+          el
+        }, smartSelectParams || {});
+        self.f7SmartSelect = f7.smartSelect.create(ssParams);
+      }
+
+      if (tooltip) {
+        self.f7Tooltip = f7.tooltip.create({
+          el: self.$refs.el,
+          text: tooltip
+        });
+      }
     });
   },
 
   beforeDestroy() {
     const self = this;
+
+    if (self.f7SmartSelect && self.f7SmartSelect.destroy) {
+      self.f7SmartSelect.destroy();
+    }
 
     if (self.f7Tooltip && self.f7Tooltip.destroy) {
       self.f7Tooltip.destroy();
@@ -194,6 +219,7 @@ export default {
         tabLink,
         tabLinkActive,
         noLinkClass,
+        smartSelect,
         className
       } = props;
       return Utils.classNames(className, {
@@ -201,7 +227,8 @@ export default {
         'icon-only': self.iconOnlyComputed,
         'tab-link': tabLink || tabLink === '',
         'tab-link-active': tabLinkActive,
-        'no-fastclick': noFastclick || noFastClick
+        'no-fastclick': noFastclick || noFastClick,
+        'smart-select': smartSelect
       }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
     },
 
@@ -212,6 +239,12 @@ export default {
   },
   methods: {
     onClick(event) {
+      const self = this;
+
+      if (self.props.smartSelect && self.f7SmartSelect) {
+        self.f7SmartSelect.open();
+      }
+
       this.dispatchEvent('click', event);
     },
 

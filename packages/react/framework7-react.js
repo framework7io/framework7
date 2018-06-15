@@ -1,5 +1,5 @@
 /**
- * Framework7 React 3.0.0-beta.9
+ * Framework7 React 3.0.0-beta.10
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 12, 2018
+ * Released on: June 15, 2018
  */
 
 (function (global, factory) {
@@ -1938,6 +1938,16 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
+    F7Button.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+      var this$1 = this;
+
+      __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
+        var self = this$1;
+        if (!newText || !self.f7Tooltip) { return; }
+        self.f7Tooltip.setText(newText);
+      });
+    };
+
     Object.defineProperties( F7Button.prototype, prototypeAccessors );
 
     return F7Button;
@@ -1954,6 +1964,7 @@
       type: [String, Boolean],
       default: '#'
     },
+    target: String,
     round: Boolean,
     roundMd: Boolean,
     roundIos: Boolean,
@@ -2417,13 +2428,14 @@
   var F7FabButton = (function (superclass) {
     function F7FabButton(props, context) {
       superclass.call(this, props, context);
+      this.__reactRefs = {};
     }
 
     if ( superclass ) F7FabButton.__proto__ = superclass;
     F7FabButton.prototype = Object.create( superclass && superclass.prototype );
     F7FabButton.prototype.constructor = F7FabButton;
 
-    var prototypeAccessors = { slots: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
 
     F7FabButton.prototype.onClick = function onClick (event) {
       this.dispatchEvent('click', event);
@@ -2436,6 +2448,7 @@
       var style = props.style;
       var fabClose = props.fabClose;
       var label = props.label;
+      var target = props.target;
       var classes = Utils.classNames(className, {
         'fab-close': fabClose,
         'fab-label-button': label
@@ -2451,9 +2464,33 @@
       return React.createElement('a', {
         id: id,
         style: style,
+        target: target,
         className: classes,
         onClick: this.onClick.bind(this)
       }, this.slots['default'], labelEl);
+    };
+
+    F7FabButton.prototype.componentWillUnmount = function componentWillUnmount () {
+      var self = this;
+
+      if (self.f7Tooltip && self.f7Tooltip.destroy) {
+        self.f7Tooltip.destroy();
+        self.f7Tooltip = null;
+        delete self.f7Tooltip;
+      }
+    };
+
+    F7FabButton.prototype.componentDidMount = function componentDidMount () {
+      var self = this;
+      var ref = self.props;
+      var tooltip = ref.tooltip;
+      if (!tooltip) { return; }
+      self.$f7ready(function (f7) {
+        self.f7Tooltip = f7.tooltip.create({
+          el: self.refs.el,
+          text: tooltip
+        });
+      });
     };
 
     prototypeAccessors.slots.get = function () {
@@ -2467,6 +2504,22 @@
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
 
+    prototypeAccessors.refs.get = function () {
+      return this.__reactRefs;
+    };
+
+    prototypeAccessors.refs.set = function (refs) {};
+
+    F7FabButton.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+      var this$1 = this;
+
+      __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
+        var self = this$1;
+        if (!newText || !self.f7Tooltip) { return; }
+        self.f7Tooltip.setText(newText);
+      });
+    };
+
     Object.defineProperties( F7FabButton.prototype, prototypeAccessors );
 
     return F7FabButton;
@@ -2475,7 +2528,9 @@
   __reactComponentSetProps(F7FabButton, Object.assign({
     id: [String, Number],
     fabClose: Boolean,
-    label: String
+    label: String,
+    target: String,
+    tooltip: String
   }, Mixins.colorProps));
 
   var F7FabButtons = (function (superclass) {
@@ -2523,13 +2578,14 @@
   var F7Fab = (function (superclass) {
     function F7Fab(props, context) {
       superclass.call(this, props, context);
+      this.__reactRefs = {};
     }
 
     if ( superclass ) F7Fab.__proto__ = superclass;
     F7Fab.prototype = Object.create( superclass && superclass.prototype );
     F7Fab.prototype.constructor = F7Fab;
 
-    var prototypeAccessors = { slots: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
 
     F7Fab.prototype.onClick = function onClick (event) {
       var self = this;
@@ -2546,6 +2602,7 @@
       var initialHref = props.href;
       var position = props.position;
       var text = props.text;
+      var target = props.target;
       var href = initialHref;
       if (href === true) { href = '#'; }
       if (href === false) { href = undefined; }
@@ -2581,6 +2638,7 @@
 
       if (linkChildren.length || linkSlots && linkSlots.length) {
         linkEl = React.createElement('a', {
+          target: target,
           href: href,
           onClick: self.onClick.bind(self),
           key: 'f7-fab-link'
@@ -2599,6 +2657,29 @@
       }, linkEl, rootChildren, rootSlots);
     };
 
+    F7Fab.prototype.componentWillUnmount = function componentWillUnmount () {
+      var self = this;
+
+      if (self.f7Tooltip && self.f7Tooltip.destroy) {
+        self.f7Tooltip.destroy();
+        self.f7Tooltip = null;
+        delete self.f7Tooltip;
+      }
+    };
+
+    F7Fab.prototype.componentDidMount = function componentDidMount () {
+      var self = this;
+      var ref = self.props;
+      var tooltip = ref.tooltip;
+      if (!tooltip) { return; }
+      self.$f7ready(function (f7) {
+        self.f7Tooltip = f7.tooltip.create({
+          el: self.refs.el,
+          text: tooltip
+        });
+      });
+    };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -2610,6 +2691,22 @@
       return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
     };
 
+    prototypeAccessors.refs.get = function () {
+      return this.__reactRefs;
+    };
+
+    prototypeAccessors.refs.set = function (refs) {};
+
+    F7Fab.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+      var this$1 = this;
+
+      __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
+        var self = this$1;
+        if (!newText || !self.f7Tooltip) { return; }
+        self.f7Tooltip.setText(newText);
+      });
+    };
+
     Object.defineProperties( F7Fab.prototype, prototypeAccessors );
 
     return F7Fab;
@@ -2619,12 +2716,176 @@
     id: [String, Number],
     morphTo: String,
     href: [Boolean, String],
+    target: String,
     text: String,
     position: {
       type: String,
       default: 'right-bottom'
-    }
+    },
+    tooltip: String
   }, Mixins.colorProps));
+
+  var F7Gauge = (function (superclass) {
+    function F7Gauge(props, context) {
+      superclass.call(this, props, context);
+    }
+
+    if ( superclass ) F7Gauge.__proto__ = superclass;
+    F7Gauge.prototype = Object.create( superclass && superclass.prototype );
+    F7Gauge.prototype.constructor = F7Gauge;
+
+    F7Gauge.prototype.render = function render () {
+      var props = this.props;
+      var className = props.className;
+      var id = props.id;
+      var style = props.style;
+      var type = props.type;
+      var value = props.value;
+      var size = props.size;
+      var bgColor = props.bgColor;
+      var borderBgColor = props.borderBgColor;
+      var borderColor = props.borderColor;
+      var borderWidth = props.borderWidth;
+      var valueText = props.valueText;
+      var valueTextColor = props.valueTextColor;
+      var valueFontSize = props.valueFontSize;
+      var valueFontWeight = props.valueFontWeight;
+      var labelText = props.labelText;
+      var labelTextColor = props.labelTextColor;
+      var labelFontSize = props.labelFontSize;
+      var labelFontWeight = props.labelFontWeight;
+      var classes = Utils.classNames(className, 'gauge');
+      var semiCircle = type === 'semicircle';
+      var radius = size / 2 - borderWidth / 2;
+      var length = 2 * Math.PI * radius;
+      var progress = Math.max(Math.min(value, 1), 0);
+      {
+        return React.createElement('div', {
+          id: id,
+          style: style,
+          className: classes
+        }, React.createElement('svg', {
+          className: 'gauge-svg',
+          width: (size + "px"),
+          height: ((semiCircle ? size / 2 : size) + "px"),
+          viewBox: ("0 0 " + size + " " + (semiCircle ? size / 2 : size))
+        }, semiCircle && React.createElement('path', {
+          className: 'gauge-back-semi',
+          d: ("M" + (size - borderWidth / 2) + "," + (size / 2) + " a1,1 0 0,0 -" + (size - borderWidth) + ",0"),
+          stroke: borderBgColor,
+          strokeWidth: borderWidth,
+          fill: bgColor || 'none'
+        }), semiCircle && React.createElement('path', {
+          className: 'gauge-front-semi',
+          d: ("M" + (size - borderWidth / 2) + "," + (size / 2) + " a1,1 0 0,0 -" + (size - borderWidth) + ",0"),
+          stroke: borderColor,
+          strokeWidth: borderWidth,
+          strokeDasharray: length / 2,
+          strokeDashoffset: length / 2 * (progress - 1),
+          fill: borderBgColor ? 'none' : bgColor || 'none'
+        }), !semiCircle && borderBgColor && React.createElement('circle', {
+          className: 'gauge-back-circle',
+          stroke: borderBgColor,
+          strokeWidth: borderWidth,
+          fill: bgColor || 'none',
+          cx: size / 2,
+          cy: size / 2,
+          r: radius
+        }), !semiCircle && React.createElement('circle', {
+          className: 'gauge-front-circle',
+          transform: ("rotate(-90 " + (size / 2) + " " + (size / 2) + ")"),
+          stroke: borderColor,
+          strokeWidth: borderWidth,
+          strokeDasharray: length,
+          strokeDashoffset: length * (1 - progress),
+          fill: borderBgColor ? 'none' : bgColor || 'none',
+          cx: size / 2,
+          cy: size / 2,
+          r: radius
+        }), valueText && React.createElement('text', {
+          className: 'gauge-value-text',
+          x: '50%',
+          y: semiCircle ? '100%' : '50%',
+          fontWeight: valueFontWeight,
+          fontSize: valueFontSize,
+          fill: valueTextColor,
+          dy: semiCircle ? labelText ? -labelFontSize - 15 : -5 : 0,
+          textAnchor: 'middle',
+          dominantBaseline: !semiCircle && 'middle'
+        }, valueText), labelText && React.createElement('text', {
+          className: 'gauge-label-text',
+          x: '50%',
+          y: semiCircle ? '100%' : '50%',
+          fontWeight: labelFontWeight,
+          fontSize: labelFontSize,
+          fill: labelTextColor,
+          dy: semiCircle ? -5 : valueText ? valueFontSize / 2 + 10 : 0,
+          textAnchor: 'middle',
+          dominantBaseline: !semiCircle && 'middle'
+        }, labelText)));
+      }
+    };
+
+    return F7Gauge;
+  }(React.Component));
+
+  __reactComponentSetProps(F7Gauge, {
+    id: [String, Number],
+    type: {
+      type: String,
+      default: 'circle'
+    },
+    value: {
+      type: [Number, String],
+      default: 0
+    },
+    size: {
+      type: [Number, String],
+      default: 200
+    },
+    bgColor: {
+      type: String,
+      default: 'transparent'
+    },
+    borderBgColor: {
+      type: String,
+      default: '#eeeeee'
+    },
+    borderColor: {
+      type: String,
+      default: '#000000'
+    },
+    borderWidth: {
+      type: [Number, String],
+      default: 10
+    },
+    valueText: [Number, String],
+    valueTextColor: {
+      type: String,
+      default: '#000000'
+    },
+    valueFontSize: {
+      type: [Number, String],
+      default: 31
+    },
+    valueFontWeight: {
+      type: [Number, String],
+      default: 500
+    },
+    labelText: String,
+    labelTextColor: {
+      type: String,
+      default: '#888888'
+    },
+    labelFontSize: {
+      type: [Number, String],
+      default: 14
+    },
+    labelFontWeight: {
+      type: [Number, String],
+      default: 400
+    }
+  });
 
   var F7Toggle = (function (superclass) {
     function F7Toggle(props, context) {
@@ -3220,7 +3481,7 @@
 
         f7.input.checkEmptyState(inputEl);
 
-        if (validate && (typeof value !== 'undefined' || typeof defaultValue !== 'undefined')) {
+        if ((validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
           setTimeout(function () {
             f7.input.validate(inputEl);
           }, 0);
@@ -3362,6 +3623,12 @@
     var prototypeAccessors = { attrs: { configurable: true },classes: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
 
     F7Link.prototype.onClick = function onClick (event) {
+      var self = this;
+
+      if (self.props.smartSelect && self.f7SmartSelect) {
+        self.f7SmartSelect.open();
+      }
+
       this.dispatchEvent('click', event);
     };
 
@@ -3389,13 +3656,15 @@
       var tabLink = props.tabLink;
       var tabLinkActive = props.tabLinkActive;
       var noLinkClass = props.noLinkClass;
+      var smartSelect = props.smartSelect;
       var className = props.className;
       return Utils.classNames(className, {
         link: !(noLinkClass || self.state.isTabbarLabel),
         'icon-only': self.iconOnlyComputed,
         'tab-link': tabLink || tabLink === '',
         'tab-link-active': tabLinkActive,
-        'no-fastclick': noFastclick || noFastClick
+        'no-fastclick': noFastclick || noFastClick,
+        'smart-select': smartSelect
       }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
     };
 
@@ -3480,6 +3749,10 @@
     F7Link.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
 
+      if (self.f7SmartSelect && self.f7SmartSelect.destroy) {
+        self.f7SmartSelect.destroy();
+      }
+
       if (self.f7Tooltip && self.f7Tooltip.destroy) {
         self.f7Tooltip.destroy();
         self.f7Tooltip = null;
@@ -3494,6 +3767,8 @@
       var tabbarLabel = ref.tabbarLabel;
       var tabLink = ref.tabLink;
       var tooltip = ref.tooltip;
+      var smartSelect = ref.smartSelect;
+      var smartSelectParams = ref.smartSelectParams;
       var isTabbarLabel = false;
 
       if (tabbarLabel || (tabLink || tabLink === '') && self.$$(el).parents('.tabbar-labels').length) {
@@ -3503,12 +3778,20 @@
       self.setState({
         isTabbarLabel: isTabbarLabel
       });
-      if (!tooltip) { return; }
       self.$f7ready(function (f7) {
-        self.f7Tooltip = f7.tooltip.create({
-          el: self.refs.el,
-          text: tooltip
-        });
+        if (smartSelect) {
+          var ssParams = Utils.extend({
+            el: el
+          }, smartSelectParams || {});
+          self.f7SmartSelect = f7.smartSelect.create(ssParams);
+        }
+
+        if (tooltip) {
+          self.f7Tooltip = f7.tooltip.create({
+            el: self.refs.el,
+            text: tooltip
+          });
+        }
       });
     };
 
@@ -3528,6 +3811,16 @@
     };
 
     prototypeAccessors.refs.set = function (refs) {};
+
+    F7Link.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+      var this$1 = this;
+
+      __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
+        var self = this$1;
+        if (!newText || !self.f7Tooltip) { return; }
+        self.f7Tooltip.setText(newText);
+      });
+    };
 
     Object.defineProperties( F7Link.prototype, prototypeAccessors );
 
@@ -3551,7 +3844,10 @@
       type: [String, Boolean],
       default: '#'
     },
-    tooltip: String
+    target: String,
+    tooltip: String,
+    smartSelect: Boolean,
+    smartSelectParams: Object
   }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
 
   var F7ListButton = (function (superclass) {
@@ -3889,6 +4185,54 @@
 
     var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
 
+    F7ListItemContent.prototype.checkHasInputState = function checkHasInputState () {
+      var self = this;
+      var props = self.props;
+      var itemInput = props.itemInput;
+      var inlineLabel = props.inlineLabel;
+      var itemInputWithInfo = props.itemInputWithInfo;
+      var hasInput = itemInput || self.state.hasInput;
+      var hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
+      var hasInputInfo = itemInputWithInfo || self.state.hasInputInfo;
+      var hasInputErrorMessage = self.state.hasInputErrorMessage;
+
+      if (hasInput && !self.state.hasInput) {
+        self.hasInputSet = true;
+        self.setState({
+          hasInput: hasInput
+        });
+      } else if (!hasInput) {
+        self.hasInputSet = false;
+      }
+
+      if (hasInputInfo && !self.state.hasInputInfo) {
+        self.hasInputInfoSet = true;
+        self.setState({
+          hasInputInfo: hasInputInfo
+        });
+      } else if (!hasInputInfo) {
+        self.hasInputInfoSet = false;
+      }
+
+      if (hasInputErrorMessage && !self.state.hasInputErrorMessage) {
+        self.hasInputErrorMessageSet = true;
+        self.setState({
+          hasInputErrorMessage: hasInputErrorMessage
+        });
+      } else if (!hasInputInfo) {
+        self.hasInputErrorMessageSet = false;
+      }
+
+      if (hasInlineLabel && !self.state.hasInlineLabel) {
+        self.hasInlineLabelSet = true;
+        self.setState({
+          hasInlineLabel: hasInlineLabel
+        });
+      } else if (!hasInlineLabel) {
+        self.hasInlineLabelSet = false;
+      }
+    };
+
     F7ListItemContent.prototype.onClick = function onClick (event) {
       this.dispatchEvent('click', event);
     };
@@ -4005,42 +4349,6 @@
         if (slotName === 'header') { slotsHeader.push(child); }
         if (slotName === 'footer') { slotsFooter.push(child); }
       });
-
-      if (hasInput && !self.state.hasInput) {
-        self.hasInputSet = true;
-        self.setState({
-          hasInput: hasInput
-        });
-      } else if (!hasInput) {
-        self.hasInputSet = false;
-      }
-
-      if (hasInputInfo && !self.state.hasInputInfo) {
-        self.hasInputInfoSet = true;
-        self.setState({
-          hasInputInfo: hasInputInfo
-        });
-      } else if (!hasInputInfo) {
-        self.hasInputInfoSet = false;
-      }
-
-      if (hasInputErrorMessage && !self.state.hasInputErrorMessage) {
-        self.hasInputErrorMessageSet = true;
-        self.setState({
-          hasInputErrorMessage: hasInputErrorMessage
-        });
-      } else if (!hasInputInfo) {
-        self.hasInputErrorMessageSet = false;
-      }
-
-      if (hasInlineLabel && !self.state.hasInlineLabel) {
-        self.hasInlineLabelSet = true;
-        self.setState({
-          hasInlineLabel: hasInlineLabel
-        });
-      } else if (!hasInlineLabel) {
-        self.hasInlineLabelSet = false;
-      }
 
       if (radio || checkbox) {
         {
@@ -4234,6 +4542,14 @@
           hasInputErrorMessage: hasInputErrorMessage
         });
       }
+    };
+
+    F7ListItemContent.prototype.componentWillUpdate = function componentWillUpdate () {
+      this.checkHasInputState();
+    };
+
+    F7ListItemContent.prototype.componentWillMount = function componentWillMount () {
+      this.checkHasInputState();
     };
 
     prototypeAccessors.slots.get = function () {
@@ -10091,7 +10407,7 @@
   };
 
   /**
-   * Framework7 React 3.0.0-beta.9
+   * Framework7 React 3.0.0-beta.10
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -10099,7 +10415,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: June 12, 2018
+   * Released on: June 15, 2018
    */
 
   var Plugin = {
@@ -10138,6 +10454,7 @@
       window.FabButton = F7FabButton;
       window.FabButtons = F7FabButtons;
       window.Fab = F7Fab;
+      window.Gauge = F7Gauge;
       window.Icon = F7Icon;
       window.Input = F7Input;
       window.Label = F7Label;

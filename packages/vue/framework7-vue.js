@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.0.0-beta.9
+ * Framework7 Vue 3.0.0-beta.10
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 12, 2018
+ * Released on: June 15, 2018
  */
 
 (function (global, factory) {
@@ -1425,6 +1425,7 @@
         type: [String, Boolean],
         default: '#'
       },
+      target: String,
       round: Boolean,
       roundMd: Boolean,
       roundIos: Boolean,
@@ -1583,6 +1584,13 @@
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
       }
 
+    },
+    watch: {
+      'props.tooltip': function watchTooltip(newText) {
+        var self = this;
+        if (!newText || !self.f7Tooltip) { return; }
+        self.f7Tooltip.setText(newText);
+      }
     },
 
     mounted: function mounted() {
@@ -2030,7 +2038,9 @@
     props: Object.assign({
       id: [String, Number],
       fabClose: Boolean,
-      label: String
+      label: String,
+      target: String,
+      tooltip: String
     }, Mixins.colorProps),
 
     render: function render() {
@@ -2041,6 +2051,7 @@
       var style = props.style;
       var fabClose = props.fabClose;
       var label = props.label;
+      var target = props.target;
       var classes = Utils.classNames(className, {
         'fab-close': fabClose,
         'fab-label-button': label
@@ -2060,7 +2071,8 @@
           click: this.onClick.bind(this)
         },
         attrs: {
-          id: id
+          id: id,
+          target: target
         }
       }, [this.$slots['default'], labelEl]);
     },
@@ -2078,6 +2090,37 @@
       }
 
     },
+    watch: {
+      'props.tooltip': function watchTooltip(newText) {
+        var self = this;
+        if (!newText || !self.f7Tooltip) { return; }
+        self.f7Tooltip.setText(newText);
+      }
+    },
+
+    mounted: function mounted() {
+      var self = this;
+      var ref = self.props;
+      var tooltip = ref.tooltip;
+      if (!tooltip) { return; }
+      self.$f7ready(function (f7) {
+        self.f7Tooltip = f7.tooltip.create({
+          el: self.$refs.el,
+          text: tooltip
+        });
+      });
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      var self = this;
+
+      if (self.f7Tooltip && self.f7Tooltip.destroy) {
+        self.f7Tooltip.destroy();
+        self.f7Tooltip = null;
+        delete self.f7Tooltip;
+      }
+    },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
@@ -2127,11 +2170,13 @@
       id: [String, Number],
       morphTo: String,
       href: [Boolean, String],
+      target: String,
       text: String,
       position: {
         type: String,
         default: 'right-bottom'
-      }
+      },
+      tooltip: String
     }, Mixins.colorProps),
 
     render: function render() {
@@ -2145,6 +2190,7 @@
       var initialHref = props.href;
       var position = props.position;
       var text = props.text;
+      var target = props.target;
       var href = initialHref;
       if (href === true) { href = '#'; }
       if (href === false) { href = undefined; }
@@ -2184,6 +2230,7 @@
             click: self.onClick.bind(self)
           },
           attrs: {
+            target: target,
             href: href
           }
         }, [linkChildren, textEl, linkSlots]);
@@ -2217,6 +2264,214 @@
       }
 
     },
+    watch: {
+      'props.tooltip': function watchTooltip(newText) {
+        var self = this;
+        if (!newText || !self.f7Tooltip) { return; }
+        self.f7Tooltip.setText(newText);
+      }
+    },
+
+    mounted: function mounted() {
+      var self = this;
+      var ref = self.props;
+      var tooltip = ref.tooltip;
+      if (!tooltip) { return; }
+      self.$f7ready(function (f7) {
+        self.f7Tooltip = f7.tooltip.create({
+          el: self.$refs.el,
+          text: tooltip
+        });
+      });
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      var self = this;
+
+      if (self.f7Tooltip && self.f7Tooltip.destroy) {
+        self.f7Tooltip.destroy();
+        self.f7Tooltip = null;
+        delete self.f7Tooltip;
+      }
+    },
+
+    computed: {
+      props: function props() {
+        return __vueComponentProps(this);
+      }
+
+    }
+  };
+
+  var f7Gauge = {
+    props: {
+      id: [String, Number],
+      type: {
+        type: String,
+        default: 'circle'
+      },
+      value: {
+        type: [Number, String],
+        default: 0
+      },
+      size: {
+        type: [Number, String],
+        default: 200
+      },
+      bgColor: {
+        type: String,
+        default: 'transparent'
+      },
+      borderBgColor: {
+        type: String,
+        default: '#eeeeee'
+      },
+      borderColor: {
+        type: String,
+        default: '#000000'
+      },
+      borderWidth: {
+        type: [Number, String],
+        default: 10
+      },
+      valueText: [Number, String],
+      valueTextColor: {
+        type: String,
+        default: '#000000'
+      },
+      valueFontSize: {
+        type: [Number, String],
+        default: 31
+      },
+      valueFontWeight: {
+        type: [Number, String],
+        default: 500
+      },
+      labelText: String,
+      labelTextColor: {
+        type: String,
+        default: '#888888'
+      },
+      labelFontSize: {
+        type: [Number, String],
+        default: 14
+      },
+      labelFontWeight: {
+        type: [Number, String],
+        default: 400
+      }
+    },
+    name: 'f7-gauge',
+
+    render: function render() {
+      var _h = this.$createElement;
+      var props = this.props;
+      var className = props.className;
+      var id = props.id;
+      var style = props.style;
+      var type = props.type;
+      var value = props.value;
+      var size = props.size;
+      var bgColor = props.bgColor;
+      var borderBgColor = props.borderBgColor;
+      var borderColor = props.borderColor;
+      var borderWidth = props.borderWidth;
+      var valueText = props.valueText;
+      var valueTextColor = props.valueTextColor;
+      var valueFontSize = props.valueFontSize;
+      var valueFontWeight = props.valueFontWeight;
+      var labelText = props.labelText;
+      var labelTextColor = props.labelTextColor;
+      var labelFontSize = props.labelFontSize;
+      var labelFontWeight = props.labelFontWeight;
+      var classes = Utils.classNames(className, 'gauge');
+      var semiCircle = type === 'semicircle';
+      var radius = size / 2 - borderWidth / 2;
+      var length = 2 * Math.PI * radius;
+      var progress = Math.max(Math.min(value, 1), 0);
+      {
+        return _h('div', {
+          style: style,
+          class: classes,
+          attrs: {
+            id: id
+          }
+        }, [_h('svg', {
+          class: 'gauge-svg',
+          attrs: {
+            width: (size + "px"),
+            height: ((semiCircle ? size / 2 : size) + "px"),
+            viewbox: ("0 0 " + size + " " + (semiCircle ? size / 2 : size))
+          }
+        }, [semiCircle && _h('path', {
+          class: 'gauge-back-semi',
+          attrs: {
+            d: ("M" + (size - borderWidth / 2) + "," + (size / 2) + " a1,1 0 0,0 -" + (size - borderWidth) + ",0"),
+            stroke: borderBgColor,
+            'stroke-width': borderWidth,
+            fill: bgColor || 'none'
+          }
+        }), semiCircle && _h('path', {
+          class: 'gauge-front-semi',
+          attrs: {
+            d: ("M" + (size - borderWidth / 2) + "," + (size / 2) + " a1,1 0 0,0 -" + (size - borderWidth) + ",0"),
+            stroke: borderColor,
+            'stroke-width': borderWidth,
+            'stroke-dasharray': length / 2,
+            'stroke-dashoffset': length / 2 * (progress - 1),
+            fill: borderBgColor ? 'none' : bgColor || 'none'
+          }
+        }), !semiCircle && borderBgColor && _h('circle', {
+          class: 'gauge-back-circle',
+          attrs: {
+            stroke: borderBgColor,
+            'stroke-width': borderWidth,
+            fill: bgColor || 'none',
+            cx: size / 2,
+            cy: size / 2,
+            r: radius
+          }
+        }), !semiCircle && _h('circle', {
+          class: 'gauge-front-circle',
+          attrs: {
+            transform: ("rotate(-90 " + (size / 2) + " " + (size / 2) + ")"),
+            stroke: borderColor,
+            'stroke-width': borderWidth,
+            'stroke-dasharray': length,
+            'stroke-dashoffset': length * (1 - progress),
+            fill: borderBgColor ? 'none' : bgColor || 'none',
+            cx: size / 2,
+            cy: size / 2,
+            r: radius
+          }
+        }), valueText && _h('text', {
+          class: 'gauge-value-text',
+          attrs: {
+            x: '50%',
+            y: semiCircle ? '100%' : '50%',
+            'font-weight': valueFontWeight,
+            'font-size': valueFontSize,
+            fill: valueTextColor,
+            dy: semiCircle ? labelText ? -labelFontSize - 15 : -5 : 0,
+            'text-anchor': 'middle',
+            'dominant-baseline': !semiCircle && 'middle'
+          }
+        }, [valueText]), labelText && _h('text', {
+          class: 'gauge-label-text',
+          attrs: {
+            x: '50%',
+            y: semiCircle ? '100%' : '50%',
+            'font-weight': labelFontWeight,
+            'font-size': labelFontSize,
+            fill: labelTextColor,
+            dy: semiCircle ? -5 : valueText ? valueFontSize / 2 + 10 : 0,
+            'text-anchor': 'middle',
+            'dominant-baseline': !semiCircle && 'middle'
+          }
+        }, [labelText])])]);
+      }
+    },
+
     computed: {
       props: function props() {
         return __vueComponentProps(this);
@@ -2758,7 +3013,7 @@
 
         f7.input.checkEmptyState(inputEl);
 
-        if (validate && (typeof value !== 'undefined' || typeof defaultValue !== 'undefined')) {
+        if ((validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
           setTimeout(function () {
             f7.input.validate(inputEl);
           }, 0);
@@ -2922,7 +3177,10 @@
         type: [String, Boolean],
         default: '#'
       },
-      tooltip: String
+      target: String,
+      tooltip: String,
+      smartSelect: Boolean,
+      smartSelectParams: Object
     }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
 
     data: function data() {
@@ -3025,6 +3283,14 @@
       })), [iconEl, textEl, defaultSlots]);
     },
 
+    watch: {
+      'props.tooltip': function watchTooltip(newText) {
+        var self = this;
+        if (!newText || !self.f7Tooltip) { return; }
+        self.f7Tooltip.setText(newText);
+      }
+    },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
@@ -3032,6 +3298,8 @@
       var tabbarLabel = ref.tabbarLabel;
       var tabLink = ref.tabLink;
       var tooltip = ref.tooltip;
+      var smartSelect = ref.smartSelect;
+      var smartSelectParams = ref.smartSelectParams;
       var isTabbarLabel = false;
 
       if (tabbarLabel || (tabLink || tabLink === '') && self.$$(el).parents('.tabbar-labels').length) {
@@ -3041,17 +3309,29 @@
       self.setState({
         isTabbarLabel: isTabbarLabel
       });
-      if (!tooltip) { return; }
       self.$f7ready(function (f7) {
-        self.f7Tooltip = f7.tooltip.create({
-          el: self.$refs.el,
-          text: tooltip
-        });
+        if (smartSelect) {
+          var ssParams = Utils.extend({
+            el: el
+          }, smartSelectParams || {});
+          self.f7SmartSelect = f7.smartSelect.create(ssParams);
+        }
+
+        if (tooltip) {
+          self.f7Tooltip = f7.tooltip.create({
+            el: self.$refs.el,
+            text: tooltip
+          });
+        }
       });
     },
 
     beforeDestroy: function beforeDestroy() {
       var self = this;
+
+      if (self.f7SmartSelect && self.f7SmartSelect.destroy) {
+        self.f7SmartSelect.destroy();
+      }
 
       if (self.f7Tooltip && self.f7Tooltip.destroy) {
         self.f7Tooltip.destroy();
@@ -3085,13 +3365,15 @@
         var tabLink = props.tabLink;
         var tabLinkActive = props.tabLinkActive;
         var noLinkClass = props.noLinkClass;
+        var smartSelect = props.smartSelect;
         var className = props.className;
         return Utils.classNames(className, {
           link: !(noLinkClass || self.state.isTabbarLabel),
           'icon-only': self.iconOnlyComputed,
           'tab-link': tabLink || tabLink === '',
           'tab-link-active': tabLinkActive,
-          'no-fastclick': noFastclick || noFastClick
+          'no-fastclick': noFastclick || noFastClick,
+          'smart-select': smartSelect
         }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
       },
 
@@ -3102,6 +3384,12 @@
     },
     methods: {
       onClick: function onClick(event) {
+        var self = this;
+
+        if (self.props.smartSelect && self.f7SmartSelect) {
+          self.f7SmartSelect.open();
+        }
+
         this.dispatchEvent('click', event);
       },
 
@@ -3550,42 +3838,6 @@
         if (slotName === 'footer') { slotsFooter.push(child); }
       });
 
-      if (hasInput && !self.state.hasInput) {
-        self.hasInputSet = true;
-        self.setState({
-          hasInput: hasInput
-        });
-      } else if (!hasInput) {
-        self.hasInputSet = false;
-      }
-
-      if (hasInputInfo && !self.state.hasInputInfo) {
-        self.hasInputInfoSet = true;
-        self.setState({
-          hasInputInfo: hasInputInfo
-        });
-      } else if (!hasInputInfo) {
-        self.hasInputInfoSet = false;
-      }
-
-      if (hasInputErrorMessage && !self.state.hasInputErrorMessage) {
-        self.hasInputErrorMessageSet = true;
-        self.setState({
-          hasInputErrorMessage: hasInputErrorMessage
-        });
-      } else if (!hasInputInfo) {
-        self.hasInputErrorMessageSet = false;
-      }
-
-      if (hasInlineLabel && !self.state.hasInlineLabel) {
-        self.hasInlineLabelSet = true;
-        self.setState({
-          hasInlineLabel: hasInlineLabel
-        });
-      } else if (!hasInlineLabel) {
-        self.hasInlineLabelSet = false;
-      }
-
       if (radio || checkbox) {
         {
           inputEl = _h('input', {
@@ -3714,6 +3966,14 @@
       }, [slotsContentStart, inputEl, inputIconEl, mediaEl, innerEl, slotsContent, slotsContentEnd]);
     },
 
+    beforeMount: function beforeMount() {
+      this.checkHasInputState();
+    },
+
+    beforeUpdate: function beforeUpdate() {
+      this.checkHasInputState();
+    },
+
     mounted: function mounted() {
       var self = this;
       var innerEl = self.$refs.innerEl;
@@ -3789,6 +4049,54 @@
     },
 
     methods: {
+      checkHasInputState: function checkHasInputState() {
+        var self = this;
+        var props = self.props;
+        var itemInput = props.itemInput;
+        var inlineLabel = props.inlineLabel;
+        var itemInputWithInfo = props.itemInputWithInfo;
+        var hasInput = itemInput || self.state.hasInput;
+        var hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
+        var hasInputInfo = itemInputWithInfo || self.state.hasInputInfo;
+        var hasInputErrorMessage = self.state.hasInputErrorMessage;
+
+        if (hasInput && !self.state.hasInput) {
+          self.hasInputSet = true;
+          self.setState({
+            hasInput: hasInput
+          });
+        } else if (!hasInput) {
+          self.hasInputSet = false;
+        }
+
+        if (hasInputInfo && !self.state.hasInputInfo) {
+          self.hasInputInfoSet = true;
+          self.setState({
+            hasInputInfo: hasInputInfo
+          });
+        } else if (!hasInputInfo) {
+          self.hasInputInfoSet = false;
+        }
+
+        if (hasInputErrorMessage && !self.state.hasInputErrorMessage) {
+          self.hasInputErrorMessageSet = true;
+          self.setState({
+            hasInputErrorMessage: hasInputErrorMessage
+          });
+        } else if (!hasInputInfo) {
+          self.hasInputErrorMessageSet = false;
+        }
+
+        if (hasInlineLabel && !self.state.hasInlineLabel) {
+          self.hasInlineLabelSet = true;
+          self.setState({
+            hasInlineLabel: hasInlineLabel
+          });
+        } else if (!hasInlineLabel) {
+          self.hasInlineLabelSet = false;
+        }
+      },
+
       onClick: function onClick(event) {
         this.dispatchEvent('click', event);
       },
@@ -9262,7 +9570,7 @@
   };
 
   /**
-   * Framework7 Vue 3.0.0-beta.9
+   * Framework7 Vue 3.0.0-beta.10
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -9270,7 +9578,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: June 12, 2018
+   * Released on: June 15, 2018
    */
 
   var Plugin = {
@@ -9309,6 +9617,7 @@
       Vue.component('f7-fab-button', f7FabButton);
       Vue.component('f7-fab-buttons', f7FabButtons);
       Vue.component('f7-fab', f7Fab);
+      Vue.component('f7-gauge', f7Gauge);
       Vue.component('f7-icon', F7Icon);
       Vue.component('f7-input', F7Input);
       Vue.component('f7-label', f7Label);

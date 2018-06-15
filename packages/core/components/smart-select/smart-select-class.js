@@ -73,6 +73,9 @@ class SmartSelect extends Framework7Class {
       ss.open();
     }
     function onChange() {
+      const value = ss.$selectEl.val();
+      ss.$el.trigger('smartselect:change', ss, value);
+      ss.emit('local::change smartSelectChange', ss, value);
       ss.setValue();
     }
     ss.attachEvents = function attachEvents() {

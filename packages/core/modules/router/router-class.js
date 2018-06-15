@@ -1077,7 +1077,15 @@ class Router extends Framework7Class {
     let initUrl = router.params.url;
     let documentUrl = document.location.href.split(document.location.origin)[1];
     let historyRestored;
-    if (!router.params.pushState || !router.params.pushStateOnLoad) {
+    const { pushState, pushStateOnLoad, pushStateSeparator, pushStateAnimateOnLoad } = router.params;
+    let { pushStateRoot } = router.params;
+    if (window.cordova && pushState && !pushStateSeparator && !pushStateRoot && document.location.pathname.indexOf('index.html')) {
+      // eslint-disable-next-line
+      console.warn('Framework7: wrong or not complete pushState configuration, trying to guess pushStateRoot');
+      pushStateRoot = document.location.pathname.split('index.html')[0];
+    }
+
+    if (!pushState || !pushStateOnLoad) {
       if (!initUrl) {
         initUrl = documentUrl;
       }
@@ -1088,12 +1096,12 @@ class Router extends Framework7Class {
         initUrl += document.location.hash;
       }
     } else {
-      if (router.params.pushStateRoot && documentUrl.indexOf(router.params.pushStateRoot) >= 0) {
-        documentUrl = documentUrl.split(router.params.pushStateRoot)[1];
+      if (pushStateRoot && documentUrl.indexOf(pushStateRoot) >= 0) {
+        documentUrl = documentUrl.split(pushStateRoot)[1];
         if (documentUrl === '') documentUrl = '/';
       }
-      if (router.params.pushStateSeparator.length > 0 && documentUrl.indexOf(router.params.pushStateSeparator) >= 0) {
-        initUrl = documentUrl.split(router.params.pushStateSeparator)[1];
+      if (pushStateSeparator.length > 0 && documentUrl.indexOf(pushStateSeparator) >= 0) {
+        initUrl = documentUrl.split(pushStateSeparator)[1];
       } else {
         initUrl = documentUrl;
       }
@@ -1105,7 +1113,7 @@ class Router extends Framework7Class {
       } else if (History.state && History.state[view.id] && History.state[view.id].url === router.history[router.history.length - 1]) {
         initUrl = router.history[router.history.length - 1];
       } else {
-        router.history = [documentUrl.split(router.params.pushStateSeparator)[0] || '/', initUrl];
+        router.history = [documentUrl.split(pushStateSeparator)[0] || '/', initUrl];
       }
       if (router.history.length > 1) {
         historyRestored = true;
@@ -1201,7 +1209,7 @@ class Router extends Framework7Class {
           initial: true,
           pushState: false,
           history: false,
-          animate: router.params.pushStateAnimateOnLoad,
+          animate: pushStateAnimateOnLoad,
           once: {
             pageAfterIn() {
               if (router.history.length > 2) {
@@ -1216,7 +1224,7 @@ class Router extends Framework7Class {
         router.saveHistory();
       }
     }
-    if (initUrl && router.params.pushState && router.params.pushStateOnLoad && (!History.state || !History.state[view.id])) {
+    if (initUrl && pushState && pushStateOnLoad && (!History.state || !History.state[view.id])) {
       History.initViewState(view.id, {
         url: initUrl,
       });

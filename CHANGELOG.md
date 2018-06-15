@@ -2,6 +2,26 @@
 
 # Change Log
 
+# [v3.0.0-beta.10](https://github.com/framework7io/framework7/compare/v3.0.0-beta.9...v3.0.0-beta.10) - June 15, 2018
+  * Core
+    * All new Gauge component with responsive SVG gauges
+    * Router
+      * Added `preRoute` support (middleware) that can be configured per route or globally on View/Router init for all routes
+    * Smart Select
+      * New `change`/`smartSelectChange` events
+    * Autocomplete
+      * Fixed error with undefined value replacement
+    * Tooltip
+      * New `setText` method to dynamically change Tooltip's text/content
+  * Phenome
+    * Better validation logic for `Input` component
+    * `Toggle` - fixed issue when `toggleChange` event not being fired on desktop
+    * `ListItemContent` - fixed issue with calling `setState` in render function
+    * Support for `target` prop/attribute for `Link`, `Button`, `Fab`, `FabButton` components
+    * Tooltip support (with `tooltip` prop) for `Fab` and `FabButton` components
+    * New `Gauge` (React) / `f7-gauge` (Vue) component to produce responsive SVG gauges
+    * Added Smart Select for `Link` component with `smartSelect` and `smartSelectParams` props
+
 # [v3.0.0-beta.9](https://github.com/framework7io/framework7/compare/v3.0.0-beta.8...v3.0.0-beta.9) - June 12, 2018
   * Core
     * All new Tooltip component

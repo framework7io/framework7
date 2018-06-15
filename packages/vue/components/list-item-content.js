@@ -159,42 +159,6 @@ export default {
       if (slotName === 'footer') slotsFooter.push(child);
     });
 
-    if (hasInput && !self.state.hasInput) {
-      self.hasInputSet = true;
-      self.setState({
-        hasInput
-      });
-    } else if (!hasInput) {
-      self.hasInputSet = false;
-    }
-
-    if (hasInputInfo && !self.state.hasInputInfo) {
-      self.hasInputInfoSet = true;
-      self.setState({
-        hasInputInfo
-      });
-    } else if (!hasInputInfo) {
-      self.hasInputInfoSet = false;
-    }
-
-    if (hasInputErrorMessage && !self.state.hasInputErrorMessage) {
-      self.hasInputErrorMessageSet = true;
-      self.setState({
-        hasInputErrorMessage
-      });
-    } else if (!hasInputInfo) {
-      self.hasInputErrorMessageSet = false;
-    }
-
-    if (hasInlineLabel && !self.state.hasInlineLabel) {
-      self.hasInlineLabelSet = true;
-      self.setState({
-        hasInlineLabel
-      });
-    } else if (!hasInlineLabel) {
-      self.hasInlineLabelSet = false;
-    }
-
     if (radio || checkbox) {
       {
         inputEl = _h('input', {
@@ -323,6 +287,14 @@ export default {
     }, [slotsContentStart, inputEl, inputIconEl, mediaEl, innerEl, slotsContent, slotsContentEnd]);
   },
 
+  beforeMount() {
+    this.checkHasInputState();
+  },
+
+  beforeUpdate() {
+    this.checkHasInputState();
+  },
+
   mounted() {
     const self = this;
     const innerEl = self.$refs.innerEl;
@@ -398,6 +370,56 @@ export default {
   },
 
   methods: {
+    checkHasInputState() {
+      const self = this;
+      const props = self.props;
+      const {
+        itemInput,
+        inlineLabel,
+        itemInputWithInfo
+      } = props;
+      const hasInput = itemInput || self.state.hasInput;
+      const hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
+      const hasInputInfo = itemInputWithInfo || self.state.hasInputInfo;
+      const hasInputErrorMessage = self.state.hasInputErrorMessage;
+
+      if (hasInput && !self.state.hasInput) {
+        self.hasInputSet = true;
+        self.setState({
+          hasInput
+        });
+      } else if (!hasInput) {
+        self.hasInputSet = false;
+      }
+
+      if (hasInputInfo && !self.state.hasInputInfo) {
+        self.hasInputInfoSet = true;
+        self.setState({
+          hasInputInfo
+        });
+      } else if (!hasInputInfo) {
+        self.hasInputInfoSet = false;
+      }
+
+      if (hasInputErrorMessage && !self.state.hasInputErrorMessage) {
+        self.hasInputErrorMessageSet = true;
+        self.setState({
+          hasInputErrorMessage
+        });
+      } else if (!hasInputInfo) {
+        self.hasInputErrorMessageSet = false;
+      }
+
+      if (hasInlineLabel && !self.state.hasInlineLabel) {
+        self.hasInlineLabelSet = true;
+        self.setState({
+          hasInlineLabel
+        });
+      } else if (!hasInlineLabel) {
+        self.hasInlineLabelSet = false;
+      }
+    },
+
     onClick(event) {
       this.dispatchEvent('click', event);
     },

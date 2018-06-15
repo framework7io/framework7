@@ -1,6 +1,7 @@
 import React from 'react';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
+import __reactComponentWatch from '../runtime-helpers/react-component-watch.js';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
@@ -8,6 +9,7 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7Fab extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
   }
 
   onClick(event) {
@@ -25,7 +27,8 @@ class F7Fab extends React.Component {
       morphTo,
       href: initialHref,
       position,
-      text
+      text,
+      target
     } = props;
     let href = initialHref;
     if (href === true) href = '#';
@@ -63,6 +66,7 @@ class F7Fab extends React.Component {
 
     if (linkChildren.length || linkSlots && linkSlots.length) {
       linkEl = React.createElement('a', {
+        target: target,
         href: href,
         onClick: self.onClick.bind(self),
         key: 'f7-fab-link'
@@ -81,6 +85,30 @@ class F7Fab extends React.Component {
     }, linkEl, rootChildren, rootSlots);
   }
 
+  componentWillUnmount() {
+    const self = this;
+
+    if (self.f7Tooltip && self.f7Tooltip.destroy) {
+      self.f7Tooltip.destroy();
+      self.f7Tooltip = null;
+      delete self.f7Tooltip;
+    }
+  }
+
+  componentDidMount() {
+    const self = this;
+    const {
+      tooltip
+    } = self.props;
+    if (!tooltip) return;
+    self.$f7ready(f7 => {
+      self.f7Tooltip = f7.tooltip.create({
+        el: self.refs.el,
+        text: tooltip
+      });
+    });
+  }
+
   get slots() {
     return __reactComponentSlots(this.props);
   }
@@ -89,17 +117,33 @@ class F7Fab extends React.Component {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
 
+  get refs() {
+    return this.__reactRefs;
+  }
+
+  set refs(refs) {}
+
+  componentDidUpdate(prevProps, prevState) {
+    __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, newText => {
+      const self = this;
+      if (!newText || !self.f7Tooltip) return;
+      self.f7Tooltip.setText(newText);
+    });
+  }
+
 }
 
 __reactComponentSetProps(F7Fab, Object.assign({
   id: [String, Number],
   morphTo: String,
   href: [Boolean, String],
+  target: String,
   text: String,
   position: {
     type: String,
     default: 'right-bottom'
-  }
+  },
+  tooltip: String
 }, Mixins.colorProps));
 
 export default F7Fab;

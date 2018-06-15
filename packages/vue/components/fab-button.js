@@ -7,7 +7,9 @@ export default {
   props: Object.assign({
     id: [String, Number],
     fabClose: Boolean,
-    label: String
+    label: String,
+    target: String,
+    tooltip: String
   }, Mixins.colorProps),
 
   render() {
@@ -18,7 +20,8 @@ export default {
       id,
       style,
       fabClose,
-      label
+      label,
+      target
     } = props;
     const classes = Utils.classNames(className, {
       'fab-close': fabClose,
@@ -39,7 +42,8 @@ export default {
         click: this.onClick.bind(this)
       },
       attrs: {
-        id: id
+        id: id,
+        target: target
       }
     }, [this.$slots['default'], labelEl]);
   },
@@ -54,6 +58,38 @@ export default {
     }
 
   },
+  watch: {
+    'props.tooltip': function watchTooltip(newText) {
+      const self = this;
+      if (!newText || !self.f7Tooltip) return;
+      self.f7Tooltip.setText(newText);
+    }
+  },
+
+  mounted() {
+    const self = this;
+    const {
+      tooltip
+    } = self.props;
+    if (!tooltip) return;
+    self.$f7ready(f7 => {
+      self.f7Tooltip = f7.tooltip.create({
+        el: self.$refs.el,
+        text: tooltip
+      });
+    });
+  },
+
+  beforeDestroy() {
+    const self = this;
+
+    if (self.f7Tooltip && self.f7Tooltip.destroy) {
+      self.f7Tooltip.destroy();
+      self.f7Tooltip = null;
+      delete self.f7Tooltip;
+    }
+  },
+
   computed: {
     props() {
       return __vueComponentProps(this);

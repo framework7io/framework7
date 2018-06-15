@@ -31,6 +31,14 @@ export default {
       tooltip.hide();
       return tooltip;
     };
+    app.tooltip.setText = function text(el, newText) {
+      const $el = $(el);
+      if ($el.length === 0) return undefined;
+      const tooltip = $el[0].f7Tooltip;
+      if (!tooltip) return undefined;
+      tooltip.setText(newText);
+      return tooltip;
+    };
   },
   params: {
     tooltip: {

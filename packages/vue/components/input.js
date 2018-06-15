@@ -271,7 +271,7 @@ export default {
 
       f7.input.checkEmptyState(inputEl);
 
-      if (validate && (typeof value !== 'undefined' || typeof defaultValue !== 'undefined')) {
+      if ((validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
         setTimeout(() => {
           f7.input.validate(inputEl);
         }, 0);

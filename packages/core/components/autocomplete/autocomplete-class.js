@@ -436,7 +436,7 @@ class Autocomplete extends Framework7Class {
     const ac = this;
     if (ac.params.renderItem) return ac.params.renderItem.call(ac, item, index);
     let itemHtml;
-    const itemValue = item.value.replace(/"/g, '&quot;');
+    const itemValue = item.value ? item.value.replace(/"/g, '&quot;') : item.value;
     if (ac.params.openIn !== 'dropdown') {
       itemHtml = `
         <li>
@@ -580,7 +580,7 @@ class Autocomplete extends Framework7Class {
         backdropEl: $el.find('.searchbar-backdrop'),
         customSearch: true,
         on: {
-          searchbarSearch(sb, query) {
+          search(sb, query) {
             if (query.length === 0 && ac.searchbar.enabled) {
               ac.searchbar.backdropShow();
             } else {
