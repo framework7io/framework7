@@ -3,6 +3,7 @@ import { document } from 'ssr-window';
 import Utils from '../../utils/utils';
 import History from '../../utils/history';
 import redirect from './redirect';
+import preRoute from './pre-route';
 
 function backward(el, backwardOptions) {
   const router = this;
@@ -492,37 +493,69 @@ function back(...args) {
     options.route.context = options.context;
   }
 
+  let backForceLoaded;
   if (options.force && router.params.stackPages) {
     router.$el.children('.page-previous.stacked').each((index, pageEl) => {
       if (pageEl.f7Page && pageEl.f7Page.route && pageEl.f7Page.route.url === route.url) {
+        backForceLoaded = true;
         router.loadBack({ el: pageEl }, options);
       }
     });
+    if (backForceLoaded) {
+      return router;
+    }
   }
+  function resolve() {
+    let routerLoaded = false;
+    ('url content component pageName el componentUrl template templateUrl').split(' ').forEach((pageLoadProp) => {
+      if (route.route[pageLoadProp] && !routerLoaded) {
+        routerLoaded = true;
+        router.loadBack({ [pageLoadProp]: route.route[pageLoadProp] }, options);
+      }
+    });
+    if (routerLoaded) return;
+    // Async
+    function asyncResolve(resolveParams, resolveOptions) {
+      router.allowPageChange = false;
+      if (resolveOptions && resolveOptions.context) {
+        if (!route.context) route.context = resolveOptions.context;
+        else route.context = Utils.extend({}, route.context, resolveOptions.context);
+        options.route.context = route.context;
+      }
+      router.loadBack(resolveParams, Utils.extend(options, resolveOptions), true);
+    }
+    function asyncReject() {
+      router.allowPageChange = true;
+    }
+    if (route.route.async) {
+      router.allowPageChange = false;
 
-  ('url content component pageName el componentUrl template templateUrl').split(' ').forEach((pageLoadProp) => {
-    if (route.route[pageLoadProp]) {
-      router.loadBack({ [pageLoadProp]: route.route[pageLoadProp] }, options);
+      route.route.async.call(router, route, router.currentRoute, asyncResolve, asyncReject);
     }
-  });
-  // Async
-  function asyncResolve(resolveParams, resolveOptions) {
-    router.allowPageChange = false;
-    if (resolveOptions && resolveOptions.context) {
-      if (!route.context) route.context = resolveOptions.context;
-      else route.context = Utils.extend({}, route.context, resolveOptions.context);
-      options.route.context = route.context;
-    }
-    router.loadBack(resolveParams, Utils.extend(options, resolveOptions), true);
   }
-  function asyncReject() {
+  function reject() {
     router.allowPageChange = true;
   }
-  if (route.route.async) {
-    router.allowPageChange = false;
 
-    route.route.async.call(router, route, router.currentRoute, asyncResolve, asyncReject);
+  if (router.params.preRoute || route.route.preRoute) {
+    router.allowPageChange = false;
+    preRoute.call(
+      router,
+      route.route.preRoute,
+      route,
+      router.currentRoute,
+      () => {
+        router.allowPageChange = true;
+        resolve();
+      },
+      () => {
+        reject();
+      },
+    );
+  } else {
+    resolve();
   }
+
   // Return Router
   return router;
 }

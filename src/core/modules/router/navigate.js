@@ -3,6 +3,7 @@ import { document } from 'ssr-window';
 import Utils from '../../utils/utils';
 import History from '../../utils/history';
 import redirect from './redirect';
+import preRoute from './pre-route';
 
 function refreshPage() {
   const router = this;
@@ -539,54 +540,86 @@ function navigate(navigateParams, navigateOptions = {}) {
     return redirect.call(router, 'navigate', route, navigateOptions);
   }
 
+
   const options = {};
   if (route.route.options) {
     Utils.extend(options, route.route.options, navigateOptions, { route });
   } else {
     Utils.extend(options, navigateOptions, { route });
   }
+
   if (options && options.context) {
     route.context = options.context;
     options.route.context = options.context;
   }
-  ('popup popover sheet loginScreen actions customModal').split(' ').forEach((modalLoadProp) => {
-    if (route.route[modalLoadProp]) {
-      router.modalLoad(modalLoadProp, route, options);
-    }
-  });
-  ('url content component pageName el componentUrl template templateUrl').split(' ').forEach((pageLoadProp) => {
-    if (route.route[pageLoadProp]) {
-      router.load({ [pageLoadProp]: route.route[pageLoadProp] }, options);
-    }
-  });
-  // Async
-  function asyncResolve(resolveParams, resolveOptions) {
-    router.allowPageChange = false;
-    let resolvedAsModal = false;
-    if (resolveOptions && resolveOptions.context) {
-      if (!route.context) route.context = resolveOptions.context;
-      else route.context = Utils.extend({}, route.context, resolveOptions.context);
-      options.route.context = route.context;
-    }
+
+  function resolve() {
+    let routerLoaded = false;
     ('popup popover sheet loginScreen actions customModal').split(' ').forEach((modalLoadProp) => {
-      if (resolveParams[modalLoadProp]) {
-        resolvedAsModal = true;
-        const modalRoute = Utils.extend({}, route, { route: resolveParams });
-        router.allowPageChange = true;
-        router.modalLoad(modalLoadProp, modalRoute, Utils.extend(options, resolveOptions));
+      if (route.route[modalLoadProp] && !routerLoaded) {
+        routerLoaded = true;
+        router.modalLoad(modalLoadProp, route, options);
       }
     });
-    if (resolvedAsModal) return;
-    router.load(resolveParams, Utils.extend(options, resolveOptions), true);
+    ('url content component pageName el componentUrl template templateUrl').split(' ').forEach((pageLoadProp) => {
+      if (route.route[pageLoadProp] && !routerLoaded) {
+        routerLoaded = true;
+        router.load({ [pageLoadProp]: route.route[pageLoadProp] }, options);
+      }
+    });
+    if (routerLoaded) return;
+    // Async
+    function asyncResolve(resolveParams, resolveOptions) {
+      router.allowPageChange = false;
+      let resolvedAsModal = false;
+      if (resolveOptions && resolveOptions.context) {
+        if (!route.context) route.context = resolveOptions.context;
+        else route.context = Utils.extend({}, route.context, resolveOptions.context);
+        options.route.context = route.context;
+      }
+      ('popup popover sheet loginScreen actions customModal').split(' ').forEach((modalLoadProp) => {
+        if (resolveParams[modalLoadProp]) {
+          resolvedAsModal = true;
+          const modalRoute = Utils.extend({}, route, { route: resolveParams });
+          router.allowPageChange = true;
+          router.modalLoad(modalLoadProp, modalRoute, Utils.extend(options, resolveOptions));
+        }
+      });
+      if (resolvedAsModal) return;
+      router.load(resolveParams, Utils.extend(options, resolveOptions), true);
+    }
+    function asyncReject() {
+      router.allowPageChange = true;
+    }
+    if (route.route.async) {
+      router.allowPageChange = false;
+
+      route.route.async.call(router, route, router.currentRoute, asyncResolve, asyncReject);
+    }
   }
-  function asyncReject() {
+  function reject() {
     router.allowPageChange = true;
   }
-  if (route.route.async) {
-    router.allowPageChange = false;
 
-    route.route.async.call(router, route, router.currentRoute, asyncResolve, asyncReject);
+  if (router.params.preRoute || route.route.preRoute) {
+    router.allowPageChange = false;
+    preRoute.call(
+      router,
+      route.route.preRoute,
+      route,
+      router.currentRoute,
+      () => {
+        router.allowPageChange = true;
+        resolve();
+      },
+      () => {
+        reject();
+      },
+    );
+  } else {
+    resolve();
   }
+
   // Return Router
   return router;
 }
