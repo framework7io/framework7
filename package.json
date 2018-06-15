@@ -39,6 +39,11 @@
     "last 2 versions",
     "ie >= 10"
   ],
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint"
+    }
+  },
   "dependencies": {
     "dom7": "^2.0.7",
     "path-to-regexp": "^2.1.0",
@@ -66,6 +71,7 @@
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.0",
     "hoek": "^5.0.3",
+    "husky": "^1.0.0-rc.9",
     "phenome": "0.0.10",
     "prop-types": "^15.6.1",
     "react": "^16.4.0",
