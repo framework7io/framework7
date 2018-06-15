@@ -240,7 +240,7 @@ class Gauge extends Framework7Class {
     }
     if (valueText) {
       if (!$gaugeSvgEl.find('.gauge-value-text').length) {
-        $gaugeSvgEl.append('<text class="gauge-value-text"></text>')
+        $gaugeSvgEl.append('<text class="gauge-value-text"></text>');
       }
       const textAttrs = {
         x: '50%',
@@ -261,7 +261,7 @@ class Gauge extends Framework7Class {
     }
     if (labelText) {
       if (!$gaugeSvgEl.find('.gauge-label-text').length) {
-        $gaugeSvgEl.append('<text class="gauge-label-text"></text>')
+        $gaugeSvgEl.append('<text class="gauge-label-text"></text>');
       }
       const labelAttrs = {
         x: '50%',
