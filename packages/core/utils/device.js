@@ -1,6 +1,7 @@
 import { window, document } from 'ssr-window';
 
 const Device = (function Device() {
+  const platform = window.navigator.platform;
   const ua = window.navigator.userAgent;
 
   const device = {
@@ -8,28 +9,38 @@ const Device = (function Device() {
     android: false,
     androidChrome: false,
     desktop: false,
-    windows: false,
+    windowsPhone: false,
     iphone: false,
     iphoneX: false,
     ipod: false,
     ipad: false,
-    cordova: window.cordova || window.phonegap,
-    phonegap: window.cordova || window.phonegap,
+    edge: false,
+    ie: false,
+    macos: false,
+    windows: false,
+    cordova: !!(window.cordova || window.phonegap),
+    phonegap: !!(window.cordova || window.phonegap),
   };
 
-  const windows = ua.match(/(Windows Phone);?[\s\/]+([\d.]+)?/); // eslint-disable-line
+  const windowsPhone = ua.match(/(Windows Phone);?[\s\/]+([\d.]+)?/); // eslint-disable-line
   const android = ua.match(/(Android);?[\s\/]+([\d.]+)?/); // eslint-disable-line
   const ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
   const ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
   const iphone = !ipad && ua.match(/(iPhone\sOS|iOS)\s([\d_]+)/);
   const iphoneX = iphone && window.screen.width === 375 && window.screen.height === 812;
+  const ie = ua.indexOf('MSIE ') >= 0 || ua.indexOf('Trident/') >= 0;
+  const edge = ua.indexOf('Edge/') >= 0;
+  const macos = platform === 'MacIntel';
+  const windows = platform === 'Win32';
 
+  device.ie = ie;
+  device.edge = edge;
 
   // Windows
-  if (windows) {
+  if (windowsPhone) {
     device.os = 'windows';
     device.osVersion = windows[2];
-    device.windows = true;
+    device.windowsPhone = true;
   }
   // Android
   if (android && !windows) {
@@ -70,6 +81,10 @@ const Device = (function Device() {
 
   // Desktop
   device.desktop = !(device.os || device.android || device.webView);
+  if (device.desktop) {
+    device.macos = macos;
+    device.windows = windows;
+  }
 
   // Minimal UI
   if (device.os && device.os === 'ios') {

@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [v3.0.0-beta.11](https://github.com/framework7io/framework7/compare/v3.0.0-beta.10...v3.0.0-beta.11) - June 19, 2018
+  * Core
+    * Fix touch ripple issues that happen from time to time in Edge
+    * Fix minor push state issues in Edge
+    * Device util now has additional detections props: `windowsPhone`, `windows`, `macos`, `ie`, `edge`
+
 # [v3.0.0-beta.10](https://github.com/framework7io/framework7/compare/v3.0.0-beta.9...v3.0.0-beta.10) - June 15, 2018
   * Core
     * All new Gauge component with responsive SVG gauges

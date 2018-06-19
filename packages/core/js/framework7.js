@@ -1,5 +1,5 @@
 /**
- * Framework7 3.0.0-beta.10
+ * Framework7 3.0.0-beta.11
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 15, 2018
+ * Released on: June 19, 2018
  */
 
 (function (global, factory) {
@@ -2639,7 +2639,7 @@
         try {
           object[key] = null;
         } catch (e) {
-          // no getter for object
+          // no setter for object
         }
         try {
           delete object[key];
@@ -2861,6 +2861,7 @@
   };
 
   var Device = (function Device() {
+    var platform = win.navigator.platform;
     var ua = win.navigator.userAgent;
 
     var device = {
@@ -2868,28 +2869,38 @@
       android: false,
       androidChrome: false,
       desktop: false,
-      windows: false,
+      windowsPhone: false,
       iphone: false,
       iphoneX: false,
       ipod: false,
       ipad: false,
-      cordova: win.cordova || win.phonegap,
-      phonegap: win.cordova || win.phonegap,
+      edge: false,
+      ie: false,
+      macos: false,
+      windows: false,
+      cordova: !!(win.cordova || win.phonegap),
+      phonegap: !!(win.cordova || win.phonegap),
     };
 
-    var windows = ua.match(/(Windows Phone);?[\s\/]+([\d.]+)?/); // eslint-disable-line
+    var windowsPhone = ua.match(/(Windows Phone);?[\s\/]+([\d.]+)?/); // eslint-disable-line
     var android = ua.match(/(Android);?[\s\/]+([\d.]+)?/); // eslint-disable-line
     var ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
     var ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
     var iphone = !ipad && ua.match(/(iPhone\sOS|iOS)\s([\d_]+)/);
     var iphoneX = iphone && win.screen.width === 375 && win.screen.height === 812;
+    var ie = ua.indexOf('MSIE ') >= 0 || ua.indexOf('Trident/') >= 0;
+    var edge = ua.indexOf('Edge/') >= 0;
+    var macos = platform === 'MacIntel';
+    var windows = platform === 'Win32';
 
+    device.ie = ie;
+    device.edge = edge;
 
     // Windows
-    if (windows) {
+    if (windowsPhone) {
       device.os = 'windows';
       device.osVersion = windows[2];
-      device.windows = true;
+      device.windowsPhone = true;
     }
     // Android
     if (android && !windows) {
@@ -2930,6 +2941,10 @@
 
     // Desktop
     device.desktop = !(device.os || device.android || device.webView);
+    if (device.desktop) {
+      device.macos = macos;
+      device.windows = windows;
+    }
 
     // Minimal UI
     if (device.os && device.os === 'ios') {
@@ -7040,9 +7055,11 @@
     }
 
     // History State
-    if (router.params.pushState && options.pushState) {
-      if (backIndex) { History.go(-backIndex); }
-      else { History.back(); }
+    if (!(Device.ie || Device.edge)) {
+      if (router.params.pushState && options.pushState) {
+        if (backIndex) { History.go(-backIndex); }
+        else { History.back(); }
+      }
     }
 
     // Update History
@@ -7062,6 +7079,14 @@
 
     // Current Route
     router.currentRoute = options.route;
+
+    // History State
+    if (Device.ie || Device.edge) {
+      if (router.params.pushState && options.pushState) {
+        if (backIndex) { History.go(-backIndex); }
+        else { History.back(); }
+      }
+    }
 
     // Insert Page
     insertPage();
@@ -7116,7 +7141,7 @@
 
       // Preload previous page
       var preloadPreviousPage = app.theme === 'ios' ? (router.params.preloadPreviousPage || router.params.iosSwipeBack) : router.params.preloadPreviousPage;
-      if (preloadPreviousPage) {
+      if (preloadPreviousPage && router.history[router.history.length - 2]) {
         router.back(router.history[router.history.length - 2], { preload: true });
       }
       if (router.params.pushState) {
@@ -10031,7 +10056,9 @@
   };
   TouchRipple.prototype.onRemove = function onRemove () {
     var ripple = this;
-    ripple.$rippleWaveEl.remove();
+    if (ripple.$rippleWaveEl) {
+      ripple.$rippleWaveEl.remove();
+    }
     Object.keys(ripple).forEach(function (key) {
       ripple[key] = null;
       delete ripple[key];
