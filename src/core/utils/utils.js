@@ -171,7 +171,7 @@ const Utils = {
       try {
         object[key] = null;
       } catch (e) {
-        // no getter for object
+        // no setter for object
       }
       try {
         delete object[key];
