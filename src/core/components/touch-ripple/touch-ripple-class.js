@@ -29,7 +29,9 @@ export default class TouchRipple {
   }
   onRemove() {
     let ripple = this;
-    ripple.$rippleWaveEl.remove();
+    if (ripple.$rippleWaveEl) {
+      ripple.$rippleWaveEl.remove();
+    }
     Object.keys(ripple).forEach((key) => {
       ripple[key] = null;
       delete ripple[key];
