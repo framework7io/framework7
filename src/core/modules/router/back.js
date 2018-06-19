@@ -1,6 +1,7 @@
 import $ from 'dom7';
 import { document } from 'ssr-window';
 import Utils from '../../utils/utils';
+import Device from '../../utils/device';
 import History from '../../utils/history';
 import redirect from './redirect';
 import preRoute from './pre-route';
@@ -198,9 +199,11 @@ function backward(el, backwardOptions) {
   }
 
   // History State
-  if (router.params.pushState && options.pushState) {
-    if (backIndex) History.go(-backIndex);
-    else History.back();
+  if (!(Device.ie || Device.edge)) {
+    if (router.params.pushState && options.pushState) {
+      if (backIndex) History.go(-backIndex);
+      else History.back();
+    }
   }
 
   // Update History
@@ -220,6 +223,14 @@ function backward(el, backwardOptions) {
 
   // Current Route
   router.currentRoute = options.route;
+
+  // History State
+  if (Device.ie || Device.edge) {
+    if (router.params.pushState && options.pushState) {
+      if (backIndex) History.go(-backIndex);
+      else History.back();
+    }
+  }
 
   // Insert Page
   insertPage();
@@ -274,7 +285,7 @@ function backward(el, backwardOptions) {
 
     // Preload previous page
     const preloadPreviousPage = app.theme === 'ios' ? (router.params.preloadPreviousPage || router.params.iosSwipeBack) : router.params.preloadPreviousPage;
-    if (preloadPreviousPage) {
+    if (preloadPreviousPage && router.history[router.history.length - 2]) {
       router.back(router.history[router.history.length - 2], { preload: true });
     }
     if (router.params.pushState) {
