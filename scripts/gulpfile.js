@@ -86,4 +86,3 @@ gulp.task('server-vue', () => {
   server();
   gulp.src('./kitchen-sink/vue/index.html').pipe(gopen({ uri: 'http://localhost:3000/kitchen-sink/vue/' }));
 });
-

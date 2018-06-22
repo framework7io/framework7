@@ -394,12 +394,12 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   const options = loadOptions;
   const { url, content, el, pageName, template, templateUrl, component, componentUrl } = params;
 
-  if (!options.reloadCurrent &&
-    options.route &&
-    options.route.route &&
-    options.route.route.parentPath &&
-    router.currentRoute.route &&
-    router.currentRoute.route.parentPath === options.route.route.parentPath) {
+  if (!options.reloadCurrent
+    && options.route
+    && options.route.route
+    && options.route.route.parentPath
+    && router.currentRoute.route
+    && router.currentRoute.route.parentPath === options.route.route.parentPath) {
     // Do something nested
     if (options.route.url === router.url) {
       return false;
@@ -410,8 +410,8 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
       // Check for equal params name
       Object.keys(options.route.params).forEach((paramName) => {
         if (
-          !(paramName in router.currentRoute.params) ||
-          (router.currentRoute.params[paramName] !== options.route.params[paramName])
+          !(paramName in router.currentRoute.params)
+          || (router.currentRoute.params[paramName] !== options.route.params[paramName])
         ) {
           sameParams = false;
         }
@@ -426,11 +426,11 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
   }
 
   if (
-    options.route &&
-    options.route.url &&
-    router.url === options.route.url &&
-    !(options.reloadCurrent || options.reloadPrevious) &&
-    !router.params.allowDuplicateUrls
+    options.route
+    && options.route.url
+    && router.url === options.route.url
+    && !(options.reloadCurrent || options.reloadPrevious)
+    && !router.params.allowDuplicateUrls
   ) {
     router.allowPageChange = true;
     return false;

@@ -39,16 +39,19 @@ class Gauge extends Framework7Class {
 
     return gauge;
   }
+
   calcRadius() {
     const gauge = this;
     const { size, borderWidth } = gauge.params;
     return (size / 2) - (borderWidth / 2);
   }
+
   calcBorderLength() {
     const gauge = this;
     const radius = gauge.calcRadius();
     return 2 * Math.PI * radius;
   }
+
   render() {
     const gauge = this;
     if (gauge.params.render) return gauge.params.render.call(gauge, gauge);
@@ -149,6 +152,7 @@ class Gauge extends Framework7Class {
       </svg>
     `.trim();
   }
+
   update(newParams = {}) {
     const gauge = this;
     const { params, $gaugeSvgEl } = gauge;
@@ -282,6 +286,7 @@ class Gauge extends Framework7Class {
     }
     return gauge;
   }
+
   init() {
     const gauge = this;
     const $gaugeSvgEl = $(gauge.render()).eq(0);
@@ -293,6 +298,7 @@ class Gauge extends Framework7Class {
     gauge.$el.append($gaugeSvgEl);
     return gauge;
   }
+
   destroy() {
     const gauge = this;
     if (!gauge.$el || gauge.destroyed) return;

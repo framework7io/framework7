@@ -53,9 +53,9 @@ export default {
         if (typeof panel === 'string') {
           side = panel;
           if (
-            (app.params.panel.swipe === 'left' && side === 'right') ||
-            (app.params.panel.swipe === 'right' && side === 'left') ||
-            side === 'both'
+            (app.params.panel.swipe === 'left' && side === 'right')
+            || (app.params.panel.swipe === 'right' && side === 'left')
+            || side === 'both'
           ) {
             side = 'both';
             app.params.panel.swipe = side;

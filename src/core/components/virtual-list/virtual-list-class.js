@@ -146,6 +146,7 @@ class VirtualList extends Framework7Class {
 
     return vl;
   }
+
   setListSize() {
     const vl = this;
     const items = vl.filteredItems || vl.items;
@@ -171,6 +172,7 @@ class VirtualList extends Framework7Class {
       vl.$itemsWrapEl.css({ height: `${vl.listHeight}px` });
     }
   }
+
   render(force, forceScrollTop) {
     const vl = this;
     if (force) vl.lastRepaintY = null;
@@ -310,6 +312,7 @@ class VirtualList extends Framework7Class {
       });
     }
   }
+
   // Filter
   filterItems(indexes, resetScrollTop = true) {
     const vl = this;
@@ -322,6 +325,7 @@ class VirtualList extends Framework7Class {
     }
     vl.update();
   }
+
   resetFilter() {
     const vl = this;
     if (vl.params.showFilteredItemsOnly) {
@@ -332,6 +336,7 @@ class VirtualList extends Framework7Class {
     }
     vl.update();
   }
+
   scrollToItem(index) {
     const vl = this;
     if (index > vl.items.length) return false;
@@ -347,15 +352,18 @@ class VirtualList extends Framework7Class {
     vl.render(true, (listTop + itemTop) - parseInt(vl.$pageContentEl.css('padding-top'), 10));
     return true;
   }
+
   handleScroll() {
     const vl = this;
     vl.render();
   }
+
   // Handle resize event
   isVisible() {
     const vl = this;
     return !!(vl.el.offsetWidth || vl.el.offsetHeight || vl.el.getClientRects().length);
   }
+
   handleResize() {
     const vl = this;
     if (vl.isVisible()) {
@@ -363,6 +371,7 @@ class VirtualList extends Framework7Class {
       vl.render(true);
     }
   }
+
   // Append
   appendItems(items) {
     const vl = this;
@@ -371,10 +380,12 @@ class VirtualList extends Framework7Class {
     }
     vl.update();
   }
+
   appendItem(item) {
     const vl = this;
     vl.appendItems([item]);
   }
+
   // Replace
   replaceAllItems(items) {
     const vl = this;
@@ -383,12 +394,14 @@ class VirtualList extends Framework7Class {
     vl.domCache = {};
     vl.update();
   }
+
   replaceItem(index, item) {
     const vl = this;
     vl.items[index] = item;
     if (vl.params.cache) delete vl.domCache[index];
     vl.update();
   }
+
   // Prepend
   prependItems(items) {
     const vl = this;
@@ -404,6 +417,7 @@ class VirtualList extends Framework7Class {
     }
     vl.update();
   }
+
   prependItem(item) {
     const vl = this;
     vl.prependItems([item]);
@@ -441,6 +455,7 @@ class VirtualList extends Framework7Class {
     }
     vl.update();
   }
+
   // Insert before
   insertItemBefore(index, item) {
     const vl = this;
@@ -466,6 +481,7 @@ class VirtualList extends Framework7Class {
     }
     vl.update();
   }
+
   // Delete
   deleteItems(indexes) {
     const vl = this;
@@ -505,6 +521,7 @@ class VirtualList extends Framework7Class {
     }
     vl.update();
   }
+
   deleteAllItems() {
     const vl = this;
     vl.items = [];
@@ -512,15 +529,18 @@ class VirtualList extends Framework7Class {
     if (vl.params.cache) vl.domCache = {};
     vl.update();
   }
+
   deleteItem(index) {
     const vl = this;
     vl.deleteItems([index]);
   }
+
   // Clear cache
   clearCache() {
     const vl = this;
     vl.domCache = {};
   }
+
   // Update Virtual List
   update(deleteCache) {
     const vl = this;
@@ -530,12 +550,14 @@ class VirtualList extends Framework7Class {
     vl.setListSize();
     vl.render(true);
   }
+
   init() {
     const vl = this;
     vl.attachEvents();
     vl.setListSize();
     vl.render();
   }
+
   destroy() {
     let vl = this;
     vl.detachEvents();

@@ -15,6 +15,7 @@ class Framework7Class {
       });
     }
   }
+
   on(events, handler, priority) {
     const self = this;
     if (typeof handler !== 'function') return self;
@@ -25,6 +26,7 @@ class Framework7Class {
     });
     return self;
   }
+
   once(events, handler, priority) {
     const self = this;
     if (typeof handler !== 'function') return self;
@@ -34,6 +36,7 @@ class Framework7Class {
     }
     return self.on(events, onceHandler, priority);
   }
+
   off(events, handler) {
     const self = this;
     if (!self.eventsListeners) return self;
@@ -50,6 +53,7 @@ class Framework7Class {
     });
     return self;
   }
+
   emit(...args) {
     const self = this;
     if (!self.eventsListeners) return self;
@@ -90,6 +94,7 @@ class Framework7Class {
     }
     return self;
   }
+
   useModulesParams(instanceParams) {
     const instance = this;
     if (!instance.modules) return;
@@ -101,6 +106,7 @@ class Framework7Class {
       }
     });
   }
+
   useModules(modulesParams = {}) {
     const instance = this;
     if (!instance.modules) return;
@@ -131,11 +137,13 @@ class Framework7Class {
       }
     });
   }
+
   static set components(components) {
     const Class = this;
     if (!Class.use) return;
     Class.use(components);
   }
+
   static installModule(module, ...params) {
     const Class = this;
     if (!Class.prototype.modules) Class.prototype.modules = {};
@@ -159,6 +167,7 @@ class Framework7Class {
     }
     return Class;
   }
+
   static use(module, ...params) {
     const Class = this;
     if (Array.isArray(module)) {

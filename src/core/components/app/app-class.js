@@ -82,6 +82,7 @@ class Framework7 extends Framework7Class {
     // Return app instance
     return app;
   }
+
   init() {
     const app = this;
     if (app.initialized) return app;
@@ -135,15 +136,19 @@ class Framework7 extends Framework7Class {
   get t7() {
     return Template7;
   }
+
   static get Dom7() {
     return $;
   }
+
   static get $() {
     return $;
   }
+
   static get Template7() {
     return Template7;
   }
+
   static get Class() {
     return Framework7Class;
   }

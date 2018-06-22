@@ -291,6 +291,7 @@ class Autocomplete extends Framework7Class {
 
     return ac;
   }
+
   positionDropdown() {
     const ac = this;
     const { $inputEl, app, $dropdownEl } = ac;
@@ -333,10 +334,12 @@ class Autocomplete extends Framework7Class {
       [paddingProp]: $listEl.length > 0 && !ac.params.expandInput ? `${paddingValue}px` : '',
     });
   }
+
   focus() {
     const ac = this;
     ac.$el.find('input[type=search]').focus();
   }
+
   source(query) {
     const ac = this;
     if (!ac.params.source) return;
@@ -378,6 +381,7 @@ class Autocomplete extends Framework7Class {
       }
     });
   }
+
   updateValues() {
     const ac = this;
     let valuesHTML = '';
@@ -393,6 +397,7 @@ class Autocomplete extends Framework7Class {
     }
     ac.$el.find('.autocomplete-values ul').html(valuesHTML);
   }
+
   preloaderHide() {
     const ac = this;
     if (ac.params.openIn === 'dropdown' && ac.$dropdownEl) {
@@ -401,6 +406,7 @@ class Autocomplete extends Framework7Class {
       $('.autocomplete-preloader').removeClass('autocomplete-preloader-visible');
     }
   }
+
   preloaderShow() {
     const ac = this;
     if (ac.params.openIn === 'dropdown' && ac.$dropdownEl) {
@@ -409,12 +415,14 @@ class Autocomplete extends Framework7Class {
       $('.autocomplete-preloader').addClass('autocomplete-preloader-visible');
     }
   }
+
   renderPreloader() {
     const ac = this;
     return `
       <div class="autocomplete-preloader preloader ${ac.params.preloaderColor ? `color-${ac.params.preloaderColor}` : ''}">${ac.app.theme === 'md' ? Utils.mdPreloaderContent : ''}</div>
     `.trim();
   }
+
   renderSearchbar() {
     const ac = this;
     if (ac.params.renderSearchbar) return ac.params.renderSearchbar.call(ac);
@@ -432,6 +440,7 @@ class Autocomplete extends Framework7Class {
     `.trim();
     return searchbarHTML;
   }
+
   renderItem(item, index) {
     const ac = this;
     if (ac.params.renderItem) return ac.params.renderItem.call(ac, item, index);
@@ -503,6 +512,7 @@ class Autocomplete extends Framework7Class {
     `.trim();
     return navbarHtml;
   }
+
   renderDropdown() {
     const ac = this;
     if (ac.params.renderDropdown) return ac.params.renderDropdown.call(ac, ac.items);
@@ -518,6 +528,7 @@ class Autocomplete extends Framework7Class {
     `.trim();
     return dropdownHtml;
   }
+
   renderPage() {
     const ac = this;
     if (ac.params.renderPage) return ac.params.renderPage.call(ac, ac.items);
@@ -543,6 +554,7 @@ class Autocomplete extends Framework7Class {
     `.trim();
     return pageHtml;
   }
+
   renderPopup() {
     const ac = this;
     if (ac.params.renderPopup) return ac.params.renderPopup.call(ac, ac.items);
@@ -555,6 +567,7 @@ class Autocomplete extends Framework7Class {
     `.trim();
     return popupHtml;
   }
+
   onOpen(type, el) {
     const ac = this;
     const app = ac.app;
@@ -603,6 +616,7 @@ class Autocomplete extends Framework7Class {
 
     ac.emit('local::open autocompleteOpen', ac);
   }
+
   onOpened() {
     const ac = this;
     if (ac.params.openIn !== 'dropdown' && ac.params.autoFocus) {
@@ -610,6 +624,7 @@ class Autocomplete extends Framework7Class {
     }
     ac.emit('local::opened autocompleteOpened', ac);
   }
+
   onClose() {
     const ac = this;
     if (ac.destroyed) return;
@@ -631,6 +646,7 @@ class Autocomplete extends Framework7Class {
 
     ac.emit('local::close autocompleteClose', ac);
   }
+
   onClosed() {
     const ac = this;
     if (ac.destroyed) return;
@@ -642,6 +658,7 @@ class Autocomplete extends Framework7Class {
 
     ac.emit('local::closed autocompleteClosed', ac);
   }
+
   openPage() {
     const ac = this;
     if (ac.opened) return ac;
@@ -672,6 +689,7 @@ class Autocomplete extends Framework7Class {
     });
     return ac;
   }
+
   openPopup() {
     const ac = this;
     if (ac.opened) return ac;
@@ -709,6 +727,7 @@ class Autocomplete extends Framework7Class {
     }
     return ac;
   }
+
   openDropdown() {
     const ac = this;
 
@@ -732,6 +751,7 @@ class Autocomplete extends Framework7Class {
     ac.onOpen('dropdown', ac.$dropdownEl);
     ac.onOpened('dropdown', ac.$dropdownEl);
   }
+
   open() {
     const ac = this;
     if (ac.opened) return ac;
@@ -742,6 +762,7 @@ class Autocomplete extends Framework7Class {
     }).join('')}`]();
     return ac;
   }
+
   close() {
     const ac = this;
     if (!ac.opened) return ac;
@@ -761,10 +782,12 @@ class Autocomplete extends Framework7Class {
     }
     return ac;
   }
+
   init() {
     const ac = this;
     ac.attachEvents();
   }
+
   destroy() {
     const ac = this;
     ac.emit('local::beforeDestroy autocompleteBeforeDestroy', ac);

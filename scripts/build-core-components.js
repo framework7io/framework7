@@ -4,8 +4,8 @@
 /* eslint no-param-reassign: ["error", { "props": false }] */
 
 const gulp = require('gulp');
-const getConfig = require('./get-core-config.js');
 const modifyFile = require('gulp-modify-file');
+const getConfig = require('./get-core-config.js');
 const getOutput = require('./get-core-output.js');
 
 function build(cb) {

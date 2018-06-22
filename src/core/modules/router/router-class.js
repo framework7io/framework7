@@ -111,6 +111,7 @@ class Router extends Framework7Class {
 
     return router;
   }
+
   animatableNavElements(newNavbarInner, oldNavbarInner) {
     const router = this;
     const dynamicNavbar = router.dynamicNavbar;
@@ -164,6 +165,7 @@ class Router extends Framework7Class {
 
     return { newNavEls, oldNavEls };
   }
+
   animateWithCSS(oldPage, newPage, oldNavbarInner, newNavbarInner, direction, callback) {
     const router = this;
     const dynamicNavbar = router.dynamicNavbar;
@@ -254,6 +256,7 @@ class Router extends Framework7Class {
       router.$el.addClass(routerTransitionClass);
     }
   }
+
   animateWithJS(oldPage, newPage, oldNavbarInner, newNavbarInner, direction, callback) {
     const router = this;
     const dynamicNavbar = router.dynamicNavbar;
@@ -397,6 +400,7 @@ class Router extends Framework7Class {
 
     Utils.nextFrame(render);
   }
+
   animate(...args) {
     // Args: oldPage, newPage, oldNavbarInner, newNavbarInner, direction, callback
     const router = this;
@@ -408,6 +412,7 @@ class Router extends Framework7Class {
       router.animateWithCSS(...args);
     }
   }
+
   removeModal(modalEl) {
     const router = this;
     router.removeEl(modalEl);
@@ -417,14 +422,17 @@ class Router extends Framework7Class {
     const $tabEl = $(tabEl);
     $tabEl.html('');
   }
+
   removeNavbar(el) {
     const router = this;
     router.removeEl(el);
   }
+
   removePage(el) {
     const router = this;
     router.removeEl(el);
   }
+
   removeEl(el) {
     if (!el) return;
     const router = this;
@@ -452,6 +460,7 @@ class Router extends Framework7Class {
       $el.remove();
     }
   }
+
   getPageEl(content) {
     const router = this;
     if (typeof content === 'string') {
@@ -466,6 +475,7 @@ class Router extends Framework7Class {
 
     return router.findElement('.page', router.tempDom);
   }
+
   findElement(stringSelector, container, notStacked) {
     const router = this;
     const view = router.view;
@@ -500,6 +510,7 @@ class Router extends Framework7Class {
     if (found && found.length > 1) return $(found[0]);
     return undefined;
   }
+
   flattenRoutes(routes = this.routes) {
     let flattenedRoutes = [];
     routes.forEach((route) => {
@@ -542,6 +553,7 @@ class Router extends Framework7Class {
       path,
     };
   }
+
   findTabRoute(tabEl) {
     const router = this;
     const $tabEl = $(tabEl);
@@ -551,15 +563,16 @@ class Router extends Framework7Class {
     let foundTabRoute;
     flattenedRoutes.forEach((route) => {
       if (
-        route.parentPath === parentPath &&
-        route.tab &&
-        route.tab.id === tabId
+        route.parentPath === parentPath
+        && route.tab
+        && route.tab.id === tabId
       ) {
         foundTabRoute = route;
       }
     });
     return foundTabRoute;
   }
+
   findRouteByKey(key, value) {
     const router = this;
     const routes = router.routes;
@@ -574,6 +587,7 @@ class Router extends Framework7Class {
     });
     return matchingRoute;
   }
+
   findMatchingRoute(url) {
     if (!url) return undefined;
     const router = this;
@@ -627,6 +641,7 @@ class Router extends Framework7Class {
     });
     return matchingRoute;
   }
+
   removeFromXhrCache(url) {
     const router = this;
     const xhrCache = router.cache.xhr;
@@ -636,6 +651,7 @@ class Router extends Framework7Class {
     }
     if (index !== false) xhrCache.splice(index, 1);
   }
+
   xhrRequest(requestUrl, options) {
     const router = this;
     const params = router.params;
@@ -643,31 +659,31 @@ class Router extends Framework7Class {
     let url = requestUrl;
 
     let hasQuery = url.indexOf('?') >= 0;
-    if (params.passRouteQueryToRequest &&
-      options &&
-      options.route &&
-      options.route.query &&
-      Object.keys(options.route.query).length
+    if (params.passRouteQueryToRequest
+      && options
+      && options.route
+      && options.route.query
+      && Object.keys(options.route.query).length
     ) {
       url += `${hasQuery ? '&' : '?'}${Utils.serializeObject(options.route.query)}`;
       hasQuery = true;
     }
 
-    if (params.passRouteParamsToRequest &&
-      options &&
-      options.route &&
-      options.route.params &&
-      Object.keys(options.route.params).length
+    if (params.passRouteParamsToRequest
+      && options
+      && options.route
+      && options.route.params
+      && Object.keys(options.route.params).length
     ) {
       url += `${hasQuery ? '&' : '?'}${Utils.serializeObject(options.route.params)}`;
       hasQuery = true;
     }
 
-    if (url.indexOf('{{') >= 0 &&
-      options &&
-      options.route &&
-      options.route.params &&
-      Object.keys(options.route.params).length
+    if (url.indexOf('{{') >= 0
+      && options
+      && options.route
+      && options.route.params
+      && Object.keys(options.route.params).length
     ) {
       Object.keys(options.route.params).forEach((paramName) => {
         const regExp = new RegExp(`{{${paramName}}}`, 'g');
@@ -723,12 +739,14 @@ class Router extends Framework7Class {
       });
     });
   }
+
   // Remove theme elements
   removeThemeElements(el) {
     const router = this;
     const theme = router.app.theme;
     $(el).find(`.${theme === 'md' ? 'ios' : 'md'}-only, .if-${theme === 'md' ? 'ios' : 'md'}`).remove();
   }
+
   templateLoader(template, templateUrl, options, resolve, reject) {
     const router = this;
     function compile(t) {
@@ -783,24 +801,28 @@ class Router extends Framework7Class {
       compile(template);
     }
   }
+
   modalTemplateLoader(template, templateUrl, options, resolve, reject) {
     const router = this;
     return router.templateLoader(template, templateUrl, options, (html) => {
       resolve(html);
     }, reject);
   }
+
   tabTemplateLoader(template, templateUrl, options, resolve, reject) {
     const router = this;
     return router.templateLoader(template, templateUrl, options, (html) => {
       resolve(html);
     }, reject);
   }
+
   pageTemplateLoader(template, templateUrl, options, resolve, reject) {
     const router = this;
     return router.templateLoader(template, templateUrl, options, (html, newOptions = {}) => {
       resolve(router.getPageEl(html), newOptions);
     }, reject);
   }
+
   componentLoader(component, componentUrl, options = {}, resolve, reject) {
     const router = this;
     const url = typeof component === 'string' ? component : componentUrl;
@@ -854,24 +876,28 @@ class Router extends Framework7Class {
       compile(component);
     }
   }
+
   modalComponentLoader(rootEl, component, componentUrl, options, resolve, reject) {
     const router = this;
     router.componentLoader(component, componentUrl, options, (el) => {
       resolve(el);
     }, reject);
   }
+
   tabComponentLoader(tabEl, component, componentUrl, options, resolve, reject) {
     const router = this;
     router.componentLoader(component, componentUrl, options, (el) => {
       resolve(el);
     }, reject);
   }
+
   pageComponentLoader(routerEl, component, componentUrl, options, resolve, reject) {
     const router = this;
     router.componentLoader(component, componentUrl, options, (el, newOptions = {}) => {
       resolve(el, newOptions);
     }, reject);
   }
+
   getPageData(pageEl, navbarEl, from, to, route = {}, pageFromEl) {
     const router = this;
     const $pageEl = $(pageEl);
@@ -916,6 +942,7 @@ class Router extends Framework7Class {
     $pageEl[0].f7Page = page;
     return page;
   }
+
   // Callbacks
   pageCallback(callback, pageEl, navbarEl, from, to, options = {}, pageFromEl) {
     if (!pageEl) return;
@@ -993,8 +1020,8 @@ class Router extends Framework7Class {
           // eslint-disable-next-line
           $pageContent = $pageContent.filter((pageContentIndex, pageContentEl) => {
             return (
-              $(pageContentEl).parents('.tab:not(.tab-active)').length === 0 &&
-              !$(pageContentEl).is('.tab:not(.tab-active)')
+              $(pageContentEl).parents('.tab:not(.tab-active)').length === 0
+              && !$(pageContentEl).is('.tab:not(.tab-active)')
             );
           });
         }
@@ -1015,8 +1042,8 @@ class Router extends Framework7Class {
         // eslint-disable-next-line
         $pageContent = $pageContent.filter((pageContentIndex, pageContentEl) => {
           return (
-            $(pageContentEl).parents('.tab:not(.tab-active)').length === 0 &&
-            !$(pageContentEl).is('.tab:not(.tab-active)')
+            $(pageContentEl).parents('.tab:not(.tab-active)').length === 0
+            && !$(pageContentEl).is('.tab:not(.tab-active)')
           );
         });
       }
@@ -1035,6 +1062,7 @@ class Router extends Framework7Class {
       $pageEl[0].f7Page = null;
     }
   }
+
   saveHistory() {
     const router = this;
     router.view.history = router.history;
@@ -1042,6 +1070,7 @@ class Router extends Framework7Class {
       window.localStorage[`f7router-${router.view.id}-history`] = JSON.stringify(router.history);
     }
   }
+
   restoreHistory() {
     const router = this;
     if (router.params.pushState && window.localStorage[`f7router-${router.view.id}-history`]) {
@@ -1049,12 +1078,14 @@ class Router extends Framework7Class {
       router.view.history = router.history;
     }
   }
+
   clearHistory() {
     const router = this;
     router.history = [];
     if (router.view) router.view.history = [];
     router.saveHistory();
   }
+
   init() {
     const router = this;
     const { app, view } = router;
@@ -1062,8 +1093,8 @@ class Router extends Framework7Class {
     // Init Swipeback
     if (process.env.TARGET !== 'desktop') {
       if (
-        (view && router.params.iosSwipeBack && app.theme === 'ios') ||
-        (view && router.params.mdSwipeBack && app.theme === 'md')
+        (view && router.params.iosSwipeBack && app.theme === 'ios')
+        || (view && router.params.mdSwipeBack && app.theme === 'md')
       ) {
         SwipeBack(router);
       }
@@ -1231,6 +1262,7 @@ class Router extends Framework7Class {
     }
     router.emit('local::init routerInit', router);
   }
+
   destroy() {
     let router = this;
 

@@ -144,10 +144,12 @@ const Input = {
     if (contentScrollTop > min) {
       $scrollableEl.scrollTop(centered ? centeredPosition : min, duration);
       return true;
-    } else if (contentScrollTop < max) {
+    }
+    if (contentScrollTop < max) {
       $scrollableEl.scrollTop(centered ? centeredPosition : max, duration);
       return true;
-    } else if (force) {
+    }
+    if (force) {
       $scrollableEl.scrollTop(centered ? centeredPosition : max, duration);
     }
     return false;

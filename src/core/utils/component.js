@@ -1,7 +1,7 @@
 import { window, document } from 'ssr-window';
 import $ from 'dom7';
 import Template7 from 'template7';
-import Utils from '../utils/utils';
+import Utils from './utils';
 
 const tempDom = document.createElement('div');
 

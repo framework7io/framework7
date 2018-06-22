@@ -197,12 +197,12 @@ const Utils = {
   },
   requestAnimationFrame(callback) {
     if (window.requestAnimationFrame) return window.requestAnimationFrame(callback);
-    else if (window.webkitRequestAnimationFrame) return window.webkitRequestAnimationFrame(callback);
+    if (window.webkitRequestAnimationFrame) return window.webkitRequestAnimationFrame(callback);
     return window.setTimeout(callback, 1000 / 60);
   },
   cancelAnimationFrame(id) {
     if (window.cancelAnimationFrame) return window.cancelAnimationFrame(id);
-    else if (window.webkitCancelAnimationFrame) return window.webkitCancelAnimationFrame(id);
+    if (window.webkitCancelAnimationFrame) return window.webkitCancelAnimationFrame(id);
     return window.clearTimeout(id);
   },
   removeDiacritics(str) {

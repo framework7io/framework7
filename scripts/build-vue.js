@@ -5,7 +5,6 @@
 
 const gulp = require('gulp');
 const fs = require('fs');
-const bannerVue = require('./banner-vue');
 
 const rollup = require('rollup');
 const buble = require('rollup-plugin-buble');
@@ -15,6 +14,7 @@ const header = require('gulp-header');
 const uglify = require('gulp-uglify');
 const sourcemaps = require('gulp-sourcemaps');
 const rename = require('gulp-rename');
+const bannerVue = require('./banner-vue');
 
 function esm({ banner, componentImports, componentExports }) {
   return `

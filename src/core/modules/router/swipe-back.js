@@ -248,8 +248,8 @@ function SwipeBack(r) {
     let pageChanged = false;
     // Swipe back to previous page
     if (
-      (timeDiff < 300 && touchesDiff > 10) ||
-      (timeDiff >= 300 && touchesDiff > viewContainerWidth / 2)
+      (timeDiff < 300 && touchesDiff > 10)
+      || (timeDiff >= 300 && touchesDiff > viewContainerWidth / 2)
     ) {
       currentPage.removeClass('page-current').addClass(`page-next${app.theme === 'md' ? ' page-next-on-right' : ''}`);
       previousPage.removeClass('page-previous').addClass('page-current').removeAttr('aria-hidden');

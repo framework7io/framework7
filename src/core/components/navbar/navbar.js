@@ -13,10 +13,10 @@ const Navbar = {
       return;
     }
     if (
-      $el.hasClass('stacked') ||
-      $el.parents('.stacked').length > 0 ||
-      $el.parents('.tab:not(.tab-active)').length > 0 ||
-      $el.parents('.popup:not(.modal-in)').length > 0
+      $el.hasClass('stacked')
+      || $el.parents('.stacked').length > 0
+      || $el.parents('.tab:not(.tab-active)').length > 0
+      || $el.parents('.popup:not(.modal-in)').length > 0
     ) {
       return;
     }
@@ -301,17 +301,17 @@ export default {
         app.navbar.size($navbarEl);
       }
       if (
-        app.params.navbar.hideOnPageScroll ||
-        page.$el.find('.hide-navbar-on-scroll').length ||
-        page.$el.hasClass('hide-navbar-on-scroll') ||
-        page.$el.find('.hide-bars-on-scroll').length ||
-        page.$el.hasClass('hide-bars-on-scroll')
+        app.params.navbar.hideOnPageScroll
+        || page.$el.find('.hide-navbar-on-scroll').length
+        || page.$el.hasClass('hide-navbar-on-scroll')
+        || page.$el.find('.hide-bars-on-scroll').length
+        || page.$el.hasClass('hide-bars-on-scroll')
       ) {
         if (
-          page.$el.find('.keep-navbar-on-scroll').length ||
-          page.$el.hasClass('keep-navbar-on-scroll') ||
-          page.$el.find('.keep-bars-on-scroll').length ||
-          page.$el.hasClass('keep-bars-on-scroll')
+          page.$el.find('.keep-navbar-on-scroll').length
+          || page.$el.hasClass('keep-navbar-on-scroll')
+          || page.$el.find('.keep-bars-on-scroll').length
+          || page.$el.hasClass('keep-bars-on-scroll')
         ) {
           return;
         }

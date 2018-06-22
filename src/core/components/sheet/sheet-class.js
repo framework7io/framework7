@@ -84,10 +84,10 @@ class Sheet extends Modal {
       const $target = $(target);
       if ($target.closest(sheet.el).length === 0) {
         if (
-          sheet.params.closeByBackdropClick &&
-          sheet.params.backdrop &&
-          sheet.backdropEl &&
-          sheet.backdropEl === target
+          sheet.params.closeByBackdropClick
+          && sheet.params.backdrop
+          && sheet.backdropEl
+          && sheet.backdropEl === target
         ) {
           sheet.close();
         } else if (sheet.params.closeByOutsideClick) {

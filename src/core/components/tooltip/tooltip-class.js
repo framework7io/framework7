@@ -51,8 +51,8 @@ class Tooltip extends Framework7Class {
       const x = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
       const y = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
       const distance = (
-        ((x - touchesStart.x) ** 2) +
-        ((y - touchesStart.y) ** 2)
+        ((x - touchesStart.x) ** 2)
+        + ((y - touchesStart.y) ** 2)
       ) ** 0.5;
       if (distance > 50) {
         isTouched = false;
@@ -108,6 +108,7 @@ class Tooltip extends Framework7Class {
 
     return tooltip;
   }
+
   position(targetEl) {
     const tooltip = this;
     const { $tooltipEl, app } = tooltip;
@@ -174,6 +175,7 @@ class Tooltip extends Framework7Class {
     // Apply Styles
     $tooltipEl.css({ top: `${top}px`, left: `${left}px` });
   }
+
   show(aroundEl) {
     const tooltip = this;
     const { app, $tooltipEl, $el } = tooltip;
@@ -191,6 +193,7 @@ class Tooltip extends Framework7Class {
     $tooltipEl.removeClass('tooltip-out').addClass('tooltip-in');
     return tooltip;
   }
+
   hide() {
     const tooltip = this;
     const { $tooltipEl, $el } = tooltip;
@@ -202,6 +205,7 @@ class Tooltip extends Framework7Class {
     $tooltipEl.addClass('tooltip-out').removeClass('tooltip-in');
     return tooltip;
   }
+
   render() {
     const tooltip = this;
     if (tooltip.params.render) return tooltip.params.render.call(tooltip, tooltip);
@@ -212,6 +216,7 @@ class Tooltip extends Framework7Class {
       </div>
     `.trim();
   }
+
   setText(newText) {
     const tooltip = this;
     if (typeof newText === 'undefined') {
@@ -227,10 +232,12 @@ class Tooltip extends Framework7Class {
     }
     return tooltip;
   }
+
   init() {
     const tooltip = this;
     tooltip.attachEvents();
   }
+
   destroy() {
     const tooltip = this;
     if (!tooltip.$el || tooltip.destroyed) return;

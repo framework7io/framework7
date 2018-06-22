@@ -217,8 +217,8 @@ class Calendar extends Framework7Class {
         }
         if (calendar.params.closeOnSelect) {
           if (
-            (calendar.params.rangePicker && calendar.value.length === 2) ||
-            !calendar.params.rangePicker
+            (calendar.params.rangePicker && calendar.value.length === 2)
+            || !calendar.params.rangePicker
           ) {
             calendar.close();
           }
@@ -279,6 +279,7 @@ class Calendar extends Framework7Class {
     const d = new Date(date);
     return new Date(d.getFullYear(), d.getMonth(), d.getDate());
   }
+
   normalizeValues(values) {
     const calendar = this;
     let newValues = [];
@@ -287,11 +288,13 @@ class Calendar extends Framework7Class {
     }
     return newValues;
   }
+
   initInput() {
     const calendar = this;
     if (!calendar.$inputEl) return;
     if (calendar.params.inputReadOnly) calendar.$inputEl.prop('readOnly', true);
   }
+
   isPopover() {
     const calendar = this;
     const { app, modal, params } = calendar;
@@ -300,14 +303,16 @@ class Calendar extends Framework7Class {
 
     if (!calendar.inline && calendar.inputEl) {
       if (params.openIn === 'popover') return true;
-      else if (app.device.ios) {
+      if (app.device.ios) {
         return !!app.device.ipad;
-      } else if (app.width >= 768) {
+      }
+      if (app.width >= 768) {
         return true;
       }
     }
     return false;
   }
+
   formatDate(d) {
     const calendar = this;
     const date = new Date(d);
@@ -330,6 +335,7 @@ class Calendar extends Framework7Class {
       .replace(/DD/g, dayNames[weekDay])
       .replace(/D(\W+)/g, `${dayNamesShort[weekDay]}$1`);
   }
+
   formatValue() {
     const calendar = this;
     const { value } = calendar;
@@ -340,6 +346,7 @@ class Calendar extends Framework7Class {
       .map(v => calendar.formatDate(v))
       .join(calendar.params.rangePicker ? ' - ' : ', ');
   }
+
   addValue(newValue) {
     const calendar = this;
     const { multiple, rangePicker } = calendar.params;
@@ -371,15 +378,18 @@ class Calendar extends Framework7Class {
       calendar.updateValue();
     }
   }
+
   setValue(values) {
     const calendar = this;
     calendar.value = values;
     calendar.updateValue();
   }
+
   getValue() {
     const calendar = this;
     return calendar.value;
   }
+
   updateValue(onlyHeader) {
     const calendar = this;
     const {
@@ -421,6 +431,7 @@ class Calendar extends Framework7Class {
       }
     }
   }
+
   updateCurrentMonthYear(dir) {
     const calendar = this;
     const { $months, $el, params } = calendar;
@@ -434,6 +445,7 @@ class Calendar extends Framework7Class {
     $el.find('.current-month-value').text(params.monthNames[calendar.currentMonth]);
     $el.find('.current-year-value').text(calendar.currentYear);
   }
+
   update() {
     const calendar = this;
     const { currentYear, currentMonth, $wrapperEl } = calendar;
@@ -456,6 +468,7 @@ class Calendar extends Framework7Class {
       );
     });
   }
+
   onMonthChangeStart(dir) {
     const calendar = this;
     const { $months, currentYear, currentMonth } = calendar;
@@ -473,6 +486,7 @@ class Calendar extends Framework7Class {
       currentMonth
     );
   }
+
   onMonthChangeEnd(dir, rebuildBoth) {
     const calendar = this;
     const { currentYear, currentMonth, $wrapperEl, monthsTranslate } = calendar;
@@ -516,6 +530,7 @@ class Calendar extends Framework7Class {
       currentMonth
     );
   }
+
   setMonthsTranslate(translate) {
     const calendar = this;
     const { $months, isHorizontal: isH, inverter } = calendar;
@@ -538,6 +553,7 @@ class Calendar extends Framework7Class {
       .transform(`translate3d(${isH ? nextMonthTranslate : 0}%, ${isH ? 0 : nextMonthTranslate}%, 0)`)
       .addClass('calendar-month-next');
   }
+
   nextMonth(transition) {
     const calendar = this;
     const { params, $wrapperEl, inverter, isHorizontal: isH } = calendar;
@@ -583,6 +599,7 @@ class Calendar extends Framework7Class {
       calendar.onMonthChangeEnd('next');
     }
   }
+
   prevMonth(transition) {
     const calendar = this;
     const { params, $wrapperEl, inverter, isHorizontal: isH } = calendar;
@@ -631,6 +648,7 @@ class Calendar extends Framework7Class {
       calendar.onMonthChangeEnd('prev');
     }
   }
+
   resetMonth(transition = '') {
     const calendar = this;
     const { $wrapperEl, inverter, isHorizontal: isH, monthsTranslate } = calendar;
@@ -721,10 +739,12 @@ class Calendar extends Framework7Class {
       calendar.onMonthChangeEnd(dir);
     }
   }
+
   nextYear() {
     const calendar = this;
     calendar.setYearMonth(calendar.currentYear + 1);
   }
+
   prevYear() {
     const calendar = this;
     calendar.setYearMonth(calendar.currentYear - 1);
@@ -778,6 +798,7 @@ class Calendar extends Framework7Class {
     const d = new Date(date);
     return new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
   }
+
   renderMonths(date) {
     const calendar = this;
     if (calendar.params.renderMonths) {
@@ -791,6 +812,7 @@ class Calendar extends Framework7Class {
       </div>
     `.trim();
   }
+
   renderMonth(d, offset) {
     const calendar = this;
     const { params, value } = calendar;
@@ -923,6 +945,7 @@ class Calendar extends Framework7Class {
     monthHtml = `<div class="calendar-month" data-year="${year}" data-month="${month}">${monthHtml}</div>`;
     return monthHtml;
   }
+
   renderWeekHeader() {
     const calendar = this;
     if (calendar.params.renderWeekHeader) {
@@ -943,6 +966,7 @@ class Calendar extends Framework7Class {
       </div>
     `.trim();
   }
+
   renderMonthSelector() {
     const calendar = this;
     const app = calendar.app;
@@ -970,6 +994,7 @@ class Calendar extends Framework7Class {
       </div>
     `.trim();
   }
+
   renderYearSelector() {
     const calendar = this;
     const app = calendar.app;
@@ -997,6 +1022,7 @@ class Calendar extends Framework7Class {
       </div>
     `.trim();
   }
+
   renderHeader() {
     const calendar = this;
     if (calendar.params.renderHeader) {
@@ -1008,6 +1034,7 @@ class Calendar extends Framework7Class {
       </div>
     `.trim();
   }
+
   renderFooter() {
     const calendar = this;
     const app = calendar.app;
@@ -1020,6 +1047,7 @@ class Calendar extends Framework7Class {
       </div>
     `.trim();
   }
+
   renderToolbar() {
     const calendar = this;
     if (calendar.params.renderToolbar) {
@@ -1054,6 +1082,7 @@ class Calendar extends Framework7Class {
 
     return inlineHtml;
   }
+
   renderCustomModal() {
     const calendar = this;
     const { cssClass, toolbar, header, footer, rangePicker, weekHeader } = calendar.params;
@@ -1073,6 +1102,7 @@ class Calendar extends Framework7Class {
 
     return sheetHtml;
   }
+
   renderSheet() {
     const calendar = this;
     const { cssClass, toolbar, header, footer, rangePicker, weekHeader } = calendar.params;
@@ -1092,6 +1122,7 @@ class Calendar extends Framework7Class {
 
     return sheetHtml;
   }
+
   renderPopover() {
     const calendar = this;
     const { cssClass, toolbar, header, footer, rangePicker, weekHeader } = calendar.params;
@@ -1115,6 +1146,7 @@ class Calendar extends Framework7Class {
 
     return popoverHtml;
   }
+
   render() {
     const calendar = this;
     const { params } = calendar;
@@ -1124,11 +1156,12 @@ class Calendar extends Framework7Class {
       if (modalType === 'auto') modalType = calendar.isPopover() ? 'popover' : 'sheet';
 
       if (modalType === 'popover') return calendar.renderPopover();
-      else if (modalType === 'sheet') return calendar.renderSheet();
+      if (modalType === 'sheet') return calendar.renderSheet();
       return calendar.renderCustomModal();
     }
     return calendar.renderInline();
   }
+
   onOpen() {
     const calendar = this;
     const { initialized, $el, app, $inputEl, inline, value, params } = calendar;
@@ -1184,6 +1217,7 @@ class Calendar extends Framework7Class {
     }
     calendar.emit('local::open calendarOpen', calendar);
   }
+
   onOpened() {
     const calendar = this;
     calendar.opening = false;
@@ -1195,6 +1229,7 @@ class Calendar extends Framework7Class {
     }
     calendar.emit('local::opened calendarOpened', calendar);
   }
+
   onClose() {
     const calendar = this;
     const app = calendar.app;
@@ -1216,6 +1251,7 @@ class Calendar extends Framework7Class {
     }
     calendar.emit('local::close calendarClose', calendar);
   }
+
   onClosed() {
     const calendar = this;
     calendar.opened = false;
@@ -1239,6 +1275,7 @@ class Calendar extends Framework7Class {
     }
     calendar.emit('local::closed calendarClosed', calendar);
   }
+
   open() {
     const calendar = this;
     const { app, opened, inline, $inputEl, params } = calendar;
@@ -1298,6 +1335,7 @@ class Calendar extends Framework7Class {
       calendar.modal.open();
     }
   }
+
   close() {
     const calendar = this;
     const { opened, inline } = calendar;
@@ -1313,6 +1351,7 @@ class Calendar extends Framework7Class {
       calendar.modal.close();
     }
   }
+
   init() {
     const calendar = this;
 
@@ -1337,6 +1376,7 @@ class Calendar extends Framework7Class {
     }
     calendar.emit('local::init calendarInit', calendar);
   }
+
   destroy() {
     const calendar = this;
     if (calendar.destroyed) return;

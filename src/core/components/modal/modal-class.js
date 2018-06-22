@@ -29,6 +29,7 @@ class Modal extends Framework7Class {
 
     return this;
   }
+
   onOpen() {
     const modal = this;
     modal.opened = true;
@@ -37,11 +38,13 @@ class Modal extends Framework7Class {
     modal.$el.trigger(`modal:open ${modal.type.toLowerCase()}:open`, modal);
     modal.emit(`local::open modalOpen ${modal.type}Open`, modal);
   }
+
   onOpened() {
     const modal = this;
     modal.$el.trigger(`modal:opened ${modal.type.toLowerCase()}:opened`, modal);
     modal.emit(`local::opened modalOpened ${modal.type}Opened`, modal);
   }
+
   onClose() {
     const modal = this;
     modal.opened = false;
@@ -51,6 +54,7 @@ class Modal extends Framework7Class {
     modal.$el.trigger(`modal:close ${modal.type.toLowerCase()}:close`, modal);
     modal.emit(`local::close modalClose ${modal.type}Close`, modal);
   }
+
   onClosed() {
     const modal = this;
     if (!modal.type || !modal.$el) return;
@@ -59,6 +63,7 @@ class Modal extends Framework7Class {
     modal.$el.trigger(`modal:closed ${modal.type.toLowerCase()}:closed`, modal);
     modal.emit(`local::closed modalClosed ${modal.type}Closed`, modal);
   }
+
   open(animateModal) {
     const modal = this;
     const app = modal.app;
@@ -150,6 +155,7 @@ class Modal extends Framework7Class {
 
     return modal;
   }
+
   close(animateModal) {
     const modal = this;
     const $el = modal.$el;
@@ -210,6 +216,7 @@ class Modal extends Framework7Class {
 
     return modal;
   }
+
   destroy() {
     const modal = this;
     if (modal.destroyed) return;

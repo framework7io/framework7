@@ -208,20 +208,25 @@ class Stepper extends Framework7Class {
 
     return stepper;
   }
+
   minus() {
     return this.decrement();
   }
+
   plus() {
     return this.increment();
   }
+
   decrement() {
     const stepper = this;
     return stepper.setValue(stepper.value - stepper.step);
   }
+
   increment() {
     const stepper = this;
     return stepper.setValue(stepper.value + stepper.step);
   }
+
   setValue(newValue, forceUpdate) {
     const stepper = this;
     const { step, min, max } = stepper;
@@ -256,14 +261,17 @@ class Stepper extends Framework7Class {
     stepper.emit('local::change stepperChange', stepper, stepper.value);
     return stepper;
   }
+
   getValue() {
     return this.value;
   }
+
   formatValue(value) {
     const stepper = this;
     if (!stepper.params.formatValue) return value;
     return stepper.params.formatValue.call(stepper, value);
   }
+
   init() {
     const stepper = this;
     stepper.attachEvents();
@@ -273,6 +281,7 @@ class Stepper extends Framework7Class {
     }
     return stepper;
   }
+
   destroy() {
     let stepper = this;
     stepper.$el.trigger('stepper:beforedestroy', stepper);
