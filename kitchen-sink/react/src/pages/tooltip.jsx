@@ -16,7 +16,7 @@ export default class extends React.Component {
           </NavRight>
         </Navbar>
         <Block strong>
-          <p>Tooltips display informative text when users hover over, focus on, or tap an element.</p>
+          <p>Tooltips display informative text when users hover over, or tap an target element..</p>
           <p>Tooltip can be positioned around any element with any HTML content inside.</p>
         </Block>
         <Block strong>
@@ -36,11 +36,11 @@ export default class extends React.Component {
     const self = this;
     const app = self.$f7;
     self.iconTooltip = app.tooltip.create({
-      el: '.icon-tooltip',
+      targetEl: '.icon-tooltip',
       text: 'Tooltip text',
     });
     self.navbarTooltip = app.tooltip.create({
-      el: '.navbar-tooltip',
+      targetEl: '.navbar-tooltip',
       text: 'One more tooltip<br>with more text<br><em>and custom formatting</em>'
     });
   }
