@@ -191,7 +191,7 @@ class F7Link extends React.Component {
 
       if (tooltip) {
         self.f7Tooltip = f7.tooltip.create({
-          el: self.refs.el,
+          targetEl: self.refs.el,
           text: tooltip
         });
       }

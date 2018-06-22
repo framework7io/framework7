@@ -56,11 +56,11 @@ class Popup extends Modal {
       const $target = $(target);
       if ($target.closest(popup.el).length === 0) {
         if (
-          popup.params &&
-          popup.params.closeByBackdropClick &&
-          popup.params.backdrop &&
-          popup.backdropEl &&
-          popup.backdropEl === target
+          popup.params
+          && popup.params.closeByBackdropClick
+          && popup.params.backdrop
+          && popup.backdropEl
+          && popup.backdropEl === target
         ) {
           popup.close();
         }

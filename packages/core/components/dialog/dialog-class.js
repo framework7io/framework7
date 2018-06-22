@@ -107,10 +107,10 @@ class Dialog extends Modal {
           $(buttonEl).on('click', buttonOnClick);
         });
         if (
-          addKeyboardHander &&
-          !app.device.ios &&
-          !app.device.android &&
-          !app.device.cordova
+          addKeyboardHander
+          && !app.device.ios
+          && !app.device.android
+          && !app.device.cordova
         ) {
           $(document).on('keydown', onKeyPress);
         }
@@ -120,10 +120,10 @@ class Dialog extends Modal {
           $(buttonEl).off('click', buttonOnClick);
         });
         if (
-          addKeyboardHander &&
-          !app.device.ios &&
-          !app.device.android &&
-          !app.device.cordova
+          addKeyboardHander
+          && !app.device.ios
+          && !app.device.android
+          && !app.device.cordova
         ) {
           $(document).off('keydown', onKeyPress);
         }
@@ -172,9 +172,9 @@ class Dialog extends Modal {
       const $target = $(target);
       if ($target.closest(dialog.el).length === 0) {
         if (
-          dialog.params.closeByBackdropClick &&
-          dialog.backdropEl &&
-          dialog.backdropEl === target
+          dialog.params.closeByBackdropClick
+          && dialog.backdropEl
+          && dialog.backdropEl === target
         ) {
           dialog.close();
         }

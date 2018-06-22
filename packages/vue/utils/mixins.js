@@ -156,25 +156,25 @@ const Mixins = {
     } = props;
 
     return {
-      'data-searchbar': (Utils.isStringProp(searchbarEnable) && searchbarEnable) ||
-                        (Utils.isStringProp(searchbarDisable) && searchbarDisable) ||
-                        (Utils.isStringProp(searchbarClear) && searchbarClear) ||
-                        (Utils.isStringProp(searchbarToggle) && searchbarToggle) || undefined,
-      'data-panel': (Utils.isStringProp(panelOpen) && panelOpen) ||
-                    (Utils.isStringProp(panelClose) && panelClose) || undefined,
-      'data-popup': (Utils.isStringProp(popupOpen) && popupOpen) ||
-                    (Utils.isStringProp(popupClose) && popupClose) || undefined,
-      'data-actions': (Utils.isStringProp(actionsOpen) && actionsOpen) ||
-                    (Utils.isStringProp(actionsClose) && actionsClose) || undefined,
-      'data-popover': (Utils.isStringProp(popoverOpen) && popoverOpen) ||
-                      (Utils.isStringProp(popoverClose) && popoverClose) || undefined,
-      'data-sheet': (Utils.isStringProp(sheetOpen) && sheetOpen) ||
-                    (Utils.isStringProp(sheetClose) && sheetClose) || undefined,
-      'data-login-screen': (Utils.isStringProp(loginScreenOpen) && loginScreenOpen) ||
-                           (Utils.isStringProp(loginScreenClose) && loginScreenClose) || undefined,
-      'data-sortable': (Utils.isStringProp(sortableEnable) && sortableEnable) ||
-                       (Utils.isStringProp(sortableDisable) && sortableDisable) ||
-                       (Utils.isStringProp(sortableToggle) && sortableToggle) || undefined,
+      'data-searchbar': (Utils.isStringProp(searchbarEnable) && searchbarEnable)
+                        || (Utils.isStringProp(searchbarDisable) && searchbarDisable)
+                        || (Utils.isStringProp(searchbarClear) && searchbarClear)
+                        || (Utils.isStringProp(searchbarToggle) && searchbarToggle) || undefined,
+      'data-panel': (Utils.isStringProp(panelOpen) && panelOpen)
+                    || (Utils.isStringProp(panelClose) && panelClose) || undefined,
+      'data-popup': (Utils.isStringProp(popupOpen) && popupOpen)
+                    || (Utils.isStringProp(popupClose) && popupClose) || undefined,
+      'data-actions': (Utils.isStringProp(actionsOpen) && actionsOpen)
+                    || (Utils.isStringProp(actionsClose) && actionsClose) || undefined,
+      'data-popover': (Utils.isStringProp(popoverOpen) && popoverOpen)
+                      || (Utils.isStringProp(popoverClose) && popoverClose) || undefined,
+      'data-sheet': (Utils.isStringProp(sheetOpen) && sheetOpen)
+                    || (Utils.isStringProp(sheetClose) && sheetClose) || undefined,
+      'data-login-screen': (Utils.isStringProp(loginScreenOpen) && loginScreenOpen)
+                           || (Utils.isStringProp(loginScreenClose) && loginScreenClose) || undefined,
+      'data-sortable': (Utils.isStringProp(sortableEnable) && sortableEnable)
+                       || (Utils.isStringProp(sortableDisable) && sortableDisable)
+                       || (Utils.isStringProp(sortableToggle) && sortableToggle) || undefined,
     };
   },
   linkActionsClasses(props) {

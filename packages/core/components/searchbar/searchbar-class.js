@@ -181,10 +181,10 @@ class Searchbar extends FrameworkClass {
       const value = sb.$inputEl.val().trim();
       if (
         (
-          (sb.$searchContainer && sb.$searchContainer.length > 0) &&
-          (sb.params.searchIn || sb.isVirtualList || sb.params.searchIn === sb.params.searchItem)
-        ) ||
-        sb.params.customSearch
+          (sb.$searchContainer && sb.$searchContainer.length > 0)
+          && (sb.params.searchIn || sb.isVirtualList || sb.params.searchIn === sb.params.searchItem)
+        )
+        || sb.params.customSearch
       ) {
         sb.search(value, true);
       }
@@ -251,6 +251,7 @@ class Searchbar extends FrameworkClass {
 
     return sb;
   }
+
   clear(e) {
     const sb = this;
     if (!sb.query && e && $(e.target).hasClass('searchbar-clear')) {
@@ -263,6 +264,7 @@ class Searchbar extends FrameworkClass {
     sb.emit('local::clear searchbarClear', sb, previousQuery);
     return sb;
   }
+
   setDisableButtonMargin() {
     const sb = this;
     if (sb.expandable) return;
@@ -274,6 +276,7 @@ class Searchbar extends FrameworkClass {
     sb.$disableButtonEl.transition('');
     sb.disableButtonHasMargin = true;
   }
+
   enable(setFocus) {
     const sb = this;
     if (sb.enabled) return sb;
@@ -324,6 +327,7 @@ class Searchbar extends FrameworkClass {
     }
     return sb;
   }
+
   disable() {
     const sb = this;
     if (!sb.enabled) return sb;
@@ -349,12 +353,14 @@ class Searchbar extends FrameworkClass {
     sb.emit('local::disable searchbarDisable', sb);
     return sb;
   }
+
   toggle() {
     const sb = this;
     if (sb.enabled) sb.disable();
     else sb.enable(true);
     return sb;
   }
+
   backdropShow() {
     const sb = this;
     if (sb.$backdropEl) {
@@ -362,6 +368,7 @@ class Searchbar extends FrameworkClass {
     }
     return sb;
   }
+
   backdropHide() {
     const sb = this;
     if (sb.$backdropEl) {
@@ -369,6 +376,7 @@ class Searchbar extends FrameworkClass {
     }
     return sb;
   }
+
   search(query, internal) {
     const sb = this;
     if (sb.previousQuery && query.trim() === sb.previousQuery) return sb;
@@ -394,8 +402,8 @@ class Searchbar extends FrameworkClass {
     }
     // Add active/inactive classes on overlay
     if (
-      ($searchContainer && $searchContainer.length && $el.hasClass('searchbar-enabled')) ||
-      (sb.params.customSearch && $el.hasClass('searchbar-enabled'))
+      ($searchContainer && $searchContainer.length && $el.hasClass('searchbar-enabled'))
+      || (sb.params.customSearch && $el.hasClass('searchbar-enabled'))
     ) {
       if (query.length === 0) {
         sb.backdropShow();
@@ -507,10 +515,12 @@ class Searchbar extends FrameworkClass {
 
     return sb;
   }
+
   init() {
     const sb = this;
     sb.attachEvents();
   }
+
   destroy() {
     const sb = this;
     sb.emit('local::beforeDestroy searchbarBeforeDestroy', sb);

@@ -111,14 +111,13 @@ function swipePanel(panel) {
       }
 
       if (
-        (side === 'left' &&
-          (
+        (side === 'left'
+          && (
             direction === 'to-left' && !$el.hasClass('panel-active')
           )
         )
-        ||
-        (side === 'right' &&
-          (
+        || (side === 'right'
+          && (
             direction === 'to-right' && !$el.hasClass('panel-active')
           )
         )
@@ -234,8 +233,7 @@ function swipePanel(panel) {
         action = 'reset';
       } else if (
         (timeDiff < 300 && Math.abs(translate) > 0)
-        ||
-        (timeDiff >= 300 && (Math.abs(translate) >= panelWidth / 2))
+        || (timeDiff >= 300 && (Math.abs(translate) >= panelWidth / 2))
       ) {
         action = 'swap';
       } else {
@@ -255,8 +253,7 @@ function swipePanel(panel) {
       action = 'reset';
     } else if (
       (timeDiff < 300 && Math.abs(translate) >= 0)
-      ||
-      (timeDiff >= 300 && (Math.abs(translate) <= panelWidth / 2))
+      || (timeDiff >= 300 && (Math.abs(translate) <= panelWidth / 2))
     ) {
       if (side === 'left' && translate === panelWidth) action = 'reset';
       else action = 'swap';

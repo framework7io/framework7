@@ -27,6 +27,7 @@ export default class TouchRipple {
 
     return ripple;
   }
+
   onRemove() {
     let ripple = this;
     if (ripple.$rippleWaveEl) {
@@ -38,6 +39,7 @@ export default class TouchRipple {
     });
     ripple = null;
   }
+
   remove() {
     const ripple = this;
     if (ripple.removing) return;

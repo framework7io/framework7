@@ -198,4 +198,3 @@ function tabRemove($oldTabEl, $newTabEl, tabRoute) {
 }
 
 export { tabLoad, tabRemove };
-

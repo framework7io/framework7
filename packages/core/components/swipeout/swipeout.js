@@ -94,8 +94,7 @@ const Swipeout = {
 
       if (
         (translate > 0 && $actionsLeft.length === 0)
-        ||
-        (translate < 0 && $actionsRight.length === 0)
+        || (translate < 0 && $actionsRight.length === 0)
       ) {
         if (!opened) {
           isTouched = false;
@@ -232,18 +231,14 @@ const Swipeout = {
       if (
         (
           timeDiff < 300
-          &&
-          (
+          && (
             (touchesDiff < -10 && direction === 'to-left')
-            ||
-            (touchesDiff > 10 && direction === 'to-right')
+            || (touchesDiff > 10 && direction === 'to-right')
           )
         )
-        ||
-        (
+        || (
           timeDiff >= 300
-          &&
-          (Math.abs(translate) > actionsWidth / 2)
+          && (Math.abs(translate) > actionsWidth / 2)
         )
       ) {
         action = 'open';
@@ -327,12 +322,12 @@ const Swipeout = {
       if (Swipeout.el) {
         const $targetEl = $(e.target);
         if (!(
-          $(Swipeout.el).is($targetEl[0]) ||
-          $targetEl.parents('.swipeout').is(Swipeout.el) ||
-          $targetEl.hasClass('modal-in') ||
-          ($targetEl.attr('class') || '').indexOf('-backdrop') > 0 ||
-          $targetEl.hasClass('actions-modal') ||
-          $targetEl.parents('.actions-modal.modal-in, .dialog.modal-in').length > 0
+          $(Swipeout.el).is($targetEl[0])
+          || $targetEl.parents('.swipeout').is(Swipeout.el)
+          || $targetEl.hasClass('modal-in')
+          || ($targetEl.attr('class') || '').indexOf('-backdrop') > 0
+          || $targetEl.hasClass('actions-modal')
+          || $targetEl.parents('.actions-modal.modal-in, .dialog.modal-in').length > 0
         )) {
           app.swipeout.close(Swipeout.el);
         }

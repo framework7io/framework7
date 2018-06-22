@@ -2,6 +2,13 @@
 
 # Change Log
 
+# [v3.0.0-beta.12](https://github.com/framework7io/framework7/compare/v3.0.0-beta.11...v3.0.0-beta.12) - June 22, 2018
+  * Core
+    * Tooltip
+      * `el` parameter has been renamed to `targetEl`
+    * Accordion
+      * Now it toggles `aria-hidden` attribute on accordion content toggle
+
 # [v3.0.0-beta.11](https://github.com/framework7io/framework7/compare/v3.0.0-beta.10...v3.0.0-beta.11) - June 19, 2018
   * Core
     * Fix touch ripple issues that happen from time to time in Edge

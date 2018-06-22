@@ -51,6 +51,7 @@ class Panel extends Framework7Class {
 
     return panel;
   }
+
   init() {
     const panel = this;
     const app = panel.app;
@@ -60,15 +61,14 @@ class Panel extends Framework7Class {
     if ("universal" !== 'desktop') {
       if (
         (app.params.panel.swipe === panel.side)
-        ||
-        (app.params.panel.swipe === 'both')
-        ||
-        (app.params.panel.swipe && app.params.panel.swipe !== panel.side && app.params.panel.swipeCloseOpposite)
+        || (app.params.panel.swipe === 'both')
+        || (app.params.panel.swipe && app.params.panel.swipe !== panel.side && app.params.panel.swipeCloseOpposite)
       ) {
         panel.initSwipePanel();
       }
     }
   }
+
   getViewEl() {
     const panel = this;
     const app = panel.app;
@@ -80,6 +80,7 @@ class Panel extends Framework7Class {
     }
     return viewEl;
   }
+
   setBreakpoint() {
     const panel = this;
     const app = panel.app;
@@ -112,6 +113,7 @@ class Panel extends Framework7Class {
       panel.$el.trigger('panel:breakpoint', panel);
     }
   }
+
   initBreakpoints() {
     const panel = this;
     const app = panel.app;
@@ -124,11 +126,13 @@ class Panel extends Framework7Class {
     panel.setBreakpoint();
     return panel;
   }
+
   initSwipePanel() {
     if (process.env.TARGET !== 'desktop') {
       SwipePanel(this);
     }
   }
+
   destroy() {
     let panel = this;
     const app = panel.app;
@@ -146,6 +150,7 @@ class Panel extends Framework7Class {
     Utils.deleteProps(panel);
     panel = null;
   }
+
   open(animate = true) {
     const panel = this;
     const app = panel.app;
@@ -200,6 +205,7 @@ class Panel extends Framework7Class {
 
     return true;
   }
+
   close(animate = true) {
     const panel = this;
     const app = panel.app;
@@ -236,12 +242,14 @@ class Panel extends Framework7Class {
     }
     return true;
   }
+
   onOpen() {
     const panel = this;
     panel.opened = true;
     panel.$el.trigger('panel:open', panel);
     panel.emit('local::open panelOpen', panel);
   }
+
   onOpened() {
     const panel = this;
     const app = panel.app;
@@ -250,6 +258,7 @@ class Panel extends Framework7Class {
     panel.$el.trigger('panel:opened', panel);
     panel.emit('local::opened panelOpened', panel);
   }
+
   onClose() {
     const panel = this;
     panel.opened = false;
@@ -257,6 +266,7 @@ class Panel extends Framework7Class {
     panel.$el.trigger('panel:close', panel);
     panel.emit('local::close panelClose', panel);
   }
+
   onClosed() {
     const panel = this;
     const app = panel.app;

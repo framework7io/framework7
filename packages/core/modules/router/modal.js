@@ -188,4 +188,3 @@ function modalRemove(modal) {
 }
 
 export { modalLoad, modalRemove };
-

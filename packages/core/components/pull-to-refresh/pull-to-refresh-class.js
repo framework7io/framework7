@@ -257,10 +257,12 @@ class PullToRefresh extends Framework7Class {
 
     return ptr;
   }
+
   init() {
     const ptr = this;
     ptr.attachEvents();
   }
+
   destroy() {
     let ptr = this;
     ptr.emit('local::beforeDestroy ptrBeforeDestroy', ptr);

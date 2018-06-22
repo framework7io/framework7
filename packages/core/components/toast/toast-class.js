@@ -85,6 +85,7 @@ class Toast extends Modal {
 
     return toast;
   }
+
   render() {
     const toast = this;
     const app = toast.app;

@@ -85,9 +85,9 @@ class Actions extends Modal {
       if (actions.params.convertToPopover && (targetEl || (targetX !== undefined && targetY !== undefined))) {
         // Popover
         if (
-          actions.params.forceToPopover ||
-          (app.device.ios && app.device.ipad) ||
-          app.width >= 768
+          actions.params.forceToPopover
+          || (app.device.ios && app.device.ipad)
+          || app.width >= 768
         ) {
           convertToPopover = true;
         }
@@ -159,10 +159,10 @@ class Actions extends Modal {
       const $target = $(target);
       if ($target.closest(actions.el).length === 0) {
         if (
-          actions.params.closeByBackdropClick &&
-          actions.params.backdrop &&
-          actions.backdropEl &&
-          actions.backdropEl === target
+          actions.params.closeByBackdropClick
+          && actions.params.backdrop
+          && actions.backdropEl
+          && actions.backdropEl === target
         ) {
           actions.close();
         } else if (actions.params.closeByOutsideClick) {
@@ -188,14 +188,14 @@ class Actions extends Modal {
 
     return actions;
   }
+
   render() {
     const actions = this;
     if (actions.params.render) return actions.params.render.call(actions, actions);
     const { groups } = actions;
     return `
       <div class="actions-modal${actions.params.grid ? ' actions-grid' : ''}">
-        ${groups.map(group =>
-          `<div class="actions-group">
+        ${groups.map(group => `<div class="actions-group">
             ${group.map((button) => {
               const buttonClasses = [`actions-${button.label ? 'label' : 'button'}`];
               const { color, bg, bold, disabled, label, text, icon } = button;
@@ -216,6 +216,7 @@ class Actions extends Modal {
       </div>
     `.trim();
   }
+
   renderPopover() {
     const actions = this;
     if (actions.params.renderPopover) return actions.params.renderPopover.call(actions, actions);

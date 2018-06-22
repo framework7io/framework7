@@ -89,6 +89,7 @@ class Messages extends Framework7Class {
 
     return data;
   }
+
   getMessagesData() {
     const m = this;
     const data = [];
@@ -97,6 +98,7 @@ class Messages extends Framework7Class {
     });
     return data;
   }
+
   renderMessage(messageToRender) {
     const m = this;
     const message = Utils.extend({
@@ -128,51 +130,61 @@ class Messages extends Framework7Class {
       </div>
     `;
   }
+
   renderMessages(messagesToRender = this.messages, method = this.params.newMessagesFirst ? 'prepend' : 'append') {
     const m = this;
     const html = messagesToRender.map(message => m.renderMessage(message)).join('');
     m.$el[method](html);
   }
+
   isFirstMessage(...args) {
     const m = this;
     if (m.params.firstMessageRule) return m.params.firstMessageRule(...args);
     return false;
   }
+
   isLastMessage(...args) {
     const m = this;
     if (m.params.lastMessageRule) return m.params.lastMessageRule(...args);
     return false;
   }
+
   isTailMessage(...args) {
     const m = this;
     if (m.params.tailMessageRule) return m.params.tailMessageRule(...args);
     return false;
   }
+
   isSameNameMessage(...args) {
     const m = this;
     if (m.params.sameNameMessageRule) return m.params.sameNameMessageRule(...args);
     return false;
   }
+
   isSameHeaderMessage(...args) {
     const m = this;
     if (m.params.sameHeaderMessageRule) return m.params.sameHeaderMessageRule(...args);
     return false;
   }
+
   isSameFooterMessage(...args) {
     const m = this;
     if (m.params.sameFooterMessageRule) return m.params.sameFooterMessageRule(...args);
     return false;
   }
+
   isSameAvatarMessage(...args) {
     const m = this;
     if (m.params.sameAvatarMessageRule) return m.params.sameAvatarMessageRule(...args);
     return false;
   }
+
   isCustomClassMessage(...args) {
     const m = this;
     if (m.params.customClassMessageRule) return m.params.customClassMessageRule(...args);
     return undefined;
   }
+
   layout() {
     const m = this;
     m.$el.find('.message, .messages-title').each((index, messageEl) => {
@@ -220,11 +232,13 @@ class Messages extends Framework7Class {
       });
     });
   }
+
   clear() {
     const m = this;
     m.messages = [];
     m.$el.html('');
   }
+
   removeMessage(messageToRemove, layout = true) {
     const m = this;
     // Index or El
@@ -248,6 +262,7 @@ class Messages extends Framework7Class {
     if (m.params.autoLayout && layout) m.layout();
     return m;
   }
+
   removeMessages(messagesToRemove, layout = true) {
     const m = this;
     if (Array.isArray(messagesToRemove)) {
@@ -286,6 +301,7 @@ class Messages extends Framework7Class {
 
     return m.addMessages([messageToAdd], animate, method);
   }
+
   addMessages(...args) {
     const m = this;
     let messagesToAdd;
@@ -366,6 +382,7 @@ class Messages extends Framework7Class {
 
     return m;
   }
+
   showTyping(message = {}) {
     const m = this;
     const typingMessage = m.messages.filter(el => el.isTyping)[0];
@@ -378,6 +395,7 @@ class Messages extends Framework7Class {
     }, message));
     return m;
   }
+
   hideTyping() {
     const m = this;
     let typingMessageIndex;
@@ -399,6 +417,7 @@ class Messages extends Framework7Class {
     }
     return m;
   }
+
   scroll(duration = 300, scrollTop) {
     const m = this;
     const currentScroll = m.pageContentEl.scrollTop;
@@ -411,6 +430,7 @@ class Messages extends Framework7Class {
     m.$pageContentEl.scrollTop(newScrollTop, duration);
     return m;
   }
+
   init() {
     const m = this;
     if (!m.messages || m.messages.length === 0) {
@@ -422,6 +442,7 @@ class Messages extends Framework7Class {
     if (m.params.autoLayout) m.layout();
     if (m.params.scrollMessages) m.scroll(0);
   }
+
   destroy() {
     const m = this;
     m.emit('local::beforeDestroy messagesBeforeDestroy', m);

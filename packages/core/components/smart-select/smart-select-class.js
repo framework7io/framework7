@@ -139,6 +139,7 @@ class SmartSelect extends Framework7Class {
 
     return ss;
   }
+
   checkMaxLength() {
     const ss = this;
     const $containerEl = ss.$containerEl;
@@ -154,6 +155,7 @@ class SmartSelect extends Framework7Class {
       $containerEl.find('.disabled').removeClass('disabled');
     }
   }
+
   setValue(value) {
     const ss = this;
     let valueArray = [];
@@ -178,6 +180,7 @@ class SmartSelect extends Framework7Class {
     }
     ss.$valueEl.text(valueArray.join(', '));
   }
+
   getItemsData() {
     const ss = this;
     const items = [];
@@ -227,6 +230,7 @@ class SmartSelect extends Framework7Class {
     ss.items = items;
     return items;
   }
+
   renderSearchbar() {
     const ss = this;
     if (ss.params.renderSearchbar) return ss.params.renderSearchbar.call(ss);
@@ -244,6 +248,7 @@ class SmartSelect extends Framework7Class {
     `;
     return searchbarHTML;
   }
+
   renderItem(item, index) {
     const ss = this;
     if (ss.params.renderItem) return ss.params.renderItem.call(ss, item, index);
@@ -271,6 +276,7 @@ class SmartSelect extends Framework7Class {
     }
     return itemHtml;
   }
+
   renderItems() {
     const ss = this;
     if (ss.params.renderItems) return ss.params.renderItems.call(ss, ss.items);
@@ -279,6 +285,7 @@ class SmartSelect extends Framework7Class {
     `;
     return itemsHtml;
   }
+
   renderPage() {
     const ss = this;
     if (ss.params.renderPage) return ss.params.renderPage.call(ss, ss.items);
@@ -310,6 +317,7 @@ class SmartSelect extends Framework7Class {
     `;
     return pageHtml;
   }
+
   renderPopup() {
     const ss = this;
     if (ss.params.renderPopup) return ss.params.renderPopup.call(ss, ss.items);
@@ -345,6 +353,7 @@ class SmartSelect extends Framework7Class {
     `;
     return popupHtml;
   }
+
   renderSheet() {
     const ss = this;
     if (ss.params.renderSheet) return ss.params.renderSheet.call(ss, ss.items);
@@ -369,6 +378,7 @@ class SmartSelect extends Framework7Class {
     `;
     return sheetHtml;
   }
+
   renderPopover() {
     const ss = this;
     if (ss.params.renderPopover) return ss.params.renderPopover.call(ss, ss.items);
@@ -383,6 +393,7 @@ class SmartSelect extends Framework7Class {
     `;
     return popoverHtml;
   }
+
   onOpen(type, containerEl) {
     const ss = this;
     const app = ss.app;
@@ -437,12 +448,14 @@ class SmartSelect extends Framework7Class {
     ss.$el.trigger('smartselect:open', ss);
     ss.emit('local::open smartSelectOpen', ss);
   }
+
   onOpened() {
     const ss = this;
 
     ss.$el.trigger('smartselect:opened', ss);
     ss.emit('local::opened smartSelectOpened', ss);
   }
+
   onClose() {
     const ss = this;
     if (ss.destroyed) return;
@@ -466,6 +479,7 @@ class SmartSelect extends Framework7Class {
     ss.$el.trigger('smartselect:close', ss);
     ss.emit('local::close smartSelectClose', ss);
   }
+
   onClosed() {
     const ss = this;
     if (ss.destroyed) return;
@@ -476,6 +490,7 @@ class SmartSelect extends Framework7Class {
     ss.$el.trigger('smartselect:closed', ss);
     ss.emit('local::closed smartSelectClosed', ss);
   }
+
   openPage() {
     const ss = this;
     if (ss.opened) return ss;
@@ -505,6 +520,7 @@ class SmartSelect extends Framework7Class {
     });
     return ss;
   }
+
   openPopup() {
     const ss = this;
     if (ss.opened) return ss;
@@ -542,6 +558,7 @@ class SmartSelect extends Framework7Class {
     }
     return ss;
   }
+
   openSheet() {
     const ss = this;
     if (ss.opened) return ss;
@@ -582,6 +599,7 @@ class SmartSelect extends Framework7Class {
     }
     return ss;
   }
+
   openPopover() {
     const ss = this;
     if (ss.opened) return ss;
@@ -618,6 +636,7 @@ class SmartSelect extends Framework7Class {
     }
     return ss;
   }
+
   open(type) {
     const ss = this;
     if (ss.opened) return ss;
@@ -628,6 +647,7 @@ class SmartSelect extends Framework7Class {
     }).join('')}`]();
     return ss;
   }
+
   close() {
     const ss = this;
     if (!ss.opened) return ss;
@@ -644,11 +664,13 @@ class SmartSelect extends Framework7Class {
     }
     return ss;
   }
+
   init() {
     const ss = this;
     ss.attachEvents();
     ss.setValue();
   }
+
   destroy() {
     const ss = this;
     ss.emit('local::beforeDestroy smartSelectBeforeDestroy', ss);

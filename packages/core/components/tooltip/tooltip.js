@@ -42,7 +42,7 @@ export default {
   },
   params: {
     tooltip: {
-      el: null,
+      targetEl: null,
       text: null,
       cssClass: null,
       render: null,
@@ -54,7 +54,7 @@ export default {
       $(tabEl).find('.tooltip-init').each((index, el) => {
         const text = $(el).attr('data-tooltip');
         if (!text) return;
-        app.tooltip.create({ el, text });
+        app.tooltip.create({ targetEl: el, text });
       });
     },
     tabBeforeRemove(tabEl) {
@@ -67,7 +67,7 @@ export default {
       page.$el.find('.tooltip-init').each((index, el) => {
         const text = $(el).attr('data-tooltip');
         if (!text) return;
-        app.tooltip.create({ el, text });
+        app.tooltip.create({ targetEl: el, text });
       });
     },
     pageBeforeRemove(page) {

@@ -88,10 +88,10 @@ const Lazy = {
     const threshold = app.params.lazy.threshold || 0;
 
     return (
-      rect.top >= (0 - threshold) &&
-      rect.left >= (0 - threshold) &&
-      rect.top <= (app.height + threshold) &&
-      rect.left <= (app.width + threshold)
+      rect.top >= (0 - threshold)
+      && rect.left >= (0 - threshold)
+      && rect.top <= (app.height + threshold)
+      && rect.left <= (app.width + threshold)
     );
   },
   loadImage(imageEl, callback) {

@@ -147,8 +147,8 @@ const Sortable = {
         }
       }
 
-      if (($insertAfterEl || $insertBeforeEl) &&
-         $sortableContainer.hasClass('virtual-list')
+      if (($insertAfterEl || $insertBeforeEl)
+         && $sortableContainer.hasClass('virtual-list')
       ) {
         virtualList = $sortableContainer[0].f7VirtualList;
         oldIndex = $sortingEl[0].f7VirtualListIndex;

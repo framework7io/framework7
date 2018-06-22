@@ -324,10 +324,10 @@ function loadBack(backParams, backOptions, ignorePageChange) {
   const { url, content, el, pageName, template, templateUrl, component, componentUrl } = params;
 
   if (
-    options.route.url &&
-    router.url === options.route.url &&
-    !(options.reloadCurrent || options.reloadPrevious) &&
-    !router.params.allowDuplicateUrls
+    options.route.url
+    && router.url === options.route.url
+    && !(options.reloadCurrent || options.reloadPrevious)
+    && !router.params.allowDuplicateUrls
   ) {
     return false;
   }
@@ -418,9 +418,9 @@ function back(...args) {
     });
   }
   if (currentRouteIsModal) {
-    const modalToClose = router.currentRoute.modal ||
-                         router.currentRoute.route.modalInstance ||
-                         app[modalType].get();
+    const modalToClose = router.currentRoute.modal
+                         || router.currentRoute.route.modalInstance
+                         || app[modalType].get();
     const previousUrl = router.history[router.history.length - 2];
     let previousRoute = router.findMatchingRoute(previousUrl);
     if (!previousRoute && previousUrl) {

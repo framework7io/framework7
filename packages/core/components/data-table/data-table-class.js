@@ -104,6 +104,7 @@ class DataTable extends Framework7Class {
 
     return table;
   }
+
   setCollapsibleLabels() {
     const table = this;
     if (!table.collapsible) return;
@@ -116,6 +117,7 @@ class DataTable extends Framework7Class {
       }
     });
   }
+
   checkSelectedHeader() {
     const table = this;
     if (table.$headerEl.length > 0 && table.$headerSelectedEl.length > 0) {
@@ -124,12 +126,14 @@ class DataTable extends Framework7Class {
       table.$headerSelectedEl.find('.data-table-selected-count').text(checkedItems);
     }
   }
+
   init() {
     const table = this;
     table.attachEvents();
     table.setCollapsibleLabels();
     table.checkSelectedHeader();
   }
+
   destroy() {
     let table = this;
 

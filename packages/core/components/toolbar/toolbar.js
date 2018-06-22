@@ -169,17 +169,17 @@ export default {
         app.toolbar.init(tabbarEl);
       });
       if (
-        app.params.toolbar.hideOnPageScroll ||
-        page.$el.find('.hide-toolbar-on-scroll').length ||
-        page.$el.hasClass('hide-toolbar-on-scroll') ||
-        page.$el.find('.hide-bars-on-scroll').length ||
-        page.$el.hasClass('hide-bars-on-scroll')
+        app.params.toolbar.hideOnPageScroll
+        || page.$el.find('.hide-toolbar-on-scroll').length
+        || page.$el.hasClass('hide-toolbar-on-scroll')
+        || page.$el.find('.hide-bars-on-scroll').length
+        || page.$el.hasClass('hide-bars-on-scroll')
       ) {
         if (
-          page.$el.find('.keep-toolbar-on-scroll').length ||
-          page.$el.hasClass('keep-toolbar-on-scroll') ||
-          page.$el.find('.keep-bars-on-scroll').length ||
-          page.$el.hasClass('keep-bars-on-scroll')
+          page.$el.find('.keep-toolbar-on-scroll').length
+          || page.$el.hasClass('keep-toolbar-on-scroll')
+          || page.$el.find('.keep-bars-on-scroll').length
+          || page.$el.hasClass('keep-bars-on-scroll')
         ) {
           return;
         }

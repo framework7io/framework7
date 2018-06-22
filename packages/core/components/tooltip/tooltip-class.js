@@ -16,26 +16,26 @@ class Tooltip extends Framework7Class {
 
     tooltip.params = Utils.extend(defaults, params);
 
-    const { el } = tooltip.params;
-    if (!el) return tooltip;
+    const { targetEl } = tooltip.params;
+    if (!targetEl) return tooltip;
 
-    const $el = $(el);
-    if ($el.length === 0) return tooltip;
+    const $targetEl = $(targetEl);
+    if ($targetEl.length === 0) return tooltip;
 
-    const $tooltipEl = $(tooltip.render()).eq(0);
+    const $el = $(tooltip.render()).eq(0);
 
     Utils.extend(tooltip, {
       app,
+      $targetEl,
+      targetEl: $targetEl && $targetEl[0],
       $el,
       el: $el && $el[0],
-      $tooltipEl,
-      tooltipEl: $tooltipEl && $tooltipEl[0],
       text: tooltip.params.text || '',
       visible: false,
       opened: false,
     });
 
-    $el[0].f7Tooltip = tooltip;
+    $targetEl[0].f7Tooltip = tooltip;
 
     const touchesStart = {};
     let isTouched;
@@ -51,8 +51,8 @@ class Tooltip extends Framework7Class {
       const x = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
       const y = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
       const distance = (
-        ((x - touchesStart.x) ** 2) +
-        ((y - touchesStart.y) ** 2)
+        ((x - touchesStart.x) ** 2)
+        + ((y - touchesStart.y) ** 2)
       ) ** 0.5;
       if (distance > 50) {
         isTouched = false;
@@ -71,34 +71,34 @@ class Tooltip extends Framework7Class {
       tooltip.hide();
     }
     function handleTransitionEnd() {
-      if (!$tooltipEl.hasClass('tooltip-in')) {
-        $tooltipEl.removeClass('tooltip-out').remove();
+      if (!$el.hasClass('tooltip-in')) {
+        $el.removeClass('tooltip-out').remove();
       }
     }
 
     tooltip.attachEvents = function attachEvents() {
       if (Support.touch) {
         const passive = Support.passiveListener ? { passive: true } : false;
-        $el.on(app.touchEvents.start, handleTouchStart, passive);
+        $targetEl.on(app.touchEvents.start, handleTouchStart, passive);
         app.on('touchmove', handleTouchMove);
         app.on('touchend:passive', handleTouchEnd);
         return;
       }
-      $tooltipEl.on('transitionend webkitTransitionEnd', handleTransitionEnd);
-      $el.on('mouseenter', handleMouseEnter);
-      $el.on('mouseleave', handleMouseLeave);
+      $el.on('transitionend webkitTransitionEnd', handleTransitionEnd);
+      $targetEl.on('mouseenter', handleMouseEnter);
+      $targetEl.on('mouseleave', handleMouseLeave);
     };
     tooltip.detachEvents = function detachEvents() {
       if (Support.touch) {
         const passive = Support.passiveListener ? { passive: true } : false;
-        $el.off(app.touchEvents.start, handleTouchStart, passive);
+        $targetEl.off(app.touchEvents.start, handleTouchStart, passive);
         app.off('touchmove', handleTouchMove);
         app.off('touchend:passive', handleTouchEnd);
         return;
       }
-      $tooltipEl.off('transitionend webkitTransitionEnd', handleTransitionEnd);
-      $el.off('mouseenter', handleMouseEnter);
-      $el.off('mouseleave', handleMouseLeave);
+      $el.off('transitionend webkitTransitionEnd', handleTransitionEnd);
+      $targetEl.off('mouseenter', handleMouseEnter);
+      $targetEl.off('mouseleave', handleMouseLeave);
     };
 
     // Install Modules
@@ -108,14 +108,15 @@ class Tooltip extends Framework7Class {
 
     return tooltip;
   }
+
   position(targetEl) {
     const tooltip = this;
-    const { $tooltipEl, app } = tooltip;
-    $tooltipEl.css({ left: '', top: '' });
+    const { $el, app } = tooltip;
+    $el.css({ left: '', top: '' });
     const $targetEl = $(targetEl || tooltip.el);
-    const [width, height] = [$tooltipEl.width(), $tooltipEl.height()];
+    const [width, height] = [$el.width(), $el.height()];
 
-    $tooltipEl.css({ left: '', top: '' });
+    $el.css({ left: '', top: '' });
 
     let targetWidth;
     let targetHeight;
@@ -172,36 +173,39 @@ class Tooltip extends Framework7Class {
     }
 
     // Apply Styles
-    $tooltipEl.css({ top: `${top}px`, left: `${left}px` });
+    $el.css({ top: `${top}px`, left: `${left}px` });
   }
+
   show(aroundEl) {
     const tooltip = this;
-    const { app, $tooltipEl, $el } = tooltip;
-    app.root.append($tooltipEl);
+    const { app, $el, $targetEl } = tooltip;
+    app.root.append($el);
     tooltip.position(aroundEl);
     const $aroundEl = $(aroundEl);
     tooltip.visible = true;
     tooltip.opened = true;
+    $targetEl.trigger('tooltip:show', tooltip);
     $el.trigger('tooltip:show', tooltip);
-    $tooltipEl.trigger('tooltip:show', tooltip);
-    if ($aroundEl.length && $aroundEl[0] !== $el[0]) {
+    if ($aroundEl.length && $aroundEl[0] !== $targetEl[0]) {
       $aroundEl.trigger('tooltip:show', tooltip);
     }
     tooltip.emit('local::show tooltipShow', tooltip);
-    $tooltipEl.removeClass('tooltip-out').addClass('tooltip-in');
+    $el.removeClass('tooltip-out').addClass('tooltip-in');
     return tooltip;
   }
+
   hide() {
     const tooltip = this;
-    const { $tooltipEl, $el } = tooltip;
+    const { $el, $targetEl } = tooltip;
     tooltip.visible = false;
     tooltip.opened = false;
+    $targetEl.trigger('tooltip:hide', tooltip);
     $el.trigger('tooltip:hide', tooltip);
-    $tooltipEl.trigger('tooltip:hide', tooltip);
     tooltip.emit('local::hide tooltipHide', tooltip);
-    $tooltipEl.addClass('tooltip-out').removeClass('tooltip-in');
+    $el.addClass('tooltip-out').removeClass('tooltip-in');
     return tooltip;
   }
+
   render() {
     const tooltip = this;
     if (tooltip.params.render) return tooltip.params.render.call(tooltip, tooltip);
@@ -212,6 +216,7 @@ class Tooltip extends Framework7Class {
       </div>
     `.trim();
   }
+
   setText(newText) {
     const tooltip = this;
     if (typeof newText === 'undefined') {
@@ -219,25 +224,27 @@ class Tooltip extends Framework7Class {
     }
     tooltip.params.text = newText;
     tooltip.text = newText;
-    if (tooltip.$tooltipEl) {
-      tooltip.$tooltipEl.children('.tooltip-content').html(newText);
+    if (tooltip.$el) {
+      tooltip.$el.children('.tooltip-content').html(newText);
     }
     if (tooltip.opened) {
       tooltip.position();
     }
     return tooltip;
   }
+
   init() {
     const tooltip = this;
     tooltip.attachEvents();
   }
+
   destroy() {
     const tooltip = this;
-    if (!tooltip.$el || tooltip.destroyed) return;
-    tooltip.$el.trigger('tooltip:beforedestroy', tooltip);
+    if (!tooltip.$targetEl || tooltip.destroyed) return;
+    tooltip.$targetEl.trigger('tooltip:beforedestroy', tooltip);
     tooltip.emit('local::beforeDestroy tooltipBeforeDestroy', tooltip);
-    tooltip.$tooltipEl.remove();
-    delete tooltip.$el[0].f7Tooltip;
+    tooltip.$el.remove();
+    delete tooltip.$targetEl[0].f7Tooltip;
     tooltip.detachEvents();
     Utils.deleteProps(tooltip);
     tooltip.destroyed = true;

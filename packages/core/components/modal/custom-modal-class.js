@@ -1,6 +1,6 @@
 import $ from 'dom7';
 import Utils from '../../utils/utils';
-import Modal from '../modal/modal-class';
+import Modal from './modal-class';
 
 class CustomModal extends Modal {
   constructor(app, params) {

@@ -158,14 +158,17 @@ class Toggle extends Framework7Class {
     // Init
     toggle.init();
   }
+
   toggle() {
     const toggle = this;
     toggle.checked = !toggle.checked;
   }
+
   init() {
     const toggle = this;
     toggle.attachEvents();
   }
+
   destroy() {
     let toggle = this;
     toggle.$el.trigger('toggle:beforedestroy', toggle);

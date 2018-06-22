@@ -148,31 +148,37 @@ class ViAd extends Framework7Class {
       app,
     });
   }
+
   start() {
     const vi = this;
     if (vi.destroyed) return;
     if (vi.ad) vi.ad.startAd();
   }
+
   pause() {
     const vi = this;
     if (vi.destroyed) return;
     if (vi.ad) vi.ad.pauseAd();
   }
+
   resume() {
     const vi = this;
     if (vi.destroyed) return;
     if (vi.ad) vi.ad.resumeAd();
   }
+
   stop() {
     const vi = this;
     if (vi.destroyed) return;
     if (vi.ad) vi.ad.stopAd();
   }
+
   init() {
     const vi = this;
     if (vi.destroyed) return;
     if (vi.ad) vi.ad.initAd();
   }
+
   destroy() {
     const vi = this;
     vi.destroyed = true;

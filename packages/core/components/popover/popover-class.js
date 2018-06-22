@@ -96,10 +96,10 @@ class Popover extends Modal {
       const $target = $(target);
       if ($target.closest(popover.el).length === 0) {
         if (
-          popover.params.closeByBackdropClick &&
-          popover.params.backdrop &&
-          popover.backdropEl &&
-          popover.backdropEl === target
+          popover.params.closeByBackdropClick
+          && popover.params.backdrop
+          && popover.backdropEl
+          && popover.backdropEl === target
         ) {
           popover.close();
         } else if (popover.params.closeByOutsideClick) {
@@ -123,6 +123,7 @@ class Popover extends Modal {
 
     return popover;
   }
+
   resize() {
     const popover = this;
     const { app, $el, $targetEl, $angleEl } = popover;
