@@ -15,6 +15,7 @@ const Accordion = {
     const $el = $(el);
     const $list = $el.parents('.accordion-list').eq(0);
     let $contentEl = $el.children('.accordion-item-content');
+    $contentEl.removeAttr('aria-hidden');
     if ($contentEl.length === 0) $contentEl = $el.find('.accordion-item-content');
     if ($contentEl.length === 0) return;
     const $openedItem = $list.length > 0 && $el.parent().children('.accordion-item-opened');
@@ -46,6 +47,7 @@ const Accordion = {
     let $contentEl = $el.children('.accordion-item-content');
     if ($contentEl.length === 0) $contentEl = $el.find('.accordion-item-content');
     $el.removeClass('accordion-item-opened');
+    $contentEl.attr('aria-hidden', true);
     $contentEl.transition(0);
     $contentEl.css('height', `${$contentEl[0].scrollHeight}px`);
     $contentEl._clientLeft = $contentEl[0].clientLeft;
