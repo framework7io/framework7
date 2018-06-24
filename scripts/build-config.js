@@ -101,6 +101,9 @@ const config = {
     // VI Video Ads
     'vi',
 
+    // Elevation
+    'elevation',
+
     // Typography
     'typography',
   ],

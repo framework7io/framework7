@@ -5,8 +5,10 @@ export default () => (
   <Page>
     <Navbar title="Elevation" backLink="Back"></Navbar>
     <Block strong>
-      <p>Shadows provide important visual cues about objects’ depth and directional movement. They are the only visual cue indicating the amount of separation between surfaces. An object’s elevation determines the appearance of its shadow. The elevation values are mapped out in a "z-space" and range from 1 to 24.</p>
-      <p>Elevation can be added to any element by adding <code>elevation-1</code>, <code>elevation-2</code>, ..., <code>elevation-24</code> classes</p>
+      <p>Shadows provide important visual cues about objects' depth and directional movement. They are the only visual cue indicating the amount of separation between surfaces. An object’s elevation determines the appearance of its shadow. The elevation values are mapped out in a "z-space" and range from 1 to 24.</p>
+      <p>Elevation can be added to any element by adding <code>elevation-0</code>, <code>elevation-1</code>, ..., <code>elevation-24</code> classes.</p>
+      <p>To add different elevation only on hover (desktop), you can use <code>elevarion-hover-0</code>, <code>elevarion-hover-1</code>, ..., <code>elevarion-hover-24</code> classes.</p>
+      <p>To specify elevation only when item pressed, you can use <code>elevarion-pressed-0</code>, <code>elevarion-pressed-1</code>, ..., <code>elevarion-pressed-24</code> classes.</p>
     </Block>
     <Block>
       <Row>
@@ -95,6 +97,11 @@ export default () => (
         </Col>
         <Col>
           <div className="elevation-demo elevation-24">24</div>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <div className="elevation-demo elevation-6 elevation-hover-24 elevation-pressed-12 elevation-transition">6 + hover-24 + pressed-12</div>
         </Col>
       </Row>
     </Block>
