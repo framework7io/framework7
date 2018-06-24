@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.0.0-beta.12
+ * Framework7 Vue 3.0.0-beta.14
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 22, 2018
+ * Released on: June 24, 2018
  */
 
 (function (global, factory) {
@@ -1261,6 +1261,7 @@
       ifIos: String,
       ios: String,
       md: String,
+      tooltip: String,
       size: [String, Number]
     }, Mixins.colorProps),
 
@@ -1271,6 +1272,7 @@
       var id = props.id;
       var style = props.style;
       return _h('i', {
+        ref: 'el',
         style: Utils.extend({
           fontSize: self.sizeComputed
         }, style),
@@ -1279,6 +1281,39 @@
           id: id
         }
       }, [self.iconTextComputed, this.$slots['default']]);
+    },
+
+    watch: {
+      'props.tooltip': function watchTooltip(newText) {
+        var self = this;
+        if (!newText || !self.f7Tooltip) { return; }
+        self.f7Tooltip.setText(newText);
+      }
+    },
+
+    mounted: function mounted() {
+      var self = this;
+      var el = self.$refs.el;
+      if (!el) { return; }
+      var ref = self.props;
+      var tooltip = ref.tooltip;
+      if (!tooltip) { return; }
+      self.$f7ready(function (f7) {
+        self.f7Tooltip = f7.tooltip.create({
+          targetEl: el,
+          text: tooltip
+        });
+      });
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      var self = this;
+
+      if (self.f7Tooltip && self.f7Tooltip.destroy) {
+        self.f7Tooltip.destroy();
+        self.f7Tooltip = null;
+        delete self.f7Tooltip;
+      }
     },
 
     computed: {
@@ -3319,7 +3354,7 @@
 
         if (tooltip) {
           self.f7Tooltip = f7.tooltip.create({
-            targetEl: self.$refs.el,
+            targetEl: el,
             text: tooltip
           });
         }
@@ -9570,7 +9605,7 @@
   };
 
   /**
-   * Framework7 Vue 3.0.0-beta.12
+   * Framework7 Vue 3.0.0-beta.14
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -9578,7 +9613,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: June 22, 2018
+   * Released on: June 24, 2018
    */
 
   var Plugin = {

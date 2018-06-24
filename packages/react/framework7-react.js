@@ -1,5 +1,5 @@
 /**
- * Framework7 React 3.0.0-beta.12
+ * Framework7 React 3.0.0-beta.14
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 22, 2018
+ * Released on: June 24, 2018
  */
 
 (function (global, factory) {
@@ -1635,13 +1635,14 @@
   var F7Icon = (function (superclass) {
     function F7Icon(props, context) {
       superclass.call(this, props, context);
+      this.__reactRefs = {};
     }
 
     if ( superclass ) F7Icon.__proto__ = superclass;
     F7Icon.prototype = Object.create( superclass && superclass.prototype );
     F7Icon.prototype.constructor = F7Icon;
 
-    var prototypeAccessors = { sizeComputed: { configurable: true },iconTextComputed: { configurable: true },classes: { configurable: true },slots: { configurable: true } };
+    var prototypeAccessors = { sizeComputed: { configurable: true },iconTextComputed: { configurable: true },classes: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
 
     prototypeAccessors.sizeComputed.get = function () {
       var self = this;
@@ -1729,11 +1730,16 @@
     };
 
     F7Icon.prototype.render = function render () {
+      var this$1 = this;
+
       var self = this;
       var props = self.props;
       var id = props.id;
       var style = props.style;
       return React.createElement('i', {
+        ref: function (__reactNode) {
+          this$1.__reactRefs['el'] = __reactNode;
+        },
         id: id,
         style: Utils.extend({
           fontSize: self.sizeComputed
@@ -1742,8 +1748,49 @@
       }, self.iconTextComputed, this.slots['default']);
     };
 
+    F7Icon.prototype.componentWillUnmount = function componentWillUnmount () {
+      var self = this;
+
+      if (self.f7Tooltip && self.f7Tooltip.destroy) {
+        self.f7Tooltip.destroy();
+        self.f7Tooltip = null;
+        delete self.f7Tooltip;
+      }
+    };
+
+    F7Icon.prototype.componentDidMount = function componentDidMount () {
+      var self = this;
+      var el = self.refs.el;
+      if (!el) { return; }
+      var ref = self.props;
+      var tooltip = ref.tooltip;
+      if (!tooltip) { return; }
+      self.$f7ready(function (f7) {
+        self.f7Tooltip = f7.tooltip.create({
+          targetEl: el,
+          text: tooltip
+        });
+      });
+    };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
+    };
+
+    prototypeAccessors.refs.get = function () {
+      return this.__reactRefs;
+    };
+
+    prototypeAccessors.refs.set = function (refs) {};
+
+    F7Icon.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+      var this$1 = this;
+
+      __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
+        var self = this$1;
+        if (!newText || !self.f7Tooltip) { return; }
+        self.f7Tooltip.setText(newText);
+      });
     };
 
     Object.defineProperties( F7Icon.prototype, prototypeAccessors );
@@ -1762,6 +1809,7 @@
     ifIos: String,
     ios: String,
     md: String,
+    tooltip: String,
     size: [String, Number]
   }, Mixins.colorProps));
 
@@ -3788,7 +3836,7 @@
 
         if (tooltip) {
           self.f7Tooltip = f7.tooltip.create({
-            targetEl: self.refs.el,
+            targetEl: el,
             text: tooltip
           });
         }
@@ -10407,7 +10455,7 @@
   };
 
   /**
-   * Framework7 React 3.0.0-beta.12
+   * Framework7 React 3.0.0-beta.14
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -10415,7 +10463,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: June 22, 2018
+   * Released on: June 24, 2018
    */
 
   var Plugin = {

@@ -1,12 +1,14 @@
 import React from 'react';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
+import __reactComponentWatch from '../runtime-helpers/react-component-watch.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
 
 class F7Icon extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
   }
 
   get sizeComputed() {
@@ -105,6 +107,9 @@ class F7Icon extends React.Component {
       style
     } = props;
     return React.createElement('i', {
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
       id: id,
       style: Utils.extend({
         fontSize: self.sizeComputed
@@ -113,8 +118,48 @@ class F7Icon extends React.Component {
     }, self.iconTextComputed, this.slots['default']);
   }
 
+  componentWillUnmount() {
+    const self = this;
+
+    if (self.f7Tooltip && self.f7Tooltip.destroy) {
+      self.f7Tooltip.destroy();
+      self.f7Tooltip = null;
+      delete self.f7Tooltip;
+    }
+  }
+
+  componentDidMount() {
+    const self = this;
+    const el = self.refs.el;
+    if (!el) return;
+    const {
+      tooltip
+    } = self.props;
+    if (!tooltip) return;
+    self.$f7ready(f7 => {
+      self.f7Tooltip = f7.tooltip.create({
+        targetEl: el,
+        text: tooltip
+      });
+    });
+  }
+
   get slots() {
     return __reactComponentSlots(this.props);
+  }
+
+  get refs() {
+    return this.__reactRefs;
+  }
+
+  set refs(refs) {}
+
+  componentDidUpdate(prevProps, prevState) {
+    __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, newText => {
+      const self = this;
+      if (!newText || !self.f7Tooltip) return;
+      self.f7Tooltip.setText(newText);
+    });
   }
 
 }
@@ -130,6 +175,7 @@ __reactComponentSetProps(F7Icon, Object.assign({
   ifIos: String,
   ios: String,
   md: String,
+  tooltip: String,
   size: [String, Number]
 }, Mixins.colorProps));
 

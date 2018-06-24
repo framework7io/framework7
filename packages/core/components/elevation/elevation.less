@@ -1,0 +1,58 @@
+/* === Elevation === */
+@elevations: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24;
+.elevation-loop(@array, @i: 1) when (@i =< length(@array)) {
+  @value: extract(@array, @i);
+  .elevation-@{value} {
+    .elevation(@value) !important;
+  }
+  .elevation-loop(@array, (@i + 1));
+}
+.elevation-loop(@elevations);
+
+.elevation-hover-loop(@array, @i: 1) when (@i =< length(@array)) {
+  @value: extract(@array, @i);
+  .device-desktop .elevation-hover-@{value}:hover {
+    .elevation(@value) !important;
+  }
+  .elevation-hover-loop(@array, (@i + 1));
+}
+.elevation-hover-loop(@elevations);
+
+.elevation-pressed-loop(@array, @i: 1) when (@i =< length(@array)) {
+  @value: extract(@array, @i);
+  .active-state.elevation-pressed-@{value},
+  .device-desktop .active-state.elevation-pressed-@{value} {
+    .elevation(@value) !important;
+  }
+  .elevation-pressed-loop(@array, (@i + 1));
+}
+.elevation-pressed-loop(@elevations);
+
+.elevation-transition-100 {
+  transition-duration: 100ms;
+  transition-property: box-shadow;
+}
+.elevation-transition,
+.elevation-transition-200 {
+  transition-duration: 200ms;
+  transition-property: box-shadow;
+}
+.elevation-transition-300 {
+  transition-duration: 300ms;
+  transition-property: box-shadow;
+}
+.elevation-transition-400 {
+  transition-duration: 400ms;
+  transition-property: box-shadow;
+}
+.elevation-transition-500 {
+  transition-duration: 500ms;
+  transition-property: box-shadow;
+}
+
+& when (@includeIosTheme) {
+  @import url('./elevation-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./elevation-md.less');
+}

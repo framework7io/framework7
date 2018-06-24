@@ -2,6 +2,17 @@
 
 # Change Log
 
+# [v3.0.0-beta.14](https://github.com/framework7io/framework7/compare/v3.0.0-beta.12...v3.0.0-beta.14) - June 24, 2018
+  * Core
+    * Elevation
+      * Elevation moved to separate component
+      * Added support for `elevation-hover-$n` class to add elevation on hover
+      * Added support for `elevation-pressed-$n` class to add elevation on press
+      * Added support for `elevation-transiton` class to add transition between elevation states
+  * Phenome
+    * Icon
+      * Added support for tooltip with `tooltip` prop
+
 # [v3.0.0-beta.12](https://github.com/framework7io/framework7/compare/v3.0.0-beta.11...v3.0.0-beta.12) - June 22, 2018
   * Core
     * Tooltip
