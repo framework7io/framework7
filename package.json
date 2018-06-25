@@ -1,6 +1,7 @@
 {
   "name": "framework7",
   "version": "9.9.10",
+  "main":"packages/react/framework7-react.js",
   "scripts": {
     "build:dev": "cross-env-shell NODE_ENV=development \"gulp build-core && gulp phenome && gulp build-vue && gulp build-react\"",
     "build:prod": "cross-env-shell NODE_ENV=production \"gulp build-core && gulp phenome && gulp build-vue && gulp build-react\"",
