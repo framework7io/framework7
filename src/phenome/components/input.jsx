@@ -43,6 +43,7 @@ export default {
     // Form
     noFormStoreData: Boolean,
     noStoreData: Boolean,
+    ignoreStoreData: Boolean,
 
     // Error, Info
     errorMessage: String,
@@ -100,6 +101,7 @@ export default {
       className,
       noStoreData,
       noFormStoreData,
+      ignoreStoreData,
     } = props;
 
     let inputEl;
@@ -111,7 +113,7 @@ export default {
       const inputClassName = Utils.classNames(
         type === 'textarea' && resizable && 'resizable',
         !wrap && className,
-        (noFormStoreData || noStoreData) && 'no-store-data',
+        (noFormStoreData || noStoreData || ignoreStoreData) && 'no-store-data',
         errorMessage && errorMessageForce && 'input-invalid'
       );
       let input;
