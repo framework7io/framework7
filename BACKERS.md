@@ -57,6 +57,7 @@ Bart DJ
 ---
 
 ### $10+ Thank You
+David Fall<br>
 Almaz Kazakov<br>
 plpl<br>
 Zakery Kates<br>
@@ -73,6 +74,7 @@ Dave Billington
 ---
 
 ### $5+
+Evgeny Konyahin<br>
 jinsom<br>
 Alessandro De Siro<br>
 Simon MacDonald<br>
