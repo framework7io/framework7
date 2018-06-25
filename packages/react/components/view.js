@@ -1,25 +1,69 @@
-import React from 'react';
-import f7 from '../utils/f7';
-import events from '../utils/events';
-import Utils from '../utils/utils';
-import Mixins from '../utils/mixins';
-import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
-import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
-import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
+'use strict';
 
-class F7View extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-    this.__reactRefs = {};
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-    this.state = (() => {
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _f = require('../utils/f7');
+
+var _f2 = _interopRequireDefault(_f);
+
+var _events = require('../utils/events');
+
+var _events2 = _interopRequireDefault(_events);
+
+var _utils = require('../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _mixins = require('../utils/mixins');
+
+var _mixins2 = _interopRequireDefault(_mixins);
+
+var _reactComponentDispatchEvent = require('../runtime-helpers/react-component-dispatch-event.js');
+
+var _reactComponentDispatchEvent2 = _interopRequireDefault(_reactComponentDispatchEvent);
+
+var _reactComponentSlots = require('../runtime-helpers/react-component-slots.js');
+
+var _reactComponentSlots2 = _interopRequireDefault(_reactComponentSlots);
+
+var _reactComponentSetProps = require('../runtime-helpers/react-component-set-props.js');
+
+var _reactComponentSetProps2 = _interopRequireDefault(_reactComponentSetProps);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var F7View = function (_React$Component) {
+  _inherits(F7View, _React$Component);
+
+  function F7View(props, context) {
+    _classCallCheck(this, F7View);
+
+    var _this = _possibleConstructorReturn(this, (F7View.__proto__ || Object.getPrototypeOf(F7View)).call(this, props, context));
+
+    _this.__reactRefs = {};
+
+    _this.state = function () {
       return {
         pages: []
       };
-    })();
+    }();
 
-    (() => {
-      const self = this;
+    (function () {
+      var self = _this;
       self.onSwipeBackMoveBound = self.onSwipeBackMove.bind(self);
       self.onSwipeBackBeforeChangeBound = self.onSwipeBackBeforeChange.bind(self);
       self.onSwipeBackAfterChangeBound = self.onSwipeBackAfterChange.bind(self);
@@ -28,135 +72,157 @@ class F7View extends React.Component {
       self.onTabShowBound = self.onTabShow.bind(self);
       self.onTabHideBound = self.onTabHide.bind(self);
     })();
+    return _this;
   }
 
-  onSwipeBackMove(event) {
-    this.dispatchEvent('swipeback:move swipeBackMove', event, event.detail);
-  }
+  _createClass(F7View, [{
+    key: 'onSwipeBackMove',
+    value: function onSwipeBackMove(event) {
+      this.dispatchEvent('swipeback:move swipeBackMove', event, event.detail);
+    }
+  }, {
+    key: 'onSwipeBackBeforeChange',
+    value: function onSwipeBackBeforeChange(event) {
+      this.dispatchEvent('swipeback:beforechange swipeBackBeforeChange', event, event.detail);
+    }
+  }, {
+    key: 'onSwipeBackAfterChange',
+    value: function onSwipeBackAfterChange(event) {
+      this.dispatchEvent('swipeback:afterchange swipeBackAfterChange', event, event.detail);
+    }
+  }, {
+    key: 'onSwipeBackBeforeReset',
+    value: function onSwipeBackBeforeReset(event) {
+      this.dispatchEvent('swipeback:beforereset swipeBackBeforeReset', event, event.detail);
+    }
+  }, {
+    key: 'onSwipeBackAfterReset',
+    value: function onSwipeBackAfterReset(event) {
+      this.dispatchEvent('swipeback:afterreset swipeBackAfterReset', event, event.detail);
+    }
+  }, {
+    key: 'onTabShow',
+    value: function onTabShow(e) {
+      this.dispatchEvent('tab:show tabShow', e);
+    }
+  }, {
+    key: 'onTabHide',
+    value: function onTabHide(e) {
+      this.dispatchEvent('tab:hide tabHide', e);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
 
-  onSwipeBackBeforeChange(event) {
-    this.dispatchEvent('swipeback:beforechange swipeBackBeforeChange', event, event.detail);
-  }
+      var self = this;
+      var props = self.props;
+      var id = props.id,
+          style = props.style,
+          tab = props.tab,
+          main = props.main,
+          tabActive = props.tabActive,
+          className = props.className;
 
-  onSwipeBackAfterChange(event) {
-    this.dispatchEvent('swipeback:afterchange swipeBackAfterChange', event, event.detail);
-  }
-
-  onSwipeBackBeforeReset(event) {
-    this.dispatchEvent('swipeback:beforereset swipeBackBeforeReset', event, event.detail);
-  }
-
-  onSwipeBackAfterReset(event) {
-    this.dispatchEvent('swipeback:afterreset swipeBackAfterReset', event, event.detail);
-  }
-
-  onTabShow(e) {
-    this.dispatchEvent('tab:show tabShow', e);
-  }
-
-  onTabHide(e) {
-    this.dispatchEvent('tab:hide tabHide', e);
-  }
-
-  render() {
-    const self = this;
-    const props = self.props;
-    const {
-      id,
-      style,
-      tab,
-      main,
-      tabActive,
-      className
-    } = props;
-    const classes = Utils.classNames(className, 'view', {
-      'view-main': main,
-      'tab-active': tabActive,
-      tab
-    }, Mixins.colorClasses(props));
-    return React.createElement('div', {
-      ref: __reactNode => {
-        this.__reactRefs['el'] = __reactNode;
-      },
-      id: id,
-      style: style,
-      className: classes
-    }, this.slots['default'], self.state.pages.map(page => {
-      const PageComponent = page.component;
-      {
-        return React.createElement(PageComponent, Object.assign({
-          key: page.id
-        }, page.props));
-      }
-    }));
-  }
-
-  componentDidUpdate() {
-    const self = this;
-    if (!self.routerData) return;
-    events.emit('viewRouterDidUpdate', self.routerData);
-  }
-
-  componentWillUnmount() {
-    const self = this;
-    const el = self.refs.el;
-    el.removeEventListener('swipeback:move', self.onSwipeBackMoveBound);
-    el.removeEventListener('swipeback:beforechange', self.onSwipeBackBeforeChangeBound);
-    el.removeEventListener('swipeback:afterchange', self.onSwipeBackAfterChangeBound);
-    el.removeEventListener('swipeback:beforereset', self.onSwipeBackBeforeResetBound);
-    el.removeEventListener('swipeback:afterreset', self.onSwipeBackAfterResetBound);
-    el.removeEventListener('tab:show', self.onTabShowBound);
-    el.removeEventListener('tab:hide', self.onTabHideBound);
-    if (!self.props.init) return;
-    if (self.f7View && self.f7View.destroy) self.f7View.destroy();
-    f7.routers.views.splice(f7.routers.views.indexOf(self.routerData), 1);
-    self.routerData = null;
-    delete self.routerData;
-  }
-
-  componentDidMount() {
-    const self = this;
-    const el = self.refs.el;
-    el.addEventListener('swipeback:move', self.onSwipeBackMoveBound);
-    el.addEventListener('swipeback:beforechange', self.onSwipeBackBeforeChangeBound);
-    el.addEventListener('swipeback:afterchange', self.onSwipeBackAfterChangeBound);
-    el.addEventListener('swipeback:beforereset', self.onSwipeBackBeforeResetBound);
-    el.addEventListener('swipeback:afterreset', self.onSwipeBackAfterResetBound);
-    el.addEventListener('tab:show', self.onTabShowBound);
-    el.addEventListener('tab:hide', self.onTabHideBound);
-    self.setState({
-      pages: []
-    });
-    self.$f7ready(f7Instance => {
+      var classes = _utils2.default.classNames(className, 'view', {
+        'view-main': main,
+        'tab-active': tabActive,
+        tab: tab
+      }, _mixins2.default.colorClasses(props));
+      return _react2.default.createElement('div', {
+        ref: function ref(__reactNode) {
+          _this2.__reactRefs['el'] = __reactNode;
+        },
+        id: id,
+        style: style,
+        className: classes
+      }, this.slots['default'], self.state.pages.map(function (page) {
+        var PageComponent = page.component;
+        {
+          return _react2.default.createElement(PageComponent, Object.assign({
+            key: page.id
+          }, page.props));
+        }
+      }));
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      var self = this;
+      if (!self.routerData) return;
+      _events2.default.emit('viewRouterDidUpdate', self.routerData);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      var self = this;
+      var el = self.refs.el;
+      el.removeEventListener('swipeback:move', self.onSwipeBackMoveBound);
+      el.removeEventListener('swipeback:beforechange', self.onSwipeBackBeforeChangeBound);
+      el.removeEventListener('swipeback:afterchange', self.onSwipeBackAfterChangeBound);
+      el.removeEventListener('swipeback:beforereset', self.onSwipeBackBeforeResetBound);
+      el.removeEventListener('swipeback:afterreset', self.onSwipeBackAfterResetBound);
+      el.removeEventListener('tab:show', self.onTabShowBound);
+      el.removeEventListener('tab:hide', self.onTabHideBound);
       if (!self.props.init) return;
-      self.routerData = {
-        el,
-        component: self,
-        instance: null
-      };
-      f7.routers.views.push(self.routerData);
-      self.routerData.instance = f7Instance.views.create(el, Utils.noUndefinedProps(self.props));
-      self.f7View = self.routerData.instance;
-    });
-  }
+      if (self.f7View && self.f7View.destroy) self.f7View.destroy();
+      _f2.default.routers.views.splice(_f2.default.routers.views.indexOf(self.routerData), 1);
+      self.routerData = null;
+      delete self.routerData;
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var self = this;
+      var el = self.refs.el;
+      el.addEventListener('swipeback:move', self.onSwipeBackMoveBound);
+      el.addEventListener('swipeback:beforechange', self.onSwipeBackBeforeChangeBound);
+      el.addEventListener('swipeback:afterchange', self.onSwipeBackAfterChangeBound);
+      el.addEventListener('swipeback:beforereset', self.onSwipeBackBeforeResetBound);
+      el.addEventListener('swipeback:afterreset', self.onSwipeBackAfterResetBound);
+      el.addEventListener('tab:show', self.onTabShowBound);
+      el.addEventListener('tab:hide', self.onTabHideBound);
+      self.setState({
+        pages: []
+      });
+      self.$f7ready(function (f7Instance) {
+        if (!self.props.init) return;
+        self.routerData = {
+          el: el,
+          component: self,
+          instance: null
+        };
+        _f2.default.routers.views.push(self.routerData);
+        self.routerData.instance = f7Instance.views.create(el, _utils2.default.noUndefinedProps(self.props));
+        self.f7View = self.routerData.instance;
+      });
+    }
+  }, {
+    key: 'dispatchEvent',
+    value: function dispatchEvent(events) {
+      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
 
-  get slots() {
-    return __reactComponentSlots(this.props);
-  }
+      return _reactComponentDispatchEvent2.default.apply(undefined, [this, events].concat(args));
+    }
+  }, {
+    key: 'slots',
+    get: function get() {
+      return (0, _reactComponentSlots2.default)(this.props);
+    }
+  }, {
+    key: 'refs',
+    get: function get() {
+      return this.__reactRefs;
+    },
+    set: function set(refs) {}
+  }]);
 
-  dispatchEvent(events, ...args) {
-    return __reactComponentDispatchEvent(this, events, ...args);
-  }
+  return F7View;
+}(_react2.default.Component);
 
-  get refs() {
-    return this.__reactRefs;
-  }
-
-  set refs(refs) {}
-
-}
-
-__reactComponentSetProps(F7View, Object.assign({
+(0, _reactComponentSetProps2.default)(F7View, Object.assign({
   id: [String, Number],
   tab: Boolean,
   tabActive: Boolean,
@@ -203,6 +269,6 @@ __reactComponentSetProps(F7View, Object.assign({
     type: Boolean,
     default: true
   }
-}, Mixins.colorProps));
+}, _mixins2.default.colorProps));
 
-export default F7View;
+exports.default = F7View;

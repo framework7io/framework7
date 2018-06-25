@@ -1,69 +1,118 @@
-import React from 'react';
-import Utils from '../utils/utils';
-import Mixins from '../utils/mixins';
-import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
-import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
-import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
+'use strict';
 
-class F7MessagebarAttachment extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-    (() => {
-      this.onClickBound = this.onClick.bind(this);
-      this.onDeleteClickBound = this.onDeleteClick.bind(this);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _utils = require('../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _mixins = require('../utils/mixins');
+
+var _mixins2 = _interopRequireDefault(_mixins);
+
+var _reactComponentDispatchEvent = require('../runtime-helpers/react-component-dispatch-event.js');
+
+var _reactComponentDispatchEvent2 = _interopRequireDefault(_reactComponentDispatchEvent);
+
+var _reactComponentSlots = require('../runtime-helpers/react-component-slots.js');
+
+var _reactComponentSlots2 = _interopRequireDefault(_reactComponentSlots);
+
+var _reactComponentSetProps = require('../runtime-helpers/react-component-set-props.js');
+
+var _reactComponentSetProps2 = _interopRequireDefault(_reactComponentSetProps);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var F7MessagebarAttachment = function (_React$Component) {
+  _inherits(F7MessagebarAttachment, _React$Component);
+
+  function F7MessagebarAttachment(props, context) {
+    _classCallCheck(this, F7MessagebarAttachment);
+
+    var _this = _possibleConstructorReturn(this, (F7MessagebarAttachment.__proto__ || Object.getPrototypeOf(F7MessagebarAttachment)).call(this, props, context));
+
+    (function () {
+      _this.onClickBound = _this.onClick.bind(_this);
+      _this.onDeleteClickBound = _this.onDeleteClick.bind(_this);
     })();
+    return _this;
   }
 
-  onClick(e) {
-    this.dispatchEvent('attachment:click attachmentClick', e);
-  }
+  _createClass(F7MessagebarAttachment, [{
+    key: 'onClick',
+    value: function onClick(e) {
+      this.dispatchEvent('attachment:click attachmentClick', e);
+    }
+  }, {
+    key: 'onDeleteClick',
+    value: function onDeleteClick(e) {
+      this.dispatchEvent('attachment:delete attachmentDelete', e);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var self = this;
+      var props = self.props;
+      var deletable = props.deletable,
+          image = props.image,
+          className = props.className,
+          id = props.id,
+          style = props.style;
 
-  onDeleteClick(e) {
-    this.dispatchEvent('attachment:delete attachmentDelete', e);
-  }
+      var classes = _utils2.default.classNames(className, 'messagebar-attachment', _mixins2.default.colorClasses(props));
+      return _react2.default.createElement('div', {
+        id: id,
+        style: style,
+        className: classes,
+        onClick: self.onClickBound
+      }, image && _react2.default.createElement('img', {
+        src: image
+      }), deletable && _react2.default.createElement('span', {
+        className: 'messagebar-attachment-delete',
+        onClick: self.onDeleteClickBound
+      }), this.slots['default']);
+    }
+  }, {
+    key: 'dispatchEvent',
+    value: function dispatchEvent(events) {
+      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
 
-  render() {
-    const self = this;
-    const props = self.props;
-    const {
-      deletable,
-      image,
-      className,
-      id,
-      style
-    } = props;
-    const classes = Utils.classNames(className, 'messagebar-attachment', Mixins.colorClasses(props));
-    return React.createElement('div', {
-      id: id,
-      style: style,
-      className: classes,
-      onClick: self.onClickBound
-    }, image && React.createElement('img', {
-      src: image
-    }), deletable && React.createElement('span', {
-      className: 'messagebar-attachment-delete',
-      onClick: self.onDeleteClickBound
-    }), this.slots['default']);
-  }
+      return _reactComponentDispatchEvent2.default.apply(undefined, [this, events].concat(args));
+    }
+  }, {
+    key: 'slots',
+    get: function get() {
+      return (0, _reactComponentSlots2.default)(this.props);
+    }
+  }]);
 
-  get slots() {
-    return __reactComponentSlots(this.props);
-  }
+  return F7MessagebarAttachment;
+}(_react2.default.Component);
 
-  dispatchEvent(events, ...args) {
-    return __reactComponentDispatchEvent(this, events, ...args);
-  }
-
-}
-
-__reactComponentSetProps(F7MessagebarAttachment, Object.assign({
+(0, _reactComponentSetProps2.default)(F7MessagebarAttachment, Object.assign({
   id: [String, Number],
   image: String,
   deletable: {
     type: Boolean,
     default: true
   }
-}, Mixins.colorProps));
+}, _mixins2.default.colorProps));
 
-export default F7MessagebarAttachment;
+exports.default = F7MessagebarAttachment;

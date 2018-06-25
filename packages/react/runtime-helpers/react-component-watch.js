@@ -1,8 +1,14 @@
-export default function (component, watchFor, prevProps, prevState, callback) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (component, watchFor, prevProps, prevState, callback) {
   if (!callback) return;
 
-  let newValue;
-  let oldValue;
+  var newValue = void 0;
+  var oldValue = void 0;
 
   if (watchFor.indexOf('props') === 0) {
     newValue = component.props;
@@ -12,7 +18,9 @@ export default function (component, watchFor, prevProps, prevState, callback) {
     oldValue = prevState;
   }
   // state and props has 5 letters
-  watchFor.slice(5).split('.').filter(part => part).forEach((part) => {
+  watchFor.slice(5).split('.').filter(function (part) {
+    return part;
+  }).forEach(function (part) {
     if (typeof newValue !== 'undefined' && newValue !== null) {
       newValue = newValue[part];
     }
@@ -24,4 +32,4 @@ export default function (component, watchFor, prevProps, prevState, callback) {
   if (oldValue === newValue) return;
 
   if (callback) callback(newValue, oldValue);
-}
+};

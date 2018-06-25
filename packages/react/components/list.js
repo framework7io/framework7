@@ -1,242 +1,294 @@
-import React from 'react';
-import Utils from '../utils/utils';
-import Mixins from '../utils/mixins';
-import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
-import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
-import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
+'use strict';
 
-class F7List extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-    this.__reactRefs = {};
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _utils = require('../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _mixins = require('../utils/mixins');
+
+var _mixins2 = _interopRequireDefault(_mixins);
+
+var _reactComponentDispatchEvent = require('../runtime-helpers/react-component-dispatch-event.js');
+
+var _reactComponentDispatchEvent2 = _interopRequireDefault(_reactComponentDispatchEvent);
+
+var _reactComponentSlots = require('../runtime-helpers/react-component-slots.js');
+
+var _reactComponentSlots2 = _interopRequireDefault(_reactComponentSlots);
+
+var _reactComponentSetProps = require('../runtime-helpers/react-component-set-props.js');
+
+var _reactComponentSetProps2 = _interopRequireDefault(_reactComponentSetProps);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var F7List = function (_React$Component) {
+  _inherits(F7List, _React$Component);
+
+  function F7List(props, context) {
+    _classCallCheck(this, F7List);
+
+    var _this = _possibleConstructorReturn(this, (F7List.__proto__ || Object.getPrototypeOf(F7List)).call(this, props, context));
+
+    _this.__reactRefs = {};
+    return _this;
   }
 
-  onSortableEnable(event) {
-    this.dispatchEvent('sortable:enable sortableEnable', event);
-  }
-
-  onSortableDisable(event) {
-    this.dispatchEvent('sortable:disable sortableDisable', event);
-  }
-
-  onSortableSort(event) {
-    this.dispatchEvent('sortable:sort sortableSort', event, event.detail);
-  }
-
-  onTabShow(e) {
-    this.dispatchEvent('tab:show tabShow', e);
-  }
-
-  onTabHide(e) {
-    this.dispatchEvent('tab:hide tabHide', e);
-  }
-
-  get classes() {
-    const self = this;
-    const props = self.props;
-    const {
-      inset,
-      tabletInset,
-      mediaList,
-      simpleList,
-      linksList,
-      sortable,
-      accordionList,
-      contactsList,
-      virtualList,
-      sortableEnabled,
-      tab,
-      tabActive,
-      noHairlines,
-      noHairlinesIos,
-      noHairlinesMd,
-      noHairlinesBetween,
-      noHairlinesBetweenIos,
-      noHairlinesBetweenMd,
-      formStoreData,
-      inlineLabels,
-      className
-    } = props;
-    return Utils.classNames(className, 'list', {
-      inset,
-      'tablet-inset': tabletInset,
-      'media-list': mediaList,
-      'simple-list': simpleList,
-      'links-list': linksList,
-      sortable,
-      'accordion-list': accordionList,
-      'contacts-list': contactsList,
-      'virtual-list': virtualList,
-      'sortable-enabled': sortableEnabled,
-      tab,
-      'tab-active': tabActive,
-      'no-hairlines': noHairlines,
-      'no-hairlines-between': noHairlinesBetween,
-      'no-hairlines-md': noHairlinesMd,
-      'no-hairlines-between-md': noHairlinesBetweenMd,
-      'no-hairlines-ios': noHairlinesIos,
-      'no-hairlines-between-ios': noHairlinesBetweenIos,
-      'form-store-data': formStoreData,
-      'inline-labels': inlineLabels
-    }, Mixins.colorClasses(props));
-  }
-
-  render() {
-    const self = this;
-    const props = self.props;
-    const {
-      id,
-      style,
-      form
-    } = props;
-    const {
-      list: slotsList,
-      default: slotsDefault
-    } = self.slots;
-    const rootChildrenBeforeList = [];
-    const rootChildrenAfterList = [];
-    const ulChildren = slotsList || [];
-    const flattenSlots = Utils.flattenArray(slotsDefault);
-    let wasUlChild = false;
-    flattenSlots.forEach(child => {
-      if (typeof child === 'undefined') return;
-      let tag;
-      {
-        tag = child.type && child.type.name;
-
-        if (!tag && typeof child.type === 'string') {
-          tag = child.type;
-        }
-      }
-
-      if (!tag && 'react' === 'react' || tag && !(tag === 'li' || tag === 'F7ListItem' || tag === 'F7ListButton' || tag.indexOf('list-item') >= 0 || tag.indexOf('list-button') >= 0)) {
-        if (wasUlChild) rootChildrenAfterList.push(child);else rootChildrenBeforeList.push(child);
-      } else if (tag) {
-        wasUlChild = true;
-        ulChildren.push(child);
-      }
-    });
-    const ListTag = form ? 'form' : 'div';
-
-    if (ulChildren.length > 0) {
-      return React.createElement(ListTag, {
-        id: id,
-        ref: __reactNode => {
-          this.__reactRefs['el'] = __reactNode;
-        },
-        style: style,
-        className: self.classes
-      }, self.slots['before-list'], rootChildrenBeforeList, React.createElement('ul', null, ulChildren), self.slots['after-list'], rootChildrenAfterList);
-    } else {
-      return React.createElement(ListTag, {
-        id: id,
-        ref: __reactNode => {
-          this.__reactRefs['el'] = __reactNode;
-        },
-        style: style,
-        className: self.classes
-      }, self.slots['before-list'], rootChildrenBeforeList, self.slots['after-list'], rootChildrenAfterList);
+  _createClass(F7List, [{
+    key: 'onSortableEnable',
+    value: function onSortableEnable(event) {
+      this.dispatchEvent('sortable:enable sortableEnable', event);
     }
-  }
-
-  componentDidMount() {
-    const self = this;
-    const el = self.refs.el;
-    const {
-      virtualList,
-      virtualListParams
-    } = self.props;
-
-    if (el) {
-      self.onSortableEnableBound = self.onSortableEnable.bind(self);
-      self.onSortableDisableBound = self.onSortableDisable.bind(self);
-      self.onSortableSortBound = self.onSortableSort.bind(self);
-      self.onTabShowBound = self.onTabShow.bind(self);
-      self.onTabHideBound = self.onTabHide.bind(self);
-      el.addEventListener('sortable:enable', self.onSortableEnableBound);
-      el.addEventListener('sortable:disable', self.onSortableDisableBound);
-      el.addEventListener('sortable:sort', self.onSortableSortBound);
-      el.addEventListener('tab:show', self.onTabShowBound);
-      el.addEventListener('tab:hide', self.onTabHideBound);
+  }, {
+    key: 'onSortableDisable',
+    value: function onSortableDisable(event) {
+      this.dispatchEvent('sortable:disable sortableDisable', event);
     }
+  }, {
+    key: 'onSortableSort',
+    value: function onSortableSort(event) {
+      this.dispatchEvent('sortable:sort sortableSort', event, event.detail);
+    }
+  }, {
+    key: 'onTabShow',
+    value: function onTabShow(e) {
+      this.dispatchEvent('tab:show tabShow', e);
+    }
+  }, {
+    key: 'onTabHide',
+    value: function onTabHide(e) {
+      this.dispatchEvent('tab:hide tabHide', e);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
 
-    if (!virtualList) return;
-    self.$f7ready(f7 => {
-      const $$ = self.$$;
-      const $el = $$(el);
-      const templateScript = $el.find('script');
-      let template = templateScript.html();
+      var self = this;
+      var props = self.props;
+      var id = props.id,
+          style = props.style,
+          form = props.form;
+      var _self$slots = self.slots,
+          slotsList = _self$slots.list,
+          slotsDefault = _self$slots.default;
 
-      if (!template && templateScript.length > 0) {
-        template = templateScript[0].outerHTML;
-        template = /\<script type="text\/template7"\>(.*)<\/script>/.exec(template)[1];
-      }
+      var rootChildrenBeforeList = [];
+      var rootChildrenAfterList = [];
+      var ulChildren = slotsList || [];
+      var flattenSlots = _utils2.default.flattenArray(slotsDefault);
+      var wasUlChild = false;
+      flattenSlots.forEach(function (child) {
+        if (typeof child === 'undefined') return;
+        var tag = void 0;
+        {
+          tag = child.type && child.type.name;
 
-      const vlParams = virtualListParams || {};
-      if (!template && !vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal) return;
-      if (template) template = self.$t7.compile(template);
-      self.f7VirtualList = f7.virtualList.create(Utils.extend({
-        el,
-        itemTemplate: template,
-        on: {
-          itemBeforeInsert(itemEl, item) {
-            const vl = this;
-            self.dispatchEvent('virtual:itembeforeinsert virtualItemBeforeInsert', vl, itemEl, item);
-          },
-
-          beforeClear(fragment) {
-            const vl = this;
-            self.dispatchEvent('virtual:beforeclear virtualBeforeClear', vl, fragment);
-          },
-
-          itemsBeforeInsert(fragment) {
-            const vl = this;
-            self.dispatchEvent('virtual:itemsbeforeinsert virtualItemsBeforeInsert', vl, fragment);
-          },
-
-          itemsAfterInsert(fragment) {
-            const vl = this;
-            self.dispatchEvent('virtual:itemsafterinsert virtualItemsAfterInsert', vl, fragment);
+          if (!tag && typeof child.type === 'string') {
+            tag = child.type;
           }
-
         }
-      }, vlParams));
-    });
-  }
 
-  componentWillUnmount() {
-    const self = this;
-    const el = self.refs.el;
+        if (!tag && 'react' === 'react' || tag && !(tag === 'li' || tag === 'F7ListItem' || tag === 'F7ListButton' || tag.indexOf('list-item') >= 0 || tag.indexOf('list-button') >= 0)) {
+          if (wasUlChild) rootChildrenAfterList.push(child);else rootChildrenBeforeList.push(child);
+        } else if (tag) {
+          wasUlChild = true;
+          ulChildren.push(child);
+        }
+      });
+      var ListTag = form ? 'form' : 'div';
 
-    if (el) {
-      el.removeEventListener('sortable:enable', self.onSortableEnableBound);
-      el.removeEventListener('sortable:disable', self.onSortableDisableBound);
-      el.removeEventListener('sortable:sort', self.onSortableSortBound);
-      el.removeEventListener('tab:show', self.onTabShowBound);
-      el.removeEventListener('tab:hide', self.onTabHideBound);
+      if (ulChildren.length > 0) {
+        return _react2.default.createElement(ListTag, {
+          id: id,
+          ref: function ref(__reactNode) {
+            _this2.__reactRefs['el'] = __reactNode;
+          },
+          style: style,
+          className: self.classes
+        }, self.slots['before-list'], rootChildrenBeforeList, _react2.default.createElement('ul', null, ulChildren), self.slots['after-list'], rootChildrenAfterList);
+      } else {
+        return _react2.default.createElement(ListTag, {
+          id: id,
+          ref: function ref(__reactNode) {
+            _this2.__reactRefs['el'] = __reactNode;
+          },
+          style: style,
+          className: self.classes
+        }, self.slots['before-list'], rootChildrenBeforeList, self.slots['after-list'], rootChildrenAfterList);
+      }
     }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var self = this;
+      var el = self.refs.el;
+      var _self$props = self.props,
+          virtualList = _self$props.virtualList,
+          virtualListParams = _self$props.virtualListParams;
 
-    if (!(self.virtualList && self.f7VirtualList)) return;
-    if (self.f7VirtualList.destroy) self.f7VirtualList.destroy();
-  }
 
-  get slots() {
-    return __reactComponentSlots(this.props);
-  }
+      if (el) {
+        self.onSortableEnableBound = self.onSortableEnable.bind(self);
+        self.onSortableDisableBound = self.onSortableDisable.bind(self);
+        self.onSortableSortBound = self.onSortableSort.bind(self);
+        self.onTabShowBound = self.onTabShow.bind(self);
+        self.onTabHideBound = self.onTabHide.bind(self);
+        el.addEventListener('sortable:enable', self.onSortableEnableBound);
+        el.addEventListener('sortable:disable', self.onSortableDisableBound);
+        el.addEventListener('sortable:sort', self.onSortableSortBound);
+        el.addEventListener('tab:show', self.onTabShowBound);
+        el.addEventListener('tab:hide', self.onTabHideBound);
+      }
 
-  dispatchEvent(events, ...args) {
-    return __reactComponentDispatchEvent(this, events, ...args);
-  }
+      if (!virtualList) return;
+      self.$f7ready(function (f7) {
+        var $$ = self.$$;
+        var $el = $$(el);
+        var templateScript = $el.find('script');
+        var template = templateScript.html();
 
-  get refs() {
-    return this.__reactRefs;
-  }
+        if (!template && templateScript.length > 0) {
+          template = templateScript[0].outerHTML;
+          template = /\<script type="text\/template7"\>(.*)<\/script>/.exec(template)[1];
+        }
 
-  set refs(refs) {}
+        var vlParams = virtualListParams || {};
+        if (!template && !vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal) return;
+        if (template) template = self.$t7.compile(template);
+        self.f7VirtualList = f7.virtualList.create(_utils2.default.extend({
+          el: el,
+          itemTemplate: template,
+          on: {
+            itemBeforeInsert: function itemBeforeInsert(itemEl, item) {
+              var vl = this;
+              self.dispatchEvent('virtual:itembeforeinsert virtualItemBeforeInsert', vl, itemEl, item);
+            },
+            beforeClear: function beforeClear(fragment) {
+              var vl = this;
+              self.dispatchEvent('virtual:beforeclear virtualBeforeClear', vl, fragment);
+            },
+            itemsBeforeInsert: function itemsBeforeInsert(fragment) {
+              var vl = this;
+              self.dispatchEvent('virtual:itemsbeforeinsert virtualItemsBeforeInsert', vl, fragment);
+            },
+            itemsAfterInsert: function itemsAfterInsert(fragment) {
+              var vl = this;
+              self.dispatchEvent('virtual:itemsafterinsert virtualItemsAfterInsert', vl, fragment);
+            }
+          }
+        }, vlParams));
+      });
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      var self = this;
+      var el = self.refs.el;
 
-}
+      if (el) {
+        el.removeEventListener('sortable:enable', self.onSortableEnableBound);
+        el.removeEventListener('sortable:disable', self.onSortableDisableBound);
+        el.removeEventListener('sortable:sort', self.onSortableSortBound);
+        el.removeEventListener('tab:show', self.onTabShowBound);
+        el.removeEventListener('tab:hide', self.onTabHideBound);
+      }
 
-__reactComponentSetProps(F7List, Object.assign({
+      if (!(self.virtualList && self.f7VirtualList)) return;
+      if (self.f7VirtualList.destroy) self.f7VirtualList.destroy();
+    }
+  }, {
+    key: 'dispatchEvent',
+    value: function dispatchEvent(events) {
+      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+
+      return _reactComponentDispatchEvent2.default.apply(undefined, [this, events].concat(args));
+    }
+  }, {
+    key: 'classes',
+    get: function get() {
+      var self = this;
+      var props = self.props;
+      var inset = props.inset,
+          tabletInset = props.tabletInset,
+          mediaList = props.mediaList,
+          simpleList = props.simpleList,
+          linksList = props.linksList,
+          sortable = props.sortable,
+          accordionList = props.accordionList,
+          contactsList = props.contactsList,
+          virtualList = props.virtualList,
+          sortableEnabled = props.sortableEnabled,
+          tab = props.tab,
+          tabActive = props.tabActive,
+          noHairlines = props.noHairlines,
+          noHairlinesIos = props.noHairlinesIos,
+          noHairlinesMd = props.noHairlinesMd,
+          noHairlinesBetween = props.noHairlinesBetween,
+          noHairlinesBetweenIos = props.noHairlinesBetweenIos,
+          noHairlinesBetweenMd = props.noHairlinesBetweenMd,
+          formStoreData = props.formStoreData,
+          inlineLabels = props.inlineLabels,
+          className = props.className;
+
+      return _utils2.default.classNames(className, 'list', {
+        inset: inset,
+        'tablet-inset': tabletInset,
+        'media-list': mediaList,
+        'simple-list': simpleList,
+        'links-list': linksList,
+        sortable: sortable,
+        'accordion-list': accordionList,
+        'contacts-list': contactsList,
+        'virtual-list': virtualList,
+        'sortable-enabled': sortableEnabled,
+        tab: tab,
+        'tab-active': tabActive,
+        'no-hairlines': noHairlines,
+        'no-hairlines-between': noHairlinesBetween,
+        'no-hairlines-md': noHairlinesMd,
+        'no-hairlines-between-md': noHairlinesBetweenMd,
+        'no-hairlines-ios': noHairlinesIos,
+        'no-hairlines-between-ios': noHairlinesBetweenIos,
+        'form-store-data': formStoreData,
+        'inline-labels': inlineLabels
+      }, _mixins2.default.colorClasses(props));
+    }
+  }, {
+    key: 'slots',
+    get: function get() {
+      return (0, _reactComponentSlots2.default)(this.props);
+    }
+  }, {
+    key: 'refs',
+    get: function get() {
+      return this.__reactRefs;
+    },
+    set: function set(refs) {}
+  }]);
+
+  return F7List;
+}(_react2.default.Component);
+
+(0, _reactComponentSetProps2.default)(F7List, Object.assign({
   id: [String, Number],
   inset: Boolean,
   tabletInset: Boolean,
@@ -260,6 +312,6 @@ __reactComponentSetProps(F7List, Object.assign({
   inlineLabels: Boolean,
   virtualList: Boolean,
   virtualListParams: Object
-}, Mixins.colorProps));
+}, _mixins2.default.colorProps));
 
-export default F7List;
+exports.default = F7List;

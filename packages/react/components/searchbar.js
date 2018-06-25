@@ -1,233 +1,293 @@
-import React from 'react';
-import Utils from '../utils/utils';
-import Mixins from '../utils/mixins';
-import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
-import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
-import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
+'use strict';
 
-class F7Searchbar extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-    this.__reactRefs = {};
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _utils = require('../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _mixins = require('../utils/mixins');
+
+var _mixins2 = _interopRequireDefault(_mixins);
+
+var _reactComponentDispatchEvent = require('../runtime-helpers/react-component-dispatch-event.js');
+
+var _reactComponentDispatchEvent2 = _interopRequireDefault(_reactComponentDispatchEvent);
+
+var _reactComponentSlots = require('../runtime-helpers/react-component-slots.js');
+
+var _reactComponentSlots2 = _interopRequireDefault(_reactComponentSlots);
+
+var _reactComponentSetProps = require('../runtime-helpers/react-component-set-props.js');
+
+var _reactComponentSetProps2 = _interopRequireDefault(_reactComponentSetProps);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var F7Searchbar = function (_React$Component) {
+  _inherits(F7Searchbar, _React$Component);
+
+  function F7Searchbar(props, context) {
+    _classCallCheck(this, F7Searchbar);
+
+    var _this = _possibleConstructorReturn(this, (F7Searchbar.__proto__ || Object.getPrototypeOf(F7Searchbar)).call(this, props, context));
+
+    _this.__reactRefs = {};
+    return _this;
   }
 
-  search(query) {
-    if (!this.f7Searchbar) return undefined;
-    return this.f7Searchbar.search(query);
-  }
-
-  enable() {
-    if (!this.f7Searchbar) return undefined;
-    return this.f7Searchbar.enable();
-  }
-
-  disable() {
-    if (!this.f7Searchbar) return undefined;
-    return this.f7Searchbar.disable();
-  }
-
-  toggle() {
-    if (!this.f7Searchbar) return undefined;
-    return this.toggle.disable();
-  }
-
-  clear() {
-    if (!this.f7Searchbar) return undefined;
-    return this.f7Searchbar.clear();
-  }
-
-  onChange(event) {
-    this.dispatchEvent('change', event);
-  }
-
-  onInput(event) {
-    this.dispatchEvent('input', event);
-  }
-
-  onFocus(event) {
-    this.dispatchEvent('focus', event);
-  }
-
-  onBlur(event) {
-    this.dispatchEvent('blur', event);
-  }
-
-  onSubmit(event) {
-    this.dispatchEvent('submit', event);
-  }
-
-  onClearButtonClick(event) {
-    this.dispatchEvent('click:clear clickClear', event);
-  }
-
-  onDisableButtonClick(event) {
-    this.dispatchEvent('click:disable clickDisable', event);
-  }
-
-  render() {
-    const self = this;
-    let clearEl;
-    let disableEl;
-    const props = self.props;
-    const {
-      placeholder,
-      clearButton,
-      disableButton,
-      disableButtonText,
-      form,
-      noShadow,
-      noHairline,
-      expandable,
-      className,
-      style,
-      id
-    } = props;
-
-    if (clearButton) {
-      clearEl = React.createElement('span', {
-        className: 'input-clear-button',
-        onClick: self.onClearButtonClick.bind(self)
-      });
+  _createClass(F7Searchbar, [{
+    key: 'search',
+    value: function search(query) {
+      if (!this.f7Searchbar) return undefined;
+      return this.f7Searchbar.search(query);
     }
-
-    if (disableButton) {
-      disableEl = React.createElement('span', {
-        className: 'searchbar-disable-button',
-        onClick: self.onDisableButtonClick.bind(self)
-      }, disableButtonText);
+  }, {
+    key: 'enable',
+    value: function enable() {
+      if (!this.f7Searchbar) return undefined;
+      return this.f7Searchbar.enable();
     }
-
-    const SearchbarTag = form ? 'form' : 'div';
-    const classes = Utils.classNames(className, 'searchbar', {
-      'no-shadow': noShadow,
-      'no-hairline': noHairline,
-      'searchbar-expandable': expandable
-    }, Mixins.colorClasses(props));
-    return React.createElement(SearchbarTag, {
-      ref: __reactNode => {
-        this.__reactRefs['el'] = __reactNode;
-      },
-      id: id,
-      style: style,
-      className: classes
-    }, this.slots['before-inner'], React.createElement('div', {
-      className: 'searchbar-inner'
-    }, this.slots['inner-start'], React.createElement('div', {
-      className: 'searchbar-input-wrap'
-    }, this.slots['input-wrap-start'], React.createElement('input', {
-      placeholder: placeholder,
-      type: 'search',
-      onInput: self.onInput.bind(self),
-      onChange: self.onChange.bind(self),
-      onFocus: self.onFocus.bind(self),
-      onBlur: self.onBlur.bind(self)
-    }), React.createElement('i', {
-      className: 'searchbar-icon'
-    }), clearEl, this.slots['input-wrap-end']), disableEl, this.slots['inner-end'], this.slots['default']), this.slots['after-inner']);
-  }
-
-  componentDidMount() {
-    const self = this;
-    const {
-      init,
-      searchContainer,
-      searchIn,
-      searchItem,
-      hideOnEnableEl,
-      hideOnSearchEl,
-      foundEl,
-      notFoundEl,
-      backdrop,
-      backdropEl,
-      disableButton,
-      ignore,
-      customSearch,
-      removeDiacritics,
-      hideDividers,
-      hideGroups,
-      form
-    } = self.props;
-    if (!init) return;
-    const el = self.refs.el;
-
-    if (form && el) {
-      self.onSubmitBound = self.onSubmit.bind(self);
-      el.addEventListener('submit', self.onSubmitBound, false);
+  }, {
+    key: 'disable',
+    value: function disable() {
+      if (!this.f7Searchbar) return undefined;
+      return this.f7Searchbar.disable();
     }
+  }, {
+    key: 'toggle',
+    value: function toggle() {
+      if (!this.f7Searchbar) return undefined;
+      return this.toggle.disable();
+    }
+  }, {
+    key: 'clear',
+    value: function clear() {
+      if (!this.f7Searchbar) return undefined;
+      return this.f7Searchbar.clear();
+    }
+  }, {
+    key: 'onChange',
+    value: function onChange(event) {
+      this.dispatchEvent('change', event);
+    }
+  }, {
+    key: 'onInput',
+    value: function onInput(event) {
+      this.dispatchEvent('input', event);
+    }
+  }, {
+    key: 'onFocus',
+    value: function onFocus(event) {
+      this.dispatchEvent('focus', event);
+    }
+  }, {
+    key: 'onBlur',
+    value: function onBlur(event) {
+      this.dispatchEvent('blur', event);
+    }
+  }, {
+    key: 'onSubmit',
+    value: function onSubmit(event) {
+      this.dispatchEvent('submit', event);
+    }
+  }, {
+    key: 'onClearButtonClick',
+    value: function onClearButtonClick(event) {
+      this.dispatchEvent('click:clear clickClear', event);
+    }
+  }, {
+    key: 'onDisableButtonClick',
+    value: function onDisableButtonClick(event) {
+      this.dispatchEvent('click:disable clickDisable', event);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
 
-    self.$f7ready(() => {
-      const params = Utils.noUndefinedProps({
-        el: self.refs.el,
-        searchContainer,
-        searchIn,
-        searchItem,
-        hideOnEnableEl,
-        hideOnSearchEl,
-        foundEl,
-        notFoundEl,
-        backdrop,
-        backdropEl,
-        disableButton,
-        ignore,
-        customSearch,
-        removeDiacritics,
-        hideDividers,
-        hideGroups,
-        on: {
-          search(searchbar, query, previousQuery) {
-            self.dispatchEvent('searchbar:search searchbarSearch', searchbar, query, previousQuery);
-          },
+      var self = this;
+      var clearEl = void 0;
+      var disableEl = void 0;
+      var props = self.props;
+      var placeholder = props.placeholder,
+          clearButton = props.clearButton,
+          disableButton = props.disableButton,
+          disableButtonText = props.disableButtonText,
+          form = props.form,
+          noShadow = props.noShadow,
+          noHairline = props.noHairline,
+          expandable = props.expandable,
+          className = props.className,
+          style = props.style,
+          id = props.id;
 
-          clear(searchbar, previousQuery) {
-            self.dispatchEvent('searchbar:clear searchbarClear', searchbar, previousQuery);
-          },
 
-          enable(searchbar) {
-            self.dispatchEvent('searchbar:enable searchbarEnable', searchbar);
-          },
+      if (clearButton) {
+        clearEl = _react2.default.createElement('span', {
+          className: 'input-clear-button',
+          onClick: self.onClearButtonClick.bind(self)
+        });
+      }
 
-          disable(searchbar) {
-            self.dispatchEvent('searchbar:disable searchbarDisable', searchbar);
+      if (disableButton) {
+        disableEl = _react2.default.createElement('span', {
+          className: 'searchbar-disable-button',
+          onClick: self.onDisableButtonClick.bind(self)
+        }, disableButtonText);
+      }
+
+      var SearchbarTag = form ? 'form' : 'div';
+      var classes = _utils2.default.classNames(className, 'searchbar', {
+        'no-shadow': noShadow,
+        'no-hairline': noHairline,
+        'searchbar-expandable': expandable
+      }, _mixins2.default.colorClasses(props));
+      return _react2.default.createElement(SearchbarTag, {
+        ref: function ref(__reactNode) {
+          _this2.__reactRefs['el'] = __reactNode;
+        },
+        id: id,
+        style: style,
+        className: classes
+      }, this.slots['before-inner'], _react2.default.createElement('div', {
+        className: 'searchbar-inner'
+      }, this.slots['inner-start'], _react2.default.createElement('div', {
+        className: 'searchbar-input-wrap'
+      }, this.slots['input-wrap-start'], _react2.default.createElement('input', {
+        placeholder: placeholder,
+        type: 'search',
+        onInput: self.onInput.bind(self),
+        onChange: self.onChange.bind(self),
+        onFocus: self.onFocus.bind(self),
+        onBlur: self.onBlur.bind(self)
+      }), _react2.default.createElement('i', {
+        className: 'searchbar-icon'
+      }), clearEl, this.slots['input-wrap-end']), disableEl, this.slots['inner-end'], this.slots['default']), this.slots['after-inner']);
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var self = this;
+      var _self$props = self.props,
+          init = _self$props.init,
+          searchContainer = _self$props.searchContainer,
+          searchIn = _self$props.searchIn,
+          searchItem = _self$props.searchItem,
+          hideOnEnableEl = _self$props.hideOnEnableEl,
+          hideOnSearchEl = _self$props.hideOnSearchEl,
+          foundEl = _self$props.foundEl,
+          notFoundEl = _self$props.notFoundEl,
+          backdrop = _self$props.backdrop,
+          backdropEl = _self$props.backdropEl,
+          disableButton = _self$props.disableButton,
+          ignore = _self$props.ignore,
+          customSearch = _self$props.customSearch,
+          removeDiacritics = _self$props.removeDiacritics,
+          hideDividers = _self$props.hideDividers,
+          hideGroups = _self$props.hideGroups,
+          form = _self$props.form;
+
+      if (!init) return;
+      var el = self.refs.el;
+
+      if (form && el) {
+        self.onSubmitBound = self.onSubmit.bind(self);
+        el.addEventListener('submit', self.onSubmitBound, false);
+      }
+
+      self.$f7ready(function () {
+        var params = _utils2.default.noUndefinedProps({
+          el: self.refs.el,
+          searchContainer: searchContainer,
+          searchIn: searchIn,
+          searchItem: searchItem,
+          hideOnEnableEl: hideOnEnableEl,
+          hideOnSearchEl: hideOnSearchEl,
+          foundEl: foundEl,
+          notFoundEl: notFoundEl,
+          backdrop: backdrop,
+          backdropEl: backdropEl,
+          disableButton: disableButton,
+          ignore: ignore,
+          customSearch: customSearch,
+          removeDiacritics: removeDiacritics,
+          hideDividers: hideDividers,
+          hideGroups: hideGroups,
+          on: {
+            search: function search(searchbar, query, previousQuery) {
+              self.dispatchEvent('searchbar:search searchbarSearch', searchbar, query, previousQuery);
+            },
+            clear: function clear(searchbar, previousQuery) {
+              self.dispatchEvent('searchbar:clear searchbarClear', searchbar, previousQuery);
+            },
+            enable: function enable(searchbar) {
+              self.dispatchEvent('searchbar:enable searchbarEnable', searchbar);
+            },
+            disable: function disable(searchbar) {
+              self.dispatchEvent('searchbar:disable searchbarDisable', searchbar);
+            }
           }
-
-        }
+        });
+        Object.keys(params).forEach(function (key) {
+          if (params[key] === '') {
+            delete params[key];
+          }
+        });
+        self.f7Searchbar = self.$f7.searchbar.create(params);
       });
-      Object.keys(params).forEach(key => {
-        if (params[key] === '') {
-          delete params[key];
-        }
-      });
-      self.f7Searchbar = self.$f7.searchbar.create(params);
-    });
-  }
-
-  componentWillUnmount() {
-    const self = this;
-
-    if (self.props.form && self.refs.el) {
-      self.refs.el.removeEventListener('submit', self.onSubmitBound, false);
     }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      var self = this;
 
-    if (self.f7Searchbar && self.f7Searchbar.destroy) self.f7Searchbar.destroy();
-  }
+      if (self.props.form && self.refs.el) {
+        self.refs.el.removeEventListener('submit', self.onSubmitBound, false);
+      }
 
-  get slots() {
-    return __reactComponentSlots(this.props);
-  }
+      if (self.f7Searchbar && self.f7Searchbar.destroy) self.f7Searchbar.destroy();
+    }
+  }, {
+    key: 'dispatchEvent',
+    value: function dispatchEvent(events) {
+      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
 
-  dispatchEvent(events, ...args) {
-    return __reactComponentDispatchEvent(this, events, ...args);
-  }
+      return _reactComponentDispatchEvent2.default.apply(undefined, [this, events].concat(args));
+    }
+  }, {
+    key: 'slots',
+    get: function get() {
+      return (0, _reactComponentSlots2.default)(this.props);
+    }
+  }, {
+    key: 'refs',
+    get: function get() {
+      return this.__reactRefs;
+    },
+    set: function set(refs) {}
+  }]);
 
-  get refs() {
-    return this.__reactRefs;
-  }
+  return F7Searchbar;
+}(_react2.default.Component);
 
-  set refs(refs) {}
-
-}
-
-__reactComponentSetProps(F7Searchbar, Object.assign({
+(0, _reactComponentSetProps2.default)(F7Searchbar, Object.assign({
   id: [String, Number],
   noShadow: Boolean,
   noHairline: Boolean,
@@ -306,6 +366,6 @@ __reactComponentSetProps(F7Searchbar, Object.assign({
     type: Boolean,
     default: true
   }
-}, Mixins.colorProps));
+}, _mixins2.default.colorProps));
 
-export default F7Searchbar;
+exports.default = F7Searchbar;
