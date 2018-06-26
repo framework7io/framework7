@@ -1,5 +1,9 @@
 {
-  "name": "framework7",
+  "name": "framework7-react",
+  "version": "9.9.15",
+  "main": "packages/react/framework7-react.js",
+  "jsnext:main": "packages/react/framework7-react.esm.js",
+  "module": "packages/react/framework7-react.esm.js",
   "scripts": {
     "build:dev": "cross-env-shell NODE_ENV=development \"gulp build-core && gulp phenome && gulp build-vue && gulp build-react\"",
     "build:prod": "cross-env-shell NODE_ENV=production \"gulp build-core && gulp phenome && gulp build-vue && gulp build-react\"",
@@ -21,6 +25,7 @@
     "lint:fix": "eslint . --fix",
     "test": "npm run build:prod && eslint .",
     "release": "bash ./scripts/release.sh",
+    "es6toes5": "babel packages/react --presets babel-preset-es2015 --plugins transform-class-properties --out-dir packages/react",
     "postinstall": "node -e \"console.log('\\u001b[35m\\u001b[1mLove Framework7? Support project by donating or pledging on patreon:\\u001b[22m\\u001b[39m\\n > \\u001b[32mhttps://patreon.com/vladimirkharlampidi\\u001b[0m\\n')\""
   },
   "repository": {
@@ -45,14 +50,17 @@
     }
   },
   "dependencies": {
-    "dom7": "^2.0.7",
+    "babel-cli": "^6.26.0",
+    "dom7": "git+ssh://git@github.com:burtontanner/dom7.git#v2.0.8",
     "path-to-regexp": "^2.1.0",
     "ssr-window": "^1.0.0",
-    "template7": "^1.3.6"
+    "template7": "git+ssh://git@github.com:burtontanner/template7.git#v1.3.7"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.49",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.49",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-es2015": "^6.0.15",
     "cross-env": "^5.1.6",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^13.0.0",

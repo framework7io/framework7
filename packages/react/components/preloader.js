@@ -1,73 +1,107 @@
-import React from 'react';
-import Utils from '../utils/utils';
-import Mixins from '../utils/mixins';
-import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
+'use strict';
 
-class F7Preloader extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _utils = require('../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _mixins = require('../utils/mixins');
+
+var _mixins2 = _interopRequireDefault(_mixins);
+
+var _reactComponentSetProps = require('../runtime-helpers/react-component-set-props.js');
+
+var _reactComponentSetProps2 = _interopRequireDefault(_reactComponentSetProps);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var F7Preloader = function (_React$Component) {
+  _inherits(F7Preloader, _React$Component);
+
+  function F7Preloader(props, context) {
+    _classCallCheck(this, F7Preloader);
+
+    return _possibleConstructorReturn(this, (F7Preloader.__proto__ || Object.getPrototypeOf(F7Preloader)).call(this, props, context));
   }
 
-  get sizeComputed() {
-    let s = this.props.size;
+  _createClass(F7Preloader, [{
+    key: 'render',
+    value: function render() {
+      var self = this;
+      var sizeComputed = self.sizeComputed;
 
-    if (s && typeof s === 'string' && s.indexOf('px') >= 0) {
-      s = s.replace('px', '');
+      var props = self.props;
+      var id = props.id,
+          style = props.style,
+          className = props.className;
+
+      var preloaderStyle = {};
+
+      if (sizeComputed) {
+        preloaderStyle.width = sizeComputed + 'px';
+        preloaderStyle.height = sizeComputed + 'px';
+      }
+
+      if (style) _utils2.default.extend(preloaderStyle, style || {});
+      var innerEl = void 0;
+
+      if (self.$theme.md) {
+        innerEl = _react2.default.createElement('span', {
+          className: 'preloader-inner'
+        }, _react2.default.createElement('span', {
+          className: 'preloader-inner-gap'
+        }), _react2.default.createElement('span', {
+          className: 'preloader-inner-left'
+        }, _react2.default.createElement('span', {
+          className: 'preloader-inner-half-circle'
+        })), _react2.default.createElement('span', {
+          className: 'preloader-inner-right'
+        }, _react2.default.createElement('span', {
+          className: 'preloader-inner-half-circle'
+        })));
+      }
+
+      var classes = _utils2.default.classNames(className, 'preloader', _mixins2.default.colorClasses(props));
+      return _react2.default.createElement('span', {
+        id: id,
+        style: preloaderStyle,
+        className: classes
+      }, innerEl);
     }
+  }, {
+    key: 'sizeComputed',
+    get: function get() {
+      var s = this.props.size;
 
-    return s;
-  }
+      if (s && typeof s === 'string' && s.indexOf('px') >= 0) {
+        s = s.replace('px', '');
+      }
 
-  render() {
-    const self = this;
-    const {
-      sizeComputed
-    } = self;
-    const props = self.props;
-    const {
-      id,
-      style,
-      className
-    } = props;
-    const preloaderStyle = {};
-
-    if (sizeComputed) {
-      preloaderStyle.width = `${sizeComputed}px`;
-      preloaderStyle.height = `${sizeComputed}px`;
+      return s;
     }
+  }]);
 
-    if (style) Utils.extend(preloaderStyle, style || {});
-    let innerEl;
+  return F7Preloader;
+}(_react2.default.Component);
 
-    if (self.$theme.md) {
-      innerEl = React.createElement('span', {
-        className: 'preloader-inner'
-      }, React.createElement('span', {
-        className: 'preloader-inner-gap'
-      }), React.createElement('span', {
-        className: 'preloader-inner-left'
-      }, React.createElement('span', {
-        className: 'preloader-inner-half-circle'
-      })), React.createElement('span', {
-        className: 'preloader-inner-right'
-      }, React.createElement('span', {
-        className: 'preloader-inner-half-circle'
-      })));
-    }
-
-    const classes = Utils.classNames(className, 'preloader', Mixins.colorClasses(props));
-    return React.createElement('span', {
-      id: id,
-      style: preloaderStyle,
-      className: classes
-    }, innerEl);
-  }
-
-}
-
-__reactComponentSetProps(F7Preloader, Object.assign({
+(0, _reactComponentSetProps2.default)(F7Preloader, Object.assign({
   id: [String, Number],
   size: [Number, String]
-}, Mixins.colorProps));
+}, _mixins2.default.colorProps));
 
-export default F7Preloader;
+exports.default = F7Preloader;

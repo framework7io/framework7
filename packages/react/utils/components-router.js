@@ -1,17 +1,31 @@
-/* eslint no-underscore-dangle: "off" */
-import f7 from './f7';
-import events from './events';
-import Utils from './utils';
+'use strict';
 
-let routerComponentIdCounter = 0;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-export default {
+var _f = require('./f7');
+
+var _f2 = _interopRequireDefault(_f);
+
+var _events = require('./events');
+
+var _events2 = _interopRequireDefault(_events);
+
+var _utils = require('./utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var routerComponentIdCounter = 0; /* eslint no-underscore-dangle: "off" */
+exports.default = {
   proto: {
-    pageComponentLoader(routerEl, component, componentUrl, options, resolve, reject) {
-      const router = this;
-      const el = routerEl;
-      let routerComponent;
-      f7.routers.views.forEach((data) => {
+    pageComponentLoader: function pageComponentLoader(routerEl, component, componentUrl, options, resolve, reject) {
+      var router = this;
+      var el = routerEl;
+      var routerComponent = void 0;
+      _f2.default.routers.views.forEach(function (data) {
         if (data.el && data.el === routerEl) {
           routerComponent = data.component;
         }
@@ -22,49 +36,46 @@ export default {
         return;
       }
 
-      const id = `${Utils.now()}_${(routerComponentIdCounter += 1)}`;
-      const pageData = {
-        component,
-        id,
-        props: Utils.extend(
-          {
-            f7route: options.route,
-            f7router: router,
-          },
-          options.route.params
-        ),
+      var id = _utils2.default.now() + '_' + (routerComponentIdCounter += 1);
+      var pageData = {
+        component: component,
+        id: id,
+        props: _utils2.default.extend({
+          f7route: options.route,
+          f7router: router
+        }, options.route.params)
       };
       routerComponent.$f7router = router;
       routerComponent.$f7route = options.route;
 
-      let resolved;
+      var resolved = void 0;
       function onDidUpdate(componentRouterData) {
         if (componentRouterData.component !== routerComponent || resolved) return;
-        events.off('viewRouterDidUpdate', onDidUpdate);
+        _events2.default.off('viewRouterDidUpdate', onDidUpdate);
 
-        const pageEl = el.children[el.children.length - 1];
+        var pageEl = el.children[el.children.length - 1];
         pageData.el = pageEl;
 
         resolve(pageEl);
         resolved = true;
       }
 
-      events.on('viewRouterDidUpdate', onDidUpdate);
+      _events2.default.on('viewRouterDidUpdate', onDidUpdate);
 
       routerComponent.state.pages.push(pageData);
       routerComponent.setState({ pages: routerComponent.state.pages });
     },
-    removePage($pageEl) {
+    removePage: function removePage($pageEl) {
       if (!$pageEl) return;
-      const router = this;
-      let routerComponent;
-      f7.routers.views.forEach((data) => {
+      var router = this;
+      var routerComponent = void 0;
+      _f2.default.routers.views.forEach(function (data) {
         if (data.el && data.el === router.el) {
           routerComponent = data.component;
         }
       });
 
-      let pageEl;
+      var pageEl = void 0;
       if ('length' in $pageEl) {
         // Dom7
         if ($pageEl.length === 0) return;
@@ -74,8 +85,8 @@ export default {
       }
       if (!pageEl) return;
 
-      let pageComponentFound;
-      routerComponent.state.pages.forEach((page, index) => {
+      var pageComponentFound = void 0;
+      routerComponent.state.pages.forEach(function (page, index) {
         if (page.el === pageEl) {
           pageComponentFound = true;
           routerComponent.state.pages.splice(index, 1);
@@ -86,12 +97,12 @@ export default {
         pageEl.parentNode.removeChild(pageEl);
       }
     },
-    tabComponentLoader(tabEl, component, componentUrl, options, resolve, reject) {
-      const router = this;
+    tabComponentLoader: function tabComponentLoader(tabEl, component, componentUrl, options, resolve, reject) {
+      var router = this;
       if (!tabEl) reject();
 
-      let tabsComponent;
-      f7.routers.tabs.forEach((tabData) => {
+      var tabsComponent = void 0;
+      _f2.default.routers.tabs.forEach(function (tabData) {
         if (tabData.el && tabData.el === tabEl) {
           tabsComponent = tabData.component;
         }
@@ -101,106 +112,100 @@ export default {
         return;
       }
 
-      const id = `${Utils.now()}_${(routerComponentIdCounter += 1)}`;
-      const tabContent = {
-        id,
-        component,
-        props: Utils.extend(
-          {
-            f7route: options.route,
-            f7router: router,
-          },
-          options.route.params
-        ),
+      var id = _utils2.default.now() + '_' + (routerComponentIdCounter += 1);
+      var tabContent = {
+        id: id,
+        component: component,
+        props: _utils2.default.extend({
+          f7route: options.route,
+          f7router: router
+        }, options.route.params)
       };
 
       tabsComponent.$f7router = router;
       tabsComponent.$f7route = options.route;
 
-      let resolved;
+      var resolved = void 0;
       function onDidUpdate(componentRouterData) {
         if (componentRouterData.component !== tabsComponent || resolved) return;
-        events.off('tabRouterDidUpdate', onDidUpdate);
+        _events2.default.off('tabRouterDidUpdate', onDidUpdate);
 
-        const tabContentEl = tabEl.children[0];
+        var tabContentEl = tabEl.children[0];
         resolve(tabContentEl);
 
         resolved = true;
       }
 
-      events.on('tabRouterDidUpdate', onDidUpdate);
+      _events2.default.on('tabRouterDidUpdate', onDidUpdate);
 
-      tabsComponent.setState({ tabContent });
+      tabsComponent.setState({ tabContent: tabContent });
     },
-    removeTabContent(tabEl) {
+    removeTabContent: function removeTabContent(tabEl) {
       if (!tabEl) return;
 
-      let tabComponent;
-      f7.routers.tabs.forEach((tabData) => {
+      var tabComponent = void 0;
+      _f2.default.routers.tabs.forEach(function (tabData) {
         if (tabData.el && tabData.el === tabEl) {
           tabComponent = tabData.component;
         }
       });
-      const hasComponent = !!tabComponent.state.tabContent;
+      var hasComponent = !!tabComponent.state.tabContent;
       if (!tabComponent || !hasComponent) {
         tabEl.innerHTML = ''; // eslint-disable-line
         return;
       }
       tabComponent.setState({ tabContent: null });
     },
-    modalComponentLoader(rootEl, component, componentUrl, options, resolve, reject) {
-      const router = this;
-      const modalsComponent = f7.routers.modals && f7.routers.modals.component;
-      const modalsComponentEl = f7.routers.modals && f7.routers.modals.el;
+    modalComponentLoader: function modalComponentLoader(rootEl, component, componentUrl, options, resolve, reject) {
+      var router = this;
+      var modalsComponent = _f2.default.routers.modals && _f2.default.routers.modals.component;
+      var modalsComponentEl = _f2.default.routers.modals && _f2.default.routers.modals.el;
 
       if (!modalsComponent || !modalsComponent.state.modals) {
         reject();
         return;
       }
 
-      const id = `${Utils.now()}_${(routerComponentIdCounter += 1)}`;
-      const modalData = {
-        component,
-        id,
-        props: Utils.extend(
-          {
-            f7route: options.route,
-            f7router: router,
-          },
-          options.route.params
-        ),
+      var id = _utils2.default.now() + '_' + (routerComponentIdCounter += 1);
+      var modalData = {
+        component: component,
+        id: id,
+        props: _utils2.default.extend({
+          f7route: options.route,
+          f7router: router
+        }, options.route.params)
       };
       modalsComponent.$f7router = router;
       modalsComponent.$f7route = options.route;
 
-      let resolved;
+      var resolved = void 0;
       function onDidUpdate(componentRouterData) {
         if (componentRouterData.component !== modalsComponent || resolved) return;
-        events.off('modalsRouterDidUpdate', onDidUpdate);
+        _events2.default.off('modalsRouterDidUpdate', onDidUpdate);
 
-        const modalEl = modalsComponentEl.children[modalsComponentEl.children.length - 1];
+        var modalEl = modalsComponentEl.children[modalsComponentEl.children.length - 1];
         modalData.el = modalEl;
 
         resolve(modalEl);
         resolved = true;
       }
 
-      events.on('modalsRouterDidUpdate', onDidUpdate);
+      _events2.default.on('modalsRouterDidUpdate', onDidUpdate);
 
       modalsComponent.state.modals.push(modalData);
       modalsComponent.setState({ modals: modalsComponent.state.modals });
     },
-    removeModal(modalEl) {
-      const modalsComponent = f7.routers.modals && f7.routers.modals.component;
+    removeModal: function removeModal(modalEl) {
+      var modalsComponent = _f2.default.routers.modals && _f2.default.routers.modals.component;
       if (!modalsComponent) return;
 
-      let modalDataToRemove;
-      modalsComponent.state.modals.forEach((modalData) => {
+      var modalDataToRemove = void 0;
+      modalsComponent.state.modals.forEach(function (modalData) {
         if (modalData.el === modalEl) modalDataToRemove = modalData;
       });
 
       modalsComponent.state.modals.splice(modalsComponent.state.modals.indexOf(modalDataToRemove), 1);
       modalsComponent.setState({ modals: modalsComponent.state.modals });
-    },
-  },
+    }
+  }
 };

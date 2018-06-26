@@ -1,7 +1,13 @@
-export default function (props) {
-  const slots = {};
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (props) {
+  var slots = {};
   if (!props) return slots;
-  const children = props.children;
+  var children = props.children;
 
   if (!children || children.length === 0) {
     return slots;
@@ -13,16 +19,16 @@ export default function (props) {
   }
 
   if (Array.isArray(children)) {
-    children.forEach((child) => {
+    children.forEach(function (child) {
       if (!child) return;
-      const slotName = (child.props && child.props.slot) || 'default';
+      var slotName = child.props && child.props.slot || 'default';
       addChildToSlot(slotName, child);
     });
   } else {
-    let slotName = 'default';
+    var slotName = 'default';
     if (children.props && children.props.slot) slotName = children.props.slot;
     addChildToSlot(slotName, children);
   }
 
   return slots;
-}
+};

@@ -1,28 +1,47 @@
-import React from 'react';
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _componentsRouter = require('./components-router');
+
+var _componentsRouter2 = _interopRequireDefault(_componentsRouter);
+
+var _f = require('./f7');
+
+var _f2 = _interopRequireDefault(_f);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 /* eslint no-underscore-dangle: "off" */
-import componentsRouter from './components-router';
-import f7 from './f7';
-
-const Plugin = {
+var Plugin = {
   name: 'phenomePlugin',
-  install(params = {}) {
-    const Framework7 = this;
-    f7.Framework7 = Framework7;
+  install: function install() {
+    var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-    const Extend = React.Component; // eslint-disable-line
-    const compiler = 'react'; // eslint-disable-line
-    const refs = 'refs'; // eslint-disable-line
+    var Framework7 = this;
+    _f2.default.Framework7 = Framework7;
 
-    
+    var Extend = _react2.default.Component; // eslint-disable-line
+    var compiler = 'react'; // eslint-disable-line
+    var refs = 'refs'; // eslint-disable-line
+
+
     // Define protos
     Object.defineProperty(Extend.prototype, '$f7', {
-      get() {
-        return f7.instance;
-      },
+      get: function get() {
+        return _f2.default.instance;
+      }
     });
 
-    const $theme = {};
-    const { theme } = params;
+    var $theme = {};
+    var theme = params.theme;
+
     if (theme === 'md') $theme.md = true;
     if (theme === 'ios') $theme.ios = true;
     if (!theme || theme === 'auto') {
@@ -30,16 +49,16 @@ const Plugin = {
       $theme.md = !(Framework7.Device || Framework7.device).ios;
     }
     Object.defineProperty(Extend.prototype, '$theme', {
-      get() {
+      get: function get() {
         return {
-          ios: f7.instance ? f7.instance.theme === 'ios' : $theme.ios,
-          md: f7.instance ? f7.instance.theme === 'md' : $theme.md,
+          ios: _f2.default.instance ? _f2.default.instance.theme === 'ios' : $theme.ios,
+          md: _f2.default.instance ? _f2.default.instance.theme === 'md' : $theme.md
         };
-      },
+      }
     });
 
     function f7ready(callback) {
-      f7.ready(callback);
+      _f2.default.ready(callback);
     }
     Extend.prototype.Dom7 = Framework7.$;
     Extend.prototype.$$ = Framework7.$;
@@ -50,13 +69,13 @@ const Plugin = {
     Extend.prototype.$f7Ready = f7ready;
 
     Object.defineProperty(Extend.prototype, '$f7route', {
-      get() {
-        const self = this;
+      get: function get() {
+        var self = this;
         if (self.props && self.props.f7route) return self.props.f7route;
         if (self.f7route) return self.f7route;
         if (self._f7route) return self._f7route;
-        let route;
-        let parent = self;
+        var route = void 0;
+        var parent = self;
         while (parent && !route) {
           if (parent._f7route) route = parent._f7route;
           if (compiler === 'vue') {
@@ -67,22 +86,21 @@ const Plugin = {
         }
         return route;
       },
-      set(value) {
-        const self = this;
+      set: function set(value) {
+        var self = this;
         self._f7route = value;
-      },
+      }
     });
     Object.defineProperty(Extend.prototype, '$f7router', {
-      get() {
-        const self = this;
+      get: function get() {
+        var self = this;
         if (self.props && self.props.f7router) return self.props.f7router;
         if (self.f7router) return self.f7router;
         if (self._f7router) return self._f7router;
-        let router;
-        let parent = self;
+        var router = void 0;
+        var parent = self;
         while (parent && !router) {
-          if (parent._f7router) router = parent._f7router;
-          else if (parent.f7View) {
+          if (parent._f7router) router = parent._f7router;else if (parent.f7View) {
             router = parent.f7View.router;
           } else if (parent[refs] && parent[refs].el && parent[refs].el.f7View) {
             router = parent[refs].el.f7View.router;
@@ -95,15 +113,15 @@ const Plugin = {
         }
         return router;
       },
-      set(value) {
-        const self = this;
+      set: function set(value) {
+        var self = this;
         self._f7router = value;
-      },
+      }
     });
 
     // Extend F7 Router
-    Framework7.Router.use(componentsRouter);
-  },
+    Framework7.Router.use(_componentsRouter2.default);
+  }
 };
 
-export default Plugin;
+exports.default = Plugin;

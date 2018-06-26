@@ -1,18 +1,23 @@
-const eventsEmitter = {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var eventsEmitter = {
   listeners: {},
-  on(events, handler) {
-    events.split(' ').forEach((event) => {
+  on: function on(events, handler) {
+    events.split(' ').forEach(function (event) {
       if (!eventsEmitter.listeners[event]) eventsEmitter.listeners[event] = [];
       eventsEmitter.listeners[event].push(handler);
     });
   },
-  off(events, handler) {
-    events.split(' ').forEach((event) => {
+  off: function off(events, handler) {
+    events.split(' ').forEach(function (event) {
       if (!eventsEmitter.listeners[event]) return;
       if (typeof handler === 'undefined') {
         eventsEmitter.listeners[event] = [];
       } else {
-        eventsEmitter.listeners[event].forEach((eventHandler, index) => {
+        eventsEmitter.listeners[event].forEach(function (eventHandler, index) {
           if (eventHandler === handler) {
             eventsEmitter.listeners[event].splice(index, 1);
           }
@@ -20,27 +25,31 @@ const eventsEmitter = {
       }
     });
   },
-  once(events, handler) {
+  once: function once(events, handler) {
     if (typeof handler !== 'function') return;
-    function onceHandler(...args) {
-      handler(...args);
+    function onceHandler() {
+      handler.apply(undefined, arguments);
       eventsEmitter.off(events, onceHandler);
     }
     eventsEmitter.on(events, onceHandler);
   },
-  emit(events, ...args) {
-    events.split(' ').forEach((event) => {
+  emit: function emit(events) {
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    events.split(' ').forEach(function (event) {
       if (eventsEmitter.listeners && eventsEmitter.listeners[event]) {
-        const handlers = [];
-        eventsEmitter.listeners[event].forEach((eventHandler) => {
+        var handlers = [];
+        eventsEmitter.listeners[event].forEach(function (eventHandler) {
           handlers.push(eventHandler);
         });
-        handlers.forEach((eventHandler) => {
-          eventHandler(...args);
+        handlers.forEach(function (eventHandler) {
+          eventHandler.apply(undefined, args);
         });
       }
     });
-  },
+  }
 };
 
-export default eventsEmitter;
+exports.default = eventsEmitter;

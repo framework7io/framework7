@@ -1,3 +1,7 @@
+'use strict';
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 /**
  * Framework7 React 3.0.0-beta.14
  * Build full featured iOS & Android apps using Framework7 & React
@@ -11,10 +15,9 @@
  */
 
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('react')) :
-  typeof define === 'function' && define.amd ? define(['react'], factory) :
-  (global.Framework7React = factory(global.React));
-}(this, (function (React) { 'use strict';
+  (typeof exports === 'undefined' ? 'undefined' : _typeof(exports)) === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('react')) : typeof define === 'function' && define.amd ? define(['react'], factory) : global.Framework7React = factory(global.React);
+})(undefined, function (React) {
+  'use strict';
 
   React = React && React.hasOwnProperty('default') ? React['default'] : React;
 
@@ -22,7 +25,9 @@
     noUndefinedProps: function noUndefinedProps(obj) {
       var o = {};
       Object.keys(obj).forEach(function (key) {
-        if (typeof obj[key] !== 'undefined') { o[key] = obj[key]; }
+        if (typeof obj[key] !== 'undefined') {
+          o[key] = obj[key];
+        }
       });
       return o;
     },
@@ -33,7 +38,7 @@
       return typeof val === 'string' && val !== '';
     },
     isObject: function isObject(o) {
-      return typeof o === 'object' && o !== null && o.constructor && o.constructor === Object;
+      return (typeof o === 'undefined' ? 'undefined' : _typeof(o)) === 'object' && o !== null && o.constructor && o.constructor === Object;
     },
     now: function now() {
       return Date.now();
@@ -41,17 +46,19 @@
     extend: function extend() {
       var assign, assign$1;
 
-      var args = [], len$1 = arguments.length;
-      while ( len$1-- ) args[ len$1 ] = arguments[ len$1 ];
-      var deep = true;
+      var args = [],
+          len$1 = arguments.length;
+      while (len$1--) {
+        args[len$1] = arguments[len$1];
+      }var deep = true;
       var to;
       var from;
       if (typeof args[0] === 'boolean') {
-        (assign = args, deep = assign[0], to = assign[1]);
+        assign = args, deep = assign[0], to = assign[1];
         args.splice(0, 2);
         from = args;
       } else {
-        (assign$1 = args, to = assign$1[0]);
+        assign$1 = args, to = assign$1[0];
         args.splice(0, 1);
         from = args;
       }
@@ -80,30 +87,39 @@
       return to;
     },
     flattenArray: function flattenArray() {
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-
-      var arr = [];
+      var args = [],
+          len = arguments.length;
+      while (len--) {
+        args[len] = arguments[len];
+      }var arr = [];
       args.forEach(function (arg) {
-        if (Array.isArray(arg)) { arr.push.apply(arr, Utils.flattenArray.apply(Utils, arg)); }
-        else { arr.push(arg); }
+        if (Array.isArray(arg)) {
+          arr.push.apply(arr, Utils.flattenArray.apply(Utils, arg));
+        } else {
+          arr.push(arg);
+        }
       });
       return arr;
     },
     classNames: function classNames() {
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-
-      var classes = [];
+      var args = [],
+          len = arguments.length;
+      while (len--) {
+        args[len] = arguments[len];
+      }var classes = [];
       args.forEach(function (arg) {
-        if (typeof arg === 'object' && arg.constructor === Object) {
+        if ((typeof arg === 'undefined' ? 'undefined' : _typeof(arg)) === 'object' && arg.constructor === Object) {
           Object.keys(arg).forEach(function (key) {
-            if (arg[key]) { classes.push(key); }
+            if (arg[key]) {
+              classes.push(key);
+            }
           });
-        } else if (arg) { classes.push(arg); }
+        } else if (arg) {
+          classes.push(arg);
+        }
       });
       return classes.join(' ');
-    },
+    }
   };
 
   var Mixins = {
@@ -114,7 +130,7 @@
       bgColor: String,
       borderColor: String,
       rippleColor: String,
-      themeDark: Boolean,
+      themeDark: Boolean
     },
     colorClasses: function colorClasses(props) {
       var obj;
@@ -127,9 +143,9 @@
       var rippleColor = props.rippleColor;
       var themeDark = props.themeDark;
 
-      return ( obj = {
+      return obj = {
         'theme-dark': themeDark
-      }, obj[("color-" + color)] = color, obj[("color-theme-" + colorTheme)] = colorTheme, obj[("text-color-" + textColor)] = textColor, obj[("bg-color-" + bgColor)] = bgColor, obj[("border-color-" + borderColor)] = borderColor, obj[("ripple-color-" + rippleColor)] = rippleColor, obj );
+      }, obj["color-" + color] = color, obj["color-theme-" + colorTheme] = colorTheme, obj["text-color-" + textColor] = textColor, obj["bg-color-" + bgColor] = bgColor, obj["border-color-" + borderColor] = borderColor, obj["ripple-color-" + rippleColor] = rippleColor, obj;
     },
     linkIconProps: {
       icon: String,
@@ -142,7 +158,7 @@
       iconIos: String,
       iconMd: String,
       iconColor: String,
-      iconSize: [String, Number],
+      iconSize: [String, Number]
     },
     linkRouterProps: {
       back: Boolean,
@@ -150,7 +166,7 @@
       force: Boolean,
       animate: {
         type: Boolean,
-        default: undefined,
+        default: undefined
       },
       ignoreCache: Boolean,
       pageName: String,
@@ -158,7 +174,7 @@
       reloadAll: Boolean,
       reloadPrevious: Boolean,
       routeTabId: String,
-      view: String,
+      view: String
     },
     linkRouterAttrs: function linkRouterAttrs(props) {
       var force = props.force;
@@ -183,7 +199,7 @@
         'data-animate': dataAnimate,
         'data-ignore-cache': ignoreCache || undefined,
         'data-route-tab-id': routeTabId || undefined,
-        'data-view': Utils.isStringProp(view) ? view : undefined,
+        'data-view': Utils.isStringProp(view) ? view : undefined
       };
     },
     linkRouterClasses: function linkRouterClasses(props) {
@@ -193,7 +209,7 @@
 
       return {
         back: back || linkBack,
-        external: external,
+        external: external
       };
     },
     linkActionsProps: {
@@ -230,7 +246,7 @@
       // Sortable
       sortableEnable: [Boolean, String],
       sortableDisable: [Boolean, String],
-      sortableToggle: [Boolean, String],
+      sortableToggle: [Boolean, String]
     },
     linkActionsAttrs: function linkActionsAttrs(props) {
       var searchbarEnable = props.searchbarEnable;
@@ -254,25 +270,14 @@
       var sortableToggle = props.sortableToggle;
 
       return {
-        'data-searchbar': (Utils.isStringProp(searchbarEnable) && searchbarEnable)
-                          || (Utils.isStringProp(searchbarDisable) && searchbarDisable)
-                          || (Utils.isStringProp(searchbarClear) && searchbarClear)
-                          || (Utils.isStringProp(searchbarToggle) && searchbarToggle) || undefined,
-        'data-panel': (Utils.isStringProp(panelOpen) && panelOpen)
-                      || (Utils.isStringProp(panelClose) && panelClose) || undefined,
-        'data-popup': (Utils.isStringProp(popupOpen) && popupOpen)
-                      || (Utils.isStringProp(popupClose) && popupClose) || undefined,
-        'data-actions': (Utils.isStringProp(actionsOpen) && actionsOpen)
-                      || (Utils.isStringProp(actionsClose) && actionsClose) || undefined,
-        'data-popover': (Utils.isStringProp(popoverOpen) && popoverOpen)
-                        || (Utils.isStringProp(popoverClose) && popoverClose) || undefined,
-        'data-sheet': (Utils.isStringProp(sheetOpen) && sheetOpen)
-                      || (Utils.isStringProp(sheetClose) && sheetClose) || undefined,
-        'data-login-screen': (Utils.isStringProp(loginScreenOpen) && loginScreenOpen)
-                             || (Utils.isStringProp(loginScreenClose) && loginScreenClose) || undefined,
-        'data-sortable': (Utils.isStringProp(sortableEnable) && sortableEnable)
-                         || (Utils.isStringProp(sortableDisable) && sortableDisable)
-                         || (Utils.isStringProp(sortableToggle) && sortableToggle) || undefined,
+        'data-searchbar': Utils.isStringProp(searchbarEnable) && searchbarEnable || Utils.isStringProp(searchbarDisable) && searchbarDisable || Utils.isStringProp(searchbarClear) && searchbarClear || Utils.isStringProp(searchbarToggle) && searchbarToggle || undefined,
+        'data-panel': Utils.isStringProp(panelOpen) && panelOpen || Utils.isStringProp(panelClose) && panelClose || undefined,
+        'data-popup': Utils.isStringProp(popupOpen) && popupOpen || Utils.isStringProp(popupClose) && popupClose || undefined,
+        'data-actions': Utils.isStringProp(actionsOpen) && actionsOpen || Utils.isStringProp(actionsClose) && actionsClose || undefined,
+        'data-popover': Utils.isStringProp(popoverOpen) && popoverOpen || Utils.isStringProp(popoverClose) && popoverClose || undefined,
+        'data-sheet': Utils.isStringProp(sheetOpen) && sheetOpen || Utils.isStringProp(sheetClose) && sheetClose || undefined,
+        'data-login-screen': Utils.isStringProp(loginScreenOpen) && loginScreenOpen || Utils.isStringProp(loginScreenClose) && loginScreenClose || undefined,
+        'data-sortable': Utils.isStringProp(sortableEnable) && sortableEnable || Utils.isStringProp(sortableDisable) && sortableDisable || Utils.isStringProp(sortableToggle) && sortableToggle || undefined
       };
     },
     linkActionsClasses: function linkActionsClasses(props) {
@@ -315,14 +320,16 @@
         'login-screen-open': loginScreenOpen || loginScreenOpen === '',
         'sortable-enable': Utils.isTrueProp(sortableEnable),
         'sortable-disable': Utils.isTrueProp(sortableDisable),
-        'sortable-toggle': sortableToggle === true || (typeof sortableToggle === 'string' && sortableToggle.length),
+        'sortable-toggle': sortableToggle === true || typeof sortableToggle === 'string' && sortableToggle.length
       };
-    },
+    }
   };
 
-  function __reactComponentSlots (props) {
+  function __reactComponentSlots(props) {
     var slots = {};
-    if (!props) { return slots; }
+    if (!props) {
+      return slots;
+    }
     var children = props.children;
 
     if (!children || children.length === 0) {
@@ -330,19 +337,25 @@
     }
 
     function addChildToSlot(name, child) {
-      if (!slots[name]) { slots[name] = []; }
+      if (!slots[name]) {
+        slots[name] = [];
+      }
       slots[name].push(child);
     }
 
     if (Array.isArray(children)) {
       children.forEach(function (child) {
-        if (!child) { return; }
-        var slotName = (child.props && child.props.slot) || 'default';
+        if (!child) {
+          return;
+        }
+        var slotName = child.props && child.props.slot || 'default';
         addChildToSlot(slotName, child);
       });
     } else {
       var slotName = 'default';
-      if (children.props && children.props.slot) { slotName = children.props.slot; }
+      if (children.props && children.props.slot) {
+        slotName = children.props.slot;
+      }
       addChildToSlot(slotName, children);
     }
 
@@ -350,7 +363,7 @@
   }
 
   function createCommonjsModule(fn, module) {
-  	return module = { exports: {} }, fn(module, module.exports), module.exports;
+    return module = { exports: {} }, fn(module, module.exports), module.exports;
   }
 
   /**
@@ -443,22 +456,17 @@
 
   var ReactPropTypesSecret_1 = ReactPropTypesSecret;
 
-  var factoryWithThrowingShims = function() {
+  var factoryWithThrowingShims = function factoryWithThrowingShims() {
     function shim(props, propName, componentName, location, propFullName, secret) {
       if (secret === ReactPropTypesSecret_1) {
         // It is still safe when called from React.
         return;
       }
-      invariant_1(
-        false,
-        'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
-        'Use PropTypes.checkPropTypes() to call them. ' +
-        'Read more at http://fb.me/use-check-prop-types'
-      );
-    }  shim.isRequired = shim;
+      invariant_1(false, 'Calling PropTypes validators directly is not supported by the `prop-types` package. ' + 'Use PropTypes.checkPropTypes() to call them. ' + 'Read more at http://fb.me/use-check-prop-types');
+    }shim.isRequired = shim;
     function getShim() {
       return shim;
-    }  // Important!
+    } // Important!
     // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
     var ReactPropTypes = {
       array: shim,
@@ -488,30 +496,46 @@
   };
 
   var propTypes = createCommonjsModule(function (module) {
-  /**
-   * Copyright (c) 2013-present, Facebook, Inc.
-   *
-   * This source code is licensed under the MIT license found in the
-   * LICENSE file in the root directory of this source tree.
-   */
+    /**
+     * Copyright (c) 2013-present, Facebook, Inc.
+     *
+     * This source code is licensed under the MIT license found in the
+     * LICENSE file in the root directory of this source tree.
+     */
 
-  {
-    // By explicitly using `prop-types` you are opting into new production behavior.
-    // http://fb.me/prop-types-in-prod
-    module.exports = factoryWithThrowingShims();
-  }
+    {
+      // By explicitly using `prop-types` you are opting into new production behavior.
+      // http://fb.me/prop-types-in-prod
+      module.exports = factoryWithThrowingShims();
+    }
   });
 
-  function __reactComponentSetProps (component, props) {
-    var propType = function (type) {
-      if (type === String) { return propTypes.string; }
-      if (type === Boolean) { return propTypes.bool; }
-      if (type === Function) { return propTypes.func; }
-      if (type === Number) { return propTypes.number; }
-      if (type === Object) { return propTypes.object; }
-      if (type === Array) { return propTypes.array; }
-      if (type === Symbol) { return propTypes.symbol; }
-      if (type.constructor === Function) { return propTypes.instanceOf(type); }
+  function __reactComponentSetProps(component, props) {
+    var propType = function propType(type) {
+      if (type === String) {
+        return propTypes.string;
+      }
+      if (type === Boolean) {
+        return propTypes.bool;
+      }
+      if (type === Function) {
+        return propTypes.func;
+      }
+      if (type === Number) {
+        return propTypes.number;
+      }
+      if (type === Object) {
+        return propTypes.object;
+      }
+      if (type === Array) {
+        return propTypes.array;
+      }
+      if (type === Symbol) {
+        return propTypes.symbol;
+      }
+      if (type.constructor === Function) {
+        return propTypes.instanceOf(type);
+      }
       return propTypes.any;
     };
 
@@ -535,10 +559,10 @@
       }
 
       if (typeof prop.default !== 'undefined') {
-        var hasFunctionType =
-          prop.type === Function ||
-          (Array.isArray(prop.type) && prop.type.indexOf(Function) >= 0);
-        if (!component.defaultProps) { component.defaultProps = {}; }
+        var hasFunctionType = prop.type === Function || Array.isArray(prop.type) && prop.type.indexOf(Function) >= 0;
+        if (!component.defaultProps) {
+          component.defaultProps = {};
+        }
         if (typeof prop.default === 'function' && !hasFunctionType) {
           component.defaultProps[propName] = prop.default();
         } else {
@@ -548,18 +572,18 @@
     });
   }
 
-  var F7AccordionContent = (function (superclass) {
+  var F7AccordionContent = function (superclass) {
     function F7AccordionContent(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7AccordionContent.__proto__ = superclass;
-    F7AccordionContent.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7AccordionContent.__proto__ = superclass;
+    F7AccordionContent.prototype = Object.create(superclass && superclass.prototype);
     F7AccordionContent.prototype.constructor = F7AccordionContent;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7AccordionContent.prototype.render = function render () {
+    F7AccordionContent.prototype.render = function render() {
       var props = this.props;
       var className = props.className;
       var id = props.id;
@@ -576,16 +600,16 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7AccordionContent.prototype, prototypeAccessors );
+    Object.defineProperties(F7AccordionContent.prototype, prototypeAccessors);
 
     return F7AccordionContent;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7AccordionContent, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
 
-  function __reactComponentEl (component) {
+  function __reactComponentEl(component) {
     var self = component;
     var el;
     var child = self._reactInternalFiber.child;
@@ -601,55 +625,62 @@
     return el;
   }
 
-  function __reactComponentDispatchEvent (component, events) {
-    var args = [], len = arguments.length - 2;
-    while ( len-- > 0 ) args[ len ] = arguments[ len + 2 ];
+  function __reactComponentDispatchEvent(component, events) {
+    var args = [],
+        len = arguments.length - 2;
+    while (len-- > 0) {
+      args[len] = arguments[len + 2];
+    }var self = component;
 
-    var self = component;
-
-    if (!events || !events.trim().length || typeof events !== 'string') { return; }
+    if (!events || !events.trim().length || typeof events !== 'string') {
+      return;
+    }
 
     events.trim().split(' ').forEach(function (event) {
       var ref;
 
       var eventName = (event || '').trim();
-      if (!eventName) { return; }
+      if (!eventName) {
+        return;
+      }
       eventName = eventName.charAt(0).toUpperCase() + eventName.slice(1);
 
       var propName = "on" + eventName;
 
-      if (self.props[propName]) { (ref = self.props)[propName].apply(ref, args); }
+      if (self.props[propName]) {
+        (ref = self.props)[propName].apply(ref, args);
+      }
     });
   }
 
-  var F7AccordionItem = (function (superclass) {
+  var F7AccordionItem = function (superclass) {
     function F7AccordionItem(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7AccordionItem.__proto__ = superclass;
-    F7AccordionItem.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7AccordionItem.__proto__ = superclass;
+    F7AccordionItem.prototype = Object.create(superclass && superclass.prototype);
     F7AccordionItem.prototype.constructor = F7AccordionItem;
 
-    var prototypeAccessors = { slots: { configurable: true },el: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true }, el: { configurable: true } };
 
-    F7AccordionItem.prototype.onOpen = function onOpen (event) {
+    F7AccordionItem.prototype.onOpen = function onOpen(event) {
       this.dispatchEvent('accordionOpen accordion:open', event);
     };
 
-    F7AccordionItem.prototype.onOpened = function onOpened (event) {
+    F7AccordionItem.prototype.onOpened = function onOpened(event) {
       this.dispatchEvent('accordionOpened accordion:opened', event);
     };
 
-    F7AccordionItem.prototype.onClose = function onClose (event) {
+    F7AccordionItem.prototype.onClose = function onClose(event) {
       this.dispatchEvent('accordionClose accordion:close', event);
     };
 
-    F7AccordionItem.prototype.onClosed = function onClosed (event) {
+    F7AccordionItem.prototype.onClosed = function onClosed(event) {
       this.dispatchEvent('accordionClosed accordion:closed', event);
     };
 
-    F7AccordionItem.prototype.render = function render () {
+    F7AccordionItem.prototype.render = function render() {
       var props = this.props;
       var className = props.className;
       var id = props.id;
@@ -665,20 +696,24 @@
       }, this.slots['default']);
     };
 
-    F7AccordionItem.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7AccordionItem.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
       var el = self.el;
-      if (!el) { return; }
+      if (!el) {
+        return;
+      }
       el.removeEventListener('accordion:open', self.onOpenBound);
       el.removeEventListener('accordion:opened', self.onOpenedBound);
       el.removeEventListener('accordion:close', self.onCloseBound);
       el.removeEventListener('accordion:closed', self.onClosedBound);
     };
 
-    F7AccordionItem.prototype.componentDidMount = function componentDidMount () {
+    F7AccordionItem.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       var el = self.el;
-      if (!el) { return; }
+      if (!el) {
+        return;
+      }
       self.onOpenBound = self.onOpen.bind(self);
       self.onOpenedBound = self.onOpened.bind(self);
       self.onCloseBound = self.onClose.bind(self);
@@ -697,35 +732,36 @@
       return __reactComponentEl(this);
     };
 
-    F7AccordionItem.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7AccordionItem.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
-    Object.defineProperties( F7AccordionItem.prototype, prototypeAccessors );
+    Object.defineProperties(F7AccordionItem.prototype, prototypeAccessors);
 
     return F7AccordionItem;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7AccordionItem, Object.assign({
     id: [String, Number],
     opened: Boolean
   }, Mixins.colorProps));
 
-  var F7AccordionToggle = (function (superclass) {
+  var F7AccordionToggle = function (superclass) {
     function F7AccordionToggle(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7AccordionToggle.__proto__ = superclass;
-    F7AccordionToggle.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7AccordionToggle.__proto__ = superclass;
+    F7AccordionToggle.prototype = Object.create(superclass && superclass.prototype);
     F7AccordionToggle.prototype.constructor = F7AccordionToggle;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7AccordionToggle.prototype.render = function render () {
+    F7AccordionToggle.prototype.render = function render() {
       var props = this.props;
       var className = props.className;
       var id = props.id;
@@ -742,27 +778,27 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7AccordionToggle.prototype, prototypeAccessors );
+    Object.defineProperties(F7AccordionToggle.prototype, prototypeAccessors);
 
     return F7AccordionToggle;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7AccordionToggle, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
 
-  var F7Accordion = (function (superclass) {
+  var F7Accordion = function (superclass) {
     function F7Accordion(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7Accordion.__proto__ = superclass;
-    F7Accordion.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Accordion.__proto__ = superclass;
+    F7Accordion.prototype = Object.create(superclass && superclass.prototype);
     F7Accordion.prototype.constructor = F7Accordion;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7Accordion.prototype.render = function render () {
+    F7Accordion.prototype.render = function render() {
       var props = this.props;
       var className = props.className;
       var id = props.id;
@@ -779,28 +815,28 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7Accordion.prototype, prototypeAccessors );
+    Object.defineProperties(F7Accordion.prototype, prototypeAccessors);
 
     return F7Accordion;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Accordion, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
 
-  var F7ActionsButton = (function (superclass) {
+  var F7ActionsButton = function (superclass) {
     function F7ActionsButton(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
     }
 
-    if ( superclass ) F7ActionsButton.__proto__ = superclass;
-    F7ActionsButton.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7ActionsButton.__proto__ = superclass;
+    F7ActionsButton.prototype = Object.create(superclass && superclass.prototype);
     F7ActionsButton.prototype.constructor = F7ActionsButton;
 
-    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true }, refs: { configurable: true } };
 
-    F7ActionsButton.prototype.onClick = function onClick (event) {
+    F7ActionsButton.prototype.onClick = function onClick(event) {
       var self = this;
       var $$ = self.$$;
       var el = self.refs.el;
@@ -812,7 +848,7 @@
       self.dispatchEvent('click', event);
     };
 
-    F7ActionsButton.prototype.render = function render () {
+    F7ActionsButton.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -838,7 +874,7 @@
         style: style,
         className: classes,
         onClick: self.onClick.bind(self),
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         }
       }, mediaEl, React.createElement('div', {
@@ -850,11 +886,12 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7ActionsButton.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7ActionsButton.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -863,10 +900,10 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    Object.defineProperties( F7ActionsButton.prototype, prototypeAccessors );
+    Object.defineProperties(F7ActionsButton.prototype, prototypeAccessors);
 
     return F7ActionsButton;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7ActionsButton, Object.assign({
     id: [String, Number],
@@ -877,24 +914,24 @@
     }
   }, Mixins.colorProps));
 
-  var F7ActionsGroup = (function (superclass) {
+  var F7ActionsGroup = function (superclass) {
     function F7ActionsGroup(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7ActionsGroup.__proto__ = superclass;
-    F7ActionsGroup.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7ActionsGroup.__proto__ = superclass;
+    F7ActionsGroup.prototype = Object.create(superclass && superclass.prototype);
     F7ActionsGroup.prototype.constructor = F7ActionsGroup;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7ActionsGroup.prototype.render = function render () {
+    F7ActionsGroup.prototype.render = function render() {
       var self = this;
       var props = self.props;
       var className = props.className;
       var id = props.id;
       var style = props.style;
-      var classes = Utils.classNames.apply(Utils, [ className, 'actions-group' ].concat( Mixins.colorClasses(props) ));
+      var classes = Utils.classNames.apply(Utils, [className, 'actions-group'].concat(Mixins.colorClasses(props)));
       return React.createElement('div', {
         id: id,
         style: style,
@@ -906,31 +943,31 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7ActionsGroup.prototype, prototypeAccessors );
+    Object.defineProperties(F7ActionsGroup.prototype, prototypeAccessors);
 
     return F7ActionsGroup;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7ActionsGroup, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
 
-  var F7ActionsLabel = (function (superclass) {
+  var F7ActionsLabel = function (superclass) {
     function F7ActionsLabel(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7ActionsLabel.__proto__ = superclass;
-    F7ActionsLabel.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7ActionsLabel.__proto__ = superclass;
+    F7ActionsLabel.prototype = Object.create(superclass && superclass.prototype);
     F7ActionsLabel.prototype.constructor = F7ActionsLabel;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7ActionsLabel.prototype.onClick = function onClick (event) {
+    F7ActionsLabel.prototype.onClick = function onClick(event) {
       this.dispatchEvent('click', event);
     };
 
-    F7ActionsLabel.prototype.render = function render () {
+    F7ActionsLabel.prototype.render = function render() {
       var self = this;
       var props = self.props;
       var className = props.className;
@@ -952,25 +989,28 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7ActionsLabel.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7ActionsLabel.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
-    Object.defineProperties( F7ActionsLabel.prototype, prototypeAccessors );
+    Object.defineProperties(F7ActionsLabel.prototype, prototypeAccessors);
 
     return F7ActionsLabel;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7ActionsLabel, Object.assign({
     id: [String, Number],
     bold: Boolean
   }, Mixins.colorProps));
 
-  function __reactComponentWatch (component, watchFor, prevProps, prevState, callback) {
-    if (!callback) { return; }
+  function __reactComponentWatch(component, watchFor, prevProps, prevState, callback) {
+    if (!callback) {
+      return;
+    }
 
     var newValue;
     var oldValue;
@@ -983,7 +1023,9 @@
       oldValue = prevState;
     }
     // state and props has 5 letters
-    watchFor.slice(5).split('.').filter(function (part) { return part; }).forEach(function (part) {
+    watchFor.slice(5).split('.').filter(function (part) {
+      return part;
+    }).forEach(function (part) {
       if (typeof newValue !== 'undefined' && newValue !== null) {
         newValue = newValue[part];
       }
@@ -992,52 +1034,60 @@
       }
     });
 
-    if (oldValue === newValue) { return; }
+    if (oldValue === newValue) {
+      return;
+    }
 
-    if (callback) { callback(newValue, oldValue); }
+    if (callback) {
+      callback(newValue, oldValue);
+    }
   }
 
-  var F7Actions = (function (superclass) {
+  var F7Actions = function (superclass) {
     function F7Actions(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
     }
 
-    if ( superclass ) F7Actions.__proto__ = superclass;
-    F7Actions.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Actions.__proto__ = superclass;
+    F7Actions.prototype = Object.create(superclass && superclass.prototype);
     F7Actions.prototype.constructor = F7Actions;
 
-    var prototypeAccessors = { slots: { configurable: true },el: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true }, el: { configurable: true }, refs: { configurable: true } };
 
-    F7Actions.prototype.onOpen = function onOpen (event) {
+    F7Actions.prototype.onOpen = function onOpen(event) {
       this.dispatchEvent('actions:open actionsOpen', event);
     };
 
-    F7Actions.prototype.onOpened = function onOpened (event) {
+    F7Actions.prototype.onOpened = function onOpened(event) {
       this.dispatchEvent('actions:opened actionsOpened', event);
     };
 
-    F7Actions.prototype.onClose = function onClose (event) {
+    F7Actions.prototype.onClose = function onClose(event) {
       this.dispatchEvent('actions:close actionsClose', event);
     };
 
-    F7Actions.prototype.onClosed = function onClosed (event) {
+    F7Actions.prototype.onClosed = function onClosed(event) {
       this.dispatchEvent('actions:closed actionsClosed', event);
     };
 
-    F7Actions.prototype.open = function open (animate) {
+    F7Actions.prototype.open = function open(animate) {
       var self = this;
-      if (!self.$f7) { return undefined; }
+      if (!self.$f7) {
+        return undefined;
+      }
       return self.$f7.actions.open(self.refs.el, animate);
     };
 
-    F7Actions.prototype.close = function close (animate) {
+    F7Actions.prototype.close = function close(animate) {
       var self = this;
-      if (!self.$f7) { return undefined; }
+      if (!self.$f7) {
+        return undefined;
+      }
       return self.$f7.actions.close(self.refs.el, animate);
     };
 
-    F7Actions.prototype.render = function render () {
+    F7Actions.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -1052,28 +1102,34 @@
       return React.createElement('div', {
         id: id,
         style: style,
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         className: classes
       }, this.slots['default']);
     };
 
-    F7Actions.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7Actions.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
-      if (self.f7Actions) { self.f7Actions.destroy(); }
+      if (self.f7Actions) {
+        self.f7Actions.destroy();
+      }
       var el = self.el;
-      if (!el) { return; }
+      if (!el) {
+        return;
+      }
       el.removeEventListener('actions:open', self.onOpenBound);
       el.removeEventListener('actions:opened', self.onOpenedBound);
       el.removeEventListener('actions:close', self.onCloseBound);
       el.removeEventListener('actions:closed', self.onClosedBound);
     };
 
-    F7Actions.prototype.componentDidMount = function componentDidMount () {
+    F7Actions.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       var el = self.refs.el;
-      if (!el) { return; }
+      if (!el) {
+        return;
+      }
       var props = self.props;
       var grid = props.grid;
       var target = props.target;
@@ -1093,9 +1149,15 @@
           el: self.refs.el,
           grid: grid
         };
-        if (target) { actionsParams.targetEl = target; }
-        if ('convertToPopover' in props) { actionsParams.convertToPopover = convertToPopover; }
-        if ('forceToPopover' in props) { actionsParams.forceToPopover = forceToPopover; }
+        if (target) {
+          actionsParams.targetEl = target;
+        }
+        if ('convertToPopover' in props) {
+          actionsParams.convertToPopover = convertToPopover;
+        }
+        if ('forceToPopover' in props) {
+          actionsParams.forceToPopover = forceToPopover;
+        }
         self.f7Actions = self.$f7.actions.create(actionsParams);
 
         if (opened) {
@@ -1112,11 +1174,12 @@
       return __reactComponentEl(this);
     };
 
-    F7Actions.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7Actions.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -1125,12 +1188,14 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    F7Actions.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+    F7Actions.prototype.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.opened', prevProps, prevState, function (opened) {
         var self = this$1;
-        if (!self.f7Actions) { return; }
+        if (!self.f7Actions) {
+          return;
+        }
 
         if (opened) {
           self.f7Actions.open();
@@ -1140,10 +1205,10 @@
       });
     };
 
-    Object.defineProperties( F7Actions.prototype, prototypeAccessors );
+    Object.defineProperties(F7Actions.prototype, prototypeAccessors);
 
     return F7Actions;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Actions, Object.assign({
     id: [String, Number],
@@ -1158,13 +1223,17 @@
     listeners: {},
     on: function on(events, handler) {
       events.split(' ').forEach(function (event) {
-        if (!eventsEmitter.listeners[event]) { eventsEmitter.listeners[event] = []; }
+        if (!eventsEmitter.listeners[event]) {
+          eventsEmitter.listeners[event] = [];
+        }
         eventsEmitter.listeners[event].push(handler);
       });
     },
     off: function off(events, handler) {
       events.split(' ').forEach(function (event) {
-        if (!eventsEmitter.listeners[event]) { return; }
+        if (!eventsEmitter.listeners[event]) {
+          return;
+        }
         if (typeof handler === 'undefined') {
           eventsEmitter.listeners[event] = [];
         } else {
@@ -1177,21 +1246,25 @@
       });
     },
     once: function once(events, handler) {
-      if (typeof handler !== 'function') { return; }
+      if (typeof handler !== 'function') {
+        return;
+      }
       function onceHandler() {
-        var args = [], len = arguments.length;
-        while ( len-- ) args[ len ] = arguments[ len ];
-
-        handler.apply(void 0, args);
+        var args = [],
+            len = arguments.length;
+        while (len--) {
+          args[len] = arguments[len];
+        }handler.apply(void 0, args);
         eventsEmitter.off(events, onceHandler);
       }
       eventsEmitter.on(events, onceHandler);
     },
     emit: function emit(events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      events.split(' ').forEach(function (event) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }events.split(' ').forEach(function (event) {
         if (eventsEmitter.listeners && eventsEmitter.listeners[event]) {
           var handlers = [];
           eventsEmitter.listeners[event].forEach(function (eventHandler) {
@@ -1202,60 +1275,65 @@
           });
         }
       });
-    },
+    }
   };
 
   var f7 = {
     instance: null,
     Framework7: null,
     init: function init(rootEl, params, routes) {
-      if ( params === void 0 ) params = {};
+      if (params === void 0) params = {};
 
       var f7Params = Utils.extend({}, params, {
-        root: rootEl,
+        root: rootEl
       });
-      if (routes && routes.length && !f7Params.routes) { f7Params.routes = routes; }
+      if (routes && routes.length && !f7Params.routes) {
+        f7Params.routes = routes;
+      }
 
       f7.instance = new f7.Framework7(f7Params);
       eventsEmitter.emit('ready', f7.instance);
     },
     ready: function ready(callback) {
-      if (!callback) { return; }
-      if (f7.instance) { callback(f7.instance); }
-      else {
+      if (!callback) {
+        return;
+      }
+      if (f7.instance) {
+        callback(f7.instance);
+      } else {
         eventsEmitter.once('ready', callback);
       }
     },
     routers: {
       views: [],
       tabs: [],
-      modals: null,
-    },
+      modals: null
+    }
   };
 
-  var F7RoutableModals = (function (superclass) {
+  var F7RoutableModals = function (superclass) {
     function F7RoutableModals(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
 
-      this.state = (function () {
+      this.state = function () {
         return {
           modals: []
         };
-      })();
+      }();
     }
 
-    if ( superclass ) F7RoutableModals.__proto__ = superclass;
-    F7RoutableModals.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7RoutableModals.__proto__ = superclass;
+    F7RoutableModals.prototype = Object.create(superclass && superclass.prototype);
     F7RoutableModals.prototype.constructor = F7RoutableModals;
 
     var prototypeAccessors = { refs: { configurable: true } };
 
-    F7RoutableModals.prototype.render = function render () {
+    F7RoutableModals.prototype.render = function render() {
       var this$1 = this;
 
       return React.createElement('div', {
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         className: 'framework7-modals'
@@ -1269,7 +1347,7 @@
       }));
     };
 
-    F7RoutableModals.prototype.componentDidMount = function componentDidMount () {
+    F7RoutableModals.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       var el = self.refs.el;
       self.setState({
@@ -1282,17 +1360,21 @@
       f7.routers.modals = self.routerData;
     };
 
-    F7RoutableModals.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7RoutableModals.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
-      if (!self.routerData) { return; }
+      if (!self.routerData) {
+        return;
+      }
       f7.routers.modals = null;
       self.routerData = null;
       delete self.routerData;
     };
 
-    F7RoutableModals.prototype.componentDidUpdate = function componentDidUpdate () {
+    F7RoutableModals.prototype.componentDidUpdate = function componentDidUpdate() {
       var self = this;
-      if (!self.routerData) { return; }
+      if (!self.routerData) {
+        return;
+      }
       eventsEmitter.emit('modalsRouterDidUpdate', self.routerData);
     };
 
@@ -1302,30 +1384,30 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    Object.defineProperties( F7RoutableModals.prototype, prototypeAccessors );
+    Object.defineProperties(F7RoutableModals.prototype, prototypeAccessors);
 
     return F7RoutableModals;
-  }(React.Component));
+  }(React.Component);
 
-  var F7App = (function (superclass) {
+  var F7App = function (superclass) {
     function F7App(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
 
-      this.state = (function () {
+      this.state = function () {
         return {
           modals: []
         };
-      })();
+      }();
     }
 
-    if ( superclass ) F7App.__proto__ = superclass;
-    F7App.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7App.__proto__ = superclass;
+    F7App.prototype = Object.create(superclass && superclass.prototype);
     F7App.prototype.constructor = F7App;
 
-    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true }, refs: { configurable: true } };
 
-    F7App.prototype.render = function render () {
+    F7App.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -1335,7 +1417,7 @@
       var className = props.className;
       var classes = Utils.classNames(className, 'framework7-root', Mixins.colorClasses(props));
       return React.createElement('div', {
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         id: id || 'framework7-root',
@@ -1344,10 +1426,10 @@
       }, this.slots['default'], React.createElement(F7RoutableModals, null));
     };
 
-    F7App.prototype.componentDidMount = function componentDidMount () {
+    F7App.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       var ref = self.props;
-      var params = ref.params; if ( params === void 0 ) params = {};
+      var params = ref.params;if (params === void 0) params = {};
       var routes = ref.routes;
       var el = self.refs.el;
       var parentEl = el.parentNode;
@@ -1369,10 +1451,10 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    Object.defineProperties( F7App.prototype, prototypeAccessors );
+    Object.defineProperties(F7App.prototype, prototypeAccessors);
 
     return F7App;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7App, Object.assign({
     id: [String, Number],
@@ -1380,18 +1462,18 @@
     routes: Array
   }, Mixins.colorProps));
 
-  var F7Badge = (function (superclass) {
+  var F7Badge = function (superclass) {
     function F7Badge(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7Badge.__proto__ = superclass;
-    F7Badge.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Badge.__proto__ = superclass;
+    F7Badge.prototype = Object.create(superclass && superclass.prototype);
     F7Badge.prototype.constructor = F7Badge;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7Badge.prototype.render = function render () {
+    F7Badge.prototype.render = function render() {
       var props = this.props;
       var className = props.className;
       var id = props.id;
@@ -1408,27 +1490,27 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7Badge.prototype, prototypeAccessors );
+    Object.defineProperties(F7Badge.prototype, prototypeAccessors);
 
     return F7Badge;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Badge, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
 
-  var F7BlockFooter = (function (superclass) {
+  var F7BlockFooter = function (superclass) {
     function F7BlockFooter(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7BlockFooter.__proto__ = superclass;
-    F7BlockFooter.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7BlockFooter.__proto__ = superclass;
+    F7BlockFooter.prototype = Object.create(superclass && superclass.prototype);
     F7BlockFooter.prototype.constructor = F7BlockFooter;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7BlockFooter.prototype.render = function render () {
+    F7BlockFooter.prototype.render = function render() {
       var props = this.props;
       var className = props.className;
       var id = props.id;
@@ -1445,27 +1527,27 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7BlockFooter.prototype, prototypeAccessors );
+    Object.defineProperties(F7BlockFooter.prototype, prototypeAccessors);
 
     return F7BlockFooter;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7BlockFooter, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
 
-  var F7BlockHeader = (function (superclass) {
+  var F7BlockHeader = function (superclass) {
     function F7BlockHeader(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7BlockHeader.__proto__ = superclass;
-    F7BlockHeader.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7BlockHeader.__proto__ = superclass;
+    F7BlockHeader.prototype = Object.create(superclass && superclass.prototype);
     F7BlockHeader.prototype.constructor = F7BlockHeader;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7BlockHeader.prototype.render = function render () {
+    F7BlockHeader.prototype.render = function render() {
       var props = this.props;
       var className = props.className;
       var id = props.id;
@@ -1482,27 +1564,27 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7BlockHeader.prototype, prototypeAccessors );
+    Object.defineProperties(F7BlockHeader.prototype, prototypeAccessors);
 
     return F7BlockHeader;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7BlockHeader, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
 
-  var F7BlockTitle = (function (superclass) {
+  var F7BlockTitle = function (superclass) {
     function F7BlockTitle(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7BlockTitle.__proto__ = superclass;
-    F7BlockTitle.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7BlockTitle.__proto__ = superclass;
+    F7BlockTitle.prototype = Object.create(superclass && superclass.prototype);
     F7BlockTitle.prototype.constructor = F7BlockTitle;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7BlockTitle.prototype.render = function render () {
+    F7BlockTitle.prototype.render = function render() {
       var props = this.props;
       var className = props.className;
       var id = props.id;
@@ -1519,35 +1601,35 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7BlockTitle.prototype, prototypeAccessors );
+    Object.defineProperties(F7BlockTitle.prototype, prototypeAccessors);
 
     return F7BlockTitle;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7BlockTitle, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
 
-  var F7Block = (function (superclass) {
+  var F7Block = function (superclass) {
     function F7Block(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7Block.__proto__ = superclass;
-    F7Block.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Block.__proto__ = superclass;
+    F7Block.prototype = Object.create(superclass && superclass.prototype);
     F7Block.prototype.constructor = F7Block;
 
-    var prototypeAccessors = { slots: { configurable: true },el: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true }, el: { configurable: true } };
 
-    F7Block.prototype.onTabShow = function onTabShow (e) {
+    F7Block.prototype.onTabShow = function onTabShow(e) {
       this.dispatchEvent('tabShow tab:show', e);
     };
 
-    F7Block.prototype.onTabHide = function onTabHide (e) {
+    F7Block.prototype.onTabHide = function onTabHide(e) {
       this.dispatchEvent('tabShow tab:hide', e);
     };
 
-    F7Block.prototype.render = function render () {
+    F7Block.prototype.render = function render() {
       var self = this;
       var props = self.props;
       var className = props.className;
@@ -1582,16 +1664,20 @@
       }, this.slots['default']);
     };
 
-    F7Block.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7Block.prototype.componentWillUnmount = function componentWillUnmount() {
       var el = this.el;
-      if (!el) { return; }
+      if (!el) {
+        return;
+      }
       el.removeEventListener('tab:show', this.onTabShowBound);
       el.removeEventListener('tab:hide', this.onTabHideBound);
     };
 
-    F7Block.prototype.componentDidMount = function componentDidMount () {
+    F7Block.prototype.componentDidMount = function componentDidMount() {
       var el = this.el;
-      if (!el) { return; }
+      if (!el) {
+        return;
+      }
       this.onTabShowBound = this.onTabShow.bind(this);
       this.onTabHideBound = this.onTabHide.bind(this);
       el.addEventListener('tab:show', this.onTabShowBound);
@@ -1606,17 +1692,18 @@
       return __reactComponentEl(this);
     };
 
-    F7Block.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7Block.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
-    Object.defineProperties( F7Block.prototype, prototypeAccessors );
+    Object.defineProperties(F7Block.prototype, prototypeAccessors);
 
     return F7Block;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Block, Object.assign({
     id: [String, Number],
@@ -1632,17 +1719,17 @@
     noHairlinesIos: Boolean
   }, Mixins.colorProps));
 
-  var F7Icon = (function (superclass) {
+  var F7Icon = function (superclass) {
     function F7Icon(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
     }
 
-    if ( superclass ) F7Icon.__proto__ = superclass;
-    F7Icon.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Icon.__proto__ = superclass;
+    F7Icon.prototype = Object.create(superclass && superclass.prototype);
     F7Icon.prototype.constructor = F7Icon;
 
-    var prototypeAccessors = { sizeComputed: { configurable: true },iconTextComputed: { configurable: true },classes: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { sizeComputed: { configurable: true }, iconTextComputed: { configurable: true }, classes: { configurable: true }, slots: { configurable: true }, refs: { configurable: true } };
 
     prototypeAccessors.sizeComputed.get = function () {
       var self = this;
@@ -1708,7 +1795,7 @@
         }
 
         if (prop === 'fa' || prop === 'ion') {
-          classes[(prop + "-" + value)] = true;
+          classes[prop + "-" + value] = true;
         }
 
         if (prop === 'icon') {
@@ -1721,15 +1808,21 @@
           'f7-icons': f7,
           fa: fa
         };
-        if (ion) { classes[("ion-" + ion)] = true; }
-        if (fa) { classes[("fa-" + fa)] = true; }
-        if (icon) { classes[icon] = true; }
+        if (ion) {
+          classes["ion-" + ion] = true;
+        }
+        if (fa) {
+          classes["fa-" + fa] = true;
+        }
+        if (icon) {
+          classes[icon] = true;
+        }
       }
 
       return Utils.classNames(className, classes, Mixins.colorClasses(props));
     };
 
-    F7Icon.prototype.render = function render () {
+    F7Icon.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -1737,7 +1830,7 @@
       var id = props.id;
       var style = props.style;
       return React.createElement('i', {
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         id: id,
@@ -1748,7 +1841,7 @@
       }, self.iconTextComputed, this.slots['default']);
     };
 
-    F7Icon.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7Icon.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
 
       if (self.f7Tooltip && self.f7Tooltip.destroy) {
@@ -1758,13 +1851,17 @@
       }
     };
 
-    F7Icon.prototype.componentDidMount = function componentDidMount () {
+    F7Icon.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       var el = self.refs.el;
-      if (!el) { return; }
+      if (!el) {
+        return;
+      }
       var ref = self.props;
       var tooltip = ref.tooltip;
-      if (!tooltip) { return; }
+      if (!tooltip) {
+        return;
+      }
       self.$f7ready(function (f7) {
         self.f7Tooltip = f7.tooltip.create({
           targetEl: el,
@@ -1783,20 +1880,22 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    F7Icon.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+    F7Icon.prototype.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
         var self = this$1;
-        if (!newText || !self.f7Tooltip) { return; }
+        if (!newText || !self.f7Tooltip) {
+          return;
+        }
         self.f7Tooltip.setText(newText);
       });
     };
 
-    Object.defineProperties( F7Icon.prototype, prototypeAccessors );
+    Object.defineProperties(F7Icon.prototype, prototypeAccessors);
 
     return F7Icon;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Icon, Object.assign({
     id: [String, Number],
@@ -1813,19 +1912,19 @@
     size: [String, Number]
   }, Mixins.colorProps));
 
-  var F7Button = (function (superclass) {
+  var F7Button = function (superclass) {
     function F7Button(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
     }
 
-    if ( superclass ) F7Button.__proto__ = superclass;
-    F7Button.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Button.__proto__ = superclass;
+    F7Button.prototype = Object.create(superclass && superclass.prototype);
     F7Button.prototype.constructor = F7Button;
 
-    var prototypeAccessors = { attrs: { configurable: true },classes: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { attrs: { configurable: true }, classes: { configurable: true }, slots: { configurable: true }, refs: { configurable: true } };
 
-    F7Button.prototype.onClick = function onClick (event) {
+    F7Button.prototype.onClick = function onClick(event) {
       this.dispatchEvent('click', event);
     };
 
@@ -1836,8 +1935,12 @@
       var target = props.target;
       var tabLink = props.tabLink;
       var hrefComputed = href;
-      if (href === true) { hrefComputed = '#'; }
-      if (href === false) { hrefComputed = undefined; }
+      if (href === true) {
+        hrefComputed = '#';
+      }
+      if (href === false) {
+        hrefComputed = undefined;
+      }
       return Utils.extend({
         href: hrefComputed,
         target: target,
@@ -1892,7 +1995,7 @@
       }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
     };
 
-    F7Button.prototype.render = function render () {
+    F7Button.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -1936,7 +2039,7 @@
       }
 
       return React.createElement('a', Object.assign({
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         id: id,
@@ -1946,7 +2049,7 @@
       }, self.attrs), iconEl, textEl, this.slots['default']);
     };
 
-    F7Button.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7Button.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
 
       if (self.f7Tooltip && self.f7Tooltip.destroy) {
@@ -1956,11 +2059,13 @@
       }
     };
 
-    F7Button.prototype.componentDidMount = function componentDidMount () {
+    F7Button.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       var ref = self.props;
       var tooltip = ref.tooltip;
-      if (!tooltip) { return; }
+      if (!tooltip) {
+        return;
+      }
       self.$f7ready(function (f7) {
         self.f7Tooltip = f7.tooltip.create({
           targetEl: self.refs.el,
@@ -1973,11 +2078,12 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7Button.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7Button.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -1986,20 +2092,22 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    F7Button.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+    F7Button.prototype.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
         var self = this$1;
-        if (!newText || !self.f7Tooltip) { return; }
+        if (!newText || !self.f7Tooltip) {
+          return;
+        }
         self.f7Tooltip.setText(newText);
       });
     };
 
-    Object.defineProperties( F7Button.prototype, prototypeAccessors );
+    Object.defineProperties(F7Button.prototype, prototypeAccessors);
 
     return F7Button;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Button, Object.assign({
     id: [String, Number],
@@ -2032,18 +2140,18 @@
     tooltip: String
   }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
 
-  var F7CardContent = (function (superclass) {
+  var F7CardContent = function (superclass) {
     function F7CardContent(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7CardContent.__proto__ = superclass;
-    F7CardContent.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7CardContent.__proto__ = superclass;
+    F7CardContent.prototype = Object.create(superclass && superclass.prototype);
     F7CardContent.prototype.constructor = F7CardContent;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7CardContent.prototype.render = function render () {
+    F7CardContent.prototype.render = function render() {
       var props = this.props;
       var id = props.id;
       var className = props.className;
@@ -2063,10 +2171,10 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7CardContent.prototype, prototypeAccessors );
+    Object.defineProperties(F7CardContent.prototype, prototypeAccessors);
 
     return F7CardContent;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7CardContent, Object.assign({
     id: [String, Number],
@@ -2076,18 +2184,18 @@
     }
   }, Mixins.colorProps));
 
-  var F7CardFooter = (function (superclass) {
+  var F7CardFooter = function (superclass) {
     function F7CardFooter(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7CardFooter.__proto__ = superclass;
-    F7CardFooter.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7CardFooter.__proto__ = superclass;
+    F7CardFooter.prototype = Object.create(superclass && superclass.prototype);
     F7CardFooter.prototype.constructor = F7CardFooter;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7CardFooter.prototype.render = function render () {
+    F7CardFooter.prototype.render = function render() {
       var props = this.props;
       var className = props.className;
       var id = props.id;
@@ -2104,27 +2212,27 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7CardFooter.prototype, prototypeAccessors );
+    Object.defineProperties(F7CardFooter.prototype, prototypeAccessors);
 
     return F7CardFooter;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7CardFooter, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
 
-  var F7CardHeader = (function (superclass) {
+  var F7CardHeader = function (superclass) {
     function F7CardHeader(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7CardHeader.__proto__ = superclass;
-    F7CardHeader.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7CardHeader.__proto__ = superclass;
+    F7CardHeader.prototype = Object.create(superclass && superclass.prototype);
     F7CardHeader.prototype.constructor = F7CardHeader;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7CardHeader.prototype.render = function render () {
+    F7CardHeader.prototype.render = function render() {
       var props = this.props;
       var className = props.className;
       var id = props.id;
@@ -2141,27 +2249,27 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7CardHeader.prototype, prototypeAccessors );
+    Object.defineProperties(F7CardHeader.prototype, prototypeAccessors);
 
     return F7CardHeader;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7CardHeader, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
 
-  var F7Card = (function (superclass) {
+  var F7Card = function (superclass) {
     function F7Card(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7Card.__proto__ = superclass;
-    F7Card.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Card.__proto__ = superclass;
+    F7Card.prototype = Object.create(superclass && superclass.prototype);
     F7Card.prototype.constructor = F7Card;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7Card.prototype.render = function render () {
+    F7Card.prototype.render = function render() {
       var self = this;
       var props = self.props;
       var className = props.className;
@@ -2204,10 +2312,10 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7Card.prototype, prototypeAccessors );
+    Object.defineProperties(F7Card.prototype, prototypeAccessors);
 
     return F7Card;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Card, Object.assign({
     id: [String, Number],
@@ -2221,18 +2329,18 @@
     }
   }, Mixins.colorProps));
 
-  var F7Checkbox = (function (superclass) {
+  var F7Checkbox = function (superclass) {
     function F7Checkbox(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7Checkbox.__proto__ = superclass;
-    F7Checkbox.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Checkbox.__proto__ = superclass;
+    F7Checkbox.prototype = Object.create(superclass && superclass.prototype);
     F7Checkbox.prototype.constructor = F7Checkbox;
 
-    var prototypeAccessors = { classes: { configurable: true },slots: { configurable: true } };
+    var prototypeAccessors = { classes: { configurable: true }, slots: { configurable: true } };
 
-    F7Checkbox.prototype.onChange = function onChange (event) {
+    F7Checkbox.prototype.onChange = function onChange(event) {
       this.dispatchEvent('change', event);
     };
 
@@ -2247,7 +2355,7 @@
       }, Mixins.colorClasses(props));
     };
 
-    F7Checkbox.prototype.render = function render () {
+    F7Checkbox.prototype.render = function render() {
       var self = this;
       var props = self.props;
       var name = props.name;
@@ -2285,17 +2393,18 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7Checkbox.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7Checkbox.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
-    Object.defineProperties( F7Checkbox.prototype, prototypeAccessors );
+    Object.defineProperties(F7Checkbox.prototype, prototypeAccessors);
 
     return F7Checkbox;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Checkbox, Object.assign({
     id: [String, Number],
@@ -2307,26 +2416,26 @@
     defaultChecked: Boolean
   }, Mixins.colorProps));
 
-  var F7Chip = (function (superclass) {
+  var F7Chip = function (superclass) {
     function F7Chip(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7Chip.__proto__ = superclass;
-    F7Chip.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Chip.__proto__ = superclass;
+    F7Chip.prototype = Object.create(superclass && superclass.prototype);
     F7Chip.prototype.constructor = F7Chip;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7Chip.prototype.onClick = function onClick (event) {
+    F7Chip.prototype.onClick = function onClick(event) {
       this.dispatchEvent('click', event);
     };
 
-    F7Chip.prototype.onDeleteClick = function onDeleteClick (event) {
+    F7Chip.prototype.onDeleteClick = function onDeleteClick(event) {
       this.dispatchEvent('delete', event);
     };
 
-    F7Chip.prototype.render = function render () {
+    F7Chip.prototype.render = function render() {
       var self = this;
       var props = self.props;
       var media = props.media;
@@ -2343,7 +2452,7 @@
       var deleteEl;
 
       if (media || self.slots && self.slots.media) {
-        var mediaClasses = Utils.classNames('chip-media', mediaTextColor && ("text-color-" + mediaTextColor), mediaBgColor && ("bg-color-" + mediaBgColor));
+        var mediaClasses = Utils.classNames('chip-media', mediaTextColor && "text-color-" + mediaTextColor, mediaBgColor && "bg-color-" + mediaBgColor);
         mediaEl = React.createElement('div', {
           className: mediaClasses
         }, media || this.slots['media']);
@@ -2378,17 +2487,18 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7Chip.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7Chip.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
-    Object.defineProperties( F7Chip.prototype, prototypeAccessors );
+    Object.defineProperties(F7Chip.prototype, prototypeAccessors);
 
     return F7Chip;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Chip, Object.assign({
     id: [String, Number],
@@ -2400,22 +2510,22 @@
     outline: Boolean
   }, Mixins.colorProps));
 
-  var F7Col = (function (superclass) {
+  var F7Col = function (superclass) {
     function F7Col(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7Col.__proto__ = superclass;
-    F7Col.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Col.__proto__ = superclass;
+    F7Col.prototype = Object.create(superclass && superclass.prototype);
     F7Col.prototype.constructor = F7Col;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7Col.prototype.onClick = function onClick (e) {
+    F7Col.prototype.onClick = function onClick(e) {
       this.dispatchEvent('click', e);
     };
 
-    F7Col.prototype.render = function render () {
+    F7Col.prototype.render = function render() {
       var obj;
 
       var self = this;
@@ -2428,9 +2538,9 @@
       var tabletWidth = props.tabletWidth;
       var desktopWidth = props.desktopWidth;
       var ColTag = tag;
-      var classes = Utils.classNames(className, ( obj = {
+      var classes = Utils.classNames(className, (obj = {
         col: width === 'auto'
-      }, obj[("col-" + width)] = width !== 'auto', obj[("tablet-" + tabletWidth)] = tabletWidth, obj[("desktop-" + desktopWidth)] = desktopWidth, obj ), Mixins.colorClasses(props));
+      }, obj["col-" + width] = width !== 'auto', obj["tablet-" + tabletWidth] = tabletWidth, obj["desktop-" + desktopWidth] = desktopWidth, obj), Mixins.colorClasses(props));
       return React.createElement(ColTag, {
         id: id,
         style: style,
@@ -2443,17 +2553,18 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7Col.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7Col.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
-    Object.defineProperties( F7Col.prototype, prototypeAccessors );
+    Object.defineProperties(F7Col.prototype, prototypeAccessors);
 
     return F7Col;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Col, Object.assign({
     id: [String, Number],
@@ -2473,23 +2584,23 @@
     }
   }, Mixins.colorProps));
 
-  var F7FabButton = (function (superclass) {
+  var F7FabButton = function (superclass) {
     function F7FabButton(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
     }
 
-    if ( superclass ) F7FabButton.__proto__ = superclass;
-    F7FabButton.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7FabButton.__proto__ = superclass;
+    F7FabButton.prototype = Object.create(superclass && superclass.prototype);
     F7FabButton.prototype.constructor = F7FabButton;
 
-    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true }, refs: { configurable: true } };
 
-    F7FabButton.prototype.onClick = function onClick (event) {
+    F7FabButton.prototype.onClick = function onClick(event) {
       this.dispatchEvent('click', event);
     };
 
-    F7FabButton.prototype.render = function render () {
+    F7FabButton.prototype.render = function render() {
       var props = this.props;
       var className = props.className;
       var id = props.id;
@@ -2518,7 +2629,7 @@
       }, this.slots['default'], labelEl);
     };
 
-    F7FabButton.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7FabButton.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
 
       if (self.f7Tooltip && self.f7Tooltip.destroy) {
@@ -2528,11 +2639,13 @@
       }
     };
 
-    F7FabButton.prototype.componentDidMount = function componentDidMount () {
+    F7FabButton.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       var ref = self.props;
       var tooltip = ref.tooltip;
-      if (!tooltip) { return; }
+      if (!tooltip) {
+        return;
+      }
       self.$f7ready(function (f7) {
         self.f7Tooltip = f7.tooltip.create({
           targetEl: self.refs.el,
@@ -2545,11 +2658,12 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7FabButton.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7FabButton.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -2558,20 +2672,22 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    F7FabButton.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+    F7FabButton.prototype.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
         var self = this$1;
-        if (!newText || !self.f7Tooltip) { return; }
+        if (!newText || !self.f7Tooltip) {
+          return;
+        }
         self.f7Tooltip.setText(newText);
       });
     };
 
-    Object.defineProperties( F7FabButton.prototype, prototypeAccessors );
+    Object.defineProperties(F7FabButton.prototype, prototypeAccessors);
 
     return F7FabButton;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7FabButton, Object.assign({
     id: [String, Number],
@@ -2581,24 +2697,24 @@
     tooltip: String
   }, Mixins.colorProps));
 
-  var F7FabButtons = (function (superclass) {
+  var F7FabButtons = function (superclass) {
     function F7FabButtons(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7FabButtons.__proto__ = superclass;
-    F7FabButtons.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7FabButtons.__proto__ = superclass;
+    F7FabButtons.prototype = Object.create(superclass && superclass.prototype);
     F7FabButtons.prototype.constructor = F7FabButtons;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7FabButtons.prototype.render = function render () {
+    F7FabButtons.prototype.render = function render() {
       var props = this.props;
       var className = props.className;
       var id = props.id;
       var style = props.style;
       var position = props.position;
-      var classes = Utils.classNames(className, 'fab-buttons', ("fab-buttons-" + position), Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'fab-buttons', "fab-buttons-" + position, Mixins.colorClasses(props));
       return React.createElement('div', {
         id: id,
         style: style,
@@ -2610,10 +2726,10 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7FabButtons.prototype, prototypeAccessors );
+    Object.defineProperties(F7FabButtons.prototype, prototypeAccessors);
 
     return F7FabButtons;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7FabButtons, Object.assign({
     id: [String, Number],
@@ -2623,24 +2739,24 @@
     }
   }, Mixins.colorProps));
 
-  var F7Fab = (function (superclass) {
+  var F7Fab = function (superclass) {
     function F7Fab(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
     }
 
-    if ( superclass ) F7Fab.__proto__ = superclass;
-    F7Fab.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Fab.__proto__ = superclass;
+    F7Fab.prototype = Object.create(superclass && superclass.prototype);
     F7Fab.prototype.constructor = F7Fab;
 
-    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true }, refs: { configurable: true } };
 
-    F7Fab.prototype.onClick = function onClick (event) {
+    F7Fab.prototype.onClick = function onClick(event) {
       var self = this;
       self.dispatchEvent('click', event);
     };
 
-    F7Fab.prototype.render = function render () {
+    F7Fab.prototype.render = function render() {
       var self = this;
       var props = self.props;
       var className = props.className;
@@ -2652,8 +2768,12 @@
       var text = props.text;
       var target = props.target;
       var href = initialHref;
-      if (href === true) { href = '#'; }
-      if (href === false) { href = undefined; }
+      if (href === true) {
+        href = '#';
+      }
+      if (href === false) {
+        href = undefined;
+      }
       var linkChildren = [];
       var rootChildren = [];
       var ref = self.slots;
@@ -2665,12 +2785,18 @@
       if (defaultSlots) {
         for (var i = 0; i < defaultSlots.length; i += 1) {
           var child = defaultSlots[i];
-          var isRoot = (void 0);
+          var isRoot = void 0;
           {
             var tag = child.type && child.type.name;
-            if (tag === 'F7FabButtons') { isRoot = true; }
+            if (tag === 'F7FabButtons') {
+              isRoot = true;
+            }
           }
-          if (isRoot) { rootChildren.push(child); }else { linkChildren.push(child); }
+          if (isRoot) {
+            rootChildren.push(child);
+          } else {
+            linkChildren.push(child);
+          }
         }
       }
 
@@ -2693,7 +2819,7 @@
         }, linkChildren, textEl, linkSlots);
       }
 
-      var classes = Utils.classNames(className, 'fab', ("fab-" + position), {
+      var classes = Utils.classNames(className, 'fab', "fab-" + position, {
         'fab-morph': morphTo,
         'fab-extended': typeof textEl !== 'undefined'
       }, Mixins.colorClasses(props));
@@ -2705,7 +2831,7 @@
       }, linkEl, rootChildren, rootSlots);
     };
 
-    F7Fab.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7Fab.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
 
       if (self.f7Tooltip && self.f7Tooltip.destroy) {
@@ -2715,11 +2841,13 @@
       }
     };
 
-    F7Fab.prototype.componentDidMount = function componentDidMount () {
+    F7Fab.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       var ref = self.props;
       var tooltip = ref.tooltip;
-      if (!tooltip) { return; }
+      if (!tooltip) {
+        return;
+      }
       self.$f7ready(function (f7) {
         self.f7Tooltip = f7.tooltip.create({
           targetEl: self.refs.el,
@@ -2732,11 +2860,12 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7Fab.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7Fab.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -2745,20 +2874,22 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    F7Fab.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+    F7Fab.prototype.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
         var self = this$1;
-        if (!newText || !self.f7Tooltip) { return; }
+        if (!newText || !self.f7Tooltip) {
+          return;
+        }
         self.f7Tooltip.setText(newText);
       });
     };
 
-    Object.defineProperties( F7Fab.prototype, prototypeAccessors );
+    Object.defineProperties(F7Fab.prototype, prototypeAccessors);
 
     return F7Fab;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Fab, Object.assign({
     id: [String, Number],
@@ -2773,16 +2904,16 @@
     tooltip: String
   }, Mixins.colorProps));
 
-  var F7Gauge = (function (superclass) {
+  var F7Gauge = function (superclass) {
     function F7Gauge(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7Gauge.__proto__ = superclass;
-    F7Gauge.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Gauge.__proto__ = superclass;
+    F7Gauge.prototype = Object.create(superclass && superclass.prototype);
     F7Gauge.prototype.constructor = F7Gauge;
 
-    F7Gauge.prototype.render = function render () {
+    F7Gauge.prototype.render = function render() {
       var props = this.props;
       var className = props.className;
       var id = props.id;
@@ -2814,18 +2945,18 @@
           className: classes
         }, React.createElement('svg', {
           className: 'gauge-svg',
-          width: (size + "px"),
-          height: ((semiCircle ? size / 2 : size) + "px"),
-          viewBox: ("0 0 " + size + " " + (semiCircle ? size / 2 : size))
+          width: size + "px",
+          height: (semiCircle ? size / 2 : size) + "px",
+          viewBox: "0 0 " + size + " " + (semiCircle ? size / 2 : size)
         }, semiCircle && React.createElement('path', {
           className: 'gauge-back-semi',
-          d: ("M" + (size - borderWidth / 2) + "," + (size / 2) + " a1,1 0 0,0 -" + (size - borderWidth) + ",0"),
+          d: "M" + (size - borderWidth / 2) + "," + size / 2 + " a1,1 0 0,0 -" + (size - borderWidth) + ",0",
           stroke: borderBgColor,
           strokeWidth: borderWidth,
           fill: bgColor || 'none'
         }), semiCircle && React.createElement('path', {
           className: 'gauge-front-semi',
-          d: ("M" + (size - borderWidth / 2) + "," + (size / 2) + " a1,1 0 0,0 -" + (size - borderWidth) + ",0"),
+          d: "M" + (size - borderWidth / 2) + "," + size / 2 + " a1,1 0 0,0 -" + (size - borderWidth) + ",0",
           stroke: borderColor,
           strokeWidth: borderWidth,
           strokeDasharray: length / 2,
@@ -2841,7 +2972,7 @@
           r: radius
         }), !semiCircle && React.createElement('circle', {
           className: 'gauge-front-circle',
-          transform: ("rotate(-90 " + (size / 2) + " " + (size / 2) + ")"),
+          transform: "rotate(-90 " + size / 2 + " " + size / 2 + ")",
           stroke: borderColor,
           strokeWidth: borderWidth,
           strokeDasharray: length,
@@ -2875,7 +3006,7 @@
     };
 
     return F7Gauge;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Gauge, {
     id: [String, Number],
@@ -2935,29 +3066,31 @@
     }
   });
 
-  var F7Toggle = (function (superclass) {
+  var F7Toggle = function (superclass) {
     function F7Toggle(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
     }
 
-    if ( superclass ) F7Toggle.__proto__ = superclass;
-    F7Toggle.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Toggle.__proto__ = superclass;
+    F7Toggle.prototype = Object.create(superclass && superclass.prototype);
     F7Toggle.prototype.constructor = F7Toggle;
 
     var prototypeAccessors = { refs: { configurable: true } };
 
-    F7Toggle.prototype.toggle = function toggle () {
+    F7Toggle.prototype.toggle = function toggle() {
       var self = this;
-      if (self.f7Toggle && self.f7Toggle.toggle) { self.f7Toggle.toggle(); }
+      if (self.f7Toggle && self.f7Toggle.toggle) {
+        self.f7Toggle.toggle();
+      }
     };
 
-    F7Toggle.prototype.onChange = function onChange (e) {
+    F7Toggle.prototype.onChange = function onChange(e) {
       var self = this;
       self.dispatchEvent('change', e);
     };
 
-    F7Toggle.prototype.render = function render () {
+    F7Toggle.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -2988,7 +3121,7 @@
         });
       }
       return React.createElement('label', {
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         id: id,
@@ -2999,14 +3132,18 @@
       }));
     };
 
-    F7Toggle.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7Toggle.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
-      if (self.f7Toggle && self.f7Toggle.destroy && self.f7Toggle.$el) { self.f7Toggle.destroy(); }
+      if (self.f7Toggle && self.f7Toggle.destroy && self.f7Toggle.$el) {
+        self.f7Toggle.destroy();
+      }
     };
 
-    F7Toggle.prototype.componentDidMount = function componentDidMount () {
+    F7Toggle.prototype.componentDidMount = function componentDidMount() {
       var self = this;
-      if (!self.props.init) { return; }
+      if (!self.props.init) {
+        return;
+      }
       self.$f7ready(function (f7) {
         self.f7Toggle = f7.toggle.create({
           el: self.refs.el,
@@ -3020,11 +3157,12 @@
       });
     };
 
-    F7Toggle.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7Toggle.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -3033,20 +3171,22 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    F7Toggle.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+    F7Toggle.prototype.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.checked', prevProps, prevState, function (newValue) {
         var self = this$1;
-        if (!self.f7Toggle) { return; }
+        if (!self.f7Toggle) {
+          return;
+        }
         self.f7Toggle.checked = newValue;
       });
     };
 
-    Object.defineProperties( F7Toggle.prototype, prototypeAccessors );
+    Object.defineProperties(F7Toggle.prototype, prototypeAccessors);
 
     return F7Toggle;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Toggle, Object.assign({
     id: [String, Number],
@@ -3062,24 +3202,26 @@
     value: [String, Number, Array]
   }, Mixins.colorProps));
 
-  var F7Range = (function (superclass) {
+  var F7Range = function (superclass) {
     function F7Range(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
     }
 
-    if ( superclass ) F7Range.__proto__ = superclass;
-    F7Range.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Range.__proto__ = superclass;
+    F7Range.prototype = Object.create(superclass && superclass.prototype);
     F7Range.prototype.constructor = F7Range;
 
-    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true }, refs: { configurable: true } };
 
-    F7Range.prototype.setValue = function setValue (newValue) {
+    F7Range.prototype.setValue = function setValue(newValue) {
       var self = this;
-      if (self.f7Range && self.f7Range.setValue) { self.f7Range.setValue(newValue); }
+      if (self.f7Range && self.f7Range.setValue) {
+        self.f7Range.setValue(newValue);
+      }
     };
 
-    F7Range.prototype.getValue = function getValue () {
+    F7Range.prototype.getValue = function getValue() {
       var self = this;
 
       if (self.f7Range && self.f7Range.getValue) {
@@ -3089,7 +3231,7 @@
       return undefined;
     };
 
-    F7Range.prototype.render = function render () {
+    F7Range.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -3106,7 +3248,7 @@
         disabled: disabled
       }, Mixins.colorClasses(props));
       return React.createElement('div', {
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         id: id,
@@ -3119,15 +3261,19 @@
       }), this.slots['default']);
     };
 
-    F7Range.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7Range.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
-      if (self.f7Range && self.f7Range.destroy) { self.f7Range.destroy(); }
+      if (self.f7Range && self.f7Range.destroy) {
+        self.f7Range.destroy();
+      }
     };
 
-    F7Range.prototype.componentDidMount = function componentDidMount () {
+    F7Range.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       self.$f7ready(function (f7) {
-        if (!self.props.init) { return; }
+        if (!self.props.init) {
+          return;
+        }
         var props = self.props;
         var value = props.value;
         var min = props.min;
@@ -3163,11 +3309,12 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7Range.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7Range.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -3176,20 +3323,22 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    F7Range.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+    F7Range.prototype.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.value', prevProps, prevState, function (newValue) {
         var self = this$1;
-        if (!self.f7Range) { return; }
+        if (!self.f7Range) {
+          return;
+        }
         self.f7Range.setValue(newValue);
       });
     };
 
-    Object.defineProperties( F7Range.prototype, prototypeAccessors );
+    Object.defineProperties(F7Range.prototype, prototypeAccessors);
 
     return F7Range;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Range, Object.assign({
     id: [String, Number],
@@ -3231,7 +3380,7 @@
     }
   }, Mixins.colorProps));
 
-  var F7Input = (function (superclass) {
+  var F7Input = function (superclass) {
     function F7Input(props, context) {
       var this$1 = this;
 
@@ -3251,45 +3400,45 @@
       })();
     }
 
-    if ( superclass ) F7Input.__proto__ = superclass;
-    F7Input.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Input.__proto__ = superclass;
+    F7Input.prototype = Object.create(superclass && superclass.prototype);
     F7Input.prototype.constructor = F7Input;
 
-    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true }, refs: { configurable: true } };
 
-    F7Input.prototype.onTextareaResize = function onTextareaResize (event) {
+    F7Input.prototype.onTextareaResize = function onTextareaResize(event) {
       this.dispatchEvent('textarea:resize textareaResize', event);
     };
 
-    F7Input.prototype.onInputNotEmpty = function onInputNotEmpty (event) {
+    F7Input.prototype.onInputNotEmpty = function onInputNotEmpty(event) {
       this.dispatchEvent('input:notempty inputNotEmpty', event);
     };
 
-    F7Input.prototype.onInputEmpty = function onInputEmpty (event) {
+    F7Input.prototype.onInputEmpty = function onInputEmpty(event) {
       this.dispatchEvent('input:empty inputEmpty', event);
     };
 
-    F7Input.prototype.onInputClear = function onInputClear (event) {
+    F7Input.prototype.onInputClear = function onInputClear(event) {
       this.dispatchEvent('input:clear inputClear', event);
     };
 
-    F7Input.prototype.onInput = function onInput (event) {
+    F7Input.prototype.onInput = function onInput(event) {
       this.dispatchEvent('input', event);
     };
 
-    F7Input.prototype.onFocus = function onFocus (event) {
+    F7Input.prototype.onFocus = function onFocus(event) {
       this.dispatchEvent('focus', event);
     };
 
-    F7Input.prototype.onBlur = function onBlur (event) {
+    F7Input.prototype.onBlur = function onBlur(event) {
       this.dispatchEvent('blur', event);
     };
 
-    F7Input.prototype.onChange = function onChange (event) {
+    F7Input.prototype.onChange = function onChange(event) {
       this.dispatchEvent('change', event);
     };
 
-    F7Input.prototype.render = function render () {
+    F7Input.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -3335,7 +3484,7 @@
       var noFormStoreData = props.noFormStoreData;
       var inputEl;
 
-      var createInput = function (tag, children) {
+      var createInput = function createInput(tag, children) {
         var InputTag = tag;
         var needsValue = type !== 'file';
         var needsType = tag === 'input';
@@ -3343,7 +3492,7 @@
         var input;
         {
           input = React.createElement(InputTag, {
-            ref: function (__reactNode) {
+            ref: function ref(__reactNode) {
               this$1.__reactRefs['inputEl'] = __reactNode;
             },
             style: inputStyle,
@@ -3430,7 +3579,7 @@
         var wrapClasses = Utils.classNames(className, 'item-input-wrap', Mixins.colorClasses(props));
         return React.createElement('div', {
           id: id,
-          ref: function (__reactNode) {
+          ref: function ref(__reactNode) {
             this$1.__reactRefs['wrapEl'] = __reactNode;
           },
           className: wrapClasses,
@@ -3447,15 +3596,19 @@
       return inputEl;
     };
 
-    F7Input.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7Input.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
       var ref = self.props;
       var type = ref.type;
       var resizable = ref.resizable;
       var clearButton = ref.clearButton;
-      if (type === 'range' || type === 'toggle') { return; }
+      if (type === 'range' || type === 'toggle') {
+        return;
+      }
       var inputEl = self.refs.inputEl;
-      if (!inputEl) { return; }
+      if (!inputEl) {
+        return;
+      }
       inputEl.removeEventListener('input:notempty', self.onInputNotEmptyBound, false);
 
       if (type === 'textarea' && resizable) {
@@ -3468,15 +3621,19 @@
       }
     };
 
-    F7Input.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+    F7Input.prototype.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.value', prevProps, prevState, function () {
         var self = this$1;
         var ref = self.props;
         var type = ref.type;
-        if (type === 'range' || type === 'toggle') { return; }
-        if (!self.$f7) { return; }
+        if (type === 'range' || type === 'toggle') {
+          return;
+        }
+        if (!self.$f7) {
+          return;
+        }
         self.updateInputOnDidUpdate = true;
       });
 
@@ -3485,11 +3642,15 @@
       var validate = ref.validate;
       var resizable = ref.resizable;
       var f7 = self.$f7;
-      if (!f7) { return; }
+      if (!f7) {
+        return;
+      }
 
       if (self.updateInputOnDidUpdate) {
         var inputEl = self.refs.inputEl;
-        if (!inputEl) { return; }
+        if (!inputEl) {
+          return;
+        }
         self.updateInputOnDidUpdate = false;
         f7.input.checkEmptyState(inputEl);
 
@@ -3503,7 +3664,7 @@
       }
     };
 
-    F7Input.prototype.componentDidMount = function componentDidMount () {
+    F7Input.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       self.$f7ready(function (f7) {
         var ref = self.props;
@@ -3513,9 +3674,13 @@
         var clearButton = ref.clearButton;
         var value = ref.value;
         var defaultValue = ref.defaultValue;
-        if (type === 'range' || type === 'toggle') { return; }
+        if (type === 'range' || type === 'toggle') {
+          return;
+        }
         var inputEl = self.refs.inputEl;
-        if (!inputEl) { return; }
+        if (!inputEl) {
+          return;
+        }
         inputEl.addEventListener('input:notempty', self.onInputNotEmptyBound, false);
 
         if (type === 'textarea' && resizable) {
@@ -3545,11 +3710,12 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7Input.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7Input.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -3558,10 +3724,10 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    Object.defineProperties( F7Input.prototype, prototypeAccessors );
+    Object.defineProperties(F7Input.prototype, prototypeAccessors);
 
     return F7Input;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Input, Object.assign({
     type: String,
@@ -3606,18 +3772,18 @@
     }
   }, Mixins.colorProps));
 
-  var F7Label = (function (superclass) {
+  var F7Label = function (superclass) {
     function F7Label(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7Label.__proto__ = superclass;
-    F7Label.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Label.__proto__ = superclass;
+    F7Label.prototype = Object.create(superclass && superclass.prototype);
     F7Label.prototype.constructor = F7Label;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7Label.prototype.render = function render () {
+    F7Label.prototype.render = function render() {
       var self = this;
       var props = self.props;
       var inline = props.inline;
@@ -3641,10 +3807,10 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7Label.prototype, prototypeAccessors );
+    Object.defineProperties(F7Label.prototype, prototypeAccessors);
 
     return F7Label;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Label, Object.assign({
     id: [String, Number],
@@ -3652,25 +3818,25 @@
     inline: Boolean
   }, Mixins.colorProps));
 
-  var F7Link = (function (superclass) {
+  var F7Link = function (superclass) {
     function F7Link(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
 
-      this.state = (function () {
+      this.state = function () {
         return {
           isTabbarLabel: props.tabbarLabel
         };
-      })();
+      }();
     }
 
-    if ( superclass ) F7Link.__proto__ = superclass;
-    F7Link.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Link.__proto__ = superclass;
+    F7Link.prototype = Object.create(superclass && superclass.prototype);
     F7Link.prototype.constructor = F7Link;
 
-    var prototypeAccessors = { attrs: { configurable: true },classes: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { attrs: { configurable: true }, classes: { configurable: true }, slots: { configurable: true }, refs: { configurable: true } };
 
-    F7Link.prototype.onClick = function onClick (event) {
+    F7Link.prototype.onClick = function onClick(event) {
       var self = this;
 
       if (self.props.smartSelect && self.f7SmartSelect) {
@@ -3687,8 +3853,12 @@
       var target = props.target;
       var tabLink = props.tabLink;
       var hrefComputed = href;
-      if (href === true) { hrefComputed = '#'; }
-      if (href === false) { hrefComputed = undefined; }
+      if (href === true) {
+        hrefComputed = '#';
+      }
+      if (href === false) {
+        hrefComputed = undefined;
+      }
       return Utils.extend({
         href: hrefComputed,
         target: target,
@@ -3716,7 +3886,7 @@
       }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
     };
 
-    F7Link.prototype.render = function render () {
+    F7Link.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -3746,9 +3916,11 @@
       var iconBadgeEl;
 
       if (text) {
-        if (badge) { badgeEl = React.createElement(F7Badge, {
-          color: badgeColor
-        }, badge); }
+        if (badge) {
+          badgeEl = React.createElement(F7Badge, {
+            color: badgeColor
+          }, badge);
+        }
         textEl = React.createElement('span', {
           className: self.state.isTabbarLabel ? 'tabbar-label' : ''
         }, text, badgeEl);
@@ -3784,7 +3956,7 @@
       }
 
       return React.createElement('a', Object.assign({
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         id: id,
@@ -3794,7 +3966,7 @@
       }, self.attrs), iconEl, textEl, defaultSlots);
     };
 
-    F7Link.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7Link.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
 
       if (self.f7SmartSelect && self.f7SmartSelect.destroy) {
@@ -3808,7 +3980,7 @@
       }
     };
 
-    F7Link.prototype.componentDidMount = function componentDidMount () {
+    F7Link.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       var el = self.refs.el;
       var ref = self.props;
@@ -3847,11 +4019,12 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7Link.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7Link.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -3860,20 +4033,22 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    F7Link.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+    F7Link.prototype.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
         var self = this$1;
-        if (!newText || !self.f7Tooltip) { return; }
+        if (!newText || !self.f7Tooltip) {
+          return;
+        }
         self.f7Tooltip.setText(newText);
       });
     };
 
-    Object.defineProperties( F7Link.prototype, prototypeAccessors );
+    Object.defineProperties(F7Link.prototype, prototypeAccessors);
 
     return F7Link;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Link, Object.assign({
     id: [String, Number],
@@ -3898,18 +4073,18 @@
     smartSelectParams: Object
   }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
 
-  var F7ListButton = (function (superclass) {
+  var F7ListButton = function (superclass) {
     function F7ListButton(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7ListButton.__proto__ = superclass;
-    F7ListButton.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7ListButton.__proto__ = superclass;
+    F7ListButton.prototype = Object.create(superclass && superclass.prototype);
     F7ListButton.prototype.constructor = F7ListButton;
 
-    var prototypeAccessors = { attrs: { configurable: true },classes: { configurable: true },slots: { configurable: true } };
+    var prototypeAccessors = { attrs: { configurable: true }, classes: { configurable: true }, slots: { configurable: true } };
 
-    F7ListButton.prototype.onClick = function onClick (event) {
+    F7ListButton.prototype.onClick = function onClick(event) {
       this.dispatchEvent('click', event);
     };
 
@@ -3943,7 +4118,7 @@
       }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
     };
 
-    F7ListButton.prototype.render = function render () {
+    F7ListButton.prototype.render = function render() {
       var self = this;
       var props = this.props;
       var className = props.className;
@@ -3966,17 +4141,18 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7ListButton.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7ListButton.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
-    Object.defineProperties( F7ListButton.prototype, prototypeAccessors );
+    Object.defineProperties(F7ListButton.prototype, prototypeAccessors);
 
     return F7ListButton;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7ListButton, Object.assign({
     id: [String, Number],
@@ -3991,18 +4167,18 @@
     target: String
   }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
 
-  var F7ListGroup = (function (superclass) {
+  var F7ListGroup = function (superclass) {
     function F7ListGroup(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7ListGroup.__proto__ = superclass;
-    F7ListGroup.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7ListGroup.__proto__ = superclass;
+    F7ListGroup.prototype = Object.create(superclass && superclass.prototype);
     F7ListGroup.prototype.constructor = F7ListGroup;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7ListGroup.prototype.render = function render () {
+    F7ListGroup.prototype.render = function render() {
       var self = this;
       var props = self.props;
       var className = props.className;
@@ -4025,10 +4201,10 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7ListGroup.prototype, prototypeAccessors );
+    Object.defineProperties(F7ListGroup.prototype, prototypeAccessors);
 
     return F7ListGroup;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7ListGroup, Object.assign({
     id: [String, Number],
@@ -4036,29 +4212,33 @@
     sortable: Boolean
   }, Mixins.colorProps));
 
-  var F7ListIndex = (function (superclass) {
+  var F7ListIndex = function (superclass) {
     function F7ListIndex(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
     }
 
-    if ( superclass ) F7ListIndex.__proto__ = superclass;
-    F7ListIndex.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7ListIndex.__proto__ = superclass;
+    F7ListIndex.prototype = Object.create(superclass && superclass.prototype);
     F7ListIndex.prototype.constructor = F7ListIndex;
 
-    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true }, refs: { configurable: true } };
 
-    F7ListIndex.prototype.update = function update () {
-      if (!this.f7ListIndex) { return; }
+    F7ListIndex.prototype.update = function update() {
+      if (!this.f7ListIndex) {
+        return;
+      }
       this.f7ListIndex.update();
     };
 
-    F7ListIndex.prototype.scrollListToIndex = function scrollListToIndex (indexContent) {
-      if (!this.f7ListIndex) { return; }
+    F7ListIndex.prototype.scrollListToIndex = function scrollListToIndex(indexContent) {
+      if (!this.f7ListIndex) {
+        return;
+      }
       this.f7ListIndex.scrollListToIndex(indexContent);
     };
 
-    F7ListIndex.prototype.render = function render () {
+    F7ListIndex.prototype.render = function render() {
       var this$1 = this;
 
       var props = this.props;
@@ -4067,7 +4247,7 @@
       var style = props.style;
       var classes = Utils.classNames(className, 'list-index', Mixins.colorClasses(props));
       return React.createElement('div', {
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         id: id,
@@ -4076,9 +4256,11 @@
       }, this.slots['default']);
     };
 
-    F7ListIndex.prototype.componentDidMount = function componentDidMount () {
+    F7ListIndex.prototype.componentDidMount = function componentDidMount() {
       var self = this;
-      if (!self.props.init) { return; }
+      if (!self.props.init) {
+        return;
+      }
       self.$f7ready(function (f7) {
         var el = self.refs.el;
         var ref = self.props;
@@ -4106,8 +4288,10 @@
       });
     };
 
-    F7ListIndex.prototype.componentWillUnmount = function componentWillUnmount () {
-      if (!this.props.init) { return; }
+    F7ListIndex.prototype.componentWillUnmount = function componentWillUnmount() {
+      if (!this.props.init) {
+        return;
+      }
 
       if (this.f7ListIndex && this.f7ListIndex.destroy) {
         this.f7ListIndex.destroy();
@@ -4118,11 +4302,12 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7ListIndex.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7ListIndex.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -4131,20 +4316,22 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    F7ListIndex.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+    F7ListIndex.prototype.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.indexes', prevProps, prevState, function () {
-        if (!this$1.f7ListIndex) { return; }
+        if (!this$1.f7ListIndex) {
+          return;
+        }
         this$1.f7ListIndex.params.indexes = this$1.indexes;
         this$1.update();
       });
     };
 
-    Object.defineProperties( F7ListIndex.prototype, prototypeAccessors );
+    Object.defineProperties(F7ListIndex.prototype, prototypeAccessors);
 
     return F7ListIndex;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7ListIndex, Object.assign({
     id: [String, Number],
@@ -4175,18 +4362,18 @@
     }
   }, Mixins.colorProps));
 
-  var F7ListItemCell = (function (superclass) {
+  var F7ListItemCell = function (superclass) {
     function F7ListItemCell(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7ListItemCell.__proto__ = superclass;
-    F7ListItemCell.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7ListItemCell.__proto__ = superclass;
+    F7ListItemCell.prototype = Object.create(superclass && superclass.prototype);
     F7ListItemCell.prototype.constructor = F7ListItemCell;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7ListItemCell.prototype.render = function render () {
+    F7ListItemCell.prototype.render = function render() {
       var props = this.props;
       var className = props.className;
       var id = props.id;
@@ -4203,37 +4390,37 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7ListItemCell.prototype, prototypeAccessors );
+    Object.defineProperties(F7ListItemCell.prototype, prototypeAccessors);
 
     return F7ListItemCell;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7ListItemCell, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
 
-  var F7ListItemContent = (function (superclass) {
+  var F7ListItemContent = function (superclass) {
     function F7ListItemContent(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
 
-      this.state = (function () {
+      this.state = function () {
         return {
           hasInput: false,
           hasInlineLabel: false,
           hasInputInfo: false,
           hasInputErrorMessage: false
         };
-      })();
+      }();
     }
 
-    if ( superclass ) F7ListItemContent.__proto__ = superclass;
-    F7ListItemContent.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7ListItemContent.__proto__ = superclass;
+    F7ListItemContent.prototype = Object.create(superclass && superclass.prototype);
     F7ListItemContent.prototype.constructor = F7ListItemContent;
 
-    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true }, refs: { configurable: true } };
 
-    F7ListItemContent.prototype.checkHasInputState = function checkHasInputState () {
+    F7ListItemContent.prototype.checkHasInputState = function checkHasInputState() {
       var self = this;
       var props = self.props;
       var itemInput = props.itemInput;
@@ -4281,15 +4468,15 @@
       }
     };
 
-    F7ListItemContent.prototype.onClick = function onClick (event) {
+    F7ListItemContent.prototype.onClick = function onClick(event) {
       this.dispatchEvent('click', event);
     };
 
-    F7ListItemContent.prototype.onChange = function onChange (event) {
+    F7ListItemContent.prototype.onChange = function onChange(event) {
       this.dispatchEvent('change', event);
     };
 
-    F7ListItemContent.prototype.render = function render () {
+    F7ListItemContent.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -4358,44 +4545,90 @@
 
       if (slots && slots.length) {
         slots.forEach(function (slot) {
-          if (Array.isArray(slot)) { flattenSlots.push.apply(flattenSlots, slot); }else { flattenSlots.push(slot); }
+          if (Array.isArray(slot)) {
+            flattenSlots.push.apply(flattenSlots, slot);
+          } else {
+            flattenSlots.push(slot);
+          }
         });
       }
 
       flattenSlots.forEach(function (child) {
-        if (typeof child === 'undefined') { return; }
+        if (typeof child === 'undefined') {
+          return;
+        }
         {
           var tag = child.type && child.type.name;
 
           if (tag === 'F7Input') {
             hasInput = true;
-            if (child.props && child.props.info) { hasInputInfo = true; }
-            if (child.props && child.props.errorMessage && child.props.errorMessageForce) { hasInputErrorMessage = true; }
+            if (child.props && child.props.info) {
+              hasInputInfo = true;
+            }
+            if (child.props && child.props.errorMessage && child.props.errorMessageForce) {
+              hasInputErrorMessage = true;
+            }
           }
 
           if (tag === 'F7Label') {
-            if (child.props && child.props.inline) { hasInlineLabel = true; }
+            if (child.props && child.props.inline) {
+              hasInlineLabel = true;
+            }
           }
         }
         var slotName;
         slotName = child.props ? child.props.slot : undefined;
-        if (!slotName || slotName === 'inner') { slotsInner.push(child); }
-        if (slotName === 'content-start') { slotsContentStart.push(child); }
-        if (slotName === 'content') { slotsContent.push(child); }
-        if (slotName === 'content-end') { slotsContentEnd.push(child); }
-        if (slotName === 'after-start') { slotsAfterStart.push(child); }
-        if (slotName === 'after') { slotsAfter.push(child); }
-        if (slotName === 'after-end') { slotsAfterEnd.push(child); }
-        if (slotName === 'media') { slotsMedia.push(child); }
-        if (slotName === 'inner-start') { slotsInnerStart.push(child); }
-        if (slotName === 'inner-end') { slotsInnerEnd.push(child); }
-        if (slotName === 'before-title') { slotsBeforeTitle.push(child); }
-        if (slotName === 'title') { slotsTitle.push(child); }
-        if (slotName === 'after-title') { slotsAfterTitle.push(child); }
-        if (slotName === 'subtitle') { slotsSubtitle.push(child); }
-        if (slotName === 'text') { slotsText.push(child); }
-        if (slotName === 'header') { slotsHeader.push(child); }
-        if (slotName === 'footer') { slotsFooter.push(child); }
+        if (!slotName || slotName === 'inner') {
+          slotsInner.push(child);
+        }
+        if (slotName === 'content-start') {
+          slotsContentStart.push(child);
+        }
+        if (slotName === 'content') {
+          slotsContent.push(child);
+        }
+        if (slotName === 'content-end') {
+          slotsContentEnd.push(child);
+        }
+        if (slotName === 'after-start') {
+          slotsAfterStart.push(child);
+        }
+        if (slotName === 'after') {
+          slotsAfter.push(child);
+        }
+        if (slotName === 'after-end') {
+          slotsAfterEnd.push(child);
+        }
+        if (slotName === 'media') {
+          slotsMedia.push(child);
+        }
+        if (slotName === 'inner-start') {
+          slotsInnerStart.push(child);
+        }
+        if (slotName === 'inner-end') {
+          slotsInnerEnd.push(child);
+        }
+        if (slotName === 'before-title') {
+          slotsBeforeTitle.push(child);
+        }
+        if (slotName === 'title') {
+          slotsTitle.push(child);
+        }
+        if (slotName === 'after-title') {
+          slotsAfterTitle.push(child);
+        }
+        if (slotName === 'subtitle') {
+          slotsSubtitle.push(child);
+        }
+        if (slotName === 'text') {
+          slotsText.push(child);
+        }
+        if (slotName === 'header') {
+          slotsHeader.push(child);
+        }
+        if (slotName === 'footer') {
+          slotsFooter.push(child);
+        }
       });
 
       if (radio || checkbox) {
@@ -4412,7 +4645,7 @@
           });
         }
         inputIconEl = React.createElement('i', {
-          className: ("icon icon-" + (radio ? 'radio' : 'checkbox'))
+          className: "icon icon-" + (radio ? 'radio' : 'checkbox')
         });
       }
 
@@ -4483,14 +4716,14 @@
           className: 'item-title-row'
         }, slotsBeforeTitle, titleEl, slotsAfterTitle, afterWrapEl);
         innerEl = React.createElement('div', {
-          ref: function (__reactNode) {
+          ref: function ref(__reactNode) {
             this$1.__reactRefs['innerEl'] = __reactNode;
           },
           className: 'item-inner'
         }, slotsInnerStart, headerEl, titleRowEl, subtitleEl, textEl, slotsInner, footerEl, slotsInnerEnd);
       } else {
         innerEl = React.createElement('div', {
-          ref: function (__reactNode) {
+          ref: function ref(__reactNode) {
             this$1.__reactRefs['innerEl'] = __reactNode;
           },
           className: 'item-inner'
@@ -4508,7 +4741,7 @@
         'item-input-invalid': hasInputErrorMessage
       }, Mixins.colorClasses(props));
       return React.createElement(ItemContentTag, {
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         id: id,
@@ -4518,10 +4751,12 @@
       }, slotsContentStart, inputEl, inputIconEl, mediaEl, innerEl, slotsContent, slotsContentEnd);
     };
 
-    F7ListItemContent.prototype.componentDidUpdate = function componentDidUpdate () {
+    F7ListItemContent.prototype.componentDidUpdate = function componentDidUpdate() {
       var self = this;
       var innerEl = self.refs.innerEl;
-      if (!innerEl) { return; }
+      if (!innerEl) {
+        return;
+      }
       var $innerEl = self.$$(innerEl);
       var $labelEl = $innerEl.children('.item-title.item-label');
       var $inputEl = $innerEl.children('.item-input-wrap');
@@ -4555,10 +4790,12 @@
       }
     };
 
-    F7ListItemContent.prototype.componentDidMount = function componentDidMount () {
+    F7ListItemContent.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       var innerEl = self.refs.innerEl;
-      if (!innerEl) { return; }
+      if (!innerEl) {
+        return;
+      }
       var $innerEl = self.$$(innerEl);
       var $labelEl = $innerEl.children('.item-title.item-label');
       var $inputEl = $innerEl.children('.item-input-wrap');
@@ -4592,11 +4829,11 @@
       }
     };
 
-    F7ListItemContent.prototype.componentWillUpdate = function componentWillUpdate () {
+    F7ListItemContent.prototype.componentWillUpdate = function componentWillUpdate() {
       this.checkHasInputState();
     };
 
-    F7ListItemContent.prototype.componentWillMount = function componentWillMount () {
+    F7ListItemContent.prototype.componentWillMount = function componentWillMount() {
       this.checkHasInputState();
     };
 
@@ -4604,11 +4841,12 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7ListItemContent.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7ListItemContent.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -4617,10 +4855,10 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    Object.defineProperties( F7ListItemContent.prototype, prototypeAccessors );
+    Object.defineProperties(F7ListItemContent.prototype, prototypeAccessors);
 
     return F7ListItemContent;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7ListItemContent, Object.assign({
     id: [String, Number],
@@ -4648,18 +4886,18 @@
     disabled: Boolean
   }, Mixins.colorProps));
 
-  var F7ListItemRow = (function (superclass) {
+  var F7ListItemRow = function (superclass) {
     function F7ListItemRow(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7ListItemRow.__proto__ = superclass;
-    F7ListItemRow.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7ListItemRow.__proto__ = superclass;
+    F7ListItemRow.prototype = Object.create(superclass && superclass.prototype);
     F7ListItemRow.prototype.constructor = F7ListItemRow;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7ListItemRow.prototype.render = function render () {
+    F7ListItemRow.prototype.render = function render() {
       var props = this.props;
       var className = props.className;
       var id = props.id;
@@ -4676,29 +4914,29 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7ListItemRow.prototype, prototypeAccessors );
+    Object.defineProperties(F7ListItemRow.prototype, prototypeAccessors);
 
     return F7ListItemRow;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7ListItemRow, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
 
-  var F7ListItem = (function (superclass) {
+  var F7ListItem = function (superclass) {
     function F7ListItem(props, context) {
       var this$1 = this;
 
       superclass.call(this, props, context);
       this.__reactRefs = {};
 
-      this.state = (function () {
+      this.state = function () {
         return {
           isMedia: props.mediaItem || props.mediaList,
           isSortable: props.sortable,
           isSimple: false
         };
-      })();
+      }();
 
       (function () {
         var self = this$1;
@@ -4718,13 +4956,13 @@
       })();
     }
 
-    if ( superclass ) F7ListItem.__proto__ = superclass;
-    F7ListItem.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7ListItem.__proto__ = superclass;
+    F7ListItem.prototype = Object.create(superclass && superclass.prototype);
     F7ListItem.prototype.constructor = F7ListItem;
 
-    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true }, refs: { configurable: true } };
 
-    F7ListItem.prototype.onClick = function onClick (event) {
+    F7ListItem.prototype.onClick = function onClick(event) {
       var self = this;
 
       if (self.props.smartSelect && self.f7SmartSelect) {
@@ -4736,59 +4974,59 @@
       }
     };
 
-    F7ListItem.prototype.onSwipeoutDeleted = function onSwipeoutDeleted (event) {
+    F7ListItem.prototype.onSwipeoutDeleted = function onSwipeoutDeleted(event) {
       this.dispatchEvent('swipeout:deleted swipeoutDeleted', event);
     };
 
-    F7ListItem.prototype.onSwipeoutDelete = function onSwipeoutDelete (event) {
+    F7ListItem.prototype.onSwipeoutDelete = function onSwipeoutDelete(event) {
       this.dispatchEvent('swipeout:delete swipeoutDelete', event);
     };
 
-    F7ListItem.prototype.onSwipeoutClose = function onSwipeoutClose (event) {
+    F7ListItem.prototype.onSwipeoutClose = function onSwipeoutClose(event) {
       this.dispatchEvent('swipeout:close swipeoutClose', event);
     };
 
-    F7ListItem.prototype.onSwipeoutClosed = function onSwipeoutClosed (event) {
+    F7ListItem.prototype.onSwipeoutClosed = function onSwipeoutClosed(event) {
       this.dispatchEvent('swipeout:closed swipeoutClosed', event);
     };
 
-    F7ListItem.prototype.onSwipeoutOpen = function onSwipeoutOpen (event) {
+    F7ListItem.prototype.onSwipeoutOpen = function onSwipeoutOpen(event) {
       this.dispatchEvent('swipeout:open swipeoutOpen', event);
     };
 
-    F7ListItem.prototype.onSwipeoutOpened = function onSwipeoutOpened (event) {
+    F7ListItem.prototype.onSwipeoutOpened = function onSwipeoutOpened(event) {
       this.dispatchEvent('swipeout:opened swipeoutOpened', event);
     };
 
-    F7ListItem.prototype.onSwipeout = function onSwipeout (event) {
+    F7ListItem.prototype.onSwipeout = function onSwipeout(event) {
       this.dispatchEvent('swipeout', event);
     };
 
-    F7ListItem.prototype.onAccClose = function onAccClose (event) {
+    F7ListItem.prototype.onAccClose = function onAccClose(event) {
       this.dispatchEvent('accordion:close accordionClose', event);
     };
 
-    F7ListItem.prototype.onAccClosed = function onAccClosed (event) {
+    F7ListItem.prototype.onAccClosed = function onAccClosed(event) {
       this.dispatchEvent('accordion:closed accordionClosed', event);
     };
 
-    F7ListItem.prototype.onAccOpen = function onAccOpen (event) {
+    F7ListItem.prototype.onAccOpen = function onAccOpen(event) {
       this.dispatchEvent('accordion:open accordionOpen', event);
     };
 
-    F7ListItem.prototype.onAccOpened = function onAccOpened (event) {
+    F7ListItem.prototype.onAccOpened = function onAccOpened(event) {
       this.dispatchEvent('accordion:opened accordionOpened', event);
     };
 
-    F7ListItem.prototype.onChange = function onChange (event) {
+    F7ListItem.prototype.onChange = function onChange(event) {
       this.dispatchEvent('change', event);
     };
 
-    F7ListItem.prototype.onInput = function onInput (event) {
+    F7ListItem.prototype.onInput = function onInput(event) {
       this.dispatchEvent('input', event);
     };
 
-    F7ListItem.prototype.render = function render () {
+    F7ListItem.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -4893,7 +5131,7 @@
 
       if (divider || groupTitle) {
         return React.createElement('li', {
-          ref: function (__reactNode) {
+          ref: function ref(__reactNode) {
             this$1.__reactRefs['el'] = __reactNode;
           },
           id: id,
@@ -4902,7 +5140,7 @@
         }, React.createElement('span', null, this.slots['default'], !this.slots.default && title));
       } else if (isSimple) {
         return React.createElement('li', {
-          ref: function (__reactNode) {
+          ref: function ref(__reactNode) {
             this$1.__reactRefs['el'] = __reactNode;
           },
           id: id,
@@ -4913,7 +5151,7 @@
 
       var linkItemEl = link || href || smartSelect || accordionItem ? linkEl : itemContentEl;
       return React.createElement('li', {
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         id: id,
@@ -4926,7 +5164,7 @@
       }), (swipeout || accordionItem) && self.slots.default, this.slots['root'], this.slots['root-end']);
     };
 
-    F7ListItem.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7ListItem.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
       var el = self.refs.el;
       var ref = self.props;
@@ -4958,12 +5196,14 @@
       }
     };
 
-    F7ListItem.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+    F7ListItem.prototype.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.swipeoutOpened', prevProps, prevState, function (opened) {
         var self = this$1;
-        if (!self.props.swipeout) { return; }
+        if (!self.props.swipeout) {
+          return;
+        }
         var el = self.refs.el;
 
         if (opened) {
@@ -4975,7 +5215,9 @@
 
       var self = this;
       var $listEl = self.$listEl;
-      if (!$listEl || $listEl && $listEl.length === 0) { return; }
+      if (!$listEl || $listEl && $listEl.length === 0) {
+        return;
+      }
       var isMedia = $listEl.hasClass('media-list');
       var isSimple = $listEl.hasClass('simple-list');
       var isSortable = $listEl.hasClass('sortable');
@@ -4999,10 +5241,12 @@
       }
     };
 
-    F7ListItem.prototype.componentDidMount = function componentDidMount () {
+    F7ListItem.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       var el = self.refs.el;
-      if (!el) { return; }
+      if (!el) {
+        return;
+      }
       self.$listEl = self.$$(el).parents('.list, .list-group').eq(0);
 
       if (self.$listEl.length) {
@@ -5055,11 +5299,12 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7ListItem.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7ListItem.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -5068,10 +5313,10 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    Object.defineProperties( F7ListItem.prototype, prototypeAccessors );
+    Object.defineProperties(F7ListItem.prototype, prototypeAccessors);
 
     return F7ListItem;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7ListItem, Object.assign({
     id: [String, Number],
@@ -5112,35 +5357,35 @@
     inlineLabel: Boolean
   }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
 
-  var F7List = (function (superclass) {
+  var F7List = function (superclass) {
     function F7List(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
     }
 
-    if ( superclass ) F7List.__proto__ = superclass;
-    F7List.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7List.__proto__ = superclass;
+    F7List.prototype = Object.create(superclass && superclass.prototype);
     F7List.prototype.constructor = F7List;
 
-    var prototypeAccessors = { classes: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { classes: { configurable: true }, slots: { configurable: true }, refs: { configurable: true } };
 
-    F7List.prototype.onSortableEnable = function onSortableEnable (event) {
+    F7List.prototype.onSortableEnable = function onSortableEnable(event) {
       this.dispatchEvent('sortable:enable sortableEnable', event);
     };
 
-    F7List.prototype.onSortableDisable = function onSortableDisable (event) {
+    F7List.prototype.onSortableDisable = function onSortableDisable(event) {
       this.dispatchEvent('sortable:disable sortableDisable', event);
     };
 
-    F7List.prototype.onSortableSort = function onSortableSort (event) {
+    F7List.prototype.onSortableSort = function onSortableSort(event) {
       this.dispatchEvent('sortable:sort sortableSort', event, event.detail);
     };
 
-    F7List.prototype.onTabShow = function onTabShow (e) {
+    F7List.prototype.onTabShow = function onTabShow(e) {
       this.dispatchEvent('tab:show tabShow', e);
     };
 
-    F7List.prototype.onTabHide = function onTabHide (e) {
+    F7List.prototype.onTabHide = function onTabHide(e) {
       this.dispatchEvent('tab:hide tabHide', e);
     };
 
@@ -5192,7 +5437,7 @@
       }, Mixins.colorClasses(props));
     };
 
-    F7List.prototype.render = function render () {
+    F7List.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -5209,7 +5454,9 @@
       var flattenSlots = Utils.flattenArray(slotsDefault);
       var wasUlChild = false;
       flattenSlots.forEach(function (child) {
-        if (typeof child === 'undefined') { return; }
+        if (typeof child === 'undefined') {
+          return;
+        }
         var tag;
         {
           tag = child.type && child.type.name;
@@ -5220,7 +5467,11 @@
         }
 
         if (!tag && 'react' === 'react' || tag && !(tag === 'li' || tag === 'F7ListItem' || tag === 'F7ListButton' || tag.indexOf('list-item') >= 0 || tag.indexOf('list-button') >= 0)) {
-          if (wasUlChild) { rootChildrenAfterList.push(child); }else { rootChildrenBeforeList.push(child); }
+          if (wasUlChild) {
+            rootChildrenAfterList.push(child);
+          } else {
+            rootChildrenBeforeList.push(child);
+          }
         } else if (tag) {
           wasUlChild = true;
           ulChildren.push(child);
@@ -5231,7 +5482,7 @@
       if (ulChildren.length > 0) {
         return React.createElement(ListTag, {
           id: id,
-          ref: function (__reactNode) {
+          ref: function ref(__reactNode) {
             this$1.__reactRefs['el'] = __reactNode;
           },
           style: style,
@@ -5240,7 +5491,7 @@
       } else {
         return React.createElement(ListTag, {
           id: id,
-          ref: function (__reactNode) {
+          ref: function ref(__reactNode) {
             this$1.__reactRefs['el'] = __reactNode;
           },
           style: style,
@@ -5249,7 +5500,7 @@
       }
     };
 
-    F7List.prototype.componentDidMount = function componentDidMount () {
+    F7List.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       var el = self.refs.el;
       var ref = self.props;
@@ -5269,7 +5520,9 @@
         el.addEventListener('tab:hide', self.onTabHideBound);
       }
 
-      if (!virtualList) { return; }
+      if (!virtualList) {
+        return;
+      }
       self.$f7ready(function (f7) {
         var $$ = self.$$;
         var $el = $$(el);
@@ -5282,8 +5535,12 @@
         }
 
         var vlParams = virtualListParams || {};
-        if (!template && !vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal) { return; }
-        if (template) { template = self.$t7.compile(template); }
+        if (!template && !vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal) {
+          return;
+        }
+        if (template) {
+          template = self.$t7.compile(template);
+        }
         self.f7VirtualList = f7.virtualList.create(Utils.extend({
           el: el,
           itemTemplate: template,
@@ -5313,7 +5570,7 @@
       });
     };
 
-    F7List.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7List.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
       var el = self.refs.el;
 
@@ -5325,19 +5582,24 @@
         el.removeEventListener('tab:hide', self.onTabHideBound);
       }
 
-      if (!(self.virtualList && self.f7VirtualList)) { return; }
-      if (self.f7VirtualList.destroy) { self.f7VirtualList.destroy(); }
+      if (!(self.virtualList && self.f7VirtualList)) {
+        return;
+      }
+      if (self.f7VirtualList.destroy) {
+        self.f7VirtualList.destroy();
+      }
     };
 
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
 
-    F7List.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7List.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -5346,10 +5608,10 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    Object.defineProperties( F7List.prototype, prototypeAccessors );
+    Object.defineProperties(F7List.prototype, prototypeAccessors);
 
     return F7List;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7List, Object.assign({
     id: [String, Number],
@@ -5377,18 +5639,18 @@
     virtualListParams: Object
   }, Mixins.colorProps));
 
-  var F7LoginScreenTitle = (function (superclass) {
+  var F7LoginScreenTitle = function (superclass) {
     function F7LoginScreenTitle(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7LoginScreenTitle.__proto__ = superclass;
-    F7LoginScreenTitle.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7LoginScreenTitle.__proto__ = superclass;
+    F7LoginScreenTitle.prototype = Object.create(superclass && superclass.prototype);
     F7LoginScreenTitle.prototype.constructor = F7LoginScreenTitle;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7LoginScreenTitle.prototype.render = function render () {
+    F7LoginScreenTitle.prototype.render = function render() {
       var props = this.props;
       var className = props.className;
       var id = props.id;
@@ -5405,58 +5667,62 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7LoginScreenTitle.prototype, prototypeAccessors );
+    Object.defineProperties(F7LoginScreenTitle.prototype, prototypeAccessors);
 
     return F7LoginScreenTitle;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7LoginScreenTitle, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
 
-  var F7LoginScreen = (function (superclass) {
+  var F7LoginScreen = function (superclass) {
     function F7LoginScreen(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
     }
 
-    if ( superclass ) F7LoginScreen.__proto__ = superclass;
-    F7LoginScreen.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7LoginScreen.__proto__ = superclass;
+    F7LoginScreen.prototype = Object.create(superclass && superclass.prototype);
     F7LoginScreen.prototype.constructor = F7LoginScreen;
 
-    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true }, refs: { configurable: true } };
 
-    F7LoginScreen.prototype.onOpen = function onOpen (event) {
+    F7LoginScreen.prototype.onOpen = function onOpen(event) {
       this.dispatchEvent('loginscreen:open loginScreenOpen', event);
     };
 
-    F7LoginScreen.prototype.onOpened = function onOpened (event) {
+    F7LoginScreen.prototype.onOpened = function onOpened(event) {
       this.dispatchEvent('loginscreen:opened loginScreenOpened', event);
     };
 
-    F7LoginScreen.prototype.onClose = function onClose (event) {
+    F7LoginScreen.prototype.onClose = function onClose(event) {
       this.dispatchEvent('loginscreen:close loginScreenClose', event);
     };
 
-    F7LoginScreen.prototype.onClosed = function onClosed (event) {
+    F7LoginScreen.prototype.onClosed = function onClosed(event) {
       this.dispatchEvent('loginscreen:closed loginScreenClosed', event);
     };
 
-    F7LoginScreen.prototype.open = function open (animate) {
+    F7LoginScreen.prototype.open = function open(animate) {
       var self = this;
       var el = self.refs.el;
-      if (!self.$f7 || !el) { return undefined; }
+      if (!self.$f7 || !el) {
+        return undefined;
+      }
       return self.$f7.loginScreen.open(el, animate);
     };
 
-    F7LoginScreen.prototype.close = function close (animate) {
+    F7LoginScreen.prototype.close = function close(animate) {
       var self = this;
       var el = self.refs.el;
-      if (!self.$f7 || !el) { return undefined; }
+      if (!self.$f7 || !el) {
+        return undefined;
+      }
       return self.$f7.loginScreen.close(el, animate);
     };
 
-    F7LoginScreen.prototype.render = function render () {
+    F7LoginScreen.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -5466,7 +5732,7 @@
       var style = props.style;
       var classes = Utils.classNames(className, 'login-screen', Mixins.colorClasses(props));
       return React.createElement('div', {
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         id: id,
@@ -5475,21 +5741,27 @@
       }, this.slots['default']);
     };
 
-    F7LoginScreen.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7LoginScreen.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
       var el = self.refs.el;
-      if (self.f7LoginScreen) { self.f7LoginScreen.destroy(); }
-      if (!el) { return; }
+      if (self.f7LoginScreen) {
+        self.f7LoginScreen.destroy();
+      }
+      if (!el) {
+        return;
+      }
       el.removeEventListener('loginscreen:open', self.onOpenBound);
       el.removeEventListener('loginscreen:opened', self.onOpenedBound);
       el.removeEventListener('loginscreen:close', self.onCloseBound);
       el.removeEventListener('loginscreen:closed', self.onClosedBound);
     };
 
-    F7LoginScreen.prototype.componentDidMount = function componentDidMount () {
+    F7LoginScreen.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       var el = self.refs.el;
-      if (!el) { return; }
+      if (!el) {
+        return;
+      }
       self.onOpenBound = self.onOpen.bind(self);
       self.onOpenedBound = self.onOpened.bind(self);
       self.onCloseBound = self.onClose.bind(self);
@@ -5513,11 +5785,12 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7LoginScreen.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7LoginScreen.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -5526,12 +5799,14 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    F7LoginScreen.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+    F7LoginScreen.prototype.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.opened', prevProps, prevState, function (opened) {
         var self = this$1;
-        if (!self.f7LoginScreen) { return; }
+        if (!self.f7LoginScreen) {
+          return;
+        }
 
         if (opened) {
           self.f7LoginScreen.open();
@@ -5541,17 +5816,17 @@
       });
     };
 
-    Object.defineProperties( F7LoginScreen.prototype, prototypeAccessors );
+    Object.defineProperties(F7LoginScreen.prototype, prototypeAccessors);
 
     return F7LoginScreen;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7LoginScreen, Object.assign({
     id: [String, Number],
     opened: Boolean
   }, Mixins.colorProps));
 
-  var F7Message = (function (superclass) {
+  var F7Message = function (superclass) {
     function F7Message(props, context) {
       var this$1 = this;
 
@@ -5568,37 +5843,37 @@
       })();
     }
 
-    if ( superclass ) F7Message.__proto__ = superclass;
-    F7Message.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Message.__proto__ = superclass;
+    F7Message.prototype = Object.create(superclass && superclass.prototype);
     F7Message.prototype.constructor = F7Message;
 
-    var prototypeAccessors = { classes: { configurable: true },slots: { configurable: true } };
+    var prototypeAccessors = { classes: { configurable: true }, slots: { configurable: true } };
 
-    F7Message.prototype.onClick = function onClick (event) {
+    F7Message.prototype.onClick = function onClick(event) {
       this.dispatchEvent('click', event);
     };
 
-    F7Message.prototype.onNameClick = function onNameClick (event) {
+    F7Message.prototype.onNameClick = function onNameClick(event) {
       this.dispatchEvent('click:name clickName', event);
     };
 
-    F7Message.prototype.onTextClick = function onTextClick (event) {
+    F7Message.prototype.onTextClick = function onTextClick(event) {
       this.dispatchEvent('click:text clickText', event);
     };
 
-    F7Message.prototype.onAvatarClick = function onAvatarClick (event) {
+    F7Message.prototype.onAvatarClick = function onAvatarClick(event) {
       this.dispatchEvent('click:avatar clickAvatar', event);
     };
 
-    F7Message.prototype.onHeaderClick = function onHeaderClick (event) {
+    F7Message.prototype.onHeaderClick = function onHeaderClick(event) {
       this.dispatchEvent('click:header clickHeader', event);
     };
 
-    F7Message.prototype.onFooterClick = function onFooterClick (event) {
+    F7Message.prototype.onFooterClick = function onFooterClick(event) {
       this.dispatchEvent('click:footer clickFooter', event);
     };
 
-    F7Message.prototype.onBubbleClick = function onBubbleClick (event) {
+    F7Message.prototype.onBubbleClick = function onBubbleClick(event) {
       this.dispatchEvent('click:bubble clickBubble', event);
     };
 
@@ -5629,7 +5904,7 @@
       }, Mixins.colorClasses(props));
     };
 
-    F7Message.prototype.render = function render () {
+    F7Message.prototype.render = function render() {
       var self = this;
       var props = self.props;
       var text = props.text;
@@ -5667,7 +5942,7 @@
       }, slotsStart, (avatar || slotsAvatar) && React.createElement('div', {
         className: 'message-avatar',
         style: {
-          backgroundImage: avatar && ("url(" + avatar + ")")
+          backgroundImage: avatar && "url(" + avatar + ")"
         },
         onClick: self.onAvatarClickBound
       }, slotsAvatar), React.createElement('div', {
@@ -5704,17 +5979,18 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7Message.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7Message.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
-    Object.defineProperties( F7Message.prototype, prototypeAccessors );
+    Object.defineProperties(F7Message.prototype, prototypeAccessors);
 
     return F7Message;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Message, Object.assign({
     id: [String, Number],
@@ -5740,7 +6016,7 @@
     typing: Boolean
   }, Mixins.colorProps));
 
-  var F7MessagebarAttachment = (function (superclass) {
+  var F7MessagebarAttachment = function (superclass) {
     function F7MessagebarAttachment(props, context) {
       var this$1 = this;
 
@@ -5752,21 +6028,21 @@
       })();
     }
 
-    if ( superclass ) F7MessagebarAttachment.__proto__ = superclass;
-    F7MessagebarAttachment.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7MessagebarAttachment.__proto__ = superclass;
+    F7MessagebarAttachment.prototype = Object.create(superclass && superclass.prototype);
     F7MessagebarAttachment.prototype.constructor = F7MessagebarAttachment;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7MessagebarAttachment.prototype.onClick = function onClick (e) {
+    F7MessagebarAttachment.prototype.onClick = function onClick(e) {
       this.dispatchEvent('attachment:click attachmentClick', e);
     };
 
-    F7MessagebarAttachment.prototype.onDeleteClick = function onDeleteClick (e) {
+    F7MessagebarAttachment.prototype.onDeleteClick = function onDeleteClick(e) {
       this.dispatchEvent('attachment:delete attachmentDelete', e);
     };
 
-    F7MessagebarAttachment.prototype.render = function render () {
+    F7MessagebarAttachment.prototype.render = function render() {
       var self = this;
       var props = self.props;
       var deletable = props.deletable;
@@ -5792,17 +6068,18 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7MessagebarAttachment.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7MessagebarAttachment.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
-    Object.defineProperties( F7MessagebarAttachment.prototype, prototypeAccessors );
+    Object.defineProperties(F7MessagebarAttachment.prototype, prototypeAccessors);
 
     return F7MessagebarAttachment;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7MessagebarAttachment, Object.assign({
     id: [String, Number],
@@ -5813,18 +6090,18 @@
     }
   }, Mixins.colorProps));
 
-  var F7MessagebarAttachments = (function (superclass) {
+  var F7MessagebarAttachments = function (superclass) {
     function F7MessagebarAttachments(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7MessagebarAttachments.__proto__ = superclass;
-    F7MessagebarAttachments.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7MessagebarAttachments.__proto__ = superclass;
+    F7MessagebarAttachments.prototype = Object.create(superclass && superclass.prototype);
     F7MessagebarAttachments.prototype.constructor = F7MessagebarAttachments;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7MessagebarAttachments.prototype.render = function render () {
+    F7MessagebarAttachments.prototype.render = function render() {
       var props = this.props;
       var className = props.className;
       var id = props.id;
@@ -5841,16 +6118,16 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7MessagebarAttachments.prototype, prototypeAccessors );
+    Object.defineProperties(F7MessagebarAttachments.prototype, prototypeAccessors);
 
     return F7MessagebarAttachments;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7MessagebarAttachments, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
 
-  var F7MessagebarSheetImage = (function (superclass) {
+  var F7MessagebarSheetImage = function (superclass) {
     function F7MessagebarSheetImage(props, context) {
       var this$1 = this;
 
@@ -5861,18 +6138,22 @@
       })();
     }
 
-    if ( superclass ) F7MessagebarSheetImage.__proto__ = superclass;
-    F7MessagebarSheetImage.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7MessagebarSheetImage.__proto__ = superclass;
+    F7MessagebarSheetImage.prototype = Object.create(superclass && superclass.prototype);
     F7MessagebarSheetImage.prototype.constructor = F7MessagebarSheetImage;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7MessagebarSheetImage.prototype.onChange = function onChange (e) {
-      if (this.props.checked) { this.dispatchEvent('checked', e); }else { this.dispatchEvent('unchecked', e); }
+    F7MessagebarSheetImage.prototype.onChange = function onChange(e) {
+      if (this.props.checked) {
+        this.dispatchEvent('checked', e);
+      } else {
+        this.dispatchEvent('unchecked', e);
+      }
       this.dispatchEvent('change', e);
     };
 
-    F7MessagebarSheetImage.prototype.render = function render () {
+    F7MessagebarSheetImage.prototype.render = function render() {
       var self = this;
       var props = self.props;
       var image = props.image;
@@ -5882,7 +6163,7 @@
       var style = props.style;
       var classes = Utils.classNames(className, 'messagebar-sheet-image', 'checkbox', Mixins.colorClasses(props));
       var styles = Utils.extend({
-        backgroundImage: image && ("url(" + image + ")")
+        backgroundImage: image && "url(" + image + ")"
       }, style || {});
       var inputEl;
       {
@@ -5905,17 +6186,18 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7MessagebarSheetImage.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7MessagebarSheetImage.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
-    Object.defineProperties( F7MessagebarSheetImage.prototype, prototypeAccessors );
+    Object.defineProperties(F7MessagebarSheetImage.prototype, prototypeAccessors);
 
     return F7MessagebarSheetImage;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7MessagebarSheetImage, Object.assign({
     id: [String, Number],
@@ -5923,18 +6205,18 @@
     checked: Boolean
   }, Mixins.colorProps));
 
-  var F7MessagebarSheetItem = (function (superclass) {
+  var F7MessagebarSheetItem = function (superclass) {
     function F7MessagebarSheetItem(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7MessagebarSheetItem.__proto__ = superclass;
-    F7MessagebarSheetItem.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7MessagebarSheetItem.__proto__ = superclass;
+    F7MessagebarSheetItem.prototype = Object.create(superclass && superclass.prototype);
     F7MessagebarSheetItem.prototype.constructor = F7MessagebarSheetItem;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7MessagebarSheetItem.prototype.render = function render () {
+    F7MessagebarSheetItem.prototype.render = function render() {
       var props = this.props;
       var className = props.className;
       var id = props.id;
@@ -5951,27 +6233,27 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7MessagebarSheetItem.prototype, prototypeAccessors );
+    Object.defineProperties(F7MessagebarSheetItem.prototype, prototypeAccessors);
 
     return F7MessagebarSheetItem;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7MessagebarSheetItem, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
 
-  var F7MessagebarSheet = (function (superclass) {
+  var F7MessagebarSheet = function (superclass) {
     function F7MessagebarSheet(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7MessagebarSheet.__proto__ = superclass;
-    F7MessagebarSheet.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7MessagebarSheet.__proto__ = superclass;
+    F7MessagebarSheet.prototype = Object.create(superclass && superclass.prototype);
     F7MessagebarSheet.prototype.constructor = F7MessagebarSheet;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7MessagebarSheet.prototype.render = function render () {
+    F7MessagebarSheet.prototype.render = function render() {
       var props = this.props;
       var className = props.className;
       var id = props.id;
@@ -5988,16 +6270,16 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7MessagebarSheet.prototype, prototypeAccessors );
+    Object.defineProperties(F7MessagebarSheet.prototype, prototypeAccessors);
 
     return F7MessagebarSheet;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7MessagebarSheet, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
 
-  var F7Messagebar = (function (superclass) {
+  var F7Messagebar = function (superclass) {
     function F7Messagebar(props, context) {
       var this$1 = this;
 
@@ -6016,146 +6298,198 @@
       })();
     }
 
-    if ( superclass ) F7Messagebar.__proto__ = superclass;
-    F7Messagebar.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Messagebar.__proto__ = superclass;
+    F7Messagebar.prototype = Object.create(superclass && superclass.prototype);
     F7Messagebar.prototype.constructor = F7Messagebar;
 
-    var prototypeAccessors = { classes: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { classes: { configurable: true }, slots: { configurable: true }, refs: { configurable: true } };
 
-    F7Messagebar.prototype.clear = function clear () {
+    F7Messagebar.prototype.clear = function clear() {
       var ref;
 
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar) { return undefined; }
+      var args = [],
+          len = arguments.length;
+      while (len--) {
+        args[len] = arguments[len];
+      }if (!this.f7Messagebar) {
+        return undefined;
+      }
       return (ref = this.f7Messagebar).clear.apply(ref, args);
     };
 
-    F7Messagebar.prototype.getValue = function getValue () {
+    F7Messagebar.prototype.getValue = function getValue() {
       var ref;
 
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar) { return undefined; }
+      var args = [],
+          len = arguments.length;
+      while (len--) {
+        args[len] = arguments[len];
+      }if (!this.f7Messagebar) {
+        return undefined;
+      }
       return (ref = this.f7Messagebar).getValue.apply(ref, args);
     };
 
-    F7Messagebar.prototype.setValue = function setValue () {
+    F7Messagebar.prototype.setValue = function setValue() {
       var ref;
 
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar) { return undefined; }
+      var args = [],
+          len = arguments.length;
+      while (len--) {
+        args[len] = arguments[len];
+      }if (!this.f7Messagebar) {
+        return undefined;
+      }
       return (ref = this.f7Messagebar).setValue.apply(ref, args);
     };
 
-    F7Messagebar.prototype.setPlaceholder = function setPlaceholder () {
+    F7Messagebar.prototype.setPlaceholder = function setPlaceholder() {
       var ref;
 
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar) { return undefined; }
+      var args = [],
+          len = arguments.length;
+      while (len--) {
+        args[len] = arguments[len];
+      }if (!this.f7Messagebar) {
+        return undefined;
+      }
       return (ref = this.f7Messagebar).setPlaceholder.apply(ref, args);
     };
 
-    F7Messagebar.prototype.resize = function resize () {
+    F7Messagebar.prototype.resize = function resize() {
       var ref;
 
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar) { return undefined; }
+      var args = [],
+          len = arguments.length;
+      while (len--) {
+        args[len] = arguments[len];
+      }if (!this.f7Messagebar) {
+        return undefined;
+      }
       return (ref = this.f7Messagebar).resizePage.apply(ref, args);
     };
 
-    F7Messagebar.prototype.focus = function focus () {
+    F7Messagebar.prototype.focus = function focus() {
       var ref;
 
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar) { return undefined; }
+      var args = [],
+          len = arguments.length;
+      while (len--) {
+        args[len] = arguments[len];
+      }if (!this.f7Messagebar) {
+        return undefined;
+      }
       return (ref = this.f7Messagebar).focus.apply(ref, args);
     };
 
-    F7Messagebar.prototype.blur = function blur () {
+    F7Messagebar.prototype.blur = function blur() {
       var ref;
 
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar) { return undefined; }
+      var args = [],
+          len = arguments.length;
+      while (len--) {
+        args[len] = arguments[len];
+      }if (!this.f7Messagebar) {
+        return undefined;
+      }
       return (ref = this.f7Messagebar).blur.apply(ref, args);
     };
 
-    F7Messagebar.prototype.attachmentsShow = function attachmentsShow () {
+    F7Messagebar.prototype.attachmentsShow = function attachmentsShow() {
       var ref;
 
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar) { return undefined; }
+      var args = [],
+          len = arguments.length;
+      while (len--) {
+        args[len] = arguments[len];
+      }if (!this.f7Messagebar) {
+        return undefined;
+      }
       return (ref = this.f7Messagebar).attachmentsShow.apply(ref, args);
     };
 
-    F7Messagebar.prototype.attachmentsHide = function attachmentsHide () {
+    F7Messagebar.prototype.attachmentsHide = function attachmentsHide() {
       var ref;
 
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar) { return undefined; }
+      var args = [],
+          len = arguments.length;
+      while (len--) {
+        args[len] = arguments[len];
+      }if (!this.f7Messagebar) {
+        return undefined;
+      }
       return (ref = this.f7Messagebar).attachmentsHide.apply(ref, args);
     };
 
-    F7Messagebar.prototype.attachmentsToggle = function attachmentsToggle () {
+    F7Messagebar.prototype.attachmentsToggle = function attachmentsToggle() {
       var ref;
 
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar) { return undefined; }
+      var args = [],
+          len = arguments.length;
+      while (len--) {
+        args[len] = arguments[len];
+      }if (!this.f7Messagebar) {
+        return undefined;
+      }
       return (ref = this.f7Messagebar).attachmentsToggle.apply(ref, args);
     };
 
-    F7Messagebar.prototype.sheetShow = function sheetShow () {
+    F7Messagebar.prototype.sheetShow = function sheetShow() {
       var ref;
 
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar) { return undefined; }
+      var args = [],
+          len = arguments.length;
+      while (len--) {
+        args[len] = arguments[len];
+      }if (!this.f7Messagebar) {
+        return undefined;
+      }
       return (ref = this.f7Messagebar).sheetShow.apply(ref, args);
     };
 
-    F7Messagebar.prototype.sheetHide = function sheetHide () {
+    F7Messagebar.prototype.sheetHide = function sheetHide() {
       var ref;
 
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar) { return undefined; }
+      var args = [],
+          len = arguments.length;
+      while (len--) {
+        args[len] = arguments[len];
+      }if (!this.f7Messagebar) {
+        return undefined;
+      }
       return (ref = this.f7Messagebar).sheetHide.apply(ref, args);
     };
 
-    F7Messagebar.prototype.sheetToggle = function sheetToggle () {
+    F7Messagebar.prototype.sheetToggle = function sheetToggle() {
       var ref;
 
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messagebar) { return undefined; }
+      var args = [],
+          len = arguments.length;
+      while (len--) {
+        args[len] = arguments[len];
+      }if (!this.f7Messagebar) {
+        return undefined;
+      }
       return (ref = this.f7Messagebar).sheetToggle.apply(ref, args);
     };
 
-    F7Messagebar.prototype.onChange = function onChange (event) {
+    F7Messagebar.prototype.onChange = function onChange(event) {
       this.dispatchEvent('change', event);
     };
 
-    F7Messagebar.prototype.onInput = function onInput (event) {
+    F7Messagebar.prototype.onInput = function onInput(event) {
       this.dispatchEvent('input', event);
     };
 
-    F7Messagebar.prototype.onFocus = function onFocus (event) {
+    F7Messagebar.prototype.onFocus = function onFocus(event) {
       this.dispatchEvent('focus', event);
     };
 
-    F7Messagebar.prototype.onBlur = function onBlur (event) {
+    F7Messagebar.prototype.onBlur = function onBlur(event) {
       this.dispatchEvent('blur', event);
     };
 
-    F7Messagebar.prototype.onClick = function onClick (event) {
+    F7Messagebar.prototype.onClick = function onClick(event) {
       var self = this;
       var value = self.refs.area.refs.inputEl.value;
       var clear = self.f7Messagebar ? function () {
@@ -6166,15 +6500,15 @@
       this.dispatchEvent('click', event);
     };
 
-    F7Messagebar.prototype.onDeleteAttachment = function onDeleteAttachment (e) {
+    F7Messagebar.prototype.onDeleteAttachment = function onDeleteAttachment(e) {
       this.dispatchEvent('messagebar:attachmentdelete messagebarAttachmentDelete', e);
     };
 
-    F7Messagebar.prototype.onClickAttachment = function onClickAttachment (e) {
+    F7Messagebar.prototype.onClickAttachment = function onClickAttachment(e) {
       this.dispatchEvent('messagebar:attachmentclick messagebarAttachmentClick', e);
     };
 
-    F7Messagebar.prototype.onResizePage = function onResizePage (e) {
+    F7Messagebar.prototype.onResizePage = function onResizePage(e) {
       this.dispatchEvent('messagebar:resizepage messagebarResizePage', e);
     };
 
@@ -6190,7 +6524,7 @@
       }, Mixins.colorClasses(props));
     };
 
-    F7Messagebar.prototype.render = function render () {
+    F7Messagebar.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -6219,7 +6553,9 @@
 
       if (slotsDefault) {
         slotsDefault.forEach(function (child) {
-          if (typeof child === 'undefined') { return; }
+          if (typeof child === 'undefined') {
+            return;
+          }
           var tag;
           tag = child.type && child.type.name;
 
@@ -6234,7 +6570,7 @@
       }
 
       return React.createElement('div', {
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         id: id,
@@ -6245,7 +6581,7 @@
       }, slotsInnerStart, React.createElement('div', {
         className: 'messagebar-area'
       }, slotsBeforeArea, messagebarAttachmentsEl, React.createElement(F7Input, {
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['area'] = __reactNode;
         },
         type: 'textarea',
@@ -6265,33 +6601,43 @@
       }, slotsSendLink || sendLink), slotsInnerEnd, innerEndEls), slotsAfterInner, messagebarSheetEl);
     };
 
-    F7Messagebar.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7Messagebar.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
-      if (self.f7Messagebar && self.f7Messagebar.destroy) { self.f7Messagebar.destroy(); }
+      if (self.f7Messagebar && self.f7Messagebar.destroy) {
+        self.f7Messagebar.destroy();
+      }
       var el = self.refs.el;
-      if (!el) { return; }
+      if (!el) {
+        return;
+      }
       el.removeEventListener('messagebar:attachmentdelete', self.onDeleteAttachmentBound);
       el.removeEventListener('messagebar:attachmentclick', self.onClickAttachmentBound);
       el.removeEventListener('messagebar:resizepage', self.onResizePageBound);
     };
 
-    F7Messagebar.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+    F7Messagebar.prototype.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.sheetVisible', prevProps, prevState, function () {
         var self = this$1;
-        if (!self.props.resizable || !self.f7Messagebar) { return; }
+        if (!self.props.resizable || !self.f7Messagebar) {
+          return;
+        }
         self.updateSheetVisible = true;
       });
 
       __reactComponentWatch(this, 'props.attachmentsVisible', prevProps, prevState, function () {
         var self = this$1;
-        if (!self.props.resizable || !self.f7Messagebar) { return; }
+        if (!self.props.resizable || !self.f7Messagebar) {
+          return;
+        }
         self.updateAttachmentsVisible = true;
       });
 
       var self = this;
-      if (!self.f7Messagebar) { return; }
+      if (!self.f7Messagebar) {
+        return;
+      }
       var ref = self.props;
       var sheetVisible = ref.sheetVisible;
       var attachmentsVisible = ref.attachmentsVisible;
@@ -6309,7 +6655,7 @@
       }
     };
 
-    F7Messagebar.prototype.componentDidMount = function componentDidMount () {
+    F7Messagebar.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       var ref = self.props;
       var init = ref.init;
@@ -6318,9 +6664,13 @@
       var bottomOffset = ref.bottomOffset;
       var topOffset = ref.topOffset;
       var maxHeight = ref.maxHeight;
-      if (!init) { return; }
+      if (!init) {
+        return;
+      }
       var el = self.refs.el;
-      if (!el) { return; }
+      if (!el) {
+        return;
+      }
       el.addEventListener('messagebar:attachmentdelete', self.onDeleteAttachmentBound);
       el.addEventListener('messagebar:attachmentclick', self.onClickAttachmentBound);
       el.addEventListener('messagebar:resizepage', self.onResizePageBound);
@@ -6341,11 +6691,12 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7Messagebar.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7Messagebar.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -6354,10 +6705,10 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    Object.defineProperties( F7Messagebar.prototype, prototypeAccessors );
+    Object.defineProperties(F7Messagebar.prototype, prototypeAccessors);
 
     return F7Messagebar;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Messagebar, Object.assign({
     id: [String, Number],
@@ -6393,18 +6744,18 @@
     }
   }, Mixins.colorProps));
 
-  var F7MessagesTitle = (function (superclass) {
+  var F7MessagesTitle = function (superclass) {
     function F7MessagesTitle(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7MessagesTitle.__proto__ = superclass;
-    F7MessagesTitle.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7MessagesTitle.__proto__ = superclass;
+    F7MessagesTitle.prototype = Object.create(superclass && superclass.prototype);
     F7MessagesTitle.prototype.constructor = F7MessagesTitle;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7MessagesTitle.prototype.render = function render () {
+    F7MessagesTitle.prototype.render = function render() {
       var props = this.props;
       var className = props.className;
       var id = props.id;
@@ -6421,91 +6772,117 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7MessagesTitle.prototype, prototypeAccessors );
+    Object.defineProperties(F7MessagesTitle.prototype, prototypeAccessors);
 
     return F7MessagesTitle;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7MessagesTitle, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
 
-  var F7Messages = (function (superclass) {
+  var F7Messages = function (superclass) {
     function F7Messages(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
     }
 
-    if ( superclass ) F7Messages.__proto__ = superclass;
-    F7Messages.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Messages.__proto__ = superclass;
+    F7Messages.prototype = Object.create(superclass && superclass.prototype);
     F7Messages.prototype.constructor = F7Messages;
 
-    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true }, refs: { configurable: true } };
 
-    F7Messages.prototype.renderMessages = function renderMessages (messagesToRender, method) {
-      if (!this.f7Messages) { return undefined; }
+    F7Messages.prototype.renderMessages = function renderMessages(messagesToRender, method) {
+      if (!this.f7Messages) {
+        return undefined;
+      }
       return this.f7Messages.renderMessages(messagesToRender, method);
     };
 
-    F7Messages.prototype.layout = function layout () {
-      if (!this.f7Messages) { return undefined; }
+    F7Messages.prototype.layout = function layout() {
+      if (!this.f7Messages) {
+        return undefined;
+      }
       return this.f7Messages.layout();
     };
 
-    F7Messages.prototype.scroll = function scroll (duration, scrollTop) {
-      if (!this.f7Messages) { return undefined; }
+    F7Messages.prototype.scroll = function scroll(duration, scrollTop) {
+      if (!this.f7Messages) {
+        return undefined;
+      }
       return this.f7Messages.scroll(duration, scrollTop);
     };
 
-    F7Messages.prototype.clear = function clear () {
-      if (!this.f7Messages) { return undefined; }
+    F7Messages.prototype.clear = function clear() {
+      if (!this.f7Messages) {
+        return undefined;
+      }
       return this.f7Messages.clear();
     };
 
-    F7Messages.prototype.removeMessage = function removeMessage (messageToRemove, layout) {
-      if (!this.f7Messages) { return undefined; }
+    F7Messages.prototype.removeMessage = function removeMessage(messageToRemove, layout) {
+      if (!this.f7Messages) {
+        return undefined;
+      }
       return this.f7Messages.removeMessage(messageToRemove, layout);
     };
 
-    F7Messages.prototype.removeMessages = function removeMessages (messagesToRemove, layout) {
-      if (!this.f7Messages) { return undefined; }
+    F7Messages.prototype.removeMessages = function removeMessages(messagesToRemove, layout) {
+      if (!this.f7Messages) {
+        return undefined;
+      }
       return this.f7Messages.removeMessages(messagesToRemove, layout);
     };
 
-    F7Messages.prototype.addMessage = function addMessage () {
+    F7Messages.prototype.addMessage = function addMessage() {
       var ref;
 
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messages) { return undefined; }
+      var args = [],
+          len = arguments.length;
+      while (len--) {
+        args[len] = arguments[len];
+      }if (!this.f7Messages) {
+        return undefined;
+      }
       return (ref = this.f7Messages).addMessage.apply(ref, args);
     };
 
-    F7Messages.prototype.addMessages = function addMessages () {
+    F7Messages.prototype.addMessages = function addMessages() {
       var ref;
 
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-      if (!this.f7Messages) { return undefined; }
+      var args = [],
+          len = arguments.length;
+      while (len--) {
+        args[len] = arguments[len];
+      }if (!this.f7Messages) {
+        return undefined;
+      }
       return (ref = this.f7Messages).addMessages.apply(ref, args);
     };
 
-    F7Messages.prototype.showTyping = function showTyping (message) {
-      if (!this.f7Messages) { return undefined; }
+    F7Messages.prototype.showTyping = function showTyping(message) {
+      if (!this.f7Messages) {
+        return undefined;
+      }
       return this.f7Messages.showTyping(message);
     };
 
-    F7Messages.prototype.hideTyping = function hideTyping () {
-      if (!this.f7Messages) { return undefined; }
+    F7Messages.prototype.hideTyping = function hideTyping() {
+      if (!this.f7Messages) {
+        return undefined;
+      }
       return this.f7Messages.hideTyping();
     };
 
-    F7Messages.prototype.destroy = function destroy () {
-      if (!this.f7Messages) { return undefined; }
+    F7Messages.prototype.destroy = function destroy() {
+      if (!this.f7Messages) {
+        return undefined;
+      }
       return this.f7Messages.destroy();
     };
 
-    F7Messages.prototype.render = function render () {
+    F7Messages.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -6515,7 +6892,7 @@
       var className = props.className;
       var classes = Utils.classNames(className, 'messages', Mixins.colorClasses(props));
       return React.createElement('div', {
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         id: id,
@@ -6524,11 +6901,13 @@
       }, this.slots['default']);
     };
 
-    F7Messages.prototype.componentWillUnmount = function componentWillUnmount () {
-      if (this.f7Messages && this.f7Messages.destroy) { this.f7Messages.destroy(); }
+    F7Messages.prototype.componentWillUnmount = function componentWillUnmount() {
+      if (this.f7Messages && this.f7Messages.destroy) {
+        this.f7Messages.destroy();
+      }
     };
 
-    F7Messages.prototype.componentDidMount = function componentDidMount () {
+    F7Messages.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       var ref = self.props;
       var init = ref.init;
@@ -6546,7 +6925,9 @@
       var sameAvatarMessageRule = ref.sameAvatarMessageRule;
       var customClassMessageRule = ref.customClassMessageRule;
       var renderMessage = ref.renderMessage;
-      if (!init) { return; }
+      if (!init) {
+        return;
+      }
       self.$f7ready(function (f7) {
         self.f7Messages = f7.messages.create(Utils.noUndefinedProps({
           el: self.refs.el,
@@ -6568,17 +6949,23 @@
       });
     };
 
-    F7Messages.prototype.componentDidUpdate = function componentDidUpdate () {
+    F7Messages.prototype.componentDidUpdate = function componentDidUpdate() {
       var self = this;
       var ref = self.props;
       var init = ref.init;
       var autoLayout = ref.autoLayout;
       var scrollMessages = ref.scrollMessages;
-      if (!init) { return; }
+      if (!init) {
+        return;
+      }
       var el = self.refs.el;
-      if (!el) { return; }
+      if (!el) {
+        return;
+      }
       var children = el.children;
-      if (!children) { return; }
+      if (!children) {
+        return;
+      }
 
       for (var i = 0; i < children.length; i += 1) {
         if (!children[i].classList.contains('message-appeared')) {
@@ -6595,13 +6982,19 @@
       }
     };
 
-    F7Messages.prototype.componentWillUpdate = function componentWillUpdate () {
+    F7Messages.prototype.componentWillUpdate = function componentWillUpdate() {
       var self = this;
-      if (!self.props.init) { return; }
+      if (!self.props.init) {
+        return;
+      }
       var el = self.refs.el;
-      if (!el) { return; }
+      if (!el) {
+        return;
+      }
       var children = el.children;
-      if (!children) { return; }
+      if (!children) {
+        return;
+      }
 
       for (var i = 0; i < children.length; i += 1) {
         children[i].classList.add('message-appeared');
@@ -6618,10 +7011,10 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    Object.defineProperties( F7Messages.prototype, prototypeAccessors );
+    Object.defineProperties(F7Messages.prototype, prototypeAccessors);
 
     return F7Messages;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Messages, Object.assign({
     id: [String, Number],
@@ -6664,22 +7057,22 @@
     }
   }, Mixins.colorProps));
 
-  var F7NavLeft = (function (superclass) {
+  var F7NavLeft = function (superclass) {
     function F7NavLeft(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7NavLeft.__proto__ = superclass;
-    F7NavLeft.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7NavLeft.__proto__ = superclass;
+    F7NavLeft.prototype = Object.create(superclass && superclass.prototype);
     F7NavLeft.prototype.constructor = F7NavLeft;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7NavLeft.prototype.onBackClick = function onBackClick (e) {
+    F7NavLeft.prototype.onBackClick = function onBackClick(e) {
       this.dispatchEvent('back-click backClick click:back clickBack', e);
     };
 
-    F7NavLeft.prototype.render = function render () {
+    F7NavLeft.prototype.render = function render() {
       var props = this.props;
       var backLink = props.backLink;
       var backLinkUrl = props.backLinkUrl;
@@ -6716,17 +7109,18 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7NavLeft.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7NavLeft.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
-    Object.defineProperties( F7NavLeft.prototype, prototypeAccessors );
+    Object.defineProperties(F7NavLeft.prototype, prototypeAccessors);
 
     return F7NavLeft;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7NavLeft, Object.assign({
     id: [String, Number],
@@ -6736,18 +7130,18 @@
     sliding: Boolean
   }, Mixins.colorProps));
 
-  var F7NavRight = (function (superclass) {
+  var F7NavRight = function (superclass) {
     function F7NavRight(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7NavRight.__proto__ = superclass;
-    F7NavRight.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7NavRight.__proto__ = superclass;
+    F7NavRight.prototype = Object.create(superclass && superclass.prototype);
     F7NavRight.prototype.constructor = F7NavRight;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7NavRight.prototype.render = function render () {
+    F7NavRight.prototype.render = function render() {
       var props = this.props;
       var className = props.className;
       var id = props.id;
@@ -6768,28 +7162,28 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7NavRight.prototype, prototypeAccessors );
+    Object.defineProperties(F7NavRight.prototype, prototypeAccessors);
 
     return F7NavRight;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7NavRight, Object.assign({
     id: [String, Number],
     sliding: Boolean
   }, Mixins.colorProps));
 
-  var F7NavTitle = (function (superclass) {
+  var F7NavTitle = function (superclass) {
     function F7NavTitle(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7NavTitle.__proto__ = superclass;
-    F7NavTitle.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7NavTitle.__proto__ = superclass;
+    F7NavTitle.prototype = Object.create(superclass && superclass.prototype);
     F7NavTitle.prototype.constructor = F7NavTitle;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7NavTitle.prototype.render = function render () {
+    F7NavTitle.prototype.render = function render() {
       var self = this;
       var props = self.props;
       var title = props.title;
@@ -6820,10 +7214,10 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7NavTitle.prototype, prototypeAccessors );
+    Object.defineProperties(F7NavTitle.prototype, prototypeAccessors);
 
     return F7NavTitle;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7NavTitle, Object.assign({
     id: [String, Number],
@@ -6832,41 +7226,47 @@
     sliding: Boolean
   }, Mixins.colorProps));
 
-  var F7Navbar = (function (superclass) {
+  var F7Navbar = function (superclass) {
     function F7Navbar(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
     }
 
-    if ( superclass ) F7Navbar.__proto__ = superclass;
-    F7Navbar.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Navbar.__proto__ = superclass;
+    F7Navbar.prototype = Object.create(superclass && superclass.prototype);
     F7Navbar.prototype.constructor = F7Navbar;
 
-    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true }, refs: { configurable: true } };
 
-    F7Navbar.prototype.hide = function hide (animate) {
+    F7Navbar.prototype.hide = function hide(animate) {
       var self = this;
-      if (!self.$f7) { return; }
+      if (!self.$f7) {
+        return;
+      }
       self.$f7.navbar.hide(self.refs.el, animate);
     };
 
-    F7Navbar.prototype.show = function show (animate) {
+    F7Navbar.prototype.show = function show(animate) {
       var self = this;
-      if (!self.$f7) { return; }
+      if (!self.$f7) {
+        return;
+      }
       self.$f7.navbar.show(self.refs.el, animate);
     };
 
-    F7Navbar.prototype.size = function size () {
+    F7Navbar.prototype.size = function size() {
       var self = this;
-      if (!self.$f7) { return; }
+      if (!self.$f7) {
+        return;
+      }
       self.$f7.navbar.size(self.refs.el);
     };
 
-    F7Navbar.prototype.onBackClick = function onBackClick (e) {
+    F7Navbar.prototype.onBackClick = function onBackClick(e) {
       this.dispatchEvent('back-click backClick click:back clickBack', e);
     };
 
-    F7Navbar.prototype.render = function render () {
+    F7Navbar.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -6906,7 +7306,7 @@
         }
 
         innerEl = React.createElement('div', {
-          ref: function (__reactNode) {
+          ref: function ref(__reactNode) {
             this$1.__reactRefs['inner'] = __reactNode;
           },
           className: Utils.classNames('navbar-inner', {
@@ -6921,7 +7321,7 @@
         'no-hairline': noHairline
       }, Mixins.colorClasses(props));
       return React.createElement('div', {
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         id: id,
@@ -6930,9 +7330,11 @@
       }, this.slots['before-inner'], innerEl, this.slots['after-inner']);
     };
 
-    F7Navbar.prototype.componentDidUpdate = function componentDidUpdate () {
+    F7Navbar.prototype.componentDidUpdate = function componentDidUpdate() {
       var self = this;
-      if (!self.$f7) { return; }
+      if (!self.$f7) {
+        return;
+      }
       var el = self.refs.el;
 
       if (el && el.children && el.children.length) {
@@ -6946,11 +7348,12 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7Navbar.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7Navbar.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -6959,10 +7362,10 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    Object.defineProperties( F7Navbar.prototype, prototypeAccessors );
+    Object.defineProperties(F7Navbar.prototype, prototypeAccessors);
 
     return F7Navbar;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Navbar, Object.assign({
     id: [String, Number],
@@ -6984,47 +7387,47 @@
     }
   }, Mixins.colorProps));
 
-  var F7PageContent = (function (superclass) {
+  var F7PageContent = function (superclass) {
     function F7PageContent(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
     }
 
-    if ( superclass ) F7PageContent.__proto__ = superclass;
-    F7PageContent.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7PageContent.__proto__ = superclass;
+    F7PageContent.prototype = Object.create(superclass && superclass.prototype);
     F7PageContent.prototype.constructor = F7PageContent;
 
-    var prototypeAccessors = { classes: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { classes: { configurable: true }, slots: { configurable: true }, refs: { configurable: true } };
 
-    F7PageContent.prototype.onPtrPullStart = function onPtrPullStart (event) {
+    F7PageContent.prototype.onPtrPullStart = function onPtrPullStart(event) {
       this.dispatchEvent('ptr:pullstart ptrPullStart', event);
     };
 
-    F7PageContent.prototype.onPtrPullMove = function onPtrPullMove (event) {
+    F7PageContent.prototype.onPtrPullMove = function onPtrPullMove(event) {
       this.dispatchEvent('ptr:pullmove ptrPullMove', event);
     };
 
-    F7PageContent.prototype.onPtrPullEnd = function onPtrPullEnd (event) {
+    F7PageContent.prototype.onPtrPullEnd = function onPtrPullEnd(event) {
       this.dispatchEvent('ptr:pullend ptrPullEnd', event);
     };
 
-    F7PageContent.prototype.onPtrRefresh = function onPtrRefresh (event) {
+    F7PageContent.prototype.onPtrRefresh = function onPtrRefresh(event) {
       this.dispatchEvent('ptr:refresh ptrRefresh', event, event.detail);
     };
 
-    F7PageContent.prototype.onPtrDone = function onPtrDone (event) {
+    F7PageContent.prototype.onPtrDone = function onPtrDone(event) {
       this.dispatchEvent('ptr:done ptrDone', event);
     };
 
-    F7PageContent.prototype.onInfinite = function onInfinite (event) {
+    F7PageContent.prototype.onInfinite = function onInfinite(event) {
       this.dispatchEvent('infinite', event);
     };
 
-    F7PageContent.prototype.onTabShow = function onTabShow (e) {
+    F7PageContent.prototype.onTabShow = function onTabShow(e) {
       this.dispatchEvent('tab:show tabShow', e);
     };
 
-    F7PageContent.prototype.onTabHide = function onTabHide (e) {
+    F7PageContent.prototype.onTabHide = function onTabHide(e) {
       this.dispatchEvent('tab:hide tabHide', e);
     };
 
@@ -7056,7 +7459,7 @@
       }, Mixins.colorClasses(props));
     };
 
-    F7PageContent.prototype.render = function render () {
+    F7PageContent.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -7095,13 +7498,13 @@
         className: self.classes,
         'data-ptr-distance': ptrDistance || undefined,
         'data-infinite-distance': infiniteDistance || undefined,
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         }
       }, ptrEl, infiniteTop ? infiniteEl : self.slots.default, infiniteTop ? self.slots.default : infiniteEl);
     };
 
-    F7PageContent.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7PageContent.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
       var el = self.refs.el;
       el.removeEventListener('ptr:pullstart', self.onPtrPullStart);
@@ -7114,7 +7517,7 @@
       el.removeEventListener('tab:hide', self.onTabHide);
     };
 
-    F7PageContent.prototype.componentDidMount = function componentDidMount () {
+    F7PageContent.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       var el = self.refs.el;
       var ref = self.props;
@@ -7152,11 +7555,12 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7PageContent.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7PageContent.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -7165,10 +7569,10 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    Object.defineProperties( F7PageContent.prototype, prototypeAccessors );
+    Object.defineProperties(F7PageContent.prototype, prototypeAccessors);
 
     return F7PageContent;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7PageContent, Object.assign({
     id: [String, Number],
@@ -7194,81 +7598,81 @@
     loginScreen: Boolean
   }, Mixins.colorProps));
 
-  var F7Page = (function (superclass) {
+  var F7Page = function (superclass) {
     function F7Page(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
 
-      this.state = (function () {
+      this.state = function () {
         return {
           hasSubnavbar: false
         };
-      })();
+      }();
     }
 
-    if ( superclass ) F7Page.__proto__ = superclass;
-    F7Page.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Page.__proto__ = superclass;
+    F7Page.prototype = Object.create(superclass && superclass.prototype);
     F7Page.prototype.constructor = F7Page;
 
-    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true }, refs: { configurable: true } };
 
-    F7Page.prototype.onPtrPullStart = function onPtrPullStart (event) {
+    F7Page.prototype.onPtrPullStart = function onPtrPullStart(event) {
       this.dispatchEvent('ptr:pullstart ptrPullStart', event);
     };
 
-    F7Page.prototype.onPtrPullMove = function onPtrPullMove (event) {
+    F7Page.prototype.onPtrPullMove = function onPtrPullMove(event) {
       this.dispatchEvent('ptr:pullmove ptrPullMove', event);
     };
 
-    F7Page.prototype.onPtrPullEnd = function onPtrPullEnd (event) {
+    F7Page.prototype.onPtrPullEnd = function onPtrPullEnd(event) {
       this.dispatchEvent('ptr:pullend ptrPullEnd', event);
     };
 
-    F7Page.prototype.onPtrRefresh = function onPtrRefresh (event) {
+    F7Page.prototype.onPtrRefresh = function onPtrRefresh(event) {
       this.dispatchEvent('ptr:refresh ptrRefresh', event, event.detail);
     };
 
-    F7Page.prototype.onPtrDone = function onPtrDone (event) {
+    F7Page.prototype.onPtrDone = function onPtrDone(event) {
       this.dispatchEvent('ptr:done ptrDone', event);
     };
 
-    F7Page.prototype.onInfinite = function onInfinite (event) {
+    F7Page.prototype.onInfinite = function onInfinite(event) {
       this.dispatchEvent('infinite', event);
     };
 
-    F7Page.prototype.onPageMounted = function onPageMounted (event) {
+    F7Page.prototype.onPageMounted = function onPageMounted(event) {
       this.dispatchEvent('page:mounted pageMounted', event, event.detail);
     };
 
-    F7Page.prototype.onPageInit = function onPageInit (event) {
+    F7Page.prototype.onPageInit = function onPageInit(event) {
       this.dispatchEvent('page:init pageInit', event, event.detail);
     };
 
-    F7Page.prototype.onPageReinit = function onPageReinit (event) {
+    F7Page.prototype.onPageReinit = function onPageReinit(event) {
       this.dispatchEvent('page:reinit pageReinit', event, event.detail);
     };
 
-    F7Page.prototype.onPageBeforeIn = function onPageBeforeIn (event) {
+    F7Page.prototype.onPageBeforeIn = function onPageBeforeIn(event) {
       this.dispatchEvent('page:beforein pageBeforeIn', event, event.detail);
     };
 
-    F7Page.prototype.onPageBeforeOut = function onPageBeforeOut (event) {
+    F7Page.prototype.onPageBeforeOut = function onPageBeforeOut(event) {
       this.dispatchEvent('page:beforeout pageBeforeOut', event, event.detail);
     };
 
-    F7Page.prototype.onPageAfterOut = function onPageAfterOut (event) {
+    F7Page.prototype.onPageAfterOut = function onPageAfterOut(event) {
       this.dispatchEvent('page:afterout pageAfterOut', event, event.detail);
     };
 
-    F7Page.prototype.onPageAfterIn = function onPageAfterIn (event) {
+    F7Page.prototype.onPageAfterIn = function onPageAfterIn(event) {
       this.dispatchEvent('page:afterin pageAfterIn', event, event.detail);
     };
 
-    F7Page.prototype.onPageBeforeRemove = function onPageBeforeRemove (event) {
+    F7Page.prototype.onPageBeforeRemove = function onPageBeforeRemove(event) {
       this.dispatchEvent('page:beforeremove pageBeforeRemove', event, event.detail);
     };
 
-    F7Page.prototype.render = function render () {
+    F7Page.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -7305,25 +7709,35 @@
       var slotsFixed = ref.fixed;
       var slotsDefault = ref.default;
       var fixedTags;
-      fixedTags = 'Navbar Toolbar Tabbar Subnavbar Searchbar Messagebar Fab ListIndex'.split(' ').map(function (tagName) { return ("F7" + tagName); });
+      fixedTags = 'Navbar Toolbar Tabbar Subnavbar Searchbar Messagebar Fab ListIndex'.split(' ').map(function (tagName) {
+        return "F7" + tagName;
+      });
       var hasSubnavbar;
       var hasMessages;
       hasMessages = messagesContent;
 
       if (slotsDefault) {
         slotsDefault.forEach(function (child) {
-          if (typeof child === 'undefined') { return; }
+          if (typeof child === 'undefined') {
+            return;
+          }
           var isFixedTag = false;
           {
             var tag = child.type && child.type.name;
 
             if (!tag) {
-              if (needsPageContent) { staticList.push(child); }
+              if (needsPageContent) {
+                staticList.push(child);
+              }
               return;
             }
 
-            if (tag === 'F7Subnavbar') { hasSubnavbar = true; }
-            if (typeof hasMessages === 'undefined' && tag === 'F7Messages') { hasMessages = true; }
+            if (tag === 'F7Subnavbar') {
+              hasSubnavbar = true;
+            }
+            if (typeof hasMessages === 'undefined' && tag === 'F7Messages') {
+              hasMessages = true;
+            }
 
             if (fixedTags.indexOf(tag) >= 0) {
               isFixedTag = true;
@@ -7331,7 +7745,11 @@
           }
 
           if (needsPageContent) {
-            if (isFixedTag) { fixedList.push(child); }else { staticList.push(child); }
+            if (isFixedTag) {
+              fixedList.push(child);
+            } else {
+              staticList.push(child);
+            }
           }
         });
       }
@@ -7347,7 +7765,7 @@
 
       if (!needsPageContent) {
         return React.createElement('div', {
-          ref: function (__reactNode) {
+          ref: function ref(__reactNode) {
             this$1.__reactRefs['el'] = __reactNode;
           },
           id: id,
@@ -7372,7 +7790,7 @@
         loginScreen: loginScreen
       }, slotsStatic, staticList);
       return React.createElement('div', {
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         id: id,
@@ -7382,7 +7800,7 @@
       }, fixedList, slotsFixed, pageContentEl);
     };
 
-    F7Page.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7Page.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
       var el = self.refs.el;
       el.removeEventListener('ptr:pullstart', self.onPtrPullStart);
@@ -7401,7 +7819,7 @@
       el.removeEventListener('page:beforeremove', self.onPageBeforeRemove);
     };
 
-    F7Page.prototype.componentDidMount = function componentDidMount () {
+    F7Page.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       var el = self.refs.el;
       var ref = self.props;
@@ -7448,11 +7866,12 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7Page.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7Page.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -7461,10 +7880,10 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    Object.defineProperties( F7Page.prototype, prototypeAccessors );
+    Object.defineProperties(F7Page.prototype, prototypeAccessors);
 
     return F7Page;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Page, Object.assign({
     id: [String, Number],
@@ -7500,60 +7919,64 @@
     loginScreen: Boolean
   }, Mixins.colorProps));
 
-  var F7Panel = (function (superclass) {
+  var F7Panel = function (superclass) {
     function F7Panel(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
     }
 
-    if ( superclass ) F7Panel.__proto__ = superclass;
-    F7Panel.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Panel.__proto__ = superclass;
+    F7Panel.prototype = Object.create(superclass && superclass.prototype);
     F7Panel.prototype.constructor = F7Panel;
 
-    var prototypeAccessors = { classes: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { classes: { configurable: true }, slots: { configurable: true }, refs: { configurable: true } };
 
-    F7Panel.prototype.onOpen = function onOpen (event) {
+    F7Panel.prototype.onOpen = function onOpen(event) {
       this.dispatchEvent('panel:open panelOpen', event);
     };
 
-    F7Panel.prototype.onOpened = function onOpened (event) {
+    F7Panel.prototype.onOpened = function onOpened(event) {
       this.dispatchEvent('panel:opened panelOpened', event);
     };
 
-    F7Panel.prototype.onClose = function onClose (event) {
+    F7Panel.prototype.onClose = function onClose(event) {
       this.dispatchEvent('panel:close panelClose', event);
     };
 
-    F7Panel.prototype.onClosed = function onClosed (event) {
+    F7Panel.prototype.onClosed = function onClosed(event) {
       this.dispatchEvent('panel:closed panelClosed', event);
     };
 
-    F7Panel.prototype.onBackdropClick = function onBackdropClick (event) {
+    F7Panel.prototype.onBackdropClick = function onBackdropClick(event) {
       this.dispatchEvent('panel:backdrop-click panelBackdropClick', event);
     };
 
-    F7Panel.prototype.onPanelSwipe = function onPanelSwipe (event) {
+    F7Panel.prototype.onPanelSwipe = function onPanelSwipe(event) {
       this.dispatchEvent('panel:swipe panelSwipe', event);
     };
 
-    F7Panel.prototype.onPanelSwipeOpen = function onPanelSwipeOpen (event) {
+    F7Panel.prototype.onPanelSwipeOpen = function onPanelSwipeOpen(event) {
       this.dispatchEvent('panel:swipeopen panelSwipeOpen', event);
     };
 
-    F7Panel.prototype.onBreakpoint = function onBreakpoint (event) {
+    F7Panel.prototype.onBreakpoint = function onBreakpoint(event) {
       this.dispatchEvent('panel:breakpoint panelBreakpoint', event);
     };
 
-    F7Panel.prototype.open = function open (animate) {
+    F7Panel.prototype.open = function open(animate) {
       var self = this;
-      if (!self.$f7) { return; }
+      if (!self.$f7) {
+        return;
+      }
       var side = self.props.side || (self.props.left ? 'left' : 'right');
       self.$f7.panel.open(side, animate);
     };
 
-    F7Panel.prototype.close = function close (animate) {
+    F7Panel.prototype.close = function close(animate) {
       var self = this;
-      if (!self.$f7) { return; }
+      if (!self.$f7) {
+        return;
+      }
       var side = self.props.side || (self.props.left ? 'left' : 'right');
       self.$f7.panel.close(side, animate);
     };
@@ -7571,19 +7994,19 @@
       var effect = props.effect;
       side = side || (left ? 'left' : 'right');
       effect = effect || (reveal ? 'reveal' : 'cover');
-      return Utils.classNames(className, 'panel', ( obj = {
+      return Utils.classNames(className, 'panel', (obj = {
         'panel-active': opened
-      }, obj[("panel-" + side)] = side, obj[("panel-" + effect)] = effect, obj ), Mixins.colorClasses(props));
+      }, obj["panel-" + side] = side, obj["panel-" + effect] = effect, obj), Mixins.colorClasses(props));
     };
 
-    F7Panel.prototype.render = function render () {
+    F7Panel.prototype.render = function render() {
       var this$1 = this;
 
       var props = this.props;
       var id = props.id;
       var style = props.style;
       return React.createElement('div', {
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         id: id,
@@ -7592,11 +8015,15 @@
       }, this.slots['default']);
     };
 
-    F7Panel.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7Panel.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
-      if (self.f7Panel) { self.f7Panel.destroy(); }
+      if (self.f7Panel) {
+        self.f7Panel.destroy();
+      }
       var el = self.refs.el;
-      if (!el) { return; }
+      if (!el) {
+        return;
+      }
       el.removeEventListener('panel:open', self.onOpenBound);
       el.removeEventListener('panel:opened', self.onOpenedBound);
       el.removeEventListener('panel:close', self.onCloseBound);
@@ -7607,7 +8034,7 @@
       el.removeEventListener('panel:breakpoint', self.onBreakpointBound);
     };
 
-    F7Panel.prototype.componentDidMount = function componentDidMount () {
+    F7Panel.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       var el = self.refs.el;
       var ref = self.props;
@@ -7638,7 +8065,9 @@
 
       self.$f7ready(function () {
         var $ = self.$$;
-        if (!$) { return; }
+        if (!$) {
+          return;
+        }
 
         if ($('.panel-backdrop').length === 0) {
           $('<div class="panel-backdrop"></div>').insertBefore(el);
@@ -7654,12 +8083,14 @@
       }
 
       var $ = self.$$;
-      if (!$) { return; }
+      if (!$) {
+        return;
+      }
       var panelSide = side || (left ? 'left' : 'right');
       var panelEffect = effect || (reveal ? 'reveal' : 'cover');
 
       if (opened) {
-        $('html').addClass(("with-panel-" + panelSide + "-" + panelEffect));
+        $('html').addClass("with-panel-" + panelSide + "-" + panelEffect);
       }
     };
 
@@ -7667,11 +8098,12 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7Panel.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7Panel.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -7680,12 +8112,14 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    F7Panel.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+    F7Panel.prototype.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.opened', prevProps, prevState, function (opened) {
         var self = this$1;
-        if (!self.$f7) { return; }
+        if (!self.$f7) {
+          return;
+        }
         var side = self.props.side || (self.props.left ? 'left' : 'right');
 
         if (opened) {
@@ -7696,10 +8130,10 @@
       });
     };
 
-    Object.defineProperties( F7Panel.prototype, prototypeAccessors );
+    Object.defineProperties(F7Panel.prototype, prototypeAccessors);
 
     return F7Panel;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Panel, Object.assign({
     id: [String, Number],
@@ -7712,47 +8146,55 @@
     opened: Boolean
   }, Mixins.colorProps));
 
-  var F7PhotoBrowser = (function (superclass) {
+  var F7PhotoBrowser = function (superclass) {
     function F7PhotoBrowser(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7PhotoBrowser.__proto__ = superclass;
-    F7PhotoBrowser.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7PhotoBrowser.__proto__ = superclass;
+    F7PhotoBrowser.prototype = Object.create(superclass && superclass.prototype);
     F7PhotoBrowser.prototype.constructor = F7PhotoBrowser;
 
-    F7PhotoBrowser.prototype.open = function open (index) {
+    F7PhotoBrowser.prototype.open = function open(index) {
       return this.f7PhotoBrowser.open(index);
     };
 
-    F7PhotoBrowser.prototype.close = function close () {
+    F7PhotoBrowser.prototype.close = function close() {
       return this.f7PhotoBrowser.close();
     };
 
-    F7PhotoBrowser.prototype.expositionToggle = function expositionToggle () {
+    F7PhotoBrowser.prototype.expositionToggle = function expositionToggle() {
       return this.f7PhotoBrowser.expositionToggle();
     };
 
-    F7PhotoBrowser.prototype.expositionEnable = function expositionEnable () {
+    F7PhotoBrowser.prototype.expositionEnable = function expositionEnable() {
       return this.f7PhotoBrowser.expositionEnable();
     };
 
-    F7PhotoBrowser.prototype.expositionDisable = function expositionDisable () {
+    F7PhotoBrowser.prototype.expositionDisable = function expositionDisable() {
       return this.f7PhotoBrowser.expositionDisable();
     };
 
-    F7PhotoBrowser.prototype.render = function render () {
+    F7PhotoBrowser.prototype.render = function render() {
       return null;
     };
 
-    F7PhotoBrowser.prototype.componentDidMount = function componentDidMount () {
+    F7PhotoBrowser.prototype.componentDidMount = function componentDidMount() {
       var self = this;
-      if (!self.props.init) { return; }
+      if (!self.props.init) {
+        return;
+      }
       self.$f7ready(function (f7) {
         var params;
-        if (typeof self.props.params !== 'undefined') { params = self.props.params; }else { params = Object.assign({}, self.props); }
+        if (typeof self.props.params !== 'undefined') {
+          params = self.props.params;
+        } else {
+          params = Object.assign({}, self.props);
+        }
         Object.keys(params).forEach(function (param) {
-          if (typeof params[param] === 'undefined' || params[param] === '') { delete params[param]; }
+          if (typeof params[param] === 'undefined' || params[param] === '') {
+            delete params[param];
+          }
         });
         params = Utils.extend({}, params, {
           on: {
@@ -7782,25 +8224,30 @@
       });
     };
 
-    F7PhotoBrowser.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7PhotoBrowser.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
-      if (self.f7PhotoBrowser && self.f7PhotoBrowser.destroy) { self.f7PhotoBrowser.destroy(); }
+      if (self.f7PhotoBrowser && self.f7PhotoBrowser.destroy) {
+        self.f7PhotoBrowser.destroy();
+      }
     };
 
-    F7PhotoBrowser.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7PhotoBrowser.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
-    F7PhotoBrowser.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+    F7PhotoBrowser.prototype.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.photos', prevProps, prevState, function (newValue) {
         var self = this$1;
         var pb = self.f7PhotoBrowser;
-        if (!pb) { return; }
+        if (!pb) {
+          return;
+        }
         self.f7PhotoBrowser.photos = newValue;
 
         if (pb.opened && pb.swiper) {
@@ -7810,7 +8257,7 @@
     };
 
     return F7PhotoBrowser;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7PhotoBrowser, {
     id: [String, Number],
@@ -7884,47 +8331,51 @@
     renderStandalone: Function
   });
 
-  var F7Popover = (function (superclass) {
+  var F7Popover = function (superclass) {
     function F7Popover(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
     }
 
-    if ( superclass ) F7Popover.__proto__ = superclass;
-    F7Popover.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Popover.__proto__ = superclass;
+    F7Popover.prototype = Object.create(superclass && superclass.prototype);
     F7Popover.prototype.constructor = F7Popover;
 
-    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true }, refs: { configurable: true } };
 
-    F7Popover.prototype.onOpen = function onOpen (event) {
+    F7Popover.prototype.onOpen = function onOpen(event) {
       this.dispatchEvent('popover:open popoverOpen', event);
     };
 
-    F7Popover.prototype.onOpened = function onOpened (event) {
+    F7Popover.prototype.onOpened = function onOpened(event) {
       this.dispatchEvent('popover:opened popoverOpened', event);
     };
 
-    F7Popover.prototype.onClose = function onClose (event) {
+    F7Popover.prototype.onClose = function onClose(event) {
       this.dispatchEvent('popover:close popoverClose', event);
     };
 
-    F7Popover.prototype.onClosed = function onClosed (event) {
+    F7Popover.prototype.onClosed = function onClosed(event) {
       this.dispatchEvent('popover:closed popoverClosed', event);
     };
 
-    F7Popover.prototype.open = function open (target, animate) {
+    F7Popover.prototype.open = function open(target, animate) {
       var self = this;
-      if (!self.$f7) { return undefined; }
+      if (!self.$f7) {
+        return undefined;
+      }
       return self.$f7.popover.open(self.refs.el, target, animate);
     };
 
-    F7Popover.prototype.close = function close (animate) {
+    F7Popover.prototype.close = function close(animate) {
       var self = this;
-      if (!self.$f7) { return undefined; }
+      if (!self.$f7) {
+        return undefined;
+      }
       return self.$f7.sheet.close(self.refs.el, animate);
     };
 
-    F7Popover.prototype.render = function render () {
+    F7Popover.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -7934,7 +8385,7 @@
       var style = props.style;
       var classes = Utils.classNames(className, 'popover', Mixins.colorClasses(props));
       return React.createElement('div', {
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         id: id,
@@ -7947,21 +8398,27 @@
       }, this.slots['default']));
     };
 
-    F7Popover.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7Popover.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
-      if (self.f7Popover) { self.f7Popover.destroy(); }
+      if (self.f7Popover) {
+        self.f7Popover.destroy();
+      }
       var el = self.refs.el;
-      if (!el) { return; }
+      if (!el) {
+        return;
+      }
       el.removeEventListener('popover:open', self.onOpenBound);
       el.removeEventListener('popover:opened', self.onOpenedBound);
       el.removeEventListener('popover:close', self.onCloseBound);
       el.removeEventListener('popover:closed', self.onClosedBound);
     };
 
-    F7Popover.prototype.componentDidMount = function componentDidMount () {
+    F7Popover.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       var el = self.refs.el;
-      if (!el) { return; }
+      if (!el) {
+        return;
+      }
       self.onOpenBound = self.onOpen.bind(self);
       self.onOpenedBound = self.onOpened.bind(self);
       self.onCloseBound = self.onClose.bind(self);
@@ -7977,7 +8434,9 @@
         var popoverParams = {
           el: el
         };
-        if (target) { popoverParams.targetEl = target; }
+        if (target) {
+          popoverParams.targetEl = target;
+        }
         self.f7Popover = self.$f7.popover.create(popoverParams);
 
         if (opened && target) {
@@ -7990,11 +8449,12 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7Popover.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7Popover.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -8003,12 +8463,14 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    F7Popover.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+    F7Popover.prototype.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.opened', prevProps, prevState, function (opened) {
         var self = this$1;
-        if (!self.f7Popover) { return; }
+        if (!self.f7Popover) {
+          return;
+        }
 
         if (opened) {
           self.f7Popover.open();
@@ -8018,10 +8480,10 @@
       });
     };
 
-    Object.defineProperties( F7Popover.prototype, prototypeAccessors );
+    Object.defineProperties(F7Popover.prototype, prototypeAccessors);
 
     return F7Popover;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Popover, Object.assign({
     id: [String, Number],
@@ -8029,47 +8491,51 @@
     target: [String, Object]
   }, Mixins.colorProps));
 
-  var F7Popup = (function (superclass) {
+  var F7Popup = function (superclass) {
     function F7Popup(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
     }
 
-    if ( superclass ) F7Popup.__proto__ = superclass;
-    F7Popup.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Popup.__proto__ = superclass;
+    F7Popup.prototype = Object.create(superclass && superclass.prototype);
     F7Popup.prototype.constructor = F7Popup;
 
-    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true }, refs: { configurable: true } };
 
-    F7Popup.prototype.onOpen = function onOpen (event) {
+    F7Popup.prototype.onOpen = function onOpen(event) {
       this.dispatchEvent('popup:open popupOpen', event);
     };
 
-    F7Popup.prototype.onOpened = function onOpened (event) {
+    F7Popup.prototype.onOpened = function onOpened(event) {
       this.dispatchEvent('popup:opened popupOpened', event);
     };
 
-    F7Popup.prototype.onClose = function onClose (event) {
+    F7Popup.prototype.onClose = function onClose(event) {
       this.dispatchEvent('popup:close popupClose', event);
     };
 
-    F7Popup.prototype.onClosed = function onClosed (event) {
+    F7Popup.prototype.onClosed = function onClosed(event) {
       this.dispatchEvent('popup:closed popupClosed', event);
     };
 
-    F7Popup.prototype.open = function open (animate) {
+    F7Popup.prototype.open = function open(animate) {
       var self = this;
-      if (!self.$f7) { return undefined; }
+      if (!self.$f7) {
+        return undefined;
+      }
       return self.$f7.popup.open(self.refs.el, animate);
     };
 
-    F7Popup.prototype.close = function close (animate) {
+    F7Popup.prototype.close = function close(animate) {
       var self = this;
-      if (!self.$f7) { return undefined; }
+      if (!self.$f7) {
+        return undefined;
+      }
       return self.$f7.popup.close(self.refs.el, animate);
     };
 
-    F7Popup.prototype.render = function render () {
+    F7Popup.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -8082,7 +8548,7 @@
         'popup-tablet-fullscreen': tabletFullscreen
       }, Mixins.colorClasses(props));
       return React.createElement('div', {
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         id: id,
@@ -8091,21 +8557,27 @@
       }, this.slots['default']);
     };
 
-    F7Popup.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7Popup.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
-      if (self.f7Popup) { self.f7Popup.destroy(); }
+      if (self.f7Popup) {
+        self.f7Popup.destroy();
+      }
       var el = self.refs.el;
-      if (!el) { return; }
+      if (!el) {
+        return;
+      }
       el.removeEventListener('popup:open', self.onOpenBound);
       el.removeEventListener('popup:opened', self.onOpenedBound);
       el.removeEventListener('popup:close', self.onCloseBound);
       el.removeEventListener('popup:closed', self.onClosedBound);
     };
 
-    F7Popup.prototype.componentDidMount = function componentDidMount () {
+    F7Popup.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       var el = self.refs.el;
-      if (!el) { return; }
+      if (!el) {
+        return;
+      }
       self.onOpenBound = self.onOpen.bind(self);
       self.onOpenedBound = self.onOpened.bind(self);
       self.onCloseBound = self.onClose.bind(self);
@@ -8129,11 +8601,12 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7Popup.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7Popup.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -8142,12 +8615,14 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    F7Popup.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+    F7Popup.prototype.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.opened', prevProps, prevState, function (opened) {
         var self = this$1;
-        if (!self.f7Popup) { return; }
+        if (!self.f7Popup) {
+          return;
+        }
 
         if (opened) {
           self.f7Popup.open();
@@ -8157,10 +8632,10 @@
       });
     };
 
-    Object.defineProperties( F7Popup.prototype, prototypeAccessors );
+    Object.defineProperties(F7Popup.prototype, prototypeAccessors);
 
     return F7Popup;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Popup, Object.assign({
     id: [String, Number],
@@ -8168,13 +8643,13 @@
     opened: Boolean
   }, Mixins.colorProps));
 
-  var F7Preloader = (function (superclass) {
+  var F7Preloader = function (superclass) {
     function F7Preloader(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7Preloader.__proto__ = superclass;
-    F7Preloader.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Preloader.__proto__ = superclass;
+    F7Preloader.prototype = Object.create(superclass && superclass.prototype);
     F7Preloader.prototype.constructor = F7Preloader;
 
     var prototypeAccessors = { sizeComputed: { configurable: true } };
@@ -8189,7 +8664,7 @@
       return s;
     };
 
-    F7Preloader.prototype.render = function render () {
+    F7Preloader.prototype.render = function render() {
       var self = this;
       var sizeComputed = self.sizeComputed;
       var props = self.props;
@@ -8203,7 +8678,9 @@
         preloaderStyle.height = sizeComputed + "px";
       }
 
-      if (style) { Utils.extend(preloaderStyle, style || {}); }
+      if (style) {
+        Utils.extend(preloaderStyle, style || {});
+      }
       var innerEl;
 
       if (self.$theme.md) {
@@ -8230,35 +8707,37 @@
       }, innerEl);
     };
 
-    Object.defineProperties( F7Preloader.prototype, prototypeAccessors );
+    Object.defineProperties(F7Preloader.prototype, prototypeAccessors);
 
     return F7Preloader;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Preloader, Object.assign({
     id: [String, Number],
     size: [Number, String]
   }, Mixins.colorProps));
 
-  var F7Progressbar = (function (superclass) {
+  var F7Progressbar = function (superclass) {
     function F7Progressbar(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
     }
 
-    if ( superclass ) F7Progressbar.__proto__ = superclass;
-    F7Progressbar.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Progressbar.__proto__ = superclass;
+    F7Progressbar.prototype = Object.create(superclass && superclass.prototype);
     F7Progressbar.prototype.constructor = F7Progressbar;
 
     var prototypeAccessors = { refs: { configurable: true } };
 
-    F7Progressbar.prototype.set = function set (progress, speed) {
+    F7Progressbar.prototype.set = function set(progress, speed) {
       var self = this;
-      if (!self.$f7) { return; }
+      if (!self.$f7) {
+        return;
+      }
       self.$f7.progressbar.set(self.refs.el, progress, speed);
     };
 
-    F7Progressbar.prototype.render = function render () {
+    F7Progressbar.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -8269,14 +8748,14 @@
       var infinite = props.infinite;
       var className = props.className;
       var transformStyle = {
-        transform: progress ? ("translate3d(" + (-100 + progress) + "%, 0, 0)") : '',
-        WebkitTransform: progress ? ("translate3d(" + (-100 + progress) + "%, 0, 0)") : ''
+        transform: progress ? "translate3d(" + (-100 + progress) + "%, 0, 0)" : '',
+        WebkitTransform: progress ? "translate3d(" + (-100 + progress) + "%, 0, 0)" : ''
       };
       var classes = Utils.classNames(className, 'progressbar', {
         'progressbar-infinite': infinite
       }, Mixins.colorClasses(props));
       return React.createElement('span', {
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         id: id,
@@ -8294,10 +8773,10 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    Object.defineProperties( F7Progressbar.prototype, prototypeAccessors );
+    Object.defineProperties(F7Progressbar.prototype, prototypeAccessors);
 
     return F7Progressbar;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Progressbar, Object.assign({
     id: [String, Number],
@@ -8305,22 +8784,22 @@
     infinite: Boolean
   }, Mixins.colorProps));
 
-  var F7Radio = (function (superclass) {
+  var F7Radio = function (superclass) {
     function F7Radio(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7Radio.__proto__ = superclass;
-    F7Radio.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Radio.__proto__ = superclass;
+    F7Radio.prototype = Object.create(superclass && superclass.prototype);
     F7Radio.prototype.constructor = F7Radio;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7Radio.prototype.onChange = function onChange (event) {
+    F7Radio.prototype.onChange = function onChange(event) {
       this.dispatchEvent('change', event);
     };
 
-    F7Radio.prototype.render = function render () {
+    F7Radio.prototype.render = function render() {
       var self = this;
       var props = self.props;
       var name = props.name;
@@ -8362,17 +8841,18 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7Radio.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7Radio.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
-    Object.defineProperties( F7Radio.prototype, prototypeAccessors );
+    Object.defineProperties(F7Radio.prototype, prototypeAccessors);
 
     return F7Radio;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Radio, Object.assign({
     id: [String, Number],
@@ -8384,22 +8864,22 @@
     defaultChecked: Boolean
   }, Mixins.colorProps));
 
-  var F7Row = (function (superclass) {
+  var F7Row = function (superclass) {
     function F7Row(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7Row.__proto__ = superclass;
-    F7Row.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Row.__proto__ = superclass;
+    F7Row.prototype = Object.create(superclass && superclass.prototype);
     F7Row.prototype.constructor = F7Row;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7Row.prototype.onClick = function onClick (e) {
+    F7Row.prototype.onClick = function onClick(e) {
       this.dispatchEvent('click', e);
     };
 
-    F7Row.prototype.render = function render () {
+    F7Row.prototype.render = function render() {
       var self = this;
       var props = self.props;
       var className = props.className;
@@ -8423,17 +8903,18 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7Row.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7Row.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
-    Object.defineProperties( F7Row.prototype, prototypeAccessors );
+    Object.defineProperties(F7Row.prototype, prototypeAccessors);
 
     return F7Row;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Row, Object.assign({
     id: [String, Number],
@@ -8444,72 +8925,82 @@
     }
   }, Mixins.colorProps));
 
-  var F7Searchbar = (function (superclass) {
+  var F7Searchbar = function (superclass) {
     function F7Searchbar(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
     }
 
-    if ( superclass ) F7Searchbar.__proto__ = superclass;
-    F7Searchbar.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Searchbar.__proto__ = superclass;
+    F7Searchbar.prototype = Object.create(superclass && superclass.prototype);
     F7Searchbar.prototype.constructor = F7Searchbar;
 
-    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true }, refs: { configurable: true } };
 
-    F7Searchbar.prototype.search = function search (query) {
-      if (!this.f7Searchbar) { return undefined; }
+    F7Searchbar.prototype.search = function search(query) {
+      if (!this.f7Searchbar) {
+        return undefined;
+      }
       return this.f7Searchbar.search(query);
     };
 
-    F7Searchbar.prototype.enable = function enable () {
-      if (!this.f7Searchbar) { return undefined; }
+    F7Searchbar.prototype.enable = function enable() {
+      if (!this.f7Searchbar) {
+        return undefined;
+      }
       return this.f7Searchbar.enable();
     };
 
-    F7Searchbar.prototype.disable = function disable () {
-      if (!this.f7Searchbar) { return undefined; }
+    F7Searchbar.prototype.disable = function disable() {
+      if (!this.f7Searchbar) {
+        return undefined;
+      }
       return this.f7Searchbar.disable();
     };
 
-    F7Searchbar.prototype.toggle = function toggle () {
-      if (!this.f7Searchbar) { return undefined; }
+    F7Searchbar.prototype.toggle = function toggle() {
+      if (!this.f7Searchbar) {
+        return undefined;
+      }
       return this.toggle.disable();
     };
 
-    F7Searchbar.prototype.clear = function clear () {
-      if (!this.f7Searchbar) { return undefined; }
+    F7Searchbar.prototype.clear = function clear() {
+      if (!this.f7Searchbar) {
+        return undefined;
+      }
       return this.f7Searchbar.clear();
     };
 
-    F7Searchbar.prototype.onChange = function onChange (event) {
+    F7Searchbar.prototype.onChange = function onChange(event) {
       this.dispatchEvent('change', event);
     };
 
-    F7Searchbar.prototype.onInput = function onInput (event) {
+    F7Searchbar.prototype.onInput = function onInput(event) {
       this.dispatchEvent('input', event);
     };
 
-    F7Searchbar.prototype.onFocus = function onFocus (event) {
+    F7Searchbar.prototype.onFocus = function onFocus(event) {
       this.dispatchEvent('focus', event);
     };
 
-    F7Searchbar.prototype.onBlur = function onBlur (event) {
+    F7Searchbar.prototype.onBlur = function onBlur(event) {
       this.dispatchEvent('blur', event);
     };
 
-    F7Searchbar.prototype.onSubmit = function onSubmit (event) {
+    F7Searchbar.prototype.onSubmit = function onSubmit(event) {
       this.dispatchEvent('submit', event);
     };
 
-    F7Searchbar.prototype.onClearButtonClick = function onClearButtonClick (event) {
+    F7Searchbar.prototype.onClearButtonClick = function onClearButtonClick(event) {
       this.dispatchEvent('click:clear clickClear', event);
     };
 
-    F7Searchbar.prototype.onDisableButtonClick = function onDisableButtonClick (event) {
+    F7Searchbar.prototype.onDisableButtonClick = function onDisableButtonClick(event) {
       this.dispatchEvent('click:disable clickDisable', event);
     };
 
-    F7Searchbar.prototype.render = function render () {
+    F7Searchbar.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -8549,7 +9040,7 @@
         'searchbar-expandable': expandable
       }, Mixins.colorClasses(props));
       return React.createElement(SearchbarTag, {
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         id: id,
@@ -8571,7 +9062,7 @@
       }), clearEl, this.slots['input-wrap-end']), disableEl, this.slots['inner-end'], this.slots['default']), this.slots['after-inner']);
     };
 
-    F7Searchbar.prototype.componentDidMount = function componentDidMount () {
+    F7Searchbar.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       var ref = self.props;
       var init = ref.init;
@@ -8591,7 +9082,9 @@
       var hideDividers = ref.hideDividers;
       var hideGroups = ref.hideGroups;
       var form = ref.form;
-      if (!init) { return; }
+      if (!init) {
+        return;
+      }
       var el = self.refs.el;
 
       if (form && el) {
@@ -8645,25 +9138,28 @@
       });
     };
 
-    F7Searchbar.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7Searchbar.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
 
       if (self.props.form && self.refs.el) {
         self.refs.el.removeEventListener('submit', self.onSubmitBound, false);
       }
 
-      if (self.f7Searchbar && self.f7Searchbar.destroy) { self.f7Searchbar.destroy(); }
+      if (self.f7Searchbar && self.f7Searchbar.destroy) {
+        self.f7Searchbar.destroy();
+      }
     };
 
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
 
-    F7Searchbar.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7Searchbar.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -8672,10 +9168,10 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    Object.defineProperties( F7Searchbar.prototype, prototypeAccessors );
+    Object.defineProperties(F7Searchbar.prototype, prototypeAccessors);
 
     return F7Searchbar;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Searchbar, Object.assign({
     id: [String, Number],
@@ -8758,18 +9254,18 @@
     }
   }, Mixins.colorProps));
 
-  var F7Segmented = (function (superclass) {
+  var F7Segmented = function (superclass) {
     function F7Segmented(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7Segmented.__proto__ = superclass;
-    F7Segmented.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Segmented.__proto__ = superclass;
+    F7Segmented.prototype = Object.create(superclass && superclass.prototype);
     F7Segmented.prototype.constructor = F7Segmented;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7Segmented.prototype.render = function render () {
+    F7Segmented.prototype.render = function render() {
       var self = this;
       var props = self.props;
       var className = props.className;
@@ -8795,10 +9291,10 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7Segmented.prototype, prototypeAccessors );
+    Object.defineProperties(F7Segmented.prototype, prototypeAccessors);
 
     return F7Segmented;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Segmented, Object.assign({
     id: [String, Number],
@@ -8810,47 +9306,51 @@
     }
   }, Mixins.colorProps));
 
-  var F7Sheet = (function (superclass) {
+  var F7Sheet = function (superclass) {
     function F7Sheet(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
     }
 
-    if ( superclass ) F7Sheet.__proto__ = superclass;
-    F7Sheet.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Sheet.__proto__ = superclass;
+    F7Sheet.prototype = Object.create(superclass && superclass.prototype);
     F7Sheet.prototype.constructor = F7Sheet;
 
-    var prototypeAccessors = { slots: { configurable: true },el: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true }, el: { configurable: true }, refs: { configurable: true } };
 
-    F7Sheet.prototype.onOpen = function onOpen (event) {
+    F7Sheet.prototype.onOpen = function onOpen(event) {
       this.dispatchEvent('sheet:open sheetOpen', event);
     };
 
-    F7Sheet.prototype.onOpened = function onOpened (event) {
+    F7Sheet.prototype.onOpened = function onOpened(event) {
       this.dispatchEvent('sheet:opened sheetOpened', event);
     };
 
-    F7Sheet.prototype.onClose = function onClose (event) {
+    F7Sheet.prototype.onClose = function onClose(event) {
       this.dispatchEvent('sheet:close sheetClose', event);
     };
 
-    F7Sheet.prototype.onClosed = function onClosed (event) {
+    F7Sheet.prototype.onClosed = function onClosed(event) {
       this.dispatchEvent('sheet:closed sheetClosed', event);
     };
 
-    F7Sheet.prototype.open = function open (animate) {
+    F7Sheet.prototype.open = function open(animate) {
       var self = this;
-      if (!self.$f7) { return undefined; }
+      if (!self.$f7) {
+        return undefined;
+      }
       return self.$f7.sheet.open(self.refs.el, animate);
     };
 
-    F7Sheet.prototype.close = function close (animate) {
+    F7Sheet.prototype.close = function close(animate) {
       var self = this;
-      if (!self.$f7) { return undefined; }
+      if (!self.$f7) {
+        return undefined;
+      }
       return self.$f7.sheet.close(self.refs.el, animate);
     };
 
-    F7Sheet.prototype.render = function render () {
+    F7Sheet.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -8861,12 +9361,16 @@
       var style = props.style;
       var className = props.className;
       var fixedTags;
-      fixedTags = 'Navbar Toolbar Tabbar Subnavbar Searchbar Messagebar Fab ListIndex'.split(' ').map(function (tagName) { return ("F7" + tagName); });
+      fixedTags = 'Navbar Toolbar Tabbar Subnavbar Searchbar Messagebar Fab ListIndex'.split(' ').map(function (tagName) {
+        return "F7" + tagName;
+      });
       var slotsDefault = self.slots.default;
 
       if (slotsDefault && slotsDefault.length) {
         slotsDefault.forEach(function (child) {
-          if (typeof child === 'undefined') { return; }
+          if (typeof child === 'undefined') {
+            return;
+          }
           var isFixedTag = false;
           {
             var tag = child.type && child.type.name;
@@ -8879,7 +9383,11 @@
               isFixedTag = true;
             }
           }
-          if (isFixedTag) { fixedList.push(child); }else { staticList.push(child); }
+          if (isFixedTag) {
+            fixedList.push(child);
+          } else {
+            staticList.push(child);
+          }
         });
       }
 
@@ -8888,7 +9396,7 @@
       }, staticList);
       var classes = Utils.classNames(className, 'sheet-modal', Mixins.colorClasses(props));
       return React.createElement('div', {
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         id: id,
@@ -8897,21 +9405,27 @@
       }, fixedList, innerEl);
     };
 
-    F7Sheet.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7Sheet.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
-      if (self.f7Sheet) { self.f7Sheet.destroy(); }
+      if (self.f7Sheet) {
+        self.f7Sheet.destroy();
+      }
       var el = self.el;
-      if (!el) { return; }
+      if (!el) {
+        return;
+      }
       el.removeEventListener('popup:open', self.onOpenBound);
       el.removeEventListener('popup:opened', self.onOpenedBound);
       el.removeEventListener('popup:close', self.onCloseBound);
       el.removeEventListener('popup:closed', self.onClosedBound);
     };
 
-    F7Sheet.prototype.componentDidMount = function componentDidMount () {
+    F7Sheet.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       var el = self.refs.el;
-      if (!el) { return; }
+      if (!el) {
+        return;
+      }
       self.onOpenBound = self.onOpen.bind(self);
       self.onOpenedBound = self.onOpened.bind(self);
       self.onCloseBound = self.onClose.bind(self);
@@ -8952,11 +9466,12 @@
       return __reactComponentEl(this);
     };
 
-    F7Sheet.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7Sheet.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -8965,12 +9480,14 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    F7Sheet.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+    F7Sheet.prototype.componentDidUpdate = function componentDidUpdate(prevProps, prevState) {
       var this$1 = this;
 
       __reactComponentWatch(this, 'props.opened', prevProps, prevState, function (opened) {
         var self = this$1;
-        if (!self.f7Sheet) { return; }
+        if (!self.f7Sheet) {
+          return;
+        }
 
         if (opened) {
           self.f7Sheet.open();
@@ -8980,10 +9497,10 @@
       });
     };
 
-    Object.defineProperties( F7Sheet.prototype, prototypeAccessors );
+    Object.defineProperties(F7Sheet.prototype, prototypeAccessors);
 
     return F7Sheet;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Sheet, Object.assign({
     id: [String, Number],
@@ -8991,18 +9508,18 @@
     backdrop: Boolean
   }, Mixins.colorProps));
 
-  var F7Statusbar = (function (superclass) {
+  var F7Statusbar = function (superclass) {
     function F7Statusbar(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7Statusbar.__proto__ = superclass;
-    F7Statusbar.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Statusbar.__proto__ = superclass;
+    F7Statusbar.prototype = Object.create(superclass && superclass.prototype);
     F7Statusbar.prototype.constructor = F7Statusbar;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7Statusbar.prototype.render = function render () {
+    F7Statusbar.prototype.render = function render() {
       var props = this.props;
       var className = props.className;
       var id = props.id;
@@ -9019,16 +9536,16 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7Statusbar.prototype, prototypeAccessors );
+    Object.defineProperties(F7Statusbar.prototype, prototypeAccessors);
 
     return F7Statusbar;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Statusbar, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
 
-  var F7Stepper = (function (superclass) {
+  var F7Stepper = function (superclass) {
     function F7Stepper(props, context) {
       var this$1 = this;
 
@@ -9042,28 +9559,34 @@
       })();
     }
 
-    if ( superclass ) F7Stepper.__proto__ = superclass;
-    F7Stepper.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Stepper.__proto__ = superclass;
+    F7Stepper.prototype = Object.create(superclass && superclass.prototype);
     F7Stepper.prototype.constructor = F7Stepper;
 
-    var prototypeAccessors = { classes: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { classes: { configurable: true }, refs: { configurable: true } };
 
-    F7Stepper.prototype.increment = function increment () {
-      if (!this.f7Stepper) { return; }
+    F7Stepper.prototype.increment = function increment() {
+      if (!this.f7Stepper) {
+        return;
+      }
       this.f7Stepper.increment();
     };
 
-    F7Stepper.prototype.decrement = function decrement () {
-      if (!this.f7Stepper) { return; }
+    F7Stepper.prototype.decrement = function decrement() {
+      if (!this.f7Stepper) {
+        return;
+      }
       this.f7Stepper.decrement();
     };
 
-    F7Stepper.prototype.setValue = function setValue (newValue) {
+    F7Stepper.prototype.setValue = function setValue(newValue) {
       var self = this;
-      if (self.f7Stepper && self.f7Stepper.setValue) { self.f7Stepper.setValue(newValue); }
+      if (self.f7Stepper && self.f7Stepper.setValue) {
+        self.f7Stepper.setValue(newValue);
+      }
     };
 
-    F7Stepper.prototype.getValue = function getValue () {
+    F7Stepper.prototype.getValue = function getValue() {
       var self = this;
 
       if (self.f7Stepper && self.f7Stepper.getValue) {
@@ -9073,15 +9596,15 @@
       return undefined;
     };
 
-    F7Stepper.prototype.onInput = function onInput (e) {
+    F7Stepper.prototype.onInput = function onInput(e) {
       this.dispatchEvent('input', e, this.f7Stepper);
     };
 
-    F7Stepper.prototype.onMinusClick = function onMinusClick (e) {
+    F7Stepper.prototype.onMinusClick = function onMinusClick(e) {
       this.dispatchEvent('stepper:minusclick stepperMinusClick', e, this.f7Stepper);
     };
 
-    F7Stepper.prototype.onPlusClick = function onPlusClick (e) {
+    F7Stepper.prototype.onPlusClick = function onPlusClick(e) {
       this.dispatchEvent('stepper:plusclick stepperPlusClick', e, this.f7Stepper);
     };
 
@@ -9120,7 +9643,7 @@
       }, Mixins.colorClasses(props));
     };
 
-    F7Stepper.prototype.render = function render () {
+    F7Stepper.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -9163,7 +9686,7 @@
       }
 
       return React.createElement('div', {
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         id: id,
@@ -9178,17 +9701,21 @@
       }));
     };
 
-    F7Stepper.prototype.componentWillUnmount = function componentWillUnmount () {
-      if (!this.props.init) { return; }
+    F7Stepper.prototype.componentWillUnmount = function componentWillUnmount() {
+      if (!this.props.init) {
+        return;
+      }
 
       if (this.f7Stepper && this.f7Stepper.destroy) {
         this.f7Stepper.destroy();
       }
     };
 
-    F7Stepper.prototype.componentDidMount = function componentDidMount () {
+    F7Stepper.prototype.componentDidMount = function componentDidMount() {
       var self = this;
-      if (!self.props.init) { return; }
+      if (!self.props.init) {
+        return;
+      }
       self.$f7ready(function (f7) {
         var ref = self.props;
         var min = ref.min;
@@ -9200,7 +9727,9 @@
         var autorepeatDynamic = ref.autorepeatDynamic;
         var wraps = ref.wraps;
         var el = self.refs.el;
-        if (!el) { return; }
+        if (!el) {
+          return;
+        }
         self.f7Stepper = f7.stepper.create(Utils.noUndefinedProps({
           el: el,
           min: min,
@@ -9221,11 +9750,12 @@
       });
     };
 
-    F7Stepper.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7Stepper.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -9234,10 +9764,10 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    Object.defineProperties( F7Stepper.prototype, prototypeAccessors );
+    Object.defineProperties(F7Stepper.prototype, prototypeAccessors);
 
     return F7Stepper;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Stepper, Object.assign({
     id: [String, Number],
@@ -9303,18 +9833,18 @@
     raised: Boolean
   }, Mixins.colorProps));
 
-  var F7Subnavbar = (function (superclass) {
+  var F7Subnavbar = function (superclass) {
     function F7Subnavbar(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7Subnavbar.__proto__ = superclass;
-    F7Subnavbar.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Subnavbar.__proto__ = superclass;
+    F7Subnavbar.prototype = Object.create(superclass && superclass.prototype);
     F7Subnavbar.prototype.constructor = F7Subnavbar;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7Subnavbar.prototype.render = function render () {
+    F7Subnavbar.prototype.render = function render() {
       var self = this;
       var props = self.props;
       var inner = props.inner;
@@ -9341,10 +9871,10 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7Subnavbar.prototype, prototypeAccessors );
+    Object.defineProperties(F7Subnavbar.prototype, prototypeAccessors);
 
     return F7Subnavbar;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Subnavbar, Object.assign({
     id: [String, Number],
@@ -9356,18 +9886,18 @@
     }
   }, Mixins.colorProps));
 
-  var F7SwipeoutActions = (function (superclass) {
+  var F7SwipeoutActions = function (superclass) {
     function F7SwipeoutActions(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7SwipeoutActions.__proto__ = superclass;
-    F7SwipeoutActions.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7SwipeoutActions.__proto__ = superclass;
+    F7SwipeoutActions.prototype = Object.create(superclass && superclass.prototype);
     F7SwipeoutActions.prototype.constructor = F7SwipeoutActions;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7SwipeoutActions.prototype.render = function render () {
+    F7SwipeoutActions.prototype.render = function render() {
       var props = this.props;
       var left = props.left;
       var right = props.right;
@@ -9378,11 +9908,15 @@
       var sideComputed = side;
 
       if (!sideComputed) {
-        if (left) { sideComputed = 'left'; }
-        if (right) { sideComputed = 'right'; }
+        if (left) {
+          sideComputed = 'left';
+        }
+        if (right) {
+          sideComputed = 'right';
+        }
       }
 
-      var classes = Utils.classNames(className, ("swipeout-actions-" + sideComputed), Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, "swipeout-actions-" + sideComputed, Mixins.colorClasses(props));
       return React.createElement('div', {
         id: id,
         style: style,
@@ -9394,10 +9928,10 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7SwipeoutActions.prototype, prototypeAccessors );
+    Object.defineProperties(F7SwipeoutActions.prototype, prototypeAccessors);
 
     return F7SwipeoutActions;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7SwipeoutActions, Object.assign({
     id: [String, Number],
@@ -9406,22 +9940,22 @@
     side: String
   }, Mixins.colorProps));
 
-  var F7SwipeoutButton = (function (superclass) {
+  var F7SwipeoutButton = function (superclass) {
     function F7SwipeoutButton(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7SwipeoutButton.__proto__ = superclass;
-    F7SwipeoutButton.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7SwipeoutButton.__proto__ = superclass;
+    F7SwipeoutButton.prototype = Object.create(superclass && superclass.prototype);
     F7SwipeoutButton.prototype.constructor = F7SwipeoutButton;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7SwipeoutButton.prototype.onClick = function onClick (event) {
+    F7SwipeoutButton.prototype.onClick = function onClick(event) {
       this.dispatchEvent('click', event);
     };
 
-    F7SwipeoutButton.prototype.render = function render () {
+    F7SwipeoutButton.prototype.render = function render() {
       var props = this.props;
       var className = props.className;
       var id = props.id;
@@ -9451,17 +9985,18 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7SwipeoutButton.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7SwipeoutButton.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
-    Object.defineProperties( F7SwipeoutButton.prototype, prototypeAccessors );
+    Object.defineProperties(F7SwipeoutButton.prototype, prototypeAccessors);
 
     return F7SwipeoutButton;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7SwipeoutButton, Object.assign({
     id: [String, Number],
@@ -9473,18 +10008,18 @@
     href: String
   }, Mixins.colorProps));
 
-  var F7SwiperSlide = (function (superclass) {
+  var F7SwiperSlide = function (superclass) {
     function F7SwiperSlide(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7SwiperSlide.__proto__ = superclass;
-    F7SwiperSlide.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7SwiperSlide.__proto__ = superclass;
+    F7SwiperSlide.prototype = Object.create(superclass && superclass.prototype);
     F7SwiperSlide.prototype.constructor = F7SwiperSlide;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7SwiperSlide.prototype.render = function render () {
+    F7SwiperSlide.prototype.render = function render() {
       var props = this.props;
       var className = props.className;
       var id = props.id;
@@ -9504,27 +10039,27 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7SwiperSlide.prototype, prototypeAccessors );
+    Object.defineProperties(F7SwiperSlide.prototype, prototypeAccessors);
 
     return F7SwiperSlide;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7SwiperSlide, {
     id: [String, Number],
     zoom: Boolean
   });
 
-  var F7Swiper = (function (superclass) {
+  var F7Swiper = function (superclass) {
     function F7Swiper(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
     }
 
-    if ( superclass ) F7Swiper.__proto__ = superclass;
-    F7Swiper.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Swiper.__proto__ = superclass;
+    F7Swiper.prototype = Object.create(superclass && superclass.prototype);
     F7Swiper.prototype.constructor = F7Swiper;
 
-    var prototypeAccessors = { paginationComputed: { configurable: true },scrollbarComputed: { configurable: true },navigationComputed: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { paginationComputed: { configurable: true }, scrollbarComputed: { configurable: true }, navigationComputed: { configurable: true }, slots: { configurable: true }, refs: { configurable: true } };
 
     prototypeAccessors.paginationComputed.get = function () {
       var self = this;
@@ -9565,7 +10100,7 @@
       return false;
     };
 
-    F7Swiper.prototype.render = function render () {
+    F7Swiper.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -9580,7 +10115,7 @@
 
       if (self.paginationComputed) {
         paginationEl = React.createElement('div', {
-          ref: function (__reactNode) {
+          ref: function ref(__reactNode) {
             this$1.__reactRefs['paginationEl'] = __reactNode;
           },
           className: 'swiper-pagination'
@@ -9589,7 +10124,7 @@
 
       if (self.scrollbarComputed) {
         scrollbarEl = React.createElement('div', {
-          ref: function (__reactNode) {
+          ref: function ref(__reactNode) {
             this$1.__reactRefs['scrollbarEl'] = __reactNode;
           },
           className: 'swiper-scrollbar'
@@ -9598,13 +10133,13 @@
 
       if (self.navigationComputed) {
         buttonNextEl = React.createElement('div', {
-          ref: function (__reactNode) {
+          ref: function ref(__reactNode) {
             this$1.__reactRefs['nextEl'] = __reactNode;
           },
           className: 'swiper-button-next'
         });
         buttonPrevEl = React.createElement('div', {
-          ref: function (__reactNode) {
+          ref: function ref(__reactNode) {
             this$1.__reactRefs['prevEl'] = __reactNode;
           },
           className: 'swiper-button-prev'
@@ -9615,7 +10150,7 @@
       return React.createElement('div', {
         id: id,
         style: style,
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         className: classes
@@ -9624,15 +10159,21 @@
       }, this.slots['default']), paginationEl, scrollbarEl, buttonPrevEl, buttonNextEl, this.slots['after-wrapper']);
     };
 
-    F7Swiper.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7Swiper.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
-      if (!self.props.init) { return; }
-      if (self.swiper && self.swiper.destroy) { self.swiper.destroy(); }
+      if (!self.props.init) {
+        return;
+      }
+      if (self.swiper && self.swiper.destroy) {
+        self.swiper.destroy();
+      }
     };
 
-    F7Swiper.prototype.componentDidMount = function componentDidMount () {
+    F7Swiper.prototype.componentDidMount = function componentDidMount() {
       var self = this;
-      if (!self.props.init) { return; }
+      if (!self.props.init) {
+        return;
+      }
       self.$f7ready(function (f7) {
         var newParams = {
           pagination: {},
@@ -9644,20 +10185,26 @@
         var pagination = ref.pagination;
         var navigation = ref.navigation;
         var scrollbar = ref.scrollbar;
-        if (params) { Utils.extend(newParams, params); }
-        if (pagination && !newParams.pagination.el) { newParams.pagination.el = self.refs.paginationEl; }
+        if (params) {
+          Utils.extend(newParams, params);
+        }
+        if (pagination && !newParams.pagination.el) {
+          newParams.pagination.el = self.refs.paginationEl;
+        }
 
         if (navigation && !newParams.navigation.nextEl && !newParams.navigation.prevEl) {
           newParams.navigation.nextEl = self.refs.nextEl;
           newParams.navigation.prevEl = self.refs.prevEl;
         }
 
-        if (scrollbar && !newParams.scrollbar.el) { newParams.scrollbar.el = self.refs.scrollbarEl; }
+        if (scrollbar && !newParams.scrollbar.el) {
+          newParams.scrollbar.el = self.refs.scrollbarEl;
+        }
         self.swiper = f7.swiper.create(self.refs.el, newParams);
       });
     };
 
-    F7Swiper.prototype.componentDidUpdate = function componentDidUpdate () {
+    F7Swiper.prototype.componentDidUpdate = function componentDidUpdate() {
       var self = this;
 
       if (!self.initialUpdate) {
@@ -9665,7 +10212,9 @@
         return;
       }
 
-      if (self.swiper && self.swiper.update) { self.swiper.update(); }
+      if (self.swiper && self.swiper.update) {
+        self.swiper.update();
+      }
     };
 
     prototypeAccessors.slots.get = function () {
@@ -9678,10 +10227,10 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    Object.defineProperties( F7Swiper.prototype, prototypeAccessors );
+    Object.defineProperties(F7Swiper.prototype, prototypeAccessors);
 
     return F7Swiper;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Swiper, Object.assign({
     id: [String, Number],
@@ -9695,18 +10244,18 @@
     }
   }, Mixins.colorProps));
 
-  var F7Tab = (function (superclass) {
+  var F7Tab = function (superclass) {
     function F7Tab(props, context) {
       var this$1 = this;
 
       superclass.call(this, props, context);
       this.__reactRefs = {};
 
-      this.state = (function () {
+      this.state = function () {
         return {
           tabContent: null
         };
-      })();
+      }();
 
       (function () {
         this$1.onTabShowBound = this$1.onTabShow.bind(this$1);
@@ -9714,26 +10263,28 @@
       })();
     }
 
-    if ( superclass ) F7Tab.__proto__ = superclass;
-    F7Tab.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Tab.__proto__ = superclass;
+    F7Tab.prototype = Object.create(superclass && superclass.prototype);
     F7Tab.prototype.constructor = F7Tab;
 
-    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true }, refs: { configurable: true } };
 
-    F7Tab.prototype.show = function show (animate) {
-      if (!this.$f7) { return; }
+    F7Tab.prototype.show = function show(animate) {
+      if (!this.$f7) {
+        return;
+      }
       this.$f7.tab.show(this.refs.el, animate);
     };
 
-    F7Tab.prototype.onTabShow = function onTabShow (e) {
+    F7Tab.prototype.onTabShow = function onTabShow(e) {
       this.dispatchEvent('tab:show tabShow', e);
     };
 
-    F7Tab.prototype.onTabHide = function onTabHide (e) {
+    F7Tab.prototype.onTabHide = function onTabHide(e) {
       this.dispatchEvent('tab:hide tabHide', e);
     };
 
-    F7Tab.prototype.render = function render () {
+    F7Tab.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -9747,12 +10298,14 @@
         'tab-active': tabActive
       }, Mixins.colorClasses(props));
       var TabContent;
-      if (tabContent) { TabContent = tabContent.component; }
+      if (tabContent) {
+        TabContent = tabContent.component;
+      }
       {
         return React.createElement('div', {
           id: id,
           style: style,
-          ref: function (__reactNode) {
+          ref: function ref(__reactNode) {
             this$1.__reactRefs['el'] = __reactNode;
           },
           className: classes
@@ -9762,7 +10315,7 @@
       }
     };
 
-    F7Tab.prototype.componentDidMount = function componentDidMount () {
+    F7Tab.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       var el = self.refs.el;
 
@@ -9783,7 +10336,7 @@
       });
     };
 
-    F7Tab.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7Tab.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
       var el = self.refs.el;
 
@@ -9792,15 +10345,19 @@
         el.removeEventListener('tab:hide', self.onTabHideBound);
       }
 
-      if (!self.routerData) { return; }
+      if (!self.routerData) {
+        return;
+      }
       f7.routers.tabs.splice(f7.routers.tabs.indexOf(self.routerData), 1);
       self.routerData = null;
       delete self.routerData;
     };
 
-    F7Tab.prototype.componentDidUpdate = function componentDidUpdate () {
+    F7Tab.prototype.componentDidUpdate = function componentDidUpdate() {
       var self = this;
-      if (!self.routerData) { return; }
+      if (!self.routerData) {
+        return;
+      }
       eventsEmitter.emit('tabRouterDidUpdate', self.routerData);
     };
 
@@ -9808,11 +10365,12 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7Tab.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7Tab.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -9821,28 +10379,28 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    Object.defineProperties( F7Tab.prototype, prototypeAccessors );
+    Object.defineProperties(F7Tab.prototype, prototypeAccessors);
 
     return F7Tab;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Tab, Object.assign({
     id: [String, Number],
     tabActive: Boolean
   }, Mixins.colorProps));
 
-  var F7Tabs = (function (superclass) {
+  var F7Tabs = function (superclass) {
     function F7Tabs(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7Tabs.__proto__ = superclass;
-    F7Tabs.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Tabs.__proto__ = superclass;
+    F7Tabs.prototype = Object.create(superclass && superclass.prototype);
     F7Tabs.prototype.constructor = F7Tabs;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7Tabs.prototype.render = function render () {
+    F7Tabs.prototype.render = function render() {
       var self = this;
       var props = self.props;
       var animated = props.animated;
@@ -9878,10 +10436,10 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7Tabs.prototype, prototypeAccessors );
+    Object.defineProperties(F7Tabs.prototype, prototypeAccessors);
 
     return F7Tabs;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Tabs, Object.assign({
     id: [String, Number],
@@ -9890,31 +10448,35 @@
     routable: Boolean
   }, Mixins.colorProps));
 
-  var F7Toolbar = (function (superclass) {
+  var F7Toolbar = function (superclass) {
     function F7Toolbar(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
     }
 
-    if ( superclass ) F7Toolbar.__proto__ = superclass;
-    F7Toolbar.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Toolbar.__proto__ = superclass;
+    F7Toolbar.prototype = Object.create(superclass && superclass.prototype);
     F7Toolbar.prototype.constructor = F7Toolbar;
 
-    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true }, refs: { configurable: true } };
 
-    F7Toolbar.prototype.hide = function hide (animate) {
+    F7Toolbar.prototype.hide = function hide(animate) {
       var self = this;
-      if (!self.$f7) { return; }
+      if (!self.$f7) {
+        return;
+      }
       self.$f7.toolbar.hide(this.refs.el, animate);
     };
 
-    F7Toolbar.prototype.show = function show (animate) {
+    F7Toolbar.prototype.show = function show(animate) {
       var self = this;
-      if (!self.$f7) { return; }
+      if (!self.$f7) {
+        return;
+      }
       self.$f7.toolbar.show(this.refs.el, animate);
     };
 
-    F7Toolbar.prototype.render = function render () {
+    F7Toolbar.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -9942,7 +10504,7 @@
       return React.createElement('div', {
         id: id,
         style: style,
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         className: classes
@@ -9951,14 +10513,16 @@
       }, this.slots['default']) : this.slots['default'], this.slots['after-inner']);
     };
 
-    F7Toolbar.prototype.componentDidMount = function componentDidMount () {
+    F7Toolbar.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       self.$f7ready(function (f7) {
-        if (self.props.tabbar) { f7.toolbar.setHighlight(self.refs.el); }
+        if (self.props.tabbar) {
+          f7.toolbar.setHighlight(self.refs.el);
+        }
       });
     };
 
-    F7Toolbar.prototype.componentDidUpdate = function componentDidUpdate () {
+    F7Toolbar.prototype.componentDidUpdate = function componentDidUpdate() {
       var self = this;
 
       if (self.props.tabbar && self.$f7) {
@@ -9976,10 +10540,10 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    Object.defineProperties( F7Toolbar.prototype, prototypeAccessors );
+    Object.defineProperties(F7Toolbar.prototype, prototypeAccessors);
 
     return F7Toolbar;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Toolbar, Object.assign({
     id: [String, Number],
@@ -9996,18 +10560,18 @@
     }
   }, Mixins.colorProps));
 
-  var F7View = (function (superclass) {
+  var F7View = function (superclass) {
     function F7View(props, context) {
       var this$1 = this;
 
       superclass.call(this, props, context);
       this.__reactRefs = {};
 
-      this.state = (function () {
+      this.state = function () {
         return {
           pages: []
         };
-      })();
+      }();
 
       (function () {
         var self = this$1;
@@ -10021,41 +10585,41 @@
       })();
     }
 
-    if ( superclass ) F7View.__proto__ = superclass;
-    F7View.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7View.__proto__ = superclass;
+    F7View.prototype = Object.create(superclass && superclass.prototype);
     F7View.prototype.constructor = F7View;
 
-    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true }, refs: { configurable: true } };
 
-    F7View.prototype.onSwipeBackMove = function onSwipeBackMove (event) {
+    F7View.prototype.onSwipeBackMove = function onSwipeBackMove(event) {
       this.dispatchEvent('swipeback:move swipeBackMove', event, event.detail);
     };
 
-    F7View.prototype.onSwipeBackBeforeChange = function onSwipeBackBeforeChange (event) {
+    F7View.prototype.onSwipeBackBeforeChange = function onSwipeBackBeforeChange(event) {
       this.dispatchEvent('swipeback:beforechange swipeBackBeforeChange', event, event.detail);
     };
 
-    F7View.prototype.onSwipeBackAfterChange = function onSwipeBackAfterChange (event) {
+    F7View.prototype.onSwipeBackAfterChange = function onSwipeBackAfterChange(event) {
       this.dispatchEvent('swipeback:afterchange swipeBackAfterChange', event, event.detail);
     };
 
-    F7View.prototype.onSwipeBackBeforeReset = function onSwipeBackBeforeReset (event) {
+    F7View.prototype.onSwipeBackBeforeReset = function onSwipeBackBeforeReset(event) {
       this.dispatchEvent('swipeback:beforereset swipeBackBeforeReset', event, event.detail);
     };
 
-    F7View.prototype.onSwipeBackAfterReset = function onSwipeBackAfterReset (event) {
+    F7View.prototype.onSwipeBackAfterReset = function onSwipeBackAfterReset(event) {
       this.dispatchEvent('swipeback:afterreset swipeBackAfterReset', event, event.detail);
     };
 
-    F7View.prototype.onTabShow = function onTabShow (e) {
+    F7View.prototype.onTabShow = function onTabShow(e) {
       this.dispatchEvent('tab:show tabShow', e);
     };
 
-    F7View.prototype.onTabHide = function onTabHide (e) {
+    F7View.prototype.onTabHide = function onTabHide(e) {
       this.dispatchEvent('tab:hide tabHide', e);
     };
 
-    F7View.prototype.render = function render () {
+    F7View.prototype.render = function render() {
       var this$1 = this;
 
       var self = this;
@@ -10072,7 +10636,7 @@
         tab: tab
       }, Mixins.colorClasses(props));
       return React.createElement('div', {
-        ref: function (__reactNode) {
+        ref: function ref(__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
         id: id,
@@ -10088,13 +10652,15 @@
       }));
     };
 
-    F7View.prototype.componentDidUpdate = function componentDidUpdate () {
+    F7View.prototype.componentDidUpdate = function componentDidUpdate() {
       var self = this;
-      if (!self.routerData) { return; }
+      if (!self.routerData) {
+        return;
+      }
       eventsEmitter.emit('viewRouterDidUpdate', self.routerData);
     };
 
-    F7View.prototype.componentWillUnmount = function componentWillUnmount () {
+    F7View.prototype.componentWillUnmount = function componentWillUnmount() {
       var self = this;
       var el = self.refs.el;
       el.removeEventListener('swipeback:move', self.onSwipeBackMoveBound);
@@ -10104,14 +10670,18 @@
       el.removeEventListener('swipeback:afterreset', self.onSwipeBackAfterResetBound);
       el.removeEventListener('tab:show', self.onTabShowBound);
       el.removeEventListener('tab:hide', self.onTabHideBound);
-      if (!self.props.init) { return; }
-      if (self.f7View && self.f7View.destroy) { self.f7View.destroy(); }
+      if (!self.props.init) {
+        return;
+      }
+      if (self.f7View && self.f7View.destroy) {
+        self.f7View.destroy();
+      }
       f7.routers.views.splice(f7.routers.views.indexOf(self.routerData), 1);
       self.routerData = null;
       delete self.routerData;
     };
 
-    F7View.prototype.componentDidMount = function componentDidMount () {
+    F7View.prototype.componentDidMount = function componentDidMount() {
       var self = this;
       var el = self.refs.el;
       el.addEventListener('swipeback:move', self.onSwipeBackMoveBound);
@@ -10125,7 +10695,9 @@
         pages: []
       });
       self.$f7ready(function (f7Instance) {
-        if (!self.props.init) { return; }
+        if (!self.props.init) {
+          return;
+        }
         self.routerData = {
           el: el,
           component: self,
@@ -10141,11 +10713,12 @@
       return __reactComponentSlots(this.props);
     };
 
-    F7View.prototype.dispatchEvent = function dispatchEvent (events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    F7View.prototype.dispatchEvent = function dispatchEvent(events) {
+      var args = [],
+          len = arguments.length - 1;
+      while (len-- > 0) {
+        args[len] = arguments[len + 1];
+      }return __reactComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     };
 
     prototypeAccessors.refs.get = function () {
@@ -10154,10 +10727,10 @@
 
     prototypeAccessors.refs.set = function (refs) {};
 
-    Object.defineProperties( F7View.prototype, prototypeAccessors );
+    Object.defineProperties(F7View.prototype, prototypeAccessors);
 
     return F7View;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7View, Object.assign({
     id: [String, Number],
@@ -10208,18 +10781,18 @@
     }
   }, Mixins.colorProps));
 
-  var F7Views = (function (superclass) {
+  var F7Views = function (superclass) {
     function F7Views(props, context) {
       superclass.call(this, props, context);
     }
 
-    if ( superclass ) F7Views.__proto__ = superclass;
-    F7Views.prototype = Object.create( superclass && superclass.prototype );
+    if (superclass) F7Views.__proto__ = superclass;
+    F7Views.prototype = Object.create(superclass && superclass.prototype);
     F7Views.prototype.constructor = F7Views;
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7Views.prototype.render = function render () {
+    F7Views.prototype.render = function render() {
       var self = this;
       var props = self.props;
       var className = props.className;
@@ -10240,10 +10813,10 @@
       return __reactComponentSlots(this.props);
     };
 
-    Object.defineProperties( F7Views.prototype, prototypeAccessors );
+    Object.defineProperties(F7Views.prototype, prototypeAccessors);
 
     return F7Views;
-  }(React.Component));
+  }(React.Component);
 
   __reactComponentSetProps(F7Views, Object.assign({
     id: [String, Number],
@@ -10271,24 +10844,23 @@
           return;
         }
 
-        var id = (Utils.now()) + "_" + ((routerComponentIdCounter += 1));
+        var id = Utils.now() + "_" + (routerComponentIdCounter += 1);
         var pageData = {
           component: component,
           id: id,
-          props: Utils.extend(
-            {
-              f7route: options.route,
-              f7router: router,
-            },
-            options.route.params
-          ),
+          props: Utils.extend({
+            f7route: options.route,
+            f7router: router
+          }, options.route.params)
         };
         routerComponent.$f7router = router;
         routerComponent.$f7route = options.route;
 
         var resolved;
         function onDidUpdate(componentRouterData) {
-          if (componentRouterData.component !== routerComponent || resolved) { return; }
+          if (componentRouterData.component !== routerComponent || resolved) {
+            return;
+          }
           eventsEmitter.off('viewRouterDidUpdate', onDidUpdate);
 
           var pageEl = el.children[el.children.length - 1];
@@ -10304,7 +10876,9 @@
         routerComponent.setState({ pages: routerComponent.state.pages });
       },
       removePage: function removePage($pageEl) {
-        if (!$pageEl) { return; }
+        if (!$pageEl) {
+          return;
+        }
         var router = this;
         var routerComponent;
         f7.routers.views.forEach(function (data) {
@@ -10316,12 +10890,16 @@
         var pageEl;
         if ('length' in $pageEl) {
           // Dom7
-          if ($pageEl.length === 0) { return; }
+          if ($pageEl.length === 0) {
+            return;
+          }
           pageEl = $pageEl[0];
         } else {
           pageEl = $pageEl;
         }
-        if (!pageEl) { return; }
+        if (!pageEl) {
+          return;
+        }
 
         var pageComponentFound;
         routerComponent.state.pages.forEach(function (page, index) {
@@ -10337,7 +10915,9 @@
       },
       tabComponentLoader: function tabComponentLoader(tabEl, component, componentUrl, options, resolve, reject) {
         var router = this;
-        if (!tabEl) { reject(); }
+        if (!tabEl) {
+          reject();
+        }
 
         var tabsComponent;
         f7.routers.tabs.forEach(function (tabData) {
@@ -10350,17 +10930,14 @@
           return;
         }
 
-        var id = (Utils.now()) + "_" + ((routerComponentIdCounter += 1));
+        var id = Utils.now() + "_" + (routerComponentIdCounter += 1);
         var tabContent = {
           id: id,
           component: component,
-          props: Utils.extend(
-            {
-              f7route: options.route,
-              f7router: router,
-            },
-            options.route.params
-          ),
+          props: Utils.extend({
+            f7route: options.route,
+            f7router: router
+          }, options.route.params)
         };
 
         tabsComponent.$f7router = router;
@@ -10368,7 +10945,9 @@
 
         var resolved;
         function onDidUpdate(componentRouterData) {
-          if (componentRouterData.component !== tabsComponent || resolved) { return; }
+          if (componentRouterData.component !== tabsComponent || resolved) {
+            return;
+          }
           eventsEmitter.off('tabRouterDidUpdate', onDidUpdate);
 
           var tabContentEl = tabEl.children[0];
@@ -10382,7 +10961,9 @@
         tabsComponent.setState({ tabContent: tabContent });
       },
       removeTabContent: function removeTabContent(tabEl) {
-        if (!tabEl) { return; }
+        if (!tabEl) {
+          return;
+        }
 
         var tabComponent;
         f7.routers.tabs.forEach(function (tabData) {
@@ -10407,24 +10988,23 @@
           return;
         }
 
-        var id = (Utils.now()) + "_" + ((routerComponentIdCounter += 1));
+        var id = Utils.now() + "_" + (routerComponentIdCounter += 1);
         var modalData = {
           component: component,
           id: id,
-          props: Utils.extend(
-            {
-              f7route: options.route,
-              f7router: router,
-            },
-            options.route.params
-          ),
+          props: Utils.extend({
+            f7route: options.route,
+            f7router: router
+          }, options.route.params)
         };
         modalsComponent.$f7router = router;
         modalsComponent.$f7route = options.route;
 
         var resolved;
         function onDidUpdate(componentRouterData) {
-          if (componentRouterData.component !== modalsComponent || resolved) { return; }
+          if (componentRouterData.component !== modalsComponent || resolved) {
+            return;
+          }
           eventsEmitter.off('modalsRouterDidUpdate', onDidUpdate);
 
           var modalEl = modalsComponentEl.children[modalsComponentEl.children.length - 1];
@@ -10441,17 +11021,21 @@
       },
       removeModal: function removeModal(modalEl) {
         var modalsComponent = f7.routers.modals && f7.routers.modals.component;
-        if (!modalsComponent) { return; }
+        if (!modalsComponent) {
+          return;
+        }
 
         var modalDataToRemove;
         modalsComponent.state.modals.forEach(function (modalData) {
-          if (modalData.el === modalEl) { modalDataToRemove = modalData; }
+          if (modalData.el === modalEl) {
+            modalDataToRemove = modalData;
+          }
         });
 
         modalsComponent.state.modals.splice(modalsComponent.state.modals.indexOf(modalDataToRemove), 1);
         modalsComponent.setState({ modals: modalsComponent.state.modals });
-      },
-    },
+      }
+    }
   };
 
   /**
@@ -10469,7 +11053,7 @@
   var Plugin = {
     name: 'phenomePlugin',
     install: function install(params) {
-      if ( params === void 0 ) params = {};
+      if (params === void 0) params = {};
 
       var Framework7 = this;
       f7.Framework7 = Framework7;
@@ -10563,13 +11147,17 @@
       Object.defineProperty(Extend.prototype, '$f7', {
         get: function get() {
           return f7.instance;
-        },
+        }
       });
 
       var $theme = {};
       var theme = params.theme;
-      if (theme === 'md') { $theme.md = true; }
-      if (theme === 'ios') { $theme.ios = true; }
+      if (theme === 'md') {
+        $theme.md = true;
+      }
+      if (theme === 'ios') {
+        $theme.ios = true;
+      }
       if (!theme || theme === 'auto') {
         $theme.ios = !!(Framework7.Device || Framework7.device).ios;
         $theme.md = !(Framework7.Device || Framework7.device).ios;
@@ -10578,9 +11166,9 @@
         get: function get() {
           return {
             ios: f7.instance ? f7.instance.theme === 'ios' : $theme.ios,
-            md: f7.instance ? f7.instance.theme === 'md' : $theme.md,
+            md: f7.instance ? f7.instance.theme === 'md' : $theme.md
           };
-        },
+        }
       });
 
       function f7ready(callback) {
@@ -10597,13 +11185,21 @@
       Object.defineProperty(Extend.prototype, '$f7route', {
         get: function get() {
           var self = this;
-          if (self.props && self.props.f7route) { return self.props.f7route; }
-          if (self.f7route) { return self.f7route; }
-          if (self._f7route) { return self._f7route; }
+          if (self.props && self.props.f7route) {
+            return self.props.f7route;
+          }
+          if (self.f7route) {
+            return self.f7route;
+          }
+          if (self._f7route) {
+            return self._f7route;
+          }
           var route;
           var parent = self;
           while (parent && !route) {
-            if (parent._f7route) { route = parent._f7route; }
+            if (parent._f7route) {
+              route = parent._f7route;
+            }
             {
               parent = parent._reactInternalFiber._debugOwner.stateNode;
             }
@@ -10613,19 +11209,26 @@
         set: function set(value) {
           var self = this;
           self._f7route = value;
-        },
+        }
       });
       Object.defineProperty(Extend.prototype, '$f7router', {
         get: function get() {
           var self = this;
-          if (self.props && self.props.f7router) { return self.props.f7router; }
-          if (self.f7router) { return self.f7router; }
-          if (self._f7router) { return self._f7router; }
+          if (self.props && self.props.f7router) {
+            return self.props.f7router;
+          }
+          if (self.f7router) {
+            return self.f7router;
+          }
+          if (self._f7router) {
+            return self._f7router;
+          }
           var router;
           var parent = self;
           while (parent && !router) {
-            if (parent._f7router) { router = parent._f7router; }
-            else if (parent.f7View) {
+            if (parent._f7router) {
+              router = parent._f7router;
+            } else if (parent.f7View) {
               router = parent.f7View.router;
             } else if (parent[refs] && parent[refs].el && parent[refs].el.f7View) {
               router = parent[refs].el.f7View.router;
@@ -10639,14 +11242,13 @@
         set: function set(value) {
           var self = this;
           self._f7router = value;
-        },
+        }
       });
 
       // Extend F7 Router
       Framework7.Router.use(componentsRouter);
-    },
+    }
   };
 
   return Plugin;
-
-})));
+});
