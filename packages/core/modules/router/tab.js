@@ -1,20 +1,41 @@
-import $ from 'dom7';
-import Utils from '../../utils/utils';
-import History from '../../utils/history';
+'use strict';
 
-function tabLoad(tabRoute, loadOptions = {}) {
-  const router = this;
-  const options = Utils.extend({
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.tabRemove = exports.tabLoad = undefined;
+
+var _dom = require('dom7');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+var _utils = require('../../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _history = require('../../utils/history');
+
+var _history2 = _interopRequireDefault(_history);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function tabLoad(tabRoute) {
+  var loadOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  var router = this;
+  var options = _utils2.default.extend({
     animate: router.params.animate,
     pushState: true,
     history: true,
     parentPageEl: null,
     preload: false,
-    on: {},
+    on: {}
   }, loadOptions);
 
-  let currentRoute;
-  let previousRoute;
+  var currentRoute = void 0;
+  var previousRoute = void 0;
   if (options.route) {
     // Set Route
     if (!options.preload && options.route !== router.currentRoute) {
@@ -31,13 +52,9 @@ function tabLoad(tabRoute, loadOptions = {}) {
 
     // Update Browser History
     if (router.params.pushState && options.pushState && !options.reloadPrevious) {
-      History.replace(
-        router.view.id,
-        {
-          url: options.route.url,
-        },
-        (router.params.pushStateRoot || '') + router.params.pushStateSeparator + options.route.url
-      );
+      _history2.default.replace(router.view.id, {
+        url: options.route.url
+      }, (router.params.pushStateRoot || '') + router.params.pushStateSeparator + options.route.url);
     }
 
     // Update Router History
@@ -48,25 +65,29 @@ function tabLoad(tabRoute, loadOptions = {}) {
   }
 
   // Show Tab
-  const $parentPageEl = $(options.parentPageEl || router.currentPageEl);
-  let tabEl;
-  if ($parentPageEl.length && $parentPageEl.find(`#${tabRoute.id}`).length) {
-    tabEl = $parentPageEl.find(`#${tabRoute.id}`).eq(0);
+  var $parentPageEl = (0, _dom2.default)(options.parentPageEl || router.currentPageEl);
+  var tabEl = void 0;
+  if ($parentPageEl.length && $parentPageEl.find('#' + tabRoute.id).length) {
+    tabEl = $parentPageEl.find('#' + tabRoute.id).eq(0);
   } else if (router.view.selector) {
-    tabEl = `${router.view.selector} #${tabRoute.id}`;
+    tabEl = router.view.selector + ' #' + tabRoute.id;
   } else {
-    tabEl = `#${tabRoute.id}`;
+    tabEl = '#' + tabRoute.id;
   }
-  const tabShowResult = router.app.tab.show({
-    tabEl,
+  var tabShowResult = router.app.tab.show({
+    tabEl: tabEl,
     animate: options.animate,
-    tabRoute: options.route,
+    tabRoute: options.route
   });
 
-  const { $newTabEl, $oldTabEl, animated, onTabsChanged } = tabShowResult;
+  var $newTabEl = tabShowResult.$newTabEl,
+      $oldTabEl = tabShowResult.$oldTabEl,
+      animated = tabShowResult.animated,
+      onTabsChanged = tabShowResult.onTabsChanged;
+
 
   if ($newTabEl && $newTabEl.parents('.page').length > 0 && options.route) {
-    const tabParentPageData = $newTabEl.parents('.page')[0].f7Page;
+    var tabParentPageData = $newTabEl.parents('.page')[0].f7Page;
     if (tabParentPageData && options.route) {
       tabParentPageData.route = options.route;
     }
@@ -77,15 +98,15 @@ function tabLoad(tabRoute, loadOptions = {}) {
     // Remove theme elements
     router.removeThemeElements($newTabEl);
 
-    let tabEventTarget = $newTabEl;
-    if (typeof contentEl !== 'string') tabEventTarget = $(contentEl);
+    var tabEventTarget = $newTabEl;
+    if (typeof contentEl !== 'string') tabEventTarget = (0, _dom2.default)(contentEl);
 
     tabEventTarget.trigger('tab:init tab:mounted', tabRoute);
     router.emit('tabInit tabMounted', $newTabEl[0], tabRoute);
 
     if ($oldTabEl && router.params.unloadTabContent) {
       if (animated) {
-        onTabsChanged(() => {
+        onTabsChanged(function () {
           router.tabRemove($oldTabEl, $newTabEl, tabRoute);
         });
       } else {
@@ -100,8 +121,15 @@ function tabLoad(tabRoute, loadOptions = {}) {
   // Load Tab Content
   function loadTab(loadTabParams, loadTabOptions) {
     // Load Tab Props
-    const { url, content, el, template, templateUrl, component, componentUrl } = loadTabParams;
+    var url = loadTabParams.url,
+        content = loadTabParams.content,
+        el = loadTabParams.el,
+        template = loadTabParams.template,
+        templateUrl = loadTabParams.templateUrl,
+        component = loadTabParams.component,
+        componentUrl = loadTabParams.componentUrl;
     // Component/Template Callbacks
+
     function resolve(contentEl) {
       router.allowPageChange = true;
       if (!contentEl) return;
@@ -110,7 +138,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
       } else {
         $newTabEl.html('');
         if (contentEl.f7Component) {
-          contentEl.f7Component.$mount((componentEl) => {
+          contentEl.f7Component.$mount(function (componentEl) {
             $newTabEl.append(componentEl);
           });
         } else {
@@ -152,25 +180,23 @@ function tabLoad(tabRoute, loadOptions = {}) {
         router.xhr.abort();
         router.xhr = false;
       }
-      router.xhrRequest(url, loadTabOptions)
-        .then((tabContent) => {
-          resolve(tabContent);
-        })
-        .catch(() => {
-          router.allowPageChange = true;
-        });
+      router.xhrRequest(url, loadTabOptions).then(function (tabContent) {
+        resolve(tabContent);
+      }).catch(function () {
+        router.allowPageChange = true;
+      });
     }
   }
 
-  ('url content component el componentUrl template templateUrl').split(' ').forEach((tabLoadProp) => {
+  'url content component el componentUrl template templateUrl'.split(' ').forEach(function (tabLoadProp) {
     if (tabRoute[tabLoadProp]) {
-      loadTab({ [tabLoadProp]: tabRoute[tabLoadProp] }, options);
+      loadTab(_defineProperty({}, tabLoadProp, tabRoute[tabLoadProp]), options);
     }
   });
 
   // Async
   function asyncResolve(resolveParams, resolveOptions) {
-    loadTab(resolveParams, Utils.extend(options, resolveOptions));
+    loadTab(resolveParams, _utils2.default.extend(options, resolveOptions));
   }
   function asyncReject() {
     router.allowPageChange = true;
@@ -181,12 +207,12 @@ function tabLoad(tabRoute, loadOptions = {}) {
   return router;
 }
 function tabRemove($oldTabEl, $newTabEl, tabRoute) {
-  const router = this;
-  let hasTabComponentChild;
-  $oldTabEl.children().each((index, tabChild) => {
+  var router = this;
+  var hasTabComponentChild = void 0;
+  $oldTabEl.children().each(function (index, tabChild) {
     if (tabChild.f7Component) {
       hasTabComponentChild = true;
-      $(tabChild).trigger('tab:beforeremove', tabRoute);
+      (0, _dom2.default)(tabChild).trigger('tab:beforeremove', tabRoute);
       tabChild.f7Component.$destroy();
     }
   });
@@ -197,4 +223,5 @@ function tabRemove($oldTabEl, $newTabEl, tabRoute) {
   router.removeTabContent($oldTabEl[0], tabRoute);
 }
 
-export { tabLoad, tabRemove };
+exports.tabLoad = tabLoad;
+exports.tabRemove = tabRemove;

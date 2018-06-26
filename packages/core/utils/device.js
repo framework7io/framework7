@@ -1,10 +1,16 @@
-import { window, document } from 'ssr-window';
+'use strict';
 
-const Device = (function Device() {
-  const platform = window.navigator.platform;
-  const ua = window.navigator.userAgent;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-  const device = {
+var _ssrWindow = require('ssr-window');
+
+var Device = function Device() {
+  var platform = _ssrWindow.window.navigator.platform;
+  var ua = _ssrWindow.window.navigator.userAgent;
+
+  var device = {
     ios: false,
     android: false,
     androidChrome: false,
@@ -18,20 +24,20 @@ const Device = (function Device() {
     ie: false,
     macos: false,
     windows: false,
-    cordova: !!(window.cordova || window.phonegap),
-    phonegap: !!(window.cordova || window.phonegap),
+    cordova: !!(_ssrWindow.window.cordova || _ssrWindow.window.phonegap),
+    phonegap: !!(_ssrWindow.window.cordova || _ssrWindow.window.phonegap)
   };
 
-  const windowsPhone = ua.match(/(Windows Phone);?[\s\/]+([\d.]+)?/); // eslint-disable-line
-  const android = ua.match(/(Android);?[\s\/]+([\d.]+)?/); // eslint-disable-line
-  const ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
-  const ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
-  const iphone = !ipad && ua.match(/(iPhone\sOS|iOS)\s([\d_]+)/);
-  const iphoneX = iphone && window.screen.width === 375 && window.screen.height === 812;
-  const ie = ua.indexOf('MSIE ') >= 0 || ua.indexOf('Trident/') >= 0;
-  const edge = ua.indexOf('Edge/') >= 0;
-  const macos = platform === 'MacIntel';
-  const windows = platform === 'Win32';
+  var windowsPhone = ua.match(/(Windows Phone);?[\s\/]+([\d.]+)?/); // eslint-disable-line
+  var android = ua.match(/(Android);?[\s\/]+([\d.]+)?/); // eslint-disable-line
+  var ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
+  var ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
+  var iphone = !ipad && ua.match(/(iPhone\sOS|iOS)\s([\d_]+)/);
+  var iphoneX = iphone && _ssrWindow.window.screen.width === 375 && _ssrWindow.window.screen.height === 812;
+  var ie = ua.indexOf('MSIE ') >= 0 || ua.indexOf('Trident/') >= 0;
+  var edge = ua.indexOf('Edge/') >= 0;
+  var macos = platform === 'MacIntel';
+  var windows = platform === 'Win32';
 
   device.ie = ie;
   device.edge = edge;
@@ -75,9 +81,8 @@ const Device = (function Device() {
   }
 
   // Webview
-  device.webView = (iphone || ipad || ipod) && (ua.match(/.*AppleWebKit(?!.*Safari)/i) || window.navigator.standalone);
+  device.webView = (iphone || ipad || ipod) && (ua.match(/.*AppleWebKit(?!.*Safari)/i) || _ssrWindow.window.navigator.standalone);
   device.webview = device.webView;
-
 
   // Desktop
   device.desktop = !(device.os || device.android || device.webView);
@@ -88,18 +93,15 @@ const Device = (function Device() {
 
   // Minimal UI
   if (device.os && device.os === 'ios') {
-    const osVersionArr = device.osVersion.split('.');
-    const metaViewport = document.querySelector('meta[name="viewport"]');
-    device.minimalUi = !device.webView
-      && (ipod || iphone)
-      && (osVersionArr[0] * 1 === 7 ? osVersionArr[1] * 1 >= 1 : osVersionArr[0] * 1 > 7)
-      && metaViewport && metaViewport.getAttribute('content').indexOf('minimal-ui') >= 0;
+    var osVersionArr = device.osVersion.split('.');
+    var metaViewport = _ssrWindow.document.querySelector('meta[name="viewport"]');
+    device.minimalUi = !device.webView && (ipod || iphone) && (osVersionArr[0] * 1 === 7 ? osVersionArr[1] * 1 >= 1 : osVersionArr[0] * 1 > 7) && metaViewport && metaViewport.getAttribute('content').indexOf('minimal-ui') >= 0;
   }
 
   // Check for status bar and fullscreen app mode
   device.needsStatusbarOverlay = function needsStatusbarOverlay() {
-    if ((device.webView || (device.android && device.cordova)) && (window.innerWidth * window.innerHeight === window.screen.width * window.screen.height)) {
-      if (device.iphoneX && (window.orientation === 90 || window.orientation === -90)) {
+    if ((device.webView || device.android && device.cordova) && _ssrWindow.window.innerWidth * _ssrWindow.window.innerHeight === _ssrWindow.window.screen.width * _ssrWindow.window.screen.height) {
+      if (device.iphoneX && (_ssrWindow.window.orientation === 90 || _ssrWindow.window.orientation === -90)) {
         return false;
       }
       return true;
@@ -109,10 +111,10 @@ const Device = (function Device() {
   device.statusbar = device.needsStatusbarOverlay();
 
   // Pixel Ratio
-  device.pixelRatio = window.devicePixelRatio || 1;
+  device.pixelRatio = _ssrWindow.window.devicePixelRatio || 1;
 
   // Export object
   return device;
-}());
+}();
 
-export default Device;
+exports.default = Device;

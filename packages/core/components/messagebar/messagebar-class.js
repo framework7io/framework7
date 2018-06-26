@@ -1,14 +1,46 @@
-import $ from 'dom7';
-import Utils from '../../utils/utils';
-import Framework7Class from '../../utils/class';
+'use strict';
 
-class Messagebar extends Framework7Class {
-  constructor(app, params = {}) {
-    super(params, [app]);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-    const messagebar = this;
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-    const defaults = {
+var _dom = require('dom7');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+var _utils = require('../../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _class = require('../../utils/class');
+
+var _class2 = _interopRequireDefault(_class);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Messagebar = function (_Framework7Class) {
+  _inherits(Messagebar, _Framework7Class);
+
+  function Messagebar(app) {
+    var _ret, _ret2;
+
+    var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    _classCallCheck(this, Messagebar);
+
+    var _this = _possibleConstructorReturn(this, (Messagebar.__proto__ || Object.getPrototypeOf(Messagebar)).call(this, params, [app]));
+
+    var messagebar = _this;
+
+    var defaults = {
       top: false,
       topOffset: 0,
       bottomOffset: 0,
@@ -16,62 +48,62 @@ class Messagebar extends Framework7Class {
       renderAttachments: undefined,
       renderAttachment: undefined,
       maxHeight: null,
-      resizePage: true,
+      resizePage: true
     };
 
     // Extend defaults with modules params
     messagebar.useModulesParams(defaults);
 
-    messagebar.params = Utils.extend(defaults, params);
+    messagebar.params = _utils2.default.extend(defaults, params);
 
     // El
-    const $el = $(messagebar.params.el);
-    if ($el.length === 0) return messagebar;
+    var $el = (0, _dom2.default)(messagebar.params.el);
+    if ($el.length === 0) return _ret = messagebar, _possibleConstructorReturn(_this, _ret);
 
     $el[0].f7Messagebar = messagebar;
 
     // Page and PageContent
-    const $pageEl = $el.parents('.page').eq(0);
-    const $pageContentEl = $pageEl.find('.page-content').eq(0);
+    var $pageEl = $el.parents('.page').eq(0);
+    var $pageContentEl = $pageEl.find('.page-content').eq(0);
 
     // Area
-    const $areaEl = $el.find('.messagebar-area');
+    var $areaEl = $el.find('.messagebar-area');
 
     // Textarea
-    let $textareaEl;
+    var $textareaEl = void 0;
     if (messagebar.params.textareaEl) {
-      $textareaEl = $(messagebar.params.textareaEl);
+      $textareaEl = (0, _dom2.default)(messagebar.params.textareaEl);
     } else {
       $textareaEl = $el.find('textarea');
     }
 
     // Attachments & Library
-    const $attachmentsEl = $el.find('.messagebar-attachments');
-    const $sheetEl = $el.find('.messagebar-sheet');
+    var $attachmentsEl = $el.find('.messagebar-attachments');
+    var $sheetEl = $el.find('.messagebar-sheet');
 
     if (messagebar.params.top) {
       $el.addClass('messagebar-top');
     }
 
-    Utils.extend(messagebar, {
-      $el,
+    _utils2.default.extend(messagebar, {
+      $el: $el,
       el: $el[0],
-      $areaEl,
+      $areaEl: $areaEl,
       areaEl: $areaEl[0],
-      $textareaEl,
+      $textareaEl: $textareaEl,
       textareaEl: $textareaEl[0],
-      $attachmentsEl,
+      $attachmentsEl: $attachmentsEl,
       attachmentsEl: $attachmentsEl[0],
       attachmentsVisible: $attachmentsEl.hasClass('messagebar-attachments-visible'),
-      $sheetEl,
+      $sheetEl: $sheetEl,
       sheetEl: $sheetEl[0],
       sheetVisible: $sheetEl.hasClass('messagebar-sheet-visible'),
-      $pageEl,
+      $pageEl: $pageEl,
       pageEl: $pageEl[0],
-      $pageContentEl,
+      $pageContentEl: $pageContentEl,
       pageContentEl: $pageContentEl,
       top: $el.hasClass('messagebar-top') || messagebar.params.top,
-      attachments: [],
+      attachments: []
     });
 
     // Events
@@ -84,12 +116,12 @@ class Messagebar extends Framework7Class {
       e.preventDefault();
     }
     function onAttachmentClick(e) {
-      const index = $(this).index();
-      if ($(e.target).closest('.messagebar-attachment-delete').length) {
-        $(this).trigger('messagebar:attachmentdelete', index);
+      var index = (0, _dom2.default)(this).index();
+      if ((0, _dom2.default)(e.target).closest('.messagebar-attachment-delete').length) {
+        (0, _dom2.default)(this).trigger('messagebar:attachmentdelete', index);
         messagebar.emit('local::attachmentDelete messagebarAttachmentDelete', messagebar, this, index);
       } else {
-        $(this).trigger('messagebar:attachmentclick', index);
+        (0, _dom2.default)(this).trigger('messagebar:attachmentclick', index);
         messagebar.emit('local::attachmentClick messagebarAttachmentClick', messagebar, this, index);
       }
     }
@@ -129,249 +161,278 @@ class Messagebar extends Framework7Class {
       app.off('resize', onAppResize);
     };
 
-
     // Install Modules
     messagebar.useModules();
 
     // Init
     messagebar.init();
 
-    return messagebar;
+    return _ret2 = messagebar, _possibleConstructorReturn(_this, _ret2);
   }
 
-  focus() {
-    const messagebar = this;
-    messagebar.$textareaEl.focus();
-    return messagebar;
-  }
+  _createClass(Messagebar, [{
+    key: 'focus',
+    value: function focus() {
+      var messagebar = this;
+      messagebar.$textareaEl.focus();
+      return messagebar;
+    }
+  }, {
+    key: 'blur',
+    value: function blur() {
+      var messagebar = this;
+      messagebar.$textareaEl.blur();
+      return messagebar;
+    }
+  }, {
+    key: 'clear',
+    value: function clear() {
+      var messagebar = this;
+      messagebar.$textareaEl.val('').trigger('change');
+      return messagebar;
+    }
+  }, {
+    key: 'getValue',
+    value: function getValue() {
+      var messagebar = this;
+      return messagebar.$textareaEl.val().trim();
+    }
+  }, {
+    key: 'setValue',
+    value: function setValue(value) {
+      var messagebar = this;
+      messagebar.$textareaEl.val(value).trigger('change');
+      return messagebar;
+    }
+  }, {
+    key: 'setPlaceholder',
+    value: function setPlaceholder(placeholder) {
+      var messagebar = this;
+      messagebar.$textareaEl.attr('placeholder', placeholder);
+      return messagebar;
+    }
+  }, {
+    key: 'resizePage',
+    value: function resizePage() {
+      var messagebar = this;
+      var params = messagebar.params,
+          $el = messagebar.$el,
+          top = messagebar.top,
+          $pageEl = messagebar.$pageEl,
+          $pageContentEl = messagebar.$pageContentEl,
+          $areaEl = messagebar.$areaEl,
+          $textareaEl = messagebar.$textareaEl,
+          $sheetEl = messagebar.$sheetEl,
+          $attachmentsEl = messagebar.$attachmentsEl;
 
-  blur() {
-    const messagebar = this;
-    messagebar.$textareaEl.blur();
-    return messagebar;
-  }
-
-  clear() {
-    const messagebar = this;
-    messagebar.$textareaEl.val('').trigger('change');
-    return messagebar;
-  }
-
-  getValue() {
-    const messagebar = this;
-    return messagebar.$textareaEl.val().trim();
-  }
-
-  setValue(value) {
-    const messagebar = this;
-    messagebar.$textareaEl.val(value).trigger('change');
-    return messagebar;
-  }
-
-  setPlaceholder(placeholder) {
-    const messagebar = this;
-    messagebar.$textareaEl.attr('placeholder', placeholder);
-    return messagebar;
-  }
-
-  resizePage() {
-    const messagebar = this;
-    const {
-      params,
-      $el,
-      top,
-      $pageEl,
-      $pageContentEl,
-      $areaEl,
-      $textareaEl,
-      $sheetEl,
-      $attachmentsEl,
-    } = messagebar;
-    const elHeight = $el[0].offsetHeight;
-    let maxHeight = params.maxHeight;
-    if (top) {
-      /*
-      Disable at the moment
-      const requiredPaddingTop = elHeight + params.topOffset;
-      const currentPaddingTop = parseInt($pageContentEl.css('padding-top'), 10);
-      if (requiredPaddingTop !== currentPaddingTop) {
-        if (!maxHeight) {
-          maxHeight = $pageEl[0].offsetHeight - currentPaddingTop - $sheetEl.outerHeight() - $attachmentsEl.outerHeight() - parseInt($areaEl.css('margin-top'), 10) - parseInt($areaEl.css('margin-bottom'), 10);
-        }
-        $textareaEl.css('max-height', `${maxHeight}px`);
-        $pageContentEl.css('padding-top', `${requiredPaddingTop}px`);
-        $el.trigger('messagebar:resizePage');
-        messagebar.emit('local::resizepage messagebarResizePage');
-      }
-      */
-    } else {
-      const currentPaddingBottom = parseInt($pageContentEl.css('padding-bottom'), 10);
-      const requiredPaddingBottom = elHeight + params.bottomOffset;
-      if (requiredPaddingBottom !== currentPaddingBottom && $pageContentEl.length) {
+      var elHeight = $el[0].offsetHeight;
+      var maxHeight = params.maxHeight;
+      if (top) {
+        /*
+        Disable at the moment
+        const requiredPaddingTop = elHeight + params.topOffset;
         const currentPaddingTop = parseInt($pageContentEl.css('padding-top'), 10);
-        const pageScrollHeight = $pageContentEl[0].scrollHeight;
-        const pageOffsetHeight = $pageContentEl[0].offsetHeight;
-        const pageScrollTop = $pageContentEl[0].scrollTop;
-        const scrollOnBottom = (pageScrollTop === pageScrollHeight - pageOffsetHeight);
-        if (!maxHeight) {
-          maxHeight = $pageEl[0].offsetHeight - currentPaddingTop - $sheetEl.outerHeight() - $attachmentsEl.outerHeight() - parseInt($areaEl.css('margin-top'), 10) - parseInt($areaEl.css('margin-bottom'), 10);
+        if (requiredPaddingTop !== currentPaddingTop) {
+          if (!maxHeight) {
+            maxHeight = $pageEl[0].offsetHeight - currentPaddingTop - $sheetEl.outerHeight() - $attachmentsEl.outerHeight() - parseInt($areaEl.css('margin-top'), 10) - parseInt($areaEl.css('margin-bottom'), 10);
+          }
+          $textareaEl.css('max-height', `${maxHeight}px`);
+          $pageContentEl.css('padding-top', `${requiredPaddingTop}px`);
+          $el.trigger('messagebar:resizePage');
+          messagebar.emit('local::resizepage messagebarResizePage');
         }
-        $textareaEl.css('max-height', `${maxHeight}px`);
-        $pageContentEl.css('padding-bottom', `${requiredPaddingBottom}px`);
-        if (scrollOnBottom) {
-          $pageContentEl.scrollTop($pageContentEl[0].scrollHeight - pageOffsetHeight);
+        */
+      } else {
+        var currentPaddingBottom = parseInt($pageContentEl.css('padding-bottom'), 10);
+        var requiredPaddingBottom = elHeight + params.bottomOffset;
+        if (requiredPaddingBottom !== currentPaddingBottom && $pageContentEl.length) {
+          var currentPaddingTop = parseInt($pageContentEl.css('padding-top'), 10);
+          var pageScrollHeight = $pageContentEl[0].scrollHeight;
+          var pageOffsetHeight = $pageContentEl[0].offsetHeight;
+          var pageScrollTop = $pageContentEl[0].scrollTop;
+          var scrollOnBottom = pageScrollTop === pageScrollHeight - pageOffsetHeight;
+          if (!maxHeight) {
+            maxHeight = $pageEl[0].offsetHeight - currentPaddingTop - $sheetEl.outerHeight() - $attachmentsEl.outerHeight() - parseInt($areaEl.css('margin-top'), 10) - parseInt($areaEl.css('margin-bottom'), 10);
+          }
+          $textareaEl.css('max-height', maxHeight + 'px');
+          $pageContentEl.css('padding-bottom', requiredPaddingBottom + 'px');
+          if (scrollOnBottom) {
+            $pageContentEl.scrollTop($pageContentEl[0].scrollHeight - pageOffsetHeight);
+          }
+          $el.trigger('messagebar:resizepage');
+          messagebar.emit('local::resizePage messagebarResizePage', messagebar);
         }
-        $el.trigger('messagebar:resizepage');
-        messagebar.emit('local::resizePage messagebarResizePage', messagebar);
       }
     }
-  }
+  }, {
+    key: 'checkEmptyState',
+    value: function checkEmptyState() {
+      var messagebar = this;
+      var $el = messagebar.$el,
+          $textareaEl = messagebar.$textareaEl;
 
-  checkEmptyState() {
-    const messagebar = this;
-    const { $el, $textareaEl } = messagebar;
-    const value = $textareaEl.val().trim();
-    if (value && value.length) {
-      $el.addClass('messagebar-with-value');
-    } else {
-      $el.removeClass('messagebar-with-value');
+      var value = $textareaEl.val().trim();
+      if (value && value.length) {
+        $el.addClass('messagebar-with-value');
+      } else {
+        $el.removeClass('messagebar-with-value');
+      }
     }
-  }
+  }, {
+    key: 'attachmentsCreate',
+    value: function attachmentsCreate() {
+      var innerHTML = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
 
-  attachmentsCreate(innerHTML = '') {
-    const messagebar = this;
-    const $attachmentsEl = $(`<div class="messagebar-attachments">${innerHTML}</div>`);
-    $attachmentsEl.insertBefore(messagebar.$textareaEl);
-    Utils.extend(messagebar, {
-      $attachmentsEl,
-      attachmentsEl: $attachmentsEl[0],
-    });
-    return messagebar;
-  }
-
-  attachmentsShow(innerHTML = '') {
-    const messagebar = this;
-    messagebar.$attachmentsEl = messagebar.$el.find('.messagebar-attachments');
-    if (messagebar.$attachmentsEl.length === 0) {
-      messagebar.attachmentsCreate(innerHTML);
+      var messagebar = this;
+      var $attachmentsEl = (0, _dom2.default)('<div class="messagebar-attachments">' + innerHTML + '</div>');
+      $attachmentsEl.insertBefore(messagebar.$textareaEl);
+      _utils2.default.extend(messagebar, {
+        $attachmentsEl: $attachmentsEl,
+        attachmentsEl: $attachmentsEl[0]
+      });
+      return messagebar;
     }
-    messagebar.$el.addClass('messagebar-attachments-visible');
-    messagebar.attachmentsVisible = true;
-    if (messagebar.params.resizePage) {
-      messagebar.resizePage();
+  }, {
+    key: 'attachmentsShow',
+    value: function attachmentsShow() {
+      var innerHTML = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
+      var messagebar = this;
+      messagebar.$attachmentsEl = messagebar.$el.find('.messagebar-attachments');
+      if (messagebar.$attachmentsEl.length === 0) {
+        messagebar.attachmentsCreate(innerHTML);
+      }
+      messagebar.$el.addClass('messagebar-attachments-visible');
+      messagebar.attachmentsVisible = true;
+      if (messagebar.params.resizePage) {
+        messagebar.resizePage();
+      }
+      return messagebar;
     }
-    return messagebar;
-  }
-
-  attachmentsHide() {
-    const messagebar = this;
-    messagebar.$el.removeClass('messagebar-attachments-visible');
-    messagebar.attachmentsVisible = false;
-    if (messagebar.params.resizePage) {
-      messagebar.resizePage();
+  }, {
+    key: 'attachmentsHide',
+    value: function attachmentsHide() {
+      var messagebar = this;
+      messagebar.$el.removeClass('messagebar-attachments-visible');
+      messagebar.attachmentsVisible = false;
+      if (messagebar.params.resizePage) {
+        messagebar.resizePage();
+      }
+      return messagebar;
     }
-    return messagebar;
-  }
-
-  attachmentsToggle() {
-    const messagebar = this;
-    if (messagebar.attachmentsVisible) {
-      messagebar.attachmentsHide();
-    } else {
-      messagebar.attachmentsShow();
+  }, {
+    key: 'attachmentsToggle',
+    value: function attachmentsToggle() {
+      var messagebar = this;
+      if (messagebar.attachmentsVisible) {
+        messagebar.attachmentsHide();
+      } else {
+        messagebar.attachmentsShow();
+      }
+      return messagebar;
     }
-    return messagebar;
-  }
-
-  renderAttachment(attachment) {
-    const messagebar = this;
-    if (messagebar.params.renderAttachment) {
-      return messagebar.params.renderAttachment.call(messagebar, attachment);
+  }, {
+    key: 'renderAttachment',
+    value: function renderAttachment(attachment) {
+      var messagebar = this;
+      if (messagebar.params.renderAttachment) {
+        return messagebar.params.renderAttachment.call(messagebar, attachment);
+      }
+      return '\n      <div class="messagebar-attachment">\n        <img src="' + attachment + '">\n        <span class="messagebar-attachment-delete"></span>\n      </div>\n    ';
     }
-    return `
-      <div class="messagebar-attachment">
-        <img src="${attachment}">
-        <span class="messagebar-attachment-delete"></span>
-      </div>
-    `;
-  }
-
-  renderAttachments() {
-    const messagebar = this;
-    let html;
-    if (messagebar.params.renderAttachments) {
-      html = messagebar.params.renderAttachments.call(messagebar, messagebar.attachments);
-    } else {
-      html = `${messagebar.attachments.map(attachment => messagebar.renderAttachment(attachment)).join('')}`;
+  }, {
+    key: 'renderAttachments',
+    value: function renderAttachments() {
+      var messagebar = this;
+      var html = void 0;
+      if (messagebar.params.renderAttachments) {
+        html = messagebar.params.renderAttachments.call(messagebar, messagebar.attachments);
+      } else {
+        html = '' + messagebar.attachments.map(function (attachment) {
+          return messagebar.renderAttachment(attachment);
+        }).join('');
+      }
+      if (messagebar.$attachmentsEl.length === 0) {
+        messagebar.attachmentsCreate(html);
+      } else {
+        messagebar.$attachmentsEl.html(html);
+      }
     }
-    if (messagebar.$attachmentsEl.length === 0) {
-      messagebar.attachmentsCreate(html);
-    } else {
-      messagebar.$attachmentsEl.html(html);
+  }, {
+    key: 'sheetCreate',
+    value: function sheetCreate() {
+      var innerHTML = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
+      var messagebar = this;
+      var $sheetEl = (0, _dom2.default)('<div class="messagebar-sheet">' + innerHTML + '</div>');
+      messagebar.$el.append($sheetEl);
+      _utils2.default.extend(messagebar, {
+        $sheetEl: $sheetEl,
+        sheetEl: $sheetEl[0]
+      });
+      return messagebar;
     }
-  }
+  }, {
+    key: 'sheetShow',
+    value: function sheetShow() {
+      var innerHTML = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
 
-  sheetCreate(innerHTML = '') {
-    const messagebar = this;
-    const $sheetEl = $(`<div class="messagebar-sheet">${innerHTML}</div>`);
-    messagebar.$el.append($sheetEl);
-    Utils.extend(messagebar, {
-      $sheetEl,
-      sheetEl: $sheetEl[0],
-    });
-    return messagebar;
-  }
-
-  sheetShow(innerHTML = '') {
-    const messagebar = this;
-    messagebar.$sheetEl = messagebar.$el.find('.messagebar-sheet');
-    if (messagebar.$sheetEl.length === 0) {
-      messagebar.sheetCreate(innerHTML);
+      var messagebar = this;
+      messagebar.$sheetEl = messagebar.$el.find('.messagebar-sheet');
+      if (messagebar.$sheetEl.length === 0) {
+        messagebar.sheetCreate(innerHTML);
+      }
+      messagebar.$el.addClass('messagebar-sheet-visible');
+      messagebar.sheetVisible = true;
+      if (messagebar.params.resizePage) {
+        messagebar.resizePage();
+      }
+      return messagebar;
     }
-    messagebar.$el.addClass('messagebar-sheet-visible');
-    messagebar.sheetVisible = true;
-    if (messagebar.params.resizePage) {
-      messagebar.resizePage();
+  }, {
+    key: 'sheetHide',
+    value: function sheetHide() {
+      var messagebar = this;
+      messagebar.$el.removeClass('messagebar-sheet-visible');
+      messagebar.sheetVisible = false;
+      if (messagebar.params.resizePage) {
+        messagebar.resizePage();
+      }
+      return messagebar;
     }
-    return messagebar;
-  }
-
-  sheetHide() {
-    const messagebar = this;
-    messagebar.$el.removeClass('messagebar-sheet-visible');
-    messagebar.sheetVisible = false;
-    if (messagebar.params.resizePage) {
-      messagebar.resizePage();
+  }, {
+    key: 'sheetToggle',
+    value: function sheetToggle() {
+      var messagebar = this;
+      if (messagebar.sheetVisible) {
+        messagebar.sheetHide();
+      } else {
+        messagebar.sheetShow();
+      }
+      return messagebar;
     }
-    return messagebar;
-  }
-
-  sheetToggle() {
-    const messagebar = this;
-    if (messagebar.sheetVisible) {
-      messagebar.sheetHide();
-    } else {
-      messagebar.sheetShow();
+  }, {
+    key: 'init',
+    value: function init() {
+      var messagebar = this;
+      messagebar.attachEvents();
+      messagebar.checkEmptyState();
+      return messagebar;
     }
-    return messagebar;
-  }
+  }, {
+    key: 'destroy',
+    value: function destroy() {
+      var messagebar = this;
+      messagebar.emit('local::beforeDestroy messagebarBeforeDestroy', messagebar);
+      messagebar.$el.trigger('messagebar:beforedestroy', messagebar);
+      messagebar.detachEvents();
+      messagebar.$el[0].f7Messagebar = null;
+      delete messagebar.$el[0].f7Messagebar;
+      _utils2.default.deleteProps(messagebar);
+    }
+  }]);
 
-  init() {
-    const messagebar = this;
-    messagebar.attachEvents();
-    messagebar.checkEmptyState();
-    return messagebar;
-  }
+  return Messagebar;
+}(_class2.default);
 
-  destroy() {
-    const messagebar = this;
-    messagebar.emit('local::beforeDestroy messagebarBeforeDestroy', messagebar);
-    messagebar.$el.trigger('messagebar:beforedestroy', messagebar);
-    messagebar.detachEvents();
-    messagebar.$el[0].f7Messagebar = null;
-    delete messagebar.$el[0].f7Messagebar;
-    Utils.deleteProps(messagebar);
-  }
-}
-
-export default Messagebar;
+exports.default = Messagebar;

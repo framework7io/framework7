@@ -1,27 +1,42 @@
-import $ from '../../utils/dom';
-import Utils from '../../utils/utils';
+'use strict';
 
-const Virtual = {
-  update(force) {
-    const swiper = this;
-    const { slidesPerView, slidesPerGroup, centeredSlides } = swiper.params;
-    const {
-      from: previousFrom,
-      to: previousTo,
-      slides,
-      slidesGrid: previousSlidesGrid,
-      renderSlide,
-      offset: previousOffset,
-    } = swiper.virtual;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _dom = require('../../utils/dom');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+var _utils = require('../../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Virtual = {
+  update: function update(force) {
+    var swiper = this;
+    var _swiper$params = swiper.params,
+        slidesPerView = _swiper$params.slidesPerView,
+        slidesPerGroup = _swiper$params.slidesPerGroup,
+        centeredSlides = _swiper$params.centeredSlides;
+    var _swiper$virtual = swiper.virtual,
+        previousFrom = _swiper$virtual.from,
+        previousTo = _swiper$virtual.to,
+        slides = _swiper$virtual.slides,
+        previousSlidesGrid = _swiper$virtual.slidesGrid,
+        renderSlide = _swiper$virtual.renderSlide,
+        previousOffset = _swiper$virtual.offset;
+
     swiper.updateActiveIndex();
-    const activeIndex = swiper.activeIndex || 0;
+    var activeIndex = swiper.activeIndex || 0;
 
-    let offsetProp;
-    if (swiper.rtlTranslate) offsetProp = 'right';
-    else offsetProp = swiper.isHorizontal() ? 'left' : 'top';
+    var offsetProp = void 0;
+    if (swiper.rtlTranslate) offsetProp = 'right';else offsetProp = swiper.isHorizontal() ? 'left' : 'top';
 
-    let slidesAfter;
-    let slidesBefore;
+    var slidesAfter = void 0;
+    var slidesBefore = void 0;
     if (centeredSlides) {
       slidesAfter = Math.floor(slidesPerView / 2) + slidesPerGroup;
       slidesBefore = Math.floor(slidesPerView / 2) + slidesPerGroup;
@@ -29,15 +44,15 @@ const Virtual = {
       slidesAfter = slidesPerView + (slidesPerGroup - 1);
       slidesBefore = slidesPerGroup;
     }
-    const from = Math.max((activeIndex || 0) - slidesBefore, 0);
-    const to = Math.min((activeIndex || 0) + slidesAfter, slides.length - 1);
-    const offset = (swiper.slidesGrid[from] || 0) - (swiper.slidesGrid[0] || 0);
+    var from = Math.max((activeIndex || 0) - slidesBefore, 0);
+    var to = Math.min((activeIndex || 0) + slidesAfter, slides.length - 1);
+    var offset = (swiper.slidesGrid[from] || 0) - (swiper.slidesGrid[0] || 0);
 
-    Utils.extend(swiper.virtual, {
-      from,
-      to,
-      offset,
-      slidesGrid: swiper.slidesGrid,
+    _utils2.default.extend(swiper.virtual, {
+      from: from,
+      to: to,
+      offset: offset,
+      slidesGrid: swiper.slidesGrid
     });
 
     function onRendered() {
@@ -51,92 +66,92 @@ const Virtual = {
 
     if (previousFrom === from && previousTo === to && !force) {
       if (swiper.slidesGrid !== previousSlidesGrid && offset !== previousOffset) {
-        swiper.slides.css(offsetProp, `${offset}px`);
+        swiper.slides.css(offsetProp, offset + 'px');
       }
       swiper.updateProgress();
       return;
     }
     if (swiper.params.virtual.renderExternal) {
       swiper.params.virtual.renderExternal.call(swiper, {
-        offset,
-        from,
-        to,
-        slides: (function getSlides() {
-          const slidesToRender = [];
-          for (let i = from; i <= to; i += 1) {
+        offset: offset,
+        from: from,
+        to: to,
+        slides: function getSlides() {
+          var slidesToRender = [];
+          for (var i = from; i <= to; i += 1) {
             slidesToRender.push(slides[i]);
           }
           return slidesToRender;
-        }()),
+        }()
       });
       onRendered();
       return;
     }
-    const prependIndexes = [];
-    const appendIndexes = [];
+    var prependIndexes = [];
+    var appendIndexes = [];
     if (force) {
-      swiper.$wrapperEl.find(`.${swiper.params.slideClass}`).remove();
+      swiper.$wrapperEl.find('.' + swiper.params.slideClass).remove();
     } else {
-      for (let i = previousFrom; i <= previousTo; i += 1) {
+      for (var i = previousFrom; i <= previousTo; i += 1) {
         if (i < from || i > to) {
-          swiper.$wrapperEl.find(`.${swiper.params.slideClass}[data-swiper-slide-index="${i}"]`).remove();
+          swiper.$wrapperEl.find('.' + swiper.params.slideClass + '[data-swiper-slide-index="' + i + '"]').remove();
         }
       }
     }
-    for (let i = 0; i < slides.length; i += 1) {
-      if (i >= from && i <= to) {
+    for (var _i = 0; _i < slides.length; _i += 1) {
+      if (_i >= from && _i <= to) {
         if (typeof previousTo === 'undefined' || force) {
-          appendIndexes.push(i);
+          appendIndexes.push(_i);
         } else {
-          if (i > previousTo) appendIndexes.push(i);
-          if (i < previousFrom) prependIndexes.push(i);
+          if (_i > previousTo) appendIndexes.push(_i);
+          if (_i < previousFrom) prependIndexes.push(_i);
         }
       }
     }
-    appendIndexes.forEach((index) => {
+    appendIndexes.forEach(function (index) {
       swiper.$wrapperEl.append(renderSlide(slides[index], index));
     });
-    prependIndexes.sort((a, b) => a < b).forEach((index) => {
+    prependIndexes.sort(function (a, b) {
+      return a < b;
+    }).forEach(function (index) {
       swiper.$wrapperEl.prepend(renderSlide(slides[index], index));
     });
-    swiper.$wrapperEl.children('.swiper-slide').css(offsetProp, `${offset}px`);
+    swiper.$wrapperEl.children('.swiper-slide').css(offsetProp, offset + 'px');
     onRendered();
   },
-  renderSlide(slide, index) {
-    const swiper = this;
-    const params = swiper.params.virtual;
+  renderSlide: function renderSlide(slide, index) {
+    var swiper = this;
+    var params = swiper.params.virtual;
     if (params.cache && swiper.virtual.cache[index]) {
       return swiper.virtual.cache[index];
     }
-    const $slideEl = params.renderSlide
-      ? $(params.renderSlide.call(swiper, slide, index))
-      : $(`<div class="${swiper.params.slideClass}" data-swiper-slide-index="${index}">${slide}</div>`);
+    var $slideEl = params.renderSlide ? (0, _dom2.default)(params.renderSlide.call(swiper, slide, index)) : (0, _dom2.default)('<div class="' + swiper.params.slideClass + '" data-swiper-slide-index="' + index + '">' + slide + '</div>');
     if (!$slideEl.attr('data-swiper-slide-index')) $slideEl.attr('data-swiper-slide-index', index);
     if (params.cache) swiper.virtual.cache[index] = $slideEl;
     return $slideEl;
   },
-  appendSlide(slide) {
-    const swiper = this;
+  appendSlide: function appendSlide(slide) {
+    var swiper = this;
     swiper.virtual.slides.push(slide);
     swiper.virtual.update(true);
   },
-  prependSlide(slide) {
-    const swiper = this;
+  prependSlide: function prependSlide(slide) {
+    var swiper = this;
     swiper.virtual.slides.unshift(slide);
     if (swiper.params.virtual.cache) {
-      const cache = swiper.virtual.cache;
-      const newCache = {};
-      Object.keys(cache).forEach((cachedIndex) => {
+      var cache = swiper.virtual.cache;
+      var newCache = {};
+      Object.keys(cache).forEach(function (cachedIndex) {
         newCache[cachedIndex + 1] = cache[cachedIndex];
       });
       swiper.virtual.cache = newCache;
     }
     swiper.virtual.update(true);
     swiper.slideNext(0);
-  },
+  }
 };
 
-export default {
+exports.default = {
   name: 'virtual',
   params: {
     virtual: {
@@ -144,39 +159,40 @@ export default {
       slides: [],
       cache: true,
       renderSlide: null,
-      renderExternal: null,
-    },
+      renderExternal: null
+    }
   },
-  create() {
-    const swiper = this;
-    Utils.extend(swiper, {
+  create: function create() {
+    var swiper = this;
+    _utils2.default.extend(swiper, {
       virtual: {
         update: Virtual.update.bind(swiper),
         appendSlide: Virtual.appendSlide.bind(swiper),
         prependSlide: Virtual.prependSlide.bind(swiper),
         renderSlide: Virtual.renderSlide.bind(swiper),
         slides: swiper.params.virtual.slides,
-        cache: {},
-      },
+        cache: {}
+      }
     });
   },
+
   on: {
-    beforeInit() {
-      const swiper = this;
+    beforeInit: function beforeInit() {
+      var swiper = this;
       if (!swiper.params.virtual.enabled) return;
-      swiper.classNames.push(`${swiper.params.containerModifierClass}virtual`);
-      const overwriteParams = {
-        watchSlidesProgress: true,
+      swiper.classNames.push(swiper.params.containerModifierClass + 'virtual');
+      var overwriteParams = {
+        watchSlidesProgress: true
       };
-      Utils.extend(swiper.params, overwriteParams);
-      Utils.extend(swiper.originalParams, overwriteParams);
+      _utils2.default.extend(swiper.params, overwriteParams);
+      _utils2.default.extend(swiper.originalParams, overwriteParams);
 
       swiper.virtual.update();
     },
-    setTranslate() {
-      const swiper = this;
+    setTranslate: function setTranslate() {
+      var swiper = this;
       if (!swiper.params.virtual.enabled) return;
       swiper.virtual.update();
-    },
-  },
+    }
+  }
 };

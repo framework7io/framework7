@@ -1,4 +1,9 @@
-export default {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
   init: true,
   direction: 'horizontal',
   touchEventsTarget: 'container',
@@ -122,5 +127,5 @@ export default {
   wrapperClass: 'swiper-wrapper',
 
   // Callbacks
-  runCallbacksOnInit: true,
+  runCallbacksOnInit: true
 };

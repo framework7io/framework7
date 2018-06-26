@@ -1,9 +1,15 @@
-export default function () {
-  const swiper = this;
+"use strict";
 
-  const slidesIndexes = [];
-  for (let i = 0; i < swiper.slides.length; i += 1) {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function () {
+  var swiper = this;
+
+  var slidesIndexes = [];
+  for (var i = 0; i < swiper.slides.length; i += 1) {
     slidesIndexes.push(i);
   }
   swiper.removeSlide(slidesIndexes);
-}
+};

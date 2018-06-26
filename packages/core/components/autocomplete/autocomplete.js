@@ -1,8 +1,24 @@
-import Utils from '../../utils/utils';
-import Autocomplete from './autocomplete-class';
-import ConstructorMethods from '../../utils/constructor-methods';
+'use strict';
 
-export default {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _utils = require('../../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _autocompleteClass = require('./autocomplete-class');
+
+var _autocompleteClass2 = _interopRequireDefault(_autocompleteClass);
+
+var _constructorMethods = require('../../utils/constructor-methods');
+
+var _constructorMethods2 = _interopRequireDefault(_constructorMethods);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
   name: 'autocomplete',
   params: {
     autocomplete: {
@@ -59,34 +75,31 @@ export default {
       renderPopup: undefined,
       renderItem: undefined,
       renderSearchbar: undefined,
-      renderNavbar: undefined,
+      renderNavbar: undefined
 
-    },
+    }
   },
   static: {
-    Autocomplete,
+    Autocomplete: _autocompleteClass2.default
   },
-  create() {
-    const app = this;
-    app.autocomplete = Utils.extend(
-      ConstructorMethods({
-        defaultSelector: undefined,
-        constructor: Autocomplete,
-        app,
-        domProp: 'f7Autocomplete',
-      }),
-      {
-        open(autocompleteEl) {
-          const ac = app.autocomplete.get(autocompleteEl);
-          if (ac && ac.open) return ac.open();
-          return undefined;
-        },
-        close(autocompleteEl) {
-          const ac = app.autocomplete.get(autocompleteEl);
-          if (ac && ac.close) return ac.close();
-          return undefined;
-        },
+  create: function create() {
+    var app = this;
+    app.autocomplete = _utils2.default.extend((0, _constructorMethods2.default)({
+      defaultSelector: undefined,
+      constructor: _autocompleteClass2.default,
+      app: app,
+      domProp: 'f7Autocomplete'
+    }), {
+      open: function open(autocompleteEl) {
+        var ac = app.autocomplete.get(autocompleteEl);
+        if (ac && ac.open) return ac.open();
+        return undefined;
+      },
+      close: function close(autocompleteEl) {
+        var ac = app.autocomplete.get(autocompleteEl);
+        if (ac && ac.close) return ac.close();
+        return undefined;
       }
-    );
-  },
+    });
+  }
 };

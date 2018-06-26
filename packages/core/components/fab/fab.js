@@ -1,45 +1,54 @@
-import $ from 'dom7';
-import Utils from '../../utils/utils';
+'use strict';
 
-const Fab = {
-  morphOpen(fabEl, targetEl) {
-    const app = this;
-    const $fabEl = $(fabEl);
-    const $targetEl = $(targetEl);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _dom = require('dom7');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+var _utils = require('../../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Fab = {
+  morphOpen: function morphOpen(fabEl, targetEl) {
+    var app = this;
+    var $fabEl = (0, _dom2.default)(fabEl);
+    var $targetEl = (0, _dom2.default)(targetEl);
     if ($targetEl.length === 0) return;
 
     $targetEl.transition(0).addClass('fab-morph-target-visible');
-    const target = {
+    var target = {
       width: $targetEl[0].offsetWidth,
       height: $targetEl[0].offsetHeight,
       offset: $targetEl.offset(),
       borderRadius: $targetEl.css('border-radius'),
-      zIndex: $targetEl.css('z-index'),
+      zIndex: $targetEl.css('z-index')
     };
-    const fab = {
+    var fab = {
       width: $fabEl[0].offsetWidth,
       height: $fabEl[0].offsetHeight,
       offset: $fabEl.offset(),
-      translateX: Utils.getTranslate($fabEl[0], 'x'),
-      translateY: Utils.getTranslate($fabEl[0], 'y'),
+      translateX: _utils2.default.getTranslate($fabEl[0], 'x'),
+      translateY: _utils2.default.getTranslate($fabEl[0], 'y')
     };
 
     $fabEl[0].f7FabMorphData = {
-      $targetEl,
-      target,
-      fab,
+      $targetEl: $targetEl,
+      target: target,
+      fab: fab
     };
 
-    const diffX = (fab.offset.left + (fab.width / 2))
-                  - (target.offset.left + (target.width / 2))
-                  - fab.translateX;
-    const diffY = (fab.offset.top + (fab.height / 2))
-                  - (target.offset.top + (target.height / 2))
-                  - fab.translateY;
-    const scaleX = target.width / fab.width;
-    const scaleY = target.height / fab.height;
+    var diffX = fab.offset.left + fab.width / 2 - (target.offset.left + target.width / 2) - fab.translateX;
+    var diffY = fab.offset.top + fab.height / 2 - (target.offset.top + target.height / 2) - fab.translateY;
+    var scaleX = target.width / fab.width;
+    var scaleY = target.height / fab.height;
 
-    let borderRadius = Math.ceil(parseInt(target.borderRadius, 10) / Math.max(scaleX, scaleY));
+    var borderRadius = Math.ceil(parseInt(target.borderRadius, 10) / Math.max(scaleX, scaleY));
     if (borderRadius > 0) borderRadius += 2;
 
     $fabEl[0].f7FabMorphResizeHandler = function resizeHandler() {
@@ -50,89 +59,64 @@ const Fab = {
       target.offset = $targetEl.offset();
       fab.offset = $fabEl.offset();
 
-      const diffXNew = (fab.offset.left + (fab.width / 2))
-                      - (target.offset.left + (target.width / 2))
-                      - fab.translateX;
-      const diffYNew = (fab.offset.top + (fab.height / 2))
-                      - (target.offset.top + (target.height / 2))
-                      - fab.translateY;
-      const scaleXNew = target.width / fab.width;
-      const scaleYNew = target.height / fab.height;
+      var diffXNew = fab.offset.left + fab.width / 2 - (target.offset.left + target.width / 2) - fab.translateX;
+      var diffYNew = fab.offset.top + fab.height / 2 - (target.offset.top + target.height / 2) - fab.translateY;
+      var scaleXNew = target.width / fab.width;
+      var scaleYNew = target.height / fab.height;
 
-      $fabEl.transform(`translate3d(${-diffXNew}px, ${-diffYNew}px, 0) scale(${scaleXNew}, ${scaleYNew})`);
+      $fabEl.transform('translate3d(' + -diffXNew + 'px, ' + -diffYNew + 'px, 0) scale(' + scaleXNew + ', ' + scaleYNew + ')');
     };
 
-    $targetEl
-      .css('opacity', 0)
-      .transform(`scale(${1 / scaleX}, ${1 / scaleY})`);
-    $fabEl
-      .addClass('fab-opened')
-      .css('z-index', target.zIndex - 1)
-      .transform(`translate3d(${-diffX}px, ${-diffY}px, 0)`);
-    $fabEl.transitionEnd(() => {
+    $targetEl.css('opacity', 0).transform('scale(' + 1 / scaleX + ', ' + 1 / scaleY + ')');
+    $fabEl.addClass('fab-opened').css('z-index', target.zIndex - 1).transform('translate3d(' + -diffX + 'px, ' + -diffY + 'px, 0)');
+    $fabEl.transitionEnd(function () {
       $targetEl.transition('');
-      Utils.nextTick(() => {
+      _utils2.default.nextTick(function () {
         $targetEl.css('opacity', 1).transform('scale(1,1)');
       });
-      $fabEl.transform(`translate3d(${-diffX}px, ${-diffY}px, 0) scale(${scaleX}, ${scaleY})`)
-        .css('border-radius', `${borderRadius}px`)
-        .css('box-shadow', 'none');
+      $fabEl.transform('translate3d(' + -diffX + 'px, ' + -diffY + 'px, 0) scale(' + scaleX + ', ' + scaleY + ')').css('border-radius', borderRadius + 'px').css('box-shadow', 'none');
       app.on('resize', $fabEl[0].f7FabMorphResizeHandler);
       if ($targetEl.parents('.page-content').length > 0) {
         $targetEl.parents('.page-content').on('scroll', $fabEl[0].f7FabMorphResizeHandler);
       }
     });
   },
-  morphClose(fabEl) {
-    const app = this;
-    const $fabEl = $(fabEl);
-    const morphData = $fabEl[0].f7FabMorphData;
+  morphClose: function morphClose(fabEl) {
+    var app = this;
+    var $fabEl = (0, _dom2.default)(fabEl);
+    var morphData = $fabEl[0].f7FabMorphData;
     if (!morphData) return;
-    const { $targetEl, target, fab } = morphData;
+    var $targetEl = morphData.$targetEl,
+        target = morphData.target,
+        fab = morphData.fab;
+
     if ($targetEl.length === 0) return;
 
-    const diffX = (fab.offset.left + (fab.width / 2))
-                  - (target.offset.left + (target.width / 2))
-                  - fab.translateX;
-    const diffY = (fab.offset.top + (fab.height / 2))
-                  - (target.offset.top + (target.height / 2))
-                  - fab.translateY;
-    const scaleX = target.width / fab.width;
-    const scaleY = target.height / fab.height;
+    var diffX = fab.offset.left + fab.width / 2 - (target.offset.left + target.width / 2) - fab.translateX;
+    var diffY = fab.offset.top + fab.height / 2 - (target.offset.top + target.height / 2) - fab.translateY;
+    var scaleX = target.width / fab.width;
+    var scaleY = target.height / fab.height;
 
     app.off('resize', $fabEl[0].f7FabMorphResizeHandler);
     if ($targetEl.parents('.page-content').length > 0) {
       $targetEl.parents('.page-content').off('scroll', $fabEl[0].f7FabMorphResizeHandler);
     }
 
-    $targetEl
-      .css('opacity', 0)
-      .transform(`scale(${1 / scaleX}, ${1 / scaleY})`);
-    $fabEl
-      .transition('')
-      .css('box-shadow', '')
-      .css('border-radius', '')
-      .transform(`translate3d(${-diffX}px, ${-diffY}px, 0)`);
-    $fabEl.transitionEnd(() => {
-      $fabEl
-        .css('z-index', '')
-        .removeClass('fab-opened')
-        .transform('');
-      Utils.nextTick(() => {
-        $fabEl.transitionEnd(() => {
-          $targetEl
-            .removeClass('fab-morph-target-visible')
-            .css('opacity', '')
-            .transform('')
-            .transition('');
+    $targetEl.css('opacity', 0).transform('scale(' + 1 / scaleX + ', ' + 1 / scaleY + ')');
+    $fabEl.transition('').css('box-shadow', '').css('border-radius', '').transform('translate3d(' + -diffX + 'px, ' + -diffY + 'px, 0)');
+    $fabEl.transitionEnd(function () {
+      $fabEl.css('z-index', '').removeClass('fab-opened').transform('');
+      _utils2.default.nextTick(function () {
+        $fabEl.transitionEnd(function () {
+          $targetEl.removeClass('fab-morph-target-visible').css('opacity', '').transform('').transition('');
         });
       });
     });
   },
-  open(fabEl, targetEl) {
-    const app = this;
-    const $fabEl = $(fabEl).eq(0);
-    const $buttonsEl = $fabEl.find('.fab-buttons');
+  open: function open(fabEl, targetEl) {
+    var app = this;
+    var $fabEl = (0, _dom2.default)(fabEl).eq(0);
+    var $buttonsEl = $fabEl.find('.fab-buttons');
     if (!$fabEl.length) return;
     if ($fabEl.hasClass('fab-opened')) return;
     if (!$buttonsEl.length && !$fabEl.hasClass('fab-morph')) return;
@@ -149,10 +133,12 @@ const Fab = {
     }
     $fabEl.trigger('fab:open');
   },
-  close(fabEl = '.fab-opened') {
-    const app = this;
-    const $fabEl = $(fabEl).eq(0);
-    const $buttonsEl = $fabEl.find('.fab-buttons');
+  close: function close() {
+    var fabEl = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '.fab-opened';
+
+    var app = this;
+    var $fabEl = (0, _dom2.default)(fabEl).eq(0);
+    var $buttonsEl = $fabEl.find('.fab-buttons');
     if (!$fabEl.length) return;
     if (!$fabEl.hasClass('fab-opened')) return;
     if (!$buttonsEl.length && !$fabEl.hasClass('fab-morph')) return;
@@ -164,41 +150,45 @@ const Fab = {
     }
     $fabEl.trigger('fab:close');
   },
-  toggle(fabEl) {
-    const app = this;
-    const $fabEl = $(fabEl);
-    if (!$fabEl.hasClass('fab-opened')) app.fab.open(fabEl);
-    else app.fab.close(fabEl);
-  },
+  toggle: function toggle(fabEl) {
+    var app = this;
+    var $fabEl = (0, _dom2.default)(fabEl);
+    if (!$fabEl.hasClass('fab-opened')) app.fab.open(fabEl);else app.fab.close(fabEl);
+  }
 };
 
-export default {
+exports.default = {
   name: 'fab',
-  create() {
-    const app = this;
-    Utils.extend(app, {
+  create: function create() {
+    var app = this;
+    _utils2.default.extend(app, {
       fab: {
         openedEl: null,
         morphOpen: Fab.morphOpen.bind(app),
         morphClose: Fab.morphClose.bind(app),
         open: Fab.open.bind(app),
         close: Fab.close.bind(app),
-        toggle: Fab.toggle.bind(app),
-      },
+        toggle: Fab.toggle.bind(app)
+      }
     });
   },
+
   clicks: {
     '.fab > a': function open($clickedEl) {
-      const app = this;
+      var app = this;
       app.fab.toggle($clickedEl.parents('.fab'));
     },
-    '.fab-open': function open($clickedEl, data = {}) {
-      const app = this;
+    '.fab-open': function open($clickedEl) {
+      var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+      var app = this;
       app.fab.open(data.fab);
     },
-    '.fab-close': function close($clickedEl, data = {}) {
-      const app = this;
+    '.fab-close': function close($clickedEl) {
+      var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+      var app = this;
       app.fab.close(data.fab);
-    },
-  },
+    }
+  }
 };

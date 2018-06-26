@@ -1,20 +1,31 @@
-import $ from 'dom7';
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.clearHistory = undefined;
+
+var _dom = require('dom7');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function clearHistory() {
-  const router = this;
-  const app = router.app;
-  const separateNavbar = router.separateNavbar;
-  const url = router.history[router.history.length - 1];
+  var router = this;
+  var app = router.app;
+  var separateNavbar = router.separateNavbar;
+  var url = router.history[router.history.length - 1];
 
-  const $currentPageEl = $(router.currentPageEl);
+  var $currentPageEl = (0, _dom2.default)(router.currentPageEl);
 
-  const $pagesToRemove = router.$el
-    .children('.page:not(.stacked)')
-    .filter((index, pageInView) => pageInView !== $currentPageEl[0]);
+  var $pagesToRemove = router.$el.children('.page:not(.stacked)').filter(function (index, pageInView) {
+    return pageInView !== $currentPageEl[0];
+  });
 
-  $pagesToRemove.each((index, pageEl) => {
-    const $oldPageEl = $(pageEl);
-    const $oldNavbarInnerEl = $(app.navbar.getElByPage($oldPageEl));
+  $pagesToRemove.each(function (index, pageEl) {
+    var $oldPageEl = (0, _dom2.default)(pageEl);
+    var $oldNavbarInnerEl = (0, _dom2.default)(app.navbar.getElByPage($oldPageEl));
     if (router.params.stackPages && router.initialPages.indexOf($oldPageEl[0]) >= 0) {
       $oldPageEl.addClass('stacked');
       if (separateNavbar) {
@@ -35,4 +46,4 @@ function clearHistory() {
   router.saveHistory();
 }
 
-export { clearHistory }; // eslint-disable-line
+exports.clearHistory = clearHistory; // eslint-disable-line

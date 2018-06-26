@@ -1,15 +1,24 @@
-/* eslint no-underscore-dangle: "off" */
-import Utils from '../../utils/utils';
+'use strict';
 
-const Autoplay = {
-  run() {
-    const swiper = this;
-    const $activeSlideEl = swiper.slides.eq(swiper.activeIndex);
-    let delay = swiper.params.autoplay.delay;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _utils = require('../../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Autoplay = {
+  run: function run() {
+    var swiper = this;
+    var $activeSlideEl = swiper.slides.eq(swiper.activeIndex);
+    var delay = swiper.params.autoplay.delay;
     if ($activeSlideEl.attr('data-swiper-autoplay')) {
       delay = $activeSlideEl.attr('data-swiper-autoplay') || swiper.params.autoplay.delay;
     }
-    swiper.autoplay.timeout = Utils.nextTick(() => {
+    swiper.autoplay.timeout = _utils2.default.nextTick(function () {
       if (swiper.params.autoplay.reverseDirection) {
         if (swiper.params.loop) {
           swiper.loopFix();
@@ -39,8 +48,8 @@ const Autoplay = {
       }
     }, delay);
   },
-  start() {
-    const swiper = this;
+  start: function start() {
+    var swiper = this;
     if (typeof swiper.autoplay.timeout !== 'undefined') return false;
     if (swiper.autoplay.running) return false;
     swiper.autoplay.running = true;
@@ -48,8 +57,8 @@ const Autoplay = {
     swiper.autoplay.run();
     return true;
   },
-  stop() {
-    const swiper = this;
+  stop: function stop() {
+    var swiper = this;
     if (!swiper.autoplay.running) return false;
     if (typeof swiper.autoplay.timeout === 'undefined') return false;
 
@@ -61,8 +70,8 @@ const Autoplay = {
     swiper.emit('autoplayStop');
     return true;
   },
-  pause(speed) {
-    const swiper = this;
+  pause: function pause(speed) {
+    var swiper = this;
     if (!swiper.autoplay.running) return;
     if (swiper.autoplay.paused) return;
     if (swiper.autoplay.timeout) clearTimeout(swiper.autoplay.timeout);
@@ -74,10 +83,9 @@ const Autoplay = {
       swiper.$wrapperEl[0].addEventListener('transitionend', swiper.autoplay.onTransitionEnd);
       swiper.$wrapperEl[0].addEventListener('webkitTransitionEnd', swiper.autoplay.onTransitionEnd);
     }
-  },
-};
-
-export default {
+  }
+}; /* eslint no-underscore-dangle: "off" */
+exports.default = {
   name: 'autoplay',
   params: {
     autoplay: {
@@ -86,12 +94,12 @@ export default {
       waitForTransition: true,
       disableOnInteraction: true,
       stopOnLastSlide: false,
-      reverseDirection: false,
-    },
+      reverseDirection: false
+    }
   },
-  create() {
-    const swiper = this;
-    Utils.extend(swiper, {
+  create: function create() {
+    var swiper = this;
+    _utils2.default.extend(swiper, {
       autoplay: {
         running: false,
         paused: false,
@@ -99,7 +107,7 @@ export default {
         start: Autoplay.start.bind(swiper),
         stop: Autoplay.stop.bind(swiper),
         pause: Autoplay.pause.bind(swiper),
-        onTransitionEnd(e) {
+        onTransitionEnd: function onTransitionEnd(e) {
           if (!swiper || swiper.destroyed || !swiper.$wrapperEl) return;
           if (e.target !== this) return;
           swiper.$wrapperEl[0].removeEventListener('transitionend', swiper.autoplay.onTransitionEnd);
@@ -110,19 +118,20 @@ export default {
           } else {
             swiper.autoplay.run();
           }
-        },
-      },
+        }
+      }
     });
   },
+
   on: {
-    init() {
-      const swiper = this;
+    init: function init() {
+      var swiper = this;
       if (swiper.params.autoplay.enabled) {
         swiper.autoplay.start();
       }
     },
-    beforeTransitionStart(speed, internal) {
-      const swiper = this;
+    beforeTransitionStart: function beforeTransitionStart(speed, internal) {
+      var swiper = this;
       if (swiper.autoplay.running) {
         if (internal || !swiper.params.autoplay.disableOnInteraction) {
           swiper.autoplay.pause(speed);
@@ -131,8 +140,8 @@ export default {
         }
       }
     },
-    sliderFirstMove() {
-      const swiper = this;
+    sliderFirstMove: function sliderFirstMove() {
+      var swiper = this;
       if (swiper.autoplay.running) {
         if (swiper.params.autoplay.disableOnInteraction) {
           swiper.autoplay.stop();
@@ -141,11 +150,11 @@ export default {
         }
       }
     },
-    destroy() {
-      const swiper = this;
+    destroy: function destroy() {
+      var swiper = this;
       if (swiper.autoplay.running) {
         swiper.autoplay.stop();
       }
-    },
-  },
+    }
+  }
 };

@@ -1,79 +1,88 @@
-import { window } from 'ssr-window';
-import Utils from '../../utils/utils';
+'use strict';
 
-const keyPrefix = 'f7storage-';
-const Storage = {
-  get(key) {
-    return Utils.promise((resolve, reject) => {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _ssrWindow = require('ssr-window');
+
+var _utils = require('../../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var keyPrefix = 'f7storage-';
+var Storage = {
+  get: function get(key) {
+    return _utils2.default.promise(function (resolve, reject) {
       try {
-        const value = JSON.parse(window.localStorage.getItem(`${keyPrefix}${key}`));
+        var value = JSON.parse(_ssrWindow.window.localStorage.getItem('' + keyPrefix + key));
         resolve(value);
       } catch (e) {
         reject(e);
       }
     });
   },
-  set(key, value) {
-    return Utils.promise((resolve, reject) => {
+  set: function set(key, value) {
+    return _utils2.default.promise(function (resolve, reject) {
       try {
-        window.localStorage.setItem(`${keyPrefix}${key}`, JSON.stringify(value));
+        _ssrWindow.window.localStorage.setItem('' + keyPrefix + key, JSON.stringify(value));
         resolve();
       } catch (e) {
         reject(e);
       }
     });
   },
-  remove(key) {
-    return Utils.promise((resolve, reject) => {
+  remove: function remove(key) {
+    return _utils2.default.promise(function (resolve, reject) {
       try {
-        window.localStorage.removeItem(`${keyPrefix}${key}`);
+        _ssrWindow.window.localStorage.removeItem('' + keyPrefix + key);
         resolve();
       } catch (e) {
         reject(e);
       }
     });
   },
-  clear() {
-
-  },
-  length() {
-
-  },
-  keys() {
-    return Utils.promise((resolve, reject) => {
+  clear: function clear() {},
+  length: function length() {},
+  keys: function keys() {
+    return _utils2.default.promise(function (resolve, reject) {
       try {
-        const keys = Object.keys(window.localStorage)
-          .filter(keyName => keyName.indexOf(keyPrefix) === 0)
-          .map(keyName => keyName.replace(keyPrefix, ''));
+        var keys = Object.keys(_ssrWindow.window.localStorage).filter(function (keyName) {
+          return keyName.indexOf(keyPrefix) === 0;
+        }).map(function (keyName) {
+          return keyName.replace(keyPrefix, '');
+        });
         resolve(keys);
       } catch (e) {
         reject(e);
       }
     });
   },
-  forEach(callback) {
-    return Utils.promise((resolve, reject) => {
+  forEach: function forEach(callback) {
+    return _utils2.default.promise(function (resolve, reject) {
       try {
-        Object.keys(window.localStorage)
-          .filter(keyName => keyName.indexOf(keyPrefix) === 0)
-          .forEach((keyName, index) => {
-            const key = keyName.replace(keyPrefix, '');
-            Storage.get(key).then((value) => {
-              callback(key, value, index);
-            });
+        Object.keys(_ssrWindow.window.localStorage).filter(function (keyName) {
+          return keyName.indexOf(keyPrefix) === 0;
+        }).forEach(function (keyName, index) {
+          var key = keyName.replace(keyPrefix, '');
+          Storage.get(key).then(function (value) {
+            callback(key, value, index);
           });
+        });
         resolve();
       } catch (e) {
         reject(e);
       }
     });
-  },
+  }
 };
 
-export default {
+exports.default = {
   name: 'storage',
   static: {
-    Storage,
-    storage: Storage,
-  },
+    Storage: Storage,
+    storage: Storage
+  }
 };

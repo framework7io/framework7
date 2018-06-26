@@ -1,39 +1,60 @@
-import $ from 'dom7';
-import ConstructorMethods from '../../utils/constructor-methods';
-import Toggle from './toggle-class';
+'use strict';
 
-export default {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _dom = require('dom7');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+var _constructorMethods = require('../../utils/constructor-methods');
+
+var _constructorMethods2 = _interopRequireDefault(_constructorMethods);
+
+var _toggleClass = require('./toggle-class');
+
+var _toggleClass2 = _interopRequireDefault(_toggleClass);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
   name: 'toggle',
-  create() {
-    const app = this;
-    app.toggle = ConstructorMethods({
+  create: function create() {
+    var app = this;
+    app.toggle = (0, _constructorMethods2.default)({
       defaultSelector: '.toggle',
-      constructor: Toggle,
-      app,
-      domProp: 'f7Toggle',
+      constructor: _toggleClass2.default,
+      app: app,
+      domProp: 'f7Toggle'
     });
   },
+
   static: {
-    Toggle,
+    Toggle: _toggleClass2.default
   },
   on: {
-    tabMounted(tabEl) {
-      const app = this;
-      $(tabEl).find('.toggle-init').each((index, toggleEl) => app.toggle.create({ el: toggleEl }));
+    tabMounted: function tabMounted(tabEl) {
+      var app = this;
+      (0, _dom2.default)(tabEl).find('.toggle-init').each(function (index, toggleEl) {
+        return app.toggle.create({ el: toggleEl });
+      });
     },
-    tabBeforeRemove(tabEl) {
-      $(tabEl).find('.toggle-init').each((index, toggleEl) => {
+    tabBeforeRemove: function tabBeforeRemove(tabEl) {
+      (0, _dom2.default)(tabEl).find('.toggle-init').each(function (index, toggleEl) {
         if (toggleEl.f7Toggle) toggleEl.f7Toggle.destroy();
       });
     },
-    pageInit(page) {
-      const app = this;
-      page.$el.find('.toggle-init').each((index, toggleEl) => app.toggle.create({ el: toggleEl }));
-    },
-    pageBeforeRemove(page) {
-      page.$el.find('.toggle-init').each((index, toggleEl) => {
-        if (toggleEl.f7Toggle) toggleEl.f7Toggle.destroy();
+    pageInit: function pageInit(page) {
+      var app = this;
+      page.$el.find('.toggle-init').each(function (index, toggleEl) {
+        return app.toggle.create({ el: toggleEl });
       });
     },
-  },
+    pageBeforeRemove: function pageBeforeRemove(page) {
+      page.$el.find('.toggle-init').each(function (index, toggleEl) {
+        if (toggleEl.f7Toggle) toggleEl.f7Toggle.destroy();
+      });
+    }
+  }
 };

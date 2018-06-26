@@ -1,12 +1,25 @@
-import $ from 'dom7';
-import Utils from '../../utils/utils';
+'use strict';
 
-const Toolbar = {
-  setHighlight(tabbarEl) {
-    const app = this;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _dom = require('dom7');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+var _utils = require('../../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Toolbar = {
+  setHighlight: function setHighlight(tabbarEl) {
+    var app = this;
     if (app.theme !== 'md') return;
 
-    const $tabbarEl = $(tabbarEl);
+    var $tabbarEl = (0, _dom2.default)(tabbarEl);
 
     if ($tabbarEl.length === 0 || !($tabbarEl.hasClass('tabbar') || $tabbarEl.hasClass('tabbar-labels'))) return;
 
@@ -14,53 +27,55 @@ const Toolbar = {
       $tabbarEl.children('.toolbar-inner').append('<span class="tab-link-highlight"></span>');
     }
 
-    const $highlightEl = $tabbarEl.find('.tab-link-highlight');
-    const $activeLink = $tabbarEl.find('.tab-link-active');
-    let highlightWidth;
-    let highlightTranslate;
+    var $highlightEl = $tabbarEl.find('.tab-link-highlight');
+    var $activeLink = $tabbarEl.find('.tab-link-active');
+    var highlightWidth = void 0;
+    var highlightTranslate = void 0;
 
     if ($tabbarEl.hasClass('tabbar-scrollable') && $activeLink && $activeLink[0]) {
-      highlightWidth = `${$activeLink[0].offsetWidth}px`;
-      highlightTranslate = `${$activeLink[0].offsetLeft}px`;
+      highlightWidth = $activeLink[0].offsetWidth + 'px';
+      highlightTranslate = $activeLink[0].offsetLeft + 'px';
     } else {
-      const activeIndex = $activeLink.index();
-      const tabLinksCount = $tabbarEl.find('.tab-link').length;
-      highlightWidth = `${100 / tabLinksCount}%`;
-      highlightTranslate = `${(app.rtl ? -activeIndex : activeIndex) * 100}%`;
+      var activeIndex = $activeLink.index();
+      var tabLinksCount = $tabbarEl.find('.tab-link').length;
+      highlightWidth = 100 / tabLinksCount + '%';
+      highlightTranslate = (app.rtl ? -activeIndex : activeIndex) * 100 + '%';
     }
 
-    $highlightEl
-      .css('width', highlightWidth)
-      .transform(`translate3d(${highlightTranslate},0,0)`);
+    $highlightEl.css('width', highlightWidth).transform('translate3d(' + highlightTranslate + ',0,0)');
   },
-  init(tabbarEl) {
-    const app = this;
+  init: function init(tabbarEl) {
+    var app = this;
     app.toolbar.setHighlight(tabbarEl);
   },
-  hide(el, animate = true) {
-    const $el = $(el);
+  hide: function hide(el) {
+    var animate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+    var $el = (0, _dom2.default)(el);
     if ($el.hasClass('toolbar-hidden')) return;
-    const className = `toolbar-hidden${animate ? ' toolbar-transitioning' : ''}`;
-    $el.transitionEnd(() => {
+    var className = 'toolbar-hidden' + (animate ? ' toolbar-transitioning' : '');
+    $el.transitionEnd(function () {
       $el.removeClass('toolbar-transitioning');
     });
     $el.addClass(className);
   },
-  show(el, animate = true) {
-    const $el = $(el);
+  show: function show(el) {
+    var animate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+    var $el = (0, _dom2.default)(el);
     if (!$el.hasClass('toolbar-hidden')) return;
     if (animate) {
       $el.addClass('toolbar-transitioning');
-      $el.transitionEnd(() => {
+      $el.transitionEnd(function () {
         $el.removeClass('toolbar-transitioning');
       });
     }
     $el.removeClass('toolbar-hidden');
   },
-  initHideToolbarOnScroll(pageEl) {
-    const app = this;
-    const $pageEl = $(pageEl);
-    let $toolbarEl = $pageEl.parents('.view').children('.toolbar');
+  initHideToolbarOnScroll: function initHideToolbarOnScroll(pageEl) {
+    var app = this;
+    var $pageEl = (0, _dom2.default)(pageEl);
+    var $toolbarEl = $pageEl.parents('.view').children('.toolbar');
     if ($toolbarEl.length === 0) {
       $toolbarEl = $pageEl.find('.toolbar');
     }
@@ -71,16 +86,16 @@ const Toolbar = {
       return;
     }
 
-    let previousScrollTop;
-    let currentScrollTop;
+    var previousScrollTop = void 0;
+    var currentScrollTop = void 0;
 
-    let scrollHeight;
-    let offsetHeight;
-    let reachEnd;
-    let action;
-    let toolbarHidden;
+    var scrollHeight = void 0;
+    var offsetHeight = void 0;
+    var reachEnd = void 0;
+    var action = void 0;
+    var toolbarHidden = void 0;
     function handleScroll() {
-      const scrollContent = this;
+      var scrollContent = this;
       if ($pageEl.hasClass('page-previous')) return;
       currentScrollTop = scrollContent.scrollTop;
       scrollHeight = scrollContent.scrollHeight;
@@ -116,38 +131,39 @@ const Toolbar = {
     }
     $pageEl.on('scroll', '.page-content', handleScroll, true);
     $pageEl[0].f7ScrollToolbarHandler = handleScroll;
-  },
+  }
 };
-export default {
+exports.default = {
   name: 'toolbar',
-  create() {
-    const app = this;
-    Utils.extend(app, {
+  create: function create() {
+    var app = this;
+    _utils2.default.extend(app, {
       toolbar: {
         hide: Toolbar.hide.bind(app),
         show: Toolbar.show.bind(app),
         setHighlight: Toolbar.setHighlight.bind(app),
         initHideToolbarOnScroll: Toolbar.initHideToolbarOnScroll.bind(app),
-        init: Toolbar.init.bind(app),
-      },
+        init: Toolbar.init.bind(app)
+      }
     });
   },
+
   params: {
     toolbar: {
       hideOnPageScroll: false,
       showOnPageScrollEnd: true,
-      showOnPageScrollTop: true,
-    },
+      showOnPageScrollTop: true
+    }
   },
   on: {
-    pageBeforeRemove(page) {
+    pageBeforeRemove: function pageBeforeRemove(page) {
       if (page.$el[0].f7ScrollToolbarHandler) {
         page.$el.off('scroll', '.page-content', page.$el[0].f7ScrollToolbarHandler, true);
       }
     },
-    pageBeforeIn(page) {
-      const app = this;
-      let $toolbarEl = page.$el.parents('.view').children('.toolbar');
+    pageBeforeIn: function pageBeforeIn(page) {
+      var app = this;
+      var $toolbarEl = page.$el.parents('.view').children('.toolbar');
       if ($toolbarEl.length === 0) {
         $toolbarEl = page.$el.find('.toolbar');
       }
@@ -163,34 +179,23 @@ export default {
         app.toolbar.show($toolbarEl);
       }
     },
-    pageInit(page) {
-      const app = this;
-      page.$el.find('.tabbar, .tabbar-labels').each((index, tabbarEl) => {
+    pageInit: function pageInit(page) {
+      var app = this;
+      page.$el.find('.tabbar, .tabbar-labels').each(function (index, tabbarEl) {
         app.toolbar.init(tabbarEl);
       });
-      if (
-        app.params.toolbar.hideOnPageScroll
-        || page.$el.find('.hide-toolbar-on-scroll').length
-        || page.$el.hasClass('hide-toolbar-on-scroll')
-        || page.$el.find('.hide-bars-on-scroll').length
-        || page.$el.hasClass('hide-bars-on-scroll')
-      ) {
-        if (
-          page.$el.find('.keep-toolbar-on-scroll').length
-          || page.$el.hasClass('keep-toolbar-on-scroll')
-          || page.$el.find('.keep-bars-on-scroll').length
-          || page.$el.hasClass('keep-bars-on-scroll')
-        ) {
+      if (app.params.toolbar.hideOnPageScroll || page.$el.find('.hide-toolbar-on-scroll').length || page.$el.hasClass('hide-toolbar-on-scroll') || page.$el.find('.hide-bars-on-scroll').length || page.$el.hasClass('hide-bars-on-scroll')) {
+        if (page.$el.find('.keep-toolbar-on-scroll').length || page.$el.hasClass('keep-toolbar-on-scroll') || page.$el.find('.keep-bars-on-scroll').length || page.$el.hasClass('keep-bars-on-scroll')) {
           return;
         }
         app.toolbar.initHideToolbarOnScroll(page.el);
       }
     },
-    init() {
-      const app = this;
-      app.root.find('.tabbar, .tabbar-labels').each((index, tabbarEl) => {
+    init: function init() {
+      var app = this;
+      app.root.find('.tabbar, .tabbar-labels').each(function (index, tabbarEl) {
         app.toolbar.init(tabbarEl);
       });
-    },
-  },
+    }
+  }
 };

@@ -1,23 +1,58 @@
-import $ from 'dom7';
-import Utils from '../../utils/utils';
-import Router from '../../modules/router/router';
-import Framework7Class from '../../utils/class';
+'use strict';
 
-class View extends Framework7Class {
-  constructor(appInstance, el, viewParams = {}) {
-    super(viewParams, [appInstance]);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-    const app = appInstance;
-    const $el = $(el);
-    const view = this;
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-    const defaults = {
+var _dom = require('dom7');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+var _utils = require('../../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _router = require('../../modules/router/router');
+
+var _router2 = _interopRequireDefault(_router);
+
+var _class = require('../../utils/class');
+
+var _class2 = _interopRequireDefault(_class);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var View = function (_Framework7Class) {
+  _inherits(View, _Framework7Class);
+
+  function View(appInstance, el) {
+    var _ret;
+
+    var viewParams = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+    _classCallCheck(this, View);
+
+    var _this = _possibleConstructorReturn(this, (View.__proto__ || Object.getPrototypeOf(View)).call(this, viewParams, [appInstance]));
+
+    var app = appInstance;
+    var $el = (0, _dom2.default)(el);
+    var view = _this;
+
+    var defaults = {
       routes: [],
-      routesAdd: [],
+      routesAdd: []
     };
 
     // Default View params
-    view.params = Utils.extend(defaults, app.params.view, viewParams);
+    view.params = _utils2.default.extend(defaults, app.params.view, viewParams);
 
     // Routes
     if (view.params.routes.length > 0) {
@@ -27,34 +62,33 @@ class View extends Framework7Class {
     }
 
     // Selector
-    let selector;
-    if (typeof el === 'string') selector = el;
-    else {
+    var selector = void 0;
+    if (typeof el === 'string') selector = el;else {
       // Supposed to be HTMLElement or Dom7
-      selector = ($el.attr('id') ? `#${$el.attr('id')}` : '') + ($el.attr('class') ? `.${$el.attr('class').replace(/ /g, '.').replace('.active', '')}` : '');
+      selector = ($el.attr('id') ? '#' + $el.attr('id') : '') + ($el.attr('class') ? '.' + $el.attr('class').replace(/ /g, '.').replace('.active', '') : '');
     }
 
     // DynamicNavbar
-    let $navbarEl;
+    var $navbarEl = void 0;
     if (app.theme === 'ios' && view.params.iosDynamicNavbar && view.params.iosSeparateDynamicNavbar) {
       $navbarEl = $el.children('.navbar').eq(0);
       if ($navbarEl.length === 0) {
-        $navbarEl = $('<div class="navbar"></div>');
+        $navbarEl = (0, _dom2.default)('<div class="navbar"></div>');
       }
     }
 
     // View Props
-    Utils.extend(false, view, {
-      app,
-      $el,
+    _utils2.default.extend(false, view, {
+      app: app,
+      $el: $el,
       el: $el[0],
       name: view.params.name,
       main: view.params.main || $el.hasClass('view-main'),
-      $navbarEl,
+      $navbarEl: $navbarEl,
       navbarEl: $navbarEl ? $navbarEl[0] : undefined,
-      selector,
+      selector: selector,
       history: [],
-      scrollHistory: {},
+      scrollHistory: {}
     });
 
     // Save in DOM
@@ -76,13 +110,13 @@ class View extends Framework7Class {
     view.index = app.views.indexOf(view);
 
     // View ID
-    let viewId;
+    var viewId = void 0;
     if (view.name) {
-      viewId = `view_${view.name}`;
+      viewId = 'view_' + view.name;
     } else if (view.main) {
       viewId = 'view_main';
     } else {
-      viewId = `view_${view.index}`;
+      viewId = 'view_' + view.index;
     }
     view.id = viewId;
 
@@ -90,59 +124,66 @@ class View extends Framework7Class {
     if (app.initialized) {
       view.init();
     } else {
-      app.on('init', () => {
+      app.on('init', function () {
         view.init();
       });
     }
 
-    return view;
+    return _ret = view, _possibleConstructorReturn(_this, _ret);
   }
 
-  destroy() {
-    let view = this;
-    const app = view.app;
+  _createClass(View, [{
+    key: 'destroy',
+    value: function destroy() {
+      var view = this;
+      var app = view.app;
 
-    view.$el.trigger('view:beforedestroy', view);
-    view.emit('local::beforeDestroy viewBeforeDestroy', view);
+      view.$el.trigger('view:beforedestroy', view);
+      view.emit('local::beforeDestroy viewBeforeDestroy', view);
 
-    if (view.main) {
-      app.views.main = null;
-      delete app.views.main;
-    } else if (view.name) {
-      app.views[view.name] = null;
-      delete app.views[view.name];
+      if (view.main) {
+        app.views.main = null;
+        delete app.views.main;
+      } else if (view.name) {
+        app.views[view.name] = null;
+        delete app.views[view.name];
+      }
+      view.$el[0].f7View = null;
+      delete view.$el[0].f7View;
+
+      app.views.splice(app.views.indexOf(view), 1);
+
+      // Destroy Router
+      if (view.params.router && view.router) {
+        view.router.destroy();
+      }
+
+      view.emit('local::destroy viewDestroy', view);
+
+      // Delete props & methods
+      Object.keys(view).forEach(function (viewProp) {
+        view[viewProp] = null;
+        delete view[viewProp];
+      });
+
+      view = null;
     }
-    view.$el[0].f7View = null;
-    delete view.$el[0].f7View;
-
-    app.views.splice(app.views.indexOf(view), 1);
-
-    // Destroy Router
-    if (view.params.router && view.router) {
-      view.router.destroy();
+  }, {
+    key: 'init',
+    value: function init() {
+      var view = this;
+      if (view.params.router) {
+        view.router.init();
+      }
     }
+  }]);
 
-    view.emit('local::destroy viewDestroy', view);
-
-    // Delete props & methods
-    Object.keys(view).forEach((viewProp) => {
-      view[viewProp] = null;
-      delete view[viewProp];
-    });
-
-    view = null;
-  }
-
-  init() {
-    const view = this;
-    if (view.params.router) {
-      view.router.init();
-    }
-  }
-}
+  return View;
+}(_class2.default);
 
 // Use Router
-View.use(Router);
 
 
-export default View;
+View.use(_router2.default);
+
+exports.default = View;

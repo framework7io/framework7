@@ -1,14 +1,20 @@
-export default function (routePreRoute, to, from, resolve, reject) {
-  const router = this;
-  const preRoutes = [];
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (routePreRoute, to, from, resolve, reject) {
+  var router = this;
+  var preRoutes = [];
   if (Array.isArray(routePreRoute)) {
-    preRoutes.push(...routePreRoute);
+    preRoutes.push.apply(preRoutes, _toConsumableArray(routePreRoute));
   } else if (routePreRoute && typeof routePreRoute === 'function') {
     preRoutes.push(routePreRoute);
   }
   if (router.params.preRoute) {
     if (Array.isArray(router.params.preRoute)) {
-      preRoutes.push(...router.params.preRoute);
+      preRoutes.push.apply(preRoutes, _toConsumableArray(router.params.preRoute));
     } else {
       preRoutes.push(router.params.preRoute);
     }
@@ -19,19 +25,15 @@ export default function (routePreRoute, to, from, resolve, reject) {
       resolve();
       return;
     }
-    const preRoute = preRoutes.shift();
+    var preRoute = preRoutes.shift();
 
-    preRoute.call(
-      router,
-      to,
-      from,
-      () => {
-        next();
-      },
-      () => {
-        reject();
-      }
-    );
+    preRoute.call(router, to, from, function () {
+      next();
+    }, function () {
+      reject();
+    });
   }
   next();
-}
+};
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }

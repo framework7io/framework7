@@ -1,3 +1,8 @@
-export default {
-  name: 'list',
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  name: 'list'
 };

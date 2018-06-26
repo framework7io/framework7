@@ -1,7 +1,12 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 function checkOverflow() {
-  const swiper = this;
-  const wasLocked = swiper.isLocked;
+  var swiper = this;
+  var wasLocked = swiper.isLocked;
 
   swiper.isLocked = swiper.snapGrid.length === 1;
   swiper.allowSlideNext = !swiper.isLocked;
@@ -16,4 +21,4 @@ function checkOverflow() {
   }
 }
 
-export default { checkOverflow };
+exports.default = { checkOverflow: checkOverflow };

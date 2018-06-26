@@ -1,3 +1,8 @@
-export default {
-  name: 'link',
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  name: 'link'
 };

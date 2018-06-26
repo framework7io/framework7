@@ -1,46 +1,57 @@
-import { window, document } from 'ssr-window';
-import $ from '../../utils/dom';
-import Utils from '../../utils/utils';
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _ssrWindow = require('ssr-window');
+
+var _dom = require('../../utils/dom');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+var _utils = require('../../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function isEventSupported() {
-  const eventName = 'onwheel';
-  let isSupported = eventName in document;
+  var eventName = 'onwheel';
+  var isSupported = eventName in _ssrWindow.document;
 
   if (!isSupported) {
-    const element = document.createElement('div');
+    var element = _ssrWindow.document.createElement('div');
     element.setAttribute(eventName, 'return;');
     isSupported = typeof element[eventName] === 'function';
   }
 
-  if (!isSupported &&
-    document.implementation &&
-    document.implementation.hasFeature &&
-    // always returns true in newer browsers as per the standard.
-    // @see http://dom.spec.whatwg.org/#dom-domimplementation-hasfeature
-    document.implementation.hasFeature('', '') !== true
-  ) {
+  if (!isSupported && _ssrWindow.document.implementation && _ssrWindow.document.implementation.hasFeature &&
+  // always returns true in newer browsers as per the standard.
+  // @see http://dom.spec.whatwg.org/#dom-domimplementation-hasfeature
+  _ssrWindow.document.implementation.hasFeature('', '') !== true) {
     // This is the only way to test support for the `wheel` event in IE9+.
-    isSupported = document.implementation.hasFeature('Events.wheel', '3.0');
+    isSupported = _ssrWindow.document.implementation.hasFeature('Events.wheel', '3.0');
   }
 
   return isSupported;
 }
-const Mousewheel = {
-  lastScrollTime: Utils.now(),
-  event: (function getEvent() {
-    if (window.navigator.userAgent.indexOf('firefox') > -1) return 'DOMMouseScroll';
+var Mousewheel = {
+  lastScrollTime: _utils2.default.now(),
+  event: function getEvent() {
+    if (_ssrWindow.window.navigator.userAgent.indexOf('firefox') > -1) return 'DOMMouseScroll';
     return isEventSupported() ? 'wheel' : 'mousewheel';
-  }()),
-  normalize(e) {
+  }(),
+  normalize: function normalize(e) {
     // Reasonable defaults
-    const PIXEL_STEP = 10;
-    const LINE_HEIGHT = 40;
-    const PAGE_HEIGHT = 800;
+    var PIXEL_STEP = 10;
+    var LINE_HEIGHT = 40;
+    var PAGE_HEIGHT = 800;
 
-    let sX = 0;
-    let sY = 0; // spinX, spinY
-    let pX = 0;
-    let pY = 0; // pixelX, pixelY
+    var sX = 0;
+    var sY = 0; // spinX, spinY
+    var pX = 0;
+    var pY = 0; // pixelX, pixelY
 
     // Legacy
     if ('detail' in e) {
@@ -73,10 +84,12 @@ const Mousewheel = {
     }
 
     if ((pX || pY) && e.deltaMode) {
-      if (e.deltaMode === 1) { // delta in LINE units
+      if (e.deltaMode === 1) {
+        // delta in LINE units
         pX *= LINE_HEIGHT;
         pY *= LINE_HEIGHT;
-      } else { // delta in PAGE units
+      } else {
+        // delta in PAGE units
         pX *= PAGE_HEIGHT;
         pY *= PAGE_HEIGHT;
       }
@@ -84,46 +97,44 @@ const Mousewheel = {
 
     // Fall-back if spin cannot be determined
     if (pX && !sX) {
-      sX = (pX < 1) ? -1 : 1;
+      sX = pX < 1 ? -1 : 1;
     }
     if (pY && !sY) {
-      sY = (pY < 1) ? -1 : 1;
+      sY = pY < 1 ? -1 : 1;
     }
 
     return {
       spinX: sX,
       spinY: sY,
       pixelX: pX,
-      pixelY: pY,
+      pixelY: pY
     };
   },
-  handleMouseEnter() {
-    const swiper = this;
+  handleMouseEnter: function handleMouseEnter() {
+    var swiper = this;
     swiper.mouseEntered = true;
   },
-  handleMouseLeave() {
-    const swiper = this;
+  handleMouseLeave: function handleMouseLeave() {
+    var swiper = this;
     swiper.mouseEntered = false;
   },
-  handle(event) {
-    let e = event;
-    const swiper = this;
-    const params = swiper.params.mousewheel;
+  handle: function handle(event) {
+    var e = event;
+    var swiper = this;
+    var params = swiper.params.mousewheel;
 
     if (!swiper.mouseEntered && !params.releaseOnEdges) return true;
 
     if (e.originalEvent) e = e.originalEvent; // jquery fix
-    let delta = 0;
-    const rtlFactor = swiper.rtlTranslate ? -1 : 1;
+    var delta = 0;
+    var rtlFactor = swiper.rtlTranslate ? -1 : 1;
 
-    const data = Mousewheel.normalize(e);
+    var data = Mousewheel.normalize(e);
 
     if (params.forceToAxis) {
       if (swiper.isHorizontal()) {
-        if (Math.abs(data.pixelX) > Math.abs(data.pixelY)) delta = data.pixelX * rtlFactor;
-        else return true;
-      } else if (Math.abs(data.pixelY) > Math.abs(data.pixelX)) delta = data.pixelY;
-      else return true;
+        if (Math.abs(data.pixelX) > Math.abs(data.pixelY)) delta = data.pixelX * rtlFactor;else return true;
+      } else if (Math.abs(data.pixelY) > Math.abs(data.pixelX)) delta = data.pixelY;else return true;
     } else {
       delta = Math.abs(data.pixelX) > Math.abs(data.pixelY) ? -data.pixelX * rtlFactor : -data.pixelY;
     }
@@ -133,7 +144,7 @@ const Mousewheel = {
     if (params.invert) delta = -delta;
 
     if (!swiper.params.freeMode) {
-      if (Utils.now() - swiper.mousewheel.lastScrollTime > 60) {
+      if (_utils2.default.now() - swiper.mousewheel.lastScrollTime > 60) {
         if (delta < 0) {
           if ((!swiper.isEnd || swiper.params.loop) && !swiper.animating) {
             swiper.slideNext();
@@ -144,15 +155,15 @@ const Mousewheel = {
           swiper.emit('scroll', e);
         } else if (params.releaseOnEdges) return true;
       }
-      swiper.mousewheel.lastScrollTime = (new window.Date()).getTime();
+      swiper.mousewheel.lastScrollTime = new _ssrWindow.window.Date().getTime();
     } else {
       // Freemode or scrollContainer:
       if (swiper.params.loop) {
         swiper.loopFix();
       }
-      let position = swiper.getTranslate() + (delta * params.sensitivity);
-      const wasBeginning = swiper.isBeginning;
-      const wasEnd = swiper.isEnd;
+      var position = swiper.getTranslate() + delta * params.sensitivity;
+      var wasBeginning = swiper.isBeginning;
+      var wasEnd = swiper.isEnd;
 
       if (position >= swiper.minTranslate()) position = swiper.minTranslate();
       if (position <= swiper.maxTranslate()) position = swiper.maxTranslate();
@@ -163,13 +174,13 @@ const Mousewheel = {
       swiper.updateActiveIndex();
       swiper.updateSlidesClasses();
 
-      if ((!wasBeginning && swiper.isBeginning) || (!wasEnd && swiper.isEnd)) {
+      if (!wasBeginning && swiper.isBeginning || !wasEnd && swiper.isEnd) {
         swiper.updateSlidesClasses();
       }
 
       if (swiper.params.freeModeSticky) {
         clearTimeout(swiper.mousewheel.timeout);
-        swiper.mousewheel.timeout = Utils.nextTick(() => {
+        swiper.mousewheel.timeout = _utils2.default.nextTick(function () {
           swiper.slideToClosest();
         }, 300);
       }
@@ -182,17 +193,16 @@ const Mousewheel = {
       if (position === swiper.minTranslate() || position === swiper.maxTranslate()) return true;
     }
 
-    if (e.preventDefault) e.preventDefault();
-    else e.returnValue = false;
+    if (e.preventDefault) e.preventDefault();else e.returnValue = false;
     return false;
   },
-  enable() {
-    const swiper = this;
+  enable: function enable() {
+    var swiper = this;
     if (!Mousewheel.event) return false;
     if (swiper.mousewheel.enabled) return false;
-    let target = swiper.$el;
+    var target = swiper.$el;
     if (swiper.params.mousewheel.eventsTarged !== 'container') {
-      target = $(swiper.params.mousewheel.eventsTarged);
+      target = (0, _dom2.default)(swiper.params.mousewheel.eventsTarged);
     }
     target.on('mouseenter', swiper.mousewheel.handleMouseEnter);
     target.on('mouseleave', swiper.mousewheel.handleMouseLeave);
@@ -200,21 +210,21 @@ const Mousewheel = {
     swiper.mousewheel.enabled = true;
     return true;
   },
-  disable() {
-    const swiper = this;
+  disable: function disable() {
+    var swiper = this;
     if (!Mousewheel.event) return false;
     if (!swiper.mousewheel.enabled) return false;
-    let target = swiper.$el;
+    var target = swiper.$el;
     if (swiper.params.mousewheel.eventsTarged !== 'container') {
-      target = $(swiper.params.mousewheel.eventsTarged);
+      target = (0, _dom2.default)(swiper.params.mousewheel.eventsTarged);
     }
     target.off(Mousewheel.event, swiper.mousewheel.handle);
     swiper.mousewheel.enabled = false;
     return true;
-  },
+  }
 };
 
-export default {
+exports.default = {
   name: 'mousewheel',
   params: {
     mousewheel: {
@@ -223,12 +233,12 @@ export default {
       invert: false,
       forceToAxis: false,
       sensitivity: 1,
-      eventsTarged: 'container',
-    },
+      eventsTarged: 'container'
+    }
   },
-  create() {
-    const swiper = this;
-    Utils.extend(swiper, {
+  create: function create() {
+    var swiper = this;
+    _utils2.default.extend(swiper, {
       mousewheel: {
         enabled: false,
         enable: Mousewheel.enable.bind(swiper),
@@ -236,18 +246,19 @@ export default {
         handle: Mousewheel.handle.bind(swiper),
         handleMouseEnter: Mousewheel.handleMouseEnter.bind(swiper),
         handleMouseLeave: Mousewheel.handleMouseLeave.bind(swiper),
-        lastScrollTime: Utils.now(),
-      },
+        lastScrollTime: _utils2.default.now()
+      }
     });
   },
+
   on: {
-    init() {
-      const swiper = this;
+    init: function init() {
+      var swiper = this;
       if (swiper.params.mousewheel.enabled) swiper.mousewheel.enable();
     },
-    destroy() {
-      const swiper = this;
+    destroy: function destroy() {
+      var swiper = this;
       if (swiper.mousewheel.enabled) swiper.mousewheel.disable();
-    },
-  },
+    }
+  }
 };

@@ -1,28 +1,47 @@
-import $ from 'dom7';
-import ConstructorMethods from '../../utils/constructor-methods';
-import Calendar from './calendar-class';
+'use strict';
 
-export default {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _dom = require('dom7');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+var _constructorMethods = require('../../utils/constructor-methods');
+
+var _constructorMethods2 = _interopRequireDefault(_constructorMethods);
+
+var _calendarClass = require('./calendar-class');
+
+var _calendarClass2 = _interopRequireDefault(_calendarClass);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
   name: 'calendar',
   static: {
-    Calendar,
+    Calendar: _calendarClass2.default
   },
-  create() {
-    const app = this;
-    app.calendar = ConstructorMethods({
+  create: function create() {
+    var app = this;
+    app.calendar = (0, _constructorMethods2.default)({
       defaultSelector: '.calendar',
-      constructor: Calendar,
-      app,
-      domProp: 'f7Calendar',
+      constructor: _calendarClass2.default,
+      app: app,
+      domProp: 'f7Calendar'
     });
-    app.calendar.close = function close(el = '.calendar') {
-      const $el = $(el);
+    app.calendar.close = function close() {
+      var el = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '.calendar';
+
+      var $el = (0, _dom2.default)(el);
       if ($el.length === 0) return;
-      const calendar = $el[0].f7Calendar;
-      if (!calendar || (calendar && !calendar.opened)) return;
+      var calendar = $el[0].f7Calendar;
+      if (!calendar || calendar && !calendar.opened) return;
       calendar.close();
     };
   },
+
   params: {
     calendar: {
       // Calendar settings
@@ -77,7 +96,7 @@ export default {
       renderInline: null,
       renderPopover: null,
       renderSheet: null,
-      render: null,
-    },
-  },
+      render: null
+    }
+  }
 };

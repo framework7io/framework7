@@ -1,8 +1,24 @@
-import $ from 'dom7';
-import Utils from '../../utils/utils';
-import Panel from './panel-class';
+'use strict';
 
-export default {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _dom = require('dom7');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+var _utils = require('../../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _panelClass = require('./panel-class');
+
+var _panelClass2 = _interopRequireDefault(_panelClass);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
   name: 'panel',
   params: {
     panel: {
@@ -15,23 +31,25 @@ export default {
       swipeOnlyClose: false,
       swipeNoFollow: false,
       swipeThreshold: 0,
-      closeByBackdropClick: true,
-    },
+      closeByBackdropClick: true
+    }
   },
   static: {
-    Panel,
+    Panel: _panelClass2.default
   },
   instance: {
     panel: {
-      allowOpen: true,
-    },
+      allowOpen: true
+    }
   },
-  create() {
-    const app = this;
-    Utils.extend(app.panel, {
-      disableSwipe(panel = 'both') {
-        let side;
-        let panels = [];
+  create: function create() {
+    var app = this;
+    _utils2.default.extend(app.panel, {
+      disableSwipe: function disableSwipe() {
+        var panel = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'both';
+
+        var side = void 0;
+        var panels = [];
         if (typeof panel === 'string') {
           if (panel === 'both') {
             side = 'both';
@@ -43,20 +61,18 @@ export default {
         } else {
           panels = [panel];
         }
-        panels.forEach((panelInstance) => {
-          if (panelInstance) Utils.extend(panelInstance, { swipeable: false });
+        panels.forEach(function (panelInstance) {
+          if (panelInstance) _utils2.default.extend(panelInstance, { swipeable: false });
         });
       },
-      enableSwipe(panel = 'both') {
-        let panels = [];
-        let side;
+      enableSwipe: function enableSwipe() {
+        var panel = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'both';
+
+        var panels = [];
+        var side = void 0;
         if (typeof panel === 'string') {
           side = panel;
-          if (
-            (app.params.panel.swipe === 'left' && side === 'right')
-            || (app.params.panel.swipe === 'right' && side === 'left')
-            || side === 'both'
-          ) {
+          if (app.params.panel.swipe === 'left' && side === 'right' || app.params.panel.swipe === 'right' && side === 'left' || side === 'both') {
             side = 'both';
             app.params.panel.swipe = side;
             panels = [app.panel.left, app.panel.right];
@@ -68,45 +84,45 @@ export default {
           panels.push(panel);
         }
         if (panels.length) {
-          panels.forEach((panelInstance) => {
+          panels.forEach(function (panelInstance) {
             if (!panelInstance) return;
             if (!panelInstance.swipeInitialized) {
               panelInstance.initSwipePanel();
             } else {
-              Utils.extend(panelInstance, { swipeable: true });
+              _utils2.default.extend(panelInstance, { swipeable: true });
             }
           });
         }
       },
-      create(params) {
-        return new Panel(app, params);
+      create: function create(params) {
+        return new _panelClass2.default(app, params);
       },
-      open(side, animate) {
-        let panelSide = side;
+      open: function open(side, animate) {
+        var panelSide = side;
         if (!panelSide) {
-          if ($('.panel').length > 1) {
+          if ((0, _dom2.default)('.panel').length > 1) {
             return false;
           }
-          panelSide = $('.panel').hasClass('panel-left') ? 'left' : 'right';
+          panelSide = (0, _dom2.default)('.panel').hasClass('panel-left') ? 'left' : 'right';
         }
         if (!panelSide) return false;
         if (app.panel[panelSide]) {
           return app.panel[panelSide].open(animate);
         }
-        const $panelEl = $(`.panel-${panelSide}`);
+        var $panelEl = (0, _dom2.default)('.panel-' + panelSide);
         if ($panelEl.length > 0) {
           return app.panel.create({ el: $panelEl }).open(animate);
         }
         return false;
       },
-      close(side, animate) {
-        let $panelEl;
-        let panelSide;
+      close: function close(side, animate) {
+        var $panelEl = void 0;
+        var panelSide = void 0;
         if (panelSide) {
           panelSide = side;
-          $panelEl = $(`.panel-${panelSide}`);
+          $panelEl = (0, _dom2.default)('.panel-' + panelSide);
         } else {
-          $panelEl = $('.panel.panel-active');
+          $panelEl = (0, _dom2.default)('.panel.panel-active');
           panelSide = $panelEl.hasClass('panel-left') ? 'left' : 'right';
         }
         if (!panelSide) return false;
@@ -118,61 +134,66 @@ export default {
         }
         return false;
       },
-      get(side) {
-        let panelSide = side;
+      get: function get(side) {
+        var panelSide = side;
         if (!panelSide) {
-          if ($('.panel').length > 1) {
+          if ((0, _dom2.default)('.panel').length > 1) {
             return undefined;
           }
-          panelSide = $('.panel').hasClass('panel-left') ? 'left' : 'right';
+          panelSide = (0, _dom2.default)('.panel').hasClass('panel-left') ? 'left' : 'right';
         }
         if (!panelSide) return undefined;
         if (app.panel[panelSide]) {
           return app.panel[panelSide];
         }
-        const $panelEl = $(`.panel-${panelSide}`);
+        var $panelEl = (0, _dom2.default)('.panel-' + panelSide);
         if ($panelEl.length > 0) {
           return app.panel.create({ el: $panelEl });
         }
         return undefined;
-      },
+      }
     });
   },
+
   on: {
-    init() {
-      const app = this;
+    init: function init() {
+      var app = this;
 
       // Create Panels
-      $('.panel').each((index, panelEl) => {
-        const side = $(panelEl).hasClass('panel-left') ? 'left' : 'right';
-        app.panel[side] = app.panel.create({ el: panelEl, side });
+      (0, _dom2.default)('.panel').each(function (index, panelEl) {
+        var side = (0, _dom2.default)(panelEl).hasClass('panel-left') ? 'left' : 'right';
+        app.panel[side] = app.panel.create({ el: panelEl, side: side });
       });
-    },
+    }
   },
   clicks: {
-    '.panel-open': function open(clickedEl, data = {}) {
-      const app = this;
-      let side = 'left';
-      if (data.panel === 'right' || ($('.panel').length === 1 && $('.panel').hasClass('panel-right'))) {
+    '.panel-open': function open(clickedEl) {
+      var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+      var app = this;
+      var side = 'left';
+      if (data.panel === 'right' || (0, _dom2.default)('.panel').length === 1 && (0, _dom2.default)('.panel').hasClass('panel-right')) {
         side = 'right';
       }
       app.panel.open(side, data.animate);
     },
-    '.panel-close': function close(clickedEl, data = {}) {
-      const app = this;
-      const side = data.panel;
+    '.panel-close': function close(clickedEl) {
+      var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+      var app = this;
+      var side = data.panel;
       app.panel.close(side, data.animate);
     },
     '.panel-backdrop': function close() {
-      const app = this;
-      const $panelEl = $('.panel-active');
-      const instance = $panelEl[0] && $panelEl[0].f7Panel;
+      var app = this;
+      var $panelEl = (0, _dom2.default)('.panel-active');
+      var instance = $panelEl[0] && $panelEl[0].f7Panel;
       $panelEl.trigger('panel:backdrop-click');
       if (instance) {
         instance.emit('backdropClick', instance);
       }
       app.emit('panelBackdropClick', instance || $panelEl[0]);
       if (app.params.panel.closeByBackdropClick) app.panel.close();
-    },
-  },
+    }
+  }
 };

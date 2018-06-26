@@ -1,12 +1,17 @@
-import { document } from 'ssr-window';
-import $ from '../../../utils/dom';
-import Utils from '../../../utils/utils';
+'use strict';
 
-export default function (event) {
-  const swiper = this;
-  const data = swiper.touchEventsData;
-  const { params, touches, rtlTranslate: rtl } = swiper;
-  let e = event;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (event) {
+  var swiper = this;
+  var data = swiper.touchEventsData;
+  var params = swiper.params,
+      touches = swiper.touches,
+      rtl = swiper.rtlTranslate;
+
+  var e = event;
   if (e.originalEvent) e = e.originalEvent;
   if (!data.isTouched) {
     if (data.startMoving && data.isScrolling) {
@@ -15,8 +20,8 @@ export default function (event) {
     return;
   }
   if (data.isTouchEvent && e.type === 'mousemove') return;
-  const pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
-  const pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+  var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+  var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
   if (e.preventedByNestedSwiper) {
     touches.startX = pageX;
     touches.startY = pageY;
@@ -26,36 +31,30 @@ export default function (event) {
     // isMoved = true;
     swiper.allowClick = false;
     if (data.isTouched) {
-      Utils.extend(touches, {
+      _utils2.default.extend(touches, {
         startX: pageX,
         startY: pageY,
         currentX: pageX,
-        currentY: pageY,
+        currentY: pageY
       });
-      data.touchStartTime = Utils.now();
+      data.touchStartTime = _utils2.default.now();
     }
     return;
   }
   if (data.isTouchEvent && params.touchReleaseOnEdges && !params.loop) {
     if (swiper.isVertical()) {
       // Vertical
-      if (
-        (pageY < touches.startY && swiper.translate <= swiper.maxTranslate()) ||
-        (pageY > touches.startY && swiper.translate >= swiper.minTranslate())
-      ) {
+      if (pageY < touches.startY && swiper.translate <= swiper.maxTranslate() || pageY > touches.startY && swiper.translate >= swiper.minTranslate()) {
         data.isTouched = false;
         data.isMoved = false;
         return;
       }
-    } else if (
-      (pageX < touches.startX && swiper.translate <= swiper.maxTranslate()) ||
-      (pageX > touches.startX && swiper.translate >= swiper.minTranslate())
-    ) {
+    } else if (pageX < touches.startX && swiper.translate <= swiper.maxTranslate() || pageX > touches.startX && swiper.translate >= swiper.minTranslate()) {
       return;
     }
   }
-  if (data.isTouchEvent && document.activeElement) {
-    if (e.target === document.activeElement && $(e.target).is(data.formElements)) {
+  if (data.isTouchEvent && _ssrWindow.document.activeElement) {
+    if (e.target === _ssrWindow.document.activeElement && (0, _dom2.default)(e.target).is(data.formElements)) {
       data.isMoved = true;
       swiper.allowClick = false;
       return;
@@ -69,18 +68,18 @@ export default function (event) {
   touches.currentX = pageX;
   touches.currentY = pageY;
 
-  const diffX = touches.currentX - touches.startX;
-  const diffY = touches.currentY - touches.startY;
+  var diffX = touches.currentX - touches.startX;
+  var diffY = touches.currentY - touches.startY;
 
   if (typeof data.isScrolling === 'undefined') {
-    let touchAngle;
-    if ((swiper.isHorizontal() && touches.currentY === touches.startY) || (swiper.isVertical() && touches.currentX === touches.startX)) {
+    var touchAngle = void 0;
+    if (swiper.isHorizontal() && touches.currentY === touches.startY || swiper.isVertical() && touches.currentX === touches.startX) {
       data.isScrolling = false;
     } else {
       // eslint-disable-next-line
-      if ((diffX * diffX) + (diffY * diffY) >= 25) {
-        touchAngle = (Math.atan2(Math.abs(diffY), Math.abs(diffX)) * 180) / Math.PI;
-        data.isScrolling = swiper.isHorizontal() ? touchAngle > params.touchAngle : (90 - touchAngle > params.touchAngle);
+      if (diffX * diffX + diffY * diffY >= 25) {
+        touchAngle = Math.atan2(Math.abs(diffY), Math.abs(diffX)) * 180 / Math.PI;
+        data.isScrolling = swiper.isHorizontal() ? touchAngle > params.touchAngle : 90 - touchAngle > params.touchAngle;
       }
     }
   }
@@ -124,7 +123,7 @@ export default function (event) {
   swiper.emit('sliderMove', e);
   data.isMoved = true;
 
-  let diff = swiper.isHorizontal() ? diffX : diffY;
+  var diff = swiper.isHorizontal() ? diffX : diffY;
   touches.diff = diff;
 
   diff *= params.touchRatio;
@@ -133,17 +132,17 @@ export default function (event) {
   swiper.swipeDirection = diff > 0 ? 'prev' : 'next';
   data.currentTranslate = diff + data.startTranslate;
 
-  let disableParentSwiper = true;
-  let resistanceRatio = params.resistanceRatio;
+  var disableParentSwiper = true;
+  var resistanceRatio = params.resistanceRatio;
   if (params.touchReleaseOnEdges) {
     resistanceRatio = 0;
   }
-  if ((diff > 0 && data.currentTranslate > swiper.minTranslate())) {
+  if (diff > 0 && data.currentTranslate > swiper.minTranslate()) {
     disableParentSwiper = false;
-    if (params.resistance) data.currentTranslate = (swiper.minTranslate() - 1) + ((-swiper.minTranslate() + data.startTranslate + diff) ** resistanceRatio);
+    if (params.resistance) data.currentTranslate = swiper.minTranslate() - 1 + (-swiper.minTranslate() + data.startTranslate + diff) ** resistanceRatio;
   } else if (diff < 0 && data.currentTranslate < swiper.maxTranslate()) {
     disableParentSwiper = false;
-    if (params.resistance) data.currentTranslate = (swiper.maxTranslate() + 1) - ((swiper.maxTranslate() - data.startTranslate - diff) ** resistanceRatio);
+    if (params.resistance) data.currentTranslate = swiper.maxTranslate() + 1 - (swiper.maxTranslate() - data.startTranslate - diff) ** resistanceRatio;
   }
 
   if (disableParentSwiper) {
@@ -157,7 +156,6 @@ export default function (event) {
   if (!swiper.allowSlidePrev && swiper.swipeDirection === 'prev' && data.currentTranslate > data.startTranslate) {
     data.currentTranslate = data.startTranslate;
   }
-
 
   // Threshold
   if (params.threshold > 0) {
@@ -188,16 +186,28 @@ export default function (event) {
     if (data.velocities.length === 0) {
       data.velocities.push({
         position: touches[swiper.isHorizontal() ? 'startX' : 'startY'],
-        time: data.touchStartTime,
+        time: data.touchStartTime
       });
     }
     data.velocities.push({
       position: touches[swiper.isHorizontal() ? 'currentX' : 'currentY'],
-      time: Utils.now(),
+      time: _utils2.default.now()
     });
   }
   // Update progress
   swiper.updateProgress(data.currentTranslate);
   // Update translate
   swiper.setTranslate(data.currentTranslate);
-}
+};
+
+var _ssrWindow = require('ssr-window');
+
+var _dom = require('../../../utils/dom');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+var _utils = require('../../../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

@@ -1,14 +1,23 @@
-export default function (runCallbacks = true, direction) {
-  const swiper = this;
-  const { activeIndex, previousIndex } = swiper;
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function () {
+  var runCallbacks = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+  var direction = arguments[1];
+
+  var swiper = this;
+  var activeIndex = swiper.activeIndex,
+      previousIndex = swiper.previousIndex;
+
   swiper.animating = false;
   swiper.setTransition(0);
 
-  let dir = direction;
+  var dir = direction;
   if (!dir) {
-    if (activeIndex > previousIndex) dir = 'next';
-    else if (activeIndex < previousIndex) dir = 'prev';
-    else dir = 'reset';
+    if (activeIndex > previousIndex) dir = 'next';else if (activeIndex < previousIndex) dir = 'prev';else dir = 'reset';
   }
 
   swiper.emit('transitionEnd');
@@ -25,4 +34,4 @@ export default function (runCallbacks = true, direction) {
       swiper.emit('slidePrevTransitionEnd');
     }
   }
-}
+};

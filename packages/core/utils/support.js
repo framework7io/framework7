@@ -1,10 +1,16 @@
-import { window, document } from 'ssr-window';
+'use strict';
 
-const Support = (function Support() {
-  const positionSticky = (function supportPositionSticky() {
-    let support = false;
-    const div = document.createElement('div');
-    ('sticky -webkit-sticky -moz-sticky').split(' ').forEach((prop) => {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _ssrWindow = require('ssr-window');
+
+var Support = function Support() {
+  var positionSticky = function supportPositionSticky() {
+    var support = false;
+    var div = _ssrWindow.document.createElement('div');
+    'sticky -webkit-sticky -moz-sticky'.split(' ').forEach(function (prop) {
       if (support) return;
       div.style.position = prop;
       if (div.style.position === prop) {
@@ -12,61 +18,61 @@ const Support = (function Support() {
       }
     });
     return support;
-  }());
+  }();
 
-  const testDiv = document.createElement('div');
+  var testDiv = _ssrWindow.document.createElement('div');
 
   return {
-    positionSticky,
-    touch: (function checkTouch() {
-      return !!(('ontouchstart' in window) || (window.DocumentTouch && document instanceof window.DocumentTouch));
-    }()),
+    positionSticky: positionSticky,
+    touch: function checkTouch() {
+      return !!('ontouchstart' in _ssrWindow.window || _ssrWindow.window.DocumentTouch && _ssrWindow.document instanceof _ssrWindow.window.DocumentTouch);
+    }(),
 
-    pointerEvents: !!(window.navigator.pointerEnabled || window.PointerEvent),
-    prefixedPointerEvents: !!window.navigator.msPointerEnabled,
+    pointerEvents: !!(_ssrWindow.window.navigator.pointerEnabled || _ssrWindow.window.PointerEvent),
+    prefixedPointerEvents: !!_ssrWindow.window.navigator.msPointerEnabled,
 
-    transition: (function checkTransition() {
-      const style = testDiv.style;
-      return ('transition' in style || 'webkitTransition' in style || 'MozTransition' in style);
-    }()),
-    transforms3d: (window.Modernizr && window.Modernizr.csstransforms3d === true) || (function checkTransforms3d() {
-      const style = testDiv.style;
-      return ('webkitPerspective' in style || 'MozPerspective' in style || 'OPerspective' in style || 'MsPerspective' in style || 'perspective' in style);
-    }()),
+    transition: function checkTransition() {
+      var style = testDiv.style;
+      return 'transition' in style || 'webkitTransition' in style || 'MozTransition' in style;
+    }(),
+    transforms3d: _ssrWindow.window.Modernizr && _ssrWindow.window.Modernizr.csstransforms3d === true || function checkTransforms3d() {
+      var style = testDiv.style;
+      return 'webkitPerspective' in style || 'MozPerspective' in style || 'OPerspective' in style || 'MsPerspective' in style || 'perspective' in style;
+    }(),
 
-    flexbox: (function checkFlexbox() {
-      const div = document.createElement('div').style;
-      const styles = ('alignItems webkitAlignItems webkitBoxAlign msFlexAlign mozBoxAlign webkitFlexDirection msFlexDirection mozBoxDirection mozBoxOrient webkitBoxDirection webkitBoxOrient').split(' ');
-      for (let i = 0; i < styles.length; i += 1) {
+    flexbox: function checkFlexbox() {
+      var div = _ssrWindow.document.createElement('div').style;
+      var styles = 'alignItems webkitAlignItems webkitBoxAlign msFlexAlign mozBoxAlign webkitFlexDirection msFlexDirection mozBoxDirection mozBoxOrient webkitBoxDirection webkitBoxOrient'.split(' ');
+      for (var i = 0; i < styles.length; i += 1) {
         if (styles[i] in div) return true;
       }
       return false;
-    }()),
+    }(),
 
-    observer: (function checkObserver() {
-      return ('MutationObserver' in window || 'WebkitMutationObserver' in window);
-    }()),
+    observer: function checkObserver() {
+      return 'MutationObserver' in _ssrWindow.window || 'WebkitMutationObserver' in _ssrWindow.window;
+    }(),
 
-    passiveListener: (function checkPassiveListener() {
-      let supportsPassive = false;
+    passiveListener: function checkPassiveListener() {
+      var supportsPassive = false;
       try {
-        const opts = Object.defineProperty({}, 'passive', {
+        var opts = Object.defineProperty({}, 'passive', {
           // eslint-disable-next-line
-          get() {
+          get: function get() {
             supportsPassive = true;
-          },
+          }
         });
-        window.addEventListener('testPassiveListener', null, opts);
+        _ssrWindow.window.addEventListener('testPassiveListener', null, opts);
       } catch (e) {
         // No support
       }
       return supportsPassive;
-    }()),
+    }(),
 
-    gestures: (function checkGestures() {
-      return 'ongesturestart' in window;
-    }()),
+    gestures: function checkGestures() {
+      return 'ongesturestart' in _ssrWindow.window;
+    }()
   };
-}());
+}();
 
-export default Support;
+exports.default = Support;

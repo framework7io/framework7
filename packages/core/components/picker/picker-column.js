@@ -1,12 +1,15 @@
-import $ from 'dom7';
-import Utils from '../../utils/utils';
+'use strict';
 
-export default function (colEl, updateItems) {
-  const picker = this;
-  const app = picker.app;
-  const $colEl = $(colEl);
-  const colIndex = $colEl.index();
-  const col = picker.cols[colIndex];
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (colEl, updateItems) {
+  var picker = this;
+  var app = picker.app;
+  var $colEl = (0, _dom2.default)(colEl);
+  var colIndex = $colEl.index();
+  var col = picker.cols[colIndex];
   if (col.divider) return;
 
   col.$el = $colEl;
@@ -14,14 +17,14 @@ export default function (colEl, updateItems) {
   col.$itemsEl = col.$el.find('.picker-items');
   col.items = col.$itemsEl.find('.picker-item');
 
-  let itemHeight;
-  let itemsHeight;
-  let minTranslate;
-  let maxTranslate;
-  let animationFrameId;
+  var itemHeight = void 0;
+  var itemsHeight = void 0;
+  var minTranslate = void 0;
+  var maxTranslate = void 0;
+  var animationFrameId = void 0;
 
   function updateDuringScroll() {
-    animationFrameId = Utils.requestAnimationFrame(() => {
+    animationFrameId = _utils2.default.requestAnimationFrame(function () {
       col.updateItems(undefined, undefined, 0);
       updateDuringScroll();
     });
@@ -42,12 +45,12 @@ export default function (colEl, updateItems) {
       col.$el.removeClass('picker-column-absolute');
       if (!col.width) col.$el.css({ width: '' });
     }
-    let colWidth = 0;
-    const colHeight = col.$el[0].offsetHeight;
+    var colWidth = 0;
+    var colHeight = col.$el[0].offsetHeight;
     itemHeight = col.items[0].offsetHeight;
     itemsHeight = itemHeight * col.items.length;
-    minTranslate = ((colHeight / 2) - itemsHeight) + (itemHeight / 2);
-    maxTranslate = (colHeight / 2) - (itemHeight / 2);
+    minTranslate = colHeight / 2 - itemsHeight + itemHeight / 2;
+    maxTranslate = colHeight / 2 - itemHeight / 2;
     if (col.width) {
       colWidth = col.width;
       if (parseInt(colWidth, 10) === colWidth) colWidth += 'px';
@@ -55,31 +58,34 @@ export default function (colEl, updateItems) {
     }
     if (picker.params.rotateEffect) {
       if (!col.width) {
-        col.items.each((index, itemEl) => {
-          const item = $(itemEl).children('span');
+        col.items.each(function (index, itemEl) {
+          var item = (0, _dom2.default)(itemEl).children('span');
           colWidth = Math.max(colWidth, item[0].offsetWidth);
         });
-        col.$el.css({ width: `${colWidth + 2}px` });
+        col.$el.css({ width: colWidth + 2 + 'px' });
       }
       col.$el.addClass('picker-column-absolute');
     }
   };
 
-  col.setValue = function setColValue(newValue, transition = '', valueCallbacks) {
-    const newActiveIndex = col.$itemsEl.find(`.picker-item[data-picker-value="${newValue}"]`).index();
+  col.setValue = function setColValue(newValue) {
+    var transition = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+    var valueCallbacks = arguments[2];
+
+    var newActiveIndex = col.$itemsEl.find('.picker-item[data-picker-value="' + newValue + '"]').index();
     if (typeof newActiveIndex === 'undefined' || newActiveIndex === -1) {
       return;
     }
-    const newTranslate = (-newActiveIndex * itemHeight) + maxTranslate;
+    var newTranslate = -newActiveIndex * itemHeight + maxTranslate;
     // Update wrapper
     col.$itemsEl.transition(transition);
-    col.$itemsEl.transform(`translate3d(0,${newTranslate}px,0)`);
+    col.$itemsEl.transform('translate3d(0,' + newTranslate + 'px,0)');
 
     // Watch items
     if (picker.params.updateValuesOnMomentum && col.activeIndex && col.activeIndex !== newActiveIndex) {
-      Utils.cancelAnimationFrame(animationFrameId);
-      col.$itemsEl.transitionEnd(() => {
-        Utils.cancelAnimationFrame(animationFrameId);
+      _utils2.default.cancelAnimationFrame(animationFrameId);
+      col.$itemsEl.transitionEnd(function () {
+        _utils2.default.cancelAnimationFrame(animationFrameId);
       });
       updateDuringScroll();
     }
@@ -91,7 +97,7 @@ export default function (colEl, updateItems) {
   col.updateItems = function updateColItems(activeIndex, translate, transition, valueCallbacks) {
     if (typeof translate === 'undefined') {
       // eslint-disable-next-line
-      translate = Utils.getTranslate(col.$itemsEl[0], 'y');
+      translate = _utils2.default.getTranslate(col.$itemsEl[0], 'y');
     }
     // eslint-disable-next-line
     if (typeof activeIndex === 'undefined') activeIndex = -Math.round((translate - maxTranslate) / itemHeight);
@@ -99,25 +105,25 @@ export default function (colEl, updateItems) {
     if (activeIndex < 0) activeIndex = 0;
     // eslint-disable-next-line
     if (activeIndex >= col.items.length) activeIndex = col.items.length - 1;
-    const previousActiveIndex = col.activeIndex;
+    var previousActiveIndex = col.activeIndex;
     col.activeIndex = activeIndex;
     col.$itemsEl.find('.picker-item-selected').removeClass('picker-item-selected');
 
     col.items.transition(transition);
 
-    const selectedItem = col.items.eq(activeIndex).addClass('picker-item-selected').transform('');
+    var selectedItem = col.items.eq(activeIndex).addClass('picker-item-selected').transform('');
 
     // Set 3D rotate effect
     if (picker.params.rotateEffect) {
-      col.items.each((index, itemEl) => {
-        const $itemEl = $(itemEl);
-        const itemOffsetTop = $itemEl.index() * itemHeight;
-        const translateOffset = maxTranslate - translate;
-        const itemOffset = itemOffsetTop - translateOffset;
-        const percentage = itemOffset / itemHeight;
-        const itemsFit = Math.ceil(col.height / itemHeight / 2) + 1;
+      col.items.each(function (index, itemEl) {
+        var $itemEl = (0, _dom2.default)(itemEl);
+        var itemOffsetTop = $itemEl.index() * itemHeight;
+        var translateOffset = maxTranslate - translate;
+        var itemOffset = itemOffsetTop - translateOffset;
+        var percentage = itemOffset / itemHeight;
+        var itemsFit = Math.ceil(col.height / itemHeight / 2) + 1;
 
-        let angle = (-18 * percentage);
+        var angle = -18 * percentage;
         if (angle > 180) angle = 180;
         if (angle < -180) angle = -180;
         if (Math.abs(percentage) > itemsFit) {
@@ -125,7 +131,7 @@ export default function (colEl, updateItems) {
         } else {
           $itemEl.removeClass('picker-item-far');
         }
-        $itemEl.transform(`translate3d(0, ${-translate + maxTranslate}px, ${picker.needsOriginFix ? -110 : 0}px) rotateX(${angle}deg)`);
+        $itemEl.transform('translate3d(0, ' + (-translate + maxTranslate) + 'px, ' + (picker.needsOriginFix ? -110 : 0) + 'px) rotateX(' + angle + 'deg)');
       });
     }
 
@@ -143,28 +149,28 @@ export default function (colEl, updateItems) {
     }
   };
 
-  let allowItemClick = true;
-  let isTouched;
-  let isMoved;
-  let touchStartY;
-  let touchCurrentY;
-  let touchStartTime;
-  let touchEndTime;
-  let startTranslate;
-  let returnTo;
-  let currentTranslate;
-  let prevTranslate;
-  let velocityTranslate;
+  var allowItemClick = true;
+  var isTouched = void 0;
+  var isMoved = void 0;
+  var touchStartY = void 0;
+  var touchCurrentY = void 0;
+  var touchStartTime = void 0;
+  var touchEndTime = void 0;
+  var startTranslate = void 0;
+  var returnTo = void 0;
+  var currentTranslate = void 0;
+  var prevTranslate = void 0;
+  var velocityTranslate = void 0;
   function handleTouchStart(e) {
     if (isMoved || isTouched) return;
     e.preventDefault();
     isTouched = true;
     touchStartY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
     touchCurrentY = touchStartY;
-    touchStartTime = (new Date()).getTime();
+    touchStartTime = new Date().getTime();
 
     allowItemClick = true;
-    startTranslate = Utils.getTranslate(col.$itemsEl[0], 'y');
+    startTranslate = _utils2.default.getTranslate(col.$itemsEl[0], 'y');
     currentTranslate = startTranslate;
   }
   function handleTouchMove(e) {
@@ -174,28 +180,28 @@ export default function (colEl, updateItems) {
     touchCurrentY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
     if (!isMoved) {
       // First move
-      Utils.cancelAnimationFrame(animationFrameId);
+      _utils2.default.cancelAnimationFrame(animationFrameId);
       isMoved = true;
-      startTranslate = Utils.getTranslate(col.$itemsEl[0], 'y');
+      startTranslate = _utils2.default.getTranslate(col.$itemsEl[0], 'y');
       currentTranslate = startTranslate;
       col.$itemsEl.transition(0);
     }
 
-    const diff = touchCurrentY - touchStartY;
+    var diff = touchCurrentY - touchStartY;
     currentTranslate = startTranslate + diff;
     returnTo = undefined;
 
     // Normalize translate
     if (currentTranslate < minTranslate) {
-      currentTranslate = minTranslate - ((minTranslate - currentTranslate) ** 0.8);
+      currentTranslate = minTranslate - (minTranslate - currentTranslate) ** 0.8;
       returnTo = 'min';
     }
     if (currentTranslate > maxTranslate) {
-      currentTranslate = maxTranslate + ((currentTranslate - maxTranslate) ** 0.8);
+      currentTranslate = maxTranslate + (currentTranslate - maxTranslate) ** 0.8;
       returnTo = 'max';
     }
     // Transform wrapper
-    col.$itemsEl.transform(`translate3d(0,${currentTranslate}px,0)`);
+    col.$itemsEl.transform('translate3d(0,' + currentTranslate + 'px,0)');
 
     // Update items
     col.updateItems(undefined, currentTranslate, 0, picker.params.updateValuesOnTouchmove);
@@ -215,27 +221,27 @@ export default function (colEl, updateItems) {
     col.$itemsEl.transition('');
     if (returnTo) {
       if (returnTo === 'min') {
-        col.$itemsEl.transform(`translate3d(0,${minTranslate}px,0)`);
-      } else col.$itemsEl.transform(`translate3d(0,${maxTranslate}px,0)`);
+        col.$itemsEl.transform('translate3d(0,' + minTranslate + 'px,0)');
+      } else col.$itemsEl.transform('translate3d(0,' + maxTranslate + 'px,0)');
     }
     touchEndTime = new Date().getTime();
-    let newTranslate;
+    var newTranslate = void 0;
     if (touchEndTime - touchStartTime > 300) {
       newTranslate = currentTranslate;
     } else {
-      newTranslate = currentTranslate + (velocityTranslate * picker.params.momentumRatio);
+      newTranslate = currentTranslate + velocityTranslate * picker.params.momentumRatio;
     }
 
     newTranslate = Math.max(Math.min(newTranslate, maxTranslate), minTranslate);
 
     // Active Index
-    const activeIndex = -Math.floor((newTranslate - maxTranslate) / itemHeight);
+    var activeIndex = -Math.floor((newTranslate - maxTranslate) / itemHeight);
 
     // Normalize translate
-    if (!picker.params.freeMode) newTranslate = (-activeIndex * itemHeight) + maxTranslate;
+    if (!picker.params.freeMode) newTranslate = -activeIndex * itemHeight + maxTranslate;
 
     // Transform wrapper
-    col.$itemsEl.transform(`translate3d(0,${parseInt(newTranslate, 10)}px,0)`);
+    col.$itemsEl.transform('translate3d(0,' + parseInt(newTranslate, 10) + 'px,0)');
 
     // Update items
     col.updateItems(activeIndex, newTranslate, '', true);
@@ -243,25 +249,25 @@ export default function (colEl, updateItems) {
     // Watch items
     if (picker.params.updateValuesOnMomentum) {
       updateDuringScroll();
-      col.$itemsEl.transitionEnd(() => {
-        Utils.cancelAnimationFrame(animationFrameId);
+      col.$itemsEl.transitionEnd(function () {
+        _utils2.default.cancelAnimationFrame(animationFrameId);
       });
     }
 
     // Allow click
-    setTimeout(() => {
+    setTimeout(function () {
       allowItemClick = true;
     }, 100);
   }
 
   function handleClick() {
     if (!allowItemClick) return;
-    Utils.cancelAnimationFrame(animationFrameId);
-    const value = $(this).attr('data-picker-value');
+    _utils2.default.cancelAnimationFrame(animationFrameId);
+    var value = (0, _dom2.default)(this).attr('data-picker-value');
     col.setValue(value);
   }
 
-  const activeListener = app.support.passiveListener ? { passive: false, capture: false } : false;
+  var activeListener = app.support.passiveListener ? { passive: false, capture: false } : false;
   col.attachEvents = function attachColEvents() {
     col.$el.on(app.touchEvents.start, handleTouchStart, activeListener);
     app.on('touchmove:active', handleTouchMove);
@@ -277,7 +283,7 @@ export default function (colEl, updateItems) {
 
   col.init = function initCol() {
     col.calcSize();
-    col.$itemsEl.transform(`translate3d(0,${maxTranslate}px,0)`).transition(0);
+    col.$itemsEl.transform('translate3d(0,' + maxTranslate + 'px,0)').transition(0);
     if (colIndex === 0) col.$el.addClass('picker-column-first');
     if (colIndex === picker.cols.length - 1) col.$el.addClass('picker-column-last');
     // Update items on init
@@ -291,4 +297,14 @@ export default function (colEl, updateItems) {
   };
 
   col.init();
-}
+};
+
+var _dom = require('dom7');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+var _utils = require('../../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

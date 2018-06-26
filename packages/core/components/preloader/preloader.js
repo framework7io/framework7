@@ -1,63 +1,75 @@
-import $ from 'dom7';
-import Utils from '../../utils/utils';
+'use strict';
 
-const Preloader = {
-  init(el) {
-    const app = this;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _dom = require('dom7');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+var _utils = require('../../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Preloader = {
+  init: function init(el) {
+    var app = this;
     if (app.theme !== 'md') return;
-    const $el = $(el);
+    var $el = (0, _dom2.default)(el);
     if ($el.length === 0 || $el.children('.preloader-inner').length > 0) return;
-    $el.append(Utils.mdPreloaderContent);
+    $el.append(_utils2.default.mdPreloaderContent);
   },
+
   // Modal
   visible: false,
-  show(color = 'white') {
-    const app = this;
+  show: function show() {
+    var color = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'white';
+
+    var app = this;
     if (Preloader.visible) return;
-    const preloaderInner = app.theme !== 'md' ? '' : Utils.mdPreloaderContent;
-    $('html').addClass('with-modal-preloader');
-    app.root.append(`
-      <div class="preloader-backdrop"></div>
-      <div class="preloader-modal">
-        <div class="preloader color-${color}">${preloaderInner}</div>
-      </div>
-    `);
+    var preloaderInner = app.theme !== 'md' ? '' : _utils2.default.mdPreloaderContent;
+    (0, _dom2.default)('html').addClass('with-modal-preloader');
+    app.root.append('\n      <div class="preloader-backdrop"></div>\n      <div class="preloader-modal">\n        <div class="preloader color-' + color + '">' + preloaderInner + '</div>\n      </div>\n    ');
     Preloader.visible = true;
   },
-  hide() {
-    const app = this;
+  hide: function hide() {
+    var app = this;
     if (!Preloader.visible) return;
-    $('html').removeClass('with-modal-preloader');
+    (0, _dom2.default)('html').removeClass('with-modal-preloader');
     app.root.find('.preloader-backdrop, .preloader-modal').remove();
     Preloader.visible = false;
-  },
+  }
 };
-export default {
+exports.default = {
   name: 'preloader',
-  create() {
-    const app = this;
-    Utils.extend(app, {
+  create: function create() {
+    var app = this;
+    _utils2.default.extend(app, {
       preloader: {
         init: Preloader.init.bind(app),
         show: Preloader.show.bind(app),
-        hide: Preloader.hide.bind(app),
-      },
+        hide: Preloader.hide.bind(app)
+      }
     });
   },
+
   on: {
-    photoBrowserOpen(pb) {
-      const app = this;
+    photoBrowserOpen: function photoBrowserOpen(pb) {
+      var app = this;
       if (app.theme !== 'md') return;
-      pb.$el.find('.preloader').each((index, preloaderEl) => {
+      pb.$el.find('.preloader').each(function (index, preloaderEl) {
         app.preloader.init(preloaderEl);
       });
     },
-    pageInit(page) {
-      const app = this;
+    pageInit: function pageInit(page) {
+      var app = this;
       if (app.theme !== 'md') return;
-      page.$el.find('.preloader').each((index, preloaderEl) => {
+      page.$el.find('.preloader').each(function (index, preloaderEl) {
         app.preloader.init(preloaderEl);
       });
-    },
-  },
+    }
+  }
 };

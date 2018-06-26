@@ -1,28 +1,47 @@
-import $ from 'dom7';
-import ConstructorMethods from '../../utils/constructor-methods';
-import Picker from './picker-class';
+'use strict';
 
-export default {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _dom = require('dom7');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+var _constructorMethods = require('../../utils/constructor-methods');
+
+var _constructorMethods2 = _interopRequireDefault(_constructorMethods);
+
+var _pickerClass = require('./picker-class');
+
+var _pickerClass2 = _interopRequireDefault(_pickerClass);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
   name: 'picker',
   static: {
-    Picker,
+    Picker: _pickerClass2.default
   },
-  create() {
-    const app = this;
-    app.picker = ConstructorMethods({
+  create: function create() {
+    var app = this;
+    app.picker = (0, _constructorMethods2.default)({
       defaultSelector: '.picker',
-      constructor: Picker,
-      app,
-      domProp: 'f7Picker',
+      constructor: _pickerClass2.default,
+      app: app,
+      domProp: 'f7Picker'
     });
-    app.picker.close = function close(el = '.picker') {
-      const $el = $(el);
+    app.picker.close = function close() {
+      var el = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '.picker';
+
+      var $el = (0, _dom2.default)(el);
       if ($el.length === 0) return;
-      const picker = $el[0].f7Picker;
-      if (!picker || (picker && !picker.opened)) return;
+      var picker = $el[0].f7Picker;
+      if (!picker || picker && !picker.opened) return;
       picker.close();
     };
   },
+
   params: {
     picker: {
       // Picker settings
@@ -48,7 +67,7 @@ export default {
       url: 'select/',
       // Render functions
       renderToolbar: null,
-      render: null,
-    },
-  },
+      render: null
+    }
+  }
 };

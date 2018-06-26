@@ -1,15 +1,31 @@
-import $ from 'dom7';
-import Utils from '../../utils/utils';
-import View from './view-class';
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _dom = require('dom7');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+var _utils = require('../../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _viewClass = require('./view-class');
+
+var _viewClass2 = _interopRequireDefault(_viewClass);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function getCurrentView(app) {
-  const popoverView = $('.popover.modal-in .view');
-  const popupView = $('.popup.modal-in .view');
-  const panelView = $('.panel.panel-active .view');
-  let appViews = $('.views');
+  var popoverView = (0, _dom2.default)('.popover.modal-in .view');
+  var popupView = (0, _dom2.default)('.popup.modal-in .view');
+  var panelView = (0, _dom2.default)('.panel.panel-active .view');
+  var appViews = (0, _dom2.default)('.views');
   if (appViews.length === 0) appViews = app.root;
   // Find active view as tab
-  let appView = appViews.children('.view');
+  var appView = appViews.children('.view');
   // Propably in tabs or split view
   if (appView.length > 1) {
     if (appView.hasClass('tab')) {
@@ -31,7 +47,7 @@ function getCurrentView(app) {
   return undefined;
 }
 
-export default {
+exports.default = {
   name: 'view',
   params: {
     view: {
@@ -84,60 +100,61 @@ export default {
       iosAnimateNavbarBackIcon: true,
       // Delays
       iosPageLoadDelay: 0,
-      materialPageLoadDelay: 0,
-    },
+      materialPageLoadDelay: 0
+    }
   },
   static: {
-    View,
+    View: _viewClass2.default
   },
-  create() {
-    const app = this;
-    Utils.extend(app, {
-      views: Utils.extend([], {
-        create(el, params) {
-          return new View(app, el, params);
+  create: function create() {
+    var app = this;
+    _utils2.default.extend(app, {
+      views: _utils2.default.extend([], {
+        create: function create(el, params) {
+          return new _viewClass2.default(app, el, params);
         },
-        get(viewEl) {
-          const $viewEl = $(viewEl);
+        get: function get(viewEl) {
+          var $viewEl = (0, _dom2.default)(viewEl);
           if ($viewEl.length && $viewEl[0].f7View) return $viewEl[0].f7View;
           return undefined;
-        },
-      }),
+        }
+      })
     });
     Object.defineProperty(app.views, 'current', {
       enumerable: true,
       configurable: true,
-      get() {
+      get: function get() {
         return getCurrentView(app);
-      },
+      }
     });
     // Alias
     app.view = app.views;
   },
+
   on: {
-    init() {
-      const app = this;
-      $('.view-init').each((index, viewEl) => {
+    init: function init() {
+      var app = this;
+      (0, _dom2.default)('.view-init').each(function (index, viewEl) {
         if (viewEl.f7View) return;
-        const viewParams = $(viewEl).dataset();
+        var viewParams = (0, _dom2.default)(viewEl).dataset();
         app.views.create(viewEl, viewParams);
       });
     },
-    modalOpen(modal) {
-      const app = this;
-      modal.$el.find('.view-init').each((index, viewEl) => {
+    modalOpen: function modalOpen(modal) {
+      var app = this;
+      modal.$el.find('.view-init').each(function (index, viewEl) {
         if (viewEl.f7View) return;
-        const viewParams = $(viewEl).dataset();
+        var viewParams = (0, _dom2.default)(viewEl).dataset();
         app.views.create(viewEl, viewParams);
       });
     },
-    modalBeforeDestroy(modal) {
+    modalBeforeDestroy: function modalBeforeDestroy(modal) {
       if (!modal || !modal.$el) return;
-      modal.$el.find('.view-init').each((index, viewEl) => {
-        const view = viewEl.f7View;
+      modal.$el.find('.view-init').each(function (index, viewEl) {
+        var view = viewEl.f7View;
         if (!view) return;
         view.destroy();
       });
-    },
-  },
+    }
+  }
 };

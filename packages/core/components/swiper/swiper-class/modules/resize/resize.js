@@ -1,37 +1,49 @@
-import { window } from 'ssr-window';
-import Utils from '../../utils/utils';
+'use strict';
 
-export default {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _ssrWindow = require('ssr-window');
+
+var _utils = require('../../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
   name: 'resize',
-  create() {
-    const swiper = this;
-    Utils.extend(swiper, {
+  create: function create() {
+    var swiper = this;
+    _utils2.default.extend(swiper, {
       resize: {
-        resizeHandler() {
+        resizeHandler: function resizeHandler() {
           if (!swiper || swiper.destroyed || !swiper.initialized) return;
           swiper.emit('beforeResize');
           swiper.emit('resize');
         },
-        orientationChangeHandler() {
+        orientationChangeHandler: function orientationChangeHandler() {
           if (!swiper || swiper.destroyed || !swiper.initialized) return;
           swiper.emit('orientationchange');
-        },
-      },
+        }
+      }
     });
   },
+
   on: {
-    init() {
-      const swiper = this;
+    init: function init() {
+      var swiper = this;
       // Emit resize
-      window.addEventListener('resize', swiper.resize.resizeHandler);
+      _ssrWindow.window.addEventListener('resize', swiper.resize.resizeHandler);
 
       // Emit orientationchange
-      window.addEventListener('orientationchange', swiper.resize.orientationChangeHandler);
+      _ssrWindow.window.addEventListener('orientationchange', swiper.resize.orientationChangeHandler);
     },
-    destroy() {
-      const swiper = this;
-      window.removeEventListener('resize', swiper.resize.resizeHandler);
-      window.removeEventListener('orientationchange', swiper.resize.orientationChangeHandler);
-    },
-  },
+    destroy: function destroy() {
+      var swiper = this;
+      _ssrWindow.window.removeEventListener('resize', swiper.resize.resizeHandler);
+      _ssrWindow.window.removeEventListener('orientationchange', swiper.resize.orientationChangeHandler);
+    }
+  }
 };

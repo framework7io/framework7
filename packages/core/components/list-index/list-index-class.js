@@ -1,13 +1,46 @@
-import $ from 'dom7';
-import Utils from '../../utils/utils';
-import Framework7Class from '../../utils/class';
+'use strict';
 
-class ListIndex extends Framework7Class {
-  constructor(app, params = {}) {
-    super(params, [app]);
-    const index = this;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-    const defaults = {
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _dom = require('dom7');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+var _utils = require('../../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _class = require('../../utils/class');
+
+var _class2 = _interopRequireDefault(_class);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ListIndex = function (_Framework7Class) {
+  _inherits(ListIndex, _Framework7Class);
+
+  function ListIndex(app) {
+    var _ret3;
+
+    var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    _classCallCheck(this, ListIndex);
+
+    var _this = _possibleConstructorReturn(this, (ListIndex.__proto__ || Object.getPrototypeOf(ListIndex)).call(this, params, [app]));
+
+    var index = _this;
+
+    var defaults = {
       el: null, // where to render indexes
       listEl: null, // list el to generate indexes
       indexes: 'auto', // or array of indexes
@@ -16,45 +49,48 @@ class ListIndex extends Framework7Class {
       scrollList: true,
       label: false,
       // eslint-disable-next-line
-      renderItem(itemContent, itemIndex) {
-        return `
-          <li>${itemContent}</li>
-        `.trim();
+      renderItem: function renderItem(itemContent, itemIndex) {
+        return ('\n          <li>' + itemContent + '</li>\n        ').trim();
       },
-      renderSkipPlaceholder() {
+      renderSkipPlaceholder: function renderSkipPlaceholder() {
         return '<li class="list-index-skip-placeholder"></li>';
       },
-      on: {},
+
+      on: {}
     };
 
     // Extend defaults with modules params
     index.useModulesParams(defaults);
 
-    index.params = Utils.extend(defaults, params);
+    index.params = _utils2.default.extend(defaults, params);
 
-    let $el;
-    let $listEl;
-    let $pageContentEl;
-    let $ul;
+    var $el = void 0;
+    var $listEl = void 0;
+    var $pageContentEl = void 0;
+    var $ul = void 0;
 
     if (index.params.el) {
-      $el = $(index.params.el);
+      $el = (0, _dom2.default)(index.params.el);
     } else {
-      return index;
+      var _ret;
+
+      return _ret = index, _possibleConstructorReturn(_this, _ret);
     }
 
     $ul = $el.find('ul');
     if ($ul.length === 0) {
-      $ul = $('<ul></ul>');
+      $ul = (0, _dom2.default)('<ul></ul>');
       $el.append($ul);
     }
 
     if (index.params.listEl) {
-      $listEl = $(index.params.listEl);
+      $listEl = (0, _dom2.default)(index.params.listEl);
     }
 
     if (index.params.indexes === 'auto' && !$listEl) {
-      return index;
+      var _ret2;
+
+      return _ret2 = index, _possibleConstructorReturn(_this, _ret2);
     }
 
     if ($listEl) {
@@ -68,19 +104,19 @@ class ListIndex extends Framework7Class {
 
     $el[0].f7ListIndex = index;
 
-    Utils.extend(index, {
-      app,
-      $el,
+    _utils2.default.extend(index, {
+      app: app,
+      $el: $el,
       el: $el && $el[0],
-      $ul,
+      $ul: $ul,
       ul: $ul && $ul[0],
-      $listEl,
+      $listEl: $listEl,
       listEl: $listEl && $listEl[0],
-      $pageContentEl,
+      $pageContentEl: $pageContentEl,
       pageContentEl: $pageContentEl && $pageContentEl[0],
       indexes: params.indexes,
       height: 0,
-      skipRate: 0,
+      skipRate: 0
     });
 
     // Install Modules
@@ -88,7 +124,7 @@ class ListIndex extends Framework7Class {
 
     // Attach events
     function handleResize() {
-      const height = { index };
+      var height = { index: index };
       index.calcSize();
       if (height !== index.height) {
         index.render();
@@ -96,15 +132,15 @@ class ListIndex extends Framework7Class {
     }
 
     function handleClick(e) {
-      const $clickedLi = $(e.target).closest('li');
+      var $clickedLi = (0, _dom2.default)(e.target).closest('li');
       if (!$clickedLi.length) return;
 
-      let itemIndex = $clickedLi.index();
+      var itemIndex = $clickedLi.index();
       if (index.skipRate > 0) {
-        const percentage = itemIndex / ($clickedLi.siblings('li').length - 1);
+        var percentage = itemIndex / ($clickedLi.siblings('li').length - 1);
         itemIndex = Math.round((index.indexes.length - 1) * percentage);
       }
-      const itemContent = index.indexes[itemIndex];
+      var itemContent = index.indexes[itemIndex];
 
       index.$el.trigger('listindex:click', itemContent, itemIndex);
       index.emit('local::click listIndexClick', index, itemContent, itemIndex);
@@ -116,15 +152,15 @@ class ListIndex extends Framework7Class {
       }
     }
 
-    const touchesStart = {};
-    let isTouched;
-    let isMoved;
-    let topPoint;
-    let bottomPoint;
-    let $labelEl;
-    let previousIndex = null;
+    var touchesStart = {};
+    var isTouched = void 0;
+    var isMoved = void 0;
+    var topPoint = void 0;
+    var bottomPoint = void 0;
+    var $labelEl = void 0;
+    var previousIndex = null;
     function handleTouchStart(e) {
-      const $children = $ul.children();
+      var $children = $ul.children();
       if (!$children.length) return;
       topPoint = $children[0].getBoundingClientRect().top;
       bottomPoint = $children[$children.length - 1].getBoundingClientRect().top + $children[0].offsetHeight;
@@ -138,26 +174,25 @@ class ListIndex extends Framework7Class {
     function handleTouchMove(e) {
       if (!isTouched) return;
       if (!isMoved && index.params.label) {
-        $labelEl = $('<span class="list-index-label"></span>');
+        $labelEl = (0, _dom2.default)('<span class="list-index-label"></span>');
         $el.append($labelEl);
       }
       isMoved = true;
-      const pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+      var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
       e.preventDefault();
 
-      let percentage = (pageY - topPoint) / (bottomPoint - topPoint);
+      var percentage = (pageY - topPoint) / (bottomPoint - topPoint);
       percentage = Math.min(Math.max(percentage, 0), 1);
 
-      const itemIndex = Math.round((index.indexes.length - 1) * percentage);
-      const itemContent = index.indexes[itemIndex];
+      var itemIndex = Math.round((index.indexes.length - 1) * percentage);
+      var itemContent = index.indexes[itemIndex];
 
-
-      const ulHeight = bottomPoint - topPoint;
-      const bubbleBottom = ((index.height - ulHeight) / 2) + ((1 - percentage) * ulHeight);
+      var ulHeight = bottomPoint - topPoint;
+      var bubbleBottom = (index.height - ulHeight) / 2 + (1 - percentage) * ulHeight;
 
       if (itemIndex !== previousIndex) {
         if (index.params.label) {
-          $labelEl.html(itemContent).transform(`translateY(-${bubbleBottom}px)`);
+          $labelEl.html(itemContent).transform('translateY(-' + bubbleBottom + 'px)');
         }
 
         if (index.$listEl && index.params.scrollList) {
@@ -179,14 +214,12 @@ class ListIndex extends Framework7Class {
         $labelEl = undefined;
       }
     }
-    const passiveListener = app.support.passiveListener ? { passive: true } : false;
+    var passiveListener = app.support.passiveListener ? { passive: true } : false;
     index.attachEvents = function attachEvents() {
       $el.parents('.tab').on('tab:show', handleResize);
       $el.parents('.page').on('page:reinit', handleResize);
       $el.parents('.panel').on('panel:open', handleResize);
-      $el
-        .parents('.sheet-modal, .actions-modal, .popup, .popover, .login-screen, .dialog, .toast')
-        .on('modal:open', handleResize);
+      $el.parents('.sheet-modal, .actions-modal, .popup, .popover, .login-screen, .dialog, .toast').on('modal:open', handleResize);
       app.on('resize', handleResize);
 
       $el.on('click', handleClick);
@@ -198,9 +231,7 @@ class ListIndex extends Framework7Class {
       $el.parents('.tab').off('tab:show', handleResize);
       $el.parents('.page').off('page:reinit', handleResize);
       $el.parents('.panel').off('panel:open', handleResize);
-      $el
-        .parents('.sheet-modal, .actions-modal, .popup, .popover, .login-screen, .dialog, .toast')
-        .off('modal:open', handleResize);
+      $el.parents('.sheet-modal, .actions-modal, .popup, .popover, .login-screen, .dialog, .toast').off('modal:open', handleResize);
       app.off('resize', handleResize);
 
       $el.off('click', handleClick);
@@ -211,132 +242,156 @@ class ListIndex extends Framework7Class {
     // Init
     index.init();
 
-    return index;
+    return _ret3 = index, _possibleConstructorReturn(_this, _ret3);
   }
   // eslint-disable-next-line
-  scrollListToIndex(itemContent, itemIndex) {
-    const index = this;
-    const { $listEl, $pageContentEl } = index;
-    if (!$listEl || !$pageContentEl || $pageContentEl.length === 0) return index;
 
-    let $scrollToEl;
-    $listEl.find('.list-group-title, .item-divider').each((elIndex, el) => {
-      if ($scrollToEl) return;
-      const $el = $(el);
-      if ($el.text() === itemContent) {
-        $scrollToEl = $el;
-      }
-    });
-    if (!$scrollToEl || $scrollToEl.length === 0) return index;
 
-    const parentTop = $scrollToEl.parent().offset().top;
-    const paddingTop = parseInt($pageContentEl.css('padding-top'), 10);
-    const scrollTop = $pageContentEl[0].scrollTop;
-    const scrollToElTop = $scrollToEl.offset().top;
+  _createClass(ListIndex, [{
+    key: 'scrollListToIndex',
+    value: function scrollListToIndex(itemContent, itemIndex) {
+      var index = this;
+      var $listEl = index.$listEl,
+          $pageContentEl = index.$pageContentEl;
 
-    if (parentTop <= paddingTop) {
-      $pageContentEl.scrollTop((parentTop + scrollTop) - paddingTop);
-    } else {
-      $pageContentEl.scrollTop((scrollToElTop + scrollTop) - paddingTop);
-    }
-    return index;
-  }
+      if (!$listEl || !$pageContentEl || $pageContentEl.length === 0) return index;
 
-  renderSkipPlaceholder() {
-    const index = this;
-    return index.params.renderSkipPlaceholder.call(index);
-  }
-
-  renderItem(itemContent, itemIndex) {
-    const index = this;
-    return index.params.renderItem.call(index, itemContent, itemIndex);
-  }
-
-  render() {
-    const index = this;
-    const { $ul, indexes, skipRate } = index;
-    let wasSkipped;
-
-    const html = indexes.map((itemContent, itemIndex) => {
-      if (itemIndex % skipRate !== 0 && skipRate > 0) {
-        wasSkipped = true;
-        return '';
-      }
-      let itemHtml = index.renderItem(itemContent, itemIndex);
-      if (wasSkipped) {
-        itemHtml = index.renderSkipPlaceholder() + itemHtml;
-      }
-      wasSkipped = false;
-      return itemHtml;
-    }).join('');
-
-    $ul.html(html);
-
-    return index;
-  }
-
-  calcSize() {
-    const index = this;
-    const { app, params, el, indexes } = index;
-    const height = el.offsetHeight;
-    const itemHeight = app.theme === 'ios' ? params.iosItemHeight : params.mdItemHeight;
-    const maxItems = Math.floor(height / itemHeight);
-    const items = indexes.length;
-    let skipRate = 0;
-    if (items > maxItems) {
-      skipRate = Math.ceil(((items * 2) - 1) / maxItems);
-    }
-
-    index.height = height;
-    index.skipRate = skipRate;
-
-    return index;
-  }
-
-  calcIndexes() {
-    const index = this;
-    if (index.params.indexes === 'auto') {
-      index.indexes = [];
-
-      index.$listEl.find('.list-group-title, .item-divider').each((elIndex, el) => {
-        const elContent = $(el).text();
-        if (index.indexes.indexOf(elContent) < 0) {
-          index.indexes.push(elContent);
+      var $scrollToEl = void 0;
+      $listEl.find('.list-group-title, .item-divider').each(function (elIndex, el) {
+        if ($scrollToEl) return;
+        var $el = (0, _dom2.default)(el);
+        if ($el.text() === itemContent) {
+          $scrollToEl = $el;
         }
       });
-    } else {
-      index.indexes = index.params.indexes;
+      if (!$scrollToEl || $scrollToEl.length === 0) return index;
+
+      var parentTop = $scrollToEl.parent().offset().top;
+      var paddingTop = parseInt($pageContentEl.css('padding-top'), 10);
+      var scrollTop = $pageContentEl[0].scrollTop;
+      var scrollToElTop = $scrollToEl.offset().top;
+
+      if (parentTop <= paddingTop) {
+        $pageContentEl.scrollTop(parentTop + scrollTop - paddingTop);
+      } else {
+        $pageContentEl.scrollTop(scrollToElTop + scrollTop - paddingTop);
+      }
+      return index;
     }
-    return index;
-  }
+  }, {
+    key: 'renderSkipPlaceholder',
+    value: function renderSkipPlaceholder() {
+      var index = this;
+      return index.params.renderSkipPlaceholder.call(index);
+    }
+  }, {
+    key: 'renderItem',
+    value: function renderItem(itemContent, itemIndex) {
+      var index = this;
+      return index.params.renderItem.call(index, itemContent, itemIndex);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var index = this;
+      var $ul = index.$ul,
+          indexes = index.indexes,
+          skipRate = index.skipRate;
 
-  update() {
-    const index = this;
-    index.calcIndexes();
-    index.calcSize();
-    index.render();
+      var wasSkipped = void 0;
 
-    return index;
-  }
+      var html = indexes.map(function (itemContent, itemIndex) {
+        if (itemIndex % skipRate !== 0 && skipRate > 0) {
+          wasSkipped = true;
+          return '';
+        }
+        var itemHtml = index.renderItem(itemContent, itemIndex);
+        if (wasSkipped) {
+          itemHtml = index.renderSkipPlaceholder() + itemHtml;
+        }
+        wasSkipped = false;
+        return itemHtml;
+      }).join('');
 
-  init() {
-    const index = this;
-    index.calcIndexes();
-    index.calcSize();
-    index.render();
-    index.attachEvents();
-  }
+      $ul.html(html);
 
-  destroy() {
-    let index = this;
-    index.$el.trigger('listindex:beforedestroy', index);
-    index.emit('local::beforeDestroy listIndexBeforeDestroy', index);
-    index.detachEvents();
-    index.$el[0].f7ListIndex = null;
-    delete index.$el[0].f7ListIndex;
-    Utils.deleteProps(index);
-    index = null;
-  }
-}
+      return index;
+    }
+  }, {
+    key: 'calcSize',
+    value: function calcSize() {
+      var index = this;
+      var app = index.app,
+          params = index.params,
+          el = index.el,
+          indexes = index.indexes;
 
-export default ListIndex;
+      var height = el.offsetHeight;
+      var itemHeight = app.theme === 'ios' ? params.iosItemHeight : params.mdItemHeight;
+      var maxItems = Math.floor(height / itemHeight);
+      var items = indexes.length;
+      var skipRate = 0;
+      if (items > maxItems) {
+        skipRate = Math.ceil((items * 2 - 1) / maxItems);
+      }
+
+      index.height = height;
+      index.skipRate = skipRate;
+
+      return index;
+    }
+  }, {
+    key: 'calcIndexes',
+    value: function calcIndexes() {
+      var index = this;
+      if (index.params.indexes === 'auto') {
+        index.indexes = [];
+
+        index.$listEl.find('.list-group-title, .item-divider').each(function (elIndex, el) {
+          var elContent = (0, _dom2.default)(el).text();
+          if (index.indexes.indexOf(elContent) < 0) {
+            index.indexes.push(elContent);
+          }
+        });
+      } else {
+        index.indexes = index.params.indexes;
+      }
+      return index;
+    }
+  }, {
+    key: 'update',
+    value: function update() {
+      var index = this;
+      index.calcIndexes();
+      index.calcSize();
+      index.render();
+
+      return index;
+    }
+  }, {
+    key: 'init',
+    value: function init() {
+      var index = this;
+      index.calcIndexes();
+      index.calcSize();
+      index.render();
+      index.attachEvents();
+    }
+  }, {
+    key: 'destroy',
+    value: function destroy() {
+      var index = this;
+      index.$el.trigger('listindex:beforedestroy', index);
+      index.emit('local::beforeDestroy listIndexBeforeDestroy', index);
+      index.detachEvents();
+      index.$el[0].f7ListIndex = null;
+      delete index.$el[0].f7ListIndex;
+      _utils2.default.deleteProps(index);
+      index = null;
+    }
+  }]);
+
+  return ListIndex;
+}(_class2.default);
+
+exports.default = ListIndex;

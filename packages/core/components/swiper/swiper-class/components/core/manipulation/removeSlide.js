@@ -1,20 +1,29 @@
-import Support from '../../../utils/support';
+'use strict';
 
-export default function (slidesIndexes) {
-  const swiper = this;
-  const { params, $wrapperEl, activeIndex } = swiper;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-  let activeIndexBuffer = activeIndex;
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.default = function (slidesIndexes) {
+  var swiper = this;
+  var params = swiper.params,
+      $wrapperEl = swiper.$wrapperEl,
+      activeIndex = swiper.activeIndex;
+
+
+  var activeIndexBuffer = activeIndex;
   if (params.loop) {
     activeIndexBuffer -= swiper.loopedSlides;
     swiper.loopDestroy();
-    swiper.slides = $wrapperEl.children(`.${params.slideClass}`);
+    swiper.slides = $wrapperEl.children('.' + params.slideClass);
   }
-  let newActiveIndex = activeIndexBuffer;
-  let indexToRemove;
+  var newActiveIndex = activeIndexBuffer;
+  var indexToRemove = void 0;
 
-  if (typeof slidesIndexes === 'object' && 'length' in slidesIndexes) {
-    for (let i = 0; i < slidesIndexes.length; i += 1) {
+  if ((typeof slidesIndexes === 'undefined' ? 'undefined' : _typeof(slidesIndexes)) === 'object' && 'length' in slidesIndexes) {
+    for (var i = 0; i < slidesIndexes.length; i += 1) {
       indexToRemove = slidesIndexes[i];
       if (swiper.slides[indexToRemove]) swiper.slides.eq(indexToRemove).remove();
       if (indexToRemove < newActiveIndex) newActiveIndex -= 1;
@@ -31,7 +40,7 @@ export default function (slidesIndexes) {
     swiper.loopCreate();
   }
 
-  if (!(params.observer && Support.observer)) {
+  if (!(params.observer && _support2.default.observer)) {
     swiper.update();
   }
   if (params.loop) {
@@ -39,4 +48,10 @@ export default function (slidesIndexes) {
   } else {
     swiper.slideTo(newActiveIndex, 0, false);
   }
-}
+};
+
+var _support = require('../../../utils/support');
+
+var _support2 = _interopRequireDefault(_support);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

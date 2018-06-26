@@ -1,3 +1,9 @@
-export default function () {
-  return (-this.snapGrid[0]);
-}
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function () {
+  return -this.snapGrid[0];
+};

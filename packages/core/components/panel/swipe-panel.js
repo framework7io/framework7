@@ -1,41 +1,58 @@
-import $ from 'dom7';
-import Utils from '../../utils/utils';
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _dom = require('dom7');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+var _utils = require('../../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function swipePanel(panel) {
-  const app = panel.app;
-  Utils.extend(panel, {
+  var app = panel.app;
+  _utils2.default.extend(panel, {
     swipeable: true,
-    swipeInitialized: true,
+    swipeInitialized: true
   });
-  const params = app.params.panel;
-  const { $el, $backdropEl, side, effect } = panel;
-  let otherPanel;
+  var params = app.params.panel;
+  var $el = panel.$el,
+      $backdropEl = panel.$backdropEl,
+      side = panel.side,
+      effect = panel.effect;
 
-  let isTouched;
-  let isMoved;
-  let isScrolling;
-  const touchesStart = {};
-  let touchStartTime;
-  let touchesDiff;
-  let translate;
-  let backdropOpacity;
-  let panelWidth;
-  let direction;
+  var otherPanel = void 0;
 
-  let $viewEl;
+  var isTouched = void 0;
+  var isMoved = void 0;
+  var isScrolling = void 0;
+  var touchesStart = {};
+  var touchStartTime = void 0;
+  var touchesDiff = void 0;
+  var translate = void 0;
+  var backdropOpacity = void 0;
+  var panelWidth = void 0;
+  var direction = void 0;
 
-  let touchMoves = 0;
+  var $viewEl = void 0;
+
+  var touchMoves = 0;
   function handleTouchStart(e) {
     if (!panel.swipeable) return;
-    if (!app.panel.allowOpen || (!params.swipe && !params.swipeOnlyClose) || isTouched) return;
-    if ($('.modal-in, .photo-browser-in').length > 0) return;
+    if (!app.panel.allowOpen || !params.swipe && !params.swipeOnlyClose || isTouched) return;
+    if ((0, _dom2.default)('.modal-in, .photo-browser-in').length > 0) return;
     otherPanel = app.panel[side === 'left' ? 'right' : 'left'] || {};
     if (!panel.opened && otherPanel.opened) return;
     if (!(params.swipeCloseOpposite || params.swipeOnlyClose)) {
       if (otherPanel.opened) return;
     }
     if (e.target && e.target.nodeName.toLowerCase() === 'input' && e.target.type === 'range') return;
-    if ($(e.target).closest('.range-slider, .tabs-swipeable-wrap, .calendar-months, .no-swipe-panel').length > 0) return;
+    if ((0, _dom2.default)(e.target).closest('.range-slider, .tabs-swipeable-wrap, .calendar-months, .no-swipe-panel').length > 0) return;
     touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
     touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
     if (params.swipeOnlyClose && !panel.opened) {
@@ -54,19 +71,19 @@ function swipePanel(panel) {
     }
     if (params.swipeCloseActiveAreaSide && panel.opened) {
       if (side === 'left') {
-        if (touchesStart.x < ($el[0].offsetWidth - params.swipeCloseActiveAreaSide)) return;
+        if (touchesStart.x < $el[0].offsetWidth - params.swipeCloseActiveAreaSide) return;
       }
       if (side === 'right') {
-        if (touchesStart.x > ((app.width - $el[0].offsetWidth) + params.swipeCloseActiveAreaSide)) return;
+        if (touchesStart.x > app.width - $el[0].offsetWidth + params.swipeCloseActiveAreaSide) return;
       }
     }
     touchMoves = 0;
-    $viewEl = $(panel.getViewEl());
+    $viewEl = (0, _dom2.default)(panel.getViewEl());
     isMoved = false;
     isTouched = true;
     isScrolling = undefined;
 
-    touchStartTime = Utils.now();
+    touchStartTime = _utils2.default.now();
     direction = undefined;
   }
   function handleTouchMove(e) {
@@ -77,8 +94,8 @@ function swipePanel(panel) {
       isTouched = false;
       return;
     }
-    const pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
-    const pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+    var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+    var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
     if (typeof isScrolling === 'undefined') {
       isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
     }
@@ -110,25 +127,14 @@ function swipePanel(panel) {
         return;
       }
 
-      if (
-        (side === 'left'
-          && (
-            direction === 'to-left' && !$el.hasClass('panel-active')
-          )
-        )
-        || (side === 'right'
-          && (
-            direction === 'to-right' && !$el.hasClass('panel-active')
-          )
-        )
-      ) {
+      if (side === 'left' && direction === 'to-left' && !$el.hasClass('panel-active') || side === 'right' && direction === 'to-right' && !$el.hasClass('panel-active')) {
         isTouched = false;
         return;
       }
     }
 
     if (params.swipeNoFollow) {
-      const timeDiff = (new Date()).getTime() - touchStartTime;
+      var timeDiff = new Date().getTime() - touchStartTime;
       if (timeDiff < 300) {
         if (direction === 'to-left') {
           if (side === 'right') app.panel.open(side);
@@ -158,10 +164,10 @@ function swipePanel(panel) {
     isMoved = true;
 
     e.preventDefault();
-    let threshold = panel.opened ? 0 : -params.swipeThreshold;
+    var threshold = panel.opened ? 0 : -params.swipeThreshold;
     if (side === 'right') threshold = -threshold;
 
-    touchesDiff = (pageX - touchesStart.x) + threshold;
+    touchesDiff = pageX - touchesStart.x + threshold;
 
     if (side === 'right') {
       if (effect === 'cover') {
@@ -185,14 +191,14 @@ function swipePanel(panel) {
       }
     }
     if (effect === 'reveal') {
-      $viewEl.transform(`translate3d(${translate}px,0,0)`).transition(0);
-      $backdropEl.transform(`translate3d(${translate}px,0,0)`).transition(0);
+      $viewEl.transform('translate3d(' + translate + 'px,0,0)').transition(0);
+      $backdropEl.transform('translate3d(' + translate + 'px,0,0)').transition(0);
 
       $el.trigger('panel:swipe', panel, Math.abs(translate / panelWidth));
       panel.emit('local::swipe panelSwipe', panel, Math.abs(translate / panelWidth));
     } else {
       if (side === 'left') translate -= panelWidth;
-      $el.transform(`translate3d(${translate}px,0,0)`).transition(0);
+      $el.transform('translate3d(' + translate + 'px,0,0)').transition(0);
 
       $backdropEl.transition(0);
       backdropOpacity = 1 - Math.abs(translate / panelWidth);
@@ -210,11 +216,11 @@ function swipePanel(panel) {
     }
     isTouched = false;
     isMoved = false;
-    const timeDiff = (new Date()).getTime() - touchStartTime;
-    let action;
-    const edge = (translate === 0 || Math.abs(translate) === panelWidth);
+    var timeDiff = new Date().getTime() - touchStartTime;
+    var action = void 0;
+    var edge = translate === 0 || Math.abs(translate) === panelWidth;
 
-    const threshold = params.swipeThreshold || 0;
+    var threshold = params.swipeThreshold || 0;
 
     if (!panel.opened) {
       if (Math.abs(touchesDiff) < threshold) {
@@ -231,10 +237,7 @@ function swipePanel(panel) {
         }
       } else if (translate === 0) {
         action = 'reset';
-      } else if (
-        (timeDiff < 300 && Math.abs(translate) > 0)
-        || (timeDiff >= 300 && (Math.abs(translate) >= panelWidth / 2))
-      ) {
+      } else if (timeDiff < 300 && Math.abs(translate) > 0 || timeDiff >= 300 && Math.abs(translate) >= panelWidth / 2) {
         action = 'swap';
       } else {
         action = 'reset';
@@ -251,12 +254,8 @@ function swipePanel(panel) {
       }
     } else if (translate === -panelWidth) {
       action = 'reset';
-    } else if (
-      (timeDiff < 300 && Math.abs(translate) >= 0)
-      || (timeDiff >= 300 && (Math.abs(translate) <= panelWidth / 2))
-    ) {
-      if (side === 'left' && translate === panelWidth) action = 'reset';
-      else action = 'swap';
+    } else if (timeDiff < 300 && Math.abs(translate) >= 0 || timeDiff >= 300 && Math.abs(translate) <= panelWidth / 2) {
+      if (side === 'left' && translate === panelWidth) action = 'reset';else action = 'swap';
     } else {
       action = 'reset';
     }
@@ -272,18 +271,18 @@ function swipePanel(panel) {
         if (edge) {
           $el.css({ display: '' });
         } else {
-          const target = effect === 'reveal' ? $viewEl : $el;
-          $('html').addClass('with-panel-transitioning');
-          target.transitionEnd(() => {
+          var target = effect === 'reveal' ? $viewEl : $el;
+          (0, _dom2.default)('html').addClass('with-panel-transitioning');
+          target.transitionEnd(function () {
             if ($el.hasClass('panel-active')) return;
             $el.css({ display: '' });
-            $('html').removeClass('with-panel-transitioning');
+            (0, _dom2.default)('html').removeClass('with-panel-transitioning');
           });
         }
       }
     }
     if (effect === 'reveal') {
-      Utils.nextFrame(() => {
+      _utils2.default.nextFrame(function () {
         $viewEl.transition('');
         $viewEl.transform('');
       });
@@ -296,11 +295,11 @@ function swipePanel(panel) {
   app.on('touchstart:passive', handleTouchStart);
   app.on('touchmove:active', handleTouchMove);
   app.on('touchend:passive', handleTouchEnd);
-  panel.on('panelDestroy', () => {
+  panel.on('panelDestroy', function () {
     app.off('touchstart:passive', handleTouchStart);
     app.off('touchmove:active', handleTouchMove);
     app.off('touchend:passive', handleTouchEnd);
   });
 }
 
-export default swipePanel;
+exports.default = swipePanel;

@@ -1,44 +1,61 @@
-import { window, document } from 'ssr-window';
-import $ from 'dom7';
-import Support from '../../utils/support';
-import Device from '../../utils/device';
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _ssrWindow = require('ssr-window');
+
+var _dom = require('dom7');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+var _support = require('../../utils/support');
+
+var _support2 = _interopRequireDefault(_support);
+
+var _device = require('../../utils/device');
+
+var _device2 = _interopRequireDefault(_device);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function initTouch() {
-  const app = this;
-  const params = app.params.touch;
-  const useRipple = app.theme === 'md' && params.materialRipple;
+  var app = this;
+  var params = app.params.touch;
+  var useRipple = app.theme === 'md' && params.materialRipple;
 
-  if (Device.ios && Device.webView) {
+  if (_device2.default.ios && _device2.default.webView) {
     // Strange hack required for iOS 8 webview to work on inputs
-    window.addEventListener('touchstart', () => {});
+    _ssrWindow.window.addEventListener('touchstart', function () {});
   }
 
-  let touchStartX;
-  let touchStartY;
-  let touchStartTime;
-  let targetElement;
-  let trackClick;
-  let activeSelection;
-  let scrollParent;
-  let lastClickTime;
-  let isMoved;
-  let tapHoldFired;
-  let tapHoldTimeout;
+  var touchStartX = void 0;
+  var touchStartY = void 0;
+  var touchStartTime = void 0;
+  var targetElement = void 0;
+  var trackClick = void 0;
+  var activeSelection = void 0;
+  var scrollParent = void 0;
+  var lastClickTime = void 0;
+  var isMoved = void 0;
+  var tapHoldFired = void 0;
+  var tapHoldTimeout = void 0;
 
-  let activableElement;
-  let activeTimeout;
+  var activableElement = void 0;
+  var activeTimeout = void 0;
 
-  let needsFastClick;
-  let needsFastClickTimeOut;
+  var needsFastClick = void 0;
+  var needsFastClickTimeOut = void 0;
 
-  let rippleWave;
-  let rippleTarget;
-  let rippleTimeout;
+  var rippleWave = void 0;
+  var rippleTarget = void 0;
+  var rippleTimeout = void 0;
 
   function findActivableElement(el) {
-    const target = $(el);
-    const parents = target.parents(params.activeStateElements);
-    let activable;
+    var target = (0, _dom2.default)(el);
+    var parents = target.parents(params.activeStateElements);
+    var activable = void 0;
     if (target.is(params.activeStateElements)) {
       activable = target;
     }
@@ -49,7 +66,7 @@ function initTouch() {
   }
 
   function isInsideScrollableView(el) {
-    const pageContent = el.parents('.page-content, .panel');
+    var pageContent = el.parents('.page-content, .panel');
 
     if (pageContent.length === 0) {
       return false;
@@ -57,7 +74,7 @@ function initTouch() {
 
     // This event handler covers the "tap to stop scrolling".
     if (pageContent.prop('scrollHandlerSet') !== 'yes') {
-      pageContent.on('scroll', () => {
+      pageContent.on('scroll', function () {
         clearTimeout(activeTimeout);
         clearTimeout(rippleTimeout);
       });
@@ -76,13 +93,13 @@ function initTouch() {
     activableElement = null;
   }
   function isFormElement(el) {
-    const nodes = ('input select textarea label').split(' ');
+    var nodes = 'input select textarea label'.split(' ');
     if (el.nodeName && nodes.indexOf(el.nodeName.toLowerCase()) >= 0) return true;
     return false;
   }
   function androidNeedsBlur(el) {
-    const noBlur = ('button input textarea select').split(' ');
-    if (document.activeElement && el !== document.activeElement && document.activeElement !== document.body) {
+    var noBlur = 'button input textarea select'.split(' ');
+    if (_ssrWindow.document.activeElement && el !== _ssrWindow.document.activeElement && _ssrWindow.document.activeElement !== _ssrWindow.document.body) {
       if (noBlur.indexOf(el.nodeName.toLowerCase()) >= 0) {
         return false;
       }
@@ -104,35 +121,35 @@ function initTouch() {
       return false;
     }
     */
-    const $el = $(el);
+    var $el = (0, _dom2.default)(el);
     if (el.nodeName.toLowerCase() === 'input' && (el.type === 'file' || el.type === 'range')) return false;
-    if (el.nodeName.toLowerCase() === 'select' && Device.android) return false;
+    if (el.nodeName.toLowerCase() === 'select' && _device2.default.android) return false;
     if ($el.hasClass('no-fastclick') || $el.parents('.no-fastclick').length > 0) return false;
     if (params.fastClicksExclude && $el.is(params.fastClicksExclude)) return false;
     return true;
   }
   function targetNeedsFocus(el) {
-    if (document.activeElement === el) {
+    if (_ssrWindow.document.activeElement === el) {
       return false;
     }
-    const tag = el.nodeName.toLowerCase();
-    const skipInputs = ('button checkbox file image radio submit').split(' ');
+    var tag = el.nodeName.toLowerCase();
+    var skipInputs = 'button checkbox file image radio submit'.split(' ');
     if (el.disabled || el.readOnly) return false;
     if (tag === 'textarea') return true;
     if (tag === 'select') {
-      if (Device.android) return false;
+      if (_device2.default.android) return false;
       return true;
     }
     if (tag === 'input' && skipInputs.indexOf(el.type) < 0) return true;
     return false;
   }
   function targetNeedsPrevent(el) {
-    const $el = $(el);
-    let prevent = true;
+    var $el = (0, _dom2.default)(el);
+    var prevent = true;
     if ($el.is('label') || $el.parents('label').length > 0) {
-      if (Device.android) {
+      if (_device2.default.android) {
         prevent = false;
-      } else if (Device.ios && $el.is('input')) {
+      } else if (_device2.default.ios && $el.is('input')) {
         prevent = true;
       } else prevent = false;
     }
@@ -141,8 +158,8 @@ function initTouch() {
 
   // Ripple handlers
   function findRippleElement(el) {
-    const rippleElements = params.materialRippleElements;
-    const $el = $(el);
+    var rippleElements = params.materialRippleElements;
+    var $el = (0, _dom2.default)(el);
     if ($el.is(rippleElements)) {
       if ($el.hasClass('no-ripple')) {
         return false;
@@ -150,7 +167,7 @@ function initTouch() {
       return $el;
     }
     if ($el.parents(rippleElements).length > 0) {
-      const rippleParent = $el.parents(rippleElements).eq(0);
+      var rippleParent = $el.parents(rippleElements).eq(0);
       if (rippleParent.hasClass('no-ripple')) {
         return false;
       }
@@ -178,7 +195,7 @@ function initTouch() {
     if (!isInsideScrollableView(rippleTarget)) {
       createRipple(rippleTarget, touchStartX, touchStartY);
     } else {
-      rippleTimeout = setTimeout(() => {
+      rippleTimeout = setTimeout(function () {
         createRipple(rippleTarget, touchStartX, touchStartY);
       }, 80);
     }
@@ -203,8 +220,8 @@ function initTouch() {
   function handleMouseDown(e) {
     findActivableElement(e.target).addClass('active-state');
     if ('which' in e && e.which === 3) {
-      setTimeout(() => {
-        $('.active-state').removeClass('active-state');
+      setTimeout(function () {
+        (0, _dom2.default)('.active-state').removeClass('active-state');
       }, 0);
     }
     if (useRipple) {
@@ -214,13 +231,13 @@ function initTouch() {
     }
   }
   function handleMouseMove() {
-    $('.active-state').removeClass('active-state');
+    (0, _dom2.default)('.active-state').removeClass('active-state');
     if (useRipple) {
       rippleTouchMove();
     }
   }
   function handleMouseUp() {
-    $('.active-state').removeClass('active-state');
+    (0, _dom2.default)('.active-state').removeClass('active-state');
     if (useRipple) {
       rippleTouchEnd();
     }
@@ -228,20 +245,20 @@ function initTouch() {
 
   // Send Click
   function sendClick(e) {
-    const touch = e.changedTouches[0];
-    const evt = document.createEvent('MouseEvents');
-    let eventType = 'click';
-    if (Device.android && targetElement.nodeName.toLowerCase() === 'select') {
+    var touch = e.changedTouches[0];
+    var evt = _ssrWindow.document.createEvent('MouseEvents');
+    var eventType = 'click';
+    if (_device2.default.android && targetElement.nodeName.toLowerCase() === 'select') {
       eventType = 'mousedown';
     }
-    evt.initMouseEvent(eventType, true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
+    evt.initMouseEvent(eventType, true, true, _ssrWindow.window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
     evt.forwardedTouchEvent = true;
 
-    if (app.device.ios && window.navigator.standalone) {
+    if (app.device.ios && _ssrWindow.window.navigator.standalone) {
       // Fix the issue happens in iOS home screen apps where the wrong element is selected during a momentum scroll.
       // Upon tapping, we give the scrolling time to stop, then we grab the element based where the user tapped.
-      setTimeout(() => {
-        targetElement = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+      setTimeout(function () {
+        targetElement = _ssrWindow.document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
         targetElement.dispatchEvent(evt);
       }, 10);
     } else {
@@ -251,6 +268,8 @@ function initTouch() {
 
   // Touch Handlers
   function handleTouchStart(e) {
+    var _this = this;
+
     isMoved = false;
     tapHoldFired = false;
     if (e.targetTouches.length > 1) {
@@ -262,11 +281,11 @@ function initTouch() {
     }
     if (params.tapHold) {
       if (tapHoldTimeout) clearTimeout(tapHoldTimeout);
-      tapHoldTimeout = setTimeout(() => {
+      tapHoldTimeout = setTimeout(function () {
         if (e && e.touches && e.touches.length > 1) return;
         tapHoldFired = true;
         e.preventDefault();
-        $(e.target).trigger('taphold');
+        (0, _dom2.default)(e.target).trigger('taphold');
       }, params.tapHoldDelay);
     }
     if (needsFastClickTimeOut) clearTimeout(needsFastClickTimeOut);
@@ -276,43 +295,39 @@ function initTouch() {
       trackClick = false;
       return true;
     }
-    if (Device.ios || (Device.android && 'getSelection' in window)) {
-      const selection = window.getSelection();
-      if (
-        selection.rangeCount
-        && selection.focusNode !== document.body
-        && (!selection.isCollapsed || document.activeElement === selection.focusNode)
-      ) {
+    if (_device2.default.ios || _device2.default.android && 'getSelection' in _ssrWindow.window) {
+      var selection = _ssrWindow.window.getSelection();
+      if (selection.rangeCount && selection.focusNode !== _ssrWindow.document.body && (!selection.isCollapsed || _ssrWindow.document.activeElement === selection.focusNode)) {
         activeSelection = true;
         return true;
       }
 
       activeSelection = false;
     }
-    if (Device.android) {
+    if (_device2.default.android) {
       if (androidNeedsBlur(e.target)) {
-        document.activeElement.blur();
+        _ssrWindow.document.activeElement.blur();
       }
     }
 
     trackClick = true;
     targetElement = e.target;
-    touchStartTime = (new Date()).getTime();
+    touchStartTime = new Date().getTime();
     touchStartX = e.targetTouches[0].pageX;
     touchStartY = e.targetTouches[0].pageY;
 
     // Detect scroll parent
-    if (Device.ios) {
+    if (_device2.default.ios) {
       scrollParent = undefined;
-      $(targetElement).parents().each(() => {
-        const parent = this;
+      (0, _dom2.default)(targetElement).parents().each(function () {
+        var parent = _this;
         if (parent.scrollHeight > parent.offsetHeight && !scrollParent) {
           scrollParent = parent;
           scrollParent.f7ScrollTop = scrollParent.scrollTop;
         }
       });
     }
-    if ((touchStartTime - lastClickTime) < params.fastClicksDelayBetweenClicks) {
+    if (touchStartTime - lastClickTime < params.fastClicksDelayBetweenClicks) {
       e.preventDefault();
     }
 
@@ -334,10 +349,10 @@ function initTouch() {
   }
   function handleTouchMove(e) {
     if (!trackClick) return;
-    const distance = params.fastClicksDistanceThreshold;
+    var distance = params.fastClicksDistanceThreshold;
     if (distance) {
-      const pageX = e.targetTouches[0].pageX;
-      const pageY = e.targetTouches[0].pageY;
+      var pageX = e.targetTouches[0].pageX;
+      var pageY = e.targetTouches[0].pageY;
       if (Math.abs(pageX - touchStartX) > distance || Math.abs(pageY - touchStartY) > distance) {
         isMoved = true;
       }
@@ -364,18 +379,18 @@ function initTouch() {
     clearTimeout(activeTimeout);
     clearTimeout(tapHoldTimeout);
 
-    const touchEndTime = (new Date()).getTime();
+    var touchEndTime = new Date().getTime();
 
     if (!trackClick) {
       if (!activeSelection && needsFastClick) {
-        if (!(Device.android && !e.cancelable) && e.cancelable) {
+        if (!(_device2.default.android && !e.cancelable) && e.cancelable) {
           e.preventDefault();
         }
       }
       return true;
     }
 
-    if (document.activeElement === e.target) {
+    if (_ssrWindow.document.activeElement === e.target) {
       if (params.activeState) removeActive();
       if (useRipple) {
         rippleTouchEnd();
@@ -387,7 +402,7 @@ function initTouch() {
       e.preventDefault();
     }
 
-    if ((touchEndTime - lastClickTime) < params.fastClicksDelayBetweenClicks) {
+    if (touchEndTime - lastClickTime < params.fastClicksDelayBetweenClicks) {
       setTimeout(removeActive, 0);
       return true;
     }
@@ -396,7 +411,7 @@ function initTouch() {
 
     trackClick = false;
 
-    if (Device.ios && scrollParent) {
+    if (_device2.default.ios && scrollParent) {
       if (scrollParent.scrollTop !== scrollParent.f7ScrollTop) {
         return false;
       }
@@ -416,7 +431,7 @@ function initTouch() {
 
     // Trigger focus when required
     if (targetNeedsFocus(targetElement)) {
-      if (Device.ios && Device.webView) {
+      if (_device2.default.ios && _device2.default.webView) {
         targetElement.focus();
         return false;
       }
@@ -425,8 +440,8 @@ function initTouch() {
     }
 
     // Blur active elements
-    if (document.activeElement && targetElement !== document.activeElement && document.activeElement !== document.body && targetElement.nodeName.toLowerCase() !== 'label') {
-      document.activeElement.blur();
+    if (_ssrWindow.document.activeElement && targetElement !== _ssrWindow.document.activeElement && _ssrWindow.document.activeElement !== _ssrWindow.document.body && targetElement.nodeName.toLowerCase() !== 'label') {
+      _ssrWindow.document.activeElement.blur();
     }
 
     // Send click
@@ -455,13 +470,13 @@ function initTouch() {
   }
 
   function handleClick(e) {
-    let allowClick = false;
+    var allowClick = false;
     if (trackClick) {
       targetElement = null;
       trackClick = false;
       return true;
     }
-    if ((e.target.type === 'submit' && e.detail === 0) || e.target.type === 'file') {
+    if (e.target.type === 'submit' && e.detail === 0 || e.target.type === 'file') {
       return true;
     }
     if (!targetElement) {
@@ -472,7 +487,7 @@ function initTouch() {
     if (!needsFastClick) {
       allowClick = true;
     }
-    if (document.activeElement === targetElement) {
+    if (_ssrWindow.document.activeElement === targetElement) {
       allowClick = true;
     }
     if (e.forwardedTouchEvent) {
@@ -496,14 +511,14 @@ function initTouch() {
       }
       targetElement = null;
     }
-    needsFastClickTimeOut = setTimeout(() => {
+    needsFastClickTimeOut = setTimeout(function () {
       needsFastClick = false;
-    }, (Device.ios || Device.androidChrome ? 100 : 400));
+    }, _device2.default.ios || _device2.default.androidChrome ? 100 : 400);
 
     if (params.tapHold) {
-      tapHoldTimeout = setTimeout(() => {
+      tapHoldTimeout = setTimeout(function () {
         tapHoldFired = false;
-      }, (Device.ios || Device.androidChrome ? 100 : 400));
+      }, _device2.default.ios || _device2.default.androidChrome ? 100 : 400);
     }
 
     return allowClick;
@@ -512,7 +527,7 @@ function initTouch() {
   function emitAppTouchEvent(name, e) {
     app.emit({
       events: name,
-      data: [e],
+      data: [e]
     });
   }
   function appClick(e) {
@@ -537,47 +552,47 @@ function initTouch() {
     emitAppTouchEvent('touchend:passive', e);
   }
 
-  const passiveListener = Support.passiveListener ? { passive: true } : false;
-  const activeListener = Support.passiveListener ? { passive: false } : false;
+  var passiveListener = _support2.default.passiveListener ? { passive: true } : false;
+  var activeListener = _support2.default.passiveListener ? { passive: false } : false;
 
-  document.addEventListener('click', appClick, true);
+  _ssrWindow.document.addEventListener('click', appClick, true);
 
-  if (Support.passiveListener) {
-    document.addEventListener(app.touchEvents.start, appTouchStartActive, activeListener);
-    document.addEventListener(app.touchEvents.move, appTouchMoveActive, activeListener);
-    document.addEventListener(app.touchEvents.end, appTouchEndActive, activeListener);
+  if (_support2.default.passiveListener) {
+    _ssrWindow.document.addEventListener(app.touchEvents.start, appTouchStartActive, activeListener);
+    _ssrWindow.document.addEventListener(app.touchEvents.move, appTouchMoveActive, activeListener);
+    _ssrWindow.document.addEventListener(app.touchEvents.end, appTouchEndActive, activeListener);
 
-    document.addEventListener(app.touchEvents.start, appTouchStartPassive, passiveListener);
-    document.addEventListener(app.touchEvents.move, appTouchMovePassive, passiveListener);
-    document.addEventListener(app.touchEvents.end, appTouchEndPassive, passiveListener);
+    _ssrWindow.document.addEventListener(app.touchEvents.start, appTouchStartPassive, passiveListener);
+    _ssrWindow.document.addEventListener(app.touchEvents.move, appTouchMovePassive, passiveListener);
+    _ssrWindow.document.addEventListener(app.touchEvents.end, appTouchEndPassive, passiveListener);
   } else {
-    document.addEventListener(app.touchEvents.start, (e) => {
+    _ssrWindow.document.addEventListener(app.touchEvents.start, function (e) {
       appTouchStartActive(e);
       appTouchStartPassive(e);
     }, false);
-    document.addEventListener(app.touchEvents.move, (e) => {
+    _ssrWindow.document.addEventListener(app.touchEvents.move, function (e) {
       appTouchMoveActive(e);
       appTouchMovePassive(e);
     }, false);
-    document.addEventListener(app.touchEvents.end, (e) => {
+    _ssrWindow.document.addEventListener(app.touchEvents.end, function (e) {
       appTouchEndActive(e);
       appTouchEndPassive(e);
     }, false);
   }
 
-  if (Support.touch) {
+  if (_support2.default.touch) {
     app.on('click', handleClick);
     app.on('touchstart', handleTouchStart);
     app.on('touchmove', handleTouchMove);
     app.on('touchend', handleTouchEnd);
-    document.addEventListener('touchcancel', handleTouchCancel, { passive: true });
+    _ssrWindow.document.addEventListener('touchcancel', handleTouchCancel, { passive: true });
   } else if (params.activeState) {
     app.on('touchstart', handleMouseDown);
     app.on('touchmove', handleMouseMove);
     app.on('touchend', handleMouseUp);
   }
-  document.addEventListener('contextmenu', (e) => {
-    if (params.disableContextMenu && (Device.ios || Device.android || Device.cordova)) {
+  _ssrWindow.document.addEventListener('contextmenu', function (e) {
+    if (params.disableContextMenu && (_device2.default.ios || _device2.default.android || _device2.default.cordova)) {
       e.preventDefault();
     }
     if (useRipple) {
@@ -587,7 +602,7 @@ function initTouch() {
   });
 }
 
-export default {
+exports.default = {
   name: 'touch',
   params: {
     touch: {
@@ -606,17 +621,17 @@ export default {
       activeState: true,
       activeStateElements: 'a, button, label, span, .actions-button, .stepper-button, .stepper-button-plus, .stepper-button-minus',
       materialRipple: true,
-      materialRippleElements: '.ripple, .link, .item-link, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell:not(.input-cell), .notification-close-button, .stepper-button, .stepper-button-minus, .stepper-button-plus',
-    },
+      materialRippleElements: '.ripple, .link, .item-link, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell:not(.input-cell), .notification-close-button, .stepper-button, .stepper-button-minus, .stepper-button-plus'
+    }
   },
   instance: {
     touchEvents: {
-      start: Support.touch ? 'touchstart' : 'mousedown',
-      move: Support.touch ? 'touchmove' : 'mousemove',
-      end: Support.touch ? 'touchend' : 'mouseup',
-    },
+      start: _support2.default.touch ? 'touchstart' : 'mousedown',
+      move: _support2.default.touch ? 'touchmove' : 'mousemove',
+      end: _support2.default.touch ? 'touchend' : 'mouseup'
+    }
   },
   on: {
-    init: initTouch,
-  },
+    init: initTouch
+  }
 };

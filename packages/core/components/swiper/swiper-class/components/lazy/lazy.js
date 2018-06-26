@@ -1,37 +1,50 @@
-import $ from '../../utils/dom';
-import Utils from '../../utils/utils';
+'use strict';
 
-const Lazy = {
-  loadInSlide(index, loadInDuplicate = true) {
-    const swiper = this;
-    const params = swiper.params.lazy;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _dom = require('../../utils/dom');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+var _utils = require('../../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Lazy = {
+  loadInSlide: function loadInSlide(index) {
+    var loadInDuplicate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+    var swiper = this;
+    var params = swiper.params.lazy;
     if (typeof index === 'undefined') return;
     if (swiper.slides.length === 0) return;
-    const isVirtual = swiper.virtual && swiper.params.virtual.enabled;
+    var isVirtual = swiper.virtual && swiper.params.virtual.enabled;
 
-    const $slideEl = isVirtual
-      ? swiper.$wrapperEl.children(`.${swiper.params.slideClass}[data-swiper-slide-index="${index}"]`)
-      : swiper.slides.eq(index);
+    var $slideEl = isVirtual ? swiper.$wrapperEl.children('.' + swiper.params.slideClass + '[data-swiper-slide-index="' + index + '"]') : swiper.slides.eq(index);
 
-    let $images = $slideEl.find(`.${params.elementClass}:not(.${params.loadedClass}):not(.${params.loadingClass})`);
+    var $images = $slideEl.find('.' + params.elementClass + ':not(.' + params.loadedClass + '):not(.' + params.loadingClass + ')');
     if ($slideEl.hasClass(params.elementClass) && !$slideEl.hasClass(params.loadedClass) && !$slideEl.hasClass(params.loadingClass)) {
       $images = $images.add($slideEl[0]);
     }
     if ($images.length === 0) return;
 
-    $images.each((imageIndex, imageEl) => {
-      const $imageEl = $(imageEl);
+    $images.each(function (imageIndex, imageEl) {
+      var $imageEl = (0, _dom2.default)(imageEl);
       $imageEl.addClass(params.loadingClass);
 
-      const background = $imageEl.attr('data-background');
-      const src = $imageEl.attr('data-src');
-      const srcset = $imageEl.attr('data-srcset');
-      const sizes = $imageEl.attr('data-sizes');
+      var background = $imageEl.attr('data-background');
+      var src = $imageEl.attr('data-src');
+      var srcset = $imageEl.attr('data-srcset');
+      var sizes = $imageEl.attr('data-sizes');
 
-      swiper.loadImage($imageEl[0], (src || background), srcset, sizes, false, () => {
-        if (typeof swiper === 'undefined' || swiper === null || !swiper || (swiper && !swiper.params) || swiper.destroyed) return;
+      swiper.loadImage($imageEl[0], src || background, srcset, sizes, false, function () {
+        if (typeof swiper === 'undefined' || swiper === null || !swiper || swiper && !swiper.params || swiper.destroyed) return;
         if (background) {
-          $imageEl.css('background-image', `url("${background}")`);
+          $imageEl.css('background-image', 'url("' + background + '")');
           $imageEl.removeAttr('data-background');
         } else {
           if (srcset) {
@@ -49,14 +62,14 @@ const Lazy = {
         }
 
         $imageEl.addClass(params.loadedClass).removeClass(params.loadingClass);
-        $slideEl.find(`.${params.preloaderClass}`).remove();
+        $slideEl.find('.' + params.preloaderClass).remove();
         if (swiper.params.loop && loadInDuplicate) {
-          const slideOriginalIndex = $slideEl.attr('data-swiper-slide-index');
+          var slideOriginalIndex = $slideEl.attr('data-swiper-slide-index');
           if ($slideEl.hasClass(swiper.params.slideDuplicateClass)) {
-            const originalSlide = swiper.$wrapperEl.children(`[data-swiper-slide-index="${slideOriginalIndex}"]:not(.${swiper.params.slideDuplicateClass})`);
+            var originalSlide = swiper.$wrapperEl.children('[data-swiper-slide-index="' + slideOriginalIndex + '"]:not(.' + swiper.params.slideDuplicateClass + ')');
             swiper.lazy.loadInSlide(originalSlide.index(), false);
           } else {
-            const duplicatedSlide = swiper.$wrapperEl.children(`.${swiper.params.slideDuplicateClass}[data-swiper-slide-index="${slideOriginalIndex}"]`);
+            var duplicatedSlide = swiper.$wrapperEl.children('.' + swiper.params.slideDuplicateClass + '[data-swiper-slide-index="' + slideOriginalIndex + '"]');
             swiper.lazy.loadInSlide(duplicatedSlide.index(), false);
           }
         }
@@ -66,22 +79,24 @@ const Lazy = {
       swiper.emit('lazyImageLoad', $slideEl[0], $imageEl[0]);
     });
   },
-  load() {
-    const swiper = this;
-    const {
-      $wrapperEl, params: swiperParams, slides, activeIndex,
-    } = swiper;
-    const isVirtual = swiper.virtual && swiperParams.virtual.enabled;
-    const params = swiperParams.lazy;
+  load: function load() {
+    var swiper = this;
+    var $wrapperEl = swiper.$wrapperEl,
+        swiperParams = swiper.params,
+        slides = swiper.slides,
+        activeIndex = swiper.activeIndex;
 
-    let slidesPerView = swiperParams.slidesPerView;
+    var isVirtual = swiper.virtual && swiperParams.virtual.enabled;
+    var params = swiperParams.lazy;
+
+    var slidesPerView = swiperParams.slidesPerView;
     if (slidesPerView === 'auto') {
       slidesPerView = 0;
     }
 
     function slideExist(index) {
       if (isVirtual) {
-        if ($wrapperEl.children(`.${swiperParams.slideClass}[data-swiper-slide-index="${index}"]`).length) {
+        if ($wrapperEl.children('.' + swiperParams.slideClass + '[data-swiper-slide-index="' + index + '"]').length) {
           return true;
         }
       } else if (slides[index]) return true;
@@ -89,50 +104,50 @@ const Lazy = {
     }
     function slideIndex(slideEl) {
       if (isVirtual) {
-        return $(slideEl).attr('data-swiper-slide-index');
+        return (0, _dom2.default)(slideEl).attr('data-swiper-slide-index');
       }
-      return $(slideEl).index();
+      return (0, _dom2.default)(slideEl).index();
     }
 
     if (!swiper.lazy.initialImageLoaded) swiper.lazy.initialImageLoaded = true;
     if (swiper.params.watchSlidesVisibility) {
-      $wrapperEl.children(`.${swiperParams.slideVisibleClass}`).each((elIndex, slideEl) => {
-        const index = isVirtual ? $(slideEl).attr('data-swiper-slide-index') : $(slideEl).index();
+      $wrapperEl.children('.' + swiperParams.slideVisibleClass).each(function (elIndex, slideEl) {
+        var index = isVirtual ? (0, _dom2.default)(slideEl).attr('data-swiper-slide-index') : (0, _dom2.default)(slideEl).index();
         swiper.lazy.loadInSlide(index);
       });
     } else if (slidesPerView > 1) {
-      for (let i = activeIndex; i < activeIndex + slidesPerView; i += 1) {
+      for (var i = activeIndex; i < activeIndex + slidesPerView; i += 1) {
         if (slideExist(i)) swiper.lazy.loadInSlide(i);
       }
     } else {
       swiper.lazy.loadInSlide(activeIndex);
     }
     if (params.loadPrevNext) {
-      if (slidesPerView > 1 || (params.loadPrevNextAmount && params.loadPrevNextAmount > 1)) {
-        const amount = params.loadPrevNextAmount;
-        const spv = slidesPerView;
-        const maxIndex = Math.min(activeIndex + spv + Math.max(amount, spv), slides.length);
-        const minIndex = Math.max(activeIndex - Math.max(spv, amount), 0);
+      if (slidesPerView > 1 || params.loadPrevNextAmount && params.loadPrevNextAmount > 1) {
+        var amount = params.loadPrevNextAmount;
+        var spv = slidesPerView;
+        var maxIndex = Math.min(activeIndex + spv + Math.max(amount, spv), slides.length);
+        var minIndex = Math.max(activeIndex - Math.max(spv, amount), 0);
         // Next Slides
-        for (let i = activeIndex + slidesPerView; i < maxIndex; i += 1) {
-          if (slideExist(i)) swiper.lazy.loadInSlide(i);
+        for (var _i = activeIndex + slidesPerView; _i < maxIndex; _i += 1) {
+          if (slideExist(_i)) swiper.lazy.loadInSlide(_i);
         }
         // Prev Slides
-        for (let i = minIndex; i < activeIndex; i += 1) {
-          if (slideExist(i)) swiper.lazy.loadInSlide(i);
+        for (var _i2 = minIndex; _i2 < activeIndex; _i2 += 1) {
+          if (slideExist(_i2)) swiper.lazy.loadInSlide(_i2);
         }
       } else {
-        const nextSlide = $wrapperEl.children(`.${swiperParams.slideNextClass}`);
+        var nextSlide = $wrapperEl.children('.' + swiperParams.slideNextClass);
         if (nextSlide.length > 0) swiper.lazy.loadInSlide(slideIndex(nextSlide));
 
-        const prevSlide = $wrapperEl.children(`.${swiperParams.slidePrevClass}`);
+        var prevSlide = $wrapperEl.children('.' + swiperParams.slidePrevClass);
         if (prevSlide.length > 0) swiper.lazy.loadInSlide(slideIndex(prevSlide));
       }
     }
-  },
+  }
 };
 
-export default {
+exports.default = {
   name: 'lazy',
   params: {
     lazy: {
@@ -144,63 +159,64 @@ export default {
       elementClass: 'swiper-lazy',
       loadingClass: 'swiper-lazy-loading',
       loadedClass: 'swiper-lazy-loaded',
-      preloaderClass: 'swiper-lazy-preloader',
-    },
+      preloaderClass: 'swiper-lazy-preloader'
+    }
   },
-  create() {
-    const swiper = this;
-    Utils.extend(swiper, {
+  create: function create() {
+    var swiper = this;
+    _utils2.default.extend(swiper, {
       lazy: {
         initialImageLoaded: false,
         load: Lazy.load.bind(swiper),
-        loadInSlide: Lazy.loadInSlide.bind(swiper),
-      },
+        loadInSlide: Lazy.loadInSlide.bind(swiper)
+      }
     });
   },
+
   on: {
-    beforeInit() {
-      const swiper = this;
+    beforeInit: function beforeInit() {
+      var swiper = this;
       if (swiper.params.lazy.enabled && swiper.params.preloadImages) {
         swiper.params.preloadImages = false;
       }
     },
-    init() {
-      const swiper = this;
+    init: function init() {
+      var swiper = this;
       if (swiper.params.lazy.enabled && !swiper.params.loop && swiper.params.initialSlide === 0) {
         swiper.lazy.load();
       }
     },
-    scroll() {
-      const swiper = this;
+    scroll: function scroll() {
+      var swiper = this;
       if (swiper.params.freeMode && !swiper.params.freeModeSticky) {
         swiper.lazy.load();
       }
     },
-    resize() {
-      const swiper = this;
+    resize: function resize() {
+      var swiper = this;
       if (swiper.params.lazy.enabled) {
         swiper.lazy.load();
       }
     },
-    scrollbarDragMove() {
-      const swiper = this;
+    scrollbarDragMove: function scrollbarDragMove() {
+      var swiper = this;
       if (swiper.params.lazy.enabled) {
         swiper.lazy.load();
       }
     },
-    transitionStart() {
-      const swiper = this;
+    transitionStart: function transitionStart() {
+      var swiper = this;
       if (swiper.params.lazy.enabled) {
-        if (swiper.params.lazy.loadOnTransitionStart || (!swiper.params.lazy.loadOnTransitionStart && !swiper.lazy.initialImageLoaded)) {
+        if (swiper.params.lazy.loadOnTransitionStart || !swiper.params.lazy.loadOnTransitionStart && !swiper.lazy.initialImageLoaded) {
           swiper.lazy.load();
         }
       }
     },
-    transitionEnd() {
-      const swiper = this;
+    transitionEnd: function transitionEnd() {
+      var swiper = this;
       if (swiper.params.lazy.enabled && !swiper.params.lazy.loadOnTransitionStart) {
         swiper.lazy.load();
       }
-    },
-  },
+    }
+  }
 };

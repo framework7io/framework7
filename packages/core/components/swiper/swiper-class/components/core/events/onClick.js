@@ -1,5 +1,11 @@
-export default function (e) {
-  const swiper = this;
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (e) {
+  var swiper = this;
   if ("universal" === 'desktop') {
     swiper.emit('tap click', e);
   } else if (!swiper.allowClick) {
@@ -9,4 +15,4 @@ export default function (e) {
       e.stopImmediatePropagation();
     }
   }
-}
+};

@@ -1,7 +1,15 @@
-export default function () {
-  const swiper = this;
+'use strict';
 
-  const { params, el } = swiper;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function () {
+  var swiper = this;
+
+  var params = swiper.params,
+      el = swiper.el;
+
 
   if (el && el.offsetWidth === 0) return;
 
@@ -11,9 +19,12 @@ export default function () {
   }
 
   // Save locks
-  const { allowSlideNext, allowSlidePrev, snapGrid } = swiper;
+  var allowSlideNext = swiper.allowSlideNext,
+      allowSlidePrev = swiper.allowSlidePrev,
+      snapGrid = swiper.snapGrid;
 
   // Disable locks on resize
+
   swiper.allowSlideNext = true;
   swiper.allowSlidePrev = true;
 
@@ -21,7 +32,7 @@ export default function () {
   swiper.updateSlides();
 
   if (params.freeMode) {
-    const newTranslate = Math.min(Math.max(swiper.translate, swiper.maxTranslate()), swiper.minTranslate());
+    var newTranslate = Math.min(Math.max(swiper.translate, swiper.maxTranslate()), swiper.minTranslate());
     swiper.setTranslate(newTranslate);
     swiper.updateActiveIndex();
     swiper.updateSlidesClasses();
@@ -44,4 +55,4 @@ export default function () {
   if (swiper.params.watchOverflow && snapGrid !== swiper.snapGrid) {
     swiper.checkOverflow();
   }
-}
+};

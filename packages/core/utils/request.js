@@ -1,16 +1,27 @@
-import { window, document } from 'ssr-window';
-import Utils from './utils';
+'use strict';
 
-const globals = {};
-let jsonpRequests = 0;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _ssrWindow = require('ssr-window');
+
+var _utils = require('./utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var globals = {};
+var jsonpRequests = 0;
 
 function Request(requestOptions) {
-  const globalsNoCallbacks = Utils.extend({}, globals);
-  ('beforeCreate beforeOpen beforeSend error complete success statusCode').split(' ').forEach((callbackName) => {
+  var globalsNoCallbacks = _utils2.default.extend({}, globals);
+  'beforeCreate beforeOpen beforeSend error complete success statusCode'.split(' ').forEach(function (callbackName) {
     delete globalsNoCallbacks[callbackName];
   });
-  const defaults = Utils.extend({
-    url: window.location.toString(),
+  var defaults = _utils2.default.extend({
+    url: _ssrWindow.window.location.toString(),
     method: 'GET',
     data: false,
     async: true,
@@ -23,14 +34,14 @@ function Request(requestOptions) {
     processData: true,
     dataType: 'text',
     contentType: 'application/x-www-form-urlencoded',
-    timeout: 0,
+    timeout: 0
   }, globalsNoCallbacks);
 
-  const options = Utils.extend({}, defaults, requestOptions);
-  let proceedRequest;
+  var options = _utils2.default.extend({}, defaults, requestOptions);
+  var proceedRequest = void 0;
 
   // Function to run XHR callbacks and events
-  function fireCallback(callbackName, ...data) {
+  function fireCallback(callbackName) {
     /*
       Callbacks:
       beforeCreate (options),
@@ -41,17 +52,22 @@ function Request(requestOptions) {
       success (response, status, xhr),
       statusCode ()
     */
-    let globalCallbackValue;
-    let optionCallbackValue;
+    var globalCallbackValue = void 0;
+    var optionCallbackValue = void 0;
+
+    for (var _len = arguments.length, data = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      data[_key - 1] = arguments[_key];
+    }
+
     if (globals[callbackName]) {
-      globalCallbackValue = globals[callbackName](...data);
+      globalCallbackValue = globals[callbackName].apply(globals, data);
     }
     if (options[callbackName]) {
-      optionCallbackValue = options[callbackName](...data);
+      optionCallbackValue = options[callbackName].apply(options, data);
     }
     if (typeof globalCallbackValue !== 'boolean') globalCallbackValue = true;
     if (typeof optionCallbackValue !== 'boolean') optionCallbackValue = true;
-    return (globalCallbackValue && optionCallbackValue);
+    return globalCallbackValue && optionCallbackValue;
   }
 
   // Before create callback
@@ -62,21 +78,20 @@ function Request(requestOptions) {
   if (options.type) options.method = options.type;
 
   // Parameters Prefix
-  let paramsPrefix = options.url.indexOf('?') >= 0 ? '&' : '?';
+  var paramsPrefix = options.url.indexOf('?') >= 0 ? '&' : '?';
 
   // UC method
-  const method = options.method.toUpperCase();
+  var method = options.method.toUpperCase();
 
   // Data to modify GET URL
   if ((method === 'GET' || method === 'HEAD' || method === 'OPTIONS' || method === 'DELETE') && options.data) {
-    let stringData;
+    var stringData = void 0;
     if (typeof options.data === 'string') {
       // Should be key=value string
-      if (options.data.indexOf('?') >= 0) stringData = options.data.split('?')[1];
-      else stringData = options.data;
+      if (options.data.indexOf('?') >= 0) stringData = options.data.split('?')[1];else stringData = options.data;
     } else {
       // Should be key=value object
-      stringData = Utils.serializeObject(options.data);
+      stringData = _utils2.default.serializeObject(options.data);
     }
     if (stringData.length) {
       options.url += paramsPrefix + stringData;
@@ -86,17 +101,19 @@ function Request(requestOptions) {
 
   // JSONP
   if (options.dataType === 'json' && options.url.indexOf('callback=') >= 0) {
-    const callbackName = `f7jsonp_${Date.now() + ((jsonpRequests += 1))}`;
-    let abortTimeout;
-    const callbackSplit = options.url.split('callback=');
-    let requestUrl = `${callbackSplit[0]}callback=${callbackName}`;
+    var callbackName = 'f7jsonp_' + (Date.now() + (jsonpRequests += 1));
+    var abortTimeout = void 0;
+    var callbackSplit = options.url.split('callback=');
+    var requestUrl = callbackSplit[0] + 'callback=' + callbackName;
     if (callbackSplit[1].indexOf('&') >= 0) {
-      const addVars = callbackSplit[1].split('&').filter(el => el.indexOf('=') > 0).join('&');
-      if (addVars.length > 0) requestUrl += `&${addVars}`;
+      var addVars = callbackSplit[1].split('&').filter(function (el) {
+        return el.indexOf('=') > 0;
+      }).join('&');
+      if (addVars.length > 0) requestUrl += '&' + addVars;
     }
 
     // Create script
-    let script = document.createElement('script');
+    var script = _ssrWindow.document.createElement('script');
     script.type = 'text/javascript';
     script.onerror = function onerror() {
       clearTimeout(abortTimeout);
@@ -106,17 +123,17 @@ function Request(requestOptions) {
     script.src = requestUrl;
 
     // Handler
-    window[callbackName] = function jsonpCallback(data) {
+    _ssrWindow.window[callbackName] = function jsonpCallback(data) {
       clearTimeout(abortTimeout);
       fireCallback('success', data);
       script.parentNode.removeChild(script);
       script = null;
-      delete window[callbackName];
+      delete _ssrWindow.window[callbackName];
     };
-    document.querySelector('head').appendChild(script);
+    _ssrWindow.document.querySelector('head').appendChild(script);
 
     if (options.timeout > 0) {
-      abortTimeout = setTimeout(() => {
+      abortTimeout = setTimeout(function () {
         script.parentNode.removeChild(script);
         script = null;
         fireCallback('error', null, 'timeout');
@@ -129,12 +146,12 @@ function Request(requestOptions) {
   // Cache for GET/HEAD requests
   if (method === 'GET' || method === 'HEAD' || method === 'OPTIONS' || method === 'DELETE') {
     if (options.cache === false) {
-      options.url += `${paramsPrefix}_nocache${Date.now()}`;
+      options.url += paramsPrefix + '_nocache' + Date.now();
     }
   }
 
   // Create XHR
-  const xhr = new XMLHttpRequest();
+  var xhr = new XMLHttpRequest();
 
   // Save Request URL
   xhr.requestUrl = options.url;
@@ -148,32 +165,32 @@ function Request(requestOptions) {
   xhr.open(method, options.url, options.async, options.user, options.password);
 
   // Create POST Data
-  let postData = null;
+  var postData = null;
 
   if ((method === 'POST' || method === 'PUT' || method === 'PATCH') && options.data) {
     if (options.processData) {
-      const postDataInstances = [ArrayBuffer, Blob, Document, FormData];
+      var postDataInstances = [ArrayBuffer, Blob, Document, FormData];
       // Post Data
       if (postDataInstances.indexOf(options.data.constructor) >= 0) {
         postData = options.data;
       } else {
         // POST Headers
-        const boundary = `---------------------------${Date.now().toString(16)}`;
+        var boundary = '---------------------------' + Date.now().toString(16);
 
         if (options.contentType === 'multipart/form-data') {
-          xhr.setRequestHeader('Content-Type', `multipart/form-data; boundary=${boundary}`);
+          xhr.setRequestHeader('Content-Type', 'multipart/form-data; boundary=' + boundary);
         } else {
           xhr.setRequestHeader('Content-Type', options.contentType);
         }
         postData = '';
-        let data = Utils.serializeObject(options.data);
+        var data = _utils2.default.serializeObject(options.data);
         if (options.contentType === 'multipart/form-data') {
           data = data.split('&');
-          const newData = [];
-          for (let i = 0; i < data.length; i += 1) {
-            newData.push(`Content-Disposition: form-data; name="${data[i].split('=')[0]}"\r\n\r\n${data[i].split('=')[1]}\r\n`);
+          var newData = [];
+          for (var i = 0; i < data.length; i += 1) {
+            newData.push('Content-Disposition: form-data; name="' + data[i].split('=')[0] + '"\r\n\r\n' + data[i].split('=')[1] + '\r\n');
           }
-          postData = `--${boundary}\r\n${newData.join(`--${boundary}\r\n`)}--${boundary}--\r\n`;
+          postData = '--' + boundary + '\r\n' + newData.join('--' + boundary + '\r\n') + '--' + boundary + '--\r\n';
         } else {
           postData = data;
         }
@@ -186,7 +203,7 @@ function Request(requestOptions) {
 
   // Additional headers
   if (options.headers) {
-    Object.keys(options.headers).forEach((headerName) => {
+    Object.keys(options.headers).forEach(function (headerName) {
       xhr.setRequestHeader(headerName, options.headers[headerName]);
     });
   }
@@ -194,7 +211,7 @@ function Request(requestOptions) {
   // Check for crossDomain
   if (typeof options.crossDomain === 'undefined') {
     // eslint-disable-next-line
-    options.crossDomain = /^([\w-]+:)?\/\/([^\/]+)/.test(options.url) && RegExp.$2 !== window.location.host;
+    options.crossDomain = /^([\w-]+:)?\/\/([^\/]+)/.test(options.url) && RegExp.$2 !== _ssrWindow.window.location.host;
   }
 
   if (!options.crossDomain) {
@@ -202,18 +219,18 @@ function Request(requestOptions) {
   }
 
   if (options.xhrFields) {
-    Utils.extend(xhr, options.xhrFields);
+    _utils2.default.extend(xhr, options.xhrFields);
   }
 
-  let xhrTimeout;
+  var xhrTimeout = void 0;
 
   // Handle XHR
   xhr.onload = function onload() {
     if (xhrTimeout) clearTimeout(xhrTimeout);
-    if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 0) {
-      let responseData;
+    if (xhr.status >= 200 && xhr.status < 300 || xhr.status === 0) {
+      var responseData = void 0;
       if (options.dataType === 'json') {
-        let parseError;
+        var parseError = void 0;
         try {
           responseData = JSON.parse(xhr.responseText);
         } catch (err) {
@@ -249,7 +266,7 @@ function Request(requestOptions) {
     xhr.onabort = function onabort() {
       if (xhrTimeout) clearTimeout(xhrTimeout);
     };
-    xhrTimeout = setTimeout(() => {
+    xhrTimeout = setTimeout(function () {
       xhr.abort();
       fireCallback('error', xhr, 'timeout');
       fireCallback('complete', xhr, 'timeout');
@@ -266,57 +283,89 @@ function Request(requestOptions) {
   // Return XHR object
   return xhr;
 }
-function RequestShortcut(method, ...args) {
-  let [url, data, success, error, dataType] = [];
-  if (typeof args[1] === 'function') {
-    [url, success, error, dataType] = args;
-  } else {
-    [url, data, success, error, dataType] = args;
+function RequestShortcut(method) {
+  var _ref = [],
+      url = _ref[0],
+      data = _ref[1],
+      success = _ref[2],
+      error = _ref[3],
+      dataType = _ref[4];
+
+  for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+    args[_key2 - 1] = arguments[_key2];
   }
-  [success, error].forEach((callback) => {
+
+  if (typeof args[1] === 'function') {
+    url = args[0];
+    success = args[1];
+    error = args[2];
+    dataType = args[3];
+  } else {
+    url = args[0];
+    data = args[1];
+    success = args[2];
+    error = args[3];
+    dataType = args[4];
+  }
+  [success, error].forEach(function (callback) {
     if (typeof callback === 'string') {
       dataType = callback;
-      if (callback === success) success = undefined;
-      else error = undefined;
+      if (callback === success) success = undefined;else error = undefined;
     }
   });
   dataType = dataType || (method === 'json' || method === 'postJSON' ? 'json' : undefined);
-  const requestOptions = {
-    url,
+  var requestOptions = {
+    url: url,
     method: method === 'post' || method === 'postJSON' ? 'POST' : 'GET',
-    data,
-    success,
-    error,
-    dataType,
+    data: data,
+    success: success,
+    error: error,
+    dataType: dataType
   };
   if (method === 'postJSON') {
-    Utils.extend(requestOptions, {
+    _utils2.default.extend(requestOptions, {
       contentType: 'application/json',
       processData: false,
       crossDomain: true,
-      data: typeof data === 'string' ? data : JSON.stringify(data),
+      data: typeof data === 'string' ? data : JSON.stringify(data)
     });
   }
   return Request(requestOptions);
 }
-Request.get = function get(...args) {
-  return RequestShortcut('get', ...args);
+Request.get = function get() {
+  for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+    args[_key3] = arguments[_key3];
+  }
+
+  return RequestShortcut.apply(undefined, ['get'].concat(args));
 };
-Request.post = function post(...args) {
-  return RequestShortcut('post', ...args);
+Request.post = function post() {
+  for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+    args[_key4] = arguments[_key4];
+  }
+
+  return RequestShortcut.apply(undefined, ['post'].concat(args));
 };
-Request.json = function json(...args) {
-  return RequestShortcut('json', ...args);
+Request.json = function json() {
+  for (var _len5 = arguments.length, args = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
+    args[_key5] = arguments[_key5];
+  }
+
+  return RequestShortcut.apply(undefined, ['json'].concat(args));
 };
 Request.getJSON = Request.json;
-Request.postJSON = function postJSON(...args) {
-  return RequestShortcut('postJSON', ...args);
+Request.postJSON = function postJSON() {
+  for (var _len6 = arguments.length, args = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
+    args[_key6] = arguments[_key6];
+  }
+
+  return RequestShortcut.apply(undefined, ['postJSON'].concat(args));
 };
 Request.setup = function setup(options) {
   if (options.type && !options.method) {
-    Utils.extend(options, { method: options.type });
+    _utils2.default.extend(options, { method: options.type });
   }
-  Utils.extend(globals, options);
+  _utils2.default.extend(globals, options);
 };
 
-export default Request;
+exports.default = Request;

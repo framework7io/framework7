@@ -1,56 +1,74 @@
-import Utils from '../../utils/utils';
-import History from '../../utils/history';
+'use strict';
 
-function modalLoad(modalType, route, loadOptions = {}) {
-  const router = this;
-  const app = router.app;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.modalRemove = exports.modalLoad = undefined;
 
-  const options = Utils.extend({
+var _utils = require('../../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _history = require('../../utils/history');
+
+var _history2 = _interopRequireDefault(_history);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function modalLoad(modalType, route) {
+  var loadOptions = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+  var router = this;
+  var app = router.app;
+
+  var options = _utils2.default.extend({
     animate: router.params.animate,
     pushState: true,
     history: true,
-    on: {},
+    on: {}
   }, loadOptions);
 
-  const modalParams = Utils.extend({}, route.route[modalType]);
-  const modalRoute = route.route;
+  var modalParams = _utils2.default.extend({}, route.route[modalType]);
+  var modalRoute = route.route;
 
   function onModalLoaded() {
     // Create Modal
-    const modal = app[modalType].create(modalParams);
+    var modal = app[modalType].create(modalParams);
     modalRoute.modalInstance = modal;
 
-    const hasEl = modal.el;
+    var hasEl = modal.el;
 
     function closeOnSwipeBack() {
       modal.close();
     }
-    modal.on('modalOpen', () => {
+    modal.on('modalOpen', function () {
       if (!hasEl) {
         // Remove theme elements
         router.removeThemeElements(modal.el);
 
         // Emit events
-        modal.$el.trigger(`${modalType.toLowerCase()}:init ${modalType.toLowerCase()}:mounted`, route, modal);
-        router.emit(`modalInit ${modalType}Init ${modalType}Mounted`, modal.el, route, modal);
+        modal.$el.trigger(modalType.toLowerCase() + ':init ' + modalType.toLowerCase() + ':mounted', route, modal);
+        router.emit('modalInit ' + modalType + 'Init ' + modalType + 'Mounted', modal.el, route, modal);
       }
       router.once('swipeBackMove', closeOnSwipeBack);
     });
-    modal.on('modalClose', () => {
+    modal.on('modalClose', function () {
       router.off('swipeBackMove', closeOnSwipeBack);
       if (!modal.closeByRouter) {
         router.back();
       }
     });
 
-    modal.on('modalClosed', () => {
-      modal.$el.trigger(`${modalType.toLowerCase()}:beforeremove`, route, modal);
-      modal.emit(`modalBeforeRemove ${modalType}BeforeRemove`, modal.el, route, modal);
-      const modalComponent = modal.el.f7Component;
+    modal.on('modalClosed', function () {
+      modal.$el.trigger(modalType.toLowerCase() + ':beforeremove', route, modal);
+      modal.emit('modalBeforeRemove ' + modalType + 'BeforeRemove', modal.el, route, modal);
+      var modalComponent = modal.el.f7Component;
       if (modalComponent) {
         modalComponent.$destroy();
       }
-      Utils.nextTick(() => {
+      _utils2.default.nextTick(function () {
         if (modalComponent || modalParams.component) {
           router.removeModal(modal.el);
         }
@@ -62,19 +80,15 @@ function modalLoad(modalType, route, loadOptions = {}) {
     if (options.route) {
       // Update Browser History
       if (router.params.pushState && options.pushState) {
-        History.push(
-          router.view.id,
-          {
-            url: options.route.url,
-            modal: modalType,
-          },
-          (router.params.pushStateRoot || '') + router.params.pushStateSeparator + options.route.url
-        );
+        _history2.default.push(router.view.id, {
+          url: options.route.url,
+          modal: modalType
+        }, (router.params.pushStateRoot || '') + router.params.pushStateSeparator + options.route.url);
       }
 
       // Set Route
       if (options.route !== router.currentRoute) {
-        router.currentRoute = Utils.extend(options.route, { modal });
+        router.currentRoute = _utils2.default.extend(options.route, { modal: modal });
       }
 
       // Update Router History
@@ -89,8 +103,8 @@ function modalLoad(modalType, route, loadOptions = {}) {
       router.removeThemeElements(modal.el);
 
       // Emit events
-      modal.$el.trigger(`${modalType.toLowerCase()}:init ${modalType.toLowerCase()}:mounted`, route, modal);
-      router.emit(`modalInit ${modalType}Init ${modalType}Mounted`, modal.el, route, modal);
+      modal.$el.trigger(modalType.toLowerCase() + ':init ' + modalType.toLowerCase() + ':mounted', route, modal);
+      router.emit('modalInit ' + modalType + 'Init ' + modalType + 'Mounted', modal.el, route, modal);
     }
 
     // Open
@@ -100,15 +114,21 @@ function modalLoad(modalType, route, loadOptions = {}) {
   // Load Modal Content
   function loadModal(loadModalParams, loadModalOptions) {
     // Load Modal Props
-    const { url, content, template, templateUrl, component, componentUrl } = loadModalParams;
+    var url = loadModalParams.url,
+        content = loadModalParams.content,
+        template = loadModalParams.template,
+        templateUrl = loadModalParams.templateUrl,
+        component = loadModalParams.component,
+        componentUrl = loadModalParams.componentUrl;
 
     // Component/Template Callbacks
+
     function resolve(contentEl) {
       if (contentEl) {
         if (typeof contentEl === 'string') {
           modalParams.content = contentEl;
         } else if (contentEl.f7Component) {
-          contentEl.f7Component.$mount((componentEl) => {
+          contentEl.f7Component.$mount(function (componentEl) {
             modalParams.el = componentEl;
             app.root.append(componentEl);
           });
@@ -146,24 +166,22 @@ function modalLoad(modalType, route, loadOptions = {}) {
         router.xhr.abort();
         router.xhr = false;
       }
-      router.xhrRequest(url, loadModalOptions)
-        .then((modalContent) => {
-          modalParams.content = modalContent;
-          onModalLoaded();
-        })
-        .catch(() => {
-          router.allowPageChange = true;
-        });
+      router.xhrRequest(url, loadModalOptions).then(function (modalContent) {
+        modalParams.content = modalContent;
+        onModalLoaded();
+      }).catch(function () {
+        router.allowPageChange = true;
+      });
     } else {
       onModalLoaded();
     }
   }
 
-  let foundLoadProp;
-  ('url content component el componentUrl template templateUrl').split(' ').forEach((modalLoadProp) => {
+  var foundLoadProp = void 0;
+  'url content component el componentUrl template templateUrl'.split(' ').forEach(function (modalLoadProp) {
     if (modalParams[modalLoadProp] && !foundLoadProp) {
       foundLoadProp = true;
-      loadModal({ [modalLoadProp]: modalParams[modalLoadProp] }, options);
+      loadModal(_defineProperty({}, modalLoadProp, modalParams[modalLoadProp]), options);
     }
   });
   if (!foundLoadProp && modalType === 'actions') {
@@ -172,7 +190,7 @@ function modalLoad(modalType, route, loadOptions = {}) {
 
   // Async
   function asyncResolve(resolveParams, resolveOptions) {
-    loadModal(resolveParams, Utils.extend(options, resolveOptions));
+    loadModal(resolveParams, _utils2.default.extend(options, resolveOptions));
   }
   function asyncReject() {
     router.allowPageChange = true;
@@ -183,8 +201,9 @@ function modalLoad(modalType, route, loadOptions = {}) {
   return router;
 }
 function modalRemove(modal) {
-  Utils.extend(modal, { closeByRouter: true });
+  _utils2.default.extend(modal, { closeByRouter: true });
   modal.close();
 }
 
-export { modalLoad, modalRemove };
+exports.modalLoad = modalLoad;
+exports.modalRemove = modalRemove;

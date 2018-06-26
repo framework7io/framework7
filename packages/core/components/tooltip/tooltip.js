@@ -1,79 +1,96 @@
-import $ from 'dom7';
-import Tooltip from './tooltip-class';
-import ConstructorMethods from '../../utils/constructor-methods';
+'use strict';
 
-export default {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _dom = require('dom7');
+
+var _dom2 = _interopRequireDefault(_dom);
+
+var _tooltipClass = require('./tooltip-class');
+
+var _tooltipClass2 = _interopRequireDefault(_tooltipClass);
+
+var _constructorMethods = require('../../utils/constructor-methods');
+
+var _constructorMethods2 = _interopRequireDefault(_constructorMethods);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
   name: 'tooltip',
   static: {
-    Tooltip,
+    Tooltip: _tooltipClass2.default
   },
-  create() {
-    const app = this;
-    app.tooltip = ConstructorMethods({
+  create: function create() {
+    var app = this;
+    app.tooltip = (0, _constructorMethods2.default)({
       defaultSelector: '.tooltip',
-      constructor: Tooltip,
-      app,
-      domProp: 'f7Tooltip',
+      constructor: _tooltipClass2.default,
+      app: app,
+      domProp: 'f7Tooltip'
     });
     app.tooltip.show = function show(el) {
-      const $el = $(el);
+      var $el = (0, _dom2.default)(el);
       if ($el.length === 0) return undefined;
-      const tooltip = $el[0].f7Tooltip;
+      var tooltip = $el[0].f7Tooltip;
       if (!tooltip) return undefined;
       tooltip.show($el[0]);
       return tooltip;
     };
     app.tooltip.hide = function hide(el) {
-      const $el = $(el);
+      var $el = (0, _dom2.default)(el);
       if ($el.length === 0) return undefined;
-      const tooltip = $el[0].f7Tooltip;
+      var tooltip = $el[0].f7Tooltip;
       if (!tooltip) return undefined;
       tooltip.hide();
       return tooltip;
     };
     app.tooltip.setText = function text(el, newText) {
-      const $el = $(el);
+      var $el = (0, _dom2.default)(el);
       if ($el.length === 0) return undefined;
-      const tooltip = $el[0].f7Tooltip;
+      var tooltip = $el[0].f7Tooltip;
       if (!tooltip) return undefined;
       tooltip.setText(newText);
       return tooltip;
     };
   },
+
   params: {
     tooltip: {
       targetEl: null,
       text: null,
       cssClass: null,
-      render: null,
-    },
+      render: null
+    }
   },
   on: {
-    tabMounted(tabEl) {
-      const app = this;
-      $(tabEl).find('.tooltip-init').each((index, el) => {
-        const text = $(el).attr('data-tooltip');
+    tabMounted: function tabMounted(tabEl) {
+      var app = this;
+      (0, _dom2.default)(tabEl).find('.tooltip-init').each(function (index, el) {
+        var text = (0, _dom2.default)(el).attr('data-tooltip');
         if (!text) return;
-        app.tooltip.create({ targetEl: el, text });
+        app.tooltip.create({ targetEl: el, text: text });
       });
     },
-    tabBeforeRemove(tabEl) {
-      $(tabEl).find('.tooltip-init').each((index, el) => {
+    tabBeforeRemove: function tabBeforeRemove(tabEl) {
+      (0, _dom2.default)(tabEl).find('.tooltip-init').each(function (index, el) {
         if (el.f7Tooltip) el.f7Tooltip.destroy();
       });
     },
-    pageInit(page) {
-      const app = this;
-      page.$el.find('.tooltip-init').each((index, el) => {
-        const text = $(el).attr('data-tooltip');
+    pageInit: function pageInit(page) {
+      var app = this;
+      page.$el.find('.tooltip-init').each(function (index, el) {
+        var text = (0, _dom2.default)(el).attr('data-tooltip');
         if (!text) return;
-        app.tooltip.create({ targetEl: el, text });
+        app.tooltip.create({ targetEl: el, text: text });
       });
     },
-    pageBeforeRemove(page) {
-      page.$el.find('.tooltip-init').each((index, el) => {
+    pageBeforeRemove: function pageBeforeRemove(page) {
+      page.$el.find('.tooltip-init').each(function (index, el) {
         if (el.f7Tooltip) el.f7Tooltip.destroy();
       });
-    },
-  },
+    }
+  }
 };

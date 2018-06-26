@@ -1,27 +1,37 @@
-import Router from './router-class';
+'use strict';
 
-export default {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _routerClass = require('./router-class');
+
+var _routerClass2 = _interopRequireDefault(_routerClass);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
   name: 'router',
   static: {
-    Router,
+    Router: _routerClass2.default
   },
   instance: {
     cache: {
       xhr: [],
       templates: [],
-      components: [],
-    },
+      components: []
+    }
   },
-  create() {
-    const instance = this;
+  create: function create() {
+    var instance = this;
     if (instance.app) {
       // View Router
       if (instance.params.router) {
-        instance.router = new Router(instance.app, instance);
+        instance.router = new _routerClass2.default(instance.app, instance);
       }
     } else {
       // App Router
-      instance.router = new Router(instance);
+      instance.router = new _routerClass2.default(instance);
     }
-  },
+  }
 };

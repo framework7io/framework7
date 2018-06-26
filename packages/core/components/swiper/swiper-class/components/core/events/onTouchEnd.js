@@ -1,13 +1,21 @@
-import Utils from '../../../utils/utils';
+'use strict';
 
-export default function (event) {
-  const swiper = this;
-  const data = swiper.touchEventsData;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-  const {
-    params, touches, rtlTranslate: rtl, $wrapperEl, slidesGrid, snapGrid,
-  } = swiper;
-  let e = event;
+exports.default = function (event) {
+  var swiper = this;
+  var data = swiper.touchEventsData;
+
+  var params = swiper.params,
+      touches = swiper.touches,
+      rtl = swiper.rtlTranslate,
+      $wrapperEl = swiper.$wrapperEl,
+      slidesGrid = swiper.slidesGrid,
+      snapGrid = swiper.snapGrid;
+
+  var e = event;
   if (e.originalEvent) e = e.originalEvent;
   if (data.allowTouchCallbacks) {
     swiper.emit('touchEnd', e);
@@ -27,28 +35,28 @@ export default function (event) {
   }
 
   // Time diff
-  const touchEndTime = Utils.now();
-  const timeDiff = touchEndTime - data.touchStartTime;
+  var touchEndTime = _utils2.default.now();
+  var timeDiff = touchEndTime - data.touchStartTime;
 
   // Tap, doubleTap, Click
   if (swiper.allowClick) {
     swiper.updateClickedSlide(e);
     swiper.emit('tap', e);
-    if (timeDiff < 300 && (touchEndTime - data.lastClickTime) > 300) {
+    if (timeDiff < 300 && touchEndTime - data.lastClickTime > 300) {
       if (data.clickTimeout) clearTimeout(data.clickTimeout);
-      data.clickTimeout = Utils.nextTick(() => {
+      data.clickTimeout = _utils2.default.nextTick(function () {
         if (!swiper || swiper.destroyed) return;
         swiper.emit('click', e);
       }, 300);
     }
-    if (timeDiff < 300 && (touchEndTime - data.lastClickTime) < 300) {
+    if (timeDiff < 300 && touchEndTime - data.lastClickTime < 300) {
       if (data.clickTimeout) clearTimeout(data.clickTimeout);
       swiper.emit('doubleTap', e);
     }
   }
 
-  data.lastClickTime = Utils.now();
-  Utils.nextTick(() => {
+  data.lastClickTime = _utils2.default.now();
+  _utils2.default.nextTick(function () {
     if (!swiper.destroyed) swiper.allowClick = true;
   });
 
@@ -62,7 +70,7 @@ export default function (event) {
   data.isMoved = false;
   data.startMoving = false;
 
-  let currentPos;
+  var currentPos = void 0;
   if (params.followFinger) {
     currentPos = rtl ? swiper.translate : -swiper.translate;
   } else {
@@ -84,11 +92,11 @@ export default function (event) {
 
     if (params.freeModeMomentum) {
       if (data.velocities.length > 1) {
-        const lastMoveEvent = data.velocities.pop();
-        const velocityEvent = data.velocities.pop();
+        var lastMoveEvent = data.velocities.pop();
+        var velocityEvent = data.velocities.pop();
 
-        const distance = lastMoveEvent.position - velocityEvent.position;
-        const time = lastMoveEvent.time - velocityEvent.time;
+        var distance = lastMoveEvent.position - velocityEvent.position;
+        var time = lastMoveEvent.time - velocityEvent.time;
         swiper.velocity = distance / time;
         swiper.velocity /= 2;
         if (Math.abs(swiper.velocity) < params.freeModeMinimumVelocity) {
@@ -96,7 +104,7 @@ export default function (event) {
         }
         // this implies that the user stopped moving a finger then released.
         // There would be no events with distance zero, so the last event is stale.
-        if (time > 150 || (Utils.now() - lastMoveEvent.time) > 300) {
+        if (time > 150 || _utils2.default.now() - lastMoveEvent.time > 300) {
           swiper.velocity = 0;
         }
       } else {
@@ -105,16 +113,16 @@ export default function (event) {
       swiper.velocity *= params.freeModeMomentumVelocityRatio;
 
       data.velocities.length = 0;
-      let momentumDuration = 1000 * params.freeModeMomentumRatio;
-      const momentumDistance = swiper.velocity * momentumDuration;
+      var momentumDuration = 1000 * params.freeModeMomentumRatio;
+      var momentumDistance = swiper.velocity * momentumDuration;
 
-      let newPosition = swiper.translate + momentumDistance;
+      var newPosition = swiper.translate + momentumDistance;
       if (rtl) newPosition = -newPosition;
 
-      let doBounce = false;
-      let afterBouncePosition;
-      const bounceAmount = Math.abs(swiper.velocity) * 20 * params.freeModeMomentumBounceRatio;
-      let needsLoopFix;
+      var doBounce = false;
+      var afterBouncePosition = void 0;
+      var bounceAmount = Math.abs(swiper.velocity) * 20 * params.freeModeMomentumBounceRatio;
+      var needsLoopFix = void 0;
       if (newPosition < swiper.maxTranslate()) {
         if (params.freeModeMomentumBounce) {
           if (newPosition + swiper.maxTranslate() < -bounceAmount) {
@@ -140,8 +148,8 @@ export default function (event) {
         }
         if (params.loop && params.centeredSlides) needsLoopFix = true;
       } else if (params.freeModeSticky) {
-        let nextSlide;
-        for (let j = 0; j < snapGrid.length; j += 1) {
+        var nextSlide = void 0;
+        for (var j = 0; j < snapGrid.length; j += 1) {
           if (snapGrid[j] > -newPosition) {
             nextSlide = j;
             break;
@@ -156,7 +164,7 @@ export default function (event) {
         newPosition = -newPosition;
       }
       if (needsLoopFix) {
-        swiper.once('transitionEnd', () => {
+        swiper.once('transitionEnd', function () {
           swiper.loopFix();
         });
       }
@@ -178,13 +186,13 @@ export default function (event) {
         swiper.setTranslate(newPosition);
         swiper.transitionStart(true, swiper.swipeDirection);
         swiper.animating = true;
-        $wrapperEl.transitionEnd(() => {
+        $wrapperEl.transitionEnd(function () {
           if (!swiper || swiper.destroyed || !data.allowMomentumBounce) return;
           swiper.emit('momentumBounce');
 
           swiper.setTransition(params.speed);
           swiper.setTranslate(afterBouncePosition);
-          $wrapperEl.transitionEnd(() => {
+          $wrapperEl.transitionEnd(function () {
             if (!swiper || swiper.destroyed) return;
             swiper.transitionEnd();
           });
@@ -196,7 +204,7 @@ export default function (event) {
         swiper.transitionStart(true, swiper.swipeDirection);
         if (!swiper.animating) {
           swiper.animating = true;
-          $wrapperEl.transitionEnd(() => {
+          $wrapperEl.transitionEnd(function () {
             if (!swiper || swiper.destroyed) return;
             swiper.transitionEnd();
           });
@@ -221,9 +229,9 @@ export default function (event) {
   }
 
   // Find current slide
-  let stopIndex = 0;
-  let groupSize = swiper.slidesSizesGrid[0];
-  for (let i = 0; i < slidesGrid.length; i += params.slidesPerGroup) {
+  var stopIndex = 0;
+  var groupSize = swiper.slidesSizesGrid[0];
+  for (var i = 0; i < slidesGrid.length; i += params.slidesPerGroup) {
     if (typeof slidesGrid[i + params.slidesPerGroup] !== 'undefined') {
       if (currentPos >= slidesGrid[i] && currentPos < slidesGrid[i + params.slidesPerGroup]) {
         stopIndex = i;
@@ -236,7 +244,7 @@ export default function (event) {
   }
 
   // Find current slide size
-  const ratio = (currentPos - slidesGrid[stopIndex]) / groupSize;
+  var ratio = (currentPos - slidesGrid[stopIndex]) / groupSize;
 
   if (timeDiff > params.longSwipesMs) {
     // Long touches
@@ -245,12 +253,10 @@ export default function (event) {
       return;
     }
     if (swiper.swipeDirection === 'next') {
-      if (ratio >= params.longSwipesRatio) swiper.slideTo(stopIndex + params.slidesPerGroup);
-      else swiper.slideTo(stopIndex);
+      if (ratio >= params.longSwipesRatio) swiper.slideTo(stopIndex + params.slidesPerGroup);else swiper.slideTo(stopIndex);
     }
     if (swiper.swipeDirection === 'prev') {
-      if (ratio > (1 - params.longSwipesRatio)) swiper.slideTo(stopIndex + params.slidesPerGroup);
-      else swiper.slideTo(stopIndex);
+      if (ratio > 1 - params.longSwipesRatio) swiper.slideTo(stopIndex + params.slidesPerGroup);else swiper.slideTo(stopIndex);
     }
   } else {
     // Short swipes
@@ -265,4 +271,10 @@ export default function (event) {
       swiper.slideTo(stopIndex);
     }
   }
-}
+};
+
+var _utils = require('../../../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }

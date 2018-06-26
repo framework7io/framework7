@@ -1,7 +1,20 @@
-import PhotoBrowser from './photo-browser-class';
-import ConstructorMethods from '../../utils/constructor-methods';
+'use strict';
 
-export default {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _photoBrowserClass = require('./photo-browser-class');
+
+var _photoBrowserClass2 = _interopRequireDefault(_photoBrowserClass);
+
+var _constructorMethods = require('../../utils/constructor-methods');
+
+var _constructorMethods2 = _interopRequireDefault(_constructorMethods);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
   name: 'photoBrowser',
   params: {
     photoBrowser: {
@@ -40,29 +53,30 @@ export default {
         preloadImages: true,
         navigation: {
           nextEl: '.photo-browser-next',
-          prevEl: '.photo-browser-prev',
+          prevEl: '.photo-browser-prev'
         },
         zoom: {
           enabled: true,
           maxRatio: 3,
-          minRatio: 1,
+          minRatio: 1
         },
         lazy: {
-          enabled: true,
-        },
-      },
-    },
+          enabled: true
+        }
+      }
+    }
   },
-  create() {
-    const app = this;
-    app.photoBrowser = ConstructorMethods({
+  create: function create() {
+    var app = this;
+    app.photoBrowser = (0, _constructorMethods2.default)({
       defaultSelector: '.photo-browser',
-      constructor: PhotoBrowser,
-      app,
-      domProp: 'f7PhotoBrowser',
+      constructor: _photoBrowserClass2.default,
+      app: app,
+      domProp: 'f7PhotoBrowser'
     });
   },
+
   static: {
-    PhotoBrowser,
-  },
+    PhotoBrowser: _photoBrowserClass2.default
+  }
 };

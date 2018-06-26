@@ -1,12 +1,21 @@
-/* eslint no-param-reassign: "off" */
-import Request from '../../utils/request';
+'use strict';
 
-export default {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _request = require('../../utils/request');
+
+var _request2 = _interopRequireDefault(_request);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
   name: 'request',
   proto: {
-    request: Request,
+    request: _request2.default
   },
   static: {
-    request: Request,
-  },
-};
+    request: _request2.default
+  }
+}; /* eslint no-param-reassign: "off" */

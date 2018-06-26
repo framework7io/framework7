@@ -1,15 +1,31 @@
-import { window } from 'ssr-window';
-import Utils from '../../utils/utils';
-import Support from '../../utils/support';
+'use strict';
 
-const Observer = {
-  func: window.MutationObserver || window.WebkitMutationObserver,
-  attach(target, options = {}) {
-    const swiper = this;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-    const ObserverFunc = Observer.func;
-    const observer = new ObserverFunc((mutations) => {
-      mutations.forEach((mutation) => {
+var _ssrWindow = require('ssr-window');
+
+var _utils = require('../../utils/utils');
+
+var _utils2 = _interopRequireDefault(_utils);
+
+var _support = require('../../utils/support');
+
+var _support2 = _interopRequireDefault(_support);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Observer = {
+  func: _ssrWindow.window.MutationObserver || _ssrWindow.window.WebkitMutationObserver,
+  attach: function attach(target) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    var swiper = this;
+
+    var ObserverFunc = Observer.func;
+    var observer = new ObserverFunc(function (mutations) {
+      mutations.forEach(function (mutation) {
         swiper.emit('observerUpdate', mutation);
       });
     });
@@ -17,17 +33,17 @@ const Observer = {
     observer.observe(target, {
       attributes: typeof options.attributes === 'undefined' ? true : options.attributes,
       childList: typeof options.childList === 'undefined' ? true : options.childList,
-      characterData: typeof options.characterData === 'undefined' ? true : options.characterData,
+      characterData: typeof options.characterData === 'undefined' ? true : options.characterData
     });
 
     swiper.observer.observers.push(observer);
   },
-  init() {
-    const swiper = this;
-    if (!Support.observer || !swiper.params.observer) return;
+  init: function init() {
+    var swiper = this;
+    if (!_support2.default.observer || !swiper.params.observer) return;
     if (swiper.params.observeParents) {
-      const containerParents = swiper.$el.parents();
-      for (let i = 0; i < containerParents.length; i += 1) {
+      var containerParents = swiper.$el.parents();
+      for (var i = 0; i < containerParents.length; i += 1) {
         swiper.observer.attach(containerParents[i]);
       }
     }
@@ -37,40 +53,41 @@ const Observer = {
     // Observe wrapper
     swiper.observer.attach(swiper.$wrapperEl[0], { attributes: false });
   },
-  destroy() {
-    const swiper = this;
-    swiper.observer.observers.forEach((observer) => {
+  destroy: function destroy() {
+    var swiper = this;
+    swiper.observer.observers.forEach(function (observer) {
       observer.disconnect();
     });
     swiper.observer.observers = [];
-  },
+  }
 };
 
-export default {
+exports.default = {
   name: 'observer',
   params: {
     observer: false,
-    observeParents: false,
+    observeParents: false
   },
-  create() {
-    const swiper = this;
-    Utils.extend(swiper, {
+  create: function create() {
+    var swiper = this;
+    _utils2.default.extend(swiper, {
       observer: {
         init: Observer.init.bind(swiper),
         attach: Observer.attach.bind(swiper),
         destroy: Observer.destroy.bind(swiper),
-        observers: [],
-      },
+        observers: []
+      }
     });
   },
+
   on: {
-    init() {
-      const swiper = this;
+    init: function init() {
+      var swiper = this;
       swiper.observer.init();
     },
-    destroy() {
-      const swiper = this;
+    destroy: function destroy() {
+      var swiper = this;
       swiper.observer.destroy();
-    },
-  },
+    }
+  }
 };
