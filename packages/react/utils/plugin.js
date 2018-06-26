@@ -16,7 +16,9 @@ var _f = require('./f7');
 
 var _f2 = _interopRequireDefault(_f);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 /* eslint no-underscore-dangle: "off" */
 var Plugin = {

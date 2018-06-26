@@ -8,9 +8,17 @@ var _utils = require('./utils');
 
 var _utils2 = _interopRequireDefault(_utils);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });
+  } else {
+    obj[key] = value;
+  }return obj;
+}
 
 var Mixins = {
   colorProps: {
@@ -32,7 +40,6 @@ var Mixins = {
         borderColor = props.borderColor,
         rippleColor = props.rippleColor,
         themeDark = props.themeDark;
-
 
     return _ref = {
       'theme-dark': themeDark
@@ -78,7 +85,6 @@ var Mixins = {
         routeTabId = props.routeTabId,
         view = props.view;
 
-
     var dataAnimate = void 0;
     if ('animate' in props && typeof animate !== 'undefined') {
       dataAnimate = animate.toString();
@@ -99,7 +105,6 @@ var Mixins = {
     var back = props.back,
         linkBack = props.linkBack,
         external = props.external;
-
 
     return {
       back: back || linkBack,
@@ -164,7 +169,6 @@ var Mixins = {
         sortableDisable = props.sortableDisable,
         sortableToggle = props.sortableToggle;
 
-
     return {
       'data-searchbar': _utils2.default.isStringProp(searchbarEnable) && searchbarEnable || _utils2.default.isStringProp(searchbarDisable) && searchbarDisable || _utils2.default.isStringProp(searchbarClear) && searchbarClear || _utils2.default.isStringProp(searchbarToggle) && searchbarToggle || undefined,
       'data-panel': _utils2.default.isStringProp(panelOpen) && panelOpen || _utils2.default.isStringProp(panelClose) && panelClose || undefined,
@@ -196,7 +200,6 @@ var Mixins = {
         sortableEnable = props.sortableEnable,
         sortableDisable = props.sortableDisable,
         sortableToggle = props.sortableToggle;
-
 
     return {
       'searchbar-enable': searchbarEnable || searchbarEnable === '',

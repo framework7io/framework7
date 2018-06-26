@@ -334,7 +334,9 @@ var _plugin = require('./utils/plugin');
 
 var _plugin2 = _interopRequireDefault(_plugin);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 /**
  * Framework7 React 3.0.0-beta.14

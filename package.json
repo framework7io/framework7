@@ -1,9 +1,7 @@
 {
-  "name": "framework7-react",
-  "version": "9.9.12",
-  "main": "packages/react/framework7-react.js",
-  "jsnext:main": "packages/react/framework7-react.esm.js",
-  "module": "packages/react/framework7-react.esm.js",
+  "name": "framework7",
+  "version": "10.10.1",
+  "main": "packages/react",
   "scripts": {
     "build:dev": "cross-env-shell NODE_ENV=development \"gulp build-core && gulp phenome && gulp build-vue && gulp build-react\"",
     "build:prod": "cross-env-shell NODE_ENV=production \"gulp build-core && gulp phenome && gulp build-vue && gulp build-react\"",
@@ -25,7 +23,6 @@
     "lint:fix": "eslint . --fix",
     "test": "npm run build:prod && eslint .",
     "release": "bash ./scripts/release.sh",
-    "es6toes5": "babel packages/react --presets babel-preset-es2015 --plugins transform-class-properties --out-dir packages/react",
     "postinstall": "node -e \"console.log('\\u001b[35m\\u001b[1mLove Framework7? Support project by donating or pledging on patreon:\\u001b[22m\\u001b[39m\\n > \\u001b[32mhttps://patreon.com/vladimirkharlampidi\\u001b[0m\\n')\""
   },
   "repository": {
