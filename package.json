@@ -1,6 +1,6 @@
 {
   "name": "framework7",
-  "version": "10.10.3",
+  "version": "10.10.4",
   "main": "packages/core/js/framework7.js",
   "jsnext:main": "packages/core/framework7.esm.js",
   "module": "packages/core/framework7.esm.js",
