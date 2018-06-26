@@ -60,7 +60,6 @@
       f7Button,
     },
     data() {
-      console.log('aha?!');
       return {
         photos: [
           {
