@@ -90,7 +90,7 @@
         <f7-button round>Button</f7-button>
         <f7-button round active>Active</f7-button>
       </f7-segmented>
-      <f7-segmented round round tag="p">
+      <f7-segmented raised round tag="p">
         <f7-button round outline>Outline</f7-button>
         <f7-button round outline>Outline</f7-button>
         <f7-button round outline active>Active</f7-button>

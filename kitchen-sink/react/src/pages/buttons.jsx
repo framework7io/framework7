@@ -93,7 +93,7 @@ export default () => (
         <Button round>Button</Button>
         <Button round active>Active</Button>
       </Segmented>
-      <Segmented round round tag="p">
+      <Segmented raised round tag="p">
         <Button round outline>Outline</Button>
         <Button round outline>Outline</Button>
         <Button round outline active>Active</Button>

@@ -6,7 +6,7 @@ export default () => (
     <Navbar sliding backLink="Back" title="Badge">
       <NavRight>
         <Link iconOnly>
-          <Icon ios="f7:person_fill" md="material:person" className="icon Icons ios-only">
+          <Icon ios="f7:person_fill" md="material:person">
             <Badge color="red">5</Badge>
           </Icon>
         </Link>
