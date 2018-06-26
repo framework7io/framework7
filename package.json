@@ -1,6 +1,6 @@
 {
   "name": "framework7-react",
-  "version": "9.9.14",
+  "version": "9.9.15",
   "main": "packages/react/framework7-react.js",
   "jsnext:main": "packages/react/framework7-react.esm.js",
   "module": "packages/react/framework7-react.esm.js",
