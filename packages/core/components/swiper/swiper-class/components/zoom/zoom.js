@@ -20,7 +20,9 @@ var _support = require('../../utils/support');
 
 var _support2 = _interopRequireDefault(_support);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 var Zoom = {
   // Calc Scale From Multi-touches
@@ -30,7 +32,7 @@ var Zoom = {
     var y1 = e.targetTouches[0].pageY;
     var x2 = e.targetTouches[1].pageX;
     var y2 = e.targetTouches[1].pageY;
-    var distance = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+    var distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     return distance;
   },
 
@@ -84,10 +86,10 @@ var Zoom = {
       zoom.scale = gesture.scaleMove / gesture.scaleStart * zoom.currentScale;
     }
     if (zoom.scale > gesture.maxRatio) {
-      zoom.scale = gesture.maxRatio - 1 + (zoom.scale - gesture.maxRatio + 1) ** 0.5;
+      zoom.scale = gesture.maxRatio - 1 + Math.pow(zoom.scale - gesture.maxRatio + 1, 0.5);
     }
     if (zoom.scale < params.minRatio) {
-      zoom.scale = params.minRatio + 1 - (params.minRatio - zoom.scale + 1) ** 0.5;
+      zoom.scale = params.minRatio + 1 - Math.pow(params.minRatio - zoom.scale + 1, 0.5);
     }
     gesture.$imageEl.transform('translate3d(0,0,0) scale(' + zoom.scale + ')');
   },
@@ -182,17 +184,17 @@ var Zoom = {
     image.currentY = image.touchesCurrent.y - image.touchesStart.y + image.startY;
 
     if (image.currentX < image.minX) {
-      image.currentX = image.minX + 1 - (image.minX - image.currentX + 1) ** 0.8;
+      image.currentX = image.minX + 1 - Math.pow(image.minX - image.currentX + 1, 0.8);
     }
     if (image.currentX > image.maxX) {
-      image.currentX = image.maxX - 1 + (image.currentX - image.maxX + 1) ** 0.8;
+      image.currentX = image.maxX - 1 + Math.pow(image.currentX - image.maxX + 1, 0.8);
     }
 
     if (image.currentY < image.minY) {
-      image.currentY = image.minY + 1 - (image.minY - image.currentY + 1) ** 0.8;
+      image.currentY = image.minY + 1 - Math.pow(image.minY - image.currentY + 1, 0.8);
     }
     if (image.currentY > image.maxY) {
-      image.currentY = image.maxY - 1 + (image.currentY - image.maxY + 1) ** 0.8;
+      image.currentY = image.maxY - 1 + Math.pow(image.currentY - image.maxY + 1, 0.8);
     }
 
     // Velocity
@@ -289,7 +291,6 @@ var Zoom = {
     var gesture = zoom.gesture,
         image = zoom.image;
 
-
     if (!gesture.$slideEl) {
       gesture.$slideEl = swiper.clickedSlide ? (0, _dom2.default)(swiper.clickedSlide) : swiper.slides.eq(swiper.activeIndex);
       gesture.$imageEl = gesture.$slideEl.find('img, svg, canvas');
@@ -375,7 +376,6 @@ var Zoom = {
     var zoom = swiper.zoom;
     var params = swiper.params.zoom;
     var gesture = zoom.gesture;
-
 
     if (!gesture.$slideEl) {
       gesture.$slideEl = swiper.clickedSlide ? (0, _dom2.default)(swiper.clickedSlide) : swiper.slides.eq(swiper.activeIndex);

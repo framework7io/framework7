@@ -24,7 +24,9 @@ var _removeAllSlides = require('./removeAllSlides');
 
 var _removeAllSlides2 = _interopRequireDefault(_removeAllSlides);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 exports.default = {
   appendSlide: _appendSlide2.default,

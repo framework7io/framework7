@@ -10,7 +10,6 @@ exports.default = function () {
   var params = swiper.params,
       el = swiper.el;
 
-
   if (el && el.offsetWidth === 0) return;
 
   // Breakpoints

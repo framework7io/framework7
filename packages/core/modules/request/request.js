@@ -8,7 +8,9 @@ var _request = require('../../utils/request');
 
 var _request2 = _interopRequireDefault(_request);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 exports.default = {
   name: 'request',

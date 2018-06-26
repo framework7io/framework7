@@ -16,7 +16,9 @@ var _browser = require('../../utils/browser');
 
 var _browser2 = _interopRequireDefault(_browser);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 var Cube = {
   setTranslate: function setTranslate() {

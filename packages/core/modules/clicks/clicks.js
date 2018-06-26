@@ -22,7 +22,9 @@ var _viewClass = require('../../components/view/view-class');
 
 var _viewClass2 = _interopRequireDefault(_viewClass);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 function initClicks(app) {
   function handleClicks(e) {

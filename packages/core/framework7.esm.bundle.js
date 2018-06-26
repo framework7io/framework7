@@ -289,7 +289,9 @@ var _typography = require('./components/typography/typography');
 
 var _typography2 = _interopRequireDefault(_typography);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 // Core Components
 

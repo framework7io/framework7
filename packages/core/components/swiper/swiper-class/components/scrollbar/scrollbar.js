@@ -22,7 +22,9 @@ var _device = require('../../utils/device');
 
 var _device2 = _interopRequireDefault(_device);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 var Scrollbar = {
   setTranslate: function setTranslate() {
@@ -91,7 +93,6 @@ var Scrollbar = {
     var $dragEl = scrollbar.$dragEl,
         $el = scrollbar.$el;
 
-
     $dragEl[0].style.width = '';
     $dragEl[0].style.height = '';
     var trackSize = swiper.isHorizontal() ? $el[0].offsetWidth : $el[0].offsetHeight;
@@ -134,7 +135,6 @@ var Scrollbar = {
     var $el = scrollbar.$el,
         dragSize = scrollbar.dragSize,
         trackSize = scrollbar.trackSize;
-
 
     var pointerPosition = void 0;
     if (swiper.isHorizontal()) {
@@ -187,7 +187,6 @@ var Scrollbar = {
     var $el = scrollbar.$el,
         $dragEl = scrollbar.$dragEl;
 
-
     if (!swiper.scrollbar.isTouched) return;
     if (e.preventDefault) e.preventDefault();else e.returnValue = false;
     scrollbar.setDragPosition(e);
@@ -202,7 +201,6 @@ var Scrollbar = {
     var params = swiper.params.scrollbar;
     var scrollbar = swiper.scrollbar;
     var $el = scrollbar.$el;
-
 
     if (!swiper.scrollbar.isTouched) return;
     swiper.scrollbar.isTouched = false;

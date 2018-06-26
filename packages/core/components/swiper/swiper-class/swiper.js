@@ -84,7 +84,9 @@ var _effectCoverflow = require('./components/effect-coverflow/effect-coverflow')
 
 var _effectCoverflow2 = _interopRequireDefault(_effectCoverflow);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 // Components
 // Swiper Class

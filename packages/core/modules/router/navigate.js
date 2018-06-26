@@ -27,9 +27,17 @@ var _preRoute = require('./pre-route');
 
 var _preRoute2 = _interopRequireDefault(_preRoute);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });
+  } else {
+    obj[key] = value;
+  }return obj;
+}
 
 function refreshPage() {
   var router = this;
@@ -428,7 +436,6 @@ function load() {
       templateUrl = params.templateUrl,
       component = params.component,
       componentUrl = params.componentUrl;
-
 
   if (!options.reloadCurrent && options.route && options.route.route && options.route.route.parentPath && router.currentRoute.route && router.currentRoute.route.parentPath === options.route.route.parentPath) {
     // Do something nested

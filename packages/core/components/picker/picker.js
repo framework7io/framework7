@@ -16,7 +16,9 @@ var _pickerClass = require('./picker-class');
 
 var _pickerClass2 = _interopRequireDefault(_pickerClass);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 exports.default = {
   name: 'picker',

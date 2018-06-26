@@ -20,7 +20,9 @@ var _maxTranslate = require('./maxTranslate');
 
 var _maxTranslate2 = _interopRequireDefault(_maxTranslate);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 exports.default = {
   getTranslate: _getTranslate2.default,

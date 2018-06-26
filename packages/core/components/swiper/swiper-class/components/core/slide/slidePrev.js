@@ -16,7 +16,6 @@ exports.default = function () {
       slidesGrid = swiper.slidesGrid,
       rtlTranslate = swiper.rtlTranslate;
 
-
   if (params.loop) {
     if (animating) return false;
     swiper.loopFix();

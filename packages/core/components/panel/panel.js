@@ -16,7 +16,9 @@ var _panelClass = require('./panel-class');
 
 var _panelClass2 = _interopRequireDefault(_panelClass);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 exports.default = {
   name: 'panel',

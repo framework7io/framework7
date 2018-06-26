@@ -9,7 +9,6 @@ exports.default = function () {
   var params = swiper.params,
       $wrapperEl = swiper.$wrapperEl;
 
-
   var slidesPerView = params.slidesPerView === 'auto' ? swiper.slidesPerViewDynamic() : params.slidesPerView;
   var slideToIndex = swiper.clickedIndex;
   var realIndex = void 0;
@@ -50,4 +49,6 @@ var _utils = require('../../../utils/utils');
 
 var _utils2 = _interopRequireDefault(_utils);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}

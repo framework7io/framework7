@@ -8,7 +8,9 @@ var _routerClass = require('./router-class');
 
 var _routerClass2 = _interopRequireDefault(_routerClass);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 exports.default = {
   name: 'router',

@@ -101,7 +101,9 @@ var _modal = require('./components/modal/modal');
 
 var _modal2 = _interopRequireDefault(_modal);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 // F7 Class
 /**

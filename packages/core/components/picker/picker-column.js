@@ -193,11 +193,11 @@ exports.default = function (colEl, updateItems) {
 
     // Normalize translate
     if (currentTranslate < minTranslate) {
-      currentTranslate = minTranslate - (minTranslate - currentTranslate) ** 0.8;
+      currentTranslate = minTranslate - Math.pow(minTranslate - currentTranslate, 0.8);
       returnTo = 'min';
     }
     if (currentTranslate > maxTranslate) {
-      currentTranslate = maxTranslate + (currentTranslate - maxTranslate) ** 0.8;
+      currentTranslate = maxTranslate + Math.pow(currentTranslate - maxTranslate, 0.8);
       returnTo = 'max';
     }
     // Transform wrapper
@@ -307,4 +307,6 @@ var _utils = require('../../utils/utils');
 
 var _utils2 = _interopRequireDefault(_utils);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}

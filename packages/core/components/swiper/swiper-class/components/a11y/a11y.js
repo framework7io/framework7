@@ -12,7 +12,9 @@ var _utils = require('../../utils/utils');
 
 var _utils2 = _interopRequireDefault(_utils);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 var a11y = {
   makeElFocusable: function makeElFocusable($el) {
@@ -78,7 +80,6 @@ var a11y = {
     var _swiper$navigation = swiper.navigation,
         $nextEl = _swiper$navigation.$nextEl,
         $prevEl = _swiper$navigation.$prevEl;
-
 
     if ($prevEl && $prevEl.length > 0) {
       if (swiper.isBeginning) {

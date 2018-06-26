@@ -14,9 +14,17 @@ var _utils = require('./utils');
 
 var _utils2 = _interopRequireDefault(_utils);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });
+  } else {
+    obj[key] = value;
+  }return obj;
+}
 
 var History = {
   queue: [],
@@ -33,7 +41,6 @@ var History = {
     var router = currentQueue.router,
         stateUrl = currentQueue.stateUrl,
         action = currentQueue.action;
-
 
     var animate = router.params.animate;
     if (router.params.pushStateAnimate === false) animate = false;

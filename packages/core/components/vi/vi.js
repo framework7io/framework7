@@ -18,7 +18,9 @@ var _viClass = require('./vi-class');
 
 var _viClass2 = _interopRequireDefault(_viClass);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 exports.default = {
   name: 'vi',

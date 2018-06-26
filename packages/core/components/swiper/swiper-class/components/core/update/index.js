@@ -40,7 +40,9 @@ var _updateClickedSlide = require('./updateClickedSlide');
 
 var _updateClickedSlide2 = _interopRequireDefault(_updateClickedSlide);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 exports.default = {
   updateSize: _updateSize2.default,

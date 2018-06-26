@@ -48,4 +48,6 @@ var _constructorMethods = require('./constructor-methods');
 
 var _constructorMethods2 = _interopRequireDefault(_constructorMethods);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}

@@ -17,9 +17,17 @@ var _history = require('../../utils/history');
 
 var _history2 = _interopRequireDefault(_history);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });
+  } else {
+    obj[key] = value;
+  }return obj;
+}
 
 function tabLoad(tabRoute) {
   var loadOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -84,7 +92,6 @@ function tabLoad(tabRoute) {
       $oldTabEl = tabShowResult.$oldTabEl,
       animated = tabShowResult.animated,
       onTabsChanged = tabShowResult.onTabsChanged;
-
 
   if ($newTabEl && $newTabEl.parents('.page').length > 0 && options.route) {
     var tabParentPageData = $newTabEl.parents('.page')[0].f7Page;

@@ -16,7 +16,9 @@ var _viewClass = require('./view-class');
 
 var _viewClass2 = _interopRequireDefault(_viewClass);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 function getCurrentView(app) {
   var popoverView = (0, _dom2.default)('.popover.modal-in .view');

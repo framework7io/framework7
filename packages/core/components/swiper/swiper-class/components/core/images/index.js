@@ -12,7 +12,9 @@ var _preloadImages = require('./preloadImages');
 
 var _preloadImages2 = _interopRequireDefault(_preloadImages);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 exports.default = {
   loadImage: _loadImage2.default,

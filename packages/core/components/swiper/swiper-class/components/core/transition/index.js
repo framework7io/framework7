@@ -16,7 +16,9 @@ var _transitionEnd = require('./transitionEnd');
 
 var _transitionEnd2 = _interopRequireDefault(_transitionEnd);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 exports.default = {
   setTransition: _setTransition2.default,

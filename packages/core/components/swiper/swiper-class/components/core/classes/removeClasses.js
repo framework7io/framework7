@@ -9,6 +9,5 @@ exports.default = function () {
   var $el = swiper.$el,
       classNames = swiper.classNames;
 
-
   $el.removeClass(classNames.join(' '));
 };

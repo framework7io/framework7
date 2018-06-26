@@ -32,7 +32,9 @@ var _slideToClickedSlide = require('./slideToClickedSlide');
 
 var _slideToClickedSlide2 = _interopRequireDefault(_slideToClickedSlide);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 exports.default = {
   slideTo: _slideTo2.default,

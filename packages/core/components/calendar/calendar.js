@@ -16,7 +16,9 @@ var _calendarClass = require('./calendar-class');
 
 var _calendarClass2 = _interopRequireDefault(_calendarClass);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 exports.default = {
   name: 'calendar',

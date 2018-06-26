@@ -14,7 +14,9 @@ var _utils = require('../../utils/utils');
 
 var _utils2 = _interopRequireDefault(_utils);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 var Swipeout = {
   init: function init() {
@@ -154,7 +156,7 @@ var Swipeout = {
         var buttonTranslate = translate;
         progress = buttonTranslate / actionsRightWidth;
         if (buttonTranslate < -actionsRightWidth) {
-          buttonTranslate = -actionsRightWidth - (-buttonTranslate - actionsRightWidth) ** 0.8;
+          buttonTranslate = -actionsRightWidth - Math.pow(-buttonTranslate - actionsRightWidth, 0.8);
           translate = buttonTranslate;
           if ($overswipeRightButton.length > 0) {
             overswipeRight = true;
@@ -186,7 +188,7 @@ var Swipeout = {
         var _buttonTranslate = translate;
         progress = _buttonTranslate / actionsLeftWidth;
         if (_buttonTranslate > actionsLeftWidth) {
-          _buttonTranslate = actionsLeftWidth + (_buttonTranslate - actionsLeftWidth) ** 0.8;
+          _buttonTranslate = actionsLeftWidth + Math.pow(_buttonTranslate - actionsLeftWidth, 0.8);
           translate = _buttonTranslate;
           if ($overswipeLeftButton.length > 0) {
             overswipeLeft = true;

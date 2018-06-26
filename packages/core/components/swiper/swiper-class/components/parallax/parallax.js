@@ -12,13 +12,14 @@ var _utils = require('../../utils/utils');
 
 var _utils2 = _interopRequireDefault(_utils);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 var Parallax = {
   setTransform: function setTransform(el, progress) {
     var swiper = this;
     var rtl = swiper.rtl;
-
 
     var $el = (0, _dom2.default)(el);
     var rtlFactor = rtl ? -1 : 1;

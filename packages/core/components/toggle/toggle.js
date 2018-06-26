@@ -16,7 +16,9 @@ var _toggleClass = require('./toggle-class');
 
 var _toggleClass2 = _interopRequireDefault(_toggleClass);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 exports.default = {
   name: 'toggle',

@@ -14,7 +14,6 @@ exports.default = function () {
       translate = swiper.translate,
       $wrapperEl = swiper.$wrapperEl;
 
-
   if (params.virtualTranslate) {
     return rtl ? -translate : translate;
   }
@@ -29,4 +28,6 @@ var _utils = require('../../../utils/utils');
 
 var _utils2 = _interopRequireDefault(_utils);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}

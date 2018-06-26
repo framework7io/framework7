@@ -34,7 +34,9 @@ var _onClick = require('./onClick');
 
 var _onClick2 = _interopRequireDefault(_onClick);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 function attachEvents() {
   var swiper = this;
@@ -42,7 +44,6 @@ function attachEvents() {
       touchEvents = swiper.touchEvents,
       el = swiper.el,
       wrapperEl = swiper.wrapperEl;
-
 
   if ("universal" !== 'desktop') {
     swiper.onTouchStart = _onTouchStart2.default.bind(swiper);
@@ -93,7 +94,6 @@ function detachEvents() {
       touchEvents = swiper.touchEvents,
       el = swiper.el,
       wrapperEl = swiper.wrapperEl;
-
 
   var target = params.touchEventsTarget === 'container' ? el : wrapperEl;
   var capture = !!params.nested;

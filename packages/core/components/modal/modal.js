@@ -12,7 +12,9 @@ var _customModalClass = require('./custom-modal-class');
 
 var _customModalClass2 = _interopRequireDefault(_customModalClass);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 exports.default = {
   name: 'modal',

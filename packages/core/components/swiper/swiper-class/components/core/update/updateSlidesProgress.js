@@ -13,7 +13,6 @@ exports.default = function () {
   var slides = swiper.slides,
       rtl = swiper.rtlTranslate;
 
-
   if (slides.length === 0) return;
   if (typeof slides[0].swiperSlideOffset === 'undefined') swiper.updateSlidesOffset();
 

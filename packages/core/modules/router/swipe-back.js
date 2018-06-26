@@ -24,7 +24,9 @@ var _utils = require('../../utils/utils');
 
 var _utils2 = _interopRequireDefault(_utils);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 function SwipeBack(r) {
   var router = r;
@@ -208,7 +210,7 @@ function SwipeBack(r) {
     if (dynamicNavbar) {
       currentNavElements.each(function (index, navEl) {
         var $navEl = (0, _dom2.default)(navEl);
-        if (!$navEl.is('.subnavbar')) $navEl[0].style.opacity = 1 - percentage ** 0.33;
+        if (!$navEl.is('.subnavbar')) $navEl[0].style.opacity = 1 - Math.pow(percentage, 0.33);
         if ($navEl[0].className.indexOf('sliding') >= 0 || currentNavbar.hasClass('sliding')) {
           var activeNavTranslate = percentage * $navEl[0].f7NavbarRightOffset;
           if (_device2.default.pixelRatio === 1) activeNavTranslate = Math.round(activeNavTranslate);
@@ -226,7 +228,7 @@ function SwipeBack(r) {
       });
       previousNavElements.each(function (index, navEl) {
         var $navEl = (0, _dom2.default)(navEl);
-        if (!$navEl.is('.subnavbar')) $navEl[0].style.opacity = percentage ** 3;
+        if (!$navEl.is('.subnavbar')) $navEl[0].style.opacity = Math.pow(percentage, 3);
         if ($navEl[0].className.indexOf('sliding') >= 0 || previousNavbar.hasClass('sliding')) {
           var previousNavTranslate = $navEl[0].f7NavbarLeftOffset * (1 - percentage);
           if ($navEl[0].className.indexOf('title') >= 0 && activeNavBackIcon && activeNavBackIcon.length && activeNavBackIconText.length) {

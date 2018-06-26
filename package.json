@@ -25,7 +25,7 @@
     "lint:fix": "eslint . --fix",
     "test": "npm run build:prod && eslint .",
     "release": "bash ./scripts/release.sh",
-    "es6toes5": "babel packages/core --presets babel-preset-es2015 --plugins transform-class-properties --out-dir packages/core",
+    "es6toes5": "babel packages/core --presets babel-preset-es2015 --plugins transform-exponentiation-operator  --out-dir packages/core",
     "postinstall": "node -e \"console.log('\\u001b[35m\\u001b[1mLove Framework7? Support project by donating or pledging on patreon:\\u001b[22m\\u001b[39m\\n > \\u001b[32mhttps://patreon.com/vladimirkharlampidi\\u001b[0m\\n')\""
   },
   "repository": {
@@ -60,6 +60,7 @@
     "@babel/core": "^7.0.0-beta.49",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.49",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-exponentiation-operator": "^6.24.1",
     "babel-preset-es2015": "^6.0.15",
     "cross-env": "^5.1.6",
     "eslint": "^4.19.1",

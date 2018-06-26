@@ -16,7 +16,9 @@ var _loopDestroy = require('./loopDestroy');
 
 var _loopDestroy2 = _interopRequireDefault(_loopDestroy);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 exports.default = {
   loopCreate: _loopCreate2.default,
