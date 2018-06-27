@@ -34,4 +34,5 @@ __reactComponentSetProps(F7BlockTitle, Object.assign({
   id: [String, Number]
 }, Mixins.colorProps));
 
+F7BlockTitle.displayName = 'f7-block-title';
 export default F7BlockTitle;

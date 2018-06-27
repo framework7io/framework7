@@ -82,4 +82,5 @@ __reactComponentSetProps(F7ActionsButton, Object.assign({
   }
 }, Mixins.colorProps));
 
+F7ActionsButton.displayName = 'f7-actions-button';
 export default F7ActionsButton;

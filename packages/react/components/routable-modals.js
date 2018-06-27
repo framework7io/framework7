@@ -65,4 +65,5 @@ class F7RoutableModals extends React.Component {
 
 }
 
+F7RoutableModals.displayName = 'f7-routable-modals';
 export default F7RoutableModals;

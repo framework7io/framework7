@@ -47,4 +47,5 @@ __reactComponentSetProps(F7SwipeoutActions, Object.assign({
   side: String
 }, Mixins.colorProps));
 
+F7SwipeoutActions.displayName = 'f7-swipeout-actions';
 export default F7SwipeoutActions;

@@ -88,4 +88,5 @@ __reactComponentSetProps(F7AccordionItem, Object.assign({
   opened: Boolean
 }, Mixins.colorProps));
 
+F7AccordionItem.displayName = 'f7-accordion-item';
 export default F7AccordionItem;

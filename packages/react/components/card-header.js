@@ -34,4 +34,5 @@ __reactComponentSetProps(F7CardHeader, Object.assign({
   id: [String, Number]
 }, Mixins.colorProps));
 
+F7CardHeader.displayName = 'f7-card-header';
 export default F7CardHeader;

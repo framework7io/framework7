@@ -209,4 +209,5 @@ __reactComponentSetProps(F7Panel, Object.assign({
   opened: Boolean
 }, Mixins.colorProps));
 
+F7Panel.displayName = 'f7-panel';
 export default F7Panel;

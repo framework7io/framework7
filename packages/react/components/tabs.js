@@ -56,4 +56,5 @@ __reactComponentSetProps(F7Tabs, Object.assign({
   routable: Boolean
 }, Mixins.colorProps));
 
+F7Tabs.displayName = 'f7-tabs';
 export default F7Tabs;

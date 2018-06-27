@@ -138,4 +138,5 @@ __reactComponentSetProps(F7Popover, Object.assign({
   target: [String, Object]
 }, Mixins.colorProps));
 
+F7Popover.displayName = 'f7-popover';
 export default F7Popover;

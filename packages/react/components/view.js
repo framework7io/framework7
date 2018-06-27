@@ -205,4 +205,5 @@ __reactComponentSetProps(F7View, Object.assign({
   }
 }, Mixins.colorProps));
 
+F7View.displayName = 'f7-view';
 export default F7View;

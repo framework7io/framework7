@@ -71,4 +71,5 @@ __reactComponentSetProps(F7App, Object.assign({
   routes: Array
 }, Mixins.colorProps));
 
+F7App.displayName = 'f7-app';
 export default F7App;

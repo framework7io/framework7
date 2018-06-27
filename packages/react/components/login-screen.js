@@ -129,4 +129,5 @@ __reactComponentSetProps(F7LoginScreen, Object.assign({
   opened: Boolean
 }, Mixins.colorProps));
 
+F7LoginScreen.displayName = 'f7-login-screen';
 export default F7LoginScreen;

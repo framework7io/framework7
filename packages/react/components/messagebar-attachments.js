@@ -34,4 +34,5 @@ __reactComponentSetProps(F7MessagebarAttachments, Object.assign({
   id: [String, Number]
 }, Mixins.colorProps));
 
+F7MessagebarAttachments.displayName = 'f7-messagebar-attachments';
 export default F7MessagebarAttachments;

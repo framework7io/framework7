@@ -152,4 +152,5 @@ __reactComponentSetProps(F7Actions, Object.assign({
   target: [String, Object]
 }, Mixins.colorProps));
 
+F7Actions.displayName = 'f7-actions';
 export default F7Actions;

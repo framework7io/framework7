@@ -422,4 +422,5 @@ __reactComponentSetProps(F7ListItem, Object.assign({
   inlineLabel: Boolean
 }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
 
+F7ListItem.displayName = 'f7-list-item';
 export default F7ListItem;

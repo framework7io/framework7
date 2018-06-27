@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.0.0-beta.14
+ * Framework7 Vue 3.0.0-beta.15
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 24, 2018
+ * Released on: June 27, 2018
  */
 
 (function (global, factory) {
@@ -2436,7 +2436,7 @@
           attrs: {
             width: (size + "px"),
             height: ((semiCircle ? size / 2 : size) + "px"),
-            viewbox: ("0 0 " + size + " " + (semiCircle ? size / 2 : size))
+            viewBox: ("0 0 " + size + " " + (semiCircle ? size / 2 : size))
           }
         }, [semiCircle && _h('path', {
           class: 'gauge-back-semi',
@@ -2822,6 +2822,7 @@
       clearButton: Boolean,
       noFormStoreData: Boolean,
       noStoreData: Boolean,
+      ignoreStoreData: Boolean,
       errorMessage: String,
       errorMessageForce: Boolean,
       info: String,
@@ -2874,13 +2875,14 @@
       var className = props.className;
       var noStoreData = props.noStoreData;
       var noFormStoreData = props.noFormStoreData;
+      var ignoreStoreData = props.ignoreStoreData;
       var inputEl;
 
       var createInput = function (tag, children) {
         var InputTag = tag;
         var needsValue = type !== 'file';
         var needsType = tag === 'input';
-        var inputClassName = Utils.classNames(type === 'textarea' && resizable && 'resizable', !wrap && className, (noFormStoreData || noStoreData) && 'no-store-data', errorMessage && errorMessageForce && 'input-invalid');
+        var inputClassName = Utils.classNames(type === 'textarea' && resizable && 'resizable', !wrap && className, (noFormStoreData || noStoreData || ignoreStoreData) && 'no-store-data', errorMessage && errorMessageForce && 'input-invalid');
         var input;
         {
           input = _h(InputTag, {
@@ -4668,7 +4670,7 @@
           tag = child.tag;
         }
 
-        if (!tag && 'vue' === 'react' || tag && !(tag === 'li' || tag === 'F7ListItem' || tag === 'F7ListButton' || tag.indexOf('list-item') >= 0 || tag.indexOf('list-button') >= 0)) {
+        if (!tag && 'vue' === 'react' || tag && !(tag === 'li' || tag === 'F7ListItem' || tag === 'F7ListButton' || tag.indexOf('list-item') >= 0 || tag.indexOf('list-button') >= 0 || tag.indexOf('f7-list-item') >= 0 || tag.indexOf('f7-list-button') >= 0)) {
           if (wasUlChild) { rootChildrenAfterList.push(child); }else { rootChildrenBeforeList.push(child); }
         } else if (tag) {
           wasUlChild = true;
@@ -5511,9 +5513,9 @@
           var tag;
           tag = child.tag;
 
-          if (tag && (tag.indexOf('messagebar-attachments') >= 0 || tag === 'F7MessagebarAttachments')) {
+          if (tag && (tag.indexOf('messagebar-attachments') >= 0 || tag === 'F7MessagebarAttachments' || tag === 'f7-messagebar-attachments')) {
             messagebarAttachmentsEl = child;
-          } else if (tag && (tag.indexOf('messagebar-sheet') >= 0 || tag === 'F7MessagebarSheet')) {
+          } else if (tag && (tag.indexOf('messagebar-sheet') >= 0 || tag === 'F7MessagebarSheet' || tag === 'f7-messagebar-sheet')) {
             messagebarSheetEl = child;
           } else {
             innerEndEls.push(child);
@@ -9605,7 +9607,7 @@
   };
 
   /**
-   * Framework7 Vue 3.0.0-beta.14
+   * Framework7 Vue 3.0.0-beta.15
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -9613,7 +9615,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: June 24, 2018
+   * Released on: June 27, 2018
    */
 
   var Plugin = {

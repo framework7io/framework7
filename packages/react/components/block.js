@@ -100,4 +100,5 @@ __reactComponentSetProps(F7Block, Object.assign({
   noHairlinesIos: Boolean
 }, Mixins.colorProps));
 
+F7Block.displayName = 'f7-block';
 export default F7Block;

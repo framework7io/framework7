@@ -49,4 +49,5 @@ __reactComponentSetProps(F7ActionsLabel, Object.assign({
   bold: Boolean
 }, Mixins.colorProps));
 
+F7ActionsLabel.displayName = 'f7-actions-label';
 export default F7ActionsLabel;

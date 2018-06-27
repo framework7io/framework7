@@ -59,4 +59,5 @@ __reactComponentSetProps(F7Progressbar, Object.assign({
   infinite: Boolean
 }, Mixins.colorProps));
 
+F7Progressbar.displayName = 'f7-progressbar';
 export default F7Progressbar;

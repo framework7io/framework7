@@ -100,7 +100,8 @@ class F7Input extends React.Component {
       style,
       className,
       noStoreData,
-      noFormStoreData
+      noFormStoreData,
+      ignoreStoreData
     } = props;
     let inputEl;
 
@@ -108,7 +109,7 @@ class F7Input extends React.Component {
       const InputTag = tag;
       const needsValue = type !== 'file';
       const needsType = tag === 'input';
-      const inputClassName = Utils.classNames(type === 'textarea' && resizable && 'resizable', !wrap && className, (noFormStoreData || noStoreData) && 'no-store-data', errorMessage && errorMessageForce && 'input-invalid');
+      const inputClassName = Utils.classNames(type === 'textarea' && resizable && 'resizable', !wrap && className, (noFormStoreData || noStoreData || ignoreStoreData) && 'no-store-data', errorMessage && errorMessageForce && 'input-invalid');
       let input;
       {
         input = React.createElement(InputTag, {
@@ -363,6 +364,7 @@ __reactComponentSetProps(F7Input, Object.assign({
   clearButton: Boolean,
   noFormStoreData: Boolean,
   noStoreData: Boolean,
+  ignoreStoreData: Boolean,
   errorMessage: String,
   errorMessageForce: Boolean,
   info: String,
@@ -372,4 +374,5 @@ __reactComponentSetProps(F7Input, Object.assign({
   }
 }, Mixins.colorProps));
 
+F7Input.displayName = 'f7-input';
 export default F7Input;

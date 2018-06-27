@@ -43,4 +43,5 @@ __reactComponentSetProps(F7Label, Object.assign({
   inline: Boolean
 }, Mixins.colorProps));
 
+F7Label.displayName = 'f7-label';
 export default F7Label;

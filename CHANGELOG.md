@@ -2,6 +2,10 @@
 
 # Change Log
 
+# [v3.0.0-beta.15](https://github.com/framework7io/framework7/compare/v3.0.0-beta.14...v3.0.0-beta.15) - June 27, 2018
+  * Phenome Components
+    * Fixes issue when React components could be rendered wrong in production build
+
 # [v3.0.0-beta.14](https://github.com/framework7io/framework7/compare/v3.0.0-beta.12...v3.0.0-beta.14) - June 24, 2018
   * Core
     * Elevation

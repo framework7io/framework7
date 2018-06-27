@@ -47,8 +47,8 @@ class F7Fab extends React.Component {
         const child = defaultSlots[i];
         let isRoot;
         {
-          const tag = child.type && child.type.name;
-          if (tag === 'F7FabButtons') isRoot = true;
+          const tag = child.type && (child.type.displayName || child.type.name);
+          if (tag === 'F7FabButtons' || tag === 'f7-fab-buttons') isRoot = true;
         }
         if (isRoot) rootChildren.push(child);else linkChildren.push(child);
       }
@@ -146,4 +146,5 @@ __reactComponentSetProps(F7Fab, Object.assign({
   tooltip: String
 }, Mixins.colorProps));
 
+F7Fab.displayName = 'f7-fab';
 export default F7Fab;

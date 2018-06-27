@@ -155,15 +155,15 @@ class F7ListItemContent extends React.Component {
     flattenSlots.forEach(child => {
       if (typeof child === 'undefined') return;
       {
-        const tag = child.type && child.type.name;
+        const tag = child.type && (child.type.displayName || child.type.name);
 
-        if (tag === 'F7Input') {
+        if (tag === 'F7Input' || tag === 'f7-input') {
           hasInput = true;
           if (child.props && child.props.info) hasInputInfo = true;
           if (child.props && child.props.errorMessage && child.props.errorMessageForce) hasInputErrorMessage = true;
         }
 
-        if (tag === 'F7Label') {
+        if (tag === 'F7Label' || tag === 'f7-label') {
           if (child.props && child.props.inline) hasInlineLabel = true;
         }
       }
@@ -432,4 +432,5 @@ __reactComponentSetProps(F7ListItemContent, Object.assign({
   disabled: Boolean
 }, Mixins.colorProps));
 
+F7ListItemContent.displayName = 'f7-list-item-content';
 export default F7ListItemContent;

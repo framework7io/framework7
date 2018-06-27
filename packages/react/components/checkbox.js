@@ -83,4 +83,5 @@ __reactComponentSetProps(F7Checkbox, Object.assign({
   defaultChecked: Boolean
 }, Mixins.colorProps));
 
+F7Checkbox.displayName = 'f7-checkbox';
 export default F7Checkbox;

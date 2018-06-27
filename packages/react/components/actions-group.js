@@ -35,4 +35,5 @@ __reactComponentSetProps(F7ActionsGroup, Object.assign({
   id: [String, Number]
 }, Mixins.colorProps));
 
+F7ActionsGroup.displayName = 'f7-actions-group';
 export default F7ActionsGroup;

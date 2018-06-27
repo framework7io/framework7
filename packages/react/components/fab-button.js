@@ -103,4 +103,5 @@ __reactComponentSetProps(F7FabButton, Object.assign({
   tooltip: String
 }, Mixins.colorProps));
 
+F7FabButton.displayName = 'f7-fab-button';
 export default F7FabButton;

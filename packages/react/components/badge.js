@@ -34,4 +34,5 @@ __reactComponentSetProps(F7Badge, Object.assign({
   id: [String, Number]
 }, Mixins.colorProps));
 
+F7Badge.displayName = 'f7-badge';
 export default F7Badge;

@@ -147,4 +147,5 @@ __reactComponentSetProps(F7Navbar, Object.assign({
   }
 }, Mixins.colorProps));
 
+F7Navbar.displayName = 'f7-navbar';
 export default F7Navbar;

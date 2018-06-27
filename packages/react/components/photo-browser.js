@@ -166,4 +166,5 @@ __reactComponentSetProps(F7PhotoBrowser, {
   renderStandalone: Function
 });
 
+F7PhotoBrowser.displayName = 'f7-photo-browser';
 export default F7PhotoBrowser;

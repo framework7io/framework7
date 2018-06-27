@@ -74,4 +74,5 @@ __reactComponentSetProps(F7Radio, Object.assign({
   defaultChecked: Boolean
 }, Mixins.colorProps));
 
+F7Radio.displayName = 'f7-radio';
 export default F7Radio;

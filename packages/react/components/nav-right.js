@@ -39,4 +39,5 @@ __reactComponentSetProps(F7NavRight, Object.assign({
   sliding: Boolean
 }, Mixins.colorProps));
 
+F7NavRight.displayName = 'f7-nav-right';
 export default F7NavRight;

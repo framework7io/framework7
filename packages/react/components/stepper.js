@@ -268,4 +268,5 @@ __reactComponentSetProps(F7Stepper, Object.assign({
   raised: Boolean
 }, Mixins.colorProps));
 
+F7Stepper.displayName = 'f7-stepper';
 export default F7Stepper;

@@ -34,4 +34,5 @@ __reactComponentSetProps(F7Statusbar, Object.assign({
   id: [String, Number]
 }, Mixins.colorProps));
 
+F7Statusbar.displayName = 'f7-statusbar';
 export default F7Statusbar;

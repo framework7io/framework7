@@ -118,4 +118,5 @@ __reactComponentSetProps(F7Toggle, Object.assign({
   value: [String, Number, Array]
 }, Mixins.colorProps));
 
+F7Toggle.displayName = 'f7-toggle';
 export default F7Toggle;

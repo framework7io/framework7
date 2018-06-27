@@ -180,4 +180,5 @@ __reactComponentSetProps(F7Swiper, Object.assign({
   }
 }, Mixins.colorProps));
 
+F7Swiper.displayName = 'f7-swiper';
 export default F7Swiper;

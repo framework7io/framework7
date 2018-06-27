@@ -34,4 +34,5 @@ __reactComponentSetProps(F7MessagesTitle, Object.assign({
   id: [String, Number]
 }, Mixins.colorProps));
 
+F7MessagesTitle.displayName = 'f7-messages-title';
 export default F7MessagesTitle;

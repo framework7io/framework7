@@ -66,4 +66,5 @@ __reactComponentSetProps(F7MessagebarSheetImage, Object.assign({
   checked: Boolean
 }, Mixins.colorProps));
 
+F7MessagebarSheetImage.displayName = 'f7-messagebar-sheet-image';
 export default F7MessagebarSheetImage;

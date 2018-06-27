@@ -68,4 +68,5 @@ __reactComponentSetProps(F7NavLeft, Object.assign({
   sliding: Boolean
 }, Mixins.colorProps));
 
+F7NavLeft.displayName = 'f7-nav-left';
 export default F7NavLeft;

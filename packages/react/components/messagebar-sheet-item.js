@@ -34,4 +34,5 @@ __reactComponentSetProps(F7MessagebarSheetItem, Object.assign({
   id: [String, Number]
 }, Mixins.colorProps));
 
+F7MessagebarSheetItem.displayName = 'f7-messagebar-sheet-item';
 export default F7MessagebarSheetItem;

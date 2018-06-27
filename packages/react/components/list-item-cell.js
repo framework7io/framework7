@@ -34,4 +34,5 @@ __reactComponentSetProps(F7ListItemCell, Object.assign({
   id: [String, Number]
 }, Mixins.colorProps));
 
+F7ListItemCell.displayName = 'f7-list-item-cell';
 export default F7ListItemCell;

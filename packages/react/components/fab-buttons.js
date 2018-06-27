@@ -39,4 +39,5 @@ __reactComponentSetProps(F7FabButtons, Object.assign({
   }
 }, Mixins.colorProps));
 
+F7FabButtons.displayName = 'f7-fab-buttons';
 export default F7FabButtons;

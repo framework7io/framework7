@@ -162,4 +162,5 @@ __reactComponentSetProps(F7Range, Object.assign({
   }
 }, Mixins.colorProps));
 
+F7Range.displayName = 'f7-range';
 export default F7Range;

@@ -185,4 +185,5 @@ __reactComponentSetProps(F7Message, Object.assign({
   typing: Boolean
 }, Mixins.colorProps));
 
+F7Message.displayName = 'f7-message';
 export default F7Message;

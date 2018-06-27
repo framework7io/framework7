@@ -34,4 +34,5 @@ __reactComponentSetProps(F7BlockHeader, Object.assign({
   id: [String, Number]
 }, Mixins.colorProps));
 
+F7BlockHeader.displayName = 'f7-block-header';
 export default F7BlockHeader;

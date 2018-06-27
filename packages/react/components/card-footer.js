@@ -34,4 +34,5 @@ __reactComponentSetProps(F7CardFooter, Object.assign({
   id: [String, Number]
 }, Mixins.colorProps));
 
+F7CardFooter.displayName = 'f7-card-footer';
 export default F7CardFooter;

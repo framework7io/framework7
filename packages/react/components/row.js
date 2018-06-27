@@ -55,4 +55,5 @@ __reactComponentSetProps(F7Row, Object.assign({
   }
 }, Mixins.colorProps));
 
+F7Row.displayName = 'f7-row';
 export default F7Row;

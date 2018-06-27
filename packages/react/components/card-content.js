@@ -41,4 +41,5 @@ __reactComponentSetProps(F7CardContent, Object.assign({
   }
 }, Mixins.colorProps));
 
+F7CardContent.displayName = 'f7-card-content';
 export default F7CardContent;

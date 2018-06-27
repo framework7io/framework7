@@ -37,4 +37,5 @@ __reactComponentSetProps(F7SwiperSlide, {
   zoom: Boolean
 });
 
+F7SwiperSlide.displayName = 'f7-swiper-slide';
 export default F7SwiperSlide;

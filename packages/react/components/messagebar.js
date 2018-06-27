@@ -174,11 +174,11 @@ class F7Messagebar extends React.Component {
       slotsDefault.forEach(child => {
         if (typeof child === 'undefined') return;
         let tag;
-        tag = child.type && child.type.name;
+        tag = child.type && (child.type.displayName || child.type.name);
 
-        if (tag && (tag.indexOf('messagebar-attachments') >= 0 || tag === 'F7MessagebarAttachments')) {
+        if (tag && (tag.indexOf('messagebar-attachments') >= 0 || tag === 'F7MessagebarAttachments' || tag === 'f7-messagebar-attachments')) {
           messagebarAttachmentsEl = child;
-        } else if (tag && (tag.indexOf('messagebar-sheet') >= 0 || tag === 'F7MessagebarSheet')) {
+        } else if (tag && (tag.indexOf('messagebar-sheet') >= 0 || tag === 'F7MessagebarSheet' || tag === 'f7-messagebar-sheet')) {
           messagebarSheetEl = child;
         } else {
           innerEndEls.push(child);
@@ -340,4 +340,5 @@ __reactComponentSetProps(F7Messagebar, Object.assign({
   }
 }, Mixins.colorProps));
 
+F7Messagebar.displayName = 'f7-messagebar';
 export default F7Messagebar;

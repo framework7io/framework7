@@ -223,4 +223,5 @@ __reactComponentSetProps(F7Messages, Object.assign({
   }
 }, Mixins.colorProps));
 
+F7Messages.displayName = 'f7-messages';
 export default F7Messages;

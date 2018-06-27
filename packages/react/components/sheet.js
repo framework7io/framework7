@@ -52,7 +52,7 @@ class F7Sheet extends React.Component {
       className
     } = props;
     let fixedTags;
-    fixedTags = 'Navbar Toolbar Tabbar Subnavbar Searchbar Messagebar Fab ListIndex'.split(' ').map(tagName => `F7${tagName}`);
+    fixedTags = 'navbar toolbar tabbar subnavbar searchbar messagebar fab list-index'.split(' ').map(tagName => `f7-${tagName}`);
     const slotsDefault = self.slots.default;
 
     if (slotsDefault && slotsDefault.length) {
@@ -60,7 +60,7 @@ class F7Sheet extends React.Component {
         if (typeof child === 'undefined') return;
         let isFixedTag = false;
         {
-          const tag = child.type && child.type.name;
+          const tag = child.type && (child.type.displayName || child.type.name);
 
           if (!tag) {
             return;
@@ -175,4 +175,5 @@ __reactComponentSetProps(F7Sheet, Object.assign({
   backdrop: Boolean
 }, Mixins.colorProps));
 
+F7Sheet.displayName = 'f7-sheet';
 export default F7Sheet;

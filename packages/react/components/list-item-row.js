@@ -34,4 +34,5 @@ __reactComponentSetProps(F7ListItemRow, Object.assign({
   id: [String, Number]
 }, Mixins.colorProps));
 
+F7ListItemRow.displayName = 'f7-list-item-row';
 export default F7ListItemRow;

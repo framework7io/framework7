@@ -49,4 +49,5 @@ __reactComponentSetProps(F7Segmented, Object.assign({
   }
 }, Mixins.colorProps));
 
+F7Segmented.displayName = 'f7-segmented';
 export default F7Segmented;

@@ -51,4 +51,5 @@ __reactComponentSetProps(F7NavTitle, Object.assign({
   sliding: Boolean
 }, Mixins.colorProps));
 
+F7NavTitle.displayName = 'f7-nav-title';
 export default F7NavTitle;

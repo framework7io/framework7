@@ -70,4 +70,5 @@ __reactComponentSetProps(F7Preloader, Object.assign({
   size: [Number, String]
 }, Mixins.colorProps));
 
+F7Preloader.displayName = 'f7-preloader';
 export default F7Preloader;

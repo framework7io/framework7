@@ -179,4 +179,5 @@ __reactComponentSetProps(F7Icon, Object.assign({
   size: [String, Number]
 }, Mixins.colorProps));
 
+F7Icon.displayName = 'f7-icon';
 export default F7Icon;

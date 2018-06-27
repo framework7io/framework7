@@ -62,4 +62,5 @@ __reactComponentSetProps(F7SwipeoutButton, Object.assign({
   href: String
 }, Mixins.colorProps));
 
+F7SwipeoutButton.displayName = 'f7-swipeout-button';
 export default F7SwipeoutButton;

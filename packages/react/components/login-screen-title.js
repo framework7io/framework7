@@ -34,4 +34,5 @@ __reactComponentSetProps(F7LoginScreenTitle, Object.assign({
   id: [String, Number]
 }, Mixins.colorProps));
 
+F7LoginScreenTitle.displayName = 'f7-login-screen-title';
 export default F7LoginScreenTitle;

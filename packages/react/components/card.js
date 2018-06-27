@@ -71,4 +71,5 @@ __reactComponentSetProps(F7Card, Object.assign({
   }
 }, Mixins.colorProps));
 
+F7Card.displayName = 'f7-card';
 export default F7Card;

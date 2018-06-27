@@ -69,4 +69,5 @@ __reactComponentSetProps(F7Col, Object.assign({
   }
 }, Mixins.colorProps));
 
+F7Col.displayName = 'f7-col';
 export default F7Col;

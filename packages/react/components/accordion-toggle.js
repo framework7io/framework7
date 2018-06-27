@@ -34,4 +34,5 @@ __reactComponentSetProps(F7AccordionToggle, Object.assign({
   id: [String, Number]
 }, Mixins.colorProps));
 
+F7AccordionToggle.displayName = 'f7-accordion-toggle';
 export default F7AccordionToggle;

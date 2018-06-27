@@ -42,4 +42,5 @@ __reactComponentSetProps(F7ListGroup, Object.assign({
   sortable: Boolean
 }, Mixins.colorProps));
 
+F7ListGroup.displayName = 'f7-list-group';
 export default F7ListGroup;

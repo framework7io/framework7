@@ -88,4 +88,5 @@ __reactComponentSetProps(F7Chip, Object.assign({
   outline: Boolean
 }, Mixins.colorProps));
 
+F7Chip.displayName = 'f7-chip';
 export default F7Chip;

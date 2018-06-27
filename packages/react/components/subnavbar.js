@@ -50,4 +50,5 @@ __reactComponentSetProps(F7Subnavbar, Object.assign({
   }
 }, Mixins.colorProps));
 
+F7Subnavbar.displayName = 'f7-subnavbar';
 export default F7Subnavbar;

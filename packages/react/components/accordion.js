@@ -34,4 +34,5 @@ __reactComponentSetProps(F7Accordion, Object.assign({
   id: [String, Number]
 }, Mixins.colorProps));
 
+F7Accordion.displayName = 'f7-accordion';
 export default F7Accordion;

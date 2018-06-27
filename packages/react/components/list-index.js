@@ -132,4 +132,5 @@ __reactComponentSetProps(F7ListIndex, Object.assign({
   }
 }, Mixins.colorProps));
 
+F7ListIndex.displayName = 'f7-list-index';
 export default F7ListIndex;

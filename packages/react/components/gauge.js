@@ -161,4 +161,5 @@ __reactComponentSetProps(F7Gauge, {
   }
 });
 
+F7Gauge.displayName = 'f7-gauge';
 export default F7Gauge;

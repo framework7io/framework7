@@ -1,5 +1,5 @@
 /**
- * Framework7 React 3.0.0-beta.14
+ * Framework7 React 3.0.0-beta.15
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 24, 2018
+ * Released on: June 27, 2018
  */
 
 (function (global, factory) {
@@ -585,6 +585,8 @@
     id: [String, Number]
   }, Mixins.colorProps));
 
+  F7AccordionContent.displayName = 'f7-accordion-content';
+
   function __reactComponentEl (component) {
     var self = component;
     var el;
@@ -714,6 +716,8 @@
     opened: Boolean
   }, Mixins.colorProps));
 
+  F7AccordionItem.displayName = 'f7-accordion-item';
+
   var F7AccordionToggle = (function (superclass) {
     function F7AccordionToggle(props, context) {
       superclass.call(this, props, context);
@@ -751,6 +755,8 @@
     id: [String, Number]
   }, Mixins.colorProps));
 
+  F7AccordionToggle.displayName = 'f7-accordion-toggle';
+
   var F7Accordion = (function (superclass) {
     function F7Accordion(props, context) {
       superclass.call(this, props, context);
@@ -787,6 +793,8 @@
   __reactComponentSetProps(F7Accordion, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
+
+  F7Accordion.displayName = 'f7-accordion';
 
   var F7ActionsButton = (function (superclass) {
     function F7ActionsButton(props, context) {
@@ -877,6 +885,8 @@
     }
   }, Mixins.colorProps));
 
+  F7ActionsButton.displayName = 'f7-actions-button';
+
   var F7ActionsGroup = (function (superclass) {
     function F7ActionsGroup(props, context) {
       superclass.call(this, props, context);
@@ -914,6 +924,8 @@
   __reactComponentSetProps(F7ActionsGroup, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
+
+  F7ActionsGroup.displayName = 'f7-actions-group';
 
   var F7ActionsLabel = (function (superclass) {
     function F7ActionsLabel(props, context) {
@@ -968,6 +980,8 @@
     id: [String, Number],
     bold: Boolean
   }, Mixins.colorProps));
+
+  F7ActionsLabel.displayName = 'f7-actions-label';
 
   function __reactComponentWatch (component, watchFor, prevProps, prevState, callback) {
     if (!callback) { return; }
@@ -1154,6 +1168,8 @@
     target: [String, Object]
   }, Mixins.colorProps));
 
+  F7Actions.displayName = 'f7-actions';
+
   var eventsEmitter = {
     listeners: {},
     on: function on(events, handler) {
@@ -1307,6 +1323,8 @@
     return F7RoutableModals;
   }(React.Component));
 
+  F7RoutableModals.displayName = 'f7-routable-modals';
+
   var F7App = (function (superclass) {
     function F7App(props, context) {
       superclass.call(this, props, context);
@@ -1380,6 +1398,8 @@
     routes: Array
   }, Mixins.colorProps));
 
+  F7App.displayName = 'f7-app';
+
   var F7Badge = (function (superclass) {
     function F7Badge(props, context) {
       superclass.call(this, props, context);
@@ -1416,6 +1436,8 @@
   __reactComponentSetProps(F7Badge, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
+
+  F7Badge.displayName = 'f7-badge';
 
   var F7BlockFooter = (function (superclass) {
     function F7BlockFooter(props, context) {
@@ -1454,6 +1476,8 @@
     id: [String, Number]
   }, Mixins.colorProps));
 
+  F7BlockFooter.displayName = 'f7-block-footer';
+
   var F7BlockHeader = (function (superclass) {
     function F7BlockHeader(props, context) {
       superclass.call(this, props, context);
@@ -1491,6 +1515,8 @@
     id: [String, Number]
   }, Mixins.colorProps));
 
+  F7BlockHeader.displayName = 'f7-block-header';
+
   var F7BlockTitle = (function (superclass) {
     function F7BlockTitle(props, context) {
       superclass.call(this, props, context);
@@ -1527,6 +1553,8 @@
   __reactComponentSetProps(F7BlockTitle, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
+
+  F7BlockTitle.displayName = 'f7-block-title';
 
   var F7Block = (function (superclass) {
     function F7Block(props, context) {
@@ -1631,6 +1659,8 @@
     noHairlinesMd: Boolean,
     noHairlinesIos: Boolean
   }, Mixins.colorProps));
+
+  F7Block.displayName = 'f7-block';
 
   var F7Icon = (function (superclass) {
     function F7Icon(props, context) {
@@ -1812,6 +1842,8 @@
     tooltip: String,
     size: [String, Number]
   }, Mixins.colorProps));
+
+  F7Icon.displayName = 'f7-icon';
 
   var F7Button = (function (superclass) {
     function F7Button(props, context) {
@@ -2032,6 +2064,8 @@
     tooltip: String
   }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
 
+  F7Button.displayName = 'f7-button';
+
   var F7CardContent = (function (superclass) {
     function F7CardContent(props, context) {
       superclass.call(this, props, context);
@@ -2076,6 +2110,8 @@
     }
   }, Mixins.colorProps));
 
+  F7CardContent.displayName = 'f7-card-content';
+
   var F7CardFooter = (function (superclass) {
     function F7CardFooter(props, context) {
       superclass.call(this, props, context);
@@ -2113,6 +2149,8 @@
     id: [String, Number]
   }, Mixins.colorProps));
 
+  F7CardFooter.displayName = 'f7-card-footer';
+
   var F7CardHeader = (function (superclass) {
     function F7CardHeader(props, context) {
       superclass.call(this, props, context);
@@ -2149,6 +2187,8 @@
   __reactComponentSetProps(F7CardHeader, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
+
+  F7CardHeader.displayName = 'f7-card-header';
 
   var F7Card = (function (superclass) {
     function F7Card(props, context) {
@@ -2220,6 +2260,8 @@
       default: true
     }
   }, Mixins.colorProps));
+
+  F7Card.displayName = 'f7-card';
 
   var F7Checkbox = (function (superclass) {
     function F7Checkbox(props, context) {
@@ -2306,6 +2348,8 @@
     readonly: Boolean,
     defaultChecked: Boolean
   }, Mixins.colorProps));
+
+  F7Checkbox.displayName = 'f7-checkbox';
 
   var F7Chip = (function (superclass) {
     function F7Chip(props, context) {
@@ -2400,6 +2444,8 @@
     outline: Boolean
   }, Mixins.colorProps));
 
+  F7Chip.displayName = 'f7-chip';
+
   var F7Col = (function (superclass) {
     function F7Col(props, context) {
       superclass.call(this, props, context);
@@ -2472,6 +2518,8 @@
       type: [Number, String]
     }
   }, Mixins.colorProps));
+
+  F7Col.displayName = 'f7-col';
 
   var F7FabButton = (function (superclass) {
     function F7FabButton(props, context) {
@@ -2581,6 +2629,8 @@
     tooltip: String
   }, Mixins.colorProps));
 
+  F7FabButton.displayName = 'f7-fab-button';
+
   var F7FabButtons = (function (superclass) {
     function F7FabButtons(props, context) {
       superclass.call(this, props, context);
@@ -2622,6 +2672,8 @@
       default: 'top'
     }
   }, Mixins.colorProps));
+
+  F7FabButtons.displayName = 'f7-fab-buttons';
 
   var F7Fab = (function (superclass) {
     function F7Fab(props, context) {
@@ -2667,8 +2719,8 @@
           var child = defaultSlots[i];
           var isRoot = (void 0);
           {
-            var tag = child.type && child.type.name;
-            if (tag === 'F7FabButtons') { isRoot = true; }
+            var tag = child.type && (child.type.displayName || child.type.name);
+            if (tag === 'F7FabButtons' || tag === 'f7-fab-buttons') { isRoot = true; }
           }
           if (isRoot) { rootChildren.push(child); }else { linkChildren.push(child); }
         }
@@ -2772,6 +2824,8 @@
     },
     tooltip: String
   }, Mixins.colorProps));
+
+  F7Fab.displayName = 'f7-fab';
 
   var F7Gauge = (function (superclass) {
     function F7Gauge(props, context) {
@@ -2935,6 +2989,8 @@
     }
   });
 
+  F7Gauge.displayName = 'f7-gauge';
+
   var F7Toggle = (function (superclass) {
     function F7Toggle(props, context) {
       superclass.call(this, props, context);
@@ -3061,6 +3117,8 @@
     name: String,
     value: [String, Number, Array]
   }, Mixins.colorProps));
+
+  F7Toggle.displayName = 'f7-toggle';
 
   var F7Range = (function (superclass) {
     function F7Range(props, context) {
@@ -3231,6 +3289,8 @@
     }
   }, Mixins.colorProps));
 
+  F7Range.displayName = 'f7-range';
+
   var F7Input = (function (superclass) {
     function F7Input(props, context) {
       var this$1 = this;
@@ -3333,13 +3393,14 @@
       var className = props.className;
       var noStoreData = props.noStoreData;
       var noFormStoreData = props.noFormStoreData;
+      var ignoreStoreData = props.ignoreStoreData;
       var inputEl;
 
       var createInput = function (tag, children) {
         var InputTag = tag;
         var needsValue = type !== 'file';
         var needsType = tag === 'input';
-        var inputClassName = Utils.classNames(type === 'textarea' && resizable && 'resizable', !wrap && className, (noFormStoreData || noStoreData) && 'no-store-data', errorMessage && errorMessageForce && 'input-invalid');
+        var inputClassName = Utils.classNames(type === 'textarea' && resizable && 'resizable', !wrap && className, (noFormStoreData || noStoreData || ignoreStoreData) && 'no-store-data', errorMessage && errorMessageForce && 'input-invalid');
         var input;
         {
           input = React.createElement(InputTag, {
@@ -3597,6 +3658,7 @@
     clearButton: Boolean,
     noFormStoreData: Boolean,
     noStoreData: Boolean,
+    ignoreStoreData: Boolean,
     errorMessage: String,
     errorMessageForce: Boolean,
     info: String,
@@ -3605,6 +3667,8 @@
       default: true
     }
   }, Mixins.colorProps));
+
+  F7Input.displayName = 'f7-input';
 
   var F7Label = (function (superclass) {
     function F7Label(props, context) {
@@ -3651,6 +3715,8 @@
     floating: Boolean,
     inline: Boolean
   }, Mixins.colorProps));
+
+  F7Label.displayName = 'f7-label';
 
   var F7Link = (function (superclass) {
     function F7Link(props, context) {
@@ -3898,6 +3964,8 @@
     smartSelectParams: Object
   }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
 
+  F7Link.displayName = 'f7-link';
+
   var F7ListButton = (function (superclass) {
     function F7ListButton(props, context) {
       superclass.call(this, props, context);
@@ -3991,6 +4059,8 @@
     target: String
   }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
 
+  F7ListButton.displayName = 'f7-list-button';
+
   var F7ListGroup = (function (superclass) {
     function F7ListGroup(props, context) {
       superclass.call(this, props, context);
@@ -4035,6 +4105,8 @@
     mediaList: Boolean,
     sortable: Boolean
   }, Mixins.colorProps));
+
+  F7ListGroup.displayName = 'f7-list-group';
 
   var F7ListIndex = (function (superclass) {
     function F7ListIndex(props, context) {
@@ -4175,6 +4247,8 @@
     }
   }, Mixins.colorProps));
 
+  F7ListIndex.displayName = 'f7-list-index';
+
   var F7ListItemCell = (function (superclass) {
     function F7ListItemCell(props, context) {
       superclass.call(this, props, context);
@@ -4211,6 +4285,8 @@
   __reactComponentSetProps(F7ListItemCell, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
+
+  F7ListItemCell.displayName = 'f7-list-item-cell';
 
   var F7ListItemContent = (function (superclass) {
     function F7ListItemContent(props, context) {
@@ -4365,15 +4441,15 @@
       flattenSlots.forEach(function (child) {
         if (typeof child === 'undefined') { return; }
         {
-          var tag = child.type && child.type.name;
+          var tag = child.type && (child.type.displayName || child.type.name);
 
-          if (tag === 'F7Input') {
+          if (tag === 'F7Input' || tag === 'f7-input') {
             hasInput = true;
             if (child.props && child.props.info) { hasInputInfo = true; }
             if (child.props && child.props.errorMessage && child.props.errorMessageForce) { hasInputErrorMessage = true; }
           }
 
-          if (tag === 'F7Label') {
+          if (tag === 'F7Label' || tag === 'f7-label') {
             if (child.props && child.props.inline) { hasInlineLabel = true; }
           }
         }
@@ -4648,6 +4724,8 @@
     disabled: Boolean
   }, Mixins.colorProps));
 
+  F7ListItemContent.displayName = 'f7-list-item-content';
+
   var F7ListItemRow = (function (superclass) {
     function F7ListItemRow(props, context) {
       superclass.call(this, props, context);
@@ -4684,6 +4762,8 @@
   __reactComponentSetProps(F7ListItemRow, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
+
+  F7ListItemRow.displayName = 'f7-list-item-row';
 
   var F7ListItem = (function (superclass) {
     function F7ListItem(props, context) {
@@ -5112,6 +5192,8 @@
     inlineLabel: Boolean
   }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
 
+  F7ListItem.displayName = 'f7-list-item';
+
   var F7List = (function (superclass) {
     function F7List(props, context) {
       superclass.call(this, props, context);
@@ -5212,14 +5294,14 @@
         if (typeof child === 'undefined') { return; }
         var tag;
         {
-          tag = child.type && child.type.name;
+          tag = child.type && (child.type.displayName || child.type.name);
 
           if (!tag && typeof child.type === 'string') {
             tag = child.type;
           }
         }
 
-        if (!tag && 'react' === 'react' || tag && !(tag === 'li' || tag === 'F7ListItem' || tag === 'F7ListButton' || tag.indexOf('list-item') >= 0 || tag.indexOf('list-button') >= 0)) {
+        if (!tag && 'react' === 'react' || tag && !(tag === 'li' || tag === 'F7ListItem' || tag === 'F7ListButton' || tag.indexOf('list-item') >= 0 || tag.indexOf('list-button') >= 0 || tag.indexOf('f7-list-item') >= 0 || tag.indexOf('f7-list-button') >= 0)) {
           if (wasUlChild) { rootChildrenAfterList.push(child); }else { rootChildrenBeforeList.push(child); }
         } else if (tag) {
           wasUlChild = true;
@@ -5377,6 +5459,8 @@
     virtualListParams: Object
   }, Mixins.colorProps));
 
+  F7List.displayName = 'f7-list';
+
   var F7LoginScreenTitle = (function (superclass) {
     function F7LoginScreenTitle(props, context) {
       superclass.call(this, props, context);
@@ -5413,6 +5497,8 @@
   __reactComponentSetProps(F7LoginScreenTitle, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
+
+  F7LoginScreenTitle.displayName = 'f7-login-screen-title';
 
   var F7LoginScreen = (function (superclass) {
     function F7LoginScreen(props, context) {
@@ -5550,6 +5636,8 @@
     id: [String, Number],
     opened: Boolean
   }, Mixins.colorProps));
+
+  F7LoginScreen.displayName = 'f7-login-screen';
 
   var F7Message = (function (superclass) {
     function F7Message(props, context) {
@@ -5740,6 +5828,8 @@
     typing: Boolean
   }, Mixins.colorProps));
 
+  F7Message.displayName = 'f7-message';
+
   var F7MessagebarAttachment = (function (superclass) {
     function F7MessagebarAttachment(props, context) {
       var this$1 = this;
@@ -5813,6 +5903,8 @@
     }
   }, Mixins.colorProps));
 
+  F7MessagebarAttachment.displayName = 'f7-messagebar-attachment';
+
   var F7MessagebarAttachments = (function (superclass) {
     function F7MessagebarAttachments(props, context) {
       superclass.call(this, props, context);
@@ -5849,6 +5941,8 @@
   __reactComponentSetProps(F7MessagebarAttachments, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
+
+  F7MessagebarAttachments.displayName = 'f7-messagebar-attachments';
 
   var F7MessagebarSheetImage = (function (superclass) {
     function F7MessagebarSheetImage(props, context) {
@@ -5923,6 +6017,8 @@
     checked: Boolean
   }, Mixins.colorProps));
 
+  F7MessagebarSheetImage.displayName = 'f7-messagebar-sheet-image';
+
   var F7MessagebarSheetItem = (function (superclass) {
     function F7MessagebarSheetItem(props, context) {
       superclass.call(this, props, context);
@@ -5960,6 +6056,8 @@
     id: [String, Number]
   }, Mixins.colorProps));
 
+  F7MessagebarSheetItem.displayName = 'f7-messagebar-sheet-item';
+
   var F7MessagebarSheet = (function (superclass) {
     function F7MessagebarSheet(props, context) {
       superclass.call(this, props, context);
@@ -5996,6 +6094,8 @@
   __reactComponentSetProps(F7MessagebarSheet, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
+
+  F7MessagebarSheet.displayName = 'f7-messagebar-sheet';
 
   var F7Messagebar = (function (superclass) {
     function F7Messagebar(props, context) {
@@ -6221,11 +6321,11 @@
         slotsDefault.forEach(function (child) {
           if (typeof child === 'undefined') { return; }
           var tag;
-          tag = child.type && child.type.name;
+          tag = child.type && (child.type.displayName || child.type.name);
 
-          if (tag && (tag.indexOf('messagebar-attachments') >= 0 || tag === 'F7MessagebarAttachments')) {
+          if (tag && (tag.indexOf('messagebar-attachments') >= 0 || tag === 'F7MessagebarAttachments' || tag === 'f7-messagebar-attachments')) {
             messagebarAttachmentsEl = child;
-          } else if (tag && (tag.indexOf('messagebar-sheet') >= 0 || tag === 'F7MessagebarSheet')) {
+          } else if (tag && (tag.indexOf('messagebar-sheet') >= 0 || tag === 'F7MessagebarSheet' || tag === 'f7-messagebar-sheet')) {
             messagebarSheetEl = child;
           } else {
             innerEndEls.push(child);
@@ -6393,6 +6493,8 @@
     }
   }, Mixins.colorProps));
 
+  F7Messagebar.displayName = 'f7-messagebar';
+
   var F7MessagesTitle = (function (superclass) {
     function F7MessagesTitle(props, context) {
       superclass.call(this, props, context);
@@ -6429,6 +6531,8 @@
   __reactComponentSetProps(F7MessagesTitle, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
+
+  F7MessagesTitle.displayName = 'f7-messages-title';
 
   var F7Messages = (function (superclass) {
     function F7Messages(props, context) {
@@ -6664,6 +6768,8 @@
     }
   }, Mixins.colorProps));
 
+  F7Messages.displayName = 'f7-messages';
+
   var F7NavLeft = (function (superclass) {
     function F7NavLeft(props, context) {
       superclass.call(this, props, context);
@@ -6736,6 +6842,8 @@
     sliding: Boolean
   }, Mixins.colorProps));
 
+  F7NavLeft.displayName = 'f7-nav-left';
+
   var F7NavRight = (function (superclass) {
     function F7NavRight(props, context) {
       superclass.call(this, props, context);
@@ -6777,6 +6885,8 @@
     id: [String, Number],
     sliding: Boolean
   }, Mixins.colorProps));
+
+  F7NavRight.displayName = 'f7-nav-right';
 
   var F7NavTitle = (function (superclass) {
     function F7NavTitle(props, context) {
@@ -6831,6 +6941,8 @@
     subtitle: String,
     sliding: Boolean
   }, Mixins.colorProps));
+
+  F7NavTitle.displayName = 'f7-nav-title';
 
   var F7Navbar = (function (superclass) {
     function F7Navbar(props, context) {
@@ -6983,6 +7095,8 @@
       default: true
     }
   }, Mixins.colorProps));
+
+  F7Navbar.displayName = 'f7-navbar';
 
   var F7PageContent = (function (superclass) {
     function F7PageContent(props, context) {
@@ -7194,6 +7308,8 @@
     loginScreen: Boolean
   }, Mixins.colorProps));
 
+  F7PageContent.displayName = 'f7-page-content';
+
   var F7Page = (function (superclass) {
     function F7Page(props, context) {
       superclass.call(this, props, context);
@@ -7305,7 +7421,7 @@
       var slotsFixed = ref.fixed;
       var slotsDefault = ref.default;
       var fixedTags;
-      fixedTags = 'Navbar Toolbar Tabbar Subnavbar Searchbar Messagebar Fab ListIndex'.split(' ').map(function (tagName) { return ("F7" + tagName); });
+      fixedTags = 'navbar toolbar tabbar subnavbar searchbar messagebar fab list-index'.split(' ').map(function (tagName) { return ("f7-" + tagName); });
       var hasSubnavbar;
       var hasMessages;
       hasMessages = messagesContent;
@@ -7315,15 +7431,15 @@
           if (typeof child === 'undefined') { return; }
           var isFixedTag = false;
           {
-            var tag = child.type && child.type.name;
+            var tag = child.type && (child.type.displayName || child.type.name);
 
             if (!tag) {
               if (needsPageContent) { staticList.push(child); }
               return;
             }
 
-            if (tag === 'F7Subnavbar') { hasSubnavbar = true; }
-            if (typeof hasMessages === 'undefined' && tag === 'F7Messages') { hasMessages = true; }
+            if (tag === 'F7Subnavbar' || tag === 'f7-subnavbar') { hasSubnavbar = true; }
+            if (typeof hasMessages === 'undefined' && (tag === 'F7Messages' || tag === 'f7-messages')) { hasMessages = true; }
 
             if (fixedTags.indexOf(tag) >= 0) {
               isFixedTag = true;
@@ -7499,6 +7615,8 @@
     messagesContent: Boolean,
     loginScreen: Boolean
   }, Mixins.colorProps));
+
+  F7Page.displayName = 'f7-page';
 
   var F7Panel = (function (superclass) {
     function F7Panel(props, context) {
@@ -7712,6 +7830,8 @@
     opened: Boolean
   }, Mixins.colorProps));
 
+  F7Panel.displayName = 'f7-panel';
+
   var F7PhotoBrowser = (function (superclass) {
     function F7PhotoBrowser(props, context) {
       superclass.call(this, props, context);
@@ -7884,6 +8004,8 @@
     renderStandalone: Function
   });
 
+  F7PhotoBrowser.displayName = 'f7-photo-browser';
+
   var F7Popover = (function (superclass) {
     function F7Popover(props, context) {
       superclass.call(this, props, context);
@@ -8029,6 +8151,8 @@
     target: [String, Object]
   }, Mixins.colorProps));
 
+  F7Popover.displayName = 'f7-popover';
+
   var F7Popup = (function (superclass) {
     function F7Popup(props, context) {
       superclass.call(this, props, context);
@@ -8168,6 +8292,8 @@
     opened: Boolean
   }, Mixins.colorProps));
 
+  F7Popup.displayName = 'f7-popup';
+
   var F7Preloader = (function (superclass) {
     function F7Preloader(props, context) {
       superclass.call(this, props, context);
@@ -8240,6 +8366,8 @@
     size: [Number, String]
   }, Mixins.colorProps));
 
+  F7Preloader.displayName = 'f7-preloader';
+
   var F7Progressbar = (function (superclass) {
     function F7Progressbar(props, context) {
       superclass.call(this, props, context);
@@ -8304,6 +8432,8 @@
     progress: Number,
     infinite: Boolean
   }, Mixins.colorProps));
+
+  F7Progressbar.displayName = 'f7-progressbar';
 
   var F7Radio = (function (superclass) {
     function F7Radio(props, context) {
@@ -8384,6 +8514,8 @@
     defaultChecked: Boolean
   }, Mixins.colorProps));
 
+  F7Radio.displayName = 'f7-radio';
+
   var F7Row = (function (superclass) {
     function F7Row(props, context) {
       superclass.call(this, props, context);
@@ -8443,6 +8575,8 @@
       default: 'div'
     }
   }, Mixins.colorProps));
+
+  F7Row.displayName = 'f7-row';
 
   var F7Searchbar = (function (superclass) {
     function F7Searchbar(props, context) {
@@ -8758,6 +8892,8 @@
     }
   }, Mixins.colorProps));
 
+  F7Searchbar.displayName = 'f7-searchbar';
+
   var F7Segmented = (function (superclass) {
     function F7Segmented(props, context) {
       superclass.call(this, props, context);
@@ -8810,6 +8946,8 @@
     }
   }, Mixins.colorProps));
 
+  F7Segmented.displayName = 'f7-segmented';
+
   var F7Sheet = (function (superclass) {
     function F7Sheet(props, context) {
       superclass.call(this, props, context);
@@ -8861,7 +8999,7 @@
       var style = props.style;
       var className = props.className;
       var fixedTags;
-      fixedTags = 'Navbar Toolbar Tabbar Subnavbar Searchbar Messagebar Fab ListIndex'.split(' ').map(function (tagName) { return ("F7" + tagName); });
+      fixedTags = 'navbar toolbar tabbar subnavbar searchbar messagebar fab list-index'.split(' ').map(function (tagName) { return ("f7-" + tagName); });
       var slotsDefault = self.slots.default;
 
       if (slotsDefault && slotsDefault.length) {
@@ -8869,7 +9007,7 @@
           if (typeof child === 'undefined') { return; }
           var isFixedTag = false;
           {
-            var tag = child.type && child.type.name;
+            var tag = child.type && (child.type.displayName || child.type.name);
 
             if (!tag) {
               return;
@@ -8991,6 +9129,8 @@
     backdrop: Boolean
   }, Mixins.colorProps));
 
+  F7Sheet.displayName = 'f7-sheet';
+
   var F7Statusbar = (function (superclass) {
     function F7Statusbar(props, context) {
       superclass.call(this, props, context);
@@ -9027,6 +9167,8 @@
   __reactComponentSetProps(F7Statusbar, Object.assign({
     id: [String, Number]
   }, Mixins.colorProps));
+
+  F7Statusbar.displayName = 'f7-statusbar';
 
   var F7Stepper = (function (superclass) {
     function F7Stepper(props, context) {
@@ -9303,6 +9445,8 @@
     raised: Boolean
   }, Mixins.colorProps));
 
+  F7Stepper.displayName = 'f7-stepper';
+
   var F7Subnavbar = (function (superclass) {
     function F7Subnavbar(props, context) {
       superclass.call(this, props, context);
@@ -9356,6 +9500,8 @@
     }
   }, Mixins.colorProps));
 
+  F7Subnavbar.displayName = 'f7-subnavbar';
+
   var F7SwipeoutActions = (function (superclass) {
     function F7SwipeoutActions(props, context) {
       superclass.call(this, props, context);
@@ -9405,6 +9551,8 @@
     right: Boolean,
     side: String
   }, Mixins.colorProps));
+
+  F7SwipeoutActions.displayName = 'f7-swipeout-actions';
 
   var F7SwipeoutButton = (function (superclass) {
     function F7SwipeoutButton(props, context) {
@@ -9473,6 +9621,8 @@
     href: String
   }, Mixins.colorProps));
 
+  F7SwipeoutButton.displayName = 'f7-swipeout-button';
+
   var F7SwiperSlide = (function (superclass) {
     function F7SwiperSlide(props, context) {
       superclass.call(this, props, context);
@@ -9513,6 +9663,8 @@
     id: [String, Number],
     zoom: Boolean
   });
+
+  F7SwiperSlide.displayName = 'f7-swiper-slide';
 
   var F7Swiper = (function (superclass) {
     function F7Swiper(props, context) {
@@ -9695,6 +9847,8 @@
     }
   }, Mixins.colorProps));
 
+  F7Swiper.displayName = 'f7-swiper';
+
   var F7Tab = (function (superclass) {
     function F7Tab(props, context) {
       var this$1 = this;
@@ -9831,6 +9985,8 @@
     tabActive: Boolean
   }, Mixins.colorProps));
 
+  F7Tab.displayName = 'f7-tab';
+
   var F7Tabs = (function (superclass) {
     function F7Tabs(props, context) {
       superclass.call(this, props, context);
@@ -9889,6 +10045,8 @@
     swipeable: Boolean,
     routable: Boolean
   }, Mixins.colorProps));
+
+  F7Tabs.displayName = 'f7-tabs';
 
   var F7Toolbar = (function (superclass) {
     function F7Toolbar(props, context) {
@@ -9995,6 +10153,8 @@
       default: true
     }
   }, Mixins.colorProps));
+
+  F7Toolbar.displayName = 'f7-toolbar';
 
   var F7View = (function (superclass) {
     function F7View(props, context) {
@@ -10208,6 +10368,8 @@
     }
   }, Mixins.colorProps));
 
+  F7View.displayName = 'f7-view';
+
   var F7Views = (function (superclass) {
     function F7Views(props, context) {
       superclass.call(this, props, context);
@@ -10249,6 +10411,8 @@
     id: [String, Number],
     tabs: Boolean
   }, Mixins.colorProps));
+
+  F7Views.displayName = 'f7-views';
 
   /* eslint no-underscore-dangle: "off" */
 
@@ -10455,7 +10619,7 @@
   };
 
   /**
-   * Framework7 React 3.0.0-beta.14
+   * Framework7 React 3.0.0-beta.15
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -10463,7 +10627,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: June 24, 2018
+   * Released on: June 27, 2018
    */
 
   var Plugin = {

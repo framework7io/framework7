@@ -112,7 +112,7 @@ class F7Page extends React.Component {
       default: slotsDefault
     } = self.slots;
     let fixedTags;
-    fixedTags = 'Navbar Toolbar Tabbar Subnavbar Searchbar Messagebar Fab ListIndex'.split(' ').map(tagName => `F7${tagName}`);
+    fixedTags = 'navbar toolbar tabbar subnavbar searchbar messagebar fab list-index'.split(' ').map(tagName => `f7-${tagName}`);
     let hasSubnavbar;
     let hasMessages;
     hasMessages = messagesContent;
@@ -122,15 +122,15 @@ class F7Page extends React.Component {
         if (typeof child === 'undefined') return;
         let isFixedTag = false;
         {
-          const tag = child.type && child.type.name;
+          const tag = child.type && (child.type.displayName || child.type.name);
 
           if (!tag) {
             if (needsPageContent) staticList.push(child);
             return;
           }
 
-          if (tag === 'F7Subnavbar') hasSubnavbar = true;
-          if (typeof hasMessages === 'undefined' && tag === 'F7Messages') hasMessages = true;
+          if (tag === 'F7Subnavbar' || tag === 'f7-subnavbar') hasSubnavbar = true;
+          if (typeof hasMessages === 'undefined' && (tag === 'F7Messages' || tag === 'f7-messages')) hasMessages = true;
 
           if (fixedTags.indexOf(tag) >= 0) {
             isFixedTag = true;
@@ -302,4 +302,5 @@ __reactComponentSetProps(F7Page, Object.assign({
   loginScreen: Boolean
 }, Mixins.colorProps));
 
+F7Page.displayName = 'f7-page';
 export default F7Page;

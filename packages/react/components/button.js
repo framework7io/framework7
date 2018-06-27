@@ -217,4 +217,5 @@ __reactComponentSetProps(F7Button, Object.assign({
   tooltip: String
 }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
 
+F7Button.displayName = 'f7-button';
 export default F7Button;

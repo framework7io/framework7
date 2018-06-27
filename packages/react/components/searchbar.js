@@ -308,4 +308,5 @@ __reactComponentSetProps(F7Searchbar, Object.assign({
   }
 }, Mixins.colorProps));
 
+F7Searchbar.displayName = 'f7-searchbar';
 export default F7Searchbar;

@@ -129,4 +129,5 @@ __reactComponentSetProps(F7Tab, Object.assign({
   tabActive: Boolean
 }, Mixins.colorProps));
 
+F7Tab.displayName = 'f7-tab';
 export default F7Tab;

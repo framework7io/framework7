@@ -100,7 +100,7 @@ export default {
         attrs: {
           width: `${size}px`,
           height: `${semiCircle ? size / 2 : size}px`,
-          viewbox: `0 0 ${size} ${semiCircle ? size / 2 : size}`
+          viewBox: `0 0 ${size} ${semiCircle ? size / 2 : size}`
         }
       }, [semiCircle && _h('path', {
         class: 'gauge-back-semi',

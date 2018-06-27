@@ -34,4 +34,5 @@ __reactComponentSetProps(F7BlockFooter, Object.assign({
   id: [String, Number]
 }, Mixins.colorProps));
 
+F7BlockFooter.displayName = 'f7-block-footer';
 export default F7BlockFooter;

@@ -131,4 +131,5 @@ __reactComponentSetProps(F7Popup, Object.assign({
   opened: Boolean
 }, Mixins.colorProps));
 
+F7Popup.displayName = 'f7-popup';
 export default F7Popup;

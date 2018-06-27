@@ -101,4 +101,5 @@ __reactComponentSetProps(F7Toolbar, Object.assign({
   }
 }, Mixins.colorProps));
 
+F7Toolbar.displayName = 'f7-toolbar';
 export default F7Toolbar;

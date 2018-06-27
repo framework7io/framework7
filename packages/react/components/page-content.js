@@ -206,4 +206,5 @@ __reactComponentSetProps(F7PageContent, Object.assign({
   loginScreen: Boolean
 }, Mixins.colorProps));
 
+F7PageContent.displayName = 'f7-page-content';
 export default F7PageContent;

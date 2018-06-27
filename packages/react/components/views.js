@@ -39,4 +39,5 @@ __reactComponentSetProps(F7Views, Object.assign({
   tabs: Boolean
 }, Mixins.colorProps));
 
+F7Views.displayName = 'f7-views';
 export default F7Views;
