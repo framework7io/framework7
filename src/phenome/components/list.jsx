@@ -57,7 +57,7 @@ export default {
       if (typeof child === 'undefined') return;
       let tag;
       if (process.env.COMPILER === 'react') {
-        tag = child.type && child.type.name;
+        tag = child.type && (child.type.displayName || child.type.name);
         if (!tag && typeof child.type === 'string') {
           tag = child.type;
         }
@@ -67,13 +67,15 @@ export default {
       }
 
       if (
-        (!tag && process.env.COMPILER === 'react') ||
-        (tag && !(
-          tag === 'li' ||
-          tag === 'F7ListItem' ||
-          tag === 'F7ListButton' ||
-          tag.indexOf('list-item') >= 0 ||
-          tag.indexOf('list-button') >= 0
+        (!tag && process.env.COMPILER === 'react')
+        || (tag && !(
+          tag === 'li'
+          || tag === 'F7ListItem'
+          || tag === 'F7ListButton'
+          || tag.indexOf('list-item') >= 0
+          || tag.indexOf('list-button') >= 0
+          || tag.indexOf('f7-list-item') >= 0
+          || tag.indexOf('f7-list-button') >= 0
         ))
       ) {
         if (wasUlChild) rootChildrenAfterList.push(child);

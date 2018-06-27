@@ -123,13 +123,13 @@ export default {
     flattenSlots.forEach((child) => {
       if (typeof child === 'undefined') return;
       if (process.env.COMPILER === 'react') {
-        const tag = child.type && child.type.name;
-        if (tag === 'F7Input') {
+        const tag = child.type && (child.type.displayName || child.type.name);
+        if (tag === 'F7Input' || tag === 'f7-input') {
           hasInput = true;
           if (child.props && child.props.info) hasInputInfo = true;
           if (child.props && child.props.errorMessage && child.props.errorMessageForce) hasInputErrorMessage = true;
         }
-        if (tag === 'F7Label') {
+        if (tag === 'F7Label' || tag === 'f7-label') {
           if (child.props && child.props.inline) hasInlineLabel = true;
         }
       }

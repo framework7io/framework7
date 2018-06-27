@@ -88,11 +88,11 @@ export default {
         if (typeof child === 'undefined') return;
         let tag;
         tag = child.tag; // phenome-vue-line
-        tag = child.type && child.type.name; // phenome-react-line
+        tag = child.type && (child.type.displayName || child.type.name); // phenome-react-line
 
-        if (tag && (tag.indexOf('messagebar-attachments') >= 0 || tag === 'F7MessagebarAttachments')) {
+        if (tag && (tag.indexOf('messagebar-attachments') >= 0 || tag === 'F7MessagebarAttachments' || tag === 'f7-messagebar-attachments')) {
           messagebarAttachmentsEl = child;
-        } else if (tag && (tag.indexOf('messagebar-sheet') >= 0 || tag === 'F7MessagebarSheet')) {
+        } else if (tag && (tag.indexOf('messagebar-sheet') >= 0 || tag === 'F7MessagebarSheet' || tag === 'f7-messagebar-sheet')) {
           messagebarSheetEl = child;
         } else {
           innerEndEls.push(child);
@@ -125,11 +125,11 @@ export default {
             />
             {slotsAfterArea}
           </div>
-          {((sendLink && sendLink.length > 0) || slotsSendLink) &&
+          {((sendLink && sendLink.length > 0) || slotsSendLink) && (
             <F7Link onClick={self.onClickBound}>
               {slotsSendLink || sendLink}
             </F7Link>
-          }
+          )}
           {slotsInnerEnd}
           {innerEndEls}
         </div>

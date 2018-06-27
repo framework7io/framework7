@@ -24,7 +24,7 @@ export default {
     // phenome-vue-next-line
     fixedTags = ('navbar toolbar tabbar subnavbar searchbar messagebar fab list-index').split(' ');
     // phenome-react-next-line
-    fixedTags = ('Navbar Toolbar Tabbar Subnavbar Searchbar Messagebar Fab ListIndex').split(' ').map(tagName => `F7${tagName}`);
+    fixedTags = ('navbar toolbar tabbar subnavbar searchbar messagebar fab list-index').split(' ').map(tagName => `f7-${tagName}`);
 
     const slotsDefault = self.slots.default;
 
@@ -33,7 +33,7 @@ export default {
         if (typeof child === 'undefined') return;
         let isFixedTag = false;
         if (process.env.COMPILER === 'react') {
-          const tag = child.type && child.type.name;
+          const tag = child.type && (child.type.displayName || child.type.name);
           if (!tag) {
             return;
           }

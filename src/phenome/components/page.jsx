@@ -84,7 +84,7 @@ export default {
     // phenome-vue-next-line
     fixedTags = ('navbar toolbar tabbar subnavbar searchbar messagebar fab list-index').split(' ');
     // phenome-react-next-line
-    fixedTags = ('Navbar Toolbar Tabbar Subnavbar Searchbar Messagebar Fab ListIndex').split(' ').map(tagName => `F7${tagName}`);
+    fixedTags = ('navbar toolbar tabbar subnavbar searchbar messagebar fab list-index').split(' ').map(tagName => `f7-${tagName}`);
 
     let hasSubnavbar;
     let hasMessages;
@@ -96,13 +96,13 @@ export default {
         if (typeof child === 'undefined') return;
         let isFixedTag = false;
         if (process.env.COMPILER === 'react') {
-          const tag = child.type && child.type.name;
+          const tag = child.type && (child.type.displayName || child.type.name);
           if (!tag) {
             if (needsPageContent) staticList.push(child);
             return;
           }
-          if (tag === 'F7Subnavbar') hasSubnavbar = true;
-          if (typeof hasMessages === 'undefined' && tag === 'F7Messages') hasMessages = true;
+          if (tag === 'F7Subnavbar' || tag === 'f7-subnavbar') hasSubnavbar = true;
+          if (typeof hasMessages === 'undefined' && (tag === 'F7Messages' || tag === 'f7-messages')) hasMessages = true;
           if (fixedTags.indexOf(tag) >= 0) {
             isFixedTag = true;
           }
