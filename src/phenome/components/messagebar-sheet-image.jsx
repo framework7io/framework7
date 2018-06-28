@@ -40,7 +40,7 @@ export default {
         <input type="checkbox" checked={checked} onChange={self.onChangeBound} />
       );
     }
-    if (process.env.COMPILER === 'vye') {
+    if (process.env.COMPILER === 'vue') {
       inputEl = (
         <input type="checkbox" domProps={{ checked }} onChange={self.onChangeBound} />
       );
