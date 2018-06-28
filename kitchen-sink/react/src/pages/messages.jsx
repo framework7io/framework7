@@ -251,6 +251,9 @@ export default class extends React.Component {
         text,
       });
     }
+    if (messagesToSend.length === 0) {
+      return;
+    }
 
     self.setState({
       // Reset attachments

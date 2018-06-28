@@ -5,8 +5,8 @@
     <f7-messagebar
       :placeholder="placeholder"
       ref="messagebar"
-      :attachmentsVisible="attachmentsVisible"
-      :sheetVisible="sheetVisible"
+      :attachments-visible="attachmentsVisible"
+      :sheet-visible="sheetVisible"
     >
       <f7-link
         icon-ios="f7:camera_fill"
@@ -250,6 +250,10 @@
             text,
           });
         }
+        if (messagesToSend.length === 0) {
+          return;
+        }
+
         // Reset attachments
         self.attachments = [];
         // Hide sheet
