@@ -56,7 +56,8 @@ Bart DJ
 
 ---
 
-### $10+ Thank You
+### $10+ Supporter
+Kyle Hammond<br>
 En-Yang Lin<br>
 VOUSYS<br>
 David Fall<br>
@@ -75,7 +76,7 @@ Dave Billington
 
 ---
 
-### $5+
+### $5+ Thank You
 Evgeny Konyahin<br>
 jinsom<br>
 Alessandro De Siro<br>
