@@ -18,7 +18,6 @@ export default {
       sliding
     } = props;
     const classes = Utils.classNames(className, 'right', {
-      right: true,
       sliding
     }, Mixins.colorClasses(props));
     return _h('div', {

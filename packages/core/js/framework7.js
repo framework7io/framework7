@@ -1,5 +1,5 @@
 /**
- * Framework7 3.0.0-beta.15
+ * Framework7 3.0.0-beta.16
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 27, 2018
+ * Released on: July 1, 2018
  */
 
 (function (global, factory) {
@@ -21387,9 +21387,8 @@
 
     Searchbar.prototype.search = function search (query, internal) {
       var sb = this;
-      if (sb.previousQuery && query.trim() === sb.previousQuery) { return sb; }
-      if (typeof (sb.previousQuery) !== 'undefined' && sb.previousQuery.trim() === '' && query.trim() === '') { return sb; }
-      sb.previousQuery = query.trim();
+      sb.previousQuery = sb.query || '';
+      if (query === sb.previousQuery) { return sb; }
 
       if (!internal) {
         if (!sb.enabled) {

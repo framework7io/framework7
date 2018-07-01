@@ -136,6 +136,7 @@ class F7ListItem extends React.Component {
       checkbox,
       radio,
       checked,
+      defaultChecked,
       name,
       value,
       readonly,
@@ -166,6 +167,7 @@ class F7ListItem extends React.Component {
         accordionItem: accordionItem,
         checkbox: checkbox,
         checked: checked,
+        defaultChecked: defaultChecked,
         radio: radio,
         name: name,
         value: value,
@@ -214,7 +216,9 @@ class F7ListItem extends React.Component {
         style: style,
         className: liClasses
       }, React.createElement('span', null, this.slots['default'], !this.slots.default && title));
-    } else if (isSimple) {
+    }
+
+    if (isSimple) {
       return React.createElement('li', {
         ref: __reactNode => {
           this.__reactRefs['el'] = __reactNode;
@@ -412,6 +416,7 @@ __reactComponentSetProps(F7ListItem, Object.assign({
   checkbox: Boolean,
   radio: Boolean,
   checked: Boolean,
+  defaultChecked: Boolean,
   name: String,
   value: [String, Number, Array],
   readonly: Boolean,

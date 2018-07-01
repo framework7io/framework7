@@ -18,7 +18,6 @@ class F7NavRight extends React.Component {
       sliding
     } = props;
     const classes = Utils.classNames(className, 'right', {
-      right: true,
       sliding
     }, Mixins.colorClasses(props));
     return React.createElement('div', {

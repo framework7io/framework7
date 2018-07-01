@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.0.0-beta.15
+ * Framework7 Vue 3.0.0-beta.16
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 27, 2018
+ * Released on: July 1, 2018
  */
 
 (function (global, factory) {
@@ -3742,6 +3742,7 @@
       inlineLabel: Boolean,
       checkbox: Boolean,
       checked: Boolean,
+      defaultChecked: Boolean,
       radio: Boolean,
       name: String,
       value: [String, Number, Array],
@@ -3779,6 +3780,7 @@
       var value = props.value;
       var name = props.name;
       var checked = props.checked;
+      var defaultChecked = props.defaultChecked;
       var readonly = props.readonly;
       var disabled = props.disabled;
       var required = props.required;
@@ -4223,6 +4225,7 @@
       checkbox: Boolean,
       radio: Boolean,
       checked: Boolean,
+      defaultChecked: Boolean,
       name: String,
       value: [String, Number, Array],
       readonly: Boolean,
@@ -4283,6 +4286,7 @@
       var checkbox = props.checkbox;
       var radio = props.radio;
       var checked = props.checked;
+      var defaultChecked = props.defaultChecked;
       var name = props.name;
       var value = props.value;
       var readonly = props.readonly;
@@ -4317,6 +4321,7 @@
             accordionItem: accordionItem,
             checkbox: checkbox,
             checked: checked,
+            defaultChecked: defaultChecked,
             radio: radio,
             name: name,
             value: value,
@@ -4367,7 +4372,9 @@
             id: id
           }
         }, [_h('span', [this.$slots['default'] || [title]])]);
-      } else if (isSimple) {
+      }
+
+      if (isSimple) {
         return _h('li', {
           ref: 'el',
           style: style,
@@ -5341,6 +5348,19 @@
         backgroundImage: image && ("url(" + image + ")")
       }, style || {});
       var inputEl;
+      {
+        inputEl = _h('input', {
+          domProps: {
+            checked: checked
+          },
+          on: {
+            change: self.onChangeBound
+          },
+          attrs: {
+            type: 'checkbox'
+          }
+        });
+      }
       return _h('label', {
         class: classes,
         style: styles,
@@ -6149,7 +6169,6 @@
       var style = props.style;
       var sliding = props.sliding;
       var classes = Utils.classNames(className, 'right', {
-        right: true,
         sliding: sliding
       }, Mixins.colorClasses(props));
       return _h('div', {
@@ -9607,7 +9626,7 @@
   };
 
   /**
-   * Framework7 Vue 3.0.0-beta.15
+   * Framework7 Vue 3.0.0-beta.16
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -9615,7 +9634,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: June 27, 2018
+   * Released on: July 1, 2018
    */
 
   var Plugin = {

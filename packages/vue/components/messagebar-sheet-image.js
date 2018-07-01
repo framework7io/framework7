@@ -30,7 +30,19 @@ export default {
       backgroundImage: image && `url(${image})`
     }, style || {});
     let inputEl;
-    {}
+    {
+      inputEl = _h('input', {
+        domProps: {
+          checked
+        },
+        on: {
+          change: self.onChangeBound
+        },
+        attrs: {
+          type: 'checkbox'
+        }
+      });
+    }
     return _h('label', {
       class: classes,
       style: styles,

@@ -2,6 +2,13 @@
 
 # Change Log
 
+# [v3.0.0-beta.16](https://github.com/framework7io/framework7/compare/v3.0.0-beta.15...v3.0.0-beta.16) - July 1, 2018
+  * Core
+    * Searchbar - fixed issue with wrong `previousQuery` in `search` event
+  * Phenome
+    * ListItem has new `defaultChecked` prop to support React uncontrolled components
+  * Minor fixes
+
 # [v3.0.0-beta.15](https://github.com/framework7io/framework7/compare/v3.0.0-beta.14...v3.0.0-beta.15) - June 27, 2018
   * Phenome Components
     * Fixes issue when React components could be rendered wrong in production build
