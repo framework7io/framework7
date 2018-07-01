@@ -213,7 +213,7 @@ export default class extends React.Component {
           </Row>
         </Block>
 
-        <Block>Autorepeat (Tap & hold)</Block>
+        <BlockTitle>Autorepeat (Tap & hold)</BlockTitle>
         <BlockHeader>Pressing and holding one of its buttons increments or decrements the stepper’s value repeatedly. With dynamic autorepeat, the rate of change depends on how long the user continues pressing the control.</BlockHeader>
         <Block strong className="text-align-center">
           <Row>
@@ -228,7 +228,7 @@ export default class extends React.Component {
           </Row>
         </Block>
 
-        <Block>Wraps</Block>
+        <BlockTitle>Wraps</BlockTitle>
         <BlockHeader>In wraps mode incrementing beyond maximum value sets value to minimum value, likewise, decrementing below minimum value sets value to maximum value</BlockHeader>
         <Block strong className="text-align-center">
           <Row>

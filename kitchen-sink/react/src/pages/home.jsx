@@ -7,7 +7,7 @@ export default () => (
       <NavLeft>
         <Link panelOpen="left" iconIos="f7:menu" iconMd="material:menu"></Link>
       </NavLeft>
-      <NavTitle>Framework7</NavTitle>
+      <NavTitle>Framework7 React</NavTitle>
       <NavRight>
         <Link searchbarEnable=".searchbar-components" iconIos="f7:search_strong" iconMd="material:search"></Link>
       </NavRight>

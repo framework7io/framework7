@@ -15,9 +15,7 @@ export default class extends React.Component {
         <Navbar title="Tabbar Scrollable" backLink="Back">
           {this.$theme.md && (
             <NavRight>
-              <Link icon="material:compare_arrows" onClick={() => {this.setState({ toolbarBottom: !this.state.toolbarBottom })}}>
-                <i className="icon material-icons rotate-icon">compare_arrows</i>
-              </Link>
+              <Link icon-material="compare_arrows" onClick={() => {this.setState({ toolbarBottom: !this.state.toolbarBottom })}}></Link>
             </NavRight>
           )}
         </Navbar>

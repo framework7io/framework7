@@ -38,7 +38,7 @@ export default () => (
     ></Card>
 
     <BlockTitle>Styled Cards</BlockTitle>
-    <Card className="demo-CardHeader-pic">
+    <Card className="demo-card-header-pic">
       <CardHeader
         className="no-border"
         valign="bottom"
@@ -53,7 +53,7 @@ export default () => (
         <Link>Read more</Link>
       </CardFooter>
     </Card>
-    <Card className="demo-CardHeader-pic">
+    <Card className="demo-card-header-pic">
       <CardHeader
         className="no-border"
         valign="bottom"

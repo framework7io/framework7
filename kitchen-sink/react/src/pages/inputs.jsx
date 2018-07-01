@@ -60,7 +60,7 @@ export default () => (
       <ListItem>
         <Icon icon="demo-list-icon" slot="media"></Icon>
         <Label>Range</Label>
-        <Input id="range-id" inputId="wtf" type="range" value="50" min="0" max="100" step="1"></Input>
+        <Input id="range-id" type="range" value="50" min="0" max="100" step="1"></Input>
       </ListItem>
 
       <ListItem>

@@ -2,9 +2,7 @@
   <f7-page :page-content="false">
     <f7-navbar title="Tabbar Labels" back-link="Back">
       <f7-nav-right v-if="$theme.md">
-        <f7-link icon="material:compare_arrows" @click="toggleToolbarPosition">
-          <i class="icon material-icons rotate-icon">compare_arrows</i>
-        </f7-link>
+        <f7-link icon-material="compare_arrows" @click="toggleToolbarPosition"></f7-link>
       </f7-nav-right>
     </f7-navbar>
     <f7-toolbar tabbar labels>

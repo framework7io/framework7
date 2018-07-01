@@ -4,7 +4,7 @@ import { Navbar, Page, Toolbar, Link, Block } from 'framework7-react';
 export default () => (
   <Page hideToolbarOnScroll>
     <Navbar title="Hide Toolbar On Scroll" backLink="Back"></Navbar>
-    <Toolbar bottom-md>
+    <Toolbar bottomMd>
       <Link>Left Link</Link>
       <Link>Right Link</Link>
     </Toolbar>

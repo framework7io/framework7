@@ -199,7 +199,7 @@
       </f7-row>
     </f7-block>
 
-    <f7-block>Autorepeat (Tap & hold)</f7-block>
+    <f7-block-title>Autorepeat (Tap & hold)</f7-block-title>
     <f7-block-header>Pressing and holding one of its buttons increments or decrements the stepper’s value repeatedly. With dynamic autorepeat, the rate of change depends on how long the user continues pressing the control.</f7-block-header>
     <f7-block strong class="text-align-center">
       <f7-row>
@@ -214,7 +214,7 @@
       </f7-row>
     </f7-block>
 
-    <f7-block>Wraps</f7-block>
+    <f7-block-title>Wraps</f7-block-title>
     <f7-block-header>In wraps mode incrementing beyond maximum value sets value to minimum value, likewise, decrementing below minimum value sets value to maximum value</f7-block-header>
     <f7-block strong class="text-align-center">
       <f7-row>

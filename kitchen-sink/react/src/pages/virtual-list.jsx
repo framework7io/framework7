@@ -68,7 +68,6 @@ export default class extends React.Component {
     return found; // return array with mathced indexes
   }
   renderExternal(vl, vlData) {
-    console.log('wtf?!');
     this.setState({ vlData });
   }
 }

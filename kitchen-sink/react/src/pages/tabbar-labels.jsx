@@ -12,11 +12,11 @@ export default class extends React.Component {
     return (
       <Page pageContent={false}>
         <Navbar title="Tabbar Labels" backLink="Back">
-          <NavRight v-if="$theme.md">
-            <Link icon="material:compare_arrows" onClick={() => {this.setState({ toolbarBottom: !this.state.toolbarBottom })}}>
-              <i className="icon material-icons rotate-icon">compare_arrows</i>
-            </Link>
-          </NavRight>
+          {this.$theme.md && (
+            <NavRight>
+              <Link icon-material="compare_arrows" onClick={() => {this.setState({ toolbarBottom: !this.state.toolbarBottom })}}></Link>
+            </NavRight>
+          )}
         </Navbar>
         <Toolbar tabbar labels bottomMd={this.state.toolbarBottom}>
           <Link tabLink="#tab-1" tabLinkActive text="Tab 1" iconIos="f7:email_fill" iconMd="material:email"></Link>

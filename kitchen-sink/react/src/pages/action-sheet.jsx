@@ -64,7 +64,7 @@ export default class extends React.Component {
         </Actions>
 
         {/* Grid */}
-        <Actions grid={true} opened={this.state.actionGridOpened} actionsClosed={() => this.setActionsGridOpened(false)}>
+        <Actions grid={true} opened={this.state.actionGridOpened} onActionsClosed={() => this.setActionsGridOpened(false)}>
           <ActionsGroup>
             <ActionsButton>
               <img slot="media" src="http://lorempixel.com/96/96/people/1" width="48"/>

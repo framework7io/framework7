@@ -81,12 +81,12 @@ export default () => (
 
     <BlockTitle>Custom Collapsible</BlockTitle>
     <Block inner accordionList>
-      {Array.from(Array(3).keys()).map(n => {
+      {Array.from(Array(3).keys()).map(n => (
         <AccordionItem key={n}>
           <AccordionToggle><b>Item {n + 1}</b></AccordionToggle>
           <AccordionContent>Content {n + 1}</AccordionContent>
         </AccordionItem>
-      })}
+      ))}
     </Block>
   </Page>
 );
