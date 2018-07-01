@@ -21,7 +21,6 @@ export default {
       className,
       'right',
       {
-        right: true,
         sliding,
       },
       Mixins.colorClasses(props),
