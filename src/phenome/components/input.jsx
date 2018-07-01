@@ -262,15 +262,15 @@ export default {
           {errorMessage && errorMessageForce && (
             <div className="item-input-error-message">{errorMessage}</div>
           )}
-          {clearButton &&
+          {clearButton && (
             <span className="input-clear-button" />
-          }
-          {(info || (slotsInfo && slotsInfo.length)) &&
+          )}
+          {(info || (slotsInfo && slotsInfo.length)) && (
             <div className="item-input-info">
               {info}
               <slot name="info" />
             </div>
-          }
+          )}
         </div>
       );
     }
@@ -319,10 +319,9 @@ export default {
 
       f7.input.checkEmptyState(inputEl);
       if (
-        (validate || validate === '') &&
-        (
-          (typeof value !== 'undefined' && value !== null && value !== '') ||
-          (typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')
+        (validate || validate === '') && (
+          (typeof value !== 'undefined' && value !== null && value !== '')
+          || (typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')
         )
       ) {
         setTimeout(() => {

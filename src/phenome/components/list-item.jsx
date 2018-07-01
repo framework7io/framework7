@@ -216,7 +216,8 @@ export default {
           <span><slot>{title}</slot></span>
         </li>
       );
-    } else if (isSimple) {
+    }
+    if (isSimple) {
       return (
         <li ref="el" id={id} style={style} className={liClasses}>
           {title}
