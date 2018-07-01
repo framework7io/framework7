@@ -27,6 +27,7 @@ export default {
 
     checkbox: Boolean,
     checked: Boolean,
+    defaultChecked: Boolean,
     radio: Boolean,
     name: String,
     value: [String, Number, Array],
@@ -56,6 +57,7 @@ export default {
       value,
       name,
       checked,
+      defaultChecked,
       readonly,
       disabled,
       required,
@@ -185,6 +187,7 @@ export default {
             value={value}
             name={name}
             checked={checked}
+            defaultChecked={defaultChecked}
             readOnly={readonly}
             disabled={disabled}
             required={required}

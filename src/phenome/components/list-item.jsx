@@ -44,6 +44,7 @@ export default {
     checkbox: Boolean,
     radio: Boolean,
     checked: Boolean,
+    defaultChecked: Boolean,
     name: String,
     value: [String, Number, Array],
     readonly: Boolean,
@@ -99,6 +100,7 @@ export default {
       checkbox,
       radio,
       checked,
+      defaultChecked,
       name,
       value,
       readonly,
@@ -132,6 +134,7 @@ export default {
           accordionItem={accordionItem}
           checkbox={checkbox}
           checked={checked}
+          defaultChecked={defaultChecked}
           radio={radio}
           name={name}
           value={value}
