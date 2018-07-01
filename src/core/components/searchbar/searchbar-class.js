@@ -379,9 +379,8 @@ class Searchbar extends FrameworkClass {
 
   search(query, internal) {
     const sb = this;
-    if (sb.previousQuery && query.trim() === sb.previousQuery) return sb;
-    if (typeof (sb.previousQuery) !== 'undefined' && sb.previousQuery.trim() === '' && query.trim() === '') return sb;
-    sb.previousQuery = query.trim();
+    sb.previousQuery = sb.query || '';
+    if (query === sb.previousQuery) return sb;
 
     if (!internal) {
       if (!sb.enabled) {
