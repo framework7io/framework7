@@ -2,6 +2,14 @@
 
 # Change Log
 
+# [v3.0.0-beta.17](https://github.com/framework7io/framework7/compare/v3.0.0-beta.16...v3.0.0-beta.17) - July 2, 2018
+  * Core
+    * Router
+      * `preRoute` middleware renamed to `beforeEnter` that will be executed before route load/enter.
+      * Added `beforeLeave` route middleware that will be executed before route unload/leave.
+    * Progressbar
+      * Fixed positioning of progressbar inside of the Page with statusbar enabled
+
 # [v3.0.0-beta.16](https://github.com/framework7io/framework7/compare/v3.0.0-beta.15...v3.0.0-beta.16) - July 1, 2018
   * Core
     * Searchbar - fixed issue with wrong `previousQuery` in `search` event

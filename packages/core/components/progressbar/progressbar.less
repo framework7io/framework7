@@ -15,20 +15,27 @@ body, .view, .views, .page, .panel, .popup, .framework7-root {
     border-radius: 0 !important;
     transform-origin: center top !important;
   }
-  html.with-statusbar.device-ios &, html.with-statusbar.ios:not(.device-ios):not(.device-android) & {
+}
+.with-statusbar.device-ios,
+.with-statusbar.ios:not(.device-ios):not(.device-android) {
+  body, .framework7-root {
     > .progressbar, > .progressbar-infinite {
       top: 20px;
     }
   }
-  html.with-statusbar.device-android &, html.with-statusbar.md:not(.device-ios):not(.device-android) & {
+}
+.with-statusbar.device-android,
+.with-statusbar.md:not(.device-ios):not(.device-android) {
+  body, .framework7-root {
     > .progressbar, > .progressbar-infinite {
       top: 24px;
     }
   }
 }
+
 .with-statusbar {
   .safe-areas({
-    body, .view, .views, .page, .panel, .popup, .framework7-root {
+    body, .framework7-root {
       > .progressbar, > .progressbar-infinite {
         top: constant(safe-area-inset-top);
         top: env(safe-area-inset-top);

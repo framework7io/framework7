@@ -1,5 +1,5 @@
 /**
- * Framework7 3.0.0-beta.16
+ * Framework7 3.0.0-beta.17
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 1, 2018
+ * Released on: July 2, 2018
  */
 html,
 body,
@@ -5882,79 +5882,29 @@ body > .progressbar-infinite,
   -webkit-transform-origin: center top !important;
   transform-origin: center top !important;
 }
-html.with-statusbar.device-ios body > .progressbar,
-html.with-statusbar.device-ios .view > .progressbar,
-html.with-statusbar.device-ios .views > .progressbar,
-html.with-statusbar.device-ios .page > .progressbar,
-html.with-statusbar.device-ios .panel > .progressbar,
-html.with-statusbar.device-ios .popup > .progressbar,
-html.with-statusbar.device-ios .framework7-root > .progressbar,
-html.with-statusbar.ios:not(.device-ios):not(.device-android) body > .progressbar,
-html.with-statusbar.ios:not(.device-ios):not(.device-android) .view > .progressbar,
-html.with-statusbar.ios:not(.device-ios):not(.device-android) .views > .progressbar,
-html.with-statusbar.ios:not(.device-ios):not(.device-android) .page > .progressbar,
-html.with-statusbar.ios:not(.device-ios):not(.device-android) .panel > .progressbar,
-html.with-statusbar.ios:not(.device-ios):not(.device-android) .popup > .progressbar,
-html.with-statusbar.ios:not(.device-ios):not(.device-android) .framework7-root > .progressbar,
-html.with-statusbar.device-ios body > .progressbar-infinite,
-html.with-statusbar.device-ios .view > .progressbar-infinite,
-html.with-statusbar.device-ios .views > .progressbar-infinite,
-html.with-statusbar.device-ios .page > .progressbar-infinite,
-html.with-statusbar.device-ios .panel > .progressbar-infinite,
-html.with-statusbar.device-ios .popup > .progressbar-infinite,
-html.with-statusbar.device-ios .framework7-root > .progressbar-infinite,
-html.with-statusbar.ios:not(.device-ios):not(.device-android) body > .progressbar-infinite,
-html.with-statusbar.ios:not(.device-ios):not(.device-android) .view > .progressbar-infinite,
-html.with-statusbar.ios:not(.device-ios):not(.device-android) .views > .progressbar-infinite,
-html.with-statusbar.ios:not(.device-ios):not(.device-android) .page > .progressbar-infinite,
-html.with-statusbar.ios:not(.device-ios):not(.device-android) .panel > .progressbar-infinite,
-html.with-statusbar.ios:not(.device-ios):not(.device-android) .popup > .progressbar-infinite,
-html.with-statusbar.ios:not(.device-ios):not(.device-android) .framework7-root > .progressbar-infinite {
+.with-statusbar.device-ios body > .progressbar,
+.with-statusbar.ios:not(.device-ios):not(.device-android) body > .progressbar,
+.with-statusbar.device-ios .framework7-root > .progressbar,
+.with-statusbar.ios:not(.device-ios):not(.device-android) .framework7-root > .progressbar,
+.with-statusbar.device-ios body > .progressbar-infinite,
+.with-statusbar.ios:not(.device-ios):not(.device-android) body > .progressbar-infinite,
+.with-statusbar.device-ios .framework7-root > .progressbar-infinite,
+.with-statusbar.ios:not(.device-ios):not(.device-android) .framework7-root > .progressbar-infinite {
   top: 20px;
 }
-html.with-statusbar.device-android body > .progressbar,
-html.with-statusbar.device-android .view > .progressbar,
-html.with-statusbar.device-android .views > .progressbar,
-html.with-statusbar.device-android .page > .progressbar,
-html.with-statusbar.device-android .panel > .progressbar,
-html.with-statusbar.device-android .popup > .progressbar,
-html.with-statusbar.device-android .framework7-root > .progressbar,
-html.with-statusbar.md:not(.device-ios):not(.device-android) body > .progressbar,
-html.with-statusbar.md:not(.device-ios):not(.device-android) .view > .progressbar,
-html.with-statusbar.md:not(.device-ios):not(.device-android) .views > .progressbar,
-html.with-statusbar.md:not(.device-ios):not(.device-android) .page > .progressbar,
-html.with-statusbar.md:not(.device-ios):not(.device-android) .panel > .progressbar,
-html.with-statusbar.md:not(.device-ios):not(.device-android) .popup > .progressbar,
-html.with-statusbar.md:not(.device-ios):not(.device-android) .framework7-root > .progressbar,
-html.with-statusbar.device-android body > .progressbar-infinite,
-html.with-statusbar.device-android .view > .progressbar-infinite,
-html.with-statusbar.device-android .views > .progressbar-infinite,
-html.with-statusbar.device-android .page > .progressbar-infinite,
-html.with-statusbar.device-android .panel > .progressbar-infinite,
-html.with-statusbar.device-android .popup > .progressbar-infinite,
-html.with-statusbar.device-android .framework7-root > .progressbar-infinite,
-html.with-statusbar.md:not(.device-ios):not(.device-android) body > .progressbar-infinite,
-html.with-statusbar.md:not(.device-ios):not(.device-android) .view > .progressbar-infinite,
-html.with-statusbar.md:not(.device-ios):not(.device-android) .views > .progressbar-infinite,
-html.with-statusbar.md:not(.device-ios):not(.device-android) .page > .progressbar-infinite,
-html.with-statusbar.md:not(.device-ios):not(.device-android) .panel > .progressbar-infinite,
-html.with-statusbar.md:not(.device-ios):not(.device-android) .popup > .progressbar-infinite,
-html.with-statusbar.md:not(.device-ios):not(.device-android) .framework7-root > .progressbar-infinite {
+.with-statusbar.device-android body > .progressbar,
+.with-statusbar.md:not(.device-ios):not(.device-android) body > .progressbar,
+.with-statusbar.device-android .framework7-root > .progressbar,
+.with-statusbar.md:not(.device-ios):not(.device-android) .framework7-root > .progressbar,
+.with-statusbar.device-android body > .progressbar-infinite,
+.with-statusbar.md:not(.device-ios):not(.device-android) body > .progressbar-infinite,
+.with-statusbar.device-android .framework7-root > .progressbar-infinite,
+.with-statusbar.md:not(.device-ios):not(.device-android) .framework7-root > .progressbar-infinite {
   top: 24px;
 }
 .with-statusbar.device-iphone-x body > .progressbar,
-.with-statusbar.device-iphone-x .view > .progressbar,
-.with-statusbar.device-iphone-x .views > .progressbar,
-.with-statusbar.device-iphone-x .page > .progressbar,
-.with-statusbar.device-iphone-x .panel > .progressbar,
-.with-statusbar.device-iphone-x .popup > .progressbar,
 .with-statusbar.device-iphone-x .framework7-root > .progressbar,
 .with-statusbar.device-iphone-x body > .progressbar-infinite,
-.with-statusbar.device-iphone-x .view > .progressbar-infinite,
-.with-statusbar.device-iphone-x .views > .progressbar-infinite,
-.with-statusbar.device-iphone-x .page > .progressbar-infinite,
-.with-statusbar.device-iphone-x .panel > .progressbar-infinite,
-.with-statusbar.device-iphone-x .popup > .progressbar-infinite,
 .with-statusbar.device-iphone-x .framework7-root > .progressbar-infinite {
   top: constant(safe-area-inset-top);
   top: env(safe-area-inset-top);
