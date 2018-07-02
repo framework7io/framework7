@@ -21,7 +21,6 @@ function initClicks(app) {
           if (target !== '_browser' && window.cordova && window.cordova.InAppBrowser) {
             e.preventDefault();
             window.cordova.InAppBrowser.open(url, target);
-          } else {
           }
         }
         return;
