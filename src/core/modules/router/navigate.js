@@ -3,7 +3,7 @@ import { document } from 'ssr-window';
 import Utils from '../../utils/utils';
 import History from '../../utils/history';
 import redirect from './redirect';
-import preRoute from './pre-route';
+import processRouteQueue from './process-route-queue';
 
 function refreshPage() {
   const router = this;
@@ -601,24 +601,17 @@ function navigate(navigateParams, navigateOptions = {}) {
     router.allowPageChange = true;
   }
 
-  if (router.params.preRoute || route.route.preRoute) {
-    router.allowPageChange = false;
-    preRoute.call(
-      router,
-      route.route.preRoute,
-      route,
-      router.currentRoute,
-      () => {
-        router.allowPageChange = true;
-        resolve();
-      },
-      () => {
-        reject();
-      },
-    );
-  } else {
-    resolve();
-  }
+  processRouteQueue.call(
+    router,
+    route,
+    router.currentRoute,
+    () => {
+      resolve();
+    },
+    () => {
+      reject();
+    },
+  );
 
   // Return Router
   return router;

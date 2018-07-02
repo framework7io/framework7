@@ -4,7 +4,7 @@ import Utils from '../../utils/utils';
 import Device from '../../utils/device';
 import History from '../../utils/history';
 import redirect from './redirect';
-import preRoute from './pre-route';
+import processRouteQueue from './process-route-queue';
 
 function backward(el, backwardOptions) {
   const router = this;
@@ -403,7 +403,7 @@ function back(...args) {
   const router = this;
   const app = router.app;
   if (!router.view) {
-    app.views.main.router.back(navigateUrl, navigateOptions);
+    app.views.main.router.back(...args);
     return router;
   }
 
@@ -448,13 +448,30 @@ function back(...args) {
   }
   const $previousPage = router.$el.children('.page-current').prevAll('.page-previous').eq(0);
   if (!navigateOptions.force && $previousPage.length > 0) {
-    if (router.params.pushState && $previousPage[0].f7Page && router.history[router.history.length - 2] !== $previousPage[0].f7Page.route.url) {
-      router.back(router.history[router.history.length - 2], Utils.extend(navigateOptions, { force: true }));
+    if (router.params.pushState
+      && $previousPage[0].f7Page
+      && router.history[router.history.length - 2] !== $previousPage[0].f7Page.route.url
+    ) {
+      router.back(
+        router.history[router.history.length - 2],
+        Utils.extend(navigateOptions, { force: true })
+      );
       return router;
     }
-    router.loadBack({ el: $previousPage }, Utils.extend(navigateOptions, {
-      route: $previousPage[0].f7Page.route,
-    }));
+
+    const previousPageRoute = $previousPage[0].f7Page.route;
+    processRouteQueue.call(
+      router,
+      previousPageRoute,
+      router.currentRoute,
+      () => {
+        router.loadBack({ el: $previousPage }, Utils.extend(navigateOptions, {
+          route: previousPageRoute,
+        }));
+      },
+      () => {}
+    );
+
     return router;
   }
 
@@ -548,23 +565,20 @@ function back(...args) {
     router.allowPageChange = true;
   }
 
-  if (router.params.preRoute || route.route.preRoute) {
-    router.allowPageChange = false;
-    preRoute.call(
+  if (options.preload) {
+    resolve();
+  } else {
+    processRouteQueue.call(
       router,
-      route.route.preRoute,
       route,
       router.currentRoute,
       () => {
-        router.allowPageChange = true;
         resolve();
       },
       () => {
         reject();
       },
     );
-  } else {
-    resolve();
   }
 
   // Return Router
