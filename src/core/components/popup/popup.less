@@ -47,7 +47,7 @@
   }
 }
 html.with-statusbar {
-  @media all and (max-width:629px), (max-height:629px) {
+  @media (max-width:629px), (max-height:629px) {
     .popup-backdrop {
       z-index: 9500;
     }
@@ -68,7 +68,7 @@ html.with-statusbar {
       top: 24px;
     }
   }
-  @media all and (min-width:630px), (min-height:630px) {
+  @media (min-width:630px), (min-height:630px) {
     &.device-ios .popup-tablet-fullscreen, &.ios:not(.device-ios):not(.device-android) .popup-tablet-fullscreen {
       height: ~"calc(100% - 20px)";
       top: 20px;

@@ -145,7 +145,7 @@
     .-((@i - 1));
   } .-;
 
-  @media all and (min-width:768px) {
+  @media (min-width:768px) {
     .-(@i: length(@cols)) when (@i > 0) {
       @divider: e(extract(@cols, @i));
       @className: `Math.floor(@{divider})`;
