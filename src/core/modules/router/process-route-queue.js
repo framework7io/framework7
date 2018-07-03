@@ -39,7 +39,7 @@ function processQueue(router, routerQueue, routeQueue, to, from, resolve, reject
 export default function (to, from, resolve, reject) {
   const router = this;
   function enterNextRoute() {
-    if (router.params.beforeEnter || to.route.beforeEnter) {
+    if (to && to.route && (router.params.beforeEnter || to.route.beforeEnter)) {
       router.allowPageChange = false;
       processQueue(
         router,
@@ -60,7 +60,7 @@ export default function (to, from, resolve, reject) {
     }
   }
   function leaveCurrentRoute() {
-    if (router.params.beforeLeave || from.route.beforeLeave) {
+    if (from && from.route && (router.params.beforeLeave || from.route.beforeLeave)) {
       router.allowPageChange = false;
       processQueue(
         router,
