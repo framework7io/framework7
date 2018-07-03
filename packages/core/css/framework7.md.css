@@ -1,5 +1,5 @@
 /**
- * Framework7 3.0.0-beta.17
+ * Framework7 3.0.0-beta.18
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 2, 2018
+ * Released on: July 3, 2018
  */
 html,
 body,
@@ -44,14 +44,14 @@ a, button, input, textarea, .link, .button, label, .sortable-handler {
   -ms-touch-action: manipulation;
 }
 */
-@media all and (width: 1024px) and (height: 691px) and (orientation: landscape) {
+@media (width: 1024px) and (height: 691px) and (orientation: landscape) {
   html,
   body,
   .framework7-root {
     height: 671px;
   }
 }
-@media all and (width: 1024px) and (height: 692px) and (orientation: landscape) {
+@media (width: 1024px) and (height: 692px) and (orientation: landscape) {
   html,
   body,
   .framework7-root {
@@ -1663,7 +1663,7 @@ html.with-statusbar.device-iphone-x .framework7-root {
 .block-footer {
   margin-top: 10px;
 }
-@media all and (min-width: 768px) {
+@media (min-width: 768px) {
   .block-strong.tablet-inset:before {
     display: none !important;
   }
@@ -1787,7 +1787,7 @@ html.with-statusbar.device-iphone-x .framework7-root {
   margin-top: -22px;
   margin-bottom: 32px;
 }
-@media all and (min-width: 768px) {
+@media (min-width: 768px) {
   .md .block.tablet-inset {
     margin-left: 16px;
     margin-right: 16px;
@@ -1892,7 +1892,7 @@ html.with-statusbar.device-iphone-x .framework7-root {
     margin-right: calc(16px + env(safe-area-inset-right));
   }
 }
-@media (orientation: landscape) and all and (min-width: 768px) {
+@media (orientation: landscape) and (min-width: 768px) {
   .md.device-iphone-x .ios-left-edge .block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
   .md.device-iphone-x .ios-edges .block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
   .md.device-iphone-x .popup .block.tablet-inset:not(.no-ios-edges):not(.no-ios-left-edge),
@@ -1902,7 +1902,7 @@ html.with-statusbar.device-iphone-x .framework7-root {
     margin-left: calc(16px + env(safe-area-inset-left));
   }
 }
-@media (orientation: landscape) and all and (min-width: 768px) {
+@media (orientation: landscape) and (min-width: 768px) {
   .md.device-iphone-x .ios-right-edge .block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
   .md.device-iphone-x .ios-edges .block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
   .md.device-iphone-x .popup .block.tablet-inset:not(.no-ios-edges):not(.no-ios-right-edge),
@@ -2154,7 +2154,7 @@ html.with-statusbar.device-iphone-x .framework7-root {
 .list.simple-list li {
   position: relative;
   white-space: nowrap;
-  text-oveflow: ellipsis;
+  text-overflow: ellipsis;
   max-width: 100%;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -2203,7 +2203,7 @@ html.with-statusbar.device-iphone-x .framework7-root {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   white-space: nowrap;
-  text-oveflow: ellipsis;
+  text-overflow: ellipsis;
   max-width: 100%;
 }
 .list.links-list li:last-child a:after {
@@ -4524,7 +4524,7 @@ input[type="button"].md .dialog-button {
     transform: translate3d(0, 100vh, 0);
   }
 }
-@media all and (max-width: 629px), (max-height: 629px) {
+@media (max-width: 629px), (max-height: 629px) {
   html.with-statusbar .popup-backdrop {
     z-index: 9500;
   }
@@ -4545,7 +4545,7 @@ input[type="button"].md .dialog-button {
     top: 24px;
   }
 }
-@media all and (min-width: 630px), (min-height: 630px) {
+@media (min-width: 630px), (min-height: 630px) {
   html.with-statusbar.device-ios .popup-tablet-fullscreen,
   html.with-statusbar.ios:not(.device-ios):not(.device-android) .popup-tablet-fullscreen {
     height: calc(100% - 20px);
@@ -7409,7 +7409,7 @@ html.device-android-4 .accordion-item-content {
 .timeline-horizontal.col-5 .timeline-item {
   width: 5vw;
 }
-@media all and (min-width: 768px) {
+@media (min-width: 768px) {
   .timeline-horizontal.tablet-100 .timeline-item {
     width: 100vw;
   }
@@ -12267,7 +12267,7 @@ label.item-radio.disabled,
 .md .row.no-gap .col:nth-last-child(21) ~ .col {
   width: 4.76190476%;
 }
-@media all and (min-width: 768px) {
+@media (min-width: 768px) {
   .md .row .tablet-100 {
     width: 100%;
     width: calc((100% - 16px*0) / 1);
@@ -12612,7 +12612,7 @@ label.item-radio.disabled,
     width: 4.76190476%;
   }
 }
-@media all and (min-width: 1025px) {
+@media (min-width: 1025px) {
   .md .row .desktop-100 {
     width: 100%;
     width: calc((100% - 16px*0) / 1);
@@ -13091,14 +13091,18 @@ label.item-radio.disabled,
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  flex-shink: 1;
+  -webkit-flex-shrink: 1;
+  -ms-flex-negative: 1;
+  flex-shrink: 1;
   width: 100%;
   position: relative;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 .calendar-day {
-  flex-shink: 1;
+  -webkit-flex-shrink: 1;
+  -ms-flex-negative: 1;
+  flex-shrink: 1;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -13190,7 +13194,9 @@ label.item-radio.disabled,
   align-items: center;
   width: 50%;
   max-width: 200px;
-  flex-shink: 10;
+  -webkit-flex-shrink: 10;
+  -ms-flex-negative: 10;
+  flex-shrink: 10;
 }
 .calendar-month-selector span,
 .calendar-year-selector span {

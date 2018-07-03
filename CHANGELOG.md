@@ -2,6 +2,11 @@
 
 # Change Log
 
+# [v3.0.0-beta.18](https://github.com/framework7io/framework7/compare/v3.0.0-beta.17...v3.0.0-beta.18) - July 3, 2018
+  * Core
+    * Router
+      * Fixed error with `beforeLeave` middleware when loading initial route
+
 # [v3.0.0-beta.17](https://github.com/framework7io/framework7/compare/v3.0.0-beta.16...v3.0.0-beta.17) - July 2, 2018
   * Core
     * Router

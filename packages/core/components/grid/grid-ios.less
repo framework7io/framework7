@@ -38,7 +38,7 @@
     .--;
   }
 
-  @media all and (min-width:768px) {
+  @media (min-width:768px) {
     .row {
       .-(@i: length(@cols)) when (@i > 0) {
         @divider: e(extract(@cols, @i));
@@ -75,7 +75,7 @@
       .--;
     }
   }
-  @media all and (min-width:1025px) {
+  @media (min-width:1025px) {
     .row {
       .-(@i: length(@cols)) when (@i > 0) {
         @divider: e(extract(@cols, @i));
