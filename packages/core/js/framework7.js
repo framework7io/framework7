@@ -1,5 +1,5 @@
 /**
- * Framework7 3.0.0-beta.18
+ * Framework7 3.0.0-beta.19
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -5841,11 +5841,11 @@
   function processRouteQueue (to, from, resolve, reject) {
     var router = this;
     function enterNextRoute() {
-      if (to && to.route && (router.params.beforeEnter || to.route.beforeEnter)) {
+      if (to && to.route && (router.params.routesBeforeEnter || to.route.beforeEnter)) {
         router.allowPageChange = false;
         processQueue(
           router,
-          router.params.beforeEnter,
+          router.params.routesBeforeEnter,
           to.route.beforeEnter,
           to,
           from,
@@ -5862,11 +5862,11 @@
       }
     }
     function leaveCurrentRoute() {
-      if (from && from.route && (router.params.beforeLeave || from.route.beforeLeave)) {
+      if (from && from.route && (router.params.routesBeforeLeave || from.route.beforeLeave)) {
         router.allowPageChange = false;
         processQueue(
           router,
-          router.params.beforeLeave,
+          router.params.routesBeforeLeave,
           from.route.beforeLeave,
           to,
           from,
@@ -9477,6 +9477,9 @@
         // Delays
         iosPageLoadDelay: 0,
         materialPageLoadDelay: 0,
+        // Routes hooks
+        routesBeforeEnter: null,
+        routesBeforeLeave: null,
       },
     },
     static: {

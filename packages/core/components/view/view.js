@@ -85,6 +85,9 @@ export default {
       // Delays
       iosPageLoadDelay: 0,
       materialPageLoadDelay: 0,
+      // Routes hooks
+      routesBeforeEnter: null,
+      routesBeforeLeave: null,
     },
   },
   static: {

@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [v3.0.0-beta.19](https://github.com/framework7io/framework7/compare/v3.0.0-beta.18...v3.0.0-beta.19) - July 3, 2018
+  * Core
+    * Router
+      * View/Router parameter `beforeLeave` renamed to `routesBeforeLeave`
+      * View/Router parameter `beforeEnter` renamed to `routesBeforeEnter`
+
 # [v3.0.0-beta.18](https://github.com/framework7io/framework7/compare/v3.0.0-beta.17...v3.0.0-beta.18) - July 3, 2018
   * Core
     * Router
