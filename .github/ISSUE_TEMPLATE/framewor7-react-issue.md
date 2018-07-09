@@ -12,7 +12,7 @@ Please, don't ask questions on GitHub! Do you want to ask a question? Are you lo
 - If the issue is about Framework7 v1/v2 then it is more likely it will be closed because v1/v2 is not maintained anymore
 - If the issue is related to Swiper, then please open it in Swiper repository at https://github.com/nolimits4web/Swiper
 - If the issue is related to Dom7, then please open it in Dom7 repository at https://github.com/nolimits4web/Dom7
-- If the issue is related to Template7, then please open it in Dom7 repository at https://github.com/nolimits4web/Template7
+- If the issue is related to Template7, then please open it in Template7 repository at https://github.com/nolimits4web/Template7
 -->
 
 * Framework7 version: [e.g. 3.0.0]
