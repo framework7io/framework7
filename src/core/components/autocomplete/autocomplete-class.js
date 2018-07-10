@@ -617,6 +617,14 @@ class Autocomplete extends Framework7Class {
     ac.emit('local::open autocompleteOpen', ac);
   }
 
+  autoFocus() {
+    const ac = this;
+    if (ac.searchbar && ac.searchbar.$inputEl) {
+      ac.searchbar.$inputEl.focus();
+    }
+    return ac;
+  }
+
   onOpened() {
     const ac = this;
     if (ac.params.openIn !== 'dropdown' && ac.params.autoFocus) {
