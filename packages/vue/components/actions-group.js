@@ -16,7 +16,7 @@ export default {
       id,
       style
     } = props;
-    const classes = Utils.classNames(className, 'actions-group', ...Mixins.colorClasses(props));
+    const classes = Utils.classNames(className, 'actions-group', Mixins.colorClasses(props));
     return _h('div', {
       style: style,
       class: classes,

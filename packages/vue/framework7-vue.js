@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.0.0
+ * Framework7 Vue 3.0.1
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 5, 2018
+ * Released on: July 10, 2018
  */
 
 (function (global, factory) {
@@ -607,7 +607,7 @@
       var className = props.className;
       var id = props.id;
       var style = props.style;
-      var classes = Utils.classNames.apply(Utils, [ className, 'actions-group' ].concat( Mixins.colorClasses(props) ));
+      var classes = Utils.classNames(className, 'actions-group', Mixins.colorClasses(props));
       return _h('div', {
         style: style,
         class: classes,
@@ -9626,7 +9626,7 @@
   };
 
   /**
-   * Framework7 Vue 3.0.0
+   * Framework7 Vue 3.0.1
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -9634,7 +9634,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: July 5, 2018
+   * Released on: July 10, 2018
    */
 
   var Plugin = {

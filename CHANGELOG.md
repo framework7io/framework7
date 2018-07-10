@@ -2,6 +2,10 @@
 
 # Change Log
 
+# [v3.0.1](https://github.com/framework7io/framework7/compare/v3.0.0...v3.0.1) - July 10, 2018
+  * Phenome
+    * Fixed `TypeError` error in `ActionsGroup` component
+
 # [v3.0.0](https://github.com/framework7io/framework7/compare/v3.0.0-beta.19...v3.0.0) - July 5, 2018 🎉 
 
 # [v3.0.0-beta.19](https://github.com/framework7io/framework7/compare/v3.0.0-beta.18...v3.0.0-beta.19) - July 3, 2018

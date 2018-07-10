@@ -17,7 +17,7 @@ class F7ActionsGroup extends React.Component {
       id,
       style
     } = props;
-    const classes = Utils.classNames(className, 'actions-group', ...Mixins.colorClasses(props));
+    const classes = Utils.classNames(className, 'actions-group', Mixins.colorClasses(props));
     return React.createElement('div', {
       id: id,
       style: style,
