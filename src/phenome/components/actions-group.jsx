@@ -19,7 +19,7 @@ export default {
     const classes = Utils.classNames(
       className,
       'actions-group',
-      ...Mixins.colorClasses(props),
+      Mixins.colorClasses(props),
     );
 
     return (
