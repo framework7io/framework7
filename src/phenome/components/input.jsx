@@ -197,7 +197,7 @@ export default {
               value: needsValue ? value : undefined,
               checked,
               disabled,
-              readonly,
+              readOnly: readonly,
               multiple,
               required,
             }}
