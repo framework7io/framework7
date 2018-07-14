@@ -26,6 +26,7 @@ export default {
   params: {
     calendar: {
       // Calendar settings
+      calendarType: 'georgian', // or 'jalali'
       monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
       monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
@@ -34,6 +35,8 @@ export default {
       weekendDays: [0, 6], // Sunday and Saturday
       multiple: false,
       rangePicker: false,
+      minimumDaysInRange: 1, // when calendar is used as rangePicker
+      maximumDaysInRange: 0, // when calendar is used as rangePicker, 0 means unlimited
       dateFormat: 'yyyy-mm-dd',
       direction: 'horizontal', // or 'vertical'
       minDate: null,
