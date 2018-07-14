@@ -62,6 +62,12 @@ export default class extends React.Component {
         <Block className="no-padding">
           <div id="demo-calendar-inline-container"></div>
         </Block>
+        <BlockTitle>Jalali Calendar</BlockTitle>
+        <List noHairlinesMd>
+          <ListItem>
+            <Input type="text" placeholder="Your birth date in Jalali" readonly inputId="demo-jcalendar-default"/>
+          </ListItem>
+        </List>
       </Page>
     );
   }
@@ -72,6 +78,11 @@ export default class extends React.Component {
     // Default
     self.calendarDefault = app.calendar.create({
       inputEl: '#demo-calendar-default',
+    });
+    // Jalali
+    self.jcalendarDefault = app.calendar.create({
+      calendarType: 'jalali',
+      inputEl: '#demo-jcalendar-default',
     });
     // With custom date format
     self.calendarDateFormat = app.calendar.create({
@@ -137,6 +148,7 @@ export default class extends React.Component {
   onPageBeforeRemove() {
     const self = this;
     self.calendarDefault.destroy();
+    self.jcalendarDefault.destroy();
     self.calendarDateFormat.destroy();
     self.calendarMultiple.destroy();
     self.calendarRange.destroy();
