@@ -11,7 +11,6 @@ const Plugin = {
     f7.Framework7 = Framework7;
 
     const Extend = EXTEND; // eslint-disable-line
-    const compiler = COMPILER; // eslint-disable-line
 
     // REGISTER_COMPONENTS
 
@@ -56,7 +55,17 @@ const Plugin = {
         if (self.props && self.props.f7route) return self.props.f7route;
         if (self.f7route) return self.f7route;
         if (self._f7route) return self._f7route;
-        return undefined;
+
+        let route;
+        // eslint-disable-next-line
+        if (COMPILER === 'vue') {
+          let parent = self;
+          while (parent && !route) {
+            if (parent._f7route) route = parent._f7route;
+            parent = parent.$parent;
+          }
+        }
+        return route;
       },
       set(value) {
         const self = this;
@@ -69,7 +78,22 @@ const Plugin = {
         if (self.props && self.props.f7router) return self.props.f7router;
         if (self.f7router) return self.f7router;
         if (self._f7router) return self._f7router;
-        return undefined;
+
+        let router;
+        // eslint-disable-next-line
+        if (COMPILER === 'vue') {
+          let parent = self;
+          while (parent && !router) {
+            if (parent._f7router) router = parent._f7router;
+            else if (parent.f7View) {
+              router = parent.f7View.router;
+            } else if (parent.$refs && parent.$refs.el && parent.$refs.el.f7View) {
+              router = parent.$refs.el.f7View.router;
+            }
+            parent = parent.$parent;
+          }
+        }
+        return router;
       },
       set(value) {
         const self = this;
