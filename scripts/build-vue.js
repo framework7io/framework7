@@ -39,9 +39,8 @@ function buildVue(cb) {
     .replace('// IMPORT_LIBRARY', 'import Vue from \'vue\';')
     .replace('// IMPORT_COMPONENTS\n', '')
     .replace('// REGISTER_COMPONENTS\n', '')
-    .replace(/EXTEND/g, 'Vue')
-    .replace(/COMPILER/, '\'vue\'')
-    .replace(/REFS_PROP/, '\'$refs\'');
+    .replace(/EXTEND/g, 'params.Vue || Vue')
+    .replace(/COMPILER/, '\'vue\'');
 
   fs.writeFileSync(`${buildPath}/vue/utils/plugin.js`, newPluginContent);
 
@@ -86,9 +85,8 @@ function buildVue(cb) {
     .replace('// IMPORT_LIBRARY', 'import Vue from \'vue\';')
     .replace('// IMPORT_COMPONENTS', `${componentImports.join('\n')}\n`)
     .replace('// REGISTER_COMPONENTS', registerComponents)
-    .replace(/EXTEND/g, 'Vue')
-    .replace(/COMPILER/, '\'vue\'')
-    .replace(/REFS_PROP/, '\'$refs\'');
+    .replace(/EXTEND/g, 'params.Vue || Vue')
+    .replace(/COMPILER/, '\'vue\'');
 
   fs.writeFileSync(`${buildPath}/vue/framework7-vue.esm.bundle.js`, bannerVue + esmBundlePluginContent);
 
