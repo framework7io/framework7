@@ -9,9 +9,7 @@ class Calendar extends Framework7Class {
     const calendar = this;
     if (params.calendarType === 'jalali') {
       params.jalali = params.jalali || {};
-      for (var param in app.params.calendar.jalali) {
-        params[param] = params.jalali[param] || params[param] || app.params.calendar.jalali[param];
-      }
+      ['monthNames', 'monthNamesShort', 'dayNames', 'dayNamesShort', 'firstDay', 'weekendDays'].forEach((param) => { params[param] = params.jalali[param] || params[param] || app.params.calendar.jalali[param]; });
     }
     calendar.params = Utils.extend({}, app.params.calendar, params);
     if (calendar.params.calendarType === 'jalali') {
