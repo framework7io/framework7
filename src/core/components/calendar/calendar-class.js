@@ -8,12 +8,10 @@ class Calendar extends Framework7Class {
     super(params, [app]);
     const calendar = this;
     if (params.calendarType === 'jalali') {
-      params.monthNames = params.monthNames || ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
-      params.monthNamesShort = params.monthNamesShort || ['فر', 'اد', 'خر', 'تیر', 'مر', 'شه', 'مهر', 'آب', 'آذر', 'دی', 'به', 'اس'];
-      params.dayNames = params.dayNames || ['یک‌شنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه', 'شنبه'];
-      params.dayNamesShort = params.dayNamesShort || ['1ش', '۲ش', '۳ش', '۴ش', '۵ش', 'ج', 'ش'];
-      params.firstDay = params.firstDay || 6; // Saturday
-      params.weekendDays = params.weekendDays || [5]; // Friday
+      params.jalali = params.jalali || {};
+      for (var param in app.params.calendar.jalali) {
+        params[param] = params.jalali[param] || params[param] || app.params.calendar.jalali[param];
+      }
     }
     calendar.params = Utils.extend({}, app.params.calendar, params);
     if (calendar.params.calendarType === 'jalali') {
