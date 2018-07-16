@@ -12,7 +12,6 @@ const Plugin = {
 
     const Extend = EXTEND; // eslint-disable-line
     const compiler = COMPILER; // eslint-disable-line
-    const refs = REFS_PROP; // eslint-disable-line
 
     // REGISTER_COMPONENTS
 
