@@ -44,7 +44,7 @@ function buildReact(cb) {
     .replace('// IMPORT_LIBRARY', 'import React from \'react\';')
     .replace('// IMPORT_COMPONENTS\n', '')
     .replace('// REGISTER_COMPONENTS\n', '')
-    .replace(/EXTEND/g, 'React.Component')
+    .replace(/EXTEND/g, 'params.React ? params.React.Component : React.Component')
     .replace(/COMPILER/, '\'react\'')
     .replace(/REFS_PROP/, '\'refs\'');
 
@@ -91,7 +91,7 @@ function buildReact(cb) {
     .replace('// IMPORT_LIBRARY', 'import React from \'react\';')
     .replace('// IMPORT_COMPONENTS', `${componentImports.join('\n')}\n`)
     .replace('// REGISTER_COMPONENTS', registerComponents)
-    .replace(/EXTEND/g, 'React.Component')
+    .replace(/EXTEND/g, 'params.React ? params.React.Component : React.Component')
     .replace(/COMPILER/, '\'react\'')
     .replace(/REFS_PROP/, '\'refs\'');
 

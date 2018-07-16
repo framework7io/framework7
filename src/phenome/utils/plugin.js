@@ -57,17 +57,7 @@ const Plugin = {
         if (self.props && self.props.f7route) return self.props.f7route;
         if (self.f7route) return self.f7route;
         if (self._f7route) return self._f7route;
-        let route;
-        let parent = self;
-        while (parent && !route) {
-          if (parent._f7route) route = parent._f7route;
-          if (compiler === 'vue') {
-            parent = parent.$parent;
-          } else {
-            parent = parent._reactInternalFiber._debugOwner.stateNode;
-          }
-        }
-        return route;
+        return undefined;
       },
       set(value) {
         const self = this;
@@ -80,22 +70,7 @@ const Plugin = {
         if (self.props && self.props.f7router) return self.props.f7router;
         if (self.f7router) return self.f7router;
         if (self._f7router) return self._f7router;
-        let router;
-        let parent = self;
-        while (parent && !router) {
-          if (parent._f7router) router = parent._f7router;
-          else if (parent.f7View) {
-            router = parent.f7View.router;
-          } else if (parent[refs] && parent[refs].el && parent[refs].el.f7View) {
-            router = parent[refs].el.f7View.router;
-          }
-          if (compiler === 'vue') {
-            parent = parent.$parent;
-          } else {
-            parent = parent._reactInternalFiber._debugOwner.stateNode;
-          }
-        }
-        return router;
+        return undefined;
       },
       set(value) {
         const self = this;
