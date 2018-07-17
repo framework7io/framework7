@@ -92,6 +92,20 @@
       <div class="block block-strong no-padding">
         <div id="demo-calendar-inline-container"></div>
       </div>
+      <div class="block-title">Jalali Calendar</div>
+      <div class="list no-hairlines-md">
+        <ul>
+          <li>
+            <div class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-input-wrap">
+                  <input type="text" placeholder="Your birth date in Jalali" readonly="readonly" id="demo-jcalendar-default"/>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </f7-page>
 </template>
@@ -111,6 +125,11 @@
         // Default
         self.calendarDefault = app.calendar.create({
           inputEl: '#demo-calendar-default',
+        });
+        // Jalali
+        self.jcalendarDefault = app.calendar.create({
+          calendarType: 'jalali',
+          inputEl: '#demo-jcalendar-default',
         });
         // With custom date format
         self.calendarDateFormat = app.calendar.create({
@@ -174,6 +193,7 @@
       onPageBeforeRemove() {
         const self = this;
         self.calendarDefault.destroy();
+        self.jcalendarDefault.destroy();
         self.calendarDateFormat.destroy();
         self.calendarMultiple.destroy();
         self.calendarRange.destroy();
