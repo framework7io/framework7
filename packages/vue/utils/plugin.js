@@ -9,9 +9,7 @@ const Plugin = {
     const Framework7 = this;
     f7.Framework7 = Framework7;
 
-    const Extend = Vue; // eslint-disable-line
-    const compiler = 'vue'; // eslint-disable-line
-    const refs = '$refs'; // eslint-disable-line
+    const Extend = params.Vue || Vue; // eslint-disable-line
 
     
     // Define protos
@@ -55,14 +53,14 @@ const Plugin = {
         if (self.props && self.props.f7route) return self.props.f7route;
         if (self.f7route) return self.f7route;
         if (self._f7route) return self._f7route;
+
         let route;
-        let parent = self;
-        while (parent && !route) {
-          if (parent._f7route) route = parent._f7route;
-          if (compiler === 'vue') {
+        // eslint-disable-next-line
+        if ('vue' === 'vue') {
+          let parent = self;
+          while (parent && !route) {
+            if (parent._f7route) route = parent._f7route;
             parent = parent.$parent;
-          } else {
-            parent = parent._reactInternalFiber._debugOwner.stateNode;
           }
         }
         return route;
@@ -78,19 +76,19 @@ const Plugin = {
         if (self.props && self.props.f7router) return self.props.f7router;
         if (self.f7router) return self.f7router;
         if (self._f7router) return self._f7router;
+
         let router;
-        let parent = self;
-        while (parent && !router) {
-          if (parent._f7router) router = parent._f7router;
-          else if (parent.f7View) {
-            router = parent.f7View.router;
-          } else if (parent[refs] && parent[refs].el && parent[refs].el.f7View) {
-            router = parent[refs].el.f7View.router;
-          }
-          if (compiler === 'vue') {
+        // eslint-disable-next-line
+        if (COMPILER === 'vue') {
+          let parent = self;
+          while (parent && !router) {
+            if (parent._f7router) router = parent._f7router;
+            else if (parent.f7View) {
+              router = parent.f7View.router;
+            } else if (parent.$refs && parent.$refs.el && parent.$refs.el.f7View) {
+              router = parent.$refs.el.f7View.router;
+            }
             parent = parent.$parent;
-          } else {
-            parent = parent._reactInternalFiber._debugOwner.stateNode;
           }
         }
         return router;

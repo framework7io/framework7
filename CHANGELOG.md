@@ -2,6 +2,19 @@
 
 # Change Log
 
+# [v3.0.5](https://github.com/framework7io/framework7/compare/v3.0.1...v3.0.5) - July 20, 2018
+  * Core
+    * Calendar
+      * Added support for Jalali calendar, can be enabled with `calendarType: 'jalali'`
+      * New `rangePickerMinDays` and `rangePickerMaxDays` to require min/max days when range picker enabled
+    * Tooltip
+      * Fixed issue when tooltip wasn't fully hidden on touch devices
+    * Router
+      * `routeChanged` event will also work for routable tabs now
+  * Phenome
+    * Fixed not working `readonly` prop in `f7-input` Vue component
+  * Minor fixes
+
 # [v3.0.1](https://github.com/framework7io/framework7/compare/v3.0.0...v3.0.1) - July 10, 2018
   * Phenome
     * Fixed `TypeError` error in `ActionsGroup` component

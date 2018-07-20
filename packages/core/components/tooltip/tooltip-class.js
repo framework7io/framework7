@@ -77,28 +77,28 @@ class Tooltip extends Framework7Class {
     }
 
     tooltip.attachEvents = function attachEvents() {
+      $el.on('transitionend webkitTransitionEnd', handleTransitionEnd);
       if (Support.touch) {
         const passive = Support.passiveListener ? { passive: true } : false;
         $targetEl.on(app.touchEvents.start, handleTouchStart, passive);
         app.on('touchmove', handleTouchMove);
         app.on('touchend:passive', handleTouchEnd);
-        return;
+      } else {
+        $targetEl.on('mouseenter', handleMouseEnter);
+        $targetEl.on('mouseleave', handleMouseLeave);
       }
-      $el.on('transitionend webkitTransitionEnd', handleTransitionEnd);
-      $targetEl.on('mouseenter', handleMouseEnter);
-      $targetEl.on('mouseleave', handleMouseLeave);
     };
     tooltip.detachEvents = function detachEvents() {
+      $el.off('transitionend webkitTransitionEnd', handleTransitionEnd);
       if (Support.touch) {
         const passive = Support.passiveListener ? { passive: true } : false;
         $targetEl.off(app.touchEvents.start, handleTouchStart, passive);
         app.off('touchmove', handleTouchMove);
         app.off('touchend:passive', handleTouchEnd);
-        return;
+      } else {
+        $targetEl.off('mouseenter', handleMouseEnter);
+        $targetEl.off('mouseleave', handleMouseLeave);
       }
-      $el.off('transitionend webkitTransitionEnd', handleTransitionEnd);
-      $targetEl.off('mouseenter', handleMouseEnter);
-      $targetEl.off('mouseleave', handleMouseLeave);
     };
 
     // Install Modules

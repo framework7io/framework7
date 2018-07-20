@@ -445,7 +445,7 @@ class Autocomplete extends Framework7Class {
     const ac = this;
     if (ac.params.renderItem) return ac.params.renderItem.call(ac, item, index);
     let itemHtml;
-    const itemValue = item.value ? item.value.replace(/"/g, '&quot;') : item.value;
+    const itemValue = item.value && typeof item.value === 'string' ? item.value.replace(/"/g, '&quot;') : item.value;
     if (ac.params.openIn !== 'dropdown') {
       itemHtml = `
         <li>
@@ -615,6 +615,14 @@ class Autocomplete extends Framework7Class {
     }
 
     ac.emit('local::open autocompleteOpen', ac);
+  }
+
+  autoFocus() {
+    const ac = this;
+    if (ac.searchbar && ac.searchbar.$inputEl) {
+      ac.searchbar.$inputEl.focus();
+    }
+    return ac;
   }
 
   onOpened() {

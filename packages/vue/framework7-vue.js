@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.0.1
+ * Framework7 Vue 3.0.5
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 10, 2018
+ * Released on: July 20, 2018
  */
 
 (function (global, factory) {
@@ -2893,7 +2893,7 @@
               value: needsValue ? value : undefined,
               checked: checked,
               disabled: disabled,
-              readonly: readonly,
+              readOnly: readonly,
               multiple: multiple,
               required: required
             },
@@ -9626,7 +9626,7 @@
   };
 
   /**
-   * Framework7 Vue 3.0.1
+   * Framework7 Vue 3.0.5
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -9634,7 +9634,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: July 10, 2018
+   * Released on: July 20, 2018
    */
 
   var Plugin = {
@@ -9645,8 +9645,7 @@
       var Framework7 = this;
       f7.Framework7 = Framework7;
 
-      var Extend = Vue; // eslint-disable-line
-      var refs = '$refs'; // eslint-disable-line
+      var Extend = params.Vue || Vue; // eslint-disable-line
 
       Vue.component('f7-accordion-content', f7AccordionContent);
       Vue.component('f7-accordion-item', f7AccordionItem);
@@ -9771,11 +9770,13 @@
           if (self.props && self.props.f7route) { return self.props.f7route; }
           if (self.f7route) { return self.f7route; }
           if (self._f7route) { return self._f7route; }
+
           var route;
-          var parent = self;
-          while (parent && !route) {
-            if (parent._f7route) { route = parent._f7route; }
-            {
+          // eslint-disable-next-line
+          {
+            var parent = self;
+            while (parent && !route) {
+              if (parent._f7route) { route = parent._f7route; }
               parent = parent.$parent;
             }
           }
@@ -9792,16 +9793,18 @@
           if (self.props && self.props.f7router) { return self.props.f7router; }
           if (self.f7router) { return self.f7router; }
           if (self._f7router) { return self._f7router; }
+
           var router;
-          var parent = self;
-          while (parent && !router) {
-            if (parent._f7router) { router = parent._f7router; }
-            else if (parent.f7View) {
-              router = parent.f7View.router;
-            } else if (parent[refs] && parent[refs].el && parent[refs].el.f7View) {
-              router = parent[refs].el.f7View.router;
-            }
-            {
+          // eslint-disable-next-line
+          if (COMPILER === 'vue') {
+            var parent = self;
+            while (parent && !router) {
+              if (parent._f7router) { router = parent._f7router; }
+              else if (parent.f7View) {
+                router = parent.f7View.router;
+              } else if (parent.$refs && parent.$refs.el && parent.$refs.el.f7View) {
+                router = parent.$refs.el.f7View.router;
+              }
               parent = parent.$parent;
             }
           }

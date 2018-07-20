@@ -1,5 +1,5 @@
 /**
- * Framework7 React 3.0.1
+ * Framework7 React 3.0.5
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 10, 2018
+ * Released on: July 20, 2018
  */
 
 (function (global, factory) {
@@ -358,90 +358,13 @@
    *
    * This source code is licensed under the MIT license found in the
    * LICENSE file in the root directory of this source tree.
-   *
-   * 
-   */
-
-  function makeEmptyFunction(arg) {
-    return function () {
-      return arg;
-    };
-  }
-
-  /**
-   * This function accepts and discards inputs; it has no side effects. This is
-   * primarily useful idiomatically for overridable function endpoints which
-   * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
-   */
-  var emptyFunction = function emptyFunction() {};
-
-  emptyFunction.thatReturns = makeEmptyFunction;
-  emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-  emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-  emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-  emptyFunction.thatReturnsThis = function () {
-    return this;
-  };
-  emptyFunction.thatReturnsArgument = function (arg) {
-    return arg;
-  };
-
-  var emptyFunction_1 = emptyFunction;
-
-  /**
-   * Copyright (c) 2013-present, Facebook, Inc.
-   *
-   * This source code is licensed under the MIT license found in the
-   * LICENSE file in the root directory of this source tree.
-   *
-   */
-
-  /**
-   * Use invariant() to assert state which your program assumes to be true.
-   *
-   * Provide sprintf-style format (only %s is supported) and arguments
-   * to provide information about what broke and what you were
-   * expecting.
-   *
-   * The invariant message will be stripped in production, but the invariant
-   * will remain to ensure logic does not differ in production.
-   */
-
-  var validateFormat = function validateFormat(format) {};
-
-  function invariant(condition, format, a, b, c, d, e, f) {
-    validateFormat(format);
-
-    if (!condition) {
-      var error;
-      if (format === undefined) {
-        error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
-      } else {
-        var args = [a, b, c, d, e, f];
-        var argIndex = 0;
-        error = new Error(format.replace(/%s/g, function () {
-          return args[argIndex++];
-        }));
-        error.name = 'Invariant Violation';
-      }
-
-      error.framesToPop = 1; // we don't care about invariant's own frame
-      throw error;
-    }
-  }
-
-  var invariant_1 = invariant;
-
-  /**
-   * Copyright (c) 2013-present, Facebook, Inc.
-   *
-   * This source code is licensed under the MIT license found in the
-   * LICENSE file in the root directory of this source tree.
    */
 
   var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
   var ReactPropTypesSecret_1 = ReactPropTypesSecret;
+
+  function emptyFunction() {}
 
   var factoryWithThrowingShims = function() {
     function shim(props, propName, componentName, location, propFullName, secret) {
@@ -449,12 +372,13 @@
         // It is still safe when called from React.
         return;
       }
-      invariant_1(
-        false,
+      var err = new Error(
         'Calling PropTypes validators directly is not supported by the `prop-types` package. ' +
         'Use PropTypes.checkPropTypes() to call them. ' +
         'Read more at http://fb.me/use-check-prop-types'
       );
+      err.name = 'Invariant Violation';
+      throw err;
     }  shim.isRequired = shim;
     function getShim() {
       return shim;
@@ -481,7 +405,7 @@
       exact: getShim
     };
 
-    ReactPropTypes.checkPropTypes = emptyFunction_1;
+    ReactPropTypes.checkPropTypes = emptyFunction;
     ReactPropTypes.PropTypes = ReactPropTypes;
 
     return ReactPropTypes;
@@ -511,7 +435,7 @@
       if (type === Object) { return propTypes.object; }
       if (type === Array) { return propTypes.array; }
       if (type === Symbol) { return propTypes.symbol; }
-      if (type.constructor === Function) { return propTypes.instanceOf(type); }
+      if (type.constructor === Function || type === Date) { return propTypes.instanceOf(type); }
       return propTypes.any;
     };
 
@@ -534,10 +458,12 @@
         component.propTypes[propName] = propType(type);
       }
 
-      if (typeof prop.default !== 'undefined') {
-        var hasFunctionType =
-          prop.type === Function ||
-          (Array.isArray(prop.type) && prop.type.indexOf(Function) >= 0);
+      if (
+        (typeof prop.default !== 'undefined')
+        || (('default' in prop) && prop.default === undefined)
+      ) {
+        var hasFunctionType = prop.type === Function
+          || (Array.isArray(prop.type) && prop.type.indexOf(Function) >= 0);
         if (!component.defaultProps) { component.defaultProps = {}; }
         if (typeof prop.default === 'function' && !hasFunctionType) {
           component.defaultProps[propName] = prop.default();
@@ -10626,7 +10552,7 @@
   };
 
   /**
-   * Framework7 React 3.0.1
+   * Framework7 React 3.0.5
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -10634,7 +10560,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: July 10, 2018
+   * Released on: July 20, 2018
    */
 
   var Plugin = {
@@ -10645,8 +10571,7 @@
       var Framework7 = this;
       f7.Framework7 = Framework7;
 
-      var Extend = React.Component; // eslint-disable-line
-      var refs = 'refs'; // eslint-disable-line
+      var Extend = params.React ? params.React.Component : React.Component; // eslint-disable-line
 
       window.AccordionContent = F7AccordionContent;
       window.AccordionItem = F7AccordionItem;
@@ -10771,14 +10696,8 @@
           if (self.props && self.props.f7route) { return self.props.f7route; }
           if (self.f7route) { return self.f7route; }
           if (self._f7route) { return self._f7route; }
+
           var route;
-          var parent = self;
-          while (parent && !route) {
-            if (parent._f7route) { route = parent._f7route; }
-            {
-              parent = parent._reactInternalFiber._debugOwner.stateNode;
-            }
-          }
           return route;
         },
         set: function set(value) {
@@ -10792,17 +10711,19 @@
           if (self.props && self.props.f7router) { return self.props.f7router; }
           if (self.f7router) { return self.f7router; }
           if (self._f7router) { return self._f7router; }
+
           var router;
-          var parent = self;
-          while (parent && !router) {
-            if (parent._f7router) { router = parent._f7router; }
-            else if (parent.f7View) {
-              router = parent.f7View.router;
-            } else if (parent[refs] && parent[refs].el && parent[refs].el.f7View) {
-              router = parent[refs].el.f7View.router;
-            }
-            {
-              parent = parent._reactInternalFiber._debugOwner.stateNode;
+          // eslint-disable-next-line
+          if (COMPILER === 'vue') {
+            var parent = self;
+            while (parent && !router) {
+              if (parent._f7router) { router = parent._f7router; }
+              else if (parent.f7View) {
+                router = parent.f7View.router;
+              } else if (parent.$refs && parent.$refs.el && parent.$refs.el.f7View) {
+                router = parent.$refs.el.f7View.router;
+              }
+              parent = parent.$parent;
             }
           }
           return router;

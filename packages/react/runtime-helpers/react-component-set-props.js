@@ -9,7 +9,7 @@ export default (component, props) => {
     if (type === Object) return PropTypes.object;
     if (type === Array) return PropTypes.array;
     if (type === Symbol) return PropTypes.symbol;
-    if (type.constructor === Function) return PropTypes.instanceOf(type);
+    if (type.constructor === Function || type === Date) return PropTypes.instanceOf(type);
     return PropTypes.any;
   };
 
@@ -32,10 +32,12 @@ export default (component, props) => {
       component.propTypes[propName] = propType(type);
     }
 
-    if (typeof prop.default !== 'undefined') {
-      const hasFunctionType =
-        prop.type === Function ||
-        (Array.isArray(prop.type) && prop.type.indexOf(Function) >= 0);
+    if (
+      (typeof prop.default !== 'undefined')
+      || (('default' in prop) && prop.default === undefined)
+    ) {
+      const hasFunctionType = prop.type === Function
+        || (Array.isArray(prop.type) && prop.type.indexOf(Function) >= 0);
       if (!component.defaultProps) component.defaultProps = {};
       if (typeof prop.default === 'function' && !hasFunctionType) {
         component.defaultProps[propName] = prop.default();

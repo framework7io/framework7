@@ -1,5 +1,5 @@
 /**
- * Framework7 React 3.0.1
+ * Framework7 React 3.0.5
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 10, 2018
+ * Released on: July 20, 2018
  */
 
 import F7AccordionContent from './components/accordion-content';
