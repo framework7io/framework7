@@ -89,6 +89,10 @@ If you want to help in Framework7 development and make it event better visit thi
 
 If you have questions about Framework7 or want to help others you are welcome to special forum at http://forum.framework7.io/
 
+## Discord Channel
+
+Discord Channel at https://discord.gg/dZ5kk85
+
 ## Docs
 
 Documentation available at http://framework7.io/docs/
