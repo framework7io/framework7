@@ -45,7 +45,7 @@ function buildReact(cb) {
     .replace('// IMPORT_COMPONENTS\n', '')
     .replace('// REGISTER_COMPONENTS\n', '')
     .replace(/EXTEND/g, 'params.React ? params.React.Component : React.Component')
-    .replace(/COMPILER/, '\'react\'');
+    .replace(/COMPILER/g, '\'react\'');
 
   fs.writeFileSync(`${buildPath}/react/utils/plugin.js`, newPluginContent);
 
@@ -91,7 +91,7 @@ function buildReact(cb) {
     .replace('// IMPORT_COMPONENTS', `${componentImports.join('\n')}\n`)
     .replace('// REGISTER_COMPONENTS', registerComponents)
     .replace(/EXTEND/g, 'params.React ? params.React.Component : React.Component')
-    .replace(/COMPILER/, '\'react\'');
+    .replace(/COMPILER/g, '\'react\'');
 
   fs.writeFileSync(`${buildPath}/react/framework7-react.esm.bundle.js`, bannerReact + esmBundlePluginContent);
 
