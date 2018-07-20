@@ -58,6 +58,7 @@ Bart DJ
 ---
 
 ### $10+ Supporter
+Rick Chang<br>
 Marc Hildmann<br>
 Kyle Hammond<br>
 En-Yang Lin<br>
