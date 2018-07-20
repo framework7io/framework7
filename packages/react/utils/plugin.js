@@ -79,7 +79,7 @@ const Plugin = {
 
         let router;
         // eslint-disable-next-line
-        if (COMPILER === 'vue') {
+        if ('react' === 'vue') {
           let parent = self;
           while (parent && !router) {
             if (parent._f7router) router = parent._f7router;

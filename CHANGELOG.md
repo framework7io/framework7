@@ -2,6 +2,10 @@
 
 # Change Log
 
+# [v3.0.7](https://github.com/framework7io/framework7/compare/v3.0.6...v3.0.7) - July 20, 2018
+  * Phenome
+    * Fixed build error
+
 # [v3.0.6](https://github.com/framework7io/framework7/compare/v3.0.5...v3.0.6) - July 20, 2018
   * Core
     * Fixed missing `idate` dependency

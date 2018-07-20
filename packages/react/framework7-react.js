@@ -1,5 +1,5 @@
 /**
- * Framework7 React 3.0.6
+ * Framework7 React 3.0.7
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -10552,7 +10552,7 @@
   };
 
   /**
-   * Framework7 React 3.0.6
+   * Framework7 React 3.0.7
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -10713,19 +10713,6 @@
           if (self._f7router) { return self._f7router; }
 
           var router;
-          // eslint-disable-next-line
-          if (COMPILER === 'vue') {
-            var parent = self;
-            while (parent && !router) {
-              if (parent._f7router) { router = parent._f7router; }
-              else if (parent.f7View) {
-                router = parent.f7View.router;
-              } else if (parent.$refs && parent.$refs.el && parent.$refs.el.f7View) {
-                router = parent.$refs.el.f7View.router;
-              }
-              parent = parent.$parent;
-            }
-          }
           return router;
         },
         set: function set(value) {

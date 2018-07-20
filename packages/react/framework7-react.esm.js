@@ -1,5 +1,5 @@
 /**
- * Framework7 React 3.0.6
+ * Framework7 React 3.0.7
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *

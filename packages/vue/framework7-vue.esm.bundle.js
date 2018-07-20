@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.0.6
+ * Framework7 Vue 3.0.7
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -253,7 +253,7 @@ const Plugin = {
 
         let router;
         // eslint-disable-next-line
-        if (COMPILER === 'vue') {
+        if ('vue' === 'vue') {
           let parent = self;
           while (parent && !router) {
             if (parent._f7router) router = parent._f7router;
