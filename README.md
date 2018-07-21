@@ -42,16 +42,16 @@ Compiled results will be available in `build/` folder.
 
 To build production versions the following npm scripts are available:
 
-* `build:prod` - build prodiction versions of all packages (Core, Vue, React)
-* `build-core:prod` - build prodiction version of Core (vanilla JS) Framework7
-* `build-react:prod` - build prodiction version of Framework7 React package
-* `build-vue:prod` - build prodiction version of Framework7 Vue package
+* `build:prod` - build production versions of all packages (Core, Vue, React)
+* `build-core:prod` - build production version of Core (vanilla JS) Framework7
+* `build-react:prod` - build production version of Framework7 React package
+* `build-vue:prod` - build production version of Framework7 Vue package
 
 Compiled results will be available in `packages/` folder.
 
 ## Kitchen Sink
 
-To Run Kitchen Sink with development environment (development version will be built first) use the following npm scripts:
+To run Kitchen Sink with development environment (development version will be built first) use the following npm scripts:
 
 * `dev` - build development versions of all packages (Core, Vue, React) and run local server. With this common script it will watch for changes in all `src/` files and rebuild all packages (Core, Vue, React)
 * `core:dev` - build development version of Core (vanilla JS) Framework7 package and run core Kitchen Sink
@@ -67,7 +67,7 @@ To Run Kitchen Sink with production builds (already compiled `/packages/` will b
 
 ## Source Code
 
-Whole source code is locaed under `/src/` folder.
+Whole source code is located under `/src/` folder.
 
 Framework7 uses Phenome compiler to generate React & Vue components. So all the React & Vue related code is under the `/src/phenome/` folder
 
@@ -79,7 +79,7 @@ Before you open an issue please review the [contributing](https://github.com/fra
 
 **All changes should be commited to `src/` files only!**.
 
-Framework7 uses LESS for CSS compliations, and ES modules JS files.
+Framework7 uses LESS for CSS compilations, and ES modules JS files.
 
 The project uses [.editorconfig](http://editorconfig.org/) and [ESLint](https://eslint.org/) to define and lint the coding style of each file. We recommend that you install the Editor Config and ESLint extension for your preferred IDE.
 
