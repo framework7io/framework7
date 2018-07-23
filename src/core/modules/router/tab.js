@@ -103,19 +103,16 @@ function tabLoad(tabRoute, loadOptions = {}) {
       }
     }
   }
-  if (!router.params.unloadTabContent) {
-    if ($newTabEl[0].f7RouterTabLoaded) {
-      if ($oldTabEl && $oldTabEl.length) {
-        if (animated) {
-          onTabsChanged(() => {
-            router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
-          });
-        } else {
-          router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
-        }
-      }
-      return router;
+  if (!router.params.unloadTabContent && $newTabEl[0].f7RouterTabLoaded) {
+    if (!$oldTabEl || !$oldTabEl.length) return router;
+    if (animated) {
+      onTabsChanged(() => {
+        router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
+      });
+    } else {
+      router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
     }
+    return router;
   }
 
   // Load Tab Content

@@ -55,7 +55,11 @@ function initSwipers(swiperEl) {
         if (!view) view = app.views.main;
         const router = view.router;
         const tabRoute = router.findTabRoute(swiper.slides.eq(swiper.activeIndex)[0]);
-        if (tabRoute) router.navigate(tabRoute.path);
+        if (tabRoute) {
+          setTimeout(() => {
+            router.navigate(tabRoute.path);
+          }, 0);
+        }
       } else {
         app.tab.show({
           tabEl: swiper.slides.eq(swiper.activeIndex),
