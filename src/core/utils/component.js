@@ -212,16 +212,18 @@ class Framework7Component {
               });
             }
             if (methodName.indexOf('.') >= 0) {
+
               methodName.split('.').forEach((path, pathIndex) => {
+                if (path === 'this') return;
                 if (!method) method = component;
                 if (method[path]) method = method[path];
                 else {
-                  throw new Error(`Component doesn't have method "${methodName.split('.').slice(0, pathIndex + 1).join('.')}"`);
+                  throw new Error(`Framework7: Component doesn't have method "${methodName.split('.').slice(0, pathIndex + 1).join('.')}"`);
                 }
               });
             } else {
               if (!component[methodName]) {
-                throw new Error(`Component doesn't have method "${methodName}"`);
+                throw new Error(`Framework7: Component doesn't have method "${methodName}"`);
               }
               method = component[methodName];
             }
