@@ -4,11 +4,40 @@ import Template7 from 'template7';
 import Utils from './utils';
 
 const tempDom = document.createElement('div');
+let counter = 0;
+
+function renderEsTemplate(template, context, id) {
+  const callbackName = `f7_component_callback_es_template${id || new Date().getTime()}`;
+  if (id && window[callbackName]) {
+    return window[callbackName].call(context);
+  }
+  const scriptContent = `
+    window.${callbackName} = function () {
+      return \`${template}\`;
+    }
+  `;
+  // Insert Script El
+  const scriptEl = document.createElement('script');
+  scriptEl.innerHTML = scriptContent;
+  $('head').append(scriptEl);
+
+  // Render template
+  const rendered = window[callbackName].call(context);
+
+  // Remove Script El
+  $(scriptEl).remove();
+
+  return rendered;
+}
 
 class Framework7Component {
   constructor(opts, extendContext = {}) {
     const options = Utils.extend({}, opts);
     let component = Utils.merge(this, extendContext, { $options: options });
+    if (!options.id) {
+      options.id = `${Utils.now()}${counter}`;
+      counter += 1;
+    }
 
     // Apply context
     ('beforeCreate created beforeMount mounted beforeDestroy destroyed').split(' ').forEach((cycleKey) => {
@@ -69,10 +98,15 @@ class Framework7Component {
         html = options.render();
       } else if (options.template) {
         if (typeof options.template === 'string') {
-          try {
-            html = Template7.compile(options.template)(component);
-          } catch (err) {
-            throw err;
+          if (options.templateType === 't7' || !options.templateType) {
+            try {
+              html = Template7.compile(options.template)(component);
+            } catch (err) {
+              throw err;
+            }
+          }
+          if (options.templateType === 'es') {
+            html = renderEsTemplate(options.template, component, options.id);
           }
         } else {
           // Supposed to be function
@@ -277,9 +311,11 @@ const Component = {
 
     // Template
     let template;
-    if (componentString.indexOf('<template>') >= 0) {
+    const hasTemplate = componentString.match(/<template([ ]?)([a-z0-9-]*)>/);
+    const templateType = hasTemplate[2] || 't7';
+    if (hasTemplate) {
       template = componentString
-        .split('<template>')
+        .split(/<template[ ]?[a-z0-9-]*>/)
         .filter((item, index) => index > 0)
         .join('<template>')
         .split('</template>')
@@ -293,7 +329,8 @@ const Component = {
 
     // Styles
     let style;
-    const styleScopeId = Utils.now();
+    const id = `${Utils.now()}${counter}`;
+    counter += 1;
     if (componentString.indexOf('<style>') >= 0) {
       style = componentString.split('<style>')[1].split('</style>')[0];
     } else if (componentString.indexOf('<style scoped>') >= 0) {
@@ -301,9 +338,9 @@ const Component = {
       style = style.split('\n').map((line) => {
         if (line.indexOf('{') >= 0) {
           if (line.indexOf('{{this}}') >= 0) {
-            return line.replace('{{this}}', `[data-scope="${styleScopeId}"]`);
+            return line.replace('{{this}}', `[data-scope="${id}"]`);
           }
-          return `[data-scope="${styleScopeId}"] ${line.trim()}`;
+          return `[data-scope="${id}"] ${line.trim()}`;
         }
         return line;
       }).join('\n');
@@ -330,11 +367,14 @@ const Component = {
 
     if (!component.template && !component.render) {
       component.template = template;
+      component.templateType = templateType;
     }
     if (style) {
       component.style = style;
-      component.styleScopeId = styleScopeId;
+      component.styleScopeId = id;
     }
+
+    component.id = id;
     return component;
   },
   create(c, extendContext = {}) {
