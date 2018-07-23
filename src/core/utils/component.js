@@ -212,7 +212,6 @@ class Framework7Component {
               });
             }
             if (methodName.indexOf('.') >= 0) {
-
               methodName.split('.').forEach((path, pathIndex) => {
                 if (path === 'this') return;
                 if (!method) method = component;
