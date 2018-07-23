@@ -136,6 +136,13 @@ class Framework7Component {
 
     // Find Events
     const events = [];
+    ('click focus blur change input submit scroll focusin focusout keyup keydown keypress mouseenter mouseleave').split(' ').forEach((event) => {
+      $(tempDom).find(`[on${event}]`).each((index, element) => {
+        if (element[`on${event}`]) {
+          element[`on${event}`] = element[`on${event}`].bind(component);
+        }
+      });
+    });
     $(tempDom).find('*').each((index, element) => {
       const attrs = [];
       for (let i = 0; i < element.attributes.length; i += 1) {
