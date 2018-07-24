@@ -4,7 +4,7 @@ import Template7 from 'template7';
 import PathToRegexp from 'path-to-regexp'; // eslint-disable-line
 import Framework7Class from '../../utils/class';
 import Utils from '../../utils/utils';
-import Component from '../../utils/component';
+import Component from '../../utils/component/component';
 import History from '../../utils/history';
 import SwipeBack from './swipe-back';
 

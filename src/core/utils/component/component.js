@@ -1,7 +1,14 @@
 import { window, document } from 'ssr-window';
 import $ from 'dom7';
 import Template7 from 'template7';
-import Utils from './utils';
+import Utils from '../utils';
+import morphdom from './morphdom/index';
+
+// TODO: 1. add support in parser for "export default"
+// TODO: 2. move component class to other file
+// TODO: 3. split structure to more files
+// TODO: 4. better handle component IDs and caching
+// TODO: 5. better delete scripts and functions from window when component destroyed
 
 const tempDom = document.createElement('div');
 let counter = 0;
@@ -33,7 +40,7 @@ function renderEsTemplate(template, context, id) {
 class Framework7Component {
   constructor(opts, extendContext = {}) {
     const options = Utils.extend({}, opts);
-    let component = Utils.merge(this, extendContext, { $options: options });
+    let self = Utils.merge(this, extendContext, { $options: options });
     if (!options.id) {
       options.id = `${Utils.now()}${counter}`;
       counter += 1;
@@ -41,30 +48,30 @@ class Framework7Component {
 
     // Apply context
     ('beforeCreate created beforeMount mounted beforeDestroy destroyed').split(' ').forEach((cycleKey) => {
-      if (options[cycleKey]) options[cycleKey] = options[cycleKey].bind(component);
+      if (options[cycleKey]) options[cycleKey] = options[cycleKey].bind(self);
     });
 
     if (options.data) {
-      options.data = options.data.bind(component);
+      options.data = options.data.bind(self);
       // Data
-      Utils.extend(component, options.data());
+      Utils.extend(self, options.data());
     }
-    if (options.render) options.render = options.render.bind(component);
+    if (options.render) options.render = options.render.bind(self);
     if (options.methods) {
       Object.keys(options.methods).forEach((methodName) => {
-        component[methodName] = options.methods[methodName].bind(component);
+        self[methodName] = options.methods[methodName].bind(self);
       });
     }
 
     // Bind Events
     if (options.on) {
       Object.keys(options.on).forEach((eventName) => {
-        options.on[eventName] = options.on[eventName].bind(component);
+        options.on[eventName] = options.on[eventName].bind(self);
       });
     }
     if (options.once) {
       Object.keys(options.once).forEach((eventName) => {
-        options.once[eventName] = options.once[eventName].bind(component);
+        options.once[eventName] = options.once[eventName].bind(self);
       });
     }
 
@@ -73,15 +80,15 @@ class Framework7Component {
     // Watchers
     if (options.watch) {
       Object.keys(options.watch).forEach((watchKey) => {
-        let dataKeyValue = component[watchKey];
-        Object.defineProperty(component, watchKey, {
+        let dataKeyValue = self[watchKey];
+        Object.defineProperty(self, watchKey, {
           enumerable: true,
           configurable: true,
           set(newValue) {
             const previousValue = dataKeyValue;
             dataKeyValue = newValue;
             if (previousValue === newValue) return;
-            options.watch[watchKey].call(component, newValue, previousValue);
+            options.watch[watchKey].call(self, newValue, previousValue);
           },
           get() {
             return dataKeyValue;
@@ -91,7 +98,6 @@ class Framework7Component {
     }
 
     // Render template
-
     function render() {
       let html = '';
       if (options.render) {
@@ -100,17 +106,17 @@ class Framework7Component {
         if (typeof options.template === 'string') {
           if (options.templateType === 't7' || !options.templateType) {
             try {
-              html = Template7.compile(options.template)(component);
+              html = Template7.compile(options.template)(self);
             } catch (err) {
               throw err;
             }
           }
           if (options.templateType === 'es') {
-            html = renderEsTemplate(options.template, component, options.id);
+            html = renderEsTemplate(options.template, self, options.id);
           }
         } else {
           // Supposed to be function
-          html = options.template(component);
+          html = options.template(self);
         }
       }
       return html;
@@ -130,16 +136,15 @@ class Framework7Component {
     // Extend component with $el
     const el = tempDom.children[0];
     const $el = $(el);
-    component.$el = $el;
-    component.el = el;
-    component.el = el;
+    self.$el = $el;
+    self.el = el;
 
     // Find Events
     const events = [];
     ('click focus blur change input submit scroll focusin focusout keyup keydown keypress mouseenter mouseleave').split(' ').forEach((event) => {
       $(tempDom).find(`[on${event}]`).each((index, element) => {
         if (element[`on${event}`]) {
-          element[`on${event}`] = element[`on${event}`].bind(component);
+          element[`on${event}`] = element[`on${event}`].bind(self);
         }
       });
     });
@@ -201,12 +206,12 @@ class Framework7Component {
                 else if (arg.indexOf('.') > 0) {
                   let deepArg;
                   arg.split('.').forEach((path) => {
-                    if (!deepArg) deepArg = component;
+                    if (!deepArg) deepArg = self;
                     deepArg = deepArg[path];
                   });
                   arg = deepArg;
                 } else {
-                  arg = component[arg];
+                  arg = self[arg];
                 }
                 customArgs.push(arg);
               });
@@ -214,17 +219,17 @@ class Framework7Component {
             if (methodName.indexOf('.') >= 0) {
               methodName.split('.').forEach((path, pathIndex) => {
                 if (path === 'this') return;
-                if (!method) method = component;
+                if (!method) method = self;
                 if (method[path]) method = method[path];
                 else {
                   throw new Error(`Framework7: Component doesn't have method "${methodName.split('.').slice(0, pathIndex + 1).join('.')}"`);
                 }
               });
             } else {
-              if (!component[methodName]) {
+              if (!self[methodName]) {
                 throw new Error(`Framework7: Component doesn't have method "${methodName}"`);
               }
-              method = component[methodName];
+              method = self[methodName];
             }
             method(...customArgs);
           },
@@ -281,7 +286,7 @@ class Framework7Component {
     if (options.created) options.created();
 
     // Mount
-    component.$mount = function mount(mountMethod) {
+    self.$mount = function mount(mountMethod) {
       if (options.beforeMount) options.beforeMount();
       if (styleEl) $('head').append(styleEl);
       if (mountMethod) mountMethod(el);
@@ -289,7 +294,7 @@ class Framework7Component {
     };
 
     // Destroy
-    component.$destroy = function destroy() {
+    self.$destroy = function destroy() {
       if (options.beforeDestroy) options.beforeDestroy();
       if (styleEl) $(styleEl).remove();
       detachEvents();
@@ -299,16 +304,49 @@ class Framework7Component {
         el.f7Component = null;
         delete el.f7Component;
       }
-      Utils.deleteProps(component);
-      component = null;
+      Utils.deleteProps(self);
+      self = null;
     };
 
     // Store component instance
     for (let i = 0; i < tempDom.children.length; i += 1) {
-      tempDom.children[i].f7Component = component;
+      tempDom.children[i].f7Component = self;
     }
 
-    return component;
+    function update() {
+      let html = render();
+      if (html && typeof html === 'string') {
+        html = html.trim();
+        tempDom.innerHTML = html;
+      } else if (html) {
+        tempDom.innerHTML = '';
+        tempDom.appendChild(html);
+      }
+      // 1. render
+      // 2. collect new events array from new tempDom element
+      // 3. morph dom to el from tempDom and in callbacks
+        //  1. If element removed - detach event
+        //  2. If element added - attach event
+        //  3. If navbar added - fix this case
+        //  4. If element with -init class removed - handle it
+        //  5. If element with -init class added - handle it
+        //  6. Don't modify element content with "-init" class
+
+    }
+    self.$setState = (updater) => {
+      let mergeState;
+      if (typeof updater === 'function') {
+        mergeState = updater(self.state || {});
+      } else {
+        mergeState = updater;
+      }
+      Utils.merge(self.state || {}, mergeState || {});
+      update();
+    };
+    self.$forceUpdate = () => {
+      update();
+    };
+    return self;
   }
 }
 
