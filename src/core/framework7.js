@@ -18,6 +18,7 @@ import ClicksModule from './modules/clicks/clicks';
 import RouterModule from './modules/router/router';
 import HistoryModule from './modules/history/history';
 import StorageModule from './modules/storage/storage';
+import ComponentModule from './modules/component/component';
 
 // Core Components
 import Statusbar from './components/statusbar/statusbar';
@@ -52,6 +53,7 @@ Framework7.use([
   RouterModule,
   HistoryModule,
   StorageModule,
+  ComponentModule,
   Statusbar,
   View,
   Navbar,

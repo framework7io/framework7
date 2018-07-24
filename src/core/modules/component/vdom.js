@@ -1,0 +1,159 @@
+/* eslint no-use-before-define: "off" */
+/* eslint import/no-named-as-default: "off" */
+import { window, document } from 'ssr-window';
+import h from './snabbdom/h';
+
+const selfClosing = 'area base br col command embed hr img input keygen link menuitem meta param source track wbr'.split(' ');
+const propsAttrs = 'hidden value checked disabled readonly selected'.split(' ');
+const tempDom = document.createElement('div');
+
+function getEventHandler(handlerString, context, { stop, prevent, once } = {}) {
+  let fired = false;
+
+  let methodName;
+  let method;
+  let customArgs = [];
+
+  if (handlerString.indexOf('(') < 0) {
+    methodName = handlerString;
+  } else {
+    methodName = handlerString.split('(')[0];
+  }
+  if (methodName.indexOf('.') >= 0) {
+    methodName.split('.').forEach((path, pathIndex) => {
+      if (pathIndex === 0 && path === 'window') {
+        // eslint-disable-next-line
+        context = window;
+        return;
+      }
+      if (path === 'this') return;
+      if (!method) method = context;
+      if (method[path]) method = method[path];
+      else {
+        throw new Error(`Framework7: Component doesn't have method "${methodName.split('.').slice(0, pathIndex + 1).join('.')}"`);
+      }
+    });
+  } else {
+    if (!context[methodName]) {
+      throw new Error(`Framework7: Component doesn't have method "${methodName}"`);
+    }
+    method = context[methodName];
+  }
+
+  function handler(...args) {
+    const e = args[0];
+    if (once && fired) return;
+    if (stop) e.stopPropagation();
+    if (prevent) e.preventDefault();
+    fired = true;
+
+    if (handlerString.indexOf('(') < 0) {
+      customArgs = args;
+    } else {
+      handlerString.split('(')[1].split(')')[0].split(',').forEach((argument) => {
+        let arg = argument.trim();
+        // eslint-disable-next-line
+        if (!isNaN(arg)) arg = parseFloat(arg);
+        else if (arg === 'true') arg = true;
+        else if (arg === 'false') arg = false;
+        else if (arg === 'null') arg = null;
+        else if (arg === 'undefined') arg = undefined;
+        else if (arg[0] === '"') arg = arg.replace(/"/g, '');
+        else if (arg[0] === '\'') arg = arg.replace(/'/g, '');
+        else if (arg.indexOf('.') > 0) {
+          let deepArg;
+          arg.split('.').forEach((path) => {
+            if (!deepArg) deepArg = context;
+            deepArg = deepArg[path];
+          });
+          arg = deepArg;
+        } else {
+          arg = context[arg];
+        }
+        customArgs.push(arg);
+      });
+    }
+
+    method(...customArgs);
+  }
+
+  return handler;
+}
+
+function getData(el, context) {
+  const data = {};
+  const attributes = el.attributes;
+  Array.prototype.forEach.call(attributes, (attr) => {
+    const attrName = attr.name;
+    const attrValue = attr.value;
+    if (propsAttrs.indexOf(attrName) >= 0) {
+      if (!data.props) data.props = {};
+      data.props[attrName] = attrValue;
+    } else if (attrName === 'key') {
+      data.key = attrName;
+    } else if (attrName.indexOf('on') === 0 || attrName.indexOf('@') === 0) {
+      if (!data.on) data.on = {};
+      let eventName = attrName.indexOf('on') === 0 ? attrName.substr(2) : attrName.substr(1);
+      let stop = false;
+      let prevent = false;
+      let once = false;
+      if (eventName.indexOf('.') >= 0) {
+        eventName.split('.').forEach((eventNamePart, eventNameIndex) => {
+          if (eventNameIndex === 0) eventName = eventNamePart;
+          else {
+            if (eventNamePart === 'stop') stop = true;
+            if (eventNamePart === 'prevent') prevent = true;
+            if (eventNamePart === 'once') once = true;
+          }
+        });
+      }
+      data.on[eventName] = getEventHandler(attrValue, context, { stop, prevent, once });
+    } else {
+      if (!data.attrs) data.attrs = {};
+      data.attrs[attr.name] = attr.value;
+    }
+  });
+  return data;
+}
+function elementToVNode(el, context) {
+  if (el.nodeType === 1) {
+    // element
+    const tagName = el.nodeName.toLowerCase();
+    return h(
+      tagName,
+      getData(el, context),
+      selfClosing.indexOf(tagName) >= 0 ? [] : getChildren(el, context)
+    );
+  }
+  if (el.nodeType === 3) {
+    // text
+    return el.textContent;
+  }
+  return null;
+}
+function getChildren(el, context) {
+  const children = [];
+  const nodes = el.childNodes;
+  for (let i = 0; i < nodes.length; i += 1) {
+    const childNode = nodes[i];
+    const child = elementToVNode(childNode, context);
+    if (child) {
+      children.push(child);
+    }
+  }
+  return children;
+}
+
+export default function (html = '', context) {
+  // Save to temp dom
+  tempDom.innerHTML = html.trim();
+
+  // Parse DOM
+  const rootEl = tempDom.childNodes[0];
+  const result = elementToVNode(rootEl, context);
+
+  // Clean
+  tempDom.innerHTML = '';
+
+  return result;
+}
