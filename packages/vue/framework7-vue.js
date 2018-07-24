@@ -5804,7 +5804,7 @@
 
       onClick: function onClick(event) {
         var self = this;
-        var value = self.$refs.area.refs.inputEl.value;
+        var value = self.$refs.area.$refs.inputEl.value;
         var clear = self.f7Messagebar ? function () {
           self.f7Messagebar.clear();
         } : function () {};
