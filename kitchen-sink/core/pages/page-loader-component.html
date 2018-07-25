@@ -81,15 +81,7 @@
         <p>Button clicked <b>{{clickCounter}}</b> times</p>
         <p><a class="button button-round button-fill" @click="onButtonClick">Increase Counter</a></p>
       </div>
-      {{#unless listItems}}
-      <div class="block block-strong text-align-center">
-        {{#if listLoading}}
-        <div class="preloader"></div>
-        {{else}}
-        <p><a class="button button-round button-fill" @click="loadList">Load List</a></p>
-        {{/if}}
-      </div>
-      {{else}}
+      {{#if listItems}}
       <div class="list simple-list">
         <ul>
           {{#each listItems}}
@@ -97,7 +89,15 @@
           {{/each}}
         </ul>
       </div>
-      {{/unless}}
+      {{else}}
+      <div class="block block-strong text-align-center">
+        {{#if listLoading}}
+        <div class="preloader"></div>
+        {{else}}
+        <p><a class="button button-round button-fill" @click="loadList">Load List</a></p>
+        {{/if}}
+      </div>
+      {{/if}}
     </div>
   </div>
 </template>

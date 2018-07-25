@@ -15,29 +15,14 @@
       <div class="block-title">Scroll bottom</div>
       <div class="list simple-list">
         <ul>
-          <li>Item 1</li>
-          <li>Item 2</li>
-          <li>Item 3</li>
-          <li>Item 4</li>
-          <li>Item 5</li>
-          <li>Item 6</li>
-          <li>Item 7</li>
-          <li>Item 8</li>
-          <li>Item 9</li>
-          <li>Item 10</li>
-          <li>Item 11</li>
-          <li>Item 12</li>
-          <li>Item 13</li>
-          <li>Item 14</li>
-          <li>Item 15</li>
-          <li>Item 16</li>
-          <li>Item 17</li>
-          <li>Item 18</li>
-          <li>Item 19</li>
-          <li>Item 20</li>
+          {{#each items}}
+          <li key="{{@index}}">Item {{this}}</li>
+          {{/each}}
         </ul>
       </div>
+      {{#if hasMoreItems}}
       <div class="preloader infinite-scroll-preloader"></div>
+      {{/if}}
     </div>
   </div>
 </template>
@@ -46,32 +31,37 @@
     data: function () {
       return {
         allowInfinite: true,
+        hasMoreItems: true,
         lastItem: 20,
+        items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
       }
     },
     methods: {
       loadMore: function () {
         var self = this;
+
         var $ = self.$$;
         if (!self.allowInfinite) return;
         self.allowInfinite = false;
 
         setTimeout(function () {
           if (self.lastItem >= 200) {
-            $(self.$el).find('.preloader').remove();
+            self.$setState({
+              hasMoreItems: false,
+            });
             return;
           }
-          var html = '';
 
           for (var i = 1; i <= 20; i++) {
-            html += '<li>Item ' + (self.lastItem + i) + '</li>';
+            self.items.push(self.lastItem + i);
           }
 
-          $(self.$el).find('.list ul').append(html);
-
-          self.lastItem += 20;
-
           self.allowInfinite = true;
+
+          self.$setState({
+            lastItem: self.lastItem + 20,
+            items: self.items,
+          })
         }, 1000);
       }
     }

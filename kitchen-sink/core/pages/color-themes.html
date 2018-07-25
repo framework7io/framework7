@@ -62,7 +62,8 @@
     methods: {
       setLayoutTheme: function (theme) {
         var self = this;
-        self.$app.root.removeClass('theme-dark theme-light').addClass('theme-' + theme);
+        var app = self.$app;
+        app.root.removeClass('theme-dark theme-light').addClass('theme-' + theme);
       },
       setColorTheme: function (color) {
         var self = this;

@@ -52,7 +52,7 @@
           </li>
         </ul>
       </div>
-      <div class="block-title display-flex justify-content-space-between">Price Filter <span class="price-value">$200 - $400</span></div>
+      <div class="block-title display-flex justify-content-space-between">Price Filter <span class="price-value">${{priceMin}} - ${{priceMax}}</span></div>
       <div class="list simple-list">
         <ul>
           <li class="item-row">
@@ -83,9 +83,18 @@
 </template>
 <script>
   return {
+    data() {
+      return {
+        priceMin: 200,
+        priceMax: 400,
+      }
+    },
     methods: {
       onPriceChange: function (e, range) {
-        this.$el.find('.price-value').text('$'+(range.value[0])+' - $'+(range.value[1]));
+        this.$setState({
+          priceMin: range.value[0],
+          priceMax: range.value[1],
+        });
       }
     }
   }
