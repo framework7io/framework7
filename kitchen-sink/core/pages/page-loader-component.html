@@ -13,7 +13,7 @@
     </div>
     <div class="page-content">
       <div class="block block-strong">
-        <p>Component page is alos compiled with Template7, but it has much more functionality. In addition to Template7 page it has lifecycle hooks, events handling and data managment.</p>
+        <p>Component page is also compiled with Template7 or ES Template, but it has much more functionality. In addition to Template7 page it has lifecycle hooks, events handling, data managment and Virtual DOM data bindings.</p>
         <p>It is useful to use Component page when you need page-specific logic.</p>
       </div>
       <div class="block-title">Events Handling</div>
@@ -66,16 +66,90 @@
           <li><b>$theme.md</b>: {{$theme.md}}</li>
         </ul>
       </div>
+      <div class="block-title">Virtual DOM</div>
+      <div class="block block-strong">
+        <p>Component page is rendered using Virtual DOM. It means it can automatically update page layout depending on changed state with minimal efforts and with maxumim performance.</p>
+      </div>
+      <div class="block block-strong">
+        <p>Ok, so your name is <b>{{name}}</b>?</p>
+        <div class="input {{#if $theme.md}}margin-bottom{{/if}}">
+          <input class="padding-bottom" type="text" @input="onInput" value="{{name}}" placeholder="Type your name">
+          <div class="input-info">Type new name and it be dynamically changed</div>
+        </div>
+      </div>
+      <div class="block block-strong">
+        <p>Button clicked <b>{{clickCounter}}</b> times</p>
+        <p><a class="button button-round button-fill" @click="onButtonClick">Increase Counter</a></p>
+      </div>
+      {{#unless listItems}}
+      <div class="block block-strong text-align-center">
+        {{#if listLoading}}
+        <div class="preloader"></div>
+        {{else}}
+        <p><a class="button button-round button-fill" @click="loadList">Load List</a></p>
+        {{/if}}
+      </div>
+      {{else}}
+      <div class="list simple-list">
+        <ul>
+          {{#each listItems}}
+          <li>Item {{this}}</li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/unless}}
     </div>
   </div>
 </template>
 <style>
   p {
-    margin: 10px;
+    margin: 10px 0;
   }
 </style>
 <script>
   return {
+    // Component Data
+    data: function () {
+      // Must return an object
+      return {
+        name: 'Jimmy',
+        age: 25,
+        like: ['Tennis', 'Chess', 'Football'],
+        clickCounter: 0,
+        listItems: null,
+        listLoading: null,
+      }
+    },
+    // Component Methods
+    methods: {
+      openAlert: function () {
+        var self = this;
+        self.$app.dialog.alert('Hello World');
+      },
+      onInput: function (e) {
+        var self = this;
+        self.$setState({
+          name: e.target.value,
+        });
+      },
+      onButtonClick: function () {
+        var self = this;
+        self.$setState({
+          clickCounter: self.clickCounter + 1
+        });
+      },
+      loadList: function () {
+        var self = this;
+        self.$setState({ listLoading: true });
+        // Emulate Ajax request
+        setTimeout(() => {
+          self.$setState({
+            listLoading: false,
+            listItems: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+          });
+        }, 2000);
+      },
+    },
     // Lifecycle Hooks
     beforeCreate() {
       console.log('componentBeforeCreate', this)
@@ -94,22 +168,6 @@
     },
     destroyed() {
       console.log('componentDestroyed', this);
-    },
-    // Component Data
-    data: function () {
-      // Must return an object
-      return {
-        name: 'Jimmy',
-        age: 25,
-        like: ['Tennis', 'Chess', 'Football'],
-      }
-    },
-    // Component Methods
-    methods: {
-      openAlert: function () {
-        var self = this;
-        self.$app.dialog.alert('Hello World');
-      },
     },
     // Page Events
     on: {

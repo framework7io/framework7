@@ -1,0 +1,10 @@
+import { VNode, VNodeData } from './vnode';
+export declare type VNodes = Array<VNode>;
+export declare type VNodesSparse = VNode | Array<VNode | undefined | null>;
+export declare function h(sel: string): VNode;
+export declare function h(sel: string, data: VNodeData): VNode;
+export declare function h(sel: string, text: string): VNode;
+export declare function h(sel: string, children: VNodesSparse): VNode;
+export declare function h(sel: string, data: VNodeData, text: string): VNode;
+export declare function h(sel: string, data: VNodeData, children: VNodesSparse): VNode;
+export default h;
