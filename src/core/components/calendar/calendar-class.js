@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import IDate from 'idate';
+import IDate from './idate/index';
 import Utils from '../../utils/utils';
 import Framework7Class from '../../utils/class';
 
