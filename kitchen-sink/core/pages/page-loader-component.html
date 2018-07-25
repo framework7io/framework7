@@ -81,6 +81,23 @@
         <p>Button clicked <b>{{clickCounter}}</b> times</p>
         <p><a class="button button-round button-fill" @click="onButtonClick">Increase Counter</a></p>
       </div>
+      {{#unless listItems}}
+      <div class="block block-strong text-align-center">
+        {{#if listLoading}}
+        <div class="preloader"></div>
+        {{else}}
+        <p><a class="button button-round button-fill" @click="loadList">Load List</a></p>
+        {{/if}}
+      </div>
+      {{else}}
+      <div class="list simple-list">
+        <ul>
+          {{#each listItems}}
+          <li>Item {{this}}</li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/unless}}
     </div>
   </div>
 </template>
@@ -91,25 +108,6 @@
 </style>
 <script>
   return {
-    // Lifecycle Hooks
-    beforeCreate() {
-      console.log('componentBeforeCreate', this)
-    },
-    created() {
-      console.log('componentCreated', this)
-    },
-    beforeMount() {
-      console.log('componentBeforeMount', this)
-    },
-    mounted() {
-      console.log('componentMounted', this);
-    },
-    beforeDestroy() {
-      console.log('componentBeforeDestroy', this);
-    },
-    destroyed() {
-      console.log('componentDestroyed', this);
-    },
     // Component Data
     data: function () {
       // Must return an object
@@ -118,6 +116,8 @@
         age: 25,
         like: ['Tennis', 'Chess', 'Football'],
         clickCounter: 0,
+        listItems: null,
+        listLoading: null,
       }
     },
     // Component Methods
@@ -138,6 +138,36 @@
           clickCounter: self.clickCounter + 1
         });
       },
+      loadList: function () {
+        var self = this;
+        self.$setState({ listLoading: true });
+        // Emulate Ajax request
+        setTimeout(() => {
+          self.$setState({
+            listLoading: false,
+            listItems: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+          });
+        }, 2000);
+      },
+    },
+    // Lifecycle Hooks
+    beforeCreate() {
+      console.log('componentBeforeCreate', this)
+    },
+    created() {
+      console.log('componentCreated', this)
+    },
+    beforeMount() {
+      console.log('componentBeforeMount', this)
+    },
+    mounted() {
+      console.log('componentMounted', this);
+    },
+    beforeDestroy() {
+      console.log('componentBeforeDestroy', this);
+    },
+    destroyed() {
+      console.log('componentDestroyed', this);
     },
     // Page Events
     on: {
