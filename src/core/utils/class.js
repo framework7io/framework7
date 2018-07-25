@@ -139,7 +139,7 @@ class Framework7Class {
             if (!instance.vnodeHooks[hookName]) instance.vnodeHooks[hookName] = {};
             if (!instance.vnodeHooks[hookName][vnodeId]) instance.vnodeHooks[hookName][vnodeId] = [];
             instance.vnodeHooks[hookName][vnodeId].push(handler.bind(instance));
-          })
+          });
         });
       }
       // Module create callback

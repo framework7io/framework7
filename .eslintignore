@@ -8,4 +8,4 @@ kitchen-sink
 src/core/framework7.js
 src/core/modules/demo-module.js
 src/core/components/swiper/swiper-class
-src/core/utils/component/snabbdom
+src/core/modules/component/snabbdom
