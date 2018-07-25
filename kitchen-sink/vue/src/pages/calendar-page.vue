@@ -13,6 +13,9 @@
         >
           <div class="event-color" :style="{'background-color': item.color}" slot="root-start"></div>
         </f7-list-item>
+        <f7-list-item v-if="eventItems.length === 0">
+          <span class="text-color-gray" slot="title">No events for this day</span>
+        </f7-list-item>
       </f7-list>
     </div>
   </f7-page>
