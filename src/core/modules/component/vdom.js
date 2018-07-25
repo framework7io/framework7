@@ -7,12 +7,55 @@ const selfClosing = 'area base br col command embed hr img input keygen link men
 const propsAttrs = 'hidden value checked disabled readonly selected'.split(' ');
 const tempDom = document.createElement('div');
 
+function getHooks(data, app, initial) {
+  if (!data || !data.attrs || !data.attrs.class) return null;
+  const classNames = data.attrs.class;
+  const hooks = {};
+  const insert = [];
+  const destroy = [];
+  const update = [];
+  const postpatch = [];
+  classNames.split(' ').forEach((className) => {
+    if (!initial) {
+      insert.push(...app.getVnodeHooks('insert', className));
+    }
+    destroy.push(...app.getVnodeHooks('destroy', className));
+    update.push(...app.getVnodeHooks('update', className));
+    postpatch.push(...app.getVnodeHooks('postpatch', className));
+  });
+
+  if (insert.length === 0 && destroy.length === 0 && update.length === 0 && postpatch.length === 0) {
+    return null;
+  }
+  if (insert.length) {
+    hooks.insert = (vnode) => {
+      insert.forEach(f => f(vnode));
+    };
+  }
+  if (destroy.length) {
+    hooks.destroy = (vnode) => {
+      destroy.forEach(f => f(vnode));
+    };
+  }
+  if (update.length) {
+    hooks.update = (oldVnode, vnode) => {
+      update.forEach(f => f(vnode));
+    };
+  }
+  if (postpatch.length) {
+    hooks.postpatch = (oldVnode, vnode) => {
+      postpatch.forEach(f => f(vnode));
+    };
+  }
+  return hooks;
+}
 function getEventHandler(handlerString, context, { stop, prevent, once } = {}) {
   let fired = false;
 
   let methodName;
   let method;
   let customArgs = [];
+  let needMethodBind = true;
 
   if (handlerString.indexOf('(') < 0) {
     methodName = handlerString;
@@ -21,12 +64,13 @@ function getEventHandler(handlerString, context, { stop, prevent, once } = {}) {
   }
   if (methodName.indexOf('.') >= 0) {
     methodName.split('.').forEach((path, pathIndex) => {
+      if (pathIndex === 0 && path === 'this') return;
       if (pathIndex === 0 && path === 'window') {
         // eslint-disable-next-line
-        context = window;
+        method = window;
+        needMethodBind = false;
         return;
       }
-      if (path === 'this') return;
       if (!method) method = context;
       if (method[path]) method = method[path];
       else {
@@ -38,6 +82,9 @@ function getEventHandler(handlerString, context, { stop, prevent, once } = {}) {
       throw new Error(`Framework7: Component doesn't have method "${methodName}"`);
     }
     method = context[methodName];
+  }
+  if (needMethodBind) {
+    method = method.bind(context);
   }
 
   function handler(...args) {
@@ -80,7 +127,7 @@ function getEventHandler(handlerString, context, { stop, prevent, once } = {}) {
   return handler;
 }
 
-function getData(el, context) {
+function getData(el, context, app, initial) {
   const data = {};
   const attributes = el.attributes;
   Array.prototype.forEach.call(attributes, (attr) => {
@@ -110,19 +157,41 @@ function getData(el, context) {
       data.on[eventName] = getEventHandler(attrValue, context, { stop, prevent, once });
     } else {
       if (!data.attrs) data.attrs = {};
-      data.attrs[attr.name] = attr.value;
+      data.attrs[attrName] = attrValue;
+
+      if (attrName === 'id' && !data.key) {
+        data.key = attrValue;
+      }
     }
   });
+  const hooks = getHooks(data, app, initial);
+  if (hooks) {
+    data.hook = hooks;
+  }
   return data;
 }
-function elementToVNode(el, context) {
+
+function getChildren(el, context, app, initial) {
+  const children = [];
+  const nodes = el.childNodes;
+  for (let i = 0; i < nodes.length; i += 1) {
+    const childNode = nodes[i];
+    const child = elementToVNode(childNode, context, app, initial);
+    if (child) {
+      children.push(child);
+    }
+  }
+  return children;
+}
+
+function elementToVNode(el, context, app, initial) {
   if (el.nodeType === 1) {
     // element
     const tagName = el.nodeName.toLowerCase();
     return h(
       tagName,
-      getData(el, context),
-      selfClosing.indexOf(tagName) >= 0 ? [] : getChildren(el, context)
+      getData(el, context, app, initial),
+      selfClosing.indexOf(tagName) >= 0 ? [] : getChildren(el, context, app, initial)
     );
   }
   if (el.nodeType === 3) {
@@ -131,26 +200,14 @@ function elementToVNode(el, context) {
   }
   return null;
 }
-function getChildren(el, context) {
-  const children = [];
-  const nodes = el.childNodes;
-  for (let i = 0; i < nodes.length; i += 1) {
-    const childNode = nodes[i];
-    const child = elementToVNode(childNode, context);
-    if (child) {
-      children.push(child);
-    }
-  }
-  return children;
-}
 
-export default function (html = '', context) {
+export default function (html = '', context, app, initial) {
   // Save to temp dom
   tempDom.innerHTML = html.trim();
 
   // Parse DOM
   const rootEl = tempDom.childNodes[0];
-  const result = elementToVNode(rootEl, context);
+  const result = elementToVNode(rootEl, context, app, initial);
 
   // Clean
   tempDom.innerHTML = '';

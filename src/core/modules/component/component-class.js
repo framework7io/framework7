@@ -95,7 +95,7 @@ class Framework7Component {
     // Make Dom
     if (html && typeof html === 'string') {
       html = html.trim();
-      self.$vnode = vdom(html, self);
+      self.$vnode = vdom(html, self, app, true);
       self.el = document.createElement('div');
       patch(self.el, self.$vnode);
     } else if (html) {
@@ -187,7 +187,7 @@ class Framework7Component {
     // Make Dom
     if (html && typeof html === 'string') {
       html = html.trim();
-      const newVNode = vdom(html, self);
+      const newVNode = vdom(html, self, self.$app);
       self.$vnode = patch(self.$vnode, newVNode);
     }
   }
@@ -219,6 +219,10 @@ class Framework7Component {
     if (self.el && self.el.f7Component) {
       self.el.f7Component = null;
       delete self.el.f7Component;
+    }
+    // Patch with empty node
+    if (self.$vnode) {
+      self.$vnode = patch(self.$vnode, { sel: self.$vnode.sel, data: {} });
     }
     Utils.deleteProps(self);
   }

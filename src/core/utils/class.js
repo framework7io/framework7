@@ -130,7 +130,18 @@ class Framework7Class {
           instance.on(moduleEventName, module.on[moduleEventName]);
         });
       }
-
+      // Add vnode hooks
+      if (module.vnode) {
+        if (!instance.vnodeHooks) instance.vnodeHooks = {};
+        Object.keys(module.vnode).forEach((vnodeId) => {
+          Object.keys(module.vnode[vnodeId]).forEach((hookName) => {
+            const handler = module.vnode[vnodeId][hookName];
+            if (!instance.vnodeHooks[hookName]) instance.vnodeHooks[hookName] = {};
+            if (!instance.vnodeHooks[hookName][vnodeId]) instance.vnodeHooks[hookName][vnodeId] = [];
+            instance.vnodeHooks[hookName][vnodeId].push(handler.bind(instance));
+          })
+        });
+      }
       // Module create callback
       if (module.create) {
         module.create.bind(instance)(moduleParams);

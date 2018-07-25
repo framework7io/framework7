@@ -2,7 +2,7 @@
 import { init } from './snabbdom/snabbdom';
 import attributesModule from './snabbdom/modules/attributes';
 import propsModule from './snabbdom/modules/props';
-import eventListenersModule from './snabbdom/modules/eventlisteners';
+import eventListenersModule from './eventslisteners';
 
 const patch = init([
   attributesModule,

@@ -437,9 +437,6 @@ class Router extends Framework7Class {
     const router = this;
     const $el = $(el);
     if ($el.length === 0) return;
-    if ($el[0].f7Component && $el[0].f7Component.$destroy) {
-      $el[0].f7Component.$destroy();
-    }
     $el.find('.tab').each((tabIndex, tabEl) => {
       $(tabEl).children().each((index, tabChild) => {
         if (tabChild.f7Component) {
@@ -448,6 +445,9 @@ class Router extends Framework7Class {
         }
       });
     });
+    if ($el[0].f7Component && $el[0].f7Component.$destroy) {
+      $el[0].f7Component.$destroy();
+    }
     if (!router.params.removeElements) {
       return;
     }
