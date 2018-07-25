@@ -46,29 +46,25 @@
   }
 
   .calendar-day {
-    &.calendar-day-today span {
+    &.calendar-day-today .calendar-day-number {
       color: @themeColor;
     }
-    &.calendar-day-has-events span {
-      &:after {
-        background: @themeColor;
-      }
-    }
-    &.calendar-day-has-events.calendar-day-selected span:after {
-      background-color: #fff;
-    }
-    &.calendar-day-selected span {
+    &.calendar-day-selected .calendar-day-number {
       background: @themeColor;
       color: #fff;
     }
-    span {
-      width: 36px;
-      height: 36px;
-      line-height: 36px;
+    .calendar-day-number {
+      width: 32px;
+      height: 32px;
+      line-height: 32px;
+    }
+    .calendar-day-event {
+      background: @themeColor;
     }
   }
+
   .calendar-range .calendar-day.calendar-day-selected {
-    span {
+    .calendar-day-number {
       color: #fff;
     }
   }
@@ -150,20 +146,18 @@
         background: @colorThemeValue;
       }
       .calendar-day {
-        &.calendar-day-today span {
+        &.calendar-day-today .calendar-day-number {
           color: @colorThemeValue;
         }
-        &.calendar-day-has-events span {
-          &:after {
-            background: @colorThemeValue;
-          }
-        }
-        &.calendar-day-selected span {
+        &.calendar-day-selected .calendar-day-number {
           background: @colorThemeValue;
           color: #fff;
           &:after {
             background-color: #fff;
           }
+        }
+        .calendar-day-event {
+          background: @colorThemeValue;
         }
       }
     }

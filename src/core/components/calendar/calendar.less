@@ -111,39 +111,47 @@
   &.calendar-day-prev, &.calendar-day-next {
     color: #b8b8b8;
   }
-  &.calendar-day-weekend {
-  }
+  &.calendar-day-weekend {}
   &.calendar-day-prev, &.calendar-day-next {}
   .calendar-month-prev &, .calendar-month-next & {}
   &.calendar-day-disabled {
     color: #d4d4d4;
     cursor: auto;
   }
-  &.calendar-day-selected span {
+  &.calendar-day-selected .calendar-day-number {
     color:#fff;
   }
-  &.calendar-day-has-events span {
-    &:after {
-      content: '';
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      position: absolute;
-      margin-left: -2px;
-      left: 50%;
-      bottom: 1px;
-    }
-  }
-  span {
+  &.calendar-day-has-events .calendar-day-number {}
+
+  .calendar-day-number {
     display: inline-block;
     border-radius: 100%;
     position: relative;
   }
+  .calendar-day-events {
+    position: absolute;
+    display: flex;
+    left: 0;
+    width: 100%;
+    top: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+  .calendar-day-event {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+     + .calendar-day-event {
+       margin-left: 2px;
+     }
+  }
 }
+
 .calendar-range .calendar-day.calendar-day-selected {
   align-items: stretch;
   align-content: stretch;
-  span {
+  .calendar-day-number {
     width: 100%;
     border-radius: 0;
     height: auto;
@@ -160,7 +168,7 @@
   width: 50%;
   max-width: 200px;
   flex-shrink: 10;
-  span {
+  .calendar-day-number {
     flex-shrink: 1;
     position: relative;
     overflow: hidden;

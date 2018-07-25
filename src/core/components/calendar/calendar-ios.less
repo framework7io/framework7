@@ -38,24 +38,19 @@
   .hairline-root('.calendar-row', top, #c4c4c4);
   .calendar-day {
     font-size: 15px;
-    &.calendar-day-today span {
+    &.calendar-day-today .calendar-day-number {
       background: #e3e3e3;
     }
-    &.calendar-day-has-events span {
-      &:after {
-        background: @themeColor;
-      }
-    }
-    &.calendar-day-has-events.calendar-day-selected span:after {
-      background-color: #fff;
-    }
-    &.calendar-day-selected span {
+    &.calendar-day-selected .calendar-day-number {
       background: @themeColor;
     }
-    span {
+    .calendar-day-number {
       width: 30px;
       height: 30px;
       line-height: 30px;
+    }
+    .calendar-day-event {
+      background: @themeColor;
     }
   }
   .calendar-month-selector, .calendar-year-selector {
@@ -133,7 +128,7 @@
       }
       .calendar-day {
         color: #fff;
-        &.calendar-day-today:not(.calendar-day-selected) span {
+        &.calendar-day-today:not(.calendar-day-selected) .calendar-day-number {
           background: #333;
         }
         &.calendar-day-disabled {
@@ -151,7 +146,10 @@
 
   .color-theme-loop({
     .color-theme-@{colorThemeName}, .color-@{colorThemeName} {
-      .calendar-day.calendar-day-selected span {
+      .calendar-day.calendar-day-selected .calendar-day-number {
+        background: @colorThemeValue;
+      }
+      .calendar-day .calendar-day-event {
         background: @colorThemeValue;
       }
     }

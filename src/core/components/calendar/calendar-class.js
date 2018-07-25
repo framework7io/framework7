@@ -795,6 +795,10 @@ class Calendar extends Framework7Class {
               match = true;
             }
           }
+        } else if (range[i].date) {
+          if (dayDate === new calendar.DateHandleClass(range[i].date).getTime()) {
+            match = true;
+          }
         } else if (dayDate === new calendar.DateHandleClass(range[i]).getTime()) {
           match = true;
         }
@@ -813,6 +817,8 @@ class Calendar extends Framework7Class {
           match = true;
         }
       }
+    } else if (range.date) {
+      match = dayDate === new calendar.DateHandleClass(range.date).getTime();
     } else if (typeof range === 'function') {
       match = range(new calendar.DateHandleClass(dayDate));
     }
@@ -875,7 +881,7 @@ class Calendar extends Framework7Class {
     let monthHtml = '';
     let dayIndex = 0 + (params.firstDay - 1);
     let disabled;
-    let hasEvent;
+    let hasEvents;
     let firstDayOfMonthIndex = new calendar.DateHandleClass(date.getFullYear(), date.getMonth()).getDay();
     if (firstDayOfMonthIndex === 0) firstDayOfMonthIndex = 7;
 
@@ -926,15 +932,37 @@ class Calendar extends Framework7Class {
         if (params.weekendDays.indexOf(weekDayIndex) >= 0) {
           addClass += ' calendar-day-weekend';
         }
-        // Has Events
-        hasEvent = false;
+        // Events
+        let eventsHtml = '';
+        hasEvents = false;
         if (params.events) {
           if (calendar.dateInRange(dayDate, params.events)) {
-            hasEvent = true;
+            hasEvents = true;
           }
         }
-        if (hasEvent) {
+        if (hasEvents) {
           addClass += ' calendar-day-has-events';
+          eventsHtml = `
+            <span class="calendar-day-events">
+              <span class="calendar-day-event"></span>
+            </span>
+          `;
+          if (Array.isArray(params.events)) {
+            const eventDots = [];
+            params.events.forEach((ev) => {
+              const color = ev.color || '';
+              if (eventDots.indexOf(color) < 0 && calendar.dateInRange(dayDate, ev)) {
+                eventDots.push(color);
+              }
+            });
+            eventsHtml = `
+              <span class="calendar-day-events">
+                ${eventDots.map(color => `
+                  <span class="calendar-day-event" style="${color ? `background-color: ${color}` : ''}"></span>
+                `.trim()).join('')}
+              </span>
+            `;
+          }
         }
         // Custom Ranges
         if (params.rangesClasses) {
@@ -962,9 +990,9 @@ class Calendar extends Framework7Class {
         const dayYear = dayDate.getFullYear();
         const dayMonth = dayDate.getMonth();
         rowHtml += `
-      <div data-year="${dayYear}" data-month="${dayMonth}" data-day="${dayNumber}" class="calendar-day${addClass}" data-date="${dayYear}-${dayMonth}-${dayNumber}">
-      <span>${dayNumber}</span>
-      </div>`.trim();
+          <div data-year="${dayYear}" data-month="${dayMonth}" data-day="${dayNumber}" class="calendar-day${addClass}" data-date="${dayYear}-${dayMonth}-${dayNumber}">
+            <span class="calendar-day-number">${dayNumber}${eventsHtml}</span>
+          </div>`.trim();
       }
       monthHtml += `<div class="calendar-row">${rowHtml}</div>`;
     }
