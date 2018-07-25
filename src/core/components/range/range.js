@@ -55,4 +55,17 @@ export default {
       });
     },
   },
+  vnode: {
+    'range-slider-init': {
+      insert(vnode) {
+        const rangeEl = vnode.elm;
+        const app = this;
+        app.range.create({ el: rangeEl });
+      },
+      destroy(vnode) {
+        const rangeEl = vnode.elm;
+        if (rangeEl.f7Range) rangeEl.f7Range.destroy();
+      },
+    },
+  },
 };

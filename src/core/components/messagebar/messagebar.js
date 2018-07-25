@@ -44,4 +44,18 @@ export default {
       });
     },
   },
+  vnode: {
+    'messagebar-init': {
+      insert(vnode) {
+        const app = this;
+        const messagebarEl = vnode.elm;
+        app.messagebar.create(Utils.extend({ el: messagebarEl }, $(messagebarEl).dataset()));
+      },
+      destroy(vnode) {
+        const app = this;
+        const messagebarEl = vnode.elm;
+        app.messagebar.destroy(messagebarEl);
+      },
+    },
+  },
 };

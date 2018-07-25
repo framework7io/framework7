@@ -14,6 +14,8 @@ class SmartSelect extends Framework7Class {
     const $el = $(params.el).eq(0);
     if ($el.length === 0) return ss;
 
+    if ($el[0].f7SmartSelect) return $el[0].f7SmartSelect;
+
     const $selectEl = $el.find('select').eq(0);
     if ($selectEl.length === 0) return ss;
 
@@ -49,6 +51,7 @@ class SmartSelect extends Framework7Class {
     const multiple = $selectEl[0].multiple;
     const inputType = multiple ? 'checkbox' : 'radio';
     const id = Utils.now();
+
     Utils.extend(ss, {
       params: Utils.extend(defaults, params),
       $el,
@@ -66,6 +69,7 @@ class SmartSelect extends Framework7Class {
       selectName: $selectEl.attr('name'),
       maxLength: $selectEl.attr('maxlength') || params.maxLength,
     });
+
     $el[0].f7SmartSelect = ss;
 
     // Events

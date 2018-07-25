@@ -23,6 +23,7 @@ class Gauge extends Framework7Class {
     const $el = $(el);
     if ($el.length === 0) return gauge;
 
+    if ($el[0].f7Gauge) return $el[0].f7Gauge;
 
     Utils.extend(gauge, {
       app,

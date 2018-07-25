@@ -28,6 +28,8 @@ class Messagebar extends Framework7Class {
     const $el = $(messagebar.params.el);
     if ($el.length === 0) return messagebar;
 
+    if ($el[0].f7Messagebar) return $el[0].f7Messagebar;
+
     $el[0].f7Messagebar = messagebar;
 
     // Page and PageContent

@@ -43,4 +43,18 @@ export default {
       });
     },
   },
+  vnode: {
+    'list-index-init': {
+      insert(vnode) {
+        const app = this;
+        const listIndexEl = vnode.elm;
+        const params = Utils.extend($(listIndexEl).dataset(), { el: listIndexEl });
+        app.listIndex.create(params);
+      },
+      destroy(vnode) {
+        const listIndexEl = vnode.elm;
+        if (listIndexEl.f7ListIndex) listIndexEl.f7ListIndex.destroy();
+      },
+    },
+  },
 };

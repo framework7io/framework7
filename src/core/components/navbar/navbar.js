@@ -381,4 +381,13 @@ export default {
       }
     },
   },
+  vnode: {
+    'navbar-inner': {
+      postpatch(vnode) {
+        const app = this;
+        if (app.theme !== 'ios') return;
+        app.navbar.size(vnode.elm);
+      },
+    },
+  },
 };

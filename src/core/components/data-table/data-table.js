@@ -42,7 +42,18 @@ export default {
       });
     },
   },
-  clicks: {
-
+  vnode: {
+    'data-table-init': {
+      insert(vnode) {
+        const app = this;
+        const tableEl = vnode.elm;
+        app.dataTable.create({ el: tableEl });
+      },
+      destroy(vnode) {
+        const app = this;
+        const tableEl = vnode.elm;
+        app.dataTable.destroy(tableEl);
+      },
+    },
   },
 };

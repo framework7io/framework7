@@ -43,6 +43,10 @@ class ListIndex extends Framework7Class {
       return index;
     }
 
+    if ($el[0].f7ListIndex) {
+      return $el[0].f7ListIndex;
+    }
+
     $ul = $el.find('ul');
     if ($ul.length === 0) {
       $ul = $('<ul></ul>');

@@ -39,6 +39,8 @@ class Stepper extends Framework7Class {
     const $el = $(el);
     if ($el.length === 0) return stepper;
 
+    if ($el[0].f7Stepper) return $el[0].f7Stepper;
+
     let $inputEl;
     if (stepper.params.inputEl) {
       $inputEl = $(stepper.params.inputEl);

@@ -6,6 +6,7 @@ import Support from '../../utils/support';
 class Range extends Framework7Class {
   constructor(app, params) {
     super(params, [app]);
+
     const range = this;
     const defaults = {
       el: null,
@@ -30,6 +31,8 @@ class Range extends Framework7Class {
     const $el = $(el);
     if ($el.length === 0) return range;
 
+    if ($el[0].f7Range) return $el[0].f7Range;
+
     const dataset = $el.dataset();
 
     ('step min max value').split(' ').forEach((paramName) => {
@@ -42,7 +45,6 @@ class Range extends Framework7Class {
         range.params[paramName] = dataset[paramName];
       }
     });
-
 
     if (!range.params.value) {
       if (typeof dataset.value !== 'undefined') range.params.value = dataset.value;

@@ -33,6 +33,8 @@ class Messages extends Framework7Class {
     const $el = $(params.el).eq(0);
     if ($el.length === 0) return m;
 
+    if ($el[0].f7Messages) return $el[0].f7Messages;
+
     $el[0].f7Messages = m;
 
     const $pageContentEl = $el.closest('.page-content').eq(0);

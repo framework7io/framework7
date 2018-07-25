@@ -100,4 +100,19 @@ export default {
       }
     },
   },
+  vnode: {
+    'smart-select-init': {
+      insert(vnode) {
+        const app = this;
+        const smartSelectEl = vnode.elm;
+        app.smartSelect.create(Utils.extend({ el: smartSelectEl }, $(smartSelectEl).dataset()));
+      },
+      destroy(vnode) {
+        const smartSelectEl = vnode.elm;
+        if (smartSelectEl.f7SmartSelect && smartSelectEl.f7SmartSelect.destroy) {
+          smartSelectEl.f7SmartSelect.destroy();
+        }
+      },
+    },
+  },
 };
