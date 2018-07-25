@@ -7,11 +7,9 @@ import patch from './patch';
 
 let counter = 0;
 
-function renderEsTemplate(template, context, id) {
+function renderEsTemplate(template, id) {
   const callbackName = `f7_component_es_template${id || new Date().getTime()}`;
-  if (id && window[callbackName]) {
-    return window[callbackName].call(context);
-  }
+
   const scriptContent = `
     window.${callbackName} = function () {
       return \`${template}\`;
@@ -22,13 +20,14 @@ function renderEsTemplate(template, context, id) {
   scriptEl.innerHTML = scriptContent;
   $('head').append(scriptEl);
 
-  // Render template
-  const rendered = window[callbackName].call(context);
+  // Render function
+  const render = window[callbackName];
 
   // Remove Script El
   $(scriptEl).remove();
+  delete window[callbackName];
 
-  return rendered;
+  return render;
 }
 
 class Framework7Component {
@@ -170,7 +169,8 @@ class Framework7Component {
           }
         }
         if ($options.templateType === 'es') {
-          html = renderEsTemplate($options.template, self, $options.id);
+          $options.render = renderEsTemplate($options.template, $options.id).bind(self);
+          html = $options.render();
         }
       } else {
         // Supposed to be function
