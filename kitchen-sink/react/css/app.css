@@ -476,6 +476,13 @@ code {
   height: 100%;
   overflow: auto;
 }
+#calendar-events .event-color {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 8px;
+  height: 100%;
+}
 @media (orientation: landscape) {
   #calendar {
     float: left;

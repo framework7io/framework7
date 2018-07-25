@@ -14,24 +14,39 @@ export default class extends React.Component {
       today: new Date(year, month, day),
       events: [
         {
-          date: new Date(year, month, day, 12, 30),
+          date: new Date(year, month, day),
+          hours: 12,
+          minutes: 30,
           title: 'Meeting with Vladimir',
+          color: '#2196f3',
         },
         {
-          date: new Date(year, month, day, 18, 0),
+          date: new Date(year, month, day),
+          hours: 18,
+          minutes: 0,
           title: 'Shopping',
+          color: '#4caf50',
         },
         {
-          date: new Date(year, month, day, 21, 0),
+          date: new Date(year, month, day),
+          hours: 21,
+          minutes: 0,
           title: 'Gym',
+          color: '#e91e63',
         },
         {
-          date: new Date(year, month, day + 2, 16, 0),
+          date: new Date(year, month, day + 2),
+          hours: 16,
+          minutes: 0,
           title: 'Pay loan',
+          color: '#2196f3',
         },
         {
-          date: new Date(year, month, day + 2, 21, 0),
+          date: new Date(year, month, day + 2),
+          hours: 21,
+          minutes: 0,
           title: 'Gym',
+          color: '#ff9800',
         },
       ],
       eventItems: [],
@@ -58,7 +73,9 @@ export default class extends React.Component {
               key={index}
               title={item.title}
               after={item.time}
-            ></ListItem>
+            >
+              <div class="event-color" style={{'background-color': item.color}} slot="root-start"></div>
+            </ListItem>
           ))}
           {this.state.eventItems.length === 0 && (
             <ListItem>
@@ -87,6 +104,7 @@ export default class extends React.Component {
         eventItems.push({
           title: event.title,
           time: `${hours}:${minutes}`,
+          color: event.color,
         });
       });
     }
@@ -103,7 +121,7 @@ export default class extends React.Component {
       containerEl: '#calendar',
       toolbar: false,
       value: [self.state.today],
-      events: self.state.events.map(event => new Date(event.date.getFullYear(), event.date.getMonth(), event.date.getDate())),
+      events: self.state.events,
       on: {
         init(calendar) {
           $('.navbar-calendar-title').text(`${monthNames[calendar.currentMonth]}, ${calendar.currentYear}`);

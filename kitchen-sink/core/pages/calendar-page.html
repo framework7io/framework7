@@ -14,7 +14,23 @@
     <div class="page-content">
       <div id="calendar" class="block block-strong no-padding no-margin no-hairline-top"></div>
       <div id="calendar-events" class="list no-margin no-hairlines no-ios-left-edge">
-        <ul></ul>
+        <ul>
+          {{#each eventItems}}
+            <li class="item-content">
+              <div class="event-color" style="background-color: {{color}}"></div>
+              <div class="item-inner">
+                <div class="item-title">{{title}}</div>
+                <div class="item-after">{{time}}</div>
+              </div>
+            </li>
+          {{else}}
+            <li class="item-content">
+              <div class="item-inner">
+                <div class="item-title text-color-gray">No events for this day</div>
+              </div>
+            </li>
+          {{/each}}
+        </ul>
       </div>
     </div>
   </div>
@@ -30,6 +46,13 @@
   #calendar-events ul {
     height: 100%;
     overflow: auto;
+  }
+  #calendar-events .event-color {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 8px;
+    height: 100%;
   }
   @media (orientation: landscape) {
     #calendar {
@@ -58,27 +81,43 @@
       var month = date.getMonth();
       var day = date.getDate();
       return {
+        eventItems: [],
         today: new Date(year, month, day),
         events: [
           {
-            date: new Date(year, month, day, 12, 30),
+            date: new Date(year, month, day),
+            hours: 12,
+            minutes: 30,
             title: 'Meeting with Vladimir',
+            color: '#2196f3',
           },
           {
-            date: new Date(year, month, day, 18, 00),
+            date: new Date(year, month, day),
+            hours: 18,
+            minutes: 0,
             title: 'Shopping',
+            color: '#4caf50',
           },
           {
-            date: new Date(year, month, day, 21, 00),
+            date: new Date(year, month, day),
+            hours: 21,
+            minutes: 0,
             title: 'Gym',
+            color: '#e91e63',
           },
           {
-            date: new Date(year, month, day + 2, 16, 00),
+            date: new Date(year, month, day + 2),
+            hours: 16,
+            minutes: 0,
             title: 'Pay loan',
+            color: '#2196f3',
           },
           {
-            date: new Date(year, month, day + 2, 21, 00),
+            date: new Date(year, month, day + 2),
+            hours: 21,
+            minutes: 0,
             title: 'Gym',
+            color: '#ff9800',
           },
         ],
       }
@@ -94,30 +133,23 @@
               event.date.getTime() < currentDate.getTime() + 24 * 60 * 60 * 1000
             );
           });
-        var eventsHtml = '';
-        if (currentEvents.length) {
-          eventsHtml = currentEvents
-            .map(function (event) {
-              var hours = event.date.getHours();
-              var minutes = event.date.getMinutes();
-              if (minutes < 10) minutes = '0' + minutes;
-              return '<li class="item-content">' +
-                      '<div class="item-inner">' +
-                        '<div class="item-title">' + (event.title) + '</div>' +
-                        '<div class="item-after">' + (hours + ':' + minutes) + '</div>' +
-                      '</div>' +
-                    '</li>';
-            })
-            .join('');
-        } else {
-          eventsHtml = '<li class="item-content">' +
-                        '<div class="item-inner">' +
-                          '<div class="item-title text-color-gray">No events for this day</div>' +
-                        '</div>' +
-                      '</li>';
-        }
 
-        self.$el.find('.list ul').html(eventsHtml);
+        const eventItems = [];
+        if (currentEvents.length) {
+          currentEvents.forEach(function (event) {
+            const hours = event.hours;
+            let minutes = event.minutes;
+            if (minutes < 10) minutes = `0${minutes}`;
+            eventItems.push({
+              title: event.title,
+              time: `${hours}:${minutes}`,
+              color: event.color,
+            });
+          });
+        }
+        self.$setState({
+          eventItems: eventItems,
+        });
       },
     },
     on: {
@@ -130,9 +162,7 @@
           containerEl: '#calendar',
           toolbar: false,
           value: [self.today],
-          events: self.events.map(function (event) {
-            return new Date(event.date.getFullYear(), event.date.getMonth(), event.date.getDate());
-          }),
+          events: self.events,
           on: {
             init: function (calendar) {
               $('.navbar-calendar-title').text(monthNames[calendar.currentMonth] +', ' + calendar.currentYear);

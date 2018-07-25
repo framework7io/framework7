@@ -5,20 +5,28 @@
     </f7-navbar>
     <div class="page-content">
       <div id="calendar" class="block block-strong no-padding no-margin no-hairline-top"></div>
-      <div id="calendar-events" class="list no-margin no-hairlines no-ios-left-edge">
-        <ul></ul>
-      </div>
+      <f7-list id="calendar-events" class="no-margin no-hairlines no-ios-left-edge">
+        <f7-list-item v-for="(item, index) in eventItems"
+          :key="index"
+          :title="item.title"
+          :after="item.time"
+        >
+          <div class="event-color" :style="{'background-color': item.color}" slot="root-start"></div>
+        </f7-list-item>
+      </f7-list>
     </div>
   </f7-page>
 </template>
 <script>
-  import { f7Navbar, f7Page, f7NavTitle } from 'framework7-vue';
+  import { f7Navbar, f7Page, f7NavTitle, f7List, f7ListItem } from 'framework7-vue';
 
   export default {
     components: {
       f7Navbar,
       f7Page,
       f7NavTitle,
+      f7List,
+      f7ListItem,
     },
     data() {
       const date = new Date();
@@ -29,26 +37,42 @@
         today: new Date(year, month, day),
         events: [
           {
-            date: new Date(year, month, day, 12, 30),
+            date: new Date(year, month, day),
+            hours: 12,
+            minutes: 30,
             title: 'Meeting with Vladimir',
+            color: '#2196f3',
           },
           {
-            date: new Date(year, month, day, 18, 0),
+            date: new Date(year, month, day),
+            hours: 18,
+            minutes: 0,
             title: 'Shopping',
+            color: '#4caf50',
           },
           {
-            date: new Date(year, month, day, 21, 0),
+            date: new Date(year, month, day),
+            hours: 21,
+            minutes: 0,
             title: 'Gym',
+            color: '#e91e63',
           },
           {
-            date: new Date(year, month, day + 2, 16, 0),
+            date: new Date(year, month, day + 2),
+            hours: 16,
+            minutes: 0,
             title: 'Pay loan',
+            color: '#2196f3',
           },
           {
-            date: new Date(year, month, day + 2, 21, 0),
+            date: new Date(year, month, day + 2),
+            hours: 21,
+            minutes: 0,
             title: 'Gym',
+            color: '#ff9800',
           },
         ],
+        eventItems: [],
       };
     },
     methods: {
@@ -58,32 +82,23 @@
         const currentEvents = self.events
           .filter(event => (
             event.date.getTime() >= currentDate.getTime() &&
-        event.date.getTime() < currentDate.getTime() + 24 * 60 * 60 * 1000
+            event.date.getTime() < currentDate.getTime() + 24 * 60 * 60 * 1000
           ));
-        let eventsHtml = '';
-        if (currentEvents.length) {
-          eventsHtml = currentEvents
-            .map((event) => {
-              const hours = event.date.getHours();
-              let minutes = event.date.getMinutes();
-              if (minutes < 10) minutes = `0${minutes}`;
-              return `${'<li class="item-content">' +
-                '<div class="item-inner">' +
-                  '<div class="item-title">'}${event.title}</div>` +
-                  `<div class="item-after">${hours}:${minutes}</div>` +
-                '</div>' +
-              '</li>';
-            })
-            .join('');
-        } else {
-          eventsHtml = '<li class="item-content">' +
-                      '<div class="item-inner">' +
-                        '<div class="item-title text-color-gray">No events for this day</div>' +
-                      '</div>' +
-                    '</li>';
-        }
 
-        self.$el.querySelector('.list ul').innerHTML = eventsHtml;
+        const eventItems = [];
+        if (currentEvents.length) {
+          currentEvents.forEach((event) => {
+            const hours = event.date.getHours();
+            let minutes = event.date.getMinutes();
+            if (minutes < 10) minutes = `0${minutes}`;
+            eventItems.push({
+              title: event.title,
+              time: `${hours}:${minutes}`,
+              color: event.color,
+            });
+          });
+        }
+        self.eventItems = eventItems;
       },
       onPageInit(e, page) {
         const self = this;
@@ -94,7 +109,7 @@
           containerEl: '#calendar',
           toolbar: false,
           value: [self.today],
-          events: self.events.map(event => new Date(event.date.getFullYear(), event.date.getMonth(), event.date.getDate())),
+          events: self.events,
           on: {
             init(calendar) {
               $('.navbar-calendar-title').text(`${monthNames[calendar.currentMonth]}, ${calendar.currentYear}`);
