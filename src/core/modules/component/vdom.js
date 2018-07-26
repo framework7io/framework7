@@ -128,7 +128,9 @@ function getEventHandler(handlerString, context, { stop, prevent, once } = {}) {
 }
 
 function getData(el, context, app, initial) {
-  const data = {};
+  const data = {
+    context,
+  };
   const attributes = el.attributes;
   Array.prototype.forEach.call(attributes, (attr) => {
     const attrName = attr.name;
