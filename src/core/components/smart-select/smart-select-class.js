@@ -336,7 +336,7 @@ class SmartSelect extends Framework7Class {
             <div class="navbar${ss.params.navbarColorTheme ? `theme-${ss.params.navbarColorTheme}` : ''}">
               <div class="navbar-inner sliding">
                 <div class="left">
-                  <a href="#" class="link popup-close">
+                  <a href="#" class="link popup-close" data-popup=".smart-select-popup[data-select-name='${ss.selectName}']">
                     <i class="icon icon-back"></i>
                     <span class="ios-only">${ss.params.popupCloseLinkText}</span>
                   </a>
