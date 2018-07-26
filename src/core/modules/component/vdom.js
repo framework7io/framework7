@@ -138,9 +138,9 @@ function getData(el, context, app, initial) {
       data.props[attrName] = attrValue;
     } else if (attrName === 'key') {
       data.key = attrName;
-    } else if (attrName.indexOf('on') === 0 || attrName.indexOf('@') === 0) {
+    } else if (attrName.indexOf('@') === 0) {
       if (!data.on) data.on = {};
-      let eventName = attrName.indexOf('on') === 0 ? attrName.substr(2) : attrName.substr(1);
+      let eventName = attrName.substr(1);
       let stop = false;
       let prevent = false;
       let once = false;
