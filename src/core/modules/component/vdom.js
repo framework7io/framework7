@@ -7,7 +7,7 @@ const selfClosing = 'area base br col command embed hr img input keygen link men
 const propsAttrs = 'hidden value checked disabled readonly selected'.split(' ');
 const tempDom = document.createElement('div');
 
-function getHooks(data, app, initial) {
+function getHooks(data, app, initial, isRoot) {
   if (!data || !data.attrs || !data.attrs.class) return null;
   const classNames = data.attrs.class;
   const hooks = {};
@@ -23,6 +23,16 @@ function getHooks(data, app, initial) {
     update.push(...app.getVnodeHooks('update', className));
     postpatch.push(...app.getVnodeHooks('postpatch', className));
   });
+
+  if (isRoot && !initial) {
+    postpatch.push((oldVnode, vnode) => {
+      const vn = vnode || oldVnode;
+      if (!vn) return;
+      if (vn.data && vn.data.context && vn.data.context.$options.updated) {
+        vn.data.context.$options.updated();
+      }
+    });
+  }
 
   if (insert.length === 0 && destroy.length === 0 && update.length === 0 && postpatch.length === 0) {
     return null;
@@ -127,7 +137,7 @@ function getEventHandler(handlerString, context, { stop, prevent, once } = {}) {
   return handler;
 }
 
-function getData(el, context, app, initial) {
+function getData(el, context, app, initial, isRoot) {
   const data = {
     context,
   };
@@ -166,7 +176,7 @@ function getData(el, context, app, initial) {
       }
     }
   });
-  const hooks = getHooks(data, app, initial);
+  const hooks = getHooks(data, app, initial, isRoot);
   if (hooks) {
     data.hook = hooks;
   }
@@ -186,13 +196,13 @@ function getChildren(el, context, app, initial) {
   return children;
 }
 
-function elementToVNode(el, context, app, initial) {
+function elementToVNode(el, context, app, initial, isRoot) {
   if (el.nodeType === 1) {
     // element
     const tagName = el.nodeName.toLowerCase();
     return h(
       tagName,
-      getData(el, context, app, initial),
+      getData(el, context, app, initial, isRoot),
       selfClosing.indexOf(tagName) >= 0 ? [] : getChildren(el, context, app, initial)
     );
   }
@@ -209,7 +219,7 @@ export default function (html = '', context, app, initial) {
 
   // Parse DOM
   const rootEl = tempDom.childNodes[0];
-  const result = elementToVNode(rootEl, context, app, initial);
+  const result = elementToVNode(rootEl, context, app, initial, true);
 
   // Clean
   tempDom.innerHTML = '';

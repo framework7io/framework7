@@ -58,7 +58,7 @@ class Framework7Component {
     });
 
     // Apply context
-    ('beforeCreate created beforeMount mounted beforeDestroy destroyed').split(' ').forEach((cycleKey) => {
+    ('beforeCreate created beforeMount mounted beforeDestroy destroyed updated').split(' ').forEach((cycleKey) => {
       if ($options[cycleKey]) $options[cycleKey] = $options[cycleKey].bind(self);
     });
 
