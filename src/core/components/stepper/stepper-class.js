@@ -51,7 +51,7 @@ class Stepper extends Framework7Class {
     }
 
     if ($inputEl && $inputEl.length) {
-      ('step min max').split(' ').forEach((paramName) => {
+      ('step min max decimalPoint').split(' ').forEach((paramName) => {
         if (!params[paramName] && $inputEl.attr(paramName)) {
           stepper.params[paramName] = parseFloat($inputEl.attr(paramName));
         }
@@ -225,6 +225,7 @@ class Stepper extends Framework7Class {
       stepper.endTypeMode();
     }
     function onInput(e) {
+      if (manualInput) { stepper.typeValue(e.target.value); return; }
       if (e.detail && e.detail.sentByF7Stepper) return;
       stepper.setValue(e.target.value, true);
     }
@@ -319,6 +320,7 @@ class Stepper extends Framework7Class {
   endTypeMode() {
     const stepper = this;
     stepper.value = parseFloat(stepper.value);
+	if (isNaN(stepper.value)) stepper.value = 0;
 
     stepper.$el.trigger('stepper:change', stepper, stepper.value);
     const formattedValue = stepper.formatValue(stepper.value);
