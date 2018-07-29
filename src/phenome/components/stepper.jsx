@@ -36,7 +36,7 @@ export default {
     },
     inputReadonly: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     autorepeat: {
       type: Boolean,
@@ -49,6 +49,18 @@ export default {
     wraps: {
       type: Boolean,
       default: false,
+    },
+    manualInputMode: {
+      type: Boolean,
+      default: false,
+    },
+    decimalPoint: {
+      type: Number,
+      default: 4,
+    },
+    buttonsEndInputMode: {
+      type: Boolean,
+      default: true,
     },
     disabled: Boolean,
     buttonsOnly: Boolean,
@@ -101,7 +113,7 @@ export default {
             step={inputType === 'number' ? step : undefined}
             onInput={self.onInput.bind(self)}
             domProps={{
-              readonly: inputReadonly,
+              readOnly: inputReadonly,
               value,
             }}
           />
@@ -181,7 +193,7 @@ export default {
     if (!self.props.init) return;
     self.$f7ready((f7) => {
       const {
-        min, max, value, step, formatValue, autorepeat, autorepeatDynamic, wraps,
+        min, max, value, step, formatValue, autorepeat, autorepeatDynamic, wraps, manualInputMode, decimalPoint, buttonsEndInputMode,
       } = self.props;
       const el = self.refs.el;
       if (!el) return;
@@ -195,6 +207,9 @@ export default {
         autorepeat,
         autorepeatDynamic,
         wraps,
+        manualInputMode,
+        decimalPoint,
+        buttonsEndInputMode,
         on: {
           change(stepper, newValue) {
             self.dispatchEvent('stepper:change stepperChange', newValue);
