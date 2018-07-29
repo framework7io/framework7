@@ -224,7 +224,7 @@ export default {
       inputEl = (
         <F7Toggle
           checked={checked}
-          readOnly={readonly}
+          readonly={readonly}
           name={name}
           value={value}
           disabled={disabled}

@@ -63,7 +63,7 @@ export default {
           onChange={self.onChange.bind(self)}
           domProps={{
             disabled,
-            readonly,
+            readOnly: readonly,
             value,
             checked,
           }}
