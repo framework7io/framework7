@@ -191,10 +191,10 @@
     <f7-block strong class="text-align-center">
       <f7-row>
         <f7-col>
-          <f7-stepper :value="100" :min="0" :max="1000" :step="100"></f7-stepper>
+          <f7-stepper fill :value="100" :min="0" :max="1000" :step="100"></f7-stepper>
         </f7-col>
         <f7-col>
-          <f7-stepper :input="false" :value="5" :min="0" :max="10" :step="0.5"></f7-stepper>
+          <f7-stepper fill :input="false" :value="5" :min="0" :max="10" :step="0.5"></f7-stepper>
         </f7-col>
       </f7-row>
     </f7-block>
@@ -205,11 +205,11 @@
       <f7-row>
         <f7-col>
           <small class="display-block">Default</small>
-          <f7-stepper :value="0" :min="0" :max="100" :step="1" :autorepeat="true"></f7-stepper>
+          <f7-stepper fill :value="0" :min="0" :max="100" :step="1" :autorepeat="true"></f7-stepper>
         </f7-col>
         <f7-col>
           <small class="display-block">Dynamic</small>
-          <f7-stepper :value="0" :min="0" :max="100" :step="1" :autorepeat="true" :autorepeat-dynamic="true"></f7-stepper>
+          <f7-stepper fill :value="0" :min="0" :max="100" :step="1" :autorepeat="true" :autorepeat-dynamic="true"></f7-stepper>
         </f7-col>
       </f7-row>
     </f7-block>
@@ -219,7 +219,7 @@
     <f7-block strong class="text-align-center">
       <f7-row>
         <f7-col>
-          <f7-stepper :value="0" :min="0" :max="10" :step="1" :autorepeat="true" :wraps="true"></f7-stepper>
+          <f7-stepper fill :value="0" :min="0" :max="10" :step="1" :autorepeat="true" :wraps="true"></f7-stepper>
         </f7-col>
       </f7-row>
     </f7-block>
@@ -244,11 +244,23 @@
           :value="meetingTime"
           :buttons-only="true"
           small
+          fill
+          raised
           slot="after"
           @stepper:change="setMeetingTime"
         ></f7-stepper>
       </f7-list-item>
     </f7-list>
+
+    <f7-block-title>Manual input</f7-block-title>
+    <f7-block-header>It is possible to enter value manually from keyboard or mobile keypad. When click on input field, stepper enter into manual input mode, which allow type value from keyboar and check fractional part with defined accurancy. Click outside or enter Return key, ending manual mode.</f7-block-header>
+    <f7-block strong class="text-align-center">
+      <f7-row>
+        <f7-col>
+          <f7-stepper fill :value="0" :min="0" :max="1000" :step="1" :autorepeat="true" :wraps="true" :manual-input-mode="true" :decimal-point="2"></f7-stepper>
+        </f7-col>
+      </f7-row>
+    </f7-block>
   </f7-page>
 </template>
 <script>

@@ -205,10 +205,10 @@ export default class extends React.Component {
         <Block strong className="text-align-center">
           <Row>
             <Col>
-              <Stepper value={100} min={0} max={1000} step={100}></Stepper>
+              <Stepper fill value={100} min={0} max={1000} step={100}></Stepper>
             </Col>
             <Col>
-              <Stepper input={false} value={5} min={0} max={10} step={0.5}></Stepper>
+              <Stepper fill input={false} value={5} min={0} max={10} step={0.5}></Stepper>
             </Col>
           </Row>
         </Block>
@@ -219,11 +219,11 @@ export default class extends React.Component {
           <Row>
             <Col>
               <small className="display-block">Default</small>
-              <Stepper value={0} min={0} max={100} step={1} autorepeat={true}></Stepper>
+              <Stepper fill value={0} min={0} max={100} step={1} autorepeat={true}></Stepper>
             </Col>
             <Col>
               <small className="display-block">Dynamic</small>
-              <Stepper value={0} min={0} max={100} step={1} autorepeat={true} autorepeatDynamic={true}></Stepper>
+              <Stepper fill value={0} min={0} max={100} step={1} autorepeat={true} autorepeatDynamic={true}></Stepper>
             </Col>
           </Row>
         </Block>
@@ -233,7 +233,7 @@ export default class extends React.Component {
         <Block strong className="text-align-center">
           <Row>
             <Col>
-              <Stepper value={0} min={0} max={10} step={1} autorepeat={true} wraps={true}></Stepper>
+              <Stepper fill value={0} min={0} max={10} step={1} autorepeat={true} wraps={true}></Stepper>
             </Col>
           </Row>
         </Block>
@@ -258,11 +258,23 @@ export default class extends React.Component {
               value={this.state.meetingTime}
               buttonsOnly={true}
               small
+              fill
+              raised
               slot="after"
               onStepperChange={this.setMeetingTime.bind(this)}
             ></Stepper>
           </ListItem>
         </List>
+
+        <BlockTitle>Manual input</BlockTitle>
+        <BlockHeader>It is possible to enter value manually from keyboard or mobile keypad. When click on input field, stepper enter into manual input mode, which allow type value from keyboar and check fractional part with defined accurancy. Click outside or enter Return key, ending manual mode.</BlockHeader>
+        <Block strong className="text-align-center">
+          <Row>
+            <Col>
+              <Stepper fill value={0} min={0} max={1000} step={1} autorepeat={true} wraps={true} manualInputMode={true} decimalPoint={2}></Stepper>
+            </Col>
+          </Row>
+        </Block>
       </Page>
     );
   }
