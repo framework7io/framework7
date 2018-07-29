@@ -95,8 +95,7 @@ function build(config, components, themes, rtl, cb) {
       }
       gulp.src(`${output}/css/${outputFileName}.css`)
         .pipe(cleanCSS({
-          advanced: false,
-          aggressiveMerging: false,
+          compatibility: '*,-properties.zeroUnits',
         }))
         .pipe(header(banner))
         .pipe(rename((filePath) => {
