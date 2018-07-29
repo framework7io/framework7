@@ -300,7 +300,7 @@ export default {
     },
     onClick(event) {
       const self = this;
-      const value = self.refs.area.refs.inputEl.value;
+      const value = self.refs.area.$refs.inputEl.value;
       const clear = self.f7Messagebar
         ? () => { self.f7Messagebar.clear(); }
         : () => {};
