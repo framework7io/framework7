@@ -20,6 +20,8 @@ class Stepper extends Framework7Class {
       autorepeat: false,
       autorepeatDynamic: false,
       wraps: false,
+      decimalPoint: 4,
+	  buttonsEndInputMode: true,
     };
 
     // Extend defaults with modules params
@@ -49,11 +51,18 @@ class Stepper extends Framework7Class {
     }
 
     if ($inputEl && $inputEl.length) {
-      ('step min max').split(' ').forEach((paramName) => {
+      ('step min max decimalPoint').split(' ').forEach((paramName) => {
         if (!params[paramName] && $inputEl.attr(paramName)) {
           stepper.params[paramName] = parseFloat($inputEl.attr(paramName));
         }
       });
+	  
+	  const decimalPoint = parseInt(stepper.params.decimalPoint);
+      if (Number.isNaN(decimalPoint)) {
+        stepper.params.decimalPoint = 0;
+      } else {
+        stepper.params.decimalPoint = decimalPoint;
+      }
 
       const inputValue = parseFloat($inputEl.val());
       if (typeof params.value === 'undefined' && !Number.isNaN(inputValue) && (inputValue || inputValue === 0)) {
@@ -71,7 +80,7 @@ class Stepper extends Framework7Class {
     const $buttonPlusEl = $el.find('.stepper-button-plus');
     const $buttonMinusEl = $el.find('.stepper-button-minus');
 
-    const { step, min, max, value } = stepper.params;
+    const { step, min, max, value, decimalPoint } = stepper.params;
 
     Utils.extend(stepper, {
       app,
@@ -88,7 +97,8 @@ class Stepper extends Framework7Class {
       step,
       min,
       max,
-      value,
+      value,      
+	  decimalPoint,
     });
 
     $el[0].f7Stepper = stepper;
@@ -101,7 +111,8 @@ class Stepper extends Framework7Class {
     let intervalId;
     let timeoutId;
     let autorepeatAction = null;
-    let autorepeatInAction = false;
+    let autorepeatInAction = false;    
+	let manualInput = false;
 
     function dynamicRepeat(current, progressions, startsIn, progressionStep, repeatEvery, action) {
       clearTimeout(timeoutId);
@@ -122,7 +133,8 @@ class Stepper extends Framework7Class {
     }
 
     function onTouchStart(e) {
-      if (isTouched) return;
+      if (isTouched) return;      
+	  if (manualInput) { return; }
       if ($(e.target).closest($buttonPlusEl).length) {
         autorepeatAction = 'increment';
       } else if ($(e.target).closest($buttonMinusEl).length) {
@@ -142,6 +154,7 @@ class Stepper extends Framework7Class {
     }
     function onTouchMove(e) {
       if (!isTouched) return;
+	  if (manualInput) { return; }
       const pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
       const pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
 
@@ -165,6 +178,13 @@ class Stepper extends Framework7Class {
     }
 
     function onMinusClick() {
+	  if (manualInput) {
+        if (stepper.params.buttonsEndInputMode) {
+          manualInput = false;
+          stepper.endTypeMode();
+        };
+        return;
+      }
       if (preventButtonClick) {
         preventButtonClick = false;
         return;
@@ -172,13 +192,40 @@ class Stepper extends Framework7Class {
       stepper.decrement();
     }
     function onPlusClick() {
+	  if (manualInput) {
+        if (stepper.params.buttonsEndInputMode) {
+          manualInput = false;
+          stepper.endTypeMode();
+        };
+        return;
+      }
       if (preventButtonClick) {
         preventButtonClick = false;
         return;
       }
       stepper.increment();
     }
+    function onInputClick(e) {
+      if (!e.target.readOnly) {
+        manualInput = true;
+        if (typeof e.target.selectionStart == "number") {
+          e.target.selectionStart = e.target.selectionEnd = e.target.value.length;
+        }
+      }
+    }
+    function onInputKey(e) {
+      if (e.keyCode == 13 || e.which == 13) {
+        e.preventDefault();
+        manualInput = false;
+        stepper.endTypeMode();
+      }
+    }
+    function onInputBlur() {
+      manualInput = false;
+      stepper.endTypeMode();
+    }
     function onInput(e) {
+      if (manualInput) { stepper.typeValue(e.target.value); return; }
       if (e.detail && e.detail.sentByF7Stepper) return;
       stepper.setValue(e.target.value, true);
     }
@@ -187,6 +234,9 @@ class Stepper extends Framework7Class {
       $buttonPlusEl.on('click', onPlusClick);
       if (stepper.params.watchInput && $inputEl && $inputEl.length) {
         $inputEl.on('input', onInput);
+        $inputEl.on('click', onInputClick);
+        $inputEl.on('blur', onInputBlur);
+        $inputEl.on('keyup', onInputKey);
       }
       if (stepper.params.autorepeat) {
         app.on('touchstart:passive', onTouchStart);
@@ -199,6 +249,9 @@ class Stepper extends Framework7Class {
       $buttonPlusEl.off('click', onPlusClick);
       if (stepper.params.watchInput && $inputEl && $inputEl.length) {
         $inputEl.off('input', onInput);
+        $inputEl.off('click', onInputClick);
+        $inputEl.off('blur', onInputBlur);
+        $inputEl.off('keyup', onInputKey);
       }
     };
 
@@ -263,6 +316,62 @@ class Stepper extends Framework7Class {
     stepper.emit('local::change stepperChange', stepper, stepper.value);
     return stepper;
   }
+
+  endTypeMode() {
+    const stepper = this;
+    stepper.value = parseFloat(stepper.value);
+	if (isNaN(stepper.value)) stepper.value = 0;
+
+    stepper.$el.trigger('stepper:change', stepper, stepper.value);
+    const formattedValue = stepper.formatValue(stepper.value);
+    if (stepper.$inputEl && stepper.$inputEl.length) {
+      stepper.$inputEl.val(formattedValue);
+      stepper.$inputEl.trigger('input change', { sentByF7Stepper: true });
+      stepper.$inputEl.blur();
+    }
+    if (stepper.$valueEl && stepper.$valueEl.length) {
+      stepper.$valueEl.html(formattedValue);
+    }
+    stepper.emit('local::change stepperChange', stepper, stepper.value);
+    return stepper;
+  };
+
+  typeValue(value) {
+    const stepper = this;
+    const { step, min, max } = stepper;
+
+    let _inputTxt = String(value);
+    if (_inputTxt.lastIndexOf('.') + 1 == _inputTxt.length || _inputTxt.lastIndexOf(',') + 1 == _inputTxt.length) {
+      if (_inputTxt.lastIndexOf('.') != _inputTxt.indexOf('.') || _inputTxt.lastIndexOf(',') != _inputTxt.indexOf(',')) {
+        _inputTxt = _inputTxt.slice(0, -1);
+        stepper.value = _inputTxt;
+        stepper.$inputEl.val(stepper.value);
+        return;
+      }
+    } else {
+      let value = parseFloat(_inputTxt.replace(',', '.'));
+      if (value === 0) {
+        stepper.value = _inputTxt.replace(',', '.');
+        stepper.$inputEl.val(stepper.value);
+        return;
+      }
+      if (isNaN(value)) {
+        stepper.value = 0;
+        stepper.$inputEl.val(stepper.value);
+        return;
+      }
+      else {
+        const powVal = Math.pow(10, stepper.params.decimalPoint);
+        value = (Math.round((value) * powVal)).toFixed(stepper.params.decimalPoint + 1) / powVal;
+        stepper.value = parseFloat(String(value).replace(',', '.'));
+        stepper.$inputEl.val(stepper.value);
+        return;
+      }
+    }
+    stepper.value = _inputTxt;
+    stepper.$inputEl.val(_inputTxt);
+    return stepper;
+  };
 
   getValue() {
     return this.value;
