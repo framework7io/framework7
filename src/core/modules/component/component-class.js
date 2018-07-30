@@ -52,7 +52,22 @@ class Framework7Component {
       enumerable: true,
       configurable: true,
       get() {
-        return Utils.merge({}, app.data, app.methods);
+        let root = Utils.merge({}, app.data, app.methods);
+        if (window && window.Proxy) {
+          root = new window.Proxy(root, {
+            set(target, name, val) {
+              app.data[name] = val;
+            },
+            deleteProperty(target, name) {
+              delete app.data[name];
+              delete app.methods[name];
+            },
+            has(target, name) {
+              return (name in app.data || name in app.methods);
+            },
+          });
+        }
+        return root;
       },
       set() {},
     });
