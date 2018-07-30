@@ -451,7 +451,7 @@ var Calendar = function (params) {
         var dayDate, currentValues = [], i, j, k,
             rows = 6, cols = 7,
             monthHTML = '',
-            dayIndex = 0 + (p.params.firstDay - 1),
+            dayIndex = 0 + ((p.params.firstDay - 8) % 7),
             today = new Date().setHours(0,0,0,0),
             minDate = p.params.minDate ? new Date(p.params.minDate).getTime() : null,
             maxDate = p.params.maxDate ? new Date(p.params.maxDate).getTime() : null,
