@@ -48,22 +48,23 @@ app.initSmartSelects = function (pageContainer) {
                 itemAfter.text(valueText.join(', '));
             }
         }
-
-        $select.on('change', function () {
-            var valueText = [];
-            for (var i = 0; i < select.length; i++) {
-                if (select[i].selected) {
-                    var displayAs = select[i].dataset ? select[i].dataset.displayAs : $(select[i]).data('display-as');
-                	if (displayAs && typeof displayAs !== 'undefined') {
-						valueText.push(displayAs);
-					} else {
-						valueText.push(select[i].textContent.trim());
-					}
-				}
+        if(!smartSelect.hasClass("smart-select-initialized")){
+            $select.on('change', function () {
+                var valueText = [];
+                for (var i = 0; i < select.length; i++) {
+                    if (select[i].selected) {
+                        var displayAs = select[i].dataset ? select[i].dataset.displayAs : $(select[i]).data('display-as');
+                      if (displayAs && typeof displayAs !== 'undefined') {
+                valueText.push(displayAs);
+              } else {
+                valueText.push(select[i].textContent.trim());
+              }
             }
-            smartSelect.find('.item-after').text(valueText.join(', '));
-        });
-
+                }
+                smartSelect.find('.item-after').text(valueText.join(', '));
+            });
+        }
+        smartSelect.addClass("smart-select-initialized");
     });
 
 };
