@@ -1115,6 +1115,8 @@ class Router extends Framework7Class {
 
     // Save History
     router.saveHistory();
+
+    router.emit('routeUrlUpdate', router.currentRoute, router);
   }
 
   init() {
