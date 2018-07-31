@@ -123,6 +123,8 @@ class F7Sheet extends React.Component {
       if (useDefaultBackdrop) {
         const app = self.$f7;
         useBackdrop = app.params.sheet && app.params.sheet.backdrop !== undefined ? app.params.sheet.backdrop : self.$theme.md;
+      } else {
+        useBackdrop = backdrop;
       }
 
       self.f7Sheet = self.$f7.sheet.create({

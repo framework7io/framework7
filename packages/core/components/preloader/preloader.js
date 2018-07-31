@@ -60,4 +60,14 @@ export default {
       });
     },
   },
+  vnode: {
+    preloader: {
+      insert(vnode) {
+        const app = this;
+        const preloaderEl = vnode.elm;
+        if (app.theme !== 'md') return;
+        app.preloader.init(preloaderEl);
+      },
+    },
+  },
 };

@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.0.7
+ * Framework7 Vue 3.1.0
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 20, 2018
+ * Released on: July 31, 2018
  */
 
 (function (global, factory) {
@@ -2424,87 +2424,85 @@
       var radius = size / 2 - borderWidth / 2;
       var length = 2 * Math.PI * radius;
       var progress = Math.max(Math.min(value, 1), 0);
-      {
-        return _h('div', {
-          style: style,
-          class: classes,
-          attrs: {
-            id: id
-          }
-        }, [_h('svg', {
-          class: 'gauge-svg',
-          attrs: {
-            width: (size + "px"),
-            height: ((semiCircle ? size / 2 : size) + "px"),
-            viewBox: ("0 0 " + size + " " + (semiCircle ? size / 2 : size))
-          }
-        }, [semiCircle && _h('path', {
-          class: 'gauge-back-semi',
-          attrs: {
-            d: ("M" + (size - borderWidth / 2) + "," + (size / 2) + " a1,1 0 0,0 -" + (size - borderWidth) + ",0"),
-            stroke: borderBgColor,
-            'stroke-width': borderWidth,
-            fill: bgColor || 'none'
-          }
-        }), semiCircle && _h('path', {
-          class: 'gauge-front-semi',
-          attrs: {
-            d: ("M" + (size - borderWidth / 2) + "," + (size / 2) + " a1,1 0 0,0 -" + (size - borderWidth) + ",0"),
-            stroke: borderColor,
-            'stroke-width': borderWidth,
-            'stroke-dasharray': length / 2,
-            'stroke-dashoffset': length / 2 * (progress - 1),
-            fill: borderBgColor ? 'none' : bgColor || 'none'
-          }
-        }), !semiCircle && borderBgColor && _h('circle', {
-          class: 'gauge-back-circle',
-          attrs: {
-            stroke: borderBgColor,
-            'stroke-width': borderWidth,
-            fill: bgColor || 'none',
-            cx: size / 2,
-            cy: size / 2,
-            r: radius
-          }
-        }), !semiCircle && _h('circle', {
-          class: 'gauge-front-circle',
-          attrs: {
-            transform: ("rotate(-90 " + (size / 2) + " " + (size / 2) + ")"),
-            stroke: borderColor,
-            'stroke-width': borderWidth,
-            'stroke-dasharray': length,
-            'stroke-dashoffset': length * (1 - progress),
-            fill: borderBgColor ? 'none' : bgColor || 'none',
-            cx: size / 2,
-            cy: size / 2,
-            r: radius
-          }
-        }), valueText && _h('text', {
-          class: 'gauge-value-text',
-          attrs: {
-            x: '50%',
-            y: semiCircle ? '100%' : '50%',
-            'font-weight': valueFontWeight,
-            'font-size': valueFontSize,
-            fill: valueTextColor,
-            dy: semiCircle ? labelText ? -labelFontSize - 15 : -5 : 0,
-            'text-anchor': 'middle',
-            'dominant-baseline': !semiCircle && 'middle'
-          }
-        }, [valueText]), labelText && _h('text', {
-          class: 'gauge-label-text',
-          attrs: {
-            x: '50%',
-            y: semiCircle ? '100%' : '50%',
-            'font-weight': labelFontWeight,
-            'font-size': labelFontSize,
-            fill: labelTextColor,
-            dy: semiCircle ? -5 : valueText ? valueFontSize / 2 + 10 : 0,
-            'text-anchor': 'middle',
-            'dominant-baseline': !semiCircle && 'middle'
-          }
-        }, [labelText])])]);
-      }
+      return _h('div', {
+        style: style,
+        class: classes,
+        attrs: {
+          id: id
+        }
+      }, [_h('svg', {
+        class: 'gauge-svg',
+        attrs: {
+          width: (size + "px"),
+          height: ((semiCircle ? size / 2 : size) + "px"),
+          viewBox: ("0 0 " + size + " " + (semiCircle ? size / 2 : size))
+        }
+      }, [semiCircle && _h('path', {
+        class: 'gauge-back-semi',
+        attrs: {
+          d: ("M" + (size - borderWidth / 2) + "," + (size / 2) + " a1,1 0 0,0 -" + (size - borderWidth) + ",0"),
+          stroke: borderBgColor,
+          'stroke-width': borderWidth,
+          fill: bgColor || 'none'
+        }
+      }), semiCircle && _h('path', {
+        class: 'gauge-front-semi',
+        attrs: {
+          d: ("M" + (size - borderWidth / 2) + "," + (size / 2) + " a1,1 0 0,0 -" + (size - borderWidth) + ",0"),
+          stroke: borderColor,
+          'stroke-width': borderWidth,
+          'stroke-dasharray': length / 2,
+          'stroke-dashoffset': length / 2 * (progress - 1),
+          fill: borderBgColor ? 'none' : bgColor || 'none'
+        }
+      }), !semiCircle && borderBgColor && _h('circle', {
+        class: 'gauge-back-circle',
+        attrs: {
+          stroke: borderBgColor,
+          'stroke-width': borderWidth,
+          fill: bgColor || 'none',
+          cx: size / 2,
+          cy: size / 2,
+          r: radius
+        }
+      }), !semiCircle && _h('circle', {
+        class: 'gauge-front-circle',
+        attrs: {
+          transform: ("rotate(-90 " + (size / 2) + " " + (size / 2) + ")"),
+          stroke: borderColor,
+          'stroke-width': borderWidth,
+          'stroke-dasharray': length,
+          'stroke-dashoffset': length * (1 - progress),
+          fill: borderBgColor ? 'none' : bgColor || 'none',
+          cx: size / 2,
+          cy: size / 2,
+          r: radius
+        }
+      }), valueText && _h('text', {
+        class: 'gauge-value-text',
+        attrs: {
+          x: '50%',
+          y: semiCircle ? '100%' : '50%',
+          'font-weight': valueFontWeight,
+          'font-size': valueFontSize,
+          fill: valueTextColor,
+          dy: semiCircle ? labelText ? -labelFontSize - 15 : -5 : 0,
+          'text-anchor': 'middle',
+          'dominant-baseline': !semiCircle && 'middle'
+        }
+      }, [valueText]), labelText && _h('text', {
+        class: 'gauge-label-text',
+        attrs: {
+          x: '50%',
+          y: semiCircle ? '100%' : '50%',
+          'font-weight': labelFontWeight,
+          'font-size': labelFontSize,
+          fill: labelTextColor,
+          dy: semiCircle ? -5 : valueText ? valueFontSize / 2 + 10 : 0,
+          'text-anchor': 'middle',
+          'dominant-baseline': !semiCircle && 'middle'
+        }
+      }, [labelText])])]);
     },
 
     computed: {
@@ -2552,7 +2550,7 @@
         inputEl = _h('input', {
           domProps: {
             disabled: disabled,
-            readonly: readonly,
+            readOnly: readonly,
             value: value,
             checked: checked
           },
@@ -5804,7 +5802,11 @@
 
       onClick: function onClick(event) {
         var self = this;
-        var value = self.$refs.area.refs.inputEl.value;
+        var value;
+        {
+          value = self.$refs.area.$refs.inputEl.value;
+        }
+        console.log(value);
         var clear = self.f7Messagebar ? function () {
           self.f7Messagebar.clear();
         } : function () {};
@@ -8190,6 +8192,8 @@
         if (useDefaultBackdrop) {
           var app = self.$f7;
           useBackdrop = app.params.sheet && app.params.sheet.backdrop !== undefined ? app.params.sheet.backdrop : self.$theme.md;
+        } else {
+          useBackdrop = backdrop;
         }
 
         self.f7Sheet = self.$f7.sheet.create({
@@ -8324,7 +8328,7 @@
       },
       inputReadonly: {
         type: Boolean,
-        default: true
+        default: false
       },
       autorepeat: {
         type: Boolean,
@@ -8337,6 +8341,18 @@
       wraps: {
         type: Boolean,
         default: false
+      },
+      manualInputMode: {
+        type: Boolean,
+        default: false
+      },
+      decimalPoint: {
+        type: Number,
+        default: 4
+      },
+      buttonsEndInputMode: {
+        type: Boolean,
+        default: true
       },
       disabled: Boolean,
       buttonsOnly: Boolean,
@@ -8377,7 +8393,7 @@
         {
           inputEl = _h('input', {
             domProps: {
-              readonly: inputReadonly,
+              readOnly: inputReadonly,
               value: value
             },
             on: {
@@ -8483,6 +8499,9 @@
         var autorepeat = ref.autorepeat;
         var autorepeatDynamic = ref.autorepeatDynamic;
         var wraps = ref.wraps;
+        var manualInputMode = ref.manualInputMode;
+        var decimalPoint = ref.decimalPoint;
+        var buttonsEndInputMode = ref.buttonsEndInputMode;
         var el = self.$refs.el;
         if (!el) { return; }
         self.f7Stepper = f7.stepper.create(Utils.noUndefinedProps({
@@ -8495,6 +8514,9 @@
           autorepeat: autorepeat,
           autorepeatDynamic: autorepeatDynamic,
           wraps: wraps,
+          manualInputMode: manualInputMode,
+          decimalPoint: decimalPoint,
+          buttonsEndInputMode: buttonsEndInputMode,
           on: {
             change: function change(stepper, newValue) {
               self.dispatchEvent('stepper:change stepperChange', newValue);
@@ -9626,7 +9648,7 @@
   };
 
   /**
-   * Framework7 Vue 3.0.7
+   * Framework7 Vue 3.1.0
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -9634,7 +9656,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: July 20, 2018
+   * Released on: July 31, 2018
    */
 
   var Plugin = {

@@ -108,7 +108,11 @@ class F7Messagebar extends React.Component {
 
   onClick(event) {
     const self = this;
-    const value = self.refs.area.refs.inputEl.value;
+    let value;
+    {
+      value = self.refs.area.refs.inputEl.value;
+    }
+    console.log(value);
     const clear = self.f7Messagebar ? () => {
       self.f7Messagebar.clear();
     } : () => {};

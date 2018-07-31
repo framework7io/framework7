@@ -8,7 +8,7 @@ if ("es" !== 'es') {
   }
 }
 
-function initSwipers(swiperEl) {
+function initSwiper(swiperEl) {
   const app = this;
   const $swiperEl = $(swiperEl);
   if ($swiperEl.length === 0) return;
@@ -55,7 +55,11 @@ function initSwipers(swiperEl) {
         if (!view) view = app.views.main;
         const router = view.router;
         const tabRoute = router.findTabRoute(swiper.slides.eq(swiper.activeIndex)[0]);
-        if (tabRoute) router.navigate(tabRoute.path);
+        if (tabRoute) {
+          setTimeout(() => {
+            router.navigate(tabRoute.path);
+          }, 0);
+        }
       } else {
         app.tab.show({
           tabEl: swiper.slides.eq(swiper.activeIndex),
@@ -88,13 +92,13 @@ export default {
     pageMounted(page) {
       const app = this;
       page.$el.find('.tabs-swipeable-wrap').each((index, swiperEl) => {
-        initSwipers.call(app, swiperEl);
+        initSwiper.call(app, swiperEl);
       });
     },
     pageInit(page) {
       const app = this;
       page.$el.find('.swiper-init, .tabs-swipeable-wrap').each((index, swiperEl) => {
-        initSwipers.call(app, swiperEl);
+        initSwiper.call(app, swiperEl);
       });
     },
     pageReinit(page) {
@@ -107,7 +111,7 @@ export default {
     tabMounted(tabEl) {
       const app = this;
       $(tabEl).find('.swiper-init, .tabs-swipeable-wrap').each((index, swiperEl) => {
-        initSwipers.call(app, swiperEl);
+        initSwiper.call(app, swiperEl);
       });
     },
     tabShow(tabEl) {
@@ -122,6 +126,32 @@ export default {
       $(tabEl).find('.swiper-init, .tabs-swipeable-wrap').each((index, swiperEl) => {
         app.swiper.destroy(swiperEl);
       });
+    },
+  },
+  vnode: {
+    'swiper-init': {
+      insert(vnode) {
+        const app = this;
+        const swiperEl = vnode.elm;
+        initSwiper.call(app, swiperEl);
+      },
+      destroy(vnode) {
+        const app = this;
+        const swiperEl = vnode.elm;
+        app.swiper.destroy(swiperEl);
+      },
+    },
+    'tabs-swipeable-wrap': {
+      insert(vnode) {
+        const app = this;
+        const swiperEl = vnode.elm;
+        initSwiper.call(app, swiperEl);
+      },
+      destroy(vnode) {
+        const app = this;
+        const swiperEl = vnode.elm;
+        app.swiper.destroy(swiperEl);
+      },
     },
   },
 };

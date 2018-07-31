@@ -76,4 +76,19 @@ export default {
       });
     },
   },
+  vnode: {
+    'tooltip-init': {
+      insert(vnode) {
+        const app = this;
+        const el = vnode.elm;
+        const text = $(el).attr('data-tooltip');
+        if (!text) return;
+        app.tooltip.create({ targetEl: el, text });
+      },
+      destroy(vnode) {
+        const el = vnode.elm;
+        if (el.f7Tooltip) el.f7Tooltip.destroy();
+      },
+    },
+  },
 };

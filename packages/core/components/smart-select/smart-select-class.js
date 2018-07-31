@@ -14,6 +14,8 @@ class SmartSelect extends Framework7Class {
     const $el = $(params.el).eq(0);
     if ($el.length === 0) return ss;
 
+    if ($el[0].f7SmartSelect) return $el[0].f7SmartSelect;
+
     const $selectEl = $el.find('select').eq(0);
     if ($selectEl.length === 0) return ss;
 
@@ -49,6 +51,7 @@ class SmartSelect extends Framework7Class {
     const multiple = $selectEl[0].multiple;
     const inputType = multiple ? 'checkbox' : 'radio';
     const id = Utils.now();
+
     Utils.extend(ss, {
       params: Utils.extend(defaults, params),
       $el,
@@ -66,6 +69,7 @@ class SmartSelect extends Framework7Class {
       selectName: $selectEl.attr('name'),
       maxLength: $selectEl.attr('maxlength') || params.maxLength,
     });
+
     $el[0].f7SmartSelect = ss;
 
     // Events
@@ -332,7 +336,7 @@ class SmartSelect extends Framework7Class {
             <div class="navbar${ss.params.navbarColorTheme ? `theme-${ss.params.navbarColorTheme}` : ''}">
               <div class="navbar-inner sliding">
                 <div class="left">
-                  <a href="#" class="link popup-close">
+                  <a href="#" class="link popup-close" data-popup=".smart-select-popup[data-select-name='${ss.selectName}']">
                     <i class="icon icon-back"></i>
                     <span class="ios-only">${ss.params.popupCloseLinkText}</span>
                   </a>

@@ -21,6 +21,7 @@ class Toggle extends Framework7Class {
     const $el = $(el);
     if ($el.length === 0) return toggle;
 
+    if ($el[0].f7Toggle) return $el[0].f7Toggle;
 
     const $inputEl = $el.children('input[type="checkbox"]');
 

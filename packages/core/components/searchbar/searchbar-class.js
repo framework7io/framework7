@@ -40,6 +40,8 @@ class Searchbar extends FrameworkClass {
     const $el = $(sb.params.el);
     if ($el.length === 0) return sb;
 
+    if ($el[0].f7Searchbar) return $el[0].f7Searchbar;
+
     $el[0].f7Searchbar = sb;
 
     let $pageEl;
@@ -425,6 +427,8 @@ class Searchbar extends FrameworkClass {
         sb.virtualList.resetFilter();
         if ($notFoundEl) $notFoundEl.hide();
         if ($foundEl) $foundEl.show();
+        $el.trigger('searchbar:search', query, sb.previousQuery);
+        sb.emit('local::search searchbarSearch', sb, query, sb.previousQuery);
         return sb;
       }
       vlQuery = sb.params.removeDiacritics ? Utils.removeDiacritics(query) : query;

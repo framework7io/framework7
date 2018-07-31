@@ -1,5 +1,5 @@
 /**
- * Framework7 React 3.0.7
+ * Framework7 React 3.1.0
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 20, 2018
+ * Released on: July 31, 2018
  */
 
 (function (global, factory) {
@@ -2787,71 +2787,69 @@
       var radius = size / 2 - borderWidth / 2;
       var length = 2 * Math.PI * radius;
       var progress = Math.max(Math.min(value, 1), 0);
-      {
-        return React.createElement('div', {
-          id: id,
-          style: style,
-          className: classes
-        }, React.createElement('svg', {
-          className: 'gauge-svg',
-          width: (size + "px"),
-          height: ((semiCircle ? size / 2 : size) + "px"),
-          viewBox: ("0 0 " + size + " " + (semiCircle ? size / 2 : size))
-        }, semiCircle && React.createElement('path', {
-          className: 'gauge-back-semi',
-          d: ("M" + (size - borderWidth / 2) + "," + (size / 2) + " a1,1 0 0,0 -" + (size - borderWidth) + ",0"),
-          stroke: borderBgColor,
-          strokeWidth: borderWidth,
-          fill: bgColor || 'none'
-        }), semiCircle && React.createElement('path', {
-          className: 'gauge-front-semi',
-          d: ("M" + (size - borderWidth / 2) + "," + (size / 2) + " a1,1 0 0,0 -" + (size - borderWidth) + ",0"),
-          stroke: borderColor,
-          strokeWidth: borderWidth,
-          strokeDasharray: length / 2,
-          strokeDashoffset: length / 2 * (progress - 1),
-          fill: borderBgColor ? 'none' : bgColor || 'none'
-        }), !semiCircle && borderBgColor && React.createElement('circle', {
-          className: 'gauge-back-circle',
-          stroke: borderBgColor,
-          strokeWidth: borderWidth,
-          fill: bgColor || 'none',
-          cx: size / 2,
-          cy: size / 2,
-          r: radius
-        }), !semiCircle && React.createElement('circle', {
-          className: 'gauge-front-circle',
-          transform: ("rotate(-90 " + (size / 2) + " " + (size / 2) + ")"),
-          stroke: borderColor,
-          strokeWidth: borderWidth,
-          strokeDasharray: length,
-          strokeDashoffset: length * (1 - progress),
-          fill: borderBgColor ? 'none' : bgColor || 'none',
-          cx: size / 2,
-          cy: size / 2,
-          r: radius
-        }), valueText && React.createElement('text', {
-          className: 'gauge-value-text',
-          x: '50%',
-          y: semiCircle ? '100%' : '50%',
-          fontWeight: valueFontWeight,
-          fontSize: valueFontSize,
-          fill: valueTextColor,
-          dy: semiCircle ? labelText ? -labelFontSize - 15 : -5 : 0,
-          textAnchor: 'middle',
-          dominantBaseline: !semiCircle && 'middle'
-        }, valueText), labelText && React.createElement('text', {
-          className: 'gauge-label-text',
-          x: '50%',
-          y: semiCircle ? '100%' : '50%',
-          fontWeight: labelFontWeight,
-          fontSize: labelFontSize,
-          fill: labelTextColor,
-          dy: semiCircle ? -5 : valueText ? valueFontSize / 2 + 10 : 0,
-          textAnchor: 'middle',
-          dominantBaseline: !semiCircle && 'middle'
-        }, labelText)));
-      }
+      return React.createElement('div', {
+        id: id,
+        style: style,
+        className: classes
+      }, React.createElement('svg', {
+        className: 'gauge-svg',
+        width: (size + "px"),
+        height: ((semiCircle ? size / 2 : size) + "px"),
+        viewBox: ("0 0 " + size + " " + (semiCircle ? size / 2 : size))
+      }, semiCircle && React.createElement('path', {
+        className: 'gauge-back-semi',
+        d: ("M" + (size - borderWidth / 2) + "," + (size / 2) + " a1,1 0 0,0 -" + (size - borderWidth) + ",0"),
+        stroke: borderBgColor,
+        strokeWidth: borderWidth,
+        fill: bgColor || 'none'
+      }), semiCircle && React.createElement('path', {
+        className: 'gauge-front-semi',
+        d: ("M" + (size - borderWidth / 2) + "," + (size / 2) + " a1,1 0 0,0 -" + (size - borderWidth) + ",0"),
+        stroke: borderColor,
+        strokeWidth: borderWidth,
+        strokeDasharray: length / 2,
+        strokeDashoffset: length / 2 * (progress - 1),
+        fill: borderBgColor ? 'none' : bgColor || 'none'
+      }), !semiCircle && borderBgColor && React.createElement('circle', {
+        className: 'gauge-back-circle',
+        stroke: borderBgColor,
+        strokeWidth: borderWidth,
+        fill: bgColor || 'none',
+        cx: size / 2,
+        cy: size / 2,
+        r: radius
+      }), !semiCircle && React.createElement('circle', {
+        className: 'gauge-front-circle',
+        transform: ("rotate(-90 " + (size / 2) + " " + (size / 2) + ")"),
+        stroke: borderColor,
+        strokeWidth: borderWidth,
+        strokeDasharray: length,
+        strokeDashoffset: length * (1 - progress),
+        fill: borderBgColor ? 'none' : bgColor || 'none',
+        cx: size / 2,
+        cy: size / 2,
+        r: radius
+      }), valueText && React.createElement('text', {
+        className: 'gauge-value-text',
+        x: '50%',
+        y: semiCircle ? '100%' : '50%',
+        fontWeight: valueFontWeight,
+        fontSize: valueFontSize,
+        fill: valueTextColor,
+        dy: semiCircle ? labelText ? -labelFontSize - 15 : -5 : 0,
+        textAnchor: 'middle',
+        dominantBaseline: !semiCircle && 'middle'
+      }, valueText), labelText && React.createElement('text', {
+        className: 'gauge-label-text',
+        x: '50%',
+        y: semiCircle ? '100%' : '50%',
+        fontWeight: labelFontWeight,
+        fontSize: labelFontSize,
+        fill: labelTextColor,
+        dy: semiCircle ? -5 : valueText ? valueFontSize / 2 + 10 : 0,
+        textAnchor: 'middle',
+        dominantBaseline: !semiCircle && 'middle'
+      }, labelText)));
     };
 
     return F7Gauge;
@@ -3390,7 +3388,7 @@
       } else if (type === 'toggle') {
         inputEl = React.createElement(F7Toggle, {
           checked: checked,
-          readOnly: readonly,
+          readonly: readonly,
           name: name,
           value: value,
           disabled: disabled,
@@ -6191,7 +6189,11 @@
 
     F7Messagebar.prototype.onClick = function onClick (event) {
       var self = this;
-      var value = self.refs.area.refs.inputEl.value;
+      var value;
+      {
+        value = self.refs.area.refs.inputEl.value;
+      }
+      console.log(value);
       var clear = self.f7Messagebar ? function () {
         self.f7Messagebar.clear();
       } : function () {};
@@ -9002,6 +9004,8 @@
         if (useDefaultBackdrop) {
           var app = self.$f7;
           useBackdrop = app.params.sheet && app.params.sheet.backdrop !== undefined ? app.params.sheet.backdrop : self.$theme.md;
+        } else {
+          useBackdrop = backdrop;
         }
 
         self.f7Sheet = self.$f7.sheet.create({
@@ -9274,6 +9278,9 @@
         var autorepeat = ref.autorepeat;
         var autorepeatDynamic = ref.autorepeatDynamic;
         var wraps = ref.wraps;
+        var manualInputMode = ref.manualInputMode;
+        var decimalPoint = ref.decimalPoint;
+        var buttonsEndInputMode = ref.buttonsEndInputMode;
         var el = self.refs.el;
         if (!el) { return; }
         self.f7Stepper = f7.stepper.create(Utils.noUndefinedProps({
@@ -9286,6 +9293,9 @@
           autorepeat: autorepeat,
           autorepeatDynamic: autorepeatDynamic,
           wraps: wraps,
+          manualInputMode: manualInputMode,
+          decimalPoint: decimalPoint,
+          buttonsEndInputMode: buttonsEndInputMode,
           on: {
             change: function change(stepper, newValue) {
               self.dispatchEvent('stepper:change stepperChange', newValue);
@@ -9347,7 +9357,7 @@
     },
     inputReadonly: {
       type: Boolean,
-      default: true
+      default: false
     },
     autorepeat: {
       type: Boolean,
@@ -9360,6 +9370,18 @@
     wraps: {
       type: Boolean,
       default: false
+    },
+    manualInputMode: {
+      type: Boolean,
+      default: false
+    },
+    decimalPoint: {
+      type: Number,
+      default: 4
+    },
+    buttonsEndInputMode: {
+      type: Boolean,
+      default: true
     },
     disabled: Boolean,
     buttonsOnly: Boolean,
@@ -10552,7 +10574,7 @@
   };
 
   /**
-   * Framework7 React 3.0.7
+   * Framework7 React 3.1.0
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -10560,7 +10582,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: July 20, 2018
+   * Released on: July 31, 2018
    */
 
   var Plugin = {

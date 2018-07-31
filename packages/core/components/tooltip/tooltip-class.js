@@ -22,6 +22,8 @@ class Tooltip extends Framework7Class {
     const $targetEl = $(targetEl);
     if ($targetEl.length === 0) return tooltip;
 
+    if ($targetEl[0].f7Tooltip) return $targetEl[0].f7Tooltip;
+
     const $el = $(tooltip.render()).eq(0);
 
     Utils.extend(tooltip, {

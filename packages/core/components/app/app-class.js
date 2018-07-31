@@ -128,6 +128,13 @@ class Framework7 extends Framework7Class {
 
     return app;
   }
+
+  getVnodeHooks(hook, id) {
+    const app = this;
+    if (!app.vnodeHooks || !app.vnodeHooks[hook]) return [];
+    return app.vnodeHooks[hook][id] || [];
+  }
+
   // eslint-disable-next-line
   get $() {
     return $;

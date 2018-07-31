@@ -199,7 +199,7 @@ function backward(el, backwardOptions) {
   }
 
   // History State
-  if (!(Device.ie || Device.edge)) {
+  if (!(Device.ie || Device.edge || (Device.firefox && !Device.ios))) {
     if (router.params.pushState && options.pushState) {
       if (backIndex) History.go(-backIndex);
       else History.back();
@@ -225,7 +225,7 @@ function backward(el, backwardOptions) {
   router.currentRoute = options.route;
 
   // History State
-  if (Device.ie || Device.edge) {
+  if (Device.ie || Device.edge || (Device.firefox && !Device.ios)) {
     if (router.params.pushState && options.pushState) {
       if (backIndex) History.go(-backIndex);
       else History.back();

@@ -16,6 +16,7 @@ const Device = (function Device() {
     ipad: false,
     edge: false,
     ie: false,
+    firefox: false,
     macos: false,
     windows: false,
     cordova: !!(window.cordova || window.phonegap),
@@ -30,11 +31,13 @@ const Device = (function Device() {
   const iphoneX = iphone && window.screen.width === 375 && window.screen.height === 812;
   const ie = ua.indexOf('MSIE ') >= 0 || ua.indexOf('Trident/') >= 0;
   const edge = ua.indexOf('Edge/') >= 0;
+  const firefox = ua.indexOf('Gecko/') >= 0 && ua.indexOf('Firefox/') >= 0;
   const macos = platform === 'MacIntel';
   const windows = platform === 'Win32';
 
   device.ie = ie;
   device.edge = edge;
+  device.firefox = firefox;
 
   // Windows
   if (windowsPhone) {

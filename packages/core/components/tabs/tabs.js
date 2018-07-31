@@ -87,6 +87,12 @@ const Tab = {
             tabsChanged();
           })
           .slideTo($newTabEl.index(), animate ? undefined : 0);
+      } else if (swiper && swiper.animating) {
+        animated = true;
+        swiper
+          .once('slideChangeTransitionEnd', () => {
+            tabsChanged();
+          });
       }
     }
 

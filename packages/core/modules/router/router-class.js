@@ -4,7 +4,6 @@ import Template7 from 'template7';
 import PathToRegexp from 'path-to-regexp'; // eslint-disable-line
 import Framework7Class from '../../utils/class';
 import Utils from '../../utils/utils';
-import Component from '../../utils/component';
 import History from '../../utils/history';
 import SwipeBack from './swipe-back';
 
@@ -438,9 +437,6 @@ class Router extends Framework7Class {
     const router = this;
     const $el = $(el);
     if ($el.length === 0) return;
-    if ($el[0].f7Component && $el[0].f7Component.$destroy) {
-      $el[0].f7Component.$destroy();
-    }
     $el.find('.tab').each((tabIndex, tabEl) => {
       $(tabEl).children().each((index, tabChild) => {
         if (tabChild.f7Component) {
@@ -449,6 +445,9 @@ class Router extends Framework7Class {
         }
       });
     });
+    if ($el[0].f7Component && $el[0].f7Component.$destroy) {
+      $el[0].f7Component.$destroy();
+    }
     if (!router.params.removeElements) {
       return;
     }
@@ -825,8 +824,9 @@ class Router extends Framework7Class {
 
   componentLoader(component, componentUrl, options = {}, resolve, reject) {
     const router = this;
+    const { app } = router;
     const url = typeof component === 'string' ? component : componentUrl;
-    function compile(c) {
+    function compile(componentOptions) {
       let context = options.context || {};
       if (typeof context === 'function') context = context.call(router);
       else if (typeof context === 'string') {
@@ -841,20 +841,15 @@ class Router extends Framework7Class {
         {},
         context,
         {
-          $,
-          $$: $,
-          $app: router.app,
-          $root: Utils.merge({}, router.app.data, router.app.methods),
           $route: options.route,
           $router: router,
-          $dom7: $,
           $theme: {
-            ios: router.app.theme === 'ios',
-            md: router.app.theme === 'md',
+            ios: app.theme === 'ios',
+            md: app.theme === 'md',
           },
         }
       );
-      const createdComponent = Component.create(c, extendContext);
+      const createdComponent = app.component.create(componentOptions, extendContext);
       resolve(createdComponent.el);
     }
     if (url) {
@@ -866,7 +861,7 @@ class Router extends Framework7Class {
       router
         .xhrRequest(url, options)
         .then((loadedComponent) => {
-          compile(Component.parse(loadedComponent));
+          compile(app.component.parse(loadedComponent));
         })
         .catch((err) => {
           reject();
@@ -1084,6 +1079,44 @@ class Router extends Framework7Class {
     router.history = [];
     if (router.view) router.view.history = [];
     router.saveHistory();
+  }
+
+  updateCurrentUrl(newUrl) {
+    const router = this;
+    // Update history
+    if (router.history.length) {
+      router.history[router.history.length - 1] = newUrl;
+    } else {
+      router.history.push(newUrl);
+    }
+
+    // Update current route params
+    const { query, hash, params, url, path } = router.parseRouteUrl(newUrl);
+    if (router.currentRoute) {
+      Utils.extend(router.currentRoute, {
+        query,
+        hash,
+        params,
+        url,
+        path,
+      });
+    }
+
+    if (router.params.pushState) {
+      const pushStateRoot = router.params.pushStateRoot || '';
+      History.replace(
+        router.view.id,
+        {
+          url: newUrl,
+        },
+        pushStateRoot + router.params.pushStateSeparator + newUrl
+      );
+    }
+
+    // Save History
+    router.saveHistory();
+
+    router.emit('routeUrlUpdate', router.currentRoute, router);
   }
 
   init() {

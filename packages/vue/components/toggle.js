@@ -41,7 +41,7 @@ export default {
       inputEl = _h('input', {
         domProps: {
           disabled,
-          readonly,
+          readOnly: readonly,
           value,
           checked
         },

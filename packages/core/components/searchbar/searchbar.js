@@ -84,4 +84,20 @@ export default {
       if (sb) sb.toggle();
     },
   },
+  vnode: {
+    'searchbar-init': {
+      insert(vnode) {
+        const app = this;
+        const searchbarEl = vnode.elm;
+        const $searchbarEl = $(searchbarEl);
+        app.searchbar.create(Utils.extend($searchbarEl.dataset(), { el: searchbarEl }));
+      },
+      destroy(vnode) {
+        const searchbarEl = vnode.elm;
+        if (searchbarEl.f7Searchbar && searchbarEl.f7Searchbar.destroy) {
+          searchbarEl.f7Searchbar.destroy();
+        }
+      },
+    },
+  },
 };

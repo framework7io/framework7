@@ -43,7 +43,18 @@ export default {
       });
     },
   },
-  clicks: {
-
+  vnode: {
+    'messages-init': {
+      insert(vnode) {
+        const app = this;
+        const messagesEl = vnode.elm;
+        app.messages.create({ el: messagesEl });
+      },
+      destroy(vnode) {
+        const app = this;
+        const messagesEl = vnode.elm;
+        app.messages.destroy(messagesEl);
+      },
+    },
   },
 };

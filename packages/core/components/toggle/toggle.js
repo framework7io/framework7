@@ -36,4 +36,17 @@ export default {
       });
     },
   },
+  vnode: {
+    'toggle-init': {
+      insert(vnode) {
+        const app = this;
+        const toggleEl = vnode.elm;
+        app.toggle.create({ el: toggleEl });
+      },
+      destroy(vnode) {
+        const toggleEl = vnode.elm;
+        if (toggleEl.f7Toggle) toggleEl.f7Toggle.destroy();
+      },
+    },
+  },
 };

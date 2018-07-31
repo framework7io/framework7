@@ -2,6 +2,48 @@
 
 # Change Log
 
+# [v3.1.0](https://github.com/framework7io/framework7/compare/v3.0.7...v3.1.0) - July 20, 2018
+  * Core
+    * Router
+      * New `updateCurrentUrl(url)` method to update url of the currently active route (and current browser state if `pushState` is enabled)
+      * Will emit new `routeUrlUpdate` event if `updateCurrentUrl()` was called
+      * Fixed issue when going back with enabled `pushState` could produce double pages back in Firefox
+      * Fixed issue when changing routable swipeable tabs wasn't trigger `routeChanged` event
+      * Single-file Router Components:
+        * It can now treat component template as ES template literal. Addional `es` attribute is required on template to enable, e.g. `<template es>`
+        * It is now rendered with Virtual DOM (Snabbdom library) for layout auto updating 🎉
+        * It has new `$setState(mergeState)` method to set new component state and force component to update its layout
+    * Searchbar
+      * Fixed issue when in some situations it didn't trigger `search` event when used with Virtual List
+    * Calendar
+      * Day "events" dots layout is reworked and now each day can have few dots (of different color) at a time
+    * Input
+      * Fixed wrong resizable textarea calculation in Firefox
+    * Stepper
+      * Has new "manual input mode". When enabled it allows to type value from keyboar and check fractional part with defined accurancy. Also, when enabled, then `step` parameter is ignored during typing. It has 3 new parameters:
+        * `manualInputMode: false` - enables manual input mode
+        * `decimalPoint: 4` - number of digits after dot
+        * `buttonsEndInputMode: true` - disables manual input mode on Stepper's button click
+    * Swiper - updated to latest 4.3.5
+      * Core
+        * `iOSEdgeSwipeThreshold` parameter renamed to just `edgeSwipeThreshold`. Old `iOSEdgeSwipeThreshold` name is still supported
+        * Improved observer performance if there are many mutations at a time.
+      * Controller
+        * Fixed issue with wrong auto height resizing
+      * Scrollbar
+        * Fixed issue when it was using active event listeners instead of passive.
+    * Dom7 - updated to latest  2.0.7
+      * Fixed issue with undefined elements in classList access (#13)
+    * Template7 - updated to latest 1.3.8
+      * Fixed issue with parsing parents in `js` and `js_if` helpers when properties contain `$` character
+  * Phenome
+    * Stepper component has new properties:
+      * `manualInputMode: false` - enables manual input mode
+      * `decimalPoint: 4` - number of digits after dot
+      * `buttonsEndInputMode: true` - disables manual input mode on Stepper's button click
+    * Fixed Messagebar send-link reference issue
+  * Lots of minor fixes
+
 # [v3.0.7](https://github.com/framework7io/framework7/compare/v3.0.6...v3.0.7) - July 20, 2018
   * Phenome
     * Fixed build error

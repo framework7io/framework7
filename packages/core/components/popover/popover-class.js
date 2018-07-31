@@ -76,7 +76,7 @@ class Popover extends Modal {
           popover.$targetEl = $(targetEl);
           popover.targetEl = popover.$targetEl[0];
         }
-        originalOpen.call(popover, animate);
+        return originalOpen.call(popover, animate);
       },
     });
 

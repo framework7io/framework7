@@ -1,5 +1,5 @@
 /**
- * Framework7 3.0.7
+ * Framework7 3.1.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 20, 2018
+ * Released on: July 31, 2018
  */
 
 import Template7 from 'template7';
@@ -33,6 +33,7 @@ import ClicksModule from './modules/clicks/clicks';
 import RouterModule from './modules/router/router';
 import HistoryModule from './modules/history/history';
 import StorageModule from './modules/storage/storage';
+import ComponentModule from './modules/component/component';
 
 // Core Components
 import Statusbar from './components/statusbar/statusbar';
@@ -66,6 +67,7 @@ Framework7.use([
   RouterModule,
   HistoryModule,
   StorageModule,
+  ComponentModule,
   Statusbar,
   View,
   Navbar,

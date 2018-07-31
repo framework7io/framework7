@@ -36,8 +36,7 @@ export default {
       const app = this;
       $(tabEl).find('.stepper-init').each((index, stepperEl) => {
         const dataset = $(stepperEl).dataset();
-        // eslint-disable-next-line
-        new Stepper(app, Utils.extend({ el: stepperEl }, dataset || {}));
+        app.stepper.create(Utils.extend({ el: stepperEl }, dataset || {}));
       });
     },
     tabBeforeRemove(tabEl) {
@@ -49,14 +48,27 @@ export default {
       const app = this;
       page.$el.find('.stepper-init').each((index, stepperEl) => {
         const dataset = $(stepperEl).dataset();
-        // eslint-disable-next-line
-        new Stepper(app, Utils.extend({ el: stepperEl }, dataset || {}));
+        app.stepper.create(Utils.extend({ el: stepperEl }, dataset || {}));
       });
     },
     pageBeforeRemove(page) {
       page.$el.find('.stepper-init').each((index, stepperEl) => {
         if (stepperEl.f7Stepper) stepperEl.f7Stepper.destroy();
       });
+    },
+  },
+  vnode: {
+    'stepper-init': {
+      insert(vnode) {
+        const app = this;
+        const stepperEl = vnode.elm;
+        const dataset = $(stepperEl).dataset();
+        app.stepper.create(Utils.extend({ el: stepperEl }, dataset || {}));
+      },
+      destroy(vnode) {
+        const stepperEl = vnode.elm;
+        if (stepperEl.f7Stepper) stepperEl.f7Stepper.destroy();
+      },
     },
   },
 };

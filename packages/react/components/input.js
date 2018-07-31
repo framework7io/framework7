@@ -174,7 +174,7 @@ class F7Input extends React.Component {
     } else if (type === 'toggle') {
       inputEl = React.createElement(F7Toggle, {
         checked: checked,
-        readOnly: readonly,
+        readonly: readonly,
         name: name,
         value: value,
         disabled: disabled,

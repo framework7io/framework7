@@ -69,4 +69,17 @@ export default {
       });
     },
   },
+  vnode: {
+    'gauge-init': {
+      insert(vnode) {
+        const app = this;
+        const el = vnode.elm;
+        app.gauge.create(Utils.extend({ el }, $(el).dataset() || {}));
+      },
+      destroy(vnode) {
+        const el = vnode.elm;
+        if (el.f7Gauge) el.f7Gauge.destroy();
+      },
+    },
+  },
 };

@@ -168,7 +168,10 @@ class F7Stepper extends React.Component {
         formatValue,
         autorepeat,
         autorepeatDynamic,
-        wraps
+        wraps,
+        manualInputMode,
+        decimalPoint,
+        buttonsEndInputMode
       } = self.props;
       const el = self.refs.el;
       if (!el) return;
@@ -182,6 +185,9 @@ class F7Stepper extends React.Component {
         autorepeat,
         autorepeatDynamic,
         wraps,
+        manualInputMode,
+        decimalPoint,
+        buttonsEndInputMode,
         on: {
           change(stepper, newValue) {
             self.dispatchEvent('stepper:change stepperChange', newValue);
@@ -237,7 +243,7 @@ __reactComponentSetProps(F7Stepper, Object.assign({
   },
   inputReadonly: {
     type: Boolean,
-    default: true
+    default: false
   },
   autorepeat: {
     type: Boolean,
@@ -250,6 +256,18 @@ __reactComponentSetProps(F7Stepper, Object.assign({
   wraps: {
     type: Boolean,
     default: false
+  },
+  manualInputMode: {
+    type: Boolean,
+    default: false
+  },
+  decimalPoint: {
+    type: Number,
+    default: 4
+  },
+  buttonsEndInputMode: {
+    type: Boolean,
+    default: true
   },
   disabled: Boolean,
   buttonsOnly: Boolean,

@@ -1,5 +1,5 @@
 /**
- * Framework7 3.0.7
+ * Framework7 3.1.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 20, 2018
+ * Released on: July 31, 2018
  */
 html,
 body,
@@ -12138,23 +12138,40 @@ label.item-radio.disabled,
   color: #d4d4d4;
   cursor: auto;
 }
-.calendar-day.calendar-day-selected span {
+.calendar-day.calendar-day-selected .calendar-day-number {
   color: #fff;
 }
-.calendar-day.calendar-day-has-events span:after {
-  content: '';
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  position: absolute;
-  margin-left: -2px;
-  left: 50%;
-  bottom: 1px;
-}
-.calendar-day span {
+.calendar-day .calendar-day-number {
   display: inline-block;
   border-radius: 100%;
   position: relative;
+}
+.calendar-day .calendar-day-events {
+  position: absolute;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  left: 0;
+  width: 100%;
+  top: 100%;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+.calendar-day .calendar-day-event {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+}
+.calendar-day .calendar-day-event + .calendar-day-event {
+  margin-left: 2px;
 }
 .calendar-range .calendar-day.calendar-day-selected {
   -webkit-box-align: stretch;
@@ -12165,7 +12182,7 @@ label.item-radio.disabled,
   -ms-flex-line-pack: stretch;
   align-content: stretch;
 }
-.calendar-range .calendar-day.calendar-day-selected span {
+.calendar-range .calendar-day.calendar-day-selected .calendar-day-number {
   width: 100%;
   border-radius: 0;
   height: auto;
@@ -12203,8 +12220,8 @@ label.item-radio.disabled,
   -ms-flex-negative: 10;
   flex-shrink: 10;
 }
-.calendar-month-selector span,
-.calendar-year-selector span {
+.calendar-month-selector .calendar-day-number,
+.calendar-year-selector .calendar-day-number {
   -webkit-flex-shrink: 1;
   -ms-flex-negative: 1;
   flex-shrink: 1;
@@ -12300,22 +12317,19 @@ label.item-radio.disabled,
 .ios .calendar-day {
   font-size: 15px;
 }
-.ios .calendar-day.calendar-day-today span {
+.ios .calendar-day.calendar-day-today .calendar-day-number {
   background: #e3e3e3;
 }
-.ios .calendar-day.calendar-day-has-events span:after {
+.ios .calendar-day.calendar-day-selected .calendar-day-number {
   background: #007aff;
 }
-.ios .calendar-day.calendar-day-has-events.calendar-day-selected span:after {
-  background-color: #fff;
-}
-.ios .calendar-day.calendar-day-selected span {
-  background: #007aff;
-}
-.ios .calendar-day span {
+.ios .calendar-day .calendar-day-number {
   width: 30px;
   height: 30px;
   line-height: 30px;
+}
+.ios .calendar-day .calendar-day-event {
+  background: #007aff;
 }
 .ios .calendar-month-selector a.icon-only,
 .ios .calendar-year-selector a.icon-only {
@@ -12440,7 +12454,7 @@ label.item-radio.disabled,
 .ios .theme-dark .calendar-day {
   color: #fff;
 }
-.ios .theme-dark .calendar-day.calendar-day-today:not(.calendar-day-selected) span {
+.ios .theme-dark .calendar-day.calendar-day-today:not(.calendar-day-selected) .calendar-day-number {
   background: #333;
 }
 .ios .theme-dark .calendar-day.calendar-day-disabled {
@@ -12455,40 +12469,76 @@ label.item-radio.disabled,
 .ios .theme-dark .calendar-sheet {
   background: #171717;
 }
-.ios .color-theme-red .calendar-day.calendar-day-selected span,
-.ios .color-red .calendar-day.calendar-day-selected span {
+.ios .color-theme-red .calendar-day.calendar-day-selected .calendar-day-number,
+.ios .color-red .calendar-day.calendar-day-selected .calendar-day-number {
   background: #ff3b30;
 }
-.ios .color-theme-green .calendar-day.calendar-day-selected span,
-.ios .color-green .calendar-day.calendar-day-selected span {
+.ios .color-theme-red .calendar-day .calendar-day-event,
+.ios .color-red .calendar-day .calendar-day-event {
+  background: #ff3b30;
+}
+.ios .color-theme-green .calendar-day.calendar-day-selected .calendar-day-number,
+.ios .color-green .calendar-day.calendar-day-selected .calendar-day-number {
   background: #4cd964;
 }
-.ios .color-theme-blue .calendar-day.calendar-day-selected span,
-.ios .color-blue .calendar-day.calendar-day-selected span {
+.ios .color-theme-green .calendar-day .calendar-day-event,
+.ios .color-green .calendar-day .calendar-day-event {
+  background: #4cd964;
+}
+.ios .color-theme-blue .calendar-day.calendar-day-selected .calendar-day-number,
+.ios .color-blue .calendar-day.calendar-day-selected .calendar-day-number {
   background: #007aff;
 }
-.ios .color-theme-pink .calendar-day.calendar-day-selected span,
-.ios .color-pink .calendar-day.calendar-day-selected span {
+.ios .color-theme-blue .calendar-day .calendar-day-event,
+.ios .color-blue .calendar-day .calendar-day-event {
+  background: #007aff;
+}
+.ios .color-theme-pink .calendar-day.calendar-day-selected .calendar-day-number,
+.ios .color-pink .calendar-day.calendar-day-selected .calendar-day-number {
   background: #ff2d55;
 }
-.ios .color-theme-yellow .calendar-day.calendar-day-selected span,
-.ios .color-yellow .calendar-day.calendar-day-selected span {
+.ios .color-theme-pink .calendar-day .calendar-day-event,
+.ios .color-pink .calendar-day .calendar-day-event {
+  background: #ff2d55;
+}
+.ios .color-theme-yellow .calendar-day.calendar-day-selected .calendar-day-number,
+.ios .color-yellow .calendar-day.calendar-day-selected .calendar-day-number {
   background: #ffcc00;
 }
-.ios .color-theme-orange .calendar-day.calendar-day-selected span,
-.ios .color-orange .calendar-day.calendar-day-selected span {
+.ios .color-theme-yellow .calendar-day .calendar-day-event,
+.ios .color-yellow .calendar-day .calendar-day-event {
+  background: #ffcc00;
+}
+.ios .color-theme-orange .calendar-day.calendar-day-selected .calendar-day-number,
+.ios .color-orange .calendar-day.calendar-day-selected .calendar-day-number {
   background: #ff9500;
 }
-.ios .color-theme-gray .calendar-day.calendar-day-selected span,
-.ios .color-gray .calendar-day.calendar-day-selected span {
+.ios .color-theme-orange .calendar-day .calendar-day-event,
+.ios .color-orange .calendar-day .calendar-day-event {
+  background: #ff9500;
+}
+.ios .color-theme-gray .calendar-day.calendar-day-selected .calendar-day-number,
+.ios .color-gray .calendar-day.calendar-day-selected .calendar-day-number {
   background: #8e8e93;
 }
-.ios .color-theme-white .calendar-day.calendar-day-selected span,
-.ios .color-white .calendar-day.calendar-day-selected span {
+.ios .color-theme-gray .calendar-day .calendar-day-event,
+.ios .color-gray .calendar-day .calendar-day-event {
+  background: #8e8e93;
+}
+.ios .color-theme-white .calendar-day.calendar-day-selected .calendar-day-number,
+.ios .color-white .calendar-day.calendar-day-selected .calendar-day-number {
   background: #ffffff;
 }
-.ios .color-theme-black .calendar-day.calendar-day-selected span,
-.ios .color-black .calendar-day.calendar-day-selected span {
+.ios .color-theme-white .calendar-day .calendar-day-event,
+.ios .color-white .calendar-day .calendar-day-event {
+  background: #ffffff;
+}
+.ios .color-theme-black .calendar-day.calendar-day-selected .calendar-day-number,
+.ios .color-black .calendar-day.calendar-day-selected .calendar-day-number {
+  background: #000000;
+}
+.ios .color-theme-black .calendar-day .calendar-day-event,
+.ios .color-black .calendar-day .calendar-day-event {
   background: #000000;
 }
 /* === Picker === */

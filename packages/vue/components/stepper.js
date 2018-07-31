@@ -37,7 +37,7 @@ export default {
     },
     inputReadonly: {
       type: Boolean,
-      default: true
+      default: false
     },
     autorepeat: {
       type: Boolean,
@@ -50,6 +50,18 @@ export default {
     wraps: {
       type: Boolean,
       default: false
+    },
+    manualInputMode: {
+      type: Boolean,
+      default: false
+    },
+    decimalPoint: {
+      type: Number,
+      default: 4
+    },
+    buttonsEndInputMode: {
+      type: Boolean,
+      default: true
     },
     disabled: Boolean,
     buttonsOnly: Boolean,
@@ -92,7 +104,7 @@ export default {
       {
         inputEl = _h('input', {
           domProps: {
-            readonly: inputReadonly,
+            readOnly: inputReadonly,
             value
           },
           on: {
@@ -199,7 +211,10 @@ export default {
         formatValue,
         autorepeat,
         autorepeatDynamic,
-        wraps
+        wraps,
+        manualInputMode,
+        decimalPoint,
+        buttonsEndInputMode
       } = self.props;
       const el = self.$refs.el;
       if (!el) return;
@@ -213,6 +228,9 @@ export default {
         autorepeat,
         autorepeatDynamic,
         wraps,
+        manualInputMode,
+        decimalPoint,
+        buttonsEndInputMode,
         on: {
           change(stepper, newValue) {
             self.dispatchEvent('stepper:change stepperChange', newValue);
