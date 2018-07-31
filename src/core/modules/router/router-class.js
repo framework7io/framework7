@@ -1081,6 +1081,42 @@ class Router extends Framework7Class {
     router.saveHistory();
   }
 
+  updateCurrentUrl(newUrl) {
+    const router = this;
+    // Update history
+    if (router.history.length) {
+      router.history[router.history.length - 1] = newUrl;
+    } else {
+      router.history.push(newUrl);
+    }
+
+    // Update current route params
+    const { query, hash, params, url, path } = router.parseRouteUrl(newUrl);
+    if (router.currentRoute) {
+      Utils.extend(router.currentRoute, {
+        query,
+        hash,
+        params,
+        url,
+        path,
+      });
+    }
+
+    if (router.params.pushState) {
+      const pushStateRoot = router.params.pushStateRoot || '';
+      History.replace(
+        router.view.id,
+        {
+          url: newUrl,
+        },
+        pushStateRoot + router.params.pushStateSeparator + newUrl
+      );
+    }
+
+    // Save History
+    router.saveHistory();
+  }
+
   init() {
     const router = this;
     const { app, view } = router;
