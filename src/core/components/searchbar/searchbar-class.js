@@ -427,6 +427,8 @@ class Searchbar extends FrameworkClass {
         sb.virtualList.resetFilter();
         if ($notFoundEl) $notFoundEl.hide();
         if ($foundEl) $foundEl.show();
+        $el.trigger('searchbar:search', query, sb.previousQuery);
+        sb.emit('local::search searchbarSearch', sb, query, sb.previousQuery);
         return sb;
       }
       vlQuery = sb.params.removeDiacritics ? Utils.removeDiacritics(query) : query;
