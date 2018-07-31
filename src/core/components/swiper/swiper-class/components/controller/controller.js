@@ -48,9 +48,9 @@ const Controller = {
   getInterpolateFunction(c) {
     const swiper = this;
     if (!swiper.controller.spline) {
-      swiper.controller.spline = swiper.params.loop ?
-        new Controller.LinearSpline(swiper.slidesGrid, c.slidesGrid) :
-        new Controller.LinearSpline(swiper.snapGrid, c.snapGrid);
+      swiper.controller.spline = swiper.params.loop
+        ? new Controller.LinearSpline(swiper.slidesGrid, c.slidesGrid)
+        : new Controller.LinearSpline(swiper.snapGrid, c.snapGrid);
     }
   },
   setTranslate(setTranslate, byController) {
@@ -102,6 +102,11 @@ const Controller = {
       c.setTransition(duration, swiper);
       if (duration !== 0) {
         c.transitionStart();
+        if (c.params.autoHeight) {
+          Utils.nextTick(() => {
+            c.updateAutoHeight();
+          });
+        }
         c.$wrapperEl.transitionEnd(() => {
           if (!controlled) return;
           if (c.params.loop && swiper.params.controller.by === 'slide') {

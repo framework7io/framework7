@@ -40,16 +40,16 @@ export default function (event) {
     if (swiper.isVertical()) {
       // Vertical
       if (
-        (pageY < touches.startY && swiper.translate <= swiper.maxTranslate()) ||
-        (pageY > touches.startY && swiper.translate >= swiper.minTranslate())
+        (pageY < touches.startY && swiper.translate <= swiper.maxTranslate())
+        || (pageY > touches.startY && swiper.translate >= swiper.minTranslate())
       ) {
         data.isTouched = false;
         data.isMoved = false;
         return;
       }
     } else if (
-      (pageX < touches.startX && swiper.translate <= swiper.maxTranslate()) ||
-      (pageX > touches.startX && swiper.translate >= swiper.minTranslate())
+      (pageX < touches.startX && swiper.translate <= swiper.maxTranslate())
+      || (pageX > touches.startX && swiper.translate >= swiper.minTranslate())
     ) {
       return;
     }
@@ -71,6 +71,7 @@ export default function (event) {
 
   const diffX = touches.currentX - touches.startX;
   const diffY = touches.currentY - touches.startY;
+  if (swiper.params.threshold && Math.sqrt((diffX ** 2) + (diffY ** 2)) < swiper.params.threshold) return;
 
   if (typeof data.isScrolling === 'undefined') {
     let touchAngle;
@@ -87,7 +88,7 @@ export default function (event) {
   if (data.isScrolling) {
     swiper.emit('touchMoveOpposite', e);
   }
-  if (typeof startMoving === 'undefined') {
+  if (typeof data.startMoving === 'undefined') {
     if (touches.currentX !== touches.startX || touches.currentY !== touches.startY) {
       data.startMoving = true;
     }
