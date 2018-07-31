@@ -2,7 +2,7 @@
 
 # Change Log
 
-# [v3.1.0](https://github.com/framework7io/framework7/compare/v3.0.7...v3.1.0) - July 20, 2018
+# [v3.1.0](https://github.com/framework7io/framework7/compare/v3.0.7...v3.1.0) - July 31, 2018
   * Core
     * Router
       * New `updateCurrentUrl(url)` method to update url of the currently active route (and current browser state if `pushState` is enabled)
