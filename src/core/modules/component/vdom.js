@@ -218,7 +218,12 @@ export default function (html = '', context, app, initial) {
   tempDom.innerHTML = html.trim();
 
   // Parse DOM
-  const rootEl = tempDom.childNodes[0];
+  let rootEl;
+  for (let i = 0; i < tempDom.childNodes.length; i += 1) {
+    if (!rootEl && tempDom.childNodes[i].nodeType === 1) {
+      rootEl = tempDom.childNodes[i];
+    }
+  }
   const result = elementToVNode(rootEl, context, app, initial, true);
 
   // Clean
