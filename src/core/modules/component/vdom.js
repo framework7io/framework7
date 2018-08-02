@@ -4,13 +4,14 @@ import { window, document } from 'ssr-window';
 import h from './snabbdom/h';
 
 const selfClosing = 'area base br col command embed hr img input keygen link menuitem meta param source track wbr'.split(' ');
-const propsAttrs = 'hidden value checked disabled readonly selected'.split(' ');
+const propsAttrs = 'value hidden checked disabled readonly selected'.split(' ');
+const booleanProps = 'hidden checked disabled readonly selected readOnly'.split(' ');
 const tempDom = document.createElement('div');
 
 function getHooks(data, app, initial, isRoot) {
-  if (!data || !data.attrs || !data.attrs.class) return null;
-  const classNames = data.attrs.class;
   const hooks = {};
+  if (!data || !data.attrs || !data.attrs.class) return hooks;
+  const classNames = data.attrs.class;
   const insert = [];
   const destroy = [];
   const update = [];
@@ -33,9 +34,8 @@ function getHooks(data, app, initial, isRoot) {
       }
     });
   }
-
   if (insert.length === 0 && destroy.length === 0 && update.length === 0 && postpatch.length === 0) {
-    return null;
+    return hooks;
   }
   if (insert.length) {
     hooks.insert = (vnode) => {
@@ -54,9 +54,10 @@ function getHooks(data, app, initial, isRoot) {
   }
   if (postpatch.length) {
     hooks.postpatch = (oldVnode, vnode) => {
-      postpatch.forEach(f => f(vnode));
+      postpatch.forEach(f => f(oldVnode, vnode));
     };
   }
+
   return hooks;
 }
 function getEventHandler(handlerString, context, { stop, prevent, once } = {}) {
@@ -143,11 +144,19 @@ function getData(el, context, app, initial, isRoot) {
   };
   const attributes = el.attributes;
   Array.prototype.forEach.call(attributes, (attr) => {
-    const attrName = attr.name;
+    let attrName = attr.name;
     const attrValue = attr.value;
     if (propsAttrs.indexOf(attrName) >= 0) {
       if (!data.props) data.props = {};
-      data.props[attrName] = attrValue;
+      if (attrName === 'readonly') {
+        attrName = 'readOnly';
+      }
+      if (booleanProps.indexOf(attrName) >= 0) {
+        // eslint-disable-next-line
+        data.props[attrName] = attrValue === false ? false : true;
+      } else {
+        data.props[attrName] = attrValue;
+      }
     } else if (attrName === 'key') {
       data.key = attrName;
     } else if (attrName.indexOf('@') === 0) {
@@ -177,6 +186,19 @@ function getData(el, context, app, initial, isRoot) {
     }
   });
   const hooks = getHooks(data, app, initial, isRoot);
+  hooks.prepatch = (oldVnode, vnode) => {
+    if (!oldVnode || !vnode) return;
+    if (oldVnode && oldVnode.data && oldVnode.data.props) {
+      Object.keys(oldVnode.data.props).forEach((key) => {
+        if (booleanProps.indexOf(key) < 0) return;
+        if (!vnode.data) vnode.data = {};
+        if (!vnode.data.props) vnode.data.props = {};
+        if (oldVnode.data.props[key] === true && !(key in vnode.data.props)) {
+          vnode.data.props[key] = false;
+        }
+      });
+    }
+  };
   if (hooks) {
     data.hook = hooks;
   }
