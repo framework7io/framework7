@@ -40,6 +40,9 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   # build
   VERSION=$VERSION npm run build:prod
 
+  # update dependencies
+  npm run release-update-dependencies
+
   # update packages
   # using subshells to avoid having to cd back
   (
