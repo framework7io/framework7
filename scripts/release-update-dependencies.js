@@ -1,7 +1,7 @@
 const fs = require('fs');
 
-const dest = require('../packages/core/package.json')
-const src = require('../package.json')
+const dest = require('../packages/core/package.json');
+const src = require('../package.json');
 
 dest.dependencies = src.dependencies;
 
