@@ -58,6 +58,7 @@ Bart DJ
 ---
 
 ### $10+ Supporter
+Danny Redfern<br>
 Rick Chang<br>
 Marc Hildmann<br>
 Kyle Hammond<br>
