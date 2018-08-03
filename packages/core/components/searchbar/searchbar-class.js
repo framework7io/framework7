@@ -529,7 +529,10 @@ class Searchbar extends FrameworkClass {
     sb.emit('local::beforeDestroy searchbarBeforeDestroy', sb);
     sb.$el.trigger('searchbar:beforedestroy', sb);
     sb.detachEvents();
-    delete sb.$el.f7Searchbar;
+    if (sb.$el[0]) {
+      sb.$el[0].f7Searchbar = null;
+      delete sb.$el[0].f7Searchbar;
+    }
     Utils.deleteProps(sb);
   }
 }

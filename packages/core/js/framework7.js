@@ -1,5 +1,5 @@
 /**
- * Framework7 3.1.0
+ * Framework7 3.1.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 31, 2018
+ * Released on: August 3, 2018
  */
 
 (function (global, factory) {
@@ -8990,13 +8990,14 @@
   /* eslint no-use-before-define: "off" */
 
   var selfClosing = 'area base br col command embed hr img input keygen link menuitem meta param source track wbr'.split(' ');
-  var propsAttrs = 'hidden value checked disabled readonly selected'.split(' ');
+  var propsAttrs = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple value'.split(' ');
+  var booleanProps = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple readOnly'.split(' ');
   var tempDom = doc.createElement('div');
 
   function getHooks(data, app, initial, isRoot) {
-    if (!data || !data.attrs || !data.attrs.class) { return null; }
-    var classNames = data.attrs.class;
     var hooks = {};
+    if (!data || !data.attrs || !data.attrs.class) { return hooks; }
+    var classNames = data.attrs.class;
     var insert = [];
     var destroy = [];
     var update = [];
@@ -9019,9 +9020,8 @@
         }
       });
     }
-
     if (insert.length === 0 && destroy.length === 0 && update.length === 0 && postpatch.length === 0) {
-      return null;
+      return hooks;
     }
     if (insert.length) {
       hooks.insert = function (vnode) {
@@ -9040,9 +9040,10 @@
     }
     if (postpatch.length) {
       hooks.postpatch = function (oldVnode, vnode) {
-        postpatch.forEach(function (f) { return f(vnode); });
+        postpatch.forEach(function (f) { return f(oldVnode, vnode); });
       };
     }
+
     return hooks;
   }
   function getEventHandler(handlerString, context, ref) {
@@ -9141,7 +9142,15 @@
       var attrValue = attr.value;
       if (propsAttrs.indexOf(attrName) >= 0) {
         if (!data.props) { data.props = {}; }
-        data.props[attrName] = attrValue;
+        if (attrName === 'readonly') {
+          attrName = 'readOnly';
+        }
+        if (booleanProps.indexOf(attrName) >= 0) {
+          // eslint-disable-next-line
+          data.props[attrName] = attrValue === false ? false : true;
+        } else {
+          data.props[attrName] = attrValue;
+        }
       } else if (attrName === 'key') {
         data.key = attrName;
       } else if (attrName.indexOf('@') === 0) {
@@ -9171,6 +9180,19 @@
       }
     });
     var hooks = getHooks(data, app, initial, isRoot);
+    hooks.prepatch = function (oldVnode, vnode) {
+      if (!oldVnode || !vnode) { return; }
+      if (oldVnode && oldVnode.data && oldVnode.data.props) {
+        Object.keys(oldVnode.data.props).forEach(function (key) {
+          if (booleanProps.indexOf(key) < 0) { return; }
+          if (!vnode.data) { vnode.data = {}; }
+          if (!vnode.data.props) { vnode.data.props = {}; }
+          if (oldVnode.data.props[key] === true && !(key in vnode.data.props)) {
+            vnode.data.props[key] = false;
+          }
+        });
+      }
+    };
     if (hooks) {
       data.hook = hooks;
     }
@@ -9214,7 +9236,12 @@
     tempDom.innerHTML = html.trim();
 
     // Parse DOM
-    var rootEl = tempDom.childNodes[0];
+    var rootEl;
+    for (var i = 0; i < tempDom.childNodes.length; i += 1) {
+      if (!rootEl && tempDom.childNodes[i].nodeType === 1) {
+        rootEl = tempDom.childNodes[i];
+      }
+    }
     var result = elementToVNode(rootEl, context, app, initial, true);
 
     // Clean
@@ -15125,8 +15152,10 @@
       index.$el.trigger('listindex:beforedestroy', index);
       index.emit('local::beforeDestroy listIndexBeforeDestroy', index);
       index.detachEvents();
-      index.$el[0].f7ListIndex = null;
-      delete index.$el[0].f7ListIndex;
+      if (index.$el[0]) {
+        index.$el[0].f7ListIndex = null;
+        delete index.$el[0].f7ListIndex;
+      }
       Utils.deleteProps(index);
       index = null;
     };
@@ -15875,7 +15904,10 @@
       panel.$el.trigger('panel:destroy', panel);
       panel.emit('local::destroy panelDestroy');
       delete app.panel[panel.side];
-      delete panel.el.f7Panel;
+      if (panel.el) {
+        panel.el.f7Panel = null;
+        delete panel.el.f7Panel;
+      }
       Utils.deleteProps(panel);
       panel = null;
     };
@@ -22360,8 +22392,11 @@
       table.emit('local::beforeDestroy datatableBeforeDestroy', table);
 
       table.attachEvents();
-      table.$el[0].f7DataTable = null;
-      delete table.$el[0].f7DataTable;
+
+      if (table.$el[0]) {
+        table.$el[0].f7DataTable = null;
+        delete table.$el[0].f7DataTable;
+      }
       Utils.deleteProps(table);
       table = null;
     };
@@ -23172,7 +23207,10 @@
       sb.emit('local::beforeDestroy searchbarBeforeDestroy', sb);
       sb.$el.trigger('searchbar:beforedestroy', sb);
       sb.detachEvents();
-      delete sb.$el.f7Searchbar;
+      if (sb.$el[0]) {
+        sb.$el[0].f7Searchbar = null;
+        delete sb.$el[0].f7Searchbar;
+      }
       Utils.deleteProps(sb);
     };
 
@@ -23772,8 +23810,10 @@
       var m = this;
       m.emit('local::beforeDestroy messagesBeforeDestroy', m);
       m.$el.trigger('messages:beforedestroy', m);
-      m.$el[0].f7Messages = null;
-      delete m.$el[0].f7Messages;
+      if (m.$el[0]) {
+        m.$el[0].f7Messages = null;
+        delete m.$el[0].f7Messages;
+      }
       Utils.deleteProps(m);
     };
 
@@ -24198,8 +24238,10 @@
       messagebar.emit('local::beforeDestroy messagebarBeforeDestroy', messagebar);
       messagebar.$el.trigger('messagebar:beforedestroy', messagebar);
       messagebar.detachEvents();
-      messagebar.$el[0].f7Messagebar = null;
-      delete messagebar.$el[0].f7Messagebar;
+      if (messagebar.$el[0]) {
+        messagebar.$el[0].f7Messagebar = null;
+        delete messagebar.$el[0].f7Messagebar;
+      }
       Utils.deleteProps(messagebar);
     };
 
@@ -30859,6 +30901,7 @@
       pb.emit('local::beforeDestroy photoBrowserBeforeDestroy', pb);
       if (pb.$el) {
         pb.$el.trigger('photobrowser:beforedestroy');
+        pb.$el[0].f7PhotoBrowser = null;
         delete pb.$el[0].f7PhotoBrowser;
       }
       Utils.deleteProps(pb);

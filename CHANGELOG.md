@@ -2,6 +2,14 @@
 
 # Change Log
 
+# [v3.1.1](https://github.com/framework7io/framework7/compare/v3.1.0...v3.1.1) - August 3, 2018
+  * Core
+    * Virtual DOM Router Components
+      * Imporved boolean attributes handling (`readonly`, `checked`, etc.)
+      * Fixed issue when comment inside of template can break the rendering
+      * Better auto-init components cleanup
+  * Minor fixes
+
 # [v3.1.0](https://github.com/framework7io/framework7/compare/v3.0.7...v3.1.0) - July 31, 2018
   * Core
     * Router

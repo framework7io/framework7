@@ -449,8 +449,10 @@ class Messages extends Framework7Class {
     const m = this;
     m.emit('local::beforeDestroy messagesBeforeDestroy', m);
     m.$el.trigger('messages:beforedestroy', m);
-    m.$el[0].f7Messages = null;
-    delete m.$el[0].f7Messages;
+    if (m.$el[0]) {
+      m.$el[0].f7Messages = null;
+      delete m.$el[0].f7Messages;
+    }
     Utils.deleteProps(m);
   }
 }
