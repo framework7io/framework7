@@ -461,6 +461,10 @@ var routes = [
     componentUrl: './pages/virtual-list.html',
   },
   {
+    path: '/virtual-list-vdom/',
+    componentUrl: './pages/virtual-list-vdom.html',
+  },
+  {
     path: '/vi/',
     componentUrl: './pages/vi.html',
   },
