@@ -141,8 +141,11 @@ class DataTable extends Framework7Class {
     table.emit('local::beforeDestroy datatableBeforeDestroy', table);
 
     table.attachEvents();
-    table.$el[0].f7DataTable = null;
-    delete table.$el[0].f7DataTable;
+
+    if (table.$el[0]) {
+      table.$el[0].f7DataTable = null;
+      delete table.$el[0].f7DataTable;
+    }
     Utils.deleteProps(table);
     table = null;
   }

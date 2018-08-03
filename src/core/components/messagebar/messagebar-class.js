@@ -370,8 +370,10 @@ class Messagebar extends Framework7Class {
     messagebar.emit('local::beforeDestroy messagebarBeforeDestroy', messagebar);
     messagebar.$el.trigger('messagebar:beforedestroy', messagebar);
     messagebar.detachEvents();
-    messagebar.$el[0].f7Messagebar = null;
-    delete messagebar.$el[0].f7Messagebar;
+    if (messagebar.$el[0]) {
+      messagebar.$el[0].f7Messagebar = null;
+      delete messagebar.$el[0].f7Messagebar;
+    }
     Utils.deleteProps(messagebar);
   }
 }

@@ -653,6 +653,7 @@ class PhotoBrowser extends Framework7Class {
     pb.emit('local::beforeDestroy photoBrowserBeforeDestroy', pb);
     if (pb.$el) {
       pb.$el.trigger('photobrowser:beforedestroy');
+      pb.$el[0].f7PhotoBrowser = null;
       delete pb.$el[0].f7PhotoBrowser;
     }
     Utils.deleteProps(pb);

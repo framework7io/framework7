@@ -336,8 +336,10 @@ class ListIndex extends Framework7Class {
     index.$el.trigger('listindex:beforedestroy', index);
     index.emit('local::beforeDestroy listIndexBeforeDestroy', index);
     index.detachEvents();
-    index.$el[0].f7ListIndex = null;
-    delete index.$el[0].f7ListIndex;
+    if (index.$el[0]) {
+      index.$el[0].f7ListIndex = null;
+      delete index.$el[0].f7ListIndex;
+    }
     Utils.deleteProps(index);
     index = null;
   }
