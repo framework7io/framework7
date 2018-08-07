@@ -49,7 +49,7 @@ function getHooks(data, app, initial, isRoot) {
   }
   if (update.length) {
     hooks.update = (oldVnode, vnode) => {
-      update.forEach(f => f(vnode));
+      update.forEach(f => f(oldVnode, vnode));
     };
   }
   if (postpatch.length) {
