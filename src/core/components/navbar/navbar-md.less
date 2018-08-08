@@ -3,23 +3,16 @@
   @import (multiple) '../../less/vars-md.less';
   @duration: 400ms;
   .navbar {
-    height: @navbarSize;
-    background: @navbarBg;
-    color: #fff;
-    font-size: 20px;
     .md-bar-shadow-to-bottom();
     &.no-shadow {
       .md-bar-no-shadow();
-    }
-    a {
-      color: inherit;
     }
     a.link {
       justify-content: center;
       padding: 0 16px;
       min-width: 48px;
-      height: @navbarSize;
-      line-height: @navbarSize;
+      height: var(--f7-navbar-size);
+      line-height: var(--f7-navbar-size);
       .md-link-highlight();
     }
     a.icon-only {
@@ -64,21 +57,11 @@
 
   // Relation with page
   .navbar ~ * .page-content, .navbar ~ .page-content {
-    padding-top: @navbarSize;
+    padding-top: var(--f7-navbar-size);
   }
 
   @media (min-width: 768px) {
-    .navbar {
-      height: @navbarSizeTablet;
-      a.link {
-        height: @navbarSizeTablet;
-        line-height: @navbarSizeTablet;
-      }
-    }
-    // Relation with page
-    .navbar ~ * .page-content, .navbar ~ .page-content {
-      padding-top: @navbarSizeTablet;
-    }
+    --f7-navbar-size: var(--f7-navbar-tablet-size);
   }
 
   // Transitions

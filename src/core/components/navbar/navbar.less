@@ -1,4 +1,6 @@
 /* === Navbar === */
+@import url('./navbar-vars.less');
+
 .navbar {
   position: relative;
   left: 0;
@@ -9,8 +11,15 @@
   box-sizing: border-box;
   margin: 0;
   transform: translate3d(0,0,0);
+  height: var(--f7-navbar-size);
+  background-color: var(--f7-navbar-bg-color);
+  color: var(--f7-navbar-text-color);
+  font-size: var(--f7-navbar-font-size);
   b {
     font-weight: 500;
+  }
+  a {
+    color: var(--f7-navbar-links-color);
   }
   a.link {
     display: flex;

@@ -1,15 +1,7 @@
 .md {
   @import (multiple) '../../less/colors-md.less';
-  body {
-    font-family: Roboto, Noto, Helvetica, Arial, sans-serif;
-    color: #212121;
-    line-height: 1.5;
-  }
   .ios-only, .if-ios {
     display: none !important;
-  }
-  a {
-    color: @themeColor;
   }
   // Dark Theme
   & when (@includeDarkTheme) {

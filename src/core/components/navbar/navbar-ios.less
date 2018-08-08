@@ -3,9 +3,6 @@
   @import (multiple) '../../less/vars-ios.less';
   @duration: 400ms;
   .navbar {
-    height: @navbarSize;
-    font-size: 17px;
-    background: @navbarBg;
     &.no-hairline {
       .hairline-remove(bottom);
     }
@@ -14,16 +11,15 @@
     }
     a.link {
       justify-content: flex-start;
-      line-height: @navbarSize;
-      height: @navbarSize;
+      line-height: var(--f7-navbar-size);
+      height: var(--f7-navbar-size);
     }
     a.icon-only {
-      width: @navbarSize;
+      width: var(--f7-navbar-size);
       margin: 0;
       justify-content: center;
     }
     .title {
-      font-size: 17px;
       margin: 0;
       line-height: 1.2;
     }
@@ -80,7 +76,7 @@
 
   // Relation with page
   .navbar ~ *:not(.no-navbar) .page-content, .navbar ~ .page-content {
-    padding-top: @navbarSize;
+    padding-top: var(--f7-navbar-size);
   }
 
   // Positions
