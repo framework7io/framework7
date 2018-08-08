@@ -170,7 +170,7 @@ class Panel extends Framework7Class {
     const wasInDom = $el.parents(document).length > 0;
     if (!$panelParentEl.is(app.root)) {
       app.root.append($el);
-      modal.once('panelClosed', () => {
+      panel.once('panelClosed', () => {
         if (wasInDom) {
           $panelParentEl.append($el);
         } else {
