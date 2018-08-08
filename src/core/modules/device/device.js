@@ -37,6 +37,8 @@ export default {
         }
       } else if (Device.desktop) {
         classNames.push('device-desktop');
+        if (Device.macos) classNames.push('device-macos');
+        else if (Device.windows) classNames.push('device-windows');
       }
       if (Device.cordova || Device.phonegap) {
         classNames.push('device-cordova');
