@@ -1,6 +1,4 @@
 /* === Navbar === */
-@import url('./navbar-vars.less');
-
 .navbar {
   position: relative;
   left: 0;
@@ -12,17 +10,20 @@
   margin: 0;
   transform: translate3d(0,0,0);
   height: var(--f7-navbar-size);
-  background-color: var(--f7-navbar-bg-color);
-  color: var(--f7-navbar-text-color);
+  background-color: var(--f7-bars-bg-color);
+  color: var(--f7-bars-text-color);
   font-size: var(--f7-navbar-font-size);
   b {
     font-weight: 500;
   }
   a {
-    color: var(--f7-navbar-links-color);
+    color: var(--f7-bars-links-color);
   }
   a.link {
     display: flex;
+    justify-content: flex-start;
+    line-height: var(--f7-navbar-size);
+    height: var(--f7-navbar-size);
   }
   .title, .left, .right {
     position: relative;
@@ -40,6 +41,8 @@
   }
   .subtitle {
     display: block;
+    color: var(--f7-navbar-subtitle-text-color);
+    font-weight: normal;
   }
   .left, .right {
     flex-shrink: 0;
@@ -52,6 +55,17 @@
     position: absolute;
     height: 100%;
   }
+}
+// Transitions
+.navbar-transitioning {
+  transition-duration: 400ms;
+}
+.navbar-page-transitioning {
+  transition-duration: var(--f7-page-transition-duration);
+}
+// Hidden
+.navbar-hidden {
+  transform: translate3d(0, -100%, 0);
 }
 .navbar-inner {
   position: absolute;

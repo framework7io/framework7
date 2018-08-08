@@ -275,10 +275,10 @@ function SwipeBack(r) {
           sliding.transform(`translate3d(${translate}px,0,0)`);
           if (params.iosAnimateNavbarBackIcon) {
             if (sliding.hasClass('left') && activeNavBackIcon.length > 0) {
-              activeNavBackIcon.addClass('navbar-transitioning').transform(`translate3d(${iconTranslate}px,0,0)`);
+              activeNavBackIcon.addClass('navbar-page-transitioning').transform(`translate3d(${iconTranslate}px,0,0)`);
             }
           }
-        }).addClass('navbar-transitioning');
+        }).addClass('navbar-page-transitioning');
 
       previousNavElements.transform('').css({ opacity: '' }).each((navElIndex, navEl) => {
         const translate = pageChanged ? 0 : navEl.f7NavbarLeftOffset;
@@ -288,10 +288,10 @@ function SwipeBack(r) {
         sliding.transform(`translate3d(${translate}px,0,0)`);
         if (params.iosAnimateNavbarBackIcon) {
           if (sliding.hasClass('left') && previousNavBackIcon.length > 0) {
-            previousNavBackIcon.addClass('navbar-transitioning').transform(`translate3d(${iconTranslate}px,0,0)`);
+            previousNavBackIcon.addClass('navbar-page-transitioning').transform(`translate3d(${iconTranslate}px,0,0)`);
           }
         }
-      }).addClass('navbar-transitioning');
+      }).addClass('navbar-page-transitioning');
     }
     allowViewTouchMove = false;
     router.allowPageChange = false;
@@ -324,10 +324,10 @@ function SwipeBack(r) {
       $([currentPage[0], previousPage[0]]).removeClass('page-transitioning page-transitioning-swipeback');
 
       if (dynamicNavbar) {
-        currentNavElements.removeClass('navbar-transitioning').css({ opacity: '' }).transform('');
-        previousNavElements.removeClass('navbar-transitioning').css({ opacity: '' }).transform('');
-        if (activeNavBackIcon && activeNavBackIcon.length > 0) activeNavBackIcon.removeClass('navbar-transitioning');
-        if (previousNavBackIcon && previousNavBackIcon.length > 0) previousNavBackIcon.removeClass('navbar-transitioning');
+        currentNavElements.removeClass('navbar-page-transitioning').css({ opacity: '' }).transform('');
+        previousNavElements.removeClass('navbar-page-transitioning').css({ opacity: '' }).transform('');
+        if (activeNavBackIcon && activeNavBackIcon.length > 0) activeNavBackIcon.removeClass('navbar-page-transitioning');
+        if (previousNavBackIcon && previousNavBackIcon.length > 0) previousNavBackIcon.removeClass('navbar-page-transitioning');
       }
       allowViewTouchMove = true;
       router.allowPageChange = true;

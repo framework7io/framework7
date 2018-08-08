@@ -1,7 +1,5 @@
 .ios {
   @import (multiple) '../../less/colors-ios.less';
-  @import (multiple) '../../less/vars-ios.less';
-  @duration: 400ms;
   .navbar {
     &.no-hairline {
       .hairline-remove(bottom);
@@ -10,9 +8,7 @@
       backface-visibility: hidden;
     }
     a.link {
-      justify-content: flex-start;
-      line-height: var(--f7-navbar-size);
-      height: var(--f7-navbar-size);
+
     }
     a.icon-only {
       width: var(--f7-navbar-size);
@@ -24,11 +20,9 @@
       line-height: 1.2;
     }
     .subtitle {
-      color: #6d6d72;
       line-height: 1;
       font-size: 10px;
       text-align: center;
-      font-weight: normal;
     }
     .left, .right {
       a + a {
@@ -68,7 +62,7 @@
       });
     }
   }
-  .hairline-root('.navbar', bottom, @navbarBorderColor);
+  .hairline-root('.navbar', bottom, var(--f7-bars-border-color));
   .navbar-inner {
     justify-content: space-between;
     padding: 0 8px;
@@ -112,21 +106,11 @@
     }
   }
 
-  // Transitions
-  .navbar-transitioning {
-    transition-duration: @duration;
-  }
-
-  // Hidden
-  .navbar-hidden {
-    transform: translate3d(0, -100%, 0);
-  }
-
   // Animations
   .router-transition-css-forward, .router-transition-css-backward {
     .navbar-current {
       .left, > .title, .right, .subnavbar {
-        animation: ios-navbar-element-fade-out @duration forwards;
+        animation: ios-navbar-element-fade-out var(--f7-page-transition-duration) forwards;
       }
       .sliding,
       .left.sliding .icon,
@@ -134,12 +118,12 @@
       &.sliding .left .icon,
       &.sliding > .title,
       &.sliding .right {
-        transition-duration: @duration;
+        transition-duration: var(--f7-page-transition-duration);
         opacity: 0 !important;
         animation: none;
       }
       &.sliding .subnavbar, .sliding.subnavbar {
-        transition-duration: @duration;
+        transition-duration: var(--f7-page-transition-duration);
         animation: none;
         opacity: 1;
       }
@@ -147,7 +131,7 @@
   }
   .router-transition-css-forward .navbar-next, .router-transition-css-backward .navbar-previous {
     .left, > .title, .right, .subnavbar {
-      animation: ios-navbar-element-fade-in @duration forwards;
+      animation: ios-navbar-element-fade-in var(--f7-page-transition-duration) forwards;
     }
     & .sliding,
     & .left.sliding .icon,
@@ -156,25 +140,25 @@
     &.sliding > .title,
     &.sliding .right,
     &.sliding .subnavbar {
-      transition-duration: @duration;
+      transition-duration: var(--f7-page-transition-duration);
       animation: none;
       transform: translate3d(0,0,0) !important;
       opacity: 1 !important;
     }
   }
 
-  // Dark Theme
-  & when (@includeDarkTheme) {
-    .theme-dark {
-      .navbar, .navbar& {
-        background: @navbarBgDark;
-        .hairline-color(bottom, @navbarBorderColorDark);
-        .subtitle {
-          color: #8e8e93;
-        }
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      .navbar, &.navbar {
+        --f7-theme-color: @colorThemeValue;
       }
     }
-  }
+  });
+  .color-loop({
+    .navbar.color-@{colorName} {
+      --f7-theme-color: @colorThemeValue;
+    }
+  });
 
   .safe-areas-landscape({
     .safe-area-left({

@@ -1,18 +1,13 @@
 .md {
   @import (multiple) '../../less/colors-md.less';
-  @import (multiple) '../../less/vars-md.less';
-  @duration: 400ms;
   .navbar {
     .md-bar-shadow-to-bottom();
     &.no-shadow {
       .md-bar-no-shadow();
     }
     a.link {
-      justify-content: center;
       padding: 0 16px;
       min-width: 48px;
-      height: var(--f7-navbar-size);
-      line-height: var(--f7-navbar-size);
       .md-link-highlight();
     }
     a.icon-only {
@@ -27,8 +22,6 @@
     .subtitle {
       line-height: 1.2;
       font-size: 14px;
-      font-weight: normal;
-      color: rgba(255,255,255,0.85);
     }
     .right {
       .ltr({
@@ -64,27 +57,21 @@
     --f7-navbar-size: var(--f7-navbar-tablet-size);
   }
 
-  // Transitions
-  .navbar-transitioning {
-    transition-duration: @duration;
-  }
-
   // Hidden
   .navbar-hidden {
     .md-bar-no-shadow();
-    transform: translate3d(0, -100%, 0);
   }
 
   .color-theme-loop({
     .color-theme-@{colorThemeName} {
       .navbar, &.navbar {
-        background: @colorThemeValue;
+        --f7-theme-color: @colorThemeValue;
       }
     }
   });
   .color-loop({
     .navbar.color-@{colorName} {
-      background: @colorValue;
+      --f7-theme-color: @colorThemeValue;
     }
   });
 
