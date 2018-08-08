@@ -38,8 +38,8 @@ function es(components, cb) {
         .replace('process.env.NODE_ENV', JSON.stringify(env))
         .replace('process.env.TARGET', JSON.stringify(target))
         .replace('process.env.FORMAT', JSON.stringify(format))
-        .replace('//IMPORT_COMPONENTS\n', components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'))
-        .replace('//INSTALL_COMPONENTS\n', components.map(component => component.capitalized).join(',\n  '))
+        .replace('//IMPORT_COMPONENTS', components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'))
+        .replace('//INSTALL_COMPONENTS', components.map(component => component.capitalized).join(',\n  '))
         .replace('//ES_IMPORT_HELPERS', "import Request from './utils/request';\nimport Utils from './utils/utils';\nimport Support from './utils/support';\nimport Device from './utils/device';")
         .replace('//NAMED_ES_EXPORT', 'export { Template7, $ as Dom7, Request, Utils, Device, Support };');
 
