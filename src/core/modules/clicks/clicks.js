@@ -12,6 +12,9 @@ function initClicks(app) {
     const url = isLink && clickedLink.attr('href');
     const isTabLink = isLink && clickedLink.hasClass('tab-link') && (clickedLink.attr('data-tab') || (url && url.indexOf('#') === 0));
 
+    // Check if no-auto
+    if (clickedLink.hasClass('no-auto')) return;
+    
     // Check if link is external
     if (isLink) {
       // eslint-disable-next-line
