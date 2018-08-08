@@ -555,7 +555,7 @@ function navigate(navigateParams, navigateOptions = {}) {
 
   function resolve() {
     let routerLoaded = false;
-    ('popup popover sheet loginScreen actions customModal').split(' ').forEach((modalLoadProp) => {
+    ('popup popover sheet loginScreen actions customModal panel').split(' ').forEach((modalLoadProp) => {
       if (route.route[modalLoadProp] && !routerLoaded) {
         routerLoaded = true;
         router.modalLoad(modalLoadProp, route, options);
