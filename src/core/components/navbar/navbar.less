@@ -10,14 +10,14 @@
   margin: 0;
   transform: translate3d(0,0,0);
   height: var(--f7-navbar-size);
-  background-color: var(--f7-bars-bg-color);
+  background-color: var(--f7-bars-bg-color, var(--f7-theme-color));
   color: var(--f7-bars-text-color);
   font-size: var(--f7-navbar-font-size);
   b {
     font-weight: 500;
   }
   a {
-    color: var(--f7-bars-links-color);
+    color: var(--f7-bars-links-color, var(--f7-theme-color));
   }
   a.link {
     display: flex;
@@ -85,6 +85,7 @@
     position: absolute;
   }
 }
+
 & when (@includeIosTheme) {
   @import url('./navbar-ios.less');
 }

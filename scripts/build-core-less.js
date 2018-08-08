@@ -14,12 +14,12 @@ const cleanCSS = require('gulp-clean-css');
 const getConfig = require('./get-core-config.js');
 const getOutput = require('./get-core-output.js');
 const banner = require('./banner-core.js');
+const lessLists = require('less-plugin-lists');
 
 // Copy LESS
 function copyLess(config, cb) {
   const output = getOutput();
-  const colorsIos = Object.keys(config.ios.colors).map(colorName => `${colorName} ${config.ios.colors[colorName]}`).join(', ');
-  const colorsMd = Object.keys(config.md.colors).map(colorName => `${colorName} ${config.md.colors[colorName]}`).join(', ');
+  const colors = Object.keys(config.colors).map(colorName => `${colorName} ${config.colors[colorName]}`).join(', ');
   const includeIosTheme = config.themes.indexOf('ios') >= 0;
   const includeMdTheme = config.themes.indexOf('md') >= 0;
   const includeDarkTheme = config.darkTheme;
@@ -33,10 +33,11 @@ function copyLess(config, cb) {
         .replace('$includeIosTheme', includeIosTheme)
         .replace('$includeMdTheme', includeMdTheme)
         .replace('$includeDarkTheme', includeDarkTheme)
+        .replace('$colors', colors)
         .replace('$themeColorIos', config.ios.themeColor)
-        .replace('$colorsIos', colorsIos)
+        .replace('$colorsIos', '')
         .replace('$themeColorMd', config.md.themeColor)
-        .replace('$colorsMd', colorsMd)
+        .replace('$colorsMd', '')
         .replace('$rtl', rtl);
       return newContent;
     }))
@@ -48,8 +49,7 @@ function copyLess(config, cb) {
 // Build CSS
 function build(config, components, themes, rtl, cb) {
   const env = process.env.NODE_ENV || 'development';
-  const colorsIos = Object.keys(config.ios.colors).map(colorName => `${colorName} ${config.ios.colors[colorName]}`).join(', ');
-  const colorsMd = Object.keys(config.md.colors).map(colorName => `${colorName} ${config.md.colors[colorName]}`).join(', ');
+  const colors = Object.keys(config.colors).map(colorName => `${colorName} ${config.colors[colorName]}`).join(', ');
   const includeIosTheme = themes.indexOf('ios') >= 0;
   const includeMdTheme = themes.indexOf('md') >= 0;
   const includeDarkTheme = config.darkTheme;
@@ -64,14 +64,17 @@ function build(config, components, themes, rtl, cb) {
         .replace('$includeIosTheme', includeIosTheme)
         .replace('$includeMdTheme', includeMdTheme)
         .replace('$includeDarkTheme', includeDarkTheme)
+        .replace('$colors', colors)
         .replace('$themeColorIos', config.ios.themeColor)
-        .replace('$colorsIos', colorsIos)
+        .replace('$colorsIos', '')
         .replace('$themeColorMd', config.md.themeColor)
-        .replace('$colorsMd', colorsMd)
+        .replace('$colorsMd', '')
         .replace('$rtl', rtl);
       return newContent;
     }))
-    .pipe(less())
+    .pipe(less({
+      plugins: [new lessLists()],
+    }))
     .on('error', (err) => {
       if (cb) cb();
       console.log(err.toString());
