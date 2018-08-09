@@ -1,25 +1,9 @@
 // Colors Loop
 .color-theme-loop(@ruleset) when (length( @colors ) >= 1) {
-  // @length: length( @colors ) ;
-  // .looper( 1 ) ;
-  // .looper( @index ) when ( @index <= @length ) and (length(extract( @colors, @index )) = 2) {
-  //   @pairTheme: extract( @colors, @index );
-  //   @colorThemeName: extract( @pairTheme, 1 ) ;
-  //   @colorThemeValue: extract( @pairTheme, 2 ) ;
-  //   @ruleset();
-  //   .looper( @index + 1 ) ;
-  // }
+
 }
 .color-loop(@ruleset) when (length( @colors ) >= 1) {
-  // @length: length( @colors ) ;
-  // .looper( 1 ) ;
-  // .looper( @index ) when ( @index <= @length ) and (length(extract( @colors, @index )) = 2) {
-  //   @pair: extract( @colors, @index );
-  //   @colorName: extract( @pair, 1 ) ;
-  //   @colorValue: extract( @pair, 2 ) ;
-  //   @ruleset();
-  //   .looper( @index + 1 ) ;
-  // }
+
 }
 
 // RTL, LTR
@@ -311,57 +295,6 @@
   &.active-state:before {
     opacity: 1;
     transition-duration: 150ms;
-  }
-}
-.md-link-highlight-color(@color) {
-  &:before {
-    background-image: radial-gradient(circle at center, @color 66%, rgba(red(@color),green(@color),blue(@color),0) 66%);
-  }
-}
-
-// MD Button
-.md-button() {
-  color:@themeColor;
-  border-radius: 2px;
-  line-height: 36px;
-  height: 36px;
-  text-transform: uppercase;
-  min-width: 64px;
-  padding: 0 8px;
-  border: none;
-  transition-duration: 300ms;
-  transform: translate3d(0,0,0);
-  &.active-state {
-    background: rgba(0,0,0,0.1);
-  }
-  &.button-fill, &.button-active, &.tab-link-active {
-    background-color: @themeColor;
-    color: #fff;
-    &.active-state {
-      background: darken(@themeColor, 8%);
-    }
-  }
-  &.button-big {
-    height: 48px;
-    line-height: 48px;
-    border-radius: 3px;
-  }
-  &.button-round {
-    border-radius: 36px;
-  }
-  i.icon + span,
-  span:not(.ripple-wave) + span,
-  span:not(.ripple-wave) + i.icon,
-  i.icon + i.icon {
-    margin-left: 8px;
-  }
-
-  // Raised (with shadow) buttons
-  &.button-raised {
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    &.active-state {
-      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    }
   }
 }
 

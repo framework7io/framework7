@@ -1,26 +1,14 @@
 .md {
-  @import (multiple) '../../less/colors-md.less';
-  @import (multiple) '../../less/vars-md.less';
-  @duration: 400ms;
   .toolbar {
-    background: @toolbarBg;
-    height: @toolbarSize;
-    color: @toolbarColor;
-    font-size: 14px;
     top: 0;
     .md-bar-shadow-to-bottom();
     &.no-shadow {
       .md-bar-no-shadow();
     }
-    a {
-      color: @toolbarLinkColor;
-    }
     a.link {
       justify-content: center;
       padding: 0 16px;
       min-width: 48px;
-      line-height: @toolbarSize;
-      height: @toolbarSize;
       .md-link-highlight();
       i + span, i + i, span + i, span + span {
         .ltr({
@@ -38,6 +26,7 @@
   }
   .toolbar-inner {
     overflow: hidden;
+    padding: 0 var(--f7-area-right) 0 var(--f7-area-left);
   }
 
   .tabbar, .tabbar-labels {
@@ -55,11 +44,7 @@
     a.tab-link {
       transition-duration: 300ms;
       overflow: hidden;
-      color: @tabbarLinkColor;
       position: relative;
-      &.tab-link-active, &.active-state {
-        color: @tabbarActiveLinkColor;
-      }
     }
     .tab-link-highlight {
       position: absolute;
@@ -86,7 +71,7 @@
     }
   }
   .tabbar-labels {
-    height: @tabbarLabelsSize;
+    height: var(--f7-tabbar-labels-size);
     a.tab-link, a.link {
       padding-top: 12px;
       padding-bottom: 12px;
@@ -97,7 +82,7 @@
       overflow: hidden;
     }
     &.toolbar-bottom-md {
-      height: @tabbarLabelsBottomSize;
+      height: var(--f7-tabbar-labels-bottom-size);
       a.tab-link, a.link {
         padding-top: 7px;
         padding-bottom: 7px;
@@ -110,7 +95,6 @@
       }
     }
   }
-
 
   // Scrollable
   .tabbar-scrollable {
@@ -126,15 +110,14 @@
   // Relation with page and navbar
   .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ * .page-content,
   .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .page-content {
-    padding-top: @toolbarSize;
+    padding-top: var(--f7-toolbar-size);
   }
   .toolbar.tabbar-labels:not(.toolbar-bottom-md) ~ * .page-content, .toolbar.tabbar-labels:not(.toolbar-bottom-md) ~ .page-content {
-    padding-top: @tabbarLabelsSize;
+    padding-top: var(--f7-tabbar-labels-size);
   }
 
   // Hidden
   .toolbar-hidden {
-    transform: translate3d(0, -100%, 0);
     .md-bar-no-shadow();
     &.toolbar-bottom-md, &.messagebar {
       transform: translate3d(0, 100%, 0);
@@ -144,144 +127,60 @@
   // With Navbar
   .navbar {
     + .toolbar:not(.toolbar-bottom-md):not(.messagebar) {
-      top: @navbarSize;
+      top: var(--f7-navbar-size);
     }
     + .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ * .page-content,
     + .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .page-content {
-      padding-top: @toolbarSize + @navbarSize;
+      padding-top: ~"calc(var(--f7-toolbar-size) + var(--f7-navbar-size))";
     }
     + .toolbar.tabbar-labels:not(.toolbar-bottom-md) ~ * .page-content, + .toolbar.tabbar-labels:not(.toolbar-bottom-md) ~ .page-content {
-      padding-top: @tabbarLabelsSize + @navbarSize;
+      padding-top: ~"calc(var(--f7-tabbar-labels-size) + var(--f7-navbar-size))";
     }
     + .toolbar-hidden:not(.toolbar-bottom-md):not(.messagebar) {
-      @translate: @navbarSize + @toolbarSize;
-      transform: translate3d(0, -@translate, 0);
+      --translate: ~"calc(var(--f7-navbar-size) + var(--f7-toolbar-size))";
+      transform: ~"translate3d(0, calc(var(--translate) * -1), 0)";
     }
     + .toolbar-hidden.tabbar-labels:not(.toolbar-bottom-md) {
-      @translate: @navbarSize + @tabbarLabelsSize;
-      transform: translate3d(0, -@translate, 0);
+      --translate: ~"calc(var(--f7-navbar-size) + var(--f7-tabbar-labels-size))";
+      transform: ~"translate3d(0, calc(var(--translate) * -1), 0)";
     }
     &.navbar-hidden {
       + .toolbar:not(.toolbar-bottom-md):not(.messagebar):not(.toolbar-hidden) {
-        transform: translate3d(0, -@navbarSize, 0);
-      }
-    }
-    @media (min-width: 768px) {
-      + .toolbar:not(.toolbar-bottom-md):not(.messagebar) {
-        top: @navbarSizeTablet;
-      }
-      + .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ * .page-content,
-      + .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .page-content {
-        padding-top: @toolbarSize + @navbarSizeTablet;
-      }
-      + .toolbar.tabbar-labels:not(.toolbar-bottom-md) ~ * .page-content, + .toolbar.tabbar-labels:not(.toolbar-bottom-md) ~ .page-content {
-        padding-top: @tabbarLabelsSize + @navbarSizeTablet;
-      }
-      &.navbar-hidden {
-        + .toolbar:not(.toolbar-bottom-md):not(.messagebar):not(.toolbar-hidden) {
-          transform: translate3d(0, -@navbarSizeTablet, 0);
-        }
-      }
-      + .toolbar-hidden:not(.toolbar-bottom-md):not(.messagebar) {
-        @translate: @navbarSizeTablet + @toolbarSize;
-        transform: translate3d(0, -@translate, 0);
-      }
-      + .toolbar-hidden.tabbar-labels:not(.toolbar-bottom-md):not(.messagebar) {
-        @translate: @navbarSizeTablet + @tabbarLabelsSize;
-        transform: translate3d(0, -@translate, 0);
+        transform: ~"translate3d(0, calc(var(--f7-navbar-size) * -1), 0)";
       }
     }
   }
 
-  // Bottom
-  .toolbar-bottom-md ~ * .page-content,
-  .toolbar-bottom-md ~ .page-content,
-  .messagebar ~ * .page-content,
-  .messagebar ~ .page-content {
-    padding-bottom: @toolbarSize;
-  }
-  .toolbar-bottom-md.tabbar-labels ~ * .page-content, .toolbar-bottom-md.tabbar-labels ~ .page-content {
-    padding-bottom: @tabbarLabelsBottomSize;
+  // Relation with page
+  .toolbar-bottom-md.tabbar-labels ~ * .page-content,
+  .toolbar-bottom-md.tabbar-labels ~ .page-content {
+    padding-bottom: ~"calc(var(--f7-tabbar-labels-bottom-size) + var(--f7-area-bottom))";
   }
 
-  // Transitions
-  .toolbar-transitioning, .navbar-transitioning + .toolbar {
-    transition-duration: @duration;
-  }
-
-  .color-theme-loop({
-    .color-theme-@{colorThemeName} {
-      .toolbar:not(.messagebar), &.toolbar:not(.messagebar) {
-        background: @colorThemeValue;
-      }
-    }
-  });
-  .color-loop({
-    .toolbar:not(.messagebar).color-@{colorName} {
-      background: @colorValue;
-    }
-  });
-
-  .safe-areas({
-    .views, .view, .page, .popup, .panel, .login-screen {
-      >.toolbar:first-child:not(.toolbar-bottom-md) {
-        height: ~"calc(@{toolbarSize} + constant(safe-area-inset-top))";
-        height: ~"calc(@{toolbarSize} + env(safe-area-inset-top))";
-        .toolbar-inner {
-          height: auto;
-        }
-        .toolbar-inner {
-          bottom: 0;
-          top: constant(safe-area-inset-top);
-          top: env(safe-area-inset-top);
-        }
-        &.tabbar-labels {
-          height: ~"calc(@{tabbarLabelsSize} + constant(safe-area-inset-top))";
-          height: ~"calc(@{tabbarLabelsSize} + env(safe-area-inset-top))";
-        }
-      }
-      >.toolbar-bottom-md {
-        height: ~"calc(@{toolbarSize} + constant(safe-area-inset-bottom))";
-        height: ~"calc(@{toolbarSize} + env(safe-area-inset-bottom))";
-        .toolbar-inner {
-          height: auto;
-          top: 0;
-          bottom: constant(safe-area-inset-bottom);
-          bottom: env(safe-area-inset-bottom);
-        }
-        &.tabbar-labels {
-          height: ~"calc(@{tabbarLabelsBottomSize} + constant(safe-area-inset-bottom))";
-          height: ~"calc(@{tabbarLabelsBottomSize} + env(safe-area-inset-bottom))";
-        }
-      }
-    }
-
-    // Relation with page
-    .toolbar-bottom-md ~ * .page-content,
-    .toolbar-bottom-md ~ .page-content,
-    .messagebar ~ * .page-content,
-    .messagebar ~ .page-content {
-      padding-bottom: ~"calc(@{toolbarSize} + constant(safe-area-inset-bottom))";
-      padding-bottom: ~"calc(@{toolbarSize} + env(safe-area-inset-bottom))";
-    }
-    .toolbar-bottom-md.tabbar-labels ~ * .page-content,
-    .toolbar-bottom-md.tabbar-labels ~ .page-content {
-      padding-bottom: ~"calc(@{tabbarLabelsBottomSize} + constant(safe-area-inset-bottom))";
-      padding-bottom: ~"calc(@{tabbarLabelsBottomSize} + env(safe-area-inset-bottom))";
-    }
-  });
-  .safe-areas-landscape({
-    .safe-area-left({
+  .views, .view, .page, .popup, .panel, .login-screen {
+    >.toolbar:first-child:not(.toolbar-bottom-md) {
+      height: ~"calc(var(--f7-toolbar-size) + var(--f7-area-top))";
       .toolbar-inner {
-        padding-left: constant(safe-area-inset-left);
-        padding-left: env(safe-area-inset-left);
+        height: auto;
       }
-    });
-    .safe-area-right({
       .toolbar-inner {
-        padding-right: constant(safe-area-inset-right);
-        padding-right: env(safe-area-inset-right);
+        bottom: 0;
+        top: var(--f7-area-top);
       }
-    });
-  });
+      &.tabbar-labels {
+        height: ~"calc(var(--f7-tabbar-labels-size) + var(--f7-area-top))";
+      }
+    }
+    >.toolbar-bottom-md {
+      height: ~"calc(var(--f7-toolbar-size) + var(--f7-area-bottom))";
+      .toolbar-inner {
+        height: auto;
+        top: 0;
+        bottom: var(--f7-area-bottom);
+      }
+      &.tabbar-labels {
+        height: ~"calc(var(--f7-tabbar-labels-bottom-size) + var(--f7-area-bottom))";
+      }
+    }
+  }
 }

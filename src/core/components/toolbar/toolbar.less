@@ -8,10 +8,15 @@
   z-index: 500;
   box-sizing: border-box;
   left: 0;
+  height: var(--f7-toolbar-size);
+  background-color: var(--f7-bars-bg-color, var(--f7-theme-color));
+  color: var(--f7-bars-text-color);
+  font-size: var(--f7-toolbar-font-size);
   b {
-    font-weight: 500;
+    font-weight: 600;
   }
   a {
+    color: var(--f7-bars-links-color, var(--f7-theme-color));
     box-sizing: border-box;
     flex-shrink: 1;
     position: relative;
@@ -20,6 +25,8 @@
   }
   a.link {
     display: flex;
+    line-height: var(--f7-toolbar-size);
+    height: var(--f7-toolbar-size);
   }
   i.icon {
     display: block;
@@ -40,6 +47,12 @@
 .tabbar, .tabbar-labels {
   .views > & {
     z-index: 5001;
+  }
+  a {
+    color: var(--f7-tabbar-link-inactive-color);
+    &.tab-link-active, &.active-state {
+      color: var(--f7-tabbar-link-active-color, var(--f7-theme-color));
+    }
   }
   a.link {
     line-height: 1.4;
@@ -90,6 +103,25 @@
     position: absolute;
   }
 }
+// Transitions
+.toolbar-transitioning,
+.navbar-transitioning + .toolbar {
+  transition-duration: 400ms;
+}
+// Hidden
+.toolbar-hidden {
+  transform: translate3d(0, 100%, 0);
+}
+// Relation with page
+.ios .toolbar ~ * .page-content,
+.ios .toolbar ~ .page-content,
+.md .toolbar-bottom-md ~ * .page-content,
+.md .toolbar-bottom-md ~ .page-content,
+.md .messagebar ~ * .page-content,
+.md .messagebar ~ .page-content {
+  padding-bottom: ~"calc(var(--f7-toolbar-size) + var(--f7-area-bottom))";
+}
+
 & when (@includeIosTheme) {
   @import url('./toolbar-ios.less');
 }
