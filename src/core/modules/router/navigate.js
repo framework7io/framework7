@@ -577,7 +577,7 @@ function navigate(navigateParams, navigateOptions = {}) {
         else route.context = Utils.extend({}, route.context, resolveOptions.context);
         options.route.context = route.context;
       }
-      ('popup popover sheet loginScreen actions customModal').split(' ').forEach((modalLoadProp) => {
+      ('popup popover sheet loginScreen actions customModal panel').split(' ').forEach((modalLoadProp) => {
         if (resolveParams[modalLoadProp]) {
           resolvedAsModal = true;
           const modalRoute = Utils.extend({}, route, { route: resolveParams });

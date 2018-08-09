@@ -29,6 +29,10 @@ class Panel extends Framework7Class {
       Utils.extend(app.panel, {
         [side]: panel,
       });
+    } else {
+      const error = `Can't create panel; app already has a ${side} panel!`
+      console.error(error);
+      throw new Error(error);
     }
 
     let $backdropEl = $('.panel-backdrop');
