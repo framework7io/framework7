@@ -15,5 +15,10 @@ export default () => (
         <Button raised panelOpen="right">Open right panel</Button>
       </Col>
     </Block>
+    <Block className="row">
+      <Col>
+        <Button raised href="/panel/routable-panel/">Routable panel</Button>
+      </Col>
+    </Block>
   </Page>
 )
