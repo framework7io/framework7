@@ -1,4 +1,6 @@
 /* === Grid === */
+@cols: 5, 10, 15, 20, 25, 30, 100/3, 35, 40, 45, 50, 55, 60, 65, 100*(2/3), 70, 75, 80, 85, 90, 95, 100;
+
 .row {
   display: flex;
   justify-content: space-between;
@@ -7,11 +9,101 @@
   > [class*="col-"], > .col {
     box-sizing: border-box;
   }
-}
-@cols: 5, 10, 15, 20, 25, 30, 100/3, 35, 40, 45, 50, 55, 60, 65, 100*(2/3), 70, 75, 80, 85, 90, 95, 100;
-.row {
   .col {
     width: 100%;
+  }
+  @spacer: var(--f7-grid-spacer);
+  .for-each(@colSize in @cols) {
+    @className: `Math.floor(@{colSize})`;
+    @n: `100/parseFloat(@{colSize})`;
+    @n-1: @n - 1;
+    .col-@{className} {
+      width: ~"@{colSize}%";
+      width: ~"-webkit-calc((100% - @{spacer}*@{n-1}) / @{n})";
+      width: ~"calc((100% - @{spacer}*@{n-1}) / @{n})";
+    }
+    &.no-gap {
+      .col-@{className} {
+        width: ~"@{colSize}%";
+      }
+    }
+  }
+
+  .for-each(@colSize, @index in @cols) {
+    .col:nth-last-child(@{index}), .col:nth-last-child(@{index}) ~ .col {
+      @index-1: @index - 1;
+      width: 100% / @index;
+      width: ~"-webkit-calc((100% - @{spacer}*@{index-1}) / @{index})";
+      width: ~"calc((100% - @{spacer}*@{index-1}) / @{index})";
+    }
+    &.no-gap {
+      .col:nth-last-child(@{index}), .col:nth-last-child(@{index}) ~ .col {
+        width: 100% / @index;
+      }
+    }
+  }
+  @media (min-width: 768px) {
+    .for-each(@colSize in @cols) {
+      @className: `Math.floor(@{colSize})`;
+      @n: `100/parseFloat(@{colSize})`;
+      @n-1: @n - 1;
+      .tablet-@{className} {
+        width: ~"@{colSize}%";
+        width: ~"-webkit-calc((100% - @{spacer}*@{n-1}) / @{n})";
+        width: ~"calc((100% - @{spacer}*@{n-1}) / @{n})";
+      }
+      &.no-gap {
+        .tablet-@{className} {
+          width: ~"@{colSize}%";
+        }
+      }
+    }
+
+    .for-each(@colSize, @index in @cols) {
+      .tablet-auto:nth-last-child(@{index}), .tablet-auto:nth-last-child(@{index}) ~ .tablet-auto {
+        @index-1: @index - 1;
+        width: 100% / @index;
+        width: ~"-webkit-calc((100% - @{spacer}*@{index-1}) / @{index})";
+        width: ~"calc((100% - @{spacer}*@{index-1}) / @{index})";
+      }
+      &.no-gap {
+        .tablet-auto:nth-last-child(@{index}), .tablet-auto:nth-last-child(@{index}) ~ .tablet-auto {
+          width: 100% / @index;
+        }
+      }
+    }
+  }
+
+  @media (min-width: 1025px) {
+    .for-each(@colSize in @cols) {
+      @className: `Math.floor(@{colSize})`;
+      @n: `100/parseFloat(@{colSize})`;
+      @n-1: @n - 1;
+      .desktop-@{className} {
+        width: ~"@{colSize}%";
+        width: ~"-webkit-calc((100% - @{spacer}*@{n-1}) / @{n})";
+        width: ~"calc((100% - @{spacer}*@{n-1}) / @{n})";
+      }
+      &.no-gap {
+        .desktop-@{className} {
+          width: ~"@{colSize}%";
+        }
+      }
+    }
+
+    .for-each(@colSize, @index in @cols) {
+      .desktop-auto:nth-last-child(@{index}), .desktop-auto:nth-last-child(@{index}) ~ .desktop-auto {
+        @index-1: @index - 1;
+        width: 100% / @index;
+        width: ~"-webkit-calc((100% - @{spacer}*@{index-1}) / @{index})";
+        width: ~"calc((100% - @{spacer}*@{index-1}) / @{index})";
+      }
+      &.no-gap {
+        .desktop-auto:nth-last-child(@{index}), .desktop-auto:nth-last-child(@{index}) ~ .desktop-auto {
+          width: 100% / @index;
+        }
+      }
+    }
   }
 }
 
