@@ -108,7 +108,8 @@ function initTouch() {
     if (el.nodeName.toLowerCase() === 'input' && (el.type === 'file' || el.type === 'range')) return false;
     if (el.nodeName.toLowerCase() === 'select' && Device.android) return false;
     if ($el.hasClass('no-fastclick') || $el.parents('.no-fastclick').length > 0) return false;
-    if (params.fastClicksExclude && $el.is(params.fastClicksExclude)) return false;
+    if (params.fastClicksExclude && $el.closest(params.fastClicksExclude).length > 0) return false;
+
     return true;
   }
   function targetNeedsFocus(el) {
