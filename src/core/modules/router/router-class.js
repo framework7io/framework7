@@ -88,26 +88,6 @@ class Router extends Framework7Class {
       },
     });
 
-    Utils.extend(router, {
-      // Load
-      forward,
-      load,
-      navigate,
-      refreshPage,
-      // Tab
-      tabLoad,
-      tabRemove,
-      // Modal
-      modalLoad,
-      modalRemove,
-      // Back
-      backward,
-      loadBack,
-      back,
-      // Clear history
-      clearPreviousHistory,
-    });
-
     return router;
   }
 
@@ -537,6 +517,7 @@ class Router extends Framework7Class {
     });
     return flattenedRoutes;
   }
+
   // eslint-disable-next-line
   parseRouteUrl(url) {
     if (!url) return {};
@@ -551,6 +532,25 @@ class Router extends Framework7Class {
       url,
       path,
     };
+  }
+
+  // eslint-disable-next-line
+  constructRouteUrl(route, { params, query } = {}) {
+    const { path } = route;
+    const toUrl = PathToRegexp.compile(path);
+    let url;
+    try {
+      url = toUrl(params || {});
+    } catch (error) {
+      throw new Error(`Framework7: error constructing route URL from passed params:\nRoute: ${path}\n${error.toString()}`);
+    }
+
+    if (query) {
+      if (typeof query === 'string') url += `?${query}`;
+      else url += `?${Utils.serializeObject(query)}`;
+    }
+
+    return url;
   }
 
   findTabRoute(tabEl) {
@@ -1310,5 +1310,24 @@ class Router extends Framework7Class {
     router = null;
   }
 }
+
+// Load
+Router.prototype.forward = forward;
+Router.prototype.load = load;
+Router.prototype.navigate = navigate;
+Router.prototype.refreshPage = refreshPage;
+// Tab
+Router.prototype.tabLoad = tabLoad;
+Router.prototype.tabRemove = tabRemove;
+// Modal
+Router.prototype.modalLoad = modalLoad;
+Router.prototype.modalRemove = modalRemove;
+// Back
+Router.prototype.backward = backward;
+Router.prototype.loadBack = loadBack;
+Router.prototype.back = back;
+// Clear history
+Router.prototype.clearPreviousHistory = clearPreviousHistory;
+
 
 export default Router;

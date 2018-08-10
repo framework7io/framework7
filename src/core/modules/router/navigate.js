@@ -499,11 +499,30 @@ function navigate(navigateParams, navigateOptions = {}) {
   const router = this;
   let url;
   let createRoute;
+  let name;
+  let query;
+  let params;
+  let route;
   if (typeof navigateParams === 'string') {
     url = navigateParams;
   } else {
     url = navigateParams.url;
     createRoute = navigateParams.route;
+    name = navigateParams.name;
+    query = navigateParams.query;
+    params = navigateParams.params;
+  }
+  if (name) {
+    // find route by name
+    route = router.findRouteByKey('name', name);
+    if (!route) {
+      throw new Error(`Framework7: route with name "${name}" not found`);
+    }
+    url = router.constructRouteUrl(route, { params, query });
+    if (url) {
+      return router.navigate(url, navigateOptions);
+    }
+    throw new Error(`Framework7: can't construct URL for route with name "${name}"`);
   }
   const app = router.app;
   if (!router.view) {
@@ -523,7 +542,6 @@ function navigate(navigateParams, navigateOptions = {}) {
       .replace('///', '/')
       .replace('//', '/');
   }
-  let route;
   if (createRoute) {
     route = Utils.extend(router.parseRouteUrl(navigateUrl), {
       route: Utils.extend({}, createRoute),
