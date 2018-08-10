@@ -40,7 +40,7 @@ class Autocomplete extends Framework7Class {
     }
     if (!view) view = app.views.main;
 
-    const id = Utils.now();
+    const id = Utils.id();
 
     let url = params.url;
     if (!url && $openerEl && $openerEl.length) {

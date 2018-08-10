@@ -50,7 +50,7 @@ class SmartSelect extends Framework7Class {
 
     const multiple = $selectEl[0].multiple;
     const inputType = multiple ? 'checkbox' : 'radio';
-    const id = Utils.now();
+    const id = Utils.id();
 
     Utils.extend(ss, {
       params: Utils.extend(defaults, params),

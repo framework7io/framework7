@@ -2,10 +2,8 @@ import { window, document } from 'ssr-window';
 import $ from 'dom7';
 import Utils from '../../utils/utils';
 
-let counter = 0;
-
 function parseComponent(componentString) {
-  const id = `${Utils.now()}${counter}`;
+  const id = Utils.id();
   const callbackName = `f7_component_create_callback_${id}`;
 
   // Template
@@ -29,7 +27,7 @@ function parseComponent(componentString) {
   // Parse Styles
   let style = null;
   let styleScoped = false;
-  counter += 1;
+
   if (componentString.indexOf('<style>') >= 0) {
     style = componentString.split('<style>')[1].split('</style>')[0];
   } else if (componentString.indexOf('<style scoped>') >= 0) {
@@ -38,9 +36,9 @@ function parseComponent(componentString) {
     style = style.split('\n').map((line) => {
       if (line.indexOf('{') >= 0) {
         if (line.indexOf('{{this}}') >= 0) {
-          return line.replace('{{this}}', `[data-scope="${id}"]`);
+          return line.replace('{{this}}', `[data-f7-${id}]`);
         }
-        return `[data-scope="${id}"] ${line.trim()}`;
+        return `[data-f7-${id}] ${line.trim()}`;
       }
       return line;
     }).join('\n');
