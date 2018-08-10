@@ -143,7 +143,17 @@ const createPromise = function createPromise(handler) {
   return promise;
 };
 
+let uniqueNumber = 1;
+
 const Utils = {
+  uniqueNumber() {
+    uniqueNumber += 1;
+    return uniqueNumber;
+  },
+  id(mask = 'xxxxxxxxxx', map = '0123456789abcdef') {
+    const length = map.length;
+    return mask.replace(/x/g, () => map[Math.floor((Math.random() * length))]);
+  },
   mdPreloaderContent: `
     <span class="preloader-inner">
       <span class="preloader-inner-gap"></span>
