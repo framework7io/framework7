@@ -2,25 +2,24 @@
   @import (multiple) '../../less/colors-md.less';
   // Buttons
   .button {
-    color:@themeColor;
-    border-radius: 4px;
-    line-height: 36px;
-    height: 36px;
-    text-transform: uppercase;
-    min-width: 64px;
-    padding: 0 8px;
-    border: none;
     transition-duration: 300ms;
     transform: translate3d(0,0,0);
-    font-weight: 500;
-    letter-spacing: 0.03em;
-    &.active-state {
-      background: rgba(0,0,0,0.1);
-    }
 
+    &.button-fill,
+    &.button-fill-ios {
+      &.active-state {
+        background-color: var(--f7-button-fill-pressed-bg-color, var(--f7-theme-color-shade))
+      }
+    }
+  }
+}
+    /*
+    &.button-round-md {
+      border-radius: var(--f7-button-height);
+    }
     &.button-fill, &.button-fill-md, &.button-active, &.tab-link-active {
-      background-color: @themeColor;
-      color: #fff;
+      // background-color: @themeColor;
+      // color: #fff;
       &.active-state {
         background: darken(@themeColor, 8%);
       }
@@ -29,9 +28,6 @@
       height: 48px;
       line-height: 48px;
       border-radius: 4px;
-    }
-    &.button-round, &.button-round-md {
-      border-radius: 36px;
     }
     &.button-outline {
       border: 2px solid @themeColor;
@@ -195,3 +191,4 @@
     }
   });
 }
+  */

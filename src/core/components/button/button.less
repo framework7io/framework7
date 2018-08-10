@@ -1,5 +1,6 @@
 button {
   appearance: none;
+  width: 100%;
 }
 .button {
   text-decoration: none;
@@ -7,11 +8,9 @@ button {
   display: block;
   appearance: none;
   background: none;
-  padding: 0 10px;
   margin: 0;
   white-space: nowrap;
   text-overflow:ellipsis;
-  font-size: 14px;
   position: relative;
   overflow: hidden;
   font-family: inherit;
@@ -19,14 +18,61 @@ button {
   outline: 0;
   box-sizing: border-box;
   vertical-align: middle;
-}
-.button {
+  border: none;
+  font-size: var(--f7-button-font-size);
+  color: var(--f7-button-color, var(--f7-theme-color));
+  height: var(--f7-button-height);
+  line-height: var(--f7-button-height);
+  padding: 0 var(--f7-button-padding);;
+  border-radius: var(--f7-button-border-radius);
+  min-width: var(--f7-button-min-width);
+  font-weight: var(--f7-button-font-weight);
+  letter-spacing: var(--f7-button-letter-spacing);
+  text-transform: var(--f7-button-text-transform);
   input[type="submit"]&, input[type="button"]&{
     width: 100%;
   }
-}
-button {
-  width: 100%;
+  &.active-state {
+    background-color: var(--f7-button-pressed-bg-color);
+  }
+  &.button-round,
+  .ios &.button-round-ios,
+  .md &.button-round-md {
+    border-radius: var(--f7-button-height);
+  }
+  &.button-fill,
+  .ios &.button-fill-ios,
+  .md &.button-fill-md,
+  &.button-active,
+  &.tab-link-active {
+    background-color: var(--f7-button-color, var(--f7-theme-color));
+    color: var(--f7-button-fill-text-color);
+    border-color: transparent;
+  }
+  &.button-fill,
+  .ios &.button-fill-ios,
+  .md &.button-fill-md {
+    &.active-state {
+      background-color: var(--f7-button-fill-pressed-bg-color);
+    }
+  }
+  &.button-outline,
+  .ios &.button-outline-ios,
+  .md &.button-outline-md {
+    border: var(--f7-button-outline-border-width) solid var(--f7-button-color, var(--f7-theme-color));
+    line-height: ~"calc(var(--f7-button-height) - var(--f7-button-outline-border-width) * 2)";
+  }
+  &.button-big,
+  .ios &.button-big-ios,
+  .md &.button-big-md {
+    --f7-button-height: var(--f7-button-big-height);
+    --f7-button-font-size: var(--f7-button-big-font-size, --f7-button-font-size);
+  }
+  &.button-small,
+  .ios &.button-small-ios,
+  .md &.button-small-md {
+    --f7-button-height: var(--f7-button-small-height);
+  }
 }
 .segmented {
   align-self: center;

@@ -1,28 +1,31 @@
 .ios {
   @import (multiple) '../../less/colors-ios.less';
-  //Buttons
+  // Buttons
   .button {
-    border: 1px solid @themeColor;
-    color: @themeColor;
-    border-radius: 5px;
-    line-height: 27px;
-    height: 29px;
+    transition-duration: 100ms;
 
-    &.active-state {
-      background: rgba(red(@themeColor), green(@themeColor), blue(@themeColor), .15);
+    &.button-fill,
+    &.button-fill-ios {
+      &.active-state {
+        background-color: var(--f7-button-fill-pressed-bg-color, var(--f7-theme-color-tint));
+      }
     }
-    &.button-round, &.button-round-ios {
-      border-radius: 29px;
+    &.button-big,
+    &.button-big-ios {
+      --f7-button-font-size: 17px;
     }
-    &.button-active, &.tab-link-active {
-      background: @themeColor;
-      color: #fff;
+    &.button-small,
+    &.button-small-ios {
+      --f7-button-font-size: 13px;
+      --f7-button-font-weight: 600;
+      --f7-button-text-transform: uppercase;
+      --f7-button-outline-border-width: 2px;
+      --f7-button-fill-pressed-bg-color: transparent;
     }
-    &.button-big, &.button-big-ios {
-      font-size: 17px;
-      height: 44px;
-      line-height: 42px;
-    }
+  }
+}
+    /*
+
     &.button-small, &.button-small-ios {
       height: 26px;
       line-height: 22px;
@@ -39,9 +42,9 @@
       }
     }
     &.button-fill, &.button-fill-ios {
-      color: #fff;
-      background: @themeColor;
-      border-color: transparent;
+      // color: #fff;
+      // background: @themeColor;
+      // border-color: transparent;
       &.active-state {
         opacity: 0.8;
       }
@@ -180,3 +183,4 @@
     }
   });
 }
+  */

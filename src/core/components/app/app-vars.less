@@ -1,4 +1,6 @@
-// Core
+/*====================
+  Core
+  ==================== */
 :root {
   --f7-area-left: 0px;
   --f7-area-right: 0px;
@@ -40,6 +42,8 @@
 }
 .ios {
   --f7-theme-color: #007aff;
+  --f7-theme-color-shade: darken(@themeColorIos, 8%);
+  --f7-theme-color-tint: lighten(@themeColorIos, 8%);
   --f7-font-family: -apple-system, SF UI Text, Helvetica Neue, Helvetica, Arial, sans-serif;
   --f7-text-color: #000;
   --f7-font-size: 14px;
@@ -48,6 +52,8 @@
 }
 .md {
   --f7-theme-color: #2196f3;
+  --f7-theme-color-shade: darken(@themeColorMd, 8%);
+  --f7-theme-color-tint: lighten(@themeColorMd, 8%);
   --f7-font-family: Roboto, Noto, Helvetica, Arial, sans-serif;
   --f7-text-color: #212121;
   --f7-font-size: 14px;
@@ -55,7 +61,9 @@
   --f7-page-transition-duration: 250ms;
 }
 
-// Bars
+/*====================
+  Bars - Navbar, Toolbar, Subnavbar, Searchbar
+  ==================== */
 .ios {
   --f7-bars-bg-color: #f7f7f8;
   --f7-bars-border-color: #c4c4c4;
@@ -104,12 +112,14 @@
 
   --f7-tabbar-labels-size: 72px;
   --f7-tabbar-labels-bottom-size: 56px;
-  --f7-tabbar-active-border-color: #fff;
   --f7-tabbar-link-inactive-color: rgba(255,255,255,0.7);
   --f7-tabbar-link-active-color: #fff;
+  --f7-tabbar-link-active-border-color: #fff;
 }
 
-// Grid
+/*====================
+  Grid
+  ==================== */
 .ios {
   --f7-grid-spacer: 15px;
 }
@@ -117,7 +127,46 @@
   --f7-grid-spacer: 16px;
 }
 
-// Color Themes
+/*====================
+  Buttons
+  ==================== */
+:root {
+  --f7-button-font-size: 14px;
+  --f7-button-min-width: 32px;
+  --f7-button-fill-text-color: #fff;
+}
+.ios {
+  --f7-button-color: var(--f7-theme-color);
+  --f7-button-height: 29px;
+  --f7-button-padding: 10px;
+  --f7-button-border-radius: 5px;
+  --f7-button-font-weight: 400;
+  --f7-button-letter-spacing: 0;
+  --f7-button-text-transform: none;
+  --f7-button-pressed-bg-color: rgba(red(@themeColorIos), green(@themeColorIos), blue(@themeColorIos), .15);
+  --f7-button-fill-pressed-bg-color: var(--f7-theme-color-tint);
+  --f7-button-outline-border-width: 1px;
+  --f7-button-big-height: 44px;
+  --f7-button-small-height: 26px;
+}
+.md {
+  --f7-button-color: var(--f7-theme-color);
+  --f7-button-height: 36px;
+  --f7-button-padding: 8px;
+  --f7-button-border-radius: 4px;
+  --f7-button-font-weight: 500;
+  --f7-button-letter-spacing: 0.03em;
+  --f7-button-text-transform: uppercase;
+  --f7-button-pressed-bg-color: rgba(0,0,0,0.1);
+  --f7-button-fill-pressed-bg-color: var(--f7-theme-color-shade);
+  --f7-button-outline-border-width: 2px;
+  --f7-button-big-height: 48px;
+  --f7-button-small-height: 28px;
+}
+
+/*====================
+  Color Themes
+  ==================== */
 .for-each(@pair in @colors) {
   @colorName: at(@pair, 1);
   @colorValue: at(@pair, 2);
