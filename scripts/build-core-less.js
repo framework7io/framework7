@@ -11,10 +11,10 @@ const autoprefixer = require('gulp-autoprefixer');
 const header = require('gulp-header');
 const rename = require('gulp-rename');
 const cleanCSS = require('gulp-clean-css');
+const LessLists = require('less-plugin-lists');
 const getConfig = require('./get-core-config.js');
 const getOutput = require('./get-core-output.js');
 const banner = require('./banner-core.js');
-const LessLists = require('less-plugin-lists');
 
 // Copy LESS
 function copyLess(config, cb) {
