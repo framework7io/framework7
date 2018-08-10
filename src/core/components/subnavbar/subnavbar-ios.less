@@ -1,23 +1,13 @@
 .ios {
-  @import (multiple) '../../less/colors-ios.less';
-  @import (multiple) '../../less/vars-ios.less';
-  @duration: 400ms;
   .subnavbar {
-    height: 45px;
+    height: ~"calc(var(--f7-subnavbar-height) + 1px)";
     margin-top: -1px;
     padding-top: 1px;
-    background: @barsBg;
     &.no-hairline {
       .hairline-remove(bottom);
     }
     .title {
-      font-weight: 700;
-      line-height: 1;
-      overflow: visible;
-      font-size: 34px;
-      text-align: center;
-      display: flex;
-      align-items: center;
+      line-height: 1.1;
       align-self: flex-start;
       flex-shrink: 10;
       letter-spacing: -0.03em;
@@ -62,34 +52,31 @@
     });
 
     a.link {
-      line-height: 44px;
-      height: 44px;
       justify-content: flex-start;
     }
     a.icon-only {
-      min-width: 44px;
       justify-content: center;
       margin: 0;
     }
   }
-  .hairline-root('.subnavbar', bottom, @barsBorderColor);
+  .hairline-root('.subnavbar', bottom, var(--f7-bars-border-color));
 
   .subnavbar-inner {
-    padding: 0 8px;
+    padding: ~"0 calc(8px + var(--f7-area-right)) 0 calc(8px + var(--f7-area-left))";
   }
 
   // Relation with page
   .navbar ~ .page-with-subnavbar:not(.no-navbar) .subnavbar,
   .navbar ~ .subnavbar
   {
-    top: 44px;
+    top: var(--f7-navbar-height);
   }
 
   .page-with-subnavbar .page-content,
   .subnavbar ~ .page-content,
   .subnavbar ~ * .page-content
   {
-    padding-top: 44px;
+    padding-top: var(--f7-subnavbar-height);
   }
 
   .navbar ~ .page-with-subnavbar:not(.no-navbar) .page-content,
@@ -97,29 +84,6 @@
   .navbar ~ *:not(.no-navbar) .subnavbar ~ .page-content,
   .navbar ~ *:not(.no-navbar) .subnavbar ~ * .page-content
   {
-    padding-top: 88px;
+    padding-top: ~"calc(var(--f7-navbar-height) + var(--f7-subnavbar-height))";
   }
-
-  // Dark Theme
-  .theme-dark {
-    .subnavbar, .subnavbar& {
-      background: @navbarBgDark;
-      .hairline-color(bottom, @navbarBorderColorDark);
-    }
-  }
-
-  .safe-areas-landscape({
-    .safe-area-left({
-      .subnavbar-inner {
-        padding-left: ~"calc(8px + constant(safe-area-inset-left))";
-        padding-left: ~"calc(8px + env(safe-area-inset-left))";
-      }
-    });
-    .safe-area-right({
-      .subnavbar-inner {
-        padding-right: ~"calc(8px + constant(safe-area-inset-right))";
-        padding-right: ~"calc(8px + env(safe-area-inset-right))";
-      }
-    });
-  });
 }

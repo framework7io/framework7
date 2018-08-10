@@ -2,17 +2,33 @@
   Core
   ==================== */
 :root {
+  --f7-theme-color: @themeColor;
+  --f7-theme-color-rgb: red(@themeColor), green(@themeColor), blue(@themeColor);
+  --f7-theme-color-shade: darken(@themeColor, 8%);
+  --f7-theme-color-tint: lighten(@themeColor, 8%);
+
+  --f7-theme-red-color: #ff3b30;
+
   --f7-area-left: 0px;
   --f7-area-right: 0px;
   --f7-area-top: 0px;
   --f7-area-bottom: 0px;
 
+  --f7-area-outer-left: 0px;
+  --f7-area-outer-right: 0px;
+  --f7-area-outer-top: 0px;
+  --f7-area-outer-bottom: 0px;
+
   @supports (left: env(safe-area-inset-left)) {
     --f7-area-top: env(safe-area-inset-top);
     --f7-area-bottom: env(safe-area-inset-bottom);
+    --f7-area-outer-top: env(safe-area-inset-top);
+    --f7-area-outer-bottom: env(safe-area-inset-bottom);
     .ios-edges {
       --f7-area-left: env(safe-area-inset-left);
       --f7-area-right: env(safe-area-inset-right);
+      --f7-area-outer-left: env(safe-area-inset-left);
+      --f7-area-outer-right: env(safe-area-inset-right);
     }
     .ios-left-edge,
     .ios-edges,
@@ -20,6 +36,7 @@
     .sheet-modal,
     .panel-left {
       --f7-area-left: env(safe-area-inset-left);
+      --f7-area-outer-left: env(safe-area-inset-left);
     }
     .ios-right-edge,
     .ios-edges,
@@ -27,23 +44,25 @@
     .sheet-modal,
     .panel-left {
       --f7-area-right: env(safe-area-inset-right);
+      --f7-area--outer-right: env(safe-area-inset-right);
     }
     .no-ios-edges {
       --f7-area-left: 0px;
       --f7-area-right: 0px;
+      --f7-area-outer-left: 0px;
+      --f7-area-outer-right: 0px;
     }
     .no-ios-left-edge {
       --f7-area-left: 0px;
+      --f7-area-outer-left: 0px;
     }
     .no-ios-right-edge {
-      --f7-area-left: 0px;
+      --f7-area-right: 0px;
+      --f7-area-outer-right: 0px;
     }
   }
 }
 .ios {
-  --f7-theme-color: #007aff;
-  --f7-theme-color-shade: darken(@themeColorIos, 8%);
-  --f7-theme-color-tint: lighten(@themeColorIos, 8%);
   --f7-font-family: -apple-system, SF UI Text, Helvetica Neue, Helvetica, Arial, sans-serif;
   --f7-text-color: #000;
   --f7-font-size: 14px;
@@ -51,9 +70,6 @@
   --f7-page-transition-duration: 400ms;
 }
 .md {
-  --f7-theme-color: #2196f3;
-  --f7-theme-color-shade: darken(@themeColorMd, 8%);
-  --f7-theme-color-tint: lighten(@themeColorMd, 8%);
   --f7-font-family: Roboto, Noto, Helvetica, Arial, sans-serif;
   --f7-text-color: #212121;
   --f7-font-size: 14px;
@@ -70,19 +86,26 @@
   // --f7-bars-links-color: var(--f7-theme-color);
   --f7-bars-text-color: #000;
 
-  --f7-navbar-size: 44px;
+  --f7-navbar-height: 44px;
   --f7-navbar-font-size: 17px;
   --f7-navbar-subtitle-text-color: #6d6d72;
 
-  --f7-subnavbar-size: 44px;
+  --f7-subnavbar-height: 44px;
+  --f7-subnavbar-title-font-size: 34px;
+  --f7-subnavbar-title-font-weight: 700;
 
-  --f7-searchbar-size: 44px;
+  --f7-searchbar-height: 44px;
+  --f7-searchbar-placeholder-color: #939398;
+  --f7-searchbar-input-text-color: #000;
+  --f7-searchbar-input-font-size: 17px;
+  --f7-searchbar-input-bg-color: #e8e8ea;
+  --f7-searchbar-input-height: 32px;
 
-  --f7-toolbar-size: 44px;
+  --f7-toolbar-height: 44px;
   --f7-toolbar-font-size: 17px;
 
-  --f7-tabbar-labels-size: 50px;
-  --f7-tabbar-labels-tablet-size: 56px;
+  --f7-tabbar-labels-height: 50px;
+  --f7-tabbar-labels-tablet-height: 56px;
   --f7-tabbar-link-inactive-color: #929292;
   // --f7-tabbar-link-active-color: var(--f7-theme-color);
 
@@ -91,6 +114,9 @@
     --f7-bars-border-color: #282829;
     --f7-bars-text-color: #fff;
     --f7-navbar-subtitle-text-color: #8e8e93;
+    --f7-searchbar-bg-color: #303030;
+    --f7-searchbar-input-bg-color: #171717;
+    --f7-searchbar-input-text-color: #fff;
   }
 }
 .md {
@@ -98,19 +124,27 @@
   --f7-bars-links-color: #fff;
   --f7-bars-text-color: #fff;
 
-  --f7-navbar-size: 56px;
+  --f7-navbar-height: 56px;
   --f7-navbar-tablet-size: 64px;
   --f7-navbar-font-size: 20px;
   --f7-navbar-subtitle-text-color: rgba(255,255,255,0.85);
 
-  --f7-subnavbar-size: 48px;
+  --f7-subnavbar-height: 48px;
+  --f7-subnavbar-title-font-size: 20px;
+  --f7-subnavbar-title-font-weight: 500;
 
-  --f7-searchbar-size: 48px;
+  --f7-searchbar-bg-color: #fff;
+  --f7-searchbar-height: 48px;
+  --f7-searchbar-placeholder-color: #939398;
+  --f7-searchbar-input-text-color: #000;
+  --f7-searchbar-input-font-size: 20px;
+  --f7-searchbar-input-bg-color: transparent;
+  --f7-searchbar-input-height: 100%;
 
-  --f7-toolbar-size: 48px;
+  --f7-toolbar-height: 48px;
   --f7-toolbar-font-size: 14px;
 
-  --f7-tabbar-labels-size: 72px;
+  --f7-tabbar-labels-height: 72px;
   --f7-tabbar-labels-bottom-size: 56px;
   --f7-tabbar-link-inactive-color: rgba(255,255,255,0.7);
   --f7-tabbar-link-active-color: #fff;
@@ -134,23 +168,27 @@
   --f7-button-font-size: 14px;
   --f7-button-min-width: 32px;
   --f7-button-fill-text-color: #fff;
+  --f7-button-raised-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  --f7-button-raised-pressed-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  --f7-segmented-raised-divider-color: rgba(0,0,0,0.1);
 }
 .ios {
-  --f7-button-color: var(--f7-theme-color);
+  // --f7-button-color: var(--f7-theme-color);
   --f7-button-height: 29px;
   --f7-button-padding: 10px;
   --f7-button-border-radius: 5px;
   --f7-button-font-weight: 400;
   --f7-button-letter-spacing: 0;
   --f7-button-text-transform: none;
-  --f7-button-pressed-bg-color: rgba(red(@themeColorIos), green(@themeColorIos), blue(@themeColorIos), .15);
-  --f7-button-fill-pressed-bg-color: var(--f7-theme-color-tint);
+  // --f7-button-pressed-bg-color: rgba(var(--f7-theme-color-rgb), .15);
+  // --f7-button-fill-pressed-bg-color: var(--f7-theme-color-tint);
   --f7-button-outline-border-width: 1px;
   --f7-button-big-height: 44px;
+  --f7-button-big-font-size: 17px;
   --f7-button-small-height: 26px;
 }
 .md {
-  --f7-button-color: var(--f7-theme-color);
+  // --f7-button-color: var(--f7-theme-color);
   --f7-button-height: 36px;
   --f7-button-padding: 8px;
   --f7-button-border-radius: 4px;
@@ -158,10 +196,74 @@
   --f7-button-letter-spacing: 0.03em;
   --f7-button-text-transform: uppercase;
   --f7-button-pressed-bg-color: rgba(0,0,0,0.1);
-  --f7-button-fill-pressed-bg-color: var(--f7-theme-color-shade);
+  // --f7-button-fill-pressed-bg-color: var(--f7-theme-color-shade);
   --f7-button-outline-border-width: 2px;
   --f7-button-big-height: 48px;
+  --f7-button-big-font-size: 14px;
   --f7-button-small-height: 28px;
+  .theme-dark {
+    --f7-button-pressed-bg-color: rgba(255,255,255,0.1);
+  }
+}
+
+/*====================
+  Block
+  ==================== */
+:root {
+  --f7-block-strong-bg-color: #fff;
+  --f7-block-title-font-size: inherit;
+  --f7-block-header-margin: 10px;
+  --f7-block-footer-margin: 10px;
+  --f7-block-header-font-size: 14px;
+  --f7-block-footer-font-size: 14px;
+}
+.ios {
+  --f7-block-text-color: #6d6d72;
+  --f7-block-padding: 15px;
+  --f7-block-vertical-margin: 35px;
+  --f7-block-strong-text-color: #000;
+  --f7-block-strong-border-color: #c8c7cc;
+  --f7-block-title-text-transform: uppercase;
+  --f7-block-title-text-color: #6d6d72;
+  --f7-block-title-font-weight: 400;
+  --f7-block-title-line-height: 17px;
+  --f7-block-title-margin-bottom: 10px;
+  --f7-block-inset-side-margin: 15px;
+  --f7-block-inset-border-radius: 7px;
+  --f7-block-header-text-color: #8f8f94;
+  --f7-block-footer-text-color: #8f8f94;
+  .theme-dark {
+    --f7-block-strong-border-color: #282829;
+    --f7-block-title-text-color: #8E8E93;
+    --f7-block-header-text-color: #8E8E93;
+    --f7-block-footer-text-color: #8E8E93;
+    --f7-block-strong-bg-color: #1c1c1d;
+    --f7-block-strong-text-color: #fff;
+  }
+}
+.md {
+  --f7-block-text-color: inherit;
+  --f7-block-padding: 16px;
+  --f7-block-vertical-margin: 32px;
+  --f7-block-strong-text-color: inherit;
+  --f7-block-strong-border-color: rgba(0,0,0,0.12);
+  --f7-block-title-text-transform: none;
+  --f7-block-title-text-color: rgba(0,0,0,0.54);
+  --f7-block-title-font-weight: 500;
+  --f7-block-title-line-height: 16px;
+  --f7-block-title-margin-bottom: 16px;
+  --f7-block-inset-side-margin: 16px;
+  --f7-block-inset-border-radius: 4px;
+  --f7-block-header-text-color: rgba(0,0,0,0.54);
+  --f7-block-footer-text-color: rgba(0,0,0,0.54);
+
+  .theme-dark {
+    --f7-block-strong-border-color: #282829;
+    --f7-block-title-text-color: #fff;
+    --f7-block-header-text-color: rgba(255,255,255,0.54);
+    --f7-block-footer-text-color: rgba(255,255,255,0.54);
+    --f7-block-strong-bg-color: #1c1c1d;
+  }
 }
 
 /*====================
@@ -172,6 +274,9 @@
   @colorValue: at(@pair, 2);
   .color-theme-@{colorName} {
     --f7-theme-color: @colorValue;
+    --f7-theme-color-rgb: red(@colorValue), green(@colorValue), blue(@colorValue);
+    --f7-theme-color-shade: darken(@colorValue, 8%);
+    --f7-theme-color-tint: lighten(@colorValue, 8%);
   }
 }
 .for-each(@pair in @colors) {
@@ -179,5 +284,8 @@
   @colorValue: at(@pair, 2);
   .color-@{colorName} {
     --f7-theme-color: @colorValue;
+    --f7-theme-color-rgb: red(@colorValue), green(@colorValue), blue(@colorValue);
+    --f7-theme-color-shade: darken(@colorValue, 8%);
+    --f7-theme-color-tint: lighten(@colorValue, 8%);
   }
 }

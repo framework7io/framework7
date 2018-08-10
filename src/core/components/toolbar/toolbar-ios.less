@@ -15,7 +15,7 @@
       }
     }
     a.icon-only {
-      min-height: var(--f7-toolbar-size);
+      min-height: var(--f7-toolbar-height);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -37,7 +37,7 @@
     }
   }
   .tabbar-labels {
-    height: var(--f7-tabbar-labels-size);
+    height: var(--f7-tabbar-labels-height);
     a.tab-link, a.link {
       padding-top: 4px;
       padding-bottom: 4px;
@@ -52,7 +52,7 @@
 
   }
   @media (min-width: 768px) {
-    --f7-tabbar-labels-size: var(--f7-tabbar-labels-tablet-size);
+    --f7-tabbar-labels-height: var(--f7-tabbar-labels-tablet-height);
     .tabbar, .tabbar-labels {
       .toolbar-inner {
         justify-content: center;
@@ -83,19 +83,19 @@
   // Relation with page
   .tabbar-labels ~ * .page-content,
   .tabbar-labels ~ .page-content {
-    padding-bottom: ~"calc(var(--f7-tabbar-labels-size) + var(--f7-area-bottom))";
+    padding-bottom: ~"calc(var(--f7-tabbar-labels-height) + var(--f7-area-bottom))";
   }
 
   .views, .view, .page, .popup, .panel, .login-screen {
     >.toolbar {
-      height: ~"calc(var(--f7-toolbar-size) + var(--f7-area-bottom))";
+      height: ~"calc(var(--f7-toolbar-height) + var(--f7-area-bottom))";
       .toolbar-inner {
         height: auto;
         bottom: var(--f7-area-bottom);
       }
     }
     >.tabbar-labels {
-      height: ~"calc(var(--f7-tabbar-labels-size) + var(--f7-area-bottom))";
+      height: ~"calc(var(--f7-tabbar-labels-height) + var(--f7-area-bottom))";
     }
   }
 }

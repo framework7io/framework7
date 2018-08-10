@@ -8,7 +8,7 @@
   z-index: 500;
   box-sizing: border-box;
   left: 0;
-  height: var(--f7-toolbar-size);
+  height: var(--f7-toolbar-height);
   background-color: var(--f7-bars-bg-color, var(--f7-theme-color));
   color: var(--f7-bars-text-color);
   font-size: var(--f7-toolbar-font-size);
@@ -25,8 +25,8 @@
   }
   a.link {
     display: flex;
-    line-height: var(--f7-toolbar-size);
-    height: var(--f7-toolbar-size);
+    line-height: var(--f7-toolbar-height);
+    height: var(--f7-toolbar-height);
   }
   i.icon {
     display: block;
@@ -119,7 +119,7 @@
 .md .toolbar-bottom-md ~ .page-content,
 .md .messagebar ~ * .page-content,
 .md .messagebar ~ .page-content {
-  padding-bottom: ~"calc(var(--f7-toolbar-size) + var(--f7-area-bottom))";
+  padding-bottom: ~"calc(var(--f7-toolbar-height) + var(--f7-area-bottom))";
 }
 
 & when (@includeIosTheme) {

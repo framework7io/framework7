@@ -112,6 +112,7 @@ const config = {
     'ios',
     'md',
   ],
+  themeColor: '#007aff',
   colors: {
     red: '#ff3b30',
     green: '#4cd964',
@@ -128,12 +129,6 @@ const config = {
     gray: '#8e8e93',
     white: '#ffffff',
     black: '#000000',
-  },
-  ios: {
-    themeColor: '#007aff',
-  },
-  md: {
-    themeColor: '#2196f3',
   },
 };
 

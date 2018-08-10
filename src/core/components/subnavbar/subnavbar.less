@@ -9,11 +9,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  background-color: var(--f7-bars-bg-color, var(--f7-theme-color));
+  color: var(--f7-bars-text-color);
   .title {
     position: relative;
     overflow: hidden;
     text-overflow: ellpsis;
     white-space: nowrap;
+    font-size: var(--f7-subnavbar-title-font-size);
+    font-weight: var(--f7-subnavbar-title-font-weight);
+    text-align: left;
+    display: inline-block;
   }
   .left, .right {
     flex-shrink: 0;
@@ -24,6 +31,13 @@
   .right:first-child {
     position: absolute;
     height: 100%;
+  }
+  a.link {
+    line-height: var(--f7-subnavbar-height);
+    height: var(--f7-subnavbar-height);
+  }
+  a.icon-only {
+    min-width: var(--f7-subnavbar-height);
   }
 }
 .subnavbar-inner {

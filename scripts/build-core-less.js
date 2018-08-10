@@ -14,7 +14,7 @@ const cleanCSS = require('gulp-clean-css');
 const getConfig = require('./get-core-config.js');
 const getOutput = require('./get-core-output.js');
 const banner = require('./banner-core.js');
-const lessLists = require('less-plugin-lists');
+const LessLists = require('less-plugin-lists');
 
 // Copy LESS
 function copyLess(config, cb) {
@@ -34,10 +34,7 @@ function copyLess(config, cb) {
         .replace('$includeMdTheme', includeMdTheme)
         .replace('$includeDarkTheme', includeDarkTheme)
         .replace('$colors', colors)
-        .replace('$themeColorIos', config.ios.themeColor)
-        .replace('$colorsIos', '')
-        .replace('$themeColorMd', config.md.themeColor)
-        .replace('$colorsMd', '')
+        .replace('$themeColor', config.themeColor)
         .replace('$rtl', rtl);
       return newContent;
     }))
@@ -65,15 +62,12 @@ function build(config, components, themes, rtl, cb) {
         .replace('$includeMdTheme', includeMdTheme)
         .replace('$includeDarkTheme', includeDarkTheme)
         .replace('$colors', colors)
-        .replace('$themeColorIos', config.ios.themeColor)
-        .replace('$colorsIos', '')
-        .replace('$themeColorMd', config.md.themeColor)
-        .replace('$colorsMd', '')
+        .replace('$themeColor', config.themeColor)
         .replace('$rtl', rtl);
       return newContent;
     }))
     .pipe(less({
-      plugins: [new lessLists()],
+      plugins: [new LessLists()],
     }))
     .on('error', (err) => {
       if (cb) cb();

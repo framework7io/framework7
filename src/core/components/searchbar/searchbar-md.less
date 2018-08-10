@@ -1,9 +1,5 @@
 .md {
-  @import (multiple) '../../less/colors-md.less';
-  @import (multiple) '../../less/vars-md.less';
   .searchbar {
-    height: @searchbarSize;
-    background: @searchbarBg;
     input[type="search"], input[type="text"] {
       .ltr({
         padding-left: 65px;
@@ -13,24 +9,10 @@
         padding-right: 65px;
         padding-left: 48px;
       });
-      box-sizing: border-box;
-      width: 100%;
-      height: 100%;
-      display: block;
-      border: none;
-      appearance: none;
-      font-family: inherit;
-      font-size: 20px;
-      color: #000;
-      font-weight: normal;
-      &::placeholder {
-        color: #939398;
-        opacity: 1;
-      }
     }
   }
-  .searchbar-expandable {
-    height: 100%;
+  .searchbar-inner {
+    padding: 0 var(--f7-area-right) 0 var(--f7-area-left);
   }
   .searchbar-backdrop {
     background: rgba(0,0,0,0.25);
@@ -39,8 +21,13 @@
     position: absolute;
     width: 48px;
     height: 48px;
-    .ltr({ left: -4px; });
-    .rtl({ right: -4px; });
+    .ltr({
+      left: ~"calc(-4px + var(--f7-area-left))";
+
+    });
+    .rtl({
+      right: ~"calc(-4px + var(--f7-area-right))";;
+    });
     top: 50%;
     margin-top: -24px;
     background-size: 24px 24px;
@@ -119,53 +106,43 @@
       .rtl({ padding-right: 65px + 8px; });
     }
     .searchbar-icon, .searchbar-disable-button {
-      .ltr({ left: -4px + 8px; });
-      .rtl({ right: -4px + 8px; });
+      .ltr({
+        left: ~"calc(-4px + 8px + var(--f7-area-left))";
+      });
+      .rtl({
+        right: ~"calc(-4px + 8px + var(--f7-area-left))";
+      });
     }
   }
   .searchbar-expandable {
-    width: 56px;
+    --f7-searchbar-size: var(--f7-searchbar-height);
     height: 100%;
     opacity: 0;
     top: 50%;
-    margin-top: -56px / 2;
+    border-radius: ~"calc(var(--f7-searchbar-size))";
+    width: ~"calc(var(--f7-searchbar-size))";
+    margin-top: ~"calc(var(--f7-searchbar-size) * -1 / 2)";
     transform: translate3d(0px, 0px, 0px);
     .ltr({
       left: 100%;
-      margin-left: -56px;
+      margin-left: ~"calc(var(--f7-searchbar-size) * -1)"
     });
     .rtl({
       right: 100%;
-      margin-right: -56px;
+      margin-right: ~"calc(var(--f7-searchbar-size) * -1)"
     });
   }
   .navbar .searchbar-expandable {
-    border-radius: @navbarSize / 2;
-    width: @navbarSize;
-    margin-top: -@navbarSize / 2;
-    .ltr({ margin-left: -@navbarSize; });
-    .rtl({ margin-right: -@navbarSize; });
-    @media (min-width: 768px) {
-      border-radius: @navbarSizeTablet / 2;
-      width: @navbarSizeTablet;
-      margin-top: -@navbarSizeTablet / 2;
-      .ltr({ margin-left: -@navbarSizeTablet; });
-      .rtl({ margin-right: -@navbarSizeTablet; });
-    }
+    --f7-searchbar-size: var(--f7-navbar-height);
   }
-  .toolbar .searchbar-expandable, .subnavbar .searchbar-expandable {
-    border-radius: @toolbarSize / 2;
-    width: @toolbarSize;
-    margin-top: -@toolbarSize / 2;
-    .ltr({ margin-left: -@toolbarSize; });
-    .rtl({ margin-right: -@navbarSize; });
+  .toolbar .searchbar-expandable {
+    --f7-searchbar-size: var(--f7-navbar-height);
+  }
+  .subnavbar .searchbar-expandable {
+    --f7-searchbar-size: var(--f7-subnavbar-height);
   }
   .tabbar-labels .searchbar-expandable {
-    border-radius: @tabbarLabelsSize / 2;
-    width: @tabbarLabelsSize;
-    margin-top: -@tabbarLabelsSize / 2;
-    .ltr({ margin-left: -@tabbarLabelsSize; });
-    .rtl({ margin-right: -@tabbarLabelsSize; });
+    --f7-searchbar-size: var(--f7-tabbar-labels-height);
   }
 
   .searchbar-expandable.searchbar-enabled {
@@ -185,97 +162,51 @@
     });
   }
 
-
   // Relation with page/navbar/toolbar
   .page > .searchbar ~ * .page-content,
   .page > .searchbar ~ .page-content {
-    padding-top: @searchbarSize;
+    padding-top: var(--f7-searchbar-height);
   }
   // Navbar
   .page > .navbar ~ .searchbar {
-    top: @navbarSize;
-    @media (min-width: 768px) {
-      top: @navbarSizeTablet;
-    }
+    top: var(--f7-navbar-height);
   }
   .page > .navbar ~ .searchbar ~ * .page-content,
   .page > .navbar ~ .searchbar ~ .page-content {
-    padding-top: @navbarSize + @searchbarSize;
-    @media (min-width: 768px) {
-      padding-top: @navbarSizeTablet + @searchbarSize;
-    }
+    padding-top: ~"calc(var(--f7-navbar-height) + var(--f7-searchbar-height))";
   }
 
   // Toolbar
   .page > .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .searchbar {
-    top: @toolbarSize;
+    top: var(--f7-toolbar-height);
   }
   .page > .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .searchbar ~ * .page-content,
   .page > .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .searchbar ~ .page-content {
-    padding-top: @toolbarSize + @searchbarSize;
+    padding-top: ~"calc(var(--f7-toolbar-height) + var(--f7-searchbar-height))";
   }
 
   .page > .tabbar-labels:not(.toolbar-bottom-md) ~ .searchbar {
-    top: @tabbarLabelsSize;
+    top: var(--f7-toolbar-labels-height);
   }
   .page > .tabbar-labels:not(.toolbar-bottom-md) ~ .searchbar ~ * .page-content,
   .page > .tabbar-labels:not(.toolbar-bottom-md) ~ .searchbar ~ .page-content {
-    padding-top: @tabbarLabelsSize + @searchbarSize;
+    padding-top: ~"calc(var(--f7-tabbar-labels-height) + var(--f7-searchbar-height))";
   }
 
   // Navbar + Toolbar
   .page > .navbar ~ .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .searchbar {
-    top: @navbarSize + @toolbarSize;
-    @media (min-width: 768px) {
-      top: @navbarSizeTablet + @toolbarSize;
-    }
+    top: ~"calc(var(--f7-navbar-height) + var(--f7-searchbar-height))";
   }
   .page > .navbar ~ .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .searchbar ~ * .page-content,
   .page > .navbar ~ .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .searchbar ~ .page-content {
-    padding-top: @navbarSize + @toolbarSize + @searchbarSize;
-    @media (min-width: 768px) {
-      padding-top: @navbarSizeTablet + @toolbarSize + @searchbarSize;
-    }
+    padding-top: ~"calc(var(--f7-navbar-height) + var(--f7-toolbar-height) + var(--f7-searchbar-height))";
   }
 
   .page > .navbar ~ .tabbar-labels:not(.toolbar-bottom-md) ~ .searchbar {
-    top: @navbarSize + @tabbarLabelsSize;
-    @media (min-width: 768px) {
-      top: @navbarSizeTablet + @tabbarLabelsSize;
-    }
+    top: ~"calc(var(--f7-navbar-height) + var(--f7-tabbar-labels-height))";
   }
   .page > .navbar ~ .tabbar-labels:not(.toolbar-bottom-md) ~ .searchbar ~ * .page-content,
   .page > .navbar ~ .tabbar-labels:not(.toolbar-bottom-md) ~ .searchbar ~ .page-content {
-    padding-top: @navbarSize + @tabbarLabelsSize + @searchbarSize;
-    @media (min-width: 768px) {
-      padding-top: @navbarSizeTablet + @tabbarLabelsSize + @searchbarSize;
-    }
+    padding-top: ~"calc(var(--f7-navbar-height) + var(--f7-tabbar-labels-height) + var(--f7-searchbar-height))";
   }
-
-  .safe-areas-landscape({
-    .safe-area-left({
-      .searchbar-inner {
-        padding-left: constant(safe-area-inset-left);
-        padding-left: env(safe-area-inset-left);
-      }
-      .ltr({
-        .searchbar-disable-button {
-          left: ~"calc(4px + constant(safe-area-inset-left))";
-          left: ~"calc(4px + env(safe-area-inset-left))";
-        }
-      });
-    });
-    .safe-area-right({
-      .searchbar-inner {
-        padding-right: constant(safe-area-inset-right);
-        padding-right: env(safe-area-inset-right);
-      }
-      .rtl({
-        .searchbar-disable-button {
-          right: ~"calc(4px + constant(safe-area-inset-right))";
-          right: ~"calc(4px + env(safe-area-inset-right))";
-        }
-      });
-    });
-  });
 }

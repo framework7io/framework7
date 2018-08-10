@@ -71,7 +71,7 @@
     }
   }
   .tabbar-labels {
-    height: var(--f7-tabbar-labels-size);
+    height: var(--f7-tabbar-labels-height);
     a.tab-link, a.link {
       padding-top: 12px;
       padding-bottom: 12px;
@@ -110,10 +110,10 @@
   // Relation with page and navbar
   .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ * .page-content,
   .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .page-content {
-    padding-top: var(--f7-toolbar-size);
+    padding-top: var(--f7-toolbar-height);
   }
   .toolbar.tabbar-labels:not(.toolbar-bottom-md) ~ * .page-content, .toolbar.tabbar-labels:not(.toolbar-bottom-md) ~ .page-content {
-    padding-top: var(--f7-tabbar-labels-size);
+    padding-top: var(--f7-tabbar-labels-height);
   }
 
   // Hidden
@@ -127,26 +127,26 @@
   // With Navbar
   .navbar {
     + .toolbar:not(.toolbar-bottom-md):not(.messagebar) {
-      top: var(--f7-navbar-size);
+      top: var(--f7-navbar-height);
     }
     + .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ * .page-content,
     + .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .page-content {
-      padding-top: ~"calc(var(--f7-toolbar-size) + var(--f7-navbar-size))";
+      padding-top: ~"calc(var(--f7-toolbar-height) + var(--f7-navbar-height))";
     }
     + .toolbar.tabbar-labels:not(.toolbar-bottom-md) ~ * .page-content, + .toolbar.tabbar-labels:not(.toolbar-bottom-md) ~ .page-content {
-      padding-top: ~"calc(var(--f7-tabbar-labels-size) + var(--f7-navbar-size))";
+      padding-top: ~"calc(var(--f7-tabbar-labels-height) + var(--f7-navbar-height))";
     }
     + .toolbar-hidden:not(.toolbar-bottom-md):not(.messagebar) {
-      --translate: ~"calc(var(--f7-navbar-size) + var(--f7-toolbar-size))";
+      --translate: ~"calc(var(--f7-navbar-height) + var(--f7-toolbar-height))";
       transform: ~"translate3d(0, calc(var(--translate) * -1), 0)";
     }
     + .toolbar-hidden.tabbar-labels:not(.toolbar-bottom-md) {
-      --translate: ~"calc(var(--f7-navbar-size) + var(--f7-tabbar-labels-size))";
+      --translate: ~"calc(var(--f7-navbar-height) + var(--f7-tabbar-labels-height))";
       transform: ~"translate3d(0, calc(var(--translate) * -1), 0)";
     }
     &.navbar-hidden {
       + .toolbar:not(.toolbar-bottom-md):not(.messagebar):not(.toolbar-hidden) {
-        transform: ~"translate3d(0, calc(var(--f7-navbar-size) * -1), 0)";
+        transform: ~"translate3d(0, calc(var(--f7-navbar-height) * -1), 0)";
       }
     }
   }
@@ -159,7 +159,7 @@
 
   .views, .view, .page, .popup, .panel, .login-screen {
     >.toolbar:first-child:not(.toolbar-bottom-md) {
-      height: ~"calc(var(--f7-toolbar-size) + var(--f7-area-top))";
+      height: ~"calc(var(--f7-toolbar-height) + var(--f7-area-top))";
       .toolbar-inner {
         height: auto;
       }
@@ -168,11 +168,11 @@
         top: var(--f7-area-top);
       }
       &.tabbar-labels {
-        height: ~"calc(var(--f7-tabbar-labels-size) + var(--f7-area-top))";
+        height: ~"calc(var(--f7-tabbar-labels-height) + var(--f7-area-top))";
       }
     }
     >.toolbar-bottom-md {
-      height: ~"calc(var(--f7-toolbar-size) + var(--f7-area-bottom))";
+      height: ~"calc(var(--f7-toolbar-height) + var(--f7-area-bottom))";
       .toolbar-inner {
         height: auto;
         top: 0;

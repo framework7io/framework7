@@ -202,12 +202,18 @@ class Searchbar extends FrameworkClass {
       if (!sb || (sb && !sb.$el)) return;
       if (sb.enabled) {
         sb.$el.removeClass('searchbar-enabled');
+        if (sb.expandable) {
+          sb.$el.parents('.navbar-inner').removeClass('with-searchbar-expandable-enabled');
+        }
       }
     }
     function onPageBeforeIn() {
       if (!sb || (sb && !sb.$el)) return;
       if (sb.enabled) {
         sb.$el.addClass('searchbar-enabled');
+        if (sb.expandable) {
+          sb.$el.parents('.navbar-inner').removeClass('with-searchbar-expandable-enabled');
+        }
       }
     }
     sb.attachEvents = function attachEvents() {
@@ -295,6 +301,9 @@ class Searchbar extends FrameworkClass {
         }
         sb.$disableButtonEl.css(`margin-${app.rtl ? 'left' : 'right'}`, '0px');
       }
+      if (sb.expandable) {
+        sb.$el.parents('.navbar-inner').addClass('with-searchbar-expandable-enabled');
+      }
       if (sb.$hideOnEnableEl) sb.$hideOnEnableEl.addClass('hidden-by-searchbar');
       sb.$el.trigger('searchbar:enable');
       sb.emit('local::enable searchbarEnable', sb);
@@ -337,6 +346,9 @@ class Searchbar extends FrameworkClass {
     sb.$inputEl.val('').trigger('change');
     sb.$el.removeClass('searchbar-enabled');
     sb.$el.removeClass('searchbar-focused');
+    if (sb.expandable) {
+      sb.$el.parents('.navbar-inner').removeClass('with-searchbar-expandable-enabled');
+    }
     if (!sb.expandable && sb.$disableButtonEl && sb.$disableButtonEl.length > 0 && app.theme === 'ios') {
       sb.$disableButtonEl.css(`margin-${app.rtl ? 'left' : 'right'}`, `${-sb.disableButtonEl.offsetWidth}px`);
     }

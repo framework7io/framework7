@@ -1,33 +1,13 @@
 .ios {
-  @import (multiple) '../../less/colors-ios.less';
-  @import (multiple) '../../less/vars-ios.less';
   .searchbar {
-    height: @searchbarSize;
-    background: @searchbarBg;
     &.no-hairline {
       .hairline-remove(bottom);
     }
     input[type="search"], input[type="text"] {
       padding: 0 28px;
-      box-sizing: border-box;
-      width: 100%;
-      height: 100%;
-      display: block;
-      border: none;
-      appearance: none;
       border-radius: 10px;
       border-radius: 8px;
-      font-family: inherit;
-      color: #000;
-      font-size: 17px;
-      font-weight: normal;
       z-index: 30;
-      background-color: #e8e8ea;
-      position: relative;
-      &::placeholder {
-        color: #939398;
-        opacity: 1;
-      }
     }
     .input-clear-button {
       z-index: 40;
@@ -39,11 +19,8 @@
       });
     }
   }
-  .searchbar-expandable {
-
-  }
   .searchbar-inner {
-    padding: 0 8px;
+    padding: ~"0 calc(8px + var(--f7-area-right)) 0 calc(8px + var(--f7-area-left))";
   }
   .searchbar-icon {
     width: 13px;
@@ -64,18 +41,14 @@
   .searchbar-backdrop {
     background: rgba(0,0,0,0.4);
   }
-  .searchbar-input-wrap {
-    // height: 36px;
-    height: 32px;
-  }
-  .hairline-root('.searchbar', bottom, @searchbarBorderColor);
+  .hairline-root('.searchbar', bottom, var(--f7-bars-border-color));
 
   .searchbar-disable-button {
     font-size: 17px;
     flex-shrink: 0;
     transform: translate3d(0,0,0);
     transition-duration: 300ms;
-    color: @themeColor;
+    color: var(--f7-bars-links-color, var(--f7-theme-color));
     display: none;
     &.active-state {
       transition-duration: 0ms;
@@ -96,6 +69,7 @@
     }
   }
   .searchbar-expandable {
+    --f7-searchbar-size: var(--f7-searchbar-height);
     .ltr({ left: 0; });
     .rtl({ right: 0; });
     bottom: 0;
@@ -111,7 +85,16 @@
       display: block;
     }
     .searchbar-inner {
-      height: @searchbarSize;
+      height: var(--f7-searchbar-size)
+    }
+  }
+  .navbar .searchbar-expandable {
+    --f7-searchbar-size: var(--f7-navbar-height);
+  }
+  .navbar-inner.with-searchbar-expandable-enabled {
+    .left, .title, .right {
+      transform: translateY(-44px);
+      transition: 300ms;
     }
   }
   .searchbar-expandable.searchbar-enabled {
@@ -125,7 +108,7 @@
   }
   // Relation with page
   .navbar ~ .page:not(.no-navbar) > .searchbar, .page > .navbar ~ .searchbar {
-    top: @searchbarSize;
+    top: var(--f7-searchbar-height);
   }
   // Relation with page
   .navbar ~ .page:not(.no-navbar) > .searchbar ~ .page-content,
@@ -133,44 +116,7 @@
   .page > .navbar ~ .searchbar ~ .page-content,
   .page > .navbar ~ .searchbar ~ * .page-content
   {
-    padding-top: @navbarSize + @searchbarSize;
+    padding-top: ~"calc(var(--f7-navbar-height) + var(--f7-searchbar-height))";
   }
-
-  // Dark Theme
-  & when (@includeDarkTheme) {
-    .theme-dark {
-      .searchbar, .searchbar& {
-        background-color: #303030;
-        .hairline-color(bottom, @searchbarBorderColorDark);
-        input[type="search"], input[type="text"] {
-          background-color: #171717;
-          color: #fff;
-        }
-
-      }
-    }
-  }
-
-  .color-theme-loop({
-    .color-theme-@{colorThemeName} {
-      .searchbar-disable-button {
-        color: @colorThemeValue;
-      }
-    }
-  });
-  .safe-areas-landscape({
-    .safe-area-left({
-      .searchbar-inner {
-        padding-left: ~"calc(8px + constant(safe-area-inset-left))";
-        padding-left: ~"calc(8px + env(safe-area-inset-left))";
-      }
-    });
-    .safe-area-right({
-      .searchbar-inner {
-        padding-right: ~"calc(8px + constant(safe-area-inset-right))";
-        padding-right: ~"calc(8px + env(safe-area-inset-right))";
-      }
-    });
-  });
 }
 
