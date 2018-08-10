@@ -5,10 +5,8 @@ import Utils from '../../utils/utils';
 import vdom from './vdom';
 import patch from './patch';
 
-let counter = 0;
-
 function renderEsTemplate(template, id) {
-  const callbackName = `f7_component_es_template${id || new Date().getTime()}`;
+  const callbackName = `f7_component_es_template_callback_${id}`;
 
   const scriptContent = `
     window.${callbackName} = function () {
@@ -32,7 +30,7 @@ function renderEsTemplate(template, id) {
 
 class Framework7Component {
   constructor(app, options, extendContext = {}) {
-    const id = `${Utils.now()}${counter}`;
+    const id = Utils.id();
     const self = Utils.merge(
       this,
       extendContext,
@@ -45,7 +43,6 @@ class Framework7Component {
       }
     );
     const { $options } = self;
-    counter += 1;
 
     // Root data and methods
     Object.defineProperty(self, '$root', {
@@ -123,7 +120,7 @@ class Framework7Component {
       self.$styleEl = document.createElement('style');
       self.$styleEl.innerHTML = $options.style;
       if ($options.styleScoped) {
-        self.el.setAttribute('data-scope', $options.id);
+        self.el.setAttribute(`data-f7-${$options.id}`, '');
       }
     }
 
@@ -227,8 +224,8 @@ class Framework7Component {
     if (self.$styleEl) $(self.$styleEl).remove();
     self.$detachEvents();
     if (self.$options.destroyed) self.$options.destroyed();
-    if (window[`f7_component_es_template${self.$options.id}`]) {
-      delete window[`f7_component_es_template${self.$options.id}`];
+    if (window[`f7_component_es_template_callback_${self.$options.id}`]) {
+      delete window[`f7_component_es_template_callback_${self.$options.id}`];
     }
     // Delete component instance
     if (self.el && self.el.f7Component) {
