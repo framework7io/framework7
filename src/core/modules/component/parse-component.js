@@ -76,7 +76,7 @@ function parseComponent(componentString) {
   }
   if (component.template) {
     if (component.templateType === 't7') {
-      component.template = Template7.compile(component.template)
+      component.template = Template7.compile(component.template);
     }
     if (component.templateType === 'es') {
       const renderContent = `window.${callbackRenderName} = function () {
