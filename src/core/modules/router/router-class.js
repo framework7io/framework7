@@ -852,7 +852,15 @@ class Router extends Framework7Class {
       const createdComponent = app.component.create(componentOptions, extendContext);
       resolve(createdComponent.el);
     }
+    let cachedComponent;
     if (url) {
+      router.cache.components.forEach((cached) => {
+        if (cached.url === url) cachedComponent = cached.component;
+      });
+    }
+    if (url && cachedComponent) {
+      compile(cachedComponent);
+    } else if (url && !cachedComponent) {
       // Load via XHR
       if (router.xhr) {
         router.xhr.abort();
@@ -861,7 +869,12 @@ class Router extends Framework7Class {
       router
         .xhrRequest(url, options)
         .then((loadedComponent) => {
-          compile(app.component.parse(loadedComponent));
+          const parsedComponent = app.component.parse(loadedComponent);
+          router.cache.components.push({
+            url,
+            component: parsedComponent,
+          });
+          compile(parsedComponent);
         })
         .catch((err) => {
           reject();

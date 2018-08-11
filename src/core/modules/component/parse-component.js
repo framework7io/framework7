@@ -105,7 +105,6 @@ function parseComponent(componentString) {
 
   // Component ID
   component.id = id;
-
   return component;
 }
 
