@@ -33,6 +33,18 @@ button {
     width: 100%;
   }
 
+  > i.icon + span,
+  > span:not(.ripple-wave) + span,
+  > span:not(.ripple-wave) + i.icon,
+  > i.icon + i.icon {
+    .ltr({
+      margin-left: 5px;
+    });
+    .rtl({
+      margin-right: 5px;
+    });
+  }
+
   &.button-round,
   .ios &.button-round-ios,
   .md &.button-round-md {
