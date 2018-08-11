@@ -1,10 +1,12 @@
 import { window, document } from 'ssr-window';
+import Template7 from 'template7';
 import $ from 'dom7';
 import Utils from '../../utils/utils';
 
 function parseComponent(componentString) {
   const id = Utils.id();
-  const callbackName = `f7_component_create_callback_${id}`;
+  const callbackCreateName = `f7_component_create_callback_${id}`;
+  const callbackRenderName = `f7_component_render_callback_${id}`;
 
   // Template
   let template;
@@ -46,30 +48,53 @@ function parseComponent(componentString) {
 
   // Parse Script
   let scriptContent;
+  let scriptEl;
   if (componentString.indexOf('<script>') >= 0) {
     const scripts = componentString.split('<script>');
     scriptContent = scripts[scripts.length - 1].split('</script>')[0].trim();
   } else {
     scriptContent = 'return {}';
   }
-  scriptContent = `window.${callbackName} = function () {${scriptContent}}`;
+  scriptContent = `window.${callbackCreateName} = function () {${scriptContent}}`;
 
   // Insert Script El
-  const scriptEl = document.createElement('script');
+  scriptEl = document.createElement('script');
   scriptEl.innerHTML = scriptContent;
   $('head').append(scriptEl);
 
-  const component = window[callbackName]();
+  const component = window[callbackCreateName]();
 
   // Remove Script El
   $(scriptEl).remove();
-  window[callbackName] = null;
-  delete window[callbackName];
+  window[callbackCreateName] = null;
+  delete window[callbackCreateName];
 
   // Assign Template
   if (!component.template && !component.render) {
     component.template = template;
     component.templateType = templateType;
+  }
+  if (component.template) {
+    if (component.templateType === 't7') {
+      component.template = Template7.compile(component.template)
+    }
+    if (component.templateType === 'es') {
+      const renderContent = `window.${callbackRenderName} = function () {
+        return function render() {
+          return \`${component.template}\`;
+        }
+      }`;
+      scriptEl = document.createElement('script');
+      scriptEl.innerHTML = renderContent;
+      $('head').append(scriptEl);
+
+      component.render = window[callbackRenderName]();
+
+      // Remove Script El
+      $(scriptEl).remove();
+      window[callbackRenderName] = null;
+      delete window[callbackRenderName];
+    }
   }
 
   // Assign Style
