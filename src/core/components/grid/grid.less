@@ -6,38 +6,28 @@
   justify-content: space-between;
   flex-wrap: wrap;
   align-items: flex-start;
+  --f7-grid-col-width: 100%;
   > [class*="col-"], > .col {
     box-sizing: border-box;
+    width: var(--f7-grid-col-width);
   }
-  .col {
-    width: 100%;
+  &.no-gap {
+    --f7-grid-gap: 0px;
   }
-  @spacer: var(--f7-grid-spacer);
+  @spacer: var(--f7-grid-gap);
   .for-each(@colSize in @cols) {
     @className: `Math.floor(@{colSize})`;
     @n: `100/parseFloat(@{colSize})`;
     @n-1: @n - 1;
     .col-@{className} {
-      width: ~"@{colSize}%";
-      width: ~"calc((100% - @{spacer}*@{n-1}) / @{n})";
-    }
-    &.no-gap {
-      .col-@{className} {
-        width: ~"@{colSize}%";
-      }
+      --f7-grid-col-width: ~"calc((100% - @{spacer}*@{n-1}) / @{n})";
     }
   }
 
   .for-each(@colSize, @index in @cols) {
     .col:nth-last-child(@{index}), .col:nth-last-child(@{index}) ~ .col {
       @index-1: @index - 1;
-      width: 100% / @index;
-      width: ~"calc((100% - @{spacer}*@{index-1}) / @{index})";
-    }
-    &.no-gap {
-      .col:nth-last-child(@{index}), .col:nth-last-child(@{index}) ~ .col {
-        width: 100% / @index;
-      }
+      --f7-grid-col-width: ~"calc((100% - @{spacer}*@{index-1}) / @{index})";
     }
   }
   @media (min-width: 768px) {
@@ -46,26 +36,14 @@
       @n: `100/parseFloat(@{colSize})`;
       @n-1: @n - 1;
       .tablet-@{className} {
-        width: ~"@{colSize}%";
-        width: ~"calc((100% - @{spacer}*@{n-1}) / @{n})";
-      }
-      &.no-gap {
-        .tablet-@{className} {
-          width: ~"@{colSize}%";
-        }
+        --f7-grid-col-width: ~"calc((100% - @{spacer}*@{n-1}) / @{n})";
       }
     }
 
     .for-each(@colSize, @index in @cols) {
       .tablet-auto:nth-last-child(@{index}), .tablet-auto:nth-last-child(@{index}) ~ .tablet-auto {
         @index-1: @index - 1;
-        width: 100% / @index;
-        width: ~"calc((100% - @{spacer}*@{index-1}) / @{index})";
-      }
-      &.no-gap {
-        .tablet-auto:nth-last-child(@{index}), .tablet-auto:nth-last-child(@{index}) ~ .tablet-auto {
-          width: 100% / @index;
-        }
+        --f7-grid-col-width: ~"calc((100% - @{spacer}*@{index-1}) / @{index})";
       }
     }
   }
@@ -76,26 +54,14 @@
       @n: `100/parseFloat(@{colSize})`;
       @n-1: @n - 1;
       .desktop-@{className} {
-        width: ~"@{colSize}%";
-        width: ~"calc((100% - @{spacer}*@{n-1}) / @{n})";
-      }
-      &.no-gap {
-        .desktop-@{className} {
-          width: ~"@{colSize}%";
-        }
+        --f7-grid-col-width: ~"calc((100% - @{spacer}*@{n-1}) / @{n})";
       }
     }
 
     .for-each(@colSize, @index in @cols) {
       .desktop-auto:nth-last-child(@{index}), .desktop-auto:nth-last-child(@{index}) ~ .desktop-auto {
         @index-1: @index - 1;
-        width: 100% / @index;
-        width: ~"calc((100% - @{spacer}*@{index-1}) / @{index})";
-      }
-      &.no-gap {
-        .desktop-auto:nth-last-child(@{index}), .desktop-auto:nth-last-child(@{index}) ~ .desktop-auto {
-          width: 100% / @index;
-        }
+        --f7-grid-col-width: ~"calc((100% - @{spacer}*@{index-1}) / @{index})";
       }
     }
   }
