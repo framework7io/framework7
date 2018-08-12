@@ -1,16 +1,37 @@
 /* === Badge === */
 .badge {
-  display: inline-block;
-  color: #fff;
-  background: #8e8e93;
+  display: inline-flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  color: var(--f7-badge-text-color);
+  background: var(--f7-badge-bg-color);
   position: relative;
   box-sizing: border-box;
   text-align: center;
+  vertical-align: middle;
+  font-weight: var(--f7-badge-font-weight);
+  font-size: var(--f7-badge-font-size);
+  border-radius: var(--f7-badge-border-radius);
+  padding: var(--f7-badge-padding);
+  height: var(--f7-badge-size);
+  min-width: var(--f7-badge-size);
+
   .icon &, .f7-icons &, .framework7-icons &, .material-icons & {
     position: absolute;
     left: 100%;
     margin-left: -10px;
     top: -2px;
+    font-family: var(--f7-font-family);
+    --f7-badge-font-size: var(--f7-badge-in-icon-font-size);
+    --f7-badge-size: var(--f7-badge-in-icon-size);
+  }
+}
+.for-each(@pair in @colors) {
+  @colorName: at(@pair, 1);
+  @colorValue: at(@pair, 2);
+  .badge.color-@{colorName} {
+    --f7-badge-bg-color: @colorValue;
   }
 }
 
