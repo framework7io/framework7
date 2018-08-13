@@ -76,7 +76,35 @@
   --f7-line-height: 1.5;
   --f7-page-transition-duration: 250ms;
 }
-
+/*====================
+  Statusbar
+  ==================== */
+:root {
+  --f7-statusbar-height: 0px;
+}
+.with-statusbar {
+  &.device-ios {
+    --f7-statusbar-height: var(--f7-area-top, 20px);
+    @supports not (top: env(safe-area-inset-top)) {
+      --f7-statusbar-height: 20px;
+    }
+  }
+  &.device-android {
+    --f7-statusbar-height: 24px;
+  }
+  &.ios:not(.device-ios):not(.device-android) {
+    --f7-statusbar-height: 20px;
+  }
+  &.md:not(.device-ios):not(.device-android) {
+    --f7-statusbar-height: 24px;
+  }
+}
+.ios {
+  // --f7-statusbar-bg-color: var(--f7-bars-bg-color);
+}
+.md {
+  // --f7-statusbar-bg-color: var(--f7-theme-color-shade);
+}
 /*====================
   Bars - Navbar, Toolbar, Subnavbar, Searchbar
   ==================== */
@@ -256,7 +284,6 @@
   --f7-block-inset-border-radius: 4px;
   --f7-block-header-text-color: rgba(0,0,0,0.54);
   --f7-block-footer-text-color: rgba(0,0,0,0.54);
-
   .theme-dark {
     --f7-block-strong-border-color: #282829;
     --f7-block-title-text-color: #fff;
@@ -290,6 +317,53 @@
   --f7-badge-padding: 0 4px;
   --f7-badge-in-icon-size: 16px;
   --f7-badge-in-icon-font-size: 10px;
+}
+
+/*====================
+  Popup
+  ==================== */
+.ios {
+  --f7-popup-box-shadow: none;
+}
+.md {
+  --f7-popup-box-shadow: 0px 20px 44px rgba(0,0,0,0.5);
+}
+/*====================
+  Toggle
+  ==================== */
+.ios {
+  --f7-toggle-handle-color: #fff;
+  --f7-toggle-width: 52px;
+  --f7-toggle-height: 32px;
+  --f7-toggle-border-color-ios: #e5e5e5;
+  --f7-toggle-inactive-color: #fff;
+  .theme-dark {
+    --f7-toggle-border-color-ios: #555;
+    --f7-toggle-inactive-color: #222;
+  }
+}
+.md {
+  --f7-toggle-handle-color: #fff;
+  --f7-toggle-width: 36px;
+  --f7-toggle-height: 14px;
+  --f7-toggle-inactive-color: #b0afaf;
+  .theme-dark {
+    --f7-toggle-inactive-color: #555;
+  }
+}
+
+/*====================
+  Tooltip
+  ==================== */
+:root {
+  --f7-tooltip-bg-color: rgba(0,0,0,0.87);;
+  --f7-tooltip-text-color: #fff;
+  --f7-tooltip-border-radius: 4px;
+  --f7-tooltip-padding: 8px 16px;
+  --f7-tooltip-font-size: 14px;
+  --f7-tooltip-font-weight: 500;
+  --f7-tooltip-desktop-padding: 6px 8px;
+  --f7-tooltip-desktop-font-size: 12px;
 }
 
 /*====================

@@ -1,4 +1,9 @@
 /* === Toggle === */
+.toggle, .toggle-icon {
+  width: var(--f7-toggle-width);
+  height: var(--f7-toggle-height);
+  border-radius: var(--f7-toggle-height);
+}
 .toggle {
   display: inline-block;
   vertical-align: middle;
@@ -30,7 +35,7 @@
     content: '';
   }
   &:after {
-    background: #fff;
+    background: var(--f7-toggle-handle-color);
     position: absolute;
     z-index: 2;
     transform: translateX(0px);
