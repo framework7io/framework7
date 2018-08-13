@@ -4,9 +4,11 @@
   position: absolute;
   max-width: 568px;
   z-index: 20000;
-  color: #fff;
-  font-size: 14px;
+  color: var(--f7-toast-text-color);
+  font-size: var(--f7-toast-font-size);
   box-sizing: border-box;
+  background-color: var(--f7-toast-bg-color);
+  opacity: 0;
   &.modal-in {
     opacity: 1;
   }
@@ -15,6 +17,7 @@
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
+    padding: var(--f7-toast-padding-vertical) var(--f7-toast-padding-horizontal);
   }
   .toast-text {
     line-height: 20px;
@@ -23,6 +26,9 @@
   }
   .toast-button {
     flex-shrink: 0;
+    min-width: var(--f7-toast-button-min-width);
+    margin-top: -8px;
+    margin-bottom: -8px;
   }
   &.toast-with-icon {
     .toast-content {
@@ -32,39 +38,20 @@
     .toast-text {
       text-align: center;
     }
-    .toast-icon .f7-icons {
-      font-size: 50px;
-      width: 50px;
-      height: 50px;
-    }
+    .toast-icon .f7-icons,
     .toast-icon .material-icons {
-      font-size: 48px;
-      width: 48px;
-      height: 48px;
+      font-size: var(--f7-toast-icon-size);
+      width: var(--f7-toast-icon-size);
+      height: var(--f7-toast-icon-size);
     }
   }
   &.toast-center {
     top: 50%;
-    opacity: 0;
-  }
-
-  @media (min-width: 1024px) {
-    opacity: 0;
   }
 }
-
 html.with-statusbar {
-  &.device-ios .toast-top, &.ios:not(.device-ios):not(.device-android) .toast-top {
-    margin-top: 20px;
-  }
-  .safe-areas({
-    .toast-top {
-      margin-top: constant(safe-area-inset-top);
-      margin-top: env(safe-area-inset-top);
-    }
-  });
-  &.device-android .toast-top, &.md:not(.device-ios):not(.device-android) .toast-top {
-    margin-top: 24px;
+  .toast-top {
+    margin-top: var(--f7-statusbar-height);
   }
 }
 
