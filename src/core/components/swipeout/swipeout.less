@@ -30,8 +30,9 @@
   display: flex;
   direction: ltr;
   > a, > button, > span, > div {
-    color: #fff;
-    background: #c7c7cc;
+    color: var(--f7-swipeout-button-text-color);
+    background: var(--f7-swipeout-button-bg-color);
+    padding: var(--f7-swipeout-button-padding);
     display: flex;
     align-items: center;
     position: relative;
@@ -46,6 +47,9 @@
       z-index: -1;
       transform: translate3d(0,0,0);
     }
+  }
+  .swipeout-delete {
+    background: var(--f7-swipeout-delete-button-bg-color);
   }
 }
 .swipeout-actions-right {
@@ -65,6 +69,15 @@
     &:after {
       right: 100%;
       margin-right: -1px;
+    }
+  }
+}
+.for-each(@pair in @colors) {
+  @colorName: at(@pair, 1);
+  @colorValue: at(@pair, 2);
+  .swipeout-actions-left, .swipeout-actions-right {
+    .color-@{colorName} {
+      --f7-swipeout-button-bg-color: @colorValue;
     }
   }
 }
