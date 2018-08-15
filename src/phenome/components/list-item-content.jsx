@@ -175,15 +175,16 @@ export default {
       if (process.env.COMPILER === 'vue') {
         inputEl = (
           <input
+            ref="inputEl"
             name={name}
             type={radio ? 'radio' : 'checkbox'}
             domProps={{ checked, readonly, disabled, required, value }}
-            onChange={self.onChange.bind(self)}
           />
         );
       } else {
         inputEl = (
           <input
+            ref="inputEl"
             value={value}
             name={name}
             checked={checked}
@@ -192,7 +193,6 @@ export default {
             disabled={disabled}
             required={required}
             type={radio ? 'radio' : 'checkbox'}
-            onChange={self.onChange.bind(self)}
           />
         );
       }
@@ -336,7 +336,7 @@ export default {
         id={id}
         style={style}
         className={classes}
-        onClick={self.onClick.bind(self)}
+        onClick={self.onClickBound}
       >
         {slotsContentStart}
         {inputEl}
@@ -348,6 +348,11 @@ export default {
       </ItemContentTag>
     );
   },
+  componentDidCreate() {
+    const self = this;
+    self.onClickBound = self.onClick.bind(self);
+    self.onChangeBound = self.onChange.bind(self);
+  },
   componentWillMount() {
     this.checkHasInputState();
   },
@@ -356,15 +361,18 @@ export default {
   },
   componentDidMount() {
     const self = this;
-    const innerEl = self.refs.innerEl;
+    const { innerEl, inputEl } = self.refs;
+    if (inputEl) {
+      inputEl.addEventListener('change', self.onChangeBound);
+    }
     if (!innerEl) return;
     const $innerEl = self.$$(innerEl);
     const $labelEl = $innerEl.children('.item-title.item-label');
-    const $inputEl = $innerEl.children('.item-input-wrap');
+    const $inputWrapEl = $innerEl.children('.item-input-wrap');
     const hasInlineLabel = $labelEl.hasClass('item-label-inline');
-    const hasInput = $inputEl.length > 0;
-    const hasInputInfo = $inputEl.children('.item-input-info').length > 0;
-    const hasInputErrorMessage = $inputEl.children('.item-input-error-message').length > 0;
+    const hasInput = $inputWrapEl.length > 0;
+    const hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
+    const hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
     if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {
       self.setState({ hasInlineLabel });
     }
@@ -384,11 +392,11 @@ export default {
     if (!innerEl) return;
     const $innerEl = self.$$(innerEl);
     const $labelEl = $innerEl.children('.item-title.item-label');
-    const $inputEl = $innerEl.children('.item-input-wrap');
+    const $inputWrapEl = $innerEl.children('.item-input-wrap');
     const hasInlineLabel = $labelEl.hasClass('item-label-inline');
-    const hasInput = $inputEl.length > 0;
-    const hasInputInfo = $inputEl.children('.item-input-info').length > 0;
-    const hasInputErrorMessage = $inputEl.children('.item-input-error-message').length > 0;
+    const hasInput = $inputWrapEl.length > 0;
+    const hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
+    const hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
     if (hasInlineLabel !== self.state.hasInlineLabel) {
       self.setState({ hasInlineLabel });
     }
@@ -400,6 +408,13 @@ export default {
     }
     if (!self.hasInputErrorMessageSet && hasInputErrorMessage !== self.state.hasInputErrorMessage) {
       self.setState({ hasInputErrorMessage });
+    }
+  },
+  componentWillUnmount() {
+    const self = this;
+    const { inputEl } = self.refs;
+    if (inputEl) {
+      inputEl.removeEventListener('change', self.onChangeBound);
     }
   },
   methods: {
