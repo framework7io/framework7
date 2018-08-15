@@ -30,6 +30,38 @@ function forward(el, forwardOptions = {}) {
     on: {},
   }, forwardOptions);
 
+  let currentRouteIsModal = router.currentRoute.modal;
+  let modalType;
+  if (!currentRouteIsModal) {
+    ('popup popover sheet loginScreen actions customModal panel').split(' ').forEach((modalLoadProp) => {
+      if (router.currentRoute && router.currentRoute.route && router.currentRoute.route[modalLoadProp]) {
+        currentRouteIsModal = true;
+        modalType = modalLoadProp;
+      }
+    });
+  }  
+
+  if (currentRouteIsModal) {
+    const modalToClose = router.currentRoute.modal
+                         || router.currentRoute.route.modalInstance
+                         || app[modalType].get();
+    const previousUrl = router.history[router.history.length - 2];
+    let previousRoute = router.findMatchingRoute(previousUrl);
+    if (!previousRoute && previousUrl) {
+      previousRoute = {
+        url: previousUrl,
+        path: previousUrl.split('?')[0],
+        query: Utils.parseUrlQuery(previousUrl),
+        route: {
+          path: previousUrl.split('?')[0],
+          url: previousUrl,
+        },
+      };
+    }
+
+    router.modalRemove(modalToClose);
+  }  
+
   const dynamicNavbar = router.dynamicNavbar;
   const separateNavbar = router.separateNavbar;
 
