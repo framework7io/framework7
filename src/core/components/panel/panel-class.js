@@ -146,6 +146,11 @@ class Panel extends Framework7Class {
     let panel = this;
     const app = panel.app;
 
+    if (!panel.$el) {
+      //Panel already destroyed
+      return;
+    }
+
     panel.emit('local::beforeDestroy panelBeforeDestroy', panel);
     panel.$el.trigger('panel:beforedestroy', panel);
 
