@@ -6,7 +6,7 @@ export default () => (
     <Page>
         <BlockTitle>Routable Panel</BlockTitle>
         <Block>
-          <p>This is a routable panel. You can close it by clicking outsite or on this link: <Link href="/panel/">close me</Link>.</p>
+          <p>This is a routable panel. You can close it by clicking outsite or on this link: <Link panelClose>close me</Link>.</p>
         </Block>
         <BlockTitle>Panel Content</BlockTitle>
         <Block>

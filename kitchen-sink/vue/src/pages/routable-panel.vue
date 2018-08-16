@@ -3,7 +3,7 @@
     <f7-page>
         <f7-block-title>Routable Panel</f7-block-title>
         <f7-block>
-          <p>This is a routable panel. You can close it by clicking outsite or on this link: <Link href="/panel/">close me</Link>.</p>
+          <p>This is a routable panel. You can close it by clicking outsite or on this link: <f7-link panel-close>close me</f7-link>.</p>
         </f7-block>
         <f7-block-title>Panel Content</f7-block-title>
         <f7-block>
@@ -14,11 +14,11 @@
   </f7-panel>
 </template>
 <script>
-  import { f7Page, f7Panel, f7Block, f7BlockTitle } from 'framework7-vue';
+  import { f7Page, f7Panel, f7Block, f7BlockTitle, f7Link } from 'framework7-vue';
 
   export default {
     components: {
-      f7Page, f7Panel, f7Block, f7BlockTitle
+      f7Page, f7Panel, f7Block, f7BlockTitle, f7Link
     }
   };
 </script>

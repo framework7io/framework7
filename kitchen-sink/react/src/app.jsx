@@ -10,9 +10,6 @@ export default function (props) {
   return (
     <App params={{ theme, routes }}>
       <Statusbar />
-      <Panel left cover>
-        <View url="/panel-left/" linksView=".view-main" />
-      </Panel>
       <Panel right reveal>
         <View url="/panel-right/"/>
       </Panel>
