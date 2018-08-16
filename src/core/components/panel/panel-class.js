@@ -30,7 +30,8 @@ class Panel extends Framework7Class {
         [side]: panel,
       });
     } else {
-      const error = `Can't create panel; app already has a ${side} panel!`
+      const error = `Can't create panel; app already has a ${side} panel!`;
+      // eslint-disable-next-line no-console
       console.error(error);
       throw new Error(error);
     }
@@ -147,7 +148,7 @@ class Panel extends Framework7Class {
     const app = panel.app;
 
     if (!panel.$el) {
-      //Panel already destroyed
+      // Panel already destroyed
       return;
     }
 
@@ -186,7 +187,7 @@ class Panel extends Framework7Class {
           $el.remove();
         }
       });
-    }    
+    }
 
     // Ignore if opened
     if (opened || $el.hasClass('panel-visible-by-breakpoint') || $el.hasClass('panel-active')) return false;

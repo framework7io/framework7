@@ -39,7 +39,7 @@ function forward(el, forwardOptions = {}) {
         modalType = modalLoadProp;
       }
     });
-  }  
+  }
 
   if (currentRouteIsModal) {
     const modalToClose = router.currentRoute.modal
@@ -60,7 +60,7 @@ function forward(el, forwardOptions = {}) {
     }
 
     router.modalRemove(modalToClose);
-  }  
+  }
 
   const dynamicNavbar = router.dynamicNavbar;
   const separateNavbar = router.separateNavbar;
