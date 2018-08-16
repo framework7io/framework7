@@ -24,6 +24,7 @@ export default {
       navbarColorTheme: undefined,
       routableModals: true,
       url: 'select/',
+      className: '',
       /*
         Custom render functions
       */
