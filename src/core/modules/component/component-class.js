@@ -5,34 +5,9 @@ import Utils from '../../utils/utils';
 import vdom from './vdom';
 import patch from './patch';
 
-let counter = 0;
-
-function renderEsTemplate(template, id) {
-  const callbackName = `f7_component_es_template${id || new Date().getTime()}`;
-
-  const scriptContent = `
-    window.${callbackName} = function () {
-      return \`${template}\`;
-    }
-  `;
-  // Insert Script El
-  const scriptEl = document.createElement('script');
-  scriptEl.innerHTML = scriptContent;
-  $('head').append(scriptEl);
-
-  // Render function
-  const render = window[callbackName];
-
-  // Remove Script El
-  $(scriptEl).remove();
-  delete window[callbackName];
-
-  return render;
-}
-
 class Framework7Component {
   constructor(app, options, extendContext = {}) {
-    const id = `${Utils.now()}${counter}`;
+    const id = Utils.id();
     const self = Utils.merge(
       this,
       extendContext,
@@ -45,7 +20,6 @@ class Framework7Component {
       }
     );
     const { $options } = self;
-    counter += 1;
 
     // Root data and methods
     Object.defineProperty(self, '$root', {
@@ -123,7 +97,7 @@ class Framework7Component {
       self.$styleEl = document.createElement('style');
       self.$styleEl.innerHTML = $options.style;
       if ($options.styleScoped) {
-        self.el.setAttribute('data-scope', $options.id);
+        self.el.setAttribute(`data-f7-${$options.id}`, '');
       }
     }
 
@@ -176,16 +150,10 @@ class Framework7Component {
       html = $options.render();
     } else if ($options.template) {
       if (typeof $options.template === 'string') {
-        if ($options.templateType === 't7' || !$options.templateType) {
-          try {
-            html = Template7.compile($options.template)(self);
-          } catch (err) {
-            throw err;
-          }
-        }
-        if ($options.templateType === 'es') {
-          $options.render = renderEsTemplate($options.template, $options.id).bind(self);
-          html = $options.render();
+        try {
+          html = Template7.compile($options.template)(self);
+        } catch (err) {
+          throw err;
         }
       } else {
         // Supposed to be function
@@ -227,9 +195,6 @@ class Framework7Component {
     if (self.$styleEl) $(self.$styleEl).remove();
     self.$detachEvents();
     if (self.$options.destroyed) self.$options.destroyed();
-    if (window[`f7_component_es_template${self.$options.id}`]) {
-      delete window[`f7_component_es_template${self.$options.id}`];
-    }
     // Delete component instance
     if (self.el && self.el.f7Component) {
       self.el.f7Component = null;

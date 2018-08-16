@@ -391,8 +391,10 @@ function loadBack(backParams, backOptions, ignorePageChange) {
   return router;
 }
 function back(...args) {
+  const router = this;
   let navigateUrl;
   let navigateOptions;
+  let route;
   if (typeof args[0] === 'object') {
     navigateOptions = args[0] || {};
   } else {
@@ -400,7 +402,24 @@ function back(...args) {
     navigateOptions = args[1] || {};
   }
 
-  const router = this;
+  const { name, params, query } = navigateOptions;
+  if (name) {
+    // find route by name
+    route = router.findRouteByKey('name', name);
+    if (!route) {
+      throw new Error(`Framework7: route with name "${name}" not found`);
+    }
+    navigateUrl = router.constructRouteUrl(route, { params, query });
+    if (navigateUrl) {
+      return router.back(navigateUrl, Utils.extend({}, navigateOptions, {
+        name: null,
+        params: null,
+        query: null,
+      }));
+    }
+    throw new Error(`Framework7: can't construct URL for route with name "${name}"`);
+  }
+
   const app = router.app;
   if (!router.view) {
     app.views.main.router.back(...args);
@@ -487,7 +506,7 @@ function back(...args) {
   }
 
   // Find route to load
-  let route = router.findMatchingRoute(navigateUrl);
+  route = router.findMatchingRoute(navigateUrl);
   if (!route) {
     if (navigateUrl) {
       route = {

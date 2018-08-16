@@ -60,6 +60,10 @@ export default {
     routes: Array,
     routesAdd: Array,
 
+    // Routes hooks
+    routesBeforeEnter: [Function, Array],
+    routesBeforeLeave: [Function, Array],
+
     init: {
       type: Boolean,
       default: true,

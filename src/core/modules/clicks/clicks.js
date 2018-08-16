@@ -49,8 +49,7 @@ function initClicks(app) {
       clickedLinkData = clickedLink.dataset();
     }
     const validUrl = url && url.length > 0 && url !== '#' && !isTabLink;
-    const template = clickedLinkData.template;
-    if (validUrl || clickedLink.hasClass('back') || template) {
+    if (validUrl || clickedLink.hasClass('back')) {
       let view;
       if (clickedLinkData.view) {
         view = $(clickedLinkData.view)[0].f7View;
