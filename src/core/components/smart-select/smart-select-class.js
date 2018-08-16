@@ -431,18 +431,18 @@ class SmartSelect extends Framework7Class {
         $searchbarEl = $(app.navbar.getElByPage($containerEl)).find('.searchbar');
       }
 
-      if(ss.params.appendSearchbarNotFound && (type === 'page' || type === 'popup')){
+      if (ss.params.appendSearchbarNotFound && (type === 'page' || type === 'popup')) {
         let $notFoundEl = null;
 
-        if (typeof ss.params.appendSearchbarNotFound == "string"){
+        if (typeof ss.params.appendSearchbarNotFound === 'string') {
           $notFoundEl = $(`<div class="block searchbar-not-found">${ss.params.appendSearchbarNotFound}</div>`);
-        } else if (typeof ss.params.appendSearchbarNotFound == "boolean"){
+        } else if (typeof ss.params.appendSearchbarNotFound === 'boolean') {
           $notFoundEl = $(`<div class="block searchbar-not-found">Nothing found</div>`);
         } else {
           $notFoundEl = ss.params.appendSearchbarNotFound;
         }
 
-        if ($notFoundEl){
+        if ($notFoundEl) {
           $containerEl.find('.page-content').append($notFoundEl[0]);
         }
       }
@@ -452,7 +452,7 @@ class SmartSelect extends Framework7Class {
         backdropEl: $containerEl.find('.searchbar-backdrop'),
         searchContainer: `.smart-select-list-${ss.id}`,
         searchIn: '.item-title',
-      }, typeof ss.params.searchbar == "object" ? ss.params.searchbar : {})
+      }, typeof ss.params.searchbar == 'object' ? ss.params.searchbar : {});
 
       ss.searchbar = app.searchbar.create(searchbarParams);
     }
