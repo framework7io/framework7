@@ -437,7 +437,7 @@ class SmartSelect extends Framework7Class {
         if (typeof ss.params.appendSearchbarNotFound === 'string') {
           $notFoundEl = $(`<div class="block searchbar-not-found">${ss.params.appendSearchbarNotFound}</div>`);
         } else if (typeof ss.params.appendSearchbarNotFound === 'boolean') {
-          $notFoundEl = $(`<div class="block searchbar-not-found">Nothing found</div>`);
+          $notFoundEl = $('<div class="block searchbar-not-found">Nothing found</div>');
         } else {
           $notFoundEl = ss.params.appendSearchbarNotFound;
         }
@@ -452,7 +452,7 @@ class SmartSelect extends Framework7Class {
         backdropEl: $containerEl.find('.searchbar-backdrop'),
         searchContainer: `.smart-select-list-${ss.id}`,
         searchIn: '.item-title',
-      }, typeof ss.params.searchbar == 'object' ? ss.params.searchbar : {});
+      }, typeof ss.params.searchbar === 'object' ? ss.params.searchbar : {});
 
       ss.searchbar = app.searchbar.create(searchbarParams);
     }
