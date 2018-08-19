@@ -56,6 +56,13 @@ function buildKs(cb) {
         objectAssign: 'Object.assign',
       }),
     ],
+    onwarn(warning, warn) {
+      const ignore = ['EVAL'];
+      if (warning.code && ignore.indexOf(warning.code) >= 0) {
+        return;
+      }
+      warn(warning);
+    },
   }).then(bundle => bundle.write({
     format: 'umd',
     name: 'app',

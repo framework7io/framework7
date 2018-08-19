@@ -7,6 +7,8 @@ export default {
     id: [String, Number],
     opened: Boolean,
     backdrop: Boolean,
+    closeByBackdropClick: Boolean,
+    closeByOutsideClick: Boolean,
     ...Mixins.colorProps,
   },
   render() {
@@ -103,26 +105,38 @@ export default {
     el.addEventListener('sheet:close', self.onCloseBound);
     el.addEventListener('sheet:closed', self.onClosedBound);
 
-    self.$f7ready(() => {
-      let useBackdrop;
-      let useDefaultBackdrop;
-      const { opened, backdrop } = self.props;
-      // phenome-vue-next-line
-      useDefaultBackdrop = self.$options.propsData.backdrop === undefined;
-      // phenome-react-next-line
-      useDefaultBackdrop = typeof backdrop === 'undefined';
+    const props = self.props;
+    const {
+      opened,
+      backdrop,
+      closeByBackdropClick,
+      closeByOutsideClick,
+    } = props;
 
-      if (useDefaultBackdrop) {
-        const app = self.$f7;
-        useBackdrop = app.params.sheet && app.params.sheet.backdrop !== undefined ? app.params.sheet.backdrop : self.$theme.md;
-      } else {
-        useBackdrop = backdrop;
-      }
-      
-      self.f7Sheet = self.$f7.sheet.create({
-        el: self.refs.el,
-        backdrop: useBackdrop,
-      });
+    const sheetParams = {
+      el: self.refs.el,
+    };
+
+    let useDefaultBackdrop;
+    if (process.env.COMPILER === 'vue') {
+      useDefaultBackdrop = self.$options.propsData.backdrop === undefined;
+      if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') sheetParams.closeByBackdropClick = closeByBackdropClick;
+      if (typeof self.$options.propsData.closeByOutsideClick !== 'undefined') sheetParams.closeByOutsideClick = closeByOutsideClick;
+    }
+    if (process.env.COMPILER === 'react') {
+      useDefaultBackdrop = typeof backdrop === 'undefined';
+      if ('closeByBackdropClick' in props) sheetParams.closeByBackdropClick = closeByBackdropClick;
+      if ('closeByOutsideClick' in props) sheetParams.closeByOutsideClick = closeByOutsideClick;
+    }
+    if (useDefaultBackdrop) {
+      const app = self.$f7;
+      sheetParams.backdrop = app.params.sheet && app.params.sheet.backdrop !== undefined ? app.params.sheet.backdrop : self.$theme.md;
+    } else {
+      sheetParams.backdrop = backdrop;
+    }
+
+    self.$f7ready(() => {
+      self.f7Sheet = self.$f7.sheet.create(sheetParams);
       if (opened) {
         self.f7Sheet.open(false);
       }

@@ -67,6 +67,7 @@ function build(cb) {
     if (cb) cb();
   }).catch((err) => {
     console.log(err);
+    if (cb) cb();
   });
 }
 

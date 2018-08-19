@@ -10,6 +10,8 @@ export default {
     convertToPopover: Boolean,
     forceToPopover: Boolean,
     target: [String, Object],
+    closeByBackdropClick: Boolean,
+    closeByOutsideClick: Boolean,
     ...Mixins.colorProps,
   },
   render() {
@@ -51,14 +53,7 @@ export default {
     const self = this;
     const el = self.refs.el;
     if (!el) return;
-    const props = self.props;
-    const {
-      grid,
-      target,
-      convertToPopover,
-      forceToPopover,
-      opened,
-    } = props;
+
     self.onOpenBound = self.onOpen.bind(self);
     self.onOpenedBound = self.onOpened.bind(self);
     self.onCloseBound = self.onClose.bind(self);
@@ -67,23 +62,38 @@ export default {
     el.addEventListener('actions:opened', self.onOpenedBound);
     el.addEventListener('actions:close', self.onCloseBound);
     el.addEventListener('actions:closed', self.onClosedBound);
-    self.$f7ready(() => {
-      const actionsParams = {
-        el: self.refs.el,
-        grid,
-      };
-      if (target) actionsParams.targetEl = target;
 
-      // phenome-vue-next-line
+    const props = self.props;
+    const {
+      grid,
+      target,
+      convertToPopover,
+      forceToPopover,
+      opened,
+      closeByBackdropClick,
+      closeByOutsideClick,
+    } = props;
+
+    const actionsParams = {
+      el: self.refs.el,
+      grid,
+    };
+    if (target) actionsParams.targetEl = target;
+
+    if (process.env.COMPILER === 'vue') {
       if (typeof self.$options.propsData.convertToPopover !== 'undefined') actionsParams.convertToPopover = convertToPopover;
-      // phenome-vue-next-line
       if (typeof self.$options.propsData.forceToPopover !== 'undefined') actionsParams.forceToPopover = forceToPopover;
-
-      // phenome-react-next-line
+      if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') actionsParams.closeByBackdropClick = closeByBackdropClick;
+      if (typeof self.$options.propsData.closeByOutsideClick !== 'undefined') actionsParams.closeByOutsideClick = closeByOutsideClick;
+    }
+    if (process.env.COMPILER === 'react') {
       if ('convertToPopover' in props) actionsParams.convertToPopover = convertToPopover;
-      // phenome-react-next-line
       if ('forceToPopover' in props) actionsParams.forceToPopover = forceToPopover;
+      if ('closeByBackdropClick' in props) actionsParams.closeByBackdropClick = closeByBackdropClick;
+      if ('closeByOutsideClick' in props) actionsParams.closeByOutsideClick = closeByOutsideClick;
+    }
 
+    self.$f7ready(() => {
       self.f7Actions = self.$f7.actions.create(actionsParams);
 
       if (opened) {
