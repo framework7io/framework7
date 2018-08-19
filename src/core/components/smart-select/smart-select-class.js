@@ -6,12 +6,19 @@ class SmartSelect extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
     const ss = this;
-    ss.app = app;
+
     const defaults = Utils.extend({
       on: {},
     }, app.params.smartSelect);
 
-    const $el = $(params.el).eq(0);
+    // Extend defaults with modules params
+    ss.useModulesParams(defaults);
+
+    ss.params = Utils.extend({}, defaults, params);
+
+    ss.app = app;
+
+    const $el = $(ss.params.el).eq(0);
     if ($el.length === 0) return ss;
 
     if ($el[0].f7SmartSelect) return $el[0].f7SmartSelect;
@@ -19,7 +26,7 @@ class SmartSelect extends Framework7Class {
     const $selectEl = $el.find('select').eq(0);
     if ($selectEl.length === 0) return ss;
 
-    let $valueEl = $(params.valueEl);
+    let $valueEl = $(ss.params.valueEl);
     if ($valueEl.length === 0) {
       $valueEl = $el.find('.item-after');
     }
@@ -28,20 +35,11 @@ class SmartSelect extends Framework7Class {
       $valueEl.insertAfter($el.find('.item-title'));
     }
 
-    // Extend defaults with modules params
-    ss.useModulesParams(defaults);
-
     // View
-    let view = params.view;
-    if (!view) {
-      view = $el.parents('.view').length && $el.parents('.view')[0].f7View;
-    }
-    if (!view && (params.openIn === 'page' || (params.openIn !== 'page' && params.routableModals === true))) {
-      throw Error('Smart Select requires initialized View');
-    }
+    let view;
 
     // Url
-    let url = params.url;
+    let url = ss.params.url;
     if (!url) {
       if ($el.attr('href') && $el.attr('href') !== '#') url = $el.attr('href');
       else url = `${$selectEl.attr('name').toLowerCase()}-select/`;
@@ -53,7 +51,6 @@ class SmartSelect extends Framework7Class {
     const id = Utils.id();
 
     Utils.extend(ss, {
-      params: Utils.extend(defaults, params),
       $el,
       el: $el[0],
       $selectEl,
@@ -142,6 +139,19 @@ class SmartSelect extends Framework7Class {
     ss.init();
 
     return ss;
+  }
+
+  getView() {
+    const ss = this;
+    let view = ss.view || ss.params.view;
+    if (!view) {
+      view = ss.$el.parents('.view').length && ss.$el.parents('.view')[0].f7View;
+    }
+    if (!view) {
+      throw Error('Smart Select requires initialized View');
+    }
+    ss.view = view;
+    return view;
   }
 
   checkMaxLength() {
@@ -504,8 +514,9 @@ class SmartSelect extends Framework7Class {
     if (ss.opened) return ss;
     ss.getItemsData();
     const pageHtml = ss.renderPage(ss.items);
+    const view = ss.getView();
 
-    ss.view.router.navigate({
+    view.router.navigate({
       url: ss.url,
       route: {
         content: pageHtml,
@@ -554,7 +565,8 @@ class SmartSelect extends Framework7Class {
     };
 
     if (ss.params.routableModals) {
-      ss.view.router.navigate({
+      const view = ss.getView();
+      view.router.navigate({
         url: ss.url,
         route: {
           path: ss.url,
@@ -595,7 +607,8 @@ class SmartSelect extends Framework7Class {
     };
 
     if (ss.params.routableModals) {
-      ss.view.router.navigate({
+      const view = ss.getView();
+      view.router.navigate({
         url: ss.url,
         route: {
           path: ss.url,
@@ -632,7 +645,8 @@ class SmartSelect extends Framework7Class {
       },
     };
     if (ss.params.routableModals) {
-      ss.view.router.navigate({
+      const view = ss.getView();
+      view.router.navigate({
         url: ss.url,
         route: {
           path: ss.url,
@@ -660,7 +674,8 @@ class SmartSelect extends Framework7Class {
     const ss = this;
     if (!ss.opened) return ss;
     if (ss.params.routableModals || ss.openedIn === 'page') {
-      ss.view.router.back();
+      const view = ss.getView();
+      view.router.back();
     } else {
       ss.modal.once('modalClosed', () => {
         Utils.nextTick(() => {
