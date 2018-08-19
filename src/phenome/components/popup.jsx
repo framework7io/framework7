@@ -7,6 +7,7 @@ export default {
     id: [String, Number],
     tabletFullscreen: Boolean,
     opened: Boolean,
+    closeByBackdropClick: Boolean,
     ...Mixins.colorProps,
   },
   render() {
@@ -65,10 +66,20 @@ export default {
     el.addEventListener('popup:close', self.onCloseBound);
     el.addEventListener('popup:closed', self.onClosedBound);
 
+    const props = self.props;
+    const { closeByBackdropClick } = props;
+
+    const popupParams = { el };
+
+    if (process.env.COMPILER === 'vue') {
+      if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') popupParams.closeByBackdropClick = closeByBackdropClick;
+    }
+    if (process.env.COMPILER === 'react') {
+      if ('closeByBackdropClick' in props) popupParams.closeByBackdropClick = closeByBackdropClick;
+    }
+
     self.$f7ready(() => {
-      self.f7Popup = self.$f7.popup.create({
-        el,
-      });
+      self.f7Popup = self.$f7.popup.create(popupParams);
       if (self.props.opened) {
         self.f7Popup.open(false);
       }

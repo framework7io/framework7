@@ -53,6 +53,16 @@ export default {
     const self = this;
     const el = self.refs.el;
     if (!el) return;
+
+    self.onOpenBound = self.onOpen.bind(self);
+    self.onOpenedBound = self.onOpened.bind(self);
+    self.onCloseBound = self.onClose.bind(self);
+    self.onClosedBound = self.onClosed.bind(self);
+    el.addEventListener('actions:open', self.onOpenBound);
+    el.addEventListener('actions:opened', self.onOpenedBound);
+    el.addEventListener('actions:close', self.onCloseBound);
+    el.addEventListener('actions:closed', self.onClosedBound);
+
     const props = self.props;
     const {
       grid,
@@ -63,35 +73,27 @@ export default {
       closeByBackdropClick,
       closeByOutsideClick,
     } = props;
-    self.onOpenBound = self.onOpen.bind(self);
-    self.onOpenedBound = self.onOpened.bind(self);
-    self.onCloseBound = self.onClose.bind(self);
-    self.onClosedBound = self.onClosed.bind(self);
-    el.addEventListener('actions:open', self.onOpenBound);
-    el.addEventListener('actions:opened', self.onOpenedBound);
-    el.addEventListener('actions:close', self.onCloseBound);
-    el.addEventListener('actions:closed', self.onClosedBound);
+
+    const actionsParams = {
+      el: self.refs.el,
+      grid,
+    };
+    if (target) actionsParams.targetEl = target;
+
+    if (process.env.COMPILER === 'vue') {
+      if (typeof self.$options.propsData.convertToPopover !== 'undefined') actionsParams.convertToPopover = convertToPopover;
+      if (typeof self.$options.propsData.forceToPopover !== 'undefined') actionsParams.forceToPopover = forceToPopover;
+      if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') actionsParams.closeByBackdropClick = closeByBackdropClick;
+      if (typeof self.$options.propsData.closeByOutsideClick !== 'undefined') actionsParams.closeByOutsideClick = closeByOutsideClick;
+    }
+    if (process.env.COMPILER === 'react') {
+      if ('convertToPopover' in props) actionsParams.convertToPopover = convertToPopover;
+      if ('forceToPopover' in props) actionsParams.forceToPopover = forceToPopover;
+      if ('closeByBackdropClick' in props) actionsParams.closeByBackdropClick = closeByBackdropClick;
+      if ('closeByOutsideClick' in props) actionsParams.closeByOutsideClick = closeByOutsideClick;
+    }
+
     self.$f7ready(() => {
-      const actionsParams = {
-        el: self.refs.el,
-        grid,
-      };
-      if (target) actionsParams.targetEl = target;
-
-      if (process.env.COMPILER === 'vue') {
-        if (typeof self.$options.propsData.convertToPopover !== 'undefined') actionsParams.convertToPopover = convertToPopover;
-        if (typeof self.$options.propsData.forceToPopover !== 'undefined') actionsParams.forceToPopover = forceToPopover;
-        if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') actionsParams.closeByBackdropClick = closeByBackdropClick;
-        if (typeof self.$options.propsData.closeByOutsideClick !== 'undefined') actionsParams.closeByOutsideClick = closeByOutsideClick;
-      }
-
-      if (process.env.COMPILER === 'react') {
-        if ('convertToPopover' in props) actionsParams.convertToPopover = convertToPopover;
-        if ('forceToPopover' in props) actionsParams.forceToPopover = forceToPopover;
-        if ('closeByBackdropClick' in props) actionsParams.closeByBackdropClick = closeByBackdropClick;
-        if ('closeByOutsideClick' in props) actionsParams.closeByOutsideClick = closeByOutsideClick;
-      }
-
       self.f7Actions = self.$f7.actions.create(actionsParams);
 
       if (opened) {
