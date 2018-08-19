@@ -100,6 +100,13 @@ function umd(components, cb) {
       commonjs(),
       buble(),
     ],
+    onwarn(warning, warn) {
+      const ignore = ['EVAL'];
+      if (warning.code && ignore.indexOf(warning.code) >= 0) {
+        return;
+      }
+      warn(warning);
+    },
   }).then((bundle) => {
     cache = bundle;
     return bundle.write({
