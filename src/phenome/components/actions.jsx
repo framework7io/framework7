@@ -10,6 +10,8 @@ export default {
     convertToPopover: Boolean,
     forceToPopover: Boolean,
     target: [String, Object],
+    closeByBackdropClick: Boolean,
+    closeByOutsideClick: Boolean,
     ...Mixins.colorProps,
   },
   render() {
@@ -58,6 +60,8 @@ export default {
       convertToPopover,
       forceToPopover,
       opened,
+      closeByBackdropClick,
+      closeByOutsideClick,
     } = props;
     self.onOpenBound = self.onOpen.bind(self);
     self.onOpenedBound = self.onOpened.bind(self);
@@ -74,15 +78,19 @@ export default {
       };
       if (target) actionsParams.targetEl = target;
 
-      // phenome-vue-next-line
-      if (typeof self.$options.propsData.convertToPopover !== 'undefined') actionsParams.convertToPopover = convertToPopover;
-      // phenome-vue-next-line
-      if (typeof self.$options.propsData.forceToPopover !== 'undefined') actionsParams.forceToPopover = forceToPopover;
+      if (process.env.COMPILER === 'vue') {
+        if (typeof self.$options.propsData.convertToPopover !== 'undefined') actionsParams.convertToPopover = convertToPopover;
+        if (typeof self.$options.propsData.forceToPopover !== 'undefined') actionsParams.forceToPopover = forceToPopover;
+        if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') actionsParams.closeByBackdropClick = closeByBackdropClick;
+        if (typeof self.$options.propsData.closeByOutsideClick !== 'undefined') actionsParams.closeByOutsideClick = closeByOutsideClick;
+      }
 
-      // phenome-react-next-line
-      if ('convertToPopover' in props) actionsParams.convertToPopover = convertToPopover;
-      // phenome-react-next-line
-      if ('forceToPopover' in props) actionsParams.forceToPopover = forceToPopover;
+      if (process.env.COMPILER === 'react') {
+        if ('convertToPopover' in props) actionsParams.convertToPopover = convertToPopover;
+        if ('forceToPopover' in props) actionsParams.forceToPopover = forceToPopover;
+        if ('closeByBackdropClick' in props) actionsParams.closeByBackdropClick = closeByBackdropClick;
+        if ('closeByOutsideClick' in props) actionsParams.closeByOutsideClick = closeByOutsideClick;
+      }
 
       self.f7Actions = self.$f7.actions.create(actionsParams);
 
