@@ -6,16 +6,33 @@
   vertical-align: middle;
   align-items: center;
   margin: 2px 0;
+  background-color: var(--f7-chip-bg-color);
+  font-size: var(--f7-chip-font-size);
+  color: var(--f7-chip-text-color);
+  height: var(--f7-chip-height);
+  line-height: var(--f7-chip-height);
+  border-radius: var(--f7-chip-height);
 }
 .chip-media {
   border-radius: 50%;
   text-align: center;
-  color: #fff;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-
+  height: var(--f7-chip-height);
+  width: var(--f7-chip-height);
+  border-radius: var(--f7-chip-height);
+  text-align: center;
+  line-height: var(--f7-chip-height);
+  box-sizing: border-box;
+  color: #fff;
+  font-size: var(--f7-chip-media-font-size);
+  vertical-align: middle;
+  i.icon {
+    font-size: ~"calc(var(--f7-chip-height) - 8px)";
+    height: ~"calc(var(--f7-chip-height) - 8px)";
+  }
   img {
     max-width: 100%;
     max-height: 100%;
@@ -38,11 +55,35 @@
   cursor: pointer;
   flex-shrink: 0;
   background-repeat: no-repeat;
+  width: 24px;
+  height: 24px;
+  color: var(--f7-chip-delete-button-color);
+  opacity: 0.54;
+  &:after {
+    .coreIconsFont();
+    content: 'delete_round_ios';
+    line-height: 24px;
+  }
 }
 .chip .chip-delete.active-state {
   opacity: 1;
 }
-
+.chip-outline {
+  border: 1px solid var(--f7-chip-outline-border-color);
+  background: none;
+}
+.for-each(@pair in @colors) {
+  @colorName: at(@pair, 1);
+  @colorValue: at(@pair, 2);
+  .chip.color-@{colorName} {
+    --f7-chip-bg-color: @colorValue;
+    --f7-chip-text-color: #fff;
+    &.chip-outline {
+      --f7-chip-outline-border-color: @colorValue;
+      --f7-chip-text-color: @colorValue;
+    }
+  }
+}
 & when (@includeIosTheme) {
   @import url('./chip-ios.less');
 }
