@@ -8,6 +8,14 @@ i.icon {
   font-style: normal;
   position: relative;
 }
+.icon-back,
+.icon-prev,
+.icon-forward,
+.icon-next {
+  &:after {
+    .coreIconsFont();
+  }
+}
 
 & when (@includeIosTheme) {
   @import url('./icon-ios.less');

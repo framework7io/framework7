@@ -23,8 +23,8 @@ m = md5.new()
 
 f = fontforge.font()
 f.encoding = 'UnicodeFull'
-f.design_size = 25
-f.em = 512
+f.design_size = 24
+f.em = 24
 f.ascent = 448
 f.descent = 64
 
@@ -38,7 +38,7 @@ for char in "0123456789abcdefghijklmnopqrstuvwzxyz_- ":
   glyph.importOutlines(BLANK_PATH)
   glyph.width = 0
 
-font_name = 'Ololo';
+font_name = 'Framework7CoreIcons';
 m.update(font_name + ';')
 
 for dirname, dirnames, filenames in os.walk(INPUT_SVG_DIR):

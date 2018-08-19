@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>notification_close_ios</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="notification_close_ios" transform="translate(-12.000000, -12.000000)" fill="#000000" fill-rule="nonzero">
+            <path d="M22.5,20.3786797 L14.7218254,12.6005051 L12.6005051,14.7218254 L20.3786797,22.5 L12.6005051,30.2781746 L14.7218254,32.3994949 L22.5,24.6213203 L30.2781746,32.3994949 L32.3994949,30.2781746 L24.6213203,22.5 L32.3994949,14.7218254 L30.2781746,12.6005051 L22.5,20.3786797 Z M22,44 C34.1502645,44 44,34.1502645 44,22 C44,9.8497355 34.1502645,0 22,0 C9.8497355,0 0,9.8497355 0,22 C0,34.1502645 9.8497355,44 22,44 Z" id="Shape"></path>
+        </g>
+    </g>
+</svg>
