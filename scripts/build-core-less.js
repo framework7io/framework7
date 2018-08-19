@@ -16,11 +16,11 @@ const getConfig = require('./get-core-config.js');
 const getOutput = require('./get-core-output.js');
 const banner = require('./banner-core.js');
 
-function base64_encode(file) {
+function base64Encode(file) {
   // read binary data
   const bitmap = fs.readFileSync(file);
   // convert binary data to base64 encoded string
-  return new Buffer(bitmap).toString('base64');
+  return Buffer.from(bitmap).toString('base64');
 }
 
 // Copy LESS
@@ -31,7 +31,7 @@ function copyLess(config, cb) {
   const includeMdTheme = config.themes.indexOf('md') >= 0;
   const includeDarkTheme = config.darkTheme;
   const rtl = config.rtl;
-  const iconsFontBase64 = base64_encode('src/core/icons/font/Framework7CoreIcons.woff2');
+  const iconsFontBase64 = base64Encode('src/core/icons/font/Framework7CoreIcons.woff2');
 
   gulp.src(['src/core/framework7.less'])
     .pipe(modifyFile((content) => {
@@ -62,7 +62,7 @@ function build(config, components, themes, rtl, cb) {
   const currentTheme = themes.length === 1 ? themes[0] : '';
   const outputFileName = `framework7${rtl ? '.rtl' : ''}${currentTheme ? `.${currentTheme}` : ''}`;
   const output = getOutput();
-  const iconsFontBase64 = base64_encode('src/core/icons/font/Framework7CoreIcons.woff2');
+  const iconsFontBase64 = base64Encode('src/core/icons/font/Framework7CoreIcons.woff2');
 
   gulp.src('./src/core/framework7.less')
     .pipe(modifyFile((content) => {
