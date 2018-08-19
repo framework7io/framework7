@@ -17,9 +17,6 @@
   .searchbar-backdrop {
     background: rgba(0,0,0,0.25);
   }
-  .searchbar-icon {
-
-  }
   .searchbar-icon, .searchbar-disable-button {
     position: absolute;
     .ltr({
@@ -38,7 +35,6 @@
     margin-top: -12px;
     color: #737373;
     &:after {
-      .coreIconsFont();
       content: 'search_md';
       line-height: 1.2;
     }
@@ -50,8 +46,8 @@
     font-size: 0 !important;
     display: block;
     margin-top: -24px;
-    .md-link-highlight(rgba(0,0,0,0.1));
     color: #737373;
+    .md-link-highlight(rgba(0,0,0,0.1));
     &:after {
       .coreIconsFont();
       line-height: 48px;
@@ -79,16 +75,13 @@
       width: 48px;
       height: 48px;
       margin-top: -24px;
-      border-radius: 0;
-      background-color: transparent;
       .ltr({ right: 0; });
       .rtl({ left: 0; });
       .md-link-highlight(rgba(0,0,0,0.1));
+      color: #737373;
       &:after {
-        .coreIconsFont();
         line-height: 48px;
         content: 'delete_md';
-        color: #737373;
         opacity: 1;
       }
     }

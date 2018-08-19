@@ -91,7 +91,6 @@ textarea {
   transition-duration: 100ms;
   position: absolute;
   top: 50%;
-  border-radius: 50%;
   border: none;
   padding: 0;
   margin: 0;
@@ -106,14 +105,7 @@ textarea {
     left: 0;
   });
   &:after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    background-repeat: no-repeat;
-    background-position: center center;
+    .coreIconsFont();
   }
   &:before {
     position: absolute;

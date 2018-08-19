@@ -5,8 +5,9 @@
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="delete_round_md" fill="#000000" fill-rule="nonzero">
-            <path d="M10,0 C4.47,0 0,4.47 0,10 C0,15.53 4.47,20 10,20 C15.53,20 20,15.53 20,10 C20,4.47 15.53,0 10,0 Z M15,13.59 L13.59,15 L10,11.41 L6.41,15 L5,13.59 L8.59,10 L5,6.41 L6.41,5 L10,8.59 L13.59,5 L15,6.41 L11.41,10 L15,13.59 Z" id="Shape"></path>
+        <g id="delete_round_md" transform="translate(-2.000000, -2.000000)">
+            <circle id="Oval-2" fill="#000000" cx="12" cy="12" r="12"></circle>
+            <polygon id="Shape" fill="#FFFFFF" fill-rule="nonzero" points="17 8.00714286 15.9928571 7 12 10.9928571 8.00714286 7 7 8.00714286 10.9928571 12 7 15.9928571 8.00714286 17 12 13.0071429 15.9928571 17 17 15.9928571 13.0071429 12"></polygon>
         </g>
     </g>
 </svg>
