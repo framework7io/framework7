@@ -78,10 +78,10 @@
   .chip.color-@{colorName} {
     --f7-chip-bg-color: @colorValue;
     --f7-chip-text-color: #fff;
-    &.chip-outline {
-      --f7-chip-outline-border-color: @colorValue;
-      --f7-chip-text-color: @colorValue;
-    }
+  }
+  .chip-outline.color-@{colorName} {
+    --f7-chip-outline-border-color: @colorValue;
+    --f7-chip-text-color: @colorValue;
   }
 }
 & when (@includeIosTheme) {

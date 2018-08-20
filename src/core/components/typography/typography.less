@@ -136,7 +136,7 @@
 .for-each(@pair in @colors) {
   @colorName: at(@pair, 1);
   @colorValue: at(@pair, 2);
-  .text-colortheme-@{colorName} {
+  .text-color-@{colorName} {
     color: @colorValue !important;
   }
   .bg-color-@{colorName} {
