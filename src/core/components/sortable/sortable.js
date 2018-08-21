@@ -135,9 +135,10 @@ const Sortable = {
       $sortingEl.removeClass('sorting');
       $sortableContainer.removeClass('sortable-sorting');
 
-      let virtualList;
-      let oldIndex;
-      let newIndex;
+      let indexTo;
+      if ($insertAfterEl) indexTo = $insertAfterEl.index();
+      else if ($insertBeforeEl) indexTo = $insertBeforeEl.index();
+
       if (app.params.sortable.moveElements) {
         if ($insertAfterEl) {
           $sortingEl.insertAfter($insertAfterEl);
@@ -150,14 +151,15 @@ const Sortable = {
       if (($insertAfterEl || $insertBeforeEl)
          && $sortableContainer.hasClass('virtual-list')
       ) {
-        virtualList = $sortableContainer[0].f7VirtualList;
-        oldIndex = $sortingEl[0].f7VirtualListIndex;
-        newIndex = $insertBeforeEl ? $insertBeforeEl[0].f7VirtualListIndex : $insertAfterEl[0].f7VirtualListIndex;
-        if (virtualList) virtualList.moveItem(oldIndex, newIndex);
+        indexFrom = $sortingEl[0].f7VirtualListIndex;
+        indexTo = $insertBeforeEl ? $insertBeforeEl[0].f7VirtualListIndex : $insertAfterEl[0].f7VirtualListIndex;
+        const virtualList = $sortableContainer[0].f7VirtualList;
+        if (virtualList) virtualList.moveItem(indexFrom, indexTo);
       }
-
-      $sortingEl.trigger('sortable:sort', { from: indexFrom, to: $sortingEl.index() });
-      app.emit('sortableSort', $sortingEl[0], { from: indexFrom, to: $sortingEl.index() });
+      if (typeof indexTo !== 'undefined' && indexTo !== indexFrom) {
+        $sortingEl.trigger('sortable:sort', { from: indexFrom, to: indexTo });
+        app.emit('sortableSort', $sortingEl[0], { from: indexFrom, to: indexTo });
+      }
 
       $insertBeforeEl = undefined;
       $insertAfterEl = undefined;

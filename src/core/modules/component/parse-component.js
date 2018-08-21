@@ -36,6 +36,8 @@ function parseComponent(componentString) {
     styleScoped = true;
     style = componentString.split('<style scoped>')[1].split('</style>')[0];
     style = style.split('\n').map((line) => {
+      const trimmedLine = line.trim();
+      if (trimmedLine.indexOf('@') === 0) return line;
       if (line.indexOf('{') >= 0) {
         if (line.indexOf('{{this}}') >= 0) {
           return line.replace('{{this}}', `[data-f7-${id}]`);
