@@ -3,12 +3,17 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  right: 0;
   text-align: center;
   z-index: 10;
-  width: 16px;
+  width: var(--f7-list-index-width);
   cursor: pointer;
   user-select: none;
+  .ltr({
+    right: var(--f7-area-right);
+  });
+  .rtl({
+    left: var(--f7-area-left);
+  });
   &:before {
     content: '';
     position: absolute;
@@ -18,8 +23,9 @@
     height: 100%;
   }
   ul {
-    font-size: 11px;
-    font-weight: 600;
+    color: var(--f7-list-index-text-color, var(--f7-theme-color));
+    font-size: var(--f7-list-index-font-size);
+    font-weight: var(--f7-list-index-font-weight);
     list-style: none;
     margin: 0;
     padding: 0;
@@ -37,8 +43,8 @@
     padding: 0;
     list-style: none;
     position: relative;
-    height: 14px;
-    line-height: 14px;
+    height: var(--f7-list-index-item-height);
+    line-height: var(--f7-list-index-item-height);
     flex-shrink: 0;
     display: block;
     width: 100%;
@@ -50,6 +56,11 @@
       left: 50%;
       top: 50%;
       border-radius: 50%;
+      width: var(--f7-list-index-skip-dot-size);
+      height: var(--f7-list-index-skip-dot-size);
+      margin-left: ~"calc(-1 * var(--f7-list-index-skip-dot-size) / 2)";
+      margin-top: ~"calc(-1 * var(--f7-list-index-skip-dot-size) / 2)";
+      background: var(--f7-list-index-text-color, var(--f7-theme-color));
     }
   }
   .list-index-label {
@@ -57,9 +68,13 @@
     bottom: 0;
     right: 100%;
     text-align: center;
-    border-radius: 50%;
-    color: #fff;
-    font-weight: 500;
+    background-color: var(--f7-list-index-label-bg-color, var(--f7-theme-color));
+    color: var(--f7-list-index-label-text-color);
+    width: var(--f7-list-index-label-size);
+    height: var(--f7-list-index-label-size);
+    line-height: var(--f7-list-index-label-size);
+    font-size: var(--f7-list-index-label-font-size);
+    font-weight: var(--f7-list-index-label-font-weight);
   }
 }
 & when (@includeIosTheme) {

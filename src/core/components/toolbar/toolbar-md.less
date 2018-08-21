@@ -82,7 +82,7 @@
       overflow: hidden;
     }
     &.toolbar-bottom-md {
-      height: var(--f7-tabbar-labels-bottom-size);
+      height: var(--f7-tabbar-labels-bottom-height);
       a.tab-link, a.link {
         padding-top: 7px;
         padding-bottom: 7px;
@@ -154,7 +154,7 @@
   // Relation with page
   .toolbar-bottom-md.tabbar-labels ~ * .page-content,
   .toolbar-bottom-md.tabbar-labels ~ .page-content {
-    padding-bottom: ~"calc(var(--f7-tabbar-labels-bottom-size) + var(--f7-area-bottom))";
+    padding-bottom: ~"calc(var(--f7-tabbar-labels-bottom-height) + var(--f7-area-bottom))";
   }
 
   .views, .view, .page, .popup, .panel, .login-screen {
@@ -179,7 +179,7 @@
         bottom: var(--f7-area-bottom);
       }
       &.tabbar-labels {
-        height: ~"calc(var(--f7-tabbar-labels-bottom-size) + var(--f7-area-bottom))";
+        height: ~"calc(var(--f7-tabbar-labels-bottom-height) + var(--f7-area-bottom))";
       }
     }
   }
