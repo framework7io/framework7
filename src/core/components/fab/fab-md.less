@@ -7,7 +7,7 @@
     height: 56px;
     border-radius: 28px;
     color: #fff;
-    .elevation(6);
+    box-shadow: var(--f7-elevation-6);
     &.active-state {
       background: darken(@themeColor, 8%);
     }
@@ -75,7 +75,7 @@
   .fab-morph {
     border-radius: 28px;
     background: @themeColor;
-    .elevation(6);
+    box-shadow: var(--f7-elevation-6);
     > a {
       box-shadow: none;
       background: none !important;
@@ -100,7 +100,7 @@
   }
   // Labels
   .fab-label {
-    .elevation(3);
+    box-shadow: var(--f7-elevation-3);
   }
 
   .color-theme-loop({
