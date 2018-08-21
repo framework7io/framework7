@@ -4,12 +4,20 @@
     .hairline-remove(top);
     .hairline-remove(bottom);
   }
+  ul {
+    background: none;
+  }
 }
 .card {
-  background: #fff;
+  background: var(--f7-card-bg-color);
   position: relative;
-  border-radius: 4px;
-  font-size: 14px;
+  border-radius: var(--f7-card-border-radius);
+  font-size: var(-f7-card-font-size);
+  margin-top: var(--f7-card-margin);
+  margin-bottom: var(--f7-card-margin);
+  margin-left: ~"calc(var(--f7-card-margin) + var(--f7-area-left))";
+  margin-right: ~"calc(var(--f7-card-margin) + var(--f7-area-right))";
+  box-shadow: var(--f7-card-box-shadow);
   .list, .block {
     margin: 0;
   }
@@ -17,13 +25,20 @@
     margin-left: 0;
     margin-right: 0;
   }
-
+}
+.card-outline {
+  box-shadow: none;
+  border: 1px solid var(--f7-card-outline-border-color);
 }
 .card-content {
   position: relative;
 }
 .card-content-padding {
   position: relative;
+  padding: var(--f7-card-content-padding);
+  > .list, > .block {
+    margin: ~"calc(-1 * var(--f7-card-content-padding))";
+  }
   > p:first-child {
     margin-top: 0;
   }
@@ -31,8 +46,20 @@
     margin-bottom: 0;
   }
 }
+.card-header {
+  min-height: var(--f7-card-header-min-height); 
+  font-size: var(--f7-card-header-font-size);
+  padding: var(--f7-card-header-padding);
+}
+.card-footer {
+  min-height: var(--f7-card-footer-min-height); 
+  color: var(--f7-card-footer-text-color);
+  padding: var(--f7-card-footer-padding);
+  a.link {
+    overflow: hidden;
+  }
+}
 .card-header, .card-footer {
-  min-height: 44px;
   position: relative;
   box-sizing: border-box;
   display: flex;
@@ -58,15 +85,15 @@
   }
 }
 .card-header {
-  border-radius: 4px 4px 0 0;
-  .hairline(bottom, #e1e1e1);
+  border-radius: var(--f7-card-border-radius) var(--f7-card-border-radius) 0 0;
+  .hairline(bottom, var(--f7-card-header-border-color));
   &.no-hairline {
     .hairline-remove(bottom);
   }
 }
 .card-footer {
-  border-radius: 0 0 4px 4px;
-  .hairline(top, #e1e1e1);
+  border-radius: 0 0 var(--f7-card-border-radius) var(--f7-card-border-radius);
+  .hairline(top, var(--f7-card-footer-border-color));
   &.no-hairline {
     .hairline-remove(top);
   }
