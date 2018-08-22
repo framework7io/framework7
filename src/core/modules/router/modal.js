@@ -34,7 +34,7 @@ function modalLoad(modalType, route, loadOptions = {}) {
 
         // Emit events
         modal.$el.trigger(`${modalType.toLowerCase()}:init ${modalType.toLowerCase()}:mounted`, route, modal);
-        router.emit(`${modalOrPanel}Init ${modalType}Init ${modalType}Mounted`, modal.el, route, modal);
+        router.emit(`${!isPanel ? 'modalInit' : ''} ${modalType}Init ${modalType}Mounted`, modal.el, route, modal);
       }
       router.once('swipeBackMove', closeOnSwipeBack);
     });
@@ -47,7 +47,7 @@ function modalLoad(modalType, route, loadOptions = {}) {
 
     modal.on(`${modalOrPanel}Closed`, () => {
       modal.$el.trigger(`${modalType.toLowerCase()}:beforeremove`, route, modal);
-      modal.emit(`${isPanel ? 'modalBeforeRemove ' : ''}${modalType}BeforeRemove`, modal.el, route, modal);
+      modal.emit(`${!isPanel ? 'modalBeforeRemove ' : ''}${modalType}BeforeRemove`, modal.el, route, modal);
       const modalComponent = modal.el.f7Component;
       if (modalComponent) {
         modalComponent.$destroy();
