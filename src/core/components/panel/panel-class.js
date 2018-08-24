@@ -173,14 +173,28 @@ class Panel extends Framework7Class {
 
     const { side, effect, $el, $backdropEl, opened } = panel;
 
-    const $insertBeforeEl = app.root.children('.panel, .views, .view').eq(0);
-    const $insertAfterEl = app.root.children('.statusbar').eq(0);
-    if ($insertBeforeEl.length) {
-      $el.insertBefore($insertBeforeEl);
-    } else if ($insertAfterEl.length) {
-      $el.insertAfter($insertBeforeEl);
-    } else {
-      app.root.prepend($el);
+    const $panelParentEl = $el.parent();
+    const wasInDom = $el.parents(document).length > 0;
+
+    if (!$panelParentEl.is(app.root)) {
+      const $insertBeforeEl = app.root.children('.panel, .views, .view').eq(0);
+      const $insertAfterEl = app.root.children('.statusbar').eq(0);
+
+      if ($insertBeforeEl.length) {
+        $el.insertBefore($insertBeforeEl);
+      } else if ($insertAfterEl.length) {
+        $el.insertAfter($insertBeforeEl);
+      } else {
+        app.root.prepend($el);
+      }
+
+      panel.once('panelClosed', () => {
+        if (wasInDom) {
+          $panelParentEl.append($el);
+        } else {
+          $el.remove();	
+        }
+      });	
     }
 
     // Ignore if opened
