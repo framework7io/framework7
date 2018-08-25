@@ -192,9 +192,9 @@ class Panel extends Framework7Class {
         if (wasInDom) {
           $panelParentEl.append($el);
         } else {
-          $el.remove();	
+          $el.remove();
         }
-      });	
+      });
     }
 
     // Ignore if opened
