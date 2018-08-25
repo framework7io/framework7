@@ -97,6 +97,7 @@ import ColorThemes from './pages/color-themes.vue';
 import RoutableModals from './pages/routable-modals.vue';
 import RoutablePopup from './pages/routable-popup.vue';
 import RoutableActions from './pages/routable-actions.vue';
+import RoutablePanel from './pages/routable-panel.vue';
 
 import NotFound from './pages/404.vue';
 
@@ -304,6 +305,14 @@ export default [
   {
     path: '/panel/',
     component: Panel,
+    routes: [
+      {
+        path: '/routable-panel/',
+        panel: {
+          component: RoutablePanel
+        },
+      },
+    ]
   },
   {
     path: '/photo-browser/',

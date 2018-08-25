@@ -30,6 +30,38 @@ function forward(el, forwardOptions = {}) {
     on: {},
   }, forwardOptions);
 
+  let currentRouteIsModal = router.currentRoute.modal;
+  let modalType;
+  if (!currentRouteIsModal) {
+    ('popup popover sheet loginScreen actions customModal panel').split(' ').forEach((modalLoadProp) => {
+      if (router.currentRoute && router.currentRoute.route && router.currentRoute.route[modalLoadProp]) {
+        currentRouteIsModal = true;
+        modalType = modalLoadProp;
+      }
+    });
+  }
+
+  if (currentRouteIsModal) {
+    const modalToClose = router.currentRoute.modal
+                         || router.currentRoute.route.modalInstance
+                         || app[modalType].get();
+    const previousUrl = router.history[router.history.length - 2];
+    let previousRoute = router.findMatchingRoute(previousUrl);
+    if (!previousRoute && previousUrl) {
+      previousRoute = {
+        url: previousUrl,
+        path: previousUrl.split('?')[0],
+        query: Utils.parseUrlQuery(previousUrl),
+        route: {
+          path: previousUrl.split('?')[0],
+          url: previousUrl,
+        },
+      };
+    }
+
+    router.modalRemove(modalToClose);
+  }
+
   const dynamicNavbar = router.dynamicNavbar;
   const separateNavbar = router.separateNavbar;
 
@@ -573,7 +605,7 @@ function navigate(navigateParams, navigateOptions = {}) {
 
   function resolve() {
     let routerLoaded = false;
-    ('popup popover sheet loginScreen actions customModal').split(' ').forEach((modalLoadProp) => {
+    ('popup popover sheet loginScreen actions customModal panel').split(' ').forEach((modalLoadProp) => {
       if (route.route[modalLoadProp] && !routerLoaded) {
         routerLoaded = true;
         router.modalLoad(modalLoadProp, route, options);
@@ -595,7 +627,7 @@ function navigate(navigateParams, navigateOptions = {}) {
         else route.context = Utils.extend({}, route.context, resolveOptions.context);
         options.route.context = route.context;
       }
-      ('popup popover sheet loginScreen actions customModal').split(' ').forEach((modalLoadProp) => {
+      ('popup popover sheet loginScreen actions customModal panel').split(' ').forEach((modalLoadProp) => {
         if (resolveParams[modalLoadProp]) {
           resolvedAsModal = true;
           const modalRoute = Utils.extend({}, route, { route: resolveParams });

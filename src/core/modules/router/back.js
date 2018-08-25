@@ -429,7 +429,7 @@ function back(...args) {
   let currentRouteIsModal = router.currentRoute.modal;
   let modalType;
   if (!currentRouteIsModal) {
-    ('popup popover sheet loginScreen actions customModal').split(' ').forEach((modalLoadProp) => {
+    ('popup popover sheet loginScreen actions customModal panel').split(' ').forEach((modalLoadProp) => {
       if (router.currentRoute.route[modalLoadProp]) {
         currentRouteIsModal = true;
         modalType = modalLoadProp;
