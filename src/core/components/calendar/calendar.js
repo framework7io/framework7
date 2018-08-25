@@ -77,6 +77,7 @@ export default {
       view: null,
       url: 'date/',
       backdrop: true,
+      closeByBackdropClick: true,
       // Render functions
       renderWeekHeader: null,
       renderMonths: null,
