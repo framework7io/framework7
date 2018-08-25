@@ -96,7 +96,6 @@ import ColorThemes from './pages/color-themes.jsx';
 import RoutableModals from './pages/routable-modals.jsx';
 import RoutablePopup from './pages/routable-popup.jsx';
 import RoutableActions from './pages/routable-actions.jsx';
-import RoutablePanel from './pages/routable-panel.jsx';
 
 import NotFound from './pages/404.jsx';
 
@@ -303,14 +302,6 @@ export default [
   {
     path: '/panel/',
     component: Panel,
-    routes: [
-      {
-        path: '/routable-panel/',
-        panel: {
-          component: RoutablePanel
-        }
-      }
-    ]
   },
   {
     path: '/photo-browser/',

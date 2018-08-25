@@ -193,14 +193,6 @@ var routes = [
   {
     path: '/panel/',
     url: './pages/panel.html',
-    routes: [
-      {
-        path: '/routable-panel/',
-        panel: {
-          url: './pages/routable-panel.html'
-        },
-      },
-    ]
   },
   {
     path: '/photo-browser/',
