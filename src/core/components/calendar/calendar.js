@@ -76,6 +76,7 @@ export default {
       routableModals: true,
       view: null,
       url: 'date/',
+      backdrop: true,
       // Render functions
       renderWeekHeader: null,
       renderMonths: null,
