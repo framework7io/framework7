@@ -1355,7 +1355,7 @@ class Calendar extends Framework7Class {
       targetEl: $inputEl,
       scrollToEl: calendar.params.scrollToInput ? $inputEl : undefined,
       content: modalContent,
-      backdrop: calendar.params.backdrop,
+      backdrop: (modalType === 'popover' && app.params.popover.backdrop !== false) || calendar.params.backdrop,
       closeByBackdropClick: calendar.params.closeByBackdropClick,
       on: {
         open() {
