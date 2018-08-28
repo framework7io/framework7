@@ -7,8 +7,8 @@ const fs = require('fs');
 const { transformSync } = require('@babel/core');
 
 function transformRestSpread(buildPath) {
-  const reactFiles = fs.readdirSync(`${buildPath}/react/components`).filter(f => f[0] !== '.');
-  const vueFiles = fs.readdirSync(`${buildPath}/vue/components`).filter(f => f[0] !== '.');
+  const reactFiles = fs.readdirSync(`${buildPath}/react/components`).filter(f => f[0] !== '.' && f.indexOf('.d.ts') < 0);
+  const vueFiles = fs.readdirSync(`${buildPath}/vue/components`).filter(f => f[0] !== '.' && f.indexOf('.d.ts') < 0);
 
   function transformFile(filePath) {
     const fileContent = fs.readFileSync(filePath, 'utf8');
@@ -34,6 +34,7 @@ function build(cb) {
 
   phenome({
     paths: ['./src/phenome/**/*.js', './src/phenome/**/*.jsx'],
+    typeScriptDefinitions: true,
     react: {
       out: `${buildPath}/react/`,
       helpers: {
