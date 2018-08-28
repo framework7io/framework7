@@ -145,9 +145,6 @@ export default {
   beforeDestroy() {
     const self = this;
     const el = self.$refs.el;
-    const {
-      form,
-    } = self.props;
 
     if (el) {
       el.removeEventListener('sortable:enable', self.onSortableEnableBound);
@@ -155,9 +152,6 @@ export default {
       el.removeEventListener('sortable:sort', self.onSortableSortBound);
       el.removeEventListener('tab:show', self.onTabShowBound);
       el.removeEventListener('tab:hide', self.onTabHideBound);
-      if (form) {
-        el.removeEventListener('submit', self.onSubmitBound);
-      }
     }
 
     if (!(self.virtualList && self.f7VirtualList)) return;
@@ -169,8 +163,7 @@ export default {
     const el = self.$refs.el;
     const {
       virtualList,
-      virtualListParams,
-      form,
+      virtualListParams
     } = self.props;
 
     if (el) {
@@ -184,10 +177,6 @@ export default {
       el.addEventListener('sortable:sort', self.onSortableSortBound);
       el.addEventListener('tab:show', self.onTabShowBound);
       el.addEventListener('tab:hide', self.onTabHideBound);
-      if (form) {
-        self.onSubmitBound = self.onSubmit.bind(self);
-        el.addEventListener('submit', self.onSubmitBound);
-      }
     }
 
     if (!virtualList) return;
@@ -253,10 +242,6 @@ export default {
 
     onTabHide(e) {
       this.dispatchEvent('tab:hide tabHide', e);
-    },
-    
-    onSubmit(e) {
-      this.dispatchEvent('submit', e);
     },
 
     dispatchEvent(events, ...args) {

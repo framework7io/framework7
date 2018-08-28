@@ -1,5 +1,5 @@
 /**
- * Framework7 3.1.1
+ * Framework7 3.2.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: August 3, 2018
+ * Released on: August 28, 2018
  */
 
 (function (global, factory) {
@@ -2603,7 +2603,20 @@
     return promise;
   };
 
+  var uniqueNumber = 1;
+
   var Utils = {
+    uniqueNumber: function uniqueNumber$1() {
+      uniqueNumber += 1;
+      return uniqueNumber;
+    },
+    id: function id(mask, map) {
+      if ( mask === void 0 ) mask = 'xxxxxxxxxx';
+      if ( map === void 0 ) map = '0123456789abcdef';
+
+      var length = map.length;
+      return mask.replace(/x/g, function () { return map[Math.floor((Math.random() * length))]; });
+    },
     mdPreloaderContent: "\n    <span class=\"preloader-inner\">\n      <span class=\"preloader-inner-gap\"></span>\n      <span class=\"preloader-inner-left\">\n          <span class=\"preloader-inner-half-circle\"></span>\n      </span>\n      <span class=\"preloader-inner-right\">\n          <span class=\"preloader-inner-half-circle\"></span>\n      </span>\n    </span>\n  ".trim(),
     eventNameToColonCase: function eventNameToColonCase(eventName) {
       var hasColon;
@@ -2677,7 +2690,7 @@
 
         for (i = 0; i < length; i += 1) {
           param = params[i].replace(/#\S+/g, '').split('=');
-          query[decodeURIComponent(param[0])] = typeof param[1] === 'undefined' ? undefined : decodeURIComponent(param[1]) || '';
+          query[decodeURIComponent(param[0])] = typeof param[1] === 'undefined' ? undefined : decodeURIComponent(param.slice(1).join('=')) || '';
         }
       }
       return query;
@@ -3372,6 +3385,8 @@
           }
         } else if (Device.desktop) {
           classNames.push('device-desktop');
+          if (Device.macos) { classNames.push('device-macos'); }
+          else if (Device.windows) { classNames.push('device-windows'); }
         }
         if (Device.cordova || Device.phonegap) {
           classNames.push('device-cordova');
@@ -4005,7 +4020,8 @@
       if (el.nodeName.toLowerCase() === 'input' && (el.type === 'file' || el.type === 'range')) { return false; }
       if (el.nodeName.toLowerCase() === 'select' && Device.android) { return false; }
       if ($el.hasClass('no-fastclick') || $el.parents('.no-fastclick').length > 0) { return false; }
-      if (params.fastClicksExclude && $el.is(params.fastClicksExclude)) { return false; }
+      if (params.fastClicksExclude && $el.closest(params.fastClicksExclude).length > 0) { return false; }
+
       return true;
     }
     function targetNeedsFocus(el) {
@@ -4547,8 +4563,8 @@
     // Match Express-style parameters and un-named parameters with a prefix
     // and optional suffixes. Matches appear as:
     //
-    // "/:test(\\d+)?" => ["/", "test", "\d+", undefined, "?"]
-    // "/route(\\d+)"  => [undefined, undefined, undefined, "\d+", undefined]
+    // ":test(\\d+)?" => ["test", "\d+", undefined, "?"]
+    // "(\\d+)"  => [undefined, undefined, "\d+", undefined]
     '(?:\\:(\\w+)(?:\\(((?:\\\\.|[^\\\\()])+)\\))?|\\(((?:\\\\.|[^\\\\()])+)\\))([+*?])?'
   ].join('|'), 'g');
 
@@ -4822,11 +4838,12 @@
     options = options || {};
 
     var strict = options.strict;
+    var start = options.start !== false;
     var end = options.end !== false;
     var delimiter = escapeString(options.delimiter || DEFAULT_DELIMITER);
     var delimiters = options.delimiters || DEFAULT_DELIMITERS;
     var endsWith = [].concat(options.endsWith || []).map(escapeString).concat('$').join('|');
-    var route = '';
+    var route = start ? '^' : '';
     var isEndDelimited = tokens.length === 0;
 
     // Iterate over the tokens and create our regexp string.
@@ -4837,21 +4854,20 @@
         route += escapeString(token);
         isEndDelimited = i === tokens.length - 1 && delimiters.indexOf(token[token.length - 1]) > -1;
       } else {
-        var prefix = escapeString(token.prefix);
         var capture = token.repeat
-          ? '(?:' + token.pattern + ')(?:' + prefix + '(?:' + token.pattern + '))*'
+          ? '(?:' + token.pattern + ')(?:' + escapeString(token.delimiter) + '(?:' + token.pattern + '))*'
           : token.pattern;
 
         if (keys) { keys.push(token); }
 
         if (token.optional) {
           if (token.partial) {
-            route += prefix + '(' + capture + ')?';
+            route += escapeString(token.prefix) + '(' + capture + ')?';
           } else {
-            route += '(?:' + prefix + '(' + capture + '))?';
+            route += '(?:' + escapeString(token.prefix) + '(' + capture + '))?';
           }
         } else {
-          route += prefix + '(' + capture + ')';
+          route += escapeString(token.prefix) + '(' + capture + ')';
         }
       }
     }
@@ -4865,7 +4881,7 @@
       if (!isEndDelimited) { route += '(?=' + delimiter + '|' + endsWith + ')'; }
     }
 
-    return new RegExp('^' + route, flags(options))
+    return new RegExp(route, flags(options))
   }
 
   /**
@@ -5088,7 +5104,7 @@
       var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
       var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
       if (typeof isScrolling === 'undefined') {
-        isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x)) || pageX < touchesStart.x;
+        isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x)) || (pageX < touchesStart.x && !app.rtl) || (pageX > touchesStart.x && app.rtl);
       }
       if (isScrolling || e.f7PreventSwipeBack || app.preventSwipeBack) {
         isTouched = false;
@@ -5571,6 +5587,38 @@
       on: {},
     }, forwardOptions);
 
+    var currentRouteIsModal = router.currentRoute.modal;
+    var modalType;
+    if (!currentRouteIsModal) {
+      ('popup popover sheet loginScreen actions customModal panel').split(' ').forEach(function (modalLoadProp) {
+        if (router.currentRoute && router.currentRoute.route && router.currentRoute.route[modalLoadProp]) {
+          currentRouteIsModal = true;
+          modalType = modalLoadProp;
+        }
+      });
+    }
+
+    if (currentRouteIsModal) {
+      var modalToClose = router.currentRoute.modal
+                           || router.currentRoute.route.modalInstance
+                           || app[modalType].get();
+      var previousUrl = router.history[router.history.length - 2];
+      var previousRoute = router.findMatchingRoute(previousUrl);
+      if (!previousRoute && previousUrl) {
+        previousRoute = {
+          url: previousUrl,
+          path: previousUrl.split('?')[0],
+          query: Utils.parseUrlQuery(previousUrl),
+          route: {
+            path: previousUrl.split('?')[0],
+            url: previousUrl,
+          },
+        };
+      }
+
+      router.modalRemove(modalToClose);
+    }
+
     var dynamicNavbar = router.dynamicNavbar;
     var separateNavbar = router.separateNavbar;
 
@@ -6052,11 +6100,30 @@
     var router = this;
     var url;
     var createRoute;
+    var name;
+    var query;
+    var params;
+    var route;
     if (typeof navigateParams === 'string') {
       url = navigateParams;
     } else {
       url = navigateParams.url;
       createRoute = navigateParams.route;
+      name = navigateParams.name;
+      query = navigateParams.query;
+      params = navigateParams.params;
+    }
+    if (name) {
+      // find route by name
+      route = router.findRouteByKey('name', name);
+      if (!route) {
+        throw new Error(("Framework7: route with name \"" + name + "\" not found"));
+      }
+      url = router.constructRouteUrl(route, { params: params, query: query });
+      if (url) {
+        return router.navigate(url, navigateOptions);
+      }
+      throw new Error(("Framework7: can't construct URL for route with name \"" + name + "\""));
     }
     var app = router.app;
     if (!router.view) {
@@ -6076,7 +6143,6 @@
         .replace('///', '/')
         .replace('//', '/');
     }
-    var route;
     if (createRoute) {
       route = Utils.extend(router.parseRouteUrl(navigateUrl), {
         route: Utils.extend({}, createRoute),
@@ -6108,7 +6174,7 @@
 
     function resolve() {
       var routerLoaded = false;
-      ('popup popover sheet loginScreen actions customModal').split(' ').forEach(function (modalLoadProp) {
+      ('popup popover sheet loginScreen actions customModal panel').split(' ').forEach(function (modalLoadProp) {
         if (route.route[modalLoadProp] && !routerLoaded) {
           routerLoaded = true;
           router.modalLoad(modalLoadProp, route, options);
@@ -6132,7 +6198,7 @@
           else { route.context = Utils.extend({}, route.context, resolveOptions.context); }
           options.route.context = route.context;
         }
-        ('popup popover sheet loginScreen actions customModal').split(' ').forEach(function (modalLoadProp) {
+        ('popup popover sheet loginScreen actions customModal panel').split(' ').forEach(function (modalLoadProp) {
           if (resolveParams[modalLoadProp]) {
             resolvedAsModal = true;
             var modalRoute = Utils.extend({}, route, { route: resolveParams });
@@ -6258,27 +6324,24 @@
       tabEventTarget.trigger('tab:init tab:mounted', tabRoute);
       router.emit('tabInit tabMounted', $newTabEl[0], tabRoute);
 
-      if ($oldTabEl) {
+      if ($oldTabEl.length) {
         if (animated) {
           onTabsChanged(function () {
-            if ($oldTabEl.length) {
-              router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
-            }
+            router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
             if (router.params.unloadTabContent) {
               router.tabRemove($oldTabEl, $newTabEl, tabRoute);
             }
           });
         } else {
-          if ($oldTabEl.length) {
-            router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
-          }
+          router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
           if (router.params.unloadTabContent) {
             router.tabRemove($oldTabEl, $newTabEl, tabRoute);
           }
         }
       }
     }
-    if (!router.params.unloadTabContent && $newTabEl[0].f7RouterTabLoaded) {
+
+    if ($newTabEl[0].f7RouterTabLoaded) {
       if (!$oldTabEl || !$oldTabEl.length) { return router; }
       if (animated) {
         onTabsChanged(function () {
@@ -6316,9 +6379,7 @@
             $newTabEl.append(contentEl);
           }
         }
-        if (!router.params.unloadTabContent) {
-          $newTabEl[0].f7RouterTabLoaded = true;
-        }
+        $newTabEl[0].f7RouterTabLoaded = true;
         onTabLoaded(contentEl);
       }
       function reject() {
@@ -6379,11 +6440,17 @@
     if (tabRoute.async) {
       tabRoute.async.call(router, currentRoute, previousRoute, asyncResolve, asyncReject);
     }
+
     return router;
   }
   function tabRemove($oldTabEl, $newTabEl, tabRoute) {
     var router = this;
+
     var hasTabComponentChild;
+    if ($oldTabEl[0]) {
+      $oldTabEl[0].f7RouterTabLoaded = false;
+      delete $oldTabEl[0].f7RouterTabLoaded;
+    }
     $oldTabEl.children().each(function (index, tabChild) {
       if (tabChild.f7Component) {
         hasTabComponentChild = true;
@@ -6403,6 +6470,8 @@
 
     var router = this;
     var app = router.app;
+    var isPanel = modalType === 'panel';
+    var modalOrPanel = isPanel ? 'panel' : 'modal';
 
     var options = Utils.extend({
       animate: router.params.animate,
@@ -6424,27 +6493,27 @@
       function closeOnSwipeBack() {
         modal.close();
       }
-      modal.on('modalOpen', function () {
+      modal.on((modalOrPanel + "Open"), function () {
         if (!hasEl) {
           // Remove theme elements
           router.removeThemeElements(modal.el);
 
           // Emit events
           modal.$el.trigger(((modalType.toLowerCase()) + ":init " + (modalType.toLowerCase()) + ":mounted"), route, modal);
-          router.emit(("modalInit " + modalType + "Init " + modalType + "Mounted"), modal.el, route, modal);
+          router.emit(((!isPanel ? 'modalInit' : '') + " " + modalType + "Init " + modalType + "Mounted"), modal.el, route, modal);
         }
         router.once('swipeBackMove', closeOnSwipeBack);
       });
-      modal.on('modalClose', function () {
+      modal.on((modalOrPanel + "Close"), function () {
         router.off('swipeBackMove', closeOnSwipeBack);
         if (!modal.closeByRouter) {
           router.back();
         }
       });
 
-      modal.on('modalClosed', function () {
+      modal.on((modalOrPanel + "Closed"), function () {
         modal.$el.trigger(((modalType.toLowerCase()) + ":beforeremove"), route, modal);
-        modal.emit(("modalBeforeRemove " + modalType + "BeforeRemove"), modal.el, route, modal);
+        modal.emit(("" + (!isPanel ? 'modalBeforeRemove ' : '') + modalType + "BeforeRemove"), modal.el, route, modal);
         var modalComponent = modal.el.f7Component;
         if (modalComponent) {
           modalComponent.$destroy();
@@ -6489,7 +6558,7 @@
 
         // Emit events
         modal.$el.trigger(((modalType.toLowerCase()) + ":init " + (modalType.toLowerCase()) + ":mounted"), route, modal);
-        router.emit(("modalInit " + modalType + "Init " + modalType + "Mounted"), modal.el, route, modal);
+        router.emit((modalOrPanel + "Init " + modalType + "Init " + modalType + "Mounted"), modal.el, route, modal);
       }
 
       // Open
@@ -6989,8 +7058,10 @@
 
     var args = [], len = arguments.length;
     while ( len-- ) args[ len ] = arguments[ len ];
+    var router = this;
     var navigateUrl;
     var navigateOptions;
+    var route;
     if (typeof args[0] === 'object') {
       navigateOptions = args[0] || {};
     } else {
@@ -6998,7 +7069,26 @@
       navigateOptions = args[1] || {};
     }
 
-    var router = this;
+    var name = navigateOptions.name;
+    var params = navigateOptions.params;
+    var query = navigateOptions.query;
+    if (name) {
+      // find route by name
+      route = router.findRouteByKey('name', name);
+      if (!route) {
+        throw new Error(("Framework7: route with name \"" + name + "\" not found"));
+      }
+      navigateUrl = router.constructRouteUrl(route, { params: params, query: query });
+      if (navigateUrl) {
+        return router.back(navigateUrl, Utils.extend({}, navigateOptions, {
+          name: null,
+          params: null,
+          query: null,
+        }));
+      }
+      throw new Error(("Framework7: can't construct URL for route with name \"" + name + "\""));
+    }
+
     var app = router.app;
     if (!router.view) {
       (ref = app.views.main.router).back.apply(ref, args);
@@ -7008,7 +7098,7 @@
     var currentRouteIsModal = router.currentRoute.modal;
     var modalType;
     if (!currentRouteIsModal) {
-      ('popup popover sheet loginScreen actions customModal').split(' ').forEach(function (modalLoadProp) {
+      ('popup popover sheet loginScreen actions customModal panel').split(' ').forEach(function (modalLoadProp) {
         if (router.currentRoute.route[modalLoadProp]) {
           currentRouteIsModal = true;
           modalType = modalLoadProp;
@@ -7085,7 +7175,7 @@
     }
 
     // Find route to load
-    var route = router.findMatchingRoute(navigateUrl);
+    route = router.findMatchingRoute(navigateUrl);
     if (!route) {
       if (navigateUrl) {
         route = {
@@ -7295,26 +7385,6 @@
         set: function set(newRoute) {
           previousRoute = newRoute;
         },
-      });
-
-      Utils.extend(router, {
-        // Load
-        forward: forward,
-        load: load,
-        navigate: navigate,
-        refreshPage: refreshPage,
-        // Tab
-        tabLoad: tabLoad,
-        tabRemove: tabRemove,
-        // Modal
-        modalLoad: modalLoad,
-        modalRemove: modalRemove,
-        // Back
-        backward: backward,
-        loadBack: loadBack,
-        back: back,
-        // Clear history
-        clearPreviousHistory: clearPreviousHistory,
       });
 
       return router;
@@ -7757,6 +7827,7 @@
       });
       return flattenedRoutes;
     };
+
     // eslint-disable-next-line
     Router.prototype.parseRouteUrl = function parseRouteUrl (url) {
       if (!url) { return {}; }
@@ -7771,6 +7842,29 @@
         url: url,
         path: path,
       };
+    };
+
+    // eslint-disable-next-line
+    Router.prototype.constructRouteUrl = function constructRouteUrl (route, ref) {
+      if ( ref === void 0 ) ref = {};
+      var params = ref.params;
+      var query = ref.query;
+
+      var path = route.path;
+      var toUrl = pathToRegexp_1.compile(path);
+      var url;
+      try {
+        url = toUrl(params || {});
+      } catch (error) {
+        throw new Error(("Framework7: error constructing route URL from passed params:\nRoute: " + path + "\n" + (error.toString())));
+      }
+
+      if (query) {
+        if (typeof query === 'string') { url += "?" + query; }
+        else { url += "?" + (Utils.serializeObject(query)); }
+      }
+
+      return url;
     };
 
     Router.prototype.findTabRoute = function findTabRoute (tabEl) {
@@ -8080,7 +8174,15 @@
         var createdComponent = app.component.create(componentOptions, extendContext);
         resolve(createdComponent.el);
       }
+      var cachedComponent;
       if (url) {
+        router.cache.components.forEach(function (cached) {
+          if (cached.url === url) { cachedComponent = cached.component; }
+        });
+      }
+      if (url && cachedComponent) {
+        compile(cachedComponent);
+      } else if (url && !cachedComponent) {
         // Load via XHR
         if (router.xhr) {
           router.xhr.abort();
@@ -8089,7 +8191,12 @@
         router
           .xhrRequest(url, options)
           .then(function (loadedComponent) {
-            compile(app.component.parse(loadedComponent));
+            var parsedComponent = app.component.parse(loadedComponent);
+            router.cache.components.push({
+              url: url,
+              component: parsedComponent,
+            });
+            compile(parsedComponent);
           })
           .catch(function (err) {
             reject();
@@ -8560,6 +8667,24 @@
     return Router;
   }(Framework7Class));
 
+  // Load
+  Router.prototype.forward = forward;
+  Router.prototype.load = load;
+  Router.prototype.navigate = navigate;
+  Router.prototype.refreshPage = refreshPage;
+  // Tab
+  Router.prototype.tabLoad = tabLoad;
+  Router.prototype.tabRemove = tabRemove;
+  // Modal
+  Router.prototype.modalLoad = modalLoad;
+  Router.prototype.modalRemove = modalRemove;
+  // Back
+  Router.prototype.backward = backward;
+  Router.prototype.loadBack = loadBack;
+  Router.prototype.back = back;
+  // Clear history
+  Router.prototype.clearPreviousHistory = clearPreviousHistory;
+
   var Router$1 = {
     name: 'router',
     static: {
@@ -8780,8 +8905,7 @@
         clickedLinkData = clickedLink.dataset();
       }
       var validUrl = url && url.length > 0 && url !== '#' && !isTabLink;
-      var template = clickedLinkData.template;
-      if (validUrl || clickedLink.hasClass('back') || template) {
+      if (validUrl || clickedLink.hasClass('back')) {
         var view;
         if (clickedLinkData.view) {
           view = $$1(clickedLinkData.view)[0].f7View;
@@ -9035,7 +9159,7 @@
     }
     if (update.length) {
       hooks.update = function (oldVnode, vnode) {
-        update.forEach(function (f) { return f(vnode); });
+        update.forEach(function (f) { return f(oldVnode, vnode); });
       };
     }
     if (postpatch.length) {
@@ -9152,7 +9276,7 @@
           data.props[attrName] = attrValue;
         }
       } else if (attrName === 'key') {
-        data.key = attrName;
+        data.key = attrValue;
       } else if (attrName.indexOf('@') === 0) {
         if (!data.on) { data.on = {}; }
         var eventName = attrName.substr(1);
@@ -9770,31 +9894,10 @@
     propsModule,
     eventListenersModule ]);
 
-  var counter = 0;
-
-  function renderEsTemplate(template, id) {
-    var callbackName = "f7_component_es_template" + (id || new Date().getTime());
-
-    var scriptContent = "\n    window." + callbackName + " = function () {\n      return `" + template + "`;\n    }\n  ";
-    // Insert Script El
-    var scriptEl = doc.createElement('script');
-    scriptEl.innerHTML = scriptContent;
-    $$1('head').append(scriptEl);
-
-    // Render function
-    var render = win[callbackName];
-
-    // Remove Script El
-    $$1(scriptEl).remove();
-    delete win[callbackName];
-
-    return render;
-  }
-
   var Framework7Component = function Framework7Component(app, options, extendContext) {
     if ( extendContext === void 0 ) extendContext = {};
 
-    var id = "" + (Utils.now()) + counter;
+    var id = Utils.id();
     var self = Utils.merge(
       this,
       extendContext,
@@ -9807,7 +9910,6 @@
       }
     );
     var $options = self.$options;
-    counter += 1;
 
     // Root data and methods
     Object.defineProperty(self, '$root', {
@@ -9885,7 +9987,7 @@
       self.$styleEl = doc.createElement('style');
       self.$styleEl.innerHTML = $options.style;
       if ($options.styleScoped) {
-        self.el.setAttribute('data-scope', $options.id);
+        self.el.setAttribute(("data-f7-" + ($options.id)), '');
       }
     }
 
@@ -9940,16 +10042,10 @@
       html = $options.render();
     } else if ($options.template) {
       if (typeof $options.template === 'string') {
-        if ($options.templateType === 't7' || !$options.templateType) {
-          try {
-            html = Template7.compile($options.template)(self);
-          } catch (err) {
-            throw err;
-          }
-        }
-        if ($options.templateType === 'es') {
-          $options.render = renderEsTemplate($options.template, $options.id).bind(self);
-          html = $options.render();
+        try {
+          html = Template7.compile($options.template)(self);
+        } catch (err) {
+          throw err;
         }
       } else {
         // Supposed to be function
@@ -9991,9 +10087,6 @@
     if (self.$styleEl) { $$1(self.$styleEl).remove(); }
     self.$detachEvents();
     if (self.$options.destroyed) { self.$options.destroyed(); }
-    if (win[("f7_component_es_template" + (self.$options.id))]) {
-      delete win[("f7_component_es_template" + (self.$options.id))];
-    }
     // Delete component instance
     if (self.el && self.el.f7Component) {
       self.el.f7Component = null;
@@ -10006,11 +10099,10 @@
     Utils.deleteProps(self);
   };
 
-  var counter$1 = 0;
-
   function parseComponent(componentString) {
-    var id = "" + (Utils.now()) + counter$1;
-    var callbackName = "f7_component_create_callback_" + id;
+    var id = Utils.id();
+    var callbackCreateName = "f7_component_create_callback_" + id;
+    var callbackRenderName = "f7_component_render_callback_" + id;
 
     // Template
     var template;
@@ -10033,18 +10125,20 @@
     // Parse Styles
     var style = null;
     var styleScoped = false;
-    counter$1 += 1;
+
     if (componentString.indexOf('<style>') >= 0) {
       style = componentString.split('<style>')[1].split('</style>')[0];
     } else if (componentString.indexOf('<style scoped>') >= 0) {
       styleScoped = true;
       style = componentString.split('<style scoped>')[1].split('</style>')[0];
       style = style.split('\n').map(function (line) {
+        var trimmedLine = line.trim();
+        if (trimmedLine.indexOf('@') === 0) { return line; }
         if (line.indexOf('{') >= 0) {
           if (line.indexOf('{{this}}') >= 0) {
-            return line.replace('{{this}}', ("[data-scope=\"" + id + "\"]"));
+            return line.replace('{{this}}', ("[data-f7-" + id + "]"));
           }
-          return ("[data-scope=\"" + id + "\"] " + (line.trim()));
+          return ("[data-f7-" + id + "] " + (line.trim()));
         }
         return line;
       }).join('\n');
@@ -10052,30 +10146,49 @@
 
     // Parse Script
     var scriptContent;
+    var scriptEl;
     if (componentString.indexOf('<script>') >= 0) {
       var scripts = componentString.split('<script>');
       scriptContent = scripts[scripts.length - 1].split('</script>')[0].trim();
     } else {
       scriptContent = 'return {}';
     }
-    scriptContent = "window." + callbackName + " = function () {" + scriptContent + "}";
+    scriptContent = "window." + callbackCreateName + " = function () {" + scriptContent + "}";
 
     // Insert Script El
-    var scriptEl = doc.createElement('script');
+    scriptEl = doc.createElement('script');
     scriptEl.innerHTML = scriptContent;
     $$1('head').append(scriptEl);
 
-    var component = win[callbackName]();
+    var component = win[callbackCreateName]();
 
     // Remove Script El
     $$1(scriptEl).remove();
-    win[callbackName] = null;
-    delete win[callbackName];
+    win[callbackCreateName] = null;
+    delete win[callbackCreateName];
 
     // Assign Template
     if (!component.template && !component.render) {
       component.template = template;
       component.templateType = templateType;
+    }
+    if (component.template) {
+      if (component.templateType === 't7') {
+        component.template = Template7.compile(component.template);
+      }
+      if (component.templateType === 'es') {
+        var renderContent = "window." + callbackRenderName + " = function () {\n        return function render() {\n          return `" + (component.template) + "`;\n        }\n      }";
+        scriptEl = doc.createElement('script');
+        scriptEl.innerHTML = renderContent;
+        $$1('head').append(scriptEl);
+
+        component.render = win[callbackRenderName]();
+
+        // Remove Script El
+        $$1(scriptEl).remove();
+        win[callbackRenderName] = null;
+        delete win[callbackRenderName];
+      }
     }
 
     // Assign Style
@@ -10086,7 +10199,6 @@
 
     // Component ID
     component.id = id;
-
     return component;
   }
 
@@ -10839,11 +10951,18 @@
 
       if ($tabbarEl.length === 0 || !($tabbarEl.hasClass('tabbar') || $tabbarEl.hasClass('tabbar-labels'))) { return; }
 
-      if ($tabbarEl.find('.tab-link-highlight').length === 0) {
-        $tabbarEl.children('.toolbar-inner').append('<span class="tab-link-highlight"></span>');
+      var $highlightEl = $tabbarEl.find('.tab-link-highlight');
+      var tabLinksCount = $tabbarEl.find('.tab-link').length;
+      if (tabLinksCount === 0) {
+        $highlightEl.remove();
+        return;
       }
 
-      var $highlightEl = $tabbarEl.find('.tab-link-highlight');
+      if ($highlightEl.length === 0) {
+        $tabbarEl.children('.toolbar-inner').append('<span class="tab-link-highlight"></span>');
+        $highlightEl = $tabbarEl.find('.tab-link-highlight');
+      }
+
       var $activeLink = $tabbarEl.find('.tab-link-active');
       var highlightWidth;
       var highlightTranslate;
@@ -10853,7 +10972,6 @@
         highlightTranslate = ($activeLink[0].offsetLeft) + "px";
       } else {
         var activeIndex = $activeLink.index();
-        var tabLinksCount = $tabbarEl.find('.tab-link').length;
         highlightWidth = (100 / tabLinksCount) + "%";
         highlightTranslate = ((app.rtl ? -activeIndex : activeIndex) * 100) + "%";
       }
@@ -11303,8 +11421,24 @@
 
       // backdrop
       if ($backdropEl) {
-        $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
-        $backdropEl.removeClass('backdrop-in');
+        var needToHideBackdrop = true;
+        if (modal.type === 'popup') {
+          modal.$el.prevAll('.popup.modal-in').each(function (index, popupEl) {
+            var popupInstance = popupEl.f7Modal;
+            if (!popupInstance) { return; }
+            if (
+              popupInstance.params.closeByBackdropClick
+              && popupInstance.params.backdrop
+              && popupInstance.backdropEl === modal.backdropEl
+            ) {
+              needToHideBackdrop = false;
+            }
+          });
+        }
+        if (needToHideBackdrop) {
+          $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
+          $backdropEl.removeClass('backdrop-in');
+        }
       }
 
       // Modal
@@ -11764,7 +11898,9 @@
     },
     create: function create() {
       var app = this;
-      var defaultDialogTitle = app.params.dialog.title || app.name;
+      function defaultDialogTitle() {
+        return app.params.dialog.title || app.name;
+      }
       var destroyOnClose = app.params.dialog.destroyPredefinedDialogs;
       var keyboardActions = app.params.dialog.keyboardActions;
       app.dialog = Utils.extend(
@@ -11787,7 +11923,7 @@
               (assign = args, text = assign[0], callbackOk = assign[1], title = assign[2]);
             }
             return new Dialog(app, {
-              title: typeof title === 'undefined' ? defaultDialogTitle : title,
+              title: typeof title === 'undefined' ? defaultDialogTitle() : title,
               text: text,
               buttons: [{
                 text: app.params.dialog.buttonOk,
@@ -11811,7 +11947,7 @@
               (assign = args, text = assign[0], callbackOk = assign[1], callbackCancel = assign[2], title = assign[3]);
             }
             return new Dialog(app, {
-              title: typeof title === 'undefined' ? defaultDialogTitle : title,
+              title: typeof title === 'undefined' ? defaultDialogTitle() : title,
               text: text,
               content: '<div class="dialog-input-field item-input"><div class="item-input-wrap"><input type="text" class="dialog-input"></div></div>',
               buttons: [
@@ -11845,7 +11981,7 @@
               (assign = args, text = assign[0], callbackOk = assign[1], callbackCancel = assign[2], title = assign[3]);
             }
             return new Dialog(app, {
-              title: typeof title === 'undefined' ? defaultDialogTitle : title,
+              title: typeof title === 'undefined' ? defaultDialogTitle() : title,
               text: text,
               buttons: [
                 {
@@ -11875,7 +12011,7 @@
               (assign = args, text = assign[0], callbackOk = assign[1], callbackCancel = assign[2], title = assign[3]);
             }
             return new Dialog(app, {
-              title: typeof title === 'undefined' ? defaultDialogTitle : title,
+              title: typeof title === 'undefined' ? defaultDialogTitle() : title,
               text: text,
               content: ("\n              <div class=\"dialog-input-field dialog-input-double item-input\">\n                <div class=\"item-input-wrap\">\n                  <input type=\"text\" name=\"dialog-username\" placeholder=\"" + (app.params.dialog.usernamePlaceholder) + "\" class=\"dialog-input\">\n                </div>\n              </div>\n              <div class=\"dialog-input-field dialog-input-double item-input\">\n                <div class=\"item-input-wrap\">\n                  <input type=\"password\" name=\"dialog-password\" placeholder=\"" + (app.params.dialog.passwordPlaceholder) + "\" class=\"dialog-input\">\n                </div>\n              </div>"),
               buttons: [
@@ -11910,7 +12046,7 @@
               (assign = args, text = assign[0], callbackOk = assign[1], callbackCancel = assign[2], title = assign[3]);
             }
             return new Dialog(app, {
-              title: typeof title === 'undefined' ? defaultDialogTitle : title,
+              title: typeof title === 'undefined' ? defaultDialogTitle() : title,
               text: text,
               content: ("\n              <div class=\"dialog-input-field item-input\">\n                <div class=\"item-input-wrap\">\n                  <input type=\"password\" name=\"dialog-password\" placeholder=\"" + (app.params.dialog.passwordPlaceholder) + "\" class=\"dialog-input\">\n                </div>\n              </div>"),
               buttons: [
@@ -12034,7 +12170,21 @@
             && popup.backdropEl
             && popup.backdropEl === target
           ) {
-            popup.close();
+            var needToClose = true;
+            popup.$el.nextAll('.popup.modal-in').each(function (index, popupEl) {
+              var popupInstance = popupEl.f7Modal;
+              if (!popupInstance) { return; }
+              if (
+                popupInstance.params.closeByBackdropClick
+                && popupInstance.params.backdrop
+                && popupInstance.backdropEl === popup.backdropEl
+              ) {
+                needToClose = false;
+              }
+            });
+            if (needToClose) {
+              popup.close();
+            }
           }
         }
       }
@@ -13465,9 +13615,10 @@
         $sortingEl.removeClass('sorting');
         $sortableContainer.removeClass('sortable-sorting');
 
-        var virtualList;
-        var oldIndex;
-        var newIndex;
+        var indexTo;
+        if ($insertAfterEl) { indexTo = $insertAfterEl.index(); }
+        else if ($insertBeforeEl) { indexTo = $insertBeforeEl.index(); }
+
         if (app.params.sortable.moveElements) {
           if ($insertAfterEl) {
             $sortingEl.insertAfter($insertAfterEl);
@@ -13480,14 +13631,15 @@
         if (($insertAfterEl || $insertBeforeEl)
            && $sortableContainer.hasClass('virtual-list')
         ) {
-          virtualList = $sortableContainer[0].f7VirtualList;
-          oldIndex = $sortingEl[0].f7VirtualListIndex;
-          newIndex = $insertBeforeEl ? $insertBeforeEl[0].f7VirtualListIndex : $insertAfterEl[0].f7VirtualListIndex;
-          if (virtualList) { virtualList.moveItem(oldIndex, newIndex); }
+          indexFrom = $sortingEl[0].f7VirtualListIndex;
+          indexTo = $insertBeforeEl ? $insertBeforeEl[0].f7VirtualListIndex : $insertAfterEl[0].f7VirtualListIndex;
+          var virtualList = $sortableContainer[0].f7VirtualList;
+          if (virtualList) { virtualList.moveItem(indexFrom, indexTo); }
         }
-
-        $sortingEl.trigger('sortable:sort', { from: indexFrom, to: $sortingEl.index() });
-        app.emit('sortableSort', $sortingEl[0], { from: indexFrom, to: $sortingEl.index() });
+        if (typeof indexTo !== 'undefined' && indexTo !== indexFrom) {
+          $sortingEl.trigger('sortable:sort', { from: indexFrom, to: indexTo });
+          app.emit('sortableSort', $sortingEl[0], { from: indexFrom, to: indexTo });
+        }
 
         $insertBeforeEl = undefined;
         $insertAfterEl = undefined;
@@ -14129,6 +14281,12 @@
       var app = this;
       var $accordionItemEl = $clickedEl.closest('.accordion-item').eq(0);
       if (!$accordionItemEl.length) { $accordionItemEl = $clickedEl.parents('li').eq(0); }
+
+      var $accordionContent = $clickedEl.parents('.accordion-item-content').eq(0);
+      if ($accordionContent.length) {
+        if ($accordionContent.parents($accordionItemEl).length) { return; }
+      }
+
       if ($clickedEl.parents('li').length > 1 && $clickedEl.parents('li')[0] !== $accordionItemEl[0]) { return; }
       app.accordion.toggle($accordionItemEl);
     },
@@ -15764,6 +15922,11 @@
       var panel = this;
 
       var el = params.el;
+
+      if (!el && params.content) {
+        el = params.content;
+      }
+
       var $el = $$1(el);
       if ($el.length === 0) { return panel; }
       if ($el[0].f7Panel) { return $el[0].f7Panel; }
@@ -15779,6 +15942,8 @@
 
       if (!app.panel[side]) {
         Utils.extend(app.panel, ( obj = {}, obj[side] = panel, obj ));
+      } else {
+        throw new Error(("Framework7: Can't create panel; app already has a " + side + " panel!"));
       }
 
       var $backdropEl = $$1('.panel-backdrop');
@@ -15895,6 +16060,11 @@
       var panel = this;
       var app = panel.app;
 
+      if (!panel.$el) {
+        // Panel already destroyed
+        return;
+      }
+
       panel.emit('local::beforeDestroy panelBeforeDestroy', panel);
       panel.$el.trigger('panel:beforedestroy', panel);
 
@@ -15924,6 +16094,30 @@
       var $el = panel.$el;
       var $backdropEl = panel.$backdropEl;
       var opened = panel.opened;
+
+      var $panelParentEl = $el.parent();
+      var wasInDom = $el.parents(document).length > 0;
+
+      if (!$panelParentEl.is(app.root)) {
+        var $insertBeforeEl = app.root.children('.panel, .views, .view').eq(0);
+        var $insertAfterEl = app.root.children('.statusbar').eq(0);
+
+        if ($insertBeforeEl.length) {
+          $el.insertBefore($insertBeforeEl);
+        } else if ($insertAfterEl.length) {
+          $el.insertAfter($insertBeforeEl);
+        } else {
+          app.root.prepend($el);
+        }
+
+        panel.once('panelClosed', function () {
+          if (wasInDom) {
+            $panelParentEl.append($el);
+          } else {
+            $el.remove();
+          }
+        });
+      }
 
       // Ignore if opened
       if (opened || $el.hasClass('panel-visible-by-breakpoint') || $el.hasClass('panel-active')) { return false; }
@@ -18128,12 +18322,19 @@
 
       Framework7Class$$1.call(this, params, [app]);
       var ss = this;
-      ss.app = app;
+
       var defaults = Utils.extend({
         on: {},
       }, app.params.smartSelect);
 
-      var $el = $$1(params.el).eq(0);
+      // Extend defaults with modules params
+      ss.useModulesParams(defaults);
+
+      ss.params = Utils.extend({}, defaults, params);
+
+      ss.app = app;
+
+      var $el = $$1(ss.params.el).eq(0);
       if ($el.length === 0) { return ss; }
 
       if ($el[0].f7SmartSelect) { return $el[0].f7SmartSelect; }
@@ -18141,7 +18342,7 @@
       var $selectEl = $el.find('select').eq(0);
       if ($selectEl.length === 0) { return ss; }
 
-      var $valueEl = $$1(params.valueEl);
+      var $valueEl = $$1(ss.params.valueEl);
       if ($valueEl.length === 0) {
         $valueEl = $el.find('.item-after');
       }
@@ -18150,20 +18351,11 @@
         $valueEl.insertAfter($el.find('.item-title'));
       }
 
-      // Extend defaults with modules params
-      ss.useModulesParams(defaults);
-
       // View
-      var view = params.view;
-      if (!view) {
-        view = $el.parents('.view').length && $el.parents('.view')[0].f7View;
-      }
-      if (!view && (params.openIn === 'page' || (params.openIn !== 'page' && params.routableModals === true))) {
-        throw Error('Smart Select requires initialized View');
-      }
+      var view;
 
       // Url
-      var url = params.url;
+      var url = ss.params.url;
       if (!url) {
         if ($el.attr('href') && $el.attr('href') !== '#') { url = $el.attr('href'); }
         else { url = ($selectEl.attr('name').toLowerCase()) + "-select/"; }
@@ -18172,10 +18364,9 @@
 
       var multiple = $selectEl[0].multiple;
       var inputType = multiple ? 'checkbox' : 'radio';
-      var id = Utils.now();
+      var id = Utils.id();
 
       Utils.extend(ss, {
-        params: Utils.extend(defaults, params),
         $el: $el,
         el: $el[0],
         $selectEl: $selectEl,
@@ -18269,6 +18460,19 @@
     if ( Framework7Class$$1 ) SmartSelect.__proto__ = Framework7Class$$1;
     SmartSelect.prototype = Object.create( Framework7Class$$1 && Framework7Class$$1.prototype );
     SmartSelect.prototype.constructor = SmartSelect;
+
+    SmartSelect.prototype.getView = function getView () {
+      var ss = this;
+      var view = ss.view || ss.params.view;
+      if (!view) {
+        view = ss.$el.parents('.view').length && ss.$el.parents('.view')[0].f7View;
+      }
+      if (!view) {
+        throw Error('Smart Select requires initialized View');
+      }
+      ss.view = view;
+      return view;
+    };
 
     SmartSelect.prototype.checkMaxLength = function checkMaxLength () {
       var ss = this;
@@ -18394,7 +18598,8 @@
       if (typeof pageTitle === 'undefined') {
         pageTitle = ss.$el.find('.item-title').text().trim();
       }
-      var pageHtml = "\n      <div class=\"page smart-select-page\" data-name=\"smart-select-page\" data-select-name=\"" + (ss.selectName) + "\">\n        <div class=\"navbar " + (ss.params.navbarColorTheme ? ("color-theme-" + (ss.params.navbarColorTheme)) : '') + "\">\n          <div class=\"navbar-inner sliding " + (ss.params.navbarColorTheme ? ("color-theme-" + (ss.params.navbarColorTheme)) : '') + "\">\n            <div class=\"left\">\n              <a href=\"#\" class=\"link back\">\n                <i class=\"icon icon-back\"></i>\n                <span class=\"ios-only\">" + (ss.params.pageBackLinkText) + "</span>\n              </a>\n            </div>\n            " + (pageTitle ? ("<div class=\"title\">" + pageTitle + "</div>") : '') + "\n            " + (ss.params.searchbar ? ("<div class=\"subnavbar\">" + (ss.renderSearchbar()) + "</div>") : '') + "\n          </div>\n        </div>\n        " + (ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : '') + "\n        <div class=\"page-content\">\n          <div class=\"list smart-select-list-" + (ss.id) + " " + (ss.params.virtualList ? ' virtual-list' : '') + " " + (ss.params.formColorTheme ? ("color-theme-" + (ss.params.formColorTheme)) : '') + "\">\n            <ul>" + (!ss.params.virtualList && ss.renderItems(ss.items)) + "</ul>\n          </div>\n        </div>\n      </div>\n    ";
+      var cssClass = ss.params.cssClass;
+      var pageHtml = "\n      <div class=\"page smart-select-page " + cssClass + "\" data-name=\"smart-select-page\" data-select-name=\"" + (ss.selectName) + "\">\n        <div class=\"navbar " + (ss.params.navbarColorTheme ? ("color-theme-" + (ss.params.navbarColorTheme)) : '') + "\">\n          <div class=\"navbar-inner sliding " + (ss.params.navbarColorTheme ? ("color-theme-" + (ss.params.navbarColorTheme)) : '') + "\">\n            <div class=\"left\">\n              <a href=\"#\" class=\"link back\">\n                <i class=\"icon icon-back\"></i>\n                <span class=\"ios-only\">" + (ss.params.pageBackLinkText) + "</span>\n              </a>\n            </div>\n            " + (pageTitle ? ("<div class=\"title\">" + pageTitle + "</div>") : '') + "\n            " + (ss.params.searchbar ? ("<div class=\"subnavbar\">" + (ss.renderSearchbar()) + "</div>") : '') + "\n          </div>\n        </div>\n        " + (ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : '') + "\n        <div class=\"page-content\">\n          <div class=\"list smart-select-list-" + (ss.id) + " " + (ss.params.virtualList ? ' virtual-list' : '') + " " + (ss.params.formColorTheme ? ("color-theme-" + (ss.params.formColorTheme)) : '') + "\">\n            <ul>" + (!ss.params.virtualList && ss.renderItems(ss.items)) + "</ul>\n          </div>\n        </div>\n      </div>\n    ";
       return pageHtml;
     };
 
@@ -18405,21 +18610,24 @@
       if (typeof pageTitle === 'undefined') {
         pageTitle = ss.$el.find('.item-title').text().trim();
       }
-      var popupHtml = "\n      <div class=\"popup smart-select-popup\" data-select-name=\"" + (ss.selectName) + "\">\n        <div class=\"view\">\n          <div class=\"page smart-select-page " + (ss.params.searchbar ? 'page-with-subnavbar' : '') + "\" data-name=\"smart-select-page\">\n            <div class=\"navbar" + (ss.params.navbarColorTheme ? ("theme-" + (ss.params.navbarColorTheme)) : '') + "\">\n              <div class=\"navbar-inner sliding\">\n                <div class=\"left\">\n                  <a href=\"#\" class=\"link popup-close\" data-popup=\".smart-select-popup[data-select-name='" + (ss.selectName) + "']\">\n                    <i class=\"icon icon-back\"></i>\n                    <span class=\"ios-only\">" + (ss.params.popupCloseLinkText) + "</span>\n                  </a>\n                </div>\n                " + (pageTitle ? ("<div class=\"title\">" + pageTitle + "</div>") : '') + "\n                " + (ss.params.searchbar ? ("<div class=\"subnavbar\">" + (ss.renderSearchbar()) + "</div>") : '') + "\n              </div>\n            </div>\n            " + (ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : '') + "\n            <div class=\"page-content\">\n              <div class=\"list smart-select-list-" + (ss.id) + " " + (ss.params.virtualList ? ' virtual-list' : '') + (ss.params.formColorTheme ? ("theme-" + (ss.params.formColorTheme)) : '') + "\">\n                <ul>" + (!ss.params.virtualList && ss.renderItems(ss.items)) + "</ul>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    ";
+      var cssClass = ss.params.cssClass;
+      var popupHtml = "\n      <div class=\"popup smart-select-popup " + cssClass + "\" data-select-name=\"" + (ss.selectName) + "\">\n        <div class=\"view\">\n          <div class=\"page smart-select-page " + (ss.params.searchbar ? 'page-with-subnavbar' : '') + "\" data-name=\"smart-select-page\">\n            <div class=\"navbar" + (ss.params.navbarColorTheme ? ("theme-" + (ss.params.navbarColorTheme)) : '') + "\">\n              <div class=\"navbar-inner sliding\">\n                <div class=\"left\">\n                  <a href=\"#\" class=\"link popup-close\" data-popup=\".smart-select-popup[data-select-name='" + (ss.selectName) + "']\">\n                    <i class=\"icon icon-back\"></i>\n                    <span class=\"ios-only\">" + (ss.params.popupCloseLinkText) + "</span>\n                  </a>\n                </div>\n                " + (pageTitle ? ("<div class=\"title\">" + pageTitle + "</div>") : '') + "\n                " + (ss.params.searchbar ? ("<div class=\"subnavbar\">" + (ss.renderSearchbar()) + "</div>") : '') + "\n              </div>\n            </div>\n            " + (ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : '') + "\n            <div class=\"page-content\">\n              <div class=\"list smart-select-list-" + (ss.id) + " " + (ss.params.virtualList ? ' virtual-list' : '') + (ss.params.formColorTheme ? ("theme-" + (ss.params.formColorTheme)) : '') + "\">\n                <ul>" + (!ss.params.virtualList && ss.renderItems(ss.items)) + "</ul>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    ";
       return popupHtml;
     };
 
     SmartSelect.prototype.renderSheet = function renderSheet () {
       var ss = this;
       if (ss.params.renderSheet) { return ss.params.renderSheet.call(ss, ss.items); }
-      var sheetHtml = "\n      <div class=\"sheet-modal smart-select-sheet\" data-select-name=\"" + (ss.selectName) + "\">\n        <div class=\"toolbar " + (ss.params.toolbarColorTheme ? ("theme-" + (ss.params.toolbarColorTheme)) : '') + "\">\n          <div class=\"toolbar-inner\">\n            <div class=\"left\"></div>\n            <div class=\"right\">\n              <a class=\"link sheet-close\">" + (ss.params.sheetCloseLinkText) + "</a>\n            </div>\n          </div>\n        </div>\n        <div class=\"sheet-modal-inner\">\n          <div class=\"page-content\">\n            <div class=\"list smart-select-list-" + (ss.id) + " " + (ss.params.virtualList ? ' virtual-list' : '') + (ss.params.formColorTheme ? ("theme-" + (ss.params.formColorTheme)) : '') + "\">\n              <ul>" + (!ss.params.virtualList && ss.renderItems(ss.items)) + "</ul>\n            </div>\n          </div>\n        </div>\n      </div>\n    ";
+      var cssClass = ss.params.cssClass;
+      var sheetHtml = "\n      <div class=\"sheet-modal smart-select-sheet " + cssClass + "\" data-select-name=\"" + (ss.selectName) + "\">\n        <div class=\"toolbar " + (ss.params.toolbarColorTheme ? ("theme-" + (ss.params.toolbarColorTheme)) : '') + "\">\n          <div class=\"toolbar-inner\">\n            <div class=\"left\"></div>\n            <div class=\"right\">\n              <a class=\"link sheet-close\">" + (ss.params.sheetCloseLinkText) + "</a>\n            </div>\n          </div>\n        </div>\n        <div class=\"sheet-modal-inner\">\n          <div class=\"page-content\">\n            <div class=\"list smart-select-list-" + (ss.id) + " " + (ss.params.virtualList ? ' virtual-list' : '') + (ss.params.formColorTheme ? ("theme-" + (ss.params.formColorTheme)) : '') + "\">\n              <ul>" + (!ss.params.virtualList && ss.renderItems(ss.items)) + "</ul>\n            </div>\n          </div>\n        </div>\n      </div>\n    ";
       return sheetHtml;
     };
 
     SmartSelect.prototype.renderPopover = function renderPopover () {
       var ss = this;
       if (ss.params.renderPopover) { return ss.params.renderPopover.call(ss, ss.items); }
-      var popoverHtml = "\n      <div class=\"popover smart-select-popover\" data-select-name=\"" + (ss.selectName) + "\">\n        <div class=\"popover-inner\">\n          <div class=\"list smart-select-list-" + (ss.id) + " " + (ss.params.virtualList ? ' virtual-list' : '') + (ss.params.formColorTheme ? ("theme-" + (ss.params.formColorTheme)) : '') + "\">\n            <ul>" + (!ss.params.virtualList && ss.renderItems(ss.items)) + "</ul>\n          </div>\n        </div>\n      </div>\n    ";
+      var cssClass = ss.params.cssClass;
+      var popoverHtml = "\n      <div class=\"popover smart-select-popover " + cssClass + "\" data-select-name=\"" + (ss.selectName) + "\">\n        <div class=\"popover-inner\">\n          <div class=\"list smart-select-list-" + (ss.id) + " " + (ss.params.virtualList ? ' virtual-list' : '') + (ss.params.formColorTheme ? ("theme-" + (ss.params.formColorTheme)) : '') + "\">\n            <ul>" + (!ss.params.virtualList && ss.renderItems(ss.items)) + "</ul>\n          </div>\n        </div>\n      </div>\n    ";
       return popoverHtml;
     };
 
@@ -18451,12 +18659,31 @@
         if (type === 'page' && app.theme === 'ios') {
           $searchbarEl = $$1(app.navbar.getElByPage($containerEl)).find('.searchbar');
         }
-        ss.searchbar = app.searchbar.create({
+
+        if (ss.params.appendSearchbarNotFound && (type === 'page' || type === 'popup')) {
+          var $notFoundEl = null;
+
+          if (typeof ss.params.appendSearchbarNotFound === 'string') {
+            $notFoundEl = $$1(("<div class=\"block searchbar-not-found\">" + (ss.params.appendSearchbarNotFound) + "</div>"));
+          } else if (typeof ss.params.appendSearchbarNotFound === 'boolean') {
+            $notFoundEl = $$1('<div class="block searchbar-not-found">Nothing found</div>');
+          } else {
+            $notFoundEl = ss.params.appendSearchbarNotFound;
+          }
+
+          if ($notFoundEl) {
+            $containerEl.find('.page-content').append($notFoundEl[0]);
+          }
+        }
+
+        var searchbarParams = Utils.extend({
           el: $searchbarEl,
           backdropEl: $containerEl.find('.searchbar-backdrop'),
           searchContainer: (".smart-select-list-" + (ss.id)),
           searchIn: '.item-title',
-        });
+        }, typeof ss.params.searchbar === 'object' ? ss.params.searchbar : {});
+
+        ss.searchbar = app.searchbar.create(searchbarParams);
       }
 
       // Check for max length
@@ -18525,8 +18752,9 @@
       if (ss.opened) { return ss; }
       ss.getItemsData();
       var pageHtml = ss.renderPage(ss.items);
+      var view = ss.getView();
 
-      ss.view.router.navigate({
+      view.router.navigate({
         url: ss.url,
         route: {
           content: pageHtml,
@@ -18575,7 +18803,8 @@
       };
 
       if (ss.params.routableModals) {
-        ss.view.router.navigate({
+        var view = ss.getView();
+        view.router.navigate({
           url: ss.url,
           route: {
             path: ss.url,
@@ -18616,7 +18845,8 @@
       };
 
       if (ss.params.routableModals) {
-        ss.view.router.navigate({
+        var view = ss.getView();
+        view.router.navigate({
           url: ss.url,
           route: {
             path: ss.url,
@@ -18653,7 +18883,8 @@
         },
       };
       if (ss.params.routableModals) {
-        ss.view.router.navigate({
+        var view = ss.getView();
+        view.router.navigate({
           url: ss.url,
           route: {
             path: ss.url,
@@ -18681,7 +18912,8 @@
       var ss = this;
       if (!ss.opened) { return ss; }
       if (ss.params.routableModals || ss.openedIn === 'page') {
-        ss.view.router.back();
+        var view = ss.getView();
+        view.router.back();
       } else {
         ss.modal.once('modalClosed', function () {
           Utils.nextTick(function () {
@@ -18734,6 +18966,7 @@
         navbarColorTheme: undefined,
         routableModals: true,
         url: 'select/',
+        cssClass: '',
         /*
           Custom render functions
         */
@@ -20559,7 +20792,8 @@
         targetEl: $inputEl,
         scrollToEl: calendar.params.scrollToInput ? $inputEl : undefined,
         content: modalContent,
-        backdrop: modalType === 'popover' && app.params.popover.backdrop !== false,
+        backdrop: calendar.params.backdrop === true || (modalType === 'popover' && app.params.popover.backdrop !== false && calendar.params.backdrop !== false),
+        closeByBackdropClick: calendar.params.closeByBackdropClick,
         on: {
           open: function open() {
             var modal = this;
@@ -20736,6 +20970,8 @@
         routableModals: true,
         view: null,
         url: 'date/',
+        backdrop: null,
+        closeByBackdropClick: true,
         // Render functions
         renderWeekHeader: null,
         renderMonths: null,
@@ -31265,7 +31501,7 @@
       }
       if (!view) { view = app.views.main; }
 
-      var id = Utils.now();
+      var id = Utils.id();
 
       var url = params.url;
       if (!url && $openerEl && $openerEl.length) {

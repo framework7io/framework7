@@ -4,6 +4,8 @@ import History from '../../utils/history';
 function modalLoad(modalType, route, loadOptions = {}) {
   const router = this;
   const app = router.app;
+  const isPanel = modalType === 'panel';
+  const modalOrPanel = isPanel ? 'panel' : 'modal';
 
   const options = Utils.extend({
     animate: router.params.animate,
@@ -25,27 +27,27 @@ function modalLoad(modalType, route, loadOptions = {}) {
     function closeOnSwipeBack() {
       modal.close();
     }
-    modal.on('modalOpen', () => {
+    modal.on(`${modalOrPanel}Open`, () => {
       if (!hasEl) {
         // Remove theme elements
         router.removeThemeElements(modal.el);
 
         // Emit events
         modal.$el.trigger(`${modalType.toLowerCase()}:init ${modalType.toLowerCase()}:mounted`, route, modal);
-        router.emit(`modalInit ${modalType}Init ${modalType}Mounted`, modal.el, route, modal);
+        router.emit(`${!isPanel ? 'modalInit' : ''} ${modalType}Init ${modalType}Mounted`, modal.el, route, modal);
       }
       router.once('swipeBackMove', closeOnSwipeBack);
     });
-    modal.on('modalClose', () => {
+    modal.on(`${modalOrPanel}Close`, () => {
       router.off('swipeBackMove', closeOnSwipeBack);
       if (!modal.closeByRouter) {
         router.back();
       }
     });
 
-    modal.on('modalClosed', () => {
+    modal.on(`${modalOrPanel}Closed`, () => {
       modal.$el.trigger(`${modalType.toLowerCase()}:beforeremove`, route, modal);
-      modal.emit(`modalBeforeRemove ${modalType}BeforeRemove`, modal.el, route, modal);
+      modal.emit(`${!isPanel ? 'modalBeforeRemove ' : ''}${modalType}BeforeRemove`, modal.el, route, modal);
       const modalComponent = modal.el.f7Component;
       if (modalComponent) {
         modalComponent.$destroy();
@@ -90,7 +92,7 @@ function modalLoad(modalType, route, loadOptions = {}) {
 
       // Emit events
       modal.$el.trigger(`${modalType.toLowerCase()}:init ${modalType.toLowerCase()}:mounted`, route, modal);
-      router.emit(`modalInit ${modalType}Init ${modalType}Mounted`, modal.el, route, modal);
+      router.emit(`${modalOrPanel}Init ${modalType}Init ${modalType}Mounted`, modal.el, route, modal);
     }
 
     // Open

@@ -49,7 +49,7 @@ function getHooks(data, app, initial, isRoot) {
   }
   if (update.length) {
     hooks.update = (oldVnode, vnode) => {
-      update.forEach(f => f(vnode));
+      update.forEach(f => f(oldVnode, vnode));
     };
   }
   if (postpatch.length) {
@@ -158,7 +158,7 @@ function getData(el, context, app, initial, isRoot) {
         data.props[attrName] = attrValue;
       }
     } else if (attrName === 'key') {
-      data.key = attrName;
+      data.key = attrValue;
     } else if (attrName.indexOf('@') === 0) {
       if (!data.on) data.on = {};
       let eventName = attrName.substr(1);

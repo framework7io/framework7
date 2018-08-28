@@ -7,6 +7,12 @@ const Accordion = {
     const app = this;
     let $accordionItemEl = $clickedEl.closest('.accordion-item').eq(0);
     if (!$accordionItemEl.length) $accordionItemEl = $clickedEl.parents('li').eq(0);
+
+    const $accordionContent = $clickedEl.parents('.accordion-item-content').eq(0);
+    if ($accordionContent.length) {
+      if ($accordionContent.parents($accordionItemEl).length) return;
+    }
+
     if ($clickedEl.parents('li').length > 1 && $clickedEl.parents('li')[0] !== $accordionItemEl[0]) return;
     app.accordion.toggle($accordionItemEl);
   },

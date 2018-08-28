@@ -1,5 +1,5 @@
 /**
- * Framework7 React 3.1.1
+ * Framework7 React 3.2.0
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: August 3, 2018
+ * Released on: August 28, 2018
  */
 
 (function (global, factory) {
@@ -301,20 +301,20 @@
         'searchbar-disable': searchbarDisable || searchbarDisable === '',
         'searchbar-clear': searchbarClear || searchbarClear === '',
         'searchbar-toggle': searchbarToggle || searchbarToggle === '',
-        'panel-close': Utils.isTrueProp(panelClose),
+        'panel-close': Utils.isTrueProp(panelClose) || panelClose,
         'panel-open': panelOpen || panelOpen === '',
-        'popup-close': Utils.isTrueProp(popupClose),
+        'popup-close': Utils.isTrueProp(popupClose) || popupClose,
         'popup-open': popupOpen || popupOpen === '',
-        'actions-close': Utils.isTrueProp(actionsClose),
+        'actions-close': Utils.isTrueProp(actionsClose) || actionsClose,
         'actions-open': actionsOpen || actionsOpen === '',
-        'popover-close': Utils.isTrueProp(popoverClose),
+        'popover-close': Utils.isTrueProp(popoverClose) || popoverClose,
         'popover-open': popoverOpen || popoverOpen === '',
-        'sheet-close': Utils.isTrueProp(sheetClose),
+        'sheet-close': Utils.isTrueProp(sheetClose) || sheetClose,
         'sheet-open': sheetOpen || sheetOpen === '',
-        'login-screen-close': Utils.isTrueProp(loginScreenClose),
+        'login-screen-close': Utils.isTrueProp(loginScreenClose) || loginScreenClose,
         'login-screen-open': loginScreenOpen || loginScreenOpen === '',
-        'sortable-enable': Utils.isTrueProp(sortableEnable),
-        'sortable-disable': Utils.isTrueProp(sortableDisable),
+        'sortable-enable': Utils.isTrueProp(sortableEnable) || sortableEnable,
+        'sortable-disable': Utils.isTrueProp(sortableDisable) || sortableDisable,
         'sortable-toggle': sortableToggle === true || (typeof sortableToggle === 'string' && sortableToggle.length),
       };
     },
@@ -1014,12 +1014,6 @@
       var self = this;
       var el = self.refs.el;
       if (!el) { return; }
-      var props = self.props;
-      var grid = props.grid;
-      var target = props.target;
-      var convertToPopover = props.convertToPopover;
-      var forceToPopover = props.forceToPopover;
-      var opened = props.opened;
       self.onOpenBound = self.onOpen.bind(self);
       self.onOpenedBound = self.onOpened.bind(self);
       self.onCloseBound = self.onClose.bind(self);
@@ -1028,14 +1022,26 @@
       el.addEventListener('actions:opened', self.onOpenedBound);
       el.addEventListener('actions:close', self.onCloseBound);
       el.addEventListener('actions:closed', self.onClosedBound);
-      self.$f7ready(function () {
-        var actionsParams = {
-          el: self.refs.el,
-          grid: grid
-        };
-        if (target) { actionsParams.targetEl = target; }
+      var props = self.props;
+      var grid = props.grid;
+      var target = props.target;
+      var convertToPopover = props.convertToPopover;
+      var forceToPopover = props.forceToPopover;
+      var opened = props.opened;
+      var closeByBackdropClick = props.closeByBackdropClick;
+      var closeByOutsideClick = props.closeByOutsideClick;
+      var actionsParams = {
+        el: self.refs.el,
+        grid: grid
+      };
+      if (target) { actionsParams.targetEl = target; }
+      {
         if ('convertToPopover' in props) { actionsParams.convertToPopover = convertToPopover; }
         if ('forceToPopover' in props) { actionsParams.forceToPopover = forceToPopover; }
+        if ('closeByBackdropClick' in props) { actionsParams.closeByBackdropClick = closeByBackdropClick; }
+        if ('closeByOutsideClick' in props) { actionsParams.closeByOutsideClick = closeByOutsideClick; }
+      }
+      self.$f7ready(function () {
         self.f7Actions = self.$f7.actions.create(actionsParams);
 
         if (opened) {
@@ -1091,7 +1097,9 @@
     grid: Boolean,
     convertToPopover: Boolean,
     forceToPopover: Boolean,
-    target: [String, Object]
+    target: [String, Object],
+    closeByBackdropClick: Boolean,
+    closeByOutsideClick: Boolean
   }, Mixins.colorProps));
 
   F7Actions.displayName = 'f7-actions';
@@ -4214,6 +4222,8 @@
 
   var F7ListItemContent = (function (superclass) {
     function F7ListItemContent(props, context) {
+      var this$1 = this;
+
       superclass.call(this, props, context);
       this.__reactRefs = {};
 
@@ -4224,6 +4234,12 @@
           hasInputInfo: false,
           hasInputErrorMessage: false
         };
+      })();
+
+      (function () {
+        var self = this$1;
+        self.onClickBound = self.onClick.bind(self);
+        self.onChangeBound = self.onChange.bind(self);
       })();
     }
 
@@ -4402,6 +4418,9 @@
       if (radio || checkbox) {
         {
           inputEl = React.createElement('input', {
+            ref: function (__reactNode) {
+              this$1.__reactRefs['inputEl'] = __reactNode;
+            },
             value: value,
             name: name,
             checked: checked,
@@ -4409,8 +4428,7 @@
             readOnly: readonly,
             disabled: disabled,
             required: required,
-            type: radio ? 'radio' : 'checkbox',
-            onChange: self.onChange.bind(self)
+            type: radio ? 'radio' : 'checkbox'
           });
         }
         inputIconEl = React.createElement('i', {
@@ -4516,8 +4534,18 @@
         id: id,
         style: style,
         className: classes,
-        onClick: self.onClick.bind(self)
+        onClick: self.onClickBound
       }, slotsContentStart, inputEl, inputIconEl, mediaEl, innerEl, slotsContent, slotsContentEnd);
+    };
+
+    F7ListItemContent.prototype.componentWillUnmount = function componentWillUnmount () {
+      var self = this;
+      var ref = self.refs;
+      var inputEl = ref.inputEl;
+
+      if (inputEl) {
+        inputEl.removeEventListener('change', self.onChangeBound);
+      }
     };
 
     F7ListItemContent.prototype.componentDidUpdate = function componentDidUpdate () {
@@ -4526,11 +4554,11 @@
       if (!innerEl) { return; }
       var $innerEl = self.$$(innerEl);
       var $labelEl = $innerEl.children('.item-title.item-label');
-      var $inputEl = $innerEl.children('.item-input-wrap');
+      var $inputWrapEl = $innerEl.children('.item-input-wrap');
       var hasInlineLabel = $labelEl.hasClass('item-label-inline');
-      var hasInput = $inputEl.length > 0;
-      var hasInputInfo = $inputEl.children('.item-input-info').length > 0;
-      var hasInputErrorMessage = $inputEl.children('.item-input-error-message').length > 0;
+      var hasInput = $inputWrapEl.length > 0;
+      var hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
+      var hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
 
       if (hasInlineLabel !== self.state.hasInlineLabel) {
         self.setState({
@@ -4559,15 +4587,22 @@
 
     F7ListItemContent.prototype.componentDidMount = function componentDidMount () {
       var self = this;
-      var innerEl = self.refs.innerEl;
+      var ref = self.refs;
+      var innerEl = ref.innerEl;
+      var inputEl = ref.inputEl;
+
+      if (inputEl) {
+        inputEl.addEventListener('change', self.onChangeBound);
+      }
+
       if (!innerEl) { return; }
       var $innerEl = self.$$(innerEl);
       var $labelEl = $innerEl.children('.item-title.item-label');
-      var $inputEl = $innerEl.children('.item-input-wrap');
+      var $inputWrapEl = $innerEl.children('.item-input-wrap');
       var hasInlineLabel = $labelEl.hasClass('item-label-inline');
-      var hasInput = $inputEl.length > 0;
-      var hasInputInfo = $inputEl.children('.item-input-info').length > 0;
-      var hasInputErrorMessage = $inputEl.children('.item-input-error-message').length > 0;
+      var hasInput = $inputWrapEl.length > 0;
+      var hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
+      var hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
 
       if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {
         self.setState({
@@ -8027,14 +8062,20 @@
       el.addEventListener('popover:opened', self.onOpenedBound);
       el.addEventListener('popover:close', self.onCloseBound);
       el.addEventListener('popover:closed', self.onClosedBound);
-      var ref = self.props;
-      var target = ref.target;
-      var opened = ref.opened;
+      var props = self.props;
+      var target = props.target;
+      var opened = props.opened;
+      var closeByBackdropClick = props.closeByBackdropClick;
+      var closeByOutsideClick = props.closeByOutsideClick;
+      var popoverParams = {
+        el: el
+      };
+      if (target) { popoverParams.targetEl = target; }
+      {
+        if ('closeByBackdropClick' in props) { popoverParams.closeByBackdropClick = closeByBackdropClick; }
+        if ('closeByOutsideClick' in props) { popoverParams.closeByOutsideClick = closeByOutsideClick; }
+      }
       self.$f7ready(function () {
-        var popoverParams = {
-          el: el
-        };
-        if (target) { popoverParams.targetEl = target; }
         self.f7Popover = self.$f7.popover.create(popoverParams);
 
         if (opened && target) {
@@ -8083,7 +8124,9 @@
   __reactComponentSetProps(F7Popover, Object.assign({
     id: [String, Number],
     opened: Boolean,
-    target: [String, Object]
+    target: [String, Object],
+    closeByBackdropClick: Boolean,
+    closeByOutsideClick: Boolean
   }, Mixins.colorProps));
 
   F7Popover.displayName = 'f7-popover';
@@ -8173,10 +8216,22 @@
       el.addEventListener('popup:opened', self.onOpenedBound);
       el.addEventListener('popup:close', self.onCloseBound);
       el.addEventListener('popup:closed', self.onClosedBound);
+      var props = self.props;
+      var closeByBackdropClick = props.closeByBackdropClick;
+      var backdrop = props.backdrop;
+      var animate = props.animate;
+      var popupParams = {
+        el: el,
+        backdrop: backdrop,
+        animate: animate
+      };
+      {
+        if ('closeByBackdropClick' in props) { popupParams.closeByBackdropClick = closeByBackdropClick; }
+        if ('animate' in props) { popupParams.animate = animate; }
+        if ('backdrop' in props) { popupParams.backdrop = backdrop; }
+      }
       self.$f7ready(function () {
-        self.f7Popup = self.$f7.popup.create({
-          el: el
-        });
+        self.f7Popup = self.$f7.popup.create(popupParams);
 
         if (self.props.opened) {
           self.f7Popup.open(false);
@@ -8224,7 +8279,10 @@
   __reactComponentSetProps(F7Popup, Object.assign({
     id: [String, Number],
     tabletFullscreen: Boolean,
-    opened: Boolean
+    opened: Boolean,
+    closeByBackdropClick: Boolean,
+    backdrop: Boolean,
+    animate: Boolean
   }, Mixins.colorProps));
 
   F7Popup.displayName = 'f7-popup';
@@ -8993,25 +9051,30 @@
       el.addEventListener('sheet:opened', self.onOpenedBound);
       el.addEventListener('sheet:close', self.onCloseBound);
       el.addEventListener('sheet:closed', self.onClosedBound);
-      self.$f7ready(function () {
-        var useBackdrop;
-        var useDefaultBackdrop;
-        var ref = self.props;
-        var opened = ref.opened;
-        var backdrop = ref.backdrop;
+      var props = self.props;
+      var opened = props.opened;
+      var backdrop = props.backdrop;
+      var closeByBackdropClick = props.closeByBackdropClick;
+      var closeByOutsideClick = props.closeByOutsideClick;
+      var sheetParams = {
+        el: self.refs.el
+      };
+      var useDefaultBackdrop;
+      {
         useDefaultBackdrop = typeof backdrop === 'undefined';
+        if ('closeByBackdropClick' in props) { sheetParams.closeByBackdropClick = closeByBackdropClick; }
+        if ('closeByOutsideClick' in props) { sheetParams.closeByOutsideClick = closeByOutsideClick; }
+      }
 
-        if (useDefaultBackdrop) {
-          var app = self.$f7;
-          useBackdrop = app.params.sheet && app.params.sheet.backdrop !== undefined ? app.params.sheet.backdrop : self.$theme.md;
-        } else {
-          useBackdrop = backdrop;
-        }
+      if (useDefaultBackdrop) {
+        var app = self.$f7;
+        sheetParams.backdrop = app.params.sheet && app.params.sheet.backdrop !== undefined ? app.params.sheet.backdrop : self.$theme.md;
+      } else {
+        sheetParams.backdrop = backdrop;
+      }
 
-        self.f7Sheet = self.$f7.sheet.create({
-          el: self.refs.el,
-          backdrop: useBackdrop
-        });
+      self.$f7ready(function () {
+        self.f7Sheet = self.$f7.sheet.create(sheetParams);
 
         if (opened) {
           self.f7Sheet.open(false);
@@ -9063,7 +9126,9 @@
   __reactComponentSetProps(F7Sheet, Object.assign({
     id: [String, Number],
     opened: Boolean,
-    backdrop: Boolean
+    backdrop: Boolean,
+    closeByBackdropClick: Boolean,
+    closeByOutsideClick: Boolean
   }, Mixins.colorProps));
 
   F7Sheet.displayName = 'f7-sheet';
@@ -10317,6 +10382,8 @@
     passRouteParamsToRequest: Boolean,
     routes: Array,
     routesAdd: Array,
+    routesBeforeEnter: [Function, Array],
+    routesBeforeLeave: [Function, Array],
     init: {
       type: Boolean,
       default: true
@@ -10574,7 +10641,7 @@
   };
 
   /**
-   * Framework7 React 3.1.1
+   * Framework7 React 3.2.0
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -10582,7 +10649,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: August 3, 2018
+   * Released on: August 28, 2018
    */
 
   var Plugin = {

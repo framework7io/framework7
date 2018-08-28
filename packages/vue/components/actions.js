@@ -10,7 +10,9 @@ export default {
     grid: Boolean,
     convertToPopover: Boolean,
     forceToPopover: Boolean,
-    target: [String, Object]
+    target: [String, Object],
+    closeByBackdropClick: Boolean,
+    closeByOutsideClick: Boolean
   }, Mixins.colorProps),
 
   render() {
@@ -53,14 +55,6 @@ export default {
     const self = this;
     const el = self.$refs.el;
     if (!el) return;
-    const props = self.props;
-    const {
-      grid,
-      target,
-      convertToPopover,
-      forceToPopover,
-      opened
-    } = props;
     self.onOpenBound = self.onOpen.bind(self);
     self.onOpenedBound = self.onOpened.bind(self);
     self.onCloseBound = self.onClose.bind(self);
@@ -69,14 +63,28 @@ export default {
     el.addEventListener('actions:opened', self.onOpenedBound);
     el.addEventListener('actions:close', self.onCloseBound);
     el.addEventListener('actions:closed', self.onClosedBound);
-    self.$f7ready(() => {
-      const actionsParams = {
-        el: self.$refs.el,
-        grid
-      };
-      if (target) actionsParams.targetEl = target;
+    const props = self.props;
+    const {
+      grid,
+      target,
+      convertToPopover,
+      forceToPopover,
+      opened,
+      closeByBackdropClick,
+      closeByOutsideClick
+    } = props;
+    const actionsParams = {
+      el: self.$refs.el,
+      grid
+    };
+    if (target) actionsParams.targetEl = target;
+    {
       if (typeof self.$options.propsData.convertToPopover !== 'undefined') actionsParams.convertToPopover = convertToPopover;
       if (typeof self.$options.propsData.forceToPopover !== 'undefined') actionsParams.forceToPopover = forceToPopover;
+      if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') actionsParams.closeByBackdropClick = closeByBackdropClick;
+      if (typeof self.$options.propsData.closeByOutsideClick !== 'undefined') actionsParams.closeByOutsideClick = closeByOutsideClick;
+    }
+    self.$f7ready(() => {
       self.f7Actions = self.$f7.actions.create(actionsParams);
 
       if (opened) {

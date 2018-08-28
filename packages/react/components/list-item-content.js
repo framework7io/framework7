@@ -19,6 +19,12 @@ class F7ListItemContent extends React.Component {
         hasInputErrorMessage: false
       };
     })();
+
+    (() => {
+      const self = this;
+      self.onClickBound = self.onClick.bind(self);
+      self.onChangeBound = self.onChange.bind(self);
+    })();
   }
 
   checkHasInputState() {
@@ -192,6 +198,9 @@ class F7ListItemContent extends React.Component {
     if (radio || checkbox) {
       {
         inputEl = React.createElement('input', {
+          ref: __reactNode => {
+            this.__reactRefs['inputEl'] = __reactNode;
+          },
           value: value,
           name: name,
           checked: checked,
@@ -199,8 +208,7 @@ class F7ListItemContent extends React.Component {
           readOnly: readonly,
           disabled: disabled,
           required: required,
-          type: radio ? 'radio' : 'checkbox',
-          onChange: self.onChange.bind(self)
+          type: radio ? 'radio' : 'checkbox'
         });
       }
       inputIconEl = React.createElement('i', {
@@ -306,8 +314,19 @@ class F7ListItemContent extends React.Component {
       id: id,
       style: style,
       className: classes,
-      onClick: self.onClick.bind(self)
+      onClick: self.onClickBound
     }, slotsContentStart, inputEl, inputIconEl, mediaEl, innerEl, slotsContent, slotsContentEnd);
+  }
+
+  componentWillUnmount() {
+    const self = this;
+    const {
+      inputEl
+    } = self.refs;
+
+    if (inputEl) {
+      inputEl.removeEventListener('change', self.onChangeBound);
+    }
   }
 
   componentDidUpdate() {
@@ -316,11 +335,11 @@ class F7ListItemContent extends React.Component {
     if (!innerEl) return;
     const $innerEl = self.$$(innerEl);
     const $labelEl = $innerEl.children('.item-title.item-label');
-    const $inputEl = $innerEl.children('.item-input-wrap');
+    const $inputWrapEl = $innerEl.children('.item-input-wrap');
     const hasInlineLabel = $labelEl.hasClass('item-label-inline');
-    const hasInput = $inputEl.length > 0;
-    const hasInputInfo = $inputEl.children('.item-input-info').length > 0;
-    const hasInputErrorMessage = $inputEl.children('.item-input-error-message').length > 0;
+    const hasInput = $inputWrapEl.length > 0;
+    const hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
+    const hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
 
     if (hasInlineLabel !== self.state.hasInlineLabel) {
       self.setState({
@@ -349,15 +368,23 @@ class F7ListItemContent extends React.Component {
 
   componentDidMount() {
     const self = this;
-    const innerEl = self.refs.innerEl;
+    const {
+      innerEl,
+      inputEl
+    } = self.refs;
+
+    if (inputEl) {
+      inputEl.addEventListener('change', self.onChangeBound);
+    }
+
     if (!innerEl) return;
     const $innerEl = self.$$(innerEl);
     const $labelEl = $innerEl.children('.item-title.item-label');
-    const $inputEl = $innerEl.children('.item-input-wrap');
+    const $inputWrapEl = $innerEl.children('.item-input-wrap');
     const hasInlineLabel = $labelEl.hasClass('item-label-inline');
-    const hasInput = $inputEl.length > 0;
-    const hasInputInfo = $inputEl.children('.item-input-info').length > 0;
-    const hasInputErrorMessage = $inputEl.children('.item-input-error-message').length > 0;
+    const hasInput = $inputWrapEl.length > 0;
+    const hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
+    const hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
 
     if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {
       self.setState({

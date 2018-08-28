@@ -1,5 +1,5 @@
 /**
- * Framework7 3.1.1
+ * Framework7 3.2.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: August 3, 2018
+ * Released on: August 28, 2018
  */
 html,
 body,
@@ -10794,6 +10794,7 @@ body > .progressbar-infinite,
   z-index: -1;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
+  pointer-events: none;
 }
 .swipeout-actions-right {
   right: 0%;
@@ -14830,7 +14831,7 @@ textarea {
 }
 .md .item-input-focused.color-green .item-input-wrap:after,
 .md .input-after.color-green:after {
-  background: #f44336;
+  background: #4caf50;
 }
 .md .item-input-focused.color-blue .item-label,
 .md .item-input-focused.color-blue .item-floating-label {
@@ -14838,7 +14839,7 @@ textarea {
 }
 .md .item-input-focused.color-blue .item-input-wrap:after,
 .md .input-after.color-blue:after {
-  background: #f44336;
+  background: #2196f3;
 }
 .md .item-input-focused.color-pink .item-label,
 .md .item-input-focused.color-pink .item-floating-label {
@@ -14846,7 +14847,7 @@ textarea {
 }
 .md .item-input-focused.color-pink .item-input-wrap:after,
 .md .input-after.color-pink:after {
-  background: #f44336;
+  background: #e91e63;
 }
 .md .item-input-focused.color-yellow .item-label,
 .md .item-input-focused.color-yellow .item-floating-label {
@@ -14854,7 +14855,7 @@ textarea {
 }
 .md .item-input-focused.color-yellow .item-input-wrap:after,
 .md .input-after.color-yellow:after {
-  background: #f44336;
+  background: #ffeb3b;
 }
 .md .item-input-focused.color-orange .item-label,
 .md .item-input-focused.color-orange .item-floating-label {
@@ -14862,7 +14863,7 @@ textarea {
 }
 .md .item-input-focused.color-orange .item-input-wrap:after,
 .md .input-after.color-orange:after {
-  background: #f44336;
+  background: #ff9800;
 }
 .md .item-input-focused.color-gray .item-label,
 .md .item-input-focused.color-gray .item-floating-label {
@@ -14870,7 +14871,7 @@ textarea {
 }
 .md .item-input-focused.color-gray .item-input-wrap:after,
 .md .input-after.color-gray:after {
-  background: #f44336;
+  background: #9e9e9e;
 }
 .md .item-input-focused.color-white .item-label,
 .md .item-input-focused.color-white .item-floating-label {
@@ -14878,7 +14879,7 @@ textarea {
 }
 .md .item-input-focused.color-white .item-input-wrap:after,
 .md .input-after.color-white:after {
-  background: #f44336;
+  background: #ffffff;
 }
 .md .item-input-focused.color-black .item-label,
 .md .item-input-focused.color-black .item-floating-label {
@@ -14886,7 +14887,7 @@ textarea {
 }
 .md .item-input-focused.color-black .item-input-wrap:after,
 .md .input-after.color-black:after {
-  background: #f44336;
+  background: #000000;
 }
 /* === Checkbox === */
 .icon-checkbox,

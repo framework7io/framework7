@@ -8,7 +8,12 @@ class Panel extends Framework7Class {
     super(params, [app]);
     const panel = this;
 
-    const el = params.el;
+    let el = params.el;
+
+    if (!el && params.content) {
+      el = params.content;
+    }
+
     const $el = $(el);
     if ($el.length === 0) return panel;
     if ($el[0].f7Panel) return $el[0].f7Panel;
@@ -24,6 +29,8 @@ class Panel extends Framework7Class {
       Utils.extend(app.panel, {
         [side]: panel,
       });
+    } else {
+      throw new Error(`Framework7: Can't create panel; app already has a ${side} panel!`);
     }
 
     let $backdropEl = $('.panel-backdrop');
@@ -137,6 +144,11 @@ class Panel extends Framework7Class {
     let panel = this;
     const app = panel.app;
 
+    if (!panel.$el) {
+      // Panel already destroyed
+      return;
+    }
+
     panel.emit('local::beforeDestroy panelBeforeDestroy', panel);
     panel.$el.trigger('panel:beforedestroy', panel);
 
@@ -160,6 +172,30 @@ class Panel extends Framework7Class {
     if (!app.panel.allowOpen) return false;
 
     const { side, effect, $el, $backdropEl, opened } = panel;
+
+    const $panelParentEl = $el.parent();
+    const wasInDom = $el.parents(document).length > 0;
+
+    if (!$panelParentEl.is(app.root)) {
+      const $insertBeforeEl = app.root.children('.panel, .views, .view').eq(0);
+      const $insertAfterEl = app.root.children('.statusbar').eq(0);
+
+      if ($insertBeforeEl.length) {
+        $el.insertBefore($insertBeforeEl);
+      } else if ($insertAfterEl.length) {
+        $el.insertAfter($insertBeforeEl);
+      } else {
+        app.root.prepend($el);
+      }
+
+      panel.once('panelClosed', () => {
+        if (wasInDom) {
+          $panelParentEl.append($el);
+        } else {
+          $el.remove();
+        }
+      });
+    }
 
     // Ignore if opened
     if (opened || $el.hasClass('panel-visible-by-breakpoint') || $el.hasClass('panel-active')) return false;

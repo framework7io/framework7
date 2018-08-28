@@ -50,6 +50,8 @@ export default {
     passRouteParamsToRequest: Boolean,
     routes: Array,
     routesAdd: Array,
+    routesBeforeEnter: [Function, Array],
+    routesBeforeLeave: [Function, Array],
     init: {
       type: Boolean,
       default: true

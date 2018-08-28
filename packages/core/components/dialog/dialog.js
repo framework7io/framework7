@@ -23,7 +23,9 @@ export default {
   },
   create() {
     const app = this;
-    const defaultDialogTitle = app.params.dialog.title || app.name;
+    function defaultDialogTitle() {
+      return app.params.dialog.title || app.name;
+    }
     const destroyOnClose = app.params.dialog.destroyPredefinedDialogs;
     const keyboardActions = app.params.dialog.keyboardActions;
     app.dialog = Utils.extend(
@@ -40,7 +42,7 @@ export default {
             [text, callbackOk, title] = args;
           }
           return new Dialog(app, {
-            title: typeof title === 'undefined' ? defaultDialogTitle : title,
+            title: typeof title === 'undefined' ? defaultDialogTitle() : title,
             text,
             buttons: [{
               text: app.params.dialog.buttonOk,
@@ -57,7 +59,7 @@ export default {
             [text, callbackOk, callbackCancel, title] = args;
           }
           return new Dialog(app, {
-            title: typeof title === 'undefined' ? defaultDialogTitle : title,
+            title: typeof title === 'undefined' ? defaultDialogTitle() : title,
             text,
             content: '<div class="dialog-input-field item-input"><div class="item-input-wrap"><input type="text" class="dialog-input"></div></div>',
             buttons: [
@@ -85,7 +87,7 @@ export default {
             [text, callbackOk, callbackCancel, title] = args;
           }
           return new Dialog(app, {
-            title: typeof title === 'undefined' ? defaultDialogTitle : title,
+            title: typeof title === 'undefined' ? defaultDialogTitle() : title,
             text,
             buttons: [
               {
@@ -109,7 +111,7 @@ export default {
             [text, callbackOk, callbackCancel, title] = args;
           }
           return new Dialog(app, {
-            title: typeof title === 'undefined' ? defaultDialogTitle : title,
+            title: typeof title === 'undefined' ? defaultDialogTitle() : title,
             text,
             content: `
               <div class="dialog-input-field dialog-input-double item-input">
@@ -148,7 +150,7 @@ export default {
             [text, callbackOk, callbackCancel, title] = args;
           }
           return new Dialog(app, {
-            title: typeof title === 'undefined' ? defaultDialogTitle : title,
+            title: typeof title === 'undefined' ? defaultDialogTitle() : title,
             text,
             content: `
               <div class="dialog-input-field item-input">

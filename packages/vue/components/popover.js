@@ -7,7 +7,9 @@ export default {
   props: Object.assign({
     id: [String, Number],
     opened: Boolean,
-    target: [String, Object]
+    target: [String, Object],
+    closeByBackdropClick: Boolean,
+    closeByOutsideClick: Boolean
   }, Mixins.colorProps),
 
   render() {
@@ -59,15 +61,22 @@ export default {
     el.addEventListener('popover:opened', self.onOpenedBound);
     el.addEventListener('popover:close', self.onCloseBound);
     el.addEventListener('popover:closed', self.onClosedBound);
+    const props = self.props;
     const {
       target,
-      opened
-    } = self.props;
+      opened,
+      closeByBackdropClick,
+      closeByOutsideClick
+    } = props;
+    const popoverParams = {
+      el
+    };
+    if (target) popoverParams.targetEl = target;
+    {
+      if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') popoverParams.closeByBackdropClick = closeByBackdropClick;
+      if (typeof self.$options.propsData.closeByOutsideClick !== 'undefined') popoverParams.closeByOutsideClick = closeByOutsideClick;
+    }
     self.$f7ready(() => {
-      const popoverParams = {
-        el
-      };
-      if (target) popoverParams.targetEl = target;
       self.f7Popover = self.$f7.popover.create(popoverParams);
 
       if (opened && target) {

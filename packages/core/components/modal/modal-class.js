@@ -173,8 +173,24 @@ class Modal extends Framework7Class {
 
     // backdrop
     if ($backdropEl) {
-      $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
-      $backdropEl.removeClass('backdrop-in');
+      let needToHideBackdrop = true;
+      if (modal.type === 'popup') {
+        modal.$el.prevAll('.popup.modal-in').each((index, popupEl) => {
+          const popupInstance = popupEl.f7Modal;
+          if (!popupInstance) return;
+          if (
+            popupInstance.params.closeByBackdropClick
+            && popupInstance.params.backdrop
+            && popupInstance.backdropEl === modal.backdropEl
+          ) {
+            needToHideBackdrop = false;
+          }
+        });
+      }
+      if (needToHideBackdrop) {
+        $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
+        $backdropEl.removeClass('backdrop-in');
+      }
     }
 
     // Modal

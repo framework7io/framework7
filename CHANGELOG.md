@@ -2,6 +2,34 @@
 
 # Change Log
 
+# [v3.2.0](https://github.com/framework7io/framework7/compare/v3.1.1...v3.2.0) - August 28, 2018
+  * Core
+    * Router
+      * Added support for routable Panels! Thanks to @bencompton 🎉
+      * Added support to navigate to route by its name using `router.navigate({ name: 'someroute' })`
+      * Optimized Router Component ES template parsing
+      * Now it caches XHR-loaded Router Components (from `componentUrl`)
+    * Calendar
+      * New `backdrop` and `closeByBackdropClick` parameters
+    * Smart Select
+      * New `cssClass` parameter that will add additional class to Smart Select element
+      * `searchbar` parameter now can be a full object with Searchbar parameters
+      * New `appendSearchbarNotFound` parameter that adds additional element to Smart Select container that will be visible when there are no searchbar results
+    * Popup
+      * Fixed issue on backdrop click when multiple popups opened same time
+    * Device
+      * It now adds `device-macos` and `device-windows` html classes when relevant device is used
+    * Utils - 2 new methods added:
+      * `app.utils.uniqueNumber()` - returns unique counter number
+      * `app.utils.id(mask, map)` - returns randomly generated string by mask, e.g. `app.utils.id('xxxx-xxxx-xxxx-xxxx')` will return string like `d692-c811-e032-6028`
+  * Phenome (Vue/React)
+    * View component - added new `routesBeforeEnter` and `routesBeforeLeave` properties
+    * List component - now emits `submit` event if it is used as form
+    * List Item component - fixed issue with `onChange` event in React
+    * Actions, Popover, Sheet - added new `closeByBackdropClick` and `closeByOutsideClick` properties
+    * Popup - added new `closeByBackdropClick`, `backdrop`, `animate` properties
+  * Lots of minor fixes
+
 # [v3.1.1](https://github.com/framework7io/framework7/compare/v3.1.0...v3.1.1) - August 3, 2018
   * Core
     * Virtual DOM Router Components

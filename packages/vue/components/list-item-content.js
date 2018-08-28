@@ -164,15 +164,13 @@ export default {
     if (radio || checkbox) {
       {
         inputEl = _h('input', {
+          ref: 'inputEl',
           domProps: {
             checked,
             readonly,
             disabled,
             required,
             value
-          },
-          on: {
-            change: self.onChange.bind(self)
           },
           attrs: {
             name: name,
@@ -281,12 +279,18 @@ export default {
       style: style,
       class: classes,
       on: {
-        click: self.onClick.bind(self)
+        click: self.onClickBound
       },
       attrs: {
         id: id
       }
     }, [slotsContentStart, inputEl, inputIconEl, mediaEl, innerEl, slotsContent, slotsContentEnd]);
+  },
+
+  created() {
+    const self = this;
+    self.onClickBound = self.onClick.bind(self);
+    self.onChangeBound = self.onChange.bind(self);
   },
 
   beforeMount() {
@@ -299,15 +303,23 @@ export default {
 
   mounted() {
     const self = this;
-    const innerEl = self.$refs.innerEl;
+    const {
+      innerEl,
+      inputEl
+    } = self.$refs;
+
+    if (inputEl) {
+      inputEl.addEventListener('change', self.onChangeBound);
+    }
+
     if (!innerEl) return;
     const $innerEl = self.$$(innerEl);
     const $labelEl = $innerEl.children('.item-title.item-label');
-    const $inputEl = $innerEl.children('.item-input-wrap');
+    const $inputWrapEl = $innerEl.children('.item-input-wrap');
     const hasInlineLabel = $labelEl.hasClass('item-label-inline');
-    const hasInput = $inputEl.length > 0;
-    const hasInputInfo = $inputEl.children('.item-input-info').length > 0;
-    const hasInputErrorMessage = $inputEl.children('.item-input-error-message').length > 0;
+    const hasInput = $inputWrapEl.length > 0;
+    const hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
+    const hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
 
     if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {
       self.setState({
@@ -340,11 +352,11 @@ export default {
     if (!innerEl) return;
     const $innerEl = self.$$(innerEl);
     const $labelEl = $innerEl.children('.item-title.item-label');
-    const $inputEl = $innerEl.children('.item-input-wrap');
+    const $inputWrapEl = $innerEl.children('.item-input-wrap');
     const hasInlineLabel = $labelEl.hasClass('item-label-inline');
-    const hasInput = $inputEl.length > 0;
-    const hasInputInfo = $inputEl.children('.item-input-info').length > 0;
-    const hasInputErrorMessage = $inputEl.children('.item-input-error-message').length > 0;
+    const hasInput = $inputWrapEl.length > 0;
+    const hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
+    const hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
 
     if (hasInlineLabel !== self.state.hasInlineLabel) {
       self.setState({
@@ -368,6 +380,17 @@ export default {
       self.setState({
         hasInputErrorMessage
       });
+    }
+  },
+
+  beforeDestroy() {
+    const self = this;
+    const {
+      inputEl
+    } = self.$refs;
+
+    if (inputEl) {
+      inputEl.removeEventListener('change', self.onChangeBound);
     }
   },
 
