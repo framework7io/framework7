@@ -81,7 +81,7 @@ export default {
       this.dispatchEvent('tabShow tab:show', e);
     },
     onTabHide(e) {
-      this.dispatchEvent('tabShow tab:hide', e);
+      this.dispatchEvent('tabHide tab:hide', e);
     },
   },
 };
