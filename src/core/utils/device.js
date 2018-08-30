@@ -93,6 +93,7 @@ const Device = (function Device() {
   if (device.os && device.os === 'ios') {
     const osVersionArr = device.osVersion.split('.');
     const metaViewport = document.querySelector('meta[name="viewport"]');
+    const metaAppleMobileWebAppStatusBarStyle = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
     device.minimalUi = !device.webView
       && (ipod || iphone)
       && (osVersionArr[0] * 1 === 7 ? osVersionArr[1] * 1 >= 1 : osVersionArr[0] * 1 > 7)
@@ -101,7 +102,7 @@ const Device = (function Device() {
 
   // Check for status bar and fullscreen app mode
   device.needsStatusbarOverlay = function needsStatusbarOverlay() {
-    if ((device.webView || (device.android && device.cordova)) && (window.innerWidth * window.innerHeight === window.screen.width * window.screen.height)) {
+    if ((device.webView || (device.android && device.cordova)) && ((window.innerWidth * window.innerHeight === window.screen.width * window.screen.height) || (metaAppleMobileWebAppStatusBarStyle.getAttribute('content').indexOf('translucent') >= 0) )) {
       if (device.iphoneX && (window.orientation === 90 || window.orientation === -90)) {
         return false;
       }
