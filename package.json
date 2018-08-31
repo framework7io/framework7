@@ -46,10 +46,10 @@
     }
   },
   "dependencies": {
-    "dom7": "^2.0.7",
+    "dom7": "^2.1.0",
     "path-to-regexp": "^2.4.0",
     "ssr-window": "^1.0.1",
-    "template7": "^1.3.8"
+    "template7": "^1.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -73,7 +73,7 @@
     "gulp-uglify": "^3.0.1",
     "hoek": "^5.0.4",
     "husky": "^1.0.0-rc.13",
-    "phenome": "0.0.20",
+    "phenome": "0.1.0",
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",

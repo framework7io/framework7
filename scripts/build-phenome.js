@@ -2,7 +2,7 @@
 /* eslint no-console: "off" */
 /* eslint global-require: "off" */
 /* eslint no-param-reassign: ["error", { "props": false }] */
-const phenome = require('phenome');
+const phenome = require('../../phenome/lib/compiler-io/index');
 const fs = require('fs');
 const { transformSync } = require('@babel/core');
 
@@ -34,9 +34,9 @@ function build(cb) {
 
   phenome({
     paths: ['./src/phenome/**/*.js', './src/phenome/**/*.jsx'],
-    typeScriptDefinitions: true,
     react: {
       out: `${buildPath}/react/`,
+      typeScriptDefinitions: true,
       helpers: {
         el: 'auto',
         slots: 'auto',
