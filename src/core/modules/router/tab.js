@@ -83,7 +83,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
     tabEventTarget.trigger('tab:init tab:mounted', tabRoute);
     router.emit('tabInit tabMounted', $newTabEl[0], tabRoute);
 
-    if ($oldTabEl.length) {
+    if ($oldTabEl && $oldTabEl.length) {
       if (animated) {
         onTabsChanged(() => {
           router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
