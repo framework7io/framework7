@@ -71,7 +71,7 @@ export default {
     const props = self.props;
     const { closeByBackdropClick, backdrop, animate } = props;
 
-    const popupParams = { el, backdrop, animate };
+    const popupParams = { el };
 
     if (process.env.COMPILER === 'vue') {
       if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') popupParams.closeByBackdropClick = closeByBackdropClick;
