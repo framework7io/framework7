@@ -36,7 +36,7 @@ function build(cb) {
     paths: ['./src/phenome/**/*.js', './src/phenome/**/*.jsx'],
     react: {
       out: `${buildPath}/react/`,
-      typeScriptDefinitions: true,
+      typeScriptDefinitions: false,
       helpers: {
         el: 'auto',
         slots: 'auto',
