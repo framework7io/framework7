@@ -16,7 +16,7 @@ class F7Block extends React.Component {
   }
 
   onTabHide(e) {
-    this.dispatchEvent('tabShow tab:hide', e);
+    this.dispatchEvent('tabHide tab:hide', e);
   }
 
   render() {

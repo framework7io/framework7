@@ -46,6 +46,8 @@ class F7Navbar extends React.Component {
       title,
       subtitle,
       inner,
+      innerClass,
+      innerClassName,
       className,
       id,
       style,
@@ -78,7 +80,7 @@ class F7Navbar extends React.Component {
         ref: __reactNode => {
           this.__reactRefs['inner'] = __reactNode;
         },
-        className: Utils.classNames('navbar-inner', {
+        className: Utils.classNames('navbar-inner', innerClass, innerClassName, {
           sliding
         })
       }, leftEl, titleEl, this.slots['default']);
@@ -144,7 +146,9 @@ __reactComponentSetProps(F7Navbar, Object.assign({
   inner: {
     type: Boolean,
     default: true
-  }
+  },
+  innerClass: String,
+  innerClassName: String
 }, Mixins.colorProps));
 
 F7Navbar.displayName = 'f7-navbar';

@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.2.0
+ * Framework7 Vue 3.2.1
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: August 28, 2018
+ * Released on: August 31, 2018
  */
 
 (function (global, factory) {
@@ -1237,7 +1237,7 @@
       },
 
       onTabHide: function onTabHide(e) {
-        this.dispatchEvent('tabShow tab:hide', e);
+        this.dispatchEvent('tabHide tab:hide', e);
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -5835,7 +5835,6 @@
         {
           value = self.$refs.area.$refs.inputEl.value;
         }
-        console.log(value);
         var clear = self.f7Messagebar ? function () {
           self.f7Messagebar.clear();
         } : function () {};
@@ -6285,7 +6284,9 @@
       inner: {
         type: Boolean,
         default: true
-      }
+      },
+      innerClass: String,
+      innerClassName: String
     }, Mixins.colorProps),
 
     render: function render() {
@@ -6299,6 +6300,8 @@
       var title = props.title;
       var subtitle = props.subtitle;
       var inner = props.inner;
+      var innerClass = props.innerClass;
+      var innerClassName = props.innerClassName;
       var className = props.className;
       var id = props.id;
       var style = props.style;
@@ -6334,7 +6337,7 @@
 
         innerEl = _h('div', {
           ref: 'inner',
-          class: Utils.classNames('navbar-inner', {
+          class: Utils.classNames('navbar-inner', innerClass, innerClassName, {
             sliding: sliding
           })
         }, [leftEl, titleEl, this.$slots['default']]);
@@ -7466,9 +7469,7 @@
       var backdrop = props.backdrop;
       var animate = props.animate;
       var popupParams = {
-        el: el,
-        backdrop: backdrop,
-        animate: animate
+        el: el
       };
       {
         if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') { popupParams.closeByBackdropClick = closeByBackdropClick; }
@@ -9709,7 +9710,7 @@
   };
 
   /**
-   * Framework7 Vue 3.2.0
+   * Framework7 Vue 3.2.1
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -9717,7 +9718,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: August 28, 2018
+   * Released on: August 31, 2018
    */
 
   var Plugin = {

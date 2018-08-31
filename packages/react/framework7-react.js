@@ -1,5 +1,5 @@
 /**
- * Framework7 React 3.2.0
+ * Framework7 React 3.2.1
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: August 28, 2018
+ * Released on: August 31, 2018
  */
 
 (function (global, factory) {
@@ -1506,7 +1506,7 @@
     };
 
     F7Block.prototype.onTabHide = function onTabHide (e) {
-      this.dispatchEvent('tabShow tab:hide', e);
+      this.dispatchEvent('tabHide tab:hide', e);
     };
 
     F7Block.prototype.render = function render () {
@@ -6228,7 +6228,6 @@
       {
         value = self.refs.area.refs.inputEl.value;
       }
-      console.log(value);
       var clear = self.f7Messagebar ? function () {
         self.f7Messagebar.clear();
       } : function () {};
@@ -6960,6 +6959,8 @@
       var title = props.title;
       var subtitle = props.subtitle;
       var inner = props.inner;
+      var innerClass = props.innerClass;
+      var innerClassName = props.innerClassName;
       var className = props.className;
       var id = props.id;
       var style = props.style;
@@ -6991,7 +6992,7 @@
           ref: function (__reactNode) {
             this$1.__reactRefs['inner'] = __reactNode;
           },
-          className: Utils.classNames('navbar-inner', {
+          className: Utils.classNames('navbar-inner', innerClass, innerClassName, {
             sliding: sliding
           })
         }, leftEl, titleEl, this.slots['default']);
@@ -7063,7 +7064,9 @@
     inner: {
       type: Boolean,
       default: true
-    }
+    },
+    innerClass: String,
+    innerClassName: String
   }, Mixins.colorProps));
 
   F7Navbar.displayName = 'f7-navbar';
@@ -8221,9 +8224,7 @@
       var backdrop = props.backdrop;
       var animate = props.animate;
       var popupParams = {
-        el: el,
-        backdrop: backdrop,
-        animate: animate
+        el: el
       };
       {
         if ('closeByBackdropClick' in props) { popupParams.closeByBackdropClick = closeByBackdropClick; }
@@ -10641,7 +10642,7 @@
   };
 
   /**
-   * Framework7 React 3.2.0
+   * Framework7 React 3.2.1
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -10649,7 +10650,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: August 28, 2018
+   * Released on: August 31, 2018
    */
 
   var Plugin = {

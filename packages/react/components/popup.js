@@ -92,9 +92,7 @@ class F7Popup extends React.Component {
       animate
     } = props;
     const popupParams = {
-      el,
-      backdrop,
-      animate
+      el
     };
     {
       if ('closeByBackdropClick' in props) popupParams.closeByBackdropClick = closeByBackdropClick;

@@ -68,9 +68,7 @@ export default {
       animate
     } = props;
     const popupParams = {
-      el,
-      backdrop,
-      animate
+      el
     };
     {
       if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') popupParams.closeByBackdropClick = closeByBackdropClick;
