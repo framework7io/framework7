@@ -54,6 +54,8 @@
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "acorn": "^5.7.2",
+    "acorn-jsx": "^4.1.1",
     "cross-env": "^5.2.0",
     "eslint": "^5.4.0",
     "eslint-config-airbnb-base": "^13.1.0",

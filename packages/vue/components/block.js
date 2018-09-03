@@ -80,7 +80,7 @@ export default {
     },
 
     onTabHide(e) {
-      this.dispatchEvent('tabShow tab:hide', e);
+      this.dispatchEvent('tabHide tab:hide', e);
     },
 
     dispatchEvent(events, ...args) {

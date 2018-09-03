@@ -2,6 +2,16 @@
 
 # Change Log
 
+# [v3.2.1](https://github.com/framework7io/framework7/compare/v3.2.0...v3.2.1) - August 31, 2018
+  * Template7 - updated to latest 1.4.0
+      * Added TypeScript Definitions
+  * Dom7 - updated to latest 2.1.0
+      * Added TypeScript Definitions
+  * Phenome
+    * Navbar - added `innerClass` and `innerClassName` (alias) props to set additional class on `navbar-inner` element
+    * Popup - fixed issue when its `animate` and `backdrop` props became disabled by default
+  * Minor fixes
+
 # [v3.2.0](https://github.com/framework7io/framework7/compare/v3.1.1...v3.2.0) - August 28, 2018
   * Core
     * Router
