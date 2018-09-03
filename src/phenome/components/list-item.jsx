@@ -210,6 +210,7 @@ export default {
         swipeout,
         'accordion-item': accordionItem,
         'accordion-item-opened': accordionItemOpened,
+        disabled: disabled && !(radio || checkbox),
       },
       Mixins.colorClasses(props),
     );
@@ -233,10 +234,11 @@ export default {
     return (
       <li ref="el" id={id} style={style} className={liClasses}>
         <slot name="root-start" />
-        {swipeout ? (
-          <div className="swipeout-content">{linkItemEl}</div>
-        ) :
-          linkItemEl
+        {swipeout
+          ? (
+            <div className="swipeout-content">{linkItemEl}</div>
+          )
+          : linkItemEl
         }
         {isSortable && (<div className="sortable-handler" />)}
         {(swipeout || accordionItem) && self.slots.default}
