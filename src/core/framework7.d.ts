@@ -1,4 +1,7 @@
 import Framework7 from './components/app/app-class';
+import './modules/device/device';
+import './modules/support/support';
+
 import './components/accordion/accordion';
 import './components/actions/actions';
 import './components/autocomplete/autocomplete';

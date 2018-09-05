@@ -59,35 +59,35 @@ export interface Framework7Params {
   initOnDeviceReady : boolean
   /** Object with clicks-module related parameters */
   clicks: {
-      /** CSS selector for links that should be treated as external and shouldn't be handled by Framework7. For example such '.external' value will match to links like <a href="somepage.html" class="external"> (with class "external") (default '.external') */
-      externalLinks : string
+    /** CSS selector for links that should be treated as external and shouldn't be handled by Framework7. For example such '.external' value will match to links like <a href="somepage.html" class="external"> (with class "external") (default '.external') */
+    externalLinks : string
   }
   /** Object with touch-module related parameters */
   touch: {
-      /** Fast clicks is a built-in library that removes 300ms delay from links and form elements in mobile browser while you click them. You can disable this built-in library if you want to use other third party fast clicks script.. (default true) */
-      fastClicks : boolean
-      /** Distance threshold (in px) to prevent short taps. So if tap/move distance is larger than this value then "click" will not be triggered. (default 10) */
-      fastClicksDistanceThreshold : number
-      /** Minimal allowed delay (in ms) between multiple clicks. (default 50) */
-      fastClicksDelayBetweenClicks : number
-      /** This parameter allows to specify elements not handled by fast clicks by passing CSS selector of such elements. */
-      fastClicksExclude : string
-      /** . (default true) */
-      disableContextMenu : boolean
-      /** Enables tap hold. (default false) */
-      tapHold : boolean
-      /** Determines how long (in ms) the user must hold their tap before the taphold event is fired on the target element. (default 750) */
-      tapHoldDelay : number
-      /** When enabled (by default), then click event will not be fired after tap hold event. (default true) */
-      tapHoldPreventClicks : boolean
-      /** When enabled, app will add "active-state" class to currently touched (:active) element.. (default true) */
-      activeState : boolean
-      /** CSS selector of elements where enabled activeState will add appropriate active class. (default a, button, label, span, .actions-button) */
-      activeStateElements : string
-      /** Enables Material theme specific touch ripple effect. (default true) */
-      materialRipple : boolean
-      /** CSS selector of elements to apply touch ripple effect on click. (default .ripple, .link, .item-link, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell, .notification-close-button) */
-      materialRippleElements : string
+    /** Fast clicks is a built-in library that removes 300ms delay from links and form elements in mobile browser while you click them. You can disable this built-in library if you want to use other third party fast clicks script.. (default true) */
+    fastClicks : boolean
+    /** Distance threshold (in px) to prevent short taps. So if tap/move distance is larger than this value then "click" will not be triggered. (default 10) */
+    fastClicksDistanceThreshold : number
+    /** Minimal allowed delay (in ms) between multiple clicks. (default 50) */
+    fastClicksDelayBetweenClicks : number
+    /** This parameter allows to specify elements not handled by fast clicks by passing CSS selector of such elements. */
+    fastClicksExclude : string
+    /** . (default true) */
+    disableContextMenu : boolean
+    /** Enables tap hold. (default false) */
+    tapHold : boolean
+    /** Determines how long (in ms) the user must hold their tap before the taphold event is fired on the target element. (default 750) */
+    tapHoldDelay : number
+    /** When enabled (by default), then click event will not be fired after tap hold event. (default true) */
+    tapHoldPreventClicks : boolean
+    /** When enabled, app will add "active-state" class to currently touched (:active) element.. (default true) */
+    activeState : boolean
+    /** CSS selector of elements where enabled activeState will add appropriate active class. (default a, button, label, span, .actions-button) */
+    activeStateElements : string
+    /** Enables Material theme specific touch ripple effect. (default true) */
+    materialRipple : boolean
+    /** CSS selector of elements to apply touch ripple effect on click. (default .ripple, .link, .item-link, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell, .notification-close-button) */
+    materialRippleElements : string
   }
 }
 
@@ -103,29 +103,29 @@ export interface Framework7Plugin {
   create(instance: Framework7): () => void,
   /** Object with default class/plugin parameters */
   params?: {
-      [plugin_name: string]: {
-          [param: string]: any
-      }
+    [plugin_name: string]: {
+      [param: string]: any
+    }
   },
   /** proto object extends Class prototype */
   proto?: {
-      [name: string]: any
+    [name: string]: any
   },
   /** Extend Class with static props and methods, e.g. Class.myMethod */
   static?: {
-      [name: string]: any
+    [name: string]: any
   },
   /** Initialized instance Props & Methods */
   instance?: {
-      [name: string]: any
+    [name: string]: any
   },
   /** Event handlers */
   on?: {
-      [event: string]: (...params: any[]) => void
+    [event: string]: (...params: any[]) => void
   },
   /** Handle clicks - prop name means CSS selector of element to add click handler */
   clicks?: {
-      [selector: string]: ($clickedEl: HTMLElement, data: any) => void
+    [selector: string]: ($clickedEl: HTMLElement, data: any) => void
   }
 }
 
@@ -189,10 +189,6 @@ interface Framework7 extends Framework7Class<Events> {
   t7 : Template7
   /** App parameters */
   params : Framework7Params
-  /** Object with properties about supported features. Check the Support utilities section */
-  support : Support
-  /** Object with properties about device. Check the Device utilities section */
-  device : Device
   /** Object with some useful utilities. Check the Utils section */
   utils : Utils
   /** Contains methods to work with XHR requests. Check the Request utilities section */
