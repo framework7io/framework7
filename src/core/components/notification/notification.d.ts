@@ -1,0 +1,117 @@
+import Dom7 from 'dom7';
+import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+
+namespace Notification {
+  interface Notification extends Framework7EventsClass<Events> {
+    /** Link to global app instance */
+    app : Framework7
+    /** Notification HTML element */
+    el : HTMLElement
+    /** Dom7 instance with notification HTML element */
+    $el : Dom7
+    /** Notification parameters */
+    params : Parameters
+
+    /** Open notification */
+    open() : Notification
+    /** Close notification */
+    close() : Notification
+  }
+
+  interface Parameters {
+    /** Notification element. Can be useful if you already have Notification element in your HTML and want to create new instance using this element. */
+    el: HTMLElement
+    /** Notification icon HTML layout, e.g. <i class="f7-icons">home</i> or image <img src="path/to/icon.png">. */
+    icon: string
+    /** Notification title. */
+    title: string
+    /** Additional text on the right side of title. */
+    titleRightText: string
+    /** Notification subtitle. */
+    subtitle: string
+    /** Notification inner text. */
+    text: string
+    /** Adds notification close button. (default false) */
+    closeButton?: boolean
+    /** Timeout delay (in ms) to close notification automatically. */
+    closeTimeout: number
+    /** If enabled, notification will be closed on notification click. (default false) */
+    closeOnClick?: boolean
+    /** If enabled, notification can be closed by swipe gesture. (default true) */
+    swipeToClose?: boolean
+    /** Additional css class to add. */
+    cssClass: string
+    /** Custom function to render Notification. Must return notification html. */
+    render: () => string
+    /** Object with events handlers.. */
+    on: {
+      [event in keyof Events] : Function
+    }
+  }
+
+  interface Events {
+    /** Event will be triggered when user clicks on Notification element. As an argument event handler receives notification instance */
+    click: (notification : Notification) => void
+    /** Event will be triggered when Notification starts its opening animation. As an argument event handler receives notification instance */
+    open: (notification : Notification) => void
+    /** Event will be triggered after Notification completes its opening animation. As an argument event handler receives notification instance */
+    opened: (notification : Notification) => void
+    /** Event will be triggered when Notification starts its closing animation. As an argument event handler receives notification instance */
+    close: (notification : Notification) => void
+    /** Event will be triggered after Notification completes its closing animation. As an argument event handler receives notification instance */
+    closed: (notification : Notification) => void
+    /** Event will be triggered right before Notification instance will be destroyed. As an argument event handler receives notification instance */
+    beforeDestroy: (notification : Notification) => void
+  }
+
+  interface DomEvents {
+    /** Event will be triggered when Notification starts its opening animation */
+    'notification:open' : () => void
+    /** Event will be triggered after Notification completes its opening animation */
+    'notification:opened' : () => void
+    /** Event will be triggered when Notification starts its closing animation */
+    'notification:close' : () => void
+    /** Event will be triggered after Notification completes its closing animation */
+    'notification:closed' : () => void
+  }
+}
+
+declare module '../app/app-class' {
+  interface Framework7Class {
+    notification: {
+      /** create Notification instance */
+      create(parameters : Notification.Parameters) : Notification.Notification
+
+      /** destroy Notification instance */
+      destroy(el : HTMLElement | CSSSelector | Notification.Notification) : void
+
+      /** get Notification instance by HTML element */
+      get(el : HTMLElement | CSSSelector) : Notification.Notification
+
+      /** open Notification */
+      open(el : HTMLElement | CSSSelector) : Notification.Notification
+
+      /** closes Notification */
+      close(el : HTMLElement | CSSSelector) : Notification.Notification
+    }
+  }
+  interface Framework7Params {
+    notification: Notification.Parameters
+  }
+  interface Framework7AppEvents {
+    /** Event will be triggered when user clicks on Notification element. As an argument event handler receives notification instance */
+    notificationClick: (notification : Notification.Notification) => void
+    /** Event will be triggered when Notification starts its opening animation. As an argument event handler receives notification instance */
+    notificationOpen: (notification : Notification.Notification) => void
+    /** Event will be triggered after Notification completes its opening animation. As an argument event handler receives notification instance */
+    notificationOpened: (notification : Notification.Notification) => void
+    /** Event will be triggered when Notification starts its closing animation. As an argument event handler receives notification instance */
+    notificationClose: (notification : Notification.Notification) => void
+    /** Event will be triggered after Notification completes its closing animation. As an argument event handler receives notification instance */
+    notificationClosed: (notification : Notification.Notification) => void
+    /** Event will be triggered right before Notification instance will be destroyed. As an argument event handler receives notification instance */
+    notificationBeforeDestroy: (notification : Notification.Notification) => void
+  }
+}
+
+export default Notification;

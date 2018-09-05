@@ -1,7 +1,7 @@
 import Dom7 from 'dom7';
-import Framework7, { CSSSelector } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
 
-declare module '../app/app-class' {
+namespace Popup {
   interface Events {
     /** Event will be triggered when Popup starts its opening animation. As an argument event handler receives popup instance */
     open: (popup : Popup) => void
@@ -64,37 +64,38 @@ declare module '../app/app-class' {
     /** Event will be triggered after Popup completes its closing animation */
     'popup:closed' : () => void
   }
+}
+
+declare module '../app/app-class' {
   interface Framework7Class {
     popup: {
       /** create Popup instance */
-      create(parameters : Parameters) : Popup
-
+      create(parameters : Popup.Parameters) : Popup.Popup
       /** destroy Popup instance */
-      destroy(el : HTMLElement | CSSSelector | Popup) : void
-
+      destroy(el : HTMLElement | CSSSelector | Popup.Popup) : void
       /** get Popup instance by HTML element */
-      get(el : HTMLElement | CSSSelector) : Popup
-
+      get(el : HTMLElement | CSSSelector) : Popup.Popup
       /** open Popup */
-      open(el : HTMLElement | CSSSelector) : Popup
-
+      open(el : HTMLElement | CSSSelector) : Popup.Popup
       /** closes Popup */
-      close(el : HTMLElement | CSSSelector) : Popup
+      close(el : HTMLElement | CSSSelector) : Popup.Popup
     }
   }
   interface Framework7Params {
-
+    popup: Popup.Parameters
   }
   interface Framework7AppEvents {
     /** Event will be triggered when Popup starts its opening animation. As an argument event handler receives popup instance */
-    popupOpen: (popup : Popup) => void
+    popupOpen: (popup : Popup.Popup) => void
     /** Event will be triggered when Popup completes its opening animation. As an argument event handler receives popup instance */
-    popupOpened: (popup : Popup) => void
+    popupOpened: (popup : Popup.Popup) => void
     /** Event will be triggered when Popup starts its closing animation. As an argument event handler receives popup instance */
-    popupClose: (popup : Popup) => void
+    popupClose: (popup : Popup.Popup) => void
     /** Event will be triggered after Popup completes its closing animation. As an argument event handler receives popup instance */
-    popupClosed: (popup : Popup) => void
+    popupClosed: (popup : Popup.Popup) => void
     /** Event will be triggered right before Popup instance will be destroyed */
-    popupBeforeDestroy: (popup : Popup) => void
+    popupBeforeDestroy: (popup : Popup.Popup) => void
   }
 }
+
+export default Popup;
