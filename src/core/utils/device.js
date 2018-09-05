@@ -78,7 +78,7 @@ const Device = (function Device() {
   }
 
   // Webview
-  device.webView = (iphone || ipad || ipod) && (ua.match(/.*AppleWebKit(?!.*Safari)/i) || window.navigator.standalone);
+  device.webView = !!((iphone || ipad || ipod) && (ua.match(/.*AppleWebKit(?!.*Safari)/i) || window.navigator.standalone));
   device.webview = device.webView;
 
 
