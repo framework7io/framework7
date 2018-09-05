@@ -155,10 +155,10 @@ export default {
       const app = this;
       let $toolbarEl = page.$el.parents('.view').children('.toolbar');
       if ($toolbarEl.length === 0) {
-        $toolbarEl = page.$el.find('.toolbar');
+        $toolbarEl = page.$el.parents('.views').children('.tabbar, .tabbar-labels');
       }
       if ($toolbarEl.length === 0) {
-        $toolbarEl = page.$el.parents('.views').children('.tabbar, .tabbar-labels');
+        $toolbarEl = page.$el.find('.toolbar');
       }
       if ($toolbarEl.length === 0) {
         return;
