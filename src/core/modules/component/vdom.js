@@ -180,7 +180,7 @@ function getData(el, context, app, initial, isRoot) {
       if (!data.attrs) data.attrs = {};
       data.attrs[attrName] = attrValue;
 
-      if (attrName === 'id' && !data.key) {
+      if (attrName === 'id' && !data.key && !isRoot) {
         data.key = attrValue;
       }
     }

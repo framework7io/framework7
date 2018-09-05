@@ -45,7 +45,7 @@ function buildVue(cb) {
   fs.writeFileSync(`${buildPath}/vue/utils/plugin.js`, newPluginContent);
 
   /* Build main components esm module: framework7-vue.esm.js */
-  const files = fs.readdirSync(`${buildPath}/vue/components`);
+  const files = fs.readdirSync(`${buildPath}/vue/components`).filter(file => file.indexOf('.d.ts') < 0);
   const components = [];
   const componentImports = [];
   const componentExports = [];
