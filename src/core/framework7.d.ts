@@ -43,6 +43,7 @@ import Progressbar from './components/progressbar/progressbar';
 import PullToRefresh from './components/pull-to-refresh/pull-to-refresh';
 import Radio from './components/radio/radio';
 import Range from './components/range/range';
+import Searchbar from './components/searchbar/searchbar';
 import Statusbar from './components/statusbar/statusbar';
 
 declare module './components/app/app-class' {
@@ -203,6 +204,10 @@ declare module './components/app/app-class' {
   interface Framework7Class extends Range.AppMethods {}
   interface Framework7Params extends Range.AppParams {}
   interface Framework7AppEvents extends Range.AppEvents {}
+
+  interface Framework7Class extends Searchbar.AppMethods {}
+  interface Framework7Params extends Searchbar.AppParams {}
+  interface Framework7AppEvents extends Searchbar.AppEvents {}
 
   interface Framework7Class extends Statusbar.AppMethods {}
   interface Framework7Params extends Statusbar.AppParams {}
