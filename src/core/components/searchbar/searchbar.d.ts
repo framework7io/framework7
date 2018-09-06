@@ -45,7 +45,7 @@ namespace Searchbar {
     expandable?: boolean
     /** Object with events handlers.. */
     on: {
-      [event in keyof Events] : Function
+      [event in keyof Events] : Events[event]
     }
   }
   interface Searchbar extends Framework7EventsClass<Events> {

@@ -51,12 +51,14 @@ export interface Framework7Params {
   data : () => any
   /** App root methods. Object with methods.  Note, that this inside of each method points to app Framework7 instance.. (default {}) */
   methods : { [name : string] : () => any }
-  /** Object with events handlers.. (default {}) */
-  on : { [event : string] : () => void }
   /** By default Framework7 will be initialized automatically when you call new Framework7(). If you want to prevent this behavior you can disable it with this option and then initialize it manually with init() when you need it.. (default true) */
   init : boolean
   /** If automatic initialization is enabled with init: true parameter and app is running under cordova environment then it will be initialized on deviceready event.. (default true) */
   initOnDeviceReady : boolean
+  /** Object with events handlers.. (default {}) */
+  on: {
+    [event in keyof Framework7AppEvents] : Framework7AppEvents[event]
+  }
 
 }
 
@@ -103,7 +105,7 @@ export interface Framework7AppEvents {
   'init': () => void
 }
 
-interface Framework7 extends Framework7Class<Events> {
+interface Framework7 extends Framework7Class<Framework7AppEvents> {
   /** App ID passed in parameters */
   id : string
   /** App name passed in parameters */
@@ -132,17 +134,6 @@ interface Framework7 extends Framework7Class<Events> {
   t7 : Template7
   /** App parameters */
   params : Framework7Params
-
-  /** Add event handler */
-  on(event : keyof Framework7AppEvents, handler : () => void) : void
-  /** Add event handler that will be removed after it was fired */
-  once(event : keyof Framework7AppEvents, handler : () => void) : void
-  /** Remove event handler */
-  off(event : keyof Framework7AppEvents, handler : () => void) : void
-  /** Remove all handlers for specified event */
-  off(event : keyof Framework7AppEvents) : void
-  /** Fire event on instance */
-  emit(event : keyof Framework7AppEvents, ... args : any[]) : void
   /** Initialize app. In case you disabled auto initialization with init: false parameter */
   init() : void
 }

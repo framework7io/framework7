@@ -193,7 +193,7 @@ namespace Calendar {
     render: () => string
 
     on: {
-      [event in keyof Events] : Function
+      [event in keyof Events] : Events[event]
     }
   }
 

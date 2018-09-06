@@ -1,11 +1,17 @@
-import { Dom7Instance } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import { Framework7Plugin } from '../app/app-class';
 
-declare module '../app/app-class' {
-  interface Framework7Class {
+export namespace Subnavbar {
+  interface AppMethods {
+
   }
-  interface Framework7Params {
+  interface AppParams {
+
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
+
   }
 }
+
+declare const Subnavbar: Framework7Plugin;
+
+export default Subnavbar;

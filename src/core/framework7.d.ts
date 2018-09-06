@@ -44,7 +44,10 @@ import PullToRefresh from './components/pull-to-refresh/pull-to-refresh';
 import Radio from './components/radio/radio';
 import Range from './components/range/range';
 import Searchbar from './components/searchbar/searchbar';
+import Sortable, { Sortable as SortableNamespace } from './components/sortable/sortable';
 import Statusbar from './components/statusbar/statusbar';
+import Subnavbar, { Subnavbar as SubnavbarNamespace } from './components/subnavbar/subnavbar';
+import Swipeout, { Swipeout as SwipeoutNamespace } from './components/swipeout/swipeout'
 
 declare module './components/app/app-class' {
   // Modules
@@ -209,9 +212,21 @@ declare module './components/app/app-class' {
   interface Framework7Params extends Searchbar.AppParams {}
   interface Framework7AppEvents extends Searchbar.AppEvents {}
 
+  interface Framework7Class extends SortableNamespace.AppMethods {}
+  interface Framework7Params extends SortableNamespace.AppParams {}
+  interface Framework7AppEvents extends SortableNamespace.AppEvents {}
+
   interface Framework7Class extends Statusbar.AppMethods {}
   interface Framework7Params extends Statusbar.AppParams {}
   interface Framework7AppEvents extends Statusbar.AppEvents {}
+
+  interface Framework7Class extends SubnavbarNamespace.AppMethods {}
+  interface Framework7Params extends SubnavbarNamespace.AppParams {}
+  interface Framework7AppEvents extends SubnavbarNamespace.AppEvents {}
+
+  interface Framework7Class extends SwipeoutNamespace.AppMethods {}
+  interface Framework7Params extends SwipeoutNamespace.AppParams {}
+  interface Framework7AppEvents extends SwipeoutNamespace.AppEvents {}
 }
 
 export default Framework7;

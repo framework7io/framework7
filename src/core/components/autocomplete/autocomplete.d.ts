@@ -127,7 +127,7 @@ namespace Autocomplete {
     renderNavbar: () => string
 
     on: {
-      [event in keyof Events] : Function
+      [event in keyof Events] : Events[event]
     }
   }
 

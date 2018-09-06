@@ -80,7 +80,7 @@ namespace Dialog {
     cssClass: string
     /** Object with events handlers.. */
     on: {
-      [event in keyof Events] : Function
+      [event in keyof Events] : Events[event]
     }
   }
 
