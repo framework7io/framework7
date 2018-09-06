@@ -49,6 +49,7 @@ import Statusbar from './components/statusbar/statusbar';
 import Subnavbar, { Subnavbar as SubnavbarNamespace } from './components/subnavbar/subnavbar';
 import Swipeout, { Swipeout as SwipeoutNamespace } from './components/swipeout/swipeout'
 import Tabs, { Tabs as TabsNamespace } from './components/tabs/tabs'
+import Toolbar, { Toolbar as ToolbarNamespace } from './components/toolbar/toolbar'
 
 declare module './components/app/app-class' {
   // Modules
@@ -232,6 +233,10 @@ declare module './components/app/app-class' {
   interface Framework7Class extends TabsNamespace.AppMethods {}
   interface Framework7Params extends TabsNamespace.AppParams {}
   interface Framework7AppEvents extends TabsNamespace.AppEvents {}
+
+  interface Framework7Class extends ToolbarNamespace.AppMethods {}
+  interface Framework7Params extends ToolbarNamespace.AppParams {}
+  interface Framework7AppEvents extends ToolbarNamespace.AppEvents {}
 }
 
 export default Framework7;
