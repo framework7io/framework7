@@ -1,11 +1,7 @@
 import Framework7 from '../../components/app/app-class';
 
 namespace ResizeModule {
-
-}
-
-declare module '../../components/app/app-class' {
-  interface Framework7Class {
+  interface AppMethods {
     /** App width in px */
     width : number
     /** App height in px */
@@ -15,9 +11,10 @@ declare module '../../components/app/app-class' {
     /** App top offset in px */
     top : number
   }
-  interface Framework7Params {
+  interface AppParams {
+
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
     /** Event will be fired on app resize (window resize). */
     'resize': () => void
     /** Event will be fired on app orientation change (window orientantion change). */

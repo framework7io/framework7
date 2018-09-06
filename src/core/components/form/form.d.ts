@@ -20,10 +20,7 @@ namespace Form {
     /** Event will be triggered on Ajax request error */
     'formajax:error': () => void
   }
-}
-
-declare module '../app/app-class' {
-  interface Framework7Class {
+  interface AppMethods {
     form: {
       /** convert form fields values to data object */
       convertToData(form : HTMLElement | CSSSelector) : object
@@ -39,9 +36,10 @@ declare module '../app/app-class' {
       removeFormData(formId : string) : void
     }
   }
-  interface Framework7Params {
+  interface AppParams {
+
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
     /** Event will be triggered on form when calling app.form.convertToData */
     formToData: (form : HTMLElement, data : object) => void
     /** Event will be triggered on form when calling app.form.fillFromData  */

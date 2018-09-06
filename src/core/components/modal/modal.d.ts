@@ -51,28 +51,27 @@ namespace Modal {
     /** Event will be triggered right before Custom Modal instance will be destroyed. As an argument event handler receives modal instance */
     beforeDestroy: (modal : Modal) => void
   }
-}
 
-declare module '../app/app-class' {
-  interface Framework7Class {
+  interface AppMethods {
     customModal: {
       /** Creates Custom modal */
-      create(parameters : Modal.Parameters) : Modal.Modal
+      create(parameters : Parameters) : Modal
     }
   }
-  interface Framework7Params {
+  interface AppParams {
+
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
     /** Event will be triggered when Modal starts its opening animation. As an argument event handler receives modal instance */
-    customModalOpen: (modal : Modal.Modal) => void
+    customModalOpen: (modal : Modal) => void
     /** Event will be triggered after Modal completes its opening animation. As an argument event handler receives modal instance */
-    customModalOpened: (modal : Modal.Modal) => void
+    customModalOpened: (modal : Modal) => void
     /** Event will be triggered when Modal starts its closing animation. As an argument event handler receives modal instance */
-    customModalClose: (modal : Modal.Modal) => void
+    customModalClose: (modal : Modal) => void
     /** Event will be triggered after Modal completes its closing animation. As an argument event handler receives modal instance */
-    customModalClosed: (modal : Modal.Modal) => void
+    customModalClosed: (modal : Modal) => void
     /** Event will be triggered right before Modal instance will be destroyed. As an argument event handler receives modal instance */
-    customModalBeforeDestroy: (modal : Modal.Modal) => void
+    customModalBeforeDestroy: (modal : Modal) => void
   }
 }
 

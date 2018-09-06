@@ -2,11 +2,7 @@ import Dom7 from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
 
 namespace Navbar {
-
-}
-
-declare module '../app/app-class' {
-  interface Framework7Class {
+  interface AppMethods {
     navbar: {
       /** Hide navbar */
       hide(navbarEl : HTMLElement | CSSSelector, animate?: boolean) : void
@@ -20,7 +16,7 @@ declare module '../app/app-class' {
       getPageByEl(navbarEl : HTMLElement | CSSSelector) : HTMLElement
     }
   }
-  interface Framework7Params {
+  interface AppParams {
     navbar: {
       /** Will hide Navbars on page scroll. (default false) */
       hideOnPageScroll?: boolean
@@ -34,7 +30,8 @@ declare module '../app/app-class' {
       iosCenterTitle?: boolean
     }
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
+
   }
 }
 

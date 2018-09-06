@@ -20,22 +20,21 @@ namespace DataTable {
     /** Event will be triggered right before Data Table instance will be destroyed. As an argument event handler receives Data table instance */
     beforeDestroy : (dataTable : DataTable) => void
   }
-}
 
-declare module '../app/app-class' {
-  interface Framework7Class {
+  interface AppMethods {
     dataTable: {
       /** create DataTable instance */
-      create(parameters : DataTable.Parameters ) : DataTable.DataTable;
+      create(parameters : Parameters ) : DataTable;
       /** destroy DataTable instance */
-      destroy(el : HTMLElement | CSSSelector | DataTable.DataTable) : void;
+      destroy(el : HTMLElement | CSSSelector | DataTable) : void;
       /** get DataTable instance by HTML element */
-      get(el : HTMLElement | CSSSelector) : DataTable.DataTable;
+      get(el : HTMLElement | CSSSelector) : DataTable;
     }
   }
-  interface Framework7Params {
+  interface AppParams {
+
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
     /** Event will be triggered data table sort changed. As an argument event handler receives data table instance and new sort order (asc or desc) */
     dataTableSort : (dataTable : DataTable, sort : string) => void
     /** Event will be triggered right before Data Table instance will be destroyed. As an argument event handler receives Data table instance */

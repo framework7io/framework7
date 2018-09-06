@@ -2,11 +2,7 @@ import Dom7 from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
 
 namespace Preloader {
-
-}
-
-declare module '../app/app-class' {
-  interface Framework7Class {
+  interface AppMethods {
     preloader: {
       /** Show Preloader overlay */
       show(color?: string | 'white') : void
@@ -14,9 +10,11 @@ declare module '../app/app-class' {
       hide() : void
     }
   }
-  interface Framework7Params {
+  interface AppParams {
+
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
+
   }
 }
 

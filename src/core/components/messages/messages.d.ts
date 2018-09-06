@@ -107,26 +107,25 @@ namespace Messages {
     /** Event will be triggered right before Messages instance will be destroyed */
     'messages:beforedestroy': void
   }
-}
 
-declare module '../app/app-class' {
-  interface Framework7Class {
+  interface AppMethods {
     messages: {
       /** create Messages instance */
-      create(parameters : Messages.Parameters) : Messages.Messages
+      create(parameters : Parameters) : Messages
 
       /** destroy Messages instance */
-      destroy(el : HTMLElement | CSSSelector | Messages.Messages) : void
+      destroy(el : HTMLElement | CSSSelector | Messages) : void
 
       /** get Messages instance by HTML element */
-      get(el : HTMLElement | CSSSelector) : Messages.Messages
+      get(el : HTMLElement | CSSSelector) : Messages
     }
   }
-  interface Framework7Params {
+  interface AppParams {
+    messages: Parameters
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
     /** Event will be triggered right before Messages instance will be destroyed */
-    messagesBeforeDestroy(messages : Messages.Messages) : void
+    messagesBeforeDestroy(messages : Messages) : void
   }
 }
 

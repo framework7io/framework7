@@ -74,43 +74,40 @@ namespace Notification {
     /** Event will be triggered after Notification completes its closing animation */
     'notification:closed' : () => void
   }
-}
-
-declare module '../app/app-class' {
-  interface Framework7Class {
+  interface AppMethods {
     notification: {
       /** create Notification instance */
-      create(parameters : Notification.Parameters) : Notification.Notification
+      create(parameters : Parameters) : Notification
 
       /** destroy Notification instance */
-      destroy(el : HTMLElement | CSSSelector | Notification.Notification) : void
+      destroy(el : HTMLElement | CSSSelector | Notification) : void
 
       /** get Notification instance by HTML element */
-      get(el : HTMLElement | CSSSelector) : Notification.Notification
+      get(el : HTMLElement | CSSSelector) : Notification
 
       /** open Notification */
-      open(el : HTMLElement | CSSSelector) : Notification.Notification
+      open(el : HTMLElement | CSSSelector) : Notification
 
       /** closes Notification */
-      close(el : HTMLElement | CSSSelector) : Notification.Notification
+      close(el : HTMLElement | CSSSelector) : Notification
     }
   }
-  interface Framework7Params {
-    notification: Notification.Parameters
+  interface AppParams {
+    notification: Parameters
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
     /** Event will be triggered when user clicks on Notification element. As an argument event handler receives notification instance */
-    notificationClick: (notification : Notification.Notification) => void
+    notificationClick: (notification : Notification) => void
     /** Event will be triggered when Notification starts its opening animation. As an argument event handler receives notification instance */
-    notificationOpen: (notification : Notification.Notification) => void
+    notificationOpen: (notification : Notification) => void
     /** Event will be triggered after Notification completes its opening animation. As an argument event handler receives notification instance */
-    notificationOpened: (notification : Notification.Notification) => void
+    notificationOpened: (notification : Notification) => void
     /** Event will be triggered when Notification starts its closing animation. As an argument event handler receives notification instance */
-    notificationClose: (notification : Notification.Notification) => void
+    notificationClose: (notification : Notification) => void
     /** Event will be triggered after Notification completes its closing animation. As an argument event handler receives notification instance */
-    notificationClosed: (notification : Notification.Notification) => void
+    notificationClosed: (notification : Notification) => void
     /** Event will be triggered right before Notification instance will be destroyed. As an argument event handler receives notification instance */
-    notificationBeforeDestroy: (notification : Notification.Notification) => void
+    notificationBeforeDestroy: (notification : Notification) => void
   }
 }
 

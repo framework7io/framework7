@@ -107,39 +107,38 @@ namespace Messagebar {
     /** Event will be triggered right before Messagebar instance will be destroyed */
     'messagebar:beforedestroy': void
   }
-}
-
-declare module '../app/app-class' {
-  interface Framework7Class {
+  interface AppMethods {
     messagebar: {
       /** create Messagebar instance */
-      create(parameters : Messagebar.Parameters) : Messagebar.Messagebar
+      create(parameters : Parameters) : Messagebar
 
       /** destroy Messagebar instance */
-      destroy(el : HTMLElement | CSSSelector | Messagebar.Messagebar) : void
+      destroy(el : HTMLElement | CSSSelector | Messagebar) : void
 
       /** get Messagebar instance by HTML element */
-      get(el : HTMLElement | CSSSelector) : Messagebar.Messagebar
+      get(el : HTMLElement | CSSSelector) : Messagebar
     }
   }
-  interface Framework7Params {
+  interface AppParams {
+    messagebar: Parameters
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
     /** Event will be triggered after messagebar textarea value changed. As an argument event handler receives messagebar instance */
-    messagebarChange(messagebar : Messagebar.Messagebar) : void
+    messagebarChange(messagebar : Messagebar) : void
     /** Event will be triggered when messagebar textarea gets focus. As an argument event handler receives messagebar instance */
-    messagebarFocus(messagebar : Messagebar.Messagebar) : void
+    messagebarFocus(messagebar : Messagebar) : void
     /** Event will be triggered when messagebar textarea loses focus. As an argument event handler receives messagebar instance */
-    messagebarBlur(messagebar : Messagebar.Messagebar) : void
+    messagebarBlur(messagebar : Messagebar) : void
     /** Event will be triggered when messagebar resizes messages page. As an argument event handler receives messagebar instance */
-    messagebarResizePage(messagebar : Messagebar.Messagebar) : void
+    messagebarResizePage(messagebar : Messagebar) : void
     /** Event will be triggered after click on messagebar attachment delete button. As an argument event handler receives messagebar instance, clicked attachment HTML element and attachment index number */
-    messagebarAttachmentDelete(messagebar : Messagebar.Messagebar, attachmentEl : HTMLElement, attachmentIndex: number) : void
+    messagebarAttachmentDelete(messagebar : Messagebar, attachmentEl : HTMLElement, attachmentIndex: number) : void
     /** Event will be triggered on messagebar attachment click. As an argument event handler receives messagebar instance, clicked attachment HTML element and attachment index number */
-    messagebarAttachmentClick(messagebar : Messagebar.Messagebar, attachmentEl : HTMLElement, attachmentIndex: number) : void
+    messagebarAttachmentClick(messagebar : Messagebar, attachmentEl : HTMLElement, attachmentIndex: number) : void
     /** Event will be triggered right before Messagebar instance will be destroyed */
-    messagebarBeforeDestroy(messagebar : Messagebar.Messagebar) : void
+    messagebarBeforeDestroy(messagebar : Messagebar) : void
   }
 }
+
 
 export default Messagebar;

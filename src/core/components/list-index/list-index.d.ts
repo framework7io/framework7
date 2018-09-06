@@ -69,28 +69,26 @@ namespace ListIndex {
     'listindex:beforedestroy': () => void
   }
 
-}
-
-declare module '../app/app-class' {
-  interface Framework7Class {
+  interface AppMethods {
     listIndex: {
       /** create ListIndex instance */
-      create(parameters : ListIndex.Parameters) : ListIndex.ListIndex;
+      create(parameters : Parameters) : ListIndex;
       /** destroy ListIndex instance */
-      destroy(el : HTMLElement | CSSSelector | ListIndex.ListIndex) : void;
+      destroy(el : HTMLElement | CSSSelector | ListIndex) : void;
       /** get ListIndex instance by HTML element */
-      get(el : HTMLElement | CSSSelector) : ListIndex.ListIndex;
+      get(el : HTMLElement | CSSSelector) : ListIndex;
     }
   }
-  interface Framework7Params {
+  interface AppParams {
+
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
     /** Event will be triggered on index select rather by click or swiping. As an argument event handler receives list index instance and selected index item content */
-    listIndexSelect(listIndex: ListIndex.ListIndex, itemContent: string, itemIndex: number) : void
+    listIndexSelect(listIndex: ListIndex, itemContent: string, itemIndex: number) : void
     /** Event will be triggered on index click. As an argument event handler receives list index instance and clicked index item content */
-    listIndexClick(listIndex: ListIndex.ListIndex, itemContent: string, itemIndex: number) : void
+    listIndexClick(listIndex: ListIndex, itemContent: string, itemIndex: number) : void
     /** Event will be triggered right before List Index instance will be destroyed. As an argument event handler receives list index instance */
-    listIndexBeforeDestroy(listIndex: ListIndex.ListIndex) : void
+    listIndexBeforeDestroy(listIndex: ListIndex) : void
   }
 }
 

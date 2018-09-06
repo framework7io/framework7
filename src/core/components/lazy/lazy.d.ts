@@ -10,10 +10,7 @@ namespace Lazy {
     /** Event will be triggered in case of error loading image file */
     'lazy:error': () => void
   }
-}
-
-declare module '../app/app-class' {
-  interface Framework7Class {
+  interface AppMethods {
     lazy: {
       /** initialize lazy loading on page */
       create(pageEl : HTMLElement | CSSSelector) : void;
@@ -27,7 +24,7 @@ declare module '../app/app-class' {
       ) : void;
     }
   }
-  interface Framework7Params {
+  interface AppParams {
     lazy: {
       /** Lazy load image placeholder source to show while image is not yet loaded. By default it is 1x1 px image. */
       placeholder: string
@@ -37,7 +34,7 @@ declare module '../app/app-class' {
       sequential?: boolean
     }
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
     /** Event will be triggered in the beginning of image file loading. As an argument it receives lazy loading HTML element. */
     lazyLoad?: (lazyEl : HTMLElement) => void
     /** Event will be triggered after image file successfully loaded. As an argument it receives lazy loading HTML element. */

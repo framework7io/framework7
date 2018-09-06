@@ -1,11 +1,16 @@
 import Dom7 from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
 
-declare module '../app/app-class' {
-  interface Framework7Class {
+namespace Popover {
+  interface AppMethods {
+
   }
-  interface Framework7Params {
+  interface AppParams {
+
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
+
   }
 }
+
+export default Popover;

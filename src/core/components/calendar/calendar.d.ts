@@ -232,50 +232,48 @@ namespace Calendar {
     /** Event will be triggered after Calendar completes its closing animation */
     'calendar:closed' : () => void
   }
-}
 
-declare module '../app/app-class' {
-  interface Framework7Class {
+  interface AppMethods {
     calendar: {
       /** create Calendar instance */
-      create(parameters : Calendar.Parameters) : Calendar.Calendar
+      create(parameters : Parameters) : Calendar
 
       /** destroy Calendar instance */
-      destroy(el : HTMLElement | CSSSelector | Calendar.Calendar) : void
+      destroy(el : HTMLElement | CSSSelector | Calendar) : void
 
       /** get Calendar instance by HTML element */
-      get(el : HTMLElement | CSSSelector) : Calendar.Calendar
+      get(el : HTMLElement | CSSSelector) : Calendar
 
       /** closes Calendar */
-      close(el : HTMLElement | CSSSelector) : Calendar.Calendar
+      close(el : HTMLElement | CSSSelector) : Calendar
     }
   }
-  interface Framework7Params {
-    calendar: Calendar.Parameters
+  interface AppParams {
+    calendar: Parameters
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
     /** Event will be triggered after click on calendar day element */
-    calendarDayClick: (calendar : Calendar.Calendar, dayEl : HTMLElement, year : number, month : number, day : number) => void
+    calendarDayClick: (calendar : Calendar, dayEl : HTMLElement, year : number, month : number, day : number) => void
     /** Event will be triggered when calendar value changes */
-    calendarChange: (calendar : Calendar.Calendar, value : unknown) => void
+    calendarChange: (calendar : Calendar, value : unknown) => void
     /** Event will be triggered when new month HTML layout has been added. Useful if you need to postprocess added html elements */
-    calendarMonthAdd: (calendar : Calendar.Calendar, monthEl : HTMLElement) => void
+    calendarMonthAdd: (calendar : Calendar, monthEl : HTMLElement) => void
     /** Event will be triggered in the begining of transition to next month */
-    calendarMonthYearChangeStart: (calendar : Calendar.Calendar, year : number, month : number) => void
+    calendarMonthYearChangeStart: (calendar : Calendar, year : number, month : number) => void
     /** Event will be triggered after transition to next month */
-    calendarMonthYearChangeEnd: (calendar : Calendar.Calendar, year : number, month : number) => void
+    calendarMonthYearChangeEnd: (calendar : Calendar, year : number, month : number) => void
     /** Event will be triggered when calendar initialized */
-    calendarInit: (calendar : Calendar.Calendar) => void
+    calendarInit: (calendar : Calendar) => void
     /** Event will be triggered when Calendar starts its opening animation. As an argument event handler receives calendar instance */
-    calendarOpen: (calendar : Calendar.Calendar) => void
+    calendarOpen: (calendar : Calendar) => void
     /** Event will be triggered after Calendar completes its opening animation. As an argument event handler receives calendar instance */
-    calendarOpened: (calendar : Calendar.Calendar) => void
+    calendarOpened: (calendar : Calendar) => void
     /** Event will be triggered when Calendar starts its closing animation. As an argument event handler receives calendar instance */
-    calendarClose: (calendar : Calendar.Calendar) => void
+    calendarClose: (calendar : Calendar) => void
     /** Event will be triggered after Calendar completes its closing animation. As an argument event handler receives calendar instance */
-    calendarClosed: (calendar : Calendar.Calendar) => void
+    calendarClosed: (calendar : Calendar) => void
     /** Event will be triggered right before Calendar instance will be destroyed. As an argument event handler receives calendar instance */
-    calendarBeforeDestroy: (calendar : Calendar.Calendar) => void
+    calendarBeforeDestroy: (calendar : Calendar) => void
   }
 }
 

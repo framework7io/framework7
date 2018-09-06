@@ -1,8 +1,8 @@
 import Framework7 from '../app/app-class';
 import { CSSSelector } from '../app/app-class';
 
-declare module '../app/app-class' {
-  interface Framework7Class {
+namespace Accordion {
+  interface AppMethods {
     accordion: {
       /** open specified accordion item */
       open(el : HTMLElement | CSSSelector) : void
@@ -14,10 +14,10 @@ declare module '../app/app-class' {
       toggle(el : HTMLElement | CSSSelector) : void
     }
   }
-  interface Framework7Params {
-    //
+  interface AppParams {
+
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
     /** Event will be triggered when accordion content starts its opening animation */
     accordionOpen : (el : HTMLElement | CSSSelector) => void
 
@@ -31,3 +31,5 @@ declare module '../app/app-class' {
     accordionClosed : (el : HTMLElement | CSSSelector) => void
   }
 }
+
+export default Accordion;

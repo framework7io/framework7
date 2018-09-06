@@ -2,17 +2,15 @@ import { Utils } from '../../utils/utils';
 import Framework7 from '../../components/app/app-class';
 
 namespace UtilsModule {
-
-}
-
-declare module '../../components/app/app-class' {
-  interface Framework7Class {
+  interface AppMethods {
     /** Object with set of helper methods */
     utils: Utils
   }
-  interface Framework7Params {
+  interface AppParams {
+
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
+
   }
 }
 

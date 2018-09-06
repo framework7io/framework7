@@ -145,39 +145,38 @@ namespace Autocomplete {
     /** Event will be triggered right before Autocomplete instance will be destroyed. As an argument event handler receives autocomplete instance */
     beforeDestroy : (autocomplete : Autocomplete) => void
   }
-}
 
-declare module '../app/app-class' {
-  interface Framework7Class {
+  interface AppMethods {
     autocomplete: {
       /** create Autocomplete instance */
-      create(parameters : Autocomplete.Parameters) : Autocomplete.Autocomplete
+      create(parameters : Parameters) : Autocomplete
       /** destroy Autocomplete instance */
       destroy(el : HTMLElement | CSSSelector) : void
       /** get Autocomplete instance by HTML element */
-      get(el : HTMLElement | CSSSelector) : Autocomplete.Autocomplete
+      get(el : HTMLElement | CSSSelector) : Autocomplete
       /** open Autocomplete */
-      open(el : HTMLElement | CSSSelector) : Autocomplete.Autocomplete
+      open(el : HTMLElement | CSSSelector) : Autocomplete
       /** closes Autocomplete */
-      close(el : HTMLElement | CSSSelector) : Autocomplete.Autocomplete
+      close(el : HTMLElement | CSSSelector) : Autocomplete
     }
+
   }
-  interface Framework7Params {
-    autocomplete: Autocomplete.Parameters
+  interface AppParams {
+    autocomplete: Parameters
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
     /** Event will be triggered when Autocomplete value changed. Returned value is an array with selected items */
-    autocompleteChange : (autocomplete : Autocomplete.Autocomplete, value : unknown) => void
+    autocompleteChange : (autocomplete : Autocomplete, value : unknown) => void
     /** Event will be triggered when Autocomplete starts its opening animation. As an argument event handler receives autocomplete instance */
-    autocompleteOpen : (autocomplete : Autocomplete.Autocomplete) => void
+    autocompleteOpen : (autocomplete : Autocomplete) => void
     /** Event will be triggered after Autocomplete completes its opening animation. As an argument event handler receives autocomplete instance */
-    autocompleteOpened : (autocomplete : Autocomplete.Autocomplete) => void
+    autocompleteOpened : (autocomplete : Autocomplete) => void
     /** Event will be triggered when Autocomplete starts its closing animation. As an argument event handler receives autocomplete instance */
-    autocompleteClose : (autocomplete : Autocomplete.Autocomplete) => void
+    autocompleteClose : (autocomplete : Autocomplete) => void
     /** Event will be triggered after Autocomplete completes its closing animation. As an argument event handler receives autocomplete instance */
-    autocompleteClosed : (autocomplete : Autocomplete.Autocomplete) => void
+    autocompleteClosed : (autocomplete : Autocomplete) => void
     /** Event will be triggered right before Autocomplete instance will be destroyed. As an argument event handler receives autocomplete instance */
-    autocompleteBeforeDestroy : (autocomplete : Autocomplete.Autocomplete) => void
+    autocompleteBeforeDestroy : (autocomplete : Autocomplete) => void
   }
 }
 

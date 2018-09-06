@@ -70,26 +70,24 @@ namespace Gauge {
     /** Event will be triggered right before Gauge instance will be destroyed */
     'gauge:beforedestroy': () => void
   }
-}
-
-declare module '../app/app-class' {
-  interface Framework7Class {
+  interface AppMethods {
     gauge: {
       /** create Gauge instance */
-      create(parameters : Gauge.Parameters) : Gauge.Gauge;
+      create(parameters : Gauge.Parameters) : Gauge;
       /** destroy Gauge instance */
-      destroy(el : HTMLElement | CSSSelector | Gauge.Gauge) : void;
+      destroy(el : HTMLElement | CSSSelector | Gauge) : void;
       /** get Gauge instance by HTML element */
-      get(el : HTMLElement | CSSSelector) : Gauge.Gauge;
+      get(el : HTMLElement | CSSSelector) : Gauge;
       /** update/rerender Gauge SVG according to passed parameters */
-      update(parameters : Parameters) : Gauge.Gauge;
+      update(parameters : Parameters) : Gauge;
     }
   }
-  interface Framework7Params {
+  interface AppParams {
+
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
     /** Event will be triggered right before Gauge instance will be destroyed. As an argument event handler receives Gauge instance */
-    gaugeBeforeDestroy: (dialog : Gauge.Gauge) => void
+    gaugeBeforeDestroy: (dialog : Gauge) => void
   }
 }
 

@@ -1,18 +1,14 @@
 import Framework7 from '../../components/app/app-class';
 
 namespace TouchModule {
-
-}
-
-declare module '../../components/app/app-class' {
-  interface Framework7Class {
+  interface AppMethods {
     touchEvents: {
       start: string
       move: string
       end: string
     }
   }
-  interface Framework7Params {
+  interface AppParams {
     /** Object with touch-module related parameters */
     touch: {
       /** Fast clicks is a built-in library that removes 300ms delay from links and form elements in mobile browser while you click them. You can disable this built-in library if you want to use other third party fast clicks script.. (default true) */
@@ -41,7 +37,7 @@ declare module '../../components/app/app-class' {
       materialRippleElements : string
     }
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
     /** Event will be fired on app click */
     'click': (event : Event) => void
     /** Event will be fired on touch start (mousedown) event added as active listener (possible to prevent default) */

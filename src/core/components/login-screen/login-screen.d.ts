@@ -57,40 +57,38 @@ namespace LoginScreen {
     /** Event will be triggered after LoginScreen completes its closing animation */
     'loginscreen:closed' : () => void
   }
-}
-
-declare module '../app/app-class' {
-  interface Framework7Class {
+  interface AppMethods {
     loginScreen: {
       /** create LoginScreen instance */
-      create(parameters : LoginScreen.Parameters) : LoginScreen.LoginScreen
+      create(parameters : Parameters) : LoginScreen
 
       /** destroy LoginScreen instance */
-      destroy(el : HTMLElement | CSSSelector | LoginScreen.LoginScreen) : void
+      destroy(el : HTMLElement | CSSSelector | LoginScreen) : void
 
       /** get LoginScreen instance by HTML element */
-      get(el : HTMLElement | CSSSelector) : LoginScreen.LoginScreen
+      get(el : HTMLElement | CSSSelector) : LoginScreen
 
       /** open LoginScreen */
-      open(el : HTMLElement | CSSSelector) : LoginScreen.LoginScreen
+      open(el : HTMLElement | CSSSelector) : LoginScreen
 
       /** closes LoginScreen */
-      close(el : HTMLElement | CSSSelector) : LoginScreen.LoginScreen
+      close(el : HTMLElement | CSSSelector) : LoginScreen
     }
   }
-  interface Framework7Params {
+  interface AppParams {
+
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
     /** Event will be triggered when LoginScreen starts its opening animation. As an argument event handler receives loginScreen instance */
-    loginScreenOpen: (loginScreen : LoginScreen.LoginScreen) => void
+    loginScreenOpen: (loginScreen : LoginScreen) => void
     /** Event will be triggered after LoginScreen completes its opening animation. As an argument event handler receives loginScreen instance */
-    loginScreenOpened: (loginScreen : LoginScreen.LoginScreen) => void
+    loginScreenOpened: (loginScreen : LoginScreen) => void
     /** Event will be triggered when LoginScreen starts its closing animation. As an argument event handler receives loginScreen instance */
-    loginScreenClose: (loginScreen : LoginScreen.LoginScreen) => void
+    loginScreenClose: (loginScreen : LoginScreen) => void
     /** Event will be triggered after LoginScreen completes its closing animation. As an argument event handler receives loginScreen instance */
-    loginScreenClosed: (loginScreen : LoginScreen.LoginScreen) => void
+    loginScreenClosed: (loginScreen : LoginScreen) => void
     /** Event will be triggered right before LoginScreen instance will be destroyed. As an argument event handler receives loginScreen instance */
-    loginScreenBeforeDestroy: (loginScreen : LoginScreen.LoginScreen) => void
+    loginScreenBeforeDestroy: (loginScreen : LoginScreen) => void
   }
 }
 

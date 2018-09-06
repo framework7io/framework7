@@ -6,10 +6,7 @@ namespace InfiniteScroll {
     /** Event will be triggered when page scroll reaches specified (in data-distance attribute) distance to the bottom. */
     'infinite': () => void
   }
-}
-
-declare module '../app/app-class' {
-  interface Framework7Class {
+  interface AppMethods {
     infiniteScroll: {
       /** Add infinite scroll event listener to the specified HTML element */
       create(el : HTMLElement | CSSSelector) : void;
@@ -17,9 +14,10 @@ declare module '../app/app-class' {
       destroy(el : HTMLElement | CSSSelector) : void;
     }
   }
-  interface Framework7Params {
+  interface AppParams {
+
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
     infinite: (el : HTMLElement, event : Event) => void
   }
 }

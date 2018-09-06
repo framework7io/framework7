@@ -12,10 +12,7 @@ namespace Input {
     /** Event will be triggered after input value will be cleared by clicking on input clear button */
     'input:clear': () => void
   }
-}
-
-declare module '../app/app-class' {
-  interface Framework7Class {
+  interface AppMethods {
     input: {
       /** Scroll input into view */
       scrollIntoView(inputEl : HTMLElement | CSSSelector, durationMS: number, centered : boolean, force : boolean) : void
@@ -33,7 +30,7 @@ declare module '../app/app-class' {
       validateInputs(containerEl : HTMLElement | CSSSelector) : void
     }
   }
-  interface Framework7Params {
+  interface AppParams {
     input: {
       /** When enabled will scroll input into view on input focus. By default it is enabled for android devices only, as it helps to solve issue when on-screen keyboard may overlap the input. */
       scrollIntoViewOnFocus?: boolean
@@ -45,7 +42,8 @@ declare module '../app/app-class' {
       scrollIntoViewAlways?: boolean
     }
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
+
   }
 }
 

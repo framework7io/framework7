@@ -82,30 +82,28 @@ namespace Panel {
     /** Event will be triggered right before Panel instance will be destroyed */
     'panel:beforedestroy': () => void
   }
-}
 
-declare module '../app/app-class' {
-  interface Framework7Class {
+  interface AppMethods {
     panel: {
       /** open panel */
       open(side : 'left' | 'right', animate?: boolean) : boolean
       /** close panel */
       close(side : 'left' | 'right', animate?: boolean) : boolean
       /** create new panel instance */
-      create(parameters : Panel.Parameters) : Panel.Panel
+      create(parameters : Parameters) : Panel
       /** get Panel instance by specified side */
-      get(side : 'left' | 'right') : Panel.Panel
+      get(side : 'left' | 'right') : Panel
       /** enable swipes for panel (swipe-to-close and swipe-to-open) */
       enableSwipe(side : 'left' | 'right') : void
       /** disable swipes for panel (swipe-to-close and swipe-to-open) */
       disableSwipe(side : 'left' | 'right') : void
       /** left panel instance */
-      left : Panel.Panel
+      left : Panel
       /** right panel instance */
-      right : Panel.Panel
+      right : Panel
     }
   }
-  interface Framework7Params {
+  interface AppParams {
     /** Minimal app width (in px) when left panel becomes always visible. */
     leftBreakpoint : number
     /** Minimal app width (in px) when right panel becomes always visible. */
@@ -125,25 +123,25 @@ declare module '../app/app-class' {
     /** Enable/disable ability to close panel by clicking outside of panel (on panel's backdrop). (default true) */
     closeByBackdropClick : boolean
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
     /** Event will be triggered when Panel starts its opening animation. As an argument event handler receives panel instance */
-    panelOpen: (panel : Panel.Panel) => void
+    panelOpen: (panel : Panel) => void
     /** Event will be triggered when Panel completes its opening animation. As an argument event handler receives panel instance */
-    panelOpened: (panel : Panel.Panel) => void
+    panelOpened: (panel : Panel) => void
     /** Event will be triggered when Panel starts its closing animation. As an argument event handler receives panel instance */
-    panelClose: (panel : Panel.Panel) => void
+    panelClose: (panel : Panel) => void
     /** Event will be triggered after Notification completes its closing animation. As an argument event handler receives notification instance */
-    panelClosed: (panel : Panel.Panel) => void
+    panelClosed: (panel : Panel) => void
     /** Event will be triggered when the panel backdrop is clicked. As an argument event handler receives panel instance */
-    panelBackdropClick: (panel : Panel.Panel) => void
+    panelBackdropClick: (panel : Panel) => void
     /** Event will be triggered in the very beginning of opening it with swipe. As an argument event handler receives panel instance */
-    panelSwipeOpen: (panel : Panel.Panel) => void
+    panelSwipeOpen: (panel : Panel) => void
     /** Event will be triggered for swipe panel during touch swipe action. As an argument event handler receives panel instance and opened progress (from 0 to 1) */
-    panelSwipe: (panel : Panel.Panel, progress: number) => void
+    panelSwipe: (panel : Panel, progress: number) => void
     /** Event will be triggered when it becomes visible/hidden when app width matches its breakpoint. As an argument event handler receives panel instance */
-    panelBreakpoint: (panel : Panel.Panel) => void
+    panelBreakpoint: (panel : Panel) => void
     /** Event will be triggered right before Panel instance will be destroyed */
-    panelBeforeDestroy: (panel : Panel.Panel) => void
+    panelBeforeDestroy: (panel : Panel) => void
   }
 }
 

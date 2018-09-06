@@ -107,48 +107,47 @@ namespace Dialog {
     /** Event will be triggered after Dialog completes its closing animation */
     'dialog:closed' : () => void
   }
-}
-declare module '../app/app-class' {
-  interface Framework7Class {
+
+  interface AppMethods {
     dialog: {
       /** create Dialog instance */
-      create(parameters : Dialog.Parameters ) : Dialog.Dialog;
+      create(parameters : Parameters ) : Dialog;
       /** destroy Dialog instance */
-      destroy(el : HTMLElement | CSSSelector | Dialog.Dialog) : void;
+      destroy(el : HTMLElement | CSSSelector | Dialog) : void;
       /** get Dialog instance by HTML element */
-      get(el : HTMLElement | CSSSelector) : Dialog.Dialog;
+      get(el : HTMLElement | CSSSelector) : Dialog;
       /** opens Dialog */
-      open(el : HTMLElement | CSSSelector, animate : boolean) : Dialog.Dialog;
+      open(el : HTMLElement | CSSSelector, animate : boolean) : Dialog;
       /** closes Dialog */
-      close(el : HTMLElement | CSSSelector, animate : boolean) : Dialog.Dialog;
+      close(el : HTMLElement | CSSSelector, animate : boolean) : Dialog;
 
       /** create Alert Dialog and open it */
-      alert(text : string, title : string, callback?: () => void) : Dialog.Dialog
+      alert(text : string, title : string, callback?: () => void) : Dialog
       /** create Alert Dialog with default title and open it */
-      alert(text : string, callback?: () => void) : Dialog.Dialog
+      alert(text : string, callback?: () => void) : Dialog
 
       /** create Confirm Dialog and open it */
-      confirm(text : string, title : string, callbackOk?: () => void, callbackCancel?: () => void) : Dialog.Dialog
+      confirm(text : string, title : string, callbackOk?: () => void, callbackCancel?: () => void) : Dialog
       /** create Confirm Dialog with default title and open it */
-      confirm(text : string, callbackOk?: () => void, callbackCancel?: () => void) : Dialog.Dialog
+      confirm(text : string, callbackOk?: () => void, callbackCancel?: () => void) : Dialog
 
       /** create Prompt Dialog and open it */
-      prompt(text : string, title : string, callbackOk?: (value : string) => void, callbackCancel?: (value : string) => void) : Dialog.Dialog
+      prompt(text : string, title : string, callbackOk?: (value : string) => void, callbackCancel?: (value : string) => void) : Dialog
       /** create Prompt Dialog with default title and open it */
-      prompt(text : string, callbackOk?: (value : string) => void, callbackCancel?: (value : string) => void) : Dialog.Dialog
+      prompt(text : string, callbackOk?: (value : string) => void, callbackCancel?: (value : string) => void) : Dialog
 
       /** create Login Dialog and open it */
-      login(text : string, title : string, callbackOk?: (username : string, password : string) => void, callbackCancel?: (username : string, password : string) => void) : Dialog.Dialog
+      login(text : string, title : string, callbackOk?: (username : string, password : string) => void, callbackCancel?: (username : string, password : string) => void) : Dialog
       /** create Login Dialog with default title and open it */
-      login(text : string, callbackOk?: (username : string, password : string) => void, callbackCancel?: (username : string, password : string) => void) : Dialog.Dialog
+      login(text : string, callbackOk?: (username : string, password : string) => void, callbackCancel?: (username : string, password : string) => void) : Dialog
 
       /** create Password Dialog and open it */
-      password(text : string, title : string, callbackOk?: (password : string) => void, callbackCancel?: (password : string) => void) : Dialog.Dialog
+      password(text : string, title : string, callbackOk?: (password : string) => void, callbackCancel?: (password : string) => void) : Dialog
       /** create Password Dialog with default title and open it */
-      password(text : string, callbackOk?: (password : string) => void, callbackCancel?: (password : string) => void) : Dialog.Dialog
+      password(text : string, callbackOk?: (password : string) => void, callbackCancel?: (password : string) => void) : Dialog
 
       /** create Preloader Dialog and open it */
-      preloader(title?: string, color?: string) : Dialog.Dialog
+      preloader(title?: string, color?: string) : Dialog
 
       /** create Progress Dialog and open it */
       progress(
@@ -156,11 +155,10 @@ declare module '../app/app-class' {
         /** Optional. Progressbar progress (from 0 to 100). If no number passed then it will have infinite progressbar. */
         progress?: number,
         color?: string
-      ) : Dialog.Dialog
+      ) : Dialog
     }
   }
-
-  interface Framework7Params {
+  interface AppParams {
     dialog: {
       /** Default dialogs shortcuts title. If not specified, will be equal to app.name. */
       title? : string
@@ -182,17 +180,17 @@ declare module '../app/app-class' {
       keyboardActions?: boolean
     }
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
     /** Event will be triggered when Dialog starts its opening animation. As an argument event handler receives dialog instance */
-    dialogOpen: (dialog : Dialog.Dialog) => void
+    dialogOpen: (dialog : Dialog) => void
     /** Event will be triggered after Dialog completes its opening animation. As an argument event handler receives dialog instance */
-    dialogOpened: (dialog : Dialog.Dialog) => void
+    dialogOpened: (dialog : Dialog) => void
     /** Event will be triggered when Dialog starts its closing animation. As an argument event handler receives dialog instance */
-    dialogClose: (dialog : Dialog.Dialog) => void
+    dialogClose: (dialog : Dialog) => void
     /** Event will be triggered after Dialog completes its closing animation. As an argument event handler receives dialog instance */
-    dialogClosed: (dialog : Dialog.Dialog) => void
+    dialogClosed: (dialog : Dialog) => void
     /** Event will be triggered right before Dialog instance will be destroyed. As an argument event handler receives dialog instance */
-    dialogBeforeDestroy: (dialog : Dialog.Dialog) => void
+    dialogBeforeDestroy: (dialog : Dialog) => void
   }
 }
 

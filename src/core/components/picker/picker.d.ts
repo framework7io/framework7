@@ -167,39 +167,37 @@ namespace Picker {
     /** Event will be triggered after Picker completes its closing animation */
     'picker:closed' : () => void
   }
-}
 
-declare module '../app/app-class' {
-  interface Framework7Class {
+  interface AppMethods {
     picker: {
       /** create Picker instance */
-      create(parameters : Picker.Parameters) : Picker.Picker
+      create(parameters : Parameters) : Picker
       /** destroy Picker instance */
-      destroy(el : HTMLElement | CSSSelector | Picker.Picker) : void
+      destroy(el : HTMLElement | CSSSelector | Picker) : void
       /** get Picker instance by HTML element */
-      get(el : HTMLElement | CSSSelector) : Picker.Picker
+      get(el : HTMLElement | CSSSelector) : Picker
       /** closes Picker */
-      close(el : HTMLElement | CSSSelector) : Picker.Picker
+      close(el : HTMLElement | CSSSelector) : Picker
     }
   }
-  interface Framework7Params {
-    picker: Picker.Parameters
+  interface AppParams {
+    picker: Parameters
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
     /** Event will be triggered when picker value changes */
-    pickerChange: (picker : Picker.Picker, value : unknown, displayValue : unknown) => void
+    pickerChange: (picker : Picker, value : unknown, displayValue : unknown) => void
     /** Event will be triggered when picker initialized */
-    pickerInit: (picker : Picker.Picker) => void
+    pickerInit: (picker : Picker) => void
     /** Event will be triggered when Picker starts its opening animation. As an argument event handler receives picker instance */
-    pickerOpen: (picker : Picker.Picker) => void
+    pickerOpen: (picker : Picker) => void
     /** Event will be triggered when Picker completes its opening animation. As an argument event handler receives picker instance */
-    pickerOpened: (picker : Picker.Picker) => void
+    pickerOpened: (picker : Picker) => void
     /** Event will be triggered when Picker starts its closing animation. As an argument event handler receives picker instance */
-    pickerClose: (picker : Picker.Picker) => void
+    pickerClose: (picker : Picker) => void
     /** Event will be triggered after Picker completes its closing animation. As an argument event handler receives picker instance */
-    pickerClosed: (picker : Picker.Picker) => void
+    pickerClosed: (picker : Picker) => void
     /** Event will be triggered right before Picker instance will be destroyed */
-    pickerBeforeDestroy: (picker : Picker.Picker) => void
+    pickerBeforeDestroy: (picker : Picker) => void
   }
 }
 

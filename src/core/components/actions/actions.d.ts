@@ -109,37 +109,35 @@ namespace Actions {
     /** Event will be triggered after Action Sheet completes its closing animation */
     'actions:closed' : (actions : Actions) => void
   }
-}
 
-declare module '../app/app-class' {
-  interface Framework7Class {
+  interface AppMethods {
     actions: {
       /** create Action Sheet instance */
-      create(parameters : Actions.Parameters) : Actions.Actions;
+      create(parameters : Parameters) : Actions;
       /** destroy Action Sheet instance */
-      destroy(el : HTMLElement | CSSSelector | Actions.Actions) : void;
+      destroy(el : HTMLElement | CSSSelector | Actions) : void;
       /** get Action Sheet instance by HTML element */
-      get(el : HTMLElement | CSSSelector) : Actions.Actions;
+      get(el : HTMLElement | CSSSelector) : Actions;
       /** opens Action Sheet */
-      open(el : HTMLElement | CSSSelector, animate : boolean) : Actions.Actions;
+      open(el : HTMLElement | CSSSelector, animate : boolean) : Actions;
       /** closes Action Sheet */
-      close(el : HTMLElement | CSSSelector, animate : boolean) : Actions.Actions;
+      close(el : HTMLElement | CSSSelector, animate : boolean) : Actions;
     }
   }
-  interface Framework7Params {
-    actions: Actions.Parameters
+  interface AppParams {
+    actions: Parameters
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
     /** Event will be triggered when Action Sheet starts its opening animation. As an argument event handler receives action sheet instance */
-    actionsOpen : (actions : Actions.Actions) => void
+    actionsOpen : (actions : Actions) => void
     /** Event will be triggered after Action Sheet completes its opening animation. As an argument event handler receives action sheet instance */
-    actionsOpened : (actions : Actions.Actions) => void
+    actionsOpened : (actions : Actions) => void
     /** Event will be triggered when Action Sheet starts its closing animation. As an argument event handler receives action sheet instance */
-    actionsClose : (actions : Actions.Actions) => void
+    actionsClose : (actions : Actions) => void
     /** Event will be triggered after Action Sheet completes its closing animation. As an argument event handler receives action sheet instance */
-    actionsClosed : (actions : Actions.Actions) => void
+    actionsClosed : (actions : Actions) => void
     /** Event will be triggered right before Action Sheet instance will be destroyed. As an argument event handler receives action sheet instance */
-    actionsBeforeDestroy : (actions : Actions.Actions) => void
+    actionsBeforeDestroy : (actions : Actions) => void
   }
 }
 

@@ -2,11 +2,7 @@ import Dom7 from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
 
 namespace Progressbar {
-
-}
-
-declare module '../app/app-class' {
-  interface Framework7Class {
+  interface AppMethods {
     progressbar: {
       /** set progress for Determinate Progressbar */
       set(el: HTMLElement | CSSSelector, progress : number, duration : number) : void
@@ -23,9 +19,11 @@ declare module '../app/app-class' {
       hide(el?: HTMLElement | CSSSelector) : void
     }
   }
-  interface Framework7Params {
+  interface AppParams {
+
   }
-  interface Framework7AppEvents {
+  interface AppEvents {
+
   }
 }
 
