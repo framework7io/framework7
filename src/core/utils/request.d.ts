@@ -87,6 +87,6 @@ export interface Request {
   setup: (parameters: RequestParameters) => void
 }
 
-const Request : Request = {};
+declare const Request : Request;
 
 export default Request;

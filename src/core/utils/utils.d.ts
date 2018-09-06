@@ -27,6 +27,6 @@ export interface Utils {
   deleteProps: (obj: object) => void
 }
 
-const Utils : Utils = {};
+declare const Utils : Utils;
 
 export default Utils;

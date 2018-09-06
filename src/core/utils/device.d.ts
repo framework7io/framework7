@@ -45,6 +45,6 @@ export interface Device {
   needsStatusbarOverlay: () => boolean
 }
 
-const Device : Device = {};
+declare const Device : Device;
 
 export default Device;

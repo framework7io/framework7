@@ -14,6 +14,6 @@ export interface Support {
   /** CSS "position:sticky" support */
   positionSticky: boolean
 }
-const Support : Support = {}
+declare const Support : Support;
 
 export default Support;
