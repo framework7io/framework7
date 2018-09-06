@@ -1,4 +1,4 @@
-import Dom7 from 'dom7';
+import { Dom7Instance } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
 
 namespace Searchbar {
@@ -52,11 +52,11 @@ namespace Searchbar {
     /** Searchbar HTML element */
     el : HTMLElement
     /** Dom7 instance with searchbar HTML element */
-    $el : Dom7
+    $el : Dom7Instance
     /** Searchbar input HTML element */
     inputEl: HTMLElement
     /** Dom7 instance with searchbar input HTML element */
-    $inputEl: Dom7
+    $inputEl: Dom7Instance
     /** Current search query (search input value) */
     query: string
     /** Previous search query (search input value) */
@@ -64,7 +64,7 @@ namespace Searchbar {
     /** Searchbar search container */
     searchContainer: HTMLElement
     /** Dom7 element with searchbar search container */
-    $searchContainer: Dom7
+    $searchContainer: Dom7Instance
     /** Boolean value that represents is searchbar enabled or disabled */
     enabled: boolean
     /** Boolean value that represents is searchbar expandable or not */

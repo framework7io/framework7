@@ -1,4 +1,4 @@
-import Dom7 from 'dom7';
+import { Dom7Instance } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
 import View from '../view/view';
 
@@ -9,15 +9,15 @@ namespace Calendar {
     /** Calendar wrapping container HTML element (when inline calendar is in use) */
     containerEl : HTMLElement
     /** Dom7 instance with calendar wrapping container HTML element (when inline calendar is in use) */
-    $containerEl : Dom7
+    $containerEl : Dom7Instance
     /** Calendar HTML element */
     el : HTMLElement
     /** Dom7 instance with calendar HTML element */
-    $el : Dom7
+    $el : Dom7Instance
     /** Calendar input HTML element (passed in inputEl parameter) */
     inputEl : HTMLElement
     /** Dom7 instance with calendar input HTML element (passed in inputEl parameter) */
-    $inputEl : Dom7
+    $inputEl : Dom7Instance
     /** Array where each item represents selected date */
     value : Date[]
     /** true if Calendar is currently opened */

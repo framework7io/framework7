@@ -1,4 +1,4 @@
-import Dom7 from 'dom7';
+import { Dom7Instance } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
 
 namespace Popup {
@@ -37,11 +37,11 @@ namespace Popup {
     /** Popup HTML element */
     el : HTMLElement
     /** Dom7 instance with popup HTML element */
-    $el : Dom7
+    $el : Dom7Instance
     /** Backdrop HTML element */
     backdropEl : HTMLElement
     /** Dom7 instance with backdrop HTML element */
-    $backdropEl: Dom7
+    $backdropEl: Dom7Instance
     /** Popup parameters */
     params : Parameters
     /** Boolean prop indicating whether popup is opened or not */

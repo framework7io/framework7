@@ -1,4 +1,4 @@
-import Dom7 from 'dom7';
+import { Dom7Instance } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
 
 namespace Actions {
@@ -8,11 +8,11 @@ namespace Actions {
     /** Action sheet HTML element */
     el : HTMLElement
     /** Dom7 instance with action sheet HTML element */
-    $el : Dom7
+    $el : Dom7Instance
     /** Backdrop HTML element */
     backdropEl : HTMLElement
     /** Dom7 instance with backdrop HTML element */
-    $backdropEl : Dom7
+    $backdropEl : Dom7Instance
     /** Action sheet instance parameters */
     params : Parameters
     /** Boolean prop indicating whether action sheet is opened or not */

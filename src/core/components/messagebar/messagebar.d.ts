@@ -1,4 +1,4 @@
-import Dom7 from 'dom7';
+import { Dom7Instance } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
 
 namespace Messagebar {
@@ -6,11 +6,11 @@ namespace Messagebar {
     /** Messagebar HTML element. */
     el : HTMLElement
     /** Dom7 element with messagebar HTML element. */
-    $el : Dom7
+    $el : Dom7Instance
     /** Messagebar textarea HTML element */
     textareaEl : HTMLTextAreaElement
     /** Dom7 element with messagebar textarea HTML element */
-    $textareaEl : Dom7
+    $textareaEl : Dom7Instance
     /** Object with passed initialization parameters */
     params : Parameters
     /** Array with messagebar attachments */

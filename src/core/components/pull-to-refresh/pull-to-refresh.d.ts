@@ -1,4 +1,4 @@
-import Dom7 from 'dom7';
+import { Dom7Instance } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
 
 namespace PullToRefresh {
@@ -8,7 +8,7 @@ namespace PullToRefresh {
     /** PTR HTML element (ptr-content) */
     el : HTMLElement
     /** Dom7 instance with PTR HTML element (ptr-content) */
-    $el : Dom7
+    $el : Dom7Instance
     /** Reset PTR state */
     done() : void
     /** Trigger PTR */

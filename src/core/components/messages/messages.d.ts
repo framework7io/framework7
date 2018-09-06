@@ -1,4 +1,4 @@
-import Dom7 from 'dom7';
+import { Dom7Instance } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
 
 namespace Messages {
@@ -8,7 +8,7 @@ namespace Messages {
     /** Messages container HTML element (<div class="messages">) */
     el : HTMLElement
     /** Dom7 element with messages HTML element */
-    $el : Dom7
+    $el : Dom7Instance
     /** Array with messages */
     messages : Message[]
 

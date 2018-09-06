@@ -1,4 +1,4 @@
-import Dom7, { Dom7Static } from 'Dom7'
+import { Dom7, Dom7Instance } from 'Dom7'
 import Template7 from 'Template7'
 
 // Css Selector string is an option on many F7 methods
@@ -115,7 +115,7 @@ interface Framework7 extends Framework7Class<Events> {
   /** App language */
   language : string
   /** Dom7 instance with app root element */
-  root : Dom7
+  root : Dom7Instance
   /** Boolean property indicating app is in RTL layout or not */
   rtl : boolean
   /** Current app theme. Can be md or ios */
@@ -127,7 +127,7 @@ interface Framework7 extends Framework7Class<Events> {
   /** Boolean property indicating app is initialized or not */
   initialized : boolean
   /** Dom7 alias */
-  $ : Dom7Static
+  $ : Dom7
   /** Template7 alias */
   t7 : Template7
   /** App parameters */

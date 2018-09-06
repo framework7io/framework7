@@ -1,4 +1,4 @@
-import Dom7 from 'dom7';
+import { Dom7Instance } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
 
 namespace PhotoBrowser {
@@ -70,7 +70,7 @@ namespace PhotoBrowser {
     /** Photo Browser HTML element */
     el : HTMLElement
     /** Dom7 instance with Photo Browser HTML element */
-    $el : Dom7
+    $el : Dom7Instance
     /** Index number of currently active photo slide */
     activeIndex: number
     /** true if Photo Browser in exposition mode */

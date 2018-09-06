@@ -1,4 +1,4 @@
-import Dom7 from 'dom7';
+import { Dom7Instance } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
 import View from '../view/view';
 
@@ -9,15 +9,15 @@ namespace Picker {
     /** Picker wrapping container HTML element (when inline picker is in use) */
     containerEl : HTMLElement
     /** Dom7 instance with picker wrapping container HTML element (when inline picker is in use) */
-    $containerEl : Dom7
+    $containerEl : Dom7Instance
     /** Picker HTML element */
     el : HTMLElement
     /** Dom7 instance with picker HTML element */
-    $el : Dom7
+    $el : Dom7Instance
     /** Picker input HTML element (passed in inputEl parameter) */
     inputEl : HTMLElement
     /** Dom7 instance with picker input HTML element (passed in inputEl parameter) */
-    $inputEl : Dom7
+    $inputEl : Dom7Instance
     /** Array where each item represents current selected value for each column */
     value : unknown
     /** Array with specified Picker columns. Each column also has its own methods and properties (look below) */
@@ -51,7 +51,7 @@ namespace Picker {
     /** Column HTML element */
     el : HTMLElement
     /** Dom7 instance with column HTML container */
-    $el : Dom7
+    $el : Dom7Instance
     /** Dom7 instance with column items HTML elements */
     items : HTMLElement[]
     /** Currently selected column value */

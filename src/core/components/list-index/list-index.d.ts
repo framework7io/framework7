@@ -1,4 +1,4 @@
-import Dom7 from 'dom7';
+import { Dom7Instance } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
 
 namespace ListIndex {
@@ -8,15 +8,15 @@ namespace ListIndex {
     /** List index HTML element */
     el : HTMLElement
     /** Dom7 instance with list index HTML element */
-    $el : Dom7
+    $el : Dom7Instance
     /** Dynamically created inner <ul> HTML element */
     ul : HTMLElement
     /** Dom7 instance with dynamically created inner <ul> HTML element */
-    $ul : Dom7
+    $ul : Dom7Instance
     /** Related List HTML element, passed in listEl parameter */
     listEl : HTMLElement
     /** Dom7 instance with related List HTML element, passed in listEl parameter */
-    $listEl : Dom7
+    $listEl : Dom7Instance
     /** Array with calculated indexes */
     indexes : number[]
     /** List index parameters */

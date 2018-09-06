@@ -1,4 +1,4 @@
-import Dom7 from 'dom7';
+import { Dom7Instance } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
 
 namespace Range {
@@ -32,11 +32,11 @@ namespace Range {
     /** Range HTML element */
     el : HTMLElement
     /** Dom7 instance with range HTML element */
-    $el : Dom7
+    $el : Dom7Instance
     /** Range Slider input HTML element */
     inputEl: HTMLElement
     /** Dom7 instance with range slider input HTML element */
-    $inputEl: Dom7
+    $inputEl: Dom7Instance
     /** Range slider width (in px) */
     rangeWidth: number
     /** Boolean property indicating whether it is dual or not */

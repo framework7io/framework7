@@ -1,4 +1,4 @@
-import Dom7 from 'dom7';
+import { Dom7Instance } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
 
 namespace Gauge {
@@ -8,11 +8,11 @@ namespace Gauge {
     /** Gauge HTML element */
     el : HTMLElement
     /** Dom7 instance with gauge HTML element */
-    $el : Dom7
+    $el : Dom7Instance
     /** Gauge generated SVH HTML element */
     gaugeSvgEl : HTMLElement
     /** Dom7 instance with generated SVH HTML element */
-    $gaugeSvgEl : Dom7
+    $gaugeSvgEl : Dom7Instance
     /** Gauge parameters */
     params : Parameters
 

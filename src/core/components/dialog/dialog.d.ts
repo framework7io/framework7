@@ -1,4 +1,4 @@
-import Dom7 from 'dom7';
+import { Dom7Instance } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
 
 namespace Dialog {
@@ -8,11 +8,11 @@ namespace Dialog {
     /** Dialog HTML element */
     el : HTMLElement
     /** Dom7 instance with dialog HTML element */
-    $el : any // Dom7
+    $el : Dom7Instance // Dom7Instance
     /** Backdrop HTML element */
     backdropEl : HTMLElement
     /** Dom7 instance with backdrop HTML element */
-    $backdropEl : any // Dom7
+    $backdropEl : Dom7Instance // Dom7Instance
     /** Dialog parameters */
     params : Parameters
     /** Boolean prop indicating whether dialog is opened or not */

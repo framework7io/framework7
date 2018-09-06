@@ -1,4 +1,4 @@
-import Dom7 from 'dom7';
+import { Dom7Instance } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
 import Searchbar from '../searchbar/searchbar';
 import View from '../view/view';
@@ -16,13 +16,13 @@ namespace Autocomplete {
     /** HTML element of Autcomplete opener element (if passed on init) */
     openerEl : HTMLElement | undefined
     /** Dom7 instance of of Autcomplete opener element (if passed on init) */
-    $openerEl : Dom7 | undefined
+    $openerEl : Dom7Instance | undefined
     /** HTML element of Autcomplete input (if passed on init) */
     inputEl : HTMLElement | undefined
     /** Dom7 instance of of Autcomplete input (if passed on init) */
-    $inputEl : Dom7 | undefined
+    $inputEl : Dom7Instance | undefined
     /** Dom7 instance of Autcomplete dropdown */
-    $dropdownEl : Dom7 | undefined
+    $dropdownEl : Dom7Instance | undefined
     /** Autcomplete URL (that was passed in url parameter) */
     url : string
     /** Autcomplete View (that was passed in view parameter) or found parent view */
@@ -30,7 +30,7 @@ namespace Autocomplete {
     /** HTML element of Autcomplete container: dropdown element, or popup element, or page element. Available when Autocomplete opened */
     el : HTMLElement | undefined
     /** Dom7 instance of Autcomplete container: dropdown element, or popup element, or page element. Available when Autocomplete opened */
-    $el : Dom7 | undefined
+    $el : Dom7Instance | undefined
     /** Autcomplete page Searchbar instance */
     searchbar : Searchbar.Searchbar
 
