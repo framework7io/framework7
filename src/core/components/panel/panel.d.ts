@@ -104,24 +104,26 @@ namespace Panel {
     }
   }
   interface AppParams {
-    /** Minimal app width (in px) when left panel becomes always visible. */
-    leftBreakpoint : number
-    /** Minimal app width (in px) when right panel becomes always visible. */
-    rightBreakpoint : number
-    /** Disabled by default. If you want to enable ability to open/close side panels with swipe you can pass here left (for left panel) or right (for right panel) or both (for both panels).. */
-    swipe : string
-    /** Width (in px) of invisible edge from the screen that triggers swipe panel. (default 0) */
-    swipeActiveArea : number
-    /** This parameter gives ability to close opposite panel by swipe. For example, if your swipePanel is "left", then you could close "right" panel also with swipe.. (default true) */
-    swipeCloseOpposite : boolean
-    /** This parameter allows to close (but not open) panels with swipes. (default false) */
-    swipeOnlyClose : boolean
-    /** Fallback option for potentially better performance on old/slow devices. If you enable it, then side panel will not follow your finger during touch, it will be automatically opened/closed on swipe left/right.. (default false) */
-    swipeNoFollow : boolean
-    /** Panel will not move with swipe if "touch distance" will be less than this value (in px).. (default 0) */
-    swipeThreshold : number
-    /** Enable/disable ability to close panel by clicking outside of panel (on panel's backdrop). (default true) */
-    closeByBackdropClick : boolean
+    panel: {
+      /** Minimal app width (in px) when left panel becomes always visible. */
+      leftBreakpoint : number
+      /** Minimal app width (in px) when right panel becomes always visible. */
+      rightBreakpoint : number
+      /** Disabled by default. If you want to enable ability to open/close side panels with swipe you can pass here left (for left panel) or right (for right panel) or both (for both panels).. */
+      swipe : string
+      /** Width (in px) of invisible edge from the screen that triggers swipe panel. (default 0) */
+      swipeActiveArea : number
+      /** This parameter gives ability to close opposite panel by swipe. For example, if your swipePanel is "left", then you could close "right" panel also with swipe.. (default true) */
+      swipeCloseOpposite : boolean
+      /** This parameter allows to close (but not open) panels with swipes. (default false) */
+      swipeOnlyClose : boolean
+      /** Fallback option for potentially better performance on old/slow devices. If you enable it, then side panel will not follow your finger during touch, it will be automatically opened/closed on swipe left/right.. (default false) */
+      swipeNoFollow : boolean
+      /** Panel will not move with swipe if "touch distance" will be less than this value (in px).. (default 0) */
+      swipeThreshold : number
+      /** Enable/disable ability to close panel by clicking outside of panel (on panel's backdrop). (default true) */
+      closeByBackdropClick : boolean
+    }
   }
   interface AppEvents {
     /** Event will be triggered when Panel starts its opening animation. As an argument event handler receives panel instance */
