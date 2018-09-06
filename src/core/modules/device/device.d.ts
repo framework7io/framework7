@@ -1,4 +1,4 @@
-import Device from '../../utils/device';
+import { Device } from '../../utils/device';
 import Framework7 from '../../components/app/app-class';
 
 namespace DeviceModule {

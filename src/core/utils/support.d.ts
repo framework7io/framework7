@@ -1,4 +1,4 @@
-interface Support {
+export interface Support {
   /** Touch events support (touchstart, touchmove, touchend) */
   touch: boolean
   /** CSS 3D Transforms support */
@@ -14,5 +14,6 @@ interface Support {
   /** CSS "position:sticky" support */
   positionSticky: boolean
 }
+const Support : Support = {}
 
 export default Support;

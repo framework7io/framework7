@@ -1,4 +1,4 @@
-interface Device {
+export interface Device {
   /** true for iOS device */
   ios: boolean
   /** true for Android device */
@@ -44,5 +44,7 @@ interface Device {
   /** Returns true if app running in full-screen mode and requires Status Bar overlay */
   needsStatusbarOverlay: () => boolean
 }
+
+const Device : Device = {};
 
 export default Device;

@@ -189,8 +189,6 @@ interface Framework7 extends Framework7Class<Events> {
   t7 : Template7
   /** App parameters */
   params : Framework7Params
-  /** Object with some useful utilities. Check the Utils section */
-  utils : Utils
   /** Contains methods to work with XHR requests. Check the Request utilities section */
   request : Request
 

@@ -1,14 +1,14 @@
-import { Support } from '../../utils/support';
+import { Utils } from '../../utils/utils';
 import Framework7 from '../../components/app/app-class';
 
-namespace SupportModule {
+namespace UtilsModule {
 
 }
 
 declare module '../../components/app/app-class' {
   interface Framework7Class {
-    /** Object with properties about supported features */
-    support: Support
+    /** Object with set of helper methods */
+    utils: Utils
   }
   interface Framework7Params {
   }
@@ -16,4 +16,4 @@ declare module '../../components/app/app-class' {
   }
 }
 
-export default SupportModule;
+export default UtilsModule;
