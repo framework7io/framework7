@@ -48,6 +48,7 @@ import Sortable, { Sortable as SortableNamespace } from './components/sortable/s
 import Statusbar from './components/statusbar/statusbar';
 import Subnavbar, { Subnavbar as SubnavbarNamespace } from './components/subnavbar/subnavbar';
 import Swipeout, { Swipeout as SwipeoutNamespace } from './components/swipeout/swipeout'
+import Tabs, { Tabs as TabsNamespace } from './components/tabs/tabs'
 
 declare module './components/app/app-class' {
   // Modules
@@ -227,6 +228,10 @@ declare module './components/app/app-class' {
   interface Framework7Class extends SwipeoutNamespace.AppMethods {}
   interface Framework7Params extends SwipeoutNamespace.AppParams {}
   interface Framework7AppEvents extends SwipeoutNamespace.AppEvents {}
+
+  interface Framework7Class extends TabsNamespace.AppMethods {}
+  interface Framework7Params extends TabsNamespace.AppParams {}
+  interface Framework7AppEvents extends TabsNamespace.AppEvents {}
 }
 
 export default Framework7;

@@ -1,11 +1,37 @@
-import { Dom7Instance } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import { CSSSelector, Framework7Plugin } from '../app/app-class';
 
-declare module '../app/app-class' {
-  interface Framework7Class {
+export namespace Tabs {
+  interface TabShowResult {
+    newTabEl: HTMLElement
+    oldTabEl: HTMLElement | undefined
+    onTabsChanged(callback: Function) : void
+    animated: boolean
   }
-  interface Framework7Params {
+  interface DomEvents {
+    /** Event will be triggered when Tab becomes visible/active */
+    'tab:show': (Event) => void
+    /** Event will be triggered when Tab becomes hidden/inactive */
+    'tab:hide': (Event) => void
   }
-  interface Framework7AppEvents {
+  interface AppMethods {
+    tab: {
+      /** Show tab */
+      show(tabEl: HTMLElement | CSSSelector, animate?: boolean): TabShowResult
+      /** Show tab */
+      show(tabEl: HTMLElement | CSSSelector, tabLinkEl?: HTMLElement | CSSSelector, animate?: boolean): TabShowResult
+    }
+  }
+  interface AppParams {
+
+  }
+  interface AppEvents {
+    /** Event will be triggered when Tab becomes visible/active */
+    tabShow: (tabEl: HTMLElement) => void
+    /** Event will be triggered when Tab becomes hidden/inactive */
+    tabHide: (tabEl: HTMLElement) => void
   }
 }
+
+declare const Tabs: Framework7Plugin;
+
+export default Tabs;
