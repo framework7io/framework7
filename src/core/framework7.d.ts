@@ -3,6 +3,9 @@ import './modules/device/device';
 import './modules/support/support';
 import './modules/utils/utils';
 import './modules/request/request';
+import './modules/touch/touch';
+import './modules/resize/resize';
+import './modules/clicks/clicks';
 
 import './components/accordion/accordion';
 import './components/actions/actions';
