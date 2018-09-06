@@ -41,6 +41,9 @@ import Popup from './components/popup/popup';
 import Preloader from './components/preloader/preloader';
 import Progressbar from './components/progressbar/progressbar';
 import PullToRefresh from './components/pull-to-refresh/pull-to-refresh';
+import Radio from './components/radio/radio';
+import Range from './components/range/range';
+import Statusbar from './components/statusbar/statusbar';
 
 declare module './components/app/app-class' {
   // Modules
@@ -196,6 +199,14 @@ declare module './components/app/app-class' {
   interface Framework7Class extends PullToRefresh.AppMethods {}
   interface Framework7Params extends PullToRefresh.AppParams {}
   interface Framework7AppEvents extends PullToRefresh.AppEvents {}
+
+  interface Framework7Class extends Range.AppMethods {}
+  interface Framework7Params extends Range.AppParams {}
+  interface Framework7AppEvents extends Range.AppEvents {}
+
+  interface Framework7Class extends Statusbar.AppMethods {}
+  interface Framework7Params extends Statusbar.AppParams {}
+  interface Framework7AppEvents extends Statusbar.AppEvents {}
 }
 
 export default Framework7;
