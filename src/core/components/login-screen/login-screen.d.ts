@@ -24,13 +24,13 @@ namespace LoginScreen {
 
   interface Parameters {
     /**  */
-    el : HTMLElement
+    el?: HTMLElement
     /**  */
-    content : string
+    content?: string
     /** true */
-    animate : boolean
+    animate?: boolean
     /** Object with events handlers.. */
-    on: {
+    on?: {
       [event in keyof Events] : Function
     }
   }
@@ -69,10 +69,10 @@ namespace LoginScreen {
       get(el : HTMLElement | CSSSelector) : LoginScreen
 
       /** open LoginScreen */
-      open(el : HTMLElement | CSSSelector) : LoginScreen
+      open(el : HTMLElement | CSSSelector, animate?: boolean) : LoginScreen
 
       /** closes LoginScreen */
-      close(el : HTMLElement | CSSSelector) : LoginScreen
+      close(el : HTMLElement | CSSSelector, animate?: boolean) : LoginScreen
     }
   }
   interface AppParams {

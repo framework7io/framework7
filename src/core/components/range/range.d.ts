@@ -6,21 +6,21 @@ namespace Range {
     /** Range Slider element. HTMLElement or string with CSS selector of range slider element */
     el: HTMLElement | CSSSelector
     /** Range Slider input element or CSS selector of input element. If not specified, will try to look for input type="range" inside of range slider element */
-    inputEl: HTMLElement | CSSSelector
+    inputEl?: HTMLElement | CSSSelector
     /** Enable dual range slider (default false) */
-    dual: boolean
+    dual?: boolean
     /** Minimal step between values (default 1) */
-    step: number
+    step?: number
     /** Enables additional label around range slider knob (default false) */
-    label: boolean
+    label?: boolean
     /** Minimum value */
-    min: number
+    min?: number
     /** Maximum value */
-    max: number
+    max?: number
     /** Initial value. Number in case of single range, and array of values in case of dual range */
-    value: number | number[]
+    value?: number | number[]
     /** When enabled it is also possible to interact with range slider (change value) on range bar click and swipe (default true) */
-    draggableBar: boolean
+    draggableBar?: boolean
     /** Object with events handlers.. */
     on: {
       [event in keyof Events] : Function

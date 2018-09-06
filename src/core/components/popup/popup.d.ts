@@ -74,9 +74,9 @@ namespace Popup {
       /** get Popup instance by HTML element */
       get(el : HTMLElement | CSSSelector) : Popup
       /** open Popup */
-      open(el : HTMLElement | CSSSelector) : Popup
+      open(el : HTMLElement | CSSSelector, animate?: boolean) : Popup
       /** closes Popup */
-      close(el : HTMLElement | CSSSelector) : Popup
+      close(el : HTMLElement | CSSSelector, animate?: boolean) : Popup
     }
   }
   interface AppParams {

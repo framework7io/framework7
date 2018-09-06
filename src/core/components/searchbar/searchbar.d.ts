@@ -6,43 +6,43 @@ namespace Searchbar {
     /** Searchbar element. HTMLElement or string with CSS selector of searchbar element */
     el: HTMLElement | CSSSelector
     /** CSS selector or HTML element of searchbar input element. By default (if not passed) will try to look for input type="search" inside of searchbar */
-    inputEl: HTMLElement | CSSSelector
+    inputEl?: HTMLElement | CSSSelector
     /** Enables disable button (default true) */
-    disableButton: boolean
+    disableButton?: boolean
     /** CSS selector or HTML element of searchbar disable button. By default (if not passed) will try to look for element with search-disable-button class inside of searchbar */
-    disableButtonEl: HTMLElement | CSSSelector
+    disableButtonEl?: HTMLElement | CSSSelector
     /** CSS selector or HTML element of list block to search in */
-    searchContainer: HTMLElement | CSSSelector
+    searchContainer?: HTMLElement | CSSSelector
     /** CSS selector of List View element's field where we need to search. Usually we search through element titles, in this case we need to pass .item-title. It is also possible to pass few elements for search like .item-title, .item-text */
-    searchIn: CSSSelector
+    searchIn?: CSSSelector
     /** CSS selector of single search item. If we do a search in List View, then it must be a single list element li (default "li") */
-    searchItem: CSSSelector
+    searchItem?: CSSSelector
     /** CSS selector or HTMLElement of searchbar "found" element to make it hidden when there is no search results (default ".searchbar-found") */
-    foundEl: HTMLElement | CSSSelector
+    foundEl?: HTMLElement | CSSSelector
     /** CSS selector or HTMLElement of searchbar "not-found" element to make it visible when there is no search results (default ".searchbar-not-found") */
-    notFoundEl: HTMLElement | CSSSelector
+    notFoundEl?: HTMLElement | CSSSelector
     /** CSS selector or HTMLElement of elements to be hidden when searchbar enabled (default ".searchbar-hide-on-enable") */
-    hideOnEnableEl: HTMLElement | CSSSelector
+    hideOnEnableEl?: HTMLElement | CSSSelector
     /** CSS selector or HTMLElement of elements to be hidden on searchbar search (default ".searchbar-hide-on-search") */
-    hideOnSearchEl: HTMLElement | CSSSelector
+    hideOnSearchEl?: HTMLElement | CSSSelector
     /** Enables searchbar backdrop element (default true) */
-    backdrop: boolean
+    backdrop?: boolean
     /** CSS selector or HTMLElement of searchbar backdrop element. If not passed and backdrop parameter is true then it will look for .searchbar-backdrop element. In case none found it will create one automatically */
-    backdropEl: HTMLElement | CSSSelector
+    backdropEl?: HTMLElement | CSSSelector
     /** CSS selector for items to be ignored by searchbar and always present in search results (default ".searchbar-ignore") */
-    ignore: CSSSelector
+    ignore?: CSSSelector
     /** When enabled searchbar will not search through any of list blocks specified by searchContainer and you will be able to use custom search functionality, for example, for calling external APIs with search results and for displaying them manually (default false) */
-    customSearch: boolean
+    customSearch?: boolean
     /** Enable to remove/replace diacritics (á, í, ó, etc.) during search (default false) */
-    removeDiacritics: boolean
+    removeDiacritics?: boolean
     /** If enabled, then search will consider item dividers and group titles and hide them if there are no found items right after them (default true) */
-    hideDividers: boolean
+    hideDividers?: boolean
     /** If enabled, then search will consider list view groups hide them if there are no found items inside of these groups (default true) */
-    hideGroups: boolean
+    hideGroups?: boolean
     /** Disable searchbar on backdrop click */
-    disableOnBackdropClick: boolean
+    disableOnBackdropClick?: boolean
     /** Enables expandable searchbar */
-    expandable: boolean
+    expandable?: boolean
     /** Object with events handlers.. */
     on: {
       [event in keyof Events] : Function

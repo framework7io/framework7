@@ -7,17 +7,17 @@ namespace Calendar {
     /** Link to global app instance */
     app : Framework7
     /** Calendar wrapping container HTML element (when inline calendar is in use) */
-    containerEl : HTMLElement | undefined
+    containerEl : HTMLElement
     /** Dom7 instance with calendar wrapping container HTML element (when inline calendar is in use) */
-    $containerEl : Dom7 | undefined
+    $containerEl : Dom7
     /** Calendar HTML element */
     el : HTMLElement
     /** Dom7 instance with calendar HTML element */
-    $el : Dom7 | undefined
+    $el : Dom7
     /** Calendar input HTML element (passed in inputEl parameter) */
     inputEl : HTMLElement
     /** Dom7 instance with calendar input HTML element (passed in inputEl parameter) */
-    $inputEl : Dom7 | undefined
+    $inputEl : Dom7
     /** Array where each item represents selected date */
     value : Date[]
     /** true if Calendar is currently opened */
@@ -25,7 +25,7 @@ namespace Calendar {
     /** true when inline calendar is in use */
     inline : boolean
     /** Array with specified Calendar columns. Each column also has its own methods and properties (look below) */
-    cols : unknown[]
+    cols : object[]
     /** Calendar URL (that was passed in url parameter) */
     url: string
     /** Calendar View (that was passed in view parameter) or found parent view */
@@ -35,11 +35,11 @@ namespace Calendar {
 
 
     /** Set new selected dates. values is array where each item represents selected date */
-    setValue(values : Date) : void
+    setValue(values : Date[]) : void
     /** Returns current calendar value */
-    getValue() : Date // ??
+    getValue() : Date[]
     /** Adds value to the values array. Useful in case if multiple selection is enabled (with multiple: true parameter) */
-    addValue() : void
+    addValue(value: Date) : void
     /** Rerenders calendar. Useful in case you added/changed values dynamically and need to update calendar layout */
     update() : void
     /** Calendar transition to next month for specified duration in ms */
