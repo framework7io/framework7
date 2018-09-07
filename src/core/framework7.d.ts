@@ -54,6 +54,7 @@ import SwipeoutComponent, { Swipeout as SwipeoutNamespace } from './components/s
 import SwiperComponent, { Swiper as SwiperNamespace } from './components/swiper/swiper'
 import TabsComponent, { Tabs as TabsNamespace } from './components/tabs/tabs'
 import ToastComponent, { Toast as ToastNamespace } from './components/toast/toast'
+import ToggleComponent, { Toggle as ToggleNamespace } from './components/toggle/toggle'
 import ToolbarComponent, { Toolbar as ToolbarNamespace } from './components/toolbar/toolbar'
 
 declare module './components/app/app-class' {
@@ -263,6 +264,10 @@ declare module './components/app/app-class' {
   interface Framework7Class extends ToastNamespace.AppMethods{}
   interface Framework7Params extends ToastNamespace.AppParams{}
   interface Framework7AppEvents extends ToastNamespace.AppEvents{}
+
+  interface Framework7Class extends ToggleNamespace.AppMethods{}
+  interface Framework7Params extends ToggleNamespace.AppParams{}
+  interface Framework7AppEvents extends ToggleNamespace.AppEvents{}
 
   interface Framework7Class extends ToolbarNamespace.AppMethods{}
   interface Framework7Params extends ToolbarNamespace.AppParams{}
