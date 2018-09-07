@@ -1,7 +1,7 @@
 import { Dom7Instance } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Dialog {
+export namespace Dialog {
   interface Dialog extends Framework7EventsClass<Events> {
     /** Link to global app instance */
     app : Framework7
@@ -193,5 +193,6 @@ namespace Dialog {
     dialogBeforeDestroy: (dialog : Dialog) => void
   }
 }
+declare const DialogComponent: Framework7Plugin;
 
-export default Dialog;
+export default DialogComponent;

@@ -1,9 +1,9 @@
 import { Dom7Instance } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
-import Searchbar from '../searchbar/searchbar';
-import View from '../view/view';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
+import { Searchbar } from '../searchbar/searchbar';
+import { View } from '../view/view';
 
-namespace Autocomplete {
+export namespace Autocomplete {
   interface Autocomplete extends Framework7EventsClass<Events> {
     /** Link to global app instance */
     app : Framework7
@@ -179,5 +179,6 @@ namespace Autocomplete {
     autocompleteBeforeDestroy : (autocomplete : Autocomplete) => void
   }
 }
+declare const AutcompleteComponent: Framework7Plugin;
 
 export default Autocomplete;

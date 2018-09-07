@@ -1,7 +1,7 @@
 import { Dom7Instance } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Popover {
+export namespace Popover {
   interface Events {
     /** Event will be triggered when Popover starts its opening animation. As an argument event handler receives popover instance */
     open: (popover : Popover) => void
@@ -113,4 +113,6 @@ namespace Popover {
   }
 }
 
-export default Popover;
+declare const PopoverComponent: Framework7Plugin;
+
+export default PopoverComponent;

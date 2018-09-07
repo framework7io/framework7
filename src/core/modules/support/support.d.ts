@@ -1,7 +1,7 @@
 import { Support } from '../../utils/support';
-import Framework7 from '../../components/app/app-class';
+import Framework7, { Framework7Plugin } from '../../components/app/app-class';
 
-namespace SupportModule {
+export namespace Support {
   interface AppMethods {
     /** Object with properties about supported features */
     support: Support
@@ -13,5 +13,7 @@ namespace SupportModule {
 
   }
 }
+
+declare const SupportModule: Framework7Plugin;
 
 export default SupportModule;

@@ -1,6 +1,6 @@
-import Framework7 from '../../components/app/app-class';
+import Framework7, { Framework7Plugin } from '../../components/app/app-class';
 
-namespace ClicksModule {
+export namespace Clicks {
   interface AppMethods {
 
   }
@@ -15,5 +15,7 @@ namespace ClicksModule {
 
   }
 }
+
+declare const ClicksModule: Framework7Plugin;
 
 export default ClicksModule;

@@ -1,7 +1,16 @@
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Block {
+export namespace Block {
+  interface AppMethods {
 
+  }
+  interface AppParams {
+
+  }
+  interface AppEvents {
+
+  }
 }
 
-export default Block;
+declare const BlockComponent: Framework7Plugin;
+export default BlockComponent;

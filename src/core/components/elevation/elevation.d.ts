@@ -1,7 +1,16 @@
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Elevation {
+export namespace Elevation {
+  interface AppMethods {
 
+  }
+  interface AppParams {
+
+  }
+  interface AppEvents {
+
+  }
 }
 
-export default Elevation;
+declare const ElevationComponent: Framework7Plugin;
+export default ElevationComponent;

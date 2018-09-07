@@ -32,6 +32,6 @@ export namespace Tabs {
   }
 }
 
-declare const Tabs: Framework7Plugin;
+declare const TabsComponent: Framework7Plugin;
 
-export default Tabs;
+export default TabsComponent;

@@ -1,7 +1,16 @@
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Card {
+export namespace Card {
+  interface AppMethods {
 
+  }
+  interface AppParams {
+
+  }
+  interface AppEvents {
+
+  }
 }
 
-export default Card;
+declare const CardComponent: Framework7Plugin;
+export default CardComponent;

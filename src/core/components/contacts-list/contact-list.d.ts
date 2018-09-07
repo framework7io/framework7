@@ -1,7 +1,16 @@
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace ContactList {
+export namespace ContactList {
+  interface AppMethods {
 
+  }
+  interface AppParams {
+
+  }
+  interface AppEvents {
+
+  }
 }
 
-export default ContactList;
+declare const ContactListComponent: Framework7Plugin;
+export default ContactListComponent;

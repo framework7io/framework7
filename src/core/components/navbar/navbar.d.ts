@@ -1,6 +1,6 @@
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Navbar {
+export namespace Navbar {
   interface AppMethods {
     navbar: {
       /** Hide navbar */
@@ -34,4 +34,6 @@ namespace Navbar {
   }
 }
 
-export default Navbar;
+declare const NavbarComponent: Framework7Plugin;
+
+export default NavbarComponent;

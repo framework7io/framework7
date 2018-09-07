@@ -1,7 +1,6 @@
-import { Dom7Instance } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Page {
+export namespace Page {
   interface AppMethods {
 
   }
@@ -13,4 +12,5 @@ namespace Page {
   }
 }
 
-export default Page;
+declare const PageComponent: Framework7Plugin;
+export default PageComponent;

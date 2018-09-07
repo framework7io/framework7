@@ -1,6 +1,6 @@
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Input {
+export namespace Input {
   interface DomEvents {
     /** Event will be triggered after resizable textarea resized. event.detail will contain object with the initialHeight, currentHeight and scrollHeight properties */
     'textarea:resize': () => void
@@ -46,4 +46,6 @@ namespace Input {
   }
 }
 
-export default Input;
+declare const InputComponent: Framework7Plugin;
+
+export default InputComponent;

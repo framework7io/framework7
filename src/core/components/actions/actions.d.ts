@@ -1,7 +1,7 @@
 import { Dom7Instance } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Actions {
+export namespace Actions {
   interface Actions extends Framework7EventsClass<Events> {
     /** Link to global app instance */
     app : Framework7
@@ -140,5 +140,7 @@ namespace Actions {
     actionsBeforeDestroy : (actions : Actions) => void
   }
 }
+
+declare const ActionsComponent: Framework7Plugin;
 
 export default Actions;

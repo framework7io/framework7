@@ -30,6 +30,6 @@ export namespace Toolbar {
   }
 }
 
-declare const Toolbar: Framework7Plugin;
+declare const ToolbarComponent: Framework7Plugin;
 
-export default Toolbar;
+export default ToolbarComponent;

@@ -1,7 +1,7 @@
 import { Device } from '../../utils/device';
-import Framework7 from '../../components/app/app-class';
+import Framework7, { Framework7Plugin } from '../../components/app/app-class';
 
-namespace DeviceModule {
+export namespace Device {
   interface AppMethods {
     /** Object with properties about device */
     device: Device
@@ -13,5 +13,6 @@ namespace DeviceModule {
 
   }
 }
+declare const DeviceModule: Framework7Plugin;
 
 export default DeviceModule;

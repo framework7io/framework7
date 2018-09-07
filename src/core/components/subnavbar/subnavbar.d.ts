@@ -12,6 +12,6 @@ export namespace Subnavbar {
   }
 }
 
-declare const Subnavbar: Framework7Plugin;
+declare const SubnavbarComponent: Framework7Plugin;
 
-export default Subnavbar;
+export default SubnavbarComponent;

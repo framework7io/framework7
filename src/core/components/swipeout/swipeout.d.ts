@@ -60,6 +60,6 @@ export namespace Swipeout {
   }
 }
 
-declare const Swipeout: Framework7Plugin;
+declare const SwipeoutComponent: Framework7Plugin;
 
-export default Swipeout;
+export default SwipeoutComponent;

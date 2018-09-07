@@ -1,6 +1,6 @@
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Grid {
+export namespace Grid {
   interface AppMethods {
 
   }
@@ -12,4 +12,5 @@ namespace Grid {
   }
 }
 
-export default Grid;
+declare const GridComponent: Framework7Plugin;
+export default GridComponent;

@@ -1,7 +1,7 @@
 import { Dom7Instance } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Notification {
+export namespace Notification {
   interface Notification extends Framework7EventsClass<Events> {
     /** Link to global app instance */
     app : Framework7
@@ -111,4 +111,6 @@ namespace Notification {
   }
 }
 
-export default Notification;
+declare const NotificationComponent: Framework7Plugin;
+
+export default NotificationComponent;

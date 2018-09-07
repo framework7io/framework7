@@ -1,7 +1,7 @@
 import { Dom7Instance } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Searchbar {
+export namespace Searchbar {
   interface Parameters {
     /** Searchbar element. HTMLElement or string with CSS selector of searchbar element */
     el: HTMLElement | CSSSelector
@@ -146,4 +146,6 @@ namespace Searchbar {
   }
 }
 
-export default Searchbar;
+declare const SearchbarComponent: Framework7Plugin;
+
+export default SearchbarComponent;

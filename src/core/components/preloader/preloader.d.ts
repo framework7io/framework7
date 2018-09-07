@@ -1,6 +1,6 @@
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Preloader {
+export namespace Preloader {
   interface AppMethods {
     preloader: {
       /** Show Preloader overlay */
@@ -17,4 +17,6 @@ namespace Preloader {
   }
 }
 
-export default Preloader;
+declare const PreloaderComponent: Framework7Plugin;
+
+export default PreloaderComponent;

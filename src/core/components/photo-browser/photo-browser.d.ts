@@ -1,7 +1,7 @@
 import { Dom7Instance } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace PhotoBrowser {
+export namespace PhotoBrowser {
   interface Photo {
     /** image url */
     url?: string
@@ -177,4 +177,6 @@ namespace PhotoBrowser {
   }
 }
 
-export default PhotoBrowser;
+declare const PhotoBrowserComponent: Framework7Plugin;
+
+export default PhotoBrowserComponent;

@@ -1,7 +1,7 @@
 import { Dom7Instance } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Popup {
+export namespace Popup {
   interface Events {
     /** Event will be triggered when Popup starts its opening animation. As an argument event handler receives popup instance */
     open: (popup : Popup) => void
@@ -96,4 +96,6 @@ namespace Popup {
   }
 }
 
-export default Popup;
+declare const PopupComponent: Framework7Plugin;
+
+export default PopupComponent;

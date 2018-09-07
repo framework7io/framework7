@@ -1,6 +1,6 @@
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Link {
+export namespace Link {
   interface AppMethods {
 
   }
@@ -12,4 +12,5 @@ namespace Link {
   }
 }
 
-export default Link;
+declare const LinkComponent: Framework7Plugin;
+export default LinkComponent;

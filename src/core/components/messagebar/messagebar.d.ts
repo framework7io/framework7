@@ -1,7 +1,7 @@
 import { Dom7Instance } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Messagebar {
+export namespace Messagebar {
   interface Messagebar extends Framework7EventsClass<Events> {
     /** Messagebar HTML element. */
     el : HTMLElement
@@ -140,5 +140,6 @@ namespace Messagebar {
   }
 }
 
+declare const MessagebarComponent: Framework7Plugin;
 
-export default Messagebar;
+export default MessagebarComponent;

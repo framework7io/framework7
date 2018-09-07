@@ -1,7 +1,7 @@
 import { Request } from '../../utils/request';
-import Framework7 from '../../components/app/app-class';
+import Framework7, { Framework7Plugin } from '../../components/app/app-class';
 
-namespace RequestModule {
+export namespace Request {
   interface AppMethods {
     /** Object with properties about supported features */
     request: Request
@@ -13,5 +13,7 @@ namespace RequestModule {
 
   }
 }
+
+declare const RequestModule: Framework7Plugin;
 
 export default RequestModule;

@@ -1,8 +1,8 @@
 import { Dom7Instance } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
-import View from '../view/view';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
+import { View } from '../view/view';
 
-namespace Picker {
+export namespace Picker {
   interface Picker extends Framework7EventsClass<Events> {
     /** Link to global app instance */
     app : Framework7
@@ -201,4 +201,6 @@ namespace Picker {
   }
 }
 
-export default Picker;
+declare const PickerComponent: Framework7Plugin;
+
+export default PickerComponent;

@@ -1,6 +1,6 @@
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Form {
+export namespace Form {
   interface DomEvents {
     /** Event will be triggered on form when calling app.form.convertToData */
     'form:todata': () => void
@@ -57,5 +57,6 @@ namespace Form {
     formAjaxError: (form : HTMLElement, data : object, xhr : XMLHttpRequest) => void
   }
 }
+declare const FormComponent: Framework7Plugin;
 
-export default Form;
+export default FormComponent;

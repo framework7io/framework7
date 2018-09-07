@@ -1,6 +1,6 @@
-import Framework7 from '../../components/app/app-class';
+import Framework7, { Framework7Plugin } from '../../components/app/app-class';
 
-namespace ResizeModule {
+export namespace Resize {
   interface AppMethods {
     /** App width in px */
     width : number
@@ -21,5 +21,7 @@ namespace ResizeModule {
     'orientationchange': () => void
   }
 }
+
+declare const ResizeModule: Framework7Plugin;
 
 export default ResizeModule;

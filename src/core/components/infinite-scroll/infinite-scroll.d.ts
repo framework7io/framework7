@@ -1,6 +1,6 @@
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace InfiniteScroll {
+export namespace InfiniteScroll {
   interface DomEvents {
     /** Event will be triggered when page scroll reaches specified (in data-distance attribute) distance to the bottom. */
     'infinite': () => void
@@ -21,4 +21,5 @@ namespace InfiniteScroll {
   }
 }
 
-export default InfiniteScroll;
+declare const InfiniteScrollComponent: Framework7Plugin;
+export default InfiniteScrollComponent;

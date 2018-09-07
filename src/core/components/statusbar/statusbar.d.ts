@@ -1,6 +1,6 @@
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Statusbar {
+export namespace Statusbar {
   interface AppParams {
     /** Statusbar parameters */
     statusbar: {
@@ -67,4 +67,5 @@ namespace Statusbar {
   }
 }
 
-export default Statusbar;
+const StatusbarComponent: Framework7Plugin;
+export default StatusbarComponent;

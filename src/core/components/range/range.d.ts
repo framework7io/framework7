@@ -1,7 +1,7 @@
 import { Dom7Instance } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Range {
+export namespace Range {
   interface Parameters {
     /** Range Slider element. HTMLElement or string with CSS selector of range slider element */
     el: HTMLElement | CSSSelector
@@ -104,4 +104,6 @@ namespace Range {
   }
 }
 
-export default Range;
+declare const RangeComponent: Framework7Plugin;
+
+export default RangeComponent;

@@ -1,7 +1,7 @@
 import { Dom7Instance } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace DataTable {
+export namespace DataTable {
   interface DataTable extends Framework7EventsClass<Events>{
     /** Data table HTML element */
     el: HTMLElement
@@ -42,4 +42,6 @@ namespace DataTable {
   }
 }
 
-export default DataTable;
+declare const DataTableComponent: Framework7Plugin;
+
+export default DataTableComponent;

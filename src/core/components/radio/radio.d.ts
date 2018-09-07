@@ -1,7 +1,16 @@
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Radio {
+export namespace Radio {
+  interface AppMethods {
 
+  }
+  interface AppParams {
+
+  }
+  interface AppEvents {
+
+  }
 }
 
-export default Radio;
+declare const RadioComponent: Framework7Plugin;
+export default RadioComponent;

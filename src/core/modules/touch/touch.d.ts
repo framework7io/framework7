@@ -1,6 +1,6 @@
-import Framework7 from '../../components/app/app-class';
+import Framework7, { Framework7Plugin } from '../../components/app/app-class';
 
-namespace TouchModule {
+export namespace Touch {
   interface AppMethods {
     touchEvents: {
       start: string
@@ -54,5 +54,7 @@ namespace TouchModule {
     'touchend:passive': (event : Event) => void
   }
 }
+
+declare const TouchModule: Framework7Plugin;
 
 export default TouchModule;

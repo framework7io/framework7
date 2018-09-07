@@ -1,6 +1,6 @@
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Progressbar {
+export namespace Progressbar {
   interface AppMethods {
     progressbar: {
       /** set progress for Determinate Progressbar */
@@ -26,4 +26,6 @@ namespace Progressbar {
   }
 }
 
-export default Progressbar;
+declare const ProgressbarComponent: Framework7Plugin;
+
+export default ProgressbarComponent;

@@ -1,7 +1,7 @@
 import { Dom7Instance } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Panel {
+export namespace Panel {
   interface Panel extends Framework7EventsClass<Events>{
     /** Link to global app instance */
     app : Framework7
@@ -147,4 +147,6 @@ namespace Panel {
   }
 }
 
-export default Panel;
+declare const PanelComponent: Framework7Plugin;
+
+export default PanelComponent;

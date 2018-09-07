@@ -1,6 +1,6 @@
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Fab {
+export namespace Fab {
   interface DomEvents {
     /** Event will be triggered on FAB open or when it morphs to target element */
     'fab:open' : () => void
@@ -25,4 +25,6 @@ namespace Fab {
   }
 }
 
-export default Fab;
+declare const FabComponent: Framework7Plugin;
+
+export default FabComponent;

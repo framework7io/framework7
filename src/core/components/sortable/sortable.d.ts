@@ -39,6 +39,6 @@ export namespace Sortable {
   }
 }
 
-declare const Sortable: Framework7Plugin;
+declare const SortableComponent: Framework7Plugin;
 
-export default Sortable;
+export default SortableComponent;

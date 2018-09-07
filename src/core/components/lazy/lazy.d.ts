@@ -1,6 +1,6 @@
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Lazy {
+export namespace Lazy {
   interface DomEvents {
     /** Event will be triggered in the beginning of image file loading */
     'lazy:load': () => void
@@ -43,4 +43,6 @@ namespace Lazy {
   }
 }
 
-export default Lazy;
+declare const LazyComponent: Framework7Plugin;
+
+export default LazyComponent;

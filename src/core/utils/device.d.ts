@@ -42,7 +42,7 @@ export interface Device {
   /** true if app running in full-screen mode and requires Status Bar overlay */
   statusbar: boolean
   /** Returns true if app running in full-screen mode and requires Status Bar overlay */
-  needsStatusbarOverlay: () => boolean
+  needsStatusbarOverlay() : boolean
 }
 
 declare const Device : Device;

@@ -1,7 +1,7 @@
 import { Dom7Instance } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Modal {
+export namespace Modal {
   interface Modal extends Framework7EventsClass<Events> {
     /** Link to global app instance */
     app : Framework7
@@ -75,4 +75,6 @@ namespace Modal {
   }
 }
 
-export default Modal;
+declare const ModalComponent: Framework7Plugin;
+
+export default ModalComponent;

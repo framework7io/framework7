@@ -1,7 +1,7 @@
 import { Dom7Instance } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace Messages {
+export namespace Messages {
   interface Messages extends Framework7EventsClass<Events> {
     /** Object with passed initialization parameters */
     params : Parameters
@@ -129,4 +129,6 @@ namespace Messages {
   }
 }
 
-export default Messages;
+declare const MessagesComponent: Framework7Plugin;
+
+export default MessagesComponent;

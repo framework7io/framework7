@@ -1,6 +1,6 @@
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace List {
+export namespace List {
   interface AppMethods {
 
   }
@@ -12,5 +12,5 @@ namespace List {
   }
 }
 
-
-export default List;
+declare const ListComponent: Framework7Plugin;
+export default ListComponent;

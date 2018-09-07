@@ -1,7 +1,7 @@
 import { Dom7Instance } from 'dom7';
-import Framework7, { CSSSelector, Framework7EventsClass } from '../app/app-class';
+import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-namespace PullToRefresh {
+export namespace PullToRefresh {
   interface PullToRefresh extends Framework7EventsClass<Events> {
     /** Link to global app instance */
     app : Framework7
@@ -98,4 +98,6 @@ namespace PullToRefresh {
   }
 }
 
-export default PullToRefresh;
+declare const PullToRefreshComponent: Framework7Plugin;
+
+export default PullToRefreshComponent;

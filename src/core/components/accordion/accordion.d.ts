@@ -1,7 +1,7 @@
 import Framework7 from '../app/app-class';
-import { CSSSelector } from '../app/app-class';
+import { CSSSelector, Framework7Plugin } from '../app/app-class';
 
-namespace Accordion {
+export namespace Accordion {
   interface AppMethods {
     accordion: {
       /** open specified accordion item */
@@ -32,4 +32,6 @@ namespace Accordion {
   }
 }
 
-export default Accordion;
+declare const AccordionComponent: Framework7Plugin;
+
+export default AccordionComponent;
