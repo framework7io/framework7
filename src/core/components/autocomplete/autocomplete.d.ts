@@ -181,4 +181,4 @@ export namespace Autocomplete {
 }
 declare const AutcompleteComponent: Framework7Plugin;
 
-export default Autocomplete;
+export default AutcompleteComponent;

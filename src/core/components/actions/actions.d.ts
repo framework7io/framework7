@@ -143,4 +143,4 @@ export namespace Actions {
 
 declare const ActionsComponent: Framework7Plugin;
 
-export default Actions;
+export default ActionsComponent;
