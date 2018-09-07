@@ -44,7 +44,7 @@ export namespace Range {
     /** Range min value */
     min: number
     /** Range max value */
-    max: nmber
+    max: number
     /** Range value */
     value: number | number[]
     /** Array where each element represents HTMLElement of created range knob (2 knobs in case of dual slider) */

@@ -48,9 +48,12 @@ import SheetComponent, { Sheet as SheetNamespace } from './components/sheet/shee
 import SmartSelectComponent, { SmartSelect as SmartSelectNamespace } from './components/smart-select/smart-select';
 import SortableComponent, { Sortable as SortableNamespace } from './components/sortable/sortable';
 import StatusbarComponent, { Statusbar as StatusbarNamespace } from './components/statusbar/statusbar';
+import StepperComponent, { Stepper as StepperNamespace } from './components/stepper/stepper';
 import SubnavbarComponent, { Subnavbar as SubnavbarNamespace } from './components/subnavbar/subnavbar';
 import SwipeoutComponent, { Swipeout as SwipeoutNamespace } from './components/swipeout/swipeout'
+import SwiperComponent, { Swiper as SwiperNamespace } from './components/swiper/swiper'
 import TabsComponent, { Tabs as TabsNamespace } from './components/tabs/tabs'
+import ToastComponent, { Toast as ToastNamespace } from './components/toast/toast'
 import ToolbarComponent, { Toolbar as ToolbarNamespace } from './components/toolbar/toolbar'
 
 declare module './components/app/app-class' {
@@ -237,6 +240,10 @@ declare module './components/app/app-class' {
   interface Framework7Params extends StatusbarNamespace.AppParams{}
   interface Framework7AppEvents extends StatusbarNamespace.AppEvents{}
 
+  interface Framework7Class extends StepperNamespace.AppMethods{}
+  interface Framework7Params extends StepperNamespace.AppParams{}
+  interface Framework7AppEvents extends StepperNamespace.AppEvents{}
+
   interface Framework7Class extends SubnavbarNamespace.AppMethods{}
   interface Framework7Params extends SubnavbarNamespace.AppParams{}
   interface Framework7AppEvents extends SubnavbarNamespace.AppEvents{}
@@ -245,9 +252,17 @@ declare module './components/app/app-class' {
   interface Framework7Params extends SwipeoutNamespace.AppParams{}
   interface Framework7AppEvents extends SwipeoutNamespace.AppEvents{}
 
+  interface Framework7Class extends SwiperNamespace.AppMethods{}
+  interface Framework7Params extends SwiperNamespace.AppParams{}
+  interface Framework7AppEvents extends SwiperNamespace.AppEvents{}
+
   interface Framework7Class extends TabsNamespace.AppMethods{}
   interface Framework7Params extends TabsNamespace.AppParams{}
   interface Framework7AppEvents extends TabsNamespace.AppEvents{}
+
+  interface Framework7Class extends ToastNamespace.AppMethods{}
+  interface Framework7Params extends ToastNamespace.AppParams{}
+  interface Framework7AppEvents extends ToastNamespace.AppEvents{}
 
   interface Framework7Class extends ToolbarNamespace.AppMethods{}
   interface Framework7Params extends ToolbarNamespace.AppParams{}
