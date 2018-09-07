@@ -56,6 +56,7 @@ import TabsComponent, { Tabs as TabsNamespace } from './components/tabs/tabs'
 import ToastComponent, { Toast as ToastNamespace } from './components/toast/toast'
 import ToggleComponent, { Toggle as ToggleNamespace } from './components/toggle/toggle'
 import ToolbarComponent, { Toolbar as ToolbarNamespace } from './components/toolbar/toolbar'
+import TooltipComponent, { Tooltip as TooltipNamespace } from './components/tooltip/tooltip'
 
 declare module './components/app/app-class' {
   // Modules
@@ -273,6 +274,9 @@ declare module './components/app/app-class' {
   interface Framework7Params extends ToolbarNamespace.AppParams{}
   interface Framework7AppEvents extends ToolbarNamespace.AppEvents{}
 
+  interface Framework7Class extends TooltipNamespace.AppMethods{}
+  interface Framework7Params extends TooltipNamespace.AppParams{}
+  interface Framework7AppEvents extends TooltipNamespace.AppEvents{}
 }
 
 export default Framework7;
