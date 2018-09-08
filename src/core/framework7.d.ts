@@ -57,6 +57,8 @@ import ToastComponent, { Toast as ToastNamespace } from './components/toast/toas
 import ToggleComponent, { Toggle as ToggleNamespace } from './components/toggle/toggle'
 import ToolbarComponent, { Toolbar as ToolbarNamespace } from './components/toolbar/toolbar'
 import TooltipComponent, { Tooltip as TooltipNamespace } from './components/tooltip/tooltip'
+import ViComponent, { Vi as ViNamespace } from './components/vi/vi'
+import VirtualListComponent, { VirtualList as VirtualListNamespace } from './components/virtual-list/virtual-list'
 
 declare module './components/app/app-class' {
   // Modules
@@ -277,6 +279,14 @@ declare module './components/app/app-class' {
   interface Framework7Class extends TooltipNamespace.AppMethods{}
   interface Framework7Params extends TooltipNamespace.AppParams{}
   interface Framework7AppEvents extends TooltipNamespace.AppEvents{}
+
+  interface Framework7Class extends ViNamespace.AppMethods{}
+  interface Framework7Params extends ViNamespace.AppParams{}
+  interface Framework7AppEvents extends ViNamespace.AppEvents{}
+
+  interface Framework7Class extends VirtualListNamespace.AppMethods{}
+  interface Framework7Params extends VirtualListNamespace.AppParams{}
+  interface Framework7AppEvents extends VirtualListNamespace.AppEvents{}
 }
 
 export default Framework7;
