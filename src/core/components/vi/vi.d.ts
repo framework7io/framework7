@@ -1,5 +1,4 @@
 import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
-import { start } from 'repl';
 
 export namespace Vi {
   interface Vi extends Framework7EventsClass<Events> {
