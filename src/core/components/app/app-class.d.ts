@@ -58,7 +58,7 @@ export interface Framework7Params {
   initOnDeviceReady : boolean
   /** Object with events handlers.. (default {}) */
   on: {
-    [event in keyof Framework7AppEvents] : Framework7AppEvents[event]
+    [event in keyof Framework7Events] : Framework7Events[event]
   }
 
 }
@@ -101,12 +101,12 @@ export interface Framework7Plugin {
   }
 }
 
-export interface Framework7AppEvents {
+export interface Framework7Events {
   /** Event will be fired on app initialization. Automatically after new Framework7() or after app.init() if you disabled auto init. */
   'init': () => void
 }
 
-interface Framework7 extends Framework7Class<Framework7AppEvents> {
+interface Framework7 extends Framework7Class<Framework7Events> {
   /** App ID passed in parameters */
   id : string
   /** App name passed in parameters */

@@ -66,233 +66,233 @@ declare module './components/app/app-class' {
   // Modules
   interface Framework7Class extends DeviceNamespace.AppMethods{}
   interface Framework7Params extends DeviceNamespace.AppParams{}
-  interface Framework7AppEvents extends DeviceNamespace.AppEvents{}
+  interface Framework7Events extends DeviceNamespace.AppEvents{}
 
   interface Framework7Class extends SupportNamespace.AppMethods{}
   interface Framework7Params extends SupportNamespace.AppParams{}
-  interface Framework7AppEvents extends SupportNamespace.AppEvents{}
+  interface Framework7Events extends SupportNamespace.AppEvents{}
 
   interface Framework7Class extends UtilsNamespace.AppMethods{}
   interface Framework7Params extends UtilsNamespace.AppParams{}
-  interface Framework7AppEvents extends UtilsNamespace.AppEvents{}
+  interface Framework7Events extends UtilsNamespace.AppEvents{}
 
   interface Framework7Class extends RequestNamespace.AppMethods{}
   interface Framework7Params extends RequestNamespace.AppParams{}
-  interface Framework7AppEvents extends RequestNamespace.AppEvents{}
+  interface Framework7Events extends RequestNamespace.AppEvents{}
 
   interface Framework7Class extends TouchNamespace.AppMethods{}
   interface Framework7Params extends TouchNamespace.AppParams{}
-  interface Framework7AppEvents extends TouchNamespace.AppEvents{}
+  interface Framework7Events extends TouchNamespace.AppEvents{}
 
   interface Framework7Class extends ResizeNamespace.AppMethods{}
   interface Framework7Params extends ResizeNamespace.AppParams{}
-  interface Framework7AppEvents extends ResizeNamespace.AppEvents{}
+  interface Framework7Events extends ResizeNamespace.AppEvents{}
 
   interface Framework7Class extends ClicksNamespace.AppMethods{}
   interface Framework7Params extends ClicksNamespace.AppParams{}
-  interface Framework7AppEvents extends ClicksNamespace.AppEvents{}
+  interface Framework7Events extends ClicksNamespace.AppEvents{}
 
   // Components
   //INSTALL_COMPONENTS
   interface Framework7Class extends AccordionNamespace.AppMethods{}
   interface Framework7Params extends AccordionNamespace.AppParams{}
-  interface Framework7AppEvents extends AccordionNamespace.AppEvents{}
+  interface Framework7Events extends AccordionNamespace.AppEvents{}
 
   interface Framework7Class extends ActionsNamespace.AppMethods{}
   interface Framework7Params extends ActionsNamespace.AppParams{}
-  interface Framework7AppEvents extends ActionsNamespace.AppEvents{}
+  interface Framework7Events extends ActionsNamespace.AppEvents{}
 
   interface Framework7Class extends AutocompleteNamespace.AppMethods{}
   interface Framework7Params extends AutocompleteNamespace.AppParams{}
-  interface Framework7AppEvents extends AutocompleteNamespace.AppEvents{}
+  interface Framework7Events extends AutocompleteNamespace.AppEvents{}
 
   interface Framework7Class extends CalendarNamespace.AppMethods{}
   interface Framework7Params extends CalendarNamespace.AppParams{}
-  interface Framework7AppEvents extends CalendarNamespace.AppEvents{}
+  interface Framework7Events extends CalendarNamespace.AppEvents{}
 
   interface Framework7Class extends DataTableNamespace.AppMethods{}
   interface Framework7Params extends DataTableNamespace.AppParams{}
-  interface Framework7AppEvents extends DataTableNamespace.AppEvents{}
+  interface Framework7Events extends DataTableNamespace.AppEvents{}
 
   interface Framework7Class extends DialogNamespace.AppMethods{}
   interface Framework7Params extends DialogNamespace.AppParams{}
-  interface Framework7AppEvents extends DialogNamespace.AppEvents{}
+  interface Framework7Events extends DialogNamespace.AppEvents{}
 
   interface Framework7Class extends FormNamespace.AppMethods{}
   interface Framework7Params extends FormNamespace.AppParams{}
-  interface Framework7AppEvents extends FormNamespace.AppEvents{}
+  interface Framework7Events extends FormNamespace.AppEvents{}
 
   interface Framework7Class extends GaugeNamespace.AppMethods{}
   interface Framework7Params extends GaugeNamespace.AppParams{}
-  interface Framework7AppEvents extends GaugeNamespace.AppEvents{}
+  interface Framework7Events extends GaugeNamespace.AppEvents{}
 
   interface Framework7Class extends GridNamespace.AppMethods{}
   interface Framework7Params extends GridNamespace.AppParams{}
-  interface Framework7AppEvents extends GridNamespace.AppEvents{}
+  interface Framework7Events extends GridNamespace.AppEvents{}
 
   interface Framework7Class extends IconNamespace.AppMethods{}
   interface Framework7Params extends IconNamespace.AppParams{}
-  interface Framework7AppEvents extends IconNamespace.AppEvents{}
+  interface Framework7Events extends IconNamespace.AppEvents{}
 
   interface Framework7Class extends InfiniteNamespace.AppMethods{}
   interface Framework7Params extends InfiniteNamespace.AppParams{}
-  interface Framework7AppEvents extends InfiniteNamespace.AppEvents{}
+  interface Framework7Events extends InfiniteNamespace.AppEvents{}
 
   interface Framework7Class extends InputNamespace.AppMethods{}
   interface Framework7Params extends InputNamespace.AppParams{}
-  interface Framework7AppEvents extends InputNamespace.AppEvents{}
+  interface Framework7Events extends InputNamespace.AppEvents{}
 
   interface Framework7Class extends LazyNamespace.AppMethods{}
   interface Framework7Params extends LazyNamespace.AppParams{}
-  interface Framework7AppEvents extends LazyNamespace.AppEvents{}
+  interface Framework7Events extends LazyNamespace.AppEvents{}
 
   interface Framework7Class extends LinkNamespace.AppMethods{}
   interface Framework7Params extends LinkNamespace.AppParams{}
-  interface Framework7AppEvents extends LinkNamespace.AppEvents{}
+  interface Framework7Events extends LinkNamespace.AppEvents{}
 
   interface Framework7Class extends ListNamespace.AppMethods{}
   interface Framework7Params extends ListNamespace.AppParams{}
-  interface Framework7AppEvents extends ListNamespace.AppEvents{}
+  interface Framework7Events extends ListNamespace.AppEvents{}
 
   interface Framework7Class extends ListIndexNamespace.AppMethods{}
   interface Framework7Params extends ListIndexNamespace.AppParams{}
-  interface Framework7AppEvents extends ListIndexNamespace.AppEvents{}
+  interface Framework7Events extends ListIndexNamespace.AppEvents{}
 
   interface Framework7Class extends LoginScreenNamespace.AppMethods{}
   interface Framework7Params extends LoginScreenNamespace.AppParams{}
-  interface Framework7AppEvents extends LoginScreenNamespace.AppEvents{}
+  interface Framework7Events extends LoginScreenNamespace.AppEvents{}
 
   interface Framework7Class extends MessagebarNamespace.AppMethods{}
   interface Framework7Params extends MessagebarNamespace.AppParams{}
-  interface Framework7AppEvents extends MessagebarNamespace.AppEvents{}
+  interface Framework7Events extends MessagebarNamespace.AppEvents{}
 
   interface Framework7Class extends MessagesNamespace.AppMethods{}
   interface Framework7Params extends MessagesNamespace.AppParams{}
-  interface Framework7AppEvents extends MessagesNamespace.AppEvents{}
+  interface Framework7Events extends MessagesNamespace.AppEvents{}
 
   interface Framework7Class extends ModalNamespace.AppMethods{}
   interface Framework7Params extends ModalNamespace.AppParams{}
-  interface Framework7AppEvents extends ModalNamespace.AppEvents{}
+  interface Framework7Events extends ModalNamespace.AppEvents{}
 
   interface Framework7Class extends NavbarNamespace.AppMethods{}
   interface Framework7Params extends NavbarNamespace.AppParams{}
-  interface Framework7AppEvents extends NavbarNamespace.AppEvents{}
+  interface Framework7Events extends NavbarNamespace.AppEvents{}
 
   interface Framework7Class extends NotificationNamespace.AppMethods{}
   interface Framework7Params extends NotificationNamespace.AppParams{}
-  interface Framework7AppEvents extends NotificationNamespace.AppEvents{}
+  interface Framework7Events extends NotificationNamespace.AppEvents{}
 
   interface Framework7Class extends PageNamespace.AppMethods{}
   interface Framework7Params extends PageNamespace.AppParams{}
-  interface Framework7AppEvents extends PageNamespace.AppEvents{}
+  interface Framework7Events extends PageNamespace.AppEvents{}
 
   interface Framework7Class extends PanelNamespace.AppMethods{}
   interface Framework7Params extends PanelNamespace.AppParams{}
-  interface Framework7AppEvents extends PanelNamespace.AppEvents{}
+  interface Framework7Events extends PanelNamespace.AppEvents{}
 
   interface Framework7Class extends PhotoBrowserNamespace.AppMethods{}
   interface Framework7Params extends PhotoBrowserNamespace.AppParams{}
-  interface Framework7AppEvents extends PhotoBrowserNamespace.AppEvents{}
+  interface Framework7Events extends PhotoBrowserNamespace.AppEvents{}
 
   interface Framework7Class extends PickerNamespace.AppMethods{}
   interface Framework7Params extends PickerNamespace.AppParams{}
-  interface Framework7AppEvents extends PickerNamespace.AppEvents{}
+  interface Framework7Events extends PickerNamespace.AppEvents{}
 
   interface Framework7Class extends PopoverNamespace.AppMethods{}
   interface Framework7Params extends PopoverNamespace.AppParams{}
-  interface Framework7AppEvents extends PopoverNamespace.AppEvents{}
+  interface Framework7Events extends PopoverNamespace.AppEvents{}
 
   interface Framework7Class extends PopupNamespace.AppMethods{}
   interface Framework7Params extends PopupNamespace.AppParams{}
-  interface Framework7AppEvents extends PopupNamespace.AppEvents{}
+  interface Framework7Events extends PopupNamespace.AppEvents{}
 
   interface Framework7Class extends PreloaderNamespace.AppMethods{}
   interface Framework7Params extends PreloaderNamespace.AppParams{}
-  interface Framework7AppEvents extends PreloaderNamespace.AppEvents{}
+  interface Framework7Events extends PreloaderNamespace.AppEvents{}
 
   interface Framework7Class extends ProgressbarNamespace.AppMethods{}
   interface Framework7Params extends ProgressbarNamespace.AppParams{}
-  interface Framework7AppEvents extends ProgressbarNamespace.AppEvents{}
+  interface Framework7Events extends ProgressbarNamespace.AppEvents{}
 
   interface Framework7Class extends PullToRefreshNamespace.AppMethods{}
   interface Framework7Params extends PullToRefreshNamespace.AppParams{}
-  interface Framework7AppEvents extends PullToRefreshNamespace.AppEvents{}
+  interface Framework7Events extends PullToRefreshNamespace.AppEvents{}
 
   interface Framework7Class extends RadioNamespace.AppMethods{}
   interface Framework7Params extends RadioNamespace.AppParams{}
-  interface Framework7AppEvents extends RadioNamespace.AppEvents{}
+  interface Framework7Events extends RadioNamespace.AppEvents{}
 
   interface Framework7Class extends RangeNamespace.AppMethods{}
   interface Framework7Params extends RangeNamespace.AppParams{}
-  interface Framework7AppEvents extends RangeNamespace.AppEvents{}
+  interface Framework7Events extends RangeNamespace.AppEvents{}
 
   interface Framework7Class extends SearchbarNamespace.AppMethods{}
   interface Framework7Params extends SearchbarNamespace.AppParams{}
-  interface Framework7AppEvents extends SearchbarNamespace.AppEvents{}
+  interface Framework7Events extends SearchbarNamespace.AppEvents{}
 
   interface Framework7Class extends SheetNamespace.AppMethods{}
   interface Framework7Params extends SheetNamespace.AppParams{}
-  interface Framework7AppEvents extends SheetNamespace.AppEvents{}
+  interface Framework7Events extends SheetNamespace.AppEvents{}
 
   interface Framework7Class extends SmartSelectNamespace.AppMethods{}
   interface Framework7Params extends SmartSelectNamespace.AppParams{}
-  interface Framework7AppEvents extends SmartSelectNamespace.AppEvents{}
+  interface Framework7Events extends SmartSelectNamespace.AppEvents{}
 
   interface Framework7Class extends SortableNamespace.AppMethods{}
   interface Framework7Params extends SortableNamespace.AppParams{}
-  interface Framework7AppEvents extends SortableNamespace.AppEvents{}
+  interface Framework7Events extends SortableNamespace.AppEvents{}
 
   interface Framework7Class extends StatusbarNamespace.AppMethods{}
   interface Framework7Params extends StatusbarNamespace.AppParams{}
-  interface Framework7AppEvents extends StatusbarNamespace.AppEvents{}
+  interface Framework7Events extends StatusbarNamespace.AppEvents{}
 
   interface Framework7Class extends StepperNamespace.AppMethods{}
   interface Framework7Params extends StepperNamespace.AppParams{}
-  interface Framework7AppEvents extends StepperNamespace.AppEvents{}
+  interface Framework7Events extends StepperNamespace.AppEvents{}
 
   interface Framework7Class extends SubnavbarNamespace.AppMethods{}
   interface Framework7Params extends SubnavbarNamespace.AppParams{}
-  interface Framework7AppEvents extends SubnavbarNamespace.AppEvents{}
+  interface Framework7Events extends SubnavbarNamespace.AppEvents{}
 
   interface Framework7Class extends SwipeoutNamespace.AppMethods{}
   interface Framework7Params extends SwipeoutNamespace.AppParams{}
-  interface Framework7AppEvents extends SwipeoutNamespace.AppEvents{}
+  interface Framework7Events extends SwipeoutNamespace.AppEvents{}
 
   interface Framework7Class extends SwiperNamespace.AppMethods{}
   interface Framework7Params extends SwiperNamespace.AppParams{}
-  interface Framework7AppEvents extends SwiperNamespace.AppEvents{}
+  interface Framework7Events extends SwiperNamespace.AppEvents{}
 
   interface Framework7Class extends TabsNamespace.AppMethods{}
   interface Framework7Params extends TabsNamespace.AppParams{}
-  interface Framework7AppEvents extends TabsNamespace.AppEvents{}
+  interface Framework7Events extends TabsNamespace.AppEvents{}
 
   interface Framework7Class extends ToastNamespace.AppMethods{}
   interface Framework7Params extends ToastNamespace.AppParams{}
-  interface Framework7AppEvents extends ToastNamespace.AppEvents{}
+  interface Framework7Events extends ToastNamespace.AppEvents{}
 
   interface Framework7Class extends ToggleNamespace.AppMethods{}
   interface Framework7Params extends ToggleNamespace.AppParams{}
-  interface Framework7AppEvents extends ToggleNamespace.AppEvents{}
+  interface Framework7Events extends ToggleNamespace.AppEvents{}
 
   interface Framework7Class extends ToolbarNamespace.AppMethods{}
   interface Framework7Params extends ToolbarNamespace.AppParams{}
-  interface Framework7AppEvents extends ToolbarNamespace.AppEvents{}
+  interface Framework7Events extends ToolbarNamespace.AppEvents{}
 
   interface Framework7Class extends TooltipNamespace.AppMethods{}
   interface Framework7Params extends TooltipNamespace.AppParams{}
-  interface Framework7AppEvents extends TooltipNamespace.AppEvents{}
+  interface Framework7Events extends TooltipNamespace.AppEvents{}
 
   interface Framework7Class extends ViNamespace.AppMethods{}
   interface Framework7Params extends ViNamespace.AppParams{}
-  interface Framework7AppEvents extends ViNamespace.AppEvents{}
+  interface Framework7Events extends ViNamespace.AppEvents{}
 
   interface Framework7Class extends ViewNamespace.AppMethods{}
   interface Framework7Params extends ViewNamespace.AppParams{}
-  interface Framework7AppEvents extends ViewNamespace.AppEvents{}
+  interface Framework7Events extends ViewNamespace.AppEvents{}
 
   interface Framework7Class extends VirtualListNamespace.AppMethods{}
   interface Framework7Params extends VirtualListNamespace.AppParams{}
-  interface Framework7AppEvents extends VirtualListNamespace.AppEvents{}
+  interface Framework7Events extends VirtualListNamespace.AppEvents{}
 }
 //NAMED_EXPORT
 export default Framework7;
