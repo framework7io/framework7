@@ -9,6 +9,7 @@ const buildKsVue = require('./build-ks-vue.js');
 const buildKsReact = require('./build-ks-react.js');
 
 const buildCoreJs = require('./build-core-js.js');
+const buildCoreTypings = require('./build-core-typings.js');
 const buildCoreLess = require('./build-core-less.js');
 const buildCoreComponents = require('./build-core-components.js');
 
@@ -23,11 +24,12 @@ gulp.task('ks-core', buildKsCore);
 gulp.task('ks-vue', buildKsVue);
 gulp.task('ks-react', buildKsReact);
 gulp.task('core-js', buildCoreJs);
+gulp.task('core-typings', buildCoreTypings);
 gulp.task('core-less', buildCoreLess);
 gulp.task('core-components', buildCoreComponents);
 gulp.task('phenome', buildPhenome);
 
-gulp.task('build-core', ['core-js', 'core-less', 'core-components']);
+gulp.task('build-core', ['core-js', 'core-typings', 'core-less', 'core-components']);
 gulp.task('build-react', buildReact);
 gulp.task('build-vue', buildVue);
 
@@ -35,6 +37,7 @@ gulp.task('build-vue', buildVue);
 const watch = {
   all() {
     gulp.watch(['./src/core/**/*.js'], () => runSequence('core-js', 'core-components', 'ks-react', 'ks-vue'));
+    gulp.watch(['./src/core/**/*.d.ts'], () => runSequence('core-typings'));
     gulp.watch('./src/core/**/*.less', () => runSequence('core-less', 'core-components'));
     gulp.watch(['./src/phenome/**/*.js', './src/phenome/**/*.jsx'], () => runSequence('phenome', 'build-react', 'build-vue', 'ks-react', 'ks-vue'));
     gulp.watch(['./kitchen-sink/react/src/**/*.js', './kitchen-sink/react/src/**/*.jsx'], () => runSequence('ks-react'));
@@ -42,6 +45,7 @@ const watch = {
   },
   core() {
     gulp.watch(['./src/core/**/*.js'], () => runSequence('core-js', 'core-components'));
+    gulp.watch(['./src/core/**/*.d.ts'], () => runSequence('core-typings'));
     gulp.watch('./src/**/**/*.less', () => runSequence('core-less', 'core-components'));
   },
   react() {
