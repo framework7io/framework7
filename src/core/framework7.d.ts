@@ -10,6 +10,7 @@ import ResizeModule, { Resize as ResizeNamespace } from './modules/resize/resize
 import ClicksModule, { Clicks as ClicksNamespace } from './modules/clicks/clicks';
 
 // Components
+//IMPORT_COMPONENTS
 import AccordionComponent, { Accordion as AccordionNamespace } from './components/accordion/accordion';
 import ActionsComponent, { Actions as ActionsNamespace } from './components/actions/actions';
 import AutocompleteComponent, { Autocomplete as AutocompleteNamespace } from './components/autocomplete/autocomplete';
@@ -58,6 +59,7 @@ import ToggleComponent, { Toggle as ToggleNamespace } from './components/toggle/
 import ToolbarComponent, { Toolbar as ToolbarNamespace } from './components/toolbar/toolbar'
 import TooltipComponent, { Tooltip as TooltipNamespace } from './components/tooltip/tooltip'
 import ViComponent, { Vi as ViNamespace } from './components/vi/vi'
+import ViewComponent, { View as ViewNamespace } from './components/view/view'
 import VirtualListComponent, { VirtualList as VirtualListNamespace } from './components/virtual-list/virtual-list'
 
 declare module './components/app/app-class' {
@@ -90,8 +92,8 @@ declare module './components/app/app-class' {
   interface Framework7Params extends ClicksNamespace.AppParams{}
   interface Framework7AppEvents extends ClicksNamespace.AppEvents{}
 
-
   // Components
+  //INSTALL_COMPONENTS
   interface Framework7Class extends AccordionNamespace.AppMethods{}
   interface Framework7Params extends AccordionNamespace.AppParams{}
   interface Framework7AppEvents extends AccordionNamespace.AppEvents{}
@@ -284,9 +286,13 @@ declare module './components/app/app-class' {
   interface Framework7Params extends ViNamespace.AppParams{}
   interface Framework7AppEvents extends ViNamespace.AppEvents{}
 
+  interface Framework7Class extends ViewNamespace.AppMethods{}
+  interface Framework7Params extends ViewNamespace.AppParams{}
+  interface Framework7AppEvents extends ViewNamespace.AppEvents{}
+
   interface Framework7Class extends VirtualListNamespace.AppMethods{}
   interface Framework7Params extends VirtualListNamespace.AppParams{}
   interface Framework7AppEvents extends VirtualListNamespace.AppEvents{}
 }
-
+//NAMED_EXPORT
 export default Framework7;

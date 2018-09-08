@@ -1,5 +1,6 @@
 import { Dom7, Dom7Instance } from 'Dom7'
 import Template7 from 'Template7'
+import { Router } from '../../modules/router/router';
 
 // Css Selector string is an option on many F7 methods
 // Giving this alias makes the typename show in the intellisense
@@ -46,7 +47,7 @@ export interface Framework7Params {
   /** App language. Can be used by other components. By default equal to the current browser/webview language (i.e. navigator.language).. */
   language : string
   /** Array with default routes to all views.. (default []) */
-  routes : Route[]
+  routes : Router.RouteParameters[]
   /** App root data. Must be a function that returns an object with root data.  Note, that this inside of this data function points to app Framework7 instance.. */
   data : () => any
   /** App root methods. Object with methods.  Note, that this inside of each method points to app Framework7 instance.. (default {}) */
@@ -113,7 +114,7 @@ interface Framework7 extends Framework7Class<Framework7AppEvents> {
   /** App version */
   version : string
   /** App routes */
-  routes : Route[]
+  routes : Router.RouteParameters[]
   /** App language */
   language : string
   /** Dom7 instance with app root element */
