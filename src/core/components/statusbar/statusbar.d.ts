@@ -65,7 +65,8 @@ export namespace Statusbar {
       isVisible() : boolean
     }
   }
+  interface AppEvents {}
 }
 
-const StatusbarComponent: Framework7Plugin;
+declare const StatusbarComponent: Framework7Plugin;
 export default StatusbarComponent;

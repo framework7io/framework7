@@ -44,7 +44,7 @@ function buildTypings(cb) {
       const install = [...modules, ...components].map((f7Module) => {
         const capitalized = capitalize(f7Module);
         return [
-          `interface Framework7Class extends ${capitalized}Namespace.AppMethods{}`,
+          `interface Framework7Class<Events> extends ${capitalized}Namespace.AppMethods{}`,
           `interface Framework7Params extends ${capitalized}Namespace.AppParams{}`,
           `interface Framework7Events extends ${capitalized}Namespace.AppEvents{}`,
         ].join('\n  ');
@@ -55,9 +55,8 @@ function buildTypings(cb) {
         .replace(/\/\/ IMPORT_COMPONENTS/, importComponents.join('\n'))
         .replace(/\/\/ INSTALL/, install.join('\n  '));
     }))
-    .pipe(gulp.dest(`${output}/`));
-
-  cb();
+    .pipe(gulp.dest(`${output}/`))
+    .on('end', cb);
 }
 
 module.exports = buildTypings;
