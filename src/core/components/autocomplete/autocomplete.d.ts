@@ -52,13 +52,13 @@ export namespace Autocomplete {
     /** Function which accepts search query and render function where you need to pass array with matched items. */
     source: (query : string, render : unknown[]) => unknown
     /** Limit number of maximum displayed items in autocomplete per query. */
-    limit: number
+    limit?: number
     /** Set to true to include Preloader to autocomplete layout. (default false) */
     preloader?: boolean
     /** Preloader color, one of the default colors. */
-    preloaderColor: string
+    preloaderColor?: string
     /** Array with default selected values. */
-    value: unknown[]
+    value?: unknown[]
     /** Name of matched item object's key that represents item value. (default id) */
     valueProperty?: string
     /** Name of matched item object's key that represents item display value which is used as title of displayed options. (default text) */
@@ -66,13 +66,13 @@ export namespace Autocomplete {
     /** If enabled, then it will request passed to source function on autocomplete open. (default false) */
     requestSourceOnOpen?: boolean
     /** String with CSS selector or HTMLElement of link which will open standalone autocomplete page or popup on click. */
-    openerEl: HTMLElement | CSSSelector
+    openerEl?: HTMLElement | CSSSelector
     /** Default text for "Close" button when opened as Popup. (default Close) */
     popupCloseLinkText?: string
     /** Default text for "Back" link when opened as Page. (default Back) */
     pageBackLinkText?: string
     /** Autocomplete page title. If nothing is specified and passed openerEl is an item of List View, then text value of item-title element will be used. */
-    pageTitle: string
+    pageTitle?: string
     /** Searchbar placeholder text. (default Search...) */
     searchbarPlaceholder?: string
     /** Searchbar "Cancel" button text. (default Cancel) */
@@ -88,17 +88,17 @@ export namespace Autocomplete {
     /** Set to false to open standalone autocomplete without animation. (default true) */
     animate?: boolean
     /** Navbar color theme. One of the default color themes. */
-    navbarColorTheme: string
+    navbarColorTheme?: string
     /** Form (checkboxes or radios) color theme. One of the default color themes. */
-    formColorTheme: string
+    formColorTheme?: string
     /** Will add opened autocomplete modal (when openIn: 'popup') to router history which gives ability to close autocomplete by going back in router history and set current route to the autocomplete modal. (default true) */
     routableModals?: boolean
     /** Standalone autocomplete URL that will be set as a current route. (default select/) */
     url?: string
     /** Link to initialized View instance if you want use standalone Autcomplete. By default, if not specified, it will be opened in Main View.. */
-    view: View.View
+    view?: View.View
     /** String with CSS selector or HTMLElement of related text input. */
-    inputEl: HTMLElement | CSSSelector
+    inputEl?: HTMLElement | CSSSelector
     /** Allows to configure input events used to handle Autcomplete actions and source request. Can be changed for example to change keyup compositionend if you use keyboard with composition of Chinese characters. (default input) */
     inputEvents?: string
     /** Highlight matches in autcomplete results. (default true) */
@@ -106,27 +106,27 @@ export namespace Autocomplete {
     /** Enables type ahead, will prefill input value with first item in match. (default false) */
     typeahead?: boolean
     /** Specify dropdown placeholder text. */
-    dropdownPlaceholderText: string
+    dropdownPlaceholderText?: string
     /** If true then value of related input will be update as well. (default true) */
     updateInputValueOnSelect?: boolean
     /** If true then input which is used as item-input in List View will be expanded to full screen wide during dropdown visible.. (default false) */
     expandInput?: boolean
     /** By default dropdown will be added to parent page-content element. You can specify here different element where to add dropdown element. */
-    dropdownContainerEl: HTMLElement | CSSSelector
+    dropdownContainerEl?: HTMLElement | CSSSelector
     /** Function to render autocomplete dropdown, must return dropdown HTML string. */
-    renderDropdown: (items : any[]) => string
+    renderDropdown?: (items : any[]) => string
     /** Function to render autocomplete page, must return page HTML string. */
-    renderPage: (items : any[]) => string
+    renderPage?: (items : any[]) => string
     /** Function to render autocomplete popup, must return popup HTML string. */
-    renderPopup: (items : any[]) => string
+    renderPopup?: (items : any[]) => string
     /** Function to render single autocomplete, must return item HTML string. */
-    renderItem: (item : any, index: number) => string
+    renderItem?: (item : any, index: number) => string
     /** Function to render searchbar, must return searchbar HTML string. */
-    renderSearchbar: () => string
+    renderSearchbar?: () => string
     /** Function to render navbar, must return navbar HTML string. */
-    renderNavbar: () => string
+    renderNavbar?: () => string
 
-    on: {
+    on?: {
       [event in keyof Events] : Events[event]
     }
   }
@@ -162,7 +162,7 @@ export namespace Autocomplete {
 
   }
   interface AppParams {
-    autocomplete: Parameters
+    autocomplete?: Parameters | undefined
   }
   interface AppEvents {
     /** Event will be triggered when Autocomplete value changed. Returned value is an array with selected items */

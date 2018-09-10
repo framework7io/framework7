@@ -1,5 +1,6 @@
 import { Dom7Instance } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
+import { View } from '../view/view';
 
 export namespace PhotoBrowser {
   interface Photo {
@@ -12,56 +13,56 @@ export namespace PhotoBrowser {
   }
   interface Parameters {
     /** Array with URLs of photos or array of objects with "url" (or "html") and "caption" properties. */
-    photos: Photo[] | string[]
+    photos?: Photo[] | string[]
     /** Enable disable exposition mode when clicking on Photo Browser. (default true) */
-    exposition: boolean
+    exposition?: boolean
     /** Set to true if you also want to hide captions in exposition mode (default false) */
-    expositionHideCaptions: boolean
+    expositionHideCaptions?: boolean
     /** You can close Photo Browser with swipe up/down when this parameter is enabled (default true) */
-    swipeToClose: boolean
+    swipeToClose?: boolean
     /** Will add opened photo browser to router history which gives ability to close photo browser by going back in router history and set current route to the photo browser modal (default true) */
-    routableModals: boolean
+    routableModals?: boolean
     /** Photo browser modal URL that will be set as a current route (default "photos/") */
-    url: string
+    url?: string
     /** Link to initialized View instance if you want use "page" Photo Browser type or where to set routing when routableModals enabled. By default, if not specified, it will be opened in Main View */
-    view: View.View
+    view?: View.View
     /** Define how Photo Browser should be opened. Could be standalone (will be opened as an overlay with custom transition effect), popup (will be opened as popup), page (will be injected to View and loaded as a new page). */
-    type: 'popup' | 'page' | 'standaone'
+    type?: 'popup' | 'page' | 'standaone'
     /** Photo Browser color theme, could be light or dark (deault "light") */
-    theme: 'light' | 'dark'
+    theme?: 'light' | 'dark'
     /** Captions color theme, could be also light or dark. By default, equal to theme parameter */
-    captionsTheme: string
+    captionsTheme?: string
     /** Set to false to remove Photo Browser's Navbar (default true) */
-    navbar: boolean
+    navbar?: boolean
     /** Set to false to remove Photo Browser's Toolbar (default true) */
-    toolbar: boolean
+    toolbar?: boolean
     /** Text on back link in Photo Browser's navbar (default "Close") */
-    backLinkText: string
+    backLinkText?: string
     /** Text of "of" in photos counter: "3 of 5" (default "of") */
-    navbarOfText: string
+    navbarOfText?: string
     /** One of the default colors */
-    iconsColor: string
+    iconsColor?: string
     /** Swiper parameters */
-    swiper: object
+    swiper?: object
 
     /** Function to render navbar, must return navbar HTML string */
-    renderNavbar: () => string
+    renderNavbar?: () => string
     /** Function to render toolbar, must return toolbar HTML string */
-    renderToolbar: () => string
+    renderToolbar?: () => string
     /** Function to render single caption, must return caption HTML string */
-    renderCaption: (caption: string, index: number) => string
+    renderCaption?: (caption: string, index: number) => string
     /** Function to render photo object, must return photo object HTML string */
-    renderObject: (photo: Photo | string, index: number) => string
+    renderObject?: (photo: Photo | string, index: number) => string
     /** Function to render lazy loaded photo slide, must return slide HTML string */
-    renderLazyPhoto: (photo: Photo | string, index: number) => string
+    renderLazyPhoto?: (photo: Photo | string, index: number) => string
     /** Function to render photo as a swiper slide, must return slide HTML string */
-    renderPhoto: (photo: Photo | string, index: number) => string
+    renderPhoto?: (photo: Photo | string, index: number) => string
     /** Function to render photobrowser page, must return full page HTML layout string */
-    renderPage: () => string
+    renderPage?: () => string
     /** Function to render photobrowser popup, must return full popup HTML layout string */
-    renderPopup: () => string
+    renderPopup?: () => string
     /** Function to render photobrowser standalone modal, must return full modal HTML layout string */
-    renderStandalone: () => string
+    renderStandalone?: () => string
 
   }
   interface PhotoBrowser extends Framework7EventsClass<Events> {
@@ -161,7 +162,7 @@ export namespace PhotoBrowser {
     }
   }
   interface AppParams {
-    photoBrowser: Parameters
+    photoBrowser?: Parameters | undefined
   }
   interface AppEvents {
     /** Event will be triggered when Photo Browser starts its opening animation. As an argument event handler receives Photo Browser instance */

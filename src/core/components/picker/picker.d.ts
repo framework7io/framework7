@@ -69,21 +69,21 @@ export namespace Picker {
 
   interface ColumnParameters {
     /** Array with string columns values. */
-    values: string[]
+    values?: string[]
     /** Array with string columns values that will be displayed in Picker. If not specified, it will display values from values parameter. */
-    displayValues: string[]
+    displayValues?: string[]
     /** Additional CSS class name to be set on column HTML container. */
-    cssClass: string
+    cssClass?: string
     /** Text alignment of column values, could be "left", "center" or "right". */
-    textAlign: string
+    textAlign?: string
     /** Column width in px. Useful if you need to fix column widths in picker with dependent columns. By default, calculated automatically. */
-    width: number
+    width?: number
     /** Defines column that should be used as a visual divider, that doesn't have any values. (default false) */
     divider?: boolean
     /** Should be specified for divider-column (divider:true) with content of the column. */
-    content: string
+    content?: string
     /** Callback function that will be executed when picker value changed. */
-    onChange: (picker : Picker, value : string, displayValue : string) => void
+    onChange?: (picker : Picker, value : string, displayValue : string) => void
   }
 
   interface Parameters {
@@ -98,29 +98,29 @@ export namespace Picker {
     /** Disables snapping on values. (default false) */
     freeMode?: boolean
     /** Array with initial values. Each array item represents value of related column. */
-    value: unknown[]
+    value?: unknown[]
     /** Function to format input value, should return new/formatted string value. values and displayValues are arrays where each item represents value/display value of related column. */
-    formatValue: (values : unknown[], displayValues : unknown[]) => string
+    formatValue?: (values : unknown[], displayValues : unknown[]) => string
     /** Array with columns. Each array item represents object with column parameters. */
-    cols: ColumnParameters[]
+    cols?: ColumnParameters[]
 
     /** Object with events handlers.. */
-    on: {
+    on?: {
       [event in keyof Events] : Events[event]
     }
 
     /** String with CSS selector or HTMLElement where to place generated Picker HTML. Use only for inline picker. */
-    containerEl: HTMLElement | CSSSelector
+    containerEl?: HTMLElement | CSSSelector
     /** Can be auto, popover (to open picker in popover), sheet (to open in sheet modal). In case of auto will open in sheet modal on small screens and in popover on large screens.. (default auto) */
     openIn?: string
     /** String with CSS selector or HTMLElement with related input element. */
-    inputEl: HTMLElement | CSSSelector
+    inputEl?: HTMLElement | CSSSelector
     /** Scroll viewport (page-content) to input when picker opened. (default true) */
     scrollToInput?: boolean
     /** Sets "readonly" attribute on specified input. (default true) */
     inputReadOnly?: boolean
     /** Additional CSS class name to be set on picker element. */
-    cssClass: string
+    cssClass?: string
     /** If enabled, picker will be closed by clicking outside of picker or related input element. (default true) */
     closeByOutsideClick?: boolean
     /** Enables picker toolbar. (default true) */
@@ -132,12 +132,12 @@ export namespace Picker {
     /** Picker modal URL that will be set as a current route. (default select/) */
     url?: string
     /** View where to set routing when routableModals enabled. Defaults to parent view of inputEl or main view if not found parent view. */
-    view: object
+    view?: object
 
     /** Function to render toolbar. Must return toolbar HTML string. */
-    renderToolbar: () => string
+    renderToolbar?: () => string
     /** Function to render whole picker. Must return picker full HTML string. */
-    render: () => string
+    render?: () => string
   }
 
   interface Events {
@@ -181,7 +181,7 @@ export namespace Picker {
     }
   }
   interface AppParams {
-    picker: Parameters
+    picker?: Parameters | undefined
   }
   interface AppEvents {
     /** Event will be triggered when picker value changes */

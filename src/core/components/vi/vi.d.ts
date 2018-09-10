@@ -21,65 +21,65 @@ export namespace Vi {
   }
   interface Parameters {
     /** Global app parameter which enables vi API and vi SDK to load. If you pass any vi parameters under vi app parameters then it will enable vi api as well */
-    enabled: boolean
+    enabled?: boolean
     /** App bundle id, if not specified then equal to id app parameter */
-    appId: string
+    appId?: string
     /** vi placemenet ID, you can use this one for testing, and switch to yours real one for production */
-    placementId: string
+    placementId?: string
     /** Ad type. Can be interstitial (when ad runs as full screen video) or instream (when ad video  */
-    placementType: string
+    placementType?: string
     /** Enables video ad autoplay */
-    autoplay: boolean
+    autoplay?: boolean
     /** Defines whether the ad must start muted or not. By default is true when app is running as a web app (not Cordova) under mobile device (iOS or Android). It is required because on mobile device video autoplay usually requires additional user interaction */
-    startMuted: boolean
+    startMuted?: boolean
     /** Enables overlay layer that will be visible when ad can not autoplay (in case video autoplay requires user interaction) */
-    fallbackOverlay: boolean
+    fallbackOverlay?: boolean
     /** Fallback overlay text */
-    fallbackOverlayText: string
+    fallbackOverlayText?: string
     /** App version, if not specified then equal to version app parameter */
-    appVer: string
+    appVer?: string
     /** App language, if not specified then equal to language app parameter */
-    language: string
+    language?: string
     /** App width in px. If not specified then equal to app container width */
-    width: number
+    width?: number
     /** App height in px. If not specified then equal to app container height */
-    height: number
+    height?: number
     /** Enable ad interface progress bar */
-    showProgress: boolean
+    showProgress?: boolean
     /** Enable ad interface vi branding logo */
-    showBranding: boolean
+    showBranding?: boolean
     /** Enable ad interface mute button */
-    showMute: boolean
+    showMute?: boolean
     /** Operating system, if not specified then will be equal to app.device.os */
-    os: string
+    os?: string
     /** Operating system version, if not specified then will be equal to app.device.osVersion */
-    osVersion: string
+    osVersion?: string
     /** Device orientation, if not specified then will be detected based on window.orientation */
-    orientation: string
+    orientation?: string
     /** User age (optional) */
-    age: number
+    age?: number
     /** User gender (optional) */
-    gender: string
+    gender?: string
     /** Unique advertiser identifier (optional) */
-    advertiserId: string
+    advertiserId?: string
     /** Device location latitude (optional) */
-    latitude: number
+    latitude?: number
     /** Device location longitude (optional) */
-    longitude: number
+    longitude?: number
     /** App store id (optional) */
-    storeId: string
+    storeId?: string
     /** Device IP address (optional) */
-    ip: string
+    ip?: string
     /** Device manufacturer (optional) */
-    manufacturer: string
+    manufacturer?: string
     /** Device model */
-    model: string
+    model?: string
     /** Device connection type (optional) */
-    connectionType: string
+    connectionType?: string
     /** Device connection provider (optional) */
-    connectionProvider: string
+    connectionProvider?: string
     /** Object with events handlers.. */
-    on: {
+    on?: {
       [event in keyof Events] : Events[event]
     }
   }
@@ -105,7 +105,7 @@ export namespace Vi {
     }
   }
   interface AppParams {
-    vi: Parameters
+    vi?: Parameters | undefined
   }
   interface AppEvents {
     viSdkReady: () => void

@@ -12,7 +12,7 @@ export namespace Tooltip {
     /** Function to render tooltip element, must return full tooltip HTML layout string */
     render?: (tooltip: Tooltip) => string
     /** Object with events handlers.. */
-    on: {
+    on?: {
       [event in keyof Events] : Events[event]
     }
   }
@@ -75,7 +75,7 @@ export namespace Tooltip {
     }
   }
   interface AppParams {
-    tooltip: Parameters
+    tooltip?: Parameters | undefined
   }
   interface AppEvents {
     /** Event will be triggered when Tooltip becomes visible. As an argument event handler receives Tooltip instance */

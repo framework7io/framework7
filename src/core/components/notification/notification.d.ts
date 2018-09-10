@@ -20,31 +20,31 @@ export namespace Notification {
 
   interface Parameters {
     /** Notification element. Can be useful if you already have Notification element in your HTML and want to create new instance using this element. */
-    el: HTMLElement
+    el?: HTMLElement
     /** Notification icon HTML layout, e.g. <i class="f7-icons">home</i> or image <img src="path/to/icon.png">. */
-    icon: string
+    icon?: string
     /** Notification title. */
-    title: string
+    title?: string
     /** Additional text on the right side of title. */
-    titleRightText: string
+    titleRightText?: string
     /** Notification subtitle. */
-    subtitle: string
+    subtitle?: string
     /** Notification inner text. */
-    text: string
+    text?: string
     /** Adds notification close button. (default false) */
     closeButton?: boolean
     /** Timeout delay (in ms) to close notification automatically. */
-    closeTimeout: number
+    closeTimeout?: number
     /** If enabled, notification will be closed on notification click. (default false) */
     closeOnClick?: boolean
     /** If enabled, notification can be closed by swipe gesture. (default true) */
     swipeToClose?: boolean
     /** Additional css class to add. */
-    cssClass: string
+    cssClass?: string
     /** Custom function to render Notification. Must return notification html. */
-    render: () => string
+    render?: () => string
     /** Object with events handlers.. */
-    on: {
+    on?: {
       [event in keyof Events] : Events[event]
     }
   }
@@ -93,7 +93,7 @@ export namespace Notification {
     }
   }
   interface AppParams {
-    notification: Parameters
+    notification?: Parameters | undefined
   }
   interface AppEvents {
     /** Event will be triggered when user clicks on Notification element. As an argument event handler receives notification instance */

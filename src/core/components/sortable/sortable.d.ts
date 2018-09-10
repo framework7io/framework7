@@ -24,10 +24,10 @@ export namespace Sortable {
     }
   }
   interface AppParams {
-    sortable: {
+    sortable?: {
       /** When enabled then it will move (reorder) HTML elements according to new sortable order. It is useful to disable it if you use other library for DOM manipulation, like React or Vue (default true) */
-      moveElements: boolean
-    }
+      moveElements?: boolean
+    } | undefined
   }
   interface AppEvents {
     /** Event will be triggered when sortable mode is enabled */

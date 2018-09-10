@@ -30,60 +30,64 @@ export namespace Actions {
     /** String with Button's text (could be HTML string) */
     text:string
     /** HTML string of icon */
-    icon:string
+    icon?:string
     /** Enables bold button text */
-    bold:boolean
+    bold?:boolean
     /** Button color, one of default colors */
-    color:string
+    color?:string
     /** Button background color, one of default colors */
-    bg:string
+    bg?:string
     /** If enabled then it will be rendered as label instead of button */
-    label:boolean
+    label?:boolean
     /** Defines whether the button is disabled or not. */
-    disabled:boolean
+    disabled?:boolean
     /** If enabled then button click will close Action Sheet */
-    close:boolean
+    close?:boolean
     /** Callback function that will be executed after click on this button */
-    onClick: (actions : Actions, e: unknown) => void
+    onClick?: (actions : Actions, e: unknown) => void
   }
 
   interface Parameters {
     /** Action Sheet element. Can be useful if you already have Action Sheet element in your HTML and want to create new instance using this element*/
-    el:HTMLElement
+    el?:HTMLElement
     /** Full Action Sheet HTML content string. Can be useful if you want to create Action Sheet element with custom HTML*/
-    content:string
+    content?:string
     /** Enables Action Sheet backdrop (dark semi transparent layer behind)*/
-    backdrop:boolean
+    backdrop?:boolean
     /** When enabled, action sheet will be closed on backdrop click*/
-    closeByBackdropClick:boolean
+    closeByBackdropClick?:boolean
     /** When enabled, action sheet will be closed on when click outside of it*/
-    closeByOutsideClick:boolean
+    closeByOutsideClick?:boolean
     /** Whether the Action Sheet should be opened/closed with animation or not. Can be overwritten in .open() and .close() methods*/
-    animate:boolean
+    animate?:boolean
     /** Action sheet groups/buttons. In this case Actions layout will be generated dynamically based on passed groups and buttons. In case of groups it should array where each item represent array with buttons for group.*/
-    buttons: Button[]
+    buttons?: Button[]
     /** Enables grid buttons layout*/
-    grid:boolean
+    grid?:boolean
     /** When enabled, action sheet will be converted to Popoveron large screens.*/
-    convertToPopover:boolean
+    convertToPopover?:boolean
     /** When enabled, action sheel will be always converted to Popover.*/
-    forceToPopover:boolean
+    forceToPopover?:boolean
     /** HTML element or string CSS selector of target element. Required when converstion to popover is in use*/
-    targetEl: HTMLElement | CSSSelector
+    targetEl?: HTMLElement | CSSSelector
     /** Virtual target element horizontal offset from left side of the screen. Required when converstion to popover is in use without using real target element (targetEl)*/
-    targetX:number
+    targetX?:number
     /** Virtual target element vertical offset from top of the screen. Required when converstion to popover is in use without using real target element (targetEl)*/
-    targetY:number
+    targetY?:number
     /** Virtual target element width (in px). Required when converstion to popover is in use without using real target element (targetEl)*/
-    targetWidth:number
+    targetWidth?:number
     /** Virtual target element height (in px). Required when converstion to popover is in use without using real target element (targetEl)*/
-    targetHeight:number
+    targetHeight?:number
     /** Callback function that will be executed after click on the Action Sheet button*/
-    onClick: (actions : Actions, e: unknown) => void
+    onClick?: (actions : Actions, e: unknown) => void
     /** Custom function to render Action Sheet. Must return Action Sheet html*/
-    render: () => string
+    render?: () => string
     /** Custom function to render Popover when conversition to popover is in use. Must return Popover html*/
-    renderPopover: () => string
+    renderPopover?: () => string
+    /** Object with event handlers */
+    on?: {
+      [event in keyof Events] : Events[event]
+    }
   }
 
   interface Events {
@@ -125,7 +129,7 @@ export namespace Actions {
     }
   }
   interface AppParams {
-    actions: Parameters
+    actions?: Parameters | undefined
   }
   interface AppEvents {
     /** Event will be triggered when Action Sheet starts its opening animation. As an argument event handler receives action sheet instance */

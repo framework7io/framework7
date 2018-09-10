@@ -7,11 +7,16 @@ export namespace DataTable {
     el: HTMLElement
     /** Dom7 instance with Data table HTML element */
     $el: Dom7Instance
+
   }
 
   interface Parameters {
     /** Data Table element. Can be useful if you already have Data Table element in your HTML and want to create new instance using this element */
     el: HTMLElement
+
+    on?: {
+      [event in keyof Events] : Events[event]
+    }
   }
 
   interface Events {

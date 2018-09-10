@@ -71,31 +71,31 @@ export namespace Messages {
     /** If enabled then messages autoscrolling will happen only when user is on top/bottom of the messages view. (default true) */
     scrollMessagesOnEdge?: boolean
     /** Array with initial messages. Each message in array should be presented as an object with single message parameters. */
-    messages: Message[]
+    messages?: Message[]
     /** Object with events handlers.. */
-    on: {
+    on?: {
       [event in keyof Events] : Events[event]
     }
 
     /** Function to render single message. Must return full message HTML string. */
-    renderMessage: (message : Message) => string
+    renderMessage?: (message : Message) => string
 
     /** Function that must return boolean true or false based on required condition depending on previous and next messages. In case of match then message-first class will be added to message. */
-    firstMessageRule: (message : Message, previousMessage : Message, nextMessage : Message) => boolean
+    firstMessageRule?: (message : Message, previousMessage : Message, nextMessage : Message) => boolean
     /** Function that must return boolean true or false based on required condition depending on previous and next messages. In case of match then message-last class will be added to message. */
-    lastMessageRule: (message : Message, previousMessage : Message, nextMessage : Message) => boolean
+    lastMessageRule?: (message : Message, previousMessage : Message, nextMessage : Message) => boolean
     /** Function that must return boolean true or false based on required condition depending on previous and next messages. In case of match then message-tail class will be added to message. */
-    tailMessageRule: (message : Message, previousMessage : Message, nextMessage : Message) => boolean
+    tailMessageRule?: (message : Message, previousMessage : Message, nextMessage : Message) => boolean
     /** Function that must return boolean true or false based on required condition depending on previous and next messages. In case of match then message-same-name class will be added to message. */
-    sameNameMessageRule: (message : Message, previousMessage : Message, nextMessage : Message) => boolean
+    sameNameMessageRule?: (message : Message, previousMessage : Message, nextMessage : Message) => boolean
     /** Function that must return boolean true or false based on required condition depending on previous and next messages. In case of match then message-same-header class will be added to message. */
-    sameHeaderMessageRule: (message : Message, previousMessage : Message, nextMessage : Message) => boolean
+    sameHeaderMessageRule?: (message : Message, previousMessage : Message, nextMessage : Message) => boolean
     /** Function that must return boolean true or false based on required condition depending on previous and next messages. In case of match then message-same-footer class will be added to message. */
-    sameFooterMessageRule: (message : Message, previousMessage : Message, nextMessage : Message) => boolean
+    sameFooterMessageRule?: (message : Message, previousMessage : Message, nextMessage : Message) => boolean
     /** Function that must return boolean true or false based on required condition depending on previous and next messages. In case of match then message-same-avatar class will be added to message. */
-    sameAvatarMessageRule: (message : Message, previousMessage : Message, nextMessage : Message) => boolean
+    sameAvatarMessageRule?: (message : Message, previousMessage : Message, nextMessage : Message) => boolean
     /** Function that must return additional message classes as string, based on required condition depending on previous and next messages.. */
-    customClassMessageRule: (message : Message, previousMessage : Message, nextMessage : Message) => string
+    customClassMessageRule?: (message : Message, previousMessage : Message, nextMessage : Message) => string
   }
 
   interface Events {
@@ -121,7 +121,7 @@ export namespace Messages {
     }
   }
   interface AppParams {
-    messages: Parameters
+    messages?: Parameters | undefined
   }
   interface AppEvents {
     /** Event will be triggered right before Messages instance will be destroyed */

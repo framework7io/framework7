@@ -4,9 +4,9 @@ import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from
 export namespace Toggle {
   interface Parameters {
     /** Toggle element. HTMLElement or string with CSS selector of toggle element */
-    el: HTMLElement | CSSSelector
+    el?: HTMLElement | CSSSelector
     /** Object with events handlers.. */
-    on: {
+    on?: {
       [event in keyof Events] : Events[event]
     }
   }
@@ -54,7 +54,7 @@ export namespace Toggle {
     }
   }
   interface AppParams {
-    toggle: Parameters
+    toggle?: Parameters | undefined
   }
   interface AppEvents {
     /** Event will be triggered when toggle state has been changed. As an argument event handler receives toggle instance */

@@ -47,8 +47,6 @@ export namespace PullToRefresh {
     'ptr:beforedestroy' : () => void
   }
 
-
-
   interface Data {
     /** touchmove event */
     event: Event

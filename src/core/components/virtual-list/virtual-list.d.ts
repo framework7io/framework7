@@ -69,43 +69,43 @@ export namespace VirtualList {
     /** Target List Block element. In case of string - CSS selector of list block element */
     el: HTMLElement | CSSSelector
     /** List element <ul> inside of List block */
-    ul: HTMLElement | CSSSelector
+    ul?: HTMLElement | CSSSelector
     /** Will automatically create <ul> element inside of Virtual List block. If disabled, then virtual list can be used on any block element without ul > li structure (default true) */
-    createUl: boolean
+    createUl?: boolean
     /** Array with list items */
-    items: any[]
+    items?: any[]
     /** Amount of rows (items) to be rendered before current screen scroll position. By default it is equal to double amount of rows (items) that fit to screen */
-    rowsBefore: number
+    rowsBefore?: number
     /** Amount of rows (items) to be rendered after current screen scroll position. By default it is equal to the amount of rows (items) that fit to screen */
-    rowsAfter: number
+    rowsAfter?: number
     /** Number of items per row. Doesn't compatible when using Virtual List with dynamic height (default 1) */
-    cols: number
+    cols?: number
     /** If number - list item height in px. If function then function should return item height. By default equals to 44 for iOS theme and 48 for MD theme */
-    height: number | Function
+    height?: number | Function
     /** Template7 string template or Template7 compiled template that used to render single item. Template should contain full HTML layout for single item, including wrapping <li></li> tags */
-    itemTemplate: string | Function
+    itemTemplate?: string | Function
     /** This optional function allows to use custom function to render item HTML. It could be used instead of template parameter */
-    renderItem(item: any) : string
+    renderItem?(item: any) : string
     /** This optional function allows to render DOM items using some custom method. Useful in case it is used (e.g.) with Vue/React plugin to pass DOM rendering and manipulation to Vue/React. renderParameters conaints object with the following properties: fromIndex, toIndex, listHeight, topPosition, items */
-    renderExternal(renderParameters: VirtualListRenderData) : void
+    renderExternal?(renderParameters: VirtualListRenderData) : void
     /** Defines list item template for the case if empty data passed */
-    emptyTemplate: string
+    emptyTemplate?: string
     /** This parameter allows to control buffer size on Virtual Lists with dynamic height (when height parameter is function) as a buffer size multiplier (default 1) */
-    dynamicHeightBufferSize: number
+    dynamicHeightBufferSize?: number
     /** Disable or enable DOM cache for already rendered list items. In this case each item will be rendered only once and all futher manipulations will be with DOM element. It is useful if your list items have some user interaction elements (like form elements or swipe outs) or could be modified (default true) */
-    cache: boolean
+    cache?: boolean
     /** Is the current device updates and handles scroll events during scroll. By default (if not specified) it is "false" for all iOS devices with iOS version less than 8 */
-    updatableScroll: boolean
+    updatableScroll?: boolean
     /** Will set height on list block if enabled (default true) */
-    setListHeight: boolean
+    setListHeight?: boolean
     /** Option to show filtered items only set by `filter()` method (default false) */
-    showFilteredItemsOnly: boolean
+    showFilteredItemsOnly?: boolean
     /** Search function that will be used by Searchbar, it receives search query, item itself and item index. If item matches to search query you need to return true, otherwise this function should return false */
-    searchByItem(query: string, item: any, index: number): boolean
+    searchByItem?(query: string, item: any, index: number): boolean
     /** Search function that will be used by Searchbar, it receives search query and array with all items. You need to loop through items and return array with indexes of matched items */
-    searchAll(query: string, items: any[]): any[]
+    searchAll?(query: string, items: any[]): any[]
     /** Object with events handlers.. */
-    on: {
+    on?: {
       [event in keyof Events] : Events[event]
     }
   }
@@ -126,7 +126,7 @@ export namespace VirtualList {
     }
   }
   interface AppParams {
-    virutalList: Parameters
+    virutalList?: Parameters | undefined
   }
   interface AppEvents {
     vlItemBeforeInsert: (virutalList: VirtualList, itemEl: HTMLElement, item: any) => void

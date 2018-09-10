@@ -14,7 +14,7 @@ export namespace Input {
   interface AppMethods {
     input: {
       /** Scroll input into view */
-      scrollIntoView(inputEl : HTMLElement | CSSSelector, durationMS: number, centered : boolean, force : boolean) : void
+      scrollIntoView(inputEl : HTMLElement | CSSSelector, durationMS?: number, centered? : boolean, force? : boolean) : void
       /** Will add additional required styles and classes on input like when it is focused*/
       focus(inputEl : HTMLElement | CSSSelector) : void
       /** Will remove additional required styles and classes on input like when it loses focus */
@@ -30,7 +30,7 @@ export namespace Input {
     }
   }
   interface AppParams {
-    input: {
+    input?: {
       /** When enabled will scroll input into view on input focus. By default it is enabled for android devices only, as it helps to solve issue when on-screen keyboard may overlap the input. */
       scrollIntoViewOnFocus?: boolean
       /** Tweaks behavior of previous parameter to scroll input into the center of view on input focus. (default false) */
@@ -39,7 +39,7 @@ export namespace Input {
       scrollIntoViewDuration?: number
       /** When enabled will scroll input into view no matter is it outside of view or not. (default false) */
       scrollIntoViewAlways?: boolean
-    }
+    } | undefined
   }
   interface AppEvents {
 

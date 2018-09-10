@@ -30,17 +30,16 @@ export namespace Swipeout {
     }
   }
   interface AppParams {
-    swipeout: {
+    swipeout?: {
       /** Fallback option for potentially better performance on old/slow devices. If you enable it, then swipeout item will not follow your finger during touch, it will be automatically opened/closed on swipe left/right. (default false) */
-      noFollow: boolean
+      noFollow?: boolean
       /** When disabled, then framework will not remove swipeout element from DOM on "swipeout-delete" click. Useful to enable if you use another library like Vue or React to manage (remove) swipeout items (default true) */
-      removeElements: boolean
+      removeElements?: boolean
       /** When enabled, then framework will remove swipeout element from DOM on "swipeout-delete" click after specified delay (default false) */
-      removeElementsWithTimeout: boolean
+      removeElementsWithTimeout?: boolean
       /** Delay in ms to remove swipeout item if removeElementsWithTimeout is enabled */
-      removeElementsTimeout: number
-    }
-
+      removeElementsTimeout?: number
+    } | undefined
   }
   interface AppEvents {
     /** Event will be triggered while you move swipeout element */

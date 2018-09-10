@@ -1,6 +1,10 @@
 import { Dom7, Dom7Instance } from 'Dom7'
 import Template7 from 'Template7'
 import { Router } from '../../modules/router/router';
+import Device, { Device as DeviceInterface } from '../../utils/device';
+import Request, { Request as RequestInterface } from '../../utils/request';
+import Support, { Support as SupportInterface } from '../../utils/support';
+import Utils, { Utils as UtilsInterface } from '../../utils/utils';
 
 // Css Selector string is an option on many F7 methods
 // Giving this alias makes the typename show in the intellisense
@@ -35,29 +39,29 @@ export interface Framework7EventsClass<Events> {
 
 export interface Framework7Params {
   /** App root element. If you main app layout is not a direct child of the <body> then it is required to specify root element here. (default body) */
-  root : string
+  root? : string
   /** App bundle id.. (default io.framework7.testapp) */
-  id : string | 'io.framework7.testapp'
+  id? : string | 'io.framework7.testapp'
   /** App name. Can be used by other components, e.g. as the default title for Dialog component.. (default Framework7) */
-  name : string
+  name? : string
   /** App version. Can be used by other components.. (default 1.0.0) */
-  version : string
+  version? : string
   /** App theme. Can be ios, md or auto. In case of auto it will use iOS theme for iOS devices and MD theme for all other devices.. (default auto) */
-  theme : string
+  theme? : string
   /** App language. Can be used by other components. By default equal to the current browser/webview language (i.e. navigator.language).. */
-  language : string
+  language? : string
   /** Array with default routes to all views.. (default []) */
-  routes : Router.RouteParameters[]
+  routes? : Router.RouteParameters[]
   /** App root data. Must be a function that returns an object with root data.  Note, that this inside of this data function points to app Framework7 instance.. */
-  data : () => any
+  data? : () => any
   /** App root methods. Object with methods.  Note, that this inside of each method points to app Framework7 instance.. (default {}) */
-  methods : { [name : string] : () => any }
+  methods? : { [name : string] : () => any }
   /** By default Framework7 will be initialized automatically when you call new Framework7(). If you want to prevent this behavior you can disable it with this option and then initialize it manually with init() when you need it.. (default true) */
-  init : boolean
+  init? : boolean
   /** If automatic initialization is enabled with init: true parameter and app is running under cordova environment then it will be initialized on deviceready event.. (default true) */
-  initOnDeviceReady : boolean
+  initOnDeviceReady? : boolean
   /** Object with events handlers.. (default {}) */
-  on: {
+  on?: {
     [event in keyof Framework7Events] : Framework7Events[event]
   }
 
@@ -143,6 +147,10 @@ declare class Framework7 implements Framework7 {
   constructor(parameters?: Framework7Params);
 
   static use(plugin : Framework7Plugin) : void;
+  static device: DeviceInterface = Device;
+  static request: RequestInterface = Request;
+  static support: SupportInterface = Support;
+  static utils: UtilsInterface = Utils;
 }
 
 export default Framework7;

@@ -16,7 +16,7 @@ export namespace Navbar {
     }
   }
   interface AppParams {
-    navbar: {
+    navbar?: {
       /** Will hide Navbars on page scroll. (default false) */
       hideOnPageScroll?: boolean
       /** Set to true to show hidden Navbar when scrolling reaches end of the page. (default true) */
@@ -27,7 +27,7 @@ export namespace Navbar {
       scrollTopOnTitleClick?: boolean
       /** When enabled then it will try to position title at the center in iOS theme. Sometime (with some custom design) it may not needed. This will have effect only in iOS theme. (default true) */
       iosCenterTitle?: boolean
-    }
+    } | undefined
   }
   interface AppEvents {
 

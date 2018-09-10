@@ -61,22 +61,18 @@ export namespace LoginScreen {
     loginScreen: {
       /** create LoginScreen instance */
       create(parameters : Parameters) : LoginScreen
-
       /** destroy LoginScreen instance */
       destroy(el : HTMLElement | CSSSelector | LoginScreen) : void
-
       /** get LoginScreen instance by HTML element */
       get(el : HTMLElement | CSSSelector) : LoginScreen
-
       /** open LoginScreen */
       open(el : HTMLElement | CSSSelector, animate?: boolean) : LoginScreen
-
       /** closes LoginScreen */
       close(el : HTMLElement | CSSSelector, animate?: boolean) : LoginScreen
     }
   }
   interface AppParams {
-
+    loginScreen?: Parameters | undefined
   }
   interface AppEvents {
     /** Event will be triggered when LoginScreen starts its opening animation. As an argument event handler receives loginScreen instance */

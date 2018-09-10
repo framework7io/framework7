@@ -44,7 +44,7 @@ export namespace Searchbar {
     /** Enables expandable searchbar */
     expandable?: boolean
     /** Object with events handlers.. */
-    on: {
+    on?: {
       [event in keyof Events] : Events[event]
     }
   }
@@ -130,7 +130,7 @@ export namespace Searchbar {
     }
   }
   interface AppParams {
-    searchbar: Parameters
+    searchbar?: Parameters | undefined
   }
   interface AppEvents {
     /** Event will be triggered during search (search field change). As an argument event handler receives searchbar instance, current query and previous query */

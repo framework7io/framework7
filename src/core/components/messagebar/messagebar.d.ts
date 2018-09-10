@@ -56,7 +56,7 @@ export namespace Messagebar {
     /** CSS selector or HTML element of messagebar element (div class="messagebar"). */
     el: HTMLElement | CSSSelector
     /** CSS selector or HTML element of messagebar textarea element. By default (if not passed) will try to look for textarea inside of messagebar. */
-    textareaEl: HTMLElement | CSSSelector
+    textareaEl?: HTMLElement | CSSSelector
     /** Max height of textarea when it resized depending on amount of its text. (default null) */
     maxHeight?: number
     /** Array with attachments. For example ['path/to/image1.png', 'path/to/image2.png']. (default []) */
@@ -64,14 +64,14 @@ export namespace Messagebar {
     /** Disable if you don't want to resize messages page when messagebar textarea size changed. (default true) */
     resizePage?: boolean
     /** Object with events handlers.. */
-    on: {
+    on?: {
       [event in keyof Events] : Events[event]
     }
 
     /** Function to render attachments block. Must return full attachments HTML string. */
-    renderAttachments: (attachments : string[]) => string
+    renderAttachments?: (attachments : string[]) => string
     /** Function to render single attachment. Must return full attachment HTML string. */
-    renderAttachment: (attachment : string) => string
+    renderAttachment?: (attachment : string) => string
   }
 
   interface Events {
@@ -120,7 +120,7 @@ export namespace Messagebar {
     }
   }
   interface AppParams {
-    messagebar: Parameters
+    messagebar?: Parameters | undefined
   }
   interface AppEvents {
     /** Event will be triggered after messagebar textarea value changed. As an argument event handler receives messagebar instance */

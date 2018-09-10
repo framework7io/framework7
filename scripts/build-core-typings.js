@@ -6,6 +6,7 @@
 const gulp = require('gulp');
 const fs = require('fs');
 const modifyFile = require('gulp-modify-file');
+const rename = require('gulp-rename');
 const getOutput = require('./get-core-output.js');
 
 function capitalize(name) {
@@ -29,6 +30,7 @@ function buildTypings(cb) {
     return fs.existsSync(`./src/core/components/${file}/${file}.d.ts`);
   });
 
+
   gulp.src('./src/core/framework7.d.ts')
     .pipe(modifyFile((content) => {
       const importModules = modules.map((f7Module) => {
@@ -50,11 +52,16 @@ function buildTypings(cb) {
         ].join('\n  ');
       });
 
-      return content
+      // eslint-disable-next-line
+      content = content
         .replace(/\/\/ IMPORT_MODULES/, importModules.join('\n'))
         .replace(/\/\/ IMPORT_COMPONENTS/, importComponents.join('\n'))
         .replace(/\/\/ INSTALL/, install.join('\n  '));
+
+      return content;
     }))
+    .pipe(gulp.dest(`${output}/`))
+    .pipe(rename((file) => { file.basename = 'framework7.esm.bundle.d'; }))
     .pipe(gulp.dest(`${output}/`))
     .on('end', cb);
 }

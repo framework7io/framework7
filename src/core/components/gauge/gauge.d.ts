@@ -56,7 +56,7 @@ export namespace Gauge {
     /** Label text font weight. (default 400) */
     labelFontWeight?: string
     /** Object with events handlers.. */
-    on: {
+    on?: {
       [event in keyof Events] : Events[event]
     }
   }
@@ -83,7 +83,7 @@ export namespace Gauge {
     }
   }
   interface AppParams {
-
+    gauge?: Parameters | undefined
   }
   interface AppEvents {
     /** Event will be triggered right before Gauge instance will be destroyed. As an argument event handler receives Gauge instance */

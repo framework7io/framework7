@@ -13,14 +13,14 @@ export namespace Toolbar {
     }
   }
   interface AppParams {
-    toolbar: {
+    toolbar?: {
       /** Will hide Toolbars/Tabbars on page scroll (default false) */
-      hideOnPageScroll: boolean
+      hideOnPageScroll?: boolean
       /** Set to true to show hidden Toolbar/Tabbar when scrolling reaches end of the page (default true) */
-      showOnPageScrollEnd: boolean
+      showOnPageScrollEnd?: boolean
       /** Set to false and hidden Toolbar/Tabbar will not become visible when you scroll page to top everytime. They will become visible only at the most top scroll position, in the beginning of the page (default true)  */
-      showOnPageScrollTop: boolean
-    },
+      showOnPageScrollTop?: boolean
+    } | undefined
   }
   interface AppEvents {
     /** Event will be triggered when Tab becomes visible/active */

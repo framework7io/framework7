@@ -55,7 +55,7 @@ export namespace Dialog {
 
   interface Parameters {
     /** Dialog element. Can be useful if you already have Dialog element in your HTML and want to create new instance using this element. */
-    el: HTMLElement
+    el?: HTMLElement
     /** Enables Dialog backdrop (dark semi transparent layer behind). (default true) */
     backdrop?: boolean
     /** When enabled, dialog will be closed on backdrop click. (default true) */
@@ -63,11 +63,11 @@ export namespace Dialog {
     /** Whether the Dialog should be opened/closed with animation or not. Can be overwritten in .open() and .close() methods. (default true) */
     animate?: boolean
     /** Dialog title. */
-    title: string
+    title?: string
     /** Dialog inner text. */
-    text: string
+    text?: string
     /** Custom Dialog content that follows dialog text. */
-    content: string
+    content?: string
     /** Array with dialog buttons. (default []) */
     buttons?: Button[]
     /** Enables vertical buttons layout. (default false) */
@@ -75,11 +75,11 @@ export namespace Dialog {
     /** When enabled will automatically destroy Dialog on close. (default false) */
     destroyOnClose?: boolean
     /** Callback function that will be executed after click on the Dialog button. As an arguments it received dialog instance and clicked button index number. */
-    onClick: (dialog : Dialog, index : number) => void
+    onClick?: (dialog : Dialog, index : number) => void
     /** Additional css class to add. */
-    cssClass: string
+    cssClass?: string
     /** Object with events handlers.. */
-    on: {
+    on?: {
       [event in keyof Events] : Events[event]
     }
   }
@@ -159,7 +159,7 @@ export namespace Dialog {
     }
   }
   interface AppParams {
-    dialog: {
+    dialog?: {
       /** Default dialogs shortcuts title. If not specified, will be equal to app.name. */
       title? : string
       /** Default "OK" button text. (default OK) */
@@ -178,7 +178,7 @@ export namespace Dialog {
       destroyPredefinedDialogs?: boolean
       /** Enables keyboard shortcuts (Enter and Esc) keys for predefined dialogs (Alert, Confirm, Prompt, Login, Password) "Ok" and "Cancel" buttons. (default true) */
       keyboardActions?: boolean
-    }
+    } | undefined
   }
   interface AppEvents {
     /** Event will be triggered when Dialog starts its opening animation. As an argument event handler receives dialog instance */

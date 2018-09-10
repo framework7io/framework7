@@ -18,28 +18,28 @@ export namespace Toast {
   }
   interface Parameters {
     /** Toast element. Can be useful if you already have Toast element in your HTML and want to create new instance using this element. */
-    el: HTMLElement | CSSSelector
+    el?: HTMLElement | CSSSelector
     /** Toast icon HTML layout, e.g. <i class="f7-icons">home</i> or image <img src="path/to/icon.png"> */
-    icon: string
+    icon?: string
     /** Toast inner text */
-    text: string
+    text?: string
     /** Toast position. Can be bottom, center or top (default bottom) */
-    position: 'top' | 'center' | 'bottom'
+    position?: 'top' | 'center' | 'bottom'
     /** Adds toast close button (default false) */
-    closeButton: boolean
+    closeButton?: boolean
     /** One of the default color themes */
-    closeButtonColor: string
+    closeButtonColor?: string
     /** Close button text (default Ok) */
-    closeButtonText: string
+    closeButtonText?: string
     /** Additional css class to add */
-    cssClass: string
+    cssClass?: string
     /** Destroys toast instance on close (default false) */
-    destroyOnClose: boolean
+    destroyOnClose?: boolean
     /** Custom function to render Toast. Must return toast html */
-    render: () => string
+    render?: () => string
 
     /** Object with events handlers.. */
-    on: {
+    on?: {
       [event in keyof Events] : Events[event]
     }
   }
@@ -88,7 +88,7 @@ export namespace Toast {
     }
   }
   interface AppParams {
-    toast: Parameters
+    toast?: Parameters | undefined
   }
   interface AppEvents {
     /** Event will be triggered when user clicks on Toast close button. As an argument event handler receives toast instance */

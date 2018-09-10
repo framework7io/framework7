@@ -39,7 +39,7 @@ export namespace Popover {
     targetHeight?: number
 
     /** Object with events handlers.. */
-    on: {
+    on?: {
       [event in keyof Events] : Events[event]
     }
   }
@@ -97,7 +97,7 @@ export namespace Popover {
     }
   }
   interface AppParams {
-    popover: Parameters
+    popover?: Parameters | undefined
   }
   interface AppEvents {
     /** Event will be triggered when Popover starts its opening animation. As an argument event handler receives popover instance */

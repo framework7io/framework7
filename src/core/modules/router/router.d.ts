@@ -5,45 +5,45 @@ import { View } from '../../components/view/view';
 export namespace Router {
   interface Component {
     /** Template7 template string. Will be compiled as Template7 template */
-    template : string
+    template? : string
     /** Render function to render component. Must return full html string or HTMLElement */
-    render : () => string | HTMLElement
+    render? : () => string | HTMLElement
     /** Component data, function must return component context data */
-    data : () => any
+    data? : () => any
     /** Component CSS styles. Styles will be added to the document after component will be mounted (added to DOM), and removed after component will be destroyed (removed from the DOM) */
-    style : string
+    style? : string
     /** Object with additional component methods which extend component context */
-    methods : { [name : string] : () => any }
+    methods? : { [name : string] : () => any }
     /** Object with page events handlers */
-    on : { [event : string] : () => void }
+    on? : { [event : string] : () => void }
 
     /** Called synchronously immediately after the component has been initialized, before data and event/watcher setup. */
-    beforeCreate : () => void
+    beforeCreate? : () => void
     /** Called synchronously after the component is created, context data and methods are available and component element $el is also created and available */
-    created : () => void
+    created? : () => void
     /** Called right before component will be added to DOM */
-    beforeMount : () => void
+    beforeMount? : () => void
     /** Called right after component was be added to DOM */
-    mounted : () => void
+    mounted? : () => void
     /** Called right after component VDOM has been patched */
-    updated : () => void
+    updated? : () => void
     /** Called right before component will be destoyed */
-    beforeDestroy : () => void
+    beforeDestroy? : () => void
     /** Called when component destroyed */
-    destroyed : () => void
+    destroyed? : () => void
   }
   interface RouteParameters {
     /** Route name, e.g. home */
-    name: string
+    name?: string
     /** Route path. Means this route will be loaded when we click link that match to this path, or can be loaded by this path using API */
     path: string
     /** Object with additional route options (optional) */
-    options: RouteOptions
+    options?: RouteOptions
     /** Array with nested routes */
-    routes: RouteParameters[]
+    routes?: RouteParameters[]
 
     /** Load page from DOM by passed HTMLElement */
-    el: HTMLElement | CSSSelector
+    el?: HTMLElement | CSSSelector
     /** Load page from DOM that has same data-name attribute */
     pageName?: string;
     /** Creates dynamic page from specified content string */
@@ -53,39 +53,39 @@ export namespace Router {
     /** Load page content from passed Template7 template string or function */
     template?: string | Function
     /** Load page content from url via Ajax, and compile it using Template7 */
-    templateUrl: string
+    templateUrl?: string
     /** Load page from passed Framework7 Router Component */
-    component: Component
+    component?: Component
     /** load pages as a component via Ajax */
-    componentUrl: string
+    componentUrl?: string
     /** Do required asynchronous manipulation and the return required route content and options */
-    async(routeTo: Route, routeFrom: Route, resolve: Function, reject: Function): void
+    async?(routeTo: Route, routeFrom: Route, resolve: Function, reject: Function): void
 
     /** tab id */
-    id: string
+    id?: string
     /** Array with tab routes */
-    tabs: RouteParameters[]
+    tabs?: RouteParameters[]
     /** Action Sheet route */
-    actions: RouteParameters
+    actions?: RouteParameters
     /** Popup route */
-    popup: RouteParameters
+    popup?: RouteParameters
     /** Login screen route */
-    loginScreen: RouteParameters
+    loginScreen?: RouteParameters
     /** Popover route */
-    popover: RouteParameters
+    popover?: RouteParameters
     /** Sheet route */
-    sheet: RouteParameters
+    sheet?: RouteParameters
     /** Panel route */
-    panel: RouteParameters
+    panel?: RouteParameters
 
     /** Route alias, or array with route aliases. We need to specify here alias path */
-    alias: string | any[]
+    alias?: string | any[]
     /** Route redirect. We need to specify here redirect url (not path) */
-    redirect: string | ((routeTo: Route, resolve: Function, reject: Function) => void)
+    redirect?: string | ((routeTo: Route, resolve: Function, reject: Function) => void)
     /** Function (or array of functions) that will be executed before route load/enter. To proceed route loading resolve must be called. In case of array then every function in array must be resolved to proceed */
-    beforeEnter: Function[] | ((routeTo: Route, routeFrom: Route, resolve: Function, reject: Function) => void)
+    beforeEnter?: Function[] | ((routeTo: Route, routeFrom: Route, resolve: Function, reject: Function) => void)
     /** Function (or array of functions) that will be executed before route unload/leave. To proceed navigation resolve must be called. In case of array then every function in array must be resolved to proceed */
-    beforeLeave: Function[] | ((routeTo: Route, routeFrom: Route, resolve: Function, reject: Function) => void)
+    beforeLeave?: Function[] | ((routeTo: Route, routeFrom: Route, resolve: Function, reject: Function) => void)
   }
   interface RouteOptions {
     /** whether the page should be animated or not (overwrites default router settings) */

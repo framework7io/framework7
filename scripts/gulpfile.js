@@ -29,7 +29,7 @@ gulp.task('core-less', buildCoreLess);
 gulp.task('core-components', buildCoreComponents);
 gulp.task('phenome', buildPhenome);
 
-gulp.task('build-core', ['core-js', 'core-typings', 'core-less', 'core-components']);
+gulp.task('build-core', ['core-js', 'core-components', 'core-typings', 'core-less']);
 gulp.task('build-react', buildReact);
 gulp.task('build-vue', buildVue);
 

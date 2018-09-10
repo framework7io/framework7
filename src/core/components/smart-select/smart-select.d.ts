@@ -20,61 +20,61 @@ export namespace SmartSelect {
     /** Smart Select element. Can be useful if you already have Smart Select element in your HTML and want to create new instance using this element */
     el: HTMLElement | CSSSelector
     /** Link to initialized View instance which is required for Smart Select to work. By default, if not specified, it will be opened in parent View. */
-    view: View.View
+    view?: View.View
     /** Visual element where to insert selected value. If not passed then it will look for <div class="item-after"> element */
-    valueEl: HTMLElement | CSSSelector
+    valueEl?: HTMLElement | CSSSelector
     /** Defines how to open Smart Select. Can be page or popup or popover or sheet (default is "page") */
-    openIn: 'page' | 'popup' | 'popover' | 'sheet'
+    openIn?: 'page' | 'popup' | 'popover' | 'sheet'
     /** Smart select page title. If not passed then it will be the <div class="item-title"> text */
-    pageTitle: string
+    pageTitle?: string
     /** Smart select Page back link text (default 'Back') */
-    pageBackLinkText: string
+    pageBackLinkText?: string
     /** Smart select Popup close link text (default 'Close') */
-    popupCloseLinkText: string
+    popupCloseLinkText?: string
     /** Smart select Sheet close link text (default 'Done') */
-    sheetCloseLinkText: string
+    sheetCloseLinkText?: string
     /** Enables Searchbar on smart select page. If passed as object then it should be valid Searchbar parameters (default false) */
-    searchbar: boolean | Searchbar.Parameters
+    searchbar?: boolean | Searchbar.Parameters
     /** Searchbar placeholder text (default 'Search') */
-    searchbarPlaceholder: string
+    searchbarPlaceholder?: string
     /** Searchbar "cancel" link text. Has effect only in iOS theme (default 'Cancel') */
-    searchbarDisableText: string
+    searchbarDisableText?: string
     /** Appends block with content that displayed when there are no Searchbar results (default false) */
-    appendSearchbarNotFound: boolean | string | HTMLElement
+    appendSearchbarNotFound?: boolean | string | HTMLElement
     /** If enabled then smart select will be automatically closed after user selectes any option (default false) */
-    closeOnSelect: boolean
+    closeOnSelect?: boolean
     /** Enable Virtual List for smart select if your select has a lot (hundreds, thousands) of options (default false) */
-    virtualList: boolean
+    virtualList?: boolean
     /** Virtual list item height. If number - list item height in px. If function then function should return item height */
-    virtualListHeight: number | Function
+    virtualListHeight?: number | Function
     /** Smart select page form color theme. One of the default colors */
-    formColorTheme: string
+    formColorTheme?: string
     /** Smart select navbar color theme. One of the default colors */
-    navbarColorTheme: string
+    navbarColorTheme?: string
     /** Will add opened smart select modal (when openIn is popup, popover or sheet) to router history which gives ability to close smart select by going back in router history and set current route to the smart select modal (default true) */
-    routableModals: boolean
+    routableModals?: boolean
     /** Smart select page/modal URL that will be set as a current route (default 'select/') */
-    url: string
+    url?: string
     /** Additional CSS class name to be set on Smart Select container (Page, Popup, Popover or Sheet) */
-    cssClass: string
+    cssClass?: string
 
     /** Function to render smart select page, must return full page HTML string */
-    renderPage: (items: any[]) => string,
+    renderPage?: (items: any[]) => string,
     /** Function to render smart select popup, must return full popup HTML string */
-    renderPopup: (items: any[]) => string,
+    renderPopup?: (items: any[]) => string,
     /** Function to render smart select sheet, must return full sheet HTML string */
-    renderSheet: (items: any[]) => string,
+    renderSheet?: (items: any[]) => string,
     /** Function to render smart select popover, must return full popover HTML string */
-    renderPopover: (items: any[]) => string,
+    renderPopover?: (items: any[]) => string,
     /** Function to render all smart select items, must return all items HTML string */
-    renderItems: (items: any[]) => string,
+    renderItems?: (items: any[]) => string,
     /** Function to render smart select item, must return item HTML string */
-    renderItem: (item: any, index: number) => string,
+    renderItem?: (item: any, index: number) => string,
     /** Function to render smart select searchbar dropdown, must return searchbar HTML string */
-    renderSearchbar: () => string,
+    renderSearchbar?: () => string,
 
     /** Object with events handlers.. */
-    on: {
+    on?: {
       [event in keyof Events] : Events[event]
     }
   }
@@ -135,7 +135,7 @@ export namespace SmartSelect {
     }
   }
   interface AppParams {
-    smartSelect: Parameters
+    smartSelect?: Parameters | undefined
   }
   interface AppEvents {
     /** Event will be triggered when Smart Select starts its opening animation. As an argument event handler receives smart select instance */

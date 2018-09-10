@@ -78,15 +78,15 @@ export namespace Calendar {
     /** Calendar type, can be gregorian or jalali. (default gregorian) */
     calendarType?: string
     /** Array with initial selected dates. Each array item represents selected date. */
-    value: Date[]
+    value?: Date[]
     /** Additonal disabled dates. Parameter accepts so called Date Range (look below for details). */
-    disabled: DateRange
+    disabled?: DateRange
     /** Dates with events. Will be marked with additonal "dot" on calendar day. Parameter accepts so called Date Range (look below for details).. */
-    events: DateRange | (Extract<DateRange, {}> & { color: string })
+    events?: DateRange | (Extract<DateRange, {}> & { color: string })
     /** Date ranges you want to add custom CSS class for additional styling. Look below for accepted format. */
-    rangesClasses: RangeClass[]
+    rangesClasses?: RangeClass[]
     /** Function to format input value, should return new/formatted string value. values is array where each item represents selected date. */
-    formatValue: (values : Date) => string
+    formatValue?: (values : Date) => string
     /** Array with full month names. (default ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August' , 'September' , 'October', 'November', 'December']) */
     monthNames?: string[]
     /** Array with short month names. (default ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']) */
@@ -146,17 +146,17 @@ export namespace Calendar {
 
     // Container/opener-specific parameters
     /** String with CSS selector or HTMLElement where to place generated Calendar HTML. Use only for inline calendar. */
-    containerEl: HTMLElement | CSSSelector
+    containerEl?: HTMLElement | CSSSelector
     /** Can be auto, popover (to open calendar in popover), sheet (to open in sheet modal) or customModal (to open in custom Calendar modal overlay). In case of auto will open in sheet modal on small screens and in popover on large screens.. (default auto) */
     openIn?: string
     /** String with CSS selector or HTMLElement with related input element. */
-    inputEl: HTMLElement | CSSSelector
+    inputEl?: HTMLElement | CSSSelector
     /** Scroll viewport (page-content) to input when calendar opened. (default true) */
     scrollToInput?: boolean
     /** Sets "readonly" attribute on specified input. (default true) */
     inputReadOnly?: boolean
     /** Additional CSS class name to be set on calendar element. */
-    cssClass: string
+    cssClass?: string
     /** If enabled, picker will be closed by clicking outside of picker or related input element. (default true) */
     closeByOutsideClick?: boolean
     /** Enables calendar toolbar. (default true) */
@@ -172,27 +172,27 @@ export namespace Calendar {
     /** Calendar modal URL that will be set as a current route. (default date/) */
     url?: string
     /** View where to set routing when routableModals enabled. Defaults to parent view of inputEl or main view if not found parent view. */
-    view: View.View
+    view?: View.View
 
     // render functions
     /** Function to render week header. Must return week header HTML string. */
-    renderWeekHeader: () => string
+    renderWeekHeader?: () => string
     /** Function to render months wrapper. Must return months container full HTML string. */
-    renderMonths: (date : Date) => string
+    renderMonths?: (date : Date) => string
     /** Function to render single month. Must return single month HTML string. */
-    renderMonth: (date : Date, /** ??? */ offset : number) => string
+    renderMonth?: (date : Date, /** ??? */ offset : number) => string
     /** Function to render month selector. Must return month selector HTML string. */
-    renderMonthSelector: () => string
+    renderMonthSelector?: () => string
     /** Function to render year selector. Must return year selector HTML string. */
-    renderYearSelector: () => string
+    renderYearSelector?: () => string
     /** Function to render calendar header. Must return calendar header HTML string. */
-    renderHeader: () => string
+    renderHeader?: () => string
     /** Function to render toolbar. Must return toolbar HTML string. */
-    renderToolbar: () => string
+    renderToolbar?: () => string
     /** Function to render whole calendar. Must return calendar full HTML string. */
-    render: () => string
+    render?: () => string
 
-    on: {
+    on?: {
       [event in keyof Events] : Events[event]
     }
   }
@@ -249,7 +249,7 @@ export namespace Calendar {
     }
   }
   interface AppParams {
-    calendar: Parameters
+    calendar?: Parameters | undefined
   }
   interface AppEvents {
     /** Event will be triggered after click on calendar day element */

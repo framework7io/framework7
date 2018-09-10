@@ -16,13 +16,13 @@ export namespace Sheet {
   }
   interface Parameters {
     /** Sheet Modal element. Can be useful if you already have Sheet Modal element in your HTML and want to create new instance using this element. */
-    el: HTMLElement | CSSSelector
+    el?: HTMLElement | CSSSelector
     /** Full Sheet Modal HTML layout string. Can be useful if you want to create Sheet Modal element dynamically. */
-    content: string
+    content?: string
     /** Enables Sheet Modal backdrop (dark semi transparent layer behind). (default true) */
     backdrop?: boolean
     /** HTML element or string (with CSS selector) of element. If specified, then sheet will try to scroll page content to this element on open */
-    scrollToEl: HTMLElement | CSSSelector
+    scrollToEl?: HTMLElement | CSSSelector
     /** When enabled, Sheet Modal will be closed on backdrop click. (default true) */
     closeByBackdropClick?: boolean
     /** When enabled, sheet will be closed on when click outside of it */
@@ -31,7 +31,7 @@ export namespace Sheet {
     animate?: boolean
 
     /** Object with events handlers.. */
-    on: {
+    on?: {
       [event in keyof Events] : Events[event]
     }
   }
@@ -84,7 +84,7 @@ export namespace Sheet {
     }
   }
   interface AppParams {
-    sheet: Parameters
+    sheet?: Parameters | undefined
   }
   interface AppEvents {
     /** Event will be triggered when Sheet Modal starts its opening animation. As an argument event handler receives sheet instance */

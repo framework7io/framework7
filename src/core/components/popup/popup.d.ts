@@ -16,9 +16,9 @@ export namespace Popup {
   }
   interface Parameters {
     /** Popup element. Can be useful if you already have Popup element in your HTML and want to create new instance using this element. */
-    el: HTMLElement | CSSSelector
+    el?: HTMLElement | CSSSelector
     /** Full Popup HTML layout string. Can be useful if you want to create Popup element dynamically. */
-    content: string
+    content?: string
     /** Enables Popup backdrop (dark semi transparent layer behind). (default true) */
     backdrop?: boolean
     /** When enabled, popup will be closed on backdrop click. (default true) */
@@ -27,7 +27,7 @@ export namespace Popup {
     animate?: boolean
 
     /** Object with events handlers.. */
-    on: {
+    on?: {
       [event in keyof Events] : Events[event]
     }
   }
@@ -80,7 +80,7 @@ export namespace Popup {
     }
   }
   interface AppParams {
-    popup: Parameters
+    popup?: Parameters | undefined
   }
   interface AppEvents {
     /** Event will be triggered when Popup starts its opening animation. As an argument event handler receives popup instance */

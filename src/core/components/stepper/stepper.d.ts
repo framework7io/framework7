@@ -32,7 +32,7 @@ export namespace Stepper {
     /** Number of digits after dot, when in manual input mode */
     buttonsEndInputMode?: boolean
     /** Object with events handlers.. */
-    on: {
+    on?: {
       [event in keyof Events] : Events[event]
     }
   }
@@ -102,7 +102,7 @@ export namespace Stepper {
     }
   }
   interface AppParams {
-    stepper: Parameters
+    stepper?: Parameters | undefined
   }
   interface AppEvents {
     /** Event will be triggered when stepper value has been changed. As an argument event handler receives stepper instance and stepper value */

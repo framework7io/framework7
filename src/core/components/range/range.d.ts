@@ -22,7 +22,7 @@ export namespace Range {
     /** When enabled it is also possible to interact with range slider (change value) on range bar click and swipe (default true) */
     draggableBar?: boolean
     /** Object with events handlers.. */
-    on: {
+    on?: {
       [event in keyof Events] : Events[event]
     }
   }
@@ -92,7 +92,7 @@ export namespace Range {
     }
   }
   interface AppParams {
-    range: Parameters
+    range?: Parameters | undefined
   }
   interface AppEvents {
     /** Event will be triggered when range value has been changed. As an argument event handler receives range instance */

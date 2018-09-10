@@ -24,14 +24,14 @@ export namespace Lazy {
     }
   }
   interface AppParams {
-    lazy: {
+    lazy?: {
       /** Lazy load image placeholder source to show while image is not yet loaded. By default it is 1x1 px image. */
-      placeholder: string
+      placeholder?: string
       /** By default images are loaded when they appear on the screen. Use this parameter if you want to load images earlier. Setting it to 50 will load image when it 50 pixels before it appears on viewport. (default 0) */
       threshold?: number
       /** If enabled, then lazy images will be loaded one by one when they appear in viewport. (default true) */
       sequential?: boolean
-    }
+    } | undefined
   }
   interface AppEvents {
     /** Event will be triggered in the beginning of image file loading. As an argument it receives lazy loading HTML element. */
