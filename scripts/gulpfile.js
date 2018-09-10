@@ -16,6 +16,7 @@ const buildCoreComponents = require('./build-core-components.js');
 const buildPhenome = require('./build-phenome.js');
 const buildVue = require('./build-vue');
 const buildReact = require('./build-react');
+const buildReactTypings = require('./build-react-typings.js');
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -29,8 +30,11 @@ gulp.task('core-less', buildCoreLess);
 gulp.task('core-components', buildCoreComponents);
 gulp.task('phenome', buildPhenome);
 
+gulp.task('react', buildReact);
+gulp.task('react-typings', buildReactTypings);
+
 gulp.task('build-core', ['core-js', 'core-components', 'core-typings', 'core-less']);
-gulp.task('build-react', buildReact);
+gulp.task('build-react', ['react', 'react-typings']);
 gulp.task('build-vue', buildVue);
 
 // Watchers
