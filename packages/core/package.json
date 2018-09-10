@@ -3,6 +3,7 @@
   "version": "3.2.1",
   "description": "Full featured mobile HTML framework for building iOS & Android apps",
   "main": "js/framework7.js",
+  "typings": "framework7.d.ts",
   "jsnext:main": "framework7.esm.js",
   "module": "framework7.esm.js",
   "scripts": {
@@ -39,7 +40,7 @@
   },
   "homepage": "http://framework7.io/",
   "dependencies": {
-    "dom7": "^2.1.0",
+    "dom7": "^2.1.1",
     "path-to-regexp": "^2.4.0",
     "ssr-window": "^1.0.1",
     "template7": "^1.4.0"
