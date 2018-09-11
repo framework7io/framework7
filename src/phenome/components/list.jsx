@@ -23,6 +23,10 @@ export default {
     noHairlinesIos: Boolean,
     noHairlinesBetweenIos: Boolean,
 
+    // Links Chevron (Arrow) Icon
+    noChevron: Boolean,
+    chevronCenter: Boolean,
+
     // Tab
     tab: Boolean,
     tabActive: Boolean,
@@ -145,6 +149,8 @@ export default {
         formStoreData,
         inlineLabels,
         className,
+        noChevron,
+        chevronCenter,
       } = props;
 
       return Utils.classNames(
@@ -171,6 +177,8 @@ export default {
           'no-hairlines-between-ios': noHairlinesBetweenIos,
           'form-store-data': formStoreData,
           'inline-labels': inlineLabels,
+          'no-chevron': noChevron,
+          'chevron-center': chevronCenter,
         },
         Mixins.colorClasses(props),
       );

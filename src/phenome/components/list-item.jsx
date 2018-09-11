@@ -40,6 +40,10 @@ export default {
     smartSelect: Boolean,
     smartSelectParams: Object,
 
+    // Links Chevron (Arrow) Icon
+    noChevron: Boolean,
+    chevronCenter: Boolean,
+
     // Inputs
     checkbox: Boolean,
     radio: Boolean,
@@ -110,6 +114,8 @@ export default {
       itemInputWithInfo,
       inlineLabel,
       sortable,
+      noChevron,
+      chevronCenter,
     } = props;
 
     const isMedia = mediaItem || mediaList || self.state.isMedia;
@@ -211,6 +217,8 @@ export default {
         'accordion-item': accordionItem,
         'accordion-item-opened': accordionItemOpened,
         disabled: disabled && !(radio || checkbox),
+        'no-chevron': noChevron,
+        'chevron-center': chevronCenter,
       },
       Mixins.colorClasses(props),
     );
