@@ -57,6 +57,7 @@ function modalLoad(modalType, route, loadOptions = {}) {
           router.removeModal(modal.el);
         }
         modal.destroy();
+        delete modal.route;
         delete modalRoute.modalInstance;
       });
     });
@@ -76,7 +77,8 @@ function modalLoad(modalType, route, loadOptions = {}) {
 
       // Set Route
       if (options.route !== router.currentRoute) {
-        router.currentRoute = Utils.extend(options.route, { modal });
+        modal.route = Utils.extend(options.route, { modal });
+        router.currentRoute = modal.route;
       }
 
       // Update Router History
