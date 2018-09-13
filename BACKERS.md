@@ -3,6 +3,11 @@
 <table>
   <tr>
     <td align="center" valign="middle">
+      <a href="https://appvalley.vip/" target="_blank">
+        <img width="200" src="https://framework7.io/i/sponsors/appvalley.jpg">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://www.securcom.me/" target="_blank">
         <img width="200" src="https://framework7.io/i/sponsors/securcom.png">
       </a>
@@ -36,6 +41,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ---
 
 ### $100 Silver Sponsor
+Colin Adams ([App Valley](https://appvalley.vip/))
 Pavol Cvengros ([securCom Inc](https://www.securcom.me/))<br>
 Mason Fok ([tommy](http://mytommy.com))<br>
 Juergen Schimmoeller
