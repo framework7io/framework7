@@ -8,7 +8,7 @@ const modifyFile = require('gulp-modify-file');
 const rename = require('gulp-rename');
 
 const typesImports = `
-import React from 'react';
+import Vue from 'vue';
 import { Dom7 } from 'dom7';
 import Framework7 from 'framework7';
 import { Framework7Plugin } from 'framework7/components/app/app-class';
@@ -45,15 +45,15 @@ interface Framework7Extensions {
   }
 }
 
-declare module 'react' {
-  interface Component extends Framework7Extensions {}
+declare module 'vue/types/vue' {
+  interface Vue extends Framework7Extensions {}
 }
 `.trim();
 
 function buildTypings(cb) {
   const env = process.env.NODE_ENV || 'development';
-  const output = `${env === 'development' ? './build' : './packages'}/react`;
-  gulp.src(`${output}/framework7-react.esm.js`)
+  const output = `${env === 'development' ? './build' : './packages'}/vue`;
+  gulp.src(`${output}/framework7-vue.esm.js`)
     .pipe(modifyFile((content) => {
       const firstImport = content.indexOf('import');
       const firstExport = content.indexOf('export');
@@ -70,16 +70,19 @@ ${content.substring(firstExport)}
 `.trim();
       // Replace Plugin Import/Export
       content = content
-        .replace('import Framework7React from \'./utils/plugin\';', '')
-        .replace('export default Framework7React;', [
-          'declare const Framework7React: Framework7Plugin;',
-          'export default Framework7React;',
+        .replace('import Framework7Vue from \'./utils/plugin\';', '')
+        .replace('export default Framework7Vue;', [
+          'declare const Framework7Vue: Framework7Plugin;',
+          'export default Framework7Vue;',
         ].join('\n'));
+
       return `${content}\n`;
     }))
-    .pipe(rename((file) => { file.basename = 'framework7-react.d'; file.extname = '.ts'; }))
+    .pipe(rename((file) => { file.basename = 'framework7-vue.d'; file.extname = '.ts'; }))
     .pipe(gulp.dest(`${output}/`))
-    .pipe(rename((file) => { file.basename = 'framework7-react.esm.d'; }))
+    .pipe(rename((file) => { file.basename = 'framework7-vue.esm.d'; }))
+    .pipe(gulp.dest(`${output}/`))
+    .pipe(rename((file) => { file.basename = 'framework7-vue.esm.bundle.d'; }))
     .pipe(gulp.dest(`${output}/`))
     .on('end', cb);
 }
