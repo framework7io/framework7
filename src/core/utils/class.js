@@ -43,7 +43,7 @@ class Framework7Class {
     events.split(' ').forEach((event) => {
       if (typeof handler === 'undefined') {
         self.eventsListeners[event] = [];
-      } else {
+      } else if (self.eventsListeners[event]) {
         self.eventsListeners[event].forEach((eventHandler, index) => {
           if (eventHandler === handler) {
             self.eventsListeners[event].splice(index, 1);
