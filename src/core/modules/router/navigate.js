@@ -529,7 +529,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
 }
 function navigate(navigateParams, navigateOptions = {}) {
   const router = this;
-  if (router.swipeBackActive) return;
+  if (router.swipeBackActive) return router;
   let url;
   let createRoute;
   let name;

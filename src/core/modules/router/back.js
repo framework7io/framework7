@@ -392,7 +392,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
 }
 function back(...args) {
   const router = this;
-  if (router.swipeBackActive) return;
+  if (router.swipeBackActive) return router;
   let navigateUrl;
   let navigateOptions;
   let route;
