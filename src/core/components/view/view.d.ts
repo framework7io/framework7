@@ -39,10 +39,6 @@ export namespace View {
     stackPages?: boolean
     /**	CSS Selector of another view or object with initialized View instance. By defaul all links in initialized (only) view will load pages in this view. This tell links to load pages in other view. */
     linksView?: CSSSelector | View
-    /**	Set to true and App will keep View's navigation history unique, it will also remove duplicated pages. By default, equal to the same App's parameter. */
-    uniqueHistory?: boolean
-    /**	Use this parameter in addition to uniqueHistory. Set to true and App will ignore URL GET parameters when cheking its uniqueness. So the URLs like "page.html" and "page.html?id=3" will be treated as the same. By default, equal to the same App's parameter. */
-    uniqueHistoryIgnoreGetParameters?: boolean
     /**	You may enable this parameter to allow loading of new pages that have same url as currently "active" page in View. */
     allowDuplicateUrls?: boolean
     /**	Enables transitions between pages */

@@ -24,8 +24,6 @@ export default {
     xhrCacheIgnoreGetParameters: Boolean,
     xhrCacheDuration: Number,
     preloadPreviousPage: Boolean,
-    uniqueHistory: Boolean,
-    uniqueHistoryIgnoreGetParameters: Boolean,
     allowDuplicateUrls: Boolean,
     reloadPages: Boolean,
     removeElements: Boolean,
