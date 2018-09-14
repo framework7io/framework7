@@ -225,7 +225,7 @@ class Router extends Framework7Class {
     if (dynamicNavbar) {
       // Prepare Navbars
       animateNavbars(0);
-      Utils.nextTick(() => {
+      Utils.nextFrame(() => {
         // Add class, start animation
         animateNavbars(1);
         router.$el.addClass(routerTransitionClass);
@@ -372,12 +372,12 @@ class Router extends Framework7Class {
         onDone();
         return;
       }
-      Utils.nextFrame(render);
+      Utils.requestAnimationFrame(render);
     }
 
     router.$el.addClass(routerTransitionClass);
 
-    Utils.nextFrame(render);
+    Utils.requestAnimationFrame(render);
   }
 
   animate(...args) {

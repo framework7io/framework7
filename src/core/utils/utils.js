@@ -197,7 +197,9 @@ const Utils = {
     return setTimeout(callback, delay);
   },
   nextFrame(callback) {
-    return Utils.requestAnimationFrame(callback);
+    return Utils.requestAnimationFrame(() => {
+      Utils.requestAnimationFrame(callback);
+    });
   },
   now() {
     return Date.now();

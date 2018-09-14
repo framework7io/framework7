@@ -71,12 +71,13 @@ const Fab = {
       .transform(`translate3d(${-diffX}px, ${-diffY}px, 0)`);
     $fabEl.transitionEnd(() => {
       $targetEl.transition('');
-      Utils.nextTick(() => {
+      Utils.nextFrame(() => {
         $targetEl.css('opacity', 1).transform('scale(1,1)');
+        $fabEl
+          .transform(`translate3d(${-diffX}px, ${-diffY}px, 0) scale(${scaleX}, ${scaleY})`)
+          .css('border-radius', `${borderRadius}px`)
+          .css('box-shadow', 'none');
       });
-      $fabEl.transform(`translate3d(${-diffX}px, ${-diffY}px, 0) scale(${scaleX}, ${scaleY})`)
-        .css('border-radius', `${borderRadius}px`)
-        .css('box-shadow', 'none');
       app.on('resize', $fabEl[0].f7FabMorphResizeHandler);
       if ($targetEl.parents('.page-content').length > 0) {
         $targetEl.parents('.page-content').on('scroll', $fabEl[0].f7FabMorphResizeHandler);
@@ -118,7 +119,7 @@ const Fab = {
         .css('z-index', '')
         .removeClass('fab-opened')
         .transform('');
-      Utils.nextTick(() => {
+      Utils.nextFrame(() => {
         $fabEl.transitionEnd(() => {
           $targetEl
             .removeClass('fab-morph-target-visible')
