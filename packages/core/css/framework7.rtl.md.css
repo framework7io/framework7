@@ -1,5 +1,5 @@
 /**
- * Framework7 3.2.1
+ * Framework7 3.3.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: August 31, 2018
+ * Released on: September 14, 2018
  */
 html {
   direction: rtl;
@@ -9092,19 +9092,47 @@ textarea {
 }
 .md .item-floating-label ~ .item-input-wrap input::-webkit-input-placeholder,
 .md .item-floating-label ~ .item-input-wrap textarea::-webkit-input-placeholder {
-  color: transparent !important;
+  opacity: 0;
+  -webkit-transition-duration: 100ms;
+  transition-duration: 100ms;
 }
 .md .item-floating-label ~ .item-input-wrap input:-ms-input-placeholder,
 .md .item-floating-label ~ .item-input-wrap textarea:-ms-input-placeholder {
-  color: transparent !important;
+  opacity: 0;
+  transition-duration: 100ms;
 }
 .md .item-floating-label ~ .item-input-wrap input::-ms-input-placeholder,
 .md .item-floating-label ~ .item-input-wrap textarea::-ms-input-placeholder {
-  color: transparent !important;
+  opacity: 0;
+  transition-duration: 100ms;
 }
 .md .item-floating-label ~ .item-input-wrap input::placeholder,
 .md .item-floating-label ~ .item-input-wrap textarea::placeholder {
-  color: transparent !important;
+  opacity: 0;
+  -webkit-transition-duration: 100ms;
+  transition-duration: 100ms;
+}
+.md .item-floating-label ~ .item-input-wrap input.input-focused::-webkit-input-placeholder,
+.md .item-floating-label ~ .item-input-wrap textarea.input-focused::-webkit-input-placeholder {
+  opacity: 1;
+  -webkit-transition-duration: 300ms;
+  transition-duration: 300ms;
+}
+.md .item-floating-label ~ .item-input-wrap input.input-focused:-ms-input-placeholder,
+.md .item-floating-label ~ .item-input-wrap textarea.input-focused:-ms-input-placeholder {
+  opacity: 1;
+  transition-duration: 300ms;
+}
+.md .item-floating-label ~ .item-input-wrap input.input-focused::-ms-input-placeholder,
+.md .item-floating-label ~ .item-input-wrap textarea.input-focused::-ms-input-placeholder {
+  opacity: 1;
+  transition-duration: 300ms;
+}
+.md .item-floating-label ~ .item-input-wrap input.input-focused::placeholder,
+.md .item-floating-label ~ .item-input-wrap textarea.input-focused::placeholder {
+  opacity: 1;
+  -webkit-transition-duration: 300ms;
+  transition-duration: 300ms;
 }
 .md .item-input-with-value .item-floating-label,
 .md .item-input-focused .item-floating-label {
@@ -16630,7 +16658,7 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active) .table
   transition-property: transform;
   transition-property: transform, -webkit-transform;
 }
-.swiper-invisible-blank-slide {
+.swiper-slide-invisible-blank {
   visibility: hidden;
 }
 /* Auto Height */

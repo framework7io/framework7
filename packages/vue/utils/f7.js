@@ -11,7 +11,13 @@ const f7 = {
     if (routes && routes.length && !f7Params.routes) f7Params.routes = routes;
 
     f7.instance = new f7.Framework7(f7Params);
-    events.emit('ready', f7.instance);
+    if (f7.instance.initialized) {
+      events.emit('ready', f7.instance);
+    } else {
+      f7.instance.on('init', () => {
+        events.emit('ready', f7.instance);
+      });
+    }
   },
   ready(callback) {
     if (!callback) return;

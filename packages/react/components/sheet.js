@@ -127,15 +127,13 @@ class F7Sheet extends React.Component {
       if ('closeByBackdropClick' in props) sheetParams.closeByBackdropClick = closeByBackdropClick;
       if ('closeByOutsideClick' in props) sheetParams.closeByOutsideClick = closeByOutsideClick;
     }
+    self.$f7ready(f7 => {
+      if (useDefaultBackdrop) {
+        sheetParams.backdrop = f7.params.sheet && f7.params.sheet.backdrop !== undefined ? f7.params.sheet.backdrop : self.$theme.md;
+      } else {
+        sheetParams.backdrop = backdrop;
+      }
 
-    if (useDefaultBackdrop) {
-      const app = self.$f7;
-      sheetParams.backdrop = app.params.sheet && app.params.sheet.backdrop !== undefined ? app.params.sheet.backdrop : self.$theme.md;
-    } else {
-      sheetParams.backdrop = backdrop;
-    }
-
-    self.$f7ready(() => {
       self.f7Sheet = self.$f7.sheet.create(sheetParams);
 
       if (opened) {

@@ -33,6 +33,8 @@ export default {
     accordionItemOpened: Boolean,
     smartSelect: Boolean,
     smartSelectParams: Object,
+    noChevron: Boolean,
+    chevronCenter: Boolean,
     checkbox: Boolean,
     radio: Boolean,
     checked: Boolean,
@@ -107,7 +109,9 @@ export default {
       itemInput,
       itemInputWithInfo,
       inlineLabel,
-      sortable
+      sortable,
+      noChevron,
+      chevronCenter
     } = props;
     const isMedia = mediaItem || mediaList || self.state.isMedia;
     const isSortable = sortable || self.state.isSortable;
@@ -173,7 +177,10 @@ export default {
       'media-item': isMedia,
       swipeout,
       'accordion-item': accordionItem,
-      'accordion-item-opened': accordionItemOpened
+      'accordion-item-opened': accordionItemOpened,
+      disabled: disabled && !(radio || checkbox),
+      'no-chevron': noChevron,
+      'chevron-center': chevronCenter
     }, Mixins.colorClasses(props));
 
     if (divider || groupTitle) {

@@ -23,6 +23,7 @@ import EffectFade from './components/effect-fade/effect-fade';
 import EffectCube from './components/effect-cube/effect-cube';
 import EffectFlip from './components/effect-flip/effect-flip';
 import EffectCoverflow from './components/effect-coverflow/effect-coverflow';
+import Thumbs from './components/thumbs/thumbs';
 
 Swiper.use([
   Device,
@@ -44,6 +45,7 @@ Swiper.use([
   EffectCube,
   EffectFlip,
   EffectCoverflow,
+  Thumbs,
 ]);
 
 export default Swiper;

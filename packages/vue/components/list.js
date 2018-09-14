@@ -21,6 +21,8 @@ export default {
     noHairlinesBetweenMd: Boolean,
     noHairlinesIos: Boolean,
     noHairlinesBetweenIos: Boolean,
+    noChevron: Boolean,
+    chevronCenter: Boolean,
     tab: Boolean,
     tabActive: Boolean,
     form: Boolean,
@@ -110,7 +112,9 @@ export default {
         noHairlinesBetweenMd,
         formStoreData,
         inlineLabels,
-        className
+        className,
+        noChevron,
+        chevronCenter
       } = props;
       return Utils.classNames(className, 'list', {
         inset,
@@ -132,7 +136,9 @@ export default {
         'no-hairlines-ios': noHairlinesIos,
         'no-hairlines-between-ios': noHairlinesBetweenIos,
         'form-store-data': formStoreData,
-        'inline-labels': inlineLabels
+        'inline-labels': inlineLabels,
+        'no-chevron': noChevron,
+        'chevron-center': chevronCenter
       }, Mixins.colorClasses(props));
     },
 

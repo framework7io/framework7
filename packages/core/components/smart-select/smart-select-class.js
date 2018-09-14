@@ -305,7 +305,8 @@ class SmartSelect extends Framework7Class {
     if (ss.params.renderPage) return ss.params.renderPage.call(ss, ss.items);
     let pageTitle = ss.params.pageTitle;
     if (typeof pageTitle === 'undefined') {
-      pageTitle = ss.$el.find('.item-title').text().trim();
+      const $itemTitleEl = ss.$el.find('.item-title');
+      pageTitle = $itemTitleEl.length ? $itemTitleEl.text().trim() : '';
     }
     const cssClass = ss.params.cssClass;
     const pageHtml = `
@@ -338,7 +339,8 @@ class SmartSelect extends Framework7Class {
     if (ss.params.renderPopup) return ss.params.renderPopup.call(ss, ss.items);
     let pageTitle = ss.params.pageTitle;
     if (typeof pageTitle === 'undefined') {
-      pageTitle = ss.$el.find('.item-title').text().trim();
+      const $itemTitleEl = ss.$el.find('.item-title');
+      pageTitle = $itemTitleEl.length ? $itemTitleEl.text().trim() : '';
     }
     const cssClass = ss.params.cssClass;
     const popupHtml = `

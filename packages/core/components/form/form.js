@@ -244,24 +244,24 @@ function initAjaxForm() {
       data = Utils.serializeObject(app.form.convertToData($formEl[0]));
     }
 
-    const xhr = app.request({
+    app.request({
       method,
       url,
       contentType,
       data,
-      beforeSend() {
+      beforeSend(xhr) {
         $formEl.trigger('formajax:beforesend', data, xhr);
         app.emit('formAjaxBeforeSend', $formEl[0], data, xhr);
       },
-      error() {
+      error(xhr) {
         $formEl.trigger('formajax:error', data, xhr);
         app.emit('formAjaxError', $formEl[0], data, xhr);
       },
-      complete() {
+      complete(xhr) {
         $formEl.trigger('formajax:complete', data, xhr);
         app.emit('formAjaxComplete', $formEl[0], data, xhr);
       },
-      success() {
+      success(response, status, xhr) {
         $formEl.trigger('formajax:success', data, xhr);
         app.emit('formAjaxSuccess', $formEl[0], data, xhr);
       },

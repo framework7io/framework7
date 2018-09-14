@@ -55,7 +55,9 @@ class F7List extends React.Component {
       noHairlinesBetweenMd,
       formStoreData,
       inlineLabels,
-      className
+      className,
+      noChevron,
+      chevronCenter
     } = props;
     return Utils.classNames(className, 'list', {
       inset,
@@ -77,7 +79,9 @@ class F7List extends React.Component {
       'no-hairlines-ios': noHairlinesIos,
       'no-hairlines-between-ios': noHairlinesBetweenIos,
       'form-store-data': formStoreData,
-      'inline-labels': inlineLabels
+      'inline-labels': inlineLabels,
+      'no-chevron': noChevron,
+      'chevron-center': chevronCenter
     }, Mixins.colorClasses(props));
   }
 
@@ -253,6 +257,8 @@ __reactComponentSetProps(F7List, Object.assign({
   noHairlinesBetweenMd: Boolean,
   noHairlinesIos: Boolean,
   noHairlinesBetweenIos: Boolean,
+  noChevron: Boolean,
+  chevronCenter: Boolean,
   tab: Boolean,
   tabActive: Boolean,
   form: Boolean,

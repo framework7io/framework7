@@ -147,6 +147,7 @@ function getData(el, context, app, initial, isRoot) {
     let attrName = attr.name;
     const attrValue = attr.value;
     if (propsAttrs.indexOf(attrName) >= 0) {
+      // Props
       if (!data.props) data.props = {};
       if (attrName === 'readonly') {
         attrName = 'readOnly';
@@ -158,8 +159,10 @@ function getData(el, context, app, initial, isRoot) {
         data.props[attrName] = attrValue;
       }
     } else if (attrName === 'key') {
+      // Key
       data.key = attrValue;
     } else if (attrName.indexOf('@') === 0) {
+      // Events
       if (!data.on) data.on = {};
       let eventName = attrName.substr(1);
       let stop = false;
@@ -176,11 +179,26 @@ function getData(el, context, app, initial, isRoot) {
         });
       }
       data.on[eventName] = getEventHandler(attrValue, context, { stop, prevent, once });
+    } else if (attrName === 'style') {
+      // Style
+      if (attrValue.indexOf('{') >= 0 && attrValue.indexOf('}') >= 0) {
+        try {
+          data.style = JSON.parse(attrValue);
+        } catch (e) {
+          if (!data.attrs) data.attrs = {};
+          data.attrs.style = attrValue;
+        }
+      } else {
+        if (!data.attrs) data.attrs = {};
+        data.attrs.style = attrValue;
+      }
     } else {
+      // Rest of attribures
       if (!data.attrs) data.attrs = {};
       data.attrs[attrName] = attrValue;
 
-      if (attrName === 'id' && !data.key) {
+      // ID -> Key
+      if (attrName === 'id' && !data.key && !isRoot) {
         data.key = attrValue;
       }
     }

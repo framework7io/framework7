@@ -45,8 +45,6 @@ export default {
       xhrCacheIgnoreGetParameters: false,
       xhrCacheDuration: 1000 * 60 * 10, // Ten minutes
       preloadPreviousPage: true,
-      uniqueHistory: false,
-      uniqueHistoryIgnoreGetParameters: false,
       allowDuplicateUrls: false,
       reloadPages: false,
       removeElements: true,
