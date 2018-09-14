@@ -1067,6 +1067,9 @@ class Router extends Framework7Class {
 
     if (callback === 'beforeRemove') {
       detachEvents();
+      if ($pageEl[0].f7Page && $pageEl[0].f7Page.navbarEl) {
+        delete $pageEl[0].f7Page.navbarEl.f7Page;
+      }
       $pageEl[0].f7Page = null;
     }
   }
