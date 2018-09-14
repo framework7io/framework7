@@ -103,6 +103,13 @@ export namespace Router {
     /** custom/extended context for Template7/Component page (when route loaded from template, templateUrl, component or componentUrl) */
     context?: object;
   }
+  interface NavigateParameters {
+    query?: { [ queryParameter : string ] : number | string | undefined }
+    /** route params. If we have matching route with `/page/user/:userId/post/:postId/` path and url of the page is `/page/user/55/post/12/` then it will be the following object `{userId: '55', postId: '12'}` */
+    params?: { [ routeParameter : string ] : number | string | undefined }
+    /** route name */
+    name : string
+  }
   interface Route {
     /** route URL */
     url : string
@@ -179,7 +186,7 @@ export namespace Router {
     /** Navigate to (load) new page */
     navigate(url: string, options?: RouteOptions): Router
     /** Navigate to (load) new page by parameters. This method allows to navigate to route by its name */
-    navigate(parameters: Route, options?: RouteOptions): Router
+    navigate(parameters: NavigateParameters, options?: RouteOptions): Router
     /** Go back to previous page, going back in View history */
     back(url?: string, options?: RouteOptions): Router
     /** Refresh/reload current page */
