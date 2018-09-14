@@ -1,5 +1,5 @@
 /**
- * Framework7 3.1.1
+ * Framework7 3.3.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: August 3, 2018
+ * Released on: September 14, 2018
  */
 
 import Template7 from 'template7';
@@ -91,6 +91,7 @@ import Gauge from './components/gauge/gauge';
 import Vi from './components/vi/vi';
 import Elevation from './components/elevation/elevation';
 import Typography from './components/typography/typography';
+
 if ("es" !== 'es') {
   if (typeof window !== 'undefined') {
     // Template7
@@ -167,7 +168,8 @@ Framework7.use([
   Gauge,
   Vi,
   Elevation,
-  Typography]);
+  Typography
+]);
 
 export { Template7, $ as Dom7, Request, Utils, Device, Support };
 export default Framework7;

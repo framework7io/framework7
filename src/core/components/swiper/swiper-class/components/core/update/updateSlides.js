@@ -115,14 +115,21 @@ export default function () {
       if (currentWebKitTransform) {
         slide[0].style.webkitTransform = 'none';
       }
-      if (swiper.isHorizontal()) {
-        slideSize = slide[0].getBoundingClientRect().width
-          + parseFloat(slideStyles.getPropertyValue('margin-left'))
-          + parseFloat(slideStyles.getPropertyValue('margin-right'));
+      if (params.roundLengths) {
+        slideSize = swiper.isHorizontal()
+          ? slide.outerWidth(true)
+          : slide.outerHeight(true);
       } else {
-        slideSize = slide[0].getBoundingClientRect().height
-          + parseFloat(slideStyles.getPropertyValue('margin-top'))
-          + parseFloat(slideStyles.getPropertyValue('margin-bottom'));
+        // eslint-disable-next-line
+        if (swiper.isHorizontal()) {
+          slideSize = slide[0].getBoundingClientRect().width
+            + parseFloat(slideStyles.getPropertyValue('margin-left'))
+            + parseFloat(slideStyles.getPropertyValue('margin-right'));
+        } else {
+          slideSize = slide[0].getBoundingClientRect().height
+            + parseFloat(slideStyles.getPropertyValue('margin-top'))
+            + parseFloat(slideStyles.getPropertyValue('margin-bottom'));
+        }
       }
       if (currentTransform) {
         slide[0].style.transform = currentTransform;
@@ -220,6 +227,23 @@ export default function () {
       if (rtl) slides.css({ marginLeft: `${spaceBetween}px` });
       else slides.css({ marginRight: `${spaceBetween}px` });
     } else slides.css({ marginBottom: `${spaceBetween}px` });
+  }
+
+  if (params.centerInsufficientSlides) {
+    let allSlidesSize = 0;
+    slidesSizesGrid.forEach((slideSizeValue) => {
+      allSlidesSize += slideSizeValue + (params.spaceBetween ? params.spaceBetween : 0);
+    });
+    allSlidesSize -= params.spaceBetween;
+    if (allSlidesSize < swiperSize) {
+      const allSlidesOffset = (swiperSize - allSlidesSize) / 2;
+      snapGrid.forEach((snap, snapIndex) => {
+        snapGrid[snapIndex] = snap - allSlidesOffset;
+      });
+      slidesGrid.forEach((snap, snapIndex) => {
+        slidesGrid[snapIndex] = snap + allSlidesOffset;
+      });
+    }
   }
 
   Utils.extend(swiper, {

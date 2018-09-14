@@ -370,9 +370,6 @@ div.demo-lazy {
   height: -ms-calc(30% - 20px);
   height: calc(30% - 20px);
 }
-.demo-swiper-gallery-thumbs .swiper-slide {
-  width: 25%;
-}
 .demo-swiper-gallery-thumbs .swiper-slide-pic {
   height: 100%;
   position: absolute;
@@ -383,7 +380,7 @@ div.demo-lazy {
   opacity: 0.35;
   transition: 300ms;
 }
-.demo-swiper-gallery-thumbs .swiper-slide-active .swiper-slide-pic  {
+.demo-swiper-gallery-thumbs .swiper-slide-thumb-active .swiper-slide-pic  {
   opacity: 1;
 }
 .demo-swiper-gallery-top .swiper-slide,

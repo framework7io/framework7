@@ -40,6 +40,10 @@ export default {
     smartSelect: Boolean,
     smartSelectParams: Object,
 
+    // Links Chevron (Arrow) Icon
+    noChevron: Boolean,
+    chevronCenter: Boolean,
+
     // Inputs
     checkbox: Boolean,
     radio: Boolean,
@@ -110,6 +114,8 @@ export default {
       itemInputWithInfo,
       inlineLabel,
       sortable,
+      noChevron,
+      chevronCenter,
     } = props;
 
     const isMedia = mediaItem || mediaList || self.state.isMedia;
@@ -210,6 +216,9 @@ export default {
         swipeout,
         'accordion-item': accordionItem,
         'accordion-item-opened': accordionItemOpened,
+        disabled: disabled && !(radio || checkbox),
+        'no-chevron': noChevron,
+        'chevron-center': chevronCenter,
       },
       Mixins.colorClasses(props),
     );
@@ -233,10 +242,11 @@ export default {
     return (
       <li ref="el" id={id} style={style} className={liClasses}>
         <slot name="root-start" />
-        {swipeout ? (
-          <div className="swipeout-content">{linkItemEl}</div>
-        ) :
-          linkItemEl
+        {swipeout
+          ? (
+            <div className="swipeout-content">{linkItemEl}</div>
+          )
+          : linkItemEl
         }
         {isSortable && (<div className="sortable-handler" />)}
         {(swipeout || accordionItem) && self.slots.default}

@@ -50,7 +50,7 @@ function buildReact(cb) {
   fs.writeFileSync(`${buildPath}/react/utils/plugin.js`, newPluginContent);
 
   /* Build main components esm module: framework7-react.esm.js */
-  const files = fs.readdirSync(`${buildPath}/react/components`);
+  const files = fs.readdirSync(`${buildPath}/react/components`).filter(file => file.indexOf('.d.ts') < 0);
   const components = [];
   const componentImports = [];
   const componentAliases = [];

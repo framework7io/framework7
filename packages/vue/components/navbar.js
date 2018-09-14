@@ -23,7 +23,9 @@ export default {
     inner: {
       type: Boolean,
       default: true
-    }
+    },
+    innerClass: String,
+    innerClassName: String
   }, Mixins.colorProps),
 
   render() {
@@ -38,6 +40,8 @@ export default {
       title,
       subtitle,
       inner,
+      innerClass,
+      innerClassName,
       className,
       id,
       style,
@@ -74,7 +78,7 @@ export default {
 
       innerEl = _h('div', {
         ref: 'inner',
-        class: Utils.classNames('navbar-inner', {
+        class: Utils.classNames('navbar-inner', innerClass, innerClassName, {
           sliding
         })
       }, [leftEl, titleEl, this.$slots['default']]);

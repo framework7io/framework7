@@ -312,7 +312,6 @@ export default {
       {
         value = self.$refs.area.$refs.inputEl.value;
       }
-      console.log(value);
       const clear = self.f7Messagebar ? () => {
         self.f7Messagebar.clear();
       } : () => {};

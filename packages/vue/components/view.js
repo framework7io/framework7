@@ -22,8 +22,6 @@ export default {
     xhrCacheIgnoreGetParameters: Boolean,
     xhrCacheDuration: Number,
     preloadPreviousPage: Boolean,
-    uniqueHistory: Boolean,
-    uniqueHistoryIgnoreGetParameters: Boolean,
     allowDuplicateUrls: Boolean,
     reloadPages: Boolean,
     removeElements: Boolean,
@@ -50,6 +48,8 @@ export default {
     passRouteParamsToRequest: Boolean,
     routes: Array,
     routesAdd: Array,
+    routesBeforeEnter: [Function, Array],
+    routesBeforeLeave: [Function, Array],
     init: {
       type: Boolean,
       default: true

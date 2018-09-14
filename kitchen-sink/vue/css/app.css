@@ -383,7 +383,7 @@ div.demo-lazy {
   opacity: 0.35;
   transition: 300ms;
 }
-.demo-swiper-gallery-thumbs .swiper-slide-active .swiper-slide-pic  {
+.demo-swiper-gallery-thumbs .swiper-slide-thumb-active .swiper-slide-pic  {
   opacity: 1;
 }
 .demo-swiper-gallery-top .swiper-slide,

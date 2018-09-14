@@ -1,5 +1,5 @@
 /**
- * Framework7 3.1.1
+ * Framework7 3.3.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: August 3, 2018
+ * Released on: September 14, 2018
  */
 html {
   direction: rtl;
@@ -6352,6 +6352,7 @@ body > .progressbar-infinite,
   z-index: -1;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
+  pointer-events: none;
 }
 .swipeout-actions-right {
   right: 0%;
@@ -15264,7 +15265,7 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active) .table
   transition-property: transform;
   transition-property: transform, -webkit-transform;
 }
-.swiper-invisible-blank-slide {
+.swiper-slide-invisible-blank {
   visibility: hidden;
 }
 /* Auto Height */

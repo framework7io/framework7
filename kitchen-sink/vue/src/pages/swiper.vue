@@ -44,7 +44,7 @@
           <a href="swiper-scrollbar/">With Scrollbar</a>
         </li>
         <li>
-          <a href="swiper-gallery/">Two Way Control Gallery</a>
+          <a href="swiper-gallery/">Thumbs Gallery</a>
         </li>
         <li>
           <a href="swiper-custom-controls/">Custom Controls</a>

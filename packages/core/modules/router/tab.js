@@ -83,27 +83,24 @@ function tabLoad(tabRoute, loadOptions = {}) {
     tabEventTarget.trigger('tab:init tab:mounted', tabRoute);
     router.emit('tabInit tabMounted', $newTabEl[0], tabRoute);
 
-    if ($oldTabEl) {
+    if ($oldTabEl && $oldTabEl.length) {
       if (animated) {
         onTabsChanged(() => {
-          if ($oldTabEl.length) {
-            router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
-          }
+          router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
           if (router.params.unloadTabContent) {
             router.tabRemove($oldTabEl, $newTabEl, tabRoute);
           }
         });
       } else {
-        if ($oldTabEl.length) {
-          router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
-        }
+        router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
         if (router.params.unloadTabContent) {
           router.tabRemove($oldTabEl, $newTabEl, tabRoute);
         }
       }
     }
   }
-  if (!router.params.unloadTabContent && $newTabEl[0].f7RouterTabLoaded) {
+
+  if ($newTabEl[0].f7RouterTabLoaded) {
     if (!$oldTabEl || !$oldTabEl.length) return router;
     if (animated) {
       onTabsChanged(() => {
@@ -135,9 +132,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
           $newTabEl.append(contentEl);
         }
       }
-      if (!router.params.unloadTabContent) {
-        $newTabEl[0].f7RouterTabLoaded = true;
-      }
+      $newTabEl[0].f7RouterTabLoaded = true;
       onTabLoaded(contentEl);
     }
     function reject() {
@@ -196,11 +191,17 @@ function tabLoad(tabRoute, loadOptions = {}) {
   if (tabRoute.async) {
     tabRoute.async.call(router, currentRoute, previousRoute, asyncResolve, asyncReject);
   }
+
   return router;
 }
 function tabRemove($oldTabEl, $newTabEl, tabRoute) {
   const router = this;
+
   let hasTabComponentChild;
+  if ($oldTabEl[0]) {
+    $oldTabEl[0].f7RouterTabLoaded = false;
+    delete $oldTabEl[0].f7RouterTabLoaded;
+  }
   $oldTabEl.children().each((index, tabChild) => {
     if (tabChild.f7Component) {
       hasTabComponentChild = true;

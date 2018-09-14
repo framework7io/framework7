@@ -307,7 +307,7 @@ export default {
       if (process.env.COMPILER === 'react') {
         value = self.refs.area.refs.inputEl.value;
       }
-      console.log(value);
+
       const clear = self.f7Messagebar
         ? () => { self.f7Messagebar.clear(); }
         : () => {};

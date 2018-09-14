@@ -7,6 +7,12 @@ const Accordion = {
     const app = this;
     let $accordionItemEl = $clickedEl.closest('.accordion-item').eq(0);
     if (!$accordionItemEl.length) $accordionItemEl = $clickedEl.parents('li').eq(0);
+
+    const $accordionContent = $clickedEl.parents('.accordion-item-content').eq(0);
+    if ($accordionContent.length) {
+      if ($accordionContent.parents($accordionItemEl).length) return;
+    }
+
     if ($clickedEl.parents('li').length > 1 && $clickedEl.parents('li')[0] !== $accordionItemEl[0]) return;
     app.accordion.toggle($accordionItemEl);
   },
@@ -26,7 +32,9 @@ const Accordion = {
       if ($el.hasClass('accordion-item-opened')) {
         $contentEl.transition(0);
         $contentEl.css('height', 'auto');
-        $contentEl._clientLeft = $contentEl[0].clientLeft;
+        Utils.nextFrame(() => {
+          $contentEl.transition('');
+        });
         $contentEl.transition('');
         $el.trigger('accordion:opened');
         app.emit('accordionOpened', $el[0]);
@@ -50,15 +58,14 @@ const Accordion = {
     $contentEl.attr('aria-hidden', true);
     $contentEl.transition(0);
     $contentEl.css('height', `${$contentEl[0].scrollHeight}px`);
-    $contentEl._clientLeft = $contentEl[0].clientLeft;
-    $contentEl.transition('');
     // Close
     $contentEl.transitionEnd(() => {
       if ($el.hasClass('accordion-item-opened')) {
         $contentEl.transition(0);
         $contentEl.css('height', 'auto');
-        $contentEl._clientLeft = $contentEl[0].clientLeft;
-        $contentEl.transition('');
+        Utils.nextFrame(() => {
+          $contentEl.transition('');
+        });
         $el.trigger('accordion:opened');
         app.emit('accordionOpened', $el[0]);
       } else {

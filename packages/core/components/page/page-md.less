@@ -43,7 +43,12 @@
     opacity: 0;
     pointer-events: none;
     &.page-next-on-right {
-      transform: translate3d(100%, 0, 0);
+      .ltr({
+        transform: translate3d(100%, 0, 0);
+      });
+      .rtl({
+        transform: translate3d(-100%, 0, 0);
+      });
     }
   }
 

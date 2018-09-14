@@ -78,14 +78,6 @@ class F7Actions extends React.Component {
     const self = this;
     const el = self.refs.el;
     if (!el) return;
-    const props = self.props;
-    const {
-      grid,
-      target,
-      convertToPopover,
-      forceToPopover,
-      opened
-    } = props;
     self.onOpenBound = self.onOpen.bind(self);
     self.onOpenedBound = self.onOpened.bind(self);
     self.onCloseBound = self.onClose.bind(self);
@@ -94,14 +86,28 @@ class F7Actions extends React.Component {
     el.addEventListener('actions:opened', self.onOpenedBound);
     el.addEventListener('actions:close', self.onCloseBound);
     el.addEventListener('actions:closed', self.onClosedBound);
-    self.$f7ready(() => {
-      const actionsParams = {
-        el: self.refs.el,
-        grid
-      };
-      if (target) actionsParams.targetEl = target;
+    const props = self.props;
+    const {
+      grid,
+      target,
+      convertToPopover,
+      forceToPopover,
+      opened,
+      closeByBackdropClick,
+      closeByOutsideClick
+    } = props;
+    const actionsParams = {
+      el: self.refs.el,
+      grid
+    };
+    if (target) actionsParams.targetEl = target;
+    {
       if ('convertToPopover' in props) actionsParams.convertToPopover = convertToPopover;
       if ('forceToPopover' in props) actionsParams.forceToPopover = forceToPopover;
+      if ('closeByBackdropClick' in props) actionsParams.closeByBackdropClick = closeByBackdropClick;
+      if ('closeByOutsideClick' in props) actionsParams.closeByOutsideClick = closeByOutsideClick;
+    }
+    self.$f7ready(() => {
       self.f7Actions = self.$f7.actions.create(actionsParams);
 
       if (opened) {
@@ -149,7 +155,9 @@ __reactComponentSetProps(F7Actions, Object.assign({
   grid: Boolean,
   convertToPopover: Boolean,
   forceToPopover: Boolean,
-  target: [String, Object]
+  target: [String, Object],
+  closeByBackdropClick: Boolean,
+  closeByOutsideClick: Boolean
 }, Mixins.colorProps));
 
 F7Actions.displayName = 'f7-actions';

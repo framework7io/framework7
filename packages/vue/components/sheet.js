@@ -7,7 +7,9 @@ export default {
   props: Object.assign({
     id: [String, Number],
     opened: Boolean,
-    backdrop: Boolean
+    backdrop: Boolean,
+    closeByBackdropClick: Boolean,
+    closeByOutsideClick: Boolean
   }, Mixins.colorProps),
 
   render() {
@@ -86,26 +88,30 @@ export default {
     el.addEventListener('sheet:opened', self.onOpenedBound);
     el.addEventListener('sheet:close', self.onCloseBound);
     el.addEventListener('sheet:closed', self.onClosedBound);
-    self.$f7ready(() => {
-      let useBackdrop;
-      let useDefaultBackdrop;
-      const {
-        opened,
-        backdrop
-      } = self.props;
+    const props = self.props;
+    const {
+      opened,
+      backdrop,
+      closeByBackdropClick,
+      closeByOutsideClick
+    } = props;
+    const sheetParams = {
+      el: self.$refs.el
+    };
+    let useDefaultBackdrop;
+    {
       useDefaultBackdrop = self.$options.propsData.backdrop === undefined;
-
+      if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') sheetParams.closeByBackdropClick = closeByBackdropClick;
+      if (typeof self.$options.propsData.closeByOutsideClick !== 'undefined') sheetParams.closeByOutsideClick = closeByOutsideClick;
+    }
+    self.$f7ready(f7 => {
       if (useDefaultBackdrop) {
-        const app = self.$f7;
-        useBackdrop = app.params.sheet && app.params.sheet.backdrop !== undefined ? app.params.sheet.backdrop : self.$theme.md;
+        sheetParams.backdrop = f7.params.sheet && f7.params.sheet.backdrop !== undefined ? f7.params.sheet.backdrop : self.$theme.md;
       } else {
-        useBackdrop = backdrop;
+        sheetParams.backdrop = backdrop;
       }
 
-      self.f7Sheet = self.$f7.sheet.create({
-        el: self.$refs.el,
-        backdrop: useBackdrop
-      });
+      self.f7Sheet = self.$f7.sheet.create(sheetParams);
 
       if (opened) {
         self.f7Sheet.open(false);

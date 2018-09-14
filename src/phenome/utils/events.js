@@ -3,7 +3,7 @@ const eventsEmitter = {
   on(events, handler) {
     events.split(' ').forEach((event) => {
       if (!eventsEmitter.listeners[event]) eventsEmitter.listeners[event] = [];
-      eventsEmitter.listeners[event].push(handler);
+      eventsEmitter.listeners[event].unshift(handler);
     });
   },
   off(events, handler) {

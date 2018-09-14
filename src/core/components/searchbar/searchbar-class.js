@@ -280,9 +280,11 @@ class Searchbar extends FrameworkClass {
     sb.$disableButtonEl.transition(0).show();
     sb.$disableButtonEl.css(`margin-${app.rtl ? 'left' : 'right'}`, `${-sb.disableButtonEl.offsetWidth}px`);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
-    sb._clientLeft = sb.$disableButtonEl[0].clientLeft;
-    sb.$disableButtonEl.transition('');
-    sb.disableButtonHasMargin = true;
+    // sb._clientLeft = sb.$disableButtonEl[0].clientLeft;
+    Utils.nextFrame(() => {
+      sb.$disableButtonEl.transition('');
+      sb.disableButtonHasMargin = true;
+    });
   }
 
   enable(setFocus) {

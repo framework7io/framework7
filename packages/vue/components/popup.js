@@ -7,7 +7,10 @@ export default {
   props: Object.assign({
     id: [String, Number],
     tabletFullscreen: Boolean,
-    opened: Boolean
+    opened: Boolean,
+    closeByBackdropClick: Boolean,
+    backdrop: Boolean,
+    animate: Boolean
   }, Mixins.colorProps),
 
   render() {
@@ -58,10 +61,22 @@ export default {
     el.addEventListener('popup:opened', self.onOpenedBound);
     el.addEventListener('popup:close', self.onCloseBound);
     el.addEventListener('popup:closed', self.onClosedBound);
+    const props = self.props;
+    const {
+      closeByBackdropClick,
+      backdrop,
+      animate
+    } = props;
+    const popupParams = {
+      el
+    };
+    {
+      if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') popupParams.closeByBackdropClick = closeByBackdropClick;
+      if (typeof self.$options.propsData.animate !== 'undefined') popupParams.animate = animate;
+      if (typeof self.$options.propsData.backdrop !== 'undefined') popupParams.backdrop = backdrop;
+    }
     self.$f7ready(() => {
-      self.f7Popup = self.$f7.popup.create({
-        el
-      });
+      self.f7Popup = self.$f7.popup.create(popupParams);
 
       if (self.props.opened) {
         self.f7Popup.open(false);

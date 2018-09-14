@@ -117,15 +117,10 @@ class Modal extends Framework7Class {
       });
     }
 
-    // Emit open
-    /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
-    modal._clientLeft = $el[0].clientLeft;
 
-    // Backdrop
-    if ($backdropEl) {
-      $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
-      $backdropEl.addClass('backdrop-in');
-    }
+    /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
+    // modal._clientLeft = $el[0].clientLeft;
+
     // Modal
     function transitionEnd() {
       if ($el.hasClass('modal-out')) {
@@ -135,19 +130,28 @@ class Modal extends Framework7Class {
       }
     }
     if (animate) {
-      $el
-        .animationEnd(() => {
-          transitionEnd();
-        });
-      $el
-        .transitionEnd(() => {
-          transitionEnd();
-        });
-      $el
-        .removeClass('modal-out not-animated')
-        .addClass('modal-in');
-      modal.onOpen();
+      Utils.nextFrame(() => {
+        if ($backdropEl) {
+          $backdropEl.removeClass('not-animated');
+          $backdropEl.addClass('backdrop-in');
+        }
+        $el
+          .animationEnd(() => {
+            transitionEnd();
+          });
+        $el
+          .transitionEnd(() => {
+            transitionEnd();
+          });
+        $el
+          .removeClass('modal-out not-animated')
+          .addClass('modal-in');
+        modal.onOpen();
+      });
     } else {
+      if ($backdropEl) {
+        $backdropEl.addClass('backdrop-in not-animated');
+      }
       $el.removeClass('modal-out').addClass('modal-in not-animated');
       modal.onOpen();
       modal.onOpened();
@@ -173,8 +177,24 @@ class Modal extends Framework7Class {
 
     // backdrop
     if ($backdropEl) {
-      $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
-      $backdropEl.removeClass('backdrop-in');
+      let needToHideBackdrop = true;
+      if (modal.type === 'popup') {
+        modal.$el.prevAll('.popup.modal-in').each((index, popupEl) => {
+          const popupInstance = popupEl.f7Modal;
+          if (!popupInstance) return;
+          if (
+            popupInstance.params.closeByBackdropClick
+            && popupInstance.params.backdrop
+            && popupInstance.backdropEl === modal.backdropEl
+          ) {
+            needToHideBackdrop = false;
+          }
+        });
+      }
+      if (needToHideBackdrop) {
+        $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
+        $backdropEl.removeClass('backdrop-in');
+      }
     }
 
     // Modal

@@ -6,12 +6,19 @@ class SmartSelect extends Framework7Class {
   constructor(app, params = {}) {
     super(params, [app]);
     const ss = this;
-    ss.app = app;
+
     const defaults = Utils.extend({
       on: {},
     }, app.params.smartSelect);
 
-    const $el = $(params.el).eq(0);
+    // Extend defaults with modules params
+    ss.useModulesParams(defaults);
+
+    ss.params = Utils.extend({}, defaults, params);
+
+    ss.app = app;
+
+    const $el = $(ss.params.el).eq(0);
     if ($el.length === 0) return ss;
 
     if ($el[0].f7SmartSelect) return $el[0].f7SmartSelect;
@@ -19,7 +26,7 @@ class SmartSelect extends Framework7Class {
     const $selectEl = $el.find('select').eq(0);
     if ($selectEl.length === 0) return ss;
 
-    let $valueEl = $(params.valueEl);
+    let $valueEl = $(ss.params.valueEl);
     if ($valueEl.length === 0) {
       $valueEl = $el.find('.item-after');
     }
@@ -28,20 +35,11 @@ class SmartSelect extends Framework7Class {
       $valueEl.insertAfter($el.find('.item-title'));
     }
 
-    // Extend defaults with modules params
-    ss.useModulesParams(defaults);
-
     // View
-    let view = params.view;
-    if (!view) {
-      view = $el.parents('.view').length && $el.parents('.view')[0].f7View;
-    }
-    if (!view && (params.openIn === 'page' || (params.openIn !== 'page' && params.routableModals === true))) {
-      throw Error('Smart Select requires initialized View');
-    }
+    let view;
 
     // Url
-    let url = params.url;
+    let url = ss.params.url;
     if (!url) {
       if ($el.attr('href') && $el.attr('href') !== '#') url = $el.attr('href');
       else url = `${$selectEl.attr('name').toLowerCase()}-select/`;
@@ -50,10 +48,9 @@ class SmartSelect extends Framework7Class {
 
     const multiple = $selectEl[0].multiple;
     const inputType = multiple ? 'checkbox' : 'radio';
-    const id = Utils.now();
+    const id = Utils.id();
 
     Utils.extend(ss, {
-      params: Utils.extend(defaults, params),
       $el,
       el: $el[0],
       $selectEl,
@@ -142,6 +139,19 @@ class SmartSelect extends Framework7Class {
     ss.init();
 
     return ss;
+  }
+
+  getView() {
+    const ss = this;
+    let view = ss.view || ss.params.view;
+    if (!view) {
+      view = ss.$el.parents('.view').length && ss.$el.parents('.view')[0].f7View;
+    }
+    if (!view) {
+      throw Error('Smart Select requires initialized View');
+    }
+    ss.view = view;
+    return view;
   }
 
   checkMaxLength() {
@@ -295,10 +305,12 @@ class SmartSelect extends Framework7Class {
     if (ss.params.renderPage) return ss.params.renderPage.call(ss, ss.items);
     let pageTitle = ss.params.pageTitle;
     if (typeof pageTitle === 'undefined') {
-      pageTitle = ss.$el.find('.item-title').text().trim();
+      const $itemTitleEl = ss.$el.find('.item-title');
+      pageTitle = $itemTitleEl.length ? $itemTitleEl.text().trim() : '';
     }
+    const cssClass = ss.params.cssClass;
     const pageHtml = `
-      <div class="page smart-select-page" data-name="smart-select-page" data-select-name="${ss.selectName}">
+      <div class="page smart-select-page ${cssClass}" data-name="smart-select-page" data-select-name="${ss.selectName}">
         <div class="navbar ${ss.params.navbarColorTheme ? `color-theme-${ss.params.navbarColorTheme}` : ''}">
           <div class="navbar-inner sliding ${ss.params.navbarColorTheme ? `color-theme-${ss.params.navbarColorTheme}` : ''}">
             <div class="left">
@@ -327,13 +339,15 @@ class SmartSelect extends Framework7Class {
     if (ss.params.renderPopup) return ss.params.renderPopup.call(ss, ss.items);
     let pageTitle = ss.params.pageTitle;
     if (typeof pageTitle === 'undefined') {
-      pageTitle = ss.$el.find('.item-title').text().trim();
+      const $itemTitleEl = ss.$el.find('.item-title');
+      pageTitle = $itemTitleEl.length ? $itemTitleEl.text().trim() : '';
     }
+    const cssClass = ss.params.cssClass;
     const popupHtml = `
-      <div class="popup smart-select-popup" data-select-name="${ss.selectName}">
+      <div class="popup smart-select-popup ${cssClass}" data-select-name="${ss.selectName}">
         <div class="view">
           <div class="page smart-select-page ${ss.params.searchbar ? 'page-with-subnavbar' : ''}" data-name="smart-select-page">
-            <div class="navbar${ss.params.navbarColorTheme ? `theme-${ss.params.navbarColorTheme}` : ''}">
+            <div class="navbar ${ss.params.navbarColorTheme ? `color-theme-${ss.params.navbarColorTheme}` : ''}">
               <div class="navbar-inner sliding">
                 <div class="left">
                   <a href="#" class="link popup-close" data-popup=".smart-select-popup[data-select-name='${ss.selectName}']">
@@ -347,7 +361,7 @@ class SmartSelect extends Framework7Class {
             </div>
             ${ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : ''}
             <div class="page-content">
-              <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
+              <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''} ${ss.params.formColorTheme ? `color-theme-${ss.params.formColorTheme}` : ''}">
                 <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
               </div>
             </div>
@@ -361,8 +375,9 @@ class SmartSelect extends Framework7Class {
   renderSheet() {
     const ss = this;
     if (ss.params.renderSheet) return ss.params.renderSheet.call(ss, ss.items);
+    const cssClass = ss.params.cssClass;
     const sheetHtml = `
-      <div class="sheet-modal smart-select-sheet" data-select-name="${ss.selectName}">
+      <div class="sheet-modal smart-select-sheet ${cssClass}" data-select-name="${ss.selectName}">
         <div class="toolbar ${ss.params.toolbarColorTheme ? `theme-${ss.params.toolbarColorTheme}` : ''}">
           <div class="toolbar-inner">
             <div class="left"></div>
@@ -373,7 +388,7 @@ class SmartSelect extends Framework7Class {
         </div>
         <div class="sheet-modal-inner">
           <div class="page-content">
-            <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
+            <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''} ${ss.params.formColorTheme ? `color-theme-${ss.params.formColorTheme}` : ''}">
               <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
             </div>
           </div>
@@ -386,10 +401,11 @@ class SmartSelect extends Framework7Class {
   renderPopover() {
     const ss = this;
     if (ss.params.renderPopover) return ss.params.renderPopover.call(ss, ss.items);
+    const cssClass = ss.params.cssClass;
     const popoverHtml = `
-      <div class="popover smart-select-popover" data-select-name="${ss.selectName}">
+      <div class="popover smart-select-popover ${cssClass}" data-select-name="${ss.selectName}">
         <div class="popover-inner">
-          <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''}${ss.params.formColorTheme ? `theme-${ss.params.formColorTheme}` : ''}">
+          <div class="list smart-select-list-${ss.id} ${ss.params.virtualList ? ' virtual-list' : ''} ${ss.params.formColorTheme ? `color-theme-${ss.params.formColorTheme}` : ''}">
             <ul>${!ss.params.virtualList && ss.renderItems(ss.items)}</ul>
           </div>
         </div>
@@ -426,12 +442,31 @@ class SmartSelect extends Framework7Class {
       if (type === 'page' && app.theme === 'ios') {
         $searchbarEl = $(app.navbar.getElByPage($containerEl)).find('.searchbar');
       }
-      ss.searchbar = app.searchbar.create({
+
+      if (ss.params.appendSearchbarNotFound && (type === 'page' || type === 'popup')) {
+        let $notFoundEl = null;
+
+        if (typeof ss.params.appendSearchbarNotFound === 'string') {
+          $notFoundEl = $(`<div class="block searchbar-not-found">${ss.params.appendSearchbarNotFound}</div>`);
+        } else if (typeof ss.params.appendSearchbarNotFound === 'boolean') {
+          $notFoundEl = $('<div class="block searchbar-not-found">Nothing found</div>');
+        } else {
+          $notFoundEl = ss.params.appendSearchbarNotFound;
+        }
+
+        if ($notFoundEl) {
+          $containerEl.find('.page-content').append($notFoundEl[0]);
+        }
+      }
+
+      const searchbarParams = Utils.extend({
         el: $searchbarEl,
         backdropEl: $containerEl.find('.searchbar-backdrop'),
         searchContainer: `.smart-select-list-${ss.id}`,
         searchIn: '.item-title',
-      });
+      }, typeof ss.params.searchbar === 'object' ? ss.params.searchbar : {});
+
+      ss.searchbar = app.searchbar.create(searchbarParams);
     }
 
     // Check for max length
@@ -500,8 +535,9 @@ class SmartSelect extends Framework7Class {
     if (ss.opened) return ss;
     ss.getItemsData();
     const pageHtml = ss.renderPage(ss.items);
+    const view = ss.getView();
 
-    ss.view.router.navigate({
+    view.router.navigate({
       url: ss.url,
       route: {
         content: pageHtml,
@@ -550,7 +586,8 @@ class SmartSelect extends Framework7Class {
     };
 
     if (ss.params.routableModals) {
-      ss.view.router.navigate({
+      const view = ss.getView();
+      view.router.navigate({
         url: ss.url,
         route: {
           path: ss.url,
@@ -591,7 +628,8 @@ class SmartSelect extends Framework7Class {
     };
 
     if (ss.params.routableModals) {
-      ss.view.router.navigate({
+      const view = ss.getView();
+      view.router.navigate({
         url: ss.url,
         route: {
           path: ss.url,
@@ -628,7 +666,8 @@ class SmartSelect extends Framework7Class {
       },
     };
     if (ss.params.routableModals) {
-      ss.view.router.navigate({
+      const view = ss.getView();
+      view.router.navigate({
         url: ss.url,
         route: {
           path: ss.url,
@@ -656,7 +695,8 @@ class SmartSelect extends Framework7Class {
     const ss = this;
     if (!ss.opened) return ss;
     if (ss.params.routableModals || ss.openedIn === 'page') {
-      ss.view.router.back();
+      const view = ss.getView();
+      view.router.back();
     } else {
       ss.modal.once('modalClosed', () => {
         Utils.nextTick(() => {

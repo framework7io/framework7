@@ -24,6 +24,8 @@ export default {
       type: Boolean,
       default: true,
     },
+    innerClass: String,
+    innerClassName: String,
     ...Mixins.colorProps,
   },
   render() {
@@ -37,6 +39,8 @@ export default {
       title,
       subtitle,
       inner,
+      innerClass,
+      innerClassName,
       className,
       id,
       style,
@@ -71,7 +75,7 @@ export default {
       innerEl = (
         <div
           ref="inner"
-          className={Utils.classNames('navbar-inner', { sliding })}
+          className={Utils.classNames('navbar-inner', innerClass, innerClassName, { sliding })}
         >
           {leftEl}
           {titleEl}

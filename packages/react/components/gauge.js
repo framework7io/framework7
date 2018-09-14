@@ -55,7 +55,7 @@ class F7Gauge extends React.Component {
       stroke: borderColor,
       strokeWidth: borderWidth,
       strokeDasharray: length / 2,
-      strokeDashoffset: length / 2 * (progress - 1),
+      strokeDashoffset: length / 2 * (1 + progress),
       fill: borderBgColor ? 'none' : bgColor || 'none'
     }), !semiCircle && borderBgColor && React.createElement('circle', {
       className: 'gauge-back-circle',

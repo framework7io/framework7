@@ -85,10 +85,22 @@ class F7Popup extends React.Component {
     el.addEventListener('popup:opened', self.onOpenedBound);
     el.addEventListener('popup:close', self.onCloseBound);
     el.addEventListener('popup:closed', self.onClosedBound);
+    const props = self.props;
+    const {
+      closeByBackdropClick,
+      backdrop,
+      animate
+    } = props;
+    const popupParams = {
+      el
+    };
+    {
+      if ('closeByBackdropClick' in props) popupParams.closeByBackdropClick = closeByBackdropClick;
+      if ('animate' in props) popupParams.animate = animate;
+      if ('backdrop' in props) popupParams.backdrop = backdrop;
+    }
     self.$f7ready(() => {
-      self.f7Popup = self.$f7.popup.create({
-        el
-      });
+      self.f7Popup = self.$f7.popup.create(popupParams);
 
       if (self.props.opened) {
         self.f7Popup.open(false);
@@ -128,7 +140,10 @@ class F7Popup extends React.Component {
 __reactComponentSetProps(F7Popup, Object.assign({
   id: [String, Number],
   tabletFullscreen: Boolean,
-  opened: Boolean
+  opened: Boolean,
+  closeByBackdropClick: Boolean,
+  backdrop: Boolean,
+  animate: Boolean
 }, Mixins.colorProps));
 
 F7Popup.displayName = 'f7-popup';

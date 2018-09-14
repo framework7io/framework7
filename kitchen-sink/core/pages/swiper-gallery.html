@@ -8,7 +8,7 @@
             <span class="ios-only">Back</span>
           </a>
         </div>
-        <div class="title">Two Way Control Gallery</div>
+        <div class="title">Thumbs Gallery</div>
       </div>
     </div>
     <div class="page-content">
@@ -59,22 +59,23 @@
       },
       pageInit() {
         var self = this;
+        var swiperThumbs = self.$app.swiper.create('.demo-swiper-gallery-thumbs', {
+            slidesPerView: 4,
+            spaceBetween: 10,
+            freeMode: true,
+            watchSlidesProgress: true,
+            watchSlidesVisibility: true,
+        });
         var swiperTop = self.$app.swiper.create('.demo-swiper-gallery-top', {
             spaceBetween: 10,
             navigation: {
               nextEl: '.swiper-button-next',
               prevEl: '.swiper-button-prev',
             },
+            thumbs: {
+              swiper: swiperThumbs,
+            },
         });
-        var swiperThumbs = self.$app.swiper.create('.demo-swiper-gallery-thumbs', {
-            slidesPerView: 'auto',
-            spaceBetween: 10,
-            centeredSlides: true,
-            touchRatio: 0.2,
-            slideToClickedSlide: true
-        });
-        swiperTop.controller.control = swiperThumbs;
-        swiperThumbs.controller.control = swiperTop;
 
         self.swiperTop = swiperTop;
         self.swiperThumbs = swiperThumbs;

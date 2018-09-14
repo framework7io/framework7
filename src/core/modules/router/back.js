@@ -392,6 +392,7 @@ function loadBack(backParams, backOptions, ignorePageChange) {
 }
 function back(...args) {
   const router = this;
+  if (router.swipeBackActive) return router;
   let navigateUrl;
   let navigateOptions;
   let route;
@@ -429,7 +430,7 @@ function back(...args) {
   let currentRouteIsModal = router.currentRoute.modal;
   let modalType;
   if (!currentRouteIsModal) {
-    ('popup popover sheet loginScreen actions customModal').split(' ').forEach((modalLoadProp) => {
+    ('popup popover sheet loginScreen actions customModal panel').split(' ').forEach((modalLoadProp) => {
       if (router.currentRoute.route[modalLoadProp]) {
         currentRouteIsModal = true;
         modalType = modalLoadProp;
@@ -441,7 +442,18 @@ function back(...args) {
                          || router.currentRoute.route.modalInstance
                          || app[modalType].get();
     const previousUrl = router.history[router.history.length - 2];
-    let previousRoute = router.findMatchingRoute(previousUrl);
+    let previousRoute;
+    // check if previous route is modal too
+    if (modalToClose && modalToClose.$el) {
+      const prevOpenedModals = modalToClose.$el.prevAll('.modal-in');
+      if (prevOpenedModals.length && prevOpenedModals[0].f7Modal) {
+        previousRoute = prevOpenedModals[0].f7Modal.route;
+      }
+    }
+    if (!previousRoute) {
+      previousRoute = router.findMatchingRoute(previousUrl);
+    }
+
     if (!previousRoute && previousUrl) {
       previousRoute = {
         url: previousUrl,

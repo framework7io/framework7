@@ -57,8 +57,16 @@
     width: auto;
     max-width: 75%;
     pointer-events: none;
-    ~ .item-input-wrap input::placeholder, ~ .item-input-wrap textarea::placeholder, {
-      color: transparent !important;
+    ~ .item-input-wrap input,
+    ~ .item-input-wrap textarea, {
+      &::placeholder {
+        opacity: 0;
+        transition-duration: 100ms;
+      }
+      &.input-focused::placeholder{
+        opacity: 1;
+        transition-duration: 300ms;
+      }
     }
     .ltr({
       transform-origin: left;
@@ -260,7 +268,7 @@
     }
     .item-input-focused.color-@{colorName} .item-input-wrap:after,
     .input-after.color-@{colorName}:after {
-      background: @colorThemeValue;
+      background: @colorValue;
     }
   });
 }

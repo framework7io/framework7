@@ -1,6 +1,6 @@
 <template>
   <f7-page style="background: #000" @page:beforeremove="onPageBeforeRemove" @page:init="onPageInit">
-    <f7-navbar title="Two Way Control Gallery" back-link="Back"></f7-navbar>
+    <f7-navbar title="Thumbs Gallery" back-link="Back"></f7-navbar>
     <div class="swiper-container demo-swiper-gallery-top">
       <div class="swiper-wrapper">
         <div style="background-image:url(http://lorempixel.com/800/800/nature/1/)" class="swiper-slide"></div>
@@ -53,22 +53,23 @@
       },
       onPageInit() {
         const self = this;
+        const swiperThumbs = self.$f7.swiper.create('.demo-swiper-gallery-thumbs', {
+          slidesPerView: 4,
+          spaceBetween: 10,
+          freeMode: true,
+          watchSlidesProgress: true,
+          watchSlidesVisibility: true,
+        });
         const swiperTop = self.$f7.swiper.create('.demo-swiper-gallery-top', {
           spaceBetween: 10,
           navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
           },
+          thumbs: {
+            swiper: swiperThumbs,
+          },
         });
-        const swiperThumbs = self.$f7.swiper.create('.demo-swiper-gallery-thumbs', {
-          slidesPerView: 'auto',
-          spaceBetween: 10,
-          centeredSlides: true,
-          touchRatio: 0.2,
-          slideToClickedSlide: true,
-        });
-        swiperTop.controller.control = swiperThumbs;
-        swiperThumbs.controller.control = swiperTop;
 
         self.swiperTop = swiperTop;
         self.swiperThumbs = swiperThumbs;

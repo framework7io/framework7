@@ -54,7 +54,7 @@ function SwipeBack(r) {
     const pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
     const pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
     if (typeof isScrolling === 'undefined') {
-      isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x)) || pageX < touchesStart.x;
+      isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x)) || (pageX < touchesStart.x && !app.rtl) || (pageX > touchesStart.x && app.rtl);
     }
     if (isScrolling || e.f7PreventSwipeBack || app.preventSwipeBack) {
       isTouched = false;
@@ -125,10 +125,8 @@ function SwipeBack(r) {
           }
           if (previousNavbar.hasClass('sliding')) {
             previousNavBackIcon = previousNavbar.children('.left').find('.back .icon');
-            // previousNavBackIconText = previousNavbar.children('left').find('.back span').eq(0);
           } else {
             previousNavBackIcon = previousNavbar.children('.left.sliding').find('.back .icon');
-            // previousNavBackIconText = previousNavbar.children('.left.sliding').find('.back span').eq(0);
           }
         }
       }
@@ -169,6 +167,9 @@ function SwipeBack(r) {
       currentPageTranslate = Math.round(currentPageTranslate);
       previousPageTranslate = Math.round(previousPageTranslate);
     }
+
+    router.swipeBackActive = true;
+    $([currentPage[0], previousPage[0]]).addClass('page-swipeback-active');
 
     currentPage.transform(`translate3d(${currentPageTranslate}px,0,0)`);
     if (paramsSwipeBackAnimateShadow) pageShadow[0].style.opacity = 1 - (1 * percentage);
@@ -232,6 +233,8 @@ function SwipeBack(r) {
     }
     isTouched = false;
     isMoved = false;
+    router.swipeBackActive = false;
+    $([currentPage[0], previousPage[0]]).removeClass('page-swipeback-active');
     if (touchesDiff === 0) {
       $([currentPage[0], previousPage[0]]).transform('');
       if (pageShadow && pageShadow.length > 0) pageShadow.remove();

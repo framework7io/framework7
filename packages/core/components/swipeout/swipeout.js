@@ -452,12 +452,14 @@ const Swipeout = {
       }
     });
     // eslint-disable-next-line
-    $el[0]._clientLeft = $el[0].clientLeft;
-    $el
-      .addClass('swipeout-deleting swipeout-transitioning')
-      .css({ height: '0px' })
-      .find('.swipeout-content')
-      .transform('translate3d(-100%,0,0)');
+    // $el[0]._clientLeft = $el[0].clientLeft;
+    Utils.nextFrame(() => {
+      $el
+        .addClass('swipeout-deleting swipeout-transitioning')
+        .css({ height: '0px' })
+        .find('.swipeout-content')
+        .transform('translate3d(-100%,0,0)');
+    });
   },
 };
 export default {
