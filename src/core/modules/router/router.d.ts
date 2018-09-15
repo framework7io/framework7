@@ -101,7 +101,11 @@ export namespace Router {
     /** load new page and remove all previous pages from history and DOM */
     reloadAll?: boolean
     /** custom/extended context for Template7/Component page (when route loaded from template, templateUrl, component or componentUrl) */
-    context?: object;
+    context?: object
+    /** If set to `true` then it will ignore if such URL in cache and reload it using XHR again */
+    ignoreCache?: boolean
+    /** if set to `true` then it will ignore previous page in history and load specified one */
+    force?: boolean
   }
   interface Route {
     /** route URL */
