@@ -1,5 +1,5 @@
 /**
- * Framework7 React 3.3.0
+ * Framework7 React 3.3.1
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 14, 2018
+ * Released on: September 15, 2018
  */
 
 (function (global, factory) {
@@ -4774,10 +4774,6 @@
 
     F7ListItem.prototype.onClick = function onClick (event) {
       var self = this;
-
-      if (self.props.smartSelect && self.f7SmartSelect) {
-        self.f7SmartSelect.open();
-      }
 
       if (event.target.tagName.toLowerCase() !== 'input') {
         self.dispatchEvent('click', event);
@@ -10657,7 +10653,7 @@
   };
 
   /**
-   * Framework7 React 3.3.0
+   * Framework7 React 3.3.1
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -10665,7 +10661,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: September 14, 2018
+   * Released on: September 15, 2018
    */
 
   var Plugin = {

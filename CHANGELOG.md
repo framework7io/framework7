@@ -2,6 +2,18 @@
 
 # Change Log
 
+# [v3.3.1](https://github.com/framework7io/framework7/compare/v3.3.0...v3.3.1) - September 14, 2018
+  * Core
+    * Router
+      * TypeScript defs tweaks #2668 #2666
+    * Panel
+      * TypeScript defs tweaks #2667
+    * Smart Select
+      * Fixed issue when it could throw error on init trying to get select `name` attribute
+  * Phenome
+    * ListItem
+      * Fixed issue when Smart Select could be opened twice that caused router issue on navigating back
+
 # [v3.3.0](https://github.com/framework7io/framework7/compare/v3.2.1...v3.3.0) - September 14, 2018
   * Core
     * Added TypeScript definitions for whole core framework APIs (with huge help of @JasonKleban)! 🎉
