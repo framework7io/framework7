@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 declare namespace F7ListButton {
   export interface Props {
