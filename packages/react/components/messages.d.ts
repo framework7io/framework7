@@ -5,7 +5,7 @@ declare namespace F7Messages {
     slot? : string
     id? : string | number
     autoLayout? : boolean  | false
-    messages? : Array<any>  | function(){return[];}
+    messages? : Array<any> | (() => any[])
     newMessagesFirst? : boolean  | false
     scrollMessages? : boolean  | true
     scrollMessagesOnEdge? : boolean  | true
@@ -26,7 +26,7 @@ declare namespace F7Messages {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    
+
   }
 }
 declare class F7Messages extends React.Component<F7Messages.Props, {}> {
