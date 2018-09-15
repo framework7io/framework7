@@ -4,8 +4,8 @@
   .row {
     .-(@i: length(@cols)) when (@i > 0) {
       @divider: e(extract(@cols, @i));
-      @className: `Math.floor(@{divider})`;
-      @n: `100/parseFloat(@{divider})`;
+      @className: framework7_floor(@divider);
+      @n: framework7_calculateN(@divider);
       @n-1: @n - 1;
       .col-@{className} {
         width: ~"@{divider}%";
@@ -42,8 +42,8 @@
     .row {
       .-(@i: length(@cols)) when (@i > 0) {
         @divider: e(extract(@cols, @i));
-        @className: `Math.floor(@{divider})`;
-        @n: `100/parseFloat(@{divider})`;
+        @className: framework7_floor(@divider);
+        @n: framework7_calculateN(@divider);
         @n-1: @n - 1;
         .tablet-@{className} {
           width: ~"@{divider}%";
@@ -79,8 +79,8 @@
     .row {
       .-(@i: length(@cols)) when (@i > 0) {
         @divider: e(extract(@cols, @i));
-        @className: `Math.floor(@{divider})`;
-        @n: `100/parseFloat(@{divider})`;
+        @className: framework7_floor(@divider);
+        @n: framework7_calculateN(@divider);
         @n-1: @n - 1;
         .desktop-@{className} {
           width: ~"@{divider}%";
