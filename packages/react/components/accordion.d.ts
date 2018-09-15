@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7Accordion {
+declare namespace F7Accordion {
   export interface Props {
     slot? : string
     id? : string | number
@@ -14,7 +14,7 @@ namespace F7Accordion {
     
   }
 }
-class F7Accordion extends React.Component<F7Accordion.Props, {}> {
+declare class F7Accordion extends React.Component<F7Accordion.Props, {}> {
   
 }
 export default F7Accordion;

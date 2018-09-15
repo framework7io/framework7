@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7Subnavbar {
+declare namespace F7Subnavbar {
   export interface Props {
     slot? : string
     id? : string | number
@@ -17,7 +17,7 @@ namespace F7Subnavbar {
     
   }
 }
-class F7Subnavbar extends React.Component<F7Subnavbar.Props, {}> {
+declare class F7Subnavbar extends React.Component<F7Subnavbar.Props, {}> {
   
 }
 export default F7Subnavbar;

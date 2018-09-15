@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7AccordionItem {
+declare namespace F7AccordionItem {
   export interface Props {
     slot? : string
     id? : string | number
@@ -18,7 +18,7 @@ namespace F7AccordionItem {
     onAccordionClosed? : Function
   }
 }
-class F7AccordionItem extends React.Component<F7AccordionItem.Props, {}> {
+declare class F7AccordionItem extends React.Component<F7AccordionItem.Props, {}> {
   onOpen(event : any) : unknown
   onOpened(event : any) : unknown
   onClose(event : any) : unknown

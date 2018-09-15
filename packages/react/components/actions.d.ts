@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7Actions {
+declare namespace F7Actions {
   export interface Props {
     slot? : string
     id? : string | number
@@ -24,7 +24,7 @@ namespace F7Actions {
     onActionsClosed? : Function
   }
 }
-class F7Actions extends React.Component<F7Actions.Props, {}> {
+declare class F7Actions extends React.Component<F7Actions.Props, {}> {
   onOpen(event : any) : unknown
   onOpened(event : any) : unknown
   onClose(event : any) : unknown

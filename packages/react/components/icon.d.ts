@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7Icon {
+declare namespace F7Icon {
   export interface Props {
     slot? : string
     id? : string | number
@@ -25,7 +25,7 @@ namespace F7Icon {
     
   }
 }
-class F7Icon extends React.Component<F7Icon.Props, {}> {
+declare class F7Icon extends React.Component<F7Icon.Props, {}> {
   
 }
 export default F7Icon;

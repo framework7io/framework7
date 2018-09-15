@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7SwipeoutButton {
+declare namespace F7SwipeoutButton {
   export interface Props {
     slot? : string
     id? : string | number
@@ -20,7 +20,7 @@ namespace F7SwipeoutButton {
     onClick? : Function
   }
 }
-class F7SwipeoutButton extends React.Component<F7SwipeoutButton.Props, {}> {
+declare class F7SwipeoutButton extends React.Component<F7SwipeoutButton.Props, {}> {
   onClick(event : any) : unknown
 }
 export default F7SwipeoutButton;

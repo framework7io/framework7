@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7FabButtons {
+declare namespace F7FabButtons {
   export interface Props {
     slot? : string
     id? : string | number
@@ -15,7 +15,7 @@ namespace F7FabButtons {
     
   }
 }
-class F7FabButtons extends React.Component<F7FabButtons.Props, {}> {
+declare class F7FabButtons extends React.Component<F7FabButtons.Props, {}> {
   
 }
 export default F7FabButtons;

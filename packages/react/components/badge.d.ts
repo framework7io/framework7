@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7Badge {
+declare namespace F7Badge {
   export interface Props {
     slot? : string
     id? : string | number
@@ -14,7 +14,7 @@ namespace F7Badge {
     
   }
 }
-class F7Badge extends React.Component<F7Badge.Props, {}> {
+declare class F7Badge extends React.Component<F7Badge.Props, {}> {
   
 }
 export default F7Badge;

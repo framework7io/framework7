@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7Messages {
+declare namespace F7Messages {
   export interface Props {
     slot? : string
     id? : string | number
@@ -29,7 +29,7 @@ namespace F7Messages {
     
   }
 }
-class F7Messages extends React.Component<F7Messages.Props, {}> {
+declare class F7Messages extends React.Component<F7Messages.Props, {}> {
   renderMessages(messagesToRender : any, method : any) : unknown
   layout() : unknown
   scroll(duration : any, scrollTop : any) : unknown

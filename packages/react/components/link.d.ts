@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7Link {
+declare namespace F7Link {
   export interface Props {
     slot? : string
     id? : string | number
@@ -71,7 +71,7 @@ namespace F7Link {
     onClick? : Function
   }
 }
-class F7Link extends React.Component<F7Link.Props, {}> {
+declare class F7Link extends React.Component<F7Link.Props, {}> {
   onClick(event : any) : unknown
 }
 export default F7Link;

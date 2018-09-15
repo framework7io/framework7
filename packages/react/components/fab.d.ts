@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7Fab {
+declare namespace F7Fab {
   export interface Props {
     slot? : string
     id? : string | number
@@ -20,7 +20,7 @@ namespace F7Fab {
     onClick? : Function
   }
 }
-class F7Fab extends React.Component<F7Fab.Props, {}> {
+declare class F7Fab extends React.Component<F7Fab.Props, {}> {
   onClick(event : any) : unknown
 }
 export default F7Fab;

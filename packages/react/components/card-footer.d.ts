@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7CardFooter {
+declare namespace F7CardFooter {
   export interface Props {
     slot? : string
     id? : string | number
@@ -14,7 +14,7 @@ namespace F7CardFooter {
     
   }
 }
-class F7CardFooter extends React.Component<F7CardFooter.Props, {}> {
+declare class F7CardFooter extends React.Component<F7CardFooter.Props, {}> {
   
 }
 export default F7CardFooter;

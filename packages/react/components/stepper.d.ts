@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7Stepper {
+declare namespace F7Stepper {
   export interface Props {
     slot? : string
     id? : string | number
@@ -47,7 +47,7 @@ namespace F7Stepper {
     onStepperPlusClick? : Function
   }
 }
-class F7Stepper extends React.Component<F7Stepper.Props, {}> {
+declare class F7Stepper extends React.Component<F7Stepper.Props, {}> {
   increment() : unknown
   decrement() : unknown
   setValue(newValue : any) : unknown

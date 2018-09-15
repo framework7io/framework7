@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7NavLeft {
+declare namespace F7NavLeft {
   export interface Props {
     slot? : string
     id? : string | number
@@ -19,7 +19,7 @@ namespace F7NavLeft {
     onClickBack? : Function
   }
 }
-class F7NavLeft extends React.Component<F7NavLeft.Props, {}> {
+declare class F7NavLeft extends React.Component<F7NavLeft.Props, {}> {
   onBackClick(e : any) : unknown
 }
 export default F7NavLeft;

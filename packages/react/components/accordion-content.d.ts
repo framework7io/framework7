@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7AccordionContent {
+declare namespace F7AccordionContent {
   export interface Props {
     slot? : string
     id? : string | number
@@ -11,10 +11,10 @@ namespace F7AccordionContent {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    
+
   }
 }
-class F7AccordionContent extends React.Component<F7AccordionContent.Props, {}> {
-  
+declare class F7AccordionContent extends React.Component<F7AccordionContent.Props, {}> {
+
 }
 export default F7AccordionContent;

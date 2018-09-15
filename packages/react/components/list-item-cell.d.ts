@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7ListItemCell {
+declare namespace F7ListItemCell {
   export interface Props {
     slot? : string
     id? : string | number
@@ -14,7 +14,7 @@ namespace F7ListItemCell {
     
   }
 }
-class F7ListItemCell extends React.Component<F7ListItemCell.Props, {}> {
+declare class F7ListItemCell extends React.Component<F7ListItemCell.Props, {}> {
   
 }
 export default F7ListItemCell;

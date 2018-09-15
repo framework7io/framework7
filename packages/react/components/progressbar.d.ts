@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7Progressbar {
+declare namespace F7Progressbar {
   export interface Props {
     slot? : string
     id? : string | number
@@ -16,7 +16,7 @@ namespace F7Progressbar {
     
   }
 }
-class F7Progressbar extends React.Component<F7Progressbar.Props, {}> {
+declare class F7Progressbar extends React.Component<F7Progressbar.Props, {}> {
   set(progress : any, speed : any) : unknown
 }
 export default F7Progressbar;

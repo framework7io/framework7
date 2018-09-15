@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7Block {
+declare namespace F7Block {
   export interface Props {
     slot? : string
     id? : string | number
@@ -25,7 +25,7 @@ namespace F7Block {
     onTabHide? : Function
   }
 }
-class F7Block extends React.Component<F7Block.Props, {}> {
+declare class F7Block extends React.Component<F7Block.Props, {}> {
   onTabShow(e : any) : unknown
   onTabHide(e : any) : unknown
 }

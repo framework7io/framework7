@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7Radio {
+declare namespace F7Radio {
   export interface Props {
     slot? : string
     id? : string | number
@@ -20,7 +20,7 @@ namespace F7Radio {
     onChange? : Function
   }
 }
-class F7Radio extends React.Component<F7Radio.Props, {}> {
+declare class F7Radio extends React.Component<F7Radio.Props, {}> {
   onChange(event : any) : unknown
 }
 export default F7Radio;

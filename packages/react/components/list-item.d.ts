@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7ListItem {
+declare namespace F7ListItem {
   export interface Props {
     slot? : string
     id? : string | number
@@ -95,7 +95,7 @@ namespace F7ListItem {
     onInput? : Function
   }
 }
-class F7ListItem extends React.Component<F7ListItem.Props, {}> {
+declare class F7ListItem extends React.Component<F7ListItem.Props, {}> {
   onClick(event : any) : unknown
   onSwipeoutDeleted(event : any) : unknown
   onSwipeoutDelete(event : any) : unknown

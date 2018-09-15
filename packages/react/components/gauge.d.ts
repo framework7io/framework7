@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7Gauge {
+declare namespace F7Gauge {
   export interface Props {
     slot? : string
     id? : string | number
@@ -22,7 +22,7 @@ namespace F7Gauge {
     
   }
 }
-class F7Gauge extends React.Component<F7Gauge.Props, {}> {
+declare class F7Gauge extends React.Component<F7Gauge.Props, {}> {
   
 }
 export default F7Gauge;

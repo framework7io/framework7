@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7ListIndex {
+declare namespace F7ListIndex {
   export interface Props {
     slot? : string
     id? : string | number
@@ -21,7 +21,7 @@ namespace F7ListIndex {
     onListIndexSelect? : Function
   }
 }
-class F7ListIndex extends React.Component<F7ListIndex.Props, {}> {
+declare class F7ListIndex extends React.Component<F7ListIndex.Props, {}> {
   update() : unknown
   scrollListToIndex(indexContent : any) : unknown
 }

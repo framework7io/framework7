@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7CardContent {
+declare namespace F7CardContent {
   export interface Props {
     slot? : string
     id? : string | number
@@ -15,7 +15,7 @@ namespace F7CardContent {
     
   }
 }
-class F7CardContent extends React.Component<F7CardContent.Props, {}> {
+declare class F7CardContent extends React.Component<F7CardContent.Props, {}> {
   
 }
 export default F7CardContent;

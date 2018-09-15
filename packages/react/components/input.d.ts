@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7Input {
+declare namespace F7Input {
   export interface Props {
     slot? : string
     type? : string
@@ -58,7 +58,7 @@ namespace F7Input {
     onChange? : Function
   }
 }
-class F7Input extends React.Component<F7Input.Props, {}> {
+declare class F7Input extends React.Component<F7Input.Props, {}> {
   onTextareaResize(event : any) : unknown
   onInputNotEmpty(event : any) : unknown
   onInputEmpty(event : any) : unknown

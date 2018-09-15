@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7ListItemRow {
+declare namespace F7ListItemRow {
   export interface Props {
     slot? : string
     id? : string | number
@@ -14,7 +14,7 @@ namespace F7ListItemRow {
     
   }
 }
-class F7ListItemRow extends React.Component<F7ListItemRow.Props, {}> {
+declare class F7ListItemRow extends React.Component<F7ListItemRow.Props, {}> {
   
 }
 export default F7ListItemRow;

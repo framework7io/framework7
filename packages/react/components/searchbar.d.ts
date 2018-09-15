@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7Searchbar {
+declare namespace F7Searchbar {
   export interface Props {
     slot? : string
     id? : string | number
@@ -47,7 +47,7 @@ namespace F7Searchbar {
     onClickDisable? : Function
   }
 }
-class F7Searchbar extends React.Component<F7Searchbar.Props, {}> {
+declare class F7Searchbar extends React.Component<F7Searchbar.Props, {}> {
   search(query : any) : unknown
   enable() : unknown
   disable() : unknown

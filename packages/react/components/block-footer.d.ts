@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7BlockFooter {
+declare namespace F7BlockFooter {
   export interface Props {
     slot? : string
     id? : string | number
@@ -14,7 +14,7 @@ namespace F7BlockFooter {
     
   }
 }
-class F7BlockFooter extends React.Component<F7BlockFooter.Props, {}> {
+declare class F7BlockFooter extends React.Component<F7BlockFooter.Props, {}> {
   
 }
 export default F7BlockFooter;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7Sheet {
+declare namespace F7Sheet {
   export interface Props {
     slot? : string
     id? : string | number
@@ -21,7 +21,7 @@ namespace F7Sheet {
     onSheetClosed? : Function
   }
 }
-class F7Sheet extends React.Component<F7Sheet.Props, {}> {
+declare class F7Sheet extends React.Component<F7Sheet.Props, {}> {
   onOpen(event : any) : unknown
   onOpened(event : any) : unknown
   onClose(event : any) : unknown

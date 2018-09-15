@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7Swiper {
+declare namespace F7Swiper {
   export interface Props {
     slot? : string
     id? : string | number
@@ -19,7 +19,7 @@ namespace F7Swiper {
     
   }
 }
-class F7Swiper extends React.Component<F7Swiper.Props, {}> {
+declare class F7Swiper extends React.Component<F7Swiper.Props, {}> {
   
 }
 export default F7Swiper;

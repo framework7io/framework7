@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7Segmented {
+declare namespace F7Segmented {
   export interface Props {
     slot? : string
     id? : string | number
@@ -17,7 +17,7 @@ namespace F7Segmented {
     
   }
 }
-class F7Segmented extends React.Component<F7Segmented.Props, {}> {
+declare class F7Segmented extends React.Component<F7Segmented.Props, {}> {
   
 }
 export default F7Segmented;

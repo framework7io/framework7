@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7Preloader {
+declare namespace F7Preloader {
   export interface Props {
     slot? : string
     id? : string | number
@@ -15,7 +15,7 @@ namespace F7Preloader {
     
   }
 }
-class F7Preloader extends React.Component<F7Preloader.Props, {}> {
+declare class F7Preloader extends React.Component<F7Preloader.Props, {}> {
   
 }
 export default F7Preloader;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7List {
+declare namespace F7List {
   export interface Props {
     slot? : string
     id? : string | number
@@ -46,7 +46,7 @@ namespace F7List {
     onTabHide? : Function
   }
 }
-class F7List extends React.Component<F7List.Props, {}> {
+declare class F7List extends React.Component<F7List.Props, {}> {
   onSortableEnable(event : any) : unknown
   onSortableDisable(event : any) : unknown
   onSortableSort(event : any) : unknown

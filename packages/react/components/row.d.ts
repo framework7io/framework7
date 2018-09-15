@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7Row {
+declare namespace F7Row {
   export interface Props {
     slot? : string
     id? : string | number
@@ -16,7 +16,7 @@ namespace F7Row {
     onClick? : Function
   }
 }
-class F7Row extends React.Component<F7Row.Props, {}> {
+declare class F7Row extends React.Component<F7Row.Props, {}> {
   onClick(e : any) : unknown
 }
 export default F7Row;

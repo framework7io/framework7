@@ -1,6 +1,6 @@
 import React from 'react';
 
-namespace F7MessagebarAttachment {
+declare namespace F7MessagebarAttachment {
   export interface Props {
     slot? : string
     id? : string | number
@@ -17,7 +17,7 @@ namespace F7MessagebarAttachment {
     onAttachmentDelete? : Function
   }
 }
-class F7MessagebarAttachment extends React.Component<F7MessagebarAttachment.Props, {}> {
+declare class F7MessagebarAttachment extends React.Component<F7MessagebarAttachment.Props, {}> {
   onClick(e : any) : unknown
   onDeleteClick(e : any) : unknown
 }
