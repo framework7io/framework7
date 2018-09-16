@@ -125,6 +125,7 @@ export default {
     self.onSwipeBackAfterResetBound = self.onSwipeBackAfterReset.bind(self);
     self.onTabShowBound = self.onTabShow.bind(self);
     self.onTabHideBound = self.onTabHide.bind(self);
+    self.onViewInitBound = self.onViewInit.bind(self);
   },
   componentDidMount() {
     const self = this;
@@ -137,17 +138,18 @@ export default {
     el.addEventListener('swipeback:afterreset', self.onSwipeBackAfterResetBound);
     el.addEventListener('tab:show', self.onTabShowBound);
     el.addEventListener('tab:hide', self.onTabHideBound);
+    el.addEventListener('view:init', self.onViewInitBound);
 
     self.setState({ pages: [] });
 
     self.$f7ready((f7Instance) => {
-      if (!self.props.init) return;
       self.routerData = {
         el,
         component: self,
         instance: null,
       };
       f7.routers.views.push(self.routerData);
+      if (!self.props.init) return;
       // phenome-vue-next-line
       self.routerData.instance = f7Instance.views.create(el, Utils.noUndefinedProps(self.$options.propsData || {}));
       // phenome-react-next-line
@@ -166,6 +168,7 @@ export default {
     el.removeEventListener('swipeback:afterreset', self.onSwipeBackAfterResetBound);
     el.removeEventListener('tab:show', self.onTabShowBound);
     el.removeEventListener('tab:hide', self.onTabHideBound);
+    el.removeEventListener('view:init', self.onViewInitBound);
 
     if (!self.props.init) return;
     if (self.f7View && self.f7View.destroy) self.f7View.destroy();
@@ -179,6 +182,14 @@ export default {
     events.emit('viewRouterDidUpdate', self.routerData);
   },
   methods: {
+    onViewInit(event) {
+      const self = this;
+      self.dispatchEvent('view:init viewInit', event, event.detail);
+      if (!self.props.init) {
+        self.routerData.instance = event.detail;
+        self.f7View = self.routerData.instance;
+      }
+    },
     onSwipeBackMove(event) {
       this.dispatchEvent('swipeback:move swipeBackMove', event, event.detail);
     },
