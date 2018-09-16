@@ -4,6 +4,8 @@ namespace F7Subnavbar {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     sliding? : boolean
     title? : string
     inner? : boolean  | true

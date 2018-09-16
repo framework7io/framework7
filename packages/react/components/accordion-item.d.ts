@@ -4,6 +4,8 @@ namespace F7AccordionItem {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     opened? : boolean
     color? : string
     colorTheme? : string

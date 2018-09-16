@@ -4,6 +4,8 @@ namespace F7Page {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     name? : string
     stacked? : boolean
     withSubnavbar? : boolean

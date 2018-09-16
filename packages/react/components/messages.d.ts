@@ -4,6 +4,8 @@ namespace F7Messages {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     autoLayout? : boolean  | false
     messages? : Array<any>  | function(){return[];}
     newMessagesFirst? : boolean  | false

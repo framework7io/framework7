@@ -4,6 +4,8 @@ namespace F7Message {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     text? : string
     name? : string
     avatar? : string

@@ -4,6 +4,8 @@ namespace F7Panel {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     side? : string
     effect? : string
     cover? : boolean

@@ -4,6 +4,8 @@ namespace F7Label {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     floating? : boolean
     inline? : boolean
     color? : string

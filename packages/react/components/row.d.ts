@@ -4,6 +4,8 @@ namespace F7Row {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     noGap? : boolean
     tag? : string  | 'div'
     color? : string

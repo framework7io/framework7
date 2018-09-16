@@ -4,6 +4,8 @@ namespace F7FabButton {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     fabClose? : boolean
     label? : string
     target? : string

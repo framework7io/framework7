@@ -4,6 +4,8 @@ namespace F7ListItemContent {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     title? : string | number
     text? : string | number
     media? : string

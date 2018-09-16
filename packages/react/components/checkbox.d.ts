@@ -4,6 +4,8 @@ namespace F7Checkbox {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     checked? : boolean
     name? : number | string
     value? : number | string | boolean

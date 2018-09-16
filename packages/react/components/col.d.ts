@@ -4,6 +4,8 @@ namespace F7Col {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     tag? : string  | 'div'
     width? : number | string  | 'auto'
     tabletWidth? : number | string

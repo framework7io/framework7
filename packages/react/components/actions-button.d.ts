@@ -4,6 +4,8 @@ namespace F7ActionsButton {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     bold? : boolean
     close? : boolean  | true
     color? : string

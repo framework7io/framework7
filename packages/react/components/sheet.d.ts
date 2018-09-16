@@ -4,6 +4,8 @@ namespace F7Sheet {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     opened? : boolean
     backdrop? : boolean
     closeByBackdropClick? : boolean

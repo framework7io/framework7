@@ -4,6 +4,8 @@ namespace F7Block {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     inset? : boolean
     tabletInset? : boolean
     strong? : boolean

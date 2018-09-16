@@ -4,6 +4,8 @@ namespace F7MessagebarSheetImage {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     image? : string
     checked? : boolean
     color? : string

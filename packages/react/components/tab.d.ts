@@ -4,6 +4,8 @@ namespace F7Tab {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     tabActive? : boolean
     color? : string
     colorTheme? : string

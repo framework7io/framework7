@@ -4,6 +4,8 @@ namespace F7App {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     params? : Object
     routes? : Array<any>
     color? : string

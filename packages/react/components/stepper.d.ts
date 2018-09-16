@@ -4,6 +4,8 @@ namespace F7Stepper {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     init? : boolean  | true
     value? : number  | 0
     min? : number  | 0

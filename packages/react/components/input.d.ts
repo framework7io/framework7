@@ -9,7 +9,11 @@ namespace F7Input {
     defaultValue? : string | number | Array<any>
     placeholder? : string
     id? : string | number
-    inputId? : string | number
+    className? : string
+    style? : React.CSSProperties
+    inputid? : string | number
+    className? : string
+    style? : React.CSSProperties
     size? : string | number
     accept? : string | number
     autocomplete? : string
