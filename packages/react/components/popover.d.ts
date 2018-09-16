@@ -26,7 +26,7 @@ class F7Popover extends React.Component<F7Popover.Props, {}> {
   onOpened(event : any) : unknown
   onClose(event : any) : unknown
   onClosed(event : any) : unknown
-  open(target : any, animate : any) : unknown
-  close(animate : any) : unknown
+  open(target : any, animate? : any) : unknown
+  close(animate? : any) : unknown
 }
 export default F7Popover;

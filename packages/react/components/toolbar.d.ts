@@ -23,7 +23,7 @@ namespace F7Toolbar {
   }
 }
 class F7Toolbar extends React.Component<F7Toolbar.Props, {}> {
-  hide(animate : any) : unknown
-  show(animate : any) : unknown
+  hide(animate? : any) : unknown
+  show(animate? : any) : unknown
 }
 export default F7Toolbar;

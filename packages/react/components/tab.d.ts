@@ -17,7 +17,7 @@ namespace F7Tab {
   }
 }
 class F7Tab extends React.Component<F7Tab.Props, {}> {
-  show(animate : any) : unknown
+  show(animate? : any) : unknown
   onTabShow(e : any) : unknown
   onTabHide(e : any) : unknown
 }
