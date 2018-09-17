@@ -4,6 +4,8 @@ namespace F7View {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     tab? : boolean
     tabActive? : boolean
     name? : string

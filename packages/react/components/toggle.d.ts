@@ -4,6 +4,8 @@ namespace F7Toggle {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     init? : boolean  | true
     checked? : boolean
     defaultChecked? : boolean

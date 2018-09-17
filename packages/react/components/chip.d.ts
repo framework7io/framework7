@@ -4,6 +4,8 @@ namespace F7Chip {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     media? : string
     text? : string | number
     deleteable? : boolean

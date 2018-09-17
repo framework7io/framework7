@@ -4,6 +4,8 @@ namespace F7MessagebarAttachment {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     image? : string
     deletable? : boolean  | true
     color? : string

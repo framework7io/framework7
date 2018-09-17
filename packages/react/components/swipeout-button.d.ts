@@ -4,6 +4,8 @@ namespace F7SwipeoutButton {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     text? : string
     confirmText? : string
     overswipe? : boolean

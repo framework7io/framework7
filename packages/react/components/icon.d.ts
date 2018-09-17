@@ -4,6 +4,8 @@ namespace F7Icon {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     material? : string
     f7? : string
     ion? : string

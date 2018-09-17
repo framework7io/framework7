@@ -4,6 +4,8 @@ namespace F7Button {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     noFastclick? : boolean
     noFastClick? : boolean
     text? : string

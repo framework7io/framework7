@@ -4,6 +4,8 @@ namespace F7ActionsLabel {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     bold? : boolean
     color? : string
     colorTheme? : string

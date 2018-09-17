@@ -4,6 +4,8 @@ namespace F7ListGroup {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     mediaList? : boolean
     sortable? : boolean
     color? : string

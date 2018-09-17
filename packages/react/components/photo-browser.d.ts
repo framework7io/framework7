@@ -4,6 +4,8 @@ namespace F7PhotoBrowser {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     init? : boolean  | true
     params? : Object
     photos? : Array<any>

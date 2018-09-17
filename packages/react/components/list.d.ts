@@ -4,6 +4,8 @@ namespace F7List {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     inset? : boolean
     tabletInset? : boolean
     mediaList? : boolean

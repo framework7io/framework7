@@ -4,6 +4,8 @@ namespace F7Tabs {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     animated? : boolean
     swipeable? : boolean
     routable? : boolean

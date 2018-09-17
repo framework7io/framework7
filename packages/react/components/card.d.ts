@@ -4,6 +4,8 @@ namespace F7Card {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     title? : string | number
     content? : string | number
     footer? : string | number

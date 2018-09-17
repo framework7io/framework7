@@ -4,6 +4,8 @@ namespace F7Range {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     init? : boolean  | true
     value? : number | Array<any> | string  | 0
     min? : number | string  | 0

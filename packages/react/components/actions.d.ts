@@ -4,6 +4,8 @@ namespace F7Actions {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     opened? : boolean
     grid? : boolean
     convertToPopover? : boolean

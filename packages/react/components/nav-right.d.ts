@@ -4,6 +4,8 @@ namespace F7NavRight {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     sliding? : boolean
     color? : string
     colorTheme? : string

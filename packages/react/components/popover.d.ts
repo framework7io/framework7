@@ -4,6 +4,8 @@ namespace F7Popover {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     opened? : boolean
     target? : string | Object
     closeByBackdropClick? : boolean

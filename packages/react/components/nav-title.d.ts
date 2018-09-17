@@ -4,6 +4,8 @@ namespace F7NavTitle {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     title? : string
     subtitle? : string
     sliding? : boolean

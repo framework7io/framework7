@@ -4,6 +4,8 @@ namespace F7SwiperSlide {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     zoom? : boolean
     
   }

@@ -4,6 +4,8 @@ namespace F7Swiper {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     params? : Object
     pagination? : boolean
     scrollbar? : boolean

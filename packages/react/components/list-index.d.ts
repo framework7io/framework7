@@ -4,6 +4,8 @@ namespace F7ListIndex {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     init? : boolean  | true
     listEl? : string | Object
     indexes? : string | Array<any>  | 'auto'

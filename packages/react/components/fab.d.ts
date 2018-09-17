@@ -4,6 +4,8 @@ namespace F7Fab {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     morphTo? : string
     href? : boolean | string
     target? : string

@@ -4,6 +4,8 @@ namespace F7Searchbar {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     noShadow? : boolean
     noHairline? : boolean
     form? : boolean  | true

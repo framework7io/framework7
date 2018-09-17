@@ -4,6 +4,8 @@ namespace F7Toolbar {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     bottomMd? : boolean
     tabbar? : boolean
     labels? : boolean

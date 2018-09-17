@@ -4,6 +4,8 @@ namespace F7Segmented {
   export interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     raised? : boolean
     round? : boolean
     tag? : string  | 'div'
