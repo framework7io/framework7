@@ -27,7 +27,7 @@ class F7Popup extends React.Component<F7Popup.Props, {}> {
   onOpened(event : any) : unknown
   onClose(event : any) : unknown
   onClosed(event : any) : unknown
-  open(animate : any) : unknown
-  close(animate : any) : unknown
+  open(animate? : any) : unknown
+  close(animate? : any) : unknown
 }
 export default F7Popup;

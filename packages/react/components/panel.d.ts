@@ -37,7 +37,7 @@ class F7Panel extends React.Component<F7Panel.Props, {}> {
   onPanelSwipe(event : any) : unknown
   onPanelSwipeOpen(event : any) : unknown
   onBreakpoint(event : any) : unknown
-  open(animate : any) : unknown
-  close(animate : any) : unknown
+  open(animate? : any) : unknown
+  close(animate? : any) : unknown
 }
 export default F7Panel;

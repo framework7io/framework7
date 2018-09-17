@@ -29,7 +29,7 @@ class F7Actions extends React.Component<F7Actions.Props, {}> {
   onOpened(event : any) : unknown
   onClose(event : any) : unknown
   onClosed(event : any) : unknown
-  open(animate : any) : unknown
-  close(animate : any) : unknown
+  open(animate? : any) : unknown
+  close(animate? : any) : unknown
 }
 export default F7Actions;

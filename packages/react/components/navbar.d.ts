@@ -28,8 +28,8 @@ namespace F7Navbar {
   }
 }
 class F7Navbar extends React.Component<F7Navbar.Props, {}> {
-  hide(animate : any) : unknown
-  show(animate : any) : unknown
+  hide(animate? : any) : unknown
+  show(animate? : any) : unknown
   size() : unknown
   onBackClick(e : any) : unknown
 }

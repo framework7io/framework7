@@ -23,7 +23,7 @@ class F7LoginScreen extends React.Component<F7LoginScreen.Props, {}> {
   onOpened(event : any) : unknown
   onClose(event : any) : unknown
   onClosed(event : any) : unknown
-  open(animate : any) : unknown
-  close(animate : any) : unknown
+  open(animate? : any) : unknown
+  close(animate? : any) : unknown
 }
 export default F7LoginScreen;
