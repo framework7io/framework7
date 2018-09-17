@@ -59,7 +59,7 @@ function buildTypings(cb) {
         .replace('// LIB_EXTENSION', libExtension)
         .replace('// EXPORT_COMPONENTS', `export {\n${componentExports.join(',\n')}\n}`)
         .replace('// DECLARE_PLUGIN', declarePlugin)
-        .replace('// EXPORT_PLUGIN', exportPlugin)
+        .replace('// EXPORT_PLUGIN', exportPlugin);
       return content;
     }))
     .pipe(rename((file) => { file.basename = 'framework7-vue.d'; file.extname = '.ts'; }))
