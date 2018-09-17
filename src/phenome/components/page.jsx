@@ -7,6 +7,8 @@ export default {
   name: 'f7-page',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     name: String,
     stacked: Boolean,
     withSubnavbar: Boolean,

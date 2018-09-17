@@ -5,6 +5,8 @@ export default {
   name: 'f7-message',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     text: String,
     name: String,
     avatar: String,

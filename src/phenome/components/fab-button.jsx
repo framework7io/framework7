@@ -5,6 +5,8 @@ export default {
   name: 'f7-fab-button',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     fabClose: Boolean,
     label: String,
     target: String,

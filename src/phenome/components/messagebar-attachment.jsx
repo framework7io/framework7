@@ -5,6 +5,8 @@ export default {
   name: 'f7-messagebar-attachment',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     image: String,
     deletable: {
       type: Boolean,

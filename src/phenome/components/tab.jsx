@@ -9,6 +9,8 @@ export default {
   name: 'f7-tab',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     tabActive: Boolean,
     ...Mixins.colorProps,
   },

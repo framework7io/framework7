@@ -7,6 +7,8 @@ export default {
   name: 'f7-nav-left',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     backLink: [Boolean, String],
     backLinkUrl: String,
     backLinkForce: Boolean,

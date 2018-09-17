@@ -5,6 +5,8 @@ export default {
   name: 'f7-fab',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     morphTo: String,
     href: [Boolean, String],
     target: String,

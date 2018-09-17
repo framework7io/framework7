@@ -2,9 +2,9 @@
 /* eslint no-console: "off" */
 /* eslint global-require: "off" */
 /* eslint no-param-reassign: ["error", { "props": false }] */
-const phenome = require('phenome');
 const fs = require('fs');
 const { transformSync } = require('@babel/core');
+const phenome = require('phenome');
 
 function transformRestSpread(buildPath) {
   const reactFiles = fs.readdirSync(`${buildPath}/react/components`).filter(f => f[0] !== '.' && f.indexOf('.d.ts') < 0);

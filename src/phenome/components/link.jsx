@@ -9,6 +9,8 @@ export default {
   name: 'f7-link',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     noLinkClass: Boolean,
     noFastClick: Boolean,
     noFastclick: Boolean,

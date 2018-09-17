@@ -5,6 +5,8 @@ export default {
   name: 'f7-subnavbar',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     sliding: Boolean,
     title: String,
     inner: {

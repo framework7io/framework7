@@ -9,6 +9,8 @@ export default {
   name: 'f7-list-item-content',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
 
     title: [String, Number],
     text: [String, Number],

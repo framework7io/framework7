@@ -10,6 +10,8 @@ export default {
   name: 'f7-messagebar',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     sheetVisible: Boolean,
     attachmentsVisible: Boolean,
     top: Boolean,

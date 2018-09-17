@@ -5,6 +5,8 @@ export default {
   name: 'f7-page-content',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     tab: Boolean,
     tabActive: Boolean,
     ptr: Boolean,

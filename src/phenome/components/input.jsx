@@ -14,6 +14,8 @@ export default {
     defaultValue: [String, Number, Array],
     placeholder: String,
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     inputId: [String, Number],
     size: [String, Number],
     accept: [String, Number],
