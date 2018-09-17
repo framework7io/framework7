@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7CardHeader {
+declare namespace F7CardHeader {
   export interface Props {
     slot? : string
     id? : string | number
@@ -14,7 +14,7 @@ namespace F7CardHeader {
     
   }
 }
-class F7CardHeader extends React.Component<F7CardHeader.Props, {}> {
+declare class F7CardHeader extends React.Component<F7CardHeader.Props, {}> {
   
 }
 export default F7CardHeader;

@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Page {
+declare namespace F7Page {
   export interface Props {
     slot? : string
     id? : string | number
@@ -48,7 +48,7 @@ namespace F7Page {
     onPageBeforeRemove? : Function
   }
 }
-class F7Page extends React.Component<F7Page.Props, {}> {
+declare class F7Page extends React.Component<F7Page.Props, {}> {
   onPtrPullStart(event : any) : unknown
   onPtrPullMove(event : any) : unknown
   onPtrPullEnd(event : any) : unknown

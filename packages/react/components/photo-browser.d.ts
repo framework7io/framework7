@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7PhotoBrowser {
+declare namespace F7PhotoBrowser {
   export interface Props {
     slot? : string
     id? : string | number
@@ -39,7 +39,7 @@ namespace F7PhotoBrowser {
     onPhotoBrowserSwipeToClose? : Function
   }
 }
-class F7PhotoBrowser extends React.Component<F7PhotoBrowser.Props, {}> {
+declare class F7PhotoBrowser extends React.Component<F7PhotoBrowser.Props, {}> {
   open(index : any) : unknown
   close() : unknown
   expositionToggle() : unknown

@@ -1,11 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Messages {
+declare namespace F7Messages {
   export interface Props {
     slot? : string
     id? : string | number
     autoLayout? : boolean  | false
-    messages? : Array<any>  | function(){return[];}
+    messages? : Array<any> | (() => any[])
     newMessagesFirst? : boolean  | false
     scrollMessages? : boolean  | true
     scrollMessagesOnEdge? : boolean  | true
@@ -26,10 +26,10 @@ namespace F7Messages {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    
+
   }
 }
-class F7Messages extends React.Component<F7Messages.Props, {}> {
+declare class F7Messages extends React.Component<F7Messages.Props, {}> {
   renderMessages(messagesToRender : any, method : any) : unknown
   layout() : unknown
   scroll(duration : any, scrollTop : any) : unknown

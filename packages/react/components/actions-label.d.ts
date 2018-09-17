@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7ActionsLabel {
+declare namespace F7ActionsLabel {
   export interface Props {
     slot? : string
     id? : string | number
@@ -15,7 +15,7 @@ namespace F7ActionsLabel {
     onClick? : Function
   }
 }
-class F7ActionsLabel extends React.Component<F7ActionsLabel.Props, {}> {
+declare class F7ActionsLabel extends React.Component<F7ActionsLabel.Props, {}> {
   onClick(event : any) : unknown
 }
 export default F7ActionsLabel;

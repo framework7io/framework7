@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Panel {
+declare namespace F7Panel {
   export interface Props {
     slot? : string
     id? : string | number
@@ -28,7 +28,7 @@ namespace F7Panel {
     onPanelBreakpoint? : Function
   }
 }
-class F7Panel extends React.Component<F7Panel.Props, {}> {
+declare class F7Panel extends React.Component<F7Panel.Props, {}> {
   onOpen(event : any) : unknown
   onOpened(event : any) : unknown
   onClose(event : any) : unknown

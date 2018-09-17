@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7MessagebarSheet {
+declare namespace F7MessagebarSheet {
   export interface Props {
     slot? : string
     id? : string | number
@@ -14,7 +14,7 @@ namespace F7MessagebarSheet {
     
   }
 }
-class F7MessagebarSheet extends React.Component<F7MessagebarSheet.Props, {}> {
+declare class F7MessagebarSheet extends React.Component<F7MessagebarSheet.Props, {}> {
   
 }
 export default F7MessagebarSheet;

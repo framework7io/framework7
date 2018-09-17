@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Toolbar {
+declare namespace F7Toolbar {
   export interface Props {
     slot? : string
     id? : string | number
@@ -22,7 +22,7 @@ namespace F7Toolbar {
     
   }
 }
-class F7Toolbar extends React.Component<F7Toolbar.Props, {}> {
+declare class F7Toolbar extends React.Component<F7Toolbar.Props, {}> {
   hide(animate : any) : unknown
   show(animate : any) : unknown
 }

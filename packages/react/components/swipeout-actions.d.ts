@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7SwipeoutActions {
+declare namespace F7SwipeoutActions {
   export interface Props {
     slot? : string
     id? : string | number
@@ -17,7 +17,7 @@ namespace F7SwipeoutActions {
     
   }
 }
-class F7SwipeoutActions extends React.Component<F7SwipeoutActions.Props, {}> {
+declare class F7SwipeoutActions extends React.Component<F7SwipeoutActions.Props, {}> {
   
 }
 export default F7SwipeoutActions;

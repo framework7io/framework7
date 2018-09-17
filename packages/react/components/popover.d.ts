@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Popover {
+declare namespace F7Popover {
   export interface Props {
     slot? : string
     id? : string | number
@@ -21,7 +21,7 @@ namespace F7Popover {
     onPopoverClosed? : Function
   }
 }
-class F7Popover extends React.Component<F7Popover.Props, {}> {
+declare class F7Popover extends React.Component<F7Popover.Props, {}> {
   onOpen(event : any) : unknown
   onOpened(event : any) : unknown
   onClose(event : any) : unknown

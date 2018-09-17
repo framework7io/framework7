@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Button {
+declare namespace F7Button {
   export interface Props {
     slot? : string
     id? : string | number
@@ -79,7 +79,7 @@ namespace F7Button {
     onClick? : Function
   }
 }
-class F7Button extends React.Component<F7Button.Props, {}> {
+declare class F7Button extends React.Component<F7Button.Props, {}> {
   onClick(event : any) : unknown
 }
 export default F7Button;

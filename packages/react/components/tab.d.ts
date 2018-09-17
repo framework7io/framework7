@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Tab {
+declare namespace F7Tab {
   export interface Props {
     slot? : string
     id? : string | number
@@ -16,7 +16,7 @@ namespace F7Tab {
     onTabHide? : Function
   }
 }
-class F7Tab extends React.Component<F7Tab.Props, {}> {
+declare class F7Tab extends React.Component<F7Tab.Props, {}> {
   show(animate : any) : unknown
   onTabShow(e : any) : unknown
   onTabHide(e : any) : unknown

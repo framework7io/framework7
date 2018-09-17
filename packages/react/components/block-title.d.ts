@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7BlockTitle {
+declare namespace F7BlockTitle {
   export interface Props {
     slot? : string
     id? : string | number
@@ -14,7 +14,7 @@ namespace F7BlockTitle {
     
   }
 }
-class F7BlockTitle extends React.Component<F7BlockTitle.Props, {}> {
+declare class F7BlockTitle extends React.Component<F7BlockTitle.Props, {}> {
   
 }
 export default F7BlockTitle;

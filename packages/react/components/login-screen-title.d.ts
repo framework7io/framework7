@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7LoginScreenTitle {
+declare namespace F7LoginScreenTitle {
   export interface Props {
     slot? : string
     id? : string | number
@@ -14,7 +14,7 @@ namespace F7LoginScreenTitle {
     
   }
 }
-class F7LoginScreenTitle extends React.Component<F7LoginScreenTitle.Props, {}> {
+declare class F7LoginScreenTitle extends React.Component<F7LoginScreenTitle.Props, {}> {
   
 }
 export default F7LoginScreenTitle;

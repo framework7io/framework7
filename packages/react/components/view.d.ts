@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7View {
+declare namespace F7View {
   export interface Props {
     slot? : string
     id? : string | number
@@ -62,7 +62,7 @@ namespace F7View {
     onTabHide? : Function
   }
 }
-class F7View extends React.Component<F7View.Props, {}> {
+declare class F7View extends React.Component<F7View.Props, {}> {
   onSwipeBackMove(event : any) : unknown
   onSwipeBackBeforeChange(event : any) : unknown
   onSwipeBackAfterChange(event : any) : unknown

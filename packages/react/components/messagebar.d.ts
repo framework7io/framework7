@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Messagebar {
+declare namespace F7Messagebar {
   export interface Props {
     slot? : string
     id? : string | number
@@ -38,7 +38,7 @@ namespace F7Messagebar {
     onMessagebarResizePage? : Function
   }
 }
-class F7Messagebar extends React.Component<F7Messagebar.Props, {}> {
+declare class F7Messagebar extends React.Component<F7Messagebar.Props, {}> {
   clear(undefined : any) : unknown
   getValue(undefined : any) : unknown
   setValue(undefined : any) : unknown

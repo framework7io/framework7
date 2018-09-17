@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7MessagesTitle {
+declare namespace F7MessagesTitle {
   export interface Props {
     slot? : string
     id? : string | number
@@ -14,7 +14,7 @@ namespace F7MessagesTitle {
     
   }
 }
-class F7MessagesTitle extends React.Component<F7MessagesTitle.Props, {}> {
+declare class F7MessagesTitle extends React.Component<F7MessagesTitle.Props, {}> {
   
 }
 export default F7MessagesTitle;

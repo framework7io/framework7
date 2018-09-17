@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Chip {
+declare namespace F7Chip {
   export interface Props {
     slot? : string
     id? : string | number
@@ -21,7 +21,7 @@ namespace F7Chip {
     onDelete? : Function
   }
 }
-class F7Chip extends React.Component<F7Chip.Props, {}> {
+declare class F7Chip extends React.Component<F7Chip.Props, {}> {
   onClick(event : any) : unknown
   onDeleteClick(event : any) : unknown
 }

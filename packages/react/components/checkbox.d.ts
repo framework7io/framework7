@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Checkbox {
+declare namespace F7Checkbox {
   export interface Props {
     slot? : string
     id? : string | number
@@ -20,7 +20,7 @@ namespace F7Checkbox {
     onChange? : Function
   }
 }
-class F7Checkbox extends React.Component<F7Checkbox.Props, {}> {
+declare class F7Checkbox extends React.Component<F7Checkbox.Props, {}> {
   onChange(event : any) : unknown
 }
 export default F7Checkbox;

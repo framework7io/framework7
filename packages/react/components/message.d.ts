@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Message {
+declare namespace F7Message {
   export interface Props {
     slot? : string
     id? : string | number
@@ -37,7 +37,7 @@ namespace F7Message {
     onClickBubble? : Function
   }
 }
-class F7Message extends React.Component<F7Message.Props, {}> {
+declare class F7Message extends React.Component<F7Message.Props, {}> {
   onClick(event : any) : unknown
   onNameClick(event : any) : unknown
   onTextClick(event : any) : unknown

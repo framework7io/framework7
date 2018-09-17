@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7MessagebarSheetImage {
+declare namespace F7MessagebarSheetImage {
   export interface Props {
     slot? : string
     id? : string | number
@@ -18,7 +18,7 @@ namespace F7MessagebarSheetImage {
     onChange? : Function
   }
 }
-class F7MessagebarSheetImage extends React.Component<F7MessagebarSheetImage.Props, {}> {
+declare class F7MessagebarSheetImage extends React.Component<F7MessagebarSheetImage.Props, {}> {
   onChange(e : any) : unknown
 }
 export default F7MessagebarSheetImage;

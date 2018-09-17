@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Navbar {
+declare namespace F7Navbar {
   export interface Props {
     slot? : string
     id? : string | number
@@ -27,7 +27,7 @@ namespace F7Navbar {
     onClickBack? : Function
   }
 }
-class F7Navbar extends React.Component<F7Navbar.Props, {}> {
+declare class F7Navbar extends React.Component<F7Navbar.Props, {}> {
   hide(animate : any) : unknown
   show(animate : any) : unknown
   size() : unknown

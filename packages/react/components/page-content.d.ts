@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7PageContent {
+declare namespace F7PageContent {
   export interface Props {
     slot? : string
     id? : string | number
@@ -35,7 +35,7 @@ namespace F7PageContent {
     onTabHide? : Function
   }
 }
-class F7PageContent extends React.Component<F7PageContent.Props, {}> {
+declare class F7PageContent extends React.Component<F7PageContent.Props, {}> {
   onPtrPullStart(event : any) : unknown
   onPtrPullMove(event : any) : unknown
   onPtrPullEnd(event : any) : unknown

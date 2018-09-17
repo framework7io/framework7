@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Range {
+declare namespace F7Range {
   export interface Props {
     slot? : string
     id? : string | number
@@ -27,7 +27,7 @@ namespace F7Range {
     onRangeChanged? : Function
   }
 }
-class F7Range extends React.Component<F7Range.Props, {}> {
+declare class F7Range extends React.Component<F7Range.Props, {}> {
   setValue(newValue : any) : unknown
   getValue() : unknown
 }

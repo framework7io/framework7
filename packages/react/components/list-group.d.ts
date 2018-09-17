@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7ListGroup {
+declare namespace F7ListGroup {
   export interface Props {
     slot? : string
     id? : string | number
@@ -16,7 +16,7 @@ namespace F7ListGroup {
     
   }
 }
-class F7ListGroup extends React.Component<F7ListGroup.Props, {}> {
+declare class F7ListGroup extends React.Component<F7ListGroup.Props, {}> {
   
 }
 export default F7ListGroup;

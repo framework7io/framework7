@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Statusbar {
+declare namespace F7Statusbar {
   export interface Props {
     slot? : string
     id? : string | number
@@ -14,7 +14,7 @@ namespace F7Statusbar {
     
   }
 }
-class F7Statusbar extends React.Component<F7Statusbar.Props, {}> {
+declare class F7Statusbar extends React.Component<F7Statusbar.Props, {}> {
   
 }
 export default F7Statusbar;

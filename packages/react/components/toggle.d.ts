@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Toggle {
+declare namespace F7Toggle {
   export interface Props {
     slot? : string
     id? : string | number
@@ -22,7 +22,7 @@ namespace F7Toggle {
     onChange? : Function
   }
 }
-class F7Toggle extends React.Component<F7Toggle.Props, {}> {
+declare class F7Toggle extends React.Component<F7Toggle.Props, {}> {
   toggle() : unknown
   onChange(e : any) : unknown
 }
