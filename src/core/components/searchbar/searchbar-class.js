@@ -393,6 +393,7 @@ class Searchbar extends FrameworkClass {
         sb.enable();
       }
       sb.$inputEl.val(query);
+      sb.$inputEl.trigger('input');
     }
     sb.query = query;
     sb.value = query;
