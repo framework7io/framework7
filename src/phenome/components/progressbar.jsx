@@ -5,6 +5,8 @@ export default {
   name: 'f7-progressbar',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     progress: Number,
     infinite: Boolean,
     ...Mixins.colorProps,

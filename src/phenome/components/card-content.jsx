@@ -5,6 +5,8 @@ export default {
   name: 'f7-card-content',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     padding: {
       type: Boolean,
       default: true,

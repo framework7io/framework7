@@ -5,6 +5,8 @@ export default {
   name: 'f7-checkbox',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     checked: Boolean,
     name: [Number, String],
     value: [Number, String, Boolean],

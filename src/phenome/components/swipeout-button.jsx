@@ -5,6 +5,8 @@ export default {
   name: 'f7-swipeout-button',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     text: String,
     confirmText: String,
     overswipe: Boolean,

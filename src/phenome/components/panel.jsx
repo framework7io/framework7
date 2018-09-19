@@ -5,6 +5,8 @@ export default {
   name: 'f7-panel',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     side: String,
     effect: String,
     cover: Boolean,

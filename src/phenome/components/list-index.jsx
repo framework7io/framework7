@@ -6,6 +6,8 @@ export default {
   name: 'f7-list-index',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     init: {
       type: Boolean,
       default: true,

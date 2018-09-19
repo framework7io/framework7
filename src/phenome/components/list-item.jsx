@@ -8,6 +8,8 @@ export default {
   name: 'f7-list-item',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
 
     title: [String, Number],
     text: [String, Number],
@@ -371,9 +373,6 @@ export default {
   methods: {
     onClick(event) {
       const self = this;
-      if (self.props.smartSelect && self.f7SmartSelect) {
-        self.f7SmartSelect.open();
-      }
       if (event.target.tagName.toLowerCase() !== 'input') {
         self.dispatchEvent('click', event);
       }

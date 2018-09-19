@@ -86,9 +86,9 @@ export namespace Panel {
   interface AppMethods {
     panel: {
       /** open panel */
-      open(side : 'left' | 'right', animate?: boolean) : boolean
+      open(side?: 'left' | 'right', animate?: boolean) : boolean
       /** close panel */
-      close(side : 'left' | 'right', animate?: boolean) : boolean
+      close(side?: 'left' | 'right', animate?: boolean) : boolean
       /** create new panel instance */
       create(parameters : Parameters) : Panel
       /** get Panel instance by specified side */

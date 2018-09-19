@@ -23,12 +23,18 @@ const Device = (function Device() {
     phonegap: !!(window.cordova || window.phonegap),
   };
 
+  const screnWidth = window.screen.width;
+  const screnHeight = window.screen.height;
+
   const windowsPhone = ua.match(/(Windows Phone);?[\s\/]+([\d.]+)?/); // eslint-disable-line
   const android = ua.match(/(Android);?[\s\/]+([\d.]+)?/); // eslint-disable-line
   const ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
   const ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
   const iphone = !ipad && ua.match(/(iPhone\sOS|iOS)\s([\d_]+)/);
-  const iphoneX = iphone && window.screen.width === 375 && window.screen.height === 812;
+  const iphoneX = iphone && (
+    (screnWidth === 375 && screnHeight === 812) // X/XS
+    || (screnWidth === 414 && screnHeight === 896) // XR / XS Max
+  );
   const ie = ua.indexOf('MSIE ') >= 0 || ua.indexOf('Trident/') >= 0;
   const edge = ua.indexOf('Edge/') >= 0;
   const firefox = ua.indexOf('Gecko/') >= 0 && ua.indexOf('Firefox/') >= 0;

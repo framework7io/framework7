@@ -5,6 +5,8 @@ export default {
   name: 'f7-popover',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     opened: Boolean,
     target: [String, Object],
     closeByBackdropClick: Boolean,

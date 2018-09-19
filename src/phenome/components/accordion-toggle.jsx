@@ -4,6 +4,8 @@ import Mixins from '../utils/mixins';
 export default {
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     ...Mixins.colorProps,
   },
   name: 'f7-accordion-toggle',

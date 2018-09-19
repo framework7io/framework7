@@ -370,10 +370,6 @@ export default {
     onClick(event) {
       const self = this;
 
-      if (self.props.smartSelect && self.f7SmartSelect) {
-        self.f7SmartSelect.open();
-      }
-
       if (event.target.tagName.toLowerCase() !== 'input') {
         self.dispatchEvent('click', event);
       }

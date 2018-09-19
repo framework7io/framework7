@@ -4,6 +4,8 @@ export default {
   name: 'f7-swiper-slide',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     zoom: Boolean,
   },
   render() {

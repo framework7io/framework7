@@ -6,6 +6,8 @@ import Utils from '../utils/utils';
 export default {
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     type: {
       type: String,
       default: 'circle',

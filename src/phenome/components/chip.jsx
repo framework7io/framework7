@@ -5,6 +5,8 @@ export default {
   name: 'f7-chip',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     media: String,
     text: [String, Number],
     deleteable: Boolean,
