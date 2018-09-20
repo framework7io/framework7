@@ -106,6 +106,8 @@ export namespace Router {
     ignoreCache?: boolean
     /** if set to `true` then it will ignore previous page in history and load specified one */
     force?: boolean
+    /** pass React/Vue component props */
+    props?: object
   }
   interface NavigateParameters {
     query?: { [ queryParameter : string ] : number | string | undefined }
