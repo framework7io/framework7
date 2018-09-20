@@ -519,7 +519,6 @@ class Router extends Framework7Class {
         } else {
           flattenedRoutes = flattenedRoutes.concat(route, this.flattenRoutes(mergedPathsRoutes));
         }
-
       }
       if (!('routes' in route) && !('tabs' in route && route.tabs)) {
         flattenedRoutes.push(route);
