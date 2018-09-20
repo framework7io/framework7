@@ -1,5 +1,4 @@
-// const gulp = require('gulp');
-// const fs = require('fs');
+/* eslint-disable */
 const rollup = require('rollup');
 const buble = require('rollup-plugin-buble');
 const resolve = require('rollup-plugin-node-resolve');
@@ -7,12 +6,12 @@ const commonjs = require('rollup-plugin-commonjs');
 
 rollup.rollup({
   input: [
-    './packages/core/framework7.esm.js',
-    './packages/core/components/accordion/accordion.js',
-    './packages/core/components/actions/actions.js',
-    './packages/core/components/swiper/swiper.js',
-    './packages/core/components/photo-browser/photo-browser.js',
-    './packages/core/components/calendar/calendar.js',
+    '../packages/core/framework7.esm.js',
+    '../packages/core/components/accordion/accordion.js',
+    '../packages/core/components/actions/actions.js',
+    '../packages/core/components/swiper/swiper.js',
+    '../packages/core/components/photo-browser/photo-browser.js',
+    '../packages/core/components/calendar/calendar.js',
   ],
   experimentalCodeSplitting: true,
   experimentalDynamicImport: true,
