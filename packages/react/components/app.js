@@ -67,6 +67,8 @@ class F7App extends React.Component {
 
 __reactComponentSetProps(F7App, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   params: Object,
   routes: Array
 }, Mixins.colorProps));

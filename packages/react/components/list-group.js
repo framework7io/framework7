@@ -38,6 +38,8 @@ class F7ListGroup extends React.Component {
 
 __reactComponentSetProps(F7ListGroup, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   mediaList: Boolean,
   sortable: Boolean
 }, Mixins.colorProps));

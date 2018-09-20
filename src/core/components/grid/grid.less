@@ -16,8 +16,8 @@
   }
   @spacer: var(--f7-grid-gap);
   .for-each(@colSize in @cols) {
-    @className: `Math.floor(@{colSize})`;
-    @n: `100/parseFloat(@{colSize})`;
+    @className: framework7_floor(@colSize);
+    @n: framework7_calculateN(@colSize);
     @n-1: @n - 1;
     .col-@{className} {
       --f7-grid-col-width: ~"calc((100% - @{spacer}*@{n-1}) / @{n})";
@@ -32,8 +32,8 @@
   }
   @media (min-width: 768px) {
     .for-each(@colSize in @cols) {
-      @className: `Math.floor(@{colSize})`;
-      @n: `100/parseFloat(@{colSize})`;
+      @className: framework7_floor(@colSize);
+      @n: framework7_calculateN(@colSize);
       @n-1: @n - 1;
       .tablet-@{className} {
         --f7-grid-col-width: ~"calc((100% - @{spacer}*@{n-1}) / @{n})";
@@ -50,8 +50,8 @@
 
   @media (min-width: 1025px) {
     .for-each(@colSize in @cols) {
-      @className: `Math.floor(@{colSize})`;
-      @n: `100/parseFloat(@{colSize})`;
+      @className: framework7_floor(@colSize);
+      @n: framework7_calculateN(@colSize);
       @n-1: @n - 1;
       .desktop-@{className} {
         --f7-grid-col-width: ~"calc((100% - @{spacer}*@{n-1}) / @{n})";

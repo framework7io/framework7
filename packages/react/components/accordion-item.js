@@ -85,6 +85,8 @@ class F7AccordionItem extends React.Component {
 
 __reactComponentSetProps(F7AccordionItem, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   opened: Boolean
 }, Mixins.colorProps));
 

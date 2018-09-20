@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Label {
-  export interface Props {
+declare namespace F7Label {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     floating? : boolean
     inline? : boolean
     color? : string
@@ -16,7 +18,7 @@ namespace F7Label {
     
   }
 }
-class F7Label extends React.Component<F7Label.Props, {}> {
+declare class F7Label extends React.Component<F7Label.Props, {}> {
   
 }
 export default F7Label;

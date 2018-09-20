@@ -120,16 +120,16 @@ class F7Messagebar extends React.Component {
     this.dispatchEvent('click', event);
   }
 
-  onDeleteAttachment(e) {
-    this.dispatchEvent('messagebar:attachmentdelete messagebarAttachmentDelete', e);
+  onDeleteAttachment(event) {
+    this.dispatchEvent('messagebar:attachmentdelete messagebarAttachmentDelete', event);
   }
 
-  onClickAttachment(e) {
-    this.dispatchEvent('messagebar:attachmentclick messagebarAttachmentClick', e);
+  onClickAttachment(event) {
+    this.dispatchEvent('messagebar:attachmentclick messagebarAttachmentClick', event);
   }
 
-  onResizePage(e) {
-    this.dispatchEvent('messagebar:resizepage messagebarResizePage', e);
+  onResizePage(event) {
+    this.dispatchEvent('messagebar:resizepage messagebarResizePage', event);
   }
 
   get classes() {
@@ -311,6 +311,8 @@ class F7Messagebar extends React.Component {
 
 __reactComponentSetProps(F7Messagebar, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   sheetVisible: Boolean,
   attachmentsVisible: Boolean,
   top: Boolean,

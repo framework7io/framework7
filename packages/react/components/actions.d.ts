@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Actions {
-  export interface Props {
+declare namespace F7Actions {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     opened? : boolean
     grid? : boolean
     convertToPopover? : boolean
@@ -18,18 +20,18 @@ namespace F7Actions {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onActionsOpen? : Function
-    onActionsOpened? : Function
-    onActionsClose? : Function
-    onActionsClosed? : Function
+    onActionsOpen? : (event?: any) => void
+    onActionsOpened? : (event?: any) => void
+    onActionsClose? : (event?: any) => void
+    onActionsClosed? : (event?: any) => void
   }
 }
-class F7Actions extends React.Component<F7Actions.Props, {}> {
-  onOpen(event : any) : unknown
-  onOpened(event : any) : unknown
-  onClose(event : any) : unknown
-  onClosed(event : any) : unknown
-  open(animate : any) : unknown
-  close(animate : any) : unknown
+declare class F7Actions extends React.Component<F7Actions.Props, {}> {
+  onOpen(event? : any) : unknown
+  onOpened(event? : any) : unknown
+  onClose(event? : any) : unknown
+  onClosed(event? : any) : unknown
+  open(animate? : any) : unknown
+  close(animate? : any) : unknown
 }
 export default F7Actions;

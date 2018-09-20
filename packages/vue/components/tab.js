@@ -110,12 +110,12 @@ export default {
       this.$f7.tab.show(this.$refs.el, animate);
     },
 
-    onTabShow(e) {
-      this.dispatchEvent('tab:show tabShow', e);
+    onTabShow(event) {
+      this.dispatchEvent('tab:show tabShow', event);
     },
 
-    onTabHide(e) {
-      this.dispatchEvent('tab:hide tabHide', e);
+    onTabHide(event) {
+      this.dispatchEvent('tab:hide tabHide', event);
     },
 
     dispatchEvent(events, ...args) {

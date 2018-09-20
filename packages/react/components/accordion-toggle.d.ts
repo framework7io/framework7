@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7AccordionToggle {
-  export interface Props {
+declare namespace F7AccordionToggle {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     color? : string
     colorTheme? : string
     textColor? : string
@@ -14,7 +16,7 @@ namespace F7AccordionToggle {
     
   }
 }
-class F7AccordionToggle extends React.Component<F7AccordionToggle.Props, {}> {
+declare class F7AccordionToggle extends React.Component<F7AccordionToggle.Props, {}> {
   
 }
 export default F7AccordionToggle;

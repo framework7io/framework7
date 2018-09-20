@@ -82,7 +82,8 @@ export default {
         el: self.$refs.el,
         on: {
           change(toggle) {
-            self.dispatchEvent('toggle:change toggleChange', toggle.checked);
+            const checked = toggle.checked;
+            self.dispatchEvent('toggle:change toggleChange', checked);
           }
 
         }
@@ -101,9 +102,9 @@ export default {
       if (self.f7Toggle && self.f7Toggle.toggle) self.f7Toggle.toggle();
     },
 
-    onChange(e) {
+    onChange(event) {
       const self = this;
-      self.dispatchEvent('change', e);
+      self.dispatchEvent('change', event);
     },
 
     dispatchEvent(events, ...args) {

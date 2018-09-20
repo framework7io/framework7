@@ -31,7 +31,9 @@ class F7MessagesTitle extends React.Component {
 }
 
 __reactComponentSetProps(F7MessagesTitle, Object.assign({
-  id: [String, Number]
+  id: [String, Number],
+  className: String,
+  style: Object
 }, Mixins.colorProps));
 
 F7MessagesTitle.displayName = 'f7-messages-title';

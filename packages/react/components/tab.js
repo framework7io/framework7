@@ -29,12 +29,12 @@ class F7Tab extends React.Component {
     this.$f7.tab.show(this.refs.el, animate);
   }
 
-  onTabShow(e) {
-    this.dispatchEvent('tab:show tabShow', e);
+  onTabShow(event) {
+    this.dispatchEvent('tab:show tabShow', event);
   }
 
-  onTabHide(e) {
-    this.dispatchEvent('tab:hide tabHide', e);
+  onTabHide(event) {
+    this.dispatchEvent('tab:hide tabHide', event);
   }
 
   render() {
@@ -126,6 +126,8 @@ class F7Tab extends React.Component {
 
 __reactComponentSetProps(F7Tab, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   tabActive: Boolean
 }, Mixins.colorProps));
 

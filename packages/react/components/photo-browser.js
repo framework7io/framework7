@@ -96,6 +96,8 @@ class F7PhotoBrowser extends React.Component {
 
 __reactComponentSetProps(F7PhotoBrowser, {
   id: [String, Number],
+  className: String,
+  style: Object,
   init: {
     type: Boolean,
     default: true

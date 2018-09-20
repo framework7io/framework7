@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Toolbar {
-  export interface Props {
+declare namespace F7Toolbar {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     bottomMd? : boolean
     tabbar? : boolean
     labels? : boolean
@@ -22,8 +24,8 @@ namespace F7Toolbar {
     
   }
 }
-class F7Toolbar extends React.Component<F7Toolbar.Props, {}> {
-  hide(animate : any) : unknown
-  show(animate : any) : unknown
+declare class F7Toolbar extends React.Component<F7Toolbar.Props, {}> {
+  hide(animate? : any) : unknown
+  show(animate? : any) : unknown
 }
 export default F7Toolbar;

@@ -5,6 +5,8 @@ export default {
   name: 'f7-row',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     noGap: Boolean,
     tag: {
       type: String,
@@ -41,8 +43,8 @@ export default {
     );
   },
   methods: {
-    onClick(e) {
-      this.dispatchEvent('click', e);
+    onClick(event) {
+      this.dispatchEvent('click', event);
     },
   },
 };

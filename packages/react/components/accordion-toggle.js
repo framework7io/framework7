@@ -31,7 +31,9 @@ class F7AccordionToggle extends React.Component {
 }
 
 __reactComponentSetProps(F7AccordionToggle, Object.assign({
-  id: [String, Number]
+  id: [String, Number],
+  className: String,
+  style: Object
 }, Mixins.colorProps));
 
 F7AccordionToggle.displayName = 'f7-accordion-toggle';

@@ -88,6 +88,8 @@ class F7Toolbar extends React.Component {
 
 __reactComponentSetProps(F7Toolbar, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   bottomMd: Boolean,
   tabbar: Boolean,
   labels: Boolean,

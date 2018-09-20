@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Swiper {
-  export interface Props {
+declare namespace F7Swiper {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     params? : Object
     pagination? : boolean
     scrollbar? : boolean
@@ -19,7 +21,7 @@ namespace F7Swiper {
     
   }
 }
-class F7Swiper extends React.Component<F7Swiper.Props, {}> {
+declare class F7Swiper extends React.Component<F7Swiper.Props, {}> {
   
 }
 export default F7Swiper;

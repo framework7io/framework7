@@ -31,7 +31,9 @@ class F7AccordionContent extends React.Component {
 }
 
 __reactComponentSetProps(F7AccordionContent, Object.assign({
-  id: [String, Number]
+  id: [String, Number],
+  className: String,
+  style: Object
 }, Mixins.colorProps));
 
 F7AccordionContent.displayName = 'f7-accordion-content';

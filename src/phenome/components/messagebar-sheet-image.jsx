@@ -6,6 +6,8 @@ export default {
   name: 'f7-messagebar-sheet-image',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     image: String,
     checked: Boolean,
     ...Mixins.colorProps,
@@ -54,10 +56,10 @@ export default {
     );
   },
   methods: {
-    onChange(e) {
-      if (this.props.checked) this.dispatchEvent('checked', e);
-      else this.dispatchEvent('unchecked', e);
-      this.dispatchEvent('change', e);
+    onChange(event) {
+      if (this.props.checked) this.dispatchEvent('checked', event);
+      else this.dispatchEvent('unchecked', event);
+      this.dispatchEvent('change', event);
     },
   },
 };

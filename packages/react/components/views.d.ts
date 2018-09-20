@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Views {
-  export interface Props {
+declare namespace F7Views {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     tabs? : boolean
     color? : string
     colorTheme? : string
@@ -15,7 +17,7 @@ namespace F7Views {
     
   }
 }
-class F7Views extends React.Component<F7Views.Props, {}> {
+declare class F7Views extends React.Component<F7Views.Props, {}> {
   
 }
 export default F7Views;

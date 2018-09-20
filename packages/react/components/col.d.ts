@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Col {
-  export interface Props {
+declare namespace F7Col {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     tag? : string  | 'div'
     width? : number | string  | 'auto'
     tabletWidth? : number | string
@@ -15,10 +17,10 @@ namespace F7Col {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onClick? : Function
+    onClick? : (event?: any) => void
   }
 }
-class F7Col extends React.Component<F7Col.Props, {}> {
-  onClick(e : any) : unknown
+declare class F7Col extends React.Component<F7Col.Props, {}> {
+  onClick(event? : any) : unknown
 }
 export default F7Col;

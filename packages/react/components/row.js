@@ -10,8 +10,8 @@ class F7Row extends React.Component {
     super(props, context);
   }
 
-  onClick(e) {
-    this.dispatchEvent('click', e);
+  onClick(event) {
+    this.dispatchEvent('click', event);
   }
 
   render() {
@@ -48,6 +48,8 @@ class F7Row extends React.Component {
 
 __reactComponentSetProps(F7Row, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   noGap: Boolean,
   tag: {
     type: String,

@@ -42,6 +42,8 @@ class F7SwipeoutActions extends React.Component {
 
 __reactComponentSetProps(F7SwipeoutActions, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   left: Boolean,
   right: Boolean,
   side: String

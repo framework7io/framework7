@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Tab {
-  export interface Props {
+declare namespace F7Tab {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     tabActive? : boolean
     color? : string
     colorTheme? : string
@@ -12,13 +14,13 @@ namespace F7Tab {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onTabShow? : Function
-    onTabHide? : Function
+    onTabShow? : (event?: any) => void
+    onTabHide? : (event?: any) => void
   }
 }
-class F7Tab extends React.Component<F7Tab.Props, {}> {
-  show(animate : any) : unknown
-  onTabShow(e : any) : unknown
-  onTabHide(e : any) : unknown
+declare class F7Tab extends React.Component<F7Tab.Props, {}> {
+  show(animate? : any) : unknown
+  onTabShow(event? : any) : unknown
+  onTabHide(event? : any) : unknown
 }
 export default F7Tab;

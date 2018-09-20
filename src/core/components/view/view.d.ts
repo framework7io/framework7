@@ -125,8 +125,14 @@ export namespace View {
     }
   }
   interface View extends Router.AppMethods{}
-  interface Events extends Router.Events{}
-  interface DomEvents extends Router.DomEvents {}
+  interface Events extends Router.Events{
+    /** Event will be fired on View init */
+    init: (view: View) => void
+  }
+  interface DomEvents extends Router.DomEvents {
+    /** Event will be fired on View init */
+    'view:init': () => void
+  }
   interface AppMethods extends Router.AppEvents{
     view: {
       current: View
@@ -137,7 +143,10 @@ export namespace View {
   interface AppParams {
     view?: Parameters | undefined
   }
-  interface AppEvents extends Router.Events{}
+  interface AppEvents extends Router.Events{
+    /** Event will be fired on View init */
+    viewInit: (view: View) => void
+  }
 }
 
 declare const ViewComponent: Framework7Plugin;

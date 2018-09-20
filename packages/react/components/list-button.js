@@ -81,6 +81,8 @@ class F7ListButton extends React.Component {
 
 __reactComponentSetProps(F7ListButton, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   noFastclick: Boolean,
   noFastClick: Boolean,
   title: [String, Number],

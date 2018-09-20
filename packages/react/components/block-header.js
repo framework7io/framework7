@@ -31,7 +31,9 @@ class F7BlockHeader extends React.Component {
 }
 
 __reactComponentSetProps(F7BlockHeader, Object.assign({
-  id: [String, Number]
+  id: [String, Number],
+  className: String,
+  style: Object
 }, Mixins.colorProps));
 
 F7BlockHeader.displayName = 'f7-block-header';

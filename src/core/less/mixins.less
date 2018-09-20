@@ -1,3 +1,4 @@
+@plugin './plugin.js';
 // Colors Loop
 .color-theme-loop(@ruleset) when (length( @colors ) >= 1) {
 
@@ -272,7 +273,7 @@
 }
 // SVG BG
 .svg-background(@svg) {
-  @url: `encodeURIComponent(@{svg})`;
+  @url: framework7_encodeURIComponent(@svg);
   background-image: url("data:image/svg+xml;charset=utf-8,@{url}");
 }
 // MD Active Active Links Highlights

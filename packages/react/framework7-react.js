@@ -1,5 +1,5 @@
 /**
- * Framework7 React 3.3.0
+ * Framework7 React 3.3.2
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 14, 2018
+ * Released on: September 20, 2018
  */
 
 (function (global, factory) {
@@ -508,7 +508,9 @@
   }(React.Component));
 
   __reactComponentSetProps(F7AccordionContent, Object.assign({
-    id: [String, Number]
+    id: [String, Number],
+    className: String,
+    style: Object
   }, Mixins.colorProps));
 
   F7AccordionContent.displayName = 'f7-accordion-content';
@@ -639,6 +641,8 @@
 
   __reactComponentSetProps(F7AccordionItem, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     opened: Boolean
   }, Mixins.colorProps));
 
@@ -678,7 +682,9 @@
   }(React.Component));
 
   __reactComponentSetProps(F7AccordionToggle, Object.assign({
-    id: [String, Number]
+    id: [String, Number],
+    className: String,
+    style: Object
   }, Mixins.colorProps));
 
   F7AccordionToggle.displayName = 'f7-accordion-toggle';
@@ -717,7 +723,9 @@
   }(React.Component));
 
   __reactComponentSetProps(F7Accordion, Object.assign({
-    id: [String, Number]
+    id: [String, Number],
+    className: String,
+    style: Object
   }, Mixins.colorProps));
 
   F7Accordion.displayName = 'f7-accordion';
@@ -804,6 +812,8 @@
 
   __reactComponentSetProps(F7ActionsButton, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     bold: Boolean,
     close: {
       type: Boolean,
@@ -848,7 +858,9 @@
   }(React.Component));
 
   __reactComponentSetProps(F7ActionsGroup, Object.assign({
-    id: [String, Number]
+    id: [String, Number],
+    className: String,
+    style: Object
   }, Mixins.colorProps));
 
   F7ActionsGroup.displayName = 'f7-actions-group';
@@ -904,6 +916,8 @@
 
   __reactComponentSetProps(F7ActionsLabel, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     bold: Boolean
   }, Mixins.colorProps));
 
@@ -1093,6 +1107,8 @@
 
   __reactComponentSetProps(F7Actions, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     opened: Boolean,
     grid: Boolean,
     convertToPopover: Boolean,
@@ -1334,6 +1350,8 @@
 
   __reactComponentSetProps(F7App, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     params: Object,
     routes: Array
   }, Mixins.colorProps));
@@ -1374,7 +1392,9 @@
   }(React.Component));
 
   __reactComponentSetProps(F7Badge, Object.assign({
-    id: [String, Number]
+    id: [String, Number],
+    className: String,
+    style: Object
   }, Mixins.colorProps));
 
   F7Badge.displayName = 'f7-badge';
@@ -1413,7 +1433,9 @@
   }(React.Component));
 
   __reactComponentSetProps(F7BlockFooter, Object.assign({
-    id: [String, Number]
+    id: [String, Number],
+    className: String,
+    style: Object
   }, Mixins.colorProps));
 
   F7BlockFooter.displayName = 'f7-block-footer';
@@ -1452,7 +1474,9 @@
   }(React.Component));
 
   __reactComponentSetProps(F7BlockHeader, Object.assign({
-    id: [String, Number]
+    id: [String, Number],
+    className: String,
+    style: Object
   }, Mixins.colorProps));
 
   F7BlockHeader.displayName = 'f7-block-header';
@@ -1491,7 +1515,9 @@
   }(React.Component));
 
   __reactComponentSetProps(F7BlockTitle, Object.assign({
-    id: [String, Number]
+    id: [String, Number],
+    className: String,
+    style: Object
   }, Mixins.colorProps));
 
   F7BlockTitle.displayName = 'f7-block-title';
@@ -1507,12 +1533,12 @@
 
     var prototypeAccessors = { slots: { configurable: true },el: { configurable: true } };
 
-    F7Block.prototype.onTabShow = function onTabShow (e) {
-      this.dispatchEvent('tabShow tab:show', e);
+    F7Block.prototype.onTabShow = function onTabShow (event) {
+      this.dispatchEvent('tabShow tab:show', event);
     };
 
-    F7Block.prototype.onTabHide = function onTabHide (e) {
-      this.dispatchEvent('tabHide tab:hide', e);
+    F7Block.prototype.onTabHide = function onTabHide (event) {
+      this.dispatchEvent('tabHide tab:hide', event);
     };
 
     F7Block.prototype.render = function render () {
@@ -1588,6 +1614,8 @@
 
   __reactComponentSetProps(F7Block, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     inset: Boolean,
     tabletInset: Boolean,
     strong: Boolean,
@@ -1770,6 +1798,8 @@
 
   __reactComponentSetProps(F7Icon, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     material: String,
     f7: String,
     ion: String,
@@ -1975,6 +2005,8 @@
 
   __reactComponentSetProps(F7Button, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     noFastclick: Boolean,
     noFastClick: Boolean,
     text: String,
@@ -2044,6 +2076,8 @@
 
   __reactComponentSetProps(F7CardContent, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     padding: {
       type: Boolean,
       default: true
@@ -2086,7 +2120,9 @@
   }(React.Component));
 
   __reactComponentSetProps(F7CardFooter, Object.assign({
-    id: [String, Number]
+    id: [String, Number],
+    className: String,
+    style: Object
   }, Mixins.colorProps));
 
   F7CardFooter.displayName = 'f7-card-footer';
@@ -2125,7 +2161,9 @@
   }(React.Component));
 
   __reactComponentSetProps(F7CardHeader, Object.assign({
-    id: [String, Number]
+    id: [String, Number],
+    className: String,
+    style: Object
   }, Mixins.colorProps));
 
   F7CardHeader.displayName = 'f7-card-header';
@@ -2191,6 +2229,8 @@
 
   __reactComponentSetProps(F7Card, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     title: [String, Number],
     content: [String, Number],
     footer: [String, Number],
@@ -2281,6 +2321,8 @@
 
   __reactComponentSetProps(F7Checkbox, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     checked: Boolean,
     name: [Number, String],
     value: [Number, String, Boolean],
@@ -2376,6 +2418,8 @@
 
   __reactComponentSetProps(F7Chip, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     media: String,
     text: [String, Number],
     deleteable: Boolean,
@@ -2397,8 +2441,8 @@
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7Col.prototype.onClick = function onClick (e) {
-      this.dispatchEvent('click', e);
+    F7Col.prototype.onClick = function onClick (event) {
+      this.dispatchEvent('click', event);
     };
 
     F7Col.prototype.render = function render () {
@@ -2443,6 +2487,8 @@
 
   __reactComponentSetProps(F7Col, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     tag: {
       type: String,
       default: 'div'
@@ -2563,6 +2609,8 @@
 
   __reactComponentSetProps(F7FabButton, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     fabClose: Boolean,
     label: String,
     target: String,
@@ -2607,6 +2655,8 @@
 
   __reactComponentSetProps(F7FabButtons, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     position: {
       type: String,
       default: 'top'
@@ -2754,6 +2804,8 @@
 
   __reactComponentSetProps(F7Fab, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     morphTo: String,
     href: [Boolean, String],
     target: String,
@@ -2871,6 +2923,8 @@
 
   __reactComponentSetProps(F7Gauge, {
     id: [String, Number],
+    className: String,
+    style: Object,
     type: {
       type: String,
       default: 'circle'
@@ -2946,9 +3000,9 @@
       if (self.f7Toggle && self.f7Toggle.toggle) { self.f7Toggle.toggle(); }
     };
 
-    F7Toggle.prototype.onChange = function onChange (e) {
+    F7Toggle.prototype.onChange = function onChange (event) {
       var self = this;
-      self.dispatchEvent('change', e);
+      self.dispatchEvent('change', event);
     };
 
     F7Toggle.prototype.render = function render () {
@@ -3006,7 +3060,8 @@
           el: self.refs.el,
           on: {
             change: function change(toggle) {
-              self.dispatchEvent('toggle:change toggleChange', toggle.checked);
+              var checked = toggle.checked;
+              self.dispatchEvent('toggle:change toggleChange', checked);
             }
 
           }
@@ -3044,6 +3099,8 @@
 
   __reactComponentSetProps(F7Toggle, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     init: {
       type: Boolean,
       default: true
@@ -3189,6 +3246,8 @@
 
   __reactComponentSetProps(F7Range, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     init: {
       type: Boolean,
       default: true
@@ -3569,6 +3628,8 @@
     defaultValue: [String, Number, Array],
     placeholder: String,
     id: [String, Number],
+    className: String,
+    style: Object,
     inputId: [String, Number],
     size: [String, Number],
     accept: [String, Number],
@@ -3650,6 +3711,8 @@
 
   __reactComponentSetProps(F7Label, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     floating: Boolean,
     inline: Boolean
   }, Mixins.colorProps));
@@ -3881,6 +3944,8 @@
 
   __reactComponentSetProps(F7Link, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     noLinkClass: Boolean,
     noFastClick: Boolean,
     noFastclick: Boolean,
@@ -3986,6 +4051,8 @@
 
   __reactComponentSetProps(F7ListButton, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     noFastclick: Boolean,
     noFastClick: Boolean,
     title: [String, Number],
@@ -4040,6 +4107,8 @@
 
   __reactComponentSetProps(F7ListGroup, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     mediaList: Boolean,
     sortable: Boolean
   }, Mixins.colorProps));
@@ -4158,6 +4227,8 @@
 
   __reactComponentSetProps(F7ListIndex, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     init: {
       type: Boolean,
       default: true
@@ -4221,7 +4292,9 @@
   }(React.Component));
 
   __reactComponentSetProps(F7ListItemCell, Object.assign({
-    id: [String, Number]
+    id: [String, Number],
+    className: String,
+    style: Object
   }, Mixins.colorProps));
 
   F7ListItemCell.displayName = 'f7-list-item-cell';
@@ -4667,6 +4740,8 @@
 
   __reactComponentSetProps(F7ListItemContent, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     title: [String, Number],
     text: [String, Number],
     media: String,
@@ -4728,7 +4803,9 @@
   }(React.Component));
 
   __reactComponentSetProps(F7ListItemRow, Object.assign({
-    id: [String, Number]
+    id: [String, Number],
+    className: String,
+    style: Object
   }, Mixins.colorProps));
 
   F7ListItemRow.displayName = 'f7-list-item-row';
@@ -4774,10 +4851,6 @@
 
     F7ListItem.prototype.onClick = function onClick (event) {
       var self = this;
-
-      if (self.props.smartSelect && self.f7SmartSelect) {
-        self.f7SmartSelect.open();
-      }
 
       if (event.target.tagName.toLowerCase() !== 'input') {
         self.dispatchEvent('click', event);
@@ -5132,6 +5205,8 @@
 
   __reactComponentSetProps(F7ListItem, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     title: [String, Number],
     text: [String, Number],
     media: String,
@@ -5195,15 +5270,16 @@
     };
 
     F7List.prototype.onSortableSort = function onSortableSort (event) {
-      this.dispatchEvent('sortable:sort sortableSort', event, event.detail);
+      var sortData = event.detail;
+      this.dispatchEvent('sortable:sort sortableSort', event, sortData);
     };
 
-    F7List.prototype.onTabShow = function onTabShow (e) {
-      this.dispatchEvent('tab:show tabShow', e);
+    F7List.prototype.onTabShow = function onTabShow (event) {
+      this.dispatchEvent('tab:show tabShow', event);
     };
 
-    F7List.prototype.onTabHide = function onTabHide (e) {
-      this.dispatchEvent('tab:hide tabHide', e);
+    F7List.prototype.onTabHide = function onTabHide (event) {
+      this.dispatchEvent('tab:hide tabHide', event);
     };
 
     prototypeAccessors.classes.get = function () {
@@ -5419,6 +5495,8 @@
 
   __reactComponentSetProps(F7List, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     inset: Boolean,
     tabletInset: Boolean,
     mediaList: Boolean,
@@ -5481,7 +5559,9 @@
   }(React.Component));
 
   __reactComponentSetProps(F7LoginScreenTitle, Object.assign({
-    id: [String, Number]
+    id: [String, Number],
+    className: String,
+    style: Object
   }, Mixins.colorProps));
 
   F7LoginScreenTitle.displayName = 'f7-login-screen-title';
@@ -5620,6 +5700,8 @@
 
   __reactComponentSetProps(F7LoginScreen, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     opened: Boolean
   }, Mixins.colorProps));
 
@@ -5792,6 +5874,8 @@
 
   __reactComponentSetProps(F7Message, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     text: String,
     name: String,
     avatar: String,
@@ -5834,12 +5918,12 @@
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7MessagebarAttachment.prototype.onClick = function onClick (e) {
-      this.dispatchEvent('attachment:click attachmentClick', e);
+    F7MessagebarAttachment.prototype.onClick = function onClick (event) {
+      this.dispatchEvent('attachment:click attachmentClick', event);
     };
 
-    F7MessagebarAttachment.prototype.onDeleteClick = function onDeleteClick (e) {
-      this.dispatchEvent('attachment:delete attachmentDelete', e);
+    F7MessagebarAttachment.prototype.onDeleteClick = function onDeleteClick (event) {
+      this.dispatchEvent('attachment:delete attachmentDelete', event);
     };
 
     F7MessagebarAttachment.prototype.render = function render () {
@@ -5882,6 +5966,8 @@
 
   __reactComponentSetProps(F7MessagebarAttachment, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     image: String,
     deletable: {
       type: Boolean,
@@ -5925,7 +6011,9 @@
   }(React.Component));
 
   __reactComponentSetProps(F7MessagebarAttachments, Object.assign({
-    id: [String, Number]
+    id: [String, Number],
+    className: String,
+    style: Object
   }, Mixins.colorProps));
 
   F7MessagebarAttachments.displayName = 'f7-messagebar-attachments';
@@ -5947,9 +6035,9 @@
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7MessagebarSheetImage.prototype.onChange = function onChange (e) {
-      if (this.props.checked) { this.dispatchEvent('checked', e); }else { this.dispatchEvent('unchecked', e); }
-      this.dispatchEvent('change', e);
+    F7MessagebarSheetImage.prototype.onChange = function onChange (event) {
+      if (this.props.checked) { this.dispatchEvent('checked', event); }else { this.dispatchEvent('unchecked', event); }
+      this.dispatchEvent('change', event);
     };
 
     F7MessagebarSheetImage.prototype.render = function render () {
@@ -5999,6 +6087,8 @@
 
   __reactComponentSetProps(F7MessagebarSheetImage, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     image: String,
     checked: Boolean
   }, Mixins.colorProps));
@@ -6039,7 +6129,9 @@
   }(React.Component));
 
   __reactComponentSetProps(F7MessagebarSheetItem, Object.assign({
-    id: [String, Number]
+    id: [String, Number],
+    className: String,
+    style: Object
   }, Mixins.colorProps));
 
   F7MessagebarSheetItem.displayName = 'f7-messagebar-sheet-item';
@@ -6078,7 +6170,9 @@
   }(React.Component));
 
   __reactComponentSetProps(F7MessagebarSheet, Object.assign({
-    id: [String, Number]
+    id: [String, Number],
+    className: String,
+    style: Object
   }, Mixins.colorProps));
 
   F7MessagebarSheet.displayName = 'f7-messagebar-sheet';
@@ -6255,16 +6349,16 @@
       this.dispatchEvent('click', event);
     };
 
-    F7Messagebar.prototype.onDeleteAttachment = function onDeleteAttachment (e) {
-      this.dispatchEvent('messagebar:attachmentdelete messagebarAttachmentDelete', e);
+    F7Messagebar.prototype.onDeleteAttachment = function onDeleteAttachment (event) {
+      this.dispatchEvent('messagebar:attachmentdelete messagebarAttachmentDelete', event);
     };
 
-    F7Messagebar.prototype.onClickAttachment = function onClickAttachment (e) {
-      this.dispatchEvent('messagebar:attachmentclick messagebarAttachmentClick', e);
+    F7Messagebar.prototype.onClickAttachment = function onClickAttachment (event) {
+      this.dispatchEvent('messagebar:attachmentclick messagebarAttachmentClick', event);
     };
 
-    F7Messagebar.prototype.onResizePage = function onResizePage (e) {
-      this.dispatchEvent('messagebar:resizepage messagebarResizePage', e);
+    F7Messagebar.prototype.onResizePage = function onResizePage (event) {
+      this.dispatchEvent('messagebar:resizepage messagebarResizePage', event);
     };
 
     prototypeAccessors.classes.get = function () {
@@ -6450,6 +6544,8 @@
 
   __reactComponentSetProps(F7Messagebar, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     sheetVisible: Boolean,
     attachmentsVisible: Boolean,
     top: Boolean,
@@ -6518,7 +6614,9 @@
   }(React.Component));
 
   __reactComponentSetProps(F7MessagesTitle, Object.assign({
-    id: [String, Number]
+    id: [String, Number],
+    className: String,
+    style: Object
   }, Mixins.colorProps));
 
   F7MessagesTitle.displayName = 'f7-messages-title';
@@ -6718,6 +6816,8 @@
 
   __reactComponentSetProps(F7Messages, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     autoLayout: {
       type: Boolean,
       default: false
@@ -6770,8 +6870,8 @@
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7NavLeft.prototype.onBackClick = function onBackClick (e) {
-      this.dispatchEvent('back-click backClick click:back clickBack', e);
+    F7NavLeft.prototype.onBackClick = function onBackClick (event) {
+      this.dispatchEvent('back-click backClick click:back clickBack', event);
     };
 
     F7NavLeft.prototype.render = function render () {
@@ -6825,6 +6925,8 @@
 
   __reactComponentSetProps(F7NavLeft, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     backLink: [Boolean, String],
     backLinkUrl: String,
     backLinkForce: Boolean,
@@ -6871,6 +6973,8 @@
 
   __reactComponentSetProps(F7NavRight, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     sliding: Boolean
   }, Mixins.colorProps));
 
@@ -6925,6 +7029,8 @@
 
   __reactComponentSetProps(F7NavTitle, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     title: String,
     subtitle: String,
     sliding: Boolean
@@ -6962,8 +7068,8 @@
       self.$f7.navbar.size(self.refs.el);
     };
 
-    F7Navbar.prototype.onBackClick = function onBackClick (e) {
-      this.dispatchEvent('back-click backClick click:back clickBack', e);
+    F7Navbar.prototype.onBackClick = function onBackClick (event) {
+      this.dispatchEvent('back-click backClick click:back clickBack', event);
     };
 
     F7Navbar.prototype.render = function render () {
@@ -7068,6 +7174,8 @@
 
   __reactComponentSetProps(F7Navbar, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     backLink: [Boolean, String],
     backLinkUrl: String,
     backLinkForce: Boolean,
@@ -7115,7 +7223,8 @@
     };
 
     F7PageContent.prototype.onPtrRefresh = function onPtrRefresh (event) {
-      this.dispatchEvent('ptr:refresh ptrRefresh', event, event.detail);
+      var done = event.detail;
+      this.dispatchEvent('ptr:refresh ptrRefresh', event, done);
     };
 
     F7PageContent.prototype.onPtrDone = function onPtrDone (event) {
@@ -7126,12 +7235,12 @@
       this.dispatchEvent('infinite', event);
     };
 
-    F7PageContent.prototype.onTabShow = function onTabShow (e) {
-      this.dispatchEvent('tab:show tabShow', e);
+    F7PageContent.prototype.onTabShow = function onTabShow (event) {
+      this.dispatchEvent('tab:show tabShow', event);
     };
 
-    F7PageContent.prototype.onTabHide = function onTabHide (e) {
-      this.dispatchEvent('tab:hide tabHide', e);
+    F7PageContent.prototype.onTabHide = function onTabHide (event) {
+      this.dispatchEvent('tab:hide tabHide', event);
     };
 
     prototypeAccessors.classes.get = function () {
@@ -7278,6 +7387,8 @@
 
   __reactComponentSetProps(F7PageContent, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     tab: Boolean,
     tabActive: Boolean,
     ptr: Boolean,
@@ -7333,7 +7444,8 @@
     };
 
     F7Page.prototype.onPtrRefresh = function onPtrRefresh (event) {
-      this.dispatchEvent('ptr:refresh ptrRefresh', event, event.detail);
+      var done = event.detail;
+      this.dispatchEvent('ptr:refresh ptrRefresh', event, done);
     };
 
     F7Page.prototype.onPtrDone = function onPtrDone (event) {
@@ -7345,35 +7457,43 @@
     };
 
     F7Page.prototype.onPageMounted = function onPageMounted (event) {
-      this.dispatchEvent('page:mounted pageMounted', event, event.detail);
+      var page = event.detail;
+      this.dispatchEvent('page:mounted pageMounted', event, page);
     };
 
     F7Page.prototype.onPageInit = function onPageInit (event) {
-      this.dispatchEvent('page:init pageInit', event, event.detail);
+      var page = event.detail;
+      this.dispatchEvent('page:init pageInit', event, page);
     };
 
     F7Page.prototype.onPageReinit = function onPageReinit (event) {
-      this.dispatchEvent('page:reinit pageReinit', event, event.detail);
+      var page = event.detail;
+      this.dispatchEvent('page:reinit pageReinit', event, page);
     };
 
     F7Page.prototype.onPageBeforeIn = function onPageBeforeIn (event) {
-      this.dispatchEvent('page:beforein pageBeforeIn', event, event.detail);
+      var page = event.detail;
+      this.dispatchEvent('page:beforein pageBeforeIn', event, page);
     };
 
     F7Page.prototype.onPageBeforeOut = function onPageBeforeOut (event) {
-      this.dispatchEvent('page:beforeout pageBeforeOut', event, event.detail);
+      var page = event.detail;
+      this.dispatchEvent('page:beforeout pageBeforeOut', event, page);
     };
 
     F7Page.prototype.onPageAfterOut = function onPageAfterOut (event) {
-      this.dispatchEvent('page:afterout pageAfterOut', event, event.detail);
+      var page = event.detail;
+      this.dispatchEvent('page:afterout pageAfterOut', event, page);
     };
 
     F7Page.prototype.onPageAfterIn = function onPageAfterIn (event) {
-      this.dispatchEvent('page:afterin pageAfterIn', event, event.detail);
+      var page = event.detail;
+      this.dispatchEvent('page:afterin pageAfterIn', event, page);
     };
 
     F7Page.prototype.onPageBeforeRemove = function onPageBeforeRemove (event) {
-      this.dispatchEvent('page:beforeremove pageBeforeRemove', event, event.detail);
+      var page = event.detail;
+      this.dispatchEvent('page:beforeremove pageBeforeRemove', event, page);
     };
 
     F7Page.prototype.render = function render () {
@@ -7576,6 +7696,8 @@
 
   __reactComponentSetProps(F7Page, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     name: String,
     stacked: Boolean,
     withSubnavbar: Boolean,
@@ -7813,6 +7935,8 @@
 
   __reactComponentSetProps(F7Panel, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     side: String,
     effect: String,
     cover: Boolean,
@@ -7926,6 +8050,8 @@
 
   __reactComponentSetProps(F7PhotoBrowser, {
     id: [String, Number],
+    className: String,
+    style: Object,
     init: {
       type: Boolean,
       default: true
@@ -8145,6 +8271,8 @@
 
   __reactComponentSetProps(F7Popover, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     opened: Boolean,
     target: [String, Object],
     closeByBackdropClick: Boolean,
@@ -8298,6 +8426,8 @@
 
   __reactComponentSetProps(F7Popup, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     tabletFullscreen: Boolean,
     opened: Boolean,
     closeByBackdropClick: Boolean,
@@ -8376,6 +8506,8 @@
 
   __reactComponentSetProps(F7Preloader, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     size: [Number, String]
   }, Mixins.colorProps));
 
@@ -8442,6 +8574,8 @@
 
   __reactComponentSetProps(F7Progressbar, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     progress: Number,
     infinite: Boolean
   }, Mixins.colorProps));
@@ -8519,6 +8653,8 @@
 
   __reactComponentSetProps(F7Radio, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     checked: Boolean,
     name: [Number, String],
     value: [Number, String, Boolean],
@@ -8540,8 +8676,8 @@
 
     var prototypeAccessors = { slots: { configurable: true } };
 
-    F7Row.prototype.onClick = function onClick (e) {
-      this.dispatchEvent('click', e);
+    F7Row.prototype.onClick = function onClick (event) {
+      this.dispatchEvent('click', event);
     };
 
     F7Row.prototype.render = function render () {
@@ -8582,6 +8718,8 @@
 
   __reactComponentSetProps(F7Row, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     noGap: Boolean,
     tag: {
       type: String,
@@ -8826,6 +8964,8 @@
 
   __reactComponentSetProps(F7Searchbar, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     noShadow: Boolean,
     noHairline: Boolean,
     form: {
@@ -8951,6 +9091,8 @@
 
   __reactComponentSetProps(F7Segmented, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     raised: Boolean,
     round: Boolean,
     tag: {
@@ -9143,6 +9285,8 @@
 
   __reactComponentSetProps(F7Sheet, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     opened: Boolean,
     backdrop: Boolean,
     closeByBackdropClick: Boolean,
@@ -9185,7 +9329,9 @@
   }(React.Component));
 
   __reactComponentSetProps(F7Statusbar, Object.assign({
-    id: [String, Number]
+    id: [String, Number],
+    className: String,
+    style: Object
   }, Mixins.colorProps));
 
   F7Statusbar.displayName = 'f7-statusbar';
@@ -9235,16 +9381,19 @@
       return undefined;
     };
 
-    F7Stepper.prototype.onInput = function onInput (e) {
-      this.dispatchEvent('input', e, this.f7Stepper);
+    F7Stepper.prototype.onInput = function onInput (event) {
+      var stepper = this.f7Stepper;
+      this.dispatchEvent('input', event, stepper);
     };
 
-    F7Stepper.prototype.onMinusClick = function onMinusClick (e) {
-      this.dispatchEvent('stepper:minusclick stepperMinusClick', e, this.f7Stepper);
+    F7Stepper.prototype.onMinusClick = function onMinusClick (event) {
+      var stepper = this.f7Stepper;
+      this.dispatchEvent('stepper:minusclick stepperMinusClick', event, stepper);
     };
 
-    F7Stepper.prototype.onPlusClick = function onPlusClick (e) {
-      this.dispatchEvent('stepper:plusclick stepperPlusClick', e, this.f7Stepper);
+    F7Stepper.prototype.onPlusClick = function onPlusClick (event) {
+      var stepper = this.f7Stepper;
+      this.dispatchEvent('stepper:plusclick stepperPlusClick', event, stepper);
     };
 
     prototypeAccessors.classes.get = function () {
@@ -9409,6 +9558,8 @@
 
   __reactComponentSetProps(F7Stepper, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     init: {
       type: Boolean,
       default: true
@@ -9530,6 +9681,8 @@
 
   __reactComponentSetProps(F7Subnavbar, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     sliding: Boolean,
     title: String,
     inner: {
@@ -9585,6 +9738,8 @@
 
   __reactComponentSetProps(F7SwipeoutActions, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     left: Boolean,
     right: Boolean,
     side: String
@@ -9651,6 +9806,8 @@
 
   __reactComponentSetProps(F7SwipeoutButton, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     text: String,
     confirmText: String,
     overswipe: Boolean,
@@ -9699,6 +9856,8 @@
 
   __reactComponentSetProps(F7SwiperSlide, {
     id: [String, Number],
+    className: String,
+    style: Object,
     zoom: Boolean
   });
 
@@ -9875,6 +10034,8 @@
 
   __reactComponentSetProps(F7Swiper, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     params: Object,
     pagination: Boolean,
     scrollbar: Boolean,
@@ -9917,12 +10078,12 @@
       this.$f7.tab.show(this.refs.el, animate);
     };
 
-    F7Tab.prototype.onTabShow = function onTabShow (e) {
-      this.dispatchEvent('tab:show tabShow', e);
+    F7Tab.prototype.onTabShow = function onTabShow (event) {
+      this.dispatchEvent('tab:show tabShow', event);
     };
 
-    F7Tab.prototype.onTabHide = function onTabHide (e) {
-      this.dispatchEvent('tab:hide tabHide', e);
+    F7Tab.prototype.onTabHide = function onTabHide (event) {
+      this.dispatchEvent('tab:hide tabHide', event);
     };
 
     F7Tab.prototype.render = function render () {
@@ -10020,6 +10181,8 @@
 
   __reactComponentSetProps(F7Tab, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     tabActive: Boolean
   }, Mixins.colorProps));
 
@@ -10079,6 +10242,8 @@
 
   __reactComponentSetProps(F7Tabs, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     animated: Boolean,
     swipeable: Boolean,
     routable: Boolean
@@ -10179,6 +10344,8 @@
 
   __reactComponentSetProps(F7Toolbar, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     bottomMd: Boolean,
     tabbar: Boolean,
     labels: Boolean,
@@ -10216,6 +10383,7 @@
         self.onSwipeBackAfterResetBound = self.onSwipeBackAfterReset.bind(self);
         self.onTabShowBound = self.onTabShow.bind(self);
         self.onTabHideBound = self.onTabHide.bind(self);
+        self.onViewInitBound = self.onViewInit.bind(self);
       })();
     }
 
@@ -10225,32 +10393,48 @@
 
     var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
 
+    F7View.prototype.onViewInit = function onViewInit (event) {
+      var self = this;
+      var view = event.detail;
+      self.dispatchEvent('view:init viewInit', event, view);
+
+      if (!self.props.init) {
+        self.routerData.instance = view;
+        self.f7View = self.routerData.instance;
+      }
+    };
+
     F7View.prototype.onSwipeBackMove = function onSwipeBackMove (event) {
-      this.dispatchEvent('swipeback:move swipeBackMove', event, event.detail);
+      var swipeBackData = event.detail;
+      this.dispatchEvent('swipeback:move swipeBackMove', event, swipeBackData);
     };
 
     F7View.prototype.onSwipeBackBeforeChange = function onSwipeBackBeforeChange (event) {
-      this.dispatchEvent('swipeback:beforechange swipeBackBeforeChange', event, event.detail);
+      var swipeBackData = event.detail;
+      this.dispatchEvent('swipeback:beforechange swipeBackBeforeChange', event, swipeBackData);
     };
 
     F7View.prototype.onSwipeBackAfterChange = function onSwipeBackAfterChange (event) {
-      this.dispatchEvent('swipeback:afterchange swipeBackAfterChange', event, event.detail);
+      var swipeBackData = event.detail;
+      this.dispatchEvent('swipeback:afterchange swipeBackAfterChange', event, swipeBackData);
     };
 
     F7View.prototype.onSwipeBackBeforeReset = function onSwipeBackBeforeReset (event) {
-      this.dispatchEvent('swipeback:beforereset swipeBackBeforeReset', event, event.detail);
+      var swipeBackData = event.detail;
+      this.dispatchEvent('swipeback:beforereset swipeBackBeforeReset', event, swipeBackData);
     };
 
     F7View.prototype.onSwipeBackAfterReset = function onSwipeBackAfterReset (event) {
-      this.dispatchEvent('swipeback:afterreset swipeBackAfterReset', event, event.detail);
+      var swipeBackData = event.detail;
+      this.dispatchEvent('swipeback:afterreset swipeBackAfterReset', event, swipeBackData);
     };
 
-    F7View.prototype.onTabShow = function onTabShow (e) {
-      this.dispatchEvent('tab:show tabShow', e);
+    F7View.prototype.onTabShow = function onTabShow (event) {
+      this.dispatchEvent('tab:show tabShow', event);
     };
 
-    F7View.prototype.onTabHide = function onTabHide (e) {
-      this.dispatchEvent('tab:hide tabHide', e);
+    F7View.prototype.onTabHide = function onTabHide (event) {
+      this.dispatchEvent('tab:hide tabHide', event);
     };
 
     F7View.prototype.render = function render () {
@@ -10302,6 +10486,7 @@
       el.removeEventListener('swipeback:afterreset', self.onSwipeBackAfterResetBound);
       el.removeEventListener('tab:show', self.onTabShowBound);
       el.removeEventListener('tab:hide', self.onTabHideBound);
+      el.removeEventListener('view:init', self.onViewInitBound);
       if (!self.props.init) { return; }
       if (self.f7View && self.f7View.destroy) { self.f7View.destroy(); }
       f7.routers.views.splice(f7.routers.views.indexOf(self.routerData), 1);
@@ -10319,17 +10504,18 @@
       el.addEventListener('swipeback:afterreset', self.onSwipeBackAfterResetBound);
       el.addEventListener('tab:show', self.onTabShowBound);
       el.addEventListener('tab:hide', self.onTabHideBound);
+      el.addEventListener('view:init', self.onViewInitBound);
       self.setState({
         pages: []
       });
       self.$f7ready(function (f7Instance) {
-        if (!self.props.init) { return; }
         self.routerData = {
           el: el,
           component: self,
           instance: null
         };
         f7.routers.views.push(self.routerData);
+        if (!self.props.init) { return; }
         self.routerData.instance = f7Instance.views.create(el, Utils.noUndefinedProps(self.props));
         self.f7View = self.routerData.instance;
       });
@@ -10359,6 +10545,8 @@
 
   __reactComponentSetProps(F7View, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     tab: Boolean,
     tabActive: Boolean,
     name: String,
@@ -10447,6 +10635,8 @@
 
   __reactComponentSetProps(F7Views, Object.assign({
     id: [String, Number],
+    className: String,
+    style: Object,
     tabs: Boolean
   }, Mixins.colorProps));
 
@@ -10482,7 +10672,8 @@
               f7route: options.route,
               f7router: router,
             },
-            options.route.params
+            options.route.params,
+            options.props || {}
           ),
         };
         routerComponent.$f7router = router;
@@ -10561,7 +10752,8 @@
               f7route: options.route,
               f7router: router,
             },
-            options.route.params
+            options.route.params,
+            options.props || {}
           ),
         };
 
@@ -10618,7 +10810,8 @@
               f7route: options.route,
               f7router: router,
             },
-            options.route.params
+            options.route.params,
+            options.props || {}
           ),
         };
         modalsComponent.$f7router = router;
@@ -10657,7 +10850,7 @@
   };
 
   /**
-   * Framework7 React 3.3.0
+   * Framework7 React 3.3.2
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -10665,7 +10858,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: September 14, 2018
+   * Released on: September 20, 2018
    */
 
   var Plugin = {

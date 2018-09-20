@@ -170,6 +170,8 @@ class F7Swiper extends React.Component {
 
 __reactComponentSetProps(F7Swiper, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   params: Object,
   pagination: Boolean,
   scrollbar: Boolean,

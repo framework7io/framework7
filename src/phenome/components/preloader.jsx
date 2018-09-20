@@ -5,6 +5,8 @@ export default {
   name: 'f7-preloader',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     size: [Number, String],
     ...Mixins.colorProps,
   },

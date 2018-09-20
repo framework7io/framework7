@@ -75,6 +75,8 @@ class F7ActionsButton extends React.Component {
 
 __reactComponentSetProps(F7ActionsButton, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   bold: Boolean,
   close: {
     type: Boolean,

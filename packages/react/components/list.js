@@ -20,15 +20,16 @@ class F7List extends React.Component {
   }
 
   onSortableSort(event) {
-    this.dispatchEvent('sortable:sort sortableSort', event, event.detail);
+    const sortData = event.detail;
+    this.dispatchEvent('sortable:sort sortableSort', event, sortData);
   }
 
-  onTabShow(e) {
-    this.dispatchEvent('tab:show tabShow', e);
+  onTabShow(event) {
+    this.dispatchEvent('tab:show tabShow', event);
   }
 
-  onTabHide(e) {
-    this.dispatchEvent('tab:hide tabHide', e);
+  onTabHide(event) {
+    this.dispatchEvent('tab:hide tabHide', event);
   }
 
   get classes() {
@@ -242,6 +243,8 @@ class F7List extends React.Component {
 
 __reactComponentSetProps(F7List, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   inset: Boolean,
   tabletInset: Boolean,
   mediaList: Boolean,

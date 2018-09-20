@@ -5,6 +5,8 @@ export default {
   name: 'f7-toolbar',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     bottomMd: Boolean,
     tabbar: Boolean,
     labels: Boolean,

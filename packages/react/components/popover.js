@@ -141,6 +141,8 @@ class F7Popover extends React.Component {
 
 __reactComponentSetProps(F7Popover, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   opened: Boolean,
   target: [String, Object],
   closeByBackdropClick: Boolean,

@@ -5,6 +5,8 @@ export default {
   name: 'f7-actions-label',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     bold: Boolean,
     ...Mixins.colorProps,
   },

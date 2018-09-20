@@ -7,6 +7,8 @@ export default {
   name: 'f7-nav-left',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     backLink: [Boolean, String],
     backLinkUrl: String,
     backLinkForce: Boolean,
@@ -55,8 +57,8 @@ export default {
     );
   },
   methods: {
-    onBackClick(e) {
-      this.dispatchEvent('back-click backClick click:back clickBack', e);
+    onBackClick(event) {
+      this.dispatchEvent('back-click backClick click:back clickBack', event);
     },
   },
 };

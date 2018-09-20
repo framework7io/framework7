@@ -31,7 +31,9 @@ class F7BlockFooter extends React.Component {
 }
 
 __reactComponentSetProps(F7BlockFooter, Object.assign({
-  id: [String, Number]
+  id: [String, Number],
+  className: String,
+  style: Object
 }, Mixins.colorProps));
 
 F7BlockFooter.displayName = 'f7-block-footer';

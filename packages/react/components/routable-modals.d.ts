@@ -1,12 +1,12 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7RoutableModals {
-  export interface Props {
+declare namespace F7RoutableModals {
+  interface Props {
     slot? : string
     
   }
 }
-class F7RoutableModals extends React.Component<F7RoutableModals.Props, {}> {
+declare class F7RoutableModals extends React.Component<F7RoutableModals.Props, {}> {
   
 }
 export default F7RoutableModals;

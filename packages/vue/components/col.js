@@ -55,8 +55,8 @@ export default {
   },
 
   methods: {
-    onClick(e) {
-      this.dispatchEvent('click', e);
+    onClick(event) {
+      this.dispatchEvent('click', event);
     },
 
     dispatchEvent(events, ...args) {

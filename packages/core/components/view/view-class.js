@@ -137,6 +137,8 @@ class View extends Framework7Class {
     const view = this;
     if (view.params.router) {
       view.router.init();
+      view.$el.trigger('view:init', view);
+      view.emit('local::init viewInit', view);
     }
   }
 }

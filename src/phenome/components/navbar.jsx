@@ -8,6 +8,8 @@ export default {
   name: 'f7-navbar',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     backLink: [Boolean, String],
     backLinkUrl: String,
     backLinkForce: Boolean,
@@ -128,8 +130,8 @@ export default {
       if (!self.$f7) return;
       self.$f7.navbar.size(self.refs.el);
     },
-    onBackClick(e) {
-      this.dispatchEvent('back-click backClick click:back clickBack', e);
+    onBackClick(event) {
+      this.dispatchEvent('back-click backClick click:back clickBack', event);
     },
   },
 };

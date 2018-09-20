@@ -166,6 +166,8 @@ class F7Icon extends React.Component {
 
 __reactComponentSetProps(F7Icon, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   material: String,
   f7: String,
   ion: String,

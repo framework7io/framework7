@@ -36,6 +36,8 @@ class F7Views extends React.Component {
 
 __reactComponentSetProps(F7Views, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   tabs: Boolean
 }, Mixins.colorProps));
 

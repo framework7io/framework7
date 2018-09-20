@@ -184,6 +184,8 @@ class F7Messages extends React.Component {
 
 __reactComponentSetProps(F7Messages, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   autoLayout: {
     type: Boolean,
     default: false

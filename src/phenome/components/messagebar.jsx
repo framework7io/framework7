@@ -10,6 +10,8 @@ export default {
   name: 'f7-messagebar',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     sheetVisible: Boolean,
     attachmentsVisible: Boolean,
     top: Boolean,
@@ -315,14 +317,14 @@ export default {
       this.dispatchEvent('send', value, clear);
       this.dispatchEvent('click', event);
     },
-    onDeleteAttachment(e) {
-      this.dispatchEvent('messagebar:attachmentdelete messagebarAttachmentDelete', e);
+    onDeleteAttachment(event) {
+      this.dispatchEvent('messagebar:attachmentdelete messagebarAttachmentDelete', event);
     },
-    onClickAttachment(e) {
-      this.dispatchEvent('messagebar:attachmentclick messagebarAttachmentClick', e);
+    onClickAttachment(event) {
+      this.dispatchEvent('messagebar:attachmentclick messagebarAttachmentClick', event);
     },
-    onResizePage(e) {
-      this.dispatchEvent('messagebar:resizepage messagebarResizePage', e);
+    onResizePage(event) {
+      this.dispatchEvent('messagebar:resizepage messagebarResizePage', event);
     },
   },
 };

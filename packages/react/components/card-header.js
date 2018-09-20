@@ -31,7 +31,9 @@ class F7CardHeader extends React.Component {
 }
 
 __reactComponentSetProps(F7CardHeader, Object.assign({
-  id: [String, Number]
+  id: [String, Number],
+  className: String,
+  style: Object
 }, Mixins.colorProps));
 
 F7CardHeader.displayName = 'f7-card-header';

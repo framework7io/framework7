@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7List {
-  export interface Props {
+declare namespace F7List {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     inset? : boolean
     tabletInset? : boolean
     mediaList? : boolean
@@ -35,22 +37,22 @@ namespace F7List {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onVirtualItemBeforeInsert? : Function
-    onVirtualBeforeClear? : Function
-    onVirtualItemsBeforeInsert? : Function
-    onVirtualItemsAfterInsert? : Function
-    onSortableEnable? : Function
-    onSortableDisable? : Function
-    onSortableSort? : Function
-    onTabShow? : Function
-    onTabHide? : Function
+    onVirtualItemBeforeInsert? : (vl?: any, itemEl?: any, item?: any) => void
+    onVirtualBeforeClear? : (vl?: any, fragment?: any) => void
+    onVirtualItemsBeforeInsert? : (vl?: any, fragment?: any) => void
+    onVirtualItemsAfterInsert? : (vl?: any, fragment?: any) => void
+    onSortableEnable? : (event?: any) => void
+    onSortableDisable? : (event?: any) => void
+    onSortableSort? : (event?: any, sortData?: any) => void
+    onTabShow? : (event?: any) => void
+    onTabHide? : (event?: any) => void
   }
 }
-class F7List extends React.Component<F7List.Props, {}> {
-  onSortableEnable(event : any) : unknown
-  onSortableDisable(event : any) : unknown
-  onSortableSort(event : any) : unknown
-  onTabShow(e : any) : unknown
-  onTabHide(e : any) : unknown
+declare class F7List extends React.Component<F7List.Props, {}> {
+  onSortableEnable(event? : any) : unknown
+  onSortableDisable(event? : any) : unknown
+  onSortableSort(event? : any) : unknown
+  onTabShow(event? : any) : unknown
+  onTabHide(event? : any) : unknown
 }
 export default F7List;

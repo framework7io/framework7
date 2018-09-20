@@ -41,10 +41,6 @@ class F7ListItem extends React.Component {
   onClick(event) {
     const self = this;
 
-    if (self.props.smartSelect && self.f7SmartSelect) {
-      self.f7SmartSelect.open();
-    }
-
     if (event.target.tagName.toLowerCase() !== 'input') {
       self.dispatchEvent('click', event);
     }
@@ -394,6 +390,8 @@ class F7ListItem extends React.Component {
 
 __reactComponentSetProps(F7ListItem, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   title: [String, Number],
   text: [String, Number],
   media: String,

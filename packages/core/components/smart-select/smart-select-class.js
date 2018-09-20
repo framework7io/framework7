@@ -39,10 +39,10 @@ class SmartSelect extends Framework7Class {
     let view;
 
     // Url
-    let url = ss.params.url;
+    let url = params.url;
     if (!url) {
       if ($el.attr('href') && $el.attr('href') !== '#') url = $el.attr('href');
-      else url = `${$selectEl.attr('name').toLowerCase()}-select/`;
+      else if ($selectEl.attr('name')) url = `${$selectEl.attr('name').toLowerCase()}-select/`;
     }
     if (!url) url = ss.params.url;
 
@@ -342,9 +342,9 @@ class SmartSelect extends Framework7Class {
       const $itemTitleEl = ss.$el.find('.item-title');
       pageTitle = $itemTitleEl.length ? $itemTitleEl.text().trim() : '';
     }
-    const cssClass = ss.params.cssClass;
+    const cssClass = ss.params.cssClass || '';
     const popupHtml = `
-      <div class="popup smart-select-popup ${cssClass}" data-select-name="${ss.selectName}">
+      <div class="popup smart-select-popup ${cssClass} ${ss.params.popupTabletFullscreen ? 'popup-tablet-fullscreen' : ''}" data-select-name="${ss.selectName}">
         <div class="view">
           <div class="page smart-select-page ${ss.params.searchbar ? 'page-with-subnavbar' : ''}" data-name="smart-select-page">
             <div class="navbar ${ss.params.navbarColorTheme ? `color-theme-${ss.params.navbarColorTheme}` : ''}">

@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7BlockFooter {
-  export interface Props {
+declare namespace F7BlockFooter {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     color? : string
     colorTheme? : string
     textColor? : string
@@ -14,7 +16,7 @@ namespace F7BlockFooter {
     
   }
 }
-class F7BlockFooter extends React.Component<F7BlockFooter.Props, {}> {
+declare class F7BlockFooter extends React.Component<F7BlockFooter.Props, {}> {
   
 }
 export default F7BlockFooter;

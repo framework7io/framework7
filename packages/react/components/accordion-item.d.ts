@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7AccordionItem {
-  export interface Props {
+declare namespace F7AccordionItem {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     opened? : boolean
     color? : string
     colorTheme? : string
@@ -12,16 +14,16 @@ namespace F7AccordionItem {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onAccordionOpen? : Function
-    onAccordionOpened? : Function
-    onAccordionClose? : Function
-    onAccordionClosed? : Function
+    onAccordionOpen? : (event?: any) => void
+    onAccordionOpened? : (event?: any) => void
+    onAccordionClose? : (event?: any) => void
+    onAccordionClosed? : (event?: any) => void
   }
 }
-class F7AccordionItem extends React.Component<F7AccordionItem.Props, {}> {
-  onOpen(event : any) : unknown
-  onOpened(event : any) : unknown
-  onClose(event : any) : unknown
-  onClosed(event : any) : unknown
+declare class F7AccordionItem extends React.Component<F7AccordionItem.Props, {}> {
+  onOpen(event? : any) : unknown
+  onOpened(event? : any) : unknown
+  onClose(event? : any) : unknown
+  onClosed(event? : any) : unknown
 }
 export default F7AccordionItem;

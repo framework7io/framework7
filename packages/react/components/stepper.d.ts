@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Stepper {
-  export interface Props {
+declare namespace F7Stepper {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     init? : boolean  | true
     value? : number  | 0
     min? : number  | 0
@@ -41,19 +43,19 @@ namespace F7Stepper {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onStepperChange? : Function
-    onInput? : Function
-    onStepperMinusClick? : Function
-    onStepperPlusClick? : Function
+    onStepperChange? : (newValue?: any) => void
+    onInput? : (event?: any, stepper?: any) => void
+    onStepperMinusClick? : (event?: any, stepper?: any) => void
+    onStepperPlusClick? : (event?: any, stepper?: any) => void
   }
 }
-class F7Stepper extends React.Component<F7Stepper.Props, {}> {
+declare class F7Stepper extends React.Component<F7Stepper.Props, {}> {
   increment() : unknown
   decrement() : unknown
-  setValue(newValue : any) : unknown
+  setValue(newValue? : any) : unknown
   getValue() : unknown
-  onInput(e : any) : unknown
-  onMinusClick(e : any) : unknown
-  onPlusClick(e : any) : unknown
+  onInput(event? : any) : unknown
+  onMinusClick(event? : any) : unknown
+  onPlusClick(event? : any) : unknown
 }
 export default F7Stepper;

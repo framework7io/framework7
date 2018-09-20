@@ -124,6 +124,8 @@ class F7Range extends React.Component {
 
 __reactComponentSetProps(F7Range, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   init: {
     type: Boolean,
     default: true

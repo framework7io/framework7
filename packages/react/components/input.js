@@ -337,6 +337,8 @@ __reactComponentSetProps(F7Input, Object.assign({
   defaultValue: [String, Number, Array],
   placeholder: String,
   id: [String, Number],
+  className: String,
+  style: Object,
   inputId: [String, Number],
   size: [String, Number],
   accept: [String, Number],

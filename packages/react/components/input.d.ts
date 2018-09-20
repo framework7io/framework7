@@ -1,7 +1,7 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Input {
-  export interface Props {
+declare namespace F7Input {
+  interface Props {
     slot? : string
     type? : string
     name? : string
@@ -9,6 +9,8 @@ namespace F7Input {
     defaultValue? : string | number | Array<any>
     placeholder? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     inputId? : string | number
     size? : string | number
     accept? : string | number
@@ -48,24 +50,24 @@ namespace F7Input {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onTextareaResize? : Function
-    onInputNotEmpty? : Function
-    onInputEmpty? : Function
-    onInputClear? : Function
-    onInput? : Function
-    onFocus? : Function
-    onBlur? : Function
-    onChange? : Function
+    onTextareaResize? : (event?: any) => void
+    onInputNotEmpty? : (event?: any) => void
+    onInputEmpty? : (event?: any) => void
+    onInputClear? : (event?: any) => void
+    onInput? : (event?: any) => void
+    onFocus? : (event?: any) => void
+    onBlur? : (event?: any) => void
+    onChange? : (event?: any) => void
   }
 }
-class F7Input extends React.Component<F7Input.Props, {}> {
-  onTextareaResize(event : any) : unknown
-  onInputNotEmpty(event : any) : unknown
-  onInputEmpty(event : any) : unknown
-  onInputClear(event : any) : unknown
-  onInput(event : any) : unknown
-  onFocus(event : any) : unknown
-  onBlur(event : any) : unknown
-  onChange(event : any) : unknown
+declare class F7Input extends React.Component<F7Input.Props, {}> {
+  onTextareaResize(event? : any) : unknown
+  onInputNotEmpty(event? : any) : unknown
+  onInputEmpty(event? : any) : unknown
+  onInputClear(event? : any) : unknown
+  onInput(event? : any) : unknown
+  onFocus(event? : any) : unknown
+  onBlur(event? : any) : unknown
+  onChange(event? : any) : unknown
 }
 export default F7Input;

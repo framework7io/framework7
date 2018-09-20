@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7MessagebarAttachments {
-  export interface Props {
+declare namespace F7MessagebarAttachments {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     color? : string
     colorTheme? : string
     textColor? : string
@@ -14,7 +16,7 @@ namespace F7MessagebarAttachments {
     
   }
 }
-class F7MessagebarAttachments extends React.Component<F7MessagebarAttachments.Props, {}> {
+declare class F7MessagebarAttachments extends React.Component<F7MessagebarAttachments.Props, {}> {
   
 }
 export default F7MessagebarAttachments;

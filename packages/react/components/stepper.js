@@ -41,16 +41,19 @@ class F7Stepper extends React.Component {
     return undefined;
   }
 
-  onInput(e) {
-    this.dispatchEvent('input', e, this.f7Stepper);
+  onInput(event) {
+    const stepper = this.f7Stepper;
+    this.dispatchEvent('input', event, stepper);
   }
 
-  onMinusClick(e) {
-    this.dispatchEvent('stepper:minusclick stepperMinusClick', e, this.f7Stepper);
+  onMinusClick(event) {
+    const stepper = this.f7Stepper;
+    this.dispatchEvent('stepper:minusclick stepperMinusClick', event, stepper);
   }
 
-  onPlusClick(e) {
-    this.dispatchEvent('stepper:plusclick stepperPlusClick', e, this.f7Stepper);
+  onPlusClick(event) {
+    const stepper = this.f7Stepper;
+    this.dispatchEvent('stepper:plusclick stepperPlusClick', event, stepper);
   }
 
   get classes() {
@@ -212,6 +215,8 @@ class F7Stepper extends React.Component {
 
 __reactComponentSetProps(F7Stepper, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   init: {
     type: Boolean,
     default: true

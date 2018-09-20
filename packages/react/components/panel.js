@@ -200,6 +200,8 @@ class F7Panel extends React.Component {
 
 __reactComponentSetProps(F7Panel, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   side: String,
   effect: String,
   cover: Boolean,

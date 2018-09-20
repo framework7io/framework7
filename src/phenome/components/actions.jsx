@@ -5,6 +5,8 @@ export default {
   name: 'f7-actions',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     opened: Boolean,
     grid: Boolean,
     convertToPopover: Boolean,

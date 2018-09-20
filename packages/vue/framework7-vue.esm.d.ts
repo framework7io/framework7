@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.3.0
+ * Framework7 Vue 3.3.1
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,9 +7,8 @@
  *
  * Released under the MIT License
  *
- * Released on: September 14, 2018
+ * Released on: September 17, 2018
  */
-
 
 import Vue from 'vue';
 import { Dom7 } from 'dom7';
@@ -102,10 +101,7 @@ import f7Toolbar from './components/toolbar';
 import f7View from './components/view';
 import f7Views from './components/views';
 
-
-
-
-interface Framework7Extensions {
+declare interface Framework7Extensions {
   /** Main Framework7's initialized instance. It allows you to use any of Framework7 APIs */
   $f7: Framework7
   /** Callback function that will be executed when Framework7 fully intialized. Useful to use in components when you need to access Framework7 API and to be sure it is ready. So it is safe to put all Framework7 related logic into this callback. As an argument it receives initialized Framework7 instance */
@@ -217,7 +213,7 @@ export {
   f7Toolbar,
   f7View,
   f7Views
-};
+}
 
 declare const Framework7Vue: Framework7Plugin;
 export default Framework7Vue;

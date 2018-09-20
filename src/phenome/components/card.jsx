@@ -11,6 +11,8 @@ export default {
   name: 'f7-card',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     title: [String, Number],
     content: [String, Number],
     footer: [String, Number],

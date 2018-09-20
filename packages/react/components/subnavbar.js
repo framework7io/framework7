@@ -42,6 +42,8 @@ class F7Subnavbar extends React.Component {
 
 __reactComponentSetProps(F7Subnavbar, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   sliding: Boolean,
   title: String,
   inner: {

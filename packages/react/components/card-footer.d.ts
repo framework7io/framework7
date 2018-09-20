@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7CardFooter {
-  export interface Props {
+declare namespace F7CardFooter {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     color? : string
     colorTheme? : string
     textColor? : string
@@ -14,7 +16,7 @@ namespace F7CardFooter {
     
   }
 }
-class F7CardFooter extends React.Component<F7CardFooter.Props, {}> {
+declare class F7CardFooter extends React.Component<F7CardFooter.Props, {}> {
   
 }
 export default F7CardFooter;

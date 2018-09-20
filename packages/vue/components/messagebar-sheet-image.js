@@ -55,9 +55,9 @@ export default {
   },
 
   methods: {
-    onChange(e) {
-      if (this.props.checked) this.dispatchEvent('checked', e);else this.dispatchEvent('unchecked', e);
-      this.dispatchEvent('change', e);
+    onChange(event) {
+      if (this.props.checked) this.dispatchEvent('checked', event);else this.dispatchEvent('unchecked', event);
+      this.dispatchEvent('change', event);
     },
 
     dispatchEvent(events, ...args) {

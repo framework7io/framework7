@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7App {
-  export interface Props {
+declare namespace F7App {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     params? : Object
     routes? : Array<any>
     color? : string
@@ -16,7 +18,7 @@ namespace F7App {
     
   }
 }
-class F7App extends React.Component<F7App.Props, {}> {
+declare class F7App extends React.Component<F7App.Props, {}> {
   
 }
 export default F7App;

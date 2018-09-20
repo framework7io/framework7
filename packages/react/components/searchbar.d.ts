@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Searchbar {
-  export interface Props {
+declare namespace F7Searchbar {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     noShadow? : boolean
     noHairline? : boolean
     form? : boolean  | true
@@ -34,31 +36,31 @@ namespace F7Searchbar {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onSearchbarSearch? : Function
-    onSearchbarClear? : Function
-    onSearchbarEnable? : Function
-    onSearchbarDisable? : Function
-    onChange? : Function
-    onInput? : Function
-    onFocus? : Function
-    onBlur? : Function
-    onSubmit? : Function
-    onClickClear? : Function
-    onClickDisable? : Function
+    onSearchbarSearch? : (searchbar?: any, query?: any, previousQuery?: any) => void
+    onSearchbarClear? : (searchbar?: any, previousQuery?: any) => void
+    onSearchbarEnable? : (searchbar?: any) => void
+    onSearchbarDisable? : (searchbar?: any) => void
+    onChange? : (event?: any) => void
+    onInput? : (event?: any) => void
+    onFocus? : (event?: any) => void
+    onBlur? : (event?: any) => void
+    onSubmit? : (event?: any) => void
+    onClickClear? : (event?: any) => void
+    onClickDisable? : (event?: any) => void
   }
 }
-class F7Searchbar extends React.Component<F7Searchbar.Props, {}> {
-  search(query : any) : unknown
+declare class F7Searchbar extends React.Component<F7Searchbar.Props, {}> {
+  search(query? : any) : unknown
   enable() : unknown
   disable() : unknown
   toggle() : unknown
   clear() : unknown
-  onChange(event : any) : unknown
-  onInput(event : any) : unknown
-  onFocus(event : any) : unknown
-  onBlur(event : any) : unknown
-  onSubmit(event : any) : unknown
-  onClearButtonClick(event : any) : unknown
-  onDisableButtonClick(event : any) : unknown
+  onChange(event? : any) : unknown
+  onInput(event? : any) : unknown
+  onFocus(event? : any) : unknown
+  onBlur(event? : any) : unknown
+  onSubmit(event? : any) : unknown
+  onClearButtonClick(event? : any) : unknown
+  onDisableButtonClick(event? : any) : unknown
 }
 export default F7Searchbar;

@@ -97,6 +97,8 @@ class F7FabButton extends React.Component {
 
 __reactComponentSetProps(F7FabButton, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   fabClose: Boolean,
   label: String,
   target: String,

@@ -105,6 +105,8 @@ class F7ListIndex extends React.Component {
 
 __reactComponentSetProps(F7ListIndex, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   init: {
     type: Boolean,
     default: true

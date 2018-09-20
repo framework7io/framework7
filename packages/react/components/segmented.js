@@ -41,6 +41,8 @@ class F7Segmented extends React.Component {
 
 __reactComponentSetProps(F7Segmented, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   raised: Boolean,
   round: Boolean,
   tag: {

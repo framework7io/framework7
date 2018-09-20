@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7ListIndex {
-  export interface Props {
+declare namespace F7ListIndex {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     init? : boolean  | true
     listEl? : string | Object
     indexes? : string | Array<any>  | 'auto'
@@ -18,11 +20,11 @@ namespace F7ListIndex {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onListIndexSelect? : Function
+    onListIndexSelect? : (itemContent?: any, itemIndex?: any) => void
   }
 }
-class F7ListIndex extends React.Component<F7ListIndex.Props, {}> {
+declare class F7ListIndex extends React.Component<F7ListIndex.Props, {}> {
   update() : unknown
-  scrollListToIndex(indexContent : any) : unknown
+  scrollListToIndex(indexContent? : any) : unknown
 }
 export default F7ListIndex;

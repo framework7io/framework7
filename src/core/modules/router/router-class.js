@@ -493,14 +493,8 @@ class Router extends Framework7Class {
   flattenRoutes(routes = this.routes) {
     let flattenedRoutes = [];
     routes.forEach((route) => {
-      if ('routes' in route) {
-        const mergedPathsRoutes = route.routes.map((childRoute) => {
-          const cRoute = Utils.extend({}, childRoute);
-          cRoute.path = (`${route.path}/${cRoute.path}`).replace('///', '/').replace('//', '/');
-          return cRoute;
-        });
-        flattenedRoutes = flattenedRoutes.concat(route, this.flattenRoutes(mergedPathsRoutes));
-      } else if ('tabs' in route && route.tabs) {
+      let hasTabRoutes = false;
+      if ('tabs' in route && route.tabs) {
         const mergedPathsRoutes = route.tabs.map((tabRoute) => {
           const tRoute = Utils.extend({}, route, {
             path: (`${route.path}/${tabRoute.path}`).replace('///', '/').replace('//', '/'),
@@ -508,10 +502,25 @@ class Router extends Framework7Class {
             tab: tabRoute,
           });
           delete tRoute.tabs;
+          delete tRoute.routes;
           return tRoute;
         });
+        hasTabRoutes = true;
         flattenedRoutes = flattenedRoutes.concat(this.flattenRoutes(mergedPathsRoutes));
-      } else {
+      }
+      if ('routes' in route) {
+        const mergedPathsRoutes = route.routes.map((childRoute) => {
+          const cRoute = Utils.extend({}, childRoute);
+          cRoute.path = (`${route.path}/${cRoute.path}`).replace('///', '/').replace('//', '/');
+          return cRoute;
+        });
+        if (hasTabRoutes) {
+          flattenedRoutes = flattenedRoutes.concat(this.flattenRoutes(mergedPathsRoutes));
+        } else {
+          flattenedRoutes = flattenedRoutes.concat(route, this.flattenRoutes(mergedPathsRoutes));
+        }
+      }
+      if (!('routes' in route) && !('tabs' in route && route.tabs)) {
         flattenedRoutes.push(route);
       }
     });

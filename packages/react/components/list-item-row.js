@@ -31,7 +31,9 @@ class F7ListItemRow extends React.Component {
 }
 
 __reactComponentSetProps(F7ListItemRow, Object.assign({
-  id: [String, Number]
+  id: [String, Number],
+  className: String,
+  style: Object
 }, Mixins.colorProps));
 
 F7ListItemRow.displayName = 'f7-list-item-row';

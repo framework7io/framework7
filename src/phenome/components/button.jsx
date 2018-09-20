@@ -8,6 +8,8 @@ export default {
   name: 'f7-button',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     noFastclick: Boolean,
     noFastClick: Boolean,
     text: String,

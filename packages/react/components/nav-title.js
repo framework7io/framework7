@@ -46,6 +46,8 @@ class F7NavTitle extends React.Component {
 
 __reactComponentSetProps(F7NavTitle, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   title: String,
   subtitle: String,
   sliding: Boolean

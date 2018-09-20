@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7ListItemContent {
-  export interface Props {
+declare namespace F7ListItemContent {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     title? : string | number
     text? : string | number
     media? : string
@@ -34,13 +36,13 @@ namespace F7ListItemContent {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onClick? : Function
-    onChange? : Function
+    onClick? : (event?: any) => void
+    onChange? : (event?: any) => void
   }
 }
-class F7ListItemContent extends React.Component<F7ListItemContent.Props, {}> {
+declare class F7ListItemContent extends React.Component<F7ListItemContent.Props, {}> {
   checkHasInputState() : unknown
-  onClick(event : any) : unknown
-  onChange(event : any) : unknown
+  onClick(event? : any) : unknown
+  onChange(event? : any) : unknown
 }
 export default F7ListItemContent;

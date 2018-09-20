@@ -31,7 +31,9 @@ class F7BlockTitle extends React.Component {
 }
 
 __reactComponentSetProps(F7BlockTitle, Object.assign({
-  id: [String, Number]
+  id: [String, Number],
+  className: String,
+  style: Object
 }, Mixins.colorProps));
 
 F7BlockTitle.displayName = 'f7-block-title';

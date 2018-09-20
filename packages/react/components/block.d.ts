@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Block {
-  export interface Props {
+declare namespace F7Block {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     inset? : boolean
     tabletInset? : boolean
     strong? : boolean
@@ -21,12 +23,12 @@ namespace F7Block {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onTabShow? : Function
-    onTabHide? : Function
+    onTabShow? : (event?: any) => void
+    onTabHide? : (event?: any) => void
   }
 }
-class F7Block extends React.Component<F7Block.Props, {}> {
-  onTabShow(e : any) : unknown
-  onTabHide(e : any) : unknown
+declare class F7Block extends React.Component<F7Block.Props, {}> {
+  onTabShow(event? : any) : unknown
+  onTabHide(event? : any) : unknown
 }
 export default F7Block;

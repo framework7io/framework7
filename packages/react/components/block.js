@@ -11,12 +11,12 @@ class F7Block extends React.Component {
     super(props, context);
   }
 
-  onTabShow(e) {
-    this.dispatchEvent('tabShow tab:show', e);
+  onTabShow(event) {
+    this.dispatchEvent('tabShow tab:show', event);
   }
 
-  onTabHide(e) {
-    this.dispatchEvent('tabHide tab:hide', e);
+  onTabHide(event) {
+    this.dispatchEvent('tabHide tab:hide', event);
   }
 
   render() {
@@ -88,6 +88,8 @@ class F7Block extends React.Component {
 
 __reactComponentSetProps(F7Block, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   inset: Boolean,
   tabletInset: Boolean,
   strong: Boolean,

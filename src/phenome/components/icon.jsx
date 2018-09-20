@@ -5,6 +5,8 @@ export default {
   name: 'f7-icon',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     material: String, // Material Icons
     f7: String, // Framework7 Icons
     ion: String, // Ionicons

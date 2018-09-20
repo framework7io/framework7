@@ -130,8 +130,8 @@ export default {
       self.$f7.navbar.size(self.$refs.el);
     },
 
-    onBackClick(e) {
-      this.dispatchEvent('back-click backClick click:back clickBack', e);
+    onBackClick(event) {
+      this.dispatchEvent('back-click backClick click:back clickBack', event);
     },
 
     dispatchEvent(events, ...args) {

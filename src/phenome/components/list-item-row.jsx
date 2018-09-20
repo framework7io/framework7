@@ -5,6 +5,8 @@ export default {
   name: 'f7-list-item-row',
   props: {
     id: [String, Number],
+    className: String, // phenome-react-line
+    style: Object, // phenome-react-line
     ...Mixins.colorProps,
   },
   render() {

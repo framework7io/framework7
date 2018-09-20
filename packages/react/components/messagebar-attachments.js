@@ -31,7 +31,9 @@ class F7MessagebarAttachments extends React.Component {
 }
 
 __reactComponentSetProps(F7MessagebarAttachments, Object.assign({
-  id: [String, Number]
+  id: [String, Number],
+  className: String,
+  style: Object
 }, Mixins.colorProps));
 
 F7MessagebarAttachments.displayName = 'f7-messagebar-attachments';

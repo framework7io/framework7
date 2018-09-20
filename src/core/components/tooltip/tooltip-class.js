@@ -115,7 +115,7 @@ class Tooltip extends Framework7Class {
     const tooltip = this;
     const { $el, app } = tooltip;
     $el.css({ left: '', top: '' });
-    const $targetEl = $(targetEl || tooltip.el);
+    const $targetEl = $(targetEl || tooltip.targetEl);
     const [width, height] = [$el.width(), $el.height()];
 
     $el.css({ left: '', top: '' });

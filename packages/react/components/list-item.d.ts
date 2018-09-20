@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7ListItem {
-  export interface Props {
+declare namespace F7ListItem {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     title? : string | number
     text? : string | number
     media? : string
@@ -79,36 +81,36 @@ namespace F7ListItem {
     sortableEnable? : boolean | string
     sortableDisable? : boolean | string
     sortableToggle? : boolean | string
-    onClick? : Function
-    onSwipeoutDeleted? : Function
-    onSwipeoutDelete? : Function
-    onSwipeoutClose? : Function
-    onSwipeoutClosed? : Function
-    onSwipeoutOpen? : Function
-    onSwipeoutOpened? : Function
-    onSwipeout? : Function
-    onAccordionClose? : Function
-    onAccordionClosed? : Function
-    onAccordionOpen? : Function
-    onAccordionOpened? : Function
-    onChange? : Function
-    onInput? : Function
+    onClick? : (event?: any) => void
+    onSwipeoutDeleted? : (event?: any) => void
+    onSwipeoutDelete? : (event?: any) => void
+    onSwipeoutClose? : (event?: any) => void
+    onSwipeoutClosed? : (event?: any) => void
+    onSwipeoutOpen? : (event?: any) => void
+    onSwipeoutOpened? : (event?: any) => void
+    onSwipeout? : (event?: any) => void
+    onAccordionClose? : (event?: any) => void
+    onAccordionClosed? : (event?: any) => void
+    onAccordionOpen? : (event?: any) => void
+    onAccordionOpened? : (event?: any) => void
+    onChange? : (event?: any) => void
+    onInput? : (event?: any) => void
   }
 }
-class F7ListItem extends React.Component<F7ListItem.Props, {}> {
-  onClick(event : any) : unknown
-  onSwipeoutDeleted(event : any) : unknown
-  onSwipeoutDelete(event : any) : unknown
-  onSwipeoutClose(event : any) : unknown
-  onSwipeoutClosed(event : any) : unknown
-  onSwipeoutOpen(event : any) : unknown
-  onSwipeoutOpened(event : any) : unknown
-  onSwipeout(event : any) : unknown
-  onAccClose(event : any) : unknown
-  onAccClosed(event : any) : unknown
-  onAccOpen(event : any) : unknown
-  onAccOpened(event : any) : unknown
-  onChange(event : any) : unknown
-  onInput(event : any) : unknown
+declare class F7ListItem extends React.Component<F7ListItem.Props, {}> {
+  onClick(event? : any) : unknown
+  onSwipeoutDeleted(event? : any) : unknown
+  onSwipeoutDelete(event? : any) : unknown
+  onSwipeoutClose(event? : any) : unknown
+  onSwipeoutClosed(event? : any) : unknown
+  onSwipeoutOpen(event? : any) : unknown
+  onSwipeoutOpened(event? : any) : unknown
+  onSwipeout(event? : any) : unknown
+  onAccClose(event? : any) : unknown
+  onAccClosed(event? : any) : unknown
+  onAccOpen(event? : any) : unknown
+  onAccOpened(event? : any) : unknown
+  onChange(event? : any) : unknown
+  onInput(event? : any) : unknown
 }
 export default F7ListItem;

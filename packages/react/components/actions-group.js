@@ -32,7 +32,9 @@ class F7ActionsGroup extends React.Component {
 }
 
 __reactComponentSetProps(F7ActionsGroup, Object.assign({
-  id: [String, Number]
+  id: [String, Number],
+  className: String,
+  style: Object
 }, Mixins.colorProps));
 
 F7ActionsGroup.displayName = 'f7-actions-group';

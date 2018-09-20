@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7AccordionContent {
-  export interface Props {
+declare namespace F7AccordionContent {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     color? : string
     colorTheme? : string
     textColor? : string
@@ -14,7 +16,7 @@ namespace F7AccordionContent {
     
   }
 }
-class F7AccordionContent extends React.Component<F7AccordionContent.Props, {}> {
+declare class F7AccordionContent extends React.Component<F7AccordionContent.Props, {}> {
   
 }
 export default F7AccordionContent;

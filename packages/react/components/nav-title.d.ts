@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7NavTitle {
-  export interface Props {
+declare namespace F7NavTitle {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     title? : string
     subtitle? : string
     sliding? : boolean
@@ -17,7 +19,7 @@ namespace F7NavTitle {
     
   }
 }
-class F7NavTitle extends React.Component<F7NavTitle.Props, {}> {
+declare class F7NavTitle extends React.Component<F7NavTitle.Props, {}> {
   
 }
 export default F7NavTitle;

@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Progressbar {
-  export interface Props {
+declare namespace F7Progressbar {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     progress? : number
     infinite? : boolean
     color? : string
@@ -16,7 +18,7 @@ namespace F7Progressbar {
     
   }
 }
-class F7Progressbar extends React.Component<F7Progressbar.Props, {}> {
-  set(progress : any, speed : any) : unknown
+declare class F7Progressbar extends React.Component<F7Progressbar.Props, {}> {
+  set(progress? : any, speed? : any) : unknown
 }
 export default F7Progressbar;
