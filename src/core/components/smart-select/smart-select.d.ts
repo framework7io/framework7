@@ -31,6 +31,8 @@ export namespace SmartSelect {
     pageBackLinkText?: string
     /** Smart select Popup close link text (default 'Close') */
     popupCloseLinkText?: string
+    /** Smart select Popup will be opened as full screen popup on tablet */
+    popupTabletFullscreen?: boolean
     /** Smart select Sheet close link text (default 'Done') */
     sheetCloseLinkText?: string
     /** Enables Searchbar on smart select page. If passed as object then it should be valid Searchbar parameters (default false) */
