@@ -16,9 +16,9 @@ class F7Toggle extends React.Component {
     if (self.f7Toggle && self.f7Toggle.toggle) self.f7Toggle.toggle();
   }
 
-  onChange(e) {
+  onChange(event) {
     const self = this;
-    self.dispatchEvent('change', e);
+    self.dispatchEvent('change', event);
   }
 
   render() {
@@ -76,7 +76,8 @@ class F7Toggle extends React.Component {
         el: self.refs.el,
         on: {
           change(toggle) {
-            self.dispatchEvent('toggle:change toggleChange', toggle.checked);
+            const checked = toggle.checked;
+            self.dispatchEvent('toggle:change toggleChange', checked);
           }
 
         }
@@ -106,6 +107,8 @@ class F7Toggle extends React.Component {
 
 __reactComponentSetProps(F7Toggle, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   init: {
     type: Boolean,
     default: true

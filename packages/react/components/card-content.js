@@ -35,6 +35,8 @@ class F7CardContent extends React.Component {
 
 __reactComponentSetProps(F7CardContent, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   padding: {
     type: Boolean,
     default: true

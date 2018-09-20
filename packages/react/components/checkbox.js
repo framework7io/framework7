@@ -75,6 +75,8 @@ class F7Checkbox extends React.Component {
 
 __reactComponentSetProps(F7Checkbox, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   checked: Boolean,
   name: [Number, String],
   value: [Number, String, Boolean],

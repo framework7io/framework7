@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Sheet {
-  export interface Props {
+declare namespace F7Sheet {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     opened? : boolean
     backdrop? : boolean
     closeByBackdropClick? : boolean
@@ -15,18 +17,18 @@ namespace F7Sheet {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onSheetOpen? : Function
-    onSheetOpened? : Function
-    onSheetClose? : Function
-    onSheetClosed? : Function
+    onSheetOpen? : (event?: any) => void
+    onSheetOpened? : (event?: any) => void
+    onSheetClose? : (event?: any) => void
+    onSheetClosed? : (event?: any) => void
   }
 }
-class F7Sheet extends React.Component<F7Sheet.Props, {}> {
-  onOpen(event : any) : unknown
-  onOpened(event : any) : unknown
-  onClose(event : any) : unknown
-  onClosed(event : any) : unknown
-  open(animate : any) : unknown
-  close(animate : any) : unknown
+declare class F7Sheet extends React.Component<F7Sheet.Props, {}> {
+  onOpen(event? : any) : unknown
+  onOpened(event? : any) : unknown
+  onClose(event? : any) : unknown
+  onClosed(event? : any) : unknown
+  open(animate? : any) : unknown
+  close(animate? : any) : unknown
 }
 export default F7Sheet;

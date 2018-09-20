@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Icon {
-  export interface Props {
+declare namespace F7Icon {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     material? : string
     f7? : string
     ion? : string
@@ -25,7 +27,7 @@ namespace F7Icon {
     
   }
 }
-class F7Icon extends React.Component<F7Icon.Props, {}> {
+declare class F7Icon extends React.Component<F7Icon.Props, {}> {
   
 }
 export default F7Icon;

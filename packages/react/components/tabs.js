@@ -51,6 +51,8 @@ class F7Tabs extends React.Component {
 
 __reactComponentSetProps(F7Tabs, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   animated: Boolean,
   swipeable: Boolean,
   routable: Boolean

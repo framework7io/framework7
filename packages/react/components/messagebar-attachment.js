@@ -15,12 +15,12 @@ class F7MessagebarAttachment extends React.Component {
     })();
   }
 
-  onClick(e) {
-    this.dispatchEvent('attachment:click attachmentClick', e);
+  onClick(event) {
+    this.dispatchEvent('attachment:click attachmentClick', event);
   }
 
-  onDeleteClick(e) {
-    this.dispatchEvent('attachment:delete attachmentDelete', e);
+  onDeleteClick(event) {
+    this.dispatchEvent('attachment:delete attachmentDelete', event);
   }
 
   render() {
@@ -59,6 +59,8 @@ class F7MessagebarAttachment extends React.Component {
 
 __reactComponentSetProps(F7MessagebarAttachment, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   image: String,
   deletable: {
     type: Boolean,

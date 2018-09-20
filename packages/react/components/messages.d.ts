@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Messages {
-  export interface Props {
+declare namespace F7Messages {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     autoLayout? : boolean  | false
     messages? : Array<any>  | function(){return[];}
     newMessagesFirst? : boolean  | false
@@ -29,16 +31,16 @@ namespace F7Messages {
     
   }
 }
-class F7Messages extends React.Component<F7Messages.Props, {}> {
-  renderMessages(messagesToRender : any, method : any) : unknown
+declare class F7Messages extends React.Component<F7Messages.Props, {}> {
+  renderMessages(messagesToRender? : any, method? : any) : unknown
   layout() : unknown
-  scroll(duration : any, scrollTop : any) : unknown
+  scroll(duration? : any, scrollTop? : any) : unknown
   clear() : unknown
-  removeMessage(messageToRemove : any, layout : any) : unknown
-  removeMessages(messagesToRemove : any, layout : any) : unknown
-  addMessage(undefined : any) : unknown
-  addMessages(undefined : any) : unknown
-  showTyping(message : any) : unknown
+  removeMessage(messageToRemove? : any, layout? : any) : unknown
+  removeMessages(messagesToRemove? : any, layout? : any) : unknown
+  addMessage(undefined? : any) : unknown
+  addMessages(undefined? : any) : unknown
+  showTyping(message? : any) : unknown
   hideTyping() : unknown
   destroy() : unknown
 }

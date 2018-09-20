@@ -66,6 +66,8 @@ class F7Radio extends React.Component {
 
 __reactComponentSetProps(F7Radio, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   checked: Boolean,
   name: [Number, String],
   value: [Number, String, Boolean],

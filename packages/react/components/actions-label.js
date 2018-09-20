@@ -46,6 +46,8 @@ class F7ActionsLabel extends React.Component {
 
 __reactComponentSetProps(F7ActionsLabel, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   bold: Boolean
 }, Mixins.colorProps));
 

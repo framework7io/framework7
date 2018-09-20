@@ -139,6 +139,8 @@ class F7Popup extends React.Component {
 
 __reactComponentSetProps(F7Popup, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   tabletFullscreen: Boolean,
   opened: Boolean,
   closeByBackdropClick: Boolean,

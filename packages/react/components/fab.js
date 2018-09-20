@@ -135,6 +135,8 @@ class F7Fab extends React.Component {
 
 __reactComponentSetProps(F7Fab, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   morphTo: String,
   href: [Boolean, String],
   target: String,

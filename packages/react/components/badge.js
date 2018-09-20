@@ -31,7 +31,9 @@ class F7Badge extends React.Component {
 }
 
 __reactComponentSetProps(F7Badge, Object.assign({
-  id: [String, Number]
+  id: [String, Number],
+  className: String,
+  style: Object
 }, Mixins.colorProps));
 
 F7Badge.displayName = 'f7-badge';

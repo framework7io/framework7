@@ -151,6 +151,8 @@ class F7Actions extends React.Component {
 
 __reactComponentSetProps(F7Actions, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   opened: Boolean,
   grid: Boolean,
   convertToPopover: Boolean,

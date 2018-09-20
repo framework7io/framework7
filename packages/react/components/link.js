@@ -224,6 +224,8 @@ class F7Link extends React.Component {
 
 __reactComponentSetProps(F7Link, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   noLinkClass: Boolean,
   noFastClick: Boolean,
   noFastclick: Boolean,

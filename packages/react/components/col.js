@@ -10,8 +10,8 @@ class F7Col extends React.Component {
     super(props, context);
   }
 
-  onClick(e) {
-    this.dispatchEvent('click', e);
+  onClick(event) {
+    this.dispatchEvent('click', event);
   }
 
   render() {
@@ -53,6 +53,8 @@ class F7Col extends React.Component {
 
 __reactComponentSetProps(F7Col, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   tag: {
     type: String,
     default: 'div'

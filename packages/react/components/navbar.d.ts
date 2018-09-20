@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Navbar {
-  export interface Props {
+declare namespace F7Navbar {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     backLink? : boolean | string
     backLinkUrl? : string
     backLinkForce? : boolean
@@ -23,14 +25,14 @@ namespace F7Navbar {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onBackClick? : Function
-    onClickBack? : Function
+    onBackClick? : (event?: any) => void
+    onClickBack? : (event?: any) => void
   }
 }
-class F7Navbar extends React.Component<F7Navbar.Props, {}> {
-  hide(animate : any) : unknown
-  show(animate : any) : unknown
+declare class F7Navbar extends React.Component<F7Navbar.Props, {}> {
+  hide(animate? : any) : unknown
+  show(animate? : any) : unknown
   size() : unknown
-  onBackClick(e : any) : unknown
+  onBackClick(event? : any) : unknown
 }
 export default F7Navbar;

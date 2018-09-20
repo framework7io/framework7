@@ -31,7 +31,9 @@ class F7ListItemCell extends React.Component {
 }
 
 __reactComponentSetProps(F7ListItemCell, Object.assign({
-  id: [String, Number]
+  id: [String, Number],
+  className: String,
+  style: Object
 }, Mixins.colorProps));
 
 F7ListItemCell.displayName = 'f7-list-item-cell';

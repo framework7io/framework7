@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Fab {
-  export interface Props {
+declare namespace F7Fab {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     morphTo? : string
     href? : boolean | string
     target? : string
@@ -17,10 +19,10 @@ namespace F7Fab {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onClick? : Function
+    onClick? : (event?: any) => void
   }
 }
-class F7Fab extends React.Component<F7Fab.Props, {}> {
-  onClick(event : any) : unknown
+declare class F7Fab extends React.Component<F7Fab.Props, {}> {
+  onClick(event? : any) : unknown
 }
 export default F7Fab;

@@ -1,15 +1,14 @@
 /**
- * Framework7 React 3.3.1
- * Build full featured iOS & Android apps using Framework7 & React
- * http://framework7.io/react/
+ * Framework7 Vue 3.3.1
+ * Build full featured iOS & Android apps using Framework7 & Vue
+ * http://framework7.io/vue/
  *
  * Copyright 2014-2018 Vladimir Kharlampidi
  *
  * Released under the MIT License
  *
- * Released on: September 15, 2018
+ * Released on: September 17, 2018
  */
-
 
 import React from 'react';
 import { Dom7 } from 'dom7';
@@ -102,92 +101,7 @@ import F7Toolbar from './components/toolbar';
 import F7View from './components/view';
 import F7Views from './components/views';
 
-
-const AccordionContent = F7AccordionContent;
-const AccordionItem = F7AccordionItem;
-const AccordionToggle = F7AccordionToggle;
-const Accordion = F7Accordion;
-const ActionsButton = F7ActionsButton;
-const ActionsGroup = F7ActionsGroup;
-const ActionsLabel = F7ActionsLabel;
-const Actions = F7Actions;
-const App = F7App;
-const Badge = F7Badge;
-const BlockFooter = F7BlockFooter;
-const BlockHeader = F7BlockHeader;
-const BlockTitle = F7BlockTitle;
-const Block = F7Block;
-const Button = F7Button;
-const CardContent = F7CardContent;
-const CardFooter = F7CardFooter;
-const CardHeader = F7CardHeader;
-const Card = F7Card;
-const Checkbox = F7Checkbox;
-const Chip = F7Chip;
-const Col = F7Col;
-const FabButton = F7FabButton;
-const FabButtons = F7FabButtons;
-const Fab = F7Fab;
-const Gauge = F7Gauge;
-const Icon = F7Icon;
-const Input = F7Input;
-const Label = F7Label;
-const Link = F7Link;
-const ListButton = F7ListButton;
-const ListGroup = F7ListGroup;
-const ListIndex = F7ListIndex;
-const ListItemCell = F7ListItemCell;
-const ListItemContent = F7ListItemContent;
-const ListItemRow = F7ListItemRow;
-const ListItem = F7ListItem;
-const List = F7List;
-const LoginScreenTitle = F7LoginScreenTitle;
-const LoginScreen = F7LoginScreen;
-const Message = F7Message;
-const MessagebarAttachment = F7MessagebarAttachment;
-const MessagebarAttachments = F7MessagebarAttachments;
-const MessagebarSheetImage = F7MessagebarSheetImage;
-const MessagebarSheetItem = F7MessagebarSheetItem;
-const MessagebarSheet = F7MessagebarSheet;
-const Messagebar = F7Messagebar;
-const MessagesTitle = F7MessagesTitle;
-const Messages = F7Messages;
-const NavLeft = F7NavLeft;
-const NavRight = F7NavRight;
-const NavTitle = F7NavTitle;
-const Navbar = F7Navbar;
-const PageContent = F7PageContent;
-const Page = F7Page;
-const Panel = F7Panel;
-const PhotoBrowser = F7PhotoBrowser;
-const Popover = F7Popover;
-const Popup = F7Popup;
-const Preloader = F7Preloader;
-const Progressbar = F7Progressbar;
-const Radio = F7Radio;
-const Range = F7Range;
-const RoutableModals = F7RoutableModals;
-const Row = F7Row;
-const Searchbar = F7Searchbar;
-const Segmented = F7Segmented;
-const Sheet = F7Sheet;
-const Statusbar = F7Statusbar;
-const Stepper = F7Stepper;
-const Subnavbar = F7Subnavbar;
-const SwipeoutActions = F7SwipeoutActions;
-const SwipeoutButton = F7SwipeoutButton;
-const SwiperSlide = F7SwiperSlide;
-const Swiper = F7Swiper;
-const Tab = F7Tab;
-const Tabs = F7Tabs;
-const Toggle = F7Toggle;
-const Toolbar = F7Toolbar;
-const View = F7View;
-const Views = F7Views;
-
-
-
-interface Framework7Extensions {
+declare interface Framework7Extensions {
   /** Main Framework7's initialized instance. It allows you to use any of Framework7 APIs */
   $f7: Framework7
   /** Callback function that will be executed when Framework7 fully intialized. Useful to use in components when you need to access Framework7 API and to be sure it is ready. So it is safe to put all Framework7 related logic into this callback. As an argument it receives initialized Framework7 instance */
@@ -219,168 +133,168 @@ declare module 'react' {
 
 export {
   F7AccordionContent,
-  AccordionContent,
+  F7AccordionContent as AccordionContent,
   F7AccordionItem,
-  AccordionItem,
+  F7AccordionItem as AccordionItem,
   F7AccordionToggle,
-  AccordionToggle,
+  F7AccordionToggle as AccordionToggle,
   F7Accordion,
-  Accordion,
+  F7Accordion as Accordion,
   F7ActionsButton,
-  ActionsButton,
+  F7ActionsButton as ActionsButton,
   F7ActionsGroup,
-  ActionsGroup,
+  F7ActionsGroup as ActionsGroup,
   F7ActionsLabel,
-  ActionsLabel,
+  F7ActionsLabel as ActionsLabel,
   F7Actions,
-  Actions,
+  F7Actions as Actions,
   F7App,
-  App,
+  F7App as App,
   F7Badge,
-  Badge,
+  F7Badge as Badge,
   F7BlockFooter,
-  BlockFooter,
+  F7BlockFooter as BlockFooter,
   F7BlockHeader,
-  BlockHeader,
+  F7BlockHeader as BlockHeader,
   F7BlockTitle,
-  BlockTitle,
+  F7BlockTitle as BlockTitle,
   F7Block,
-  Block,
+  F7Block as Block,
   F7Button,
-  Button,
+  F7Button as Button,
   F7CardContent,
-  CardContent,
+  F7CardContent as CardContent,
   F7CardFooter,
-  CardFooter,
+  F7CardFooter as CardFooter,
   F7CardHeader,
-  CardHeader,
+  F7CardHeader as CardHeader,
   F7Card,
-  Card,
+  F7Card as Card,
   F7Checkbox,
-  Checkbox,
+  F7Checkbox as Checkbox,
   F7Chip,
-  Chip,
+  F7Chip as Chip,
   F7Col,
-  Col,
+  F7Col as Col,
   F7FabButton,
-  FabButton,
+  F7FabButton as FabButton,
   F7FabButtons,
-  FabButtons,
+  F7FabButtons as FabButtons,
   F7Fab,
-  Fab,
+  F7Fab as Fab,
   F7Gauge,
-  Gauge,
+  F7Gauge as Gauge,
   F7Icon,
-  Icon,
+  F7Icon as Icon,
   F7Input,
-  Input,
+  F7Input as Input,
   F7Label,
-  Label,
+  F7Label as Label,
   F7Link,
-  Link,
+  F7Link as Link,
   F7ListButton,
-  ListButton,
+  F7ListButton as ListButton,
   F7ListGroup,
-  ListGroup,
+  F7ListGroup as ListGroup,
   F7ListIndex,
-  ListIndex,
+  F7ListIndex as ListIndex,
   F7ListItemCell,
-  ListItemCell,
+  F7ListItemCell as ListItemCell,
   F7ListItemContent,
-  ListItemContent,
+  F7ListItemContent as ListItemContent,
   F7ListItemRow,
-  ListItemRow,
+  F7ListItemRow as ListItemRow,
   F7ListItem,
-  ListItem,
+  F7ListItem as ListItem,
   F7List,
-  List,
+  F7List as List,
   F7LoginScreenTitle,
-  LoginScreenTitle,
+  F7LoginScreenTitle as LoginScreenTitle,
   F7LoginScreen,
-  LoginScreen,
+  F7LoginScreen as LoginScreen,
   F7Message,
-  Message,
+  F7Message as Message,
   F7MessagebarAttachment,
-  MessagebarAttachment,
+  F7MessagebarAttachment as MessagebarAttachment,
   F7MessagebarAttachments,
-  MessagebarAttachments,
+  F7MessagebarAttachments as MessagebarAttachments,
   F7MessagebarSheetImage,
-  MessagebarSheetImage,
+  F7MessagebarSheetImage as MessagebarSheetImage,
   F7MessagebarSheetItem,
-  MessagebarSheetItem,
+  F7MessagebarSheetItem as MessagebarSheetItem,
   F7MessagebarSheet,
-  MessagebarSheet,
+  F7MessagebarSheet as MessagebarSheet,
   F7Messagebar,
-  Messagebar,
+  F7Messagebar as Messagebar,
   F7MessagesTitle,
-  MessagesTitle,
+  F7MessagesTitle as MessagesTitle,
   F7Messages,
-  Messages,
+  F7Messages as Messages,
   F7NavLeft,
-  NavLeft,
+  F7NavLeft as NavLeft,
   F7NavRight,
-  NavRight,
+  F7NavRight as NavRight,
   F7NavTitle,
-  NavTitle,
+  F7NavTitle as NavTitle,
   F7Navbar,
-  Navbar,
+  F7Navbar as Navbar,
   F7PageContent,
-  PageContent,
+  F7PageContent as PageContent,
   F7Page,
-  Page,
+  F7Page as Page,
   F7Panel,
-  Panel,
+  F7Panel as Panel,
   F7PhotoBrowser,
-  PhotoBrowser,
+  F7PhotoBrowser as PhotoBrowser,
   F7Popover,
-  Popover,
+  F7Popover as Popover,
   F7Popup,
-  Popup,
+  F7Popup as Popup,
   F7Preloader,
-  Preloader,
+  F7Preloader as Preloader,
   F7Progressbar,
-  Progressbar,
+  F7Progressbar as Progressbar,
   F7Radio,
-  Radio,
+  F7Radio as Radio,
   F7Range,
-  Range,
+  F7Range as Range,
   F7RoutableModals,
-  RoutableModals,
+  F7RoutableModals as RoutableModals,
   F7Row,
-  Row,
+  F7Row as Row,
   F7Searchbar,
-  Searchbar,
+  F7Searchbar as Searchbar,
   F7Segmented,
-  Segmented,
+  F7Segmented as Segmented,
   F7Sheet,
-  Sheet,
+  F7Sheet as Sheet,
   F7Statusbar,
-  Statusbar,
+  F7Statusbar as Statusbar,
   F7Stepper,
-  Stepper,
+  F7Stepper as Stepper,
   F7Subnavbar,
-  Subnavbar,
+  F7Subnavbar as Subnavbar,
   F7SwipeoutActions,
-  SwipeoutActions,
+  F7SwipeoutActions as SwipeoutActions,
   F7SwipeoutButton,
-  SwipeoutButton,
+  F7SwipeoutButton as SwipeoutButton,
   F7SwiperSlide,
-  SwiperSlide,
+  F7SwiperSlide as SwiperSlide,
   F7Swiper,
-  Swiper,
+  F7Swiper as Swiper,
   F7Tab,
-  Tab,
+  F7Tab as Tab,
   F7Tabs,
-  Tabs,
+  F7Tabs as Tabs,
   F7Toggle,
-  Toggle,
+  F7Toggle as Toggle,
   F7Toolbar,
-  Toolbar,
+  F7Toolbar as Toolbar,
   F7View,
-  View,
+  F7View as View,
   F7Views,
-  Views
-};
+  F7Views as Views
+}
 
 declare const Framework7React: Framework7Plugin;
 export default Framework7React;

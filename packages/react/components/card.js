@@ -61,6 +61,8 @@ class F7Card extends React.Component {
 
 __reactComponentSetProps(F7Card, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   title: [String, Number],
   content: [String, Number],
   footer: [String, Number],

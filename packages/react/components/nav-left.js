@@ -11,8 +11,8 @@ class F7NavLeft extends React.Component {
     super(props, context);
   }
 
-  onBackClick(e) {
-    this.dispatchEvent('back-click backClick click:back clickBack', e);
+  onBackClick(event) {
+    this.dispatchEvent('back-click backClick click:back clickBack', event);
   }
 
   render() {
@@ -62,6 +62,8 @@ class F7NavLeft extends React.Component {
 
 __reactComponentSetProps(F7NavLeft, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   backLink: [Boolean, String],
   backLinkUrl: String,
   backLinkForce: Boolean,

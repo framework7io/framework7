@@ -1,5 +1,5 @@
 /**
- * Framework7 3.3.1
+ * Framework7 3.3.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 15, 2018
+ * Released on: September 20, 2018
  */
 
 (function (global, factory) {
@@ -2868,12 +2868,18 @@
       phonegap: !!(win.cordova || win.phonegap),
     };
 
+    var screnWidth = win.screen.width;
+    var screnHeight = win.screen.height;
+
     var windowsPhone = ua.match(/(Windows Phone);?[\s\/]+([\d.]+)?/); // eslint-disable-line
     var android = ua.match(/(Android);?[\s\/]+([\d.]+)?/); // eslint-disable-line
     var ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
     var ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
     var iphone = !ipad && ua.match(/(iPhone\sOS|iOS)\s([\d_]+)/);
-    var iphoneX = iphone && win.screen.width === 375 && win.screen.height === 812;
+    var iphoneX = iphone && (
+      (screnWidth === 375 && screnHeight === 812) // X/XS
+      || (screnWidth === 414 && screnHeight === 896) // XR / XS Max
+    );
     var ie = ua.indexOf('MSIE ') >= 0 || ua.indexOf('Trident/') >= 0;
     var edge = ua.indexOf('Edge/') >= 0;
     var firefox = ua.indexOf('Gecko/') >= 0 && ua.indexOf('Firefox/') >= 0;
@@ -7811,25 +7817,34 @@
 
       var flattenedRoutes = [];
       routes.forEach(function (route) {
-        if ('routes' in route) {
-          var mergedPathsRoutes = route.routes.map(function (childRoute) {
-            var cRoute = Utils.extend({}, childRoute);
-            cRoute.path = (((route.path) + "/" + (cRoute.path))).replace('///', '/').replace('//', '/');
-            return cRoute;
-          });
-          flattenedRoutes = flattenedRoutes.concat(route, this$1.flattenRoutes(mergedPathsRoutes));
-        } else if ('tabs' in route && route.tabs) {
-          var mergedPathsRoutes$1 = route.tabs.map(function (tabRoute) {
+        var hasTabRoutes = false;
+        if ('tabs' in route && route.tabs) {
+          var mergedPathsRoutes = route.tabs.map(function (tabRoute) {
             var tRoute = Utils.extend({}, route, {
               path: (((route.path) + "/" + (tabRoute.path))).replace('///', '/').replace('//', '/'),
               parentPath: route.path,
               tab: tabRoute,
             });
             delete tRoute.tabs;
+            delete tRoute.routes;
             return tRoute;
           });
-          flattenedRoutes = flattenedRoutes.concat(this$1.flattenRoutes(mergedPathsRoutes$1));
-        } else {
+          hasTabRoutes = true;
+          flattenedRoutes = flattenedRoutes.concat(this$1.flattenRoutes(mergedPathsRoutes));
+        }
+        if ('routes' in route) {
+          var mergedPathsRoutes$1 = route.routes.map(function (childRoute) {
+            var cRoute = Utils.extend({}, childRoute);
+            cRoute.path = (((route.path) + "/" + (cRoute.path))).replace('///', '/').replace('//', '/');
+            return cRoute;
+          });
+          if (hasTabRoutes) {
+            flattenedRoutes = flattenedRoutes.concat(this$1.flattenRoutes(mergedPathsRoutes$1));
+          } else {
+            flattenedRoutes = flattenedRoutes.concat(route, this$1.flattenRoutes(mergedPathsRoutes$1));
+          }
+        }
+        if (!('routes' in route) && !('tabs' in route && route.tabs)) {
           flattenedRoutes.push(route);
         }
       });
@@ -8862,6 +8877,8 @@
       var view = this;
       if (view.params.router) {
         view.router.init();
+        view.$el.trigger('view:init', view);
+        view.emit('local::init viewInit', view);
       }
     };
 
@@ -15507,6 +15524,7 @@
       var args = [], len = arguments.length;
       while ( len-- ) args[ len ] = arguments[ len ];
       var app = this;
+
       var tabEl;
       var tabLinkEl;
       var animate;
@@ -15581,8 +15599,9 @@
       }
 
       // Swipeable tabs
+      var swiper;
       if ($tabsEl.parent().hasClass('tabs-swipeable-wrap') && app.swiper) {
-        var swiper = $tabsEl.parent()[0].swiper;
+        swiper = $tabsEl.parent()[0].swiper;
         if (swiper && swiper.activeIndex !== $newTabEl.index()) {
           animated = true;
           swiper
@@ -15601,16 +15620,18 @@
 
       // Remove active class from old tabs
       var $oldTabEl = $tabsEl.children('.tab-active');
-      $oldTabEl
-        .removeClass('tab-active')
-        .trigger('tab:hide');
-      app.emit('tabHide', $oldTabEl[0]);
+      $oldTabEl.removeClass('tab-active');
+      if (!swiper || (swiper && !swiper.animating)) {
+        $oldTabEl.trigger('tab:hide');
+        app.emit('tabHide', $oldTabEl[0]);
+      }
 
       // Trigger 'show' event on new tab
-      $newTabEl
-        .addClass('tab-active')
-        .trigger('tab:show');
-      app.emit('tabShow', $newTabEl[0]);
+      $newTabEl.addClass('tab-active');
+      if (!swiper || (swiper && !swiper.animating)) {
+        $newTabEl.trigger('tab:show');
+        app.emit('tabShow', $newTabEl[0]);
+      }
 
       // Find related link for new tab
       if (!$tabLinkEl) {
@@ -18733,8 +18754,8 @@
         var $itemTitleEl = ss.$el.find('.item-title');
         pageTitle = $itemTitleEl.length ? $itemTitleEl.text().trim() : '';
       }
-      var cssClass = ss.params.cssClass;
-      var popupHtml = "\n      <div class=\"popup smart-select-popup " + cssClass + "\" data-select-name=\"" + (ss.selectName) + "\">\n        <div class=\"view\">\n          <div class=\"page smart-select-page " + (ss.params.searchbar ? 'page-with-subnavbar' : '') + "\" data-name=\"smart-select-page\">\n            <div class=\"navbar " + (ss.params.navbarColorTheme ? ("color-theme-" + (ss.params.navbarColorTheme)) : '') + "\">\n              <div class=\"navbar-inner sliding\">\n                <div class=\"left\">\n                  <a href=\"#\" class=\"link popup-close\" data-popup=\".smart-select-popup[data-select-name='" + (ss.selectName) + "']\">\n                    <i class=\"icon icon-back\"></i>\n                    <span class=\"ios-only\">" + (ss.params.popupCloseLinkText) + "</span>\n                  </a>\n                </div>\n                " + (pageTitle ? ("<div class=\"title\">" + pageTitle + "</div>") : '') + "\n                " + (ss.params.searchbar ? ("<div class=\"subnavbar\">" + (ss.renderSearchbar()) + "</div>") : '') + "\n              </div>\n            </div>\n            " + (ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : '') + "\n            <div class=\"page-content\">\n              <div class=\"list smart-select-list-" + (ss.id) + " " + (ss.params.virtualList ? ' virtual-list' : '') + " " + (ss.params.formColorTheme ? ("color-theme-" + (ss.params.formColorTheme)) : '') + "\">\n                <ul>" + (!ss.params.virtualList && ss.renderItems(ss.items)) + "</ul>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    ";
+      var cssClass = ss.params.cssClass || '';
+      var popupHtml = "\n      <div class=\"popup smart-select-popup " + cssClass + " " + (ss.params.popupTabletFullscreen ? 'popup-tablet-fullscreen' : '') + "\" data-select-name=\"" + (ss.selectName) + "\">\n        <div class=\"view\">\n          <div class=\"page smart-select-page " + (ss.params.searchbar ? 'page-with-subnavbar' : '') + "\" data-name=\"smart-select-page\">\n            <div class=\"navbar " + (ss.params.navbarColorTheme ? ("color-theme-" + (ss.params.navbarColorTheme)) : '') + "\">\n              <div class=\"navbar-inner sliding\">\n                <div class=\"left\">\n                  <a href=\"#\" class=\"link popup-close\" data-popup=\".smart-select-popup[data-select-name='" + (ss.selectName) + "']\">\n                    <i class=\"icon icon-back\"></i>\n                    <span class=\"ios-only\">" + (ss.params.popupCloseLinkText) + "</span>\n                  </a>\n                </div>\n                " + (pageTitle ? ("<div class=\"title\">" + pageTitle + "</div>") : '') + "\n                " + (ss.params.searchbar ? ("<div class=\"subnavbar\">" + (ss.renderSearchbar()) + "</div>") : '') + "\n              </div>\n            </div>\n            " + (ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : '') + "\n            <div class=\"page-content\">\n              <div class=\"list smart-select-list-" + (ss.id) + " " + (ss.params.virtualList ? ' virtual-list' : '') + " " + (ss.params.formColorTheme ? ("color-theme-" + (ss.params.formColorTheme)) : '') + "\">\n                <ul>" + (!ss.params.virtualList && ss.renderItems(ss.items)) + "</ul>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    ";
       return popupHtml;
     };
 
@@ -19078,6 +19099,7 @@
         pageTitle: undefined,
         pageBackLinkText: 'Back',
         popupCloseLinkText: 'Close',
+        popupTabletFullscreen: false,
         sheetCloseLinkText: 'Done',
         searchbar: false,
         searchbarPlaceholder: 'Search',
@@ -23324,6 +23346,9 @@
           sb.backdropShow();
         }
         sb.$el.addClass('searchbar-enabled');
+        if (!sb.$disableButtonEl || (sb.$disableButtonEl && sb.$disableButtonEl.length === 0)) {
+          sb.$el.addClass('searchbar-enabled-no-disable-button');
+        }
         if (!sb.expandable && sb.$disableButtonEl && sb.$disableButtonEl.length > 0 && app.theme === 'ios') {
           if (!sb.disableButtonHasMargin) {
             sb.setDisableButtonMargin();
@@ -23370,8 +23395,7 @@
       if (!sb.enabled) { return sb; }
       var app = sb.app;
       sb.$inputEl.val('').trigger('change');
-      sb.$el.removeClass('searchbar-enabled');
-      sb.$el.removeClass('searchbar-focused');
+      sb.$el.removeClass('searchbar-enabled searchbar-focused searchbar-enabled-no-disable-button');
       if (!sb.expandable && sb.$disableButtonEl && sb.$disableButtonEl.length > 0 && app.theme === 'ios') {
         sb.$disableButtonEl.css(("margin-" + (app.rtl ? 'left' : 'right')), ((-sb.disableButtonEl.offsetWidth) + "px"));
       }
@@ -23424,6 +23448,7 @@
           sb.enable();
         }
         sb.$inputEl.val(query);
+        sb.$inputEl.trigger('input');
       }
       sb.query = query;
       sb.value = query;
@@ -32758,7 +32783,7 @@
       var $el = tooltip.$el;
       var app = tooltip.app;
       $el.css({ left: '', top: '' });
-      var $targetEl = $(targetEl || tooltip.el);
+      var $targetEl = $(targetEl || tooltip.targetEl);
       var ref = [$el.width(), $el.height()];
       var width = ref[0];
       var height = ref[1];

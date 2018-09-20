@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7MessagebarAttachment {
-  export interface Props {
+declare namespace F7MessagebarAttachment {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     image? : string
     deletable? : boolean  | true
     color? : string
@@ -13,12 +15,12 @@ namespace F7MessagebarAttachment {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onAttachmentClick? : Function
-    onAttachmentDelete? : Function
+    onAttachmentClick? : (event?: any) => void
+    onAttachmentDelete? : (event?: any) => void
   }
 }
-class F7MessagebarAttachment extends React.Component<F7MessagebarAttachment.Props, {}> {
-  onClick(e : any) : unknown
-  onDeleteClick(e : any) : unknown
+declare class F7MessagebarAttachment extends React.Component<F7MessagebarAttachment.Props, {}> {
+  onClick(event? : any) : unknown
+  onDeleteClick(event? : any) : unknown
 }
 export default F7MessagebarAttachment;

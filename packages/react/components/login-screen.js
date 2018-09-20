@@ -126,6 +126,8 @@ class F7LoginScreen extends React.Component {
 
 __reactComponentSetProps(F7LoginScreen, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   opened: Boolean
 }, Mixins.colorProps));
 

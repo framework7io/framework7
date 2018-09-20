@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.3.1
+ * Framework7 Vue 3.3.2
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 15, 2018
+ * Released on: September 20, 2018
  */
 
 (function (global, factory) {
@@ -1238,12 +1238,12 @@
     },
 
     methods: {
-      onTabShow: function onTabShow(e) {
-        this.dispatchEvent('tabShow tab:show', e);
+      onTabShow: function onTabShow(event) {
+        this.dispatchEvent('tabShow tab:show', event);
       },
 
-      onTabHide: function onTabHide(e) {
-        this.dispatchEvent('tabHide tab:hide', e);
+      onTabHide: function onTabHide(event) {
+        this.dispatchEvent('tabHide tab:hide', event);
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -2062,8 +2062,8 @@
     },
 
     methods: {
-      onClick: function onClick(e) {
-        this.dispatchEvent('click', e);
+      onClick: function onClick(event) {
+        this.dispatchEvent('click', event);
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -2605,7 +2605,8 @@
           el: self.$refs.el,
           on: {
             change: function change(toggle) {
-              self.dispatchEvent('toggle:change toggleChange', toggle.checked);
+              var checked = toggle.checked;
+              self.dispatchEvent('toggle:change toggleChange', checked);
             }
 
           }
@@ -2624,9 +2625,9 @@
         if (self.f7Toggle && self.f7Toggle.toggle) { self.f7Toggle.toggle(); }
       },
 
-      onChange: function onChange(e) {
+      onChange: function onChange(event) {
         var self = this;
-        self.dispatchEvent('change', e);
+        self.dispatchEvent('change', event);
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -4894,15 +4895,16 @@
       },
 
       onSortableSort: function onSortableSort(event) {
-        this.dispatchEvent('sortable:sort sortableSort', event, event.detail);
+        var sortData = event.detail;
+        this.dispatchEvent('sortable:sort sortableSort', event, sortData);
       },
 
-      onTabShow: function onTabShow(e) {
-        this.dispatchEvent('tab:show tabShow', e);
+      onTabShow: function onTabShow(event) {
+        this.dispatchEvent('tab:show tabShow', event);
       },
 
-      onTabHide: function onTabHide(e) {
-        this.dispatchEvent('tab:hide tabHide', e);
+      onTabHide: function onTabHide(event) {
+        this.dispatchEvent('tab:hide tabHide', event);
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -5310,12 +5312,12 @@
     },
 
     methods: {
-      onClick: function onClick(e) {
-        this.dispatchEvent('attachment:click attachmentClick', e);
+      onClick: function onClick(event) {
+        this.dispatchEvent('attachment:click attachmentClick', event);
       },
 
-      onDeleteClick: function onDeleteClick(e) {
-        this.dispatchEvent('attachment:delete attachmentDelete', e);
+      onDeleteClick: function onDeleteClick(event) {
+        this.dispatchEvent('attachment:delete attachmentDelete', event);
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -5415,9 +5417,9 @@
     },
 
     methods: {
-      onChange: function onChange(e) {
-        if (this.props.checked) { this.dispatchEvent('checked', e); }else { this.dispatchEvent('unchecked', e); }
-        this.dispatchEvent('change', e);
+      onChange: function onChange(event) {
+        if (this.props.checked) { this.dispatchEvent('checked', event); }else { this.dispatchEvent('unchecked', event); }
+        this.dispatchEvent('change', event);
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -5858,16 +5860,16 @@
         this.dispatchEvent('click', event);
       },
 
-      onDeleteAttachment: function onDeleteAttachment(e) {
-        this.dispatchEvent('messagebar:attachmentdelete messagebarAttachmentDelete', e);
+      onDeleteAttachment: function onDeleteAttachment(event) {
+        this.dispatchEvent('messagebar:attachmentdelete messagebarAttachmentDelete', event);
       },
 
-      onClickAttachment: function onClickAttachment(e) {
-        this.dispatchEvent('messagebar:attachmentclick messagebarAttachmentClick', e);
+      onClickAttachment: function onClickAttachment(event) {
+        this.dispatchEvent('messagebar:attachmentclick messagebarAttachmentClick', event);
       },
 
-      onResizePage: function onResizePage(e) {
-        this.dispatchEvent('messagebar:resizepage messagebarResizePage', e);
+      onResizePage: function onResizePage(event) {
+        this.dispatchEvent('messagebar:resizepage messagebarResizePage', event);
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -6179,8 +6181,8 @@
     },
 
     methods: {
-      onBackClick: function onBackClick(e) {
-        this.dispatchEvent('back-click backClick click:back clickBack', e);
+      onBackClick: function onBackClick(event) {
+        this.dispatchEvent('back-click backClick click:back clickBack', event);
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -6404,8 +6406,8 @@
         self.$f7.navbar.size(self.$refs.el);
       },
 
-      onBackClick: function onBackClick(e) {
-        this.dispatchEvent('back-click backClick click:back clickBack', e);
+      onBackClick: function onBackClick(event) {
+        this.dispatchEvent('back-click backClick click:back clickBack', event);
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -6590,7 +6592,8 @@
       },
 
       onPtrRefresh: function onPtrRefresh(event) {
-        this.dispatchEvent('ptr:refresh ptrRefresh', event, event.detail);
+        var done = event.detail;
+        this.dispatchEvent('ptr:refresh ptrRefresh', event, done);
       },
 
       onPtrDone: function onPtrDone(event) {
@@ -6601,12 +6604,12 @@
         this.dispatchEvent('infinite', event);
       },
 
-      onTabShow: function onTabShow(e) {
-        this.dispatchEvent('tab:show tabShow', e);
+      onTabShow: function onTabShow(event) {
+        this.dispatchEvent('tab:show tabShow', event);
       },
 
-      onTabHide: function onTabHide(e) {
-        this.dispatchEvent('tab:hide tabHide', e);
+      onTabHide: function onTabHide(event) {
+        this.dispatchEvent('tab:hide tabHide', event);
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -6863,7 +6866,8 @@
       },
 
       onPtrRefresh: function onPtrRefresh(event) {
-        this.dispatchEvent('ptr:refresh ptrRefresh', event, event.detail);
+        var done = event.detail;
+        this.dispatchEvent('ptr:refresh ptrRefresh', event, done);
       },
 
       onPtrDone: function onPtrDone(event) {
@@ -6875,35 +6879,43 @@
       },
 
       onPageMounted: function onPageMounted(event) {
-        this.dispatchEvent('page:mounted pageMounted', event, event.detail);
+        var page = event.detail;
+        this.dispatchEvent('page:mounted pageMounted', event, page);
       },
 
       onPageInit: function onPageInit(event) {
-        this.dispatchEvent('page:init pageInit', event, event.detail);
+        var page = event.detail;
+        this.dispatchEvent('page:init pageInit', event, page);
       },
 
       onPageReinit: function onPageReinit(event) {
-        this.dispatchEvent('page:reinit pageReinit', event, event.detail);
+        var page = event.detail;
+        this.dispatchEvent('page:reinit pageReinit', event, page);
       },
 
       onPageBeforeIn: function onPageBeforeIn(event) {
-        this.dispatchEvent('page:beforein pageBeforeIn', event, event.detail);
+        var page = event.detail;
+        this.dispatchEvent('page:beforein pageBeforeIn', event, page);
       },
 
       onPageBeforeOut: function onPageBeforeOut(event) {
-        this.dispatchEvent('page:beforeout pageBeforeOut', event, event.detail);
+        var page = event.detail;
+        this.dispatchEvent('page:beforeout pageBeforeOut', event, page);
       },
 
       onPageAfterOut: function onPageAfterOut(event) {
-        this.dispatchEvent('page:afterout pageAfterOut', event, event.detail);
+        var page = event.detail;
+        this.dispatchEvent('page:afterout pageAfterOut', event, page);
       },
 
       onPageAfterIn: function onPageAfterIn(event) {
-        this.dispatchEvent('page:afterin pageAfterIn', event, event.detail);
+        var page = event.detail;
+        this.dispatchEvent('page:afterin pageAfterIn', event, page);
       },
 
       onPageBeforeRemove: function onPageBeforeRemove(event) {
-        this.dispatchEvent('page:beforeremove pageBeforeRemove', event, event.detail);
+        var page = event.detail;
+        this.dispatchEvent('page:beforeremove pageBeforeRemove', event, page);
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -7796,8 +7808,8 @@
     },
 
     methods: {
-      onClick: function onClick(e) {
-        this.dispatchEvent('click', e);
+      onClick: function onClick(event) {
+        this.dispatchEvent('click', event);
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -8634,16 +8646,19 @@
         return undefined;
       },
 
-      onInput: function onInput(e) {
-        this.dispatchEvent('input', e, this.f7Stepper);
+      onInput: function onInput(event) {
+        var stepper = this.f7Stepper;
+        this.dispatchEvent('input', event, stepper);
       },
 
-      onMinusClick: function onMinusClick(e) {
-        this.dispatchEvent('stepper:minusclick stepperMinusClick', e, this.f7Stepper);
+      onMinusClick: function onMinusClick(event) {
+        var stepper = this.f7Stepper;
+        this.dispatchEvent('stepper:minusclick stepperMinusClick', event, stepper);
       },
 
-      onPlusClick: function onPlusClick(e) {
-        this.dispatchEvent('stepper:plusclick stepperPlusClick', e, this.f7Stepper);
+      onPlusClick: function onPlusClick(event) {
+        var stepper = this.f7Stepper;
+        this.dispatchEvent('stepper:plusclick stepperPlusClick', event, stepper);
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -9102,12 +9117,12 @@
         this.$f7.tab.show(this.$refs.el, animate);
       },
 
-      onTabShow: function onTabShow(e) {
-        this.dispatchEvent('tab:show tabShow', e);
+      onTabShow: function onTabShow(event) {
+        this.dispatchEvent('tab:show tabShow', event);
       },
 
-      onTabHide: function onTabHide(e) {
-        this.dispatchEvent('tab:hide tabHide', e);
+      onTabHide: function onTabHide(event) {
+        this.dispatchEvent('tab:hide tabHide', event);
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -9381,6 +9396,7 @@
       self.onSwipeBackAfterResetBound = self.onSwipeBackAfterReset.bind(self);
       self.onTabShowBound = self.onTabShow.bind(self);
       self.onTabHideBound = self.onTabHide.bind(self);
+      self.onViewInitBound = self.onViewInit.bind(self);
     },
 
     mounted: function mounted() {
@@ -9393,17 +9409,18 @@
       el.addEventListener('swipeback:afterreset', self.onSwipeBackAfterResetBound);
       el.addEventListener('tab:show', self.onTabShowBound);
       el.addEventListener('tab:hide', self.onTabHideBound);
+      el.addEventListener('view:init', self.onViewInitBound);
       self.setState({
         pages: []
       });
       self.$f7ready(function (f7Instance) {
-        if (!self.props.init) { return; }
         self.routerData = {
           el: el,
           component: self,
           instance: null
         };
         f7.routers.views.push(self.routerData);
+        if (!self.props.init) { return; }
         self.routerData.instance = f7Instance.views.create(el, Utils.noUndefinedProps(self.$options.propsData || {}));
         self.f7View = self.routerData.instance;
       });
@@ -9419,6 +9436,7 @@
       el.removeEventListener('swipeback:afterreset', self.onSwipeBackAfterResetBound);
       el.removeEventListener('tab:show', self.onTabShowBound);
       el.removeEventListener('tab:hide', self.onTabHideBound);
+      el.removeEventListener('view:init', self.onViewInitBound);
       if (!self.props.init) { return; }
       if (self.f7View && self.f7View.destroy) { self.f7View.destroy(); }
       f7.routers.views.splice(f7.routers.views.indexOf(self.routerData), 1);
@@ -9433,32 +9451,48 @@
     },
 
     methods: {
+      onViewInit: function onViewInit(event) {
+        var self = this;
+        var view = event.detail;
+        self.dispatchEvent('view:init viewInit', event, view);
+
+        if (!self.props.init) {
+          self.routerData.instance = view;
+          self.f7View = self.routerData.instance;
+        }
+      },
+
       onSwipeBackMove: function onSwipeBackMove(event) {
-        this.dispatchEvent('swipeback:move swipeBackMove', event, event.detail);
+        var swipeBackData = event.detail;
+        this.dispatchEvent('swipeback:move swipeBackMove', event, swipeBackData);
       },
 
       onSwipeBackBeforeChange: function onSwipeBackBeforeChange(event) {
-        this.dispatchEvent('swipeback:beforechange swipeBackBeforeChange', event, event.detail);
+        var swipeBackData = event.detail;
+        this.dispatchEvent('swipeback:beforechange swipeBackBeforeChange', event, swipeBackData);
       },
 
       onSwipeBackAfterChange: function onSwipeBackAfterChange(event) {
-        this.dispatchEvent('swipeback:afterchange swipeBackAfterChange', event, event.detail);
+        var swipeBackData = event.detail;
+        this.dispatchEvent('swipeback:afterchange swipeBackAfterChange', event, swipeBackData);
       },
 
       onSwipeBackBeforeReset: function onSwipeBackBeforeReset(event) {
-        this.dispatchEvent('swipeback:beforereset swipeBackBeforeReset', event, event.detail);
+        var swipeBackData = event.detail;
+        this.dispatchEvent('swipeback:beforereset swipeBackBeforeReset', event, swipeBackData);
       },
 
       onSwipeBackAfterReset: function onSwipeBackAfterReset(event) {
-        this.dispatchEvent('swipeback:afterreset swipeBackAfterReset', event, event.detail);
+        var swipeBackData = event.detail;
+        this.dispatchEvent('swipeback:afterreset swipeBackAfterReset', event, swipeBackData);
       },
 
-      onTabShow: function onTabShow(e) {
-        this.dispatchEvent('tab:show tabShow', e);
+      onTabShow: function onTabShow(event) {
+        this.dispatchEvent('tab:show tabShow', event);
       },
 
-      onTabHide: function onTabHide(e) {
-        this.dispatchEvent('tab:hide tabHide', e);
+      onTabHide: function onTabHide(event) {
+        this.dispatchEvent('tab:hide tabHide', event);
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -9546,7 +9580,8 @@
               f7route: options.route,
               f7router: router,
             },
-            options.route.params
+            options.route.params,
+            options.props || {}
           ),
         };
         routerComponent.$f7router = router;
@@ -9625,7 +9660,8 @@
               f7route: options.route,
               f7router: router,
             },
-            options.route.params
+            options.route.params,
+            options.props || {}
           ),
         };
 
@@ -9682,7 +9718,8 @@
               f7route: options.route,
               f7router: router,
             },
-            options.route.params
+            options.route.params,
+            options.props || {}
           ),
         };
         modalsComponent.$f7router = router;
@@ -9721,7 +9758,7 @@
   };
 
   /**
-   * Framework7 Vue 3.3.1
+   * Framework7 Vue 3.3.2
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -9729,7 +9766,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: September 15, 2018
+   * Released on: September 20, 2018
    */
 
   var Plugin = {

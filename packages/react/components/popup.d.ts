@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Popup {
-  export interface Props {
+declare namespace F7Popup {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     tabletFullscreen? : boolean
     opened? : boolean
     closeByBackdropClick? : boolean
@@ -16,18 +18,18 @@ namespace F7Popup {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onPopupOpen? : Function
-    onPopupOpened? : Function
-    onPopupClose? : Function
-    onPopupClosed? : Function
+    onPopupOpen? : (event?: any) => void
+    onPopupOpened? : (event?: any) => void
+    onPopupClose? : (event?: any) => void
+    onPopupClosed? : (event?: any) => void
   }
 }
-class F7Popup extends React.Component<F7Popup.Props, {}> {
-  onOpen(event : any) : unknown
-  onOpened(event : any) : unknown
-  onClose(event : any) : unknown
-  onClosed(event : any) : unknown
-  open(animate : any) : unknown
-  close(animate : any) : unknown
+declare class F7Popup extends React.Component<F7Popup.Props, {}> {
+  onOpen(event? : any) : unknown
+  onOpened(event? : any) : unknown
+  onClose(event? : any) : unknown
+  onClosed(event? : any) : unknown
+  open(animate? : any) : unknown
+  close(animate? : any) : unknown
 }
 export default F7Popup;

@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7NavLeft {
-  export interface Props {
+declare namespace F7NavLeft {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     backLink? : boolean | string
     backLinkUrl? : string
     backLinkForce? : boolean
@@ -15,11 +17,11 @@ namespace F7NavLeft {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onBackClick? : Function
-    onClickBack? : Function
+    onBackClick? : (event?: any) => void
+    onClickBack? : (event?: any) => void
   }
 }
-class F7NavLeft extends React.Component<F7NavLeft.Props, {}> {
-  onBackClick(e : any) : unknown
+declare class F7NavLeft extends React.Component<F7NavLeft.Props, {}> {
+  onBackClick(event? : any) : unknown
 }
 export default F7NavLeft;

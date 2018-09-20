@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Link {
-  export interface Props {
+declare namespace F7Link {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     noLinkClass? : boolean
     noFastClick? : boolean
     noFastclick? : boolean
@@ -68,10 +70,10 @@ namespace F7Link {
     sortableEnable? : boolean | string
     sortableDisable? : boolean | string
     sortableToggle? : boolean | string
-    onClick? : Function
+    onClick? : (event?: any) => void
   }
 }
-class F7Link extends React.Component<F7Link.Props, {}> {
-  onClick(event : any) : unknown
+declare class F7Link extends React.Component<F7Link.Props, {}> {
+  onClick(event? : any) : unknown
 }
 export default F7Link;

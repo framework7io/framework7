@@ -33,6 +33,8 @@ class F7FabButtons extends React.Component {
 
 __reactComponentSetProps(F7FabButtons, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   position: {
     type: String,
     default: 'top'

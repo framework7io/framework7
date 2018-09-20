@@ -103,6 +103,8 @@ class F7Gauge extends React.Component {
 
 __reactComponentSetProps(F7Gauge, {
   id: [String, Number],
+  className: String,
+  style: Object,
   type: {
     type: String,
     default: 'circle'

@@ -31,7 +31,9 @@ class F7Statusbar extends React.Component {
 }
 
 __reactComponentSetProps(F7Statusbar, Object.assign({
-  id: [String, Number]
+  id: [String, Number],
+  className: String,
+  style: Object
 }, Mixins.colorProps));
 
 F7Statusbar.displayName = 'f7-statusbar';

@@ -163,6 +163,8 @@ class F7Message extends React.Component {
 
 __reactComponentSetProps(F7Message, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   text: String,
   name: String,
   avatar: String,

@@ -229,6 +229,8 @@ class F7Searchbar extends React.Component {
 
 __reactComponentSetProps(F7Searchbar, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   noShadow: Boolean,
   noHairline: Boolean,
   form: {

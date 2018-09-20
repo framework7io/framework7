@@ -390,6 +390,8 @@ class F7ListItem extends React.Component {
 
 __reactComponentSetProps(F7ListItem, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   title: [String, Number],
   text: [String, Number],
   media: String,

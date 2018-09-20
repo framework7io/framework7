@@ -31,7 +31,9 @@ class F7CardFooter extends React.Component {
 }
 
 __reactComponentSetProps(F7CardFooter, Object.assign({
-  id: [String, Number]
+  id: [String, Number],
+  className: String,
+  style: Object
 }, Mixins.colorProps));
 
 F7CardFooter.displayName = 'f7-card-footer';

@@ -35,6 +35,8 @@ class F7NavRight extends React.Component {
 
 __reactComponentSetProps(F7NavRight, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   sliding: Boolean
 }, Mixins.colorProps));
 

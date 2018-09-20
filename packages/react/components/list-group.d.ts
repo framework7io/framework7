@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7ListGroup {
-  export interface Props {
+declare namespace F7ListGroup {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     mediaList? : boolean
     sortable? : boolean
     color? : string
@@ -16,7 +18,7 @@ namespace F7ListGroup {
     
   }
 }
-class F7ListGroup extends React.Component<F7ListGroup.Props, {}> {
+declare class F7ListGroup extends React.Component<F7ListGroup.Props, {}> {
   
 }
 export default F7ListGroup;

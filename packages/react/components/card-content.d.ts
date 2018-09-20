@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7CardContent {
-  export interface Props {
+declare namespace F7CardContent {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     padding? : boolean  | true
     color? : string
     colorTheme? : string
@@ -15,7 +17,7 @@ namespace F7CardContent {
     
   }
 }
-class F7CardContent extends React.Component<F7CardContent.Props, {}> {
+declare class F7CardContent extends React.Component<F7CardContent.Props, {}> {
   
 }
 export default F7CardContent;

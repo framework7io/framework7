@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Toggle {
-  export interface Props {
+declare namespace F7Toggle {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     init? : boolean  | true
     checked? : boolean
     defaultChecked? : boolean
@@ -18,12 +20,12 @@ namespace F7Toggle {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onToggleChange? : Function
-    onChange? : Function
+    onToggleChange? : (checked?: any) => void
+    onChange? : (event?: any) => void
   }
 }
-class F7Toggle extends React.Component<F7Toggle.Props, {}> {
+declare class F7Toggle extends React.Component<F7Toggle.Props, {}> {
   toggle() : unknown
-  onChange(e : any) : unknown
+  onChange(event? : any) : unknown
 }
 export default F7Toggle;

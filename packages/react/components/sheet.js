@@ -177,6 +177,8 @@ class F7Sheet extends React.Component {
 
 __reactComponentSetProps(F7Sheet, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   opened: Boolean,
   backdrop: Boolean,
   closeByBackdropClick: Boolean,

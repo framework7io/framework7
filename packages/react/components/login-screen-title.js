@@ -31,7 +31,9 @@ class F7LoginScreenTitle extends React.Component {
 }
 
 __reactComponentSetProps(F7LoginScreenTitle, Object.assign({
-  id: [String, Number]
+  id: [String, Number],
+  className: String,
+  style: Object
 }, Mixins.colorProps));
 
 F7LoginScreenTitle.displayName = 'f7-login-screen-title';

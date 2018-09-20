@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Message {
-  export interface Props {
+declare namespace F7Message {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     text? : string
     name? : string
     avatar? : string
@@ -28,22 +30,22 @@ namespace F7Message {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onClick? : Function
-    onClickName? : Function
-    onClickText? : Function
-    onClickAvatar? : Function
-    onClickHeader? : Function
-    onClickFooter? : Function
-    onClickBubble? : Function
+    onClick? : (event?: any) => void
+    onClickName? : (event?: any) => void
+    onClickText? : (event?: any) => void
+    onClickAvatar? : (event?: any) => void
+    onClickHeader? : (event?: any) => void
+    onClickFooter? : (event?: any) => void
+    onClickBubble? : (event?: any) => void
   }
 }
-class F7Message extends React.Component<F7Message.Props, {}> {
-  onClick(event : any) : unknown
-  onNameClick(event : any) : unknown
-  onTextClick(event : any) : unknown
-  onAvatarClick(event : any) : unknown
-  onHeaderClick(event : any) : unknown
-  onFooterClick(event : any) : unknown
-  onBubbleClick(event : any) : unknown
+declare class F7Message extends React.Component<F7Message.Props, {}> {
+  onClick(event? : any) : unknown
+  onNameClick(event? : any) : unknown
+  onTextClick(event? : any) : unknown
+  onAvatarClick(event? : any) : unknown
+  onHeaderClick(event? : any) : unknown
+  onFooterClick(event? : any) : unknown
+  onBubbleClick(event? : any) : unknown
 }
 export default F7Message;

@@ -55,6 +55,8 @@ class F7Progressbar extends React.Component {
 
 __reactComponentSetProps(F7Progressbar, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   progress: Number,
   infinite: Boolean
 }, Mixins.colorProps));

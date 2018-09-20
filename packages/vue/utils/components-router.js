@@ -31,7 +31,8 @@ export default {
             f7route: options.route,
             f7router: router,
           },
-          options.route.params
+          options.route.params,
+          options.props || {},
         ),
       };
       routerComponent.$f7router = router;
@@ -110,7 +111,8 @@ export default {
             f7route: options.route,
             f7router: router,
           },
-          options.route.params
+          options.route.params,
+          options.props || {},
         ),
       };
 
@@ -167,7 +169,8 @@ export default {
             f7route: options.route,
             f7router: router,
           },
-          options.route.params
+          options.route.params,
+          options.props || {},
         ),
       };
       modalsComponent.$f7router = router;

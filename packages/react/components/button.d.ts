@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Button {
-  export interface Props {
+declare namespace F7Button {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     noFastclick? : boolean
     noFastClick? : boolean
     text? : string
@@ -76,10 +78,10 @@ namespace F7Button {
     sortableEnable? : boolean | string
     sortableDisable? : boolean | string
     sortableToggle? : boolean | string
-    onClick? : Function
+    onClick? : (event?: any) => void
   }
 }
-class F7Button extends React.Component<F7Button.Props, {}> {
-  onClick(event : any) : unknown
+declare class F7Button extends React.Component<F7Button.Props, {}> {
+  onClick(event? : any) : unknown
 }
 export default F7Button;

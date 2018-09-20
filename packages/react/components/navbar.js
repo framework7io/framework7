@@ -31,8 +31,8 @@ class F7Navbar extends React.Component {
     self.$f7.navbar.size(self.refs.el);
   }
 
-  onBackClick(e) {
-    this.dispatchEvent('back-click backClick click:back clickBack', e);
+  onBackClick(event) {
+    this.dispatchEvent('back-click backClick click:back clickBack', event);
   }
 
   render() {
@@ -131,6 +131,8 @@ class F7Navbar extends React.Component {
 
 __reactComponentSetProps(F7Navbar, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   backLink: [Boolean, String],
   backLinkUrl: String,
   backLinkForce: Boolean,

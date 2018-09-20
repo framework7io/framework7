@@ -80,6 +80,8 @@ class F7Chip extends React.Component {
 
 __reactComponentSetProps(F7Chip, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   media: String,
   text: [String, Number],
   deleteable: Boolean,

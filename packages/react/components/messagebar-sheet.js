@@ -31,7 +31,9 @@ class F7MessagebarSheet extends React.Component {
 }
 
 __reactComponentSetProps(F7MessagebarSheet, Object.assign({
-  id: [String, Number]
+  id: [String, Number],
+  className: String,
+  style: Object
 }, Mixins.colorProps));
 
 F7MessagebarSheet.displayName = 'f7-messagebar-sheet';

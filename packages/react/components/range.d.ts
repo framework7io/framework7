@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Range {
-  export interface Props {
+declare namespace F7Range {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     init? : boolean  | true
     value? : number | Array<any> | string  | 0
     min? : number | string  | 0
@@ -23,12 +25,12 @@ namespace F7Range {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onRangeChange? : Function
-    onRangeChanged? : Function
+    onRangeChange? : (val?: any) => void
+    onRangeChanged? : (val?: any) => void
   }
 }
-class F7Range extends React.Component<F7Range.Props, {}> {
-  setValue(newValue : any) : unknown
+declare class F7Range extends React.Component<F7Range.Props, {}> {
+  setValue(newValue? : any) : unknown
   getValue() : unknown
 }
 export default F7Range;

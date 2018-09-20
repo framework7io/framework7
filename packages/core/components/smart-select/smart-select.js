@@ -13,6 +13,7 @@ export default {
       pageTitle: undefined,
       pageBackLinkText: 'Back',
       popupCloseLinkText: 'Close',
+      popupTabletFullscreen: false,
       sheetCloseLinkText: 'Done',
       searchbar: false,
       searchbarPlaceholder: 'Search',

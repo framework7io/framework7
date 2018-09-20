@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7MessagebarSheetImage {
-  export interface Props {
+declare namespace F7MessagebarSheetImage {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     image? : string
     checked? : boolean
     color? : string
@@ -13,12 +15,12 @@ namespace F7MessagebarSheetImage {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onChecked? : Function
-    onUnchecked? : Function
-    onChange? : Function
+    onChecked? : (event?: any) => void
+    onUnchecked? : (event?: any) => void
+    onChange? : (event?: any) => void
   }
 }
-class F7MessagebarSheetImage extends React.Component<F7MessagebarSheetImage.Props, {}> {
-  onChange(e : any) : unknown
+declare class F7MessagebarSheetImage extends React.Component<F7MessagebarSheetImage.Props, {}> {
+  onChange(event? : any) : unknown
 }
 export default F7MessagebarSheetImage;

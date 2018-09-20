@@ -34,6 +34,8 @@ class F7SwiperSlide extends React.Component {
 
 __reactComponentSetProps(F7SwiperSlide, {
   id: [String, Number],
+  className: String,
+  style: Object,
   zoom: Boolean
 });
 

@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Messagebar {
-  export interface Props {
+declare namespace F7Messagebar {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     sheetVisible? : boolean
     attachmentsVisible? : boolean
     top? : boolean
@@ -26,39 +28,39 @@ namespace F7Messagebar {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onChange? : Function
-    onInput? : Function
-    onFocus? : Function
-    onBlur? : Function
-    onSubmit? : Function
-    onSend? : Function
-    onClick? : Function
-    onMessagebarAttachmentDelete? : Function
-    onMessagebarAttachmentClick? : Function
-    onMessagebarResizePage? : Function
+    onChange? : (event?: any) => void
+    onInput? : (event?: any) => void
+    onFocus? : (event?: any) => void
+    onBlur? : (event?: any) => void
+    onSubmit? : (value?: any, clear?: any) => void
+    onSend? : (value?: any, clear?: any) => void
+    onClick? : (event?: any) => void
+    onMessagebarAttachmentDelete? : (event?: any) => void
+    onMessagebarAttachmentClick? : (event?: any) => void
+    onMessagebarResizePage? : (event?: any) => void
   }
 }
-class F7Messagebar extends React.Component<F7Messagebar.Props, {}> {
-  clear(undefined : any) : unknown
-  getValue(undefined : any) : unknown
-  setValue(undefined : any) : unknown
-  setPlaceholder(undefined : any) : unknown
-  resize(undefined : any) : unknown
-  focus(undefined : any) : unknown
-  blur(undefined : any) : unknown
-  attachmentsShow(undefined : any) : unknown
-  attachmentsHide(undefined : any) : unknown
-  attachmentsToggle(undefined : any) : unknown
-  sheetShow(undefined : any) : unknown
-  sheetHide(undefined : any) : unknown
-  sheetToggle(undefined : any) : unknown
-  onChange(event : any) : unknown
-  onInput(event : any) : unknown
-  onFocus(event : any) : unknown
-  onBlur(event : any) : unknown
-  onClick(event : any) : unknown
-  onDeleteAttachment(e : any) : unknown
-  onClickAttachment(e : any) : unknown
-  onResizePage(e : any) : unknown
+declare class F7Messagebar extends React.Component<F7Messagebar.Props, {}> {
+  clear(undefined? : any) : unknown
+  getValue(undefined? : any) : unknown
+  setValue(undefined? : any) : unknown
+  setPlaceholder(undefined? : any) : unknown
+  resize(undefined? : any) : unknown
+  focus(undefined? : any) : unknown
+  blur(undefined? : any) : unknown
+  attachmentsShow(undefined? : any) : unknown
+  attachmentsHide(undefined? : any) : unknown
+  attachmentsToggle(undefined? : any) : unknown
+  sheetShow(undefined? : any) : unknown
+  sheetHide(undefined? : any) : unknown
+  sheetToggle(undefined? : any) : unknown
+  onChange(event? : any) : unknown
+  onInput(event? : any) : unknown
+  onFocus(event? : any) : unknown
+  onBlur(event? : any) : unknown
+  onClick(event? : any) : unknown
+  onDeleteAttachment(event? : any) : unknown
+  onClickAttachment(event? : any) : unknown
+  onResizePage(event? : any) : unknown
 }
 export default F7Messagebar;

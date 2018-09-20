@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7PhotoBrowser {
-  export interface Props {
+declare namespace F7PhotoBrowser {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     init? : boolean  | true
     params? : Object
     photos? : Array<any>
@@ -32,15 +34,15 @@ namespace F7PhotoBrowser {
     renderPage? : Function
     renderPopup? : Function
     renderStandalone? : Function
-    onPhotoBrowserOpen? : Function
-    onPhotoBrowserClose? : Function
-    onPhotoBrowserOpened? : Function
-    onPhotoBrowserClosed? : Function
-    onPhotoBrowserSwipeToClose? : Function
+    onPhotoBrowserOpen? : (...args?: any[]) => void
+    onPhotoBrowserClose? : (...args?: any[]) => void
+    onPhotoBrowserOpened? : (...args?: any[]) => void
+    onPhotoBrowserClosed? : (...args?: any[]) => void
+    onPhotoBrowserSwipeToClose? : (...args?: any[]) => void
   }
 }
-class F7PhotoBrowser extends React.Component<F7PhotoBrowser.Props, {}> {
-  open(index : any) : unknown
+declare class F7PhotoBrowser extends React.Component<F7PhotoBrowser.Props, {}> {
+  open(index? : any) : unknown
   close() : unknown
   expositionToggle() : unknown
   expositionEnable() : unknown

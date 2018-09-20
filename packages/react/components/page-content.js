@@ -24,7 +24,8 @@ class F7PageContent extends React.Component {
   }
 
   onPtrRefresh(event) {
-    this.dispatchEvent('ptr:refresh ptrRefresh', event, event.detail);
+    const done = event.detail;
+    this.dispatchEvent('ptr:refresh ptrRefresh', event, done);
   }
 
   onPtrDone(event) {
@@ -35,12 +36,12 @@ class F7PageContent extends React.Component {
     this.dispatchEvent('infinite', event);
   }
 
-  onTabShow(e) {
-    this.dispatchEvent('tab:show tabShow', e);
+  onTabShow(event) {
+    this.dispatchEvent('tab:show tabShow', event);
   }
 
-  onTabHide(e) {
-    this.dispatchEvent('tab:hide tabHide', e);
+  onTabHide(event) {
+    this.dispatchEvent('tab:hide tabHide', event);
   }
 
   get classes() {
@@ -184,6 +185,8 @@ class F7PageContent extends React.Component {
 
 __reactComponentSetProps(F7PageContent, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   tab: Boolean,
   tabActive: Boolean,
   ptr: Boolean,

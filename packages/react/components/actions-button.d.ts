@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7ActionsButton {
-  export interface Props {
+declare namespace F7ActionsButton {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     bold? : boolean
     close? : boolean  | true
     color? : string
@@ -13,10 +15,10 @@ namespace F7ActionsButton {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onClick? : Function
+    onClick? : (event?: any) => void
   }
 }
-class F7ActionsButton extends React.Component<F7ActionsButton.Props, {}> {
-  onClick(event : any) : unknown
+declare class F7ActionsButton extends React.Component<F7ActionsButton.Props, {}> {
+  onClick(event? : any) : unknown
 }
 export default F7ActionsButton;

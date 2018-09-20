@@ -54,6 +54,8 @@ class F7SwipeoutButton extends React.Component {
 
 __reactComponentSetProps(F7SwipeoutButton, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   text: String,
   confirmText: String,
   overswipe: Boolean,

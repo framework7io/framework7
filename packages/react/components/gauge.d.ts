@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Gauge {
-  export interface Props {
+declare namespace F7Gauge {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     type? : string  | 'circle'
     value? : number | string  | 0
     size? : number | string  | 200
@@ -22,7 +24,7 @@ namespace F7Gauge {
     
   }
 }
-class F7Gauge extends React.Component<F7Gauge.Props, {}> {
+declare class F7Gauge extends React.Component<F7Gauge.Props, {}> {
   
 }
 export default F7Gauge;

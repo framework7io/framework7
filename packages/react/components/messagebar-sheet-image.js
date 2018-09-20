@@ -14,9 +14,9 @@ class F7MessagebarSheetImage extends React.Component {
     })();
   }
 
-  onChange(e) {
-    if (this.props.checked) this.dispatchEvent('checked', e);else this.dispatchEvent('unchecked', e);
-    this.dispatchEvent('change', e);
+  onChange(event) {
+    if (this.props.checked) this.dispatchEvent('checked', event);else this.dispatchEvent('unchecked', event);
+    this.dispatchEvent('change', event);
   }
 
   render() {
@@ -62,6 +62,8 @@ class F7MessagebarSheetImage extends React.Component {
 
 __reactComponentSetProps(F7MessagebarSheetImage, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   image: String,
   checked: Boolean
 }, Mixins.colorProps));

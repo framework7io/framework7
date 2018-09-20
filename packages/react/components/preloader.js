@@ -67,6 +67,8 @@ class F7Preloader extends React.Component {
 
 __reactComponentSetProps(F7Preloader, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   size: [Number, String]
 }, Mixins.colorProps));
 

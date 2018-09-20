@@ -1,5 +1,5 @@
 /**
- * Framework7 3.3.1
+ * Framework7 3.3.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 15, 2018
+ * Released on: September 20, 2018
  */
 html,
 body,
@@ -25402,13 +25402,13 @@ html.device-desktop .data-table .sortable-cell:not(.sortable-cell-active) .table
   -webkit-transition-duration: 150ms;
   transition-duration: 150ms;
 }
-.md .searchbar-enabled .searchbar-disable-button {
+.md .searchbar-enabled:not(.searchbar-enabled-no-disable-button) .searchbar-disable-button {
   -webkit-transform: rotate(0deg) scale(1);
   transform: rotate(0deg) scale(1);
   pointer-events: auto;
   opacity: 1;
 }
-.md .searchbar-enabled .searchbar-icon {
+.md .searchbar-enabled:not(.searchbar-enabled-no-disable-button) .searchbar-icon {
   opacity: 0;
   -webkit-transform: rotate(90deg) scale(0.5);
   transform: rotate(90deg) scale(0.5);

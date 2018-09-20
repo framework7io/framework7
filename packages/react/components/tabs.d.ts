@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Tabs {
-  export interface Props {
+declare namespace F7Tabs {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     animated? : boolean
     swipeable? : boolean
     routable? : boolean
@@ -17,7 +19,7 @@ namespace F7Tabs {
     
   }
 }
-class F7Tabs extends React.Component<F7Tabs.Props, {}> {
+declare class F7Tabs extends React.Component<F7Tabs.Props, {}> {
   
 }
 export default F7Tabs;

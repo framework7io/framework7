@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7Popover {
-  export interface Props {
+declare namespace F7Popover {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     opened? : boolean
     target? : string | Object
     closeByBackdropClick? : boolean
@@ -15,18 +17,18 @@ namespace F7Popover {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onPopoverOpen? : Function
-    onPopoverOpened? : Function
-    onPopoverClose? : Function
-    onPopoverClosed? : Function
+    onPopoverOpen? : (event?: any) => void
+    onPopoverOpened? : (event?: any) => void
+    onPopoverClose? : (event?: any) => void
+    onPopoverClosed? : (event?: any) => void
   }
 }
-class F7Popover extends React.Component<F7Popover.Props, {}> {
-  onOpen(event : any) : unknown
-  onOpened(event : any) : unknown
-  onClose(event : any) : unknown
-  onClosed(event : any) : unknown
-  open(target : any, animate : any) : unknown
-  close(animate : any) : unknown
+declare class F7Popover extends React.Component<F7Popover.Props, {}> {
+  onOpen(event? : any) : unknown
+  onOpened(event? : any) : unknown
+  onClose(event? : any) : unknown
+  onClosed(event? : any) : unknown
+  open(target? : any, animate? : any) : unknown
+  close(animate? : any) : unknown
 }
 export default F7Popover;

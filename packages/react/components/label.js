@@ -39,6 +39,8 @@ class F7Label extends React.Component {
 
 __reactComponentSetProps(F7Label, Object.assign({
   id: [String, Number],
+  className: String,
+  style: Object,
   floating: Boolean,
   inline: Boolean
 }, Mixins.colorProps));

@@ -1,9 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
-namespace F7View {
-  export interface Props {
+declare namespace F7View {
+  interface Props {
     slot? : string
     id? : string | number
+    className? : string
+    style? : React.CSSProperties
     tab? : boolean
     tabActive? : boolean
     name? : string
@@ -53,22 +55,24 @@ namespace F7View {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onSwipeBackMove? : Function
-    onSwipeBackBeforeChange? : Function
-    onSwipeBackAfterChange? : Function
-    onSwipeBackBeforeReset? : Function
-    onSwipeBackAfterReset? : Function
-    onTabShow? : Function
-    onTabHide? : Function
+    onViewInit? : (event?: any, view?: any) => void
+    onSwipeBackMove? : (event?: any, swipeBackData?: any) => void
+    onSwipeBackBeforeChange? : (event?: any, swipeBackData?: any) => void
+    onSwipeBackAfterChange? : (event?: any, swipeBackData?: any) => void
+    onSwipeBackBeforeReset? : (event?: any, swipeBackData?: any) => void
+    onSwipeBackAfterReset? : (event?: any, swipeBackData?: any) => void
+    onTabShow? : (event?: any) => void
+    onTabHide? : (event?: any) => void
   }
 }
-class F7View extends React.Component<F7View.Props, {}> {
-  onSwipeBackMove(event : any) : unknown
-  onSwipeBackBeforeChange(event : any) : unknown
-  onSwipeBackAfterChange(event : any) : unknown
-  onSwipeBackBeforeReset(event : any) : unknown
-  onSwipeBackAfterReset(event : any) : unknown
-  onTabShow(e : any) : unknown
-  onTabHide(e : any) : unknown
+declare class F7View extends React.Component<F7View.Props, {}> {
+  onViewInit(event? : any) : unknown
+  onSwipeBackMove(event? : any) : unknown
+  onSwipeBackBeforeChange(event? : any) : unknown
+  onSwipeBackAfterChange(event? : any) : unknown
+  onSwipeBackBeforeReset(event? : any) : unknown
+  onSwipeBackAfterReset(event? : any) : unknown
+  onTabShow(event? : any) : unknown
+  onTabHide(event? : any) : unknown
 }
 export default F7View;
