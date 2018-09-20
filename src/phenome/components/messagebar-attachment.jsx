@@ -47,11 +47,11 @@ export default {
     );
   },
   methods: {
-    onClick(e) {
-      this.dispatchEvent('attachment:click attachmentClick', e);
+    onClick(event) {
+      this.dispatchEvent('attachment:click attachmentClick', event);
     },
-    onDeleteClick(e) {
-      this.dispatchEvent('attachment:delete attachmentDelete', e);
+    onDeleteClick(event) {
+      this.dispatchEvent('attachment:delete attachmentDelete', event);
     },
   },
 };

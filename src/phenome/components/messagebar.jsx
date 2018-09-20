@@ -317,14 +317,14 @@ export default {
       this.dispatchEvent('send', value, clear);
       this.dispatchEvent('click', event);
     },
-    onDeleteAttachment(e) {
-      this.dispatchEvent('messagebar:attachmentdelete messagebarAttachmentDelete', e);
+    onDeleteAttachment(event) {
+      this.dispatchEvent('messagebar:attachmentdelete messagebarAttachmentDelete', event);
     },
-    onClickAttachment(e) {
-      this.dispatchEvent('messagebar:attachmentclick messagebarAttachmentClick', e);
+    onClickAttachment(event) {
+      this.dispatchEvent('messagebar:attachmentclick messagebarAttachmentClick', event);
     },
-    onResizePage(e) {
-      this.dispatchEvent('messagebar:resizepage messagebarResizePage', e);
+    onResizePage(event) {
+      this.dispatchEvent('messagebar:resizepage messagebarResizePage', event);
     },
   },
 };

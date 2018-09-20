@@ -186,32 +186,38 @@ export default {
   methods: {
     onViewInit(event) {
       const self = this;
-      self.dispatchEvent('view:init viewInit', event, event.detail);
+      const view = event.detail;
+      self.dispatchEvent('view:init viewInit', event, view);
       if (!self.props.init) {
-        self.routerData.instance = event.detail;
+        self.routerData.instance = view;
         self.f7View = self.routerData.instance;
       }
     },
     onSwipeBackMove(event) {
-      this.dispatchEvent('swipeback:move swipeBackMove', event, event.detail);
+      const swipeBackData = event.detail;
+      this.dispatchEvent('swipeback:move swipeBackMove', event, swipeBackData);
     },
     onSwipeBackBeforeChange(event) {
-      this.dispatchEvent('swipeback:beforechange swipeBackBeforeChange', event, event.detail);
+      const swipeBackData = event.detail;
+      this.dispatchEvent('swipeback:beforechange swipeBackBeforeChange', event, swipeBackData);
     },
     onSwipeBackAfterChange(event) {
-      this.dispatchEvent('swipeback:afterchange swipeBackAfterChange', event, event.detail);
+      const swipeBackData = event.detail;
+      this.dispatchEvent('swipeback:afterchange swipeBackAfterChange', event, swipeBackData);
     },
     onSwipeBackBeforeReset(event) {
-      this.dispatchEvent('swipeback:beforereset swipeBackBeforeReset', event, event.detail);
+      const swipeBackData = event.detail;
+      this.dispatchEvent('swipeback:beforereset swipeBackBeforeReset', event, swipeBackData);
     },
     onSwipeBackAfterReset(event) {
-      this.dispatchEvent('swipeback:afterreset swipeBackAfterReset', event, event.detail);
+      const swipeBackData = event.detail;
+      this.dispatchEvent('swipeback:afterreset swipeBackAfterReset', event, swipeBackData);
     },
-    onTabShow(e) {
-      this.dispatchEvent('tab:show tabShow', e);
+    onTabShow(event) {
+      this.dispatchEvent('tab:show tabShow', event);
     },
-    onTabHide(e) {
-      this.dispatchEvent('tab:hide tabHide', e);
+    onTabHide(event) {
+      this.dispatchEvent('tab:hide tabHide', event);
     },
   },
 };

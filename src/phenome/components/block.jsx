@@ -79,11 +79,11 @@ export default {
     );
   },
   methods: {
-    onTabShow(e) {
-      this.dispatchEvent('tabShow tab:show', e);
+    onTabShow(event) {
+      this.dispatchEvent('tabShow tab:show', event);
     },
-    onTabHide(e) {
-      this.dispatchEvent('tabHide tab:hide', e);
+    onTabHide(event) {
+      this.dispatchEvent('tabHide tab:hide', event);
     },
   },
 };

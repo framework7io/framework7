@@ -269,13 +269,14 @@ export default {
       this.dispatchEvent('sortable:disable sortableDisable', event);
     },
     onSortableSort(event) {
-      this.dispatchEvent('sortable:sort sortableSort', event, event.detail);
+      const sortData = event.detail;
+      this.dispatchEvent('sortable:sort sortableSort', event, sortData);
     },
-    onTabShow(e) {
-      this.dispatchEvent('tab:show tabShow', e);
+    onTabShow(event) {
+      this.dispatchEvent('tab:show tabShow', event);
     },
-    onTabHide(e) {
-      this.dispatchEvent('tab:hide tabHide', e);
+    onTabHide(event) {
+      this.dispatchEvent('tab:hide tabHide', event);
     },
   },
 };

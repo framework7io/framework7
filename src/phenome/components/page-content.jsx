@@ -164,7 +164,8 @@ export default {
       this.dispatchEvent('ptr:pullend ptrPullEnd', event);
     },
     onPtrRefresh(event) {
-      this.dispatchEvent('ptr:refresh ptrRefresh', event, event.detail);
+      const done = event.detail;
+      this.dispatchEvent('ptr:refresh ptrRefresh', event, done);
     },
     onPtrDone(event) {
       this.dispatchEvent('ptr:done ptrDone', event);
@@ -172,11 +173,11 @@ export default {
     onInfinite(event) {
       this.dispatchEvent('infinite', event);
     },
-    onTabShow(e) {
-      this.dispatchEvent('tab:show tabShow', e);
+    onTabShow(event) {
+      this.dispatchEvent('tab:show tabShow', event);
     },
-    onTabHide(e) {
-      this.dispatchEvent('tab:hide tabHide', e);
+    onTabHide(event) {
+      this.dispatchEvent('tab:hide tabHide', event);
     },
   },
 };

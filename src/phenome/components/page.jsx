@@ -251,7 +251,8 @@ export default {
       this.dispatchEvent('ptr:pullend ptrPullEnd', event);
     },
     onPtrRefresh(event) {
-      this.dispatchEvent('ptr:refresh ptrRefresh', event, event.detail);
+      const done = event.detail;
+      this.dispatchEvent('ptr:refresh ptrRefresh', event, done);
     },
     onPtrDone(event) {
       this.dispatchEvent('ptr:done ptrDone', event);
@@ -260,28 +261,36 @@ export default {
       this.dispatchEvent('infinite', event);
     },
     onPageMounted(event) {
-      this.dispatchEvent('page:mounted pageMounted', event, event.detail);
+      const page = event.detail;
+      this.dispatchEvent('page:mounted pageMounted', event, page);
     },
     onPageInit(event) {
-      this.dispatchEvent('page:init pageInit', event, event.detail);
+      const page = event.detail;
+      this.dispatchEvent('page:init pageInit', event, page);
     },
     onPageReinit(event) {
-      this.dispatchEvent('page:reinit pageReinit', event, event.detail);
+      const page = event.detail;
+      this.dispatchEvent('page:reinit pageReinit', event, page);
     },
     onPageBeforeIn(event) {
-      this.dispatchEvent('page:beforein pageBeforeIn', event, event.detail);
+      const page = event.detail;
+      this.dispatchEvent('page:beforein pageBeforeIn', event, page);
     },
     onPageBeforeOut(event) {
-      this.dispatchEvent('page:beforeout pageBeforeOut', event, event.detail);
+      const page = event.detail;
+      this.dispatchEvent('page:beforeout pageBeforeOut', event, page);
     },
     onPageAfterOut(event) {
-      this.dispatchEvent('page:afterout pageAfterOut', event, event.detail);
+      const page = event.detail;
+      this.dispatchEvent('page:afterout pageAfterOut', event, page);
     },
     onPageAfterIn(event) {
-      this.dispatchEvent('page:afterin pageAfterIn', event, event.detail);
+      const page = event.detail;
+      this.dispatchEvent('page:afterin pageAfterIn', event, page);
     },
     onPageBeforeRemove(event) {
-      this.dispatchEvent('page:beforeremove pageBeforeRemove', event, event.detail);
+      const page = event.detail;
+      this.dispatchEvent('page:beforeremove pageBeforeRemove', event, page);
     },
   },
 };
