@@ -12,6 +12,7 @@ const buildCoreJs = require('./build-core-js.js');
 const buildCoreTypings = require('./build-core-typings.js');
 const buildCoreLess = require('./build-core-less.js');
 const buildCoreComponents = require('./build-core-components.js');
+const buildCoreLazy = require('./build-core-lazy.js');
 
 const buildPhenome = require('./build-phenome.js');
 const buildVue = require('./build-vue');
@@ -29,6 +30,7 @@ gulp.task('core-js', buildCoreJs);
 gulp.task('core-typings', buildCoreTypings);
 gulp.task('core-less', buildCoreLess);
 gulp.task('core-components', buildCoreComponents);
+gulp.task('core-lazy', buildCoreLazy);
 gulp.task('phenome', buildPhenome);
 
 gulp.task('react', buildReact);
@@ -37,7 +39,7 @@ gulp.task('react-typings', buildReactTypings);
 gulp.task('vue', buildVue);
 gulp.task('vue-typings', buildVueTypings);
 
-gulp.task('build-core', ['core-js', 'core-components', 'core-typings', 'core-less']);
+gulp.task('build-core', ['core-js', 'core-components', 'core-typings', 'core-less', 'core-lazy']);
 gulp.task('build-react', () => runSequence('react', 'react-typings'));
 gulp.task('build-vue', () => runSequence('vue', 'vue-typings'));
 
@@ -74,14 +76,16 @@ const watch = {
   core() {
     gulp.watch(['./src/core/**/*.js'], () => runSequence(
       'core-js',
-      'core-components'
+      'core-components',
+      'core-lazy',
     ));
     gulp.watch(['./src/core/**/*.d.ts'], () => runSequence(
       'core-typings'
     ));
     gulp.watch('./src/**/**/*.less', () => runSequence(
       'core-less',
-      'core-components'
+      'core-components',
+      'core-lazy',
     ));
   },
   react() {
@@ -92,7 +96,7 @@ const watch = {
     ));
     gulp.watch('./src/core/**/*.less', () => runSequence(
       'core-less',
-      'core-components'
+      'core-components',
     ));
     gulp.watch(['./src/phenome/**/*.js', './src/phenome/**/*.jsx'], () => runSequence(
       'phenome',
@@ -111,7 +115,7 @@ const watch = {
     ));
     gulp.watch('./src/core/**/*.less', () => runSequence(
       'core-less',
-      'core-components'
+      'core-components',
     ));
     gulp.watch(['./src/phenome/**/*.js', './src/phenome/**/*.jsx'], () => runSequence(
       'phenome',

@@ -167,7 +167,6 @@ class Framework7Class {
     const instance = this;
     if (!instance.modules) return;
     Object.keys(instance.modules).forEach((moduleName) => {
-      // const module = instance.modules[moduleName];
       const moduleParams = modulesParams[moduleName] || {};
       instance.useModule(moduleName, moduleParams);
     });
