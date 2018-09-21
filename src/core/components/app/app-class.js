@@ -4,6 +4,10 @@ import { window, document } from 'ssr-window';
 import Utils from '../../utils/utils';
 import Device from '../../utils/device';
 import Framework7Class from '../../utils/class';
+import Support from '../../utils/support';
+import ConstructorMethods from '../../utils/constructor-methods';
+import ModalMethods from '../../utils/modal-methods';
+import Modal from '../modal/modal-class';
 
 class Framework7 extends Framework7Class {
   constructor(params) {
@@ -13,6 +17,8 @@ class Framework7 extends Framework7Class {
 
     // App Instance
     const app = this;
+
+    Framework7.instance = app;
 
     // Default
     const defaults = {
@@ -129,6 +135,16 @@ class Framework7 extends Framework7Class {
     return app;
   }
 
+  // eslint-disable-next-line
+  loadComponent(...args) {
+    return Framework7.loadComponent(...args);
+  }
+
+  // eslint-disable-next-line
+  loadComponents(...args) {
+    return Framework7.loadComponents(...args);
+  }
+
   getVnodeHooks(hook, id) {
     const app = this;
     if (!app.vnodeHooks || !app.vnodeHooks[hook]) return [];
@@ -160,5 +176,87 @@ class Framework7 extends Framework7Class {
     return Framework7Class;
   }
 }
+
+Framework7.loadComponent = function loadComponent(path) {
+  return new Promise((resolve, reject) => {
+    if (typeof path !== 'string') {
+      reject(new Error('Framework7: Component path must be a string'));
+      return;
+    }
+    if (!path) {
+      reject(new Error('Framework7: Component path must be specified'));
+      return;
+    }
+    Framework7.request.get(
+      path,
+      (scriptContent) => {
+        const id = Utils.id();
+        const callbackLoadName = `f7_component_loader_callback_${id}`;
+
+        const scriptEl = document.createElement('script');
+        scriptEl.innerHTML = `window.${callbackLoadName} = function () {${scriptContent}\nreturn framework7ComponentLoader}`;
+        $('head').append(scriptEl);
+
+        const componentLoader = window[callbackLoadName]();
+        delete window[callbackLoadName];
+        $(scriptEl).remove();
+
+        if (!componentLoader) {
+          reject(new Error(`Framework7: Can't find Framework7 component in ${path} file`));
+          return;
+        }
+
+        // Check if it was already added
+        if (Framework7.prototype.modules && Framework7.prototype.modules[componentLoader.componentName]) {
+          resolve();
+          return;
+        }
+
+        // Then execure
+        const module = componentLoader({
+          $,
+          Template7,
+          Utils,
+          Device,
+          Support,
+          ConstructorMethods,
+          ModalMethods,
+          Framework7Class,
+          Modal,
+        });
+
+        if (!module) {
+          reject(new Error(`Framework7: Can't find Framework7 component in ${path} file`));
+          return;
+        }
+
+        // One more check if it was added
+        if (Framework7.prototype.modules && Framework7.prototype.modules[module.name]) {
+          resolve();
+          return;
+        }
+
+        // Install It
+        Framework7.use(module);
+
+        // Extend app instance
+        const app = Framework7.instance;
+
+        if (app) {
+          app.useModuleParams(module, app.params);
+          app.useModule(module);
+        }
+
+        resolve();
+      },
+      (xhr, status) => {
+        reject(xhr, status);
+      }
+    );
+  });
+};
+Framework7.loadComponents = function loadComponents(paths) {
+  return Promise.all(paths.map(path => Framework7.loadComponent(path)));
+};
 
 export default Framework7;
