@@ -1,5 +1,5 @@
-import { Dom7, Dom7Instance } from 'Dom7'
-import Template7 from 'Template7'
+import { Dom7, Dom7Instance } from 'dom7'
+import Template7 from 'template7'
 import { Router } from '../../modules/router/router';
 import Device, { Device as DeviceInterface } from '../../utils/device';
 import Request, { Request as RequestInterface } from '../../utils/request';
