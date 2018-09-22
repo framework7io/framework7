@@ -10,7 +10,7 @@
  * Released on: September 17, 2018
  */
 
-import * as React from 'react';
+import React from 'react';
 import { Dom7 } from 'dom7';
 import Framework7 from 'framework7';
 import { Framework7Plugin } from 'framework7/components/app/app-class';

@@ -9,7 +9,7 @@ const rename = require('gulp-rename');
 const fs = require('fs');
 
 const importLib = `
-import React from 'react';
+import * as React from 'react';
 `.trim();
 
 const libExtension = `
