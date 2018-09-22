@@ -36,7 +36,7 @@ export namespace Modal {
     animate?: boolean
     /** Object with events handlers.. */
     on?: {
-      [event in keyof Events] : Events[event]
+      [event in keyof Events]? : Events[event]
     }
   }
   interface Events {

@@ -13,7 +13,7 @@ export namespace Tooltip {
     render?: (tooltip: Tooltip) => string
     /** Object with events handlers.. */
     on?: {
-      [event in keyof Events] : Events[event]
+      [event in keyof Events]? : Events[event]
     }
   }
   interface DomEvents {

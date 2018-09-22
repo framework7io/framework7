@@ -106,7 +106,7 @@ export namespace VirtualList {
     searchAll?(query: string, items: any[]): any[]
     /** Object with events handlers.. */
     on?: {
-      [event in keyof Events] : Events[event]
+      [event in keyof Events]? : Events[event]
     }
   }
   interface Events {
