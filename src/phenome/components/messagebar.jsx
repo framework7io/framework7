@@ -6,6 +6,14 @@ import Mixins from '../utils/mixins';
 import F7Input from './input';
 import F7Link from './link';
 
+/* phenome-dts-imports
+import { Messagebar as MessagebarNamespace } from 'framework7/components/messagebar/messagebar';
+*/
+
+/* phenome-dts-instance
+f7Messagebar: MessagebarNamespace.Messagebar
+*/
+
 export default {
   name: 'f7-messagebar',
   props: {

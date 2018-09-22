@@ -1,6 +1,14 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
+/* phenome-dts-imports
+import { Searchbar as SearchbarNamespace } from 'framework7/components/searchbar/searchbar';
+*/
+
+/* phenome-dts-instance
+f7Searchbar: SearchbarNamespace.Searchbar
+*/
+
 export default {
   name: 'f7-searchbar',
   props: {

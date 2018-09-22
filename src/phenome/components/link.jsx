@@ -5,6 +5,16 @@ import Mixins from '../utils/mixins';
 import F7Badge from './badge';
 import F7Icon from './icon';
 
+/* phenome-dts-imports
+import { Tooltip as TooltipNamespace } from 'framework7/components/tooltip/tooltip';
+import { SmartSelect as SmartSelectNamespace } from 'framework7/components/smart-select/smart-select';
+*/
+
+/* phenome-dts-instance
+f7Tooltip: TooltipNamespace.Tooltip
+f7SmartSelect: SmartSelectNamespace.SmartSelect
+*/
+
 export default {
   name: 'f7-link',
   props: {

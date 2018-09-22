@@ -1,6 +1,14 @@
 import Mixins from '../utils/mixins';
 import Utils from '../utils/utils';
 
+/* phenome-dts-imports
+import { LoginScreen as LoginScreenNamespace } from 'framework7/components/login-screen/login-screen';
+*/
+
+/* phenome-dts-instance
+f7LoginScreen: LoginScreenNamespace.LoginScreen
+*/
+
 export default {
   name: 'f7-login-screen',
   props: {

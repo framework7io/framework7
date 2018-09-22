@@ -1,6 +1,14 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
+/* phenome-dts-imports
+import { VirtualList as VirtualListNamespace } from 'framework7/components/virtual-list/virtual-list';
+*/
+
+/* phenome-dts-instance
+f7VirtualList: VirtualListNamespace.VirtualList
+*/
+
 export default {
   name: 'f7-list',
   props: {

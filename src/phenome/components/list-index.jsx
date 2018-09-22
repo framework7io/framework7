@@ -2,6 +2,14 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
+/* phenome-dts-imports
+import { ListIndex as ListIndexNamespace } from 'framework7/components/list-index/list-index';
+*/
+
+/* phenome-dts-instance
+f7ListIndex: ListIndexNamespace.ListIndex
+*/
+
 export default {
   name: 'f7-list-index',
   props: {

@@ -1,6 +1,14 @@
 import Mixins from '../utils/mixins';
 import Utils from '../utils/utils';
 
+/* phenome-dts-imports
+import { Popover as PopoverNamespace } from 'framework7/components/popover/popover';
+*/
+
+/* phenome-dts-instance
+f7Popover: PopoverNamespace.Popover
+*/
+
 export default {
   name: 'f7-popover',
   props: {

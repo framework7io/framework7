@@ -4,6 +4,14 @@ import Utils from '../utils/utils';
 import F7ListItemContent from './list-item-content';
 import Mixins from '../utils/mixins';
 
+/* phenome-dts-imports
+import { SmartSelect as SmartSelectNamespace } from 'framework7/components/smart-select/smart-select';
+*/
+
+/* phenome-dts-instance
+f7SmartSelect: SmartSelectNamespace.SmartSelect
+*/
+
 export default {
   name: 'f7-list-item',
   props: {
