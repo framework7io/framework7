@@ -1,5 +1,6 @@
 {
-  "name": "framework7",
+  "name": "framework7-source",
+  "version": "0.0.0",
   "scripts": {
     "build:dev": "cross-env-shell NODE_ENV=development \"gulp build-core && gulp phenome && gulp build-vue && gulp build-react\"",
     "build:prod": "cross-env-shell NODE_ENV=production \"gulp build-core && gulp phenome && gulp build-vue && gulp build-react\"",
