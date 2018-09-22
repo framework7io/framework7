@@ -15,7 +15,7 @@ export namespace DataTable {
     el: HTMLElement
 
     on?: {
-      [event in keyof Events] : Events[event]
+      [event in keyof Events]? : Events[event]
     }
   }
 

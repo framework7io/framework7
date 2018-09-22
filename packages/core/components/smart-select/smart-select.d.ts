@@ -77,7 +77,7 @@ export namespace SmartSelect {
 
     /** Object with events handlers.. */
     on?: {
-      [event in keyof Events] : Events[event]
+      [event in keyof Events]? : Events[event]
     }
   }
   interface SmartSelect extends Framework7EventsClass<Events> {

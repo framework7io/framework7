@@ -106,7 +106,7 @@ export namespace Picker {
 
     /** Object with events handlers.. */
     on?: {
-      [event in keyof Events] : Events[event]
+      [event in keyof Events]? : Events[event]
     }
 
     /** String with CSS selector or HTMLElement where to place generated Picker HTML. Use only for inline picker. */

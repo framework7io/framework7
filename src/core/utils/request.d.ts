@@ -80,7 +80,7 @@ export interface Request {
     url: string,
     data?: any,
     success?: (data: any, status: number | string, xhr: RequestXHR) => void,
-    error: (xhr: RequestXHR, status: number | string) => void,
+    error?: (xhr: RequestXHR, status: number | string) => void,
     dataType?: string
   ) => RequestXHR
   /** Set default values for future Ajax requests */

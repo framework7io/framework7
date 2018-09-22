@@ -45,7 +45,7 @@ export namespace Notification {
     render?: () => string
     /** Object with events handlers.. */
     on?: {
-      [event in keyof Events] : Events[event]
+      [event in keyof Events]? : Events[event]
     }
   }
 

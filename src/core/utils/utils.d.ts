@@ -16,9 +16,9 @@ export interface Utils {
   /** Returns current timestamp in ms */
   now: () => number
   /** Extends target object with properties and methods from from objects */
-  extend: (target: object, ...from: object) => object
+  extend: (target: object, ...from: object[]) => object
   /** Extends target object with properties and methods from from objects */
-  merge: (target: object, ...from: object) => object
+  merge: (target: object, ...from: object[]) => object
   /** Returns unique number, increased by 1 with every call */
   uniqueNumber: () => number
   /** Generates random ID-like string */

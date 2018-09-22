@@ -9,9 +9,9 @@ export namespace Tabs {
   }
   interface DomEvents {
     /** Event will be triggered when Tab becomes visible/active */
-    'tab:show': (Event) => void
+    'tab:show': (event: any) => void
     /** Event will be triggered when Tab becomes hidden/inactive */
-    'tab:hide': (Event) => void
+    'tab:hide': (event: any) => void
   }
   interface AppMethods {
     tab: {

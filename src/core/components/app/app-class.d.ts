@@ -1,10 +1,10 @@
-import { Dom7, Dom7Instance } from 'Dom7'
-import Template7 from 'Template7'
+import { Dom7, Dom7Instance } from 'dom7'
+import Template7 from 'template7'
 import { Router } from '../../modules/router/router';
-import Device, { Device as DeviceInterface } from '../../utils/device';
-import Request, { Request as RequestInterface } from '../../utils/request';
-import Support, { Support as SupportInterface } from '../../utils/support';
-import Utils, { Utils as UtilsInterface } from '../../utils/utils';
+import { Device } from '../../utils/device';
+import { Request } from '../../utils/request';
+import { Support } from '../../utils/support';
+import { Utils } from '../../utils/utils';
 
 // Css Selector string is an option on many F7 methods
 // Giving this alias makes the typename show in the intellisense
@@ -147,10 +147,10 @@ declare class Framework7 implements Framework7 {
   constructor(parameters?: Framework7Params);
 
   static use(plugin : Framework7Plugin) : void;
-  static device: DeviceInterface = Device;
-  static request: RequestInterface = Request;
-  static support: SupportInterface = Support;
-  static utils: UtilsInterface = Utils;
+  static device: Device;
+  static request: Request;
+  static support: Support;
+  static utils: Utils;
 }
 
 export default Framework7;

@@ -121,7 +121,7 @@ export namespace View {
     pushStateOnLoad?: boolean
     /** Object with events handlers.. */
     on?: {
-      [event in keyof Events] : Events[event]
+      [event in keyof Events]? : Events[event]
     }
   }
   interface View extends Router.AppMethods{}

@@ -40,7 +40,7 @@ export namespace Popover {
 
     /** Object with events handlers.. */
     on?: {
-      [event in keyof Events] : Events[event]
+      [event in keyof Events]? : Events[event]
     }
   }
   interface Popover extends Framework7EventsClass<Events> {

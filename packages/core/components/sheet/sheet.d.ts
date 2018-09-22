@@ -32,7 +32,7 @@ export namespace Sheet {
 
     /** Object with events handlers.. */
     on?: {
-      [event in keyof Events] : Events[event]
+      [event in keyof Events]? : Events[event]
     }
   }
   interface Sheet extends Framework7EventsClass<Events> {

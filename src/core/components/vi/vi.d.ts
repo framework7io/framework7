@@ -80,7 +80,7 @@ export namespace Vi {
     connectionProvider?: string
     /** Object with events handlers.. */
     on?: {
-      [event in keyof Events] : Events[event]
+      [event in keyof Events]? : Events[event]
     }
   }
   interface Events {
