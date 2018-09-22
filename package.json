@@ -76,7 +76,7 @@
     "gulp-uglify": "^3.0.1",
     "hoek": "^5.0.4",
     "husky": "^1.0.0-rc.13",
-    "phenome": "0.1.4",
+    "phenome": "0.1.5",
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
