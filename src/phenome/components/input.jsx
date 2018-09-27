@@ -35,7 +35,11 @@ export default {
     multiple: Boolean,
     readonly: Boolean,
     required: Boolean,
-    inputStyle: String,
+    inputStyle: [String, Object], // phenome-vue-line
+    inputStyle: Object, // phenome-react-line
+    /* phenome-react-dts-props
+    inputStyle?: React.CSSProperties
+    */
     pattern: String,
     validate: [Boolean, String],
     tabindex: [String, Number],

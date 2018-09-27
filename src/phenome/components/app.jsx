@@ -3,6 +3,11 @@ import Mixins from '../utils/mixins';
 import f7 from '../utils/f7';
 import RoutableModals from './routable-modals';
 
+/* phenome-dts-imports
+import { Framework7Params } from 'framework7/components/app/app-class';
+import { Router } from 'framework7/modules/router/router';
+*/
+
 export default {
   name: 'f7-app',
   props: {
@@ -11,6 +16,10 @@ export default {
     style: Object, // phenome-react-line
     params: Object,
     routes: Array,
+    /* phenome-react-dts-props
+    params?: Framework7Params
+    routes?: Router.RouteParameters[]
+    */
     ...Mixins.colorProps,
   },
   state() {
