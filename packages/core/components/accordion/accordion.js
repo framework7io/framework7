@@ -32,6 +32,7 @@ const Accordion = {
       if ($el.hasClass('accordion-item-opened')) {
         $contentEl.transition(0);
         $contentEl.css('height', 'auto');
+        $contentEl._clientLeft = $contentEl[0].clientLeft;
         Utils.nextFrame(() => {
           $contentEl.transition('');
           $el.trigger('accordion:opened');
