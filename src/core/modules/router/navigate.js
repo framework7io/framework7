@@ -434,6 +434,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
     && router.currentRoute.route.parentPath === options.route.route.parentPath) {
     // Do something nested
     if (options.route.url === router.url) {
+      router.allowPageChange = true;
       return false;
     }
     // Check for same params
