@@ -1,0 +1,86 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+
+  .chip {
+    font-size: 13px;
+    color: #000;
+    background: rgba(0, 0, 0, 0.12);
+    height: 24px;
+    border-radius: 12px;
+    padding: 0 10px;
+  }
+  .chip-outline {
+    background: none;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+  }
+  .chip-media {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 16px;
+    color: #fff;
+    font-size: 12px;
+    box-sizing: border-box;
+    .ltr({
+      margin-left: -10px;
+      + .chip-label {
+        margin-left: 4px;
+      }
+    });
+    .rtl({
+      margin-right: -10px;
+      + .chip-label {
+        margin-right: 4px;
+      }
+    });
+
+    i.icon {
+      font-size: 16px;
+      height: 16px;
+    }
+  }
+  .chip-delete {
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    .svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'><circle cx='14' cy='14' r='14' fill='#000'/><line stroke='#fff' stroke-width='3' stroke-miterlimit='10' x1='8' y1='8' x2='20' y2='20'/><line fill='none' stroke='#fff' stroke-width='3' stroke-miterlimit='10' x1='20' y1='8' x2='8' y2='20'/></svg>");
+    background-position: center;
+    background-size: 14px 14px;
+    opacity: 0.54;
+    .ltr({
+      margin-right: -10px;
+    });
+    .rtl({
+      margin-left: -10px;
+    });
+  }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .chip {
+        background-color: #333;
+        color: #fff;
+      }
+      .chip-outline {
+        background: none;
+        border-color: #333;
+      }
+      .chip-delete {
+        .svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'><circle cx='14' cy='14' r='14' fill='#fff'/><line stroke='#000' stroke-width='3' stroke-miterlimit='10' x1='8' y1='8' x2='20' y2='20'/><line fill='none' stroke='#000' stroke-width='3' stroke-miterlimit='10' x1='20' y1='8' x2='8' y2='20'/></svg>");
+      }
+    }
+  }
+  .color-loop({
+    .chip.color-@{colorName} {
+      background: @colorValue;
+      color: #fff;
+      &.chip-outline {
+        background: none;
+        border-color: @colorValue;
+        color: @colorValue;
+      }
+    }
+  });
+}

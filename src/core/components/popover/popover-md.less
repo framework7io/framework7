@@ -1,0 +1,81 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  @import (multiple) '../../less/vars-md.less';
+  .popover {
+    background: #fff;
+    border-radius: 4px;
+    .elevation(8);
+    transform: scale(0.85, 0.6);
+    transition-property: opacity, transform, border-radius;
+    &.modal-in {
+      opacity: 1;
+      transform: scale(1);
+    }
+    &.modal-out {
+      opacity: 0;
+      transform: scale(1);
+    }
+    .list {
+      &:first-child {
+        ul {
+          border-radius: 3px 3px 0 0;
+        }
+        li:first-child, li:first-child a, li:first-child > label {
+          border-radius: 3px 3px 0 0;
+        }
+      }
+      &:last-child {
+        ul {
+          border-radius: 0 0 3px 3px;
+        }
+        li:last-child, li:last-child a, li:last-child > label {
+          border-radius: 0 0 3px 3px;
+        }
+      }
+      &:first-child:last-child {
+        li:first-child:last-child, li:first-child:last-child a, li:first-child:last-child > label, ul {
+          border-radius: 13px;
+        }
+      }
+      + .list {
+        margin-top: 35px;
+      }
+    }
+  }
+  .popover-on-top {
+    transform-origin: center bottom;
+  }
+  .popover-on-bottom {
+    transform-origin: center top;
+  }
+  .popover-from-actions {
+    .list {
+      margin: 0;
+    }
+    .item-link i.icon {
+      width: 24px;
+      height: 24px;
+      font-size: 24px;
+    }
+  }
+  .popover-from-actions-label {
+    padding: 8px 16px;
+    color: rgba(0,0,0,0.54);
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  .hairline-root('.popover-from-actions-label', bottom, #d2d2d6);
+
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .popover {
+        background-color: #202020;
+      }
+      .popover-from-actions-label {
+        color: rgba(255,255,255,0.54);
+        .hairline-color(bottom, @blockBorderColorDark);
+      }
+    }
+  }
+}

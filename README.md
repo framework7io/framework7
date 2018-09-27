@@ -2,21 +2,18 @@
 [![Join the chat at https://gitter.im/nolimits4web/Framework7](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nolimits4web/Framework7)
 [![Build Status](https://travis-ci.org/framework7io/framework7.svg?branch=master)](https://travis-ci.org/framework7io/framework7)
 [![devDependency Status](https://david-dm.org/framework7io/framework7/dev-status.svg)](https://david-dm.org/framework7io/framework7#info=devDependencies)
+[![Greenkeeper badge](https://badges.greenkeeper.io/framework7io/Framework7.svg)](https://greenkeeper.io/)
 
 # Framework7
-
-[![Greenkeeper badge](https://badges.greenkeeper.io/framework7io/Framework7.svg)](https://greenkeeper.io/)
 
 Full Featured Mobile HTML Framework For Building iOS & Android Apps
 
 ## Getting Started
   * [Getting Started Guide](https://framework7.io/docs/introduction.html)
-  * Clone/download this repo
-  * Start building your App from changing Kitchen Sink, or using a clean template.
 
-## Build
+## Framework7 Development
 
-Framework7 uses `gulp` and `rollup` to build a development (build) and productuin (dist) versions.
+Framework7 uses `gulp` and `rollup` to build a development (build) and production versions.
 
 First you need to have `gulp-cli` which you should install globally.
 
@@ -30,46 +27,61 @@ Then install all dependencies, in repo's root:
 $ npm install
 ```
 
-And build development version of Framework7:
-```
-$ npm run build:dev
-```
+## Development Builds
 
-The result is available in `build/` folder.
+The following npm scripts are available to create development builds:
 
-## Dist/Release
+* `build:dev` - build development versions of all packages (Core, Vue, React)
+* `build-core:dev` - build development version of Core (vanilla JS) Framework7
+* `build-react:dev` - build development version of Framework7 React package
+* `build-vue:dev` - build development version of Framework7 Vue package
 
-To build production version of Framework7:
+Compiled results will be available in `build/` folder.
 
-```
-$ npm run build:prod
-```
+## Production builds
 
-Production version will be available in `dist/` folder.
+To build production versions the following npm scripts are available:
+
+* `build:prod` - build production versions of all packages (Core, Vue, React)
+* `build-core:prod` - build production version of Core (vanilla JS) Framework7
+* `build-react:prod` - build production version of Framework7 React package
+* `build-vue:prod` - build production version of Framework7 Vue package
+
+Compiled results will be available in `packages/` folder.
 
 ## Kitchen Sink
 
-Kitchen Sink uses Ajax for navigation between pages so you will need a server.
+To run Kitchen Sink with development environment (development version will be built first) use the following npm scripts:
 
-Run Kitchen Sink with development environment (development version will be built first):
+* `dev` - build development versions of all packages (Core, Vue, React) and run local server. With this common script it will watch for changes in all `src/` files and rebuild all packages (Core, Vue, React)
+* `core:dev` - build development version of Core (vanilla JS) Framework7 package and run core Kitchen Sink
+* `react:dev` - build development version of Framework7 React package and run React Kitchen Sink
+* `vue:dev` - build development version of Framework7 Vue package and run Vue Kitchen Sink
 
-```
-$ npm run dev
-```
+To Run Kitchen Sink with production builds (already compiled `/packages/` will be used), use the following npm scripts:
 
-Run Kitchen Sink with production environment (configured to scripts and styles from `dist/` folder):
+* `prod` - build Kitchen Sinks with production versions
+* `core:prod` - run core Kitchen Sink with production Framework7 core package
+* `react:prod` - run React Kitchen Sink with production build of Framework7 React
+* `vue:prod` - run Vue Kitchen Sink with production build of Framework7 Vue
 
-```
-$ npm run prod
-```
+## Source Code
+
+Whole source code is located under `/src/` folder.
+
+Framework7 uses Phenome compiler to generate React & Vue components. So all the React & Vue related code is under the `/src/phenome/` folder
+
+Framework7 core library source code is under `/src/core/` folder
 
 ## Contributing
 
 Before you open an issue please review the [contributing](https://github.com/framework7io/framework7/blob/master/CONTRIBUTING.md) guideline.
 
-All changes should be commited to `src/` files. Framework7 uses LESS for CSS compliations, and ES modules JS files.
+**All changes should be commited to `src/` files only!**.
 
-The project uses [.editorconfig](http://editorconfig.org/) to define the coding style of each file. We recommend that you install the Editor Config extension for your preferred IDE.
+Framework7 uses LESS for CSS compilations, and ES modules JS files.
+
+The project uses [.editorconfig](http://editorconfig.org/) and [ESLint](https://eslint.org/) to define and lint the coding style of each file. We recommend that you install the Editor Config and ESLint extension for your preferred IDE.
 
 If you want to help in Framework7 development and make it event better visit this page: http://framework7.io/contribute/
 
@@ -89,6 +101,7 @@ Tutorials available at http://framework7.io/tutorials/
 
 Appstore apps made with Framework7: http://framework7.io/showcase/
 
-## v1
+## Previous Versions
 
-Old v1 version of Framework7 is still available at [v1 branch](https://github.com/framework7io/Framework7/tree/v1)
+* [v2 branch](https://github.com/framework7io/Framework7/tree/v2)
+* [v1 branch](https://github.com/framework7io/Framework7/tree/v1)

@@ -1,0 +1,155 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  @import (multiple) '../../less/vars-md.less';
+  .fab > a, .fab-buttons a {
+    background: @themeColor;
+    width: 56px;
+    height: 56px;
+    border-radius: 28px;
+    color: #fff;
+    .elevation(6);
+    &.active-state {
+      background: darken(@themeColor, 8%);
+    }
+  }
+  .fab[class*="fab-left"] {
+    left: 15px;
+  }
+  .fab[class*="fab-right"] {
+    right: 15px;
+  }
+  .fab[class*="-top"] {
+    top: 15px;
+  }
+  .fab[class*="-bottom"] {
+    bottom: 15px;
+  }
+
+  // Relation with navbar
+  .navbar ~ * .fab[class*="-top"], .navbar ~ .fab[class*="-top"] {
+    margin-top: @navbarSize;
+  }
+
+  @media (min-width: 768px) {
+    .navbar ~ * .fab[class*="-top"], .navbar ~ .fab[class*="-top"] {
+      margin-top: @navbarSizeTablet;
+    }
+  }
+  // Relation with toolbar
+  .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ * .fab[class*="-top"],
+  .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .fab[class*="-top"] {
+    margin-top: @toolbarSize;
+  }
+  .tabbar-labels:not(.toolbar-bottom-md) ~ * .fab[class*="-top"], .tabbar-labels:not(.toolbar-bottom-md) ~ .fab[class*="-top"] {
+    margin-top: @tabbarLabelsSize;
+  }
+  .navbar {
+    + .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ * .fab[class*="-top"],
+    + .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .fab[class*="-top"] {
+      margin-top: @toolbarSize + @navbarSize;
+    }
+    + .tabbar-labels:not(.toolbar-bottom-md) ~ * .fab[class*="-top"], + .tabbar-labels:not(.toolbar-bottom-md) ~ .fab[class*="-top"] {
+      margin-top: @tabbarLabelsSize + @navbarSize;
+    }
+    @media (min-width: 768px) {
+      + .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ * .fab[class*="-top"],
+      + .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .fab[class*="-top"] {
+        margin-top: @toolbarSize + @navbarSizeTablet;
+      }
+      + .tabbar-labels:not(.toolbar-bottom-md) ~ * .fab[class*="-top"], + .tabbar-labels:not(.toolbar-bottom-md) ~ .fab[class*="-top"] {
+        margin-top: @tabbarLabelsSize + @navbarSizeTablet;
+      }
+    }
+  }
+  // Bottom
+  .toolbar-bottom-md ~ * .fab[class*="-bottom"],
+  .toolbar-bottom-md ~ .fab[class*="-bottom"],
+  .messagebar ~ * .fab[class*="-bottom"],
+  .messagebar ~ .fab[class*="-bottom"] {
+    margin-bottom: @toolbarSize;
+  }
+  .toolbar-bottom-md.tabbar-labels ~ * .fab[class*="-bottom"], .toolbar-bottom-md.tabbar-labels ~ .fab[class*="-bottom"] {
+    margin-bottom: @tabbarLabelsSize;
+  }
+
+  .fab-morph {
+    border-radius: 28px;
+    background: @themeColor;
+    .elevation(6);
+    > a {
+      box-shadow: none;
+      background: none !important;
+    }
+  }
+  // Extended
+  .fab-extended {
+    min-width: 48px;
+    > a {
+      height: 48px;
+      i {
+        left: 48px / 2;
+      }
+    }
+    i ~ .fab-text {
+      padding-left: 48px;
+    }
+  }
+  .fab-text {
+    font-weight: 500;
+    letter-spacing: 0.03em;
+  }
+  // Labels
+  .fab-label {
+    .elevation(3);
+  }
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      .fab > a, .fab-buttons a, &.fab > a, &.fab-buttons a {
+        background: @colorThemeValue;
+        &.active-state {
+          background: darken(@colorThemeValue, 8%);
+        }
+      }
+      .fab-morph, &.fab-morph {
+        background: @colorThemeValue;
+      }
+    }
+  });
+  .color-loop({
+    .fab.color-@{colorName} > a,
+    .fab.color-@{colorName} .fab-buttons > a,
+    .fab-buttons.color-@{colorName} a,
+    .fab > a.color-@{colorName},
+    .fab .fab-buttons > a.color-@{colorName} {
+      background: @colorValue;
+      &.active-state {
+        background: darken(@colorValue, 8%);
+      }
+    }
+    .fab-morph.color-@{colorName} {
+      background: @colorValue;
+    }
+  });
+
+  .safe-areas({
+    .fab[class*="-bottom"] {
+      bottom: ~"calc(16px + constant(safe-area-inset-bottom))";
+      bottom: ~"calc(16px + env(safe-area-inset-bottom))";
+    }
+  });
+  .safe-areas-landscape({
+    .safe-area-left({
+      .fab[class*="fab-left"] {
+        left: ~"calc(16px + constant(safe-area-inset-left))";
+        left: ~"calc(16px + env(safe-area-inset-left))";
+      }
+    });
+    .safe-area-right({
+      .fab[class*="fab-right"] {
+        right: ~"calc(16px + constant(safe-area-inset-right))";
+        right: ~"calc(16px + env(safe-area-inset-right))";
+      }
+    });
+  });
+}

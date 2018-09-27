@@ -2,6 +2,363 @@
 
 # Change Log
 
+# [v3.3.2](https://github.com/framework7io/framework7/compare/v3.3.1...v3.3.2) - September 20, 2018
+  * Core
+    * Support for new iPhone XR / XS / XS Max
+    * View
+      * Now it emits `view:init` DOM event and `viewInit` app event
+    * Router
+      * Now it is possible to pass React/Vue component `props` in route `options` or when navigating like `router.navigate('/somepage/', { props: { foo: 'bar' } })`
+  * Phenome
+    * View Component - added support `viewInit` event
+    * Improved TypeScript declaration for React components events
+  * Minor fixes
+
+# [v3.3.1](https://github.com/framework7io/framework7/compare/v3.3.0...v3.3.1) - September 14, 2018
+  * Core
+    * Router
+      * TypeScript defs tweaks #2668 #2666
+    * Panel
+      * TypeScript defs tweaks #2667
+    * Smart Select
+      * Fixed issue when it could throw error on init trying to get select `name` attribute
+  * Phenome
+    * ListItem
+      * Fixed issue when Smart Select could be opened twice that caused router issue on navigating back
+
+# [v3.3.0](https://github.com/framework7io/framework7/compare/v3.2.1...v3.3.0) - September 14, 2018
+  * Core
+    * Added TypeScript definitions for whole core framework APIs (with huge help of @JasonKleban)! 🎉
+    * Swiper update to latest 4.4.1:
+      * Core
+        * New `centerInsufficientSlides` parameter to center slides if the amount of slides less than `slidesPerView`
+        * New `breakpointsInverse` parameter (boolean), if enabled then it will count breakpoints in reversed direction, e.g. will override parameters if window width is more than specified breakpoint
+      * Virtual Slides
+        * New `addSlidesBefore` and `addSlidesAfter` parameters to increase amount of pre-rendered slides
+      * Thumbs
+        * All new "Thumbs" module/component designed to control slider thumbnails, in more logical and correct way than with Controller module.
+    * Virtual DOM Router Components
+      * Added snabbdom's "style" module that allows to make fancy and smooth custom animations
+    * Input
+      * Now input placeholder will be visible on item with floating label when it receives focus
+  * Phenome
+    * Added TypeScript definitions for all React components 🎉
+    * Added TypeScript definitions for F7-Vue and F7-React components extensions (e.g. `this.$f7`, `this.$f7router`, etc.) 🎉
+    * List Component
+      * new `noChevron` prop to disable "chevron" icon on all nested list items with link
+      * new `chevronCenter` prop to set "chevron" icon in the middle of all nested media list items with link
+    * ListItem Component
+      * `disabled` prop will now set "disabled" class on list item if it is not a checkbox or radio
+      * new `noChevron` prop to disable "chevron" icon on list item with link
+      * new `chevronCenter` prop to set "chevron" icon in the middle of media list item with link
+    * Improved Framework7 initialization routine
+    * Fixed issue when `f7ready` callback fired before `deviceready` event in Cordova environment
+  * Lots of fixes
+
+# [v3.2.1](https://github.com/framework7io/framework7/compare/v3.2.0...v3.2.1) - August 31, 2018
+  * Template7 - updated to latest 1.4.0
+      * Added TypeScript Definitions
+  * Dom7 - updated to latest 2.1.0
+      * Added TypeScript Definitions
+  * Phenome
+    * Navbar - added `innerClass` and `innerClassName` (alias) props to set additional class on `navbar-inner` element
+    * Popup - fixed issue when its `animate` and `backdrop` props became disabled by default
+  * Minor fixes
+
+# [v3.2.0](https://github.com/framework7io/framework7/compare/v3.1.1...v3.2.0) - August 28, 2018
+  * Core
+    * Router
+      * Added support for routable Panels! Thanks to @bencompton 🎉
+      * Added support to navigate to route by its name using `router.navigate({ name: 'someroute' })`
+      * Optimized Router Component ES template parsing
+      * Now it caches XHR-loaded Router Components (from `componentUrl`)
+    * Calendar
+      * New `backdrop` and `closeByBackdropClick` parameters
+    * Smart Select
+      * New `cssClass` parameter that will add additional class to Smart Select element
+      * `searchbar` parameter now can be a full object with Searchbar parameters
+      * New `appendSearchbarNotFound` parameter that adds additional element to Smart Select container that will be visible when there are no searchbar results
+    * Popup
+      * Fixed issue on backdrop click when multiple popups opened same time
+    * Device
+      * It now adds `device-macos` and `device-windows` html classes when relevant device is used
+    * Utils - 2 new methods added:
+      * `app.utils.uniqueNumber()` - returns unique counter number
+      * `app.utils.id(mask, map)` - returns randomly generated string by mask, e.g. `app.utils.id('xxxx-xxxx-xxxx-xxxx')` will return string like `d692-c811-e032-6028`
+  * Phenome (Vue/React)
+    * View component - added new `routesBeforeEnter` and `routesBeforeLeave` properties
+    * List component - now emits `submit` event if it is used as form
+    * List Item component - fixed issue with `onChange` event in React
+    * Actions, Popover, Sheet - added new `closeByBackdropClick` and `closeByOutsideClick` properties
+    * Popup - added new `closeByBackdropClick`, `backdrop`, `animate` properties
+  * Lots of minor fixes
+
+# [v3.1.1](https://github.com/framework7io/framework7/compare/v3.1.0...v3.1.1) - August 3, 2018
+  * Core
+    * Virtual DOM Router Components
+      * Imporved boolean attributes handling (`readonly`, `checked`, etc.)
+      * Fixed issue when comment inside of template can break the rendering
+      * Better auto-init components cleanup
+  * Minor fixes
+
+# [v3.1.0](https://github.com/framework7io/framework7/compare/v3.0.7...v3.1.0) - July 31, 2018
+  * Core
+    * Router
+      * New `updateCurrentUrl(url)` method to update url of the currently active route (and current browser state if `pushState` is enabled)
+      * Will emit new `routeUrlUpdate` event if `updateCurrentUrl()` was called
+      * Fixed issue when going back with enabled `pushState` could produce double pages back in Firefox
+      * Fixed issue when changing routable swipeable tabs wasn't trigger `routeChanged` event
+      * Single-file Router Components:
+        * It can now treat component template as ES template literal. Addional `es` attribute is required on template to enable, e.g. `<template es>`
+        * It is now rendered with Virtual DOM (Snabbdom library) for layout auto updating 🎉
+        * It has new `$setState(mergeState)` method to set new component state and force component to update its layout
+    * Searchbar
+      * Fixed issue when in some situations it didn't trigger `search` event when used with Virtual List
+    * Calendar
+      * Day "events" dots layout is reworked and now each day can have few dots (of different color) at a time
+    * Input
+      * Fixed wrong resizable textarea calculation in Firefox
+    * Stepper
+      * Has new "manual input mode". When enabled it allows to type value from keyboar and check fractional part with defined accurancy. Also, when enabled, then `step` parameter is ignored during typing. It has 3 new parameters:
+        * `manualInputMode: false` - enables manual input mode
+        * `decimalPoint: 4` - number of digits after dot
+        * `buttonsEndInputMode: true` - disables manual input mode on Stepper's button click
+    * Swiper - updated to latest 4.3.5
+      * Core
+        * `iOSEdgeSwipeThreshold` parameter renamed to just `edgeSwipeThreshold`. Old `iOSEdgeSwipeThreshold` name is still supported
+        * Improved observer performance if there are many mutations at a time.
+      * Controller
+        * Fixed issue with wrong auto height resizing
+      * Scrollbar
+        * Fixed issue when it was using active event listeners instead of passive.
+    * Dom7 - updated to latest  2.0.7
+      * Fixed issue with undefined elements in classList access (#13)
+    * Template7 - updated to latest 1.3.8
+      * Fixed issue with parsing parents in `js` and `js_if` helpers when properties contain `$` character
+  * Phenome
+    * Stepper component has new properties:
+      * `manualInputMode: false` - enables manual input mode
+      * `decimalPoint: 4` - number of digits after dot
+      * `buttonsEndInputMode: true` - disables manual input mode on Stepper's button click
+    * Fixed Messagebar send-link reference issue
+  * Lots of minor fixes
+
+# [v3.0.7](https://github.com/framework7io/framework7/compare/v3.0.6...v3.0.7) - July 20, 2018
+  * Phenome
+    * Fixed build error
+
+# [v3.0.6](https://github.com/framework7io/framework7/compare/v3.0.5...v3.0.6) - July 20, 2018
+  * Core
+    * Fixed missing `idate` dependency
+
+# [v3.0.5](https://github.com/framework7io/framework7/compare/v3.0.1...v3.0.5) - July 20, 2018
+  * Core
+    * Calendar
+      * Added support for Jalali calendar, can be enabled with `calendarType: 'jalali'`
+      * New `rangePickerMinDays` and `rangePickerMaxDays` to require min/max days when range picker enabled
+    * Tooltip
+      * Fixed issue when tooltip wasn't fully hidden on touch devices
+    * Router
+      * `routeChanged` event will also work for routable tabs now
+  * Phenome
+    * Fixed not working `readonly` prop in `f7-input` Vue component
+  * Minor fixes
+
+# [v3.0.1](https://github.com/framework7io/framework7/compare/v3.0.0...v3.0.1) - July 10, 2018
+  * Phenome
+    * Fixed `TypeError` error in `ActionsGroup` component
+
+# [v3.0.0](https://github.com/framework7io/framework7/compare/v3.0.0-beta.19...v3.0.0) - July 5, 2018 🎉 
+
+# [v3.0.0-beta.19](https://github.com/framework7io/framework7/compare/v3.0.0-beta.18...v3.0.0-beta.19) - July 3, 2018
+  * Core
+    * Router
+      * View/Router parameter `beforeLeave` renamed to `routesBeforeLeave`
+      * View/Router parameter `beforeEnter` renamed to `routesBeforeEnter`
+
+# [v3.0.0-beta.18](https://github.com/framework7io/framework7/compare/v3.0.0-beta.17...v3.0.0-beta.18) - July 3, 2018
+  * Core
+    * Router
+      * Fixed error with `beforeLeave` middleware when loading initial route
+
+# [v3.0.0-beta.17](https://github.com/framework7io/framework7/compare/v3.0.0-beta.16...v3.0.0-beta.17) - July 2, 2018
+  * Core
+    * Router
+      * `preRoute` middleware renamed to `beforeEnter` that will be executed before route load/enter.
+      * Added `beforeLeave` route middleware that will be executed before route unload/leave.
+    * Progressbar
+      * Fixed positioning of progressbar inside of the Page with statusbar enabled
+
+# [v3.0.0-beta.16](https://github.com/framework7io/framework7/compare/v3.0.0-beta.15...v3.0.0-beta.16) - July 1, 2018
+  * Core
+    * Searchbar - fixed issue with wrong `previousQuery` in `search` event
+  * Phenome
+    * ListItem has new `defaultChecked` prop to support React uncontrolled components
+  * Minor fixes
+
+# [v3.0.0-beta.15](https://github.com/framework7io/framework7/compare/v3.0.0-beta.14...v3.0.0-beta.15) - June 27, 2018
+  * Phenome Components
+    * Fixes issue when React components could be rendered wrong in production build
+
+# [v3.0.0-beta.14](https://github.com/framework7io/framework7/compare/v3.0.0-beta.12...v3.0.0-beta.14) - June 24, 2018
+  * Core
+    * Elevation
+      * Elevation moved to separate component
+      * Added support for `elevation-hover-$n` class to add elevation on hover
+      * Added support for `elevation-pressed-$n` class to add elevation on press
+      * Added support for `elevation-transiton` class to add transition between elevation states
+  * Phenome
+    * Icon
+      * Added support for tooltip with `tooltip` prop
+
+# [v3.0.0-beta.12](https://github.com/framework7io/framework7/compare/v3.0.0-beta.11...v3.0.0-beta.12) - June 22, 2018
+  * Core
+    * Tooltip
+      * `el` parameter has been renamed to `targetEl`
+    * Accordion
+      * Now it toggles `aria-hidden` attribute on accordion content toggle
+
+# [v3.0.0-beta.11](https://github.com/framework7io/framework7/compare/v3.0.0-beta.10...v3.0.0-beta.11) - June 19, 2018
+  * Core
+    * Fix touch ripple issues that happen from time to time in Edge
+    * Fix minor push state issues in Edge
+    * Device util now has additional detections props: `windowsPhone`, `windows`, `macos`, `ie`, `edge`
+
+# [v3.0.0-beta.10](https://github.com/framework7io/framework7/compare/v3.0.0-beta.9...v3.0.0-beta.10) - June 15, 2018
+  * Core
+    * All new Gauge component with responsive SVG gauges
+    * Router
+      * Added `preRoute` support (middleware) that can be configured per route or globally on View/Router init for all routes
+    * Smart Select
+      * New `change`/`smartSelectChange` events
+    * Autocomplete
+      * Fixed error with undefined value replacement
+    * Tooltip
+      * New `setText` method to dynamically change Tooltip's text/content
+  * Phenome
+    * Better validation logic for `Input` component
+    * `Toggle` - fixed issue when `toggleChange` event not being fired on desktop
+    * `ListItemContent` - fixed issue with calling `setState` in render function
+    * Support for `target` prop/attribute for `Link`, `Button`, `Fab`, `FabButton` components
+    * Tooltip support (with `tooltip` prop) for `Fab` and `FabButton` components
+    * New `Gauge` (React) / `f7-gauge` (Vue) component to produce responsive SVG gauges
+    * Added Smart Select for `Link` component with `smartSelect` and `smartSelectParams` props
+
+# [v3.0.0-beta.9](https://github.com/framework7io/framework7/compare/v3.0.0-beta.8...v3.0.0-beta.9) - June 12, 2018
+  * Core
+    * All new Tooltip component
+    * Template7 update to latest 1.3.6
+      * Better `@global` parsing in `js` and `js_if` helpers
+  * Phenome
+    * Now `f7route` and `f7router` are passed as props for components loaded by router (Page, Routable Tabs, Routable Modals).
+    * `$f7route` and `$f7router` are now also available only on components loaded by router (Page, Routable Tabs, Routable Modals) and may not be available in custom children components. For children components they must be passed done using props
+    * Added `tooltip` support for `Link` and `Button` components
+
+# [v3.0.0-beta.8](https://github.com/framework7io/framework7/compare/v3.0.0-beta.7...v3.0.0-beta.8) - June 11, 2018
+  * Phenome
+    * Transform object rest spread syntax to Object.assign in Vue/React components
+
+# [v3.0.0-beta.7](https://github.com/framework7io/framework7/compare/v3.0.0-beta.6...v3.0.0-beta.7) - June 9, 2018
+  * Core
+    * Lots of MD styles updated to new Material Design specification
+    * Cards
+      * New outline cards style
+    * Chips
+      * New outline style + tweaked iOS chips styles
+    * FAB
+      * New FAB-Extended style with addtional text label support inside of FAB
+      * Support for FAB actions label
+    * Typography
+      * New Elevation styles, can be configured with `elevation-1`, `elevation-2`,  ..., `elevation-24` classes
+    * Dialog
+      * Preloader dialog now supports preloader color as second argument: `app.dialog.preloader(title, color)`
+    * Smart Select
+      * Will not error anymore about required View if it is actually not required (e.g. for SS opened in Popup, Popover or Sheet)
+    * Picker - fixed issues with touch/swipe areas in RTL layout
+    * Calendar
+      * Fixed issue when not possible to switch calendar to previous month when min date is the last date of previous month
+      * Fixed issue when double click behind calendar could cause router to go to the previous page
+    * Swiper - updated to latest
+      * Fixed issue when slidePrev goes to wrong slide #2650
+      * Fixed issue when roundLength was not considered for grids calculation #2656
+  * Phenome
+    * Card
+      * New `outline` prop to make card outline
+    * Chip
+      * New `outline` prop to make card outline
+    * Fab
+      * New `text` prop to add text to FAB and make it as Extended FAB
+      * New `label` prop for `FabButton` to add label for fab button
+    * Simplified conditional icon props for Icon, Link and Button components: `if-ios` -> `is`, `if-md` -> `md`, `icon-if-ios` -> `icon-ios`, `icon-if-md` -> `icon-md`
+    * Input
+      * New `error-message-force` prop to force error message to show. Works in case of `validate` is omitted
+    * Messagebar
+      * New `resizePage` prop that will resize messages page with messagebar
+      * New `resizePage()` method renamed to `resize()`
+
+# [v3.0.0-beta.6](https://github.com/framework7io/framework7/compare/v3.0.0-beta.5...v3.0.0-beta.6) - June 5, 2018
+  * Phenome
+    * ListItem - fixed `subtitle` slot being ignored
+
+# [v3.0.0-beta.5](https://github.com/framework7io/framework7/compare/v3.0.0-beta.4...v3.0.0-beta.5) - June 4, 2018
+  * Phenome - fix issue when passing `undefined` child to the component
+
+# [v3.0.0-beta.4](https://github.com/framework7io/framework7/compare/v3.0.0-beta.3...v3.0.0-beta.4) - June 4, 2018
+  * Core
+    * App methods (specified in `methods` params) are now bound to app context (initialized F7 instance)
+    * Swiper - updated to latest 4.3.2
+      * Core
+        * Added `addSlide(index, slide)` method to add slide at required position. Thanks to @kochizufan
+        * Fixed issue with loop #2647. Thanks to @kochizufan
+      * Pagination
+        * New `formatFractionCurrent(number)` parameter to format current number in Fraction pagination
+        * New `formatFractionTotal(number)` parameter to format total number in Fraction pagination
+  * Phenome
+    * Use `domProps` for Vue input components
+    * ListItem
+      * New `swipeoutOpened` prop to control (open/close) swipeout item by prop
+
+# [v2.3.1](https://github.com/framework7io/framework7/compare/v2.3.0...v2.3.1) - June 1, 2018
+  * Searchbar
+    * Fixed issue with not hiding/showing backdrop when `customSearch` is enabled
+  * Sortable
+    * New app parameter `sortable.moveElements` by default is `true`. Useful to disable when you use for DOM manipulation other library like Vue or React
+  * Swiper update to latest v4.3.2:
+    * Core
+      * Added `addSlide(index, slide)` method to add slide at required position. Thanks to @kochizufan
+      * Fixed issue with loop #2647. Thanks to @kochizufan
+    * Pagination
+      * New `formatFractionCurrent(number)` parameter to format current number in Fraction pagination
+      * New `formatFractionTotal(number)` parameter to format total number in Fraction pagination
+  * Minor fixes
+
+# [v2.3.0](https://github.com/framework7io/framework7/compare/v2.2.5...v2.3.0) - May 27, 2018
+  * View/Router
+    * Fixed missing `pushStateOnLoad` parameter
+    * Added support for routable Action Sheet
+  * Searchbar
+    * Fixed issue with exapandable Searchbar missplace in MD theme when used with Subnavbar
+  * Input
+    * New `scrollIntoViewDuration` app.input parameter to set duration for scrolling input into view
+    * New `scrollIntoViewAlways` app.input parameter to scroll input into view no matter is it outside of view or not
+    * `app.input.scrollIntoView` now has additional `force` argument to scroll input into view no matter is it outside of view or not: `app.input.scrollIntoView(inputEl, duration, centered, force)`
+    * Clicking input's clear button now also triggers `input` event in addition to `change` event
+  * Statusbar
+    * Improved statusbar overlay detection for iOS devices
+  * Autocomplete
+    * New `dropdownContainerEl` parameter to define place where dropdown need to be inserted
+    * Imporved dropdown positioning
+  * Dom7 update to latest v2.0.6:
+    * Fixed issue with remove event listeners when they was not added
+  * Swiper update to latest v4.3.0:
+    * Core
+      * Fixed issue when `swipeBack` sometimes slides to wrong slide
+      * Fixed issue when window resizing can break Coverflow effect layout
+      * Fixed issue with wrong detection of iOSEdgeSwipeDetection
+    * Dom7 update to latest v2.0.6:
+      * Fixed issue with remove event listeners when they was not added
+  * Lots of minor fixes
+
 # [v2.2.5](https://github.com/framework7io/framework7/compare/v2.2.1...v2.2.5) - April 29, 2018
   * Router
     * Fixed issue with not loaded routable tabs content after swipe-back to page with these routable tabs

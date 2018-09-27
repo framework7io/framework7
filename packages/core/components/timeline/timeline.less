@@ -1,0 +1,196 @@
+/* === Timeline === */
+.timeline {
+  box-sizing: border-box;
+  .block-strong & {
+    padding: 0;
+    margin: 0;
+  }
+}
+.timeline-item {
+  display: flex;
+  justify-content: flex-start;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  position: relative;
+}
+.timeline-item-date {
+  flex-shrink: 0;
+  width: 50px;
+  text-align: right;
+  box-sizing: border-box;
+  small {
+    font-size: 10px;
+  }
+}
+.timeline-item-content {
+  margin: 2px;
+  min-width: 0;
+  position: relative;
+  flex-shrink: 10;
+  p, ul, ol, h1, h2, h3, h4 {
+    &:first-child {
+      margin-top: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+.timeline-item-inner {
+  background: #fff;
+  box-sizing: border-box;
+  .block {
+    padding: 0;
+    color: inherit;
+  }
+  .block-strong {
+    .hairline-remove(top);
+    .hairline-remove(bottom);
+    padding-left: 0;
+    padding-right: 0;
+    margin: 0;
+  }
+  .list {
+    ul {
+      .hairline-remove(top);
+      .hairline-remove(bottom);
+    }
+  }
+}
+.timeline-item-divider {
+  width: 1px;
+  position: relative;
+  width: 10px;
+  height: 10px;
+  background: #bbb;
+  border-radius: 50%;
+  margin-top: 3px;
+  flex-shrink: 0;
+  &:after, &:before {
+    content: ' ';
+    width: 1px;
+    height: 100vh;
+    position: absolute;
+    left: 50%;
+    background: inherit;
+    transform: translate3d(-50%, 0, 0);
+  }
+  &:after {
+    top: 100%;
+  }
+  &:before {
+    bottom: 100%;
+  }
+  .timeline-item:last-child &:after {
+    display: none;
+  }
+  .timeline-item:first-child &:before {
+    display: none;
+  }
+}
+.timeline-item-time {
+  font-size: 13px;
+  &:first-child, &:last-child {
+    margin-top: 0;
+  }
+  .timeline-item-title + & {
+    margin-top: 0;
+  }
+}
+.timeline-horizontal {
+  height: 100%;
+  display: flex;
+  .timeline-item {
+    display: block;
+    width: 100/3vw;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+    position: relative;
+    height: 100%;
+  }
+  .timeline-item-date {
+    width: auto;
+    text-align: left;
+    line-height: 34px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 34px;
+    .ltr({
+      text-align: left;
+    });
+    .rtl({
+      text-align: right;
+    });
+  }
+  .timeline-item-content {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0;
+  }
+  .timeline-item-divider {
+    display: none;
+  }
+
+  @cols: 5, 10, 15, 20, 25, 30, 100/3, 35, 40, 45, 50, 55, 60, 65, 100*(2/3), 70, 75, 80, 85, 90, 95, 100;
+  .-(@i: length(@cols)) when (@i > 0) {
+    @divider: e(extract(@cols, @i));
+    @className: framework7_floor(@divider);
+    &.col-@{className} .timeline-item {
+      width: ~"@{divider}vw";
+    }
+    .-((@i - 1));
+  } .-;
+
+  @media (min-width:768px) {
+    .-(@i: length(@cols)) when (@i > 0) {
+      @divider: e(extract(@cols, @i));
+      @className: framework7_floor(@divider);
+      &.tablet-@{className} .timeline-item {
+        width: ~"@{divider}vw";
+      }
+      .-((@i - 1));
+    } .-;
+  }
+
+  @timelineMonthYearHeight: 24px;
+  .timeline-year, .timeline-month {
+    display: flex;
+    flex-shrink: 0;
+    padding-top: @timelineMonthYearHeight;
+    position: relative;
+    box-sizing: border-box;
+    height: 100%;
+  }
+  .timeline-year-title, .timeline-month-title {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    line-height: @timelineMonthYearHeight;
+    height: @timelineMonthYearHeight;
+    box-sizing: border-box;
+    span {
+      display: inline-block;
+      position: sticky;
+    }
+  }
+  .timeline-year-title {
+    font-size: 16px;
+  }
+  .timeline-month-title {
+    span {
+      margin-top: -2px;
+    }
+  }
+}
+
+& when (@includeIosTheme) {
+  @import url('./timeline-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./timeline-md.less');
+}

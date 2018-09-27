@@ -1,7 +1,11 @@
 module.exports = {
-  'extends': 'airbnb-base',
+  'extends': [
+    'plugin:react/recommended',
+    'airbnb-base',
+  ],
   'plugins': [
-    "import"
+    'import',
+    'react',
   ],
   'globals': {
     "window": true,
@@ -28,8 +32,15 @@ module.exports = {
       objects: 'always-multiline',
       imports: 'always-multiline',
       exports: 'always-multiline',
-      functions: 'never',
+      functions: 'ignore',
+    }],
+    'no-param-reassign': ['error', {
+      props: false,
     }],
     'prefer-destructuring': ['off'],
+    'react/react-in-jsx-scope': ['off'],
+    'react/no-string-refs': ['off'],
+    'react/prop-types': ['off'],
+    'linebreak-style': ['off']
   },
 };

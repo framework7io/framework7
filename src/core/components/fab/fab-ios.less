@@ -1,0 +1,125 @@
+.ios {
+  @import (multiple) '../../less/colors-ios.less';
+  @import (multiple) '../../less/vars-ios.less';
+  .fab > a, .fab-buttons a {
+    background: @themeColor;
+    width: 50px;
+    height: 50px;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.4);
+    border-radius: 25px;
+    color: #fff;
+    &.active-state {
+      transition-duration: 0ms;
+      background: darken(@themeColor, 8%);
+    }
+    i.icon {
+      font-size: 21px;
+    }
+  }
+
+  .fab[class*="fab-left"] {
+    left: 15px;
+  }
+
+  .fab[class*="fab-right"] {
+    right: 15px;
+  }
+  .fab[class*="-top"] {
+    top: 15px;
+  }
+  .fab[class*="-bottom"] {
+    bottom: 15px;
+  }
+
+  // Relation with navbar
+  .navbar ~ * .fab[class*="-top"], .navbar ~ .fab[class*="-top"] {
+    margin-top: @navbarSize;
+  }
+  // Relation with toolbar
+  .toolbar ~ * .fab[class*="-bottom"], .toolbar ~ .fab[class*="-bottom"] {
+    margin-bottom: @toolbarSize;
+  }
+  .tabbar-labels ~ * .fab[class*="-bottom"], .tabbar-labels ~ .fab[class*="-bottom"] {
+    margin-bottom: @tabbarLabelsSize;
+    @media (min-width: 768px) {
+      margin-bottom: @tabbarLabelsSizeTablet;
+    }
+  }
+  .fab-morph {
+    border-radius: 25px;
+    background: @themeColor;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.4);
+    > a {
+      box-shadow: none;
+      background: none !important;
+    }
+  }
+
+  // Extended
+  .fab-extended {
+    min-width: 50px;
+    > a {
+      width: 100%;
+      height: 50px;
+      i {
+        left: 50px / 2;
+      }
+    }
+    i ~ .fab-text {
+      padding-left: 50px;
+    }
+  }
+  .fab-label {
+    box-shadow: 0px 1px 2px rgba(0,0,0,0.4);
+  }
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      .fab > a, .fab-buttons a, &.fab > a, &.fab-buttons a {
+        background: @colorThemeValue;
+        &.active-state {
+          background: darken(@colorThemeValue, 8%);
+        }
+      }
+      .fab-morph, &.fab-morph {
+        background: @colorThemeValue;
+      }
+    }
+  });
+  .color-loop({
+    .fab.color-@{colorName} > a,
+    .fab.color-@{colorName} .fab-buttons > a,
+    .fab-buttons.color-@{colorName} a,
+    .fab > a.color-@{colorName},
+    .fab .fab-buttons > a.color-@{colorName} {
+      background: @colorValue;
+      &.active-state {
+        background: darken(@colorValue, 8%);
+      }
+    }
+    .fab-morph.color-@{colorName} {
+      background: @colorValue;
+    }
+  });
+
+  .safe-areas({
+    .fab[class*="-bottom"] {
+      bottom: ~"calc(15px + constant(safe-area-inset-bottom))";
+      bottom: ~"calc(15px + env(safe-area-inset-bottom))";
+    }
+  });
+  .safe-areas-landscape({
+    .safe-area-left({
+      .fab[class*="fab-left"] {
+        left: ~"calc(15px + constant(safe-area-inset-left))";
+        left: ~"calc(15px + env(safe-area-inset-left))";
+      }
+    });
+    .safe-area-right({
+      .fab[class*="fab-right"] {
+        right: ~"calc(15px + constant(safe-area-inset-right))";
+        right: ~"calc(15px + env(safe-area-inset-right))";
+      }
+    });
+  });
+}

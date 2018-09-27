@@ -1,0 +1,76 @@
+/* === Toast === */
+.toast {
+  transition-property: transform, opacity;
+  position: absolute;
+  max-width: 568px;
+  z-index: 20000;
+  color: #fff;
+  font-size: 14px;
+  box-sizing: border-box;
+  &.modal-in {
+    opacity: 1;
+  }
+  .toast-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  .toast-text {
+    line-height: 20px;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+  .toast-button {
+    flex-shrink: 0;
+  }
+  &.toast-with-icon {
+    .toast-content {
+      display: block;
+      text-align: center;
+    }
+    .toast-text {
+      text-align: center;
+    }
+    .toast-icon .f7-icons {
+      font-size: 50px;
+      width: 50px;
+      height: 50px;
+    }
+    .toast-icon .material-icons {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+    }
+  }
+  &.toast-center {
+    top: 50%;
+    opacity: 0;
+  }
+
+  @media (min-width: 1024px) {
+    opacity: 0;
+  }
+}
+
+html.with-statusbar {
+  &.device-ios .toast-top, &.ios:not(.device-ios):not(.device-android) .toast-top {
+    margin-top: 20px;
+  }
+  .safe-areas({
+    .toast-top {
+      margin-top: constant(safe-area-inset-top);
+      margin-top: env(safe-area-inset-top);
+    }
+  });
+  &.device-android .toast-top, &.md:not(.device-ios):not(.device-android) .toast-top {
+    margin-top: 24px;
+  }
+}
+
+& when (@includeIosTheme) {
+  @import url('./toast-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./toast-md.less');
+}

@@ -2,7 +2,7 @@
 * F7 Build Configuration
 * Don't modify this file!
 * If you want to build custom version of F7, just put build-config-custom.js with the required configuration in this folder. Or build it using command line:
-* $ npm run build:prod -- --config path/to/config.js --output path/to/output/folder
+* $ npm run build-core:prod -- --config path/to/config.js --output path/to/output/folder
 */
 
 const config = {
@@ -14,7 +14,7 @@ const config = {
     'popup',
     'login-screen',
     'popover',
-    'actions',
+    // 'actions',
     'sheet',
     'toast',
 
@@ -92,8 +92,17 @@ const config = {
     // Autocomplete
     'autocomplete',
 
+    // Tooltip
+    'tooltip',
+
+    // Gauge
+    'gauge',
+
     // VI Video Ads
     'vi',
+
+    // Elevation
+    'elevation',
 
     // Typography
     'typography',

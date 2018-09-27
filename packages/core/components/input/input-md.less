@@ -1,0 +1,274 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  @import (multiple) '../../less/vars-md.less';
+  .list {
+    input[type="text"],
+    input[type="password"],
+    input[type="search"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="url"],
+    input[type="date"],
+    input[type="datetime-local"],
+    input[type="time"],
+    input[type="number"],
+    select {
+      height: 36px;
+      color: #212121;
+      font-size: 16px;
+      &::placeholder {
+        color: rgba(0,0,0,0.35);
+      }
+    }
+    textarea {
+      color: #212121;
+      font-size: 16px;
+      padding-top: 7px;
+      padding-bottom: 7px;
+      &.resizable {
+        height: 36px;
+      }
+      &::placeholder {
+        color: rgba(0,0,0,0.35);
+      }
+    }
+  }
+  .item-input-wrap, .input {
+    &:after {
+      transition-duration: 200ms;
+    }
+  }
+  .item-input-wrap {
+    min-height: 36px;
+  }
+  .hairline-root('.item-input-wrap', bottom, rgba(0, 0, 0, 0.12));
+  .hairline-root('.input', bottom, rgba(0, 0, 0, 0.12));
+  .item-label, .item-floating-label {
+    font-size: 12px;
+    width: 100%;
+    color: rgba(0,0,0,.65);
+    transition-duration: 200ms;
+    line-height: 13px;
+    transition-property: transform, color;
+  }
+  .item-floating-label {
+    transform: scale(16/12) translateY(18px);
+    color: rgba(0,0,0,0.35);
+    width: auto;
+    max-width: 75%;
+    pointer-events: none;
+    ~ .item-input-wrap input,
+    ~ .item-input-wrap textarea, {
+      &::placeholder {
+        opacity: 0;
+        transition-duration: 100ms;
+      }
+      &.input-focused::placeholder{
+        opacity: 1;
+        transition-duration: 300ms;
+      }
+    }
+    .ltr({
+      transform-origin: left;
+    });
+    .rtl({
+      transform-origin: right;
+    });
+  }
+  .item-input-with-value .item-floating-label, .item-input-focused .item-floating-label {
+    transform: scale(1) translateY(0);
+  }
+  .item-input-with-value .item-floating-label {
+    color: rgba(0,0,0,.65);
+  }
+  .item-input {
+    .item-media {
+      align-self: flex-end;
+    }
+    .item-inner {
+      display: block;
+      .hairline-remove(bottom);
+    }
+  }
+  .inline-labels, .inline-label {
+    .item-media {
+      align-self: flex-start;
+      padding-top: 14px;
+    }
+    .item-inner {
+      display: flex;
+    }
+    .item-label, .item-floating-label {
+      font-size: 16px;
+      width: 30%;
+      line-height: 1.5;
+      align-self: flex-start;
+      padding-top: 7px;
+      + .item-input-wrap {
+        .ltr({
+          margin-left: 8px;
+        });
+        .rtl({
+          margin-right: 8px;
+        });
+      }
+    }
+  }
+  .item-input-with-error-message,
+  .item-input-with-info,
+  div.input-with-error-message,
+  div.input-with-info,
+  span.input-with-error-message,
+  span.input-with-info {
+    padding-bottom: 20px;
+  }
+  .item-input-error-message, .item-input-info,
+  .input-error-message, .input-info {
+    font-size: 12px;
+    line-height: 1.4;
+    position: absolute;
+    top: 100%;
+    margin-top: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    .ltr({
+      left: 0;
+      right: 16px;
+    });
+    .rtl({
+      right: 0;
+      left: 16px;
+    });
+  }
+  .item-input-info, .input-info {
+    color: rgba(0,0,0,.45);
+  }
+  .item-input-error-message, .input-error-message {
+    color: @red;
+    display: none;
+  }
+  .item-input-focused {
+    .item-label, .item-floating-label {
+      color: @themeColor;
+    }
+  }
+  .item-input-focused .item-input-wrap:after,
+  .input-focused:after {
+    background: @themeColor;
+  }
+  .item-input-invalid, .item-invalid {
+    .item-label, .item-floating-label {
+      color: @red;
+    }
+    .item-input-error-message,
+    .input-error-message {
+      display: block;
+    }
+    .item-input-info,
+    .input-info {
+      display: none;
+    }
+  }
+  .item-input-invalid .item-input-wrap:after,
+  .input-invalid:after {
+    background: @red;;
+  }
+  .item-input-invalid, .item-input-focused {
+    .item-input-wrap:after {
+      transform: scaleY(2);
+    }
+  }
+  .input-invalid, .input-focused {
+    &:after {
+      transform: scaleY(2) !important;
+    }
+  }
+  .input-clear-button {
+    width: 24px;
+    height: 24px;
+    background: rgba(0,0,0,0.12);
+    margin-top: -12px;
+    &:after {
+      .svg-background("<svg fill='#000' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+      background-size: 16px 16px;
+      opacity: 0.54;
+    }
+    &:before {
+      width: 48px;
+      height: 48px;
+      margin-left: -24px;
+      margin-top: -24px;
+    }
+  }
+  .item-input-wrap {
+    .input-clear-button {
+      bottom: 6px;
+      margin-top: 0;
+      top: auto;
+    }
+  }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      input[type="text"],
+      input[type="password"],
+      input[type="search"],
+      input[type="email"],
+      input[type="tel"],
+      input[type="url"],
+      input[type="date"],
+      input[type="datetime-local"],
+      input[type="time"],
+      input[type="number"],
+      select,
+      textarea {
+        color: rgba(255,255,255,0.87);
+        &::placeholder {
+          color: rgba(255,255,255,0.35);
+        }
+      }
+      .item-input:not(.item-input-focused) .item-input-wrap,
+      .input {
+        .hairline-color(bottom, @blockBorderColorDark);
+      }
+      .item-label, .item-floating-label {
+        color: rgba(255,255,255,.54);
+      }
+      .item-floating-label {
+        color: rgba(255,255,255,0.35);
+      }
+      .item-input-with-value .item-floating-label {
+        color: rgba(255,255,255,.54);
+      }
+      .input-clear-button {
+        background: #fff;
+      }
+    }
+  }
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      .item-input-focused {
+        .item-label, .item-floating-label {
+          color: @colorThemeValue;
+        }
+      }
+      .item-input-focused .item-input-wrap:after,
+      .input-after:after {
+        background: @colorThemeValue;
+      }
+    }
+  });
+  .color-loop({
+    .item-input-focused.color-@{colorName} {
+      .item-label, .item-floating-label {
+        color: @colorValue;
+      }
+    }
+    .item-input-focused.color-@{colorName} .item-input-wrap:after,
+    .input-after.color-@{colorName}:after {
+      background: @colorValue;
+    }
+  });
+}

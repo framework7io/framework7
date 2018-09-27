@@ -1,0 +1,37 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  .contacts-list {
+    margin: 0;
+    .list-group-title {
+      padding: 0 16px;
+      pointer-events: none;
+      background: none;
+      color: @themeColor;
+      font-weight: 500;
+      line-height: 48px;
+      height: 48px;
+      font-size: 20px;
+      overflow: visible;
+      width: 56px;
+      + li {
+        margin-top: -48px;
+      }
+    }
+    li:not(.list-group-title) {
+      .ltr({
+        padding-left: 40px + 16px;
+      });
+      .rtl({
+        padding-right: 40px + 16px;
+      })
+    }
+  }
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .contacts-list .list-group-title {
+        color: #fff;
+      }
+    }
+  }
+}

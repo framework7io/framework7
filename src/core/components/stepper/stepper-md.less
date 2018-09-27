@@ -1,0 +1,263 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  .stepper {
+    height: 36px;
+  }
+  .stepper-button, .stepper-button-minus, .stepper-button-plus {
+    border: 2px solid @themeColor;
+    color: @themeColor;
+    line-height: 34px;
+    height: 36px;
+    width: 40px;
+    transition-duration: 300ms;
+    transform: translate3d(0,0,0);
+    overflow: hidden;
+    + .stepper-button,
+    + .stepper-button-minus,
+    + .stepper-button-plus {
+      .ltr({
+        border-left: none;
+      });
+      .rtl({
+        border-right: none;
+      });
+    }
+    &.active-state {
+      background: rgba(0,0,0,0.1);
+    }
+    .ltr({
+      &:first-child {
+        border-radius: 4px 0 0 4px;
+      }
+      &:last-child {
+        border-radius: 0 4px 4px 0;
+      }
+    });
+    .rtl({
+      &:first-child {
+        border-radius: 0 4px 4px 0;
+      }
+      &:last-child {
+        border-radius: 4px 0 0 4px;
+      }
+    });
+
+  }
+  .stepper-button-plus, .stepper-button-minus {
+    &:after, &:before {
+      background: @themeColor;
+    }
+  }
+  .stepper-value,
+  .stepper-input-wrap {
+    border-top: 2px solid @themeColor;
+    border-bottom: 2px solid @themeColor;
+  }
+  .stepper .stepper-value,
+  .stepper .stepper-input-wrap input {
+    color: @themeColor;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+  }
+  .stepper .stepper-input-wrap {
+    input {
+      height: 100%;
+    }
+  }
+  .stepper-fill, .stepper-fill-md {
+    .stepper-button, .stepper-button-minus, .stepper-button-plus {
+      background-color: @themeColor;
+      color: #fff;
+      border: none;
+      line-height: 36px;
+      &.active-state {
+        background: darken(@themeColor, 8%);
+      }
+      &:after, &:before {
+        background: #fff;
+      }
+    }
+    .stepper-button + .stepper-button,
+    .stepper-button-minus + .stepper-button-plus {
+      .ltr({
+        border-left: 1px solid rgba(0,0,0,0.1);
+      });
+      .rtl({
+        border-right: 1px solid rgba(0,0,0,0.1);
+      });
+    }
+    &.stepper-big, &.stepper-big-md {
+      .stepper-button, .stepper-button-minus, .stepper-button-plus {
+        line-height: 48px;
+      }
+    }
+    &.stepper-small, &.stepper-small-md {
+      .stepper-button, .stepper-button-minus, .stepper-button-plus {
+        line-height: 28px;
+      }
+    }
+  }
+
+  .stepper-small, .stepper-small-md {
+    height: 28px;
+    .stepper-button, .stepper-button-minus, .stepper-button-plus {
+      height: 28px;
+      line-height: 24px;
+    }
+    .stepper-button, .stepper-button-minus, .stepper-button-plus, .stepper-input-wrap, .stepper-value {
+      border-width: 2px;
+    }
+  }
+  .stepper-big, .stepper-big-md {
+    height: 48px;
+    .stepper-button, .stepper-button-minus, .stepper-button-plus {
+      height: 48px;
+      line-height: 46px;
+      .ltr({
+        &:first-child {
+          border-radius: 4px 0 0 4px;
+        }
+        &:last-child {
+          border-radius: 0 4px 4px 0;
+        }
+      });
+      .rtl({
+        &:first-child {
+          border-radius: 0 4px 4px 0;
+        }
+        &:last-child {
+          border-radius: 4px 0 0 4px;
+        }
+      });
+    }
+  }
+  .stepper-round, .stepper-round-md {
+    .stepper-button, .stepper-button-minus, .stepper-button-plus {
+      .ltr({
+        &:first-child {
+          border-radius: 36px 0 0 36px;
+        }
+        &:last-child {
+          border-radius: 0 36px 36px 0;
+        }
+      });
+      .rtl({
+        &:first-child {
+          border-radius: 0 36px 36px 0;
+        }
+        &:last-child {
+          border-radius: 36px 0 0 36px;
+        }
+      });
+    }
+  }
+  .stepper-raised {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    border-radius: 4px;
+    &.stepper-big, &.stepper-big-md {
+      border-radius: 4px;
+    }
+    &.stepper-round, &.stepper-round-md {
+      border-radius: 36px;
+    }
+    .stepper-value,
+    .stepper-input-wrap {
+      border: none;
+    }
+    &:not(.stepper-fill):not(.stepper-fill-md) {
+      .stepper-input-wrap, .stepper-value {
+        border-left: 1px solid rgba(0,0,0,0.1);
+        border-right: 1px solid rgba(0,0,0,0.1);
+      }
+    }
+    .stepper-button, .stepper-button-minus, .stepper-button-plus {
+      border: none;
+    }
+    .stepper-button + .stepper-button,
+    .stepper-button-minus + .stepper-button-plus {
+      .ltr({
+        border-left: 1px solid rgba(0,0,0,0.1);
+      });
+      .rtl({
+        border-right: 1px solid rgba(0,0,0,0.1);
+      });
+    }
+  }
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} {
+      .stepper-button, .stepper-button-minus, .stepper-button-plus {
+        border-color: @colorThemeValue;
+        color: @colorThemeValue;
+      }
+      .stepper-button-plus, .stepper-button-minus {
+        &:after, &:before {
+          background: @colorThemeValue;
+        }
+      }
+      .stepper-value,
+      .stepper-input-wrap {
+        border-top-color: @colorThemeValue;
+        border-bottom-color: @colorThemeValue;
+      }
+      .stepper-value {
+        color: @colorThemeValue;
+      }
+      .stepper .stepper-input-wrap {
+        input {
+          color: @colorThemeValue;
+        }
+      }
+      .stepper-fill, .stepper-fill-md {
+        .stepper-button, .stepper-button-minus, .stepper-button-plus {
+          background-color: @colorThemeValue;
+          color: #fff;
+          &.active-state {
+            background: darken(@colorThemeValue, 8%);
+          }
+          &:after, &:before {
+            background: #fff;
+          }
+        }
+      }
+    }
+  });
+  .color-loop({
+    .stepper.color-@{colorName} {
+      .stepper-button, .stepper-button-minus, .stepper-button-plus {
+        border-color: @colorValue;
+        color: @colorValue;
+      }
+      .stepper-button-plus, .stepper-button-minus {
+        &:after, &:before {
+          background: @colorValue;
+        }
+      }
+      .stepper-value,
+      .stepper-input-wrap {
+        border-top-color: @colorValue;
+        border-bottom-color: @colorValue;
+      }
+      .stepper-value {
+        color: @colorValue;
+      }
+      .stepper-input-wrap {
+        input {
+          color: @colorValue;
+        }
+      }
+      &.stepper-fill, &.stepper-fill-md {
+        .stepper-button, .stepper-button-minus, .stepper-button-plus {
+          background-color: @colorValue;
+          color: #fff;
+          &.active-state {
+            background: darken(@colorValue, 8%);
+          }
+          &:after, &:before {
+            background: #fff;
+          }
+        }
+      }
+    }
+  });
+}

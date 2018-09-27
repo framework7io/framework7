@@ -1,0 +1,165 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  @import (multiple) '../../less/vars-md.less';
+  .calendar-header {
+    height: @navbarSize;
+    background: @toolbarBg;
+    font-size: 20px;
+    line-height: @navbarSize;
+    padding: 0 24px;
+    color:#fff;
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+  }
+  .calendar-footer {
+    position: relative;
+    width: 100%;
+    height: 48px;
+    padding: 6px 8px;
+    overflow: hidden;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .calendar .toolbar {
+    background: none !important;
+    color: #212121;
+    a.link {
+      .md-link-highlight(rgba(0,0,0,0.15));
+      .ripple-wave {
+        background: rgba(0,0,0,0.1);
+      }
+    }
+    .icon-next, .icon-prev, .icon-forward, .icon-back {
+      opacity: 0.54;
+    }
+  }
+  .calendar-week-header {
+    color: rgba(0,0,0,.54);
+    height: 24px;
+    .calendar-week-day {
+      line-height: 24px;
+    }
+  }
+
+  .calendar-day {
+    &.calendar-day-today .calendar-day-number {
+      color: @themeColor;
+    }
+    &.calendar-day-selected .calendar-day-number {
+      background: @themeColor;
+      color: #fff;
+    }
+    .calendar-day-number {
+      width: 32px;
+      height: 32px;
+      line-height: 32px;
+    }
+    .calendar-day-event {
+      background: @themeColor;
+    }
+  }
+
+  .calendar-range .calendar-day.calendar-day-selected {
+    .calendar-day-number {
+      color: #fff;
+    }
+  }
+  .calendar-month-selector, .calendar-year-selector {
+    a.icon-only {
+      min-width: 36px;
+    }
+  }
+  .hairline-root('.calendar-sheet', top, #ccc);
+
+  .safe-areas({
+    .calendar-sheet .sheet-modal-inner {
+      margin-bottom: constant(safe-area-inset-bottom);
+      margin-bottom: env(safe-area-inset-bottom);
+    }
+  });
+  .safe-areas-landscape({
+    .safe-area-left({
+      &.calendar,
+      .calendar:not(.no-ios-edges):not(.no-ios-left-edge) {
+        .calendar-row, .calendar-week-header {
+          padding-left: constant(safe-area-inset-left);
+          padding-left: env(safe-area-inset-left);
+        }
+      }
+    });
+    .safe-area-right({
+      &.calendar,
+      .calendar:not(.no-ios-edges):not(.no-ios-right-edge) {
+        .calendar-row, .calendar-week-header {
+          padding-right: constant(safe-area-inset-right);
+          padding-right: env(safe-area-inset-right);
+        }
+      }
+    });
+  });
+
+  // Dark Theme
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .calendar-popover .calendar-week-header {
+        background-color: transparent;
+      }
+      .calendar-week-header {
+        color: rgba(255,255,255,0.54);
+      }
+      .calendar-day {
+        color: rgba(255,255,255,0.87);
+        &.calendar-day-disabled {
+          color: rgba(255,255,255,0.54);
+        }
+      }
+      .calendar-day.calendar-day-prev, .calendar-day.calendar-day-next {
+        color: rgba(255,255,255,0.35);
+      }
+      .calendar-modal, .calendar-modal& {
+        background: #202020;
+      }
+      .calendar, .calendar& {
+        &.calendar-sheet {
+          .hairline-color(top, rgba(255,255,255,0.2));
+        }
+        .toolbar {
+          color: rgba(255,255,255,0.54);
+          a.link {
+            .md-link-highlight(rgba(255,255,255,0.15));
+            .ripple-wave {
+              background-color: rgba(255,255,255,0.3);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName}, .color-@{colorThemeName} {
+      .calendar-header {
+        background: @colorThemeValue;
+      }
+      .calendar-day {
+        &.calendar-day-today .calendar-day-number {
+          color: @colorThemeValue;
+        }
+        &.calendar-day-selected .calendar-day-number {
+          background: @colorThemeValue;
+          color: #fff;
+          &:after {
+            background-color: #fff;
+          }
+        }
+        .calendar-day-event {
+          background: @colorThemeValue;
+        }
+      }
+    }
+  });
+}

@@ -2,9 +2,12 @@ build
 .git
 .github
 custom
-dist
-kitchen-sink
+packages
 node_modules
-src/framework7.js
-src/modules/demo-module.js
-src/components/swiper/swiper-class
+kitchen-sink
+src/core/framework7.js
+src/core/modules/demo-module.js
+src/core/components/swiper/swiper-class
+src/core/modules/component/snabbdom
+src/core/components/calendar/idate
+woff2

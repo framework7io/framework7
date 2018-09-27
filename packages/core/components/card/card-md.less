@@ -1,0 +1,117 @@
+.md {
+  @import (multiple) '../../less/colors-md.less';
+  @import (multiple) '../../less/vars-md.less';
+  .cards-list, .card .list {
+    ul {
+      background: none;
+    }
+  }
+  .card {
+    margin: 8px;
+    .elevation(1);
+  }
+  .card-outline {
+    box-shadow: none;
+    border: 1px solid rgba(0,0,0,0.12);
+  }
+  .card-header, .card-footer {
+    a.link {
+      .button;
+      color:@themeColor;
+      border-radius: 4px;
+      line-height: 36px;
+      height: 36px;
+      text-transform: uppercase;
+      min-width: 64px;
+      padding: 0 8px;
+      border: none;
+      transition-duration: 300ms;
+      transform: translate3d(0,0,0);
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      &.active-state {
+        background: rgba(0,0,0,0.1);
+      }
+    }
+    a.icon-only {
+      min-width: 48px;
+    }
+  }
+
+  .page-content > .card:last-child {
+    margin-bottom: 32px;
+  }
+
+  .card-content-padding {
+    padding: 16px;
+    > .list, > .block {
+      margin: -16px;
+    }
+  }
+
+  .card-header, .card-footer {
+    min-height: 48px;
+    padding: 4px 16px;
+  }
+
+  .card-header {
+    font-size: 16px;
+  }
+
+  .card-footer {
+    color: #757575;
+  }
+
+  & when (@includeDarkTheme) {
+    .theme-dark {
+      .card {
+        background-color: @blockBgDark;
+      }
+      .card-outline {
+        border-color: #282829;
+      }
+      .card-header {
+        .hairline-color(bottom, @blockBorderColorDark);
+      }
+      .card-footer {
+        color: rgba(255,255,255,0.54);
+        .hairline-color(top, @blockBorderColorDark);
+      }
+    }
+  }
+
+  .safe-areas-landscape({
+    .safe-area-left({
+      .card:not(.no-ios-edges):not(.no-ios-left-edge) {
+        margin-left: ~"calc(8px + constant(safe-area-inset-left))";
+        margin-left: ~"calc(8px + env(safe-area-inset-left))";
+      }
+    });
+    .safe-area-right({
+      .card:not(.no-ios-edges):not(.no-ios-right-edge) {
+        margin-right: ~"calc(8px + constant(safe-area-inset-right))";
+        margin-right: ~"calc(8px + env(safe-area-inset-right))";
+      }
+    });
+  });
+
+  .color-theme-loop({
+    .color-theme-@{colorThemeName} .card-header,
+    .color-theme-@{colorThemeName} .card-footer,
+    .card-header.color-theme-@{colorThemeName},
+    .card-footer.color-theme-@{colorThemeName} {
+      a.link {
+        color: @colorThemeValue;
+      }
+    }
+  });
+  .color-loop({
+    .card-header, .card-footer {
+      a.link.color-@{colorName} {
+        color: @colorValue;
+      }
+    }
+  });
+}
+
+

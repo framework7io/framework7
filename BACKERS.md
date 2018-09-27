@@ -3,6 +3,11 @@
 <table>
   <tr>
     <td align="center" valign="middle">
+      <a href="https://appvalley.vip/" target="_blank">
+        <img width="200" src="https://framework7.io/i/sponsors/appvalley.jpg">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://www.securcom.me/" target="_blank">
         <img width="200" src="https://framework7.io/i/sponsors/securcom.png">
       </a>
@@ -36,6 +41,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ---
 
 ### $100 Silver Sponsor
+Colin Adams ([App Valley](https://appvalley.vip/))
 Pavol Cvengros ([securCom Inc](https://www.securcom.me/))<br>
 Mason Fok ([tommy](http://mytommy.com))<br>
 Juergen Schimmoeller
@@ -46,6 +52,7 @@ Juergen Schimmoeller
 
 ### $50+ Top Supporter
 
+Harald Hanek<br>
 Olivier<br>
 Marcelo Lopetegui L.<br>
 Bearr Dayss<br>
@@ -56,7 +63,16 @@ Bart DJ
 
 ---
 
-### $10+ Thank You
+### $10+ Supporter
+Arsen Huang<br>
+Jonathan Pugh<br>
+Danny Redfern<br>
+Rick Chang<br>
+Marc Hildmann<br>
+Kyle Hammond<br>
+En-Yang Lin<br>
+VOUSYS<br>
+David Fall<br>
 Almaz Kazakov<br>
 plpl<br>
 Zakery Kates<br>
@@ -72,14 +88,16 @@ Dave Billington
 
 ---
 
-### $5+
+### $5+ Thank You
+Farshid Mossaiby<br>
+Byron<br>
+Evgeny Konyahin<br>
 jinsom<br>
 Alessandro De Siro<br>
 Simon MacDonald<br>
 César Teixeira<br>
 Firas Sleibi<br>
 Garry Lowther<br>
-VOUSYS<br>
 Tirso Martínez Reyes<br>
 Amir br<br>
 Toby Allen - Ballymaloe Cookery School<br>

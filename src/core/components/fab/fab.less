@@ -1,0 +1,251 @@
+/* === FAB === */
+.fab {
+  position: absolute;
+  z-index: 1500;
+}
+.fab > a, .fab-buttons a {
+  position: relative;
+  transition-duration: 300ms;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 1;
+}
+.fab > a {
+  i {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0) rotate(0deg) scale(1);
+    transition: 300ms;
+  }
+  i + i {
+    transform: translate3d(-50%, -50%, 0) rotate(-90deg) scale(0.5);
+    opacity: 0;
+  }
+}
+.fab[class*="fab-center"] {
+  left: 50%;
+  transform: translateX(-50%);
+}
+.fab[class*="left-center"], .fab[class*="right-center"] {
+  top: 50%;
+  transform: translateY(-50%);
+}
+.fab[class*="center-center"] {
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+.fab div.fab-buttons {
+  a {
+    width: 40px;
+    height: 40px;
+  }
+}
+.fab-buttons {
+  display: flex;
+  visibility: hidden;
+  pointer-events: none;
+  position: absolute;
+  a {
+    opacity: 0;
+  }
+}
+.fab-opened:not(.fab-morph) > a {
+  i {
+    transform: translate3d(-50%, -50%, 0) rotate(90deg) scale(0.5);
+    opacity: 0;
+  }
+  i + i {
+    transform: translate3d(-50%, -50%, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+}
+.fab-opened .fab-buttons {
+  visibility: visible;
+  pointer-events: auto;
+  a {
+    opacity: 1;
+    transform: translate3d(0, 0px, 0) scale(1) !important;
+    &:nth-child(2) {
+      transition-delay: 50ms;
+    }
+    &:nth-child(3) {
+      transition-delay: 100ms;
+    }
+    &:nth-child(4) {
+      transition-delay: 150ms;
+    }
+    &:nth-child(5) {
+      transition-delay: 200ms;
+    }
+    &:nth-child(6) {
+      transition-delay: 250ms;
+    }
+  }
+}
+.fab-buttons-top, .fab-buttons-bottom {
+  left: 50%;
+  width: 40px;
+  margin-left: -20px;
+}
+.fab-buttons-top {
+  bottom: 100%;
+  margin-bottom: 16px;
+  flex-direction: column-reverse;
+  a {
+    transform: translate3d(0, 8px, 0) scale(0.3);
+    transform-origin: center bottom;
+    + a {
+      margin-bottom: 16px;
+    }
+  }
+}
+.fab-buttons-bottom {
+  top: 100%;
+  margin-top: 16px;
+  flex-direction: column;
+  a {
+    transform: translate3d(0, -8px, 0) scale(0.3);
+    transform-origin: center top;
+    + a {
+      margin-top: 16px;
+    }
+  }
+}
+.fab-buttons-left, .fab-buttons-right {
+  top: 50%;
+  height: 40px;
+  margin-top: -20px;
+}
+.fab-buttons-left {
+  right: 100%;
+  margin-right: 16px;
+  .ltr({
+    flex-direction: row-reverse;
+  });
+  a {
+    transform: translate3d(8px, 0px, 0) scale(0.3);
+    transform-origin: right center;
+    + a {
+      margin-right: 16px;
+    }
+  }
+}
+.fab-buttons-right {
+  left: 100%;
+  margin-left: 16px;
+  .rtl({
+    flex-direction: row-reverse;
+  });
+  a {
+    transform: translate3d(-8px, 0, 0) scale(0.3);
+    transform-origin: left center;
+    + a {
+      margin-left: 16px;
+    }
+  }
+}
+.fab-buttons-center {
+  left: 0%;
+  top: 0%;
+  width: 100%;
+  height: 100%;
+  a {
+    position: absolute;
+    &:nth-child(1) {
+      left: 50%;
+      margin-left: -20px;
+      bottom: 100%;
+      margin-bottom: 16px;
+      transform: translateY(-8px) scale(0.3);
+      transform-origin: center bottom;
+    }
+    &:nth-child(2) {
+      left: 100%;
+      margin-top: -20px;
+      top: 50%;
+      margin-left: 16px;
+      transform: translateX(-8px) scale(0.3);
+      transform-origin: left center;
+    }
+    &:nth-child(3) {
+      left: 50%;
+      margin-left: -20px;
+      top: 100%;
+      margin-top: 16px;
+      transform: translateY(8px) scale(0.3);
+      transform-origin: center top;
+    }
+    &:nth-child(4) {
+      right: 100%;
+      margin-top: -20px;
+      top: 50%;
+      margin-right: 16px;
+      transform: translateX(8px) scale(0.3);
+      transform-origin: right center;
+    }
+  }
+}
+.fab-opened.fab-morph > a {
+  i {
+    opacity: 0;
+  }
+}
+.fab-morph, .fab-morph > a, .fab-morph-target {
+  transition-duration: 250ms;
+}
+.fab-morph-target:not(.fab-morph-target-visible) {
+  display: none;
+}
+
+// Extended
+.fab-extended {
+  width: auto;
+  > a {
+    width: 100% !important;
+  }
+}
+.fab-text {
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+// Labels
+.fab-label-button {
+  overflow: visible !important;
+}
+.fab-label {
+  position: absolute;
+  top: 50%;
+  padding: 4px 12px;
+  border-radius: 4px;
+  background: #fff;
+  color: #333;
+  white-space: nowrap;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.fab[class*="fab-right-"] {
+  .fab-label {
+    right: 100%;
+    margin-right: 8px;
+  }
+}
+.fab[class*="fab-left-"] {
+  .fab-label {
+    left: 100%;
+    margin-left: 8px;
+  }
+}
+
+& when (@includeIosTheme) {
+  @import url('./fab-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./fab-md.less');
+}

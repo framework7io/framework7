@@ -1,0 +1,73 @@
+.rtl({
+  html {
+    direction: rtl;
+  }
+});
+html, body, .framework7-root {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  width: 100%;
+  background: #fff;
+  overflow: hidden;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+.framework7-root {
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.framework7-initializing * {
+  &, &:before, &:after {
+    transition-duration: 0ms !important;
+  }
+}
+// Touch Actions
+/*
+a, button, input, textarea, .link, .button, label, .sortable-handler {
+  touch-action: manipulation;
+  -ms-touch-action: manipulation;
+}
+*/
+// Fix for iPad in Safari in Lanscape mode
+@media (width:1024px) and (height:691px) and (orientation:landscape) {
+  html, body, .framework7-root {
+    height: 671px;
+  }
+}
+@media (width:1024px) and (height:692px) and (orientation:landscape) {
+  html, body, .framework7-root  {
+    height: 672px;
+  }
+}
+* {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-touch-callout:none;
+}
+a, input, textarea, select {
+  outline: 0;
+}
+a {
+  cursor: pointer;
+  text-decoration: none;
+}
+p {
+  margin: 1em 0;
+}
+// Disabled
+.disabled {
+  .disabled() !important;
+}
+
+& when (@includeIosTheme) {
+  @import url('./app-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./app-md.less');
+}

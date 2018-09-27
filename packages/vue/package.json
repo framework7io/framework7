@@ -1,0 +1,46 @@
+{
+  "name": "framework7-vue",
+  "version": "3.3.2",
+  "description": "Build full featured iOS & Android apps using Framework7 & Vue",
+  "main": "framework7-vue.js",
+  "jsnext:main": "framework7-vue.esm.js",
+  "module": "framework7-vue.esm.js",
+  "scripts": {
+    "postinstall": "node -e \"console.log('\\u001b[35m\\u001b[1mLove Framework7 Vue? Support project by donating or pledging on patreon:\\u001b[22m\\u001b[39m\\n > \\u001b[32mhttps://patreon.com/vladimirkharlampidi\\u001b[0m\\n')\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/framework7io/framework7.git"
+  },
+  "keywords": [
+    "vue",
+    "vuejs",
+    "mobile",
+    "framework",
+    "framework7",
+    "cordova",
+    "ios",
+    "iphone",
+    "ipad",
+    "apple",
+    "phonegap",
+    "native",
+    "touch",
+    "appstore",
+    "app",
+    "f7",
+    "material",
+    "android",
+    "google",
+    "googleplay"
+  ],
+  "author": "Vladimir Kharlampidi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/framework7io/framework7/issues"
+  },
+  "homepage": "http://framework7.io/vue/",
+  "peerDependencies": {
+    "vue": "2.x"
+  }
+}
