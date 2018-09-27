@@ -136,6 +136,13 @@ export namespace View {
   interface AppMethods extends Router.AppEvents{
     view: {
       current: View
+      main: View
+      create(viewEl: HTMLElement | CSSSelector, parameters?: Parameters): View
+      get(viewEl: HTMLElement | CSSSelector): View
+    },
+    views: {
+      current: View
+      main: View
       create(viewEl: HTMLElement | CSSSelector, parameters?: Parameters): View
       get(viewEl: HTMLElement | CSSSelector): View
     }
