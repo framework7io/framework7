@@ -645,7 +645,7 @@ function navigate(navigateParams, navigateOptions = {}) {
     if (route.route.async) {
       router.allowPageChange = false;
 
-      route.route.async.call(router, route, router.currentRoute, asyncResolve, asyncReject);
+      route.route.async.call(router, options.route, router.currentRoute, asyncResolve, asyncReject);
     }
   }
   function reject() {
