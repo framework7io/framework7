@@ -34,9 +34,9 @@ export default {
 
     let fixedTags;
     // phenome-vue-next-line
-    fixedTags = ('navbar toolbar tabbar subnavbar Sheet messagebar fab list-index').split(' ');
+    fixedTags = ('navbar toolbar tabbar subnavbar searchbar messagebar fab list-index').split(' ');
     // phenome-react-next-line
-    fixedTags = ('navbar toolbar tabbar subnavbar Sheet messagebar fab list-index').split(' ').map(tagName => `f7-${tagName}`);
+    fixedTags = ('navbar toolbar tabbar subnavbar searchbar messagebar fab list-index').split(' ').map(tagName => `f7-${tagName}`);
 
     const slotsDefault = self.slots.default;
 
