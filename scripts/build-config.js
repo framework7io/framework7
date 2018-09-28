@@ -14,7 +14,7 @@ const config = {
     'popup',
     'login-screen',
     'popover',
-    // 'actions',
+    'actions',
     'sheet',
     'toast',
 
