@@ -101,7 +101,7 @@ import F7Toolbar from './components/toolbar';
 import F7View from './components/view';
 import F7Views from './components/views';
 
-declare interface Framework7Extensions {
+export interface Framework7Extensions {
   /** Main Framework7's initialized instance. It allows you to use any of Framework7 APIs */
   $f7: Framework7
   /** Callback function that will be executed when Framework7 fully intialized. Useful to use in components when you need to access Framework7 API and to be sure it is ready. So it is safe to put all Framework7 related logic into this callback. As an argument it receives initialized Framework7 instance */
