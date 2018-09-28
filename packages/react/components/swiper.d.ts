@@ -10,7 +10,7 @@ declare namespace F7Swiper {
     pagination? : boolean
     scrollbar? : boolean
     navigation? : boolean
-    init? : boolean  | true
+    init? : boolean
     color? : string
     colorTheme? : string
     textColor? : string

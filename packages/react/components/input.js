@@ -358,7 +358,7 @@ __reactComponentSetProps(F7Input, Object.assign({
   multiple: Boolean,
   readonly: Boolean,
   required: Boolean,
-  inputStyle: String,
+  inputStyle: Object,
   pattern: String,
   validate: [Boolean, String],
   tabindex: [String, Number],

@@ -1,16 +1,4 @@
-/**
- * Framework7 Vue 3.3.1
- * Build full featured iOS & Android apps using Framework7 & Vue
- * http://framework7.io/vue/
- *
- * Copyright 2014-2018 Vladimir Kharlampidi
- *
- * Released under the MIT License
- *
- * Released on: September 17, 2018
- */
-
-import React from 'react';
+import * as React from 'react';
 import { Dom7 } from 'dom7';
 import Framework7 from 'framework7';
 import { Framework7Plugin } from 'framework7/components/app/app-class';

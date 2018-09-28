@@ -41,7 +41,8 @@ export namespace Router {
     options?: RouteOptions
     /** Array with nested routes */
     routes?: RouteParameters[]
-
+    /** Modules to load */
+    modules?: any[]
     /** Load page from DOM by passed HTMLElement */
     el?: HTMLElement | CSSSelector
     /** Load page from DOM that has same data-name attribute */
@@ -100,6 +101,8 @@ export namespace Router {
     reloadPrevious?: boolean
     /** load new page and remove all previous pages from history and DOM */
     reloadAll?: boolean
+    /** previous pages history will be cleared after reloading/navigate to the specified route */
+    clearPreviousHistory?: boolean
     /** custom/extended context for Template7/Component page (when route loaded from template, templateUrl, component or componentUrl) */
     context?: object
     /** If set to `true` then it will ignore if such URL in cache and reload it using XHR again */

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Tooltip as TooltipNamespace } from 'framework7/components/tooltip/tooltip';
 
 declare namespace F7FabButton {
   interface Props {
@@ -22,5 +23,6 @@ declare namespace F7FabButton {
 }
 declare class F7FabButton extends React.Component<F7FabButton.Props, {}> {
   onClick(event? : any) : unknown
+  f7Tooltip: TooltipNamespace.Tooltip
 }
 export default F7FabButton;

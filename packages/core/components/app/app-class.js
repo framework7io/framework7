@@ -4,6 +4,9 @@ import { window, document } from 'ssr-window';
 import Utils from '../../utils/utils';
 import Device from '../../utils/device';
 import Framework7Class from '../../utils/class';
+import ConstructorMethods from '../../utils/constructor-methods';
+import ModalMethods from '../../utils/modal-methods';
+import loadModule from './load-module';
 
 class Framework7 extends Framework7Class {
   constructor(params) {
@@ -14,6 +17,8 @@ class Framework7 extends Framework7Class {
     // App Instance
     const app = this;
 
+    Framework7.instance = app;
+
     // Default
     const defaults = {
       version: '1.0.0',
@@ -23,6 +28,7 @@ class Framework7 extends Framework7Class {
       language: window.navigator.language,
       routes: [],
       name: 'Framework7',
+      lazyModulesPath: null,
       initOnDeviceReady: true,
       init: true,
     };
@@ -129,6 +135,16 @@ class Framework7 extends Framework7Class {
     return app;
   }
 
+  // eslint-disable-next-line
+  loadModule(...args) {
+    return Framework7.loadModule(...args);
+  }
+
+  // eslint-disable-next-line
+  loadModules(...args) {
+    return Framework7.loadModules(...args);
+  }
+
   getVnodeHooks(hook, id) {
     const app = this;
     if (!app.vnodeHooks || !app.vnodeHooks[hook]) return [];
@@ -160,5 +176,13 @@ class Framework7 extends Framework7Class {
     return Framework7Class;
   }
 }
+
+Framework7.ModalMethods = ModalMethods;
+Framework7.ConstructorMethods = ConstructorMethods;
+
+Framework7.loadModule = loadModule;
+Framework7.loadModules = function loadModules(modules) {
+  return Promise.all(modules.map(module => Framework7.loadModule(module)));
+};
 
 export default Framework7;

@@ -10,11 +10,11 @@ declare namespace F7PageContent {
     tabActive? : boolean
     ptr? : boolean
     ptrDistance? : number
-    ptrPreloader? : boolean  | true
+    ptrPreloader? : boolean
     infinite? : boolean
     infiniteTop? : boolean
     infiniteDistance? : number
-    infinitePreloader? : boolean  | true
+    infinitePreloader? : boolean
     hideBarsOnScroll? : boolean
     hideNavbarOnScroll? : boolean
     hideToolbarOnScroll? : boolean

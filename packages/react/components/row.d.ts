@@ -7,7 +7,7 @@ declare namespace F7Row {
     className? : string
     style? : React.CSSProperties
     noGap? : boolean
-    tag? : string  | 'div'
+    tag? : string
     color? : string
     colorTheme? : string
     textColor? : string

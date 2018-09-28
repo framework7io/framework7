@@ -6,7 +6,7 @@ declare namespace F7CardContent {
     id? : string | number
     className? : string
     style? : React.CSSProperties
-    padding? : boolean  | true
+    padding? : boolean
     color? : string
     colorTheme? : string
     textColor? : string

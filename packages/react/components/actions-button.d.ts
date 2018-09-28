@@ -7,7 +7,7 @@ declare namespace F7ActionsButton {
     className? : string
     style? : React.CSSProperties
     bold? : boolean
-    close? : boolean  | true
+    close? : boolean
     color? : string
     colorTheme? : string
     textColor? : string

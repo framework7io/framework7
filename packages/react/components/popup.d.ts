@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Popup as PopupNamespace } from 'framework7/components/popup/popup';
 
 declare namespace F7Popup {
   interface Props {
@@ -31,5 +32,6 @@ declare class F7Popup extends React.Component<F7Popup.Props, {}> {
   onClosed(event? : any) : unknown
   open(animate? : any) : unknown
   close(animate? : any) : unknown
+  f7Popup: PopupNamespace.Popup
 }
 export default F7Popup;

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { View as ViewNamespace } from 'framework7/components/view/view';
 
 declare namespace F7View {
   interface Props {
@@ -47,7 +48,7 @@ declare namespace F7View {
     routesAdd? : Array<any>
     routesBeforeEnter? : Function | Array<any>
     routesBeforeLeave? : Function | Array<any>
-    init? : boolean  | true
+    init? : boolean
     color? : string
     colorTheme? : string
     textColor? : string
@@ -74,5 +75,6 @@ declare class F7View extends React.Component<F7View.Props, {}> {
   onSwipeBackAfterReset(event? : any) : unknown
   onTabShow(event? : any) : unknown
   onTabHide(event? : any) : unknown
+  f7View: ViewNamespace.View
 }
 export default F7View;

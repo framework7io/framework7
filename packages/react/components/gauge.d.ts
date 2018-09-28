@@ -6,21 +6,21 @@ declare namespace F7Gauge {
     id? : string | number
     className? : string
     style? : React.CSSProperties
-    type? : string  | 'circle'
-    value? : number | string  | 0
-    size? : number | string  | 200
-    bgColor? : string  | 'transparent'
-    borderBgColor? : string  | '#eeeeee'
-    borderColor? : string  | '#000000'
-    borderWidth? : number | string  | 10
+    type? : string
+    value? : number | string
+    size? : number | string
+    bgColor? : string
+    borderBgColor? : string
+    borderColor? : string
+    borderWidth? : number | string
     valueText? : number | string
-    valueTextColor? : string  | '#000000'
-    valueFontSize? : number | string  | 31
-    valueFontWeight? : number | string  | 500
+    valueTextColor? : string
+    valueFontSize? : number | string
+    valueFontWeight? : number | string
     labelText? : string
-    labelTextColor? : string  | '#888888'
-    labelFontSize? : number | string  | 14
-    labelFontWeight? : number | string  | 400
+    labelTextColor? : string
+    labelFontSize? : number | string
+    labelFontWeight? : number | string
     
   }
 }

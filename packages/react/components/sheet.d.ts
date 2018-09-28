@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Sheet as SheetNamespace } from 'framework7/components/sheet/sheet';
 
 declare namespace F7Sheet {
   interface Props {
@@ -30,5 +31,6 @@ declare class F7Sheet extends React.Component<F7Sheet.Props, {}> {
   onClosed(event? : any) : unknown
   open(animate? : any) : unknown
   close(animate? : any) : unknown
+  f7Sheet: SheetNamespace.Sheet
 }
 export default F7Sheet;

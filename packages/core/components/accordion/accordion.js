@@ -34,9 +34,10 @@ const Accordion = {
         $contentEl.css('height', 'auto');
         Utils.nextFrame(() => {
           $contentEl.transition('');
-          $el.trigger('accordion:opened');
-          app.emit('accordionOpened', $el[0]);
         });
+        $contentEl.transition('');
+        $el.trigger('accordion:opened');
+        app.emit('accordionOpened', $el[0]);
       } else {
         $contentEl.css('height', '');
         $el.trigger('accordion:closed');
@@ -64,9 +65,9 @@ const Accordion = {
         $contentEl.css('height', 'auto');
         Utils.nextFrame(() => {
           $contentEl.transition('');
-          $el.trigger('accordion:opened');
-          app.emit('accordionOpened', $el[0]);
         });
+        $el.trigger('accordion:opened');
+        app.emit('accordionOpened', $el[0]);
       } else {
         $contentEl.css('height', '');
         $el.trigger('accordion:closed');
@@ -77,7 +78,7 @@ const Accordion = {
       $contentEl.transition('');
       $contentEl.css('height', '');
       $el.trigger('accordion:close');
-      app.emit('accordionClose');
+      app.emit('accordionClose', $el[0]);
     });
   },
   toggle(el) {

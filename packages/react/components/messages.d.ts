@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Messages as MessagesNamespace } from 'framework7/components/messages/messages';
 
 declare namespace F7Messages {
   interface Props {
@@ -6,11 +7,11 @@ declare namespace F7Messages {
     id? : string | number
     className? : string
     style? : React.CSSProperties
-    autoLayout? : boolean  | false
-    messages? : Array<any>  | function(){return[];}
-    newMessagesFirst? : boolean  | false
-    scrollMessages? : boolean  | true
-    scrollMessagesOnEdge? : boolean  | true
+    autoLayout? : boolean
+    messages? : Array<any>
+    newMessagesFirst? : boolean
+    scrollMessages? : boolean
+    scrollMessagesOnEdge? : boolean
     firstMessageRule? : Function
     lastMessageRule? : Function
     tailMessageRule? : Function
@@ -20,7 +21,7 @@ declare namespace F7Messages {
     sameAvatarMessageRule? : Function
     customClassMessageRule? : Function
     renderMessage? : Function
-    init? : boolean  | true
+    init? : boolean
     color? : string
     colorTheme? : string
     textColor? : string
@@ -38,10 +39,11 @@ declare class F7Messages extends React.Component<F7Messages.Props, {}> {
   clear() : unknown
   removeMessage(messageToRemove? : any, layout? : any) : unknown
   removeMessages(messagesToRemove? : any, layout? : any) : unknown
-  addMessage(undefined? : any) : unknown
-  addMessages(undefined? : any) : unknown
+  addMessage(...args : any[]) : unknown
+  addMessages(...args : any[]) : unknown
   showTyping(message? : any) : unknown
   hideTyping() : unknown
   destroy() : unknown
+  f7Messages: MessagesNamespace.Messages
 }
 export default F7Messages;

@@ -2,6 +2,31 @@
 
 # Change Log
 
+# [v3.4.0](https://github.com/framework7io/framework7/compare/v3.3.2...v3.4.0) - September 28, 2018
+  * Core
+    * Lazy modules support 🎉
+      * Added support to load F7 modules during runtime with new app methods:
+        * New `app.loadModule(module)` method to load F7 module
+        * New `app.loadModules([module])` method to load array of F7 modules
+      * New `lazyModulesPath` app parameter to specify lazy modules location
+      * New lazy component files in `lazy-components/` package folder
+      * New `js/framework7-lazy.js` script containing core version of Framework7
+      * New `css/framework7-lazy.css` styles containing core version of Framework7
+    * Router
+      * New Route's `modules` parameter to load F7 modules before entering the route
+    * Statusbar
+      * Added new `statusbar` app parameters:
+        * `androidOverlaysWebView` (by default `false`)
+        * `androidTextColor` (by default `black`)
+        * `androidBackgroundColor` (by default `null`)
+      * Added new `app.statusbar` app methods:
+        * `app.statusbar.overlaysWebView(overlays)`
+        * `app.statusbar.setTextColor(color)`
+  * Phenome
+    * Lots of TypeScript definitions fixes and tweaks
+  * Minor fixes
+
+
 # [v3.3.2](https://github.com/framework7io/framework7/compare/v3.3.1...v3.3.2) - September 20, 2018
   * Core
     * Support for new iPhone XR / XS / XS Max

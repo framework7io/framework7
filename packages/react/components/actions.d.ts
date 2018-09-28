@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Actions as ActionsNamespace } from 'framework7/components/actions/actions';
 
 declare namespace F7Actions {
   interface Props {
@@ -33,5 +34,6 @@ declare class F7Actions extends React.Component<F7Actions.Props, {}> {
   onClosed(event? : any) : unknown
   open(animate? : any) : unknown
   close(animate? : any) : unknown
+  f7Actions: ActionsNamespace.Actions
 }
 export default F7Actions;

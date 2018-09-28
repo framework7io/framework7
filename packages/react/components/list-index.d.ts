@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ListIndex as ListIndexNamespace } from 'framework7/components/list-index/list-index';
 
 declare namespace F7ListIndex {
   interface Props {
@@ -6,13 +7,13 @@ declare namespace F7ListIndex {
     id? : string | number
     className? : string
     style? : React.CSSProperties
-    init? : boolean  | true
+    init? : boolean
     listEl? : string | Object
-    indexes? : string | Array<any>  | 'auto'
-    scrollList? : boolean  | true
-    label? : boolean  | false
-    iosItemHeight? : number  | 14
-    mdItemHeight? : number  | 14
+    indexes? : string | Array<any>
+    scrollList? : boolean
+    label? : boolean
+    iosItemHeight? : number
+    mdItemHeight? : number
     color? : string
     colorTheme? : string
     textColor? : string
@@ -26,5 +27,6 @@ declare namespace F7ListIndex {
 declare class F7ListIndex extends React.Component<F7ListIndex.Props, {}> {
   update() : unknown
   scrollListToIndex(indexContent? : any) : unknown
+  f7ListIndex: ListIndexNamespace.ListIndex
 }
 export default F7ListIndex;

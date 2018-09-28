@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { SmartSelect as SmartSelectNamespace } from 'framework7/components/smart-select/smart-select';
 
 declare namespace F7ListItem {
   interface Props {
@@ -54,7 +55,7 @@ declare namespace F7ListItem {
     back? : boolean
     external? : boolean
     force? : boolean
-    animate? : boolean  | undefined
+    animate? : boolean
     ignoreCache? : boolean
     pageName? : string
     reloadCurrent? : boolean
@@ -112,5 +113,6 @@ declare class F7ListItem extends React.Component<F7ListItem.Props, {}> {
   onAccOpened(event? : any) : unknown
   onChange(event? : any) : unknown
   onInput(event? : any) : unknown
+  f7SmartSelect: SmartSelectNamespace.SmartSelect
 }
 export default F7ListItem;

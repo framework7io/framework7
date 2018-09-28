@@ -1,5 +1,5 @@
 /**
- * Framework7 React 3.3.2
+ * Framework7 React 3.4.0
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 20, 2018
+ * Released on: September 28, 2018
  */
 
 (function (global, factory) {
@@ -2904,7 +2904,7 @@
         fill: valueTextColor,
         dy: semiCircle ? labelText ? -labelFontSize - 15 : -5 : 0,
         textAnchor: 'middle',
-        dominantBaseline: !semiCircle && 'middle'
+        dominantBaseline: !semiCircle ? 'middle' : null
       }, valueText), labelText && React.createElement('text', {
         className: 'gauge-label-text',
         x: '50%',
@@ -2914,7 +2914,7 @@
         fill: labelTextColor,
         dy: semiCircle ? -5 : valueText ? valueFontSize / 2 + 10 : 0,
         textAnchor: 'middle',
-        dominantBaseline: !semiCircle && 'middle'
+        dominantBaseline: !semiCircle ? 'middle' : null
       }, labelText)));
     };
 
@@ -3649,7 +3649,7 @@
     multiple: Boolean,
     readonly: Boolean,
     required: Boolean,
-    inputStyle: String,
+    inputStyle: Object,
     pattern: String,
     validate: [Boolean, String],
     tabindex: [String, Number],
@@ -10850,7 +10850,7 @@
   };
 
   /**
-   * Framework7 React 3.3.2
+   * Framework7 React 3.4.0
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -10858,7 +10858,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: September 20, 2018
+   * Released on: September 28, 2018
    */
 
   var Plugin = {

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { LoginScreen as LoginScreenNamespace } from 'framework7/components/login-screen/login-screen';
 
 declare namespace F7LoginScreen {
   interface Props {
@@ -27,5 +28,6 @@ declare class F7LoginScreen extends React.Component<F7LoginScreen.Props, {}> {
   onClosed(event? : any) : unknown
   open(animate? : any) : unknown
   close(animate? : any) : unknown
+  f7LoginScreen: LoginScreenNamespace.LoginScreen
 }
 export default F7LoginScreen;

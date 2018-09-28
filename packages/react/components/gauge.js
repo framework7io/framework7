@@ -85,7 +85,7 @@ class F7Gauge extends React.Component {
       fill: valueTextColor,
       dy: semiCircle ? labelText ? -labelFontSize - 15 : -5 : 0,
       textAnchor: 'middle',
-      dominantBaseline: !semiCircle && 'middle'
+      dominantBaseline: !semiCircle ? 'middle' : null
     }, valueText), labelText && React.createElement('text', {
       className: 'gauge-label-text',
       x: '50%',
@@ -95,7 +95,7 @@ class F7Gauge extends React.Component {
       fill: labelTextColor,
       dy: semiCircle ? -5 : valueText ? valueFontSize / 2 + 10 : 0,
       textAnchor: 'middle',
-      dominantBaseline: !semiCircle && 'middle'
+      dominantBaseline: !semiCircle ? 'middle' : null
     }, labelText)));
   }
 

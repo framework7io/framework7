@@ -1,5 +1,5 @@
 /**
- * Framework7 3.3.2
+ * Framework7 3.4.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 20, 2018
+ * Released on: September 28, 2018
  */
 html,
 body,
@@ -10942,10 +10942,8 @@ label.item-radio.disabled,
   border-top-color: #f44336;
   border-bottom-color: #f44336;
 }
-.md .color-theme-red .stepper-value {
-  color: #f44336;
-}
-.md .color-theme-red .stepper .stepper-input-wrap input {
+.md .color-theme-red .stepper-value,
+.md .color-theme-red .stepper-input-wrap input {
   color: #f44336;
 }
 .md .color-theme-red .stepper-fill .stepper-button,
@@ -10996,10 +10994,8 @@ label.item-radio.disabled,
   border-top-color: #4caf50;
   border-bottom-color: #4caf50;
 }
-.md .color-theme-green .stepper-value {
-  color: #4caf50;
-}
-.md .color-theme-green .stepper .stepper-input-wrap input {
+.md .color-theme-green .stepper-value,
+.md .color-theme-green .stepper-input-wrap input {
   color: #4caf50;
 }
 .md .color-theme-green .stepper-fill .stepper-button,
@@ -11050,10 +11046,8 @@ label.item-radio.disabled,
   border-top-color: #2196f3;
   border-bottom-color: #2196f3;
 }
-.md .color-theme-blue .stepper-value {
-  color: #2196f3;
-}
-.md .color-theme-blue .stepper .stepper-input-wrap input {
+.md .color-theme-blue .stepper-value,
+.md .color-theme-blue .stepper-input-wrap input {
   color: #2196f3;
 }
 .md .color-theme-blue .stepper-fill .stepper-button,
@@ -11104,10 +11098,8 @@ label.item-radio.disabled,
   border-top-color: #e91e63;
   border-bottom-color: #e91e63;
 }
-.md .color-theme-pink .stepper-value {
-  color: #e91e63;
-}
-.md .color-theme-pink .stepper .stepper-input-wrap input {
+.md .color-theme-pink .stepper-value,
+.md .color-theme-pink .stepper-input-wrap input {
   color: #e91e63;
 }
 .md .color-theme-pink .stepper-fill .stepper-button,
@@ -11158,10 +11150,8 @@ label.item-radio.disabled,
   border-top-color: #ffeb3b;
   border-bottom-color: #ffeb3b;
 }
-.md .color-theme-yellow .stepper-value {
-  color: #ffeb3b;
-}
-.md .color-theme-yellow .stepper .stepper-input-wrap input {
+.md .color-theme-yellow .stepper-value,
+.md .color-theme-yellow .stepper-input-wrap input {
   color: #ffeb3b;
 }
 .md .color-theme-yellow .stepper-fill .stepper-button,
@@ -11212,10 +11202,8 @@ label.item-radio.disabled,
   border-top-color: #ff9800;
   border-bottom-color: #ff9800;
 }
-.md .color-theme-orange .stepper-value {
-  color: #ff9800;
-}
-.md .color-theme-orange .stepper .stepper-input-wrap input {
+.md .color-theme-orange .stepper-value,
+.md .color-theme-orange .stepper-input-wrap input {
   color: #ff9800;
 }
 .md .color-theme-orange .stepper-fill .stepper-button,
@@ -11266,10 +11254,8 @@ label.item-radio.disabled,
   border-top-color: #9e9e9e;
   border-bottom-color: #9e9e9e;
 }
-.md .color-theme-gray .stepper-value {
-  color: #9e9e9e;
-}
-.md .color-theme-gray .stepper .stepper-input-wrap input {
+.md .color-theme-gray .stepper-value,
+.md .color-theme-gray .stepper-input-wrap input {
   color: #9e9e9e;
 }
 .md .color-theme-gray .stepper-fill .stepper-button,
@@ -11320,10 +11306,8 @@ label.item-radio.disabled,
   border-top-color: #ffffff;
   border-bottom-color: #ffffff;
 }
-.md .color-theme-white .stepper-value {
-  color: #ffffff;
-}
-.md .color-theme-white .stepper .stepper-input-wrap input {
+.md .color-theme-white .stepper-value,
+.md .color-theme-white .stepper-input-wrap input {
   color: #ffffff;
 }
 .md .color-theme-white .stepper-fill .stepper-button,
@@ -11374,10 +11358,8 @@ label.item-radio.disabled,
   border-top-color: #000000;
   border-bottom-color: #000000;
 }
-.md .color-theme-black .stepper-value {
-  color: #000000;
-}
-.md .color-theme-black .stepper .stepper-input-wrap input {
+.md .color-theme-black .stepper-value,
+.md .color-theme-black .stepper-input-wrap input {
   color: #000000;
 }
 .md .color-theme-black .stepper-fill .stepper-button,
@@ -11428,41 +11410,39 @@ label.item-radio.disabled,
   border-top-color: #f44336;
   border-bottom-color: #f44336;
 }
-.md .stepper.color-red .stepper-value {
-  color: #f44336;
-}
+.md .stepper.color-red .stepper-value,
 .md .stepper.color-red .stepper-input-wrap input {
   color: #f44336;
 }
-.md .stepper.color-red.stepper-fill .stepper-button,
-.md .stepper.color-red.stepper-fill-md .stepper-button,
-.md .stepper.color-red.stepper-fill .stepper-button-minus,
-.md .stepper.color-red.stepper-fill-md .stepper-button-minus,
-.md .stepper.color-red.stepper-fill .stepper-button-plus,
-.md .stepper.color-red.stepper-fill-md .stepper-button-plus {
+.md .stepper-fill.color-red .stepper-button,
+.md .stepper-fill-md.color-red .stepper-button,
+.md .stepper-fill.color-red .stepper-button-minus,
+.md .stepper-fill-md.color-red .stepper-button-minus,
+.md .stepper-fill.color-red .stepper-button-plus,
+.md .stepper-fill-md.color-red .stepper-button-plus {
   background-color: #f44336;
   color: #fff;
 }
-.md .stepper.color-red.stepper-fill .stepper-button.active-state,
-.md .stepper.color-red.stepper-fill-md .stepper-button.active-state,
-.md .stepper.color-red.stepper-fill .stepper-button-minus.active-state,
-.md .stepper.color-red.stepper-fill-md .stepper-button-minus.active-state,
-.md .stepper.color-red.stepper-fill .stepper-button-plus.active-state,
-.md .stepper.color-red.stepper-fill-md .stepper-button-plus.active-state {
+.md .stepper-fill.color-red .stepper-button.active-state,
+.md .stepper-fill-md.color-red .stepper-button.active-state,
+.md .stepper-fill.color-red .stepper-button-minus.active-state,
+.md .stepper-fill-md.color-red .stepper-button-minus.active-state,
+.md .stepper-fill.color-red .stepper-button-plus.active-state,
+.md .stepper-fill-md.color-red .stepper-button-plus.active-state {
   background: #f21f0f;
 }
-.md .stepper.color-red.stepper-fill .stepper-button:after,
-.md .stepper.color-red.stepper-fill-md .stepper-button:after,
-.md .stepper.color-red.stepper-fill .stepper-button-minus:after,
-.md .stepper.color-red.stepper-fill-md .stepper-button-minus:after,
-.md .stepper.color-red.stepper-fill .stepper-button-plus:after,
-.md .stepper.color-red.stepper-fill-md .stepper-button-plus:after,
-.md .stepper.color-red.stepper-fill .stepper-button:before,
-.md .stepper.color-red.stepper-fill-md .stepper-button:before,
-.md .stepper.color-red.stepper-fill .stepper-button-minus:before,
-.md .stepper.color-red.stepper-fill-md .stepper-button-minus:before,
-.md .stepper.color-red.stepper-fill .stepper-button-plus:before,
-.md .stepper.color-red.stepper-fill-md .stepper-button-plus:before {
+.md .stepper-fill.color-red .stepper-button:after,
+.md .stepper-fill-md.color-red .stepper-button:after,
+.md .stepper-fill.color-red .stepper-button-minus:after,
+.md .stepper-fill-md.color-red .stepper-button-minus:after,
+.md .stepper-fill.color-red .stepper-button-plus:after,
+.md .stepper-fill-md.color-red .stepper-button-plus:after,
+.md .stepper-fill.color-red .stepper-button:before,
+.md .stepper-fill-md.color-red .stepper-button:before,
+.md .stepper-fill.color-red .stepper-button-minus:before,
+.md .stepper-fill-md.color-red .stepper-button-minus:before,
+.md .stepper-fill.color-red .stepper-button-plus:before,
+.md .stepper-fill-md.color-red .stepper-button-plus:before {
   background: #fff;
 }
 .md .stepper.color-green .stepper-button,
@@ -11482,41 +11462,39 @@ label.item-radio.disabled,
   border-top-color: #4caf50;
   border-bottom-color: #4caf50;
 }
-.md .stepper.color-green .stepper-value {
-  color: #4caf50;
-}
+.md .stepper.color-green .stepper-value,
 .md .stepper.color-green .stepper-input-wrap input {
   color: #4caf50;
 }
-.md .stepper.color-green.stepper-fill .stepper-button,
-.md .stepper.color-green.stepper-fill-md .stepper-button,
-.md .stepper.color-green.stepper-fill .stepper-button-minus,
-.md .stepper.color-green.stepper-fill-md .stepper-button-minus,
-.md .stepper.color-green.stepper-fill .stepper-button-plus,
-.md .stepper.color-green.stepper-fill-md .stepper-button-plus {
+.md .stepper-fill.color-green .stepper-button,
+.md .stepper-fill-md.color-green .stepper-button,
+.md .stepper-fill.color-green .stepper-button-minus,
+.md .stepper-fill-md.color-green .stepper-button-minus,
+.md .stepper-fill.color-green .stepper-button-plus,
+.md .stepper-fill-md.color-green .stepper-button-plus {
   background-color: #4caf50;
   color: #fff;
 }
-.md .stepper.color-green.stepper-fill .stepper-button.active-state,
-.md .stepper.color-green.stepper-fill-md .stepper-button.active-state,
-.md .stepper.color-green.stepper-fill .stepper-button-minus.active-state,
-.md .stepper.color-green.stepper-fill-md .stepper-button-minus.active-state,
-.md .stepper.color-green.stepper-fill .stepper-button-plus.active-state,
-.md .stepper.color-green.stepper-fill-md .stepper-button-plus.active-state {
+.md .stepper-fill.color-green .stepper-button.active-state,
+.md .stepper-fill-md.color-green .stepper-button.active-state,
+.md .stepper-fill.color-green .stepper-button-minus.active-state,
+.md .stepper-fill-md.color-green .stepper-button-minus.active-state,
+.md .stepper-fill.color-green .stepper-button-plus.active-state,
+.md .stepper-fill-md.color-green .stepper-button-plus.active-state {
   background: #409343;
 }
-.md .stepper.color-green.stepper-fill .stepper-button:after,
-.md .stepper.color-green.stepper-fill-md .stepper-button:after,
-.md .stepper.color-green.stepper-fill .stepper-button-minus:after,
-.md .stepper.color-green.stepper-fill-md .stepper-button-minus:after,
-.md .stepper.color-green.stepper-fill .stepper-button-plus:after,
-.md .stepper.color-green.stepper-fill-md .stepper-button-plus:after,
-.md .stepper.color-green.stepper-fill .stepper-button:before,
-.md .stepper.color-green.stepper-fill-md .stepper-button:before,
-.md .stepper.color-green.stepper-fill .stepper-button-minus:before,
-.md .stepper.color-green.stepper-fill-md .stepper-button-minus:before,
-.md .stepper.color-green.stepper-fill .stepper-button-plus:before,
-.md .stepper.color-green.stepper-fill-md .stepper-button-plus:before {
+.md .stepper-fill.color-green .stepper-button:after,
+.md .stepper-fill-md.color-green .stepper-button:after,
+.md .stepper-fill.color-green .stepper-button-minus:after,
+.md .stepper-fill-md.color-green .stepper-button-minus:after,
+.md .stepper-fill.color-green .stepper-button-plus:after,
+.md .stepper-fill-md.color-green .stepper-button-plus:after,
+.md .stepper-fill.color-green .stepper-button:before,
+.md .stepper-fill-md.color-green .stepper-button:before,
+.md .stepper-fill.color-green .stepper-button-minus:before,
+.md .stepper-fill-md.color-green .stepper-button-minus:before,
+.md .stepper-fill.color-green .stepper-button-plus:before,
+.md .stepper-fill-md.color-green .stepper-button-plus:before {
   background: #fff;
 }
 .md .stepper.color-blue .stepper-button,
@@ -11536,41 +11514,39 @@ label.item-radio.disabled,
   border-top-color: #2196f3;
   border-bottom-color: #2196f3;
 }
-.md .stepper.color-blue .stepper-value {
-  color: #2196f3;
-}
+.md .stepper.color-blue .stepper-value,
 .md .stepper.color-blue .stepper-input-wrap input {
   color: #2196f3;
 }
-.md .stepper.color-blue.stepper-fill .stepper-button,
-.md .stepper.color-blue.stepper-fill-md .stepper-button,
-.md .stepper.color-blue.stepper-fill .stepper-button-minus,
-.md .stepper.color-blue.stepper-fill-md .stepper-button-minus,
-.md .stepper.color-blue.stepper-fill .stepper-button-plus,
-.md .stepper.color-blue.stepper-fill-md .stepper-button-plus {
+.md .stepper-fill.color-blue .stepper-button,
+.md .stepper-fill-md.color-blue .stepper-button,
+.md .stepper-fill.color-blue .stepper-button-minus,
+.md .stepper-fill-md.color-blue .stepper-button-minus,
+.md .stepper-fill.color-blue .stepper-button-plus,
+.md .stepper-fill-md.color-blue .stepper-button-plus {
   background-color: #2196f3;
   color: #fff;
 }
-.md .stepper.color-blue.stepper-fill .stepper-button.active-state,
-.md .stepper.color-blue.stepper-fill-md .stepper-button.active-state,
-.md .stepper.color-blue.stepper-fill .stepper-button-minus.active-state,
-.md .stepper.color-blue.stepper-fill-md .stepper-button-minus.active-state,
-.md .stepper.color-blue.stepper-fill .stepper-button-plus.active-state,
-.md .stepper.color-blue.stepper-fill-md .stepper-button-plus.active-state {
+.md .stepper-fill.color-blue .stepper-button.active-state,
+.md .stepper-fill-md.color-blue .stepper-button.active-state,
+.md .stepper-fill.color-blue .stepper-button-minus.active-state,
+.md .stepper-fill-md.color-blue .stepper-button-minus.active-state,
+.md .stepper-fill.color-blue .stepper-button-plus.active-state,
+.md .stepper-fill-md.color-blue .stepper-button-plus.active-state {
   background: #0c82df;
 }
-.md .stepper.color-blue.stepper-fill .stepper-button:after,
-.md .stepper.color-blue.stepper-fill-md .stepper-button:after,
-.md .stepper.color-blue.stepper-fill .stepper-button-minus:after,
-.md .stepper.color-blue.stepper-fill-md .stepper-button-minus:after,
-.md .stepper.color-blue.stepper-fill .stepper-button-plus:after,
-.md .stepper.color-blue.stepper-fill-md .stepper-button-plus:after,
-.md .stepper.color-blue.stepper-fill .stepper-button:before,
-.md .stepper.color-blue.stepper-fill-md .stepper-button:before,
-.md .stepper.color-blue.stepper-fill .stepper-button-minus:before,
-.md .stepper.color-blue.stepper-fill-md .stepper-button-minus:before,
-.md .stepper.color-blue.stepper-fill .stepper-button-plus:before,
-.md .stepper.color-blue.stepper-fill-md .stepper-button-plus:before {
+.md .stepper-fill.color-blue .stepper-button:after,
+.md .stepper-fill-md.color-blue .stepper-button:after,
+.md .stepper-fill.color-blue .stepper-button-minus:after,
+.md .stepper-fill-md.color-blue .stepper-button-minus:after,
+.md .stepper-fill.color-blue .stepper-button-plus:after,
+.md .stepper-fill-md.color-blue .stepper-button-plus:after,
+.md .stepper-fill.color-blue .stepper-button:before,
+.md .stepper-fill-md.color-blue .stepper-button:before,
+.md .stepper-fill.color-blue .stepper-button-minus:before,
+.md .stepper-fill-md.color-blue .stepper-button-minus:before,
+.md .stepper-fill.color-blue .stepper-button-plus:before,
+.md .stepper-fill-md.color-blue .stepper-button-plus:before {
   background: #fff;
 }
 .md .stepper.color-pink .stepper-button,
@@ -11590,41 +11566,39 @@ label.item-radio.disabled,
   border-top-color: #e91e63;
   border-bottom-color: #e91e63;
 }
-.md .stepper.color-pink .stepper-value {
-  color: #e91e63;
-}
+.md .stepper.color-pink .stepper-value,
 .md .stepper.color-pink .stepper-input-wrap input {
   color: #e91e63;
 }
-.md .stepper.color-pink.stepper-fill .stepper-button,
-.md .stepper.color-pink.stepper-fill-md .stepper-button,
-.md .stepper.color-pink.stepper-fill .stepper-button-minus,
-.md .stepper.color-pink.stepper-fill-md .stepper-button-minus,
-.md .stepper.color-pink.stepper-fill .stepper-button-plus,
-.md .stepper.color-pink.stepper-fill-md .stepper-button-plus {
+.md .stepper-fill.color-pink .stepper-button,
+.md .stepper-fill-md.color-pink .stepper-button,
+.md .stepper-fill.color-pink .stepper-button-minus,
+.md .stepper-fill-md.color-pink .stepper-button-minus,
+.md .stepper-fill.color-pink .stepper-button-plus,
+.md .stepper-fill-md.color-pink .stepper-button-plus {
   background-color: #e91e63;
   color: #fff;
 }
-.md .stepper.color-pink.stepper-fill .stepper-button.active-state,
-.md .stepper.color-pink.stepper-fill-md .stepper-button.active-state,
-.md .stepper.color-pink.stepper-fill .stepper-button-minus.active-state,
-.md .stepper.color-pink.stepper-fill-md .stepper-button-minus.active-state,
-.md .stepper.color-pink.stepper-fill .stepper-button-plus.active-state,
-.md .stepper.color-pink.stepper-fill-md .stepper-button-plus.active-state {
+.md .stepper-fill.color-pink .stepper-button.active-state,
+.md .stepper-fill-md.color-pink .stepper-button.active-state,
+.md .stepper-fill.color-pink .stepper-button-minus.active-state,
+.md .stepper-fill-md.color-pink .stepper-button-minus.active-state,
+.md .stepper-fill.color-pink .stepper-button-plus.active-state,
+.md .stepper-fill-md.color-pink .stepper-button-plus.active-state {
   background: #ca1452;
 }
-.md .stepper.color-pink.stepper-fill .stepper-button:after,
-.md .stepper.color-pink.stepper-fill-md .stepper-button:after,
-.md .stepper.color-pink.stepper-fill .stepper-button-minus:after,
-.md .stepper.color-pink.stepper-fill-md .stepper-button-minus:after,
-.md .stepper.color-pink.stepper-fill .stepper-button-plus:after,
-.md .stepper.color-pink.stepper-fill-md .stepper-button-plus:after,
-.md .stepper.color-pink.stepper-fill .stepper-button:before,
-.md .stepper.color-pink.stepper-fill-md .stepper-button:before,
-.md .stepper.color-pink.stepper-fill .stepper-button-minus:before,
-.md .stepper.color-pink.stepper-fill-md .stepper-button-minus:before,
-.md .stepper.color-pink.stepper-fill .stepper-button-plus:before,
-.md .stepper.color-pink.stepper-fill-md .stepper-button-plus:before {
+.md .stepper-fill.color-pink .stepper-button:after,
+.md .stepper-fill-md.color-pink .stepper-button:after,
+.md .stepper-fill.color-pink .stepper-button-minus:after,
+.md .stepper-fill-md.color-pink .stepper-button-minus:after,
+.md .stepper-fill.color-pink .stepper-button-plus:after,
+.md .stepper-fill-md.color-pink .stepper-button-plus:after,
+.md .stepper-fill.color-pink .stepper-button:before,
+.md .stepper-fill-md.color-pink .stepper-button:before,
+.md .stepper-fill.color-pink .stepper-button-minus:before,
+.md .stepper-fill-md.color-pink .stepper-button-minus:before,
+.md .stepper-fill.color-pink .stepper-button-plus:before,
+.md .stepper-fill-md.color-pink .stepper-button-plus:before {
   background: #fff;
 }
 .md .stepper.color-yellow .stepper-button,
@@ -11644,41 +11618,39 @@ label.item-radio.disabled,
   border-top-color: #ffeb3b;
   border-bottom-color: #ffeb3b;
 }
-.md .stepper.color-yellow .stepper-value {
-  color: #ffeb3b;
-}
+.md .stepper.color-yellow .stepper-value,
 .md .stepper.color-yellow .stepper-input-wrap input {
   color: #ffeb3b;
 }
-.md .stepper.color-yellow.stepper-fill .stepper-button,
-.md .stepper.color-yellow.stepper-fill-md .stepper-button,
-.md .stepper.color-yellow.stepper-fill .stepper-button-minus,
-.md .stepper.color-yellow.stepper-fill-md .stepper-button-minus,
-.md .stepper.color-yellow.stepper-fill .stepper-button-plus,
-.md .stepper.color-yellow.stepper-fill-md .stepper-button-plus {
+.md .stepper-fill.color-yellow .stepper-button,
+.md .stepper-fill-md.color-yellow .stepper-button,
+.md .stepper-fill.color-yellow .stepper-button-minus,
+.md .stepper-fill-md.color-yellow .stepper-button-minus,
+.md .stepper-fill.color-yellow .stepper-button-plus,
+.md .stepper-fill-md.color-yellow .stepper-button-plus {
   background-color: #ffeb3b;
   color: #fff;
 }
-.md .stepper.color-yellow.stepper-fill .stepper-button.active-state,
-.md .stepper.color-yellow.stepper-fill-md .stepper-button.active-state,
-.md .stepper.color-yellow.stepper-fill .stepper-button-minus.active-state,
-.md .stepper.color-yellow.stepper-fill-md .stepper-button-minus.active-state,
-.md .stepper.color-yellow.stepper-fill .stepper-button-plus.active-state,
-.md .stepper.color-yellow.stepper-fill-md .stepper-button-plus.active-state {
+.md .stepper-fill.color-yellow .stepper-button.active-state,
+.md .stepper-fill-md.color-yellow .stepper-button.active-state,
+.md .stepper-fill.color-yellow .stepper-button-minus.active-state,
+.md .stepper-fill-md.color-yellow .stepper-button-minus.active-state,
+.md .stepper-fill.color-yellow .stepper-button-plus.active-state,
+.md .stepper-fill-md.color-yellow .stepper-button-plus.active-state {
   background: #ffe712;
 }
-.md .stepper.color-yellow.stepper-fill .stepper-button:after,
-.md .stepper.color-yellow.stepper-fill-md .stepper-button:after,
-.md .stepper.color-yellow.stepper-fill .stepper-button-minus:after,
-.md .stepper.color-yellow.stepper-fill-md .stepper-button-minus:after,
-.md .stepper.color-yellow.stepper-fill .stepper-button-plus:after,
-.md .stepper.color-yellow.stepper-fill-md .stepper-button-plus:after,
-.md .stepper.color-yellow.stepper-fill .stepper-button:before,
-.md .stepper.color-yellow.stepper-fill-md .stepper-button:before,
-.md .stepper.color-yellow.stepper-fill .stepper-button-minus:before,
-.md .stepper.color-yellow.stepper-fill-md .stepper-button-minus:before,
-.md .stepper.color-yellow.stepper-fill .stepper-button-plus:before,
-.md .stepper.color-yellow.stepper-fill-md .stepper-button-plus:before {
+.md .stepper-fill.color-yellow .stepper-button:after,
+.md .stepper-fill-md.color-yellow .stepper-button:after,
+.md .stepper-fill.color-yellow .stepper-button-minus:after,
+.md .stepper-fill-md.color-yellow .stepper-button-minus:after,
+.md .stepper-fill.color-yellow .stepper-button-plus:after,
+.md .stepper-fill-md.color-yellow .stepper-button-plus:after,
+.md .stepper-fill.color-yellow .stepper-button:before,
+.md .stepper-fill-md.color-yellow .stepper-button:before,
+.md .stepper-fill.color-yellow .stepper-button-minus:before,
+.md .stepper-fill-md.color-yellow .stepper-button-minus:before,
+.md .stepper-fill.color-yellow .stepper-button-plus:before,
+.md .stepper-fill-md.color-yellow .stepper-button-plus:before {
   background: #fff;
 }
 .md .stepper.color-orange .stepper-button,
@@ -11698,41 +11670,39 @@ label.item-radio.disabled,
   border-top-color: #ff9800;
   border-bottom-color: #ff9800;
 }
-.md .stepper.color-orange .stepper-value {
-  color: #ff9800;
-}
+.md .stepper.color-orange .stepper-value,
 .md .stepper.color-orange .stepper-input-wrap input {
   color: #ff9800;
 }
-.md .stepper.color-orange.stepper-fill .stepper-button,
-.md .stepper.color-orange.stepper-fill-md .stepper-button,
-.md .stepper.color-orange.stepper-fill .stepper-button-minus,
-.md .stepper.color-orange.stepper-fill-md .stepper-button-minus,
-.md .stepper.color-orange.stepper-fill .stepper-button-plus,
-.md .stepper.color-orange.stepper-fill-md .stepper-button-plus {
+.md .stepper-fill.color-orange .stepper-button,
+.md .stepper-fill-md.color-orange .stepper-button,
+.md .stepper-fill.color-orange .stepper-button-minus,
+.md .stepper-fill-md.color-orange .stepper-button-minus,
+.md .stepper-fill.color-orange .stepper-button-plus,
+.md .stepper-fill-md.color-orange .stepper-button-plus {
   background-color: #ff9800;
   color: #fff;
 }
-.md .stepper.color-orange.stepper-fill .stepper-button.active-state,
-.md .stepper.color-orange.stepper-fill-md .stepper-button.active-state,
-.md .stepper.color-orange.stepper-fill .stepper-button-minus.active-state,
-.md .stepper.color-orange.stepper-fill-md .stepper-button-minus.active-state,
-.md .stepper.color-orange.stepper-fill .stepper-button-plus.active-state,
-.md .stepper.color-orange.stepper-fill-md .stepper-button-plus.active-state {
+.md .stepper-fill.color-orange .stepper-button.active-state,
+.md .stepper-fill-md.color-orange .stepper-button.active-state,
+.md .stepper-fill.color-orange .stepper-button-minus.active-state,
+.md .stepper-fill-md.color-orange .stepper-button-minus.active-state,
+.md .stepper-fill.color-orange .stepper-button-plus.active-state,
+.md .stepper-fill-md.color-orange .stepper-button-plus.active-state {
   background: #d68000;
 }
-.md .stepper.color-orange.stepper-fill .stepper-button:after,
-.md .stepper.color-orange.stepper-fill-md .stepper-button:after,
-.md .stepper.color-orange.stepper-fill .stepper-button-minus:after,
-.md .stepper.color-orange.stepper-fill-md .stepper-button-minus:after,
-.md .stepper.color-orange.stepper-fill .stepper-button-plus:after,
-.md .stepper.color-orange.stepper-fill-md .stepper-button-plus:after,
-.md .stepper.color-orange.stepper-fill .stepper-button:before,
-.md .stepper.color-orange.stepper-fill-md .stepper-button:before,
-.md .stepper.color-orange.stepper-fill .stepper-button-minus:before,
-.md .stepper.color-orange.stepper-fill-md .stepper-button-minus:before,
-.md .stepper.color-orange.stepper-fill .stepper-button-plus:before,
-.md .stepper.color-orange.stepper-fill-md .stepper-button-plus:before {
+.md .stepper-fill.color-orange .stepper-button:after,
+.md .stepper-fill-md.color-orange .stepper-button:after,
+.md .stepper-fill.color-orange .stepper-button-minus:after,
+.md .stepper-fill-md.color-orange .stepper-button-minus:after,
+.md .stepper-fill.color-orange .stepper-button-plus:after,
+.md .stepper-fill-md.color-orange .stepper-button-plus:after,
+.md .stepper-fill.color-orange .stepper-button:before,
+.md .stepper-fill-md.color-orange .stepper-button:before,
+.md .stepper-fill.color-orange .stepper-button-minus:before,
+.md .stepper-fill-md.color-orange .stepper-button-minus:before,
+.md .stepper-fill.color-orange .stepper-button-plus:before,
+.md .stepper-fill-md.color-orange .stepper-button-plus:before {
   background: #fff;
 }
 .md .stepper.color-gray .stepper-button,
@@ -11752,41 +11722,39 @@ label.item-radio.disabled,
   border-top-color: #9e9e9e;
   border-bottom-color: #9e9e9e;
 }
-.md .stepper.color-gray .stepper-value {
-  color: #9e9e9e;
-}
+.md .stepper.color-gray .stepper-value,
 .md .stepper.color-gray .stepper-input-wrap input {
   color: #9e9e9e;
 }
-.md .stepper.color-gray.stepper-fill .stepper-button,
-.md .stepper.color-gray.stepper-fill-md .stepper-button,
-.md .stepper.color-gray.stepper-fill .stepper-button-minus,
-.md .stepper.color-gray.stepper-fill-md .stepper-button-minus,
-.md .stepper.color-gray.stepper-fill .stepper-button-plus,
-.md .stepper.color-gray.stepper-fill-md .stepper-button-plus {
+.md .stepper-fill.color-gray .stepper-button,
+.md .stepper-fill-md.color-gray .stepper-button,
+.md .stepper-fill.color-gray .stepper-button-minus,
+.md .stepper-fill-md.color-gray .stepper-button-minus,
+.md .stepper-fill.color-gray .stepper-button-plus,
+.md .stepper-fill-md.color-gray .stepper-button-plus {
   background-color: #9e9e9e;
   color: #fff;
 }
-.md .stepper.color-gray.stepper-fill .stepper-button.active-state,
-.md .stepper.color-gray.stepper-fill-md .stepper-button.active-state,
-.md .stepper.color-gray.stepper-fill .stepper-button-minus.active-state,
-.md .stepper.color-gray.stepper-fill-md .stepper-button-minus.active-state,
-.md .stepper.color-gray.stepper-fill .stepper-button-plus.active-state,
-.md .stepper.color-gray.stepper-fill-md .stepper-button-plus.active-state {
+.md .stepper-fill.color-gray .stepper-button.active-state,
+.md .stepper-fill-md.color-gray .stepper-button.active-state,
+.md .stepper-fill.color-gray .stepper-button-minus.active-state,
+.md .stepper-fill-md.color-gray .stepper-button-minus.active-state,
+.md .stepper-fill.color-gray .stepper-button-plus.active-state,
+.md .stepper-fill-md.color-gray .stepper-button-plus.active-state {
   background: #8a8a8a;
 }
-.md .stepper.color-gray.stepper-fill .stepper-button:after,
-.md .stepper.color-gray.stepper-fill-md .stepper-button:after,
-.md .stepper.color-gray.stepper-fill .stepper-button-minus:after,
-.md .stepper.color-gray.stepper-fill-md .stepper-button-minus:after,
-.md .stepper.color-gray.stepper-fill .stepper-button-plus:after,
-.md .stepper.color-gray.stepper-fill-md .stepper-button-plus:after,
-.md .stepper.color-gray.stepper-fill .stepper-button:before,
-.md .stepper.color-gray.stepper-fill-md .stepper-button:before,
-.md .stepper.color-gray.stepper-fill .stepper-button-minus:before,
-.md .stepper.color-gray.stepper-fill-md .stepper-button-minus:before,
-.md .stepper.color-gray.stepper-fill .stepper-button-plus:before,
-.md .stepper.color-gray.stepper-fill-md .stepper-button-plus:before {
+.md .stepper-fill.color-gray .stepper-button:after,
+.md .stepper-fill-md.color-gray .stepper-button:after,
+.md .stepper-fill.color-gray .stepper-button-minus:after,
+.md .stepper-fill-md.color-gray .stepper-button-minus:after,
+.md .stepper-fill.color-gray .stepper-button-plus:after,
+.md .stepper-fill-md.color-gray .stepper-button-plus:after,
+.md .stepper-fill.color-gray .stepper-button:before,
+.md .stepper-fill-md.color-gray .stepper-button:before,
+.md .stepper-fill.color-gray .stepper-button-minus:before,
+.md .stepper-fill-md.color-gray .stepper-button-minus:before,
+.md .stepper-fill.color-gray .stepper-button-plus:before,
+.md .stepper-fill-md.color-gray .stepper-button-plus:before {
   background: #fff;
 }
 .md .stepper.color-white .stepper-button,
@@ -11806,41 +11774,39 @@ label.item-radio.disabled,
   border-top-color: #ffffff;
   border-bottom-color: #ffffff;
 }
-.md .stepper.color-white .stepper-value {
-  color: #ffffff;
-}
+.md .stepper.color-white .stepper-value,
 .md .stepper.color-white .stepper-input-wrap input {
   color: #ffffff;
 }
-.md .stepper.color-white.stepper-fill .stepper-button,
-.md .stepper.color-white.stepper-fill-md .stepper-button,
-.md .stepper.color-white.stepper-fill .stepper-button-minus,
-.md .stepper.color-white.stepper-fill-md .stepper-button-minus,
-.md .stepper.color-white.stepper-fill .stepper-button-plus,
-.md .stepper.color-white.stepper-fill-md .stepper-button-plus {
+.md .stepper-fill.color-white .stepper-button,
+.md .stepper-fill-md.color-white .stepper-button,
+.md .stepper-fill.color-white .stepper-button-minus,
+.md .stepper-fill-md.color-white .stepper-button-minus,
+.md .stepper-fill.color-white .stepper-button-plus,
+.md .stepper-fill-md.color-white .stepper-button-plus {
   background-color: #ffffff;
   color: #fff;
 }
-.md .stepper.color-white.stepper-fill .stepper-button.active-state,
-.md .stepper.color-white.stepper-fill-md .stepper-button.active-state,
-.md .stepper.color-white.stepper-fill .stepper-button-minus.active-state,
-.md .stepper.color-white.stepper-fill-md .stepper-button-minus.active-state,
-.md .stepper.color-white.stepper-fill .stepper-button-plus.active-state,
-.md .stepper.color-white.stepper-fill-md .stepper-button-plus.active-state {
+.md .stepper-fill.color-white .stepper-button.active-state,
+.md .stepper-fill-md.color-white .stepper-button.active-state,
+.md .stepper-fill.color-white .stepper-button-minus.active-state,
+.md .stepper-fill-md.color-white .stepper-button-minus.active-state,
+.md .stepper-fill.color-white .stepper-button-plus.active-state,
+.md .stepper-fill-md.color-white .stepper-button-plus.active-state {
   background: #ebebeb;
 }
-.md .stepper.color-white.stepper-fill .stepper-button:after,
-.md .stepper.color-white.stepper-fill-md .stepper-button:after,
-.md .stepper.color-white.stepper-fill .stepper-button-minus:after,
-.md .stepper.color-white.stepper-fill-md .stepper-button-minus:after,
-.md .stepper.color-white.stepper-fill .stepper-button-plus:after,
-.md .stepper.color-white.stepper-fill-md .stepper-button-plus:after,
-.md .stepper.color-white.stepper-fill .stepper-button:before,
-.md .stepper.color-white.stepper-fill-md .stepper-button:before,
-.md .stepper.color-white.stepper-fill .stepper-button-minus:before,
-.md .stepper.color-white.stepper-fill-md .stepper-button-minus:before,
-.md .stepper.color-white.stepper-fill .stepper-button-plus:before,
-.md .stepper.color-white.stepper-fill-md .stepper-button-plus:before {
+.md .stepper-fill.color-white .stepper-button:after,
+.md .stepper-fill-md.color-white .stepper-button:after,
+.md .stepper-fill.color-white .stepper-button-minus:after,
+.md .stepper-fill-md.color-white .stepper-button-minus:after,
+.md .stepper-fill.color-white .stepper-button-plus:after,
+.md .stepper-fill-md.color-white .stepper-button-plus:after,
+.md .stepper-fill.color-white .stepper-button:before,
+.md .stepper-fill-md.color-white .stepper-button:before,
+.md .stepper-fill.color-white .stepper-button-minus:before,
+.md .stepper-fill-md.color-white .stepper-button-minus:before,
+.md .stepper-fill.color-white .stepper-button-plus:before,
+.md .stepper-fill-md.color-white .stepper-button-plus:before {
   background: #fff;
 }
 .md .stepper.color-black .stepper-button,
@@ -11860,41 +11826,39 @@ label.item-radio.disabled,
   border-top-color: #000000;
   border-bottom-color: #000000;
 }
-.md .stepper.color-black .stepper-value {
-  color: #000000;
-}
+.md .stepper.color-black .stepper-value,
 .md .stepper.color-black .stepper-input-wrap input {
   color: #000000;
 }
-.md .stepper.color-black.stepper-fill .stepper-button,
-.md .stepper.color-black.stepper-fill-md .stepper-button,
-.md .stepper.color-black.stepper-fill .stepper-button-minus,
-.md .stepper.color-black.stepper-fill-md .stepper-button-minus,
-.md .stepper.color-black.stepper-fill .stepper-button-plus,
-.md .stepper.color-black.stepper-fill-md .stepper-button-plus {
+.md .stepper-fill.color-black .stepper-button,
+.md .stepper-fill-md.color-black .stepper-button,
+.md .stepper-fill.color-black .stepper-button-minus,
+.md .stepper-fill-md.color-black .stepper-button-minus,
+.md .stepper-fill.color-black .stepper-button-plus,
+.md .stepper-fill-md.color-black .stepper-button-plus {
   background-color: #000000;
   color: #fff;
 }
-.md .stepper.color-black.stepper-fill .stepper-button.active-state,
-.md .stepper.color-black.stepper-fill-md .stepper-button.active-state,
-.md .stepper.color-black.stepper-fill .stepper-button-minus.active-state,
-.md .stepper.color-black.stepper-fill-md .stepper-button-minus.active-state,
-.md .stepper.color-black.stepper-fill .stepper-button-plus.active-state,
-.md .stepper.color-black.stepper-fill-md .stepper-button-plus.active-state {
+.md .stepper-fill.color-black .stepper-button.active-state,
+.md .stepper-fill-md.color-black .stepper-button.active-state,
+.md .stepper-fill.color-black .stepper-button-minus.active-state,
+.md .stepper-fill-md.color-black .stepper-button-minus.active-state,
+.md .stepper-fill.color-black .stepper-button-plus.active-state,
+.md .stepper-fill-md.color-black .stepper-button-plus.active-state {
   background: #000000;
 }
-.md .stepper.color-black.stepper-fill .stepper-button:after,
-.md .stepper.color-black.stepper-fill-md .stepper-button:after,
-.md .stepper.color-black.stepper-fill .stepper-button-minus:after,
-.md .stepper.color-black.stepper-fill-md .stepper-button-minus:after,
-.md .stepper.color-black.stepper-fill .stepper-button-plus:after,
-.md .stepper.color-black.stepper-fill-md .stepper-button-plus:after,
-.md .stepper.color-black.stepper-fill .stepper-button:before,
-.md .stepper.color-black.stepper-fill-md .stepper-button:before,
-.md .stepper.color-black.stepper-fill .stepper-button-minus:before,
-.md .stepper.color-black.stepper-fill-md .stepper-button-minus:before,
-.md .stepper.color-black.stepper-fill .stepper-button-plus:before,
-.md .stepper.color-black.stepper-fill-md .stepper-button-plus:before {
+.md .stepper-fill.color-black .stepper-button:after,
+.md .stepper-fill-md.color-black .stepper-button:after,
+.md .stepper-fill.color-black .stepper-button-minus:after,
+.md .stepper-fill-md.color-black .stepper-button-minus:after,
+.md .stepper-fill.color-black .stepper-button-plus:after,
+.md .stepper-fill-md.color-black .stepper-button-plus:after,
+.md .stepper-fill.color-black .stepper-button:before,
+.md .stepper-fill-md.color-black .stepper-button:before,
+.md .stepper-fill.color-black .stepper-button-minus:before,
+.md .stepper-fill-md.color-black .stepper-button-minus:before,
+.md .stepper-fill.color-black .stepper-button-plus:before,
+.md .stepper-fill-md.color-black .stepper-button-plus:before {
   background: #fff;
 }
 /* === Smart Select === */

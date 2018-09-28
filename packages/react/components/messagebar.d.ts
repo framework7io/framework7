@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Messagebar as MessagebarNamespace } from 'framework7/components/messagebar/messagebar';
 
 declare namespace F7Messagebar {
   interface Props {
@@ -9,9 +10,9 @@ declare namespace F7Messagebar {
     sheetVisible? : boolean
     attachmentsVisible? : boolean
     top? : boolean
-    resizable? : boolean  | true
-    bottomOffset? : number  | 0
-    topOffset? : number  | 0
+    resizable? : boolean
+    bottomOffset? : number
+    topOffset? : number
     maxHeight? : number
     resizePage? : boolean
     sendLink? : string
@@ -19,8 +20,8 @@ declare namespace F7Messagebar {
     disabled? : boolean
     readonly? : boolean
     name? : string
-    placeholder? : string  | 'Message'
-    init? : boolean  | true
+    placeholder? : string
+    init? : boolean
     color? : string
     colorTheme? : string
     textColor? : string
@@ -41,19 +42,19 @@ declare namespace F7Messagebar {
   }
 }
 declare class F7Messagebar extends React.Component<F7Messagebar.Props, {}> {
-  clear(undefined? : any) : unknown
-  getValue(undefined? : any) : unknown
-  setValue(undefined? : any) : unknown
-  setPlaceholder(undefined? : any) : unknown
-  resize(undefined? : any) : unknown
-  focus(undefined? : any) : unknown
-  blur(undefined? : any) : unknown
-  attachmentsShow(undefined? : any) : unknown
-  attachmentsHide(undefined? : any) : unknown
-  attachmentsToggle(undefined? : any) : unknown
-  sheetShow(undefined? : any) : unknown
-  sheetHide(undefined? : any) : unknown
-  sheetToggle(undefined? : any) : unknown
+  clear(...args : any[]) : unknown
+  getValue(...args : any[]) : unknown
+  setValue(...args : any[]) : unknown
+  setPlaceholder(...args : any[]) : unknown
+  resize(...args : any[]) : unknown
+  focus(...args : any[]) : unknown
+  blur(...args : any[]) : unknown
+  attachmentsShow(...args : any[]) : unknown
+  attachmentsHide(...args : any[]) : unknown
+  attachmentsToggle(...args : any[]) : unknown
+  sheetShow(...args : any[]) : unknown
+  sheetHide(...args : any[]) : unknown
+  sheetToggle(...args : any[]) : unknown
   onChange(event? : any) : unknown
   onInput(event? : any) : unknown
   onFocus(event? : any) : unknown
@@ -62,5 +63,6 @@ declare class F7Messagebar extends React.Component<F7Messagebar.Props, {}> {
   onDeleteAttachment(event? : any) : unknown
   onClickAttachment(event? : any) : unknown
   onResizePage(event? : any) : unknown
+  f7Messagebar: MessagebarNamespace.Messagebar
 }
 export default F7Messagebar;

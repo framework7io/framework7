@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { VirtualList as VirtualListNamespace } from 'framework7/components/virtual-list/virtual-list';
 
 declare namespace F7List {
   interface Props {
@@ -54,5 +55,6 @@ declare class F7List extends React.Component<F7List.Props, {}> {
   onSortableSort(event? : any) : unknown
   onTabShow(event? : any) : unknown
   onTabHide(event? : any) : unknown
+  f7VirtualList: VirtualListNamespace.VirtualList
 }
 export default F7List;

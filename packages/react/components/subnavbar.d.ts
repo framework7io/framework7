@@ -8,7 +8,7 @@ declare namespace F7Subnavbar {
     style? : React.CSSProperties
     sliding? : boolean
     title? : string
-    inner? : boolean  | true
+    inner? : boolean
     color? : string
     colorTheme? : string
     textColor? : string

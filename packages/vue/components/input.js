@@ -32,7 +32,7 @@ export default {
     multiple: Boolean,
     readonly: Boolean,
     required: Boolean,
-    inputStyle: String,
+    inputStyle: [String, Object],
     pattern: String,
     validate: [Boolean, String],
     tabindex: [String, Number],

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Tooltip as TooltipNamespace } from 'framework7/components/tooltip/tooltip';
 
 declare namespace F7Button {
   interface Props {
@@ -11,7 +12,7 @@ declare namespace F7Button {
     text? : string
     tabLink? : boolean | string
     tabLinkActive? : boolean
-    href? : string | boolean  | '#'
+    href? : string | boolean
     target? : string
     round? : boolean
     roundMd? : boolean
@@ -51,7 +52,7 @@ declare namespace F7Button {
     back? : boolean
     external? : boolean
     force? : boolean
-    animate? : boolean  | undefined
+    animate? : boolean
     ignoreCache? : boolean
     pageName? : string
     reloadCurrent? : boolean
@@ -83,5 +84,6 @@ declare namespace F7Button {
 }
 declare class F7Button extends React.Component<F7Button.Props, {}> {
   onClick(event? : any) : unknown
+  f7Tooltip: TooltipNamespace.Tooltip
 }
 export default F7Button;

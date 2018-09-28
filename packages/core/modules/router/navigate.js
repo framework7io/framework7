@@ -434,6 +434,7 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
     && router.currentRoute.route.parentPath === options.route.route.parentPath) {
     // Do something nested
     if (options.route.url === router.url) {
+      router.allowPageChange = true;
       return false;
     }
     // Check for same params
@@ -645,7 +646,7 @@ function navigate(navigateParams, navigateOptions = {}) {
     if (route.route.async) {
       router.allowPageChange = false;
 
-      route.route.async.call(router, route, router.currentRoute, asyncResolve, asyncReject);
+      route.route.async.call(router, options.route, router.currentRoute, asyncResolve, asyncReject);
     }
   }
   function reject() {
@@ -657,7 +658,18 @@ function navigate(navigateParams, navigateOptions = {}) {
     route,
     router.currentRoute,
     () => {
-      resolve();
+      if (route.route.modules) {
+        app
+          .loadModules(Array.isArray(route.route.modules) ? route.route.modules : [route.route.modules])
+          .then(() => {
+            resolve();
+          })
+          .catch(() => {
+            reject();
+          });
+      } else {
+        resolve();
+      }
     },
     () => {
       reject();

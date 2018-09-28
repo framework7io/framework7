@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Tooltip as TooltipNamespace } from 'framework7/components/tooltip/tooltip';
 
 declare namespace F7Fab {
   interface Props {
@@ -10,7 +11,7 @@ declare namespace F7Fab {
     href? : boolean | string
     target? : string
     text? : string
-    position? : string  | 'right-bottom'
+    position? : string
     tooltip? : string
     color? : string
     colorTheme? : string
@@ -24,5 +25,6 @@ declare namespace F7Fab {
 }
 declare class F7Fab extends React.Component<F7Fab.Props, {}> {
   onClick(event? : any) : unknown
+  f7Tooltip: TooltipNamespace.Tooltip
 }
 export default F7Fab;

@@ -7,7 +7,7 @@ declare namespace F7MessagebarAttachment {
     className? : string
     style? : React.CSSProperties
     image? : string
-    deletable? : boolean  | true
+    deletable? : boolean
     color? : string
     colorTheme? : string
     textColor? : string

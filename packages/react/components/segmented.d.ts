@@ -8,7 +8,7 @@ declare namespace F7Segmented {
     style? : React.CSSProperties
     raised? : boolean
     round? : boolean
-    tag? : string  | 'div'
+    tag? : string
     color? : string
     colorTheme? : string
     textColor? : string

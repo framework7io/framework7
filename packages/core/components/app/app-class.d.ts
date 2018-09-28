@@ -1,10 +1,10 @@
-import { Dom7, Dom7Instance } from 'Dom7'
-import Template7 from 'Template7'
+import { Dom7, Dom7Instance } from 'dom7'
+import Template7 from 'template7'
 import { Router } from '../../modules/router/router';
-import Device, { Device as DeviceInterface } from '../../utils/device';
-import Request, { Request as RequestInterface } from '../../utils/request';
-import Support, { Support as SupportInterface } from '../../utils/support';
-import Utils, { Utils as UtilsInterface } from '../../utils/utils';
+import { Device } from '../../utils/device';
+import { Request } from '../../utils/request';
+import { Support } from '../../utils/support';
+import { Utils } from '../../utils/utils';
 
 // Css Selector string is an option on many F7 methods
 // Giving this alias makes the typename show in the intellisense
@@ -56,6 +56,8 @@ export interface Framework7Params {
   data? : () => any
   /** App root methods. Object with methods.  Note, that this inside of each method points to app Framework7 instance.. (default {}) */
   methods? : { [name : string] : () => any }
+  /** Lazy modules path */
+  lazyModulesPath?: string
   /** By default Framework7 will be initialized automatically when you call new Framework7(). If you want to prevent this behavior you can disable it with this option and then initialize it manually with init() when you need it.. (default true) */
   init? : boolean
   /** If automatic initialization is enabled with init: true parameter and app is running under cordova environment then it will be initialized on deviceready event.. (default true) */
@@ -141,16 +143,20 @@ interface Framework7 extends Framework7Class<Framework7Events> {
   params : Framework7Params
   /** Initialize app. In case you disabled auto initialization with init: false parameter */
   init() : void
+  /** Load module */
+  loadModule(module: string | Function | Framework7Plugin) : Promise
+  /** Load modules */
+  loadModules(modules: any[]) : Promise
 }
 
 declare class Framework7 implements Framework7 {
   constructor(parameters?: Framework7Params);
 
   static use(plugin : Framework7Plugin) : void;
-  static device: DeviceInterface = Device;
-  static request: RequestInterface = Request;
-  static support: SupportInterface = Support;
-  static utils: UtilsInterface = Utils;
+  static device: Device;
+  static request: Request;
+  static support: Support;
+  static utils: Utils;
 }
 
 export default Framework7;
