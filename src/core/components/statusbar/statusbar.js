@@ -57,7 +57,7 @@ const Statusbar = {
       }
     }
   },
-  iosSetTextColor(color) {
+  setIosTextColor(color) {
     if (!Device.ios) return;
     Statusbar.setTextColor(color);
   },
@@ -172,11 +172,13 @@ export default {
       enabled: true,
       overlay: 'auto',
       scrollTopOnClick: true,
+
       iosOverlaysWebView: true,
       iosTextColor: 'black',
       iosBackgroundColor: null,
-      androidOverlaysWebView: true,
-      androidTextColor: 'white',
+
+      androidOverlaysWebView: false,
+      androidTextColor: 'black',
       androidBackgroundColor: null,
     },
   },
@@ -194,7 +196,7 @@ export default {
         init: Statusbar.init.bind(app),
 
         iosOverlaysWebView: Statusbar.iosOverlaysWebView,
-        iosSetTextColor: Statusbar.iosSetTextColor,
+        setIosTextColor: Statusbar.iosSetTextColor,
       },
     });
   },
