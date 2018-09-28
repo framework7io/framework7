@@ -119,7 +119,7 @@ function loadModule(moduleToLoad) {
       });
       const styleLoad = new Promise((resolveStyle) => {
         Framework7.request.get(
-          modulePath.replace('.js', '.css'),
+          modulePath.replace('.js', app.rtl ? '.rtl.css' : '.css'),
           (styleContent) => {
             const styleEl = document.createElement('style');
             styleEl.innerHTML = styleContent;
