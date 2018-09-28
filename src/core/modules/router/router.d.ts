@@ -41,7 +41,8 @@ export namespace Router {
     options?: RouteOptions
     /** Array with nested routes */
     routes?: RouteParameters[]
-
+    /** Modules to load */
+    modules?: any[]
     /** Load page from DOM by passed HTMLElement */
     el?: HTMLElement | CSSSelector
     /** Load page from DOM that has same data-name attribute */

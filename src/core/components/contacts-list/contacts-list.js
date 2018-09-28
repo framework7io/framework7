@@ -1,3 +1,3 @@
 export default {
-  name: 'contactList',
+  name: 'contactsList',
 };
