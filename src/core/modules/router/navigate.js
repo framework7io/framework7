@@ -18,7 +18,7 @@ function forward(el, forwardOptions = {}) {
   const app = router.app;
   const view = router.view;
 
-  const options = Utils.extend({
+  const options = Utils.extend(false, {
     animate: router.params.animate,
     pushState: true,
     replaceState: false,
