@@ -7,11 +7,11 @@ export namespace Sortable {
   }
   interface DomEvents {
     /** Event will be triggered when sortable mode is enabled */
-    'sortable:enable': (Event) => void
+    'sortable:enable': (event: any) => void
     /** Event will be triggered when sortable mode is disabled */
-    'sortable:disable': (Event) => void
+    'sortable:disable': (event: any) => void
     /** Event will be triggered after user release currently sorting element in new position. event.detail will contain object with from and to properties with from/to index numbers of sorted list item */
-    'sortable:sort': (Event, indexes: SortIndexes) => void
+    'sortable:sort': (event: any, indexes: SortIndexes) => void
   }
   interface AppMethods {
     sortable: {

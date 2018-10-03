@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Popover as PopoverNamespace } from 'framework7/components/popover/popover';
 
 declare namespace F7Popover {
   interface Props {
@@ -30,5 +31,6 @@ declare class F7Popover extends React.Component<F7Popover.Props, {}> {
   onClosed(event? : any) : unknown
   open(target? : any, animate? : any) : unknown
   close(animate? : any) : unknown
+  f7Popover: PopoverNamespace.Popover
 }
 export default F7Popover;

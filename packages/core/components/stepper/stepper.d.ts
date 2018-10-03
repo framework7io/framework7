@@ -33,7 +33,7 @@ export namespace Stepper {
     buttonsEndInputMode?: boolean
     /** Object with events handlers.. */
     on?: {
-      [event in keyof Events] : Events[event]
+      [event in keyof Events]? : Events[event]
     }
   }
   interface Stepper extends Framework7EventsClass<Events> {

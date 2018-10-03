@@ -301,10 +301,10 @@ function SwipeBack(r) {
 
     // Swipe Back Callback
     const callbackData = {
-      currentPage: currentPage[0],
-      previousPage: previousPage[0],
-      currentNavbar: currentNavbar[0],
-      previousNavbar: previousNavbar[0],
+      currentPageEl: currentPage[0],
+      previousPageEl: previousPage[0],
+      currentNavbarEl: currentNavbar[0],
+      previousNavbarEl: previousNavbar[0],
     };
 
     if (pageChanged) {

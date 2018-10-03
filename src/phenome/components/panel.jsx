@@ -1,6 +1,14 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
+/* phenome-dts-imports
+import { Panel as PanelNamespace } from 'framework7/components/panel/panel';
+*/
+
+/* phenome-dts-instance
+f7Panel: PanelNamespace.Panel
+*/
+
 export default {
   name: 'f7-panel',
   props: {

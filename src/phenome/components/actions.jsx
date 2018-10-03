@@ -1,6 +1,14 @@
 import Mixins from '../utils/mixins';
 import Utils from '../utils/utils';
 
+/* phenome-dts-imports
+import { Actions as ActionsNamespace } from 'framework7/components/actions/actions';
+*/
+
+/* phenome-dts-instance
+f7Actions: ActionsNamespace.Actions
+*/
+
 export default {
   name: 'f7-actions',
   props: {

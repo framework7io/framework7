@@ -1,5 +1,13 @@
 import Utils from '../utils/utils';
 
+/* phenome-dts-imports
+import { PhotoBrowser as PhotoBrowserNamespace } from 'framework7/components/photo-browser/photo-browser';
+*/
+
+/* phenome-dts-instance
+f7PhotoBrowser: PhotoBrowserNamespace.PhotoBrowser
+*/
+
 export default {
   name: 'f7-photo-browser',
   props: {

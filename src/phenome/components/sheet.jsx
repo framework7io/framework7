@@ -1,6 +1,14 @@
 import Mixins from '../utils/mixins';
 import Utils from '../utils/utils';
 
+/* phenome-dts-imports
+import { Sheet as SheetNamespace } from 'framework7/components/sheet/sheet';
+*/
+
+/* phenome-dts-instance
+f7Sheet: SheetNamespace.Sheet
+*/
+
 export default {
   name: 'f7-sheet',
   props: {

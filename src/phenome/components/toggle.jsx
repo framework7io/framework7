@@ -1,6 +1,14 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
+/* phenome-dts-imports
+import { Toggle as ToggleNamespace } from 'framework7/components/toggle/toggle';
+*/
+
+/* phenome-dts-instance
+f7Toggle: ToggleNamespace.Toggle
+*/
+
 export default {
   name: 'f7-toggle',
   props: {

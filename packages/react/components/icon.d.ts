@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Tooltip as TooltipNamespace } from 'framework7/components/tooltip/tooltip';
 
 declare namespace F7Icon {
   interface Props {
@@ -28,6 +29,6 @@ declare namespace F7Icon {
   }
 }
 declare class F7Icon extends React.Component<F7Icon.Props, {}> {
-  
+  f7Tooltip: TooltipNamespace.Tooltip
 }
 export default F7Icon;

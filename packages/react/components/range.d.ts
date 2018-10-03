@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Range as RangeNamespace } from 'framework7/components/range/range';
 
 declare namespace F7Range {
   interface Props {
@@ -6,18 +7,18 @@ declare namespace F7Range {
     id? : string | number
     className? : string
     style? : React.CSSProperties
-    init? : boolean  | true
-    value? : number | Array<any> | string  | 0
-    min? : number | string  | 0
-    max? : number | string  | 100
-    step? : number | string  | 1
-    label? : boolean  | false
-    dual? : boolean  | false
+    init? : boolean
+    value? : number | Array<any> | string
+    min? : number | string
+    max? : number | string
+    step? : number | string
+    label? : boolean
+    dual? : boolean
     name? : string
     inputId? : string
     input? : boolean
     disabled? : boolean
-    draggableBar? : boolean  | true
+    draggableBar? : boolean
     color? : string
     colorTheme? : string
     textColor? : string
@@ -32,5 +33,6 @@ declare namespace F7Range {
 declare class F7Range extends React.Component<F7Range.Props, {}> {
   setValue(newValue? : any) : unknown
   getValue() : unknown
+  f7Range: RangeNamespace.Range
 }
 export default F7Range;

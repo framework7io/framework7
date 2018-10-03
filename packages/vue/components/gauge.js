@@ -152,7 +152,7 @@ export default {
         fill: valueTextColor,
         dy: semiCircle ? labelText ? -labelFontSize - 15 : -5 : 0,
         'text-anchor': 'middle',
-        'dominant-baseline': !semiCircle && 'middle'
+        'dominant-baseline': !semiCircle ? 'middle' : null
       }
     }, [valueText]), labelText && _h('text', {
       class: 'gauge-label-text',
@@ -164,7 +164,7 @@ export default {
         fill: labelTextColor,
         dy: semiCircle ? -5 : valueText ? valueFontSize / 2 + 10 : 0,
         'text-anchor': 'middle',
-        'dominant-baseline': !semiCircle && 'middle'
+        'dominant-baseline': !semiCircle ? 'middle' : null
       }
     }, [labelText])])]);
   },

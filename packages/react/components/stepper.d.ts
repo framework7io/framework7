@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Stepper as StepperNamespace } from 'framework7/components/stepper/stepper';
 
 declare namespace F7Stepper {
   interface Props {
@@ -6,21 +7,21 @@ declare namespace F7Stepper {
     id? : string | number
     className? : string
     style? : React.CSSProperties
-    init? : boolean  | true
-    value? : number  | 0
-    min? : number  | 0
-    max? : number  | 100
-    step? : number  | 1
+    init? : boolean
+    value? : number
+    min? : number
+    max? : number
+    step? : number
     formatValue? : Function
-    input? : boolean  | true
-    inputType? : string  | 'text'
-    inputReadonly? : boolean  | false
-    autorepeat? : boolean  | false
-    autorepeatDynamic? : boolean  | false
-    wraps? : boolean  | false
-    manualInputMode? : boolean  | false
-    decimalPoint? : number  | 4
-    buttonsEndInputMode? : boolean  | true
+    input? : boolean
+    inputType? : string
+    inputReadonly? : boolean
+    autorepeat? : boolean
+    autorepeatDynamic? : boolean
+    wraps? : boolean
+    manualInputMode? : boolean
+    decimalPoint? : number
+    buttonsEndInputMode? : boolean
     disabled? : boolean
     buttonsOnly? : boolean
     round? : boolean
@@ -57,5 +58,6 @@ declare class F7Stepper extends React.Component<F7Stepper.Props, {}> {
   onInput(event? : any) : unknown
   onMinusClick(event? : any) : unknown
   onPlusClick(event? : any) : unknown
+  f7Stepper: StepperNamespace.Stepper
 }
 export default F7Stepper;

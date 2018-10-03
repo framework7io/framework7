@@ -5,6 +5,14 @@ import events from '../utils/events';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
+/* phenome-dts-imports
+import { View as ViewNamespace } from 'framework7/components/view/view';
+*/
+
+/* phenome-dts-instance
+f7View: ViewNamespace.View
+*/
+
 export default {
   name: 'f7-view',
   props: {

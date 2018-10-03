@@ -1,6 +1,14 @@
 import Mixins from '../utils/mixins';
 import Utils from '../utils/utils';
 
+/* phenome-dts-imports
+import { Popup as PopupNamespace } from 'framework7/components/popup/popup';
+*/
+
+/* phenome-dts-instance
+f7Popup: PopupNamespace.Popup
+*/
+
 export default {
   name: 'f7-popup',
   props: {

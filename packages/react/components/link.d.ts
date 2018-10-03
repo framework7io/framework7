@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { Tooltip as TooltipNamespace } from 'framework7/components/tooltip/tooltip';
+import { SmartSelect as SmartSelectNamespace } from 'framework7/components/smart-select/smart-select';
 
 declare namespace F7Link {
   interface Props {
@@ -17,7 +19,7 @@ declare namespace F7Link {
     badge? : string | number
     badgeColor? : string
     iconBadge? : string | number
-    href? : string | boolean  | '#'
+    href? : string | boolean
     target? : string
     tooltip? : string
     smartSelect? : boolean
@@ -43,7 +45,7 @@ declare namespace F7Link {
     back? : boolean
     external? : boolean
     force? : boolean
-    animate? : boolean  | undefined
+    animate? : boolean
     ignoreCache? : boolean
     pageName? : string
     reloadCurrent? : boolean
@@ -75,5 +77,7 @@ declare namespace F7Link {
 }
 declare class F7Link extends React.Component<F7Link.Props, {}> {
   onClick(event? : any) : unknown
+  f7Tooltip: TooltipNamespace.Tooltip
+  f7SmartSelect: SmartSelectNamespace.SmartSelect
 }
 export default F7Link;

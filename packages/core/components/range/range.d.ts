@@ -23,7 +23,7 @@ export namespace Range {
     draggableBar?: boolean
     /** Object with events handlers.. */
     on?: {
-      [event in keyof Events] : Events[event]
+      [event in keyof Events]? : Events[event]
     }
   }
   interface Range extends Framework7EventsClass<Events> {

@@ -30,7 +30,6 @@ declare namespace F7Input {
     multiple? : boolean
     readonly? : boolean
     required? : boolean
-    inputStyle? : string
     pattern? : string
     validate? : boolean | string
     tabindex? : string | number
@@ -42,7 +41,7 @@ declare namespace F7Input {
     errorMessage? : string
     errorMessageForce? : boolean
     info? : string
-    wrap? : boolean  | true
+    wrap? : boolean
     color? : string
     colorTheme? : string
     textColor? : string
@@ -50,6 +49,7 @@ declare namespace F7Input {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
+    inputStyle? : React.CSSProperties
     onTextareaResize? : (event?: any) => void
     onInputNotEmpty? : (event?: any) => void
     onInputEmpty? : (event?: any) => void

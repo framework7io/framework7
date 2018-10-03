@@ -200,13 +200,9 @@
         border-top-color: @colorThemeValue;
         border-bottom-color: @colorThemeValue;
       }
-      .stepper-value {
+      .stepper-value,
+      .stepper-input-wrap input {
         color: @colorThemeValue;
-      }
-      .stepper .stepper-input-wrap {
-        input {
-          color: @colorThemeValue;
-        }
       }
       .stepper-fill, .stepper-fill-md {
         .stepper-button, .stepper-button-minus, .stepper-button-plus {
@@ -238,24 +234,21 @@
         border-top-color: @colorValue;
         border-bottom-color: @colorValue;
       }
-      .stepper-value {
+      .stepper-value,
+      .stepper-input-wrap input {
         color: @colorValue;
       }
-      .stepper-input-wrap {
-        input {
-          color: @colorValue;
+    }
+    .stepper-fill.color-@{colorName},
+    .stepper-fill-md.color-@{colorName} {
+      .stepper-button, .stepper-button-minus, .stepper-button-plus {
+        background-color: @colorValue;
+        color: #fff;
+        &.active-state {
+          background: darken(@colorValue, 8%);
         }
-      }
-      &.stepper-fill, &.stepper-fill-md {
-        .stepper-button, .stepper-button-minus, .stepper-button-plus {
-          background-color: @colorValue;
-          color: #fff;
-          &.active-state {
-            background: darken(@colorValue, 8%);
-          }
-          &:after, &:before {
-            background: #fff;
-          }
+        &:after, &:before {
+          background: #fff;
         }
       }
     }

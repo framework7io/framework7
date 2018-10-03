@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Toggle as ToggleNamespace } from 'framework7/components/toggle/toggle';
 
 declare namespace F7Toggle {
   interface Props {
@@ -6,7 +7,7 @@ declare namespace F7Toggle {
     id? : string | number
     className? : string
     style? : React.CSSProperties
-    init? : boolean  | true
+    init? : boolean
     checked? : boolean
     defaultChecked? : boolean
     disabled? : boolean
@@ -27,5 +28,6 @@ declare namespace F7Toggle {
 declare class F7Toggle extends React.Component<F7Toggle.Props, {}> {
   toggle() : unknown
   onChange(event? : any) : unknown
+  f7Toggle: ToggleNamespace.Toggle
 }
 export default F7Toggle;

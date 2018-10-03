@@ -1,6 +1,14 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
+/* phenome-dts-imports
+import { Messages as MessagesNamespace } from 'framework7/components/messages/messages';
+*/
+
+/* phenome-dts-instance
+f7Messages: MessagesNamespace.Messages
+*/
+
 export default {
   name: 'f7-messages',
   props: {

@@ -121,7 +121,7 @@ export namespace View {
     pushStateOnLoad?: boolean
     /** Object with events handlers.. */
     on?: {
-      [event in keyof Events] : Events[event]
+      [event in keyof Events]? : Events[event]
     }
   }
   interface View extends Router.AppMethods{}
@@ -136,6 +136,13 @@ export namespace View {
   interface AppMethods extends Router.AppEvents{
     view: {
       current: View
+      main: View
+      create(viewEl: HTMLElement | CSSSelector, parameters?: Parameters): View
+      get(viewEl: HTMLElement | CSSSelector): View
+    },
+    views: {
+      current: View
+      main: View
       create(viewEl: HTMLElement | CSSSelector, parameters?: Parameters): View
       get(viewEl: HTMLElement | CSSSelector): View
     }

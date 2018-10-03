@@ -13,7 +13,7 @@ declare namespace F7Toolbar {
     hidden? : boolean
     noShadow? : boolean
     noHairline? : boolean
-    inner? : boolean  | true
+    inner? : boolean
     color? : string
     colorTheme? : string
     textColor? : string

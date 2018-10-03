@@ -9,7 +9,7 @@ declare namespace F7Message {
     text? : string
     name? : string
     avatar? : string
-    type? : string  | 'sent'
+    type? : string
     image? : string
     header? : string
     footer? : string

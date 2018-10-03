@@ -1,5 +1,5 @@
 /**
- * Framework7 3.3.2
+ * Framework7 3.4.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 20, 2018
+ * Released on: September 28, 2018
  */
 
 (function (global, factory) {
@@ -2868,8 +2868,8 @@
       phonegap: !!(win.cordova || win.phonegap),
     };
 
-    var screnWidth = win.screen.width;
-    var screnHeight = win.screen.height;
+    var screenWidth = win.screen.width;
+    var screenHeight = win.screen.height;
 
     var windowsPhone = ua.match(/(Windows Phone);?[\s\/]+([\d.]+)?/); // eslint-disable-line
     var android = ua.match(/(Android);?[\s\/]+([\d.]+)?/); // eslint-disable-line
@@ -2877,8 +2877,8 @@
     var ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
     var iphone = !ipad && ua.match(/(iPhone\sOS|iOS)\s([\d_]+)/);
     var iphoneX = iphone && (
-      (screnWidth === 375 && screnHeight === 812) // X/XS
-      || (screnWidth === 414 && screnHeight === 896) // XR / XS Max
+      (screenWidth === 375 && screenHeight === 812) // X/XS
+      || (screenWidth === 414 && screenHeight === 896) // XR / XS Max
     );
     var ie = ua.indexOf('MSIE ') >= 0 || ua.indexOf('Trident/') >= 0;
     var edge = ua.indexOf('Edge/') >= 0;
@@ -3074,6 +3074,21 @@
     return self;
   };
 
+  // eslint-disable-next-line
+  Framework7Class.prototype.useModuleParams = function useModuleParams (module, instanceParams) {
+    if (module.params) {
+      var originalParams = {};
+      Object.keys(module.params).forEach(function (paramKey) {
+        if (typeof instanceParams[paramKey] === 'undefined') { return; }
+        originalParams[paramKey] = Utils.extend({}, instanceParams[paramKey]);
+      });
+      Utils.extend(instanceParams, module.params);
+      Object.keys(originalParams).forEach(function (paramKey) {
+        Utils.extend(instanceParams[paramKey], originalParams[paramKey]);
+      });
+    }
+  };
+
   Framework7Class.prototype.useModulesParams = function useModulesParams (instanceParams) {
     var instance = this;
     if (!instance.modules) { return; }
@@ -3086,47 +3101,58 @@
     });
   };
 
+  Framework7Class.prototype.useModule = function useModule (moduleName, moduleParams) {
+      if ( moduleName === void 0 ) moduleName = '';
+      if ( moduleParams === void 0 ) moduleParams = {};
+
+    var instance = this;
+    if (!instance.modules) { return; }
+    var module = typeof moduleName === 'string' ? instance.modules[moduleName] : moduleName;
+    if (!module) { return; }
+
+    // Extend instance methods and props
+    if (module.instance) {
+      Object.keys(module.instance).forEach(function (modulePropName) {
+        var moduleProp = module.instance[modulePropName];
+        if (typeof moduleProp === 'function') {
+          instance[modulePropName] = moduleProp.bind(instance);
+        } else {
+          instance[modulePropName] = moduleProp;
+        }
+      });
+    }
+    // Add event listeners
+    if (module.on && instance.on) {
+      Object.keys(module.on).forEach(function (moduleEventName) {
+        instance.on(moduleEventName, module.on[moduleEventName]);
+      });
+    }
+    // Add vnode hooks
+    if (module.vnode) {
+      if (!instance.vnodeHooks) { instance.vnodeHooks = {}; }
+      Object.keys(module.vnode).forEach(function (vnodeId) {
+        Object.keys(module.vnode[vnodeId]).forEach(function (hookName) {
+          var handler = module.vnode[vnodeId][hookName];
+          if (!instance.vnodeHooks[hookName]) { instance.vnodeHooks[hookName] = {}; }
+          if (!instance.vnodeHooks[hookName][vnodeId]) { instance.vnodeHooks[hookName][vnodeId] = []; }
+          instance.vnodeHooks[hookName][vnodeId].push(handler.bind(instance));
+        });
+      });
+    }
+    // Module create callback
+    if (module.create) {
+      module.create.bind(instance)(moduleParams);
+    }
+  };
+
   Framework7Class.prototype.useModules = function useModules (modulesParams) {
       if ( modulesParams === void 0 ) modulesParams = {};
 
     var instance = this;
     if (!instance.modules) { return; }
     Object.keys(instance.modules).forEach(function (moduleName) {
-      var module = instance.modules[moduleName];
       var moduleParams = modulesParams[moduleName] || {};
-      // Extend instance methods and props
-      if (module.instance) {
-        Object.keys(module.instance).forEach(function (modulePropName) {
-          var moduleProp = module.instance[modulePropName];
-          if (typeof moduleProp === 'function') {
-            instance[modulePropName] = moduleProp.bind(instance);
-          } else {
-            instance[modulePropName] = moduleProp;
-          }
-        });
-      }
-      // Add event listeners
-      if (module.on && instance.on) {
-        Object.keys(module.on).forEach(function (moduleEventName) {
-          instance.on(moduleEventName, module.on[moduleEventName]);
-        });
-      }
-      // Add vnode hooks
-      if (module.vnode) {
-        if (!instance.vnodeHooks) { instance.vnodeHooks = {}; }
-        Object.keys(module.vnode).forEach(function (vnodeId) {
-          Object.keys(module.vnode[vnodeId]).forEach(function (hookName) {
-            var handler = module.vnode[vnodeId][hookName];
-            if (!instance.vnodeHooks[hookName]) { instance.vnodeHooks[hookName] = {}; }
-            if (!instance.vnodeHooks[hookName][vnodeId]) { instance.vnodeHooks[hookName][vnodeId] = []; }
-            instance.vnodeHooks[hookName][vnodeId].push(handler.bind(instance));
-          });
-        });
-      }
-      // Module create callback
-      if (module.create) {
-        module.create.bind(instance)(moduleParams);
-      }
+      instance.useModule(moduleName, moduleParams);
     });
   };
 
@@ -3177,6 +3203,227 @@
 
   Object.defineProperties( Framework7Class, staticAccessors$1 );
 
+  function ConstructorMethods (parameters) {
+    if ( parameters === void 0 ) parameters = {};
+
+    var defaultSelector = parameters.defaultSelector;
+    var constructor = parameters.constructor;
+    var domProp = parameters.domProp;
+    var app = parameters.app;
+    var addMethods = parameters.addMethods;
+    var methods = {
+      create: function create() {
+        var args = [], len = arguments.length;
+        while ( len-- ) args[ len ] = arguments[ len ];
+
+        if (app) { return new (Function.prototype.bind.apply( constructor, [ null ].concat( [app], args) )); }
+        return new (Function.prototype.bind.apply( constructor, [ null ].concat( args) ));
+      },
+      get: function get(el) {
+        if ( el === void 0 ) el = defaultSelector;
+
+        if (el instanceof constructor) { return el; }
+        var $el = $(el);
+        if ($el.length === 0) { return undefined; }
+        return $el[0][domProp];
+      },
+      destroy: function destroy(el) {
+        var instance = methods.get(el);
+        if (instance && instance.destroy) { return instance.destroy(); }
+        return undefined;
+      },
+    };
+    if (addMethods && Array.isArray(addMethods)) {
+      addMethods.forEach(function (methodName) {
+        methods[methodName] = function (el) {
+          if ( el === void 0 ) el = defaultSelector;
+          var args = [], len = arguments.length - 1;
+          while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+
+          var instance = methods.get(el);
+          if (instance && instance[methodName]) { return instance[methodName].apply(instance, args); }
+          return undefined;
+        };
+      });
+    }
+    return methods;
+  }
+
+  function ModalMethods (parameters) {
+    if ( parameters === void 0 ) parameters = {};
+
+    var defaultSelector = parameters.defaultSelector;
+    var constructor = parameters.constructor;
+    var app = parameters.app;
+    var methods = Utils.extend(
+      ConstructorMethods({
+        defaultSelector: defaultSelector,
+        constructor: constructor,
+        app: app,
+        domProp: 'f7Modal',
+      }),
+      {
+        open: function open(el, animate) {
+          var $el = $(el);
+          var instance = $el[0].f7Modal;
+          if (!instance) { instance = new constructor(app, { el: $el }); }
+          return instance.open(animate);
+        },
+        close: function close(el, animate) {
+          if ( el === void 0 ) el = defaultSelector;
+
+          var $el = $(el);
+          if ($el.length === 0) { return undefined; }
+          var instance = $el[0].f7Modal;
+          if (!instance) { instance = new constructor(app, { el: $el }); }
+          return instance.close(animate);
+        },
+      }
+    );
+    return methods;
+  }
+
+  var fetchedModules = [];
+  function loadModule(moduleToLoad) {
+    var Framework7 = this;
+    return new Promise(function (resolve, reject) {
+      var app = Framework7.instance;
+      var modulePath;
+      var moduleObj;
+      var moduleFunc;
+      if (!moduleToLoad) {
+        reject(new Error('Framework7: Lazy module must be specified'));
+        return;
+      }
+
+      function install(module) {
+        Framework7.use(module);
+
+        if (app) {
+          app.useModuleParams(module, app.params);
+          app.useModule(module);
+        }
+      }
+
+      if (typeof moduleToLoad === 'string') {
+        var matchNamePattern = moduleToLoad.match(/([a-z0-9-]*)/i);
+        if (moduleToLoad.indexOf('.') < 0 && matchNamePattern && matchNamePattern[0].length === moduleToLoad.length) {
+          if (!app || (app && !app.params.lazyModulesPath)) {
+            reject(new Error('Framework7: "lazyModulesPath" app parameter must be specified to fetch module by name'));
+            return;
+          }
+          modulePath = (app.params.lazyModulesPath) + "/" + moduleToLoad + ".js";
+        } else {
+          modulePath = moduleToLoad;
+        }
+      } else if (typeof moduleToLoad === 'function') {
+        moduleFunc = moduleToLoad;
+      } else {
+        // considering F7-Plugin object
+        moduleObj = moduleToLoad;
+      }
+
+      if (moduleFunc) {
+        var module = moduleFunc(Framework7, false);
+        if (!module) {
+          reject(new Error('Framework7: Can\'t find Framework7 component in specified component function'));
+          return;
+        }
+        // Check if it was added
+        if (Framework7.prototype.modules && Framework7.prototype.modules[module.name]) {
+          resolve();
+          return;
+        }
+        // Install It
+        install(module);
+
+        resolve();
+      }
+      if (moduleObj) {
+        var module$1 = moduleObj;
+        if (!module$1) {
+          reject(new Error('Framework7: Can\'t find Framework7 component in specified component'));
+          return;
+        }
+        // Check if it was added
+        if (Framework7.prototype.modules && Framework7.prototype.modules[module$1.name]) {
+          resolve();
+          return;
+        }
+        // Install It
+        install(module$1);
+
+        resolve();
+      }
+      if (modulePath) {
+        if (fetchedModules.indexOf(modulePath) >= 0) {
+          resolve();
+          return;
+        }
+        fetchedModules.push(modulePath);
+        var scriptLoad = new Promise(function (resolveScript, rejectScript) {
+          Framework7.request.get(
+            modulePath,
+            function (scriptContent) {
+              var id = Utils.id();
+              var callbackLoadName = "f7_component_loader_callback_" + id;
+
+              var scriptEl = document.createElement('script');
+              scriptEl.innerHTML = "window." + callbackLoadName + " = function (Framework7, Framework7AutoInstallComponent) {return " + (scriptContent.trim()) + "}";
+              $('head').append(scriptEl);
+
+              var componentLoader = window[callbackLoadName];
+              delete window[callbackLoadName];
+              $(scriptEl).remove();
+
+              var module = componentLoader(Framework7, false);
+
+              if (!module) {
+                rejectScript(new Error(("Framework7: Can't find Framework7 component in " + modulePath + " file")));
+                return;
+              }
+
+              // Check if it was added
+              if (Framework7.prototype.modules && Framework7.prototype.modules[module.name]) {
+                resolveScript();
+                return;
+              }
+
+              // Install It
+              install(module);
+
+              resolveScript();
+            },
+            function (xhr, status) {
+              rejectScript(xhr, status);
+            }
+          );
+        });
+        var styleLoad = new Promise(function (resolveStyle) {
+          Framework7.request.get(
+            modulePath.replace('.js', app.rtl ? '.rtl.css' : '.css'),
+            function (styleContent) {
+              var styleEl = document.createElement('style');
+              styleEl.innerHTML = styleContent;
+              $('head').append(styleEl);
+
+              resolveStyle();
+            },
+            function () {
+              resolveStyle();
+            }
+          );
+        });
+
+        Promise.all([scriptLoad, styleLoad]).then(function () {
+          resolve();
+        }).catch(function (err) {
+          reject(err);
+        });
+      }
+    });
+  }
+
   var Framework7 = (function (Framework7Class$$1) {
     function Framework7(params) {
       Framework7Class$$1.call(this, params);
@@ -3185,6 +3432,8 @@
 
       // App Instance
       var app = this;
+
+      Framework7.instance = app;
 
       // Default
       var defaults = {
@@ -3195,6 +3444,7 @@
         language: win.navigator.language,
         routes: [],
         name: 'Framework7',
+        lazyModulesPath: null,
         initOnDeviceReady: true,
         init: true,
       };
@@ -3308,6 +3558,22 @@
       return app;
     };
 
+    // eslint-disable-next-line
+    Framework7.prototype.loadModule = function loadModule$$1 () {
+      var args = [], len = arguments.length;
+      while ( len-- ) args[ len ] = arguments[ len ];
+
+      return Framework7.loadModule.apply(Framework7, args);
+    };
+
+    // eslint-disable-next-line
+    Framework7.prototype.loadModules = function loadModules () {
+      var args = [], len = arguments.length;
+      while ( len-- ) args[ len ] = arguments[ len ];
+
+      return Framework7.loadModules.apply(Framework7, args);
+    };
+
     Framework7.prototype.getVnodeHooks = function getVnodeHooks (hook, id) {
       var app = this;
       if (!app.vnodeHooks || !app.vnodeHooks[hook]) { return []; }
@@ -3344,6 +3610,14 @@
 
     return Framework7;
   }(Framework7Class));
+
+  Framework7.ModalMethods = ModalMethods;
+  Framework7.ConstructorMethods = ConstructorMethods;
+
+  Framework7.loadModule = loadModule;
+  Framework7.loadModules = function loadModules(modules) {
+    return Promise.all(modules.map(function (module) { return Framework7.loadModule(module); }));
+  };
 
   var DeviceModule = {
     name: 'device',
@@ -5347,10 +5621,10 @@
 
       // Swipe Back Callback
       var callbackData = {
-        currentPage: currentPage[0],
-        previousPage: previousPage[0],
-        currentNavbar: currentNavbar[0],
-        previousNavbar: previousNavbar[0],
+        currentPageEl: currentPage[0],
+        previousPageEl: previousPage[0],
+        currentNavbarEl: currentNavbar[0],
+        previousNavbarEl: previousNavbar[0],
       };
 
       if (pageChanged) {
@@ -6000,6 +6274,7 @@
       && router.currentRoute.route.parentPath === options.route.route.parentPath) {
       // Do something nested
       if (options.route.url === router.url) {
+        router.allowPageChange = true;
         return false;
       }
       // Check for same params
@@ -6215,7 +6490,7 @@
       if (route.route.async) {
         router.allowPageChange = false;
 
-        route.route.async.call(router, route, router.currentRoute, asyncResolve, asyncReject);
+        route.route.async.call(router, options.route, router.currentRoute, asyncResolve, asyncReject);
       }
     }
     function reject() {
@@ -6227,7 +6502,18 @@
       route,
       router.currentRoute,
       function () {
-        resolve();
+        if (route.route.modules) {
+          app
+            .loadModules(Array.isArray(route.route.modules) ? route.route.modules : [route.route.modules])
+            .then(function () {
+              resolve();
+            })
+            .catch(function () {
+              reject();
+            });
+        } else {
+          resolve();
+        }
       },
       function () {
         reject();
@@ -7277,7 +7563,18 @@
         route,
         router.currentRoute,
         function () {
-          resolve();
+          if (route.route.modules) {
+            app
+              .loadModules(Array.isArray(route.route.modules) ? route.route.modules : [route.route.modules])
+              .then(function () {
+                resolve();
+              })
+              .catch(function () {
+                reject();
+              });
+          } else {
+            resolve();
+          }
         },
         function () {
           reject();
@@ -10392,7 +10689,7 @@
         if (pageContent.length > 0) { pageContent.scrollTop(0, 300); }
       }
     },
-    setIosTextColor: function setIosTextColor(color) {
+    setTextColor: function setTextColor(color) {
       if (Device.cordova && win.StatusBar) {
         if (color === 'white') {
           win.StatusBar.styleLightContent();
@@ -10400,6 +10697,10 @@
           win.StatusBar.styleDefault();
         }
       }
+    },
+    setIosTextColor: function setIosTextColor(color) {
+      if (!Device.ios) { return; }
+      Statusbar.setTextColor(color);
     },
     setBackgroundColor: function setBackgroundColor(color) {
       $('.statusbar').css('background-color', color);
@@ -10413,10 +10714,9 @@
       }
       return false;
     },
-    iosOverlaysWebView: function iosOverlaysWebView(overlays) {
+    overlaysWebView: function overlaysWebView(overlays) {
       if ( overlays === void 0 ) overlays = true;
 
-      if (!Device.ios) { return; }
       if (Device.cordova && win.StatusBar) {
         win.StatusBar.overlaysWebView(overlays);
         if (overlays) {
@@ -10425,6 +10725,10 @@
           $('html').removeClass('with-statusbar');
         }
       }
+    },
+    iosOverlaysWebView: function iosOverlaysWebView(overlays) {
+      if (!Device.ios) { return; }
+      Statusbar.overlaysWebView(overlays);
     },
     checkOverlay: function checkOverlay() {
       if (Device.needsStatusbarOverlay()) {
@@ -10470,23 +10774,36 @@
         if (params.scrollTopOnClick) {
           $(win).on('statusTap', Statusbar.onClick.bind(app));
         }
-        if (params.iosOverlaysWebView) {
-          win.StatusBar.overlaysWebView(true);
-        } else {
-          win.StatusBar.overlaysWebView(false);
+        if (Device.ios) {
+          if (params.iosOverlaysWebView) {
+            win.StatusBar.overlaysWebView(true);
+          } else {
+            win.StatusBar.overlaysWebView(false);
+          }
+          if (params.iosTextColor === 'white') {
+            win.StatusBar.styleLightContent();
+          } else {
+            win.StatusBar.styleDefault();
+          }
         }
-
-        if (params.iosTextColor === 'white') {
-          win.StatusBar.styleLightContent();
-        } else {
-          win.StatusBar.styleDefault();
+        if (Device.android) {
+          if (params.androidOverlaysWebView) {
+            win.StatusBar.overlaysWebView(true);
+          } else {
+            win.StatusBar.overlaysWebView(false);
+          }
+          if (params.androidTextColor === 'white') {
+            win.StatusBar.styleLightContent();
+          } else {
+            win.StatusBar.styleDefault();
+          }
         }
       }
-      if (params.iosBackgroundColor && app.theme === 'ios') {
+      if (params.iosBackgroundColor && Device.ios) {
         Statusbar.setBackgroundColor(params.iosBackgroundColor);
       }
-      if (params.materialBackgroundColor && app.theme === 'md') {
-        Statusbar.setBackgroundColor(params.materialBackgroundColor);
+      if ((params.materialBackgroundColor || params.androidBackgroundColor) && Device.android) {
+        Statusbar.setBackgroundColor(params.materialBackgroundColor || params.androidBackgroundColor);
       }
     },
   };
@@ -10498,10 +10815,14 @@
         enabled: true,
         overlay: 'auto',
         scrollTopOnClick: true,
+
         iosOverlaysWebView: true,
         iosTextColor: 'black',
         iosBackgroundColor: null,
-        materialBackgroundColor: null,
+
+        androidOverlaysWebView: false,
+        androidTextColor: 'black',
+        androidBackgroundColor: null,
       },
     },
     create: function create() {
@@ -10511,11 +10832,14 @@
           checkOverlay: Statusbar.checkOverlay,
           hide: Statusbar.hide,
           show: Statusbar.show,
-          iosOverlaysWebView: Statusbar.iosOverlaysWebView,
-          setIosTextColor: Statusbar.setIosTextColor,
+          overlaysWebView: Statusbar.overlaysWebView,
+          setTextColor: Statusbar.setTextColor,
           setBackgroundColor: Statusbar.setBackgroundColor,
           isVisible: Statusbar.isVisible,
           init: Statusbar.init.bind(app),
+
+          iosOverlaysWebView: Statusbar.iosOverlaysWebView,
+          setIosTextColor: Statusbar.iosSetTextColor,
         },
       });
     },
@@ -11309,6 +11633,7 @@
     ripple.rippleTransform = "translate3d(" + (-center.x + (width / 2)) + "px, " + (-center.y + (height / 2)) + "px, 0) scale(1)";
 
     Utils.nextFrame(function () {
+      if (!ripple || !ripple.$rippleWaveEl) { return; }
       ripple.$rippleWaveEl.transform(ripple.rippleTransform);
     });
 
@@ -11929,86 +12254,6 @@
 
     return Dialog;
   }(Modal));
-
-  function ConstructorMethods (parameters) {
-    if ( parameters === void 0 ) parameters = {};
-
-    var defaultSelector = parameters.defaultSelector;
-    var constructor = parameters.constructor;
-    var domProp = parameters.domProp;
-    var app = parameters.app;
-    var addMethods = parameters.addMethods;
-    var methods = {
-      create: function create() {
-        var args = [], len = arguments.length;
-        while ( len-- ) args[ len ] = arguments[ len ];
-
-        if (app) { return new (Function.prototype.bind.apply( constructor, [ null ].concat( [app], args) )); }
-        return new (Function.prototype.bind.apply( constructor, [ null ].concat( args) ));
-      },
-      get: function get(el) {
-        if ( el === void 0 ) el = defaultSelector;
-
-        if (el instanceof constructor) { return el; }
-        var $el = $(el);
-        if ($el.length === 0) { return undefined; }
-        return $el[0][domProp];
-      },
-      destroy: function destroy(el) {
-        var instance = methods.get(el);
-        if (instance && instance.destroy) { return instance.destroy(); }
-        return undefined;
-      },
-    };
-    if (addMethods && Array.isArray(addMethods)) {
-      addMethods.forEach(function (methodName) {
-        methods[methodName] = function (el) {
-          if ( el === void 0 ) el = defaultSelector;
-          var args = [], len = arguments.length - 1;
-          while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-          var instance = methods.get(el);
-          if (instance && instance[methodName]) { return instance[methodName].apply(instance, args); }
-          return undefined;
-        };
-      });
-    }
-    return methods;
-  }
-
-  function ModalMethods (parameters) {
-    if ( parameters === void 0 ) parameters = {};
-
-    var defaultSelector = parameters.defaultSelector;
-    var constructor = parameters.constructor;
-    var app = parameters.app;
-    var methods = Utils.extend(
-      ConstructorMethods({
-        defaultSelector: defaultSelector,
-        constructor: constructor,
-        app: app,
-        domProp: 'f7Modal',
-      }),
-      {
-        open: function open(el, animate) {
-          var $el = $(el);
-          var instance = $el[0].f7Modal;
-          if (!instance) { instance = new constructor(app, { el: $el }); }
-          return instance.open(animate);
-        },
-        close: function close(el, animate) {
-          if ( el === void 0 ) el = defaultSelector;
-
-          var $el = $(el);
-          if ($el.length === 0) { return undefined; }
-          var instance = $el[0].f7Modal;
-          if (!instance) { instance = new constructor(app, { el: $el }); }
-          return instance.close(animate);
-        },
-      }
-    );
-    return methods;
-  }
 
   var Dialog$1 = {
     name: 'dialog',
@@ -14487,7 +14732,7 @@
         $contentEl.transition('');
         $contentEl.css('height', '');
         $el.trigger('accordion:close');
-        app.emit('accordionClose');
+        app.emit('accordionClose', $el[0]);
       });
     },
     toggle: function toggle(el) {
@@ -14517,6 +14762,10 @@
         Accordion.toggleClicked.call(app, $clickedEl);
       },
     },
+  };
+
+  var ContactsList = {
+    name: 'contactsList',
   };
 
   var VirtualList = (function (Framework7Class$$1) {
@@ -33651,6 +33900,7 @@
     Sortable$1,
     Swipeout$1,
     Accordion$1,
+    ContactsList,
     VirtualList$1,
     ListIndex$1,
     Timeline,

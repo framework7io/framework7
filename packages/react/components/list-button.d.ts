@@ -25,7 +25,7 @@ declare namespace F7ListButton {
     back? : boolean
     external? : boolean
     force? : boolean
-    animate? : boolean  | undefined
+    animate? : boolean
     ignoreCache? : boolean
     pageName? : string
     reloadCurrent? : boolean

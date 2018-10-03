@@ -10,7 +10,7 @@ declare namespace F7Card {
     content? : string | number
     footer? : string | number
     outline? : boolean
-    padding? : boolean  | true
+    padding? : boolean
     color? : string
     colorTheme? : string
     textColor? : string

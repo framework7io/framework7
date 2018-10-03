@@ -6,8 +6,8 @@ declare namespace F7Col {
     id? : string | number
     className? : string
     style? : React.CSSProperties
-    tag? : string  | 'div'
-    width? : number | string  | 'auto'
+    tag? : string
+    width? : number | string
     tabletWidth? : number | string
     desktopWidth? : number | string
     color? : string

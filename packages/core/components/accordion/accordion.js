@@ -78,7 +78,7 @@ const Accordion = {
       $contentEl.transition('');
       $contentEl.css('height', '');
       $el.trigger('accordion:close');
-      app.emit('accordionClose');
+      app.emit('accordionClose', $el[0]);
     });
   },
   toggle(el) {

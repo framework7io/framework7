@@ -1,5 +1,5 @@
 /**
- * Framework7 3.3.2
+ * Framework7 3.4.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 20, 2018
+ * Released on: September 28, 2018
  */
 
 import Template7 from 'template7';
@@ -56,6 +56,7 @@ import Progressbar from './components/progressbar/progressbar';
 import Sortable from './components/sortable/sortable';
 import Swipeout from './components/swipeout/swipeout';
 import Accordion from './components/accordion/accordion';
+import ContactsList from './components/contacts-list/contacts-list';
 import VirtualList from './components/virtual-list/virtual-list';
 import ListIndex from './components/list-index/list-index';
 import Timeline from './components/timeline/timeline';
@@ -134,6 +135,7 @@ Framework7.use([
   Sortable,
   Swipeout,
   Accordion,
+  ContactsList,
   VirtualList,
   ListIndex,
   Timeline,

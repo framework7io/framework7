@@ -161,7 +161,7 @@ export default {
               fill={valueTextColor}
               dy={semiCircle ? (labelText ? -labelFontSize - 15 : -5) : 0}
               textAnchor="middle"
-              dominantBaseline={!semiCircle && 'middle'}
+              dominantBaseline={!semiCircle ? 'middle' : null}
             >{valueText}</text>
           )}
           {labelText && (
@@ -174,7 +174,7 @@ export default {
               fill={labelTextColor}
               dy={semiCircle ? -5 : (valueText ? ((valueFontSize / 2) + 10) : 0)}
               textAnchor="middle"
-              dominantBaseline={!semiCircle && 'middle'}
+              dominantBaseline={!semiCircle ? 'middle' : null}
             >{labelText}</text>
           )}
         </svg>

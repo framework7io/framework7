@@ -64,6 +64,7 @@ Bart DJ
 ---
 
 ### $10+ Supporter
+Matt Davis<br>
 Arsen Huang<br>
 Jonathan Pugh<br>
 Danny Redfern<br>

@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { Framework7Params } from 'framework7/components/app/app-class';
+import { Router } from 'framework7/modules/router/router';
 
 declare namespace F7App {
   interface Props {
@@ -6,8 +8,6 @@ declare namespace F7App {
     id? : string | number
     className? : string
     style? : React.CSSProperties
-    params? : Object
-    routes? : Array<any>
     color? : string
     colorTheme? : string
     textColor? : string
@@ -15,6 +15,8 @@ declare namespace F7App {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
+    params? : Framework7Params
+    routes? : Router.RouteParameters[]
     
   }
 }

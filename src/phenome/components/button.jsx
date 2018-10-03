@@ -4,6 +4,14 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import F7Icon from './icon';
 
+/* phenome-dts-imports
+import { Tooltip as TooltipNamespace } from 'framework7/components/tooltip/tooltip';
+*/
+
+/* phenome-dts-instance
+f7Tooltip: TooltipNamespace.Tooltip
+*/
+
 export default {
   name: 'f7-button',
   props: {

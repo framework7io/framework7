@@ -48,7 +48,7 @@ const Statusbar = {
       if (pageContent.length > 0) pageContent.scrollTop(0, 300);
     }
   },
-  setIosTextColor(color) {
+  setTextColor(color) {
     if (Device.cordova && window.StatusBar) {
       if (color === 'white') {
         window.StatusBar.styleLightContent();
@@ -56,6 +56,10 @@ const Statusbar = {
         window.StatusBar.styleDefault();
       }
     }
+  },
+  setIosTextColor(color) {
+    if (!Device.ios) return;
+    Statusbar.setTextColor(color);
   },
   setBackgroundColor(color) {
     $('.statusbar').css('background-color', color);
@@ -69,8 +73,7 @@ const Statusbar = {
     }
     return false;
   },
-  iosOverlaysWebView(overlays = true) {
-    if (!Device.ios) return;
+  overlaysWebView(overlays = true) {
     if (Device.cordova && window.StatusBar) {
       window.StatusBar.overlaysWebView(overlays);
       if (overlays) {
@@ -79,6 +82,10 @@ const Statusbar = {
         $('html').removeClass('with-statusbar');
       }
     }
+  },
+  iosOverlaysWebView(overlays) {
+    if (!Device.ios) return;
+    Statusbar.overlaysWebView(overlays);
   },
   checkOverlay() {
     if (Device.needsStatusbarOverlay()) {
@@ -124,23 +131,36 @@ const Statusbar = {
       if (params.scrollTopOnClick) {
         $(window).on('statusTap', Statusbar.onClick.bind(app));
       }
-      if (params.iosOverlaysWebView) {
-        window.StatusBar.overlaysWebView(true);
-      } else {
-        window.StatusBar.overlaysWebView(false);
+      if (Device.ios) {
+        if (params.iosOverlaysWebView) {
+          window.StatusBar.overlaysWebView(true);
+        } else {
+          window.StatusBar.overlaysWebView(false);
+        }
+        if (params.iosTextColor === 'white') {
+          window.StatusBar.styleLightContent();
+        } else {
+          window.StatusBar.styleDefault();
+        }
       }
-
-      if (params.iosTextColor === 'white') {
-        window.StatusBar.styleLightContent();
-      } else {
-        window.StatusBar.styleDefault();
+      if (Device.android) {
+        if (params.androidOverlaysWebView) {
+          window.StatusBar.overlaysWebView(true);
+        } else {
+          window.StatusBar.overlaysWebView(false);
+        }
+        if (params.androidTextColor === 'white') {
+          window.StatusBar.styleLightContent();
+        } else {
+          window.StatusBar.styleDefault();
+        }
       }
     }
-    if (params.iosBackgroundColor && app.theme === 'ios') {
+    if (params.iosBackgroundColor && Device.ios) {
       Statusbar.setBackgroundColor(params.iosBackgroundColor);
     }
-    if (params.materialBackgroundColor && app.theme === 'md') {
-      Statusbar.setBackgroundColor(params.materialBackgroundColor);
+    if ((params.materialBackgroundColor || params.androidBackgroundColor) && Device.android) {
+      Statusbar.setBackgroundColor(params.materialBackgroundColor || params.androidBackgroundColor);
     }
   },
 };
@@ -152,10 +172,14 @@ export default {
       enabled: true,
       overlay: 'auto',
       scrollTopOnClick: true,
+
       iosOverlaysWebView: true,
       iosTextColor: 'black',
       iosBackgroundColor: null,
-      materialBackgroundColor: null,
+
+      androidOverlaysWebView: false,
+      androidTextColor: 'black',
+      androidBackgroundColor: null,
     },
   },
   create() {
@@ -165,11 +189,14 @@ export default {
         checkOverlay: Statusbar.checkOverlay,
         hide: Statusbar.hide,
         show: Statusbar.show,
-        iosOverlaysWebView: Statusbar.iosOverlaysWebView,
-        setIosTextColor: Statusbar.setIosTextColor,
+        overlaysWebView: Statusbar.overlaysWebView,
+        setTextColor: Statusbar.setTextColor,
         setBackgroundColor: Statusbar.setBackgroundColor,
         isVisible: Statusbar.isVisible,
         init: Statusbar.init.bind(app),
+
+        iosOverlaysWebView: Statusbar.iosOverlaysWebView,
+        setIosTextColor: Statusbar.iosSetTextColor,
       },
     });
   },

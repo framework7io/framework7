@@ -1,6 +1,14 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
+/* phenome-dts-imports
+import { Range as RangeNamespace } from 'framework7/components/range/range';
+*/
+
+/* phenome-dts-instance
+f7Range: RangeNamespace.Range
+*/
+
 export default {
   name: 'f7-range',
   props: {

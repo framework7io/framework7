@@ -77,7 +77,7 @@ const outro = `
 };
 `;
 
-function buildLazyComponentsLess(components, cb) {
+function buildLazyComponentsLess(rtl, components, cb) {
   // const env = process.env.NODE_ENV || 'development';
   const config = getConfig();
   const output = getOutput();
@@ -87,7 +87,6 @@ function buildLazyComponentsLess(components, cb) {
   const includeIosTheme = config.themes.indexOf('ios') >= 0;
   const includeMdTheme = config.themes.indexOf('md') >= 0;
   const includeDarkTheme = config.darkTheme;
-  const rtl = config.rtl;
 
   const main = fs.readFileSync('./src/core/framework7.less', 'utf8')
     .split('\n')
@@ -118,6 +117,9 @@ function buildLazyComponentsLess(components, cb) {
       }))
       .pipe(cleanCSS({
         compatibility: '*,-properties.zeroUnits',
+      }))
+      .pipe(rename((filePath) => {
+        if (rtl) filePath.basename += '.rtl';
       }))
       .pipe(gulp.dest(`${output}/lazy-components/`))
       .on('end', () => {
@@ -221,7 +223,7 @@ function buildLazyComponentsJs(components, cb) {
     });
 }
 
-function buildLazyFrameworkLess(cb) {
+function buildLazyFrameworkLess(rtl, cb) {
   const config = getConfig();
   const env = process.env.NODE_ENV || 'development';
   const colorsIos = Object.keys(config.ios.colors).map(colorName => `${colorName} ${config.ios.colors[colorName]}`).join(', ');
@@ -229,7 +231,6 @@ function buildLazyFrameworkLess(cb) {
   const includeIosTheme = config.themes.indexOf('ios') >= 0;
   const includeMdTheme = config.themes.indexOf('md') >= 0;
   const includeDarkTheme = config.darkTheme;
-  const rtl = config.rtl;
   const output = getOutput();
 
   gulp.src('./src/core/framework7.less')
@@ -261,6 +262,7 @@ function buildLazyFrameworkLess(cb) {
     .pipe(header(banner))
     .pipe(rename((filePath) => {
       filePath.basename = 'framework7-lazy';
+      if (rtl) filePath.basename += '.rtl';
     }))
     .pipe(gulp.dest(`${output}/css/`))
     .on('end', () => {
@@ -268,7 +270,7 @@ function buildLazyFrameworkLess(cb) {
         if (cb) cb();
         return;
       }
-      gulp.src(`${output}/css/framework7-lazy.css`)
+      gulp.src(`${output}/css/framework7-lazy${rtl ? '.rtl' : ''}.css`)
         .pipe(cleanCSS({
           compatibility: '*,-properties.zeroUnits',
         }))
@@ -350,23 +352,29 @@ function buildLazyFrameworkJs(cb) {
 
 function buildLazy(cb) {
   let cbs = 0;
+  const env = process.env.NODE_ENV || 'development';
+  const targetCbs = env === 'development' ? 4 : 6;
+  const config = getConfig();
   const components = fs.readdirSync('./src/core/components').filter(c => c.indexOf('.') < 0);
-  buildLazyComponentsJs(components, () => {
+  function callback() {
     cbs += 1;
-    if (cbs === 4 && cb) cb();
-  });
-  buildLazyComponentsLess(components, () => {
-    cbs += 1;
-    if (cbs === 4 && cb) cb();
-  });
-  buildLazyFrameworkJs(() => {
-    cbs += 1;
-    if (cbs === 4 && cb) cb();
-  });
-  buildLazyFrameworkLess(() => {
-    cbs += 1;
-    if (cbs === 4 && cb) cb();
-  });
+    if (cbs === targetCbs && cb) cb();
+  }
+  buildLazyComponentsJs(components, callback);
+  if (env === 'production') {
+    buildLazyComponentsLess(false, components, callback);
+    buildLazyComponentsLess(true, components, callback);
+  } else {
+    buildLazyComponentsLess(config.rtl, components, callback);
+  }
+
+  buildLazyFrameworkJs(callback);
+  if (env === 'production') {
+    buildLazyFrameworkLess(false, callback);
+    buildLazyFrameworkLess(true, callback);
+  } else {
+    buildLazyFrameworkLess(config.rtl, callback);
+  }
 }
 
 module.exports = buildLazy;

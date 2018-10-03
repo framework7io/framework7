@@ -152,56 +152,51 @@
 
   .color-theme-loop({
     .color-theme-@{colorThemeName} {
-      .stepper {
+      .stepper-button, .stepper-button-minus, .stepper-button-plus {
+        border-color: @colorThemeValue;
+        color: @colorThemeValue;
+        &.active-state {
+          background-color: rgba(red(@colorThemeValue), green(@colorThemeValue), blue(@colorThemeValue), .15);
+        }
+      }
+      .stepper-button-plus, .stepper-button-minus {
+        &:after, &:before {
+          background-color: @colorThemeValue;
+        }
+      }
+      .stepper-value,
+      .stepper-input-wrap {
+        border-top-color: @colorThemeValue;
+        border-bottom-color: @colorThemeValue;
+      }
+      .stepper-value,
+      .stepper-input-wrap input {
+        color: @colorThemeValue;
+      }
+
+      .stepper-fill, .stepper-fill-ios {
         .stepper-button, .stepper-button-minus, .stepper-button-plus {
-          border-color: @colorThemeValue;
-          color: @colorThemeValue;
-          &.active-state {
-            background-color: rgba(red(@colorThemeValue), green(@colorThemeValue), blue(@colorThemeValue), .15);
-          }
+          background-color: @colorThemeValue;
         }
         .stepper-button-plus, .stepper-button-minus {
-          &:after, &:before {
-            background-color: @colorThemeValue;
+          &:before, &:after {
+            background-color: #fff;
           }
         }
-        .stepper-value,
-        .stepper-input-wrap {
-          border-top-color: @colorThemeValue;
-          border-bottom-color: @colorThemeValue;
-        }
-        .stepper-value {
-          color: @colorThemeValue;
-        }
-        .stepper-input-wrap {
-          input {
-            color: @colorThemeValue;
-          }
-        }
-        &.stepper-fill, &.stepper-fill-ios {
+      }
+      .stepper-small, .stepper-small-ios {
+        &.stepper-fill {
           .stepper-button, .stepper-button-minus, .stepper-button-plus {
-            background-color: @colorThemeValue;
+            &.active-state {
+              color: @colorThemeValue;
+              border-color: @colorThemeValue;
+              background-color: transparent;
+            }
           }
           .stepper-button-plus, .stepper-button-minus {
-            &:before, &:after {
-              background-color: #fff;
-            }
-          }
-        }
-        &.stepper-small, &.stepper-small-ios {
-          &.stepper-fill {
-            .stepper-button, .stepper-button-minus, .stepper-button-plus {
-              &.active-state {
-                color: @colorThemeValue;
-                border-color: @colorThemeValue;
-                background-color: transparent;
-              }
-            }
-            .stepper-button-plus, .stepper-button-minus {
-              &.active-state {
-                &:before, &:after {
-                  background-color: @colorThemeValue;
-                }
+            &.active-state {
+              &:before, &:after {
+                background-color: @colorThemeValue;
               }
             }
           }
@@ -228,38 +223,36 @@
         border-top-color: @colorValue;
         border-bottom-color: @colorValue;
       }
-      .stepper-value {
+      .stepper-value,
+      .stepper-input-wrap input {
         color: @colorValue;
       }
-      .stepper-input-wrap {
-        input {
-          color: @colorValue;
+    }
+
+    .stepper-fill.color-@{colorName}, .stepper-fill-ios.color-@{colorName} {
+      .stepper-button, .stepper-button-minus, .stepper-button-plus {
+        background-color: @colorValue;
+      }
+      .stepper-button-plus, .stepper-button-minus {
+        &:before, &:after {
+          background-color: #fff;
         }
       }
-      &.stepper-fill, &.stepper-fill-ios {
+    }
+    .stepper-small.color-@{colorName},
+    .stepper-small-ios.color-@{colorName} {
+      &.stepper-fill {
         .stepper-button, .stepper-button-minus, .stepper-button-plus {
-          background-color: @colorValue;
+          &.active-state {
+            color: @colorValue;
+            border-color: @colorValue;
+            background-color: transparent;
+          }
         }
         .stepper-button-plus, .stepper-button-minus {
-          &:before, &:after {
-            background-color: #fff;
-          }
-        }
-      }
-      &.stepper-small, &.stepper-small-ios {
-        &.stepper-fill {
-          .stepper-button, .stepper-button-minus, .stepper-button-plus {
-            &.active-state {
-              color: @colorValue;
-              border-color: @colorValue;
-              background-color: transparent;
-            }
-          }
-          .stepper-button-plus, .stepper-button-minus {
-            &.active-state {
-              &:before, &:after {
-                background-color: @colorValue;
-              }
+          &.active-state {
+            &:before, &:after {
+              background-color: @colorValue;
             }
           }
         }

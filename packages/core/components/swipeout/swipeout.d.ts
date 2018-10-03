@@ -3,19 +3,19 @@ import { CSSSelector, Framework7Plugin } from '../app/app-class';
 export namespace Swipeout {
   interface DomEvents {
     /** Event will be triggered while you move swipeout element. event.detail contains current opening progress percentage */
-    'swipeout': (Event) => void
+    'swipeout': (event: any) => void
     /** Event will be triggered when swipeout element starts its opening animation */
-    'swipeout:open': (Event) => void
+    'swipeout:open': (event: any) => void
     /** Event will be triggered after swipeout element completes its opening animation */
-    'swipeout:opened': (Event) => void
+    'swipeout:opened': (event: any) => void
     /** Event will be triggered when swipeout element starts its closing animation */
-    'swipeout:close': (Event) => void
+    'swipeout:close': (event: any) => void
     /** Event will be triggered after swipeout element completes its closing animation */
-    'swipeout:closed': (Event) => void
+    'swipeout:closed': (event: any) => void
     /** Event will be triggered after swipeout element starts its delete animation */
-    'swipeout:delete': (Event) => void
+    'swipeout:delete': (event: any) => void
     /** Event will be triggered after swipeout element completes its delete animation right before it will be removed from DOM */
-    'swipeout:deleted': (Event) => void
+    'swipeout:deleted': (event: any) => void
   }
   interface AppMethods {
     swipeout: {

@@ -6,7 +6,7 @@ declare namespace F7FabButtons {
     id? : string | number
     className? : string
     style? : React.CSSProperties
-    position? : string  | 'top'
+    position? : string
     color? : string
     colorTheme? : string
     textColor? : string

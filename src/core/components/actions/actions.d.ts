@@ -86,7 +86,7 @@ export namespace Actions {
     renderPopover?: () => string
     /** Object with event handlers */
     on?: {
-      [event in keyof Events] : Events[event]
+      [event in keyof Events]? : Events[event]
     }
   }
 

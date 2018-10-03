@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Searchbar as SearchbarNamespace } from 'framework7/components/searchbar/searchbar';
 
 declare namespace F7Searchbar {
   interface Props {
@@ -8,27 +9,27 @@ declare namespace F7Searchbar {
     style? : React.CSSProperties
     noShadow? : boolean
     noHairline? : boolean
-    form? : boolean  | true
-    placeholder? : string  | 'Search'
-    disableButton? : boolean  | true
-    disableButtonText? : string  | 'Cancel'
-    clearButton? : boolean  | true
+    form? : boolean
+    placeholder? : string
+    disableButton? : boolean
+    disableButtonText? : string
+    clearButton? : boolean
     expandable? : boolean
     searchContainer? : string | Object
-    searchIn? : string  | '.item-title'
-    searchItem? : string  | 'li'
-    foundEl? : string | Object  | '.searchbar-found'
-    notFoundEl? : string | Object  | '.searchbar-not-found'
-    backdrop? : boolean  | true
+    searchIn? : string
+    searchItem? : string
+    foundEl? : string | Object
+    notFoundEl? : string | Object
+    backdrop? : boolean
     backdropEl? : string | Object
-    hideOnEnableEl? : string | Object  | '.searchbar-hide-on-enable'
-    hideOnSearchEl? : string | Object  | '.searchbar-hide-on-search'
-    ignore? : string  | '.searchbar-ignore'
-    customSearch? : boolean  | false
-    removeDiacritics? : boolean  | false
-    hideDividers? : boolean  | true
-    hideGroups? : boolean  | true
-    init? : boolean  | true
+    hideOnEnableEl? : string | Object
+    hideOnSearchEl? : string | Object
+    ignore? : string
+    customSearch? : boolean
+    removeDiacritics? : boolean
+    hideDividers? : boolean
+    hideGroups? : boolean
+    init? : boolean
     color? : string
     colorTheme? : string
     textColor? : string
@@ -62,5 +63,6 @@ declare class F7Searchbar extends React.Component<F7Searchbar.Props, {}> {
   onSubmit(event? : any) : unknown
   onClearButtonClick(event? : any) : unknown
   onDisableButtonClick(event? : any) : unknown
+  f7Searchbar: SearchbarNamespace.Searchbar
 }
 export default F7Searchbar;

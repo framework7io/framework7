@@ -1,6 +1,14 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
+/* phenome-dts-imports
+import { Stepper as StepperNamespace } from 'framework7/components/stepper/stepper';
+*/
+
+/* phenome-dts-instance
+f7Stepper: StepperNamespace.Stepper
+*/
+
 export default {
   name: 'f7-stepper',
   props: {

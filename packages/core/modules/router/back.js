@@ -604,7 +604,18 @@ function back(...args) {
       route,
       router.currentRoute,
       () => {
-        resolve();
+        if (route.route.modules) {
+          app
+            .loadModules(Array.isArray(route.route.modules) ? route.route.modules : [route.route.modules])
+            .then(() => {
+              resolve();
+            })
+            .catch(() => {
+              reject();
+            });
+        } else {
+          resolve();
+        }
       },
       () => {
         reject();

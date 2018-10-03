@@ -40,7 +40,7 @@ export namespace Toast {
 
     /** Object with events handlers.. */
     on?: {
-      [event in keyof Events] : Events[event]
+      [event in keyof Events]? : Events[event]
     }
   }
   interface Toast extends Framework7EventsClass<Events> {

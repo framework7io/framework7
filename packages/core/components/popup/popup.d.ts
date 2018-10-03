@@ -28,7 +28,7 @@ export namespace Popup {
 
     /** Object with events handlers.. */
     on?: {
-      [event in keyof Events] : Events[event]
+      [event in keyof Events]? : Events[event]
     }
   }
   interface Popup extends Framework7EventsClass<Events> {
