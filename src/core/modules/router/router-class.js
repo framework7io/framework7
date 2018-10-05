@@ -650,6 +650,24 @@ class Router extends Framework7Class {
     return matchingRoute;
   }
 
+  // eslint-disable-next-line
+  replaceRequestUrlParams(url = '', options = {}) {
+    let compiledUrl = url;
+    if (typeof compiledUrl === 'string'
+      && compiledUrl.indexOf('{{') >= 0
+      && options
+      && options.route
+      && options.route.params
+      && Object.keys(options.route.params).length
+    ) {
+      Object.keys(options.route.params).forEach((paramName) => {
+        const regExp = new RegExp(`{{${paramName}}}`, 'g');
+        compiledUrl = compiledUrl.replace(regExp, options.route.params[paramName] || '');
+      });
+    }
+    return compiledUrl;
+  }
+
   removeFromXhrCache(url) {
     const router = this;
     const xhrCache = router.cache.xhr;
@@ -687,16 +705,8 @@ class Router extends Framework7Class {
       hasQuery = true;
     }
 
-    if (url.indexOf('{{') >= 0
-      && options
-      && options.route
-      && options.route.params
-      && Object.keys(options.route.params).length
-    ) {
-      Object.keys(options.route.params).forEach((paramName) => {
-        const regExp = new RegExp(`{{${paramName}}}`, 'g');
-        url = url.replace(regExp, options.route.params[paramName] || '');
-      });
+    if (url.indexOf('{{') >= 0) {
+      url = router.replaceRequestUrlParams(url, options);
     }
     // should we ignore get params or not
     if (params.xhrCacheIgnoreGetParameters && url.indexOf('?') >= 0) {
@@ -835,6 +845,7 @@ class Router extends Framework7Class {
     const router = this;
     const { app } = router;
     const url = typeof component === 'string' ? component : componentUrl;
+    const compiledUrl = router.replaceRequestUrlParams(url, options);
     function compile(componentOptions) {
       let context = options.context || {};
       if (typeof context === 'function') context = context.call(router);
@@ -862,14 +873,14 @@ class Router extends Framework7Class {
       resolve(createdComponent.el);
     }
     let cachedComponent;
-    if (url) {
+    if (compiledUrl) {
       router.cache.components.forEach((cached) => {
-        if (cached.url === url) cachedComponent = cached.component;
+        if (cached.url === compiledUrl) cachedComponent = cached.component;
       });
     }
-    if (url && cachedComponent) {
+    if (compiledUrl && cachedComponent) {
       compile(cachedComponent);
-    } else if (url && !cachedComponent) {
+    } else if (compiledUrl && !cachedComponent) {
       // Load via XHR
       if (router.xhr) {
         router.xhr.abort();
@@ -880,7 +891,7 @@ class Router extends Framework7Class {
         .then((loadedComponent) => {
           const parsedComponent = app.component.parse(loadedComponent);
           router.cache.components.push({
-            url,
+            url: compiledUrl,
             component: parsedComponent,
           });
           compile(parsedComponent);
