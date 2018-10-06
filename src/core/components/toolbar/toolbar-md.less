@@ -26,7 +26,7 @@
   }
   .toolbar-inner {
     overflow: hidden;
-    padding: 0 var(--f7-area-right) 0 var(--f7-area-left);
+    padding: 0 var(--f7-safe-area-right) 0 var(--f7-safe-area-left);
   }
 
   .tabbar, .tabbar-labels {
@@ -154,32 +154,32 @@
   // Relation with page
   .toolbar-bottom-md.tabbar-labels ~ * .page-content,
   .toolbar-bottom-md.tabbar-labels ~ .page-content {
-    padding-bottom: ~"calc(var(--f7-tabbar-labels-bottom-height) + var(--f7-area-bottom))";
+    padding-bottom: ~"calc(var(--f7-tabbar-labels-bottom-height) + var(--f7-safe-area-bottom))";
   }
 
   .views, .view, .page, .popup, .panel, .login-screen {
     >.toolbar:first-child:not(.toolbar-bottom-md) {
-      height: ~"calc(var(--f7-toolbar-height) + var(--f7-area-top))";
+      height: ~"calc(var(--f7-toolbar-height) + var(--f7-safe-area-top))";
       .toolbar-inner {
         height: auto;
       }
       .toolbar-inner {
         bottom: 0;
-        top: var(--f7-area-top);
+        top: var(--f7-safe-area-top);
       }
       &.tabbar-labels {
-        height: ~"calc(var(--f7-tabbar-labels-height) + var(--f7-area-top))";
+        height: ~"calc(var(--f7-tabbar-labels-height) + var(--f7-safe-area-top))";
       }
     }
     >.toolbar-bottom-md {
-      height: ~"calc(var(--f7-toolbar-height) + var(--f7-area-bottom))";
+      height: ~"calc(var(--f7-toolbar-height) + var(--f7-safe-area-bottom))";
       .toolbar-inner {
         height: auto;
         top: 0;
-        bottom: var(--f7-area-bottom);
+        bottom: var(--f7-safe-area-bottom);
       }
       &.tabbar-labels {
-        height: ~"calc(var(--f7-tabbar-labels-bottom-height) + var(--f7-area-bottom))";
+        height: ~"calc(var(--f7-tabbar-labels-bottom-height) + var(--f7-safe-area-bottom))";
       }
     }
   }

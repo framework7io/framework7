@@ -24,10 +24,10 @@
       width: 18px;
     }
     .ltr({
-      right: var(--f7-area-right);
+      right: var(--f7-safe-area-right);
     });
     .rtl({
-      left: var(--f7-area-left);
+      left: var(--f7-safe-area-left);
     });
   }
   .item-inner {
@@ -65,10 +65,10 @@
 .list.sortable-enabled .no-chevron .item-link .item-inner,
 .no-chevron .list.sortable-enabled .item-link .item-inner {
   .ltr({
-    padding-right: ~"calc(var(--f7-sortable-handler-width) + var(--f7-area-right))";
+    padding-right: ~"calc(var(--f7-sortable-handler-width) + var(--f7-safe-area-right))";
   });
   .rtl({
-    padding-left: ~"calc(var(--f7-sortable-handler-width) + var(--f7-area-right))";
+    padding-left: ~"calc(var(--f7-sortable-handler-width) + var(--f7-safe-area-right))";
   });
 }
 

@@ -1,25 +1,5 @@
 .md {
-  @import (multiple) '../../less/colors-md.less';
   .ios-only, .if-ios {
     display: none !important;
   }
-  // Dark Theme
-  & when (@includeDarkTheme) {
-    .theme-dark {
-      color: rgba(255,255,255,0.87);
-    }
-  }
-
-  .color-theme-loop({
-    .color-theme-@{colorThemeName} {
-      a {
-        color: @colorThemeValue;
-      }
-    }
-  });
-  .color-loop({
-    a.color-@{colorName} {
-      color: @colorValue;
-    }
-  });
 }

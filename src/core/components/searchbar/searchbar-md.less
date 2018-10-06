@@ -12,7 +12,7 @@
     }
   }
   .searchbar-inner {
-    padding: 0 var(--f7-area-right) 0 var(--f7-area-left);
+    padding: 0 var(--f7-safe-area-right) 0 var(--f7-safe-area-left);
   }
   .searchbar-backdrop {
     background: rgba(0,0,0,0.25);
@@ -20,10 +20,10 @@
   .searchbar-icon, .searchbar-disable-button {
     position: absolute;
     .ltr({
-      left: ~"calc(-4px + var(--f7-area-left))";
+      left: ~"calc(-4px + var(--f7-safe-area-left))";
     });
     .rtl({
-      right: ~"calc(-4px + var(--f7-area-right))";;
+      right: ~"calc(-4px + var(--f7-safe-area-right))";;
     });
     top: 50%;
     transition-duration: 300ms;
@@ -113,10 +113,10 @@
     }
     .searchbar-icon, .searchbar-disable-button {
       .ltr({
-        left: ~"calc(-4px + 8px + var(--f7-area-left))";
+        left: ~"calc(-4px + 8px + var(--f7-safe-area-left))";
       });
       .rtl({
-        right: ~"calc(-4px + 8px + var(--f7-area-left))";
+        right: ~"calc(-4px + 8px + var(--f7-safe-area-left))";
       });
     }
   }

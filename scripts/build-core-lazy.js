@@ -18,9 +18,17 @@ const uglify = require('gulp-uglify');
 const header = require('gulp-header');
 const rename = require('gulp-rename');
 const sourcemaps = require('gulp-sourcemaps');
+const LessLists = require('less-plugin-lists');
 const getConfig = require('./get-core-config.js');
 const getOutput = require('./get-core-output.js');
 const banner = require('./banner-core.js');
+
+function base64Encode(file) {
+  // read binary data
+  const bitmap = fs.readFileSync(file);
+  // convert binary data to base64 encoded string
+  return Buffer.from(bitmap).toString('base64');
+}
 
 const coreComponents = [
   'app',
@@ -81,25 +89,23 @@ function buildLazyComponentsLess(rtl, components, cb) {
   // const env = process.env.NODE_ENV || 'development';
   const config = getConfig();
   const output = getOutput();
-
-  const colorsIos = Object.keys(config.ios.colors).map(colorName => `${colorName} ${config.ios.colors[colorName]}`).join(', ');
-  const colorsMd = Object.keys(config.md.colors).map(colorName => `${colorName} ${config.md.colors[colorName]}`).join(', ');
+  const colors = Object.keys(config.colors).map(colorName => `${colorName} ${config.colors[colorName]}`).join(', ');
   const includeIosTheme = config.themes.indexOf('ios') >= 0;
   const includeMdTheme = config.themes.indexOf('md') >= 0;
   const includeDarkTheme = config.darkTheme;
+  const iconsFontBase64 = base64Encode('src/core/icons/font/Framework7CoreIcons.woff2');
 
   const main = fs.readFileSync('./src/core/framework7.less', 'utf8')
     .split('\n')
     .filter(line => line.indexOf('@import url(\'./components') < 0)
     .join('\n')
     .replace('@import (reference) \'./less/mixins.less\';', '@import (reference) \'../../less/mixins.less\';')
+    .replace('$iconsFontBase64', iconsFontBase64)
     .replace('$includeIosTheme', includeIosTheme)
     .replace('$includeMdTheme', includeMdTheme)
     .replace('$includeDarkTheme', includeDarkTheme)
-    .replace('$themeColorIos', config.ios.themeColor)
-    .replace('$colorsIos', colorsIos)
-    .replace('$themeColorMd', config.md.themeColor)
-    .replace('$colorsMd', colorsMd)
+    .replace('$themeColor', config.themeColor)
+    .replace('$colors', colors)
     .replace('$rtl', rtl);
 
   let cbs = 0;
@@ -111,7 +117,9 @@ function buildLazyComponentsLess(rtl, components, cb) {
     gulp
       .src(`./src/core/components/${component}/${component}.less`)
       .pipe(modifyFile(content => `${main}\n${content}`))
-      .pipe(less())
+      .pipe(less({
+        plugins: [new LessLists()],
+      }))
       .pipe(autoprefixer({
         cascade: false,
       }))
@@ -226,28 +234,30 @@ function buildLazyComponentsJs(components, cb) {
 function buildLazyFrameworkLess(rtl, cb) {
   const config = getConfig();
   const env = process.env.NODE_ENV || 'development';
-  const colorsIos = Object.keys(config.ios.colors).map(colorName => `${colorName} ${config.ios.colors[colorName]}`).join(', ');
-  const colorsMd = Object.keys(config.md.colors).map(colorName => `${colorName} ${config.md.colors[colorName]}`).join(', ');
   const includeIosTheme = config.themes.indexOf('ios') >= 0;
   const includeMdTheme = config.themes.indexOf('md') >= 0;
   const includeDarkTheme = config.darkTheme;
   const output = getOutput();
+  const colors = Object.keys(config.colors).map(colorName => `${colorName} ${config.colors[colorName]}`).join(', ');
+  const iconsFontBase64 = base64Encode('src/core/icons/font/Framework7CoreIcons.woff2');
+
 
   gulp.src('./src/core/framework7.less')
     .pipe(modifyFile((content) => {
       const newContent = content
         .replace('//IMPORT_COMPONENTS', '')
+        .replace('$iconsFontBase64', iconsFontBase64)
         .replace('$includeIosTheme', includeIosTheme)
         .replace('$includeMdTheme', includeMdTheme)
         .replace('$includeDarkTheme', includeDarkTheme)
-        .replace('$themeColorIos', config.ios.themeColor)
-        .replace('$colorsIos', colorsIos)
-        .replace('$themeColorMd', config.md.themeColor)
-        .replace('$colorsMd', colorsMd)
+        .replace('$themeColor', config.themeColor)
+        .replace('$colors', colors)
         .replace('$rtl', rtl);
       return newContent;
     }))
-    .pipe(less())
+    .pipe(less({
+      plugins: [new LessLists()],
+    }))
     .on('error', (err) => {
       if (cb) cb();
       console.log(err.toString());

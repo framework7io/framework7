@@ -7,8 +7,8 @@
   margin: var(--f7-block-vertical-margin) 0;
   padding-top: 0;
   padding-bottom: 0;
-  padding-left: ~"calc(var(--f7-block-padding) + var(--f7-area-left))";
-  padding-right: ~"calc(var(--f7-block-padding) + var(--f7-area-left))";
+  padding-left: ~"calc(var(--f7-block-padding) + var(--f7-safe-area-left))";
+  padding-right: ~"calc(var(--f7-block-padding) + var(--f7-safe-area-left))";
 
   .no-hairlines();
   > h1, > h2, > h3, > h4, > p {
@@ -43,8 +43,8 @@
   line-height: var(--f7-block-title-line-height);
   margin-top: var(--f7-block-vertical-margin);
   margin-bottom: var(--f7-block-title-margin-bottom);
-  margin-left: ~"calc(var(--f7-block-padding)  + var(--f7-area-left))";
-  margin-right: ~"calc(var(--f7-block-padding)  + var(--f7-area-right))";
+  margin-left: ~"calc(var(--f7-block-padding)  + var(--f7-safe-area-left))";
+  margin-right: ~"calc(var(--f7-block-padding)  + var(--f7-safe-area-right))";
   + .list, + .block, + .card, + .timeline, + .block-header {
     margin-top: 0px;
   }
@@ -75,8 +75,8 @@
 .block-footer, .block-header {
   padding-top: 0;
   padding-bottom: 0;
-  padding-left: ~"calc(var(--f7-block-padding) + var(--f7-area-left))";
-  padding-right: ~"calc(var(--f7-block-padding) + var(--f7-area-left))";
+  padding-left: ~"calc(var(--f7-block-padding) + var(--f7-safe-area-left))";
+  padding-right: ~"calc(var(--f7-block-padding) + var(--f7-safe-area-left))";
   ul, p, h1, h2, h3, h4 {
     &:first-child {
       margin-top: 0;
@@ -115,8 +115,8 @@
   border-radius: var(--f7-block-inset-border-radius);
   margin-left: ~"calc(var(--f7-block-inset-side-margin) + var(--f7-area-outer-left))";
   margin-right: ~"calc(var(--f7-block-inset-side-margin) + var(--f7-area-outer-right))";
-  --f7-area-left: 0px;
-  --f7-area-right: 0px;
+  --f7-safe-area-left: 0px;
+  --f7-safe-area-right: 0px;
 }
 .block-strong.inset {
   .hairline-remove(top);
@@ -127,8 +127,8 @@
     border-radius: var(--f7-block-inset-border-radius);
     margin-left: ~"calc(var(--f7-block-inset-side-margin) + var(--f7-area-outer-left))";
     margin-right: ~"calc(var(--f7-block-inset-side-margin) + var(--f7-area-outer-right))";
-    --f7-area-left: 0px;
-    --f7-area-right: 0px;
+    --f7-safe-area-left: 0px;
+    --f7-safe-area-right: 0px;
   }
   .block-strong.tablet-inset {
     .hairline-remove(top);
