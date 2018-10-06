@@ -20,6 +20,8 @@ const Toolbar = {
     if ($highlightEl.length === 0) {
       $tabbarEl.children('.toolbar-inner').append('<span class="tab-link-highlight"></span>');
       $highlightEl = $tabbarEl.find('.tab-link-highlight');
+    } else if ($highlightEl.next().length) {
+      $tabbarEl.children('.toolbar-inner').append($highlightEl);
     }
 
     const $activeLink = $tabbarEl.find('.tab-link-active');
@@ -35,9 +37,11 @@ const Toolbar = {
       highlightTranslate = `${(app.rtl ? -activeIndex : activeIndex) * 100}%`;
     }
 
-    $highlightEl
-      .css('width', highlightWidth)
-      .transform(`translate3d(${highlightTranslate},0,0)`);
+    Utils.nextFrame(() => {
+      $highlightEl
+        .css('width', highlightWidth)
+        .transform(`translate3d(${highlightTranslate},0,0)`);
+    });
   },
   init(tabbarEl) {
     const app = this;
