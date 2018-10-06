@@ -174,6 +174,8 @@ function Request(requestOptions) {
             newData.push(`Content-Disposition: form-data; name="${data[i].split('=')[0]}"\r\n\r\n${data[i].split('=')[1]}\r\n`);
           }
           postData = `--${boundary}\r\n${newData.join(`--${boundary}\r\n`)}--${boundary}--\r\n`;
+        } else if (options.contentType === 'application/json') {
+          postData = JSON.stringify(options.data);
         } else {
           postData = data;
         }

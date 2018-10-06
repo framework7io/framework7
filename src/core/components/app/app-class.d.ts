@@ -64,7 +64,7 @@ export interface Framework7Params {
   initOnDeviceReady? : boolean
   /** Object with events handlers.. (default {}) */
   on?: {
-    [event in keyof Framework7Events] : Framework7Events[event]
+    [event in keyof Framework7Events]? : Framework7Events[event]
   }
 
 }
