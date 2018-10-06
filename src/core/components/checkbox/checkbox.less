@@ -1,30 +1,63 @@
 /* === Checkbox === */
-.icon-checkbox, .checkbox i {
-  flex-shrink: 0;
-}
+@import url('./checkbox-vars.less');
+
 .checkbox {
   position: relative;
   display: inline-block;
   vertical-align: middle;
   z-index: 1;
+  background-color: transparent;
+  .ripple-wave {
+    background: ~"rgba(var(--f7-theme-color-rgb), 0.5)";
+  }
 }
-label.item-checkbox, .checkbox {
+.icon-checkbox, .checkbox i {
+  flex-shrink: 0;
+  border: var(--f7-checkbox-border-width) solid var(--f7-checkbox-border-color);
+  width: var(--f7-checkbox-size);
+  height: var(--f7-checkbox-size);
+  border-radius: var(--f7-checkbox-border-radius);
+  box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  &:after {
+    .coreIconsFont();
+    width: var(--f7-checkbox-size);
+    height: var(--f7-checkbox-size);
+    line-height: var(--f7-checkbox-size);
+    left: ~"calc(0px - var(--f7-checkbox-border-width))";
+    top: ~"calc(0px - var(--f7-checkbox-border-width))";
+    opacity: 0;
+    color: var(--f7-checkbox-icon-color);
+    position: relative;
+  }
+}
+label.item-checkbox input[type="checkbox"]:checked ~ .icon-checkbox,
+label.item-checkbox input[type="checkbox"]:checked ~ * .icon-checkbox,
+.checkbox input[type="checkbox"]:checked ~ i {
+  border-color: var(--f7-checkbox-bg-color, var(--f7-theme-color));
+  background-color: var(--f7-checkbox-bg-color, var(--f7-theme-color));
+  &:after {
+    opacity: 1;
+  }
+}
+
+label.item-checkbox,
+.checkbox {
   cursor: pointer;
   input[type="checkbox"], input[type="radio"] {
     display: none;
   }
 }
-label.item-checkbox .icon-checkbox, .checkbox .icon-checkbox {
-  box-sizing: border-box;
-  position: relative;
-  display: block;
-  &:after {
-    content: '';
-    position: absolute;
-  }
-}
+
 label.item-checkbox {
   transition-duration: 300ms;
+  .item-content, &.item-content {
+    .item-media {
+      align-self: center;
+    }
+  }
   &.active-state {
     .hairline-color(bottom, transparent);
   }
@@ -32,6 +65,7 @@ label.item-checkbox {
     .disabled();
   }
 }
+
 & when (@includeIosTheme) {
   @import url('./checkbox-ios.less');
 }
