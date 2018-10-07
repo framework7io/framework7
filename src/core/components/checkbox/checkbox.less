@@ -13,7 +13,7 @@
 }
 .icon-checkbox, .checkbox i {
   flex-shrink: 0;
-  border: var(--f7-checkbox-border-width) solid var(--f7-checkbox-border-color);
+  border: var(--f7-checkbox-border-width) solid var(--f7-checkbox-inactive-color);
   width: var(--f7-checkbox-size);
   height: var(--f7-checkbox-size);
   border-radius: var(--f7-checkbox-border-radius);
@@ -36,8 +36,8 @@
 label.item-checkbox input[type="checkbox"]:checked ~ .icon-checkbox,
 label.item-checkbox input[type="checkbox"]:checked ~ * .icon-checkbox,
 .checkbox input[type="checkbox"]:checked ~ i {
-  border-color: var(--f7-checkbox-bg-color, var(--f7-theme-color));
-  background-color: var(--f7-checkbox-bg-color, var(--f7-theme-color));
+  border-color: var(--f7-checkbox-active-color, var(--f7-theme-color));
+  background-color: var(--f7-checkbox-active-color, var(--f7-theme-color));
   &:after {
     opacity: 1;
   }
