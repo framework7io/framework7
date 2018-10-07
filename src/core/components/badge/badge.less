@@ -1,4 +1,6 @@
 /* === Badge === */
+@import url('./badge-vars.less');
+
 .badge {
   display: inline-flex;
   align-items: center;
@@ -12,7 +14,7 @@
   vertical-align: middle;
   font-weight: var(--f7-badge-font-weight);
   font-size: var(--f7-badge-font-size);
-  border-radius: var(--f7-badge-border-radius);
+  border-radius: var(--f7-badge-size);
   padding: var(--f7-badge-padding);
   height: var(--f7-badge-size);
   min-width: var(--f7-badge-size);
@@ -27,12 +29,8 @@
     --f7-badge-size: var(--f7-badge-in-icon-size);
   }
 }
-.for-each(@pair in @colors) {
-  @colorName: at(@pair, 1);
-  @colorValue: at(@pair, 2);
-  .badge.color-@{colorName} {
-    --f7-badge-bg-color: @colorValue;
-  }
+.badge[class*="color-"] {
+  --f7-badge-bg-color: var(--f7-theme-color);
 }
 
 & when (@includeIosTheme) {
