@@ -1,4 +1,6 @@
 /* === Grid === */
+@import url('./grid-vars.less');
+
 @cols: 5, 10, 15, 20, 25, 30, 100/3, 35, 40, 45, 50, 55, 60, 65, 100*(2/3), 70, 75, 80, 85, 90, 95, 100;
 
 .row {
@@ -15,55 +17,53 @@
     --f7-grid-gap: 0px;
   }
   @spacer: var(--f7-grid-gap);
-  .for-each(@colSize in @cols) {
-    @className: framework7_floor(@colSize);
-    @n: framework7_calculateN(@colSize);
+
+  each(@cols, {
+    @className: framework7_floor(@value);
+    @n: framework7_calculateN(@value);
     @n_minus_one: framework7_minusOne(@n);
     .col-@{className} {
       --f7-grid-col-width: ~"calc((100% - @{spacer}*@{n_minus_one}) / @{n})";
     }
-  }
-
-  .for-each(@colSize, @index in @cols) {
+  });
+  each(@cols, {
     .col:nth-last-child(@{index}), .col:nth-last-child(@{index}) ~ .col {
       @index_minus_one: framework7_minusOne(@index);
       --f7-grid-col-width: ~"calc((100% - @{spacer}*@{index_minus_one}) / @{index})";
     }
-  }
+  });
+
   @media (min-width: 768px) {
-    .for-each(@colSize in @cols) {
-      @className: framework7_floor(@colSize);
-      @n: framework7_calculateN(@colSize);
+    each(@cols, {
+      @className: framework7_floor(@value);
+      @n: framework7_calculateN(@value);
       @n_minus_one: framework7_minusOne(@n);
       .tablet-@{className} {
         --f7-grid-col-width: ~"calc((100% - @{spacer}*@{n_minus_one}) / @{n})";
       }
-    }
-
-    .for-each(@colSize, @index in @cols) {
+    });
+    each(@cols, {
       .tablet-auto:nth-last-child(@{index}), .tablet-auto:nth-last-child(@{index}) ~ .tablet-auto {
         @index_minus_one: framework7_minusOne(@index);
         --f7-grid-col-width: ~"calc((100% - @{spacer}*@{index_minus_one}) / @{index})";
       }
-    }
+    });
   }
-
   @media (min-width: 1025px) {
-    .for-each(@colSize in @cols) {
-      @className: framework7_floor(@colSize);
-      @n: framework7_calculateN(@colSize);
+    each(@cols, {
+      @className: framework7_floor(@value);
+      @n: framework7_calculateN(@value);
       @n_minus_one: framework7_minusOne(@n);
       .desktop-@{className} {
         --f7-grid-col-width: ~"calc((100% - @{spacer}*@{n_minus_one}) / @{n})";
       }
-    }
-
-    .for-each(@colSize, @index in @cols) {
+    });
+    each(@cols, {
       .desktop-auto:nth-last-child(@{index}), .desktop-auto:nth-last-child(@{index}) ~ .desktop-auto {
         @index_minus_one: framework7_minusOne(@index);
         --f7-grid-col-width: ~"calc((100% - @{spacer}*@{index_minus_one}) / @{index})";
       }
-    }
+    });
   }
 }
 
