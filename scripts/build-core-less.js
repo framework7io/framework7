@@ -11,7 +11,6 @@ const autoprefixer = require('gulp-autoprefixer');
 const header = require('gulp-header');
 const rename = require('gulp-rename');
 const cleanCSS = require('gulp-clean-css');
-const LessLists = require('less-plugin-lists');
 const getConfig = require('./get-core-config.js');
 const getOutput = require('./get-core-output.js');
 const banner = require('./banner-core.js');
@@ -26,7 +25,7 @@ function base64Encode(file) {
 // Copy LESS
 function copyLess(config, cb) {
   const output = getOutput();
-  const colors = Object.keys(config.colors).map(colorName => `${colorName} ${config.colors[colorName]}`).join(', ');
+  const colors = `{\n${Object.keys(config.colors).map(colorName => `  ${colorName}: ${config.colors[colorName]};`).join('\n')}\n}`;
   const includeIosTheme = config.themes.indexOf('ios') >= 0;
   const includeMdTheme = config.themes.indexOf('md') >= 0;
   const includeDarkTheme = config.darkTheme;
@@ -55,7 +54,7 @@ function copyLess(config, cb) {
 // Build CSS
 function build(config, components, themes, rtl, cb) {
   const env = process.env.NODE_ENV || 'development';
-  const colors = Object.keys(config.colors).map(colorName => `${colorName} ${config.colors[colorName]}`).join(', ');
+  const colors = `{\n${Object.keys(config.colors).map(colorName => `  ${colorName}: ${config.colors[colorName]};`).join('\n')}\n}`;
   const includeIosTheme = themes.indexOf('ios') >= 0;
   const includeMdTheme = themes.indexOf('md') >= 0;
   const includeDarkTheme = config.darkTheme;
@@ -77,9 +76,7 @@ function build(config, components, themes, rtl, cb) {
         .replace('$rtl', rtl);
       return newContent;
     }))
-    .pipe(less({
-      plugins: [new LessLists()],
-    }))
+    .pipe(less())
     .on('error', (err) => {
       if (cb) cb();
       console.log(err.toString());

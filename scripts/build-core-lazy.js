@@ -18,7 +18,6 @@ const uglify = require('gulp-uglify');
 const header = require('gulp-header');
 const rename = require('gulp-rename');
 const sourcemaps = require('gulp-sourcemaps');
-const LessLists = require('less-plugin-lists');
 const getConfig = require('./get-core-config.js');
 const getOutput = require('./get-core-output.js');
 const banner = require('./banner-core.js');
@@ -89,7 +88,7 @@ function buildLazyComponentsLess(rtl, components, cb) {
   // const env = process.env.NODE_ENV || 'development';
   const config = getConfig();
   const output = getOutput();
-  const colors = Object.keys(config.colors).map(colorName => `${colorName} ${config.colors[colorName]}`).join(', ');
+  const colors = `{\n${Object.keys(config.colors).map(colorName => `  ${colorName}: ${config.colors[colorName]};`).join('\n')}\n}`;
   const includeIosTheme = config.themes.indexOf('ios') >= 0;
   const includeMdTheme = config.themes.indexOf('md') >= 0;
   const includeDarkTheme = config.darkTheme;
@@ -117,9 +116,7 @@ function buildLazyComponentsLess(rtl, components, cb) {
     gulp
       .src(`./src/core/components/${component}/${component}.less`)
       .pipe(modifyFile(content => `${main}\n${content}`))
-      .pipe(less({
-        plugins: [new LessLists()],
-      }))
+      .pipe(less())
       .pipe(autoprefixer({
         cascade: false,
       }))
@@ -238,7 +235,7 @@ function buildLazyFrameworkLess(rtl, cb) {
   const includeMdTheme = config.themes.indexOf('md') >= 0;
   const includeDarkTheme = config.darkTheme;
   const output = getOutput();
-  const colors = Object.keys(config.colors).map(colorName => `${colorName} ${config.colors[colorName]}`).join(', ');
+  const colors = `{\n${Object.keys(config.colors).map(colorName => `  ${colorName}: ${config.colors[colorName]};`).join('\n')}\n}`;
   const iconsFontBase64 = base64Encode('src/core/icons/font/Framework7CoreIcons.woff2');
 
 
@@ -255,9 +252,7 @@ function buildLazyFrameworkLess(rtl, cb) {
         .replace('$rtl', rtl);
       return newContent;
     }))
-    .pipe(less({
-      plugins: [new LessLists()],
-    }))
+    .pipe(less())
     .on('error', (err) => {
       if (cb) cb();
       console.log(err.toString());
