@@ -74,13 +74,9 @@
     }
   }
 }
-.for-each(@pair in @colors) {
-  @colorName: at(@pair, 1);
-  @colorValue: at(@pair, 2);
-  .swipeout-actions-left, .swipeout-actions-right {
-    .color-@{colorName} {
-      --f7-swipeout-button-bg-color: @colorValue;
-    }
+.swipeout-actions-left, .swipeout-actions-right {
+  [class*="color-"] {
+    --f7-swipeout-button-bg-color: var(--f7-theme-color);
   }
 }
 & when (@includeIosTheme) {
