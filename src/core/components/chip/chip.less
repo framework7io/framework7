@@ -72,17 +72,13 @@
   border: 1px solid var(--f7-chip-outline-border-color);
   background: none;
 }
-.for-each(@pair in @colors) {
-  @colorName: at(@pair, 1);
-  @colorValue: at(@pair, 2);
-  .chip.color-@{colorName} {
-    --f7-chip-bg-color: @colorValue;
-    --f7-chip-text-color: #fff;
-  }
-  .chip-outline.color-@{colorName} {
-    --f7-chip-outline-border-color: @colorValue;
-    --f7-chip-text-color: @colorValue;
-  }
+.chip[class*="color-"] {
+  --f7-chip-bg-color: var(--f7-theme-color);
+  --f7-chip-text-color: #fff;
+}
+.chip-outline[class*="color-"] {
+  --f7-chip-outline-border-color: var(--f7-theme-color);
+  --f7-chip-text-color: var(--f7-theme-color);
 }
 & when (@includeIosTheme) {
   @import url('./chip-ios.less');
