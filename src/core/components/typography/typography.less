@@ -1,10 +1,12 @@
 /* === Typography === */
+@import url('./typography-vars.less');
+
 .rules-loop(@values, @ruleName) {
-  .for-each(@value in @values) {
+  each(@values, {
     .@{ruleName}-@{value} {
       @{ruleName}: @value !important;
     }
-  }
+  });
 }
 
 // Display
@@ -133,18 +135,14 @@
   margin-right: var(--f7-typography-margin) !important;
 }
 // Colors
-.for-each(@pair in @colors) {
-  @colorName: at(@pair, 1);
-  @colorValue: at(@pair, 2);
-  .text-color-@{colorName} {
-    color: @colorValue !important;
-  }
-  .bg-color-@{colorName} {
-    background-color: @colorValue !important;
-  }
-  .border-color-@{colorName} {
-    border-color: @colorValue !important;
-  }
+[class*="text-color-"] {
+  color: var(--f7-theme-color-modifier) !important;
+}
+[class*="bg-color-"] {
+  background-color: var(--f7-theme-color-modifier) !important;
+}
+[class*="border-color-"] {
+  border-color: var(--f7-theme-color-modifier) !important;
 }
 
 & when (@includeIosTheme) {
