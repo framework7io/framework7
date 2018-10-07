@@ -2,8 +2,11 @@
   Core
   ==================== */
 :root {
+  @themeColorRed: red(@themeColor);
+  @themeColorGreen: green(@themeColor);
+  @themeColorBlue: blue(@themeColor);
   --f7-theme-color: @themeColor;
-  --f7-theme-color-rgb: red(@themeColor), green(@themeColor), blue(@themeColor);
+  --f7-theme-color-rgb: @themeColorRed, @themeColorGreen, @themeColorBlue;
   --f7-theme-color-shade: darken(@themeColor, 8%);
   --f7-theme-color-tint: lighten(@themeColor, 8%);
 
@@ -14,21 +17,21 @@
   --f7-safe-area-top: 0px;
   --f7-safe-area-bottom: 0px;
 
-  --f7-area-outer-left: 0px;
-  --f7-area-outer-right: 0px;
-  --f7-area-outer-top: 0px;
-  --f7-area-outer-bottom: 0px;
+  --f7-safe-area-outer-left: 0px;
+  --f7-safe-area-outer-right: 0px;
+  --f7-safe-area-outer-top: 0px;
+  --f7-safe-area-outer-bottom: 0px;
 
   @supports (left: env(safe-area-inset-left)) {
     --f7-safe-area-top: env(safe-area-inset-top);
     --f7-safe-area-bottom: env(safe-area-inset-bottom);
-    --f7-area-outer-top: env(safe-area-inset-top);
-    --f7-area-outer-bottom: env(safe-area-inset-bottom);
+    --f7-safe-area-outer-top: env(safe-area-inset-top);
+    --f7-safe-area-outer-bottom: env(safe-area-inset-bottom);
     .ios-edges {
       --f7-safe-area-left: env(safe-area-inset-left);
       --f7-safe-area-right: env(safe-area-inset-right);
-      --f7-area-outer-left: env(safe-area-inset-left);
-      --f7-area-outer-right: env(safe-area-inset-right);
+      --f7-safe-area-outer-left: env(safe-area-inset-left);
+      --f7-safe-area-outer-right: env(safe-area-inset-right);
     }
     .ios-left-edge,
     .ios-edges,
@@ -36,7 +39,7 @@
     .sheet-modal,
     .panel-left {
       --f7-safe-area-left: env(safe-area-inset-left);
-      --f7-area-outer-left: env(safe-area-inset-left);
+      --f7-safe-area-outer-left: env(safe-area-inset-left);
     }
     .ios-right-edge,
     .ios-edges,
@@ -44,21 +47,21 @@
     .sheet-modal,
     .panel-left {
       --f7-safe-area-right: env(safe-area-inset-right);
-      --f7-area--outer-right: env(safe-area-inset-right);
+      --f7-safe-area-outer-right: env(safe-area-inset-right);
     }
     .no-ios-edges {
       --f7-safe-area-left: 0px;
       --f7-safe-area-right: 0px;
-      --f7-area-outer-left: 0px;
-      --f7-area-outer-right: 0px;
+      --f7-safe-area-outer-left: 0px;
+      --f7-safe-area-outer-right: 0px;
     }
     .no-ios-left-edge {
       --f7-safe-area-left: 0px;
-      --f7-area-outer-left: 0px;
+      --f7-safe-area-outer-left: 0px;
     }
     .no-ios-right-edge {
       --f7-safe-area-right: 0px;
-      --f7-area-outer-right: 0px;
+      --f7-safe-area-outer-right: 0px;
     }
   }
 }
@@ -290,294 +293,6 @@
 }
 
 /*====================
-  Grid
-  ==================== */
-.ios {
-  --f7-grid-gap: 15px;
-}
-.md {
-  --f7-grid-gap: 16px;
-}
-
-/*====================
-  Buttons
-  ==================== */
-:root {
-  --f7-button-font-size: 14px;
-  --f7-button-min-width: 32px;
-  --f7-button-fill-text-color: #fff;
-  --f7-button-raised-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  --f7-button-raised-pressed-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  --f7-segmented-raised-divider-color: rgba(0,0,0,0.1);
-}
-.ios {
-  // --f7-button-color: var(--f7-theme-color);
-  --f7-button-height: 29px;
-  --f7-button-padding: 10px;
-  --f7-button-border-radius: 5px;
-  --f7-button-font-weight: 400;
-  --f7-button-letter-spacing: 0;
-  --f7-button-text-transform: none;
-  // --f7-button-pressed-bg-color: rgba(var(--f7-theme-color-rgb), .15);
-  // --f7-button-fill-pressed-bg-color: var(--f7-theme-color-tint);
-  --f7-button-outline-border-width: 1px;
-  --f7-button-big-height: 44px;
-  --f7-button-big-font-size: 17px;
-  --f7-button-small-height: 26px;
-}
-.md {
-  // --f7-button-color: var(--f7-theme-color);
-  --f7-button-height: 36px;
-  --f7-button-padding: 8px;
-  --f7-button-border-radius: 4px;
-  --f7-button-font-weight: 500;
-  --f7-button-letter-spacing: 0.03em;
-  --f7-button-text-transform: uppercase;
-  --f7-button-pressed-bg-color: rgba(0,0,0,0.1);
-  // --f7-button-fill-pressed-bg-color: var(--f7-theme-color-shade);
-  --f7-button-outline-border-width: 2px;
-  --f7-button-big-height: 48px;
-  --f7-button-big-font-size: 14px;
-  --f7-button-small-height: 28px;
-  .theme-dark {
-    --f7-button-pressed-bg-color: rgba(255,255,255,0.1);
-  }
-}
-
-/*====================
-  Block
-  ==================== */
-:root {
-  --f7-block-strong-bg-color: #fff;
-  --f7-block-title-font-size: inherit;
-  --f7-block-header-margin: 10px;
-  --f7-block-footer-margin: 10px;
-  --f7-block-header-font-size: 14px;
-  --f7-block-footer-font-size: 14px;
-}
-.ios {
-  --f7-block-text-color: #6d6d72;
-  --f7-block-padding: 15px;
-  --f7-block-vertical-margin: 35px;
-  --f7-block-strong-text-color: #000;
-  --f7-block-strong-border-color: #c8c7cc;
-  --f7-block-title-text-transform: uppercase;
-  --f7-block-title-text-color: #6d6d72;
-  --f7-block-title-font-weight: 400;
-  --f7-block-title-line-height: 17px;
-  --f7-block-title-margin-bottom: 10px;
-  --f7-block-inset-side-margin: 15px;
-  --f7-block-inset-border-radius: 7px;
-  --f7-block-header-text-color: #8f8f94;
-  --f7-block-footer-text-color: #8f8f94;
-  .theme-dark {
-    --f7-block-strong-border-color: #282829;
-    --f7-block-title-text-color: #8E8E93;
-    --f7-block-header-text-color: #8E8E93;
-    --f7-block-footer-text-color: #8E8E93;
-    --f7-block-strong-bg-color: #1c1c1d;
-    --f7-block-strong-text-color: #fff;
-  }
-}
-.md {
-  --f7-block-text-color: inherit;
-  --f7-block-padding: 16px;
-  --f7-block-vertical-margin: 32px;
-  --f7-block-strong-text-color: inherit;
-  --f7-block-strong-border-color: rgba(0,0,0,0.12);
-  --f7-block-title-text-transform: none;
-  --f7-block-title-text-color: rgba(0,0,0,0.54);
-  --f7-block-title-font-weight: 500;
-  --f7-block-title-line-height: 16px;
-  --f7-block-title-margin-bottom: 16px;
-  --f7-block-inset-side-margin: 16px;
-  --f7-block-inset-border-radius: 4px;
-  --f7-block-header-text-color: rgba(0,0,0,0.54);
-  --f7-block-footer-text-color: rgba(0,0,0,0.54);
-  .theme-dark {
-    --f7-block-strong-border-color: #282829;
-    --f7-block-title-text-color: #fff;
-    --f7-block-header-text-color: rgba(255,255,255,0.54);
-    --f7-block-footer-text-color: rgba(255,255,255,0.54);
-    --f7-block-strong-bg-color: #1c1c1d;
-  }
-}
-
-/*====================
-  Badge
-  ==================== */
-.ios {
-  --f7-badge-text-color: #fff;
-  --f7-badge-bg-color: #8e8e93;
-  --f7-badge-size: 20px;
-  --f7-badge-font-size: 12px;
-  --f7-badge-font-weight: normal;
-  --f7-badge-border-radius: 10px;
-  --f7-badge-padding: 0 4px;
-  --f7-badge-in-icon-size: 16px;
-  --f7-badge-in-icon-font-size: 10px;
-}
-.md {
-  --f7-badge-text-color: #fff;
-  --f7-badge-bg-color: #8e8e93;
-  --f7-badge-size: 18px;
-  --f7-badge-font-size: 12px;
-  --f7-badge-font-weight: normal;
-  --f7-badge-border-radius: 4px;
-  --f7-badge-padding: 0 4px;
-  --f7-badge-in-icon-size: 16px;
-  --f7-badge-in-icon-font-size: 10px;
-}
-
-/*====================
-  Card
-  ==================== */
-:root {
-  --f7-card-bg-color: #fff;
-  --f7-card-outline-border-color: rgba(0,0,0,0.12);
-  --f7-card-border-radius: 4px;
-  --f7-card-font-size: 14px;
-  --f7-card-header-border-color: #e1e1e1;
-  --f7-card-footer-border-color: #e1e1e1;
-  .theme-dark {
-    --f7-card-bg-color: #1c1c1d;
-    --f7-card-outline-border-color: #282829;
-    --f7-card-header-border-color: #282829;
-    --f7-card-footer-border-color: #282829;
-    --f7-card-footer-text-color: #8E8E93;
-  }
-}
-.ios {
-  --f7-card-margin: 10px;
-  --f7-card-box-shadow: 0px 1px 2px rgba(0,0,0,0.3);
-  --f7-card-content-padding: 15px;
-  --f7-card-header-font-size: 17px;
-  --f7-card-header-padding: 4px 15px;
-  --f7-card-header-min-height: 44px;
-  --f7-card-footer-text-color: #6d6d72;
-  --f7-card-footer-padding: 4px 15px;
-  --f7-card-footer-min-height: 44px;
-}
-.md {
-  --f7-card-margin: 8px;
-  --f7-card-box-shadow: var(--f7-elevation-1);
-  --f7-card-content-padding: 16px;
-  --f7-card-header-font-size: 16px;
-  --f7-card-header-padding: 4px 16px;
-  --f7-card-header-min-height: 48px;
-  --f7-card-footer-text-color: #757575;
-  --f7-card-footer-padding: 4px 16px;
-  --f7-card-footer-min-height: 48px;
-}
-
-/*====================
-  Chip
-  ==================== */
-:root {
-  --f7-chip-bg-color: rgba(0, 0, 0, 0.12);
-  --f7-chip-font-size: 13px;
-  --f7-chip-outline-border-color: rgba(0, 0, 0, 0.12);
-  --f7-chip-media-font-size: 16px;
-  --f7-chip-delete-button-color: #000;
-  .theme-dark {
-    --f7-chip-delete-button-color: #fff;
-    --f7-chip-bg-color: #333;
-    --f7-chip-outline-border-color: #333;
-  }
-}
-.ios {
-  --f7-chip-text-color: #000;
-  --f7-chip-height: 24px;
-  .theme-dark {
-    --f7-chip-text-color: #fff;
-  }
-}
-.md {
-  --f7-chip-text-color: rgba(0, 0, 0, 0.87);
-  --f7-chip-height: 32px;
-  .theme-dark {
-    --f7-chip-text-color: rgba(255,255,255,0.87);
-  }
-}
-
-/*====================
-  Fab
-  ==================== */
-:root {
-  --f7-fab-text-color: #fff;
-  --f7-fab-extended-text-font-size: 14px;
-  --f7-fab-extended-text-padding: 0 20px;
-  --f7-fab-label-bg-color: #fff;
-  --f7-fab-label-text-color: #333;
-  --f7-fab-label-border-radius: 4px;
-  --f7-fab-label-padding: 4px 12px;
-  --f7-fab-button-size: 40px;
-}
-.ios {
-  --f7-fab-size: 50px;
-  --f7-fab-box-shadow: 0px 2px 4px rgba(0,0,0,0.4);
-  --f7-fab-margin: 15px;
-  --f7-fab-extended-size: 50px;
-  --f7-fab-extended-text-font-weight: 400;
-  --f7-fab-extended-text-letter-spacing: 0;
-  --f7-fab-label-box-shadow: 0px 1px 2px rgba(0,0,0,0.4);
-  // --f7-fab-pressed-bg-color: var(--f7-theme-color-shade);
-}
-.md {
-  --f7-fab-size: 56px;
-  --f7-fab-box-shadow:  var(--f7-elevation-6);
-  --f7-fab-margin: 16px;
-  --f7-fab-extended-size: 48px;
-  --f7-fab-extended-text-font-weight: 500;
-  --f7-fab-extended-text-letter-spacing: 0.03em;
-  --f7-fab-label-box-shadow: var(--f7-elevation-3);
-  // --f7-fab-pressed-bg-color: var(--f7-theme-color-shade);
-}
-/*====================
-  List Index
-  ==================== */
-:root {
-  --f7-list-index-width: 16px;
-  --f7-list-index-font-size: 11px;
-  --f7-list-index-font-weight: 600;
-  // --f7-list-index-text-color: var(--f7-theme-color);
-  --f7-list-index-item-height: 14px;
-  --f7-list-index-label-text-color: #fff;
-  // --f7-list-index-label-bg-color: var(--f7-theme-color);;
-  --f7-list-index-label-font-weight: 500;
-}
-.ios {
-  --f7-list-index-label-size: 44px;
-  --f7-list-index-label-font-size: 17px;
-  --f7-list-index-skip-dot-size: 6px;
-}
-.md {
-  --f7-list-index-label-size: 56px;
-  --f7-list-index-label-font-size: 20px;
-  --f7-list-index-skip-dot-size: 4px;
-}
-/*====================
-  Login Screen
-  ==================== */
-:root {
-  --f7-login-screen-bg-color: #fff;
-  --f7-login-screen-content-bg-color: #fff;
-  --f7-login-screen-blocks-max-width: 480px;
-  // --f7-login-screen-list-button-text-color: var(--f7-theme-color);
-  .theme-dark {
-    --f7-login-screen-bg-color: #171717;;
-    --f7-login-screen-content-bg-color: transparent;
-  }
-}
-.ios {
-  --f7-login-screen-blocks-vertical-margin: 25px;
-  --f7-login-screen-title-font-size: 30px;
-}
-.md {
-  --f7-login-screen-blocks-vertical-margin: 24px;
-  --f7-login-screen-title-font-size: 34px;
-}
-/*====================
   Messagebar
   ==================== */
 :root {
@@ -705,166 +420,32 @@
 }
 
 /*====================
-  Panels
-  ==================== */
-:root {
-  --f7-panel-width: 260px;
-  --f7-panel-bg-color: #fff;
-}
-.ios {
-  --f7-panel-backdrop-bg-color: rgba(0,0,0,0);
-  --f7-panel-transition-duration: 400ms;
-  --f7-panel-shadow: transparent;
-}
-.md {
-  --f7-panel-backdrop-bg-color: rgba(0,0,0,0.2);
-  --f7-panel-transition-duration: 300ms;
-  --f7-panel-shadow:
-    rgba(0, 0, 0, 0.25) 0%,
-    rgba(0, 0, 0, 0.1) 30%,
-    rgba(0, 0, 0, 0.05) 40%,
-    rgba(0, 0, 0, 0) 60%,
-    rgba(0, 0, 0, 0) 100%;
-}
-
-/*====================
-  Popup
-  ==================== */
-.ios {
-  --f7-popup-box-shadow: none;
-}
-.md {
-  --f7-popup-box-shadow: 0px 20px 44px rgba(0,0,0,0.5);
-}
-
-/*====================
-  Sortable
-  ==================== */
-:root {
-  --f7-sortable-handler-color: #c7c7cc;
-  --f7-sortable-sorting-item-bg-color: rgba(255,255,255,0.8);
-  .theme-dark {
-    --f7-sortable-sorting-item-bg-color: rgba(50, 50, 50, 0.8);
-  }
-}
-.ios {
-  --f7-sortable-handler-width: 35px;
-  --f7-sortable-sorting-item-box-shadow: 0px 2px 8px rgba(0,0,0,0.6);
-}
-.md {
-  --f7-sortable-handler-width: 42px;
-  --f7-sortable-sorting-item-box-shadow: var(--f7-elevation-2);
-}
-
-/*====================
-  Swipeout
-  ==================== */
-:root {
-  --f7-swipeout-button-text-color: #fff;
-  --f7-swipeout-button-bg-color: #c7c7cc;
-  --f7-swipeout-delete-button-bg-color: #ff3b30;
-}
-.ios {
-  --f7-swipeout-button-padding: 0 30px;
-}
-.md {
-  --f7-swipeout-button-padding: 0 24px;
-}
-
-/*====================
-  Toast
-  ==================== */
-.ios {
-  --f7-toast-text-color: #fff;
-  --f7-toast-font-size: 14px;
-  --f7-toast-bg-color: rgba(0,0,0,0.75);
-  --f7-toast-translucent-bg-color-ios: rgba(0,0,0,0.75);
-  --f7-toast-padding-horizontal: 15px;
-  --f7-toast-padding-vertical: 12px;
-  --f7-toast-border-radius: 8px;
-  --f7-toast-button-min-width: 64px;
-  --f7-toast-icon-size: 48px;
-}
-.md {
-  --f7-toast-text-color: #fff;
-  --f7-toast-font-size: 14px;
-  --f7-toast-bg-color: #323232;
-  --f7-toast-padding-horizontal: 24px;
-  --f7-toast-padding-vertical: 14px;
-  --f7-toast-border-radius: 4px;
-  --f7-toast-button-min-width: 64px;
-  --f7-toast-icon-size: 48px;
-}
-/*====================
-  Toggle
-  ==================== */
-.ios {
-  --f7-toggle-handle-color: #fff;
-  --f7-toggle-width: 52px;
-  --f7-toggle-height: 32px;
-  --f7-toggle-border-color-ios: #e5e5e5;
-  --f7-toggle-inactive-color: #fff;
-  .theme-dark {
-    --f7-toggle-border-color-ios: #555;
-    --f7-toggle-inactive-color: #222;
-  }
-}
-.md {
-  --f7-toggle-handle-color: #fff;
-  --f7-toggle-width: 36px;
-  --f7-toggle-height: 14px;
-  --f7-toggle-inactive-color: #b0afaf;
-  .theme-dark {
-    --f7-toggle-inactive-color: #555;
-  }
-}
-
-/*====================
-  Tooltip
-  ==================== */
-:root {
-  --f7-tooltip-bg-color: rgba(0,0,0,0.87);;
-  --f7-tooltip-text-color: #fff;
-  --f7-tooltip-border-radius: 4px;
-  --f7-tooltip-padding: 8px 16px;
-  --f7-tooltip-font-size: 14px;
-  --f7-tooltip-font-weight: 500;
-  --f7-tooltip-desktop-padding: 6px 8px;
-  --f7-tooltip-desktop-font-size: 12px;
-}
-
-/*====================
-  Typography
-  ==================== */
-.ios {
-  --f7-typography-padding: 15px;
-  --f7-typography-margin: 15px;
-}
-.md {
-  --f7-typography-padding: 16px;
-  --f7-typography-margin: 16px;
-}
-
-/*====================
   Color Themes
   ==================== */
-.for-each(@pair in @colors) {
-  @colorName: at(@pair, 1);
-  @colorValue: at(@pair, 2);
-  .color-theme-@{colorName} {
-    --f7-theme-color: @colorValue;
-    --f7-theme-color-rgb: red(@colorValue), green(@colorValue), blue(@colorValue);
-    --f7-theme-color-shade: darken(@colorValue, 8%);
-    --f7-theme-color-tint: lighten(@colorValue, 8%);
+each(@colors, {
+  .color-theme-@{key} {
+    @themeColorRed: red(@value);
+    @themeColorGreen: green(@value);
+    @themeColorBlue: blue(@value);
+    --f7-theme-color: @value;
+    --f7-theme-color-rgb: @themeColorRed, @themeColorGreen, @themeColorBlue;
+    --f7-theme-color-shade: darken(@value, 8%);
+    --f7-theme-color-tint: lighten(@value, 8%);
   }
-}
-.for-each(@pair in @colors) {
-  @colorName: at(@pair, 1);
-  @colorValue: at(@pair, 2);
-  .color-@{colorName} {
-    --f7-theme-color: @colorValue;
-    --f7-theme-color-rgb: red(@colorValue), green(@colorValue), blue(@colorValue);
-    --f7-theme-color-shade: darken(@colorValue, 8%);
-    --f7-theme-color-tint: lighten(@colorValue, 8%);
+});
+each(@colors, {
+  .color-@{key} {
+    @themeColorRed: red(@value);
+    @themeColorGreen: green(@value);
+    @themeColorBlue: blue(@value);
+    --f7-theme-color: @value;
+    --f7-theme-color-rgb: @themeColorRed, @themeColorGreen, @themeColorBlue;
+    --f7-theme-color-shade: darken(@value, 8%);
+    --f7-theme-color-tint: lighten(@value, 8%);
   }
-}
+  .text-color-@{key},
+  .bg-color-@{key},
+  .border-color-@{key} {
+    --f7-theme-color-modifier: @value;
+  }
+});
