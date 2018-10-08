@@ -64,13 +64,26 @@ button {
 
 .button-outline,
 .ios .button-outline-ios,
-.md .button-outline-md,
-.ios .button-small.button-fill,
-.ios .button-small.button-fill-ios,
-.ios .button-small-ios.button-fill {
+.md .button-outline-md {
   border: var(--f7-button-outline-border-width) solid var(--f7-theme-color);
   line-height: ~"calc(var(--f7-button-height) - var(--f7-button-outline-border-width) * 2)";
 }
+.button-outline.button-small,
+.ios .button-outline-ios.button-small,
+.ios .button-outline-ios.button-small-ios,
+.ios .button-outline.button-small-ios,
+.md .button-outline-md.button-small,
+.md .button-outline-md.button-small-md,
+.md .button-outline.button-small-md,
+.ios .button-small.button-fill,
+.ios .button-small.button-fill-ios,
+.ios .button-small-ios.button-fill,
+.ios .button-small-ios.button-fill-ios {
+  --f7-button-outline-border-width: var(--f7-button-small-outline-border-width);
+  border: var(--f7-button-outline-border-width) solid var(--f7-theme-color);
+  line-height: ~"calc(var(--f7-button-height) - var(--f7-button-outline-border-width) * 2)";
+}
+
 .button-big,
 .ios .button-big-ios,
 .md .button-big-md {
