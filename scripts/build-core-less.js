@@ -30,7 +30,7 @@ function copyLess(config, cb) {
   const includeMdTheme = config.themes.indexOf('md') >= 0;
   const includeDarkTheme = config.darkTheme;
   const rtl = config.rtl;
-  const iconsFontBase64 = base64Encode('src/core/icons/font/Framework7CoreIcons.woff2');
+  const iconsFontBase64 = base64Encode('src/core/icons/font/Framework7CoreIcons.woff');
 
   gulp.src(['src/core/framework7.less'])
     .pipe(modifyFile((content) => {

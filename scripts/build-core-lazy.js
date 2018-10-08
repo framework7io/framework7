@@ -92,7 +92,7 @@ function buildLazyComponentsLess(rtl, components, cb) {
   const includeIosTheme = config.themes.indexOf('ios') >= 0;
   const includeMdTheme = config.themes.indexOf('md') >= 0;
   const includeDarkTheme = config.darkTheme;
-  const iconsFontBase64 = base64Encode('src/core/icons/font/Framework7CoreIcons.woff2');
+  const iconsFontBase64 = base64Encode('src/core/icons/font/Framework7CoreIcons.woff');
 
   const main = fs.readFileSync('./src/core/framework7.less', 'utf8')
     .split('\n')
@@ -236,7 +236,7 @@ function buildLazyFrameworkLess(rtl, cb) {
   const includeDarkTheme = config.darkTheme;
   const output = getOutput();
   const colors = `{\n${Object.keys(config.colors).map(colorName => `  ${colorName}: ${config.colors[colorName]};`).join('\n')}\n}`;
-  const iconsFontBase64 = base64Encode('src/core/icons/font/Framework7CoreIcons.woff2');
+  const iconsFontBase64 = base64Encode('src/core/icons/font/Framework7CoreIcons.woff');
 
 
   gulp.src('./src/core/framework7.less')

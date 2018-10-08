@@ -106,14 +106,14 @@ f.fullname = font_name
 
 f.generate(fontfile + '.ttf')
 
-# scriptPath = os.path.dirname(os.path.realpath(__file__))
-# try:
-#   subprocess.Popen([scriptPath + '/sfnt2woff', fontfile + '.ttf'], stdout=subprocess.PIPE)
-# except OSError:
-#   # If the local version of sfnt2woff fails (i.e., on Linux), try to use the
-#   # global version. This allows us to avoid forcing OS X users to compile
-#   # sfnt2woff from source, simplifying install.
-#   subprocess.call(['sfnt2woff', fontfile + '.ttf'])
+scriptPath = os.path.dirname(os.path.realpath(__file__))
+try:
+  subprocess.Popen([scriptPath + '/sfnt2woff', fontfile + '.ttf'], stdout=subprocess.PIPE)
+except OSError:
+  # If the local version of sfnt2woff fails (i.e., on Linux), try to use the
+  # global version. This allows us to avoid forcing OS X users to compile
+  # sfnt2woff from source, simplifying install.
+  subprocess.call(['sfnt2woff', fontfile + '.ttf'])
 
 # eotlitetool.py script to generate IE7-compatible .eot fonts
 # subprocess.call('python ' + scriptPath + '/eotlitetool.py ' + fontfile + '.ttf -o ' + fontfile + '.eot', shell=True)
