@@ -165,6 +165,20 @@ const Utils = {
       </span>
     </span>
   `.trim(),
+  iosPreloaderContent: `
+    <span class="preloader-inner-line"></span>
+    <span class="preloader-inner-line"></span>
+    <span class="preloader-inner-line"></span>
+    <span class="preloader-inner-line"></span>
+    <span class="preloader-inner-line"></span>
+    <span class="preloader-inner-line"></span>
+    <span class="preloader-inner-line"></span>
+    <span class="preloader-inner-line"></span>
+    <span class="preloader-inner-line"></span>
+    <span class="preloader-inner-line"></span>
+    <span class="preloader-inner-line"></span>
+    <span class="preloader-inner-line"></span>
+  `.trim(),
   eventNameToColonCase(eventName) {
     let hasColon;
     return eventName.split('').map((char, index) => {

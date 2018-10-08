@@ -4,17 +4,16 @@ import Utils from '../../utils/utils';
 const Preloader = {
   init(el) {
     const app = this;
-    if (app.theme !== 'md') return;
     const $el = $(el);
-    if ($el.length === 0 || $el.children('.preloader-inner').length > 0) return;
-    $el.append(Utils.mdPreloaderContent);
+    if ($el.length === 0 || $el.children('.preloader-inner').length > 0 || $el.children('.preloader-inner-line').length > 0) return;
+    $el.append(Utils[`${app.theme}PreloaderContent`]);
   },
   // Modal
   visible: false,
   show(color = 'white') {
     const app = this;
     if (Preloader.visible) return;
-    const preloaderInner = app.theme !== 'md' ? '' : Utils.mdPreloaderContent;
+    const preloaderInner = Utils[`${app.theme}PreloaderContent`] || '';
     $('html').addClass('with-modal-preloader');
     app.root.append(`
       <div class="preloader-backdrop"></div>
@@ -47,14 +46,12 @@ export default {
   on: {
     photoBrowserOpen(pb) {
       const app = this;
-      if (app.theme !== 'md') return;
       pb.$el.find('.preloader').each((index, preloaderEl) => {
         app.preloader.init(preloaderEl);
       });
     },
     pageInit(page) {
       const app = this;
-      if (app.theme !== 'md') return;
       page.$el.find('.preloader').each((index, preloaderEl) => {
         app.preloader.init(preloaderEl);
       });
@@ -65,7 +62,6 @@ export default {
       insert(vnode) {
         const app = this;
         const preloaderEl = vnode.elm;
-        if (app.theme !== 'md') return;
         app.preloader.init(preloaderEl);
       },
     },

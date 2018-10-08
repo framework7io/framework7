@@ -178,7 +178,7 @@ export default {
           }).open();
         },
         preloader(title, color) {
-          const preloaderInner = app.theme !== 'md' ? '' : Utils.mdPreloaderContent;
+          const preloaderInner = Utils[`${app.theme}PreloaderContent`] || '';
           return new Dialog(app, {
             title: typeof title === 'undefined' || title === null ? app.params.dialog.preloaderTitle : title,
             content: `<div class="preloader${color ? ` color-${color}` : ''}">${preloaderInner}</div>`,

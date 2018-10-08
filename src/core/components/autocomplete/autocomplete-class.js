@@ -419,7 +419,7 @@ class Autocomplete extends Framework7Class {
   renderPreloader() {
     const ac = this;
     return `
-      <div class="autocomplete-preloader preloader ${ac.params.preloaderColor ? `color-${ac.params.preloaderColor}` : ''}">${ac.app.theme === 'md' ? Utils.mdPreloaderContent : ''}</div>
+      <div class="autocomplete-preloader preloader ${ac.params.preloaderColor ? `color-${ac.params.preloaderColor}` : ''}">${Utils[`${ac.app.theme}PreloaderContent`] || ''}</div>
     `.trim();
   }
 

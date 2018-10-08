@@ -236,7 +236,7 @@ class PhotoBrowser extends Framework7Class {
     if (pb.params.renderLazyPhoto) return pb.params.renderLazyPhoto.call(pb, photo, index);
     const photoHtml = `
       <div class="photo-browser-slide photo-browser-slide-lazy swiper-slide" data-swiper-slide-index="${index}">
-          <div class="preloader swiper-lazy-preloader ${pb.params.theme === 'dark' ? 'color-white' : ''}">${pb.app.theme === 'md' ? Utils.mdPreloaderContent : ''}</div>
+          <div class="preloader swiper-lazy-preloader ${pb.params.theme === 'dark' ? 'color-white' : ''}">${Utils[`${pb.app.theme}PreloaderContent`] || ''}</div>
           <span class="swiper-zoom-container">
               <img data-src="${photo.url ? photo.url : photo}" class="swiper-lazy">
           </span>
