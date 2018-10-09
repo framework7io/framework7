@@ -85,8 +85,9 @@ const Device = (function Device() {
 
   // Webview
   device.webView = !!((iphone || ipad || ipod) && (ua.match(/.*AppleWebKit(?!.*Safari)/i) || window.navigator.standalone))
-                     || window.matchMedia('(display-mode: standalone)').matches;
+                     || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
   device.webview = device.webView;
+  device.standalone = device.webView;
 
 
   // Desktop
