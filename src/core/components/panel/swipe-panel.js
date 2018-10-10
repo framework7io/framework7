@@ -127,20 +127,40 @@ function swipePanel(panel) {
       }
     }
 
+    let threshold = panel.opened ? 0 : -params.swipeThreshold;
+    if (side === 'right') threshold = -threshold;
+
     if (params.swipeNoFollow) {
+      const touchesDiffNoFollow = (pageX - touchesStart.x);
       const timeDiff = (new Date()).getTime() - touchStartTime;
-      if (timeDiff < 300) {
-        if (direction === 'to-left') {
-          if (side === 'right') app.panel.open(side);
-          if (side === 'left' && $el.hasClass('panel-active')) app.panel.close();
-        }
-        if (direction === 'to-right') {
-          if (side === 'left') app.panel.open(side);
-          if (side === 'right' && $el.hasClass('panel-active')) app.panel.close();
-        }
+      let needToSwitch;
+      if (!panel.opened && (
+        (side === 'left' && touchesDiffNoFollow > -threshold)
+        || (side === 'right' && -touchesDiffNoFollow > threshold)
+      )) {
+        needToSwitch = true;
       }
-      isTouched = false;
-      isMoved = false;
+      if (panel.opened && (
+        (side === 'left' && touchesDiffNoFollow < 0)
+        || (side === 'right' && touchesDiffNoFollow > 0)
+      )) {
+        needToSwitch = true;
+      }
+
+      if (needToSwitch) {
+        if (timeDiff < 300) {
+          if (direction === 'to-left') {
+            if (side === 'right') app.panel.open(side);
+            if (side === 'left' && $el.hasClass('panel-active')) app.panel.close();
+          }
+          if (direction === 'to-right') {
+            if (side === 'left') app.panel.open(side);
+            if (side === 'right' && $el.hasClass('panel-active')) app.panel.close();
+          }
+        }
+        isTouched = false;
+        isMoved = false;
+      }
       return;
     }
 
@@ -158,8 +178,6 @@ function swipePanel(panel) {
     isMoved = true;
 
     e.preventDefault();
-    let threshold = panel.opened ? 0 : -params.swipeThreshold;
-    if (side === 'right') threshold = -threshold;
 
     touchesDiff = (pageX - touchesStart.x) + threshold;
 
