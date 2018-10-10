@@ -44,6 +44,8 @@ export default {
       hasInlineLabel: false,
       hasInputInfo: false,
       hasInputErrorMessage: false,
+      hasInputValue: false,
+      hasInputFocused: false,
     };
   },
   render() {
@@ -79,6 +81,8 @@ export default {
       itemInputWithInfo,
     } = props;
 
+    const hasInputFocused = self.state.hasInputFocused;
+    let hasInputValue = self.state.hasInputValue;
     let hasInput = itemInput || self.state.hasInput;
     let hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
     let hasInputInfo = itemInputWithInfo || self.state.hasInputInfo;
@@ -132,6 +136,8 @@ export default {
           hasInput = true;
           if (child.props && child.props.info) hasInputInfo = true;
           if (child.props && child.props.errorMessage && child.props.errorMessageForce) hasInputErrorMessage = true;
+          if (child.props && (typeof child.props.value === 'undefined' ? child.props.defaultValue || child.props.defaultValue === 0 : child.props.value || child.props.value === 0)) hasInputValue = true;
+          else hasInputValue = false;
         }
         if (tag === 'F7Label' || tag === 'f7-label') {
           if (child.props && child.props.inline) hasInlineLabel = true;
@@ -143,6 +149,13 @@ export default {
           hasInput = true;
           if (child.data && child.data.info) hasInputInfo = true;
           if (child.data && child.data.errorMessage && child.data.errorMessageForce) hasInputErrorMessage = true;
+          if (child.data && (typeof child.data.value === 'undefined' ? child.data.defaultValue || child.data.defaultValue === 0 : child.data.value || child.data.value === 0)) {
+            hasInputValue = true;
+          } else if (child.componentOptions && child.componentOptions.propsData && (typeof child.componentOptions.propsData.value === 'undefined' ? child.componentOptions.propsData.defaultValue || child.componentOptions.propsData.defaultValue === 0 : child.componentOptions.propsData.value || child.componentOptions.propsData.value === 0)) {
+            hasInputValue = true;
+          } else {
+            hasInputValue = false;
+          }
         }
         if (tag && tag.indexOf('f7-label') >= 0) {
           if (child.data && child.data.inline) hasInlineLabel = true;
@@ -329,6 +342,8 @@ export default {
         'item-input-with-info': hasInputInfo,
         'item-input-with-error-message': hasInputErrorMessage,
         'item-input-invalid': hasInputErrorMessage,
+        'item-input-with-value': hasInputValue,
+        'item-input-focused': hasInputFocused,
       },
       Mixins.colorClasses(props),
     );
@@ -354,6 +369,8 @@ export default {
     const self = this;
     self.onClickBound = self.onClick.bind(self);
     self.onChangeBound = self.onChange.bind(self);
+    self.onFocusBound = self.onFocus.bind(self);
+    self.onBlurBound = self.onBlur.bind(self);
   },
   componentWillMount() {
     this.checkHasInputState();
@@ -363,7 +380,7 @@ export default {
   },
   componentDidMount() {
     const self = this;
-    const { innerEl, inputEl } = self.refs;
+    const { innerEl, inputEl, el } = self.refs;
     if (inputEl) {
       inputEl.addEventListener('change', self.onChangeBound);
     }
@@ -375,6 +392,10 @@ export default {
     const hasInput = $inputWrapEl.length > 0;
     const hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
     const hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
+    if (hasInput) {
+      el.addEventListener('focus', self.onFocusBound, true);
+      el.addEventListener('blur', self.onBlurBound, true);
+    }
     if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {
       self.setState({ hasInlineLabel });
     }
@@ -414,9 +435,13 @@ export default {
   },
   componentWillUnmount() {
     const self = this;
-    const { inputEl } = self.refs;
+    const { inputEl, el } = self.refs;
     if (inputEl) {
       inputEl.removeEventListener('change', self.onChangeBound);
+    }
+    if (self.state.hasInput) {
+      el.removeEventListener('focus', self.onFocusBound, true);
+      el.removeEventListener('blur', self.onBlurBound, true);
     }
   },
   methods: {
@@ -462,6 +487,12 @@ export default {
     },
     onChange(event) {
       this.dispatchEvent('change', event);
+    },
+    onFocus() {
+      this.setState({ hasInputFocused: true });
+    },
+    onBlur() {
+      this.setState({ hasInputFocused: false });
     },
   },
 };
