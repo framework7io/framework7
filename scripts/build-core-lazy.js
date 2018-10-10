@@ -22,13 +22,6 @@ const getConfig = require('./get-core-config.js');
 const getOutput = require('./get-core-output.js');
 const banner = require('./banner-core.js');
 
-function base64Encode(file) {
-  // read binary data
-  const bitmap = fs.readFileSync(file);
-  // convert binary data to base64 encoded string
-  return Buffer.from(bitmap).toString('base64');
-}
-
 const coreComponents = [
   'app',
   'statusbar',
@@ -92,14 +85,12 @@ function buildLazyComponentsLess(rtl, components, cb) {
   const includeIosTheme = config.themes.indexOf('ios') >= 0;
   const includeMdTheme = config.themes.indexOf('md') >= 0;
   const includeDarkTheme = config.darkTheme;
-  const iconsFontBase64 = base64Encode('src/core/icons/font/Framework7CoreIcons.woff');
 
   const main = fs.readFileSync('./src/core/framework7.less', 'utf8')
     .split('\n')
     .filter(line => line.indexOf('@import url(\'./components') < 0)
     .join('\n')
     .replace('@import (reference) \'./less/mixins.less\';', '@import (reference) \'../../less/mixins.less\';')
-    .replace('$iconsFontBase64', iconsFontBase64)
     .replace('$includeIosTheme', includeIosTheme)
     .replace('$includeMdTheme', includeMdTheme)
     .replace('$includeDarkTheme', includeDarkTheme)
@@ -236,14 +227,11 @@ function buildLazyFrameworkLess(rtl, cb) {
   const includeDarkTheme = config.darkTheme;
   const output = getOutput();
   const colors = `{\n${Object.keys(config.colors).map(colorName => `  ${colorName}: ${config.colors[colorName]};`).join('\n')}\n}`;
-  const iconsFontBase64 = base64Encode('src/core/icons/font/Framework7CoreIcons.woff');
-
 
   gulp.src('./src/core/framework7.less')
     .pipe(modifyFile((content) => {
       const newContent = content
         .replace('//IMPORT_COMPONENTS', '')
-        .replace('$iconsFontBase64', iconsFontBase64)
         .replace('$includeIosTheme', includeIosTheme)
         .replace('$includeMdTheme', includeMdTheme)
         .replace('$includeDarkTheme', includeDarkTheme)

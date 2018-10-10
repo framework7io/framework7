@@ -15,13 +15,6 @@ const getConfig = require('./get-core-config.js');
 const getOutput = require('./get-core-output.js');
 const banner = require('./banner-core.js');
 
-function base64Encode(file) {
-  // read binary data
-  const bitmap = fs.readFileSync(file);
-  // convert binary data to base64 encoded string
-  return Buffer.from(bitmap).toString('base64');
-}
-
 // Copy LESS
 function copyLess(config, cb) {
   const output = getOutput();
@@ -30,14 +23,12 @@ function copyLess(config, cb) {
   const includeMdTheme = config.themes.indexOf('md') >= 0;
   const includeDarkTheme = config.darkTheme;
   const rtl = config.rtl;
-  const iconsFontBase64 = base64Encode('src/core/icons/font/Framework7CoreIcons.woff');
 
   gulp.src(['src/core/framework7.less'])
     .pipe(modifyFile((content) => {
       let newContent = content;
       newContent = `${banner}\n${newContent}`;
       newContent = newContent
-        .replace('$iconsFontBase64', iconsFontBase64)
         .replace('$includeIosTheme', includeIosTheme)
         .replace('$includeMdTheme', includeMdTheme)
         .replace('$includeDarkTheme', includeDarkTheme)
@@ -61,13 +52,11 @@ function build(config, components, themes, rtl, cb) {
   const currentTheme = themes.length === 1 ? themes[0] : '';
   const outputFileName = `framework7${rtl ? '.rtl' : ''}${currentTheme ? `.${currentTheme}` : ''}`;
   const output = getOutput();
-  const iconsFontBase64 = base64Encode('src/core/icons/font/Framework7CoreIcons.woff2');
 
   gulp.src('./src/core/framework7.less')
     .pipe(modifyFile((content) => {
       const newContent = content
         .replace('//IMPORT_COMPONENTS', components.map(component => `@import url('./components/${component}/${component}.less');`).join('\n'))
-        .replace('$iconsFontBase64', iconsFontBase64)
         .replace('$includeIosTheme', includeIosTheme)
         .replace('$includeMdTheme', includeMdTheme)
         .replace('$includeDarkTheme', includeDarkTheme)
