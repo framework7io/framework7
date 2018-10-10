@@ -18,6 +18,8 @@ class Searchbar extends FrameworkClass {
       searchContainer: undefined, // container to search, HTMLElement or CSS selector
       searchItem: 'li', // single item selector, CSS selector
       searchIn: undefined, // where to search in item, CSS selector
+      searchGroup: '.list-group',
+      searchGroupTitle: '.item-divider, .list-group-title',
       ignore: '.searchbar-ignore',
       foundEl: '.searchbar-found',
       notFoundEl: '.searchbar-not-found',
@@ -477,13 +479,13 @@ class Searchbar extends FrameworkClass {
       });
 
       if (sb.params.hideDividers) {
-        $searchContainer.find('.item-divider, .list-group-title').each((titleIndex, titleEl) => {
+        $searchContainer.find(sb.params.searchGroupTitle).each((titleIndex, titleEl) => {
           const $titleEl = $(titleEl);
-          const $nextElements = $titleEl.nextAll('li');
+          const $nextElements = $titleEl.nextAll(sb.params.searchItem);
           let hide = true;
           for (let i = 0; i < $nextElements.length; i += 1) {
             const $nextEl = $nextElements.eq(i);
-            if ($nextEl.hasClass('list-group-title') || $nextEl.hasClass('item-divider')) break;
+            if ($nextEl.is(sb.params.searchGroupTitle)) break;
             if (!$nextEl.hasClass('hidden-by-searchbar')) {
               hide = false;
             }
@@ -494,10 +496,13 @@ class Searchbar extends FrameworkClass {
         });
       }
       if (sb.params.hideGroups) {
-        $searchContainer.find('.list-group').each((groupIndex, groupEl) => {
+        $searchContainer.find(sb.params.searchGroup).each((groupIndex, groupEl) => {
           const $groupEl = $(groupEl);
           const ignore = sb.params.ignore && $groupEl.is(sb.params.ignore);
-          const notHidden = $groupEl.find('li:not(.hidden-by-searchbar)');
+          // eslint-disable-next-line
+          const notHidden = $groupEl.find(sb.params.searchItem).filter((index, el) => {
+            return !$(el).hasClass('hidden-by-searchbar');
+          });
           if (notHidden.length === 0 && !ignore) {
             $groupEl.addClass('hidden-by-searchbar');
           } else {
