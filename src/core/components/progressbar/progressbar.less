@@ -54,10 +54,15 @@ body, .view, .views, .page, .panel, .popup, .framework7-root {
   > .progressbar, > .progressbar-infinite {
     position: absolute;
     left: 0;
-    top: var(--f7-statusbar-height);
+    top: 0;
     z-index: 15000;
     border-radius: 0 !important;
     transform-origin: center top !important;
+  }
+}
+body, .framework7-root {
+  > .progressbar, > .progressbar-infinite {
+    top: var(--f7-statusbar-height);
   }
 }
 
