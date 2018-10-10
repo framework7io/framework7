@@ -39,7 +39,7 @@ gulp.task('react-typings', buildReactTypings);
 gulp.task('vue', buildVue);
 gulp.task('vue-typings', buildVueTypings);
 
-gulp.task('build-core', ['core-js', 'core-components', 'core-typings', 'core-less', 'core-lazy']);
+gulp.task('build-core', ['core-js', 'core-components', 'core-typings', 'core-less', /*'core-lazy'*/]);
 gulp.task('build-react', () => runSequence('react', 'react-typings'));
 gulp.task('build-vue', () => runSequence('vue', 'vue-typings'));
 
@@ -77,7 +77,7 @@ const watch = {
     gulp.watch(['./src/core/**/*.js'], () => runSequence(
       'core-js',
       'core-components',
-      'core-lazy',
+      // 'core-lazy',
     ));
     gulp.watch(['./src/core/**/*.d.ts'], () => runSequence(
       'core-typings'
@@ -85,7 +85,7 @@ const watch = {
     gulp.watch('./src/**/**/*.less', () => runSequence(
       'core-less',
       'core-components',
-      'core-lazy',
+      // 'core-lazy',
     ));
   },
   react() {
