@@ -158,19 +158,6 @@
   }
 
   .views, .view, .page, .popup, .panel, .login-screen {
-    >.toolbar:first-child:not(.toolbar-bottom-md) {
-      height: ~"calc(var(--f7-toolbar-height) + var(--f7-safe-area-top))";
-      .toolbar-inner {
-        height: auto;
-      }
-      .toolbar-inner {
-        bottom: 0;
-        top: var(--f7-safe-area-top);
-      }
-      &.tabbar-labels {
-        height: ~"calc(var(--f7-tabbar-labels-height) + var(--f7-safe-area-top))";
-      }
-    }
     >.toolbar-bottom-md {
       height: ~"calc(var(--f7-toolbar-height) + var(--f7-safe-area-bottom))";
       .toolbar-inner {
