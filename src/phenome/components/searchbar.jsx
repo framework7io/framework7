@@ -49,6 +49,14 @@ export default {
       type: String,
       default: 'li',
     },
+    searchGroup: {
+      type: String,
+      default: '.list-group',
+    },
+    searchGroupTitle: {
+      type: String,
+      default: '.item-divider, .list-group-title',
+    },
     foundEl: {
       type: [String, Object],
       default: '.searchbar-found',
@@ -181,6 +189,8 @@ export default {
       searchContainer,
       searchIn,
       searchItem,
+      searchGroup,
+      searchGroupTitle,
       hideOnEnableEl,
       hideOnSearchEl,
       foundEl,
@@ -211,6 +221,8 @@ export default {
         searchContainer,
         searchIn,
         searchItem,
+        searchGroup,
+        searchGroupTitle,
         hideOnEnableEl,
         hideOnSearchEl,
         foundEl,

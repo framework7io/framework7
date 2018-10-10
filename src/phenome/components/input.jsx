@@ -63,6 +63,11 @@ export default {
     },
     ...Mixins.colorProps,
   },
+  state() {
+    return {
+      inputFocused: false,
+    };
+  },
 
   render() {
     const self = this;
@@ -117,10 +122,14 @@ export default {
       const needsValue = type !== 'file';
       const needsType = tag === 'input';
       const inputClassName = Utils.classNames(
-        type === 'textarea' && resizable && 'resizable',
         !wrap && className,
-        (noFormStoreData || noStoreData || ignoreStoreData) && 'no-store-data',
-        errorMessage && errorMessageForce && 'input-invalid'
+        {
+          resizable: type === 'textarea' && resizable,
+          'no-store-data': (noFormStoreData || noStoreData || ignoreStoreData),
+          'input-invalid': errorMessage && errorMessageForce,
+          'input-with-value': typeof value === 'undefined' ? defaultValue || defaultValue === 0 : value || value === 0,
+          'input-focused': self.state.inputFocused,
+        }
       );
       let input;
       if (process.env.COMPILER === 'react') {
@@ -394,9 +403,11 @@ export default {
     },
     onFocus(event) {
       this.dispatchEvent('focus', event);
+      this.setState({ inputFocused: true });
     },
     onBlur(event) {
       this.dispatchEvent('blur', event);
+      this.setState({ inputFocused: false });
     },
     onChange(event) {
       this.dispatchEvent('change', event);
