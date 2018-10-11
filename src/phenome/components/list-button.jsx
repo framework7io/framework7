@@ -73,7 +73,6 @@ export default {
 
       return Utils.classNames(
         {
-          'item-link': true,
           'list-button': true,
           'tab-link': tabLink || tabLink === '',
           'tab-link-active': tabLinkActive,

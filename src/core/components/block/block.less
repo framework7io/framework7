@@ -115,8 +115,8 @@
 // Inset
 .block.inset {
   border-radius: var(--f7-block-inset-border-radius);
-  margin-left: ~"calc(var(--f7-block-inset-side-margin) + var(--f7-safe-area-outer-left))";
-  margin-right: ~"calc(var(--f7-block-inset-side-margin) + var(--f7-safe-area-outer-right))";
+  margin-left: calc(var(--f7-block-inset-side-margin) + var(--f7-safe-area-outer-left));
+  margin-right: calc(var(--f7-block-inset-side-margin) + var(--f7-safe-area-outer-right));
   --f7-safe-area-left: 0px;
   --f7-safe-area-right: 0px;
 }
@@ -127,8 +127,8 @@
 @media (min-width:768px) {
   .block.tablet-inset {
     border-radius: var(--f7-block-inset-border-radius);
-    margin-left: ~"calc(var(--f7-block-inset-side-margin) + var(--f7-safe-area-outer-left))";
-    margin-right: ~"calc(var(--f7-block-inset-side-margin) + var(--f7-safe-area-outer-right))";
+    margin-left: calc(var(--f7-block-inset-side-margin) + var(--f7-safe-area-outer-left));
+    margin-right: calc(var(--f7-block-inset-side-margin) + var(--f7-safe-area-outer-right));
     --f7-safe-area-left: 0px;
     --f7-safe-area-right: 0px;
   }
