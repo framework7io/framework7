@@ -20,10 +20,10 @@
   .searchbar-icon, .searchbar-disable-button {
     position: absolute;
     .ltr({
-      left: ~"calc(-4px + var(--f7-safe-area-left))";
+      left: calc(-4px + var(--f7-safe-area-left));
     });
     .rtl({
-      right: ~"calc(-4px + var(--f7-safe-area-right))";;
+      right: calc(-4px + var(--f7-safe-area-right));;
     });
     top: 50%;
     transition-duration: 300ms;
@@ -113,10 +113,10 @@
     }
     .searchbar-icon, .searchbar-disable-button {
       .ltr({
-        left: ~"calc(-4px + 8px + var(--f7-safe-area-left))";
+        left: calc(-4px + 8px + var(--f7-safe-area-left));
       });
       .rtl({
-        right: ~"calc(-4px + 8px + var(--f7-safe-area-left))";
+        right: calc(-4px + 8px + var(--f7-safe-area-left));
       });
     }
   }
@@ -125,17 +125,17 @@
     height: 100%;
     opacity: 0;
     top: 50%;
-    border-radius: ~"calc(var(--f7-searchbar-size))";
-    width: ~"calc(var(--f7-searchbar-size))";
-    margin-top: ~"calc(var(--f7-searchbar-size) * -1 / 2)";
+    border-radius: calc(var(--f7-searchbar-size));
+    width: calc(var(--f7-searchbar-size));
+    margin-top: calc(var(--f7-searchbar-size) * -1 / 2);
     transform: translate3d(0px, 0px, 0px);
     .ltr({
       left: 100%;
-      margin-left: ~"calc(var(--f7-searchbar-size) * -1)"
+      margin-left: calc(var(--f7-searchbar-size) * -1)"
     });
     .rtl({
       right: 100%;
-      margin-right: ~"calc(var(--f7-searchbar-size) * -1)"
+      margin-right: calc(var(--f7-searchbar-size) * -1)"
     });
   }
   .navbar .searchbar-expandable {
@@ -179,7 +179,7 @@
   }
   .page > .navbar ~ .searchbar ~ * .page-content,
   .page > .navbar ~ .searchbar ~ .page-content {
-    padding-top: ~"calc(var(--f7-navbar-height) + var(--f7-searchbar-height))";
+    padding-top: calc(var(--f7-navbar-height) + var(--f7-searchbar-height));
   }
 
   // Toolbar
@@ -188,7 +188,7 @@
   }
   .page > .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .searchbar ~ * .page-content,
   .page > .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .searchbar ~ .page-content {
-    padding-top: ~"calc(var(--f7-toolbar-height) + var(--f7-searchbar-height))";
+    padding-top: calc(var(--f7-toolbar-height) + var(--f7-searchbar-height));
   }
 
   .page > .tabbar-labels:not(.toolbar-bottom-md) ~ .searchbar {
@@ -196,23 +196,23 @@
   }
   .page > .tabbar-labels:not(.toolbar-bottom-md) ~ .searchbar ~ * .page-content,
   .page > .tabbar-labels:not(.toolbar-bottom-md) ~ .searchbar ~ .page-content {
-    padding-top: ~"calc(var(--f7-tabbar-labels-height) + var(--f7-searchbar-height))";
+    padding-top: calc(var(--f7-tabbar-labels-height) + var(--f7-searchbar-height));
   }
 
   // Navbar + Toolbar
   .page > .navbar ~ .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .searchbar {
-    top: ~"calc(var(--f7-navbar-height) + var(--f7-searchbar-height))";
+    top: calc(var(--f7-navbar-height) + var(--f7-searchbar-height));
   }
   .page > .navbar ~ .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .searchbar ~ * .page-content,
   .page > .navbar ~ .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .searchbar ~ .page-content {
-    padding-top: ~"calc(var(--f7-navbar-height) + var(--f7-toolbar-height) + var(--f7-searchbar-height))";
+    padding-top: calc(var(--f7-navbar-height) + var(--f7-toolbar-height) + var(--f7-searchbar-height));
   }
 
   .page > .navbar ~ .tabbar-labels:not(.toolbar-bottom-md) ~ .searchbar {
-    top: ~"calc(var(--f7-navbar-height) + var(--f7-tabbar-labels-height))";
+    top: calc(var(--f7-navbar-height) + var(--f7-tabbar-labels-height));
   }
   .page > .navbar ~ .tabbar-labels:not(.toolbar-bottom-md) ~ .searchbar ~ * .page-content,
   .page > .navbar ~ .tabbar-labels:not(.toolbar-bottom-md) ~ .searchbar ~ .page-content {
-    padding-top: ~"calc(var(--f7-navbar-height) + var(--f7-tabbar-labels-height) + var(--f7-searchbar-height))";
+    padding-top: calc(var(--f7-navbar-height) + var(--f7-tabbar-labels-height) + var(--f7-searchbar-height));
   }
 }

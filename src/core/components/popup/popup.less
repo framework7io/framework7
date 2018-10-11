@@ -7,9 +7,9 @@
 .popup {
   position: absolute;
   left: 0;
-  top: 0;
+  top: var(--f7-statusbar-height);
   width: 100%;
-  height: 100%;
+  height: calc(100% - var(--f7-statusbar-height));
   display: none;
   box-sizing: border-box;
   transition-property: transform;
@@ -52,16 +52,6 @@ html.with-statusbar {
   @media (max-width:629px), (max-height:629px) {
     .popup-backdrop {
       z-index: 9500;
-    }
-    .popup {
-      height: ~"calc(100% - var(--f7-statusbar-height))";
-      top: var(--f7-statusbar-height);
-    }
-  }
-  @media (min-width:630px), (min-height:630px) {
-    .popup-tablet-fullscreen {
-      height: ~"calc(100% - var(--f7-statusbar-height))";
-      top: var(--f7-statusbar-height);
     }
   }
 }

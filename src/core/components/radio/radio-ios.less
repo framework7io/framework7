@@ -3,9 +3,9 @@
   .icon-radio {
     &:after {
       .coreIconsFont();
-      width: ~"calc(var(--f7-radio-size) - var(--f7-radio-border-width) * 2)";
-      height: ~"calc(var(--f7-radio-size) - var(--f7-radio-border-width) * 2)";
-      line-height: ~"calc(var(--f7-radio-size) - var(--f7-radio-border-width) * 2 + 1px)";
+      width: calc(var(--f7-radio-size) - var(--f7-radio-border-width) * 2);
+      height: calc(var(--f7-radio-size) - var(--f7-radio-border-width) * 2);
+      line-height: calc(var(--f7-radio-size) - var(--f7-radio-border-width) * 2 + 1px);
       font-size: 20px;
       content: 'radio_ios';
       color: var(--f7-radio-active-color, var(--f7-theme-color));
@@ -27,23 +27,23 @@
     top: 50%;
     margin-top: -11px;
     .ltr({
-      right: ~"calc(var(--f7-safe-area-right) + 10px)";
+      right: calc(var(--f7-safe-area-right) + 10px);
     });
     .rtl({
-      left: ~"calc(var(--f7-safe-area-left) + 10px)";
+      left: calc(var(--f7-safe-area-left) + 10px);
     })
   }
   label.item-radio {
     .item-inner {
       .ltr({
-        padding-right: ~"calc(var(--f7-safe-area-right) + 35px)";
+        padding-right: calc(var(--f7-safe-area-right) + 35px);
       });
       .rtl({
-        padding-left: ~"calc(var(--f7-safe-area-left) + 35px)";
+        padding-left: calc(var(--f7-safe-area-left) + 35px);
       });
     }
   }
-  
+
   label.item-radio {
     &.active-state {
       transition-duration: 0ms;

@@ -16,10 +16,10 @@
   .navbar {
     + .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ * .fab[class*="-top"],
     + .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .fab[class*="-top"] {
-      margin-top: ~"calc(var(--f7-toolbar-height) + var(--f7-navbar-height))";
+      margin-top: calc(var(--f7-toolbar-height) + var(--f7-navbar-height));
     }
     + .tabbar-labels:not(.toolbar-bottom-md) ~ * .fab[class*="-top"], + .tabbar-labels:not(.toolbar-bottom-md) ~ .fab[class*="-top"] {
-      margin-top: ~"calc(var(--f7-tabbar-labels-height) + var(--f7-navbar-height))";
+      margin-top: calc(var(--f7-tabbar-labels-height) + var(--f7-navbar-height));
     }
   }
   // Bottom

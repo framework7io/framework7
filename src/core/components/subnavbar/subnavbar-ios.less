@@ -1,6 +1,6 @@
 .ios {
   .subnavbar {
-    height: ~"calc(var(--f7-subnavbar-height) + 1px)";
+    height: calc(var(--f7-subnavbar-height) + 1px);
     margin-top: -1px;
     padding-top: 1px;
     &.no-hairline {
@@ -84,6 +84,6 @@
   .navbar ~ *:not(.no-navbar) .subnavbar ~ .page-content,
   .navbar ~ *:not(.no-navbar) .subnavbar ~ * .page-content
   {
-    padding-top: ~"calc(var(--f7-navbar-height) + var(--f7-subnavbar-height))";
+    padding-top: calc(var(--f7-navbar-height) + var(--f7-subnavbar-height));
   }
 }

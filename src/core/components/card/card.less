@@ -17,8 +17,8 @@
   font-size: var(-f7-card-font-size);
   margin-top: var(--f7-card-margin);
   margin-bottom: var(--f7-card-margin);
-  margin-left: ~"calc(var(--f7-card-margin) + var(--f7-safe-area-left))";
-  margin-right: ~"calc(var(--f7-card-margin) + var(--f7-safe-area-right))";
+  margin-left: calc(var(--f7-card-margin) + var(--f7-safe-area-left));
+  margin-right: calc(var(--f7-card-margin) + var(--f7-safe-area-right));
   box-shadow: var(--f7-card-box-shadow);
   .list, .block {
     margin: 0;
@@ -39,7 +39,7 @@
   position: relative;
   padding: var(--f7-card-content-padding);
   > .list, > .block {
-    margin: ~"calc(-1 * var(--f7-card-content-padding))";
+    margin: calc(-1 * var(--f7-card-content-padding));
   }
   > p:first-child {
     margin-top: 0;

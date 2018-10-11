@@ -4,9 +4,9 @@
 .panel-backdrop {
   position: absolute;
   left: 0;
-  top: 0;
+  top: var(--f7-statusbar-height);
   width: 100%;
-  height: 100%;
+  height: calc(100% - var(--f7-statusbar-height));
   opacity: 0;
   z-index: 5999;
   display: none;
@@ -157,12 +157,6 @@ html {
   &.with-panel-right-cover {
     .panel-right {
       transform: translate3d(0px,0,0);
-    }
-  }
-  &.with-statusbar {
-    .panel {
-      top: var(--f7-statusbar-height);
-      height: ~"calc(100% - var(--f7-statusbar-height))";
     }
   }
 }

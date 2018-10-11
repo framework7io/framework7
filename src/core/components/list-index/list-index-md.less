@@ -11,21 +11,21 @@
   .navbar ~ .toolbar:not(.toolbar-bottom-md) ~ .list-index,
   .navbar ~ .subnavbar ~ .list-index,
   .page-with-subnavbar .navbar ~ .list-index {
-    top: ~"calc(var(--f7-navbar-height) + var(--f7-toolbar-height))";
+    top: calc(var(--f7-navbar-height) + var(--f7-toolbar-height));
   }
   .navbar ~ .tabbar-labels:not(.toolbar-bottom-md) ~ .list-index {
-    top: ~"calc(var(--f7-navbar-height) + var(--f7-tabbar-labels-height))";
+    top: calc(var(--f7-navbar-height) + var(--f7-tabbar-labels-height));
   }
 
   .toolbar-bottom-md ~ .page > .list-index,
   .toolbar-bottom-md ~ * .page > .list-index,
   .toolbar-bottom-md ~ * .page > .list-index {
-    bottom: ~"calc(var(--f7-toolbar-height) + var(--f7-safe-area-bottom))";
+    bottom: calc(var(--f7-toolbar-height) + var(--f7-safe-area-bottom));
   }
 
   .tabbar-labels.toolbar-bottom-md ~ .page > .list-index,
   .tabbar-labels.toolbar-bottom-md ~ * .page > .list-index,
   .tabbar-labels.toolbar-bottom-md ~ .list-index {
-    bottom: ~"calc(var(--f7-tabbar-labels-bottom-height) + var(--f7-safe-area-bottom))";
+    bottom: calc(var(--f7-tabbar-labels-bottom-height) + var(--f7-safe-area-bottom));
   }
 }
