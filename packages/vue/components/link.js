@@ -239,12 +239,6 @@ export default {
   },
   methods: {
     onClick(event) {
-      const self = this;
-
-      if (self.props.smartSelect && self.f7SmartSelect) {
-        self.f7SmartSelect.open();
-      }
-
       this.dispatchEvent('click', event);
     },
 

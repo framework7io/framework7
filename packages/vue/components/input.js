@@ -2,6 +2,7 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import F7Toggle from './toggle';
 import F7Range from './range';
+import __vueComponentSetState from '../runtime-helpers/vue-component-set-state.js';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
 export default {
@@ -49,6 +50,20 @@ export default {
       default: true
     }
   }, Mixins.colorProps),
+
+  data() {
+    const props = __vueComponentProps(this);
+
+    const state = (() => {
+      return {
+        inputFocused: false
+      };
+    })();
+
+    return {
+      state
+    };
+  },
 
   render() {
     const _h = this.$createElement;
@@ -102,7 +117,13 @@ export default {
       const InputTag = tag;
       const needsValue = type !== 'file';
       const needsType = tag === 'input';
-      const inputClassName = Utils.classNames(type === 'textarea' && resizable && 'resizable', !wrap && className, (noFormStoreData || noStoreData || ignoreStoreData) && 'no-store-data', errorMessage && errorMessageForce && 'input-invalid');
+      const inputClassName = Utils.classNames(!wrap && className, {
+        resizable: type === 'textarea' && resizable,
+        'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
+        'input-invalid': errorMessage && errorMessageForce,
+        'input-with-value': typeof value === 'undefined' ? defaultValue || defaultValue === 0 : value || value === 0,
+        'input-focused': self.state.inputFocused
+      });
       let input;
       {
         input = _h(InputTag, {
@@ -355,10 +376,16 @@ export default {
 
     onFocus(event) {
       this.dispatchEvent('focus', event);
+      this.setState({
+        inputFocused: true
+      });
     },
 
     onBlur(event) {
       this.dispatchEvent('blur', event);
+      this.setState({
+        inputFocused: false
+      });
     },
 
     onChange(event) {
@@ -367,6 +394,10 @@ export default {
 
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
+    },
+
+    setState(updater, callback) {
+      __vueComponentSetState(this, updater, callback);
     }
 
   },

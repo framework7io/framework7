@@ -13,7 +13,8 @@ class F7Page extends React.Component {
 
     this.state = (() => {
       return {
-        hasSubnavbar: false
+        hasSubnavbar: false,
+        routerClasses: ''
       };
     })();
   }
@@ -50,6 +51,19 @@ class F7Page extends React.Component {
 
   onPageInit(event) {
     const page = event.detail;
+    const {
+      withSubnavbar,
+      subnavbar
+    } = this.props;
+
+    if (typeof withSubnavbar === 'undefined' && typeof subnavbar === 'undefined') {
+      if (page.$navbarEl && page.$navbarEl.length && page.$navbarEl.find('.subnavbar').length || page.$el.children('.navbar').find('.subnavbar').length) {
+        this.setState({
+          hasSubnavbar: true
+        });
+      }
+    }
+
     this.dispatchEvent('page:init pageInit', event, page);
   }
 
@@ -60,6 +74,19 @@ class F7Page extends React.Component {
 
   onPageBeforeIn(event) {
     const page = event.detail;
+
+    if (page.from === 'next') {
+      this.setState({
+        routerClasses: 'page-next'
+      });
+    }
+
+    if (page.from === 'previous') {
+      this.setState({
+        routerClasses: 'page-previous'
+      });
+    }
+
     this.dispatchEvent('page:beforein pageBeforeIn', event, page);
   }
 
@@ -70,11 +97,27 @@ class F7Page extends React.Component {
 
   onPageAfterOut(event) {
     const page = event.detail;
+
+    if (page.to === 'next') {
+      this.setState({
+        routerClasses: 'page-next'
+      });
+    }
+
+    if (page.to === 'previous') {
+      this.setState({
+        routerClasses: 'page-previous'
+      });
+    }
+
     this.dispatchEvent('page:afterout pageAfterOut', event, page);
   }
 
   onPageAfterIn(event) {
     const page = event.detail;
+    this.setState({
+      routerClasses: 'page-current'
+    });
     this.dispatchEvent('page:afterin pageAfterIn', event, page);
   }
 
@@ -152,10 +195,11 @@ class F7Page extends React.Component {
       });
     }
 
-    const classes = Utils.classNames(className, 'page', {
+    const forceSubnavbar = typeof subnavbar === 'undefined' && typeof withSubnavbar === 'undefined' ? hasSubnavbar || this.state.hasSubnavbar : false;
+    const classes = Utils.classNames(className, 'page', this.state.routerClasses, {
       stacked,
       tabs,
-      'page-with-subnavbar': subnavbar || withSubnavbar || hasSubnavbar,
+      'page-with-subnavbar': subnavbar || withSubnavbar || forceSubnavbar,
       'no-navbar': noNavbar,
       'no-toolbar': noToolbar,
       'no-swipeback': noSwipeback
@@ -283,8 +327,14 @@ __reactComponentSetProps(F7Page, Object.assign({
   style: Object,
   name: String,
   stacked: Boolean,
-  withSubnavbar: Boolean,
-  subnavbar: Boolean,
+  withSubnavbar: {
+    type: Boolean,
+    default: undefined
+  },
+  subnavbar: {
+    type: Boolean,
+    default: undefined
+  },
   noNavbar: Boolean,
   noToolbar: Boolean,
   tabs: Boolean,

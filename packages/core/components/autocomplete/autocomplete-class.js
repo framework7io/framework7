@@ -473,7 +473,7 @@ class Autocomplete extends Framework7Class {
       // Dropwdown placeholder
       itemHtml = `
         <li class="autocomplete-dropdown-placeholder">
-          <div class="item-content">
+          <label class="item-content">
             <div class="item-inner">
               <div class="item-title">${item.text}</div>
             </div>

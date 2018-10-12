@@ -16,7 +16,9 @@ class F7ListItemContent extends React.Component {
         hasInput: false,
         hasInlineLabel: false,
         hasInputInfo: false,
-        hasInputErrorMessage: false
+        hasInputErrorMessage: false,
+        hasInputValue: false,
+        hasInputFocused: false
       };
     })();
 
@@ -24,6 +26,8 @@ class F7ListItemContent extends React.Component {
       const self = this;
       self.onClickBound = self.onClick.bind(self);
       self.onChangeBound = self.onChange.bind(self);
+      self.onFocusBound = self.onFocus.bind(self);
+      self.onBlurBound = self.onBlur.bind(self);
     })();
   }
 
@@ -85,6 +89,18 @@ class F7ListItemContent extends React.Component {
     this.dispatchEvent('change', event);
   }
 
+  onFocus() {
+    this.setState({
+      hasInputFocused: true
+    });
+  }
+
+  onBlur() {
+    this.setState({
+      hasInputFocused: false
+    });
+  }
+
   render() {
     const self = this;
     const props = self.props;
@@ -116,6 +132,8 @@ class F7ListItemContent extends React.Component {
       inlineLabel,
       itemInputWithInfo
     } = props;
+    const hasInputFocused = self.state.hasInputFocused;
+    let hasInputValue = self.state.hasInputValue;
     let hasInput = itemInput || self.state.hasInput;
     let hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
     let hasInputInfo = itemInputWithInfo || self.state.hasInputInfo;
@@ -168,6 +186,7 @@ class F7ListItemContent extends React.Component {
           hasInput = true;
           if (child.props && child.props.info) hasInputInfo = true;
           if (child.props && child.props.errorMessage && child.props.errorMessageForce) hasInputErrorMessage = true;
+          if (child.props && (typeof child.props.value === 'undefined' ? child.props.defaultValue || child.props.defaultValue === 0 : child.props.value || child.props.value === 0)) hasInputValue = true;else hasInputValue = false;
         }
 
         if (tag === 'F7Label' || tag === 'f7-label') {
@@ -305,7 +324,9 @@ class F7ListItemContent extends React.Component {
       'inline-label': hasInlineLabel,
       'item-input-with-info': hasInputInfo,
       'item-input-with-error-message': hasInputErrorMessage,
-      'item-input-invalid': hasInputErrorMessage
+      'item-input-invalid': hasInputErrorMessage,
+      'item-input-with-value': hasInputValue,
+      'item-input-focused': hasInputFocused
     }, Mixins.colorClasses(props));
     return React.createElement(ItemContentTag, {
       ref: __reactNode => {
@@ -321,11 +342,17 @@ class F7ListItemContent extends React.Component {
   componentWillUnmount() {
     const self = this;
     const {
-      inputEl
+      inputEl,
+      el
     } = self.refs;
 
     if (inputEl) {
       inputEl.removeEventListener('change', self.onChangeBound);
+    }
+
+    if (self.state.hasInput) {
+      el.removeEventListener('focus', self.onFocusBound, true);
+      el.removeEventListener('blur', self.onBlurBound, true);
     }
   }
 
@@ -370,7 +397,8 @@ class F7ListItemContent extends React.Component {
     const self = this;
     const {
       innerEl,
-      inputEl
+      inputEl,
+      el
     } = self.refs;
 
     if (inputEl) {
@@ -385,6 +413,11 @@ class F7ListItemContent extends React.Component {
     const hasInput = $inputWrapEl.length > 0;
     const hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
     const hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
+
+    if (hasInput) {
+      el.addEventListener('focus', self.onFocusBound, true);
+      el.addEventListener('blur', self.onBlurBound, true);
+    }
 
     if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {
       self.setState({

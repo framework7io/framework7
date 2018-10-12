@@ -1,6 +1,7 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import F7PageContent from './page-content';
+import __vueComponentSetState from '../runtime-helpers/vue-component-set-state.js';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
 export default {
@@ -9,8 +10,14 @@ export default {
     id: [String, Number],
     name: String,
     stacked: Boolean,
-    withSubnavbar: Boolean,
-    subnavbar: Boolean,
+    withSubnavbar: {
+      type: Boolean,
+      default: undefined
+    },
+    subnavbar: {
+      type: Boolean,
+      default: undefined
+    },
     noNavbar: Boolean,
     noToolbar: Boolean,
     tabs: Boolean,
@@ -44,7 +51,8 @@ export default {
 
     const state = (() => {
       return {
-        hasSubnavbar: false
+        hasSubnavbar: false,
+        routerClasses: ''
       };
     })();
 
@@ -125,10 +133,11 @@ export default {
       });
     }
 
-    const classes = Utils.classNames(className, 'page', {
+    const forceSubnavbar = typeof subnavbar === 'undefined' && typeof withSubnavbar === 'undefined' ? hasSubnavbar || this.state.hasSubnavbar : false;
+    const classes = Utils.classNames(className, 'page', this.state.routerClasses, {
       stacked,
       tabs,
-      'page-with-subnavbar': subnavbar || withSubnavbar || hasSubnavbar,
+      'page-with-subnavbar': subnavbar || withSubnavbar || forceSubnavbar,
       'no-navbar': noNavbar,
       'no-toolbar': noToolbar,
       'no-swipeback': noSwipeback
@@ -270,6 +279,19 @@ export default {
 
     onPageInit(event) {
       const page = event.detail;
+      const {
+        withSubnavbar,
+        subnavbar
+      } = this.props;
+
+      if (typeof withSubnavbar === 'undefined' && typeof subnavbar === 'undefined') {
+        if (page.$navbarEl && page.$navbarEl.length && page.$navbarEl.find('.subnavbar').length || page.$el.children('.navbar').find('.subnavbar').length) {
+          this.setState({
+            hasSubnavbar: true
+          });
+        }
+      }
+
       this.dispatchEvent('page:init pageInit', event, page);
     },
 
@@ -280,6 +302,19 @@ export default {
 
     onPageBeforeIn(event) {
       const page = event.detail;
+
+      if (page.from === 'next') {
+        this.setState({
+          routerClasses: 'page-next'
+        });
+      }
+
+      if (page.from === 'previous') {
+        this.setState({
+          routerClasses: 'page-previous'
+        });
+      }
+
       this.dispatchEvent('page:beforein pageBeforeIn', event, page);
     },
 
@@ -290,11 +325,27 @@ export default {
 
     onPageAfterOut(event) {
       const page = event.detail;
+
+      if (page.to === 'next') {
+        this.setState({
+          routerClasses: 'page-next'
+        });
+      }
+
+      if (page.to === 'previous') {
+        this.setState({
+          routerClasses: 'page-previous'
+        });
+      }
+
       this.dispatchEvent('page:afterout pageAfterOut', event, page);
     },
 
     onPageAfterIn(event) {
       const page = event.detail;
+      this.setState({
+        routerClasses: 'page-current'
+      });
       this.dispatchEvent('page:afterin pageAfterIn', event, page);
     },
 
@@ -305,6 +356,10 @@ export default {
 
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
+    },
+
+    setState(updater, callback) {
+      __vueComponentSetState(this, updater, callback);
     }
 
   },

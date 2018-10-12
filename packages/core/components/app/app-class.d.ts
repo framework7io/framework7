@@ -64,7 +64,7 @@ export interface Framework7Params {
   initOnDeviceReady? : boolean
   /** Object with events handlers.. (default {}) */
   on?: {
-    [event in keyof Framework7Events] : Framework7Events[event]
+    [event in keyof Framework7Events]? : Framework7Events[event]
   }
 
 }
@@ -144,9 +144,9 @@ interface Framework7 extends Framework7Class<Framework7Events> {
   /** Initialize app. In case you disabled auto initialization with init: false parameter */
   init() : void
   /** Load module */
-  loadModule(module: string | Function | Framework7Plugin) : Promise
+  loadModule(module: string | Function | Framework7Plugin) : Promise<any>
   /** Load modules */
-  loadModules(modules: any[]) : Promise
+  loadModules(modules: any[]) : Promise<any>
 }
 
 declare class Framework7 implements Framework7 {

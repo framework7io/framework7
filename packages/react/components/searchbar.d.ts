@@ -18,6 +18,8 @@ declare namespace F7Searchbar {
     searchContainer? : string | Object
     searchIn? : string
     searchItem? : string
+    searchGroup? : string
+    searchGroupTitle? : string
     foundEl? : string | Object
     notFoundEl? : string | Object
     backdrop? : boolean

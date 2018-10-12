@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.4.0
+ * Framework7 Vue 3.4.2
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 28, 2018
+ * Released on: October 12, 2018
  */
 
 (function (global, factory) {
@@ -2845,6 +2845,20 @@
       }
     }, Mixins.colorProps),
 
+    data: function data() {
+      var props = __vueComponentProps(this);
+
+      var state = (function () {
+        return {
+          inputFocused: false
+        };
+      })();
+
+      return {
+        state: state
+      };
+    },
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -2895,7 +2909,13 @@
         var InputTag = tag;
         var needsValue = type !== 'file';
         var needsType = tag === 'input';
-        var inputClassName = Utils.classNames(type === 'textarea' && resizable && 'resizable', !wrap && className, (noFormStoreData || noStoreData || ignoreStoreData) && 'no-store-data', errorMessage && errorMessageForce && 'input-invalid');
+        var inputClassName = Utils.classNames(!wrap && className, {
+          resizable: type === 'textarea' && resizable,
+          'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
+          'input-invalid': errorMessage && errorMessageForce,
+          'input-with-value': typeof value === 'undefined' ? defaultValue || defaultValue === 0 : value || value === 0,
+          'input-focused': self.state.inputFocused
+        });
         var input;
         {
           input = _h(InputTag, {
@@ -3143,10 +3163,16 @@
 
       onFocus: function onFocus(event) {
         this.dispatchEvent('focus', event);
+        this.setState({
+          inputFocused: true
+        });
       },
 
       onBlur: function onBlur(event) {
         this.dispatchEvent('blur', event);
+        this.setState({
+          inputFocused: false
+        });
       },
 
       onChange: function onChange(event) {
@@ -3158,6 +3184,10 @@
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+      },
+
+      setState: function setState(updater, callback) {
+        __vueComponentSetState(this, updater, callback);
       }
 
     },
@@ -3434,12 +3464,6 @@
     },
     methods: {
       onClick: function onClick(event) {
-        var self = this;
-
-        if (self.props.smartSelect && self.f7SmartSelect) {
-          self.f7SmartSelect.open();
-        }
-
         this.dispatchEvent('click', event);
       },
 
@@ -3772,7 +3796,9 @@
           hasInput: false,
           hasInlineLabel: false,
           hasInputInfo: false,
-          hasInputErrorMessage: false
+          hasInputErrorMessage: false,
+          hasInputValue: false,
+          hasInputFocused: false
         };
       })();
 
@@ -3811,6 +3837,8 @@
       var itemInput = props.itemInput;
       var inlineLabel = props.inlineLabel;
       var itemInputWithInfo = props.itemInputWithInfo;
+      var hasInputFocused = self.state.hasInputFocused;
+      var hasInputValue = self.state.hasInputValue;
       var hasInput = itemInput || self.state.hasInput;
       var hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
       var hasInputInfo = itemInputWithInfo || self.state.hasInputInfo;
@@ -3863,6 +3891,14 @@
             hasInput = true;
             if (child.data && child.data.info) { hasInputInfo = true; }
             if (child.data && child.data.errorMessage && child.data.errorMessageForce) { hasInputErrorMessage = true; }
+
+            if (child.data && (typeof child.data.value === 'undefined' ? child.data.defaultValue || child.data.defaultValue === 0 : child.data.value || child.data.value === 0)) {
+              hasInputValue = true;
+            } else if (child.componentOptions && child.componentOptions.propsData && (typeof child.componentOptions.propsData.value === 'undefined' ? child.componentOptions.propsData.defaultValue || child.componentOptions.propsData.defaultValue === 0 : child.componentOptions.propsData.value || child.componentOptions.propsData.value === 0)) {
+              hasInputValue = true;
+            } else {
+              hasInputValue = false;
+            }
           }
 
           if (tag && tag.indexOf('f7-label') >= 0) {
@@ -4001,7 +4037,9 @@
         'inline-label': hasInlineLabel,
         'item-input-with-info': hasInputInfo,
         'item-input-with-error-message': hasInputErrorMessage,
-        'item-input-invalid': hasInputErrorMessage
+        'item-input-invalid': hasInputErrorMessage,
+        'item-input-with-value': hasInputValue,
+        'item-input-focused': hasInputFocused
       }, Mixins.colorClasses(props));
       return _h(ItemContentTag, {
         ref: 'el',
@@ -4020,6 +4058,8 @@
       var self = this;
       self.onClickBound = self.onClick.bind(self);
       self.onChangeBound = self.onChange.bind(self);
+      self.onFocusBound = self.onFocus.bind(self);
+      self.onBlurBound = self.onBlur.bind(self);
     },
 
     beforeMount: function beforeMount() {
@@ -4035,6 +4075,7 @@
       var ref = self.$refs;
       var innerEl = ref.innerEl;
       var inputEl = ref.inputEl;
+      var el = ref.el;
 
       if (inputEl) {
         inputEl.addEventListener('change', self.onChangeBound);
@@ -4048,6 +4089,11 @@
       var hasInput = $inputWrapEl.length > 0;
       var hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
       var hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
+
+      if (hasInput) {
+        el.addEventListener('focus', self.onFocusBound, true);
+        el.addEventListener('blur', self.onBlurBound, true);
+      }
 
       if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {
         self.setState({
@@ -4115,9 +4161,15 @@
       var self = this;
       var ref = self.$refs;
       var inputEl = ref.inputEl;
+      var el = ref.el;
 
       if (inputEl) {
         inputEl.removeEventListener('change', self.onChangeBound);
+      }
+
+      if (self.state.hasInput) {
+        el.removeEventListener('focus', self.onFocusBound, true);
+        el.removeEventListener('blur', self.onBlurBound, true);
       }
     },
 
@@ -4176,6 +4228,18 @@
 
       onChange: function onChange(event) {
         this.dispatchEvent('change', event);
+      },
+
+      onFocus: function onFocus() {
+        this.setState({
+          hasInputFocused: true
+        });
+      },
+
+      onBlur: function onBlur() {
+        this.setState({
+          hasInputFocused: false
+        });
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -6628,8 +6692,14 @@
       id: [String, Number],
       name: String,
       stacked: Boolean,
-      withSubnavbar: Boolean,
-      subnavbar: Boolean,
+      withSubnavbar: {
+        type: Boolean,
+        default: undefined
+      },
+      subnavbar: {
+        type: Boolean,
+        default: undefined
+      },
       noNavbar: Boolean,
       noToolbar: Boolean,
       tabs: Boolean,
@@ -6663,7 +6733,8 @@
 
       var state = (function () {
         return {
-          hasSubnavbar: false
+          hasSubnavbar: false,
+          routerClasses: ''
         };
       })();
 
@@ -6741,10 +6812,11 @@
         });
       }
 
-      var classes = Utils.classNames(className, 'page', {
+      var forceSubnavbar = typeof subnavbar === 'undefined' && typeof withSubnavbar === 'undefined' ? hasSubnavbar || this.state.hasSubnavbar : false;
+      var classes = Utils.classNames(className, 'page', this.state.routerClasses, {
         stacked: stacked,
         tabs: tabs,
-        'page-with-subnavbar': subnavbar || withSubnavbar || hasSubnavbar,
+        'page-with-subnavbar': subnavbar || withSubnavbar || forceSubnavbar,
         'no-navbar': noNavbar,
         'no-toolbar': noToolbar,
         'no-swipeback': noSwipeback
@@ -6885,6 +6957,18 @@
 
       onPageInit: function onPageInit(event) {
         var page = event.detail;
+        var ref = this.props;
+        var withSubnavbar = ref.withSubnavbar;
+        var subnavbar = ref.subnavbar;
+
+        if (typeof withSubnavbar === 'undefined' && typeof subnavbar === 'undefined') {
+          if (page.$navbarEl && page.$navbarEl.length && page.$navbarEl.find('.subnavbar').length || page.$el.children('.navbar').find('.subnavbar').length) {
+            this.setState({
+              hasSubnavbar: true
+            });
+          }
+        }
+
         this.dispatchEvent('page:init pageInit', event, page);
       },
 
@@ -6895,6 +6979,19 @@
 
       onPageBeforeIn: function onPageBeforeIn(event) {
         var page = event.detail;
+
+        if (page.from === 'next') {
+          this.setState({
+            routerClasses: 'page-next'
+          });
+        }
+
+        if (page.from === 'previous') {
+          this.setState({
+            routerClasses: 'page-previous'
+          });
+        }
+
         this.dispatchEvent('page:beforein pageBeforeIn', event, page);
       },
 
@@ -6905,11 +7002,27 @@
 
       onPageAfterOut: function onPageAfterOut(event) {
         var page = event.detail;
+
+        if (page.to === 'next') {
+          this.setState({
+            routerClasses: 'page-next'
+          });
+        }
+
+        if (page.to === 'previous') {
+          this.setState({
+            routerClasses: 'page-previous'
+          });
+        }
+
         this.dispatchEvent('page:afterout pageAfterOut', event, page);
       },
 
       onPageAfterIn: function onPageAfterIn(event) {
         var page = event.detail;
+        this.setState({
+          routerClasses: 'page-current'
+        });
         this.dispatchEvent('page:afterin pageAfterIn', event, page);
       },
 
@@ -6923,6 +7036,10 @@
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+      },
+
+      setState: function setState(updater, callback) {
+        __vueComponentSetState(this, updater, callback);
       }
 
     },
@@ -7864,6 +7981,14 @@
         type: String,
         default: 'li'
       },
+      searchGroup: {
+        type: String,
+        default: '.list-group'
+      },
+      searchGroupTitle: {
+        type: String,
+        default: '.item-divider, .list-group-title'
+      },
       foundEl: {
         type: [String, Object],
         default: '.searchbar-found'
@@ -7997,6 +8122,8 @@
       var searchContainer = ref.searchContainer;
       var searchIn = ref.searchIn;
       var searchItem = ref.searchItem;
+      var searchGroup = ref.searchGroup;
+      var searchGroupTitle = ref.searchGroupTitle;
       var hideOnEnableEl = ref.hideOnEnableEl;
       var hideOnSearchEl = ref.hideOnSearchEl;
       var foundEl = ref.foundEl;
@@ -8024,6 +8151,8 @@
           searchContainer: searchContainer,
           searchIn: searchIn,
           searchItem: searchItem,
+          searchGroup: searchGroup,
+          searchGroupTitle: searchGroupTitle,
           hideOnEnableEl: hideOnEnableEl,
           hideOnSearchEl: hideOnSearchEl,
           foundEl: foundEl,
@@ -9758,7 +9887,7 @@
   };
 
   /**
-   * Framework7 Vue 3.4.0
+   * Framework7 Vue 3.4.2
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -9766,7 +9895,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: September 28, 2018
+   * Released on: October 12, 2018
    */
 
   var Plugin = {

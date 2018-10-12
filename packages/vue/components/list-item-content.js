@@ -41,7 +41,9 @@ export default {
         hasInput: false,
         hasInlineLabel: false,
         hasInputInfo: false,
-        hasInputErrorMessage: false
+        hasInputErrorMessage: false,
+        hasInputValue: false,
+        hasInputFocused: false
       };
     })();
 
@@ -82,6 +84,8 @@ export default {
       inlineLabel,
       itemInputWithInfo
     } = props;
+    const hasInputFocused = self.state.hasInputFocused;
+    let hasInputValue = self.state.hasInputValue;
     let hasInput = itemInput || self.state.hasInput;
     let hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
     let hasInputInfo = itemInputWithInfo || self.state.hasInputInfo;
@@ -134,6 +138,14 @@ export default {
           hasInput = true;
           if (child.data && child.data.info) hasInputInfo = true;
           if (child.data && child.data.errorMessage && child.data.errorMessageForce) hasInputErrorMessage = true;
+
+          if (child.data && (typeof child.data.value === 'undefined' ? child.data.defaultValue || child.data.defaultValue === 0 : child.data.value || child.data.value === 0)) {
+            hasInputValue = true;
+          } else if (child.componentOptions && child.componentOptions.propsData && (typeof child.componentOptions.propsData.value === 'undefined' ? child.componentOptions.propsData.defaultValue || child.componentOptions.propsData.defaultValue === 0 : child.componentOptions.propsData.value || child.componentOptions.propsData.value === 0)) {
+            hasInputValue = true;
+          } else {
+            hasInputValue = false;
+          }
         }
 
         if (tag && tag.indexOf('f7-label') >= 0) {
@@ -272,7 +284,9 @@ export default {
       'inline-label': hasInlineLabel,
       'item-input-with-info': hasInputInfo,
       'item-input-with-error-message': hasInputErrorMessage,
-      'item-input-invalid': hasInputErrorMessage
+      'item-input-invalid': hasInputErrorMessage,
+      'item-input-with-value': hasInputValue,
+      'item-input-focused': hasInputFocused
     }, Mixins.colorClasses(props));
     return _h(ItemContentTag, {
       ref: 'el',
@@ -291,6 +305,8 @@ export default {
     const self = this;
     self.onClickBound = self.onClick.bind(self);
     self.onChangeBound = self.onChange.bind(self);
+    self.onFocusBound = self.onFocus.bind(self);
+    self.onBlurBound = self.onBlur.bind(self);
   },
 
   beforeMount() {
@@ -305,7 +321,8 @@ export default {
     const self = this;
     const {
       innerEl,
-      inputEl
+      inputEl,
+      el
     } = self.$refs;
 
     if (inputEl) {
@@ -320,6 +337,11 @@ export default {
     const hasInput = $inputWrapEl.length > 0;
     const hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
     const hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
+
+    if (hasInput) {
+      el.addEventListener('focus', self.onFocusBound, true);
+      el.addEventListener('blur', self.onBlurBound, true);
+    }
 
     if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {
       self.setState({
@@ -386,11 +408,17 @@ export default {
   beforeDestroy() {
     const self = this;
     const {
-      inputEl
+      inputEl,
+      el
     } = self.$refs;
 
     if (inputEl) {
       inputEl.removeEventListener('change', self.onChangeBound);
+    }
+
+    if (self.state.hasInput) {
+      el.removeEventListener('focus', self.onFocusBound, true);
+      el.removeEventListener('blur', self.onBlurBound, true);
     }
   },
 
@@ -451,6 +479,18 @@ export default {
 
     onChange(event) {
       this.dispatchEvent('change', event);
+    },
+
+    onFocus() {
+      this.setState({
+        hasInputFocused: true
+      });
+    },
+
+    onBlur() {
+      this.setState({
+        hasInputFocused: false
+      });
     },
 
     dispatchEvent(events, ...args) {

@@ -133,6 +133,8 @@ class F7Searchbar extends React.Component {
       searchContainer,
       searchIn,
       searchItem,
+      searchGroup,
+      searchGroupTitle,
       hideOnEnableEl,
       hideOnSearchEl,
       foundEl,
@@ -161,6 +163,8 @@ class F7Searchbar extends React.Component {
         searchContainer,
         searchIn,
         searchItem,
+        searchGroup,
+        searchGroupTitle,
         hideOnEnableEl,
         hideOnSearchEl,
         foundEl,
@@ -262,6 +266,14 @@ __reactComponentSetProps(F7Searchbar, Object.assign({
   searchItem: {
     type: String,
     default: 'li'
+  },
+  searchGroup: {
+    type: String,
+    default: '.list-group'
+  },
+  searchGroupTitle: {
+    type: String,
+    default: '.item-divider, .list-group-title'
   },
   foundEl: {
     type: [String, Object],
