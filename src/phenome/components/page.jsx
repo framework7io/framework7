@@ -45,6 +45,7 @@ export default {
   state() {
     return {
       hasSubnavbar: false,
+      routerClasses: '',
     };
   },
   render() {
@@ -133,6 +134,7 @@ export default {
     const classes = Utils.classNames(
       className,
       'page',
+      this.state.routerClasses,
       {
         stacked,
         tabs,
@@ -274,6 +276,16 @@ export default {
     },
     onPageBeforeIn(event) {
       const page = event.detail;
+      if (page.from === 'next') {
+        this.setState({
+          routerClasses: 'page-next',
+        });
+      }
+      if (page.from === 'previous') {
+        this.setState({
+          routerClasses: 'page-previous',
+        });
+      }
       this.dispatchEvent('page:beforein pageBeforeIn', event, page);
     },
     onPageBeforeOut(event) {
@@ -282,10 +294,23 @@ export default {
     },
     onPageAfterOut(event) {
       const page = event.detail;
+      if (page.to === 'next') {
+        this.setState({
+          routerClasses: 'page-next',
+        });
+      }
+      if (page.to === 'previous') {
+        this.setState({
+          routerClasses: 'page-previous',
+        });
+      }
       this.dispatchEvent('page:afterout pageAfterOut', event, page);
     },
     onPageAfterIn(event) {
       const page = event.detail;
+      this.setState({
+        routerClasses: 'page-current',
+      });
       this.dispatchEvent('page:afterin pageAfterIn', event, page);
     },
     onPageBeforeRemove(event) {
