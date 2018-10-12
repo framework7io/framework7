@@ -11,8 +11,14 @@ export default {
     style: Object, // phenome-react-line
     name: String,
     stacked: Boolean,
-    withSubnavbar: Boolean,
-    subnavbar: Boolean,
+    withSubnavbar: {
+      type: Boolean,
+      default: undefined,
+    },
+    subnavbar: {
+      type: Boolean,
+      default: undefined,
+    },
     noNavbar: Boolean,
     noToolbar: Boolean,
     tabs: Boolean,
@@ -45,6 +51,7 @@ export default {
   state() {
     return {
       hasSubnavbar: false,
+      routerClasses: '',
     };
   },
   render() {
@@ -130,13 +137,18 @@ export default {
       });
     }
 
+    const forceSubnavbar = (typeof subnavbar === 'undefined' && typeof withSubnavbar === 'undefined')
+      ? hasSubnavbar || this.state.hasSubnavbar
+      : false;
+
     const classes = Utils.classNames(
       className,
       'page',
+      this.state.routerClasses,
       {
         stacked,
         tabs,
-        'page-with-subnavbar': subnavbar || withSubnavbar || hasSubnavbar,
+        'page-with-subnavbar': subnavbar || withSubnavbar || forceSubnavbar,
         'no-navbar': noNavbar,
         'no-toolbar': noToolbar,
         'no-swipeback': noSwipeback,
@@ -266,6 +278,16 @@ export default {
     },
     onPageInit(event) {
       const page = event.detail;
+      const { withSubnavbar, subnavbar } = this.props;
+      if (typeof withSubnavbar === 'undefined' && typeof subnavbar === 'undefined') {
+        if (
+          (page.$navbarEl && page.$navbarEl.length && page.$navbarEl.find('.subnavbar').length)
+          || (page.$el.children('.navbar').find('.subnavbar').length)
+        ) {
+          this.setState({ hasSubnavbar: true });
+        }
+      }
+
       this.dispatchEvent('page:init pageInit', event, page);
     },
     onPageReinit(event) {
@@ -274,6 +296,16 @@ export default {
     },
     onPageBeforeIn(event) {
       const page = event.detail;
+      if (page.from === 'next') {
+        this.setState({
+          routerClasses: 'page-next',
+        });
+      }
+      if (page.from === 'previous') {
+        this.setState({
+          routerClasses: 'page-previous',
+        });
+      }
       this.dispatchEvent('page:beforein pageBeforeIn', event, page);
     },
     onPageBeforeOut(event) {
@@ -282,10 +314,23 @@ export default {
     },
     onPageAfterOut(event) {
       const page = event.detail;
+      if (page.to === 'next') {
+        this.setState({
+          routerClasses: 'page-next',
+        });
+      }
+      if (page.to === 'previous') {
+        this.setState({
+          routerClasses: 'page-previous',
+        });
+      }
       this.dispatchEvent('page:afterout pageAfterOut', event, page);
     },
     onPageAfterIn(event) {
       const page = event.detail;
+      this.setState({
+        routerClasses: 'page-current',
+      });
       this.dispatchEvent('page:afterin pageAfterIn', event, page);
     },
     onPageBeforeRemove(event) {
