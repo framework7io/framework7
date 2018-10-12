@@ -54,7 +54,7 @@ class Picker extends Framework7Class {
     function onHtmlClick(e) {
       const $targetEl = $(e.target);
       if (picker.isPopover()) return;
-      if (!picker.opened) return;
+      if (!picker.opened || picker.closing) return;
       if ($targetEl.closest('[class*="backdrop"]').length) return;
       if ($inputEl && $inputEl.length > 0) {
         if ($targetEl[0] !== $inputEl[0] && $targetEl.closest('.sheet-modal').length === 0) {
@@ -318,6 +318,8 @@ class Picker extends Framework7Class {
     const picker = this;
     const { initialized, $el, app, $inputEl, inline, value, params } = picker;
     picker.opened = true;
+    picker.closing = false;
+    picker.opening = true;
 
     // Init main events
     picker.attachResizeEvent();
@@ -363,6 +365,7 @@ class Picker extends Framework7Class {
 
   onOpened() {
     const picker = this;
+    picker.opening = false;
 
     if (picker.$el) {
       picker.$el.trigger('picker:opened', picker);
@@ -376,6 +379,8 @@ class Picker extends Framework7Class {
   onClose() {
     const picker = this;
     const app = picker.app;
+    picker.opening = false;
+    picker.closing = true;
 
     // Detach events
     picker.detachResizeEvent();
@@ -399,6 +404,7 @@ class Picker extends Framework7Class {
   onClosed() {
     const picker = this;
     picker.opened = false;
+    picker.closing = false;
 
     if (!picker.inline) {
       Utils.nextTick(() => {

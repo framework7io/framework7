@@ -1,5 +1,5 @@
 /**
- * Framework7 3.4.0
+ * Framework7 3.4.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 28, 2018
+ * Released on: October 12, 2018
  */
 
 (function (global, factory) {
@@ -2929,8 +2929,10 @@
     }
 
     // Webview
-    device.webView = !!((iphone || ipad || ipod) && (ua.match(/.*AppleWebKit(?!.*Safari)/i) || win.navigator.standalone));
+    device.webView = !!((iphone || ipad || ipod) && (ua.match(/.*AppleWebKit(?!.*Safari)/i) || win.navigator.standalone))
+                       || (win.matchMedia && win.matchMedia('(display-mode: standalone)').matches);
     device.webview = device.webView;
+    device.standalone = device.webView;
 
 
     // Desktop
@@ -4007,6 +4009,8 @@
               newData.push(("Content-Disposition: form-data; name=\"" + (data$1[i].split('=')[0]) + "\"\r\n\r\n" + (data$1[i].split('=')[1]) + "\r\n"));
             }
             postData = "--" + boundary + "\r\n" + (newData.join(("--" + boundary + "\r\n"))) + "--" + boundary + "--\r\n";
+          } else if (options.contentType === 'application/json') {
+            postData = JSON.stringify(options.data);
           } else {
             postData = data$1;
           }
@@ -5848,7 +5852,7 @@
     var app = router.app;
     var view = router.view;
 
-    var options = Utils.extend({
+    var options = Utils.extend(false, {
       animate: router.params.animate,
       pushState: true,
       replaceState: false,
@@ -8279,6 +8283,27 @@
       return matchingRoute;
     };
 
+    // eslint-disable-next-line
+    Router.prototype.replaceRequestUrlParams = function replaceRequestUrlParams (url, options) {
+      if ( url === void 0 ) url = '';
+      if ( options === void 0 ) options = {};
+
+      var compiledUrl = url;
+      if (typeof compiledUrl === 'string'
+        && compiledUrl.indexOf('{{') >= 0
+        && options
+        && options.route
+        && options.route.params
+        && Object.keys(options.route.params).length
+      ) {
+        Object.keys(options.route.params).forEach(function (paramName) {
+          var regExp = new RegExp(("{{" + paramName + "}}"), 'g');
+          compiledUrl = compiledUrl.replace(regExp, options.route.params[paramName] || '');
+        });
+      }
+      return compiledUrl;
+    };
+
     Router.prototype.removeFromXhrCache = function removeFromXhrCache (url) {
       var router = this;
       var xhrCache = router.cache.xhr;
@@ -8316,16 +8341,8 @@
         hasQuery = true;
       }
 
-      if (url.indexOf('{{') >= 0
-        && options
-        && options.route
-        && options.route.params
-        && Object.keys(options.route.params).length
-      ) {
-        Object.keys(options.route.params).forEach(function (paramName) {
-          var regExp = new RegExp(("{{" + paramName + "}}"), 'g');
-          url = url.replace(regExp, options.route.params[paramName] || '');
-        });
+      if (url.indexOf('{{') >= 0) {
+        url = router.replaceRequestUrlParams(url, options);
       }
       // should we ignore get params or not
       if (params.xhrCacheIgnoreGetParameters && url.indexOf('?') >= 0) {
@@ -8468,6 +8485,7 @@
       var router = this;
       var app = router.app;
       var url = typeof component === 'string' ? component : componentUrl;
+      var compiledUrl = router.replaceRequestUrlParams(url, options);
       function compile(componentOptions) {
         var context = options.context || {};
         if (typeof context === 'function') { context = context.call(router); }
@@ -8495,14 +8513,14 @@
         resolve(createdComponent.el);
       }
       var cachedComponent;
-      if (url) {
+      if (compiledUrl) {
         router.cache.components.forEach(function (cached) {
-          if (cached.url === url) { cachedComponent = cached.component; }
+          if (cached.url === compiledUrl) { cachedComponent = cached.component; }
         });
       }
-      if (url && cachedComponent) {
+      if (compiledUrl && cachedComponent) {
         compile(cachedComponent);
-      } else if (url && !cachedComponent) {
+      } else if (compiledUrl && !cachedComponent) {
         // Load via XHR
         if (router.xhr) {
           router.xhr.abort();
@@ -8513,7 +8531,7 @@
           .then(function (loadedComponent) {
             var parsedComponent = app.component.parse(loadedComponent);
             router.cache.components.push({
-              url: url,
+              url: compiledUrl,
               component: parsedComponent,
             });
             compile(parsedComponent);
@@ -11413,6 +11431,8 @@
       if ($highlightEl.length === 0) {
         $tabbarEl.children('.toolbar-inner').append('<span class="tab-link-highlight"></span>');
         $highlightEl = $tabbarEl.find('.tab-link-highlight');
+      } else if ($highlightEl.next().length) {
+        $tabbarEl.children('.toolbar-inner').append($highlightEl);
       }
 
       var $activeLink = $tabbarEl.find('.tab-link-active');
@@ -11428,9 +11448,11 @@
         highlightTranslate = ((app.rtl ? -activeIndex : activeIndex) * 100) + "%";
       }
 
-      $highlightEl
-        .css('width', highlightWidth)
-        .transform(("translate3d(" + highlightTranslate + ",0,0)"));
+      Utils.nextFrame(function () {
+        $highlightEl
+          .css('width', highlightWidth)
+          .transform(("translate3d(" + highlightTranslate + ",0,0)"));
+      });
     },
     init: function init(tabbarEl) {
       var app = this;

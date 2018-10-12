@@ -1,5 +1,5 @@
 /**
- * Framework7 3.4.0
+ * Framework7 3.4.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 28, 2018
+ * Released on: October 12, 2018
  */
 
 (function (global, factory) {
@@ -2929,8 +2929,10 @@
     }
 
     // Webview
-    device.webView = !!((iphone || ipad || ipod) && (ua.match(/.*AppleWebKit(?!.*Safari)/i) || win.navigator.standalone));
+    device.webView = !!((iphone || ipad || ipod) && (ua.match(/.*AppleWebKit(?!.*Safari)/i) || win.navigator.standalone))
+                       || (win.matchMedia && win.matchMedia('(display-mode: standalone)').matches);
     device.webview = device.webView;
+    device.standalone = device.webView;
 
 
     // Desktop
@@ -4007,6 +4009,8 @@
               newData.push(("Content-Disposition: form-data; name=\"" + (data$1[i].split('=')[0]) + "\"\r\n\r\n" + (data$1[i].split('=')[1]) + "\r\n"));
             }
             postData = "--" + boundary + "\r\n" + (newData.join(("--" + boundary + "\r\n"))) + "--" + boundary + "--\r\n";
+          } else if (options.contentType === 'application/json') {
+            postData = JSON.stringify(options.data);
           } else {
             postData = data$1;
           }
@@ -5848,7 +5852,7 @@
     var app = router.app;
     var view = router.view;
 
-    var options = Utils.extend({
+    var options = Utils.extend(false, {
       animate: router.params.animate,
       pushState: true,
       replaceState: false,
@@ -8279,6 +8283,27 @@
       return matchingRoute;
     };
 
+    // eslint-disable-next-line
+    Router.prototype.replaceRequestUrlParams = function replaceRequestUrlParams (url, options) {
+      if ( url === void 0 ) url = '';
+      if ( options === void 0 ) options = {};
+
+      var compiledUrl = url;
+      if (typeof compiledUrl === 'string'
+        && compiledUrl.indexOf('{{') >= 0
+        && options
+        && options.route
+        && options.route.params
+        && Object.keys(options.route.params).length
+      ) {
+        Object.keys(options.route.params).forEach(function (paramName) {
+          var regExp = new RegExp(("{{" + paramName + "}}"), 'g');
+          compiledUrl = compiledUrl.replace(regExp, options.route.params[paramName] || '');
+        });
+      }
+      return compiledUrl;
+    };
+
     Router.prototype.removeFromXhrCache = function removeFromXhrCache (url) {
       var router = this;
       var xhrCache = router.cache.xhr;
@@ -8316,16 +8341,8 @@
         hasQuery = true;
       }
 
-      if (url.indexOf('{{') >= 0
-        && options
-        && options.route
-        && options.route.params
-        && Object.keys(options.route.params).length
-      ) {
-        Object.keys(options.route.params).forEach(function (paramName) {
-          var regExp = new RegExp(("{{" + paramName + "}}"), 'g');
-          url = url.replace(regExp, options.route.params[paramName] || '');
-        });
+      if (url.indexOf('{{') >= 0) {
+        url = router.replaceRequestUrlParams(url, options);
       }
       // should we ignore get params or not
       if (params.xhrCacheIgnoreGetParameters && url.indexOf('?') >= 0) {
@@ -8468,6 +8485,7 @@
       var router = this;
       var app = router.app;
       var url = typeof component === 'string' ? component : componentUrl;
+      var compiledUrl = router.replaceRequestUrlParams(url, options);
       function compile(componentOptions) {
         var context = options.context || {};
         if (typeof context === 'function') { context = context.call(router); }
@@ -8495,14 +8513,14 @@
         resolve(createdComponent.el);
       }
       var cachedComponent;
-      if (url) {
+      if (compiledUrl) {
         router.cache.components.forEach(function (cached) {
-          if (cached.url === url) { cachedComponent = cached.component; }
+          if (cached.url === compiledUrl) { cachedComponent = cached.component; }
         });
       }
-      if (url && cachedComponent) {
+      if (compiledUrl && cachedComponent) {
         compile(cachedComponent);
-      } else if (url && !cachedComponent) {
+      } else if (compiledUrl && !cachedComponent) {
         // Load via XHR
         if (router.xhr) {
           router.xhr.abort();
@@ -8513,7 +8531,7 @@
           .then(function (loadedComponent) {
             var parsedComponent = app.component.parse(loadedComponent);
             router.cache.components.push({
-              url: url,
+              url: compiledUrl,
               component: parsedComponent,
             });
             compile(parsedComponent);
@@ -11413,6 +11431,8 @@
       if ($highlightEl.length === 0) {
         $tabbarEl.children('.toolbar-inner').append('<span class="tab-link-highlight"></span>');
         $highlightEl = $tabbarEl.find('.tab-link-highlight');
+      } else if ($highlightEl.next().length) {
+        $tabbarEl.children('.toolbar-inner').append($highlightEl);
       }
 
       var $activeLink = $tabbarEl.find('.tab-link-active');
@@ -11428,9 +11448,11 @@
         highlightTranslate = ((app.rtl ? -activeIndex : activeIndex) * 100) + "%";
       }
 
-      $highlightEl
-        .css('width', highlightWidth)
-        .transform(("translate3d(" + highlightTranslate + ",0,0)"));
+      Utils.nextFrame(function () {
+        $highlightEl
+          .css('width', highlightWidth)
+          .transform(("translate3d(" + highlightTranslate + ",0,0)"));
+      });
     },
     init: function init(tabbarEl) {
       var app = this;
@@ -14688,10 +14710,9 @@
           $contentEl.css('height', 'auto');
           Utils.nextFrame(function () {
             $contentEl.transition('');
+            $el.trigger('accordion:opened');
+            app.emit('accordionOpened', $el[0]);
           });
-          $contentEl.transition('');
-          $el.trigger('accordion:opened');
-          app.emit('accordionOpened', $el[0]);
         } else {
           $contentEl.css('height', '');
           $el.trigger('accordion:closed');
@@ -14719,9 +14740,9 @@
           $contentEl.css('height', 'auto');
           Utils.nextFrame(function () {
             $contentEl.transition('');
+            $el.trigger('accordion:opened');
+            app.emit('accordionOpened', $el[0]);
           });
-          $el.trigger('accordion:opened');
-          app.emit('accordionOpened', $el[0]);
         } else {
           $contentEl.css('height', '');
           $el.trigger('accordion:closed');
@@ -16126,20 +16147,40 @@
         }
       }
 
+      var threshold = panel.opened ? 0 : -params.swipeThreshold;
+      if (side === 'right') { threshold = -threshold; }
+
       if (params.swipeNoFollow) {
+        var touchesDiffNoFollow = (pageX - touchesStart.x);
         var timeDiff = (new Date()).getTime() - touchStartTime;
-        if (timeDiff < 300) {
-          if (direction === 'to-left') {
-            if (side === 'right') { app.panel.open(side); }
-            if (side === 'left' && $el.hasClass('panel-active')) { app.panel.close(); }
-          }
-          if (direction === 'to-right') {
-            if (side === 'left') { app.panel.open(side); }
-            if (side === 'right' && $el.hasClass('panel-active')) { app.panel.close(); }
-          }
+        var needToSwitch;
+        if (!panel.opened && (
+          (side === 'left' && touchesDiffNoFollow > -threshold)
+          || (side === 'right' && -touchesDiffNoFollow > threshold)
+        )) {
+          needToSwitch = true;
         }
-        isTouched = false;
-        isMoved = false;
+        if (panel.opened && (
+          (side === 'left' && touchesDiffNoFollow < 0)
+          || (side === 'right' && touchesDiffNoFollow > 0)
+        )) {
+          needToSwitch = true;
+        }
+
+        if (needToSwitch) {
+          if (timeDiff < 300) {
+            if (direction === 'to-left') {
+              if (side === 'right') { app.panel.open(side); }
+              if (side === 'left' && $el.hasClass('panel-active')) { app.panel.close(); }
+            }
+            if (direction === 'to-right') {
+              if (side === 'left') { app.panel.open(side); }
+              if (side === 'right' && $el.hasClass('panel-active')) { app.panel.close(); }
+            }
+          }
+          isTouched = false;
+          isMoved = false;
+        }
         return;
       }
 
@@ -16157,8 +16198,6 @@
       isMoved = true;
 
       e.preventDefault();
-      var threshold = panel.opened ? 0 : -params.swipeThreshold;
-      if (side === 'right') { threshold = -threshold; }
 
       touchesDiff = (pageX - touchesStart.x) + threshold;
 
@@ -17251,6 +17290,11 @@
     },
     checkEmptyState: function checkEmptyState(inputEl) {
       var $inputEl = $(inputEl);
+      if (!$inputEl.is('input, select, textarea')) {
+        $inputEl = $inputEl.find('input, select, textarea').eq(0);
+      }
+      if (!$inputEl.length) { return; }
+
       var value = $inputEl.val();
       var $itemInputEl = $inputEl.parents('.item-input');
       var $inputWrapEl = $inputEl.parents('.input');
@@ -17362,7 +17406,7 @@
         var previousValue = $inputEl.val();
         $inputEl
           .val('')
-          .trigger('change input')
+          .trigger('input change')
           .focus()
           .trigger('input:clear', previousValue);
       }
@@ -21729,7 +21773,7 @@
       function onHtmlClick(e) {
         var $targetEl = $(e.target);
         if (picker.isPopover()) { return; }
-        if (!picker.opened) { return; }
+        if (!picker.opened || picker.closing) { return; }
         if ($targetEl.closest('[class*="backdrop"]').length) { return; }
         if ($inputEl && $inputEl.length > 0) {
           if ($targetEl[0] !== $inputEl[0] && $targetEl.closest('.sheet-modal').length === 0) {
@@ -21968,6 +22012,8 @@
       var value = picker.value;
       var params = picker.params;
       picker.opened = true;
+      picker.closing = false;
+      picker.opening = true;
 
       // Init main events
       picker.attachResizeEvent();
@@ -22013,6 +22059,7 @@
 
     Picker.prototype.onOpened = function onOpened () {
       var picker = this;
+      picker.opening = false;
 
       if (picker.$el) {
         picker.$el.trigger('picker:opened', picker);
@@ -22026,6 +22073,8 @@
     Picker.prototype.onClose = function onClose () {
       var picker = this;
       var app = picker.app;
+      picker.opening = false;
+      picker.closing = true;
 
       // Detach events
       picker.detachResizeEvent();
@@ -22049,6 +22098,7 @@
     Picker.prototype.onClosed = function onClosed () {
       var picker = this;
       picker.opened = false;
+      picker.closing = false;
 
       if (!picker.inline) {
         Utils.nextTick(function () {
@@ -22457,7 +22507,19 @@
 
         if (!isMoved) {
           $el.removeClass('ptr-transitioning');
-          if (scrollTop > $el[0].offsetHeight) {
+          var targetIsEl;
+          var targetIsScrollable;
+          $(e.target).parents().each(function (index, targetEl) {
+            if (targetEl === el) {
+              targetIsEl = true;
+            }
+            if (targetIsEl) { return; }
+            if (targetEl.scrollHeight > targetEl.offsetHeight) {
+              targetIsScrollable = true;
+            }
+          });
+
+          if (targetIsScrollable || scrollTop > $el[0].offsetHeight) {
             isTouched = false;
             return;
           }
@@ -23318,6 +23380,8 @@
         searchContainer: undefined, // container to search, HTMLElement or CSS selector
         searchItem: 'li', // single item selector, CSS selector
         searchIn: undefined, // where to search in item, CSS selector
+        searchGroup: '.list-group',
+        searchGroupTitle: '.item-divider, .list-group-title',
         ignore: '.searchbar-ignore',
         foundEl: '.searchbar-found',
         notFoundEl: '.searchbar-not-found',
@@ -23786,13 +23850,13 @@
         });
 
         if (sb.params.hideDividers) {
-          $searchContainer.find('.item-divider, .list-group-title').each(function (titleIndex, titleEl) {
+          $searchContainer.find(sb.params.searchGroupTitle).each(function (titleIndex, titleEl) {
             var $titleEl = $(titleEl);
-            var $nextElements = $titleEl.nextAll('li');
+            var $nextElements = $titleEl.nextAll(sb.params.searchItem);
             var hide = true;
             for (var i = 0; i < $nextElements.length; i += 1) {
               var $nextEl = $nextElements.eq(i);
-              if ($nextEl.hasClass('list-group-title') || $nextEl.hasClass('item-divider')) { break; }
+              if ($nextEl.is(sb.params.searchGroupTitle)) { break; }
               if (!$nextEl.hasClass('hidden-by-searchbar')) {
                 hide = false;
               }
@@ -23803,10 +23867,13 @@
           });
         }
         if (sb.params.hideGroups) {
-          $searchContainer.find('.list-group').each(function (groupIndex, groupEl) {
+          $searchContainer.find(sb.params.searchGroup).each(function (groupIndex, groupEl) {
             var $groupEl = $(groupEl);
             var ignore = sb.params.ignore && $groupEl.is(sb.params.ignore);
-            var notHidden = $groupEl.find('li:not(.hidden-by-searchbar)');
+            // eslint-disable-next-line
+            var notHidden = $groupEl.find(sb.params.searchItem).filter(function (index, el) {
+              return !$(el).hasClass('hidden-by-searchbar');
+            });
             if (notHidden.length === 0 && !ignore) {
               $groupEl.addClass('hidden-by-searchbar');
             } else {
@@ -32540,7 +32607,7 @@
         itemHtml = "\n        <li>\n          <label class=\"item-radio item-content\" data-value=\"" + itemValue + "\">\n            <div class=\"item-inner\">\n              <div class=\"item-title\">" + (item.text) + "</div>\n            </div>\n          </label>\n        </li>\n      ";
       } else {
         // Dropwdown placeholder
-        itemHtml = "\n        <li class=\"autocomplete-dropdown-placeholder\">\n          <div class=\"item-content\">\n            <div class=\"item-inner\">\n              <div class=\"item-title\">" + (item.text) + "</div>\n            </div>\n          </label>\n        </li>\n      ";
+        itemHtml = "\n        <li class=\"autocomplete-dropdown-placeholder\">\n          <label class=\"item-content\">\n            <div class=\"item-inner\">\n              <div class=\"item-title\">" + (item.text) + "</div>\n            </div>\n          </label>\n        </li>\n      ";
       }
       return itemHtml.trim();
     };

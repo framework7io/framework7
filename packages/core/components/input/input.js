@@ -106,7 +106,12 @@ const Input = {
     $inputEl.removeClass('input-focused');
   },
   checkEmptyState(inputEl) {
-    const $inputEl = $(inputEl);
+    let $inputEl = $(inputEl);
+    if (!$inputEl.is('input, select, textarea')) {
+      $inputEl = $inputEl.find('input, select, textarea').eq(0);
+    }
+    if (!$inputEl.length) return;
+
     const value = $inputEl.val();
     const $itemInputEl = $inputEl.parents('.item-input');
     const $inputWrapEl = $inputEl.parents('.input');
@@ -216,7 +221,7 @@ const Input = {
       const previousValue = $inputEl.val();
       $inputEl
         .val('')
-        .trigger('change input')
+        .trigger('input change')
         .focus()
         .trigger('input:clear', previousValue);
     }

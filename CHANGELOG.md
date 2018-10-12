@@ -2,6 +2,29 @@
 
 # Change Log
 
+# [v3.4.2](https://github.com/framework7io/framework7/compare/v3.4.0...v3.4.2) - October 12, 2018
+  * Core
+    * Device
+      * Added correct detection for `webView` prop when app installed to home screen
+    * Accordion
+      * Fixes issue when `accordionOpened` event fired without passing opened element as argument
+    * Request
+      * If `contentType: 'application/json'` and `processData: false` it will automatically send POST data as JSON
+    * Picker
+      * Fixed issue when double click outside of opened Picker could cause router navigating to previous page
+    * Pull To Refresh
+      * Now it will ignore PTR when scrolling in page's nested container
+    * Panel
+      * Now it respects `swipeThreshold` parameter when `swipeNoFollow` is enabled
+    * Searchbar
+      * New `searchGroup` parameter to handle custom item groups to hide on search
+      * New `searchGroupTitle` parameter to handle custom item groups titles to hide on search
+  * Phenome (React / Vue)
+    * Input - better handling of `with-value` and `focused` states when used in list item
+    * Searchbar - new `searchGroup` and `searchGroupTitle` props
+    * Page - improved router-related page classes handling that could cause issue with navigation
+  * Minor fixes
+
 # [v3.4.0](https://github.com/framework7io/framework7/compare/v3.3.2...v3.4.0) - September 28, 2018
   * Core
     * Lazy modules support 🎉
@@ -25,7 +48,6 @@
   * Phenome
     * Lots of TypeScript definitions fixes and tweaks
   * Minor fixes
-
 
 # [v3.3.2](https://github.com/framework7io/framework7/compare/v3.3.1...v3.3.2) - September 20, 2018
   * Core

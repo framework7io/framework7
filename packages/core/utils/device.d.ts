@@ -33,6 +33,8 @@ export interface Device {
   phonegap: boolean
   /** true if app runs in web view - webapp installed to home screen */
   webView: boolean
+  /** true if app runs in web view - webapp installed to home screen */
+  standalone: boolean
   /** Contains OS can be ios, android or windows (for Windows Phone) */
   os: string
   /** Contains OS version, e.g. 11.2.0 */

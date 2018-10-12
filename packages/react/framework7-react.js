@@ -1,5 +1,5 @@
 /**
- * Framework7 React 3.4.0
+ * Framework7 React 3.4.2
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 28, 2018
+ * Released on: October 12, 2018
  */
 
 (function (global, factory) {
@@ -3295,6 +3295,12 @@
       superclass.call(this, props, context);
       this.__reactRefs = {};
 
+      this.state = (function () {
+        return {
+          inputFocused: false
+        };
+      })();
+
       (function () {
         var self = this$1;
         self.onFocusBound = self.onFocus.bind(self);
@@ -3336,10 +3342,16 @@
 
     F7Input.prototype.onFocus = function onFocus (event) {
       this.dispatchEvent('focus', event);
+      this.setState({
+        inputFocused: true
+      });
     };
 
     F7Input.prototype.onBlur = function onBlur (event) {
       this.dispatchEvent('blur', event);
+      this.setState({
+        inputFocused: false
+      });
     };
 
     F7Input.prototype.onChange = function onChange (event) {
@@ -3397,7 +3409,13 @@
         var InputTag = tag;
         var needsValue = type !== 'file';
         var needsType = tag === 'input';
-        var inputClassName = Utils.classNames(type === 'textarea' && resizable && 'resizable', !wrap && className, (noFormStoreData || noStoreData || ignoreStoreData) && 'no-store-data', errorMessage && errorMessageForce && 'input-invalid');
+        var inputClassName = Utils.classNames(!wrap && className, {
+          resizable: type === 'textarea' && resizable,
+          'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
+          'input-invalid': errorMessage && errorMessageForce,
+          'input-with-value': typeof value === 'undefined' ? defaultValue || defaultValue === 0 : value || value === 0,
+          'input-focused': self.state.inputFocused
+        });
         var input;
         {
           input = React.createElement(InputTag, {
@@ -3738,12 +3756,6 @@
     var prototypeAccessors = { attrs: { configurable: true },classes: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
 
     F7Link.prototype.onClick = function onClick (event) {
-      var self = this;
-
-      if (self.props.smartSelect && self.f7SmartSelect) {
-        self.f7SmartSelect.open();
-      }
-
       this.dispatchEvent('click', event);
     };
 
@@ -4311,7 +4323,9 @@
           hasInput: false,
           hasInlineLabel: false,
           hasInputInfo: false,
-          hasInputErrorMessage: false
+          hasInputErrorMessage: false,
+          hasInputValue: false,
+          hasInputFocused: false
         };
       })();
 
@@ -4319,6 +4333,8 @@
         var self = this$1;
         self.onClickBound = self.onClick.bind(self);
         self.onChangeBound = self.onChange.bind(self);
+        self.onFocusBound = self.onFocus.bind(self);
+        self.onBlurBound = self.onBlur.bind(self);
       })();
     }
 
@@ -4384,6 +4400,18 @@
       this.dispatchEvent('change', event);
     };
 
+    F7ListItemContent.prototype.onFocus = function onFocus () {
+      this.setState({
+        hasInputFocused: true
+      });
+    };
+
+    F7ListItemContent.prototype.onBlur = function onBlur () {
+      this.setState({
+        hasInputFocused: false
+      });
+    };
+
     F7ListItemContent.prototype.render = function render () {
       var this$1 = this;
 
@@ -4415,6 +4443,8 @@
       var itemInput = props.itemInput;
       var inlineLabel = props.inlineLabel;
       var itemInputWithInfo = props.itemInputWithInfo;
+      var hasInputFocused = self.state.hasInputFocused;
+      var hasInputValue = self.state.hasInputValue;
       var hasInput = itemInput || self.state.hasInput;
       var hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
       var hasInputInfo = itemInputWithInfo || self.state.hasInputInfo;
@@ -4467,6 +4497,7 @@
             hasInput = true;
             if (child.props && child.props.info) { hasInputInfo = true; }
             if (child.props && child.props.errorMessage && child.props.errorMessageForce) { hasInputErrorMessage = true; }
+            if (child.props && (typeof child.props.value === 'undefined' ? child.props.defaultValue || child.props.defaultValue === 0 : child.props.value || child.props.value === 0)) { hasInputValue = true; }else { hasInputValue = false; }
           }
 
           if (tag === 'F7Label' || tag === 'f7-label') {
@@ -4604,7 +4635,9 @@
         'inline-label': hasInlineLabel,
         'item-input-with-info': hasInputInfo,
         'item-input-with-error-message': hasInputErrorMessage,
-        'item-input-invalid': hasInputErrorMessage
+        'item-input-invalid': hasInputErrorMessage,
+        'item-input-with-value': hasInputValue,
+        'item-input-focused': hasInputFocused
       }, Mixins.colorClasses(props));
       return React.createElement(ItemContentTag, {
         ref: function (__reactNode) {
@@ -4621,9 +4654,15 @@
       var self = this;
       var ref = self.refs;
       var inputEl = ref.inputEl;
+      var el = ref.el;
 
       if (inputEl) {
         inputEl.removeEventListener('change', self.onChangeBound);
+      }
+
+      if (self.state.hasInput) {
+        el.removeEventListener('focus', self.onFocusBound, true);
+        el.removeEventListener('blur', self.onBlurBound, true);
       }
     };
 
@@ -4669,6 +4708,7 @@
       var ref = self.refs;
       var innerEl = ref.innerEl;
       var inputEl = ref.inputEl;
+      var el = ref.el;
 
       if (inputEl) {
         inputEl.addEventListener('change', self.onChangeBound);
@@ -4682,6 +4722,11 @@
       var hasInput = $inputWrapEl.length > 0;
       var hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
       var hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
+
+      if (hasInput) {
+        el.addEventListener('focus', self.onFocusBound, true);
+        el.addEventListener('blur', self.onBlurBound, true);
+      }
 
       if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {
         self.setState({
@@ -7420,7 +7465,8 @@
 
       this.state = (function () {
         return {
-          hasSubnavbar: false
+          hasSubnavbar: false,
+          routerClasses: ''
         };
       })();
     }
@@ -7463,6 +7509,18 @@
 
     F7Page.prototype.onPageInit = function onPageInit (event) {
       var page = event.detail;
+      var ref = this.props;
+      var withSubnavbar = ref.withSubnavbar;
+      var subnavbar = ref.subnavbar;
+
+      if (typeof withSubnavbar === 'undefined' && typeof subnavbar === 'undefined') {
+        if (page.$navbarEl && page.$navbarEl.length && page.$navbarEl.find('.subnavbar').length || page.$el.children('.navbar').find('.subnavbar').length) {
+          this.setState({
+            hasSubnavbar: true
+          });
+        }
+      }
+
       this.dispatchEvent('page:init pageInit', event, page);
     };
 
@@ -7473,6 +7531,19 @@
 
     F7Page.prototype.onPageBeforeIn = function onPageBeforeIn (event) {
       var page = event.detail;
+
+      if (page.from === 'next') {
+        this.setState({
+          routerClasses: 'page-next'
+        });
+      }
+
+      if (page.from === 'previous') {
+        this.setState({
+          routerClasses: 'page-previous'
+        });
+      }
+
       this.dispatchEvent('page:beforein pageBeforeIn', event, page);
     };
 
@@ -7483,11 +7554,27 @@
 
     F7Page.prototype.onPageAfterOut = function onPageAfterOut (event) {
       var page = event.detail;
+
+      if (page.to === 'next') {
+        this.setState({
+          routerClasses: 'page-next'
+        });
+      }
+
+      if (page.to === 'previous') {
+        this.setState({
+          routerClasses: 'page-previous'
+        });
+      }
+
       this.dispatchEvent('page:afterout pageAfterOut', event, page);
     };
 
     F7Page.prototype.onPageAfterIn = function onPageAfterIn (event) {
       var page = event.detail;
+      this.setState({
+        routerClasses: 'page-current'
+      });
       this.dispatchEvent('page:afterin pageAfterIn', event, page);
     };
 
@@ -7564,10 +7651,11 @@
         });
       }
 
-      var classes = Utils.classNames(className, 'page', {
+      var forceSubnavbar = typeof subnavbar === 'undefined' && typeof withSubnavbar === 'undefined' ? hasSubnavbar || this.state.hasSubnavbar : false;
+      var classes = Utils.classNames(className, 'page', this.state.routerClasses, {
         stacked: stacked,
         tabs: tabs,
-        'page-with-subnavbar': subnavbar || withSubnavbar || hasSubnavbar,
+        'page-with-subnavbar': subnavbar || withSubnavbar || forceSubnavbar,
         'no-navbar': noNavbar,
         'no-toolbar': noToolbar,
         'no-swipeback': noSwipeback
@@ -7700,8 +7788,14 @@
     style: Object,
     name: String,
     stacked: Boolean,
-    withSubnavbar: Boolean,
-    subnavbar: Boolean,
+    withSubnavbar: {
+      type: Boolean,
+      default: undefined
+    },
+    subnavbar: {
+      type: Boolean,
+      default: undefined
+    },
     noNavbar: Boolean,
     noToolbar: Boolean,
     tabs: Boolean,
@@ -8863,6 +8957,8 @@
       var searchContainer = ref.searchContainer;
       var searchIn = ref.searchIn;
       var searchItem = ref.searchItem;
+      var searchGroup = ref.searchGroup;
+      var searchGroupTitle = ref.searchGroupTitle;
       var hideOnEnableEl = ref.hideOnEnableEl;
       var hideOnSearchEl = ref.hideOnSearchEl;
       var foundEl = ref.foundEl;
@@ -8890,6 +8986,8 @@
           searchContainer: searchContainer,
           searchIn: searchIn,
           searchItem: searchItem,
+          searchGroup: searchGroup,
+          searchGroupTitle: searchGroupTitle,
           hideOnEnableEl: hideOnEnableEl,
           hideOnSearchEl: hideOnSearchEl,
           foundEl: foundEl,
@@ -8997,6 +9095,14 @@
     searchItem: {
       type: String,
       default: 'li'
+    },
+    searchGroup: {
+      type: String,
+      default: '.list-group'
+    },
+    searchGroupTitle: {
+      type: String,
+      default: '.item-divider, .list-group-title'
     },
     foundEl: {
       type: [String, Object],
@@ -10850,7 +10956,7 @@
   };
 
   /**
-   * Framework7 React 3.4.0
+   * Framework7 React 3.4.2
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -10858,7 +10964,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: September 28, 2018
+   * Released on: October 12, 2018
    */
 
   var Plugin = {
