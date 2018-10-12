@@ -12,9 +12,6 @@ var app = new Framework7({
   id: 'io.framework7.testapp',
   root: '#app',
   theme: theme,
-  actions: {
-    backdrop: false,
-  },
   data: function () {
     return {
       user: {
