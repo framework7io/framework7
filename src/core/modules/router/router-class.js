@@ -1291,11 +1291,11 @@ class Router extends Framework7Class {
           Utils.extend(initOptions, router.currentRoute.route.options);
         }
         router.currentPageEl = $pageEl[0];
-        if (router.dynamicNavbar && $navbarInnerEl.length) {
+        if (router.separateNavbar && $navbarInnerEl.length) {
           router.currentNavbarEl = $navbarInnerEl[0];
         }
         router.removeThemeElements($pageEl);
-        if (router.dynamicNavbar && $navbarInnerEl.length) {
+        if (router.separateNavbar && $navbarInnerEl.length) {
           router.removeThemeElements($navbarInnerEl);
         }
         if (initOptions.route.route.tab) {

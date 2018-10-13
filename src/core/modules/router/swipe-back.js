@@ -108,11 +108,13 @@ function SwipeBack(r) {
         if (separateNavbar) {
           currentNavbar = $navbarEl.find('.navbar-current:not(.stacked)');
           previousNavbar = $navbarEl.find('.navbar-previous:not(.stacked)');
+          navbarWidth = $navbarEl[0].offsetWidth;
         } else {
           currentNavbar = currentPage.children('.navbar').children('.navbar-inner');
           previousNavbar = previousPage.children('.navbar').children('.navbar-inner');
+          navbarWidth = currentPage[0].offsetWidth;
         }
-        navbarWidth = $navbarEl[0].offsetWidth;
+
         currentNavElements = currentNavbar.children('.left, .title, .right, .subnavbar, .fading');
         previousNavElements = previousNavbar.children('.left, .title, .right, .subnavbar, .fading');
         if (params.iosAnimateNavbarBackIcon) {
