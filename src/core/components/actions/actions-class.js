@@ -239,7 +239,7 @@ class Actions extends Modal {
                     return `<li class="${itemClasses.join(' ')}">${text}</li>`;
                   }
                   if (icon) {
-                    itemClasses.push('item-content');
+                    itemClasses.push('item-link item-content');
                     return `
                       <li>
                         <a class="${itemClasses.join(' ')}">
