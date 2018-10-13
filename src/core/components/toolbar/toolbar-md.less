@@ -2,7 +2,7 @@
   .toolbar {
     top: 0;
     .md-bar-shadow-to-bottom();
-    &.no-shadow {
+    &.no-shadow, &.toolbar-hidden {
       .md-bar-no-shadow();
     }
     a.link {
@@ -118,7 +118,6 @@
 
   // Hidden
   .toolbar-hidden {
-    .md-bar-no-shadow();
     &.toolbar-bottom-md, &.messagebar {
       transform: translate3d(0, 100%, 0);
     }

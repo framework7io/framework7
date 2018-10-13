@@ -1,7 +1,7 @@
 .md {
   .navbar {
     .md-bar-shadow-to-bottom();
-    &.no-shadow {
+    &.no-shadow, &.navbar-hidden {
       .md-bar-no-shadow();
     }
     a.link {
@@ -55,10 +55,5 @@
 
   @media (min-width: 768px) {
     --f7-navbar-height: var(--f7-navbar-tablet-size);
-  }
-
-  // Hidden
-  .navbar-hidden {
-    .md-bar-no-shadow();
   }
 }
