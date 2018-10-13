@@ -9,9 +9,6 @@
   --f7-theme-color-rgb: @themeColorRed, @themeColorGreen, @themeColorBlue;
   --f7-theme-color-shade: darken(@themeColor, 8%);
   --f7-theme-color-tint: lighten(@themeColor, 8%);
-  --f7-theme-color-text-color: var(--f7-theme-color);
-  --f7-theme-color-bg-color: var(--f7-theme-color);
-  --f7-theme-color-border-color: var(--f7-theme-color);
 
   --f7-theme-red-color: #ff3b30;
 
@@ -321,6 +318,16 @@
 /*====================
   Color Themes
   ==================== */
+.color-primary {}
+.text-color-primary {
+  --f7-theme-color-text-color: var(--f7-theme-color);
+}
+.bg-color-primary {
+  --f7-theme-color-bg-color: var(--f7-theme-color);
+}
+.border-color-primary {
+  --f7-theme-color-border-color: var(--f7-theme-color);
+}
 each(@colors, {
   .color-theme-@{key} {
     @themeColorRed: red(@value);
@@ -348,7 +355,7 @@ each(@colors, {
   .bg-color-@{key} {
     --f7-theme-color-bg-color: @value;
   }
-  .bg-color-@{key} {
+  .border-color-@{key} {
     --f7-theme-color-border-color: @value;
   }
 });
