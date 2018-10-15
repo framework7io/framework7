@@ -63,10 +63,23 @@ export default {
     },
     ...Mixins.colorProps,
   },
-  state() {
+  state(props) {
+    const { value, defaultValue } = props;
     return {
       inputFocused: false,
+      currentInputValue: typeof value === 'undefined' ? defaultValue : value,
     };
+  },
+
+  computed: {
+    inputWithValue() {
+      const self = this;
+      const { value, defaultValue } = self.props;
+      const { currentInputValue } = self.state;
+      return typeof value === 'undefined'
+        ? (defaultValue || defaultValue === 0 || currentInputValue)
+        : (value || value === 0);
+    },
   },
 
   render() {
@@ -127,7 +140,7 @@ export default {
           resizable: type === 'textarea' && resizable,
           'no-store-data': (noFormStoreData || noStoreData || ignoreStoreData),
           'input-invalid': errorMessage && errorMessageForce,
-          'input-with-value': typeof value === 'undefined' ? defaultValue || defaultValue === 0 : value || value === 0,
+          'input-with-value': self.inputWithValue,
           'input-focused': self.state.inputFocused,
         }
       );
@@ -209,7 +222,7 @@ export default {
             onInput={self.onInputBound}
             onChange={self.onChangeBound}
             domProps={{
-              value: needsValue ? value : undefined,
+              value: needsValue ? value || self.state.currentInputValue : undefined,
               checked,
               disabled,
               readOnly: readonly,
@@ -294,11 +307,13 @@ export default {
   watch: {
     'props.value': function watchValue() {
       const self = this;
-      const { type } = self.props;
+      const { type, value } = self.props;
 
       if (type === 'range' || type === 'toggle') return;
 
       if (!self.$f7) return;
+
+      self.setState({ currentInputValue: value });
 
       self.updateInputOnDidUpdate = true;
     },
@@ -400,6 +415,7 @@ export default {
     },
     onInput(event) {
       this.dispatchEvent('input', event);
+      this.setState({ currentInputValue: event.target.value });
     },
     onFocus(event) {
       this.dispatchEvent('focus', event);
