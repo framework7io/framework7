@@ -18,13 +18,13 @@ export default class extends React.Component {
         <List form>
           <ListItem>
             <Label>Username</Label>
-            <Input type="text" placeholder="Your username" onInput={(e) => {
+            <Input type="text" placeholder="Your username" value={this.state.username} onInput={(e) => {
               this.setState({ username: e.target.value});
             }}></Input>
           </ListItem>
           <ListItem>
             <Label>Password</Label>
-            <Input type="password" placeholder="Your password" onInput={(e) => {
+            <Input type="password" placeholder="Your password" value={this.state.password} onInput={(e) => {
               this.setState({ password: e.target.value});
             }}></Input>
           </ListItem>
