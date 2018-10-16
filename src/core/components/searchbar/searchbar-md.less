@@ -1,21 +1,8 @@
 .md {
-  .searchbar {
-    input[type="search"], input[type="text"] {
-      .ltr({
-        padding-left: 65px;
-        padding-right: 48px;
-      });
-      .rtl({
-        padding-right: 65px;
-        padding-left: 48px;
-      });
-    }
-  }
+  --f7-searchbar-input-padding-left: calc(var(--f7-searchbar-input-padding-horizontal) + 17px);
+  --f7-searchbar-input-padding-right: var(--f7-searchbar-input-padding-horizontal);
   .searchbar-inner {
     padding: 0 var(--f7-safe-area-right) 0 var(--f7-safe-area-left);
-  }
-  .searchbar-backdrop {
-    background: rgba(0,0,0,0.25);
   }
   .searchbar-icon, .searchbar-disable-button {
     position: absolute;
@@ -107,10 +94,7 @@
     }
   }
   .page > .searchbar, .subnavbar .searchbar, .searchbar-expandable {
-    input[type="search"], input[type="text"] {
-      .ltr({ padding-left: 65px + 8px; });
-      .rtl({ padding-right: 65px + 8px; });
-    }
+    --f7-searchbar-input-padding-left: calc(var(--f7-searchbar-input-padding-horizontal) + 17px + 8px);
     .searchbar-icon, .searchbar-disable-button {
       .ltr({
         left: calc(-4px + 8px + var(--f7-safe-area-left));

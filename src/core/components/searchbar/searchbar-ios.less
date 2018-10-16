@@ -1,12 +1,11 @@
 .ios {
+  --f7-searchbar-input-padding-left: var(--f7-searchbar-input-padding-horizontal);
+  --f7-searchbar-input-padding-right: var(--f7-searchbar-input-padding-horizontal);
   .searchbar {
     &.no-hairline {
       .hairline-remove(bottom);
     }
     input[type="search"], input[type="text"] {
-      padding: 0 28px;
-      border-radius: 10px;
-      border-radius: 8px;
       z-index: 30;
     }
     .input-clear-button {
@@ -40,9 +39,6 @@
     .rtl({
       right: 8px;
     });
-  }
-  .searchbar-backdrop {
-    background: rgba(0,0,0,0.4);
   }
   .hairline-root('.searchbar', bottom, var(--f7-bars-border-color));
 
