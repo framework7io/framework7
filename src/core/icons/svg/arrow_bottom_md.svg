@@ -5,9 +5,8 @@
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="arrow_bottom_md" transform="translate(-2.000000, -2.000000)">
-            <polygon id="Shape" points="0 0 24 0 24 24 0 24"></polygon>
-            <polygon id="Shape" fill="#000000" fill-rule="nonzero" points="20 12 18.59 10.59 13 16.17 13 4 11 4 11 16.17 5.42 10.58 4 12 12 20"></polygon>
+        <g id="arrow_bottom_md" transform="translate(2.000000, 2.000000)" fill="#000000" fill-rule="nonzero">
+            <polygon id="Shape" points="16 8 14.59 6.59 9 12.17 9 0 7 0 7 12.17 1.42 6.58 0 8 8 16"></polygon>
         </g>
     </g>
 </svg>
