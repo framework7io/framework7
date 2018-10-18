@@ -2,42 +2,9 @@
   @import (multiple) '../../less/colors-ios.less';
   @import (multiple) '../../less/vars-ios.less';
   .data-table {
-    thead {
-      th, td {
-        font-weight: 600;
-        &:not(.sortable-cell-active) {
-          color: #8e8e93;
-        }
-      }
-      i.icon, i.f7-icons {
-        font-size: 18px;
-        width: 18px;
-        height: 18px;
-      }
-    }
-    tbody {
-      tr.data-table-row-selected {
-          background: #f7f7f8;
-      }
-    }
     th, td {
-      padding-left: 15px;
-      padding-right: 15px;
-      height: 44px;
       &.checkbox-cell {
         width: 22px;
-        .ltr({
-          padding-right: 7px;
-          + td, + th {
-            padding-left: 8px;
-          }
-        });
-        .rtl({
-          padding-left: 7px;
-          + td, + th {
-            padding-right: 8px;
-          }
-        });
       }
       &.actions-cell {
         a.link + a.link {

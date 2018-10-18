@@ -1,4 +1,6 @@
 /* === Data Table === */
+@import url('./data-table-vars.less');
+
 .data-table {
   overflow-x: auto;
   table {
@@ -11,20 +13,63 @@
     .rtl({ text-align: right; });
   }
   thead {
-    font-size: 12px;
     th, td {
+      font-size: var(--f7-table-head-font-size);
+      font-weight: var(--f7-table-head-font-weight);
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
       line-height: 16px;
+      height: var(--f7-table-head-cell-height);
+      &:not(.sortable-cell-active) {
+        color: var(--f7-table-head-text-color);
+      }
     }
     i.icon, i.f7-icons, i.material-icons {
       vertical-align: top;
+      font-size: var(--f7-table-head-icon-size);
+      width: var(--f7-table-head-icon-size);
+      height: var(--f7-table-head-icon-size);
+    }
+  }
+  tbody {
+    font-size: var(--f7-table-body-font-size);
+    th, td {
+      height: var(--f7-table-body-cell-height);
+    }
+    tr.data-table-row-selected {
+      background: var(--f7-table-selected-row-bg-color);
     }
   }
   th, td {
-    padding: 0;
+    --f7-table-cell-padding-left: var(--f7-table-cell-padding-horizontal);
+    --f7-table-cell-padding-right: var(--f7-table-cell-padding-horizontal);
+    padding-top: var(--f7-table-cell-padding-vertical);
+    padding-bottom: var(--f7-table-cell-padding-vertical);
+    padding-left: var(--f7-table-cell-padding-left);
+    padding-right: var(--f7-table-cell-padding-right);
     position: relative;
+    box-sizing: border-box;
+    &:first-child {
+      .ltr({
+        --f7-table-cell-padding-left: var(--f7-table-edge-cell-padding-horizontal);
+      });
+      .rtl({
+        --f7-table-cell-padding-right: var(--f7-table-edge-cell-padding-horizontal);
+      });
+    }
+    &:last-child {
+      .ltr({
+        --f7-table-cell-padding-right: var(--f7-table-edge-cell-padding-horizontal);
+      });
+      .rtl({
+        --f7-table-cell-padding-left: var(--f7-table-edge-cell-padding-horizontal);
+      });
+    }
+    &.label-cell {
+      --f7-table-cell-padding-left: var(--f7-table-label-cell-padding-horizontal);
+      --f7-table-cell-padding-right: var(--f7-table-label-cell-padding-horizontal);
+    }
     &.numeric-cell {
       .ltr({ text-align: right; });
       .rtl({ text-align: left; });
@@ -34,6 +79,28 @@
       label + span {
         .ltr({ margin-left: 8px; });
         .rtl({ margin-right: 8px; });
+      }
+      &:first-child {
+        .ltr({
+          padding-right: calc(var(--f7-table-cell-padding-right) / 2);
+          + td, + th {
+            padding-left: calc(var(--f7-table-cell-padding-left) / 2);
+          }
+        });
+        .rtl({
+          padding-left: calc(var(--f7-table-cell-padding-left) / 2);
+          + td, + th {
+            padding-right: calc(var(--f7-table-cell-padding-right) / 2);
+          }
+        });
+      }
+      &:last-child {
+        .ltr({
+          padding-left: calc(var(--f7-table-cell-padding-left) / 2);
+        });
+        .rtl({
+          padding-right: calc(var(--f7-table-cell-padding-right) / 2);
+        });
       }
     }
     &.actions-cell {
