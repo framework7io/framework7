@@ -1,6 +1,4 @@
 .md {
-  @import (multiple) '../../less/colors-md.less';
-  @import (multiple) '../../less/vars-md.less';
   .data-table {
     th, td {
       &.actions-cell {
@@ -27,7 +25,8 @@
     .rtl({ margin-left: 8px; });
   }
   .data-table-links, .data-table-actions {
-    a.link + a.link {
+    a.link + a.link,
+    .button + .button {
       .ltr({ margin-left: 24px; });
       .rtl({ margin-right: 24px; });
     }
@@ -49,6 +48,7 @@
     a.link {
       width: 48px;
       height: 48px;
+      // TODO: highlight to var
       .md-link-highlight(rgba(0,0,0,0.1));
     }
   }
@@ -86,66 +86,15 @@
     }
   }
 
-  // Collapsible
-  @media (max-width:480px) and (orientation:portrait) {
-    .data-table.data-table-collapsible {
-      td {
-        padding-left: 16px;
-        padding-right: 16px;
-      }
-      td:not(.checkbox-cell) {
-        &:before {
-          color: rgba(0,0,0,0.54);
-          font-weight: 500;
-          line-height: 16px;
-        }
-      }
-    }
-  }
-
   // Dark Theme
   & when (@includeDarkTheme) {
     .theme-dark {
       .data-table, .data-table& {
-        thead th:not(.sortable-cell-active),
-        thead td:not(.sortable-cell-active),
-        .data-table-actions a.link,
-        td.actions-cell a.link,
-        th.actions-cell a.link {
-          color: rgba(255,255,255,0.54);
-        }
+        // TODO: highlight to var
         .data-table-links a.link {
           .md-link-highlight(rgba(255,255,255,0.15));
         }
-        tbody td {
-          .hairline-color(top, @blockBorderColorDark);
-        }
-        &.data-table-collapsible tr {
-          .hairline-color(top, @blockBorderColorDark);
-        }
-        tbody {
-          tr.data-table-row-selected {
-            background-color: rgba(255,255,255,0.05);
-          }
-        }
-      }
-    }
-    &.device-desktop .theme-dark .data-table,
-    &.device-desktop .theme-dark.data-table {
-      tbody tr:hover {
-        background-color: rgba(255,255,255,0.05);
       }
     }
   }
-
-  .color-theme-loop({
-    .color-theme-@{colorThemeName} .data-table-header-selected,
-    .data-table-header-selected.color-@{colorThemeName} {
-      background: rgba(red(@colorThemeValue), green(@colorThemeValue), blue(@colorThemeValue), 0.1);
-    }
-    .color-theme-@{colorThemeName} .data-table-title-selected,
-    .color-@{colorThemeName} .data-table-title-selected {
-      color: @colorThemeValue;
-    }
-  });
 }

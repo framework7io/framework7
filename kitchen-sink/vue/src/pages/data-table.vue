@@ -616,7 +616,7 @@
     <f7-block-title>Alternate header with actions</f7-block-title>
     <div class="data-table data-table-init card">
       <div class="card-header">
-        <div class="data-table-links"><a class="link">Add</a><a class="link">Remove</a></div>
+        <div class="data-table-links"><a class="button">Add</a><a class="button">Remove</a></div>
         <div class="data-table-actions">
           <f7-link icon-ios="f7:sort" icon-md="material:sort"></f7-link>
           <f7-link icon-ios="f7:more_vertical_round" icon-md="material:more_vert"></f7-link>

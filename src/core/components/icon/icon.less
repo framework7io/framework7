@@ -16,6 +16,9 @@ i.icon {
     .coreIconsFont();
   }
 }
+.icon[class*="color-"] {
+  color: var(--f7-theme-color);
+}
 
 & when (@includeIosTheme) {
   @import url('./icon-ios.less');

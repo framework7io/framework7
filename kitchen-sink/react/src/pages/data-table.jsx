@@ -533,7 +533,7 @@ export default () => (
     <BlockTitle>Alternate header with actions</BlockTitle>
     <Card className="data-table data-table-init">
       <CardHeader>
-        <div className="data-table-links"><a className="link">Add</a><a className="link">Remove</a></div>
+        <div className="data-table-links"><a className="button">Add</a><a className="button">Remove</a></div>
         <div className="data-table-actions">
           <Link iconIos="f7:sort" iconMd="material:sort"></Link>
           <Link iconIos="f7:more_vertical_round" iconMd="material:more_vert"></Link>
