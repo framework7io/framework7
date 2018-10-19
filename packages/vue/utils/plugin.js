@@ -57,6 +57,9 @@ const Plugin = {
         let route;
         // eslint-disable-next-line
         if ('vue' === 'vue') {
+          if (self.$vnode && self.$vnode.data && self.$vnode.data.props && self.$vnode.data.props.f7route) {
+            route = self.$vnode.data.props.f7route;
+          }
           let parent = self;
           while (parent && !route) {
             if (parent._f7route) route = parent._f7route;
@@ -80,6 +83,9 @@ const Plugin = {
         let router;
         // eslint-disable-next-line
         if ('vue' === 'vue') {
+          if (self.$vnode && self.$vnode.data && self.$vnode.data.props && self.$vnode.data.props.f7route) {
+            router = self.$vnode.data.props.f7router;
+          }
           let parent = self;
           while (parent && !router) {
             if (parent._f7router) router = parent._f7router;

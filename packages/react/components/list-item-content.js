@@ -28,6 +28,8 @@ class F7ListItemContent extends React.Component {
       self.onChangeBound = self.onChange.bind(self);
       self.onFocusBound = self.onFocus.bind(self);
       self.onBlurBound = self.onBlur.bind(self);
+      self.onEmptyBound = self.onEmpty.bind(self);
+      self.onNotEmptyBound = self.onNotEmpty.bind(self);
     })();
   }
 
@@ -98,6 +100,18 @@ class F7ListItemContent extends React.Component {
   onBlur() {
     this.setState({
       hasInputFocused: false
+    });
+  }
+
+  onEmpty() {
+    this.setState({
+      hasInputValue: false
+    });
+  }
+
+  onNotEmpty() {
+    this.setState({
+      hasInputValue: true
     });
   }
 
@@ -186,7 +200,10 @@ class F7ListItemContent extends React.Component {
           hasInput = true;
           if (child.props && child.props.info) hasInputInfo = true;
           if (child.props && child.props.errorMessage && child.props.errorMessageForce) hasInputErrorMessage = true;
-          if (child.props && (typeof child.props.value === 'undefined' ? child.props.defaultValue || child.props.defaultValue === 0 : child.props.value || child.props.value === 0)) hasInputValue = true;else hasInputValue = false;
+
+          if (!hasInputValue) {
+            if (child.props && (typeof child.props.value === 'undefined' ? child.props.defaultValue || child.props.defaultValue === 0 : child.props.value || child.props.value === 0)) hasInputValue = true;else hasInputValue = false;
+          }
         }
 
         if (tag === 'F7Label' || tag === 'f7-label') {
@@ -345,14 +362,13 @@ class F7ListItemContent extends React.Component {
       inputEl,
       el
     } = self.refs;
+    el.removeEventListener('input:empty', self.onEmptyBound);
+    el.removeEventListener('input:notempty', self.onNotEmptyBound);
+    el.removeEventListener('focus', self.onFocusBound, true);
+    el.removeEventListener('blur', self.onBlurBound, true);
 
     if (inputEl) {
       inputEl.removeEventListener('change', self.onChangeBound);
-    }
-
-    if (self.state.hasInput) {
-      el.removeEventListener('focus', self.onFocusBound, true);
-      el.removeEventListener('blur', self.onBlurBound, true);
     }
   }
 
@@ -417,6 +433,8 @@ class F7ListItemContent extends React.Component {
     if (hasInput) {
       el.addEventListener('focus', self.onFocusBound, true);
       el.addEventListener('blur', self.onBlurBound, true);
+      el.addEventListener('input:empty', self.onEmptyBound);
+      el.addEventListener('input:notempty', self.onNotEmptyBound);
     }
 
     if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {

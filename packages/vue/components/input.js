@@ -55,14 +55,38 @@ export default {
     const props = __vueComponentProps(this);
 
     const state = (() => {
+      const {
+        value,
+        defaultValue
+      } = props;
       return {
-        inputFocused: false
+        inputFocused: false,
+        currentInputValue: typeof value === 'undefined' ? defaultValue : value
       };
     })();
 
     return {
       state
     };
+  },
+
+  computed: {
+    inputWithValue() {
+      const self = this;
+      const {
+        value,
+        defaultValue
+      } = self.props;
+      const {
+        currentInputValue
+      } = self.state;
+      return typeof value === 'undefined' ? defaultValue || defaultValue === 0 || currentInputValue : value || value === 0;
+    },
+
+    props() {
+      return __vueComponentProps(this);
+    }
+
   },
 
   render() {
@@ -121,7 +145,7 @@ export default {
         resizable: type === 'textarea' && resizable,
         'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
         'input-invalid': errorMessage && errorMessageForce,
-        'input-with-value': typeof value === 'undefined' ? defaultValue || defaultValue === 0 : value || value === 0,
+        'input-with-value': self.inputWithValue,
         'input-focused': self.state.inputFocused
       });
       let input;
@@ -131,7 +155,7 @@ export default {
           style: inputStyle,
           class: inputClassName,
           domProps: {
-            value: needsValue ? value : undefined,
+            value: needsValue ? value || self.state.currentInputValue : undefined,
             checked,
             disabled,
             readOnly: readonly,
@@ -247,10 +271,14 @@ export default {
     'props.value': function watchValue() {
       const self = this;
       const {
-        type
+        type,
+        value
       } = self.props;
       if (type === 'range' || type === 'toggle') return;
       if (!self.$f7) return;
+      self.setState({
+        currentInputValue: value
+      });
       self.updateInputOnDidUpdate = true;
     }
   },
@@ -372,6 +400,9 @@ export default {
 
     onInput(event) {
       this.dispatchEvent('input', event);
+      this.setState({
+        currentInputValue: event.target.value
+      });
     },
 
     onFocus(event) {
@@ -398,12 +429,6 @@ export default {
 
     setState(updater, callback) {
       __vueComponentSetState(this, updater, callback);
-    }
-
-  },
-  computed: {
-    props() {
-      return __vueComponentProps(this);
     }
 
   }

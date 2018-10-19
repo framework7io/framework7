@@ -1,5 +1,5 @@
 /**
- * Framework7 React 3.4.2
+ * Framework7 React 3.4.3
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 12, 2018
+ * Released on: October 19, 2018
  */
 
 (function (global, factory) {
@@ -3296,8 +3296,11 @@
       this.__reactRefs = {};
 
       this.state = (function () {
+        var value = props.value;
+        var defaultValue = props.defaultValue;
         return {
-          inputFocused: false
+          inputFocused: false,
+          currentInputValue: typeof value === 'undefined' ? defaultValue : value
         };
       })();
 
@@ -3318,7 +3321,7 @@
     F7Input.prototype = Object.create( superclass && superclass.prototype );
     F7Input.prototype.constructor = F7Input;
 
-    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { inputWithValue: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
 
     F7Input.prototype.onTextareaResize = function onTextareaResize (event) {
       this.dispatchEvent('textarea:resize textareaResize', event);
@@ -3338,6 +3341,9 @@
 
     F7Input.prototype.onInput = function onInput (event) {
       this.dispatchEvent('input', event);
+      this.setState({
+        currentInputValue: event.target.value
+      });
     };
 
     F7Input.prototype.onFocus = function onFocus (event) {
@@ -3413,7 +3419,7 @@
           resizable: type === 'textarea' && resizable,
           'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
           'input-invalid': errorMessage && errorMessageForce,
-          'input-with-value': typeof value === 'undefined' ? defaultValue || defaultValue === 0 : value || value === 0,
+          'input-with-value': self.inputWithValue,
           'input-focused': self.state.inputFocused
         });
         var input;
@@ -3523,6 +3529,16 @@
       return inputEl;
     };
 
+    prototypeAccessors.inputWithValue.get = function () {
+      var self = this;
+      var ref = self.props;
+      var value = ref.value;
+      var defaultValue = ref.defaultValue;
+      var ref$1 = self.state;
+      var currentInputValue = ref$1.currentInputValue;
+      return typeof value === 'undefined' ? defaultValue || defaultValue === 0 || currentInputValue : value || value === 0;
+    };
+
     F7Input.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
       var ref = self.props;
@@ -3551,8 +3567,12 @@
         var self = this$1;
         var ref = self.props;
         var type = ref.type;
+        var value = ref.value;
         if (type === 'range' || type === 'toggle') { return; }
         if (!self.$f7) { return; }
+        self.setState({
+          currentInputValue: value
+        });
         self.updateInputOnDidUpdate = true;
       });
 
@@ -4335,6 +4355,8 @@
         self.onChangeBound = self.onChange.bind(self);
         self.onFocusBound = self.onFocus.bind(self);
         self.onBlurBound = self.onBlur.bind(self);
+        self.onEmptyBound = self.onEmpty.bind(self);
+        self.onNotEmptyBound = self.onNotEmpty.bind(self);
       })();
     }
 
@@ -4409,6 +4431,18 @@
     F7ListItemContent.prototype.onBlur = function onBlur () {
       this.setState({
         hasInputFocused: false
+      });
+    };
+
+    F7ListItemContent.prototype.onEmpty = function onEmpty () {
+      this.setState({
+        hasInputValue: false
+      });
+    };
+
+    F7ListItemContent.prototype.onNotEmpty = function onNotEmpty () {
+      this.setState({
+        hasInputValue: true
       });
     };
 
@@ -4497,7 +4531,10 @@
             hasInput = true;
             if (child.props && child.props.info) { hasInputInfo = true; }
             if (child.props && child.props.errorMessage && child.props.errorMessageForce) { hasInputErrorMessage = true; }
-            if (child.props && (typeof child.props.value === 'undefined' ? child.props.defaultValue || child.props.defaultValue === 0 : child.props.value || child.props.value === 0)) { hasInputValue = true; }else { hasInputValue = false; }
+
+            if (!hasInputValue) {
+              if (child.props && (typeof child.props.value === 'undefined' ? child.props.defaultValue || child.props.defaultValue === 0 : child.props.value || child.props.value === 0)) { hasInputValue = true; }else { hasInputValue = false; }
+            }
           }
 
           if (tag === 'F7Label' || tag === 'f7-label') {
@@ -4655,14 +4692,13 @@
       var ref = self.refs;
       var inputEl = ref.inputEl;
       var el = ref.el;
+      el.removeEventListener('input:empty', self.onEmptyBound);
+      el.removeEventListener('input:notempty', self.onNotEmptyBound);
+      el.removeEventListener('focus', self.onFocusBound, true);
+      el.removeEventListener('blur', self.onBlurBound, true);
 
       if (inputEl) {
         inputEl.removeEventListener('change', self.onChangeBound);
-      }
-
-      if (self.state.hasInput) {
-        el.removeEventListener('focus', self.onFocusBound, true);
-        el.removeEventListener('blur', self.onBlurBound, true);
       }
     };
 
@@ -4726,6 +4762,8 @@
       if (hasInput) {
         el.addEventListener('focus', self.onFocusBound, true);
         el.addEventListener('blur', self.onBlurBound, true);
+        el.addEventListener('input:empty', self.onEmptyBound);
+        el.addEventListener('input:notempty', self.onNotEmptyBound);
       }
 
       if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {
@@ -6607,7 +6645,10 @@
       default: 0
     },
     maxHeight: Number,
-    resizePage: Boolean,
+    resizePage: {
+      type: Boolean,
+      default: true
+    },
     sendLink: String,
     value: [String, Number, Array],
     disabled: Boolean,
@@ -10956,7 +10997,7 @@
   };
 
   /**
-   * Framework7 React 3.4.2
+   * Framework7 React 3.4.3
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -10964,7 +11005,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: October 12, 2018
+   * Released on: October 19, 2018
    */
 
   var Plugin = {

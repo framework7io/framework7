@@ -46,5 +46,7 @@ declare class F7ListItemContent extends React.Component<F7ListItemContent.Props,
   onChange(event? : any) : unknown
   onFocus() : unknown
   onBlur() : unknown
+  onEmpty() : unknown
+  onNotEmpty() : unknown
 }
 export default F7ListItemContent;

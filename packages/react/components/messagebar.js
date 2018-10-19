@@ -329,7 +329,10 @@ __reactComponentSetProps(F7Messagebar, Object.assign({
     default: 0
   },
   maxHeight: Number,
-  resizePage: Boolean,
+  resizePage: {
+    type: Boolean,
+    default: true
+  },
   sendLink: String,
   value: [String, Number, Array],
   disabled: Boolean,

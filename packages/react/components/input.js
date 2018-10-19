@@ -14,8 +14,13 @@ class F7Input extends React.Component {
     this.__reactRefs = {};
 
     this.state = (() => {
+      const {
+        value,
+        defaultValue
+      } = props;
       return {
-        inputFocused: false
+        inputFocused: false,
+        currentInputValue: typeof value === 'undefined' ? defaultValue : value
       };
     })();
 
@@ -50,6 +55,9 @@ class F7Input extends React.Component {
 
   onInput(event) {
     this.dispatchEvent('input', event);
+    this.setState({
+      currentInputValue: event.target.value
+    });
   }
 
   onFocus(event) {
@@ -125,7 +133,7 @@ class F7Input extends React.Component {
         resizable: type === 'textarea' && resizable,
         'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
         'input-invalid': errorMessage && errorMessageForce,
-        'input-with-value': typeof value === 'undefined' ? defaultValue || defaultValue === 0 : value || value === 0,
+        'input-with-value': self.inputWithValue,
         'input-focused': self.state.inputFocused
       });
       let input;
@@ -236,6 +244,18 @@ class F7Input extends React.Component {
     return inputEl;
   }
 
+  get inputWithValue() {
+    const self = this;
+    const {
+      value,
+      defaultValue
+    } = self.props;
+    const {
+      currentInputValue
+    } = self.state;
+    return typeof value === 'undefined' ? defaultValue || defaultValue === 0 || currentInputValue : value || value === 0;
+  }
+
   componentWillUnmount() {
     const self = this;
     const {
@@ -262,10 +282,14 @@ class F7Input extends React.Component {
     __reactComponentWatch(this, 'props.value', prevProps, prevState, () => {
       const self = this;
       const {
-        type
+        type,
+        value
       } = self.props;
       if (type === 'range' || type === 'toggle') return;
       if (!self.$f7) return;
+      self.setState({
+        currentInputValue: value
+      });
       self.updateInputOnDidUpdate = true;
     });
 
