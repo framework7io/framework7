@@ -6,7 +6,7 @@
   position: relative;
   z-index: 1;
   color: var(--f7-block-text-color);
-  margin: var(--f7-block-vertical-margin) 0;
+  margin: var(--f7-block-margin-vertical) 0;
   padding-top: 0;
   padding-bottom: 0;
   padding-left: ~"calc(var(--f7-block-padding) + var(--f7-safe-area-left))";
@@ -43,7 +43,7 @@
   font-size: var(--f7-block-title-font-size, inherit);
   font-weight: var(--f7-block-title-font-weight);
   line-height: var(--f7-block-title-line-height);
-  margin-top: var(--f7-block-vertical-margin);
+  margin-top: var(--f7-block-margin-vertical);
   margin-bottom: var(--f7-block-title-margin-bottom);
   margin-left: ~"calc(var(--f7-block-padding)  + var(--f7-safe-area-left))";
   margin-right: ~"calc(var(--f7-block-padding)  + var(--f7-safe-area-right))";
@@ -63,7 +63,7 @@
   color: var(--f7-block-header-text-color);
   font-size: var(--f7-block-header-font-size);
   margin-bottom: var(--f7-block-header-margin);
-  margin-top: var(--f7-block-vertical-margin);
+  margin-top: var(--f7-block-margin-vertical);
   + .list, + .block, + .card, + .timeline {
     margin-top: var(--f7-block-header-margin);
   }
@@ -72,7 +72,7 @@
   color: var(--f7-block-footer-text-color);
   font-size: var(--f7-block-footer-font-size);
   margin-top: var(--f7-block-footer-margin);
-  margin-bottom: var(--f7-block-vertical-margin);
+  margin-bottom: var(--f7-block-margin-vertical);
 }
 .block-footer, .block-header {
   padding-top: 0;
@@ -100,12 +100,12 @@
     margin-bottom: 0;
   }
   + .block-footer {
-    margin-top: ~"calc(-1 * (var(--f7-block-vertical-margin) - var(--f7-block-footer-margin)))";
+    margin-top: ~"calc(-1 * (var(--f7-block-margin-vertical) - var(--f7-block-footer-margin)))";
   }
 }
 .block + .block-footer {
-  margin-top: ~"calc(-1 * (var(--f7-block-vertical-margin) - var(--f7-block-footer-margin)))";
-  margin-bottom: var(--f7-block-vertical-margin);
+  margin-top: ~"calc(-1 * (var(--f7-block-margin-vertical) - var(--f7-block-footer-margin)))";
+  margin-bottom: var(--f7-block-margin-vertical);
 }
 .block {
   .block-header, .block-footer {
