@@ -307,12 +307,12 @@
 
 // MD Bars Shadow
 .md-bar-shadow-remove() {
-  &:after {
+  &:after, &:before {
     display: none;
   }
 }
 .md-bar-shadow-to-bottom() {
-  &:after {
+  &:before {
     content: '';
     position: absolute;
     right: 0;
@@ -350,7 +350,7 @@
   }
 }
 .md-bar-no-shadow() {
-  &:after {
+  &:after, &:before {
     display: none;
   }
 }
