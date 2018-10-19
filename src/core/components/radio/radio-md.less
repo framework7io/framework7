@@ -32,23 +32,11 @@
     z-index: 0;
     > .icon-radio {
       .ltr({
-        margin-right: 38px;
+        margin-right: calc(var(--f7-list-item-media-margin) + var(--f7-checkbox-extra-margin))
       });
       .rtl({
-        margin-left: 38px;
+        margin-left: calc(var(--f7-list-item-media-margin) + var(--f7-checkbox-extra-margin))
       });
-    }
-    &.active-state {
-      background-color: rgba(0,0,0,0.1);
-    }
-  }
-
-  // Dark Theme
-  & when (@includeDarkTheme) {
-    .theme-dark {
-      label.item-radio.active-state {
-        background-color: rgba(255,255,255,0.05);
-      }
     }
   }
 }

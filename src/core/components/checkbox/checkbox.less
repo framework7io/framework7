@@ -58,8 +58,17 @@ label.item-checkbox {
       align-self: center;
     }
   }
+  > .icon-checkbox {
+    .ltr({
+      margin-right: calc(var(--f7-list-item-media-margin) + var(--f7-checkbox-extra-margin));
+    });
+    .rtl({
+      margin-left: calc(var(--f7-list-item-media-margin) + var(--f7-checkbox-extra-margin));
+    });
+  }
   &.active-state {
     .hairline-color(bottom, transparent);
+    background-color: var(--f7-list-link-pressed-bg-color);
   }
   &.disabled, .disabled & {
     .disabled();

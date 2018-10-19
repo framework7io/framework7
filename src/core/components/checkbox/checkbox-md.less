@@ -7,31 +7,11 @@
       font-size: 15px;
     }
   }
-  
+
   label.item-checkbox {
     position: relative;
     overflow: hidden;
     z-index: 0;
-    > .icon-checkbox {
-      .ltr({
-        margin-right: 38px;
-      });
-      .rtl({
-        margin-left: 38px;
-      });
-    }
-    &.active-state {
-      background-color: rgba(0,0,0,0.1);
-    }
-  }
-
-  // Dark Theme
-  & when (@includeDarkTheme) {
-    .theme-dark {
-      label.item-checkbox.active-state {
-        background-color: rgba(255,255,255,0.05);
-      }
-    }
   }
 }
 
