@@ -7,6 +7,8 @@
       ref="messagebar"
       :attachments-visible="attachmentsVisible"
       :sheet-visible="sheetVisible"
+      :value="messageText"
+      @input="messageText = $event.target.value"
     >
       <f7-link
         icon-ios="f7:camera_fill"
@@ -88,6 +90,7 @@
         attachments: [],
         sheetVisible: false,
         typingMessage: null,
+        messageText: '',
         messagesData: [
           {
             type: 'sent',
@@ -238,14 +241,14 @@
       },
       sendMessage() {
         const self = this;
-        const text = self.messagebar.getValue().replace(/\n/g, '<br>').trim();
+        const text = self.messageText.replace(/\n/g, '<br>').trim();
         const messagesToSend = [];
         self.attachments.forEach((attachment) => {
           messagesToSend.push({
             image: attachment,
           });
         });
-        if (text.trim().length) {
+        if (text.length) {
           messagesToSend.push({
             text,
           });
@@ -259,7 +262,7 @@
         // Hide sheet
         self.sheetVisible = false;
         // Clear area
-        self.messagebar.clear();
+        self.messageText = '';
         // Focus area
         if (text.length) self.messagebar.focus();
         // Send message
