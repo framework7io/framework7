@@ -46,6 +46,7 @@ export default {
       hasInputErrorMessage: false,
       hasInputValue: false,
       hasInputFocused: false,
+      hasInputInvalid: false,
     };
   },
   render() {
@@ -82,6 +83,7 @@ export default {
     } = props;
 
     const hasInputFocused = self.state.hasInputFocused;
+    const hasInputInvalid = self.state.hasInputInvalid;
     let hasInputValue = self.state.hasInputValue;
     let hasInput = itemInput || self.state.hasInput;
     let hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
@@ -343,7 +345,7 @@ export default {
         'inline-label': hasInlineLabel,
         'item-input-with-info': hasInputInfo,
         'item-input-with-error-message': hasInputErrorMessage,
-        'item-input-invalid': hasInputErrorMessage,
+        'item-input-invalid': hasInputInvalid,
         'item-input-with-value': hasInputValue,
         'item-input-focused': hasInputFocused,
       },
@@ -396,6 +398,7 @@ export default {
     const hasInput = $inputWrapEl.length > 0;
     const hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
     const hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
+    const hasInputInvalid = $inputWrapEl.children('.input-invalid').length > 0;
     if (hasInput) {
       el.addEventListener('focus', self.onFocusBound, true);
       el.addEventListener('blur', self.onBlurBound, true);
@@ -414,6 +417,9 @@ export default {
     if (!self.hasInputErrorMessageSet && hasInputErrorMessage !== self.state.hasInputErrorMessage) {
       self.setState({ hasInputErrorMessage });
     }
+    if (!self.hasInputInvalidSet && hasInputInvalid !== self.state.hasInputInvalid) {
+      self.setState({ hasInputInvalid });
+    }
   },
   componentDidUpdate() {
     const self = this;
@@ -426,6 +432,7 @@ export default {
     const hasInput = $inputWrapEl.length > 0;
     const hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
     const hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
+    const hasInputInvalid = $inputWrapEl.children('.input-invalid').length > 0;
     if (hasInlineLabel !== self.state.hasInlineLabel) {
       self.setState({ hasInlineLabel });
     }
@@ -437,6 +444,9 @@ export default {
     }
     if (!self.hasInputErrorMessageSet && hasInputErrorMessage !== self.state.hasInputErrorMessage) {
       self.setState({ hasInputErrorMessage });
+    }
+    if (hasInputInvalid !== self.state.hasInputInvalid) {
+      self.setState({ hasInputInvalid });
     }
   },
   componentWillUnmount() {

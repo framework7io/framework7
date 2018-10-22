@@ -67,6 +67,7 @@ export default {
     const { value, defaultValue } = props;
     return {
       inputFocused: false,
+      inputInvalid: false,
       currentInputValue: typeof value === 'undefined' ? defaultValue : value,
     };
   },
@@ -139,7 +140,7 @@ export default {
         {
           resizable: type === 'textarea' && resizable,
           'no-store-data': (noFormStoreData || noStoreData || ignoreStoreData),
-          'input-invalid': errorMessage && errorMessageForce,
+          'input-invalid': (errorMessage && errorMessageForce) || self.state.inputInvalid,
           'input-with-value': self.inputWithValue,
           'input-focused': self.state.inputFocused,
         }
@@ -355,7 +356,7 @@ export default {
         )
       ) {
         setTimeout(() => {
-          f7.input.validate(inputEl);
+          self.validateInput(inputEl);
         }, 0);
       }
       if (resizable) {
@@ -374,7 +375,7 @@ export default {
       self.updateInputOnDidUpdate = false;
       f7.input.checkEmptyState(inputEl);
       if (validate) {
-        f7.input.validate(inputEl);
+        self.validateInput(inputEl);
       }
       if (resizable) {
         f7.input.resizeTextarea(inputEl);
@@ -401,6 +402,19 @@ export default {
     }
   },
   methods: {
+    validateInput(inputEl) {
+      const self = this;
+      const f7 = self.$f7;
+      if (!f7 || !inputEl) return;
+      f7.input.validate(inputEl);
+      if (self.$$(inputEl).hasClass('input-invalid')) {
+        if (self.state.inputInvalid !== true) {
+          self.setState({ inputInvalid: true });
+        }
+      } else if (self.state.inputInvalid !== false) {
+        self.setState({ inputInvalid: false });
+      }
+    },
     onTextareaResize(event) {
       this.dispatchEvent('textarea:resize textareaResize', event);
     },
