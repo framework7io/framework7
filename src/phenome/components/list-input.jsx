@@ -13,6 +13,10 @@ export default {
     media: String,
 
     // Inputs
+    input: {
+      type: Boolean,
+      default: true,
+    },
     type: {
       type: String,
       default: 'text',
@@ -91,6 +95,7 @@ export default {
       className,
       sortable,
       media,
+      input: renderInput,
       type,
       name,
       value,
@@ -239,17 +244,21 @@ export default {
     };
 
     let inputEl;
-    if (type === 'select' || type === 'textarea' || type === 'file') {
-      if (type === 'select') {
-        inputEl = createInput('select', self.slots.default);
-      } else if (type === 'file') {
-        inputEl = createInput('input');
+    if (renderInput) {
+      if (type === 'select' || type === 'textarea' || type === 'file') {
+        if (type === 'select') {
+          inputEl = createInput('select', self.slots.default);
+        } else if (type === 'file') {
+          inputEl = createInput('input');
+        } else {
+          inputEl = createInput('textarea');
+        }
       } else {
-        inputEl = createInput('textarea');
+        inputEl = createInput('input');
       }
-    } else {
-      inputEl = createInput('input');
     }
+
+    const hasErrorMessage = !!errorMessage || (self.slots['error-message'] && self.slots['error-message'].length);
 
     return (
       <li ref="el" id={id} style={style} className={Utils.classNames(
@@ -263,10 +272,10 @@ export default {
           {
             'inline-label': inlineLabel,
             'item-input-focused': inputFocused,
-            'item-input-with-info': !!info,
+            'item-input-with-info': !!info || (self.slots.info && self.slots.info.length),
             'item-input-with-value': self.inputHasValue,
-            'item-input-with-error-message': (errorMessage && errorMessageForce) || inputInvalid,
-            'item-input-invalid': (errorMessage && errorMessageForce) || inputInvalid,
+            'item-input-with-error-message': (hasErrorMessage && errorMessageForce) || inputInvalid,
+            'item-input-invalid': (hasErrorMessage && errorMessageForce) || inputInvalid,
           }
         )}>
           <slot name="content-start" />
@@ -289,8 +298,12 @@ export default {
               'input-dropdown': type === 'select',
             })}>
               {inputEl}
-              {errorMessage && errorMessageForce && (
-                <div className="item-input-error-message">{errorMessage}</div>
+              <slot name="input" />
+              {hasErrorMessage && errorMessageForce && (
+                <div className="item-input-error-message">
+                  {errorMessage}
+                  <slot name="error-message"/>
+                </div>
               )}
               {clearButton && (
                 <span className="input-clear-button" />
@@ -444,19 +457,26 @@ export default {
       this.dispatchEvent('input:clear inputClear', event);
     },
     onInput(event) {
-      this.dispatchEvent('input', event);
-      if (this.refs && this.refs.inputEl) {
-        this.validateInput(this.refs.inputEl);
+      const self = this;
+      const { validate } = self.props;
+      self.dispatchEvent('input', event);
+      if ((validate || validate === '') && self.refs && self.refs.inputEl) {
+        self.validateInput(self.refs.inputEl);
       }
-      this.setState({ currentInputValue: event.target.value });
+      self.setState({ currentInputValue: event.target.value });
     },
     onFocus(event) {
       this.dispatchEvent('focus', event);
       this.setState({ inputFocused: true });
     },
     onBlur(event) {
-      this.dispatchEvent('blur', event);
-      this.setState({ inputFocused: false });
+      const self = this;
+      const { validate } = self.props;
+      self.dispatchEvent('blur', event);
+      if ((validate || validate === '') && self.refs && self.refs.inputEl) {
+        self.validateInput(self.refs.inputEl);
+      }
+      self.setState({ inputFocused: false });
     },
     onChange(event) {
       this.dispatchEvent('change', event);

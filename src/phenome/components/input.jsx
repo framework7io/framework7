@@ -430,16 +430,26 @@ export default {
       this.dispatchEvent('input:clear inputClear', event);
     },
     onInput(event) {
-      this.dispatchEvent('input', event);
-      this.setState({ currentInputValue: event.target.value });
+      const self = this;
+      const { validate } = self.props;
+      self.dispatchEvent('input', event);
+      if ((validate || validate === '') && self.refs && self.refs.inputEl) {
+        self.validateInput(self.refs.inputEl);
+      }
+      self.setState({ currentInputValue: event.target.value });
     },
     onFocus(event) {
       this.dispatchEvent('focus', event);
       this.setState({ inputFocused: true });
     },
     onBlur(event) {
-      this.dispatchEvent('blur', event);
-      this.setState({ inputFocused: false });
+      const self = this;
+      const { validate } = self.props;
+      self.dispatchEvent('blur', event);
+      if ((validate || validate === '') && self.refs && self.refs.inputEl) {
+        self.validateInput(self.refs.inputEl);
+      }
+      self.setState({ inputFocused: false });
     },
     onChange(event) {
       this.dispatchEvent('change', event);
