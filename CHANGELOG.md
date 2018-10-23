@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [v3.4.3](https://github.com/framework7io/framework7/compare/v3.4.2...v3.4.3) - October 19, 2018
+  * Phenome
+    * Input - better handling of `with-value` and `focused` states
+    * Messagebar - make `resizePage` enabled by default like in docs
+  * Minor fixes
+
 # [v3.4.2](https://github.com/framework7io/framework7/compare/v3.4.0...v3.4.2) - October 12, 2018
   * Core
     * Device

@@ -139,12 +139,12 @@ export default {
           if (child.data && child.data.info) hasInputInfo = true;
           if (child.data && child.data.errorMessage && child.data.errorMessageForce) hasInputErrorMessage = true;
 
-          if (child.data && (typeof child.data.value === 'undefined' ? child.data.defaultValue || child.data.defaultValue === 0 : child.data.value || child.data.value === 0)) {
-            hasInputValue = true;
-          } else if (child.componentOptions && child.componentOptions.propsData && (typeof child.componentOptions.propsData.value === 'undefined' ? child.componentOptions.propsData.defaultValue || child.componentOptions.propsData.defaultValue === 0 : child.componentOptions.propsData.value || child.componentOptions.propsData.value === 0)) {
-            hasInputValue = true;
-          } else {
-            hasInputValue = false;
+          if (!hasInputValue) {
+            if (child.data && (typeof child.data.value === 'undefined' ? child.data.defaultValue || child.data.defaultValue === 0 : child.data.value || child.data.value === 0)) {
+              hasInputValue = true;
+            } else if (child.componentOptions && child.componentOptions.propsData && (typeof child.componentOptions.propsData.value === 'undefined' ? child.componentOptions.propsData.defaultValue || child.componentOptions.propsData.defaultValue === 0 : child.componentOptions.propsData.value || child.componentOptions.propsData.value === 0)) {
+              hasInputValue = true;
+            }
           }
         }
 
@@ -307,6 +307,8 @@ export default {
     self.onChangeBound = self.onChange.bind(self);
     self.onFocusBound = self.onFocus.bind(self);
     self.onBlurBound = self.onBlur.bind(self);
+    self.onEmptyBound = self.onEmpty.bind(self);
+    self.onNotEmptyBound = self.onNotEmpty.bind(self);
   },
 
   beforeMount() {
@@ -341,6 +343,8 @@ export default {
     if (hasInput) {
       el.addEventListener('focus', self.onFocusBound, true);
       el.addEventListener('blur', self.onBlurBound, true);
+      el.addEventListener('input:empty', self.onEmptyBound);
+      el.addEventListener('input:notempty', self.onNotEmptyBound);
     }
 
     if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {
@@ -411,14 +415,13 @@ export default {
       inputEl,
       el
     } = self.$refs;
+    el.removeEventListener('input:empty', self.onEmptyBound);
+    el.removeEventListener('input:notempty', self.onNotEmptyBound);
+    el.removeEventListener('focus', self.onFocusBound, true);
+    el.removeEventListener('blur', self.onBlurBound, true);
 
     if (inputEl) {
       inputEl.removeEventListener('change', self.onChangeBound);
-    }
-
-    if (self.state.hasInput) {
-      el.removeEventListener('focus', self.onFocusBound, true);
-      el.removeEventListener('blur', self.onBlurBound, true);
     }
   },
 
@@ -490,6 +493,18 @@ export default {
     onBlur() {
       this.setState({
         hasInputFocused: false
+      });
+    },
+
+    onEmpty() {
+      this.setState({
+        hasInputValue: false
+      });
+    },
+
+    onNotEmpty() {
+      this.setState({
+        hasInputValue: true
       });
     },
 

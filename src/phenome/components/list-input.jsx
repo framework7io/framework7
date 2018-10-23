@@ -1,21 +1,33 @@
+/* eslint import/no-unresolved: ["off"] */
+/* eslint import/extensions: ["off"] */
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
-import F7Toggle from './toggle';
-import F7Range from './range';
-
 export default {
-  name: 'f7-input',
+  name: 'f7-list-input',
   props: {
+    id: [String, Number],
+    style: Object, // phenome-react-line
+    className: String, // phenome-react-line
+    sortable: Boolean,
+    media: String,
+
     // Inputs
-    type: String,
+    input: {
+      type: Boolean,
+      default: true,
+    },
+    type: {
+      type: String,
+      default: 'text',
+    },
     name: String,
     value: [String, Number, Array],
     defaultValue: [String, Number, Array],
+    readonly: Boolean,
+    required: Boolean,
+    disabled: Boolean,
     placeholder: String,
-    id: [String, Number],
-    className: String, // phenome-react-line
-    style: Object, // phenome-react-line
     inputId: [String, Number],
     size: [String, Number],
     accept: [String, Number],
@@ -25,16 +37,12 @@ export default {
     spellcheck: [String],
     autofocus: Boolean,
     autosave: String,
-    checked: Boolean,
-    disabled: Boolean,
     max: [String, Number],
     min: [String, Number],
     step: [String, Number],
     maxlength: [String, Number],
     minlength: [String, Number],
     multiple: Boolean,
-    readonly: Boolean,
-    required: Boolean,
     inputStyle: [String, Object], // phenome-vue-line
     inputStyle: Object, // phenome-react-line
     /* phenome-react-dts-props
@@ -56,43 +64,46 @@ export default {
     errorMessageForce: Boolean,
     info: String,
 
-    // Components
-    wrap: {
-      type: Boolean,
-      default: true,
-    },
+    // Label
+    label: [String, Number],
+    inlineLabel: Boolean,
+    floatingLabel: Boolean,
+    // Colors
     ...Mixins.colorProps,
   },
   state(props) {
     const { value, defaultValue } = props;
     return {
+      isSortable: props.sortable,
       inputFocused: false,
       inputInvalid: false,
       currentInputValue: typeof value === 'undefined' ? defaultValue : value,
     };
   },
-
-  computed: {
-    inputWithValue() {
-      const self = this;
-      const { value, defaultValue } = self.props;
-      const { currentInputValue } = self.state;
-      return typeof value === 'undefined'
-        ? (defaultValue || defaultValue === 0 || currentInputValue)
-        : (value || value === 0);
-    },
-  },
-
   render() {
     const self = this;
+
+    const {
+      inputFocused,
+      inputInvalid,
+    } = self.state;
+
     const props = self.props;
     const {
+      id,
+      style,
+      className,
+      sortable,
+      media,
+      input: renderInput,
       type,
       name,
       value,
       defaultValue,
+      readonly,
+      required,
+      disabled,
       placeholder,
-      id,
       inputId,
       size,
       accept,
@@ -102,47 +113,43 @@ export default {
       spellcheck,
       autofocus,
       autosave,
-      checked,
-      disabled,
       max,
       min,
       step,
       maxlength,
       minlength,
       multiple,
-      readonly,
-      required,
       inputStyle,
       pattern,
       validate,
       tabindex,
       resizable,
       clearButton,
+      noFormStoreData,
+      noStoreData,
+      ignoreStoreData,
       errorMessage,
       errorMessageForce,
       info,
-      wrap,
-      style,
-      className,
-      noStoreData,
-      noFormStoreData,
-      ignoreStoreData,
+      label,
+      inlineLabel,
+      floatingLabel,
+
     } = props;
 
-    let inputEl;
+    const isSortable = sortable || self.state.isSortable;
 
     const createInput = (tag, children) => {
       const InputTag = tag;
       const needsValue = type !== 'file';
       const needsType = tag === 'input';
       const inputClassName = Utils.classNames(
-        !wrap && className,
         {
           resizable: type === 'textarea' && resizable,
           'no-store-data': (noFormStoreData || noStoreData || ignoreStoreData),
-          'input-invalid': (errorMessage && errorMessageForce) || self.state.inputInvalid,
-          'input-with-value': self.inputWithValue,
-          'input-focused': self.state.inputFocused,
+          'input-invalid': (errorMessage && errorMessageForce) || inputInvalid,
+          'input-with-value': self.inputHasValue,
+          'input-focused': inputFocused,
         }
       );
       let input;
@@ -165,7 +172,6 @@ export default {
             spellCheck={spellcheck}
             autoFocus={autofocus}
             autoSave={autosave}
-            checked={checked}
             disabled={disabled}
             max={max}
             maxLength={maxlength}
@@ -224,7 +230,6 @@ export default {
             onChange={self.onChangeBound}
             domProps={{
               value: needsValue ? value || self.state.currentInputValue : undefined,
-              checked,
               disabled,
               readOnly: readonly,
               multiple,
@@ -238,93 +243,115 @@ export default {
       return input;
     };
 
-    const { default: slotsDefault, info: slotsInfo } = self.slots;
-    if (type === 'select' || type === 'textarea' || type === 'file') {
-      if (type === 'select') {
-        inputEl = createInput('select', slotsDefault);
-      } else if (type === 'file') {
-        inputEl = createInput('input');
+    let inputEl;
+    if (renderInput) {
+      if (type === 'select' || type === 'textarea' || type === 'file') {
+        if (type === 'select') {
+          inputEl = createInput('select', self.slots.default);
+        } else if (type === 'file') {
+          inputEl = createInput('input');
+        } else {
+          inputEl = createInput('textarea');
+        }
       } else {
-        inputEl = createInput('textarea');
+        inputEl = createInput('input');
       }
-    } else if ((slotsDefault && slotsDefault.length > 0) || !type) {
-      inputEl = slotsDefault;
-    } else if (type === 'toggle') {
-      inputEl = (
-        <F7Toggle
-          checked={checked}
-          readonly={readonly}
-          name={name}
-          value={value}
-          disabled={disabled}
-          id={inputId}
-          onChange={self.onChangeBound}
-        />
-      );
-    } else if (type === 'range') {
-      inputEl = (
-        <F7Range
-          value={value}
-          disabled={disabled}
-          min={min}
-          max={max}
-          step={step}
-          name={name}
-          id={inputId}
-          input={true}
-          onRangeChange={self.onChangeBound}
-        />
-      );
-    } else {
-      inputEl = createInput('input');
     }
 
-    if (wrap) {
-      const wrapClasses = Utils.classNames(
+    const hasErrorMessage = !!errorMessage || (self.slots['error-message'] && self.slots['error-message'].length);
+
+    return (
+      <li ref="el" id={id} style={style} className={Utils.classNames(
         className,
-        'item-input-wrap',
+        { disabled },
         Mixins.colorClasses(props),
-      );
-      return (
-        <div id={id} ref="wrapEl" className={wrapClasses} style={style}>
-          {inputEl}
-          {errorMessage && errorMessageForce && (
-            <div className="item-input-error-message">{errorMessage}</div>
-          )}
-          {clearButton && (
-            <span className="input-clear-button" />
-          )}
-          {(info || (slotsInfo && slotsInfo.length)) && (
-            <div className="item-input-info">
-              {info}
-              <slot name="info" />
+      )}>
+        <slot name="root-start" />
+        <div className={Utils.classNames(
+          'item-content item-input',
+          {
+            'inline-label': inlineLabel,
+            'item-input-focused': inputFocused,
+            'item-input-with-info': !!info || (self.slots.info && self.slots.info.length),
+            'item-input-with-value': self.inputHasValue,
+            'item-input-with-error-message': (hasErrorMessage && errorMessageForce) || inputInvalid,
+            'item-input-invalid': (hasErrorMessage && errorMessageForce) || inputInvalid,
+          }
+        )}>
+          <slot name="content-start" />
+
+          {(media || self.slots.media) && (
+            <div className="item-media">
+              {media && (<img src={media} />)}
+              <slot name="media"/>
             </div>
           )}
+          <div className="item-inner">
+            <slot name="inner-start"/>
+            {(label || self.slots.label) && (
+              <div className={Utils.classNames('item-title item-label', { 'item-floating-label': floatingLabel })}>
+                {label}
+                <slot name="label"/>
+              </div>
+            )}
+            <div className={Utils.classNames('item-input-wrap', {
+              'input-dropdown': type === 'select',
+            })}>
+              {inputEl}
+              <slot name="input" />
+              {hasErrorMessage && errorMessageForce && (
+                <div className="item-input-error-message">
+                  {errorMessage}
+                  <slot name="error-message"/>
+                </div>
+              )}
+              {clearButton && (
+                <span className="input-clear-button" />
+              )}
+              {(info || self.slots.info) && (
+                <div className="item-input-info">
+                  {info}
+                  <slot name="info"/>
+                </div>
+              )}
+            </div>
+            <slot name="inner"/>
+            <slot name="inner-end"/>
+          </div>
+          <slot name="content" />
+          <slot name="content-end" />
         </div>
-      );
-    }
-    return inputEl;
+        {isSortable && (<div className="sortable-handler" />)}
+        <slot name="root" />
+        <slot name="root-end" />
+      </li>
+    );
+  },
+  computed: {
+    inputHasValue() {
+      const self = this;
+      const { value, defaultValue } = self.props;
+      const { currentInputValue } = self.state;
+      return typeof value === 'undefined'
+        ? (defaultValue || defaultValue === 0 || currentInputValue)
+        : (value || value === 0);
+    },
   },
   watch: {
     'props.value': function watchValue() {
       const self = this;
-      const { type, value } = self.props;
-
-      if (type === 'range' || type === 'toggle') return;
-
+      const { value } = self.props;
       if (!self.$f7) return;
-
       self.setState({ currentInputValue: value });
-
       self.updateInputOnDidUpdate = true;
     },
   },
   componentDidCreate() {
     const self = this;
+    self.onChangeBound = self.onChange.bind(self);
+    self.onInputBound = self.onInput.bind(self);
     self.onFocusBound = self.onFocus.bind(self);
     self.onBlurBound = self.onBlur.bind(self);
-    self.onInputBound = self.onInput.bind(self);
-    self.onChangeBound = self.onChange.bind(self);
     self.onTextareaResizeBound = self.onTextareaResize.bind(self);
     self.onInputNotEmptyBound = self.onInputNotEmpty.bind(self);
     self.onInputEmptyBound = self.onInputEmpty.bind(self);
@@ -332,23 +359,20 @@ export default {
   },
   componentDidMount() {
     const self = this;
+    const el = self.refs.el;
+    if (!el) return;
+
     self.$f7ready((f7) => {
-      const { validate, resizable, type, clearButton, value, defaultValue } = self.props;
-      if (type === 'range' || type === 'toggle') return;
+      const { validate, resizable, value, defaultValue, type } = self.props;
 
       const inputEl = self.refs.inputEl;
       if (!inputEl) return;
 
       inputEl.addEventListener('input:notempty', self.onInputNotEmptyBound, false);
-      if (type === 'textarea' && resizable) {
-        inputEl.addEventListener('textarea:resze', self.onTextareaResizeBound, false);
-      }
-      if (clearButton) {
-        inputEl.addEventListener('input:empty', self.onInputEmptyBound, false);
-        inputEl.addEventListener('input:clear', self.onInputClearBound, false);
-      }
+      inputEl.addEventListener('textarea:resze', self.onTextareaResizeBound, false);
+      inputEl.addEventListener('input:empty', self.onInputEmptyBound, false);
+      inputEl.addEventListener('input:clear', self.onInputClearBound, false);
 
-      f7.input.checkEmptyState(inputEl);
       if (
         (validate || validate === '') && (
           (typeof value !== 'undefined' && value !== null && value !== '')
@@ -359,47 +383,50 @@ export default {
           self.validateInput(inputEl);
         }, 0);
       }
-      if (resizable) {
+      if (type === 'textarea' && resizable) {
         f7.input.resizeTextarea(inputEl);
       }
     });
+
+    self.$listEl = self.$$(el).parents('.list, .list-group').eq(0);
+    if (self.$listEl.length) {
+      self.setState({
+        isSortable: self.$listEl.hasClass('sortable'),
+      });
+    }
   },
   componentDidUpdate() {
     const self = this;
-    const { validate, resizable } = self.props;
+    const { $listEl } = self;
+    if (!$listEl || ($listEl && $listEl.length === 0)) return;
+    const isSortable = $listEl.hasClass('sortable');
+    if (isSortable !== self.state.isSortable) {
+      self.setState({ isSortable });
+    }
+    const { validate, resizable, type } = self.props;
     const f7 = self.$f7;
     if (!f7) return;
     if (self.updateInputOnDidUpdate) {
       const inputEl = self.refs.inputEl;
       if (!inputEl) return;
       self.updateInputOnDidUpdate = false;
-      f7.input.checkEmptyState(inputEl);
       if (validate) {
         self.validateInput(inputEl);
       }
-      if (resizable) {
+      if (type === 'textarea' && resizable) {
         f7.input.resizeTextarea(inputEl);
       }
     }
   },
   componentWillUnmount() {
     const self = this;
-
-    const { type, resizable, clearButton } = self.props;
-    if (type === 'range' || type === 'toggle') return;
-
     const inputEl = self.refs.inputEl;
     if (!inputEl) return;
 
     inputEl.removeEventListener('input:notempty', self.onInputNotEmptyBound, false);
-
-    if (type === 'textarea' && resizable) {
-      inputEl.removeEventListener('textarea:resze', self.onTextareaResizeBound, false);
-    }
-    if (clearButton) {
-      inputEl.removeEventListener('input:empty', self.onInputEmptyBound, false);
-      inputEl.removeEventListener('input:clear', self.onInputClearBound, false);
-    }
+    inputEl.removeEventListener('textarea:resze', self.onTextareaResizeBound, false);
+    inputEl.removeEventListener('input:empty', self.onInputEmptyBound, false);
+    inputEl.removeEventListener('input:clear', self.onInputClearBound, false);
   },
   methods: {
     validateInput(inputEl) {

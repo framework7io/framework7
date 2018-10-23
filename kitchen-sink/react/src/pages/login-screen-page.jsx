@@ -1,5 +1,5 @@
 import React from 'react';
-import { Page, LoginScreenTitle, List, ListItem, Label, Input, ListButton, BlockFooter } from 'framework7-react';
+import { Page, LoginScreenTitle, List, ListInput, ListButton, BlockFooter } from 'framework7-react';
 
 export default class extends React.Component {
   constructor(props) {
@@ -16,18 +16,24 @@ export default class extends React.Component {
       <Page noToolbar noNavbar noSwipeback loginScreen>
         <LoginScreenTitle>Framework7</LoginScreenTitle>
         <List form>
-          <ListItem>
-            <Label>Username</Label>
-            <Input type="text" placeholder="Your username" onInput={(e) => {
+          <ListInput
+            label="Username"
+            type="text"
+            placeholder="Your username"
+            value={this.state.username}
+            onInput={(e) => {
               this.setState({ username: e.target.value});
-            }}></Input>
-          </ListItem>
-          <ListItem>
-            <Label>Password</Label>
-            <Input type="password" placeholder="Your password" onInput={(e) => {
+            }}
+          />
+          <ListInput
+            label="Password"
+            type="password"
+            placeholder="Your password"
+            value={this.state.password}
+            onInput={(e) => {
               this.setState({ password: e.target.value});
-            }}></Input>
-          </ListItem>
+            }}
+          />
         </List>
         <List>
           <ListButton onClick={this.signIn.bind(this)}>Sign In</ListButton>

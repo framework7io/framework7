@@ -9,6 +9,7 @@ export default class extends React.Component {
       attachments: [],
       sheetVisible: false,
       typingMessage: null,
+      messageText: '',
       messagesData: [
         {
           type: 'sent',
@@ -111,6 +112,8 @@ export default class extends React.Component {
           ref={(el) => {this.messagebarComponent = el}}
           attachmentsVisible={this.attachmentsVisible}
           sheetVisible={this.state.sheetVisible}
+          value={this.state.messageText}
+          onInput={(e) => this.setState({messageText: e.target.value})}
         >
           <Link
             iconIos="f7:camera_fill"
@@ -239,14 +242,14 @@ export default class extends React.Component {
   }
   sendMessage() {
     const self = this;
-    const text = self.messagebar.getValue().replace(/\n/g, '<br>').trim();
+    const text = self.state.messageText.replace(/\n/g, '<br>').trim();
     const messagesToSend = [];
     self.state.attachments.forEach((attachment) => {
       messagesToSend.push({
         image: attachment,
       });
     });
-    if (text.trim().length) {
+    if (text.length) {
       messagesToSend.push({
         text,
       });
@@ -262,8 +265,9 @@ export default class extends React.Component {
       sheetVisible: false,
       // Send message
       messagesData: [...self.state.messagesData, ...messagesToSend],
+      // Clear
+      messageText: '',
     });
-    self.messagebar.clear();
 
     // Focus area
     if (text.length) self.messagebar.focus();

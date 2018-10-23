@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.4.2
+ * Framework7 Vue 3.4.3
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 12, 2018
+ * Released on: October 19, 2018
  */
 
 (function (global, factory) {
@@ -2849,14 +2849,34 @@
       var props = __vueComponentProps(this);
 
       var state = (function () {
+        var value = props.value;
+        var defaultValue = props.defaultValue;
         return {
-          inputFocused: false
+          inputFocused: false,
+          currentInputValue: typeof value === 'undefined' ? defaultValue : value
         };
       })();
 
       return {
         state: state
       };
+    },
+
+    computed: {
+      inputWithValue: function inputWithValue() {
+        var self = this;
+        var ref = self.props;
+        var value = ref.value;
+        var defaultValue = ref.defaultValue;
+        var ref$1 = self.state;
+        var currentInputValue = ref$1.currentInputValue;
+        return typeof value === 'undefined' ? defaultValue || defaultValue === 0 || currentInputValue : value || value === 0;
+      },
+
+      props: function props() {
+        return __vueComponentProps(this);
+      }
+
     },
 
     render: function render() {
@@ -2913,7 +2933,7 @@
           resizable: type === 'textarea' && resizable,
           'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
           'input-invalid': errorMessage && errorMessageForce,
-          'input-with-value': typeof value === 'undefined' ? defaultValue || defaultValue === 0 : value || value === 0,
+          'input-with-value': self.inputWithValue,
           'input-focused': self.state.inputFocused
         });
         var input;
@@ -2923,7 +2943,7 @@
             style: inputStyle,
             class: inputClassName,
             domProps: {
-              value: needsValue ? value : undefined,
+              value: needsValue ? value || self.state.currentInputValue : undefined,
               checked: checked,
               disabled: disabled,
               readOnly: readonly,
@@ -3039,8 +3059,12 @@
         var self = this;
         var ref = self.props;
         var type = ref.type;
+        var value = ref.value;
         if (type === 'range' || type === 'toggle') { return; }
         if (!self.$f7) { return; }
+        self.setState({
+          currentInputValue: value
+        });
         self.updateInputOnDidUpdate = true;
       }
     },
@@ -3159,6 +3183,9 @@
 
       onInput: function onInput(event) {
         this.dispatchEvent('input', event);
+        this.setState({
+          currentInputValue: event.target.value
+        });
       },
 
       onFocus: function onFocus(event) {
@@ -3188,12 +3215,6 @@
 
       setState: function setState(updater, callback) {
         __vueComponentSetState(this, updater, callback);
-      }
-
-    },
-    computed: {
-      props: function props() {
-        return __vueComponentProps(this);
       }
 
     }
@@ -3892,12 +3913,12 @@
             if (child.data && child.data.info) { hasInputInfo = true; }
             if (child.data && child.data.errorMessage && child.data.errorMessageForce) { hasInputErrorMessage = true; }
 
-            if (child.data && (typeof child.data.value === 'undefined' ? child.data.defaultValue || child.data.defaultValue === 0 : child.data.value || child.data.value === 0)) {
-              hasInputValue = true;
-            } else if (child.componentOptions && child.componentOptions.propsData && (typeof child.componentOptions.propsData.value === 'undefined' ? child.componentOptions.propsData.defaultValue || child.componentOptions.propsData.defaultValue === 0 : child.componentOptions.propsData.value || child.componentOptions.propsData.value === 0)) {
-              hasInputValue = true;
-            } else {
-              hasInputValue = false;
+            if (!hasInputValue) {
+              if (child.data && (typeof child.data.value === 'undefined' ? child.data.defaultValue || child.data.defaultValue === 0 : child.data.value || child.data.value === 0)) {
+                hasInputValue = true;
+              } else if (child.componentOptions && child.componentOptions.propsData && (typeof child.componentOptions.propsData.value === 'undefined' ? child.componentOptions.propsData.defaultValue || child.componentOptions.propsData.defaultValue === 0 : child.componentOptions.propsData.value || child.componentOptions.propsData.value === 0)) {
+                hasInputValue = true;
+              }
             }
           }
 
@@ -4060,6 +4081,8 @@
       self.onChangeBound = self.onChange.bind(self);
       self.onFocusBound = self.onFocus.bind(self);
       self.onBlurBound = self.onBlur.bind(self);
+      self.onEmptyBound = self.onEmpty.bind(self);
+      self.onNotEmptyBound = self.onNotEmpty.bind(self);
     },
 
     beforeMount: function beforeMount() {
@@ -4093,6 +4116,8 @@
       if (hasInput) {
         el.addEventListener('focus', self.onFocusBound, true);
         el.addEventListener('blur', self.onBlurBound, true);
+        el.addEventListener('input:empty', self.onEmptyBound);
+        el.addEventListener('input:notempty', self.onNotEmptyBound);
       }
 
       if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {
@@ -4162,14 +4187,13 @@
       var ref = self.$refs;
       var inputEl = ref.inputEl;
       var el = ref.el;
+      el.removeEventListener('input:empty', self.onEmptyBound);
+      el.removeEventListener('input:notempty', self.onNotEmptyBound);
+      el.removeEventListener('focus', self.onFocusBound, true);
+      el.removeEventListener('blur', self.onBlurBound, true);
 
       if (inputEl) {
         inputEl.removeEventListener('change', self.onChangeBound);
-      }
-
-      if (self.state.hasInput) {
-        el.removeEventListener('focus', self.onFocusBound, true);
-        el.removeEventListener('blur', self.onBlurBound, true);
       }
     },
 
@@ -4239,6 +4263,18 @@
       onBlur: function onBlur() {
         this.setState({
           hasInputFocused: false
+        });
+      },
+
+      onEmpty: function onEmpty() {
+        this.setState({
+          hasInputValue: false
+        });
+      },
+
+      onNotEmpty: function onNotEmpty() {
+        this.setState({
+          hasInputValue: true
         });
       },
 
@@ -5582,7 +5618,10 @@
         default: 0
       },
       maxHeight: Number,
-      resizePage: Boolean,
+      resizePage: {
+        type: Boolean,
+        default: true
+      },
       sendLink: String,
       value: [String, Number, Array],
       disabled: Boolean,
@@ -9887,7 +9926,7 @@
   };
 
   /**
-   * Framework7 Vue 3.4.2
+   * Framework7 Vue 3.4.3
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -9895,7 +9934,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: October 12, 2018
+   * Released on: October 19, 2018
    */
 
   var Plugin = {
@@ -10035,6 +10074,9 @@
           var route;
           // eslint-disable-next-line
           {
+            if (self.$vnode && self.$vnode.data && self.$vnode.data.props && self.$vnode.data.props.f7route) {
+              route = self.$vnode.data.props.f7route;
+            }
             var parent = self;
             while (parent && !route) {
               if (parent._f7route) { route = parent._f7route; }
@@ -10058,6 +10100,9 @@
           var router;
           // eslint-disable-next-line
           {
+            if (self.$vnode && self.$vnode.data && self.$vnode.data.props && self.$vnode.data.props.f7route) {
+              router = self.$vnode.data.props.f7router;
+            }
             var parent = self;
             while (parent && !router) {
               if (parent._f7router) { router = parent._f7router; }

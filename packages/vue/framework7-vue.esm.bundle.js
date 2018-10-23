@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.4.2
+ * Framework7 Vue 3.4.3
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 12, 2018
+ * Released on: October 19, 2018
  */
 import Vue from 'vue';
 import f7AccordionContent from './components/accordion-content';
@@ -231,6 +231,9 @@ const Plugin = {
         let route;
         // eslint-disable-next-line
         if ('vue' === 'vue') {
+          if (self.$vnode && self.$vnode.data && self.$vnode.data.props && self.$vnode.data.props.f7route) {
+            route = self.$vnode.data.props.f7route;
+          }
           let parent = self;
           while (parent && !route) {
             if (parent._f7route) route = parent._f7route;
@@ -254,6 +257,9 @@ const Plugin = {
         let router;
         // eslint-disable-next-line
         if ('vue' === 'vue') {
+          if (self.$vnode && self.$vnode.data && self.$vnode.data.props && self.$vnode.data.props.f7route) {
+            router = self.$vnode.data.props.f7router;
+          }
           let parent = self;
           while (parent && !router) {
             if (parent._f7router) router = parent._f7router;
