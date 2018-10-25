@@ -61,7 +61,8 @@ function backward(el, backwardOptions) {
   $newPage
     .addClass('page-previous')
     .removeClass('stacked')
-    .removeAttr('aria-hidden');
+    .removeAttr('aria-hidden')
+    .trigger('page:unstack');
 
   if (dynamicNavbar && $newNavbarInner.length > 0) {
     $newNavbarInner
@@ -96,6 +97,7 @@ function backward(el, backwardOptions) {
           if ($pageToRemove[0] !== $newPage[0] && $pageToRemove.index() > $newPage.index()) {
             if (router.initialPages.indexOf($pageToRemove[0]) >= 0) {
               $pageToRemove.addClass('stacked');
+              $pageToRemove.trigger('page:stack');
               if (separateNavbar) {
                 $navbarToRemove.addClass('stacked');
               }
@@ -117,6 +119,7 @@ function backward(el, backwardOptions) {
         }
         if (router.params.stackPages && router.initialPages.indexOf($pageToRemove[0]) >= 0) {
           $pageToRemove.addClass('stacked');
+          $pageToRemove.trigger('page:stack');
           $navbarToRemove.addClass('stacked');
         } else if ($pageToRemove.length > 0) {
           router.pageCallback('beforeRemove', $pageToRemove, $navbarToRemove, 'previous', undefined, options);
@@ -182,6 +185,7 @@ function backward(el, backwardOptions) {
         }
         if (router.params.stackPages && router.initialPages.indexOf(pageToRemove) >= 0) {
           $pageToRemove.addClass('stacked');
+          $pageToRemove.trigger('page:stack');
           if (separateNavbar) {
             $navbarToRemove.addClass('stacked');
           }
@@ -269,6 +273,7 @@ function backward(el, backwardOptions) {
     // Remove Old Page
     if (router.params.stackPages && router.initialPages.indexOf($oldPage[0]) >= 0) {
       $oldPage.addClass('stacked');
+      $oldPage.trigger('page:stack');
       if (separateNavbar) {
         $oldNavbarInner.addClass('stacked');
       }

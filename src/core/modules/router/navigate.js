@@ -127,7 +127,8 @@ function forward(el, forwardOptions = {}) {
   }
   $newPage
     .addClass(`page-${newPagePosition}`)
-    .removeClass('stacked');
+    .removeClass('stacked')
+    .trigger('page:unstack');
 
   if (dynamicNavbar && $newNavbarInner.length) {
     $newNavbarInner
@@ -160,6 +161,7 @@ function forward(el, forwardOptions = {}) {
         const oldNavbarInnerEl = app.navbar.getElByPage($pagesInView.eq(i));
         if (router.params.stackPages) {
           $pagesInView.eq(i).addClass('stacked');
+          $pagesInView.eq(i).trigger('page:stack');
           if (separateNavbar) {
             // $navbarsInView.eq(i).addClass('stacked');
             $(oldNavbarInnerEl).addClass('stacked');
@@ -274,6 +276,7 @@ function forward(el, forwardOptions = {}) {
   if (options.reloadCurrent && $oldPage.length > 0) {
     if (router.params.stackPages && router.initialPages.indexOf($oldPage[0]) >= 0) {
       $oldPage.addClass('stacked');
+      $oldPage.trigger('page:stack');
       if (separateNavbar) {
         $oldNavbarInner.addClass('stacked');
       }
@@ -291,6 +294,7 @@ function forward(el, forwardOptions = {}) {
       const $oldNavbarInnerEl = $(app.navbar.getElByPage($oldPageEl));
       if (router.params.stackPages && router.initialPages.indexOf($oldPageEl[0]) >= 0) {
         $oldPageEl.addClass('stacked');
+        $oldPageEl.trigger('page:stack');
         if (separateNavbar) {
           $oldNavbarInnerEl.addClass('stacked');
         }
@@ -306,6 +310,7 @@ function forward(el, forwardOptions = {}) {
   } else if (options.reloadPrevious) {
     if (router.params.stackPages && router.initialPages.indexOf($oldPage[0]) >= 0) {
       $oldPage.addClass('stacked');
+      $oldPage.trigger('page:stack');
       if (separateNavbar) {
         $oldNavbarInner.addClass('stacked');
       }
@@ -370,6 +375,7 @@ function forward(el, forwardOptions = {}) {
     if (!keepOldPage) {
       if (router.params.stackPages) {
         $oldPage.addClass('stacked');
+        $oldPage.trigger('page:stack');
         if (separateNavbar) {
           $oldNavbarInner.addClass('stacked');
         }
