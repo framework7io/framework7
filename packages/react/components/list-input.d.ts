@@ -1,16 +1,22 @@
 import * as React from 'react';
 
-declare namespace F7Input {
+declare namespace F7ListInput {
   interface Props {
     slot? : string
+    id? : string | number
+    style? : React.CSSProperties
+    className? : string
+    sortable? : boolean
+    media? : string
+    input? : boolean
     type? : string
     name? : string
     value? : string | number | Array<any>
     defaultValue? : string | number | Array<any>
+    readonly? : boolean
+    required? : boolean
+    disabled? : boolean
     placeholder? : string
-    id? : string | number
-    className? : string
-    style? : React.CSSProperties
     inputId? : string | number
     size? : string | number
     accept? : string | number
@@ -20,16 +26,12 @@ declare namespace F7Input {
     spellcheck? : string
     autofocus? : boolean
     autosave? : string
-    checked? : boolean
-    disabled? : boolean
     max? : string | number
     min? : string | number
     step? : string | number
     maxlength? : string | number
     minlength? : string | number
     multiple? : boolean
-    readonly? : boolean
-    required? : boolean
     pattern? : string
     validate? : boolean | string
     tabindex? : string | number
@@ -41,7 +43,9 @@ declare namespace F7Input {
     errorMessage? : string
     errorMessageForce? : boolean
     info? : string
-    wrap? : boolean
+    label? : string | number
+    inlineLabel? : boolean
+    floatingLabel? : boolean
     color? : string
     colorTheme? : string
     textColor? : string
@@ -60,7 +64,7 @@ declare namespace F7Input {
     onChange? : (event?: any) => void
   }
 }
-declare class F7Input extends React.Component<F7Input.Props, {}> {
+declare class F7ListInput extends React.Component<F7ListInput.Props, {}> {
   validateInput(inputEl? : any) : unknown
   onTextareaResize(event? : any) : unknown
   onInputNotEmpty(event? : any) : unknown
@@ -71,4 +75,4 @@ declare class F7Input extends React.Component<F7Input.Props, {}> {
   onBlur(event? : any) : unknown
   onChange(event? : any) : unknown
 }
-export default F7Input;
+export default F7ListInput;

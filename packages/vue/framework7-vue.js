@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.4.3
+ * Framework7 Vue 3.5.0
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 19, 2018
+ * Released on: October 26, 2018
  */
 
 (function (global, factory) {
@@ -153,7 +153,6 @@
         default: undefined,
       },
       ignoreCache: Boolean,
-      pageName: String,
       reloadCurrent: Boolean,
       reloadAll: Boolean,
       reloadPrevious: Boolean,
@@ -2853,6 +2852,7 @@
         var defaultValue = props.defaultValue;
         return {
           inputFocused: false,
+          inputInvalid: false,
           currentInputValue: typeof value === 'undefined' ? defaultValue : value
         };
       })();
@@ -2867,10 +2867,9 @@
         var self = this;
         var ref = self.props;
         var value = ref.value;
-        var defaultValue = ref.defaultValue;
         var ref$1 = self.state;
         var currentInputValue = ref$1.currentInputValue;
-        return typeof value === 'undefined' ? defaultValue || defaultValue === 0 || currentInputValue : value || value === 0;
+        return typeof value === 'undefined' ? currentInputValue : value || value === 0;
       },
 
       props: function props() {
@@ -2932,7 +2931,7 @@
         var inputClassName = Utils.classNames(!wrap && className, {
           resizable: type === 'textarea' && resizable,
           'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
-          'input-invalid': errorMessage && errorMessageForce,
+          'input-invalid': errorMessage && errorMessageForce || self.state.inputInvalid,
           'input-with-value': self.inputWithValue,
           'input-focused': self.state.inputFocused
         });
@@ -3109,7 +3108,7 @@
 
         if ((validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
           setTimeout(function () {
-            f7.input.validate(inputEl);
+            self.validateInput(inputEl);
           }, 0);
         }
 
@@ -3134,7 +3133,7 @@
         f7.input.checkEmptyState(inputEl);
 
         if (validate) {
-          f7.input.validate(inputEl);
+          self.validateInput(inputEl);
         }
 
         if (resizable) {
@@ -3165,6 +3164,26 @@
     },
 
     methods: {
+      validateInput: function validateInput(inputEl) {
+        var self = this;
+        var f7 = self.$f7;
+        if (!f7 || !inputEl) { return; }
+        var validity = inputEl.validity;
+        if (!validity) { return; }
+
+        if (!validity.valid) {
+          if (self.state.inputInvalid !== true) {
+            self.setState({
+              inputInvalid: true
+            });
+          }
+        } else if (self.state.inputInvalid !== false) {
+          self.setState({
+            inputInvalid: false
+          });
+        }
+      },
+
       onTextareaResize: function onTextareaResize(event) {
         this.dispatchEvent('textarea:resize textareaResize', event);
       },
@@ -3182,8 +3201,16 @@
       },
 
       onInput: function onInput(event) {
-        this.dispatchEvent('input', event);
-        this.setState({
+        var self = this;
+        var ref = self.props;
+        var validate = ref.validate;
+        self.dispatchEvent('input', event);
+
+        if ((validate || validate === '') && self.$refs && self.$refs.inputEl) {
+          self.validateInput(self.$refs.inputEl);
+        }
+
+        self.setState({
           currentInputValue: event.target.value
         });
       },
@@ -3196,8 +3223,16 @@
       },
 
       onBlur: function onBlur(event) {
-        this.dispatchEvent('blur', event);
-        this.setState({
+        var self = this;
+        var ref = self.props;
+        var validate = ref.validate;
+        self.dispatchEvent('blur', event);
+
+        if ((validate || validate === '') && self.$refs && self.$refs.inputEl) {
+          self.validateInput(self.$refs.inputEl);
+        }
+
+        self.setState({
           inputFocused: false
         });
       },
@@ -3750,6 +3785,465 @@
     }
   };
 
+  var f7ListInput = {
+    name: 'f7-list-input',
+    props: Object.assign({
+      id: [String, Number],
+      sortable: Boolean,
+      media: String,
+      input: {
+        type: Boolean,
+        default: true
+      },
+      type: {
+        type: String,
+        default: 'text'
+      },
+      name: String,
+      value: [String, Number, Array],
+      defaultValue: [String, Number, Array],
+      readonly: Boolean,
+      required: Boolean,
+      disabled: Boolean,
+      placeholder: String,
+      inputId: [String, Number],
+      size: [String, Number],
+      accept: [String, Number],
+      autocomplete: [String],
+      autocorrect: [String],
+      autocapitalize: [String],
+      spellcheck: [String],
+      autofocus: Boolean,
+      autosave: String,
+      max: [String, Number],
+      min: [String, Number],
+      step: [String, Number],
+      maxlength: [String, Number],
+      minlength: [String, Number],
+      multiple: Boolean,
+      inputStyle: [String, Object],
+      pattern: String,
+      validate: [Boolean, String],
+      tabindex: [String, Number],
+      resizable: Boolean,
+      clearButton: Boolean,
+      noFormStoreData: Boolean,
+      noStoreData: Boolean,
+      ignoreStoreData: Boolean,
+      errorMessage: String,
+      errorMessageForce: Boolean,
+      info: String,
+      label: [String, Number],
+      inlineLabel: Boolean,
+      floatingLabel: Boolean
+    }, Mixins.colorProps),
+
+    data: function data() {
+      var props = __vueComponentProps(this);
+
+      var state = (function () {
+        var value = props.value;
+        var defaultValue = props.defaultValue;
+        return {
+          isSortable: props.sortable,
+          inputFocused: false,
+          inputInvalid: false,
+          currentInputValue: typeof value === 'undefined' ? defaultValue : value
+        };
+      })();
+
+      return {
+        state: state
+      };
+    },
+
+    render: function render() {
+      var _h = this.$createElement;
+      var self = this;
+      var ref = self.state;
+      var inputFocused = ref.inputFocused;
+      var inputInvalid = ref.inputInvalid;
+      var props = self.props;
+      var id = props.id;
+      var style = props.style;
+      var className = props.className;
+      var sortable = props.sortable;
+      var media = props.media;
+      var renderInput = props.input;
+      var type = props.type;
+      var name = props.name;
+      var value = props.value;
+      var defaultValue = props.defaultValue;
+      var readonly = props.readonly;
+      var required = props.required;
+      var disabled = props.disabled;
+      var placeholder = props.placeholder;
+      var inputId = props.inputId;
+      var size = props.size;
+      var accept = props.accept;
+      var autocomplete = props.autocomplete;
+      var autocorrect = props.autocorrect;
+      var autocapitalize = props.autocapitalize;
+      var spellcheck = props.spellcheck;
+      var autofocus = props.autofocus;
+      var autosave = props.autosave;
+      var max = props.max;
+      var min = props.min;
+      var step = props.step;
+      var maxlength = props.maxlength;
+      var minlength = props.minlength;
+      var multiple = props.multiple;
+      var inputStyle = props.inputStyle;
+      var pattern = props.pattern;
+      var validate = props.validate;
+      var tabindex = props.tabindex;
+      var resizable = props.resizable;
+      var clearButton = props.clearButton;
+      var noFormStoreData = props.noFormStoreData;
+      var noStoreData = props.noStoreData;
+      var ignoreStoreData = props.ignoreStoreData;
+      var errorMessage = props.errorMessage;
+      var errorMessageForce = props.errorMessageForce;
+      var info = props.info;
+      var label = props.label;
+      var inlineLabel = props.inlineLabel;
+      var floatingLabel = props.floatingLabel;
+      var isSortable = sortable || self.state.isSortable;
+
+      var createInput = function (tag, children) {
+        var InputTag = tag;
+        var needsValue = type !== 'file';
+        var needsType = tag === 'input';
+        var inputClassName = Utils.classNames({
+          resizable: type === 'textarea' && resizable,
+          'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
+          'input-invalid': errorMessage && errorMessageForce || inputInvalid,
+          'input-with-value': self.inputHasValue,
+          'input-focused': inputFocused
+        });
+        var input;
+        {
+          input = _h(InputTag, {
+            ref: 'inputEl',
+            style: inputStyle,
+            class: inputClassName,
+            domProps: {
+              value: needsValue ? value || self.state.currentInputValue : undefined,
+              disabled: disabled,
+              readOnly: readonly,
+              multiple: multiple,
+              required: required
+            },
+            on: {
+              focus: self.onFocusBound,
+              blur: self.onBlurBound,
+              input: self.onInputBound,
+              change: self.onChangeBound
+            },
+            attrs: {
+              name: name,
+              type: needsType ? type : undefined,
+              placeholder: placeholder,
+              id: inputId,
+              size: size,
+              accept: accept,
+              autocomplete: autocomplete,
+              autocorrect: autocorrect,
+              autocapitalize: autocapitalize,
+              spellcheck: spellcheck,
+              autofocus: autofocus,
+              autoSave: autosave,
+              max: max,
+              maxlength: maxlength,
+              min: min,
+              minlength: minlength,
+              step: step,
+              pattern: pattern,
+              validate: typeof validate === 'string' && validate.length ? validate : undefined,
+              'data-validate': validate === true || validate === '' ? true : undefined,
+              tabindex: tabindex,
+              'data-error-message': errorMessageForce ? undefined : errorMessage
+            }
+          }, [children]);
+        }
+        return input;
+      };
+
+      var inputEl;
+
+      if (renderInput) {
+        if (type === 'select' || type === 'textarea' || type === 'file') {
+          if (type === 'select') {
+            inputEl = createInput('select', self.$slots.default);
+          } else if (type === 'file') {
+            inputEl = createInput('input');
+          } else {
+            inputEl = createInput('textarea');
+          }
+        } else {
+          inputEl = createInput('input');
+        }
+      }
+
+      var hasErrorMessage = !!errorMessage || self.$slots['error-message'] && self.$slots['error-message'].length;
+      return _h('li', {
+        ref: 'el',
+        style: style,
+        class: Utils.classNames(className, {
+          disabled: disabled
+        }, Mixins.colorClasses(props)),
+        attrs: {
+          id: id
+        }
+      }, [this.$slots['root-start'], _h('div', {
+        class: Utils.classNames('item-content item-input', {
+          'inline-label': inlineLabel,
+          'item-input-focused': inputFocused,
+          'item-input-with-info': !!info || self.$slots.info && self.$slots.info.length,
+          'item-input-with-value': self.inputHasValue,
+          'item-input-with-error-message': hasErrorMessage && errorMessageForce || inputInvalid,
+          'item-input-invalid': hasErrorMessage && errorMessageForce || inputInvalid
+        })
+      }, [this.$slots['content-start'], (media || self.$slots.media) && _h('div', {
+        class: 'item-media'
+      }, [media && _h('img', {
+        attrs: {
+          src: media
+        }
+      }), this.$slots['media']]), _h('div', {
+        class: 'item-inner'
+      }, [this.$slots['inner-start'], (label || self.$slots.label) && _h('div', {
+        class: Utils.classNames('item-title item-label', {
+          'item-floating-label': floatingLabel
+        })
+      }, [label, this.$slots['label']]), _h('div', {
+        class: Utils.classNames('item-input-wrap', {
+          'input-dropdown': type === 'select'
+        })
+      }, [inputEl, this.$slots['input'], hasErrorMessage && errorMessageForce && _h('div', {
+        class: 'item-input-error-message'
+      }, [errorMessage, this.$slots['error-message']]), clearButton && _h('span', {
+        class: 'input-clear-button'
+      }), (info || self.$slots.info) && _h('div', {
+        class: 'item-input-info'
+      }, [info, this.$slots['info']])]), this.$slots['inner'], this.$slots['inner-end']]), this.$slots['content'], this.$slots['content-end']]), isSortable && _h('div', {
+        class: 'sortable-handler'
+      }), this.$slots['root'], this.$slots['root-end']]);
+    },
+
+    computed: {
+      inputHasValue: function inputHasValue() {
+        var self = this;
+        var ref = self.props;
+        var value = ref.value;
+        var ref$1 = self.state;
+        var currentInputValue = ref$1.currentInputValue;
+        return typeof value === 'undefined' ? currentInputValue : value || value === 0;
+      },
+
+      props: function props() {
+        return __vueComponentProps(this);
+      }
+
+    },
+    watch: {
+      'props.value': function watchValue() {
+        var self = this;
+        var ref = self.props;
+        var value = ref.value;
+        if (!self.$f7) { return; }
+        self.setState({
+          currentInputValue: value
+        });
+        self.updateInputOnDidUpdate = true;
+      }
+    },
+
+    created: function created() {
+      var self = this;
+      self.onChangeBound = self.onChange.bind(self);
+      self.onInputBound = self.onInput.bind(self);
+      self.onFocusBound = self.onFocus.bind(self);
+      self.onBlurBound = self.onBlur.bind(self);
+      self.onTextareaResizeBound = self.onTextareaResize.bind(self);
+      self.onInputNotEmptyBound = self.onInputNotEmpty.bind(self);
+      self.onInputEmptyBound = self.onInputEmpty.bind(self);
+      self.onInputClearBound = self.onInputClear.bind(self);
+    },
+
+    mounted: function mounted() {
+      var self = this;
+      var el = self.$refs.el;
+      if (!el) { return; }
+      self.$f7ready(function (f7) {
+        var ref = self.props;
+        var validate = ref.validate;
+        var resizable = ref.resizable;
+        var value = ref.value;
+        var defaultValue = ref.defaultValue;
+        var type = ref.type;
+        var inputEl = self.$refs.inputEl;
+        if (!inputEl) { return; }
+        inputEl.addEventListener('input:notempty', self.onInputNotEmptyBound, false);
+        inputEl.addEventListener('textarea:resze', self.onTextareaResizeBound, false);
+        inputEl.addEventListener('input:empty', self.onInputEmptyBound, false);
+        inputEl.addEventListener('input:clear', self.onInputClearBound, false);
+
+        if ((validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
+          setTimeout(function () {
+            self.validateInput(inputEl);
+          }, 0);
+        }
+
+        if (type === 'textarea' && resizable) {
+          f7.input.resizeTextarea(inputEl);
+        }
+      });
+      self.$listEl = self.$$(el).parents('.list, .list-group').eq(0);
+
+      if (self.$listEl.length) {
+        self.setState({
+          isSortable: self.$listEl.hasClass('sortable')
+        });
+      }
+    },
+
+    updated: function updated() {
+      var self = this;
+      var $listEl = self.$listEl;
+      if (!$listEl || $listEl && $listEl.length === 0) { return; }
+      var isSortable = $listEl.hasClass('sortable');
+
+      if (isSortable !== self.state.isSortable) {
+        self.setState({
+          isSortable: isSortable
+        });
+      }
+
+      var ref = self.props;
+      var validate = ref.validate;
+      var resizable = ref.resizable;
+      var type = ref.type;
+      var f7 = self.$f7;
+      if (!f7) { return; }
+
+      if (self.updateInputOnDidUpdate) {
+        var inputEl = self.$refs.inputEl;
+        if (!inputEl) { return; }
+        self.updateInputOnDidUpdate = false;
+
+        if (validate) {
+          self.validateInput(inputEl);
+        }
+
+        if (type === 'textarea' && resizable) {
+          f7.input.resizeTextarea(inputEl);
+        }
+      }
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      var self = this;
+      var inputEl = self.$refs.inputEl;
+      if (!inputEl) { return; }
+      inputEl.removeEventListener('input:notempty', self.onInputNotEmptyBound, false);
+      inputEl.removeEventListener('textarea:resze', self.onTextareaResizeBound, false);
+      inputEl.removeEventListener('input:empty', self.onInputEmptyBound, false);
+      inputEl.removeEventListener('input:clear', self.onInputClearBound, false);
+    },
+
+    methods: {
+      validateInput: function validateInput(inputEl) {
+        var self = this;
+        var f7 = self.$f7;
+        if (!f7 || !inputEl) { return; }
+        var validity = inputEl.validity;
+        if (!validity) { return; }
+
+        if (!validity.valid) {
+          if (self.state.inputInvalid !== true) {
+            self.setState({
+              inputInvalid: true
+            });
+          }
+        } else if (self.state.inputInvalid !== false) {
+          self.setState({
+            inputInvalid: false
+          });
+        }
+      },
+
+      onTextareaResize: function onTextareaResize(event) {
+        this.dispatchEvent('textarea:resize textareaResize', event);
+      },
+
+      onInputNotEmpty: function onInputNotEmpty(event) {
+        this.dispatchEvent('input:notempty inputNotEmpty', event);
+      },
+
+      onInputEmpty: function onInputEmpty(event) {
+        this.dispatchEvent('input:empty inputEmpty', event);
+      },
+
+      onInputClear: function onInputClear(event) {
+        this.dispatchEvent('input:clear inputClear', event);
+      },
+
+      onInput: function onInput(event) {
+        var self = this;
+        var ref = self.props;
+        var validate = ref.validate;
+        self.dispatchEvent('input', event);
+
+        if ((validate || validate === '') && self.$refs && self.$refs.inputEl) {
+          self.validateInput(self.$refs.inputEl);
+        }
+
+        self.setState({
+          currentInputValue: event.target.value
+        });
+      },
+
+      onFocus: function onFocus(event) {
+        this.dispatchEvent('focus', event);
+        this.setState({
+          inputFocused: true
+        });
+      },
+
+      onBlur: function onBlur(event) {
+        var self = this;
+        var ref = self.props;
+        var validate = ref.validate;
+        self.dispatchEvent('blur', event);
+
+        if ((validate || validate === '') && self.$refs && self.$refs.inputEl) {
+          self.validateInput(self.$refs.inputEl);
+        }
+
+        self.setState({
+          inputFocused: false
+        });
+      },
+
+      onChange: function onChange(event) {
+        this.dispatchEvent('change', event);
+      },
+
+      dispatchEvent: function dispatchEvent(events) {
+        var args = [], len = arguments.length - 1;
+        while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+
+        __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+      },
+
+      setState: function setState(updater, callback) {
+        __vueComponentSetState(this, updater, callback);
+      }
+
+    }
+  };
+
   var f7ListItemCell = {
     name: 'f7-list-item-cell',
     props: Object.assign({
@@ -3819,7 +4313,8 @@
           hasInputInfo: false,
           hasInputErrorMessage: false,
           hasInputValue: false,
-          hasInputFocused: false
+          hasInputFocused: false,
+          hasInputInvalid: false
         };
       })();
 
@@ -3859,6 +4354,7 @@
       var inlineLabel = props.inlineLabel;
       var itemInputWithInfo = props.itemInputWithInfo;
       var hasInputFocused = self.state.hasInputFocused;
+      var hasInputInvalid = self.state.hasInputInvalid;
       var hasInputValue = self.state.hasInputValue;
       var hasInput = itemInput || self.state.hasInput;
       var hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
@@ -4058,7 +4554,7 @@
         'inline-label': hasInlineLabel,
         'item-input-with-info': hasInputInfo,
         'item-input-with-error-message': hasInputErrorMessage,
-        'item-input-invalid': hasInputErrorMessage,
+        'item-input-invalid': hasInputInvalid,
         'item-input-with-value': hasInputValue,
         'item-input-focused': hasInputFocused
       }, Mixins.colorClasses(props));
@@ -4112,6 +4608,7 @@
       var hasInput = $inputWrapEl.length > 0;
       var hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
       var hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
+      var hasInputInvalid = $inputWrapEl.children('.input-invalid').length > 0;
 
       if (hasInput) {
         el.addEventListener('focus', self.onFocusBound, true);
@@ -4143,6 +4640,12 @@
           hasInputErrorMessage: hasInputErrorMessage
         });
       }
+
+      if (!self.hasInputInvalidSet && hasInputInvalid !== self.state.hasInputInvalid) {
+        self.setState({
+          hasInputInvalid: hasInputInvalid
+        });
+      }
     },
 
     updated: function updated() {
@@ -4156,6 +4659,7 @@
       var hasInput = $inputWrapEl.length > 0;
       var hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
       var hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
+      var hasInputInvalid = $inputWrapEl.children('.input-invalid').length > 0;
 
       if (hasInlineLabel !== self.state.hasInlineLabel) {
         self.setState({
@@ -4178,6 +4682,12 @@
       if (!self.hasInputErrorMessageSet && hasInputErrorMessage !== self.state.hasInputErrorMessage) {
         self.setState({
           hasInputErrorMessage: hasInputErrorMessage
+        });
+      }
+
+      if (hasInputInvalid !== self.state.hasInputInvalid) {
+        self.setState({
+          hasInputInvalid: hasInputInvalid
         });
       }
     },
@@ -4816,7 +5326,7 @@
           tag = child.tag;
         }
 
-        if (!tag && 'vue' === 'react' || tag && !(tag === 'li' || tag === 'F7ListItem' || tag === 'F7ListButton' || tag.indexOf('list-item') >= 0 || tag.indexOf('list-button') >= 0 || tag.indexOf('f7-list-item') >= 0 || tag.indexOf('f7-list-button') >= 0)) {
+        if (!tag && 'vue' === 'react' || tag && !(tag === 'li' || tag === 'F7ListItem' || tag === 'F7ListButton' || tag === 'F7ListInput' || tag.indexOf('list-item') >= 0 || tag.indexOf('list-button') >= 0 || tag.indexOf('list-input') >= 0 || tag.indexOf('f7-list-item') >= 0 || tag.indexOf('f7-list-button') >= 0 || tag.indexOf('f7-list-input') >= 0)) {
           if (wasUlChild) { rootChildrenAfterList.push(child); }else { rootChildrenBeforeList.push(child); }
         } else if (tag) {
           wasUlChild = true;
@@ -6773,7 +7283,8 @@
       var state = (function () {
         return {
           hasSubnavbar: false,
-          routerClasses: ''
+          routerClass: '',
+          routerForceUnstack: false
         };
       })();
 
@@ -6852,8 +7363,8 @@
       }
 
       var forceSubnavbar = typeof subnavbar === 'undefined' && typeof withSubnavbar === 'undefined' ? hasSubnavbar || this.state.hasSubnavbar : false;
-      var classes = Utils.classNames(className, 'page', this.state.routerClasses, {
-        stacked: stacked,
+      var classes = Utils.classNames(className, 'page', this.state.routerClass, {
+        stacked: stacked && !this.state.routerForceUnstack,
         tabs: tabs,
         'page-with-subnavbar': subnavbar || withSubnavbar || forceSubnavbar,
         'no-navbar': noNavbar,
@@ -6921,6 +7432,8 @@
       self.onPageAfterOut = self.onPageAfterOut.bind(self);
       self.onPageAfterIn = self.onPageAfterIn.bind(self);
       self.onPageBeforeRemove = self.onPageBeforeRemove.bind(self);
+      self.onPageStack = self.onPageStack.bind(self);
+      self.onPageUnstack = self.onPageUnstack.bind(self);
 
       if (ptr) {
         el.addEventListener('ptr:pullstart', self.onPtrPullStart);
@@ -6942,6 +7455,8 @@
       el.addEventListener('page:afterout', self.onPageAfterOut);
       el.addEventListener('page:afterin', self.onPageAfterIn);
       el.addEventListener('page:beforeremove', self.onPageBeforeRemove);
+      el.addEventListener('page:stack', self.onPageStack);
+      el.addEventListener('page:unstack', self.onPageUnstack);
     },
 
     beforeDestroy: function beforeDestroy() {
@@ -6961,6 +7476,8 @@
       el.removeEventListener('page:afterout', self.onPageAfterOut);
       el.removeEventListener('page:afterin', self.onPageAfterIn);
       el.removeEventListener('page:beforeremove', self.onPageBeforeRemove);
+      el.removeEventListener('page:stack', self.onPageStack);
+      el.removeEventListener('page:unstack', self.onPageUnstack);
     },
 
     methods: {
@@ -6994,6 +7511,18 @@
         this.dispatchEvent('page:mounted pageMounted', event, page);
       },
 
+      onPageStack: function onPageStack() {
+        this.setState({
+          routerForceUnstack: false
+        });
+      },
+
+      onPageUnstack: function onPageUnstack() {
+        this.setState({
+          routerForceUnstack: true
+        });
+      },
+
       onPageInit: function onPageInit(event) {
         var page = event.detail;
         var ref = this.props;
@@ -7021,13 +7550,13 @@
 
         if (page.from === 'next') {
           this.setState({
-            routerClasses: 'page-next'
+            routerClass: 'page-next'
           });
         }
 
         if (page.from === 'previous') {
           this.setState({
-            routerClasses: 'page-previous'
+            routerClass: 'page-previous'
           });
         }
 
@@ -7044,13 +7573,13 @@
 
         if (page.to === 'next') {
           this.setState({
-            routerClasses: 'page-next'
+            routerClass: 'page-next'
           });
         }
 
         if (page.to === 'previous') {
           this.setState({
-            routerClasses: 'page-previous'
+            routerClass: 'page-previous'
           });
         }
 
@@ -7060,7 +7589,7 @@
       onPageAfterIn: function onPageAfterIn(event) {
         var page = event.detail;
         this.setState({
-          routerClasses: 'page-current'
+          routerClass: 'page-current'
         });
         this.dispatchEvent('page:afterin pageAfterIn', event, page);
       },
@@ -9926,7 +10455,7 @@
   };
 
   /**
-   * Framework7 Vue 3.4.3
+   * Framework7 Vue 3.5.0
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -9934,7 +10463,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: October 19, 2018
+   * Released on: October 26, 2018
    */
 
   var Plugin = {
@@ -9980,6 +10509,7 @@
       Vue.component('f7-list-button', f7ListButton);
       Vue.component('f7-list-group', f7ListGroup);
       Vue.component('f7-list-index', f7ListIndex);
+      Vue.component('f7-list-input', f7ListInput);
       Vue.component('f7-list-item-cell', f7ListItemCell);
       Vue.component('f7-list-item-content', F7ListItemContent);
       Vue.component('f7-list-item-row', f7ListItemRow);

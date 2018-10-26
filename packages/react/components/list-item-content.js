@@ -18,7 +18,8 @@ class F7ListItemContent extends React.Component {
         hasInputInfo: false,
         hasInputErrorMessage: false,
         hasInputValue: false,
-        hasInputFocused: false
+        hasInputFocused: false,
+        hasInputInvalid: false
       };
     })();
 
@@ -147,6 +148,7 @@ class F7ListItemContent extends React.Component {
       itemInputWithInfo
     } = props;
     const hasInputFocused = self.state.hasInputFocused;
+    const hasInputInvalid = self.state.hasInputInvalid;
     let hasInputValue = self.state.hasInputValue;
     let hasInput = itemInput || self.state.hasInput;
     let hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
@@ -341,7 +343,7 @@ class F7ListItemContent extends React.Component {
       'inline-label': hasInlineLabel,
       'item-input-with-info': hasInputInfo,
       'item-input-with-error-message': hasInputErrorMessage,
-      'item-input-invalid': hasInputErrorMessage,
+      'item-input-invalid': hasInputInvalid,
       'item-input-with-value': hasInputValue,
       'item-input-focused': hasInputFocused
     }, Mixins.colorClasses(props));
@@ -383,6 +385,7 @@ class F7ListItemContent extends React.Component {
     const hasInput = $inputWrapEl.length > 0;
     const hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
     const hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
+    const hasInputInvalid = $inputWrapEl.children('.input-invalid').length > 0;
 
     if (hasInlineLabel !== self.state.hasInlineLabel) {
       self.setState({
@@ -407,6 +410,12 @@ class F7ListItemContent extends React.Component {
         hasInputErrorMessage
       });
     }
+
+    if (hasInputInvalid !== self.state.hasInputInvalid) {
+      self.setState({
+        hasInputInvalid
+      });
+    }
   }
 
   componentDidMount() {
@@ -429,6 +438,7 @@ class F7ListItemContent extends React.Component {
     const hasInput = $inputWrapEl.length > 0;
     const hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
     const hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
+    const hasInputInvalid = $inputWrapEl.children('.input-invalid').length > 0;
 
     if (hasInput) {
       el.addEventListener('focus', self.onFocusBound, true);
@@ -458,6 +468,12 @@ class F7ListItemContent extends React.Component {
     if (!self.hasInputErrorMessageSet && hasInputErrorMessage !== self.state.hasInputErrorMessage) {
       self.setState({
         hasInputErrorMessage
+      });
+    }
+
+    if (!self.hasInputInvalidSet && hasInputInvalid !== self.state.hasInputInvalid) {
+      self.setState({
+        hasInputInvalid
       });
     }
   }

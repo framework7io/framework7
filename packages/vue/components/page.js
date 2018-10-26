@@ -52,7 +52,8 @@ export default {
     const state = (() => {
       return {
         hasSubnavbar: false,
-        routerClasses: ''
+        routerClass: '',
+        routerForceUnstack: false
       };
     })();
 
@@ -134,8 +135,8 @@ export default {
     }
 
     const forceSubnavbar = typeof subnavbar === 'undefined' && typeof withSubnavbar === 'undefined' ? hasSubnavbar || this.state.hasSubnavbar : false;
-    const classes = Utils.classNames(className, 'page', this.state.routerClasses, {
-      stacked,
+    const classes = Utils.classNames(className, 'page', this.state.routerClass, {
+      stacked: stacked && !this.state.routerForceUnstack,
       tabs,
       'page-with-subnavbar': subnavbar || withSubnavbar || forceSubnavbar,
       'no-navbar': noNavbar,
@@ -204,6 +205,8 @@ export default {
     self.onPageAfterOut = self.onPageAfterOut.bind(self);
     self.onPageAfterIn = self.onPageAfterIn.bind(self);
     self.onPageBeforeRemove = self.onPageBeforeRemove.bind(self);
+    self.onPageStack = self.onPageStack.bind(self);
+    self.onPageUnstack = self.onPageUnstack.bind(self);
 
     if (ptr) {
       el.addEventListener('ptr:pullstart', self.onPtrPullStart);
@@ -225,6 +228,8 @@ export default {
     el.addEventListener('page:afterout', self.onPageAfterOut);
     el.addEventListener('page:afterin', self.onPageAfterIn);
     el.addEventListener('page:beforeremove', self.onPageBeforeRemove);
+    el.addEventListener('page:stack', self.onPageStack);
+    el.addEventListener('page:unstack', self.onPageUnstack);
   },
 
   beforeDestroy() {
@@ -244,6 +249,8 @@ export default {
     el.removeEventListener('page:afterout', self.onPageAfterOut);
     el.removeEventListener('page:afterin', self.onPageAfterIn);
     el.removeEventListener('page:beforeremove', self.onPageBeforeRemove);
+    el.removeEventListener('page:stack', self.onPageStack);
+    el.removeEventListener('page:unstack', self.onPageUnstack);
   },
 
   methods: {
@@ -277,6 +284,18 @@ export default {
       this.dispatchEvent('page:mounted pageMounted', event, page);
     },
 
+    onPageStack() {
+      this.setState({
+        routerForceUnstack: false
+      });
+    },
+
+    onPageUnstack() {
+      this.setState({
+        routerForceUnstack: true
+      });
+    },
+
     onPageInit(event) {
       const page = event.detail;
       const {
@@ -305,13 +324,13 @@ export default {
 
       if (page.from === 'next') {
         this.setState({
-          routerClasses: 'page-next'
+          routerClass: 'page-next'
         });
       }
 
       if (page.from === 'previous') {
         this.setState({
-          routerClasses: 'page-previous'
+          routerClass: 'page-previous'
         });
       }
 
@@ -328,13 +347,13 @@ export default {
 
       if (page.to === 'next') {
         this.setState({
-          routerClasses: 'page-next'
+          routerClass: 'page-next'
         });
       }
 
       if (page.to === 'previous') {
         this.setState({
-          routerClasses: 'page-previous'
+          routerClass: 'page-previous'
         });
       }
 
@@ -344,7 +363,7 @@ export default {
     onPageAfterIn(event) {
       const page = event.detail;
       this.setState({
-        routerClasses: 'page-current'
+        routerClass: 'page-current'
       });
       this.dispatchEvent('page:afterin pageAfterIn', event, page);
     },

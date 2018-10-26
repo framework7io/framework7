@@ -214,6 +214,8 @@ export default {
     self.onPageAfterOut = self.onPageAfterOut.bind(self);
     self.onPageAfterIn = self.onPageAfterIn.bind(self);
     self.onPageBeforeRemove = self.onPageBeforeRemove.bind(self);
+    self.onPageStack = self.onPageStack.bind(self);
+    self.onPageUnstack = self.onPageUnstack.bind(self);
 
     if (ptr) {
       el.addEventListener('ptr:pullstart', self.onPtrPullStart);

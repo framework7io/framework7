@@ -54,7 +54,6 @@ declare namespace F7Button {
     force? : boolean
     animate? : boolean
     ignoreCache? : boolean
-    pageName? : string
     reloadCurrent? : boolean
     reloadAll? : boolean
     reloadPrevious? : boolean

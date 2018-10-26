@@ -53,7 +53,6 @@ const Mixins = {
       default: undefined,
     },
     ignoreCache: Boolean,
-    pageName: String,
     reloadCurrent: Boolean,
     reloadAll: Boolean,
     reloadPrevious: Boolean,

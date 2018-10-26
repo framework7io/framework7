@@ -75,10 +75,10 @@ export default {
   computed: {
     inputWithValue() {
       const self = this;
-      const { value, defaultValue } = self.props;
+      const { value } = self.props;
       const { currentInputValue } = self.state;
       return typeof value === 'undefined'
-        ? (defaultValue || defaultValue === 0 || currentInputValue)
+        ? (currentInputValue)
         : (value || value === 0);
     },
   },
