@@ -61,7 +61,7 @@ export default {
           return new Dialog(app, {
             title: typeof title === 'undefined' ? defaultDialogTitle() : title,
             text,
-            content: '<div class="dialog-input-field item-input"><div class="item-input-wrap"><input type="text" class="dialog-input"></div></div>',
+            content: '<div class="dialog-input-field input"><input type="text" class="dialog-input"></div>',
             buttons: [
               {
                 text: app.params.dialog.buttonCancel,
@@ -114,15 +114,11 @@ export default {
             title: typeof title === 'undefined' ? defaultDialogTitle() : title,
             text,
             content: `
-              <div class="dialog-input-field dialog-input-double item-input">
-                <div class="item-input-wrap">
-                  <input type="text" name="dialog-username" placeholder="${app.params.dialog.usernamePlaceholder}" class="dialog-input">
-                </div>
+              <div class="dialog-input-field dialog-input-double input">
+                <input type="text" name="dialog-username" placeholder="${app.params.dialog.usernamePlaceholder}" class="dialog-input">
               </div>
-              <div class="dialog-input-field dialog-input-double item-input">
-                <div class="item-input-wrap">
-                  <input type="password" name="dialog-password" placeholder="${app.params.dialog.passwordPlaceholder}" class="dialog-input">
-                </div>
+              <div class="dialog-input-field dialog-input-double input">
+                <input type="password" name="dialog-password" placeholder="${app.params.dialog.passwordPlaceholder}" class="dialog-input">
               </div>`,
             buttons: [
               {
@@ -153,10 +149,8 @@ export default {
             title: typeof title === 'undefined' ? defaultDialogTitle() : title,
             text,
             content: `
-              <div class="dialog-input-field item-input">
-                <div class="item-input-wrap">
-                  <input type="password" name="dialog-password" placeholder="${app.params.dialog.passwordPlaceholder}" class="dialog-input">
-                </div>
+              <div class="dialog-input-field input">
+                <input type="password" name="dialog-password" placeholder="${app.params.dialog.passwordPlaceholder}" class="dialog-input">
               </div>`,
             buttons: [
               {
