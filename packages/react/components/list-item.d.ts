@@ -57,7 +57,6 @@ declare namespace F7ListItem {
     force? : boolean
     animate? : boolean
     ignoreCache? : boolean
-    pageName? : string
     reloadCurrent? : boolean
     reloadAll? : boolean
     reloadPrevious? : boolean

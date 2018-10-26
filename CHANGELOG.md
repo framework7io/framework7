@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [v3.5.0](https://github.com/framework7io/framework7/compare/v3.4.3...v3.5.0) - October 26, 2018
+  * Phenome
+    * Fix issues with handling "stacked" pages
+    * New **ListInput** component to be used instead of ListItem+Label+Input
+  * Minor fixes
+
 # [v3.4.3](https://github.com/framework7io/framework7/compare/v3.4.2...v3.4.3) - October 19, 2018
   * Phenome
     * Input - better handling of `with-value` and `focused` states

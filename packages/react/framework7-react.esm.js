@@ -1,5 +1,5 @@
 /**
- * Framework7 React 3.4.3
+ * Framework7 React 3.5.0
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 19, 2018
+ * Released on: October 26, 2018
  */
 
 import F7AccordionContent from './components/accordion-content';
@@ -43,6 +43,7 @@ import F7Link from './components/link';
 import F7ListButton from './components/list-button';
 import F7ListGroup from './components/list-group';
 import F7ListIndex from './components/list-index';
+import F7ListInput from './components/list-input';
 import F7ListItemCell from './components/list-item-cell';
 import F7ListItemContent from './components/list-item-content';
 import F7ListItemRow from './components/list-item-row';
@@ -126,6 +127,7 @@ const Link = F7Link;
 const ListButton = F7ListButton;
 const ListGroup = F7ListGroup;
 const ListIndex = F7ListIndex;
+const ListInput = F7ListInput;
 const ListItemCell = F7ListItemCell;
 const ListItemContent = F7ListItemContent;
 const ListItemRow = F7ListItemRow;
@@ -242,6 +244,8 @@ export {
   ListGroup,
   F7ListIndex,
   ListIndex,
+  F7ListInput,
+  ListInput,
   F7ListItemCell,
   ListItemCell,
   F7ListItemContent,

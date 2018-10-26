@@ -40,6 +40,7 @@ import F7Link from './components/link';
 import F7ListButton from './components/list-button';
 import F7ListGroup from './components/list-group';
 import F7ListIndex from './components/list-index';
+import F7ListInput from './components/list-input';
 import F7ListItemCell from './components/list-item-cell';
 import F7ListItemContent from './components/list-item-content';
 import F7ListItemRow from './components/list-item-row';
@@ -186,6 +187,8 @@ export {
   F7ListGroup as ListGroup,
   F7ListIndex,
   F7ListIndex as ListIndex,
+  F7ListInput,
+  F7ListInput as ListInput,
   F7ListItemCell,
   F7ListItemCell as ListItemCell,
   F7ListItemContent,
