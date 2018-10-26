@@ -283,7 +283,7 @@
   background-image: url("data:image/svg+xml;charset=utf-8,@{url}");
 }
 // MD Active Active Links Highlights
-.md-link-highlight(@color:rgba(255,255,255,0.15)) {
+.link-highlight() {
   &:before {
     content: '';
     width: 152%;
@@ -291,7 +291,7 @@
     position: absolute;
     left: -26%;
     top: -26%;
-    background-image: radial-gradient(circle at center, @color 66%, rgba(255,255,255,0) 66%);
+    background-image: radial-gradient(circle at center, var(--f7-link-highlight-color) 66%, rgba(255,255,255,0) 66%);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 100%;
@@ -304,8 +304,33 @@
     transition-duration: 150ms;
   }
 }
-
 // MD Bars Shadow
+.bar-shadow-bottom(@image) {
+  &:before {
+    content: '';
+    position: absolute;
+    right: 0;
+    width: 100%;
+    top: 100%;
+    bottom: auto;
+    height: 10px;
+    pointer-events: none;
+    background: @image;
+  }
+}
+.bar-shadow-top(@image) {
+  &:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    width: 100%;
+    bottom: 100%;
+    height: 10px;
+    top: auto;
+    pointer-events: none;
+    background: @image;
+  }
+}
 .md-bar-shadow-remove() {
   &:after, &:before {
     display: none;

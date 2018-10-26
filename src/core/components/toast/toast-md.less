@@ -3,7 +3,7 @@
     transition-duration: 200ms;
     border-radius: var(--f7-toast-border-radius);
     left: 8px;
-    width: ~"calc(100% - 16px)";
+    width: calc(100% - 16px);
     transform: scale(0.9);
     &.modal-in {
       transform: scale(1);
@@ -26,7 +26,7 @@
       }
     }
     &.toast-bottom {
-      bottom: ~"calc(8px + var(--f7-safe-area-bottom))";
+      bottom: calc(8px + var(--f7-safe-area-bottom));
     }
     // 568 + 16
     @media (min-width: 584px) {
@@ -43,7 +43,7 @@
         left: 24px;
       }
       &.toast-bottom {
-        bottom: ~"calc(24px + var(--f7-safe-area-bottom))";
+        bottom: calc(24px + var(--f7-safe-area-bottom));
       }
       &.toast-top {
         top: 24px;

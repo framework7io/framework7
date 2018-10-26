@@ -1,11 +1,6 @@
 .md {
-  @import (multiple) '../../less/colors-md.less';
-  @import (multiple) '../../less/vars-md.less';
   .messagebar {
     .md-bar-no-shadow();
-    a.link {
-      .md-link-highlight(var(--f7-messagebar-link-highlight-color));
-    }
   }
   .messagebar-attachments {
     padding: 8px;
@@ -15,7 +10,8 @@
     margin-top: 8px;
     margin-bottom: 8px;
   }
-  .messagebar-sheet-image, .messagebar-sheet-item {
+  .messagebar-sheet-image,
+  .messagebar-sheet-item {
     .icon-checkbox {
       border-color: #fff;
       background: rgba(255,255,255,0.25);

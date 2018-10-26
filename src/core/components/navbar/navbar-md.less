@@ -1,13 +1,9 @@
 .md {
   .navbar {
-    .md-bar-shadow-to-bottom();
-    &.no-shadow, &.navbar-hidden {
-      .md-bar-no-shadow();
-    }
     a.link {
       padding: 0 16px;
       min-width: 48px;
-      .md-link-highlight();
+      .link-highlight();
     }
     a.icon-only {
       min-width: 0;
@@ -46,14 +42,5 @@
   }
   .page-with-subnavbar .navbar-inner {
     overflow: visible;
-  }
-
-  // Relation with page
-  .navbar ~ * .page-content, .navbar ~ .page-content {
-    padding-top: var(--f7-navbar-height);
-  }
-
-  @media (min-width: 768px) {
-    --f7-navbar-height: var(--f7-navbar-tablet-size);
   }
 }

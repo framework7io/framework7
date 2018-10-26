@@ -1,11 +1,5 @@
 .ios {
   .navbar {
-    &.no-hairline {
-      .hairline-remove(bottom);
-    }
-    &:after {
-      backface-visibility: hidden;
-    }
     a.icon-only {
       width: var(--f7-navbar-height);
       margin: 0;
@@ -58,15 +52,10 @@
       });
     }
   }
-  .hairline-root('.navbar', bottom, var(--f7-bars-border-color));
+
   .navbar-inner {
     justify-content: space-between;
-    padding: ~"0 calc(8px + var(--f7-safe-area-right)) 0 calc(8px + var(--f7-safe-area-left))";
-  }
-
-  // Relation with page
-  .navbar ~ *:not(.no-navbar) .page-content, .navbar ~ .page-content {
-    padding-top: var(--f7-navbar-height);
+    padding: 0 calc(8px + var(--f7-safe-area-right)) 0 calc(8px + var(--f7-safe-area-left));
   }
 
   // Positions

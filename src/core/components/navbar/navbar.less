@@ -1,4 +1,6 @@
 /* === Navbar === */
+@import url('./navbar-vars.less');
+
 .navbar {
   position: relative;
   left: 0;
@@ -10,14 +12,14 @@
   margin: 0;
   transform: translate3d(0,0,0);
   height: var(--f7-navbar-height);
-  background-color: var(--f7-bars-bg-color, var(--f7-theme-color));
-  color: var(--f7-bars-text-color);
+  background-color: var(--f7-navbar-bg-color, var(--f7-bars-bg-color, var(--f7-theme-color)));
+  color: var(--f7-navbar-text-color, var(--f7-bars-text-color));
   font-size: var(--f7-navbar-font-size);
   b {
     font-weight: 500;
   }
   a {
-    color: var(--f7-bars-link-color, var(--f7-theme-color));
+    color: var(--f7-navbar-link-color, var(--f7-bars-link-color, var(--f7-theme-color)));
   }
   a.link {
     display: flex;
@@ -55,10 +57,31 @@
     position: absolute;
     height: 100%;
   }
+
+  &.no-hairline, &.no-border {
+    &:after {
+      display: none !important;
+    }
+  }
+  &.no-shadow, &.navbar-hidden {
+    &:before {
+      display: none !important;
+    }
+  }
+  &:after, &:before {
+    backface-visibility: hidden;
+  }
+  .hairline(bottom, var(--f7-navbar-border-color, var(--f7-bars-border-color)));
+  .bar-shadow-bottom(var(--f7-navbar-shadow-image, var(--f7-bars-shadow-image)));
+}
+:root {
+  @media (min-width: 768px) {
+    --f7-navbar-height: var(--f7-navbar-tablet-height);
+  }
 }
 // Transitions
 .navbar-transitioning {
-  transition-duration: 400ms;
+  transition-duration: var(--f7-navbar-hide-show-transition-duration);
 }
 .navbar-page-transitioning {
   transition-duration: var(--f7-page-swipeback-transition-duration);
@@ -84,6 +107,11 @@
   > .navbar {
     position: absolute;
   }
+}
+// Relation with page
+.navbar ~ *:not(.no-navbar) .page-content,
+.navbar ~ .page-content {
+  padding-top: var(--f7-navbar-height);
 }
 
 & when (@includeIosTheme) {
