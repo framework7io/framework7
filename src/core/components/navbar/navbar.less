@@ -72,7 +72,7 @@
     backface-visibility: hidden;
   }
   .hairline(bottom, var(--f7-navbar-border-color, var(--f7-bars-border-color)));
-  .bar-shadow-bottom(var(--f7-navbar-shadow-image, var(--f7-bars-shadow-image)));
+  .bar-shadow-bottom(var(--f7-navbar-shadow-image, var(--f7-bars-shadow-bottom-image)));
 }
 :root {
   @media (min-width: 768px) {
@@ -109,7 +109,8 @@
   }
 }
 // Relation with page
-.navbar ~ *:not(.no-navbar) .page-content,
+.navbar ~ * .page:not(.no-navbar) .page-content,
+.navbar ~ .page:not(.no-navbar) .page-content,
 .navbar ~ .page-content {
   padding-top: var(--f7-navbar-height);
 }

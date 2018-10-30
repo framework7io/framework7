@@ -20,7 +20,6 @@
     height: 24px;
     margin-left: 12px;
     margin-top: -12px;
-    color: #737373;
     &:after {
       content: 'search_md';
       line-height: 1.2;
@@ -33,7 +32,7 @@
     font-size: 0 !important;
     display: block;
     margin-top: -24px;
-    color: #737373;
+    color: var(--f7-searchbar-link-color, var(--f7-bars-link-color, var(--f7-theme-color)));
     .link-highlight();
     --f7-link-highlight-color: var(--f7-link-highlight-black);
     &:after {
@@ -65,35 +64,23 @@
       margin-top: -24px;
       .ltr({ right: 0; });
       .rtl({ left: 0; });
-      color: #737373;
+      .link-highlight();
+      --f7-link-highlight-color: var(--f7-link-highlight-black);
       &:after {
         line-height: 48px;
         content: 'delete_md';
         opacity: 1;
       }
-    }
-    .input-clear-button:before {
-      margin-left: 0;
-      margin-top: 0;
-    }
-  }
-  .page-content .searchbar {
-    border-radius: 2px;
-    margin: 8px;
-    width: auto;
-    box-shadow: var(--f7-elevation-1);
-    .searchbar-inner {
-      border-radius: 2px;
+      &:before {
+        margin-left: 0;
+        margin-top: 0;
+      }
     }
   }
-  .page > .searchbar {
-    z-index: 510;
-    .md-bar-shadow-to-bottom();
-    &.no-shadow {
-      .md-bar-no-shadow();
-    }
-  }
-  .page > .searchbar, .subnavbar .searchbar, .searchbar-expandable {
+  
+  .page > .searchbar,
+  .subnavbar .searchbar,
+  .searchbar-expandable {
     --f7-searchbar-input-padding-left: calc(var(--f7-searchbar-input-padding-horizontal) + 17px + 8px);
     .searchbar-icon, .searchbar-disable-button {
       .ltr({
@@ -105,34 +92,22 @@
     }
   }
   .searchbar-expandable {
-    --f7-searchbar-size: var(--f7-searchbar-height);
+    --f7-searchbar-expandable-size: var(--f7-searchbar-height);
     height: 100%;
     opacity: 0;
     top: 50%;
-    border-radius: calc(var(--f7-searchbar-size));
-    width: calc(var(--f7-searchbar-size));
-    margin-top: calc(var(--f7-searchbar-size) * -1 / 2);
+    border-radius: calc(var(--f7-searchbar-expandable-size));
+    width: calc(var(--f7-searchbar-expandable-size));
+    margin-top: calc(var(--f7-searchbar-expandable-size) * -1 / 2);
     transform: translate3d(0px, 0px, 0px);
     .ltr({
       left: 100%;
-      margin-left: calc(var(--f7-searchbar-size) * -1);
+      margin-left: calc(var(--f7-searchbar-expandable-size) * -1);
     });
     .rtl({
       right: 100%;
-      margin-right: calc(var(--f7-searchbar-size) * -1);
+      margin-right: calc(var(--f7-searchbar-expandable-size) * -1);
     });
-  }
-  .navbar .searchbar-expandable {
-    --f7-searchbar-size: var(--f7-navbar-height);
-  }
-  .toolbar .searchbar-expandable {
-    --f7-searchbar-size: var(--f7-navbar-height);
-  }
-  .subnavbar .searchbar-expandable {
-    --f7-searchbar-size: var(--f7-subnavbar-height);
-  }
-  .tabbar-labels .searchbar-expandable {
-    --f7-searchbar-size: var(--f7-tabbar-labels-height);
   }
 
   .searchbar-expandable.searchbar-enabled {
@@ -150,20 +125,6 @@
       right: 0;
       margin-right: 0;
     });
-  }
-
-  // Relation with page/navbar/toolbar
-  .page > .searchbar ~ * .page-content,
-  .page > .searchbar ~ .page-content {
-    padding-top: var(--f7-searchbar-height);
-  }
-  // Navbar
-  .page > .navbar ~ .searchbar {
-    top: var(--f7-navbar-height);
-  }
-  .page > .navbar ~ .searchbar ~ * .page-content,
-  .page > .navbar ~ .searchbar ~ .page-content {
-    padding-top: calc(var(--f7-navbar-height) + var(--f7-searchbar-height));
   }
 
   // Toolbar

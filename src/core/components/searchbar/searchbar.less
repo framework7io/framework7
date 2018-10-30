@@ -1,4 +1,6 @@
 /* === Searchbar === */
+@import url('./searchbar-vars.less');
+
 .searchbar {
   width: 100%;
   position: relative;
@@ -6,6 +8,22 @@
   height: var(--f7-searchbar-height);
   background-color: var(--f7-searchbar-bg-color, var(--f7-bars-bg-color, var(--f7-theme-color)));
   --f7-ripple-wave-color: var(--f7-ripple-wave-black);
+  &.no-hairline, &.no-border {
+    &:after {
+      display: none !important;
+    }
+  }
+  &.no-shadow {
+    &:before {
+      display: none !important;
+    }
+  }
+  .hairline(bottom, var(--f7-searchbar-border-color, var(--f7-bars-border-color)));
+  
+  .page > & {
+    z-index: 510;
+    .bar-shadow-bottom(var(--f7-searchbar-shadow-image, var(--f7-bars-shadow-bottom-image)));
+  }
   input[type="text"], input[type="search"] {
     box-sizing: border-box;
     width: 100%;
@@ -44,18 +62,44 @@
     position: relative;
   }
   a {
-    color: var(--f7-bars-link-color, var(--f7-theme-color));
+    color: var(--f7-searchbar-link-color, var(--f7-bars-link-color, var(--f7-theme-color)));
   }
   .page > & {
     position: absolute;
     left: 0;
     top: 0;
   }
+  .page-content & {
+    border-radius: var(--f7-searchbar-in-page-content-border-radius);
+    margin: var(--f7-searchbar-in-page-content-margin);
+    width: auto;
+    box-shadow: var(--f7-searchbar-in-page-content-box-shadow);
+    .searchbar-inner,
+    input[type="text"],
+    input[type="search"] {
+      border-radius: var(--f7-searchbar-in-page-content-border-radius);
+    }
+  }
+  .input-clear-button {
+    color: var(--f7-searchbar-input-clear-button-color, var(--f7-input-clear-button-color));
+  }
 }
 .searchbar-expandable {
   position: absolute;
   transition-duration: 300ms;
   pointer-events: none;
+}
+.navbar .searchbar.searchbar-expandable {
+  --f7-searchbar-expandable-size: var(--f7-navbar-height);
+}
+.toolbar .searchbar.searchbar-expandable {
+  --f7-searchbar-expandable-size: var(--f7-toolbar-height);
+}
+.subnavbar .searchbar.searchbar-expandable {
+  --f7-searchbar-expandable-size: var(--f7-subnavbar-height);
+}
+.tabbar-labels .searchbar.searchbar-expandable {
+  --f7-searchbar-expandable-size: var(--f7-tabbar-labels-height);
 }
 .searchbar-inner {
   position: absolute;
@@ -84,6 +128,7 @@
   background-position: center;
   background-repeat: no-repeat;
   &:after {
+    color: var(--f7-searchbar-search-icon-color);
     .coreIconsFont();
   }
 }
@@ -115,6 +160,24 @@
     display: none !important;
   }
 }
+
+// Relation with page
+.navbar ~ .page:not(.no-navbar) > .searchbar,
+.page > .navbar ~ .searchbar {
+  top: var(--f7-navbar-height);
+}
+
+.page > .searchbar ~ * .page-content,
+.page > .searchbar ~ .page-content {
+  padding-top: var(--f7-searchbar-height);
+}
+.page > .navbar ~ .searchbar ~ * .page-content,
+.page > .navbar ~ .searchbar ~ .page-content,
+.navbar ~ .page:not(.no-navbar) > .searchbar ~ .page-content,
+.navbar ~ .page:not(.no-navbar) > .searchbar ~ * .page-content {
+  padding-top: calc(var(--f7-navbar-height) + var(--f7-searchbar-height));
+}
+
 & when (@includeIosTheme) {
   @import url('./searchbar-ios.less');
 }
