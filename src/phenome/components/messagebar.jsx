@@ -44,6 +44,7 @@ export default {
     value: [String, Number, Array],
     disabled: Boolean,
     readonly: Boolean,
+    textareaId: [Number, String],
     name: String,
     placeholder: {
       type: String,

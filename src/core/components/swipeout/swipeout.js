@@ -165,8 +165,16 @@ const Swipeout = {
           if ($overswipeRightButton.length > 0 && $buttonEl.hasClass('swipeout-overswipe') && direction === 'to-left') {
             $buttonEl.css({ left: `${overswipeRight ? -buttonOffset : 0}px` });
             if (overswipeRight) {
+              if (!$buttonEl.hasClass('swipeout-overswipe-active')) {
+                $swipeoutEl.trigger('swipeout:overswipeenter');
+                app.emit('swipeoutOverswipeEnter', $swipeoutEl[0]);
+              }
               $buttonEl.addClass('swipeout-overswipe-active');
             } else {
+              if ($buttonEl.hasClass('swipeout-overswipe-active')) {
+                $swipeoutEl.trigger('swipeout:overswipeexit');
+                app.emit('swipeoutOverswipeExit', $swipeoutEl[0]);
+              }
               $buttonEl.removeClass('swipeout-overswipe-active');
             }
           }
@@ -197,8 +205,16 @@ const Swipeout = {
           if ($overswipeLeftButton.length > 0 && $buttonEl.hasClass('swipeout-overswipe') && direction === 'to-right') {
             $buttonEl.css({ left: `${overswipeLeft ? buttonOffset : 0}px` });
             if (overswipeLeft) {
+              if (!$buttonEl.hasClass('swipeout-overswipe-active')) {
+                $swipeoutEl.trigger('swipeout:overswipeenter');
+                app.emit('swipeoutOverswipeEnter', $swipeoutEl[0]);
+              }
               $buttonEl.addClass('swipeout-overswipe-active');
             } else {
+              if ($buttonEl.hasClass('swipeout-overswipe-active')) {
+                $swipeoutEl.trigger('swipeout:overswipeexit');
+                app.emit('swipeoutOverswipeExit', $swipeoutEl[0]);
+              }
               $buttonEl.removeClass('swipeout-overswipe-active');
             }
           }
