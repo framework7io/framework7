@@ -19,7 +19,12 @@
 .picker-popover {
   width: var(--f7-picker-popover-width);
   .toolbar {
+    .hairline-remove(top);
+    background: none;
     border-radius: var(--f7-popover-border-radius) var(--f7-popover-border-radius) 0 0;
+  }
+  .toolbar + .picker-columns {
+    height: calc(100% - var(--f7-toolbar-height));
   }
 }
 .picker-columns {
