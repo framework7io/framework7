@@ -77,7 +77,7 @@
       }
     }
   }
-  
+
   .page > .searchbar,
   .subnavbar .searchbar,
   .searchbar-expandable {
@@ -125,39 +125,5 @@
       right: 0;
       margin-right: 0;
     });
-  }
-
-  // Toolbar
-  .page > .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .searchbar {
-    top: var(--f7-toolbar-height);
-  }
-  .page > .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .searchbar ~ * .page-content,
-  .page > .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .searchbar ~ .page-content {
-    padding-top: calc(var(--f7-toolbar-height) + var(--f7-searchbar-height));
-  }
-
-  .page > .tabbar-labels:not(.toolbar-bottom-md) ~ .searchbar {
-    top: var(--f7-toolbar-labels-height);
-  }
-  .page > .tabbar-labels:not(.toolbar-bottom-md) ~ .searchbar ~ * .page-content,
-  .page > .tabbar-labels:not(.toolbar-bottom-md) ~ .searchbar ~ .page-content {
-    padding-top: calc(var(--f7-tabbar-labels-height) + var(--f7-searchbar-height));
-  }
-
-  // Navbar + Toolbar
-  .page > .navbar ~ .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .searchbar {
-    top: calc(var(--f7-navbar-height) + var(--f7-searchbar-height));
-  }
-  .page > .navbar ~ .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .searchbar ~ * .page-content,
-  .page > .navbar ~ .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .searchbar ~ .page-content {
-    padding-top: calc(var(--f7-navbar-height) + var(--f7-toolbar-height) + var(--f7-searchbar-height));
-  }
-
-  .page > .navbar ~ .tabbar-labels:not(.toolbar-bottom-md) ~ .searchbar {
-    top: calc(var(--f7-navbar-height) + var(--f7-tabbar-labels-height));
-  }
-  .page > .navbar ~ .tabbar-labels:not(.toolbar-bottom-md) ~ .searchbar ~ * .page-content,
-  .page > .navbar ~ .tabbar-labels:not(.toolbar-bottom-md) ~ .searchbar ~ .page-content {
-    padding-top: calc(var(--f7-navbar-height) + var(--f7-tabbar-labels-height) + var(--f7-searchbar-height));
   }
 }
