@@ -4,9 +4,10 @@
 .messagebar {
   transform: translate3d(0,0,0);
   background: var(--f7-messagebar-bg-color);
-  height: auto !important;
+  height: auto;
   min-height: var(--f7-messagebar-height);
   font-size: var(--f7-messagebar-font-size);
+  padding-bottom: var(--f7-safe-area-bottom);
   bottom: 0;
   .hairline(top, var(--f7-messagebar-border-color));
   .bar-shadow-top(var(--f7-messagebar-shadow-image));
@@ -24,7 +25,7 @@
     top: auto;
     position: relative;
     height: auto;
-    bottom: var(--f7-safe-area-bottom);
+    bottom: auto;
     .rtl({
       flex-direction: row-reverse;
     });
