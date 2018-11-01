@@ -296,6 +296,69 @@
   }
 }
 
+// Relation with navbar
+.navbar ~ * .fab[class*="-top"],
+.navbar ~ .fab[class*="-top"] {
+  margin-top: var(--f7-navbar-height);
+}
+// Relation with toolbar
+.toolbar-top ~ * .fab[class*="-top"],
+.toolbar-top ~ .fab[class*="-top"],
+.ios .toolbar-top-ios ~ * .fab[class*="-top"],
+.ios .toolbar-top-ios ~ .fab[class*="-top"],
+.md .toolbar-top-md ~ * .fab[class*="-top"],
+.md .toolbar-top-md ~ .fab[class*="-top"] {
+  margin-top: var(--f7-toolbar-height);
+}
+.toolbar-bottom ~ * .fab[class*="-bottom"],
+.toolbar-bottom ~ .fab[class*="-bottom"],
+.ios .toolbar-bottom-ios ~ * .fab[class*="-bottom"],
+.ios .toolbar-bottom-ios ~ .fab[class*="-bottom"],
+.md .toolbar-bottom-md ~ * .fab[class*="-bottom"],
+.md .toolbar-bottom-md ~ .fab[class*="-bottom"] {
+  margin-bottom: var(--f7-toolbar-height);
+}
+.tabbar-labels.toolbar-bottom ~ * .fab[class*="-bottom"],
+.tabbar-labels.toolbar-bottom ~ .fab[class*="-bottom"],
+.ios .tabbar-labels.toolbar-bottom-ios ~ * .fab[class*="-bottom"],
+.ios .tabbar-labels.toolbar-bottom-ios ~ .fab[class*="-bottom"],
+.md .tabbar-labels.toolbar-bottom-md ~ * .fab[class*="-bottom"],
+.md .tabbar-labels.toolbar-bottom-md ~ .fab[class*="-bottom"] {
+  margin-bottom: var(--f7-tabbar-labels-height);
+}
+.tabbar-labels.toolbar-top ~ * .fab[class*="-bottom"],
+.tabbar-labels.toolbar-top ~ .fab[class*="-bottom"],
+.ios .tabbar-labels.toolbar-top-ios ~ * .fab[class*="-bottom"],
+.ios .tabbar-labels.toolbar-top-ios ~ .fab[class*="-bottom"],
+.md .tabbar-labels.toolbar-top-md ~ * .fab[class*="-bottom"],
+.md .tabbar-labels.toolbar-top-md ~ .fab[class*="-bottom"] {
+  margin-top: var(--f7-tabbar-labels-height);
+}
+
+.messagebar ~ * .fab[class*="-bottom"],
+.messagebar ~ .fab[class*="-bottom"] {
+  margin-bottom: var(--f7-messagebar-height);
+}
+
+.navbar {
+  + .toolbar-top,
+  .ios & + .toolbar-top-ios,
+  .md & + .toolbar-top-ios {
+    ~ * .fab[class*="-top"],
+    ~ .fab[class*="-top"] {
+      margin-top: calc(var(--f7-toolbar-height) + var(--f7-navbar-height));
+    }
+  }
+  + .toolbar-top.tabbar-labels,
+  .ios & + .toolbar-top-ios.tabbar-labels,
+  .md & + .toolbar-top-ios.tabbar-labels {
+    ~ * .fab[class*="-top"],
+    ~ .fab[class*="-top"] {
+      margin-top: calc(var(--f7-tabbar-labels-height) + var(--f7-navbar-height));
+    }
+  }
+}
+
 & when (@includeIosTheme) {
   @import url('./fab-ios.less');
 }

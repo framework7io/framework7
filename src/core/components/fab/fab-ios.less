@@ -1,25 +1,11 @@
 .ios {
-  .fab > a, .fab-buttons a {
+  .fab > a,
+  .fab-buttons a {
     &.active-state {
       transition-duration: 0ms;
     }
     i.icon {
       font-size: 21px;
     }
-  }
-
-  // Relation with navbar
-  .navbar ~ * .fab[class*="-top"],
-  .navbar ~ .fab[class*="-top"] {
-    margin-top: var(--f7-navbar-height);
-  }
-  // Relation with toolbar
-  .toolbar ~ * .fab[class*="-bottom"],
-  .toolbar ~ .fab[class*="-bottom"] {
-    margin-bottom: var(--f7-toolbar-height);
-  }
-  .tabbar-labels ~ * .fab[class*="-bottom"],
-  .tabbar-labels ~ .fab[class*="-bottom"] {
-    margin-bottom: var(--f7-tabbar-labels-height);
   }
 }
