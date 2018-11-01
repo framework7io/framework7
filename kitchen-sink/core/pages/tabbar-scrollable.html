@@ -9,14 +9,14 @@
             </a>
           </div>
         <div class="title">Tabbar Scrollable</div>
-        <div class="right md-only">
+        <div class="right">
           <a class="link" @click="toggleToolbarPosition">
             <i class="icon material-icons rotate-icon">compare_arrows</i>
           </a>
         </div>
       </div>
     </div>
-    <div class="toolbar tabbar tabbar-scrollable">
+    <div class="toolbar tabbar tabbar-scrollable toolbar-{{position}}">
       <div class="toolbar-inner">
         {{#each tabs}}
         <a href="#tab-{{this}}" class="tab-link {{#if @first}}tab-link-active{{/if}}">Tab {{this}}</a>
@@ -46,14 +46,17 @@
 </style>
 <script>
   return {
-    data: function () {
+    data() {
       return {
         tabs: [1,2,3,4,5,6,7,8,9,10],
+        position: 'bottom',
       };
     },
     methods: {
       toggleToolbarPosition: function () {
-        this.$el.find('.toolbar, .tabbar').toggleClass('toolbar-bottom-md');
+        this.$setState({
+          position: this.position === 'top' ? 'bottom' : 'top',
+        });
       },
     }
   }

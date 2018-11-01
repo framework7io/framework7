@@ -11,7 +11,7 @@
         <div class="title">Toolbar & Tabbar</div>
       </div>
     </div>
-    <div class="toolbar">
+    <div class="toolbar toolbar-{{position}}">
       <div class="toolbar-inner">
         <a class="link">Left Link</a>
         <a class="link">Right Link</a>
@@ -34,8 +34,8 @@
           </li>
         </ul>
       </div>
-      <div class="block-title md-only">Toolbar Position</div>
-      <div class="block md-only">
+      <div class="block-title">Toolbar Position</div>
+      <div class="block">
         <p>Material (MD) theme toolbar supports both top and bottom positions. Click the following button to change its position.</p>
         <p><a class="button button-raised" @click="toggleToolbarPosition">Toggle Toolbar Position</a></p>
       </div>
@@ -44,9 +44,16 @@
 </template>
 <script>
   return {
+    data() {
+      return {
+        position: 'bottom',
+      };
+    },
     methods: {
       toggleToolbarPosition: function () {
-        this.$el.find('.toolbar, .tabbar').toggleClass('toolbar-bottom-md');
+        this.$setState({
+          position: this.position === 'top' ? 'bottom' : 'top',
+        });
       },
     }
   }
