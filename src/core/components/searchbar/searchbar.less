@@ -7,7 +7,7 @@
   z-index: 200;
   height: var(--f7-searchbar-height);
   background-color: var(--f7-searchbar-bg-color, var(--f7-bars-bg-color, var(--f7-theme-color)));
-  --f7-ripple-wave-color: var(--f7-ripple-wave-black);
+  --f7-touch-ripple-color: var(--f7-touch-ripple-black);
   &.no-hairline, &.no-border {
     &:after {
       display: none !important;
@@ -19,7 +19,7 @@
     }
   }
   .hairline(bottom, var(--f7-searchbar-border-color, var(--f7-bars-border-color)));
-  
+
   .page > & {
     z-index: 510;
     .bar-shadow-bottom(var(--f7-searchbar-shadow-image, var(--f7-bars-shadow-bottom-image)));

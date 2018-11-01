@@ -18,7 +18,7 @@
     font-size: 0;
     transform: translate3d(0px, 0px, 0) scale(0);
     transition-duration: 1400ms;
-    background-color: var(--f7-ripple-wave-color);
+    background-color: var(--f7-touch-ripple-color);
     &.ripple-wave-fill {
       transition-duration: 300ms;
       opacity: 0.35;
@@ -38,8 +38,8 @@
       z-index: 0;
     }
   }
-  
+
   [class*="ripple-color-"] {
-    --f7-ripple-wave-color: var(--f7-theme-color-ripple-color);
+    --f7-touch-ripple-color: var(--f7-theme-color-ripple-color);
   }
 }
