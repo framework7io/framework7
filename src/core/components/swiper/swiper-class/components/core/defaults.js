@@ -68,6 +68,7 @@ export default {
   threshold: 0,
   touchMoveStopPropagation: true,
   touchStartPreventDefault: true,
+  touchStartForcePreventDefault: false,
   touchReleaseOnEdges: false,
 
   // Unique Navigation Elements
