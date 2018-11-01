@@ -57,6 +57,8 @@ function parseComponent(componentString) {
   } else {
     scriptContent = 'return {}';
   }
+  if (!scriptContent || !scriptContent.trim()) scriptContent = 'return {}';
+
   scriptContent = `window.${callbackCreateName} = function () {${scriptContent}}`;
 
   // Insert Script El
