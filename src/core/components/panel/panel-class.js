@@ -214,35 +214,33 @@ class Panel extends Framework7Class {
     $backdropEl.show();
 
     /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
-    // panel._clientLeft = $el[0].clientLeft;
+    panel._clientLeft = $el[0].clientLeft;
 
-    Utils.nextFrame(() => {
-      $('html').addClass(`with-panel with-panel-${side}-${effect}`);
-      panel.onOpen();
+    $('html').addClass(`with-panel with-panel-${side}-${effect}`);
+    panel.onOpen();
 
-      // Transition End;
-      const transitionEndTarget = effect === 'reveal' ? $el.nextAll('.view, .views').eq(0) : $el;
+    // Transition End;
+    const transitionEndTarget = effect === 'reveal' ? $el.nextAll('.view, .views').eq(0) : $el;
 
-      function panelTransitionEnd() {
-        transitionEndTarget.transitionEnd((e) => {
-          if ($(e.target).is(transitionEndTarget)) {
-            if ($el.hasClass('panel-active')) {
-              panel.onOpened();
-              $backdropEl.css({ display: '' });
-            } else {
-              panel.onClosed();
-              $backdropEl.css({ display: '' });
-            }
-          } else panelTransitionEnd();
-        });
-      }
-      if (animate) {
-        panelTransitionEnd();
-      } else {
-        panel.onOpened();
-        $backdropEl.css({ display: '' });
-      }
-    });
+    function panelTransitionEnd() {
+      transitionEndTarget.transitionEnd((e) => {
+        if ($(e.target).is(transitionEndTarget)) {
+          if ($el.hasClass('panel-active')) {
+            panel.onOpened();
+            $backdropEl.css({ display: '' });
+          } else {
+            panel.onClosed();
+            $backdropEl.css({ display: '' });
+          }
+        } else panelTransitionEnd();
+      });
+    }
+    if (animate) {
+      panelTransitionEnd();
+    } else {
+      panel.onOpened();
+      $backdropEl.css({ display: '' });
+    }
 
     return true;
   }
