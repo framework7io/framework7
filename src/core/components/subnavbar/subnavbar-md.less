@@ -1,13 +1,8 @@
 .md {
   .subnavbar {
     height: var(--f7-subnavbar-height);
-    .md-bar-shadow-to-bottom();
-    &.no-shadow {
-      .md-bar-shadow-remove();
-    }
     .title {
       margin: 0 16px;
-      line-height: 1.2;
     }
     .ltr ({
       .title:first-child {
@@ -44,8 +39,7 @@
     }
   }
   .subnavbar-inner {
-    padding: 0 16px;
-    padding: ~"0 calc(16px + var(--f7-safe-area-right)) 0 calc(16px + var(--f7-safe-area-left))";
+    padding: 0 calc(16px + var(--f7-safe-area-right)) 0 calc(16px + var(--f7-safe-area-left));
     .ltr({
       > a.link:first-child {
         margin-left: -16px;
@@ -62,27 +56,5 @@
         margin-left: -16px;
       }
     });
-  }
-
-  // Relation with page and navbar
-  .subnavbar ~ * .page-content,
-  .subnavbar ~ .page-content,
-  .page-with-subnavbar .page-content
-  {
-    padding-top: var(--f7-subnavbar-height);
-  }
-  .navbar ~ .subnavbar ~ .page-content,
-  .navbar ~ .subnavbar ~ * .page-content,
-  .page-with-subnavbar .navbar ~ * .page-content,
-  .page-with-subnavbar .navbar ~ .page-content
-  {
-    padding-top: calc(var(--f7-navbar-height) + var(--f7-subnavbar-height));
-  }
-  .navbar ~ .subnavbar,
-  .navbar ~ * .subnavbar,
-  .page-with-subnavbar .navbar ~ .subnavbar,
-  .page-with-subnavbar .navbar ~ * .subnavbar
-  {
-    top: var(--f7-navbar-height);
   }
 }

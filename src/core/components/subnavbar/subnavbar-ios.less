@@ -3,14 +3,9 @@
     height: calc(var(--f7-subnavbar-height) + 1px);
     margin-top: -1px;
     padding-top: 1px;
-    &.no-hairline {
-      .hairline-remove(bottom);
-    }
     .title {
-      line-height: 1.1;
       align-self: flex-start;
       flex-shrink: 10;
-      letter-spacing: -0.03em;
     }
     .ltr({
       .title {
@@ -59,31 +54,8 @@
       margin: 0;
     }
   }
-  .hairline-root('.subnavbar', bottom, var(--f7-bars-border-color));
 
   .subnavbar-inner {
-    padding: ~"0 calc(8px + var(--f7-safe-area-right)) 0 calc(8px + var(--f7-safe-area-left))";
-  }
-
-  // Relation with page
-  .navbar ~ .page-with-subnavbar:not(.no-navbar) .subnavbar,
-  .navbar ~ .subnavbar
-  {
-    top: var(--f7-navbar-height);
-  }
-
-  .page-with-subnavbar .page-content,
-  .subnavbar ~ .page-content,
-  .subnavbar ~ * .page-content
-  {
-    padding-top: var(--f7-subnavbar-height);
-  }
-
-  .navbar ~ .page-with-subnavbar:not(.no-navbar) .page-content,
-  .page-with-subnavbar .navbar ~ .page-content,
-  .navbar ~ *:not(.no-navbar) .subnavbar ~ .page-content,
-  .navbar ~ *:not(.no-navbar) .subnavbar ~ * .page-content
-  {
-    padding-top: calc(var(--f7-navbar-height) + var(--f7-subnavbar-height));
+    padding: 0 calc(8px + var(--f7-safe-area-right)) 0 calc(8px + var(--f7-safe-area-left));
   }
 }
