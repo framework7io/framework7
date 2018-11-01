@@ -346,30 +346,6 @@
     background: @image;
   }
 }
-.md-bar-shadow-to-bottom() {
-  &:before {
-    content: '';
-    position: absolute;
-    right: 0;
-    width: 100%;
-    top: 100%;
-    bottom: auto;
-    height: 10px;
-    pointer-events: none;
-    background: linear-gradient(to bottom,
-      rgba(0,0,0,0.3) 0%,
-      rgba(0,0,0,0.1) 40%,
-      rgba(0,0,0,0.05) 50%,
-      rgba(0,0,0,0) 80%,
-      rgba(0,0,0,0) 100%
-      );
-  }
-}
-.md-bar-no-shadow() {
-  &:after, &:before {
-    display: none;
-  }
-}
 .core-icons-font() {
   font-family: Framework7CoreIcons;
   font-weight: normal;

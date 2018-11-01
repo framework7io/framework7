@@ -222,12 +222,17 @@
     height: var(--f7-timeline-horizontal-date-height);
     background: var(--f7-bars-bg-color, var(--f7-theme-color));
     color: var(--f7-bars-text-color);
+    .hairline(bottom, var(--f7-timeline-horizontal-item-date-border-color));
+    .bar-shadow-bottom(var(--f7-timeline-horizontal-item-date-shadow-image));
     .ltr({
       text-align: left;
     });
     .rtl({
       text-align: right;
     });
+  }
+  &.no-shadow .timeline-item-date:before {
+    display: none;
   }
   .timeline-item-content {
     padding: var(--f7-timeline-horizontal-item-padding);
