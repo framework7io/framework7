@@ -79,6 +79,46 @@
     font-weight: var(--f7-list-index-label-font-weight);
   }
 }
+.navbar ~ .page > .list-index,
+.navbar ~ .list-index {
+  top: var(--f7-navbar-height);
+}
+
+.navbar ~ .toolbar-top,
+.ios .navbar ~ .toolbar-top-ios,
+.md .navbar ~ .toolbar-top-md {
+  ~ .list-index {
+    top: calc(var(--f7-navbar-height) + var(--f7-toolbar-height));
+  }
+  &.tabbar-labels {
+    ~ .list-index {
+      top: calc(var(--f7-navbar-height) + var(--f7-tabbar-labels-height));
+    }
+  }
+}
+
+.navbar ~ .subnavbar ~ .list-index,
+.page-with-subnavbar .navbar ~ .list-index {
+  top: calc(var(--f7-navbar-height) + var(--f7-subnvabar-height));
+}
+
+.toolbar-bottom,
+.ios .toolbar-bottom-ios,
+.md .toolbar-bottom-md {
+  ~ .page > .list-index,
+  ~ * .page > .list-index,
+  ~ .list-index {
+    bottom: calc(var(--f7-toolbar-height) + var(--f7-safe-area-bottom));
+  }
+  &.tabbar-labels {
+    ~ .page > .list-index,
+    ~ * .page > .list-index,
+    ~ .list-index {
+      bottom: calc(var(--f7-tabbar-labels-height) + var(--f7-safe-area-bottom));
+    }
+  }
+}
+
 & when (@includeIosTheme) {
   @import url('./list-index-ios.less');
 }
