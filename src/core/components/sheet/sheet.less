@@ -18,6 +18,8 @@
   .hairline(top, var(--f7-sheet-border-color));
   &:before {
     z-index: 600;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
   }
   &.modal-in, &.modal-out {
     transition-duration: 300ms;
