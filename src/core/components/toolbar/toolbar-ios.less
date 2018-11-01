@@ -1,11 +1,10 @@
 .ios {
   .toolbar {
-    bottom: 0;
-    &:after {
-      backface-visibility: hidden;
-    }
     a.link {
-      i + span, i + i, span + i, span + span {
+      i + span,
+      i + i,
+      span + i,
+      span + span {
         .ltr({
           margin-left: 7px;
         });
@@ -22,50 +21,30 @@
       margin: 0;
       min-width: 44px;
     }
-
-    &.no-hairline {
-      .hairline-remove(top);
-    }
   }
-  .hairline-root('.toolbar', top, var(--f7-bars-border-color));
   .toolbar-inner {
-    padding: ~"0 calc(8px + var(--f7-safe-area-right)) 0 calc(8px + var(--f7-safe-area-left))";
-  }
-  .tabbar, .tabbar-labels {
-    i.icon {
-      height: 30px;
-    }
+    padding: 0 calc(8px + var(--f7-safe-area-right)) 0 calc(8px + var(--f7-safe-area-left));
   }
   .tabbar-labels {
-    height: var(--f7-tabbar-labels-height);
-    a.tab-link, a.link {
+    a.tab-link,
+    a.link {
       padding-top: 4px;
       padding-bottom: 4px;
       i + span {
         margin: 0;
       }
     }
-    .tabbar-label {
-      letter-spacing: 0.01em;
-      font-size: 10px;
-    }
-
   }
   @media (min-width: 768px) {
-    --f7-tabbar-labels-height: var(--f7-tabbar-labels-tablet-height);
-    .tabbar, .tabbar-labels {
+    .tabbar,
+    .tabbar-labels {
       .toolbar-inner {
         justify-content: center;
       }
-      a.tab-link, a.link {
+      a.tab-link,
+      a.link {
         width: auto;
         min-width: 105px;
-      }
-    }
-    .tabbar-labels {
-
-      .tabbar-label {
-        font-size: 14px;
       }
     }
   }
@@ -75,27 +54,9 @@
     .toolbar-inner {
       justify-content: flex-start;
     }
-    a.tab-link, a.link {
+    a.tab-link,
+    a.link {
       padding: 0 8px;
-    }
-  }
-
-  // Relation with page
-  .tabbar-labels ~ * .page-content,
-  .tabbar-labels ~ .page-content {
-    padding-bottom: ~"calc(var(--f7-tabbar-labels-height) + var(--f7-safe-area-bottom))";
-  }
-
-  .views, .view, .page, .popup, .panel, .login-screen {
-    >.toolbar {
-      height: ~"calc(var(--f7-toolbar-height) + var(--f7-safe-area-bottom))";
-      .toolbar-inner {
-        height: auto;
-        bottom: var(--f7-safe-area-bottom);
-      }
-    }
-    >.tabbar-labels {
-      height: ~"calc(var(--f7-tabbar-labels-height) + var(--f7-safe-area-bottom))";
     }
   }
 }
