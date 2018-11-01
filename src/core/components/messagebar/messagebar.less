@@ -1,13 +1,30 @@
 /* === Messagebar === */
-.toolbar.messagebar {
+@import url('./messagebar-vars.less');
+
+.messagebar {
   transform: translate3d(0,0,0);
   background: var(--f7-messagebar-bg-color);
   height: auto !important;
   min-height: var(--f7-messagebar-height);
   font-size: var(--f7-messagebar-font-size);
+  bottom: 0;
   .hairline(top, var(--f7-messagebar-border-color));
+  .bar-shadow-top(var(--f7-messagebar-shadow-image));
+  &.no-hairline, &.no-border {
+    &:before {
+      display: none !important;
+    }
+  }
+  &.no-shadow, &.toolbar-hidden {
+    &:after {
+      display: none !important;
+    }
+  }
   .toolbar-inner {
+    top: auto;
     position: relative;
+    height: auto;
+    bottom: var(--f7-safe-area-bottom);
     .rtl({
       flex-direction: row-reverse;
     });
@@ -36,7 +53,7 @@
   a.link {
     align-self: flex-end;
     flex-shrink: 0;
-    color: var(--f7-messagebar-link-color);
+    color: var(--f7-messagebar-link-color, var(--f7-theme-color));
   }
 }
 .messagebar-attachments {
@@ -144,6 +161,10 @@
 }
 .messagebar:not(.messagebar-sheet-visible) .messagebar-sheet {
   display: none;
+}
+.messagebar ~ .page-content,
+.messagebar ~ * .page-content {
+  padding-bottom: calc(var(--f7-messagebar-height) + var(--f7-safe-area-bottom));
 }
 & when (@includeIosTheme) {
   @import url('./messagebar-ios.less');
