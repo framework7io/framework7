@@ -58,5 +58,15 @@ export default () => (
       <p>Here comes paragraph within content block. Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis. </p>
     </Block>
     <BlockFooter>Block Footer</BlockFooter>
+
+    <BlockTitle large>Block Title Large</BlockTitle>
+    <Block strong>
+      <p>Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis. </p>
+    </Block>
+
+    <BlockTitle medium>Block Title Medium</BlockTitle>
+    <Block strong>
+      <p>Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis. </p>
+    </Block>
   </Page>
 );
