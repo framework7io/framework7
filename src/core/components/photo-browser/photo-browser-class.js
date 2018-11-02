@@ -197,7 +197,7 @@ class PhotoBrowser extends Framework7Class {
     if (!pb.params.iconsColor && pb.params.theme === 'dark') iconsColor = 'white';
 
     const toolbarHtml = `
-      <div class="toolbar tabbar toolbar-bottom-md">
+      <div class="toolbar toolbar-bottom tabbar">
         <div class="toolbar-inner">
           <a href="#" class="link photo-browser-prev">
             <i class="icon icon-back ${iconsColor ? `color-${iconsColor}` : ''}"></i>
