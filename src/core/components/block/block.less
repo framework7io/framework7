@@ -9,8 +9,8 @@
   margin: var(--f7-block-margin-vertical) 0;
   padding-top: 0;
   padding-bottom: 0;
-  padding-left: ~"calc(var(--f7-block-padding) + var(--f7-safe-area-left))";
-  padding-right: ~"calc(var(--f7-block-padding) + var(--f7-safe-area-left))";
+  padding-left: calc(var(--f7-block-padding) + var(--f7-safe-area-left));
+  padding-right: calc(var(--f7-block-padding) + var(--f7-safe-area-left));
 
   .no-hairlines();
   > h1, > h2, > h3, > h4, > p {
@@ -45,8 +45,8 @@
   line-height: var(--f7-block-title-line-height);
   margin-top: var(--f7-block-margin-vertical);
   margin-bottom: var(--f7-block-title-margin-bottom);
-  margin-left: ~"calc(var(--f7-block-padding)  + var(--f7-safe-area-left))";
-  margin-right: ~"calc(var(--f7-block-padding)  + var(--f7-safe-area-right))";
+  margin-left: calc(var(--f7-block-padding)  + var(--f7-safe-area-left));
+  margin-right: calc(var(--f7-block-padding)  + var(--f7-safe-area-right));
   + .list, + .block, + .card, + .timeline, + .block-header {
     margin-top: 0px;
   }
@@ -77,8 +77,8 @@
 .block-footer, .block-header {
   padding-top: 0;
   padding-bottom: 0;
-  padding-left: ~"calc(var(--f7-block-padding) + var(--f7-safe-area-left))";
-  padding-right: ~"calc(var(--f7-block-padding) + var(--f7-safe-area-left))";
+  padding-left: calc(var(--f7-block-padding) + var(--f7-safe-area-left));
+  padding-right: calc(var(--f7-block-padding) + var(--f7-safe-area-left));
   ul, p, h1, h2, h3, h4 {
     &:first-child {
       margin-top: 0;
@@ -100,11 +100,11 @@
     margin-bottom: 0;
   }
   + .block-footer {
-    margin-top: ~"calc(-1 * (var(--f7-block-margin-vertical) - var(--f7-block-footer-margin)))";
+    margin-top: calc(-1 * (var(--f7-block-margin-vertical) - var(--f7-block-footer-margi)));
   }
 }
 .block + .block-footer {
-  margin-top: ~"calc(-1 * (var(--f7-block-margin-vertical) - var(--f7-block-footer-margin)))";
+  margin-top: calc(-1 * (var(--f7-block-margin-vertical) - var(--f7-block-footer-margin)));
   margin-bottom: var(--f7-block-margin-vertical);
 }
 .block {
