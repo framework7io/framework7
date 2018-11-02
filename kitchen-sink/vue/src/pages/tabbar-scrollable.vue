@@ -1,11 +1,11 @@
 <template>
   <f7-page :page-content="false">
     <f7-navbar title="Tabbar Scrollable" back-link="Back">
-      <f7-nav-right v-if="$theme.md">
+      <f7-nav-right>
         <f7-link icon-material="compare_arrows" @click="toggleToolbarPosition"></f7-link>
       </f7-nav-right>
     </f7-navbar>
-    <f7-toolbar tabbar scrollable>
+    <f7-toolbar :position="toolbarPosition" tabbar scrollable>
       <f7-link
         v-for="(tab, index) in tabs"
         :key="tab"
@@ -43,11 +43,12 @@
     data() {
       return {
         tabs: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        toolbarPosition: 'bottom',
       };
     },
     methods: {
       toggleToolbarPosition() {
-        this.$$(this.$el).find('.toolbar, .tabbar').toggleClass('toolbar-bottom-md');
+        this.toolbarPosition = this.position === 'top' ? 'bottom' : 'top';
       },
     },
   };

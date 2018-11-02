@@ -1,7 +1,7 @@
 <template>
   <f7-page>
     <f7-navbar title="Floating Action Button Morph" back-link="Back"></f7-navbar>
-    <f7-toolbar tabbar labels bottom-md class="fab-morph-target">
+    <f7-toolbar tabbar labels bottom class="fab-morph-target">
       <f7-link tab-link tab-link-active icon-ios="f7:email_fill" icon-md="material:email" text="Inbox"/>
       <f7-link tab-link icon-ios="f7:today" icon-md="material:today" text="Calendar"/>
       <f7-link tab-link icon-ios="f7:cloud" icon-md="material:file_upload" text="Upload"/>

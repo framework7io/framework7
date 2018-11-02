@@ -5,21 +5,24 @@ export default class extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      toolbarBottom: false,
+      toolbarPosition: 'bottom',
     }
+  }
+  toggleToolbarPosition() {
+    this.setState({
+      toolbarPosition: this.state.toolbarPosition === 'top' ? 'bottom' : 'top',
+    });
   }
   render() {
     const tabs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     return (
       <Page pageContent={false}>
         <Navbar title="Tabbar Scrollable" backLink="Back">
-          {this.$theme.md && (
-            <NavRight>
-              <Link icon-material="compare_arrows" onClick={() => {this.setState({ toolbarBottom: !this.state.toolbarBottom })}}></Link>
-            </NavRight>
-          )}
+          <NavRight>
+            <Link iconMaterial="compare_arrows" onClick={() => {this.toggleToolbarPosition()}}></Link>
+          </NavRight>
         </Navbar>
-        <Toolbar tabbar scrollable bottomMd={this.state.toolbarBottom}>
+        <Toolbar tabbar scrollable position={this.state.toolbarPosition}>
           {tabs.map((tab, index) => (
             <Link
               key={tab}

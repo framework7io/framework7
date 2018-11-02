@@ -1,7 +1,7 @@
 <template>
   <f7-page :page-content="false">
     <f7-navbar title="Animated Tabs" back-link="Back"></f7-navbar>
-    <f7-toolbar tabbar>
+    <f7-toolbar bottom tabbar>
       <f7-link tab-link="#tab-1" tab-link-active>Tab 1</f7-link>
       <f7-link tab-link="#tab-2">Tab 2</f7-link>
       <f7-link tab-link="#tab-3">Tab 3</f7-link>

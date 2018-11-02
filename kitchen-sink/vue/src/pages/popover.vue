@@ -1,7 +1,7 @@
 <template>
   <f7-page>
     <f7-navbar title="Popover" back-link="Back"></f7-navbar>
-    <f7-toolbar bottom-md>
+    <f7-toolbar bottom>
       <f7-link>Dummy Link</f7-link>
       <f7-link popover-open=".popover-menu">Open Popover</f7-link>
     </f7-toolbar>

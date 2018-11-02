@@ -16,7 +16,7 @@
         </div>
       </div>
     </div>
-    <div class="toolbar tabbar tabbar-labels toolbar-{{position}}">
+    <div class="toolbar tabbar tabbar-labels toolbar-{{toolbarPosition}}">
       <div class="toolbar-inner">
         <a href="#tab-1" class="tab-link tab-link-active">
           <i class="icon f7-icons ios-only">email</i>
@@ -87,13 +87,13 @@
   return {
     data() {
       return {
-        position: 'bottom',
+        toolbarPosition: 'bottom',
       };
     },
     methods: {
       toggleToolbarPosition: function () {
         this.$setState({
-          position: this.position === 'top' ? 'bottom' : 'top',
+          toolbarPosition: this.toolbarPosition === 'top' ? 'bottom' : 'top',
         });
       },
     }

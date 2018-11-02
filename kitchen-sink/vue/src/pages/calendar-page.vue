@@ -1,6 +1,6 @@
 <template>
   <f7-page :page-content="false" @page:beforeremove="onPageBeforeRemove" @page:init="onPageInit">
-    <f7-navbar back-link="Back">
+    <f7-navbar back-link="Back" no-shadow>
       <f7-nav-title class="navbar-calendar-title"></f7-nav-title>
     </f7-navbar>
     <div class="page-content">

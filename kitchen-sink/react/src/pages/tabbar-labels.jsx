@@ -5,20 +5,23 @@ export default class extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      toolbarBottom: false,
+      toolbarPosition: 'bottom',
     }
+  }
+  toggleToolbarPosition() {
+    this.setState({
+      toolbarPosition: this.state.toolbarPosition === 'top' ? 'bottom' : 'top',
+    });
   }
   render() {
     return (
       <Page pageContent={false}>
         <Navbar title="Tabbar Labels" backLink="Back">
-          {this.$theme.md && (
-            <NavRight>
-              <Link icon-material="compare_arrows" onClick={() => {this.setState({ toolbarBottom: !this.state.toolbarBottom })}}></Link>
-            </NavRight>
-          )}
+          <NavRight>
+            <Link iconMaterial="compare_arrows" onClick={() => {this.toggleToolbarPosition()}}></Link>
+          </NavRight>
         </Navbar>
-        <Toolbar tabbar labels bottomMd={this.state.toolbarBottom}>
+        <Toolbar tabbar labels position={this.state.toolbarPosition}>
           <Link tabLink="#tab-1" tabLinkActive text="Tab 1" iconIos="f7:email_fill" iconMd="material:email"></Link>
           <Link tabLink="#tab-2" text="Tab 2" iconIos="f7:today_fill" iconMd="material:today"></Link>
           <Link tabLink="#tab-3" text="Tab 3" iconIos="f7:cloud_fill" iconMd="material:file_upload"></Link>

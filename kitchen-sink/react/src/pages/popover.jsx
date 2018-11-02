@@ -4,7 +4,7 @@ import { Navbar, Page, Toolbar, Popover, List, ListItem, Block, Link, Button} fr
 export default () => (
   <Page>
     <Navbar title="Popover" backLink="Back"></Navbar>
-    <Toolbar bottomMd>
+    <Toolbar bottom>
       <Link>Dummy Link</Link>
       <Link popoverOpen=".popover-menu">Open Popover</Link>
     </Toolbar>

@@ -12,7 +12,7 @@ export default () => (
         </Link>
       </NavRight>
     </Navbar>
-    <Toolbar tabbar labels>
+    <Toolbar bottom tabbar labels>
       <Link tabLink="#tab-1" tabLinkActive>
         <Icon className="icon-fill" ios="f7:email_fill" md="material:email">
           <Badge color="green">5</Badge>

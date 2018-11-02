@@ -16,7 +16,7 @@
         </div>
       </div>
     </div>
-    <div class="toolbar tabbar tabbar-scrollable toolbar-{{position}}">
+    <div class="toolbar tabbar tabbar-scrollable toolbar-{{toolbarPosition}}">
       <div class="toolbar-inner">
         {{#each tabs}}
         <a href="#tab-{{this}}" class="tab-link {{#if @first}}tab-link-active{{/if}}">Tab {{this}}</a>
@@ -49,13 +49,13 @@
     data() {
       return {
         tabs: [1,2,3,4,5,6,7,8,9,10],
-        position: 'bottom',
+        toolbarPosition: 'bottom',
       };
     },
     methods: {
       toggleToolbarPosition: function () {
         this.$setState({
-          position: this.position === 'top' ? 'bottom' : 'top',
+          toolbarPosition: this.toolbarPosition === 'top' ? 'bottom' : 'top',
         });
       },
     }

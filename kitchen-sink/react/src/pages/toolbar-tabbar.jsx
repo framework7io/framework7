@@ -5,14 +5,19 @@ export default class extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      toolbarBottom: false,
+      toolbarPosition: 'bottom',
     }
+  }
+  toggleToolbarPosition() {
+    this.setState({
+      toolbarPosition: this.state.toolbarPosition === 'top' ? 'bottom' : 'top',
+    });
   }
   render() {
     return (
       <Page ref="el">
         <Navbar title="Toolbar & Tabbar" backLink="Back"></Navbar>
-        <Toolbar bottomMd={this.state.toolbarBottom}>
+        <Toolbar position={this.state.toolbarPosition}>
           <Link>Left Link</Link>
           <Link>Right Link</Link>
         </Toolbar>
@@ -22,17 +27,13 @@ export default class extends React.Component {
           <ListItem link="./tabbar-scrollable/" title="Tabbar Scrollable"></ListItem>
           <ListItem link="./toolbar-hide-scroll/" title="Hide Toolbar On Scroll"></ListItem>
         </List>
-        {this.$theme.md && (
-          <BlockTitle>Toolbar Position</BlockTitle>
-        )}
-        {this.$theme.md && (
-          <Block>
-            <p>Material (MD) theme toolbar supports both top and bottom positions. Click the following button to change its position.</p>
-            <p>
-              <Button raised onClick={() => {this.setState({ toolbarBottom: !this.state.toolbarBottom })}}>Toggle Toolbar Position</Button>
-            </p>
-          </Block>
-        )}
+        <BlockTitle>Toolbar Position</BlockTitle>
+        <Block>
+          <p>Toolbar supports both top and bottom positions. Click the following button to change its position.</p>
+          <p>
+            <Button raised onClick={() => {this.toggleToolbarPosition()}}>Toggle Toolbar Position</Button>
+          </p>
+        </Block>
       </Page>
     )
   }

@@ -1,11 +1,11 @@
 <template>
   <f7-page :page-content="false">
     <f7-navbar title="Tabbar" back-link="Back">
-      <f7-nav-right v-if="$theme.md">
+      <f7-nav-right>
         <f7-link icon-material="compare_arrows" @click="toggleToolbarPosition"></f7-link>
       </f7-nav-right>
     </f7-navbar>
-    <f7-toolbar tabbar>
+    <f7-toolbar :position="toolbarPosition" tabbar>
       <f7-link tab-link="#tab-1" tab-link-active>Tab 1</f7-link>
       <f7-link tab-link="#tab-2">Tab 2</f7-link>
       <f7-link tab-link="#tab-3">Tab 3</f7-link>
@@ -58,9 +58,14 @@
     components: {
       f7Navbar, f7Page, f7Block, f7Tabs, f7Tab, f7Link, f7Toolbar, f7NavRight,
     },
+    data() {
+      return {
+        toolbarPosition: 'bottom',
+      }
+    },
     methods: {
       toggleToolbarPosition() {
-        this.$$(this.$el).find('.toolbar, .tabbar').toggleClass('toolbar-bottom-md');
+        this.toolbarPosition = this.toolbarPosition === 'top' ? 'bottom' : 'top';
       },
     },
   };

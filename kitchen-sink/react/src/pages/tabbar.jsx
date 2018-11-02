@@ -6,20 +6,23 @@ export default class extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      toolbarBottom: false,
+      toolbarPosition: 'bottom',
     }
+  }
+  toggleToolbarPosition() {
+    this.setState({
+      toolbarPosition: this.state.toolbarPosition === 'top' ? 'bottom' : 'top',
+    });
   }
   render() {
     return (
       <Page pageContent={false} ref="el">
         <Navbar title="Tabbar" backLink="Back">
-          {this.$theme.md && (
-            <NavRight>
-              <Link icon-material="compare_arrows" onClick={() => {this.setState({ toolbarBottom: !this.state.toolbarBottom })}}></Link>
-            </NavRight>
-          )}
+          <NavRight>
+            <Link iconMaterial="compare_arrows" onClick={() => {this.toggleToolbarPosition()}}></Link>
+          </NavRight>
         </Navbar>
-        <Toolbar tabbar bottomMd={this.state.toolbarBottom}>
+        <Toolbar tabbar position={this.state.toolbarPosition}>
           <Link tabLink="#tab-1" tabLinkActive>Tab 1</Link>
           <Link tabLink="#tab-2">Tab 2</Link>
           <Link tabLink="#tab-3">Tab 3</Link>

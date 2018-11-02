@@ -9,7 +9,7 @@
         </f7-link>
       </f7-nav-right>
     </f7-navbar>
-    <f7-toolbar tabbar labels>
+    <f7-toolbar bottom tabbar labels>
       <f7-link tab-link="#tab-1" tab-link-active>
         <f7-icon class="icon-fill" ios="f7:email_fill" md="material:email">
           <f7-badge color="green">5</f7-badge>

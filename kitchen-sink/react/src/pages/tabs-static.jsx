@@ -4,7 +4,7 @@ import { Navbar, Page, Block, Tabs, Tab, Link, Toolbar } from 'framework7-react'
 export default () => (
   <Page pageContent={false}>
     <Navbar title="Static Tabs" backLink="Back"></Navbar>
-    <Toolbar tabbar>
+    <Toolbar bottom tabbar>
       <Link tabLink="#tab-1" tabLinkActive>Tab 1</Link>
       <Link tabLink="#tab-2">Tab 2</Link>
       <Link tabLink="#tab-3">Tab 3</Link>
