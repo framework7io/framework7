@@ -1,5 +1,5 @@
 /**
- * Framework7 3.5.0
+ * Framework7 3.5.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 26, 2018
+ * Released on: November 2, 2018
  */
 
 (function (global, factory) {
@@ -3694,7 +3694,7 @@
         return !!(('ontouchstart' in win) || (win.DocumentTouch && doc instanceof win.DocumentTouch));
       }()),
 
-      pointerEvents: !!(win.navigator.pointerEnabled || win.PointerEvent),
+      pointerEvents: !!(win.navigator.pointerEnabled || win.PointerEvent || ('maxTouchPoints' in win.navigator)),
       prefixedPointerEvents: !!win.navigator.msPointerEnabled,
 
       transition: (function checkTransition() {
@@ -10609,6 +10609,8 @@
     } else {
       scriptContent = 'return {}';
     }
+    if (!scriptContent || !scriptContent.trim()) { scriptContent = 'return {}'; }
+
     scriptContent = "window." + callbackCreateName + " = function () {" + scriptContent + "}";
 
     // Insert Script El
@@ -11854,7 +11856,7 @@
 
 
       /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
-      // modal._clientLeft = $el[0].clientLeft;
+      modal._clientLeft = $el[0].clientLeft;
 
       // Modal
       function transitionEnd() {
@@ -11865,24 +11867,22 @@
         }
       }
       if (animate) {
-        Utils.nextFrame(function () {
-          if ($backdropEl) {
-            $backdropEl.removeClass('not-animated');
-            $backdropEl.addClass('backdrop-in');
-          }
-          $el
-            .animationEnd(function () {
-              transitionEnd();
-            });
-          $el
-            .transitionEnd(function () {
-              transitionEnd();
-            });
-          $el
-            .removeClass('modal-out not-animated')
-            .addClass('modal-in');
-          modal.onOpen();
-        });
+        if ($backdropEl) {
+          $backdropEl.removeClass('not-animated');
+          $backdropEl.addClass('backdrop-in');
+        }
+        $el
+          .animationEnd(function () {
+            transitionEnd();
+          });
+        $el
+          .transitionEnd(function () {
+            transitionEnd();
+          });
+        $el
+          .removeClass('modal-out not-animated')
+          .addClass('modal-in');
+        modal.onOpen();
       } else {
         if ($backdropEl) {
           $backdropEl.addClass('backdrop-in not-animated');

@@ -82,6 +82,8 @@ declare namespace F7ListItem {
     sortableDisable? : boolean | string
     sortableToggle? : boolean | string
     onClick? : (event?: any) => void
+    onSwipeoutOverswipeEnter? : (event?: any) => void
+    onSwipeoutOverswipeExit? : (event?: any) => void
     onSwipeoutDeleted? : (event?: any) => void
     onSwipeoutDelete? : (event?: any) => void
     onSwipeoutClose? : (event?: any) => void
@@ -99,6 +101,8 @@ declare namespace F7ListItem {
 }
 declare class F7ListItem extends React.Component<F7ListItem.Props, {}> {
   onClick(event? : any) : unknown
+  onSwipeoutOverswipeEnter(event? : any) : unknown
+  onSwipeoutOverswipeExit(event? : any) : unknown
   onSwipeoutDeleted(event? : any) : unknown
   onSwipeoutDelete(event? : any) : unknown
   onSwipeoutClose(event? : any) : unknown

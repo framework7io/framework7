@@ -337,6 +337,7 @@ __reactComponentSetProps(F7Messagebar, Object.assign({
   value: [String, Number, Array],
   disabled: Boolean,
   readonly: Boolean,
+  textareaId: [Number, String],
   name: String,
   placeholder: {
     type: String,

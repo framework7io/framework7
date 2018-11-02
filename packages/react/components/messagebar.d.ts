@@ -19,6 +19,7 @@ declare namespace F7Messagebar {
     value? : string | number | Array<any>
     disabled? : boolean
     readonly? : boolean
+    textareaId? : number | string
     name? : string
     placeholder? : string
     init? : boolean
