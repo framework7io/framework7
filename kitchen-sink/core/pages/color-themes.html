@@ -12,36 +12,54 @@
       </div>
     </div>
     <div class="page-content">
-      <div class="block-title">Layout Themes</div>
-      <div class="block">
+      <div class="block-title block-title-medium">Layout Themes</div>
+      <div class="block block-strong">
         <p>Framework7 comes with 2 main layout themes: Light (default) and Dark:</p>
         <div class="row">
-          <div class="col-50 bg-color-white" @click="setLayoutTheme('light')" style="cursor: pointer; padding: 30px; border: 1px solid rgba(0,0,0,0.1)"></div>
-          <div class="col-50 bg-color-black" @click="setLayoutTheme('dark')"  style="cursor: pointer; padding: 30px; border: 1px solid rgba(255,255,255,0.1)"></div>
+          <div class="col-50 bg-color-white demo-theme-picker" @click="setLayoutTheme('light')"></div>
+          <div class="col-50 bg-color-black demo-theme-picker" @click="setLayoutTheme('dark')"></div>
         </div>
       </div>
-      <div class="block-title">Choose Color Theme</div>
-      <div class="block">
-        <p>Framework7 comes with {{colorsAmount}} color themes set.</p>
+      <div class="block-title block-title-medium">Navigation Bars Style</div>
+      <div class="block block-strong">
+        <p>Switch navigation bars to filled style:</p>
+        <div class="row">
+          <div class="col-50 demo-bars-picker demo-bars-picker-empty" @click="setBarsStyle('empty')">
+            <div class="demo-navbar"></div>
+            <div class="demo-toolbar"></div>
+          </div>
+          <div class="col-50 demo-bars-picker demo-bars-picker-fill" @click="setBarsStyle('fill')">
+            <div class="demo-navbar"></div>
+            <div class="demo-toolbar"></div>
+          </div>
+        </div>
+      </div>
+      <div class="block-title block-title-medium">Default Color Themes</div>
+      <div class="block block-strong">
+        <p>Framework7 comes with {{colors.length}} color themes set.</p>
         <div class="row">
         {{#each colors}}
-          <div class="col-33">
-            <button class="button button-fill button-round button-raised color-{{this}}" @click="setColorTheme('{{this}}')">{{this}}</button>
+          <div class="col-33 tablet-25 desktop-20">
+            <button class="button button-fill demo-color-picker-button button-round button-small color-{{this}}" @click="setColorTheme('{{this}}')">{{this}}</button>
           </div>
         {{/each}}
-          <div class="col-33"></div>
+          <div class="col-33 tablet-25 desktop-20"></div>
+          <div class="col-33 tablet-25 desktop-20"></div>
+          <div class="col-33 tablet-25 desktop-20"></div>
         </div>
       </div>
+      {{#if styles}}
+      <div class="block-title block-title-medium">Generated CSS Variables</div>
+      <div class="block block-strong">
+        <p>Add this code block to your custom stylesheet:</p>
+        <pre style="overflow: auto; -webkit-overflow-scrolling: touch; margin: 0; font-size: 12px;">{{styles}}</pre>
+      </div>
+      {{/if}}
     </div>
   </div>
 </template>
-<style scoped>
-  .button {
-    margin-bottom: 1em;
-    text-transform: capitalize;
-  }
-</style>
 <script>
+  var stylesheet;
   return {
     data: function () {
       var colors = [
@@ -51,26 +69,80 @@
         'pink',
         'yellow',
         'orange',
+        'purple',
+        'deeppurple',
+        'lightblue',
+        'teal',
+        'lime',
+        'deeporange',
         'gray',
         'black',
       ];
       return {
+        customColor: '',
+        barsStyle: 'empty',
         colors: colors,
-        colorsAmount: colors.length,
+        styles: '',
       };
     },
+    mounted() {
+      if (!stylesheet) {
+        stylesheet = document.createElement('style');
+        document.head.appendChild(stylesheet);
+      }
+    },
     methods: {
+      generateStylesheet(barsStyle) {
+        var self = this;
+        var styles = '';
+        if (barsStyle === 'fill') {
+          styles += `
+:root,
+:root.theme-dark,
+:root .theme-dark {
+  --f7-bars-bg-color: var(--f7-theme-color);
+  --f7-bars-text-color: #fff;
+  --f7-bars-link-color: #fff;
+  --f7-bars-border-color: transparent;
+  --f7-tabbar-link-active-color: #fff;
+  --f7-tabbar-link-inactive-color: rgba(255,255,255,0.54);
+  --f7-searchbar-input-bg-color: #fff;
+  --f7-sheet-border-color: transparent;
+}
+.navbar,
+.toolbar,
+.subnavbar,
+.calendar-header,
+.calendar-footer {
+  --f7-touch-ripple-color: var(--f7-touch-ripple-white);
+  --f7-link-highlight-color: var(--f7-link-highlight-white);
+  --f7-button-text-color: #fff;
+  --f7-button-pressed-bg-color: rgba(255,255,255,0.1);
+}
+          `;
+        }
+        return styles.trim();
+      },
       setLayoutTheme: function (theme) {
         var self = this;
-        var app = self.$app;
-        app.root.removeClass('theme-dark theme-light').addClass('theme-' + theme);
+        var $html = self.$('html');
+        $html.removeClass('theme-dark theme-light').addClass('theme-' + theme);
       },
       setColorTheme: function (color) {
         var self = this;
-        var app = self.$app;
-        var currentColorClass = app.root[0].className.match(/color-theme-([a-z]*)/);
-        if (currentColorClass) app.root.removeClass(currentColorClass[0])
-          app.root.addClass('color-theme-' + color);
+        var $html = self.$('html');
+        var currentColorClass = $html[0].className.match(/color-theme-([a-z]*)/);
+        if (currentColorClass) $html.removeClass(currentColorClass[0])
+          $html.addClass('color-theme-' + color);
+      },
+      setBarsStyle: function (barsStyle) {
+        var self = this;
+        var styles = self.generateStylesheet(barsStyle);
+        stylesheet.innerHTML = styles;
+        self.$setState({
+          barsStyle: barsStyle,
+          styles: styles,
+        });
       },
     }
   }

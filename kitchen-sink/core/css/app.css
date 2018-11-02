@@ -471,3 +471,87 @@ code {
   text-align: center;
   line-height: 100px;
 }
+
+.demo-theme-picker {
+  cursor: pointer;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 5px 20px rgba(0,0,0,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.demo-color-picker-button {
+  margin-bottom: 1em;
+  text-transform: capitalize;
+}
+.demo-bars-picker {
+  height: 200px;
+  border-radius: 10px;
+  box-shadow: 0px 5px 20px rgba(0,0,0,0.1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  background: var(--f7-page-bg-color);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.demo-bars-picker .demo-navbar,
+.demo-bars-picker .demo-toolbar {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 30px;
+}
+.demo-bars-picker .demo-navbar {
+  top: 0;
+  border-bottom: 1px solid transparent;
+}
+.demo-bars-picker .demo-toolbar {
+  bottom: 0;
+  border-top: 1px solid transparent;
+}
+.demo-bars-picker .demo-navbar:before,
+.demo-bars-picker .demo-toolbar:before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  width: 20px;
+  height: 10px;
+  top: 50%;
+  margin-top: -5px;
+}
+.demo-bars-picker .demo-navbar:after,
+.demo-bars-picker .demo-toolbar:after {
+  content: '';
+  position: absolute;
+  right: 10px;
+  width: 20px;
+  height: 10px;
+  top: 50%;
+  margin-top: -5px;
+}
+.demo-bars-picker-empty .demo-navbar,
+.demo-bars-picker-empty .demo-toolbar {
+  background: #f7f7f8;
+  border-color: rgba(0,0,0,0.1);
+}
+.theme-dark .demo-bars-picker-empty .demo-navbar,
+.theme-dark .demo-bars-picker-empty .demo-toolbar {
+  background: #1b1b1b;
+  border-color: #282829;
+}
+.demo-bars-picker-empty .demo-navbar:before,
+.demo-bars-picker-empty .demo-navbar:after,
+.demo-bars-picker-empty .demo-toolbar:before,
+.demo-bars-picker-empty .demo-toolbar:after {
+  background: var(--f7-theme-color);
+}
+.demo-bars-picker-fill .demo-navbar,
+.demo-bars-picker-fill .demo-toolbar {
+  background: var(--f7-theme-color);
+}
+.demo-bars-picker-fill .demo-navbar:before,
+.demo-bars-picker-fill .demo-navbar:after,
+.demo-bars-picker-fill .demo-toolbar:before,
+.demo-bars-picker-fill .demo-toolbar:after {
+  background: #fff;
+}
