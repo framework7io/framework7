@@ -13,7 +13,6 @@
   box-sizing: border-box;
   align-self: center;
   user-select: none;
-
   input[type="checkbox"] {
     display: none;
   }
@@ -35,6 +34,7 @@
   cursor: pointer;
   &:before, &:after {
     content: '';
+    will-change: transform;
   }
   &:after {
     background: var(--f7-toggle-handle-color);

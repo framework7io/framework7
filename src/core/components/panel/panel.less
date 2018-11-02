@@ -13,6 +13,7 @@
   transform: translate3d(0,0,0);
   background-color: var(--f7-panel-backdrop-bg-color);
   transition-duration: var(--f7-panel-transition-duration);
+  will-change: transform, opacity;
   &.not-animated {
     transition-duration: 0ms !important;
   }
@@ -28,6 +29,7 @@
   width: var(--f7-panel-width);
   background-color: var(--f7-panel-bg-color);
   overflow: visible;
+  will-change: transform;
   &:after {
     pointer-events: none;
     opacity: 0;
@@ -96,7 +98,7 @@
       background: linear-gradient(to right, var(--f7-panel-shadow));
       html.with-panel-right-reveal & {
         opacity: 1;
-        transform: ~"translate3d(calc(-1 * (var(--f7-panel-width))), 0, 0)";
+        transform: translate3d(calc(-1 * (var(--f7-panel-width))), 0, 0);
       }
     }
   }
@@ -115,7 +117,8 @@ html {
   &.with-panel-left-reveal,
   &.with-panel-right-reveal,
   &.with-panel-transitioning {
-    .views, .framework7-root > .view {
+    .views,
+    .framework7-root > .view {
       transition-duration: var(--f7-panel-transition-duration);
       transition-property: transform;
     }
@@ -126,7 +129,8 @@ html {
     }
   }
   &.with-panel {
-    .framework7-root > .views, .framework7-root > .view {
+    .framework7-root > .views,
+    .framework7-root > .view {
       .page-content {
         .not-scrollable();
       }
@@ -140,13 +144,17 @@ html {
     }
   }
   &.with-panel-left-reveal {
-    .views, .framework7-root > .view, .panel-backdrop {
+    .views,
+    .framework7-root > .view,
+    .panel-backdrop {
       transform: translate3d(var(--f7-panel-width),0,0);
     }
   }
   &.with-panel-right-reveal {
-    .views, .framework7-root > .view, .panel-backdrop {
-      transform: ~"translate3d(calc(-1 * var(--f7-panel-width)),0,0)";
+    .views,
+    .framework7-root > .view,
+    .panel-backdrop {
+      transform: translate3d(calc(-1 * var(--f7-panel-width)),0,0);
     }
   }
   &.with-panel-left-cover {
