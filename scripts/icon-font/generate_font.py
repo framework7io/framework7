@@ -1,9 +1,3 @@
-# Font generation script from Ionicons + FontCustom
-# https://github.com/FontCustom/fontcustom/
-# https://github.com/driftyco/ionicons/
-# http://fontcustom.com/
-# http://ionicons.com/
-
 import fontforge
 import os
 import md5
@@ -115,9 +109,6 @@ except OSError:
   # sfnt2woff from source, simplifying install.
   subprocess.call(['sfnt2woff', fontfile + '.ttf'])
 
-# eotlitetool.py script to generate IE7-compatible .eot fonts
-# subprocess.call('python ' + scriptPath + '/eotlitetool.py ' + fontfile + '.ttf -o ' + fontfile + '.eot', shell=True)
-# subprocess.call('mv ' + fontfile + '.eotlite ' + fontfile + '.eot', shell=True)
 
 # Hint the TTF file
 subprocess.call('ttfautohint -s -f -n ' + fontfile + '.ttf ' + fontfile + '-hinted.ttf > /dev/null 2>&1 && mv ' + fontfile + '-hinted.ttf ' + fontfile + '.ttf', shell=True)
