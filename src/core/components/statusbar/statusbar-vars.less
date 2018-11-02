@@ -1,26 +1,4 @@
 :root {
   --f7-statusbar-height: 0px;
-}
-.with-statusbar {
-  &.device-ios {
-    --f7-statusbar-height: var(--f7-safe-area-top, 20px);
-    @supports not (top: env(safe-area-inset-top)) {
-      --f7-statusbar-height: 20px;
-    }
-  }
-  &.device-android {
-    --f7-statusbar-height: 24px;
-  }
-  &.ios:not(.device-ios):not(.device-android) {
-    --f7-statusbar-height: 20px;
-  }
-  &.md:not(.device-ios):not(.device-android) {
-    --f7-statusbar-height: 24px;
-  }
-}
-.ios {
-  // --f7-statusbar-bg-color: var(--f7-bars-bg-color);
-}
-.md {
-  // --f7-statusbar-bg-color: var(--f7-theme-color-shade);
+  --f7-statusbar-bg-color: var(--f7-bars-bg-color);
 }

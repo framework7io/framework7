@@ -17,14 +17,10 @@
 
   --f7-safe-area-outer-left: 0px;
   --f7-safe-area-outer-right: 0px;
-  --f7-safe-area-outer-top: 0px;
-  --f7-safe-area-outer-bottom: 0px;
 
   @supports (left: env(safe-area-inset-left)) {
     --f7-safe-area-top: env(safe-area-inset-top);
     --f7-safe-area-bottom: env(safe-area-inset-bottom);
-    --f7-safe-area-outer-top: env(safe-area-inset-top);
-    --f7-safe-area-outer-bottom: env(safe-area-inset-bottom);
     .ios-left-edge,
     .ios-edges,
     .popup,
