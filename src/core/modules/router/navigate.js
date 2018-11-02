@@ -406,7 +406,7 @@ function forward(el, forwardOptions = {}) {
     }
   }
   if (options.animate) {
-    const delay = router.app.theme === 'md' ? router.params.materialPageLoadDelay : router.params.iosPageLoadDelay;
+    const delay = router.app.theme === 'md' ? router.params.mdPageLoadDelay : router.params.iosPageLoadDelay;
     if (delay) {
       setTimeout(() => {
         setPositionClasses();
