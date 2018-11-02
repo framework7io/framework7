@@ -11,7 +11,6 @@
   padding-bottom: 0;
   padding-left: calc(var(--f7-block-padding) + var(--f7-safe-area-left));
   padding-right: calc(var(--f7-block-padding) + var(--f7-safe-area-left));
-
   .no-hairlines();
   > h1, > h2, > h3, > h4, > p {
     &:first-child {
@@ -36,8 +35,6 @@
   margin: 0;
   white-space: nowrap;
   text-overflow: ellipsis;
-  font-size: 14px;
-  line-height: 1;
   text-transform: var(--f7-block-title-text-transform);
   color: var(--f7-block-title-text-color);
   font-size: var(--f7-block-title-font-size, inherit);
@@ -50,6 +47,20 @@
   + .list, + .block, + .card, + .timeline, + .block-header {
     margin-top: 0px;
   }
+}
+.block-title-medium {
+  font-size: var(--f7-block-title-medium-font-size);
+  text-transform: var(--f7-block-title-medium-text-transform);
+  color: var(--f7-block-title-medium-text-color);
+  font-weight: var(--f7-block-title-medium-font-weight);
+  line-height: var(--f7-block-title-medium-line-height);
+}
+.block-title-large {
+  font-size: var(--f7-block-title-large-font-size);
+  text-transform: var(--f7-block-title-large-text-transform);
+  color: var(--f7-block-title-large-text-color);
+  font-weight: var(--f7-block-title-large-font-weight);
+  line-height: var(--f7-block-title-large-line-height);
 }
 .block, .list {
   > .block-title:first-child {
