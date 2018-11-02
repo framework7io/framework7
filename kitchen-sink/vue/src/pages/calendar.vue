@@ -162,17 +162,19 @@
           containerEl: '#demo-calendar-inline-container',
           value: [new Date()],
           renderToolbar() {
-            return `${'<div class="toolbar calendar-custom-toolbar no-shadow">' +
-        '<div class="toolbar-inner">' +
-          '<div class="left">' +
-            '<a href="#" class="link icon-only"><i class="icon icon-back '}${self.$theme.md ? 'color-black' : ''}"></i></a>` +
-          '</div>' +
-          '<div class="center"></div>' +
-          '<div class="right">' +
-            `<a href="#" class="link icon-only"><i class="icon icon-forward ${self.$theme.md ? 'color-black' : ''}"></i></a>` +
-          '</div>' +
-        '</div>' +
-      '</div>';
+            return `
+              <div class="toolbar calendar-custom-toolbar no-shadow">
+                <div class="toolbar-inner">
+                  <div class="left">
+                    <a href="#" class="link icon-only"><i class="icon icon-back"></i></a>
+                  </div>
+                  <div class="center"></div>
+                  <div class="right">
+                    <a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>
+                  </div>
+                </div>
+              </div>
+            `.trim();
           },
           on: {
             init(c) {

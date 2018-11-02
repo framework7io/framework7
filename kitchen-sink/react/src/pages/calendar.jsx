@@ -119,11 +119,11 @@ export default class extends React.Component {
           <div class="toolbar calendar-custom-toolbar no-shadow">
             <div class="toolbar-inner">
               <div class="left">
-                <a href="#" class="link icon-only"><i class="icon icon-back ${self.$theme.md ? 'color-black' : ''}"></i></a>
+                <a href="#" class="link icon-only"><i class="icon icon-back"></i></a>
               </div>
               <div class="center"></div>
               <div class="right">
-                <a href="#" class="link icon-only"><i class="icon icon-forward ${self.$theme.md ? 'color-black' : ''}"></i></a>
+                <a href="#" class="link icon-only"><i class="icon icon-forward"></i></a>
               </div>
             </div>
           </div>
