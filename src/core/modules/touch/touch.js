@@ -6,7 +6,7 @@ import Device from '../../utils/device';
 function initTouch() {
   const app = this;
   const params = app.params.touch;
-  const useRipple = app.theme === 'md' && params.materialRipple;
+  const useRipple = app.theme === 'md' && params.mdTouchRipple;
 
   if (Device.ios && Device.webView) {
     // Strange hack required for iOS 8 webview to work on inputs
@@ -142,7 +142,7 @@ function initTouch() {
 
   // Ripple handlers
   function findRippleElement(el) {
-    const rippleElements = params.materialRippleElements;
+    const rippleElements = params.touchRippleElements;
     const $el = $(el);
     if ($el.is(rippleElements)) {
       if ($el.hasClass('no-ripple')) {
@@ -606,8 +606,8 @@ export default {
       // Active State
       activeState: true,
       activeStateElements: 'a, button, label, span, .actions-button, .stepper-button, .stepper-button-plus, .stepper-button-minus',
-      materialRipple: true,
-      materialRippleElements: '.ripple, .link, .item-link, .list-button, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell:not(.input-cell), .notification-close-button, .stepper-button, .stepper-button-minus, .stepper-button-plus',
+      mdTouchRipple: true,
+      touchRippleElements: '.ripple, .link, .item-link, .list-button, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell:not(.input-cell), .notification-close-button, .stepper-button, .stepper-button-minus, .stepper-button-plus',
     },
   },
   instance: {
