@@ -1,12 +1,4 @@
 @plugin './plugin.js';
-// Colors Loop
-.color-theme-loop(@ruleset) when (length( @colors ) >= 1) {
-
-}
-.color-loop(@ruleset) when (length( @colors ) >= 1) {
-
-}
-
 // RTL, LTR
 .ltr(@ruleset) {
   & when not (@rtl) {
@@ -15,45 +7,6 @@
 }
 .rtl(@ruleset) {
   & when (@rtl) {
-    @ruleset();
-  }
-}
-
-// iPhone X
-.safe-areas(@ruleset) {
-  &.device-iphone-x {
-    @ruleset();
-  }
-}
-.safe-areas-portrait(@ruleset) {
-  @media(orientation: portrait) {
-    &.device-iphone-x {
-      @ruleset();
-    }
-  }
-}
-.safe-areas-landscape(@ruleset) {
-  @media(orientation: landscape) {
-    &.device-iphone-x {
-      @ruleset();
-    }
-  }
-}
-.safe-area-left(@ruleset) {
-  .ios-left-edge,
-  .ios-edges,
-  .popup,
-  .sheet-modal,
-  .panel-left {
-    @ruleset();
-  }
-}
-.safe-area-right(@ruleset) {
-  .ios-right-edge,
-  .ios-edges,
-  .popup,
-  .sheet-modal,
-  .panel-right {
     @ruleset();
   }
 }
@@ -291,11 +244,6 @@
   &:before {
     background-color: @color;
   }
-}
-// SVG BG
-.svg-background(@svg) {
-  @url: framework7_encodeURIComponent(@svg);
-  background-image: url("data:image/svg+xml;charset=utf-8,@{url}");
 }
 // MD Active Active Links Highlights
 .link-highlight() {
