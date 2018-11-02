@@ -111,7 +111,8 @@
 // Relation with page
 .navbar ~ * .page:not(.no-navbar) .page-content,
 .navbar ~ .page:not(.no-navbar) .page-content,
-.navbar ~ .page-content {
+.navbar ~ .page-content,
+.navbar ~ :not(.page) .page-content {
   padding-top: var(--f7-navbar-height);
 }
 
