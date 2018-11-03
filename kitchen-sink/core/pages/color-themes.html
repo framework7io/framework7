@@ -16,8 +16,22 @@
       <div class="block block-strong">
         <p>Framework7 comes with 2 main layout themes: Light (default) and Dark:</p>
         <div class="row">
-          <div class="col-50 bg-color-white demo-theme-picker" @click="setLayoutTheme('light')"></div>
-          <div class="col-50 bg-color-black demo-theme-picker" @click="setLayoutTheme('dark')"></div>
+          <div class="col-50 bg-color-white demo-theme-picker" @click="setLayoutTheme('light')">
+            {{#js_if 'this.theme === "light"'}}
+            <label class="checkbox">
+              <input type="checkbox" checked disabled>
+              <i class="icon-checkbox"></i>
+            </label>
+            {{/js_if}}
+          </div>
+          <div class="col-50 bg-color-black demo-theme-picker" @click="setLayoutTheme('dark')">
+            {{#js_if 'this.theme === "dark"'}}
+            <label class="checkbox">
+              <input type="checkbox" checked disabled>
+              <i class="icon-checkbox"></i>
+            </label>
+            {{/js_if}}
+          </div>
         </div>
       </div>
       <div class="block-title block-title-medium">Navigation Bars Style</div>
@@ -26,11 +40,21 @@
         <div class="row">
           <div class="col-50 demo-bars-picker demo-bars-picker-empty" @click="setBarsStyle('empty')">
             <div class="demo-navbar"></div>
-            <div class="demo-toolbar"></div>
+            {{#js_if 'this.barsStyle === "empty"'}}
+            <label class="checkbox">
+              <input type="checkbox" checked disabled>
+              <i class="icon-checkbox"></i>
+            </label>
+            {{/js_if}}
           </div>
           <div class="col-50 demo-bars-picker demo-bars-picker-fill" @click="setBarsStyle('fill')">
             <div class="demo-navbar"></div>
-            <div class="demo-toolbar"></div>
+            {{#js_if 'this.barsStyle === "fill"'}}
+            <label class="checkbox">
+              <input type="checkbox" checked disabled>
+              <i class="icon-checkbox"></i>
+            </label>
+            {{/js_if}}
           </div>
         </div>
       </div>
@@ -48,18 +72,41 @@
           <div class="col-33 tablet-25 desktop-20"></div>
         </div>
       </div>
-      {{#if styles}}
+      <div class="block-title block-title-medium">Custom Color Theme</div>
+      <div class="list">
+        <ul>
+          <li class="item-content item-input">
+            <div class="item-media align-self-flex-end">
+              <div style="width: 28px; height: 28px; border-radius: 4px; background: var(--f7-theme-color)"></div>
+            </div>
+            <div class="item-inner">
+              <div class="item-label">HEX Color</div>
+              <div class="item-input-wrap">
+                <input type="text" value="{{customColor}}" @input="setCustomColor" placeholder="e.g. #ff0000">
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
       <div class="block-title block-title-medium">Generated CSS Variables</div>
       <div class="block block-strong">
+        {{#if customProperties}}
         <p>Add this code block to your custom stylesheet:</p>
-        <pre style="overflow: auto; -webkit-overflow-scrolling: touch; margin: 0; font-size: 12px;">{{styles}}</pre>
+        <pre style="overflow: auto; -webkit-overflow-scrolling: touch; margin: 0; font-size: 12px;">{{customProperties}}</pre>
+        {{else}}
+        <p>Change navigation bars styles or specify custom color to see custom CSS variables here</p>
+        {{/if}}
       </div>
-      {{/if}}
     </div>
   </div>
 </template>
 <script>
   var stylesheet;
+  var globalTheme = 'light';
+  var globalBarsStyle = 'empty';
+  var globalCustomColor = '';
+  var globalCustomProperties = '';
+
   return {
     data: function () {
       var colors = [
@@ -79,10 +126,11 @@
         'black',
       ];
       return {
-        customColor: '',
-        barsStyle: 'empty',
+        theme: globalTheme,
+        barsStyle: globalBarsStyle,
+        customColor: globalCustomColor,
+        customProperties: globalCustomProperties,
         colors: colors,
-        styles: '',
       };
     },
     mounted() {
@@ -92,10 +140,19 @@
       }
     },
     methods: {
-      generateStylesheet(barsStyle) {
+      generateStylesheet() {
         var self = this;
         var styles = '';
-        if (barsStyle === 'fill') {
+        if (self.customColor) {
+          const colorThemeProperties = self.$app.utils.colorThemeCSSProperties(self.customColor);
+          if (colorThemeProperties.length) {
+            styles += `
+:root {
+  ${colorThemeProperties.split('\n').join('\n  ')}
+}`;
+          }
+        }
+        if (self.barsStyle === 'fill') {
           styles += `
 :root,
 :root.theme-dark,
@@ -126,23 +183,65 @@
       setLayoutTheme: function (theme) {
         var self = this;
         var $html = self.$('html');
-        $html.removeClass('theme-dark theme-light').addClass('theme-' + theme);
+        globalTheme = theme;
+        $html.removeClass('theme-dark theme-light').addClass('theme-' + globalTheme);
+        self.$setState({ theme: globalTheme });
       },
       setColorTheme: function (color) {
         var self = this;
         var $html = self.$('html');
         var currentColorClass = $html[0].className.match(/color-theme-([a-z]*)/);
         if (currentColorClass) $html.removeClass(currentColorClass[0])
-          $html.addClass('color-theme-' + color);
+        $html.addClass('color-theme-' + color);
+        self.unsetCustomColor();
       },
       setBarsStyle: function (barsStyle) {
         var self = this;
-        var styles = self.generateStylesheet(barsStyle);
-        stylesheet.innerHTML = styles;
+        globalBarsStyle = barsStyle;
         self.$setState({
-          barsStyle: barsStyle,
-          styles: styles,
+          barsStyle: globalBarsStyle,
         });
+        globalCustomProperties = self.generateStylesheet();
+        stylesheet.innerHTML = globalCustomProperties;
+        self.$setState({
+          customProperties: globalCustomProperties,
+        });
+      },
+      unsetCustomColor: function () {
+        var self = this;
+        globalCustomColor = '';
+        self.$setState({
+          customColor: '',
+        });
+        globalCustomProperties = self.generateStylesheet();
+        stylesheet.innerHTML = globalCustomProperties;
+        self.$setState({
+          customProperties: globalCustomProperties,
+        });
+      },
+      setCustomColor: function (e) {
+        var self = this;
+        const value = e.target.value;
+        const hex = value.replace(/#/g, '');
+        if (hex && (hex.length >= 3 || hex.length <= 6) && hex.match(/[a-fA-F0-9#]*/g)[0] === hex) {
+          globalCustomColor = `#${hex}`;
+          self.$setState({
+            customColor: globalCustomColor,
+          });
+          globalCustomProperties = self.generateStylesheet();
+          stylesheet.innerHTML = globalCustomProperties;
+          self.$setState({
+            customProperties: globalCustomProperties,
+          });
+        } else if (!hex) {
+          self.unsetCustomColor();
+        } else {
+          globalCustomProperties = self.generateStylesheet();
+          stylesheet.innerHTML = globalCustomProperties;
+          self.$setState({
+            customProperties: globalCustomProperties,
+          });
+        }
       },
     }
   }
