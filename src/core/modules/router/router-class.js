@@ -712,7 +712,7 @@ class Router extends Framework7Class {
     if (params.xhrCacheIgnoreGetParameters && url.indexOf('?') >= 0) {
       url = url.split('?')[0];
     }
-    return Utils.promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       if (params.xhrCache && !ignoreCache && url.indexOf('nocache') < 0 && params.xhrCacheIgnore.indexOf(url) < 0) {
         for (let i = 0; i < router.cache.xhr.length; i += 1) {
           const cachedUrl = router.cache.xhr[i];
