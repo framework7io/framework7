@@ -97,7 +97,7 @@ const Virtual = {
     appendIndexes.forEach((index) => {
       swiper.$wrapperEl.append(renderSlide(slides[index], index));
     });
-    prependIndexes.sort((a, b) => a < b).forEach((index) => {
+    prependIndexes.sort((a, b) => b - a).forEach((index) => {
       swiper.$wrapperEl.prepend(renderSlide(slides[index], index));
     });
     swiper.$wrapperEl.children('.swiper-slide').css(offsetProp, `${offset}px`);
@@ -174,7 +174,9 @@ export default {
       Utils.extend(swiper.params, overwriteParams);
       Utils.extend(swiper.originalParams, overwriteParams);
 
-      swiper.virtual.update();
+      if (!swiper.params.initialSlide) {
+        swiper.virtual.update();
+      }
     },
     setTranslate() {
       const swiper = this;

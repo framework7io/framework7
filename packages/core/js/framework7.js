@@ -1,5 +1,5 @@
 /**
- * Framework7 3.5.0
+ * Framework7 3.5.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 26, 2018
+ * Released on: November 2, 2018
  */
 
 (function (global, factory) {
@@ -3694,7 +3694,7 @@
         return !!(('ontouchstart' in win) || (win.DocumentTouch && doc instanceof win.DocumentTouch));
       }()),
 
-      pointerEvents: !!(win.navigator.pointerEnabled || win.PointerEvent),
+      pointerEvents: !!(win.navigator.pointerEnabled || win.PointerEvent || ('maxTouchPoints' in win.navigator)),
       prefixedPointerEvents: !!win.navigator.msPointerEnabled,
 
       transition: (function checkTransition() {
@@ -10609,6 +10609,8 @@
     } else {
       scriptContent = 'return {}';
     }
+    if (!scriptContent || !scriptContent.trim()) { scriptContent = 'return {}'; }
+
     scriptContent = "window." + callbackCreateName + " = function () {" + scriptContent + "}";
 
     // Insert Script El
@@ -11854,7 +11856,7 @@
 
 
       /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
-      // modal._clientLeft = $el[0].clientLeft;
+      modal._clientLeft = $el[0].clientLeft;
 
       // Modal
       function transitionEnd() {
@@ -11865,24 +11867,22 @@
         }
       }
       if (animate) {
-        Utils.nextFrame(function () {
-          if ($backdropEl) {
-            $backdropEl.removeClass('not-animated');
-            $backdropEl.addClass('backdrop-in');
-          }
-          $el
-            .animationEnd(function () {
-              transitionEnd();
-            });
-          $el
-            .transitionEnd(function () {
-              transitionEnd();
-            });
-          $el
-            .removeClass('modal-out not-animated')
-            .addClass('modal-in');
-          modal.onOpen();
-        });
+        if ($backdropEl) {
+          $backdropEl.removeClass('not-animated');
+          $backdropEl.addClass('backdrop-in');
+        }
+        $el
+          .animationEnd(function () {
+            transitionEnd();
+          });
+        $el
+          .transitionEnd(function () {
+            transitionEnd();
+          });
+        $el
+          .removeClass('modal-out not-animated')
+          .addClass('modal-in');
+        modal.onOpen();
       } else {
         if ($backdropEl) {
           $backdropEl.addClass('backdrop-in not-animated');
@@ -14307,8 +14307,16 @@
             if ($overswipeRightButton.length > 0 && $buttonEl.hasClass('swipeout-overswipe') && direction === 'to-left') {
               $buttonEl.css({ left: ((overswipeRight ? -buttonOffset : 0) + "px") });
               if (overswipeRight) {
+                if (!$buttonEl.hasClass('swipeout-overswipe-active')) {
+                  $swipeoutEl.trigger('swipeout:overswipeenter');
+                  app.emit('swipeoutOverswipeEnter', $swipeoutEl[0]);
+                }
                 $buttonEl.addClass('swipeout-overswipe-active');
               } else {
+                if ($buttonEl.hasClass('swipeout-overswipe-active')) {
+                  $swipeoutEl.trigger('swipeout:overswipeexit');
+                  app.emit('swipeoutOverswipeExit', $swipeoutEl[0]);
+                }
                 $buttonEl.removeClass('swipeout-overswipe-active');
               }
             }
@@ -14339,8 +14347,16 @@
             if ($overswipeLeftButton.length > 0 && $buttonEl.hasClass('swipeout-overswipe') && direction === 'to-right') {
               $buttonEl.css({ left: ((overswipeLeft ? buttonOffset : 0) + "px") });
               if (overswipeLeft) {
+                if (!$buttonEl.hasClass('swipeout-overswipe-active')) {
+                  $swipeoutEl.trigger('swipeout:overswipeenter');
+                  app.emit('swipeoutOverswipeEnter', $swipeoutEl[0]);
+                }
                 $buttonEl.addClass('swipeout-overswipe-active');
               } else {
+                if ($buttonEl.hasClass('swipeout-overswipe-active')) {
+                  $swipeoutEl.trigger('swipeout:overswipeexit');
+                  app.emit('swipeoutOverswipeExit', $swipeoutEl[0]);
+                }
                 $buttonEl.removeClass('swipeout-overswipe-active');
               }
             }
@@ -16575,35 +16591,33 @@
       $backdropEl.show();
 
       /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
-      // panel._clientLeft = $el[0].clientLeft;
+      panel._clientLeft = $el[0].clientLeft;
 
-      Utils.nextFrame(function () {
-        $('html').addClass(("with-panel with-panel-" + side + "-" + effect));
-        panel.onOpen();
+      $('html').addClass(("with-panel with-panel-" + side + "-" + effect));
+      panel.onOpen();
 
-        // Transition End;
-        var transitionEndTarget = effect === 'reveal' ? $el.nextAll('.view, .views').eq(0) : $el;
+      // Transition End;
+      var transitionEndTarget = effect === 'reveal' ? $el.nextAll('.view, .views').eq(0) : $el;
 
-        function panelTransitionEnd() {
-          transitionEndTarget.transitionEnd(function (e) {
-            if ($(e.target).is(transitionEndTarget)) {
-              if ($el.hasClass('panel-active')) {
-                panel.onOpened();
-                $backdropEl.css({ display: '' });
-              } else {
-                panel.onClosed();
-                $backdropEl.css({ display: '' });
-              }
-            } else { panelTransitionEnd(); }
-          });
-        }
-        if (animate) {
-          panelTransitionEnd();
-        } else {
-          panel.onOpened();
-          $backdropEl.css({ display: '' });
-        }
-      });
+      function panelTransitionEnd() {
+        transitionEndTarget.transitionEnd(function (e) {
+          if ($(e.target).is(transitionEndTarget)) {
+            if ($el.hasClass('panel-active')) {
+              panel.onOpened();
+              $backdropEl.css({ display: '' });
+            } else {
+              panel.onClosed();
+              $backdropEl.css({ display: '' });
+            }
+          } else { panelTransitionEnd(); }
+        });
+      }
+      if (animate) {
+        panelTransitionEnd();
+      } else {
+        panel.onOpened();
+        $backdropEl.css({ display: '' });
+      }
 
       return true;
     };
@@ -23653,11 +23667,9 @@
       sb.$disableButtonEl.transition(0).show();
       sb.$disableButtonEl.css(("margin-" + (app.rtl ? 'left' : 'right')), ((-sb.disableButtonEl.offsetWidth) + "px"));
       /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
-      // sb._clientLeft = sb.$disableButtonEl[0].clientLeft;
-      Utils.nextFrame(function () {
-        sb.$disableButtonEl.transition('');
-        sb.disableButtonHasMargin = true;
-      });
+      sb._clientLeft = sb.$disableButtonEl[0].clientLeft;
+      sb.$disableButtonEl.transition('');
+      sb.disableButtonHasMargin = true;
     };
 
     Searchbar.prototype.enable = function enable (setFocus) {
@@ -25170,11 +25182,11 @@
         } else {
           // eslint-disable-next-line
           if (swiper.isHorizontal()) {
-            slideSize = slide[0].getBoundingClientRect().width
+            slideSize = parseFloat(slideStyles.getPropertyValue('width'))
               + parseFloat(slideStyles.getPropertyValue('margin-left'))
               + parseFloat(slideStyles.getPropertyValue('margin-right'));
           } else {
-            slideSize = slide[0].getBoundingClientRect().height
+            slideSize = parseFloat(slideStyles.getPropertyValue('height'))
               + parseFloat(slideStyles.getPropertyValue('margin-top'))
               + parseFloat(slideStyles.getPropertyValue('margin-bottom'));
           }
@@ -26383,7 +26395,9 @@
       ) {
         doc.activeElement.blur();
       }
-      if (preventDefault && swiper.allowTouchMove && params.touchStartPreventDefault) {
+
+      var shouldPreventDefault = preventDefault && swiper.allowTouchMove && params.touchStartPreventDefault;
+      if (params.touchStartForcePreventDefault || shouldPreventDefault) {
         e.preventDefault();
       }
     }
@@ -27026,13 +27040,30 @@
     var params = swiper.params;
     var breakpoints = params.breakpoints;
     if (!breakpoints || (breakpoints && Object.keys(breakpoints).length === 0)) { return; }
+
     // Set breakpoint for window width and update parameters
     var breakpoint = swiper.getBreakpoint(breakpoints);
-    if (breakpoint && swiper.currentBreakpoint !== breakpoint) {
-      var breakPointsParams = breakpoint in breakpoints ? breakpoints[breakpoint] : swiper.originalParams;
-      var needsReLoop = params.loop && (breakPointsParams.slidesPerView !== params.slidesPerView);
 
-      Utils.extend(swiper.params, breakPointsParams);
+    if (breakpoint && swiper.currentBreakpoint !== breakpoint) {
+      var breakpointOnlyParams = breakpoint in breakpoints ? breakpoints[breakpoint] : undefined;
+      if (breakpointOnlyParams) {
+        ['slidesPerView', 'spaceBetween', 'slidesPerGroup'].forEach(function (param) {
+          var paramValue = breakpointOnlyParams[param];
+          if (typeof paramValue === 'undefined') { return; }
+          if (param === 'slidesPerView' && (paramValue === 'AUTO' || paramValue === 'auto')) {
+            breakpointOnlyParams[param] = 'auto';
+          } else if (param === 'slidesPerView') {
+            breakpointOnlyParams[param] = parseFloat(paramValue);
+          } else {
+            breakpointOnlyParams[param] = parseInt(paramValue, 10);
+          }
+        });
+      }
+
+      var breakpointParams = breakpointOnlyParams || swiper.originalParams;
+      var needsReLoop = params.loop && (breakpointParams.slidesPerView !== params.slidesPerView);
+
+      Utils.extend(swiper.params, breakpointParams);
 
       Utils.extend(swiper, {
         allowTouchMove: swiper.params.allowTouchMove,
@@ -27048,7 +27079,7 @@
         swiper.updateSlides();
         swiper.slideTo((activeIndex - loopedSlides) + swiper.loopedSlides, 0, false);
       }
-      swiper.emit('breakpoint', breakPointsParams);
+      swiper.emit('breakpoint', breakpointParams);
     }
   }
 
@@ -27288,6 +27319,7 @@
     threshold: 0,
     touchMoveStopPropagation: true,
     touchStartPreventDefault: true,
+    touchStartForcePreventDefault: false,
     touchReleaseOnEdges: false,
 
     // Unique Navigation Elements
@@ -28054,7 +28086,7 @@
       appendIndexes.forEach(function (index) {
         swiper.$wrapperEl.append(renderSlide(slides[index], index));
       });
-      prependIndexes.sort(function (a, b) { return a < b; }).forEach(function (index) {
+      prependIndexes.sort(function (a, b) { return b - a; }).forEach(function (index) {
         swiper.$wrapperEl.prepend(renderSlide(slides[index], index));
       });
       swiper.$wrapperEl.children('.swiper-slide').css(offsetProp, (offset + "px"));
@@ -28131,7 +28163,9 @@
         Utils.extend(swiper.params, overwriteParams);
         Utils.extend(swiper.originalParams, overwriteParams);
 
-        swiper.virtual.update();
+        if (!swiper.params.initialSlide) {
+          swiper.virtual.update();
+        }
       },
       setTranslate: function setTranslate() {
         var swiper = this;
@@ -28169,6 +28203,18 @@
         $nextEl[swiper.params.watchOverflow && swiper.isLocked ? 'addClass' : 'removeClass'](params.lockClass);
       }
     },
+    onPrevClick: function onPrevClick(e) {
+      var swiper = this;
+      e.preventDefault();
+      if (swiper.isBeginning && !swiper.params.loop) { return; }
+      swiper.slidePrev();
+    },
+    onNextClick: function onNextClick(e) {
+      var swiper = this;
+      e.preventDefault();
+      if (swiper.isEnd && !swiper.params.loop) { return; }
+      swiper.slideNext();
+    },
     init: function init() {
       var swiper = this;
       var params = swiper.params.navigation;
@@ -28200,18 +28246,10 @@
       }
 
       if ($nextEl && $nextEl.length > 0) {
-        $nextEl.on('click', function (e) {
-          e.preventDefault();
-          if (swiper.isEnd && !swiper.params.loop) { return; }
-          swiper.slideNext();
-        });
+        $nextEl.on('click', swiper.navigation.onNextClick);
       }
       if ($prevEl && $prevEl.length > 0) {
-        $prevEl.on('click', function (e) {
-          e.preventDefault();
-          if (swiper.isBeginning && !swiper.params.loop) { return; }
-          swiper.slidePrev();
-        });
+        $prevEl.on('click', swiper.navigation.onPrevClick);
       }
 
       Utils.extend(swiper.navigation, {
@@ -28227,11 +28265,11 @@
       var $nextEl = ref.$nextEl;
       var $prevEl = ref.$prevEl;
       if ($nextEl && $nextEl.length) {
-        $nextEl.off('click');
+        $nextEl.off('click', swiper.navigation.onNextClick);
         $nextEl.removeClass(swiper.params.navigation.disabledClass);
       }
       if ($prevEl && $prevEl.length) {
-        $prevEl.off('click');
+        $prevEl.off('click', swiper.navigation.onPrevClick);
         $prevEl.removeClass(swiper.params.navigation.disabledClass);
       }
     },
@@ -28257,6 +28295,8 @@
           init: Navigation.init.bind(swiper),
           update: Navigation.update.bind(swiper),
           destroy: Navigation.destroy.bind(swiper),
+          onNextClick: Navigation.onNextClick.bind(swiper),
+          onPrevClick: Navigation.onPrevClick.bind(swiper),
         },
       });
     },
@@ -28819,56 +28859,42 @@
       var swiper = this;
       if (!swiper.params.scrollbar.el) { return; }
       var scrollbar = swiper.scrollbar;
-      var touchEvents = swiper.touchEvents;
+      var touchEventsTouch = swiper.touchEventsTouch;
       var touchEventsDesktop = swiper.touchEventsDesktop;
       var params = swiper.params;
       var $el = scrollbar.$el;
       var target = $el[0];
       var activeListener = Support.passiveListener && params.passiveListeners ? { passive: false, capture: false } : false;
       var passiveListener = Support.passiveListener && params.passiveListeners ? { passive: true, capture: false } : false;
-      if (!Support.touch && (Support.pointerEvents || Support.prefixedPointerEvents)) {
+      if (!Support.touch) {
         target.addEventListener(touchEventsDesktop.start, swiper.scrollbar.onDragStart, activeListener);
         doc.addEventListener(touchEventsDesktop.move, swiper.scrollbar.onDragMove, activeListener);
         doc.addEventListener(touchEventsDesktop.end, swiper.scrollbar.onDragEnd, passiveListener);
       } else {
-        if (Support.touch) {
-          target.addEventListener(touchEvents.start, swiper.scrollbar.onDragStart, activeListener);
-          target.addEventListener(touchEvents.move, swiper.scrollbar.onDragMove, activeListener);
-          target.addEventListener(touchEvents.end, swiper.scrollbar.onDragEnd, passiveListener);
-        }
-        if ((params.simulateTouch && !Device.ios && !Device.android) || (params.simulateTouch && !Support.touch && Device.ios)) {
-          target.addEventListener('mousedown', swiper.scrollbar.onDragStart, activeListener);
-          doc.addEventListener('mousemove', swiper.scrollbar.onDragMove, activeListener);
-          doc.addEventListener('mouseup', swiper.scrollbar.onDragEnd, passiveListener);
-        }
+        target.addEventListener(touchEventsTouch.start, swiper.scrollbar.onDragStart, activeListener);
+        target.addEventListener(touchEventsTouch.move, swiper.scrollbar.onDragMove, activeListener);
+        target.addEventListener(touchEventsTouch.end, swiper.scrollbar.onDragEnd, passiveListener);
       }
     },
     disableDraggable: function disableDraggable() {
       var swiper = this;
       if (!swiper.params.scrollbar.el) { return; }
       var scrollbar = swiper.scrollbar;
-      var touchEvents = swiper.touchEvents;
+      var touchEventsTouch = swiper.touchEventsTouch;
       var touchEventsDesktop = swiper.touchEventsDesktop;
       var params = swiper.params;
       var $el = scrollbar.$el;
       var target = $el[0];
       var activeListener = Support.passiveListener && params.passiveListeners ? { passive: false, capture: false } : false;
       var passiveListener = Support.passiveListener && params.passiveListeners ? { passive: true, capture: false } : false;
-      if (!Support.touch && (Support.pointerEvents || Support.prefixedPointerEvents)) {
+      if (!Support.touch) {
         target.removeEventListener(touchEventsDesktop.start, swiper.scrollbar.onDragStart, activeListener);
         doc.removeEventListener(touchEventsDesktop.move, swiper.scrollbar.onDragMove, activeListener);
         doc.removeEventListener(touchEventsDesktop.end, swiper.scrollbar.onDragEnd, passiveListener);
       } else {
-        if (Support.touch) {
-          target.removeEventListener(touchEvents.start, swiper.scrollbar.onDragStart, activeListener);
-          target.removeEventListener(touchEvents.move, swiper.scrollbar.onDragMove, activeListener);
-          target.removeEventListener(touchEvents.end, swiper.scrollbar.onDragEnd, passiveListener);
-        }
-        if ((params.simulateTouch && !Device.ios && !Device.android) || (params.simulateTouch && !Support.touch && Device.ios)) {
-          target.removeEventListener('mousedown', swiper.scrollbar.onDragStart, activeListener);
-          doc.removeEventListener('mousemove', swiper.scrollbar.onDragMove, activeListener);
-          doc.removeEventListener('mouseup', swiper.scrollbar.onDragEnd, passiveListener);
-        }
+        target.removeEventListener(touchEventsTouch.start, swiper.scrollbar.onDragStart, activeListener);
+        target.removeEventListener(touchEventsTouch.move, swiper.scrollbar.onDragMove, activeListener);
+        target.removeEventListener(touchEventsTouch.end, swiper.scrollbar.onDragEnd, passiveListener);
       }
     },
     init: function init() {
@@ -30900,6 +30926,8 @@
       var thumbsSwiper = swiper.thumbs.swiper;
       if (!thumbsSwiper) { return; }
       var clickedIndex = thumbsSwiper.clickedIndex;
+      var clickedSlide = thumbsSwiper.clickedSlide;
+      if (clickedSlide && $(clickedSlide).hasClass(swiper.params.thumbs.slideThumbActiveClass)) { return; }
       if (typeof clickedIndex === 'undefined' || clickedIndex === null) { return; }
       var slideToIndex;
       if (thumbsSwiper.params.loop) {
@@ -30948,12 +30976,12 @@
           var nextThumbsIndex = thumbsSwiper.slides.eq(currentThumbsIndex).nextAll(("[data-swiper-slide-index=\"" + (swiper.realIndex) + "\"]")).eq(0).index();
           if (typeof prevThumbsIndex === 'undefined') { newThumbsIndex = nextThumbsIndex; }
           else if (typeof nextThumbsIndex === 'undefined') { newThumbsIndex = prevThumbsIndex; }
+          else if (nextThumbsIndex - currentThumbsIndex === currentThumbsIndex - prevThumbsIndex) { newThumbsIndex = currentThumbsIndex; }
           else if (nextThumbsIndex - currentThumbsIndex < currentThumbsIndex - prevThumbsIndex) { newThumbsIndex = nextThumbsIndex; }
           else { newThumbsIndex = prevThumbsIndex; }
         } else {
           newThumbsIndex = swiper.realIndex;
         }
-
         if (thumbsSwiper.visibleSlidesIndexes.indexOf(newThumbsIndex) < 0) {
           if (thumbsSwiper.params.centeredSlides) {
             if (newThumbsIndex > currentThumbsIndex) {

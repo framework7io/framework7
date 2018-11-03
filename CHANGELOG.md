@@ -2,6 +2,22 @@
 
 # Change Log
 
+# [v3.5.1](https://github.com/framework7io/framework7/compare/v3.5.0...v3.5.1) - November 2, 2018
+  * Core
+    * Swiper update to latest 4.4.2:
+      * New `touchStartForcePreventDefault` parameter to force touch start event prevent default
+      * Breakpoints fix when breakpoint keys are strings
+      * Fixed issue when draggable scrollbar may not work on desktop Safari
+      * Fixed issue with wrong sort of Virtual Slides
+    * Swipeout
+      * Added new `swipeout:overswipeenter` and `swipeout:overswipeexit` events fired when overswipe enabled/disabled
+    * Panel
+      * Fixed issue when Swipe Panel could cause kind of screen flickering on open
+  * Phenome
+    * Messagebar - new `textareaId` property to set ID attribute on its textarea
+    * ListItem - new `swipeoutOverswipeEnter` and `swipeoutOverswipeExit` events
+  * Minor fixes
+
 # [v3.5.0](https://github.com/framework7io/framework7/compare/v3.4.3...v3.5.0) - October 26, 2018
   * Phenome
     * Fix issues with handling "stacked" pages

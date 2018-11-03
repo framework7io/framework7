@@ -42,15 +42,15 @@ export namespace Dialog {
     /** Enables bold button text. (default false) */
     bold?: boolean
     /** Button color, one of default colors. */
-    color: string
+    color?: string
     /** If enabled then button click will close Dialog. (default true) */
     close?: boolean
     /** Additional button CSS class. */
-    cssClass: string
+    cssClass?: string
     /** Array with keyboard keycodes that will be used to trigger button click. For example, key code 13 means that button click will be triggered on Enter key press. (default []) */
     keyCodes?: number[]
     /** Callback function that will be executed after click on this button. */
-    onClick: (dialog : Dialog, e : Event) => void
+    onClick?: (dialog : Dialog, e : Event) => void
   }
 
   interface Parameters {

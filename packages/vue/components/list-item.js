@@ -244,6 +244,8 @@ export default {
     self.onSwipeoutClosedBound = self.onSwipeoutClosed.bind(self);
     self.onSwipeoutDeleteBound = self.onSwipeoutDelete.bind(self);
     self.onSwipeoutDeletedBound = self.onSwipeoutDeleted.bind(self);
+    self.onSwipeoutOverswipeEnterBound = self.onSwipeoutOverswipeEnter.bind(self);
+    self.onSwipeoutOverswipeExitBound = self.onSwipeoutOverswipeExit.bind(self);
     self.onSwipeoutBound = self.onSwipeout.bind(self);
     self.onAccOpenBound = self.onAccOpen.bind(self);
     self.onAccOpenedBound = self.onAccOpened.bind(self);
@@ -280,6 +282,8 @@ export default {
       el.addEventListener('swipeout:closed', self.onSwipeoutClosedBound);
       el.addEventListener('swipeout:delete', self.onSwipeoutDeleteBound);
       el.addEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
+      el.addEventListener('swipeout:overswipeenter', self.onSwipeoutOverswipeEnterBound);
+      el.addEventListener('swipeout:overswipeexit', self.onSwipeoutOverswipeExitBound);
       el.addEventListener('swipeout', self.onSwipeoutBound);
     }
 
@@ -350,6 +354,8 @@ export default {
         el.removeEventListener('swipeout:closed', self.onSwipeoutClosedBound);
         el.removeEventListener('swipeout:delete', self.onSwipeoutDeleteBound);
         el.removeEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
+        el.removeEventListener('swipeout:overswipeenter', self.onSwipeoutOverswipeEnterBound);
+        el.removeEventListener('swipeout:overswipeexit', self.onSwipeoutOverswipeExitBound);
         el.removeEventListener('swipeout', self.onSwipeoutBound);
       }
 
@@ -373,6 +379,14 @@ export default {
       if (event.target.tagName.toLowerCase() !== 'input') {
         self.dispatchEvent('click', event);
       }
+    },
+
+    onSwipeoutOverswipeEnter(event) {
+      this.dispatchEvent('swipeout:overswipeenter swipeoutOverswipeEnter', event);
+    },
+
+    onSwipeoutOverswipeExit(event) {
+      this.dispatchEvent('swipeout:overswipeexit swipeoutOverswipeExit', event);
     },
 
     onSwipeoutDeleted(event) {

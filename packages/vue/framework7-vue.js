@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.5.0
+ * Framework7 Vue 3.5.1
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 26, 2018
+ * Released on: November 2, 2018
  */
 
 (function (global, factory) {
@@ -5075,6 +5075,8 @@
       self.onSwipeoutClosedBound = self.onSwipeoutClosed.bind(self);
       self.onSwipeoutDeleteBound = self.onSwipeoutDelete.bind(self);
       self.onSwipeoutDeletedBound = self.onSwipeoutDeleted.bind(self);
+      self.onSwipeoutOverswipeEnterBound = self.onSwipeoutOverswipeEnter.bind(self);
+      self.onSwipeoutOverswipeExitBound = self.onSwipeoutOverswipeExit.bind(self);
       self.onSwipeoutBound = self.onSwipeout.bind(self);
       self.onAccOpenBound = self.onAccOpen.bind(self);
       self.onAccOpenedBound = self.onAccOpened.bind(self);
@@ -5110,6 +5112,8 @@
         el.addEventListener('swipeout:closed', self.onSwipeoutClosedBound);
         el.addEventListener('swipeout:delete', self.onSwipeoutDeleteBound);
         el.addEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
+        el.addEventListener('swipeout:overswipeenter', self.onSwipeoutOverswipeEnterBound);
+        el.addEventListener('swipeout:overswipeexit', self.onSwipeoutOverswipeExitBound);
         el.addEventListener('swipeout', self.onSwipeoutBound);
       }
 
@@ -5177,6 +5181,8 @@
           el.removeEventListener('swipeout:closed', self.onSwipeoutClosedBound);
           el.removeEventListener('swipeout:delete', self.onSwipeoutDeleteBound);
           el.removeEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
+          el.removeEventListener('swipeout:overswipeenter', self.onSwipeoutOverswipeEnterBound);
+          el.removeEventListener('swipeout:overswipeexit', self.onSwipeoutOverswipeExitBound);
           el.removeEventListener('swipeout', self.onSwipeoutBound);
         }
 
@@ -5200,6 +5206,14 @@
         if (event.target.tagName.toLowerCase() !== 'input') {
           self.dispatchEvent('click', event);
         }
+      },
+
+      onSwipeoutOverswipeEnter: function onSwipeoutOverswipeEnter(event) {
+        this.dispatchEvent('swipeout:overswipeenter swipeoutOverswipeEnter', event);
+      },
+
+      onSwipeoutOverswipeExit: function onSwipeoutOverswipeExit(event) {
+        this.dispatchEvent('swipeout:overswipeexit swipeoutOverswipeExit', event);
       },
 
       onSwipeoutDeleted: function onSwipeoutDeleted(event) {
@@ -6136,6 +6150,7 @@
       value: [String, Number, Array],
       disabled: Boolean,
       readonly: Boolean,
+      textareaId: [Number, String],
       name: String,
       placeholder: {
         type: String,
@@ -10455,7 +10470,7 @@
   };
 
   /**
-   * Framework7 Vue 3.5.0
+   * Framework7 Vue 3.5.1
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -10463,7 +10478,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: October 26, 2018
+   * Released on: November 2, 2018
    */
 
   var Plugin = {

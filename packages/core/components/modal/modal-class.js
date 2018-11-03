@@ -119,7 +119,7 @@ class Modal extends Framework7Class {
 
 
     /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
-    // modal._clientLeft = $el[0].clientLeft;
+    modal._clientLeft = $el[0].clientLeft;
 
     // Modal
     function transitionEnd() {
@@ -130,24 +130,22 @@ class Modal extends Framework7Class {
       }
     }
     if (animate) {
-      Utils.nextFrame(() => {
-        if ($backdropEl) {
-          $backdropEl.removeClass('not-animated');
-          $backdropEl.addClass('backdrop-in');
-        }
-        $el
-          .animationEnd(() => {
-            transitionEnd();
-          });
-        $el
-          .transitionEnd(() => {
-            transitionEnd();
-          });
-        $el
-          .removeClass('modal-out not-animated')
-          .addClass('modal-in');
-        modal.onOpen();
-      });
+      if ($backdropEl) {
+        $backdropEl.removeClass('not-animated');
+        $backdropEl.addClass('backdrop-in');
+      }
+      $el
+        .animationEnd(() => {
+          transitionEnd();
+        });
+      $el
+        .transitionEnd(() => {
+          transitionEnd();
+        });
+      $el
+        .removeClass('modal-out not-animated')
+        .addClass('modal-in');
+      modal.onOpen();
     } else {
       if ($backdropEl) {
         $backdropEl.addClass('backdrop-in not-animated');
