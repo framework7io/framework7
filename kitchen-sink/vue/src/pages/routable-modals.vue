@@ -11,7 +11,6 @@
   </f7-page>
 </template>
 <script>
-  import React from 'react';
   import { f7Navbar, f7Page, f7List, f7ListItem, f7Block } from 'framework7-vue';
 
   export default {
