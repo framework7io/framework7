@@ -76,7 +76,7 @@
     "gulp-rename": "^1.4.0",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.1",
-    "hoek": "^5.0.4",
+    "hoek": "^6.0.0",
     "husky": "^1.0.0-rc.13",
     "phenome": "0.1.8",
     "prop-types": "^15.6.2",
