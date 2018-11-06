@@ -34,6 +34,7 @@ class Panel extends Framework7Class {
     }
 
     let $backdropEl = $('.panel-backdrop');
+
     if ($backdropEl.length === 0) {
       $backdropEl = $('<div class="panel-backdrop"></div>');
       $backdropEl.insertBefore($el);
@@ -186,6 +187,10 @@ class Panel extends Framework7Class {
         $el.insertAfter($insertBeforeEl);
       } else {
         app.root.prepend($el);
+      }
+
+      if ($backdropEl && $backdropEl.length && !$backdropEl.parent().is(app.root) && $backdropEl.nextAll('.panel').length === 0) {
+        $backdropEl.insertBefore($el);
       }
 
       panel.once('panelClosed', () => {
