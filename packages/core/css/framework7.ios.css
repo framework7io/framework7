@@ -1,5 +1,5 @@
 /**
- * Framework7 3.5.1
+ * Framework7 3.5.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 2, 2018
+ * Released on: November 12, 2018
  */
 html,
 body,
@@ -2196,6 +2196,8 @@ html.with-statusbar.device-iphone-x .framework7-root {
 .list li:last-child li:last-child > .item-inner:after,
 .list li:last-child > .item-content > .item-inner:after,
 .list li:last-child li:last-child > .item-content > .item-inner:after,
+.list li:last-child > .swipeout-content > .item-content > .item-inner:after,
+.list li:last-child li:last-child > .swipeout-content > .item-content > .item-inner:after,
 .list li:last-child > .item-link > .item-content > .item-inner:after,
 .list li:last-child li:last-child > .item-link > .item-content > .item-inner:after {
   display: none !important;

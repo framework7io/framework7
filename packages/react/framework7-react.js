@@ -1,5 +1,5 @@
 /**
- * Framework7 React 3.5.1
+ * Framework7 React 3.5.2
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 2, 2018
+ * Released on: November 12, 2018
  */
 
 (function (global, factory) {
@@ -473,7 +473,7 @@
     });
   }
 
-  var F7AccordionContent = (function (superclass) {
+  var F7AccordionContent = /*@__PURE__*/(function (superclass) {
     function F7AccordionContent(props, context) {
       superclass.call(this, props, context);
     }
@@ -551,7 +551,7 @@
     });
   }
 
-  var F7AccordionItem = (function (superclass) {
+  var F7AccordionItem = /*@__PURE__*/(function (superclass) {
     function F7AccordionItem(props, context) {
       superclass.call(this, props, context);
     }
@@ -647,7 +647,7 @@
 
   F7AccordionItem.displayName = 'f7-accordion-item';
 
-  var F7AccordionToggle = (function (superclass) {
+  var F7AccordionToggle = /*@__PURE__*/(function (superclass) {
     function F7AccordionToggle(props, context) {
       superclass.call(this, props, context);
     }
@@ -688,7 +688,7 @@
 
   F7AccordionToggle.displayName = 'f7-accordion-toggle';
 
-  var F7Accordion = (function (superclass) {
+  var F7Accordion = /*@__PURE__*/(function (superclass) {
     function F7Accordion(props, context) {
       superclass.call(this, props, context);
     }
@@ -729,7 +729,7 @@
 
   F7Accordion.displayName = 'f7-accordion';
 
-  var F7ActionsButton = (function (superclass) {
+  var F7ActionsButton = /*@__PURE__*/(function (superclass) {
     function F7ActionsButton(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -822,7 +822,7 @@
 
   F7ActionsButton.displayName = 'f7-actions-button';
 
-  var F7ActionsGroup = (function (superclass) {
+  var F7ActionsGroup = /*@__PURE__*/(function (superclass) {
     function F7ActionsGroup(props, context) {
       superclass.call(this, props, context);
     }
@@ -864,7 +864,7 @@
 
   F7ActionsGroup.displayName = 'f7-actions-group';
 
-  var F7ActionsLabel = (function (superclass) {
+  var F7ActionsLabel = /*@__PURE__*/(function (superclass) {
     function F7ActionsLabel(props, context) {
       superclass.call(this, props, context);
     }
@@ -950,7 +950,7 @@
     if (callback) { callback(newValue, oldValue); }
   }
 
-  var F7Actions = (function (superclass) {
+  var F7Actions = /*@__PURE__*/(function (superclass) {
     function F7Actions(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -1204,7 +1204,7 @@
     },
   };
 
-  var F7RoutableModals = (function (superclass) {
+  var F7RoutableModals = /*@__PURE__*/(function (superclass) {
     function F7RoutableModals(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -1280,7 +1280,7 @@
 
   F7RoutableModals.displayName = 'f7-routable-modals';
 
-  var F7App = (function (superclass) {
+  var F7App = /*@__PURE__*/(function (superclass) {
     function F7App(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -1357,7 +1357,7 @@
 
   F7App.displayName = 'f7-app';
 
-  var F7Badge = (function (superclass) {
+  var F7Badge = /*@__PURE__*/(function (superclass) {
     function F7Badge(props, context) {
       superclass.call(this, props, context);
     }
@@ -1398,7 +1398,7 @@
 
   F7Badge.displayName = 'f7-badge';
 
-  var F7BlockFooter = (function (superclass) {
+  var F7BlockFooter = /*@__PURE__*/(function (superclass) {
     function F7BlockFooter(props, context) {
       superclass.call(this, props, context);
     }
@@ -1439,7 +1439,7 @@
 
   F7BlockFooter.displayName = 'f7-block-footer';
 
-  var F7BlockHeader = (function (superclass) {
+  var F7BlockHeader = /*@__PURE__*/(function (superclass) {
     function F7BlockHeader(props, context) {
       superclass.call(this, props, context);
     }
@@ -1480,7 +1480,7 @@
 
   F7BlockHeader.displayName = 'f7-block-header';
 
-  var F7BlockTitle = (function (superclass) {
+  var F7BlockTitle = /*@__PURE__*/(function (superclass) {
     function F7BlockTitle(props, context) {
       superclass.call(this, props, context);
     }
@@ -1521,7 +1521,7 @@
 
   F7BlockTitle.displayName = 'f7-block-title';
 
-  var F7Block = (function (superclass) {
+  var F7Block = /*@__PURE__*/(function (superclass) {
     function F7Block(props, context) {
       superclass.call(this, props, context);
     }
@@ -1629,7 +1629,7 @@
 
   F7Block.displayName = 'f7-block';
 
-  var F7Icon = (function (superclass) {
+  var F7Icon = /*@__PURE__*/(function (superclass) {
     function F7Icon(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -1814,7 +1814,7 @@
 
   F7Icon.displayName = 'f7-icon';
 
-  var F7Button = (function (superclass) {
+  var F7Button = /*@__PURE__*/(function (superclass) {
     function F7Button(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -2037,7 +2037,7 @@
 
   F7Button.displayName = 'f7-button';
 
-  var F7CardContent = (function (superclass) {
+  var F7CardContent = /*@__PURE__*/(function (superclass) {
     function F7CardContent(props, context) {
       superclass.call(this, props, context);
     }
@@ -2085,7 +2085,7 @@
 
   F7CardContent.displayName = 'f7-card-content';
 
-  var F7CardFooter = (function (superclass) {
+  var F7CardFooter = /*@__PURE__*/(function (superclass) {
     function F7CardFooter(props, context) {
       superclass.call(this, props, context);
     }
@@ -2126,7 +2126,7 @@
 
   F7CardFooter.displayName = 'f7-card-footer';
 
-  var F7CardHeader = (function (superclass) {
+  var F7CardHeader = /*@__PURE__*/(function (superclass) {
     function F7CardHeader(props, context) {
       superclass.call(this, props, context);
     }
@@ -2167,7 +2167,7 @@
 
   F7CardHeader.displayName = 'f7-card-header';
 
-  var F7Card = (function (superclass) {
+  var F7Card = /*@__PURE__*/(function (superclass) {
     function F7Card(props, context) {
       superclass.call(this, props, context);
     }
@@ -2242,7 +2242,7 @@
 
   F7Card.displayName = 'f7-card';
 
-  var F7Checkbox = (function (superclass) {
+  var F7Checkbox = /*@__PURE__*/(function (superclass) {
     function F7Checkbox(props, context) {
       superclass.call(this, props, context);
     }
@@ -2332,7 +2332,7 @@
 
   F7Checkbox.displayName = 'f7-checkbox';
 
-  var F7Chip = (function (superclass) {
+  var F7Chip = /*@__PURE__*/(function (superclass) {
     function F7Chip(props, context) {
       superclass.call(this, props, context);
     }
@@ -2429,7 +2429,7 @@
 
   F7Chip.displayName = 'f7-chip';
 
-  var F7Col = (function (superclass) {
+  var F7Col = /*@__PURE__*/(function (superclass) {
     function F7Col(props, context) {
       superclass.call(this, props, context);
     }
@@ -2506,7 +2506,7 @@
 
   F7Col.displayName = 'f7-col';
 
-  var F7FabButton = (function (superclass) {
+  var F7FabButton = /*@__PURE__*/(function (superclass) {
     function F7FabButton(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -2618,7 +2618,7 @@
 
   F7FabButton.displayName = 'f7-fab-button';
 
-  var F7FabButtons = (function (superclass) {
+  var F7FabButtons = /*@__PURE__*/(function (superclass) {
     function F7FabButtons(props, context) {
       superclass.call(this, props, context);
     }
@@ -2664,7 +2664,7 @@
 
   F7FabButtons.displayName = 'f7-fab-buttons';
 
-  var F7Fab = (function (superclass) {
+  var F7Fab = /*@__PURE__*/(function (superclass) {
     function F7Fab(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -2818,7 +2818,7 @@
 
   F7Fab.displayName = 'f7-fab';
 
-  var F7Gauge = (function (superclass) {
+  var F7Gauge = /*@__PURE__*/(function (superclass) {
     function F7Gauge(props, context) {
       superclass.call(this, props, context);
     }
@@ -2982,7 +2982,7 @@
 
   F7Gauge.displayName = 'f7-gauge';
 
-  var F7Toggle = (function (superclass) {
+  var F7Toggle = /*@__PURE__*/(function (superclass) {
     function F7Toggle(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -3114,7 +3114,7 @@
 
   F7Toggle.displayName = 'f7-toggle';
 
-  var F7Range = (function (superclass) {
+  var F7Range = /*@__PURE__*/(function (superclass) {
     function F7Range(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -3287,7 +3287,7 @@
 
   F7Range.displayName = 'f7-range';
 
-  var F7Input = (function (superclass) {
+  var F7Input = /*@__PURE__*/(function (superclass) {
     function F7Input(props, context) {
       var this$1 = this;
 
@@ -3742,7 +3742,7 @@
 
   F7Input.displayName = 'f7-input';
 
-  var F7Label = (function (superclass) {
+  var F7Label = /*@__PURE__*/(function (superclass) {
     function F7Label(props, context) {
       superclass.call(this, props, context);
     }
@@ -3792,7 +3792,7 @@
 
   F7Label.displayName = 'f7-label';
 
-  var F7Link = (function (superclass) {
+  var F7Link = /*@__PURE__*/(function (superclass) {
     function F7Link(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -4036,7 +4036,7 @@
 
   F7Link.displayName = 'f7-link';
 
-  var F7ListButton = (function (superclass) {
+  var F7ListButton = /*@__PURE__*/(function (superclass) {
     function F7ListButton(props, context) {
       superclass.call(this, props, context);
     }
@@ -4133,7 +4133,7 @@
 
   F7ListButton.displayName = 'f7-list-button';
 
-  var F7ListGroup = (function (superclass) {
+  var F7ListGroup = /*@__PURE__*/(function (superclass) {
     function F7ListGroup(props, context) {
       superclass.call(this, props, context);
     }
@@ -4182,7 +4182,7 @@
 
   F7ListGroup.displayName = 'f7-list-group';
 
-  var F7ListIndex = (function (superclass) {
+  var F7ListIndex = /*@__PURE__*/(function (superclass) {
     function F7ListIndex(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -4325,7 +4325,7 @@
 
   F7ListIndex.displayName = 'f7-list-index';
 
-  var F7ListInput = (function (superclass) {
+  var F7ListInput = /*@__PURE__*/(function (superclass) {
     function F7ListInput(props, context) {
       var this$1 = this;
 
@@ -4462,6 +4462,7 @@
       var sortable = props.sortable;
       var media = props.media;
       var renderInput = props.input;
+      var tag = props.tag;
       var type = props.type;
       var name = props.name;
       var value = props.value;
@@ -4575,7 +4576,8 @@
       }
 
       var hasErrorMessage = !!errorMessage || self.slots['error-message'] && self.slots['error-message'].length;
-      return React.createElement('li', {
+      var ItemTag = tag;
+      return React.createElement(ItemTag, {
         ref: function (__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
@@ -4740,6 +4742,10 @@
     className: String,
     sortable: Boolean,
     media: String,
+    tag: {
+      type: String,
+      default: 'li'
+    },
     input: {
       type: Boolean,
       default: true
@@ -4789,7 +4795,7 @@
 
   F7ListInput.displayName = 'f7-list-input';
 
-  var F7ListItemCell = (function (superclass) {
+  var F7ListItemCell = /*@__PURE__*/(function (superclass) {
     function F7ListItemCell(props, context) {
       superclass.call(this, props, context);
     }
@@ -4830,7 +4836,7 @@
 
   F7ListItemCell.displayName = 'f7-list-item-cell';
 
-  var F7ListItemContent = (function (superclass) {
+  var F7ListItemContent = /*@__PURE__*/(function (superclass) {
     function F7ListItemContent(props, context) {
       var this$1 = this;
 
@@ -5367,7 +5373,7 @@
 
   F7ListItemContent.displayName = 'f7-list-item-content';
 
-  var F7ListItemRow = (function (superclass) {
+  var F7ListItemRow = /*@__PURE__*/(function (superclass) {
     function F7ListItemRow(props, context) {
       superclass.call(this, props, context);
     }
@@ -5408,7 +5414,7 @@
 
   F7ListItemRow.displayName = 'f7-list-item-row';
 
-  var F7ListItem = (function (superclass) {
+  var F7ListItem = /*@__PURE__*/(function (superclass) {
     function F7ListItem(props, context) {
       var this$1 = this;
 
@@ -5861,7 +5867,7 @@
 
   F7ListItem.displayName = 'f7-list-item';
 
-  var F7List = (function (superclass) {
+  var F7List = /*@__PURE__*/(function (superclass) {
     function F7List(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -6137,7 +6143,7 @@
 
   F7List.displayName = 'f7-list';
 
-  var F7LoginScreenTitle = (function (superclass) {
+  var F7LoginScreenTitle = /*@__PURE__*/(function (superclass) {
     function F7LoginScreenTitle(props, context) {
       superclass.call(this, props, context);
     }
@@ -6178,7 +6184,7 @@
 
   F7LoginScreenTitle.displayName = 'f7-login-screen-title';
 
-  var F7LoginScreen = (function (superclass) {
+  var F7LoginScreen = /*@__PURE__*/(function (superclass) {
     function F7LoginScreen(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -6319,7 +6325,7 @@
 
   F7LoginScreen.displayName = 'f7-login-screen';
 
-  var F7Message = (function (superclass) {
+  var F7Message = /*@__PURE__*/(function (superclass) {
     function F7Message(props, context) {
       var this$1 = this;
 
@@ -6512,7 +6518,7 @@
 
   F7Message.displayName = 'f7-message';
 
-  var F7MessagebarAttachment = (function (superclass) {
+  var F7MessagebarAttachment = /*@__PURE__*/(function (superclass) {
     function F7MessagebarAttachment(props, context) {
       var this$1 = this;
 
@@ -6589,7 +6595,7 @@
 
   F7MessagebarAttachment.displayName = 'f7-messagebar-attachment';
 
-  var F7MessagebarAttachments = (function (superclass) {
+  var F7MessagebarAttachments = /*@__PURE__*/(function (superclass) {
     function F7MessagebarAttachments(props, context) {
       superclass.call(this, props, context);
     }
@@ -6630,7 +6636,7 @@
 
   F7MessagebarAttachments.displayName = 'f7-messagebar-attachments';
 
-  var F7MessagebarSheetImage = (function (superclass) {
+  var F7MessagebarSheetImage = /*@__PURE__*/(function (superclass) {
     function F7MessagebarSheetImage(props, context) {
       var this$1 = this;
 
@@ -6707,7 +6713,7 @@
 
   F7MessagebarSheetImage.displayName = 'f7-messagebar-sheet-image';
 
-  var F7MessagebarSheetItem = (function (superclass) {
+  var F7MessagebarSheetItem = /*@__PURE__*/(function (superclass) {
     function F7MessagebarSheetItem(props, context) {
       superclass.call(this, props, context);
     }
@@ -6748,7 +6754,7 @@
 
   F7MessagebarSheetItem.displayName = 'f7-messagebar-sheet-item';
 
-  var F7MessagebarSheet = (function (superclass) {
+  var F7MessagebarSheet = /*@__PURE__*/(function (superclass) {
     function F7MessagebarSheet(props, context) {
       superclass.call(this, props, context);
     }
@@ -6789,7 +6795,7 @@
 
   F7MessagebarSheet.displayName = 'f7-messagebar-sheet';
 
-  var F7Messagebar = (function (superclass) {
+  var F7Messagebar = /*@__PURE__*/(function (superclass) {
     function F7Messagebar(props, context) {
       var this$1 = this;
 
@@ -7196,7 +7202,7 @@
 
   F7Messagebar.displayName = 'f7-messagebar';
 
-  var F7MessagesTitle = (function (superclass) {
+  var F7MessagesTitle = /*@__PURE__*/(function (superclass) {
     function F7MessagesTitle(props, context) {
       superclass.call(this, props, context);
     }
@@ -7237,7 +7243,7 @@
 
   F7MessagesTitle.displayName = 'f7-messages-title';
 
-  var F7Messages = (function (superclass) {
+  var F7Messages = /*@__PURE__*/(function (superclass) {
     function F7Messages(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -7475,7 +7481,7 @@
 
   F7Messages.displayName = 'f7-messages';
 
-  var F7NavLeft = (function (superclass) {
+  var F7NavLeft = /*@__PURE__*/(function (superclass) {
     function F7NavLeft(props, context) {
       superclass.call(this, props, context);
     }
@@ -7551,7 +7557,7 @@
 
   F7NavLeft.displayName = 'f7-nav-left';
 
-  var F7NavRight = (function (superclass) {
+  var F7NavRight = /*@__PURE__*/(function (superclass) {
     function F7NavRight(props, context) {
       superclass.call(this, props, context);
     }
@@ -7596,7 +7602,7 @@
 
   F7NavRight.displayName = 'f7-nav-right';
 
-  var F7NavTitle = (function (superclass) {
+  var F7NavTitle = /*@__PURE__*/(function (superclass) {
     function F7NavTitle(props, context) {
       superclass.call(this, props, context);
     }
@@ -7654,7 +7660,7 @@
 
   F7NavTitle.displayName = 'f7-nav-title';
 
-  var F7Navbar = (function (superclass) {
+  var F7Navbar = /*@__PURE__*/(function (superclass) {
     function F7Navbar(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -7814,7 +7820,7 @@
 
   F7Navbar.displayName = 'f7-navbar';
 
-  var F7PageContent = (function (superclass) {
+  var F7PageContent = /*@__PURE__*/(function (superclass) {
     function F7PageContent(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -8029,7 +8035,7 @@
 
   F7PageContent.displayName = 'f7-page-content';
 
-  var F7Page = (function (superclass) {
+  var F7Page = /*@__PURE__*/(function (superclass) {
     function F7Page(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -8088,6 +8094,13 @@
     F7Page.prototype.onPageUnstack = function onPageUnstack () {
       this.setState({
         routerForceUnstack: true
+      });
+    };
+
+    F7Page.prototype.onPagePosition = function onPagePosition (event) {
+      var position = event.detail.position;
+      this.setState({
+        routerClass: ("page-" + position)
       });
     };
 
@@ -8301,6 +8314,7 @@
       el.removeEventListener('page:beforeremove', self.onPageBeforeRemove);
       el.removeEventListener('page:stack', self.onPageStack);
       el.removeEventListener('page:unstack', self.onPageUnstack);
+      el.removeEventListener('page:position', self.onPagePosition);
     };
 
     F7Page.prototype.componentDidMount = function componentDidMount () {
@@ -8325,6 +8339,7 @@
       self.onPageBeforeRemove = self.onPageBeforeRemove.bind(self);
       self.onPageStack = self.onPageStack.bind(self);
       self.onPageUnstack = self.onPageUnstack.bind(self);
+      self.onPagePosition = self.onPagePosition.bind(self);
 
       if (ptr) {
         el.addEventListener('ptr:pullstart', self.onPtrPullStart);
@@ -8348,6 +8363,7 @@
       el.addEventListener('page:beforeremove', self.onPageBeforeRemove);
       el.addEventListener('page:stack', self.onPageStack);
       el.addEventListener('page:unstack', self.onPageUnstack);
+      el.addEventListener('page:position', self.onPagePosition);
     };
 
     prototypeAccessors.slots.get = function () {
@@ -8416,7 +8432,7 @@
 
   F7Page.displayName = 'f7-page';
 
-  var F7Panel = (function (superclass) {
+  var F7Panel = /*@__PURE__*/(function (superclass) {
     function F7Panel(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -8632,7 +8648,7 @@
 
   F7Panel.displayName = 'f7-panel';
 
-  var F7PhotoBrowser = (function (superclass) {
+  var F7PhotoBrowser = /*@__PURE__*/(function (superclass) {
     function F7PhotoBrowser(props, context) {
       superclass.call(this, props, context);
     }
@@ -8808,7 +8824,7 @@
 
   F7PhotoBrowser.displayName = 'f7-photo-browser';
 
-  var F7Popover = (function (superclass) {
+  var F7Popover = /*@__PURE__*/(function (superclass) {
     function F7Popover(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -8965,7 +8981,7 @@
 
   F7Popover.displayName = 'f7-popover';
 
-  var F7Popup = (function (superclass) {
+  var F7Popup = /*@__PURE__*/(function (superclass) {
     function F7Popup(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -9121,7 +9137,7 @@
 
   F7Popup.displayName = 'f7-popup';
 
-  var F7Preloader = (function (superclass) {
+  var F7Preloader = /*@__PURE__*/(function (superclass) {
     function F7Preloader(props, context) {
       superclass.call(this, props, context);
     }
@@ -9197,7 +9213,7 @@
 
   F7Preloader.displayName = 'f7-preloader';
 
-  var F7Progressbar = (function (superclass) {
+  var F7Progressbar = /*@__PURE__*/(function (superclass) {
     function F7Progressbar(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -9266,7 +9282,7 @@
 
   F7Progressbar.displayName = 'f7-progressbar';
 
-  var F7Radio = (function (superclass) {
+  var F7Radio = /*@__PURE__*/(function (superclass) {
     function F7Radio(props, context) {
       superclass.call(this, props, context);
     }
@@ -9349,7 +9365,7 @@
 
   F7Radio.displayName = 'f7-radio';
 
-  var F7Row = (function (superclass) {
+  var F7Row = /*@__PURE__*/(function (superclass) {
     function F7Row(props, context) {
       superclass.call(this, props, context);
     }
@@ -9413,7 +9429,7 @@
 
   F7Row.displayName = 'f7-row';
 
-  var F7Searchbar = (function (superclass) {
+  var F7Searchbar = /*@__PURE__*/(function (superclass) {
     function F7Searchbar(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -9544,6 +9560,7 @@
       var self = this;
       var ref = self.props;
       var init = ref.init;
+      var inputEvents = ref.inputEvents;
       var searchContainer = ref.searchContainer;
       var searchIn = ref.searchIn;
       var searchItem = ref.searchItem;
@@ -9573,6 +9590,7 @@
       self.$f7ready(function () {
         var params = Utils.noUndefinedProps({
           el: self.refs.el,
+          inputEvents: inputEvents,
           searchContainer: searchContainer,
           searchIn: searchIn,
           searchItem: searchItem,
@@ -9676,6 +9694,10 @@
       type: Boolean,
       default: true
     },
+    inputEvents: {
+      type: String,
+      default: 'change input compositionend'
+    },
     expandable: Boolean,
     searchContainer: [String, Object],
     searchIn: {
@@ -9743,7 +9765,7 @@
 
   F7Searchbar.displayName = 'f7-searchbar';
 
-  var F7Segmented = (function (superclass) {
+  var F7Segmented = /*@__PURE__*/(function (superclass) {
     function F7Segmented(props, context) {
       superclass.call(this, props, context);
     }
@@ -9799,7 +9821,7 @@
 
   F7Segmented.displayName = 'f7-segmented';
 
-  var F7Sheet = (function (superclass) {
+  var F7Sheet = /*@__PURE__*/(function (superclass) {
     function F7Sheet(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -9991,7 +10013,7 @@
 
   F7Sheet.displayName = 'f7-sheet';
 
-  var F7Statusbar = (function (superclass) {
+  var F7Statusbar = /*@__PURE__*/(function (superclass) {
     function F7Statusbar(props, context) {
       superclass.call(this, props, context);
     }
@@ -10032,7 +10054,7 @@
 
   F7Statusbar.displayName = 'f7-statusbar';
 
-  var F7Stepper = (function (superclass) {
+  var F7Stepper = /*@__PURE__*/(function (superclass) {
     function F7Stepper(props, context) {
       var this$1 = this;
 
@@ -10332,7 +10354,7 @@
 
   F7Stepper.displayName = 'f7-stepper';
 
-  var F7Subnavbar = (function (superclass) {
+  var F7Subnavbar = /*@__PURE__*/(function (superclass) {
     function F7Subnavbar(props, context) {
       superclass.call(this, props, context);
     }
@@ -10389,7 +10411,7 @@
 
   F7Subnavbar.displayName = 'f7-subnavbar';
 
-  var F7SwipeoutActions = (function (superclass) {
+  var F7SwipeoutActions = /*@__PURE__*/(function (superclass) {
     function F7SwipeoutActions(props, context) {
       superclass.call(this, props, context);
     }
@@ -10443,7 +10465,7 @@
 
   F7SwipeoutActions.displayName = 'f7-swipeout-actions';
 
-  var F7SwipeoutButton = (function (superclass) {
+  var F7SwipeoutButton = /*@__PURE__*/(function (superclass) {
     function F7SwipeoutButton(props, context) {
       superclass.call(this, props, context);
     }
@@ -10514,7 +10536,7 @@
 
   F7SwipeoutButton.displayName = 'f7-swipeout-button';
 
-  var F7SwiperSlide = (function (superclass) {
+  var F7SwiperSlide = /*@__PURE__*/(function (superclass) {
     function F7SwiperSlide(props, context) {
       superclass.call(this, props, context);
     }
@@ -10559,7 +10581,7 @@
 
   F7SwiperSlide.displayName = 'f7-swiper-slide';
 
-  var F7Swiper = (function (superclass) {
+  var F7Swiper = /*@__PURE__*/(function (superclass) {
     function F7Swiper(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -10744,7 +10766,7 @@
 
   F7Swiper.displayName = 'f7-swiper';
 
-  var F7Tab = (function (superclass) {
+  var F7Tab = /*@__PURE__*/(function (superclass) {
     function F7Tab(props, context) {
       var this$1 = this;
 
@@ -10884,7 +10906,7 @@
 
   F7Tab.displayName = 'f7-tab';
 
-  var F7Tabs = (function (superclass) {
+  var F7Tabs = /*@__PURE__*/(function (superclass) {
     function F7Tabs(props, context) {
       superclass.call(this, props, context);
     }
@@ -10947,7 +10969,7 @@
 
   F7Tabs.displayName = 'f7-tabs';
 
-  var F7Toolbar = (function (superclass) {
+  var F7Toolbar = /*@__PURE__*/(function (superclass) {
     function F7Toolbar(props, context) {
       superclass.call(this, props, context);
       this.__reactRefs = {};
@@ -11057,7 +11079,7 @@
 
   F7Toolbar.displayName = 'f7-toolbar';
 
-  var F7View = (function (superclass) {
+  var F7View = /*@__PURE__*/(function (superclass) {
     function F7View(props, context) {
       var this$1 = this;
 
@@ -11292,7 +11314,7 @@
 
   F7View.displayName = 'f7-view';
 
-  var F7Views = (function (superclass) {
+  var F7Views = /*@__PURE__*/(function (superclass) {
     function F7Views(props, context) {
       superclass.call(this, props, context);
     }
@@ -11546,7 +11568,7 @@
   };
 
   /**
-   * Framework7 React 3.5.1
+   * Framework7 React 3.5.2
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -11554,7 +11576,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: November 2, 2018
+   * Released on: November 12, 2018
    */
 
   var Plugin = {

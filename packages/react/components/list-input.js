@@ -141,6 +141,7 @@ class F7ListInput extends React.Component {
       sortable,
       media,
       input: renderInput,
+      tag,
       type,
       name,
       value,
@@ -255,7 +256,8 @@ class F7ListInput extends React.Component {
     }
 
     const hasErrorMessage = !!errorMessage || self.slots['error-message'] && self.slots['error-message'].length;
-    return React.createElement('li', {
+    const ItemTag = tag;
+    return React.createElement(ItemTag, {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
       },
@@ -417,6 +419,10 @@ __reactComponentSetProps(F7ListInput, Object.assign({
   className: String,
   sortable: Boolean,
   media: String,
+  tag: {
+    type: String,
+    default: 'li'
+  },
   input: {
     type: Boolean,
     default: true
