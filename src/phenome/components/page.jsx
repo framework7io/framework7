@@ -216,6 +216,7 @@ export default {
     self.onPageBeforeRemove = self.onPageBeforeRemove.bind(self);
     self.onPageStack = self.onPageStack.bind(self);
     self.onPageUnstack = self.onPageUnstack.bind(self);
+    self.onPagePosition = self.onPagePosition.bind(self);
 
     if (ptr) {
       el.addEventListener('ptr:pullstart', self.onPtrPullStart);
@@ -237,6 +238,7 @@ export default {
     el.addEventListener('page:beforeremove', self.onPageBeforeRemove);
     el.addEventListener('page:stack', self.onPageStack);
     el.addEventListener('page:unstack', self.onPageUnstack);
+    el.addEventListener('page:position', self.onPagePosition);
   },
   componentWillUnmount() {
     const self = this;
@@ -258,6 +260,7 @@ export default {
     el.removeEventListener('page:beforeremove', self.onPageBeforeRemove);
     el.removeEventListener('page:stack', self.onPageStack);
     el.removeEventListener('page:unstack', self.onPageUnstack);
+    el.removeEventListener('page:position', self.onPagePosition);
   },
   methods: {
     onPtrPullStart(event) {
@@ -291,6 +294,12 @@ export default {
     onPageUnstack() {
       this.setState({
         routerForceUnstack: true,
+      });
+    },
+    onPagePosition(event) {
+      const position = event.detail.position;
+      this.setState({
+        routerClass: `page-${position}`,
       });
     },
     onPageInit(event) {

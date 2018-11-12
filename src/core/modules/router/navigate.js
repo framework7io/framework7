@@ -86,7 +86,7 @@ function forward(el, forwardOptions = {}) {
       if ($newNavbarInner.length > 0) {
         $newPage.children('.navbar').remove();
       }
-      if ($newNavbarInner.length === 0 && $newPage[0].f7Page) {
+      if ($newNavbarInner.length === 0 && $newPage[0] && $newPage[0].f7Page) {
         // Try from pageData
         $newNavbarInner = $newPage[0].f7Page.$navbarEl;
       }
@@ -128,7 +128,8 @@ function forward(el, forwardOptions = {}) {
   $newPage
     .addClass(`page-${newPagePosition}`)
     .removeClass('stacked')
-    .trigger('page:unstack');
+    .trigger('page:unstack')
+    .trigger('page:position', { position: newPagePosition });
 
   if (dynamicNavbar && $newNavbarInner.length) {
     $newNavbarInner
