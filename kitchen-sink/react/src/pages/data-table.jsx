@@ -184,7 +184,7 @@ export default () => (
             <th className="numeric-cell">Fat (g)</th>
             <th className="numeric-cell">Carbs</th>
             <th className="numeric-cell">Protein (g)</th>
-            <th className="tablet-only"><Icon ios="f7:chat_fill" md="material:message"></Icon> Comments</th>
+            <th className="tablet-only"><Icon ios="f7:message_fill" md="material:message"></Icon> Comments</th>
           </tr>
         </thead>
         <tbody>
@@ -321,7 +321,7 @@ export default () => (
               <th className="numeric-cell">Fat (g)</th>
               <th className="numeric-cell">Carbs</th>
               <th className="numeric-cell">Protein (g)</th>
-              <th className="tablet-only"><Icon ios="f7:chat_fill" md="material:message"></Icon> Comments</th>
+              <th className="tablet-only"><Icon ios="f7:message_fill" md="material:message"></Icon> Comments</th>
             </tr>
           </thead>
           <tbody>
@@ -395,7 +395,7 @@ export default () => (
               <th className="numeric-cell sortable-cell">Fat (g)</th>
               <th className="numeric-cell sortable-cell">Carbs</th>
               <th className="numeric-cell sortable-cell">Protein (g)</th>
-              <th className="tablet-only"><Icon ios="f7:chat_fill" md="material:message"></Icon> Comments</th>
+              <th className="tablet-only"><Icon ios="f7:message_fill" md="material:message"></Icon> Comments</th>
             </tr>
           </thead>
           <tbody>
@@ -477,7 +477,7 @@ export default () => (
               <th className="numeric-cell">Fat (g)</th>
               <th className="numeric-cell">Carbs</th>
               <th className="numeric-cell">Protein (g)</th>
-              <th className="tablet-only"><Icon ios="f7:chat_fill" md="material:message"></Icon> Comments</th>
+              <th className="tablet-only"><Icon ios="f7:message_fill" md="material:message"></Icon> Comments</th>
             </tr>
           </thead>
           <tbody>
@@ -551,7 +551,7 @@ export default () => (
               <th className="numeric-cell">Fat (g)</th>
               <th className="numeric-cell">Carbs</th>
               <th className="numeric-cell">Protein (g)</th>
-              <th className="tablet-only"><Icon ios="f7:chat_fill" md="material:message"></Icon> Comments</th>
+              <th className="tablet-only"><Icon ios="f7:message_fill" md="material:message"></Icon> Comments</th>
               <th></th>
             </tr>
           </thead>

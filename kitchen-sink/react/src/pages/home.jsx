@@ -9,7 +9,7 @@ export default () => (
       </NavLeft>
       <NavTitle>Framework7 React</NavTitle>
       <NavRight>
-        <Link searchbarEnable=".searchbar-components" iconIos="f7:search_strong" iconMd="material:search"></Link>
+        <Link searchbarEnable=".searchbar-components" iconIos="f7:search" iconMd="material:search"></Link>
       </NavRight>
       <Searchbar className="searchbar-components" searchContainer=".components-list" searchIn="a" expandable></Searchbar>
     </Navbar>

@@ -61,7 +61,7 @@ export default class extends React.Component {
         <List simpleList>
           <ListItem>
             <ListItemCell className="width-auto flex-shrink-0">
-              <Icon ios="f7:circle" md="material:brightness_low"></Icon>
+              <Icon ios="f7:money_dollar_round" md="material:brightness_low"></Icon>
             </ListItemCell>
             <ListItemCell className="flex-shrink-3">
               <Range
@@ -76,7 +76,7 @@ export default class extends React.Component {
               ></Range>
             </ListItemCell>
             <ListItemCell className="width-auto flex-shrink-0">
-              <Icon ios="f7:circle_half" md="material:brightness_high"></Icon>
+              <Icon ios="f7:money_dollar_round_fill" md="material:brightness_high"></Icon>
             </ListItemCell>
           </ListItem>
         </List>

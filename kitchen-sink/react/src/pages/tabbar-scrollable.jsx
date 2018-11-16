@@ -19,7 +19,7 @@ export default class extends React.Component {
       <Page pageContent={false}>
         <Navbar title="Tabbar Scrollable" backLink="Back">
           <NavRight>
-            <Link iconMaterial="compare_arrows" onClick={() => {this.toggleToolbarPosition()}}></Link>
+            <Link iconMd="material:compare_arrows" iconIos="f7:reload" onClick={() => {this.toggleToolbarPosition()}}></Link>
           </NavRight>
         </Navbar>
         <Toolbar tabbar scrollable position={this.state.toolbarPosition}>

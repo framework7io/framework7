@@ -49,7 +49,7 @@
   font-family: 'Framework7 Icons';
   font-weight: normal;
   font-style: normal;
-  font-size: 25px;
+  font-size: 28px;
   line-height: 1;
   letter-spacing: normal;
   text-transform: none;
@@ -110,14 +110,6 @@ div.demo-lazy {
   height: 60vw;
 }
 
-/* Tab Bar */
-.ios .tabbar .tab-link:not(.tab-link-active) .icon-fill {
-  display: none;
-}
-.ios .tabbar .tab-link.tab-link-active .icon:not(.icon-fill) {
-  display: none;
-}
-
 /* FAB Morph */
 .demo-fab-sheet {
   position: absolute;
@@ -162,9 +154,6 @@ div.demo-lazy {
 }
 
 /* Demo Messagebar */
-.ios a.demo-send-message-link i {
-  font-size: 26px;
-}
 .ios .messagebar:not(.messagebar-with-value):not(.messagebar-attachments-visible) a.demo-send-message-link {
   pointer-events: none;
   color: #8e8e8e;

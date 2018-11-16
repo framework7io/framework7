@@ -6,8 +6,8 @@ export default () => (
     <Navbar title="Floating Action Button Morph" backLink="Back"></Navbar>
     <Toolbar tabbar labels bottom className="fab-morph-target">
       <Link tabLink tabLinkActive iconIos="f7:email_fill" iconMd="material:email" text="Inbox"/>
-      <Link tabLink iconIos="f7:today" iconMd="material:today" text="Calendar"/>
-      <Link tabLink iconIos="f7:cloud" iconMd="material:file_upload" text="Upload"/>
+      <Link tabLink iconIos="f7:calendar_fill" iconMd="material:today" text="Calendar"/>
+      <Link tabLink iconIos="f7:cloud_upload_fill" iconMd="material:file_upload" text="Upload"/>
     </Toolbar>
     <Fab position="right-bottom" morphTo=".toolbar.fab-morph-target">
       <Icon ios="f7:add" md="material:add"></Icon>

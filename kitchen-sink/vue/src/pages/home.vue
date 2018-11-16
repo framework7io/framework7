@@ -6,7 +6,7 @@
       </f7-nav-left>
       <f7-nav-title>Framework7 Vue</f7-nav-title>
       <f7-nav-right>
-        <f7-link class="searchbar-enable" data-searchbar=".searchbar-components" icon-ios="f7:search_strong" icon-md="material:search"></f7-link>
+        <f7-link class="searchbar-enable" data-searchbar=".searchbar-components" icon-ios="f7:search" icon-md="material:search"></f7-link>
       </f7-nav-right>
       <f7-searchbar class="searchbar-components" search-container=".components-list" search-in="a" expandable></f7-searchbar>
     </f7-navbar>

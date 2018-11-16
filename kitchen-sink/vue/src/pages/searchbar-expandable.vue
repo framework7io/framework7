@@ -2,7 +2,7 @@
   <f7-page>
     <f7-navbar back-link="Back" title="Searchbar">
       <f7-nav-right>
-        <f7-link class="searchbar-enable" data-searchbar=".searchbar-demo" icon-ios="f7:search_strong" icon-md="material:search"></f7-link>
+        <f7-link class="searchbar-enable" data-searchbar=".searchbar-demo" icon-ios="f7:search" icon-md="material:search"></f7-link>
       </f7-nav-right>
       <f7-searchbar
         class="searchbar-demo"
