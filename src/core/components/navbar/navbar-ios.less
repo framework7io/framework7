@@ -24,7 +24,7 @@
         });
       }
     }
-    b, .title {
+    b {
       font-weight: 600;
     }
     .left {
@@ -112,7 +112,8 @@
   }
 
   // Animations
-  .router-transition-css-forward, .router-transition-css-backward {
+  .router-transition-css-forward,
+  .router-transition-css-backward {
     .navbar-current {
       .left, > .title, .right, .subnavbar {
         animation: ios-navbar-element-fade-out var(--f7-page-transition-duration) forwards;
@@ -134,7 +135,8 @@
       }
     }
   }
-  .router-transition-css-forward .navbar-next, .router-transition-css-backward .navbar-previous {
+  .router-transition-css-forward .navbar-next,
+  .router-transition-css-backward .navbar-previous {
     .left, > .title, .right, .subnavbar {
       animation: ios-navbar-element-fade-in var(--f7-page-transition-duration) forwards;
     }
@@ -149,6 +151,22 @@
       animation: none;
       transform: translate3d(0,0,0) !important;
       opacity: 1 !important;
+    }
+  }
+  .router-transition-css-forward .navbar-next.navbar-inner-large:not(.navbar-inner-large-collapsed),
+  .router-transition-css-forward .navbar-current.navbar-inner-large:not(.navbar-inner-large-collapsed) {
+    > .title {
+      animation: none;
+      opacity: 0 !important;
+      transition-duration: 0;
+    }
+  }
+  .router-transition-css-backward .navbar-current.navbar-inner-large:not(.navbar-inner-large-collapsed),
+  .router-transition-css-backward .navbar-previous.navbar-inner-large:not(.navbar-inner-large-collapsed) {
+    > .title {
+      animation: none;
+      opacity: 0 !important;
+      transition-duration: 0;
     }
   }
 }

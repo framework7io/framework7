@@ -91,15 +91,14 @@ class Router extends Framework7Class {
     return router;
   }
 
-  animatableNavElements(newNavbarInner, oldNavbarInner) {
+  animatableNavElements(newNavbarInner, oldNavbarInner, toLarge, fromLarge, direction) {
     const router = this;
     const dynamicNavbar = router.dynamicNavbar;
     const animateIcon = router.params.iosAnimateNavbarBackIcon;
 
     let newNavEls;
     let oldNavEls;
-    function animatableNavEl(el, navbarInner) {
-      const $el = $(el);
+    function animatableNavEl($el, navbarInner) {
       const isSliding = $el.hasClass('sliding') || navbarInner.hasClass('sliding');
       const isSubnavbar = $el.hasClass('subnavbar');
       const needsOpacityTransition = isSliding ? !isSubnavbar : true;
@@ -121,10 +120,17 @@ class Router extends Framework7Class {
       newNavEls = [];
       oldNavEls = [];
       newNavbarInner.children('.left, .right, .title, .subnavbar').each((index, navEl) => {
-        newNavEls.push(animatableNavEl(navEl, newNavbarInner));
+        const $navEl = $(navEl);
+        if ($navEl.hasClass('left') && fromLarge && direction === 'forward') return;
+        if ($navEl.hasClass('title') && toLarge) {
+          return;
+        }
+        newNavEls.push(animatableNavEl($navEl, newNavbarInner));
       });
       oldNavbarInner.children('.left, .right, .title, .subnavbar').each((index, navEl) => {
-        oldNavEls.push(animatableNavEl(navEl, oldNavbarInner));
+        const $navEl = $(navEl);
+        if ($navEl.hasClass('left') && toLarge) return;
+        oldNavEls.push(animatableNavEl($navEl, oldNavbarInner));
       });
       [oldNavEls, newNavEls].forEach((navEls) => {
         navEls.forEach((navEl) => {
@@ -157,22 +163,25 @@ class Router extends Framework7Class {
     let oldNavEls;
     let navbarWidth = 0;
 
+    const fromLarge = ios && oldNavbarInner && oldNavbarInner.hasClass('navbar-inner-large') && !oldNavbarInner.hasClass('navbar-inner-large-collapsed');
+    const toLarge = ios && newNavbarInner && newNavbarInner.hasClass('navbar-inner-large') && !newNavbarInner.hasClass('navbar-inner-large-collapsed');
+
     if (ios && dynamicNavbar) {
       if (!separateNavbar) {
         navbarWidth = newNavbarInner[0].offsetWidth;
       }
-      const navEls = router.animatableNavElements(newNavbarInner, oldNavbarInner);
+      const navEls = router.animatableNavElements(newNavbarInner, oldNavbarInner, toLarge, fromLarge, direction);
       newNavEls = navEls.newNavEls;
       oldNavEls = navEls.oldNavEls;
     }
 
     function animateNavbars(progress) {
       if (!(ios && dynamicNavbar)) return;
-      if (newNavbarInner.hasClass('navbar-inner-large') && !newNavbarInner.hasClass('navbar-inner-large-collapsed')) {
-        router.$navbarEl.addClass('navbar-large');
-      } else {
-        router.$navbarEl.removeClass('navbar-large');
+      if (progress === 1) {
+        if (toLarge) router.$navbarEl.addClass('navbar-large');
+        else router.$navbarEl.removeClass('navbar-large');
       }
+
       newNavEls.forEach((navEl) => {
         const $el = navEl.$el;
         const offset = direction === 'forward' ? navEl.rightOffset : navEl.leftOffset;

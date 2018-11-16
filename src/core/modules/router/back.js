@@ -263,8 +263,11 @@ function backward(el, backwardOptions) {
     $newPage.removeClass(pageClasses).addClass('page-current').removeAttr('aria-hidden');
     $oldPage.removeClass(pageClasses).addClass('page-next').attr('aria-hidden', 'true');
     if (dynamicNavbar) {
-      $newNavbarInner.removeClass(navbarClasses).addClass('navbar-current').removeAttr('aria-hidden');
+      $newNavbarInner.removeClass(navbarClasses).addClass('navbar-current navbar-no-title-large-transition').removeAttr('aria-hidden');
       $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-next').attr('aria-hidden', 'true');
+      Utils.nextFrame(() => {
+        $newNavbarInner.removeClass('navbar-no-title-large-transition');
+      });
     }
 
     // After animation event
