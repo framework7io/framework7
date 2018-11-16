@@ -57,6 +57,26 @@
     justify-content: space-between;
     padding: 0 calc(8px + var(--f7-safe-area-right)) 0 calc(8px + var(--f7-safe-area-left));
   }
+  .navbar-inner-left-title {
+    justify-content: flex-start;
+    .right {
+      .ltr({
+        margin-left: auto;
+      });
+      .rtl({
+        margin-right: auto;
+      });
+    }
+    .title {
+      text-align: left;
+      .ltr({
+        margin-right: 10px;
+      });
+      .rtl({
+        margin-left: 10px;
+      });
+    }
+  }
 
   // Positions
   .navbar-previous {

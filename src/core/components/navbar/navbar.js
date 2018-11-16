@@ -4,7 +4,7 @@ import Utils from '../../utils/utils';
 const Navbar = {
   size(el) {
     const app = this;
-    if (app.theme !== 'ios') return;
+    if (app.theme === 'md' && !app.params.navbar.mdCenterTitle) return;
     let $el = $(el);
     if ($el.hasClass('navbar')) {
       $el = $el.children('.navbar-inner').each((index, navbarEl) => {
@@ -79,7 +79,7 @@ const Navbar = {
     // RTL inverter
     const inverter = app.rtl ? -1 : 1;
 
-    if (dynamicNavbar) {
+    if (dynamicNavbar && app.theme === 'ios') {
       if (title.hasClass('sliding') || (title.length > 0 && sliding)) {
         let titleLeftOffset = (-(currLeft + diff) * inverter) + separateNavbarLeftOffset;
         const titleRightOffset = ((navbarInnerWidth - currLeft - diff - titleWidth) * inverter) - separateNavbarRightOffset;
@@ -122,8 +122,17 @@ const Navbar = {
       }
     }
 
-    // Title left
-    if (app.params.navbar.iosCenterTitle) {
+    // Center title
+    if (app.theme === 'md' && app.params.navbar.mdCenterTitle) {
+      $el.addClass('navbar-inner-centered-title');
+    }
+    if (app.theme === 'ios' && !app.params.navbar.iosCenterTitle) {
+      $el.addClass('navbar-inner-left-title');
+    }
+    if (
+      (app.theme === 'ios' && app.params.navbar.iosCenterTitle)
+      || (app.theme === 'md' && app.params.navbar.mdCenterTitle)
+    ) {
       let titleLeft = diff;
       if (app.rtl && noLeft && noRight && title.length > 0) titleLeft = -titleLeft;
       title.css({ left: `${titleLeft}px` });
@@ -225,7 +234,6 @@ const Navbar = {
         app.navbar.hide($navbarEl);
         navbarHidden = true;
       }
-
       previousScrollTop = currentScrollTop;
     }
     $pageEl.on('scroll', '.page-content', handleScroll, true);
@@ -250,6 +258,7 @@ export default {
     navbar: {
       scrollTopOnTitleClick: true,
       iosCenterTitle: true,
+      mdCenterTitle: false,
       hideOnPageScroll: false,
       showOnPageScrollEnd: true,
       showOnPageScrollTop: true,
@@ -258,7 +267,6 @@ export default {
   on: {
     'panelBreakpoint resize': function onResize() {
       const app = this;
-      if (app.theme !== 'ios') return;
       $('.navbar').each((index, navbarEl) => {
         app.navbar.size(navbarEl);
       });
@@ -288,7 +296,6 @@ export default {
     },
     pageReinit(page) {
       const app = this;
-      if (app.theme !== 'ios') return;
       const $navbarEl = $(app.navbar.getElByPage(page));
       if (!$navbarEl || $navbarEl.length === 0) return;
       app.navbar.size($navbarEl);
@@ -297,9 +304,7 @@ export default {
       const app = this;
       const $navbarEl = $(app.navbar.getElByPage(page));
       if (!$navbarEl || $navbarEl.length === 0) return;
-      if (app.theme === 'ios') {
-        app.navbar.size($navbarEl);
-      }
+      app.navbar.size($navbarEl);
       if (
         app.params.navbar.hideOnPageScroll
         || page.$el.find('.hide-navbar-on-scroll').length
@@ -320,27 +325,48 @@ export default {
     },
     modalOpen(modal) {
       const app = this;
-      if (app.theme !== 'ios') return;
+      if (
+        (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
+        || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
+      ) {
+        return;
+      }
       modal.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
         app.navbar.size(navbarEl);
       });
     },
     panelOpen(panel) {
       const app = this;
-      if (app.theme !== 'ios') return;
+      if (
+        (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
+        || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
+      ) {
+        return;
+      }
       panel.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
         app.navbar.size(navbarEl);
       });
     },
     panelSwipeOpen(panel) {
       const app = this;
-      if (app.theme !== 'ios') return;
+      if (
+        (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
+        || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
+      ) {
+        return;
+      }
       panel.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
         app.navbar.size(navbarEl);
       });
     },
     tabShow(tabEl) {
       const app = this;
+      if (
+        (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
+        || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
+      ) {
+        return;
+      }
       $(tabEl).find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
         app.navbar.size(navbarEl);
       });
@@ -385,7 +411,12 @@ export default {
     'navbar-inner': {
       postpatch(vnode) {
         const app = this;
-        if (app.theme !== 'ios') return;
+        if (
+          (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
+          || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
+        ) {
+          return;
+        }
         app.navbar.size(vnode.elm);
       },
     },

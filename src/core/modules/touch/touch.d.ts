@@ -31,10 +31,10 @@ export namespace Touch {
       activeState? : boolean
       /** CSS selector of elements where enabled activeState will add appropriate active class. (default a, button, label, span, .actions-button) */
       activeStateElements? : string
-      /** Enables Material theme specific touch ripple effect. (default true) */
-      materialRipple? : boolean
+      /** Enables MD-theme specific touch ripple effect. (default true) */
+      mdTouchRipple? : boolean
       /** CSS selector of elements to apply touch ripple effect on click. (default .ripple, .link, .item-link, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell, .notification-close-button) */
-      materialRippleElements? : string
+      touchRippleElements? : string
     } | undefined
   }
   interface AppEvents {

@@ -27,6 +27,8 @@ export namespace Navbar {
       scrollTopOnTitleClick?: boolean
       /** When enabled then it will try to position title at the center in iOS theme. Sometime (with some custom design) it may not needed. This will have effect only in iOS theme. (default true) */
       iosCenterTitle?: boolean
+      /** When enabled then it will try to position title at the center in MD theme. Sometime (with some custom design) it may be needed to enable in MD theme. This will have effect only in MD theme. (default false) */
+      mdCenterTitle?: boolean
     } | undefined
   }
   interface AppEvents {
