@@ -95,7 +95,7 @@
   left: 0;
   top: 0;
   width: 100%;
-  height: 100%;
+  height: var(--f7-navbar-height);
   display: flex;
   align-items: center;
   box-sizing: border-box;
@@ -114,6 +114,67 @@
 .navbar ~ .page-content,
 .navbar ~ :not(.page) .page-content {
   padding-top: var(--f7-navbar-height);
+}
+
+.navbar {
+  transition: 300ms;
+}
+.navbar-large {
+  height: 44px + 52px;
+}
+.ios .navbar .navbar-inner-large {
+  .title, .title.sliding {
+    opacity: 0 !important;
+    // transition: 300ms;
+  }
+}
+.navbar .title-large {
+  position: absolute;
+  left: 25px;
+  top: 100%;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition: 300ms;
+  height: 44px;
+  font-size: 34px;
+  font-weight: bold;
+  line-height: 1.2;
+  transform: translateY(0px);
+  letter-spacing: -0.025em;
+  transform-origin: left center;
+}
+
+.navbar-inner-large-collapsed {
+  height: 44px;
+  .title {
+    opacity: 1 !important;
+  }
+  .title-large {
+    height: 0;
+  }
+}
+.navbar-previous,
+.router-transition-forward .navbar-current {
+  .title-large {
+    transform: translateY(-100%) scale(0.5);
+    opacity: 0;
+    transition-duration: 400ms;
+  }
+}
+.router-transition-backward .navbar-previous {
+  .title-large {
+    transform: translateY(0%) scale(1);
+    opacity: 1;
+  }
+}
+.router-transition-backward .navbar-previous {
+  .title-large {
+    transition-duration: 400ms;
+  }
 }
 
 & when (@includeIosTheme) {

@@ -167,36 +167,40 @@ class Router extends Framework7Class {
     }
 
     function animateNavbars(progress) {
-      if (ios && dynamicNavbar) {
-        newNavEls.forEach((navEl) => {
-          const $el = navEl.$el;
-          const offset = direction === 'forward' ? navEl.rightOffset : navEl.leftOffset;
-          if (navEl.isSliding) {
-            $el.transform(`translate3d(${offset * (1 - progress)}px,0,0)`);
-          }
-          if (navEl.hasIcon) {
-            if (direction === 'forward') {
-              navEl.$iconEl.transform(`translate3d(${(-offset - navbarWidth) * (1 - progress)}px,0,0)`);
-            } else {
-              navEl.$iconEl.transform(`translate3d(${(-offset + (navbarWidth / 5)) * (1 - progress)}px,0,0)`);
-            }
-          }
-        });
-        oldNavEls.forEach((navEl) => {
-          const $el = navEl.$el;
-          const offset = direction === 'forward' ? navEl.leftOffset : navEl.rightOffset;
-          if (navEl.isSliding) {
-            $el.transform(`translate3d(${offset * (progress)}px,0,0)`);
-          }
-          if (navEl.hasIcon) {
-            if (direction === 'forward') {
-              navEl.$iconEl.transform(`translate3d(${(-offset + (navbarWidth / 5)) * (progress)}px,0,0)`);
-            } else {
-              navEl.$iconEl.transform(`translate3d(${(-offset - navbarWidth) * (progress)}px,0,0)`);
-            }
-          }
-        });
+      if (!(ios && dynamicNavbar)) return;
+      if (newNavbarInner.hasClass('navbar-inner-large') && !newNavbarInner.hasClass('navbar-inner-large-collapsed')) {
+        router.$navbarEl.addClass('navbar-large');
+      } else {
+        router.$navbarEl.removeClass('navbar-large');
       }
+      newNavEls.forEach((navEl) => {
+        const $el = navEl.$el;
+        const offset = direction === 'forward' ? navEl.rightOffset : navEl.leftOffset;
+        if (navEl.isSliding) {
+          $el.transform(`translate3d(${offset * (1 - progress)}px,0,0)`);
+        }
+        if (navEl.hasIcon) {
+          if (direction === 'forward') {
+            navEl.$iconEl.transform(`translate3d(${(-offset - navbarWidth) * (1 - progress)}px,0,0)`);
+          } else {
+            navEl.$iconEl.transform(`translate3d(${(-offset + (navbarWidth / 5)) * (1 - progress)}px,0,0)`);
+          }
+        }
+      });
+      oldNavEls.forEach((navEl) => {
+        const $el = navEl.$el;
+        const offset = direction === 'forward' ? navEl.leftOffset : navEl.rightOffset;
+        if (navEl.isSliding) {
+          $el.transform(`translate3d(${offset * (progress)}px,0,0)`);
+        }
+        if (navEl.hasIcon) {
+          if (direction === 'forward') {
+            navEl.$iconEl.transform(`translate3d(${(-offset + (navbarWidth / 5)) * (progress)}px,0,0)`);
+          } else {
+            navEl.$iconEl.transform(`translate3d(${(-offset - navbarWidth) * (progress)}px,0,0)`);
+          }
+        }
+      });
     }
 
     // AnimationEnd Callback
