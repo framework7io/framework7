@@ -198,6 +198,7 @@ export default {
             name={name}
             type={radio ? 'radio' : 'checkbox'}
             domProps={{ checked, readonly, disabled, required, value }}
+            onChange={this.onChangeBound}
           />
         );
       } else {
@@ -212,6 +213,7 @@ export default {
             disabled={disabled}
             required={required}
             type={radio ? 'radio' : 'checkbox'}
+            onChange={this.onChangeBound}
           />
         );
       }
@@ -387,9 +389,6 @@ export default {
   componentDidMount() {
     const self = this;
     const { innerEl, inputEl, el } = self.refs;
-    if (inputEl) {
-      inputEl.addEventListener('change', self.onChangeBound);
-    }
     if (!innerEl) return;
     const $innerEl = self.$$(innerEl);
     const $labelEl = $innerEl.children('.item-title.item-label');
@@ -456,9 +455,6 @@ export default {
     el.removeEventListener('input:notempty', self.onNotEmptyBound);
     el.removeEventListener('focus', self.onFocusBound, true);
     el.removeEventListener('blur', self.onBlurBound, true);
-    if (inputEl) {
-      inputEl.removeEventListener('change', self.onChangeBound);
-    }
   },
   methods: {
     checkHasInputState() {

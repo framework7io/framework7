@@ -11,6 +11,10 @@ export default {
     className: String, // phenome-react-line
     sortable: Boolean,
     media: String,
+    tag: {
+      type: String,
+      default: 'li',
+    },
 
     // Inputs
     input: {
@@ -96,6 +100,7 @@ export default {
       sortable,
       media,
       input: renderInput,
+      tag,
       type,
       name,
       value,
@@ -260,8 +265,9 @@ export default {
 
     const hasErrorMessage = !!errorMessage || (self.slots['error-message'] && self.slots['error-message'].length);
 
+    const ItemTag = tag;
     return (
-      <li ref="el" id={id} style={style} className={Utils.classNames(
+      <ItemTag ref="el" id={id} style={style} className={Utils.classNames(
         className,
         { disabled },
         Mixins.colorClasses(props),
@@ -324,7 +330,7 @@ export default {
         {isSortable && (<div className="sortable-handler" />)}
         <slot name="root" />
         <slot name="root-end" />
-      </li>
+      </ItemTag>
     );
   },
   computed: {

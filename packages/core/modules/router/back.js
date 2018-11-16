@@ -38,7 +38,7 @@ function backward(el, backwardOptions) {
       if ($newNavbarInner.length > 0) {
         $newPage.children('.navbar').remove();
       }
-      if ($newNavbarInner.length === 0 && $newPage[0].f7Page) {
+      if ($newNavbarInner.length === 0 && $newPage[0] && $newPage[0].f7Page) {
         // Try from pageData
         $newNavbarInner = $newPage[0].f7Page.$navbarEl;
       }
@@ -62,7 +62,8 @@ function backward(el, backwardOptions) {
     .addClass('page-previous')
     .removeClass('stacked')
     .removeAttr('aria-hidden')
-    .trigger('page:unstack');
+    .trigger('page:unstack')
+    .trigger('page:position', { position: 'previous' });
 
   if (dynamicNavbar && $newNavbarInner.length > 0) {
     $newNavbarInner

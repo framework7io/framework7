@@ -1,5 +1,5 @@
 /**
- * Framework7 3.5.1
+ * Framework7 3.5.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 2, 2018
+ * Released on: November 12, 2018
  */
 
 (function (global, factory) {
@@ -806,26 +806,22 @@
 
   // Classes and attributes
   function addClass(className) {
-    var this$1 = this;
-
     if (typeof className === 'undefined') {
       return this;
     }
     var classes = className.split(' ');
     for (var i = 0; i < classes.length; i += 1) {
       for (var j = 0; j < this.length; j += 1) {
-        if (typeof this$1[j] !== 'undefined' && typeof this$1[j].classList !== 'undefined') { this$1[j].classList.add(classes[i]); }
+        if (typeof this[j] !== 'undefined' && typeof this[j].classList !== 'undefined') { this[j].classList.add(classes[i]); }
       }
     }
     return this;
   }
   function removeClass(className) {
-    var this$1 = this;
-
     var classes = className.split(' ');
     for (var i = 0; i < classes.length; i += 1) {
       for (var j = 0; j < this.length; j += 1) {
-        if (typeof this$1[j] !== 'undefined' && typeof this$1[j].classList !== 'undefined') { this$1[j].classList.remove(classes[i]); }
+        if (typeof this[j] !== 'undefined' && typeof this[j].classList !== 'undefined') { this[j].classList.remove(classes[i]); }
       }
     }
     return this;
@@ -835,19 +831,16 @@
     return this[0].classList.contains(className);
   }
   function toggleClass(className) {
-    var this$1 = this;
-
     var classes = className.split(' ');
     for (var i = 0; i < classes.length; i += 1) {
       for (var j = 0; j < this.length; j += 1) {
-        if (typeof this$1[j] !== 'undefined' && typeof this$1[j].classList !== 'undefined') { this$1[j].classList.toggle(classes[i]); }
+        if (typeof this[j] !== 'undefined' && typeof this[j].classList !== 'undefined') { this[j].classList.toggle(classes[i]); }
       }
     }
     return this;
   }
   function attr(attrs, value) {
     var arguments$1 = arguments;
-    var this$1 = this;
 
     if (arguments.length === 1 && typeof attrs === 'string') {
       // Get attr
@@ -859,13 +852,13 @@
     for (var i = 0; i < this.length; i += 1) {
       if (arguments$1.length === 2) {
         // String
-        this$1[i].setAttribute(attrs, value);
+        this[i].setAttribute(attrs, value);
       } else {
         // Object
         // eslint-disable-next-line
         for (var attrName in attrs) {
-          this$1[i][attrName] = attrs[attrName];
-          this$1[i].setAttribute(attrName, attrs[attrName]);
+          this[i][attrName] = attrs[attrName];
+          this[i].setAttribute(attrName, attrs[attrName]);
         }
       }
     }
@@ -873,17 +866,14 @@
   }
   // eslint-disable-next-line
   function removeAttr(attr) {
-    var this$1 = this;
-
     for (var i = 0; i < this.length; i += 1) {
-      this$1[i].removeAttribute(attr);
+      this[i].removeAttribute(attr);
     }
     return this;
   }
   // eslint-disable-next-line
   function prop(props, value) {
     var arguments$1 = arguments;
-    var this$1 = this;
 
     if (arguments.length === 1 && typeof props === 'string') {
       // Get prop
@@ -893,12 +883,12 @@
       for (var i = 0; i < this.length; i += 1) {
         if (arguments$1.length === 2) {
           // String
-          this$1[i][props] = value;
+          this[i][props] = value;
         } else {
           // Object
           // eslint-disable-next-line
           for (var propName in props) {
-            this$1[i][propName] = props[propName];
+            this[i][propName] = props[propName];
           }
         }
       }
@@ -906,8 +896,6 @@
     }
   }
   function data(key, value) {
-    var this$1 = this;
-
     var el;
     if (typeof value === 'undefined') {
       el = this[0];
@@ -928,17 +916,15 @@
 
     // Set value
     for (var i = 0; i < this.length; i += 1) {
-      el = this$1[i];
+      el = this[i];
       if (!el.dom7ElementDataStorage) { el.dom7ElementDataStorage = {}; }
       el.dom7ElementDataStorage[key] = value;
     }
     return this;
   }
   function removeData(key) {
-    var this$1 = this;
-
     for (var i = 0; i < this.length; i += 1) {
-      var el = this$1[i];
+      var el = this[i];
       if (el.dom7ElementDataStorage && el.dom7ElementDataStorage[key]) {
         el.dom7ElementDataStorage[key] = null;
         delete el.dom7ElementDataStorage[key];
@@ -1002,23 +988,19 @@
   // Transforms
   // eslint-disable-next-line
   function transform(transform) {
-    var this$1 = this;
-
     for (var i = 0; i < this.length; i += 1) {
-      var elStyle = this$1[i].style;
+      var elStyle = this[i].style;
       elStyle.webkitTransform = transform;
       elStyle.transform = transform;
     }
     return this;
   }
   function transition(duration) {
-    var this$1 = this;
-
     if (typeof duration !== 'string') {
       duration = duration + "ms"; // eslint-disable-line
     }
     for (var i = 0; i < this.length; i += 1) {
-      var elStyle = this$1[i].style;
+      var elStyle = this[i].style;
       elStyle.webkitTransitionDuration = duration;
       elStyle.transitionDuration = duration;
     }
@@ -1026,7 +1008,6 @@
   }
   // Events
   function on() {
-    var this$1 = this;
     var assign;
 
     var args = [], len = arguments.length;
@@ -1066,7 +1047,7 @@
     var events = eventType.split(' ');
     var j;
     for (var i = 0; i < this.length; i += 1) {
-      var el = this$1[i];
+      var el = this[i];
       if (!targetSelector) {
         for (j = 0; j < events.length; j += 1) {
           var event = events[j];
@@ -1095,7 +1076,6 @@
     return this;
   }
   function off() {
-    var this$1 = this;
     var assign;
 
     var args = [], len = arguments.length;
@@ -1114,7 +1094,7 @@
     for (var i = 0; i < events.length; i += 1) {
       var event = events[i];
       for (var j = 0; j < this.length; j += 1) {
-        var el = this$1[j];
+        var el = this[j];
         var handlers = (void 0);
         if (!targetSelector && el.dom7Listeners) {
           handlers = el.dom7Listeners[event];
@@ -1161,7 +1141,6 @@
     return dom.on(eventName, targetSelector, proxy, capture);
   }
   function trigger() {
-    var this$1 = this;
     var args = [], len = arguments.length;
     while ( len-- ) args[ len ] = arguments[ len ];
 
@@ -1170,7 +1149,7 @@
     for (var i = 0; i < events.length; i += 1) {
       var event = events[i];
       for (var j = 0; j < this.length; j += 1) {
-        var el = this$1[j];
+        var el = this[j];
         var evt = (void 0);
         try {
           evt = new win.CustomEvent(event, {
@@ -1292,18 +1271,14 @@
     return null;
   }
   function hide() {
-    var this$1 = this;
-
     for (var i = 0; i < this.length; i += 1) {
-      this$1[i].style.display = 'none';
+      this[i].style.display = 'none';
     }
     return this;
   }
   function show() {
-    var this$1 = this;
-
     for (var i = 0; i < this.length; i += 1) {
-      var el = this$1[i];
+      var el = this[i];
       if (el.style.display === 'none') {
         el.style.display = '';
       }
@@ -1319,8 +1294,6 @@
     return {};
   }
   function css(props, value) {
-    var this$1 = this;
-
     var i;
     if (arguments.length === 1) {
       if (typeof props === 'string') {
@@ -1329,7 +1302,7 @@
         for (i = 0; i < this.length; i += 1) {
           // eslint-disable-next-line
           for (var prop in props) {
-            this$1[i].style[prop] = props[prop];
+            this[i].style[prop] = props[prop];
           }
         }
         return this;
@@ -1337,7 +1310,7 @@
     }
     if (arguments.length === 2 && typeof props === 'string') {
       for (i = 0; i < this.length; i += 1) {
-        this$1[i].style[props] = value;
+        this[i].style[props] = value;
       }
       return this;
     }
@@ -1346,42 +1319,36 @@
 
   // Dom manipulation
   function toArray() {
-    var this$1 = this;
-
     var arr = [];
     for (var i = 0; i < this.length; i += 1) {
-      arr.push(this$1[i]);
+      arr.push(this[i]);
     }
     return arr;
   }
   // Iterate over the collection passing elements to `callback`
   function each(callback) {
-    var this$1 = this;
-
     // Don't bother continuing without a callback
     if (!callback) { return this; }
     // Iterate over the current collection
     for (var i = 0; i < this.length; i += 1) {
       // If the callback returns false
-      if (callback.call(this$1[i], i, this$1[i]) === false) {
+      if (callback.call(this[i], i, this[i]) === false) {
         // End the loop early
-        return this$1;
+        return this;
       }
     }
     // Return `this` to allow chained DOM operations
     return this;
   }
   function forEach(callback) {
-    var this$1 = this;
-
     // Don't bother continuing without a callback
     if (!callback) { return this; }
     // Iterate over the current collection
     for (var i = 0; i < this.length; i += 1) {
       // If the callback returns false
-      if (callback.call(this$1[i], this$1[i], i) === false) {
+      if (callback.call(this[i], this[i], i) === false) {
         // End the loop early
-        return this$1;
+        return this;
       }
     }
     // Return `this` to allow chained DOM operations
@@ -1405,21 +1372,17 @@
   }
   // eslint-disable-next-line
   function html(html) {
-    var this$1 = this;
-
     if (typeof html === 'undefined') {
       return this[0] ? this[0].innerHTML : undefined;
     }
 
     for (var i = 0; i < this.length; i += 1) {
-      this$1[i].innerHTML = html;
+      this[i].innerHTML = html;
     }
     return this;
   }
   // eslint-disable-next-line
   function text(text) {
-    var this$1 = this;
-
     if (typeof text === 'undefined') {
       if (this[0]) {
         return this[0].textContent.trim();
@@ -1428,7 +1391,7 @@
     }
 
     for (var i = 0; i < this.length; i += 1) {
-      this$1[i].textContent = text;
+      this[i].textContent = text;
     }
     return this;
   }
@@ -1460,10 +1423,8 @@
     return false;
   }
   function indexOf(el) {
-    var this$1 = this;
-
     for (var i = 0; i < this.length; i += 1) {
-      if (this$1[i] === el) { return i; }
+      if (this[i] === el) { return i; }
     }
     return -1;
   }
@@ -1496,7 +1457,6 @@
     return new Dom7([this[index]]);
   }
   function append() {
-    var this$1 = this;
     var args = [], len = arguments.length;
     while ( len-- ) args[ len ] = arguments[ len ];
 
@@ -1509,14 +1469,14 @@
           var tempDiv = doc.createElement('div');
           tempDiv.innerHTML = newChild;
           while (tempDiv.firstChild) {
-            this$1[i].appendChild(tempDiv.firstChild);
+            this[i].appendChild(tempDiv.firstChild);
           }
         } else if (newChild instanceof Dom7) {
           for (var j = 0; j < newChild.length; j += 1) {
-            this$1[i].appendChild(newChild[j]);
+            this[i].appendChild(newChild[j]);
           }
         } else {
-          this$1[i].appendChild(newChild);
+          this[i].appendChild(newChild);
         }
       }
     }
@@ -1529,8 +1489,6 @@
     return this;
   }
   function prepend(newChild) {
-    var this$1 = this;
-
     var i;
     var j;
     for (i = 0; i < this.length; i += 1) {
@@ -1538,14 +1496,14 @@
         var tempDiv = doc.createElement('div');
         tempDiv.innerHTML = newChild;
         for (j = tempDiv.childNodes.length - 1; j >= 0; j -= 1) {
-          this$1[i].insertBefore(tempDiv.childNodes[j], this$1[i].childNodes[0]);
+          this[i].insertBefore(tempDiv.childNodes[j], this[i].childNodes[0]);
         }
       } else if (newChild instanceof Dom7) {
         for (j = 0; j < newChild.length; j += 1) {
-          this$1[i].insertBefore(newChild[j], this$1[i].childNodes[0]);
+          this[i].insertBefore(newChild[j], this[i].childNodes[0]);
         }
       } else {
-        this$1[i].insertBefore(newChild, this$1[i].childNodes[0]);
+        this[i].insertBefore(newChild, this[i].childNodes[0]);
       }
     }
     return this;
@@ -1556,29 +1514,25 @@
     return this;
   }
   function insertBefore(selector) {
-    var this$1 = this;
-
     var before = $(selector);
     for (var i = 0; i < this.length; i += 1) {
       if (before.length === 1) {
-        before[0].parentNode.insertBefore(this$1[i], before[0]);
+        before[0].parentNode.insertBefore(this[i], before[0]);
       } else if (before.length > 1) {
         for (var j = 0; j < before.length; j += 1) {
-          before[j].parentNode.insertBefore(this$1[i].cloneNode(true), before[j]);
+          before[j].parentNode.insertBefore(this[i].cloneNode(true), before[j]);
         }
       }
     }
   }
   function insertAfter(selector) {
-    var this$1 = this;
-
     var after = $(selector);
     for (var i = 0; i < this.length; i += 1) {
       if (after.length === 1) {
-        after[0].parentNode.insertBefore(this$1[i], after[0].nextSibling);
+        after[0].parentNode.insertBefore(this[i], after[0].nextSibling);
       } else if (after.length > 1) {
         for (var j = 0; j < after.length; j += 1) {
-          after[j].parentNode.insertBefore(this$1[i].cloneNode(true), after[j].nextSibling);
+          after[j].parentNode.insertBefore(this[i].cloneNode(true), after[j].nextSibling);
         }
       }
     }
@@ -1642,26 +1596,22 @@
     return this.nextAll(selector).add(this.prevAll(selector));
   }
   function parent(selector) {
-    var this$1 = this;
-
     var parents = []; // eslint-disable-line
     for (var i = 0; i < this.length; i += 1) {
-      if (this$1[i].parentNode !== null) {
+      if (this[i].parentNode !== null) {
         if (selector) {
-          if ($(this$1[i].parentNode).is(selector)) { parents.push(this$1[i].parentNode); }
+          if ($(this[i].parentNode).is(selector)) { parents.push(this[i].parentNode); }
         } else {
-          parents.push(this$1[i].parentNode);
+          parents.push(this[i].parentNode);
         }
       }
     }
     return $(unique(parents));
   }
   function parents(selector) {
-    var this$1 = this;
-
     var parents = []; // eslint-disable-line
     for (var i = 0; i < this.length; i += 1) {
-      var parent = this$1[i].parentNode; // eslint-disable-line
+      var parent = this[i].parentNode; // eslint-disable-line
       while (parent) {
         if (selector) {
           if ($(parent).is(selector)) { parents.push(parent); }
@@ -1684,11 +1634,9 @@
     return closest;
   }
   function find(selector) {
-    var this$1 = this;
-
     var foundElements = [];
     for (var i = 0; i < this.length; i += 1) {
-      var found = this$1[i].querySelectorAll(selector);
+      var found = this[i].querySelectorAll(selector);
       for (var j = 0; j < found.length; j += 1) {
         foundElements.push(found[j]);
       }
@@ -1696,11 +1644,9 @@
     return new Dom7(foundElements);
   }
   function children(selector) {
-    var this$1 = this;
-
     var children = []; // eslint-disable-line
     for (var i = 0; i < this.length; i += 1) {
-      var childNodes = this$1[i].childNodes;
+      var childNodes = this[i].childNodes;
 
       for (var j = 0; j < childNodes.length; j += 1) {
         if (!selector) {
@@ -1713,10 +1659,8 @@
     return new Dom7(unique(children));
   }
   function remove() {
-    var this$1 = this;
-
     for (var i = 0; i < this.length; i += 1) {
-      if (this$1[i].parentNode) { this$1[i].parentNode.removeChild(this$1[i]); }
+      if (this[i].parentNode) { this[i].parentNode.removeChild(this[i]); }
     }
     return this;
   }
@@ -1740,10 +1684,8 @@
     return dom;
   }
   function empty() {
-    var this$1 = this;
-
     for (var i = 0; i < this.length; i += 1) {
-      var el = this$1[i];
+      var el = this[i];
       if (el.nodeType === 1) {
         for (var j = 0; j < el.childNodes.length; j += 1) {
           if (el.childNodes[j].parentNode) {
@@ -2153,7 +2095,6 @@
 
   var noTrigger = ('resize scroll').split(' ');
   function eventShortcut(name) {
-    var this$1 = this;
     var ref;
 
     var args = [], len = arguments.length - 1;
@@ -2161,9 +2102,9 @@
     if (typeof args[0] === 'undefined') {
       for (var i = 0; i < this.length; i += 1) {
         if (noTrigger.indexOf(name) < 0) {
-          if (name in this$1[i]) { this$1[i][name](); }
+          if (name in this[i]) { this[i][name](); }
           else {
-            $(this$1[i]).trigger(name);
+            $(this[i]).trigger(name);
           }
         }
       }
@@ -3426,7 +3367,7 @@
     });
   }
 
-  var Framework7 = (function (Framework7Class$$1) {
+  var Framework7 = /*@__PURE__*/(function (Framework7Class$$1) {
     function Framework7(params) {
       Framework7Class$$1.call(this, params);
 
@@ -5920,7 +5861,7 @@
         if ($newNavbarInner.length > 0) {
           $newPage.children('.navbar').remove();
         }
-        if ($newNavbarInner.length === 0 && $newPage[0].f7Page) {
+        if ($newNavbarInner.length === 0 && $newPage[0] && $newPage[0].f7Page) {
           // Try from pageData
           $newNavbarInner = $newPage[0].f7Page.$navbarEl;
         }
@@ -5962,7 +5903,8 @@
     $newPage
       .addClass(("page-" + newPagePosition))
       .removeClass('stacked')
-      .trigger('page:unstack');
+      .trigger('page:unstack')
+      .trigger('page:position', { position: newPagePosition });
 
     if (dynamicNavbar && $newNavbarInner.length) {
       $newNavbarInner
@@ -6992,7 +6934,7 @@
         if ($newNavbarInner.length > 0) {
           $newPage.children('.navbar').remove();
         }
-        if ($newNavbarInner.length === 0 && $newPage[0].f7Page) {
+        if ($newNavbarInner.length === 0 && $newPage[0] && $newPage[0].f7Page) {
           // Try from pageData
           $newNavbarInner = $newPage[0].f7Page.$navbarEl;
         }
@@ -7016,7 +6958,8 @@
       .addClass('page-previous')
       .removeClass('stacked')
       .removeAttr('aria-hidden')
-      .trigger('page:unstack');
+      .trigger('page:unstack')
+      .trigger('page:position', { position: 'previous' });
 
     if (dynamicNavbar && $newNavbarInner.length > 0) {
       $newNavbarInner
@@ -7636,7 +7579,7 @@
     router.saveHistory();
   }
 
-  var Router = (function (Framework7Class$$1) {
+  var Router = /*@__PURE__*/(function (Framework7Class$$1) {
     function Router(app, view) {
       Framework7Class$$1.call(this, {}, [typeof view === 'undefined' ? app : view]);
       var router = this;
@@ -9063,7 +9006,7 @@
     },
   };
 
-  var View = (function (Framework7Class$$1) {
+  var View = /*@__PURE__*/(function (Framework7Class$$1) {
     function View(appInstance, el, viewParams) {
       if ( viewParams === void 0 ) viewParams = {};
 
@@ -11743,7 +11686,7 @@
     var dialog = dialogsQueue.shift();
     dialog.open();
   }
-  var Modal = (function (Framework7Class$$1) {
+  var Modal = /*@__PURE__*/(function (Framework7Class$$1) {
     function Modal(app, params) {
       Framework7Class$$1.call(this, params, [app]);
 
@@ -11989,7 +11932,7 @@
     return Modal;
   }(Framework7Class));
 
-  var CustomModal = (function (Modal$$1) {
+  var CustomModal = /*@__PURE__*/(function (Modal$$1) {
     function CustomModal(app, params) {
       var extendedParams = Utils.extend({
         backdrop: true,
@@ -12089,7 +12032,7 @@
     },
   };
 
-  var Dialog = (function (Modal$$1) {
+  var Dialog = /*@__PURE__*/(function (Modal$$1) {
     function Dialog(app, params) {
       var extendedParams = Utils.extend({
         title: app.params.dialog.title,
@@ -12521,7 +12464,7 @@
     },
   };
 
-  var Popup = (function (Modal$$1) {
+  var Popup = /*@__PURE__*/(function (Modal$$1) {
     function Popup(app, params) {
       var extendedParams = Utils.extend(
         { on: {} },
@@ -12658,7 +12601,7 @@
     },
   };
 
-  var LoginScreen = (function (Modal$$1) {
+  var LoginScreen = /*@__PURE__*/(function (Modal$$1) {
     function LoginScreen(app, params) {
       var extendedParams = Utils.extend({
         on: {},
@@ -12735,7 +12678,7 @@
     },
   };
 
-  var Popover = (function (Modal$$1) {
+  var Popover = /*@__PURE__*/(function (Modal$$1) {
     function Popover(app, params) {
       var extendedParams = Utils.extend(
         { on: {} },
@@ -13060,7 +13003,7 @@
 
   /* eslint indent: ["off"] */
 
-  var Actions = (function (Modal$$1) {
+  var Actions = /*@__PURE__*/(function (Modal$$1) {
     function Actions(app, params) {
       var extendedParams = Utils.extend(
         { on: {} },
@@ -13352,7 +13295,7 @@
     },
   };
 
-  var Sheet = (function (Modal$$1) {
+  var Sheet = /*@__PURE__*/(function (Modal$$1) {
     function Sheet(app, params) {
       var extendedParams = Utils.extend(
         { on: {} },
@@ -13530,7 +13473,7 @@
     },
   };
 
-  var Toast = (function (Modal$$1) {
+  var Toast = /*@__PURE__*/(function (Modal$$1) {
     function Toast(app, params) {
       var extendedParams = Utils.extend({
         on: {},
@@ -14816,7 +14759,7 @@
     name: 'contactsList',
   };
 
-  var VirtualList = (function (Framework7Class$$1) {
+  var VirtualList = /*@__PURE__*/(function (Framework7Class$$1) {
     function VirtualList(app, params) {
       if ( params === void 0 ) params = {};
 
@@ -15399,7 +15342,7 @@
     },
   };
 
-  var ListIndex = (function (Framework7Class$$1) {
+  var ListIndex = /*@__PURE__*/(function (Framework7Class$$1) {
     function ListIndex(app, params) {
       if ( params === void 0 ) params = {};
 
@@ -16368,7 +16311,7 @@
     });
   }
 
-  var Panel = (function (Framework7Class$$1) {
+  var Panel = /*@__PURE__*/(function (Framework7Class$$1) {
     function Panel(app, params) {
       var obj;
 
@@ -16402,6 +16345,7 @@
       }
 
       var $backdropEl = $('.panel-backdrop');
+
       if ($backdropEl.length === 0) {
         $backdropEl = $('<div class="panel-backdrop"></div>');
         $backdropEl.insertBefore($el);
@@ -16563,6 +16507,10 @@
           $el.insertAfter($insertBeforeEl);
         } else {
           app.root.prepend($el);
+        }
+
+        if ($backdropEl && $backdropEl.length && !$backdropEl.parent().is(app.root) && $backdropEl.nextAll('.panel').length === 0) {
+          $backdropEl.insertBefore($el);
         }
 
         panel.once('panelClosed', function () {
@@ -17514,7 +17462,7 @@
     name: 'radio',
   };
 
-  var Toggle = (function (Framework7Class$$1) {
+  var Toggle = /*@__PURE__*/(function (Framework7Class$$1) {
     function Toggle(app, params) {
       if ( params === void 0 ) params = {};
 
@@ -17749,7 +17697,7 @@
     },
   };
 
-  var Range = (function (Framework7Class$$1) {
+  var Range = /*@__PURE__*/(function (Framework7Class$$1) {
     function Range(app, params) {
       Framework7Class$$1.call(this, params, [app]);
 
@@ -18268,7 +18216,7 @@
     },
   };
 
-  var Stepper = (function (Framework7Class$$1) {
+  var Stepper = /*@__PURE__*/(function (Framework7Class$$1) {
     function Stepper(app, params) {
       Framework7Class$$1.call(this, params, [app]);
       var stepper = this;
@@ -18776,7 +18724,7 @@
     },
   };
 
-  var SmartSelect = (function (Framework7Class$$1) {
+  var SmartSelect = /*@__PURE__*/(function (Framework7Class$$1) {
     function SmartSelect(app, params) {
       if ( params === void 0 ) params = {};
 
@@ -19827,7 +19775,7 @@
   var PERSIAN_MONTH_NAMES = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
   var PERSIAN_NUMBERS = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
 
-  var IDate = (function (Date) {
+  var IDate = /*@__PURE__*/(function (Date) {
     function IDate () {
       Date.call(this);
 
@@ -19925,7 +19873,7 @@
     return IDate;
   }(Date));
 
-  var Calendar = (function (Framework7Class$$1) {
+  var Calendar = /*@__PURE__*/(function (Framework7Class$$1) {
     function Calendar(app, params) {
       if ( params === void 0 ) params = {};
 
@@ -21746,7 +21694,7 @@
     col.init();
   }
 
-  var Picker = (function (Framework7Class$$1) {
+  var Picker = /*@__PURE__*/(function (Framework7Class$$1) {
     function Picker(app, params) {
       if ( params === void 0 ) params = {};
 
@@ -22408,7 +22356,7 @@
     },
   };
 
-  var PullToRefresh = (function (Framework7Class$$1) {
+  var PullToRefresh = /*@__PURE__*/(function (Framework7Class$$1) {
     function PullToRefresh(app, el) {
       Framework7Class$$1.call(this, {}, [app]);
       var ptr = this;
@@ -22964,7 +22912,7 @@
     },
   };
 
-  var DataTable = (function (Framework7Class$$1) {
+  var DataTable = /*@__PURE__*/(function (Framework7Class$$1) {
     function DataTable(app, params) {
       if ( params === void 0 ) params = {};
 
@@ -23388,7 +23336,7 @@
     },
   };
 
-  var Searchbar = (function (FrameworkClass) {
+  var Searchbar = /*@__PURE__*/(function (FrameworkClass) {
     function Searchbar(app, params) {
       if ( params === void 0 ) params = {};
 
@@ -23399,6 +23347,7 @@
       var defaults = {
         el: undefined,
         inputEl: undefined,
+        inputEvents: 'change input compositionend',
         disableButton: true,
         disableButtonEl: undefined,
         backdropEl: undefined,
@@ -23613,7 +23562,7 @@
         }
         sb.$inputEl.on('focus', onInputFocus);
         sb.$inputEl.on('blur', onInputBlur);
-        sb.$inputEl.on('change input compositionend', onInputChange);
+        sb.$inputEl.on(sb.params.inputEvents, onInputChange);
         sb.$inputEl.on('input:clear', onInputClear);
       };
       sb.detachEvents = function detachEvents() {
@@ -23630,7 +23579,7 @@
         }
         sb.$inputEl.off('focus', onInputFocus);
         sb.$inputEl.off('blur', onInputBlur);
-        sb.$inputEl.off('change input compositionend', onInputChange);
+        sb.$inputEl.off(sb.params.inputEvents, onInputChange);
         sb.$inputEl.off('input:clear', onInputClear);
       };
 
@@ -24050,7 +23999,7 @@
     },
   };
 
-  var Messages = (function (Framework7Class$$1) {
+  var Messages = /*@__PURE__*/(function (Framework7Class$$1) {
     function Messages(app, params) {
       if ( params === void 0 ) params = {};
 
@@ -24603,7 +24552,7 @@
     },
   };
 
-  var Messagebar = (function (Framework7Class$$1) {
+  var Messagebar = /*@__PURE__*/(function (Framework7Class$$1) {
     function Messagebar(app, params) {
       if ( params === void 0 ) params = {};
 
@@ -27397,7 +27346,7 @@
 
   var extendedDefaults = {};
 
-  var Swiper = (function (SwiperClass) {
+  var Swiper = /*@__PURE__*/(function (SwiperClass) {
     function Swiper() {
       var assign;
 
@@ -31262,7 +31211,7 @@
 
   /* eslint indent: ["off"] */
 
-  var PhotoBrowser = (function (Framework7Class$$1) {
+  var PhotoBrowser = /*@__PURE__*/(function (Framework7Class$$1) {
     function PhotoBrowser(app, params) {
       if ( params === void 0 ) params = {};
 
@@ -31951,7 +31900,7 @@
     },
   };
 
-  var Notification = (function (Modal$$1) {
+  var Notification = /*@__PURE__*/(function (Modal$$1) {
     function Notification(app, params) {
       var extendedParams = Utils.extend({
         on: {},
@@ -32200,7 +32149,7 @@
 
   /* eslint "no-useless-escape": "off" */
 
-  var Autocomplete = (function (Framework7Class$$1) {
+  var Autocomplete = /*@__PURE__*/(function (Framework7Class$$1) {
     function Autocomplete(app, params) {
       if ( params === void 0 ) params = {};
 
@@ -33018,7 +32967,7 @@
     },
   };
 
-  var Tooltip = (function (Framework7Class$$1) {
+  var Tooltip = /*@__PURE__*/(function (Framework7Class$$1) {
     function Tooltip(app, params) {
       if ( params === void 0 ) params = {};
 
@@ -33376,7 +33325,7 @@
 
   /* eslint no-nested-ternary: off */
 
-  var Gauge = (function (Framework7Class$$1) {
+  var Gauge = /*@__PURE__*/(function (Framework7Class$$1) {
     function Gauge(app, params) {
       if ( params === void 0 ) params = {};
 
@@ -33706,7 +33655,7 @@
     },
   };
 
-  var ViAd = (function (Framework7Class$$1) {
+  var ViAd = /*@__PURE__*/(function (Framework7Class$$1) {
     function ViAd(app, params) {
       if ( params === void 0 ) params = {};
 

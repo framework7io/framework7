@@ -9,6 +9,10 @@ export default {
     id: [String, Number],
     sortable: Boolean,
     media: String,
+    tag: {
+      type: String,
+      default: 'li'
+    },
     input: {
       type: Boolean,
       default: true
@@ -92,6 +96,7 @@ export default {
       sortable,
       media,
       input: renderInput,
+      tag,
       type,
       name,
       value,
@@ -209,7 +214,8 @@ export default {
     }
 
     const hasErrorMessage = !!errorMessage || self.$slots['error-message'] && self.$slots['error-message'].length;
-    return _h('li', {
+    const ItemTag = tag;
+    return _h(ItemTag, {
       ref: 'el',
       style: style,
       class: Utils.classNames(className, {

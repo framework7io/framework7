@@ -47,6 +47,8 @@ export namespace Searchbar {
     disableOnBackdropClick?: boolean
     /** Enables expandable searchbar */
     expandable?: boolean
+    /** Input events used to track search event */
+    inputEvents?: string
     /** Object with events handlers.. */
     on?: {
       [event in keyof Events]? : Events[event]

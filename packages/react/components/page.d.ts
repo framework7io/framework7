@@ -60,6 +60,7 @@ declare class F7Page extends React.Component<F7Page.Props, {}> {
   onPageMounted(event? : any) : unknown
   onPageStack() : unknown
   onPageUnstack() : unknown
+  onPagePosition(event? : any) : unknown
   onPageInit(event? : any) : unknown
   onPageReinit(event? : any) : unknown
   onPageBeforeIn(event? : any) : unknown

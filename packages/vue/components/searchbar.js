@@ -28,6 +28,10 @@ export default {
       type: Boolean,
       default: true
     },
+    inputEvents: {
+      type: String,
+      default: 'change input compositionend'
+    },
     expandable: Boolean,
     searchContainer: [String, Object],
     searchIn: {
@@ -178,6 +182,7 @@ export default {
     const self = this;
     const {
       init,
+      inputEvents,
       searchContainer,
       searchIn,
       searchItem,
@@ -208,6 +213,7 @@ export default {
     self.$f7ready(() => {
       const params = Utils.noUndefinedProps({
         el: self.$refs.el,
+        inputEvents,
         searchContainer,
         searchIn,
         searchItem,

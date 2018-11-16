@@ -130,6 +130,7 @@ class F7Searchbar extends React.Component {
     const self = this;
     const {
       init,
+      inputEvents,
       searchContainer,
       searchIn,
       searchItem,
@@ -160,6 +161,7 @@ class F7Searchbar extends React.Component {
     self.$f7ready(() => {
       const params = Utils.noUndefinedProps({
         el: self.refs.el,
+        inputEvents,
         searchContainer,
         searchIn,
         searchItem,
@@ -256,6 +258,10 @@ __reactComponentSetProps(F7Searchbar, Object.assign({
   clearButton: {
     type: Boolean,
     default: true
+  },
+  inputEvents: {
+    type: String,
+    default: 'change input compositionend'
   },
   expandable: Boolean,
   searchContainer: [String, Object],

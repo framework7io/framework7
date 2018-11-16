@@ -2,6 +2,20 @@
 
 # Change Log
 
+# [v3.5.2](https://github.com/framework7io/framework7/compare/v3.5.1...v3.5.2) - November 12, 2018
+  * Core
+    * List
+      * Fixed issue with hairlines in last swipeout-list item
+    * Panel
+      * Fixed issue when routable Panel can appear without backdrop
+    * Searchbar
+      * New `inputEvents` parameter that allow to specify which input events should be tracked for search
+  * Phenome
+    * ListInput - add `tag` property to allow to change default `li` tag to anything else
+    * Searchbar - new `inputEvents` prop that allow to specify which input events should be tracked for search
+    * Fixed issue with router page classes
+  * Minor fixes
+
 # [v3.5.1](https://github.com/framework7io/framework7/compare/v3.5.0...v3.5.1) - November 2, 2018
   * Core
     * Swiper update to latest 4.4.2:

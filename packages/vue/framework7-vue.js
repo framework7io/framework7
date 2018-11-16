@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.5.1
+ * Framework7 Vue 3.5.2
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 2, 2018
+ * Released on: November 12, 2018
  */
 
 (function (global, factory) {
@@ -3791,6 +3791,10 @@
       id: [String, Number],
       sortable: Boolean,
       media: String,
+      tag: {
+        type: String,
+        default: 'li'
+      },
       input: {
         type: Boolean,
         default: true
@@ -3870,6 +3874,7 @@
       var sortable = props.sortable;
       var media = props.media;
       var renderInput = props.input;
+      var tag = props.tag;
       var type = props.type;
       var name = props.name;
       var value = props.value;
@@ -3986,7 +3991,8 @@
       }
 
       var hasErrorMessage = !!errorMessage || self.$slots['error-message'] && self.$slots['error-message'].length;
-      return _h('li', {
+      var ItemTag = tag;
+      return _h(ItemTag, {
         ref: 'el',
         style: style,
         class: Utils.classNames(className, {
@@ -7449,6 +7455,7 @@
       self.onPageBeforeRemove = self.onPageBeforeRemove.bind(self);
       self.onPageStack = self.onPageStack.bind(self);
       self.onPageUnstack = self.onPageUnstack.bind(self);
+      self.onPagePosition = self.onPagePosition.bind(self);
 
       if (ptr) {
         el.addEventListener('ptr:pullstart', self.onPtrPullStart);
@@ -7472,6 +7479,7 @@
       el.addEventListener('page:beforeremove', self.onPageBeforeRemove);
       el.addEventListener('page:stack', self.onPageStack);
       el.addEventListener('page:unstack', self.onPageUnstack);
+      el.addEventListener('page:position', self.onPagePosition);
     },
 
     beforeDestroy: function beforeDestroy() {
@@ -7493,6 +7501,7 @@
       el.removeEventListener('page:beforeremove', self.onPageBeforeRemove);
       el.removeEventListener('page:stack', self.onPageStack);
       el.removeEventListener('page:unstack', self.onPageUnstack);
+      el.removeEventListener('page:position', self.onPagePosition);
     },
 
     methods: {
@@ -7535,6 +7544,13 @@
       onPageUnstack: function onPageUnstack() {
         this.setState({
           routerForceUnstack: true
+        });
+      },
+
+      onPagePosition: function onPagePosition(event) {
+        var position = event.detail.position;
+        this.setState({
+          routerClass: ("page-" + position)
         });
       },
 
@@ -8554,6 +8570,10 @@
         type: Boolean,
         default: true
       },
+      inputEvents: {
+        type: String,
+        default: 'change input compositionend'
+      },
       expandable: Boolean,
       searchContainer: [String, Object],
       searchIn: {
@@ -8702,6 +8722,7 @@
       var self = this;
       var ref = self.props;
       var init = ref.init;
+      var inputEvents = ref.inputEvents;
       var searchContainer = ref.searchContainer;
       var searchIn = ref.searchIn;
       var searchItem = ref.searchItem;
@@ -8731,6 +8752,7 @@
       self.$f7ready(function () {
         var params = Utils.noUndefinedProps({
           el: self.$refs.el,
+          inputEvents: inputEvents,
           searchContainer: searchContainer,
           searchIn: searchIn,
           searchItem: searchItem,
@@ -10470,7 +10492,7 @@
   };
 
   /**
-   * Framework7 Vue 3.5.1
+   * Framework7 Vue 3.5.2
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -10478,7 +10500,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: November 2, 2018
+   * Released on: November 12, 2018
    */
 
   var Plugin = {

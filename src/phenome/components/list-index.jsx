@@ -98,7 +98,7 @@ export default {
   watch: {
     'props.indexes': function watchIndexes() {
       if (!this.f7ListIndex) return;
-      this.f7ListIndex.params.indexes = this.indexes;
+      this.f7ListIndex.params.indexes = this.props.indexes;
       this.update();
     },
   },

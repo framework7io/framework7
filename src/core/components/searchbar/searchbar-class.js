@@ -12,6 +12,7 @@ class Searchbar extends FrameworkClass {
     const defaults = {
       el: undefined,
       inputEl: undefined,
+      inputEvents: 'change input compositionend',
       disableButton: true,
       disableButtonEl: undefined,
       backdropEl: undefined,
@@ -232,7 +233,7 @@ class Searchbar extends FrameworkClass {
       }
       sb.$inputEl.on('focus', onInputFocus);
       sb.$inputEl.on('blur', onInputBlur);
-      sb.$inputEl.on('change input compositionend', onInputChange);
+      sb.$inputEl.on(sb.params.inputEvents, onInputChange);
       sb.$inputEl.on('input:clear', onInputClear);
     };
     sb.detachEvents = function detachEvents() {
@@ -249,7 +250,7 @@ class Searchbar extends FrameworkClass {
       }
       sb.$inputEl.off('focus', onInputFocus);
       sb.$inputEl.off('blur', onInputBlur);
-      sb.$inputEl.off('change input compositionend', onInputChange);
+      sb.$inputEl.off(sb.params.inputEvents, onInputChange);
       sb.$inputEl.off('input:clear', onInputClear);
     };
 
