@@ -70,7 +70,9 @@
 .chip .chip-delete.active-state {
   opacity: 1;
 }
-.chip-outline {
+.chip-outline,
+.ios .chip-outline-ios,
+.md .chip-outline-md {
   border: 1px solid var(--f7-chip-outline-border-color);
   background: none;
 }
@@ -78,7 +80,9 @@
   --f7-chip-bg-color: var(--f7-theme-color);
   --f7-chip-text-color: #fff;
 }
-.chip-outline[class*="color-"] {
+.chip-outline[class*="color-"],
+.ios .chip-outline-ios[class*="color-"],
+.md .chip-outline-md[class*="color-"] {
   --f7-chip-outline-border-color: var(--f7-theme-color);
   --f7-chip-text-color: var(--f7-theme-color);
 }
