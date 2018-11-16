@@ -8,28 +8,25 @@
   justify-content: space-between;
   flex-wrap: wrap;
   align-items: flex-start;
-  --f7-grid-col-width: 100%;
+  --f7-cols-per-row: 1;
   > [class*="col-"], > .col {
     box-sizing: border-box;
-    width: var(--f7-grid-col-width);
+    width: calc((100% - var(--f7-grid-gap) * (var(--f7-cols-per-row) - 1)) / var(--f7-cols-per-row));
   }
   &.no-gap {
     --f7-grid-gap: 0px;
   }
-  @spacer: var(--f7-grid-gap);
 
   each(@cols, {
     @className: framework7_floor(@value);
     @n: framework7_calculateN(@value);
-    @n_minus_one: framework7_minusOne(@n);
     .col-@{className} {
-      --f7-grid-col-width: ~"calc((100% - @{spacer}*@{n_minus_one}) / @{n})";
+      --f7-cols-per-row: @n;
     }
   });
   each(@cols, {
     .col:nth-last-child(@{index}), .col:nth-last-child(@{index}) ~ .col {
-      @index_minus_one: framework7_minusOne(@index);
-      --f7-grid-col-width: ~"calc((100% - @{spacer}*@{index_minus_one}) / @{index})";
+      --f7-cols-per-row: @index;
     }
   });
 
@@ -37,15 +34,13 @@
     each(@cols, {
       @className: framework7_floor(@value);
       @n: framework7_calculateN(@value);
-      @n_minus_one: framework7_minusOne(@n);
       .tablet-@{className} {
-        --f7-grid-col-width: ~"calc((100% - @{spacer}*@{n_minus_one}) / @{n})";
+        --f7-cols-per-row: @n;
       }
     });
     each(@cols, {
       .tablet-auto:nth-last-child(@{index}), .tablet-auto:nth-last-child(@{index}) ~ .tablet-auto {
-        @index_minus_one: framework7_minusOne(@index);
-        --f7-grid-col-width: ~"calc((100% - @{spacer}*@{index_minus_one}) / @{index})";
+        --f7-cols-per-row: @index;
       }
     });
   }
@@ -53,15 +48,13 @@
     each(@cols, {
       @className: framework7_floor(@value);
       @n: framework7_calculateN(@value);
-      @n_minus_one: framework7_minusOne(@n);
       .desktop-@{className} {
-        --f7-grid-col-width: ~"calc((100% - @{spacer}*@{n_minus_one}) / @{n})";
+        --f7-cols-per-row: @n;
       }
     });
     each(@cols, {
       .desktop-auto:nth-last-child(@{index}), .desktop-auto:nth-last-child(@{index}) ~ .desktop-auto {
-        @index_minus_one: framework7_minusOne(@index);
-        --f7-grid-col-width: ~"calc((100% - @{spacer}*@{index_minus_one}) / @{index})";
+        --f7-cols-per-row: @index;
       }
     });
   }
