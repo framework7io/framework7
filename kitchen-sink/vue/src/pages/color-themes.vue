@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="Color Themes" back-link="Back"></f7-navbar>
+    <f7-navbar large title="Color Themes" title-large="Color Themes" back-link="Back"></f7-navbar>
     <f7-block-title>Layout Themes</f7-block-title>
     <f7-block>
       <p>Framework7 comes with 2 main layout themes: Light (default) and Dark:</p>

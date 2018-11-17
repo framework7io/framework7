@@ -1,16 +1,17 @@
 import React from 'react';
-import { Page, Navbar, NavLeft, NavTitle, NavRight, BlockTitle, List, ListItem, Link, Searchbar, Icon } from 'framework7-react';
+import { Page, Navbar, NavLeft, NavTitle, NavTitleLarge, NavRight, BlockTitle, List, ListItem, Link, Searchbar, Icon } from 'framework7-react';
 
 export default () => (
   <Page>
-    <Navbar>
+    <Navbar large sliding={false}>
       <NavLeft>
         <Link panelOpen="left" iconIos="f7:menu" iconMd="material:menu"></Link>
       </NavLeft>
-      <NavTitle>Framework7 React</NavTitle>
+      <NavTitle sliding>Framework7 React</NavTitle>
       <NavRight>
         <Link searchbarEnable=".searchbar-components" iconIos="f7:search" iconMd="material:search"></Link>
       </NavRight>
+      <NavTitleLarge>Framework7 React</NavTitleLarge>
       <Searchbar className="searchbar-components" searchContainer=".components-list" searchIn="a" expandable></Searchbar>
     </Navbar>
 

@@ -1,6 +1,6 @@
 <template>
   <f7-page>
-    <f7-navbar title="About Framework7" back-link="Back"></f7-navbar>
+    <f7-navbar large title="About Framework7" title-large="About Framework7" back-link="Back"></f7-navbar>
     <f7-block-title>Welcome to Framework7</f7-block-title>
     <f7-block strong>
       <p>Framework7 - is a free and open source HTML mobile framework to develop hybrid mobile apps or web apps with iOS or Android (Material) native look and feel. It is also an indispensable prototyping apps tool to show working app prototype as soon as possible in case you need to. Framework7 is created by Vladimir Kharlampidi (iDangero.us).</p>

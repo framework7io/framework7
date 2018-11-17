@@ -19,6 +19,14 @@ export default {
       type: Boolean,
       default: undefined,
     },
+    withNavbarLarge: {
+      type: Boolean,
+      default: undefined,
+    },
+    navbarLarge: {
+      type: Boolean,
+      default: undefined,
+    },
     noNavbar: Boolean,
     noToolbar: Boolean,
     tabs: Boolean,
@@ -51,6 +59,7 @@ export default {
   state() {
     return {
       hasSubnavbar: false,
+      hasNavbarLarge: false,
       routerClass: '',
       routerForceUnstack: false,
     };
@@ -80,6 +89,8 @@ export default {
       tabs,
       subnavbar,
       withSubnavbar,
+      navbarLarge,
+      withNavbarLarge,
       noNavbar,
       noToolbar,
       noSwipeback,
@@ -98,6 +109,7 @@ export default {
 
     let hasSubnavbar;
     let hasMessages;
+    let hasNavbarLarge;
     hasMessages = messagesContent; // phenome-react-line
     hasMessages = self.$options.propsData.messagesContent; // phenome-vue-line
 
@@ -112,6 +124,9 @@ export default {
             return;
           }
           if (tag === 'F7Subnavbar' || tag === 'f7-subnavbar') hasSubnavbar = true;
+          if (tag === 'F7Navbar' || tag === 'f7-navbar') {
+            if (child.props && child.props.large) hasNavbarLarge = true;
+          }
           if (typeof hasMessages === 'undefined' && (tag === 'F7Messages' || tag === 'f7-messages')) hasMessages = true;
           if (fixedTags.indexOf(tag) >= 0) {
             isFixedTag = true;
@@ -124,6 +139,9 @@ export default {
             return;
           }
           if (tag.indexOf('subnavbar') >= 0) hasSubnavbar = true;
+          if (tag.indexOf('navbar') >= 0) {
+            if (child.componentOptions && child.componentOptions.propsData && ('large' in child.componentOptions.propsData) && (child.componentOptions.propsData !== false)) hasNavbarLarge = true;
+          }
           if (typeof hasMessages === 'undefined' && tag.indexOf('messages') >= 0) hasMessages = true;
           for (let j = 0; j < fixedTags.length; j += 1) {
             if (tag.indexOf(fixedTags[j]) >= 0) {
@@ -142,6 +160,10 @@ export default {
       ? hasSubnavbar || this.state.hasSubnavbar
       : false;
 
+    const forceNavbarLarge = (typeof navbarLarge === 'undefined' && typeof withNavbarLarge === 'undefined')
+      ? hasNavbarLarge || this.state.hasNavbarLarge
+      : false;
+
     const classes = Utils.classNames(
       className,
       'page',
@@ -150,6 +172,7 @@ export default {
         stacked: stacked && !this.state.routerForceUnstack,
         tabs,
         'page-with-subnavbar': subnavbar || withSubnavbar || forceSubnavbar,
+        'page-with-navbar-large': navbarLarge || withNavbarLarge || forceNavbarLarge,
         'no-navbar': noNavbar,
         'no-toolbar': noToolbar,
         'no-swipeback': noSwipeback,
@@ -304,13 +327,19 @@ export default {
     },
     onPageInit(event) {
       const page = event.detail;
-      const { withSubnavbar, subnavbar } = this.props;
+      const { withSubnavbar, subnavbar, withNavbarLarge, navbarLarge } = this.props;
       if (typeof withSubnavbar === 'undefined' && typeof subnavbar === 'undefined') {
         if (
           (page.$navbarEl && page.$navbarEl.length && page.$navbarEl.find('.subnavbar').length)
           || (page.$el.children('.navbar').find('.subnavbar').length)
         ) {
           this.setState({ hasSubnavbar: true });
+        }
+      }
+
+      if (typeof withNavbarLarge === 'undefined' && typeof navbarLarge === 'undefined') {
+        if (page.$navbarEl && page.$navbarEl.hasClass('navbar-inner-large')) {
+          this.setState({ hasNavbarLarge: true });
         }
       }
 

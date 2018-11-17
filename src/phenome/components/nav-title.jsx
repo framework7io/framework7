@@ -29,9 +29,21 @@ export default {
       },
       Mixins.colorClasses(props),
     );
+
+    let children;
+    const slots = self.slots;
+    if (slots && Object.keys(slots).length) {
+      children = [];
+      Object.keys(slots).forEach((key) => {
+        children.push(...slots[key]);
+      });
+    }
+
     return (
       <div id={id} style={style} className={classes}>
-        <slot>{title}{subtitleEl}</slot>
+        {children}
+        {!children && title}
+        {!children && subtitleEl}
       </div>
     );
   },

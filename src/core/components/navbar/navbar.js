@@ -164,7 +164,7 @@ const Navbar = {
   },
   getElByPage(page) {
     let $pageEl;
-    let $navbarEl;
+    let $navbarInnerEl;
     let pageData;
     if (page.$navbarEl || page.$el) {
       pageData = page;
@@ -174,12 +174,12 @@ const Navbar = {
       if ($pageEl.length > 0) pageData = $pageEl[0].f7Page;
     }
     if (pageData && pageData.$navbarEl && pageData.$navbarEl.length > 0) {
-      $navbarEl = pageData.$navbarEl;
+      $navbarInnerEl = pageData.$navbarEl;
     } else if ($pageEl) {
-      $navbarEl = $pageEl.children('.navbar').children('.navbar-inner');
+      $navbarInnerEl = $pageEl.children('.navbar').children('.navbar-inner');
     }
-    if (!$navbarEl || ($navbarEl && $navbarEl.length === 0)) return undefined;
-    return $navbarEl[0];
+    if (!$navbarInnerEl || ($navbarInnerEl && $navbarInnerEl.length === 0)) return undefined;
+    return $navbarInnerEl[0];
   },
   getPageByEl(navbarInnerEl) {
     let $navbarInnerEl = $(navbarInnerEl);
@@ -189,10 +189,59 @@ const Navbar = {
     }
     return $navbarInnerEl[0].f7Page;
   },
-  initHideNavbarOnScroll(pageEl, navbarInnerEl) {
+
+  collapseLargeTitle(navbarInnerEl) {
+    let $navbarInnerEl = $(navbarInnerEl);
+    if ($navbarInnerEl.hasClass('navbar')) {
+      $navbarInnerEl = $navbarInnerEl.find('.navbar-inner-large');
+      if ($navbarInnerEl.length > 1) {
+        $navbarInnerEl = $(navbarInnerEl).find('.navbar-inner-large.navbar-current');
+      }
+      if ($navbarInnerEl.length > 1 || !$navbarInnerEl.length) {
+        return;
+      }
+    }
+    $navbarInnerEl.addClass('navbar-inner-large-collapsed');
+    $navbarInnerEl.parent('.navbar').removeClass('navbar-large');
+  },
+  expandLargeTitle(navbarInnerEl) {
+    let $navbarInnerEl = $(navbarInnerEl);
+    if ($navbarInnerEl.hasClass('navbar')) {
+      $navbarInnerEl = $navbarInnerEl.find('.navbar-inner-large');
+      if ($navbarInnerEl.length > 1) {
+        $navbarInnerEl = $(navbarInnerEl).find('.navbar-inner-large.navbar-current');
+      }
+      if ($navbarInnerEl.length > 1 || !$navbarInnerEl.length) {
+        return;
+      }
+    }
+    $navbarInnerEl.removeClass('navbar-inner-large-collapsed');
+    $navbarInnerEl.parent('.navbar').addClass('navbar-large');
+  },
+  toggleLargeTitle(navbarInnerEl) {
+    const app = this;
+    let $navbarInnerEl = $(navbarInnerEl);
+    if ($navbarInnerEl.hasClass('navbar')) {
+      $navbarInnerEl = $navbarInnerEl.find('.navbar-inner-large');
+      if ($navbarInnerEl.length > 1) {
+        $navbarInnerEl = $(navbarInnerEl).find('.navbar-inner-large.navbar-current');
+      }
+      if ($navbarInnerEl.length > 1 || !$navbarInnerEl.length) {
+        return;
+      }
+    }
+    if ($navbarInnerEl.hasClass('navbar-inner-large-collapsed')) {
+      app.navbar.expandLargeTitle($navbarInnerEl);
+    } else {
+      app.navbar.collapseLargeTitle($navbarInnerEl);
+    }
+  },
+  initNavbarOnScroll(pageEl, navbarInnerEl, needHide, needCollapse) {
     const app = this;
     const $pageEl = $(pageEl);
     const $navbarEl = $(navbarInnerEl || app.navbar.getElByPage(pageEl)).closest('.navbar');
+    const $navbarInnerEl = $(navbarInnerEl);
+    // const $titleLargeEl = $navbarInnerEl.children('.title-large');
 
     let previousScrollTop;
     let currentScrollTop;
@@ -202,39 +251,60 @@ const Navbar = {
     let reachEnd;
     let action;
     let navbarHidden;
+
+    let navbarCollapsed;
+    const navbarHeight = $navbarEl.hasClass('navbar-large') ? 96 : 44;
+
     function handleScroll() {
       const scrollContent = this;
-      if ($pageEl.hasClass('page-previous')) return;
       currentScrollTop = scrollContent.scrollTop;
-      scrollHeight = scrollContent.scrollHeight;
-      offsetHeight = scrollContent.offsetHeight;
-      reachEnd = currentScrollTop + offsetHeight >= scrollHeight;
-      navbarHidden = $navbarEl.hasClass('navbar-hidden');
-
-      if (reachEnd) {
-        if (app.params.navbar.showOnPageScrollEnd) {
-          action = 'show';
+      if (needCollapse) {
+        /* TODO: check later
+        const percentage = Math.min(Math.max((currentScrollTop / 52), 0), 1);
+        $navbarEl.css('height', `${96 - percentage * 52}px`);
+        $titleLargeEl.css('height', `${Math.max(44 - percentage * 52, 0)}px`);
+        */
+        navbarCollapsed = $navbarInnerEl.hasClass('navbar-inner-large-collapsed');
+        if (currentScrollTop > navbarHeight) {
+          if (!navbarCollapsed) {
+            app.navbar.collapseLargeTitle(navbarInnerEl);
+          }
+        } else if (navbarCollapsed) {
+          app.navbar.expandLargeTitle(navbarInnerEl);
         }
-      } else if (previousScrollTop > currentScrollTop) {
-        if (app.params.navbar.showOnPageScrollTop || currentScrollTop <= 44) {
-          action = 'show';
-        } else {
+      }
+      if ($pageEl.hasClass('page-previous')) return;
+      if (needHide) {
+        scrollHeight = scrollContent.scrollHeight;
+        offsetHeight = scrollContent.offsetHeight;
+        reachEnd = currentScrollTop + offsetHeight >= scrollHeight;
+        navbarHidden = $navbarEl.hasClass('navbar-hidden');
+
+        if (reachEnd) {
+          if (app.params.navbar.showOnPageScrollEnd) {
+            action = 'show';
+          }
+        } else if (previousScrollTop > currentScrollTop) {
+          if (app.params.navbar.showOnPageScrollTop || currentScrollTop <= navbarHeight) {
+            action = 'show';
+          } else {
+            action = 'hide';
+          }
+        } else if (currentScrollTop > navbarHeight) {
           action = 'hide';
+        } else {
+          action = 'show';
         }
-      } else if (currentScrollTop > 44) {
-        action = 'hide';
-      } else {
-        action = 'show';
-      }
 
-      if (action === 'show' && navbarHidden) {
-        app.navbar.show($navbarEl);
-        navbarHidden = false;
-      } else if (action === 'hide' && !navbarHidden) {
-        app.navbar.hide($navbarEl);
-        navbarHidden = true;
+        if (action === 'show' && navbarHidden) {
+          app.navbar.show($navbarEl);
+          navbarHidden = false;
+        } else if (action === 'hide' && !navbarHidden) {
+          app.navbar.hide($navbarEl);
+          navbarHidden = true;
+        }
+        previousScrollTop = currentScrollTop;
       }
-      previousScrollTop = currentScrollTop;
     }
     $pageEl.on('scroll', '.page-content', handleScroll, true);
     $pageEl[0].f7ScrollNavbarHandler = handleScroll;
@@ -250,7 +320,10 @@ export default {
         hide: Navbar.hide.bind(app),
         show: Navbar.show.bind(app),
         getElByPage: Navbar.getElByPage.bind(app),
-        initHideNavbarOnScroll: Navbar.initHideNavbarOnScroll.bind(app),
+        collapseLargeTitle: Navbar.collapseLargeTitle.bind(app),
+        expandLargeTitle: Navbar.expandLargeTitle.bind(app),
+        toggleLargeTitle: Navbar.toggleLargeTitle.bind(app),
+        initNavbarOnScroll: Navbar.initNavbarOnScroll.bind(app),
       },
     });
   },
@@ -296,15 +369,30 @@ export default {
     },
     pageReinit(page) {
       const app = this;
-      const $navbarEl = $(app.navbar.getElByPage(page));
-      if (!$navbarEl || $navbarEl.length === 0) return;
-      app.navbar.size($navbarEl);
+      const $navbarInnerEl = $(app.navbar.getElByPage(page));
+      if (!$navbarInnerEl || $navbarInnerEl.length === 0) return;
+      app.navbar.size($navbarInnerEl);
     },
     pageInit(page) {
       const app = this;
-      const $navbarEl = $(app.navbar.getElByPage(page));
-      if (!$navbarEl || $navbarEl.length === 0) return;
-      app.navbar.size($navbarEl);
+      const $navbarInnerEl = $(app.navbar.getElByPage(page));
+      if (!$navbarInnerEl || $navbarInnerEl.length === 0) return;
+      // Size
+      app.navbar.size($navbarInnerEl);
+      // Need Collapse On Scroll
+      let needCollapseOnScrollHandler;
+      if ($navbarInnerEl.children('.title-large').length > 0) {
+        $navbarInnerEl.addClass('navbar-inner-large');
+      }
+      if ($navbarInnerEl.hasClass('navbar-inner-large')) {
+        needCollapseOnScrollHandler = true;
+        page.$el.addClass('page-with-navbar-large');
+        if (app.theme === 'md') {
+          $navbarInnerEl.parent('.navbar').addClass('navbar-large');
+        }
+      }
+      // Need Hide On Scroll
+      let needHideOnScrollHandler;
       if (
         app.params.navbar.hideOnPageScroll
         || page.$el.find('.hide-navbar-on-scroll').length
@@ -318,9 +406,13 @@ export default {
           || page.$el.find('.keep-bars-on-scroll').length
           || page.$el.hasClass('keep-bars-on-scroll')
         ) {
-          return;
+          needHideOnScrollHandler = false;
+        } else {
+          needHideOnScrollHandler = true;
         }
-        app.navbar.initHideNavbarOnScroll(page.el, $navbarEl[0]);
+      }
+      if (needCollapseOnScrollHandler || needHideOnScrollHandler) {
+        app.navbar.initNavbarOnScroll(page.el, $navbarInnerEl[0], needHideOnScrollHandler, needCollapseOnScrollHandler);
       }
     },
     modalOpen(modal) {

@@ -3,6 +3,7 @@ import Mixins from '../utils/mixins';
 
 import F7NavLeft from './nav-left';
 import F7NavTitle from './nav-title';
+import F7NavRight from './nav-right';
 
 export default {
   name: 'f7-navbar',
@@ -28,6 +29,8 @@ export default {
     },
     innerClass: String,
     innerClassName: String,
+    large: Boolean,
+    titleLarge: String,
     ...Mixins.colorProps,
   },
   render() {
@@ -49,38 +52,58 @@ export default {
       hidden,
       noShadow,
       noHairline,
+      large,
+      titleLarge,
     } = props;
 
     let innerEl;
     let leftEl;
     let titleEl;
+    let rightEl;
+    let titleLargeEl;
+
+    const slots = self.slots;
 
     if (inner) {
-      if (backLink) {
+      if (backLink || slots['nav-left']) {
         leftEl = (
           <F7NavLeft
             backLink={backLink}
             backLinkUrl={backLinkUrl}
             backLinkForce={backLinkForce}
             onBackClick={self.onBackClick.bind(self)}
-          />
+          >{slots['nav-left']}</F7NavLeft>
         );
       }
-      if (title || subtitle) {
+      if (title || subtitle || slots.title) {
         titleEl = (
           <F7NavTitle
             title={title}
             subtitle={subtitle}
-          />
+          >{slots.title}</F7NavTitle>
+        );
+      }
+      if (slots['nav-right']) {
+        rightEl = (
+          <F7NavRight>{slots['nav-right']}</F7NavRight>
+        )
+      }
+      let largeTitle = titleLarge;
+      if (!largeTitle && large && title) largeTitle = title;
+      if (largeTitle) {
+        titleLargeEl = (
+          <div className="title-large">{largeTitle}</div>
         );
       }
       innerEl = (
         <div
           ref="inner"
-          className={Utils.classNames('navbar-inner', innerClass, innerClassName, { sliding })}
+          className={Utils.classNames('navbar-inner', innerClass, innerClassName, { sliding, 'navbar-inner-large': large })}
         >
           {leftEl}
           {titleEl}
+          {rightEl}
+          {titleLargeEl}
           <slot />
         </div>
       );
@@ -92,6 +115,7 @@ export default {
         'navbar-hidden': hidden,
         'no-shadow': noShadow,
         'no-hairline': noHairline,
+        'navbar-large': large,
       },
       Mixins.colorClasses(props),
     );

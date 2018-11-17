@@ -23,7 +23,7 @@ export default class extends React.Component {
   render() {
     return (
       <Page>
-        <Navbar title="Color Themes" backLink="Back"></Navbar>
+        <Navbar large title="Color Themes" title-large="Color Themes" backLink="Back"></Navbar>
         <BlockTitle>Layout Themes</BlockTitle>
         <Block>
           <p>Framework7 comes with 2 main layout themes: Light (default) and Dark:</p>

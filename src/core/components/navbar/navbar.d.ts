@@ -13,6 +13,12 @@ export namespace Navbar {
       getElByPage(pageEl : HTMLElement | CSSSelector) : HTMLElement
       /** Get page HTML element by specified Navbar element. Useful only when dynamic navbar is enabled. In this case it is out of the page container. This will have effect only in iOS theme */
       getPageByEl(navbarEl : HTMLElement | CSSSelector) : HTMLElement
+      /** Collapse large navbar title */
+      collapseLargeTitle(navbarEl: HTMLElement | CSSSelector) : void
+      /** Expand large navbar title */
+      expandLargeTitle(navbarEl: HTMLElement | CSSSelector) : void
+      /** Toggle large navbar title */
+      toggleLargeTitle(navbarEl: HTMLElement | CSSSelector) : void
     }
   }
   interface AppParams {

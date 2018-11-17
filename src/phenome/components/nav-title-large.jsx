@@ -2,34 +2,26 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
 export default {
-  name: 'f7-nav-right',
+  name: 'f7-nav-title',
   props: {
     id: [String, Number],
     className: String, // phenome-react-line
     style: Object, // phenome-react-line
-    sliding: Boolean,
     ...Mixins.colorProps,
   },
   render() {
-    const props = this.props;
-    const {
-      className,
-      id,
-      style,
-      sliding,
-    } = props;
+    const self = this;
+    const props = self.props;
+    const { id, style, className } = props;
 
     const classes = Utils.classNames(
       className,
-      'right',
-      {
-        sliding,
-      },
+      'title-large',
       Mixins.colorClasses(props),
     );
 
     const children = [];
-    const slots = this.slots;
+    const slots = self.slots;
     if (slots && Object.keys(slots).length) {
       Object.keys(slots).forEach((key) => {
         children.push(...slots[key]);

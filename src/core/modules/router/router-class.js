@@ -129,7 +129,8 @@ class Router extends Framework7Class {
       });
       oldNavbarInner.children('.left, .right, .title, .subnavbar').each((index, navEl) => {
         const $navEl = $(navEl);
-        if ($navEl.hasClass('left') && toLarge) return;
+        if ($navEl.hasClass('left') && toLarge && !fromLarge && direction === 'forward') return;
+        if ($navEl.hasClass('left') && toLarge && direction === 'backward') return;
         oldNavEls.push(animatableNavEl($navEl, oldNavbarInner));
       });
       [oldNavEls, newNavEls].forEach((navEls) => {
@@ -180,6 +181,15 @@ class Router extends Framework7Class {
       if (progress === 1) {
         if (toLarge) router.$navbarEl.addClass('navbar-large');
         else router.$navbarEl.removeClass('navbar-large');
+
+        if (toLarge) {
+          newNavbarInner.addClass('router-navbar-transition-to-large');
+          oldNavbarInner.addClass('router-navbar-transition-to-large');
+        }
+        if (fromLarge) {
+          newNavbarInner.addClass('router-navbar-transition-from-large');
+          oldNavbarInner.addClass('router-navbar-transition-from-large');
+        }
       }
 
       newNavEls.forEach((navEl) => {
@@ -215,6 +225,16 @@ class Router extends Framework7Class {
     // AnimationEnd Callback
     function onDone() {
       if (router.dynamicNavbar) {
+        if (newNavbarInner) {
+          newNavbarInner.removeClass('router-navbar-transition-to-large router-navbar-transition-from-large');
+          newNavbarInner.addClass('navbar-no-title-large-transition');
+          Utils.nextFrame(() => {
+            newNavbarInner.removeClass('navbar-no-title-large-transition');
+          });
+        }
+        if (oldNavbarInner) {
+          oldNavbarInner.removeClass('router-navbar-transition-to-large router-navbar-transition-from-large');
+        }
         if (newNavbarInner.hasClass('sliding')) {
           newNavbarInner.find('.title, .left, .right, .left .icon, .subnavbar').transform('');
         } else {
@@ -1291,7 +1311,11 @@ class Router extends Framework7Class {
             if (!router.$navbarEl.parents(document).length) {
               router.$el.prepend(router.$navbarEl);
             }
+            $navbarInnerEl.addClass('navbar-current');
             router.$navbarEl.append($navbarInnerEl);
+            if ($navbarInnerEl.hasClass('navbar-inner-large')) {
+              router.$navbarEl.addClass('navbar-large');
+            }
             $pageEl.children('.navbar').remove();
           } else {
             router.$navbarEl.addClass('navbar-hidden');

@@ -82,16 +82,40 @@
       height: var(--f7-searchbar-expandable-size)
     }
   }
-  
-  .navbar-inner.with-searchbar-expandable-enabled {
+
+  .navbar-inner:not(.navbar-inner-large).with-searchbar-expandable-enabled {
     .left, .title, .right {
       transform: translateY(calc(-1 * var(--f7-navbar-height)));
       transition: 300ms;
+      opacity: 0;
+    }
+  }
+  .navbar-inner-large {
+    .searchbar-expandable {
+      top: 0;
+      bottom: auto;
+      .hairline-remove(bottom);
+      margin-top: -1px;
+    }
+    .with-searchbar-expandable-enabled {
+      .left, .title, .right {
+        transition: 300ms;
+      }
+      .title {
+        opacity: 0;
+      }
+    }
+  }
+  .navbar-inner-large:not(.navbar-inner-large-collapsed) {
+    .searchbar-expandable {
+      --f7-searchbar-expandable-size: var(--f7-navbar-title-large-height);
+      top: 100%;//calc(-1 * var(--f7-navbar-title-large-height));
+      bottom: auto;
     }
   }
   .searchbar-expandable.searchbar-enabled {
     opacity: 1;
-    height: 100%;
+    height: var(--f7-searchbar-expandable-size);
     pointer-events: auto;
   }
 }

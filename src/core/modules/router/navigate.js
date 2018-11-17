@@ -243,10 +243,16 @@ function forward(el, forwardOptions = {}) {
       $newPage.insertBefore($oldPage);
     }
     if (separateNavbar && $newNavbarInner.length) {
+      if ($newNavbarInner.children('.title-large').length) {
+        $newNavbarInner.addClass('navbar-inner-large');
+      }
       if ($oldNavbarInner.length) {
         $newNavbarInner.insertBefore($oldNavbarInner);
       } else {
         if (!router.$navbarEl.parents(document).length) {
+          if ($newNavbarInner.hasClass('navbar-inner-large')) {
+            $navbarEl.addClass('navbar-large');
+          }
           router.$el.prepend(router.$navbarEl);
         }
         $navbarEl.append($newNavbarInner);
@@ -263,7 +269,13 @@ function forward(el, forwardOptions = {}) {
       }
     }
     if (separateNavbar && $newNavbarInner.length) {
+      if ($newNavbarInner.children('.title-large').length) {
+        $newNavbarInner.addClass('navbar-inner-large');
+      }
       if (!router.$navbarEl.parents(document).length) {
+        if ($newNavbarInner.hasClass('navbar-inner-large')) {
+          $navbarEl.addClass('navbar-large');
+        }
         router.$el.prepend(router.$navbarEl);
       }
       $navbarEl.append($newNavbarInner[0]);
@@ -359,11 +371,8 @@ function forward(el, forwardOptions = {}) {
     $newPage.removeClass(pageClasses).addClass('page-current').removeAttr('aria-hidden');
     $oldPage.removeClass(pageClasses).addClass('page-previous').attr('aria-hidden', 'true');
     if (dynamicNavbar) {
-      $newNavbarInner.removeClass(navbarClasses).addClass('navbar-current navbar-no-title-large-transition').removeAttr('aria-hidden');
+      $newNavbarInner.removeClass(navbarClasses).addClass('navbar-current').removeAttr('aria-hidden');
       $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-previous').attr('aria-hidden', 'true');
-      Utils.nextFrame(() => {
-        $newNavbarInner.removeClass('navbar-no-title-large-transition');
-      });
     }
     // After animation event
     router.allowPageChange = true;
