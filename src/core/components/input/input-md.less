@@ -9,6 +9,7 @@
   }
   .item-input-wrap,
   .input {
+    .hairline(bottom, var(--f7-list-item-border-color));
     &:after {
       transition-duration: 200ms;
     }
@@ -16,8 +17,6 @@
   .item-input-wrap {
     min-height: var(--f7-input-height);
   }
-  .hairline-root('.item-input-wrap', bottom, var(--f7-list-item-border-color));
-  .hairline-root('.input', bottom, var(--f7-list-item-border-color));
 
   .item-input {
     .item-media {

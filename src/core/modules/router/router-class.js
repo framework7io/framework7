@@ -179,9 +179,6 @@ class Router extends Framework7Class {
     function animateNavbars(progress) {
       if (!(ios && dynamicNavbar)) return;
       if (progress === 1) {
-        if (toLarge) router.$navbarEl.addClass('navbar-large');
-        else router.$navbarEl.removeClass('navbar-large');
-
         if (toLarge) {
           newNavbarInner.addClass('router-navbar-transition-to-large');
           oldNavbarInner.addClass('router-navbar-transition-to-large');
@@ -1313,8 +1310,8 @@ class Router extends Framework7Class {
             }
             $navbarInnerEl.addClass('navbar-current');
             router.$navbarEl.append($navbarInnerEl);
-            if ($navbarInnerEl.hasClass('navbar-inner-large')) {
-              router.$navbarEl.addClass('navbar-large');
+            if ($navbarInnerEl.children('.title-large').length) {
+              $navbarInnerEl.addClass('navbar-inner-large');
             }
             $pageEl.children('.navbar').remove();
           } else {

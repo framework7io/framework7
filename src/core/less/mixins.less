@@ -112,27 +112,7 @@
     height: 1px;
     width: 100%;
     transform-origin: 50% 0%;
-    .device-pixel-ratio-2 & {
-      transform: scaleY(0.5);
-    }
-    .device-pixel-ratio-3 & {
-      transform: scaleY(0.33);
-    }
-  }
-}
-.hairline-root(@selector, @position, @color) when (@position = top) {
-  @selectorEscaped: e(@selector);
-  @{selectorEscaped}:before {
-    .hairline-pseudo(@color, 0, auto, auto, 0);
-    height: 1px;
-    width: 100%;
-    transform-origin: 50% 0%;
-  }
-  &.device-pixel-ratio-2 @{selectorEscaped}:before {
-    transform: scaleY(0.5);
-  }
-  &.device-pixel-ratio-3 @{selectorEscaped}:before {
-    transform: scaleY(0.33);
+    transform: scaleY(calc(1 / var(--f7-device-pixel-ratio)))
   }
 }
 .hairline(@position, @color) when (@position = left) {
@@ -141,27 +121,7 @@
     width: 1px;
     height: 100%;
     transform-origin: 0% 50%;
-    .device-pixel-ratio-2 & {
-      transform: scaleX(0.5);
-    }
-    .device-pixel-ratio-3 & {
-      transform: scaleX(0.33);
-    }
-  }
-}
-.hairline-root(@selector, @position, @color) when (@position = left) {
-  @selectorEscaped: e(@selector);
-  @{selectorEscaped}:before {
-    .hairline-pseudo(@color, 0, auto, auto, 0);
-    width: 1px;
-    height: 100%;
-    transform-origin: 0% 50%;
-  }
-  &.device-pixel-ratio-2 @{selectorEscaped}:before {
-    transform: scaleX(0.5);
-  }
-  &.device-pixel-ratio-3 @{selectorEscaped}:before {
-    transform: scaleX(0.33);
+    transform: scaleY(calc(1 / var(--f7-device-pixel-ratio)))
   }
 }
 .hairline(@position, @color) when (@position = bottom) {
@@ -170,27 +130,7 @@
     height: 1px;
     width: 100%;
     transform-origin: 50% 100%;
-    .device-pixel-ratio-2 & {
-      transform: scaleY(0.5);
-    }
-    .device-pixel-ratio-3 & {
-      transform: scaleY(0.33);
-    }
-  }
-}
-.hairline-root(@selector, @position, @color) when (@position = bottom) {
-  @selectorEscaped: e(@selector);
-  @{selectorEscaped}:after {
-    .hairline-pseudo(@color, auto, auto, 0, 0);
-    height: 1px;
-    width: 100%;
-    transform-origin: 50% 100%;
-  }
-  &.device-pixel-ratio-2 @{selectorEscaped}:after {
-    transform: scaleY(0.5);
-  }
-  &.device-pixel-ratio-3 @{selectorEscaped}:after {
-    transform: scaleY(0.33);
+    transform: scaleY(calc(1 / var(--f7-device-pixel-ratio)))
   }
 }
 .hairline(@position, @color) when (@position = right) {
@@ -199,27 +139,7 @@
     width: 1px;
     height: 100%;
     transform-origin: 100% 50%;
-    .device-pixel-ratio-2 & {
-      transform: scaleX(0.5);
-    }
-    .device-pixel-ratio-3 & {
-      transform: scaleX(0.33);
-    }
-  }
-}
-.hairline-root(@selector, @position, @color) when (@position = right) {
-  @selectorEscaped: e(@selector);
-  @{selectorEscaped}:after {
-    .hairline-pseudo(@color, 0, 0, auto, auto);
-    width: 1px;
-    height: 100%;
-    transform-origin: 100% 50%;
-  }
-  &.device-pixel-ratio-2 @{selectorEscaped}:after {
-    transform: scaleX(0.5);
-  }
-  &.device-pixel-ratio-3 @{selectorEscaped}:after {
-    transform: scaleX(0.33);
+    transform: scaleY(calc(1 / var(--f7-device-pixel-ratio)))
   }
 }
 // For right and bottom

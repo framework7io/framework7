@@ -156,9 +156,6 @@ function backward(el, backwardOptions) {
         $newNavbarInner.insertBefore($oldNavbarInner);
       } else {
         if (!router.$navbarEl.parents(document).length) {
-          if ($newNavbarInner.hasClass('navbar-inner-large')) {
-            $navbarEl.addClass('navbar-large');
-          }
           router.$el.prepend(router.$navbarEl);
         }
         $navbarEl.append($newNavbarInner);

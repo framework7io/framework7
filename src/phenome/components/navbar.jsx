@@ -92,7 +92,9 @@ export default {
       if (!largeTitle && large && title) largeTitle = title;
       if (largeTitle) {
         titleLargeEl = (
-          <div className="title-large">{largeTitle}</div>
+          <div className="title-large">
+            <div className="title-large-text">{largeTitle}</div>
+          </div>
         );
       }
       innerEl = (

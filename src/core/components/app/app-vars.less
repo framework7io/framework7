@@ -48,6 +48,26 @@
       --f7-safe-area-outer-right: 0px;
     }
   }
+
+  --f7-device-pixel-ratio: 1;
+  @media (resolution: 2dppx) {
+    --f7-device-pixel-ratio: 2;
+  }
+  @media (min-resolution: 2dppx) {
+    --f7-device-pixel-ratio: 2;
+  }
+  @media (-webkit-device-pixel-ratio: 2) {
+    --f7-device-pixel-ratio: 2;
+  }
+  @media (-webkit-min-device-pixel-ratio: 2) {
+    --f7-device-pixel-ratio: 2;
+  }
+  @media (min-resolution: 3dppx) {
+    --f7-device-pixel-ratio: 3;
+  }
+  @media (-webkit-min-device-pixel-ratio: 3) {
+    --f7-device-pixel-ratio: 2;
+  }
 }
 /*====================
   Fonts

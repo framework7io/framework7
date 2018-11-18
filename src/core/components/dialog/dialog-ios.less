@@ -9,8 +9,9 @@
     padding: 15px;
     border-radius: var(--f7-dialog-border-radius) var(--f7-dialog-border-radius) 0 0;
     background: var(--f7-dialog-bg-color);
+    .hairline(bottom, @dialogHairlineColor);
   }
-  .hairline-root('.dialog-inner', bottom, @dialogHairlineColor);
+
 
   .dialog-title {
     + .dialog-text {
@@ -27,6 +28,7 @@
     -webkit-box-flex:1;
     -ms-flex:1;
     background: var(--f7-dialog-bg-color);
+    .hairline(right, @dialogHairlineColor);
     &.active-state {
       background-color: var(--f7-dialog-button-pressed-bg-color);
     }
@@ -50,14 +52,15 @@
     }
     .dialog-button {
       border-radius: 0;
+      .hairline(bottom, @dialogHairlineColor);
       &:last-child {
         border-radius: 0 0 var(--f7-dialog-border-radius) var(--f7-dialog-border-radius);
         .hairline-remove(bottom);
       }
     }
   }
-  .hairline-root('.dialog-button', right, @dialogHairlineColor);
-  .hairline-root('.dialog-buttons-vertical .dialog-button', bottom, @dialogHairlineColor);
+
+
 
   .dialog-no-buttons {
     .dialog-inner {

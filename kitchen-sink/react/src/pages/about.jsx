@@ -3,7 +3,7 @@ import { Page, Navbar, BlockTitle, Block } from 'framework7-react';
 
 export default () => (
   <Page>
-    <Navbar large title="About Framework7" title-large="About Framework7" backLink="Back"></Navbar>
+    <Navbar large title="About Framework7" title-large="About" backLink="Back"></Navbar>
     <BlockTitle>Welcome to Framework7</BlockTitle>
     <Block strong>
       <p>Framework7 - is a free and open source HTML mobile framework to develop hybrid mobile apps or web apps with iOS or Android (Material) native look and feel. It is also an indispensable prototyping apps tool to show working app prototype as soon as possible in case you need to. Framework7 is created by Vladimir Kharlampidi (iDangero.us).</p>
