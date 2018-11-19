@@ -251,6 +251,7 @@ const Navbar = {
       ? $navbarInnerEl.parents('.navbar')
       : $(navbarInnerEl || app.navbar.getElByPage(pageEl)).closest('.navbar');
     const navbarHideHeight = 44;
+    const snapLargeTitleCollapse = app.params.navbar.snapLargeTitleCollapse;
 
     let previousScrollTop;
     let currentScrollTop;
@@ -279,7 +280,7 @@ const Navbar = {
     let scrollContent;
     let scrollTimeoutId;
     let touchEndTimeoutId;
-    const touchSnapTimeout = 100;
+    const touchSnapTimeout = 70;
     const desktopSnapTimeout = 300;
 
     function snapLargeNavbar() {
@@ -291,38 +292,34 @@ const Navbar = {
       }
     }
 
-    function handleScroll() {
-      scrollContent = this;
-      currentScrollTop = scrollContent.scrollTop;
-      scrollChanged = currentScrollTop;
-
-      if (needCollapse) {
-        const collapseProgress = Math.min(Math.max((currentScrollTop / navbarTitleLargeHeight), 0), 1);
-        navbarCollapsed = $navbarInnerEl.hasClass('navbar-inner-large-collapsed');
-        if (collapseProgress === 0 && navbarCollapsed) {
-          app.navbar.expandLargeTitle($navbarInnerEl[0]);
-          $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-          if (app.theme === 'md') {
-            $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-          }
-        } else if (collapseProgress === 1 && !navbarCollapsed) {
-          app.navbar.collapseLargeTitle($navbarInnerEl[0]);
-          $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-          if (app.theme === 'md') {
-            $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-          }
-        } else if ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed)) {
-          $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-          if (app.theme === 'md') {
-            $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-          }
-        } else {
-          $navbarInnerEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
-          if (app.theme === 'md') {
-            $navbarEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
-          }
+    function handleLargeNavbarCollapse() {
+      const collapseProgress = Math.min(Math.max((currentScrollTop / navbarTitleLargeHeight), 0), 1);
+      navbarCollapsed = $navbarInnerEl.hasClass('navbar-inner-large-collapsed');
+      if (collapseProgress === 0 && navbarCollapsed) {
+        app.navbar.expandLargeTitle($navbarInnerEl[0]);
+        $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
+        if (app.theme === 'md') {
+          $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         }
+      } else if (collapseProgress === 1 && !navbarCollapsed) {
+        app.navbar.collapseLargeTitle($navbarInnerEl[0]);
+        $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
+        if (app.theme === 'md') {
+          $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
+        }
+      } else if ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed)) {
+        $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
+        if (app.theme === 'md') {
+          $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
+        }
+      } else {
+        $navbarInnerEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
+        if (app.theme === 'md') {
+          $navbarEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
+        }
+      }
 
+      if (snapLargeTitleCollapse) {
         if (!Support.touch) {
           clearTimeout(scrollTimeoutId);
           scrollTimeoutId = setTimeout(() => {
@@ -338,37 +335,51 @@ const Navbar = {
           }, touchSnapTimeout);
         }
       }
-      if ($pageEl.hasClass('page-previous')) return;
-      if (needHide) {
-        scrollHeight = scrollContent.scrollHeight;
-        offsetHeight = scrollContent.offsetHeight;
-        reachEnd = currentScrollTop + offsetHeight >= scrollHeight;
-        navbarHidden = $navbarEl.hasClass('navbar-hidden');
+    }
 
-        if (reachEnd) {
-          if (app.params.navbar.showOnPageScrollEnd) {
-            action = 'show';
-          }
-        } else if (previousScrollTop > currentScrollTop) {
-          if (app.params.navbar.showOnPageScrollTop || currentScrollTop <= navbarHideHeight) {
-            action = 'show';
-          } else {
-            action = 'hide';
-          }
-        } else if (currentScrollTop > navbarHideHeight) {
-          action = 'hide';
-        } else {
+    function handleTitleHideShow() {
+      scrollHeight = scrollContent.scrollHeight;
+      offsetHeight = scrollContent.offsetHeight;
+      reachEnd = currentScrollTop + offsetHeight >= scrollHeight;
+      navbarHidden = $navbarEl.hasClass('navbar-hidden');
+
+      if (reachEnd) {
+        if (app.params.navbar.showOnPageScrollEnd) {
           action = 'show';
         }
-
-        if (action === 'show' && navbarHidden) {
-          app.navbar.show($navbarEl);
-          navbarHidden = false;
-        } else if (action === 'hide' && !navbarHidden) {
-          app.navbar.hide($navbarEl);
-          navbarHidden = true;
+      } else if (previousScrollTop > currentScrollTop) {
+        if (app.params.navbar.showOnPageScrollTop || currentScrollTop <= navbarHideHeight) {
+          action = 'show';
+        } else {
+          action = 'hide';
         }
-        previousScrollTop = currentScrollTop;
+      } else if (currentScrollTop > navbarHideHeight) {
+        action = 'hide';
+      } else {
+        action = 'show';
+      }
+
+      if (action === 'show' && navbarHidden) {
+        app.navbar.show($navbarEl);
+        navbarHidden = false;
+      } else if (action === 'hide' && !navbarHidden) {
+        app.navbar.hide($navbarEl);
+        navbarHidden = true;
+      }
+      previousScrollTop = currentScrollTop;
+    }
+
+    function handleScroll() {
+      scrollContent = this;
+      currentScrollTop = scrollContent.scrollTop;
+      scrollChanged = currentScrollTop;
+
+      if (needCollapse) {
+        handleLargeNavbarCollapse();
+      }
+      if ($pageEl.hasClass('page-previous')) return;
+      if (needHide) {
+        handleTitleHideShow();
       }
     }
     function handeTouchStart() {
@@ -383,17 +394,17 @@ const Navbar = {
           clearTimeout(touchEndTimeoutId);
           touchEndTimeoutId = null;
         }
-      }, 100);
+      }, touchSnapTimeout);
     }
     $pageEl.on('scroll', '.page-content', handleScroll, true);
-    if (Support.touch && needCollapse) {
+    if (Support.touch && needCollapse && snapLargeTitleCollapse) {
       app.on('touchstart:passive', handeTouchStart);
       app.on('touchend:passive', handleTouchEnd);
     }
     $pageEl[0].f7DetachNavbarScrollHandlers = function f7DetachNavbarScrollHandlers() {
       delete $pageEl[0].f7DetachNavbarScrollHandlers;
       $pageEl.off('scroll', '.page-content', handleScroll, true);
-      if (Support.touch && needCollapse) {
+      if (Support.touch && needCollapse && snapLargeTitleCollapse) {
         app.off('touchstart:passive', handeTouchStart);
         app.off('touchend:passive', handleTouchEnd);
       }
@@ -425,6 +436,8 @@ export default {
       hideOnPageScroll: false,
       showOnPageScrollEnd: true,
       showOnPageScrollTop: true,
+      collapseLargeTitleOnScroll: true,
+      snapLargeTitleCollapse: true,
     },
   },
   on: {
@@ -477,7 +490,7 @@ export default {
         $navbarInnerEl.addClass('navbar-inner-large');
       }
       if ($navbarInnerEl.hasClass('navbar-inner-large')) {
-        needCollapseOnScrollHandler = true;
+        if (app.params.navbar.collapseLargeTitleOnScroll) needCollapseOnScrollHandler = true;
         if (app.theme === 'md') {
           $navbarInnerEl.parents('.navbar').addClass('navbar-large');
         }

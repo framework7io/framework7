@@ -131,6 +131,9 @@ class Router extends Framework7Class {
         const $navEl = $(navEl);
         if ($navEl.hasClass('left') && toLarge && !fromLarge && direction === 'forward') return;
         if ($navEl.hasClass('left') && toLarge && direction === 'backward') return;
+        if ($navEl.hasClass('title') && fromLarge) {
+          return;
+        }
         oldNavEls.push(animatableNavEl($navEl, oldNavbarInner));
       });
       [oldNavEls, newNavEls].forEach((navEls) => {

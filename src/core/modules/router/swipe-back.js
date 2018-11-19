@@ -31,6 +31,9 @@ function SwipeBack(r) {
   let pageOpacity;
   let navbarWidth;
 
+  let toLarge;
+  let fromLarge;
+
   const paramsSwipeBackAnimateShadow = params[`${app.theme}SwipeBackAnimateShadow`];
   const paramsSwipeBackAnimateOpacity = params[`${app.theme}SwipeBackAnimateOpacity`];
   const paramsSwipeBackActiveArea = params[`${app.theme}SwipeBackActiveArea`];
@@ -115,8 +118,12 @@ function SwipeBack(r) {
           navbarWidth = currentPage[0].offsetWidth;
         }
 
-        currentNavElements = currentNavbar.children('.left, .title, .right, .subnavbar, .fading');
-        previousNavElements = previousNavbar.children('.left, .title, .right, .subnavbar, .fading');
+        fromLarge = currentNavbar.hasClass('navbar-inner-large') && !currentNavbar.hasClass('navbar-inner-large-collapsed');
+        toLarge = previousNavbar.hasClass('navbar-inner-large') && !previousNavbar.hasClass('navbar-inner-large-collapsed');
+
+        currentNavElements = currentNavbar.children('.left, .title, .right, .subnavbar, .fading, .title-large');
+        previousNavElements = previousNavbar.children('.left, .title, .right, .subnavbar, .fading, .title-large');
+
         if (params.iosAnimateNavbarBackIcon) {
           if (currentNavbar.hasClass('sliding')) {
             activeNavBackIcon = currentNavbar.children('.left').find('.back .icon');
@@ -149,7 +156,7 @@ function SwipeBack(r) {
     // Touches diff
     touchesDiff = (pageX - touchesStart.x - paramsSwipeBackThreshold) * inverter;
     if (touchesDiff < 0) touchesDiff = 0;
-    const percentage = touchesDiff / viewContainerWidth;
+    const percentage = Math.min(Math.max(touchesDiff / viewContainerWidth, 0), 1);
 
     // Swipe Back Callback
     const callbackData = {
@@ -165,6 +172,13 @@ function SwipeBack(r) {
     // Transform pages
     let currentPageTranslate = touchesDiff * inverter;
     let previousPageTranslate = ((touchesDiff / 5) - (viewContainerWidth / 5)) * inverter;
+    if (!app.rtl) {
+      currentPageTranslate = Math.min(currentPageTranslate, viewContainerWidth);
+      previousPageTranslate = Math.min(previousPageTranslate, 0);
+    } else {
+      currentPageTranslate = Math.max(currentPageTranslate, -viewContainerWidth);
+      previousPageTranslate = Math.max(previousPageTranslate, 0);
+    }
     if (Device.pixelRatio === 1) {
       currentPageTranslate = Math.round(currentPageTranslate);
       previousPageTranslate = Math.round(previousPageTranslate);
@@ -185,6 +199,38 @@ function SwipeBack(r) {
     if (dynamicNavbar) {
       currentNavElements.each((index, navEl) => {
         const $navEl = $(navEl);
+        if (!fromLarge && $navEl.hasClass('.title-large')) return;
+        if (fromLarge) {
+          if ($navEl.hasClass('title')) return;
+          if ($navEl.hasClass('title-large')) {
+            if (toLarge) {
+              $navEl.css('overflow', 'visible').transform('translateX(100%)');
+              $navEl.find('.title-large-text').transform(`translateX(${-100 + percentage * 100}%)`);
+            } else {
+              $navEl.transform(`translateY(calc(${-percentage} * var(--f7-navbar-title-large-height)))`);
+              $navEl.find('.title-large-text')
+                .transform(`translateX(${percentage * 100}%) translateY(calc(${percentage} * var(--f7-navbar-title-large-height)))`);
+            }
+            return;
+          }
+        }
+        if (toLarge) {
+          if (!fromLarge) {
+            if ($navEl.hasClass('title-large')) {
+              $navEl.css('opacity', 0);
+            }
+          }
+          if ($navEl.hasClass('left')) {
+            $navEl[0].style.opacity = (1 - (percentage ** 0.33));
+            $navEl.find('.back span')
+              .css({
+                'transform-origin': 'left center',
+              })
+              .transform(`translateY(calc(var(--f7-navbar-height) * ${percentage})) scale(${1 + (1 * percentage)})`);
+            return;
+          }
+        }
+        if ($navEl.hasClass('title-large')) return;
         if (!$navEl.is('.subnavbar')) $navEl[0].style.opacity = (1 - (percentage ** 0.33));
         if ($navEl[0].className.indexOf('sliding') >= 0 || currentNavbar.hasClass('sliding')) {
           let activeNavTranslate = percentage * $navEl[0].f7NavbarRightOffset;
@@ -203,6 +249,43 @@ function SwipeBack(r) {
       });
       previousNavElements.each((index, navEl) => {
         const $navEl = $(navEl);
+        if (toLarge) {
+          if ($navEl.hasClass('title')) return;
+
+          if ($navEl.hasClass('title-large')) {
+            if (fromLarge) {
+              $navEl
+                .transform('translateY(0)')
+                .css({
+                  opacity: 1,
+                  overflow: 'visible',
+                });
+              $navEl.find('.title-large-text')
+                .css({
+                  'transform-origin': 'left center',
+                  opacity: (percentage ** 3),
+                })
+                .transform(`translateY(calc(${-1 + percentage * 1} * var(--f7-navbar-title-large-height))) scale(${0.5 + percentage * 0.5})`);
+              return;
+              // eslint-disable-next-line
+            } else {
+              $navEl
+                .transform(`translateY(calc(${percentage - 1} * var(--f7-navbar-title-large-height)))`)
+                .css({
+                  opacity: 1,
+                  overflow: 'visible',
+                });
+              $navEl.find('.title-large-text')
+                .css({
+                  'transform-origin': 'left center',
+                  opacity: (percentage ** 3),
+                })
+                .transform(`scale(${0.5 + percentage * 0.5})`);
+            }
+            return;
+          }
+        }
+        if ($navEl.hasClass('title-large')) return;
         if (!$navEl.is('.subnavbar')) $navEl[0].style.opacity = (percentage ** 3);
         if ($navEl[0].className.indexOf('sliding') >= 0 || previousNavbar.hasClass('sliding')) {
           let previousNavTranslate = $navEl[0].f7NavbarLeftOffset * (1 - percentage);
@@ -271,32 +354,114 @@ function SwipeBack(r) {
     $([currentPage[0], previousPage[0]]).addClass('page-transitioning page-transitioning-swipeback').transform('');
 
     if (dynamicNavbar) {
-      currentNavElements.css({ opacity: '' })
+      currentNavElements
+        .css({ opacity: '' })
         .each((navElIndex, navEl) => {
+          const $navEl = $(navEl);
+          if ($navEl.hasClass('title-large')) {
+            const $titleTextEl = $navEl.find('.title-large-text');
+            if (pageChanged) {
+              if (fromLarge && !toLarge) {
+                $navEl.css({
+                  overflow: 'hidden',
+                  opacity: 1,
+                }).transform('translateY(calc(-1 * var(--f7-navbar-title-large-height)))');
+                $titleTextEl.css({
+                  opacity: 1,
+                }).transform('translateX(100%) translateY(var(--f7-navbar-title-large-height))');
+              }
+              if (fromLarge && toLarge) {
+                $navEl.css({
+                  overflow: 'visible',
+                  opacity: 1,
+                }).transform('translateX(100%)');
+                $titleTextEl.css({
+                  opacity: 1,
+                }).transform('translateX(0%)');
+              }
+              if (!fromLarge) {
+                $navEl.css({
+                  overflow: '',
+                  opacity: 0,
+                }).transform('translateY(calc(-1 * var(--f7-navbar-title-large-height)))');
+              }
+            } else {
+              $navEl.css({
+                overflow: fromLarge && toLarge ? 'visible' : '',
+                opacity: !fromLarge ? 0 : '',
+              }).transform('');
+              $titleTextEl.css({
+                opacity: '',
+              }).transform('');
+            }
+            return;
+          }
+          if (toLarge) {
+            if ($navEl.hasClass('left')) {
+              // $navEl
+              $navEl.find('.back span')
+                .css({
+                  'transform-origin': 'left center',
+                })
+                .transform(pageChanged ? 'translateY(var(--f7-navbar-height)) scale(2)' : '')
+                .addClass('navbar-page-transitioning');
+              return;
+            }
+          }
           const translate = pageChanged ? navEl.f7NavbarRightOffset : 0;
-          const sliding = $(navEl);
           let iconTranslate = pageChanged ? -translate : 0;
           if (!separateNavbar && pageChanged) iconTranslate -= navbarWidth;
-          sliding.transform(`translate3d(${translate}px,0,0)`);
+          $navEl.transform(`translate3d(${translate}px,0,0)`);
           if (params.iosAnimateNavbarBackIcon) {
-            if (sliding.hasClass('left') && activeNavBackIcon.length > 0) {
+            if ($navEl.hasClass('left') && activeNavBackIcon.length > 0) {
               activeNavBackIcon.addClass('navbar-page-transitioning').transform(`translate3d(${iconTranslate}px,0,0)`);
             }
           }
         }).addClass('navbar-page-transitioning');
 
-      previousNavElements.transform('').css({ opacity: '' }).each((navElIndex, navEl) => {
-        const translate = pageChanged ? 0 : navEl.f7NavbarLeftOffset;
-        const sliding = $(navEl);
-        let iconTranslate = pageChanged ? 0 : -translate;
-        if (!separateNavbar && !pageChanged) iconTranslate += navbarWidth / 5;
-        sliding.transform(`translate3d(${translate}px,0,0)`);
-        if (params.iosAnimateNavbarBackIcon) {
-          if (sliding.hasClass('left') && previousNavBackIcon.length > 0) {
-            previousNavBackIcon.addClass('navbar-page-transitioning').transform(`translate3d(${iconTranslate}px,0,0)`);
+      previousNavElements
+        .transform('')
+        .css({ opacity: '' })
+        .each((navElIndex, navEl) => {
+          const $navEl = $(navEl);
+          if ($navEl.hasClass('title-large')) {
+            const $titleTextEl = $navEl.find('.title-large-text');
+            $navEl.css({
+              overflow: '',
+              opacity: toLarge ? 1 : 0,
+            });
+            if (pageChanged) {
+              if (toLarge) {
+                $navEl.transform('translateY(0)');
+              }
+              $titleTextEl.css({ opacity: '' }).transform('');
+            } else {
+              // eslint-disable-next-line
+              if (toLarge) {
+                if (!fromLarge) {
+                  $navEl.transform('translateY(calc(-1 * var(--f7-navbar-title-large-height)))');
+                  $titleTextEl.css({ opacity: 0 }).transform('scale(0.5)');
+                } else {
+                  $navEl.transform('translateY(0)');
+                  $titleTextEl.css({ opacity: 0 }).transform('translateY(calc(-1 * var(--f7-navbar-title-large-height))) scale(0.5)');
+                }
+              } else {
+                $titleTextEl.transform('');
+              }
+            }
+            return;
           }
-        }
-      }).addClass('navbar-page-transitioning');
+          const translate = pageChanged ? 0 : navEl.f7NavbarLeftOffset;
+          let iconTranslate = pageChanged ? 0 : -translate;
+          if (!separateNavbar && !pageChanged) iconTranslate += navbarWidth / 5;
+          $navEl.transform(`translate3d(${translate}px,0,0)`);
+          if (params.iosAnimateNavbarBackIcon) {
+            if ($navEl.hasClass('left') && previousNavBackIcon.length > 0) {
+              previousNavBackIcon.addClass('navbar-page-transitioning').transform(`translate3d(${iconTranslate}px,0,0)`);
+            }
+          }
+        })
+        .addClass('navbar-page-transitioning');
     }
     allowViewTouchMove = false;
     router.allowPageChange = false;
@@ -329,10 +494,27 @@ function SwipeBack(r) {
       $([currentPage[0], previousPage[0]]).removeClass('page-transitioning page-transitioning-swipeback');
 
       if (dynamicNavbar) {
-        currentNavElements.removeClass('navbar-page-transitioning').css({ opacity: '' }).transform('');
-        previousNavElements.removeClass('navbar-page-transitioning').css({ opacity: '' }).transform('');
-        if (activeNavBackIcon && activeNavBackIcon.length > 0) activeNavBackIcon.removeClass('navbar-page-transitioning');
-        if (previousNavBackIcon && previousNavBackIcon.length > 0) previousNavBackIcon.removeClass('navbar-page-transitioning');
+        currentNavElements.removeClass('navbar-page-transitioning')
+          .css({ opacity: '', 'transform-origin': '', overflow: '' })
+          .transform('')
+          .find('.title-large-text')
+          .css({ opacity: '', 'transform-origin': '' })
+          .transform('');
+        currentNavElements
+          .find('.navbar-page-transitioning')
+          .removeClass('navbar-page-transitioning');
+        previousNavElements.removeClass('navbar-page-transitioning')
+          .css({ opacity: '', 'transform-origin': '', overflow: '' })
+          .transform('')
+          .find('.title-large-text')
+          .css({ opacity: '', 'transform-origin': '' })
+          .transform('');
+        previousNavElements
+          .find('.navbar-page-transitioning')
+          .removeClass('navbar-page-transitioning');
+        if (toLarge && !pageChanged) {
+          currentNavElements.find('.left .back span').css('transform-origin', '');
+        }
       }
       allowViewTouchMove = true;
       router.allowPageChange = true;

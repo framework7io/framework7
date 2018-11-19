@@ -226,7 +226,7 @@
 
   .router-transition-css-backward {
     .navbar-current.router-navbar-transition-to-large .left .back span {
-      animation: ios-navbar-back-text-current-to-next var(--f7-page-transition-duration) forwards;
+      animation: ios-navbar-back-text-current-to-previous var(--f7-page-transition-duration) forwards;
       transform-origin: left center;
     }
     .navbar-current.router-navbar-transition-from-large.router-navbar-transition-to-large {
@@ -254,6 +254,11 @@
         .title-large-text {
           animation: ios-navbar-title-large-text-slide-down var(--f7-page-transition-duration) forwards, ios-navbar-title-large-text-fade-in var(--f7-page-transition-duration) forwards;
         }
+      }
+    }
+    .navbar-current.router-navbar-transition-to-large:not(.router-navbar-transition-from-large) {
+      .title-large {
+        opacity: 0;
       }
     }
     .navbar-previous.router-navbar-transition-to-large:not(.router-navbar-transition-from-large) {
@@ -313,12 +318,12 @@
     transform: translateY(0%) scale(1);
   }
   100% {
-    transform: translateY(calc(-1 * var(--f7-navbar-title-large-height))) scale(0.5);
+    transform: translateY(calc(-1 * (var(--f7-navbar-height) + var(--f7-navbar-title-large-height)) / 2)) scale(0.5);
   }
 }
 @keyframes ios-navbar-title-large-text-slide-down {
   0% {
-    transform: translateY(calc(-1 * var(--f7-navbar-title-large-height))) scale(0.5);
+    transform: translateY(calc(-1 * (var(--f7-navbar-height) + var(--f7-navbar-title-large-height)) / 2)) scale(0.5);
   }
   100% {
     transform: translateY(0%) scale(1);
@@ -360,7 +365,7 @@
   0% {
     opacity: 1;
   }
-  70% {
+  80% {
     opacity: 0;
   }
   100% {
@@ -371,7 +376,7 @@
   0% {
     opacity: 0;
   }
-  30% {
+  20% {
     opacity: 0;
   }
   100% {
@@ -394,25 +399,25 @@
     transform: translateY(0%) scale(1);
   }
 }
-@keyframes ios-navbar-back-text-current-to-next {
+@keyframes ios-navbar-back-text-current-to-previous {
   0% {
     opacity: 1;
     transform: translateY(0px) scale(1);
   }
-  70% {
+  80% {
     opacity: 0;
   }
   100% {
     opacity: 0;
-    transform: translateY(var(--f7-navbar-height)) scale(2);
+    transform: translateY(calc((var(--f7-navbar-height) + var(--f7-navbar-title-large-height)) / 2)) scale(2);
   }
 }
 @keyframes ios-navbar-back-text-next-to-current {
   0% {
     opacity: 0;
-    transform: translateY(var(--f7-navbar-height)) scale(2);
+    transform: translateY(calc((var(--f7-navbar-height) + var(--f7-navbar-title-large-height)) / 2)) scale(2);
   }
-  30% {
+  20% {
     opacity: 0;
   }
   100% {
