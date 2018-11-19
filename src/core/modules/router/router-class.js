@@ -11,7 +11,7 @@ import { refreshPage, forward, load, navigate } from './navigate';
 import { tabLoad, tabRemove } from './tab';
 import { modalLoad, modalRemove } from './modal';
 import { backward, loadBack, back } from './back';
-import { clearPreviousHistory } from './clear-previous-history';
+import { clearPreviousHistory, clearDomCache } from './clear-previous-history';
 
 class Router extends Framework7Class {
   constructor(app, view) {
@@ -1362,6 +1362,8 @@ Router.prototype.modalRemove = modalRemove;
 Router.prototype.backward = backward;
 Router.prototype.loadBack = loadBack;
 Router.prototype.back = back;
+// Clear Dom cache
+Router.prototype.clearDomCache = clearDomCache;
 // Clear history
 Router.prototype.clearPreviousHistory = clearPreviousHistory;
 

@@ -1,10 +1,9 @@
 import $ from 'dom7';
 
-function clearPreviousHistory() {
+function clearDomCache() {
   const router = this;
   const app = router.app;
   const separateNavbar = router.separateNavbar;
-  const url = router.history[router.history.length - 1];
 
   const $currentPageEl = $(router.currentPageEl);
 
@@ -29,10 +28,17 @@ function clearPreviousHistory() {
       }
     }
   });
+}
+
+function clearPreviousHistory() {
+  const router = this;
+  const url = router.history[router.history.length - 1];
+
+  router.clearDomCache();
 
   router.history = [url];
   router.view.history = [url];
   router.saveHistory();
 }
 
-export { clearPreviousHistory }; // eslint-disable-line
+export { clearPreviousHistory, clearDomCache }; // eslint-disable-line
