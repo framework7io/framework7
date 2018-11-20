@@ -1,13 +1,7 @@
 .md {
   .subnavbar {
     height: var(--f7-subnavbar-height);
-    .title {
-      margin: 0 16px;
-    }
     .ltr ({
-      .title:first-child {
-        margin-left: 56px;
-      }
       .right {
         margin-left: auto;
       }
@@ -16,9 +10,6 @@
       }
     });
     .rtl ({
-      .title:first-child {
-        margin-right: 56px;
-      }
       .right {
         margin-right: auto;
       }
@@ -39,21 +30,20 @@
     }
   }
   .subnavbar-inner {
-    padding: 0 calc(16px + var(--f7-safe-area-right)) 0 calc(16px + var(--f7-safe-area-left));
     .ltr({
       > a.link:first-child {
-        margin-left: -16px;
+        margin-left: calc(-1 * var(--f7-subnavbar-inner-padding-left));
       }
       > a.link:last-child {
-        margin-right: -16px;
+        margin-right: calc(-1 * var(--f7-subnavbar-inner-padding-right));
       }
     });
     .rtl({
       > a.link:first-child {
-        margin-right: -16px;
+        margin-right: calc(-1 * var(--f7-subnavbar-inner-padding-right));
       }
       > a.link:last-child {
-        margin-left: -16px;
+        margin-left: calc(-1 * var(--f7-subnavbar-inner-padding-left));
       }
     });
   }
