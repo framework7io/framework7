@@ -290,8 +290,10 @@ export default {
     self.onSwipeoutOverswipeEnterBound = self.onSwipeoutOverswipeEnter.bind(self);
     self.onSwipeoutOverswipeExitBound = self.onSwipeoutOverswipeExit.bind(self);
     self.onSwipeoutBound = self.onSwipeout.bind(self);
+    self.onAccBeforeOpenBound = self.onAccBeforeOpen.bind(self);
     self.onAccOpenBound = self.onAccOpen.bind(self);
     self.onAccOpenedBound = self.onAccOpened.bind(self);
+    self.onAccBeforeCloseBound = self.onAccBeforeClose.bind(self);
     self.onAccCloseBound = self.onAccClose.bind(self);
     self.onAccClosedBound = self.onAccClosed.bind(self);
   },
@@ -321,8 +323,10 @@ export default {
       el.addEventListener('swipeout', self.onSwipeoutBound);
     }
     if (accordionItem) {
+      el.addEventListener('accordion:beforeopen', self.onAccBeforeOpenBound);
       el.addEventListener('accordion:open', self.onAccOpenBound);
       el.addEventListener('accordion:opened', self.onAccOpenedBound);
+      el.addEventListener('accordion:beforeclose', self.onAccBeforeCloseBound);
       el.addEventListener('accordion:close', self.onAccCloseBound);
       el.addEventListener('accordion:closed', self.onAccClosedBound);
     }
@@ -374,8 +378,10 @@ export default {
         el.removeEventListener('swipeout', self.onSwipeoutBound);
       }
       if (accordionItem) {
+        el.removeEventListener('accordion:beforeopen', self.onAccBeforeOpenBound);
         el.removeEventListener('accordion:open', self.onAccOpenBound);
         el.removeEventListener('accordion:opened', self.onAccOpenedBound);
+        el.removeEventListener('accordion:beforeclose', self.onAccBeforeCloseBound);
         el.removeEventListener('accordion:close', self.onAccCloseBound);
         el.removeEventListener('accordion:closed', self.onAccClosedBound);
       }
@@ -418,11 +424,17 @@ export default {
     onSwipeout(event) {
       this.dispatchEvent('swipeout', event);
     },
+    onAccBeforeClose(event) {
+      this.dispatchEvent('accordion:beforeclose accordionBeforeClose', event.details.prevent);
+    },
     onAccClose(event) {
       this.dispatchEvent('accordion:close accordionClose', event);
     },
     onAccClosed(event) {
       this.dispatchEvent('accordion:closed accordionClosed', event);
+    },
+    onAccBeforeOpen(event) {
+      this.dispatchEvent('accordion:beforeopen accordionBeforeOpen', event.details.prevent);
     },
     onAccOpen(event) {
       this.dispatchEvent('accordion:open accordionOpen', event);
