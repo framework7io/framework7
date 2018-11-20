@@ -205,11 +205,11 @@ function SwipeBack(r) {
           if ($navEl.hasClass('title-large')) {
             if (toLarge) {
               $navEl.css('overflow', 'visible').transform('translateX(100%)');
-              $navEl.find('.title-large-text').transform(`translateX(${-100 + percentage * 100}%)`);
+              $navEl.find('.title-large-text, .title-large-inner').transform(`translateX(${-100 + percentage * 100}%)`);
             } else {
-              $navEl.transform(`translateY(calc(${-percentage} * var(--f7-navbar-title-large-height)))`);
-              $navEl.find('.title-large-text')
-                .transform(`translateX(${percentage * 100}%) translateY(calc(${percentage} * var(--f7-navbar-title-large-height)))`);
+              $navEl.transform(`translateY(calc(${-percentage} * var(--f7-navbar-large-title-height)))`);
+              $navEl.find('.title-large-text, .title-large-inner')
+                .transform(`translateX(${percentage * 100}%) translateY(calc(${percentage} * var(--f7-navbar-large-title-height)))`);
             }
             return;
           }
@@ -260,22 +260,22 @@ function SwipeBack(r) {
                   opacity: 1,
                   overflow: 'visible',
                 });
-              $navEl.find('.title-large-text')
+              $navEl.find('.title-large-text, .title-large-inner')
                 .css({
                   'transform-origin': 'left center',
                   opacity: (percentage ** 3),
                 })
-                .transform(`translateY(calc(${-1 + percentage * 1} * var(--f7-navbar-title-large-height))) scale(${0.5 + percentage * 0.5})`);
+                .transform(`translateY(calc(${-1 + percentage * 1} * var(--f7-navbar-large-title-height))) scale(${0.5 + percentage * 0.5})`);
               return;
               // eslint-disable-next-line
             } else {
               $navEl
-                .transform(`translateY(calc(${percentage - 1} * var(--f7-navbar-title-large-height)))`)
+                .transform(`translateY(calc(${percentage - 1} * var(--f7-navbar-large-title-height)))`)
                 .css({
                   opacity: 1,
                   overflow: 'visible',
                 });
-              $navEl.find('.title-large-text')
+              $navEl.find('.title-large-text, .title-large-inner')
                 .css({
                   'transform-origin': 'left center',
                   opacity: (percentage ** 3),
@@ -359,16 +359,16 @@ function SwipeBack(r) {
         .each((navElIndex, navEl) => {
           const $navEl = $(navEl);
           if ($navEl.hasClass('title-large')) {
-            const $titleTextEl = $navEl.find('.title-large-text');
+            const $titleTextEl = $navEl.find('.title-large-text, .title-large-inner');
             if (pageChanged) {
               if (fromLarge && !toLarge) {
                 $navEl.css({
                   overflow: 'hidden',
                   opacity: 1,
-                }).transform('translateY(calc(-1 * var(--f7-navbar-title-large-height)))');
+                }).transform('translateY(calc(-1 * var(--f7-navbar-large-title-height)))');
                 $titleTextEl.css({
                   opacity: 1,
-                }).transform('translateX(100%) translateY(var(--f7-navbar-title-large-height))');
+                }).transform('translateX(100%) translateY(var(--f7-navbar-large-title-height))');
               }
               if (fromLarge && toLarge) {
                 $navEl.css({
@@ -383,7 +383,7 @@ function SwipeBack(r) {
                 $navEl.css({
                   overflow: '',
                   opacity: 0,
-                }).transform('translateY(calc(-1 * var(--f7-navbar-title-large-height)))');
+                }).transform('translateY(calc(-1 * var(--f7-navbar-large-title-height)))');
               }
             } else {
               $navEl.css({
@@ -425,7 +425,7 @@ function SwipeBack(r) {
         .each((navElIndex, navEl) => {
           const $navEl = $(navEl);
           if ($navEl.hasClass('title-large')) {
-            const $titleTextEl = $navEl.find('.title-large-text');
+            const $titleTextEl = $navEl.find('.title-large-text, .title-large-inner');
             $navEl.css({
               overflow: '',
               opacity: toLarge ? 1 : 0,
@@ -439,11 +439,11 @@ function SwipeBack(r) {
               // eslint-disable-next-line
               if (toLarge) {
                 if (!fromLarge) {
-                  $navEl.transform('translateY(calc(-1 * var(--f7-navbar-title-large-height)))');
+                  $navEl.transform('translateY(calc(-1 * var(--f7-navbar-large-title-height)))');
                   $titleTextEl.css({ opacity: 0 }).transform('scale(0.5)');
                 } else {
                   $navEl.transform('translateY(0)');
-                  $titleTextEl.css({ opacity: 0 }).transform('translateY(calc(-1 * var(--f7-navbar-title-large-height))) scale(0.5)');
+                  $titleTextEl.css({ opacity: 0 }).transform('translateY(calc(-1 * var(--f7-navbar-large-title-height))) scale(0.5)');
                 }
               } else {
                 $titleTextEl.transform('');
@@ -497,7 +497,7 @@ function SwipeBack(r) {
         currentNavElements.removeClass('navbar-page-transitioning')
           .css({ opacity: '', 'transform-origin': '', overflow: '' })
           .transform('')
-          .find('.title-large-text')
+          .find('.title-large-text, .title-large-inner')
           .css({ opacity: '', 'transform-origin': '' })
           .transform('');
         currentNavElements
@@ -506,7 +506,7 @@ function SwipeBack(r) {
         previousNavElements.removeClass('navbar-page-transitioning')
           .css({ opacity: '', 'transform-origin': '', overflow: '' })
           .transform('')
-          .find('.title-large-text')
+          .find('.title-large-text, .title-large-inner')
           .css({ opacity: '', 'transform-origin': '' })
           .transform('');
         previousNavElements

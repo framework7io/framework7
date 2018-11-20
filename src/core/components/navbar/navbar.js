@@ -144,7 +144,10 @@ const Navbar = {
     if ($el.hasClass('navbar-inner')) $el = $el.parents('.navbar');
     if (!$el.length) return;
     if ($el.hasClass('navbar-hidden')) return;
-    const className = `navbar-hidden${animate ? ' navbar-transitioning' : ''}`;
+    let className = `navbar-hidden${animate ? ' navbar-transitioning' : ''}`;
+    if ($el.find('.navbar-inner-current .title-large')) {
+      className += ' navbar-large-hidden';
+    }
     $el.transitionEnd(() => {
       $el.removeClass('navbar-transitioning');
     });
@@ -161,7 +164,7 @@ const Navbar = {
         $el.removeClass('navbar-transitioning');
       });
     }
-    $el.removeClass('navbar-hidden');
+    $el.removeClass('navbar-hidden navbar-large-hidden');
   },
   getElByPage(page) {
     let $pageEl;
@@ -265,7 +268,7 @@ const Navbar = {
     let navbarCollapsed;
     let navbarTitleLargeHeight;
     if (needCollapse) {
-      navbarTitleLargeHeight = $navbarInnerEl.css('--f7-navbar-title-large-height');
+      navbarTitleLargeHeight = $navbarInnerEl.css('--f7-navbar-large-title-height');
       if (navbarTitleLargeHeight && navbarTitleLargeHeight.indexOf('px') >= 0) {
         navbarTitleLargeHeight = parseInt(navbarTitleLargeHeight, 10);
         if (Number.isNaN(navbarTitleLargeHeight)) {

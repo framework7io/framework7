@@ -1319,6 +1319,9 @@ class Router extends Framework7Class {
             $pageEl.children('.navbar').remove();
           } else {
             router.$navbarEl.addClass('navbar-hidden');
+            if ($navbarInnerEl.children('.title-large').length) {
+              router.$navbarEl.addClass('navbar-hidden navbar-large-hidden');
+            }
           }
         }
         const initOptions = {
