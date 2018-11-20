@@ -20,7 +20,7 @@ export default {
     ...Mixins.colorProps,
   },
   componentDidMount() {
-    const el = this.el;
+    const el = this.refs.el;
     if (!el) return;
     this.onTabShowBound = this.onTabShow.bind(this);
     this.onTabHideBound = this.onTabHide.bind(this);
@@ -28,7 +28,7 @@ export default {
     el.addEventListener('tab:hide', this.onTabHideBound);
   },
   componentWillUnmount() {
-    const el = this.el;
+    const el = this.refs.el;
     if (!el) return;
     el.removeEventListener('tab:show', this.onTabShowBound);
     el.removeEventListener('tab:hide', this.onTabHideBound);
@@ -73,6 +73,7 @@ export default {
         id={id}
         style={style}
         className={classes}
+        ref="el"
       >
         <slot />
       </div>

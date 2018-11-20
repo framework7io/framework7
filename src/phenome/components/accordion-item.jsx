@@ -12,7 +12,7 @@ export default {
   },
   componentDidMount() {
     const self = this;
-    const el = self.el;
+    const el = self.refs.el;
     if (!el) return;
     self.onOpenBound = self.onOpen.bind(self);
     self.onOpenedBound = self.onOpened.bind(self);
@@ -25,7 +25,7 @@ export default {
   },
   componentWillUnmount() {
     const self = this;
-    const el = self.el;
+    const el = self.refs.el;
     if (!el) return;
     el.removeEventListener('accordion:open', self.onOpenBound);
     el.removeEventListener('accordion:opened', self.onOpenedBound);
@@ -49,7 +49,7 @@ export default {
       Mixins.colorClasses(props),
     );
     return (
-      <div id={id} style={style} className={classes}>
+      <div id={id} style={style} className={classes} ref="el">
         <slot />
       </div>
     );
