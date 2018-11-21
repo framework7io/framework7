@@ -122,9 +122,7 @@ class Router extends Framework7Class {
       newNavbarInner.children('.left, .right, .title, .subnavbar').each((index, navEl) => {
         const $navEl = $(navEl);
         if ($navEl.hasClass('left') && fromLarge && direction === 'forward') return;
-        if ($navEl.hasClass('title') && toLarge) {
-          return;
-        }
+        if ($navEl.hasClass('title') && toLarge) return;
         newNavEls.push(animatableNavEl($navEl, newNavbarInner));
       });
       oldNavbarInner.children('.left, .right, .title, .subnavbar').each((index, navEl) => {
@@ -167,13 +165,20 @@ class Router extends Framework7Class {
     let oldNavEls;
     let navbarWidth = 0;
 
-    const fromLarge = ios && oldNavbarInner && oldNavbarInner.hasClass('navbar-inner-large') && !oldNavbarInner.hasClass('navbar-inner-large-collapsed');
-    const toLarge = ios && newNavbarInner && newNavbarInner.hasClass('navbar-inner-large') && !newNavbarInner.hasClass('navbar-inner-large-collapsed');
+    let fromLarge;
+    let toLarge;
+
+    let oldIsLarge;
+    let newIsLarge;
 
     if (ios && dynamicNavbar) {
       if (!separateNavbar) {
         navbarWidth = newNavbarInner[0].offsetWidth;
       }
+      oldIsLarge = oldNavbarInner && oldNavbarInner.hasClass('navbar-inner-large');
+      newIsLarge = newNavbarInner && newNavbarInner.hasClass('navbar-inner-large');
+      fromLarge = oldIsLarge && !oldNavbarInner.hasClass('navbar-inner-large-collapsed');
+      toLarge = newIsLarge && !newNavbarInner.hasClass('navbar-inner-large-collapsed');
       const navEls = router.animatableNavElements(newNavbarInner, oldNavbarInner, toLarge, fromLarge, direction);
       newNavEls = navEls.newNavEls;
       oldNavEls = navEls.oldNavEls;
@@ -196,7 +201,11 @@ class Router extends Framework7Class {
         const $el = navEl.$el;
         const offset = direction === 'forward' ? navEl.rightOffset : navEl.leftOffset;
         if (navEl.isSliding) {
-          $el.transform(`translate3d(${offset * (1 - progress)}px,0,0)`);
+          if (navEl.isSubnavbar && newIsLarge) {
+            $el[0].style.setProperty('transform', `translate3d(${offset * (1 - progress)}px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)`, 'important');
+          } else {
+            $el.transform(`translate3d(${offset * (1 - progress)}px,0,0)`);
+          }
         }
         if (navEl.hasIcon) {
           if (direction === 'forward') {
@@ -210,7 +219,11 @@ class Router extends Framework7Class {
         const $el = navEl.$el;
         const offset = direction === 'forward' ? navEl.leftOffset : navEl.rightOffset;
         if (navEl.isSliding) {
-          $el.transform(`translate3d(${offset * (progress)}px,0,0)`);
+          if (navEl.isSubnavbar && oldIsLarge) {
+            $el.transform(`translate3d(${offset * (progress)}px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)`);
+          } else {
+            $el.transform(`translate3d(${offset * (progress)}px,0,0)`);
+          }
         }
         if (navEl.hasIcon) {
           if (direction === 'forward') {
