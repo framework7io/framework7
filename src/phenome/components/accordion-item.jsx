@@ -65,7 +65,7 @@ export default {
   },
   methods: {
     onBeforeOpen(event) {
-      this.dispatchEvent('accordionBeforeOpen accordion:beforeopen', event.detail.prevent);
+      this.dispatchEvent('accordionBeforeOpen accordion:beforeopen', event);
     },
     onOpen(event) {
       this.dispatchEvent('accordionOpen accordion:open', event);
@@ -74,7 +74,7 @@ export default {
       this.dispatchEvent('accordionOpened accordion:opened', event);
     },
     onBeforeClose(event) {
-      this.dispatchEvent('accordionBeforeClose accordion:beforeclose', event.detail.prevent);
+      this.dispatchEvent('accordionBeforeClose accordion:beforeclose', event);
     },
     onClose(event) {
       this.dispatchEvent('accordionClose accordion:close', event);
