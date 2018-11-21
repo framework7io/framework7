@@ -260,14 +260,13 @@ function SwipeBack(r) {
                   opacity: 1,
                   overflow: 'visible',
                 });
-              $navEl.find('.title-large-text, .title-large-inner')
+              $navEl.find('.title-large-text')
                 .css({
                   'transform-origin': 'left center',
                   opacity: (percentage ** 3),
                 })
                 .transform(`translateY(calc(${-1 + percentage * 1} * var(--f7-navbar-large-title-height))) scale(${0.5 + percentage * 0.5})`);
-              return;
-              // eslint-disable-next-line
+
             } else {
               $navEl
                 .transform(`translateY(calc(${percentage - 1} * var(--f7-navbar-large-title-height)))`)
@@ -275,13 +274,19 @@ function SwipeBack(r) {
                   opacity: 1,
                   overflow: 'visible',
                 });
-              $navEl.find('.title-large-text, .title-large-inner')
+              $navEl.find('.title-large-text')
                 .css({
                   'transform-origin': 'left center',
                   opacity: (percentage ** 3),
                 })
                 .transform(`scale(${0.5 + percentage * 0.5})`);
             }
+            $navEl.find('.title-large-inner')
+              .css({
+                'transform-origin': 'left center',
+                opacity: (percentage ** 3),
+              })
+              .transform(`translateX(-${100 * (1 - percentage)}%)`);
             return;
           }
         }

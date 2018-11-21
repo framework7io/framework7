@@ -30,7 +30,9 @@ export default {
 
     return (
       <div id={id} style={style} className={classes}>
-        {children}
+        <div className="title-large-text">
+          {children}
+        </div>
       </div>
     );
   },
