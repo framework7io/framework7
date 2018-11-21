@@ -1,23 +1,14 @@
 .md {
   .ptr-preloader {
-    position: absolute;
     left: 50%;
-    top: calc((var(--f7-navbar-height) - 40px) / 2);
-    width: 40px;
-    height: 40px;
+    width: var(--f7-ptr-size);
     border-radius: 50%;
     background: #fff;
-    margin-left: -20px;
-    margin-top: -7px;
+    margin-left: calc(-1 * var(--f7-ptr-size) / 2);
+    margin-top: calc(-1 * var(--f7-ptr-size) - 4px);
     z-index: 100;
     box-shadow: var(--f7-elevation-1);
     .preloader {
-      width: 22px;
-      height: 22px;
-      margin-left: -11px;
-      margin-top: -11px;
-      top: 50%;
-      visibility: hidden;
       .preloader-inner-gap,
       .preloader-inner-half-circle {
         border-width: 3px;
@@ -93,34 +84,4 @@
       transition-property: transform;
     }
   }
-  .ptr-no-navbar {
-    .ptr-preloader {
-      top: auto;
-      bottom: 100%;
-      margin-bottom: 7px;
-    }
-  }
-  .toolbar-top ~ .ptr-content,
-  .toolbar-top-md ~ .ptr-content {
-    .ptr-preloader {
-      top: calc((var(--f7-navbar-height) - 40px) / 2 + var(--f7-toolbar-height));
-    }
-
-  }
-  .toolbar-top.tabbar-labels ~ .ptr-content,
-  .toolbar-top-md.tabbar-labels ~ .ptr-content {
-    .ptr-preloader {
-      top: calc((var(--f7-navbar-height) - 40px) / 2 + var(--f7-tabbar-labels-height));
-    }
-  }
-  .page-with-subnavbar {
-    .ptr-preloader {
-      top: calc((var(--f7-navbar-height) - 40px) / 2 + var(--f7-subnavbar-height));
-    }
-  }
-  .searchbar ~ .ptr-content {
-    .ptr-preloader {
-      top: calc((var(--f7-navbar-height) - 40px) / 2 + var(--f7-searchbar-height));
-    }
-	}
 }

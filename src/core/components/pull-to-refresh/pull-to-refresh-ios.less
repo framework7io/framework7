@@ -1,19 +1,8 @@
 .ios {
   .ptr-preloader {
-    position: relative;
-    height: 44px;
-    margin-top: -44px;
+    margin-top: calc(-1 * var(--f7-ptr-size));
     width: 100%;
     left: 0;
-    top: 0;
-    .preloader {
-      width: 20px;
-      height: 20px;
-      margin-left: -10px;
-      margin-top: -10px;
-      visibility: hidden;
-      top: 50%;
-    }
   }
   .ptr-arrow {
     position: absolute;
@@ -50,7 +39,7 @@
     transition-property: transform;
   }
   .ptr-refreshing {
-    transform: translate3d(0, 44px, 0);
+    transform: translate3d(0, var(--f7-ptr-size), 0);
     .ptr-arrow {
       visibility: hidden;
     }
@@ -64,8 +53,8 @@
     }
   }
   .ptr-no-navbar {
-    margin-top: calc(-1 * var(--f7-navbar-height));
-    height: calc(100% + var(--f7-navbar-height));
+    margin-top: calc(-1 * var(--f7-ptr-size));
+    height: calc(100% + var(--f7-ptr-size));
     .ptr-preloader {
       margin-top: 0;
     }
