@@ -425,7 +425,7 @@ export default {
       this.dispatchEvent('swipeout', event);
     },
     onAccBeforeClose(event) {
-      this.dispatchEvent('accordion:beforeclose accordionBeforeClose', event.detail.prevent);
+      this.dispatchEvent('accordion:beforeclose accordionBeforeClose', event, event.detail.prevent);
     },
     onAccClose(event) {
       this.dispatchEvent('accordion:close accordionClose', event);
@@ -434,7 +434,7 @@ export default {
       this.dispatchEvent('accordion:closed accordionClosed', event);
     },
     onAccBeforeOpen(event) {
-      this.dispatchEvent('accordion:beforeopen accordionBeforeOpen', event.detail.prevent);
+      this.dispatchEvent('accordion:beforeopen accordionBeforeOpen', event, event.detail.prevent);
     },
     onAccOpen(event) {
       this.dispatchEvent('accordion:open accordionOpen', event);
