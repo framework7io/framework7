@@ -308,9 +308,9 @@ class Searchbar extends FrameworkClass {
         sb.$disableButtonEl.css(`margin-${app.rtl ? 'left' : 'right'}`, '0px');
       }
       if (sb.expandable) {
-        sb.$el.parents('.navbar-inner').addClass('with-searchbar-expandable-enabled');
-        if (app.theme === 'md' && sb.$el.parents('.navbar-inner').hasClass('navbar-inner-large')) {
-          app.navbar.collapseLargeTitle(sb.$el.parents('.navbar-inner'));
+        sb.$el.parent('.navbar-inner').addClass('with-searchbar-expandable-enabled');
+        if (app.theme === 'md' && sb.$el.parent('.navbar-inner').parent('.navbar').length) {
+          sb.$el.parent('.navbar-inner').parent('.navbar')[0].style.setProperty('--f7-navbar-large-collapse-progress', 1);
         }
       }
       if (sb.$hideOnEnableEl) sb.$hideOnEnableEl.addClass('hidden-by-searchbar');
@@ -356,8 +356,8 @@ class Searchbar extends FrameworkClass {
     sb.$el.removeClass('searchbar-enabled searchbar-focused searchbar-enabled-no-disable-button');
     if (sb.expandable) {
       sb.$el.parents('.navbar-inner').removeClass('with-searchbar-expandable-enabled');
-      if (app.theme === 'md' && sb.$el.parents('.navbar-inner').hasClass('navbar-inner-large')) {
-        app.navbar.expandLargeTitle(sb.$el.parents('.navbar-inner'));
+      if (app.theme === 'md' && sb.$el.parent('.navbar-inner').parent('.navbar').length) {
+        sb.$el.parent('.navbar-inner').parent('.navbar')[0].style.removeProperty('--f7-navbar-large-collapse-progress');
       }
     }
     if (!sb.expandable && sb.$disableButtonEl && sb.$disableButtonEl.length > 0 && app.theme === 'ios') {

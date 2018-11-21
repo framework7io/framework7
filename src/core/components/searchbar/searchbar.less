@@ -88,6 +88,7 @@
   position: absolute;
   transition-duration: 300ms;
   pointer-events: none;
+  .hairline-remove(bottom);
 }
 .navbar .searchbar.searchbar-expandable {
   --f7-searchbar-expandable-size: var(--f7-navbar-height);
@@ -159,6 +160,10 @@
   &, .list &, .list.li&, .list li& {
     display: none !important;
   }
+}
+
+.navbar-inner.with-searchbar-expandable-enabled {
+  --f7-navbar-large-collapse-progress: 1;
 }
 
 // Relation with page

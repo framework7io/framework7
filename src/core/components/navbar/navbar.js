@@ -287,6 +287,8 @@ const Navbar = {
     const desktopSnapTimeout = 300;
 
     function snapLargeNavbar() {
+      const inSearchbarExpanded = $navbarInnerEl.hasClass('with-searchbar-expandable-enabled');
+      if (inSearchbarExpanded) return;
       if (!scrollContent || currentScrollTop < 0) return;
       if (currentScrollTop >= navbarTitleLargeHeight / 2 && currentScrollTop < navbarTitleLargeHeight) {
         $(scrollContent).scrollTop(navbarTitleLargeHeight, 100);
@@ -297,6 +299,8 @@ const Navbar = {
 
     function handleLargeNavbarCollapse() {
       const collapseProgress = Math.min(Math.max((currentScrollTop / navbarTitleLargeHeight), 0), 1);
+      const inSearchbarExpanded = $navbarInnerEl.hasClass('with-searchbar-expandable-enabled');
+      if (inSearchbarExpanded) return;
       navbarCollapsed = $navbarInnerEl.hasClass('navbar-inner-large-collapsed');
       if (collapseProgress === 0 && navbarCollapsed) {
         app.navbar.expandLargeTitle($navbarInnerEl[0]);
