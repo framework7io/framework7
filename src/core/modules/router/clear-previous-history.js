@@ -1,6 +1,6 @@
 import $ from 'dom7';
 
-function clearDomCache() {
+function clearStackedPages() {
   const router = this;
   const app = router.app;
   const separateNavbar = router.separateNavbar;
@@ -8,7 +8,7 @@ function clearDomCache() {
   const $currentPageEl = $(router.currentPageEl);
 
   const $pagesToRemove = router.$el
-    .children('.page:not(.stacked)')
+    .children('.page')
     .filter((index, pageInView) => pageInView !== $currentPageEl[0]);
 
   $pagesToRemove.each((index, pageEl) => {
@@ -34,11 +34,11 @@ function clearPreviousHistory() {
   const router = this;
   const url = router.history[router.history.length - 1];
 
-  router.clearDomCache();
+  router.clearStackedPages();
 
   router.history = [url];
   router.view.history = [url];
   router.saveHistory();
 }
 
-export { clearPreviousHistory, clearDomCache }; // eslint-disable-line
+export { clearPreviousHistory, clearStackedPages }; // eslint-disable-line

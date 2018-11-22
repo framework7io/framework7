@@ -201,7 +201,7 @@ export namespace Router {
     /** Refresh/reload current page */
     refreshPage(): Router
     /** Remove all previous pages from DOM */
-    clearDomCache(): Router
+    clearStackedPages(): Router
     /** Clear router previous pages history and remove all previous pages from DOM */
     clearPreviousHistory(): Router
     /** Updates current route url, and updates `router.currentRoute` properties (query, params, hash, etc.) based on passed url. This method doesn't load or reload any content. It just changes current route url */
