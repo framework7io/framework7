@@ -1,6 +1,6 @@
 import $ from 'dom7';
 
-function clearStackedPages() {
+function clearPreviousPages() {
   const router = this;
   const app = router.app;
   const separateNavbar = router.separateNavbar;
@@ -34,11 +34,11 @@ function clearPreviousHistory() {
   const router = this;
   const url = router.history[router.history.length - 1];
 
-  router.clearStackedPages();
+  router.clearPreviousPages();
 
   router.history = [url];
   router.view.history = [url];
   router.saveHistory();
 }
 
-export { clearPreviousHistory, clearStackedPages }; // eslint-disable-line
+export { clearPreviousHistory, clearPreviousPages }; // eslint-disable-line
