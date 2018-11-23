@@ -42,6 +42,8 @@ function SwipeBack(r) {
   const paramsSwipeBackActiveArea = params[`${app.theme}SwipeBackActiveArea`];
   const paramsSwipeBackThreshold = params[`${app.theme}SwipeBackThreshold`];
 
+  const transformOrigin = app.rtl ? 'right center' : 'left center';
+
   function handleTouchStart(e) {
     const swipeBackEnabled = params[`${app.theme}SwipeBack`];
     if (!allowViewTouchMove || !swipeBackEnabled || isTouched || (app.swipeout && app.swipeout.el) || !router.allowPageChange) return;
@@ -78,7 +80,7 @@ function SwipeBack(r) {
       }
 
       currentPage = target.closest('.page');
-      if (currentPage.hasClass('no-swipeback') || target.closest('.no-swipeback').length > 0) cancel = true;
+      if (currentPage.hasClass('no-swipeback') || target.closest('.no-swipeback, .card-opened').length > 0) cancel = true;
       previousPage = $el.find('.page-previous:not(.stacked)');
 
       let notFromBorder = touchesStart.x - $el.offset().left > paramsSwipeBackActiveArea;
@@ -122,7 +124,7 @@ function SwipeBack(r) {
         }
 
         currentNavIsLarge = currentNavbar.hasClass('navbar-inner-large');
-        previousNavIsLarge = currentNavbar.hasClass('navbar-inner-large');
+        previousNavIsLarge = previousNavbar.hasClass('navbar-inner-large');
 
         fromLarge = currentNavIsLarge && !currentNavbar.hasClass('navbar-inner-large-collapsed');
         toLarge = previousNavIsLarge && !previousNavbar.hasClass('navbar-inner-large-collapsed');
@@ -212,11 +214,11 @@ function SwipeBack(r) {
           if ($navEl.hasClass('title-large')) {
             if (toLarge) {
               $navEl.css('overflow', 'visible').transform('translateX(100%)');
-              $navEl.find('.title-large-text, .title-large-inner').transform(`translateX(${-100 + percentage * 100}%)`);
+              $navEl.find('.title-large-text, .title-large-inner').transform(`translateX(${-100 + percentage * 100 * inverter}%)`);
             } else {
               $navEl.transform(`translateY(calc(${-percentage} * var(--f7-navbar-large-title-height)))`);
               $navEl.find('.title-large-text, .title-large-inner')
-                .transform(`translateX(${percentage * 100}%) translateY(calc(${percentage} * var(--f7-navbar-large-title-height)))`);
+                .transform(`translateX(${percentage * 100 * inverter}%) translateY(calc(${percentage} * var(--f7-navbar-large-title-height)))`);
             }
             return;
           }
@@ -231,7 +233,7 @@ function SwipeBack(r) {
             $navEl[0].style.opacity = (1 - (percentage ** 0.33));
             $navEl.find('.back span')
               .css({
-                'transform-origin': 'left center',
+                'transform-origin': transformOrigin,
               })
               .transform(`translateY(calc(var(--f7-navbar-height) * ${percentage})) scale(${1 + (1 * percentage)})`);
             return;
@@ -274,7 +276,7 @@ function SwipeBack(r) {
                 });
               $navEl.find('.title-large-text')
                 .css({
-                  'transform-origin': 'left center',
+                  'transform-origin': transformOrigin,
                   opacity: (percentage ** 3),
                 })
                 .transform(`translateY(calc(${-1 + percentage * 1} * var(--f7-navbar-large-title-height))) scale(${0.5 + percentage * 0.5})`);
@@ -287,17 +289,17 @@ function SwipeBack(r) {
                 });
               $navEl.find('.title-large-text')
                 .css({
-                  'transform-origin': 'left center',
+                  'transform-origin': transformOrigin,
                   opacity: (percentage ** 3),
                 })
                 .transform(`scale(${0.5 + percentage * 0.5})`);
             }
             $navEl.find('.title-large-inner')
               .css({
-                'transform-origin': 'left center',
+                'transform-origin': transformOrigin,
                 opacity: (percentage ** 3),
               })
-              .transform(`translateX(-${100 * (1 - percentage)}%)`);
+              .transform(`translateX(${-100 * (1 - percentage) * inverter}%)`);
             return;
           }
         }
@@ -340,6 +342,8 @@ function SwipeBack(r) {
     isTouched = false;
     isMoved = false;
     router.swipeBackActive = false;
+    // RTL inverter
+    const inverter = app.rtl ? -1 : 1;
     $([currentPage[0], previousPage[0]]).removeClass('page-swipeback-active');
     if (touchesDiff === 0) {
       $([currentPage[0], previousPage[0]]).transform('');
@@ -399,13 +403,13 @@ function SwipeBack(r) {
                 }).transform('translateY(calc(-1 * var(--f7-navbar-large-title-height)))');
                 $titleTextEl.css({
                   opacity: 1,
-                }).transform('translateX(100%) translateY(var(--f7-navbar-large-title-height))');
+                }).transform(`translateX(${100 * inverter}%) translateY(var(--f7-navbar-large-title-height))`);
               }
               if (fromLarge && toLarge) {
                 $navEl.css({
                   overflow: 'visible',
                   opacity: 1,
-                }).transform('translateX(100%)');
+                }).transform(`translateX(${100 * inverter}%)`);
                 $titleTextEl.css({
                   opacity: 1,
                 }).transform('translateX(0%)');
@@ -432,7 +436,7 @@ function SwipeBack(r) {
               // $navEl
               $navEl.find('.back span')
                 .css({
-                  'transform-origin': 'left center',
+                  'transform-origin': transformOrigin,
                 })
                 .transform(pageChanged ? 'translateY(var(--f7-navbar-height)) scale(2)' : '')
                 .addClass('navbar-page-transitioning');

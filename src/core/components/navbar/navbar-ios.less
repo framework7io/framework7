@@ -196,7 +196,12 @@
     .navbar-next.router-navbar-transition-from-large {
       .left .back span {
         animation: ios-navbar-back-text-next-to-current var(--f7-page-transition-duration) forwards;
-        transform-origin: left center;
+        .ltr({
+          transform-origin: left center;
+        });
+        .rtl({
+          transform-origin: right center;
+        });
       }
     }
     .navbar-next.router-navbar-transition-from-large.router-navbar-transition-to-large {
@@ -230,7 +235,12 @@
   .router-transition-css-backward {
     .navbar-current.router-navbar-transition-to-large .left .back span {
       animation: ios-navbar-back-text-current-to-previous var(--f7-page-transition-duration) forwards;
-      transform-origin: left center;
+      .ltr({
+        transform-origin: left center;
+      });
+      .rtl({
+        transform-origin: right center;
+      });
     }
     .navbar-current.router-navbar-transition-from-large.router-navbar-transition-to-large {
       .title-large {
@@ -341,10 +351,20 @@
 }
 @keyframes ios-navbar-title-large-text-slide-left {
   0% {
-    transform: translateX(0%) scale(1);
+    .ltr({
+      transform: translateX(0%) scale(1);
+    });
+    .rtl({
+      transform: translateX(-200%) scale(1);
+    });
   }
   100% {
-    transform: translateX(-100%) scale(1);
+    .ltr({
+      transform: translateX(-100%) scale(1);
+    });
+    .rtl({
+      transform: translateX(-100%) scale(1);
+    });
   }
 }
 @keyframes ios-navbar-title-large-text-slide-right {
@@ -352,12 +372,22 @@
     transform: translateX(-100%) scale(1);
   }
   100% {
-    transform: translateX(0%) scale(1);
+    .ltr({
+      transform: translateX(0%) scale(1);
+    });
+    .rtl({
+      transform: translateX(-200%) scale(1);
+    });
   }
 }
 @keyframes ios-navbar-title-large-text-slide-left-top {
   0% {
-    transform: translateX(100%) translateY(var(--f7-navbar-large-title-height)) scale(1);
+    .ltr({
+      transform: translateX(100%) translateY(var(--f7-navbar-large-title-height)) scale(1);
+    });
+    .rtl({
+      transform: translateX(-100%) translateY(var(--f7-navbar-large-title-height)) scale(1);
+    });
   }
   100% {
     transform: translateX(0%) translateY(0%) scale(1);
@@ -368,7 +398,12 @@
     transform: translateX(0%) translateY(0%) scale(1);
   }
   100% {
-    transform: translateX(100%) translateY(var(--f7-navbar-large-title-height)) scale(1);
+    .ltr({
+      transform: translateX(100%) translateY(var(--f7-navbar-large-title-height)) scale(1);
+    });
+    .rtl({
+      transform: translateX(-100%) translateY(var(--f7-navbar-large-title-height)) scale(1);
+    });
   }
 }
 @keyframes ios-navbar-title-large-text-fade-out {
@@ -441,13 +476,23 @@
     opacity: 1;
   }
   100% {
-    transform: translateX(-100%);
+    .ltr({
+      transform: translateX(-100%);
+    });
+    .rtl({
+      transform: translateX(100%);
+    });
     opacity: 0;
   }
 }
 @keyframes ios-navbar-title-large-inner-previous-to-current {
   0% {
-    transform: translateX(-100%);
+    .ltr({
+      transform: translateX(-100%);
+    });
+    .rtl({
+      transform: translateX(100%);
+    });
     opacity: 0;
   }
   100% {
