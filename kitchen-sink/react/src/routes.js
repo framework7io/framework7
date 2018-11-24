@@ -10,6 +10,7 @@ import Buttons from './pages/buttons.jsx';
 import Calendar from './pages/calendar.jsx';
 import CalendarPage from './pages/calendar-page.jsx';
 import Cards from './pages/cards.jsx';
+import CardsExpandable from './pages/cards-expandable.jsx';
 import Checkbox from './pages/checkbox.jsx';
 import Chips from './pages/chips.jsx';
 import ContactsList from './pages/contacts-list.jsx';
@@ -202,6 +203,10 @@ export default [
   {
     path: '/cards/',
     component: Cards,
+  },
+  {
+    path: '/cards-expandable/',
+    component: CardsExpandable,
   },
   {
     path: '/checkbox/',

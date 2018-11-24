@@ -11,6 +11,7 @@ import Buttons from './pages/buttons.vue';
 import Calendar from './pages/calendar.vue';
 import CalendarPage from './pages/calendar-page.vue';
 import Cards from './pages/cards.vue';
+import CardsExpandable from './pages/cards-expandable.vue';
 import Checkbox from './pages/checkbox.vue';
 import Chips from './pages/chips.vue';
 import ContactsList from './pages/contacts-list.vue';
@@ -204,6 +205,10 @@ export default [
   {
     path: '/cards/',
     component: Cards,
+  },
+  {
+    path: '/cards-expandable/',
+    component: CardsExpandable,
   },
   {
     path: '/checkbox/',

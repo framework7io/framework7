@@ -41,6 +41,9 @@
       <f7-list-item link="/cards/" title="Cards">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>
+      <f7-list-item link="/cards-expandable/" title="Cards Expandable">
+        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+      </f7-list-item>
       <f7-list-item link="/checkbox/" title="Checkbox">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>

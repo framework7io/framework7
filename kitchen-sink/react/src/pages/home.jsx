@@ -44,6 +44,9 @@ export default () => (
       <ListItem link="/cards/" title="Cards">
         <Icon slot="media" icon="icon-f7" />
       </ListItem>
+      <ListItem link="/cards-expandable/" title="Cards Expandable">
+        <Icon slot="media" icon="icon-f7" />
+      </ListItem>
       <ListItem link="/checkbox/" title="Checkbox">
         <Icon slot="media" icon="icon-f7" />
       </ListItem>

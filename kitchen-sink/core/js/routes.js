@@ -95,6 +95,10 @@ var routes = [
     url: './pages/cards.html',
   },
   {
+    path: '/cards-expandable/',
+    url: './pages/cards-expandable.html',
+  },
+  {
     path: '/checkbox/',
     url: './pages/checkbox.html',
   },
