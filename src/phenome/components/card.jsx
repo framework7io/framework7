@@ -17,11 +17,49 @@ export default {
     content: [String, Number],
     footer: [String, Number],
     outline: Boolean,
+    expandable: Boolean,
+    expandableAnimateWidth: Boolean,
+    expandableOpened: Boolean,
     padding: {
       type: Boolean,
       default: true,
     },
     ...Mixins.colorProps,
+  },
+  watch: {
+    'props.expandableOpened': function watchOpened(expandableOpened) {
+      const self = this;
+      if (opened) {
+        self.open();
+      } else {
+        self.close();
+      }
+    },
+  },
+  componentDidCreate() {
+    Utils.bindMethods(this, 'onBeforeOpen onOpen onOpened onClose onClosed'.split(' '));
+  },
+  componentDidMount() {
+    const self = this;
+    if (!self.props.expandable) return;
+    const el = self.refs.el;
+    if (!el) return;
+    el.addEventListener('card:beforeopen', self.onBeforeOpen);
+    el.addEventListener('card:open', self.onOpen);
+    el.addEventListener('card:opened', self.onOpened);
+    el.addEventListener('card:close', self.onClose);
+    el.addEventListener('card:closed', self.onClosed);
+  },
+  componentWillUnmount() {
+    const self = this;
+    if (!self.props.expandable) return;
+    const el = self.refs.el;
+    if (!el) return;
+    el.removeEventListener('card:beforeopen', self.onBeforeOpen);
+    el.removeEventListener('card:open', self.onOpen);
+    el.removeEventListener('card:opened', self.onOpened);
+    el.removeEventListener('card:close', self.onClose);
+    el.removeEventListener('card:closed', self.onClosed);
   },
   render() {
     const self = this;
@@ -35,6 +73,8 @@ export default {
       footer,
       padding,
       outline,
+      expandable,
+      expandableAnimateWidth,
     } = props;
 
     let headerEl;
@@ -46,6 +86,8 @@ export default {
       'card',
       {
         'card-outline': outline,
+        'card-expandable': expandable,
+        'card-expandable-animate-width': expandableAnimateWidth,
       },
       Mixins.colorClasses(props),
     );
@@ -76,12 +118,39 @@ export default {
     }
 
     return (
-      <div id={id} style={style} className={classes}>
+      <div id={id} style={style} className={classes} ref="el">
         {headerEl}
         {contentEl}
         {footerEl}
         <slot />
       </div>
     );
+  },
+  methods: {
+    open() {
+      const self = this;
+      if (!self.refs.el) return;
+      self.$f7.card.open(self.refs.el);
+    },
+    close() {
+      const self = this;
+      if (!self.refs.el) return;
+      self.$f7.card.close(self.refs.el);
+    },
+    onBeforeOpen(e) {
+      this.dispatchEvent('cardBeforeOpen card:beforeopen', e.target, e.detail.prevent);
+    },
+    onOpen(e) {
+      this.dispatchEvent('cardOpen card:open', e.target);
+    },
+    onOpened(e) {
+      this.dispatchEvent('cardOpened card:opened', e.target);
+    },
+    onClose(e) {
+      this.dispatchEvent('cardClose card:close', e.target);
+    },
+    onClosed(e) {
+      this.dispatchEvent('cardClosed card:closed', e.target);
+    },
   },
 };

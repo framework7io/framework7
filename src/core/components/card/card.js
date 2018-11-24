@@ -1,3 +1,312 @@
+import $ from 'dom7';
+import Utils from '../../utils/utils';
+import Support from '../../utils/support';
+
+const CardExpandable = {
+  open(cardEl = '.card-expandable') {
+    const app = this;
+    if ($('.card-opened').length) return;
+    const $cardEl = $(cardEl).eq(0);
+
+    if (!$cardEl || !$cardEl.length) return;
+    if ($cardEl.hasClass('card-opened') || $cardEl.hasClass('card-opening') || $cardEl.hasClass('card-closing')) return;
+
+    const $pageEl = $cardEl.parents('.page').eq(0);
+    if (!$pageEl.length) return;
+
+    let prevented;
+
+    function prevent() {
+      prevented = true;
+    }
+
+    $cardEl.trigger('card:beforeopen', { prevent });
+    app.emit('cardBeforeOpen', $cardEl[0], prevent);
+
+    if (prevented) return;
+
+    const currTransform = $cardEl.css('transform');
+    let hasTransform;
+    if (currTransform && currTransform.match(/[2-9]/)) {
+      hasTransform = true;
+    }
+
+    const $cardContentEl = $cardEl.children('.card-content');
+
+    let cardWidth = $cardEl[0].offsetWidth;
+    let cardHeight = $cardEl[0].offsetHeight;
+    let pageWidth = $pageEl[0].offsetWidth;
+    let pageHeight = $pageEl[0].offsetHeight;
+
+    let scaleX = pageWidth / cardWidth;
+    let scaleY = pageHeight / cardHeight;
+
+    let offset = $cardEl.offset();
+
+    let cardLeftOffset = offset.left;
+    let cardTopOffset = offset.top;
+    if (app.rtl) cardLeftOffset -= $cardEl[0].scrollLeft;
+    if (hasTransform) {
+      cardLeftOffset = $cardEl[0].offsetLeft;
+      cardTopOffset = $cardEl[0].offsetTop - $cardEl.parents('.page-content')[0].scrollTop;
+    }
+    let cardRightOffset = pageWidth - cardWidth - cardLeftOffset;
+    if (app.rtl) {
+      [cardLeftOffset, cardRightOffset] = [cardRightOffset, cardLeftOffset];
+    }
+    let cardBottomOffset = pageHeight - cardHeight - cardTopOffset;
+    let translateX = (cardRightOffset - cardLeftOffset) / 2;
+    let translateY = (cardBottomOffset - cardTopOffset) / 2;
+
+    let $navbarEl = $pageEl.children('.navbar');
+    if (!$navbarEl.length) {
+      if ($pageEl[0].f7Page) $navbarEl = $pageEl[0].f7Page.$navbarEl;
+    }
+    if ($navbarEl && $navbarEl.length) {
+      app.navbar.hide('.view-main .navbar');
+    }
+    $cardEl
+      .removeClass('card-transitioning')
+      .addClass('card-opening')
+      .trigger('card:open');
+    app.emit('cardOpen', $cardEl[0]);
+    $cardContentEl
+      .css({
+        width: `${pageWidth}px`,
+        height: `${pageHeight}px`,
+      })
+      .transform(`translate3d(${app.rtl ? (cardLeftOffset + translateX) : (-cardLeftOffset - translateX)}px, 0px, 0) scale(${1 / scaleX}, ${1 / scaleY})`);
+    $cardEl
+      .transform(`translate3d(${translateX}px, ${translateY}px, 0) scale(${scaleX}, ${scaleY})`)
+      .transitionEnd(() => {
+        $cardEl.addClass('card-opened');
+        $cardEl.removeClass('card-opening');
+        $cardEl.trigger('card:opened');
+        app.emit('cardOpened', $cardEl[0]);
+      });
+
+    $pageEl.addClass('with-card-opened');
+
+
+    function onResize() {
+      $cardEl.removeClass('card-transitioning');
+      cardWidth = $cardEl[0].offsetWidth;
+      cardHeight = $cardEl[0].offsetHeight;
+      pageWidth = $pageEl[0].offsetWidth;
+      pageHeight = $pageEl[0].offsetHeight;
+
+      scaleX = pageWidth / cardWidth;
+      scaleY = pageHeight / cardHeight;
+
+      $cardEl.transform('translate3d(0px, 0px, 0) scale(1)');
+      offset = $cardEl.offset();
+
+      cardLeftOffset = offset.left;
+      if (app.rtl) cardLeftOffset -= $cardEl[0].scrollLeft;
+      cardTopOffset = offset.top;
+      cardRightOffset = pageWidth - cardWidth - cardLeftOffset;
+      cardBottomOffset = pageHeight - cardHeight - cardTopOffset;
+      if (app.rtl) {
+        [cardLeftOffset, cardRightOffset] = [cardRightOffset, cardLeftOffset];
+      }
+      translateX = (cardRightOffset - cardLeftOffset) / 2;
+      translateY = (cardBottomOffset - cardTopOffset) / 2;
+
+      $cardEl.transform(`translate3d(${translateX}px, ${translateY}px, 0) scale(${scaleX}, ${scaleY})`);
+      $cardContentEl
+        .css({
+          width: `${pageWidth}px`,
+          height: `${pageHeight}px`,
+        })
+        .transform(`translate3d(${app.rtl ? (cardLeftOffset + translateX) : (-cardLeftOffset - translateX)}px, 0px, 0) scale(${1 / scaleX}, ${1 / scaleY})`);
+    }
+
+    let cardScrollTop;
+    let isTouched;
+    let isMoved;
+    let touchStartX;
+    let touchStartY;
+    let touchEndX;
+    let touchEndY;
+    let isScrolling;
+    let progress;
+    let isV;
+    let isH;
+    function onTouchStart(e) {
+      if (!$(e.target).closest($cardEl).length) return;
+      if (!$cardEl.hasClass('card-opened')) return;
+      cardScrollTop = $cardContentEl.scrollTop();
+      isTouched = true;
+      touchStartX = e.targetTouches[0].pageX;
+      touchStartY = e.targetTouches[0].pageY;
+      isScrolling = undefined;
+      isV = false;
+      isH = false;
+    }
+    function onTouchMove(e) {
+      if (!isTouched) return;
+      touchEndX = e.targetTouches[0].pageX;
+      touchEndY = e.targetTouches[0].pageY;
+      if (typeof isScrolling === 'undefined') {
+        isScrolling = !!(isScrolling || Math.abs(touchEndY - touchStartY) > Math.abs(touchEndX - touchStartX));
+      }
+      if (!isH && !isV) {
+        if (!isScrolling && e.targetTouches[0].clientX <= 50) {
+          isH = true;
+        } else {
+          isV = true;
+        }
+      }
+
+      if (!(isH || isV) || (isV && cardScrollTop !== 0)) {
+        isTouched = true;
+        isMoved = true;
+        return;
+      }
+      if (!isMoved) {
+        $cardEl.removeClass('card-transitioning');
+      }
+
+      isMoved = true;
+      progress = isV ? Math.max((touchEndY - touchStartY) / 150, 0) : Math.max((touchEndX - touchStartX) / (cardWidth / 2), 0);
+      if ((progress > 0 && isV) || isH) {
+        if (isV && app.device.ios) {
+          $cardContentEl.css('-webkit-overflow-scrolling', 'auto');
+          $cardContentEl.scrollTop(0);
+        }
+        e.preventDefault();
+      }
+
+      if (progress > 1) progress **= 0.3;
+      if (progress > (isV ? 1.3 : 1.1)) {
+        isTouched = false;
+        isMoved = false;
+        app.card.close($cardEl);
+      } else {
+        $cardEl.transform(`translate3d(${translateX}px, ${translateY}px, 0) scale(${scaleX * (1 - progress * 0.2)}, ${scaleY * (1 - progress * 0.2)})`);
+      }
+    }
+    function onTouchEnd() {
+      if (!isTouched || !isMoved) return;
+      isTouched = false;
+      isMoved = false;
+      if (app.device.ios) {
+        $cardContentEl.css('-webkit-overflow-scrolling', '');
+      }
+      if (progress >= 0.8) {
+        app.card.close($cardEl);
+      } else {
+        $cardEl
+          .addClass('card-transitioning')
+          .transform(`translate3d(${translateX}px, ${translateY}px, 0) scale(${scaleX}, ${scaleY})`);
+      }
+    }
+
+    $cardEl[0].detachEventHandlers = function detachEventHandlers() {
+      app.off('resize', onResize);
+      if (Support.touch && app.params.card.swipeToClose) {
+        app.off('touchstart:passive', onTouchStart);
+        app.off('touchmove:active', onTouchMove);
+        app.off('touchend:passive', onTouchEnd);
+      }
+    };
+
+    app.on('resize', onResize);
+    if (Support.touch && app.params.card.swipeToClose) {
+      app.on('touchstart:passive', onTouchStart);
+      app.on('touchmove:active', onTouchMove);
+      app.on('touchend:passive', onTouchEnd);
+    }
+  },
+  close(cardEl = '.card-expandable.card-opened') {
+    const app = this;
+    const $cardEl = $(cardEl).eq(0);
+    if (!$cardEl || !$cardEl.length) return;
+    if (!$cardEl.hasClass('card-opened') || $cardEl.hasClass('card-opening') || $cardEl.hasClass('card-closing')) return;
+
+    const $cardContentEl = $cardEl.children('.card-content');
+
+    const $pageEl = $cardEl.parents('.page').eq(0);
+    let $navbarEl;
+
+    if ($pageEl && $pageEl.length) {
+      $navbarEl = $pageEl.children('.navbar');
+      if (!$navbarEl.length) {
+        if ($pageEl[0].f7Page) $navbarEl = $pageEl[0].f7Page.$navbarEl;
+      }
+      $pageEl.removeClass('with-card-opened');
+    }
+    if ($navbarEl && $navbarEl.length) {
+      app.navbar.show('.view-main .navbar');
+    }
+
+    $cardEl
+      .removeClass('card-opened card-transitioning')
+      .addClass('card-closing')
+      .transform('')
+      .trigger('card:close');
+    app.emit('cardClose', $cardEl[0]);
+
+    $cardContentEl
+      .css({
+        width: '',
+        height: '',
+      })
+      .transform('')
+      .transitionEnd(() => {
+        $cardEl.removeClass('card-closing');
+        $cardEl.trigger('card:closed');
+        app.emit('cardClosed', $cardEl[0]);
+      })
+      .scrollTop(0, 300);
+    if ($cardEl[0].detachEventHandlers) {
+      $cardEl[0].detachEventHandlers();
+      delete $cardEl[0].detachEventHandlers;
+    }
+  },
+  toggle(cardEl = '.card-expandable') {
+    const app = this;
+    const $cardEl = $(cardEl).eq(0);
+    if (!$cardEl.length) return;
+    if (!$cardEl.hasClass('.card-opened')) {
+      app.card.open($cardEl);
+    } else {
+      app.card.close($cardEl);
+    }
+  },
+};
+
 export default {
   name: 'card',
+  params: {
+    card: {
+      hideNavbarOnOpen: true,
+      swipeToClose: true,
+    },
+  },
+  create() {
+    const app = this;
+    Utils.extend(app, {
+      card: {
+        open: CardExpandable.open.bind(app),
+        close: CardExpandable.close.bind(app),
+        toggle: CardExpandable.toggle.bind(app),
+      },
+    });
+  },
+  clicks: {
+    '.card-close': function closeCard($clickedEl, data) {
+      const app = this;
+      app.card.close(data.card);
+    },
+    '.card-open': function closeCard($clickedEl, data) {
+      const app = this;
+      app.card.open(data.card);
+    },
+    '.card-expandable': function toggleExpandableCard($clickedEl) {
+      const app = this;
+      if ($clickedEl.hasClass('card-opened') || $clickedEl.hasClass('card-opening') || $clickedEl.hasClass('card-closing')) return;
+      app.card.open($clickedEl);
+    },
+  },
 };
