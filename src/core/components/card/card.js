@@ -3,7 +3,7 @@ import Utils from '../../utils/utils';
 import Support from '../../utils/support';
 
 const CardExpandable = {
-  open(cardEl = '.card-expandable') {
+  open(cardEl = '.card-expandable', animate = true) {
     const app = this;
     if ($('.card-opened').length) return;
     const $cardEl = $(cardEl).eq(0);
@@ -25,12 +25,25 @@ const CardExpandable = {
 
     if (prevented) return;
 
+    let $backropEl;
+    if (app.params.card.backrop) {
+      $backropEl = $cardEl.parents('.page-content').find('.card-backdrop');
+      if (!$backropEl.length) {
+        $backropEl = $('<div class="card-backdrop"></div>');
+        $cardEl.parents('.page-content').append($backropEl);
+      }
+    }
+
+    let $navbarEl = $pageEl.children('.navbar');
+    if (!$navbarEl.length) {
+      if ($pageEl[0].f7Page) $navbarEl = $pageEl[0].f7Page.$navbarEl;
+    }
+
     const currTransform = $cardEl.css('transform');
     let hasTransform;
     if (currTransform && currTransform.match(/[2-9]/)) {
       hasTransform = true;
     }
-
     const $cardContentEl = $cardEl.children('.card-content');
 
     let cardWidth = $cardEl[0].offsetWidth;
@@ -58,35 +71,42 @@ const CardExpandable = {
     let translateX = (cardRightOffset - cardLeftOffset) / 2;
     let translateY = (cardBottomOffset - cardTopOffset) / 2;
 
-    let $navbarEl = $pageEl.children('.navbar');
-    if (!$navbarEl.length) {
-      if ($pageEl[0].f7Page) $navbarEl = $pageEl[0].f7Page.$navbarEl;
-    }
     if ($navbarEl && $navbarEl.length) {
-      app.navbar.hide('.view-main .navbar');
+      app.navbar.hide('.view-main .navbar', animate);
     }
-    $cardEl
-      .removeClass('card-transitioning')
-      .addClass('card-opening')
-      .trigger('card:open');
+    if ($backropEl) {
+      $backropEl.removeClass('card-backdrop-out').addClass('card-backdrop-in');
+    }
+    $cardEl.removeClass('card-transitioning');
+    if (animate) {
+      $cardEl.addClass('card-opening');
+    }
+    $cardEl.trigger('card:open');
     app.emit('cardOpen', $cardEl[0]);
+    function transitionEnd() {
+      $cardEl.addClass('card-opened');
+      $cardEl.removeClass('card-opening');
+      $cardEl.trigger('card:opened');
+      app.emit('cardOpened', $cardEl[0]);
+    }
     $cardContentEl
       .css({
         width: `${pageWidth}px`,
         height: `${pageHeight}px`,
       })
       .transform(`translate3d(${app.rtl ? (cardLeftOffset + translateX) : (-cardLeftOffset - translateX)}px, 0px, 0) scale(${1 / scaleX}, ${1 / scaleY})`);
+
     $cardEl
-      .transform(`translate3d(${translateX}px, ${translateY}px, 0) scale(${scaleX}, ${scaleY})`)
-      .transitionEnd(() => {
-        $cardEl.addClass('card-opened');
-        $cardEl.removeClass('card-opening');
-        $cardEl.trigger('card:opened');
-        app.emit('cardOpened', $cardEl[0]);
+      .transform(`translate3d(${translateX}px, ${translateY}px, 0) scale(${scaleX}, ${scaleY})`);
+    if (animate) {
+      $cardEl.transitionEnd(() => {
+        transitionEnd();
       });
+    } else {
+      transitionEnd();
+    }
 
-    $pageEl.addClass('with-card-opened');
-
+    $pageEl.addClass('page-with-card-opened');
 
     function onResize() {
       $cardEl.removeClass('card-transitioning');
@@ -218,7 +238,7 @@ const CardExpandable = {
       app.on('touchend:passive', onTouchEnd);
     }
   },
-  close(cardEl = '.card-expandable.card-opened') {
+  close(cardEl = '.card-expandable.card-opened', animate = true) {
     const app = this;
     const $cardEl = $(cardEl).eq(0);
     if (!$cardEl || !$cardEl.length) return;
@@ -229,49 +249,69 @@ const CardExpandable = {
     const $pageEl = $cardEl.parents('.page').eq(0);
     let $navbarEl;
 
+    let $backropEl;
+    if (app.params.card.backrop) {
+      $backropEl = $cardEl.parents('.page-content').find('.card-backdrop');
+    }
+
     if ($pageEl && $pageEl.length) {
       $navbarEl = $pageEl.children('.navbar');
       if (!$navbarEl.length) {
         if ($pageEl[0].f7Page) $navbarEl = $pageEl[0].f7Page.$navbarEl;
       }
-      $pageEl.removeClass('with-card-opened');
+      $pageEl.removeClass('page-with-card-opened');
     }
     if ($navbarEl && $navbarEl.length) {
-      app.navbar.show('.view-main .navbar');
+      app.navbar.show('.view-main .navbar', animate);
     }
 
-    $cardEl
-      .removeClass('card-opened card-transitioning')
-      .addClass('card-closing')
-      .transform('')
-      .trigger('card:close');
+    if ($backropEl && $backropEl.length) {
+      $backropEl.removeClass('card-backdrop-in').addClass('card-backdrop-out');
+    }
+
+    $cardEl.removeClass('card-opened card-transitioning');
+    if (animate) {
+      $cardEl.addClass('card-closing');
+    } else {
+      $cardEl.addClass('card-no-transition');
+    }
+    $cardEl.transform('');
+    $cardEl.trigger('card:close');
     app.emit('cardClose', $cardEl[0]);
 
+    function transitionEnd() {
+      $cardEl.removeClass('card-closing card-no-transition');
+      $cardEl.trigger('card:closed');
+      app.emit('cardClosed', $cardEl[0]);
+    }
     $cardContentEl
       .css({
         width: '',
         height: '',
       })
       .transform('')
-      .transitionEnd(() => {
-        $cardEl.removeClass('card-closing');
-        $cardEl.trigger('card:closed');
-        app.emit('cardClosed', $cardEl[0]);
-      })
-      .scrollTop(0, 300);
+      .scrollTop(0, animate ? 300 : 0);
+    if (animate) {
+      $cardContentEl.transitionEnd(() => {
+        transitionEnd();
+      });
+    } else {
+      transitionEnd();
+    }
+
     if ($cardEl[0].detachEventHandlers) {
       $cardEl[0].detachEventHandlers();
       delete $cardEl[0].detachEventHandlers;
     }
   },
-  toggle(cardEl = '.card-expandable') {
+  toggle(cardEl = '.card-expandable', animate) {
     const app = this;
     const $cardEl = $(cardEl).eq(0);
     if (!$cardEl.length) return;
-    if (!$cardEl.hasClass('.card-opened')) {
-      app.card.open($cardEl);
+    if ($cardEl.hasClass('card-opened')) {
+      app.card.close($cardEl, animate);
     } else {
-      app.card.close($cardEl);
+      app.card.open($cardEl, animate);
     }
   },
 };
@@ -282,6 +322,7 @@ export default {
     card: {
       hideNavbarOnOpen: true,
       swipeToClose: true,
+      backrop: true,
     },
   },
   create() {

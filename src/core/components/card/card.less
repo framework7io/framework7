@@ -112,7 +112,6 @@
     .hairline-remove(top);
   }
 }
-
 .card-expandable {
   overflow: hidden;
   height: 300px;
@@ -129,6 +128,9 @@
   margin-bottom: var(--f7-card-expandable-margin-vertical);
   box-shadow: var(--f7-card-expandable-box-shadow);
   font-size: var(--f7-card-expandable-font-size);
+  &.card-no-transition {
+    transition-duration: 0ms;
+  }
   &.card-expandable-animate-width {
     .card-content {
       transition-property: width, transform;
@@ -211,9 +213,40 @@
     .hairline-remove(bottom);
   }
 }
-.page.with-card-opened {
+.page.page-with-card-opened {
   .page-content {
     overflow: hidden;
+  }
+}
+.card-backdrop {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  pointer-events: none;
+}
+.card-backdrop-in {
+  animation: card-backdrop-in 400ms forwards;
+}
+.card-backdrop-out {
+  animation: card-backdrop-out 400ms forwards;
+}
+@keyframes card-backdrop-in {
+  from {
+    backdrop-filter: blur(0px);
+  }
+  to {
+    backdrop-filter: blur(15px);
+  }
+}
+@keyframes card-backdrop-out {
+  from {
+    backdrop-filter: blur(15px);
+  }
+  to {
+    backdrop-filter: blur(0px);
   }
 }
 & when (@includeIosTheme) {

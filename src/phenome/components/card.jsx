@@ -49,6 +49,11 @@ export default {
     el.addEventListener('card:opened', self.onOpened);
     el.addEventListener('card:close', self.onClose);
     el.addEventListener('card:closed', self.onClosed);
+    if (self.props.expandable && self.props.expandableOpened) {
+      self.$f7ready(() => {
+        self.$f7.card.open(el, false);
+      });
+    }
   },
   componentWillUnmount() {
     const self = this;
