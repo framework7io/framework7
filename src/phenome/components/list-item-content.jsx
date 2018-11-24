@@ -198,7 +198,7 @@ export default {
             name={name}
             type={radio ? 'radio' : 'checkbox'}
             domProps={{ checked, readonly, disabled, required, value }}
-            onChange={this.onChangeBound}
+            onChange={this.onChange}
           />
         );
       } else {
@@ -213,7 +213,7 @@ export default {
             disabled={disabled}
             required={required}
             type={radio ? 'radio' : 'checkbox'}
-            onChange={this.onChangeBound}
+            onChange={this.onChange}
           />
         );
       }
@@ -359,7 +359,7 @@ export default {
         id={id}
         style={style}
         className={classes}
-        onClick={self.onClickBound}
+        onClick={self.onClick}
       >
         {slotsContentStart}
         {inputEl}
@@ -372,13 +372,7 @@ export default {
     );
   },
   componentDidCreate() {
-    const self = this;
-    self.onClickBound = self.onClick.bind(self);
-    self.onChangeBound = self.onChange.bind(self);
-    self.onFocusBound = self.onFocus.bind(self);
-    self.onBlurBound = self.onBlur.bind(self);
-    self.onEmptyBound = self.onEmpty.bind(self);
-    self.onNotEmptyBound = self.onNotEmpty.bind(self);
+    Utils.bindMethods(this, 'onClick onChange onFocus onBlur onEmpty onNotEmpty'.split(' '));
   },
   componentWillMount() {
     this.checkHasInputState();
@@ -399,10 +393,10 @@ export default {
     const hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
     const hasInputInvalid = $inputWrapEl.children('.input-invalid').length > 0;
     if (hasInput) {
-      el.addEventListener('focus', self.onFocusBound, true);
-      el.addEventListener('blur', self.onBlurBound, true);
-      el.addEventListener('input:empty', self.onEmptyBound);
-      el.addEventListener('input:notempty', self.onNotEmptyBound);
+      el.addEventListener('focus', self.onFocus, true);
+      el.addEventListener('blur', self.onBlur, true);
+      el.addEventListener('input:empty', self.onEmpty);
+      el.addEventListener('input:notempty', self.onNotEmpty);
     }
     if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {
       self.setState({ hasInlineLabel });
@@ -451,10 +445,10 @@ export default {
   componentWillUnmount() {
     const self = this;
     const { inputEl, el } = self.refs;
-    el.removeEventListener('input:empty', self.onEmptyBound);
-    el.removeEventListener('input:notempty', self.onNotEmptyBound);
-    el.removeEventListener('focus', self.onFocusBound, true);
-    el.removeEventListener('blur', self.onBlurBound, true);
+    el.removeEventListener('input:empty', self.onEmpty);
+    el.removeEventListener('input:notempty', self.onNotEmpty);
+    el.removeEventListener('focus', self.onFocus, true);
+    el.removeEventListener('blur', self.onBlur, true);
   },
   methods: {
     checkHasInputState() {

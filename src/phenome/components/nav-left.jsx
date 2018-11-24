@@ -37,7 +37,7 @@ export default {
           force={backLinkForce || undefined}
           className={(backLink === true || (backLink && this.$theme.md)) ? 'icon-only' : undefined}
           text={backLink !== true && !this.$theme.md ? backLink : undefined}
-          onClick={this.onBackClick.bind(this)}
+          onClick={this.onBackClick}
         />
       );
     }
@@ -63,6 +63,9 @@ export default {
         {children}
       </div>
     );
+  },
+  componentDidCreate() {
+    Utils.bindMethods(this, ['onBackClick'])
   },
   methods: {
     onBackClick(event) {

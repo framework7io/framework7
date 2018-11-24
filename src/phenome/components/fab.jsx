@@ -73,7 +73,7 @@ export default {
     let linkEl;
     if (linkChildren.length || (linkSlots && linkSlots.length)) {
       linkEl = (
-        <a target={target} href={href} onClick={self.onClick.bind(self)} key="f7-fab-link">
+        <a target={target} href={href} onClick={self.onClick} key="f7-fab-link">
           {linkChildren}
           {textEl}
           {linkSlots}
@@ -104,18 +104,15 @@ export default {
       </div>
     );
   },
-  methods: {
-    onClick(event) {
-      const self = this;
-      self.dispatchEvent('click', event);
-    },
-  },
   watch: {
     'props.tooltip': function watchTooltip(newText) {
       const self = this;
       if (!newText || !self.f7Tooltip) return;
       self.f7Tooltip.setText(newText);
     },
+  },
+  componentDidCreate() {
+    Utils.bindMethods(this, ['onClick'])
   },
   componentDidMount() {
     const self = this;
@@ -135,5 +132,11 @@ export default {
       self.f7Tooltip = null;
       delete self.f7Tooltip;
     }
+  },
+  methods: {
+    onClick(event) {
+      const self = this;
+      self.dispatchEvent('click', event);
+    },
   },
 };

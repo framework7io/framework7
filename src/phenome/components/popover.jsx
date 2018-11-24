@@ -59,19 +59,23 @@ export default {
       }
     },
   },
+  componentDidCreate() {
+    Utils.bindMethods(this, [
+      'onOpen',
+      'onOpened',
+      'onClose',
+      'onClosed',
+    ]);
+  },
   componentDidMount() {
     const self = this;
 
     const el = self.refs.el;
     if (!el) return;
-    self.onOpenBound = self.onOpen.bind(self);
-    self.onOpenedBound = self.onOpened.bind(self);
-    self.onCloseBound = self.onClose.bind(self);
-    self.onClosedBound = self.onClosed.bind(self);
-    el.addEventListener('popover:open', self.onOpenBound);
-    el.addEventListener('popover:opened', self.onOpenedBound);
-    el.addEventListener('popover:close', self.onCloseBound);
-    el.addEventListener('popover:closed', self.onClosedBound);
+    el.addEventListener('popover:open', self.onOpen);
+    el.addEventListener('popover:opened', self.onOpened);
+    el.addEventListener('popover:close', self.onClose);
+    el.addEventListener('popover:closed', self.onClosed);
 
     const props = self.props;
     const {
@@ -106,10 +110,10 @@ export default {
     if (self.f7Popover) self.f7Popover.destroy();
     const el = self.refs.el;
     if (!el) return;
-    el.removeEventListener('popover:open', self.onOpenBound);
-    el.removeEventListener('popover:opened', self.onOpenedBound);
-    el.removeEventListener('popover:close', self.onCloseBound);
-    el.removeEventListener('popover:closed', self.onClosedBound);
+    el.removeEventListener('popover:open', self.onOpen);
+    el.removeEventListener('popover:opened', self.onOpened);
+    el.removeEventListener('popover:close', self.onClose);
+    el.removeEventListener('popover:closed', self.onClosed);
   },
   methods: {
     onOpen(event) {

@@ -50,10 +50,13 @@ export default {
     );
 
     return (
-      <ColTag id={id} style={style} className={classes} onClick={self.onClick.bind(self)}>
+      <ColTag id={id} style={style} className={classes} onClick={self.onClick}>
         <slot />
       </ColTag>
     );
+  },
+  componentDidCreate() {
+    Utils.bindMethods(this, ['onClick'])
   },
   methods: {
     onClick(event) {

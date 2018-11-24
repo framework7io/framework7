@@ -46,11 +46,14 @@ export default {
         style={style}
         data-confirm={confirmText || undefined}
         className={classes}
-        onClick={this.onClick.bind(this)}
+        onClick={this.onClick}
       >
         <slot>{text}</slot>
       </a>
     );
+  },
+  componentDidCreate() {
+    Utils.bindMethods(this, ['onClick'])
   },
   methods: {
     onClick(event) {

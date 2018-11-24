@@ -55,7 +55,7 @@ export default {
     }
     if (deleteable) {
       deleteEl = (
-        <a href="#" className="chip-delete" onClick={self.onDeleteClick.bind(self)} />
+        <a href="#" className="chip-delete" onClick={self.onDeleteClick} />
       );
     }
 
@@ -69,12 +69,15 @@ export default {
     );
 
     return (
-      <div id={id} style={style} className={classes} onClick={self.onClick.bind(self)}>
+      <div id={id} style={style} className={classes} onClick={self.onClick}>
         {mediaEl}
         {labelEl}
         {deleteEl}
       </div>
     );
+  },
+  componentDidCreate() {
+    Utils.bindMethods(this, ['onClick', 'onDeleteClick'])
   },
   methods: {
     onClick(event) {

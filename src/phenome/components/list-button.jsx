@@ -34,7 +34,7 @@ export default {
 
     return (
       <li id={id} style={style} className={className}>
-        <a className={self.classes} {...self.attrs} onClick={self.onClick.bind(self)}>
+        <a className={self.classes} {...self.attrs} onClick={self.onClick}>
           <slot>{title || text}</slot>
         </a>
       </li>
@@ -83,6 +83,9 @@ export default {
         Mixins.linkActionsClasses(props),
       );
     },
+  },
+  componentDidCreate() {
+    Utils.bindMethods(this, ['onClick'])
   },
   methods: {
     onClick(event) {

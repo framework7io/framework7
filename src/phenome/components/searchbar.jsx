@@ -129,12 +129,12 @@ export default {
 
     if (clearButton) {
       clearEl = (
-        <span className="input-clear-button" onClick={self.onClearButtonClick.bind(self)} />
+        <span className="input-clear-button" onClick={self.onClearButtonClick} />
       );
     }
     if (disableButton) {
       disableEl = (
-        <span className="searchbar-disable-button" onClick={self.onDisableButtonClick.bind(self)}>{disableButtonText}</span>
+        <span className="searchbar-disable-button" onClick={self.onDisableButtonClick}>{disableButtonText}</span>
       );
     }
 
@@ -161,10 +161,10 @@ export default {
             <input
               placeholder={placeholder}
               type="search"
-              onInput={self.onInput.bind(self)}
-              onChange={self.onChange.bind(self)}
-              onFocus={self.onFocus.bind(self)}
-              onBlur={self.onBlur.bind(self)}
+              onInput={self.onInput}
+              onChange={self.onChange}
+              onFocus={self.onFocus}
+              onBlur={self.onBlur}
             />
             <i className="searchbar-icon" />
             {clearEl}
@@ -178,10 +178,21 @@ export default {
       </SearchbarTag>
     );
   },
+  componentDidCreate() {
+    Utils.bindMethods(this, [
+      'onSubmit',
+      'onClearButtonClick',
+      'onDisableButtonClick',
+      'onInput',
+      'onChange',
+      'onFocus',
+      'onBlur',
+    ]);
+  },
   componentWillUnmount() {
     const self = this;
     if (self.props.form && self.refs.el) {
-      self.refs.el.removeEventListener('submit', self.onSubmitBound, false);
+      self.refs.el.removeEventListener('submit', self.onSubmit, false);
     }
     if (self.f7Searchbar && self.f7Searchbar.destroy) self.f7Searchbar.destroy();
   },
@@ -216,8 +227,7 @@ export default {
     const el = self.refs.el;
 
     if (form && el) {
-      self.onSubmitBound = self.onSubmit.bind(self);
-      el.addEventListener('submit', self.onSubmitBound, false);
+      el.addEventListener('submit', self.onSubmit, false);
     }
 
     self.$f7ready(() => {

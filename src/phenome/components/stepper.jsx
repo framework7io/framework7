@@ -110,7 +110,7 @@ export default {
             step={inputType === 'number' ? step : undefined}
             value={value}
             readOnly={inputReadonly}
-            onInput={self.onInput.bind(self)}
+            onInput={self.onInput}
           />
         );
       }
@@ -121,7 +121,7 @@ export default {
             min={inputType === 'number' ? min : undefined}
             max={inputType === 'number' ? max : undefined}
             step={inputType === 'number' ? step : undefined}
-            onInput={self.onInput.bind(self)}
+            onInput={self.onInput}
             domProps={{
               readOnly: inputReadonly,
               value,
@@ -142,10 +142,10 @@ export default {
     }
     return (
       <div ref="el" id={id} style={style} className={self.classes}>
-        <div className="stepper-button-minus" onClick={self.onMinusClickBound} />
+        <div className="stepper-button-minus" onClick={self.onMinusClick} />
         {inputWrapEl}
         {valueEl}
-        <div className="stepper-button-plus" onClick={self.onPlusClickBound} />
+        <div className="stepper-button-plus" onClick={self.onPlusClick} />
       </div>
     );
   },
@@ -194,9 +194,11 @@ export default {
     },
   },
   componentDidCreate() {
-    this.onInputBound = this.onInput.bind(this);
-    this.onMinusClickBound = this.onMinusClick.bind(this);
-    this.onPlusClickBound = this.onPlusClick.bind(this);
+    Utils.bindMethods(this, [
+      'onInput',
+      'onMinusClick',
+      'onPlusClick',
+    ]);
   },
   componentDidMount() {
     const self = this;

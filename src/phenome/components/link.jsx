@@ -129,7 +129,7 @@ export default {
         id={id}
         style={style}
         className={self.classes}
-        onClick={self.onClick.bind(self)}
+        onClick={self.onClick}
         {...self.attrs}
       >
         {iconEl}
@@ -144,6 +144,9 @@ export default {
       if (!newText || !self.f7Tooltip) return;
       self.f7Tooltip.setText(newText);
     },
+  },
+  componentDidCreate() {
+    Utils.bindMethods(this, ['onClick'])
   },
   componentDidMount() {
     const self = this;

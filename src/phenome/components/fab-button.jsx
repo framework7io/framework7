@@ -54,24 +54,15 @@ export default {
         style={style}
         target={target}
         className={classes}
-        onClick={this.onClick.bind(this)}
+        onClick={this.onClick}
       >
         <slot />
         {labelEl}
       </a>
     );
   },
-  methods: {
-    onClick(event) {
-      this.dispatchEvent('click', event);
-    },
-  },
-  watch: {
-    'props.tooltip': function watchTooltip(newText) {
-      const self = this;
-      if (!newText || !self.f7Tooltip) return;
-      self.f7Tooltip.setText(newText);
-    },
+  componentDidCreate() {
+    Utils.bindMethods(this, ['onClick'])
   },
   componentDidMount() {
     const self = this;
@@ -91,5 +82,17 @@ export default {
       self.f7Tooltip = null;
       delete self.f7Tooltip;
     }
+  },
+  methods: {
+    onClick(event) {
+      this.dispatchEvent('click', event);
+    },
+  },
+  watch: {
+    'props.tooltip': function watchTooltip(newText) {
+      const self = this;
+      if (!newText || !self.f7Tooltip) return;
+      self.f7Tooltip.setText(newText);
+    },
   },
 };

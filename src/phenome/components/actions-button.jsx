@@ -44,13 +44,16 @@ export default {
     );
 
     return (
-      <div id={id} style={style} className={classes} onClick={self.onClick.bind(self)} ref="el">
+      <div id={id} style={style} className={classes} onClick={self.onClick} ref="el">
         { mediaEl }
         <div className="actions-button-text">
           <slot />
         </div>
       </div>
     );
+  },
+  componentDidCreate() {
+    Utils.bindMethods(this, ['onClick'])
   },
   methods: {
     onClick(event) {

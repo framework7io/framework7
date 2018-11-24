@@ -30,13 +30,15 @@ export default {
     ...Mixins.colorProps,
   },
   componentDidCreate() {
-    this.onClickBound = this.onClick.bind(this);
-    this.onNameClickBound = this.onNameClick.bind(this);
-    this.onTextClickBound = this.onTextClick.bind(this);
-    this.onAvatarClickBound = this.onAvatarClick.bind(this);
-    this.onHeaderClickBound = this.onHeaderClick.bind(this);
-    this.onFooterClickBound = this.onFooterClick.bind(this);
-    this.onBubbleClickBound = this.onBubbleClick.bind(this);
+    Utils.bindMethods(this, [
+      'onClick',
+      'onNameClick',
+      'onTextClick',
+      'onAvatarClick',
+      'onHeaderClick',
+      'onFooterClick',
+      'onBubbleClick',
+    ]);
   },
   render() {
     const self = this;
@@ -74,28 +76,28 @@ export default {
     } = self.slots;
 
     return (
-      <div id={id} style={style} className={self.classes} onClick={self.onClickBound}>
+      <div id={id} style={style} className={self.classes} onClick={self.onClick}>
         {slotsStart}
         {(avatar || slotsAvatar) &&
           <div
             className="message-avatar"
             style={{ backgroundImage: avatar && `url(${avatar})` }}
-            onClick={self.onAvatarClickBound}
+            onClick={self.onAvatarClick}
           >{slotsAvatar}</div>
         }
         <div className="message-content">
           {slotsContentStart}
           {(slotsName || name) &&
-            <div className="message-name" onClick={self.onNameClickBound}>
+            <div className="message-name" onClick={self.onNameClick}>
               {slotsName || name}
             </div>
           }
           {(slotsHeader || header) &&
-            <div className="message-header" onClick={self.onHeaderClickBound}>
+            <div className="message-header" onClick={self.onHeaderClick}>
               {slotsHeader || header}
             </div>
           }
-          <div className="message-bubble" onClick={self.onBubbleClickBound}>
+          <div className="message-bubble" onClick={self.onBubbleClick}>
             {slotsBubbleStart}
             {(slotsImage || image) &&
               <div className="message-image">
@@ -108,7 +110,7 @@ export default {
               </div>
             }
             {(slotsText || text || typing) &&
-              <div className="message-text" onClick={self.onTextClickBound}>
+              <div className="message-text" onClick={self.onTextClick}>
                 {slotsText || text}
                 {typing &&
                   <div className="message-typing-indicator">
@@ -128,7 +130,7 @@ export default {
             {slotsDefault}
           </div>
           {(slotsFooter || footer) &&
-            <div className="message-footer" onClick={self.onFooterClickBound}>
+            <div className="message-footer" onClick={self.onFooterClick}>
               {slotsFooter || footer}
             </div>
           }

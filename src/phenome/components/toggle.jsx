@@ -61,7 +61,7 @@ export default {
           checked={checked}
           defaultChecked={defaultChecked}
           value={value}
-          onChange={self.onChange.bind(self)}
+          onChange={self.onChange}
         />
       );
     }
@@ -70,7 +70,7 @@ export default {
         <input
           type="checkbox"
           name={name}
-          onChange={self.onChange.bind(self)}
+          onChange={self.onChange}
           domProps={{
             disabled,
             readOnly: readonly,
@@ -93,6 +93,9 @@ export default {
       if (!self.f7Toggle) return;
       self.f7Toggle.checked = newValue;
     },
+  },
+  componentDidCreate() {
+    Utils.bindMethods(this, ['onChange'])
   },
   componentDidMount() {
     const self = this;

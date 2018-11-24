@@ -15,8 +15,7 @@ export default {
     ...Mixins.colorProps,
   },
   componentDidCreate() {
-    this.onClickBound = this.onClick.bind(this);
-    this.onDeleteClickBound = this.onDeleteClick.bind(this);
+    Utils.bindMethods(this, ['onClick', 'onDeleteClick']);
   },
   render() {
     const self = this;
@@ -36,11 +35,11 @@ export default {
     );
 
     return (
-      <div id={id} style={style} className={classes} onClick={self.onClickBound}>
+      <div id={id} style={style} className={classes} onClick={self.onClick}>
         {image &&
           <img src={image} />}
         {deletable &&
-          <span className="messagebar-attachment-delete" onClick={self.onDeleteClickBound} />
+          <span className="messagebar-attachment-delete" onClick={self.onDeleteClick} />
         }
         <slot />
       </div>

@@ -37,10 +37,13 @@ export default {
     );
 
     return (
-      <RowTag id={id} style={style} className={classes} onClick={self.onClick.bind(self)}>
+      <RowTag id={id} style={style} className={classes} onClick={self.onClick}>
         <slot />
       </RowTag>
     );
+  },
+  componentDidCreate() {
+    Utils.bindMethods(this, ['onClick'])
   },
   methods: {
     onClick(event) {

@@ -71,7 +71,7 @@ export default {
             backLink={backLink}
             backLinkUrl={backLinkUrl}
             backLinkForce={backLinkForce}
-            onBackClick={self.onBackClick.bind(self)}
+            onBackClick={self.onBackClick}
           >{slots['nav-left']}</F7NavLeft>
         );
       }
@@ -129,6 +129,9 @@ export default {
         <slot name="after-inner" />
       </div>
     );
+  },
+  componentDidCreate() {
+    Utils.bindMethods(this, ['onBackClick'])
   },
   componentDidUpdate() {
     const self = this;

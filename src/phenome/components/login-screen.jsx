@@ -55,19 +55,23 @@ export default {
       }
     },
   },
+  componentDidCreate() {
+    Utils.bindMethods(this, [
+      'onOpen',
+      'onOpened',
+      'onClose',
+      'onClosed',
+    ]);
+  },
   componentDidMount() {
     const self = this;
 
     const el = self.refs.el;
     if (!el) return;
-    self.onOpenBound = self.onOpen.bind(self);
-    self.onOpenedBound = self.onOpened.bind(self);
-    self.onCloseBound = self.onClose.bind(self);
-    self.onClosedBound = self.onClosed.bind(self);
-    el.addEventListener('loginscreen:open', self.onOpenBound);
-    el.addEventListener('loginscreen:opened', self.onOpenedBound);
-    el.addEventListener('loginscreen:close', self.onCloseBound);
-    el.addEventListener('loginscreen:closed', self.onClosedBound);
+    el.addEventListener('loginscreen:open', self.onOpen);
+    el.addEventListener('loginscreen:opened', self.onOpened);
+    el.addEventListener('loginscreen:close', self.onClose);
+    el.addEventListener('loginscreen:closed', self.onClosed);
 
     self.$f7ready(() => {
       self.f7LoginScreen = self.$f7.loginScreen.create({
@@ -83,10 +87,10 @@ export default {
     const el = self.refs.el;
     if (self.f7LoginScreen) self.f7LoginScreen.destroy();
     if (!el) return;
-    el.removeEventListener('loginscreen:open', self.onOpenBound);
-    el.removeEventListener('loginscreen:opened', self.onOpenedBound);
-    el.removeEventListener('loginscreen:close', self.onCloseBound);
-    el.removeEventListener('loginscreen:closed', self.onClosedBound);
+    el.removeEventListener('loginscreen:open', self.onOpen);
+    el.removeEventListener('loginscreen:opened', self.onOpened);
+    el.removeEventListener('loginscreen:close', self.onClose);
+    el.removeEventListener('loginscreen:closed', self.onClosed);
   },
   methods: {
     onOpen(event) {

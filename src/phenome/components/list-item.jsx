@@ -160,10 +160,10 @@ export default {
           itemInput={itemInput}
           itemInputWithInfo={itemInputWithInfo}
           inlineLabel={inlineLabel}
-          onClick={needsEvents ? self.onClickBound : null} // phenome-react-line
-          onChange={needsEvents ? self.onChangeBound : null} // phenome-react-line
+          onClick={needsEvents ? self.onClick : null} // phenome-react-line
+          onChange={needsEvents ? self.onChange : null} // phenome-react-line
           // phenome-vue-next-line
-          on={needsEvents ? { click: self.onClickBound, change: self.onChangeBound } : undefined}
+          on={needsEvents ? { click: self.onClick, change: self.onChange } : undefined}
         >
           <slot name="content-start" />
           <slot name="content" />
@@ -208,7 +208,7 @@ export default {
         linkEl = (
           <a
             className={linkClasses}
-            onClick={self.onClick.bind(self)}
+            onClick={self.onClick}
             {...linkAttrs}
           >
             {itemContentEl}
@@ -278,24 +278,25 @@ export default {
     },
   },
   componentDidCreate() {
-    const self = this;
-    self.onClickBound = self.onClick.bind(self);
-    self.onChangeBound = self.onChange.bind(self);
-    self.onSwipeoutOpenBound = self.onSwipeoutOpen.bind(self);
-    self.onSwipeoutOpenedBound = self.onSwipeoutOpened.bind(self);
-    self.onSwipeoutCloseBound = self.onSwipeoutClose.bind(self);
-    self.onSwipeoutClosedBound = self.onSwipeoutClosed.bind(self);
-    self.onSwipeoutDeleteBound = self.onSwipeoutDelete.bind(self);
-    self.onSwipeoutDeletedBound = self.onSwipeoutDeleted.bind(self);
-    self.onSwipeoutOverswipeEnterBound = self.onSwipeoutOverswipeEnter.bind(self);
-    self.onSwipeoutOverswipeExitBound = self.onSwipeoutOverswipeExit.bind(self);
-    self.onSwipeoutBound = self.onSwipeout.bind(self);
-    self.onAccBeforeOpenBound = self.onAccBeforeOpen.bind(self);
-    self.onAccOpenBound = self.onAccOpen.bind(self);
-    self.onAccOpenedBound = self.onAccOpened.bind(self);
-    self.onAccBeforeCloseBound = self.onAccBeforeClose.bind(self);
-    self.onAccCloseBound = self.onAccClose.bind(self);
-    self.onAccClosedBound = self.onAccClosed.bind(self);
+    Utils.bindMethods(this, [
+      'onClick',
+      'onChange',
+      'onSwipeoutOpen',
+      'onSwipeoutOpened',
+      'onSwipeoutClose',
+      'onSwipeoutClosed',
+      'onSwipeoutDelete',
+      'onSwipeoutDeleted',
+      'onSwipeoutOverswipeEnter',
+      'onSwipeoutOverswipeExit',
+      'onSwipeout',
+      'onAccBeforeOpen',
+      'onAccOpen',
+      'onAccOpened',
+      'onAccBeforeClose',
+      'onAccClose',
+      'onAccClosed',
+    ]);
   },
   componentDidMount() {
     const self = this;
@@ -312,23 +313,23 @@ export default {
     }
     const { swipeout, swipeoutOpened, accordionItem, smartSelect, smartSelectParams } = self.props;
     if (swipeout) {
-      el.addEventListener('swipeout:open', self.onSwipeoutOpenBound);
-      el.addEventListener('swipeout:opened', self.onSwipeoutOpenedBound);
-      el.addEventListener('swipeout:close', self.onSwipeoutCloseBound);
-      el.addEventListener('swipeout:closed', self.onSwipeoutClosedBound);
-      el.addEventListener('swipeout:delete', self.onSwipeoutDeleteBound);
-      el.addEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
-      el.addEventListener('swipeout:overswipeenter', self.onSwipeoutOverswipeEnterBound);
-      el.addEventListener('swipeout:overswipeexit', self.onSwipeoutOverswipeExitBound);
-      el.addEventListener('swipeout', self.onSwipeoutBound);
+      el.addEventListener('swipeout:open', self.onSwipeoutOpen);
+      el.addEventListener('swipeout:opened', self.onSwipeoutOpened);
+      el.addEventListener('swipeout:close', self.onSwipeoutClose);
+      el.addEventListener('swipeout:closed', self.onSwipeoutClosed);
+      el.addEventListener('swipeout:delete', self.onSwipeoutDelete);
+      el.addEventListener('swipeout:deleted', self.onSwipeoutDeleted);
+      el.addEventListener('swipeout:overswipeenter', self.onSwipeoutOverswipeEnter);
+      el.addEventListener('swipeout:overswipeexit', self.onSwipeoutOverswipeExit);
+      el.addEventListener('swipeout', self.onSwipeout);
     }
     if (accordionItem) {
-      el.addEventListener('accordion:beforeopen', self.onAccBeforeOpenBound);
-      el.addEventListener('accordion:open', self.onAccOpenBound);
-      el.addEventListener('accordion:opened', self.onAccOpenedBound);
-      el.addEventListener('accordion:beforeclose', self.onAccBeforeCloseBound);
-      el.addEventListener('accordion:close', self.onAccCloseBound);
-      el.addEventListener('accordion:closed', self.onAccClosedBound);
+      el.addEventListener('accordion:beforeopen', self.onAccBeforeOpen);
+      el.addEventListener('accordion:open', self.onAccOpen);
+      el.addEventListener('accordion:opened', self.onAccOpened);
+      el.addEventListener('accordion:beforeclose', self.onAccBeforeClose);
+      el.addEventListener('accordion:close', self.onAccClose);
+      el.addEventListener('accordion:closed', self.onAccClosed);
     }
 
     self.$f7ready((f7) => {
@@ -367,23 +368,23 @@ export default {
     const { swipeout, accordionItem, smartSelect } = self.props;
     if (el) {
       if (swipeout) {
-        el.removeEventListener('swipeout:open', self.onSwipeoutOpenBound);
-        el.removeEventListener('swipeout:opened', self.onSwipeoutOpenedBound);
-        el.removeEventListener('swipeout:close', self.onSwipeoutCloseBound);
-        el.removeEventListener('swipeout:closed', self.onSwipeoutClosedBound);
-        el.removeEventListener('swipeout:delete', self.onSwipeoutDeleteBound);
-        el.removeEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
-        el.removeEventListener('swipeout:overswipeenter', self.onSwipeoutOverswipeEnterBound);
-        el.removeEventListener('swipeout:overswipeexit', self.onSwipeoutOverswipeExitBound);
-        el.removeEventListener('swipeout', self.onSwipeoutBound);
+        el.removeEventListener('swipeout:open', self.onSwipeoutOpen);
+        el.removeEventListener('swipeout:opened', self.onSwipeoutOpened);
+        el.removeEventListener('swipeout:close', self.onSwipeoutClose);
+        el.removeEventListener('swipeout:closed', self.onSwipeoutClosed);
+        el.removeEventListener('swipeout:delete', self.onSwipeoutDelete);
+        el.removeEventListener('swipeout:deleted', self.onSwipeoutDeleted);
+        el.removeEventListener('swipeout:overswipeenter', self.onSwipeoutOverswipeEnter);
+        el.removeEventListener('swipeout:overswipeexit', self.onSwipeoutOverswipeExit);
+        el.removeEventListener('swipeout', self.onSwipeout);
       }
       if (accordionItem) {
-        el.removeEventListener('accordion:beforeopen', self.onAccBeforeOpenBound);
-        el.removeEventListener('accordion:open', self.onAccOpenBound);
-        el.removeEventListener('accordion:opened', self.onAccOpenedBound);
-        el.removeEventListener('accordion:beforeclose', self.onAccBeforeCloseBound);
-        el.removeEventListener('accordion:close', self.onAccCloseBound);
-        el.removeEventListener('accordion:closed', self.onAccClosedBound);
+        el.removeEventListener('accordion:beforeopen', self.onAccBeforeOpen);
+        el.removeEventListener('accordion:open', self.onAccOpen);
+        el.removeEventListener('accordion:opened', self.onAccOpened);
+        el.removeEventListener('accordion:beforeclose', self.onAccBeforeClose);
+        el.removeEventListener('accordion:close', self.onAccClose);
+        el.removeEventListener('accordion:closed', self.onAccClosed);
       }
     }
     if (smartSelect && self.f7SmartSelect) {

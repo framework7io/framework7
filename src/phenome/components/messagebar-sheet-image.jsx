@@ -13,7 +13,7 @@ export default {
     ...Mixins.colorProps,
   },
   componentDidCreate() {
-    this.onChangeBound = this.onChange.bind(this);
+    Utils.bindMethods(this, ['onChange']);
   },
   render() {
     const self = this;
@@ -39,12 +39,12 @@ export default {
     let inputEl;
     if (process.env.COMPILER === 'react') {
       inputEl = (
-        <input type="checkbox" checked={checked} onChange={self.onChangeBound} />
+        <input type="checkbox" checked={checked} onChange={self.onChange} />
       );
     }
     if (process.env.COMPILER === 'vue') {
       inputEl = (
-        <input type="checkbox" domProps={{ checked }} onChange={self.onChangeBound} />
+        <input type="checkbox" domProps={{ checked }} onChange={self.onChange} />
       );
     }
     return (

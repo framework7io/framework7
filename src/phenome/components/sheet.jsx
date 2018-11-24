@@ -101,19 +101,23 @@ export default {
       }
     },
   },
+  componentDidCreate() {
+    Utils.bindMethods(this, [
+      'onOpen',
+      'onOpened',
+      'onClose',
+      'onClosed',
+    ]);
+  },
   componentDidMount() {
     const self = this;
 
     const el = self.refs.el;
     if (!el) return;
-    self.onOpenBound = self.onOpen.bind(self);
-    self.onOpenedBound = self.onOpened.bind(self);
-    self.onCloseBound = self.onClose.bind(self);
-    self.onClosedBound = self.onClosed.bind(self);
-    el.addEventListener('sheet:open', self.onOpenBound);
-    el.addEventListener('sheet:opened', self.onOpenedBound);
-    el.addEventListener('sheet:close', self.onCloseBound);
-    el.addEventListener('sheet:closed', self.onClosedBound);
+    el.addEventListener('sheet:open', self.onOpen);
+    el.addEventListener('sheet:opened', self.onOpened);
+    el.addEventListener('sheet:close', self.onClose);
+    el.addEventListener('sheet:closed', self.onClosed);
 
     const props = self.props;
     const {
@@ -159,10 +163,10 @@ export default {
 
     const el = self.refs.el;
     if (!el) return;
-    el.removeEventListener('popup:open', self.onOpenBound);
-    el.removeEventListener('popup:opened', self.onOpenedBound);
-    el.removeEventListener('popup:close', self.onCloseBound);
-    el.removeEventListener('popup:closed', self.onClosedBound);
+    el.removeEventListener('popup:open', self.onOpen);
+    el.removeEventListener('popup:opened', self.onOpened);
+    el.removeEventListener('popup:close', self.onClose);
+    el.removeEventListener('popup:closed', self.onClosed);
   },
   methods: {
     onOpen(event) {

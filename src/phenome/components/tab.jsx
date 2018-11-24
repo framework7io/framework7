@@ -60,8 +60,7 @@ export default {
     }
   },
   componentDidCreate() {
-    this.onTabShowBound = this.onTabShow.bind(this);
-    this.onTabHideBound = this.onTabHide.bind(this);
+    Utils.bindMethods(this, ['onTabShow', 'onTabHide']);
   },
   componentDidUpdate() {
     const self = this;
@@ -72,8 +71,8 @@ export default {
     const self = this;
     const el = self.refs.el;
     if (el) {
-      el.removeEventListener('tab:show', self.onTabShowBound);
-      el.removeEventListener('tab:hide', self.onTabHideBound);
+      el.removeEventListener('tab:show', self.onTabShow);
+      el.removeEventListener('tab:hide', self.onTabHide);
     }
     if (!self.routerData) return;
     f7.routers.tabs.splice(f7.routers.tabs.indexOf(self.routerData), 1);
@@ -85,8 +84,8 @@ export default {
     const el = self.refs.el;
 
     if (el) {
-      el.addEventListener('tab:show', self.onTabShowBound);
-      el.addEventListener('tab:hide', self.onTabHideBound);
+      el.addEventListener('tab:show', self.onTabShow);
+      el.addEventListener('tab:hide', self.onTabHide);
     }
     self.setState({ tabContent: null });
 

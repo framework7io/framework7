@@ -31,7 +31,7 @@ export default {
           readOnly={readonly}
           checked={checked}
           defaultChecked={defaultChecked}
-          onChange={self.onChange.bind(self)}
+          onChange={self.onChange}
         />
       );
     }
@@ -40,7 +40,7 @@ export default {
         <input
           type="checkbox"
           name={name}
-          onChange={self.onChange.bind(self)}
+          onChange={self.onChange}
           domProps={{
             value,
             disabled,
@@ -74,6 +74,9 @@ export default {
         Mixins.colorClasses(props),
       );
     },
+  },
+  componentDidCreate() {
+    Utils.bindMethods(this, ['onChange'])
   },
   methods: {
     onChange(event) {

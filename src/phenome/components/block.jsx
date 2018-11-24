@@ -19,19 +19,20 @@ export default {
     noHairlinesIos: Boolean,
     ...Mixins.colorProps,
   },
+  componentDidCreate() {
+    Utils.bindMethods(this, ['onTabShow', 'onTabHide']);
+  },
   componentDidMount() {
     const el = this.refs.el;
     if (!el) return;
-    this.onTabShowBound = this.onTabShow.bind(this);
-    this.onTabHideBound = this.onTabHide.bind(this);
-    el.addEventListener('tab:show', this.onTabShowBound);
-    el.addEventListener('tab:hide', this.onTabHideBound);
+    el.addEventListener('tab:show', this.onTabShow);
+    el.addEventListener('tab:hide', this.onTabHide);
   },
   componentWillUnmount() {
     const el = this.refs.el;
     if (!el) return;
-    el.removeEventListener('tab:show', this.onTabShowBound);
-    el.removeEventListener('tab:hide', this.onTabHideBound);
+    el.removeEventListener('tab:show', this.onTabShow);
+    el.removeEventListener('tab:hide', this.onTabHide);
   },
   render() {
     const self = this;

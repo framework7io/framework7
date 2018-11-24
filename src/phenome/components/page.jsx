@@ -218,28 +218,31 @@ export default {
       </div>
     );
   },
+  componentDidCreate() {
+    Utils.bindMethods(this, [
+      'onPtrPullStart',
+      'onPtrPullMove',
+      'onPtrPullEnd',
+      'onPtrRefresh',
+      'onPtrDone',
+      'onInfinite',
+      'onPageMounted',
+      'onPageInit',
+      'onPageReinit',
+      'onPageBeforeIn',
+      'onPageBeforeOut',
+      'onPageAfterOut',
+      'onPageAfterIn',
+      'onPageBeforeRemove',
+      'onPageStack',
+      'onPageUnstack',
+      'onPagePosition',
+    ]);
+  },
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
     const { ptr, infinite } = self.props;
-
-    self.onPtrPullStart = self.onPtrPullStart.bind(self);
-    self.onPtrPullMove = self.onPtrPullMove.bind(self);
-    self.onPtrPullEnd = self.onPtrPullEnd.bind(self);
-    self.onPtrRefresh = self.onPtrRefresh.bind(self);
-    self.onPtrDone = self.onPtrDone.bind(self);
-    self.onInfinite = self.onInfinite.bind(self);
-    self.onPageMounted = self.onPageMounted.bind(self);
-    self.onPageInit = self.onPageInit.bind(self);
-    self.onPageReinit = self.onPageReinit.bind(self);
-    self.onPageBeforeIn = self.onPageBeforeIn.bind(self);
-    self.onPageBeforeOut = self.onPageBeforeOut.bind(self);
-    self.onPageAfterOut = self.onPageAfterOut.bind(self);
-    self.onPageAfterIn = self.onPageAfterIn.bind(self);
-    self.onPageBeforeRemove = self.onPageBeforeRemove.bind(self);
-    self.onPageStack = self.onPageStack.bind(self);
-    self.onPageUnstack = self.onPageUnstack.bind(self);
-    self.onPagePosition = self.onPagePosition.bind(self);
 
     if (ptr) {
       el.addEventListener('ptr:pullstart', self.onPtrPullStart);

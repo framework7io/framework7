@@ -33,7 +33,7 @@ export default {
           readOnly={readonly}
           checked={checked}
           defaultChecked={defaultChecked}
-          onChange={self.onChange.bind(self)}
+          onChange={self.onChange}
         />
       );
     }
@@ -42,7 +42,7 @@ export default {
         <input
           type="radio"
           name={name}
-          onChange={self.onChange.bind(self)}
+          onChange={self.onChange}
           domProps={{
             value,
             disabled,
@@ -70,6 +70,9 @@ export default {
         <slot />
       </label>
     );
+  },
+  componentDidCreate() {
+    Utils.bindMethods(this, ['onChange'])
   },
   methods: {
     onChange(event) {
