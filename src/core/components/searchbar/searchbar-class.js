@@ -215,7 +215,7 @@ class Searchbar extends FrameworkClass {
       if (sb.enabled) {
         sb.$el.addClass('searchbar-enabled');
         if (sb.expandable) {
-          sb.$el.parents('.navbar-inner').removeClass('with-searchbar-expandable-enabled');
+          sb.$el.parents('.navbar-inner').addClass('with-searchbar-expandable-enabled');
         }
       }
     }
@@ -308,9 +308,14 @@ class Searchbar extends FrameworkClass {
         sb.$disableButtonEl.css(`margin-${app.rtl ? 'left' : 'right'}`, '0px');
       }
       if (sb.expandable) {
-        sb.$el.parent('.navbar-inner').addClass('with-searchbar-expandable-enabled');
+        if (sb.$el.parents('.navbar-inner').hasClass('navbar-inner-large') && sb.$pageEl) {
+          sb.$pageEl.find('.page-content').addClass('with-searchbar-expandable-enabled');
+        }
         if (app.theme === 'md' && sb.$el.parent('.navbar-inner').parent('.navbar').length) {
-          sb.$el.parent('.navbar-inner').parent('.navbar')[0].style.setProperty('--f7-navbar-large-collapse-progress', 1);
+          sb.$el.parent('.navbar-inner').parent('.navbar').addClass('with-searchbar-expandable-enabled');
+        } else {
+          sb.$el.parent('.navbar-inner').addClass('with-searchbar-expandable-enabled');
+          sb.$el.parent('.navbar-inner-large').addClass('navbar-inner-large-collapsed');
         }
       }
       if (sb.$hideOnEnableEl) sb.$hideOnEnableEl.addClass('hidden-by-searchbar');
@@ -355,9 +360,16 @@ class Searchbar extends FrameworkClass {
     sb.$inputEl.val('').trigger('change');
     sb.$el.removeClass('searchbar-enabled searchbar-focused searchbar-enabled-no-disable-button');
     if (sb.expandable) {
-      sb.$el.parents('.navbar-inner').removeClass('with-searchbar-expandable-enabled');
+      if (sb.$el.parents('.navbar-inner').hasClass('navbar-inner-large') && sb.$pageEl) {
+        sb.$pageEl.find('.page-content').removeClass('with-searchbar-expandable-enabled');
+      }
       if (app.theme === 'md' && sb.$el.parent('.navbar-inner').parent('.navbar').length) {
-        sb.$el.parent('.navbar-inner').parent('.navbar')[0].style.removeProperty('--f7-navbar-large-collapse-progress');
+        sb.$el.parent('.navbar-inner').parent('.navbar').removeClass('with-searchbar-expandable-enabled');
+      } else {
+        sb.$el.parent('.navbar-inner').removeClass('with-searchbar-expandable-enabled');
+        if (sb.$pageEl) {
+          sb.$pageEl.find('.page-content').trigger('scroll');
+        }
       }
     }
     if (!sb.expandable && sb.$disableButtonEl && sb.$disableButtonEl.length > 0 && app.theme === 'ios') {

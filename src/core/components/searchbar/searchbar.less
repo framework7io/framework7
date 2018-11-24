@@ -88,6 +88,8 @@
   position: absolute;
   transition-duration: 300ms;
   pointer-events: none;
+}
+.navbar-inner-large .searchbar-expandable {
   .hairline-remove(bottom);
 }
 .navbar .searchbar.searchbar-expandable {
@@ -161,9 +163,19 @@
     display: none !important;
   }
 }
-
+.navbar.with-searchbar-expandable-enabled,
 .navbar-inner.with-searchbar-expandable-enabled {
   --f7-navbar-large-collapse-progress: 1;
+  .title-large, .title-large-text, .title-large-inner {
+    transition-duration: 300ms;
+  }
+}
+
+.page-content.with-searchbar-expandable-enabled {
+  height: calc(100% + var(--f7-navbar-large-title-height));
+  transform: translateY(calc(-1 * var(--f7-navbar-large-title-height)));
+  transition-duration: 300ms;
+  transition-property: transform;
 }
 
 // Relation with page
