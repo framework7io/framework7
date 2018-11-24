@@ -57,7 +57,7 @@ const CardExpandable = {
     let offset = $cardEl.offset();
 
     let cardLeftOffset = offset.left;
-    let cardTopOffset = offset.top;
+    let cardTopOffset = offset.top - $pageEl.offset().top;
     if (app.rtl) cardLeftOffset -= $cardEl[0].scrollLeft;
     if (hasTransform) {
       cardLeftOffset = $cardEl[0].offsetLeft;

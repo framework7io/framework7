@@ -80,6 +80,12 @@ p {
 .disabled {
   .disabled() !important;
 }
+// Full viewport
+html.device-full-viewport {
+  &, & body {
+    height: 100vh;
+  }
+}
 
 & when (@includeIosTheme) {
   @import url('./app-ios.less');

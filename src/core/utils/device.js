@@ -85,10 +85,9 @@ const Device = (function Device() {
 
   // Webview
   device.webView = !!((iphone || ipad || ipod) && (ua.match(/.*AppleWebKit(?!.*Safari)/i) || window.navigator.standalone))
-                     || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+    || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
   device.webview = device.webView;
   device.standalone = device.webView;
-
 
   // Desktop
   device.desktop = !(device.os || device.android || device.webView);
@@ -107,8 +106,14 @@ const Device = (function Device() {
       && metaViewport && metaViewport.getAttribute('content').indexOf('minimal-ui') >= 0;
   }
 
+  // Meta statusbar
+  const metaStatusbar = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+
   // Check for status bar and fullscreen app mode
   device.needsStatusbarOverlay = function needsStatusbarOverlay() {
+    if (device.standalone && device.ios && metaStatusbar && metaStatusbar.content === 'black-translucent') {
+      return true;
+    }
     if ((device.webView || (device.android && device.cordova)) && (window.innerWidth * window.innerHeight === window.screen.width * window.screen.height)) {
       if (device.iphoneX && (window.orientation === 90 || window.orientation === -90)) {
         return false;
