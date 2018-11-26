@@ -54,9 +54,8 @@ class Searchbar extends FrameworkClass {
     } else {
       $navbarEl = $el.parents('.navbar-inner');
       if ($navbarEl.length > 0) {
-        if ($navbarEl[0].f7Page) {
-          $pageEl = $navbarEl[0].f7Page.$el;
-        } else {
+        $pageEl = $(app.navbar.getPageByEl($navbarEl[0]));
+        if (!$pageEl.length) {
           const $currentPageEl = $el.parents('.view').find('.page-current');
           if ($currentPageEl[0] && $currentPageEl[0].f7Page && $currentPageEl[0].f7Page.navbarEl === $navbarEl[0]) {
             $pageEl = $currentPageEl;
