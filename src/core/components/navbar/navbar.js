@@ -104,7 +104,14 @@ const Navbar = {
           left[0].f7NavbarLeftOffset = -leftWidth + separateNavbarLeftOffset;
           left[0].f7NavbarRightOffset = ((navbarInnerWidth - left[0].offsetWidth) / 2) - separateNavbarRightOffset;
           if (router && router.params.iosAnimateNavbarBackIcon && left.find('.back .icon').length > 0) {
-            left[0].f7NavbarRightOffset -= left.find('.back .icon')[0].offsetWidth;
+            if (left.find('.back .icon ~ span').length) {
+              const leftOffset = left[0].f7NavbarLeftOffset;
+              const rightOffset = left[0].f7NavbarRightOffset;
+              left[0].f7NavbarLeftOffset = 0;
+              left[0].f7NavbarRightOffset = 0;
+              left.find('.back .icon ~ span')[0].f7NavbarLeftOffset = leftOffset;
+              left.find('.back .icon ~ span')[0].f7NavbarRightOffset = rightOffset - left.find('.back .icon')[0].offsetWidth;
+            }
           }
         }
       }

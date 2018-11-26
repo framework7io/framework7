@@ -137,9 +137,9 @@
         animation: ios-navbar-element-fade-out var(--f7-page-transition-duration) forwards;
       }
       .sliding,
-      .left.sliding .icon,
+      .left.sliding .icon + span,
       &.sliding .left,
-      &.sliding .left .icon,
+      &.sliding .left .icon + span,
       &.sliding > .title,
       &.sliding .right {
         transition-duration: var(--f7-page-transition-duration);
@@ -159,9 +159,9 @@
       animation: ios-navbar-element-fade-in var(--f7-page-transition-duration) forwards;
     }
     & .sliding,
-    & .left.sliding .icon,
+    & .left.sliding .icon + span,
     &.sliding .left,
-    &.sliding .left .icon,
+    &.sliding .left .icon + span,
     &.sliding > .title,
     &.sliding .right,
     &.sliding .subnavbar {

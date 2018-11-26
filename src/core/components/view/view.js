@@ -74,7 +74,6 @@ export default {
       pushStateOnLoad: true,
       // Animate Pages
       animate: true,
-      animateWithJS: false,
       // iOS Dynamic Navbar
       iosDynamicNavbar: true,
       iosSeparateDynamicNavbar: true,
