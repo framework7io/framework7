@@ -275,6 +275,7 @@ class Range extends Framework7Class {
     }
     let parentModals;
     let parentPanel;
+    let parentPage;
     range.attachEvents = function attachEvents() {
       const passive = Support.passiveListener ? { passive: true } : false;
       range.$el.on(app.touchEvents.start, handleTouchStart, passive);
@@ -286,6 +287,8 @@ class Range extends Framework7Class {
       parentModals.on('modal:open', handleResize);
       parentPanel = range.$el.parents('.panel');
       parentPanel.on('panel:open', handleResize);
+      parentPage = range.$el.parents('.page').eq(0);
+      parentPage.on('page:reinit', handleResize);
     };
     range.detachEvents = function detachEvents() {
       const passive = Support.passiveListener ? { passive: true } : false;
@@ -300,8 +303,12 @@ class Range extends Framework7Class {
       if (parentPanel) {
         parentPanel.off('panel:open', handleResize);
       }
+      if (parentPage) {
+        parentPage.off('page:reinit', handleResize);
+      }
       parentModals = null;
       parentPanel = null;
+      parentPage = null;
     };
 
     // Install Modules

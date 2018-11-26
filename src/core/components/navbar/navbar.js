@@ -178,7 +178,16 @@ const Navbar = {
       $navbarInnerEl = $navbarInnerEl.find('.navbar-inner');
       if ($navbarInnerEl.length > 1) return undefined;
     }
-    return $navbarInnerEl[0].f7Page;
+    if ($navbarInnerEl.parents('.page').length) {
+      return $navbarInnerEl.parents('.page')[0];
+    }
+    let pageEl;
+    $navbarInnerEl.parents('.view').find('.page').each((index, el) => {
+      if (el && el.f7Page && el.f7Page.navbarEl && $navbarInnerEl[0] === el.f7Page.navbarEl) {
+        pageEl = el;
+      }
+    });
+    return pageEl;
   },
   initHideNavbarOnScroll(pageEl, navbarInnerEl) {
     const app = this;
@@ -242,6 +251,7 @@ export default {
         hide: Navbar.hide.bind(app),
         show: Navbar.show.bind(app),
         getElByPage: Navbar.getElByPage.bind(app),
+        getPageByEl: Navbar.getPageByEl.bind(app),
         initHideNavbarOnScroll: Navbar.initHideNavbarOnScroll.bind(app),
       },
     });

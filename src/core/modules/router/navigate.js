@@ -15,9 +15,9 @@ function refreshPage() {
 
 function forward(el, forwardOptions = {}) {
   const router = this;
+  const $el = $(el);
   const app = router.app;
   const view = router.view;
-
   const options = Utils.extend(false, {
     animate: router.params.animate,
     pushState: true,
@@ -66,13 +66,19 @@ function forward(el, forwardOptions = {}) {
   const separateNavbar = router.separateNavbar;
 
   const $viewEl = router.$el;
-  const $newPage = $(el);
+  const $newPage = $el;
   const reload = options.reloadPrevious || options.reloadCurrent || options.reloadAll;
   let $oldPage;
 
   let $navbarEl;
   let $newNavbarInner;
   let $oldNavbarInner;
+
+  router.allowPageChange = false;
+  if ($newPage.length === 0) {
+    router.allowPageChange = true;
+    return router;
+  }
 
   if ($newPage.length) {
     // Remove theme elements
@@ -93,10 +99,11 @@ function forward(el, forwardOptions = {}) {
     }
   }
 
-  router.allowPageChange = false;
-  if ($newPage.length === 0) {
-    router.allowPageChange = true;
-    return router;
+  // Save Keep Alive Cache
+  if (options.route && options.route.route && options.route.route.keepAlive && !options.route.route.keepAliveData) {
+    options.route.route.keepAliveData = {
+      pageEl: $el[0],
+    };
   }
 
   // Pages In View
@@ -602,10 +609,11 @@ function navigate(navigateParams, navigateOptions = {}) {
 
   const options = {};
   if (route.route.options) {
-    Utils.extend(options, route.route.options, navigateOptions, { route });
+    Utils.extend(options, route.route.options, navigateOptions);
   } else {
-    Utils.extend(options, navigateOptions, { route });
+    Utils.extend(options, navigateOptions);
   }
+  options.route = route;
 
   if (options && options.context) {
     route.context = options.context;
@@ -620,10 +628,14 @@ function navigate(navigateParams, navigateOptions = {}) {
         router.modalLoad(modalLoadProp, route, options);
       }
     });
+    if (route.route.keepAlive && route.route.keepAliveData) {
+      router.load({ el: route.route.keepAliveData.pageEl }, options, false);
+      routerLoaded = true;
+    }
     ('url content component pageName el componentUrl template templateUrl').split(' ').forEach((pageLoadProp) => {
       if (route.route[pageLoadProp] && !routerLoaded) {
         routerLoaded = true;
-        router.load({ [pageLoadProp]: route.route[pageLoadProp] }, options);
+        router.load({ [pageLoadProp]: route.route[pageLoadProp] }, options, false);
       }
     });
     if (routerLoaded) return;

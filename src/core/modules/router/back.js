@@ -8,6 +8,7 @@ import processRouteQueue from './process-route-queue';
 
 function backward(el, backwardOptions) {
   const router = this;
+  const $el = $(el);
   const app = router.app;
   const view = router.view;
 
@@ -19,7 +20,7 @@ function backward(el, backwardOptions) {
   const dynamicNavbar = router.dynamicNavbar;
   const separateNavbar = router.separateNavbar;
 
-  const $newPage = $(el);
+  const $newPage = $el;
   const $oldPage = router.$el.children('.page-current');
 
   if ($newPage.length) {
@@ -57,6 +58,13 @@ function backward(el, backwardOptions) {
   // Remove theme elements
   router.removeThemeElements($newPage);
 
+  // Save Keep Alive Cache
+  if (options.route && options.route.route && options.route.route.keepAlive && !options.route.route.keepAliveData) {
+    options.route.route.keepAliveData = {
+      pageEl: $el[0],
+    };
+  }
+
   // New Page
   $newPage
     .addClass('page-previous')
@@ -71,7 +79,6 @@ function backward(el, backwardOptions) {
       .removeClass('stacked')
       .removeAttr('aria-hidden');
   }
-
 
   // Remove previous page in case of "forced"
   let backIndex;
@@ -548,10 +555,11 @@ function back(...args) {
 
   const options = {};
   if (route.route.options) {
-    Utils.extend(options, route.route.options, navigateOptions, { route });
+    Utils.extend(options, route.route.options, navigateOptions);
   } else {
-    Utils.extend(options, navigateOptions, { route });
+    Utils.extend(options, navigateOptions);
   }
+  options.route = route;
 
   if (options && options.context) {
     route.context = options.context;
@@ -572,6 +580,10 @@ function back(...args) {
   }
   function resolve() {
     let routerLoaded = false;
+    if (route.route.keepAlive && route.route.keepAliveData) {
+      router.loadBack({ el: route.route.keepAliveData.pageEl }, options);
+      routerLoaded = true;
+    }
     ('url content component pageName el componentUrl template templateUrl').split(' ').forEach((pageLoadProp) => {
       if (route.route[pageLoadProp] && !routerLoaded) {
         routerLoaded = true;
