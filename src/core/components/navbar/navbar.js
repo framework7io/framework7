@@ -270,7 +270,7 @@ const Navbar = {
       ? $navbarInnerEl.parents('.navbar')
       : $(navbarInnerEl || app.navbar.getElByPage(pageEl)).closest('.navbar');
     const navbarHideHeight = 44;
-    const snapLargeTitleCollapse = app.params.navbar.snapLargeTitleCollapse;
+    const snapPageScrollToLargeTitle = app.params.navbar.snapPageScrollToLargeTitle;
 
     let previousScrollTop;
     let currentScrollTop;
@@ -342,7 +342,7 @@ const Navbar = {
         }
       }
 
-      if (snapLargeTitleCollapse) {
+      if (snapPageScrollToLargeTitle) {
         if (!Support.touch) {
           clearTimeout(scrollTimeoutId);
           scrollTimeoutId = setTimeout(() => {
@@ -420,14 +420,14 @@ const Navbar = {
       }, touchSnapTimeout);
     }
     $pageEl.on('scroll', '.page-content', handleScroll, true);
-    if (Support.touch && needCollapse && snapLargeTitleCollapse) {
+    if (Support.touch && needCollapse && snapPageScrollToLargeTitle) {
       app.on('touchstart:passive', handeTouchStart);
       app.on('touchend:passive', handleTouchEnd);
     }
     $pageEl[0].f7DetachNavbarScrollHandlers = function f7DetachNavbarScrollHandlers() {
       delete $pageEl[0].f7DetachNavbarScrollHandlers;
       $pageEl.off('scroll', '.page-content', handleScroll, true);
-      if (Support.touch && needCollapse && snapLargeTitleCollapse) {
+      if (Support.touch && needCollapse && snapPageScrollToLargeTitle) {
         app.off('touchstart:passive', handeTouchStart);
         app.off('touchend:passive', handleTouchEnd);
       }
@@ -461,7 +461,7 @@ export default {
       showOnPageScrollEnd: true,
       showOnPageScrollTop: true,
       collapseLargeTitleOnScroll: true,
-      snapLargeTitleCollapse: true,
+      snapPageScrollToLargeTitle: true,
     },
   },
   on: {
