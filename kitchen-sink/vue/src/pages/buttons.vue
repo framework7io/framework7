@@ -97,22 +97,22 @@
       </f7-segmented>
     </f7-block>
 
-    <f7-block-title>Big Buttons</f7-block-title>
+    <f7-block-title>Large Buttons</f7-block-title>
     <f7-block>
       <f7-row tag="p">
         <f7-col tag="span">
-          <f7-button big>Button</f7-button>
+          <f7-button large>Button</f7-button>
         </f7-col>
         <f7-col tag="span">
-          <f7-button big fill>Fill</f7-button>
+          <f7-button large fill>Fill</f7-button>
         </f7-col>
       </f7-row>
       <f7-row tag="p">
         <f7-col tag="span">
-          <f7-button big raised>Raised</f7-button>
+          <f7-button large raised>Raised</f7-button>
         </f7-col>
         <f7-col tag="span">
-          <f7-button big raised fill>Raised Fill</f7-button>
+          <f7-button large raised fill>Raised Fill</f7-button>
         </f7-col>
       </f7-row>
     </f7-block>
@@ -121,24 +121,24 @@
     <f7-block>
       <f7-row tag="p">
         <f7-col tag="span">
-          <f7-button big small>Button</f7-button>
+          <f7-button large small>Button</f7-button>
         </f7-col>
         <f7-col tag="span">
-          <f7-button big small outline>Outline</f7-button>
+          <f7-button large small outline>Outline</f7-button>
         </f7-col>
         <f7-col tag="span">
-          <f7-button big small fill>Fill</f7-button>
+          <f7-button large small fill>Fill</f7-button>
         </f7-col>
       </f7-row>
       <f7-row tag="p">
         <f7-col tag="span">
-          <f7-button big small round>Button</f7-button>
+          <f7-button large small round>Button</f7-button>
         </f7-col>
         <f7-col tag="span">
-          <f7-button big small outline round>Outline</f7-button>
+          <f7-button large small outline round>Outline</f7-button>
         </f7-col>
         <f7-col tag="span">
-          <f7-button big small fill round>Fill</f7-button>
+          <f7-button large small fill round>Fill</f7-button>
         </f7-col>
       </f7-row>
     </f7-block>
@@ -180,7 +180,7 @@
       <f7-list-button title="List Button 3"></f7-list-button>
     </f7-list>
     <f7-list inset>
-      <f7-list-button title="Big Red Button" color="red"></f7-list-button>
+      <f7-list-button title="Large Red Button" color="red"></f7-list-button>
     </f7-list>
   </f7-page>
 </template>

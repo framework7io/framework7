@@ -63,23 +63,23 @@ export default class extends React.Component {
 
           <Row className="margin-top">
             <Col>
-              <small className="display-block">Big</small>
-              <Stepper big></Stepper>
+              <small className="display-block">Large</small>
+              <Stepper large></Stepper>
             </Col>
             <Col>
-              <small className="display-block">Big Round</small>
-              <Stepper big round></Stepper>
+              <small className="display-block">Large Round</small>
+              <Stepper large round></Stepper>
             </Col>
           </Row>
 
           <Row className="margin-top">
             <Col>
-              <small className="display-block">Big Fill</small>
-              <Stepper big fill></Stepper>
+              <small className="display-block">Large Fill</small>
+              <Stepper large fill></Stepper>
             </Col>
             <Col>
-              <small className="display-block">Big Round Fill</small>
-              <Stepper big round fill></Stepper>
+              <small className="display-block">Large Round Fill</small>
+              <Stepper large round fill></Stepper>
             </Col>
           </Row>
         </Block>
@@ -132,23 +132,23 @@ export default class extends React.Component {
 
           <Row className="margin-top">
             <Col>
-              <small className="display-block">Big</small>
-              <Stepper raised big></Stepper>
+              <small className="display-block">Large</small>
+              <Stepper raised large></Stepper>
             </Col>
             <Col>
-              <small className="display-block">Big Round</small>
-              <Stepper raised big round></Stepper>
+              <small className="display-block">Large Round</small>
+              <Stepper raised large round></Stepper>
             </Col>
           </Row>
 
           <Row className="margin-top">
             <Col>
-              <small className="display-block">Big Fill</small>
-              <Stepper raised big fill></Stepper>
+              <small className="display-block">Large Fill</small>
+              <Stepper raised large fill></Stepper>
             </Col>
             <Col>
-              <small className="display-block">Big Round Fill</small>
-              <Stepper raised big round fill></Stepper>
+              <small className="display-block">Large Round Fill</small>
+              <Stepper raised large round fill></Stepper>
             </Col>
           </Row>
         </Block>

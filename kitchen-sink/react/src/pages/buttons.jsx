@@ -100,22 +100,22 @@ export default () => (
       </Segmented>
     </Block>
 
-    <BlockTitle>Big Buttons</BlockTitle>
+    <BlockTitle>Large Buttons</BlockTitle>
     <Block>
       <Row tag="p">
         <Col tag="span">
-          <Button big>Button</Button>
+          <Button large>Button</Button>
         </Col>
         <Col tag="span">
-          <Button big fill>Fill</Button>
+          <Button large fill>Fill</Button>
         </Col>
       </Row>
       <Row tag="p">
         <Col tag="span">
-          <Button big raised>Raised</Button>
+          <Button large raised>Raised</Button>
         </Col>
         <Col tag="span">
-          <Button big raised fill>Raised Fill</Button>
+          <Button large raised fill>Raised Fill</Button>
         </Col>
       </Row>
     </Block>
@@ -124,24 +124,24 @@ export default () => (
     <Block>
       <Row tag="p">
         <Col tag="span">
-          <Button big small>Button</Button>
+          <Button large small>Button</Button>
         </Col>
         <Col tag="span">
-          <Button big small outline>Outline</Button>
+          <Button large small outline>Outline</Button>
         </Col>
         <Col tag="span">
-          <Button big small fill>Fill</Button>
+          <Button large small fill>Fill</Button>
         </Col>
       </Row>
       <Row tag="p">
         <Col tag="span">
-          <Button big small round>Button</Button>
+          <Button large small round>Button</Button>
         </Col>
         <Col tag="span">
-          <Button big small outline round>Outline</Button>
+          <Button large small outline round>Outline</Button>
         </Col>
         <Col tag="span">
-          <Button big small fill round>Fill</Button>
+          <Button large small fill round>Fill</Button>
         </Col>
       </Row>
     </Block>
@@ -183,7 +183,7 @@ export default () => (
       <ListButton title="List Button 3"></ListButton>
     </List>
     <List inset>
-      <ListButton title="Big Red Button" color="red"></ListButton>
+      <ListButton title="Large Red Button" color="red"></ListButton>
     </List>
   </Page>
 );

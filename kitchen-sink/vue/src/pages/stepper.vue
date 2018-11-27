@@ -49,23 +49,23 @@
 
       <f7-row class="margin-top">
         <f7-col>
-          <small class="display-block">Big</small>
-          <f7-stepper big></f7-stepper>
+          <small class="display-block">Large</small>
+          <f7-stepper large></f7-stepper>
         </f7-col>
         <f7-col>
-          <small class="display-block">Big Round</small>
-          <f7-stepper big round></f7-stepper>
+          <small class="display-block">Large Round</small>
+          <f7-stepper large round></f7-stepper>
         </f7-col>
       </f7-row>
 
       <f7-row class="margin-top">
         <f7-col>
-          <small class="display-block">Big Fill</small>
-          <f7-stepper big fill></f7-stepper>
+          <small class="display-block">Large Fill</small>
+          <f7-stepper large fill></f7-stepper>
         </f7-col>
         <f7-col>
-          <small class="display-block">Big Round Fill</small>
-          <f7-stepper big round fill></f7-stepper>
+          <small class="display-block">Large Round Fill</small>
+          <f7-stepper large round fill></f7-stepper>
         </f7-col>
       </f7-row>
     </f7-block>
@@ -118,23 +118,23 @@
 
       <f7-row class="margin-top">
         <f7-col>
-          <small class="display-block">Big</small>
-          <f7-stepper raised big></f7-stepper>
+          <small class="display-block">Large</small>
+          <f7-stepper raised large></f7-stepper>
         </f7-col>
         <f7-col>
-          <small class="display-block">Big Round</small>
-          <f7-stepper raised big round></f7-stepper>
+          <small class="display-block">Large Round</small>
+          <f7-stepper raised large round></f7-stepper>
         </f7-col>
       </f7-row>
 
       <f7-row class="margin-top">
         <f7-col>
-          <small class="display-block">Big Fill</small>
-          <f7-stepper raised big fill></f7-stepper>
+          <small class="display-block">Large Fill</small>
+          <f7-stepper raised large fill></f7-stepper>
         </f7-col>
         <f7-col>
-          <small class="display-block">Big Round Fill</small>
-          <f7-stepper raised big round fill></f7-stepper>
+          <small class="display-block">Large Round Fill</small>
+          <f7-stepper raised large round fill></f7-stepper>
         </f7-col>
       </f7-row>
     </f7-block>

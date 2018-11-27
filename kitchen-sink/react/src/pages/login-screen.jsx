@@ -24,11 +24,11 @@ export default class extends React.Component {
         </List>
 
         <Block>
-          <Button raised big fill loginScreenOpen=".demo-login-screen">As Overlay</Button>
+          <Button raised large fill loginScreenOpen=".demo-login-screen">As Overlay</Button>
         </Block>
 
         <Block>
-          <Button raised big fill onClick={() => {this.setState({loginScreenOpened : true})}}>Open Via Prop Change</Button>
+          <Button raised large fill onClick={() => {this.setState({loginScreenOpened : true})}}>Open Via Prop Change</Button>
         </Block>
 
         <LoginScreen className="demo-login-screen" opened={this.state.loginScreenOpened} onLoginScreenClosed={() => {this.setState({loginScreenOpened : false})}}>

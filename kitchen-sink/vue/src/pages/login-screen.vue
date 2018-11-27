@@ -10,11 +10,11 @@
     </f7-list>
 
     <f7-block>
-      <f7-button raised big fill login-screen-open=".demo-login-screen">As Overlay</f7-button>
+      <f7-button raised large fill login-screen-open=".demo-login-screen">As Overlay</f7-button>
     </f7-block>
 
     <f7-block>
-      <f7-button raised big fill @click="loginScreenOpened = true">Open Via Prop Change</f7-button>
+      <f7-button raised large fill @click="loginScreenOpened = true">Open Via Prop Change</f7-button>
     </f7-block>
 
     <f7-login-screen class="demo-login-screen" :opened="loginScreenOpened" @loginscreen:closed="loginScreenOpened = false">
