@@ -498,3 +498,35 @@ code {
   text-align: center;
   line-height: 100px;
 }
+/* Demo Expandable Cards */
+@media (min-width: 768px) {
+  .demo-expandable-cards {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .demo-expandable-cards .card {
+    flex-shrink: 10;
+    min-width: 0;
+    max-width: 630px;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .demo-expandable-cards .card {
+    width: calc((100% - var(--f7-card-expandable-margin-horizontal) * 3) / 2);
+  }
+  .demo-expandable-cards .card:nth-child(2),
+  .demo-expandable-cards .card:nth-child(4) {
+    margin-left: 0;;
+  }
+  .demo-expandable-cards .card:nth-child(n + 3) {
+    margin-top: 0;
+  }
+}
+@media (min-width: 1024px) {
+  .demo-expandable-cards .card {
+    width: calc((100% - var(--f7-card-expandable-margin-horizontal) * 5) / 4);
+  }
+  .demo-expandable-cards .card:nth-child(n + 2) {
+    margin-left: 0;
+  }
+}
