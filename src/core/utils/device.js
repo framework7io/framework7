@@ -48,7 +48,7 @@ const Device = (function Device() {
   // Windows
   if (windowsPhone) {
     device.os = 'windows';
-    device.osVersion = windows[2];
+    device.osVersion = windowsPhone[2];
     device.windowsPhone = true;
   }
   // Android
