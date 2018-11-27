@@ -33,12 +33,12 @@
 }
 @media (min-width: 630px) and (min-height: 630px) {
   .popup:not(.popup-tablet-fullscreen) {
-    width: 630px;
-    height: 630px;
+    width: var(--f7-popup-tablet-width);
+    height: var(--f7-popup-tablet-height);
     left: 50%;
     top: 50%;
-    margin-left: -315px;
-    margin-top: -315px;
+    margin-left: calc(-1 * var(--f7-popup-tablet-width) / 2);
+    margin-top: calc(-1 * var(--f7-popup-tablet-height) / 2);
     transform: translate3d(0, 100vh, 0);
     box-shadow: var(--f7-popup-box-shadow);
     &.modal-in {
