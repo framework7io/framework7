@@ -53,7 +53,7 @@ export default class extends React.Component {
                 title={item.title}
                 subtitle={item.subtitle}
                 style={{top: `${this.state.vlData.topPosition}px`}}
-                virtualListIndex={index}
+                virtualListIndex={vlData.fromIndex + index}
               ></ListItem>
             ))}
           </ul>

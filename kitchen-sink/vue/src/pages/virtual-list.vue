@@ -31,7 +31,7 @@
           :title="item.title"
           :subtitle="item.subtitle"
           :style="`top: ${vlData.topPosition}px`"
-          :virtual-list-index="index"
+          :virtual-list-index="vlData.fromIndex + index"
         ></f7-list-item>
       </ul>
     </f7-list>
