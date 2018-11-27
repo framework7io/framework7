@@ -213,6 +213,27 @@
     .hairline-remove(bottom);
   }
 }
+.card-expandable-size {
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+@media (min-width: 768px) {
+  .card-expandable:not(.card-tablet-fullscreen) {
+    .card-content {
+      width: var(--f7-card-expandable-tablet-width);
+    }
+    .card-expandable-size {
+      width: var(--f7-card-expandable-tablet-width);
+      height: var(--f7-card-expandable-tablet-height);
+    }
+  }
+}
 .page.page-with-card-opened {
   .page-content {
     overflow: hidden;

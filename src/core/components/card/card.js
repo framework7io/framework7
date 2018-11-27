@@ -46,28 +46,42 @@ const CardExpandable = {
     }
     const $cardContentEl = $cardEl.children('.card-content');
 
+    const $cardSizeEl = $(document.createElement('div')).addClass('card-expandable-size');
+    $cardEl.append($cardSizeEl);
+
     let cardWidth = $cardEl[0].offsetWidth;
     let cardHeight = $cardEl[0].offsetHeight;
     let pageWidth = $pageEl[0].offsetWidth;
     let pageHeight = $pageEl[0].offsetHeight;
 
-    let scaleX = pageWidth / cardWidth;
-    let scaleY = pageHeight / cardHeight;
+    let maxWidth = $cardSizeEl[0].offsetWidth || pageWidth;
+    let maxHeight = $cardSizeEl[0].offsetHeight || pageHeight;
+
+    let scaleX = maxWidth / cardWidth;
+    let scaleY = maxHeight / cardHeight;
 
     let offset = $cardEl.offset();
 
-    let cardLeftOffset = offset.left;
-    let cardTopOffset = offset.top - $pageEl.offset().top;
-    if (app.rtl) cardLeftOffset -= $cardEl[0].scrollLeft;
+    let cardLeftOffset;
+    let cardTopOffset;
+
     if (hasTransform) {
       cardLeftOffset = $cardEl[0].offsetLeft;
       cardTopOffset = $cardEl[0].offsetTop - $cardEl.parents('.page-content')[0].scrollTop;
+    } else {
+      cardLeftOffset = offset.left;
+      cardTopOffset = offset.top - $pageEl.offset().top;
+      if (app.rtl) cardLeftOffset -= $cardEl[0].scrollLeft;
     }
-    let cardRightOffset = pageWidth - cardWidth - cardLeftOffset;
+
+    cardLeftOffset -= (pageWidth - maxWidth) / 2;
+    cardTopOffset -= (pageHeight - maxHeight) / 2;
+
+    let cardRightOffset = maxWidth - cardWidth - cardLeftOffset;
     if (app.rtl) {
       [cardLeftOffset, cardRightOffset] = [cardRightOffset, cardLeftOffset];
     }
-    let cardBottomOffset = pageHeight - cardHeight - cardTopOffset;
+    let cardBottomOffset = maxHeight - cardHeight - cardTopOffset;
     let translateX = (cardRightOffset - cardLeftOffset) / 2;
     let translateY = (cardBottomOffset - cardTopOffset) / 2;
 
@@ -91,8 +105,8 @@ const CardExpandable = {
     }
     $cardContentEl
       .css({
-        width: `${pageWidth}px`,
-        height: `${pageHeight}px`,
+        width: `${maxWidth}px`,
+        height: `${maxHeight}px`,
       })
       .transform(`translate3d(${app.rtl ? (cardLeftOffset + translateX) : (-cardLeftOffset - translateX)}px, 0px, 0) scale(${1 / scaleX}, ${1 / scaleY})`);
 
@@ -114,18 +128,21 @@ const CardExpandable = {
       cardHeight = $cardEl[0].offsetHeight;
       pageWidth = $pageEl[0].offsetWidth;
       pageHeight = $pageEl[0].offsetHeight;
+      maxWidth = $cardSizeEl[0].offsetWidth || pageWidth;
+      maxHeight = $cardSizeEl[0].offsetHeight || pageHeight;
 
-      scaleX = pageWidth / cardWidth;
-      scaleY = pageHeight / cardHeight;
+      scaleX = maxWidth / cardWidth;
+      scaleY = maxHeight / cardHeight;
 
       $cardEl.transform('translate3d(0px, 0px, 0) scale(1)');
       offset = $cardEl.offset();
 
-      cardLeftOffset = offset.left;
+      cardLeftOffset = offset.left - (pageWidth - maxWidth) / 2;
       if (app.rtl) cardLeftOffset -= $cardEl[0].scrollLeft;
-      cardTopOffset = offset.top;
-      cardRightOffset = pageWidth - cardWidth - cardLeftOffset;
-      cardBottomOffset = pageHeight - cardHeight - cardTopOffset;
+      cardTopOffset = offset.top - (pageHeight - maxHeight) / 2;
+
+      cardRightOffset = maxWidth - cardWidth - cardLeftOffset;
+      cardBottomOffset = maxHeight - cardHeight - cardTopOffset;
       if (app.rtl) {
         [cardLeftOffset, cardRightOffset] = [cardRightOffset, cardLeftOffset];
       }
@@ -135,8 +152,8 @@ const CardExpandable = {
       $cardEl.transform(`translate3d(${translateX}px, ${translateY}px, 0) scale(${scaleX}, ${scaleY})`);
       $cardContentEl
         .css({
-          width: `${pageWidth}px`,
-          height: `${pageHeight}px`,
+          width: `${maxWidth}px`,
+          height: `${maxHeight}px`,
         })
         .transform(`translate3d(${app.rtl ? (cardLeftOffset + translateX) : (-cardLeftOffset - translateX)}px, 0px, 0) scale(${1 / scaleX}, ${1 / scaleY})`);
     }
@@ -282,6 +299,7 @@ const CardExpandable = {
     function transitionEnd() {
       $cardEl.removeClass('card-closing card-no-transition');
       $cardEl.trigger('card:closed');
+      $cardEl.find('.card-expandable-size').remove();
       app.emit('cardClosed', $cardEl[0]);
     }
     $cardContentEl
