@@ -152,11 +152,21 @@ const Sortable = {
          && $sortableContainer.hasClass('virtual-list')
       ) {
         indexFrom = $sortingEl[0].f7VirtualListIndex;
-        indexTo = $insertBeforeEl ? $insertBeforeEl[0].f7VirtualListIndex : $insertAfterEl[0].f7VirtualListIndex;
+        if (typeof indexFrom === 'undefined') indexFrom = $sortingEl.attr('data-virtual-list-index');
+        if ($insertBeforeEl) {
+          indexTo = $insertBeforeEl[0].f7VirtualListIndex;
+          if (typeof indexTo === 'undefined') indexTo = $insertBeforeEl.attr('data-virtual-list-index');
+        } else {
+          indexTo = $insertAfterEl[0].f7VirtualListIndex;
+          if (typeof indexTo === 'undefined') indexTo = $insertAfterEl.attr('data-virtual-list-index');
+        }
+        if (indexTo !== null) indexTo = parseInt(indexTo, 10);
+        else indexTo = undefined;
+
         const virtualList = $sortableContainer[0].f7VirtualList;
         if (virtualList) virtualList.moveItem(indexFrom, indexTo);
       }
-      if (typeof indexTo !== 'undefined' && indexTo !== indexFrom) {
+      if (typeof indexTo !== 'undefined' && !Number.isNaN(indexTo) && indexTo !== indexFrom) {
         $sortingEl.trigger('sortable:sort', { from: indexFrom, to: indexTo });
         app.emit('sortableSort', $sortingEl[0], { from: indexFrom, to: indexTo });
       }
