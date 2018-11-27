@@ -18,11 +18,17 @@ export namespace Accordion {
 
   }
   interface AppEvents {
+    /** Event will be triggered before accordion content starts its opening animation */
+    accordionBeforeOpen : (el : HTMLElement | CSSSelector, prevent: () => void) => void
+
     /** Event will be triggered when accordion content starts its opening animation */
     accordionOpen : (el : HTMLElement | CSSSelector) => void
 
     /** Event will be triggered after accordion content completes its opening animation */
     accordionOpened : (el : HTMLElement | CSSSelector) => void
+
+    /** Event will be triggered before accordion content starts its closing animation */
+    accordionBeforeClose : (el : HTMLElement | CSSSelector, prevent: () => void) => void
 
     /** Event will be triggered when accordion content starts its closing animation */
     accordionClose : (el : HTMLElement | CSSSelector) => void
