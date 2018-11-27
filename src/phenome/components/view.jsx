@@ -46,6 +46,11 @@ export default {
     iosSwipeBackAnimateOpacity: Boolean,
     iosSwipeBackActiveArea: Number,
     iosSwipeBackThreshold: Number,
+    mdSwipeBack: Boolean,
+    mdSwipeBackAnimateShadow: Boolean,
+    mdSwipeBackAnimateOpacity: Boolean,
+    mdSwipeBackActiveArea: Number,
+    mdSwipeBackThreshold: Number,
     // Push State
     pushState: Boolean,
     pushStateRoot: String,

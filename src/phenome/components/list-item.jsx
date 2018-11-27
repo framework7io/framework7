@@ -67,6 +67,7 @@ export default {
     itemInput: Boolean,
     itemInputWithInfo: Boolean,
     inlineLabel: Boolean,
+    virtualListIndex: Number,
     ...Mixins.colorProps,
     ...Mixins.linkRouterProps,
     ...Mixins.linkActionsProps,
@@ -126,6 +127,7 @@ export default {
       sortable,
       noChevron,
       chevronCenter,
+      virtualListIndex,
     } = props;
 
     const isMedia = mediaItem || mediaList || self.state.isMedia;
@@ -232,16 +234,17 @@ export default {
       },
       Mixins.colorClasses(props),
     );
+
     if (divider || groupTitle) {
       return (
-        <li ref="el" id={id} style={style} className={liClasses}>
+        <li ref="el" id={id} style={style} className={liClasses} data-virtual-list-index={virtualListIndex}>
           <span><slot>{title}</slot></span>
         </li>
       );
     }
     if (isSimple) {
       return (
-        <li ref="el" id={id} style={style} className={liClasses}>
+        <li ref="el" id={id} style={style} className={liClasses} data-virtual-list-index={virtualListIndex}>
           {title}
           <slot name="default" />
         </li>
@@ -249,8 +252,9 @@ export default {
     }
 
     const linkItemEl = (link || href || smartSelect || accordionItem) ? linkEl : itemContentEl;
+
     return (
-      <li ref="el" id={id} style={style} className={liClasses}>
+      <li ref="el" id={id} style={style} className={liClasses} data-virtual-list-index={virtualListIndex}>
         <slot name="root-start" />
         {swipeout
           ? (
