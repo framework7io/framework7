@@ -84,4 +84,16 @@
       transition-property: transform;
     }
   }
+
+  .ptr-bottom {
+    .ptr-preloader {
+      margin-top: 0;
+      margin-bottom: calc(-1 * var(--f7-ptr-size) - 4px);
+    }
+    &.ptr-refreshing {
+      .ptr-preloader {
+        transform: translate3d(0, -66px, 0);
+      }
+    }
+  }
 }

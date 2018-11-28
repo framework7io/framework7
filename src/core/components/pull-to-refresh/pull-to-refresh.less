@@ -16,6 +16,13 @@
     visibility: hidden;
   }
 }
+.ptr-bottom {
+  .ptr-preloader {
+    top: auto;
+    bottom: 0;
+    position: fixed;
+  }
+}
 & when (@includeIosTheme) {
   @import url('./pull-to-refresh-ios.less');
 }

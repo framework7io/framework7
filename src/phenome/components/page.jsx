@@ -42,6 +42,7 @@ export default {
       type: Boolean,
       default: true,
     },
+    ptrBottom: Boolean,
     infinite: Boolean,
     infiniteTop: Boolean,
     infiniteDistance: Number,
@@ -76,6 +77,7 @@ export default {
       ptr,
       ptrDistance,
       ptrPreloader,
+      ptrBottom,
       infinite,
       infiniteDistance,
       infinitePreloader,
@@ -195,6 +197,7 @@ export default {
         ptr={ptr}
         ptrDistance={ptrDistance}
         ptrPreloader={ptrPreloader}
+        ptrBottom={ptrBottom}
         infinite={infinite}
         infiniteTop={infiniteTop}
         infiniteDistance={infiniteDistance}

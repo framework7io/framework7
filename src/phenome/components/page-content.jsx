@@ -15,6 +15,7 @@ export default {
       type: Boolean,
       default: true,
     },
+    ptrBottom: Boolean,
     infinite: Boolean,
     infiniteTop: Boolean,
     infiniteDistance: Number,
@@ -35,11 +36,12 @@ export default {
     const {
       ptr,
       ptrPreloader,
+      ptrDistance,
+      ptrBottom,
       infinite,
       infinitePreloader,
       id,
       style,
-      ptrDistance,
       infiniteDistance,
       infiniteTop,
     } = props;
@@ -69,9 +71,11 @@ export default {
         data-infinite-distance={infiniteDistance || undefined}
         ref="el"
       >
-        {ptrEl}
-        {infiniteTop ? infiniteEl : self.slots.default}
-        {infiniteTop ? self.slots.default : infiniteEl}
+        {ptrBottom ? null : ptrEl}
+        {infiniteTop ? infiniteEl : null}
+        {self.slots.default}
+        {infiniteTop ? null : infiniteEl}
+        {ptrBottom ? ptrEl : null}
       </div>
     );
   },
@@ -84,6 +88,7 @@ export default {
         tab,
         tabActive,
         ptr,
+        ptrBottom,
         infinite,
         infiniteTop,
         hideBarsOnScroll,
@@ -99,6 +104,7 @@ export default {
           tab,
           'tab-active': tabActive,
           'ptr-content': ptr,
+          'ptr-bottom': ptrBottom,
           'infinite-scroll-content': infinite,
           'infinite-scroll-top': infiniteTop,
           'hide-bars-on-scroll': hideBarsOnScroll,
