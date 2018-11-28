@@ -399,7 +399,7 @@ export default {
       if ($clickedEl.hasClass('card-opened') || $clickedEl.hasClass('card-opening') || $clickedEl.hasClass('card-closing')) return;
       app.card.open($clickedEl);
     },
-    '.card-backdrop-in': function onBackdropClick($clickedEl) {
+    '.card-backdrop-in': function onBackdropClick() {
       const app = this;
       let needToClose = false;
       if (app.params.card.closeByBackdropClick) needToClose = true;
