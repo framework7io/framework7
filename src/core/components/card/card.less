@@ -226,6 +226,9 @@
 @media (min-width: 768px) {
   .card-expandable:not(.card-tablet-fullscreen) {
     max-width: var(--f7-card-expandable-tablet-width);
+    &.card-opened, &.card-opening {
+      border-radius: var(--f7-card-expandable-tablet-border-radius);
+    }
     .card-content {
       width: var(--f7-card-expandable-tablet-width);
     }
@@ -248,14 +251,45 @@
   height: 100%;
   z-index: 99;
   pointer-events: none;
+  background: rgba(0,0,0,0.2);
+  opacity: 0;
 }
 .card-backdrop-in {
-  animation: card-backdrop-in 400ms forwards;
+  animation: card-backdrop-fade-in 400ms forwards;
+  pointer-events: auto;
 }
 .card-backdrop-out {
-  animation: card-backdrop-out 400ms forwards;
+  animation: card-backdrop-fade-out 400ms forwards;
 }
-@keyframes card-backdrop-in {
+@supports (backdrop-filter: blur(15px)) {
+  .card-backdrop {
+    background: transparent;
+    opacity: 1;
+  }
+  .card-backdrop-in {
+    animation: card-backdrop-blur-in 400ms forwards;
+  }
+  .card-backdrop-out {
+    animation: card-backdrop-blur-out 400ms forwards;
+  }
+}
+@keyframes card-backdrop-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes card-backdrop-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes card-backdrop-blur-in {
   from {
     backdrop-filter: blur(0px);
   }
@@ -263,7 +297,7 @@
     backdrop-filter: blur(15px);
   }
 }
-@keyframes card-backdrop-out {
+@keyframes card-backdrop-blur-out {
   from {
     backdrop-filter: blur(15px);
   }

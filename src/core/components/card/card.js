@@ -34,9 +34,22 @@ const CardExpandable = {
       }
     }
 
-    let $navbarEl = $pageEl.children('.navbar');
-    if (!$navbarEl.length) {
-      if ($pageEl[0].f7Page) $navbarEl = $pageEl[0].f7Page.$navbarEl;
+    let $navbarEl;
+    let $toolbarEl;
+    if (app.params.card.hideNavbarOnOpen) {
+      $navbarEl = $pageEl.children('.navbar');
+      if (!$navbarEl.length) {
+        if ($pageEl[0].f7Page) $navbarEl = $pageEl[0].f7Page.$navbarEl;
+      }
+    }
+    if (app.params.card.hideToolbarOnOpen) {
+      $toolbarEl = $pageEl.children('.toolbar');
+      if (!$toolbarEl.length) {
+        $toolbarEl = $pageEl.parents('.view').children('.toolbar');
+      }
+      if (!$toolbarEl.length) {
+        $toolbarEl = $pageEl.parents('.views').children('.toolbar');
+      }
     }
 
     const currTransform = $cardEl.css('transform');
@@ -84,9 +97,11 @@ const CardExpandable = {
     let cardBottomOffset = maxHeight - cardHeight - cardTopOffset;
     let translateX = (cardRightOffset - cardLeftOffset) / 2;
     let translateY = (cardBottomOffset - cardTopOffset) / 2;
-
-    if ($navbarEl && $navbarEl.length) {
-      app.navbar.hide('.view-main .navbar', animate);
+    if (app.params.card.hideNavbarOnOpen && $navbarEl && $navbarEl.length) {
+      app.navbar.hide($navbarEl, animate);
+    }
+    if (app.params.card.hideToolbarOnOpen && $toolbarEl && $toolbarEl.length) {
+      app.toolbar.hide($toolbarEl, animate);
     }
     if ($backropEl) {
       $backropEl.removeClass('card-backdrop-out').addClass('card-backdrop-in');
@@ -264,23 +279,38 @@ const CardExpandable = {
     const $cardContentEl = $cardEl.children('.card-content');
 
     const $pageEl = $cardEl.parents('.page').eq(0);
+    if (!$pageEl.length) return;
     let $navbarEl;
+    let $toolbarEl;
 
     let $backropEl;
     if (app.params.card.backrop) {
       $backropEl = $cardEl.parents('.page-content').find('.card-backdrop');
     }
 
-    if ($pageEl && $pageEl.length) {
+    if (app.params.card.hideNavbarOnOpen) {
       $navbarEl = $pageEl.children('.navbar');
       if (!$navbarEl.length) {
         if ($pageEl[0].f7Page) $navbarEl = $pageEl[0].f7Page.$navbarEl;
       }
-      $pageEl.removeClass('page-with-card-opened');
+      if ($navbarEl && $navbarEl.length) {
+        app.navbar.show($navbarEl, animate);
+      }
     }
-    if ($navbarEl && $navbarEl.length) {
-      app.navbar.show('.view-main .navbar', animate);
+    if (app.params.card.hideToolbarOnOpen) {
+      $toolbarEl = $pageEl.children('.toolbar');
+      if (!$toolbarEl.length) {
+        $toolbarEl = $pageEl.parents('.view').children('.toolbar');
+      }
+      if (!$toolbarEl.length) {
+        $toolbarEl = $pageEl.parents('.views').children('.toolbar');
+      }
+      if ($toolbarEl && $toolbarEl.length) {
+        app.toolbar.show($toolbarEl, animate);
+      }
     }
+    $pageEl.removeClass('page-with-card-opened');
+
 
     if ($backropEl && $backropEl.length) {
       $backropEl.removeClass('card-backdrop-in').addClass('card-backdrop-out');
@@ -339,7 +369,9 @@ export default {
   params: {
     card: {
       hideNavbarOnOpen: true,
+      hideToolbarOnOpen: true,
       swipeToClose: true,
+      closeByBackdropClick: true,
       backrop: true,
     },
   },
@@ -366,6 +398,19 @@ export default {
       const app = this;
       if ($clickedEl.hasClass('card-opened') || $clickedEl.hasClass('card-opening') || $clickedEl.hasClass('card-closing')) return;
       app.card.open($clickedEl);
+    },
+    '.card-backdrop-in': function onBackdropClick($clickedEl) {
+      const app = this;
+      let needToClose = false;
+      if (app.params.card.closeByBackdropClick) needToClose = true;
+      const $openedCardEl = $('.card-opened');
+      if (!$openedCardEl.length) return;
+      if ($openedCardEl.attr('data-close-on-backdrop-click') === 'true') {
+        needToClose = true;
+      } else if ($openedCardEl.attr('data-close-on-backdrop-click') === 'false') {
+        needToClose = false;
+      }
+      if (needToClose) app.card.close($openedCardEl);
     },
   },
 };

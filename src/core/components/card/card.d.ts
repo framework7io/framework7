@@ -15,10 +15,14 @@ export namespace Card {
     card?: {
       /** Will hide Navbar on expandable card open. (default true) */
       hideNavbarOnOpen?: boolean
+      /** Will hide Toolbar on expandable card open. (default true) */
+      hideToolbarOnOpen?: boolean
       /** Allows to close expandable card with swipe (default true) */
       swipeToClose?: boolean
       /** Enables expandable card backdrop layer (default true) */
       backrop?: boolean
+      /** When enabled, expandable card will be closed on backdrop click. (default true) */
+      closeByBackdropClick?: boolean
     } | undefined
   }
   interface AppEvents {
