@@ -507,7 +507,6 @@ code {
   .demo-expandable-cards .card {
     flex-shrink: 10;
     min-width: 0;
-    max-width: 630px;
   }
 }
 @media (min-width: 768px) and (max-width: 1023px) {
