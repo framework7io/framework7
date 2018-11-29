@@ -20,6 +20,8 @@ export default {
     expandable: Boolean,
     expandableAnimateWidth: Boolean,
     expandableOpened: Boolean,
+    noShadow: Boolean,
+    noBorder: Boolean,
     padding: {
       type: Boolean,
       default: true,
@@ -80,6 +82,8 @@ export default {
       outline,
       expandable,
       expandableAnimateWidth,
+      noShadow,
+      noBorder,
     } = props;
 
     let headerEl;
@@ -93,6 +97,8 @@ export default {
         'card-outline': outline,
         'card-expandable': expandable,
         'card-expandable-animate-width': expandableAnimateWidth,
+        'no-shadow': noShadow,
+        'no-border': noBorder,
       },
       Mixins.colorClasses(props),
     );
