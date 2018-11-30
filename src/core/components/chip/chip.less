@@ -2,7 +2,9 @@
 @import url('./chip-vars.less');
 
 .chip {
-  font-weight: normal;
+  padding-left: var(--f7-chip-padding-horizontal);
+  padding-right: var(--f7-chip-padding-horizontal);
+  font-weight: var(--f7-chip-font-weight);
   display: inline-flex;
   box-sizing: border-box;
   vertical-align: middle;
@@ -14,6 +16,7 @@
   height: var(--f7-chip-height);
   line-height: var(--f7-chip-height);
   border-radius: var(--f7-chip-height);
+  position: relative;
 }
 .chip-media {
   border-radius: 50%;
@@ -43,6 +46,18 @@
     border-radius: 50%;
     display: block;
   }
+  .ltr({
+    margin-left: calc(-1 * var(--f7-chip-padding-horizontal));
+    + .chip-label {
+      margin-left: 4px;
+    }
+  });
+  .rtl({
+    margin-right: calc(-1 * var(--f7-chip-padding-horizontal));
+    + .chip-label {
+      margin-right: 4px;
+    }
+  });
 }
 .chip-label {
   white-space: nowrap;
@@ -61,6 +76,7 @@
   height: 24px;
   color: var(--f7-chip-delete-button-color);
   opacity: 0.54;
+  position: relative;
   &:after {
     .core-icons-font();
     content: 'delete_round_ios';

@@ -1,22 +1,4 @@
 .md {
-  .chip {
-    padding: 0 12px;
-  }
-  .chip-media {
-    .ltr({
-      margin-left: -12px;
-      + .chip-label {
-        margin-left: 8px;
-      }
-    });
-    .rtl({
-      margin-right: -12px;
-      + .chip-label {
-        margin-right: 8px;
-      }
-    });
-
-  }
   .chip-label + .chip-delete {
     .ltr({
       margin-left: 4px;
@@ -27,10 +9,10 @@
   }
   .chip-delete {
     .ltr({
-      margin-right: -8px;
+      margin-right: calc(-1 * var(--f7-chip-padding-horizontal) + 4px);
     });
     .rtl({
-      margin-left: -8px;
+      margin-left: calc(-1 * var(--f7-chip-padding-horizontal) + 4px);
     });
     &:after {
       font-size: 12px;
