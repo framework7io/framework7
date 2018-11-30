@@ -37,6 +37,8 @@ export default {
       type: Boolean,
       default: true,
     },
+    // Input Value
+    value: [String, Number, Array],
 
     // SB Params
     inputEvents: {
@@ -125,6 +127,7 @@ export default {
       className,
       style,
       id,
+      value,
     } = props;
 
     if (clearButton) {
@@ -151,6 +154,17 @@ export default {
       Mixins.colorClasses(props),
     );
 
+    let valueProp;
+    let domProps;
+    if (process.env.COMPILER === 'react') {
+      valueProp = value;
+    }
+    if (process.env.COMPILER === 'vue') {
+      domProps = {
+        value,
+      };
+    }
+
     return (
       <SearchbarTag ref="el" id={id} style={style} className={classes}>
         <slot name="before-inner" />
@@ -159,12 +173,14 @@ export default {
           <div className="searchbar-input-wrap">
             <slot name="input-wrap-start" />
             <input
+              value={valueProp}
               placeholder={placeholder}
               type="search"
               onInput={self.onInput.bind(self)}
               onChange={self.onChange.bind(self)}
               onFocus={self.onFocus.bind(self)}
               onBlur={self.onBlur.bind(self)}
+              domProps={domProps}
             />
             <i className="searchbar-icon" />
             {clearEl}
