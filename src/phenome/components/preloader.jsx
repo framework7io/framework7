@@ -36,6 +36,23 @@ export default {
           </span>
         </span>
       );
+    } else {
+      innerEl = (
+        <span className="preloader-inner">
+          <span className="preloader-inner-line"></span>
+          <span className="preloader-inner-line"></span>
+          <span className="preloader-inner-line"></span>
+          <span className="preloader-inner-line"></span>
+          <span className="preloader-inner-line"></span>
+          <span className="preloader-inner-line"></span>
+          <span className="preloader-inner-line"></span>
+          <span className="preloader-inner-line"></span>
+          <span className="preloader-inner-line"></span>
+          <span className="preloader-inner-line"></span>
+          <span className="preloader-inner-line"></span>
+          <span className="preloader-inner-line"></span>
+        </span>
+      );
     }
 
     const classes = Utils.classNames(
