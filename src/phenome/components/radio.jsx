@@ -26,6 +26,7 @@ export default {
     if (process.env.COMPILER === 'react') {
       inputEl = (
         <input
+          ref="inputEl"
           type="radio"
           name={name}
           value={value}
@@ -33,16 +34,17 @@ export default {
           readOnly={readonly}
           checked={checked}
           defaultChecked={defaultChecked}
-          onChange={self.onChange.bind(self)}
+          onChange={self.onChange}
         />
       );
     }
     if (process.env.COMPILER === 'vue') {
       inputEl = (
         <input
+          ref="inputEl"
           type="radio"
           name={name}
-          onChange={self.onChange.bind(self)}
+          onChange={self.onChange}
           domProps={{
             value,
             disabled,
@@ -70,6 +72,9 @@ export default {
         <slot />
       </label>
     );
+  },
+  componentDidCreate() {
+    this.onChange = this.onChange.bind(this);
   },
   methods: {
     onChange(event) {

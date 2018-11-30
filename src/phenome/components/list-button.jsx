@@ -34,7 +34,7 @@ export default {
 
     return (
       <li id={id} style={style} className={className}>
-        <a className={self.classes} {...self.attrs} onClick={self.onClick.bind(self)}>
+        <a className={self.classes} {...self.attrs} ref="linkEl">
           <slot>{title || text}</slot>
         </a>
       </li>
@@ -84,6 +84,15 @@ export default {
         Mixins.linkActionsClasses(props),
       );
     },
+  },
+  componentDidCreate() {
+    this.onClick = this.onClick.bind(this);
+  },
+  componentDidMount() {
+    this.refs.linkEl.addEventListener('click', this.onClick);
+  },
+  componentWillUnmount() {
+    this.refs.linkEl.removeEventListener('click', this.onClick);
   },
   methods: {
     onClick(event) {

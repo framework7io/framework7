@@ -50,11 +50,11 @@ export default {
 
     return (
       <a
+        ref="el"
         id={id}
         style={style}
         target={target}
         className={classes}
-        onClick={this.onClick.bind(this)}
       >
         <slot />
         {labelEl}
@@ -73,8 +73,12 @@ export default {
       self.f7Tooltip.setText(newText);
     },
   },
+  componentDidCreate() {
+    this.onClick = this.onClick.bind(this);
+  },
   componentDidMount() {
     const self = this;
+    self.refs.el.addEventListener('click', self.onClick);
     const { tooltip } = self.props;
     if (!tooltip) return;
     self.$f7ready((f7) => {
@@ -86,6 +90,7 @@ export default {
   },
   componentWillUnmount() {
     const self = this;
+    self.refs.el.removeEventListener('click', self.onClick);
     if (self.f7Tooltip && self.f7Tooltip.destroy) {
       self.f7Tooltip.destroy();
       self.f7Tooltip = null;

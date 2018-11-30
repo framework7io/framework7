@@ -132,12 +132,12 @@ export default {
 
     if (clearButton) {
       clearEl = (
-        <span className="input-clear-button" onClick={self.onClearButtonClick.bind(self)} />
+        <span ref="clearEl" className="input-clear-button" />
       );
     }
     if (disableButton) {
       disableEl = (
-        <span className="searchbar-disable-button" onClick={self.onDisableButtonClick.bind(self)}>{disableButtonText}</span>
+        <span ref="disableEl" className="searchbar-disable-button">{disableButtonText}</span>
       );
     }
 
@@ -154,16 +154,36 @@ export default {
       Mixins.colorClasses(props),
     );
 
-    let valueProp;
-    let domProps;
+    let inputEl;
     if (process.env.COMPILER === 'react') {
-      valueProp = value;
+      inputEl = (
+        <input
+          ref="inputEl"
+          value={value}
+          placeholder={placeholder}
+          type="search"
+          onInput={self.onInput}
+          onChange={self.onChange.bind(self)}
+          onFocus={self.onFocus}
+          onBlur={self.onBlur}
+        />
+      )
     }
     if (process.env.COMPILER === 'vue') {
-      domProps = {
-        value,
-      };
+      inputEl = (
+        <input
+          ref="inputEl"
+          placeholder={placeholder}
+          type="search"
+          domProps={{ value }}
+          onInput={self.onInput}
+          onChange={self.onChange}
+          onFocus={self.onFocus}
+          onBlur={self.onBlur}
+        />
+      )
     }
+
 
     return (
       <SearchbarTag ref="el" id={id} style={style} className={classes}>
@@ -172,16 +192,7 @@ export default {
           <slot name="inner-start" />
           <div className="searchbar-input-wrap">
             <slot name="input-wrap-start" />
-            <input
-              value={valueProp}
-              placeholder={placeholder}
-              type="search"
-              onInput={self.onInput.bind(self)}
-              onChange={self.onChange.bind(self)}
-              onFocus={self.onFocus.bind(self)}
-              onBlur={self.onBlur.bind(self)}
-              domProps={domProps}
-            />
+            {inputEl}
             <i className="searchbar-icon" />
             {clearEl}
             <slot name="input-wrap-end" />
@@ -194,16 +205,17 @@ export default {
       </SearchbarTag>
     );
   },
-  componentWillUnmount() {
-    const self = this;
-    if (self.props.form && self.refs.el) {
-      self.refs.el.removeEventListener('submit', self.onSubmitBound, false);
-    }
-    if (self.f7Searchbar && self.f7Searchbar.destroy) self.f7Searchbar.destroy();
+  componentDidCreate() {
+    this.onChange = this.onChange.bind(this);
+    this.onInput = this.onInput.bind(this);
+    this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.onBlur.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onClearButtonClick = this.onClearButtonClick.bind(this);
+    this.onDisableButtonClick = this.onDisableButtonClick.bind(this);
   },
   componentDidMount() {
     const self = this;
-
     const {
       init,
       inputEvents,
@@ -227,14 +239,18 @@ export default {
       form,
     } = self.props;
 
-    if (!init) return;
-
-    const el = self.refs.el;
-
+    const { inputEl, el, clearEl, disableEl } = self.refs;
     if (form && el) {
-      self.onSubmitBound = self.onSubmit.bind(self);
-      el.addEventListener('submit', self.onSubmitBound, false);
+      el.addEventListener('submit', self.onSubmit, false);
     }
+    if (clearEl) {
+      clearEl.addEventListener('click', self.onClearButtonClick);
+    }
+    if (disableEl) {
+      disableEl.addEventListener('click', self.onDisableButtonClick);
+    }
+
+    if (!init) return;
 
     self.$f7ready(() => {
       const params = Utils.noUndefinedProps({
@@ -279,6 +295,20 @@ export default {
       });
       self.f7Searchbar = self.$f7.searchbar.create(params);
     });
+  },
+  componentWillUnmount() {
+    const self = this;
+    const { inputEl, el, clearEl, disableEl } = self.refs;
+    if (self.props.form && el) {
+      el.removeEventListener('submit', self.onSubmit, false);
+    }
+    if (clearEl) {
+      clearEl.removeEventListener('click', self.onClearButtonClick);
+    }
+    if (disableEl) {
+      disableEl.removeEventListener('click', self.onDisableButtonClick);
+    }
+    if (self.f7Searchbar && self.f7Searchbar.destroy) self.f7Searchbar.destroy();
   },
   methods: {
     search(query) {

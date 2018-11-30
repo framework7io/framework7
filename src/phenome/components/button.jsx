@@ -99,7 +99,6 @@ export default {
         id={id}
         style={style}
         className={self.classes}
-        onClick={self.onClick.bind(self)}
         {...self.attrs}
       >
         {iconEl}
@@ -197,8 +196,13 @@ export default {
       self.f7Tooltip.setText(newText);
     },
   },
+  componentDidCreate() {
+    const self = this;
+    self.onClickBound = self.onClick.bind(self);
+  },
   componentDidMount() {
     const self = this;
+    self.refs.el.addEventListener('click', self.onClickBound);
     const { tooltip } = self.props;
     if (!tooltip) return;
     self.$f7ready((f7) => {
@@ -210,6 +214,7 @@ export default {
   },
   componentWillUnmount() {
     const self = this;
+    self.refs.el.removeEventListener('click', self.onClickBound);
     if (self.f7Tooltip && self.f7Tooltip.destroy) {
       self.f7Tooltip.destroy();
       self.f7Tooltip = null;

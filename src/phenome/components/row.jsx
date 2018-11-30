@@ -37,10 +37,19 @@ export default {
     );
 
     return (
-      <RowTag id={id} style={style} className={classes} onClick={self.onClick.bind(self)}>
+      <RowTag id={id} style={style} className={classes} ref="el">
         <slot />
       </RowTag>
     );
+  },
+  componentDidCreate() {
+    this.onClick = this.onClick.bind(this);
+  },
+  componentDidMount() {
+    this.refs.el.addEventListener('click', this.onClick);
+  },
+  componentWillUnmount() {
+    this.refs.el.removeEventListener('click', this.onClick);
   },
   methods: {
     onClick(event) {

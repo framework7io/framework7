@@ -44,13 +44,22 @@ export default {
     );
 
     return (
-      <div id={id} style={style} className={classes} onClick={self.onClick.bind(self)} ref="el">
+      <div id={id} style={style} className={classes} ref="el">
         { mediaEl }
         <div className="actions-button-text">
           <slot />
         </div>
       </div>
     );
+  },
+  componentDidCreate() {
+    this.onClick = this.onClick.bind(this);
+  },
+  componentDidMount() {
+    this.refs.el.addEventListener('click', this.onClick);
+  },
+  componentWillUnmount() {
+    this.refs.el.removeEventListener('click', this.onClick);
   },
   methods: {
     onClick(event) {

@@ -181,10 +181,10 @@ export default {
             tabIndex={tabindex}
             data-error-message={errorMessageForce ? undefined : errorMessage}
             className={inputClassName}
-            onFocus={self.onFocusBound}
-            onBlur={self.onBlurBound}
-            onInput={self.onInputBound}
-            onChange={self.onChangeBound}
+            onFocus={self.onFocus}
+            onBlur={self.onBlur}
+            onInput={self.onInput}
+            onChange={self.onChange}
           >
             {children}
           </InputTag>
@@ -218,10 +218,10 @@ export default {
             tabIndex={tabindex}
             data-error-message={errorMessageForce ? undefined : errorMessage}
             className={inputClassName}
-            onFocus={self.onFocusBound}
-            onBlur={self.onBlurBound}
-            onInput={self.onInputBound}
-            onChange={self.onChangeBound}
+            onFocus={self.onFocus}
+            onBlur={self.onBlur}
+            onInput={self.onInput}
+            onChange={self.onChange}
             domProps={{
               value: needsValue ? value || self.state.currentInputValue : undefined,
               checked,
@@ -258,7 +258,7 @@ export default {
           value={value}
           disabled={disabled}
           id={inputId}
-          onChange={self.onChangeBound}
+          onChange={self.onChange}
         />
       );
     } else if (type === 'range') {
@@ -272,7 +272,7 @@ export default {
           name={name}
           id={inputId}
           input={true}
-          onRangeChange={self.onChangeBound}
+          onRangeChange={self.onChange}
         />
       );
     } else {
@@ -321,14 +321,14 @@ export default {
   },
   componentDidCreate() {
     const self = this;
-    self.onFocusBound = self.onFocus.bind(self);
-    self.onBlurBound = self.onBlur.bind(self);
-    self.onInputBound = self.onInput.bind(self);
-    self.onChangeBound = self.onChange.bind(self);
-    self.onTextareaResizeBound = self.onTextareaResize.bind(self);
-    self.onInputNotEmptyBound = self.onInputNotEmpty.bind(self);
-    self.onInputEmptyBound = self.onInputEmpty.bind(self);
-    self.onInputClearBound = self.onInputClear.bind(self);
+    self.onFocus = self.onFocus.bind(self);
+    self.onBlur = self.onBlur.bind(self);
+    self.onInput = self.onInput.bind(self);
+    self.onChange = self.onChange.bind(self);
+    self.onTextareaResize = self.onTextareaResize.bind(self);
+    self.onInputNotEmpty = self.onInputNotEmpty.bind(self);
+    self.onInputEmpty = self.onInputEmpty.bind(self);
+    self.onInputClear = self.onInputClear.bind(self);
   },
   componentDidMount() {
     const self = this;
@@ -338,14 +338,13 @@ export default {
 
       const inputEl = self.refs.inputEl;
       if (!inputEl) return;
-
-      inputEl.addEventListener('input:notempty', self.onInputNotEmptyBound, false);
+      inputEl.addEventListener('input:notempty', self.onInputNotEmpty, false);
       if (type === 'textarea' && resizable) {
-        inputEl.addEventListener('textarea:resze', self.onTextareaResizeBound, false);
+        inputEl.addEventListener('textarea:resze', self.onTextareaResize, false);
       }
       if (clearButton) {
-        inputEl.addEventListener('input:empty', self.onInputEmptyBound, false);
-        inputEl.addEventListener('input:clear', self.onInputClearBound, false);
+        inputEl.addEventListener('input:empty', self.onInputEmpty, false);
+        inputEl.addEventListener('input:clear', self.onInputClear, false);
       }
 
       f7.input.checkEmptyState(inputEl);
@@ -390,15 +389,13 @@ export default {
 
     const inputEl = self.refs.inputEl;
     if (!inputEl) return;
-
-    inputEl.removeEventListener('input:notempty', self.onInputNotEmptyBound, false);
-
+    inputEl.removeEventListener('input:notempty', self.onInputNotEmpty, false);
     if (type === 'textarea' && resizable) {
-      inputEl.removeEventListener('textarea:resze', self.onTextareaResizeBound, false);
+      inputEl.removeEventListener('textarea:resze', self.onTextareaResize, false);
     }
     if (clearButton) {
-      inputEl.removeEventListener('input:empty', self.onInputEmptyBound, false);
-      inputEl.removeEventListener('input:clear', self.onInputClearBound, false);
+      inputEl.removeEventListener('input:empty', self.onInputEmpty, false);
+      inputEl.removeEventListener('input:clear', self.onInputClear, false);
     }
   },
   methods: {

@@ -104,24 +104,25 @@ export default {
       if (process.env.COMPILER === 'react') {
         inputEl = (
           <input
+            ref="inputEl"
             type={inputType}
             min={inputType === 'number' ? min : undefined}
             max={inputType === 'number' ? max : undefined}
             step={inputType === 'number' ? step : undefined}
             value={value}
             readOnly={inputReadonly}
-            onInput={self.onInput.bind(self)}
           />
         );
       }
       if (process.env.COMPILER === 'vue') {
         inputEl = (
           <input
+            ref="inputEl"
             type={inputType}
             min={inputType === 'number' ? min : undefined}
             max={inputType === 'number' ? max : undefined}
             step={inputType === 'number' ? step : undefined}
-            onInput={self.onInput.bind(self)}
+            onInput={self.onInput}
             domProps={{
               readOnly: inputReadonly,
               value,
@@ -142,10 +143,10 @@ export default {
     }
     return (
       <div ref="el" id={id} style={style} className={self.classes}>
-        <div className="stepper-button-minus" onClick={self.onMinusClickBound} />
+        <div ref="minusEl" className="stepper-button-minus" />
         {inputWrapEl}
         {valueEl}
-        <div className="stepper-button-plus" onClick={self.onPlusClickBound} />
+        <div ref="plusEl" className="stepper-button-plus" />
       </div>
     );
   },
@@ -194,12 +195,19 @@ export default {
     },
   },
   componentDidCreate() {
-    this.onInputBound = this.onInput.bind(this);
-    this.onMinusClickBound = this.onMinusClick.bind(this);
-    this.onPlusClickBound = this.onPlusClick.bind(this);
+    this.onInput = this.onInput.bind(this);
+    this.onMinusClick = this.onMinusClick.bind(this);
+    this.onPlusClick = this.onPlusClick.bind(this);
   },
   componentDidMount() {
     const self = this;
+    const { minusEl, plusEl } = self.refs;
+    if (minusEl) {
+      minusEl.addEventListener('click', self.onMinusClick);
+    }
+    if (plusEl) {
+      plusEl.addEventListener('click', self.onPlusClick);
+    }
     if (!self.props.init) return;
     self.$f7ready((f7) => {
       const {
@@ -229,9 +237,17 @@ export default {
     });
   },
   componentWillUnmount() {
-    if (!this.props.init) return;
-    if (this.f7Stepper && this.f7Stepper.destroy) {
-      this.f7Stepper.destroy();
+    const self = this;
+    const { minusEl, plusEl } = self.refs;
+    if (minusEl) {
+      minusEl.removeEventListener('click', self.onMinusClick);
+    }
+    if (plusEl) {
+      plusEl.removeEventListener('click', self.onPlusClick);
+    }
+    if (!self.props.init) return;
+    if (self.f7Stepper && self.f7Stepper.destroy) {
+      self.f7Stepper.destroy();
     }
   },
   methods: {

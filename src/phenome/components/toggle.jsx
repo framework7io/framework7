@@ -54,6 +54,7 @@ export default {
     if (process.env.COMPILER === 'react') {
       inputEl = (
         <input
+          ref="inputEl"
           type="checkbox"
           name={name}
           disabled={disabled}
@@ -61,16 +62,17 @@ export default {
           checked={checked}
           defaultChecked={defaultChecked}
           value={value}
-          onChange={self.onChange.bind(self)}
+          onChange={self.onChange}
         />
       );
     }
     if (process.env.COMPILER === 'vue') {
       inputEl = (
         <input
+          ref="inputEl"
           type="checkbox"
           name={name}
-          onChange={self.onChange.bind(self)}
+          onChange={self.onChange}
           domProps={{
             disabled,
             readOnly: readonly,
@@ -93,6 +95,9 @@ export default {
       if (!self.f7Toggle) return;
       self.f7Toggle.checked = newValue;
     },
+  },
+  componentDidCreate() {
+    this.onChange = this.onChange.bind(this);
   },
   componentDidMount() {
     const self = this;
