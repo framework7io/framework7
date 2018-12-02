@@ -64,9 +64,6 @@ export default {
     readonly: Boolean,
     required: Boolean,
     disabled: Boolean,
-    itemInput: Boolean,
-    itemInputWithInfo: Boolean,
-    inlineLabel: Boolean,
     virtualListIndex: Number,
     ...Mixins.colorProps,
     ...Mixins.linkRouterProps,
@@ -121,9 +118,6 @@ export default {
       readonly,
       required,
       disabled,
-      itemInput,
-      itemInputWithInfo,
-      inlineLabel,
       sortable,
       noChevron,
       chevronCenter,
@@ -159,9 +153,6 @@ export default {
           readonly={readonly}
           required={required}
           disabled={disabled}
-          itemInput={itemInput}
-          itemInputWithInfo={itemInputWithInfo}
-          inlineLabel={inlineLabel}
           onClick={needsEvents ? self.onClick : null} // phenome-react-line
           onChange={needsEvents ? self.onChange : null} // phenome-react-line
           // phenome-vue-next-line

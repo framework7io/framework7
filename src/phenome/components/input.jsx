@@ -282,20 +282,20 @@ export default {
     if (wrap) {
       const wrapClasses = Utils.classNames(
         className,
-        'item-input-wrap',
+        'input',
         Mixins.colorClasses(props),
       );
       return (
         <div id={id} ref="wrapEl" className={wrapClasses} style={style}>
           {inputEl}
           {errorMessage && errorMessageForce && (
-            <div className="item-input-error-message">{errorMessage}</div>
+            <div className="input-error-message">{errorMessage}</div>
           )}
           {clearButton && (
             <span className="input-clear-button" />
           )}
           {(info || (slotsInfo && slotsInfo.length)) && (
-            <div className="item-input-info">
+            <div className="input-info">
               {info}
               <slot name="info" />
             </div>
