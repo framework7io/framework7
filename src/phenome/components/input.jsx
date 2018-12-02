@@ -42,6 +42,7 @@ export default {
     */
     pattern: String,
     validate: [Boolean, String],
+    validateOnBlur: Boolean,
     tabindex: [String, Number],
     resizable: Boolean,
     clearButton: Boolean,
@@ -115,6 +116,7 @@ export default {
       inputStyle,
       pattern,
       validate,
+      validateOnBlur,
       tabindex,
       resizable,
       clearButton,
@@ -178,6 +180,7 @@ export default {
             pattern={pattern}
             validate={typeof validate === 'string' && validate.length ? validate : undefined}
             data-validate={validate === true || validate === '' ? true : undefined}
+            data-validate-on-blur={validateOnBlur === true || validateOnBlur === '' ? true : undefined}
             tabIndex={tabindex}
             data-error-message={errorMessageForce ? undefined : errorMessage}
             className={inputClassName}
@@ -215,6 +218,7 @@ export default {
             pattern={pattern}
             validate={typeof validate === 'string' && validate.length ? validate : undefined}
             data-validate={validate === true || validate === '' ? true : undefined}
+            data-validate-on-blur={validateOnBlur === true || validateOnBlur === '' ? true : undefined}
             tabIndex={tabindex}
             data-error-message={errorMessageForce ? undefined : errorMessage}
             className={inputClassName}
@@ -325,7 +329,7 @@ export default {
   componentDidMount() {
     const self = this;
     self.$f7ready((f7) => {
-      const { validate, resizable, type, clearButton, value, defaultValue } = self.props;
+      const { validate, validateOnBlur, resizable, type, clearButton, value, defaultValue } = self.props;
       if (type === 'range' || type === 'toggle') return;
 
       const inputEl = self.refs.inputEl;
@@ -342,7 +346,9 @@ export default {
 
       f7.input.checkEmptyState(inputEl);
       if (
-        (validate || validate === '') && (
+        !validateOnBlur
+        && (validate || validate === '')
+        && (
           (typeof value !== 'undefined' && value !== null && value !== '')
           || (typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')
         )
@@ -358,7 +364,7 @@ export default {
   },
   componentDidUpdate() {
     const self = this;
-    const { validate, resizable } = self.props;
+    const { validate, validateOnBlur, resizable } = self.props;
     const f7 = self.$f7;
     if (!f7) return;
     if (self.updateInputOnDidUpdate) {
@@ -366,7 +372,7 @@ export default {
       if (!inputEl) return;
       self.updateInputOnDidUpdate = false;
       f7.input.checkEmptyState(inputEl);
-      if (validate) {
+      if (validate && !validateOnBlur) {
         self.validateInput(inputEl);
       }
       if (resizable) {
@@ -422,9 +428,9 @@ export default {
     },
     onInput(event) {
       const self = this;
-      const { validate } = self.props;
+      const { validate, validateOnBlur } = self.props;
       self.dispatchEvent('input', event);
-      if ((validate || validate === '') && self.refs && self.refs.inputEl) {
+      if (!validateOnBlur && (validate || validate === '') && self.refs && self.refs.inputEl) {
         self.validateInput(self.refs.inputEl);
       }
       self.setState({ currentInputValue: event.target.value });

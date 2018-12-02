@@ -54,6 +54,7 @@ export default {
     */
     pattern: String,
     validate: [Boolean, String],
+    validateOnBlur: Boolean,
     tabindex: [String, Number],
     resizable: Boolean,
     clearButton: Boolean,
@@ -127,6 +128,7 @@ export default {
       inputStyle,
       pattern,
       validate,
+      validateOnBlur,
       tabindex,
       resizable,
       clearButton,
@@ -189,6 +191,7 @@ export default {
             pattern={pattern}
             validate={typeof validate === 'string' && validate.length ? validate : undefined}
             data-validate={validate === true || validate === '' ? true : undefined}
+            data-validate-on-blur={validateOnBlur === true || validateOnBlur === '' ? true : undefined}
             tabIndex={tabindex}
             data-error-message={errorMessageForce ? undefined : errorMessage}
             className={inputClassName}
@@ -226,6 +229,7 @@ export default {
             pattern={pattern}
             validate={typeof validate === 'string' && validate.length ? validate : undefined}
             data-validate={validate === true || validate === '' ? true : undefined}
+            data-validate-on-blur={validateOnBlur === true || validateOnBlur === '' ? true : undefined}
             tabIndex={tabindex}
             data-error-message={errorMessageForce ? undefined : errorMessage}
             className={inputClassName}
@@ -361,7 +365,7 @@ export default {
     if (!el) return;
 
     self.$f7ready((f7) => {
-      const { validate, resizable, value, defaultValue, type } = self.props;
+      const { validate, validateOnBlur, resizable, value, defaultValue, type } = self.props;
 
       const inputEl = self.refs.inputEl;
       if (!inputEl) return;
@@ -372,7 +376,9 @@ export default {
       inputEl.addEventListener('input:clear', self.onInputClear, false);
 
       if (
-        (validate || validate === '') && (
+        !validateOnBlur
+        && (validate || validate === '')
+        && (
           (typeof value !== 'undefined' && value !== null && value !== '')
           || (typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')
         )
@@ -401,14 +407,14 @@ export default {
     if (isSortable !== self.state.isSortable) {
       self.setState({ isSortable });
     }
-    const { validate, resizable, type } = self.props;
+    const { validate, validateOnBlur, resizable, type } = self.props;
     const f7 = self.$f7;
     if (!f7) return;
     if (self.updateInputOnDidUpdate) {
       const inputEl = self.refs.inputEl;
       if (!inputEl) return;
       self.updateInputOnDidUpdate = false;
-      if (validate) {
+      if (validate && !validateOnBlur) {
         self.validateInput(inputEl);
       }
       if (type === 'textarea' && resizable) {
@@ -458,7 +464,7 @@ export default {
       const self = this;
       const { validate } = self.props;
       self.dispatchEvent('input', event);
-      if ((validate || validate === '') && self.refs && self.refs.inputEl) {
+      if (!validateOnBlur && (validate || validate === '') && self.refs && self.refs.inputEl) {
         self.validateInput(self.refs.inputEl);
       }
       self.setState({ currentInputValue: event.target.value });
