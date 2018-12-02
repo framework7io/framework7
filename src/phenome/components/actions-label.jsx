@@ -29,13 +29,19 @@ export default {
       Mixins.colorClasses(props),
     );
     return (
-      <div id={id} style={style} className={classes} onClick={self.onClick}>
+      <div id={id} style={style} className={classes} ref="el">
         <slot />
       </div>
     );
   },
   componentDidCreate() {
     Utils.bindMethods(this, ['onClick'])
+  },
+  componentDidMount() {
+    this.refs.el.addEventListener('click', this.onClick);
+  },
+  componentWillUnmount() {
+    this.refs.el.removeEventListener('click', this.onClick);
   },
   methods: {
     onClick(event) {

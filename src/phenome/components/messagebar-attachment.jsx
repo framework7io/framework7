@@ -14,9 +14,6 @@ export default {
     },
     ...Mixins.colorProps,
   },
-  componentDidCreate() {
-    Utils.bindMethods(this, ['onClick', 'onDeleteClick']);
-  },
   render() {
     const self = this;
     const props = self.props;
@@ -35,15 +32,30 @@ export default {
     );
 
     return (
-      <div id={id} style={style} className={classes} onClick={self.onClick}>
+      <div ref="el" id={id} style={style} className={classes}>
         {image &&
           <img src={image} />}
         {deletable &&
-          <span className="messagebar-attachment-delete" onClick={self.onDeleteClick} />
+          <span ref="deleteEl" className="messagebar-attachment-delete" />
         }
         <slot />
       </div>
     );
+  },
+  componentDidCreate() {
+    Utils.bindMethods(this, ['onClick', 'onDeleteClick']);
+  },
+  componentDidMount() {
+    this.refs.el.addEventListener('click', this.onClick);
+    if (this.refs.deleteEl) {
+      this.refs.deleteEl.addEventListener('click', this.onDeleteClick);
+    }
+  },
+  componentWillUnmount() {
+    this.refs.el.removeEventListener('click', this.onClick);
+    if (this.refs.deleteEl) {
+      this.refs.deleteEl.removeEventListener('click', this.onDeleteClick);
+    }
   },
   methods: {
     onClick(event) {

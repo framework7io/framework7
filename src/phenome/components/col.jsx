@@ -50,13 +50,19 @@ export default {
     );
 
     return (
-      <ColTag id={id} style={style} className={classes} onClick={self.onClick}>
+      <ColTag id={id} style={style} className={classes} ref="el">
         <slot />
       </ColTag>
     );
   },
   componentDidCreate() {
     Utils.bindMethods(this, ['onClick'])
+  },
+  componentDidMount() {
+    this.refs.el.addEventListener('click', this.onClick);
+  },
+  componentWillUnmount() {
+    this.refs.el.removeEventListener('click', this.onClick);
   },
   methods: {
     onClick(event) {

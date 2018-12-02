@@ -209,8 +209,8 @@ export default {
         );
         linkEl = (
           <a
+            ref="linkEl"
             className={linkClasses}
-            onClick={self.onClick}
             {...linkAttrs}
           >
             {itemContentEl}
@@ -304,8 +304,13 @@ export default {
   },
   componentDidMount() {
     const self = this;
-    const el = self.refs.el;
+    const { el, linkEl } = self.refs;
     if (!el) return;
+    const { link, href, smartSelect, swipeout, swipeoutOpened, accordionItem, smartSelectParams } = self.props;
+    const needsEvents = !(link || href || accordionItem || smartSelect);
+    if (!needsEvents && linkEl) {
+      linkEl.addEventListener('click', self.onClick);
+    }
 
     self.$listEl = self.$$(el).parents('.list, .list-group').eq(0);
     if (self.$listEl.length) {
@@ -315,7 +320,6 @@ export default {
         isSortable: self.$listEl.hasClass('sortable'),
       });
     }
-    const { swipeout, swipeoutOpened, accordionItem, smartSelect, smartSelectParams } = self.props;
     if (swipeout) {
       el.addEventListener('swipeout:open', self.onSwipeoutOpen);
       el.addEventListener('swipeout:opened', self.onSwipeoutOpened);
@@ -368,8 +372,12 @@ export default {
   },
   componentWillUnmount() {
     const self = this;
-    const el = self.refs.el;
-    const { swipeout, accordionItem, smartSelect } = self.props;
+    const { el, linkEl } = self.refs;
+    const { link, href, smartSelect, swipeout, accordionItem } = self.props;
+    const needsEvents = !(link || href || accordionItem || smartSelect);
+    if (!needsEvents && linkEl) {
+      linkEl.removeEventListener('click', self.onClick);
+    }
     if (el) {
       if (swipeout) {
         el.removeEventListener('swipeout:open', self.onSwipeoutOpen);

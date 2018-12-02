@@ -359,7 +359,6 @@ export default {
         id={id}
         style={style}
         className={classes}
-        onClick={self.onClick}
       >
         {slotsContentStart}
         {inputEl}
@@ -382,7 +381,8 @@ export default {
   },
   componentDidMount() {
     const self = this;
-    const { innerEl, inputEl, el } = self.refs;
+    const { innerEl, el } = self.refs;
+    el.addEventListener('click', self.onClick);
     if (!innerEl) return;
     const $innerEl = self.$$(innerEl);
     const $labelEl = $innerEl.children('.item-title.item-label');
@@ -416,7 +416,7 @@ export default {
   },
   componentDidUpdate() {
     const self = this;
-    const innerEl = self.refs.innerEl;
+    const { innerEl } = self.refs;
     if (!innerEl) return;
     const $innerEl = self.$$(innerEl);
     const $labelEl = $innerEl.children('.item-title.item-label');
@@ -444,7 +444,8 @@ export default {
   },
   componentWillUnmount() {
     const self = this;
-    const { inputEl, el } = self.refs;
+    const { el } = self.refs;
+    el.removeEventListener('click', self.onClick);
     el.removeEventListener('input:empty', self.onEmpty);
     el.removeEventListener('input:notempty', self.onNotEmpty);
     el.removeEventListener('focus', self.onFocus, true);

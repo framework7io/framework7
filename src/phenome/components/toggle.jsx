@@ -54,6 +54,7 @@ export default {
     if (process.env.COMPILER === 'react') {
       inputEl = (
         <input
+          ref="inputEl"
           type="checkbox"
           name={name}
           disabled={disabled}
@@ -68,6 +69,7 @@ export default {
     if (process.env.COMPILER === 'vue') {
       inputEl = (
         <input
+          ref="inputEl"
           type="checkbox"
           name={name}
           onChange={self.onChange}

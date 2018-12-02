@@ -26,6 +26,7 @@ export default {
     if (process.env.COMPILER === 'react') {
       inputEl = (
         <input
+          ref="inputEl"
           type="radio"
           name={name}
           value={value}
@@ -40,6 +41,7 @@ export default {
     if (process.env.COMPILER === 'vue') {
       inputEl = (
         <input
+          ref="inputEl"
           type="radio"
           name={name}
           onChange={self.onChange}

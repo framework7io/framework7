@@ -99,7 +99,6 @@ export default {
         id={id}
         style={style}
         className={self.classes}
-        onClick={self.onClick}
         {...self.attrs}
       >
         {iconEl}
@@ -202,6 +201,7 @@ export default {
   },
   componentDidMount() {
     const self = this;
+    self.refs.el.addEventListener('click', self.onClick);
     const { tooltip } = self.props;
     if (!tooltip) return;
     self.$f7ready((f7) => {
@@ -213,6 +213,7 @@ export default {
   },
   componentWillUnmount() {
     const self = this;
+    self.refs.el.removeEventListener('click', self.onClick);
     if (self.f7Tooltip && self.f7Tooltip.destroy) {
       self.f7Tooltip.destroy();
       self.f7Tooltip = null;

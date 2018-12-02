@@ -34,7 +34,7 @@ export default {
 
     return (
       <li id={id} style={style} className={className}>
-        <a className={self.classes} {...self.attrs} onClick={self.onClick}>
+        <a className={self.classes} {...self.attrs} ref="linkEl">
           <slot>{title || text}</slot>
         </a>
       </li>
@@ -86,6 +86,12 @@ export default {
   },
   componentDidCreate() {
     Utils.bindMethods(this, ['onClick'])
+  },
+  componentDidMount() {
+    this.refs.linkEl.addEventListener('click', this.onClick);
+  },
+  componentWillUnmount() {
+    this.refs.linkEl.removeEventListener('click', this.onClick);
   },
   methods: {
     onClick(event) {

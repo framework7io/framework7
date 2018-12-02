@@ -73,7 +73,7 @@ export default {
     let linkEl;
     if (linkChildren.length || (linkSlots && linkSlots.length)) {
       linkEl = (
-        <a target={target} href={href} onClick={self.onClick} key="f7-fab-link">
+        <a ref="linkEl" target={target} href={href} key="f7-fab-link">
           {linkChildren}
           {textEl}
           {linkSlots}
@@ -116,6 +116,9 @@ export default {
   },
   componentDidMount() {
     const self = this;
+    if (self.refs.linkEl) {
+      self.refs.linkEl.addEventListener('click', self.onClick);
+    }
     const { tooltip } = self.props;
     if (!tooltip) return;
     self.$f7ready((f7) => {
@@ -127,6 +130,9 @@ export default {
   },
   componentWillUnmount() {
     const self = this;
+    if (self.refs.linkEl) {
+      self.refs.linkEl.removeEventListener('click', self.onClick);
+    }
     if (self.f7Tooltip && self.f7Tooltip.destroy) {
       self.f7Tooltip.destroy();
       self.f7Tooltip = null;

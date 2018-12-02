@@ -37,6 +37,8 @@ export default {
       type: Boolean,
       default: true,
     },
+    // Input Value
+    value: [String, Number, Array],
 
     // SB Params
     inputEvents: {
@@ -125,16 +127,17 @@ export default {
       className,
       style,
       id,
+      value,
     } = props;
 
     if (clearButton) {
       clearEl = (
-        <span className="input-clear-button" onClick={self.onClearButtonClick} />
+        <span ref="clearEl" className="input-clear-button" />
       );
     }
     if (disableButton) {
       disableEl = (
-        <span className="searchbar-disable-button" onClick={self.onDisableButtonClick}>{disableButtonText}</span>
+        <span ref="disableEl" className="searchbar-disable-button">{disableButtonText}</span>
       );
     }
 
@@ -151,6 +154,37 @@ export default {
       Mixins.colorClasses(props),
     );
 
+    let inputEl;
+    if (process.env.COMPILER === 'react') {
+      inputEl = (
+        <input
+          ref="inputEl"
+          value={value}
+          placeholder={placeholder}
+          type="search"
+          onInput={self.onInput}
+          onChange={self.onChange.bind(self)}
+          onFocus={self.onFocus}
+          onBlur={self.onBlur}
+        />
+      )
+    }
+    if (process.env.COMPILER === 'vue') {
+      inputEl = (
+        <input
+          ref="inputEl"
+          placeholder={placeholder}
+          type="search"
+          domProps={{ value }}
+          onInput={self.onInput}
+          onChange={self.onChange}
+          onFocus={self.onFocus}
+          onBlur={self.onBlur}
+        />
+      )
+    }
+
+
     return (
       <SearchbarTag ref="el" id={id} style={style} className={classes}>
         <slot name="before-inner" />
@@ -158,14 +192,7 @@ export default {
           <slot name="inner-start" />
           <div className="searchbar-input-wrap">
             <slot name="input-wrap-start" />
-            <input
-              placeholder={placeholder}
-              type="search"
-              onInput={self.onInput}
-              onChange={self.onChange}
-              onFocus={self.onFocus}
-              onBlur={self.onBlur}
-            />
+            {inputEl}
             <i className="searchbar-icon" />
             {clearEl}
             <slot name="input-wrap-end" />
@@ -198,7 +225,6 @@ export default {
   },
   componentDidMount() {
     const self = this;
-
     const {
       init,
       inputEvents,
@@ -222,13 +248,18 @@ export default {
       form,
     } = self.props;
 
-    if (!init) return;
-
-    const el = self.refs.el;
-
+    const { inputEl, el, clearEl, disableEl } = self.refs;
     if (form && el) {
       el.addEventListener('submit', self.onSubmit, false);
     }
+    if (clearEl) {
+      clearEl.addEventListener('click', self.onClearButtonClick);
+    }
+    if (disableEl) {
+      disableEl.addEventListener('click', self.onDisableButtonClick);
+    }
+
+    if (!init) return;
 
     self.$f7ready(() => {
       const params = Utils.noUndefinedProps({
@@ -273,6 +304,20 @@ export default {
       });
       self.f7Searchbar = self.$f7.searchbar.create(params);
     });
+  },
+  componentWillUnmount() {
+    const self = this;
+    const { inputEl, el, clearEl, disableEl } = self.refs;
+    if (self.props.form && el) {
+      el.removeEventListener('submit', self.onSubmit, false);
+    }
+    if (clearEl) {
+      clearEl.removeEventListener('click', self.onClearButtonClick);
+    }
+    if (disableEl) {
+      disableEl.removeEventListener('click', self.onDisableButtonClick);
+    }
+    if (self.f7Searchbar && self.f7Searchbar.destroy) self.f7Searchbar.destroy();
   },
   methods: {
     search(query) {

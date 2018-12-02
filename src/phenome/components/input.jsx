@@ -384,7 +384,6 @@ export default {
     if (!inputEl) return;
 
     inputEl.removeEventListener('input:notempty', self.onInputNotEmpty, false);
-
     if (type === 'textarea' && resizable) {
       inputEl.removeEventListener('textarea:resze', self.onTextareaResize, false);
     }

@@ -129,7 +129,6 @@ export default {
         id={id}
         style={style}
         className={self.classes}
-        onClick={self.onClick}
         {...self.attrs}
       >
         {iconEl}
@@ -151,6 +150,7 @@ export default {
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
+    el.addEventListener('click', self.onClick);
     const { tabbarLabel, tabLink, tooltip, smartSelect, smartSelectParams } = self.props;
     let isTabbarLabel = false;
     if (tabbarLabel ||
@@ -181,6 +181,8 @@ export default {
   },
   componentWillUnmount() {
     const self = this;
+    const el = self.refs.el;
+    el.removeEventListener('click', self.onClick);
     if (self.f7SmartSelect && self.f7SmartSelect.destroy) {
       self.f7SmartSelect.destroy();
     }

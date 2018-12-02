@@ -41,12 +41,12 @@ export default {
 
     return (
       <a
+        ref="el"
         href={href || '#'}
         id={id}
         style={style}
         data-confirm={confirmText || undefined}
         className={classes}
-        onClick={this.onClick}
       >
         <slot>{text}</slot>
       </a>
@@ -54,6 +54,12 @@ export default {
   },
   componentDidCreate() {
     Utils.bindMethods(this, ['onClick'])
+  },
+  componentDidMount() {
+    this.refs.el.addEventListener('click', this.onClick);
+  },
+  componentWillUnmount() {
+    this.refs.el.removeEventListener('click', this.onClick);
   },
   methods: {
     onClick(event) {
