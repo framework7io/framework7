@@ -43,13 +43,13 @@ body {
     transition-duration: 0ms !important;
   }
 }
-// Touch Actions
-/*
-a, button, input, textarea, .link, .button, label, .sortable-handler {
-  touch-action: manipulation;
-  -ms-touch-action: manipulation;
+.device-ios, .device-android {
+  cursor: pointer;
 }
-*/
+.device-ios {
+  touch-action: manipulation;
+}
+
 // Fix for iPad in Safari in Lanscape mode
 @media (width:1024px) and (height:691px) and (orientation:landscape) {
   html, body, .framework7-root {
@@ -63,7 +63,7 @@ a, button, input, textarea, .link, .button, label, .sortable-handler {
 }
 * {
   -webkit-tap-highlight-color: rgba(0,0,0,0);
-  -webkit-touch-callout:none;
+  -webkit-touch-callout: none;
 }
 a, input, textarea, select {
   outline: 0;

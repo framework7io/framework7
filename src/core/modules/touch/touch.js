@@ -6,7 +6,7 @@ import Device from '../../utils/device';
 function initTouch() {
   const app = this;
   const params = app.params.touch;
-  const useRipple = app.theme === 'md' && params.mdTouchRipple;
+  const useRipple = params[`${app.theme}TouchRipple`];
 
   if (Device.ios && Device.webView) {
     // Strange hack required for iOS 8 webview to work on inputs
@@ -21,9 +21,11 @@ function initTouch() {
   let activeSelection;
   let scrollParent;
   let lastClickTime;
+  let isTouched;
   let isMoved;
   let tapHoldFired;
   let tapHoldTimeout;
+  let preventClick;
 
   let activableElement;
   let activeTimeout;
@@ -319,14 +321,7 @@ function initTouch() {
 
     if (params.activeState) {
       activableElement = findActivableElement(targetElement);
-      // If it's inside a scrollable view, we don't trigger active-state yet,
-      // because it can be a scroll instead. Based on the link:
-      // http://labnote.beedesk.com/click-scroll-and-pseudo-active-on-mobile-webk
-      if (!isInsideScrollableView(activableElement)) {
-        addActive();
-      } else {
-        activeTimeout = setTimeout(addActive, 80);
-      }
+      activeTimeout = setTimeout(addActive, 0);
     }
     if (useRipple) {
       rippleTouchStart(targetElement, touchStartX, touchStartY);
@@ -439,6 +434,7 @@ function initTouch() {
     return false;
   }
   function handleTouchCancel() {
+    isTouched = false;
     trackClick = false;
     targetElement = null;
 
@@ -510,6 +506,117 @@ function initTouch() {
     return allowClick;
   }
 
+  function handleTouchStartLite(e) {
+    preventClick = false;
+    isMoved = false;
+    tapHoldFired = false;
+    preventClick = false;
+    if (e.targetTouches.length > 1) {
+      if (activableElement) removeActive();
+      return true;
+    }
+    if (e.touches.length > 1 && activableElement) {
+      removeActive();
+    }
+    if (params.tapHold) {
+      if (tapHoldTimeout) clearTimeout(tapHoldTimeout);
+      tapHoldTimeout = setTimeout(() => {
+        if (e && e.touches && e.touches.length > 1) return;
+        tapHoldFired = true;
+        e.preventDefault();
+        preventClick = true;
+        $(e.target).trigger('taphold');
+      }, params.tapHoldDelay);
+    }
+    targetElement = e.target;
+    touchStartX = e.targetTouches[0].pageX;
+    touchStartY = e.targetTouches[0].pageY;
+
+    if (params.activeState) {
+      activableElement = findActivableElement(targetElement);
+      if (!isInsideScrollableView(activableElement)) {
+        addActive();
+      } else {
+        activeTimeout = setTimeout(addActive, 80);
+      }
+    }
+    if (useRipple) {
+      rippleTouchStart(targetElement, touchStartX, touchStartY);
+    }
+    return true;
+  }
+  function handleTouchMoveLite(e) {
+    const distance = params.fastClicks ? params.fastClicksDistanceThreshold : 0;
+    if (distance) {
+      const pageX = e.targetTouches[0].pageX;
+      const pageY = e.targetTouches[0].pageY;
+      if (Math.abs(pageX - touchStartX) > distance || Math.abs(pageY - touchStartY) > distance) {
+        isMoved = true;
+      }
+    } else {
+      isMoved = true;
+    }
+    if (isMoved) {
+      preventClick = true;
+      if (params.tapHold) {
+        clearTimeout(tapHoldTimeout);
+      }
+      if (params.activeState) {
+        clearTimeout(activeTimeout);
+        removeActive();
+      }
+      if (useRipple) {
+        rippleTouchMove();
+      }
+    }
+  }
+  function handleTouchEndLite(e) {
+    clearTimeout(activeTimeout);
+    clearTimeout(tapHoldTimeout);
+    if (document.activeElement === e.target) {
+      if (params.activeState) removeActive();
+      if (useRipple) {
+        rippleTouchEnd();
+      }
+      return true;
+    }
+    if (params.activeState) {
+      addActive();
+      setTimeout(removeActive, 0);
+    }
+    if (useRipple) {
+      rippleTouchEnd();
+    }
+    if ((params.tapHoldPreventClicks && tapHoldFired) || preventClick) {
+      if (e.cancelable) e.preventDefault();
+      preventClick = true;
+      return false;
+    }
+    return true;
+  }
+  function handleClickLite(e) {
+    if (targetElement && e.target !== targetElement) {
+      preventClick = true;
+    }
+    if (params.tapHold && params.tapHoldPreventClicks && tapHoldFired) {
+      preventClick = true;
+    }
+    if (preventClick) {
+      e.stopImmediatePropagation();
+      e.stopPropagation();
+      e.preventDefault();
+      targetElement = null;
+    }
+
+    if (params.tapHold) {
+      tapHoldTimeout = setTimeout(() => {
+        tapHoldFired = false;
+      }, (Device.ios || Device.androidChrome ? 100 : 400));
+    }
+
+    return preventClick;
+  }
+
   function emitAppTouchEvent(name, e) {
     app.emit({
       events: name,
@@ -567,10 +674,18 @@ function initTouch() {
   }
 
   if (Support.touch) {
-    app.on('click', handleClick);
-    app.on('touchstart', handleTouchStart);
-    app.on('touchmove', handleTouchMove);
-    app.on('touchend', handleTouchEnd);
+    if (params.fastClicks) {
+      app.on('click', handleClick);
+      app.on('touchstart', handleTouchStart);
+      app.on('touchmove', handleTouchMove);
+      app.on('touchend', handleTouchEnd);
+    } else {
+      app.on('click', handleClickLite);
+      app.on('touchstart', handleTouchStartLite);
+      app.on('touchmove', handleTouchMoveLite);
+      app.on('touchend', handleTouchEndLite);
+    }
+
     document.addEventListener('touchcancel', handleTouchCancel, { passive: true });
   } else if (params.activeState) {
     app.on('touchstart', handleMouseDown);
@@ -593,7 +708,7 @@ export default {
   params: {
     touch: {
       // Fast clicks
-      fastClicks: true,
+      fastClicks: false,
       fastClicksDistanceThreshold: 10,
       fastClicksDelayBetweenClicks: 50,
       fastClicksExclude: '', // CSS selector
@@ -607,6 +722,7 @@ export default {
       activeState: true,
       activeStateElements: 'a, button, label, span, .actions-button, .stepper-button, .stepper-button-plus, .stepper-button-minus, .card-expandable',
       mdTouchRipple: true,
+      iosTouchRipple: false,
       touchRippleElements: '.ripple, .link, .item-link, .list-button, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell:not(.input-cell), .notification-close-button, .stepper-button, .stepper-button-minus, .stepper-button-plus',
     },
   },
