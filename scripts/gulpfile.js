@@ -157,3 +157,16 @@ gulp.task('server-vue', () => {
   server();
   gulp.src('./kitchen-sink/vue/index.html').pipe(gopen({ uri: 'http://localhost:3000/kitchen-sink/vue/' }));
 });
+
+gulp.task('watch', () => {
+  watch.all();
+});
+gulp.task('watch-core', () => {
+  watch.core();
+});
+gulp.task('watch-react', () => {
+  watch.react();
+});
+gulp.task('watch-vue', () => {
+  watch.vue();
+});
