@@ -21,7 +21,6 @@ function initTouch() {
   let activeSelection;
   let scrollParent;
   let lastClickTime;
-  let isTouched;
   let isMoved;
   let tapHoldFired;
   let tapHoldTimeout;
@@ -434,7 +433,6 @@ function initTouch() {
     return false;
   }
   function handleTouchCancel() {
-    isTouched = false;
     trackClick = false;
     targetElement = null;
 
