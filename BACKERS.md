@@ -64,6 +64,7 @@ Bart DJ
 ---
 
 ### $10+ Supporter
+Fatih Batal<br>
 Matt Davis<br>
 Arsen Huang<br>
 Jonathan Pugh<br>
