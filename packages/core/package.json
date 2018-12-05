@@ -3,6 +3,7 @@
   "version": "3.5.2",
   "description": "Full featured mobile HTML framework for building iOS & Android apps",
   "main": "js/framework7.js",
+  "browser": "js/framework7.js",
   "typings": "framework7.d.ts",
   "jsnext:main": "framework7.esm.js",
   "module": "framework7.esm.js",
