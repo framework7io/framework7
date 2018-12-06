@@ -462,7 +462,7 @@ export default {
     },
     onInput(event) {
       const self = this;
-      const { validate } = self.props;
+      const { validate, validateOnBlur } = self.props;
       self.dispatchEvent('input', event);
       if (!validateOnBlur && (validate || validate === '') && self.refs && self.refs.inputEl) {
         self.validateInput(self.refs.inputEl);
