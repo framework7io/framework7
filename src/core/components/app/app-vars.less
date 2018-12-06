@@ -248,6 +248,17 @@
 .ripple-color-primary {
   --f7-theme-color-ripple-color: rgba(var(--f7-theme-color-rgb), 0.3);
 }
+:root {
+  each(@colors, {
+    @themeColorRed: red(@value);
+    @themeColorGreen: green(@value);
+    @themeColorBlue: blue(@value);
+    --f7-color-@{key}: @value;
+    --f7-color-@{key}-rgb: @themeColorRed, @themeColorGreen, @themeColorBlue;
+    --f7-color-@{key}-shade: darken(@value, 8%);
+    --f7-color-@{key}-tint: lighten(@value, 8%);
+  });
+}
 each(@colors, {
   .color-theme-@{key} {
     @themeColorRed: red(@value);
