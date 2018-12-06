@@ -148,10 +148,13 @@
         var styles = '';
         if (self.customColor) {
           const colorThemeProperties = self.$app.utils.colorThemeCSSProperties(self.customColor);
-          if (colorThemeProperties.length) {
+          if (Object.keys(colorThemeProperties).length) {
+            // styles +=
             styles += `
 :root {
-  ${colorThemeProperties.split('\n').join('\n  ')}
+  ${Object.keys(colorThemeProperties)
+    .map(key => `${key}: ${colorThemeProperties[key]};`)
+    .join('\n  ')}
 }`;
           }
         }
