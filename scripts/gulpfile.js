@@ -40,7 +40,7 @@ gulp.task('vue', buildVue);
 gulp.task('vue-typings', buildVueTypings);
 
 // eslint-disable-next-line
-gulp.task('build-core', runSequence('core-js', 'core-components', 'core-typings', 'core-less', 'core-lazy-components'));
+gulp.task('build-core', () => runSequence('core-js', 'core-components', 'core-typings', 'core-less', 'core-lazy-components'));
 gulp.task('build-react', () => runSequence('react', 'react-typings'));
 gulp.task('build-vue', () => runSequence('vue', 'vue-typings'));
 
