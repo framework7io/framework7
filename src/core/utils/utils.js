@@ -402,18 +402,18 @@ const Utils = {
       rgb = args;
       hex = Utils.colorRgbToHex(...rgb);
     }
-    if (!rgb) return '';
+    if (!rgb) return {};
     const hsl = Utils.colorRgbToHsl(...rgb);
     const hslShade = [hsl[0], hsl[1], Math.max(0, (hsl[2] - 0.08))];
     const hslTint = [hsl[0], hsl[1], Math.max(0, (hsl[2] + 0.08))];
     const shade = Utils.colorRgbToHex(...Utils.colorHslToRgb(...hslShade));
     const tint = Utils.colorRgbToHex(...Utils.colorHslToRgb(...hslTint));
-    return `
---f7-theme-color: ${hex};
---f7-theme-color-rgb: ${rgb.join(', ')};
---f7-theme-color-shade: ${shade};
---f7-theme-color-tint: ${tint};
-    `.trim();
+    return {
+      '--f7-theme-color': hex,
+      '--f7-theme-color-rgb': rgb.join(', '),
+      '--f7-theme-color-shade': shade,
+      '--f7-theme-color-tint': tint,
+    };
   },
 };
 export default Utils;
