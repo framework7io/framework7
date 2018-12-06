@@ -9,6 +9,10 @@ class F7ActionsButton extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.__reactRefs = {};
+
+    (() => {
+      Utils.bindMethods(this, ['onClick']);
+    })();
   }
 
   onClick(event) {
@@ -48,13 +52,20 @@ class F7ActionsButton extends React.Component {
       id: id,
       style: style,
       className: classes,
-      onClick: self.onClick.bind(self),
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
       }
     }, mediaEl, React.createElement('div', {
       className: 'actions-button-text'
     }, this.slots['default']));
+  }
+
+  componentWillUnmount() {
+    this.refs.el.removeEventListener('click', this.onClick);
+  }
+
+  componentDidMount() {
+    this.refs.el.addEventListener('click', this.onClick);
   }
 
   get slots() {

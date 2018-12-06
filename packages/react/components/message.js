@@ -8,15 +8,10 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7Message extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
 
     (() => {
-      this.onClickBound = this.onClick.bind(this);
-      this.onNameClickBound = this.onNameClick.bind(this);
-      this.onTextClickBound = this.onTextClick.bind(this);
-      this.onAvatarClickBound = this.onAvatarClick.bind(this);
-      this.onHeaderClickBound = this.onHeaderClick.bind(this);
-      this.onFooterClickBound = this.onFooterClick.bind(this);
-      this.onBubbleClickBound = this.onBubbleClick.bind(this);
+      Utils.bindMethods(this, ['onClick', 'onNameClick', 'onTextClick', 'onAvatarClick', 'onHeaderClick', 'onFooterClick', 'onBubbleClick']);
     })();
   }
 
@@ -111,27 +106,37 @@ class F7Message extends React.Component {
       'bubble-end': slotsBubbleEnd
     } = self.slots;
     return React.createElement('div', {
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
       id: id,
       style: style,
-      className: self.classes,
-      onClick: self.onClickBound
+      className: self.classes
     }, slotsStart, (avatar || slotsAvatar) && React.createElement('div', {
+      ref: __reactNode => {
+        this.__reactRefs['avatarEl'] = __reactNode;
+      },
       className: 'message-avatar',
       style: {
         backgroundImage: avatar && `url(${avatar})`
-      },
-      onClick: self.onAvatarClickBound
+      }
     }, slotsAvatar), React.createElement('div', {
       className: 'message-content'
     }, slotsContentStart, (slotsName || name) && React.createElement('div', {
-      className: 'message-name',
-      onClick: self.onNameClickBound
+      ref: __reactNode => {
+        this.__reactRefs['nameEl'] = __reactNode;
+      },
+      className: 'message-name'
     }, slotsName || name), (slotsHeader || header) && React.createElement('div', {
-      className: 'message-header',
-      onClick: self.onHeaderClickBound
+      ref: __reactNode => {
+        this.__reactRefs['headerEl'] = __reactNode;
+      },
+      className: 'message-header'
     }, slotsHeader || header), React.createElement('div', {
-      className: 'message-bubble',
-      onClick: self.onBubbleClickBound
+      ref: __reactNode => {
+        this.__reactRefs['bubbleEl'] = __reactNode;
+      },
+      className: 'message-bubble'
     }, slotsBubbleStart, (slotsImage || image) && React.createElement('div', {
       className: 'message-image'
     }, slotsImage || React.createElement('img', {
@@ -139,16 +144,58 @@ class F7Message extends React.Component {
     })), (slotsTextHeader || textHeader) && React.createElement('div', {
       className: 'message-text-header'
     }, slotsTextHeader || textHeader), (slotsText || text || typing) && React.createElement('div', {
-      className: 'message-text',
-      onClick: self.onTextClickBound
+      ref: __reactNode => {
+        this.__reactRefs['textEl'] = __reactNode;
+      },
+      className: 'message-text'
     }, slotsText || text, typing && React.createElement('div', {
       className: 'message-typing-indicator'
     }, React.createElement('div', null), React.createElement('div', null), React.createElement('div', null))), (slotsTextFooter || textFooter) && React.createElement('div', {
       className: 'message-text-footer'
     }, slotsTextFooter || textFooter), slotsBubbleEnd, slotsDefault), (slotsFooter || footer) && React.createElement('div', {
-      className: 'message-footer',
-      onClick: self.onFooterClickBound
+      ref: __reactNode => {
+        this.__reactRefs['footerEl'] = __reactNode;
+      },
+      className: 'message-footer'
     }, slotsFooter || footer), slotsContentEnd), slotsEnd);
+  }
+
+  componentWillUnmount() {
+    const {
+      el,
+      nameEl,
+      textEl,
+      avatarEl,
+      headerEl,
+      footerEl,
+      bubbleEl
+    } = this.refs;
+    el.removeEventListener('click', this.onClick);
+    if (nameEl) nameEl.removeEventListener('click', this.onNameClick);
+    if (textEl) textEl.removeEventListener('click', this.onTextClick);
+    if (avatarEl) nameEl.removeEventListener('click', this.onAvatarClick);
+    if (headerEl) nameEl.removeEventListener('click', this.onHeaderClick);
+    if (footerEl) nameEl.removeEventListener('click', this.onFooterClick);
+    if (bubbleEl) nameEl.removeEventListener('click', this.onBubbleClick);
+  }
+
+  componentDidMount() {
+    const {
+      el,
+      nameEl,
+      textEl,
+      avatarEl,
+      headerEl,
+      footerEl,
+      bubbleEl
+    } = this.refs;
+    el.addEventListener('click', this.onClick);
+    if (nameEl) nameEl.addEventListener('click', this.onNameClick);
+    if (textEl) textEl.addEventListener('click', this.onTextClick);
+    if (avatarEl) nameEl.addEventListener('click', this.onAvatarClick);
+    if (headerEl) nameEl.addEventListener('click', this.onHeaderClick);
+    if (footerEl) nameEl.addEventListener('click', this.onFooterClick);
+    if (bubbleEl) nameEl.addEventListener('click', this.onBubbleClick);
   }
 
   get slots() {
@@ -158,6 +205,12 @@ class F7Message extends React.Component {
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
+
+  get refs() {
+    return this.__reactRefs;
+  }
+
+  set refs(refs) {}
 
 }
 

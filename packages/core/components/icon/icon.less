@@ -8,6 +8,17 @@ i.icon {
   font-style: normal;
   position: relative;
 }
+.icon-back,
+.icon-prev,
+.icon-forward,
+.icon-next {
+  &:after {
+    .core-icons-font();
+  }
+}
+.icon[class*="color-"] {
+  color: var(--f7-theme-color);
+}
 
 & when (@includeIosTheme) {
   @import url('./icon-ios.less');

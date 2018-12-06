@@ -6,3 +6,9 @@
     overflow: hidden;
     box-sizing: border-box;
 }
+& when (@includeIosTheme) {
+@import url('./view-ios.less');
+}
+& when (@includeMdTheme) {
+@import url('./view-md.less');
+}

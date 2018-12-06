@@ -66,10 +66,8 @@ export default {
 
     if (linkChildren.length || linkSlots && linkSlots.length) {
       linkEl = _h('a', {
+        ref: 'linkEl',
         key: 'f7-fab-link',
-        on: {
-          click: self.onClick.bind(self)
-        },
         attrs: {
           target: target,
           href: href
@@ -91,17 +89,6 @@ export default {
     }, [linkEl, rootChildren, rootSlots]);
   },
 
-  methods: {
-    onClick(event) {
-      const self = this;
-      self.dispatchEvent('click', event);
-    },
-
-    dispatchEvent(events, ...args) {
-      __vueComponentDispatchEvent(this, events, ...args);
-    }
-
-  },
   watch: {
     'props.tooltip': function watchTooltip(newText) {
       const self = this;
@@ -110,8 +97,17 @@ export default {
     }
   },
 
+  created() {
+    Utils.bindMethods(this, ['onClick']);
+  },
+
   mounted() {
     const self = this;
+
+    if (self.$refs.linkEl) {
+      self.$refs.linkEl.addEventListener('click', self.onClick);
+    }
+
     const {
       tooltip
     } = self.props;
@@ -127,6 +123,10 @@ export default {
   beforeDestroy() {
     const self = this;
 
+    if (self.$refs.linkEl) {
+      self.$refs.linkEl.removeEventListener('click', self.onClick);
+    }
+
     if (self.f7Tooltip && self.f7Tooltip.destroy) {
       self.f7Tooltip.destroy();
       self.f7Tooltip = null;
@@ -134,6 +134,17 @@ export default {
     }
   },
 
+  methods: {
+    onClick(event) {
+      const self = this;
+      self.dispatchEvent('click', event);
+    },
+
+    dispatchEvent(events, ...args) {
+      __vueComponentDispatchEvent(this, events, ...args);
+    }
+
+  },
   computed: {
     props() {
       return __vueComponentProps(this);

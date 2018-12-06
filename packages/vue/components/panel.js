@@ -74,6 +74,10 @@ export default {
     }
   },
 
+  created() {
+    Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed', 'onBackdropClick', 'onPanelSwipe', 'onPanelSwipeOpen', 'onBreakpoint']);
+  },
+
   mounted() {
     const self = this;
     const el = self.$refs.el;
@@ -84,24 +88,16 @@ export default {
       left,
       reveal
     } = self.props;
-    self.onOpenBound = self.onOpen.bind(self);
-    self.onOpenedBound = self.onOpened.bind(self);
-    self.onCloseBound = self.onClose.bind(self);
-    self.onClosedBound = self.onClosed.bind(self);
-    self.onBackdropClickBound = self.onBackdropClick.bind(self);
-    self.onPanelSwipeBound = self.onPanelSwipe.bind(self);
-    self.onPanelSwipeOpenBound = self.onPanelSwipeOpen.bind(self);
-    self.onBreakpointBound = self.onBreakpoint.bind(self);
 
     if (el) {
-      el.addEventListener('panel:open', self.onOpenBound);
-      el.addEventListener('panel:opened', self.onOpenedBound);
-      el.addEventListener('panel:close', self.onCloseBound);
-      el.addEventListener('panel:closed', self.onClosedBound);
-      el.addEventListener('panel:backdrop-click', self.onBackdropClickBound);
-      el.addEventListener('panel:swipe', self.onPanelSwipeBound);
-      el.addEventListener('panel:swipeopen', self.onPanelSwipeOpenBound);
-      el.addEventListener('panel:breakpoint', self.onBreakpointBound);
+      el.addEventListener('panel:open', self.onOpen);
+      el.addEventListener('panel:opened', self.onOpened);
+      el.addEventListener('panel:close', self.onClose);
+      el.addEventListener('panel:closed', self.onClosed);
+      el.addEventListener('panel:backdrop-click', self.onBackdropClick);
+      el.addEventListener('panel:swipe', self.onPanelSwipe);
+      el.addEventListener('panel:swipeopen', self.onPanelSwipeOpen);
+      el.addEventListener('panel:breakpoint', self.onBreakpoint);
     }
 
     self.$f7ready(() => {
@@ -136,14 +132,14 @@ export default {
     if (self.f7Panel) self.f7Panel.destroy();
     const el = self.$refs.el;
     if (!el) return;
-    el.removeEventListener('panel:open', self.onOpenBound);
-    el.removeEventListener('panel:opened', self.onOpenedBound);
-    el.removeEventListener('panel:close', self.onCloseBound);
-    el.removeEventListener('panel:closed', self.onClosedBound);
-    el.removeEventListener('panel:backdrop-click', self.onBackdropClickBound);
-    el.removeEventListener('panel:swipe', self.onPanelSwipeBound);
-    el.removeEventListener('panel:swipeopen', self.onPanelSwipeOpenBound);
-    el.removeEventListener('panel:breakpoint', self.onBreakpointBound);
+    el.removeEventListener('panel:open', self.onOpen);
+    el.removeEventListener('panel:opened', self.onOpened);
+    el.removeEventListener('panel:close', self.onClose);
+    el.removeEventListener('panel:closed', self.onClosed);
+    el.removeEventListener('panel:backdrop-click', self.onBackdropClick);
+    el.removeEventListener('panel:swipe', self.onPanelSwipe);
+    el.removeEventListener('panel:swipeopen', self.onPanelSwipeOpen);
+    el.removeEventListener('panel:breakpoint', self.onBreakpoint);
   },
 
   methods: {

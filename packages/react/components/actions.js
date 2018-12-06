@@ -2,7 +2,6 @@ import React from 'react';
 import Mixins from '../utils/mixins';
 import Utils from '../utils/utils';
 import __reactComponentWatch from '../runtime-helpers/react-component-watch.js';
-import __reactComponentEl from '../runtime-helpers/react-component-el.js';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
@@ -11,6 +10,10 @@ class F7Actions extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.__reactRefs = {};
+
+    (() => {
+      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed']);
+    })();
   }
 
   onOpen(event) {
@@ -66,26 +69,22 @@ class F7Actions extends React.Component {
   componentWillUnmount() {
     const self = this;
     if (self.f7Actions) self.f7Actions.destroy();
-    const el = self.el;
+    const el = self.refs.el;
     if (!el) return;
-    el.removeEventListener('actions:open', self.onOpenBound);
-    el.removeEventListener('actions:opened', self.onOpenedBound);
-    el.removeEventListener('actions:close', self.onCloseBound);
-    el.removeEventListener('actions:closed', self.onClosedBound);
+    el.removeEventListener('actions:open', self.onOpen);
+    el.removeEventListener('actions:opened', self.onOpened);
+    el.removeEventListener('actions:close', self.onClose);
+    el.removeEventListener('actions:closed', self.onClosed);
   }
 
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
     if (!el) return;
-    self.onOpenBound = self.onOpen.bind(self);
-    self.onOpenedBound = self.onOpened.bind(self);
-    self.onCloseBound = self.onClose.bind(self);
-    self.onClosedBound = self.onClosed.bind(self);
-    el.addEventListener('actions:open', self.onOpenBound);
-    el.addEventListener('actions:opened', self.onOpenedBound);
-    el.addEventListener('actions:close', self.onCloseBound);
-    el.addEventListener('actions:closed', self.onClosedBound);
+    el.addEventListener('actions:open', self.onOpen);
+    el.addEventListener('actions:opened', self.onOpened);
+    el.addEventListener('actions:close', self.onClose);
+    el.addEventListener('actions:closed', self.onClosed);
     const props = self.props;
     const {
       grid,
@@ -118,10 +117,6 @@ class F7Actions extends React.Component {
 
   get slots() {
     return __reactComponentSlots(this.props);
-  }
-
-  get el() {
-    return __reactComponentEl(this);
   }
 
   dispatchEvent(events, ...args) {

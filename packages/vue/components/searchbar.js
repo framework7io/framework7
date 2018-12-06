@@ -28,6 +28,7 @@ export default {
       type: Boolean,
       default: true
     },
+    value: [String, Number, Array],
     inputEvents: {
       type: String,
       default: 'change input compositionend'
@@ -114,24 +115,21 @@ export default {
       expandable,
       className,
       style,
-      id
+      id,
+      value
     } = props;
 
     if (clearButton) {
       clearEl = _h('span', {
-        class: 'input-clear-button',
-        on: {
-          click: self.onClearButtonClick.bind(self)
-        }
+        ref: 'clearEl',
+        class: 'input-clear-button'
       });
     }
 
     if (disableButton) {
       disableEl = _h('span', {
-        class: 'searchbar-disable-button',
-        on: {
-          click: self.onDisableButtonClick.bind(self)
-        }
+        ref: 'disableEl',
+        class: 'searchbar-disable-button'
       }, [disableButtonText]);
     }
 
@@ -141,6 +139,25 @@ export default {
       'no-hairline': noHairline,
       'searchbar-expandable': expandable
     }, Mixins.colorClasses(props));
+    let inputEl;
+    {
+      inputEl = _h('input', {
+        ref: 'inputEl',
+        domProps: {
+          value
+        },
+        on: {
+          input: self.onInput,
+          change: self.onChange,
+          focus: self.onFocus,
+          blur: self.onBlur
+        },
+        attrs: {
+          placeholder: placeholder,
+          type: 'search'
+        }
+      });
+    }
     return _h(SearchbarTag, {
       ref: 'el',
       style: style,
@@ -152,27 +169,20 @@ export default {
       class: 'searchbar-inner'
     }, [this.$slots['inner-start'], _h('div', {
       class: 'searchbar-input-wrap'
-    }, [this.$slots['input-wrap-start'], _h('input', {
-      on: {
-        input: self.onInput.bind(self),
-        change: self.onChange.bind(self),
-        focus: self.onFocus.bind(self),
-        blur: self.onBlur.bind(self)
-      },
-      attrs: {
-        placeholder: placeholder,
-        type: 'search'
-      }
-    }), _h('i', {
+    }, [this.$slots['input-wrap-start'], inputEl, _h('i', {
       class: 'searchbar-icon'
     }), clearEl, this.$slots['input-wrap-end']]), disableEl, this.$slots['inner-end'], this.$slots['default']]), this.$slots['after-inner']]);
+  },
+
+  created() {
+    Utils.bindMethods(this, ['onSubmit', 'onClearButtonClick', 'onDisableButtonClick', 'onInput', 'onChange', 'onFocus', 'onBlur']);
   },
 
   beforeDestroy() {
     const self = this;
 
     if (self.props.form && self.$refs.el) {
-      self.$refs.el.removeEventListener('submit', self.onSubmitBound, false);
+      self.$refs.el.removeEventListener('submit', self.onSubmit, false);
     }
 
     if (self.f7Searchbar && self.f7Searchbar.destroy) self.f7Searchbar.destroy();
@@ -202,14 +212,26 @@ export default {
       hideGroups,
       form
     } = self.props;
-    if (!init) return;
-    const el = self.$refs.el;
+    const {
+      inputEl,
+      el,
+      clearEl,
+      disableEl
+    } = self.$refs;
 
     if (form && el) {
-      self.onSubmitBound = self.onSubmit.bind(self);
-      el.addEventListener('submit', self.onSubmitBound, false);
+      el.addEventListener('submit', self.onSubmit, false);
     }
 
+    if (clearEl) {
+      clearEl.addEventListener('click', self.onClearButtonClick);
+    }
+
+    if (disableEl) {
+      disableEl.addEventListener('click', self.onDisableButtonClick);
+    }
+
+    if (!init) return;
     self.$f7ready(() => {
       const params = Utils.noUndefinedProps({
         el: self.$refs.el,
@@ -257,6 +279,30 @@ export default {
       });
       self.f7Searchbar = self.$f7.searchbar.create(params);
     });
+  },
+
+  beforeDestroy() {
+    const self = this;
+    const {
+      inputEl,
+      el,
+      clearEl,
+      disableEl
+    } = self.$refs;
+
+    if (self.props.form && el) {
+      el.removeEventListener('submit', self.onSubmit, false);
+    }
+
+    if (clearEl) {
+      clearEl.removeEventListener('click', self.onClearButtonClick);
+    }
+
+    if (disableEl) {
+      disableEl.removeEventListener('click', self.onDisableButtonClick);
+    }
+
+    if (self.f7Searchbar && self.f7Searchbar.destroy) self.f7Searchbar.destroy();
   },
 
   methods: {

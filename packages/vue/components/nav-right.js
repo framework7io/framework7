@@ -20,13 +20,22 @@ export default {
     const classes = Utils.classNames(className, 'right', {
       sliding
     }, Mixins.colorClasses(props));
+    const children = [];
+    const slots = this.$slots;
+
+    if (slots && Object.keys(slots).length) {
+      Object.keys(slots).forEach(key => {
+        children.push(...slots[key]);
+      });
+    }
+
     return _h('div', {
       style: style,
       class: classes,
       attrs: {
         id: id
       }
-    }, [this.$slots['default']]);
+    }, [children]);
   },
 
   computed: {

@@ -6,6 +6,8 @@ declare namespace F7BlockTitle {
     id? : string | number
     className? : string
     style? : React.CSSProperties
+    large? : boolean
+    medium? : boolean
     color? : string
     colorTheme? : string
     textColor? : string

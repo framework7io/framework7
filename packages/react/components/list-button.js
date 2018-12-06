@@ -8,6 +8,11 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7ListButton extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
+
+    (() => {
+      Utils.bindMethods(this, ['onClick']);
+    })();
   }
 
   onClick(event) {
@@ -40,7 +45,6 @@ class F7ListButton extends React.Component {
       tabLinkActive
     } = props;
     return Utils.classNames({
-      'item-link': true,
       'list-button': true,
       'tab-link': tabLink || tabLink === '',
       'tab-link-active': tabLinkActive,
@@ -65,8 +69,18 @@ class F7ListButton extends React.Component {
     }, React.createElement('a', Object.assign({
       className: self.classes
     }, self.attrs, {
-      onClick: self.onClick.bind(self)
+      ref: __reactNode => {
+        this.__reactRefs['linkEl'] = __reactNode;
+      }
     }), this.slots['default'], !this.slots.default && (title || text)));
+  }
+
+  componentWillUnmount() {
+    this.refs.linkEl.removeEventListener('click', this.onClick);
+  }
+
+  componentDidMount() {
+    this.refs.linkEl.addEventListener('click', this.onClick);
   }
 
   get slots() {
@@ -76,6 +90,12 @@ class F7ListButton extends React.Component {
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
+
+  get refs() {
+    return this.__reactRefs;
+  }
+
+  set refs(refs) {}
 
 }
 

@@ -71,6 +71,8 @@ declare namespace F7Link {
     sortableEnable? : boolean | string
     sortableDisable? : boolean | string
     sortableToggle? : boolean | string
+    cardOpen? : boolean | string
+    cardClose? : boolean | string
     onClick? : (event?: any) => void
   }
 }

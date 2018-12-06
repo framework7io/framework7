@@ -1,21 +1,10 @@
 .ios {
-  @import (multiple) '../../less/colors-ios.less';
-  .progressbar, .progressbar-infinite {
-    height: 2px;
-    background: #b6b6b6;
-    transform-origin: center top;
-    border-radius: 2px;
-  }
-  .progressbar {
-    span {
-      background: @themeColor;
-    }
-  }
   .progressbar-infinite {
     &:before {
-      content: '';
-      background: @themeColor;
       animation: ios-progressbar-infinite 1s linear infinite;
+    }
+    &:after {
+      display: none;
     }
     &.color-multi:before {
       width: 400%;
@@ -25,30 +14,6 @@
       animation: ios-progressbar-infinite-multicolor 3s linear infinite;
     }
   }
-  .color-theme-loop({
-    .color-theme-@{colorThemeName} .progressbar {
-      span {
-        background: @colorThemeValue;
-      }
-    }
-    .color-theme-@{colorThemeName} .progressbar-infinite {
-      &:before {
-        background: @colorThemeValue;
-      }
-    }
-  });
-  .color-loop({
-    .progressbar.color-@{colorName} {
-      span {
-        background: @colorValue;
-      }
-    }
-    .progressbar-infinite.color-@{colorName} {
-      &:before {
-        background: @colorValue;
-      }
-    }
-  });
 }
 
 @keyframes ios-progressbar-infinite {

@@ -1,32 +1,22 @@
 /* === Elevation === */
 @elevations: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24;
-.elevation-loop(@array, @i: 1) when (@i =< length(@array)) {
-  @value: extract(@array, @i);
+
+each(@elevations, {
   .elevation-@{value} {
-    .elevation(@value) !important;
+    box-shadow: ~"var(--f7-elevation-@{value}) !important";
   }
-  .elevation-loop(@array, (@i + 1));
-}
-.elevation-loop(@elevations);
-
-.elevation-hover-loop(@array, @i: 1) when (@i =< length(@array)) {
-  @value: extract(@array, @i);
+});
+each(@elevations, {
   .device-desktop .elevation-hover-@{value}:hover {
-    .elevation(@value) !important;
+    box-shadow: ~"var(--f7-elevation-@{value}) !important";
   }
-  .elevation-hover-loop(@array, (@i + 1));
-}
-.elevation-hover-loop(@elevations);
-
-.elevation-pressed-loop(@array, @i: 1) when (@i =< length(@array)) {
-  @value: extract(@array, @i);
+});
+each(@elevations, {
   .active-state.elevation-pressed-@{value},
   .device-desktop .active-state.elevation-pressed-@{value} {
-    .elevation(@value) !important;
+    box-shadow: ~"var(--f7-elevation-@{value}) !important";
   }
-  .elevation-pressed-loop(@array, (@i + 1));
-}
-.elevation-pressed-loop(@elevations);
+});
 
 .elevation-transition-100 {
   transition-duration: 100ms;

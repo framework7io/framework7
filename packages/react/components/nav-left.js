@@ -9,6 +9,10 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7NavLeft extends React.Component {
   constructor(props, context) {
     super(props, context);
+
+    (() => {
+      Utils.bindMethods(this, ['onBackClick']);
+    })();
   }
 
   onBackClick(event) {
@@ -36,18 +40,27 @@ class F7NavLeft extends React.Component {
         force: backLinkForce || undefined,
         className: backLink === true || backLink && this.$theme.md ? 'icon-only' : undefined,
         text: backLink !== true && !this.$theme.md ? backLink : undefined,
-        onClick: this.onBackClick.bind(this)
+        onClick: this.onBackClick
       });
     }
 
     const classes = Utils.classNames(className, 'left', {
       sliding
     }, Mixins.colorClasses(props));
+    const children = [];
+    const slots = this.slots;
+
+    if (slots && Object.keys(slots).length) {
+      Object.keys(slots).forEach(key => {
+        children.push(...slots[key]);
+      });
+    }
+
     return React.createElement('div', {
       id: id,
       style: style,
       className: classes
-    }, linkEl, this.slots['default']);
+    }, linkEl, children);
   }
 
   get slots() {

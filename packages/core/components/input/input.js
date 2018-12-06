@@ -199,7 +199,7 @@ const Input = {
       app.input.checkEmptyState($inputEl);
 
       // Check validation
-      if ($inputEl.dataset().validate || $inputEl.attr('validate') !== null) {
+      if ($inputEl.attr('data-validate-on-blur') === null && ($inputEl.dataset().validate || $inputEl.attr('validate') !== null)) {
         app.input.validate($inputEl);
       }
 
@@ -210,7 +210,7 @@ const Input = {
     }
     function onInvalid(e) {
       const $inputEl = $(this);
-      if ($inputEl.dataset().validate || $inputEl.attr('validate') !== null) {
+      if ($inputEl.attr('data-validate-on-blur') === null && ($inputEl.dataset().validate || $inputEl.attr('validate') !== null)) {
         e.preventDefault();
         app.input.validate($inputEl);
       }

@@ -51,18 +51,18 @@ export default {
     }
   },
 
+  created() {
+    Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed']);
+  },
+
   mounted() {
     const self = this;
     const el = self.$refs.el;
     if (!el) return;
-    self.onOpenBound = self.onOpen.bind(self);
-    self.onOpenedBound = self.onOpened.bind(self);
-    self.onCloseBound = self.onClose.bind(self);
-    self.onClosedBound = self.onClosed.bind(self);
-    el.addEventListener('actions:open', self.onOpenBound);
-    el.addEventListener('actions:opened', self.onOpenedBound);
-    el.addEventListener('actions:close', self.onCloseBound);
-    el.addEventListener('actions:closed', self.onClosedBound);
+    el.addEventListener('actions:open', self.onOpen);
+    el.addEventListener('actions:opened', self.onOpened);
+    el.addEventListener('actions:close', self.onClose);
+    el.addEventListener('actions:closed', self.onClosed);
     const props = self.props;
     const {
       grid,
@@ -96,12 +96,12 @@ export default {
   beforeDestroy() {
     const self = this;
     if (self.f7Actions) self.f7Actions.destroy();
-    const el = self.$el;
+    const el = self.$refs.el;
     if (!el) return;
-    el.removeEventListener('actions:open', self.onOpenBound);
-    el.removeEventListener('actions:opened', self.onOpenedBound);
-    el.removeEventListener('actions:close', self.onCloseBound);
-    el.removeEventListener('actions:closed', self.onClosedBound);
+    el.removeEventListener('actions:open', self.onOpen);
+    el.removeEventListener('actions:opened', self.onOpened);
+    el.removeEventListener('actions:close', self.onClose);
+    el.removeEventListener('actions:closed', self.onClosed);
   },
 
   methods: {

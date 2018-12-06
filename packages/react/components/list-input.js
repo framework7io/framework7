@@ -25,15 +25,7 @@ class F7ListInput extends React.Component {
     })();
 
     (() => {
-      const self = this;
-      self.onChangeBound = self.onChange.bind(self);
-      self.onInputBound = self.onInput.bind(self);
-      self.onFocusBound = self.onFocus.bind(self);
-      self.onBlurBound = self.onBlur.bind(self);
-      self.onTextareaResizeBound = self.onTextareaResize.bind(self);
-      self.onInputNotEmptyBound = self.onInputNotEmpty.bind(self);
-      self.onInputEmptyBound = self.onInputEmpty.bind(self);
-      self.onInputClearBound = self.onInputClear.bind(self);
+      Utils.bindMethods(this, 'onChange onInput onFocus onBlur onTextareaResize onInputNotEmpty onInputEmpty onInputClear'.split(' '));
     })();
   }
 
@@ -76,11 +68,12 @@ class F7ListInput extends React.Component {
   onInput(event) {
     const self = this;
     const {
-      validate
+      validate,
+      validateOnBlur
     } = self.props;
     self.dispatchEvent('input', event);
 
-    if ((validate || validate === '') && self.refs && self.refs.inputEl) {
+    if (!validateOnBlur && (validate || validate === '') && self.refs && self.refs.inputEl) {
       self.validateInput(self.refs.inputEl);
     }
 
@@ -168,6 +161,7 @@ class F7ListInput extends React.Component {
       inputStyle,
       pattern,
       validate,
+      validateOnBlur,
       tabindex,
       resizable,
       clearButton,
@@ -227,13 +221,14 @@ class F7ListInput extends React.Component {
           pattern: pattern,
           validate: typeof validate === 'string' && validate.length ? validate : undefined,
           'data-validate': validate === true || validate === '' ? true : undefined,
+          'data-validate-on-blur': validateOnBlur === true || validateOnBlur === '' ? true : undefined,
           tabIndex: tabindex,
           'data-error-message': errorMessageForce ? undefined : errorMessage,
           className: inputClassName,
-          onFocus: self.onFocusBound,
-          onBlur: self.onBlurBound,
-          onInput: self.onInputBound,
-          onChange: self.onChangeBound
+          onFocus: self.onFocus,
+          onBlur: self.onBlur,
+          onInput: self.onInput,
+          onChange: self.onChange
         }, children);
       }
       return input;
@@ -304,10 +299,10 @@ class F7ListInput extends React.Component {
     const self = this;
     const inputEl = self.refs.inputEl;
     if (!inputEl) return;
-    inputEl.removeEventListener('input:notempty', self.onInputNotEmptyBound, false);
-    inputEl.removeEventListener('textarea:resze', self.onTextareaResizeBound, false);
-    inputEl.removeEventListener('input:empty', self.onInputEmptyBound, false);
-    inputEl.removeEventListener('input:clear', self.onInputClearBound, false);
+    inputEl.removeEventListener('input:notempty', self.onInputNotEmpty, false);
+    inputEl.removeEventListener('textarea:resze', self.onTextareaResize, false);
+    inputEl.removeEventListener('input:empty', self.onInputEmpty, false);
+    inputEl.removeEventListener('input:clear', self.onInputClear, false);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -338,6 +333,7 @@ class F7ListInput extends React.Component {
 
     const {
       validate,
+      validateOnBlur,
       resizable,
       type
     } = self.props;
@@ -349,7 +345,7 @@ class F7ListInput extends React.Component {
       if (!inputEl) return;
       self.updateInputOnDidUpdate = false;
 
-      if (validate) {
+      if (validate && !validateOnBlur) {
         self.validateInput(inputEl);
       }
 
@@ -366,6 +362,7 @@ class F7ListInput extends React.Component {
     self.$f7ready(f7 => {
       const {
         validate,
+        validateOnBlur,
         resizable,
         value,
         defaultValue,
@@ -373,12 +370,12 @@ class F7ListInput extends React.Component {
       } = self.props;
       const inputEl = self.refs.inputEl;
       if (!inputEl) return;
-      inputEl.addEventListener('input:notempty', self.onInputNotEmptyBound, false);
-      inputEl.addEventListener('textarea:resze', self.onTextareaResizeBound, false);
-      inputEl.addEventListener('input:empty', self.onInputEmptyBound, false);
-      inputEl.addEventListener('input:clear', self.onInputClearBound, false);
+      inputEl.addEventListener('input:notempty', self.onInputNotEmpty, false);
+      inputEl.addEventListener('textarea:resze', self.onTextareaResize, false);
+      inputEl.addEventListener('input:empty', self.onInputEmpty, false);
+      inputEl.addEventListener('input:clear', self.onInputClear, false);
 
-      if ((validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
+      if (!validateOnBlur && (validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
         setTimeout(() => {
           self.validateInput(inputEl);
         }, 0);
@@ -456,6 +453,7 @@ __reactComponentSetProps(F7ListInput, Object.assign({
   inputStyle: Object,
   pattern: String,
   validate: [Boolean, String],
+  validateOnBlur: Boolean,
   tabindex: [String, Number],
   resizable: Boolean,
   clearButton: Boolean,

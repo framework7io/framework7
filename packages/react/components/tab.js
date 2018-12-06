@@ -19,8 +19,7 @@ class F7Tab extends React.Component {
     })();
 
     (() => {
-      this.onTabShowBound = this.onTabShow.bind(this);
-      this.onTabHideBound = this.onTabHide.bind(this);
+      Utils.bindMethods(this, ['onTabShow', 'onTabHide']);
     })();
   }
 
@@ -71,8 +70,8 @@ class F7Tab extends React.Component {
     const el = self.refs.el;
 
     if (el) {
-      el.addEventListener('tab:show', self.onTabShowBound);
-      el.addEventListener('tab:hide', self.onTabHideBound);
+      el.addEventListener('tab:show', self.onTabShow);
+      el.addEventListener('tab:hide', self.onTabHide);
     }
 
     self.setState({
@@ -92,8 +91,8 @@ class F7Tab extends React.Component {
     const el = self.refs.el;
 
     if (el) {
-      el.removeEventListener('tab:show', self.onTabShowBound);
-      el.removeEventListener('tab:hide', self.onTabHideBound);
+      el.removeEventListener('tab:show', self.onTabShow);
+      el.removeEventListener('tab:hide', self.onTabHide);
     }
 
     if (!self.routerData) return;

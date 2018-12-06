@@ -46,6 +46,7 @@ export default {
     inputStyle: [String, Object],
     pattern: String,
     validate: [Boolean, String],
+    validateOnBlur: Boolean,
     tabindex: [String, Number],
     resizable: Boolean,
     clearButton: Boolean,
@@ -123,6 +124,7 @@ export default {
       inputStyle,
       pattern,
       validate,
+      validateOnBlur,
       tabindex,
       resizable,
       clearButton,
@@ -163,10 +165,10 @@ export default {
             required
           },
           on: {
-            focus: self.onFocusBound,
-            blur: self.onBlurBound,
-            input: self.onInputBound,
-            change: self.onChangeBound
+            focus: self.onFocus,
+            blur: self.onBlur,
+            input: self.onInput,
+            change: self.onChange
           },
           attrs: {
             name: name,
@@ -189,6 +191,7 @@ export default {
             pattern: pattern,
             validate: typeof validate === 'string' && validate.length ? validate : undefined,
             'data-validate': validate === true || validate === '' ? true : undefined,
+            'data-validate-on-blur': validateOnBlur === true || validateOnBlur === '' ? true : undefined,
             tabindex: tabindex,
             'data-error-message': errorMessageForce ? undefined : errorMessage
           }
@@ -292,15 +295,7 @@ export default {
   },
 
   created() {
-    const self = this;
-    self.onChangeBound = self.onChange.bind(self);
-    self.onInputBound = self.onInput.bind(self);
-    self.onFocusBound = self.onFocus.bind(self);
-    self.onBlurBound = self.onBlur.bind(self);
-    self.onTextareaResizeBound = self.onTextareaResize.bind(self);
-    self.onInputNotEmptyBound = self.onInputNotEmpty.bind(self);
-    self.onInputEmptyBound = self.onInputEmpty.bind(self);
-    self.onInputClearBound = self.onInputClear.bind(self);
+    Utils.bindMethods(this, 'onChange onInput onFocus onBlur onTextareaResize onInputNotEmpty onInputEmpty onInputClear'.split(' '));
   },
 
   mounted() {
@@ -310,6 +305,7 @@ export default {
     self.$f7ready(f7 => {
       const {
         validate,
+        validateOnBlur,
         resizable,
         value,
         defaultValue,
@@ -317,12 +313,12 @@ export default {
       } = self.props;
       const inputEl = self.$refs.inputEl;
       if (!inputEl) return;
-      inputEl.addEventListener('input:notempty', self.onInputNotEmptyBound, false);
-      inputEl.addEventListener('textarea:resze', self.onTextareaResizeBound, false);
-      inputEl.addEventListener('input:empty', self.onInputEmptyBound, false);
-      inputEl.addEventListener('input:clear', self.onInputClearBound, false);
+      inputEl.addEventListener('input:notempty', self.onInputNotEmpty, false);
+      inputEl.addEventListener('textarea:resze', self.onTextareaResize, false);
+      inputEl.addEventListener('input:empty', self.onInputEmpty, false);
+      inputEl.addEventListener('input:clear', self.onInputClear, false);
 
-      if ((validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
+      if (!validateOnBlur && (validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
         setTimeout(() => {
           self.validateInput(inputEl);
         }, 0);
@@ -357,6 +353,7 @@ export default {
 
     const {
       validate,
+      validateOnBlur,
       resizable,
       type
     } = self.props;
@@ -368,7 +365,7 @@ export default {
       if (!inputEl) return;
       self.updateInputOnDidUpdate = false;
 
-      if (validate) {
+      if (validate && !validateOnBlur) {
         self.validateInput(inputEl);
       }
 
@@ -382,10 +379,10 @@ export default {
     const self = this;
     const inputEl = self.$refs.inputEl;
     if (!inputEl) return;
-    inputEl.removeEventListener('input:notempty', self.onInputNotEmptyBound, false);
-    inputEl.removeEventListener('textarea:resze', self.onTextareaResizeBound, false);
-    inputEl.removeEventListener('input:empty', self.onInputEmptyBound, false);
-    inputEl.removeEventListener('input:clear', self.onInputClearBound, false);
+    inputEl.removeEventListener('input:notempty', self.onInputNotEmpty, false);
+    inputEl.removeEventListener('textarea:resze', self.onTextareaResize, false);
+    inputEl.removeEventListener('input:empty', self.onInputEmpty, false);
+    inputEl.removeEventListener('input:clear', self.onInputClear, false);
   },
 
   methods: {
@@ -428,11 +425,12 @@ export default {
     onInput(event) {
       const self = this;
       const {
-        validate
+        validate,
+        validateOnBlur
       } = self.props;
       self.dispatchEvent('input', event);
 
-      if ((validate || validate === '') && self.$refs && self.$refs.inputEl) {
+      if (!validateOnBlur && (validate || validate === '') && self.$refs && self.$refs.inputEl) {
         self.validateInput(self.$refs.inputEl);
       }
 

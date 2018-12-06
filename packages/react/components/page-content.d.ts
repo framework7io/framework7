@@ -11,6 +11,7 @@ declare namespace F7PageContent {
     ptr? : boolean
     ptrDistance? : number
     ptrPreloader? : boolean
+    ptrBottom? : boolean
     infinite? : boolean
     infiniteTop? : boolean
     infiniteDistance? : number

@@ -39,15 +39,24 @@ export default {
       style: style,
       class: classes,
       ref: 'el',
-      on: {
-        click: self.onClick.bind(self)
-      },
       attrs: {
         id: id
       }
     }, [mediaEl, _h('div', {
       class: 'actions-button-text'
     }, [this.$slots['default']])]);
+  },
+
+  created() {
+    Utils.bindMethods(this, ['onClick']);
+  },
+
+  mounted() {
+    this.$refs.el.addEventListener('click', this.onClick);
+  },
+
+  beforeDestroy() {
+    this.$refs.el.removeEventListener('click', this.onClick);
   },
 
   methods: {

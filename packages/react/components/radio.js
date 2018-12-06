@@ -8,6 +8,11 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7Radio extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
+
+    (() => {
+      Utils.bindMethods(this, ['onChange']);
+    })();
   }
 
   onChange(event) {
@@ -31,6 +36,9 @@ class F7Radio extends React.Component {
     let inputEl;
     {
       inputEl = React.createElement('input', {
+        ref: __reactNode => {
+          this.__reactRefs['inputEl'] = __reactNode;
+        },
         type: 'radio',
         name: name,
         value: value,
@@ -38,7 +46,7 @@ class F7Radio extends React.Component {
         readOnly: readonly,
         checked: checked,
         defaultChecked: defaultChecked,
-        onChange: self.onChange.bind(self)
+        onChange: self.onChange
       });
     }
     const iconEl = React.createElement('i', {
@@ -61,6 +69,12 @@ class F7Radio extends React.Component {
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
+
+  get refs() {
+    return this.__reactRefs;
+  }
+
+  set refs(refs) {}
 
 }
 

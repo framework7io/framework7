@@ -148,20 +148,8 @@ export default {
 
   },
 
-  beforeDestroy() {
-    const self = this;
-    const el = self.$refs.el;
-
-    if (el) {
-      el.removeEventListener('sortable:enable', self.onSortableEnableBound);
-      el.removeEventListener('sortable:disable', self.onSortableDisableBound);
-      el.removeEventListener('sortable:sort', self.onSortableSortBound);
-      el.removeEventListener('tab:show', self.onTabShowBound);
-      el.removeEventListener('tab:hide', self.onTabHideBound);
-    }
-
-    if (!(self.virtualList && self.f7VirtualList)) return;
-    if (self.f7VirtualList.destroy) self.f7VirtualList.destroy();
+  created() {
+    Utils.bindMethods(this, ['onSortableEnable', 'onSortableDisable', 'onSortableSort', 'onTabShow', 'onTabHide']);
   },
 
   mounted() {
@@ -173,16 +161,11 @@ export default {
     } = self.props;
 
     if (el) {
-      self.onSortableEnableBound = self.onSortableEnable.bind(self);
-      self.onSortableDisableBound = self.onSortableDisable.bind(self);
-      self.onSortableSortBound = self.onSortableSort.bind(self);
-      self.onTabShowBound = self.onTabShow.bind(self);
-      self.onTabHideBound = self.onTabHide.bind(self);
-      el.addEventListener('sortable:enable', self.onSortableEnableBound);
-      el.addEventListener('sortable:disable', self.onSortableDisableBound);
-      el.addEventListener('sortable:sort', self.onSortableSortBound);
-      el.addEventListener('tab:show', self.onTabShowBound);
-      el.addEventListener('tab:hide', self.onTabHideBound);
+      el.addEventListener('sortable:enable', self.onSortableEnable);
+      el.addEventListener('sortable:disable', self.onSortableDisable);
+      el.addEventListener('sortable:sort', self.onSortableSort);
+      el.addEventListener('tab:show', self.onTabShow);
+      el.addEventListener('tab:hide', self.onTabHide);
     }
 
     if (!virtualList) return;
@@ -227,6 +210,22 @@ export default {
         }
       }, vlParams));
     });
+  },
+
+  beforeDestroy() {
+    const self = this;
+    const el = self.$refs.el;
+
+    if (el) {
+      el.removeEventListener('sortable:enable', self.onSortableEnable);
+      el.removeEventListener('sortable:disable', self.onSortableDisable);
+      el.removeEventListener('sortable:sort', self.onSortableSort);
+      el.removeEventListener('tab:show', self.onTabShow);
+      el.removeEventListener('tab:hide', self.onTabHide);
+    }
+
+    if (!(self.virtualList && self.f7VirtualList)) return;
+    if (self.f7VirtualList.destroy) self.f7VirtualList.destroy();
   },
 
   methods: {

@@ -11,6 +11,10 @@ class F7Button extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.__reactRefs = {};
+
+    (() => {
+      Utils.bindMethods(this, ['onClick']);
+    })();
   }
 
   onClick(event) {
@@ -49,9 +53,9 @@ class F7Button extends React.Component {
       fill,
       fillIos,
       fillMd,
-      big,
-      bigIos,
-      bigMd,
+      large,
+      largeIos,
+      largeMd,
       small,
       smallIos,
       smallMd,
@@ -71,9 +75,9 @@ class F7Button extends React.Component {
       'button-fill': fill,
       'button-fill-ios': fillIos,
       'button-fill-md': fillMd,
-      'button-big': big,
-      'button-big-ios': bigIos,
-      'button-big-md': bigMd,
+      'button-large': large,
+      'button-large-ios': largeIos,
+      'button-large-md': largeMd,
       'button-small': small,
       'button-small-ios': smallIos,
       'button-small-md': smallMd,
@@ -133,13 +137,13 @@ class F7Button extends React.Component {
       },
       id: id,
       style: style,
-      className: self.classes,
-      onClick: self.onClick.bind(self)
+      className: self.classes
     }, self.attrs), iconEl, textEl, this.slots['default']);
   }
 
   componentWillUnmount() {
     const self = this;
+    self.refs.el.removeEventListener('click', self.onClick);
 
     if (self.f7Tooltip && self.f7Tooltip.destroy) {
       self.f7Tooltip.destroy();
@@ -150,6 +154,7 @@ class F7Button extends React.Component {
 
   componentDidMount() {
     const self = this;
+    self.refs.el.addEventListener('click', self.onClick);
     const {
       tooltip
     } = self.props;
@@ -206,9 +211,9 @@ __reactComponentSetProps(F7Button, Object.assign({
   fill: Boolean,
   fillMd: Boolean,
   fillIos: Boolean,
-  big: Boolean,
-  bigMd: Boolean,
-  bigIos: Boolean,
+  large: Boolean,
+  largeMd: Boolean,
+  largeIos: Boolean,
   small: Boolean,
   smallMd: Boolean,
   smallIos: Boolean,

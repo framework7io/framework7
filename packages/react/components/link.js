@@ -18,6 +18,10 @@ class F7Link extends React.Component {
         isTabbarLabel: props.tabbarLabel
       };
     })();
+
+    (() => {
+      Utils.bindMethods(this, ['onClick']);
+    })();
   }
 
   onClick(event) {
@@ -137,13 +141,14 @@ class F7Link extends React.Component {
       },
       id: id,
       style: style,
-      className: self.classes,
-      onClick: self.onClick.bind(self)
+      className: self.classes
     }, self.attrs), iconEl, textEl, defaultSlots);
   }
 
   componentWillUnmount() {
     const self = this;
+    const el = self.refs.el;
+    el.removeEventListener('click', self.onClick);
 
     if (self.f7SmartSelect && self.f7SmartSelect.destroy) {
       self.f7SmartSelect.destroy();
@@ -159,6 +164,7 @@ class F7Link extends React.Component {
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
+    el.addEventListener('click', self.onClick);
     const {
       tabbarLabel,
       tabLink,

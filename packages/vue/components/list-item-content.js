@@ -1,7 +1,6 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import F7Badge from './badge';
-import __vueComponentSetState from '../runtime-helpers/vue-component-set-state.js';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
 export default {
@@ -19,9 +18,6 @@ export default {
     badgeColor: String,
     mediaList: Boolean,
     mediaItem: Boolean,
-    itemInput: Boolean,
-    itemInputWithInfo: Boolean,
-    inlineLabel: Boolean,
     checkbox: Boolean,
     checked: Boolean,
     defaultChecked: Boolean,
@@ -32,26 +28,6 @@ export default {
     required: Boolean,
     disabled: Boolean
   }, Mixins.colorProps),
-
-  data() {
-    const props = __vueComponentProps(this);
-
-    const state = (() => {
-      return {
-        hasInput: false,
-        hasInlineLabel: false,
-        hasInputInfo: false,
-        hasInputErrorMessage: false,
-        hasInputValue: false,
-        hasInputFocused: false,
-        hasInputInvalid: false
-      };
-    })();
-
-    return {
-      state
-    };
-  },
 
   render() {
     const _h = this.$createElement;
@@ -80,18 +56,8 @@ export default {
       badge,
       mediaList,
       mediaItem,
-      badgeColor,
-      itemInput,
-      inlineLabel,
-      itemInputWithInfo
+      badgeColor
     } = props;
-    const hasInputFocused = self.state.hasInputFocused;
-    const hasInputInvalid = self.state.hasInputInvalid;
-    let hasInputValue = self.state.hasInputValue;
-    let hasInput = itemInput || self.state.hasInput;
-    let hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
-    let hasInputInfo = itemInputWithInfo || self.state.hasInputInfo;
-    let hasInputErrorMessage = self.state.hasInputErrorMessage;
     const slotsContentStart = [];
     const slotsContent = [];
     const slotsContentEnd = [];
@@ -133,27 +99,6 @@ export default {
 
     flattenSlots.forEach(child => {
       if (typeof child === 'undefined') return;
-      {
-        const tag = child.tag;
-
-        if (tag && tag.indexOf('f7-input') >= 0) {
-          hasInput = true;
-          if (child.data && child.data.info) hasInputInfo = true;
-          if (child.data && child.data.errorMessage && child.data.errorMessageForce) hasInputErrorMessage = true;
-
-          if (!hasInputValue) {
-            if (child.data && (typeof child.data.value === 'undefined' ? child.data.defaultValue || child.data.defaultValue === 0 : child.data.value || child.data.value === 0)) {
-              hasInputValue = true;
-            } else if (child.componentOptions && child.componentOptions.propsData && (typeof child.componentOptions.propsData.value === 'undefined' ? child.componentOptions.propsData.defaultValue || child.componentOptions.propsData.defaultValue === 0 : child.componentOptions.propsData.value || child.componentOptions.propsData.value === 0)) {
-              hasInputValue = true;
-            }
-          }
-        }
-
-        if (tag && tag.indexOf('f7-label') >= 0) {
-          if (child.data && child.data.inline) hasInlineLabel = true;
-        }
-      }
       let slotName;
       slotName = child.data ? child.data.slot : undefined;
       if (!slotName || slotName === 'inner') slotsInner.push(child);
@@ -185,6 +130,9 @@ export default {
             disabled,
             required,
             value
+          },
+          on: {
+            change: this.onChange
           },
           attrs: {
             name: name,
@@ -281,22 +229,12 @@ export default {
     const ItemContentTag = checkbox || radio ? 'label' : 'div';
     const classes = Utils.classNames(className, 'item-content', {
       'item-checkbox': checkbox,
-      'item-radio': radio,
-      'item-input': hasInput,
-      'inline-label': hasInlineLabel,
-      'item-input-with-info': hasInputInfo,
-      'item-input-with-error-message': hasInputErrorMessage,
-      'item-input-invalid': hasInputInvalid,
-      'item-input-with-value': hasInputValue,
-      'item-input-focused': hasInputFocused
+      'item-radio': radio
     }, Mixins.colorClasses(props));
     return _h(ItemContentTag, {
       ref: 'el',
       style: style,
       class: classes,
-      on: {
-        click: self.onClickBound
-      },
       attrs: {
         id: id
       }
@@ -304,194 +242,27 @@ export default {
   },
 
   created() {
-    const self = this;
-    self.onClickBound = self.onClick.bind(self);
-    self.onChangeBound = self.onChange.bind(self);
-    self.onFocusBound = self.onFocus.bind(self);
-    self.onBlurBound = self.onBlur.bind(self);
-    self.onEmptyBound = self.onEmpty.bind(self);
-    self.onNotEmptyBound = self.onNotEmpty.bind(self);
-  },
-
-  beforeMount() {
-    this.checkHasInputState();
-  },
-
-  beforeUpdate() {
-    this.checkHasInputState();
+    Utils.bindMethods(this, 'onClick onChange'.split(' '));
   },
 
   mounted() {
     const self = this;
     const {
       innerEl,
-      inputEl,
       el
     } = self.$refs;
-
-    if (inputEl) {
-      inputEl.addEventListener('change', self.onChangeBound);
-    }
-
-    if (!innerEl) return;
-    const $innerEl = self.$$(innerEl);
-    const $labelEl = $innerEl.children('.item-title.item-label');
-    const $inputWrapEl = $innerEl.children('.item-input-wrap');
-    const hasInlineLabel = $labelEl.hasClass('item-label-inline');
-    const hasInput = $inputWrapEl.length > 0;
-    const hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
-    const hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
-    const hasInputInvalid = $inputWrapEl.children('.input-invalid').length > 0;
-
-    if (hasInput) {
-      el.addEventListener('focus', self.onFocusBound, true);
-      el.addEventListener('blur', self.onBlurBound, true);
-      el.addEventListener('input:empty', self.onEmptyBound);
-      el.addEventListener('input:notempty', self.onNotEmptyBound);
-    }
-
-    if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {
-      self.setState({
-        hasInlineLabel
-      });
-    }
-
-    if (!self.hasInputSet && hasInput !== self.state.hasInput) {
-      self.setState({
-        hasInput
-      });
-    }
-
-    if (!self.hasInputInfoSet && hasInputInfo !== self.state.hasInputInfo) {
-      self.setState({
-        hasInputInfo
-      });
-    }
-
-    if (!self.hasInputErrorMessageSet && hasInputErrorMessage !== self.state.hasInputErrorMessage) {
-      self.setState({
-        hasInputErrorMessage
-      });
-    }
-
-    if (!self.hasInputInvalidSet && hasInputInvalid !== self.state.hasInputInvalid) {
-      self.setState({
-        hasInputInvalid
-      });
-    }
-  },
-
-  updated() {
-    const self = this;
-    const innerEl = self.$refs.innerEl;
-    if (!innerEl) return;
-    const $innerEl = self.$$(innerEl);
-    const $labelEl = $innerEl.children('.item-title.item-label');
-    const $inputWrapEl = $innerEl.children('.item-input-wrap');
-    const hasInlineLabel = $labelEl.hasClass('item-label-inline');
-    const hasInput = $inputWrapEl.length > 0;
-    const hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
-    const hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
-    const hasInputInvalid = $inputWrapEl.children('.input-invalid').length > 0;
-
-    if (hasInlineLabel !== self.state.hasInlineLabel) {
-      self.setState({
-        hasInlineLabel
-      });
-    }
-
-    if (hasInput !== self.state.hasInput) {
-      self.setState({
-        hasInput
-      });
-    }
-
-    if (hasInputInfo !== self.state.hasInputInfo) {
-      self.setState({
-        hasInputInfo
-      });
-    }
-
-    if (!self.hasInputErrorMessageSet && hasInputErrorMessage !== self.state.hasInputErrorMessage) {
-      self.setState({
-        hasInputErrorMessage
-      });
-    }
-
-    if (hasInputInvalid !== self.state.hasInputInvalid) {
-      self.setState({
-        hasInputInvalid
-      });
-    }
+    el.addEventListener('click', self.onClick);
   },
 
   beforeDestroy() {
     const self = this;
     const {
-      inputEl,
       el
     } = self.$refs;
-    el.removeEventListener('input:empty', self.onEmptyBound);
-    el.removeEventListener('input:notempty', self.onNotEmptyBound);
-    el.removeEventListener('focus', self.onFocusBound, true);
-    el.removeEventListener('blur', self.onBlurBound, true);
-
-    if (inputEl) {
-      inputEl.removeEventListener('change', self.onChangeBound);
-    }
+    el.removeEventListener('click', self.onClick);
   },
 
   methods: {
-    checkHasInputState() {
-      const self = this;
-      const props = self.props;
-      const {
-        itemInput,
-        inlineLabel,
-        itemInputWithInfo
-      } = props;
-      const hasInput = itemInput || self.state.hasInput;
-      const hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
-      const hasInputInfo = itemInputWithInfo || self.state.hasInputInfo;
-      const hasInputErrorMessage = self.state.hasInputErrorMessage;
-
-      if (hasInput && !self.state.hasInput) {
-        self.hasInputSet = true;
-        self.setState({
-          hasInput
-        });
-      } else if (!hasInput) {
-        self.hasInputSet = false;
-      }
-
-      if (hasInputInfo && !self.state.hasInputInfo) {
-        self.hasInputInfoSet = true;
-        self.setState({
-          hasInputInfo
-        });
-      } else if (!hasInputInfo) {
-        self.hasInputInfoSet = false;
-      }
-
-      if (hasInputErrorMessage && !self.state.hasInputErrorMessage) {
-        self.hasInputErrorMessageSet = true;
-        self.setState({
-          hasInputErrorMessage
-        });
-      } else if (!hasInputInfo) {
-        self.hasInputErrorMessageSet = false;
-      }
-
-      if (hasInlineLabel && !self.state.hasInlineLabel) {
-        self.hasInlineLabelSet = true;
-        self.setState({
-          hasInlineLabel
-        });
-      } else if (!hasInlineLabel) {
-        self.hasInlineLabelSet = false;
-      }
-    },
-
     onClick(event) {
       this.dispatchEvent('click', event);
     },
@@ -500,36 +271,8 @@ export default {
       this.dispatchEvent('change', event);
     },
 
-    onFocus() {
-      this.setState({
-        hasInputFocused: true
-      });
-    },
-
-    onBlur() {
-      this.setState({
-        hasInputFocused: false
-      });
-    },
-
-    onEmpty() {
-      this.setState({
-        hasInputValue: false
-      });
-    },
-
-    onNotEmpty() {
-      this.setState({
-        hasInputValue: true
-      });
-    },
-
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
-    },
-
-    setState(updater, callback) {
-      __vueComponentSetState(this, updater, callback);
     }
 
   },

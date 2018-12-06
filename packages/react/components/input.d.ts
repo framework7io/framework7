@@ -32,6 +32,7 @@ declare namespace F7Input {
     required? : boolean
     pattern? : string
     validate? : boolean | string
+    validateOnBlur? : boolean
     tabindex? : string | number
     resizable? : boolean
     clearButton? : boolean

@@ -31,6 +31,7 @@ export default {
     let inputEl;
     {
       inputEl = _h('input', {
+        ref: 'inputEl',
         domProps: {
           value,
           disabled,
@@ -38,7 +39,7 @@ export default {
           checked
         },
         on: {
-          change: self.onChange.bind(self)
+          change: self.onChange
         },
         attrs: {
           type: 'checkbox',
@@ -79,6 +80,11 @@ export default {
     }
 
   },
+
+  created() {
+    Utils.bindMethods(this, ['onChange']);
+  },
+
   methods: {
     onChange(event) {
       this.dispatchEvent('change', event);

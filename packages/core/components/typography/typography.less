@@ -1,13 +1,12 @@
 /* === Typography === */
+@import url('./typography-vars.less');
+
 .rules-loop(@values, @ruleName) {
-  .loop(@array, @i: 1) when (@i =< length(@array)) {
-    @value: extract(@array, @i);
+  each(@values, {
     .@{ruleName}-@{value} {
       @{ruleName}: @value !important;
     }
-    .loop(@array, (@i + 1));
-  }
-  .loop(@values);
+  });
 }
 
 // Display
@@ -85,6 +84,65 @@
 }
 .width-100 {
   width: 100% !important;
+}
+
+// Padding
+.padding {
+  padding: var(--f7-typography-padding) !important;
+}
+.padding-top {
+  padding-top: var(--f7-typography-padding) !important;
+}
+.padding-bottom {
+  padding-bottom: var(--f7-typography-padding) !important;
+}
+.padding-left {
+  padding-left: var(--f7-typography-padding) !important;
+}
+.padding-right {
+  padding-right: var(--f7-typography-padding) !important;
+}
+.padding-vertical {
+  padding-top: var(--f7-typography-padding) !important;
+  padding-bottom: var(--f7-typography-padding) !important;
+}
+.padding-horizontal {
+  padding-left: var(--f7-typography-padding) !important;
+  padding-right: var(--f7-typography-padding) !important;
+}
+// Margin
+.margin {
+  margin: var(--f7-typography-margin) !important;
+}
+.margin-top {
+  margin-top: var(--f7-typography-margin) !important;
+}
+.margin-bottom {
+  margin-bottom: var(--f7-typography-margin) !important;
+}
+.margin-left {
+  margin-left: var(--f7-typography-margin) !important;
+}
+.margin-right {
+  margin-right: var(--f7-typography-margin) !important;
+}
+.margin-vertical {
+  margin-top: var(--f7-typography-margin) !important;
+  margin-bottom: var(--f7-typography-margin) !important;
+}
+.margin-horizontal {
+  margin-left: var(--f7-typography-margin) !important;
+  margin-right: var(--f7-typography-margin) !important;
+}
+// Colors
+[class*="text-color-"] {
+  color: var(--f7-theme-color-text-color) !important;
+}
+[class*="bg-color-"] {
+  background-color: var(--f7-theme-color-bg-color) !important;
+}
+[class*="border-color-"] {
+  border-color: var(--f7-theme-color-border-color) !important;
 }
 
 & when (@includeIosTheme) {

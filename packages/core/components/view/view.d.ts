@@ -52,7 +52,7 @@ export namespace View {
     /**	Delay (in ms) after new page will be loaded and inserted to DOM and before it will be transitioned. Can be increased a bit to improve performance. Will have effect only under iOS theme */
     iosPageLoadDelay?: number
     /**	Delay (in ms) after new page will be loaded and inserted to DOM and before it will be transitioned. Can be increased a bit to improve performance. Will have effect only under MD theme */
-    materialPageLoadDelay?: number
+    mdPageLoadDelay?: number
     /**	When enabled then router will pass route url query to request url query (for url, templateUrl and componentUrl route properties) */
     passRouteQueryToRequest?: boolean
     /**	When enabled then router will pass current route parameters to request url query (for url, templateUrl and componentUrl route properties) */

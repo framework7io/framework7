@@ -28,16 +28,6 @@ export default {
     typing: Boolean
   }, Mixins.colorProps),
 
-  created() {
-    this.onClickBound = this.onClick.bind(this);
-    this.onNameClickBound = this.onNameClick.bind(this);
-    this.onTextClickBound = this.onTextClick.bind(this);
-    this.onAvatarClickBound = this.onAvatarClick.bind(this);
-    this.onHeaderClickBound = this.onHeaderClick.bind(this);
-    this.onFooterClickBound = this.onFooterClick.bind(this);
-    this.onBubbleClickBound = this.onBubbleClick.bind(this);
-  },
-
   render() {
     const _h = this.$createElement;
     const self = this;
@@ -73,39 +63,29 @@ export default {
       'bubble-end': slotsBubbleEnd
     } = self.$slots;
     return _h('div', {
+      ref: 'el',
       style: style,
       class: self.classes,
-      on: {
-        click: self.onClickBound
-      },
       attrs: {
         id: id
       }
     }, [slotsStart, (avatar || slotsAvatar) && _h('div', {
+      ref: 'avatarEl',
       class: 'message-avatar',
       style: {
         backgroundImage: avatar && `url(${avatar})`
-      },
-      on: {
-        click: self.onAvatarClickBound
       }
     }, [slotsAvatar]), _h('div', {
       class: 'message-content'
     }, [slotsContentStart, (slotsName || name) && _h('div', {
-      class: 'message-name',
-      on: {
-        click: self.onNameClickBound
-      }
+      ref: 'nameEl',
+      class: 'message-name'
     }, [slotsName || name]), (slotsHeader || header) && _h('div', {
-      class: 'message-header',
-      on: {
-        click: self.onHeaderClickBound
-      }
+      ref: 'headerEl',
+      class: 'message-header'
     }, [slotsHeader || header]), _h('div', {
-      class: 'message-bubble',
-      on: {
-        click: self.onBubbleClickBound
-      }
+      ref: 'bubbleEl',
+      class: 'message-bubble'
     }, [slotsBubbleStart, (slotsImage || image) && _h('div', {
       class: 'message-image'
     }, [slotsImage || _h('img', {
@@ -115,19 +95,15 @@ export default {
     })]), (slotsTextHeader || textHeader) && _h('div', {
       class: 'message-text-header'
     }, [slotsTextHeader || textHeader]), (slotsText || text || typing) && _h('div', {
-      class: 'message-text',
-      on: {
-        click: self.onTextClickBound
-      }
+      ref: 'textEl',
+      class: 'message-text'
     }, [slotsText || text, typing && _h('div', {
       class: 'message-typing-indicator'
     }, [_h('div'), _h('div'), _h('div')])]), (slotsTextFooter || textFooter) && _h('div', {
       class: 'message-text-footer'
     }, [slotsTextFooter || textFooter]), slotsBubbleEnd, slotsDefault]), (slotsFooter || footer) && _h('div', {
-      class: 'message-footer',
-      on: {
-        click: self.onFooterClickBound
-      }
+      ref: 'footerEl',
+      class: 'message-footer'
     }, [slotsFooter || footer]), slotsContentEnd]), slotsEnd]);
   },
 
@@ -166,6 +142,49 @@ export default {
     }
 
   },
+
+  created() {
+    Utils.bindMethods(this, ['onClick', 'onNameClick', 'onTextClick', 'onAvatarClick', 'onHeaderClick', 'onFooterClick', 'onBubbleClick']);
+  },
+
+  mounted() {
+    const {
+      el,
+      nameEl,
+      textEl,
+      avatarEl,
+      headerEl,
+      footerEl,
+      bubbleEl
+    } = this.$refs;
+    el.addEventListener('click', this.onClick);
+    if (nameEl) nameEl.addEventListener('click', this.onNameClick);
+    if (textEl) textEl.addEventListener('click', this.onTextClick);
+    if (avatarEl) nameEl.addEventListener('click', this.onAvatarClick);
+    if (headerEl) nameEl.addEventListener('click', this.onHeaderClick);
+    if (footerEl) nameEl.addEventListener('click', this.onFooterClick);
+    if (bubbleEl) nameEl.addEventListener('click', this.onBubbleClick);
+  },
+
+  beforeDestroy() {
+    const {
+      el,
+      nameEl,
+      textEl,
+      avatarEl,
+      headerEl,
+      footerEl,
+      bubbleEl
+    } = this.$refs;
+    el.removeEventListener('click', this.onClick);
+    if (nameEl) nameEl.removeEventListener('click', this.onNameClick);
+    if (textEl) textEl.removeEventListener('click', this.onTextClick);
+    if (avatarEl) nameEl.removeEventListener('click', this.onAvatarClick);
+    if (headerEl) nameEl.removeEventListener('click', this.onHeaderClick);
+    if (footerEl) nameEl.removeEventListener('click', this.onFooterClick);
+    if (bubbleEl) nameEl.removeEventListener('click', this.onBubbleClick);
+  },
+
   methods: {
     onClick(event) {
       this.dispatchEvent('click', event);

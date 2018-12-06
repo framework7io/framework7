@@ -1,5 +1,6 @@
 /* === Smart Select === */
 .smart-select {
+  @import url('./smart-select-vars.less');
   select {
     display: none;
   }
@@ -12,9 +13,17 @@
   }
 
 }
-.sheet-modal.smart-select-sheet {
-  .sheet-modal-inner {
-    background: #fff;
+.smart-select-sheet .page,
+.smart-select-sheet .sheet-modal-inner,
+.smart-select-sheet .list ul {
+  background: var(--f7-smart-select-sheet-bg, var(--f7-list-bg-color));
+}
+.smart-select-sheet {
+  .toolbar {
+    .hairline(bottom, var(--f7-smart-select-sheet-toolbar-border-color, var(--f7-bars-border-color)));
+    &:after {
+      display: block;
+    }
   }
   .list {
     margin: 0;

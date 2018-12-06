@@ -1,33 +1,9 @@
 .ios {
-  @import (multiple) '../../less/colors-ios.less';
-  @import (multiple) '../../less/vars-ios.less';
+  --f7-searchbar-input-padding-left: var(--f7-searchbar-input-padding-horizontal);
+  --f7-searchbar-input-padding-right: var(--f7-searchbar-input-padding-horizontal);
   .searchbar {
-    height: @searchbarSize;
-    background: @searchbarBg;
-    &.no-hairline {
-      .hairline-remove(bottom);
-    }
     input[type="search"], input[type="text"] {
-      padding: 0 28px;
-      box-sizing: border-box;
-      width: 100%;
-      height: 100%;
-      display: block;
-      border: none;
-      appearance: none;
-      border-radius: 10px;
-      border-radius: 8px;
-      font-family: inherit;
-      color: #000;
-      font-size: 17px;
-      font-weight: normal;
       z-index: 30;
-      background-color: #e8e8ea;
-      position: relative;
-      &::placeholder {
-        color: #939398;
-        opacity: 1;
-      }
     }
     .input-clear-button {
       z-index: 40;
@@ -39,11 +15,8 @@
       });
     }
   }
-  .searchbar-expandable {
-
-  }
   .searchbar-inner {
-    padding: 0 8px;
+    padding: 0 calc(8px + var(--f7-safe-area-right)) 0 calc(8px + var(--f7-safe-area-left));
   }
   .searchbar-icon {
     width: 13px;
@@ -51,9 +24,11 @@
     position: absolute;
     top: 50%;
     margin-top: -6px;
-    .svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 13' enable-background='new 0 0 13 13'><g><path fill='#939398' d='M5,1c2.2,0,4,1.8,4,4S7.2,9,5,9S1,7.2,1,5S2.8,1,5,1 M5,0C2.2,0,0,2.2,0,5s2.2,5,5,5s5-2.2,5-5S7.8,0,5,0 L5,0z'/></g><line stroke='#939398' stroke-miterlimit='10' stroke-width='1.5' x1='12.6' y1='12.6' x2='8.2' y2='8.2'/></svg>");
-    background-size: 13px 13px;
     z-index: 40;
+    &:after {
+      content: 'search_ios';
+      line-height: 13px;
+    }
     .ltr({
       left: 8px;
     });
@@ -61,21 +36,13 @@
       right: 8px;
     });
   }
-  .searchbar-backdrop {
-    background: rgba(0,0,0,0.4);
-  }
-  .searchbar-input-wrap {
-    // height: 36px;
-    height: 32px;
-  }
-  .hairline-root('.searchbar', bottom, @searchbarBorderColor);
 
   .searchbar-disable-button {
     font-size: 17px;
     flex-shrink: 0;
     transform: translate3d(0,0,0);
     transition-duration: 300ms;
-    color: @themeColor;
+    color: var(--f7-searchbar-link-color, var(--f7-bars-link-color, var(--f7-theme-color)));
     display: none;
     &.active-state {
       transition-duration: 0ms;
@@ -96,6 +63,7 @@
     }
   }
   .searchbar-expandable {
+    --f7-searchbar-expandable-size: var(--f7-searchbar-height);
     .ltr({ left: 0; });
     .rtl({ right: 0; });
     bottom: 0;
@@ -111,66 +79,22 @@
       display: block;
     }
     .searchbar-inner {
-      height: @searchbarSize;
+      height: var(--f7-searchbar-expandable-size)
     }
   }
+
+  .navbar-inner.with-searchbar-expandable-enabled {
+    .left, .title, .right {
+      transform: translateY(calc(-1 * var(--f7-navbar-height)));
+      transition: 300ms;
+      opacity: 0;
+    }
+  }
+
   .searchbar-expandable.searchbar-enabled {
     opacity: 1;
-    height: 100%;
+    height: var(--f7-searchbar-expandable-size);
     pointer-events: auto;
   }
-
-  .page > .searchbar {
-    z-index: 200;
-  }
-  // Relation with page
-  .navbar ~ .page:not(.no-navbar) > .searchbar, .page > .navbar ~ .searchbar {
-    top: @searchbarSize;
-  }
-  // Relation with page
-  .navbar ~ .page:not(.no-navbar) > .searchbar ~ .page-content,
-  .navbar ~ .page:not(.no-navbar) > .searchbar ~ * .page-content,
-  .page > .navbar ~ .searchbar ~ .page-content,
-  .page > .navbar ~ .searchbar ~ * .page-content
-  {
-    padding-top: @navbarSize + @searchbarSize;
-  }
-
-  // Dark Theme
-  & when (@includeDarkTheme) {
-    .theme-dark {
-      .searchbar, .searchbar& {
-        background-color: #303030;
-        .hairline-color(bottom, @searchbarBorderColorDark);
-        input[type="search"], input[type="text"] {
-          background-color: #171717;
-          color: #fff;
-        }
-
-      }
-    }
-  }
-
-  .color-theme-loop({
-    .color-theme-@{colorThemeName} {
-      .searchbar-disable-button {
-        color: @colorThemeValue;
-      }
-    }
-  });
-  .safe-areas-landscape({
-    .safe-area-left({
-      .searchbar-inner {
-        padding-left: ~"calc(8px + constant(safe-area-inset-left))";
-        padding-left: ~"calc(8px + env(safe-area-inset-left))";
-      }
-    });
-    .safe-area-right({
-      .searchbar-inner {
-        padding-right: ~"calc(8px + constant(safe-area-inset-right))";
-        padding-right: ~"calc(8px + env(safe-area-inset-right))";
-      }
-    });
-  });
 }
 

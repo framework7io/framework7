@@ -1,20 +1,8 @@
 .ios {
-  @import (multiple) '../../less/colors-ios.less';
   .ptr-preloader {
-    position: relative;
-    height: 44px;
-    margin-top: -44px;
+    margin-top: calc(-1 * var(--f7-ptr-size));
     width: 100%;
     left: 0;
-    top: 0;
-    .preloader {
-      width: 27px;
-      height: 27px;
-      margin-left: -13px;
-      margin-top: -13px;
-      visibility: hidden;
-      top: 50%;
-    }
   }
   .ptr-arrow {
     position: absolute;
@@ -25,28 +13,33 @@
     transform: rotate(0deg) translate3d(0,0,0);
     transition-duration: 300ms;
     transition-property: transform;
-    width: 13px;
+    width: 12px;
     height: 20px;
     margin-left: -6px;
     margin-top: -10px;
-    .svg-background("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 40'><polygon points='9,22 9,0 17,0 17,22 26,22 13.5,40 0,22' fill='#8c8c8c'/></svg>");
-    background-size: 13px 20px;
     visibility: visible;
-  }
-  .ptr-content {
-
+    color: var(--f7-preloader-color);
+    &:after {
+      .core-icons-font();
+      width: 12px;
+      height: 20px;
+      line-height: 20px;
+      font-size: 10px;
+      content: 'ptr_arrow_ios';
+    }
   }
   .ptr-content:not(.ptr-refreshing) {
     .ptr-preloader .preloader {
       animation: none;
     }
   }
-  .ptr-transitioning, .ptr-refreshing {
+  .ptr-transitioning,
+  .ptr-refreshing {
     transition-duration: 300ms;
     transition-property: transform;
   }
   .ptr-refreshing {
-    transform: translate3d(0, 44px, 0);
+    transform: translate3d(0, var(--f7-ptr-size), 0);
     .ptr-arrow {
       visibility: hidden;
     }
@@ -60,10 +53,37 @@
     }
   }
   .ptr-no-navbar {
-    margin-top: -44px;
-    height: ~"calc(100% + 44px)";
+    margin-top: calc(-1 * var(--f7-ptr-size));
+    height: calc(100% + var(--f7-ptr-size));
     .ptr-preloader {
       margin-top: 0;
+    }
+  }
+  .ptr-bottom {
+    .ptr-preloader {
+      margin-top: 0;
+      margin-bottom: calc(-1 * var(--f7-ptr-size));
+    }
+    &.ptr-transitioning,
+    &.ptr-refreshing {
+      > * {
+        transition-duration: 300ms;
+        transition-property: transform;
+      }
+    }
+    &.ptr-refreshing {
+      transform: none;
+      > * {
+        transform: translate3d(0, calc(-1 * var(--f7-ptr-size)), 0);
+      }
+    }
+    .ptr-arrow {
+      transform: rotate(180deg) translate3d(0,0,0);
+    }
+    &.ptr-pull-up {
+      .ptr-arrow {
+        transform: rotate(0deg) translate3d(0,0,0);
+      }
     }
   }
 }

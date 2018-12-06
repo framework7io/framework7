@@ -18,20 +18,22 @@ export default {
     noHairlinesIos: Boolean
   }, Mixins.colorProps),
 
+  created() {
+    Utils.bindMethods(this, ['onTabShow', 'onTabHide']);
+  },
+
   mounted() {
-    const el = this.$el;
+    const el = this.$refs.el;
     if (!el) return;
-    this.onTabShowBound = this.onTabShow.bind(this);
-    this.onTabHideBound = this.onTabHide.bind(this);
-    el.addEventListener('tab:show', this.onTabShowBound);
-    el.addEventListener('tab:hide', this.onTabHideBound);
+    el.addEventListener('tab:show', this.onTabShow);
+    el.addEventListener('tab:hide', this.onTabHide);
   },
 
   beforeDestroy() {
-    const el = this.$el;
+    const el = this.$refs.el;
     if (!el) return;
-    el.removeEventListener('tab:show', this.onTabShowBound);
-    el.removeEventListener('tab:hide', this.onTabHideBound);
+    el.removeEventListener('tab:show', this.onTabShow);
+    el.removeEventListener('tab:hide', this.onTabHide);
   },
 
   render() {
@@ -68,6 +70,7 @@ export default {
     return _h('div', {
       style: style,
       class: classes,
+      ref: 'el',
       attrs: {
         id: id
       }

@@ -10,6 +10,8 @@ declare namespace F7Page {
     stacked? : boolean
     withSubnavbar? : boolean
     subnavbar? : boolean
+    withNavbarLarge? : boolean
+    navbarLarge? : boolean
     noNavbar? : boolean
     noToolbar? : boolean
     tabs? : boolean
@@ -18,6 +20,7 @@ declare namespace F7Page {
     ptr? : boolean
     ptrDistance? : number
     ptrPreloader? : boolean
+    ptrBottom? : boolean
     infinite? : boolean
     infiniteTop? : boolean
     infiniteDistance? : number

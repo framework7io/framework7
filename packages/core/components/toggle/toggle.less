@@ -1,4 +1,11 @@
 /* === Toggle === */
+@import url('./toggle-vars.less');
+
+.toggle, .toggle-icon {
+  width: var(--f7-toggle-width);
+  height: var(--f7-toggle-height);
+  border-radius: var(--f7-toggle-height);
+}
 .toggle {
   display: inline-block;
   vertical-align: middle;
@@ -6,7 +13,6 @@
   box-sizing: border-box;
   align-self: center;
   user-select: none;
-
   input[type="checkbox"] {
     display: none;
   }
@@ -28,9 +34,10 @@
   cursor: pointer;
   &:before, &:after {
     content: '';
+    will-change: transform;
   }
   &:after {
-    background: #fff;
+    background: var(--f7-toggle-handle-color);
     position: absolute;
     z-index: 2;
     transform: translateX(0px);

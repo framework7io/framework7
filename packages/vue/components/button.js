@@ -24,9 +24,9 @@ export default {
     fill: Boolean,
     fillMd: Boolean,
     fillIos: Boolean,
-    big: Boolean,
-    bigMd: Boolean,
-    bigIos: Boolean,
+    large: Boolean,
+    largeMd: Boolean,
+    largeIos: Boolean,
     small: Boolean,
     smallMd: Boolean,
     smallIos: Boolean,
@@ -88,9 +88,6 @@ export default {
       style: style,
       class: self.classes
     }, self.attrs, {
-      on: {
-        click: self.onClick.bind(self)
-      },
       attrs: {
         id: id
       }
@@ -130,9 +127,9 @@ export default {
         fill,
         fillIos,
         fillMd,
-        big,
-        bigIos,
-        bigMd,
+        large,
+        largeIos,
+        largeMd,
         small,
         smallIos,
         smallMd,
@@ -152,9 +149,9 @@ export default {
         'button-fill': fill,
         'button-fill-ios': fillIos,
         'button-fill-md': fillMd,
-        'button-big': big,
-        'button-big-ios': bigIos,
-        'button-big-md': bigMd,
+        'button-large': large,
+        'button-large-ios': largeIos,
+        'button-large-md': largeMd,
         'button-small': small,
         'button-small-ios': smallIos,
         'button-small-md': smallMd,
@@ -188,8 +185,13 @@ export default {
     }
   },
 
+  created() {
+    Utils.bindMethods(this, ['onClick']);
+  },
+
   mounted() {
     const self = this;
+    self.$refs.el.addEventListener('click', self.onClick);
     const {
       tooltip
     } = self.props;
@@ -204,6 +206,7 @@ export default {
 
   beforeDestroy() {
     const self = this;
+    self.$refs.el.removeEventListener('click', self.onClick);
 
     if (self.f7Tooltip && self.f7Tooltip.destroy) {
       self.f7Tooltip.destroy();

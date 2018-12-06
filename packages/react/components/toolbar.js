@@ -30,22 +30,30 @@ class F7Toolbar extends React.Component {
       style,
       className,
       inner,
-      bottomMd,
       tabbar,
       labels,
       scrollable,
       hidden,
       noShadow,
-      noHairline
+      noHairline,
+      noBorder,
+      topMd,
+      topIos,
+      top,
+      bottomMd,
+      bottomIos,
+      bottom,
+      position
     } = props;
     const classes = Utils.classNames(className, 'toolbar', {
-      'toolbar-bottom-md': bottomMd,
       tabbar,
+      'toolbar-bottom': self.$theme.md && bottomMd || self.$theme.ios && bottomIos || bottom || position === 'bottom',
+      'toolbar-top': self.$theme.md && topMd || self.$theme.ios && topIos || top || position === 'top',
       'tabbar-labels': labels,
       'tabbar-scrollable': scrollable,
       'toolbar-hidden': hidden,
       'no-shadow': noShadow,
-      'no-hairline': noHairline
+      'no-hairline': noHairline || noBorder
     }, Mixins.colorClasses(props));
     return React.createElement('div', {
       id: id,
@@ -90,13 +98,41 @@ __reactComponentSetProps(F7Toolbar, Object.assign({
   id: [String, Number],
   className: String,
   style: Object,
-  bottomMd: Boolean,
   tabbar: Boolean,
   labels: Boolean,
   scrollable: Boolean,
   hidden: Boolean,
   noShadow: Boolean,
   noHairline: Boolean,
+  noBorder: Boolean,
+  position: {
+    type: String,
+    default: undefined
+  },
+  topMd: {
+    type: Boolean,
+    default: undefined
+  },
+  topIos: {
+    type: Boolean,
+    default: undefined
+  },
+  top: {
+    type: Boolean,
+    default: undefined
+  },
+  bottomMd: {
+    type: Boolean,
+    default: undefined
+  },
+  bottomIos: {
+    type: Boolean,
+    default: undefined
+  },
+  bottom: {
+    type: Boolean,
+    default: undefined
+  },
   inner: {
     type: Boolean,
     default: true

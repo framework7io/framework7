@@ -54,9 +54,8 @@ class Searchbar extends FrameworkClass {
     } else {
       $navbarEl = $el.parents('.navbar-inner');
       if ($navbarEl.length > 0) {
-        if ($navbarEl[0].f7Page) {
-          $pageEl = $navbarEl[0].f7Page.$el;
-        } else {
+        $pageEl = $(app.navbar.getPageByEl($navbarEl[0]));
+        if (!$pageEl.length) {
           const $currentPageEl = $el.parents('.view').find('.page-current');
           if ($currentPageEl[0] && $currentPageEl[0].f7Page && $currentPageEl[0].f7Page.navbarEl === $navbarEl[0]) {
             $pageEl = $currentPageEl;
@@ -205,12 +204,18 @@ class Searchbar extends FrameworkClass {
       if (!sb || (sb && !sb.$el)) return;
       if (sb.enabled) {
         sb.$el.removeClass('searchbar-enabled');
+        if (sb.expandable) {
+          sb.$el.parents('.navbar-inner').removeClass('with-searchbar-expandable-enabled');
+        }
       }
     }
     function onPageBeforeIn() {
       if (!sb || (sb && !sb.$el)) return;
       if (sb.enabled) {
         sb.$el.addClass('searchbar-enabled');
+        if (sb.expandable) {
+          sb.$el.parents('.navbar-inner').addClass('with-searchbar-expandable-enabled');
+        }
       }
     }
     sb.attachEvents = function attachEvents() {
@@ -301,6 +306,17 @@ class Searchbar extends FrameworkClass {
         }
         sb.$disableButtonEl.css(`margin-${app.rtl ? 'left' : 'right'}`, '0px');
       }
+      if (sb.expandable) {
+        if (sb.$el.parents('.navbar-inner').hasClass('navbar-inner-large') && sb.$pageEl) {
+          sb.$pageEl.find('.page-content').addClass('with-searchbar-expandable-enabled');
+        }
+        if (app.theme === 'md' && sb.$el.parent('.navbar-inner').parent('.navbar').length) {
+          sb.$el.parent('.navbar-inner').parent('.navbar').addClass('with-searchbar-expandable-enabled');
+        } else {
+          sb.$el.parent('.navbar-inner').addClass('with-searchbar-expandable-enabled');
+          sb.$el.parent('.navbar-inner-large').addClass('navbar-inner-large-collapsed');
+        }
+      }
       if (sb.$hideOnEnableEl) sb.$hideOnEnableEl.addClass('hidden-by-searchbar');
       sb.$el.trigger('searchbar:enable');
       sb.emit('local::enable searchbarEnable', sb);
@@ -342,10 +358,22 @@ class Searchbar extends FrameworkClass {
     const app = sb.app;
     sb.$inputEl.val('').trigger('change');
     sb.$el.removeClass('searchbar-enabled searchbar-focused searchbar-enabled-no-disable-button');
+    if (sb.expandable) {
+      if (sb.$el.parents('.navbar-inner').hasClass('navbar-inner-large') && sb.$pageEl) {
+        sb.$pageEl.find('.page-content').removeClass('with-searchbar-expandable-enabled');
+      }
+      if (app.theme === 'md' && sb.$el.parent('.navbar-inner').parent('.navbar').length) {
+        sb.$el.parent('.navbar-inner').parent('.navbar').removeClass('with-searchbar-expandable-enabled');
+      } else {
+        sb.$el.parent('.navbar-inner').removeClass('with-searchbar-expandable-enabled');
+        if (sb.$pageEl) {
+          sb.$pageEl.find('.page-content').trigger('scroll');
+        }
+      }
+    }
     if (!sb.expandable && sb.$disableButtonEl && sb.$disableButtonEl.length > 0 && app.theme === 'ios') {
       sb.$disableButtonEl.css(`margin-${app.rtl ? 'left' : 'right'}`, `${-sb.disableButtonEl.offsetWidth}px`);
     }
-
     if (sb.$backdropEl && ((sb.$searchContainer && sb.$searchContainer.length) || sb.params.customSearch)) {
       sb.backdropHide();
     }

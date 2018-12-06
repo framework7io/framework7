@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.5.2
+ * Framework7 Vue 4.0.0-beta.1
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 12, 2018
+ * Released on: December 6, 2018
  */
 
 (function (global, factory) {
@@ -103,6 +103,13 @@
         } else if (arg) { classes.push(arg); }
       });
       return classes.join(' ');
+    },
+    bindMethods: function bindMethods(context, methods) {
+      if ( methods === void 0 ) methods = [];
+
+      for (var i = 0; i < methods.length; i += 1) {
+        if (context[methods[i]]) { context[methods[i]] = context[methods[i]].bind(context); }
+      }
     },
   };
 
@@ -230,6 +237,10 @@
       sortableEnable: [Boolean, String],
       sortableDisable: [Boolean, String],
       sortableToggle: [Boolean, String],
+
+      // Card
+      cardOpen: [Boolean, String],
+      cardClose: [Boolean, String],
     },
     linkActionsAttrs: function linkActionsAttrs(props) {
       var searchbarEnable = props.searchbarEnable;
@@ -251,6 +262,8 @@
       var sortableEnable = props.sortableEnable;
       var sortableDisable = props.sortableDisable;
       var sortableToggle = props.sortableToggle;
+      var cardOpen = props.cardOpen;
+      var cardClose = props.cardClose;
 
       return {
         'data-searchbar': (Utils.isStringProp(searchbarEnable) && searchbarEnable)
@@ -272,6 +285,8 @@
         'data-sortable': (Utils.isStringProp(sortableEnable) && sortableEnable)
                          || (Utils.isStringProp(sortableDisable) && sortableDisable)
                          || (Utils.isStringProp(sortableToggle) && sortableToggle) || undefined,
+        'data-card': (Utils.isStringProp(cardOpen) && cardOpen)
+                      || (Utils.isStringProp(cardClose) && cardClose) || undefined,
       };
     },
     linkActionsClasses: function linkActionsClasses(props) {
@@ -294,27 +309,31 @@
       var sortableEnable = props.sortableEnable;
       var sortableDisable = props.sortableDisable;
       var sortableToggle = props.sortableToggle;
+      var cardOpen = props.cardOpen;
+      var cardClose = props.cardClose;
 
       return {
         'searchbar-enable': searchbarEnable || searchbarEnable === '',
         'searchbar-disable': searchbarDisable || searchbarDisable === '',
         'searchbar-clear': searchbarClear || searchbarClear === '',
         'searchbar-toggle': searchbarToggle || searchbarToggle === '',
-        'panel-close': Utils.isTrueProp(panelClose) || panelClose,
+        'panel-close': panelClose || panelClose === '',
         'panel-open': panelOpen || panelOpen === '',
-        'popup-close': Utils.isTrueProp(popupClose) || popupClose,
+        'popup-close': popupClose || popupClose === '',
         'popup-open': popupOpen || popupOpen === '',
-        'actions-close': Utils.isTrueProp(actionsClose) || actionsClose,
+        'actions-close': actionsClose || actionsClose === '',
         'actions-open': actionsOpen || actionsOpen === '',
-        'popover-close': Utils.isTrueProp(popoverClose) || popoverClose,
+        'popover-close': popoverClose || popoverClose === '',
         'popover-open': popoverOpen || popoverOpen === '',
-        'sheet-close': Utils.isTrueProp(sheetClose) || sheetClose,
+        'sheet-close': sheetClose || sheetClose === '',
         'sheet-open': sheetOpen || sheetOpen === '',
-        'login-screen-close': Utils.isTrueProp(loginScreenClose) || loginScreenClose,
+        'login-screen-close': loginScreenClose || loginScreenClose === '',
         'login-screen-open': loginScreenOpen || loginScreenOpen === '',
-        'sortable-enable': Utils.isTrueProp(sortableEnable) || sortableEnable,
-        'sortable-disable': Utils.isTrueProp(sortableDisable) || sortableDisable,
-        'sortable-toggle': sortableToggle === true || (typeof sortableToggle === 'string' && sortableToggle.length),
+        'sortable-enable': sortableEnable || sortableEnable === '',
+        'sortable-disable': sortableDisable || sortableDisable === '',
+        'sortable-toggle': sortableToggle || sortableToggle === '',
+        'card-close': cardClose || cardClose === '',
+        'card-open': cardOpen || cardOpen === '',
       };
     },
   };
@@ -382,28 +401,32 @@
       opened: Boolean
     }, Mixins.colorProps),
 
+    created: function created() {
+      Utils.bindMethods(this, 'onBeforeOpen onOpen onOpened onBeforeClose onClose onClosed'.split(' '));
+    },
+
     mounted: function mounted() {
       var self = this;
-      var el = self.$el;
+      var el = self.$refs.el;
       if (!el) { return; }
-      self.onOpenBound = self.onOpen.bind(self);
-      self.onOpenedBound = self.onOpened.bind(self);
-      self.onCloseBound = self.onClose.bind(self);
-      self.onClosedBound = self.onClosed.bind(self);
-      el.addEventListener('accordion:open', self.onOpenBound);
-      el.addEventListener('accordion:opened', self.onOpenedBound);
-      el.addEventListener('accordion:close', self.onCloseBound);
-      el.addEventListener('accordion:closed', self.onClosedBound);
+      el.addEventListener('accordion:beforeopen', self.onBeforeOpen);
+      el.addEventListener('accordion:open', self.onOpen);
+      el.addEventListener('accordion:opened', self.onOpened);
+      el.addEventListener('accordion:beforeclose', self.onBeforeClose);
+      el.addEventListener('accordion:close', self.onClose);
+      el.addEventListener('accordion:closed', self.onClosed);
     },
 
     beforeDestroy: function beforeDestroy() {
       var self = this;
-      var el = self.$el;
+      var el = self.$refs.el;
       if (!el) { return; }
-      el.removeEventListener('accordion:open', self.onOpenBound);
-      el.removeEventListener('accordion:opened', self.onOpenedBound);
-      el.removeEventListener('accordion:close', self.onCloseBound);
-      el.removeEventListener('accordion:closed', self.onClosedBound);
+      el.removeEventListener('accordion:beforeopen', self.onBeforeOpen);
+      el.removeEventListener('accordion:open', self.onOpen);
+      el.removeEventListener('accordion:opened', self.onOpened);
+      el.removeEventListener('accordion:beforeclose', self.onBeforeClose);
+      el.removeEventListener('accordion:close', self.onClose);
+      el.removeEventListener('accordion:closed', self.onClosed);
     },
 
     render: function render() {
@@ -419,6 +442,7 @@
       return _h('div', {
         style: style,
         class: classes,
+        ref: 'el',
         attrs: {
           id: id
         }
@@ -426,12 +450,20 @@
     },
 
     methods: {
+      onBeforeOpen: function onBeforeOpen(event) {
+        this.dispatchEvent('accordionBeforeOpen accordion:beforeopen', event, event.detail.prevent);
+      },
+
       onOpen: function onOpen(event) {
         this.dispatchEvent('accordionOpen accordion:open', event);
       },
 
       onOpened: function onOpened(event) {
         this.dispatchEvent('accordionOpened accordion:opened', event);
+      },
+
+      onBeforeClose: function onBeforeClose(event) {
+        this.dispatchEvent('accordionBeforeClose accordion:beforeclose', event, event.detail.prevent);
       },
 
       onClose: function onClose(event) {
@@ -553,15 +585,24 @@
         style: style,
         class: classes,
         ref: 'el',
-        on: {
-          click: self.onClick.bind(self)
-        },
         attrs: {
           id: id
         }
       }, [mediaEl, _h('div', {
         class: 'actions-button-text'
       }, [this.$slots['default']])]);
+    },
+
+    created: function created() {
+      Utils.bindMethods(this, ['onClick']);
+    },
+
+    mounted: function mounted() {
+      this.$refs.el.addEventListener('click', this.onClick);
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      this.$refs.el.removeEventListener('click', this.onClick);
     },
 
     methods: {
@@ -645,13 +686,23 @@
       return _h('div', {
         style: style,
         class: classes,
-        on: {
-          click: self.onClick.bind(self)
-        },
+        ref: 'el',
         attrs: {
           id: id
         }
       }, [this.$slots['default']]);
+    },
+
+    created: function created() {
+      Utils.bindMethods(this, ['onClick']);
+    },
+
+    mounted: function mounted() {
+      this.$refs.el.addEventListener('click', this.onClick);
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      this.$refs.el.removeEventListener('click', this.onClick);
     },
 
     methods: {
@@ -722,18 +773,18 @@
       }
     },
 
+    created: function created() {
+      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed']);
+    },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
       if (!el) { return; }
-      self.onOpenBound = self.onOpen.bind(self);
-      self.onOpenedBound = self.onOpened.bind(self);
-      self.onCloseBound = self.onClose.bind(self);
-      self.onClosedBound = self.onClosed.bind(self);
-      el.addEventListener('actions:open', self.onOpenBound);
-      el.addEventListener('actions:opened', self.onOpenedBound);
-      el.addEventListener('actions:close', self.onCloseBound);
-      el.addEventListener('actions:closed', self.onClosedBound);
+      el.addEventListener('actions:open', self.onOpen);
+      el.addEventListener('actions:opened', self.onOpened);
+      el.addEventListener('actions:close', self.onClose);
+      el.addEventListener('actions:closed', self.onClosed);
       var props = self.props;
       var grid = props.grid;
       var target = props.target;
@@ -765,12 +816,12 @@
     beforeDestroy: function beforeDestroy() {
       var self = this;
       if (self.f7Actions) { self.f7Actions.destroy(); }
-      var el = self.$el;
+      var el = self.$refs.el;
       if (!el) { return; }
-      el.removeEventListener('actions:open', self.onOpenBound);
-      el.removeEventListener('actions:opened', self.onOpenedBound);
-      el.removeEventListener('actions:close', self.onCloseBound);
-      el.removeEventListener('actions:closed', self.onClosedBound);
+      el.removeEventListener('actions:open', self.onOpen);
+      el.removeEventListener('actions:opened', self.onOpened);
+      el.removeEventListener('actions:close', self.onClose);
+      el.removeEventListener('actions:closed', self.onClosed);
     },
 
     methods: {
@@ -1139,7 +1190,9 @@
   var f7BlockTitle = {
     name: 'f7-block-title',
     props: Object.assign({
-      id: [String, Number]
+      id: [String, Number],
+      large: Boolean,
+      medium: Boolean
     }, Mixins.colorProps),
 
     render: function render() {
@@ -1148,7 +1201,12 @@
       var className = props.className;
       var id = props.id;
       var style = props.style;
-      var classes = Utils.classNames(className, 'block-title', Mixins.colorClasses(props));
+      var large = props.large;
+      var medium = props.medium;
+      var classes = Utils.classNames(className, 'block-title', {
+        'block-title-large': large,
+        'block-title-medium': medium
+      }, Mixins.colorClasses(props));
       return _h('div', {
         style: style,
         class: classes,
@@ -1182,20 +1240,22 @@
       noHairlinesIos: Boolean
     }, Mixins.colorProps),
 
+    created: function created() {
+      Utils.bindMethods(this, ['onTabShow', 'onTabHide']);
+    },
+
     mounted: function mounted() {
-      var el = this.$el;
+      var el = this.$refs.el;
       if (!el) { return; }
-      this.onTabShowBound = this.onTabShow.bind(this);
-      this.onTabHideBound = this.onTabHide.bind(this);
-      el.addEventListener('tab:show', this.onTabShowBound);
-      el.addEventListener('tab:hide', this.onTabHideBound);
+      el.addEventListener('tab:show', this.onTabShow);
+      el.addEventListener('tab:hide', this.onTabHide);
     },
 
     beforeDestroy: function beforeDestroy() {
-      var el = this.$el;
+      var el = this.$refs.el;
       if (!el) { return; }
-      el.removeEventListener('tab:show', this.onTabShowBound);
-      el.removeEventListener('tab:hide', this.onTabHideBound);
+      el.removeEventListener('tab:show', this.onTabShow);
+      el.removeEventListener('tab:hide', this.onTabHide);
     },
 
     render: function render() {
@@ -1230,6 +1290,7 @@
       return _h('div', {
         style: style,
         class: classes,
+        ref: 'el',
         attrs: {
           id: id
         }
@@ -1480,9 +1541,9 @@
       fill: Boolean,
       fillMd: Boolean,
       fillIos: Boolean,
-      big: Boolean,
-      bigMd: Boolean,
-      bigIos: Boolean,
+      large: Boolean,
+      largeMd: Boolean,
+      largeIos: Boolean,
       small: Boolean,
       smallMd: Boolean,
       smallIos: Boolean,
@@ -1542,9 +1603,6 @@
         style: style,
         class: self.classes
       }, self.attrs, {
-        on: {
-          click: self.onClick.bind(self)
-        },
         attrs: {
           id: id
         }
@@ -1581,9 +1639,9 @@
         var fill = props.fill;
         var fillIos = props.fillIos;
         var fillMd = props.fillMd;
-        var big = props.big;
-        var bigIos = props.bigIos;
-        var bigMd = props.bigMd;
+        var large = props.large;
+        var largeIos = props.largeIos;
+        var largeMd = props.largeMd;
         var small = props.small;
         var smallIos = props.smallIos;
         var smallMd = props.smallMd;
@@ -1602,9 +1660,9 @@
           'button-fill': fill,
           'button-fill-ios': fillIos,
           'button-fill-md': fillMd,
-          'button-big': big,
-          'button-big-ios': bigIos,
-          'button-big-md': bigMd,
+          'button-large': large,
+          'button-large-ios': largeIos,
+          'button-large-md': largeMd,
           'button-small': small,
           'button-small-ios': smallIos,
           'button-small-md': smallMd,
@@ -1641,8 +1699,13 @@
       }
     },
 
+    created: function created() {
+      Utils.bindMethods(this, ['onClick']);
+    },
+
     mounted: function mounted() {
       var self = this;
+      self.$refs.el.addEventListener('click', self.onClick);
       var ref = self.props;
       var tooltip = ref.tooltip;
       if (!tooltip) { return; }
@@ -1656,6 +1719,7 @@
 
     beforeDestroy: function beforeDestroy() {
       var self = this;
+      self.$refs.el.removeEventListener('click', self.onClick);
 
       if (self.f7Tooltip && self.f7Tooltip.destroy) {
         self.f7Tooltip.destroy();
@@ -1771,11 +1835,61 @@
       content: [String, Number],
       footer: [String, Number],
       outline: Boolean,
+      expandable: Boolean,
+      expandableAnimateWidth: Boolean,
+      expandableOpened: Boolean,
+      noShadow: Boolean,
+      noBorder: Boolean,
       padding: {
         type: Boolean,
         default: true
       }
     }, Mixins.colorProps),
+    watch: {
+      'props.expandableOpened': function watchOpened(expandableOpened) {
+        var self = this;
+
+        if (opened) {
+          self.open();
+        } else {
+          self.close();
+        }
+      }
+    },
+
+    created: function created() {
+      Utils.bindMethods(this, 'onBeforeOpen onOpen onOpened onClose onClosed'.split(' '));
+    },
+
+    mounted: function mounted() {
+      var self = this;
+      if (!self.props.expandable) { return; }
+      var el = self.$refs.el;
+      if (!el) { return; }
+      el.addEventListener('card:beforeopen', self.onBeforeOpen);
+      el.addEventListener('card:open', self.onOpen);
+      el.addEventListener('card:opened', self.onOpened);
+      el.addEventListener('card:close', self.onClose);
+      el.addEventListener('card:closed', self.onClosed);
+
+      if (self.props.expandable && self.props.expandableOpened) {
+        self.$f7ready(function () {
+          self.$f7.card.open(el, false);
+        });
+      }
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      var self = this;
+      if (!self.props.expandable) { return; }
+      var el = self.$refs.el;
+      if (!el) { return; }
+      el.removeEventListener('card:beforeopen', self.onBeforeOpen);
+      el.removeEventListener('card:open', self.onOpen);
+      el.removeEventListener('card:opened', self.onOpened);
+      el.removeEventListener('card:close', self.onClose);
+      el.removeEventListener('card:closed', self.onClosed);
+    },
 
     render: function render() {
       var _h = this.$createElement;
@@ -1789,11 +1903,19 @@
       var footer = props.footer;
       var padding = props.padding;
       var outline = props.outline;
+      var expandable = props.expandable;
+      var expandableAnimateWidth = props.expandableAnimateWidth;
+      var noShadow = props.noShadow;
+      var noBorder = props.noBorder;
       var headerEl;
       var contentEl;
       var footerEl;
       var classes = Utils.classNames(className, 'card', {
-        'card-outline': outline
+        'card-outline': outline,
+        'card-expandable': expandable,
+        'card-expandable-animate-width': expandableAnimateWidth,
+        'no-shadow': noShadow,
+        'no-border': noBorder
       }, Mixins.colorClasses(props));
 
       if (title || self.$slots && self.$slots.header) {
@@ -1815,12 +1937,54 @@
       return _h('div', {
         style: style,
         class: classes,
+        ref: 'el',
         attrs: {
           id: id
         }
       }, [headerEl, contentEl, footerEl, this.$slots['default']]);
     },
 
+    methods: {
+      open: function open() {
+        var self = this;
+        if (!self.$refs.el) { return; }
+        self.$f7.card.open(self.$refs.el);
+      },
+
+      close: function close() {
+        var self = this;
+        if (!self.$refs.el) { return; }
+        self.$f7.card.close(self.$refs.el);
+      },
+
+      onBeforeOpen: function onBeforeOpen(e) {
+        this.dispatchEvent('cardBeforeOpen card:beforeopen', e.target, e.detail.prevent);
+      },
+
+      onOpen: function onOpen(e) {
+        this.dispatchEvent('cardOpen card:open', e.target);
+      },
+
+      onOpened: function onOpened(e) {
+        this.dispatchEvent('cardOpened card:opened', e.target);
+      },
+
+      onClose: function onClose(e) {
+        this.dispatchEvent('cardClose card:close', e.target);
+      },
+
+      onClosed: function onClosed(e) {
+        this.dispatchEvent('cardClosed card:closed', e.target);
+      },
+
+      dispatchEvent: function dispatchEvent(events) {
+        var args = [], len = arguments.length - 1;
+        while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+
+        __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+      }
+
+    },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
@@ -1856,6 +2020,7 @@
       var inputEl;
       {
         inputEl = _h('input', {
+          ref: 'inputEl',
           domProps: {
             value: value,
             disabled: disabled,
@@ -1863,7 +2028,7 @@
             checked: checked
           },
           on: {
-            change: self.onChange.bind(self)
+            change: self.onChange
           },
           attrs: {
             type: 'checkbox',
@@ -1902,6 +2067,11 @@
       }
 
     },
+
+    created: function created() {
+      Utils.bindMethods(this, ['onChange']);
+    },
+
     methods: {
       onChange: function onChange(event) {
         this.dispatchEvent('change', event);
@@ -1961,10 +2131,8 @@
 
       if (deleteable) {
         deleteEl = _h('a', {
+          ref: 'deleteEl',
           class: 'chip-delete',
-          on: {
-            click: self.onDeleteClick.bind(self)
-          },
           attrs: {
             href: '#'
           }
@@ -1975,15 +2143,33 @@
         'chip-outline': outline
       }, Mixins.colorClasses(props));
       return _h('div', {
+        ref: 'el',
         style: style,
         class: classes,
-        on: {
-          click: self.onClick.bind(self)
-        },
         attrs: {
           id: id
         }
       }, [mediaEl, labelEl, deleteEl]);
+    },
+
+    created: function created() {
+      Utils.bindMethods(this, ['onClick', 'onDeleteClick']);
+    },
+
+    mounted: function mounted() {
+      this.$refs.el.addEventListener('click', this.onClick);
+
+      if (this.$refs.deleteEl) {
+        this.$refs.deleteEl.addEventListener('click', this.onDeleteClick);
+      }
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      this.$refs.el.removeEventListener('click', this.onClick);
+
+      if (this.$refs.deleteEl) {
+        this.$refs.deleteEl.removeEventListener('click', this.onDeleteClick);
+      }
     },
 
     methods: {
@@ -2051,13 +2237,23 @@
       return _h(ColTag, {
         style: style,
         class: classes,
-        on: {
-          click: self.onClick.bind(self)
-        },
+        ref: 'el',
         attrs: {
           id: id
         }
       }, [this.$slots['default']]);
+    },
+
+    created: function created() {
+      Utils.bindMethods(this, ['onClick']);
+    },
+
+    mounted: function mounted() {
+      this.$refs.el.addEventListener('click', this.onClick);
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      this.$refs.el.removeEventListener('click', this.onClick);
     },
 
     methods: {
@@ -2113,16 +2309,47 @@
       }
 
       return _h('a', {
+        ref: 'el',
         style: style,
         class: classes,
-        on: {
-          click: this.onClick.bind(this)
-        },
         attrs: {
           id: id,
           target: target
         }
       }, [this.$slots['default'], labelEl]);
+    },
+
+    created: function created() {
+      Utils.bindMethods(this, ['onClick']);
+    },
+
+    created: function created() {
+      this.onClick = this.onClick.bind(this);
+    },
+
+    mounted: function mounted() {
+      var self = this;
+      self.$refs.el.addEventListener('click', self.onClick);
+      var ref = self.props;
+      var tooltip = ref.tooltip;
+      if (!tooltip) { return; }
+      self.$f7ready(function (f7) {
+        self.f7Tooltip = f7.tooltip.create({
+          targetEl: self.$refs.el,
+          text: tooltip
+        });
+      });
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      var self = this;
+      self.$refs.el.removeEventListener('click', self.onClick);
+
+      if (self.f7Tooltip && self.f7Tooltip.destroy) {
+        self.f7Tooltip.destroy();
+        self.f7Tooltip = null;
+        delete self.f7Tooltip;
+      }
     },
 
     methods: {
@@ -2145,30 +2372,6 @@
         self.f7Tooltip.setText(newText);
       }
     },
-
-    mounted: function mounted() {
-      var self = this;
-      var ref = self.props;
-      var tooltip = ref.tooltip;
-      if (!tooltip) { return; }
-      self.$f7ready(function (f7) {
-        self.f7Tooltip = f7.tooltip.create({
-          targetEl: self.$refs.el,
-          text: tooltip
-        });
-      });
-    },
-
-    beforeDestroy: function beforeDestroy() {
-      var self = this;
-
-      if (self.f7Tooltip && self.f7Tooltip.destroy) {
-        self.f7Tooltip.destroy();
-        self.f7Tooltip = null;
-        delete self.f7Tooltip;
-      }
-    },
-
     computed: {
       props: function props() {
         return __vueComponentProps(this);
@@ -2273,10 +2476,8 @@
 
       if (linkChildren.length || linkSlots && linkSlots.length) {
         linkEl = _h('a', {
+          ref: 'linkEl',
           key: 'f7-fab-link',
-          on: {
-            click: self.onClick.bind(self)
-          },
           attrs: {
             target: target,
             href: href
@@ -2298,20 +2499,6 @@
       }, [linkEl, rootChildren, rootSlots]);
     },
 
-    methods: {
-      onClick: function onClick(event) {
-        var self = this;
-        self.dispatchEvent('click', event);
-      },
-
-      dispatchEvent: function dispatchEvent(events) {
-        var args = [], len = arguments.length - 1;
-        while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-        __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
-      }
-
-    },
     watch: {
       'props.tooltip': function watchTooltip(newText) {
         var self = this;
@@ -2320,8 +2507,17 @@
       }
     },
 
+    created: function created() {
+      Utils.bindMethods(this, ['onClick']);
+    },
+
     mounted: function mounted() {
       var self = this;
+
+      if (self.$refs.linkEl) {
+        self.$refs.linkEl.addEventListener('click', self.onClick);
+      }
+
       var ref = self.props;
       var tooltip = ref.tooltip;
       if (!tooltip) { return; }
@@ -2336,6 +2532,10 @@
     beforeDestroy: function beforeDestroy() {
       var self = this;
 
+      if (self.$refs.linkEl) {
+        self.$refs.linkEl.removeEventListener('click', self.onClick);
+      }
+
       if (self.f7Tooltip && self.f7Tooltip.destroy) {
         self.f7Tooltip.destroy();
         self.f7Tooltip = null;
@@ -2343,6 +2543,20 @@
       }
     },
 
+    methods: {
+      onClick: function onClick(event) {
+        var self = this;
+        self.dispatchEvent('click', event);
+      },
+
+      dispatchEvent: function dispatchEvent(events) {
+        var args = [], len = arguments.length - 1;
+        while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+
+        __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+      }
+
+    },
     computed: {
       props: function props() {
         return __vueComponentProps(this);
@@ -2561,6 +2775,7 @@
       var inputEl;
       {
         inputEl = _h('input', {
+          ref: 'inputEl',
           domProps: {
             disabled: disabled,
             readOnly: readonly,
@@ -2568,7 +2783,7 @@
             checked: checked
           },
           on: {
-            change: self.onChange.bind(self)
+            change: self.onChange
           },
           attrs: {
             type: 'checkbox',
@@ -2594,6 +2809,10 @@
         if (!self.f7Toggle) { return; }
         self.f7Toggle.checked = newValue;
       }
+    },
+
+    created: function created() {
+      Utils.bindMethods(this, ['onChange']);
     },
 
     mounted: function mounted() {
@@ -2829,6 +3048,7 @@
       inputStyle: [String, Object],
       pattern: String,
       validate: [Boolean, String],
+      validateOnBlur: Boolean,
       tabindex: [String, Number],
       resizable: Boolean,
       clearButton: Boolean,
@@ -2910,6 +3130,7 @@
       var inputStyle = props.inputStyle;
       var pattern = props.pattern;
       var validate = props.validate;
+      var validateOnBlur = props.validateOnBlur;
       var tabindex = props.tabindex;
       var resizable = props.resizable;
       var clearButton = props.clearButton;
@@ -2950,10 +3171,10 @@
               required: required
             },
             on: {
-              focus: self.onFocusBound,
-              blur: self.onBlurBound,
-              input: self.onInputBound,
-              change: self.onChangeBound
+              focus: self.onFocus,
+              blur: self.onBlur,
+              input: self.onInput,
+              change: self.onChange
             },
             attrs: {
               name: name,
@@ -2976,6 +3197,7 @@
               pattern: pattern,
               validate: typeof validate === 'string' && validate.length ? validate : undefined,
               'data-validate': validate === true || validate === '' ? true : undefined,
+              'data-validate-on-blur': validateOnBlur === true || validateOnBlur === '' ? true : undefined,
               tabindex: tabindex,
               'data-error-message': errorMessageForce ? undefined : errorMessage
             }
@@ -3001,7 +3223,7 @@
       } else if (type === 'toggle') {
         inputEl = _h(F7Toggle, {
           on: {
-            change: self.onChangeBound
+            change: self.onChange
           },
           attrs: {
             checked: checked,
@@ -3015,7 +3237,7 @@
       } else if (type === 'range') {
         inputEl = _h(F7Range, {
           on: {
-            rangeChange: self.onChangeBound
+            rangeChange: self.onChange
           },
           attrs: {
             value: value,
@@ -3033,7 +3255,7 @@
       }
 
       if (wrap) {
-        var wrapClasses = Utils.classNames(className, 'item-input-wrap', Mixins.colorClasses(props));
+        var wrapClasses = Utils.classNames(className, 'input', Mixins.colorClasses(props));
         return _h('div', {
           ref: 'wrapEl',
           class: wrapClasses,
@@ -3042,11 +3264,11 @@
             id: id
           }
         }, [inputEl, errorMessage && errorMessageForce && _h('div', {
-          class: 'item-input-error-message'
+          class: 'input-error-message'
         }, [errorMessage]), clearButton && _h('span', {
           class: 'input-clear-button'
         }), (info || slotsInfo && slotsInfo.length) && _h('div', {
-          class: 'item-input-info'
+          class: 'input-info'
         }, [info, this.$slots['info']])]);
       }
 
@@ -3069,15 +3291,7 @@
     },
 
     created: function created() {
-      var self = this;
-      self.onFocusBound = self.onFocus.bind(self);
-      self.onBlurBound = self.onBlur.bind(self);
-      self.onInputBound = self.onInput.bind(self);
-      self.onChangeBound = self.onChange.bind(self);
-      self.onTextareaResizeBound = self.onTextareaResize.bind(self);
-      self.onInputNotEmptyBound = self.onInputNotEmpty.bind(self);
-      self.onInputEmptyBound = self.onInputEmpty.bind(self);
-      self.onInputClearBound = self.onInputClear.bind(self);
+      Utils.bindMethods(this, 'onFocus onBlur onInput onChange onTextareaResize onInputNotEmpty onInputEmpty onInputClear'.split(' '));
     },
 
     mounted: function mounted() {
@@ -3085,6 +3299,7 @@
       self.$f7ready(function (f7) {
         var ref = self.props;
         var validate = ref.validate;
+        var validateOnBlur = ref.validateOnBlur;
         var resizable = ref.resizable;
         var type = ref.type;
         var clearButton = ref.clearButton;
@@ -3093,20 +3308,20 @@
         if (type === 'range' || type === 'toggle') { return; }
         var inputEl = self.$refs.inputEl;
         if (!inputEl) { return; }
-        inputEl.addEventListener('input:notempty', self.onInputNotEmptyBound, false);
+        inputEl.addEventListener('input:notempty', self.onInputNotEmpty, false);
 
         if (type === 'textarea' && resizable) {
-          inputEl.addEventListener('textarea:resze', self.onTextareaResizeBound, false);
+          inputEl.addEventListener('textarea:resze', self.onTextareaResize, false);
         }
 
         if (clearButton) {
-          inputEl.addEventListener('input:empty', self.onInputEmptyBound, false);
-          inputEl.addEventListener('input:clear', self.onInputClearBound, false);
+          inputEl.addEventListener('input:empty', self.onInputEmpty, false);
+          inputEl.addEventListener('input:clear', self.onInputClear, false);
         }
 
         f7.input.checkEmptyState(inputEl);
 
-        if ((validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
+        if (!validateOnBlur && (validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
           setTimeout(function () {
             self.validateInput(inputEl);
           }, 0);
@@ -3122,6 +3337,7 @@
       var self = this;
       var ref = self.props;
       var validate = ref.validate;
+      var validateOnBlur = ref.validateOnBlur;
       var resizable = ref.resizable;
       var f7 = self.$f7;
       if (!f7) { return; }
@@ -3132,7 +3348,7 @@
         self.updateInputOnDidUpdate = false;
         f7.input.checkEmptyState(inputEl);
 
-        if (validate) {
+        if (validate && !validateOnBlur) {
           self.validateInput(inputEl);
         }
 
@@ -3151,15 +3367,15 @@
       if (type === 'range' || type === 'toggle') { return; }
       var inputEl = self.$refs.inputEl;
       if (!inputEl) { return; }
-      inputEl.removeEventListener('input:notempty', self.onInputNotEmptyBound, false);
+      inputEl.removeEventListener('input:notempty', self.onInputNotEmpty, false);
 
       if (type === 'textarea' && resizable) {
-        inputEl.removeEventListener('textarea:resze', self.onTextareaResizeBound, false);
+        inputEl.removeEventListener('textarea:resze', self.onTextareaResize, false);
       }
 
       if (clearButton) {
-        inputEl.removeEventListener('input:empty', self.onInputEmptyBound, false);
-        inputEl.removeEventListener('input:clear', self.onInputClearBound, false);
+        inputEl.removeEventListener('input:empty', self.onInputEmpty, false);
+        inputEl.removeEventListener('input:clear', self.onInputClear, false);
       }
     },
 
@@ -3204,9 +3420,10 @@
         var self = this;
         var ref = self.props;
         var validate = ref.validate;
+        var validateOnBlur = ref.validateOnBlur;
         self.dispatchEvent('input', event);
 
-        if ((validate || validate === '') && self.$refs && self.$refs.inputEl) {
+        if (!validateOnBlur && (validate || validate === '') && self.$refs && self.$refs.inputEl) {
           self.validateInput(self.$refs.inputEl);
         }
 
@@ -3410,9 +3627,6 @@
         style: style,
         class: self.classes
       }, self.attrs, {
-        on: {
-          click: self.onClick.bind(self)
-        },
         attrs: {
           id: id
         }
@@ -3427,9 +3641,14 @@
       }
     },
 
+    created: function created() {
+      Utils.bindMethods(this, ['onClick']);
+    },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
+      el.addEventListener('click', self.onClick);
       var ref = self.props;
       var tabbarLabel = ref.tabbarLabel;
       var tabLink = ref.tabLink;
@@ -3464,6 +3683,8 @@
 
     beforeDestroy: function beforeDestroy() {
       var self = this;
+      var el = self.$refs.el;
+      el.removeEventListener('click', self.onClick);
 
       if (self.f7SmartSelect && self.f7SmartSelect.destroy) {
         self.f7SmartSelect.destroy();
@@ -3570,9 +3791,7 @@
       }, [_h('a', __vueComponentTransformJSXProps(Object.assign({
         class: self.classes
       }, self.attrs, {
-        on: {
-          click: self.onClick.bind(self)
-        }
+        ref: 'linkEl'
       })), [this.$slots['default'] || [title || text]])]);
     },
 
@@ -3599,7 +3818,6 @@
         var tabLink = props.tabLink;
         var tabLinkActive = props.tabLinkActive;
         return Utils.classNames({
-          'item-link': true,
           'list-button': true,
           'tab-link': tabLink || tabLink === '',
           'tab-link-active': tabLinkActive,
@@ -3612,6 +3830,19 @@
       }
 
     },
+
+    created: function created() {
+      Utils.bindMethods(this, ['onClick']);
+    },
+
+    mounted: function mounted() {
+      this.$refs.linkEl.addEventListener('click', this.onClick);
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      this.$refs.linkEl.removeEventListener('click', this.onClick);
+    },
+
     methods: {
       onClick: function onClick(event) {
         this.dispatchEvent('click', event);
@@ -3754,7 +3985,7 @@
     watch: {
       'props.indexes': function watchIndexes() {
         if (!this.f7ListIndex) { return; }
-        this.f7ListIndex.params.indexes = this.indexes;
+        this.f7ListIndex.params.indexes = this.props.indexes;
         this.update();
       }
     },
@@ -3828,6 +4059,7 @@
       inputStyle: [String, Object],
       pattern: String,
       validate: [Boolean, String],
+      validateOnBlur: Boolean,
       tabindex: [String, Number],
       resizable: Boolean,
       clearButton: Boolean,
@@ -3901,6 +4133,7 @@
       var inputStyle = props.inputStyle;
       var pattern = props.pattern;
       var validate = props.validate;
+      var validateOnBlur = props.validateOnBlur;
       var tabindex = props.tabindex;
       var resizable = props.resizable;
       var clearButton = props.clearButton;
@@ -3940,10 +4173,10 @@
               required: required
             },
             on: {
-              focus: self.onFocusBound,
-              blur: self.onBlurBound,
-              input: self.onInputBound,
-              change: self.onChangeBound
+              focus: self.onFocus,
+              blur: self.onBlur,
+              input: self.onInput,
+              change: self.onChange
             },
             attrs: {
               name: name,
@@ -3966,6 +4199,7 @@
               pattern: pattern,
               validate: typeof validate === 'string' && validate.length ? validate : undefined,
               'data-validate': validate === true || validate === '' ? true : undefined,
+              'data-validate-on-blur': validateOnBlur === true || validateOnBlur === '' ? true : undefined,
               tabindex: tabindex,
               'data-error-message': errorMessageForce ? undefined : errorMessage
             }
@@ -4066,15 +4300,7 @@
     },
 
     created: function created() {
-      var self = this;
-      self.onChangeBound = self.onChange.bind(self);
-      self.onInputBound = self.onInput.bind(self);
-      self.onFocusBound = self.onFocus.bind(self);
-      self.onBlurBound = self.onBlur.bind(self);
-      self.onTextareaResizeBound = self.onTextareaResize.bind(self);
-      self.onInputNotEmptyBound = self.onInputNotEmpty.bind(self);
-      self.onInputEmptyBound = self.onInputEmpty.bind(self);
-      self.onInputClearBound = self.onInputClear.bind(self);
+      Utils.bindMethods(this, 'onChange onInput onFocus onBlur onTextareaResize onInputNotEmpty onInputEmpty onInputClear'.split(' '));
     },
 
     mounted: function mounted() {
@@ -4084,18 +4310,19 @@
       self.$f7ready(function (f7) {
         var ref = self.props;
         var validate = ref.validate;
+        var validateOnBlur = ref.validateOnBlur;
         var resizable = ref.resizable;
         var value = ref.value;
         var defaultValue = ref.defaultValue;
         var type = ref.type;
         var inputEl = self.$refs.inputEl;
         if (!inputEl) { return; }
-        inputEl.addEventListener('input:notempty', self.onInputNotEmptyBound, false);
-        inputEl.addEventListener('textarea:resze', self.onTextareaResizeBound, false);
-        inputEl.addEventListener('input:empty', self.onInputEmptyBound, false);
-        inputEl.addEventListener('input:clear', self.onInputClearBound, false);
+        inputEl.addEventListener('input:notempty', self.onInputNotEmpty, false);
+        inputEl.addEventListener('textarea:resze', self.onTextareaResize, false);
+        inputEl.addEventListener('input:empty', self.onInputEmpty, false);
+        inputEl.addEventListener('input:clear', self.onInputClear, false);
 
-        if ((validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
+        if (!validateOnBlur && (validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
           setTimeout(function () {
             self.validateInput(inputEl);
           }, 0);
@@ -4128,6 +4355,7 @@
 
       var ref = self.props;
       var validate = ref.validate;
+      var validateOnBlur = ref.validateOnBlur;
       var resizable = ref.resizable;
       var type = ref.type;
       var f7 = self.$f7;
@@ -4138,7 +4366,7 @@
         if (!inputEl) { return; }
         self.updateInputOnDidUpdate = false;
 
-        if (validate) {
+        if (validate && !validateOnBlur) {
           self.validateInput(inputEl);
         }
 
@@ -4152,10 +4380,10 @@
       var self = this;
       var inputEl = self.$refs.inputEl;
       if (!inputEl) { return; }
-      inputEl.removeEventListener('input:notempty', self.onInputNotEmptyBound, false);
-      inputEl.removeEventListener('textarea:resze', self.onTextareaResizeBound, false);
-      inputEl.removeEventListener('input:empty', self.onInputEmptyBound, false);
-      inputEl.removeEventListener('input:clear', self.onInputClearBound, false);
+      inputEl.removeEventListener('input:notempty', self.onInputNotEmpty, false);
+      inputEl.removeEventListener('textarea:resze', self.onTextareaResize, false);
+      inputEl.removeEventListener('input:empty', self.onInputEmpty, false);
+      inputEl.removeEventListener('input:clear', self.onInputClear, false);
     },
 
     methods: {
@@ -4199,9 +4427,10 @@
         var self = this;
         var ref = self.props;
         var validate = ref.validate;
+        var validateOnBlur = ref.validateOnBlur;
         self.dispatchEvent('input', event);
 
-        if ((validate || validate === '') && self.$refs && self.$refs.inputEl) {
+        if (!validateOnBlur && (validate || validate === '') && self.$refs && self.$refs.inputEl) {
           self.validateInput(self.$refs.inputEl);
         }
 
@@ -4295,9 +4524,6 @@
       badgeColor: String,
       mediaList: Boolean,
       mediaItem: Boolean,
-      itemInput: Boolean,
-      itemInputWithInfo: Boolean,
-      inlineLabel: Boolean,
       checkbox: Boolean,
       checked: Boolean,
       defaultChecked: Boolean,
@@ -4308,26 +4534,6 @@
       required: Boolean,
       disabled: Boolean
     }, Mixins.colorProps),
-
-    data: function data() {
-      var props = __vueComponentProps(this);
-
-      var state = (function () {
-        return {
-          hasInput: false,
-          hasInlineLabel: false,
-          hasInputInfo: false,
-          hasInputErrorMessage: false,
-          hasInputValue: false,
-          hasInputFocused: false,
-          hasInputInvalid: false
-        };
-      })();
-
-      return {
-        state: state
-      };
-    },
 
     render: function render() {
       var _h = this.$createElement;
@@ -4356,16 +4562,6 @@
       var mediaList = props.mediaList;
       var mediaItem = props.mediaItem;
       var badgeColor = props.badgeColor;
-      var itemInput = props.itemInput;
-      var inlineLabel = props.inlineLabel;
-      var itemInputWithInfo = props.itemInputWithInfo;
-      var hasInputFocused = self.state.hasInputFocused;
-      var hasInputInvalid = self.state.hasInputInvalid;
-      var hasInputValue = self.state.hasInputValue;
-      var hasInput = itemInput || self.state.hasInput;
-      var hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
-      var hasInputInfo = itemInputWithInfo || self.state.hasInputInfo;
-      var hasInputErrorMessage = self.state.hasInputErrorMessage;
       var slotsContentStart = [];
       var slotsContent = [];
       var slotsContentEnd = [];
@@ -4407,27 +4603,6 @@
 
       flattenSlots.forEach(function (child) {
         if (typeof child === 'undefined') { return; }
-        {
-          var tag = child.tag;
-
-          if (tag && tag.indexOf('f7-input') >= 0) {
-            hasInput = true;
-            if (child.data && child.data.info) { hasInputInfo = true; }
-            if (child.data && child.data.errorMessage && child.data.errorMessageForce) { hasInputErrorMessage = true; }
-
-            if (!hasInputValue) {
-              if (child.data && (typeof child.data.value === 'undefined' ? child.data.defaultValue || child.data.defaultValue === 0 : child.data.value || child.data.value === 0)) {
-                hasInputValue = true;
-              } else if (child.componentOptions && child.componentOptions.propsData && (typeof child.componentOptions.propsData.value === 'undefined' ? child.componentOptions.propsData.defaultValue || child.componentOptions.propsData.defaultValue === 0 : child.componentOptions.propsData.value || child.componentOptions.propsData.value === 0)) {
-                hasInputValue = true;
-              }
-            }
-          }
-
-          if (tag && tag.indexOf('f7-label') >= 0) {
-            if (child.data && child.data.inline) { hasInlineLabel = true; }
-          }
-        }
         var slotName;
         slotName = child.data ? child.data.slot : undefined;
         if (!slotName || slotName === 'inner') { slotsInner.push(child); }
@@ -4459,6 +4634,9 @@
               disabled: disabled,
               required: required,
               value: value
+            },
+            on: {
+              change: this.onChange
             },
             attrs: {
               name: name,
@@ -4555,22 +4733,12 @@
       var ItemContentTag = checkbox || radio ? 'label' : 'div';
       var classes = Utils.classNames(className, 'item-content', {
         'item-checkbox': checkbox,
-        'item-radio': radio,
-        'item-input': hasInput,
-        'inline-label': hasInlineLabel,
-        'item-input-with-info': hasInputInfo,
-        'item-input-with-error-message': hasInputErrorMessage,
-        'item-input-invalid': hasInputInvalid,
-        'item-input-with-value': hasInputValue,
-        'item-input-focused': hasInputFocused
+        'item-radio': radio
       }, Mixins.colorClasses(props));
       return _h(ItemContentTag, {
         ref: 'el',
         style: style,
         class: classes,
-        on: {
-          click: self.onClickBound
-        },
         attrs: {
           id: id
         }
@@ -4578,190 +4746,25 @@
     },
 
     created: function created() {
-      var self = this;
-      self.onClickBound = self.onClick.bind(self);
-      self.onChangeBound = self.onChange.bind(self);
-      self.onFocusBound = self.onFocus.bind(self);
-      self.onBlurBound = self.onBlur.bind(self);
-      self.onEmptyBound = self.onEmpty.bind(self);
-      self.onNotEmptyBound = self.onNotEmpty.bind(self);
-    },
-
-    beforeMount: function beforeMount() {
-      this.checkHasInputState();
-    },
-
-    beforeUpdate: function beforeUpdate() {
-      this.checkHasInputState();
+      Utils.bindMethods(this, 'onClick onChange'.split(' '));
     },
 
     mounted: function mounted() {
       var self = this;
       var ref = self.$refs;
       var innerEl = ref.innerEl;
-      var inputEl = ref.inputEl;
       var el = ref.el;
-
-      if (inputEl) {
-        inputEl.addEventListener('change', self.onChangeBound);
-      }
-
-      if (!innerEl) { return; }
-      var $innerEl = self.$$(innerEl);
-      var $labelEl = $innerEl.children('.item-title.item-label');
-      var $inputWrapEl = $innerEl.children('.item-input-wrap');
-      var hasInlineLabel = $labelEl.hasClass('item-label-inline');
-      var hasInput = $inputWrapEl.length > 0;
-      var hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
-      var hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
-      var hasInputInvalid = $inputWrapEl.children('.input-invalid').length > 0;
-
-      if (hasInput) {
-        el.addEventListener('focus', self.onFocusBound, true);
-        el.addEventListener('blur', self.onBlurBound, true);
-        el.addEventListener('input:empty', self.onEmptyBound);
-        el.addEventListener('input:notempty', self.onNotEmptyBound);
-      }
-
-      if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {
-        self.setState({
-          hasInlineLabel: hasInlineLabel
-        });
-      }
-
-      if (!self.hasInputSet && hasInput !== self.state.hasInput) {
-        self.setState({
-          hasInput: hasInput
-        });
-      }
-
-      if (!self.hasInputInfoSet && hasInputInfo !== self.state.hasInputInfo) {
-        self.setState({
-          hasInputInfo: hasInputInfo
-        });
-      }
-
-      if (!self.hasInputErrorMessageSet && hasInputErrorMessage !== self.state.hasInputErrorMessage) {
-        self.setState({
-          hasInputErrorMessage: hasInputErrorMessage
-        });
-      }
-
-      if (!self.hasInputInvalidSet && hasInputInvalid !== self.state.hasInputInvalid) {
-        self.setState({
-          hasInputInvalid: hasInputInvalid
-        });
-      }
-    },
-
-    updated: function updated() {
-      var self = this;
-      var innerEl = self.$refs.innerEl;
-      if (!innerEl) { return; }
-      var $innerEl = self.$$(innerEl);
-      var $labelEl = $innerEl.children('.item-title.item-label');
-      var $inputWrapEl = $innerEl.children('.item-input-wrap');
-      var hasInlineLabel = $labelEl.hasClass('item-label-inline');
-      var hasInput = $inputWrapEl.length > 0;
-      var hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
-      var hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
-      var hasInputInvalid = $inputWrapEl.children('.input-invalid').length > 0;
-
-      if (hasInlineLabel !== self.state.hasInlineLabel) {
-        self.setState({
-          hasInlineLabel: hasInlineLabel
-        });
-      }
-
-      if (hasInput !== self.state.hasInput) {
-        self.setState({
-          hasInput: hasInput
-        });
-      }
-
-      if (hasInputInfo !== self.state.hasInputInfo) {
-        self.setState({
-          hasInputInfo: hasInputInfo
-        });
-      }
-
-      if (!self.hasInputErrorMessageSet && hasInputErrorMessage !== self.state.hasInputErrorMessage) {
-        self.setState({
-          hasInputErrorMessage: hasInputErrorMessage
-        });
-      }
-
-      if (hasInputInvalid !== self.state.hasInputInvalid) {
-        self.setState({
-          hasInputInvalid: hasInputInvalid
-        });
-      }
+      el.addEventListener('click', self.onClick);
     },
 
     beforeDestroy: function beforeDestroy() {
       var self = this;
       var ref = self.$refs;
-      var inputEl = ref.inputEl;
       var el = ref.el;
-      el.removeEventListener('input:empty', self.onEmptyBound);
-      el.removeEventListener('input:notempty', self.onNotEmptyBound);
-      el.removeEventListener('focus', self.onFocusBound, true);
-      el.removeEventListener('blur', self.onBlurBound, true);
-
-      if (inputEl) {
-        inputEl.removeEventListener('change', self.onChangeBound);
-      }
+      el.removeEventListener('click', self.onClick);
     },
 
     methods: {
-      checkHasInputState: function checkHasInputState() {
-        var self = this;
-        var props = self.props;
-        var itemInput = props.itemInput;
-        var inlineLabel = props.inlineLabel;
-        var itemInputWithInfo = props.itemInputWithInfo;
-        var hasInput = itemInput || self.state.hasInput;
-        var hasInlineLabel = inlineLabel || self.state.hasInlineLabel;
-        var hasInputInfo = itemInputWithInfo || self.state.hasInputInfo;
-        var hasInputErrorMessage = self.state.hasInputErrorMessage;
-
-        if (hasInput && !self.state.hasInput) {
-          self.hasInputSet = true;
-          self.setState({
-            hasInput: hasInput
-          });
-        } else if (!hasInput) {
-          self.hasInputSet = false;
-        }
-
-        if (hasInputInfo && !self.state.hasInputInfo) {
-          self.hasInputInfoSet = true;
-          self.setState({
-            hasInputInfo: hasInputInfo
-          });
-        } else if (!hasInputInfo) {
-          self.hasInputInfoSet = false;
-        }
-
-        if (hasInputErrorMessage && !self.state.hasInputErrorMessage) {
-          self.hasInputErrorMessageSet = true;
-          self.setState({
-            hasInputErrorMessage: hasInputErrorMessage
-          });
-        } else if (!hasInputInfo) {
-          self.hasInputErrorMessageSet = false;
-        }
-
-        if (hasInlineLabel && !self.state.hasInlineLabel) {
-          self.hasInlineLabelSet = true;
-          self.setState({
-            hasInlineLabel: hasInlineLabel
-          });
-        } else if (!hasInlineLabel) {
-          self.hasInlineLabelSet = false;
-        }
-      },
-
       onClick: function onClick(event) {
         this.dispatchEvent('click', event);
       },
@@ -4770,39 +4773,11 @@
         this.dispatchEvent('change', event);
       },
 
-      onFocus: function onFocus() {
-        this.setState({
-          hasInputFocused: true
-        });
-      },
-
-      onBlur: function onBlur() {
-        this.setState({
-          hasInputFocused: false
-        });
-      },
-
-      onEmpty: function onEmpty() {
-        this.setState({
-          hasInputValue: false
-        });
-      },
-
-      onNotEmpty: function onNotEmpty() {
-        this.setState({
-          hasInputValue: true
-        });
-      },
-
       dispatchEvent: function dispatchEvent(events) {
         var args = [], len = arguments.length - 1;
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
-      },
-
-      setState: function setState(updater, callback) {
-        __vueComponentSetState(this, updater, callback);
       }
 
     },
@@ -4883,9 +4858,7 @@
       readonly: Boolean,
       required: Boolean,
       disabled: Boolean,
-      itemInput: Boolean,
-      itemInputWithInfo: Boolean,
-      inlineLabel: Boolean
+      virtualListIndex: Number
     }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
 
     data: function data() {
@@ -4944,12 +4917,10 @@
       var readonly = props.readonly;
       var required = props.required;
       var disabled = props.disabled;
-      var itemInput = props.itemInput;
-      var itemInputWithInfo = props.itemInputWithInfo;
-      var inlineLabel = props.inlineLabel;
       var sortable = props.sortable;
       var noChevron = props.noChevron;
       var chevronCenter = props.chevronCenter;
+      var virtualListIndex = props.virtualListIndex;
       var isMedia = mediaItem || mediaList || self.state.isMedia;
       var isSortable = sortable || self.state.isSortable;
       var isSimple = self.state.isSimple;
@@ -4958,8 +4929,8 @@
         var needsEvents = !(link || href || accordionItem || smartSelect);
         itemContentEl = _h(F7ListItemContent, {
           on: needsEvents ? {
-            click: self.onClickBound,
-            change: self.onChangeBound
+            click: self.onClick,
+            change: self.onChange
           } : undefined,
           attrs: {
             title: title,
@@ -4981,10 +4952,7 @@
             value: value,
             readonly: readonly,
             required: required,
-            disabled: disabled,
-            itemInput: itemInput,
-            itemInputWithInfo: itemInputWithInfo,
-            inlineLabel: inlineLabel
+            disabled: disabled
           }
         }, [this.$slots['content-start'], this.$slots['content'], this.$slots['content-end'], this.$slots['media'], this.$slots['inner-start'], this.$slots['inner'], this.$slots['inner-end'], this.$slots['after-start'], this.$slots['after'], this.$slots['after-end'], this.$slots['header'], this.$slots['footer'], this.$slots['before-title'], this.$slots['title'], this.$slots['after-title'], this.$slots['subtitle'], this.$slots['text'], swipeout || accordionItem ? null : self.$slots.default]);
 
@@ -4999,12 +4967,9 @@
             'smart-select': smartSelect
           }, Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
           linkEl = _h('a', __vueComponentTransformJSXProps(Object.assign({
+            ref: 'linkEl',
             class: linkClasses
-          }, linkAttrs, {
-            on: {
-              click: self.onClick.bind(self)
-            }
-          })), [itemContentEl]);
+          }, linkAttrs)), [itemContentEl]);
         }
       }
 
@@ -5026,7 +4991,8 @@
           style: style,
           class: liClasses,
           attrs: {
-            id: id
+            id: id,
+            'data-virtual-list-index': virtualListIndex
           }
         }, [_h('span', [this.$slots['default'] || [title]])]);
       }
@@ -5037,7 +5003,8 @@
           style: style,
           class: liClasses,
           attrs: {
-            id: id
+            id: id,
+            'data-virtual-list-index': virtualListIndex
           }
         }, [title, this.$slots['default']]);
       }
@@ -5048,7 +5015,8 @@
         style: style,
         class: liClasses,
         attrs: {
-          id: id
+          id: id,
+          'data-virtual-list-index': virtualListIndex
         }
       }, [this.$slots['root-start'], swipeout ? _h('div', {
         class: 'swipeout-content'
@@ -5072,28 +5040,29 @@
     },
 
     created: function created() {
-      var self = this;
-      self.onClickBound = self.onClick.bind(self);
-      self.onChangeBound = self.onChange.bind(self);
-      self.onSwipeoutOpenBound = self.onSwipeoutOpen.bind(self);
-      self.onSwipeoutOpenedBound = self.onSwipeoutOpened.bind(self);
-      self.onSwipeoutCloseBound = self.onSwipeoutClose.bind(self);
-      self.onSwipeoutClosedBound = self.onSwipeoutClosed.bind(self);
-      self.onSwipeoutDeleteBound = self.onSwipeoutDelete.bind(self);
-      self.onSwipeoutDeletedBound = self.onSwipeoutDeleted.bind(self);
-      self.onSwipeoutOverswipeEnterBound = self.onSwipeoutOverswipeEnter.bind(self);
-      self.onSwipeoutOverswipeExitBound = self.onSwipeoutOverswipeExit.bind(self);
-      self.onSwipeoutBound = self.onSwipeout.bind(self);
-      self.onAccOpenBound = self.onAccOpen.bind(self);
-      self.onAccOpenedBound = self.onAccOpened.bind(self);
-      self.onAccCloseBound = self.onAccClose.bind(self);
-      self.onAccClosedBound = self.onAccClosed.bind(self);
+      Utils.bindMethods(this, ['onClick', 'onChange', 'onSwipeoutOpen', 'onSwipeoutOpened', 'onSwipeoutClose', 'onSwipeoutClosed', 'onSwipeoutDelete', 'onSwipeoutDeleted', 'onSwipeoutOverswipeEnter', 'onSwipeoutOverswipeExit', 'onSwipeout', 'onAccBeforeOpen', 'onAccOpen', 'onAccOpened', 'onAccBeforeClose', 'onAccClose', 'onAccClosed']);
     },
 
     mounted: function mounted() {
       var self = this;
-      var el = self.$refs.el;
+      var ref = self.$refs;
+      var el = ref.el;
+      var linkEl = ref.linkEl;
       if (!el) { return; }
+      var ref$1 = self.props;
+      var link = ref$1.link;
+      var href = ref$1.href;
+      var smartSelect = ref$1.smartSelect;
+      var swipeout = ref$1.swipeout;
+      var swipeoutOpened = ref$1.swipeoutOpened;
+      var accordionItem = ref$1.accordionItem;
+      var smartSelectParams = ref$1.smartSelectParams;
+      var needsEvents = !(link || href || accordionItem || smartSelect);
+
+      if (!needsEvents && linkEl) {
+        linkEl.addEventListener('click', self.onClick);
+      }
+
       self.$listEl = self.$$(el).parents('.list, .list-group').eq(0);
 
       if (self.$listEl.length) {
@@ -5104,30 +5073,25 @@
         });
       }
 
-      var ref = self.props;
-      var swipeout = ref.swipeout;
-      var swipeoutOpened = ref.swipeoutOpened;
-      var accordionItem = ref.accordionItem;
-      var smartSelect = ref.smartSelect;
-      var smartSelectParams = ref.smartSelectParams;
-
       if (swipeout) {
-        el.addEventListener('swipeout:open', self.onSwipeoutOpenBound);
-        el.addEventListener('swipeout:opened', self.onSwipeoutOpenedBound);
-        el.addEventListener('swipeout:close', self.onSwipeoutCloseBound);
-        el.addEventListener('swipeout:closed', self.onSwipeoutClosedBound);
-        el.addEventListener('swipeout:delete', self.onSwipeoutDeleteBound);
-        el.addEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
-        el.addEventListener('swipeout:overswipeenter', self.onSwipeoutOverswipeEnterBound);
-        el.addEventListener('swipeout:overswipeexit', self.onSwipeoutOverswipeExitBound);
-        el.addEventListener('swipeout', self.onSwipeoutBound);
+        el.addEventListener('swipeout:open', self.onSwipeoutOpen);
+        el.addEventListener('swipeout:opened', self.onSwipeoutOpened);
+        el.addEventListener('swipeout:close', self.onSwipeoutClose);
+        el.addEventListener('swipeout:closed', self.onSwipeoutClosed);
+        el.addEventListener('swipeout:delete', self.onSwipeoutDelete);
+        el.addEventListener('swipeout:deleted', self.onSwipeoutDeleted);
+        el.addEventListener('swipeout:overswipeenter', self.onSwipeoutOverswipeEnter);
+        el.addEventListener('swipeout:overswipeexit', self.onSwipeoutOverswipeExit);
+        el.addEventListener('swipeout', self.onSwipeout);
       }
 
       if (accordionItem) {
-        el.addEventListener('accordion:open', self.onAccOpenBound);
-        el.addEventListener('accordion:opened', self.onAccOpenedBound);
-        el.addEventListener('accordion:close', self.onAccCloseBound);
-        el.addEventListener('accordion:closed', self.onAccClosedBound);
+        el.addEventListener('accordion:beforeopen', self.onAccBeforeOpen);
+        el.addEventListener('accordion:open', self.onAccOpen);
+        el.addEventListener('accordion:opened', self.onAccOpened);
+        el.addEventListener('accordion:beforeclose', self.onAccBeforeClose);
+        el.addEventListener('accordion:close', self.onAccClose);
+        el.addEventListener('accordion:closed', self.onAccClosed);
       }
 
       self.$f7ready(function (f7) {
@@ -5173,30 +5137,41 @@
 
     beforeDestroy: function beforeDestroy() {
       var self = this;
-      var el = self.$refs.el;
-      var ref = self.props;
-      var swipeout = ref.swipeout;
-      var accordionItem = ref.accordionItem;
-      var smartSelect = ref.smartSelect;
+      var ref = self.$refs;
+      var el = ref.el;
+      var linkEl = ref.linkEl;
+      var ref$1 = self.props;
+      var link = ref$1.link;
+      var href = ref$1.href;
+      var smartSelect = ref$1.smartSelect;
+      var swipeout = ref$1.swipeout;
+      var accordionItem = ref$1.accordionItem;
+      var needsEvents = !(link || href || accordionItem || smartSelect);
+
+      if (!needsEvents && linkEl) {
+        linkEl.removeEventListener('click', self.onClick);
+      }
 
       if (el) {
         if (swipeout) {
-          el.removeEventListener('swipeout:open', self.onSwipeoutOpenBound);
-          el.removeEventListener('swipeout:opened', self.onSwipeoutOpenedBound);
-          el.removeEventListener('swipeout:close', self.onSwipeoutCloseBound);
-          el.removeEventListener('swipeout:closed', self.onSwipeoutClosedBound);
-          el.removeEventListener('swipeout:delete', self.onSwipeoutDeleteBound);
-          el.removeEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
-          el.removeEventListener('swipeout:overswipeenter', self.onSwipeoutOverswipeEnterBound);
-          el.removeEventListener('swipeout:overswipeexit', self.onSwipeoutOverswipeExitBound);
-          el.removeEventListener('swipeout', self.onSwipeoutBound);
+          el.removeEventListener('swipeout:open', self.onSwipeoutOpen);
+          el.removeEventListener('swipeout:opened', self.onSwipeoutOpened);
+          el.removeEventListener('swipeout:close', self.onSwipeoutClose);
+          el.removeEventListener('swipeout:closed', self.onSwipeoutClosed);
+          el.removeEventListener('swipeout:delete', self.onSwipeoutDelete);
+          el.removeEventListener('swipeout:deleted', self.onSwipeoutDeleted);
+          el.removeEventListener('swipeout:overswipeenter', self.onSwipeoutOverswipeEnter);
+          el.removeEventListener('swipeout:overswipeexit', self.onSwipeoutOverswipeExit);
+          el.removeEventListener('swipeout', self.onSwipeout);
         }
 
         if (accordionItem) {
-          el.removeEventListener('accordion:open', self.onAccOpenBound);
-          el.removeEventListener('accordion:opened', self.onAccOpenedBound);
-          el.removeEventListener('accordion:close', self.onAccCloseBound);
-          el.removeEventListener('accordion:closed', self.onAccClosedBound);
+          el.removeEventListener('accordion:beforeopen', self.onAccBeforeOpen);
+          el.removeEventListener('accordion:open', self.onAccOpen);
+          el.removeEventListener('accordion:opened', self.onAccOpened);
+          el.removeEventListener('accordion:beforeclose', self.onAccBeforeClose);
+          el.removeEventListener('accordion:close', self.onAccClose);
+          el.removeEventListener('accordion:closed', self.onAccClosed);
         }
       }
 
@@ -5250,12 +5225,20 @@
         this.dispatchEvent('swipeout', event);
       },
 
+      onAccBeforeClose: function onAccBeforeClose(event) {
+        this.dispatchEvent('accordion:beforeclose accordionBeforeClose', event, event.detail.prevent);
+      },
+
       onAccClose: function onAccClose(event) {
         this.dispatchEvent('accordion:close accordionClose', event);
       },
 
       onAccClosed: function onAccClosed(event) {
         this.dispatchEvent('accordion:closed accordionClosed', event);
+      },
+
+      onAccBeforeOpen: function onAccBeforeOpen(event) {
+        this.dispatchEvent('accordion:beforeopen accordionBeforeOpen', event, event.detail.prevent);
       },
 
       onAccOpen: function onAccOpen(event) {
@@ -5435,20 +5418,8 @@
 
     },
 
-    beforeDestroy: function beforeDestroy() {
-      var self = this;
-      var el = self.$refs.el;
-
-      if (el) {
-        el.removeEventListener('sortable:enable', self.onSortableEnableBound);
-        el.removeEventListener('sortable:disable', self.onSortableDisableBound);
-        el.removeEventListener('sortable:sort', self.onSortableSortBound);
-        el.removeEventListener('tab:show', self.onTabShowBound);
-        el.removeEventListener('tab:hide', self.onTabHideBound);
-      }
-
-      if (!(self.virtualList && self.f7VirtualList)) { return; }
-      if (self.f7VirtualList.destroy) { self.f7VirtualList.destroy(); }
+    created: function created() {
+      Utils.bindMethods(this, ['onSortableEnable', 'onSortableDisable', 'onSortableSort', 'onTabShow', 'onTabHide']);
     },
 
     mounted: function mounted() {
@@ -5459,16 +5430,11 @@
       var virtualListParams = ref.virtualListParams;
 
       if (el) {
-        self.onSortableEnableBound = self.onSortableEnable.bind(self);
-        self.onSortableDisableBound = self.onSortableDisable.bind(self);
-        self.onSortableSortBound = self.onSortableSort.bind(self);
-        self.onTabShowBound = self.onTabShow.bind(self);
-        self.onTabHideBound = self.onTabHide.bind(self);
-        el.addEventListener('sortable:enable', self.onSortableEnableBound);
-        el.addEventListener('sortable:disable', self.onSortableDisableBound);
-        el.addEventListener('sortable:sort', self.onSortableSortBound);
-        el.addEventListener('tab:show', self.onTabShowBound);
-        el.addEventListener('tab:hide', self.onTabHideBound);
+        el.addEventListener('sortable:enable', self.onSortableEnable);
+        el.addEventListener('sortable:disable', self.onSortableDisable);
+        el.addEventListener('sortable:sort', self.onSortableSort);
+        el.addEventListener('tab:show', self.onTabShow);
+        el.addEventListener('tab:hide', self.onTabHide);
       }
 
       if (!virtualList) { return; }
@@ -5513,6 +5479,22 @@
           }
         }, vlParams));
       });
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      var self = this;
+      var el = self.$refs.el;
+
+      if (el) {
+        el.removeEventListener('sortable:enable', self.onSortableEnable);
+        el.removeEventListener('sortable:disable', self.onSortableDisable);
+        el.removeEventListener('sortable:sort', self.onSortableSort);
+        el.removeEventListener('tab:show', self.onTabShow);
+        el.removeEventListener('tab:hide', self.onTabHide);
+      }
+
+      if (!(self.virtualList && self.f7VirtualList)) { return; }
+      if (self.f7VirtualList.destroy) { self.f7VirtualList.destroy(); }
     },
 
     methods: {
@@ -5615,18 +5597,18 @@
       }
     },
 
+    created: function created() {
+      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed']);
+    },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
       if (!el) { return; }
-      self.onOpenBound = self.onOpen.bind(self);
-      self.onOpenedBound = self.onOpened.bind(self);
-      self.onCloseBound = self.onClose.bind(self);
-      self.onClosedBound = self.onClosed.bind(self);
-      el.addEventListener('loginscreen:open', self.onOpenBound);
-      el.addEventListener('loginscreen:opened', self.onOpenedBound);
-      el.addEventListener('loginscreen:close', self.onCloseBound);
-      el.addEventListener('loginscreen:closed', self.onClosedBound);
+      el.addEventListener('loginscreen:open', self.onOpen);
+      el.addEventListener('loginscreen:opened', self.onOpened);
+      el.addEventListener('loginscreen:close', self.onClose);
+      el.addEventListener('loginscreen:closed', self.onClosed);
       self.$f7ready(function () {
         self.f7LoginScreen = self.$f7.loginScreen.create({
           el: el
@@ -5643,10 +5625,10 @@
       var el = self.$refs.el;
       if (self.f7LoginScreen) { self.f7LoginScreen.destroy(); }
       if (!el) { return; }
-      el.removeEventListener('loginscreen:open', self.onOpenBound);
-      el.removeEventListener('loginscreen:opened', self.onOpenedBound);
-      el.removeEventListener('loginscreen:close', self.onCloseBound);
-      el.removeEventListener('loginscreen:closed', self.onClosedBound);
+      el.removeEventListener('loginscreen:open', self.onOpen);
+      el.removeEventListener('loginscreen:opened', self.onOpened);
+      el.removeEventListener('loginscreen:close', self.onClose);
+      el.removeEventListener('loginscreen:closed', self.onClosed);
     },
 
     methods: {
@@ -5722,16 +5704,6 @@
       typing: Boolean
     }, Mixins.colorProps),
 
-    created: function created() {
-      this.onClickBound = this.onClick.bind(this);
-      this.onNameClickBound = this.onNameClick.bind(this);
-      this.onTextClickBound = this.onTextClick.bind(this);
-      this.onAvatarClickBound = this.onAvatarClick.bind(this);
-      this.onHeaderClickBound = this.onHeaderClick.bind(this);
-      this.onFooterClickBound = this.onFooterClick.bind(this);
-      this.onBubbleClickBound = this.onBubbleClick.bind(this);
-    },
-
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -5764,39 +5736,29 @@
       var slotsBubbleStart = ref['bubble-start'];
       var slotsBubbleEnd = ref['bubble-end'];
       return _h('div', {
+        ref: 'el',
         style: style,
         class: self.classes,
-        on: {
-          click: self.onClickBound
-        },
         attrs: {
           id: id
         }
       }, [slotsStart, (avatar || slotsAvatar) && _h('div', {
+        ref: 'avatarEl',
         class: 'message-avatar',
         style: {
           backgroundImage: avatar && ("url(" + avatar + ")")
-        },
-        on: {
-          click: self.onAvatarClickBound
         }
       }, [slotsAvatar]), _h('div', {
         class: 'message-content'
       }, [slotsContentStart, (slotsName || name) && _h('div', {
-        class: 'message-name',
-        on: {
-          click: self.onNameClickBound
-        }
+        ref: 'nameEl',
+        class: 'message-name'
       }, [slotsName || name]), (slotsHeader || header) && _h('div', {
-        class: 'message-header',
-        on: {
-          click: self.onHeaderClickBound
-        }
+        ref: 'headerEl',
+        class: 'message-header'
       }, [slotsHeader || header]), _h('div', {
-        class: 'message-bubble',
-        on: {
-          click: self.onBubbleClickBound
-        }
+        ref: 'bubbleEl',
+        class: 'message-bubble'
       }, [slotsBubbleStart, (slotsImage || image) && _h('div', {
         class: 'message-image'
       }, [slotsImage || _h('img', {
@@ -5806,19 +5768,15 @@
       })]), (slotsTextHeader || textHeader) && _h('div', {
         class: 'message-text-header'
       }, [slotsTextHeader || textHeader]), (slotsText || text || typing) && _h('div', {
-        class: 'message-text',
-        on: {
-          click: self.onTextClickBound
-        }
+        ref: 'textEl',
+        class: 'message-text'
       }, [slotsText || text, typing && _h('div', {
         class: 'message-typing-indicator'
       }, [_h('div'), _h('div'), _h('div')])]), (slotsTextFooter || textFooter) && _h('div', {
         class: 'message-text-footer'
       }, [slotsTextFooter || textFooter]), slotsBubbleEnd, slotsDefault]), (slotsFooter || footer) && _h('div', {
-        class: 'message-footer',
-        on: {
-          click: self.onFooterClickBound
-        }
+        ref: 'footerEl',
+        class: 'message-footer'
       }, [slotsFooter || footer]), slotsContentEnd]), slotsEnd]);
     },
 
@@ -5855,6 +5813,47 @@
       }
 
     },
+
+    created: function created() {
+      Utils.bindMethods(this, ['onClick', 'onNameClick', 'onTextClick', 'onAvatarClick', 'onHeaderClick', 'onFooterClick', 'onBubbleClick']);
+    },
+
+    mounted: function mounted() {
+      var ref = this.$refs;
+      var el = ref.el;
+      var nameEl = ref.nameEl;
+      var textEl = ref.textEl;
+      var avatarEl = ref.avatarEl;
+      var headerEl = ref.headerEl;
+      var footerEl = ref.footerEl;
+      var bubbleEl = ref.bubbleEl;
+      el.addEventListener('click', this.onClick);
+      if (nameEl) { nameEl.addEventListener('click', this.onNameClick); }
+      if (textEl) { textEl.addEventListener('click', this.onTextClick); }
+      if (avatarEl) { nameEl.addEventListener('click', this.onAvatarClick); }
+      if (headerEl) { nameEl.addEventListener('click', this.onHeaderClick); }
+      if (footerEl) { nameEl.addEventListener('click', this.onFooterClick); }
+      if (bubbleEl) { nameEl.addEventListener('click', this.onBubbleClick); }
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      var ref = this.$refs;
+      var el = ref.el;
+      var nameEl = ref.nameEl;
+      var textEl = ref.textEl;
+      var avatarEl = ref.avatarEl;
+      var headerEl = ref.headerEl;
+      var footerEl = ref.footerEl;
+      var bubbleEl = ref.bubbleEl;
+      el.removeEventListener('click', this.onClick);
+      if (nameEl) { nameEl.removeEventListener('click', this.onNameClick); }
+      if (textEl) { textEl.removeEventListener('click', this.onTextClick); }
+      if (avatarEl) { nameEl.removeEventListener('click', this.onAvatarClick); }
+      if (headerEl) { nameEl.removeEventListener('click', this.onHeaderClick); }
+      if (footerEl) { nameEl.removeEventListener('click', this.onFooterClick); }
+      if (bubbleEl) { nameEl.removeEventListener('click', this.onBubbleClick); }
+    },
+
     methods: {
       onClick: function onClick(event) {
         this.dispatchEvent('click', event);
@@ -5905,11 +5904,6 @@
       }
     }, Mixins.colorProps),
 
-    created: function created() {
-      this.onClickBound = this.onClick.bind(this);
-      this.onDeleteClickBound = this.onDeleteClick.bind(this);
-    },
-
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -5921,11 +5915,9 @@
       var style = props.style;
       var classes = Utils.classNames(className, 'messagebar-attachment', Mixins.colorClasses(props));
       return _h('div', {
+        ref: 'el',
         style: style,
         class: classes,
-        on: {
-          click: self.onClickBound
-        },
         attrs: {
           id: id
         }
@@ -5934,11 +5926,29 @@
           src: image
         }
       }), deletable && _h('span', {
-        class: 'messagebar-attachment-delete',
-        on: {
-          click: self.onDeleteClickBound
-        }
+        ref: 'deleteEl',
+        class: 'messagebar-attachment-delete'
       }), this.$slots['default']]);
+    },
+
+    created: function created() {
+      Utils.bindMethods(this, ['onClick', 'onDeleteClick']);
+    },
+
+    mounted: function mounted() {
+      this.$refs.el.addEventListener('click', this.onClick);
+
+      if (this.$refs.deleteEl) {
+        this.$refs.deleteEl.addEventListener('click', this.onDeleteClick);
+      }
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      this.$refs.el.removeEventListener('click', this.onClick);
+
+      if (this.$refs.deleteEl) {
+        this.$refs.deleteEl.removeEventListener('click', this.onDeleteClick);
+      }
     },
 
     methods: {
@@ -6004,10 +6014,6 @@
       checked: Boolean
     }, Mixins.colorProps),
 
-    created: function created() {
-      this.onChangeBound = this.onChange.bind(this);
-    },
-
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -6024,11 +6030,12 @@
       var inputEl;
       {
         inputEl = _h('input', {
+          ref: 'inputEl',
           domProps: {
             checked: checked
           },
           on: {
-            change: self.onChangeBound
+            change: self.onChange
           },
           attrs: {
             type: 'checkbox'
@@ -6044,6 +6051,10 @@
       }, [inputEl, _h('i', {
         class: 'icon icon-checkbox'
       }), this.$slots['default']]);
+    },
+
+    created: function created() {
+      Utils.bindMethods(this, ['onChange']);
     },
 
     methods: {
@@ -6169,14 +6180,7 @@
     }, Mixins.colorProps),
 
     created: function created() {
-      this.onChangeBound = this.onChange.bind(this);
-      this.onInputBound = this.onInput.bind(this);
-      this.onFocusBound = this.onFocus.bind(this);
-      this.onBlurBound = this.onBlur.bind(this);
-      this.onClickBound = this.onClick.bind(this);
-      this.onDeleteAttachmentBound = this.onDeleteAttachment.bind(this);
-      this.onClickAttachmentBound = this.onClickAttachment.bind(this);
-      this.onResizePageBound = this.onResizePage.bind(this);
+      Utils.bindMethods(this, ['onChange', 'onInput', 'onFocus', 'onBlur', 'onClick', 'onDeleteAttachment', 'onClickAttachment', 'onResizePage']);
     },
 
     render: function render() {
@@ -6235,10 +6239,10 @@
       }, [slotsBeforeArea, messagebarAttachmentsEl, _h(F7Input, {
         ref: 'area',
         on: {
-          input: self.onInputBound,
-          change: self.onChangeBound,
-          focus: self.onFocusBound,
-          blur: self.onBlurBound
+          input: self.onInput,
+          change: self.onChange,
+          focus: self.onFocus,
+          blur: self.onBlur
         },
         attrs: {
           type: 'textarea',
@@ -6252,7 +6256,7 @@
         }
       }), slotsAfterArea]), (sendLink && sendLink.length > 0 || slotsSendLink) && _h(F7Link, {
         on: {
-          click: self.onClickBound
+          click: self.onClick
         }
       }, [slotsSendLink || sendLink]), slotsInnerEnd, innerEndEls]), slotsAfterInner, messagebarSheetEl]);
     },
@@ -6300,9 +6304,9 @@
       if (!init) { return; }
       var el = self.$refs.el;
       if (!el) { return; }
-      el.addEventListener('messagebar:attachmentdelete', self.onDeleteAttachmentBound);
-      el.addEventListener('messagebar:attachmentclick', self.onClickAttachmentBound);
-      el.addEventListener('messagebar:resizepage', self.onResizePageBound);
+      el.addEventListener('messagebar:attachmentdelete', self.onDeleteAttachment);
+      el.addEventListener('messagebar:attachmentclick', self.onClickAttachment);
+      el.addEventListener('messagebar:resizepage', self.onResizePage);
       var params = Utils.noUndefinedProps({
         el: el,
         top: top,
@@ -6341,9 +6345,9 @@
       if (self.f7Messagebar && self.f7Messagebar.destroy) { self.f7Messagebar.destroy(); }
       var el = self.$refs.el;
       if (!el) { return; }
-      el.removeEventListener('messagebar:attachmentdelete', self.onDeleteAttachmentBound);
-      el.removeEventListener('messagebar:attachmentclick', self.onClickAttachmentBound);
-      el.removeEventListener('messagebar:resizepage', self.onResizePageBound);
+      el.removeEventListener('messagebar:attachmentdelete', self.onDeleteAttachment);
+      el.removeEventListener('messagebar:attachmentclick', self.onClickAttachment);
+      el.removeEventListener('messagebar:resizepage', self.onResizePage);
     },
 
     methods: {
@@ -6790,7 +6794,7 @@
         linkEl = _h(F7Link, {
           class: backLink === true || backLink && this.$theme.md ? 'icon-only' : undefined,
           on: {
-            click: this.onBackClick.bind(this)
+            click: this.onBackClick
           },
           attrs: {
             href: backLinkUrl || '#',
@@ -6805,13 +6809,26 @@
       var classes = Utils.classNames(className, 'left', {
         sliding: sliding
       }, Mixins.colorClasses(props));
+      var children = [];
+      var slots = this.$slots;
+
+      if (slots && Object.keys(slots).length) {
+        Object.keys(slots).forEach(function (key) {
+          children.push.apply(children, slots[key]);
+        });
+      }
+
       return _h('div', {
         style: style,
         class: classes,
         attrs: {
           id: id
         }
-      }, [linkEl, this.$slots['default']]);
+      }, [linkEl, children]);
+    },
+
+    created: function created() {
+      Utils.bindMethods(this, ['onBackClick']);
     },
 
     methods: {
@@ -6835,7 +6852,7 @@
     }
   };
 
-  var f7NavRight = {
+  var F7NavRight = {
     name: 'f7-nav-right',
     props: Object.assign({
       id: [String, Number],
@@ -6852,13 +6869,64 @@
       var classes = Utils.classNames(className, 'right', {
         sliding: sliding
       }, Mixins.colorClasses(props));
+      var children = [];
+      var slots = this.$slots;
+
+      if (slots && Object.keys(slots).length) {
+        Object.keys(slots).forEach(function (key) {
+          children.push.apply(children, slots[key]);
+        });
+      }
+
       return _h('div', {
         style: style,
         class: classes,
         attrs: {
           id: id
         }
-      }, [this.$slots['default']]);
+      }, [children]);
+    },
+
+    computed: {
+      props: function props() {
+        return __vueComponentProps(this);
+      }
+
+    }
+  };
+
+  var f7NavTitleLarge = {
+    name: 'f7-nav-title',
+    props: Object.assign({
+      id: [String, Number]
+    }, Mixins.colorProps),
+
+    render: function render() {
+      var _h = this.$createElement;
+      var self = this;
+      var props = self.props;
+      var id = props.id;
+      var style = props.style;
+      var className = props.className;
+      var classes = Utils.classNames(className, 'title-large', Mixins.colorClasses(props));
+      var children = [];
+      var slots = self.$slots;
+
+      if (slots && Object.keys(slots).length) {
+        Object.keys(slots).forEach(function (key) {
+          children.push.apply(children, slots[key]);
+        });
+      }
+
+      return _h('div', {
+        style: style,
+        class: classes,
+        attrs: {
+          id: id
+        }
+      }, [_h('div', {
+        class: 'title-large-text'
+      }, [children])]);
     },
 
     computed: {
@@ -6899,13 +6967,23 @@
       var classes = Utils.classNames(className, 'title', {
         sliding: sliding
       }, Mixins.colorClasses(props));
+      var children;
+      var slots = self.$slots;
+
+      if (slots && Object.keys(slots).length) {
+        children = [];
+        Object.keys(slots).forEach(function (key) {
+          children.push.apply(children, slots[key]);
+        });
+      }
+
       return _h('div', {
         style: style,
         class: classes,
         attrs: {
           id: id
         }
-      }, [this.$slots['default'] || [title, subtitleEl]]);
+      }, [children, !children && title, !children && subtitleEl]);
     },
 
     computed: {
@@ -6937,7 +7015,9 @@
         default: true
       },
       innerClass: String,
-      innerClassName: String
+      innerClassName: String,
+      large: Boolean,
+      titleLarge: String
     }, Mixins.colorProps),
 
     render: function render() {
@@ -6959,45 +7039,67 @@
       var hidden = props.hidden;
       var noShadow = props.noShadow;
       var noHairline = props.noHairline;
+      var large = props.large;
+      var titleLarge = props.titleLarge;
       var innerEl;
       var leftEl;
       var titleEl;
+      var rightEl;
+      var titleLargeEl;
+      var slots = self.$slots;
 
       if (inner) {
-        if (backLink) {
+        if (backLink || slots['nav-left']) {
           leftEl = _h(F7NavLeft, {
             on: {
-              backClick: self.onBackClick.bind(self)
+              backClick: self.onBackClick
             },
             attrs: {
               backLink: backLink,
               backLinkUrl: backLinkUrl,
               backLinkForce: backLinkForce
             }
-          });
+          }, [slots['nav-left']]);
         }
 
-        if (title || subtitle) {
+        if (title || subtitle || slots.title) {
           titleEl = _h(F7NavTitle, {
             attrs: {
               title: title,
               subtitle: subtitle
             }
-          });
+          }, [slots.title]);
+        }
+
+        if (slots['nav-right']) {
+          rightEl = _h(F7NavRight, [slots['nav-right']]);
+        }
+
+        var largeTitle = titleLarge;
+        if (!largeTitle && large && title) { largeTitle = title; }
+
+        if (largeTitle) {
+          titleLargeEl = _h('div', {
+            class: 'title-large'
+          }, [_h('div', {
+            class: 'title-large-text'
+          }, [largeTitle])]);
         }
 
         innerEl = _h('div', {
           ref: 'inner',
           class: Utils.classNames('navbar-inner', innerClass, innerClassName, {
-            sliding: sliding
+            sliding: sliding,
+            'navbar-inner-large': large
           })
-        }, [leftEl, titleEl, this.$slots['default']]);
+        }, [leftEl, titleEl, rightEl, titleLargeEl, this.$slots['default']]);
       }
 
       var classes = Utils.classNames(className, 'navbar', {
         'navbar-hidden': hidden,
         'no-shadow': noShadow,
-        'no-hairline': noHairline
+        'no-hairline': noHairline,
+        'navbar-large': large
       }, Mixins.colorClasses(props));
       return _h('div', {
         ref: 'el',
@@ -7007,6 +7109,10 @@
           id: id
         }
       }, [this.$slots['before-inner'], innerEl, this.$slots['after-inner']]);
+    },
+
+    created: function created() {
+      Utils.bindMethods(this, ['onBackClick']);
     },
 
     updated: function updated() {
@@ -7072,6 +7178,7 @@
         type: Boolean,
         default: true
       },
+      ptrBottom: Boolean,
       infinite: Boolean,
       infiniteTop: Boolean,
       infiniteDistance: Number,
@@ -7092,11 +7199,12 @@
       var props = self.props;
       var ptr = props.ptr;
       var ptrPreloader = props.ptrPreloader;
+      var ptrDistance = props.ptrDistance;
+      var ptrBottom = props.ptrBottom;
       var infinite = props.infinite;
       var infinitePreloader = props.infinitePreloader;
       var id = props.id;
       var style = props.style;
-      var ptrDistance = props.ptrDistance;
       var infiniteDistance = props.infiniteDistance;
       var infiniteTop = props.infiniteTop;
       var ptrEl;
@@ -7127,7 +7235,7 @@
           'data-ptr-distance': ptrDistance || undefined,
           'data-infinite-distance': infiniteDistance || undefined
         }
-      }, [ptrEl, infiniteTop ? infiniteEl : self.$slots.default, infiniteTop ? self.$slots.default : infiniteEl]);
+      }, [ptrBottom ? null : ptrEl, infiniteTop ? infiniteEl : null, self.$slots.default, infiniteTop ? null : infiniteEl, ptrBottom ? ptrEl : null]);
     },
 
     computed: {
@@ -7138,6 +7246,7 @@
         var tab = props.tab;
         var tabActive = props.tabActive;
         var ptr = props.ptr;
+        var ptrBottom = props.ptrBottom;
         var infinite = props.infinite;
         var infiniteTop = props.infiniteTop;
         var hideBarsOnScroll = props.hideBarsOnScroll;
@@ -7149,6 +7258,7 @@
           tab: tab,
           'tab-active': tabActive,
           'ptr-content': ptr,
+          'ptr-bottom': ptrBottom,
           'infinite-scroll-content': infinite,
           'infinite-scroll-top': infiniteTop,
           'hide-bars-on-scroll': hideBarsOnScroll,
@@ -7165,6 +7275,10 @@
 
     },
 
+    created: function created() {
+      Utils.bindMethods(this, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onTabShow', 'onTabHide']);
+    },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
@@ -7172,14 +7286,6 @@
       var ptr = ref.ptr;
       var infinite = ref.infinite;
       var tab = ref.tab;
-      self.onPtrPullStart = self.onPtrPullStart.bind(self);
-      self.onPtrPullMove = self.onPtrPullMove.bind(self);
-      self.onPtrPullEnd = self.onPtrPullEnd.bind(self);
-      self.onPtrRefresh = self.onPtrRefresh.bind(self);
-      self.onPtrDone = self.onPtrDone.bind(self);
-      self.onInfinite = self.onInfinite.bind(self);
-      self.onTabShow = self.onTabShow.bind(self);
-      self.onTabHide = self.onTabHide.bind(self);
 
       if (ptr) {
         el.addEventListener('ptr:pullstart', self.onPtrPullStart);
@@ -7270,6 +7376,14 @@
         type: Boolean,
         default: undefined
       },
+      withNavbarLarge: {
+        type: Boolean,
+        default: undefined
+      },
+      navbarLarge: {
+        type: Boolean,
+        default: undefined
+      },
       noNavbar: Boolean,
       noToolbar: Boolean,
       tabs: Boolean,
@@ -7284,6 +7398,7 @@
         type: Boolean,
         default: true
       },
+      ptrBottom: Boolean,
       infinite: Boolean,
       infiniteTop: Boolean,
       infiniteDistance: Number,
@@ -7304,6 +7419,7 @@
       var state = (function () {
         return {
           hasSubnavbar: false,
+          hasNavbarLarge: false,
           routerClass: '',
           routerForceUnstack: false
         };
@@ -7326,6 +7442,7 @@
       var ptr = props.ptr;
       var ptrDistance = props.ptrDistance;
       var ptrPreloader = props.ptrPreloader;
+      var ptrBottom = props.ptrBottom;
       var infinite = props.infinite;
       var infiniteDistance = props.infiniteDistance;
       var infinitePreloader = props.infinitePreloader;
@@ -7339,6 +7456,8 @@
       var tabs = props.tabs;
       var subnavbar = props.subnavbar;
       var withSubnavbar = props.withSubnavbar;
+      var navbarLarge = props.navbarLarge;
+      var withNavbarLarge = props.withNavbarLarge;
       var noNavbar = props.noNavbar;
       var noToolbar = props.noToolbar;
       var noSwipeback = props.noSwipeback;
@@ -7353,6 +7472,7 @@
       fixedTags = 'navbar toolbar tabbar subnavbar searchbar messagebar fab list-index'.split(' ');
       var hasSubnavbar;
       var hasMessages;
+      var hasNavbarLarge;
       hasMessages = self.$options.propsData.messagesContent;
 
       if (slotsDefault) {
@@ -7368,6 +7488,11 @@
             }
 
             if (tag.indexOf('subnavbar') >= 0) { hasSubnavbar = true; }
+
+            if (tag.indexOf('navbar') >= 0) {
+              if (child.componentOptions && child.componentOptions.propsData && 'large' in child.componentOptions.propsData && child.componentOptions.propsData !== false) { hasNavbarLarge = true; }
+            }
+
             if (typeof hasMessages === 'undefined' && tag.indexOf('messages') >= 0) { hasMessages = true; }
 
             for (var j = 0; j < fixedTags.length; j += 1) {
@@ -7384,10 +7509,12 @@
       }
 
       var forceSubnavbar = typeof subnavbar === 'undefined' && typeof withSubnavbar === 'undefined' ? hasSubnavbar || this.state.hasSubnavbar : false;
+      var forceNavbarLarge = typeof navbarLarge === 'undefined' && typeof withNavbarLarge === 'undefined' ? hasNavbarLarge || this.state.hasNavbarLarge : false;
       var classes = Utils.classNames(className, 'page', this.state.routerClass, {
         stacked: stacked && !this.state.routerForceUnstack,
         tabs: tabs,
         'page-with-subnavbar': subnavbar || withSubnavbar || forceSubnavbar,
+        'page-with-navbar-large': navbarLarge || withNavbarLarge || forceNavbarLarge,
         'no-navbar': noNavbar,
         'no-toolbar': noToolbar,
         'no-swipeback': noSwipeback
@@ -7410,6 +7537,7 @@
           ptr: ptr,
           ptrDistance: ptrDistance,
           ptrPreloader: ptrPreloader,
+          ptrBottom: ptrBottom,
           infinite: infinite,
           infiniteTop: infiniteTop,
           infiniteDistance: infiniteDistance,
@@ -7433,29 +7561,16 @@
       }, [fixedList, slotsFixed, pageContentEl]);
     },
 
+    created: function created() {
+      Utils.bindMethods(this, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageStack', 'onPageUnstack', 'onPagePosition']);
+    },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
       var ref = self.props;
       var ptr = ref.ptr;
       var infinite = ref.infinite;
-      self.onPtrPullStart = self.onPtrPullStart.bind(self);
-      self.onPtrPullMove = self.onPtrPullMove.bind(self);
-      self.onPtrPullEnd = self.onPtrPullEnd.bind(self);
-      self.onPtrRefresh = self.onPtrRefresh.bind(self);
-      self.onPtrDone = self.onPtrDone.bind(self);
-      self.onInfinite = self.onInfinite.bind(self);
-      self.onPageMounted = self.onPageMounted.bind(self);
-      self.onPageInit = self.onPageInit.bind(self);
-      self.onPageReinit = self.onPageReinit.bind(self);
-      self.onPageBeforeIn = self.onPageBeforeIn.bind(self);
-      self.onPageBeforeOut = self.onPageBeforeOut.bind(self);
-      self.onPageAfterOut = self.onPageAfterOut.bind(self);
-      self.onPageAfterIn = self.onPageAfterIn.bind(self);
-      self.onPageBeforeRemove = self.onPageBeforeRemove.bind(self);
-      self.onPageStack = self.onPageStack.bind(self);
-      self.onPageUnstack = self.onPageUnstack.bind(self);
-      self.onPagePosition = self.onPagePosition.bind(self);
 
       if (ptr) {
         el.addEventListener('ptr:pullstart', self.onPtrPullStart);
@@ -7559,11 +7674,21 @@
         var ref = this.props;
         var withSubnavbar = ref.withSubnavbar;
         var subnavbar = ref.subnavbar;
+        var withNavbarLarge = ref.withNavbarLarge;
+        var navbarLarge = ref.navbarLarge;
 
         if (typeof withSubnavbar === 'undefined' && typeof subnavbar === 'undefined') {
           if (page.$navbarEl && page.$navbarEl.length && page.$navbarEl.find('.subnavbar').length || page.$el.children('.navbar').find('.subnavbar').length) {
             this.setState({
               hasSubnavbar: true
+            });
+          }
+        }
+
+        if (typeof withNavbarLarge === 'undefined' && typeof navbarLarge === 'undefined') {
+          if (page.$navbarEl && page.$navbarEl.hasClass('navbar-inner-large')) {
+            this.setState({
+              hasNavbarLarge: true
             });
           }
         }
@@ -7716,6 +7841,10 @@
       }
     },
 
+    created: function created() {
+      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed', 'onBackdropClick', 'onPanelSwipe', 'onPanelSwipeOpen', 'onBreakpoint']);
+    },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
@@ -7725,24 +7854,16 @@
       var opened = ref.opened;
       var left = ref.left;
       var reveal = ref.reveal;
-      self.onOpenBound = self.onOpen.bind(self);
-      self.onOpenedBound = self.onOpened.bind(self);
-      self.onCloseBound = self.onClose.bind(self);
-      self.onClosedBound = self.onClosed.bind(self);
-      self.onBackdropClickBound = self.onBackdropClick.bind(self);
-      self.onPanelSwipeBound = self.onPanelSwipe.bind(self);
-      self.onPanelSwipeOpenBound = self.onPanelSwipeOpen.bind(self);
-      self.onBreakpointBound = self.onBreakpoint.bind(self);
 
       if (el) {
-        el.addEventListener('panel:open', self.onOpenBound);
-        el.addEventListener('panel:opened', self.onOpenedBound);
-        el.addEventListener('panel:close', self.onCloseBound);
-        el.addEventListener('panel:closed', self.onClosedBound);
-        el.addEventListener('panel:backdrop-click', self.onBackdropClickBound);
-        el.addEventListener('panel:swipe', self.onPanelSwipeBound);
-        el.addEventListener('panel:swipeopen', self.onPanelSwipeOpenBound);
-        el.addEventListener('panel:breakpoint', self.onBreakpointBound);
+        el.addEventListener('panel:open', self.onOpen);
+        el.addEventListener('panel:opened', self.onOpened);
+        el.addEventListener('panel:close', self.onClose);
+        el.addEventListener('panel:closed', self.onClosed);
+        el.addEventListener('panel:backdrop-click', self.onBackdropClick);
+        el.addEventListener('panel:swipe', self.onPanelSwipe);
+        el.addEventListener('panel:swipeopen', self.onPanelSwipeOpen);
+        el.addEventListener('panel:breakpoint', self.onBreakpoint);
       }
 
       self.$f7ready(function () {
@@ -7777,14 +7898,14 @@
       if (self.f7Panel) { self.f7Panel.destroy(); }
       var el = self.$refs.el;
       if (!el) { return; }
-      el.removeEventListener('panel:open', self.onOpenBound);
-      el.removeEventListener('panel:opened', self.onOpenedBound);
-      el.removeEventListener('panel:close', self.onCloseBound);
-      el.removeEventListener('panel:closed', self.onClosedBound);
-      el.removeEventListener('panel:backdrop-click', self.onBackdropClickBound);
-      el.removeEventListener('panel:swipe', self.onPanelSwipeBound);
-      el.removeEventListener('panel:swipeopen', self.onPanelSwipeOpenBound);
-      el.removeEventListener('panel:breakpoint', self.onBreakpointBound);
+      el.removeEventListener('panel:open', self.onOpen);
+      el.removeEventListener('panel:opened', self.onOpened);
+      el.removeEventListener('panel:close', self.onClose);
+      el.removeEventListener('panel:closed', self.onClosed);
+      el.removeEventListener('panel:backdrop-click', self.onBackdropClick);
+      el.removeEventListener('panel:swipe', self.onPanelSwipe);
+      el.removeEventListener('panel:swipeopen', self.onPanelSwipeOpen);
+      el.removeEventListener('panel:breakpoint', self.onBreakpoint);
     },
 
     methods: {
@@ -8060,18 +8181,18 @@
       }
     },
 
+    created: function created() {
+      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed']);
+    },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
       if (!el) { return; }
-      self.onOpenBound = self.onOpen.bind(self);
-      self.onOpenedBound = self.onOpened.bind(self);
-      self.onCloseBound = self.onClose.bind(self);
-      self.onClosedBound = self.onClosed.bind(self);
-      el.addEventListener('popover:open', self.onOpenBound);
-      el.addEventListener('popover:opened', self.onOpenedBound);
-      el.addEventListener('popover:close', self.onCloseBound);
-      el.addEventListener('popover:closed', self.onClosedBound);
+      el.addEventListener('popover:open', self.onOpen);
+      el.addEventListener('popover:opened', self.onOpened);
+      el.addEventListener('popover:close', self.onClose);
+      el.addEventListener('popover:closed', self.onClosed);
       var props = self.props;
       var target = props.target;
       var opened = props.opened;
@@ -8099,10 +8220,10 @@
       if (self.f7Popover) { self.f7Popover.destroy(); }
       var el = self.$refs.el;
       if (!el) { return; }
-      el.removeEventListener('popover:open', self.onOpenBound);
-      el.removeEventListener('popover:opened', self.onOpenedBound);
-      el.removeEventListener('popover:close', self.onCloseBound);
-      el.removeEventListener('popover:closed', self.onClosedBound);
+      el.removeEventListener('popover:open', self.onOpen);
+      el.removeEventListener('popover:opened', self.onOpened);
+      el.removeEventListener('popover:close', self.onClose);
+      el.removeEventListener('popover:closed', self.onClosed);
     },
 
     methods: {
@@ -8195,18 +8316,18 @@
       }
     },
 
+    created: function created() {
+      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed']);
+    },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
       if (!el) { return; }
-      self.onOpenBound = self.onOpen.bind(self);
-      self.onOpenedBound = self.onOpened.bind(self);
-      self.onCloseBound = self.onClose.bind(self);
-      self.onClosedBound = self.onClosed.bind(self);
-      el.addEventListener('popup:open', self.onOpenBound);
-      el.addEventListener('popup:opened', self.onOpenedBound);
-      el.addEventListener('popup:close', self.onCloseBound);
-      el.addEventListener('popup:closed', self.onClosedBound);
+      el.addEventListener('popup:open', self.onOpen);
+      el.addEventListener('popup:opened', self.onOpened);
+      el.addEventListener('popup:close', self.onClose);
+      el.addEventListener('popup:closed', self.onClosed);
       var props = self.props;
       var closeByBackdropClick = props.closeByBackdropClick;
       var backdrop = props.backdrop;
@@ -8233,10 +8354,10 @@
       if (self.f7Popup) { self.f7Popup.destroy(); }
       var el = self.$refs.el;
       if (!el) { return; }
-      el.removeEventListener('popup:open', self.onOpenBound);
-      el.removeEventListener('popup:opened', self.onOpenedBound);
-      el.removeEventListener('popup:close', self.onCloseBound);
-      el.removeEventListener('popup:closed', self.onClosedBound);
+      el.removeEventListener('popup:open', self.onOpen);
+      el.removeEventListener('popup:opened', self.onOpened);
+      el.removeEventListener('popup:close', self.onClose);
+      el.removeEventListener('popup:closed', self.onClosed);
     },
 
     methods: {
@@ -8323,6 +8444,34 @@
         }, [_h('span', {
           class: 'preloader-inner-half-circle'
         })])]);
+      } else {
+        innerEl = _h('span', {
+          class: 'preloader-inner'
+        }, [_h('span', {
+          class: 'preloader-inner-line'
+        }), _h('span', {
+          class: 'preloader-inner-line'
+        }), _h('span', {
+          class: 'preloader-inner-line'
+        }), _h('span', {
+          class: 'preloader-inner-line'
+        }), _h('span', {
+          class: 'preloader-inner-line'
+        }), _h('span', {
+          class: 'preloader-inner-line'
+        }), _h('span', {
+          class: 'preloader-inner-line'
+        }), _h('span', {
+          class: 'preloader-inner-line'
+        }), _h('span', {
+          class: 'preloader-inner-line'
+        }), _h('span', {
+          class: 'preloader-inner-line'
+        }), _h('span', {
+          class: 'preloader-inner-line'
+        }), _h('span', {
+          class: 'preloader-inner-line'
+        })]);
       }
 
       var classes = Utils.classNames(className, 'preloader', Mixins.colorClasses(props));
@@ -8434,6 +8583,7 @@
       var inputEl;
       {
         inputEl = _h('input', {
+          ref: 'inputEl',
           domProps: {
             value: value,
             disabled: disabled,
@@ -8441,7 +8591,7 @@
             checked: checked
           },
           on: {
-            change: self.onChange.bind(self)
+            change: self.onChange
           },
           attrs: {
             type: 'radio',
@@ -8464,6 +8614,10 @@
           id: id
         }
       }, [inputEl, iconEl, this.$slots['default']]);
+    },
+
+    created: function created() {
+      Utils.bindMethods(this, ['onChange']);
     },
 
     methods: {
@@ -8514,13 +8668,23 @@
       return _h(RowTag, {
         style: style,
         class: classes,
-        on: {
-          click: self.onClick.bind(self)
-        },
+        ref: 'el',
         attrs: {
           id: id
         }
       }, [this.$slots['default']]);
+    },
+
+    created: function created() {
+      Utils.bindMethods(this, ['onClick']);
+    },
+
+    mounted: function mounted() {
+      this.$refs.el.addEventListener('click', this.onClick);
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      this.$refs.el.removeEventListener('click', this.onClick);
     },
 
     methods: {
@@ -8570,6 +8734,7 @@
         type: Boolean,
         default: true
       },
+      value: [String, Number, Array],
       inputEvents: {
         type: String,
         default: 'change input compositionend'
@@ -8656,22 +8821,19 @@
       var className = props.className;
       var style = props.style;
       var id = props.id;
+      var value = props.value;
 
       if (clearButton) {
         clearEl = _h('span', {
-          class: 'input-clear-button',
-          on: {
-            click: self.onClearButtonClick.bind(self)
-          }
+          ref: 'clearEl',
+          class: 'input-clear-button'
         });
       }
 
       if (disableButton) {
         disableEl = _h('span', {
-          class: 'searchbar-disable-button',
-          on: {
-            click: self.onDisableButtonClick.bind(self)
-          }
+          ref: 'disableEl',
+          class: 'searchbar-disable-button'
         }, [disableButtonText]);
       }
 
@@ -8681,6 +8843,25 @@
         'no-hairline': noHairline,
         'searchbar-expandable': expandable
       }, Mixins.colorClasses(props));
+      var inputEl;
+      {
+        inputEl = _h('input', {
+          ref: 'inputEl',
+          domProps: {
+            value: value
+          },
+          on: {
+            input: self.onInput,
+            change: self.onChange,
+            focus: self.onFocus,
+            blur: self.onBlur
+          },
+          attrs: {
+            placeholder: placeholder,
+            type: 'search'
+          }
+        });
+      }
       return _h(SearchbarTag, {
         ref: 'el',
         style: style,
@@ -8692,27 +8873,20 @@
         class: 'searchbar-inner'
       }, [this.$slots['inner-start'], _h('div', {
         class: 'searchbar-input-wrap'
-      }, [this.$slots['input-wrap-start'], _h('input', {
-        on: {
-          input: self.onInput.bind(self),
-          change: self.onChange.bind(self),
-          focus: self.onFocus.bind(self),
-          blur: self.onBlur.bind(self)
-        },
-        attrs: {
-          placeholder: placeholder,
-          type: 'search'
-        }
-      }), _h('i', {
+      }, [this.$slots['input-wrap-start'], inputEl, _h('i', {
         class: 'searchbar-icon'
       }), clearEl, this.$slots['input-wrap-end']]), disableEl, this.$slots['inner-end'], this.$slots['default']]), this.$slots['after-inner']]);
+    },
+
+    created: function created() {
+      Utils.bindMethods(this, ['onSubmit', 'onClearButtonClick', 'onDisableButtonClick', 'onInput', 'onChange', 'onFocus', 'onBlur']);
     },
 
     beforeDestroy: function beforeDestroy() {
       var self = this;
 
       if (self.props.form && self.$refs.el) {
-        self.$refs.el.removeEventListener('submit', self.onSubmitBound, false);
+        self.$refs.el.removeEventListener('submit', self.onSubmit, false);
       }
 
       if (self.f7Searchbar && self.f7Searchbar.destroy) { self.f7Searchbar.destroy(); }
@@ -8741,14 +8915,25 @@
       var hideDividers = ref.hideDividers;
       var hideGroups = ref.hideGroups;
       var form = ref.form;
-      if (!init) { return; }
-      var el = self.$refs.el;
+      var ref$1 = self.$refs;
+      var inputEl = ref$1.inputEl;
+      var el = ref$1.el;
+      var clearEl = ref$1.clearEl;
+      var disableEl = ref$1.disableEl;
 
       if (form && el) {
-        self.onSubmitBound = self.onSubmit.bind(self);
-        el.addEventListener('submit', self.onSubmitBound, false);
+        el.addEventListener('submit', self.onSubmit, false);
       }
 
+      if (clearEl) {
+        clearEl.addEventListener('click', self.onClearButtonClick);
+      }
+
+      if (disableEl) {
+        disableEl.addEventListener('click', self.onDisableButtonClick);
+      }
+
+      if (!init) { return; }
       self.$f7ready(function () {
         var params = Utils.noUndefinedProps({
           el: self.$refs.el,
@@ -8796,6 +8981,29 @@
         });
         self.f7Searchbar = self.$f7.searchbar.create(params);
       });
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      var self = this;
+      var ref = self.$refs;
+      var inputEl = ref.inputEl;
+      var el = ref.el;
+      var clearEl = ref.clearEl;
+      var disableEl = ref.disableEl;
+
+      if (self.props.form && el) {
+        el.removeEventListener('submit', self.onSubmit, false);
+      }
+
+      if (clearEl) {
+        clearEl.removeEventListener('click', self.onClearButtonClick);
+      }
+
+      if (disableEl) {
+        disableEl.removeEventListener('click', self.onDisableButtonClick);
+      }
+
+      if (self.f7Searchbar && self.f7Searchbar.destroy) { self.f7Searchbar.destroy(); }
     },
 
     methods: {
@@ -8985,18 +9193,18 @@
       }
     },
 
+    created: function created() {
+      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed']);
+    },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
       if (!el) { return; }
-      self.onOpenBound = self.onOpen.bind(self);
-      self.onOpenedBound = self.onOpened.bind(self);
-      self.onCloseBound = self.onClose.bind(self);
-      self.onClosedBound = self.onClosed.bind(self);
-      el.addEventListener('sheet:open', self.onOpenBound);
-      el.addEventListener('sheet:opened', self.onOpenedBound);
-      el.addEventListener('sheet:close', self.onCloseBound);
-      el.addEventListener('sheet:closed', self.onClosedBound);
+      el.addEventListener('sheet:open', self.onOpen);
+      el.addEventListener('sheet:opened', self.onOpened);
+      el.addEventListener('sheet:close', self.onClose);
+      el.addEventListener('sheet:closed', self.onClosed);
       var props = self.props;
       var opened = props.opened;
       var backdrop = props.backdrop;
@@ -9029,12 +9237,12 @@
     beforeDestroy: function beforeDestroy() {
       var self = this;
       if (self.f7Sheet) { self.f7Sheet.destroy(); }
-      var el = self.$el;
+      var el = self.$refs.el;
       if (!el) { return; }
-      el.removeEventListener('popup:open', self.onOpenBound);
-      el.removeEventListener('popup:opened', self.onOpenedBound);
-      el.removeEventListener('popup:close', self.onCloseBound);
-      el.removeEventListener('popup:closed', self.onClosedBound);
+      el.removeEventListener('popup:open', self.onOpen);
+      el.removeEventListener('popup:opened', self.onOpened);
+      el.removeEventListener('popup:close', self.onClose);
+      el.removeEventListener('popup:closed', self.onClosed);
     },
 
     methods: {
@@ -9181,9 +9389,9 @@
       fill: Boolean,
       fillMd: Boolean,
       fillIos: Boolean,
-      big: Boolean,
-      bigMd: Boolean,
-      bigIos: Boolean,
+      large: Boolean,
+      largeMd: Boolean,
+      largeIos: Boolean,
       small: Boolean,
       smallMd: Boolean,
       smallIos: Boolean,
@@ -9211,12 +9419,13 @@
         var inputEl;
         {
           inputEl = _h('input', {
+            ref: 'inputEl',
             domProps: {
               readOnly: inputReadonly,
               value: value
             },
             on: {
-              input: self.onInput.bind(self)
+              input: self.onInput
             },
             attrs: {
               type: inputType,
@@ -9245,15 +9454,11 @@
           id: id
         }
       }, [_h('div', {
-        class: 'stepper-button-minus',
-        on: {
-          click: self.onMinusClickBound
-        }
+        ref: 'minusEl',
+        class: 'stepper-button-minus'
       }), inputWrapEl, valueEl, _h('div', {
-        class: 'stepper-button-plus',
-        on: {
-          click: self.onPlusClickBound
-        }
+        ref: 'plusEl',
+        class: 'stepper-button-plus'
       })]);
     },
 
@@ -9267,9 +9472,9 @@
         var fill = props.fill;
         var fillIos = props.fillIos;
         var fillMd = props.fillMd;
-        var big = props.big;
-        var bigIos = props.bigIos;
-        var bigMd = props.bigMd;
+        var large = props.large;
+        var largeIos = props.largeIos;
+        var largeMd = props.largeMd;
         var small = props.small;
         var smallIos = props.smallIos;
         var smallMd = props.smallMd;
@@ -9283,9 +9488,9 @@
           'stepper-fill': fill,
           'stepper-fill-ios': fillIos,
           'stepper-fill-md': fillMd,
-          'stepper-big': big,
-          'stepper-big-ios': bigIos,
-          'stepper-big-md': bigMd,
+          'stepper-large': large,
+          'stepper-large-ios': largeIos,
+          'stepper-large-md': largeMd,
           'stepper-small': small,
           'stepper-small-ios': smallIos,
           'stepper-small-md': smallMd,
@@ -9300,13 +9505,23 @@
     },
 
     created: function created() {
-      this.onInputBound = this.onInput.bind(this);
-      this.onMinusClickBound = this.onMinusClick.bind(this);
-      this.onPlusClickBound = this.onPlusClick.bind(this);
+      Utils.bindMethods(this, ['onInput', 'onMinusClick', 'onPlusClick']);
     },
 
     mounted: function mounted() {
       var self = this;
+      var ref = self.$refs;
+      var minusEl = ref.minusEl;
+      var plusEl = ref.plusEl;
+
+      if (minusEl) {
+        minusEl.addEventListener('click', self.onMinusClick);
+      }
+
+      if (plusEl) {
+        plusEl.addEventListener('click', self.onPlusClick);
+      }
+
       if (!self.props.init) { return; }
       self.$f7ready(function (f7) {
         var ref = self.props;
@@ -9347,10 +9562,23 @@
     },
 
     beforeDestroy: function beforeDestroy() {
-      if (!this.props.init) { return; }
+      var self = this;
+      var ref = self.$refs;
+      var minusEl = ref.minusEl;
+      var plusEl = ref.plusEl;
 
-      if (this.f7Stepper && this.f7Stepper.destroy) {
-        this.f7Stepper.destroy();
+      if (minusEl) {
+        minusEl.removeEventListener('click', self.onMinusClick);
+      }
+
+      if (plusEl) {
+        plusEl.removeEventListener('click', self.onPlusClick);
+      }
+
+      if (!self.props.init) { return; }
+
+      if (self.f7Stepper && self.f7Stepper.destroy) {
+        self.f7Stepper.destroy();
       }
     },
 
@@ -9524,17 +9752,27 @@
         'swipeout-close': close
       }, Mixins.colorClasses(props));
       return _h('a', {
+        ref: 'el',
         style: style,
         class: classes,
-        on: {
-          click: this.onClick.bind(this)
-        },
         attrs: {
           href: href || '#',
           id: id,
           'data-confirm': confirmText || undefined
         }
       }, [this.$slots['default'] || [text]]);
+    },
+
+    created: function created() {
+      Utils.bindMethods(this, ['onClick']);
+    },
+
+    mounted: function mounted() {
+      this.$refs.el.addEventListener('click', this.onClick);
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      this.$refs.el.removeEventListener('click', this.onClick);
     },
 
     methods: {
@@ -9799,8 +10037,7 @@
     },
 
     created: function created() {
-      this.onTabShowBound = this.onTabShow.bind(this);
-      this.onTabHideBound = this.onTabHide.bind(this);
+      Utils.bindMethods(this, ['onTabShow', 'onTabHide']);
     },
 
     updated: function updated() {
@@ -9814,8 +10051,8 @@
       var el = self.$refs.el;
 
       if (el) {
-        el.removeEventListener('tab:show', self.onTabShowBound);
-        el.removeEventListener('tab:hide', self.onTabHideBound);
+        el.removeEventListener('tab:show', self.onTabShow);
+        el.removeEventListener('tab:hide', self.onTabHide);
       }
 
       if (!self.routerData) { return; }
@@ -9829,8 +10066,8 @@
       var el = self.$refs.el;
 
       if (el) {
-        el.addEventListener('tab:show', self.onTabShowBound);
-        el.addEventListener('tab:hide', self.onTabHideBound);
+        el.addEventListener('tab:show', self.onTabShow);
+        el.addEventListener('tab:hide', self.onTabHide);
       }
 
       self.setState({
@@ -9898,11 +10135,13 @@
       var style = props.style;
       var className = props.className;
       var routable = props.routable;
-      var classes = Utils.classNames(className, {
+      var classes = Utils.classNames(className, Mixins.colorClasses(props));
+      var tabsClasses = Utils.classNames({
+        'tabs': true,
         'tabs-animated-wrap': animated,
         'tabs-swipeable-wrap': swipeable,
         'tabs-routable': routable
-      }, Mixins.colorClasses(props));
+      });
 
       if (animated || swipeable) {
         return _h('div', {
@@ -9912,13 +10151,13 @@
             id: id
           }
         }, [_h('div', {
-          class: 'tabs'
+          class: tabsClasses
         }, [this.$slots['default']])]);
       }
 
       return _h('div', {
         style: style,
-        class: Utils.classNames('tabs', classes),
+        class: Utils.classNames(tabsClasses, classes),
         attrs: {
           id: id
         }
@@ -9937,13 +10176,41 @@
     name: 'f7-toolbar',
     props: Object.assign({
       id: [String, Number],
-      bottomMd: Boolean,
       tabbar: Boolean,
       labels: Boolean,
       scrollable: Boolean,
       hidden: Boolean,
       noShadow: Boolean,
       noHairline: Boolean,
+      noBorder: Boolean,
+      position: {
+        type: String,
+        default: undefined
+      },
+      topMd: {
+        type: Boolean,
+        default: undefined
+      },
+      topIos: {
+        type: Boolean,
+        default: undefined
+      },
+      top: {
+        type: Boolean,
+        default: undefined
+      },
+      bottomMd: {
+        type: Boolean,
+        default: undefined
+      },
+      bottomIos: {
+        type: Boolean,
+        default: undefined
+      },
+      bottom: {
+        type: Boolean,
+        default: undefined
+      },
       inner: {
         type: Boolean,
         default: true
@@ -9958,21 +10225,29 @@
       var style = props.style;
       var className = props.className;
       var inner = props.inner;
-      var bottomMd = props.bottomMd;
       var tabbar = props.tabbar;
       var labels = props.labels;
       var scrollable = props.scrollable;
       var hidden = props.hidden;
       var noShadow = props.noShadow;
       var noHairline = props.noHairline;
+      var noBorder = props.noBorder;
+      var topMd = props.topMd;
+      var topIos = props.topIos;
+      var top = props.top;
+      var bottomMd = props.bottomMd;
+      var bottomIos = props.bottomIos;
+      var bottom = props.bottom;
+      var position = props.position;
       var classes = Utils.classNames(className, 'toolbar', {
-        'toolbar-bottom-md': bottomMd,
         tabbar: tabbar,
+        'toolbar-bottom': self.$theme.md && bottomMd || self.$theme.ios && bottomIos || bottom || position === 'bottom',
+        'toolbar-top': self.$theme.md && topMd || self.$theme.ios && topIos || top || position === 'top',
         'tabbar-labels': labels,
         'tabbar-scrollable': scrollable,
         'toolbar-hidden': hidden,
         'no-shadow': noShadow,
-        'no-hairline': noHairline
+        'no-hairline': noHairline || noBorder
       }, Mixins.colorClasses(props));
       return _h('div', {
         style: style,
@@ -10051,6 +10326,11 @@
       iosSwipeBackAnimateOpacity: Boolean,
       iosSwipeBackActiveArea: Number,
       iosSwipeBackThreshold: Number,
+      mdSwipeBack: Boolean,
+      mdSwipeBackAnimateShadow: Boolean,
+      mdSwipeBackAnimateOpacity: Boolean,
+      mdSwipeBackActiveArea: Number,
+      mdSwipeBackThreshold: Number,
       pushState: Boolean,
       pushStateRoot: String,
       pushStateAnimate: Boolean,
@@ -10122,28 +10402,20 @@
     },
 
     created: function created() {
-      var self = this;
-      self.onSwipeBackMoveBound = self.onSwipeBackMove.bind(self);
-      self.onSwipeBackBeforeChangeBound = self.onSwipeBackBeforeChange.bind(self);
-      self.onSwipeBackAfterChangeBound = self.onSwipeBackAfterChange.bind(self);
-      self.onSwipeBackBeforeResetBound = self.onSwipeBackBeforeReset.bind(self);
-      self.onSwipeBackAfterResetBound = self.onSwipeBackAfterReset.bind(self);
-      self.onTabShowBound = self.onTabShow.bind(self);
-      self.onTabHideBound = self.onTabHide.bind(self);
-      self.onViewInitBound = self.onViewInit.bind(self);
+      Utils.bindMethods(this, ['onSwipeBackMove', 'onSwipeBackBeforeChange', 'onSwipeBackAfterChange', 'onSwipeBackBeforeReset', 'onSwipeBackAfterReset', 'onTabShow', 'onTabHide', 'onViewInit']);
     },
 
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
-      el.addEventListener('swipeback:move', self.onSwipeBackMoveBound);
-      el.addEventListener('swipeback:beforechange', self.onSwipeBackBeforeChangeBound);
-      el.addEventListener('swipeback:afterchange', self.onSwipeBackAfterChangeBound);
-      el.addEventListener('swipeback:beforereset', self.onSwipeBackBeforeResetBound);
-      el.addEventListener('swipeback:afterreset', self.onSwipeBackAfterResetBound);
-      el.addEventListener('tab:show', self.onTabShowBound);
-      el.addEventListener('tab:hide', self.onTabHideBound);
-      el.addEventListener('view:init', self.onViewInitBound);
+      el.addEventListener('swipeback:move', self.onSwipeBackMove);
+      el.addEventListener('swipeback:beforechange', self.onSwipeBackBeforeChange);
+      el.addEventListener('swipeback:afterchange', self.onSwipeBackAfterChange);
+      el.addEventListener('swipeback:beforereset', self.onSwipeBackBeforeReset);
+      el.addEventListener('swipeback:afterreset', self.onSwipeBackAfterReset);
+      el.addEventListener('tab:show', self.onTabShow);
+      el.addEventListener('tab:hide', self.onTabHide);
+      el.addEventListener('view:init', self.onViewInit);
       self.setState({
         pages: []
       });
@@ -10163,14 +10435,14 @@
     beforeDestroy: function beforeDestroy() {
       var self = this;
       var el = self.$refs.el;
-      el.removeEventListener('swipeback:move', self.onSwipeBackMoveBound);
-      el.removeEventListener('swipeback:beforechange', self.onSwipeBackBeforeChangeBound);
-      el.removeEventListener('swipeback:afterchange', self.onSwipeBackAfterChangeBound);
-      el.removeEventListener('swipeback:beforereset', self.onSwipeBackBeforeResetBound);
-      el.removeEventListener('swipeback:afterreset', self.onSwipeBackAfterResetBound);
-      el.removeEventListener('tab:show', self.onTabShowBound);
-      el.removeEventListener('tab:hide', self.onTabHideBound);
-      el.removeEventListener('view:init', self.onViewInitBound);
+      el.removeEventListener('swipeback:move', self.onSwipeBackMove);
+      el.removeEventListener('swipeback:beforechange', self.onSwipeBackBeforeChange);
+      el.removeEventListener('swipeback:afterchange', self.onSwipeBackAfterChange);
+      el.removeEventListener('swipeback:beforereset', self.onSwipeBackBeforeReset);
+      el.removeEventListener('swipeback:afterreset', self.onSwipeBackAfterReset);
+      el.removeEventListener('tab:show', self.onTabShow);
+      el.removeEventListener('tab:hide', self.onTabHide);
+      el.removeEventListener('view:init', self.onViewInit);
       if (!self.props.init) { return; }
       if (self.f7View && self.f7View.destroy) { self.f7View.destroy(); }
       f7.routers.views.splice(f7.routers.views.indexOf(self.routerData), 1);
@@ -10341,6 +10613,13 @@
       removePage: function removePage($pageEl) {
         if (!$pageEl) { return; }
         var router = this;
+        var f7Page;
+        if ('length' in $pageEl) { f7Page = $pageEl[0].f7Page; }
+        else { f7Page = $pageEl.f7Page; }
+        if (f7Page && f7Page.route && f7Page.route.route && f7Page.route.route.keepAlive) {
+          router.app.$($pageEl).remove();
+          return;
+        }
         var routerComponent;
         f7.routers.views.forEach(function (data) {
           if (data.el && data.el === router.el) {
@@ -10492,7 +10771,7 @@
   };
 
   /**
-   * Framework7 Vue 3.5.2
+   * Framework7 Vue 4.0.0-beta.1
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -10500,7 +10779,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: November 12, 2018
+   * Released on: December 6, 2018
    */
 
   var Plugin = {
@@ -10564,7 +10843,8 @@
       Vue.component('f7-messages-title', f7MessagesTitle);
       Vue.component('f7-messages', f7Messages);
       Vue.component('f7-nav-left', F7NavLeft);
-      Vue.component('f7-nav-right', f7NavRight);
+      Vue.component('f7-nav-right', F7NavRight);
+      Vue.component('f7-nav-title-large', f7NavTitleLarge);
       Vue.component('f7-nav-title', F7NavTitle);
       Vue.component('f7-navbar', f7Navbar);
       Vue.component('f7-page-content', F7PageContent);

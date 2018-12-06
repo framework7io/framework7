@@ -1,10 +1,11 @@
 import $ from 'dom7';
 import Utils from '../../utils/utils';
+import Support from '../../utils/support';
 
 const Navbar = {
   size(el) {
     const app = this;
-    if (app.theme !== 'ios') return;
+    if (app.theme === 'md' && !app.params.navbar.mdCenterTitle) return;
     let $el = $(el);
     if ($el.hasClass('navbar')) {
       $el = $el.children('.navbar-inner').each((index, navbarEl) => {
@@ -79,7 +80,7 @@ const Navbar = {
     // RTL inverter
     const inverter = app.rtl ? -1 : 1;
 
-    if (dynamicNavbar) {
+    if (dynamicNavbar && app.theme === 'ios') {
       if (title.hasClass('sliding') || (title.length > 0 && sliding)) {
         let titleLeftOffset = (-(currLeft + diff) * inverter) + separateNavbarLeftOffset;
         const titleRightOffset = ((navbarInnerWidth - currLeft - diff - titleWidth) * inverter) - separateNavbarRightOffset;
@@ -103,7 +104,14 @@ const Navbar = {
           left[0].f7NavbarLeftOffset = -leftWidth + separateNavbarLeftOffset;
           left[0].f7NavbarRightOffset = ((navbarInnerWidth - left[0].offsetWidth) / 2) - separateNavbarRightOffset;
           if (router && router.params.iosAnimateNavbarBackIcon && left.find('.back .icon').length > 0) {
-            left[0].f7NavbarRightOffset -= left.find('.back .icon')[0].offsetWidth;
+            if (left.find('.back .icon ~ span').length) {
+              const leftOffset = left[0].f7NavbarLeftOffset;
+              const rightOffset = left[0].f7NavbarRightOffset;
+              left[0].f7NavbarLeftOffset = 0;
+              left[0].f7NavbarRightOffset = 0;
+              left.find('.back .icon ~ span')[0].f7NavbarLeftOffset = leftOffset;
+              left.find('.back .icon ~ span')[0].f7NavbarRightOffset = rightOffset - left.find('.back .icon')[0].offsetWidth;
+            }
           }
         }
       }
@@ -122,8 +130,17 @@ const Navbar = {
       }
     }
 
-    // Title left
-    if (app.params.navbar.iosCenterTitle) {
+    // Center title
+    if (app.theme === 'md' && app.params.navbar.mdCenterTitle) {
+      $el.addClass('navbar-inner-centered-title');
+    }
+    if (app.theme === 'ios' && !app.params.navbar.iosCenterTitle) {
+      $el.addClass('navbar-inner-left-title');
+    }
+    if (
+      (app.theme === 'ios' && app.params.navbar.iosCenterTitle)
+      || (app.theme === 'md' && app.params.navbar.mdCenterTitle)
+    ) {
       let titleLeft = diff;
       if (app.rtl && noLeft && noRight && title.length > 0) titleLeft = -titleLeft;
       title.css({ left: `${titleLeft}px` });
@@ -134,7 +151,10 @@ const Navbar = {
     if ($el.hasClass('navbar-inner')) $el = $el.parents('.navbar');
     if (!$el.length) return;
     if ($el.hasClass('navbar-hidden')) return;
-    const className = `navbar-hidden${animate ? ' navbar-transitioning' : ''}`;
+    let className = `navbar-hidden${animate ? ' navbar-transitioning' : ''}`;
+    if ($el.find('.navbar-inner-current .title-large')) {
+      className += ' navbar-large-hidden';
+    }
     $el.transitionEnd(() => {
       $el.removeClass('navbar-transitioning');
     });
@@ -151,11 +171,11 @@ const Navbar = {
         $el.removeClass('navbar-transitioning');
       });
     }
-    $el.removeClass('navbar-hidden');
+    $el.removeClass('navbar-hidden navbar-large-hidden');
   },
   getElByPage(page) {
     let $pageEl;
-    let $navbarEl;
+    let $navbarInnerEl;
     let pageData;
     if (page.$navbarEl || page.$el) {
       pageData = page;
@@ -165,12 +185,12 @@ const Navbar = {
       if ($pageEl.length > 0) pageData = $pageEl[0].f7Page;
     }
     if (pageData && pageData.$navbarEl && pageData.$navbarEl.length > 0) {
-      $navbarEl = pageData.$navbarEl;
+      $navbarInnerEl = pageData.$navbarEl;
     } else if ($pageEl) {
-      $navbarEl = $pageEl.children('.navbar').children('.navbar-inner');
+      $navbarInnerEl = $pageEl.children('.navbar').children('.navbar-inner');
     }
-    if (!$navbarEl || ($navbarEl && $navbarEl.length === 0)) return undefined;
-    return $navbarEl[0];
+    if (!$navbarInnerEl || ($navbarInnerEl && $navbarInnerEl.length === 0)) return undefined;
+    return $navbarInnerEl[0];
   },
   getPageByEl(navbarInnerEl) {
     let $navbarInnerEl = $(navbarInnerEl);
@@ -178,12 +198,79 @@ const Navbar = {
       $navbarInnerEl = $navbarInnerEl.find('.navbar-inner');
       if ($navbarInnerEl.length > 1) return undefined;
     }
-    return $navbarInnerEl[0].f7Page;
+    if ($navbarInnerEl.parents('.page').length) {
+      return $navbarInnerEl.parents('.page')[0];
+    }
+    let pageEl;
+    $navbarInnerEl.parents('.view').find('.page').each((index, el) => {
+      if (el && el.f7Page && el.f7Page.navbarEl && $navbarInnerEl[0] === el.f7Page.navbarEl) {
+        pageEl = el;
+      }
+    });
+    return pageEl;
   },
-  initHideNavbarOnScroll(pageEl, navbarInnerEl) {
+
+  collapseLargeTitle(navbarInnerEl) {
+    const app = this;
+    let $navbarInnerEl = $(navbarInnerEl);
+    if ($navbarInnerEl.hasClass('navbar')) {
+      $navbarInnerEl = $navbarInnerEl.find('.navbar-inner-large');
+      if ($navbarInnerEl.length > 1) {
+        $navbarInnerEl = $(navbarInnerEl).find('.navbar-inner-large.navbar-current');
+      }
+      if ($navbarInnerEl.length > 1 || !$navbarInnerEl.length) {
+        return;
+      }
+    }
+    $navbarInnerEl.addClass('navbar-inner-large-collapsed');
+    if (app.theme === 'md') {
+      $navbarInnerEl.parents('.navbar').addClass('navbar-large-collapsed');
+    }
+  },
+  expandLargeTitle(navbarInnerEl) {
+    const app = this;
+    let $navbarInnerEl = $(navbarInnerEl);
+    if ($navbarInnerEl.hasClass('navbar')) {
+      $navbarInnerEl = $navbarInnerEl.find('.navbar-inner-large');
+      if ($navbarInnerEl.length > 1) {
+        $navbarInnerEl = $(navbarInnerEl).find('.navbar-inner-large.navbar-current');
+      }
+      if ($navbarInnerEl.length > 1 || !$navbarInnerEl.length) {
+        return;
+      }
+    }
+    $navbarInnerEl.removeClass('navbar-inner-large-collapsed');
+    if (app.theme === 'md') {
+      $navbarInnerEl.parents('.navbar').removeClass('navbar-large-collapsed');
+    }
+  },
+  toggleLargeTitle(navbarInnerEl) {
+    const app = this;
+    let $navbarInnerEl = $(navbarInnerEl);
+    if ($navbarInnerEl.hasClass('navbar')) {
+      $navbarInnerEl = $navbarInnerEl.find('.navbar-inner-large');
+      if ($navbarInnerEl.length > 1) {
+        $navbarInnerEl = $(navbarInnerEl).find('.navbar-inner-large.navbar-current');
+      }
+      if ($navbarInnerEl.length > 1 || !$navbarInnerEl.length) {
+        return;
+      }
+    }
+    if ($navbarInnerEl.hasClass('navbar-inner-large-collapsed')) {
+      app.navbar.expandLargeTitle($navbarInnerEl);
+    } else {
+      app.navbar.collapseLargeTitle($navbarInnerEl);
+    }
+  },
+  initNavbarOnScroll(pageEl, navbarInnerEl, needHide, needCollapse) {
     const app = this;
     const $pageEl = $(pageEl);
-    const $navbarEl = $(navbarInnerEl || app.navbar.getElByPage(pageEl)).closest('.navbar');
+    const $navbarInnerEl = $(navbarInnerEl);
+    const $navbarEl = app.theme === 'md'
+      ? $navbarInnerEl.parents('.navbar')
+      : $(navbarInnerEl || app.navbar.getElByPage(pageEl)).closest('.navbar');
+    const navbarHideHeight = 44;
+    const snapPageScrollToLargeTitle = app.params.navbar.snapPageScrollToLargeTitle;
 
     let previousScrollTop;
     let currentScrollTop;
@@ -193,10 +280,87 @@ const Navbar = {
     let reachEnd;
     let action;
     let navbarHidden;
-    function handleScroll() {
-      const scrollContent = this;
-      if ($pageEl.hasClass('page-previous')) return;
-      currentScrollTop = scrollContent.scrollTop;
+
+    let navbarCollapsed;
+    let navbarTitleLargeHeight;
+    if (needCollapse) {
+      navbarTitleLargeHeight = $navbarInnerEl.css('--f7-navbar-large-title-height');
+      if (navbarTitleLargeHeight && navbarTitleLargeHeight.indexOf('px') >= 0) {
+        navbarTitleLargeHeight = parseInt(navbarTitleLargeHeight, 10);
+        if (Number.isNaN(navbarTitleLargeHeight)) {
+          navbarTitleLargeHeight = app.theme === 'ios' ? 52 : 48;
+        }
+      } else {
+        navbarTitleLargeHeight = app.theme === 'ios' ? 52 : 48;
+      }
+    }
+
+    let scrollChanged;
+    let scrollContent;
+    let scrollTimeoutId;
+    let touchEndTimeoutId;
+    const touchSnapTimeout = 70;
+    const desktopSnapTimeout = 300;
+
+    function snapLargeNavbar() {
+      const inSearchbarExpanded = $navbarInnerEl.hasClass('with-searchbar-expandable-enabled');
+      if (inSearchbarExpanded) return;
+      if (!scrollContent || currentScrollTop < 0) return;
+      if (currentScrollTop >= navbarTitleLargeHeight / 2 && currentScrollTop < navbarTitleLargeHeight) {
+        $(scrollContent).scrollTop(navbarTitleLargeHeight, 100);
+      } else if (currentScrollTop < navbarTitleLargeHeight) {
+        $(scrollContent).scrollTop(0, 200);
+      }
+    }
+
+    function handleLargeNavbarCollapse() {
+      const collapseProgress = Math.min(Math.max((currentScrollTop / navbarTitleLargeHeight), 0), 1);
+      const inSearchbarExpanded = $navbarInnerEl.hasClass('with-searchbar-expandable-enabled');
+      if (inSearchbarExpanded) return;
+      navbarCollapsed = $navbarInnerEl.hasClass('navbar-inner-large-collapsed');
+      if (collapseProgress === 0 && navbarCollapsed) {
+        app.navbar.expandLargeTitle($navbarInnerEl[0]);
+        $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
+        if (app.theme === 'md') {
+          $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
+        }
+      } else if (collapseProgress === 1 && !navbarCollapsed) {
+        app.navbar.collapseLargeTitle($navbarInnerEl[0]);
+        $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
+        if (app.theme === 'md') {
+          $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
+        }
+      } else if ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed)) {
+        $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
+        if (app.theme === 'md') {
+          $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
+        }
+      } else {
+        $navbarInnerEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
+        if (app.theme === 'md') {
+          $navbarEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
+        }
+      }
+
+      if (snapPageScrollToLargeTitle) {
+        if (!Support.touch) {
+          clearTimeout(scrollTimeoutId);
+          scrollTimeoutId = setTimeout(() => {
+            snapLargeNavbar();
+          }, desktopSnapTimeout);
+        } else if (touchEndTimeoutId) {
+          clearTimeout(touchEndTimeoutId);
+          touchEndTimeoutId = null;
+          touchEndTimeoutId = setTimeout(() => {
+            snapLargeNavbar();
+            clearTimeout(touchEndTimeoutId);
+            touchEndTimeoutId = null;
+          }, touchSnapTimeout);
+        }
+      }
+    }
+
+    function handleTitleHideShow() {
       scrollHeight = scrollContent.scrollHeight;
       offsetHeight = scrollContent.offsetHeight;
       reachEnd = currentScrollTop + offsetHeight >= scrollHeight;
@@ -207,12 +371,12 @@ const Navbar = {
           action = 'show';
         }
       } else if (previousScrollTop > currentScrollTop) {
-        if (app.params.navbar.showOnPageScrollTop || currentScrollTop <= 44) {
+        if (app.params.navbar.showOnPageScrollTop || currentScrollTop <= navbarHideHeight) {
           action = 'show';
         } else {
           action = 'hide';
         }
-      } else if (currentScrollTop > 44) {
+      } else if (currentScrollTop > navbarHideHeight) {
         action = 'hide';
       } else {
         action = 'show';
@@ -225,11 +389,49 @@ const Navbar = {
         app.navbar.hide($navbarEl);
         navbarHidden = true;
       }
-
       previousScrollTop = currentScrollTop;
     }
+
+    function handleScroll() {
+      scrollContent = this;
+      currentScrollTop = scrollContent.scrollTop;
+      scrollChanged = currentScrollTop;
+
+      if (needCollapse) {
+        handleLargeNavbarCollapse();
+      }
+      if ($pageEl.hasClass('page-previous')) return;
+      if (needHide) {
+        handleTitleHideShow();
+      }
+    }
+    function handeTouchStart() {
+      scrollChanged = false;
+    }
+    function handleTouchEnd() {
+      clearTimeout(touchEndTimeoutId);
+      touchEndTimeoutId = null;
+      touchEndTimeoutId = setTimeout(() => {
+        if (scrollChanged !== false) {
+          snapLargeNavbar();
+          clearTimeout(touchEndTimeoutId);
+          touchEndTimeoutId = null;
+        }
+      }, touchSnapTimeout);
+    }
     $pageEl.on('scroll', '.page-content', handleScroll, true);
-    $pageEl[0].f7ScrollNavbarHandler = handleScroll;
+    if (Support.touch && needCollapse && snapPageScrollToLargeTitle) {
+      app.on('touchstart:passive', handeTouchStart);
+      app.on('touchend:passive', handleTouchEnd);
+    }
+    $pageEl[0].f7DetachNavbarScrollHandlers = function f7DetachNavbarScrollHandlers() {
+      delete $pageEl[0].f7DetachNavbarScrollHandlers;
+      $pageEl.off('scroll', '.page-content', handleScroll, true);
+      if (Support.touch && needCollapse && snapPageScrollToLargeTitle) {
+        app.off('touchstart:passive', handeTouchStart);
+        app.off('touchend:passive', handleTouchEnd);
+      }
+    };
   },
 };
 export default {
@@ -242,7 +444,11 @@ export default {
         hide: Navbar.hide.bind(app),
         show: Navbar.show.bind(app),
         getElByPage: Navbar.getElByPage.bind(app),
-        initHideNavbarOnScroll: Navbar.initHideNavbarOnScroll.bind(app),
+        getPageByEl: Navbar.getPageByEl.bind(app),
+        collapseLargeTitle: Navbar.collapseLargeTitle.bind(app),
+        expandLargeTitle: Navbar.expandLargeTitle.bind(app),
+        toggleLargeTitle: Navbar.toggleLargeTitle.bind(app),
+        initNavbarOnScroll: Navbar.initNavbarOnScroll.bind(app),
       },
     });
   },
@@ -250,22 +456,24 @@ export default {
     navbar: {
       scrollTopOnTitleClick: true,
       iosCenterTitle: true,
+      mdCenterTitle: false,
       hideOnPageScroll: false,
       showOnPageScrollEnd: true,
       showOnPageScrollTop: true,
+      collapseLargeTitleOnScroll: true,
+      snapPageScrollToLargeTitle: true,
     },
   },
   on: {
     'panelBreakpoint resize': function onResize() {
       const app = this;
-      if (app.theme !== 'ios') return;
       $('.navbar').each((index, navbarEl) => {
         app.navbar.size(navbarEl);
       });
     },
     pageBeforeRemove(page) {
-      if (page.$el[0].f7ScrollNavbarHandler) {
-        page.$el.off('scroll', '.page-content', page.$el[0].f7ScrollNavbarHandler, true);
+      if (page.$el[0].f7DetachNavbarScrollHandlers) {
+        page.$el[0].f7DetachNavbarScrollHandlers();
       }
     },
     pageBeforeIn(page) {
@@ -288,18 +496,33 @@ export default {
     },
     pageReinit(page) {
       const app = this;
-      if (app.theme !== 'ios') return;
-      const $navbarEl = $(app.navbar.getElByPage(page));
-      if (!$navbarEl || $navbarEl.length === 0) return;
-      app.navbar.size($navbarEl);
+      const $navbarInnerEl = $(app.navbar.getElByPage(page));
+      if (!$navbarInnerEl || $navbarInnerEl.length === 0) return;
+      app.navbar.size($navbarInnerEl);
     },
     pageInit(page) {
       const app = this;
-      const $navbarEl = $(app.navbar.getElByPage(page));
-      if (!$navbarEl || $navbarEl.length === 0) return;
-      if (app.theme === 'ios') {
-        app.navbar.size($navbarEl);
+      const $navbarInnerEl = $(app.navbar.getElByPage(page));
+      if (!$navbarInnerEl || $navbarInnerEl.length === 0) return;
+
+      // Size
+      app.navbar.size($navbarInnerEl);
+
+      // Need Collapse On Scroll
+      let needCollapseOnScrollHandler;
+      if ($navbarInnerEl.children('.title-large').length > 0) {
+        $navbarInnerEl.addClass('navbar-inner-large');
       }
+      if ($navbarInnerEl.hasClass('navbar-inner-large')) {
+        if (app.params.navbar.collapseLargeTitleOnScroll) needCollapseOnScrollHandler = true;
+        if (app.theme === 'md') {
+          $navbarInnerEl.parents('.navbar').addClass('navbar-large');
+        }
+        page.$el.addClass('page-with-navbar-large');
+      }
+
+      // Need Hide On Scroll
+      let needHideOnScrollHandler;
       if (
         app.params.navbar.hideOnPageScroll
         || page.$el.find('.hide-navbar-on-scroll').length
@@ -313,34 +536,60 @@ export default {
           || page.$el.find('.keep-bars-on-scroll').length
           || page.$el.hasClass('keep-bars-on-scroll')
         ) {
-          return;
+          needHideOnScrollHandler = false;
+        } else {
+          needHideOnScrollHandler = true;
         }
-        app.navbar.initHideNavbarOnScroll(page.el, $navbarEl[0]);
+      }
+
+      if (needCollapseOnScrollHandler || needHideOnScrollHandler) {
+        app.navbar.initNavbarOnScroll(page.el, $navbarInnerEl[0], needHideOnScrollHandler, needCollapseOnScrollHandler);
       }
     },
     modalOpen(modal) {
       const app = this;
-      if (app.theme !== 'ios') return;
+      if (
+        (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
+        || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
+      ) {
+        return;
+      }
       modal.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
         app.navbar.size(navbarEl);
       });
     },
     panelOpen(panel) {
       const app = this;
-      if (app.theme !== 'ios') return;
+      if (
+        (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
+        || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
+      ) {
+        return;
+      }
       panel.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
         app.navbar.size(navbarEl);
       });
     },
     panelSwipeOpen(panel) {
       const app = this;
-      if (app.theme !== 'ios') return;
+      if (
+        (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
+        || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
+      ) {
+        return;
+      }
       panel.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
         app.navbar.size(navbarEl);
       });
     },
     tabShow(tabEl) {
       const app = this;
+      if (
+        (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
+        || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
+      ) {
+        return;
+      }
       $(tabEl).find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
         app.navbar.size(navbarEl);
       });
@@ -385,7 +634,12 @@ export default {
     'navbar-inner': {
       postpatch(vnode) {
         const app = this;
-        if (app.theme !== 'ios') return;
+        if (
+          (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
+          || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
+        ) {
+          return;
+        }
         app.navbar.size(vnode.elm);
       },
     },

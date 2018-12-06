@@ -38,9 +38,7 @@ export default {
     }, [_h('a', __vueComponentTransformJSXProps(Object.assign({
       class: self.classes
     }, self.attrs, {
-      on: {
-        click: self.onClick.bind(self)
-      }
+      ref: 'linkEl'
     })), [this.$slots['default'] || [title || text]])]);
   },
 
@@ -71,7 +69,6 @@ export default {
         tabLinkActive
       } = props;
       return Utils.classNames({
-        'item-link': true,
         'list-button': true,
         'tab-link': tabLink || tabLink === '',
         'tab-link-active': tabLinkActive,
@@ -84,6 +81,19 @@ export default {
     }
 
   },
+
+  created() {
+    Utils.bindMethods(this, ['onClick']);
+  },
+
+  mounted() {
+    this.$refs.linkEl.addEventListener('click', this.onClick);
+  },
+
+  beforeDestroy() {
+    this.$refs.linkEl.removeEventListener('click', this.onClick);
+  },
+
   methods: {
     onClick(event) {
       this.dispatchEvent('click', event);

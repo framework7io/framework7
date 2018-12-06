@@ -1,11 +1,5 @@
 .md {
-  @import (multiple) '../../less/colors-md.less';
   .statusbar {
-    background: darken(@themeColor, 15%);
+    background: var(--f7-statusbar-bg-color, var(--f7-theme-color-shade));
   }
-  .color-theme-loop({
-    .color-theme-@{colorThemeName} .statusbar {
-      background: darken(@colorThemeValue, 15%);
-    }
-  });
 }

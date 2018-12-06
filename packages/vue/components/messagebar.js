@@ -45,14 +45,7 @@ export default {
   }, Mixins.colorProps),
 
   created() {
-    this.onChangeBound = this.onChange.bind(this);
-    this.onInputBound = this.onInput.bind(this);
-    this.onFocusBound = this.onFocus.bind(this);
-    this.onBlurBound = this.onBlur.bind(this);
-    this.onClickBound = this.onClick.bind(this);
-    this.onDeleteAttachmentBound = this.onDeleteAttachment.bind(this);
-    this.onClickAttachmentBound = this.onClickAttachment.bind(this);
-    this.onResizePageBound = this.onResizePage.bind(this);
+    Utils.bindMethods(this, ['onChange', 'onInput', 'onFocus', 'onBlur', 'onClick', 'onDeleteAttachment', 'onClickAttachment', 'onResizePage']);
   },
 
   render() {
@@ -113,10 +106,10 @@ export default {
     }, [slotsBeforeArea, messagebarAttachmentsEl, _h(F7Input, {
       ref: 'area',
       on: {
-        input: self.onInputBound,
-        change: self.onChangeBound,
-        focus: self.onFocusBound,
-        blur: self.onBlurBound
+        input: self.onInput,
+        change: self.onChange,
+        focus: self.onFocus,
+        blur: self.onBlur
       },
       attrs: {
         type: 'textarea',
@@ -130,7 +123,7 @@ export default {
       }
     }), slotsAfterArea]), (sendLink && sendLink.length > 0 || slotsSendLink) && _h(F7Link, {
       on: {
-        click: self.onClickBound
+        click: self.onClick
       }
     }, [slotsSendLink || sendLink]), slotsInnerEnd, innerEndEls]), slotsAfterInner, messagebarSheetEl]);
   },
@@ -181,9 +174,9 @@ export default {
     if (!init) return;
     const el = self.$refs.el;
     if (!el) return;
-    el.addEventListener('messagebar:attachmentdelete', self.onDeleteAttachmentBound);
-    el.addEventListener('messagebar:attachmentclick', self.onClickAttachmentBound);
-    el.addEventListener('messagebar:resizepage', self.onResizePageBound);
+    el.addEventListener('messagebar:attachmentdelete', self.onDeleteAttachment);
+    el.addEventListener('messagebar:attachmentclick', self.onClickAttachment);
+    el.addEventListener('messagebar:resizepage', self.onResizePage);
     const params = Utils.noUndefinedProps({
       el,
       top,
@@ -223,9 +216,9 @@ export default {
     if (self.f7Messagebar && self.f7Messagebar.destroy) self.f7Messagebar.destroy();
     const el = self.$refs.el;
     if (!el) return;
-    el.removeEventListener('messagebar:attachmentdelete', self.onDeleteAttachmentBound);
-    el.removeEventListener('messagebar:attachmentclick', self.onClickAttachmentBound);
-    el.removeEventListener('messagebar:resizepage', self.onResizePageBound);
+    el.removeEventListener('messagebar:attachmentdelete', self.onDeleteAttachment);
+    el.removeEventListener('messagebar:attachmentclick', self.onClickAttachment);
+    el.removeEventListener('messagebar:resizepage', self.onResizePage);
   },
 
   methods: {

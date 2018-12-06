@@ -1,0 +1,25 @@
+:root {
+  --f7-popover-width: 260px;
+}
+.ios {
+  --f7-popover-bg-color: rgba(255,255,255,0.95);
+  --f7-popover-border-radius: 13px;
+  --f7-popover-box-shadow: none;
+  --f7-popover-actions-icon-size: 28px;
+  --f7-popover-actions-label-text-color: #8a8a8a;
+
+  .theme-dark, &.theme-dark {
+    --f7-popover-bg-color: rgba(30,30,30,0.95);
+  }
+}
+.md {
+  --f7-popover-bg-color: #fff;
+  --f7-popover-border-radius: 4px;
+  --f7-popover-box-shadow: var(--f7-elevation-8);
+  --f7-popover-actions-icon-size: 24px;
+  --f7-popover-actions-label-text-color: rgba(0,0,0,0.54);
+  .theme-dark, &.theme-dark {
+    --f7-popover-bg-color: #202020;
+    --f7-popover-actions-label-text-color: rgba(255,255,255,0.54);
+  }
+}

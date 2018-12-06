@@ -36,16 +36,48 @@ export default {
     }
 
     return _h('a', {
+      ref: 'el',
       style: style,
       class: classes,
-      on: {
-        click: this.onClick.bind(this)
-      },
       attrs: {
         id: id,
         target: target
       }
     }, [this.$slots['default'], labelEl]);
+  },
+
+  created() {
+    Utils.bindMethods(this, ['onClick']);
+  },
+
+  created() {
+    this.onClick = this.onClick.bind(this);
+  },
+
+  mounted() {
+    const self = this;
+    self.$refs.el.addEventListener('click', self.onClick);
+    const {
+      tooltip
+    } = self.props;
+    if (!tooltip) return;
+    self.$f7ready(f7 => {
+      self.f7Tooltip = f7.tooltip.create({
+        targetEl: self.$refs.el,
+        text: tooltip
+      });
+    });
+  },
+
+  beforeDestroy() {
+    const self = this;
+    self.$refs.el.removeEventListener('click', self.onClick);
+
+    if (self.f7Tooltip && self.f7Tooltip.destroy) {
+      self.f7Tooltip.destroy();
+      self.f7Tooltip = null;
+      delete self.f7Tooltip;
+    }
   },
 
   methods: {
@@ -65,31 +97,6 @@ export default {
       self.f7Tooltip.setText(newText);
     }
   },
-
-  mounted() {
-    const self = this;
-    const {
-      tooltip
-    } = self.props;
-    if (!tooltip) return;
-    self.$f7ready(f7 => {
-      self.f7Tooltip = f7.tooltip.create({
-        targetEl: self.$refs.el,
-        text: tooltip
-      });
-    });
-  },
-
-  beforeDestroy() {
-    const self = this;
-
-    if (self.f7Tooltip && self.f7Tooltip.destroy) {
-      self.f7Tooltip.destroy();
-      self.f7Tooltip = null;
-      delete self.f7Tooltip;
-    }
-  },
-
   computed: {
     props() {
       return __vueComponentProps(this);

@@ -31,7 +31,7 @@ export default {
       linkEl = _h(F7Link, {
         class: backLink === true || backLink && this.$theme.md ? 'icon-only' : undefined,
         on: {
-          click: this.onBackClick.bind(this)
+          click: this.onBackClick
         },
         attrs: {
           href: backLinkUrl || '#',
@@ -46,13 +46,26 @@ export default {
     const classes = Utils.classNames(className, 'left', {
       sliding
     }, Mixins.colorClasses(props));
+    const children = [];
+    const slots = this.$slots;
+
+    if (slots && Object.keys(slots).length) {
+      Object.keys(slots).forEach(key => {
+        children.push(...slots[key]);
+      });
+    }
+
     return _h('div', {
       style: style,
       class: classes,
       attrs: {
         id: id
       }
-    }, [linkEl, this.$slots['default']]);
+    }, [linkEl, children]);
+  },
+
+  created() {
+    Utils.bindMethods(this, ['onBackClick']);
   },
 
   methods: {

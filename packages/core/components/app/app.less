@@ -1,3 +1,12 @@
+@import url('./app-vars.less');
+// Core Icons
+@font-face {
+  @fontBase64: framework7_iconFont();
+  font-family: Framework7CoreIcons;
+  src: url("data:application/font-woff;charset=utf-8;base64, @{fontBase64}") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
 .rtl({
   html {
     direction: rtl;
@@ -12,12 +21,18 @@ html, body, .framework7-root {
 body {
   margin: 0;
   padding: 0;
-  font-size: 14px;
   width: 100%;
   background: #fff;
   overflow: hidden;
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
+  font-family: var(--f7-font-family);
+  font-size: var(--f7-font-size);
+  line-height: var(--f7-line-height);
+  color: var(--f7-text-color);
+}
+.theme-dark {
+  color: var(--f7-text-color);
 }
 .framework7-root {
   overflow: hidden;
@@ -28,13 +43,13 @@ body {
     transition-duration: 0ms !important;
   }
 }
-// Touch Actions
-/*
-a, button, input, textarea, .link, .button, label, .sortable-handler {
-  touch-action: manipulation;
-  -ms-touch-action: manipulation;
+.device-ios, .device-android {
+  cursor: pointer;
 }
-*/
+.device-ios {
+  touch-action: manipulation;
+}
+
 // Fix for iPad in Safari in Lanscape mode
 @media (width:1024px) and (height:691px) and (orientation:landscape) {
   html, body, .framework7-root {
@@ -48,7 +63,7 @@ a, button, input, textarea, .link, .button, label, .sortable-handler {
 }
 * {
   -webkit-tap-highlight-color: rgba(0,0,0,0);
-  -webkit-touch-callout:none;
+  -webkit-touch-callout: none;
 }
 a, input, textarea, select {
   outline: 0;
@@ -56,6 +71,7 @@ a, input, textarea, select {
 a {
   cursor: pointer;
   text-decoration: none;
+  color: var(--f7-theme-color);
 }
 p {
   margin: 1em 0;
@@ -63,6 +79,12 @@ p {
 // Disabled
 .disabled {
   .disabled() !important;
+}
+// Full viewport
+html.device-full-viewport {
+  &, & body {
+    height: 100vh;
+  }
 }
 
 & when (@includeIosTheme) {

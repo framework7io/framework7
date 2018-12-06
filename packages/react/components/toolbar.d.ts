@@ -6,13 +6,20 @@ declare namespace F7Toolbar {
     id? : string | number
     className? : string
     style? : React.CSSProperties
-    bottomMd? : boolean
     tabbar? : boolean
     labels? : boolean
     scrollable? : boolean
     hidden? : boolean
     noShadow? : boolean
     noHairline? : boolean
+    noBorder? : boolean
+    position? : string
+    topMd? : boolean
+    topIos? : boolean
+    top? : boolean
+    bottomMd? : boolean
+    bottomIos? : boolean
+    bottom? : boolean
     inner? : boolean
     color? : string
     colorTheme? : string

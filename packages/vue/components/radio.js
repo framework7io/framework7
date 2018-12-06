@@ -32,6 +32,7 @@ export default {
     let inputEl;
     {
       inputEl = _h('input', {
+        ref: 'inputEl',
         domProps: {
           value,
           disabled,
@@ -39,7 +40,7 @@ export default {
           checked
         },
         on: {
-          change: self.onChange.bind(self)
+          change: self.onChange
         },
         attrs: {
           type: 'radio',
@@ -62,6 +63,10 @@ export default {
         id: id
       }
     }, [inputEl, iconEl, this.$slots['default']]);
+  },
+
+  created() {
+    Utils.bindMethods(this, ['onChange']);
   },
 
   methods: {

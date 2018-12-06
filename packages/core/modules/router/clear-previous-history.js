@@ -1,15 +1,14 @@
 import $ from 'dom7';
 
-function clearPreviousHistory() {
+function clearPreviousPages() {
   const router = this;
   const app = router.app;
   const separateNavbar = router.separateNavbar;
-  const url = router.history[router.history.length - 1];
 
   const $currentPageEl = $(router.currentPageEl);
 
   const $pagesToRemove = router.$el
-    .children('.page:not(.stacked)')
+    .children('.page')
     .filter((index, pageInView) => pageInView !== $currentPageEl[0]);
 
   $pagesToRemove.each((index, pageEl) => {
@@ -29,10 +28,17 @@ function clearPreviousHistory() {
       }
     }
   });
+}
+
+function clearPreviousHistory() {
+  const router = this;
+  const url = router.history[router.history.length - 1];
+
+  router.clearPreviousPages();
 
   router.history = [url];
   router.view.history = [url];
   router.saveHistory();
 }
 
-export { clearPreviousHistory }; // eslint-disable-line
+export { clearPreviousHistory, clearPreviousPages }; // eslint-disable-line

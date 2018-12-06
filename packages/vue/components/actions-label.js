@@ -25,13 +25,23 @@ export default {
     return _h('div', {
       style: style,
       class: classes,
-      on: {
-        click: self.onClick.bind(self)
-      },
+      ref: 'el',
       attrs: {
         id: id
       }
     }, [this.$slots['default']]);
+  },
+
+  created() {
+    Utils.bindMethods(this, ['onClick']);
+  },
+
+  mounted() {
+    this.$refs.el.addEventListener('click', this.onClick);
+  },
+
+  beforeDestroy() {
+    this.$refs.el.removeEventListener('click', this.onClick);
   },
 
   methods: {

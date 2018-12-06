@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.5.2
+ * Framework7 Vue 4.0.0-beta.1
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 12, 2018
+ * Released on: December 6, 2018
  */
 import Vue from 'vue';
 import f7AccordionContent from './components/accordion-content';
@@ -62,6 +62,7 @@ import f7MessagesTitle from './components/messages-title';
 import f7Messages from './components/messages';
 import f7NavLeft from './components/nav-left';
 import f7NavRight from './components/nav-right';
+import f7NavTitleLarge from './components/nav-title-large';
 import f7NavTitle from './components/nav-title';
 import f7Navbar from './components/navbar';
 import f7PageContent from './components/page-content';
@@ -157,6 +158,7 @@ const Plugin = {
     Vue.component('f7-messages', f7Messages);
     Vue.component('f7-nav-left', f7NavLeft);
     Vue.component('f7-nav-right', f7NavRight);
+    Vue.component('f7-nav-title-large', f7NavTitleLarge);
     Vue.component('f7-nav-title', f7NavTitle);
     Vue.component('f7-navbar', f7Navbar);
     Vue.component('f7-page-content', f7PageContent);

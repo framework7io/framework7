@@ -3,6 +3,7 @@ import Mixins from '../utils/mixins';
 import F7CardHeader from './card-header';
 import F7CardContent from './card-content';
 import F7CardFooter from './card-footer';
+import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
 export default {
   name: 'f7-card',
@@ -12,11 +13,61 @@ export default {
     content: [String, Number],
     footer: [String, Number],
     outline: Boolean,
+    expandable: Boolean,
+    expandableAnimateWidth: Boolean,
+    expandableOpened: Boolean,
+    noShadow: Boolean,
+    noBorder: Boolean,
     padding: {
       type: Boolean,
       default: true
     }
   }, Mixins.colorProps),
+  watch: {
+    'props.expandableOpened': function watchOpened(expandableOpened) {
+      const self = this;
+
+      if (opened) {
+        self.open();
+      } else {
+        self.close();
+      }
+    }
+  },
+
+  created() {
+    Utils.bindMethods(this, 'onBeforeOpen onOpen onOpened onClose onClosed'.split(' '));
+  },
+
+  mounted() {
+    const self = this;
+    if (!self.props.expandable) return;
+    const el = self.$refs.el;
+    if (!el) return;
+    el.addEventListener('card:beforeopen', self.onBeforeOpen);
+    el.addEventListener('card:open', self.onOpen);
+    el.addEventListener('card:opened', self.onOpened);
+    el.addEventListener('card:close', self.onClose);
+    el.addEventListener('card:closed', self.onClosed);
+
+    if (self.props.expandable && self.props.expandableOpened) {
+      self.$f7ready(() => {
+        self.$f7.card.open(el, false);
+      });
+    }
+  },
+
+  beforeDestroy() {
+    const self = this;
+    if (!self.props.expandable) return;
+    const el = self.$refs.el;
+    if (!el) return;
+    el.removeEventListener('card:beforeopen', self.onBeforeOpen);
+    el.removeEventListener('card:open', self.onOpen);
+    el.removeEventListener('card:opened', self.onOpened);
+    el.removeEventListener('card:close', self.onClose);
+    el.removeEventListener('card:closed', self.onClosed);
+  },
 
   render() {
     const _h = this.$createElement;
@@ -30,13 +81,21 @@ export default {
       content,
       footer,
       padding,
-      outline
+      outline,
+      expandable,
+      expandableAnimateWidth,
+      noShadow,
+      noBorder
     } = props;
     let headerEl;
     let contentEl;
     let footerEl;
     const classes = Utils.classNames(className, 'card', {
-      'card-outline': outline
+      'card-outline': outline,
+      'card-expandable': expandable,
+      'card-expandable-animate-width': expandableAnimateWidth,
+      'no-shadow': noShadow,
+      'no-border': noBorder
     }, Mixins.colorClasses(props));
 
     if (title || self.$slots && self.$slots.header) {
@@ -58,12 +117,51 @@ export default {
     return _h('div', {
       style: style,
       class: classes,
+      ref: 'el',
       attrs: {
         id: id
       }
     }, [headerEl, contentEl, footerEl, this.$slots['default']]);
   },
 
+  methods: {
+    open() {
+      const self = this;
+      if (!self.$refs.el) return;
+      self.$f7.card.open(self.$refs.el);
+    },
+
+    close() {
+      const self = this;
+      if (!self.$refs.el) return;
+      self.$f7.card.close(self.$refs.el);
+    },
+
+    onBeforeOpen(e) {
+      this.dispatchEvent('cardBeforeOpen card:beforeopen', e.target, e.detail.prevent);
+    },
+
+    onOpen(e) {
+      this.dispatchEvent('cardOpen card:open', e.target);
+    },
+
+    onOpened(e) {
+      this.dispatchEvent('cardOpened card:opened', e.target);
+    },
+
+    onClose(e) {
+      this.dispatchEvent('cardClose card:close', e.target);
+    },
+
+    onClosed(e) {
+      this.dispatchEvent('cardClosed card:closed', e.target);
+    },
+
+    dispatchEvent(events, ...args) {
+      __vueComponentDispatchEvent(this, events, ...args);
+    }
+
+  },
   computed: {
     props() {
       return __vueComponentProps(this);

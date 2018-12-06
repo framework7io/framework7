@@ -14,9 +14,14 @@ class F7BlockTitle extends React.Component {
     const {
       className,
       id,
-      style
+      style,
+      large,
+      medium
     } = props;
-    const classes = Utils.classNames(className, 'block-title', Mixins.colorClasses(props));
+    const classes = Utils.classNames(className, 'block-title', {
+      'block-title-large': large,
+      'block-title-medium': medium
+    }, Mixins.colorClasses(props));
     return React.createElement('div', {
       id: id,
       style: style,
@@ -33,7 +38,9 @@ class F7BlockTitle extends React.Component {
 __reactComponentSetProps(F7BlockTitle, Object.assign({
   id: [String, Number],
   className: String,
-  style: Object
+  style: Object,
+  large: Boolean,
+  medium: Boolean
 }, Mixins.colorProps));
 
 F7BlockTitle.displayName = 'f7-block-title';

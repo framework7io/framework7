@@ -13,11 +13,6 @@ export default {
     }
   }, Mixins.colorProps),
 
-  created() {
-    this.onClickBound = this.onClick.bind(this);
-    this.onDeleteClickBound = this.onDeleteClick.bind(this);
-  },
-
   render() {
     const _h = this.$createElement;
     const self = this;
@@ -31,11 +26,9 @@ export default {
     } = props;
     const classes = Utils.classNames(className, 'messagebar-attachment', Mixins.colorClasses(props));
     return _h('div', {
+      ref: 'el',
       style: style,
       class: classes,
-      on: {
-        click: self.onClickBound
-      },
       attrs: {
         id: id
       }
@@ -44,11 +37,29 @@ export default {
         src: image
       }
     }), deletable && _h('span', {
-      class: 'messagebar-attachment-delete',
-      on: {
-        click: self.onDeleteClickBound
-      }
+      ref: 'deleteEl',
+      class: 'messagebar-attachment-delete'
     }), this.$slots['default']]);
+  },
+
+  created() {
+    Utils.bindMethods(this, ['onClick', 'onDeleteClick']);
+  },
+
+  mounted() {
+    this.$refs.el.addEventListener('click', this.onClick);
+
+    if (this.$refs.deleteEl) {
+      this.$refs.deleteEl.addEventListener('click', this.onDeleteClick);
+    }
+  },
+
+  beforeDestroy() {
+    this.$refs.el.removeEventListener('click', this.onClick);
+
+    if (this.$refs.deleteEl) {
+      this.$refs.deleteEl.removeEventListener('click', this.onDeleteClick);
+    }
   },
 
   methods: {

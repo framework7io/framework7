@@ -1,49 +1,44 @@
 .ios {
-  @import (multiple) '../../less/colors-ios.less';
-  @import (multiple) '../../less/vars-ios.less';
   .toggle {
-    width: 52px;
-    border-radius: 16px;
-    height: 32px;
-
     input[type="checkbox"]:checked + .toggle-icon {
-      background: #4cd964;
+      background: var(--f7-toggle-active-color, var(--f7-theme-color));
       &:before {
         transform: scale(0);
       }
       &:after {
-        .ltr({ transform: translateX(20px); });
-        .rtl({ transform: translateX(-20px); });
+        .ltr({
+          transform: translateX(calc(var(--f7-toggle-width) - var(--f7-toggle-height)));
+        });
+        .rtl({
+          transform: translateX(calc(-1 * (var(--f7-toggle-width) - var(--f7-toggle-height))));
+        });
       }
     }
   }
   .toggle-icon {
-    width: 52px;
-    border-radius: 16px;
-    height: 32px;
-    background: #e5e5e5;
+    background: var(--f7-toggle-border-color-ios);
     &:before {
       position: absolute;
       .ltr({ left: 2px; });
       .rtl({ right: 2px; });
       top: 2px;
-      width: 48px;
-      height: 28px;
-      border-radius: 16px;
+      width: calc(var(--f7-toggle-width) - 4px);
+      height: calc(var(--f7-toggle-height) - 4px);
+      border-radius: var(--f7-toggle-height);
       box-sizing: border-box;
-      background: #fff;
+      background: var(--f7-toggle-inactive-color);
       z-index: 1;
       transition-duration: 300ms;
       transform: scale(1);
     }
     &:after {
-      height: 28px;
-      width: 28px;
+      height: calc(var(--f7-toggle-height) - 4px);
+      width: calc(var(--f7-toggle-height) - 4px);
       top: 2px;
       .ltr({ left: 2px; });
       .rtl({ right: 2px; });
       box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-      border-radius: 14px;
+      border-radius: calc(var(--f7-toggle-height) - 4px);
     }
   }
   .toggle-active-state {
@@ -52,35 +47,20 @@
         transform: scale(0);
       }
     }
-    input[type="checkbox"] + .toggle-icon {
+    input[type="checkbox"] + .toggle-icon, {
       &:after {
-        width: 35px;
+        width: calc(var(--f7-toggle-height) + 4px);
       }
     }
     input[type="checkbox"]:checked + .toggle-icon {
       &:after {
-        width: 35px;
-        .ltr({ transform: translateX(13px); });
-        .rtl({ transform: translateX(-13px); });
+        .ltr({
+          transform: translateX(calc(var(--f7-toggle-width) - var(--f7-toggle-height) - 8px));
+        });
+        .rtl({
+          transform: translateX(calc(-1 * (var(--f7-toggle-width) - var(--f7-toggle-height) - 8px)));
+        });
       }
     }
   }
-
-  // Dark Theme
-  & when (@includeDarkTheme) {
-    .theme-dark {
-      .toggle-icon {
-        background-color: #fff;
-      }
-      .toggle-icon:before {
-        background-color: @blockBgDark;
-      }
-    }
-  }
-  // Colors
-  .color-loop({
-    .toggle.color-@{colorName} input[type="checkbox"]:checked + .toggle-icon {
-      background-color: @colorValue;
-    }
-  });
 }

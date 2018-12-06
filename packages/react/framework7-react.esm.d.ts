@@ -59,6 +59,7 @@ import F7MessagesTitle from './components/messages-title';
 import F7Messages from './components/messages';
 import F7NavLeft from './components/nav-left';
 import F7NavRight from './components/nav-right';
+import F7NavTitleLarge from './components/nav-title-large';
 import F7NavTitle from './components/nav-title';
 import F7Navbar from './components/navbar';
 import F7PageContent from './components/page-content';
@@ -225,6 +226,8 @@ export {
   F7NavLeft as NavLeft,
   F7NavRight,
   F7NavRight as NavRight,
+  F7NavTitleLarge,
+  F7NavTitleLarge as NavTitleLarge,
   F7NavTitle,
   F7NavTitle as NavTitle,
   F7Navbar,

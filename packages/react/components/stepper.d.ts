@@ -30,9 +30,9 @@ declare namespace F7Stepper {
     fill? : boolean
     fillMd? : boolean
     fillIos? : boolean
-    big? : boolean
-    bigMd? : boolean
-    bigIos? : boolean
+    large? : boolean
+    largeMd? : boolean
+    largeIos? : boolean
     small? : boolean
     smallMd? : boolean
     smallIos? : boolean

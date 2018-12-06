@@ -2,6 +2,7 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import F7NavLeft from './nav-left';
 import F7NavTitle from './nav-title';
+import F7NavRight from './nav-right';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
 export default {
@@ -25,7 +26,9 @@ export default {
       default: true
     },
     innerClass: String,
-    innerClassName: String
+    innerClassName: String,
+    large: Boolean,
+    titleLarge: String
   }, Mixins.colorProps),
 
   render() {
@@ -47,47 +50,69 @@ export default {
       style,
       hidden,
       noShadow,
-      noHairline
+      noHairline,
+      large,
+      titleLarge
     } = props;
     let innerEl;
     let leftEl;
     let titleEl;
+    let rightEl;
+    let titleLargeEl;
+    const slots = self.$slots;
 
     if (inner) {
-      if (backLink) {
+      if (backLink || slots['nav-left']) {
         leftEl = _h(F7NavLeft, {
           on: {
-            backClick: self.onBackClick.bind(self)
+            backClick: self.onBackClick
           },
           attrs: {
             backLink: backLink,
             backLinkUrl: backLinkUrl,
             backLinkForce: backLinkForce
           }
-        });
+        }, [slots['nav-left']]);
       }
 
-      if (title || subtitle) {
+      if (title || subtitle || slots.title) {
         titleEl = _h(F7NavTitle, {
           attrs: {
             title: title,
             subtitle: subtitle
           }
-        });
+        }, [slots.title]);
+      }
+
+      if (slots['nav-right']) {
+        rightEl = _h(F7NavRight, [slots['nav-right']]);
+      }
+
+      let largeTitle = titleLarge;
+      if (!largeTitle && large && title) largeTitle = title;
+
+      if (largeTitle) {
+        titleLargeEl = _h('div', {
+          class: 'title-large'
+        }, [_h('div', {
+          class: 'title-large-text'
+        }, [largeTitle])]);
       }
 
       innerEl = _h('div', {
         ref: 'inner',
         class: Utils.classNames('navbar-inner', innerClass, innerClassName, {
-          sliding
+          sliding,
+          'navbar-inner-large': large
         })
-      }, [leftEl, titleEl, this.$slots['default']]);
+      }, [leftEl, titleEl, rightEl, titleLargeEl, this.$slots['default']]);
     }
 
     const classes = Utils.classNames(className, 'navbar', {
       'navbar-hidden': hidden,
       'no-shadow': noShadow,
-      'no-hairline': noHairline
+      'no-hairline': noHairline,
+      'navbar-large': large
     }, Mixins.colorClasses(props));
     return _h('div', {
       ref: 'el',
@@ -97,6 +122,10 @@ export default {
         id: id
       }
     }, [this.$slots['before-inner'], innerEl, this.$slots['after-inner']]);
+  },
+
+  created() {
+    Utils.bindMethods(this, ['onBackClick']);
   },
 
   updated() {

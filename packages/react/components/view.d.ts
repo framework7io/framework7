@@ -31,6 +31,11 @@ declare namespace F7View {
     iosSwipeBackAnimateOpacity? : boolean
     iosSwipeBackActiveArea? : number
     iosSwipeBackThreshold? : number
+    mdSwipeBack? : boolean
+    mdSwipeBackAnimateShadow? : boolean
+    mdSwipeBackAnimateOpacity? : boolean
+    mdSwipeBackActiveArea? : number
+    mdSwipeBackThreshold? : number
     pushState? : boolean
     pushStateRoot? : string
     pushStateAnimate? : boolean

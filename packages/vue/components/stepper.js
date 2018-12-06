@@ -71,9 +71,9 @@ export default {
     fill: Boolean,
     fillMd: Boolean,
     fillIos: Boolean,
-    big: Boolean,
-    bigMd: Boolean,
-    bigIos: Boolean,
+    large: Boolean,
+    largeMd: Boolean,
+    largeIos: Boolean,
     small: Boolean,
     smallMd: Boolean,
     smallIos: Boolean,
@@ -103,12 +103,13 @@ export default {
       let inputEl;
       {
         inputEl = _h('input', {
+          ref: 'inputEl',
           domProps: {
             readOnly: inputReadonly,
             value
           },
           on: {
-            input: self.onInput.bind(self)
+            input: self.onInput
           },
           attrs: {
             type: inputType,
@@ -137,15 +138,11 @@ export default {
         id: id
       }
     }, [_h('div', {
-      class: 'stepper-button-minus',
-      on: {
-        click: self.onMinusClickBound
-      }
+      ref: 'minusEl',
+      class: 'stepper-button-minus'
     }), inputWrapEl, valueEl, _h('div', {
-      class: 'stepper-button-plus',
-      on: {
-        click: self.onPlusClickBound
-      }
+      ref: 'plusEl',
+      class: 'stepper-button-plus'
     })]);
   },
 
@@ -160,9 +157,9 @@ export default {
         fill,
         fillIos,
         fillMd,
-        big,
-        bigIos,
-        bigMd,
+        large,
+        largeIos,
+        largeMd,
         small,
         smallIos,
         smallMd,
@@ -177,9 +174,9 @@ export default {
         'stepper-fill': fill,
         'stepper-fill-ios': fillIos,
         'stepper-fill-md': fillMd,
-        'stepper-big': big,
-        'stepper-big-ios': bigIos,
-        'stepper-big-md': bigMd,
+        'stepper-large': large,
+        'stepper-large-ios': largeIos,
+        'stepper-large-md': largeMd,
         'stepper-small': small,
         'stepper-small-ios': smallIos,
         'stepper-small-md': smallMd,
@@ -194,13 +191,24 @@ export default {
   },
 
   created() {
-    this.onInputBound = this.onInput.bind(this);
-    this.onMinusClickBound = this.onMinusClick.bind(this);
-    this.onPlusClickBound = this.onPlusClick.bind(this);
+    Utils.bindMethods(this, ['onInput', 'onMinusClick', 'onPlusClick']);
   },
 
   mounted() {
     const self = this;
+    const {
+      minusEl,
+      plusEl
+    } = self.$refs;
+
+    if (minusEl) {
+      minusEl.addEventListener('click', self.onMinusClick);
+    }
+
+    if (plusEl) {
+      plusEl.addEventListener('click', self.onPlusClick);
+    }
+
     if (!self.props.init) return;
     self.$f7ready(f7 => {
       const {
@@ -242,10 +250,24 @@ export default {
   },
 
   beforeDestroy() {
-    if (!this.props.init) return;
+    const self = this;
+    const {
+      minusEl,
+      plusEl
+    } = self.$refs;
 
-    if (this.f7Stepper && this.f7Stepper.destroy) {
-      this.f7Stepper.destroy();
+    if (minusEl) {
+      minusEl.removeEventListener('click', self.onMinusClick);
+    }
+
+    if (plusEl) {
+      plusEl.removeEventListener('click', self.onPlusClick);
+    }
+
+    if (!self.props.init) return;
+
+    if (self.f7Stepper && self.f7Stepper.destroy) {
+      self.f7Stepper.destroy();
     }
   },
 

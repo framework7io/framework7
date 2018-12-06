@@ -53,6 +53,34 @@ class F7Preloader extends React.Component {
       }, React.createElement('span', {
         className: 'preloader-inner-half-circle'
       })));
+    } else {
+      innerEl = React.createElement('span', {
+        className: 'preloader-inner'
+      }, React.createElement('span', {
+        className: 'preloader-inner-line'
+      }), React.createElement('span', {
+        className: 'preloader-inner-line'
+      }), React.createElement('span', {
+        className: 'preloader-inner-line'
+      }), React.createElement('span', {
+        className: 'preloader-inner-line'
+      }), React.createElement('span', {
+        className: 'preloader-inner-line'
+      }), React.createElement('span', {
+        className: 'preloader-inner-line'
+      }), React.createElement('span', {
+        className: 'preloader-inner-line'
+      }), React.createElement('span', {
+        className: 'preloader-inner-line'
+      }), React.createElement('span', {
+        className: 'preloader-inner-line'
+      }), React.createElement('span', {
+        className: 'preloader-inner-line'
+      }), React.createElement('span', {
+        className: 'preloader-inner-line'
+      }), React.createElement('span', {
+        className: 'preloader-inner-line'
+      }));
     }
 
     const classes = Utils.classNames(className, 'preloader', Mixins.colorClasses(props));

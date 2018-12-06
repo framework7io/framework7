@@ -14,9 +14,14 @@ class F7Page extends React.Component {
     this.state = (() => {
       return {
         hasSubnavbar: false,
+        hasNavbarLarge: false,
         routerClass: '',
         routerForceUnstack: false
       };
+    })();
+
+    (() => {
+      Utils.bindMethods(this, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageStack', 'onPageUnstack', 'onPagePosition']);
     })();
   }
 
@@ -73,13 +78,23 @@ class F7Page extends React.Component {
     const page = event.detail;
     const {
       withSubnavbar,
-      subnavbar
+      subnavbar,
+      withNavbarLarge,
+      navbarLarge
     } = this.props;
 
     if (typeof withSubnavbar === 'undefined' && typeof subnavbar === 'undefined') {
       if (page.$navbarEl && page.$navbarEl.length && page.$navbarEl.find('.subnavbar').length || page.$el.children('.navbar').find('.subnavbar').length) {
         this.setState({
           hasSubnavbar: true
+        });
+      }
+    }
+
+    if (typeof withNavbarLarge === 'undefined' && typeof navbarLarge === 'undefined') {
+      if (page.$navbarEl && page.$navbarEl.hasClass('navbar-inner-large')) {
+        this.setState({
+          hasNavbarLarge: true
         });
       }
     }
@@ -158,6 +173,7 @@ class F7Page extends React.Component {
       ptr,
       ptrDistance,
       ptrPreloader,
+      ptrBottom,
       infinite,
       infiniteDistance,
       infinitePreloader,
@@ -171,6 +187,8 @@ class F7Page extends React.Component {
       tabs,
       subnavbar,
       withSubnavbar,
+      navbarLarge,
+      withNavbarLarge,
       noNavbar,
       noToolbar,
       noSwipeback
@@ -187,6 +205,7 @@ class F7Page extends React.Component {
     fixedTags = 'navbar toolbar tabbar subnavbar searchbar messagebar fab list-index'.split(' ').map(tagName => `f7-${tagName}`);
     let hasSubnavbar;
     let hasMessages;
+    let hasNavbarLarge;
     hasMessages = messagesContent;
 
     if (slotsDefault) {
@@ -202,6 +221,11 @@ class F7Page extends React.Component {
           }
 
           if (tag === 'F7Subnavbar' || tag === 'f7-subnavbar') hasSubnavbar = true;
+
+          if (tag === 'F7Navbar' || tag === 'f7-navbar') {
+            if (child.props && child.props.large) hasNavbarLarge = true;
+          }
+
           if (typeof hasMessages === 'undefined' && (tag === 'F7Messages' || tag === 'f7-messages')) hasMessages = true;
 
           if (fixedTags.indexOf(tag) >= 0) {
@@ -216,10 +240,12 @@ class F7Page extends React.Component {
     }
 
     const forceSubnavbar = typeof subnavbar === 'undefined' && typeof withSubnavbar === 'undefined' ? hasSubnavbar || this.state.hasSubnavbar : false;
+    const forceNavbarLarge = typeof navbarLarge === 'undefined' && typeof withNavbarLarge === 'undefined' ? hasNavbarLarge || this.state.hasNavbarLarge : false;
     const classes = Utils.classNames(className, 'page', this.state.routerClass, {
       stacked: stacked && !this.state.routerForceUnstack,
       tabs,
       'page-with-subnavbar': subnavbar || withSubnavbar || forceSubnavbar,
+      'page-with-navbar-large': navbarLarge || withNavbarLarge || forceNavbarLarge,
       'no-navbar': noNavbar,
       'no-toolbar': noToolbar,
       'no-swipeback': noSwipeback
@@ -241,6 +267,7 @@ class F7Page extends React.Component {
       ptr: ptr,
       ptrDistance: ptrDistance,
       ptrPreloader: ptrPreloader,
+      ptrBottom: ptrBottom,
       infinite: infinite,
       infiniteTop: infiniteTop,
       infiniteDistance: infiniteDistance,
@@ -291,23 +318,6 @@ class F7Page extends React.Component {
       ptr,
       infinite
     } = self.props;
-    self.onPtrPullStart = self.onPtrPullStart.bind(self);
-    self.onPtrPullMove = self.onPtrPullMove.bind(self);
-    self.onPtrPullEnd = self.onPtrPullEnd.bind(self);
-    self.onPtrRefresh = self.onPtrRefresh.bind(self);
-    self.onPtrDone = self.onPtrDone.bind(self);
-    self.onInfinite = self.onInfinite.bind(self);
-    self.onPageMounted = self.onPageMounted.bind(self);
-    self.onPageInit = self.onPageInit.bind(self);
-    self.onPageReinit = self.onPageReinit.bind(self);
-    self.onPageBeforeIn = self.onPageBeforeIn.bind(self);
-    self.onPageBeforeOut = self.onPageBeforeOut.bind(self);
-    self.onPageAfterOut = self.onPageAfterOut.bind(self);
-    self.onPageAfterIn = self.onPageAfterIn.bind(self);
-    self.onPageBeforeRemove = self.onPageBeforeRemove.bind(self);
-    self.onPageStack = self.onPageStack.bind(self);
-    self.onPageUnstack = self.onPageUnstack.bind(self);
-    self.onPagePosition = self.onPagePosition.bind(self);
 
     if (ptr) {
       el.addEventListener('ptr:pullstart', self.onPtrPullStart);
@@ -364,6 +374,14 @@ __reactComponentSetProps(F7Page, Object.assign({
     type: Boolean,
     default: undefined
   },
+  withNavbarLarge: {
+    type: Boolean,
+    default: undefined
+  },
+  navbarLarge: {
+    type: Boolean,
+    default: undefined
+  },
   noNavbar: Boolean,
   noToolbar: Boolean,
   tabs: Boolean,
@@ -378,6 +396,7 @@ __reactComponentSetProps(F7Page, Object.assign({
     type: Boolean,
     default: true
   },
+  ptrBottom: Boolean,
   infinite: Boolean,
   infiniteTop: Boolean,
   infiniteDistance: Number,

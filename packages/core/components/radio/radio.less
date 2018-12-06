@@ -1,12 +1,24 @@
 /* === Radio === */
-.icon-radio {
-  flex-shrink: 0;
-}
+@import url('./radio-vars.less');
 .radio {
   position: relative;
   display: inline-block;
   vertical-align: middle;
   z-index: 1;
+  --f7-touch-ripple-color: rgba(var(--f7-theme-color-rgb), 0.5);
+}
+.icon-radio {
+  width: var(--f7-radio-size);
+  height: var(--f7-radio-size);
+  border-radius: var(--f7-radio-border-radius);
+  position: relative;
+  box-sizing: border-box;
+  display: block;
+  flex-shrink: 0;
+}
+.radio .icon-radio,
+.md .icon-radio {
+  border: var(--f7-radio-border-width) solid var(--f7-radio-inactive-color);
 }
 label.item-radio, .radio {
   cursor: pointer;
@@ -14,19 +26,16 @@ label.item-radio, .radio {
     display: none;
   }
 }
-label.item-radio .icon-radio, .radio .icon-radio {
-  box-sizing: border-box;
-  position: relative;
-  display: block;
-  &:after {
-    content: '';
-    position: absolute;
-  }
-}
 label.item-radio {
   transition-duration: 300ms;
+  .item-content, &.item-content {
+    .item-media {
+      align-self: center;
+    }
+  }
   &.active-state {
     .hairline-color(bottom, transparent);
+    background-color: var(--f7-list-link-pressed-bg-color);
   }
   &.disabled, .disabled & {
     .disabled();

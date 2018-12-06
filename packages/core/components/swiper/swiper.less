@@ -9,30 +9,43 @@
 @import url('./swiper-class/components/zoom/zoom.less');
 
 // Navigation
-.swiper-button-prev, .swiper-button-next {
+.swiper-button-prev,
+.swiper-button-next {
   position: absolute;
   top: 50%;
   width: 27px;
   height: 44px;
+  line-height: 44px;
+  text-align: center;
   margin-top: -22px;
   z-index: 10;
   cursor: pointer;
-  background-size: 27px 44px;
-  background-position: center;
-  background-repeat: no-repeat;
+  color: var(--f7-theme-color);
+  &:after {
+    .core-icons-font();
+    font-size: 44px;
+  }
   &.swiper-button-disabled {
     opacity: 0.35;
     cursor: auto;
     pointer-events: none;
   }
 }
-.swiper-button-prev, .swiper-container-rtl .swiper-button-next {
+.swiper-button-prev,
+.swiper-container-rtl .swiper-button-next {
   left: 10px;
   right: auto;
+  &:after {
+    content: 'swiper_prev';
+  }
 }
-.swiper-button-next, .swiper-container-rtl .swiper-button-prev {
+.swiper-button-next,
+.swiper-container-rtl .swiper-button-prev {
   right: 10px;
   left: auto;
+  &:after {
+    content: 'swiper_next';
+  }
 }
 
 // Pagination
@@ -94,6 +107,7 @@
 }
 .swiper-pagination-bullet-active {
   opacity: 1;
+  background: var(--f7-theme-color);
 }
 
 .swiper-container-vertical {
@@ -135,6 +149,7 @@
   background: rgba(0,0,0,0.25);
   position: absolute;
   .swiper-pagination-progressbar-fill {
+    background: var(--f7-theme-color);
     position: absolute;
     left: 0;
     top: 0;
@@ -162,13 +177,16 @@
   }
 }
 
-.swiper-lazy-preloader {
+.preloader.swiper-lazy-preloader {
   position: absolute;
   left: 50%;
   top: 50%;
   z-index: 10;
+  width: 32px;
+  height: 32px;
+  margin-left: -16px;
+  margin-top: -16px;
 }
-
 
 & when (@includeIosTheme) {
   @import url('./swiper-ios.less');

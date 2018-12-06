@@ -10,10 +10,6 @@ export default {
     checked: Boolean
   }, Mixins.colorProps),
 
-  created() {
-    this.onChangeBound = this.onChange.bind(this);
-  },
-
   render() {
     const _h = this.$createElement;
     const self = this;
@@ -32,11 +28,12 @@ export default {
     let inputEl;
     {
       inputEl = _h('input', {
+        ref: 'inputEl',
         domProps: {
           checked
         },
         on: {
-          change: self.onChangeBound
+          change: self.onChange
         },
         attrs: {
           type: 'checkbox'
@@ -52,6 +49,10 @@ export default {
     }, [inputEl, _h('i', {
       class: 'icon icon-checkbox'
     }), this.$slots['default']]);
+  },
+
+  created() {
+    Utils.bindMethods(this, ['onChange']);
   },
 
   methods: {

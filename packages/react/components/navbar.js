@@ -3,6 +3,7 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import F7NavLeft from './nav-left';
 import F7NavTitle from './nav-title';
+import F7NavRight from './nav-right';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
@@ -11,6 +12,10 @@ class F7Navbar extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.__reactRefs = {};
+
+    (() => {
+      Utils.bindMethods(this, ['onBackClick']);
+    })();
   }
 
   hide(animate) {
@@ -53,27 +58,47 @@ class F7Navbar extends React.Component {
       style,
       hidden,
       noShadow,
-      noHairline
+      noHairline,
+      large,
+      titleLarge
     } = props;
     let innerEl;
     let leftEl;
     let titleEl;
+    let rightEl;
+    let titleLargeEl;
+    const slots = self.slots;
 
     if (inner) {
-      if (backLink) {
+      if (backLink || slots['nav-left']) {
         leftEl = React.createElement(F7NavLeft, {
           backLink: backLink,
           backLinkUrl: backLinkUrl,
           backLinkForce: backLinkForce,
-          onBackClick: self.onBackClick.bind(self)
-        });
+          onBackClick: self.onBackClick
+        }, slots['nav-left']);
       }
 
-      if (title || subtitle) {
+      if (title || subtitle || slots.title) {
         titleEl = React.createElement(F7NavTitle, {
           title: title,
           subtitle: subtitle
-        });
+        }, slots.title);
+      }
+
+      if (slots['nav-right']) {
+        rightEl = React.createElement(F7NavRight, null, slots['nav-right']);
+      }
+
+      let largeTitle = titleLarge;
+      if (!largeTitle && large && title) largeTitle = title;
+
+      if (largeTitle) {
+        titleLargeEl = React.createElement('div', {
+          className: 'title-large'
+        }, React.createElement('div', {
+          className: 'title-large-text'
+        }, largeTitle));
       }
 
       innerEl = React.createElement('div', {
@@ -81,15 +106,17 @@ class F7Navbar extends React.Component {
           this.__reactRefs['inner'] = __reactNode;
         },
         className: Utils.classNames('navbar-inner', innerClass, innerClassName, {
-          sliding
+          sliding,
+          'navbar-inner-large': large
         })
-      }, leftEl, titleEl, this.slots['default']);
+      }, leftEl, titleEl, rightEl, titleLargeEl, this.slots['default']);
     }
 
     const classes = Utils.classNames(className, 'navbar', {
       'navbar-hidden': hidden,
       'no-shadow': noShadow,
-      'no-hairline': noHairline
+      'no-hairline': noHairline,
+      'navbar-large': large
     }, Mixins.colorClasses(props));
     return React.createElement('div', {
       ref: __reactNode => {
@@ -150,7 +177,9 @@ __reactComponentSetProps(F7Navbar, Object.assign({
     default: true
   },
   innerClass: String,
-  innerClassName: String
+  innerClassName: String,
+  large: Boolean,
+  titleLarge: String
 }, Mixins.colorProps));
 
 F7Navbar.displayName = 'f7-navbar';

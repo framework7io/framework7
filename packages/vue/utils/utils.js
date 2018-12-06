@@ -74,5 +74,10 @@ const Utils = {
     });
     return classes.join(' ');
   },
+  bindMethods(context, methods = []) {
+    for (let i = 0; i < methods.length; i += 1) {
+      if (context[methods[i]]) context[methods[i]] = context[methods[i]].bind(context);
+    }
+  },
 };
 export default Utils;

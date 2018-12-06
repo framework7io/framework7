@@ -26,15 +26,7 @@ class F7Input extends React.Component {
     })();
 
     (() => {
-      const self = this;
-      self.onFocusBound = self.onFocus.bind(self);
-      self.onBlurBound = self.onBlur.bind(self);
-      self.onInputBound = self.onInput.bind(self);
-      self.onChangeBound = self.onChange.bind(self);
-      self.onTextareaResizeBound = self.onTextareaResize.bind(self);
-      self.onInputNotEmptyBound = self.onInputNotEmpty.bind(self);
-      self.onInputEmptyBound = self.onInputEmpty.bind(self);
-      self.onInputClearBound = self.onInputClear.bind(self);
+      Utils.bindMethods(this, 'onFocus onBlur onInput onChange onTextareaResize onInputNotEmpty onInputEmpty onInputClear'.split(' '));
     })();
   }
 
@@ -77,11 +69,12 @@ class F7Input extends React.Component {
   onInput(event) {
     const self = this;
     const {
-      validate
+      validate,
+      validateOnBlur
     } = self.props;
     self.dispatchEvent('input', event);
 
-    if ((validate || validate === '') && self.refs && self.refs.inputEl) {
+    if (!validateOnBlur && (validate || validate === '') && self.refs && self.refs.inputEl) {
       self.validateInput(self.refs.inputEl);
     }
 
@@ -149,6 +142,7 @@ class F7Input extends React.Component {
       inputStyle,
       pattern,
       validate,
+      validateOnBlur,
       tabindex,
       resizable,
       clearButton,
@@ -209,13 +203,14 @@ class F7Input extends React.Component {
           pattern: pattern,
           validate: typeof validate === 'string' && validate.length ? validate : undefined,
           'data-validate': validate === true || validate === '' ? true : undefined,
+          'data-validate-on-blur': validateOnBlur === true || validateOnBlur === '' ? true : undefined,
           tabIndex: tabindex,
           'data-error-message': errorMessageForce ? undefined : errorMessage,
           className: inputClassName,
-          onFocus: self.onFocusBound,
-          onBlur: self.onBlurBound,
-          onInput: self.onInputBound,
-          onChange: self.onChangeBound
+          onFocus: self.onFocus,
+          onBlur: self.onBlur,
+          onInput: self.onInput,
+          onChange: self.onChange
         }, children);
       }
       return input;
@@ -244,7 +239,7 @@ class F7Input extends React.Component {
         value: value,
         disabled: disabled,
         id: inputId,
-        onChange: self.onChangeBound
+        onChange: self.onChange
       });
     } else if (type === 'range') {
       inputEl = React.createElement(F7Range, {
@@ -256,14 +251,14 @@ class F7Input extends React.Component {
         name: name,
         id: inputId,
         input: true,
-        onRangeChange: self.onChangeBound
+        onRangeChange: self.onChange
       });
     } else {
       inputEl = createInput('input');
     }
 
     if (wrap) {
-      const wrapClasses = Utils.classNames(className, 'item-input-wrap', Mixins.colorClasses(props));
+      const wrapClasses = Utils.classNames(className, 'input', Mixins.colorClasses(props));
       return React.createElement('div', {
         id: id,
         ref: __reactNode => {
@@ -272,11 +267,11 @@ class F7Input extends React.Component {
         className: wrapClasses,
         style: style
       }, inputEl, errorMessage && errorMessageForce && React.createElement('div', {
-        className: 'item-input-error-message'
+        className: 'input-error-message'
       }, errorMessage), clearButton && React.createElement('span', {
         className: 'input-clear-button'
       }), (info || slotsInfo && slotsInfo.length) && React.createElement('div', {
-        className: 'item-input-info'
+        className: 'input-info'
       }, info, this.slots['info']));
     }
 
@@ -304,15 +299,15 @@ class F7Input extends React.Component {
     if (type === 'range' || type === 'toggle') return;
     const inputEl = self.refs.inputEl;
     if (!inputEl) return;
-    inputEl.removeEventListener('input:notempty', self.onInputNotEmptyBound, false);
+    inputEl.removeEventListener('input:notempty', self.onInputNotEmpty, false);
 
     if (type === 'textarea' && resizable) {
-      inputEl.removeEventListener('textarea:resze', self.onTextareaResizeBound, false);
+      inputEl.removeEventListener('textarea:resze', self.onTextareaResize, false);
     }
 
     if (clearButton) {
-      inputEl.removeEventListener('input:empty', self.onInputEmptyBound, false);
-      inputEl.removeEventListener('input:clear', self.onInputClearBound, false);
+      inputEl.removeEventListener('input:empty', self.onInputEmpty, false);
+      inputEl.removeEventListener('input:clear', self.onInputClear, false);
     }
   }
 
@@ -334,6 +329,7 @@ class F7Input extends React.Component {
     const self = this;
     const {
       validate,
+      validateOnBlur,
       resizable
     } = self.props;
     const f7 = self.$f7;
@@ -345,7 +341,7 @@ class F7Input extends React.Component {
       self.updateInputOnDidUpdate = false;
       f7.input.checkEmptyState(inputEl);
 
-      if (validate) {
+      if (validate && !validateOnBlur) {
         self.validateInput(inputEl);
       }
 
@@ -360,6 +356,7 @@ class F7Input extends React.Component {
     self.$f7ready(f7 => {
       const {
         validate,
+        validateOnBlur,
         resizable,
         type,
         clearButton,
@@ -369,20 +366,20 @@ class F7Input extends React.Component {
       if (type === 'range' || type === 'toggle') return;
       const inputEl = self.refs.inputEl;
       if (!inputEl) return;
-      inputEl.addEventListener('input:notempty', self.onInputNotEmptyBound, false);
+      inputEl.addEventListener('input:notempty', self.onInputNotEmpty, false);
 
       if (type === 'textarea' && resizable) {
-        inputEl.addEventListener('textarea:resze', self.onTextareaResizeBound, false);
+        inputEl.addEventListener('textarea:resze', self.onTextareaResize, false);
       }
 
       if (clearButton) {
-        inputEl.addEventListener('input:empty', self.onInputEmptyBound, false);
-        inputEl.addEventListener('input:clear', self.onInputClearBound, false);
+        inputEl.addEventListener('input:empty', self.onInputEmpty, false);
+        inputEl.addEventListener('input:clear', self.onInputClear, false);
       }
 
       f7.input.checkEmptyState(inputEl);
 
-      if ((validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
+      if (!validateOnBlur && (validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
         setTimeout(() => {
           self.validateInput(inputEl);
         }, 0);
@@ -441,6 +438,7 @@ __reactComponentSetProps(F7Input, Object.assign({
   inputStyle: Object,
   pattern: String,
   validate: [Boolean, String],
+  validateOnBlur: Boolean,
   tabindex: [String, Number],
   resizable: Boolean,
   clearButton: Boolean,

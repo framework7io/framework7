@@ -18,6 +18,14 @@ export default {
       type: Boolean,
       default: undefined
     },
+    withNavbarLarge: {
+      type: Boolean,
+      default: undefined
+    },
+    navbarLarge: {
+      type: Boolean,
+      default: undefined
+    },
     noNavbar: Boolean,
     noToolbar: Boolean,
     tabs: Boolean,
@@ -32,6 +40,7 @@ export default {
       type: Boolean,
       default: true
     },
+    ptrBottom: Boolean,
     infinite: Boolean,
     infiniteTop: Boolean,
     infiniteDistance: Number,
@@ -52,6 +61,7 @@ export default {
     const state = (() => {
       return {
         hasSubnavbar: false,
+        hasNavbarLarge: false,
         routerClass: '',
         routerForceUnstack: false
       };
@@ -75,6 +85,7 @@ export default {
       ptr,
       ptrDistance,
       ptrPreloader,
+      ptrBottom,
       infinite,
       infiniteDistance,
       infinitePreloader,
@@ -88,6 +99,8 @@ export default {
       tabs,
       subnavbar,
       withSubnavbar,
+      navbarLarge,
+      withNavbarLarge,
       noNavbar,
       noToolbar,
       noSwipeback
@@ -104,6 +117,7 @@ export default {
     fixedTags = 'navbar toolbar tabbar subnavbar searchbar messagebar fab list-index'.split(' ');
     let hasSubnavbar;
     let hasMessages;
+    let hasNavbarLarge;
     hasMessages = self.$options.propsData.messagesContent;
 
     if (slotsDefault) {
@@ -119,6 +133,11 @@ export default {
           }
 
           if (tag.indexOf('subnavbar') >= 0) hasSubnavbar = true;
+
+          if (tag.indexOf('navbar') >= 0) {
+            if (child.componentOptions && child.componentOptions.propsData && 'large' in child.componentOptions.propsData && child.componentOptions.propsData !== false) hasNavbarLarge = true;
+          }
+
           if (typeof hasMessages === 'undefined' && tag.indexOf('messages') >= 0) hasMessages = true;
 
           for (let j = 0; j < fixedTags.length; j += 1) {
@@ -135,10 +154,12 @@ export default {
     }
 
     const forceSubnavbar = typeof subnavbar === 'undefined' && typeof withSubnavbar === 'undefined' ? hasSubnavbar || this.state.hasSubnavbar : false;
+    const forceNavbarLarge = typeof navbarLarge === 'undefined' && typeof withNavbarLarge === 'undefined' ? hasNavbarLarge || this.state.hasNavbarLarge : false;
     const classes = Utils.classNames(className, 'page', this.state.routerClass, {
       stacked: stacked && !this.state.routerForceUnstack,
       tabs,
       'page-with-subnavbar': subnavbar || withSubnavbar || forceSubnavbar,
+      'page-with-navbar-large': navbarLarge || withNavbarLarge || forceNavbarLarge,
       'no-navbar': noNavbar,
       'no-toolbar': noToolbar,
       'no-swipeback': noSwipeback
@@ -161,6 +182,7 @@ export default {
         ptr: ptr,
         ptrDistance: ptrDistance,
         ptrPreloader: ptrPreloader,
+        ptrBottom: ptrBottom,
         infinite: infinite,
         infiniteTop: infiniteTop,
         infiniteDistance: infiniteDistance,
@@ -184,6 +206,10 @@ export default {
     }, [fixedList, slotsFixed, pageContentEl]);
   },
 
+  created() {
+    Utils.bindMethods(this, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageStack', 'onPageUnstack', 'onPagePosition']);
+  },
+
   mounted() {
     const self = this;
     const el = self.$refs.el;
@@ -191,23 +217,6 @@ export default {
       ptr,
       infinite
     } = self.props;
-    self.onPtrPullStart = self.onPtrPullStart.bind(self);
-    self.onPtrPullMove = self.onPtrPullMove.bind(self);
-    self.onPtrPullEnd = self.onPtrPullEnd.bind(self);
-    self.onPtrRefresh = self.onPtrRefresh.bind(self);
-    self.onPtrDone = self.onPtrDone.bind(self);
-    self.onInfinite = self.onInfinite.bind(self);
-    self.onPageMounted = self.onPageMounted.bind(self);
-    self.onPageInit = self.onPageInit.bind(self);
-    self.onPageReinit = self.onPageReinit.bind(self);
-    self.onPageBeforeIn = self.onPageBeforeIn.bind(self);
-    self.onPageBeforeOut = self.onPageBeforeOut.bind(self);
-    self.onPageAfterOut = self.onPageAfterOut.bind(self);
-    self.onPageAfterIn = self.onPageAfterIn.bind(self);
-    self.onPageBeforeRemove = self.onPageBeforeRemove.bind(self);
-    self.onPageStack = self.onPageStack.bind(self);
-    self.onPageUnstack = self.onPageUnstack.bind(self);
-    self.onPagePosition = self.onPagePosition.bind(self);
 
     if (ptr) {
       el.addEventListener('ptr:pullstart', self.onPtrPullStart);
@@ -310,13 +319,23 @@ export default {
       const page = event.detail;
       const {
         withSubnavbar,
-        subnavbar
+        subnavbar,
+        withNavbarLarge,
+        navbarLarge
       } = this.props;
 
       if (typeof withSubnavbar === 'undefined' && typeof subnavbar === 'undefined') {
         if (page.$navbarEl && page.$navbarEl.length && page.$navbarEl.find('.subnavbar').length || page.$el.children('.navbar').find('.subnavbar').length) {
           this.setState({
             hasSubnavbar: true
+          });
+        }
+      }
+
+      if (typeof withNavbarLarge === 'undefined' && typeof navbarLarge === 'undefined') {
+        if (page.$navbarEl && page.$navbarEl.hasClass('navbar-inner-large')) {
+          this.setState({
+            hasNavbarLarge: true
           });
         }
       }

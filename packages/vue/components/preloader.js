@@ -44,6 +44,34 @@ export default {
       }, [_h('span', {
         class: 'preloader-inner-half-circle'
       })])]);
+    } else {
+      innerEl = _h('span', {
+        class: 'preloader-inner'
+      }, [_h('span', {
+        class: 'preloader-inner-line'
+      }), _h('span', {
+        class: 'preloader-inner-line'
+      }), _h('span', {
+        class: 'preloader-inner-line'
+      }), _h('span', {
+        class: 'preloader-inner-line'
+      }), _h('span', {
+        class: 'preloader-inner-line'
+      }), _h('span', {
+        class: 'preloader-inner-line'
+      }), _h('span', {
+        class: 'preloader-inner-line'
+      }), _h('span', {
+        class: 'preloader-inner-line'
+      }), _h('span', {
+        class: 'preloader-inner-line'
+      }), _h('span', {
+        class: 'preloader-inner-line'
+      }), _h('span', {
+        class: 'preloader-inner-line'
+      }), _h('span', {
+        class: 'preloader-inner-line'
+      })]);
     }
 
     const classes = Utils.classNames(className, 'preloader', Mixins.colorClasses(props));

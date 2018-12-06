@@ -20,11 +20,20 @@ class F7NavRight extends React.Component {
     const classes = Utils.classNames(className, 'right', {
       sliding
     }, Mixins.colorClasses(props));
+    const children = [];
+    const slots = this.slots;
+
+    if (slots && Object.keys(slots).length) {
+      Object.keys(slots).forEach(key => {
+        children.push(...slots[key]);
+      });
+    }
+
     return React.createElement('div', {
       id: id,
       style: style,
       className: classes
-    }, this.slots['default']);
+    }, children);
   }
 
   get slots() {

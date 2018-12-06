@@ -2,7 +2,6 @@ import React from 'react';
 import Mixins from '../utils/mixins';
 import Utils from '../utils/utils';
 import __reactComponentWatch from '../runtime-helpers/react-component-watch.js';
-import __reactComponentEl from '../runtime-helpers/react-component-el.js';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
@@ -11,6 +10,10 @@ class F7Sheet extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.__reactRefs = {};
+
+    (() => {
+      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed']);
+    })();
   }
 
   onOpen(event) {
@@ -91,26 +94,22 @@ class F7Sheet extends React.Component {
   componentWillUnmount() {
     const self = this;
     if (self.f7Sheet) self.f7Sheet.destroy();
-    const el = self.el;
+    const el = self.refs.el;
     if (!el) return;
-    el.removeEventListener('popup:open', self.onOpenBound);
-    el.removeEventListener('popup:opened', self.onOpenedBound);
-    el.removeEventListener('popup:close', self.onCloseBound);
-    el.removeEventListener('popup:closed', self.onClosedBound);
+    el.removeEventListener('popup:open', self.onOpen);
+    el.removeEventListener('popup:opened', self.onOpened);
+    el.removeEventListener('popup:close', self.onClose);
+    el.removeEventListener('popup:closed', self.onClosed);
   }
 
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
     if (!el) return;
-    self.onOpenBound = self.onOpen.bind(self);
-    self.onOpenedBound = self.onOpened.bind(self);
-    self.onCloseBound = self.onClose.bind(self);
-    self.onClosedBound = self.onClosed.bind(self);
-    el.addEventListener('sheet:open', self.onOpenBound);
-    el.addEventListener('sheet:opened', self.onOpenedBound);
-    el.addEventListener('sheet:close', self.onCloseBound);
-    el.addEventListener('sheet:closed', self.onClosedBound);
+    el.addEventListener('sheet:open', self.onOpen);
+    el.addEventListener('sheet:opened', self.onOpened);
+    el.addEventListener('sheet:close', self.onClose);
+    el.addEventListener('sheet:closed', self.onClosed);
     const props = self.props;
     const {
       opened,
@@ -144,10 +143,6 @@ class F7Sheet extends React.Component {
 
   get slots() {
     return __reactComponentSlots(this.props);
-  }
-
-  get el() {
-    return __reactComponentEl(this);
   }
 
   dispatchEvent(events, ...args) {

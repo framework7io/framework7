@@ -1,5 +1,5 @@
 /**
- * Framework7 React 3.5.2
+ * Framework7 React 4.0.0-beta.1
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 12, 2018
+ * Released on: December 6, 2018
  */
 
 import F7AccordionContent from './components/accordion-content';
@@ -62,6 +62,7 @@ import F7MessagesTitle from './components/messages-title';
 import F7Messages from './components/messages';
 import F7NavLeft from './components/nav-left';
 import F7NavRight from './components/nav-right';
+import F7NavTitleLarge from './components/nav-title-large';
 import F7NavTitle from './components/nav-title';
 import F7Navbar from './components/navbar';
 import F7PageContent from './components/page-content';
@@ -146,6 +147,7 @@ const MessagesTitle = F7MessagesTitle;
 const Messages = F7Messages;
 const NavLeft = F7NavLeft;
 const NavRight = F7NavRight;
+const NavTitleLarge = F7NavTitleLarge;
 const NavTitle = F7NavTitle;
 const Navbar = F7Navbar;
 const PageContent = F7PageContent;
@@ -282,6 +284,8 @@ export {
   NavLeft,
   F7NavRight,
   NavRight,
+  F7NavTitleLarge,
+  NavTitleLarge,
   F7NavTitle,
   NavTitle,
   F7Navbar,

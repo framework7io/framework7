@@ -8,9 +8,10 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7MessagebarSheetImage extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
 
     (() => {
-      this.onChangeBound = this.onChange.bind(this);
+      Utils.bindMethods(this, ['onChange']);
     })();
   }
 
@@ -36,9 +37,12 @@ class F7MessagebarSheetImage extends React.Component {
     let inputEl;
     {
       inputEl = React.createElement('input', {
+        ref: __reactNode => {
+          this.__reactRefs['inputEl'] = __reactNode;
+        },
         type: 'checkbox',
         checked: checked,
-        onChange: self.onChangeBound
+        onChange: self.onChange
       });
     }
     return React.createElement('label', {
@@ -57,6 +61,12 @@ class F7MessagebarSheetImage extends React.Component {
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
+
+  get refs() {
+    return this.__reactRefs;
+  }
+
+  set refs(refs) {}
 
 }
 

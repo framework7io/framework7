@@ -20,9 +20,9 @@ declare namespace F7Button {
     fill? : boolean
     fillMd? : boolean
     fillIos? : boolean
-    big? : boolean
-    bigMd? : boolean
-    bigIos? : boolean
+    large? : boolean
+    largeMd? : boolean
+    largeIos? : boolean
     small? : boolean
     smallMd? : boolean
     smallIos? : boolean
@@ -78,6 +78,8 @@ declare namespace F7Button {
     sortableEnable? : boolean | string
     sortableDisable? : boolean | string
     sortableToggle? : boolean | string
+    cardOpen? : boolean | string
+    cardClose? : boolean | string
     onClick? : (event?: any) => void
   }
 }

@@ -14,6 +14,7 @@ export default {
       type: Boolean,
       default: true
     },
+    ptrBottom: Boolean,
     infinite: Boolean,
     infiniteTop: Boolean,
     infiniteDistance: Number,
@@ -35,11 +36,12 @@ export default {
     const {
       ptr,
       ptrPreloader,
+      ptrDistance,
+      ptrBottom,
       infinite,
       infinitePreloader,
       id,
       style,
-      ptrDistance,
       infiniteDistance,
       infiniteTop
     } = props;
@@ -71,7 +73,7 @@ export default {
         'data-ptr-distance': ptrDistance || undefined,
         'data-infinite-distance': infiniteDistance || undefined
       }
-    }, [ptrEl, infiniteTop ? infiniteEl : self.$slots.default, infiniteTop ? self.$slots.default : infiniteEl]);
+    }, [ptrBottom ? null : ptrEl, infiniteTop ? infiniteEl : null, self.$slots.default, infiniteTop ? null : infiniteEl, ptrBottom ? ptrEl : null]);
   },
 
   computed: {
@@ -83,6 +85,7 @@ export default {
         tab,
         tabActive,
         ptr,
+        ptrBottom,
         infinite,
         infiniteTop,
         hideBarsOnScroll,
@@ -95,6 +98,7 @@ export default {
         tab,
         'tab-active': tabActive,
         'ptr-content': ptr,
+        'ptr-bottom': ptrBottom,
         'infinite-scroll-content': infinite,
         'infinite-scroll-top': infiniteTop,
         'hide-bars-on-scroll': hideBarsOnScroll,
@@ -111,6 +115,10 @@ export default {
 
   },
 
+  created() {
+    Utils.bindMethods(this, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onTabShow', 'onTabHide']);
+  },
+
   mounted() {
     const self = this;
     const el = self.$refs.el;
@@ -119,14 +127,6 @@ export default {
       infinite,
       tab
     } = self.props;
-    self.onPtrPullStart = self.onPtrPullStart.bind(self);
-    self.onPtrPullMove = self.onPtrPullMove.bind(self);
-    self.onPtrPullEnd = self.onPtrPullEnd.bind(self);
-    self.onPtrRefresh = self.onPtrRefresh.bind(self);
-    self.onPtrDone = self.onPtrDone.bind(self);
-    self.onInfinite = self.onInfinite.bind(self);
-    self.onTabShow = self.onTabShow.bind(self);
-    self.onTabHide = self.onTabHide.bind(self);
 
     if (ptr) {
       el.addEventListener('ptr:pullstart', self.onPtrPullStart);

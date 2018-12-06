@@ -1,18 +1,31 @@
 /* === Picker === */
+@import url('./picker-vars.less');
+
 .picker {
   width: 100%;
-  height: 260px;
-  &.picker-inline, .popover & {
-    height: 200px;
+  height: var(--f7-picker-height);
+  &.picker-inline {
+    height: var(--f7-picker-inline-height);
+  }
+  .popover & {
+    height: var(--f7-picker-popover-height);
   }
   @media (orientation: landscape) and (max-height: 415px) {
     &:not(.picker-inline) {
-      height: 200px;
+      height: var(--f7-picker-landscape-height);
     }
   }
 }
 .picker-popover {
-  width: 280px;
+  width: var(--f7-picker-popover-width);
+  .toolbar {
+    .hairline-remove(top);
+    background: none;
+    border-radius: var(--f7-popover-border-radius) var(--f7-popover-border-radius) 0 0;
+  }
+  .toolbar + .picker-columns {
+    height: calc(100% - var(--f7-toolbar-height));
+  }
 }
 .picker-columns {
   display: flex;
@@ -23,6 +36,7 @@
   height: 100%;
   position: relative;
   -webkit-mask-box-image: linear-gradient(to top, transparent, transparent 5%, white 20%, white 80%, transparent 95%, transparent);
+  font-size: var(--f7-picker-column-font-size);
 }
 .picker-column {
   position: relative;
@@ -62,6 +76,7 @@
   &.picker-column-divider {
     display: flex;
     align-items: center;
+    color: var(--f7-picker-divider-text-color);
   }
 }
 .picker-items {
@@ -69,8 +84,8 @@
   transition-timing-function: ease-out;
 }
 .picker-item {
-  height: 36px;
-  line-height: 36px;
+  height: var(--f7-picker-item-height);
+  line-height: var(--f7-picker-item-height);
   white-space: nowrap;
   position: relative;
   overflow: hidden;
@@ -80,6 +95,7 @@
   width: 100%;
   box-sizing: border-box;
   transition: 300ms;
+  color: var(--f7-picker-item-text-color);
   span {
     padding: 0 10px;
   }
@@ -90,19 +106,22 @@
     pointer-events: none;
   }
   &.picker-item-selected {
+    color: var(--f7-picker-item-selected-text-color);
     transform: translate3d(0,0,0) rotateX(0deg);
   }
 
 }
 .picker-center-highlight {
-  height: 36px;
+  height: var(--f7-picker-item-height);
   box-sizing: border-box;
   position: absolute;
   left: 0;
   width: 100%;
   top: 50%;
-  margin-top: -18px;
+  margin-top: calc(-1 * var(--f7-picker-item-height) / 2);
   pointer-events: none;
+  .hairline(top, var(--f7-picker-item-selected-border-color));
+  .hairline(bottom, var(--f7-picker-item-selected-border-color));
 }
 .picker-3d {
   .picker-columns {

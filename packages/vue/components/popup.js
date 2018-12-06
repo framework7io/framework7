@@ -49,18 +49,18 @@ export default {
     }
   },
 
+  created() {
+    Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed']);
+  },
+
   mounted() {
     const self = this;
     const el = self.$refs.el;
     if (!el) return;
-    self.onOpenBound = self.onOpen.bind(self);
-    self.onOpenedBound = self.onOpened.bind(self);
-    self.onCloseBound = self.onClose.bind(self);
-    self.onClosedBound = self.onClosed.bind(self);
-    el.addEventListener('popup:open', self.onOpenBound);
-    el.addEventListener('popup:opened', self.onOpenedBound);
-    el.addEventListener('popup:close', self.onCloseBound);
-    el.addEventListener('popup:closed', self.onClosedBound);
+    el.addEventListener('popup:open', self.onOpen);
+    el.addEventListener('popup:opened', self.onOpened);
+    el.addEventListener('popup:close', self.onClose);
+    el.addEventListener('popup:closed', self.onClosed);
     const props = self.props;
     const {
       closeByBackdropClick,
@@ -89,10 +89,10 @@ export default {
     if (self.f7Popup) self.f7Popup.destroy();
     const el = self.$refs.el;
     if (!el) return;
-    el.removeEventListener('popup:open', self.onOpenBound);
-    el.removeEventListener('popup:opened', self.onOpenedBound);
-    el.removeEventListener('popup:close', self.onCloseBound);
-    el.removeEventListener('popup:closed', self.onClosedBound);
+    el.removeEventListener('popup:open', self.onOpen);
+    el.removeEventListener('popup:opened', self.onOpened);
+    el.removeEventListener('popup:close', self.onClose);
+    el.removeEventListener('popup:closed', self.onClosed);
   },
 
   methods: {

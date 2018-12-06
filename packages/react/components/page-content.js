@@ -9,6 +9,10 @@ class F7PageContent extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.__reactRefs = {};
+
+    (() => {
+      Utils.bindMethods(this, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onTabShow', 'onTabHide']);
+    })();
   }
 
   onPtrPullStart(event) {
@@ -52,6 +56,7 @@ class F7PageContent extends React.Component {
       tab,
       tabActive,
       ptr,
+      ptrBottom,
       infinite,
       infiniteTop,
       hideBarsOnScroll,
@@ -64,6 +69,7 @@ class F7PageContent extends React.Component {
       tab,
       'tab-active': tabActive,
       'ptr-content': ptr,
+      'ptr-bottom': ptrBottom,
       'infinite-scroll-content': infinite,
       'infinite-scroll-top': infiniteTop,
       'hide-bars-on-scroll': hideBarsOnScroll,
@@ -80,11 +86,12 @@ class F7PageContent extends React.Component {
     const {
       ptr,
       ptrPreloader,
+      ptrDistance,
+      ptrBottom,
       infinite,
       infinitePreloader,
       id,
       style,
-      ptrDistance,
       infiniteDistance,
       infiniteTop
     } = props;
@@ -116,7 +123,7 @@ class F7PageContent extends React.Component {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
       }
-    }, ptrEl, infiniteTop ? infiniteEl : self.slots.default, infiniteTop ? self.slots.default : infiniteEl);
+    }, ptrBottom ? null : ptrEl, infiniteTop ? infiniteEl : null, self.slots.default, infiniteTop ? null : infiniteEl, ptrBottom ? ptrEl : null);
   }
 
   componentWillUnmount() {
@@ -140,14 +147,6 @@ class F7PageContent extends React.Component {
       infinite,
       tab
     } = self.props;
-    self.onPtrPullStart = self.onPtrPullStart.bind(self);
-    self.onPtrPullMove = self.onPtrPullMove.bind(self);
-    self.onPtrPullEnd = self.onPtrPullEnd.bind(self);
-    self.onPtrRefresh = self.onPtrRefresh.bind(self);
-    self.onPtrDone = self.onPtrDone.bind(self);
-    self.onInfinite = self.onInfinite.bind(self);
-    self.onTabShow = self.onTabShow.bind(self);
-    self.onTabHide = self.onTabHide.bind(self);
 
     if (ptr) {
       el.addEventListener('ptr:pullstart', self.onPtrPullStart);
@@ -195,6 +194,7 @@ __reactComponentSetProps(F7PageContent, Object.assign({
     type: Boolean,
     default: true
   },
+  ptrBottom: Boolean,
   infinite: Boolean,
   infiniteTop: Boolean,
   infiniteDistance: Number,
