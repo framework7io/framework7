@@ -44,7 +44,6 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 Colin Adams ([App Valley](https://appvalley.vip/))
 Pavol Cvengros ([securCom Inc](https://www.securcom.me/))<br>
 Mason Fok ([tommy](http://mytommy.com))<br>
-Juergen Schimmoeller
 
 [Join here!](https://www.patreon.com/bePatron?patAmt=100.0&exp=1&u=4109762&rid=830841)
 
@@ -52,7 +51,6 @@ Juergen Schimmoeller
 
 ### $50+ Top Supporter
 Aaron Iba<br>
-Harald Hanek<br>
 Olivier<br>
 Marcelo Lopetegui L.<br>
 Bearr Dayss<br>
@@ -64,11 +62,11 @@ Bart DJ
 ---
 
 ### $10+ Supporter
+Fatih Batal<br>
 Matt Davis<br>
 Arsen Huang<br>
 Jonathan Pugh<br>
 Danny Redfern<br>
-Rick Chang<br>
 Marc Hildmann<br>
 Kyle Hammond<br>
 En-Yang Lin<br>

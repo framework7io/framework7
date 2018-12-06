@@ -109,6 +109,7 @@ export default {
             min={inputType === 'number' ? min : undefined}
             max={inputType === 'number' ? max : undefined}
             step={inputType === 'number' ? step : undefined}
+            onInput={self.onInput}
             value={value}
             readOnly={inputReadonly}
             onInput={self.onInput}
