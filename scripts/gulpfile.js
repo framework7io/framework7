@@ -12,7 +12,7 @@ const buildCoreJs = require('./build-core-js.js');
 const buildCoreTypings = require('./build-core-typings.js');
 const buildCoreLess = require('./build-core-less.js');
 const buildCoreComponents = require('./build-core-components.js');
-const buildCoreLazy = require('./build-core-lazy.js');
+const buildCoreLazyComponents = require('./build-core-lazy-components.js');
 
 const buildPhenome = require('./build-phenome.js');
 const buildVue = require('./build-vue');
@@ -30,7 +30,7 @@ gulp.task('core-js', buildCoreJs);
 gulp.task('core-typings', buildCoreTypings);
 gulp.task('core-less', buildCoreLess);
 gulp.task('core-components', buildCoreComponents);
-gulp.task('core-lazy', buildCoreLazy);
+gulp.task('core-lazy-components', buildCoreLazyComponents);
 gulp.task('phenome', buildPhenome);
 
 gulp.task('react', buildReact);

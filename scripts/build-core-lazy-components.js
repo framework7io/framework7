@@ -15,12 +15,9 @@ const less = require('gulp-less');
 const autoprefixer = require('gulp-autoprefixer');
 const cleanCSS = require('gulp-clean-css');
 const uglify = require('gulp-uglify');
-const header = require('gulp-header');
 const rename = require('gulp-rename');
-const sourcemaps = require('gulp-sourcemaps');
 const getConfig = require('./get-core-config.js');
 const getOutput = require('./get-core-output.js');
-const banner = require('./banner-core.js');
 
 const coreComponents = [
   'app',
@@ -117,7 +114,7 @@ function buildLazyComponentsLess(rtl, components, cb) {
       .pipe(rename((filePath) => {
         if (rtl) filePath.basename += '.rtl';
       }))
-      .pipe(gulp.dest(`${output}/lazy-components/`))
+      .pipe(gulp.dest(`${output}/components/`))
       .on('end', () => {
         cbs += 1;
         if (cbs === componentsToProcess.length && cb) cb();
@@ -163,13 +160,13 @@ function buildLazyComponentsJs(components, cb) {
     .then((bundle) => { // eslint-disable-line
       return bundle.write({
         strict: true,
-        dir: `${output}/lazy-components/`,
+        dir: `${output}/components/`,
         format: 'es',
         exports: 'default',
       });
     })
     .then(() => {
-      const files = fs.readdirSync(`${output}/lazy-components/`);
+      const files = fs.readdirSync(`${output}/components/`);
       const filesToProcess = files.filter((fileName) => { // eslint-disable-line
         return fileName.indexOf('.js') > 0
           && fileName.indexOf('chunk-') < 0
@@ -184,7 +181,7 @@ function buildLazyComponentsJs(components, cb) {
       });
       let cbs = 0;
       filesToProcess.forEach((fileName) => {
-        let fileContent = fs.readFileSync(`${output}/lazy-components/${fileName}`, 'utf8')
+        let fileContent = fs.readFileSync(`${output}/components/${fileName}`, 'utf8')
           .split('\n')
           .filter(line => line.indexOf('import ') !== 0)
           .map(line => line.trim().length ? `  ${line}` : line) // eslint-disable-line
@@ -196,14 +193,14 @@ function buildLazyComponentsJs(components, cb) {
             return install.replace(/COMPONENT/g, name);
           });
 
-        fs.writeFileSync(`${output}/lazy-components/${fileName}`, `${fileContent}\n`);
+        fs.writeFileSync(`${output}/components/${fileName}`, `${fileContent}\n`);
 
-        gulp.src(`${output}/lazy-components/${fileName}`)
+        gulp.src(`${output}/components/${fileName}`)
           .pipe(uglify())
           .pipe(modifyFile((content) => { // eslint-disable-line
             return `(${content}(Framework7, typeof Framework7AutoInstallComponent === 'undefined' ? undefined : Framework7AutoInstallComponent))`;
           }))
-          .pipe(gulp.dest(`${output}/lazy-components/`))
+          .pipe(gulp.dest(`${output}/components/`))
           .on('end', () => {
             cbs += 1;
             if (cbs === filesToProcess.length && cb) cb();
@@ -211,7 +208,7 @@ function buildLazyComponentsJs(components, cb) {
       });
 
       filesToRemove.forEach((fileName) => {
-        fs.unlinkSync(`${output}/lazy-components/${fileName}`);
+        fs.unlinkSync(`${output}/components/${fileName}`);
       });
     })
     .catch((err) => {
@@ -219,134 +216,10 @@ function buildLazyComponentsJs(components, cb) {
     });
 }
 
-function buildLazyFrameworkLess(rtl, cb) {
-  const config = getConfig();
-  const env = process.env.NODE_ENV || 'development';
-  const includeIosTheme = config.themes.indexOf('ios') >= 0;
-  const includeMdTheme = config.themes.indexOf('md') >= 0;
-  const includeDarkTheme = config.darkTheme;
-  const output = getOutput();
-  const colors = `{\n${Object.keys(config.colors).map(colorName => `  ${colorName}: ${config.colors[colorName]};`).join('\n')}\n}`;
-
-  gulp.src('./src/core/framework7.less')
-    .pipe(modifyFile((content) => {
-      const newContent = content
-        .replace('//IMPORT_COMPONENTS', '')
-        .replace('$includeIosTheme', includeIosTheme)
-        .replace('$includeMdTheme', includeMdTheme)
-        .replace('$includeDarkTheme', includeDarkTheme)
-        .replace('$themeColor', config.themeColor)
-        .replace('$colors', colors)
-        .replace('$rtl', rtl);
-      return newContent;
-    }))
-    .pipe(less())
-    .on('error', (err) => {
-      if (cb) cb();
-      console.log(err.toString());
-    })
-    .pipe(autoprefixer({
-      cascade: false,
-    }))
-    .on('error', (err) => {
-      if (cb) cb();
-      console.log(err.toString());
-    })
-    .pipe(header(banner))
-    .pipe(rename((filePath) => {
-      filePath.basename = 'framework7-lazy';
-      if (rtl) filePath.basename += '.rtl';
-    }))
-    .pipe(gulp.dest(`${output}/css/`))
-    .on('end', () => {
-      if (env === 'development') {
-        if (cb) cb();
-        return;
-      }
-      gulp.src(`${output}/css/framework7-lazy${rtl ? '.rtl' : ''}.css`)
-        .pipe(cleanCSS({
-          compatibility: '*,-properties.zeroUnits',
-        }))
-        .pipe(header(banner))
-        .pipe(rename((filePath) => {
-          filePath.basename += '.min';
-        }))
-        .pipe(gulp.dest(`${output}/css/`))
-        .on('end', () => {
-          if (cb) cb();
-        });
-    });
-}
-
-function buildLazyFrameworkJs(cb) {
-  const config = getConfig();
-  const env = process.env.NODE_ENV || 'development';
-  const target = process.env.TARGET || config.target || 'universal';
-  const format = process.env.FORMAT || config.format || 'umd';
-  const output = getOutput();
-
-  rollup.rollup({
-    input: './src/core/framework7.js',
-    plugins: [
-      replace({
-        delimiters: ['', ''],
-        'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
-        'process.env.TARGET': JSON.stringify(target),
-        'process.env.FORMAT': JSON.stringify(format),
-        '//IMPORT_COMPONENTS': '',
-        '//INSTALL_COMPONENTS': '',
-        '//ES_IMPORT_HELPERS': '',
-        '//NAMED_ES_EXPORT': '',
-      }),
-      resolve({ jsnext: true }),
-      commonjs(),
-      buble(),
-    ],
-    onwarn(warning, warn) {
-      const ignore = ['EVAL'];
-      if (warning.code && ignore.indexOf(warning.code) >= 0) {
-        return;
-      }
-      warn(warning);
-    },
-  }).then((bundle) => {
-    return bundle.write({
-      strict: true,
-      file: `${output}/js/framework7-lazy.js`,
-      format: 'umd',
-      name: 'Framework7',
-      sourcemap: env === 'development',
-      sourcemapFile: `${output}/js/framework7.js.map`,
-      banner,
-    });
-  }).then(() => {
-    if (env === 'development') {
-      if (cb) cb();
-      return;
-    }
-    // Minified version
-    gulp.src(`${output}/js/framework7-lazy.js`)
-      .pipe(sourcemaps.init())
-      .pipe(uglify())
-      .pipe(header(banner))
-      .pipe(rename((filePath) => {
-        filePath.basename += '.min';
-      }))
-      .pipe(sourcemaps.write('./'))
-      .pipe(gulp.dest(`${output}/js/`))
-      .on('end', () => {
-        if (cb) cb();
-      });
-  }).catch((err) => {
-    if (cb) cb();
-    console.log(err.toString());
-  });
-}
-
-function buildLazy(cb) {
+function buildLazyComponents(cb) {
   let cbs = 0;
   const env = process.env.NODE_ENV || 'development';
-  const targetCbs = env === 'development' ? 4 : 6;
+  const targetCbs = env === 'development' ? 2 : 4;
   const config = getConfig();
   const components = fs.readdirSync('./src/core/components').filter(c => c.indexOf('.') < 0);
   function callback() {
@@ -360,14 +233,6 @@ function buildLazy(cb) {
   } else {
     buildLazyComponentsLess(config.rtl, components, callback);
   }
-
-  buildLazyFrameworkJs(callback);
-  if (env === 'production') {
-    buildLazyFrameworkLess(false, callback);
-    buildLazyFrameworkLess(true, callback);
-  } else {
-    buildLazyFrameworkLess(config.rtl, callback);
-  }
 }
 
-module.exports = buildLazy;
+module.exports = buildLazyComponents;

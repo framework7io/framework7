@@ -43,14 +43,13 @@ function copyLess(config, cb) {
     });
 }
 // Build CSS
-function build(config, components, themes, rtl, cb) {
+function buildBundle(config, components, themes, rtl, cb) {
   const env = process.env.NODE_ENV || 'development';
   const colors = `{\n${Object.keys(config.colors).map(colorName => `  ${colorName}: ${config.colors[colorName]};`).join('\n')}\n}`;
   const includeIosTheme = themes.indexOf('ios') >= 0;
   const includeMdTheme = themes.indexOf('md') >= 0;
   const includeDarkTheme = config.darkTheme;
-  const currentTheme = themes.length === 1 ? themes[0] : '';
-  const outputFileName = `framework7${rtl ? '.rtl' : ''}${currentTheme ? `.${currentTheme}` : ''}`;
+  const outputFileName = `framework7.bundle${rtl ? '.rtl' : ''}`;
   const output = getOutput();
 
   gulp.src('./src/core/framework7.less')
@@ -101,7 +100,63 @@ function build(config, components, themes, rtl, cb) {
         });
     });
 }
+function buildCore(themes, rtl, cb) {
+  const config = getConfig();
+  const env = process.env.NODE_ENV || 'development';
+  const includeIosTheme = themes.indexOf('ios') >= 0;
+  const includeMdTheme = themes.indexOf('md') >= 0;
+  const includeDarkTheme = config.darkTheme;
+  const output = getOutput();
+  const colors = `{\n${Object.keys(config.colors).map(colorName => `  ${colorName}: ${config.colors[colorName]};`).join('\n')}\n}`;
 
+  gulp.src('./src/core/framework7.less')
+    .pipe(modifyFile((content) => {
+      const newContent = content
+        .replace('//IMPORT_COMPONENTS', '')
+        .replace('$includeIosTheme', includeIosTheme)
+        .replace('$includeMdTheme', includeMdTheme)
+        .replace('$includeDarkTheme', includeDarkTheme)
+        .replace('$themeColor', config.themeColor)
+        .replace('$colors', colors)
+        .replace('$rtl', rtl);
+      return newContent;
+    }))
+    .pipe(less())
+    .on('error', (err) => {
+      if (cb) cb();
+      console.log(err.toString());
+    })
+    .pipe(autoprefixer({
+      cascade: false,
+    }))
+    .on('error', (err) => {
+      if (cb) cb();
+      console.log(err.toString());
+    })
+    .pipe(header(banner))
+    .pipe(rename((filePath) => {
+      if (rtl) filePath.basename += '.rtl';
+    }))
+    .pipe(gulp.dest(`${output}/css/`))
+    .on('end', () => {
+      if (env === 'development') {
+        if (cb) cb();
+        return;
+      }
+      gulp.src(`${output}/css/framework7${rtl ? '.rtl' : ''}.css`)
+        .pipe(cleanCSS({
+          compatibility: '*,-properties.zeroUnits',
+        }))
+        .pipe(header(banner))
+        .pipe(rename((filePath) => {
+          filePath.basename += '.min';
+        }))
+        .pipe(gulp.dest(`${output}/css/`))
+        .on('end', () => {
+          if (cb) cb();
+        });
+    });
+}
 
 function buildLess(cb) {
   const config = getConfig();
@@ -118,29 +173,24 @@ function buildLess(cb) {
   // Copy Less
   copyLess(config);
 
-  // Build development version
-  if (env === 'development') {
-    build(config, components, config.themes, config.rtl, () => {
-      if (cb) cb();
-    });
-    return;
-  }
-
-  // Build multiple files
   let cbs = 0;
   function onCb() {
     cbs += 1;
-    if (cbs === 6 && cb) cb();
+    if (cbs === (env === 'development' ? 2 : 4) && cb) cb();
   }
 
-  // Build Bundle
-  build(config, components, ['ios', 'md'], false, onCb);
-  build(config, components, ['ios', 'md'], true, onCb);
-  // Build Themes
-  build(config, components, ['ios'], false, onCb);
-  build(config, components, ['ios'], true, onCb);
-  build(config, components, ['md'], false, onCb);
-  build(config, components, ['md'], true, onCb);
+  // Build development version
+  if (env === 'development') {
+    buildBundle(config, components, config.themes, config.rtl, onCb);
+    buildCore(config.themes, config.rtl, onCb);
+    return;
+  }
+
+  // Build production
+  buildBundle(config, components, ['ios', 'md'], false, onCb);
+  buildBundle(config, components, ['ios', 'md'], true, onCb);
+  buildCore(['ios', 'md'], false, onCb);
+  buildCore(['ios', 'md'], true, onCb);
 }
 
 module.exports = buildLess;

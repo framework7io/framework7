@@ -75,7 +75,7 @@ function es(components, cb) {
       if (cbs === expectCbs) cb();
     });
 }
-function umd(components, cb) {
+function umdBundle(components, cb) {
   const config = getConfig();
   const env = process.env.NODE_ENV || 'development';
   const target = process.env.TARGET || config.target || 'universal';
@@ -111,6 +111,71 @@ function umd(components, cb) {
     cache = bundle;
     return bundle.write({
       strict: true,
+      file: `${output}/js/framework7.bundle.js`,
+      format: 'umd',
+      name: 'Framework7',
+      sourcemap: env === 'development',
+      sourcemapFile: `${output}/js/framework7.bundle.js.map`,
+      banner,
+    });
+  }).then(() => {
+    if (env === 'development') {
+      if (cb) cb();
+      return;
+    }
+    // Minified version
+    gulp.src(`${output}/js/framework7.bundle.js`)
+      .pipe(sourcemaps.init())
+      .pipe(uglify())
+      .pipe(header(banner))
+      .pipe(rename((filePath) => {
+        filePath.basename += '.min';
+      }))
+      .pipe(sourcemaps.write('./'))
+      .pipe(gulp.dest(`${output}/js/`))
+      .on('end', () => {
+        cb();
+      });
+  }).catch((err) => {
+    if (cb) cb();
+    console.log(err.toString());
+  });
+}
+
+function umdCore(cb) {
+  const config = getConfig();
+  const env = process.env.NODE_ENV || 'development';
+  const target = process.env.TARGET || config.target || 'universal';
+  const format = process.env.FORMAT || config.format || 'umd';
+  const output = getOutput();
+
+  rollup.rollup({
+    input: './src/core/framework7.js',
+    plugins: [
+      replace({
+        delimiters: ['', ''],
+        'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
+        'process.env.TARGET': JSON.stringify(target),
+        'process.env.FORMAT': JSON.stringify(format),
+        '//IMPORT_COMPONENTS': '',
+        '//INSTALL_COMPONENTS': '',
+        '//ES_IMPORT_HELPERS': '',
+        '//NAMED_ES_EXPORT': '',
+      }),
+      resolve({ jsnext: true }),
+      commonjs(),
+      buble(),
+    ],
+    onwarn(warning, warn) {
+      const ignore = ['EVAL'];
+      if (warning.code && ignore.indexOf(warning.code) >= 0) {
+        return;
+      }
+      warn(warning);
+    },
+  }).then((bundle) => { // eslint-disable-line
+    return bundle.write({
+      strict: true,
       file: `${output}/js/framework7.js`,
       format: 'umd',
       name: 'Framework7',
@@ -134,13 +199,14 @@ function umd(components, cb) {
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(`${output}/js/`))
       .on('end', () => {
-        cb();
+        if (cb) cb();
       });
   }).catch((err) => {
     if (cb) cb();
     console.log(err.toString());
   });
 }
+
 function buildJs(cb) {
   const config = getConfig();
 
@@ -159,10 +225,14 @@ function buildJs(cb) {
     }
   });
 
-  const expectCbs = 2;
+  const expectCbs = 3;
   let cbs = 0;
 
-  umd(components, () => {
+  umdCore(() => {
+    cbs += 1;
+    if (cbs === expectCbs) cb();
+  });
+  umdBundle(components, () => {
     cbs += 1;
     if (cbs === expectCbs) cb();
   });
