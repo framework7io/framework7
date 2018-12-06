@@ -1,15 +1,4 @@
 .ios {
-  .router-dynamic-navbar-inside {
-    .page-shadow-effect, .page-opacity-effect {
-      top: var(--f7-navbar-height);
-    }
-    .page-next:before,
-    .page-current:after,
-    .page-current:before,
-    .page-previous:after {
-      top: var(--f7-navbar-height);
-    }
-  }
   .rtl({
     .page-previous {
       transform: translate3d(20%, 0, 0);
@@ -84,6 +73,19 @@
         .page-fake-shadow();
         animation: ios-page-element-fade-out var(--f7-page-transition-duration) forwards;
       }
+    }
+  }
+
+  .router-dynamic-navbar-inside {
+    .page-shadow-effect,
+    .page-opacity-effect {
+      top: var(--f7-navbar-height);
+    }
+    .page-next:before,
+    .page-current:after,
+    .page-current:before,
+    .page-previous:after {
+      top: var(--f7-navbar-height);
     }
   }
 }

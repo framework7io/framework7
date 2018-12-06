@@ -94,6 +94,7 @@ class Router extends Framework7Class {
   animatableNavElements(newNavbarInner, oldNavbarInner, toLarge, fromLarge, direction) {
     const router = this;
     const dynamicNavbar = router.dynamicNavbar;
+    const separateNavbar = router.separateNavbar;
     const animateIcon = router.params.iosAnimateNavbarBackIcon;
 
     let newNavEls;
@@ -123,14 +124,14 @@ class Router extends Framework7Class {
       oldNavEls = [];
       newNavbarInner.children('.left, .right, .title, .subnavbar').each((index, navEl) => {
         const $navEl = $(navEl);
-        if ($navEl.hasClass('left') && fromLarge && direction === 'forward') return;
+        if ($navEl.hasClass('left') && fromLarge && direction === 'forward' && separateNavbar) return;
         if ($navEl.hasClass('title') && toLarge) return;
         newNavEls.push(animatableNavEl($navEl, newNavbarInner));
       });
       oldNavbarInner.children('.left, .right, .title, .subnavbar').each((index, navEl) => {
         const $navEl = $(navEl);
-        if ($navEl.hasClass('left') && toLarge && !fromLarge && direction === 'forward') return;
-        if ($navEl.hasClass('left') && toLarge && direction === 'backward') return;
+        if ($navEl.hasClass('left') && toLarge && !fromLarge && direction === 'forward' && separateNavbar) return;
+        if ($navEl.hasClass('left') && toLarge && direction === 'backward' && separateNavbar) return;
         if ($navEl.hasClass('title') && fromLarge) {
           return;
         }

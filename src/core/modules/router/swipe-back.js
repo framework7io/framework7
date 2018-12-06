@@ -76,6 +76,7 @@ function SwipeBack(r) {
         if (fromLarge) {
           if (isTitle) return;
           if ($navEl.hasClass('title-large')) {
+            if (!separateNavbar) return;
             if (toLarge) {
               if (els.indexOf(el) < 0) els.push(el);
               el.overflow = 'visible';
@@ -103,11 +104,12 @@ function SwipeBack(r) {
         if (toLarge) {
           if (!fromLarge) {
             if ($navEl.hasClass('title-large')) {
+              if (!separateNavbar) return;
               if (els.indexOf(el) < 0) els.push(el);
               el.opacity = 0;
             }
           }
-          if (isLeft) {
+          if (isLeft && separateNavbar) {
             if (els.indexOf(el) < 0) els.push(el);
             el.opacity = progress => (1 - (progress ** 0.33));
             $navEl.find('.back span').each((subIndex, subNavEl) => {
@@ -135,7 +137,7 @@ function SwipeBack(r) {
           transformTarget.transform = (progress) => {
             let activeNavTranslate = progress * transformTarget.el.f7NavbarRightOffset;
             if (Device.pixelRatio === 1) activeNavTranslate = Math.round(activeNavTranslate);
-            if (isSubnavbar && currentNavIsLarge) {
+            if (isSubnavbar && currentNavIsLarge && separateNavbar) {
               return `translate3d(${activeNavTranslate}px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)`;
             }
             return `translate3d(${activeNavTranslate}px,0,0)`;
@@ -156,6 +158,7 @@ function SwipeBack(r) {
           if (els.indexOf(el) < 0) els.push(el);
 
           if ($navEl.hasClass('title-large')) {
+            if (!separateNavbar) return;
             if (fromLarge) {
               el.opacity = 1;
               el.overflow = 'visible';
@@ -207,7 +210,7 @@ function SwipeBack(r) {
           transformTarget.transform = (progress) => {
             let previousNavTranslate = transformTarget.el.f7NavbarLeftOffset * (1 - progress);
             if (Device.pixelRatio === 1) previousNavTranslate = Math.round(previousNavTranslate);
-            if (isSubnavbar && previousNavIsLarge) {
+            if (isSubnavbar && previousNavIsLarge && separateNavbar) {
               return `translate3d(${previousNavTranslate}px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)`;
             }
             return `translate3d(${previousNavTranslate}px,0,0)`;
