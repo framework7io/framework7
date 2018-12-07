@@ -46,7 +46,8 @@ export default {
     disabled: Boolean,
     itemInput: Boolean,
     itemInputWithInfo: Boolean,
-    inlineLabel: Boolean
+    inlineLabel: Boolean,
+    virtualListIndex: Number
   }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
 
   data() {
@@ -111,7 +112,8 @@ export default {
       inlineLabel,
       sortable,
       noChevron,
-      chevronCenter
+      chevronCenter,
+      virtualListIndex
     } = props;
     const isMedia = mediaItem || mediaList || self.state.isMedia;
     const isSortable = sortable || self.state.isSortable;
@@ -121,8 +123,8 @@ export default {
       const needsEvents = !(link || href || accordionItem || smartSelect);
       itemContentEl = _h(F7ListItemContent, {
         on: needsEvents ? {
-          click: self.onClickBound,
-          change: self.onChangeBound
+          click: self.onClick,
+          change: self.onChange
         } : undefined,
         attrs: {
           title: title,
@@ -162,12 +164,9 @@ export default {
           'smart-select': smartSelect
         }, Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
         linkEl = _h('a', __vueComponentTransformJSXProps(Object.assign({
+          ref: 'linkEl',
           class: linkClasses
-        }, linkAttrs, {
-          on: {
-            click: self.onClick.bind(self)
-          }
-        })), [itemContentEl]);
+        }, linkAttrs)), [itemContentEl]);
       }
     }
 
@@ -189,7 +188,8 @@ export default {
         style: style,
         class: liClasses,
         attrs: {
-          id: id
+          id: id,
+          'data-virtual-list-index': virtualListIndex
         }
       }, [_h('span', [this.$slots['default'] || [title]])]);
     }
@@ -200,7 +200,8 @@ export default {
         style: style,
         class: liClasses,
         attrs: {
-          id: id
+          id: id,
+          'data-virtual-list-index': virtualListIndex
         }
       }, [title, this.$slots['default']]);
     }
@@ -211,7 +212,8 @@ export default {
       style: style,
       class: liClasses,
       attrs: {
-        id: id
+        id: id,
+        'data-virtual-list-index': virtualListIndex
       }
     }, [this.$slots['root-start'], swipeout ? _h('div', {
       class: 'swipeout-content'
@@ -236,27 +238,47 @@ export default {
 
   created() {
     const self = this;
-    self.onClickBound = self.onClick.bind(self);
-    self.onChangeBound = self.onChange.bind(self);
-    self.onSwipeoutOpenBound = self.onSwipeoutOpen.bind(self);
-    self.onSwipeoutOpenedBound = self.onSwipeoutOpened.bind(self);
-    self.onSwipeoutCloseBound = self.onSwipeoutClose.bind(self);
-    self.onSwipeoutClosedBound = self.onSwipeoutClosed.bind(self);
-    self.onSwipeoutDeleteBound = self.onSwipeoutDelete.bind(self);
-    self.onSwipeoutDeletedBound = self.onSwipeoutDeleted.bind(self);
-    self.onSwipeoutOverswipeEnterBound = self.onSwipeoutOverswipeEnter.bind(self);
-    self.onSwipeoutOverswipeExitBound = self.onSwipeoutOverswipeExit.bind(self);
-    self.onSwipeoutBound = self.onSwipeout.bind(self);
-    self.onAccOpenBound = self.onAccOpen.bind(self);
-    self.onAccOpenedBound = self.onAccOpened.bind(self);
-    self.onAccCloseBound = self.onAccClose.bind(self);
-    self.onAccClosedBound = self.onAccClosed.bind(self);
+    self.onClick = self.onClick.bind(self);
+    self.onChange = self.onChange.bind(self);
+    self.onSwipeoutOpen = self.onSwipeoutOpen.bind(self);
+    self.onSwipeoutOpened = self.onSwipeoutOpened.bind(self);
+    self.onSwipeoutClose = self.onSwipeoutClose.bind(self);
+    self.onSwipeoutClosed = self.onSwipeoutClosed.bind(self);
+    self.onSwipeoutDelete = self.onSwipeoutDelete.bind(self);
+    self.onSwipeoutDeleted = self.onSwipeoutDeleted.bind(self);
+    self.onSwipeoutOverswipeEnter = self.onSwipeoutOverswipeEnter.bind(self);
+    self.onSwipeoutOverswipeExit = self.onSwipeoutOverswipeExit.bind(self);
+    self.onSwipeout = self.onSwipeout.bind(self);
+    self.onAccBeforeOpen = self.onAccBeforeOpen.bind(self);
+    self.onAccOpen = self.onAccOpen.bind(self);
+    self.onAccOpened = self.onAccOpened.bind(self);
+    self.onAccBeforeClose = self.onAccBeforeClose.bind(self);
+    self.onAccClose = self.onAccClose.bind(self);
+    self.onAccClosed = self.onAccClosed.bind(self);
   },
 
   mounted() {
     const self = this;
-    const el = self.$refs.el;
+    const {
+      el,
+      linkEl
+    } = self.$refs;
     if (!el) return;
+    const {
+      link,
+      href,
+      smartSelect,
+      swipeout,
+      swipeoutOpened,
+      accordionItem,
+      smartSelectParams
+    } = self.props;
+    const needsEvents = !(link || href || accordionItem || smartSelect);
+
+    if (!needsEvents && linkEl) {
+      linkEl.addEventListener('click', self.onClick);
+    }
+
     self.$listEl = self.$$(el).parents('.list, .list-group').eq(0);
 
     if (self.$listEl.length) {
@@ -267,31 +289,25 @@ export default {
       });
     }
 
-    const {
-      swipeout,
-      swipeoutOpened,
-      accordionItem,
-      smartSelect,
-      smartSelectParams
-    } = self.props;
-
     if (swipeout) {
-      el.addEventListener('swipeout:open', self.onSwipeoutOpenBound);
-      el.addEventListener('swipeout:opened', self.onSwipeoutOpenedBound);
-      el.addEventListener('swipeout:close', self.onSwipeoutCloseBound);
-      el.addEventListener('swipeout:closed', self.onSwipeoutClosedBound);
-      el.addEventListener('swipeout:delete', self.onSwipeoutDeleteBound);
-      el.addEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
-      el.addEventListener('swipeout:overswipeenter', self.onSwipeoutOverswipeEnterBound);
-      el.addEventListener('swipeout:overswipeexit', self.onSwipeoutOverswipeExitBound);
-      el.addEventListener('swipeout', self.onSwipeoutBound);
+      el.addEventListener('swipeout:open', self.onSwipeoutOpen);
+      el.addEventListener('swipeout:opened', self.onSwipeoutOpened);
+      el.addEventListener('swipeout:close', self.onSwipeoutClose);
+      el.addEventListener('swipeout:closed', self.onSwipeoutClosed);
+      el.addEventListener('swipeout:delete', self.onSwipeoutDelete);
+      el.addEventListener('swipeout:deleted', self.onSwipeoutDeleted);
+      el.addEventListener('swipeout:overswipeenter', self.onSwipeoutOverswipeEnter);
+      el.addEventListener('swipeout:overswipeexit', self.onSwipeoutOverswipeExit);
+      el.addEventListener('swipeout', self.onSwipeout);
     }
 
     if (accordionItem) {
-      el.addEventListener('accordion:open', self.onAccOpenBound);
-      el.addEventListener('accordion:opened', self.onAccOpenedBound);
-      el.addEventListener('accordion:close', self.onAccCloseBound);
-      el.addEventListener('accordion:closed', self.onAccClosedBound);
+      el.addEventListener('accordion:beforeopen', self.onAccBeforeOpen);
+      el.addEventListener('accordion:open', self.onAccOpen);
+      el.addEventListener('accordion:opened', self.onAccOpened);
+      el.addEventListener('accordion:beforeclose', self.onAccBeforeClose);
+      el.addEventListener('accordion:close', self.onAccClose);
+      el.addEventListener('accordion:closed', self.onAccClosed);
     }
 
     self.$f7ready(f7 => {
@@ -339,31 +355,43 @@ export default {
 
   beforeDestroy() {
     const self = this;
-    const el = self.$refs.el;
     const {
+      el,
+      linkEl
+    } = self.$refs;
+    const {
+      link,
+      href,
+      smartSelect,
       swipeout,
-      accordionItem,
-      smartSelect
+      accordionItem
     } = self.props;
+    const needsEvents = !(link || href || accordionItem || smartSelect);
+
+    if (!needsEvents && linkEl) {
+      linkEl.removeEventListener('click', self.onClick);
+    }
 
     if (el) {
       if (swipeout) {
-        el.removeEventListener('swipeout:open', self.onSwipeoutOpenBound);
-        el.removeEventListener('swipeout:opened', self.onSwipeoutOpenedBound);
-        el.removeEventListener('swipeout:close', self.onSwipeoutCloseBound);
-        el.removeEventListener('swipeout:closed', self.onSwipeoutClosedBound);
-        el.removeEventListener('swipeout:delete', self.onSwipeoutDeleteBound);
-        el.removeEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
-        el.removeEventListener('swipeout:overswipeenter', self.onSwipeoutOverswipeEnterBound);
-        el.removeEventListener('swipeout:overswipeexit', self.onSwipeoutOverswipeExitBound);
-        el.removeEventListener('swipeout', self.onSwipeoutBound);
+        el.removeEventListener('swipeout:open', self.onSwipeoutOpen);
+        el.removeEventListener('swipeout:opened', self.onSwipeoutOpened);
+        el.removeEventListener('swipeout:close', self.onSwipeoutClose);
+        el.removeEventListener('swipeout:closed', self.onSwipeoutClosed);
+        el.removeEventListener('swipeout:delete', self.onSwipeoutDelete);
+        el.removeEventListener('swipeout:deleted', self.onSwipeoutDeleted);
+        el.removeEventListener('swipeout:overswipeenter', self.onSwipeoutOverswipeEnter);
+        el.removeEventListener('swipeout:overswipeexit', self.onSwipeoutOverswipeExit);
+        el.removeEventListener('swipeout', self.onSwipeout);
       }
 
       if (accordionItem) {
-        el.removeEventListener('accordion:open', self.onAccOpenBound);
-        el.removeEventListener('accordion:opened', self.onAccOpenedBound);
-        el.removeEventListener('accordion:close', self.onAccCloseBound);
-        el.removeEventListener('accordion:closed', self.onAccClosedBound);
+        el.removeEventListener('accordion:beforeopen', self.onAccBeforeOpen);
+        el.removeEventListener('accordion:open', self.onAccOpen);
+        el.removeEventListener('accordion:opened', self.onAccOpened);
+        el.removeEventListener('accordion:beforeclose', self.onAccBeforeClose);
+        el.removeEventListener('accordion:close', self.onAccClose);
+        el.removeEventListener('accordion:closed', self.onAccClosed);
       }
     }
 
@@ -417,12 +445,20 @@ export default {
       this.dispatchEvent('swipeout', event);
     },
 
+    onAccBeforeClose(event) {
+      this.dispatchEvent('accordion:beforeclose accordionBeforeClose', event, event.detail.prevent);
+    },
+
     onAccClose(event) {
       this.dispatchEvent('accordion:close accordionClose', event);
     },
 
     onAccClosed(event) {
       this.dispatchEvent('accordion:closed accordionClosed', event);
+    },
+
+    onAccBeforeOpen(event) {
+      this.dispatchEvent('accordion:beforeopen accordionBeforeOpen', event, event.detail.prevent);
     },
 
     onAccOpen(event) {

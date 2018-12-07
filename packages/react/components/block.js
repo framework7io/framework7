@@ -1,7 +1,6 @@
 import React from 'react';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
-import __reactComponentEl from '../runtime-helpers/react-component-el.js';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
@@ -9,6 +8,7 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7Block extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
   }
 
   onTabShow(event) {
@@ -52,19 +52,22 @@ class F7Block extends React.Component {
     return React.createElement('div', {
       id: id,
       style: style,
-      className: classes
+      className: classes,
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      }
     }, this.slots['default']);
   }
 
   componentWillUnmount() {
-    const el = this.el;
+    const el = this.refs.el;
     if (!el) return;
     el.removeEventListener('tab:show', this.onTabShowBound);
     el.removeEventListener('tab:hide', this.onTabHideBound);
   }
 
   componentDidMount() {
-    const el = this.el;
+    const el = this.refs.el;
     if (!el) return;
     this.onTabShowBound = this.onTabShow.bind(this);
     this.onTabHideBound = this.onTabHide.bind(this);
@@ -76,13 +79,15 @@ class F7Block extends React.Component {
     return __reactComponentSlots(this.props);
   }
 
-  get el() {
-    return __reactComponentEl(this);
-  }
-
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
+
+  get refs() {
+    return this.__reactRefs;
+  }
+
+  set refs(refs) {}
 
 }
 

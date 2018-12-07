@@ -45,6 +45,7 @@ declare namespace F7ListItem {
     itemInput? : boolean
     itemInputWithInfo? : boolean
     inlineLabel? : boolean
+    virtualListIndex? : number
     color? : string
     colorTheme? : string
     textColor? : string
@@ -91,8 +92,10 @@ declare namespace F7ListItem {
     onSwipeoutOpen? : (event?: any) => void
     onSwipeoutOpened? : (event?: any) => void
     onSwipeout? : (event?: any) => void
+    onAccordionBeforeClose? : (...args: any[]) => void
     onAccordionClose? : (event?: any) => void
     onAccordionClosed? : (event?: any) => void
+    onAccordionBeforeOpen? : (...args: any[]) => void
     onAccordionOpen? : (event?: any) => void
     onAccordionOpened? : (event?: any) => void
     onChange? : (event?: any) => void
@@ -110,8 +113,10 @@ declare class F7ListItem extends React.Component<F7ListItem.Props, {}> {
   onSwipeoutOpen(event? : any) : unknown
   onSwipeoutOpened(event? : any) : unknown
   onSwipeout(event? : any) : unknown
+  onAccBeforeClose(event? : any) : unknown
   onAccClose(event? : any) : unknown
   onAccClosed(event? : any) : unknown
+  onAccBeforeOpen(event? : any) : unknown
   onAccOpen(event? : any) : unknown
   onAccOpened(event? : any) : unknown
   onChange(event? : any) : unknown

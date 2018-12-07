@@ -88,9 +88,6 @@ export default {
       style: style,
       class: self.classes
     }, self.attrs, {
-      on: {
-        click: self.onClick.bind(self)
-      },
       attrs: {
         id: id
       }
@@ -188,8 +185,14 @@ export default {
     }
   },
 
+  created() {
+    const self = this;
+    self.onClickBound = self.onClick.bind(self);
+  },
+
   mounted() {
     const self = this;
+    self.$refs.el.addEventListener('click', self.onClickBound);
     const {
       tooltip
     } = self.props;
@@ -204,6 +207,7 @@ export default {
 
   beforeDestroy() {
     const self = this;
+    self.$refs.el.removeEventListener('click', self.onClickBound);
 
     if (self.f7Tooltip && self.f7Tooltip.destroy) {
       self.f7Tooltip.destroy();

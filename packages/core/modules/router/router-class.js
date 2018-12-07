@@ -11,7 +11,7 @@ import { refreshPage, forward, load, navigate } from './navigate';
 import { tabLoad, tabRemove } from './tab';
 import { modalLoad, modalRemove } from './modal';
 import { backward, loadBack, back } from './back';
-import { clearPreviousHistory } from './clear-previous-history';
+import { clearPreviousHistory, clearPreviousPages } from './clear-previous-history';
 
 class Router extends Framework7Class {
   constructor(app, view) {
@@ -408,7 +408,13 @@ class Router extends Framework7Class {
   }
 
   removePage(el) {
+    const $el = $(el);
+    const f7Page = $el && $el[0] && $el[0].f7Page;
     const router = this;
+    if (f7Page && f7Page.route && f7Page.route.route && f7Page.route.route.keepAlive) {
+      $el.remove();
+      return;
+    }
     router.removeEl(el);
   }
 
@@ -964,9 +970,6 @@ class Router extends Framework7Class {
       pageFrom,
     };
 
-    if ($navbarEl && $navbarEl[0]) {
-      $navbarEl[0].f7Page = page;
-    }
     $pageEl[0].f7Page = page;
     return page;
   }
@@ -979,6 +982,11 @@ class Router extends Framework7Class {
     if (!$pageEl.length) return;
     const { route } = options;
     const restoreScrollTopOnBack = router.params.restoreScrollTopOnBack;
+    const keepAlive = $pageEl[0].f7Page && $pageEl[0].f7Page.route && $pageEl[0].f7Page.route.route && $pageEl[0].f7Page.route.route.keepAlive;
+
+    if (callback === 'beforeRemove' && keepAlive) {
+      callback = 'beforeUnmount'; // eslint-disable-line
+    }
 
     const camelName = `page${callback[0].toUpperCase() + callback.slice(1, callback.length)}`;
     const colonName = `page:${callback.toLowerCase()}`;
@@ -1085,12 +1093,14 @@ class Router extends Framework7Class {
     $pageEl.trigger(colonName, page);
     router.emit(camelName, page);
 
-    if (callback === 'beforeRemove') {
+    if (callback === 'beforeRemove' || callback === 'beforeUnmount') {
       detachEvents();
-      if ($pageEl[0].f7Page && $pageEl[0].f7Page.navbarEl) {
-        delete $pageEl[0].f7Page.navbarEl.f7Page;
+      if (!keepAlive) {
+        if ($pageEl[0].f7Page && $pageEl[0].f7Page.navbarEl) {
+          delete $pageEl[0].f7Page.navbarEl.f7Page;
+        }
+        $pageEl[0].f7Page = null;
       }
-      $pageEl[0].f7Page = null;
     }
   }
 
@@ -1362,6 +1372,8 @@ Router.prototype.modalRemove = modalRemove;
 Router.prototype.backward = backward;
 Router.prototype.loadBack = loadBack;
 Router.prototype.back = back;
+// Clear previoius pages from the DOM
+Router.prototype.clearPreviousPages = clearPreviousPages;
 // Clear history
 Router.prototype.clearPreviousHistory = clearPreviousHistory;
 

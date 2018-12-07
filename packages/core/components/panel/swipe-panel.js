@@ -28,7 +28,7 @@ function swipePanel(panel) {
   function handleTouchStart(e) {
     if (!panel.swipeable) return;
     if (!app.panel.allowOpen || (!params.swipe && !params.swipeOnlyClose) || isTouched) return;
-    if ($('.modal-in, .photo-browser-in').length > 0) return;
+    if ($('.modal-in:not(.toast):not(.notification), .photo-browser-in').length > 0) return;
     otherPanel = app.panel[side === 'left' ? 'right' : 'left'] || {};
     if (!panel.opened && otherPanel.opened) return;
     if (!(params.swipeCloseOpposite || params.swipeOnlyClose)) {

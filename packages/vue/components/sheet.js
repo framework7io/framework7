@@ -122,7 +122,7 @@ export default {
   beforeDestroy() {
     const self = this;
     if (self.f7Sheet) self.f7Sheet.destroy();
-    const el = self.$el;
+    const el = self.$refs.el;
     if (!el) return;
     el.removeEventListener('popup:open', self.onOpenBound);
     el.removeEventListener('popup:opened', self.onOpenedBound);

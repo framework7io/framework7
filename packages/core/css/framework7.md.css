@@ -1,5 +1,5 @@
 /**
- * Framework7 3.5.2
+ * Framework7 3.6.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 12, 2018
+ * Released on: December 7, 2018
  */
 html,
 body,
@@ -5482,6 +5482,7 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .toast-top {
   visibility: visible;
   opacity: 0;
   background: none;
+  z-index: 14000;
 }
 .preloader-backdrop.not-animated {
   -webkit-transition-duration: 0ms;
@@ -5497,7 +5498,7 @@ html.with-statusbar.md:not(.device-ios):not(.device-android) .toast-top {
   top: 50%;
   padding: 8px;
   background: rgba(0, 0, 0, 0.8);
-  z-index: 13500;
+  z-index: 14500;
   -webkit-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
 }

@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.5.2
+ * Framework7 Vue 3.6.0
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 12, 2018
+ * Released on: December 7, 2018
  */
 
 (function (global, factory) {
@@ -382,26 +382,36 @@
       opened: Boolean
     }, Mixins.colorProps),
 
-    mounted: function mounted() {
+    created: function created() {
       var self = this;
-      var el = self.$el;
-      if (!el) { return; }
+      self.onBeforeOpenBound = self.onBeforeOpen.bind(self);
       self.onOpenBound = self.onOpen.bind(self);
       self.onOpenedBound = self.onOpened.bind(self);
+      self.onBeforeCloseBound = self.onBeforeClose.bind(self);
       self.onCloseBound = self.onClose.bind(self);
       self.onClosedBound = self.onClosed.bind(self);
+    },
+
+    mounted: function mounted() {
+      var self = this;
+      var el = self.$refs.el;
+      if (!el) { return; }
+      el.addEventListener('accordion:beforeopen', self.onBeforeOpenBound);
       el.addEventListener('accordion:open', self.onOpenBound);
       el.addEventListener('accordion:opened', self.onOpenedBound);
+      el.addEventListener('accordion:beforeclose', self.onBeforeCloseBound);
       el.addEventListener('accordion:close', self.onCloseBound);
       el.addEventListener('accordion:closed', self.onClosedBound);
     },
 
     beforeDestroy: function beforeDestroy() {
       var self = this;
-      var el = self.$el;
+      var el = self.$refs.el;
       if (!el) { return; }
+      el.removeEventListener('accordion:beforeopen', self.onBeforeOpenBound);
       el.removeEventListener('accordion:open', self.onOpenBound);
       el.removeEventListener('accordion:opened', self.onOpenedBound);
+      el.removeEventListener('accordion:beforeclose', self.onBeforeCloseBound);
       el.removeEventListener('accordion:close', self.onCloseBound);
       el.removeEventListener('accordion:closed', self.onClosedBound);
     },
@@ -419,6 +429,7 @@
       return _h('div', {
         style: style,
         class: classes,
+        ref: 'el',
         attrs: {
           id: id
         }
@@ -426,12 +437,20 @@
     },
 
     methods: {
+      onBeforeOpen: function onBeforeOpen(event) {
+        this.dispatchEvent('accordionBeforeOpen accordion:beforeopen', event, event.detail.prevent);
+      },
+
       onOpen: function onOpen(event) {
         this.dispatchEvent('accordionOpen accordion:open', event);
       },
 
       onOpened: function onOpened(event) {
         this.dispatchEvent('accordionOpened accordion:opened', event);
+      },
+
+      onBeforeClose: function onBeforeClose(event) {
+        this.dispatchEvent('accordionBeforeClose accordion:beforeclose', event, event.detail.prevent);
       },
 
       onClose: function onClose(event) {
@@ -553,15 +572,24 @@
         style: style,
         class: classes,
         ref: 'el',
-        on: {
-          click: self.onClick.bind(self)
-        },
         attrs: {
           id: id
         }
       }, [mediaEl, _h('div', {
         class: 'actions-button-text'
       }, [this.$slots['default']])]);
+    },
+
+    created: function created() {
+      this.onClick = this.onClick.bind(this);
+    },
+
+    mounted: function mounted() {
+      this.$refs.el.addEventListener('click', this.onClick);
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      this.$refs.el.removeEventListener('click', this.onClick);
     },
 
     methods: {
@@ -645,13 +673,23 @@
       return _h('div', {
         style: style,
         class: classes,
-        on: {
-          click: self.onClick.bind(self)
-        },
+        ref: 'el',
         attrs: {
           id: id
         }
       }, [this.$slots['default']]);
+    },
+
+    created: function created() {
+      this.onClick = this.onClick.bind(this);
+    },
+
+    mounted: function mounted() {
+      this.$refs.el.addEventListener('click', this.onClick);
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      this.$refs.el.removeEventListener('click', this.onClick);
     },
 
     methods: {
@@ -765,7 +803,7 @@
     beforeDestroy: function beforeDestroy() {
       var self = this;
       if (self.f7Actions) { self.f7Actions.destroy(); }
-      var el = self.$el;
+      var el = self.$refs.el;
       if (!el) { return; }
       el.removeEventListener('actions:open', self.onOpenBound);
       el.removeEventListener('actions:opened', self.onOpenedBound);
@@ -1183,7 +1221,7 @@
     }, Mixins.colorProps),
 
     mounted: function mounted() {
-      var el = this.$el;
+      var el = this.$refs.el;
       if (!el) { return; }
       this.onTabShowBound = this.onTabShow.bind(this);
       this.onTabHideBound = this.onTabHide.bind(this);
@@ -1192,7 +1230,7 @@
     },
 
     beforeDestroy: function beforeDestroy() {
-      var el = this.$el;
+      var el = this.$refs.el;
       if (!el) { return; }
       el.removeEventListener('tab:show', this.onTabShowBound);
       el.removeEventListener('tab:hide', this.onTabHideBound);
@@ -1230,6 +1268,7 @@
       return _h('div', {
         style: style,
         class: classes,
+        ref: 'el',
         attrs: {
           id: id
         }
@@ -1542,9 +1581,6 @@
         style: style,
         class: self.classes
       }, self.attrs, {
-        on: {
-          click: self.onClick.bind(self)
-        },
         attrs: {
           id: id
         }
@@ -1641,8 +1677,14 @@
       }
     },
 
+    created: function created() {
+      var self = this;
+      self.onClickBound = self.onClick.bind(self);
+    },
+
     mounted: function mounted() {
       var self = this;
+      self.$refs.el.addEventListener('click', self.onClickBound);
       var ref = self.props;
       var tooltip = ref.tooltip;
       if (!tooltip) { return; }
@@ -1656,6 +1698,7 @@
 
     beforeDestroy: function beforeDestroy() {
       var self = this;
+      self.$refs.el.removeEventListener('click', self.onClickBound);
 
       if (self.f7Tooltip && self.f7Tooltip.destroy) {
         self.f7Tooltip.destroy();
@@ -1856,6 +1899,7 @@
       var inputEl;
       {
         inputEl = _h('input', {
+          ref: 'inputEl',
           domProps: {
             value: value,
             disabled: disabled,
@@ -1863,7 +1907,7 @@
             checked: checked
           },
           on: {
-            change: self.onChange.bind(self)
+            change: self.onChange
           },
           attrs: {
             type: 'checkbox',
@@ -1902,6 +1946,11 @@
       }
 
     },
+
+    created: function created() {
+      this.onChange = this.onChange.bind(this);
+    },
+
     methods: {
       onChange: function onChange(event) {
         this.dispatchEvent('change', event);
@@ -1961,10 +2010,8 @@
 
       if (deleteable) {
         deleteEl = _h('a', {
+          ref: 'deleteEl',
           class: 'chip-delete',
-          on: {
-            click: self.onDeleteClick.bind(self)
-          },
           attrs: {
             href: '#'
           }
@@ -1975,15 +2022,34 @@
         'chip-outline': outline
       }, Mixins.colorClasses(props));
       return _h('div', {
+        ref: 'el',
         style: style,
         class: classes,
-        on: {
-          click: self.onClick.bind(self)
-        },
         attrs: {
           id: id
         }
       }, [mediaEl, labelEl, deleteEl]);
+    },
+
+    created: function created() {
+      this.onClick = this.onClick.bind(this);
+      this.onDeleteClick = this.onDeleteClick.bind(this);
+    },
+
+    mounted: function mounted() {
+      this.$refs.el.addEventListener('click', this.onClick);
+
+      if (this.$refs.deleteEl) {
+        this.$refs.deleteEl.addEventListener('click', this.onDeleteClick);
+      }
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      this.$refs.el.removeEventListener('click', this.onClick);
+
+      if (this.$refs.deleteEl) {
+        this.$refs.deleteEl.removeEventListener('click', this.onDeleteClick);
+      }
     },
 
     methods: {
@@ -2051,13 +2117,23 @@
       return _h(ColTag, {
         style: style,
         class: classes,
-        on: {
-          click: self.onClick.bind(self)
-        },
+        ref: 'el',
         attrs: {
           id: id
         }
       }, [this.$slots['default']]);
+    },
+
+    created: function created() {
+      this.onClick = this.onClick.bind(this);
+    },
+
+    mounted: function mounted() {
+      this.$refs.el.addEventListener('click', this.onClick);
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      this.$refs.el.removeEventListener('click', this.onClick);
     },
 
     methods: {
@@ -2113,11 +2189,9 @@
       }
 
       return _h('a', {
+        ref: 'el',
         style: style,
         class: classes,
-        on: {
-          click: this.onClick.bind(this)
-        },
         attrs: {
           id: id,
           target: target
@@ -2146,8 +2220,13 @@
       }
     },
 
+    created: function created() {
+      this.onClick = this.onClick.bind(this);
+    },
+
     mounted: function mounted() {
       var self = this;
+      self.$refs.el.addEventListener('click', self.onClick);
       var ref = self.props;
       var tooltip = ref.tooltip;
       if (!tooltip) { return; }
@@ -2161,6 +2240,7 @@
 
     beforeDestroy: function beforeDestroy() {
       var self = this;
+      self.$refs.el.removeEventListener('click', self.onClick);
 
       if (self.f7Tooltip && self.f7Tooltip.destroy) {
         self.f7Tooltip.destroy();
@@ -2273,10 +2353,8 @@
 
       if (linkChildren.length || linkSlots && linkSlots.length) {
         linkEl = _h('a', {
+          ref: 'linkEl',
           key: 'f7-fab-link',
-          on: {
-            click: self.onClick.bind(self)
-          },
           attrs: {
             target: target,
             href: href
@@ -2320,8 +2398,17 @@
       }
     },
 
+    created: function created() {
+      this.onClick = this.onClick.bind(this);
+    },
+
     mounted: function mounted() {
       var self = this;
+
+      if (self.$refs.linkEl) {
+        self.$refs.linkEl.addEventListener('click', self.onClick);
+      }
+
       var ref = self.props;
       var tooltip = ref.tooltip;
       if (!tooltip) { return; }
@@ -2335,6 +2422,10 @@
 
     beforeDestroy: function beforeDestroy() {
       var self = this;
+
+      if (self.$refs.linkEl) {
+        self.$refs.linkEl.removeEventListener('click', self.onClick);
+      }
 
       if (self.f7Tooltip && self.f7Tooltip.destroy) {
         self.f7Tooltip.destroy();
@@ -2561,6 +2652,7 @@
       var inputEl;
       {
         inputEl = _h('input', {
+          ref: 'inputEl',
           domProps: {
             disabled: disabled,
             readOnly: readonly,
@@ -2568,7 +2660,7 @@
             checked: checked
           },
           on: {
-            change: self.onChange.bind(self)
+            change: self.onChange
           },
           attrs: {
             type: 'checkbox',
@@ -2594,6 +2686,10 @@
         if (!self.f7Toggle) { return; }
         self.f7Toggle.checked = newValue;
       }
+    },
+
+    created: function created() {
+      this.onChange = this.onChange.bind(this);
     },
 
     mounted: function mounted() {
@@ -2950,10 +3046,10 @@
               required: required
             },
             on: {
-              focus: self.onFocusBound,
-              blur: self.onBlurBound,
-              input: self.onInputBound,
-              change: self.onChangeBound
+              focus: self.onFocus,
+              blur: self.onBlur,
+              input: self.onInput,
+              change: self.onChange
             },
             attrs: {
               name: name,
@@ -3001,7 +3097,7 @@
       } else if (type === 'toggle') {
         inputEl = _h(F7Toggle, {
           on: {
-            change: self.onChangeBound
+            change: self.onChange
           },
           attrs: {
             checked: checked,
@@ -3015,7 +3111,7 @@
       } else if (type === 'range') {
         inputEl = _h(F7Range, {
           on: {
-            rangeChange: self.onChangeBound
+            rangeChange: self.onChange
           },
           attrs: {
             value: value,
@@ -3070,14 +3166,14 @@
 
     created: function created() {
       var self = this;
-      self.onFocusBound = self.onFocus.bind(self);
-      self.onBlurBound = self.onBlur.bind(self);
-      self.onInputBound = self.onInput.bind(self);
-      self.onChangeBound = self.onChange.bind(self);
-      self.onTextareaResizeBound = self.onTextareaResize.bind(self);
-      self.onInputNotEmptyBound = self.onInputNotEmpty.bind(self);
-      self.onInputEmptyBound = self.onInputEmpty.bind(self);
-      self.onInputClearBound = self.onInputClear.bind(self);
+      self.onFocus = self.onFocus.bind(self);
+      self.onBlur = self.onBlur.bind(self);
+      self.onInput = self.onInput.bind(self);
+      self.onChange = self.onChange.bind(self);
+      self.onTextareaResize = self.onTextareaResize.bind(self);
+      self.onInputNotEmpty = self.onInputNotEmpty.bind(self);
+      self.onInputEmpty = self.onInputEmpty.bind(self);
+      self.onInputClear = self.onInputClear.bind(self);
     },
 
     mounted: function mounted() {
@@ -3093,15 +3189,15 @@
         if (type === 'range' || type === 'toggle') { return; }
         var inputEl = self.$refs.inputEl;
         if (!inputEl) { return; }
-        inputEl.addEventListener('input:notempty', self.onInputNotEmptyBound, false);
+        inputEl.addEventListener('input:notempty', self.onInputNotEmpty, false);
 
         if (type === 'textarea' && resizable) {
-          inputEl.addEventListener('textarea:resze', self.onTextareaResizeBound, false);
+          inputEl.addEventListener('textarea:resze', self.onTextareaResize, false);
         }
 
         if (clearButton) {
-          inputEl.addEventListener('input:empty', self.onInputEmptyBound, false);
-          inputEl.addEventListener('input:clear', self.onInputClearBound, false);
+          inputEl.addEventListener('input:empty', self.onInputEmpty, false);
+          inputEl.addEventListener('input:clear', self.onInputClear, false);
         }
 
         f7.input.checkEmptyState(inputEl);
@@ -3151,15 +3247,15 @@
       if (type === 'range' || type === 'toggle') { return; }
       var inputEl = self.$refs.inputEl;
       if (!inputEl) { return; }
-      inputEl.removeEventListener('input:notempty', self.onInputNotEmptyBound, false);
+      inputEl.removeEventListener('input:notempty', self.onInputNotEmpty, false);
 
       if (type === 'textarea' && resizable) {
-        inputEl.removeEventListener('textarea:resze', self.onTextareaResizeBound, false);
+        inputEl.removeEventListener('textarea:resze', self.onTextareaResize, false);
       }
 
       if (clearButton) {
-        inputEl.removeEventListener('input:empty', self.onInputEmptyBound, false);
-        inputEl.removeEventListener('input:clear', self.onInputClearBound, false);
+        inputEl.removeEventListener('input:empty', self.onInputEmpty, false);
+        inputEl.removeEventListener('input:clear', self.onInputClear, false);
       }
     },
 
@@ -3410,9 +3506,6 @@
         style: style,
         class: self.classes
       }, self.attrs, {
-        on: {
-          click: self.onClick.bind(self)
-        },
         attrs: {
           id: id
         }
@@ -3427,9 +3520,15 @@
       }
     },
 
+    created: function created() {
+      var self = this;
+      self.onClick = self.onClick.bind(self);
+    },
+
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
+      el.addEventListener('click', self.onClick);
       var ref = self.props;
       var tabbarLabel = ref.tabbarLabel;
       var tabLink = ref.tabLink;
@@ -3464,6 +3563,8 @@
 
     beforeDestroy: function beforeDestroy() {
       var self = this;
+      var el = self.$refs.el;
+      el.removeEventListener('click', self.onClick);
 
       if (self.f7SmartSelect && self.f7SmartSelect.destroy) {
         self.f7SmartSelect.destroy();
@@ -3570,9 +3671,7 @@
       }, [_h('a', __vueComponentTransformJSXProps(Object.assign({
         class: self.classes
       }, self.attrs, {
-        on: {
-          click: self.onClick.bind(self)
-        }
+        ref: 'linkEl'
       })), [this.$slots['default'] || [title || text]])]);
     },
 
@@ -3612,6 +3711,19 @@
       }
 
     },
+
+    created: function created() {
+      this.onClick = this.onClick.bind(this);
+    },
+
+    mounted: function mounted() {
+      this.$refs.linkEl.addEventListener('click', this.onClick);
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      this.$refs.linkEl.removeEventListener('click', this.onClick);
+    },
+
     methods: {
       onClick: function onClick(event) {
         this.dispatchEvent('click', event);
@@ -3754,7 +3866,7 @@
     watch: {
       'props.indexes': function watchIndexes() {
         if (!this.f7ListIndex) { return; }
-        this.f7ListIndex.params.indexes = this.indexes;
+        this.f7ListIndex.params.indexes = this.props.indexes;
         this.update();
       }
     },
@@ -3940,10 +4052,10 @@
               required: required
             },
             on: {
-              focus: self.onFocusBound,
-              blur: self.onBlurBound,
-              input: self.onInputBound,
-              change: self.onChangeBound
+              focus: self.onFocus,
+              blur: self.onBlur,
+              input: self.onInput,
+              change: self.onChange
             },
             attrs: {
               name: name,
@@ -4067,14 +4179,14 @@
 
     created: function created() {
       var self = this;
-      self.onChangeBound = self.onChange.bind(self);
-      self.onInputBound = self.onInput.bind(self);
-      self.onFocusBound = self.onFocus.bind(self);
-      self.onBlurBound = self.onBlur.bind(self);
-      self.onTextareaResizeBound = self.onTextareaResize.bind(self);
-      self.onInputNotEmptyBound = self.onInputNotEmpty.bind(self);
-      self.onInputEmptyBound = self.onInputEmpty.bind(self);
-      self.onInputClearBound = self.onInputClear.bind(self);
+      self.onChange = self.onChange.bind(self);
+      self.onInput = self.onInput.bind(self);
+      self.onFocus = self.onFocus.bind(self);
+      self.onBlur = self.onBlur.bind(self);
+      self.onTextareaResize = self.onTextareaResize.bind(self);
+      self.onInputNotEmpty = self.onInputNotEmpty.bind(self);
+      self.onInputEmpty = self.onInputEmpty.bind(self);
+      self.onInputClear = self.onInputClear.bind(self);
     },
 
     mounted: function mounted() {
@@ -4090,10 +4202,10 @@
         var type = ref.type;
         var inputEl = self.$refs.inputEl;
         if (!inputEl) { return; }
-        inputEl.addEventListener('input:notempty', self.onInputNotEmptyBound, false);
-        inputEl.addEventListener('textarea:resze', self.onTextareaResizeBound, false);
-        inputEl.addEventListener('input:empty', self.onInputEmptyBound, false);
-        inputEl.addEventListener('input:clear', self.onInputClearBound, false);
+        inputEl.addEventListener('input:notempty', self.onInputNotEmpty, false);
+        inputEl.addEventListener('textarea:resze', self.onTextareaResize, false);
+        inputEl.addEventListener('input:empty', self.onInputEmpty, false);
+        inputEl.addEventListener('input:clear', self.onInputClear, false);
 
         if ((validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
           setTimeout(function () {
@@ -4152,10 +4264,10 @@
       var self = this;
       var inputEl = self.$refs.inputEl;
       if (!inputEl) { return; }
-      inputEl.removeEventListener('input:notempty', self.onInputNotEmptyBound, false);
-      inputEl.removeEventListener('textarea:resze', self.onTextareaResizeBound, false);
-      inputEl.removeEventListener('input:empty', self.onInputEmptyBound, false);
-      inputEl.removeEventListener('input:clear', self.onInputClearBound, false);
+      inputEl.removeEventListener('input:notempty', self.onInputNotEmpty, false);
+      inputEl.removeEventListener('textarea:resze', self.onTextareaResize, false);
+      inputEl.removeEventListener('input:empty', self.onInputEmpty, false);
+      inputEl.removeEventListener('input:clear', self.onInputClear, false);
     },
 
     methods: {
@@ -4460,6 +4572,9 @@
               required: required,
               value: value
             },
+            on: {
+              change: this.onChange
+            },
             attrs: {
               name: name,
               type: radio ? 'radio' : 'checkbox'
@@ -4568,9 +4683,6 @@
         ref: 'el',
         style: style,
         class: classes,
-        on: {
-          click: self.onClickBound
-        },
         attrs: {
           id: id
         }
@@ -4579,12 +4691,12 @@
 
     created: function created() {
       var self = this;
-      self.onClickBound = self.onClick.bind(self);
-      self.onChangeBound = self.onChange.bind(self);
-      self.onFocusBound = self.onFocus.bind(self);
-      self.onBlurBound = self.onBlur.bind(self);
-      self.onEmptyBound = self.onEmpty.bind(self);
-      self.onNotEmptyBound = self.onNotEmpty.bind(self);
+      self.onClick = self.onClick.bind(self);
+      self.onChange = self.onChange.bind(self);
+      self.onFocus = self.onFocus.bind(self);
+      self.onBlur = self.onBlur.bind(self);
+      self.onEmpty = self.onEmpty.bind(self);
+      self.onNotEmpty = self.onNotEmpty.bind(self);
     },
 
     beforeMount: function beforeMount() {
@@ -4599,13 +4711,9 @@
       var self = this;
       var ref = self.$refs;
       var innerEl = ref.innerEl;
-      var inputEl = ref.inputEl;
       var el = ref.el;
-
-      if (inputEl) {
-        inputEl.addEventListener('change', self.onChangeBound);
-      }
-
+      var inputEl = ref.inputEl;
+      el.addEventListener('click', self.onClick);
       if (!innerEl) { return; }
       var $innerEl = self.$$(innerEl);
       var $labelEl = $innerEl.children('.item-title.item-label');
@@ -4617,10 +4725,10 @@
       var hasInputInvalid = $inputWrapEl.children('.input-invalid').length > 0;
 
       if (hasInput) {
-        el.addEventListener('focus', self.onFocusBound, true);
-        el.addEventListener('blur', self.onBlurBound, true);
-        el.addEventListener('input:empty', self.onEmptyBound);
-        el.addEventListener('input:notempty', self.onNotEmptyBound);
+        el.addEventListener('focus', self.onFocus, true);
+        el.addEventListener('blur', self.onBlur, true);
+        el.addEventListener('input:empty', self.onEmpty);
+        el.addEventListener('input:notempty', self.onNotEmpty);
       }
 
       if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {
@@ -4656,7 +4764,8 @@
 
     updated: function updated() {
       var self = this;
-      var innerEl = self.$refs.innerEl;
+      var ref = self.$refs;
+      var innerEl = ref.innerEl;
       if (!innerEl) { return; }
       var $innerEl = self.$$(innerEl);
       var $labelEl = $innerEl.children('.item-title.item-label');
@@ -4701,16 +4810,12 @@
     beforeDestroy: function beforeDestroy() {
       var self = this;
       var ref = self.$refs;
-      var inputEl = ref.inputEl;
       var el = ref.el;
-      el.removeEventListener('input:empty', self.onEmptyBound);
-      el.removeEventListener('input:notempty', self.onNotEmptyBound);
-      el.removeEventListener('focus', self.onFocusBound, true);
-      el.removeEventListener('blur', self.onBlurBound, true);
-
-      if (inputEl) {
-        inputEl.removeEventListener('change', self.onChangeBound);
-      }
+      el.removeEventListener('click', self.onClick);
+      el.removeEventListener('input:empty', self.onEmpty);
+      el.removeEventListener('input:notempty', self.onNotEmpty);
+      el.removeEventListener('focus', self.onFocus, true);
+      el.removeEventListener('blur', self.onBlur, true);
     },
 
     methods: {
@@ -4885,7 +4990,8 @@
       disabled: Boolean,
       itemInput: Boolean,
       itemInputWithInfo: Boolean,
-      inlineLabel: Boolean
+      inlineLabel: Boolean,
+      virtualListIndex: Number
     }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
 
     data: function data() {
@@ -4950,6 +5056,7 @@
       var sortable = props.sortable;
       var noChevron = props.noChevron;
       var chevronCenter = props.chevronCenter;
+      var virtualListIndex = props.virtualListIndex;
       var isMedia = mediaItem || mediaList || self.state.isMedia;
       var isSortable = sortable || self.state.isSortable;
       var isSimple = self.state.isSimple;
@@ -4958,8 +5065,8 @@
         var needsEvents = !(link || href || accordionItem || smartSelect);
         itemContentEl = _h(F7ListItemContent, {
           on: needsEvents ? {
-            click: self.onClickBound,
-            change: self.onChangeBound
+            click: self.onClick,
+            change: self.onChange
           } : undefined,
           attrs: {
             title: title,
@@ -4999,12 +5106,9 @@
             'smart-select': smartSelect
           }, Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
           linkEl = _h('a', __vueComponentTransformJSXProps(Object.assign({
+            ref: 'linkEl',
             class: linkClasses
-          }, linkAttrs, {
-            on: {
-              click: self.onClick.bind(self)
-            }
-          })), [itemContentEl]);
+          }, linkAttrs)), [itemContentEl]);
         }
       }
 
@@ -5026,7 +5130,8 @@
           style: style,
           class: liClasses,
           attrs: {
-            id: id
+            id: id,
+            'data-virtual-list-index': virtualListIndex
           }
         }, [_h('span', [this.$slots['default'] || [title]])]);
       }
@@ -5037,7 +5142,8 @@
           style: style,
           class: liClasses,
           attrs: {
-            id: id
+            id: id,
+            'data-virtual-list-index': virtualListIndex
           }
         }, [title, this.$slots['default']]);
       }
@@ -5048,7 +5154,8 @@
         style: style,
         class: liClasses,
         attrs: {
-          id: id
+          id: id,
+          'data-virtual-list-index': virtualListIndex
         }
       }, [this.$slots['root-start'], swipeout ? _h('div', {
         class: 'swipeout-content'
@@ -5073,27 +5180,45 @@
 
     created: function created() {
       var self = this;
-      self.onClickBound = self.onClick.bind(self);
-      self.onChangeBound = self.onChange.bind(self);
-      self.onSwipeoutOpenBound = self.onSwipeoutOpen.bind(self);
-      self.onSwipeoutOpenedBound = self.onSwipeoutOpened.bind(self);
-      self.onSwipeoutCloseBound = self.onSwipeoutClose.bind(self);
-      self.onSwipeoutClosedBound = self.onSwipeoutClosed.bind(self);
-      self.onSwipeoutDeleteBound = self.onSwipeoutDelete.bind(self);
-      self.onSwipeoutDeletedBound = self.onSwipeoutDeleted.bind(self);
-      self.onSwipeoutOverswipeEnterBound = self.onSwipeoutOverswipeEnter.bind(self);
-      self.onSwipeoutOverswipeExitBound = self.onSwipeoutOverswipeExit.bind(self);
-      self.onSwipeoutBound = self.onSwipeout.bind(self);
-      self.onAccOpenBound = self.onAccOpen.bind(self);
-      self.onAccOpenedBound = self.onAccOpened.bind(self);
-      self.onAccCloseBound = self.onAccClose.bind(self);
-      self.onAccClosedBound = self.onAccClosed.bind(self);
+      self.onClick = self.onClick.bind(self);
+      self.onChange = self.onChange.bind(self);
+      self.onSwipeoutOpen = self.onSwipeoutOpen.bind(self);
+      self.onSwipeoutOpened = self.onSwipeoutOpened.bind(self);
+      self.onSwipeoutClose = self.onSwipeoutClose.bind(self);
+      self.onSwipeoutClosed = self.onSwipeoutClosed.bind(self);
+      self.onSwipeoutDelete = self.onSwipeoutDelete.bind(self);
+      self.onSwipeoutDeleted = self.onSwipeoutDeleted.bind(self);
+      self.onSwipeoutOverswipeEnter = self.onSwipeoutOverswipeEnter.bind(self);
+      self.onSwipeoutOverswipeExit = self.onSwipeoutOverswipeExit.bind(self);
+      self.onSwipeout = self.onSwipeout.bind(self);
+      self.onAccBeforeOpen = self.onAccBeforeOpen.bind(self);
+      self.onAccOpen = self.onAccOpen.bind(self);
+      self.onAccOpened = self.onAccOpened.bind(self);
+      self.onAccBeforeClose = self.onAccBeforeClose.bind(self);
+      self.onAccClose = self.onAccClose.bind(self);
+      self.onAccClosed = self.onAccClosed.bind(self);
     },
 
     mounted: function mounted() {
       var self = this;
-      var el = self.$refs.el;
+      var ref = self.$refs;
+      var el = ref.el;
+      var linkEl = ref.linkEl;
       if (!el) { return; }
+      var ref$1 = self.props;
+      var link = ref$1.link;
+      var href = ref$1.href;
+      var smartSelect = ref$1.smartSelect;
+      var swipeout = ref$1.swipeout;
+      var swipeoutOpened = ref$1.swipeoutOpened;
+      var accordionItem = ref$1.accordionItem;
+      var smartSelectParams = ref$1.smartSelectParams;
+      var needsEvents = !(link || href || accordionItem || smartSelect);
+
+      if (!needsEvents && linkEl) {
+        linkEl.addEventListener('click', self.onClick);
+      }
+
       self.$listEl = self.$$(el).parents('.list, .list-group').eq(0);
 
       if (self.$listEl.length) {
@@ -5104,30 +5229,25 @@
         });
       }
 
-      var ref = self.props;
-      var swipeout = ref.swipeout;
-      var swipeoutOpened = ref.swipeoutOpened;
-      var accordionItem = ref.accordionItem;
-      var smartSelect = ref.smartSelect;
-      var smartSelectParams = ref.smartSelectParams;
-
       if (swipeout) {
-        el.addEventListener('swipeout:open', self.onSwipeoutOpenBound);
-        el.addEventListener('swipeout:opened', self.onSwipeoutOpenedBound);
-        el.addEventListener('swipeout:close', self.onSwipeoutCloseBound);
-        el.addEventListener('swipeout:closed', self.onSwipeoutClosedBound);
-        el.addEventListener('swipeout:delete', self.onSwipeoutDeleteBound);
-        el.addEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
-        el.addEventListener('swipeout:overswipeenter', self.onSwipeoutOverswipeEnterBound);
-        el.addEventListener('swipeout:overswipeexit', self.onSwipeoutOverswipeExitBound);
-        el.addEventListener('swipeout', self.onSwipeoutBound);
+        el.addEventListener('swipeout:open', self.onSwipeoutOpen);
+        el.addEventListener('swipeout:opened', self.onSwipeoutOpened);
+        el.addEventListener('swipeout:close', self.onSwipeoutClose);
+        el.addEventListener('swipeout:closed', self.onSwipeoutClosed);
+        el.addEventListener('swipeout:delete', self.onSwipeoutDelete);
+        el.addEventListener('swipeout:deleted', self.onSwipeoutDeleted);
+        el.addEventListener('swipeout:overswipeenter', self.onSwipeoutOverswipeEnter);
+        el.addEventListener('swipeout:overswipeexit', self.onSwipeoutOverswipeExit);
+        el.addEventListener('swipeout', self.onSwipeout);
       }
 
       if (accordionItem) {
-        el.addEventListener('accordion:open', self.onAccOpenBound);
-        el.addEventListener('accordion:opened', self.onAccOpenedBound);
-        el.addEventListener('accordion:close', self.onAccCloseBound);
-        el.addEventListener('accordion:closed', self.onAccClosedBound);
+        el.addEventListener('accordion:beforeopen', self.onAccBeforeOpen);
+        el.addEventListener('accordion:open', self.onAccOpen);
+        el.addEventListener('accordion:opened', self.onAccOpened);
+        el.addEventListener('accordion:beforeclose', self.onAccBeforeClose);
+        el.addEventListener('accordion:close', self.onAccClose);
+        el.addEventListener('accordion:closed', self.onAccClosed);
       }
 
       self.$f7ready(function (f7) {
@@ -5173,30 +5293,41 @@
 
     beforeDestroy: function beforeDestroy() {
       var self = this;
-      var el = self.$refs.el;
-      var ref = self.props;
-      var swipeout = ref.swipeout;
-      var accordionItem = ref.accordionItem;
-      var smartSelect = ref.smartSelect;
+      var ref = self.$refs;
+      var el = ref.el;
+      var linkEl = ref.linkEl;
+      var ref$1 = self.props;
+      var link = ref$1.link;
+      var href = ref$1.href;
+      var smartSelect = ref$1.smartSelect;
+      var swipeout = ref$1.swipeout;
+      var accordionItem = ref$1.accordionItem;
+      var needsEvents = !(link || href || accordionItem || smartSelect);
+
+      if (!needsEvents && linkEl) {
+        linkEl.removeEventListener('click', self.onClick);
+      }
 
       if (el) {
         if (swipeout) {
-          el.removeEventListener('swipeout:open', self.onSwipeoutOpenBound);
-          el.removeEventListener('swipeout:opened', self.onSwipeoutOpenedBound);
-          el.removeEventListener('swipeout:close', self.onSwipeoutCloseBound);
-          el.removeEventListener('swipeout:closed', self.onSwipeoutClosedBound);
-          el.removeEventListener('swipeout:delete', self.onSwipeoutDeleteBound);
-          el.removeEventListener('swipeout:deleted', self.onSwipeoutDeletedBound);
-          el.removeEventListener('swipeout:overswipeenter', self.onSwipeoutOverswipeEnterBound);
-          el.removeEventListener('swipeout:overswipeexit', self.onSwipeoutOverswipeExitBound);
-          el.removeEventListener('swipeout', self.onSwipeoutBound);
+          el.removeEventListener('swipeout:open', self.onSwipeoutOpen);
+          el.removeEventListener('swipeout:opened', self.onSwipeoutOpened);
+          el.removeEventListener('swipeout:close', self.onSwipeoutClose);
+          el.removeEventListener('swipeout:closed', self.onSwipeoutClosed);
+          el.removeEventListener('swipeout:delete', self.onSwipeoutDelete);
+          el.removeEventListener('swipeout:deleted', self.onSwipeoutDeleted);
+          el.removeEventListener('swipeout:overswipeenter', self.onSwipeoutOverswipeEnter);
+          el.removeEventListener('swipeout:overswipeexit', self.onSwipeoutOverswipeExit);
+          el.removeEventListener('swipeout', self.onSwipeout);
         }
 
         if (accordionItem) {
-          el.removeEventListener('accordion:open', self.onAccOpenBound);
-          el.removeEventListener('accordion:opened', self.onAccOpenedBound);
-          el.removeEventListener('accordion:close', self.onAccCloseBound);
-          el.removeEventListener('accordion:closed', self.onAccClosedBound);
+          el.removeEventListener('accordion:beforeopen', self.onAccBeforeOpen);
+          el.removeEventListener('accordion:open', self.onAccOpen);
+          el.removeEventListener('accordion:opened', self.onAccOpened);
+          el.removeEventListener('accordion:beforeclose', self.onAccBeforeClose);
+          el.removeEventListener('accordion:close', self.onAccClose);
+          el.removeEventListener('accordion:closed', self.onAccClosed);
         }
       }
 
@@ -5250,12 +5381,20 @@
         this.dispatchEvent('swipeout', event);
       },
 
+      onAccBeforeClose: function onAccBeforeClose(event) {
+        this.dispatchEvent('accordion:beforeclose accordionBeforeClose', event, event.detail.prevent);
+      },
+
       onAccClose: function onAccClose(event) {
         this.dispatchEvent('accordion:close accordionClose', event);
       },
 
       onAccClosed: function onAccClosed(event) {
         this.dispatchEvent('accordion:closed accordionClosed', event);
+      },
+
+      onAccBeforeOpen: function onAccBeforeOpen(event) {
+        this.dispatchEvent('accordion:beforeopen accordionBeforeOpen', event, event.detail.prevent);
       },
 
       onAccOpen: function onAccOpen(event) {
@@ -5722,16 +5861,6 @@
       typing: Boolean
     }, Mixins.colorProps),
 
-    created: function created() {
-      this.onClickBound = this.onClick.bind(this);
-      this.onNameClickBound = this.onNameClick.bind(this);
-      this.onTextClickBound = this.onTextClick.bind(this);
-      this.onAvatarClickBound = this.onAvatarClick.bind(this);
-      this.onHeaderClickBound = this.onHeaderClick.bind(this);
-      this.onFooterClickBound = this.onFooterClick.bind(this);
-      this.onBubbleClickBound = this.onBubbleClick.bind(this);
-    },
-
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -5764,39 +5893,29 @@
       var slotsBubbleStart = ref['bubble-start'];
       var slotsBubbleEnd = ref['bubble-end'];
       return _h('div', {
+        ref: 'el',
         style: style,
         class: self.classes,
-        on: {
-          click: self.onClickBound
-        },
         attrs: {
           id: id
         }
       }, [slotsStart, (avatar || slotsAvatar) && _h('div', {
+        ref: 'avatarEl',
         class: 'message-avatar',
         style: {
           backgroundImage: avatar && ("url(" + avatar + ")")
-        },
-        on: {
-          click: self.onAvatarClickBound
         }
       }, [slotsAvatar]), _h('div', {
         class: 'message-content'
       }, [slotsContentStart, (slotsName || name) && _h('div', {
-        class: 'message-name',
-        on: {
-          click: self.onNameClickBound
-        }
+        ref: 'nameEl',
+        class: 'message-name'
       }, [slotsName || name]), (slotsHeader || header) && _h('div', {
-        class: 'message-header',
-        on: {
-          click: self.onHeaderClickBound
-        }
+        ref: 'headerEl',
+        class: 'message-header'
       }, [slotsHeader || header]), _h('div', {
-        class: 'message-bubble',
-        on: {
-          click: self.onBubbleClickBound
-        }
+        ref: 'bubbleEl',
+        class: 'message-bubble'
       }, [slotsBubbleStart, (slotsImage || image) && _h('div', {
         class: 'message-image'
       }, [slotsImage || _h('img', {
@@ -5806,19 +5925,15 @@
       })]), (slotsTextHeader || textHeader) && _h('div', {
         class: 'message-text-header'
       }, [slotsTextHeader || textHeader]), (slotsText || text || typing) && _h('div', {
-        class: 'message-text',
-        on: {
-          click: self.onTextClickBound
-        }
+        ref: 'textEl',
+        class: 'message-text'
       }, [slotsText || text, typing && _h('div', {
         class: 'message-typing-indicator'
       }, [_h('div'), _h('div'), _h('div')])]), (slotsTextFooter || textFooter) && _h('div', {
         class: 'message-text-footer'
       }, [slotsTextFooter || textFooter]), slotsBubbleEnd, slotsDefault]), (slotsFooter || footer) && _h('div', {
-        class: 'message-footer',
-        on: {
-          click: self.onFooterClickBound
-        }
+        ref: 'footerEl',
+        class: 'message-footer'
       }, [slotsFooter || footer]), slotsContentEnd]), slotsEnd]);
     },
 
@@ -5855,6 +5970,53 @@
       }
 
     },
+
+    created: function created() {
+      this.onClick = this.onClick.bind(this);
+      this.onNameClick = this.onNameClick.bind(this);
+      this.onTextClick = this.onTextClick.bind(this);
+      this.onAvatarClick = this.onAvatarClick.bind(this);
+      this.onHeaderClick = this.onHeaderClick.bind(this);
+      this.onFooterClick = this.onFooterClick.bind(this);
+      this.onBubbleClick = this.onBubbleClick.bind(this);
+    },
+
+    mounted: function mounted() {
+      var ref = this.$refs;
+      var el = ref.el;
+      var nameEl = ref.nameEl;
+      var textEl = ref.textEl;
+      var avatarEl = ref.avatarEl;
+      var headerEl = ref.headerEl;
+      var footerEl = ref.footerEl;
+      var bubbleEl = ref.bubbleEl;
+      el.addEventListener('click', this.onClick);
+      if (nameEl) { nameEl.addEventListener('click', this.onNameClick); }
+      if (textEl) { textEl.addEventListener('click', this.onTextClick); }
+      if (avatarEl) { nameEl.addEventListener('click', this.onAvatarClick); }
+      if (headerEl) { nameEl.addEventListener('click', this.onHeaderClick); }
+      if (footerEl) { nameEl.addEventListener('click', this.onFooterClick); }
+      if (bubbleEl) { nameEl.addEventListener('click', this.onBubbleClick); }
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      var ref = this.$refs;
+      var el = ref.el;
+      var nameEl = ref.nameEl;
+      var textEl = ref.textEl;
+      var avatarEl = ref.avatarEl;
+      var headerEl = ref.headerEl;
+      var footerEl = ref.footerEl;
+      var bubbleEl = ref.bubbleEl;
+      el.removeEventListener('click', this.onClick);
+      if (nameEl) { nameEl.removeEventListener('click', this.onNameClick); }
+      if (textEl) { textEl.removeEventListener('click', this.onTextClick); }
+      if (avatarEl) { nameEl.removeEventListener('click', this.onAvatarClick); }
+      if (headerEl) { nameEl.removeEventListener('click', this.onHeaderClick); }
+      if (footerEl) { nameEl.removeEventListener('click', this.onFooterClick); }
+      if (bubbleEl) { nameEl.removeEventListener('click', this.onBubbleClick); }
+    },
+
     methods: {
       onClick: function onClick(event) {
         this.dispatchEvent('click', event);
@@ -5905,11 +6067,6 @@
       }
     }, Mixins.colorProps),
 
-    created: function created() {
-      this.onClickBound = this.onClick.bind(this);
-      this.onDeleteClickBound = this.onDeleteClick.bind(this);
-    },
-
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -5921,11 +6078,9 @@
       var style = props.style;
       var classes = Utils.classNames(className, 'messagebar-attachment', Mixins.colorClasses(props));
       return _h('div', {
+        ref: 'el',
         style: style,
         class: classes,
-        on: {
-          click: self.onClickBound
-        },
         attrs: {
           id: id
         }
@@ -5934,11 +6089,30 @@
           src: image
         }
       }), deletable && _h('span', {
-        class: 'messagebar-attachment-delete',
-        on: {
-          click: self.onDeleteClickBound
-        }
+        ref: 'deleteEl',
+        class: 'messagebar-attachment-delete'
       }), this.$slots['default']]);
+    },
+
+    created: function created() {
+      this.onClick = this.onClick.bind(this);
+      this.onDeleteClick = this.onDeleteClick.bind(this);
+    },
+
+    mounted: function mounted() {
+      this.$refs.el.addEventListener('click', this.onClick);
+
+      if (this.$refs.deleteEl) {
+        this.$refs.deleteEl.addEventListener('click', this.onDeleteClick);
+      }
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      this.$refs.el.removeEventListener('click', this.onClick);
+
+      if (this.$refs.deleteEl) {
+        this.$refs.deleteEl.removeEventListener('click', this.onDeleteClick);
+      }
     },
 
     methods: {
@@ -6004,10 +6178,6 @@
       checked: Boolean
     }, Mixins.colorProps),
 
-    created: function created() {
-      this.onChangeBound = this.onChange.bind(this);
-    },
-
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -6024,11 +6194,12 @@
       var inputEl;
       {
         inputEl = _h('input', {
+          ref: 'inputEl',
           domProps: {
             checked: checked
           },
           on: {
-            change: self.onChangeBound
+            change: self.onChange
           },
           attrs: {
             type: 'checkbox'
@@ -6044,6 +6215,10 @@
       }, [inputEl, _h('i', {
         class: 'icon icon-checkbox'
       }), this.$slots['default']]);
+    },
+
+    created: function created() {
+      this.onChange = this.onChange.bind(this);
     },
 
     methods: {
@@ -6169,14 +6344,14 @@
     }, Mixins.colorProps),
 
     created: function created() {
-      this.onChangeBound = this.onChange.bind(this);
-      this.onInputBound = this.onInput.bind(this);
-      this.onFocusBound = this.onFocus.bind(this);
-      this.onBlurBound = this.onBlur.bind(this);
-      this.onClickBound = this.onClick.bind(this);
-      this.onDeleteAttachmentBound = this.onDeleteAttachment.bind(this);
-      this.onClickAttachmentBound = this.onClickAttachment.bind(this);
-      this.onResizePageBound = this.onResizePage.bind(this);
+      this.onChange = this.onChange.bind(this);
+      this.onInput = this.onInput.bind(this);
+      this.onFocus = this.onFocus.bind(this);
+      this.onBlur = this.onBlur.bind(this);
+      this.onClick = this.onClick.bind(this);
+      this.onDeleteAttachment = this.onDeleteAttachment.bind(this);
+      this.onClickAttachment = this.onClickAttachment.bind(this);
+      this.onResizePage = this.onResizePage.bind(this);
     },
 
     render: function render() {
@@ -6235,10 +6410,10 @@
       }, [slotsBeforeArea, messagebarAttachmentsEl, _h(F7Input, {
         ref: 'area',
         on: {
-          input: self.onInputBound,
-          change: self.onChangeBound,
-          focus: self.onFocusBound,
-          blur: self.onBlurBound
+          input: self.onInput,
+          change: self.onChange,
+          focus: self.onFocus,
+          blur: self.onBlur
         },
         attrs: {
           type: 'textarea',
@@ -6252,7 +6427,7 @@
         }
       }), slotsAfterArea]), (sendLink && sendLink.length > 0 || slotsSendLink) && _h(F7Link, {
         on: {
-          click: self.onClickBound
+          click: self.onClick
         }
       }, [slotsSendLink || sendLink]), slotsInnerEnd, innerEndEls]), slotsAfterInner, messagebarSheetEl]);
     },
@@ -6300,9 +6475,9 @@
       if (!init) { return; }
       var el = self.$refs.el;
       if (!el) { return; }
-      el.addEventListener('messagebar:attachmentdelete', self.onDeleteAttachmentBound);
-      el.addEventListener('messagebar:attachmentclick', self.onClickAttachmentBound);
-      el.addEventListener('messagebar:resizepage', self.onResizePageBound);
+      el.addEventListener('messagebar:attachmentdelete', self.onDeleteAttachment);
+      el.addEventListener('messagebar:attachmentclick', self.onClickAttachment);
+      el.addEventListener('messagebar:resizepage', self.onResizePage);
       var params = Utils.noUndefinedProps({
         el: el,
         top: top,
@@ -6341,9 +6516,9 @@
       if (self.f7Messagebar && self.f7Messagebar.destroy) { self.f7Messagebar.destroy(); }
       var el = self.$refs.el;
       if (!el) { return; }
-      el.removeEventListener('messagebar:attachmentdelete', self.onDeleteAttachmentBound);
-      el.removeEventListener('messagebar:attachmentclick', self.onClickAttachmentBound);
-      el.removeEventListener('messagebar:resizepage', self.onResizePageBound);
+      el.removeEventListener('messagebar:attachmentdelete', self.onDeleteAttachment);
+      el.removeEventListener('messagebar:attachmentclick', self.onClickAttachment);
+      el.removeEventListener('messagebar:resizepage', self.onResizePage);
     },
 
     methods: {
@@ -8434,6 +8609,7 @@
       var inputEl;
       {
         inputEl = _h('input', {
+          ref: 'inputEl',
           domProps: {
             value: value,
             disabled: disabled,
@@ -8441,7 +8617,7 @@
             checked: checked
           },
           on: {
-            change: self.onChange.bind(self)
+            change: self.onChange
           },
           attrs: {
             type: 'radio',
@@ -8464,6 +8640,10 @@
           id: id
         }
       }, [inputEl, iconEl, this.$slots['default']]);
+    },
+
+    created: function created() {
+      this.onChange = this.onChange.bind(this);
     },
 
     methods: {
@@ -8514,13 +8694,23 @@
       return _h(RowTag, {
         style: style,
         class: classes,
-        on: {
-          click: self.onClick.bind(self)
-        },
+        ref: 'el',
         attrs: {
           id: id
         }
       }, [this.$slots['default']]);
+    },
+
+    created: function created() {
+      this.onClick = this.onClick.bind(this);
+    },
+
+    mounted: function mounted() {
+      this.$refs.el.addEventListener('click', this.onClick);
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      this.$refs.el.removeEventListener('click', this.onClick);
     },
 
     methods: {
@@ -8570,6 +8760,7 @@
         type: Boolean,
         default: true
       },
+      value: [String, Number, Array],
       inputEvents: {
         type: String,
         default: 'change input compositionend'
@@ -8656,22 +8847,19 @@
       var className = props.className;
       var style = props.style;
       var id = props.id;
+      var value = props.value;
 
       if (clearButton) {
         clearEl = _h('span', {
-          class: 'input-clear-button',
-          on: {
-            click: self.onClearButtonClick.bind(self)
-          }
+          ref: 'clearEl',
+          class: 'input-clear-button'
         });
       }
 
       if (disableButton) {
         disableEl = _h('span', {
-          class: 'searchbar-disable-button',
-          on: {
-            click: self.onDisableButtonClick.bind(self)
-          }
+          ref: 'disableEl',
+          class: 'searchbar-disable-button'
         }, [disableButtonText]);
       }
 
@@ -8681,6 +8869,25 @@
         'no-hairline': noHairline,
         'searchbar-expandable': expandable
       }, Mixins.colorClasses(props));
+      var inputEl;
+      {
+        inputEl = _h('input', {
+          ref: 'inputEl',
+          domProps: {
+            value: value
+          },
+          on: {
+            input: self.onInput,
+            change: self.onChange,
+            focus: self.onFocus,
+            blur: self.onBlur
+          },
+          attrs: {
+            placeholder: placeholder,
+            type: 'search'
+          }
+        });
+      }
       return _h(SearchbarTag, {
         ref: 'el',
         style: style,
@@ -8692,30 +8899,19 @@
         class: 'searchbar-inner'
       }, [this.$slots['inner-start'], _h('div', {
         class: 'searchbar-input-wrap'
-      }, [this.$slots['input-wrap-start'], _h('input', {
-        on: {
-          input: self.onInput.bind(self),
-          change: self.onChange.bind(self),
-          focus: self.onFocus.bind(self),
-          blur: self.onBlur.bind(self)
-        },
-        attrs: {
-          placeholder: placeholder,
-          type: 'search'
-        }
-      }), _h('i', {
+      }, [this.$slots['input-wrap-start'], inputEl, _h('i', {
         class: 'searchbar-icon'
       }), clearEl, this.$slots['input-wrap-end']]), disableEl, this.$slots['inner-end'], this.$slots['default']]), this.$slots['after-inner']]);
     },
 
-    beforeDestroy: function beforeDestroy() {
-      var self = this;
-
-      if (self.props.form && self.$refs.el) {
-        self.$refs.el.removeEventListener('submit', self.onSubmitBound, false);
-      }
-
-      if (self.f7Searchbar && self.f7Searchbar.destroy) { self.f7Searchbar.destroy(); }
+    created: function created() {
+      this.onChange = this.onChange.bind(this);
+      this.onInput = this.onInput.bind(this);
+      this.onFocus = this.onFocus.bind(this);
+      this.onBlur = this.onBlur.bind(this);
+      this.onSubmit = this.onSubmit.bind(this);
+      this.onClearButtonClick = this.onClearButtonClick.bind(this);
+      this.onDisableButtonClick = this.onDisableButtonClick.bind(this);
     },
 
     mounted: function mounted() {
@@ -8741,14 +8937,25 @@
       var hideDividers = ref.hideDividers;
       var hideGroups = ref.hideGroups;
       var form = ref.form;
-      if (!init) { return; }
-      var el = self.$refs.el;
+      var ref$1 = self.$refs;
+      var inputEl = ref$1.inputEl;
+      var el = ref$1.el;
+      var clearEl = ref$1.clearEl;
+      var disableEl = ref$1.disableEl;
 
       if (form && el) {
-        self.onSubmitBound = self.onSubmit.bind(self);
-        el.addEventListener('submit', self.onSubmitBound, false);
+        el.addEventListener('submit', self.onSubmit, false);
       }
 
+      if (clearEl) {
+        clearEl.addEventListener('click', self.onClearButtonClick);
+      }
+
+      if (disableEl) {
+        disableEl.addEventListener('click', self.onDisableButtonClick);
+      }
+
+      if (!init) { return; }
       self.$f7ready(function () {
         var params = Utils.noUndefinedProps({
           el: self.$refs.el,
@@ -8796,6 +9003,29 @@
         });
         self.f7Searchbar = self.$f7.searchbar.create(params);
       });
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      var self = this;
+      var ref = self.$refs;
+      var inputEl = ref.inputEl;
+      var el = ref.el;
+      var clearEl = ref.clearEl;
+      var disableEl = ref.disableEl;
+
+      if (self.props.form && el) {
+        el.removeEventListener('submit', self.onSubmit, false);
+      }
+
+      if (clearEl) {
+        clearEl.removeEventListener('click', self.onClearButtonClick);
+      }
+
+      if (disableEl) {
+        disableEl.removeEventListener('click', self.onDisableButtonClick);
+      }
+
+      if (self.f7Searchbar && self.f7Searchbar.destroy) { self.f7Searchbar.destroy(); }
     },
 
     methods: {
@@ -9029,7 +9259,7 @@
     beforeDestroy: function beforeDestroy() {
       var self = this;
       if (self.f7Sheet) { self.f7Sheet.destroy(); }
-      var el = self.$el;
+      var el = self.$refs.el;
       if (!el) { return; }
       el.removeEventListener('popup:open', self.onOpenBound);
       el.removeEventListener('popup:opened', self.onOpenedBound);
@@ -9211,12 +9441,13 @@
         var inputEl;
         {
           inputEl = _h('input', {
+            ref: 'inputEl',
             domProps: {
               readOnly: inputReadonly,
               value: value
             },
             on: {
-              input: self.onInput.bind(self)
+              input: self.onInput
             },
             attrs: {
               type: inputType,
@@ -9245,15 +9476,11 @@
           id: id
         }
       }, [_h('div', {
-        class: 'stepper-button-minus',
-        on: {
-          click: self.onMinusClickBound
-        }
+        ref: 'minusEl',
+        class: 'stepper-button-minus'
       }), inputWrapEl, valueEl, _h('div', {
-        class: 'stepper-button-plus',
-        on: {
-          click: self.onPlusClickBound
-        }
+        ref: 'plusEl',
+        class: 'stepper-button-plus'
       })]);
     },
 
@@ -9300,13 +9527,25 @@
     },
 
     created: function created() {
-      this.onInputBound = this.onInput.bind(this);
-      this.onMinusClickBound = this.onMinusClick.bind(this);
-      this.onPlusClickBound = this.onPlusClick.bind(this);
+      this.onInput = this.onInput.bind(this);
+      this.onMinusClick = this.onMinusClick.bind(this);
+      this.onPlusClick = this.onPlusClick.bind(this);
     },
 
     mounted: function mounted() {
       var self = this;
+      var ref = self.$refs;
+      var minusEl = ref.minusEl;
+      var plusEl = ref.plusEl;
+
+      if (minusEl) {
+        minusEl.addEventListener('click', self.onMinusClick);
+      }
+
+      if (plusEl) {
+        plusEl.addEventListener('click', self.onPlusClick);
+      }
+
       if (!self.props.init) { return; }
       self.$f7ready(function (f7) {
         var ref = self.props;
@@ -9347,10 +9586,23 @@
     },
 
     beforeDestroy: function beforeDestroy() {
-      if (!this.props.init) { return; }
+      var self = this;
+      var ref = self.$refs;
+      var minusEl = ref.minusEl;
+      var plusEl = ref.plusEl;
 
-      if (this.f7Stepper && this.f7Stepper.destroy) {
-        this.f7Stepper.destroy();
+      if (minusEl) {
+        minusEl.removeEventListener('click', self.onMinusClick);
+      }
+
+      if (plusEl) {
+        plusEl.removeEventListener('click', self.onPlusClick);
+      }
+
+      if (!self.props.init) { return; }
+
+      if (self.f7Stepper && self.f7Stepper.destroy) {
+        self.f7Stepper.destroy();
       }
     },
 
@@ -9524,17 +9776,27 @@
         'swipeout-close': close
       }, Mixins.colorClasses(props));
       return _h('a', {
+        ref: 'el',
         style: style,
         class: classes,
-        on: {
-          click: this.onClick.bind(this)
-        },
         attrs: {
           href: href || '#',
           id: id,
           'data-confirm': confirmText || undefined
         }
       }, [this.$slots['default'] || [text]]);
+    },
+
+    created: function created() {
+      this.onClick = this.onClick.bind(this);
+    },
+
+    mounted: function mounted() {
+      this.$refs.el.addEventListener('click', this.onClick);
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      this.$refs.el.removeEventListener('click', this.onClick);
     },
 
     methods: {
@@ -9898,11 +10160,13 @@
       var style = props.style;
       var className = props.className;
       var routable = props.routable;
-      var classes = Utils.classNames(className, {
+      var classes = Utils.classNames(className, Mixins.colorClasses(props));
+      var tabsClasses = Utils.classNames({
+        'tabs': true,
         'tabs-animated-wrap': animated,
         'tabs-swipeable-wrap': swipeable,
         'tabs-routable': routable
-      }, Mixins.colorClasses(props));
+      });
 
       if (animated || swipeable) {
         return _h('div', {
@@ -9912,13 +10176,13 @@
             id: id
           }
         }, [_h('div', {
-          class: 'tabs'
+          class: tabsClasses
         }, [this.$slots['default']])]);
       }
 
       return _h('div', {
         style: style,
-        class: Utils.classNames('tabs', classes),
+        class: Utils.classNames(tabsClasses, classes),
         attrs: {
           id: id
         }
@@ -10051,6 +10315,11 @@
       iosSwipeBackAnimateOpacity: Boolean,
       iosSwipeBackActiveArea: Number,
       iosSwipeBackThreshold: Number,
+      mdSwipeBack: Boolean,
+      mdSwipeBackAnimateShadow: Boolean,
+      mdSwipeBackAnimateOpacity: Boolean,
+      mdSwipeBackActiveArea: Number,
+      mdSwipeBackThreshold: Number,
       pushState: Boolean,
       pushStateRoot: String,
       pushStateAnimate: Boolean,
@@ -10341,6 +10610,13 @@
       removePage: function removePage($pageEl) {
         if (!$pageEl) { return; }
         var router = this;
+        var f7Page;
+        if ('length' in $pageEl) { f7Page = $pageEl[0].f7Page; }
+        else { f7Page = $pageEl.f7Page; }
+        if (f7Page && f7Page.route && f7Page.route.route && f7Page.route.route.keepAlive) {
+          router.app.$($pageEl).remove();
+          return;
+        }
         var routerComponent;
         f7.routers.views.forEach(function (data) {
           if (data.el && data.el === router.el) {
@@ -10492,7 +10768,7 @@
   };
 
   /**
-   * Framework7 Vue 3.5.2
+   * Framework7 Vue 3.6.0
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -10500,7 +10776,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: November 12, 2018
+   * Released on: December 7, 2018
    */
 
   var Plugin = {

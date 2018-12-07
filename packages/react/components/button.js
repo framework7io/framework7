@@ -11,6 +11,11 @@ class F7Button extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.__reactRefs = {};
+
+    (() => {
+      const self = this;
+      self.onClickBound = self.onClick.bind(self);
+    })();
   }
 
   onClick(event) {
@@ -133,13 +138,13 @@ class F7Button extends React.Component {
       },
       id: id,
       style: style,
-      className: self.classes,
-      onClick: self.onClick.bind(self)
+      className: self.classes
     }, self.attrs), iconEl, textEl, this.slots['default']);
   }
 
   componentWillUnmount() {
     const self = this;
+    self.refs.el.removeEventListener('click', self.onClickBound);
 
     if (self.f7Tooltip && self.f7Tooltip.destroy) {
       self.f7Tooltip.destroy();
@@ -150,6 +155,7 @@ class F7Button extends React.Component {
 
   componentDidMount() {
     const self = this;
+    self.refs.el.addEventListener('click', self.onClickBound);
     const {
       tooltip
     } = self.props;

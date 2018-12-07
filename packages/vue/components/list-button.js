@@ -38,9 +38,7 @@ export default {
     }, [_h('a', __vueComponentTransformJSXProps(Object.assign({
       class: self.classes
     }, self.attrs, {
-      on: {
-        click: self.onClick.bind(self)
-      }
+      ref: 'linkEl'
     })), [this.$slots['default'] || [title || text]])]);
   },
 
@@ -84,6 +82,19 @@ export default {
     }
 
   },
+
+  created() {
+    this.onClick = this.onClick.bind(this);
+  },
+
+  mounted() {
+    this.$refs.linkEl.addEventListener('click', this.onClick);
+  },
+
+  beforeDestroy() {
+    this.$refs.linkEl.removeEventListener('click', this.onClick);
+  },
+
   methods: {
     onClick(event) {
       this.dispatchEvent('click', event);

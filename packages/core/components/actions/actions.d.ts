@@ -19,9 +19,9 @@ export namespace Actions {
     opened : boolean
 
     /** Open action sheet. Where animate - boolean (by default true) - defines whether it should be opened with animation */
-    open(animate : boolean) : void
+    open(animate? : boolean) : void
     /** Close action sheet. Where animate - boolean (by default true) - defines whether it should be closed with animation */
-    close(animate : boolean) : void
+    close(animate? : boolean) : void
     /** Destroy action sheet */
     destroy() : void
   }
@@ -121,11 +121,11 @@ export namespace Actions {
       /** destroy Action Sheet instance */
       destroy(el : HTMLElement | CSSSelector | Actions) : void;
       /** get Action Sheet instance by HTML element */
-      get(el : HTMLElement | CSSSelector) : Actions;
+      get(el? : HTMLElement | CSSSelector) : Actions;
       /** opens Action Sheet */
-      open(el : HTMLElement | CSSSelector, animate : boolean) : Actions;
+      open(el? : HTMLElement | CSSSelector, animate? : boolean) : Actions;
       /** closes Action Sheet */
-      close(el : HTMLElement | CSSSelector, animate : boolean) : Actions;
+      close(el? : HTMLElement | CSSSelector, animate? : boolean) : Actions;
     }
   }
   interface AppParams {

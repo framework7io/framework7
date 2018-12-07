@@ -9,6 +9,16 @@ class F7Searchbar extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.__reactRefs = {};
+
+    (() => {
+      this.onChange = this.onChange.bind(this);
+      this.onInput = this.onInput.bind(this);
+      this.onFocus = this.onFocus.bind(this);
+      this.onBlur = this.onBlur.bind(this);
+      this.onSubmit = this.onSubmit.bind(this);
+      this.onClearButtonClick = this.onClearButtonClick.bind(this);
+      this.onDisableButtonClick = this.onDisableButtonClick.bind(this);
+    })();
   }
 
   search(query) {
@@ -80,20 +90,25 @@ class F7Searchbar extends React.Component {
       expandable,
       className,
       style,
-      id
+      id,
+      value
     } = props;
 
     if (clearButton) {
       clearEl = React.createElement('span', {
-        className: 'input-clear-button',
-        onClick: self.onClearButtonClick.bind(self)
+        ref: __reactNode => {
+          this.__reactRefs['clearEl'] = __reactNode;
+        },
+        className: 'input-clear-button'
       });
     }
 
     if (disableButton) {
       disableEl = React.createElement('span', {
-        className: 'searchbar-disable-button',
-        onClick: self.onDisableButtonClick.bind(self)
+        ref: __reactNode => {
+          this.__reactRefs['disableEl'] = __reactNode;
+        },
+        className: 'searchbar-disable-button'
       }, disableButtonText);
     }
 
@@ -103,6 +118,21 @@ class F7Searchbar extends React.Component {
       'no-hairline': noHairline,
       'searchbar-expandable': expandable
     }, Mixins.colorClasses(props));
+    let inputEl;
+    {
+      inputEl = React.createElement('input', {
+        ref: __reactNode => {
+          this.__reactRefs['inputEl'] = __reactNode;
+        },
+        value: value,
+        placeholder: placeholder,
+        type: 'search',
+        onInput: self.onInput,
+        onChange: self.onChange.bind(self),
+        onFocus: self.onFocus,
+        onBlur: self.onBlur
+      });
+    }
     return React.createElement(SearchbarTag, {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
@@ -114,16 +144,33 @@ class F7Searchbar extends React.Component {
       className: 'searchbar-inner'
     }, this.slots['inner-start'], React.createElement('div', {
       className: 'searchbar-input-wrap'
-    }, this.slots['input-wrap-start'], React.createElement('input', {
-      placeholder: placeholder,
-      type: 'search',
-      onInput: self.onInput.bind(self),
-      onChange: self.onChange.bind(self),
-      onFocus: self.onFocus.bind(self),
-      onBlur: self.onBlur.bind(self)
-    }), React.createElement('i', {
+    }, this.slots['input-wrap-start'], inputEl, React.createElement('i', {
       className: 'searchbar-icon'
     }), clearEl, this.slots['input-wrap-end']), disableEl, this.slots['inner-end'], this.slots['default']), this.slots['after-inner']);
+  }
+
+  componentWillUnmount() {
+    const self = this;
+    const {
+      inputEl,
+      el,
+      clearEl,
+      disableEl
+    } = self.refs;
+
+    if (self.props.form && el) {
+      el.removeEventListener('submit', self.onSubmit, false);
+    }
+
+    if (clearEl) {
+      clearEl.removeEventListener('click', self.onClearButtonClick);
+    }
+
+    if (disableEl) {
+      disableEl.removeEventListener('click', self.onDisableButtonClick);
+    }
+
+    if (self.f7Searchbar && self.f7Searchbar.destroy) self.f7Searchbar.destroy();
   }
 
   componentDidMount() {
@@ -150,14 +197,26 @@ class F7Searchbar extends React.Component {
       hideGroups,
       form
     } = self.props;
-    if (!init) return;
-    const el = self.refs.el;
+    const {
+      inputEl,
+      el,
+      clearEl,
+      disableEl
+    } = self.refs;
 
     if (form && el) {
-      self.onSubmitBound = self.onSubmit.bind(self);
-      el.addEventListener('submit', self.onSubmitBound, false);
+      el.addEventListener('submit', self.onSubmit, false);
     }
 
+    if (clearEl) {
+      clearEl.addEventListener('click', self.onClearButtonClick);
+    }
+
+    if (disableEl) {
+      disableEl.addEventListener('click', self.onDisableButtonClick);
+    }
+
+    if (!init) return;
     self.$f7ready(() => {
       const params = Utils.noUndefinedProps({
         el: self.refs.el,
@@ -207,16 +266,6 @@ class F7Searchbar extends React.Component {
     });
   }
 
-  componentWillUnmount() {
-    const self = this;
-
-    if (self.props.form && self.refs.el) {
-      self.refs.el.removeEventListener('submit', self.onSubmitBound, false);
-    }
-
-    if (self.f7Searchbar && self.f7Searchbar.destroy) self.f7Searchbar.destroy();
-  }
-
   get slots() {
     return __reactComponentSlots(this.props);
   }
@@ -259,6 +308,7 @@ __reactComponentSetProps(F7Searchbar, Object.assign({
     type: Boolean,
     default: true
   },
+  value: [String, Number, Array],
   inputEvents: {
     type: String,
     default: 'change input compositionend'

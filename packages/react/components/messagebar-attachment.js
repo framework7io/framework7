@@ -8,10 +8,11 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7MessagebarAttachment extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
 
     (() => {
-      this.onClickBound = this.onClick.bind(this);
-      this.onDeleteClickBound = this.onDeleteClick.bind(this);
+      this.onClick = this.onClick.bind(this);
+      this.onDeleteClick = this.onDeleteClick.bind(this);
     })();
   }
 
@@ -35,16 +36,36 @@ class F7MessagebarAttachment extends React.Component {
     } = props;
     const classes = Utils.classNames(className, 'messagebar-attachment', Mixins.colorClasses(props));
     return React.createElement('div', {
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
       id: id,
       style: style,
-      className: classes,
-      onClick: self.onClickBound
+      className: classes
     }, image && React.createElement('img', {
       src: image
     }), deletable && React.createElement('span', {
-      className: 'messagebar-attachment-delete',
-      onClick: self.onDeleteClickBound
+      ref: __reactNode => {
+        this.__reactRefs['deleteEl'] = __reactNode;
+      },
+      className: 'messagebar-attachment-delete'
     }), this.slots['default']);
+  }
+
+  componentWillUnmount() {
+    this.refs.el.removeEventListener('click', this.onClick);
+
+    if (this.refs.deleteEl) {
+      this.refs.deleteEl.removeEventListener('click', this.onDeleteClick);
+    }
+  }
+
+  componentDidMount() {
+    this.refs.el.addEventListener('click', this.onClick);
+
+    if (this.refs.deleteEl) {
+      this.refs.deleteEl.addEventListener('click', this.onDeleteClick);
+    }
   }
 
   get slots() {
@@ -54,6 +75,12 @@ class F7MessagebarAttachment extends React.Component {
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
+
+  get refs() {
+    return this.__reactRefs;
+  }
+
+  set refs(refs) {}
 
 }
 

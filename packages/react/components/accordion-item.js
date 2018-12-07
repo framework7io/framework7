@@ -1,7 +1,6 @@
 import React from 'react';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
-import __reactComponentEl from '../runtime-helpers/react-component-el.js';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
@@ -9,6 +8,21 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7AccordionItem extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
+
+    (() => {
+      const self = this;
+      self.onBeforeOpenBound = self.onBeforeOpen.bind(self);
+      self.onOpenBound = self.onOpen.bind(self);
+      self.onOpenedBound = self.onOpened.bind(self);
+      self.onBeforeCloseBound = self.onBeforeClose.bind(self);
+      self.onCloseBound = self.onClose.bind(self);
+      self.onClosedBound = self.onClosed.bind(self);
+    })();
+  }
+
+  onBeforeOpen(event) {
+    this.dispatchEvent('accordionBeforeOpen accordion:beforeopen', event, event.detail.prevent);
   }
 
   onOpen(event) {
@@ -17,6 +31,10 @@ class F7AccordionItem extends React.Component {
 
   onOpened(event) {
     this.dispatchEvent('accordionOpened accordion:opened', event);
+  }
+
+  onBeforeClose(event) {
+    this.dispatchEvent('accordionBeforeClose accordion:beforeclose', event, event.detail.prevent);
   }
 
   onClose(event) {
@@ -41,30 +59,33 @@ class F7AccordionItem extends React.Component {
     return React.createElement('div', {
       id: id,
       style: style,
-      className: classes
+      className: classes,
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      }
     }, this.slots['default']);
   }
 
   componentWillUnmount() {
     const self = this;
-    const el = self.el;
+    const el = self.refs.el;
     if (!el) return;
+    el.removeEventListener('accordion:beforeopen', self.onBeforeOpenBound);
     el.removeEventListener('accordion:open', self.onOpenBound);
     el.removeEventListener('accordion:opened', self.onOpenedBound);
+    el.removeEventListener('accordion:beforeclose', self.onBeforeCloseBound);
     el.removeEventListener('accordion:close', self.onCloseBound);
     el.removeEventListener('accordion:closed', self.onClosedBound);
   }
 
   componentDidMount() {
     const self = this;
-    const el = self.el;
+    const el = self.refs.el;
     if (!el) return;
-    self.onOpenBound = self.onOpen.bind(self);
-    self.onOpenedBound = self.onOpened.bind(self);
-    self.onCloseBound = self.onClose.bind(self);
-    self.onClosedBound = self.onClosed.bind(self);
+    el.addEventListener('accordion:beforeopen', self.onBeforeOpenBound);
     el.addEventListener('accordion:open', self.onOpenBound);
     el.addEventListener('accordion:opened', self.onOpenedBound);
+    el.addEventListener('accordion:beforeclose', self.onBeforeCloseBound);
     el.addEventListener('accordion:close', self.onCloseBound);
     el.addEventListener('accordion:closed', self.onClosedBound);
   }
@@ -73,13 +94,15 @@ class F7AccordionItem extends React.Component {
     return __reactComponentSlots(this.props);
   }
 
-  get el() {
-    return __reactComponentEl(this);
-  }
-
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
+
+  get refs() {
+    return this.__reactRefs;
+  }
+
+  set refs(refs) {}
 
 }
 

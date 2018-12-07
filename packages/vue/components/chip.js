@@ -48,10 +48,8 @@ export default {
 
     if (deleteable) {
       deleteEl = _h('a', {
+        ref: 'deleteEl',
         class: 'chip-delete',
-        on: {
-          click: self.onDeleteClick.bind(self)
-        },
         attrs: {
           href: '#'
         }
@@ -62,15 +60,34 @@ export default {
       'chip-outline': outline
     }, Mixins.colorClasses(props));
     return _h('div', {
+      ref: 'el',
       style: style,
       class: classes,
-      on: {
-        click: self.onClick.bind(self)
-      },
       attrs: {
         id: id
       }
     }, [mediaEl, labelEl, deleteEl]);
+  },
+
+  created() {
+    this.onClick = this.onClick.bind(this);
+    this.onDeleteClick = this.onDeleteClick.bind(this);
+  },
+
+  mounted() {
+    this.$refs.el.addEventListener('click', this.onClick);
+
+    if (this.$refs.deleteEl) {
+      this.$refs.deleteEl.addEventListener('click', this.onDeleteClick);
+    }
+  },
+
+  beforeDestroy() {
+    this.$refs.el.removeEventListener('click', this.onClick);
+
+    if (this.$refs.deleteEl) {
+      this.$refs.deleteEl.removeEventListener('click', this.onDeleteClick);
+    }
   },
 
   methods: {

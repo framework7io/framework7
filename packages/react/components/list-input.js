@@ -26,14 +26,14 @@ class F7ListInput extends React.Component {
 
     (() => {
       const self = this;
-      self.onChangeBound = self.onChange.bind(self);
-      self.onInputBound = self.onInput.bind(self);
-      self.onFocusBound = self.onFocus.bind(self);
-      self.onBlurBound = self.onBlur.bind(self);
-      self.onTextareaResizeBound = self.onTextareaResize.bind(self);
-      self.onInputNotEmptyBound = self.onInputNotEmpty.bind(self);
-      self.onInputEmptyBound = self.onInputEmpty.bind(self);
-      self.onInputClearBound = self.onInputClear.bind(self);
+      self.onChange = self.onChange.bind(self);
+      self.onInput = self.onInput.bind(self);
+      self.onFocus = self.onFocus.bind(self);
+      self.onBlur = self.onBlur.bind(self);
+      self.onTextareaResize = self.onTextareaResize.bind(self);
+      self.onInputNotEmpty = self.onInputNotEmpty.bind(self);
+      self.onInputEmpty = self.onInputEmpty.bind(self);
+      self.onInputClear = self.onInputClear.bind(self);
     })();
   }
 
@@ -230,10 +230,10 @@ class F7ListInput extends React.Component {
           tabIndex: tabindex,
           'data-error-message': errorMessageForce ? undefined : errorMessage,
           className: inputClassName,
-          onFocus: self.onFocusBound,
-          onBlur: self.onBlurBound,
-          onInput: self.onInputBound,
-          onChange: self.onChangeBound
+          onFocus: self.onFocus,
+          onBlur: self.onBlur,
+          onInput: self.onInput,
+          onChange: self.onChange
         }, children);
       }
       return input;
@@ -304,10 +304,10 @@ class F7ListInput extends React.Component {
     const self = this;
     const inputEl = self.refs.inputEl;
     if (!inputEl) return;
-    inputEl.removeEventListener('input:notempty', self.onInputNotEmptyBound, false);
-    inputEl.removeEventListener('textarea:resze', self.onTextareaResizeBound, false);
-    inputEl.removeEventListener('input:empty', self.onInputEmptyBound, false);
-    inputEl.removeEventListener('input:clear', self.onInputClearBound, false);
+    inputEl.removeEventListener('input:notempty', self.onInputNotEmpty, false);
+    inputEl.removeEventListener('textarea:resze', self.onTextareaResize, false);
+    inputEl.removeEventListener('input:empty', self.onInputEmpty, false);
+    inputEl.removeEventListener('input:clear', self.onInputClear, false);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -373,10 +373,10 @@ class F7ListInput extends React.Component {
       } = self.props;
       const inputEl = self.refs.inputEl;
       if (!inputEl) return;
-      inputEl.addEventListener('input:notempty', self.onInputNotEmptyBound, false);
-      inputEl.addEventListener('textarea:resze', self.onTextareaResizeBound, false);
-      inputEl.addEventListener('input:empty', self.onInputEmptyBound, false);
-      inputEl.addEventListener('input:clear', self.onInputClearBound, false);
+      inputEl.addEventListener('input:notempty', self.onInputNotEmpty, false);
+      inputEl.addEventListener('textarea:resze', self.onTextareaResize, false);
+      inputEl.addEventListener('input:empty', self.onInputEmpty, false);
+      inputEl.addEventListener('input:clear', self.onInputClear, false);
 
       if ((validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
         setTimeout(() => {

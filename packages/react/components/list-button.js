@@ -8,6 +8,11 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7ListButton extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
+
+    (() => {
+      this.onClick = this.onClick.bind(this);
+    })();
   }
 
   onClick(event) {
@@ -65,8 +70,18 @@ class F7ListButton extends React.Component {
     }, React.createElement('a', Object.assign({
       className: self.classes
     }, self.attrs, {
-      onClick: self.onClick.bind(self)
+      ref: __reactNode => {
+        this.__reactRefs['linkEl'] = __reactNode;
+      }
     }), this.slots['default'], !this.slots.default && (title || text)));
+  }
+
+  componentWillUnmount() {
+    this.refs.linkEl.removeEventListener('click', this.onClick);
+  }
+
+  componentDidMount() {
+    this.refs.linkEl.addEventListener('click', this.onClick);
   }
 
   get slots() {
@@ -76,6 +91,12 @@ class F7ListButton extends React.Component {
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
+
+  get refs() {
+    return this.__reactRefs;
+  }
+
+  set refs(refs) {}
 
 }
 

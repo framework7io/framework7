@@ -347,7 +347,7 @@ class Picker extends Framework7Class {
     }
 
     // Extra focus
-    if (!inline && $inputEl.length && app.theme === 'md') {
+    if (!inline && $inputEl && $inputEl.length && app.theme === 'md') {
       $inputEl.trigger('focus');
     }
 

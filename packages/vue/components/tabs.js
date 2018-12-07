@@ -22,11 +22,13 @@ export default {
       className,
       routable
     } = props;
-    const classes = Utils.classNames(className, {
+    const classes = Utils.classNames(className, Mixins.colorClasses(props));
+    const tabsClasses = Utils.classNames({
+      'tabs': true,
       'tabs-animated-wrap': animated,
       'tabs-swipeable-wrap': swipeable,
       'tabs-routable': routable
-    }, Mixins.colorClasses(props));
+    });
 
     if (animated || swipeable) {
       return _h('div', {
@@ -36,13 +38,13 @@ export default {
           id: id
         }
       }, [_h('div', {
-        class: 'tabs'
+        class: tabsClasses
       }, [this.$slots['default']])]);
     }
 
     return _h('div', {
       style: style,
-      class: Utils.classNames('tabs', classes),
+      class: Utils.classNames(tabsClasses, classes),
       attrs: {
         id: id
       }

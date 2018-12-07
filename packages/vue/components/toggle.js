@@ -39,6 +39,7 @@ export default {
     let inputEl;
     {
       inputEl = _h('input', {
+        ref: 'inputEl',
         domProps: {
           disabled,
           readOnly: readonly,
@@ -46,7 +47,7 @@ export default {
           checked
         },
         on: {
-          change: self.onChange.bind(self)
+          change: self.onChange
         },
         attrs: {
           type: 'checkbox',
@@ -72,6 +73,10 @@ export default {
       if (!self.f7Toggle) return;
       self.f7Toggle.checked = newValue;
     }
+  },
+
+  created() {
+    this.onChange = this.onChange.bind(this);
   },
 
   mounted() {

@@ -10,6 +10,10 @@ class F7Fab extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.__reactRefs = {};
+
+    (() => {
+      this.onClick = this.onClick.bind(this);
+    })();
   }
 
   onClick(event) {
@@ -66,9 +70,11 @@ class F7Fab extends React.Component {
 
     if (linkChildren.length || linkSlots && linkSlots.length) {
       linkEl = React.createElement('a', {
+        ref: __reactNode => {
+          this.__reactRefs['linkEl'] = __reactNode;
+        },
         target: target,
         href: href,
-        onClick: self.onClick.bind(self),
         key: 'f7-fab-link'
       }, linkChildren, textEl, linkSlots);
     }
@@ -88,6 +94,10 @@ class F7Fab extends React.Component {
   componentWillUnmount() {
     const self = this;
 
+    if (self.refs.linkEl) {
+      self.refs.linkEl.removeEventListener('click', self.onClick);
+    }
+
     if (self.f7Tooltip && self.f7Tooltip.destroy) {
       self.f7Tooltip.destroy();
       self.f7Tooltip = null;
@@ -97,6 +107,11 @@ class F7Fab extends React.Component {
 
   componentDidMount() {
     const self = this;
+
+    if (self.refs.linkEl) {
+      self.refs.linkEl.addEventListener('click', self.onClick);
+    }
+
     const {
       tooltip
     } = self.props;

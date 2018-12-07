@@ -273,6 +273,9 @@ class Range extends Framework7Class {
       range.calcSize();
       range.layout();
     }
+    let parentModals;
+    let parentPanel;
+    let parentPage;
     range.attachEvents = function attachEvents() {
       const passive = Support.passiveListener ? { passive: true } : false;
       range.$el.on(app.touchEvents.start, handleTouchStart, passive);
@@ -280,12 +283,12 @@ class Range extends Framework7Class {
       app.on('touchend:passive', handleTouchEnd);
       app.on('tabShow', handleResize);
       app.on('resize', handleResize);
-      range.$el
-        .parents('.sheet-modal, .actions-modal, .popup, .popover, .login-screen, .dialog, .toast')
-        .on('modal:open', handleResize);
-      range.$el
-        .parents('.panel')
-        .on('panel:open', handleResize);
+      parentModals = range.$el.parents('.sheet-modal, .actions-modal, .popup, .popover, .login-screen, .dialog, .toast');
+      parentModals.on('modal:open', handleResize);
+      parentPanel = range.$el.parents('.panel');
+      parentPanel.on('panel:open', handleResize);
+      parentPage = range.$el.parents('.page').eq(0);
+      parentPage.on('page:reinit', handleResize);
     };
     range.detachEvents = function detachEvents() {
       const passive = Support.passiveListener ? { passive: true } : false;
@@ -294,12 +297,18 @@ class Range extends Framework7Class {
       app.off('touchend:passive', handleTouchEnd);
       app.off('tabShow', handleResize);
       app.off('resize', handleResize);
-      range.$el
-        .parents('.sheet-modal, .actions-modal, .popup, .popover, .login-screen, .dialog, .toast')
-        .off('modal:open', handleResize);
-      range.$el
-        .parents('.panel')
-        .off('panel:open', handleResize);
+      if (parentModals) {
+        parentModals.off('modal:open', handleResize);
+      }
+      if (parentPanel) {
+        parentPanel.off('panel:open', handleResize);
+      }
+      if (parentPage) {
+        parentPage.off('page:reinit', handleResize);
+      }
+      parentModals = null;
+      parentPanel = null;
+      parentPage = null;
     };
 
     // Install Modules

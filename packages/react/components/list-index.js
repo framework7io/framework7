@@ -96,7 +96,7 @@ class F7ListIndex extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     __reactComponentWatch(this, 'props.indexes', prevProps, prevState, () => {
       if (!this.f7ListIndex) return;
-      this.f7ListIndex.params.indexes = this.indexes;
+      this.f7ListIndex.params.indexes = this.props.indexes;
       this.update();
     });
   }

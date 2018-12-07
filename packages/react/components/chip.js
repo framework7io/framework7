@@ -8,6 +8,12 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7Chip extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
+
+    (() => {
+      this.onClick = this.onClick.bind(this);
+      this.onDeleteClick = this.onDeleteClick.bind(this);
+    })();
   }
 
   onClick(event) {
@@ -51,9 +57,11 @@ class F7Chip extends React.Component {
 
     if (deleteable) {
       deleteEl = React.createElement('a', {
+        ref: __reactNode => {
+          this.__reactRefs['deleteEl'] = __reactNode;
+        },
         href: '#',
-        className: 'chip-delete',
-        onClick: self.onDeleteClick.bind(self)
+        className: 'chip-delete'
       });
     }
 
@@ -61,11 +69,29 @@ class F7Chip extends React.Component {
       'chip-outline': outline
     }, Mixins.colorClasses(props));
     return React.createElement('div', {
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
       id: id,
       style: style,
-      className: classes,
-      onClick: self.onClick.bind(self)
+      className: classes
     }, mediaEl, labelEl, deleteEl);
+  }
+
+  componentWillUnmount() {
+    this.refs.el.removeEventListener('click', this.onClick);
+
+    if (this.refs.deleteEl) {
+      this.refs.deleteEl.removeEventListener('click', this.onDeleteClick);
+    }
+  }
+
+  componentDidMount() {
+    this.refs.el.addEventListener('click', this.onClick);
+
+    if (this.refs.deleteEl) {
+      this.refs.deleteEl.addEventListener('click', this.onDeleteClick);
+    }
   }
 
   get slots() {
@@ -75,6 +101,12 @@ class F7Chip extends React.Component {
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
+
+  get refs() {
+    return this.__reactRefs;
+  }
+
+  set refs(refs) {}
 
 }
 

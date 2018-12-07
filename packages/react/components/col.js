@@ -8,6 +8,11 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7Col extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
+
+    (() => {
+      this.onClick = this.onClick.bind(this);
+    })();
   }
 
   onClick(event) {
@@ -37,8 +42,18 @@ class F7Col extends React.Component {
       id: id,
       style: style,
       className: classes,
-      onClick: self.onClick.bind(self)
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      }
     }, this.slots['default']);
+  }
+
+  componentWillUnmount() {
+    this.refs.el.removeEventListener('click', this.onClick);
+  }
+
+  componentDidMount() {
+    this.refs.el.addEventListener('click', this.onClick);
   }
 
   get slots() {
@@ -48,6 +63,12 @@ class F7Col extends React.Component {
   dispatchEvent(events, ...args) {
     return __reactComponentDispatchEvent(this, events, ...args);
   }
+
+  get refs() {
+    return this.__reactRefs;
+  }
+
+  set refs(refs) {}
 
 }
 

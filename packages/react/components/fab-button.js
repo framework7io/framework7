@@ -10,6 +10,10 @@ class F7FabButton extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.__reactRefs = {};
+
+    (() => {
+      this.onClick = this.onClick.bind(this);
+    })();
   }
 
   onClick(event) {
@@ -39,16 +43,19 @@ class F7FabButton extends React.Component {
     }
 
     return React.createElement('a', {
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
       id: id,
       style: style,
       target: target,
-      className: classes,
-      onClick: this.onClick.bind(this)
+      className: classes
     }, this.slots['default'], labelEl);
   }
 
   componentWillUnmount() {
     const self = this;
+    self.refs.el.removeEventListener('click', self.onClick);
 
     if (self.f7Tooltip && self.f7Tooltip.destroy) {
       self.f7Tooltip.destroy();
@@ -59,6 +66,7 @@ class F7FabButton extends React.Component {
 
   componentDidMount() {
     const self = this;
+    self.refs.el.addEventListener('click', self.onClick);
     const {
       tooltip
     } = self.props;

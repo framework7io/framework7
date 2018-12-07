@@ -34,17 +34,27 @@ export default {
       'swipeout-close': close
     }, Mixins.colorClasses(props));
     return _h('a', {
+      ref: 'el',
       style: style,
       class: classes,
-      on: {
-        click: this.onClick.bind(this)
-      },
       attrs: {
         href: href || '#',
         id: id,
         'data-confirm': confirmText || undefined
       }
     }, [this.$slots['default'] || [text]]);
+  },
+
+  created() {
+    this.onClick = this.onClick.bind(this);
+  },
+
+  mounted() {
+    this.$refs.el.addEventListener('click', this.onClick);
+  },
+
+  beforeDestroy() {
+    this.$refs.el.removeEventListener('click', this.onClick);
   },
 
   methods: {

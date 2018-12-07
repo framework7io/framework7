@@ -96,7 +96,7 @@ export default {
   beforeDestroy() {
     const self = this;
     if (self.f7Actions) self.f7Actions.destroy();
-    const el = self.$el;
+    const el = self.$refs.el;
     if (!el) return;
     el.removeEventListener('actions:open', self.onOpenBound);
     el.removeEventListener('actions:opened', self.onOpenedBound);

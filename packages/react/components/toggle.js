@@ -9,6 +9,10 @@ class F7Toggle extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.__reactRefs = {};
+
+    (() => {
+      this.onChange = this.onChange.bind(this);
+    })();
   }
 
   toggle() {
@@ -41,6 +45,9 @@ class F7Toggle extends React.Component {
     let inputEl;
     {
       inputEl = React.createElement('input', {
+        ref: __reactNode => {
+          this.__reactRefs['inputEl'] = __reactNode;
+        },
         type: 'checkbox',
         name: name,
         disabled: disabled,
@@ -48,7 +55,7 @@ class F7Toggle extends React.Component {
         checked: checked,
         defaultChecked: defaultChecked,
         value: value,
-        onChange: self.onChange.bind(self)
+        onChange: self.onChange
       });
     }
     return React.createElement('label', {

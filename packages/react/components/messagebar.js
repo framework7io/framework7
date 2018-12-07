@@ -14,14 +14,14 @@ class F7Messagebar extends React.Component {
     this.__reactRefs = {};
 
     (() => {
-      this.onChangeBound = this.onChange.bind(this);
-      this.onInputBound = this.onInput.bind(this);
-      this.onFocusBound = this.onFocus.bind(this);
-      this.onBlurBound = this.onBlur.bind(this);
-      this.onClickBound = this.onClick.bind(this);
-      this.onDeleteAttachmentBound = this.onDeleteAttachment.bind(this);
-      this.onClickAttachmentBound = this.onClickAttachment.bind(this);
-      this.onResizePageBound = this.onResizePage.bind(this);
+      this.onChange = this.onChange.bind(this);
+      this.onInput = this.onInput.bind(this);
+      this.onFocus = this.onFocus.bind(this);
+      this.onBlur = this.onBlur.bind(this);
+      this.onClick = this.onClick.bind(this);
+      this.onDeleteAttachment = this.onDeleteAttachment.bind(this);
+      this.onClickAttachment = this.onClickAttachment.bind(this);
+      this.onResizePage = this.onResizePage.bind(this);
     })();
   }
 
@@ -212,12 +212,12 @@ class F7Messagebar extends React.Component {
       readonly: readonly,
       resizable: resizable,
       value: value,
-      onInput: self.onInputBound,
-      onChange: self.onChangeBound,
-      onFocus: self.onFocusBound,
-      onBlur: self.onBlurBound
+      onInput: self.onInput,
+      onChange: self.onChange,
+      onFocus: self.onFocus,
+      onBlur: self.onBlur
     }), slotsAfterArea), (sendLink && sendLink.length > 0 || slotsSendLink) && React.createElement(F7Link, {
-      onClick: self.onClickBound
+      onClick: self.onClick
     }, slotsSendLink || sendLink), slotsInnerEnd, innerEndEls), slotsAfterInner, messagebarSheetEl);
   }
 
@@ -226,9 +226,9 @@ class F7Messagebar extends React.Component {
     if (self.f7Messagebar && self.f7Messagebar.destroy) self.f7Messagebar.destroy();
     const el = self.refs.el;
     if (!el) return;
-    el.removeEventListener('messagebar:attachmentdelete', self.onDeleteAttachmentBound);
-    el.removeEventListener('messagebar:attachmentclick', self.onClickAttachmentBound);
-    el.removeEventListener('messagebar:resizepage', self.onResizePageBound);
+    el.removeEventListener('messagebar:attachmentdelete', self.onDeleteAttachment);
+    el.removeEventListener('messagebar:attachmentclick', self.onClickAttachment);
+    el.removeEventListener('messagebar:resizepage', self.onResizePage);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -277,9 +277,9 @@ class F7Messagebar extends React.Component {
     if (!init) return;
     const el = self.refs.el;
     if (!el) return;
-    el.addEventListener('messagebar:attachmentdelete', self.onDeleteAttachmentBound);
-    el.addEventListener('messagebar:attachmentclick', self.onClickAttachmentBound);
-    el.addEventListener('messagebar:resizepage', self.onResizePageBound);
+    el.addEventListener('messagebar:attachmentdelete', self.onDeleteAttachment);
+    el.addEventListener('messagebar:attachmentclick', self.onClickAttachment);
+    el.addEventListener('messagebar:resizepage', self.onResizePage);
     const params = Utils.noUndefinedProps({
       el,
       top,
