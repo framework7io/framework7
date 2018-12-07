@@ -36,10 +36,10 @@
     }
     .right:first-child {
       .ltr({
-        right: 8px;
+        right: calc(8px + var(--f7-safe-area-right));
       });
       .rtl({
-        left: 8px;
+        left: calc(8px + var(--f7-safe-area-left));
       });
     }
   }
