@@ -48,9 +48,9 @@ export namespace Popup {
     opened : boolean
 
     /** Open popup. */
-    open(animate: boolean) : Popup
+    open(animate?: boolean) : Popup
     /** Close popup. */
-    close(animate: boolean) : Popup
+    close(animate?: boolean) : Popup
     /** Destroy popup */
     destroy() : void
   }
@@ -72,11 +72,11 @@ export namespace Popup {
       /** destroy Popup instance */
       destroy(el : HTMLElement | CSSSelector | Popup) : void
       /** get Popup instance by HTML element */
-      get(el : HTMLElement | CSSSelector) : Popup
+      get(el? : HTMLElement | CSSSelector) : Popup
       /** open Popup */
-      open(el : HTMLElement | CSSSelector, animate?: boolean) : Popup
+      open(el? : HTMLElement | CSSSelector, animate?: boolean) : Popup
       /** closes Popup */
-      close(el : HTMLElement | CSSSelector, animate?: boolean) : Popup
+      close(el? : HTMLElement | CSSSelector, animate?: boolean) : Popup
     }
   }
   interface AppParams {
