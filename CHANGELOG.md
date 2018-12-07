@@ -2,6 +2,22 @@
 
 # Change Log
 
+# [v3.6.0](https://github.com/framework7io/framework7/compare/v3.5.2...v3.6.0) - December 7, 2018
+  * Core
+    * Router
+      * New `keepAlive` routes. When route's page is specified with `keepAlive: true`, then it, instead of removing and destroying component, it will be detached from DOM and attached back when required.
+      * New `router.clearPreviousPages()` method that removes all previous (stacked) pages from DOM
+    * Accordion
+      * New `accordion:beforeopen` event that is triggered right before accordion will be opened. `event.detail.prevent` contains function that will prevent it from opening if called;
+      * New `accordion:beforeclose` event that is triggered right before accordion will be closed. `event.detail.prevent` contains function that will prevent it from closing if called;
+  * Phenome (React / Vue)
+    * AccordionItem and ListItem have new `accordion:beforeopen` / `accordionBeforeOpen` events, second argument passed to handler contains function that will prevent it from closing if called;
+    * AccordionItem and ListItem have new `accordion:beforeclose` / `accordionBeforeClose` events, second argument passed to  handler contains function that will prevent it from closing if called;
+    *  View component now accepts MD-theme related swipeback props: `mdSwipeBack`, `mdSwipeBackAnimateShadow`, `mdSwipeBackAnimateOpacity`, `mdSwipeBackActiveArea`, `mdSwipeBackThreshold`
+    * ListItem has new `virtualListIndex: Number` property to specify item index when rendered inside of Virtual List
+    * Searchbar has new `value` property to specify Searchbar input's value. Can be usefule when used with `customSearch` enabled
+  * Lots of minor fixes and improvements
+
 # [v3.5.2](https://github.com/framework7io/framework7/compare/v3.5.1...v3.5.2) - November 12, 2018
   * Core
     * List

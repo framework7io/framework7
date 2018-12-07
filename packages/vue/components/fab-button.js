@@ -54,6 +54,10 @@ export default {
     this.onClick = this.onClick.bind(this);
   },
 
+  created() {
+    this.onClick = this.onClick.bind(this);
+  },
+
   mounted() {
     const self = this;
     self.$refs.el.addEventListener('click', self.onClick);

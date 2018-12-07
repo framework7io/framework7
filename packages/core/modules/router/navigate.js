@@ -284,6 +284,9 @@ function forward(el, forwardOptions = {}) {
   }
   if (!newPageInDom) {
     router.pageCallback('mounted', $newPage, $newNavbarInner, newPagePosition, reload ? newPagePosition : 'current', options, $oldPage);
+  } else if (options.route && options.route.route && options.route.route.keepAlive && !$newPage[0].f7PageMounted) {
+    $newPage[0].f7PageMounted = true;
+    router.pageCallback('mounted', $newPage, $newNavbarInner, newPagePosition, reload ? newPagePosition : 'current', options, $oldPage);
   }
 
   // Remove old page

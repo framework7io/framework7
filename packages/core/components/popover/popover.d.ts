@@ -89,11 +89,11 @@ export namespace Popover {
       /** destroy Popover instance */
       destroy(el : HTMLElement | CSSSelector | Popover) : void
       /** get Popover instance by HTML element */
-      get(el : HTMLElement | CSSSelector) : Popover
+      get(el? : HTMLElement | CSSSelector) : Popover
       /** open Popover */
-      open(el : HTMLElement | CSSSelector, targetEl?: HTMLElement | CSSSelector, animate?: boolean) : Popover
+      open(el? : HTMLElement | CSSSelector, targetEl?: HTMLElement | CSSSelector, animate?: boolean) : Popover
       /** closes Popover */
-      close(el : HTMLElement | CSSSelector, animate?: boolean) : Popover
+      close(el? : HTMLElement | CSSSelector, animate?: boolean) : Popover
     }
   }
   interface AppParams {

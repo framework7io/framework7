@@ -52,9 +52,9 @@ export namespace Sheet {
     opened : boolean
 
     /** Open sheet. */
-    open(animate: boolean) : Sheet
+    open(animate?: boolean) : Sheet
     /** Close sheet. */
-    close(animate: boolean) : Sheet
+    close(animate?: boolean) : Sheet
     /** Destroy sheet */
     destroy() : void
   }
@@ -76,11 +76,11 @@ export namespace Sheet {
       /** destroy Sheet Modal instance */
       destroy(el : HTMLElement | CSSSelector | Sheet) : void
       /** get Sheet Modal instance by HTML element */
-      get(el : HTMLElement | CSSSelector) : Sheet
+      get(el? : HTMLElement | CSSSelector) : Sheet
       /** open Sheet Modal */
-      open(el : HTMLElement | CSSSelector, animate?: boolean) : Sheet
+      open(el? : HTMLElement | CSSSelector, animate?: boolean) : Sheet
       /** closes Sheet Modal */
-      close(el : HTMLElement | CSSSelector, animate?: boolean) : Sheet
+      close(el? : HTMLElement | CSSSelector, animate?: boolean) : Sheet
     }
   }
   interface AppParams {

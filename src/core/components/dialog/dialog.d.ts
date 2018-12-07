@@ -19,15 +19,15 @@ export namespace Dialog {
     opened : boolean
 
     /** Open dialog */
-    open(animate : boolean) : void
+    open(animate?: boolean) : void
     /** Close dialog. */
-    close(animate : boolean) : void
+    close(animate?: boolean) : void
     /** Sets dialog progress when Dialog Progress shortcut in use */
     setProgress(
       /** progressbar progress (from 0 to 100) */
-      progress : number,
+      progress: number,
       /** (in ms) - progressbar progress change duration */
-      duration : number) : void
+      duration?: number) : void
     /** Sets dialog's title */
     setTitle(title : string) : void
     /** Sets dialog's text */
@@ -115,11 +115,11 @@ export namespace Dialog {
       /** destroy Dialog instance */
       destroy(el : HTMLElement | CSSSelector | Dialog) : void;
       /** get Dialog instance by HTML element */
-      get(el : HTMLElement | CSSSelector) : Dialog;
+      get(el? : HTMLElement | CSSSelector) : Dialog;
       /** opens Dialog */
-      open(el : HTMLElement | CSSSelector, animate : boolean) : Dialog;
+      open(el? : HTMLElement | CSSSelector, animate? : boolean) : Dialog;
       /** closes Dialog */
-      close(el : HTMLElement | CSSSelector, animate : boolean) : Dialog;
+      close(el? : HTMLElement | CSSSelector, animate? : boolean) : Dialog;
 
       /** create Alert Dialog and open it */
       alert(text : string, title : string, callback?: () => void) : Dialog
