@@ -23,17 +23,19 @@ export default {
       routable
     } = props;
     const classes = Utils.classNames(className, Mixins.colorClasses(props));
-    const tabsClasses = Utils.classNames({
-      'tabs': true,
+    const wrapClasses = Utils.classNames({
       'tabs-animated-wrap': animated,
-      'tabs-swipeable-wrap': swipeable,
+      'tabs-swipeable-wrap': swipeable
+    });
+    const tabsClasses = Utils.classNames({
+      tabs: true,
       'tabs-routable': routable
     });
 
     if (animated || swipeable) {
       return _h('div', {
         style: style,
-        class: classes,
+        class: Utils.classNames(wrapClasses, classes),
         attrs: {
           id: id
         }

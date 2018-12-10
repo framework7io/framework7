@@ -1,5 +1,5 @@
 /**
- * Framework7 React 3.6.0
+ * Framework7 React 3.6.1
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: December 7, 2018
+ * Released on: December 10, 2018
  */
 
 (function (global, factory) {
@@ -11419,10 +11419,12 @@
       var className = props.className;
       var routable = props.routable;
       var classes = Utils.classNames(className, Mixins.colorClasses(props));
-      var tabsClasses = Utils.classNames({
-        'tabs': true,
+      var wrapClasses = Utils.classNames({
         'tabs-animated-wrap': animated,
-        'tabs-swipeable-wrap': swipeable,
+        'tabs-swipeable-wrap': swipeable
+      });
+      var tabsClasses = Utils.classNames({
+        tabs: true,
         'tabs-routable': routable
       });
 
@@ -11430,7 +11432,7 @@
         return React.createElement('div', {
           id: id,
           style: style,
-          className: classes
+          className: Utils.classNames(wrapClasses, classes)
         }, React.createElement('div', {
           className: tabsClasses
         }, this.slots['default']));
@@ -11767,7 +11769,7 @@
     url: String,
     main: Boolean,
     stackPages: Boolean,
-    xhrCache: String,
+    xhrCache: Boolean,
     xhrCacheIgnore: Array,
     xhrCacheIgnoreGetParameters: Boolean,
     xhrCacheDuration: Number,
@@ -12074,7 +12076,7 @@
   };
 
   /**
-   * Framework7 React 3.6.0
+   * Framework7 React 3.6.1
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -12082,7 +12084,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: December 7, 2018
+   * Released on: December 10, 2018
    */
 
   var Plugin = {
