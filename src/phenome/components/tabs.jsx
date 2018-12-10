@@ -21,16 +21,18 @@ export default {
       className,
       Mixins.colorClasses(props),
     );
-    const tabsClasses = Utils.classNames({
-      'tabs': true,
+    const wrapClasses = Utils.classNames({
       'tabs-animated-wrap': animated,
       'tabs-swipeable-wrap': swipeable,
+    });
+    const tabsClasses = Utils.classNames({
+      tabs: true,
       'tabs-routable': routable,
     });
 
     if (animated || swipeable) {
       return (
-        <div id={id} style={style} className={classes}>
+        <div id={id} style={style} className={Utils.classNames(wrapClasses, classes)}>
           <div className={tabsClasses}>
             <slot />
           </div>
