@@ -9,53 +9,77 @@ export default () => (
       <p>Just try to fill the form below and then go to any other page, or even you may close this site, and when you return here form fields will have kept your data.</p>
     </Block>
     <List form formStoreData id="demo-form">
-      <ListItem>
-        <Label>Name</Label>
-        <Input name="name" type="text" clearButton placeholder="Your name" />
-      </ListItem>
-      <ListItem>
-        <Label>Password</Label>
-        <Input name="password" type="password" clearButton placeholder="Your password" />
-      </ListItem>
-      <ListItem>
-        <Label>E-mail</Label>
-        <Input name="email" type="email" clearButton placeholder="Your e-mail" />
-      </ListItem>
-      <ListItem>
-        <Label>URL</Label>
-        <Input name="url" type="url" clearButton placeholder="URL" />
-      </ListItem>
-      <ListItem>
-        <Label>Phone</Label>
-        <Input name="phone" type="tel" clearButton placeholder="Your phone number" />
-      </ListItem>
-      <ListItem>
-        <Label>Gender</Label>
-        <Input type="select" name="gender" placeholder="Please choose...">
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </Input>
-      </ListItem>
-      <ListItem>
-        <Label>Birthday</Label>
-        <Input name="birthday" type="date" defaultValue="2014-04-30" placeholder="Please choose..." />
-      </ListItem>
-      <ListItem>
-        <Label>Date time</Label>
-        <Input name="date" type="datetime-local" placeholder="Please choose..." />
-      </ListItem>
-      <ListItem>
-        <Label>Range</Label>
-        <Input>
-          <div className="range-slider range-slider-init" data-label="true">
-            <input name="range" type="range" defaultValue="50" min="0" max="100" step="1" />
-          </div>
-        </Input>
-      </ListItem>
-      <ListItem>
-        <Label>About you</Label>
-        <Input type="textarea" name="bio" resizable placeholder="Bio" />
-      </ListItem>
+      <ListInput
+        label="Name"
+        name="name"
+        type="text"
+        clearButton
+        placeholder="Your name"
+      />
+      <ListInput
+        label="Password"
+        name="password"
+        type="password"
+        clearButton
+        placeholder="Your password"
+      />
+      <ListInput
+        label="E-mail"
+        name="email"
+        type="email"
+        clearButton
+        placeholder="Your e-mail"
+      />
+      <ListInput
+        label="URL"
+        name="url"
+        type="url"
+        clearButton
+        placeholder="URL"
+      />
+      <ListInput
+        label="Phone"
+        name="phone"
+        type="tel"
+        clearButton
+        placeholder="Your phone number"
+      />
+      <ListInput
+        label="Gender"
+        type="select"
+        name="gender"
+        placeholder="Please choose..."
+      >
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </ListInput>
+      <ListInput
+        label="Birthday"
+        name="birthday"
+        type="date"
+        defaultValue="2014-04-30"
+        placeholder="Please choose..."
+      />
+      <ListInput
+        label="Date time"
+        name="date"
+        type="datetime-local"
+        placeholder="Please choose..."
+      />
+      <ListInput
+        label="Range"
+        input={false}
+      >
+        <Range name="range" slot="input" value={50} min={0} max={100} step={1}/>
+      </ListInput>
+
+      <ListInput
+        label="About you"
+        type="textarea"
+        name="bio"
+        resizable
+        placeholder="Bio"
+      />
     </List>
   </Page>
 );

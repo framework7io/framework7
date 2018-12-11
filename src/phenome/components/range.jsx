@@ -44,8 +44,8 @@ export default {
       default: false,
     },
     name: String,
-    inputId: String,
     input: Boolean,
+    inputId: String,
     disabled: Boolean,
     draggableBar: {
       type: Boolean,

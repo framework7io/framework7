@@ -23,53 +23,69 @@ export default class extends React.Component {
         </Block>
         <List noHairlinesMd>
           <BlockHeader>Simple Dropdown Autocomplete</BlockHeader>
-          <ListItem>
-            <Label inline>Fruit</Label>
-            <Input type="text" placeholder="Fruit" id="autocomplete-dropdown" />
-          </ListItem>
+          <ListInput
+            label="Fruit"
+            inlineLabel
+            type="text"
+            placeholder="Fruit"
+            inputId="autocomplete-dropdown"
+          />
         </List>
 
         <List noHairlinesMd>
           <BlockHeader>Dropdown With Input Expand</BlockHeader>
-          <ListItem>
-            <Label inline>Fruit</Label>
-            <Input type="text" placeholder="Fruit" id="autocomplete-dropdown-expand" />
-          </ListItem>
+          <ListInput
+            label="Fruit"
+            inlineLabel
+            type="text"
+            placeholder="Fruit"
+            inputId="autocomplete-dropdown-expand"
+          />
         </List>
         <List noHairlinesMd>
           <BlockHeader>Dropdown With All Values</BlockHeader>
-          <ListItem>
-            <Label>Fruit</Label>
-            <Input type="text" placeholder="Fruit" id="autocomplete-dropdown-all" />
-          </ListItem>
+          <ListInput
+            label="Fruit"
+            type="text"
+            placeholder="Fruit"
+            inputId="autocomplete-dropdown-all"
+          />
         </List>
         <List noHairlinesMd>
           <BlockHeader>Dropdown With Placeholder</BlockHeader>
-          <ListItem>
-            <Label>Fruit</Label>
-            <Input type="text" placeholder="Fruit" id="autocomplete-dropdown-placeholder" />
-          </ListItem>
+          <ListInput
+            label="Fruit"
+            type="text"
+            placeholder="Fruit"
+            inputId="autocomplete-dropdown-placeholder"
+          />
         </List>
         <List noHairlinesMd>
           <BlockHeader>Dropdown With Typeahead</BlockHeader>
-          <ListItem>
-            <Label>Fruit</Label>
-            <Input type="text" placeholder="Fruit" id="autocomplete-dropdown-typeahead" />
-          </ListItem>
+          <ListInput
+            label="Fruit"
+            type="text"
+            placeholder="Fruit"
+            inputId="autocomplete-dropdown-typeahead"
+          />
         </List>
         <List noHairlinesMd>
           <BlockHeader>Dropdown With Ajax-Data</BlockHeader>
-          <ListItem>
-            <Label>Language</Label>
-            <Input type="text" placeholder="Language" id="autocomplete-dropdown-ajax"/>
-          </ListItem>
+          <ListInput
+            label="Language"
+            type="text"
+            placeholder="Language"
+            inputId="autocomplete-dropdown-ajax"
+          />
         </List>
         <List noHairlinesMd>
           <BlockHeader>Dropdown With Ajax-Data + Typeahead</BlockHeader>
-          <ListItem>
-            <Label>Language</Label>
-            <Input type="text" placeholder="Language" id="autocomplete-dropdown-ajax-typeahead"/>
-          </ListItem>
+          <ListInput
+            label="Language"
+            type="text"
+            placeholder="Language"
+            inputId="autocomplete-dropdown-ajax-typeahead"
+          />
         </List>
         <BlockTitle>Standalone Autocomplete</BlockTitle>
         <Block>
