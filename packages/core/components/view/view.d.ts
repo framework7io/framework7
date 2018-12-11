@@ -28,7 +28,7 @@ export namespace View {
   }
   interface Parameters {
     /**	View name. If view was created with name, then it may be accessed via app.views.[name] */
-    name?: boolean
+    name?: string
     /**	Specify whether this is View is main or not. If not passed then will be determined based on whether its element has view-main class or not */
     main?: boolean
     /**	Set to false to disable view router */
