@@ -58,6 +58,7 @@ const Mixins = {
     reloadPrevious: Boolean,
     routeTabId: String,
     view: String,
+    routeProps: Object,
   },
   linkRouterAttrs(props) {
     const {
