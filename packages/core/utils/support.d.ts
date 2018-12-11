@@ -11,8 +11,6 @@ export interface Support {
   passiveListener: boolean
   /** Gestures event support (gesturestart, gesturechange, gestureend) */
   gestures: boolean
-  /** CSS "position:sticky" support */
-  positionSticky: boolean
 }
 declare const Support : Support;
 

@@ -10,13 +10,7 @@ class F7Stepper extends React.Component {
     this.__reactRefs = {};
 
     (() => {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onInput', 'onMinusClick', 'onPlusClick']);
-=======
-      this.onInput = this.onInput.bind(this);
-      this.onMinusClick = this.onMinusClick.bind(this);
-      this.onPlusClick = this.onPlusClick.bind(this);
->>>>>>> master
     })();
   }
 
@@ -128,12 +122,8 @@ class F7Stepper extends React.Component {
           step: inputType === 'number' ? step : undefined,
           onInput: self.onInput,
           value: value,
-<<<<<<< HEAD
           readOnly: inputReadonly,
           onInput: self.onInput
-=======
-          readOnly: inputReadonly
->>>>>>> master
         });
       }
       inputWrapEl = React.createElement('div', {

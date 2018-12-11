@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Framework7 Vue 4.0.0-beta.2
-=======
- * Framework7 Vue 3.6.0
->>>>>>> master
+ * Framework7 Vue 4.0.0-beta.3
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -11,11 +7,7 @@
  *
  * Released under the MIT License
  *
-<<<<<<< HEAD
- * Released on: December 6, 2018
-=======
- * Released on: December 7, 2018
->>>>>>> master
+ * Released on: December 11, 2018
  */
 
 (function (global, factory) {
@@ -173,6 +165,7 @@
       reloadPrevious: Boolean,
       routeTabId: String,
       view: String,
+      routeProps: Object,
     },
     linkRouterAttrs: function linkRouterAttrs(props) {
       var force = props.force;
@@ -410,7 +403,6 @@
     }, Mixins.colorProps),
 
     created: function created() {
-<<<<<<< HEAD
       Utils.bindMethods(this, 'onBeforeOpen onOpen onOpened onBeforeClose onClose onClosed'.split(' '));
     },
 
@@ -424,48 +416,18 @@
       el.addEventListener('accordion:beforeclose', self.onBeforeClose);
       el.addEventListener('accordion:close', self.onClose);
       el.addEventListener('accordion:closed', self.onClosed);
-=======
-      var self = this;
-      self.onBeforeOpenBound = self.onBeforeOpen.bind(self);
-      self.onOpenBound = self.onOpen.bind(self);
-      self.onOpenedBound = self.onOpened.bind(self);
-      self.onBeforeCloseBound = self.onBeforeClose.bind(self);
-      self.onCloseBound = self.onClose.bind(self);
-      self.onClosedBound = self.onClosed.bind(self);
-    },
-
-    mounted: function mounted() {
-      var self = this;
-      var el = self.$refs.el;
-      if (!el) { return; }
-      el.addEventListener('accordion:beforeopen', self.onBeforeOpenBound);
-      el.addEventListener('accordion:open', self.onOpenBound);
-      el.addEventListener('accordion:opened', self.onOpenedBound);
-      el.addEventListener('accordion:beforeclose', self.onBeforeCloseBound);
-      el.addEventListener('accordion:close', self.onCloseBound);
-      el.addEventListener('accordion:closed', self.onClosedBound);
->>>>>>> master
     },
 
     beforeDestroy: function beforeDestroy() {
       var self = this;
       var el = self.$refs.el;
       if (!el) { return; }
-<<<<<<< HEAD
       el.removeEventListener('accordion:beforeopen', self.onBeforeOpen);
       el.removeEventListener('accordion:open', self.onOpen);
       el.removeEventListener('accordion:opened', self.onOpened);
       el.removeEventListener('accordion:beforeclose', self.onBeforeClose);
       el.removeEventListener('accordion:close', self.onClose);
       el.removeEventListener('accordion:closed', self.onClosed);
-=======
-      el.removeEventListener('accordion:beforeopen', self.onBeforeOpenBound);
-      el.removeEventListener('accordion:open', self.onOpenBound);
-      el.removeEventListener('accordion:opened', self.onOpenedBound);
-      el.removeEventListener('accordion:beforeclose', self.onBeforeCloseBound);
-      el.removeEventListener('accordion:close', self.onCloseBound);
-      el.removeEventListener('accordion:closed', self.onClosedBound);
->>>>>>> master
     },
 
     render: function render() {
@@ -633,11 +595,7 @@
     },
 
     created: function created() {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onClick']);
-=======
-      this.onClick = this.onClick.bind(this);
->>>>>>> master
     },
 
     mounted: function mounted() {
@@ -737,11 +695,7 @@
     },
 
     created: function created() {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onClick']);
-=======
-      this.onClick = this.onClick.bind(this);
->>>>>>> master
     },
 
     mounted: function mounted() {
@@ -1747,39 +1701,46 @@
     },
 
     created: function created() {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onClick']);
-=======
-      var self = this;
-      self.onClickBound = self.onClick.bind(self);
->>>>>>> master
     },
 
     mounted: function mounted() {
       var self = this;
-<<<<<<< HEAD
-      self.$refs.el.addEventListener('click', self.onClick);
-=======
-      self.$refs.el.addEventListener('click', self.onClickBound);
->>>>>>> master
+      var el = self.$refs.el;
+      el.addEventListener('click', self.onClickBound);
       var ref = self.props;
       var tooltip = ref.tooltip;
+      var routeProps = ref.routeProps;
+
+      if (routeProps) {
+        el.f7RouteProps = routeProps;
+      }
+
       if (!tooltip) { return; }
       self.$f7ready(function (f7) {
         self.f7Tooltip = f7.tooltip.create({
-          targetEl: self.$refs.el,
+          targetEl: el,
           text: tooltip
         });
       });
     },
 
+    updated: function updated() {
+      var self = this;
+      var el = self.$refs.el;
+      var ref = self.props;
+      var routeProps = ref.routeProps;
+
+      if (routeProps) {
+        el.f7RouteProps = routeProps;
+      }
+    },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
-<<<<<<< HEAD
-      self.$refs.el.removeEventListener('click', self.onClick);
-=======
-      self.$refs.el.removeEventListener('click', self.onClickBound);
->>>>>>> master
+      var el = self.$refs.el;
+      el.removeEventListener('click', self.onClickBound);
+      delete el.f7RouteProps;
 
       if (self.f7Tooltip && self.f7Tooltip.destroy) {
         self.f7Tooltip.destroy();
@@ -2129,11 +2090,7 @@
     },
 
     created: function created() {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onChange']);
-=======
-      this.onChange = this.onChange.bind(this);
->>>>>>> master
     },
 
     methods: {
@@ -2217,12 +2174,7 @@
     },
 
     created: function created() {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onClick', 'onDeleteClick']);
-=======
-      this.onClick = this.onClick.bind(this);
-      this.onDeleteClick = this.onDeleteClick.bind(this);
->>>>>>> master
     },
 
     mounted: function mounted() {
@@ -2314,11 +2266,7 @@
     },
 
     created: function created() {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onClick']);
-=======
-      this.onClick = this.onClick.bind(this);
->>>>>>> master
     },
 
     mounted: function mounted() {
@@ -2394,10 +2342,6 @@
 
     created: function created() {
       Utils.bindMethods(this, ['onClick']);
-    },
-
-    created: function created() {
-      this.onClick = this.onClick.bind(this);
     },
 
     created: function created() {
@@ -2585,11 +2529,7 @@
     },
 
     created: function created() {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onClick']);
-=======
-      this.onClick = this.onClick.bind(this);
->>>>>>> master
     },
 
     mounted: function mounted() {
@@ -2893,11 +2833,7 @@
     },
 
     created: function created() {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onChange']);
-=======
-      this.onChange = this.onChange.bind(this);
->>>>>>> master
     },
 
     mounted: function mounted() {
@@ -3376,19 +3312,7 @@
     },
 
     created: function created() {
-<<<<<<< HEAD
       Utils.bindMethods(this, 'onFocus onBlur onInput onChange onTextareaResize onInputNotEmpty onInputEmpty onInputClear'.split(' '));
-=======
-      var self = this;
-      self.onFocus = self.onFocus.bind(self);
-      self.onBlur = self.onBlur.bind(self);
-      self.onInput = self.onInput.bind(self);
-      self.onChange = self.onChange.bind(self);
-      self.onTextareaResize = self.onTextareaResize.bind(self);
-      self.onInputNotEmpty = self.onInputNotEmpty.bind(self);
-      self.onInputEmpty = self.onInputEmpty.bind(self);
-      self.onInputClear = self.onInputClear.bind(self);
->>>>>>> master
     },
 
     mounted: function mounted() {
@@ -3739,12 +3663,7 @@
     },
 
     created: function created() {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onClick']);
-=======
-      var self = this;
-      self.onClick = self.onClick.bind(self);
->>>>>>> master
     },
 
     mounted: function mounted() {
@@ -3757,6 +3676,7 @@
       var tooltip = ref.tooltip;
       var smartSelect = ref.smartSelect;
       var smartSelectParams = ref.smartSelectParams;
+      var routeProps = ref.routeProps;
       var isTabbarLabel = false;
 
       if (tabbarLabel || (tabLink || tabLink === '') && self.$$(el).parents('.tabbar-labels').length) {
@@ -3766,6 +3686,7 @@
       self.setState({
         isTabbarLabel: isTabbarLabel
       });
+      if (routeProps) { el.f7RouteProps = routeProps; }
       self.$f7ready(function (f7) {
         if (smartSelect) {
           var ssParams = Utils.extend({
@@ -3783,10 +3704,22 @@
       });
     },
 
+    updated: function updated() {
+      var self = this;
+      var el = self.$refs.el;
+      var ref = self.props;
+      var routeProps = ref.routeProps;
+
+      if (routeProps) {
+        el.f7RouteProps = routeProps;
+      }
+    },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
       var el = self.$refs.el;
       el.removeEventListener('click', self.onClick);
+      delete el.f7RouteProps;
 
       if (self.f7SmartSelect && self.f7SmartSelect.destroy) {
         self.f7SmartSelect.destroy();
@@ -3934,19 +3867,38 @@
     },
 
     created: function created() {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onClick']);
-=======
-      this.onClick = this.onClick.bind(this);
->>>>>>> master
     },
 
     mounted: function mounted() {
-      this.$refs.linkEl.addEventListener('click', this.onClick);
+      var self = this;
+      var linkEl = self.$refs.linkEl;
+      var ref = self.props;
+      var routeProps = ref.routeProps;
+
+      if (routeProps) {
+        linkEl.f7RouteProps = routeProps;
+      }
+
+      linkEl.addEventListener('click', self.onClick);
+    },
+
+    updated: function updated() {
+      var self = this;
+      var linkEl = self.$refs.linkEl;
+      var ref = self.props;
+      var routeProps = ref.routeProps;
+
+      if (routeProps) {
+        linkEl.f7RouteProps = routeProps;
+      }
     },
 
     beforeDestroy: function beforeDestroy() {
-      this.$refs.linkEl.removeEventListener('click', this.onClick);
+      var self = this;
+      var linkEl = self.$refs.linkEl;
+      linkEl.removeEventListener('click', this.onClick);
+      delete linkEl.f7RouteProps;
     },
 
     methods: {
@@ -4406,19 +4358,7 @@
     },
 
     created: function created() {
-<<<<<<< HEAD
       Utils.bindMethods(this, 'onChange onInput onFocus onBlur onTextareaResize onInputNotEmpty onInputEmpty onInputClear'.split(' '));
-=======
-      var self = this;
-      self.onChange = self.onChange.bind(self);
-      self.onInput = self.onInput.bind(self);
-      self.onFocus = self.onFocus.bind(self);
-      self.onBlur = self.onBlur.bind(self);
-      self.onTextareaResize = self.onTextareaResize.bind(self);
-      self.onInputNotEmpty = self.onInputNotEmpty.bind(self);
-      self.onInputEmpty = self.onInputEmpty.bind(self);
-      self.onInputClear = self.onInputClear.bind(self);
->>>>>>> master
     },
 
     mounted: function mounted() {
@@ -4864,25 +4804,7 @@
     },
 
     created: function created() {
-<<<<<<< HEAD
       Utils.bindMethods(this, 'onClick onChange'.split(' '));
-=======
-      var self = this;
-      self.onClick = self.onClick.bind(self);
-      self.onChange = self.onChange.bind(self);
-      self.onFocus = self.onFocus.bind(self);
-      self.onBlur = self.onBlur.bind(self);
-      self.onEmpty = self.onEmpty.bind(self);
-      self.onNotEmpty = self.onNotEmpty.bind(self);
-    },
-
-    beforeMount: function beforeMount() {
-      this.checkHasInputState();
-    },
-
-    beforeUpdate: function beforeUpdate() {
-      this.checkHasInputState();
->>>>>>> master
     },
 
     mounted: function mounted() {
@@ -4890,103 +4812,7 @@
       var ref = self.$refs;
       var innerEl = ref.innerEl;
       var el = ref.el;
-<<<<<<< HEAD
       el.addEventListener('click', self.onClick);
-=======
-      var inputEl = ref.inputEl;
-      el.addEventListener('click', self.onClick);
-      if (!innerEl) { return; }
-      var $innerEl = self.$$(innerEl);
-      var $labelEl = $innerEl.children('.item-title.item-label');
-      var $inputWrapEl = $innerEl.children('.item-input-wrap');
-      var hasInlineLabel = $labelEl.hasClass('item-label-inline');
-      var hasInput = $inputWrapEl.length > 0;
-      var hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
-      var hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
-      var hasInputInvalid = $inputWrapEl.children('.input-invalid').length > 0;
-
-      if (hasInput) {
-        el.addEventListener('focus', self.onFocus, true);
-        el.addEventListener('blur', self.onBlur, true);
-        el.addEventListener('input:empty', self.onEmpty);
-        el.addEventListener('input:notempty', self.onNotEmpty);
-      }
-
-      if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {
-        self.setState({
-          hasInlineLabel: hasInlineLabel
-        });
-      }
-
-      if (!self.hasInputSet && hasInput !== self.state.hasInput) {
-        self.setState({
-          hasInput: hasInput
-        });
-      }
-
-      if (!self.hasInputInfoSet && hasInputInfo !== self.state.hasInputInfo) {
-        self.setState({
-          hasInputInfo: hasInputInfo
-        });
-      }
-
-      if (!self.hasInputErrorMessageSet && hasInputErrorMessage !== self.state.hasInputErrorMessage) {
-        self.setState({
-          hasInputErrorMessage: hasInputErrorMessage
-        });
-      }
-
-      if (!self.hasInputInvalidSet && hasInputInvalid !== self.state.hasInputInvalid) {
-        self.setState({
-          hasInputInvalid: hasInputInvalid
-        });
-      }
-    },
-
-    updated: function updated() {
-      var self = this;
-      var ref = self.$refs;
-      var innerEl = ref.innerEl;
-      if (!innerEl) { return; }
-      var $innerEl = self.$$(innerEl);
-      var $labelEl = $innerEl.children('.item-title.item-label');
-      var $inputWrapEl = $innerEl.children('.item-input-wrap');
-      var hasInlineLabel = $labelEl.hasClass('item-label-inline');
-      var hasInput = $inputWrapEl.length > 0;
-      var hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
-      var hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
-      var hasInputInvalid = $inputWrapEl.children('.input-invalid').length > 0;
-
-      if (hasInlineLabel !== self.state.hasInlineLabel) {
-        self.setState({
-          hasInlineLabel: hasInlineLabel
-        });
-      }
-
-      if (hasInput !== self.state.hasInput) {
-        self.setState({
-          hasInput: hasInput
-        });
-      }
-
-      if (hasInputInfo !== self.state.hasInputInfo) {
-        self.setState({
-          hasInputInfo: hasInputInfo
-        });
-      }
-
-      if (!self.hasInputErrorMessageSet && hasInputErrorMessage !== self.state.hasInputErrorMessage) {
-        self.setState({
-          hasInputErrorMessage: hasInputErrorMessage
-        });
-      }
-
-      if (hasInputInvalid !== self.state.hasInputInvalid) {
-        self.setState({
-          hasInputInvalid: hasInputInvalid
-        });
-      }
->>>>>>> master
     },
 
     beforeDestroy: function beforeDestroy() {
@@ -4994,13 +4820,6 @@
       var ref = self.$refs;
       var el = ref.el;
       el.removeEventListener('click', self.onClick);
-<<<<<<< HEAD
-=======
-      el.removeEventListener('input:empty', self.onEmpty);
-      el.removeEventListener('input:notempty', self.onNotEmpty);
-      el.removeEventListener('focus', self.onFocus, true);
-      el.removeEventListener('blur', self.onBlur, true);
->>>>>>> master
     },
 
     methods: {
@@ -5097,12 +4916,6 @@
       readonly: Boolean,
       required: Boolean,
       disabled: Boolean,
-<<<<<<< HEAD
-=======
-      itemInput: Boolean,
-      itemInputWithInfo: Boolean,
-      inlineLabel: Boolean,
->>>>>>> master
       virtualListIndex: Number
     }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
 
@@ -5285,28 +5098,7 @@
     },
 
     created: function created() {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onClick', 'onChange', 'onSwipeoutOpen', 'onSwipeoutOpened', 'onSwipeoutClose', 'onSwipeoutClosed', 'onSwipeoutDelete', 'onSwipeoutDeleted', 'onSwipeoutOverswipeEnter', 'onSwipeoutOverswipeExit', 'onSwipeout', 'onAccBeforeOpen', 'onAccOpen', 'onAccOpened', 'onAccBeforeClose', 'onAccClose', 'onAccClosed']);
-=======
-      var self = this;
-      self.onClick = self.onClick.bind(self);
-      self.onChange = self.onChange.bind(self);
-      self.onSwipeoutOpen = self.onSwipeoutOpen.bind(self);
-      self.onSwipeoutOpened = self.onSwipeoutOpened.bind(self);
-      self.onSwipeoutClose = self.onSwipeoutClose.bind(self);
-      self.onSwipeoutClosed = self.onSwipeoutClosed.bind(self);
-      self.onSwipeoutDelete = self.onSwipeoutDelete.bind(self);
-      self.onSwipeoutDeleted = self.onSwipeoutDeleted.bind(self);
-      self.onSwipeoutOverswipeEnter = self.onSwipeoutOverswipeEnter.bind(self);
-      self.onSwipeoutOverswipeExit = self.onSwipeoutOverswipeExit.bind(self);
-      self.onSwipeout = self.onSwipeout.bind(self);
-      self.onAccBeforeOpen = self.onAccBeforeOpen.bind(self);
-      self.onAccOpen = self.onAccOpen.bind(self);
-      self.onAccOpened = self.onAccOpened.bind(self);
-      self.onAccBeforeClose = self.onAccBeforeClose.bind(self);
-      self.onAccClose = self.onAccClose.bind(self);
-      self.onAccClosed = self.onAccClosed.bind(self);
->>>>>>> master
     },
 
     mounted: function mounted() {
@@ -5323,10 +5115,15 @@
       var swipeoutOpened = ref$1.swipeoutOpened;
       var accordionItem = ref$1.accordionItem;
       var smartSelectParams = ref$1.smartSelectParams;
+      var routeProps = ref$1.routeProps;
       var needsEvents = !(link || href || accordionItem || smartSelect);
 
       if (!needsEvents && linkEl) {
         linkEl.addEventListener('click', self.onClick);
+      }
+
+      if (linkEl && routeProps) {
+        linkEl.f7RouteProps = routeProps;
       }
 
       self.$listEl = self.$$(el).parents('.list, .list-group').eq(0);
@@ -5377,6 +5174,15 @@
     updated: function updated() {
       var self = this;
       var $listEl = self.$listEl;
+      var ref = self.$refs;
+      var linkEl = ref.linkEl;
+      var ref$1 = self.props;
+      var routeProps = ref$1.routeProps;
+
+      if (linkEl && routeProps) {
+        linkEl.f7RouteProps = routeProps;
+      }
+
       if (!$listEl || $listEl && $listEl.length === 0) { return; }
       var isMedia = $listEl.hasClass('media-list');
       var isSimple = $listEl.hasClass('simple-list');
@@ -5414,8 +5220,12 @@
       var accordionItem = ref$1.accordionItem;
       var needsEvents = !(link || href || accordionItem || smartSelect);
 
-      if (!needsEvents && linkEl) {
-        linkEl.removeEventListener('click', self.onClick);
+      if (linkEl) {
+        if (!needsEvents) {
+          linkEl.removeEventListener('click', self.onClick);
+        }
+
+        delete linkEl.f7RouteProps;
       }
 
       if (el) {
@@ -6081,17 +5891,7 @@
     },
 
     created: function created() {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onClick', 'onNameClick', 'onTextClick', 'onAvatarClick', 'onHeaderClick', 'onFooterClick', 'onBubbleClick']);
-=======
-      this.onClick = this.onClick.bind(this);
-      this.onNameClick = this.onNameClick.bind(this);
-      this.onTextClick = this.onTextClick.bind(this);
-      this.onAvatarClick = this.onAvatarClick.bind(this);
-      this.onHeaderClick = this.onHeaderClick.bind(this);
-      this.onFooterClick = this.onFooterClick.bind(this);
-      this.onBubbleClick = this.onBubbleClick.bind(this);
->>>>>>> master
     },
 
     mounted: function mounted() {
@@ -6106,10 +5906,10 @@
       el.addEventListener('click', this.onClick);
       if (nameEl) { nameEl.addEventListener('click', this.onNameClick); }
       if (textEl) { textEl.addEventListener('click', this.onTextClick); }
-      if (avatarEl) { nameEl.addEventListener('click', this.onAvatarClick); }
-      if (headerEl) { nameEl.addEventListener('click', this.onHeaderClick); }
-      if (footerEl) { nameEl.addEventListener('click', this.onFooterClick); }
-      if (bubbleEl) { nameEl.addEventListener('click', this.onBubbleClick); }
+      if (avatarEl) { avatarEl.addEventListener('click', this.onAvatarClick); }
+      if (headerEl) { headerEl.addEventListener('click', this.onHeaderClick); }
+      if (footerEl) { footerEl.addEventListener('click', this.onFooterClick); }
+      if (bubbleEl) { bubbleEl.addEventListener('click', this.onBubbleClick); }
     },
 
     beforeDestroy: function beforeDestroy() {
@@ -6124,10 +5924,10 @@
       el.removeEventListener('click', this.onClick);
       if (nameEl) { nameEl.removeEventListener('click', this.onNameClick); }
       if (textEl) { textEl.removeEventListener('click', this.onTextClick); }
-      if (avatarEl) { nameEl.removeEventListener('click', this.onAvatarClick); }
-      if (headerEl) { nameEl.removeEventListener('click', this.onHeaderClick); }
-      if (footerEl) { nameEl.removeEventListener('click', this.onFooterClick); }
-      if (bubbleEl) { nameEl.removeEventListener('click', this.onBubbleClick); }
+      if (avatarEl) { avatarEl.removeEventListener('click', this.onAvatarClick); }
+      if (headerEl) { headerEl.removeEventListener('click', this.onHeaderClick); }
+      if (footerEl) { footerEl.removeEventListener('click', this.onFooterClick); }
+      if (bubbleEl) { bubbleEl.removeEventListener('click', this.onBubbleClick); }
     },
 
     methods: {
@@ -6208,12 +6008,7 @@
     },
 
     created: function created() {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onClick', 'onDeleteClick']);
-=======
-      this.onClick = this.onClick.bind(this);
-      this.onDeleteClick = this.onDeleteClick.bind(this);
->>>>>>> master
     },
 
     mounted: function mounted() {
@@ -6335,11 +6130,7 @@
     },
 
     created: function created() {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onChange']);
-=======
-      this.onChange = this.onChange.bind(this);
->>>>>>> master
     },
 
     methods: {
@@ -6465,18 +6256,7 @@
     }, Mixins.colorProps),
 
     created: function created() {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onChange', 'onInput', 'onFocus', 'onBlur', 'onClick', 'onDeleteAttachment', 'onClickAttachment', 'onResizePage']);
-=======
-      this.onChange = this.onChange.bind(this);
-      this.onInput = this.onInput.bind(this);
-      this.onFocus = this.onFocus.bind(this);
-      this.onBlur = this.onBlur.bind(this);
-      this.onClick = this.onClick.bind(this);
-      this.onDeleteAttachment = this.onDeleteAttachment.bind(this);
-      this.onClickAttachment = this.onClickAttachment.bind(this);
-      this.onResizePage = this.onResizePage.bind(this);
->>>>>>> master
     },
 
     render: function render() {
@@ -8913,11 +8693,7 @@
     },
 
     created: function created() {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onChange']);
-=======
-      this.onChange = this.onChange.bind(this);
->>>>>>> master
     },
 
     methods: {
@@ -8976,11 +8752,7 @@
     },
 
     created: function created() {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onClick']);
-=======
-      this.onClick = this.onClick.bind(this);
->>>>>>> master
     },
 
     mounted: function mounted() {
@@ -9183,7 +8955,6 @@
     },
 
     created: function created() {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onSubmit', 'onClearButtonClick', 'onDisableButtonClick', 'onInput', 'onChange', 'onFocus', 'onBlur']);
     },
 
@@ -9195,15 +8966,6 @@
       }
 
       if (self.f7Searchbar && self.f7Searchbar.destroy) { self.f7Searchbar.destroy(); }
-=======
-      this.onChange = this.onChange.bind(this);
-      this.onInput = this.onInput.bind(this);
-      this.onFocus = this.onFocus.bind(this);
-      this.onBlur = this.onBlur.bind(this);
-      this.onSubmit = this.onSubmit.bind(this);
-      this.onClearButtonClick = this.onClearButtonClick.bind(this);
-      this.onDisableButtonClick = this.onDisableButtonClick.bind(this);
->>>>>>> master
     },
 
     mounted: function mounted() {
@@ -9819,13 +9581,7 @@
     },
 
     created: function created() {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onInput', 'onMinusClick', 'onPlusClick']);
-=======
-      this.onInput = this.onInput.bind(this);
-      this.onMinusClick = this.onMinusClick.bind(this);
-      this.onPlusClick = this.onPlusClick.bind(this);
->>>>>>> master
     },
 
     mounted: function mounted() {
@@ -10084,11 +9840,7 @@
     },
 
     created: function created() {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onClick']);
-=======
-      this.onClick = this.onClick.bind(this);
->>>>>>> master
     },
 
     mounted: function mounted() {
@@ -10460,17 +10212,19 @@
       var className = props.className;
       var routable = props.routable;
       var classes = Utils.classNames(className, Mixins.colorClasses(props));
-      var tabsClasses = Utils.classNames({
-        'tabs': true,
+      var wrapClasses = Utils.classNames({
         'tabs-animated-wrap': animated,
-        'tabs-swipeable-wrap': swipeable,
+        'tabs-swipeable-wrap': swipeable
+      });
+      var tabsClasses = Utils.classNames({
+        tabs: true,
         'tabs-routable': routable
       });
 
       if (animated || swipeable) {
         return _h('div', {
           style: style,
-          class: classes,
+          class: Utils.classNames(wrapClasses, classes),
           attrs: {
             id: id
           }
@@ -10634,7 +10388,7 @@
       url: String,
       main: Boolean,
       stackPages: Boolean,
-      xhrCache: String,
+      xhrCache: Boolean,
       xhrCacheIgnore: Array,
       xhrCacheIgnoreGetParameters: Boolean,
       xhrCacheDuration: Number,
@@ -11095,11 +10849,7 @@
   };
 
   /**
-<<<<<<< HEAD
-   * Framework7 Vue 4.0.0-beta.2
-=======
-   * Framework7 Vue 3.6.0
->>>>>>> master
+   * Framework7 Vue 4.0.0-beta.3
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -11107,11 +10857,7 @@
    *
    * Released under the MIT License
    *
-<<<<<<< HEAD
-   * Released on: December 6, 2018
-=======
-   * Released on: December 7, 2018
->>>>>>> master
+   * Released on: December 11, 2018
    */
 
   var Plugin = {

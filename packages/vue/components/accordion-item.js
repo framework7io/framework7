@@ -10,7 +10,6 @@ export default {
   }, Mixins.colorProps),
 
   created() {
-<<<<<<< HEAD
     Utils.bindMethods(this, 'onBeforeOpen onOpen onOpened onBeforeClose onClose onClosed'.split(' '));
   },
 
@@ -24,48 +23,18 @@ export default {
     el.addEventListener('accordion:beforeclose', self.onBeforeClose);
     el.addEventListener('accordion:close', self.onClose);
     el.addEventListener('accordion:closed', self.onClosed);
-=======
-    const self = this;
-    self.onBeforeOpenBound = self.onBeforeOpen.bind(self);
-    self.onOpenBound = self.onOpen.bind(self);
-    self.onOpenedBound = self.onOpened.bind(self);
-    self.onBeforeCloseBound = self.onBeforeClose.bind(self);
-    self.onCloseBound = self.onClose.bind(self);
-    self.onClosedBound = self.onClosed.bind(self);
-  },
-
-  mounted() {
-    const self = this;
-    const el = self.$refs.el;
-    if (!el) return;
-    el.addEventListener('accordion:beforeopen', self.onBeforeOpenBound);
-    el.addEventListener('accordion:open', self.onOpenBound);
-    el.addEventListener('accordion:opened', self.onOpenedBound);
-    el.addEventListener('accordion:beforeclose', self.onBeforeCloseBound);
-    el.addEventListener('accordion:close', self.onCloseBound);
-    el.addEventListener('accordion:closed', self.onClosedBound);
->>>>>>> master
   },
 
   beforeDestroy() {
     const self = this;
     const el = self.$refs.el;
     if (!el) return;
-<<<<<<< HEAD
     el.removeEventListener('accordion:beforeopen', self.onBeforeOpen);
     el.removeEventListener('accordion:open', self.onOpen);
     el.removeEventListener('accordion:opened', self.onOpened);
     el.removeEventListener('accordion:beforeclose', self.onBeforeClose);
     el.removeEventListener('accordion:close', self.onClose);
     el.removeEventListener('accordion:closed', self.onClosed);
-=======
-    el.removeEventListener('accordion:beforeopen', self.onBeforeOpenBound);
-    el.removeEventListener('accordion:open', self.onOpenBound);
-    el.removeEventListener('accordion:opened', self.onOpenedBound);
-    el.removeEventListener('accordion:beforeclose', self.onBeforeCloseBound);
-    el.removeEventListener('accordion:close', self.onCloseBound);
-    el.removeEventListener('accordion:closed', self.onClosedBound);
->>>>>>> master
   },
 
   render() {

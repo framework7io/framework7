@@ -1,9 +1,5 @@
 /**
-<<<<<<< HEAD
- * Framework7 React 4.0.0-beta.2
-=======
- * Framework7 React 3.6.0
->>>>>>> master
+ * Framework7 React 4.0.0-beta.3
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -11,11 +7,7 @@
  *
  * Released under the MIT License
  *
-<<<<<<< HEAD
- * Released on: December 6, 2018
-=======
- * Released on: December 7, 2018
->>>>>>> master
+ * Released on: December 11, 2018
  */
 
 (function (global, factory) {
@@ -173,6 +165,7 @@
       reloadPrevious: Boolean,
       routeTabId: String,
       view: String,
+      routeProps: Object,
     },
     linkRouterAttrs: function linkRouterAttrs(props) {
       var force = props.force;
@@ -570,17 +563,7 @@
       this.__reactRefs = {};
 
       (function () {
-<<<<<<< HEAD
         Utils.bindMethods(this$1, 'onBeforeOpen onOpen onOpened onBeforeClose onClose onClosed'.split(' '));
-=======
-        var self = this$1;
-        self.onBeforeOpenBound = self.onBeforeOpen.bind(self);
-        self.onOpenBound = self.onOpen.bind(self);
-        self.onOpenedBound = self.onOpened.bind(self);
-        self.onBeforeCloseBound = self.onBeforeClose.bind(self);
-        self.onCloseBound = self.onClose.bind(self);
-        self.onClosedBound = self.onClosed.bind(self);
->>>>>>> master
       })();
     }
 
@@ -639,42 +622,24 @@
       var self = this;
       var el = self.refs.el;
       if (!el) { return; }
-<<<<<<< HEAD
       el.removeEventListener('accordion:beforeopen', self.onBeforeOpen);
       el.removeEventListener('accordion:open', self.onOpen);
       el.removeEventListener('accordion:opened', self.onOpened);
       el.removeEventListener('accordion:beforeclose', self.onBeforeClose);
       el.removeEventListener('accordion:close', self.onClose);
       el.removeEventListener('accordion:closed', self.onClosed);
-=======
-      el.removeEventListener('accordion:beforeopen', self.onBeforeOpenBound);
-      el.removeEventListener('accordion:open', self.onOpenBound);
-      el.removeEventListener('accordion:opened', self.onOpenedBound);
-      el.removeEventListener('accordion:beforeclose', self.onBeforeCloseBound);
-      el.removeEventListener('accordion:close', self.onCloseBound);
-      el.removeEventListener('accordion:closed', self.onClosedBound);
->>>>>>> master
     };
 
     F7AccordionItem.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var el = self.refs.el;
       if (!el) { return; }
-<<<<<<< HEAD
       el.addEventListener('accordion:beforeopen', self.onBeforeOpen);
       el.addEventListener('accordion:open', self.onOpen);
       el.addEventListener('accordion:opened', self.onOpened);
       el.addEventListener('accordion:beforeclose', self.onBeforeClose);
       el.addEventListener('accordion:close', self.onClose);
       el.addEventListener('accordion:closed', self.onClosed);
-=======
-      el.addEventListener('accordion:beforeopen', self.onBeforeOpenBound);
-      el.addEventListener('accordion:open', self.onOpenBound);
-      el.addEventListener('accordion:opened', self.onOpenedBound);
-      el.addEventListener('accordion:beforeclose', self.onBeforeCloseBound);
-      el.addEventListener('accordion:close', self.onCloseBound);
-      el.addEventListener('accordion:closed', self.onClosedBound);
->>>>>>> master
     };
 
     prototypeAccessors.slots.get = function () {
@@ -798,11 +763,7 @@
       this.__reactRefs = {};
 
       (function () {
-<<<<<<< HEAD
         Utils.bindMethods(this$1, ['onClick']);
-=======
-        this$1.onClick = this$1.onClick.bind(this$1);
->>>>>>> master
       })();
     }
 
@@ -950,11 +911,7 @@
       this.__reactRefs = {};
 
       (function () {
-<<<<<<< HEAD
         Utils.bindMethods(this$1, ['onClick']);
-=======
-        this$1.onClick = this$1.onClick.bind(this$1);
->>>>>>> master
       })();
     }
 
@@ -1639,13 +1596,10 @@
 
       superclass.call(this, props, context);
       this.__reactRefs = {};
-<<<<<<< HEAD
 
       (function () {
         Utils.bindMethods(this$1, ['onTabShow', 'onTabHide']);
       })();
-=======
->>>>>>> master
     }
 
     if ( superclass ) F7Block.__proto__ = superclass;
@@ -1949,12 +1903,7 @@
       this.__reactRefs = {};
 
       (function () {
-<<<<<<< HEAD
         Utils.bindMethods(this$1, ['onClick']);
-=======
-        var self = this$1;
-        self.onClickBound = self.onClick.bind(self);
->>>>>>> master
       })();
     }
 
@@ -2086,11 +2035,9 @@
 
     F7Button.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
-<<<<<<< HEAD
-      self.refs.el.removeEventListener('click', self.onClick);
-=======
-      self.refs.el.removeEventListener('click', self.onClickBound);
->>>>>>> master
+      var el = self.refs.el;
+      el.removeEventListener('click', self.onClickBound);
+      delete el.f7RouteProps;
 
       if (self.f7Tooltip && self.f7Tooltip.destroy) {
         self.f7Tooltip.destroy();
@@ -2099,19 +2046,41 @@
       }
     };
 
+    F7Button.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+      var this$1 = this;
+
+      __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
+        var self = this$1;
+        if (!newText || !self.f7Tooltip) { return; }
+        self.f7Tooltip.setText(newText);
+      });
+
+      var self = this;
+      var el = self.refs.el;
+      var ref = self.props;
+      var routeProps = ref.routeProps;
+
+      if (routeProps) {
+        el.f7RouteProps = routeProps;
+      }
+    };
+
     F7Button.prototype.componentDidMount = function componentDidMount () {
       var self = this;
-<<<<<<< HEAD
-      self.refs.el.addEventListener('click', self.onClick);
-=======
-      self.refs.el.addEventListener('click', self.onClickBound);
->>>>>>> master
+      var el = self.refs.el;
+      el.addEventListener('click', self.onClickBound);
       var ref = self.props;
       var tooltip = ref.tooltip;
+      var routeProps = ref.routeProps;
+
+      if (routeProps) {
+        el.f7RouteProps = routeProps;
+      }
+
       if (!tooltip) { return; }
       self.$f7ready(function (f7) {
         self.f7Tooltip = f7.tooltip.create({
-          targetEl: self.refs.el,
+          targetEl: el,
           text: tooltip
         });
       });
@@ -2133,16 +2102,6 @@
     };
 
     prototypeAccessors.refs.set = function (refs) {};
-
-    F7Button.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
-      var this$1 = this;
-
-      __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
-        var self = this$1;
-        if (!newText || !self.f7Tooltip) { return; }
-        self.f7Tooltip.setText(newText);
-      });
-    };
 
     Object.defineProperties( F7Button.prototype, prototypeAccessors );
 
@@ -2511,11 +2470,7 @@
       this.__reactRefs = {};
 
       (function () {
-<<<<<<< HEAD
         Utils.bindMethods(this$1, ['onChange']);
-=======
-        this$1.onChange = this$1.onChange.bind(this$1);
->>>>>>> master
       })();
     }
 
@@ -2623,12 +2578,7 @@
       this.__reactRefs = {};
 
       (function () {
-<<<<<<< HEAD
         Utils.bindMethods(this$1, ['onClick', 'onDeleteClick']);
-=======
-        this$1.onClick = this$1.onClick.bind(this$1);
-        this$1.onDeleteClick = this$1.onDeleteClick.bind(this$1);
->>>>>>> master
       })();
     }
 
@@ -2760,11 +2710,7 @@
       this.__reactRefs = {};
 
       (function () {
-<<<<<<< HEAD
         Utils.bindMethods(this$1, ['onClick']);
-=======
-        this$1.onClick = this$1.onClick.bind(this$1);
->>>>>>> master
       })();
     }
 
@@ -2867,13 +2813,10 @@
       (function () {
         this$1.onClick = this$1.onClick.bind(this$1);
       })();
-<<<<<<< HEAD
 
       (function () {
         Utils.bindMethods(this$1, ['onClick']);
       })();
-=======
->>>>>>> master
     }
 
     if ( superclass ) F7FabButton.__proto__ = superclass;
@@ -3042,11 +2985,7 @@
       this.__reactRefs = {};
 
       (function () {
-<<<<<<< HEAD
         Utils.bindMethods(this$1, ['onClick']);
-=======
-        this$1.onClick = this$1.onClick.bind(this$1);
->>>>>>> master
       })();
     }
 
@@ -3383,11 +3322,7 @@
       this.__reactRefs = {};
 
       (function () {
-<<<<<<< HEAD
         Utils.bindMethods(this$1, ['onChange']);
-=======
-        this$1.onChange = this$1.onChange.bind(this$1);
->>>>>>> master
       })();
     }
 
@@ -3711,19 +3646,7 @@
       })();
 
       (function () {
-<<<<<<< HEAD
         Utils.bindMethods(this$1, 'onFocus onBlur onInput onChange onTextareaResize onInputNotEmpty onInputEmpty onInputClear'.split(' '));
-=======
-        var self = this$1;
-        self.onFocus = self.onFocus.bind(self);
-        self.onBlur = self.onBlur.bind(self);
-        self.onInput = self.onInput.bind(self);
-        self.onChange = self.onChange.bind(self);
-        self.onTextareaResize = self.onTextareaResize.bind(self);
-        self.onInputNotEmpty = self.onInputNotEmpty.bind(self);
-        self.onInputEmpty = self.onInputEmpty.bind(self);
-        self.onInputClear = self.onInputClear.bind(self);
->>>>>>> master
       })();
     }
 
@@ -4222,12 +4145,7 @@
       })();
 
       (function () {
-<<<<<<< HEAD
         Utils.bindMethods(this$1, ['onClick']);
-=======
-        var self = this$1;
-        self.onClick = self.onClick.bind(self);
->>>>>>> master
       })();
     }
 
@@ -4358,6 +4276,7 @@
       var self = this;
       var el = self.refs.el;
       el.removeEventListener('click', self.onClick);
+      delete el.f7RouteProps;
 
       if (self.f7SmartSelect && self.f7SmartSelect.destroy) {
         self.f7SmartSelect.destroy();
@@ -4367,6 +4286,25 @@
         self.f7Tooltip.destroy();
         self.f7Tooltip = null;
         delete self.f7Tooltip;
+      }
+    };
+
+    F7Link.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+      var this$1 = this;
+
+      __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
+        var self = this$1;
+        if (!newText || !self.f7Tooltip) { return; }
+        self.f7Tooltip.setText(newText);
+      });
+
+      var self = this;
+      var el = self.refs.el;
+      var ref = self.props;
+      var routeProps = ref.routeProps;
+
+      if (routeProps) {
+        el.f7RouteProps = routeProps;
       }
     };
 
@@ -4380,6 +4318,7 @@
       var tooltip = ref.tooltip;
       var smartSelect = ref.smartSelect;
       var smartSelectParams = ref.smartSelectParams;
+      var routeProps = ref.routeProps;
       var isTabbarLabel = false;
 
       if (tabbarLabel || (tabLink || tabLink === '') && self.$$(el).parents('.tabbar-labels').length) {
@@ -4389,6 +4328,7 @@
       self.setState({
         isTabbarLabel: isTabbarLabel
       });
+      if (routeProps) { el.f7RouteProps = routeProps; }
       self.$f7ready(function (f7) {
         if (smartSelect) {
           var ssParams = Utils.extend({
@@ -4422,16 +4362,6 @@
     };
 
     prototypeAccessors.refs.set = function (refs) {};
-
-    F7Link.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
-      var this$1 = this;
-
-      __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
-        var self = this$1;
-        if (!newText || !self.f7Tooltip) { return; }
-        self.f7Tooltip.setText(newText);
-      });
-    };
 
     Object.defineProperties( F7Link.prototype, prototypeAccessors );
 
@@ -4473,11 +4403,7 @@
       this.__reactRefs = {};
 
       (function () {
-<<<<<<< HEAD
         Utils.bindMethods(this$1, ['onClick']);
-=======
-        this$1.onClick = this$1.onClick.bind(this$1);
->>>>>>> master
       })();
     }
 
@@ -4544,11 +4470,34 @@
     };
 
     F7ListButton.prototype.componentWillUnmount = function componentWillUnmount () {
-      this.refs.linkEl.removeEventListener('click', this.onClick);
+      var self = this;
+      var linkEl = self.refs.linkEl;
+      linkEl.removeEventListener('click', this.onClick);
+      delete linkEl.f7RouteProps;
+    };
+
+    F7ListButton.prototype.componentDidUpdate = function componentDidUpdate () {
+      var self = this;
+      var linkEl = self.refs.linkEl;
+      var ref = self.props;
+      var routeProps = ref.routeProps;
+
+      if (routeProps) {
+        linkEl.f7RouteProps = routeProps;
+      }
     };
 
     F7ListButton.prototype.componentDidMount = function componentDidMount () {
-      this.refs.linkEl.addEventListener('click', this.onClick);
+      var self = this;
+      var linkEl = self.refs.linkEl;
+      var ref = self.props;
+      var routeProps = ref.routeProps;
+
+      if (routeProps) {
+        linkEl.f7RouteProps = routeProps;
+      }
+
+      linkEl.addEventListener('click', self.onClick);
     };
 
     prototypeAccessors.slots.get = function () {
@@ -4801,19 +4750,7 @@
       })();
 
       (function () {
-<<<<<<< HEAD
         Utils.bindMethods(this$1, 'onChange onInput onFocus onBlur onTextareaResize onInputNotEmpty onInputEmpty onInputClear'.split(' '));
-=======
-        var self = this$1;
-        self.onChange = self.onChange.bind(self);
-        self.onInput = self.onInput.bind(self);
-        self.onFocus = self.onFocus.bind(self);
-        self.onBlur = self.onBlur.bind(self);
-        self.onTextareaResize = self.onTextareaResize.bind(self);
-        self.onInputNotEmpty = self.onInputNotEmpty.bind(self);
-        self.onInputEmpty = self.onInputEmpty.bind(self);
-        self.onInputClear = self.onInputClear.bind(self);
->>>>>>> master
       })();
     }
 
@@ -5311,17 +5248,7 @@
       this.__reactRefs = {};
 
       (function () {
-<<<<<<< HEAD
         Utils.bindMethods(this$1, 'onClick onChange'.split(' '));
-=======
-        var self = this$1;
-        self.onClick = self.onClick.bind(self);
-        self.onChange = self.onChange.bind(self);
-        self.onFocus = self.onFocus.bind(self);
-        self.onBlur = self.onBlur.bind(self);
-        self.onEmpty = self.onEmpty.bind(self);
-        self.onNotEmpty = self.onNotEmpty.bind(self);
->>>>>>> master
       })();
     }
 
@@ -5552,58 +5479,6 @@
       var ref = self.refs;
       var el = ref.el;
       el.removeEventListener('click', self.onClick);
-<<<<<<< HEAD
-=======
-      el.removeEventListener('input:empty', self.onEmpty);
-      el.removeEventListener('input:notempty', self.onNotEmpty);
-      el.removeEventListener('focus', self.onFocus, true);
-      el.removeEventListener('blur', self.onBlur, true);
-    };
-
-    F7ListItemContent.prototype.componentDidUpdate = function componentDidUpdate () {
-      var self = this;
-      var ref = self.refs;
-      var innerEl = ref.innerEl;
-      if (!innerEl) { return; }
-      var $innerEl = self.$$(innerEl);
-      var $labelEl = $innerEl.children('.item-title.item-label');
-      var $inputWrapEl = $innerEl.children('.item-input-wrap');
-      var hasInlineLabel = $labelEl.hasClass('item-label-inline');
-      var hasInput = $inputWrapEl.length > 0;
-      var hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
-      var hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
-      var hasInputInvalid = $inputWrapEl.children('.input-invalid').length > 0;
-
-      if (hasInlineLabel !== self.state.hasInlineLabel) {
-        self.setState({
-          hasInlineLabel: hasInlineLabel
-        });
-      }
-
-      if (hasInput !== self.state.hasInput) {
-        self.setState({
-          hasInput: hasInput
-        });
-      }
-
-      if (hasInputInfo !== self.state.hasInputInfo) {
-        self.setState({
-          hasInputInfo: hasInputInfo
-        });
-      }
-
-      if (!self.hasInputErrorMessageSet && hasInputErrorMessage !== self.state.hasInputErrorMessage) {
-        self.setState({
-          hasInputErrorMessage: hasInputErrorMessage
-        });
-      }
-
-      if (hasInputInvalid !== self.state.hasInputInvalid) {
-        self.setState({
-          hasInputInvalid: hasInputInvalid
-        });
-      }
->>>>>>> master
     };
 
     F7ListItemContent.prototype.componentDidMount = function componentDidMount () {
@@ -5611,66 +5486,7 @@
       var ref = self.refs;
       var innerEl = ref.innerEl;
       var el = ref.el;
-<<<<<<< HEAD
       el.addEventListener('click', self.onClick);
-=======
-      var inputEl = ref.inputEl;
-      el.addEventListener('click', self.onClick);
-      if (!innerEl) { return; }
-      var $innerEl = self.$$(innerEl);
-      var $labelEl = $innerEl.children('.item-title.item-label');
-      var $inputWrapEl = $innerEl.children('.item-input-wrap');
-      var hasInlineLabel = $labelEl.hasClass('item-label-inline');
-      var hasInput = $inputWrapEl.length > 0;
-      var hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
-      var hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
-      var hasInputInvalid = $inputWrapEl.children('.input-invalid').length > 0;
-
-      if (hasInput) {
-        el.addEventListener('focus', self.onFocus, true);
-        el.addEventListener('blur', self.onBlur, true);
-        el.addEventListener('input:empty', self.onEmpty);
-        el.addEventListener('input:notempty', self.onNotEmpty);
-      }
-
-      if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {
-        self.setState({
-          hasInlineLabel: hasInlineLabel
-        });
-      }
-
-      if (!self.hasInputSet && hasInput !== self.state.hasInput) {
-        self.setState({
-          hasInput: hasInput
-        });
-      }
-
-      if (!self.hasInputInfoSet && hasInputInfo !== self.state.hasInputInfo) {
-        self.setState({
-          hasInputInfo: hasInputInfo
-        });
-      }
-
-      if (!self.hasInputErrorMessageSet && hasInputErrorMessage !== self.state.hasInputErrorMessage) {
-        self.setState({
-          hasInputErrorMessage: hasInputErrorMessage
-        });
-      }
-
-      if (!self.hasInputInvalidSet && hasInputInvalid !== self.state.hasInputInvalid) {
-        self.setState({
-          hasInputInvalid: hasInputInvalid
-        });
-      }
-    };
-
-    F7ListItemContent.prototype.componentWillUpdate = function componentWillUpdate () {
-      this.checkHasInputState();
-    };
-
-    F7ListItemContent.prototype.componentWillMount = function componentWillMount () {
-      this.checkHasInputState();
->>>>>>> master
     };
 
     prototypeAccessors.slots.get = function () {
@@ -5780,28 +5596,7 @@
       })();
 
       (function () {
-<<<<<<< HEAD
         Utils.bindMethods(this$1, ['onClick', 'onChange', 'onSwipeoutOpen', 'onSwipeoutOpened', 'onSwipeoutClose', 'onSwipeoutClosed', 'onSwipeoutDelete', 'onSwipeoutDeleted', 'onSwipeoutOverswipeEnter', 'onSwipeoutOverswipeExit', 'onSwipeout', 'onAccBeforeOpen', 'onAccOpen', 'onAccOpened', 'onAccBeforeClose', 'onAccClose', 'onAccClosed']);
-=======
-        var self = this$1;
-        self.onClick = self.onClick.bind(self);
-        self.onChange = self.onChange.bind(self);
-        self.onSwipeoutOpen = self.onSwipeoutOpen.bind(self);
-        self.onSwipeoutOpened = self.onSwipeoutOpened.bind(self);
-        self.onSwipeoutClose = self.onSwipeoutClose.bind(self);
-        self.onSwipeoutClosed = self.onSwipeoutClosed.bind(self);
-        self.onSwipeoutDelete = self.onSwipeoutDelete.bind(self);
-        self.onSwipeoutDeleted = self.onSwipeoutDeleted.bind(self);
-        self.onSwipeoutOverswipeEnter = self.onSwipeoutOverswipeEnter.bind(self);
-        self.onSwipeoutOverswipeExit = self.onSwipeoutOverswipeExit.bind(self);
-        self.onSwipeout = self.onSwipeout.bind(self);
-        self.onAccBeforeOpen = self.onAccBeforeOpen.bind(self);
-        self.onAccOpen = self.onAccOpen.bind(self);
-        self.onAccOpened = self.onAccOpened.bind(self);
-        self.onAccBeforeClose = self.onAccBeforeClose.bind(self);
-        self.onAccClose = self.onAccClose.bind(self);
-        self.onAccClosed = self.onAccClosed.bind(self);
->>>>>>> master
       })();
     }
 
@@ -5959,12 +5754,6 @@
           readonly: readonly,
           required: required,
           disabled: disabled,
-<<<<<<< HEAD
-=======
-          itemInput: itemInput,
-          itemInputWithInfo: itemInputWithInfo,
-          inlineLabel: inlineLabel,
->>>>>>> master
           onClick: needsEvents ? self.onClick : null,
           onChange: needsEvents ? self.onChange : null
         }, this.slots['content-start'], this.slots['content'], this.slots['content-end'], this.slots['media'], this.slots['inner-start'], this.slots['inner'], this.slots['inner-end'], this.slots['after-start'], this.slots['after'], this.slots['after-end'], this.slots['header'], this.slots['footer'], this.slots['before-title'], this.slots['title'], this.slots['after-title'], this.slots['subtitle'], this.slots['text'], swipeout || accordionItem ? null : self.slots.default);
@@ -6053,8 +5842,12 @@
       var accordionItem = ref$1.accordionItem;
       var needsEvents = !(link || href || accordionItem || smartSelect);
 
-      if (!needsEvents && linkEl) {
-        linkEl.removeEventListener('click', self.onClick);
+      if (linkEl) {
+        if (!needsEvents) {
+          linkEl.removeEventListener('click', self.onClick);
+        }
+
+        delete linkEl.f7RouteProps;
       }
 
       if (el) {
@@ -6102,6 +5895,15 @@
 
       var self = this;
       var $listEl = self.$listEl;
+      var ref = self.refs;
+      var linkEl = ref.linkEl;
+      var ref$1 = self.props;
+      var routeProps = ref$1.routeProps;
+
+      if (linkEl && routeProps) {
+        linkEl.f7RouteProps = routeProps;
+      }
+
       if (!$listEl || $listEl && $listEl.length === 0) { return; }
       var isMedia = $listEl.hasClass('media-list');
       var isSimple = $listEl.hasClass('simple-list');
@@ -6140,10 +5942,15 @@
       var swipeoutOpened = ref$1.swipeoutOpened;
       var accordionItem = ref$1.accordionItem;
       var smartSelectParams = ref$1.smartSelectParams;
+      var routeProps = ref$1.routeProps;
       var needsEvents = !(link || href || accordionItem || smartSelect);
 
       if (!needsEvents && linkEl) {
         linkEl.addEventListener('click', self.onClick);
+      }
+
+      if (linkEl && routeProps) {
+        linkEl.f7RouteProps = routeProps;
       }
 
       self.$listEl = self.$$(el).parents('.list, .list-group').eq(0);
@@ -6252,12 +6059,6 @@
     readonly: Boolean,
     required: Boolean,
     disabled: Boolean,
-<<<<<<< HEAD
-=======
-    itemInput: Boolean,
-    itemInputWithInfo: Boolean,
-    inlineLabel: Boolean,
->>>>>>> master
     virtualListIndex: Number
   }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
 
@@ -6732,17 +6533,7 @@
       this.__reactRefs = {};
 
       (function () {
-<<<<<<< HEAD
         Utils.bindMethods(this$1, ['onClick', 'onNameClick', 'onTextClick', 'onAvatarClick', 'onHeaderClick', 'onFooterClick', 'onBubbleClick']);
-=======
-        this$1.onClick = this$1.onClick.bind(this$1);
-        this$1.onNameClick = this$1.onNameClick.bind(this$1);
-        this$1.onTextClick = this$1.onTextClick.bind(this$1);
-        this$1.onAvatarClick = this$1.onAvatarClick.bind(this$1);
-        this$1.onHeaderClick = this$1.onHeaderClick.bind(this$1);
-        this$1.onFooterClick = this$1.onFooterClick.bind(this$1);
-        this$1.onBubbleClick = this$1.onBubbleClick.bind(this$1);
->>>>>>> master
       })();
     }
 
@@ -6906,10 +6697,10 @@
       el.removeEventListener('click', this.onClick);
       if (nameEl) { nameEl.removeEventListener('click', this.onNameClick); }
       if (textEl) { textEl.removeEventListener('click', this.onTextClick); }
-      if (avatarEl) { nameEl.removeEventListener('click', this.onAvatarClick); }
-      if (headerEl) { nameEl.removeEventListener('click', this.onHeaderClick); }
-      if (footerEl) { nameEl.removeEventListener('click', this.onFooterClick); }
-      if (bubbleEl) { nameEl.removeEventListener('click', this.onBubbleClick); }
+      if (avatarEl) { avatarEl.removeEventListener('click', this.onAvatarClick); }
+      if (headerEl) { headerEl.removeEventListener('click', this.onHeaderClick); }
+      if (footerEl) { footerEl.removeEventListener('click', this.onFooterClick); }
+      if (bubbleEl) { bubbleEl.removeEventListener('click', this.onBubbleClick); }
     };
 
     F7Message.prototype.componentDidMount = function componentDidMount () {
@@ -6924,10 +6715,10 @@
       el.addEventListener('click', this.onClick);
       if (nameEl) { nameEl.addEventListener('click', this.onNameClick); }
       if (textEl) { textEl.addEventListener('click', this.onTextClick); }
-      if (avatarEl) { nameEl.addEventListener('click', this.onAvatarClick); }
-      if (headerEl) { nameEl.addEventListener('click', this.onHeaderClick); }
-      if (footerEl) { nameEl.addEventListener('click', this.onFooterClick); }
-      if (bubbleEl) { nameEl.addEventListener('click', this.onBubbleClick); }
+      if (avatarEl) { avatarEl.addEventListener('click', this.onAvatarClick); }
+      if (headerEl) { headerEl.addEventListener('click', this.onHeaderClick); }
+      if (footerEl) { footerEl.addEventListener('click', this.onFooterClick); }
+      if (bubbleEl) { bubbleEl.addEventListener('click', this.onBubbleClick); }
     };
 
     prototypeAccessors.slots.get = function () {
@@ -6988,12 +6779,7 @@
       this.__reactRefs = {};
 
       (function () {
-<<<<<<< HEAD
         Utils.bindMethods(this$1, ['onClick', 'onDeleteClick']);
-=======
-        this$1.onClick = this$1.onClick.bind(this$1);
-        this$1.onDeleteClick = this$1.onDeleteClick.bind(this$1);
->>>>>>> master
       })();
     }
 
@@ -7139,11 +6925,7 @@
       this.__reactRefs = {};
 
       (function () {
-<<<<<<< HEAD
         Utils.bindMethods(this$1, ['onChange']);
-=======
-        this$1.onChange = this$1.onChange.bind(this$1);
->>>>>>> master
       })();
     }
 
@@ -7314,18 +7096,7 @@
       this.__reactRefs = {};
 
       (function () {
-<<<<<<< HEAD
         Utils.bindMethods(this$1, ['onChange', 'onInput', 'onFocus', 'onBlur', 'onClick', 'onDeleteAttachment', 'onClickAttachment', 'onResizePage']);
-=======
-        this$1.onChange = this$1.onChange.bind(this$1);
-        this$1.onInput = this$1.onInput.bind(this$1);
-        this$1.onFocus = this$1.onFocus.bind(this$1);
-        this$1.onBlur = this$1.onBlur.bind(this$1);
-        this$1.onClick = this$1.onClick.bind(this$1);
-        this$1.onDeleteAttachment = this$1.onDeleteAttachment.bind(this$1);
-        this$1.onClickAttachment = this$1.onClickAttachment.bind(this$1);
-        this$1.onResizePage = this$1.onResizePage.bind(this$1);
->>>>>>> master
       })();
     }
 
@@ -9975,11 +9746,7 @@
       this.__reactRefs = {};
 
       (function () {
-<<<<<<< HEAD
         Utils.bindMethods(this$1, ['onChange']);
-=======
-        this$1.onChange = this$1.onChange.bind(this$1);
->>>>>>> master
       })();
     }
 
@@ -10080,11 +9847,7 @@
       this.__reactRefs = {};
 
       (function () {
-<<<<<<< HEAD
         Utils.bindMethods(this$1, ['onClick']);
-=======
-        this$1.onClick = this$1.onClick.bind(this$1);
->>>>>>> master
       })();
     }
 
@@ -10173,17 +9936,7 @@
       this.__reactRefs = {};
 
       (function () {
-<<<<<<< HEAD
         Utils.bindMethods(this$1, ['onSubmit', 'onClearButtonClick', 'onDisableButtonClick', 'onInput', 'onChange', 'onFocus', 'onBlur']);
-=======
-        this$1.onChange = this$1.onChange.bind(this$1);
-        this$1.onInput = this$1.onInput.bind(this$1);
-        this$1.onFocus = this$1.onFocus.bind(this$1);
-        this$1.onBlur = this$1.onBlur.bind(this$1);
-        this$1.onSubmit = this$1.onSubmit.bind(this$1);
-        this$1.onClearButtonClick = this$1.onClearButtonClick.bind(this$1);
-        this$1.onDisableButtonClick = this$1.onDisableButtonClick.bind(this$1);
->>>>>>> master
       })();
     }
 
@@ -10379,21 +10132,12 @@
 
       if (clearEl) {
         clearEl.addEventListener('click', self.onClearButtonClick);
-<<<<<<< HEAD
       }
 
       if (disableEl) {
         disableEl.addEventListener('click', self.onDisableButtonClick);
       }
 
-=======
-      }
-
-      if (disableEl) {
-        disableEl.addEventListener('click', self.onDisableButtonClick);
-      }
-
->>>>>>> master
       if (!init) { return; }
       self.$f7ready(function () {
         var params = Utils.noUndefinedProps({
@@ -10444,7 +10188,6 @@
       });
     };
 
-<<<<<<< HEAD
     F7Searchbar.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
 
@@ -10455,8 +10198,6 @@
       if (self.f7Searchbar && self.f7Searchbar.destroy) { self.f7Searchbar.destroy(); }
     };
 
-=======
->>>>>>> master
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -10872,13 +10613,7 @@
       this.__reactRefs = {};
 
       (function () {
-<<<<<<< HEAD
         Utils.bindMethods(this$1, ['onInput', 'onMinusClick', 'onPlusClick']);
-=======
-        this$1.onInput = this$1.onInput.bind(this$1);
-        this$1.onMinusClick = this$1.onMinusClick.bind(this$1);
-        this$1.onPlusClick = this$1.onPlusClick.bind(this$1);
->>>>>>> master
       })();
     }
 
@@ -10994,12 +10729,8 @@
             step: inputType === 'number' ? step : undefined,
             onInput: self.onInput,
             value: value,
-<<<<<<< HEAD
             readOnly: inputReadonly,
             onInput: self.onInput
-=======
-            readOnly: inputReadonly
->>>>>>> master
           });
         }
         inputWrapEl = React.createElement('div', {
@@ -11038,19 +10769,11 @@
       var ref = self.refs;
       var minusEl = ref.minusEl;
       var plusEl = ref.plusEl;
-<<<<<<< HEAD
 
       if (minusEl) {
         minusEl.removeEventListener('click', self.onMinusClick);
       }
 
-=======
-
-      if (minusEl) {
-        minusEl.removeEventListener('click', self.onMinusClick);
-      }
-
->>>>>>> master
       if (plusEl) {
         plusEl.removeEventListener('click', self.onPlusClick);
       }
@@ -11332,11 +11055,7 @@
       this.__reactRefs = {};
 
       (function () {
-<<<<<<< HEAD
         Utils.bindMethods(this$1, ['onClick']);
-=======
-        this$1.onClick = this$1.onClick.bind(this$1);
->>>>>>> master
       })();
     }
 
@@ -11814,10 +11533,12 @@
       var className = props.className;
       var routable = props.routable;
       var classes = Utils.classNames(className, Mixins.colorClasses(props));
-      var tabsClasses = Utils.classNames({
-        'tabs': true,
+      var wrapClasses = Utils.classNames({
         'tabs-animated-wrap': animated,
-        'tabs-swipeable-wrap': swipeable,
+        'tabs-swipeable-wrap': swipeable
+      });
+      var tabsClasses = Utils.classNames({
+        tabs: true,
         'tabs-routable': routable
       });
 
@@ -11825,7 +11546,7 @@
         return React.createElement('div', {
           id: id,
           style: style,
-          className: classes
+          className: Utils.classNames(wrapClasses, classes)
         }, React.createElement('div', {
           className: tabsClasses
         }, this.slots['default']));
@@ -12190,7 +11911,7 @@
     url: String,
     main: Boolean,
     stackPages: Boolean,
-    xhrCache: String,
+    xhrCache: Boolean,
     xhrCacheIgnore: Array,
     xhrCacheIgnoreGetParameters: Boolean,
     xhrCacheDuration: Number,
@@ -12497,11 +12218,7 @@
   };
 
   /**
-<<<<<<< HEAD
-   * Framework7 React 4.0.0-beta.2
-=======
-   * Framework7 React 3.6.0
->>>>>>> master
+   * Framework7 React 4.0.0-beta.3
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -12509,11 +12226,7 @@
    *
    * Released under the MIT License
    *
-<<<<<<< HEAD
-   * Released on: December 6, 2018
-=======
-   * Released on: December 7, 2018
->>>>>>> master
+   * Released on: December 11, 2018
    */
 
   var Plugin = {

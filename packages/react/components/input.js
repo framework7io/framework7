@@ -26,19 +26,7 @@ class F7Input extends React.Component {
     })();
 
     (() => {
-<<<<<<< HEAD
       Utils.bindMethods(this, 'onFocus onBlur onInput onChange onTextareaResize onInputNotEmpty onInputEmpty onInputClear'.split(' '));
-=======
-      const self = this;
-      self.onFocus = self.onFocus.bind(self);
-      self.onBlur = self.onBlur.bind(self);
-      self.onInput = self.onInput.bind(self);
-      self.onChange = self.onChange.bind(self);
-      self.onTextareaResize = self.onTextareaResize.bind(self);
-      self.onInputNotEmpty = self.onInputNotEmpty.bind(self);
-      self.onInputEmpty = self.onInputEmpty.bind(self);
-      self.onInputClear = self.onInputClear.bind(self);
->>>>>>> master
     })();
   }
 

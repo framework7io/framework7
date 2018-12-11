@@ -45,18 +45,7 @@ export default {
   }, Mixins.colorProps),
 
   created() {
-<<<<<<< HEAD
     Utils.bindMethods(this, ['onChange', 'onInput', 'onFocus', 'onBlur', 'onClick', 'onDeleteAttachment', 'onClickAttachment', 'onResizePage']);
-=======
-    this.onChange = this.onChange.bind(this);
-    this.onInput = this.onInput.bind(this);
-    this.onFocus = this.onFocus.bind(this);
-    this.onBlur = this.onBlur.bind(this);
-    this.onClick = this.onClick.bind(this);
-    this.onDeleteAttachment = this.onDeleteAttachment.bind(this);
-    this.onClickAttachment = this.onClickAttachment.bind(this);
-    this.onResizePage = this.onResizePage.bind(this);
->>>>>>> master
   },
 
   render() {

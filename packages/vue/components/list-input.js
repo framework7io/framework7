@@ -295,19 +295,7 @@ export default {
   },
 
   created() {
-<<<<<<< HEAD
     Utils.bindMethods(this, 'onChange onInput onFocus onBlur onTextareaResize onInputNotEmpty onInputEmpty onInputClear'.split(' '));
-=======
-    const self = this;
-    self.onChange = self.onChange.bind(self);
-    self.onInput = self.onInput.bind(self);
-    self.onFocus = self.onFocus.bind(self);
-    self.onBlur = self.onBlur.bind(self);
-    self.onTextareaResize = self.onTextareaResize.bind(self);
-    self.onInputNotEmpty = self.onInputNotEmpty.bind(self);
-    self.onInputEmpty = self.onInputEmpty.bind(self);
-    self.onInputClear = self.onInputClear.bind(self);
->>>>>>> master
   },
 
   mounted() {

@@ -11,12 +11,7 @@ class F7Chip extends React.Component {
     this.__reactRefs = {};
 
     (() => {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onClick', 'onDeleteClick']);
-=======
-      this.onClick = this.onClick.bind(this);
-      this.onDeleteClick = this.onDeleteClick.bind(this);
->>>>>>> master
     })();
   }
 

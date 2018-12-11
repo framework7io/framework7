@@ -11,11 +11,7 @@ class F7Radio extends React.Component {
     this.__reactRefs = {};
 
     (() => {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onChange']);
-=======
-      this.onChange = this.onChange.bind(this);
->>>>>>> master
     })();
   }
 

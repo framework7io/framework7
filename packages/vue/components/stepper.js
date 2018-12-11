@@ -191,13 +191,7 @@ export default {
   },
 
   created() {
-<<<<<<< HEAD
     Utils.bindMethods(this, ['onInput', 'onMinusClick', 'onPlusClick']);
-=======
-    this.onInput = this.onInput.bind(this);
-    this.onMinusClick = this.onMinusClick.bind(this);
-    this.onPlusClick = this.onPlusClick.bind(this);
->>>>>>> master
   },
 
   mounted() {

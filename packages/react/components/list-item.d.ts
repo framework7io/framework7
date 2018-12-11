@@ -42,12 +42,6 @@ declare namespace F7ListItem {
     readonly? : boolean
     required? : boolean
     disabled? : boolean
-<<<<<<< HEAD
-=======
-    itemInput? : boolean
-    itemInputWithInfo? : boolean
-    inlineLabel? : boolean
->>>>>>> master
     virtualListIndex? : number
     color? : string
     colorTheme? : string
@@ -66,6 +60,7 @@ declare namespace F7ListItem {
     reloadPrevious? : boolean
     routeTabId? : string
     view? : string
+    routeProps? : Object
     searchbarEnable? : boolean | string
     searchbarDisable? : boolean | string
     searchbarClear? : boolean | string

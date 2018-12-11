@@ -9,13 +9,10 @@ class F7Block extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.__reactRefs = {};
-<<<<<<< HEAD
 
     (() => {
       Utils.bindMethods(this, ['onTabShow', 'onTabHide']);
     })();
-=======
->>>>>>> master
   }
 
   onTabShow(event) {

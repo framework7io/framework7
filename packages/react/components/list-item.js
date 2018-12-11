@@ -21,28 +21,7 @@ class F7ListItem extends React.Component {
     })();
 
     (() => {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onClick', 'onChange', 'onSwipeoutOpen', 'onSwipeoutOpened', 'onSwipeoutClose', 'onSwipeoutClosed', 'onSwipeoutDelete', 'onSwipeoutDeleted', 'onSwipeoutOverswipeEnter', 'onSwipeoutOverswipeExit', 'onSwipeout', 'onAccBeforeOpen', 'onAccOpen', 'onAccOpened', 'onAccBeforeClose', 'onAccClose', 'onAccClosed']);
-=======
-      const self = this;
-      self.onClick = self.onClick.bind(self);
-      self.onChange = self.onChange.bind(self);
-      self.onSwipeoutOpen = self.onSwipeoutOpen.bind(self);
-      self.onSwipeoutOpened = self.onSwipeoutOpened.bind(self);
-      self.onSwipeoutClose = self.onSwipeoutClose.bind(self);
-      self.onSwipeoutClosed = self.onSwipeoutClosed.bind(self);
-      self.onSwipeoutDelete = self.onSwipeoutDelete.bind(self);
-      self.onSwipeoutDeleted = self.onSwipeoutDeleted.bind(self);
-      self.onSwipeoutOverswipeEnter = self.onSwipeoutOverswipeEnter.bind(self);
-      self.onSwipeoutOverswipeExit = self.onSwipeoutOverswipeExit.bind(self);
-      self.onSwipeout = self.onSwipeout.bind(self);
-      self.onAccBeforeOpen = self.onAccBeforeOpen.bind(self);
-      self.onAccOpen = self.onAccOpen.bind(self);
-      self.onAccOpened = self.onAccOpened.bind(self);
-      self.onAccBeforeClose = self.onAccBeforeClose.bind(self);
-      self.onAccClose = self.onAccClose.bind(self);
-      self.onAccClosed = self.onAccClosed.bind(self);
->>>>>>> master
     })();
   }
 
@@ -194,12 +173,6 @@ class F7ListItem extends React.Component {
         readonly: readonly,
         required: required,
         disabled: disabled,
-<<<<<<< HEAD
-=======
-        itemInput: itemInput,
-        itemInputWithInfo: itemInputWithInfo,
-        inlineLabel: inlineLabel,
->>>>>>> master
         onClick: needsEvents ? self.onClick : null,
         onChange: needsEvents ? self.onChange : null
       }, this.slots['content-start'], this.slots['content'], this.slots['content-end'], this.slots['media'], this.slots['inner-start'], this.slots['inner'], this.slots['inner-end'], this.slots['after-start'], this.slots['after'], this.slots['after-end'], this.slots['header'], this.slots['footer'], this.slots['before-title'], this.slots['title'], this.slots['after-title'], this.slots['subtitle'], this.slots['text'], swipeout || accordionItem ? null : self.slots.default);
@@ -290,8 +263,12 @@ class F7ListItem extends React.Component {
     } = self.props;
     const needsEvents = !(link || href || accordionItem || smartSelect);
 
-    if (!needsEvents && linkEl) {
-      linkEl.removeEventListener('click', self.onClick);
+    if (linkEl) {
+      if (!needsEvents) {
+        linkEl.removeEventListener('click', self.onClick);
+      }
+
+      delete linkEl.f7RouteProps;
     }
 
     if (el) {
@@ -339,6 +316,17 @@ class F7ListItem extends React.Component {
     const {
       $listEl
     } = self;
+    const {
+      linkEl
+    } = self.refs;
+    const {
+      routeProps
+    } = self.props;
+
+    if (linkEl && routeProps) {
+      linkEl.f7RouteProps = routeProps;
+    }
+
     if (!$listEl || $listEl && $listEl.length === 0) return;
     const isMedia = $listEl.hasClass('media-list');
     const isSimple = $listEl.hasClass('simple-list');
@@ -377,12 +365,17 @@ class F7ListItem extends React.Component {
       swipeout,
       swipeoutOpened,
       accordionItem,
-      smartSelectParams
+      smartSelectParams,
+      routeProps
     } = self.props;
     const needsEvents = !(link || href || accordionItem || smartSelect);
 
     if (!needsEvents && linkEl) {
       linkEl.addEventListener('click', self.onClick);
+    }
+
+    if (linkEl && routeProps) {
+      linkEl.f7RouteProps = routeProps;
     }
 
     self.$listEl = self.$$(el).parents('.list, .list-group').eq(0);
@@ -485,12 +478,6 @@ __reactComponentSetProps(F7ListItem, Object.assign({
   readonly: Boolean,
   required: Boolean,
   disabled: Boolean,
-<<<<<<< HEAD
-=======
-  itemInput: Boolean,
-  itemInputWithInfo: Boolean,
-  inlineLabel: Boolean,
->>>>>>> master
   virtualListIndex: Number
 }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
 

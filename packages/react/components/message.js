@@ -11,17 +11,7 @@ class F7Message extends React.Component {
     this.__reactRefs = {};
 
     (() => {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onClick', 'onNameClick', 'onTextClick', 'onAvatarClick', 'onHeaderClick', 'onFooterClick', 'onBubbleClick']);
-=======
-      this.onClick = this.onClick.bind(this);
-      this.onNameClick = this.onNameClick.bind(this);
-      this.onTextClick = this.onTextClick.bind(this);
-      this.onAvatarClick = this.onAvatarClick.bind(this);
-      this.onHeaderClick = this.onHeaderClick.bind(this);
-      this.onFooterClick = this.onFooterClick.bind(this);
-      this.onBubbleClick = this.onBubbleClick.bind(this);
->>>>>>> master
     })();
   }
 

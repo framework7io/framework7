@@ -208,7 +208,6 @@ const Navbar = {
       }
     });
     return pageEl;
-<<<<<<< HEAD
   },
 
   collapseLargeTitle(navbarInnerEl) {
@@ -244,8 +243,6 @@ const Navbar = {
     if (app.theme === 'md') {
       $navbarInnerEl.parents('.navbar').removeClass('navbar-large-collapsed');
     }
-=======
->>>>>>> master
   },
   toggleLargeTitle(navbarInnerEl) {
     const app = this;
@@ -448,14 +445,10 @@ export default {
         show: Navbar.show.bind(app),
         getElByPage: Navbar.getElByPage.bind(app),
         getPageByEl: Navbar.getPageByEl.bind(app),
-<<<<<<< HEAD
         collapseLargeTitle: Navbar.collapseLargeTitle.bind(app),
         expandLargeTitle: Navbar.expandLargeTitle.bind(app),
         toggleLargeTitle: Navbar.toggleLargeTitle.bind(app),
         initNavbarOnScroll: Navbar.initNavbarOnScroll.bind(app),
-=======
-        initHideNavbarOnScroll: Navbar.initHideNavbarOnScroll.bind(app),
->>>>>>> master
       },
     });
   },

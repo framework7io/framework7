@@ -11,11 +11,7 @@ class F7ActionsLabel extends React.Component {
     this.__reactRefs = {};
 
     (() => {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onClick']);
-=======
-      this.onClick = this.onClick.bind(this);
->>>>>>> master
     })();
   }
 

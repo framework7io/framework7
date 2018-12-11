@@ -66,11 +66,7 @@ export default {
   },
 
   created() {
-<<<<<<< HEAD
     Utils.bindMethods(this, ['onChange']);
-=======
-    this.onChange = this.onChange.bind(this);
->>>>>>> master
   },
 
   methods: {

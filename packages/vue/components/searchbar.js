@@ -175,7 +175,6 @@ export default {
   },
 
   created() {
-<<<<<<< HEAD
     Utils.bindMethods(this, ['onSubmit', 'onClearButtonClick', 'onDisableButtonClick', 'onInput', 'onChange', 'onFocus', 'onBlur']);
   },
 
@@ -187,15 +186,6 @@ export default {
     }
 
     if (self.f7Searchbar && self.f7Searchbar.destroy) self.f7Searchbar.destroy();
-=======
-    this.onChange = this.onChange.bind(this);
-    this.onInput = this.onInput.bind(this);
-    this.onFocus = this.onFocus.bind(this);
-    this.onBlur = this.onBlur.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onClearButtonClick = this.onClearButtonClick.bind(this);
-    this.onDisableButtonClick = this.onDisableButtonClick.bind(this);
->>>>>>> master
   },
 
   mounted() {
@@ -231,21 +221,12 @@ export default {
 
     if (form && el) {
       el.addEventListener('submit', self.onSubmit, false);
-<<<<<<< HEAD
     }
 
     if (clearEl) {
       clearEl.addEventListener('click', self.onClearButtonClick);
     }
 
-=======
-    }
-
-    if (clearEl) {
-      clearEl.addEventListener('click', self.onClearButtonClick);
-    }
-
->>>>>>> master
     if (disableEl) {
       disableEl.addEventListener('click', self.onDisableButtonClick);
     }

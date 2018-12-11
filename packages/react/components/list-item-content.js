@@ -12,17 +12,7 @@ class F7ListItemContent extends React.Component {
     this.__reactRefs = {};
 
     (() => {
-<<<<<<< HEAD
       Utils.bindMethods(this, 'onClick onChange'.split(' '));
-=======
-      const self = this;
-      self.onClick = self.onClick.bind(self);
-      self.onChange = self.onChange.bind(self);
-      self.onFocus = self.onFocus.bind(self);
-      self.onBlur = self.onBlur.bind(self);
-      self.onEmpty = self.onEmpty.bind(self);
-      self.onNotEmpty = self.onNotEmpty.bind(self);
->>>>>>> master
     })();
   }
 
@@ -248,129 +238,15 @@ class F7ListItemContent extends React.Component {
       el
     } = self.refs;
     el.removeEventListener('click', self.onClick);
-<<<<<<< HEAD
-=======
-    el.removeEventListener('input:empty', self.onEmpty);
-    el.removeEventListener('input:notempty', self.onNotEmpty);
-    el.removeEventListener('focus', self.onFocus, true);
-    el.removeEventListener('blur', self.onBlur, true);
-  }
-
-  componentDidUpdate() {
-    const self = this;
-    const {
-      innerEl
-    } = self.refs;
-    if (!innerEl) return;
-    const $innerEl = self.$$(innerEl);
-    const $labelEl = $innerEl.children('.item-title.item-label');
-    const $inputWrapEl = $innerEl.children('.item-input-wrap');
-    const hasInlineLabel = $labelEl.hasClass('item-label-inline');
-    const hasInput = $inputWrapEl.length > 0;
-    const hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
-    const hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
-    const hasInputInvalid = $inputWrapEl.children('.input-invalid').length > 0;
-
-    if (hasInlineLabel !== self.state.hasInlineLabel) {
-      self.setState({
-        hasInlineLabel
-      });
-    }
-
-    if (hasInput !== self.state.hasInput) {
-      self.setState({
-        hasInput
-      });
-    }
-
-    if (hasInputInfo !== self.state.hasInputInfo) {
-      self.setState({
-        hasInputInfo
-      });
-    }
-
-    if (!self.hasInputErrorMessageSet && hasInputErrorMessage !== self.state.hasInputErrorMessage) {
-      self.setState({
-        hasInputErrorMessage
-      });
-    }
-
-    if (hasInputInvalid !== self.state.hasInputInvalid) {
-      self.setState({
-        hasInputInvalid
-      });
-    }
->>>>>>> master
   }
 
   componentDidMount() {
     const self = this;
     const {
       innerEl,
-<<<<<<< HEAD
       el
     } = self.refs;
     el.addEventListener('click', self.onClick);
-=======
-      el,
-      inputEl
-    } = self.refs;
-    el.addEventListener('click', self.onClick);
-    if (!innerEl) return;
-    const $innerEl = self.$$(innerEl);
-    const $labelEl = $innerEl.children('.item-title.item-label');
-    const $inputWrapEl = $innerEl.children('.item-input-wrap');
-    const hasInlineLabel = $labelEl.hasClass('item-label-inline');
-    const hasInput = $inputWrapEl.length > 0;
-    const hasInputInfo = $inputWrapEl.children('.item-input-info').length > 0;
-    const hasInputErrorMessage = $inputWrapEl.children('.item-input-error-message').length > 0;
-    const hasInputInvalid = $inputWrapEl.children('.input-invalid').length > 0;
-
-    if (hasInput) {
-      el.addEventListener('focus', self.onFocus, true);
-      el.addEventListener('blur', self.onBlur, true);
-      el.addEventListener('input:empty', self.onEmpty);
-      el.addEventListener('input:notempty', self.onNotEmpty);
-    }
-
-    if (!self.hasInlineLabelSet && hasInlineLabel !== self.state.hasInlineLabel) {
-      self.setState({
-        hasInlineLabel
-      });
-    }
-
-    if (!self.hasInputSet && hasInput !== self.state.hasInput) {
-      self.setState({
-        hasInput
-      });
-    }
-
-    if (!self.hasInputInfoSet && hasInputInfo !== self.state.hasInputInfo) {
-      self.setState({
-        hasInputInfo
-      });
-    }
-
-    if (!self.hasInputErrorMessageSet && hasInputErrorMessage !== self.state.hasInputErrorMessage) {
-      self.setState({
-        hasInputErrorMessage
-      });
-    }
-
-    if (!self.hasInputInvalidSet && hasInputInvalid !== self.state.hasInputInvalid) {
-      self.setState({
-        hasInputInvalid
-      });
-    }
-  }
-
-  componentWillUpdate() {
-    this.checkHasInputState();
-  }
-
-  componentWillMount() {
-    this.checkHasInputState();
->>>>>>> master
   }
 
   get slots() {

@@ -83,19 +83,40 @@ export default {
   },
 
   created() {
-<<<<<<< HEAD
     Utils.bindMethods(this, ['onClick']);
-=======
-    this.onClick = this.onClick.bind(this);
->>>>>>> master
   },
 
   mounted() {
-    this.$refs.linkEl.addEventListener('click', this.onClick);
+    const self = this;
+    const linkEl = self.$refs.linkEl;
+    const {
+      routeProps
+    } = self.props;
+
+    if (routeProps) {
+      linkEl.f7RouteProps = routeProps;
+    }
+
+    linkEl.addEventListener('click', self.onClick);
+  },
+
+  updated() {
+    const self = this;
+    const linkEl = self.$refs.linkEl;
+    const {
+      routeProps
+    } = self.props;
+
+    if (routeProps) {
+      linkEl.f7RouteProps = routeProps;
+    }
   },
 
   beforeDestroy() {
-    this.$refs.linkEl.removeEventListener('click', this.onClick);
+    const self = this;
+    const linkEl = self.$refs.linkEl;
+    linkEl.removeEventListener('click', this.onClick);
+    delete linkEl.f7RouteProps;
   },
 
   methods: {

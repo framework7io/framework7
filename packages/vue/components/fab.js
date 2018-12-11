@@ -98,11 +98,7 @@ export default {
   },
 
   created() {
-<<<<<<< HEAD
     Utils.bindMethods(this, ['onClick']);
-=======
-    this.onClick = this.onClick.bind(this);
->>>>>>> master
   },
 
   mounted() {

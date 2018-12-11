@@ -14,9 +14,6 @@ export default {
       const html = document.querySelector('html');
       if (!html) return;
       const classNames = [];
-      if (Support.positionSticky) {
-        classNames.push('support-position-sticky');
-      }
       // Add html classes
       classNames.forEach((className) => {
         html.classList.add(className);

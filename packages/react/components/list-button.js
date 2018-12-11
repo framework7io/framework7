@@ -11,11 +11,7 @@ class F7ListButton extends React.Component {
     this.__reactRefs = {};
 
     (() => {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onClick']);
-=======
-      this.onClick = this.onClick.bind(this);
->>>>>>> master
     })();
   }
 
@@ -80,11 +76,36 @@ class F7ListButton extends React.Component {
   }
 
   componentWillUnmount() {
-    this.refs.linkEl.removeEventListener('click', this.onClick);
+    const self = this;
+    const linkEl = self.refs.linkEl;
+    linkEl.removeEventListener('click', this.onClick);
+    delete linkEl.f7RouteProps;
+  }
+
+  componentDidUpdate() {
+    const self = this;
+    const linkEl = self.refs.linkEl;
+    const {
+      routeProps
+    } = self.props;
+
+    if (routeProps) {
+      linkEl.f7RouteProps = routeProps;
+    }
   }
 
   componentDidMount() {
-    this.refs.linkEl.addEventListener('click', this.onClick);
+    const self = this;
+    const linkEl = self.refs.linkEl;
+    const {
+      routeProps
+    } = self.props;
+
+    if (routeProps) {
+      linkEl.f7RouteProps = routeProps;
+    }
+
+    linkEl.addEventListener('click', self.onClick);
   }
 
   get slots() {

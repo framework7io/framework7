@@ -711,7 +711,7 @@ export default {
       fastClicksDelayBetweenClicks: 50,
       fastClicksExclude: '', // CSS selector
       // ContextMenu
-      disableContextMenu: true,
+      disableContextMenu: false,
       // Tap Hold
       tapHold: false,
       tapHoldDelay: 750,

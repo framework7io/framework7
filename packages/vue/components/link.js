@@ -139,12 +139,7 @@ export default {
   },
 
   created() {
-<<<<<<< HEAD
     Utils.bindMethods(this, ['onClick']);
-=======
-    const self = this;
-    self.onClick = self.onClick.bind(self);
->>>>>>> master
   },
 
   mounted() {
@@ -156,7 +151,8 @@ export default {
       tabLink,
       tooltip,
       smartSelect,
-      smartSelectParams
+      smartSelectParams,
+      routeProps
     } = self.props;
     let isTabbarLabel = false;
 
@@ -167,6 +163,7 @@ export default {
     self.setState({
       isTabbarLabel
     });
+    if (routeProps) el.f7RouteProps = routeProps;
     self.$f7ready(f7 => {
       if (smartSelect) {
         const ssParams = Utils.extend({
@@ -184,10 +181,23 @@ export default {
     });
   },
 
+  updated() {
+    const self = this;
+    const el = self.$refs.el;
+    const {
+      routeProps
+    } = self.props;
+
+    if (routeProps) {
+      el.f7RouteProps = routeProps;
+    }
+  },
+
   beforeDestroy() {
     const self = this;
     const el = self.$refs.el;
     el.removeEventListener('click', self.onClick);
+    delete el.f7RouteProps;
 
     if (self.f7SmartSelect && self.f7SmartSelect.destroy) {
       self.f7SmartSelect.destroy();

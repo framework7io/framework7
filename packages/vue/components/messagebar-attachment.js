@@ -43,12 +43,7 @@ export default {
   },
 
   created() {
-<<<<<<< HEAD
     Utils.bindMethods(this, ['onClick', 'onDeleteClick']);
-=======
-    this.onClick = this.onClick.bind(this);
-    this.onDeleteClick = this.onDeleteClick.bind(this);
->>>>>>> master
   },
 
   mounted() {

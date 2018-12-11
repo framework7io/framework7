@@ -14,13 +14,10 @@ class F7FabButton extends React.Component {
     (() => {
       this.onClick = this.onClick.bind(this);
     })();
-<<<<<<< HEAD
 
     (() => {
       Utils.bindMethods(this, ['onClick']);
     })();
-=======
->>>>>>> master
   }
 
   onClick(event) {

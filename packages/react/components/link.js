@@ -20,12 +20,7 @@ class F7Link extends React.Component {
     })();
 
     (() => {
-<<<<<<< HEAD
       Utils.bindMethods(this, ['onClick']);
-=======
-      const self = this;
-      self.onClick = self.onClick.bind(self);
->>>>>>> master
     })();
   }
 
@@ -154,6 +149,7 @@ class F7Link extends React.Component {
     const self = this;
     const el = self.refs.el;
     el.removeEventListener('click', self.onClick);
+    delete el.f7RouteProps;
 
     if (self.f7SmartSelect && self.f7SmartSelect.destroy) {
       self.f7SmartSelect.destroy();
@@ -166,6 +162,24 @@ class F7Link extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, newText => {
+      const self = this;
+      if (!newText || !self.f7Tooltip) return;
+      self.f7Tooltip.setText(newText);
+    });
+
+    const self = this;
+    const el = self.refs.el;
+    const {
+      routeProps
+    } = self.props;
+
+    if (routeProps) {
+      el.f7RouteProps = routeProps;
+    }
+  }
+
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
@@ -175,7 +189,8 @@ class F7Link extends React.Component {
       tabLink,
       tooltip,
       smartSelect,
-      smartSelectParams
+      smartSelectParams,
+      routeProps
     } = self.props;
     let isTabbarLabel = false;
 
@@ -186,6 +201,7 @@ class F7Link extends React.Component {
     self.setState({
       isTabbarLabel
     });
+    if (routeProps) el.f7RouteProps = routeProps;
     self.$f7ready(f7 => {
       if (smartSelect) {
         const ssParams = Utils.extend({
@@ -216,14 +232,6 @@ class F7Link extends React.Component {
   }
 
   set refs(refs) {}
-
-  componentDidUpdate(prevProps, prevState) {
-    __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, newText => {
-      const self = this;
-      if (!newText || !self.f7Tooltip) return;
-      self.f7Tooltip.setText(newText);
-    });
-  }
 
 }
 
