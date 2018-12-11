@@ -21,10 +21,12 @@ class F7Tabs extends React.Component {
       routable
     } = props;
     const classes = Utils.classNames(className, Mixins.colorClasses(props));
-    const tabsClasses = Utils.classNames({
-      'tabs': true,
+    const wrapClasses = Utils.classNames({
       'tabs-animated-wrap': animated,
-      'tabs-swipeable-wrap': swipeable,
+      'tabs-swipeable-wrap': swipeable
+    });
+    const tabsClasses = Utils.classNames({
+      tabs: true,
       'tabs-routable': routable
     });
 
@@ -32,7 +34,7 @@ class F7Tabs extends React.Component {
       return React.createElement('div', {
         id: id,
         style: style,
-        className: classes
+        className: Utils.classNames(wrapClasses, classes)
       }, React.createElement('div', {
         className: tabsClasses
       }, this.slots['default']));

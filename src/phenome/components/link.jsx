@@ -114,9 +114,9 @@ export default {
       );
     }
     if (
-      iconOnly ||
-      (!text && defaultSlots && defaultSlots.length === 0) ||
-      (!text && !defaultSlots)
+      iconOnly
+      || (!text && defaultSlots && defaultSlots.length === 0)
+      || (!text && !defaultSlots)
     ) {
       self.iconOnlyComputed = true;
     } else {
@@ -151,17 +151,19 @@ export default {
     const self = this;
     const el = self.refs.el;
     el.addEventListener('click', self.onClick);
-    const { tabbarLabel, tabLink, tooltip, smartSelect, smartSelectParams } = self.props;
+    const { tabbarLabel, tabLink, tooltip, smartSelect, smartSelectParams, routeProps } = self.props;
     let isTabbarLabel = false;
-    if (tabbarLabel ||
-      (
-        (tabLink || tabLink === '') &&
-        self.$$(el).parents('.tabbar-labels').length
+    if (tabbarLabel
+      || (
+        (tabLink || tabLink === '')
+        && self.$$(el).parents('.tabbar-labels').length
       )
     ) {
       isTabbarLabel = true;
     }
     self.setState({ isTabbarLabel });
+
+    if (routeProps) el.f7RouteProps = routeProps;
 
     self.$f7ready((f7) => {
       if (smartSelect) {
@@ -179,10 +181,19 @@ export default {
       }
     });
   },
+  componentDidUpdate() {
+    const self = this;
+    const el = self.refs.el;
+    const { routeProps } = self.props;
+    if (routeProps) {
+      el.f7RouteProps = routeProps;
+    }
+  },
   componentWillUnmount() {
     const self = this;
     const el = self.refs.el;
     el.removeEventListener('click', self.onClick);
+    delete el.f7RouteProps;
     if (self.f7SmartSelect && self.f7SmartSelect.destroy) {
       self.f7SmartSelect.destroy();
     }

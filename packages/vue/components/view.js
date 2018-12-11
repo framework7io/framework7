@@ -17,7 +17,7 @@ export default {
     url: String,
     main: Boolean,
     stackPages: Boolean,
-    xhrCache: String,
+    xhrCache: Boolean,
     xhrCacheIgnore: Array,
     xhrCacheIgnoreGetParameters: Boolean,
     xhrCacheDuration: Number,

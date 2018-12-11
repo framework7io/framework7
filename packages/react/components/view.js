@@ -180,7 +180,7 @@ __reactComponentSetProps(F7View, Object.assign({
   url: String,
   main: Boolean,
   stackPages: Boolean,
-  xhrCache: String,
+  xhrCache: Boolean,
   xhrCacheIgnore: Array,
   xhrCacheIgnoreGetParameters: Boolean,
   xhrCacheDuration: Number,

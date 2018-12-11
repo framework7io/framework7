@@ -2,6 +2,17 @@
 
 # Change Log
 
+# [v3.6.2](https://github.com/framework7io/framework7/compare/v3.6.1...v3.6.2) - December 11, 2018
+  * Core
+    * View
+      * Fixed wrong type for `name` parameter in typescript definitions
+  * Phenome
+    * Message - fixed wrong click handler target
+
+# [v3.6.1](https://github.com/framework7io/framework7/compare/v3.6.0...v3.6.1) - December 10, 2018
+  * Phenome (React / Vue)
+    * Tabs - fixed issue with broken Animated/Swipeable tabs
+
 # [v3.6.0](https://github.com/framework7io/framework7/compare/v3.5.2...v3.6.0) - December 7, 2018
   * Core
     * Router

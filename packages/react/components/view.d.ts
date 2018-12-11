@@ -15,7 +15,7 @@ declare namespace F7View {
     url? : string
     main? : boolean
     stackPages? : boolean
-    xhrCache? : string
+    xhrCache? : boolean
     xhrCacheIgnore? : Array<any>
     xhrCacheIgnoreGetParameters? : boolean
     xhrCacheDuration? : number

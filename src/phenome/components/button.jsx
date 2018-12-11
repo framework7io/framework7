@@ -201,19 +201,33 @@ export default {
   },
   componentDidMount() {
     const self = this;
-    self.refs.el.addEventListener('click', self.onClick);
-    const { tooltip } = self.props;
+    const el = self.refs.el;
+    el.addEventListener('click', self.onClickBound);
+    const { tooltip, routeProps } = self.props;
+    if (routeProps) {
+      el.f7RouteProps = routeProps;
+    }
     if (!tooltip) return;
     self.$f7ready((f7) => {
       self.f7Tooltip = f7.tooltip.create({
-        targetEl: self.refs.el,
+        targetEl: el,
         text: tooltip,
       });
     });
   },
+  componentDidUpdate() {
+    const self = this;
+    const el = self.refs.el;
+    const { routeProps } = self.props;
+    if (routeProps) {
+      el.f7RouteProps = routeProps;
+    }
+  },
   componentWillUnmount() {
     const self = this;
-    self.refs.el.removeEventListener('click', self.onClick);
+    const el = self.refs.el;
+    el.removeEventListener('click', self.onClickBound);
+    delete el.f7RouteProps;
     if (self.f7Tooltip && self.f7Tooltip.destroy) {
       self.f7Tooltip.destroy();
       self.f7Tooltip = null;

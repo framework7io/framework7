@@ -62,6 +62,7 @@ Bart DJ
 ---
 
 ### $10+ Supporter
+José Manuel Alarcón<br>
 Fatih Batal<br>
 Matt Davis<br>
 Arsen Huang<br>

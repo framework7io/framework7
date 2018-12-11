@@ -183,10 +183,10 @@ class F7Message extends React.Component {
     el.removeEventListener('click', this.onClick);
     if (nameEl) nameEl.removeEventListener('click', this.onNameClick);
     if (textEl) textEl.removeEventListener('click', this.onTextClick);
-    if (avatarEl) nameEl.removeEventListener('click', this.onAvatarClick);
-    if (headerEl) nameEl.removeEventListener('click', this.onHeaderClick);
-    if (footerEl) nameEl.removeEventListener('click', this.onFooterClick);
-    if (bubbleEl) nameEl.removeEventListener('click', this.onBubbleClick);
+    if (avatarEl) avatarEl.removeEventListener('click', this.onAvatarClick);
+    if (headerEl) headerEl.removeEventListener('click', this.onHeaderClick);
+    if (footerEl) footerEl.removeEventListener('click', this.onFooterClick);
+    if (bubbleEl) bubbleEl.removeEventListener('click', this.onBubbleClick);
   }
 
   componentDidMount() {
@@ -202,10 +202,10 @@ class F7Message extends React.Component {
     el.addEventListener('click', this.onClick);
     if (nameEl) nameEl.addEventListener('click', this.onNameClick);
     if (textEl) textEl.addEventListener('click', this.onTextClick);
-    if (avatarEl) nameEl.addEventListener('click', this.onAvatarClick);
-    if (headerEl) nameEl.addEventListener('click', this.onHeaderClick);
-    if (footerEl) nameEl.addEventListener('click', this.onFooterClick);
-    if (bubbleEl) nameEl.addEventListener('click', this.onBubbleClick);
+    if (avatarEl) avatarEl.addEventListener('click', this.onAvatarClick);
+    if (headerEl) headerEl.addEventListener('click', this.onHeaderClick);
+    if (footerEl) footerEl.addEventListener('click', this.onFooterClick);
+    if (bubbleEl) bubbleEl.addEventListener('click', this.onBubbleClick);
   }
 
   get slots() {

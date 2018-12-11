@@ -297,10 +297,13 @@ export default {
     const self = this;
     const { el, linkEl } = self.refs;
     if (!el) return;
-    const { link, href, smartSelect, swipeout, swipeoutOpened, accordionItem, smartSelectParams } = self.props;
+    const { link, href, smartSelect, swipeout, swipeoutOpened, accordionItem, smartSelectParams, routeProps } = self.props;
     const needsEvents = !(link || href || accordionItem || smartSelect);
     if (!needsEvents && linkEl) {
       linkEl.addEventListener('click', self.onClick);
+    }
+    if (linkEl && routeProps) {
+      linkEl.f7RouteProps = routeProps;
     }
 
     self.$listEl = self.$$(el).parents('.list, .list-group').eq(0);
@@ -347,6 +350,11 @@ export default {
   componentDidUpdate() {
     const self = this;
     const { $listEl } = self;
+    const { linkEl } = self.refs;
+    const { routeProps } = self.props;
+    if (linkEl && routeProps) {
+      linkEl.f7RouteProps = routeProps;
+    }
     if (!$listEl || ($listEl && $listEl.length === 0)) return;
     const isMedia = $listEl.hasClass('media-list');
     const isSimple = $listEl.hasClass('simple-list');
@@ -366,8 +374,11 @@ export default {
     const { el, linkEl } = self.refs;
     const { link, href, smartSelect, swipeout, accordionItem } = self.props;
     const needsEvents = !(link || href || accordionItem || smartSelect);
-    if (!needsEvents && linkEl) {
-      linkEl.removeEventListener('click', self.onClick);
+    if (linkEl) {
+      if (!needsEvents) {
+        linkEl.removeEventListener('click', self.onClick);
+      }
+      delete linkEl.f7RouteProps;
     }
     if (el) {
       if (swipeout) {
