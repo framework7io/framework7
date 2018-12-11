@@ -13,4 +13,3 @@ kitchen-sink/react/js/app.js
 packages/*.zip
 packages/*.tar.gz
 woff2/
-packages/
