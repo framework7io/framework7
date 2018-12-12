@@ -458,6 +458,8 @@ code {
   margin-top: 5px;
   font-size: 11px;
   color: #666;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .theme-dark .demo-icon .demo-icon-name {
   color: #aaa;
