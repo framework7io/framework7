@@ -32,7 +32,7 @@ for char in "0123456789abcdefghijklmnopqrstuvwzxyz_- ":
   glyph.importOutlines(BLANK_PATH)
   glyph.width = 0
 
-font_name = 'Framework7CoreIcons';
+font_name = 'framework7-core-icons';
 m.update(font_name + ';')
 
 for dirname, dirnames, filenames in os.walk(INPUT_SVG_DIR):
@@ -90,7 +90,7 @@ for dirname, dirnames, filenames in os.walk(INPUT_SVG_DIR):
     if AUTO_WIDTH:
       f.autoWidth(0, 0, 512)
 
-fontfile = '%s/Framework7CoreIcons' % (OUTPUT_FONT_DIR)
+fontfile = '%s/framework7-core-icons' % (OUTPUT_FONT_DIR)
 print fontfile;
 build_hash = m.hexdigest()
 

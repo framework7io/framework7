@@ -4,7 +4,8 @@
   "scripts": {
     "build:dev": "cross-env-shell NODE_ENV=development \"gulp build-core && gulp phenome && gulp build-vue && gulp build-react\"",
     "build:prod": "cross-env-shell NODE_ENV=production \"gulp build-core && gulp phenome && gulp build-vue && gulp build-react\"",
-    "build-core-icons": "python ./scripts/icon-font/generate.py",
+    "build-core-icons-font": "python ./scripts/icon-font/generate.py",
+    "build-skeleton-font": "python ./scripts/skeleton-font/generate.py",
     "build-core:dev": "cross-env NODE_ENV=development gulp build-core",
     "build-core:prod": "cross-env NODE_ENV=production gulp build-core",
     "build-vue:dev": "cross-env-shell NODE_ENV=development \"gulp phenome && gulp build-vue\"",

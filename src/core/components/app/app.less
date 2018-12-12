@@ -1,11 +1,18 @@
 @import url('./app-vars.less');
 // Core Icons
 @font-face {
-  @fontBase64: framework7_iconFont();
+  @fontBase64: framework7_coreIconsFont();
   font-family: 'framework7-core-icons';
   src: url("data:application/font-woff;charset=utf-8;base64, @{fontBase64}") format("woff");
   font-weight: 400;
   font-style: normal;
+}
+@font-face {
+  @fontBase64: framework7_skeletonFont();
+  font-family: 'framework7-skeleton';
+  src: url("data:application/font-woff;charset=utf-8;base64, @{fontBase64}") format("woff");
+  font-weight: 300, 400, 500, 600, 700;
+  font-style: normal, italic;
 }
 .rtl({
   html {

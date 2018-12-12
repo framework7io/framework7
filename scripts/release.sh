@@ -25,6 +25,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   rm -rf ./packages/core/less
   rm -rf ./packages/core/modules
   rm -rf ./packages/core/utils
+  rm -rf ./packages/core/icons
   rm -rf ./packages/core/*.js
   rm -rf ./packages/core/*.ts
   rm -rf ./packages/core/*.less
