@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.0-beta.3
+ * Framework7 4.0.0-beta.4
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: December 11, 2018
+ * Released on: December 12, 2018
  */
 
 (function (global, factory) {
@@ -4736,17 +4736,17 @@
       return true;
     }
     function handleClickLite(e) {
+      var localPreventClick = preventClick;
       if (targetElement && e.target !== targetElement) {
-        preventClick = true;
+        localPreventClick = true;
       }
       if (params.tapHold && params.tapHoldPreventClicks && tapHoldFired) {
-        preventClick = true;
+        localPreventClick = true;
       }
-      if (preventClick) {
+      if (localPreventClick) {
         e.stopImmediatePropagation();
         e.stopPropagation();
         e.preventDefault();
-        targetElement = null;
       }
 
       if (params.tapHold) {
@@ -4754,8 +4754,10 @@
           tapHoldFired = false;
         }, (Device.ios || Device.androidChrome ? 100 : 400));
       }
+      preventClick = false;
+      targetElement = null;
 
-      return preventClick;
+      return !localPreventClick;
     }
 
     function emitAppTouchEvent(name, e) {

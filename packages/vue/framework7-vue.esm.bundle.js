@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.0.0-beta.3
+ * Framework7 Vue 4.0.0-beta.4
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: December 11, 2018
+ * Released on: December 12, 2018
  */
 import Vue from 'vue';
 import f7AccordionContent from './components/accordion-content';
@@ -38,7 +38,6 @@ import f7Fab from './components/fab';
 import f7Gauge from './components/gauge';
 import f7Icon from './components/icon';
 import f7Input from './components/input';
-import f7Label from './components/label';
 import f7Link from './components/link';
 import f7ListButton from './components/list-button';
 import f7ListGroup from './components/list-group';
@@ -134,7 +133,6 @@ const Plugin = {
     Vue.component('f7-gauge', f7Gauge);
     Vue.component('f7-icon', f7Icon);
     Vue.component('f7-input', f7Input);
-    Vue.component('f7-label', f7Label);
     Vue.component('f7-link', f7Link);
     Vue.component('f7-list-button', f7ListButton);
     Vue.component('f7-list-group', f7ListGroup);

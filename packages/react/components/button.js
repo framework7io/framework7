@@ -144,7 +144,7 @@ class F7Button extends React.Component {
   componentWillUnmount() {
     const self = this;
     const el = self.refs.el;
-    el.removeEventListener('click', self.onClickBound);
+    el.removeEventListener('click', self.onClick);
     delete el.f7RouteProps;
 
     if (self.f7Tooltip && self.f7Tooltip.destroy) {
@@ -175,7 +175,7 @@ class F7Button extends React.Component {
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
-    el.addEventListener('click', self.onClickBound);
+    el.addEventListener('click', self.onClick);
     const {
       tooltip,
       routeProps

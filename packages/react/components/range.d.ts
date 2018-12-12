@@ -14,11 +14,13 @@ declare namespace F7Range {
     step? : number | string
     label? : boolean
     dual? : boolean
-    name? : string
-    inputId? : string
-    input? : boolean
-    disabled? : boolean
+    vertical? : boolean
+    verticalReversed? : boolean
     draggableBar? : boolean
+    name? : string
+    input? : boolean
+    inputId? : string
+    disabled? : boolean
     color? : string
     colorTheme? : string
     textColor? : string

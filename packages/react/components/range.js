@@ -37,9 +37,14 @@ class F7Range extends React.Component {
       style,
       input,
       inputId,
-      name
+      name,
+      vertical,
+      verticalReversed
     } = self.props;
     const classes = Utils.classNames(className, 'range-slider', {
+      'range-slider-horizontal': !vertical,
+      'range-slider-vertical': vertical,
+      'range-slider-vertical-reversed': vertical && verticalReversed,
       disabled
     }, Mixins.colorClasses(props));
     return React.createElement('div', {
@@ -73,7 +78,9 @@ class F7Range extends React.Component {
         step,
         label,
         dual,
-        draggableBar
+        draggableBar,
+        vertical,
+        verticalReversed
       } = props;
       self.f7Range = f7.range.create(Utils.noUndefinedProps({
         el: self.refs.el,
@@ -84,6 +91,8 @@ class F7Range extends React.Component {
         label,
         dual,
         draggableBar,
+        vertical,
+        verticalReversed,
         on: {
           change(range, val) {
             self.dispatchEvent('range:change rangeChange', val);
@@ -154,14 +163,22 @@ __reactComponentSetProps(F7Range, Object.assign({
     type: Boolean,
     default: false
   },
-  name: String,
-  inputId: String,
-  input: Boolean,
-  disabled: Boolean,
+  vertical: {
+    type: Boolean,
+    default: false
+  },
+  verticalReversed: {
+    type: Boolean,
+    default: false
+  },
   draggableBar: {
     type: Boolean,
     default: true
-  }
+  },
+  name: String,
+  input: Boolean,
+  inputId: String,
+  disabled: Boolean
 }, Mixins.colorProps));
 
 F7Range.displayName = 'f7-range';

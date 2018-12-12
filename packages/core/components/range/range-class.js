@@ -18,6 +18,8 @@ class Range extends Framework7Class {
       max: 100,
       value: 0,
       draggableBar: true,
+      vertical: false,
+      verticalReversed: false,
     };
 
     // Extend defaults with modules params
@@ -52,6 +54,12 @@ class Range extends Framework7Class {
         range.params.value = [parseFloat(dataset.valueLeft), parseFloat(dataset.valueRight)];
       }
     }
+    if (typeof params.vertical === 'undefined' && typeof dataset.vertical !== 'undefined') {
+      range.params.vertical = dataset.vertical;
+    }
+    if (typeof params.verticalReversed === 'undefined' && typeof dataset.verticalReversed !== 'undefined') {
+      range.params.verticalReversed = dataset.verticalReversed;
+    }
 
     let $inputEl;
     if (!range.params.dual) {
@@ -62,7 +70,8 @@ class Range extends Framework7Class {
       }
     }
 
-    const { dual, step, label, min, max, value } = range.params;
+    const { dual, step, label, min, max, value, vertical, verticalReversed } = range.params;
+
     Utils.extend(range, {
       $el,
       el: $el[0],
@@ -75,6 +84,8 @@ class Range extends Framework7Class {
       max,
       value,
       previousValue: value,
+      vertical,
+      verticalReversed,
     });
 
     if ($inputEl) {
@@ -96,6 +107,16 @@ class Range extends Framework7Class {
     }
     if (range.label) {
       $el.addClass('range-slider-label');
+    }
+
+    // Vertical
+    if (range.vertical) {
+      $el.addClass('range-slider-vertical');
+      if (range.verticalReversed) {
+        $el.addClass('range-slider-vertical-reversed');
+      }
+    } else {
+      $el.addClass('range-slider-horizontal');
     }
 
     // Check for layout
@@ -144,7 +165,9 @@ class Range extends Framework7Class {
     let isTouched;
     const touchesStart = {};
     let isScrolling;
+    let rangeOffset;
     let rangeOffsetLeft;
+    let rangeOffsetTop;
     let $touchedKnobEl;
     let dualValueIndex;
     let valueChangedByTouch;
@@ -164,10 +187,15 @@ class Range extends Framework7Class {
 
       isTouched = true;
       isScrolling = undefined;
-      rangeOffsetLeft = $el.offset().left;
+      rangeOffset = $el.offset();
+      rangeOffsetLeft = rangeOffset.left;
+      rangeOffsetTop = rangeOffset.top;
 
       let progress;
-      if (range.app.rtl) {
+      if (range.vertical) {
+        progress = (touchesStart.y - rangeOffsetTop) / range.rangeHeight;
+        if (range.verticalReversed) progress = 1 - progress;
+      } else if (range.app.rtl) {
         progress = ((rangeOffsetLeft + range.rangeWidth) - touchesStart.x) / range.rangeWidth;
       } else {
         progress = (touchesStart.x - rangeOffsetLeft) / range.rangeWidth;
@@ -200,7 +228,11 @@ class Range extends Framework7Class {
       const pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
 
       if (typeof isScrolling === 'undefined') {
-        isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
+        if (range.vertical) {
+          isScrolling = !(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
+        } else {
+          isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
+        }
       }
       if (isScrolling) {
         isTouched = false;
@@ -209,7 +241,10 @@ class Range extends Framework7Class {
       e.preventDefault();
 
       let progress;
-      if (range.app.rtl) {
+      if (range.vertical) {
+        progress = (pageY - rangeOffsetTop) / range.rangeHeight;
+        if (range.verticalReversed) progress = 1 - progress;
+      } else if (range.app.rtl) {
         progress = ((rangeOffsetLeft + range.rangeWidth) - pageX) / range.rangeWidth;
       } else {
         progress = (pageX - rangeOffsetLeft) / range.rangeWidth;
@@ -322,10 +357,17 @@ class Range extends Framework7Class {
 
   calcSize() {
     const range = this;
-    const width = range.$el.outerWidth();
-    if (width === 0) return;
-    range.rangeWidth = width;
-    range.knobWidth = range.knobs[0].outerWidth();
+    if (range.vertical) {
+      const height = range.$el.outerHeight();
+      if (height === 0) return;
+      range.rangeHeight = height;
+      range.knobHeight = range.knobs[0].outerHeight();
+    } else {
+      const width = range.$el.outerWidth();
+      if (width === 0) return;
+      range.rangeWidth = width;
+      range.knobWidth = range.knobs[0].outerWidth();
+    }
   }
 
   layout() {
@@ -333,7 +375,9 @@ class Range extends Framework7Class {
     const {
       app,
       knobWidth,
+      knobHeight,
       rangeWidth,
+      rangeHeight,
       min,
       max,
       knobs,
@@ -341,31 +385,38 @@ class Range extends Framework7Class {
       value,
       label,
       labels,
+      vertical,
+      verticalReversed,
     } = range;
-    const positionProperty = app.rtl ? 'right' : 'left';
+    const knobSize = vertical ? knobHeight : knobWidth;
+    const rangeSize = vertical ? rangeHeight : rangeWidth;
+    // eslint-disable-next-line
+    const positionProperty = vertical
+      ? (verticalReversed ? 'bottom' : 'top')
+      : (app.rtl ? 'right' : 'left');
     if (range.dual) {
       const progress = [((value[0] - min) / (max - min)), ((value[1] - min) / (max - min))];
       $barActiveEl.css({
         [positionProperty]: `${progress[0] * 100}%`,
-        width: `${(progress[1] - progress[0]) * 100}%`,
+        [vertical ? 'height' : 'width']: `${(progress[1] - progress[0]) * 100}%`,
       });
       knobs.forEach(($knobEl, knobIndex) => {
-        let leftPos = rangeWidth * progress[knobIndex];
-        const realLeft = (rangeWidth * progress[knobIndex]) - (knobWidth / 2);
-        if (realLeft < 0) leftPos = knobWidth / 2;
-        if ((realLeft + knobWidth) > rangeWidth) leftPos = rangeWidth - (knobWidth / 2);
-        $knobEl.css(positionProperty, `${leftPos}px`);
+        let startPos = rangeSize * progress[knobIndex];
+        const realStartPos = (rangeSize * progress[knobIndex]) - (knobSize / 2);
+        if (realStartPos < 0) startPos = knobSize / 2;
+        if ((realStartPos + knobSize) > rangeSize) startPos = rangeSize - (knobSize / 2);
+        $knobEl.css(positionProperty, `${startPos}px`);
         if (label) labels[knobIndex].text(value[knobIndex]);
       });
     } else {
       const progress = ((value - min) / (max - min));
-      $barActiveEl.css('width', `${progress * 100}%`);
+      $barActiveEl.css(vertical ? 'height' : 'width', `${progress * 100}%`);
 
-      let leftPos = rangeWidth * progress;
-      const realLeft = (rangeWidth * progress) - (knobWidth / 2);
-      if (realLeft < 0) leftPos = knobWidth / 2;
-      if ((realLeft + knobWidth) > rangeWidth) leftPos = rangeWidth - (knobWidth / 2);
-      knobs[0].css(positionProperty, `${leftPos}px`);
+      let startPos = rangeSize * progress;
+      const realStartPos = (rangeSize * progress) - (knobSize / 2);
+      if (realStartPos < 0) startPos = knobSize / 2;
+      if ((realStartPos + knobSize) > rangeSize) startPos = rangeSize - (knobSize / 2);
+      knobs[0].css(positionProperty, `${startPos}px`);
       if (label) labels[0].text(value);
     }
     if ((range.dual && value.indexOf(min) >= 0) || (!range.dual && value === min)) {

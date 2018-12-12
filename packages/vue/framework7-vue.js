@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.0.0-beta.3
+ * Framework7 Vue 4.0.0-beta.4
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: December 11, 2018
+ * Released on: December 12, 2018
  */
 
 (function (global, factory) {
@@ -1707,7 +1707,7 @@
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
-      el.addEventListener('click', self.onClickBound);
+      el.addEventListener('click', self.onClick);
       var ref = self.props;
       var tooltip = ref.tooltip;
       var routeProps = ref.routeProps;
@@ -1739,7 +1739,7 @@
     beforeDestroy: function beforeDestroy() {
       var self = this;
       var el = self.$refs.el;
-      el.removeEventListener('click', self.onClickBound);
+      el.removeEventListener('click', self.onClick);
       delete el.f7RouteProps;
 
       if (self.f7Tooltip && self.f7Tooltip.destroy) {
@@ -2917,14 +2917,22 @@
         type: Boolean,
         default: false
       },
-      name: String,
-      inputId: String,
-      input: Boolean,
-      disabled: Boolean,
+      vertical: {
+        type: Boolean,
+        default: false
+      },
+      verticalReversed: {
+        type: Boolean,
+        default: false
+      },
       draggableBar: {
         type: Boolean,
         default: true
-      }
+      },
+      name: String,
+      input: Boolean,
+      inputId: String,
+      disabled: Boolean
     }, Mixins.colorProps),
 
     render: function render() {
@@ -2939,7 +2947,12 @@
       var input = ref.input;
       var inputId = ref.inputId;
       var name = ref.name;
+      var vertical = ref.vertical;
+      var verticalReversed = ref.verticalReversed;
       var classes = Utils.classNames(className, 'range-slider', {
+        'range-slider-horizontal': !vertical,
+        'range-slider-vertical': vertical,
+        'range-slider-vertical-reversed': vertical && verticalReversed,
         disabled: disabled
       }, Mixins.colorClasses(props));
       return _h('div', {
@@ -2978,6 +2991,8 @@
         var label = props.label;
         var dual = props.dual;
         var draggableBar = props.draggableBar;
+        var vertical = props.vertical;
+        var verticalReversed = props.verticalReversed;
         self.f7Range = f7.range.create(Utils.noUndefinedProps({
           el: self.$refs.el,
           value: value,
@@ -2987,6 +3002,8 @@
           label: label,
           dual: dual,
           draggableBar: draggableBar,
+          vertical: vertical,
+          verticalReversed: verticalReversed,
           on: {
             change: function change(range, val) {
               self.dispatchEvent('range:change rangeChange', val);
@@ -3488,45 +3505,6 @@
 
       setState: function setState(updater, callback) {
         __vueComponentSetState(this, updater, callback);
-      }
-
-    }
-  };
-
-  var f7Label = {
-    name: 'f7-label',
-    props: Object.assign({
-      id: [String, Number],
-      floating: Boolean,
-      inline: Boolean
-    }, Mixins.colorProps),
-
-    render: function render() {
-      var _h = this.$createElement;
-      var self = this;
-      var props = self.props;
-      var inline = props.inline;
-      var id = props.id;
-      var style = props.style;
-      var className = props.className;
-      var floating = props.floating;
-      var classes = Utils.classNames(className, 'item-title', {
-        'item-label-inline': inline,
-        'item-label': !floating,
-        'item-floating-label': floating
-      }, Mixins.colorClasses(props));
-      return _h('div', {
-        style: style,
-        class: classes,
-        attrs: {
-          id: id
-        }
-      }, [this.$slots['default']]);
-    },
-
-    computed: {
-      props: function props() {
-        return __vueComponentProps(this);
       }
 
     }
@@ -10849,7 +10827,7 @@
   };
 
   /**
-   * Framework7 Vue 4.0.0-beta.3
+   * Framework7 Vue 4.0.0-beta.4
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -10857,7 +10835,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: December 11, 2018
+   * Released on: December 12, 2018
    */
 
   var Plugin = {
@@ -10898,7 +10876,6 @@
       Vue.component('f7-gauge', f7Gauge);
       Vue.component('f7-icon', F7Icon);
       Vue.component('f7-input', F7Input);
-      Vue.component('f7-label', f7Label);
       Vue.component('f7-link', F7Link);
       Vue.component('f7-list-button', f7ListButton);
       Vue.component('f7-list-group', f7ListGroup);

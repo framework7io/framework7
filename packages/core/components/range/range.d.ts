@@ -21,6 +21,10 @@ export namespace Range {
     value?: number | number[]
     /** When enabled it is also possible to interact with range slider (change value) on range bar click and swipe (default true) */
     draggableBar?: boolean
+    /** Enables vertical range slider */
+    vertical?: boolean
+    /** Makes vertical range slider reversed */
+    verticalReversed?: boolean
     /** Object with events handlers.. */
     on?: {
       [event in keyof Events]? : Events[event]
@@ -39,6 +43,8 @@ export namespace Range {
     $inputEl: Dom7Instance
     /** Range slider width (in px) */
     rangeWidth: number
+    /** Range slider height (in px) */
+    rangeHeight: number
     /** Boolean property indicating whether it is dual or not */
     dual: boolean
     /** Range min value */
@@ -51,6 +57,10 @@ export namespace Range {
     knobs: HTMLElement[]
     /** Array where each element represent HTMLElement of created range knob label (2 labels in case of dual slider) */
     labels: HTMLElement[]
+    /** Boolean property indicating whether it is vertical or not  */
+    vertical: boolean
+    /** Boolean property indicating whether it is vertical and reversed or not  */
+    verticalReversed: boolean
     /** Range parameters */
     params : Parameters
     /** Returns range slider value */

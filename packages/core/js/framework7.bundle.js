@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.0-beta.3
+ * Framework7 4.0.0-beta.4
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: December 11, 2018
+ * Released on: December 12, 2018
  */
 
 (function (global, factory) {
@@ -4736,17 +4736,17 @@
       return true;
     }
     function handleClickLite(e) {
+      var localPreventClick = preventClick;
       if (targetElement && e.target !== targetElement) {
-        preventClick = true;
+        localPreventClick = true;
       }
       if (params.tapHold && params.tapHoldPreventClicks && tapHoldFired) {
-        preventClick = true;
+        localPreventClick = true;
       }
-      if (preventClick) {
+      if (localPreventClick) {
         e.stopImmediatePropagation();
         e.stopPropagation();
         e.preventDefault();
-        targetElement = null;
       }
 
       if (params.tapHold) {
@@ -4754,8 +4754,10 @@
           tapHoldFired = false;
         }, (Device.ios || Device.androidChrome ? 100 : 400));
       }
+      preventClick = false;
+      targetElement = null;
 
-      return preventClick;
+      return !localPreventClick;
     }
 
     function emitAppTouchEvent(name, e) {
@@ -16338,14 +16340,14 @@
       // Remove active class from old tabs
       var $oldTabEl = $tabsEl.children('.tab-active');
       $oldTabEl.removeClass('tab-active');
-      if (!swiper || (swiper && !swiper.animating)) {
+      if (!swiper || (swiper && !swiper.animating) || (swiper && tabRoute)) {
         $oldTabEl.trigger('tab:hide');
         app.emit('tabHide', $oldTabEl[0]);
       }
 
       // Trigger 'show' event on new tab
       $newTabEl.addClass('tab-active');
-      if (!swiper || (swiper && !swiper.animating)) {
+      if (!swiper || (swiper && !swiper.animating) || (swiper && tabRoute)) {
         $newTabEl.trigger('tab:show');
         app.emit('tabShow', $newTabEl[0]);
       }
@@ -18609,6 +18611,8 @@
         max: 100,
         value: 0,
         draggableBar: true,
+        vertical: false,
+        verticalReversed: false,
       };
 
       // Extend defaults with modules params
@@ -18643,6 +18647,12 @@
           range.params.value = [parseFloat(dataset.valueLeft), parseFloat(dataset.valueRight)];
         }
       }
+      if (typeof params.vertical === 'undefined' && typeof dataset.vertical !== 'undefined') {
+        range.params.vertical = dataset.vertical;
+      }
+      if (typeof params.verticalReversed === 'undefined' && typeof dataset.verticalReversed !== 'undefined') {
+        range.params.verticalReversed = dataset.verticalReversed;
+      }
 
       var $inputEl;
       if (!range.params.dual) {
@@ -18660,6 +18670,9 @@
       var min = ref.min;
       var max = ref.max;
       var value = ref.value;
+      var vertical = ref.vertical;
+      var verticalReversed = ref.verticalReversed;
+
       Utils.extend(range, {
         $el: $el,
         el: $el[0],
@@ -18672,6 +18685,8 @@
         max: max,
         value: value,
         previousValue: value,
+        vertical: vertical,
+        verticalReversed: verticalReversed,
       });
 
       if ($inputEl) {
@@ -18693,6 +18708,16 @@
       }
       if (range.label) {
         $el.addClass('range-slider-label');
+      }
+
+      // Vertical
+      if (range.vertical) {
+        $el.addClass('range-slider-vertical');
+        if (range.verticalReversed) {
+          $el.addClass('range-slider-vertical-reversed');
+        }
+      } else {
+        $el.addClass('range-slider-horizontal');
       }
 
       // Check for layout
@@ -18736,7 +18761,9 @@
       var isTouched;
       var touchesStart = {};
       var isScrolling;
+      var rangeOffset;
       var rangeOffsetLeft;
+      var rangeOffsetTop;
       var $touchedKnobEl;
       var dualValueIndex;
       var valueChangedByTouch;
@@ -18756,10 +18783,15 @@
 
         isTouched = true;
         isScrolling = undefined;
-        rangeOffsetLeft = $el.offset().left;
+        rangeOffset = $el.offset();
+        rangeOffsetLeft = rangeOffset.left;
+        rangeOffsetTop = rangeOffset.top;
 
         var progress;
-        if (range.app.rtl) {
+        if (range.vertical) {
+          progress = (touchesStart.y - rangeOffsetTop) / range.rangeHeight;
+          if (range.verticalReversed) { progress = 1 - progress; }
+        } else if (range.app.rtl) {
           progress = ((rangeOffsetLeft + range.rangeWidth) - touchesStart.x) / range.rangeWidth;
         } else {
           progress = (touchesStart.x - rangeOffsetLeft) / range.rangeWidth;
@@ -18792,7 +18824,11 @@
         var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
 
         if (typeof isScrolling === 'undefined') {
-          isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
+          if (range.vertical) {
+            isScrolling = !(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
+          } else {
+            isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
+          }
         }
         if (isScrolling) {
           isTouched = false;
@@ -18801,7 +18837,10 @@
         e.preventDefault();
 
         var progress;
-        if (range.app.rtl) {
+        if (range.vertical) {
+          progress = (pageY - rangeOffsetTop) / range.rangeHeight;
+          if (range.verticalReversed) { progress = 1 - progress; }
+        } else if (range.app.rtl) {
           progress = ((rangeOffsetLeft + range.rangeWidth) - pageX) / range.rangeWidth;
         } else {
           progress = (pageX - rangeOffsetLeft) / range.rangeWidth;
@@ -18918,10 +18957,17 @@
 
     Range.prototype.calcSize = function calcSize () {
       var range = this;
-      var width = range.$el.outerWidth();
-      if (width === 0) { return; }
-      range.rangeWidth = width;
-      range.knobWidth = range.knobs[0].outerWidth();
+      if (range.vertical) {
+        var height = range.$el.outerHeight();
+        if (height === 0) { return; }
+        range.rangeHeight = height;
+        range.knobHeight = range.knobs[0].outerHeight();
+      } else {
+        var width = range.$el.outerWidth();
+        if (width === 0) { return; }
+        range.rangeWidth = width;
+        range.knobWidth = range.knobs[0].outerWidth();
+      }
     };
 
     Range.prototype.layout = function layout () {
@@ -18930,7 +18976,9 @@
       var range = this;
       var app = range.app;
       var knobWidth = range.knobWidth;
+      var knobHeight = range.knobHeight;
       var rangeWidth = range.rangeWidth;
+      var rangeHeight = range.rangeHeight;
       var min = range.min;
       var max = range.max;
       var knobs = range.knobs;
@@ -18938,27 +18986,34 @@
       var value = range.value;
       var label = range.label;
       var labels = range.labels;
-      var positionProperty = app.rtl ? 'right' : 'left';
+      var vertical = range.vertical;
+      var verticalReversed = range.verticalReversed;
+      var knobSize = vertical ? knobHeight : knobWidth;
+      var rangeSize = vertical ? rangeHeight : rangeWidth;
+      // eslint-disable-next-line
+      var positionProperty = vertical
+        ? (verticalReversed ? 'bottom' : 'top')
+        : (app.rtl ? 'right' : 'left');
       if (range.dual) {
         var progress = [((value[0] - min) / (max - min)), ((value[1] - min) / (max - min))];
-        $barActiveEl.css(( obj = {}, obj[positionProperty] = ((progress[0] * 100) + "%"), obj.width = (((progress[1] - progress[0]) * 100) + "%"), obj ));
+        $barActiveEl.css(( obj = {}, obj[positionProperty] = ((progress[0] * 100) + "%"), obj[vertical ? 'height' : 'width'] = (((progress[1] - progress[0]) * 100) + "%"), obj ));
         knobs.forEach(function ($knobEl, knobIndex) {
-          var leftPos = rangeWidth * progress[knobIndex];
-          var realLeft = (rangeWidth * progress[knobIndex]) - (knobWidth / 2);
-          if (realLeft < 0) { leftPos = knobWidth / 2; }
-          if ((realLeft + knobWidth) > rangeWidth) { leftPos = rangeWidth - (knobWidth / 2); }
-          $knobEl.css(positionProperty, (leftPos + "px"));
+          var startPos = rangeSize * progress[knobIndex];
+          var realStartPos = (rangeSize * progress[knobIndex]) - (knobSize / 2);
+          if (realStartPos < 0) { startPos = knobSize / 2; }
+          if ((realStartPos + knobSize) > rangeSize) { startPos = rangeSize - (knobSize / 2); }
+          $knobEl.css(positionProperty, (startPos + "px"));
           if (label) { labels[knobIndex].text(value[knobIndex]); }
         });
       } else {
         var progress$1 = ((value - min) / (max - min));
-        $barActiveEl.css('width', ((progress$1 * 100) + "%"));
+        $barActiveEl.css(vertical ? 'height' : 'width', ((progress$1 * 100) + "%"));
 
-        var leftPos = rangeWidth * progress$1;
-        var realLeft = (rangeWidth * progress$1) - (knobWidth / 2);
-        if (realLeft < 0) { leftPos = knobWidth / 2; }
-        if ((realLeft + knobWidth) > rangeWidth) { leftPos = rangeWidth - (knobWidth / 2); }
-        knobs[0].css(positionProperty, (leftPos + "px"));
+        var startPos = rangeSize * progress$1;
+        var realStartPos = (rangeSize * progress$1) - (knobSize / 2);
+        if (realStartPos < 0) { startPos = knobSize / 2; }
+        if ((realStartPos + knobSize) > rangeSize) { startPos = rangeSize - (knobSize / 2); }
+        knobs[0].css(positionProperty, (startPos + "px"));
         if (label) { labels[0].text(value); }
       }
       if ((range.dual && value.indexOf(min) >= 0) || (!range.dual && value === min)) {

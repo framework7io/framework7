@@ -593,17 +593,17 @@ function initTouch() {
     return true;
   }
   function handleClickLite(e) {
+    let localPreventClick = preventClick;
     if (targetElement && e.target !== targetElement) {
-      preventClick = true;
+      localPreventClick = true;
     }
     if (params.tapHold && params.tapHoldPreventClicks && tapHoldFired) {
-      preventClick = true;
+      localPreventClick = true;
     }
-    if (preventClick) {
+    if (localPreventClick) {
       e.stopImmediatePropagation();
       e.stopPropagation();
       e.preventDefault();
-      targetElement = null;
     }
 
     if (params.tapHold) {
@@ -611,8 +611,10 @@ function initTouch() {
         tapHoldFired = false;
       }, (Device.ios || Device.androidChrome ? 100 : 400));
     }
+    preventClick = false;
+    targetElement = null;
 
-    return preventClick;
+    return !localPreventClick;
   }
 
   function emitAppTouchEvent(name, e) {

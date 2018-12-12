@@ -1,5 +1,5 @@
 /**
- * Framework7 React 4.0.0-beta.3
+ * Framework7 React 4.0.0-beta.4
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: December 11, 2018
+ * Released on: December 12, 2018
  */
 
 (function (global, factory) {
@@ -2036,7 +2036,7 @@
     F7Button.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
       var el = self.refs.el;
-      el.removeEventListener('click', self.onClickBound);
+      el.removeEventListener('click', self.onClick);
       delete el.f7RouteProps;
 
       if (self.f7Tooltip && self.f7Tooltip.destroy) {
@@ -2068,7 +2068,7 @@
     F7Button.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var el = self.refs.el;
-      el.addEventListener('click', self.onClickBound);
+      el.addEventListener('click', self.onClick);
       var ref = self.props;
       var tooltip = ref.tooltip;
       var routeProps = ref.routeProps;
@@ -3495,7 +3495,12 @@
       var input = ref.input;
       var inputId = ref.inputId;
       var name = ref.name;
+      var vertical = ref.vertical;
+      var verticalReversed = ref.verticalReversed;
       var classes = Utils.classNames(className, 'range-slider', {
+        'range-slider-horizontal': !vertical,
+        'range-slider-vertical': vertical,
+        'range-slider-vertical-reversed': vertical && verticalReversed,
         disabled: disabled
       }, Mixins.colorClasses(props));
       return React.createElement('div', {
@@ -3529,6 +3534,8 @@
         var label = props.label;
         var dual = props.dual;
         var draggableBar = props.draggableBar;
+        var vertical = props.vertical;
+        var verticalReversed = props.verticalReversed;
         self.f7Range = f7.range.create(Utils.noUndefinedProps({
           el: self.refs.el,
           value: value,
@@ -3538,6 +3545,8 @@
           label: label,
           dual: dual,
           draggableBar: draggableBar,
+          vertical: vertical,
+          verticalReversed: verticalReversed,
           on: {
             change: function change(range, val) {
               self.dispatchEvent('range:change rangeChange', val);
@@ -3616,14 +3625,22 @@
       type: Boolean,
       default: false
     },
-    name: String,
-    inputId: String,
-    input: Boolean,
-    disabled: Boolean,
+    vertical: {
+      type: Boolean,
+      default: false
+    },
+    verticalReversed: {
+      type: Boolean,
+      default: false
+    },
     draggableBar: {
       type: Boolean,
       default: true
-    }
+    },
+    name: String,
+    input: Boolean,
+    inputId: String,
+    disabled: Boolean
   }, Mixins.colorProps));
 
   F7Range.displayName = 'f7-range';
@@ -4080,56 +4097,6 @@
   }, Mixins.colorProps));
 
   F7Input.displayName = 'f7-input';
-
-  var F7Label = /*@__PURE__*/(function (superclass) {
-    function F7Label(props, context) {
-      superclass.call(this, props, context);
-    }
-
-    if ( superclass ) F7Label.__proto__ = superclass;
-    F7Label.prototype = Object.create( superclass && superclass.prototype );
-    F7Label.prototype.constructor = F7Label;
-
-    var prototypeAccessors = { slots: { configurable: true } };
-
-    F7Label.prototype.render = function render () {
-      var self = this;
-      var props = self.props;
-      var inline = props.inline;
-      var id = props.id;
-      var style = props.style;
-      var className = props.className;
-      var floating = props.floating;
-      var classes = Utils.classNames(className, 'item-title', {
-        'item-label-inline': inline,
-        'item-label': !floating,
-        'item-floating-label': floating
-      }, Mixins.colorClasses(props));
-      return React.createElement('div', {
-        id: id,
-        style: style,
-        className: classes
-      }, this.slots['default']);
-    };
-
-    prototypeAccessors.slots.get = function () {
-      return __reactComponentSlots(this.props);
-    };
-
-    Object.defineProperties( F7Label.prototype, prototypeAccessors );
-
-    return F7Label;
-  }(React.Component));
-
-  __reactComponentSetProps(F7Label, Object.assign({
-    id: [String, Number],
-    className: String,
-    style: Object,
-    floating: Boolean,
-    inline: Boolean
-  }, Mixins.colorProps));
-
-  F7Label.displayName = 'f7-label';
 
   var F7Link = /*@__PURE__*/(function (superclass) {
     function F7Link(props, context) {
@@ -12218,7 +12185,7 @@
   };
 
   /**
-   * Framework7 React 4.0.0-beta.3
+   * Framework7 React 4.0.0-beta.4
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -12226,7 +12193,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: December 11, 2018
+   * Released on: December 12, 2018
    */
 
   var Plugin = {
@@ -12267,7 +12234,6 @@
       window.Gauge = F7Gauge;
       window.Icon = F7Icon;
       window.Input = F7Input;
-      window.Label = F7Label;
       window.Link = F7Link;
       window.ListButton = F7ListButton;
       window.ListGroup = F7ListGroup;

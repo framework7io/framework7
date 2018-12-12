@@ -35,7 +35,6 @@ import f7Fab from './components/fab';
 import f7Gauge from './components/gauge';
 import f7Icon from './components/icon';
 import f7Input from './components/input';
-import f7Label from './components/label';
 import f7Link from './components/link';
 import f7ListButton from './components/list-button';
 import f7ListGroup from './components/list-group';
@@ -150,7 +149,6 @@ export {
   f7Gauge,
   f7Icon,
   f7Input,
-  f7Label,
   f7Link,
   f7ListButton,
   f7ListGroup,

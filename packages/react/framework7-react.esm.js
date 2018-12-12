@@ -1,5 +1,5 @@
 /**
- * Framework7 React 4.0.0-beta.3
+ * Framework7 React 4.0.0-beta.4
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: December 11, 2018
+ * Released on: December 12, 2018
  */
 
 import F7AccordionContent from './components/accordion-content';
@@ -38,7 +38,6 @@ import F7Fab from './components/fab';
 import F7Gauge from './components/gauge';
 import F7Icon from './components/icon';
 import F7Input from './components/input';
-import F7Label from './components/label';
 import F7Link from './components/link';
 import F7ListButton from './components/list-button';
 import F7ListGroup from './components/list-group';
@@ -123,7 +122,6 @@ const Fab = F7Fab;
 const Gauge = F7Gauge;
 const Icon = F7Icon;
 const Input = F7Input;
-const Label = F7Label;
 const Link = F7Link;
 const ListButton = F7ListButton;
 const ListGroup = F7ListGroup;
@@ -236,8 +234,6 @@ export {
   Icon,
   F7Input,
   Input,
-  F7Label,
-  Label,
   F7Link,
   Link,
   F7ListButton,
