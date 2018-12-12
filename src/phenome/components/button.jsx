@@ -202,7 +202,7 @@ export default {
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
-    el.addEventListener('click', self.onClickBound);
+    el.addEventListener('click', self.onClick);
     const { tooltip, routeProps } = self.props;
     if (routeProps) {
       el.f7RouteProps = routeProps;
@@ -226,7 +226,7 @@ export default {
   componentWillUnmount() {
     const self = this;
     const el = self.refs.el;
-    el.removeEventListener('click', self.onClickBound);
+    el.removeEventListener('click', self.onClick);
     delete el.f7RouteProps;
     if (self.f7Tooltip && self.f7Tooltip.destroy) {
       self.f7Tooltip.destroy();
