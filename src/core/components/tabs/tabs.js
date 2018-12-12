@@ -101,14 +101,14 @@ const Tab = {
     // Remove active class from old tabs
     const $oldTabEl = $tabsEl.children('.tab-active');
     $oldTabEl.removeClass('tab-active');
-    if (!swiper || (swiper && !swiper.animating)) {
+    if (!swiper || (swiper && !swiper.animating) || (swiper && tabRoute)) {
       $oldTabEl.trigger('tab:hide');
       app.emit('tabHide', $oldTabEl[0]);
     }
 
     // Trigger 'show' event on new tab
     $newTabEl.addClass('tab-active');
-    if (!swiper || (swiper && !swiper.animating)) {
+    if (!swiper || (swiper && !swiper.animating) || (swiper && tabRoute)) {
       $newTabEl.trigger('tab:show');
       app.emit('tabShow', $newTabEl[0]);
     }
