@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Page, BlockTitle, Range, List, ListItem, ListItemCell, Icon } from 'framework7-react';
+import { Navbar, Page, BlockTitle, Range, List, ListItem, ListItemCell, Icon, Block } from 'framework7-react';
 
 export default class extends React.Component {
   constructor(props) {
@@ -80,6 +80,104 @@ export default class extends React.Component {
             </ListItemCell>
           </ListItem>
         </List>
+
+        <BlockTitle>Vertical</BlockTitle>
+        <Block strong className="display-flex justify-content-center">
+          <Range
+            className="margin-right"
+            style={{height: '160px'}}
+            vertical={true}
+            min={0}
+            max={100}
+            label={true}
+            step={1}
+            value={25}
+          />
+          <Range
+            className="margin-horizontal"
+            style={{height: '160px'}}
+            vertical={true}
+            min={0}
+            max={100}
+            label={true}
+            step={1}
+            value={50}
+          />
+          <Range
+            className="margin-horizontal"
+            style={{height: '160px'}}
+            vertical={true}
+            min={0}
+            max={100}
+            label={true}
+            step={1}
+            value={75}
+          />
+          <Range
+            className="margin-left"
+            style={{height: '160px'}}
+            dual={true}
+            vertical={true}
+            min={0}
+            max={100}
+            label={true}
+            step={1}
+            value={[25, 75]}
+          />
+        </Block>
+        <BlockTitle>Vertical Reversed</BlockTitle>
+        <Block strong className="display-flex justify-content-center">
+          <Range
+            className="margin-right"
+            color="red"
+            style={{height: '160px'}}
+            vertical={true}
+            verticalReversed={true}
+            min={0}
+            max={100}
+            label={true}
+            step={1}
+            value={25}
+          />
+          <Range
+            className="margin-horizontal"
+            color="red"
+            style={{height: '160px'}}
+            vertical={true}
+            verticalReversed={true}
+            min={0}
+            max={100}
+            label={true}
+            step={1}
+            value={50}
+          />
+          <Range
+            className="margin-horizontal"
+            color="red"
+            style={{height: '160px'}}
+            vertical={true}
+            verticalReversed={true}
+            min={0}
+            max={100}
+            label={true}
+            step={1}
+            value={75}
+          />
+          <Range
+            className="margin-left"
+            color="red"
+            style={{height: '160px'}}
+            dual={true}
+            vertical={true}
+            verticalReversed={true}
+            min={0}
+            max={100}
+            label={true}
+            step={1}
+            value={[25, 75]}
+          />
+        </Block>
+
       </Page>
     )
   }
