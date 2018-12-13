@@ -196,7 +196,7 @@ class Range extends Framework7Class {
       let progress;
       if (range.vertical) {
         progress = (touchesStart.y - rangeOffsetTop) / range.rangeHeight;
-        if (range.verticalReversed) progress = 1 - progress;
+        if (!range.verticalReversed) progress = 1 - progress;
       } else if (range.app.rtl) {
         progress = ((rangeOffsetLeft + range.rangeWidth) - touchesStart.x) / range.rangeWidth;
       } else {
@@ -245,7 +245,7 @@ class Range extends Framework7Class {
       let progress;
       if (range.vertical) {
         progress = (pageY - rangeOffsetTop) / range.rangeHeight;
-        if (range.verticalReversed) progress = 1 - progress;
+        if (!range.verticalReversed) progress = 1 - progress;
       } else if (range.app.rtl) {
         progress = ((rangeOffsetLeft + range.rangeWidth) - pageX) / range.rangeWidth;
       } else {
@@ -394,7 +394,7 @@ class Range extends Framework7Class {
     const rangeSize = vertical ? rangeHeight : rangeWidth;
     // eslint-disable-next-line
     const positionProperty = vertical
-      ? (verticalReversed ? 'bottom' : 'top')
+      ? (verticalReversed ? 'top' : 'bottom')
       : (app.rtl ? 'right' : 'left');
     if (range.dual) {
       const progress = [((value[0] - min) / (max - min)), ((value[1] - min) / (max - min))];

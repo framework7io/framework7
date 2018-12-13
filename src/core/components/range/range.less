@@ -51,14 +51,12 @@
   }
   .range-slider-vertical & {
     left: 0;
-    top: 0;
+    bottom: 0;
     width: 100%;
   }
   .range-slider-vertical-reversed & {
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    top: auto;
+    top: 0;
+    bottom: auto;
   }
 }
 .range-knob-wrap {
@@ -82,14 +80,14 @@
   .range-slider-vertical & {
     left: 50%;
     margin-left: calc(-1 * var(--f7-range-knob-size) / 2);
-    margin-top: calc(-1 * var(--f7-range-knob-size) / 2);
-    top: 0;
+    bottom: 0;
+    margin-bottom: calc(-1 * var(--f7-range-knob-size) / 2);
   }
   .range-slider-vertical-reversed & {
-    top: auto;
-    bottom: 0;
-    margin-top: 0;
-    margin-bottom: calc(-1 * var(--f7-range-knob-size) / 2);
+    bottom: auto;
+    top: 0;
+    margin-bottom: 0;
+    margin-top: calc(-1 * var(--f7-range-knob-size) / 2);
   }
 }
 .range-knob {
