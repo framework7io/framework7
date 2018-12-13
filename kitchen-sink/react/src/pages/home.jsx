@@ -152,6 +152,9 @@ export default () => (
       <ListItem link="/sheet-modal/" title="Sheet Modal">
         <Icon slot="media" icon="icon-f7" />
       </ListItem>
+      <ListItem link="/skeleton/" title="Skeleton (Ghost) Elements">
+        <Icon slot="media" icon="icon-f7" />
+      </ListItem>
       <ListItem link="/smart-select/" title="Smart Select">
         <Icon slot="media" icon="icon-f7" />
       </ListItem>

@@ -149,6 +149,9 @@
       <f7-list-item link="/sheet-modal/" title="Sheet Modal">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>
+      <f7-list-item link="/skeleton/" title="Skeleton (Ghost) Elements">
+        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+      </f7-list-item>
       <f7-list-item link="/smart-select/" title="Smart Select">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>

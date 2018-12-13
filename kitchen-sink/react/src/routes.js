@@ -48,6 +48,7 @@ import Range from './pages/range.jsx';
 import Searchbar from './pages/searchbar.jsx';
 import SearchbarExpandable from './pages/searchbar-expandable.jsx';
 import SheetModal from './pages/sheet-modal.jsx';
+import Skeleton from './pages/skeleton.jsx';
 import SmartSelect from './pages/smart-select.jsx';
 import Sortable from './pages/sortable.jsx';
 import Statusbar from './pages/statusbar.jsx';
@@ -355,6 +356,10 @@ export default [
   {
     path: '/sheet-modal/',
     component: SheetModal,
+  },
+  {
+    path: '/skeleton/',
+    component: Skeleton,
   },
   {
     path: '/smart-select/',

@@ -49,6 +49,7 @@ import Range from './pages/range.vue';
 import Searchbar from './pages/searchbar.vue';
 import SearchbarExpandable from './pages/searchbar-expandable.vue';
 import SheetModal from './pages/sheet-modal.vue';
+import Skeleton from './pages/skeleton.vue';
 import SmartSelect from './pages/smart-select.vue';
 import Sortable from './pages/sortable.vue';
 import Statusbar from './pages/statusbar.vue';
@@ -357,6 +358,10 @@ export default [
   {
     path: '/sheet-modal/',
     component: SheetModal,
+  },
+  {
+    path: '/skeleton/',
+    component: Skeleton,
   },
   {
     path: '/smart-select/',
