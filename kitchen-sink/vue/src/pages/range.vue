@@ -68,6 +68,20 @@
       </f7-list-item>
     </f7-list>
 
+    <f7-block-title>With Scale</f7-block-title>
+    <f7-block strong>
+      <f7-range
+        :min="0"
+        :max="100"
+        :label="true"
+        :step="5"
+        :value="25"
+        :scale="true"
+        :scale-steps="5"
+        :scale-sub-steps="4"
+      ></f7-range>
+    </f7-block>
+
     <f7-block-title>Vertical</f7-block-title>
     <f7-block strong class="display-flex justify-content-center">
       <f7-range
@@ -112,6 +126,7 @@
         :value="[25, 75]"
       /></f7-range>
     </f7-block>
+
     <f7-block-title>Vertical Reversed</f7-block-title>
     <f7-block strong class="display-flex justify-content-center">
       <f7-range

@@ -81,6 +81,20 @@ export default class extends React.Component {
           </ListItem>
         </List>
 
+        <BlockTitle>With Scale</BlockTitle>
+        <Block strong>
+          <Range
+            min={0}
+            max={100}
+            label={true}
+            step={5}
+            value={25}
+            scale={true}
+            scaleSteps={5}
+            scaleSubSteps={4}
+          />
+        </Block>
+
         <BlockTitle>Vertical</BlockTitle>
         <Block strong className="display-flex justify-content-center">
           <Range
@@ -125,6 +139,7 @@ export default class extends React.Component {
             value={[25, 75]}
           />
         </Block>
+
         <BlockTitle>Vertical Reversed</BlockTitle>
         <Block strong className="display-flex justify-content-center">
           <Range
