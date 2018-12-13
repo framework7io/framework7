@@ -25,7 +25,7 @@ f.descent = 64
 for char in "0123456789abcdefghijklmnopqrstuvwzxyzABCDEFGHIJKLMNOPQRSTUVWZXYZ_- .,:;/\!/*&'\"|(){}[]":
   glyph = f.createChar(ord(char))
   glyph.importOutlines(SQUARE_PATH)
-  glyph.width = 512
+  glyph.width = 256
 
 font_name = 'framework7-skeleton';
 m.update(font_name + ';')
