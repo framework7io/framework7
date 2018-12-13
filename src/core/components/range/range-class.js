@@ -22,6 +22,9 @@ class Range extends Framework7Class {
       vertical: false,
       verticalReversed: false,
       formatLabelValue: null,
+      scale: true,
+      scaleSteps: 10,
+      formatScaleLabel: null,
     };
 
     // Extend defaults with modules params
