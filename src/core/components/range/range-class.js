@@ -439,7 +439,7 @@ class Range extends Framework7Class {
 
   formatLabel(value, labelEl) {
     const range = this;
-    if (range.params.formatLabel) return range.params.formatLabel.call(range, labelEl, value);
+    if (range.params.formatLabel) return range.params.formatLabel.call(range, value, labelEl);
     return value;
   }
 
