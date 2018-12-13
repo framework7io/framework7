@@ -76,12 +76,10 @@ export default {
     ...Mixins.colorProps,
   },
   state(props) {
-    const { value, defaultValue } = props;
     return {
       isSortable: props.sortable,
       inputFocused: false,
       inputInvalid: false,
-      currentInputValue: typeof value === 'undefined' ? defaultValue : value,
     };
   },
   render() {
@@ -139,25 +137,34 @@ export default {
       label,
       inlineLabel,
       floatingLabel,
-
     } = props;
+
+    const domValue = self.domValue();
+    const inputHasValue = self.inputHasValue();
 
     const isSortable = sortable || self.state.isSortable;
 
-    const createInput = (tag, children) => {
-      const InputTag = tag;
+    const createInput = (InputTag, children) => {
       const needsValue = type !== 'file';
-      const needsType = tag === 'input';
+      const needsType = InputTag === 'input';
       const inputClassName = Utils.classNames(
         {
           resizable: type === 'textarea' && resizable,
           'no-store-data': (noFormStoreData || noStoreData || ignoreStoreData),
           'input-invalid': (errorMessage && errorMessageForce) || inputInvalid,
-          'input-with-value': self.inputHasValue,
+          'input-with-value': inputHasValue,
           'input-focused': inputFocused,
         }
       );
       let input;
+      let inputValue;
+      if (needsValue) {
+        if (typeof value !== 'undefined') inputValue = value;
+        else inputValue = domValue;
+      }
+      const valueProps = {};
+      if ('value' in props) valueProps.value = inputValue;
+      if ('defaultValue' in props) valueProps.defaultValue = defaultValue;
       if (process.env.COMPILER === 'react') {
         input = (
           <InputTag
@@ -167,8 +174,6 @@ export default {
             type={needsType ? type : undefined}
             placeholder={placeholder}
             id={inputId}
-            value={needsValue ? value : undefined}
-            defaultValue={defaultValue}
             size={size}
             accept={accept}
             autoComplete={autocomplete}
@@ -196,6 +201,7 @@ export default {
             onBlur={self.onBlur}
             onInput={self.onInput}
             onChange={self.onChange}
+            {...valueProps}
           >
             {children}
           </InputTag>
@@ -234,11 +240,11 @@ export default {
             onInput={self.onInput}
             onChange={self.onChange}
             domProps={{
-              value: needsValue ? value || self.state.currentInputValue : undefined,
               disabled,
               readOnly: readonly,
               multiple,
               required,
+              ...valueProps,
             }}
           >
             {children}
@@ -279,7 +285,7 @@ export default {
             'inline-label': inlineLabel,
             'item-input-focused': inputFocused,
             'item-input-with-info': !!info || (self.slots.info && self.slots.info.length),
-            'item-input-with-value': self.inputHasValue,
+            'item-input-with-value': inputHasValue,
             'item-input-with-error-message': (hasErrorMessage && errorMessageForce) || inputInvalid,
             'item-input-invalid': (hasErrorMessage && errorMessageForce) || inputInvalid,
           }
@@ -333,22 +339,10 @@ export default {
       </ItemTag>
     );
   },
-  computed: {
-    inputHasValue() {
-      const self = this;
-      const { value } = self.props;
-      const { currentInputValue } = self.state;
-      return typeof value === 'undefined'
-        ? (currentInputValue)
-        : (value || value === 0);
-    },
-  },
   watch: {
     'props.value': function watchValue() {
       const self = this;
-      const { value } = self.props;
       if (!self.$f7) return;
-      self.setState({ currentInputValue: value });
       self.updateInputOnDidUpdate = true;
     },
   },
@@ -433,6 +427,20 @@ export default {
     inputEl.removeEventListener('input:clear', self.onInputClear, false);
   },
   methods: {
+    domValue() {
+      const self = this;
+      const { inputEl } = self.refs;
+      if (!inputEl) return undefined;
+      return inputEl.value;
+    },
+    inputHasValue() {
+      const self = this;
+      const { value } = self.props;
+      const domValue = self.domValue();
+      return typeof value === 'undefined'
+        ? (domValue || domValue === 0)
+        : (value || value === 0);
+    },
     validateInput(inputEl) {
       const self = this;
       const f7 = self.$f7;
@@ -467,7 +475,6 @@ export default {
       if ((validate || validate === '') && self.refs && self.refs.inputEl) {
         self.validateInput(self.refs.inputEl);
       }
-      self.setState({ currentInputValue: event.target.value });
     },
     onFocus(event) {
       this.dispatchEvent('focus', event);
