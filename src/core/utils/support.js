@@ -5,7 +5,7 @@ const Support = (function Support() {
 
   return {
     touch: (function checkTouch() {
-      return !!(('ontouchstart' in window) || (window.DocumentTouch && document instanceof window.DocumentTouch));
+      return !!((window.navigator.maxTouchPoints > 0) || ('ontouchstart' in window) || (window.DocumentTouch && document instanceof window.DocumentTouch));
     }()),
 
     pointerEvents: !!(window.navigator.pointerEnabled || window.PointerEvent || ('maxTouchPoints' in window.navigator)),
