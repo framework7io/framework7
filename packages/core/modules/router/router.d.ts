@@ -13,9 +13,9 @@ export namespace Router {
     /** Component CSS styles. Styles will be added to the document after component will be mounted (added to DOM), and removed after component will be destroyed (removed from the DOM) */
     style? : string
     /** Object with additional component methods which extend component context */
-    methods? : { [name : string] : () => any }
+    methods? : { [name : string] : (...args) => any }
     /** Object with page events handlers */
-    on? : { [event : string] : () => void }
+    on? : { [event : string] : (e: Event, page: any) => void }
 
     /** Called synchronously immediately after the component has been initialized, before data and event/watcher setup. */
     beforeCreate? : () => void
