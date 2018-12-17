@@ -52,6 +52,10 @@ const Support = (function Support() {
     gestures: (function checkGestures() {
       return 'ongesturestart' in window;
     }()),
+
+    intersectionObserver: (function checkObserver() {
+      return ('IntersectionObserver' in window);
+    }()),
   };
 }());
 
