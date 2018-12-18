@@ -89,6 +89,7 @@ Dave Billington
 ---
 
 ### $5+ Thank You
+Jacob Rosenberg<br>
 Farshid Mossaiby<br>
 Byron<br>
 Evgeny Konyahin<br>
