@@ -504,7 +504,7 @@ function initTouch() {
     return allowClick;
   }
 
-  function handleTouchStartLite(e) {
+  function handleTouchStartLight(e) {
     preventClick = false;
     isMoved = false;
     tapHoldFired = false;
@@ -543,7 +543,7 @@ function initTouch() {
     }
     return true;
   }
-  function handleTouchMoveLite(e) {
+  function handleTouchMoveLight(e) {
     const distance = params.fastClicks ? params.fastClicksDistanceThreshold : 0;
     if (distance) {
       const pageX = e.targetTouches[0].pageX;
@@ -568,7 +568,7 @@ function initTouch() {
       }
     }
   }
-  function handleTouchEndLite(e) {
+  function handleTouchEndLight(e) {
     clearTimeout(activeTimeout);
     clearTimeout(tapHoldTimeout);
     if (document.activeElement === e.target) {
@@ -592,7 +592,7 @@ function initTouch() {
     }
     return true;
   }
-  function handleClickLite(e) {
+  function handleClickLight(e) {
     let localPreventClick = preventClick;
     if (targetElement && e.target !== targetElement) {
       localPreventClick = true;
@@ -680,10 +680,10 @@ function initTouch() {
       app.on('touchmove', handleTouchMove);
       app.on('touchend', handleTouchEnd);
     } else {
-      app.on('click', handleClickLite);
-      app.on('touchstart', handleTouchStartLite);
-      app.on('touchmove', handleTouchMoveLite);
-      app.on('touchend', handleTouchEndLite);
+      app.on('click', handleClickLight);
+      app.on('touchstart', handleTouchStartLight);
+      app.on('touchmove', handleTouchMoveLight);
+      app.on('touchend', handleTouchEndLight);
     }
 
     document.addEventListener('touchcancel', handleTouchCancel, { passive: true });
