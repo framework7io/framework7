@@ -373,6 +373,10 @@ function initTouch() {
           e.preventDefault();
         }
       }
+      if (params.activeState) removeActive();
+      if (useRipple) {
+        rippleTouchEnd();
+      }
       return true;
     }
 
@@ -390,6 +394,9 @@ function initTouch() {
 
     if ((touchEndTime - lastClickTime) < params.fastClicksDelayBetweenClicks) {
       setTimeout(removeActive, 0);
+      if (useRipple) {
+        rippleTouchEnd();
+      }
       return true;
     }
 
