@@ -49,8 +49,12 @@ function initTouch() {
     return activable || target;
   }
 
+  function isInsideScrollableViewLight(el) {
+    const pageContent = el.parents('.page-content');
+    return pageContent.length > 0;
+  }
   function isInsideScrollableView(el) {
-    const pageContent = el.parents('.page-content, .panel');
+    const pageContent = el.parents('.page-content');
 
     if (pageContent.length === 0) {
       return false;
@@ -177,7 +181,11 @@ function initTouch() {
       rippleTarget = undefined;
       return;
     }
-    if (!isInsideScrollableView(rippleTarget)) {
+    const inScrollable = params.fastClicks
+      ? isInsideScrollableView(rippleTarget)
+      : isInsideScrollableViewLight(rippleTarget);
+
+    if (!inScrollable) {
       createRipple(rippleTarget, touchStartX, touchStartY);
     } else {
       rippleTimeout = setTimeout(() => {
@@ -512,7 +520,6 @@ function initTouch() {
   }
 
   function handleTouchStartLight(e) {
-    preventClick = false;
     isMoved = false;
     tapHoldFired = false;
     preventClick = false;
@@ -539,7 +546,7 @@ function initTouch() {
 
     if (params.activeState) {
       activableElement = findActivableElement(targetElement);
-      if (!isInsideScrollableView(activableElement)) {
+      if (!isInsideScrollableViewLight(activableElement)) {
         addActive();
       } else {
         activeTimeout = setTimeout(addActive, 80);
@@ -614,9 +621,12 @@ function initTouch() {
     }
 
     if (params.tapHold) {
-      tapHoldTimeout = setTimeout(() => {
-        tapHoldFired = false;
-      }, (Device.ios || Device.androidChrome ? 100 : 400));
+      tapHoldTimeout = setTimeout(
+        () => {
+          tapHoldFired = false;
+        },
+        (Device.ios || Device.androidChrome ? 100 : 400)
+      );
     }
     preventClick = false;
     targetElement = null;
