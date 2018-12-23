@@ -8,7 +8,7 @@ export default {
   params: {
     popover: {
       closeByBackdropClick: true,
-      closeByOutsideClick: false,
+      closeByOutsideClick: true,
       backdrop: true,
     },
   },
