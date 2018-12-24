@@ -19,6 +19,7 @@ import RouterModule from './modules/router/router';
 import HistoryModule from './modules/history/history';
 import StorageModule from './modules/storage/storage';
 import ComponentModule from './modules/component/component';
+import ServiceWorkerModule from './modules/service-worker/service-worker';
 
 // Core Components
 import Statusbar from './components/statusbar/statusbar';
@@ -55,6 +56,7 @@ Framework7.use([
   HistoryModule,
   StorageModule,
   ComponentModule,
+  ServiceWorkerModule,
   Statusbar,
   View,
   Navbar,
