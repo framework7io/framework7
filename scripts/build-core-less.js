@@ -40,6 +40,7 @@ function copyLess(config, components, cb) {
     .pipe(gulp.dest(output))
     .on('end', () => {
       gulp.src([`${output}/framework7.less`])
+        // eslint-disable-next-line
         .pipe(modifyFile((content) => {
           return content
             .replace('//IMPORT_COMPONENTS', components.map(component => `@import url('./components/${component}/${component}.less');`).join('\n'));
