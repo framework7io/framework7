@@ -671,7 +671,9 @@ class Router extends Framework7Class {
             $app: router.app,
             $root: Utils.extend({}, router.app.data, router.app.methods),
             $route: options.route,
+            $f7route: options.route,
             $router: router,
+            $f7router: router,
             $theme: {
               ios: router.app.theme === 'ios',
               md: router.app.theme === 'md',
@@ -745,7 +747,9 @@ class Router extends Framework7Class {
         context,
         {
           $route: options.route,
+          $f7route: options.route,
           $router: router,
+          $f7router: router,
           $theme: {
             ios: app.theme === 'ios',
             md: app.theme === 'md',

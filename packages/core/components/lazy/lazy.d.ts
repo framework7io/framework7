@@ -19,6 +19,7 @@ export namespace Lazy {
       loadImage(
         /** lazy image or element (element with lazy class). Required. */
         pageEl : HTMLElement | CSSSelector,
+        /** Callback when image is loaded or error loading image happend */
         callback : () => void
       ) : void;
     }
@@ -31,6 +32,8 @@ export namespace Lazy {
       threshold?: number
       /** If enabled, then lazy images will be loaded one by one when they appear in viewport. (default true) */
       sequential?: boolean
+      /** When enabled, it uses IntersectionObserver API (if supported by browser) to detect when image is in viewport. Potentially provides better performance and more accurate intersection detection, but "threshold" parameter will be ignored. (default true) */
+      observer?: boolean
     } | undefined
   }
   interface AppEvents {

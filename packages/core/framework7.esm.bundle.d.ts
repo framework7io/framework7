@@ -14,6 +14,7 @@ import {Device as DeviceNamespace} from './modules/device/device';
 import {Request as RequestNamespace} from './modules/request/request';
 import {Resize as ResizeNamespace} from './modules/resize/resize';
 import {Router as RouterNamespace} from './modules/router/router';
+import {ServiceWorker as ServiceWorkerNamespace} from './modules/service-worker/service-worker';
 import {Support as SupportNamespace} from './modules/support/support';
 import {Touch as TouchNamespace} from './modules/touch/touch';
 import {Utils as UtilsNamespace} from './modules/utils/utils';
@@ -63,6 +64,7 @@ import {Radio as RadioNamespace} from './components/radio/radio';
 import {Range as RangeNamespace} from './components/range/range';
 import {Searchbar as SearchbarNamespace} from './components/searchbar/searchbar';
 import {Sheet as SheetNamespace} from './components/sheet/sheet';
+import {Skeleton as SkeletonNamespace} from './components/skeleton/skeleton';
 import {SmartSelect as SmartSelectNamespace} from './components/smart-select/smart-select';
 import {Sortable as SortableNamespace} from './components/sortable/sortable';
 import {Statusbar as StatusbarNamespace} from './components/statusbar/statusbar';
@@ -98,6 +100,9 @@ declare module './components/app/app-class' {
   interface Framework7Class<Events> extends RouterNamespace.AppMethods{}
   interface Framework7Params extends RouterNamespace.AppParams{}
   interface Framework7Events extends RouterNamespace.AppEvents{}
+  interface Framework7Class<Events> extends ServiceWorkerNamespace.AppMethods{}
+  interface Framework7Params extends ServiceWorkerNamespace.AppParams{}
+  interface Framework7Events extends ServiceWorkerNamespace.AppEvents{}
   interface Framework7Class<Events> extends SupportNamespace.AppMethods{}
   interface Framework7Params extends SupportNamespace.AppParams{}
   interface Framework7Events extends SupportNamespace.AppEvents{}
@@ -239,6 +244,9 @@ declare module './components/app/app-class' {
   interface Framework7Class<Events> extends SheetNamespace.AppMethods{}
   interface Framework7Params extends SheetNamespace.AppParams{}
   interface Framework7Events extends SheetNamespace.AppEvents{}
+  interface Framework7Class<Events> extends SkeletonNamespace.AppMethods{}
+  interface Framework7Params extends SkeletonNamespace.AppParams{}
+  interface Framework7Events extends SkeletonNamespace.AppEvents{}
   interface Framework7Class<Events> extends SmartSelectNamespace.AppMethods{}
   interface Framework7Params extends SmartSelectNamespace.AppParams{}
   interface Framework7Events extends SmartSelectNamespace.AppEvents{}

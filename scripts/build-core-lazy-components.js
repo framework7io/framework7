@@ -219,7 +219,7 @@ function buildLazyComponentsJs(components, cb) {
 function buildLazyComponents(cb) {
   let cbs = 0;
   const env = process.env.NODE_ENV || 'development';
-  const targetCbs = env === 'development' ? 2 : 4;
+  const targetCbs = env === 'development' ? 2 : 3;
   const config = getConfig();
   const components = fs.readdirSync('./src/core/components').filter(c => c.indexOf('.') < 0);
   function callback() {

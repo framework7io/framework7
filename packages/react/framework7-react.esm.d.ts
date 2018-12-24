@@ -76,6 +76,8 @@ import F7Row from './components/row';
 import F7Searchbar from './components/searchbar';
 import F7Segmented from './components/segmented';
 import F7Sheet from './components/sheet';
+import F7SkeletonBlock from './components/skeleton-block';
+import F7SkeletonText from './components/skeleton-text';
 import F7Statusbar from './components/statusbar';
 import F7Stepper from './components/stepper';
 import F7Subnavbar from './components/subnavbar';
@@ -117,7 +119,7 @@ export interface Framework7Extensions {
 }
 
 declare module 'react' {
-  interface Component extends Framework7Extensions {}
+  interface Component extends Partial<Framework7Extensions> {}
 }
 
 export {
@@ -259,6 +261,10 @@ export {
   F7Segmented as Segmented,
   F7Sheet,
   F7Sheet as Sheet,
+  F7SkeletonBlock,
+  F7SkeletonBlock as SkeletonBlock,
+  F7SkeletonText,
+  F7SkeletonText as SkeletonText,
   F7Statusbar,
   F7Statusbar as Statusbar,
   F7Stepper,

@@ -1,5 +1,5 @@
 /**
- * Framework7 React 4.0.0-beta.4
+ * Framework7 React 4.0.0-beta.5
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,14 +7,14 @@
  *
  * Released under the MIT License
  *
- * Released on: December 12, 2018
+ * Released on: December 24, 2018
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('react')) :
   typeof define === 'function' && define.amd ? define(['react'], factory) :
-  (global.Framework7React = factory(global.React));
-}(this, (function (React) { 'use strict';
+  (global = global || self, global.Framework7React = factory(global.React));
+}(this, function (React) { 'use strict';
 
   React = React && React.hasOwnProperty('default') ? React['default'] : React;
 
@@ -3536,6 +3536,11 @@
         var draggableBar = props.draggableBar;
         var vertical = props.vertical;
         var verticalReversed = props.verticalReversed;
+        var formatLabel = props.formatLabel;
+        var scale = props.scale;
+        var scaleSteps = props.scaleSteps;
+        var scaleSubSteps = props.scaleSubSteps;
+        var formatScaleLabel = props.formatScaleLabel;
         self.f7Range = f7.range.create(Utils.noUndefinedProps({
           el: self.refs.el,
           value: value,
@@ -3547,6 +3552,11 @@
           draggableBar: draggableBar,
           vertical: vertical,
           verticalReversed: verticalReversed,
+          formatLabel: formatLabel,
+          scale: scale,
+          scaleSteps: scaleSteps,
+          scaleSubSteps: scaleSubSteps,
+          formatScaleLabel: formatScaleLabel,
           on: {
             change: function change(range, val) {
               self.dispatchEvent('range:change rangeChange', val);
@@ -3637,6 +3647,20 @@
       type: Boolean,
       default: true
     },
+    formatLabel: Function,
+    scale: {
+      type: Boolean,
+      default: false
+    },
+    scaleSteps: {
+      type: Number,
+      default: 5
+    },
+    scaleSubSteps: {
+      type: Number,
+      default: 0
+    },
+    formatScaleLabel: Function,
     name: String,
     input: Boolean,
     inputId: String,
@@ -3653,12 +3677,9 @@
       this.__reactRefs = {};
 
       this.state = (function () {
-        var value = props.value;
-        var defaultValue = props.defaultValue;
         return {
           inputFocused: false,
-          inputInvalid: false,
-          currentInputValue: typeof value === 'undefined' ? defaultValue : value
+          inputInvalid: false
         };
       })();
 
@@ -3671,7 +3692,23 @@
     F7Input.prototype = Object.create( superclass && superclass.prototype );
     F7Input.prototype.constructor = F7Input;
 
-    var prototypeAccessors = { inputWithValue: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+
+    F7Input.prototype.domValue = function domValue () {
+      var self = this;
+      var ref = self.refs;
+      var inputEl = ref.inputEl;
+      if (!inputEl) { return undefined; }
+      return inputEl.value;
+    };
+
+    F7Input.prototype.inputHasValue = function inputHasValue () {
+      var self = this;
+      var ref = self.props;
+      var value = ref.value;
+      var domValue = self.domValue();
+      return typeof value === 'undefined' ? domValue || domValue === 0 : value || value === 0;
+    };
 
     F7Input.prototype.validateInput = function validateInput (inputEl) {
       var self = this;
@@ -3719,10 +3756,6 @@
       if (!validateOnBlur && (validate || validate === '') && self.refs && self.refs.inputEl) {
         self.validateInput(self.refs.inputEl);
       }
-
-      self.setState({
-        currentInputValue: event.target.value
-      });
     };
 
     F7Input.prototype.onFocus = function onFocus (event) {
@@ -3797,22 +3830,32 @@
       var noStoreData = props.noStoreData;
       var noFormStoreData = props.noFormStoreData;
       var ignoreStoreData = props.ignoreStoreData;
+      var domValue = self.domValue();
+      var inputHasValue = self.inputHasValue();
       var inputEl;
 
-      var createInput = function (tag, children) {
-        var InputTag = tag;
+      var createInput = function (InputTag, children) {
         var needsValue = type !== 'file';
-        var needsType = tag === 'input';
+        var needsType = InputTag === 'input';
         var inputClassName = Utils.classNames(!wrap && className, {
           resizable: type === 'textarea' && resizable,
           'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
           'input-invalid': errorMessage && errorMessageForce || self.state.inputInvalid,
-          'input-with-value': self.inputWithValue,
+          'input-with-value': inputHasValue,
           'input-focused': self.state.inputFocused
         });
         var input;
+        var inputValue;
+
+        if (needsValue) {
+          if (typeof value !== 'undefined') { inputValue = value; }else { inputValue = domValue; }
+        }
+
+        var valueProps = {};
+        if ('value' in props) { valueProps.value = inputValue; }
+        if ('defaultValue' in props) { valueProps.defaultValue = defaultValue; }
         {
-          input = React.createElement(InputTag, {
+          input = React.createElement(InputTag, Object.assign({
             ref: function (__reactNode) {
               this$1.__reactRefs['inputEl'] = __reactNode;
             },
@@ -3821,8 +3864,6 @@
             type: needsType ? type : undefined,
             placeholder: placeholder,
             id: inputId,
-            value: needsValue ? value : undefined,
-            defaultValue: defaultValue,
             size: size,
             accept: accept,
             autoComplete: autocomplete,
@@ -3852,7 +3893,7 @@
             onBlur: self.onBlur,
             onInput: self.onInput,
             onChange: self.onChange
-          }, children);
+          }, valueProps), children);
         }
         return input;
       };
@@ -3918,15 +3959,6 @@
       return inputEl;
     };
 
-    prototypeAccessors.inputWithValue.get = function () {
-      var self = this;
-      var ref = self.props;
-      var value = ref.value;
-      var ref$1 = self.state;
-      var currentInputValue = ref$1.currentInputValue;
-      return typeof value === 'undefined' ? currentInputValue : value || value === 0;
-    };
-
     F7Input.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
       var ref = self.props;
@@ -3955,12 +3987,8 @@
         var self = this$1;
         var ref = self.props;
         var type = ref.type;
-        var value = ref.value;
         if (type === 'range' || type === 'toggle') { return; }
         if (!self.$f7) { return; }
-        self.setState({
-          currentInputValue: value
-        });
         self.updateInputOnDidUpdate = true;
       });
 
@@ -4706,13 +4734,10 @@
       this.__reactRefs = {};
 
       this.state = (function () {
-        var value = props.value;
-        var defaultValue = props.defaultValue;
         return {
           isSortable: props.sortable,
           inputFocused: false,
-          inputInvalid: false,
-          currentInputValue: typeof value === 'undefined' ? defaultValue : value
+          inputInvalid: false
         };
       })();
 
@@ -4725,7 +4750,23 @@
     F7ListInput.prototype = Object.create( superclass && superclass.prototype );
     F7ListInput.prototype.constructor = F7ListInput;
 
-    var prototypeAccessors = { inputHasValue: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+
+    F7ListInput.prototype.domValue = function domValue () {
+      var self = this;
+      var ref = self.refs;
+      var inputEl = ref.inputEl;
+      if (!inputEl) { return undefined; }
+      return inputEl.value;
+    };
+
+    F7ListInput.prototype.inputHasValue = function inputHasValue () {
+      var self = this;
+      var ref = self.props;
+      var value = ref.value;
+      var domValue = self.domValue();
+      return typeof value === 'undefined' ? domValue || domValue === 0 : value || value === 0;
+    };
 
     F7ListInput.prototype.validateInput = function validateInput (inputEl) {
       var self = this;
@@ -4773,10 +4814,6 @@
       if (!validateOnBlur && (validate || validate === '') && self.refs && self.refs.inputEl) {
         self.validateInput(self.refs.inputEl);
       }
-
-      self.setState({
-        currentInputValue: event.target.value
-      });
     };
 
     F7ListInput.prototype.onFocus = function onFocus (event) {
@@ -4803,15 +4840,6 @@
 
     F7ListInput.prototype.onChange = function onChange (event) {
       this.dispatchEvent('change', event);
-    };
-
-    prototypeAccessors.inputHasValue.get = function () {
-      var self = this;
-      var ref = self.props;
-      var value = ref.value;
-      var ref$1 = self.state;
-      var currentInputValue = ref$1.currentInputValue;
-      return typeof value === 'undefined' ? currentInputValue : value || value === 0;
     };
 
     F7ListInput.prototype.render = function render () {
@@ -4868,22 +4896,32 @@
       var label = props.label;
       var inlineLabel = props.inlineLabel;
       var floatingLabel = props.floatingLabel;
+      var domValue = self.domValue();
+      var inputHasValue = self.inputHasValue();
       var isSortable = sortable || self.state.isSortable;
 
-      var createInput = function (tag, children) {
-        var InputTag = tag;
+      var createInput = function (InputTag, children) {
         var needsValue = type !== 'file';
-        var needsType = tag === 'input';
+        var needsType = InputTag === 'input';
         var inputClassName = Utils.classNames({
           resizable: type === 'textarea' && resizable,
           'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
           'input-invalid': errorMessage && errorMessageForce || inputInvalid,
-          'input-with-value': self.inputHasValue,
+          'input-with-value': inputHasValue,
           'input-focused': inputFocused
         });
         var input;
+        var inputValue;
+
+        if (needsValue) {
+          if (typeof value !== 'undefined') { inputValue = value; }else { inputValue = domValue; }
+        }
+
+        var valueProps = {};
+        if ('value' in props) { valueProps.value = inputValue; }
+        if ('defaultValue' in props) { valueProps.defaultValue = defaultValue; }
         {
-          input = React.createElement(InputTag, {
+          input = React.createElement(InputTag, Object.assign({
             ref: function (__reactNode) {
               this$1.__reactRefs['inputEl'] = __reactNode;
             },
@@ -4892,8 +4930,6 @@
             type: needsType ? type : undefined,
             placeholder: placeholder,
             id: inputId,
-            value: needsValue ? value : undefined,
-            defaultValue: defaultValue,
             size: size,
             accept: accept,
             autoComplete: autocomplete,
@@ -4922,7 +4958,7 @@
             onBlur: self.onBlur,
             onInput: self.onInput,
             onChange: self.onChange
-          }, children);
+          }, valueProps), children);
         }
         return input;
       };
@@ -4959,7 +4995,7 @@
           'inline-label': inlineLabel,
           'item-input-focused': inputFocused,
           'item-input-with-info': !!info || self.slots.info && self.slots.info.length,
-          'item-input-with-value': self.inputHasValue,
+          'item-input-with-value': inputHasValue,
           'item-input-with-error-message': hasErrorMessage && errorMessageForce || inputInvalid,
           'item-input-invalid': hasErrorMessage && errorMessageForce || inputInvalid
         })
@@ -5003,12 +5039,7 @@
 
       __reactComponentWatch(this, 'props.value', prevProps, prevState, function () {
         var self = this$1;
-        var ref = self.props;
-        var value = ref.value;
         if (!self.$f7) { return; }
-        self.setState({
-          currentInputValue: value
-        });
         self.updateInputOnDidUpdate = true;
       });
 
@@ -10531,6 +10562,176 @@
 
   F7Sheet.displayName = 'f7-sheet';
 
+  var F7SkeletonBlock = /*@__PURE__*/(function (superclass) {
+    function F7SkeletonBlock(props, context) {
+      superclass.call(this, props, context);
+    }
+
+    if ( superclass ) F7SkeletonBlock.__proto__ = superclass;
+    F7SkeletonBlock.prototype = Object.create( superclass && superclass.prototype );
+    F7SkeletonBlock.prototype.constructor = F7SkeletonBlock;
+
+    var prototypeAccessors = { slots: { configurable: true } };
+
+    F7SkeletonBlock.prototype.render = function render () {
+      var props = this.props;
+      var className = props.className;
+      var id = props.id;
+      var style = props.style;
+      var width = props.width;
+      var height = props.height;
+      var tag = props.tag;
+      var classes = Utils.classNames('skeleton-block', className, Mixins.colorClasses(props));
+      var styleAttribute = style;
+
+      if (width) {
+        var widthValue = typeof width === 'number' ? (width + "px") : width;
+
+        if (!styleAttribute) {
+          styleAttribute = {
+            width: widthValue
+          };
+        } else if (typeof styleAttribute === 'object') {
+          styleAttribute = Object.assign({
+            width: widthValue
+          }, styleAttribute);
+        } else if (typeof styleAttribute === 'string') {
+          styleAttribute = "width: " + widthValue + "; " + styleAttribute;
+        }
+      }
+
+      if (height) {
+        var heightValue = typeof height === 'number' ? (height + "px") : height;
+
+        if (!styleAttribute) {
+          styleAttribute = {
+            height: heightValue
+          };
+        } else if (typeof styleAttribute === 'object') {
+          styleAttribute = Object.assign({
+            height: heightValue
+          }, styleAttribute);
+        } else if (typeof styleAttribute === 'string') {
+          styleAttribute = "height: " + heightValue + "; " + styleAttribute;
+        }
+      }
+
+      var Tag = tag;
+      return React.createElement(Tag, {
+        id: id,
+        style: styleAttribute,
+        className: classes
+      }, this.slots['default']);
+    };
+
+    prototypeAccessors.slots.get = function () {
+      return __reactComponentSlots(this.props);
+    };
+
+    Object.defineProperties( F7SkeletonBlock.prototype, prototypeAccessors );
+
+    return F7SkeletonBlock;
+  }(React.Component));
+
+  __reactComponentSetProps(F7SkeletonBlock, Object.assign({
+    id: [String, Number],
+    className: String,
+    style: Object,
+    width: [Number, String],
+    height: [Number, String],
+    tag: {
+      type: String,
+      default: 'div'
+    }
+  }, Mixins.colorProps));
+
+  F7SkeletonBlock.displayName = 'f7-skeleton-block';
+
+  var F7SkeletonText = /*@__PURE__*/(function (superclass) {
+    function F7SkeletonText(props, context) {
+      superclass.call(this, props, context);
+    }
+
+    if ( superclass ) F7SkeletonText.__proto__ = superclass;
+    F7SkeletonText.prototype = Object.create( superclass && superclass.prototype );
+    F7SkeletonText.prototype.constructor = F7SkeletonText;
+
+    var prototypeAccessors = { slots: { configurable: true } };
+
+    F7SkeletonText.prototype.render = function render () {
+      var props = this.props;
+      var className = props.className;
+      var id = props.id;
+      var style = props.style;
+      var width = props.width;
+      var height = props.height;
+      var tag = props.tag;
+      var classes = Utils.classNames('skeleton-text', className, Mixins.colorClasses(props));
+      var styleAttribute = style;
+
+      if (width) {
+        var widthValue = typeof width === 'number' ? (width + "px") : width;
+
+        if (!styleAttribute) {
+          styleAttribute = {
+            width: widthValue
+          };
+        } else if (typeof styleAttribute === 'object') {
+          styleAttribute = Object.assign({
+            width: widthValue
+          }, styleAttribute);
+        } else if (typeof styleAttribute === 'string') {
+          styleAttribute = "width: " + widthValue + "; " + styleAttribute;
+        }
+      }
+
+      if (height) {
+        var heightValue = typeof height === 'number' ? (height + "px") : height;
+
+        if (!styleAttribute) {
+          styleAttribute = {
+            height: heightValue
+          };
+        } else if (typeof styleAttribute === 'object') {
+          styleAttribute = Object.assign({
+            height: heightValue
+          }, styleAttribute);
+        } else if (typeof styleAttribute === 'string') {
+          styleAttribute = "height: " + heightValue + "; " + styleAttribute;
+        }
+      }
+
+      var Tag = tag;
+      return React.createElement(Tag, {
+        id: id,
+        style: styleAttribute,
+        className: classes
+      }, this.slots['default']);
+    };
+
+    prototypeAccessors.slots.get = function () {
+      return __reactComponentSlots(this.props);
+    };
+
+    Object.defineProperties( F7SkeletonText.prototype, prototypeAccessors );
+
+    return F7SkeletonText;
+  }(React.Component));
+
+  __reactComponentSetProps(F7SkeletonText, Object.assign({
+    id: [String, Number],
+    className: String,
+    style: Object,
+    width: [Number, String],
+    height: [Number, String],
+    tag: {
+      type: String,
+      default: 'span'
+    }
+  }, Mixins.colorProps));
+
+  F7SkeletonText.displayName = 'f7-skeleton-text';
+
   var F7Statusbar = /*@__PURE__*/(function (superclass) {
     function F7Statusbar(props, context) {
       superclass.call(this, props, context);
@@ -12185,7 +12386,7 @@
   };
 
   /**
-   * Framework7 React 4.0.0-beta.4
+   * Framework7 React 4.0.0-beta.5
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -12193,7 +12394,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: December 12, 2018
+   * Released on: December 24, 2018
    */
 
   var Plugin = {
@@ -12275,6 +12476,8 @@
       window.Searchbar = F7Searchbar;
       window.Segmented = F7Segmented;
       window.Sheet = F7Sheet;
+      window.SkeletonBlock = F7SkeletonBlock;
+      window.SkeletonText = F7SkeletonText;
       window.Statusbar = F7Statusbar;
       window.Stepper = F7Stepper;
       window.Subnavbar = F7Subnavbar;
@@ -12362,4 +12565,4 @@
 
   return Plugin;
 
-})));
+}));

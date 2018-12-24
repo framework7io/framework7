@@ -56,38 +56,15 @@ export default {
     const props = __vueComponentProps(this);
 
     const state = (() => {
-      const {
-        value,
-        defaultValue
-      } = props;
       return {
         inputFocused: false,
-        inputInvalid: false,
-        currentInputValue: typeof value === 'undefined' ? defaultValue : value
+        inputInvalid: false
       };
     })();
 
     return {
       state
     };
-  },
-
-  computed: {
-    inputWithValue() {
-      const self = this;
-      const {
-        value
-      } = self.props;
-      const {
-        currentInputValue
-      } = self.state;
-      return typeof value === 'undefined' ? currentInputValue : value || value === 0;
-    },
-
-    props() {
-      return __vueComponentProps(this);
-    }
-
   },
 
   render() {
@@ -137,33 +114,42 @@ export default {
       noFormStoreData,
       ignoreStoreData
     } = props;
+    const domValue = self.domValue();
+    const inputHasValue = self.inputHasValue();
     let inputEl;
 
-    const createInput = (tag, children) => {
-      const InputTag = tag;
+    const createInput = (InputTag, children) => {
       const needsValue = type !== 'file';
-      const needsType = tag === 'input';
+      const needsType = InputTag === 'input';
       const inputClassName = Utils.classNames(!wrap && className, {
         resizable: type === 'textarea' && resizable,
         'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
         'input-invalid': errorMessage && errorMessageForce || self.state.inputInvalid,
-        'input-with-value': self.inputWithValue,
+        'input-with-value': inputHasValue,
         'input-focused': self.state.inputFocused
       });
       let input;
+      let inputValue;
+
+      if (needsValue) {
+        if (typeof value !== 'undefined') inputValue = value;else inputValue = domValue;
+      }
+
+      const valueProps = {};
+      if ('value' in props) valueProps.value = inputValue;
+      if ('defaultValue' in props) valueProps.defaultValue = defaultValue;
       {
         input = _h(InputTag, {
           ref: 'inputEl',
           style: inputStyle,
           class: inputClassName,
-          domProps: {
-            value: needsValue ? value || self.state.currentInputValue : undefined,
+          domProps: Object.assign({
             checked,
             disabled,
             readOnly: readonly,
             multiple,
             required
-          },
+          }, valueProps),
           on: {
             focus: self.onFocus,
             blur: self.onBlur,
@@ -274,14 +260,10 @@ export default {
     'props.value': function watchValue() {
       const self = this;
       const {
-        type,
-        value
+        type
       } = self.props;
       if (type === 'range' || type === 'toggle') return;
       if (!self.$f7) return;
-      self.setState({
-        currentInputValue: value
-      });
       self.updateInputOnDidUpdate = true;
     }
   },
@@ -379,6 +361,24 @@ export default {
   },
 
   methods: {
+    domValue() {
+      const self = this;
+      const {
+        inputEl
+      } = self.$refs;
+      if (!inputEl) return undefined;
+      return inputEl.value;
+    },
+
+    inputHasValue() {
+      const self = this;
+      const {
+        value
+      } = self.props;
+      const domValue = self.domValue();
+      return typeof value === 'undefined' ? domValue || domValue === 0 : value || value === 0;
+    },
+
     validateInput(inputEl) {
       const self = this;
       const f7 = self.$f7;
@@ -426,10 +426,6 @@ export default {
       if (!validateOnBlur && (validate || validate === '') && self.$refs && self.$refs.inputEl) {
         self.validateInput(self.$refs.inputEl);
       }
-
-      self.setState({
-        currentInputValue: event.target.value
-      });
     },
 
     onFocus(event) {
@@ -465,6 +461,12 @@ export default {
 
     setState(updater, callback) {
       __vueComponentSetState(this, updater, callback);
+    }
+
+  },
+  computed: {
+    props() {
+      return __vueComponentProps(this);
     }
 
   }

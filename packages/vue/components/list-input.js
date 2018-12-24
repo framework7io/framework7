@@ -65,15 +65,10 @@ export default {
     const props = __vueComponentProps(this);
 
     const state = (() => {
-      const {
-        value,
-        defaultValue
-      } = props;
       return {
         isSortable: props.sortable,
         inputFocused: false,
-        inputInvalid: false,
-        currentInputValue: typeof value === 'undefined' ? defaultValue : value
+        inputInvalid: false
       };
     })();
 
@@ -138,32 +133,41 @@ export default {
       inlineLabel,
       floatingLabel
     } = props;
+    const domValue = self.domValue();
+    const inputHasValue = self.inputHasValue();
     const isSortable = sortable || self.state.isSortable;
 
-    const createInput = (tag, children) => {
-      const InputTag = tag;
+    const createInput = (InputTag, children) => {
       const needsValue = type !== 'file';
-      const needsType = tag === 'input';
+      const needsType = InputTag === 'input';
       const inputClassName = Utils.classNames({
         resizable: type === 'textarea' && resizable,
         'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
         'input-invalid': errorMessage && errorMessageForce || inputInvalid,
-        'input-with-value': self.inputHasValue,
+        'input-with-value': inputHasValue,
         'input-focused': inputFocused
       });
       let input;
+      let inputValue;
+
+      if (needsValue) {
+        if (typeof value !== 'undefined') inputValue = value;else inputValue = domValue;
+      }
+
+      const valueProps = {};
+      if ('value' in props) valueProps.value = inputValue;
+      if ('defaultValue' in props) valueProps.defaultValue = defaultValue;
       {
         input = _h(InputTag, {
           ref: 'inputEl',
           style: inputStyle,
           class: inputClassName,
-          domProps: {
-            value: needsValue ? value || self.state.currentInputValue : undefined,
+          domProps: Object.assign({
             disabled,
             readOnly: readonly,
             multiple,
             required
-          },
+          }, valueProps),
           on: {
             focus: self.onFocus,
             blur: self.onBlur,
@@ -232,7 +236,7 @@ export default {
         'inline-label': inlineLabel,
         'item-input-focused': inputFocused,
         'item-input-with-info': !!info || self.$slots.info && self.$slots.info.length,
-        'item-input-with-value': self.inputHasValue,
+        'item-input-with-value': inputHasValue,
         'item-input-with-error-message': hasErrorMessage && errorMessageForce || inputInvalid,
         'item-input-invalid': hasErrorMessage && errorMessageForce || inputInvalid
       })
@@ -263,33 +267,10 @@ export default {
     }), this.$slots['root'], this.$slots['root-end']]);
   },
 
-  computed: {
-    inputHasValue() {
-      const self = this;
-      const {
-        value
-      } = self.props;
-      const {
-        currentInputValue
-      } = self.state;
-      return typeof value === 'undefined' ? currentInputValue : value || value === 0;
-    },
-
-    props() {
-      return __vueComponentProps(this);
-    }
-
-  },
   watch: {
     'props.value': function watchValue() {
       const self = this;
-      const {
-        value
-      } = self.props;
       if (!self.$f7) return;
-      self.setState({
-        currentInputValue: value
-      });
       self.updateInputOnDidUpdate = true;
     }
   },
@@ -386,6 +367,24 @@ export default {
   },
 
   methods: {
+    domValue() {
+      const self = this;
+      const {
+        inputEl
+      } = self.$refs;
+      if (!inputEl) return undefined;
+      return inputEl.value;
+    },
+
+    inputHasValue() {
+      const self = this;
+      const {
+        value
+      } = self.props;
+      const domValue = self.domValue();
+      return typeof value === 'undefined' ? domValue || domValue === 0 : value || value === 0;
+    },
+
     validateInput(inputEl) {
       const self = this;
       const f7 = self.$f7;
@@ -433,10 +432,6 @@ export default {
       if (!validateOnBlur && (validate || validate === '') && self.$refs && self.$refs.inputEl) {
         self.validateInput(self.$refs.inputEl);
       }
-
-      self.setState({
-        currentInputValue: event.target.value
-      });
     },
 
     onFocus(event) {
@@ -472,6 +467,12 @@ export default {
 
     setState(updater, callback) {
       __vueComponentSetState(this, updater, callback);
+    }
+
+  },
+  computed: {
+    props() {
+      return __vueComponentProps(this);
     }
 
   }

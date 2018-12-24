@@ -76,6 +76,8 @@ import f7Row from './components/row';
 import f7Searchbar from './components/searchbar';
 import f7Segmented from './components/segmented';
 import f7Sheet from './components/sheet';
+import f7SkeletonBlock from './components/skeleton-block';
+import f7SkeletonText from './components/skeleton-text';
 import f7Statusbar from './components/statusbar';
 import f7Stepper from './components/stepper';
 import f7Subnavbar from './components/subnavbar';
@@ -117,7 +119,7 @@ export interface Framework7Extensions {
 }
 
 declare module 'vue/types/vue' {
-  interface Vue extends Framework7Extensions {}
+  interface Vue extends Partial<Framework7Extensions> {}
 }
 
 export {
@@ -190,6 +192,8 @@ export {
   f7Searchbar,
   f7Segmented,
   f7Sheet,
+  f7SkeletonBlock,
+  f7SkeletonText,
   f7Statusbar,
   f7Stepper,
   f7Subnavbar,

@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.0.0-beta.4
+ * Framework7 Vue 4.0.0-beta.5
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,14 +7,14 @@
  *
  * Released under the MIT License
  *
- * Released on: December 12, 2018
+ * Released on: December 24, 2018
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('vue')) :
   typeof define === 'function' && define.amd ? define(['vue'], factory) :
-  (global.Framework7Vue = factory(global.Vue));
-}(this, (function (Vue) { 'use strict';
+  (global = global || self, global.Framework7Vue = factory(global.Vue));
+}(this, function (Vue) { 'use strict';
 
   Vue = Vue && Vue.hasOwnProperty('default') ? Vue['default'] : Vue;
 
@@ -2929,6 +2929,20 @@
         type: Boolean,
         default: true
       },
+      formatLabel: Function,
+      scale: {
+        type: Boolean,
+        default: false
+      },
+      scaleSteps: {
+        type: Number,
+        default: 5
+      },
+      scaleSubSteps: {
+        type: Number,
+        default: 0
+      },
+      formatScaleLabel: Function,
       name: String,
       input: Boolean,
       inputId: String,
@@ -2993,6 +3007,11 @@
         var draggableBar = props.draggableBar;
         var vertical = props.vertical;
         var verticalReversed = props.verticalReversed;
+        var formatLabel = props.formatLabel;
+        var scale = props.scale;
+        var scaleSteps = props.scaleSteps;
+        var scaleSubSteps = props.scaleSubSteps;
+        var formatScaleLabel = props.formatScaleLabel;
         self.f7Range = f7.range.create(Utils.noUndefinedProps({
           el: self.$refs.el,
           value: value,
@@ -3004,6 +3023,11 @@
           draggableBar: draggableBar,
           vertical: vertical,
           verticalReversed: verticalReversed,
+          formatLabel: formatLabel,
+          scale: scale,
+          scaleSteps: scaleSteps,
+          scaleSubSteps: scaleSubSteps,
+          formatScaleLabel: formatScaleLabel,
           on: {
             change: function change(range, val) {
               self.dispatchEvent('range:change rangeChange', val);
@@ -3106,34 +3130,15 @@
       var props = __vueComponentProps(this);
 
       var state = (function () {
-        var value = props.value;
-        var defaultValue = props.defaultValue;
         return {
           inputFocused: false,
-          inputInvalid: false,
-          currentInputValue: typeof value === 'undefined' ? defaultValue : value
+          inputInvalid: false
         };
       })();
 
       return {
         state: state
       };
-    },
-
-    computed: {
-      inputWithValue: function inputWithValue() {
-        var self = this;
-        var ref = self.props;
-        var value = ref.value;
-        var ref$1 = self.state;
-        var currentInputValue = ref$1.currentInputValue;
-        return typeof value === 'undefined' ? currentInputValue : value || value === 0;
-      },
-
-      props: function props() {
-        return __vueComponentProps(this);
-      }
-
     },
 
     render: function render() {
@@ -3181,33 +3186,42 @@
       var noStoreData = props.noStoreData;
       var noFormStoreData = props.noFormStoreData;
       var ignoreStoreData = props.ignoreStoreData;
+      var domValue = self.domValue();
+      var inputHasValue = self.inputHasValue();
       var inputEl;
 
-      var createInput = function (tag, children) {
-        var InputTag = tag;
+      var createInput = function (InputTag, children) {
         var needsValue = type !== 'file';
-        var needsType = tag === 'input';
+        var needsType = InputTag === 'input';
         var inputClassName = Utils.classNames(!wrap && className, {
           resizable: type === 'textarea' && resizable,
           'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
           'input-invalid': errorMessage && errorMessageForce || self.state.inputInvalid,
-          'input-with-value': self.inputWithValue,
+          'input-with-value': inputHasValue,
           'input-focused': self.state.inputFocused
         });
         var input;
+        var inputValue;
+
+        if (needsValue) {
+          if (typeof value !== 'undefined') { inputValue = value; }else { inputValue = domValue; }
+        }
+
+        var valueProps = {};
+        if ('value' in props) { valueProps.value = inputValue; }
+        if ('defaultValue' in props) { valueProps.defaultValue = defaultValue; }
         {
           input = _h(InputTag, {
             ref: 'inputEl',
             style: inputStyle,
             class: inputClassName,
-            domProps: {
-              value: needsValue ? value || self.state.currentInputValue : undefined,
+            domProps: Object.assign({
               checked: checked,
               disabled: disabled,
               readOnly: readonly,
               multiple: multiple,
               required: required
-            },
+            }, valueProps),
             on: {
               focus: self.onFocus,
               blur: self.onBlur,
@@ -3318,12 +3332,8 @@
         var self = this;
         var ref = self.props;
         var type = ref.type;
-        var value = ref.value;
         if (type === 'range' || type === 'toggle') { return; }
         if (!self.$f7) { return; }
-        self.setState({
-          currentInputValue: value
-        });
         self.updateInputOnDidUpdate = true;
       }
     },
@@ -3418,6 +3428,22 @@
     },
 
     methods: {
+      domValue: function domValue() {
+        var self = this;
+        var ref = self.$refs;
+        var inputEl = ref.inputEl;
+        if (!inputEl) { return undefined; }
+        return inputEl.value;
+      },
+
+      inputHasValue: function inputHasValue() {
+        var self = this;
+        var ref = self.props;
+        var value = ref.value;
+        var domValue = self.domValue();
+        return typeof value === 'undefined' ? domValue || domValue === 0 : value || value === 0;
+      },
+
       validateInput: function validateInput(inputEl) {
         var self = this;
         var f7 = self.$f7;
@@ -3464,10 +3490,6 @@
         if (!validateOnBlur && (validate || validate === '') && self.$refs && self.$refs.inputEl) {
           self.validateInput(self.$refs.inputEl);
         }
-
-        self.setState({
-          currentInputValue: event.target.value
-        });
       },
 
       onFocus: function onFocus(event) {
@@ -3505,6 +3527,12 @@
 
       setState: function setState(updater, callback) {
         __vueComponentSetState(this, updater, callback);
+      }
+
+    },
+    computed: {
+      props: function props() {
+        return __vueComponentProps(this);
       }
 
     }
@@ -4114,13 +4142,10 @@
       var props = __vueComponentProps(this);
 
       var state = (function () {
-        var value = props.value;
-        var defaultValue = props.defaultValue;
         return {
           isSortable: props.sortable,
           inputFocused: false,
-          inputInvalid: false,
-          currentInputValue: typeof value === 'undefined' ? defaultValue : value
+          inputInvalid: false
         };
       })();
 
@@ -4182,32 +4207,41 @@
       var label = props.label;
       var inlineLabel = props.inlineLabel;
       var floatingLabel = props.floatingLabel;
+      var domValue = self.domValue();
+      var inputHasValue = self.inputHasValue();
       var isSortable = sortable || self.state.isSortable;
 
-      var createInput = function (tag, children) {
-        var InputTag = tag;
+      var createInput = function (InputTag, children) {
         var needsValue = type !== 'file';
-        var needsType = tag === 'input';
+        var needsType = InputTag === 'input';
         var inputClassName = Utils.classNames({
           resizable: type === 'textarea' && resizable,
           'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
           'input-invalid': errorMessage && errorMessageForce || inputInvalid,
-          'input-with-value': self.inputHasValue,
+          'input-with-value': inputHasValue,
           'input-focused': inputFocused
         });
         var input;
+        var inputValue;
+
+        if (needsValue) {
+          if (typeof value !== 'undefined') { inputValue = value; }else { inputValue = domValue; }
+        }
+
+        var valueProps = {};
+        if ('value' in props) { valueProps.value = inputValue; }
+        if ('defaultValue' in props) { valueProps.defaultValue = defaultValue; }
         {
           input = _h(InputTag, {
             ref: 'inputEl',
             style: inputStyle,
             class: inputClassName,
-            domProps: {
-              value: needsValue ? value || self.state.currentInputValue : undefined,
+            domProps: Object.assign({
               disabled: disabled,
               readOnly: readonly,
               multiple: multiple,
               required: required
-            },
+            }, valueProps),
             on: {
               focus: self.onFocus,
               blur: self.onBlur,
@@ -4276,7 +4310,7 @@
           'inline-label': inlineLabel,
           'item-input-focused': inputFocused,
           'item-input-with-info': !!info || self.$slots.info && self.$slots.info.length,
-          'item-input-with-value': self.inputHasValue,
+          'item-input-with-value': inputHasValue,
           'item-input-with-error-message': hasErrorMessage && errorMessageForce || inputInvalid,
           'item-input-invalid': hasErrorMessage && errorMessageForce || inputInvalid
         })
@@ -4307,30 +4341,10 @@
       }), this.$slots['root'], this.$slots['root-end']]);
     },
 
-    computed: {
-      inputHasValue: function inputHasValue() {
-        var self = this;
-        var ref = self.props;
-        var value = ref.value;
-        var ref$1 = self.state;
-        var currentInputValue = ref$1.currentInputValue;
-        return typeof value === 'undefined' ? currentInputValue : value || value === 0;
-      },
-
-      props: function props() {
-        return __vueComponentProps(this);
-      }
-
-    },
     watch: {
       'props.value': function watchValue() {
         var self = this;
-        var ref = self.props;
-        var value = ref.value;
         if (!self.$f7) { return; }
-        self.setState({
-          currentInputValue: value
-        });
         self.updateInputOnDidUpdate = true;
       }
     },
@@ -4423,6 +4437,22 @@
     },
 
     methods: {
+      domValue: function domValue() {
+        var self = this;
+        var ref = self.$refs;
+        var inputEl = ref.inputEl;
+        if (!inputEl) { return undefined; }
+        return inputEl.value;
+      },
+
+      inputHasValue: function inputHasValue() {
+        var self = this;
+        var ref = self.props;
+        var value = ref.value;
+        var domValue = self.domValue();
+        return typeof value === 'undefined' ? domValue || domValue === 0 : value || value === 0;
+      },
+
       validateInput: function validateInput(inputEl) {
         var self = this;
         var f7 = self.$f7;
@@ -4469,10 +4499,6 @@
         if (!validateOnBlur && (validate || validate === '') && self.$refs && self.$refs.inputEl) {
           self.validateInput(self.$refs.inputEl);
         }
-
-        self.setState({
-          currentInputValue: event.target.value
-        });
       },
 
       onFocus: function onFocus(event) {
@@ -4510,6 +4536,12 @@
 
       setState: function setState(updater, callback) {
         __vueComponentSetState(this, updater, callback);
+      }
+
+    },
+    computed: {
+      props: function props() {
+        return __vueComponentProps(this);
       }
 
     }
@@ -9344,6 +9376,154 @@
     }
   };
 
+  var f7SkeletonBlock = {
+    name: 'f7-skeleton-block',
+    props: Object.assign({
+      id: [String, Number],
+      width: [Number, String],
+      height: [Number, String],
+      tag: {
+        type: String,
+        default: 'div'
+      }
+    }, Mixins.colorProps),
+
+    render: function render() {
+      var _h = this.$createElement;
+      var props = this.props;
+      var className = props.className;
+      var id = props.id;
+      var style = props.style;
+      var width = props.width;
+      var height = props.height;
+      var tag = props.tag;
+      var classes = Utils.classNames('skeleton-block', className, Mixins.colorClasses(props));
+      var styleAttribute = style;
+
+      if (width) {
+        var widthValue = typeof width === 'number' ? (width + "px") : width;
+
+        if (!styleAttribute) {
+          styleAttribute = {
+            width: widthValue
+          };
+        } else if (typeof styleAttribute === 'object') {
+          styleAttribute = Object.assign({
+            width: widthValue
+          }, styleAttribute);
+        } else if (typeof styleAttribute === 'string') {
+          styleAttribute = "width: " + widthValue + "; " + styleAttribute;
+        }
+      }
+
+      if (height) {
+        var heightValue = typeof height === 'number' ? (height + "px") : height;
+
+        if (!styleAttribute) {
+          styleAttribute = {
+            height: heightValue
+          };
+        } else if (typeof styleAttribute === 'object') {
+          styleAttribute = Object.assign({
+            height: heightValue
+          }, styleAttribute);
+        } else if (typeof styleAttribute === 'string') {
+          styleAttribute = "height: " + heightValue + "; " + styleAttribute;
+        }
+      }
+
+      var Tag = tag;
+      return _h(Tag, {
+        style: styleAttribute,
+        class: classes,
+        attrs: {
+          id: id
+        }
+      }, [this.$slots['default']]);
+    },
+
+    computed: {
+      props: function props() {
+        return __vueComponentProps(this);
+      }
+
+    }
+  };
+
+  var f7SkeletonText = {
+    name: 'f7-skeleton-text',
+    props: Object.assign({
+      id: [String, Number],
+      width: [Number, String],
+      height: [Number, String],
+      tag: {
+        type: String,
+        default: 'span'
+      }
+    }, Mixins.colorProps),
+
+    render: function render() {
+      var _h = this.$createElement;
+      var props = this.props;
+      var className = props.className;
+      var id = props.id;
+      var style = props.style;
+      var width = props.width;
+      var height = props.height;
+      var tag = props.tag;
+      var classes = Utils.classNames('skeleton-text', className, Mixins.colorClasses(props));
+      var styleAttribute = style;
+
+      if (width) {
+        var widthValue = typeof width === 'number' ? (width + "px") : width;
+
+        if (!styleAttribute) {
+          styleAttribute = {
+            width: widthValue
+          };
+        } else if (typeof styleAttribute === 'object') {
+          styleAttribute = Object.assign({
+            width: widthValue
+          }, styleAttribute);
+        } else if (typeof styleAttribute === 'string') {
+          styleAttribute = "width: " + widthValue + "; " + styleAttribute;
+        }
+      }
+
+      if (height) {
+        var heightValue = typeof height === 'number' ? (height + "px") : height;
+
+        if (!styleAttribute) {
+          styleAttribute = {
+            height: heightValue
+          };
+        } else if (typeof styleAttribute === 'object') {
+          styleAttribute = Object.assign({
+            height: heightValue
+          }, styleAttribute);
+        } else if (typeof styleAttribute === 'string') {
+          styleAttribute = "height: " + heightValue + "; " + styleAttribute;
+        }
+      }
+
+      var Tag = tag;
+      return _h(Tag, {
+        style: styleAttribute,
+        class: classes,
+        attrs: {
+          id: id
+        }
+      }, [this.$slots['default']]);
+    },
+
+    computed: {
+      props: function props() {
+        return __vueComponentProps(this);
+      }
+
+    }
+  };
+
   var f7Statusbar = {
     name: 'f7-statusbar',
     props: Object.assign({
@@ -10827,7 +11007,7 @@
   };
 
   /**
-   * Framework7 Vue 4.0.0-beta.4
+   * Framework7 Vue 4.0.0-beta.5
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -10835,7 +11015,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: December 12, 2018
+   * Released on: December 24, 2018
    */
 
   var Plugin = {
@@ -10917,6 +11097,8 @@
       Vue.component('f7-searchbar', f7Searchbar);
       Vue.component('f7-segmented', f7Segmented);
       Vue.component('f7-sheet', f7Sheet);
+      Vue.component('f7-skeleton-block', f7SkeletonBlock);
+      Vue.component('f7-skeleton-text', f7SkeletonText);
       Vue.component('f7-statusbar', f7Statusbar);
       Vue.component('f7-stepper', f7Stepper);
       Vue.component('f7-subnavbar', f7Subnavbar);
@@ -11031,4 +11213,4 @@
 
   return Plugin;
 
-})));
+}));

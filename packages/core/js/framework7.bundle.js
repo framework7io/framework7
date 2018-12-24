@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.0-beta.4
+ * Framework7 4.0.0-beta.5
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,14 +7,14 @@
  *
  * Released under the MIT License
  *
- * Released on: December 12, 2018
+ * Released on: December 24, 2018
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global.Framework7 = factory());
-}(this, (function () { 'use strict';
+  (global = global || self, global.Framework7 = factory());
+}(this, function () { 'use strict';
 
   /**
    * Template7 1.4.0
@@ -3649,7 +3649,7 @@
 
     return {
       touch: (function checkTouch() {
-        return !!(('ontouchstart' in win) || (win.DocumentTouch && doc instanceof win.DocumentTouch));
+        return !!((win.navigator.maxTouchPoints > 0) || ('ontouchstart' in win) || (win.DocumentTouch && doc instanceof win.DocumentTouch));
       }()),
 
       pointerEvents: !!(win.navigator.pointerEnabled || win.PointerEvent || ('maxTouchPoints' in win.navigator)),
@@ -3695,6 +3695,10 @@
 
       gestures: (function checkGestures() {
         return 'ongesturestart' in win;
+      }()),
+
+      intersectionObserver: (function checkObserver() {
+        return ('IntersectionObserver' in win);
       }()),
     };
   }());
@@ -4190,8 +4194,12 @@
       return activable || target;
     }
 
+    function isInsideScrollableViewLight(el) {
+      var pageContent = el.parents('.page-content');
+      return pageContent.length > 0;
+    }
     function isInsideScrollableView(el) {
-      var pageContent = el.parents('.page-content, .panel');
+      var pageContent = el.parents('.page-content');
 
       if (pageContent.length === 0) {
         return false;
@@ -4318,7 +4326,11 @@
         rippleTarget = undefined;
         return;
       }
-      if (!isInsideScrollableView(rippleTarget)) {
+      var inScrollable = params.fastClicks
+        ? isInsideScrollableView(rippleTarget)
+        : isInsideScrollableViewLight(rippleTarget);
+
+      if (!inScrollable) {
         createRipple(rippleTarget, touchStartX, touchStartY);
       } else {
         rippleTimeout = setTimeout(function () {
@@ -4510,6 +4522,10 @@
             e.preventDefault();
           }
         }
+        if (params.activeState) { removeActive(); }
+        if (useRipple) {
+          rippleTouchEnd();
+        }
         return true;
       }
 
@@ -4527,6 +4543,9 @@
 
       if ((touchEndTime - lastClickTime) < params.fastClicksDelayBetweenClicks) {
         setTimeout(removeActive, 0);
+        if (useRipple) {
+          rippleTouchEnd();
+        }
         return true;
       }
 
@@ -4647,8 +4666,7 @@
       return allowClick;
     }
 
-    function handleTouchStartLite(e) {
-      preventClick = false;
+    function handleTouchStartLight(e) {
       isMoved = false;
       tapHoldFired = false;
       preventClick = false;
@@ -4675,7 +4693,7 @@
 
       if (params.activeState) {
         activableElement = findActivableElement(targetElement);
-        if (!isInsideScrollableView(activableElement)) {
+        if (!isInsideScrollableViewLight(activableElement)) {
           addActive();
         } else {
           activeTimeout = setTimeout(addActive, 80);
@@ -4686,7 +4704,7 @@
       }
       return true;
     }
-    function handleTouchMoveLite(e) {
+    function handleTouchMoveLight(e) {
       var distance = params.fastClicks ? params.fastClicksDistanceThreshold : 0;
       if (distance) {
         var pageX = e.targetTouches[0].pageX;
@@ -4711,7 +4729,7 @@
         }
       }
     }
-    function handleTouchEndLite(e) {
+    function handleTouchEndLight(e) {
       clearTimeout(activeTimeout);
       clearTimeout(tapHoldTimeout);
       if (doc.activeElement === e.target) {
@@ -4735,7 +4753,7 @@
       }
       return true;
     }
-    function handleClickLite(e) {
+    function handleClickLight(e) {
       var localPreventClick = preventClick;
       if (targetElement && e.target !== targetElement) {
         localPreventClick = true;
@@ -4750,9 +4768,12 @@
       }
 
       if (params.tapHold) {
-        tapHoldTimeout = setTimeout(function () {
-          tapHoldFired = false;
-        }, (Device.ios || Device.androidChrome ? 100 : 400));
+        tapHoldTimeout = setTimeout(
+          function () {
+            tapHoldFired = false;
+          },
+          (Device.ios || Device.androidChrome ? 100 : 400)
+        );
       }
       preventClick = false;
       targetElement = null;
@@ -4823,10 +4844,10 @@
         app.on('touchmove', handleTouchMove);
         app.on('touchend', handleTouchEnd);
       } else {
-        app.on('click', handleClickLite);
-        app.on('touchstart', handleTouchStartLite);
-        app.on('touchmove', handleTouchMoveLite);
-        app.on('touchend', handleTouchEndLite);
+        app.on('click', handleClickLight);
+        app.on('touchstart', handleTouchStartLight);
+        app.on('touchmove', handleTouchMoveLight);
+        app.on('touchend', handleTouchEndLight);
       }
 
       doc.addEventListener('touchcancel', handleTouchCancel, { passive: true });
@@ -8570,7 +8591,9 @@
               $app: router.app,
               $root: Utils.extend({}, router.app.data, router.app.methods),
               $route: options.route,
+              $f7route: options.route,
               $router: router,
+              $f7router: router,
               $theme: {
                 ios: router.app.theme === 'ios',
                 md: router.app.theme === 'md',
@@ -8648,7 +8671,9 @@
           context,
           {
             $route: options.route,
+            $f7route: options.route,
             $router: router,
+            $f7router: router,
             $theme: {
               ios: app.theme === 'ios',
               md: app.theme === 'md',
@@ -10514,6 +10539,7 @@
         $$: $,
         $dom7: $,
         $app: app,
+        $f7: app,
         $options: Utils.extend({ id: id }, options),
       }
     );
@@ -10827,6 +10853,90 @@
     },
   };
 
+  var SW = {
+    registrations: [],
+    register: function register(path, scope) {
+      var app = this;
+      if (!('serviceWorker' in window.navigator) || !app.serviceWorker.container) {
+        return new Promise(function (resolve, reject) {
+          reject(new Error('Service worker is not supported'));
+        });
+      }
+      return new Promise(function (resolve, reject) {
+        app.serviceWorker.container.register(path, (scope ? { scope: scope } : {}))
+          .then(function (reg) {
+            SW.registrations.push(reg);
+            app.emit('swRegisterSuccess', reg);
+            resolve(reg);
+          }).catch(function (error) {
+            app.emit('swRegisterError', error);
+            reject(error);
+          });
+      });
+    },
+    unregister: function unregister(registration) {
+      var app = this;
+      if (!('serviceWorker' in window.navigator) || !app.serviceWorker.container) {
+        return new Promise(function (resolve, reject) {
+          reject(new Error('Service worker is not supported'));
+        });
+      }
+      var registrations;
+      if (!registration) { registrations = SW.registrations; }
+      else if (Array.isArray(registration)) { registrations = registration; }
+      else { registrations = [registration]; }
+      return Promise.all(registrations.map(function (reg) { return new Promise(function (resolve, reject) {
+        reg.unregister()
+          .then(function () {
+            if (SW.registrations.indexOf(reg) >= 0) {
+              SW.registrations.splice(SW.registrations.indexOf(reg), 1);
+            }
+            app.emit('swUnregisterSuccess', true);
+            resolve();
+          })
+          .catch(function (error) {
+            app.emit('swUnregisterError', error);
+            reject(error);
+          });
+      }); }));
+    },
+  };
+
+  var ServiceWorkerModule = {
+    name: 'sw',
+    params: {
+      serviceWorker: {
+        path: undefined,
+        scope: undefined,
+      },
+    },
+    create: function create() {
+      var app = this;
+      Utils.extend(app, {
+        serviceWorker: {
+          container: ('serviceWorker' in window.navigator) ? window.navigator.serviceWorker : undefined,
+          registrations: SW.registrations,
+          register: SW.register.bind(app),
+          unregister: SW.unregister.bind(app),
+        },
+      });
+    },
+    on: {
+      init: function init() {
+        if (!('serviceWorker' in window.navigator)) { return; }
+        var app = this;
+        if (!app.serviceWorker.container) { return; }
+        var paths = app.params.serviceWorker.path;
+        var scope = app.params.serviceWorker.scope;
+        if (!paths || (Array.isArray(paths) && !paths.length)) { return; }
+        var toRegister = Array.isArray(paths) ? paths : [paths];
+        toRegister.forEach(function (path) {
+          app.serviceWorker.register(path, scope);
+        });
+      },
+    },
+  };
+
   var Statusbar = {
     hide: function hide() {
       $('html').removeClass('with-statusbar');
@@ -10908,10 +11018,6 @@
           $('html').removeClass('with-statusbar');
         }
       }
-    },
-    iosOverlaysWebView: function iosOverlaysWebView(overlays) {
-      if (!Device.ios) { return; }
-      Statusbar.overlaysWebView(overlays);
     },
     checkOverlay: function checkOverlay() {
       if (Device.needsStatusbarOverlay()) {
@@ -11020,9 +11126,6 @@
           setBackgroundColor: Statusbar.setBackgroundColor,
           isVisible: Statusbar.isVisible,
           init: Statusbar.init.bind(app),
-
-          iosOverlaysWebView: Statusbar.iosOverlaysWebView,
-          setIosTextColor: Statusbar.iosSetTextColor,
         },
       });
     },
@@ -12493,6 +12596,10 @@
     },
   };
 
+  var Skeleton = {
+    name: 'skeleton',
+  };
+
   var Dialog = /*@__PURE__*/(function (Modal$$1) {
     function Dialog(app, params) {
       var extendedParams = Utils.extend({
@@ -13421,7 +13528,7 @@
     params: {
       popover: {
         closeByBackdropClick: true,
-        closeByOutsideClick: false,
+        closeByOutsideClick: true,
         backdrop: true,
       },
     },
@@ -18601,6 +18708,7 @@
       Framework7Class$$1.call(this, params, [app]);
 
       var range = this;
+
       var defaults = {
         el: null,
         inputEl: null,
@@ -18613,6 +18721,11 @@
         draggableBar: true,
         vertical: false,
         verticalReversed: false,
+        formatLabel: null,
+        scale: false,
+        scaleSteps: 5,
+        scaleSubSteps: 0,
+        formatScaleLabel: null,
       };
 
       // Extend defaults with modules params
@@ -18630,12 +18743,12 @@
 
       var dataset = $el.dataset();
 
-      ('step min max value').split(' ').forEach(function (paramName) {
+      ('step min max value scaleSteps scaleSubSteps').split(' ').forEach(function (paramName) {
         if (typeof params[paramName] === 'undefined' && typeof dataset[paramName] !== 'undefined') {
           range.params[paramName] = parseFloat(dataset[paramName]);
         }
       });
-      ('dual label').split(' ').forEach(function (paramName) {
+      ('dual label vertical verticalReversed scale').split(' ').forEach(function (paramName) {
         if (typeof params[paramName] === 'undefined' && typeof dataset[paramName] !== 'undefined') {
           range.params[paramName] = dataset[paramName];
         }
@@ -18646,12 +18759,6 @@
         if (typeof dataset.valueLeft !== 'undefined' && typeof dataset.valueRight !== 'undefined') {
           range.params.value = [parseFloat(dataset.valueLeft), parseFloat(dataset.valueRight)];
         }
-      }
-      if (typeof params.vertical === 'undefined' && typeof dataset.vertical !== 'undefined') {
-        range.params.vertical = dataset.vertical;
-      }
-      if (typeof params.verticalReversed === 'undefined' && typeof dataset.verticalReversed !== 'undefined') {
-        range.params.verticalReversed = dataset.verticalReversed;
       }
 
       var $inputEl;
@@ -18672,8 +18779,12 @@
       var value = ref.value;
       var vertical = ref.vertical;
       var verticalReversed = ref.verticalReversed;
+      var scale = ref.scale;
+      var scaleSteps = ref.scaleSteps;
+      var scaleSubSteps = ref.scaleSubSteps;
 
       Utils.extend(range, {
+        app: app,
         $el: $el,
         el: $el[0],
         $inputEl: $inputEl,
@@ -18687,6 +18798,9 @@
         previousValue: value,
         vertical: vertical,
         verticalReversed: verticalReversed,
+        scale: scale,
+        scaleSteps: scaleSteps,
+        scaleSubSteps: scaleSubSteps,
       });
 
       if ($inputEl) {
@@ -18728,7 +18842,6 @@
       // Create Knobs
       var knobHTML = "\n      <div class=\"range-knob-wrap\">\n        <div class=\"range-knob\"></div>\n        " + (range.label ? '<div class="range-knob-label"></div>' : '') + "\n      </div>\n    ";
       var knobs = [$(knobHTML)];
-      var labels = [];
 
       if (range.dual) {
         knobs.push($(knobHTML));
@@ -18740,6 +18853,7 @@
       });
 
       // Labels
+      var labels = [];
       if (range.label) {
         labels.push(knobs[0].find('.range-knob-label'));
         if (range.dual) {
@@ -18747,12 +18861,19 @@
         }
       }
 
+      // Scale
+      var $scaleEl;
+      if (range.scale && range.scaleSteps > 1) {
+        $scaleEl = $(("\n        <div class=\"range-scale\">\n          " + (range.renderScale()) + "\n        </div>\n      "));
+        $el.append($scaleEl);
+      }
+
       Utils.extend(range, {
-        app: app,
         knobs: knobs,
         labels: labels,
         $barEl: $barEl,
         $barActiveEl: $barActiveEl,
+        $scaleEl: $scaleEl,
       });
 
       $el[0].f7Range = range;
@@ -18790,7 +18911,7 @@
         var progress;
         if (range.vertical) {
           progress = (touchesStart.y - rangeOffsetTop) / range.rangeHeight;
-          if (range.verticalReversed) { progress = 1 - progress; }
+          if (!range.verticalReversed) { progress = 1 - progress; }
         } else if (range.app.rtl) {
           progress = ((rangeOffsetLeft + range.rangeWidth) - touchesStart.x) / range.rangeWidth;
         } else {
@@ -18839,7 +18960,7 @@
         var progress;
         if (range.vertical) {
           progress = (pageY - rangeOffsetTop) / range.rangeHeight;
-          if (range.verticalReversed) { progress = 1 - progress; }
+          if (!range.verticalReversed) { progress = 1 - progress; }
         } else if (range.app.rtl) {
           progress = ((rangeOffsetLeft + range.rangeWidth) - pageX) / range.rangeWidth;
         } else {
@@ -18992,29 +19113,33 @@
       var rangeSize = vertical ? rangeHeight : rangeWidth;
       // eslint-disable-next-line
       var positionProperty = vertical
-        ? (verticalReversed ? 'bottom' : 'top')
+        ? (verticalReversed ? 'top' : 'bottom')
         : (app.rtl ? 'right' : 'left');
       if (range.dual) {
         var progress = [((value[0] - min) / (max - min)), ((value[1] - min) / (max - min))];
         $barActiveEl.css(( obj = {}, obj[positionProperty] = ((progress[0] * 100) + "%"), obj[vertical ? 'height' : 'width'] = (((progress[1] - progress[0]) * 100) + "%"), obj ));
         knobs.forEach(function ($knobEl, knobIndex) {
           var startPos = rangeSize * progress[knobIndex];
-          var realStartPos = (rangeSize * progress[knobIndex]) - (knobSize / 2);
-          if (realStartPos < 0) { startPos = knobSize / 2; }
-          if ((realStartPos + knobSize) > rangeSize) { startPos = rangeSize - (knobSize / 2); }
+          if (app.theme === 'ios') {
+            var realStartPos = (rangeSize * progress[knobIndex]) - (knobSize / 2);
+            if (realStartPos < 0) { startPos = knobSize / 2; }
+            if ((realStartPos + knobSize) > rangeSize) { startPos = rangeSize - (knobSize / 2); }
+          }
           $knobEl.css(positionProperty, (startPos + "px"));
-          if (label) { labels[knobIndex].text(value[knobIndex]); }
+          if (label) { labels[knobIndex].text(range.formatLabel(value[knobIndex], labels[knobIndex][0])); }
         });
       } else {
         var progress$1 = ((value - min) / (max - min));
         $barActiveEl.css(vertical ? 'height' : 'width', ((progress$1 * 100) + "%"));
 
         var startPos = rangeSize * progress$1;
-        var realStartPos = (rangeSize * progress$1) - (knobSize / 2);
-        if (realStartPos < 0) { startPos = knobSize / 2; }
-        if ((realStartPos + knobSize) > rangeSize) { startPos = rangeSize - (knobSize / 2); }
+        if (app.theme === 'ios') {
+          var realStartPos = (rangeSize * progress$1) - (knobSize / 2);
+          if (realStartPos < 0) { startPos = knobSize / 2; }
+          if ((realStartPos + knobSize) > rangeSize) { startPos = rangeSize - (knobSize / 2); }
+        }
         knobs[0].css(positionProperty, (startPos + "px"));
-        if (label) { labels[0].text(value); }
+        if (label) { labels[0].text(range.formatLabel(value, labels[0][0])); }
       }
       if ((range.dual && value.indexOf(min) >= 0) || (!range.dual && value === min)) {
         range.$el.addClass('range-slider-min');
@@ -19083,6 +19208,69 @@
 
     Range.prototype.getValue = function getValue () {
       return this.value;
+    };
+
+    Range.prototype.formatLabel = function formatLabel (value, labelEl) {
+      var range = this;
+      if (range.params.formatLabel) { return range.params.formatLabel.call(range, value, labelEl); }
+      return value;
+    };
+
+    Range.prototype.formatScaleLabel = function formatScaleLabel (value) {
+      var range = this;
+      if (range.params.formatScaleLabel) { return range.params.formatScaleLabel.call(range, value); }
+      return value;
+    };
+
+    Range.prototype.renderScale = function renderScale () {
+      var range = this;
+      var app = range.app;
+      var verticalReversed = range.verticalReversed;
+      var vertical = range.vertical;
+
+      // eslint-disable-next-line
+      var positionProperty = vertical
+        ? (verticalReversed ? 'top' : 'bottom')
+        : (app.rtl ? 'right' : 'left');
+
+      var html = '';
+
+      Array
+        .from({ length: range.scaleSteps + 1 })
+        .forEach(function (scaleEl, index) {
+          var scaleStepValue = (range.max - range.min) / range.scaleSteps;
+          var scaleValue = range.min + scaleStepValue * index;
+          var progress = ((scaleValue - range.min) / (range.max - range.min));
+          html += "<div class=\"range-scale-step\" style=\"" + positionProperty + ": " + (progress * 100) + "%\">" + (range.formatScaleLabel(scaleValue)) + "</div>";
+
+          if (range.scaleSubSteps && range.scaleSubSteps > 1 && index < range.scaleSteps) {
+            Array
+              .from({ length: range.scaleSubSteps - 1 })
+              .forEach(function (subStepEl, subIndex) {
+                var subStep = scaleStepValue / range.scaleSubSteps;
+                var scaleSubValue = scaleValue + subStep * (subIndex + 1);
+                var subProgress = ((scaleSubValue - range.min) / (range.max - range.min));
+                html += "<div class=\"range-scale-step range-scale-substep\" style=\"" + positionProperty + ": " + (subProgress * 100) + "%\"></div>";
+              });
+          }
+        });
+
+      return html;
+    };
+
+    Range.prototype.updateScale = function updateScale () {
+      var range = this;
+      if (!range.scale || range.scaleSteps < 2) {
+        if (range.$scaleEl) { range.$scaleEl.remove(); }
+        delete range.$scaleEl;
+        return;
+      }
+      if (!range.$scaleEl) {
+        range.$scaleEl = $('<div class="range-scale"></div>');
+        range.$el.append(range.$scaleEl);
+      }
+
+      range.$scaleEl.html(range.renderScale());
     };
 
     Range.prototype.init = function init () {
@@ -23700,14 +23888,14 @@
       var $pageEl = $(pageEl).closest('.page').eq(0);
 
       // Lazy images
-      var lazyLoadImages = $pageEl.find('.lazy');
-      if (lazyLoadImages.length === 0 && !$pageEl.hasClass('lazy')) { return; }
+      var $lazyLoadImages = $pageEl.find('.lazy');
+      if ($lazyLoadImages.length === 0 && !$pageEl.hasClass('lazy')) { return; }
 
       // Placeholder
       var placeholderSrc = app.params.lazy.placeholder;
 
       if (placeholderSrc !== false) {
-        lazyLoadImages.each(function (index, lazyEl) {
+        $lazyLoadImages.each(function (index, lazyEl) {
           if ($(lazyEl).attr('data-src') && !$(lazyEl).attr('src')) { $(lazyEl).attr('src', placeholderSrc); }
         });
       }
@@ -23725,6 +23913,43 @@
           imageIsLoading = true;
           app.lazy.loadImage(imagesSequence[0], onImageComplete);
         }
+      }
+
+      function observerCallback(entries, observer) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            if (app.params.lazy.sequential && imageIsLoading) {
+              if (imagesSequence.indexOf(entry.target) < 0) { imagesSequence.push(entry.target); }
+              return;
+            }
+            // Load image
+            imageIsLoading = true;
+            app.lazy.loadImage(entry.target, onImageComplete);
+            // Detach
+            observer.unobserve(entry.target);
+          }
+        });
+      }
+      if (app.params.lazy.observer && Support.intersectionObserver) {
+        var observer = $pageEl[0].f7LazyObserver;
+        if (!observer) {
+          observer = new win.IntersectionObserver(observerCallback, {
+            root: $pageEl[0],
+          });
+        }
+        $lazyLoadImages.each(function (index, el) {
+          if (el.f7LazyObserverAdded) { return; }
+          el.f7LazyObserverAdded = true;
+          observer.observe(el);
+        });
+        if (!$pageEl[0].f7LazyDestroy) {
+          $pageEl[0].f7LazyDestroy = function () {
+            observer.disconnect();
+            delete $pageEl[0].f7LazyDestroy;
+            delete $pageEl[0].f7LazyObserver;
+          };
+        }
+        return;
       }
 
       function lazyHandler() {
@@ -23847,6 +24072,7 @@
         placeholder: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEXCwsK592mkAAAACklEQVQI12NgAAAAAgAB4iG8MwAAAABJRU5ErkJggg==',
         threshold: 0,
         sequential: true,
+        observer: true,
       },
     },
     create: function create() {
@@ -23870,6 +24096,7 @@
       },
       pageAfterIn: function pageAfterIn(page) {
         var app = this;
+        if (app.params.lazy.observer && Support.intersectionObserver) { return; }
         if (page.$el.find('.lazy').length > 0 || page.$el.hasClass('lazy')) {
           app.lazy.create(page.$el);
         }
@@ -23889,6 +24116,7 @@
       },
       tabBeforeRemove: function tabBeforeRemove(tabEl) {
         var app = this;
+        if (app.params.lazy.observer && Support.intersectionObserver) { return; }
         var $tabEl = $(tabEl);
         if ($tabEl.find('.lazy').length > 0 || $tabEl.hasClass('lazy')) {
           app.lazy.destroy($tabEl);
@@ -26085,7 +26313,7 @@
     var slideSize;
     var slidesPerColumn = params.slidesPerColumn;
     var slidesPerRow = slidesNumberEvenToRows / slidesPerColumn;
-    var numFullColumns = slidesPerRow - ((params.slidesPerColumn * slidesPerRow) - slidesLength);
+    var numFullColumns = Math.floor(slidesLength / params.slidesPerColumn);
     for (var i = 0; i < slidesLength; i += 1) {
       slideSize = 0;
       var slide = slides.eq(i);
@@ -26144,13 +26372,29 @@
         } else {
           // eslint-disable-next-line
           if (swiper.isHorizontal()) {
-            slideSize = parseFloat(slideStyles.getPropertyValue('width'))
-              + parseFloat(slideStyles.getPropertyValue('margin-left'))
-              + parseFloat(slideStyles.getPropertyValue('margin-right'));
+            var width = parseFloat(slideStyles.getPropertyValue('width'));
+            var paddingLeft = parseFloat(slideStyles.getPropertyValue('padding-left'));
+            var paddingRight = parseFloat(slideStyles.getPropertyValue('padding-right'));
+            var marginLeft = parseFloat(slideStyles.getPropertyValue('margin-left'));
+            var marginRight = parseFloat(slideStyles.getPropertyValue('margin-right'));
+            var boxSizing = slideStyles.getPropertyValue('box-sizing');
+            if (boxSizing && boxSizing === 'border-box') {
+              slideSize = width + marginLeft + marginRight;
+            } else {
+              slideSize = width + paddingLeft + paddingRight + marginLeft + marginRight;
+            }
           } else {
-            slideSize = parseFloat(slideStyles.getPropertyValue('height'))
-              + parseFloat(slideStyles.getPropertyValue('margin-top'))
-              + parseFloat(slideStyles.getPropertyValue('margin-bottom'));
+            var height = parseFloat(slideStyles.getPropertyValue('height'));
+            var paddingTop = parseFloat(slideStyles.getPropertyValue('padding-top'));
+            var paddingBottom = parseFloat(slideStyles.getPropertyValue('padding-bottom'));
+            var marginTop = parseFloat(slideStyles.getPropertyValue('margin-top'));
+            var marginBottom = parseFloat(slideStyles.getPropertyValue('margin-bottom'));
+            var boxSizing$1 = slideStyles.getPropertyValue('box-sizing');
+            if (boxSizing$1 && boxSizing$1 === 'border-box') {
+              slideSize = height + marginTop + marginBottom;
+            } else {
+              slideSize = height + paddingTop + paddingBottom + marginTop + marginBottom;
+            }
           }
         }
         if (currentTransform) {
@@ -27097,7 +27341,7 @@
     var $wrapperEl = swiper.$wrapperEl;
     var params = swiper.params;
     var slides = swiper.slides;
-    $wrapperEl.children(("." + (params.slideClass) + "." + (params.slideDuplicateClass))).remove();
+    $wrapperEl.children(("." + (params.slideClass) + "." + (params.slideDuplicateClass) + ",." + (params.slideClass) + "." + (params.slideBlankClass))).remove();
     slides.removeAttr('data-swiper-slide-index');
   }
 
@@ -28905,7 +29149,7 @@
         }
       }
       // Observe container
-      swiper.observer.attach(swiper.$el[0], { childList: false });
+      swiper.observer.attach(swiper.$el[0], { childList: swiper.params.observeSlideChildren });
 
       // Observe wrapper
       swiper.observer.attach(swiper.$wrapperEl[0], { attributes: false });
@@ -28924,6 +29168,7 @@
     params: {
       observer: false,
       observeParents: false,
+      observeSlideChildren: false,
     },
     create: function create() {
       var swiper = this;
@@ -30142,7 +30387,7 @@
       }
       if (!gesture.$imageEl || gesture.$imageEl.length === 0) { return; }
       if (Support.gestures) {
-        swiper.zoom.scale = e.scale * zoom.currentScale;
+        zoom.scale = e.scale * zoom.currentScale;
       } else {
         zoom.scale = (gesture.scaleMove / gesture.scaleStart) * zoom.currentScale;
       }
@@ -30329,12 +30574,13 @@
       if (gesture.$slideEl && swiper.previousIndex !== swiper.activeIndex) {
         gesture.$imageEl.transform('translate3d(0,0,0) scale(1)');
         gesture.$imageWrapEl.transform('translate3d(0,0,0)');
-        gesture.$slideEl = undefined;
-        gesture.$imageEl = undefined;
-        gesture.$imageWrapEl = undefined;
 
         zoom.scale = 1;
         zoom.currentScale = 1;
+
+        gesture.$slideEl = undefined;
+        gesture.$imageEl = undefined;
+        gesture.$imageWrapEl = undefined;
       }
     },
     // Toggle Zoom
@@ -30557,11 +30803,27 @@
           prevTime: undefined,
         },
       };
+
       ('onGestureStart onGestureChange onGestureEnd onTouchStart onTouchMove onTouchEnd onTransitionEnd toggle enable disable in out').split(' ').forEach(function (methodName) {
         zoom[methodName] = Zoom[methodName].bind(swiper);
       });
       Utils.extend(swiper, {
         zoom: zoom,
+      });
+
+      var scale = 1;
+      Object.defineProperty(swiper.zoom, 'scale', {
+        get: function get() {
+          return scale;
+        },
+        set: function set(value) {
+          if (scale !== value) {
+            var imageEl = swiper.zoom.gesture.$imageEl ? swiper.zoom.gesture.$imageEl[0] : undefined;
+            var slideEl = swiper.zoom.gesture.$slideEl ? swiper.zoom.gesture.$slideEl[0] : undefined;
+            swiper.emit('zoomChange', value, imageEl, slideEl);
+          }
+          scale = value;
+        },
       });
     },
     on: {
@@ -34949,6 +35211,7 @@
     HistoryModule,
     StorageModule,
     ComponentModule,
+    ServiceWorkerModule,
     Statusbar$1,
     View$1,
     Navbar$1,
@@ -34956,6 +35219,7 @@
     Subnavbar,
     TouchRipple$1,
     Modal$1,
+    Skeleton,
     Dialog$1,
     Popup$1,
     LoginScreen$1,
@@ -35008,4 +35272,4 @@
 
   return Framework7;
 
-})));
+}));

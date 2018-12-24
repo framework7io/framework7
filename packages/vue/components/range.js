@@ -46,6 +46,20 @@ export default {
       type: Boolean,
       default: true
     },
+    formatLabel: Function,
+    scale: {
+      type: Boolean,
+      default: false
+    },
+    scaleSteps: {
+      type: Number,
+      default: 5
+    },
+    scaleSubSteps: {
+      type: Number,
+      default: 0
+    },
+    formatScaleLabel: Function,
     name: String,
     input: Boolean,
     inputId: String,
@@ -111,7 +125,12 @@ export default {
         dual,
         draggableBar,
         vertical,
-        verticalReversed
+        verticalReversed,
+        formatLabel,
+        scale,
+        scaleSteps,
+        scaleSubSteps,
+        formatScaleLabel
       } = props;
       self.f7Range = f7.range.create(Utils.noUndefinedProps({
         el: self.$refs.el,
@@ -124,6 +143,11 @@ export default {
         draggableBar,
         vertical,
         verticalReversed,
+        formatLabel,
+        scale,
+        scaleSteps,
+        scaleSubSteps,
+        formatScaleLabel,
         on: {
           change(range, val) {
             self.dispatchEvent('range:change rangeChange', val);

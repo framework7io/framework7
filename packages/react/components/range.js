@@ -80,7 +80,12 @@ class F7Range extends React.Component {
         dual,
         draggableBar,
         vertical,
-        verticalReversed
+        verticalReversed,
+        formatLabel,
+        scale,
+        scaleSteps,
+        scaleSubSteps,
+        formatScaleLabel
       } = props;
       self.f7Range = f7.range.create(Utils.noUndefinedProps({
         el: self.refs.el,
@@ -93,6 +98,11 @@ class F7Range extends React.Component {
         draggableBar,
         vertical,
         verticalReversed,
+        formatLabel,
+        scale,
+        scaleSteps,
+        scaleSubSteps,
+        formatScaleLabel,
         on: {
           change(range, val) {
             self.dispatchEvent('range:change rangeChange', val);
@@ -175,6 +185,20 @@ __reactComponentSetProps(F7Range, Object.assign({
     type: Boolean,
     default: true
   },
+  formatLabel: Function,
+  scale: {
+    type: Boolean,
+    default: false
+  },
+  scaleSteps: {
+    type: Number,
+    default: 5
+  },
+  scaleSubSteps: {
+    type: Number,
+    default: 0
+  },
+  formatScaleLabel: Function,
   name: String,
   input: Boolean,
   inputId: String,

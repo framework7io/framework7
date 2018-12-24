@@ -49,8 +49,12 @@ function initTouch() {
     return activable || target;
   }
 
+  function isInsideScrollableViewLight(el) {
+    const pageContent = el.parents('.page-content');
+    return pageContent.length > 0;
+  }
   function isInsideScrollableView(el) {
-    const pageContent = el.parents('.page-content, .panel');
+    const pageContent = el.parents('.page-content');
 
     if (pageContent.length === 0) {
       return false;
@@ -177,7 +181,11 @@ function initTouch() {
       rippleTarget = undefined;
       return;
     }
-    if (!isInsideScrollableView(rippleTarget)) {
+    const inScrollable = params.fastClicks
+      ? isInsideScrollableView(rippleTarget)
+      : isInsideScrollableViewLight(rippleTarget);
+
+    if (!inScrollable) {
       createRipple(rippleTarget, touchStartX, touchStartY);
     } else {
       rippleTimeout = setTimeout(() => {
@@ -367,6 +375,10 @@ function initTouch() {
           e.preventDefault();
         }
       }
+      if (params.activeState) removeActive();
+      if (useRipple) {
+        rippleTouchEnd();
+      }
       return true;
     }
 
@@ -384,6 +396,9 @@ function initTouch() {
 
     if ((touchEndTime - lastClickTime) < params.fastClicksDelayBetweenClicks) {
       setTimeout(removeActive, 0);
+      if (useRipple) {
+        rippleTouchEnd();
+      }
       return true;
     }
 
@@ -504,8 +519,7 @@ function initTouch() {
     return allowClick;
   }
 
-  function handleTouchStartLite(e) {
-    preventClick = false;
+  function handleTouchStartLight(e) {
     isMoved = false;
     tapHoldFired = false;
     preventClick = false;
@@ -532,7 +546,7 @@ function initTouch() {
 
     if (params.activeState) {
       activableElement = findActivableElement(targetElement);
-      if (!isInsideScrollableView(activableElement)) {
+      if (!isInsideScrollableViewLight(activableElement)) {
         addActive();
       } else {
         activeTimeout = setTimeout(addActive, 80);
@@ -543,7 +557,7 @@ function initTouch() {
     }
     return true;
   }
-  function handleTouchMoveLite(e) {
+  function handleTouchMoveLight(e) {
     const distance = params.fastClicks ? params.fastClicksDistanceThreshold : 0;
     if (distance) {
       const pageX = e.targetTouches[0].pageX;
@@ -568,7 +582,7 @@ function initTouch() {
       }
     }
   }
-  function handleTouchEndLite(e) {
+  function handleTouchEndLight(e) {
     clearTimeout(activeTimeout);
     clearTimeout(tapHoldTimeout);
     if (document.activeElement === e.target) {
@@ -592,7 +606,7 @@ function initTouch() {
     }
     return true;
   }
-  function handleClickLite(e) {
+  function handleClickLight(e) {
     let localPreventClick = preventClick;
     if (targetElement && e.target !== targetElement) {
       localPreventClick = true;
@@ -607,9 +621,12 @@ function initTouch() {
     }
 
     if (params.tapHold) {
-      tapHoldTimeout = setTimeout(() => {
-        tapHoldFired = false;
-      }, (Device.ios || Device.androidChrome ? 100 : 400));
+      tapHoldTimeout = setTimeout(
+        () => {
+          tapHoldFired = false;
+        },
+        (Device.ios || Device.androidChrome ? 100 : 400)
+      );
     }
     preventClick = false;
     targetElement = null;
@@ -680,10 +697,10 @@ function initTouch() {
       app.on('touchmove', handleTouchMove);
       app.on('touchend', handleTouchEnd);
     } else {
-      app.on('click', handleClickLite);
-      app.on('touchstart', handleTouchStartLite);
-      app.on('touchmove', handleTouchMoveLite);
-      app.on('touchend', handleTouchEndLite);
+      app.on('click', handleClickLight);
+      app.on('touchstart', handleTouchStartLight);
+      app.on('touchmove', handleTouchMoveLight);
+      app.on('touchend', handleTouchEndLight);
     }
 
     document.addEventListener('touchcancel', handleTouchCancel, { passive: true });

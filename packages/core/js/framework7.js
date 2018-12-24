@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.0-beta.4
+ * Framework7 4.0.0-beta.5
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,14 +7,14 @@
  *
  * Released under the MIT License
  *
- * Released on: December 12, 2018
+ * Released on: December 24, 2018
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global.Framework7 = factory());
-}(this, (function () { 'use strict';
+  (global = global || self, global.Framework7 = factory());
+}(this, function () { 'use strict';
 
   /**
    * Template7 1.4.0
@@ -3649,7 +3649,7 @@
 
     return {
       touch: (function checkTouch() {
-        return !!(('ontouchstart' in win) || (win.DocumentTouch && doc instanceof win.DocumentTouch));
+        return !!((win.navigator.maxTouchPoints > 0) || ('ontouchstart' in win) || (win.DocumentTouch && doc instanceof win.DocumentTouch));
       }()),
 
       pointerEvents: !!(win.navigator.pointerEnabled || win.PointerEvent || ('maxTouchPoints' in win.navigator)),
@@ -3695,6 +3695,10 @@
 
       gestures: (function checkGestures() {
         return 'ongesturestart' in win;
+      }()),
+
+      intersectionObserver: (function checkObserver() {
+        return ('IntersectionObserver' in win);
       }()),
     };
   }());
@@ -4190,8 +4194,12 @@
       return activable || target;
     }
 
+    function isInsideScrollableViewLight(el) {
+      var pageContent = el.parents('.page-content');
+      return pageContent.length > 0;
+    }
     function isInsideScrollableView(el) {
-      var pageContent = el.parents('.page-content, .panel');
+      var pageContent = el.parents('.page-content');
 
       if (pageContent.length === 0) {
         return false;
@@ -4318,7 +4326,11 @@
         rippleTarget = undefined;
         return;
       }
-      if (!isInsideScrollableView(rippleTarget)) {
+      var inScrollable = params.fastClicks
+        ? isInsideScrollableView(rippleTarget)
+        : isInsideScrollableViewLight(rippleTarget);
+
+      if (!inScrollable) {
         createRipple(rippleTarget, touchStartX, touchStartY);
       } else {
         rippleTimeout = setTimeout(function () {
@@ -4510,6 +4522,10 @@
             e.preventDefault();
           }
         }
+        if (params.activeState) { removeActive(); }
+        if (useRipple) {
+          rippleTouchEnd();
+        }
         return true;
       }
 
@@ -4527,6 +4543,9 @@
 
       if ((touchEndTime - lastClickTime) < params.fastClicksDelayBetweenClicks) {
         setTimeout(removeActive, 0);
+        if (useRipple) {
+          rippleTouchEnd();
+        }
         return true;
       }
 
@@ -4647,8 +4666,7 @@
       return allowClick;
     }
 
-    function handleTouchStartLite(e) {
-      preventClick = false;
+    function handleTouchStartLight(e) {
       isMoved = false;
       tapHoldFired = false;
       preventClick = false;
@@ -4675,7 +4693,7 @@
 
       if (params.activeState) {
         activableElement = findActivableElement(targetElement);
-        if (!isInsideScrollableView(activableElement)) {
+        if (!isInsideScrollableViewLight(activableElement)) {
           addActive();
         } else {
           activeTimeout = setTimeout(addActive, 80);
@@ -4686,7 +4704,7 @@
       }
       return true;
     }
-    function handleTouchMoveLite(e) {
+    function handleTouchMoveLight(e) {
       var distance = params.fastClicks ? params.fastClicksDistanceThreshold : 0;
       if (distance) {
         var pageX = e.targetTouches[0].pageX;
@@ -4711,7 +4729,7 @@
         }
       }
     }
-    function handleTouchEndLite(e) {
+    function handleTouchEndLight(e) {
       clearTimeout(activeTimeout);
       clearTimeout(tapHoldTimeout);
       if (doc.activeElement === e.target) {
@@ -4735,7 +4753,7 @@
       }
       return true;
     }
-    function handleClickLite(e) {
+    function handleClickLight(e) {
       var localPreventClick = preventClick;
       if (targetElement && e.target !== targetElement) {
         localPreventClick = true;
@@ -4750,9 +4768,12 @@
       }
 
       if (params.tapHold) {
-        tapHoldTimeout = setTimeout(function () {
-          tapHoldFired = false;
-        }, (Device.ios || Device.androidChrome ? 100 : 400));
+        tapHoldTimeout = setTimeout(
+          function () {
+            tapHoldFired = false;
+          },
+          (Device.ios || Device.androidChrome ? 100 : 400)
+        );
       }
       preventClick = false;
       targetElement = null;
@@ -4823,10 +4844,10 @@
         app.on('touchmove', handleTouchMove);
         app.on('touchend', handleTouchEnd);
       } else {
-        app.on('click', handleClickLite);
-        app.on('touchstart', handleTouchStartLite);
-        app.on('touchmove', handleTouchMoveLite);
-        app.on('touchend', handleTouchEndLite);
+        app.on('click', handleClickLight);
+        app.on('touchstart', handleTouchStartLight);
+        app.on('touchmove', handleTouchMoveLight);
+        app.on('touchend', handleTouchEndLight);
       }
 
       doc.addEventListener('touchcancel', handleTouchCancel, { passive: true });
@@ -8570,7 +8591,9 @@
               $app: router.app,
               $root: Utils.extend({}, router.app.data, router.app.methods),
               $route: options.route,
+              $f7route: options.route,
               $router: router,
+              $f7router: router,
               $theme: {
                 ios: router.app.theme === 'ios',
                 md: router.app.theme === 'md',
@@ -8648,7 +8671,9 @@
           context,
           {
             $route: options.route,
+            $f7route: options.route,
             $router: router,
+            $f7router: router,
             $theme: {
               ios: app.theme === 'ios',
               md: app.theme === 'md',
@@ -10514,6 +10539,7 @@
         $$: $,
         $dom7: $,
         $app: app,
+        $f7: app,
         $options: Utils.extend({ id: id }, options),
       }
     );
@@ -10827,6 +10853,90 @@
     },
   };
 
+  var SW = {
+    registrations: [],
+    register: function register(path, scope) {
+      var app = this;
+      if (!('serviceWorker' in window.navigator) || !app.serviceWorker.container) {
+        return new Promise(function (resolve, reject) {
+          reject(new Error('Service worker is not supported'));
+        });
+      }
+      return new Promise(function (resolve, reject) {
+        app.serviceWorker.container.register(path, (scope ? { scope: scope } : {}))
+          .then(function (reg) {
+            SW.registrations.push(reg);
+            app.emit('swRegisterSuccess', reg);
+            resolve(reg);
+          }).catch(function (error) {
+            app.emit('swRegisterError', error);
+            reject(error);
+          });
+      });
+    },
+    unregister: function unregister(registration) {
+      var app = this;
+      if (!('serviceWorker' in window.navigator) || !app.serviceWorker.container) {
+        return new Promise(function (resolve, reject) {
+          reject(new Error('Service worker is not supported'));
+        });
+      }
+      var registrations;
+      if (!registration) { registrations = SW.registrations; }
+      else if (Array.isArray(registration)) { registrations = registration; }
+      else { registrations = [registration]; }
+      return Promise.all(registrations.map(function (reg) { return new Promise(function (resolve, reject) {
+        reg.unregister()
+          .then(function () {
+            if (SW.registrations.indexOf(reg) >= 0) {
+              SW.registrations.splice(SW.registrations.indexOf(reg), 1);
+            }
+            app.emit('swUnregisterSuccess', true);
+            resolve();
+          })
+          .catch(function (error) {
+            app.emit('swUnregisterError', error);
+            reject(error);
+          });
+      }); }));
+    },
+  };
+
+  var ServiceWorkerModule = {
+    name: 'sw',
+    params: {
+      serviceWorker: {
+        path: undefined,
+        scope: undefined,
+      },
+    },
+    create: function create() {
+      var app = this;
+      Utils.extend(app, {
+        serviceWorker: {
+          container: ('serviceWorker' in window.navigator) ? window.navigator.serviceWorker : undefined,
+          registrations: SW.registrations,
+          register: SW.register.bind(app),
+          unregister: SW.unregister.bind(app),
+        },
+      });
+    },
+    on: {
+      init: function init() {
+        if (!('serviceWorker' in window.navigator)) { return; }
+        var app = this;
+        if (!app.serviceWorker.container) { return; }
+        var paths = app.params.serviceWorker.path;
+        var scope = app.params.serviceWorker.scope;
+        if (!paths || (Array.isArray(paths) && !paths.length)) { return; }
+        var toRegister = Array.isArray(paths) ? paths : [paths];
+        toRegister.forEach(function (path) {
+          app.serviceWorker.register(path, scope);
+        });
+      },
+    },
+  };
+
   var Statusbar = {
     hide: function hide() {
       $('html').removeClass('with-statusbar');
@@ -10908,10 +11018,6 @@
           $('html').removeClass('with-statusbar');
         }
       }
-    },
-    iosOverlaysWebView: function iosOverlaysWebView(overlays) {
-      if (!Device.ios) { return; }
-      Statusbar.overlaysWebView(overlays);
     },
     checkOverlay: function checkOverlay() {
       if (Device.needsStatusbarOverlay()) {
@@ -11020,9 +11126,6 @@
           setBackgroundColor: Statusbar.setBackgroundColor,
           isVisible: Statusbar.isVisible,
           init: Statusbar.init.bind(app),
-
-          iosOverlaysWebView: Statusbar.iosOverlaysWebView,
-          setIosTextColor: Statusbar.iosSetTextColor,
         },
       });
     },
@@ -12493,6 +12596,10 @@
     },
   };
 
+  var Skeleton = {
+    name: 'skeleton',
+  };
+
   {
     if (typeof window !== 'undefined') {
       // Template7
@@ -12516,14 +12623,16 @@
     HistoryModule,
     StorageModule,
     ComponentModule,
+    ServiceWorkerModule,
     Statusbar$1,
     View$1,
     Navbar$1,
     Toolbar$1,
     Subnavbar,
     TouchRipple$1,
-    Modal$1 ]);
+    Modal$1,
+    Skeleton ]);
 
   return Framework7;
 
-})));
+}));

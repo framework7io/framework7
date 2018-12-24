@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.0.0-beta.4
+ * Framework7 Vue 4.0.0-beta.5
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: December 12, 2018
+ * Released on: December 24, 2018
  */
 
 import f7AccordionContent from './components/accordion-content';
@@ -79,6 +79,8 @@ import f7Row from './components/row';
 import f7Searchbar from './components/searchbar';
 import f7Segmented from './components/segmented';
 import f7Sheet from './components/sheet';
+import f7SkeletonBlock from './components/skeleton-block';
+import f7SkeletonText from './components/skeleton-text';
 import f7Statusbar from './components/statusbar';
 import f7Stepper from './components/stepper';
 import f7Subnavbar from './components/subnavbar';
@@ -164,6 +166,8 @@ export {
   f7Searchbar,
   f7Segmented,
   f7Sheet,
+  f7SkeletonBlock,
+  f7SkeletonText,
   f7Statusbar,
   f7Stepper,
   f7Subnavbar,

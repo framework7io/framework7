@@ -17,6 +17,11 @@ declare namespace F7Range {
     vertical? : boolean
     verticalReversed? : boolean
     draggableBar? : boolean
+    formatLabel? : Function
+    scale? : boolean
+    scaleSteps? : number
+    scaleSubSteps? : number
+    formatScaleLabel? : Function
     name? : string
     input? : boolean
     inputId? : string

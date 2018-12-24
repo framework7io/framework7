@@ -1,5 +1,5 @@
 /**
- * Framework7 React 4.0.0-beta.4
+ * Framework7 React 4.0.0-beta.5
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: December 12, 2018
+ * Released on: December 24, 2018
  */
 
 import F7AccordionContent from './components/accordion-content';
@@ -79,6 +79,8 @@ import F7Row from './components/row';
 import F7Searchbar from './components/searchbar';
 import F7Segmented from './components/segmented';
 import F7Sheet from './components/sheet';
+import F7SkeletonBlock from './components/skeleton-block';
+import F7SkeletonText from './components/skeleton-text';
 import F7Statusbar from './components/statusbar';
 import F7Stepper from './components/stepper';
 import F7Subnavbar from './components/subnavbar';
@@ -163,6 +165,8 @@ const Row = F7Row;
 const Searchbar = F7Searchbar;
 const Segmented = F7Segmented;
 const Sheet = F7Sheet;
+const SkeletonBlock = F7SkeletonBlock;
+const SkeletonText = F7SkeletonText;
 const Statusbar = F7Statusbar;
 const Stepper = F7Stepper;
 const Subnavbar = F7Subnavbar;
@@ -316,6 +320,10 @@ export {
   Segmented,
   F7Sheet,
   Sheet,
+  F7SkeletonBlock,
+  SkeletonBlock,
+  F7SkeletonText,
+  SkeletonText,
   F7Statusbar,
   Statusbar,
   F7Stepper,
