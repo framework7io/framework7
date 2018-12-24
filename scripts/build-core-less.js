@@ -16,7 +16,7 @@ const getOutput = require('./get-core-output.js');
 const banner = require('./banner-core.js');
 
 // Copy LESS
-function copyLess(config, cb) {
+function copyLess(config, components, cb) {
   const output = getOutput();
   const colors = `{\n${Object.keys(config.colors).map(colorName => `  ${colorName}: ${config.colors[colorName]};`).join('\n')}\n}`;
   const includeIosTheme = config.themes.indexOf('ios') >= 0;
@@ -39,7 +39,18 @@ function copyLess(config, cb) {
     }))
     .pipe(gulp.dest(output))
     .on('end', () => {
-      if (cb) cb();
+      gulp.src([`${output}/framework7.less`])
+        .pipe(modifyFile((content) => {
+          return content
+            .replace('//IMPORT_COMPONENTS', components.map(component => `@import url('./components/${component}/${component}.less');`).join('\n'));
+        }))
+        .pipe(rename((filePath) => {
+          filePath.basename = 'framework7.bundle';
+        }))
+        .pipe(gulp.dest(output))
+        .on('end', () => {
+          if (cb) cb();
+        });
     });
 }
 // Build CSS
@@ -171,7 +182,7 @@ function buildLess(cb) {
   });
 
   // Copy Less
-  copyLess(config);
+  copyLess(config, components);
 
   let cbs = 0;
   function onCb() {
