@@ -62,6 +62,9 @@ export default {
     let rightEl;
     let titleLargeEl;
 
+    const iosLeftTitle = self.$theme && self.$theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
+    const mdCenterTitle = self.$theme && self.$theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle;
+
     const slots = self.slots;
 
     if (inner) {
@@ -86,7 +89,7 @@ export default {
       if (slots['nav-right']) {
         rightEl = (
           <F7NavRight>{slots['nav-right']}</F7NavRight>
-        )
+        );
       }
       let largeTitle = titleLarge;
       if (!largeTitle && large && title) largeTitle = title;
@@ -100,7 +103,17 @@ export default {
       innerEl = (
         <div
           ref="inner"
-          className={Utils.classNames('navbar-inner', innerClass, innerClassName, { sliding, 'navbar-inner-large': large })}
+          className={Utils.classNames(
+            'navbar-inner',
+            innerClass,
+            innerClassName,
+            {
+              sliding,
+              'navbar-inner-left-title': iosLeftTitle,
+              'navbar-inner-centered-title': mdCenterTitle,
+              'navbar-inner-large': large,
+            }
+          )}
         >
           {leftEl}
           {titleEl}
@@ -131,7 +144,7 @@ export default {
     );
   },
   componentDidCreate() {
-    Utils.bindMethods(this, ['onBackClick'])
+    Utils.bindMethods(this, ['onBackClick']);
   },
   componentDidUpdate() {
     const self = this;
