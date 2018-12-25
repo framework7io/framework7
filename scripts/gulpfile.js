@@ -103,9 +103,9 @@ const watch = {
       'build-react',
       'ks-react'
     ));
-    gulp.watch(['./kitchen-sink/react/src/**/*.js', './kitchen-sink/react/src/**/*.jsx'], [
+    gulp.watch(['./kitchen-sink/react/src/**/*.js', './kitchen-sink/react/src/**/*.jsx'], gulp.series(
       'ks-react',
-    ]);
+    ));
   },
   vue() {
     gulp.watch(['./src/core/**/*.js'], gulp.series(
@@ -122,9 +122,9 @@ const watch = {
       'build-vue',
       'ks-vue'
     ));
-    gulp.watch(['./kitchen-sink/vue/src/**/*.js', './kitchen-sink/vue/src/**/*.vue'], [
+    gulp.watch(['./kitchen-sink/vue/src/**/*.js', './kitchen-sink/vue/src/**/*.vue'], gulp.series(
       'ks-vue',
-    ]);
+    ));
   },
 };
 
