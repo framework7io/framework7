@@ -62,7 +62,7 @@
           </li>
         </ul>
       </div>
-      <div class="block-title">Open in Mondal</div>
+      <div class="block-title">Open in Modal</div>
       <div class="list no-hairlines-md">
         <ul>
           <li>
