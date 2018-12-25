@@ -29,7 +29,6 @@ import Toolbar from './components/toolbar/toolbar';
 import Subnavbar from './components/subnavbar/subnavbar';
 import TouchRipple from './components/touch-ripple/touch-ripple';
 import Modal from './components/modal/modal';
-import Skeleton from './components/skeleton/skeleton';
 
 //IMPORT_COMPONENTS
 
@@ -64,7 +63,6 @@ Framework7.use([
   Subnavbar,
   TouchRipple,
   Modal,
-  Skeleton,
   //INSTALL_COMPONENTS
 ]);
 

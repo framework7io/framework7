@@ -98,6 +98,9 @@ const config = {
     // Gauge
     'gauge',
 
+    // Skeleton
+    'skeleton',
+
     // VI Video Ads
     'vi',
 
