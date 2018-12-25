@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.0-beta.5
+ * Framework7 4.0.0-beta.6
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: December 24, 2018
+ * Released on: December 25, 2018
  */
 
 (function (global, factory) {
@@ -11294,6 +11294,7 @@
         });
         return;
       }
+
       if (
         $el.hasClass('stacked')
         || $el.parents('.stacked').length > 0
@@ -11302,6 +11303,14 @@
       ) {
         return;
       }
+
+      if (app.theme === 'md' && app.params.navbar.mdCenterTitle) {
+        $el.addClass('navbar-inner-centered-title');
+      }
+      if (app.theme === 'ios' && !app.params.navbar.iosCenterTitle) {
+        $el.addClass('navbar-inner-left-title');
+      }
+
       var $viewEl = $el.parents('.view').eq(0);
       var left = app.rtl ? $el.children('.right') : $el.children('.left');
       var right = app.rtl ? $el.children('.left') : $el.children('.right');
@@ -11412,12 +11421,6 @@
       }
 
       // Center title
-      if (app.theme === 'md' && app.params.navbar.mdCenterTitle) {
-        $el.addClass('navbar-inner-centered-title');
-      }
-      if (app.theme === 'ios' && !app.params.navbar.iosCenterTitle) {
-        $el.addClass('navbar-inner-left-title');
-      }
       if (
         (app.theme === 'ios' && app.params.navbar.iosCenterTitle)
         || (app.theme === 'md' && app.params.navbar.mdCenterTitle)
@@ -11435,7 +11438,7 @@
       if (!$el.length) { return; }
       if ($el.hasClass('navbar-hidden')) { return; }
       var className = "navbar-hidden" + (animate ? ' navbar-transitioning' : '');
-      if ($el.find('.navbar-inner-current .title-large')) {
+      if ($el.find('.navbar-current .title-large').length) {
         className += ' navbar-large-hidden';
       }
       $el.transitionEnd(function () {
@@ -12594,10 +12597,6 @@
         queueDialogs: true,
       },
     },
-  };
-
-  var Skeleton = {
-    name: 'skeleton',
   };
 
   var Dialog = /*@__PURE__*/(function (Modal$$1) {
@@ -34930,6 +34929,10 @@
     },
   };
 
+  var Skeleton = {
+    name: 'skeleton',
+  };
+
   var ViAd = /*@__PURE__*/(function (Framework7Class$$1) {
     function ViAd(app, params) {
       if ( params === void 0 ) params = {};
@@ -35219,7 +35222,6 @@
     Subnavbar,
     TouchRipple$1,
     Modal$1,
-    Skeleton,
     Dialog$1,
     Popup$1,
     LoginScreen$1,
@@ -35265,6 +35267,7 @@
     Autocomplete$1,
     Tooltip$1,
     Gauge$1,
+    Skeleton,
     Vi,
     Elevation,
     Typography

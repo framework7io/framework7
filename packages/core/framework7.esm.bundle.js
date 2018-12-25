@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.0-beta.5
+ * Framework7 4.0.0-beta.6
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: December 24, 2018
+ * Released on: December 25, 2018
  */
 
 import Template7 from 'template7';
@@ -44,7 +44,6 @@ import Toolbar from './components/toolbar/toolbar';
 import Subnavbar from './components/subnavbar/subnavbar';
 import TouchRipple from './components/touch-ripple/touch-ripple';
 import Modal from './components/modal/modal';
-import Skeleton from './components/skeleton/skeleton';
 
 import Dialog from './components/dialog/dialog';
 import Popup from './components/popup/popup';
@@ -91,6 +90,7 @@ import Notification from './components/notification/notification';
 import Autocomplete from './components/autocomplete/autocomplete';
 import Tooltip from './components/tooltip/tooltip';
 import Gauge from './components/gauge/gauge';
+import Skeleton from './components/skeleton/skeleton';
 import Vi from './components/vi/vi';
 import Elevation from './components/elevation/elevation';
 import Typography from './components/typography/typography';
@@ -126,7 +126,6 @@ Framework7.use([
   Subnavbar,
   TouchRipple,
   Modal,
-  Skeleton,
   Dialog,
   Popup,
   LoginScreen,
@@ -172,6 +171,7 @@ Framework7.use([
   Autocomplete,
   Tooltip,
   Gauge,
+  Skeleton,
   Vi,
   Elevation,
   Typography

@@ -59,6 +59,8 @@ export default {
     let titleEl;
     let rightEl;
     let titleLargeEl;
+    const iosLeftTitle = self.$theme && self.$theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
+    const mdCenterTitle = self.$theme && self.$theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle;
     const slots = self.$slots;
 
     if (inner) {
@@ -103,6 +105,8 @@ export default {
         ref: 'inner',
         class: Utils.classNames('navbar-inner', innerClass, innerClassName, {
           sliding,
+          'navbar-inner-left-title': iosLeftTitle,
+          'navbar-inner-centered-title': mdCenterTitle,
           'navbar-inner-large': large
         })
       }, [leftEl, titleEl, rightEl, titleLargeEl, this.$slots['default']]);

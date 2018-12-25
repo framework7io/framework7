@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.0-beta.5
+ * Framework7 4.0.0-beta.6
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: December 24, 2018
+ * Released on: December 25, 2018
  */
 /*====================
   Core
@@ -1415,7 +1415,7 @@ html.device-full-viewport body {
   padding-top: calc(var(--f7-navbar-height) + var(--f7-navbar-large-title-height));
 }
 .ios .navbar a.icon-only {
-  width: var(--f7-navbar-height);
+  width: 44px;
   margin: 0;
   justify-content: center;
 }
@@ -1888,6 +1888,7 @@ html.device-full-viewport body {
 .md .navbar a.icon-only {
   min-width: 0;
   flex-shrink: 0;
+  width: 56px;
 }
 .md .navbar .right {
   margin-right: auto;
@@ -4322,78 +4323,4 @@ i.icon {
 .sheet-backdrop.backdrop-in {
   visibility: visible;
   opacity: 1;
-}
-/* === Skeleton === */
-:root {
-  --f7-skeleton-color: rgba(0, 0, 0, 0.2);
-}
-.theme-dark {
-  --f7-skeleton-color: rgba(255, 255, 255, 0.25);
-}
-.skeleton-text {
-  font-family: 'framework7-skeleton' !important;
-}
-.skeleton-text,
-.skeleton-text * {
-  color: var(--f7-skeleton-color) !important;
-  font-weight: normal !important;
-  font-style: normal !important;
-  letter-spacing: 0 !important;
-}
-.skeleton-block {
-  height: 1em;
-  background: var(--f7-skeleton-color) !important;
-  width: 100%;
-}
-.skeleton-effect-fade {
-  animation: skeleton-effect-fade 1s infinite;
-}
-.skeleton-effect-blink {
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 25%, black 75%, transparent 100%);
-  mask-image: linear-gradient(to right, transparent 0%, black 25%, black 75%, transparent 100%);
-  -webkit-mask-size: 200% 100%;
-  mask-size: 200% 100%;
-  -webkit-mask-repeat: repeat;
-  mask-repeat: repeat;
-  -webkit-mask-position: 50% top;
-  mask-position: 50% top;
-  animation: skeleton-effect-blink 1s infinite;
-}
-.skeleton-effect-pulse {
-  animation: skeleton-effect-pulse 1s infinite;
-}
-@keyframes skeleton-effect-fade {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.2;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-@keyframes skeleton-effect-blink {
-  0% {
-    -webkit-mask-position: 50% top;
-    mask-position: 50% top;
-  }
-  100% {
-    -webkit-mask-position: -150% top;
-    mask-position: -150% top;
-  }
-}
-@keyframes skeleton-effect-pulse {
-  0% {
-    transform: scale(1);
-  }
-  40% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(0.975);
-  }
-  100% {
-    transform: scale(1);
-  }
 }

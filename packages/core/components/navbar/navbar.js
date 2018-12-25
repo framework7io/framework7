@@ -13,6 +13,7 @@ const Navbar = {
       });
       return;
     }
+
     if (
       $el.hasClass('stacked')
       || $el.parents('.stacked').length > 0
@@ -21,6 +22,14 @@ const Navbar = {
     ) {
       return;
     }
+
+    if (app.theme === 'md' && app.params.navbar.mdCenterTitle) {
+      $el.addClass('navbar-inner-centered-title');
+    }
+    if (app.theme === 'ios' && !app.params.navbar.iosCenterTitle) {
+      $el.addClass('navbar-inner-left-title');
+    }
+
     const $viewEl = $el.parents('.view').eq(0);
     const left = app.rtl ? $el.children('.right') : $el.children('.left');
     const right = app.rtl ? $el.children('.left') : $el.children('.right');
@@ -131,12 +140,6 @@ const Navbar = {
     }
 
     // Center title
-    if (app.theme === 'md' && app.params.navbar.mdCenterTitle) {
-      $el.addClass('navbar-inner-centered-title');
-    }
-    if (app.theme === 'ios' && !app.params.navbar.iosCenterTitle) {
-      $el.addClass('navbar-inner-left-title');
-    }
     if (
       (app.theme === 'ios' && app.params.navbar.iosCenterTitle)
       || (app.theme === 'md' && app.params.navbar.mdCenterTitle)
@@ -152,7 +155,7 @@ const Navbar = {
     if (!$el.length) return;
     if ($el.hasClass('navbar-hidden')) return;
     let className = `navbar-hidden${animate ? ' navbar-transitioning' : ''}`;
-    if ($el.find('.navbar-inner-current .title-large')) {
+    if ($el.find('.navbar-current .title-large').length) {
       className += ' navbar-large-hidden';
     }
     $el.transitionEnd(() => {

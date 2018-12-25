@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.0.0-beta.5
+ * Framework7 Vue 4.0.0-beta.6
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: December 24, 2018
+ * Released on: December 25, 2018
  */
 
 (function (global, factory) {
@@ -7132,6 +7132,8 @@
       var titleEl;
       var rightEl;
       var titleLargeEl;
+      var iosLeftTitle = self.$theme && self.$theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
+      var mdCenterTitle = self.$theme && self.$theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle;
       var slots = self.$slots;
 
       if (inner) {
@@ -7176,6 +7178,8 @@
           ref: 'inner',
           class: Utils.classNames('navbar-inner', innerClass, innerClassName, {
             sliding: sliding,
+            'navbar-inner-left-title': iosLeftTitle,
+            'navbar-inner-centered-title': mdCenterTitle,
             'navbar-inner-large': large
           })
         }, [leftEl, titleEl, rightEl, titleLargeEl, this.$slots['default']]);
@@ -11007,7 +11011,7 @@
   };
 
   /**
-   * Framework7 Vue 4.0.0-beta.5
+   * Framework7 Vue 4.0.0-beta.6
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -11015,7 +11019,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: December 24, 2018
+   * Released on: December 25, 2018
    */
 
   var Plugin = {

@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.0-beta.5
+ * Framework7 4.0.0-beta.6
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: December 24, 2018
+ * Released on: December 25, 2018
  */
 
 import Template7 from 'template7';
@@ -44,7 +44,6 @@ import Toolbar from './components/toolbar/toolbar';
 import Subnavbar from './components/subnavbar/subnavbar';
 import TouchRipple from './components/touch-ripple/touch-ripple';
 import Modal from './components/modal/modal';
-import Skeleton from './components/skeleton/skeleton';
 
 
 if ("es" !== 'es') {
@@ -78,7 +77,6 @@ Framework7.use([
   Subnavbar,
   TouchRipple,
   Modal,
-  Skeleton,
   ]);
 
 export { Template7, $ as Dom7, Request, Utils, Device, Support };
