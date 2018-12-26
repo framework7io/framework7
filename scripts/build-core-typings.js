@@ -7,7 +7,7 @@ const gulp = require('gulp');
 const fs = require('fs');
 const modifyFile = require('gulp-modify-file');
 const rename = require('gulp-rename');
-const getOutput = require('./get-core-output.js');
+const getOutput = require('./get-output.js');
 
 function capitalize(name) {
   return name.split('-').map((word) => { // eslint-disable-line
@@ -19,7 +19,7 @@ function capitalize(name) {
 }
 
 function buildTypings(cb) {
-  const output = getOutput();
+  const output = `${getOutput()}/core`;
 
   const modules = fs.readdirSync('./src/core/modules').filter((file) => {
     if (file[0] === '.') return false;

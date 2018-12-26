@@ -7,6 +7,7 @@ const gulp = require('gulp');
 const modifyFile = require('gulp-modify-file');
 const rename = require('gulp-rename');
 const fs = require('fs');
+const getOutput = require('./get-output');
 
 const importLib = `
 import * as React from 'react';
@@ -27,8 +28,7 @@ export default Framework7React;
 `.trim();
 
 function buildTypings(cb) {
-  const env = process.env.NODE_ENV || 'development';
-  const output = `${env === 'development' ? './build' : './packages'}/react`;
+  const output = `${getOutput()}/react`;
 
   const files = fs.readdirSync(`${output}/components`).filter(file => file.indexOf('.d.ts') < 0);
 

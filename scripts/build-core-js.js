@@ -17,7 +17,7 @@ const modifyFile = require('gulp-modify-file');
 const commonjs = require('rollup-plugin-commonjs');
 const getConfig = require('./get-core-config.js');
 const banner = require('./banner-core.js');
-const getOutput = require('./get-core-output.js');
+const getOutput = require('./get-output.js');
 
 let cache;
 
@@ -26,7 +26,7 @@ function es(components, cb) {
   const env = process.env.NODE_ENV || 'development';
   const target = process.env.TARGET || config.target || 'universal';
   const format = 'es';
-  const output = getOutput();
+  const output = `${getOutput()}/core`;
 
   let cbs = 0;
   const expectCbs = 2;
@@ -80,7 +80,7 @@ function umdBundle(components, cb) {
   const env = process.env.NODE_ENV || 'development';
   const target = process.env.TARGET || config.target || 'universal';
   const format = process.env.FORMAT || config.format || 'umd';
-  const output = getOutput();
+  const output = `${getOutput()}/core`;
 
   rollup.rollup({
     input: './src/core/framework7.js',
@@ -147,7 +147,7 @@ function umdCore(cb) {
   const env = process.env.NODE_ENV || 'development';
   const target = process.env.TARGET || config.target || 'universal';
   const format = process.env.FORMAT || config.format || 'umd';
-  const output = getOutput();
+  const output = `${getOutput()}/core`;
 
   rollup.rollup({
     input: './src/core/framework7.js',

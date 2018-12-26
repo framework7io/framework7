@@ -12,12 +12,12 @@ const header = require('gulp-header');
 const rename = require('gulp-rename');
 const cleanCSS = require('gulp-clean-css');
 const getConfig = require('./get-core-config.js');
-const getOutput = require('./get-core-output.js');
+const getOutput = require('./get-output.js');
 const banner = require('./banner-core.js');
 
 // Copy LESS
 function copyLess(config, components, cb) {
-  const output = getOutput();
+  const output = `${getOutput()}/core`;
   const colors = `{\n${Object.keys(config.colors).map(colorName => `  ${colorName}: ${config.colors[colorName]};`).join('\n')}\n}`;
   const includeIosTheme = config.themes.indexOf('ios') >= 0;
   const includeMdTheme = config.themes.indexOf('md') >= 0;
@@ -62,7 +62,7 @@ function buildBundle(config, components, themes, rtl, cb) {
   const includeMdTheme = themes.indexOf('md') >= 0;
   const includeDarkTheme = config.darkTheme;
   const outputFileName = `framework7.bundle${rtl ? '.rtl' : ''}`;
-  const output = getOutput();
+  const output = `${getOutput()}/core`;
 
   gulp.src('./src/core/framework7.less')
     .pipe(modifyFile((content) => {
@@ -118,7 +118,7 @@ function buildCore(themes, rtl, cb) {
   const includeIosTheme = themes.indexOf('ios') >= 0;
   const includeMdTheme = themes.indexOf('md') >= 0;
   const includeDarkTheme = config.darkTheme;
-  const output = getOutput();
+  const output = `${getOutput()}/core`;
   const colors = `{\n${Object.keys(config.colors).map(colorName => `  ${colorName}: ${config.colors[colorName]};`).join('\n')}\n}`;
 
   gulp.src('./src/core/framework7.less')

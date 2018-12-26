@@ -17,6 +17,7 @@ const uglify = require('gulp-uglify');
 const sourcemaps = require('gulp-sourcemaps');
 const rename = require('gulp-rename');
 const bannerReact = require('./banner-react');
+const getOutput = require('./get-output.js');
 
 function esm({ banner, componentImports, componentAliases, componentExports }) {
   return `
@@ -36,7 +37,7 @@ export default Framework7React;
 // Build React
 function buildReact(cb) {
   const env = process.env.NODE_ENV || 'development';
-  const buildPath = env === 'development' ? './build' : './packages';
+  const buildPath = getOutput();
   const pluginContent = fs.readFileSync(`./${buildPath}/react/utils/plugin.js`, 'utf-8');
 
   /* Replace plugin vars: utils/plugin.js */

@@ -5,6 +5,7 @@
 const fs = require('fs');
 const { transformSync } = require('@babel/core');
 const phenome = require('phenome');
+const getOutput = require('./get-output');
 
 function transformRestSpread(buildPath) {
   const reactFiles = fs.readdirSync(`${buildPath}/react/components`).filter(f => f[0] !== '.' && f.indexOf('.d.ts') < 0);
@@ -29,8 +30,7 @@ function transformRestSpread(buildPath) {
 
 // Phenome
 function build(cb) {
-  const env = process.env.NODE_ENV || 'development';
-  const buildPath = env === 'development' ? './build' : './packages';
+  const buildPath = getOutput();
 
   phenome({
     paths: ['./src/phenome/**/*.js', './src/phenome/**/*.jsx'],

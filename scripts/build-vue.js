@@ -15,6 +15,7 @@ const uglify = require('gulp-uglify');
 const sourcemaps = require('gulp-sourcemaps');
 const rename = require('gulp-rename');
 const bannerVue = require('./banner-vue');
+const getOutput = require('./get-output');
 
 function esm({ banner, componentImports, componentExports }) {
   return `
@@ -31,7 +32,7 @@ export default Framework7Vue;
 
 function buildVue(cb) {
   const env = process.env.NODE_ENV || 'development';
-  const buildPath = env === 'development' ? './build' : './packages';
+  const buildPath = getOutput();
   const pluginContent = fs.readFileSync(`./${buildPath}/vue/utils/plugin.js`, 'utf-8');
 
   /* Replace plugin vars: utils/plugin.js */

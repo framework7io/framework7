@@ -17,7 +17,7 @@ const cleanCSS = require('gulp-clean-css');
 const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
 const getConfig = require('./get-core-config.js');
-const getOutput = require('./get-core-output.js');
+const getOutput = require('./get-output.js');
 
 const coreComponents = [
   'app',
@@ -77,7 +77,7 @@ const outro = `
 function buildLazyComponentsLess(rtl, components, cb) {
   // const env = process.env.NODE_ENV || 'development';
   const config = getConfig();
-  const output = getOutput();
+  const output = `${getOutput()}/core`;
   const colors = `{\n${Object.keys(config.colors).map(colorName => `  ${colorName}: ${config.colors[colorName]};`).join('\n')}\n}`;
   const includeIosTheme = config.themes.indexOf('ios') >= 0;
   const includeMdTheme = config.themes.indexOf('md') >= 0;
@@ -127,7 +127,7 @@ function buildLazyComponentsJs(components, cb) {
   const env = process.env.NODE_ENV || 'development';
   const target = process.env.TARGET || config.target || 'universal';
   const format = 'umd';
-  const output = getOutput();
+  const output = `${getOutput()}/core`;
 
   const componentsToProcess = components.filter((component) => { // eslint-disable-line
     return fs.existsSync(`./src/core/components/${component}/${component}.js`);
