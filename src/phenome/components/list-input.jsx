@@ -11,9 +11,13 @@ export default {
     className: String, // phenome-react-line
     sortable: Boolean,
     media: String,
-    tag: {
-      type: String,
-      default: 'li',
+    dropdown: {
+      type: [String, Boolean],
+      default: 'auto',
+    },
+    wrap: {
+      type: Boolean,
+      default: true,
     },
 
     // Inputs
@@ -98,8 +102,9 @@ export default {
       className,
       sortable,
       media,
+      dropdown,
       input: renderInput,
-      tag,
+      wrap,
       type,
       name,
       value,
@@ -195,7 +200,7 @@ export default {
             required={required}
             pattern={pattern}
             validate={typeof validate === 'string' && validate.length ? validate : undefined}
-            data-validate={validate === true || validate === '' ? true : undefined}
+            data-validate={validate === true || validate === '' || validateOnBlur === true || validateOnBlur === '' ? true : undefined}
             data-validate-on-blur={validateOnBlur === true || validateOnBlur === '' ? true : undefined}
             tabIndex={tabindex}
             data-error-message={errorMessageForce ? undefined : errorMessage}
@@ -234,7 +239,7 @@ export default {
             step={step}
             pattern={pattern}
             validate={typeof validate === 'string' && validate.length ? validate : undefined}
-            data-validate={validate === true || validate === '' ? true : undefined}
+            data-validate={validate === true || validate === '' || validateOnBlur === true || validateOnBlur === '' ? true : undefined}
             data-validate-on-blur={validateOnBlur === true || validateOnBlur === '' ? true : undefined}
             tabIndex={tabindex}
             data-error-message={errorMessageForce ? undefined : errorMessage}
@@ -275,72 +280,80 @@ export default {
 
     const hasErrorMessage = !!errorMessage || (self.slots['error-message'] && self.slots['error-message'].length);
 
-    const ItemTag = tag;
+    const ItemContent = (
+      <div ref="itemContentEl" className={Utils.classNames(
+        'item-content item-input',
+        !wrap && className,
+        !wrap && { disabled },
+        !wrap && Mixins.colorClasses(props),
+        {
+          'inline-label': inlineLabel,
+          'item-input-focused': inputFocused,
+          'item-input-with-info': !!info || (self.slots.info && self.slots.info.length),
+          'item-input-with-value': inputHasValue,
+          'item-input-with-error-message': (hasErrorMessage && errorMessageForce) || inputInvalid,
+          'item-input-invalid': (hasErrorMessage && errorMessageForce) || inputInvalid,
+        }
+      )}>
+        <slot name="content-start" />
+
+        {(media || self.slots.media) && (
+          <div className="item-media">
+            {media && (<img src={media} />)}
+            <slot name="media"/>
+          </div>
+        )}
+        <div className="item-inner">
+          <slot name="inner-start"/>
+          {(label || self.slots.label) && (
+            <div className={Utils.classNames('item-title item-label', { 'item-floating-label': floatingLabel })}>
+              {label}
+              <slot name="label"/>
+            </div>
+          )}
+          <div className={Utils.classNames('item-input-wrap', {
+            'input-dropdown': dropdown === 'auto' ? type === 'select' : dropdown,
+          })}>
+            {inputEl}
+            <slot name="input" />
+            {hasErrorMessage && errorMessageForce && (
+              <div className="item-input-error-message">
+                {errorMessage}
+                <slot name="error-message"/>
+              </div>
+            )}
+            {clearButton && (
+              <span className="input-clear-button" />
+            )}
+            {(info || self.slots.info) && (
+              <div className="item-input-info">
+                {info}
+                <slot name="info"/>
+              </div>
+            )}
+          </div>
+          <slot name="inner"/>
+          <slot name="inner-end"/>
+        </div>
+        <slot name="content" />
+        <slot name="content-end" />
+      </div>
+    );
+    if (!wrap) {
+      return ItemContent;
+    }
     return (
-      <ItemTag ref="el" id={id} style={style} className={Utils.classNames(
+      <li ref="el" id={id} style={style} className={Utils.classNames(
         className,
         { disabled },
         Mixins.colorClasses(props),
       )}>
         <slot name="root-start" />
-        <div className={Utils.classNames(
-          'item-content item-input',
-          {
-            'inline-label': inlineLabel,
-            'item-input-focused': inputFocused,
-            'item-input-with-info': !!info || (self.slots.info && self.slots.info.length),
-            'item-input-with-value': inputHasValue,
-            'item-input-with-error-message': (hasErrorMessage && errorMessageForce) || inputInvalid,
-            'item-input-invalid': (hasErrorMessage && errorMessageForce) || inputInvalid,
-          }
-        )}>
-          <slot name="content-start" />
-
-          {(media || self.slots.media) && (
-            <div className="item-media">
-              {media && (<img src={media} />)}
-              <slot name="media"/>
-            </div>
-          )}
-          <div className="item-inner">
-            <slot name="inner-start"/>
-            {(label || self.slots.label) && (
-              <div className={Utils.classNames('item-title item-label', { 'item-floating-label': floatingLabel })}>
-                {label}
-                <slot name="label"/>
-              </div>
-            )}
-            <div className={Utils.classNames('item-input-wrap', {
-              'input-dropdown': type === 'select',
-            })}>
-              {inputEl}
-              <slot name="input" />
-              {hasErrorMessage && errorMessageForce && (
-                <div className="item-input-error-message">
-                  {errorMessage}
-                  <slot name="error-message"/>
-                </div>
-              )}
-              {clearButton && (
-                <span className="input-clear-button" />
-              )}
-              {(info || self.slots.info) && (
-                <div className="item-input-info">
-                  {info}
-                  <slot name="info"/>
-                </div>
-              )}
-            </div>
-            <slot name="inner"/>
-            <slot name="inner-end"/>
-          </div>
-          <slot name="content" />
-          <slot name="content-end" />
-        </div>
+        {ItemContent}
         {isSortable && (<div className="sortable-handler" />)}
         <slot name="root" />
         <slot name="root-end" />
-      </ItemTag>
+      </li>
     );
   },
   watch: {
@@ -356,7 +369,8 @@ export default {
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
-    if (!el) return;
+    const itemContentEl = self.refs.itemContentEl;
+    if (!el && !itemContentEl) return;
 
     self.$f7ready((f7) => {
       const { validate, validateOnBlur, resizable, value, defaultValue, type } = self.props;
@@ -370,7 +384,7 @@ export default {
       inputEl.addEventListener('input:clear', self.onInputClear, false);
 
       if (
-        !validateOnBlur
+        !(validateOnBlur || validateOnBlur === '')
         && (validate || validate === '')
         && (
           (typeof value !== 'undefined' && value !== null && value !== '')
@@ -386,7 +400,7 @@ export default {
       }
     });
 
-    self.$listEl = self.$$(el).parents('.list, .list-group').eq(0);
+    self.$listEl = self.$$(el || itemContentEl).parents('.list, .list-group').eq(0);
     if (self.$listEl.length) {
       self.setState({
         isSortable: self.$listEl.hasClass('sortable'),
@@ -472,7 +486,7 @@ export default {
       const self = this;
       const { validate, validateOnBlur } = self.props;
       self.dispatchEvent('input', event);
-      if (!validateOnBlur && (validate || validate === '') && self.refs && self.refs.inputEl) {
+      if (!(validateOnBlur || validateOnBlur === '') && (validate || validate === '') && self.refs && self.refs.inputEl) {
         self.validateInput(self.refs.inputEl);
       }
     },
@@ -482,9 +496,9 @@ export default {
     },
     onBlur(event) {
       const self = this;
-      const { validate } = self.props;
+      const { validate, validateOnBlur } = self.props;
       self.dispatchEvent('blur', event);
-      if ((validate || validate === '') && self.refs && self.refs.inputEl) {
+      if ((validate || validate === '' || validateOnBlur || validateOnBlur === '') && self.refs && self.refs.inputEl) {
         self.validateInput(self.refs.inputEl);
       }
       self.setState({ inputFocused: false });

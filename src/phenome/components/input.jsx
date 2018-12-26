@@ -62,6 +62,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    dropdown: {
+      type: [String, Boolean],
+      default: 'auto',
+    },
     ...Mixins.colorProps,
   },
   state() {
@@ -111,6 +115,7 @@ export default {
       errorMessageForce,
       info,
       wrap,
+      dropdown,
       style,
       className,
       noStoreData,
@@ -174,7 +179,7 @@ export default {
             required={required}
             pattern={pattern}
             validate={typeof validate === 'string' && validate.length ? validate : undefined}
-            data-validate={validate === true || validate === '' ? true : undefined}
+            data-validate={validate === true || validate === '' || validateOnBlur === true || validateOnBlur === '' ? true : undefined}
             data-validate-on-blur={validateOnBlur === true || validateOnBlur === '' ? true : undefined}
             tabIndex={tabindex}
             data-error-message={errorMessageForce ? undefined : errorMessage}
@@ -213,7 +218,7 @@ export default {
             step={step}
             pattern={pattern}
             validate={typeof validate === 'string' && validate.length ? validate : undefined}
-            data-validate={validate === true || validate === '' ? true : undefined}
+            data-validate={validate === true || validate === '' || validateOnBlur === true || validateOnBlur === '' ? true : undefined}
             data-validate-on-blur={validateOnBlur === true || validateOnBlur === '' ? true : undefined}
             tabIndex={tabindex}
             data-error-message={errorMessageForce ? undefined : errorMessage}
@@ -283,6 +288,9 @@ export default {
       const wrapClasses = Utils.classNames(
         className,
         'input',
+        {
+          'input-dropdown': dropdown === 'auto' ? type === 'select' : dropdown,
+        },
         Mixins.colorClasses(props),
       );
       return (
@@ -337,7 +345,7 @@ export default {
 
       f7.input.checkEmptyState(inputEl);
       if (
-        !validateOnBlur
+        !(validateOnBlur || validateOnBlur === '')
         && (validate || validate === '')
         && (
           (typeof value !== 'undefined' && value !== null && value !== '')
@@ -435,7 +443,7 @@ export default {
       const self = this;
       const { validate, validateOnBlur } = self.props;
       self.dispatchEvent('input', event);
-      if (!validateOnBlur && (validate || validate === '') && self.refs && self.refs.inputEl) {
+      if (!(validateOnBlur || validateOnBlur === '') && (validate || validate === '') && self.refs && self.refs.inputEl) {
         self.validateInput(self.refs.inputEl);
       }
     },
@@ -445,9 +453,9 @@ export default {
     },
     onBlur(event) {
       const self = this;
-      const { validate } = self.props;
+      const { validate, validateOnBlur } = self.props;
       self.dispatchEvent('blur', event);
-      if ((validate || validate === '') && self.refs && self.refs.inputEl) {
+      if ((validate || validate === '' || validateOnBlur || validateOnBlur === '') && self.refs && self.refs.inputEl) {
         self.validateInput(self.refs.inputEl);
       }
       self.setState({ inputFocused: false });
