@@ -66,7 +66,7 @@ button {
 .button-outline,
 .ios .button-outline-ios,
 .md .button-outline-md {
-  border: var(--f7-button-outline-border-width) solid var(--f7-theme-color);
+  border: var(--f7-button-outline-border-width) solid var(--f7-button-outline-border-color, var(--f7-theme-color));
   line-height: calc(var(--f7-button-height) - var(--f7-button-outline-border-width) * 2);
 }
 .button-outline.button-small,
@@ -81,7 +81,7 @@ button {
 .ios .button-small-ios.button-fill,
 .ios .button-small-ios.button-fill-ios {
   --f7-button-outline-border-width: var(--f7-button-small-outline-border-width);
-  border: var(--f7-button-outline-border-width) solid var(--f7-theme-color);
+  border: var(--f7-button-outline-border-width) solid var(--f7-button-outline-border-color, var(--f7-theme-color));
   line-height: calc(var(--f7-button-height) - var(--f7-button-outline-border-width) * 2);
 }
 
@@ -114,7 +114,7 @@ button {
       border-left: none;
     }
     .button.button-outline {
-      border: var(--f7-button-outline-border-width) solid var(--f7-theme-color);
+      border: var(--f7-button-outline-border-width) solid var(--f7-button-outline-border-color, var(--f7-theme-color));
       &:nth-child(n + 2) {
         border-left: none;
       }
@@ -135,7 +135,7 @@ button {
       border-right: none;
     }
     .button.button-outline {
-      border: var(--f7-button-outline-border-width) solid var(--f7-theme-color);
+      border: var(--f7-button-outline-border-width) solid var(--f7-button-outline-border-color, var(--f7-theme-color));
       &:nth-child(n + 2) {
         border-right: none;
       }

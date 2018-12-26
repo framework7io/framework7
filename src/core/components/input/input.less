@@ -52,7 +52,7 @@ textarea {
     width: 100%;
     height: var(--f7-input-height);
     color: var(--f7-input-text-color);
-    font-size: var(--f7-input-font-size)px;
+    font-size: var(--f7-input-font-size);
     &::placeholder {
       color: var(--f7-input-placeholder-color);
     }
@@ -142,6 +142,7 @@ textarea {
   font-size: var(--f7-input-error-font-size);
   line-height: var(--f7-input-error-line-height);
   color: var(--f7-input-error-text-color);
+  font-weight: var(--f7-input-error-font-weight);
   display: none;
 }
 .item-input-info,
@@ -244,18 +245,20 @@ textarea {
     margin-top: -2px;
     width: 0;
     height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
     border-top: 5px solid #727272;
     .ltr({
-      right: 2px;
+      right: 6px;
     });
     .rtl({
-      left: 2px;
+      left: 6px;
     });
   }
-  select, input, textarea {
-    padding-right: 14px;
+  select,
+  input,
+  textarea {
+    padding-right: 20px;
   }
 }
 
