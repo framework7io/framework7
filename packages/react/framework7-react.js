@@ -1,5 +1,5 @@
 /**
- * Framework7 React 4.0.0-beta.7
+ * Framework7 React 4.0.0-beta.8
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -12415,7 +12415,7 @@
   };
 
   /**
-   * Framework7 React 4.0.0-beta.7
+   * Framework7 React 4.0.0-beta.8
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *

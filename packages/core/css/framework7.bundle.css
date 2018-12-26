@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.0-beta.7
+ * Framework7 4.0.0-beta.8
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -13746,7 +13746,7 @@ button.swiper-pagination-bullet {
   --f7-photobrowser-caption-dark-bg-color: rgba(0, 0, 0, 0.8);
   --f7-photobrowser-exposed-bg-color: #000;
   --f7-photobrowser-dark-bg-color: #000;
-  --f7-photobrowser-dark-bars-bg-color-rgb: 27, 27, 27;
+  --f7-photobrowser-dark-bars-bg-color: rgba(27, 27, 27, 0.8);
   --f7-photobrowser-dark-bars-text-color: #fff;
   --f7-photobrowser-dark-bars-link-color: #fff;
 }
@@ -13912,7 +13912,7 @@ button.swiper-pagination-bullet {
 .view.with-photo-browser-page .navbar,
 .photo-browser-page .toolbar,
 .view.with-photo-browser-page .toolbar {
-  background: rgba(var(--f7-photobrowser-bars-bg-color-rgb, var(--f7-bars-bg-color-rgb)), 0.95);
+  background: var(--f7-photobrowser-bars-bg-color, rgba(var(--f7-bars-bg-color-rgb), 0.95));
   transition: 400ms;
   color: var(--f7-photobrowser-bars-text-color, var(--f7-bars-text-color));
 }
@@ -13954,7 +13954,7 @@ button.swiper-pagination-bullet {
 .view.with-photo-browser-page-dark .toolbar {
   --f7-touch-ripple-color: var(--f7-touch-ripple-white);
   --f7-link-highlight-color: var(--f7-link-highlight-white);
-  background: rgba(var(--f7-photobrowser-dark-bars-bg-color-rgb), 0.8);
+  background: var(--f7-photobrowser-dark-bars-bg-color);
   color: var(--f7-photobrowser-dark-bars-text-color);
 }
 .photo-browser-dark .navbar:before,
