@@ -1,5 +1,5 @@
 /**
- * Framework7 React 4.0.0-beta.6
+ * Framework7 React 4.0.0-beta.7
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: December 25, 2018
+ * Released on: December 26, 2018
  */
 
 (function (global, factory) {
@@ -3753,7 +3753,7 @@
       var validateOnBlur = ref.validateOnBlur;
       self.dispatchEvent('input', event);
 
-      if (!validateOnBlur && (validate || validate === '') && self.refs && self.refs.inputEl) {
+      if (!(validateOnBlur || validateOnBlur === '') && (validate || validate === '') && self.refs && self.refs.inputEl) {
         self.validateInput(self.refs.inputEl);
       }
     };
@@ -3769,9 +3769,10 @@
       var self = this;
       var ref = self.props;
       var validate = ref.validate;
+      var validateOnBlur = ref.validateOnBlur;
       self.dispatchEvent('blur', event);
 
-      if ((validate || validate === '') && self.refs && self.refs.inputEl) {
+      if ((validate || validate === '' || validateOnBlur || validateOnBlur === '') && self.refs && self.refs.inputEl) {
         self.validateInput(self.refs.inputEl);
       }
 
@@ -3825,6 +3826,7 @@
       var errorMessageForce = props.errorMessageForce;
       var info = props.info;
       var wrap = props.wrap;
+      var dropdown = props.dropdown;
       var style = props.style;
       var className = props.className;
       var noStoreData = props.noStoreData;
@@ -3884,7 +3886,7 @@
             required: required,
             pattern: pattern,
             validate: typeof validate === 'string' && validate.length ? validate : undefined,
-            'data-validate': validate === true || validate === '' ? true : undefined,
+            'data-validate': validate === true || validate === '' || validateOnBlur === true || validateOnBlur === '' ? true : undefined,
             'data-validate-on-blur': validateOnBlur === true || validateOnBlur === '' ? true : undefined,
             tabIndex: tabindex,
             'data-error-message': errorMessageForce ? undefined : errorMessage,
@@ -3939,7 +3941,9 @@
       }
 
       if (wrap) {
-        var wrapClasses = Utils.classNames(className, 'input', Mixins.colorClasses(props));
+        var wrapClasses = Utils.classNames(className, 'input', {
+          'input-dropdown': dropdown === 'auto' ? type === 'select' : dropdown
+        }, Mixins.colorClasses(props));
         return React.createElement('div', {
           id: id,
           ref: function (__reactNode) {
@@ -4043,7 +4047,7 @@
 
         f7.input.checkEmptyState(inputEl);
 
-        if (!validateOnBlur && (validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
+        if (!(validateOnBlur || validateOnBlur === '') && (validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
           setTimeout(function () {
             self.validateInput(inputEl);
           }, 0);
@@ -4121,6 +4125,10 @@
     wrap: {
       type: Boolean,
       default: true
+    },
+    dropdown: {
+      type: [String, Boolean],
+      default: 'auto'
     }
   }, Mixins.colorProps));
 
@@ -4811,7 +4819,7 @@
       var validateOnBlur = ref.validateOnBlur;
       self.dispatchEvent('input', event);
 
-      if (!validateOnBlur && (validate || validate === '') && self.refs && self.refs.inputEl) {
+      if (!(validateOnBlur || validateOnBlur === '') && (validate || validate === '') && self.refs && self.refs.inputEl) {
         self.validateInput(self.refs.inputEl);
       }
     };
@@ -4827,9 +4835,10 @@
       var self = this;
       var ref = self.props;
       var validate = ref.validate;
+      var validateOnBlur = ref.validateOnBlur;
       self.dispatchEvent('blur', event);
 
-      if ((validate || validate === '') && self.refs && self.refs.inputEl) {
+      if ((validate || validate === '' || validateOnBlur || validateOnBlur === '') && self.refs && self.refs.inputEl) {
         self.validateInput(self.refs.inputEl);
       }
 
@@ -4855,8 +4864,9 @@
       var className = props.className;
       var sortable = props.sortable;
       var media = props.media;
+      var dropdown = props.dropdown;
       var renderInput = props.input;
-      var tag = props.tag;
+      var wrap = props.wrap;
       var type = props.type;
       var name = props.name;
       var value = props.value;
@@ -4949,7 +4959,7 @@
             required: required,
             pattern: pattern,
             validate: typeof validate === 'string' && validate.length ? validate : undefined,
-            'data-validate': validate === true || validate === '' ? true : undefined,
+            'data-validate': validate === true || validate === '' || validateOnBlur === true || validateOnBlur === '' ? true : undefined,
             'data-validate-on-blur': validateOnBlur === true || validateOnBlur === '' ? true : undefined,
             tabIndex: tabindex,
             'data-error-message': errorMessageForce ? undefined : errorMessage,
@@ -4980,18 +4990,13 @@
       }
 
       var hasErrorMessage = !!errorMessage || self.slots['error-message'] && self.slots['error-message'].length;
-      var ItemTag = tag;
-      return React.createElement(ItemTag, {
+      var ItemContent = React.createElement('div', {
         ref: function (__reactNode) {
-          this$1.__reactRefs['el'] = __reactNode;
+          this$1.__reactRefs['itemContentEl'] = __reactNode;
         },
-        id: id,
-        style: style,
-        className: Utils.classNames(className, {
+        className: Utils.classNames('item-content item-input', !wrap && className, !wrap && {
           disabled: disabled
-        }, Mixins.colorClasses(props))
-      }, this.slots['root-start'], React.createElement('div', {
-        className: Utils.classNames('item-content item-input', {
+        }, !wrap && Mixins.colorClasses(props), {
           'inline-label': inlineLabel,
           'item-input-focused': inputFocused,
           'item-input-with-info': !!info || self.slots.info && self.slots.info.length,
@@ -5011,7 +5016,7 @@
         })
       }, label, this.slots['label']), React.createElement('div', {
         className: Utils.classNames('item-input-wrap', {
-          'input-dropdown': type === 'select'
+          'input-dropdown': dropdown === 'auto' ? type === 'select' : dropdown
         })
       }, inputEl, this.slots['input'], hasErrorMessage && errorMessageForce && React.createElement('div', {
         className: 'item-input-error-message'
@@ -5019,7 +5024,22 @@
         className: 'input-clear-button'
       }), (info || self.slots.info) && React.createElement('div', {
         className: 'item-input-info'
-      }, info, this.slots['info'])), this.slots['inner'], this.slots['inner-end']), this.slots['content'], this.slots['content-end']), isSortable && React.createElement('div', {
+      }, info, this.slots['info'])), this.slots['inner'], this.slots['inner-end']), this.slots['content'], this.slots['content-end']);
+
+      if (!wrap) {
+        return ItemContent;
+      }
+
+      return React.createElement('li', {
+        ref: function (__reactNode) {
+          this$1.__reactRefs['el'] = __reactNode;
+        },
+        id: id,
+        style: style,
+        className: Utils.classNames(className, {
+          disabled: disabled
+        }, Mixins.colorClasses(props))
+      }, this.slots['root-start'], ItemContent, isSortable && React.createElement('div', {
         className: 'sortable-handler'
       }), this.slots['root'], this.slots['root-end']);
     };
@@ -5080,7 +5100,8 @@
     F7ListInput.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var el = self.refs.el;
-      if (!el) { return; }
+      var itemContentEl = self.refs.itemContentEl;
+      if (!el && !itemContentEl) { return; }
       self.$f7ready(function (f7) {
         var ref = self.props;
         var validate = ref.validate;
@@ -5096,7 +5117,7 @@
         inputEl.addEventListener('input:empty', self.onInputEmpty, false);
         inputEl.addEventListener('input:clear', self.onInputClear, false);
 
-        if (!validateOnBlur && (validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
+        if (!(validateOnBlur || validateOnBlur === '') && (validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
           setTimeout(function () {
             self.validateInput(inputEl);
           }, 0);
@@ -5106,7 +5127,7 @@
           f7.input.resizeTextarea(inputEl);
         }
       });
-      self.$listEl = self.$$(el).parents('.list, .list-group').eq(0);
+      self.$listEl = self.$$(el || itemContentEl).parents('.list, .list-group').eq(0);
 
       if (self.$listEl.length) {
         self.setState({
@@ -5143,9 +5164,13 @@
     className: String,
     sortable: Boolean,
     media: String,
-    tag: {
-      type: String,
-      default: 'li'
+    dropdown: {
+      type: [String, Boolean],
+      default: 'auto'
+    },
+    wrap: {
+      type: Boolean,
+      default: true
     },
     input: {
       type: Boolean,
@@ -12390,7 +12415,7 @@
   };
 
   /**
-   * Framework7 React 4.0.0-beta.6
+   * Framework7 React 4.0.0-beta.7
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -12398,7 +12423,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: December 25, 2018
+   * Released on: December 26, 2018
    */
 
   var Plugin = {

@@ -9,9 +9,13 @@ export default {
     id: [String, Number],
     sortable: Boolean,
     media: String,
-    tag: {
-      type: String,
-      default: 'li'
+    dropdown: {
+      type: [String, Boolean],
+      default: 'auto'
+    },
+    wrap: {
+      type: Boolean,
+      default: true
     },
     input: {
       type: Boolean,
@@ -91,8 +95,9 @@ export default {
       className,
       sortable,
       media,
+      dropdown,
       input: renderInput,
-      tag,
+      wrap,
       type,
       name,
       value,
@@ -194,7 +199,7 @@ export default {
             step: step,
             pattern: pattern,
             validate: typeof validate === 'string' && validate.length ? validate : undefined,
-            'data-validate': validate === true || validate === '' ? true : undefined,
+            'data-validate': validate === true || validate === '' || validateOnBlur === true || validateOnBlur === '' ? true : undefined,
             'data-validate-on-blur': validateOnBlur === true || validateOnBlur === '' ? true : undefined,
             tabindex: tabindex,
             'data-error-message': errorMessageForce ? undefined : errorMessage
@@ -221,18 +226,12 @@ export default {
     }
 
     const hasErrorMessage = !!errorMessage || self.$slots['error-message'] && self.$slots['error-message'].length;
-    const ItemTag = tag;
-    return _h(ItemTag, {
-      ref: 'el',
-      style: style,
-      class: Utils.classNames(className, {
+
+    const ItemContent = _h('div', {
+      ref: 'itemContentEl',
+      class: Utils.classNames('item-content item-input', !wrap && className, !wrap && {
         disabled
-      }, Mixins.colorClasses(props)),
-      attrs: {
-        id: id
-      }
-    }, [this.$slots['root-start'], _h('div', {
-      class: Utils.classNames('item-content item-input', {
+      }, !wrap && Mixins.colorClasses(props), {
         'inline-label': inlineLabel,
         'item-input-focused': inputFocused,
         'item-input-with-info': !!info || self.$slots.info && self.$slots.info.length,
@@ -254,7 +253,7 @@ export default {
       })
     }, [label, this.$slots['label']]), _h('div', {
       class: Utils.classNames('item-input-wrap', {
-        'input-dropdown': type === 'select'
+        'input-dropdown': dropdown === 'auto' ? type === 'select' : dropdown
       })
     }, [inputEl, this.$slots['input'], hasErrorMessage && errorMessageForce && _h('div', {
       class: 'item-input-error-message'
@@ -262,7 +261,22 @@ export default {
       class: 'input-clear-button'
     }), (info || self.$slots.info) && _h('div', {
       class: 'item-input-info'
-    }, [info, this.$slots['info']])]), this.$slots['inner'], this.$slots['inner-end']]), this.$slots['content'], this.$slots['content-end']]), isSortable && _h('div', {
+    }, [info, this.$slots['info']])]), this.$slots['inner'], this.$slots['inner-end']]), this.$slots['content'], this.$slots['content-end']]);
+
+    if (!wrap) {
+      return ItemContent;
+    }
+
+    return _h('li', {
+      ref: 'el',
+      style: style,
+      class: Utils.classNames(className, {
+        disabled
+      }, Mixins.colorClasses(props)),
+      attrs: {
+        id: id
+      }
+    }, [this.$slots['root-start'], ItemContent, isSortable && _h('div', {
       class: 'sortable-handler'
     }), this.$slots['root'], this.$slots['root-end']]);
   },
@@ -282,7 +296,8 @@ export default {
   mounted() {
     const self = this;
     const el = self.$refs.el;
-    if (!el) return;
+    const itemContentEl = self.$refs.itemContentEl;
+    if (!el && !itemContentEl) return;
     self.$f7ready(f7 => {
       const {
         validate,
@@ -299,7 +314,7 @@ export default {
       inputEl.addEventListener('input:empty', self.onInputEmpty, false);
       inputEl.addEventListener('input:clear', self.onInputClear, false);
 
-      if (!validateOnBlur && (validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
+      if (!(validateOnBlur || validateOnBlur === '') && (validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
         setTimeout(() => {
           self.validateInput(inputEl);
         }, 0);
@@ -309,7 +324,7 @@ export default {
         f7.input.resizeTextarea(inputEl);
       }
     });
-    self.$listEl = self.$$(el).parents('.list, .list-group').eq(0);
+    self.$listEl = self.$$(el || itemContentEl).parents('.list, .list-group').eq(0);
 
     if (self.$listEl.length) {
       self.setState({
@@ -429,7 +444,7 @@ export default {
       } = self.props;
       self.dispatchEvent('input', event);
 
-      if (!validateOnBlur && (validate || validate === '') && self.$refs && self.$refs.inputEl) {
+      if (!(validateOnBlur || validateOnBlur === '') && (validate || validate === '') && self.$refs && self.$refs.inputEl) {
         self.validateInput(self.$refs.inputEl);
       }
     },
@@ -444,11 +459,12 @@ export default {
     onBlur(event) {
       const self = this;
       const {
-        validate
+        validate,
+        validateOnBlur
       } = self.props;
       self.dispatchEvent('blur', event);
 
-      if ((validate || validate === '') && self.$refs && self.$refs.inputEl) {
+      if ((validate || validate === '' || validateOnBlur || validateOnBlur === '') && self.$refs && self.$refs.inputEl) {
         self.validateInput(self.$refs.inputEl);
       }
 

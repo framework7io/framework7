@@ -86,7 +86,7 @@ class F7ListInput extends React.Component {
     } = self.props;
     self.dispatchEvent('input', event);
 
-    if (!validateOnBlur && (validate || validate === '') && self.refs && self.refs.inputEl) {
+    if (!(validateOnBlur || validateOnBlur === '') && (validate || validate === '') && self.refs && self.refs.inputEl) {
       self.validateInput(self.refs.inputEl);
     }
   }
@@ -101,11 +101,12 @@ class F7ListInput extends React.Component {
   onBlur(event) {
     const self = this;
     const {
-      validate
+      validate,
+      validateOnBlur
     } = self.props;
     self.dispatchEvent('blur', event);
 
-    if ((validate || validate === '') && self.refs && self.refs.inputEl) {
+    if ((validate || validate === '' || validateOnBlur || validateOnBlur === '') && self.refs && self.refs.inputEl) {
       self.validateInput(self.refs.inputEl);
     }
 
@@ -131,8 +132,9 @@ class F7ListInput extends React.Component {
       className,
       sortable,
       media,
+      dropdown,
       input: renderInput,
-      tag,
+      wrap,
       type,
       name,
       value,
@@ -226,7 +228,7 @@ class F7ListInput extends React.Component {
           required: required,
           pattern: pattern,
           validate: typeof validate === 'string' && validate.length ? validate : undefined,
-          'data-validate': validate === true || validate === '' ? true : undefined,
+          'data-validate': validate === true || validate === '' || validateOnBlur === true || validateOnBlur === '' ? true : undefined,
           'data-validate-on-blur': validateOnBlur === true || validateOnBlur === '' ? true : undefined,
           tabIndex: tabindex,
           'data-error-message': errorMessageForce ? undefined : errorMessage,
@@ -257,18 +259,13 @@ class F7ListInput extends React.Component {
     }
 
     const hasErrorMessage = !!errorMessage || self.slots['error-message'] && self.slots['error-message'].length;
-    const ItemTag = tag;
-    return React.createElement(ItemTag, {
+    const ItemContent = React.createElement('div', {
       ref: __reactNode => {
-        this.__reactRefs['el'] = __reactNode;
+        this.__reactRefs['itemContentEl'] = __reactNode;
       },
-      id: id,
-      style: style,
-      className: Utils.classNames(className, {
+      className: Utils.classNames('item-content item-input', !wrap && className, !wrap && {
         disabled
-      }, Mixins.colorClasses(props))
-    }, this.slots['root-start'], React.createElement('div', {
-      className: Utils.classNames('item-content item-input', {
+      }, !wrap && Mixins.colorClasses(props), {
         'inline-label': inlineLabel,
         'item-input-focused': inputFocused,
         'item-input-with-info': !!info || self.slots.info && self.slots.info.length,
@@ -288,7 +285,7 @@ class F7ListInput extends React.Component {
       })
     }, label, this.slots['label']), React.createElement('div', {
       className: Utils.classNames('item-input-wrap', {
-        'input-dropdown': type === 'select'
+        'input-dropdown': dropdown === 'auto' ? type === 'select' : dropdown
       })
     }, inputEl, this.slots['input'], hasErrorMessage && errorMessageForce && React.createElement('div', {
       className: 'item-input-error-message'
@@ -296,7 +293,22 @@ class F7ListInput extends React.Component {
       className: 'input-clear-button'
     }), (info || self.slots.info) && React.createElement('div', {
       className: 'item-input-info'
-    }, info, this.slots['info'])), this.slots['inner'], this.slots['inner-end']), this.slots['content'], this.slots['content-end']), isSortable && React.createElement('div', {
+    }, info, this.slots['info'])), this.slots['inner'], this.slots['inner-end']), this.slots['content'], this.slots['content-end']);
+
+    if (!wrap) {
+      return ItemContent;
+    }
+
+    return React.createElement('li', {
+      ref: __reactNode => {
+        this.__reactRefs['el'] = __reactNode;
+      },
+      id: id,
+      style: style,
+      className: Utils.classNames(className, {
+        disabled
+      }, Mixins.colorClasses(props))
+    }, this.slots['root-start'], ItemContent, isSortable && React.createElement('div', {
       className: 'sortable-handler'
     }), this.slots['root'], this.slots['root-end']);
   }
@@ -358,7 +370,8 @@ class F7ListInput extends React.Component {
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
-    if (!el) return;
+    const itemContentEl = self.refs.itemContentEl;
+    if (!el && !itemContentEl) return;
     self.$f7ready(f7 => {
       const {
         validate,
@@ -375,7 +388,7 @@ class F7ListInput extends React.Component {
       inputEl.addEventListener('input:empty', self.onInputEmpty, false);
       inputEl.addEventListener('input:clear', self.onInputClear, false);
 
-      if (!validateOnBlur && (validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
+      if (!(validateOnBlur || validateOnBlur === '') && (validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
         setTimeout(() => {
           self.validateInput(inputEl);
         }, 0);
@@ -385,7 +398,7 @@ class F7ListInput extends React.Component {
         f7.input.resizeTextarea(inputEl);
       }
     });
-    self.$listEl = self.$$(el).parents('.list, .list-group').eq(0);
+    self.$listEl = self.$$(el || itemContentEl).parents('.list, .list-group').eq(0);
 
     if (self.$listEl.length) {
       self.setState({
@@ -416,9 +429,13 @@ __reactComponentSetProps(F7ListInput, Object.assign({
   className: String,
   sortable: Boolean,
   media: String,
-  tag: {
-    type: String,
-    default: 'li'
+  dropdown: {
+    type: [String, Boolean],
+    default: 'auto'
+  },
+  wrap: {
+    type: Boolean,
+    default: true
   },
   input: {
     type: Boolean,

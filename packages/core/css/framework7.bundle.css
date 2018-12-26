@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.0-beta.6
+ * Framework7 4.0.0-beta.7
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: December 25, 2018
+ * Released on: December 26, 2018
  */
 /*====================
   Core
@@ -1187,6 +1187,12 @@ html.device-full-viewport body {
   background-color: var(--f7-navbar-bg-color, var(--f7-bars-bg-color, var(--f7-theme-color)));
   color: var(--f7-navbar-text-color, var(--f7-bars-text-color));
   font-size: var(--f7-navbar-font-size);
+}
+.navbar .material-icons {
+  width: 24px;
+}
+.navbar .f7-icons {
+  width: 28px;
 }
 .navbar b {
   font-weight: 500;
@@ -2663,9 +2669,6 @@ html.device-full-viewport body {
 .md .subnavbar .right:first-child {
   right: 16px;
 }
-.md .subnavbar a {
-  color: inherit;
-}
 .md .subnavbar a.link {
   justify-content: center;
   padding: 0 16px;
@@ -2706,6 +2709,7 @@ html.device-full-viewport body {
   --f7-block-footer-margin: 10px;
   --f7-block-header-font-size: 14px;
   --f7-block-footer-font-size: 14px;
+  --f7-block-title-white-space: nowrap;
   --f7-block-title-medium-text-color: #000;
   --f7-block-title-medium-text-transform: none;
   --f7-block-title-large-text-color: #000;
@@ -2874,7 +2878,7 @@ html.device-full-viewport body {
   position: relative;
   overflow: hidden;
   margin: 0;
-  white-space: nowrap;
+  white-space: var(--f7-block-title-white-space);
   text-overflow: ellipsis;
   text-transform: var(--f7-block-title-text-transform);
   color: var(--f7-block-title-text-color);
@@ -3040,6 +3044,14 @@ html.device-full-viewport body {
   --f7-list-bg-color: #fff;
   --f7-list-item-text-max-lines: 2;
   --f7-list-chevron-icon-color: #c7c7cc;
+  --f7-list-item-title-font-size: inherit;
+  --f7-list-item-title-font-weight: 400;
+  --f7-list-item-title-text-color: inherit;
+  --f7-list-item-title-line-height: inherit;
+  --f7-list-item-title-white-space: nowrap;
+  --f7-list-item-subtitle-font-weight: 400;
+  --f7-list-item-subtitle-text-color: inherit;
+  --f7-list-item-subtitle-line-height: inherit;
   --f7-list-item-header-text-color: inherit;
   --f7-list-item-header-font-size: 12px;
   --f7-list-item-header-font-weight: 400;
@@ -3057,14 +3069,7 @@ html.device-full-viewport body {
   --f7-list-border-color: #c8c7cc;
   --f7-list-item-border-color: #c8c7cc;
   --f7-list-link-pressed-bg-color: #d9d9d9;
-  --f7-list-item-title-font-size: inherit;
-  --f7-list-item-title-font-weight: 400;
-  --f7-list-item-title-text-color: inherit;
-  --f7-list-item-title-line-height: inherit;
   --f7-list-item-subtitle-font-size: 15px;
-  --f7-list-item-subtitle-font-weight: 400;
-  --f7-list-item-subtitle-text-color: inherit;
-  --f7-list-item-subtitle-line-height: inherit;
   --f7-list-item-text-font-size: 15px;
   --f7-list-item-text-font-weight: 400;
   --f7-list-item-text-text-color: #8e8e93;
@@ -3124,14 +3129,7 @@ html.device-full-viewport body {
   --f7-list-border-color: rgba(0, 0, 0, 0.12);
   --f7-list-item-border-color: rgba(0, 0, 0, 0.12);
   --f7-list-link-pressed-bg-color: rgba(0, 0, 0, 0.1);
-  --f7-list-item-title-font-size: inherit;
-  --f7-list-item-title-font-weight: 400;
-  --f7-list-item-title-text-color: inherit;
-  --f7-list-item-title-line-height: inherit;
   --f7-list-item-subtitle-font-size: 14px;
-  --f7-list-item-subtitle-font-weight: 400;
-  --f7-list-item-subtitle-text-color: inherit;
-  --f7-list-item-subtitle-line-height: inherit;
   --f7-list-item-text-font-size: 14px;
   --f7-list-item-text-font-weight: 400;
   --f7-list-item-text-text-color: #757575;
@@ -3277,7 +3275,7 @@ html.device-full-viewport body {
 .list .item-title {
   min-width: 0;
   flex-shrink: 1;
-  white-space: nowrap;
+  white-space: var(--f7-list-item-title-white-space);
   position: relative;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -3992,7 +3990,7 @@ input[type="button"].button {
 .button-outline,
 .ios .button-outline-ios,
 .md .button-outline-md {
-  border: var(--f7-button-outline-border-width) solid var(--f7-theme-color);
+  border: var(--f7-button-outline-border-width) solid var(--f7-button-outline-border-color, var(--f7-theme-color));
   line-height: calc(var(--f7-button-height) - var(--f7-button-outline-border-width) * 2);
 }
 .button-outline.button-small,
@@ -4007,7 +4005,7 @@ input[type="button"].button {
 .ios .button-small-ios.button-fill,
 .ios .button-small-ios.button-fill-ios {
   --f7-button-outline-border-width: var(--f7-button-small-outline-border-width);
-  border: var(--f7-button-outline-border-width) solid var(--f7-theme-color);
+  border: var(--f7-button-outline-border-width) solid var(--f7-button-outline-border-color, var(--f7-theme-color));
   line-height: calc(var(--f7-button-height) - var(--f7-button-outline-border-width) * 2);
 }
 .button-large,
@@ -4039,7 +4037,7 @@ input[type="button"].button {
   border-left: none;
 }
 .segmented .button.button-outline {
-  border: var(--f7-button-outline-border-width) solid var(--f7-theme-color);
+  border: var(--f7-button-outline-border-width) solid var(--f7-button-outline-border-color, var(--f7-theme-color));
 }
 .segmented .button.button-outline:nth-child(n + 2) {
   border-left: none;
@@ -4777,6 +4775,9 @@ html.with-modal-popup .framework7-root > .panel .page-content {
   --f7-login-screen-bg-color: #fff;
   --f7-login-screen-content-bg-color: #fff;
   --f7-login-screen-blocks-max-width: 480px;
+  --f7-login-screen-title-text-align: center;
+  --f7-login-screen-title-text-color: inherit;
+  --f7-login-screen-title-letter-spacing: 0;
 }
 :root .theme-dark,
 :root.theme-dark {
@@ -4856,9 +4857,11 @@ html.with-modal-popup .framework7-root > .panel .page-content {
   margin-right: auto;
 }
 .login-screen-title {
-  text-align: center;
+  text-align: var(--f7-login-screen-title-text-align);
   font-size: var(--f7-login-screen-title-font-size);
   font-weight: var(--f7-login-screen-title-font-weight);
+  color: var(--f7-login-screen-title-text-color);
+  letter-spacing: var(--f7-login-screen-title-letter-spacing);
 }
 .theme-dark .login-screen-content .list ul,
 .theme-dark .login-screen-content .block-strong {
@@ -8101,6 +8104,7 @@ html.with-panel-right-cover .panel-right {
   --f7-input-error-text-color: #ff3b30;
   --f7-input-error-font-size: 12px;
   --f7-input-error-line-height: 1.4;
+  --f7-input-error-font-weight: 400;
   --f7-input-info-font-size: 12px;
   --f7-input-info-line-height: 1.4;
 }
@@ -8193,7 +8197,7 @@ textarea {
   width: 100%;
   height: var(--f7-input-height);
   color: var(--f7-input-text-color);
-  font-size: var(--f7-input-font-size) px;
+  font-size: var(--f7-input-font-size);
 }
 .list input[type="text"]::-webkit-input-placeholder,
 .list input[type="password"]::-webkit-input-placeholder,
@@ -8357,6 +8361,7 @@ textarea {
   font-size: var(--f7-input-error-font-size);
   line-height: var(--f7-input-error-line-height);
   color: var(--f7-input-error-text-color);
+  font-weight: var(--f7-input-error-font-weight);
   display: none;
 }
 .item-input-info,
@@ -8474,10 +8479,10 @@ textarea {
   margin-top: -2px;
   width: 0;
   height: 0;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
   border-top: 5px solid #727272;
-  right: 2px;
+  right: 6px;
 }
 .input-dropdown-wrap select,
 .input-dropdown select,
@@ -8485,7 +8490,7 @@ textarea {
 .input-dropdown input,
 .input-dropdown-wrap textarea,
 .input-dropdown textarea {
-  padding-right: 14px;
+  padding-right: 20px;
 }
 .ios .list textarea {
   padding-top: 11px;

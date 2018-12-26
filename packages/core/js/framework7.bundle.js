@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.0-beta.6
+ * Framework7 4.0.0-beta.7
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: December 25, 2018
+ * Released on: December 26, 2018
  */
 
 (function (global, factory) {

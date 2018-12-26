@@ -8,7 +8,8 @@ declare namespace F7ListInput {
     className? : string
     sortable? : boolean
     media? : string
-    tag? : string
+    dropdown? : string | boolean
+    wrap? : boolean
     input? : boolean
     type? : string
     name? : string

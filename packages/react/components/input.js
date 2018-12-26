@@ -87,7 +87,7 @@ class F7Input extends React.Component {
     } = self.props;
     self.dispatchEvent('input', event);
 
-    if (!validateOnBlur && (validate || validate === '') && self.refs && self.refs.inputEl) {
+    if (!(validateOnBlur || validateOnBlur === '') && (validate || validate === '') && self.refs && self.refs.inputEl) {
       self.validateInput(self.refs.inputEl);
     }
   }
@@ -102,11 +102,12 @@ class F7Input extends React.Component {
   onBlur(event) {
     const self = this;
     const {
-      validate
+      validate,
+      validateOnBlur
     } = self.props;
     self.dispatchEvent('blur', event);
 
-    if ((validate || validate === '') && self.refs && self.refs.inputEl) {
+    if ((validate || validate === '' || validateOnBlur || validateOnBlur === '') && self.refs && self.refs.inputEl) {
       self.validateInput(self.refs.inputEl);
     }
 
@@ -159,6 +160,7 @@ class F7Input extends React.Component {
       errorMessageForce,
       info,
       wrap,
+      dropdown,
       style,
       className,
       noStoreData,
@@ -219,7 +221,7 @@ class F7Input extends React.Component {
           required: required,
           pattern: pattern,
           validate: typeof validate === 'string' && validate.length ? validate : undefined,
-          'data-validate': validate === true || validate === '' ? true : undefined,
+          'data-validate': validate === true || validate === '' || validateOnBlur === true || validateOnBlur === '' ? true : undefined,
           'data-validate-on-blur': validateOnBlur === true || validateOnBlur === '' ? true : undefined,
           tabIndex: tabindex,
           'data-error-message': errorMessageForce ? undefined : errorMessage,
@@ -275,7 +277,9 @@ class F7Input extends React.Component {
     }
 
     if (wrap) {
-      const wrapClasses = Utils.classNames(className, 'input', Mixins.colorClasses(props));
+      const wrapClasses = Utils.classNames(className, 'input', {
+        'input-dropdown': dropdown === 'auto' ? type === 'select' : dropdown
+      }, Mixins.colorClasses(props));
       return React.createElement('div', {
         id: id,
         ref: __reactNode => {
@@ -381,7 +385,7 @@ class F7Input extends React.Component {
 
       f7.input.checkEmptyState(inputEl);
 
-      if (!validateOnBlur && (validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
+      if (!(validateOnBlur || validateOnBlur === '') && (validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
         setTimeout(() => {
           self.validateInput(inputEl);
         }, 0);
@@ -453,6 +457,10 @@ __reactComponentSetProps(F7Input, Object.assign({
   wrap: {
     type: Boolean,
     default: true
+  },
+  dropdown: {
+    type: [String, Boolean],
+    default: 'auto'
   }
 }, Mixins.colorProps));
 
