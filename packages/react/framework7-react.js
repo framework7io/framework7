@@ -1,5 +1,5 @@
 /**
- * Framework7 React 3.6.2
+ * Framework7 React 3.6.3
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,14 +7,14 @@
  *
  * Released under the MIT License
  *
- * Released on: December 11, 2018
+ * Released on: December 27, 2018
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('react')) :
   typeof define === 'function' && define.amd ? define(['react'], factory) :
-  (global.Framework7React = factory(global.React));
-}(this, (function (React) { 'use strict';
+  global.Framework7React = factory(global.React);
+}(typeof self !== 'undefined' ? self : this, function (React) { 'use strict';
 
   React = React && React.hasOwnProperty('default') ? React['default'] : React;
 
@@ -158,6 +158,7 @@
       reloadPrevious: Boolean,
       routeTabId: String,
       view: String,
+      routeProps: Object,
     },
     linkRouterAttrs: function linkRouterAttrs(props) {
       var force = props.force;
@@ -2009,7 +2010,9 @@
 
     F7Button.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
-      self.refs.el.removeEventListener('click', self.onClickBound);
+      var el = self.refs.el;
+      el.removeEventListener('click', self.onClickBound);
+      delete el.f7RouteProps;
 
       if (self.f7Tooltip && self.f7Tooltip.destroy) {
         self.f7Tooltip.destroy();
@@ -2018,15 +2021,41 @@
       }
     };
 
+    F7Button.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+      var this$1 = this;
+
+      __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
+        var self = this$1;
+        if (!newText || !self.f7Tooltip) { return; }
+        self.f7Tooltip.setText(newText);
+      });
+
+      var self = this;
+      var el = self.refs.el;
+      var ref = self.props;
+      var routeProps = ref.routeProps;
+
+      if (routeProps) {
+        el.f7RouteProps = routeProps;
+      }
+    };
+
     F7Button.prototype.componentDidMount = function componentDidMount () {
       var self = this;
-      self.refs.el.addEventListener('click', self.onClickBound);
+      var el = self.refs.el;
+      el.addEventListener('click', self.onClickBound);
       var ref = self.props;
       var tooltip = ref.tooltip;
+      var routeProps = ref.routeProps;
+
+      if (routeProps) {
+        el.f7RouteProps = routeProps;
+      }
+
       if (!tooltip) { return; }
       self.$f7ready(function (f7) {
         self.f7Tooltip = f7.tooltip.create({
-          targetEl: self.refs.el,
+          targetEl: el,
           text: tooltip
         });
       });
@@ -2048,16 +2077,6 @@
     };
 
     prototypeAccessors.refs.set = function (refs) {};
-
-    F7Button.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
-      var this$1 = this;
-
-      __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
-        var self = this$1;
-        if (!newText || !self.f7Tooltip) { return; }
-        self.f7Tooltip.setText(newText);
-      });
-    };
 
     Object.defineProperties( F7Button.prototype, prototypeAccessors );
 
@@ -3368,6 +3387,7 @@
         var label = props.label;
         var dual = props.dual;
         var draggableBar = props.draggableBar;
+        var formatLabel = props.formatLabel;
         self.f7Range = f7.range.create(Utils.noUndefinedProps({
           el: self.refs.el,
           value: value,
@@ -3377,6 +3397,7 @@
           label: label,
           dual: dual,
           draggableBar: draggableBar,
+          formatLabel: formatLabel,
           on: {
             change: function change(range, val) {
               self.dispatchEvent('range:change rangeChange', val);
@@ -3462,7 +3483,8 @@
     draggableBar: {
       type: Boolean,
       default: true
-    }
+    },
+    formatLabel: Function
   }, Mixins.colorProps));
 
   F7Range.displayName = 'f7-range';
@@ -3475,12 +3497,9 @@
       this.__reactRefs = {};
 
       this.state = (function () {
-        var value = props.value;
-        var defaultValue = props.defaultValue;
         return {
           inputFocused: false,
-          inputInvalid: false,
-          currentInputValue: typeof value === 'undefined' ? defaultValue : value
+          inputInvalid: false
         };
       })();
 
@@ -3501,7 +3520,23 @@
     F7Input.prototype = Object.create( superclass && superclass.prototype );
     F7Input.prototype.constructor = F7Input;
 
-    var prototypeAccessors = { inputWithValue: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+
+    F7Input.prototype.domValue = function domValue () {
+      var self = this;
+      var ref = self.refs;
+      var inputEl = ref.inputEl;
+      if (!inputEl) { return undefined; }
+      return inputEl.value;
+    };
+
+    F7Input.prototype.inputHasValue = function inputHasValue () {
+      var self = this;
+      var ref = self.props;
+      var value = ref.value;
+      var domValue = self.domValue();
+      return typeof value === 'undefined' ? domValue || domValue === 0 : value || value === 0;
+    };
 
     F7Input.prototype.validateInput = function validateInput (inputEl) {
       var self = this;
@@ -3548,10 +3583,6 @@
       if ((validate || validate === '') && self.refs && self.refs.inputEl) {
         self.validateInput(self.refs.inputEl);
       }
-
-      self.setState({
-        currentInputValue: event.target.value
-      });
     };
 
     F7Input.prototype.onFocus = function onFocus (event) {
@@ -3625,22 +3656,32 @@
       var noStoreData = props.noStoreData;
       var noFormStoreData = props.noFormStoreData;
       var ignoreStoreData = props.ignoreStoreData;
+      var domValue = self.domValue();
+      var inputHasValue = self.inputHasValue();
       var inputEl;
 
-      var createInput = function (tag, children) {
-        var InputTag = tag;
+      var createInput = function (InputTag, children) {
         var needsValue = type !== 'file';
-        var needsType = tag === 'input';
+        var needsType = InputTag === 'input';
         var inputClassName = Utils.classNames(!wrap && className, {
           resizable: type === 'textarea' && resizable,
           'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
           'input-invalid': errorMessage && errorMessageForce || self.state.inputInvalid,
-          'input-with-value': self.inputWithValue,
+          'input-with-value': inputHasValue,
           'input-focused': self.state.inputFocused
         });
         var input;
+        var inputValue;
+
+        if (needsValue) {
+          if (typeof value !== 'undefined') { inputValue = value; }else { inputValue = domValue; }
+        }
+
+        var valueProps = {};
+        if ('value' in props) { valueProps.value = inputValue; }
+        if ('defaultValue' in props) { valueProps.defaultValue = defaultValue; }
         {
-          input = React.createElement(InputTag, {
+          input = React.createElement(InputTag, Object.assign({
             ref: function (__reactNode) {
               this$1.__reactRefs['inputEl'] = __reactNode;
             },
@@ -3649,8 +3690,6 @@
             type: needsType ? type : undefined,
             placeholder: placeholder,
             id: inputId,
-            value: needsValue ? value : undefined,
-            defaultValue: defaultValue,
             size: size,
             accept: accept,
             autoComplete: autocomplete,
@@ -3679,7 +3718,7 @@
             onBlur: self.onBlur,
             onInput: self.onInput,
             onChange: self.onChange
-          }, children);
+          }, valueProps), children);
         }
         return input;
       };
@@ -3745,15 +3784,6 @@
       return inputEl;
     };
 
-    prototypeAccessors.inputWithValue.get = function () {
-      var self = this;
-      var ref = self.props;
-      var value = ref.value;
-      var ref$1 = self.state;
-      var currentInputValue = ref$1.currentInputValue;
-      return typeof value === 'undefined' ? currentInputValue : value || value === 0;
-    };
-
     F7Input.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
       var ref = self.props;
@@ -3782,12 +3812,8 @@
         var self = this$1;
         var ref = self.props;
         var type = ref.type;
-        var value = ref.value;
         if (type === 'range' || type === 'toggle') { return; }
         if (!self.$f7) { return; }
-        self.setState({
-          currentInputValue: value
-        });
         self.updateInputOnDidUpdate = true;
       });
 
@@ -4118,6 +4144,7 @@
       var self = this;
       var el = self.refs.el;
       el.removeEventListener('click', self.onClick);
+      delete el.f7RouteProps;
 
       if (self.f7SmartSelect && self.f7SmartSelect.destroy) {
         self.f7SmartSelect.destroy();
@@ -4127,6 +4154,25 @@
         self.f7Tooltip.destroy();
         self.f7Tooltip = null;
         delete self.f7Tooltip;
+      }
+    };
+
+    F7Link.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+      var this$1 = this;
+
+      __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
+        var self = this$1;
+        if (!newText || !self.f7Tooltip) { return; }
+        self.f7Tooltip.setText(newText);
+      });
+
+      var self = this;
+      var el = self.refs.el;
+      var ref = self.props;
+      var routeProps = ref.routeProps;
+
+      if (routeProps) {
+        el.f7RouteProps = routeProps;
       }
     };
 
@@ -4140,6 +4186,7 @@
       var tooltip = ref.tooltip;
       var smartSelect = ref.smartSelect;
       var smartSelectParams = ref.smartSelectParams;
+      var routeProps = ref.routeProps;
       var isTabbarLabel = false;
 
       if (tabbarLabel || (tabLink || tabLink === '') && self.$$(el).parents('.tabbar-labels').length) {
@@ -4149,6 +4196,7 @@
       self.setState({
         isTabbarLabel: isTabbarLabel
       });
+      if (routeProps) { el.f7RouteProps = routeProps; }
       self.$f7ready(function (f7) {
         if (smartSelect) {
           var ssParams = Utils.extend({
@@ -4182,16 +4230,6 @@
     };
 
     prototypeAccessors.refs.set = function (refs) {};
-
-    F7Link.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
-      var this$1 = this;
-
-      __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
-        var self = this$1;
-        if (!newText || !self.f7Tooltip) { return; }
-        self.f7Tooltip.setText(newText);
-      });
-    };
 
     Object.defineProperties( F7Link.prototype, prototypeAccessors );
 
@@ -4301,11 +4339,34 @@
     };
 
     F7ListButton.prototype.componentWillUnmount = function componentWillUnmount () {
-      this.refs.linkEl.removeEventListener('click', this.onClick);
+      var self = this;
+      var linkEl = self.refs.linkEl;
+      linkEl.removeEventListener('click', this.onClick);
+      delete linkEl.f7RouteProps;
+    };
+
+    F7ListButton.prototype.componentDidUpdate = function componentDidUpdate () {
+      var self = this;
+      var linkEl = self.refs.linkEl;
+      var ref = self.props;
+      var routeProps = ref.routeProps;
+
+      if (routeProps) {
+        linkEl.f7RouteProps = routeProps;
+      }
     };
 
     F7ListButton.prototype.componentDidMount = function componentDidMount () {
-      this.refs.linkEl.addEventListener('click', this.onClick);
+      var self = this;
+      var linkEl = self.refs.linkEl;
+      var ref = self.props;
+      var routeProps = ref.routeProps;
+
+      if (routeProps) {
+        linkEl.f7RouteProps = routeProps;
+      }
+
+      linkEl.addEventListener('click', self.onClick);
     };
 
     prototypeAccessors.slots.get = function () {
@@ -4547,13 +4608,10 @@
       this.__reactRefs = {};
 
       this.state = (function () {
-        var value = props.value;
-        var defaultValue = props.defaultValue;
         return {
           isSortable: props.sortable,
           inputFocused: false,
-          inputInvalid: false,
-          currentInputValue: typeof value === 'undefined' ? defaultValue : value
+          inputInvalid: false
         };
       })();
 
@@ -4574,7 +4632,23 @@
     F7ListInput.prototype = Object.create( superclass && superclass.prototype );
     F7ListInput.prototype.constructor = F7ListInput;
 
-    var prototypeAccessors = { inputHasValue: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
+    var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+
+    F7ListInput.prototype.domValue = function domValue () {
+      var self = this;
+      var ref = self.refs;
+      var inputEl = ref.inputEl;
+      if (!inputEl) { return undefined; }
+      return inputEl.value;
+    };
+
+    F7ListInput.prototype.inputHasValue = function inputHasValue () {
+      var self = this;
+      var ref = self.props;
+      var value = ref.value;
+      var domValue = self.domValue();
+      return typeof value === 'undefined' ? domValue || domValue === 0 : value || value === 0;
+    };
 
     F7ListInput.prototype.validateInput = function validateInput (inputEl) {
       var self = this;
@@ -4621,10 +4695,6 @@
       if ((validate || validate === '') && self.refs && self.refs.inputEl) {
         self.validateInput(self.refs.inputEl);
       }
-
-      self.setState({
-        currentInputValue: event.target.value
-      });
     };
 
     F7ListInput.prototype.onFocus = function onFocus (event) {
@@ -4651,15 +4721,6 @@
 
     F7ListInput.prototype.onChange = function onChange (event) {
       this.dispatchEvent('change', event);
-    };
-
-    prototypeAccessors.inputHasValue.get = function () {
-      var self = this;
-      var ref = self.props;
-      var value = ref.value;
-      var ref$1 = self.state;
-      var currentInputValue = ref$1.currentInputValue;
-      return typeof value === 'undefined' ? currentInputValue : value || value === 0;
     };
 
     F7ListInput.prototype.render = function render () {
@@ -4715,22 +4776,32 @@
       var label = props.label;
       var inlineLabel = props.inlineLabel;
       var floatingLabel = props.floatingLabel;
+      var domValue = self.domValue();
+      var inputHasValue = self.inputHasValue();
       var isSortable = sortable || self.state.isSortable;
 
-      var createInput = function (tag, children) {
-        var InputTag = tag;
+      var createInput = function (InputTag, children) {
         var needsValue = type !== 'file';
-        var needsType = tag === 'input';
+        var needsType = InputTag === 'input';
         var inputClassName = Utils.classNames({
           resizable: type === 'textarea' && resizable,
           'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
           'input-invalid': errorMessage && errorMessageForce || inputInvalid,
-          'input-with-value': self.inputHasValue,
+          'input-with-value': inputHasValue,
           'input-focused': inputFocused
         });
         var input;
+        var inputValue;
+
+        if (needsValue) {
+          if (typeof value !== 'undefined') { inputValue = value; }else { inputValue = domValue; }
+        }
+
+        var valueProps = {};
+        if ('value' in props) { valueProps.value = inputValue; }
+        if ('defaultValue' in props) { valueProps.defaultValue = defaultValue; }
         {
-          input = React.createElement(InputTag, {
+          input = React.createElement(InputTag, Object.assign({
             ref: function (__reactNode) {
               this$1.__reactRefs['inputEl'] = __reactNode;
             },
@@ -4739,8 +4810,6 @@
             type: needsType ? type : undefined,
             placeholder: placeholder,
             id: inputId,
-            value: needsValue ? value : undefined,
-            defaultValue: defaultValue,
             size: size,
             accept: accept,
             autoComplete: autocomplete,
@@ -4768,7 +4837,7 @@
             onBlur: self.onBlur,
             onInput: self.onInput,
             onChange: self.onChange
-          }, children);
+          }, valueProps), children);
         }
         return input;
       };
@@ -4805,7 +4874,7 @@
           'inline-label': inlineLabel,
           'item-input-focused': inputFocused,
           'item-input-with-info': !!info || self.slots.info && self.slots.info.length,
-          'item-input-with-value': self.inputHasValue,
+          'item-input-with-value': inputHasValue,
           'item-input-with-error-message': hasErrorMessage && errorMessageForce || inputInvalid,
           'item-input-invalid': hasErrorMessage && errorMessageForce || inputInvalid
         })
@@ -4849,12 +4918,7 @@
 
       __reactComponentWatch(this, 'props.value', prevProps, prevState, function () {
         var self = this$1;
-        var ref = self.props;
-        var value = ref.value;
         if (!self.$f7) { return; }
-        self.setState({
-          currentInputValue: value
-        });
         self.updateInputOnDidUpdate = true;
       });
 
@@ -5906,8 +5970,12 @@
       var accordionItem = ref$1.accordionItem;
       var needsEvents = !(link || href || accordionItem || smartSelect);
 
-      if (!needsEvents && linkEl) {
-        linkEl.removeEventListener('click', self.onClick);
+      if (linkEl) {
+        if (!needsEvents) {
+          linkEl.removeEventListener('click', self.onClick);
+        }
+
+        delete linkEl.f7RouteProps;
       }
 
       if (el) {
@@ -5955,6 +6023,15 @@
 
       var self = this;
       var $listEl = self.$listEl;
+      var ref = self.refs;
+      var linkEl = ref.linkEl;
+      var ref$1 = self.props;
+      var routeProps = ref$1.routeProps;
+
+      if (linkEl && routeProps) {
+        linkEl.f7RouteProps = routeProps;
+      }
+
       if (!$listEl || $listEl && $listEl.length === 0) { return; }
       var isMedia = $listEl.hasClass('media-list');
       var isSimple = $listEl.hasClass('simple-list');
@@ -5993,10 +6070,15 @@
       var swipeoutOpened = ref$1.swipeoutOpened;
       var accordionItem = ref$1.accordionItem;
       var smartSelectParams = ref$1.smartSelectParams;
+      var routeProps = ref$1.routeProps;
       var needsEvents = !(link || href || accordionItem || smartSelect);
 
       if (!needsEvents && linkEl) {
         linkEl.addEventListener('click', self.onClick);
+      }
+
+      if (linkEl && routeProps) {
+        linkEl.f7RouteProps = routeProps;
       }
 
       self.$listEl = self.$$(el).parents('.list, .list-group').eq(0);
@@ -12076,7 +12158,7 @@
   };
 
   /**
-   * Framework7 React 3.6.2
+   * Framework7 React 3.6.3
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -12084,7 +12166,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: December 11, 2018
+   * Released on: December 27, 2018
    */
 
   var Plugin = {
@@ -12253,4 +12335,4 @@
 
   return Plugin;
 
-})));
+}));

@@ -286,8 +286,12 @@ class F7ListItem extends React.Component {
     } = self.props;
     const needsEvents = !(link || href || accordionItem || smartSelect);
 
-    if (!needsEvents && linkEl) {
-      linkEl.removeEventListener('click', self.onClick);
+    if (linkEl) {
+      if (!needsEvents) {
+        linkEl.removeEventListener('click', self.onClick);
+      }
+
+      delete linkEl.f7RouteProps;
     }
 
     if (el) {
@@ -335,6 +339,17 @@ class F7ListItem extends React.Component {
     const {
       $listEl
     } = self;
+    const {
+      linkEl
+    } = self.refs;
+    const {
+      routeProps
+    } = self.props;
+
+    if (linkEl && routeProps) {
+      linkEl.f7RouteProps = routeProps;
+    }
+
     if (!$listEl || $listEl && $listEl.length === 0) return;
     const isMedia = $listEl.hasClass('media-list');
     const isSimple = $listEl.hasClass('simple-list');
@@ -373,12 +388,17 @@ class F7ListItem extends React.Component {
       swipeout,
       swipeoutOpened,
       accordionItem,
-      smartSelectParams
+      smartSelectParams,
+      routeProps
     } = self.props;
     const needsEvents = !(link || href || accordionItem || smartSelect);
 
     if (!needsEvents && linkEl) {
       linkEl.addEventListener('click', self.onClick);
+    }
+
+    if (linkEl && routeProps) {
+      linkEl.f7RouteProps = routeProps;
     }
 
     self.$listEl = self.$$(el).parents('.list, .list-group').eq(0);

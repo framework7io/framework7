@@ -52,6 +52,7 @@ declare namespace F7Link {
     reloadPrevious? : boolean
     routeTabId? : string
     view? : string
+    routeProps? : Object
     searchbarEnable? : boolean | string
     searchbarDisable? : boolean | string
     searchbarClear? : boolean | string

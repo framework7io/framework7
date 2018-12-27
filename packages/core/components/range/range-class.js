@@ -8,6 +8,7 @@ class Range extends Framework7Class {
     super(params, [app]);
 
     const range = this;
+
     const defaults = {
       el: null,
       inputEl: null,
@@ -18,6 +19,7 @@ class Range extends Framework7Class {
       max: 100,
       value: 0,
       draggableBar: true,
+      formatLabel: null,
     };
 
     // Extend defaults with modules params
@@ -355,7 +357,7 @@ class Range extends Framework7Class {
         if (realLeft < 0) leftPos = knobWidth / 2;
         if ((realLeft + knobWidth) > rangeWidth) leftPos = rangeWidth - (knobWidth / 2);
         $knobEl.css(positionProperty, `${leftPos}px`);
-        if (label) labels[knobIndex].text(value[knobIndex]);
+        if (label) labels[knobIndex].text(range.formatLabel(value[knobIndex], labels[knobIndex][0]));
       });
     } else {
       const progress = ((value - min) / (max - min));
@@ -366,7 +368,7 @@ class Range extends Framework7Class {
       if (realLeft < 0) leftPos = knobWidth / 2;
       if ((realLeft + knobWidth) > rangeWidth) leftPos = rangeWidth - (knobWidth / 2);
       knobs[0].css(positionProperty, `${leftPos}px`);
-      if (label) labels[0].text(value);
+      if (label) labels[0].text(range.formatLabel(value, labels[0][0]));
     }
     if ((range.dual && value.indexOf(min) >= 0) || (!range.dual && value === min)) {
       range.$el.addClass('range-slider-min');
@@ -433,6 +435,12 @@ class Range extends Framework7Class {
 
   getValue() {
     return this.value;
+  }
+
+  formatLabel(value, labelEl) {
+    const range = this;
+    if (range.params.formatLabel) return range.params.formatLabel.call(range, value, labelEl);
+    return value;
   }
 
   init() {

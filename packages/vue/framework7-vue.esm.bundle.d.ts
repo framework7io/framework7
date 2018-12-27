@@ -117,7 +117,7 @@ export interface Framework7Extensions {
 }
 
 declare module 'vue/types/vue' {
-  interface Vue extends Framework7Extensions {}
+  interface Vue extends Partial<Framework7Extensions> {}
 }
 
 export {

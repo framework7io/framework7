@@ -144,7 +144,9 @@ class F7Button extends React.Component {
 
   componentWillUnmount() {
     const self = this;
-    self.refs.el.removeEventListener('click', self.onClickBound);
+    const el = self.refs.el;
+    el.removeEventListener('click', self.onClickBound);
+    delete el.f7RouteProps;
 
     if (self.f7Tooltip && self.f7Tooltip.destroy) {
       self.f7Tooltip.destroy();
@@ -153,16 +155,41 @@ class F7Button extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, newText => {
+      const self = this;
+      if (!newText || !self.f7Tooltip) return;
+      self.f7Tooltip.setText(newText);
+    });
+
+    const self = this;
+    const el = self.refs.el;
+    const {
+      routeProps
+    } = self.props;
+
+    if (routeProps) {
+      el.f7RouteProps = routeProps;
+    }
+  }
+
   componentDidMount() {
     const self = this;
-    self.refs.el.addEventListener('click', self.onClickBound);
+    const el = self.refs.el;
+    el.addEventListener('click', self.onClickBound);
     const {
-      tooltip
+      tooltip,
+      routeProps
     } = self.props;
+
+    if (routeProps) {
+      el.f7RouteProps = routeProps;
+    }
+
     if (!tooltip) return;
     self.$f7ready(f7 => {
       self.f7Tooltip = f7.tooltip.create({
-        targetEl: self.refs.el,
+        targetEl: el,
         text: tooltip
       });
     });
@@ -181,14 +208,6 @@ class F7Button extends React.Component {
   }
 
   set refs(refs) {}
-
-  componentDidUpdate(prevProps, prevState) {
-    __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, newText => {
-      const self = this;
-      if (!newText || !self.f7Tooltip) return;
-      self.f7Tooltip.setText(newText);
-    });
-  }
 
 }
 

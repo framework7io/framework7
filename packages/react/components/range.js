@@ -73,7 +73,8 @@ class F7Range extends React.Component {
         step,
         label,
         dual,
-        draggableBar
+        draggableBar,
+        formatLabel
       } = props;
       self.f7Range = f7.range.create(Utils.noUndefinedProps({
         el: self.refs.el,
@@ -84,6 +85,7 @@ class F7Range extends React.Component {
         label,
         dual,
         draggableBar,
+        formatLabel,
         on: {
           change(range, val) {
             self.dispatchEvent('range:change rangeChange', val);
@@ -161,7 +163,8 @@ __reactComponentSetProps(F7Range, Object.assign({
   draggableBar: {
     type: Boolean,
     default: true
-  }
+  },
+  formatLabel: Function
 }, Mixins.colorProps));
 
 F7Range.displayName = 'f7-range';

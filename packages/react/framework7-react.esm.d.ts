@@ -117,7 +117,7 @@ export interface Framework7Extensions {
 }
 
 declare module 'react' {
-  interface Component extends Framework7Extensions {}
+  interface Component extends Partial<Framework7Extensions> {}
 }
 
 export {

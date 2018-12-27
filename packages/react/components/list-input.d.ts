@@ -66,6 +66,8 @@ declare namespace F7ListInput {
   }
 }
 declare class F7ListInput extends React.Component<F7ListInput.Props, {}> {
+  domValue() : unknown
+  inputHasValue() : unknown
   validateInput(inputEl? : any) : unknown
   onTextareaResize(event? : any) : unknown
   onInputNotEmpty(event? : any) : unknown

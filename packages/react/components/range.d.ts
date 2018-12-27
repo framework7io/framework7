@@ -19,6 +19,7 @@ declare namespace F7Range {
     input? : boolean
     disabled? : boolean
     draggableBar? : boolean
+    formatLabel? : Function
     color? : string
     colorTheme? : string
     textColor? : string

@@ -41,7 +41,8 @@ export default {
     draggableBar: {
       type: Boolean,
       default: true
-    }
+    },
+    formatLabel: Function
   }, Mixins.colorProps),
 
   render() {
@@ -96,7 +97,8 @@ export default {
         step,
         label,
         dual,
-        draggableBar
+        draggableBar,
+        formatLabel
       } = props;
       self.f7Range = f7.range.create(Utils.noUndefinedProps({
         el: self.$refs.el,
@@ -107,6 +109,7 @@ export default {
         label,
         dual,
         draggableBar,
+        formatLabel,
         on: {
           change(range, val) {
             self.dispatchEvent('range:change rangeChange', val);

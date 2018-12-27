@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.6.2
+ * Framework7 Vue 3.6.3
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,14 +7,14 @@
  *
  * Released under the MIT License
  *
- * Released on: December 11, 2018
+ * Released on: December 27, 2018
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('vue')) :
   typeof define === 'function' && define.amd ? define(['vue'], factory) :
-  (global.Framework7Vue = factory(global.Vue));
-}(this, (function (Vue) { 'use strict';
+  global.Framework7Vue = factory(global.Vue);
+}(typeof self !== 'undefined' ? self : this, function (Vue) { 'use strict';
 
   Vue = Vue && Vue.hasOwnProperty('default') ? Vue['default'] : Vue;
 
@@ -158,6 +158,7 @@
       reloadPrevious: Boolean,
       routeTabId: String,
       view: String,
+      routeProps: Object,
     },
     linkRouterAttrs: function linkRouterAttrs(props) {
       var force = props.force;
@@ -1684,21 +1685,41 @@
 
     mounted: function mounted() {
       var self = this;
-      self.$refs.el.addEventListener('click', self.onClickBound);
+      var el = self.$refs.el;
+      el.addEventListener('click', self.onClickBound);
       var ref = self.props;
       var tooltip = ref.tooltip;
+      var routeProps = ref.routeProps;
+
+      if (routeProps) {
+        el.f7RouteProps = routeProps;
+      }
+
       if (!tooltip) { return; }
       self.$f7ready(function (f7) {
         self.f7Tooltip = f7.tooltip.create({
-          targetEl: self.$refs.el,
+          targetEl: el,
           text: tooltip
         });
       });
     },
 
+    updated: function updated() {
+      var self = this;
+      var el = self.$refs.el;
+      var ref = self.props;
+      var routeProps = ref.routeProps;
+
+      if (routeProps) {
+        el.f7RouteProps = routeProps;
+      }
+    },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
-      self.$refs.el.removeEventListener('click', self.onClickBound);
+      var el = self.$refs.el;
+      el.removeEventListener('click', self.onClickBound);
+      delete el.f7RouteProps;
 
       if (self.f7Tooltip && self.f7Tooltip.destroy) {
         self.f7Tooltip.destroy();
@@ -2780,7 +2801,8 @@
       draggableBar: {
         type: Boolean,
         default: true
-      }
+      },
+      formatLabel: Function
     }, Mixins.colorProps),
 
     render: function render() {
@@ -2834,6 +2856,7 @@
         var label = props.label;
         var dual = props.dual;
         var draggableBar = props.draggableBar;
+        var formatLabel = props.formatLabel;
         self.f7Range = f7.range.create(Utils.noUndefinedProps({
           el: self.$refs.el,
           value: value,
@@ -2843,6 +2866,7 @@
           label: label,
           dual: dual,
           draggableBar: draggableBar,
+          formatLabel: formatLabel,
           on: {
             change: function change(range, val) {
               self.dispatchEvent('range:change rangeChange', val);
@@ -2944,34 +2968,15 @@
       var props = __vueComponentProps(this);
 
       var state = (function () {
-        var value = props.value;
-        var defaultValue = props.defaultValue;
         return {
           inputFocused: false,
-          inputInvalid: false,
-          currentInputValue: typeof value === 'undefined' ? defaultValue : value
+          inputInvalid: false
         };
       })();
 
       return {
         state: state
       };
-    },
-
-    computed: {
-      inputWithValue: function inputWithValue() {
-        var self = this;
-        var ref = self.props;
-        var value = ref.value;
-        var ref$1 = self.state;
-        var currentInputValue = ref$1.currentInputValue;
-        return typeof value === 'undefined' ? currentInputValue : value || value === 0;
-      },
-
-      props: function props() {
-        return __vueComponentProps(this);
-      }
-
     },
 
     render: function render() {
@@ -3018,33 +3023,42 @@
       var noStoreData = props.noStoreData;
       var noFormStoreData = props.noFormStoreData;
       var ignoreStoreData = props.ignoreStoreData;
+      var domValue = self.domValue();
+      var inputHasValue = self.inputHasValue();
       var inputEl;
 
-      var createInput = function (tag, children) {
-        var InputTag = tag;
+      var createInput = function (InputTag, children) {
         var needsValue = type !== 'file';
-        var needsType = tag === 'input';
+        var needsType = InputTag === 'input';
         var inputClassName = Utils.classNames(!wrap && className, {
           resizable: type === 'textarea' && resizable,
           'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
           'input-invalid': errorMessage && errorMessageForce || self.state.inputInvalid,
-          'input-with-value': self.inputWithValue,
+          'input-with-value': inputHasValue,
           'input-focused': self.state.inputFocused
         });
         var input;
+        var inputValue;
+
+        if (needsValue) {
+          if (typeof value !== 'undefined') { inputValue = value; }else { inputValue = domValue; }
+        }
+
+        var valueProps = {};
+        if ('value' in props) { valueProps.value = inputValue; }
+        if ('defaultValue' in props) { valueProps.defaultValue = defaultValue; }
         {
           input = _h(InputTag, {
             ref: 'inputEl',
             style: inputStyle,
             class: inputClassName,
-            domProps: {
-              value: needsValue ? value || self.state.currentInputValue : undefined,
+            domProps: Object.assign({
               checked: checked,
               disabled: disabled,
               readOnly: readonly,
               multiple: multiple,
               required: required
-            },
+            }, valueProps),
             on: {
               focus: self.onFocus,
               blur: self.onBlur,
@@ -3154,12 +3168,8 @@
         var self = this;
         var ref = self.props;
         var type = ref.type;
-        var value = ref.value;
         if (type === 'range' || type === 'toggle') { return; }
         if (!self.$f7) { return; }
-        self.setState({
-          currentInputValue: value
-        });
         self.updateInputOnDidUpdate = true;
       }
     },
@@ -3260,6 +3270,22 @@
     },
 
     methods: {
+      domValue: function domValue() {
+        var self = this;
+        var ref = self.$refs;
+        var inputEl = ref.inputEl;
+        if (!inputEl) { return undefined; }
+        return inputEl.value;
+      },
+
+      inputHasValue: function inputHasValue() {
+        var self = this;
+        var ref = self.props;
+        var value = ref.value;
+        var domValue = self.domValue();
+        return typeof value === 'undefined' ? domValue || domValue === 0 : value || value === 0;
+      },
+
       validateInput: function validateInput(inputEl) {
         var self = this;
         var f7 = self.$f7;
@@ -3305,10 +3331,6 @@
         if ((validate || validate === '') && self.$refs && self.$refs.inputEl) {
           self.validateInput(self.$refs.inputEl);
         }
-
-        self.setState({
-          currentInputValue: event.target.value
-        });
       },
 
       onFocus: function onFocus(event) {
@@ -3346,6 +3368,12 @@
 
       setState: function setState(updater, callback) {
         __vueComponentSetState(this, updater, callback);
+      }
+
+    },
+    computed: {
+      props: function props() {
+        return __vueComponentProps(this);
       }
 
     }
@@ -3535,6 +3563,7 @@
       var tooltip = ref.tooltip;
       var smartSelect = ref.smartSelect;
       var smartSelectParams = ref.smartSelectParams;
+      var routeProps = ref.routeProps;
       var isTabbarLabel = false;
 
       if (tabbarLabel || (tabLink || tabLink === '') && self.$$(el).parents('.tabbar-labels').length) {
@@ -3544,6 +3573,7 @@
       self.setState({
         isTabbarLabel: isTabbarLabel
       });
+      if (routeProps) { el.f7RouteProps = routeProps; }
       self.$f7ready(function (f7) {
         if (smartSelect) {
           var ssParams = Utils.extend({
@@ -3561,10 +3591,22 @@
       });
     },
 
+    updated: function updated() {
+      var self = this;
+      var el = self.$refs.el;
+      var ref = self.props;
+      var routeProps = ref.routeProps;
+
+      if (routeProps) {
+        el.f7RouteProps = routeProps;
+      }
+    },
+
     beforeDestroy: function beforeDestroy() {
       var self = this;
       var el = self.$refs.el;
       el.removeEventListener('click', self.onClick);
+      delete el.f7RouteProps;
 
       if (self.f7SmartSelect && self.f7SmartSelect.destroy) {
         self.f7SmartSelect.destroy();
@@ -3717,11 +3759,34 @@
     },
 
     mounted: function mounted() {
-      this.$refs.linkEl.addEventListener('click', this.onClick);
+      var self = this;
+      var linkEl = self.$refs.linkEl;
+      var ref = self.props;
+      var routeProps = ref.routeProps;
+
+      if (routeProps) {
+        linkEl.f7RouteProps = routeProps;
+      }
+
+      linkEl.addEventListener('click', self.onClick);
+    },
+
+    updated: function updated() {
+      var self = this;
+      var linkEl = self.$refs.linkEl;
+      var ref = self.props;
+      var routeProps = ref.routeProps;
+
+      if (routeProps) {
+        linkEl.f7RouteProps = routeProps;
+      }
     },
 
     beforeDestroy: function beforeDestroy() {
-      this.$refs.linkEl.removeEventListener('click', this.onClick);
+      var self = this;
+      var linkEl = self.$refs.linkEl;
+      linkEl.removeEventListener('click', this.onClick);
+      delete linkEl.f7RouteProps;
     },
 
     methods: {
@@ -3958,13 +4023,10 @@
       var props = __vueComponentProps(this);
 
       var state = (function () {
-        var value = props.value;
-        var defaultValue = props.defaultValue;
         return {
           isSortable: props.sortable,
           inputFocused: false,
-          inputInvalid: false,
-          currentInputValue: typeof value === 'undefined' ? defaultValue : value
+          inputInvalid: false
         };
       })();
 
@@ -4025,32 +4087,41 @@
       var label = props.label;
       var inlineLabel = props.inlineLabel;
       var floatingLabel = props.floatingLabel;
+      var domValue = self.domValue();
+      var inputHasValue = self.inputHasValue();
       var isSortable = sortable || self.state.isSortable;
 
-      var createInput = function (tag, children) {
-        var InputTag = tag;
+      var createInput = function (InputTag, children) {
         var needsValue = type !== 'file';
-        var needsType = tag === 'input';
+        var needsType = InputTag === 'input';
         var inputClassName = Utils.classNames({
           resizable: type === 'textarea' && resizable,
           'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
           'input-invalid': errorMessage && errorMessageForce || inputInvalid,
-          'input-with-value': self.inputHasValue,
+          'input-with-value': inputHasValue,
           'input-focused': inputFocused
         });
         var input;
+        var inputValue;
+
+        if (needsValue) {
+          if (typeof value !== 'undefined') { inputValue = value; }else { inputValue = domValue; }
+        }
+
+        var valueProps = {};
+        if ('value' in props) { valueProps.value = inputValue; }
+        if ('defaultValue' in props) { valueProps.defaultValue = defaultValue; }
         {
           input = _h(InputTag, {
             ref: 'inputEl',
             style: inputStyle,
             class: inputClassName,
-            domProps: {
-              value: needsValue ? value || self.state.currentInputValue : undefined,
+            domProps: Object.assign({
               disabled: disabled,
               readOnly: readonly,
               multiple: multiple,
               required: required
-            },
+            }, valueProps),
             on: {
               focus: self.onFocus,
               blur: self.onBlur,
@@ -4118,7 +4189,7 @@
           'inline-label': inlineLabel,
           'item-input-focused': inputFocused,
           'item-input-with-info': !!info || self.$slots.info && self.$slots.info.length,
-          'item-input-with-value': self.inputHasValue,
+          'item-input-with-value': inputHasValue,
           'item-input-with-error-message': hasErrorMessage && errorMessageForce || inputInvalid,
           'item-input-invalid': hasErrorMessage && errorMessageForce || inputInvalid
         })
@@ -4149,30 +4220,10 @@
       }), this.$slots['root'], this.$slots['root-end']]);
     },
 
-    computed: {
-      inputHasValue: function inputHasValue() {
-        var self = this;
-        var ref = self.props;
-        var value = ref.value;
-        var ref$1 = self.state;
-        var currentInputValue = ref$1.currentInputValue;
-        return typeof value === 'undefined' ? currentInputValue : value || value === 0;
-      },
-
-      props: function props() {
-        return __vueComponentProps(this);
-      }
-
-    },
     watch: {
       'props.value': function watchValue() {
         var self = this;
-        var ref = self.props;
-        var value = ref.value;
         if (!self.$f7) { return; }
-        self.setState({
-          currentInputValue: value
-        });
         self.updateInputOnDidUpdate = true;
       }
     },
@@ -4271,6 +4322,22 @@
     },
 
     methods: {
+      domValue: function domValue() {
+        var self = this;
+        var ref = self.$refs;
+        var inputEl = ref.inputEl;
+        if (!inputEl) { return undefined; }
+        return inputEl.value;
+      },
+
+      inputHasValue: function inputHasValue() {
+        var self = this;
+        var ref = self.props;
+        var value = ref.value;
+        var domValue = self.domValue();
+        return typeof value === 'undefined' ? domValue || domValue === 0 : value || value === 0;
+      },
+
       validateInput: function validateInput(inputEl) {
         var self = this;
         var f7 = self.$f7;
@@ -4316,10 +4383,6 @@
         if ((validate || validate === '') && self.$refs && self.$refs.inputEl) {
           self.validateInput(self.$refs.inputEl);
         }
-
-        self.setState({
-          currentInputValue: event.target.value
-        });
       },
 
       onFocus: function onFocus(event) {
@@ -4357,6 +4420,12 @@
 
       setState: function setState(updater, callback) {
         __vueComponentSetState(this, updater, callback);
+      }
+
+    },
+    computed: {
+      props: function props() {
+        return __vueComponentProps(this);
       }
 
     }
@@ -5213,10 +5282,15 @@
       var swipeoutOpened = ref$1.swipeoutOpened;
       var accordionItem = ref$1.accordionItem;
       var smartSelectParams = ref$1.smartSelectParams;
+      var routeProps = ref$1.routeProps;
       var needsEvents = !(link || href || accordionItem || smartSelect);
 
       if (!needsEvents && linkEl) {
         linkEl.addEventListener('click', self.onClick);
+      }
+
+      if (linkEl && routeProps) {
+        linkEl.f7RouteProps = routeProps;
       }
 
       self.$listEl = self.$$(el).parents('.list, .list-group').eq(0);
@@ -5267,6 +5341,15 @@
     updated: function updated() {
       var self = this;
       var $listEl = self.$listEl;
+      var ref = self.$refs;
+      var linkEl = ref.linkEl;
+      var ref$1 = self.props;
+      var routeProps = ref$1.routeProps;
+
+      if (linkEl && routeProps) {
+        linkEl.f7RouteProps = routeProps;
+      }
+
       if (!$listEl || $listEl && $listEl.length === 0) { return; }
       var isMedia = $listEl.hasClass('media-list');
       var isSimple = $listEl.hasClass('simple-list');
@@ -5304,8 +5387,12 @@
       var accordionItem = ref$1.accordionItem;
       var needsEvents = !(link || href || accordionItem || smartSelect);
 
-      if (!needsEvents && linkEl) {
-        linkEl.removeEventListener('click', self.onClick);
+      if (linkEl) {
+        if (!needsEvents) {
+          linkEl.removeEventListener('click', self.onClick);
+        }
+
+        delete linkEl.f7RouteProps;
       }
 
       if (el) {
@@ -10770,7 +10857,7 @@
   };
 
   /**
-   * Framework7 Vue 3.6.2
+   * Framework7 Vue 3.6.3
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -10778,7 +10865,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: December 11, 2018
+   * Released on: December 27, 2018
    */
 
   var Plugin = {
@@ -10974,4 +11061,4 @@
 
   return Plugin;
 
-})));
+}));

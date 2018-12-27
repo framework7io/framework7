@@ -144,7 +144,7 @@ function buildLazyComponentsJs(components, cb) {
     .rollup({
       input: componentsToProcess.map(component => `./src/core/components/${component}/${component}.js`),
       experimentalCodeSplitting: true,
-      optimizeChunks: true,
+      experimentalOptimizeChunks: true,
       plugins: [
         replace({
           delimiters: ['', ''],
