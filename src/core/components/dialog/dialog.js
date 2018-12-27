@@ -62,7 +62,7 @@ export default {
           return new Dialog(app, {
             title: typeof title === 'undefined' ? defaultDialogTitle() : title,
             text,
-            content: '<div class="dialog-input-field item-input"><div class="item-input-wrap"><input type="text" value="'+defaultValue+'" class="dialog-input"></div></div>',
+            content: `<div class="dialog-input-field item-input"><div class="item-input-wrap"><input type="text" value="${defaultValue}" class="dialog-input"></div></div>`,
             buttons: [
               {
                 text: app.params.dialog.buttonCancel,
