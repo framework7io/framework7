@@ -56,7 +56,7 @@ export default {
         prompt(...args) {
           let [text, title, callbackOk, callbackCancel, defaultValue] = args;
           if (typeof args[1] === 'function') {
-            [text, callbackOk, callbackCancel, title, defaultValue] = args;
+            [text, callbackOk, callbackCancel, defaultValue, title] = args;
           }
           defaultValue = typeof defaultValue === 'undefined' ? '' : defaultValue;
           return new Dialog(app, {
