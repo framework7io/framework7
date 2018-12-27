@@ -43,7 +43,7 @@ export default class extends React.Component {
           </ListItem>
         </List>
 
-        <BlockTitle>Open in Mondal</BlockTitle>
+        <BlockTitle>Open in Modal</BlockTitle>
         <List noHairlinesMd>
           <ListItem>
             <Input type="text" placeholder="Select date" readonly inputId="demo-calendar-modal"/>

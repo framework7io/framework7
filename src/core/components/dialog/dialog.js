@@ -54,14 +54,15 @@ export default {
           }).open();
         },
         prompt(...args) {
-          let [text, title, callbackOk, callbackCancel] = args;
+          let [text, title, callbackOk, callbackCancel, defaultValue] = args;
           if (typeof args[1] === 'function') {
-            [text, callbackOk, callbackCancel, title] = args;
+            [text, callbackOk, callbackCancel, defaultValue, title] = args;
           }
+          defaultValue = typeof defaultValue === 'undefined' || defaultValue === null ? '' : defaultValue;
           return new Dialog(app, {
             title: typeof title === 'undefined' ? defaultDialogTitle() : title,
             text,
-            content: '<div class="dialog-input-field input"><input type="text" class="dialog-input"></div>',
+            content: `<div class="dialog-input-field input"><input type="text" class="dialog-input" value="${defaultValue}"></div>`,
             buttons: [
               {
                 text: app.params.dialog.buttonCancel,
