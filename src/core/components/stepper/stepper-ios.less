@@ -6,26 +6,16 @@
     .f7-icons {
       font-size: 22px;
     }
-    &.active-state {
-      background-color: var(--f7-stepper-button-pressed-bg-color, rgba(var(--f7-theme-color-rgb), 0.15));
-    }
   }
   .stepper-fill,
   .stepper-fill-ios {
-    .stepper-button,
-    .stepper-button-minus,
-    .stepper-button-plus {
-      &.active-state {
-        background-color: var(--f7-stepper-fill-button-pressed-bg-color, var(--f7-theme-color-tint));
-      }
-    }
+    --f7-stepper-button-pressed-bg-color: var(--f7-stepper-fill-button-pressed-bg-color, var(--f7-theme-color-tint));
   }
 
   .stepper-small,
   .stepper-small-ios {
-    --f7-stepper-border-width: 2px;
-    --f7-stepper-fill-button-pressed-bg-color: transparent;
-    &.stepper-raised, &.stepper-raised-ios {
+    &.stepper-raised,
+    &.stepper-raised-ios {
       --f7-stepper-border-width: 0px;
     }
     .stepper-button,

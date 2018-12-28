@@ -32,6 +32,7 @@ button {
   letter-spacing: var(--f7-button-letter-spacing);
   text-transform: var(--f7-button-text-transform);
   background-color: var(--f7-button-bg-color);
+  box-shadow: var(--f7-button-box-shadow);
   &.active-state {
     background-color: var(--f7-button-pressed-bg-color, rgba(var(--f7-theme-color-rgb), 0.15));
     color: var(--f7-button-pressed-text-color, var(--f7-button-text-color, var(--f7-theme-color)));
@@ -81,7 +82,6 @@ button {
 .ios .button-outline-ios,
 .md .button-outline-md {
   --f7-button-border-width: var(--f7-button-outline-border-width);
-  --f7-button-border-color: var(--f7-button-outline-border-color, var(--f7-theme-color));
 }
 
 .button-large,
@@ -112,6 +112,7 @@ button {
   display: flex;
   flex-wrap: nowrap;
   border-radius: var(--f7-button-border-radius);
+  box-shadow: var(--f7-button-box-shadow);
   .button, button {
     width: 100%;
     flex-shrink: 1;
@@ -192,13 +193,13 @@ button {
 .segmented-raised,
 .ios .segmented-raised-ios,
 .md .segmented-raised-md {
-  box-shadow: var(--f7-button-raised-box-shadow);
+  --f7-button-box-shadow: var(--f7-button-raised-box-shadow);
 }
 .button-raised,
 .ios .button-raised-ios,
 .md .button-raised-md {
   &.active-state {
-    box-shadow: var(--f7-button-raised-pressed-box-shadow);
+    --f7-button-box-shadow: var(--f7-button-raised-pressed-box-shadow);
   }
 }
 

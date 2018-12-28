@@ -6,18 +6,9 @@
     transition-duration: 300ms;
     transform: translate3d(0,0,0);
     overflow: hidden;
-    &.active-state {
-      background-color: var(--f7-stepper-button-pressed-bg-color, rgba(0,0,0,0.1));
-    }
   }
   .stepper-fill,
   .stepper-fill-md {
-    .stepper-button,
-    .stepper-button-minus,
-    .stepper-button-plus {
-      &.active-state {
-        background-color: var(--f7-stepper-fill-button-pressed-bg-color, var(--f7-theme-color-shade))
-      }
-    }
+    --f7-stepper-button-pressed-bg-color: var(--f7-stepper-fill-button-pressed-bg-color, var(--f7-theme-color-shade));
   }
 }
