@@ -20,17 +20,22 @@ button {
   outline: 0;
   box-sizing: border-box;
   vertical-align: middle;
-  border: none;
+  border: var(--f7-button-border-width, 0px) solid var(--f7-button-border-color, var(--f7-theme-color));
   font-size: var(--f7-button-font-size);
   color: var(--f7-button-text-color, var(--f7-theme-color));
   height: var(--f7-button-height);
-  line-height: var(--f7-button-height);
+  line-height: calc(var(--f7-button-height) - var(--f7-button-border-width, 0) * 2);
   padding: 0 var(--f7-button-padding);
   border-radius: var(--f7-button-border-radius);
   min-width: var(--f7-button-min-width);
   font-weight: var(--f7-button-font-weight);
   letter-spacing: var(--f7-button-letter-spacing);
   text-transform: var(--f7-button-text-transform);
+  background-color: var(--f7-button-bg-color);
+  &.active-state {
+    background-color: var(--f7-button-pressed-bg-color, rgba(var(--f7-theme-color-rgb), 0.15));
+    color: var(--f7-button-pressed-text-color, var(--f7-button-text-color, var(--f7-theme-color)));
+  }
   input[type="submit"]&, input[type="button"]&{
     width: 100%;
   }
@@ -58,31 +63,25 @@ button {
 .md .button-fill-md,
 .button-active,
 .button.tab-link-active {
-  background-color: var(--f7-button-fill-bg-color, var(--f7-theme-color));
-  color: var(--f7-button-fill-text-color);
+  --f7-button-bg-color: var(--f7-button-fill-bg-color, var(--f7-theme-color));
+  --f7-button-text-color: var(--f7-button-fill-text-color);
   --f7-touch-ripple-color: var(--f7-touch-ripple-white);
+}
+.button-fill,
+.ios .button-fill-ios,
+.md .button-fill-md {
+  --f7-button-pressed-bg-color: var(--f7-button-fill-pressed-bg-color);
+}
+.button-active,
+.button.tab-link-active {
+  --f7-button-pressed-bg-color: var(--f7-button-bg-color);
 }
 
 .button-outline,
 .ios .button-outline-ios,
 .md .button-outline-md {
-  border: var(--f7-button-outline-border-width) solid var(--f7-button-outline-border-color, var(--f7-theme-color));
-  line-height: calc(var(--f7-button-height) - var(--f7-button-outline-border-width) * 2);
-}
-.button-outline.button-small,
-.ios .button-outline-ios.button-small,
-.ios .button-outline-ios.button-small-ios,
-.ios .button-outline.button-small-ios,
-.md .button-outline-md.button-small,
-.md .button-outline-md.button-small-md,
-.md .button-outline.button-small-md,
-.ios .button-small.button-fill,
-.ios .button-small.button-fill-ios,
-.ios .button-small-ios.button-fill,
-.ios .button-small-ios.button-fill-ios {
-  --f7-button-outline-border-width: var(--f7-button-small-outline-border-width);
-  border: var(--f7-button-outline-border-width) solid var(--f7-button-outline-border-color, var(--f7-theme-color));
-  line-height: calc(var(--f7-button-height) - var(--f7-button-outline-border-width) * 2);
+  --f7-button-border-width: var(--f7-button-outline-border-width);
+  --f7-button-border-color: var(--f7-button-outline-border-color, var(--f7-theme-color));
 }
 
 .button-large,
@@ -94,7 +93,18 @@ button {
 .button-small,
 .ios .button-small-ios,
 .md .button-small-md {
+  --f7-button-outline-border-width: var(--f7-button-small-outline-border-width);
   --f7-button-height: var(--f7-button-small-height);
+  --f7-button-font-size: var(--f7-button-small-font-size);
+  --f7-button-font-weight: var(--f7-button-small-font-weight);
+  --f7-button-text-transform: var(--f7-button-small-text-transform);
+}
+.ios .button-small.button-fill,
+.ios .button-small-ios.button-fill,
+.ios .button-small.button-fill-ios {
+  --f7-button-border-width: var(--f7-button-small-outline-border-width);
+  --f7-button-pressed-text-color: var(--f7-theme-color);
+  --f7-button-pressed-bg-color: transparent;
 }
 
 .segmented {
@@ -111,10 +121,11 @@ button {
   .ltr({
     .button:first-child {
       border-radius: var(--f7-button-border-radius) 0 0 var(--f7-button-border-radius);
+    }
+    .button:not(.button-outline):first-child {
       border-left: none;
     }
     .button.button-outline {
-      border: var(--f7-button-outline-border-width) solid var(--f7-button-outline-border-color, var(--f7-theme-color));
       &:nth-child(n + 2) {
         border-left: none;
       }
@@ -132,10 +143,11 @@ button {
   .rtl({
     .button:first-child {
       border-radius: 0 var(--f7-button-border-radius) var(--f7-button-border-radius) 0;
+    }
+    .button:not(.button-outline):first-child {
       border-right: none;
     }
     .button.button-outline {
-      border: var(--f7-button-outline-border-width) solid var(--f7-button-outline-border-color, var(--f7-theme-color));
       &:nth-child(n + 2) {
         border-right: none;
       }

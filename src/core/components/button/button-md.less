@@ -3,15 +3,9 @@
   .button {
     transition-duration: 300ms;
     transform: translate3d(0,0,0);
-    &.active-state {
-      background-color: var(--f7-button-pressed-bg-color, rgba(0,0,0,0.1));
-    }
   }
   .button-fill,
-  .button-fill-md,
-  .button-active {
-    &.active-state {
-      background-color: var(--f7-button-fill-pressed-bg-color, var(--f7-theme-color-shade))
-    }
+  .button-fill-md {
+    --f7-button-pressed-bg-color: var(--f7-button-fill-pressed-bg-color, var(--f7-theme-color-shade));
   }
 }
