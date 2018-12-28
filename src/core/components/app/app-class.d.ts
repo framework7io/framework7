@@ -153,6 +153,7 @@ declare class Framework7 implements Framework7 {
   constructor(parameters?: Framework7Params);
 
   static use(plugin : Framework7Plugin) : void;
+  static use(plugins : Framework7Plugin[]) : void;
   static device: Device;
   static request: Request;
   static support: Support;
