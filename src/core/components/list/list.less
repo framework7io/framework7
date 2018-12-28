@@ -16,6 +16,7 @@
     align-self: center;
     box-sizing: border-box;
   }
+
   ul {
     list-style: none;
     margin: 0;
@@ -221,6 +222,11 @@
     });
     flex-shrink: 1;
   }
+  .ltr({
+    .ripple-wave + .item-cell {
+      margin-left: 0;
+    }
+  });
 
   // Last-childs
   li {
