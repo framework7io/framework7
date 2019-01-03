@@ -31,6 +31,8 @@ export namespace Toast {
     closeButtonColor?: string
     /** Close button text (default Ok) */
     closeButtonText?: string
+    /** Timeout delay (in ms) to close toast automatically  */
+    closeTimeout?: number
     /** Additional css class to add */
     cssClass?: string
     /** Destroys toast instance on close (default false) */
