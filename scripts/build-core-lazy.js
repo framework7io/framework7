@@ -104,7 +104,7 @@ function buildLazyComponentsLess(rtl, components, cb) {
 
   let cbs = 0;
   const componentsToProcess = components.filter((component) => { // eslint-disable-line
-    return fs.existsSync(`./src/core/components/${component}/${component}.js`) && coreComponents.indexOf(component) < 0;
+    return fs.existsSync(`./src/core/components/${component}/${component}.less`) && coreComponents.indexOf(component) < 0;
   });
 
   componentsToProcess.forEach((component) => {
@@ -143,7 +143,6 @@ function buildLazyComponentsJs(components, cb) {
   rollup
     .rollup({
       input: componentsToProcess.map(component => `./src/core/components/${component}/${component}.js`),
-      experimentalCodeSplitting: true,
       experimentalOptimizeChunks: true,
       plugins: [
         replace({
