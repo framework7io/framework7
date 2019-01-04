@@ -5,6 +5,7 @@ import Device from '../../utils/device';
 import History from '../../utils/history';
 import redirect from './redirect';
 import processRouteQueue from './process-route-queue';
+import appRouterCheck from './app-router-check';
 
 function backward(el, backwardOptions) {
   const router = this;
@@ -441,10 +442,7 @@ function back(...args) {
   }
 
   const app = router.app;
-  if (!router.view) {
-    app.views.main.router.back(...args);
-    return router;
-  }
+  appRouterCheck(router, 'back');
 
   let currentRouteIsModal = router.currentRoute.modal;
   let modalType;

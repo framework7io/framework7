@@ -2,6 +2,25 @@
 
 # Change Log
 
+# [v3.6.5](https://github.com/framework7io/framework7/compare/v3.6.3...v3.6.5) - January 4, 2019
+  * Core
+    * Router
+      * Now router methods will throw error if accessed on main app router, e.g. `app.router.navigate()`, it was never allowed, and done to avoid further issues
+  * Minor fixes
+
+# [v3.6.3](https://github.com/framework7io/framework7/compare/v3.6.2...v3.6.3) - December 27, 2018
+  * Core
+    * Range
+      * New `formatLabel` parameter that allows to pass function and return formatted value for range knob label
+    * Tabs
+      * Fixes issue when routable swipeable tabs don't emit `tab:show` events
+    * Dialog
+      * Now it is possible to specify default value for Prompt dialog by adding it as last parameter to `app.dialog.prompt()` method
+  * Phenome
+    * New `routeProps` prop for Link, Button, ListItem, ListButton components that allows to pass props directly to target route component. For example, `<f7-link :props="{foo: 'bar'}">`
+    * New `formatLabel` prop for Range component that allows to pass function and return formatted value for range knob label
+  * Lost of minor fixes
+
 # [v3.6.2](https://github.com/framework7io/framework7/compare/v3.6.1...v3.6.2) - December 11, 2018
   * Core
     * View

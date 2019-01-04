@@ -1,7 +1,9 @@
 import $ from 'dom7';
+import appRouterCheck from './app-router-check';
 
 function clearPreviousPages() {
   const router = this;
+  appRouterCheck(router, 'clearPreviousPages');
   const app = router.app;
   const separateNavbar = router.separateNavbar;
 
@@ -32,6 +34,7 @@ function clearPreviousPages() {
 
 function clearPreviousHistory() {
   const router = this;
+  appRouterCheck(router, 'clearPreviousHistory');
   const url = router.history[router.history.length - 1];
 
   router.clearPreviousPages();

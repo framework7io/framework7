@@ -13,3 +13,12 @@ kitchen-sink/react/js/app.js
 packages/*.zip
 packages/*.tar.gz
 woff2/
+packages/core/*.*
+!packages/core/package.json
+!packages/core/README.md
+packages/react/*.*
+!packages/react/package.json
+!packages/react/README.md
+packages/vue/*.*
+!packages/vue/package.json
+!packages/vue/README.md
