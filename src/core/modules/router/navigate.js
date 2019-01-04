@@ -4,9 +4,11 @@ import Utils from '../../utils/utils';
 import History from '../../utils/history';
 import redirect from './redirect';
 import processRouteQueue from './process-route-queue';
+import appRouterCheck from './app-router-check';
 
 function refreshPage() {
   const router = this;
+  appRouterCheck(router, 'refreshPage');
   return router.navigate(router.currentRoute.url, {
     ignoreCache: true,
     reloadCurrent: true,
@@ -576,12 +578,7 @@ function navigate(navigateParams, navigateOptions = {}) {
     throw new Error(`Framework7: can't construct URL for route with name "${name}"`);
   }
   const app = router.app;
-  if (!router.view) {
-    if (app.views.main) {
-      app.views.main.router.navigate(url, navigateOptions);
-    }
-    return router;
-  }
+  appRouterCheck(router, 'navigate');
   if (url === '#' || url === '') {
     return router;
   }
