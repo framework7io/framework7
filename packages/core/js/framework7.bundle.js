@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.0-beta.10
+ * Framework7 4.0.0-beta.11
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -19952,7 +19952,7 @@
         var value = ss.$selectEl.val();
         ss.$el.trigger('smartselect:change', ss, value);
         ss.emit('local::change smartSelectChange', ss, value);
-        ss.setValue();
+        ss.setTextValue();
       }
       ss.attachEvents = function attachEvents() {
         $el.on('click', onClick);
@@ -20020,6 +20020,43 @@
     SmartSelect.prototype = Object.create( Framework7Class$$1 && Framework7Class$$1.prototype );
     SmartSelect.prototype.constructor = SmartSelect;
 
+    SmartSelect.prototype.setValue = function setValue (value) {
+      var ss = this;
+      var newValue = value;
+      var optionText = [];
+      var optionEl;
+      var displayAs;
+      var text;
+      if (ss.multiple) {
+        if (!Array.isArray(newValue)) { newValue = [newValue]; }
+        for (var i = 0; i < ss.selectEl.options.length; i += 1) {
+          optionEl = ss.selectEl.options[i];
+          if (newValue.indexOf(optionEl.value) >= 0) {
+            optionEl.selected = true;
+          } else {
+            optionEl.selected = false;
+          }
+          if (optionEl.selected) {
+            displayAs = optionEl.dataset ? optionEl.dataset.displayAs : $(optionEl).data('display-value-as');
+            text = displayAs && typeof displayAs !== 'undefined' ? displayAs : optionEl.textContent;
+            optionText.push(text.trim());
+          }
+        }
+      } else {
+        optionEl = ss.$selectEl.find(("option[value=\"" + newValue + "\"]"))[0];
+        displayAs = optionEl.dataset ? optionEl.dataset.displayAs : $(optionEl).data('display-as');
+        text = displayAs && typeof displayAs !== 'undefined' ? displayAs : optionEl.textContent;
+        optionText = [text];
+        ss.selectEl.value = newValue;
+      }
+      ss.$valueEl.text(optionText.join(', '));
+    };
+
+    SmartSelect.prototype.getValue = function getValue () {
+      var ss = this;
+      return ss.$selectEl.val();
+    };
+
     SmartSelect.prototype.getView = function getView () {
       var ss = this;
       var view = ss.view || ss.params.view;
@@ -20049,7 +20086,7 @@
       }
     };
 
-    SmartSelect.prototype.setValue = function setValue (value) {
+    SmartSelect.prototype.setTextValue = function setTextValue (value) {
       var ss = this;
       var valueArray = [];
       if (typeof value !== 'undefined') {
@@ -20490,7 +20527,7 @@
     SmartSelect.prototype.init = function init () {
       var ss = this;
       ss.attachEvents();
-      ss.setValue();
+      ss.setTextValue();
     };
 
     SmartSelect.prototype.destroy = function destroy () {

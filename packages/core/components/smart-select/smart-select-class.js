@@ -77,7 +77,7 @@ class SmartSelect extends Framework7Class {
       const value = ss.$selectEl.val();
       ss.$el.trigger('smartselect:change', ss, value);
       ss.emit('local::change smartSelectChange', ss, value);
-      ss.setValue();
+      ss.setTextValue();
     }
     ss.attachEvents = function attachEvents() {
       $el.on('click', onClick);
@@ -141,6 +141,43 @@ class SmartSelect extends Framework7Class {
     return ss;
   }
 
+  setValue(value) {
+    const ss = this;
+    let newValue = value;
+    let optionText = [];
+    let optionEl;
+    let displayAs;
+    let text;
+    if (ss.multiple) {
+      if (!Array.isArray(newValue)) newValue = [newValue];
+      for (let i = 0; i < ss.selectEl.options.length; i += 1) {
+        optionEl = ss.selectEl.options[i];
+        if (newValue.indexOf(optionEl.value) >= 0) {
+          optionEl.selected = true;
+        } else {
+          optionEl.selected = false;
+        }
+        if (optionEl.selected) {
+          displayAs = optionEl.dataset ? optionEl.dataset.displayAs : $(optionEl).data('display-value-as');
+          text = displayAs && typeof displayAs !== 'undefined' ? displayAs : optionEl.textContent;
+          optionText.push(text.trim());
+        }
+      }
+    } else {
+      optionEl = ss.$selectEl.find(`option[value="${newValue}"]`)[0];
+      displayAs = optionEl.dataset ? optionEl.dataset.displayAs : $(optionEl).data('display-as');
+      text = displayAs && typeof displayAs !== 'undefined' ? displayAs : optionEl.textContent;
+      optionText = [text];
+      ss.selectEl.value = newValue;
+    }
+    ss.$valueEl.text(optionText.join(', '));
+  }
+
+  getValue() {
+    const ss = this;
+    return ss.$selectEl.val();
+  }
+
   getView() {
     const ss = this;
     let view = ss.view || ss.params.view;
@@ -170,7 +207,7 @@ class SmartSelect extends Framework7Class {
     }
   }
 
-  setValue(value) {
+  setTextValue(value) {
     const ss = this;
     let valueArray = [];
     if (typeof value !== 'undefined') {
@@ -712,7 +749,7 @@ class SmartSelect extends Framework7Class {
   init() {
     const ss = this;
     ss.attachEvents();
-    ss.setValue();
+    ss.setTextValue();
   }
 
   destroy() {
