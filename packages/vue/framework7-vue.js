@@ -1,20 +1,20 @@
 /**
- * Framework7 Vue 3.6.3
+ * Framework7 Vue 3.6.5
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
- * Copyright 2014-2018 Vladimir Kharlampidi
+ * Copyright 2014-2019 Vladimir Kharlampidi
  *
  * Released under the MIT License
  *
- * Released on: December 27, 2018
+ * Released on: January 4, 2019
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('vue')) :
   typeof define === 'function' && define.amd ? define(['vue'], factory) :
-  global.Framework7Vue = factory(global.Vue);
-}(typeof self !== 'undefined' ? self : this, function (Vue) { 'use strict';
+  (global = global || self, global.Framework7Vue = factory(global.Vue));
+}(this, function (Vue) { 'use strict';
 
   Vue = Vue && Vue.hasOwnProperty('default') ? Vue['default'] : Vue;
 
@@ -10857,15 +10857,15 @@
   };
 
   /**
-   * Framework7 Vue 3.6.3
+   * Framework7 Vue 3.6.5
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
-   * Copyright 2014-2018 Vladimir Kharlampidi
+   * Copyright 2014-2019 Vladimir Kharlampidi
    *
    * Released under the MIT License
    *
-   * Released on: December 27, 2018
+   * Released on: January 4, 2019
    */
 
   var Plugin = {

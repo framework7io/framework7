@@ -12,6 +12,7 @@ import { tabLoad, tabRemove } from './tab';
 import { modalLoad, modalRemove } from './modal';
 import { backward, loadBack, back } from './back';
 import { clearPreviousHistory, clearPreviousPages } from './clear-previous-history';
+import appRouterCheck from './app-router-check';
 
 class Router extends Framework7Class {
   constructor(app, view) {
@@ -1129,6 +1130,7 @@ class Router extends Framework7Class {
 
   updateCurrentUrl(newUrl) {
     const router = this;
+    appRouterCheck(router, 'updateCurrentUrl');
     // Update history
     if (router.history.length) {
       router.history[router.history.length - 1] = newUrl;

@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [v3.6.5](https://github.com/framework7io/framework7/compare/v3.6.3...v3.6.5) - January 4, 2019
+  * Core
+    * Router
+      * Now router methods will throw error if accessed on main app router, e.g. `app.router.navigate()`, it was never allowed, and done to avoid further issues
+  * Minor fixes
+
 # [v3.6.3](https://github.com/framework7io/framework7/compare/v3.6.2...v3.6.3) - December 27, 2018
   * Core
     * Range

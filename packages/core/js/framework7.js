@@ -1,20 +1,20 @@
 /**
- * Framework7 3.6.3
+ * Framework7 3.6.5
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
- * Copyright 2014-2018 Vladimir Kharlampidi
+ * Copyright 2014-2019 Vladimir Kharlampidi
  *
  * Released under the MIT License
  *
- * Released on: December 27, 2018
+ * Released on: January 4, 2019
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  global.Framework7 = factory();
-}(typeof self !== 'undefined' ? self : this, function () { 'use strict';
+  (global = global || self, global.Framework7 = factory());
+}(this, function () { 'use strict';
 
   /**
    * Template7 1.4.0
@@ -5785,8 +5785,15 @@
     leaveCurrentRoute();
   }
 
+  function appRouterCheck (router, method) {
+    if (!router.view) {
+      throw new Error(("Framework7: it is not allowed to use router methods on global app router. Use router methods only on related View, e.g. app.views.main.router." + method + "(...)"));
+    }
+  }
+
   function refreshPage() {
     var router = this;
+    appRouterCheck(router, 'refreshPage');
     return router.navigate(router.currentRoute.url, {
       ignoreCache: true,
       reloadCurrent: true,
@@ -6370,12 +6377,7 @@
       throw new Error(("Framework7: can't construct URL for route with name \"" + name + "\""));
     }
     var app = router.app;
-    if (!router.view) {
-      if (app.views.main) {
-        app.views.main.router.navigate(url, navigateOptions);
-      }
-      return router;
-    }
+    appRouterCheck(router, 'navigate');
     if (url === '#' || url === '') {
       return router;
     }
@@ -7336,10 +7338,9 @@
     return router;
   }
   function back() {
-    var ref;
-
     var args = [], len = arguments.length;
     while ( len-- ) args[ len ] = arguments[ len ];
+
     var router = this;
     if (router.swipeBackActive) { return router; }
     var navigateUrl;
@@ -7373,10 +7374,7 @@
     }
 
     var app = router.app;
-    if (!router.view) {
-      (ref = app.views.main.router).back.apply(ref, args);
-      return router;
-    }
+    appRouterCheck(router, 'back');
 
     var currentRouteIsModal = router.currentRoute.modal;
     var modalType;
@@ -7587,6 +7585,7 @@
 
   function clearPreviousPages() {
     var router = this;
+    appRouterCheck(router, 'clearPreviousPages');
     var app = router.app;
     var separateNavbar = router.separateNavbar;
 
@@ -7617,6 +7616,7 @@
 
   function clearPreviousHistory() {
     var router = this;
+    appRouterCheck(router, 'clearPreviousHistory');
     var url = router.history[router.history.length - 1];
 
     router.clearPreviousPages();
@@ -8778,6 +8778,7 @@
 
     Router.prototype.updateCurrentUrl = function updateCurrentUrl (newUrl) {
       var router = this;
+      appRouterCheck(router, 'updateCurrentUrl');
       // Update history
       if (router.history.length) {
         router.history[router.history.length - 1] = newUrl;

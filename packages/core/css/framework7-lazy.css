@@ -1,13 +1,13 @@
 /**
- * Framework7 3.6.3
+ * Framework7 3.6.5
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
- * Copyright 2014-2018 Vladimir Kharlampidi
+ * Copyright 2014-2019 Vladimir Kharlampidi
  *
  * Released under the MIT License
  *
- * Released on: December 27, 2018
+ * Released on: January 4, 2019
  */
 html,
 body,
@@ -3678,7 +3678,8 @@ li.list-group-title {
   overflow: hidden;
   z-index: 15;
 }
-li.list-group-title {
+li.list-group-title,
+.list li.list-group-title {
   position: relative;
   position: -webkit-sticky;
   position: sticky;
@@ -3686,7 +3687,8 @@ li.list-group-title {
   margin-top: 0;
   z-index: 20;
 }
-li.list-group-title:before {
+li.list-group-title:before,
+.list li.list-group-title:before {
   display: none !important;
 }
 .list.inset .block-title {

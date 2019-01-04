@@ -1,20 +1,20 @@
 /**
- * Framework7 React 3.6.3
+ * Framework7 React 3.6.5
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
- * Copyright 2014-2018 Vladimir Kharlampidi
+ * Copyright 2014-2019 Vladimir Kharlampidi
  *
  * Released under the MIT License
  *
- * Released on: December 27, 2018
+ * Released on: January 4, 2019
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('react')) :
   typeof define === 'function' && define.amd ? define(['react'], factory) :
-  global.Framework7React = factory(global.React);
-}(typeof self !== 'undefined' ? self : this, function (React) { 'use strict';
+  (global = global || self, global.Framework7React = factory(global.React));
+}(this, function (React) { 'use strict';
 
   React = React && React.hasOwnProperty('default') ? React['default'] : React;
 
@@ -12158,15 +12158,15 @@
   };
 
   /**
-   * Framework7 React 3.6.3
+   * Framework7 React 3.6.5
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
-   * Copyright 2014-2018 Vladimir Kharlampidi
+   * Copyright 2014-2019 Vladimir Kharlampidi
    *
    * Released under the MIT License
    *
-   * Released on: December 27, 2018
+   * Released on: January 4, 2019
    */
 
   var Plugin = {
