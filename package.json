@@ -24,7 +24,7 @@
     "vue:prod": "cross-env-shell NODE_ENV=production \"gulp ks-vue && gulp server-vue\"",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "npm run build:prod && eslint .",
+    "test": "npm run build:dev && eslint .",
     "release": "bash ./scripts/release.sh",
     "release-update-dependencies": "node ./scripts/release-update-dependencies.js",
     "postinstall": "node -e \"console.log('\\u001b[35m\\u001b[1mLove Framework7? Support project by donating or pledging on patreon:\\u001b[22m\\u001b[39m\\n > \\u001b[32mhttps://patreon.com/vladimirkharlampidi\\u001b[0m\\n')\""

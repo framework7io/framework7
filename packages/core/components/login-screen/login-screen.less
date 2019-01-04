@@ -1,0 +1,80 @@
+/* === Login Screen === */
+@import url('./login-screen-vars.less');
+
+.login-screen {
+  position: absolute;
+  left: 0;
+  top: var(--f7-statusbar-height);
+  width: 100%;
+  height: calc(100% - var(--f7-statusbar-height));
+  display: none;
+  box-sizing: border-box;
+  transition-property: transform;
+  transform: translate3d(0, 100%, 0);
+  background: var(--f7-login-screen-bg-color);
+  z-index: 11000;
+  will-change: transform;
+  &.modal-in, &.modal-out {
+    transition-duration: 400ms;
+  }
+  &.not-animated {
+    transition-duration: 0ms;
+  }
+  &.modal-in {
+    display: block;
+    transform: translate3d(0, 0, 0);
+  }
+  &.modal-out {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+.login-screen-content {
+  background: var(--f7-login-screen-content-bg-color);
+  .list-button {
+    text-align: center;
+    color: var(--f7-login-screen-list-button-text-color, var(--f7-theme-color));
+  }
+  .login-screen-title,
+  .list,
+  .block {
+    margin: var(--f7-login-screen-blocks-margin-vertical) auto;
+  }
+  .login-screen-title,
+  .list,
+  .block,
+  .block-footer,
+  .block-header {
+    max-width: var(--f7-login-screen-blocks-max-width);
+  }
+  .list ul {
+    .hairline-remove(top);
+    .hairline-remove(bottom);
+    background: none;
+  }
+  .block-footer, .block-header {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+.login-screen-title {
+  text-align: var(--f7-login-screen-title-text-align);
+  font-size: var(--f7-login-screen-title-font-size);
+  font-weight: var(--f7-login-screen-title-font-weight);
+  color: var(--f7-login-screen-title-text-color);
+  letter-spacing: var(--f7-login-screen-title-letter-spacing);
+}
+.theme-dark {
+  .login-screen-content .list ul,
+  .login-screen-content .block-strong {
+    background-color: transparent;
+  }
+}
+
+& when (@includeIosTheme) {
+  @import url('./login-screen-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./login-screen-md.less');
+}

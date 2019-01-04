@@ -1,0 +1,283 @@
+/*====================
+  Core
+  ==================== */
+:root {
+  @themeColorRed: red(@themeColor);
+  @themeColorGreen: green(@themeColor);
+  @themeColorBlue: blue(@themeColor);
+  --f7-theme-color: @themeColor;
+  --f7-theme-color-rgb: @themeColorRed, @themeColorGreen, @themeColorBlue;
+  --f7-theme-color-shade: darken(@themeColor, 8%);
+  --f7-theme-color-tint: lighten(@themeColor, 8%);
+
+  --f7-safe-area-left: 0px;
+  --f7-safe-area-right: 0px;
+  --f7-safe-area-top: 0px;
+  --f7-safe-area-bottom: 0px;
+
+  --f7-safe-area-outer-left: 0px;
+  --f7-safe-area-outer-right: 0px;
+
+  @supports (left: env(safe-area-inset-left)) {
+    --f7-safe-area-top: env(safe-area-inset-top);
+    --f7-safe-area-bottom: env(safe-area-inset-bottom);
+    .ios-left-edge,
+    .ios-edges,
+    .popup,
+    .sheet-modal,
+    .panel-left {
+      --f7-safe-area-left: env(safe-area-inset-left);
+      --f7-safe-area-outer-left: env(safe-area-inset-left);
+    }
+    .ios-right-edge,
+    .ios-edges,
+    .popup,
+    .sheet-modal,
+    .panel-left {
+      --f7-safe-area-right: env(safe-area-inset-right);
+      --f7-safe-area-outer-right: env(safe-area-inset-right);
+    }
+    .no-ios-edges,
+    .no-ios-left-edge {
+      --f7-safe-area-left: 0px;
+      --f7-safe-area-outer-left: 0px;
+    }
+    .no-ios-edges,
+    .no-ios-right-edge {
+      --f7-safe-area-right: 0px;
+      --f7-safe-area-outer-right: 0px;
+    }
+  }
+
+  --f7-device-pixel-ratio: 1;
+  @media (min-resolution: 2dppx) {
+    --f7-device-pixel-ratio: 2;
+  }
+  @media (min-resolution: 3dppx) {
+    --f7-device-pixel-ratio: 3;
+  }
+}
+/*====================
+  Fonts
+  ==================== */
+.ios {
+  --f7-font-family: -apple-system, SF Pro Text, SF UI Text, Helvetica Neue, Helvetica, Arial, sans-serif;
+  --f7-text-color: #000;
+  --f7-font-size: 14px;
+  --f7-line-height: 1.4;
+  .theme-dark, &.theme-dark {
+    --f7-text-color: #fff;
+  }
+}
+.md {
+  --f7-font-family: Roboto, Noto, Helvetica, Arial, sans-serif;
+  --f7-text-color: #212121;
+  --f7-font-size: 14px;
+  --f7-line-height: 1.5;
+  .theme-dark, &.theme-dark {
+    --f7-text-color: rgba(255,255,255,0.87);
+  }
+}
+
+/*====================
+  Bars
+  ==================== */
+:root {
+  // --f7-bars-link-color: var(--f7-theme-color);
+  --f7-bars-bg-color: #f7f7f8;
+  --f7-bars-bg-color-rgb: 247, 247, 248;
+  --f7-bars-text-color: #000;
+  --f7-bars-shadow-bottom-image: linear-gradient(to bottom,
+    rgba(0,0,0,0.3) 0%,
+    rgba(0,0,0,0.1) 40%,
+    rgba(0,0,0,0.05) 50%,
+    rgba(0,0,0,0) 80%,
+    rgba(0,0,0,0) 100%
+  );
+  --f7-bars-shadow-top-image: linear-gradient(to top,
+    rgba(0,0,0,0.3) 0%,
+    rgba(0,0,0,0.1) 40%,
+    rgba(0,0,0,0.05) 50%,
+    rgba(0,0,0,0) 80%,
+    rgba(0,0,0,0) 100%
+  );
+}
+.theme-dark {
+  --f7-bars-bg-color: #1b1b1b;
+  --f7-bars-text-color: #fff;
+}
+.ios {
+  --f7-bars-border-color: #c4c4c4;
+  .theme-dark, &.theme-dark {
+    --f7-bars-border-color: #282829;
+  }
+}
+.md {
+  --f7-bars-border-color: transparent;
+}
+
+/*====================
+  Elevation
+  ==================== */
+:root {
+  --f7-elevation-0: 0px 0px 0px 0px rgba(0,0,0,0);
+  --f7-elevation-1:
+    0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  --f7-elevation-2:
+    0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  --f7-elevation-3:
+    0px 3px 3px -2px rgba(0, 0, 0, 0.2),
+    0px 3px 4px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 8px 0px rgba(0, 0, 0, 0.12);
+  --f7-elevation-4:
+    0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  --f7-elevation-5:
+    0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0px 5px 8px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 14px 0px rgba(0, 0, 0, 0.12);
+  --f7-elevation-6:
+    0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0px 6px 10px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+  --f7-elevation-7:
+    0px 4px 5px -2px rgba(0, 0, 0, 0.2),
+    0px 7px 10px 1px rgba(0, 0, 0, 0.14),
+    0px 2px 16px 1px rgba(0, 0, 0, 0.12);
+  --f7-elevation-8:
+    0px 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0px 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+  --f7-elevation-9:
+    0px 5px 6px -3px rgba(0, 0, 0, 0.2),
+    0px 9px 12px 1px rgba(0, 0, 0, 0.14),
+    0px 3px 16px 2px rgba(0, 0, 0, 0.12);
+  --f7-elevation-10:
+    0px 6px 6px -3px rgba(0, 0, 0, 0.2),
+    0px 10px 14px 1px rgba(0, 0, 0, 0.14),
+    0px 4px 18px 3px rgba(0, 0, 0, 0.12);
+  --f7-elevation-11:
+    0px 6px 7px -4px rgba(0, 0, 0, 0.2),
+    0px 11px 15px 1px rgba(0, 0, 0, 0.14),
+    0px 4px 20px 3px rgba(0, 0, 0, 0.12);
+  --f7-elevation-12:
+    0px 7px 8px -4px rgba(0, 0, 0, 0.2),
+    0px 12px 17px 2px rgba(0, 0, 0, 0.14),
+    0px 5px 22px 4px rgba(0, 0, 0, 0.12);
+  --f7-elevation-13:
+    0px 7px 8px -4px rgba(0, 0, 0, 0.2),
+    0px 13px 19px 2px rgba(0, 0, 0, 0.14),
+    0px 5px 24px 4px rgba(0, 0, 0, 0.12);
+  --f7-elevation-14:
+    0px 7px 9px -4px rgba(0, 0, 0, 0.2),
+    0px 14px 21px 2px rgba(0, 0, 0, 0.14),
+    0px 5px 26px 4px rgba(0, 0, 0, 0.12);
+  --f7-elevation-15:
+    0px 8px 9px -5px rgba(0, 0, 0, 0.2),
+    0px 15px 22px 2px rgba(0, 0, 0, 0.14),
+    0px 6px 28px 5px rgba(0, 0, 0, 0.12);
+  --f7-elevation-16:
+    0px 8px 10px -5px rgba(0, 0, 0, 0.2),
+    0px 16px 24px 2px rgba(0, 0, 0, 0.14),
+    0px 6px 30px 5px rgba(0, 0, 0, 0.12);
+  --f7-elevation-17:
+    0px 8px 11px -5px rgba(0, 0, 0, 0.2),
+    0px 17px 26px 2px rgba(0, 0, 0, 0.14),
+    0px 6px 32px 5px rgba(0, 0, 0, 0.12);
+  --f7-elevation-18:
+    0px 9px 11px -5px rgba(0, 0, 0, 0.2),
+    0px 18px 28px 2px rgba(0, 0, 0, 0.14),
+    0px 7px 34px 6px rgba(0, 0, 0, 0.12);
+  --f7-elevation-19:
+    0px 9px 12px -6px rgba(0, 0, 0, 0.2),
+    0px 19px 29px 2px rgba(0, 0, 0, 0.14),
+    0px 7px 36px 6px rgba(0, 0, 0, 0.12);
+  --f7-elevation-20:
+    0px 10px 13px -6px rgba(0, 0, 0, 0.2),
+    0px 20px 31px 3px rgba(0, 0, 0, 0.14),
+    0px 8px 38px 7px rgba(0, 0, 0, 0.12);
+  --f7-elevation-21:
+    0px 10px 13px -6px rgba(0, 0, 0, 0.2),
+    0px 21px 33px 3px rgba(0, 0, 0, 0.14),
+    0px 8px 40px 7px rgba(0, 0, 0, 0.12);
+  --f7-elevation-22:
+    0px 10px 14px -6px rgba(0, 0, 0, 0.2),
+    0px 22px 35px 3px rgba(0, 0, 0, 0.14),
+    0px 8px 42px 7px rgba(0, 0, 0, 0.12);
+  --f7-elevation-23:
+    0px 11px 14px -7px rgba(0, 0, 0, 0.2),
+    0px 23px 36px 3px rgba(0, 0, 0, 0.14),
+    0px 9px 44px 8px rgba(0, 0, 0, 0.12);
+  --f7-elevation-24:
+    0px 11px 15px -7px rgba(0, 0, 0, 0.2),
+    0px 24px 38px 3px rgba(0, 0, 0, 0.14),
+    0px 9px 46px 8px rgba(0, 0, 0, 0.12);
+}
+
+
+/*====================
+  Color Themes
+  ==================== */
+.color-primary {}
+.text-color-primary {
+  --f7-theme-color-text-color: var(--f7-theme-color);
+}
+.bg-color-primary {
+  --f7-theme-color-bg-color: var(--f7-theme-color);
+}
+.border-color-primary {
+  --f7-theme-color-border-color: var(--f7-theme-color);
+}
+.ripple-color-primary {
+  --f7-theme-color-ripple-color: rgba(var(--f7-theme-color-rgb), 0.3);
+}
+:root {
+  each(@colors, {
+    @themeColorRed: red(@value);
+    @themeColorGreen: green(@value);
+    @themeColorBlue: blue(@value);
+    --f7-color-@{key}: @value;
+    --f7-color-@{key}-rgb: @themeColorRed, @themeColorGreen, @themeColorBlue;
+    --f7-color-@{key}-shade: darken(@value, 8%);
+    --f7-color-@{key}-tint: lighten(@value, 8%);
+  });
+}
+each(@colors, {
+  .color-theme-@{key} {
+    @themeColorRed: red(@value);
+    @themeColorGreen: green(@value);
+    @themeColorBlue: blue(@value);
+    --f7-theme-color: @value;
+    --f7-theme-color-rgb: @themeColorRed, @themeColorGreen, @themeColorBlue;
+    --f7-theme-color-shade: darken(@value, 8%);
+    --f7-theme-color-tint: lighten(@value, 8%);
+  }
+});
+each(@colors, {
+  @themeColorRed: red(@value);
+  @themeColorGreen: green(@value);
+  @themeColorBlue: blue(@value);
+  .color-@{key} {
+    --f7-theme-color: @value;
+    --f7-theme-color-rgb: @themeColorRed, @themeColorGreen, @themeColorBlue;
+    --f7-theme-color-shade: darken(@value, 8%);
+    --f7-theme-color-tint: lighten(@value, 8%);
+  }
+  .text-color-@{key} {
+    --f7-theme-color-text-color: @value;
+  }
+  .bg-color-@{key} {
+    --f7-theme-color-bg-color: @value;
+  }
+  .border-color-@{key} {
+    --f7-theme-color-border-color: @value;
+  }
+  .ripple-color-@{key}, .ripple-@{key} {
+    --f7-theme-color-ripple-color: rgba(@themeColorRed, @themeColorGreen, @themeColorBlue, 0.3);
+  }
+});
