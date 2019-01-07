@@ -65,7 +65,7 @@ button {
 .button-active,
 .button.tab-link-active {
   --f7-button-bg-color: var(--f7-button-fill-bg-color, var(--f7-theme-color));
-  --f7-button-text-color: var(--f7-button-fill-text-color);
+  --f7-button-text-color: var(--f7-button-fill-text-color, #fff);
   --f7-touch-ripple-color: var(--f7-touch-ripple-white);
 }
 .button-fill,
@@ -82,6 +82,7 @@ button {
 .ios .button-outline-ios,
 .md .button-outline-md {
   --f7-button-border-width: var(--f7-button-outline-border-width);
+  --f7-button-border-color: var(--f7-button-outline-border-color, var(--f7-button-border-color, var(--f7-theme-color)));
 }
 
 .button-large,
@@ -176,7 +177,8 @@ button {
 .segmented-raised,
 .ios .segmented-raised-ios,
 .md .segmented-raised-md {
-  .button {
+  box-shadow: var(--f7-button-raised-box-shadow);
+  .button:not(.button-outline) {
     .ltr({
       border-left: 1px solid var(--f7-segmented-raised-divider-color);
     });
@@ -189,10 +191,7 @@ button {
 // Raised
 .button-raised,
 .ios .button-raised-ios,
-.md .button-raised-md,
-.segmented-raised,
-.ios .segmented-raised-ios,
-.md .segmented-raised-md {
+.md .button-raised-md {
   --f7-button-box-shadow: var(--f7-button-raised-box-shadow);
 }
 .button-raised,
