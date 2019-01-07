@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom/cjs/react-dom.production.min';
+import ReactDOM from 'react-dom';
 import Framework7 from 'framework7/framework7.esm.bundle';
 import Framework7React from 'framework7-react';
 import App from './app.jsx';
