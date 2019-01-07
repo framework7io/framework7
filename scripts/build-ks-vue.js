@@ -50,6 +50,7 @@ function buildKs(cb) {
       vue(),
       buble({
         objectAssign: 'Object.assign',
+        exclude: ['node_modules/vue/dist/vue.runtime.esm.js'],
       }),
     ],
     onwarn(warning, warn) {

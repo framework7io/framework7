@@ -54,6 +54,10 @@ function buildKs(cb) {
       commonjs(),
       buble({
         objectAssign: 'Object.assign',
+        exclude: [
+          'node_modules/react/cjs/react.development.js',
+          'node_modules/react-dom/cjs/react-dom.development.js',
+        ],
       }),
     ],
     onwarn(warning, warn) {
