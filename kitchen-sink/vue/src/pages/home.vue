@@ -193,8 +193,8 @@
     </f7-list>
     <f7-block-title class="searchbar-hide-on-search">Themes</f7-block-title>
     <f7-list class="searchbar-hide-on-search">
-      <f7-list-item title="iOS Theme" external link="./index.html?theme=ios"></f7-list-item>
-      <f7-list-item title="Material (MD) Theme" external link="./index.html?theme=md"></f7-list-item>
+      <f7-list-item title="iOS Theme" external link="./index.html?theme=ios" v-if="$f7.theme==='md'"></f7-list-item>
+      <f7-list-item title="Material (MD) Theme" external link="./index.html?theme=md" v-if="$f7.theme==='ios'"></f7-list-item>
       <f7-list-item title="Color Themes" link="/color-themes/"></f7-list-item>
     </f7-list>
 
