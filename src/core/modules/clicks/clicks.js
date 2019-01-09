@@ -37,7 +37,7 @@ function initClicks(app) {
       Object.keys(moduleClicks).forEach((clickSelector) => {
         const matchingClickedElement = $clickedEl.closest(clickSelector).eq(0);
         if (matchingClickedElement.length > 0) {
-          moduleClicks[clickSelector].call(app, matchingClickedElement, matchingClickedElement.dataset());
+          moduleClicks[clickSelector].call(app, matchingClickedElement, matchingClickedElement.dataset(), e);
         }
       });
     });
