@@ -101,6 +101,9 @@ const config = {
     // Skeleton
     'skeleton',
 
+    // Menu
+    'menu',
+
     // VI Video Ads
     'vi',
 

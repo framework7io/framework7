@@ -179,6 +179,10 @@ var routes = [
     componentUrl: './pages/login-screen-page.html',
   },
   {
+    path: '/menu/',
+    componentUrl: './pages/menu.html',
+  },
+  {
     path: '/messages/',
     componentUrl: './pages/messages.html',
   },
