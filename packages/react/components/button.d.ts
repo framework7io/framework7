@@ -81,6 +81,7 @@ declare namespace F7Button {
     sortableToggle? : boolean | string
     cardOpen? : boolean | string
     cardClose? : boolean | string
+    menuClose? : boolean | string
     onClick? : (event?: any) => void
   }
 }

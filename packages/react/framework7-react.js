@@ -1,5 +1,5 @@
 /**
- * Framework7 React 4.0.0-beta.11
+ * Framework7 React 4.0.0-beta.12
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 4, 2019
+ * Released on: January 9, 2019
  */
 
 (function (global, factory) {
@@ -102,7 +102,11 @@
           });
         } else if (arg) { classes.push(arg); }
       });
-      return classes.join(' ');
+      var uniqueClasses = [];
+      classes.forEach(function (c) {
+        if (uniqueClasses.indexOf(c) < 0) { uniqueClasses.push(c); }
+      });
+      return uniqueClasses.join(' ');
     },
     bindMethods: function bindMethods(context, methods) {
       if ( methods === void 0 ) methods = [];
@@ -242,6 +246,12 @@
       // Card
       cardOpen: [Boolean, String],
       cardClose: [Boolean, String],
+
+      // Menu
+      menuClose: {
+        type: [Boolean, String],
+        default: undefined,
+      },
     },
     linkActionsAttrs: function linkActionsAttrs(props) {
       var searchbarEnable = props.searchbarEnable;
@@ -312,6 +322,7 @@
       var sortableToggle = props.sortableToggle;
       var cardOpen = props.cardOpen;
       var cardClose = props.cardClose;
+      var menuClose = props.menuClose;
 
       return {
         'searchbar-enable': searchbarEnable || searchbarEnable === '',
@@ -335,6 +346,7 @@
         'sortable-toggle': sortableToggle || sortableToggle === '',
         'card-close': cardClose || cardClose === '',
         'card-open': cardOpen || cardOpen === '',
+        'menu-close': menuClose || menuClose === '',
       };
     },
   };
@@ -6548,6 +6560,409 @@
 
   F7LoginScreen.displayName = 'f7-login-screen';
 
+  var F7MenuDropdownItem = /*@__PURE__*/(function (superclass) {
+    function F7MenuDropdownItem(props, context) {
+      var this$1 = this;
+
+      superclass.call(this, props, context);
+      this.__reactRefs = {};
+
+      (function () {
+        Utils.bindMethods(this$1, ['onClick']);
+      })();
+    }
+
+    if ( superclass ) F7MenuDropdownItem.__proto__ = superclass;
+    F7MenuDropdownItem.prototype = Object.create( superclass && superclass.prototype );
+    F7MenuDropdownItem.prototype.constructor = F7MenuDropdownItem;
+
+    var prototypeAccessors = { attrs: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
+
+    F7MenuDropdownItem.prototype.onClick = function onClick (event) {
+      this.dispatchEvent('click', event);
+    };
+
+    prototypeAccessors.attrs.get = function () {
+      var self = this;
+      var props = self.props;
+      var link = props.link;
+      var href = props.href;
+      var target = props.target;
+      var hrefComputed = href;
+      if (typeof hrefComputed === 'undefined' && link) { hrefComputed = '#'; }
+      return Utils.extend({
+        href: hrefComputed,
+        target: target
+      }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
+    };
+
+    F7MenuDropdownItem.prototype.render = function render () {
+      var this$1 = this;
+
+      var self = this;
+      var props = self.props;
+      var id = props.id;
+      var className = props.className;
+      var style = props.style;
+      var link = props.link;
+      var href = props.href;
+      var text = props.text;
+      var divider = props.divider;
+      var menuClose = props.menuClose;
+      var isLink = link || href || href === '';
+      var Tag = isLink ? 'a' : 'div';
+      var classes = Utils.classNames({
+        'menu-dropdown-link': isLink && !divider,
+        'menu-dropdown-item': !isLink && !divider,
+        'menu-dropdown-divider': divider
+      }, className, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props), {
+        'menu-close': typeof menuClose === 'undefined'
+      });
+      return React.createElement(Tag, Object.assign({
+        ref: function (__reactNode) {
+          this$1.__reactRefs['el'] = __reactNode;
+        },
+        className: classes,
+        id: id,
+        style: style
+      }, self.attrs), text, this.slots['default']);
+    };
+
+    F7MenuDropdownItem.prototype.componentWillUnmount = function componentWillUnmount () {
+      var self = this;
+      var el = self.refs.el;
+      if (!el) { return; }
+      el.removeEventListener('click', self.onClick);
+      delete el.f7RouteProps;
+    };
+
+    F7MenuDropdownItem.prototype.componentDidUpdate = function componentDidUpdate () {
+      var self = this;
+      var el = self.refs.el;
+      if (!el) { return; }
+      var ref = self.props;
+      var routeProps = ref.routeProps;
+      if (routeProps) { el.f7RouteProps = routeProps; }
+    };
+
+    F7MenuDropdownItem.prototype.componentDidMount = function componentDidMount () {
+      var self = this;
+      var el = self.refs.el;
+      if (!el) { return; }
+      el.addEventListener('click', self.onClick);
+      var ref = self.props;
+      var routeProps = ref.routeProps;
+      if (routeProps) { el.f7RouteProps = routeProps; }
+    };
+
+    prototypeAccessors.slots.get = function () {
+      return __reactComponentSlots(this.props);
+    };
+
+    F7MenuDropdownItem.prototype.dispatchEvent = function dispatchEvent (events) {
+      var args = [], len = arguments.length - 1;
+      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+
+      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    };
+
+    prototypeAccessors.refs.get = function () {
+      return this.__reactRefs;
+    };
+
+    prototypeAccessors.refs.set = function (refs) {};
+
+    Object.defineProperties( F7MenuDropdownItem.prototype, prototypeAccessors );
+
+    return F7MenuDropdownItem;
+  }(React.Component));
+
+  __reactComponentSetProps(F7MenuDropdownItem, Object.assign({
+    id: [String, Number],
+    className: String,
+    style: Object,
+    text: String,
+    link: Boolean,
+    href: String,
+    target: String,
+    divider: Boolean
+  }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
+
+  F7MenuDropdownItem.displayName = 'f7-menu-dropdown-item';
+
+  var F7MenuDropdown = /*@__PURE__*/(function (superclass) {
+    function F7MenuDropdown(props, context) {
+      superclass.call(this, props, context);
+    }
+
+    if ( superclass ) F7MenuDropdown.__proto__ = superclass;
+    F7MenuDropdown.prototype = Object.create( superclass && superclass.prototype );
+    F7MenuDropdown.prototype.constructor = F7MenuDropdown;
+
+    var prototypeAccessors = { slots: { configurable: true } };
+
+    F7MenuDropdown.prototype.render = function render () {
+      var self = this;
+      var props = self.props;
+      var id = props.id;
+      var className = props.className;
+      var style = props.style;
+      var contentHeight = props.contentHeight;
+      var position = props.position;
+      var left = props.left;
+      var center = props.center;
+      var right = props.right;
+      var positionComputed = position || 'left';
+      if (left) { positionComputed = 'left'; }
+      if (center) { positionComputed = 'center'; }
+      if (right) { positionComputed = 'right'; }
+      var classes = Utils.classNames('menu-dropdown', ("menu-dropdown-" + positionComputed), Mixins.colorClasses(props), className);
+      return React.createElement('div', {
+        className: classes,
+        id: id,
+        style: style
+      }, React.createElement('div', {
+        className: 'menu-dropdown-content',
+        style: {
+          height: contentHeight
+        }
+      }, this.slots['default']));
+    };
+
+    prototypeAccessors.slots.get = function () {
+      return __reactComponentSlots(this.props);
+    };
+
+    Object.defineProperties( F7MenuDropdown.prototype, prototypeAccessors );
+
+    return F7MenuDropdown;
+  }(React.Component));
+
+  __reactComponentSetProps(F7MenuDropdown, Object.assign({
+    id: [String, Number],
+    className: String,
+    style: Object,
+    contentHeight: String,
+    position: String,
+    left: Boolean,
+    center: Boolean,
+    right: Boolean
+  }, Mixins.colorProps));
+
+  F7MenuDropdown.displayName = 'f7-menu-dropdown';
+
+  var F7MenuItem = /*@__PURE__*/(function (superclass) {
+    function F7MenuItem(props, context) {
+      var this$1 = this;
+
+      superclass.call(this, props, context);
+      this.__reactRefs = {};
+
+      (function () {
+        Utils.bindMethods(this$1, ['onClick']);
+      })();
+    }
+
+    if ( superclass ) F7MenuItem.__proto__ = superclass;
+    F7MenuItem.prototype = Object.create( superclass && superclass.prototype );
+    F7MenuItem.prototype.constructor = F7MenuItem;
+
+    var prototypeAccessors = { attrs: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
+
+    F7MenuItem.prototype.onClick = function onClick (event) {
+      this.dispatchEvent('click', event);
+    };
+
+    prototypeAccessors.attrs.get = function () {
+      var self = this;
+      var props = self.props;
+      var href = props.href;
+      var link = props.link;
+      var target = props.target;
+      var hrefComputed = href;
+      if (typeof hrefComputed === 'undefined' && link) { hrefComputed = '#'; }
+      return Utils.extend({
+        href: hrefComputed,
+        target: target
+      }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
+    };
+
+    F7MenuItem.prototype.render = function render () {
+      var this$1 = this;
+
+      var self = this;
+      var props = self.props;
+      var id = props.id;
+      var className = props.className;
+      var style = props.style;
+      var link = props.link;
+      var href = props.href;
+      var text = props.text;
+      var dropdown = props.dropdown;
+      var iconOnly = props.iconOnly;
+      var icon = props.icon;
+      var iconColor = props.iconColor;
+      var iconSize = props.iconSize;
+      var iconMaterial = props.iconMaterial;
+      var iconIon = props.iconIon;
+      var iconFa = props.iconFa;
+      var iconF7 = props.iconF7;
+      var iconIfMd = props.iconIfMd;
+      var iconIfIos = props.iconIfIos;
+      var iconMd = props.iconMd;
+      var iconIos = props.iconIos;
+      var slots = self.slots;
+      var iconEl;
+      var iconOnlyComputed;
+      var mdThemeIcon = iconIfMd || iconMd;
+      var iosThemeIcon = iconIfIos || iconIos;
+
+      if (icon || iconMaterial || iconIon || iconFa || iconF7 || mdThemeIcon || iosThemeIcon) {
+        iconEl = React.createElement(F7Icon, {
+          material: iconMaterial,
+          f7: iconF7,
+          fa: iconFa,
+          ion: iconIon,
+          icon: icon,
+          md: mdThemeIcon,
+          ios: iosThemeIcon,
+          color: iconColor,
+          size: iconSize
+        });
+      }
+
+      if (iconOnly || !text && slots.text && slots.text.length === 0 || !text && !slots.text) {
+        iconOnlyComputed = true;
+      } else {
+        iconOnlyComputed = false;
+      }
+
+      var isLink = link || href || href === '';
+      var Tag = isLink ? 'a' : 'div';
+      var isDropdown = dropdown || dropdown === '';
+      var classes = Utils.classNames({
+        'menu-item': true,
+        'menu-item-dropdown': isDropdown,
+        'icon-only': iconOnlyComputed
+      }, className, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
+      return React.createElement(Tag, Object.assign({
+        ref: function (__reactNode) {
+          this$1.__reactRefs['el'] = __reactNode;
+        },
+        className: classes,
+        id: id,
+        style: style
+      }, self.attrs), (text || slots.text && slots.text.length || iconEl) && React.createElement('div', {
+        className: 'menu-item-content'
+      }, text, iconEl, this.slots['text']), this.slots['default']);
+    };
+
+    F7MenuItem.prototype.componentWillUnmount = function componentWillUnmount () {
+      var self = this;
+      var el = self.refs.el;
+      if (!el) { return; }
+      el.removeEventListener('click', self.onClick);
+      delete el.f7RouteProps;
+    };
+
+    F7MenuItem.prototype.componentDidUpdate = function componentDidUpdate () {
+      var self = this;
+      var el = self.refs.el;
+      if (!el) { return; }
+      var ref = self.props;
+      var routeProps = ref.routeProps;
+      if (routeProps) { el.f7RouteProps = routeProps; }
+    };
+
+    F7MenuItem.prototype.componentDidMount = function componentDidMount () {
+      var self = this;
+      var el = self.refs.el;
+      if (!el) { return; }
+      el.addEventListener('click', self.onClick);
+      var ref = self.props;
+      var routeProps = ref.routeProps;
+      if (routeProps) { el.f7RouteProps = routeProps; }
+    };
+
+    prototypeAccessors.slots.get = function () {
+      return __reactComponentSlots(this.props);
+    };
+
+    F7MenuItem.prototype.dispatchEvent = function dispatchEvent (events) {
+      var args = [], len = arguments.length - 1;
+      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+
+      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    };
+
+    prototypeAccessors.refs.get = function () {
+      return this.__reactRefs;
+    };
+
+    prototypeAccessors.refs.set = function (refs) {};
+
+    Object.defineProperties( F7MenuItem.prototype, prototypeAccessors );
+
+    return F7MenuItem;
+  }(React.Component));
+
+  __reactComponentSetProps(F7MenuItem, Object.assign({
+    id: [String, Number],
+    className: String,
+    style: Object,
+    text: String,
+    iconOnly: Boolean,
+    href: String,
+    link: Boolean,
+    target: String,
+    dropdown: Boolean
+  }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
+
+  F7MenuItem.displayName = 'f7-menu-item';
+
+  var F7Menu = /*@__PURE__*/(function (superclass) {
+    function F7Menu(props, context) {
+      superclass.call(this, props, context);
+    }
+
+    if ( superclass ) F7Menu.__proto__ = superclass;
+    F7Menu.prototype = Object.create( superclass && superclass.prototype );
+    F7Menu.prototype.constructor = F7Menu;
+
+    var prototypeAccessors = { slots: { configurable: true } };
+
+    F7Menu.prototype.render = function render () {
+      var self = this;
+      var props = self.props;
+      var id = props.id;
+      var className = props.className;
+      var style = props.style;
+      return React.createElement('div', {
+        className: Utils.classNames('menu', Mixins.colorClasses(props), className),
+        id: id,
+        style: style
+      }, React.createElement('div', {
+        className: 'menu-inner'
+      }, this.slots['default']));
+    };
+
+    prototypeAccessors.slots.get = function () {
+      return __reactComponentSlots(this.props);
+    };
+
+    Object.defineProperties( F7Menu.prototype, prototypeAccessors );
+
+    return F7Menu;
+  }(React.Component));
+
+  __reactComponentSetProps(F7Menu, Object.assign({
+    id: [String, Number],
+    className: String,
+    style: Object
+  }, Mixins.colorProps));
+
+  F7Menu.displayName = 'f7-menu';
+
   var F7Message = /*@__PURE__*/(function (superclass) {
     function F7Message(props, context) {
       var this$1 = this;
@@ -12415,7 +12830,7 @@
   };
 
   /**
-   * Framework7 React 4.0.0-beta.11
+   * Framework7 React 4.0.0-beta.12
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -12423,7 +12838,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: January 4, 2019
+   * Released on: January 9, 2019
    */
 
   var Plugin = {
@@ -12476,6 +12891,10 @@
       window.List = F7List;
       window.LoginScreenTitle = F7LoginScreenTitle;
       window.LoginScreen = F7LoginScreen;
+      window.MenuDropdownItem = F7MenuDropdownItem;
+      window.MenuDropdown = F7MenuDropdown;
+      window.MenuItem = F7MenuItem;
+      window.Menu = F7Menu;
       window.Message = F7Message;
       window.MessagebarAttachment = F7MessagebarAttachment;
       window.MessagebarAttachments = F7MessagebarAttachments;

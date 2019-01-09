@@ -82,6 +82,7 @@ declare namespace F7ListItem {
     sortableToggle? : boolean | string
     cardOpen? : boolean | string
     cardClose? : boolean | string
+    menuClose? : boolean | string
     onClick? : (event?: any) => void
     onSwipeoutOverswipeEnter? : (event?: any) => void
     onSwipeoutOverswipeExit? : (event?: any) => void

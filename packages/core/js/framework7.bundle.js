@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.0-beta.11
+ * Framework7 4.0.0-beta.12
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 4, 2019
+ * Released on: January 9, 2019
  */
 
 (function (global, factory) {
@@ -4884,10 +4884,10 @@
         tapHoldPreventClicks: true,
         // Active State
         activeState: true,
-        activeStateElements: 'a, button, label, span, .actions-button, .stepper-button, .stepper-button-plus, .stepper-button-minus, .card-expandable',
+        activeStateElements: 'a, button, label, span, .actions-button, .stepper-button, .stepper-button-plus, .stepper-button-minus, .card-expandable, .menu-item',
         mdTouchRipple: true,
         iosTouchRipple: false,
-        touchRippleElements: '.ripple, .link, .item-link, .list-button, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell:not(.input-cell), .notification-close-button, .stepper-button, .stepper-button-minus, .stepper-button-plus',
+        touchRippleElements: '.ripple, .link, .item-link, .list-button, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell:not(.input-cell), .notification-close-button, .stepper-button, .stepper-button-minus, .stepper-button-plus, .menu-item-content',
       },
     },
     instance: {
@@ -9421,7 +9421,7 @@
         Object.keys(moduleClicks).forEach(function (clickSelector) {
           var matchingClickedElement = $clickedEl.closest(clickSelector).eq(0);
           if (matchingClickedElement.length > 0) {
-            moduleClicks[clickSelector].call(app, matchingClickedElement, matchingClickedElement.dataset());
+            moduleClicks[clickSelector].call(app, matchingClickedElement, matchingClickedElement.dataset(), e);
           }
         });
       });
@@ -34973,6 +34973,34 @@
     name: 'skeleton',
   };
 
+  var Menu = {
+    name: 'menu',
+    on: {
+      click: function click(e) {
+        var openedMenus = $('.menu-item-dropdown-opened');
+        if (!openedMenus.length) { return; }
+        openedMenus.each(function (index, el) {
+          if (!$(e.target).closest('.menu-item-dropdown-opened').length) {
+            $(el).removeClass('menu-item-dropdown-opened');
+          }
+        });
+      },
+    },
+    clicks: {
+      '.menu-item-dropdown': function onClick($clickedEl, dataset, e) {
+        if ($clickedEl.hasClass('menu-item-dropdown-opened')) {
+          if ($(e.target).closest('.menu-dropdown').length) { return; }
+          $clickedEl.removeClass('menu-item-dropdown-opened');
+        } else {
+          $clickedEl.addClass('menu-item-dropdown-opened');
+        }
+      },
+      '.menu-close': function onClick() {
+        $('.menu-item-dropdown-opened').removeClass('menu-item-dropdown-opened');
+      },
+    },
+  };
+
   var ViAd = /*@__PURE__*/(function (Framework7Class$$1) {
     function ViAd(app, params) {
       if ( params === void 0 ) params = {};
@@ -35308,6 +35336,7 @@
     Tooltip$1,
     Gauge$1,
     Skeleton,
+    Menu,
     Vi,
     Elevation,
     Typography

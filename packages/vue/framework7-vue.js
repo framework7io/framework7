@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.0.0-beta.11
+ * Framework7 Vue 4.0.0-beta.12
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 4, 2019
+ * Released on: January 9, 2019
  */
 
 (function (global, factory) {
@@ -102,7 +102,11 @@
           });
         } else if (arg) { classes.push(arg); }
       });
-      return classes.join(' ');
+      var uniqueClasses = [];
+      classes.forEach(function (c) {
+        if (uniqueClasses.indexOf(c) < 0) { uniqueClasses.push(c); }
+      });
+      return uniqueClasses.join(' ');
     },
     bindMethods: function bindMethods(context, methods) {
       if ( methods === void 0 ) methods = [];
@@ -242,6 +246,12 @@
       // Card
       cardOpen: [Boolean, String],
       cardClose: [Boolean, String],
+
+      // Menu
+      menuClose: {
+        type: [Boolean, String],
+        default: undefined,
+      },
     },
     linkActionsAttrs: function linkActionsAttrs(props) {
       var searchbarEnable = props.searchbarEnable;
@@ -312,6 +322,7 @@
       var sortableToggle = props.sortableToggle;
       var cardOpen = props.cardOpen;
       var cardClose = props.cardClose;
+      var menuClose = props.menuClose;
 
       return {
         'searchbar-enable': searchbarEnable || searchbarEnable === '',
@@ -335,6 +346,7 @@
         'sortable-toggle': sortableToggle || sortableToggle === '',
         'card-close': cardClose || cardClose === '',
         'card-open': cardOpen || cardOpen === '',
+        'menu-close': menuClose || menuClose === '',
       };
     },
   };
@@ -5788,6 +5800,347 @@
     }
   };
 
+  var f7MenuDropdownItem = {
+    name: 'f7-menu-dropdown-item',
+    props: Object.assign({
+      id: [String, Number],
+      text: String,
+      link: Boolean,
+      href: String,
+      target: String,
+      divider: Boolean
+    }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
+
+    render: function render() {
+      var _h = this.$createElement;
+      var self = this;
+      var props = self.props;
+      var id = props.id;
+      var className = props.className;
+      var style = props.style;
+      var link = props.link;
+      var href = props.href;
+      var text = props.text;
+      var divider = props.divider;
+      var menuClose = props.menuClose;
+      var isLink = link || href || href === '';
+      var Tag = isLink ? 'a' : 'div';
+      var classes = Utils.classNames({
+        'menu-dropdown-link': isLink && !divider,
+        'menu-dropdown-item': !isLink && !divider,
+        'menu-dropdown-divider': divider
+      }, className, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props), {
+        'menu-close': typeof menuClose === 'undefined'
+      });
+      return _h(Tag, __vueComponentTransformJSXProps(Object.assign({
+        ref: 'el',
+        class: classes,
+        style: style
+      }, self.attrs, {
+        attrs: {
+          id: id
+        }
+      })), [text, this.$slots['default']]);
+    },
+
+    created: function created() {
+      Utils.bindMethods(this, ['onClick']);
+    },
+
+    mounted: function mounted() {
+      var self = this;
+      var el = self.$refs.el;
+      if (!el) { return; }
+      el.addEventListener('click', self.onClick);
+      var ref = self.props;
+      var routeProps = ref.routeProps;
+      if (routeProps) { el.f7RouteProps = routeProps; }
+    },
+
+    updated: function updated() {
+      var self = this;
+      var el = self.$refs.el;
+      if (!el) { return; }
+      var ref = self.props;
+      var routeProps = ref.routeProps;
+      if (routeProps) { el.f7RouteProps = routeProps; }
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      var self = this;
+      var el = self.$refs.el;
+      if (!el) { return; }
+      el.removeEventListener('click', self.onClick);
+      delete el.f7RouteProps;
+    },
+
+    computed: {
+      attrs: function attrs() {
+        var self = this;
+        var props = self.props;
+        var link = props.link;
+        var href = props.href;
+        var target = props.target;
+        var hrefComputed = href;
+        if (typeof hrefComputed === 'undefined' && link) { hrefComputed = '#'; }
+        return Utils.extend({
+          href: hrefComputed,
+          target: target
+        }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
+      },
+
+      props: function props() {
+        return __vueComponentProps(this);
+      }
+
+    },
+    methods: {
+      onClick: function onClick(event) {
+        this.dispatchEvent('click', event);
+      },
+
+      dispatchEvent: function dispatchEvent(events) {
+        var args = [], len = arguments.length - 1;
+        while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+
+        __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+      }
+
+    }
+  };
+
+  var f7MenuDropdown = {
+    name: 'f7-menu-dropdown',
+    props: Object.assign({
+      id: [String, Number],
+      contentHeight: String,
+      position: String,
+      left: Boolean,
+      center: Boolean,
+      right: Boolean
+    }, Mixins.colorProps),
+
+    render: function render() {
+      var _h = this.$createElement;
+      var self = this;
+      var props = self.props;
+      var id = props.id;
+      var className = props.className;
+      var style = props.style;
+      var contentHeight = props.contentHeight;
+      var position = props.position;
+      var left = props.left;
+      var center = props.center;
+      var right = props.right;
+      var positionComputed = position || 'left';
+      if (left) { positionComputed = 'left'; }
+      if (center) { positionComputed = 'center'; }
+      if (right) { positionComputed = 'right'; }
+      var classes = Utils.classNames('menu-dropdown', ("menu-dropdown-" + positionComputed), Mixins.colorClasses(props), className);
+      return _h('div', {
+        class: classes,
+        style: style,
+        attrs: {
+          id: id
+        }
+      }, [_h('div', {
+        class: 'menu-dropdown-content',
+        style: {
+          height: contentHeight
+        }
+      }, [this.$slots['default']])]);
+    },
+
+    computed: {
+      props: function props() {
+        return __vueComponentProps(this);
+      }
+
+    }
+  };
+
+  var f7MenuItem = {
+    name: 'f7-menu-item',
+    props: Object.assign({
+      id: [String, Number],
+      text: String,
+      iconOnly: Boolean,
+      href: String,
+      link: Boolean,
+      target: String,
+      dropdown: Boolean
+    }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
+
+    render: function render() {
+      var _h = this.$createElement;
+      var self = this;
+      var props = self.props;
+      var id = props.id;
+      var className = props.className;
+      var style = props.style;
+      var link = props.link;
+      var href = props.href;
+      var text = props.text;
+      var dropdown = props.dropdown;
+      var iconOnly = props.iconOnly;
+      var icon = props.icon;
+      var iconColor = props.iconColor;
+      var iconSize = props.iconSize;
+      var iconMaterial = props.iconMaterial;
+      var iconIon = props.iconIon;
+      var iconFa = props.iconFa;
+      var iconF7 = props.iconF7;
+      var iconIfMd = props.iconIfMd;
+      var iconIfIos = props.iconIfIos;
+      var iconMd = props.iconMd;
+      var iconIos = props.iconIos;
+      var slots = self.$slots;
+      var iconEl;
+      var iconOnlyComputed;
+      var mdThemeIcon = iconIfMd || iconMd;
+      var iosThemeIcon = iconIfIos || iconIos;
+
+      if (icon || iconMaterial || iconIon || iconFa || iconF7 || mdThemeIcon || iosThemeIcon) {
+        iconEl = _h(F7Icon, {
+          attrs: {
+            material: iconMaterial,
+            f7: iconF7,
+            fa: iconFa,
+            ion: iconIon,
+            icon: icon,
+            md: mdThemeIcon,
+            ios: iosThemeIcon,
+            color: iconColor,
+            size: iconSize
+          }
+        });
+      }
+
+      if (iconOnly || !text && slots.text && slots.text.length === 0 || !text && !slots.text) {
+        iconOnlyComputed = true;
+      } else {
+        iconOnlyComputed = false;
+      }
+
+      var isLink = link || href || href === '';
+      var Tag = isLink ? 'a' : 'div';
+      var isDropdown = dropdown || dropdown === '';
+      var classes = Utils.classNames({
+        'menu-item': true,
+        'menu-item-dropdown': isDropdown,
+        'icon-only': iconOnlyComputed
+      }, className, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
+      return _h(Tag, __vueComponentTransformJSXProps(Object.assign({
+        ref: 'el',
+        class: classes,
+        style: style
+      }, self.attrs, {
+        attrs: {
+          id: id
+        }
+      })), [(text || slots.text && slots.text.length || iconEl) && _h('div', {
+        class: 'menu-item-content'
+      }, [text, iconEl, this.$slots['text']]), this.$slots['default']]);
+    },
+
+    created: function created() {
+      Utils.bindMethods(this, ['onClick']);
+    },
+
+    mounted: function mounted() {
+      var self = this;
+      var el = self.$refs.el;
+      if (!el) { return; }
+      el.addEventListener('click', self.onClick);
+      var ref = self.props;
+      var routeProps = ref.routeProps;
+      if (routeProps) { el.f7RouteProps = routeProps; }
+    },
+
+    updated: function updated() {
+      var self = this;
+      var el = self.$refs.el;
+      if (!el) { return; }
+      var ref = self.props;
+      var routeProps = ref.routeProps;
+      if (routeProps) { el.f7RouteProps = routeProps; }
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      var self = this;
+      var el = self.$refs.el;
+      if (!el) { return; }
+      el.removeEventListener('click', self.onClick);
+      delete el.f7RouteProps;
+    },
+
+    computed: {
+      attrs: function attrs() {
+        var self = this;
+        var props = self.props;
+        var href = props.href;
+        var link = props.link;
+        var target = props.target;
+        var hrefComputed = href;
+        if (typeof hrefComputed === 'undefined' && link) { hrefComputed = '#'; }
+        return Utils.extend({
+          href: hrefComputed,
+          target: target
+        }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
+      },
+
+      props: function props() {
+        return __vueComponentProps(this);
+      }
+
+    },
+    methods: {
+      onClick: function onClick(event) {
+        this.dispatchEvent('click', event);
+      },
+
+      dispatchEvent: function dispatchEvent(events) {
+        var args = [], len = arguments.length - 1;
+        while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+
+        __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+      }
+
+    }
+  };
+
+  var f7Menu = {
+    name: 'f7-menu',
+    props: Object.assign({
+      id: [String, Number]
+    }, Mixins.colorProps),
+
+    render: function render() {
+      var _h = this.$createElement;
+      var self = this;
+      var props = self.props;
+      var id = props.id;
+      var className = props.className;
+      var style = props.style;
+      return _h('div', {
+        class: Utils.classNames('menu', Mixins.colorClasses(props), className),
+        style: style,
+        attrs: {
+          id: id
+        }
+      }, [_h('div', {
+        class: 'menu-inner'
+      }, [this.$slots['default']])]);
+    },
+
+    computed: {
+      props: function props() {
+        return __vueComponentProps(this);
+      }
+
+    }
+  };
+
   var f7Message = {
     name: 'f7-message',
     props: Object.assign({
@@ -11035,7 +11388,7 @@
   };
 
   /**
-   * Framework7 Vue 4.0.0-beta.11
+   * Framework7 Vue 4.0.0-beta.12
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -11043,7 +11396,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: January 4, 2019
+   * Released on: January 9, 2019
    */
 
   var Plugin = {
@@ -11096,6 +11449,10 @@
       Vue.component('f7-list', f7List);
       Vue.component('f7-login-screen-title', f7LoginScreenTitle);
       Vue.component('f7-login-screen', f7LoginScreen);
+      Vue.component('f7-menu-dropdown-item', f7MenuDropdownItem);
+      Vue.component('f7-menu-dropdown', f7MenuDropdown);
+      Vue.component('f7-menu-item', f7MenuItem);
+      Vue.component('f7-menu', f7Menu);
       Vue.component('f7-message', f7Message);
       Vue.component('f7-messagebar-attachment', f7MessagebarAttachment);
       Vue.component('f7-messagebar-attachments', f7MessagebarAttachments);

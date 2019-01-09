@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.0.0-beta.11
+ * Framework7 Vue 4.0.0-beta.12
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 4, 2019
+ * Released on: January 9, 2019
  */
 
 import f7AccordionContent from './components/accordion-content';
@@ -50,6 +50,10 @@ import f7ListItem from './components/list-item';
 import f7List from './components/list';
 import f7LoginScreenTitle from './components/login-screen-title';
 import f7LoginScreen from './components/login-screen';
+import f7MenuDropdownItem from './components/menu-dropdown-item';
+import f7MenuDropdown from './components/menu-dropdown';
+import f7MenuItem from './components/menu-item';
+import f7Menu from './components/menu';
 import f7Message from './components/message';
 import f7MessagebarAttachment from './components/messagebar-attachment';
 import f7MessagebarAttachments from './components/messagebar-attachments';
@@ -137,6 +141,10 @@ export {
   f7List,
   f7LoginScreenTitle,
   f7LoginScreen,
+  f7MenuDropdownItem,
+  f7MenuDropdown,
+  f7MenuItem,
+  f7Menu,
   f7Message,
   f7MessagebarAttachment,
   f7MessagebarAttachments,

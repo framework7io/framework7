@@ -1,5 +1,5 @@
 /**
- * Framework7 React 4.0.0-beta.11
+ * Framework7 React 4.0.0-beta.12
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 4, 2019
+ * Released on: January 9, 2019
  */
 
 import F7AccordionContent from './components/accordion-content';
@@ -50,6 +50,10 @@ import F7ListItem from './components/list-item';
 import F7List from './components/list';
 import F7LoginScreenTitle from './components/login-screen-title';
 import F7LoginScreen from './components/login-screen';
+import F7MenuDropdownItem from './components/menu-dropdown-item';
+import F7MenuDropdown from './components/menu-dropdown';
+import F7MenuItem from './components/menu-item';
+import F7Menu from './components/menu';
 import F7Message from './components/message';
 import F7MessagebarAttachment from './components/messagebar-attachment';
 import F7MessagebarAttachments from './components/messagebar-attachments';
@@ -136,6 +140,10 @@ const ListItem = F7ListItem;
 const List = F7List;
 const LoginScreenTitle = F7LoginScreenTitle;
 const LoginScreen = F7LoginScreen;
+const MenuDropdownItem = F7MenuDropdownItem;
+const MenuDropdown = F7MenuDropdown;
+const MenuItem = F7MenuItem;
+const Menu = F7Menu;
 const Message = F7Message;
 const MessagebarAttachment = F7MessagebarAttachment;
 const MessagebarAttachments = F7MessagebarAttachments;
@@ -262,6 +270,14 @@ export {
   LoginScreenTitle,
   F7LoginScreen,
   LoginScreen,
+  F7MenuDropdownItem,
+  MenuDropdownItem,
+  F7MenuDropdown,
+  MenuDropdown,
+  F7MenuItem,
+  MenuItem,
+  F7Menu,
+  Menu,
   F7Message,
   Message,
   F7MessagebarAttachment,

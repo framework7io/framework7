@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.0-beta.11
+ * Framework7 4.0.0-beta.12
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 4, 2019
+ * Released on: January 9, 2019
  */
 /*====================
   Core
@@ -3895,13 +3895,12 @@ li.list-group-title,
   --f7-button-bg-color: transparent;
   --f7-button-border-width: 0px;
   /*
-  --f7-button-border-color: var(--f7-theme-color);
   --f7-button-text-color: var(--f7-theme-color);
-  */
-  --f7-button-fill-text-color: #fff;
-  /*
   --f7-button-pressed-text-color: var(--f7-button-text-color, var(--f7-theme-color));
+  --f7-button-border-color: var(--f7-theme-color);
+  --f7-button-fill-text-color: #fff;
   --f7-button-fill-bg-color: var(--f7-theme-color);
+  --f7-button-outline-border-color: var(--f7-button-border-color, var(--f7-theme-color);
   */
   --f7-button-raised-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0,0,0,0.24);
   --f7-button-raised-pressed-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0,0,0,0.23);
@@ -4014,7 +4013,7 @@ input[type="button"].button {
 .button-active,
 .button.tab-link-active {
   --f7-button-bg-color: var(--f7-button-fill-bg-color, var(--f7-theme-color));
-  --f7-button-text-color: var(--f7-button-fill-text-color);
+  --f7-button-text-color: var(--f7-button-fill-text-color, #fff);
   --f7-touch-ripple-color: var(--f7-touch-ripple-white);
 }
 .button-fill,
@@ -4030,6 +4029,7 @@ input[type="button"].button {
 .ios .button-outline-ios,
 .md .button-outline-md {
   --f7-button-border-width: var(--f7-button-outline-border-width);
+  --f7-button-border-color: var(--f7-button-outline-border-color, var(--f7-button-border-color, var(--f7-theme-color)));
 }
 .button-large,
 .ios .button-large-ios,
@@ -4093,17 +4093,19 @@ input[type="button"].button {
 .md .segmented-round-md {
   border-radius: var(--f7-button-height);
 }
-.segmented-raised .button,
-.ios .segmented-raised-ios .button,
-.md .segmented-raised-md .button {
+.segmented-raised,
+.ios .segmented-raised-ios,
+.md .segmented-raised-md {
+  box-shadow: var(--f7-button-raised-box-shadow);
+}
+.segmented-raised .button:not(.button-outline),
+.ios .segmented-raised-ios .button:not(.button-outline),
+.md .segmented-raised-md .button:not(.button-outline) {
   border-left: 1px solid var(--f7-segmented-raised-divider-color);
 }
 .button-raised,
 .ios .button-raised-ios,
-.md .button-raised-md,
-.segmented-raised,
-.ios .segmented-raised-ios,
-.md .segmented-raised-md {
+.md .button-raised-md {
   --f7-button-box-shadow: var(--f7-button-raised-box-shadow);
 }
 .button-raised.active-state,
@@ -4183,7 +4185,8 @@ a.list-button,
   opacity: 0;
 }
 .button-fill .ripple-wave,
-.picker-calendar-day .ripple-wave {
+.picker-calendar-day .ripple-wave,
+.menu .ripple-wave {
   z-index: 1;
 }
 .checkbox .ripple-wave,

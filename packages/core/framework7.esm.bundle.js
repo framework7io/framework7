@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.0-beta.11
+ * Framework7 4.0.0-beta.12
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 4, 2019
+ * Released on: January 9, 2019
  */
 
 import Template7 from 'template7';
@@ -91,6 +91,7 @@ import Autocomplete from './components/autocomplete/autocomplete';
 import Tooltip from './components/tooltip/tooltip';
 import Gauge from './components/gauge/gauge';
 import Skeleton from './components/skeleton/skeleton';
+import Menu from './components/menu/menu';
 import Vi from './components/vi/vi';
 import Elevation from './components/elevation/elevation';
 import Typography from './components/typography/typography';
@@ -172,6 +173,7 @@ Framework7.use([
   Tooltip,
   Gauge,
   Skeleton,
+  Menu,
   Vi,
   Elevation,
   Typography

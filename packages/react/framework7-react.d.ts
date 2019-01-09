@@ -47,6 +47,10 @@ import F7ListItem from './components/list-item';
 import F7List from './components/list';
 import F7LoginScreenTitle from './components/login-screen-title';
 import F7LoginScreen from './components/login-screen';
+import F7MenuDropdownItem from './components/menu-dropdown-item';
+import F7MenuDropdown from './components/menu-dropdown';
+import F7MenuItem from './components/menu-item';
+import F7Menu from './components/menu';
 import F7Message from './components/message';
 import F7MessagebarAttachment from './components/messagebar-attachment';
 import F7MessagebarAttachments from './components/messagebar-attachments';
@@ -203,6 +207,14 @@ export {
   F7LoginScreenTitle as LoginScreenTitle,
   F7LoginScreen,
   F7LoginScreen as LoginScreen,
+  F7MenuDropdownItem,
+  F7MenuDropdownItem as MenuDropdownItem,
+  F7MenuDropdown,
+  F7MenuDropdown as MenuDropdown,
+  F7MenuItem,
+  F7MenuItem as MenuItem,
+  F7Menu,
+  F7Menu as Menu,
   F7Message,
   F7Message as Message,
   F7MessagebarAttachment,
