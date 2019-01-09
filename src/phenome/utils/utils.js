@@ -72,7 +72,11 @@ const Utils = {
         });
       } else if (arg) classes.push(arg);
     });
-    return classes.join(' ');
+    const uniqueClasses = [];
+    classes.forEach((c) => {
+      if (uniqueClasses.indexOf(c) < 0) uniqueClasses.push(c);
+    });
+    return uniqueClasses.join(' ');
   },
   bindMethods(context, methods = []) {
     for (let i = 0; i < methods.length; i += 1) {
