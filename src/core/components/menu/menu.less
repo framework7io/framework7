@@ -104,7 +104,7 @@
   color: var(--f7-menu-text-color);
   font-weight: var(--f7-menu-font-weight);
   white-space: nowrap;
-  min-width: 150px;
+  min-width: 100px;
   i, i.icon, i.f7-icons, i.material-icons {
     font-size: 20px;
   }
@@ -131,44 +131,46 @@
     pointer-events: auto;
   }
 }
-//
+.menu-item-dropdown-left .menu-dropdown:after,
+.menu-item-dropdown-center .menu-dropdown:after,
+.menu-dropdown-left:after
+.menu-dropdown-center:after {
+  content: '';
+  position: absolute;
+  left: 100%;
+  bottom: 0;
+  width: 8px;
+  height: 8px;
+  background-image: radial-gradient(ellipse at 100% 0%, transparent 0%, transparent 70%, var(--f7-menu-bg-color) 72%);
+}
+.menu-item-dropdown-right .menu-dropdown:before,
+.menu-item-dropdown-center .menu-dropdown:before,
+.menu-dropdown-right:before,
+.menu-dropdown-center:before {
+  content: '';
+  position: absolute;
+  right: 100%;
+  bottom: 0;
+  width: 8px;
+  height: 8px;
+  background-image: radial-gradient(ellipse at 0% 0%, transparent 0%, transparent 70%, var(--f7-menu-bg-color) 72%);
+}
 .menu-item-dropdown-left,
-.menu-item-dropdown-center {
-  .menu-dropdown:after {
-    content: '';
-    position: absolute;
-    left: 100%;
-    bottom: 0;
-    width: 8px;
-    height: 8px;
-    background-image: radial-gradient(ellipse at 100% 0%, transparent 0%, transparent 70%, var(--f7-menu-bg-color) 72%);
-  }
-}
-.menu-item-dropdown-right,
-.menu-item-dropdown-center {
-  .menu-dropdown:before {
-    content: '';
-    position: absolute;
-    right: 100%;
-    bottom: 0;
-    width: 8px;
-    height: 8px;
-    background-image: radial-gradient(ellipse at 0% 0%, transparent 0%, transparent 70%, var(--f7-menu-bg-color) 72%);
-  }
-}
-.menu-item-dropdown-left {
+.menu-dropdown-left {
   .menu-dropdown-content {
     left: 0;
     border-top-left-radius: 0px;
   }
 }
-.menu-item-dropdown-right {
+.menu-item-dropdown-right,
+.menu-dropdown-right {
   .menu-dropdown-content {
     right: 0;
     border-top-right-radius: 0px;
   }
 }
-.menu-item-dropdown-center {
+.menu-item-dropdown-center,
+.menu-dropdown-center {
   .menu-dropdown-content {
     left: 50%;
     min-width: calc(100% + 24px + 24px);

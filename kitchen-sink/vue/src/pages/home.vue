@@ -101,6 +101,9 @@
       <f7-list-item link="/login-screen/" title="Login Screen">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>
+      <f7-list-item link="/menu/" title="Menu">
+        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+      </f7-list-item>
       <f7-list-item link="/messages/" title="Messages">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>

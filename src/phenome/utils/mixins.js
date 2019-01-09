@@ -135,6 +135,12 @@ const Mixins = {
     // Card
     cardOpen: [Boolean, String],
     cardClose: [Boolean, String],
+
+    // Menu
+    menuClose: {
+      type: [Boolean, String],
+      default: undefined,
+    },
   },
   linkActionsAttrs(props) {
     const {
@@ -208,6 +214,7 @@ const Mixins = {
       sortableToggle,
       cardOpen,
       cardClose,
+      menuClose,
     } = props;
 
     return {
@@ -232,6 +239,7 @@ const Mixins = {
       'sortable-toggle': sortableToggle || sortableToggle === '',
       'card-close': cardClose || cardClose === '',
       'card-open': cardOpen || cardOpen === '',
+      'menu-close': menuClose || menuClose === '',
     };
   },
 };

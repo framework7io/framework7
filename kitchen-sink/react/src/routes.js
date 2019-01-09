@@ -31,6 +31,7 @@ import List from './pages/list.jsx';
 import ListIndex from './pages/list-index.jsx';
 import LoginScreen from './pages/login-screen.jsx';
 import LoginScreenPage from './pages/login-screen-page.jsx';
+import Menu from './pages/menu.jsx';
 import Messages from './pages/messages.jsx';
 import Navbar from './pages/navbar.jsx';
 import NavbarHideScroll from './pages/navbar-hide-scroll.jsx';
@@ -288,6 +289,10 @@ export default [
   {
     path: '/login-screen-page/',
     component: LoginScreenPage,
+  },
+  {
+    path: '/menu/',
+    component: Menu,
   },
   {
     path: '/messages/',
