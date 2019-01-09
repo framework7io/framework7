@@ -118,7 +118,7 @@
       f7Page,
     },
     methods: {
-      onPageInit(e) {
+      onPageInit() {
         const self = this;
         const app = self.$f7;
         const $ = self.$$;

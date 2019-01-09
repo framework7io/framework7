@@ -86,9 +86,9 @@
     },
     methods: {
       deleteChip(e) {
-        const $$ = this.$$;
+        const { $$ } = this;
         const app = this.$f7;
-        const target = e.target;
+        const { target } = e;
         app.dialog.confirm('Do you want to delete this tiny demo Chip?', () => {
           $$(target).parents('.chip').remove();
         });
@@ -96,4 +96,3 @@
     },
   };
 </script>
-

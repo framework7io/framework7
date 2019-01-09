@@ -181,7 +181,7 @@
     },
     methods: {
       onIndexSelect(itemContent) {
-        console.log(itemContent);
+        this.dialog.alert(itemContent);
       },
     },
   };
