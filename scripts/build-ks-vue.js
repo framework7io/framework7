@@ -26,12 +26,12 @@ function buildKs(cb) {
     .pipe(modifyFile((content) => {
       if (env === 'development') {
         return content
-          .replace('../../packages/core/css/framework7.min.css', '../../build/core/css/framework7.css')
-          .replace('../../packages/core/js/framework7.min.js', '../../build/core/js/framework7.js');
+          .replace('../../packages/core/css/framework7.bundle.min.css', '../../build/core/css/framework7.bundle.css')
+          .replace('../../packages/core/js/framework7.bundle.min.js', '../../build/core/js/framework7.bundle.js');
       }
       return content
-        .replace('../../build/core/css/framework7.css', '../../packages/core/css/framework7.min.css')
-        .replace('../../build/core/js/framework7.js', '../../packages/core/js/framework7.min.js');
+        .replace('../../build/core/css/framework7.bundle.css', '../../packages/core/css/framework7.bundle.min.css')
+        .replace('../../build/core/js/framework7.bundle.js', '../../packages/core/js/framework7.bundle.min.js');
     }))
     .pipe(gulp.dest('./kitchen-sink/vue'));
 
