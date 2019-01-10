@@ -31,7 +31,7 @@ export default class extends React.Component {
         <Block>
           <p>Toolbar supports both top and bottom positions. Click the following button to change its position.</p>
           <p>
-            <Button raised onClick={() => {this.toggleToolbarPosition()}}>Toggle Toolbar Position</Button>
+            <Button fill onClick={() => {this.toggleToolbarPosition()}}>Toggle Toolbar Position</Button>
           </p>
         </Block>
       </Page>

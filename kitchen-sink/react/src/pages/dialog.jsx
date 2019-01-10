@@ -12,40 +12,40 @@ export default class extends React.Component {
         <Block strong>
           <p>There are 1:1 replacements of native Alert, Prompt and Confirm modals. They support callbacks, have very easy api and can be combined with each other. Check these examples:</p>
           <Row tag="p">
-            <Button raised className="col" onClick={this.openAlert.bind(this)}>Alert</Button>
-            <Button raised className="col" onClick={this.openConfirm.bind(this)}>Confirm</Button>
-            <Button raised className="col" onClick={this.openPrompt.bind(this)}>Prompt</Button>
+            <Button fill className="col" onClick={this.openAlert.bind(this)}>Alert</Button>
+            <Button fill className="col" onClick={this.openConfirm.bind(this)}>Confirm</Button>
+            <Button fill className="col" onClick={this.openPrompt.bind(this)}>Prompt</Button>
           </Row>
           <Row tag="p">
-            <Button raised className="col" onClick={this.openLogin.bind(this)}>Login</Button>
-            <Button raised className="col" onClick={this.openPassword.bind(this)}>Password</Button>
+            <Button fill className="col" onClick={this.openLogin.bind(this)}>Login</Button>
+            <Button fill className="col" onClick={this.openPassword.bind(this)}>Password</Button>
           </Row>
         </Block>
         <BlockTitle>Vertical Buttons</BlockTitle>
         <Block strong>
           <p>
-            <Button raised onClick={this.openVerticalButtons.bind(this)}>Vertical Buttons</Button>
+            <Button fill onClick={this.openVerticalButtons.bind(this)}>Vertical Buttons</Button>
           </p>
         </Block>
         <BlockTitle>Preloader Dialog</BlockTitle>
         <Block strong>
           <Row tag="p">
-            <Button raised className="col" onClick={this.openPreloader.bind(this)}>Preloader</Button>
-            <Button raised className="col" onClick={this.openCustomPreloader.bind(this)}>Custom Text</Button>
+            <Button fill className="col" onClick={this.openPreloader.bind(this)}>Preloader</Button>
+            <Button fill className="col" onClick={this.openCustomPreloader.bind(this)}>Custom Text</Button>
           </Row>
         </Block>
         <BlockTitle>Progress Dialog</BlockTitle>
         <Block strong>
           <Row tag="p">
-            <Button raised className="col" onClick={this.openInfiniteProgress.bind(this)}>Infinite</Button>
-            <Button raised className="col" onClick={this.openDeterminedProgress.bind(this)}>Determined</Button>
+            <Button fill className="col" onClick={this.openInfiniteProgress.bind(this)}>Infinite</Button>
+            <Button fill className="col" onClick={this.openDeterminedProgress.bind(this)}>Determined</Button>
           </Row>
         </Block>
         <BlockTitle>Dialogs Stack</BlockTitle>
         <Block strong>
           <p>This feature doesn't allow to open multiple dialogs at the same time, and will automatically open next dialog when you close the current one. Such behavior is similar to browser native dialogs: </p>
           <p>
-            <Button raised onClick={this.openAlerts.bind(this)}>Open Multiple Alerts</Button>
+            <Button fill onClick={this.openAlerts.bind(this)}>Open Multiple Alerts</Button>
           </p>
         </Block>
       </Page>

@@ -4,40 +4,40 @@
     <f7-block strong>
       <p>There are 1:1 replacements of native Alert, Prompt and Confirm modals. They support callbacks, have very easy api and can be combined with each other. Check these examples:</p>
       <f7-row tag="p">
-        <f7-button raised class="col" @click="openAlert">Alert</f7-button>
-        <f7-button raised class="col" @click="openConfirm">Confirm</f7-button>
-        <f7-button raised class="col" @click="openPrompt">Prompt</f7-button>
+        <f7-button fill class="col" @click="openAlert">Alert</f7-button>
+        <f7-button fill class="col" @click="openConfirm">Confirm</f7-button>
+        <f7-button fill class="col" @click="openPrompt">Prompt</f7-button>
       </f7-row>
       <f7-row tag="p">
-        <f7-button raised class="col" @click="openLogin">Login</f7-button>
-        <f7-button raised class="col" @click="openPassword">Password</f7-button>
+        <f7-button fill class="col" @click="openLogin">Login</f7-button>
+        <f7-button fill class="col" @click="openPassword">Password</f7-button>
       </f7-row>
     </f7-block>
     <f7-block-title>Vertical Buttons</f7-block-title>
     <f7-block strong>
       <p>
-        <f7-button raised @click="openVerticalButtons">Vertical Buttons</f7-button>
+        <f7-button fill @click="openVerticalButtons">Vertical Buttons</f7-button>
       </p>
     </f7-block>
     <f7-block-title>Preloader Dialog</f7-block-title>
     <f7-block strong>
       <f7-row tag="p">
-        <f7-button raised class="col" @click="openPreloader">Preloader</f7-button>
-        <f7-button raised class="col" @click="openCustomPreloader">Custom Text</f7-button>
+        <f7-button fill class="col" @click="openPreloader">Preloader</f7-button>
+        <f7-button fill class="col" @click="openCustomPreloader">Custom Text</f7-button>
       </f7-row>
     </f7-block>
     <f7-block-title>Progress Dialog</f7-block-title>
     <f7-block strong>
       <f7-row tag="p">
-        <f7-button raised class="col" @click="openInfiniteProgress">Infinite</f7-button>
-        <f7-button raised class="col" @click="openDeterminedProgress">Determined</f7-button>
+        <f7-button fill class="col" @click="openInfiniteProgress">Infinite</f7-button>
+        <f7-button fill class="col" @click="openDeterminedProgress">Determined</f7-button>
       </f7-row>
     </f7-block>
     <f7-block-title>Dialogs Stack</f7-block-title>
     <f7-block strong>
       <p>This feature doesn't allow to open multiple dialogs at the same time, and will automatically open next dialog when you close the current one. Such behavior is similar to browser native dialogs: </p>
       <p>
-        <f7-button raised @click="openAlerts">Open Multiple Alerts</f7-button>
+        <f7-button fill @click="openAlerts">Open Multiple Alerts</f7-button>
       </p>
     </f7-block>
   </f7-page>

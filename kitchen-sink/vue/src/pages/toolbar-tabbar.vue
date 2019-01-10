@@ -15,7 +15,7 @@
     <f7-block>
       <p>Toolbar supports both top and bottom positions. Click the following button to change its position.</p>
       <p>
-        <f7-button raised @click="toggleToolbarPosition">Toggle Toolbar Position</f7-button>
+        <f7-button fill @click="toggleToolbarPosition">Toggle Toolbar Position</f7-button>
       </p>
     </f7-block>
   </f7-page>

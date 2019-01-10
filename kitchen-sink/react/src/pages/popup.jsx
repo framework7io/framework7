@@ -16,13 +16,13 @@ export default class extends React.Component {
         <Block>
           <p>Popup is a modal window with any HTML content that pops up over App's main content. Popup as all other overlays is part of so called "Temporary Views".</p>
           <p>
-            <Button raised popupOpen=".demo-popup">Open Popup</Button>
+            <Button fill popupOpen=".demo-popup">Open Popup</Button>
           </p>
           <p>
-            <Button raised onClick={() => this.setState({ popupOpened : true })}>Open Via Prop Change</Button>
+            <Button fill onClick={() => this.setState({ popupOpened : true })}>Open Via Prop Change</Button>
           </p>
           <p>
-            <Button raised onClick={this.createPopup.bind(this)}>Create Dynamic Popup</Button>
+            <Button fill onClick={this.createPopup.bind(this)}>Create Dynamic Popup</Button>
           </p>
         </Block>
         <Popup className="demo-popup" opened={this.state.popupOpened} onPopupClosed={() => this.setState({popupOpened : false})}>

@@ -41,15 +41,15 @@ export default class extends React.Component {
           <Row>
             <Col>
               <PhotoBrowser photos={this.state.photos} ref={(el) => {this.standalone = el}} />
-              <Button raised onClick={() => this.standalone.open()}>Standalone</Button>
+              <Button raisedMd outlineIos onClick={() => this.standalone.open()}>Standalone</Button>
             </Col>
             <Col>
               <PhotoBrowser photos={this.state.photos} type="popup" ref={(el) => {this.popup = el}} />
-              <Button raised onClick={() => this.popup.open()}>Popup</Button>
+              <Button raisedMd outlineIos onClick={() => this.popup.open()}>Popup</Button>
             </Col>
             <Col>
               <PhotoBrowser photos={this.state.photos} type="page" backLinkText="Back" ref={(el) => {this.page = el}} />
-              <Button raised onClick={() => this.page.open()}>Page</Button>
+              <Button raisedMd outlineIos onClick={() => this.page.open()}>Page</Button>
             </Col>
           </Row>
         </Block>
@@ -58,15 +58,15 @@ export default class extends React.Component {
           <Row>
             <Col>
               <PhotoBrowser photos={this.state.photos} theme="dark" ref={(el) => {this.standaloneDark = el}} />
-              <Button raised onClick={() => this.standaloneDark.open()}>Standalone</Button>
+              <Button raisedMd outlineIos onClick={() => this.standaloneDark.open()}>Standalone</Button>
             </Col>
             <Col>
               <PhotoBrowser photos={this.state.photos} theme="dark" type="popup" ref={(el) => {this.popupDark = el}} />
-              <Button raised onClick={() => this.popupDark.open()}>Popup</Button>
+              <Button raisedMd outlineIos onClick={() => this.popupDark.open()}>Popup</Button>
             </Col>
             <Col>
               <PhotoBrowser photos={this.state.photos} theme="dark" type="page" backLinkText="Back" ref={(el) => {this.pageDark = el}} />
-              <Button raised onClick={() => this.pageDark.open()}>Page</Button>
+              <Button raisedMd outlineIos onClick={() => this.pageDark.open()}>Page</Button>
             </Col>
           </Row>
         </Block>

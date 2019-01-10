@@ -6,10 +6,10 @@
     </f7-block>
     <f7-block class="row">
       <f7-col>
-        <f7-button raised panel-open="left">Open left panel</f7-button>
+        <f7-button raised fill panel-open="left">Open left panel</f7-button>
       </f7-col>
       <f7-col>
-        <f7-button raised panel-open="right">Open right panel</f7-button>
+        <f7-button raised fill panel-open="right">Open right panel</f7-button>
       </f7-col>
     </f7-block>
   </f7-page>

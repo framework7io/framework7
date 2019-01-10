@@ -4,28 +4,28 @@
     <f7-block>
       <p>Toasts provide brief feedback about an operation through a message on the screen.</p>
       <p>
-        <f7-button raised @click="showToastBottom">Toast on Bottom</f7-button>
+        <f7-button fill @click="showToastBottom">Toast on Bottom</f7-button>
       </p>
       <p>
-        <f7-button raised @click="showToastTop">Toast on Top</f7-button>
+        <f7-button fill @click="showToastTop">Toast on Top</f7-button>
       </p>
       <p>
-        <f7-button raised @click="showToastCenter">Toast on Center</f7-button>
+        <f7-button fill @click="showToastCenter">Toast on Center</f7-button>
       </p>
       <p>
-        <f7-button raised @click="showToastIcon">Toast with icon</f7-button>
+        <f7-button fill @click="showToastIcon">Toast with icon</f7-button>
       </p>
       <p>
-        <f7-button raised @click="showToastLargeMessage">Toast with large message</f7-button>
+        <f7-button fill @click="showToastLargeMessage">Toast with large message</f7-button>
       </p>
       <p>
-        <f7-button raised @click="showToastWithButton">Toast with close button</f7-button>
+        <f7-button fill @click="showToastWithButton">Toast with close button</f7-button>
       </p>
       <p>
-        <f7-button raised @click="showToastWithCustomButton">Toast with custom button</f7-button>
+        <f7-button fill @click="showToastWithCustomButton">Toast with custom button</f7-button>
       </p>
       <p>
-        <f7-button raised @click="showToastWithCallback">Toast with callback on close</f7-button>
+        <f7-button fill @click="showToastWithCallback">Toast with callback on close</f7-button>
       </p>
     </f7-block>
   </f7-page>

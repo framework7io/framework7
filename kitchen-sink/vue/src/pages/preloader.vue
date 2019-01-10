@@ -46,15 +46,15 @@
     <f7-block>
       <p>With <b>app.preloader.show()</b> you can show small overlay with preloader indicator.</p>
       <p>
-        <a class="button button-raised" @click="openIndicator">Open Small Indicator</a>
+        <a class="button button-fill" @click="openIndicator">Open Small Indicator</a>
       </p>
       <p>With <b>app.dialog.preloader()</b> you can show dialog modal with preloader indicator.</p>
       <p>
-        <a class="button button-raised" @click="openDialog">Open Dialog Preloader</a>
+        <a class="button button-fill" @click="openDialog">Open Dialog Preloader</a>
       </p>
       <p>With <b>app.dialog.preloader('My text...')</b> you can show dialog preloader modal with custom title.</p>
       <p>
-        <a class="button button-raised" @click="openCustomDialog">Open Dialog Preloader</a>
+        <a class="button button-fill" @click="openCustomDialog">Open Dialog Preloader</a>
       </p>
     </f7-block>
   </f7-page>

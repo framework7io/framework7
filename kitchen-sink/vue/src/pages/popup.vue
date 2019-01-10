@@ -4,13 +4,13 @@
     <f7-block>
       <p>Popup is a modal window with any HTML content that pops up over App's main content. Popup as all other overlays is part of so called "Temporary Views".</p>
       <p>
-        <f7-button raised popup-open=".demo-popup">Open Popup</f7-button>
+        <f7-button fill popup-open=".demo-popup">Open Popup</f7-button>
       </p>
       <p>
-        <f7-button raised @click="popupOpened = true">Open Via Prop Change</f7-button>
+        <f7-button fill @click="popupOpened = true">Open Via Prop Change</f7-button>
       </p>
       <p>
-        <f7-button raised @click="createPopup">Create Dynamic Popup</f7-button>
+        <f7-button fill @click="createPopup">Create Dynamic Popup</f7-button>
       </p>
     </f7-block>
     <f7-popup class="demo-popup" :opened="popupOpened" @popup:closed="popupOpened = false">

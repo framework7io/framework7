@@ -12,28 +12,28 @@ export default class extends React.Component {
         <Block>
           <p>Toasts provide brief feedback about an operation through a message on the screen.</p>
           <p>
-            <Button raised onClick={this.showToastBottom.bind(this)}>Toast on Bottom</Button>
+            <Button fill onClick={this.showToastBottom.bind(this)}>Toast on Bottom</Button>
           </p>
           <p>
-            <Button raised onClick={this.showToastTop.bind(this)}>Toast on Top</Button>
+            <Button fill onClick={this.showToastTop.bind(this)}>Toast on Top</Button>
           </p>
           <p>
-            <Button raised onClick={this.showToastCenter.bind(this)}>Toast on Center</Button>
+            <Button fill onClick={this.showToastCenter.bind(this)}>Toast on Center</Button>
           </p>
           <p>
-            <Button raised onClick={this.showToastIcon.bind(this)}>Toast with icon</Button>
+            <Button fill onClick={this.showToastIcon.bind(this)}>Toast with icon</Button>
           </p>
           <p>
-            <Button raised onClick={this.showToastLargeMessage.bind(this)}>Toast with large message</Button>
+            <Button fill onClick={this.showToastLargeMessage.bind(this)}>Toast with large message</Button>
           </p>
           <p>
-            <Button raised onClick={this.showToastWithButton.bind(this)}>Toast with close button</Button>
+            <Button fill onClick={this.showToastWithButton.bind(this)}>Toast with close button</Button>
           </p>
           <p>
-            <Button raised onClick={this.showToastWithCustomButton.bind(this)}>Toast with custom button</Button>
+            <Button fill onClick={this.showToastWithCustomButton.bind(this)}>Toast with custom button</Button>
           </p>
           <p>
-            <Button raised onClick={this.showToastWithCallback.bind(this)}>Toast with callback on close</Button>
+            <Button fill onClick={this.showToastWithCallback.bind(this)}>Toast with callback on close</Button>
           </p>
         </Block>
       </Page>

@@ -34,13 +34,13 @@ export default class extends React.Component {
             <p>Inline determinate load & hide:</p>
             <p id="demo-determinate-container"></p>
             <p>
-              <Button raised onClick={()=>{this.showDeterminate(true)}}>Start Loading</Button>
+              <Button fill onClick={()=>{this.showDeterminate(true)}}>Start Loading</Button>
             </p>
           </div>
           <div>
             <p>Overlay with determinate progress bar on top of the app:</p>
             <p>
-              <Button raised onClick={()=>{this.showDeterminate(false)}}>Start Loading</Button>
+              <Button fill onClick={()=>{this.showDeterminate(false)}}>Start Loading</Button>
             </p>
           </div>
         </Block>
@@ -59,13 +59,13 @@ export default class extends React.Component {
             <p>Overlay with infinite progress bar on top of the app</p>
             <p id="demo-infinite-container"></p>
             <p>
-              <Button raised onClick={()=>{this.showInfinite(false)}}>Start Loading</Button>
+              <Button fill onClick={()=>{this.showInfinite(false)}}>Start Loading</Button>
             </p>
           </div>
           <div>
             <p>Overlay with infinite multi-color progress bar on top of the app</p>
             <p>
-              <Button raised onClick={()=>{this.showInfinite(true)}}>Start Loading</Button>
+              <Button fill onClick={()=>{this.showInfinite(true)}}>Start Loading</Button>
             </p>
           </div>
         </Block>

@@ -4,11 +4,11 @@
     <f7-block>
       <p>Sheet Modals slide up from the bottom of the screen to reveal more content. Such modals allow to create custom overlays with custom content.</p>
       <f7-row tag="p">
-        <f7-button class="col" raised sheet-open=".demo-sheet">Open Sheet</f7-button>
-        <f7-button class="col" raised @click="createSheet">Create Dynamic Sheet</f7-button>
+        <f7-button class="col" fill sheet-open=".demo-sheet">Open Sheet</f7-button>
+        <f7-button class="col" fill @click="createSheet">Create Dynamic Sheet</f7-button>
       </f7-row>
       <p>
-        <f7-button class="col" raised @click="sheetOpened = true">Open Via Prop Change</f7-button>
+        <f7-button class="col" fill @click="sheetOpened = true">Open Via Prop Change</f7-button>
       </p>
     </f7-block>
     <f7-sheet class="demo-sheet" :opened="sheetOpened" @sheet:closed="sheetOpened = false">

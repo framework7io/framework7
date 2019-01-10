@@ -9,10 +9,10 @@ export default () => (
     </Block>
     <Block className="row">
       <Col>
-        <Button raised panelOpen="left">Open left panel</Button>
+        <Button raised fill panelOpen="left">Open left panel</Button>
       </Col>
       <Col>
-        <Button raised panelOpen="right">Open right panel</Button>
+        <Button raised fill panelOpen="right">Open right panel</Button>
       </Col>
     </Block>
   </Page>

@@ -16,11 +16,11 @@ export default class extends React.Component {
         <Block>
           <p>Sheet Modals slide up from the bottom of the screen to reveal more content. Such modals allow to create custom overlays with custom content.</p>
           <Row tag="p">
-            <Button className="col" raised sheetOpen=".demo-sheet">Open Sheet</Button>
-            <Button className="col" raised onClick={this.createSheet.bind(this)}>Create Dynamic Sheet</Button>
+            <Button className="col" fill sheetOpen=".demo-sheet">Open Sheet</Button>
+            <Button className="col" fill onClick={this.createSheet.bind(this)}>Create Dynamic Sheet</Button>
           </Row>
           <p>
-            <Button className="col" raised onClick={() => {this.setState({sheetOpened: true})}}>Open Via Prop Change</Button>
+            <Button className="col" fill onClick={() => {this.setState({sheetOpened: true})}}>Open Via Prop Change</Button>
           </p>
         </Block>
 

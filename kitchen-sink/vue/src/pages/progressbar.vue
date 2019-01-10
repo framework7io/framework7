@@ -21,13 +21,13 @@
         <p>Inline determinate load & hide:</p>
         <p id="demo-determinate-container"></p>
         <p>
-          <f7-button raised @click="showDeterminate(true)">Start Loading</f7-button>
+          <f7-button fill @click="showDeterminate(true)">Start Loading</f7-button>
         </p>
       </div>
       <div>
         <p>Overlay with determinate progress bar on top of the app:</p>
         <p>
-          <f7-button raised @click="showDeterminate(false)">Start Loading</f7-button>
+          <f7-button fill @click="showDeterminate(false)">Start Loading</f7-button>
         </p>
       </div>
     </f7-block>
@@ -46,13 +46,13 @@
         <p>Overlay with infinite progress bar on top of the app</p>
         <p id="demo-infinite-container"></p>
         <p>
-          <f7-button raised @click="showInfinite(false)">Start Loading</f7-button>
+          <f7-button fill @click="showInfinite(false)">Start Loading</f7-button>
         </p>
       </div>
       <div>
         <p>Overlay with infinite multi-color progress bar on top of the app</p>
         <p>
-          <f7-button raised @click="showInfinite(true)">Start Loading</f7-button>
+          <f7-button fill @click="showInfinite(true)">Start Loading</f7-button>
         </p>
       </div>
     </f7-block>

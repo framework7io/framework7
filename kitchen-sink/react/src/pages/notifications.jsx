@@ -11,10 +11,10 @@ export default class extends React.Component {
         <Navbar title="Notifications" backLink="Back"></Navbar>
         <Block>
           <p>Framework7 comes with simple Notifications component that allows you to show some useful messages to user and request basic actions.</p>
-          <p><Button raised onClick={this.showNotificationFull.bind(this)}>Full layout notification</Button></p>
-          <p><Button raised onClick={this.showNotificationWithButton.bind(this)}>With close button</Button></p>
-          <p><Button raised onClick={this.showNotificationCloseOnClick.bind(this)}>Click to close</Button></p>
-          <p><Button raised onClick={this.showNotificationCallbackOnClose.bind(this)}>Callback on close</Button></p>
+          <p><Button fill onClick={this.showNotificationFull.bind(this)}>Full layout notification</Button></p>
+          <p><Button fill onClick={this.showNotificationWithButton.bind(this)}>With close button</Button></p>
+          <p><Button fill onClick={this.showNotificationCloseOnClick.bind(this)}>Click to close</Button></p>
+          <p><Button fill onClick={this.showNotificationCallbackOnClose.bind(this)}>Callback on close</Button></p>
         </Block>
       </Page>
     )

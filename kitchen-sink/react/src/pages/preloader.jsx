@@ -54,15 +54,15 @@ export default class extends React.Component {
         <Block>
           <p>With <b>app.preloader.show()</b> you can show small overlay with preloader indicator.</p>
           <p>
-            <a className="button button-raised" onClick={this.openIndicator.bind(this)}>Open Small Indicator</a>
+            <a className="button button-fill" onClick={this.openIndicator.bind(this)}>Open Small Indicator</a>
           </p>
           <p>With <b>app.dialog.preloader()</b> you can show dialog modal with preloader indicator.</p>
           <p>
-            <a className="button button-raised" onClick={this.openDialog.bind(this)}>Open Dialog Preloader</a>
+            <a className="button button-fill" onClick={this.openDialog.bind(this)}>Open Dialog Preloader</a>
           </p>
           <p>With <b>app.dialog.preloader('My text...')</b> you can show dialog preloader modal with custom title.</p>
           <p>
-            <a className="button button-raised" onClick={this.openCustomDialog.bind(this)}>Open Dialog Preloader</a>
+            <a className="button button-fill" onClick={this.openCustomDialog.bind(this)}>Open Dialog Preloader</a>
           </p>
         </Block>
       </Page>

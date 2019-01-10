@@ -18,13 +18,13 @@ export default class extends React.Component {
         <Block strong>
           <p className="row">
             {/* One group, open by direct accessing instance .open() method */}
-            <Button className="col" raised onClick={() => this.refs.actionsOneGroup.open()}>One group</Button>
+            <Button className="col" fill onClick={() => this.refs.actionsOneGroup.open()}>One group</Button>
             {/*  Two groups, open by "actionsOpen" attribute */}
-            <Button className="col" raised actionsOpen="#actions-two-groups">Two groups</Button>
+            <Button className="col" fill actionsOpen="#actions-two-groups">Two groups</Button>
           </p>
           <p>
             {/* Actions Grid, open by changing actionGridOpened state property */}
-            <Button raised onClick={() => this.setActionsGridOpened(true)}>Action Grid</Button>
+            <Button fill onClick={() => this.setActionsGridOpened(true)}>Action Grid</Button>
           </p>
         </Block>
 

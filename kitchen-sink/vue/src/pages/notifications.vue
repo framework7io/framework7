@@ -3,10 +3,10 @@
     <f7-navbar title="Notifications" back-link="Back"></f7-navbar>
     <f7-block>
       <p>Framework7 comes with simple Notifications component that allows you to show some useful messages to user and request basic actions.</p>
-      <p><f7-button raised @click="showNotificationFull">Full layout notification</f7-button></p>
-      <p><f7-button raised @click="showNotificationWithButton">With close button</f7-button></p>
-      <p><f7-button raised @click="showNotificationCloseOnClick">Click to close</f7-button></p>
-      <p><f7-button raised @click="showNotificationCallbackOnClose">Callback on close</f7-button></p>
+      <p><f7-button fill @click="showNotificationFull">Full layout notification</f7-button></p>
+      <p><f7-button fill @click="showNotificationWithButton">With close button</f7-button></p>
+      <p><f7-button fill @click="showNotificationCloseOnClick">Click to close</f7-button></p>
+      <p><f7-button fill @click="showNotificationCallbackOnClose">Callback on close</f7-button></p>
     </f7-block>
   </f7-page>
 </template>
