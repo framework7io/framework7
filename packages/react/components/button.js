@@ -60,8 +60,12 @@ class F7Button extends React.Component {
       smallIos,
       smallMd,
       raised,
+      raisedIos,
+      raisedMd,
       active,
       outline,
+      outlineIos,
+      outlineMd,
       disabled,
       className
     } = props;
@@ -82,8 +86,12 @@ class F7Button extends React.Component {
       'button-small-ios': smallIos,
       'button-small-md': smallMd,
       'button-raised': raised,
+      'button-raised-ios': raisedIos,
+      'button-raised-md': raisedMd,
       'button-active': active,
       'button-outline': outline,
+      'button-outline-ios': outlineIos,
+      'button-outline-md': outlineMd,
       disabled
     }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
   }
@@ -237,7 +245,11 @@ __reactComponentSetProps(F7Button, Object.assign({
   smallMd: Boolean,
   smallIos: Boolean,
   raised: Boolean,
+  raisedMd: Boolean,
+  raisedIos: Boolean,
   outline: Boolean,
+  outlineMd: Boolean,
+  outlineIos: Boolean,
   active: Boolean,
   disabled: Boolean,
   tooltip: String

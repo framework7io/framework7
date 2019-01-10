@@ -6,7 +6,11 @@ export default {
   props: Object.assign({
     id: [String, Number],
     raised: Boolean,
+    raisedIos: Boolean,
+    raisedMD: Boolean,
     round: Boolean,
+    roundIos: Boolean,
+    roundMd: Boolean,
     tag: {
       type: String,
       default: 'div'
@@ -20,7 +24,11 @@ export default {
     const {
       className,
       raised,
+      raisedIos,
+      raisedMd,
       round,
+      roundIos,
+      roundMd,
       id,
       style,
       tag
@@ -28,7 +36,11 @@ export default {
     const classNames = Utils.classNames(className, {
       segmented: true,
       'segmented-raised': raised,
-      'segmented-round': round
+      'segmented-raised-ios': raisedIos,
+      'segmented-raised-md': raisedMd,
+      'segmented-round': round,
+      'segmented-round-ios': roundIos,
+      'segmented-round-md': roundMd
     }, Mixins.colorClasses(props));
     const SegmentedTag = tag;
     return _h(SegmentedTag, {

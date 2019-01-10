@@ -1,5 +1,5 @@
 /**
- * Framework7 React 4.0.0-beta.12
+ * Framework7 React 4.0.0-beta.14
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 9, 2019
+ * Released on: January 10, 2019
  */
 
 (function (global, factory) {
@@ -1965,8 +1965,12 @@
       var smallIos = props.smallIos;
       var smallMd = props.smallMd;
       var raised = props.raised;
+      var raisedIos = props.raisedIos;
+      var raisedMd = props.raisedMd;
       var active = props.active;
       var outline = props.outline;
+      var outlineIos = props.outlineIos;
+      var outlineMd = props.outlineMd;
       var disabled = props.disabled;
       var className = props.className;
       return Utils.classNames(className, 'button', {
@@ -1986,8 +1990,12 @@
         'button-small-ios': smallIos,
         'button-small-md': smallMd,
         'button-raised': raised,
+        'button-raised-ios': raisedIos,
+        'button-raised-md': raisedMd,
         'button-active': active,
         'button-outline': outline,
+        'button-outline-ios': outlineIos,
+        'button-outline-md': outlineMd,
         disabled: disabled
       }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
     };
@@ -2147,7 +2155,11 @@
     smallMd: Boolean,
     smallIos: Boolean,
     raised: Boolean,
+    raisedMd: Boolean,
+    raisedIos: Boolean,
     outline: Boolean,
+    outlineMd: Boolean,
+    outlineIos: Boolean,
     active: Boolean,
     disabled: Boolean,
     tooltip: String
@@ -10776,14 +10788,22 @@
       var props = self.props;
       var className = props.className;
       var raised = props.raised;
+      var raisedIos = props.raisedIos;
+      var raisedMd = props.raisedMd;
       var round = props.round;
+      var roundIos = props.roundIos;
+      var roundMd = props.roundMd;
       var id = props.id;
       var style = props.style;
       var tag = props.tag;
       var classNames = Utils.classNames(className, {
         segmented: true,
         'segmented-raised': raised,
-        'segmented-round': round
+        'segmented-raised-ios': raisedIos,
+        'segmented-raised-md': raisedMd,
+        'segmented-round': round,
+        'segmented-round-ios': roundIos,
+        'segmented-round-md': roundMd
       }, Mixins.colorClasses(props));
       var SegmentedTag = tag;
       return React.createElement(SegmentedTag, {
@@ -10807,7 +10827,11 @@
     className: String,
     style: Object,
     raised: Boolean,
+    raisedIos: Boolean,
+    raisedMD: Boolean,
     round: Boolean,
+    roundIos: Boolean,
+    roundMd: Boolean,
     tag: {
       type: String,
       default: 'div'
@@ -12830,7 +12854,7 @@
   };
 
   /**
-   * Framework7 React 4.0.0-beta.12
+   * Framework7 React 4.0.0-beta.14
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -12838,7 +12862,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: January 9, 2019
+   * Released on: January 10, 2019
    */
 
   var Plugin = {

@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.0-beta.12
+ * Framework7 4.0.0-beta.14
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 9, 2019
+ * Released on: January 10, 2019
  */
 /*====================
   Core
@@ -97,8 +97,8 @@
   --f7-bars-bg-color: #f7f7f8;
   --f7-bars-bg-color-rgb: 247, 247, 248;
   --f7-bars-text-color: #000;
-  --f7-bars-shadow-bottom-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.1) 40%, rgba(0, 0, 0, 0.05) 50%, rgba(0, 0, 0, 0) 80%, rgba(0, 0, 0, 0) 100%);
-  --f7-bars-shadow-top-image: linear-gradient(to top, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.1) 40%, rgba(0, 0, 0, 0.05) 50%, rgba(0, 0, 0, 0) 80%, rgba(0, 0, 0, 0) 100%);
+  --f7-bars-shadow-bottom-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.08) 40%, rgba(0, 0, 0, 0.04) 50%, rgba(0, 0, 0, 0) 90%, rgba(0, 0, 0, 0) 100%);
+  --f7-bars-shadow-top-image: linear-gradient(to top, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.08) 40%, rgba(0, 0, 0, 0.04) 50%, rgba(0, 0, 0, 0) 90%, rgba(0, 0, 0, 0) 100%);
 }
 .theme-dark {
   --f7-bars-bg-color: #1b1b1b;
@@ -1289,7 +1289,7 @@ html.device-full-viewport body {
   width: 100%;
   top: 100%;
   bottom: auto;
-  height: 10px;
+  height: 8px;
   pointer-events: none;
   background: var(--f7-navbar-shadow-image, var(--f7-bars-shadow-bottom-image));
 }
@@ -2068,7 +2068,7 @@ html.device-full-viewport body {
   width: 100%;
   top: 100%;
   bottom: auto;
-  height: 10px;
+  height: 8px;
   pointer-events: none;
   background: var(--f7-toolbar-top-shadow-image, var(--f7-bars-shadow-bottom-image));
 }
@@ -2131,7 +2131,7 @@ html.device-full-viewport body {
   right: 0;
   width: 100%;
   bottom: 100%;
-  height: 10px;
+  height: 8px;
   top: auto;
   pointer-events: none;
   background: var(--f7-toolbar-bottom-shadow-image, var(--f7-bars-shadow-top-image));
@@ -2575,7 +2575,7 @@ html.device-full-viewport body {
   width: 100%;
   top: 100%;
   bottom: auto;
-  height: 10px;
+  height: 8px;
   pointer-events: none;
   background: var(--f7-navbar-shadow-image, var(--f7-bars-shadow-bottom-image));
 }
@@ -2790,7 +2790,7 @@ html.device-full-viewport body {
   padding-top: 0;
   padding-bottom: 0;
   padding-left: calc(var(--f7-block-padding) + var(--f7-safe-area-left));
-  padding-right: calc(var(--f7-block-padding) + var(--f7-safe-area-left));
+  padding-right: calc(var(--f7-block-padding) + var(--f7-safe-area-right));
 }
 .block.no-hairlines:before,
 .block.no-hairlines ul:before,
@@ -2940,7 +2940,7 @@ html.device-full-viewport body {
   padding-top: 0;
   padding-bottom: 0;
   padding-left: calc(var(--f7-block-padding) + var(--f7-safe-area-left));
-  padding-right: calc(var(--f7-block-padding) + var(--f7-safe-area-left));
+  padding-right: calc(var(--f7-block-padding) + var(--f7-safe-area-right));
 }
 .block-footer ul:first-child,
 .block-header ul:first-child,
@@ -3754,7 +3754,7 @@ li.list-group-title,
 }
 .list.inset {
   margin-left: calc(var(--f7-list-inset-side-margin) + var(--f7-safe-area-outer-left));
-  margin-right: calc(var(--f7-list-inset-side-margin) + var(--f7-safe-area-outer-left));
+  margin-right: calc(var(--f7-list-inset-side-margin) + var(--f7-safe-area-outer-right));
   border-radius: var(--f7-list-inset-border-radius);
   --f7-safe-area-left: 0px;
   --f7-safe-area-right: 0px;
@@ -3784,7 +3784,7 @@ li.list-group-title,
 @media (min-width: 768px) {
   .list.tablet-inset {
     margin-left: calc(var(--f7-list-inset-side-margin) + var(--f7-safe-area-outer-left));
-    margin-right: calc(var(--f7-list-inset-side-margin) + var(--f7-safe-area-outer-left));
+    margin-right: calc(var(--f7-list-inset-side-margin) + var(--f7-safe-area-outer-right));
     border-radius: var(--f7-list-inset-border-radius);
     --f7-safe-area-left: 0px;
     --f7-safe-area-right: 0px;
@@ -3900,7 +3900,7 @@ li.list-group-title,
   --f7-button-border-color: var(--f7-theme-color);
   --f7-button-fill-text-color: #fff;
   --f7-button-fill-bg-color: var(--f7-theme-color);
-  --f7-button-outline-border-color: var(--f7-button-border-color, var(--f7-theme-color);
+  --f7-button-outline-border-color: var(--f7-theme-color);
   */
   --f7-button-raised-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0,0,0,0.24);
   --f7-button-raised-pressed-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0,0,0,0.23);
@@ -4028,8 +4028,8 @@ input[type="button"].button {
 .button-outline,
 .ios .button-outline-ios,
 .md .button-outline-md {
+  --f7-button-border-color: var(--f7-button-outline-border-color, var(--f7-theme-color));
   --f7-button-border-width: var(--f7-button-outline-border-width);
-  --f7-button-border-color: var(--f7-button-outline-border-color, var(--f7-button-border-color, var(--f7-theme-color)));
 }
 .button-large,
 .ios .button-large-ios,

@@ -15,7 +15,11 @@ class F7Segmented extends React.Component {
     const {
       className,
       raised,
+      raisedIos,
+      raisedMd,
       round,
+      roundIos,
+      roundMd,
       id,
       style,
       tag
@@ -23,7 +27,11 @@ class F7Segmented extends React.Component {
     const classNames = Utils.classNames(className, {
       segmented: true,
       'segmented-raised': raised,
-      'segmented-round': round
+      'segmented-raised-ios': raisedIos,
+      'segmented-raised-md': raisedMd,
+      'segmented-round': round,
+      'segmented-round-ios': roundIos,
+      'segmented-round-md': roundMd
     }, Mixins.colorClasses(props));
     const SegmentedTag = tag;
     return React.createElement(SegmentedTag, {
@@ -44,7 +52,11 @@ __reactComponentSetProps(F7Segmented, Object.assign({
   className: String,
   style: Object,
   raised: Boolean,
+  raisedIos: Boolean,
+  raisedMD: Boolean,
   round: Boolean,
+  roundIos: Boolean,
+  roundMd: Boolean,
   tag: {
     type: String,
     default: 'div'

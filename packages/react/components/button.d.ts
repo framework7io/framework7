@@ -27,7 +27,11 @@ declare namespace F7Button {
     smallMd? : boolean
     smallIos? : boolean
     raised? : boolean
+    raisedMd? : boolean
+    raisedIos? : boolean
     outline? : boolean
+    outlineMd? : boolean
+    outlineIos? : boolean
     active? : boolean
     disabled? : boolean
     tooltip? : string
