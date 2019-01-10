@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Navbar, Page, Block, BlockTitle, List, ListItem, Input } from 'framework7-react';
+import { Navbar, Page, Block, BlockTitle, List, ListItem, ListInput } from 'framework7-react';
 
 export default class extends React.Component {
   constructor(props) {
@@ -17,37 +17,27 @@ export default class extends React.Component {
 
         <BlockTitle>Default setup</BlockTitle>
         <List noHairlinesMd>
-          <ListItem>
-            <Input type="text" placeholder="Your birth date" readonly inputId="demo-calendar-default"/>
-          </ListItem>
+          <ListInput type="text" placeholder="Your birth date" readonly inputId="demo-calendar-default"/>
         </List>
 
         <BlockTitle>Custom date format</BlockTitle>
         <List noHairlinesMd>
-          <ListItem>
-            <Input type="text" placeholder="Select date" readonly inputId="demo-calendar-date-format"/>
-          </ListItem>
+          <ListInput type="text" placeholder="Select date" readonly inputId="demo-calendar-date-format"/>
         </List>
 
         <BlockTitle>Multiple Values</BlockTitle>
         <List noHairlinesMd>
-          <ListItem>
-            <Input type="text" placeholder="Select multiple dates" readonly inputId="demo-calendar-multiple"/>
-          </ListItem>
+          <ListInput type="text" placeholder="Select multiple dates" readonly inputId="demo-calendar-multiple"/>
         </List>
 
         <BlockTitle>Range Picker</BlockTitle>
         <List noHairlinesMd>
-          <ListItem>
-            <Input type="text" placeholder="Select date range" readonly inputId="demo-calendar-range"/>
-          </ListItem>
+          <ListInput type="text" placeholder="Select date range" readonly inputId="demo-calendar-range"/>
         </List>
 
         <BlockTitle>Open in Modal</BlockTitle>
         <List noHairlinesMd>
-          <ListItem>
-            <Input type="text" placeholder="Select date" readonly inputId="demo-calendar-modal"/>
-          </ListItem>
+          <ListInput type="text" placeholder="Select date" readonly inputId="demo-calendar-modal"/>
         </List>
 
         <BlockTitle>Calendar Page</BlockTitle>
@@ -64,9 +54,7 @@ export default class extends React.Component {
         </Block>
         <BlockTitle>Jalali Calendar</BlockTitle>
         <List noHairlinesMd>
-          <ListItem>
-            <Input type="text" placeholder="Your birth date in Jalali" readonly inputId="demo-jcalendar-default"/>
-          </ListItem>
+          <ListInput type="text" placeholder="Your birth date in Jalali" readonly inputId="demo-jcalendar-default"/>
         </List>
       </Page>
     );

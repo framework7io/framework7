@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Page, Block, BlockTitle, List, ListItem, Input } from 'framework7-react';
+import { Navbar, Page, Block, BlockTitle, List, ListInput } from 'framework7-react';
 
 export default class extends React.Component {
   constructor(props) {
@@ -15,34 +15,24 @@ export default class extends React.Component {
         </Block>
         <BlockTitle>Picker with single value</BlockTitle>
         <List noHairlinesMd>
-          <ListItem>
-            <Input type="text" placeholder="Your iOS device" readonly inputId="demo-picker-device"/>
-          </ListItem>
+          <ListInput type="text" placeholder="Your iOS device" readonly inputId="demo-picker-device"/>
         </List>
         <BlockTitle>2 values and 3d-rotate effect</BlockTitle>
         <List noHairlinesMd>
-          <ListItem>
-            <Input type="text" placeholder="Describe yourself" readonly inputId="demo-picker-describe"/>
-          </ListItem>
+          <ListInput type="text" placeholder="Describe yourself" readonly inputId="demo-picker-describe"/>
         </List>
         <BlockTitle>Dependent values</BlockTitle>
         <List noHairlinesMd>
-          <ListItem>
-            <Input type="text" placeholder="Your car" readonly inputId="demo-picker-dependent"/>
-          </ListItem>
+          <ListInput type="text" placeholder="Your car" readonly inputId="demo-picker-dependent"/>
         </List>
 
         <BlockTitle>Custom toolbar</BlockTitle>
         <List noHairlinesMd>
-          <ListItem>
-            <Input type="text" placeholder="Describe yourself" readonly inputId="demo-picker-custom-toolbar"/>
-          </ListItem>
+          <ListInput type="text" placeholder="Describe yourself" readonly inputId="demo-picker-custom-toolbar"/>
         </List>
         <BlockTitle>Inline Picker / Date-time</BlockTitle>
         <List className="no-margin">
-          <ListItem>
-            <Input type="text" placeholder="Date Time" readonly inputId="demo-picker-date"/>
-          </ListItem>
+          <ListInput type="text" placeholder="Date Time" readonly inputId="demo-picker-date"/>
         </List>
         <Block strong className="no-padding no-margin margin-bottom">
           <div id="demo-picker-date-container"></div>
