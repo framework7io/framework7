@@ -3,17 +3,13 @@
 /* eslint global-require: "off" */
 /* eslint no-param-reassign: ["error", { "props": false }] */
 
-const gulp = require('gulp');
 const fs = require('fs');
 
 const rollup = require('rollup');
 const buble = require('rollup-plugin-buble');
 const replace = require('rollup-plugin-replace');
 
-const header = require('gulp-header');
-const uglify = require('gulp-uglify');
-const sourcemaps = require('gulp-sourcemaps');
-const rename = require('gulp-rename');
+const UglifyJS = require('uglify-js');
 const bannerVue = require('./banner-vue');
 const getOutput = require('./get-output');
 
@@ -115,24 +111,24 @@ function buildVue(cb) {
     sourcemap: env === 'development',
     sourcemapFile: `${buildPath}/vue/framework7-vue.js.map`,
     banner: bannerVue,
-  })).then(() => {
+  })).then((bundle) => {
     if (env === 'development') {
       if (cb) cb();
       return;
     }
-    // Minified version
-    gulp.src(`${buildPath}/vue/framework7-vue.js`)
-      .pipe(sourcemaps.init())
-      .pipe(uglify())
-      .pipe(header(bannerVue))
-      .pipe(rename((filePath) => {
-        filePath.basename += '.min';
-      }))
-      .pipe(sourcemaps.write('./'))
-      .pipe(gulp.dest(`${buildPath}/vue/`))
-      .on('end', () => {
-        if (cb) cb();
-      });
+    const result = bundle.output[0];
+    const minified = UglifyJS.minify(result.code, {
+      sourceMap: {
+        content: result.map,
+        url: 'framework7-vue.min.js.map',
+      },
+      output: {
+        preamble: bannerVue,
+      },
+    });
+    fs.writeFileSync(`${buildPath}/vue/framework7-vue.min.js`, minified.code);
+    fs.writeFileSync(`${buildPath}/vue/framework7-vue.min.js.map`, minified.map);
+    if (cb) cb();
   }).catch((err) => {
     if (cb) cb();
     console.log(err);

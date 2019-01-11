@@ -3,10 +3,8 @@
 /* eslint global-require: "off" */
 /* eslint no-param-reassign: ["error", { "props": false }] */
 
-const gulp = require('gulp');
 const fs = require('fs');
-const modifyFile = require('gulp-modify-file');
-const rename = require('gulp-rename');
+const path = require('path');
 const getOutput = require('./get-output.js');
 
 function capitalize(name) {
@@ -30,40 +28,41 @@ function buildTypings(cb) {
     return fs.existsSync(`./src/core/components/${file}/${file}.d.ts`);
   });
 
+  const importModules = modules.map((f7Module) => {
+    const capitalized = capitalize(f7Module);
+    return `import {${capitalized} as ${capitalized}Namespace} from './modules/${f7Module}/${f7Module}';`;
+  });
 
-  gulp.src('./src/core/framework7.d.ts')
-    .pipe(modifyFile((content) => {
-      const importModules = modules.map((f7Module) => {
-        const capitalized = capitalize(f7Module);
-        return `import {${capitalized} as ${capitalized}Namespace} from './modules/${f7Module}/${f7Module}';`;
-      });
+  const importComponents = components.map((component) => {
+    const capitalized = capitalize(component);
+    return `import {${capitalized} as ${capitalized}Namespace} from './components/${component}/${component}';`;
+  });
 
-      const importComponents = components.map((component) => {
-        const capitalized = capitalize(component);
-        return `import {${capitalized} as ${capitalized}Namespace} from './components/${component}/${component}';`;
-      });
+  const install = [...modules, ...components].map((f7Module) => {
+    const capitalized = capitalize(f7Module);
+    return [
+      `interface Framework7Class<Events> extends ${capitalized}Namespace.AppMethods{}`,
+      `interface Framework7Params extends ${capitalized}Namespace.AppParams{}`,
+      `interface Framework7Events extends ${capitalized}Namespace.AppEvents{}`,
+    ].join('\n  ');
+  });
 
-      const install = [...modules, ...components].map((f7Module) => {
-        const capitalized = capitalize(f7Module);
-        return [
-          `interface Framework7Class<Events> extends ${capitalized}Namespace.AppMethods{}`,
-          `interface Framework7Params extends ${capitalized}Namespace.AppParams{}`,
-          `interface Framework7Events extends ${capitalized}Namespace.AppEvents{}`,
-        ].join('\n  ');
-      });
+  const typings = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.d.ts'), 'utf8');
+  const bundleTypings = typings
+    .replace(/\/\/ IMPORT_MODULES/, importModules.join('\n'))
+    .replace(/\/\/ IMPORT_COMPONENTS/, importComponents.join('\n'))
+    .replace(/\/\/ INSTALL/, install.join('\n  '));
+  const coreTypings = typings
+    .replace(/\/\/ IMPORT_MODULES/, importModules.join('\n'))
+    .replace(/\/\/ IMPORT_COMPONENTS/, '')
+    .replace(/\/\/ INSTALL/, '');
 
-      // eslint-disable-next-line
-      content = content
-        .replace(/\/\/ IMPORT_MODULES/, importModules.join('\n'))
-        .replace(/\/\/ IMPORT_COMPONENTS/, importComponents.join('\n'))
-        .replace(/\/\/ INSTALL/, install.join('\n  '));
+  fs.writeFileSync(`${output}/js/framework7.d.ts`, coreTypings);
+  fs.writeFileSync(`${output}/js/framework7.bundle.d.ts`, bundleTypings);
+  fs.writeFileSync(`${output}/framework7.esm.d.ts`, coreTypings);
+  fs.writeFileSync(`${output}/framework7.esm.bundle.d.ts`, bundleTypings);
 
-      return content;
-    }))
-    .pipe(gulp.dest(`${output}/`))
-    .pipe(rename((file) => { file.basename = 'framework7.esm.bundle.d'; }))
-    .pipe(gulp.dest(`${output}/`))
-    .on('end', cb);
+  cb();
 }
 
 module.exports = buildTypings;

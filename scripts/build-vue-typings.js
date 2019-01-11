@@ -3,10 +3,8 @@
 /* eslint global-require: "off" */
 /* eslint no-param-reassign: "off" */
 
-const gulp = require('gulp');
-const modifyFile = require('gulp-modify-file');
-const rename = require('gulp-rename');
 const fs = require('fs');
+const path = require('path');
 const getOutput = require('./get-output');
 
 const importLib = `
@@ -50,25 +48,20 @@ function buildTypings(cb) {
     componentExports.push(`  f7${componentName}`);
   });
 
-  gulp.src('./src/phenome/framework7-phenome.d.ts')
-    .pipe(modifyFile((content) => {
-      // Modify content
-      content = content
-        .replace('// IMPORT_LIB', importLib)
-        .replace('// IMPORT_COMPONENTS', componentImports.join('\n'))
-        .replace('// LIB_EXTENSION', libExtension)
-        .replace('// EXPORT_COMPONENTS', `export {\n${componentExports.join(',\n')}\n}`)
-        .replace('// DECLARE_PLUGIN', declarePlugin)
-        .replace('// EXPORT_PLUGIN', exportPlugin);
-      return content;
-    }))
-    .pipe(rename((file) => { file.basename = 'framework7-vue.d'; file.extname = '.ts'; }))
-    .pipe(gulp.dest(`${output}/`))
-    .pipe(rename((file) => { file.basename = 'framework7-vue.esm.d'; }))
-    .pipe(gulp.dest(`${output}/`))
-    .pipe(rename((file) => { file.basename = 'framework7-vue.esm.bundle.d'; }))
-    .pipe(gulp.dest(`${output}/`))
-    .on('end', cb);
+  let vueTypings = fs.readFileSync(path.resolve(__dirname, '../src/phenome/framework7-phenome.d.ts'), 'utf8');
+  vueTypings = vueTypings
+    .replace('// IMPORT_LIB', importLib)
+    .replace('// IMPORT_COMPONENTS', componentImports.join('\n'))
+    .replace('// LIB_EXTENSION', libExtension)
+    .replace('// EXPORT_COMPONENTS', `export {\n${componentExports.join(',\n')}\n}`)
+    .replace('// DECLARE_PLUGIN', declarePlugin)
+    .replace('// EXPORT_PLUGIN', exportPlugin);
+
+  fs.writeFileSync(`${output}/framework7-vue.d.ts`, vueTypings);
+  fs.writeFileSync(`${output}/framework7-vue.esm.d.ts`, vueTypings);
+  fs.writeFileSync(`${output}/framework7-vue.esm.bundle.d.ts`, vueTypings);
+
+  cb();
 }
 
 module.exports = buildTypings;

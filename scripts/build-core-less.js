@@ -3,14 +3,11 @@
 /* eslint global-require: "off" */
 /* eslint no-param-reassign: ["error", { "props": false }] */
 
-const gulp = require('gulp');
 const fs = require('fs');
-const modifyFile = require('gulp-modify-file');
-const less = require('gulp-less');
-const autoprefixer = require('gulp-autoprefixer');
-const header = require('gulp-header');
-const rename = require('gulp-rename');
-const cleanCSS = require('gulp-clean-css');
+const path = require('path');
+const less = require('./utils/less');
+const autoprefixer = require('./utils/autoprefixer');
+const cleanCSS = require('./utils/clean-css');
 const getConfig = require('./get-core-config.js');
 const getOutput = require('./get-output.js');
 const banner = require('./banner-core.js');
@@ -24,38 +21,28 @@ function copyLess(config, components, cb) {
   const includeDarkTheme = config.darkTheme;
   const rtl = config.rtl;
 
-  gulp.src(['src/core/framework7.less'])
-    .pipe(modifyFile((content) => {
-      let newContent = content;
-      newContent = `${banner}\n${newContent}`;
-      newContent = newContent
-        .replace('$includeIosTheme', includeIosTheme)
-        .replace('$includeMdTheme', includeMdTheme)
-        .replace('$includeDarkTheme', includeDarkTheme)
-        .replace('$colors', colors)
-        .replace('$themeColor', config.themeColor)
-        .replace('$rtl', rtl);
-      return newContent;
-    }))
-    .pipe(gulp.dest(output))
-    .on('end', () => {
-      gulp.src([`${output}/framework7.less`])
-        // eslint-disable-next-line
-        .pipe(modifyFile((content) => {
-          return content
-            .replace('//IMPORT_COMPONENTS', components.map(component => `@import url('./components/${component}/${component}.less');`).join('\n'));
-        }))
-        .pipe(rename((filePath) => {
-          filePath.basename = 'framework7.bundle';
-        }))
-        .pipe(gulp.dest(output))
-        .on('end', () => {
-          if (cb) cb();
-        });
-    });
+  // Core LESS
+  let lessContent = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.less'), 'utf8');
+  lessContent = `${banner}\n${lessContent}`;
+  lessContent = lessContent
+    .replace('$includeIosTheme', includeIosTheme)
+    .replace('$includeMdTheme', includeMdTheme)
+    .replace('$includeDarkTheme', includeDarkTheme)
+    .replace('$colors', colors)
+    .replace('$themeColor', config.themeColor)
+    .replace('$rtl', rtl);
+
+  fs.writeFileSync(`${output}/framework7.less`, lessContent);
+
+  // Bundle LESS
+  const lessBundleContent = lessContent
+    .replace('//IMPORT_COMPONENTS', components.map(component => `@import url('./components/${component}/${component}.less');`).join('\n'));
+  fs.writeFileSync(`${output}/framework7.bundle.less`, lessBundleContent);
+
+  if (cb) cb();
 }
-// Build CSS
-function buildBundle(config, components, themes, rtl, cb) {
+// Build CSS Bundle
+async function buildBundle(config, components, themes, rtl, cb) {
   const env = process.env.NODE_ENV || 'development';
   const colors = `{\n${Object.keys(config.colors).map(colorName => `  ${colorName}: ${config.colors[colorName]};`).join('\n')}\n}`;
   const includeIosTheme = themes.indexOf('ios') >= 0;
@@ -64,55 +51,39 @@ function buildBundle(config, components, themes, rtl, cb) {
   const outputFileName = `framework7.bundle${rtl ? '.rtl' : ''}`;
   const output = `${getOutput()}/core`;
 
-  gulp.src('./src/core/framework7.less')
-    .pipe(modifyFile((content) => {
-      const newContent = content
-        .replace('//IMPORT_COMPONENTS', components.map(component => `@import url('./components/${component}/${component}.less');`).join('\n'))
-        .replace('$includeIosTheme', includeIosTheme)
-        .replace('$includeMdTheme', includeMdTheme)
-        .replace('$includeDarkTheme', includeDarkTheme)
-        .replace('$colors', colors)
-        .replace('$themeColor', config.themeColor)
-        .replace('$rtl', rtl);
-      return newContent;
-    }))
-    .pipe(less())
-    .on('error', (err) => {
-      if (cb) cb();
-      console.log(err.toString());
-    })
-    .pipe(autoprefixer({
-      cascade: false,
-    }))
-    .on('error', (err) => {
-      if (cb) cb();
-      console.log(err.toString());
-    })
-    .pipe(header(banner))
-    .pipe(rename((filePath) => {
-      filePath.basename = outputFileName;
-    }))
-    .pipe(gulp.dest(`${output}/css/`))
-    .on('end', () => {
-      if (env === 'development') {
-        if (cb) cb();
-        return;
-      }
-      gulp.src(`${output}/css/${outputFileName}.css`)
-        .pipe(cleanCSS({
-          compatibility: '*,-properties.zeroUnits',
-        }))
-        .pipe(header(banner))
-        .pipe(rename((filePath) => {
-          filePath.basename += '.min';
-        }))
-        .pipe(gulp.dest(`${output}/css/`))
-        .on('end', () => {
-          if (cb) cb();
-        });
-    });
+  let lessContent = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.less'), 'utf8');
+  lessContent = lessContent
+    .replace('//IMPORT_COMPONENTS', components.map(component => `@import url('./components/${component}/${component}.less');`).join('\n'))
+    .replace('$includeIosTheme', includeIosTheme)
+    .replace('$includeMdTheme', includeMdTheme)
+    .replace('$includeDarkTheme', includeDarkTheme)
+    .replace('$colors', colors)
+    .replace('$themeColor', config.themeColor)
+    .replace('$rtl', rtl);
+
+  const cssContent = await autoprefixer(
+    await less(lessContent, path.resolve(__dirname, '../src/core'))
+  );
+
+  // Write file
+  fs.writeFileSync(`${output}/css/${outputFileName}.css`, `${banner}\n${cssContent}`);
+
+  if (env === 'development') {
+    if (cb) cb();
+    return;
+  }
+
+  // Minified
+  const minifiedContent = await cleanCSS(cssContent);
+
+  // Write file
+  fs.writeFileSync(`${output}/css/${outputFileName}.min.css`, `${banner}\n${minifiedContent}`);
+
+  if (cb) cb();
 }
-function buildCore(themes, rtl, cb) {
+
+// Build CSS Core
+async function buildCore(themes, rtl, cb) {
   const config = getConfig();
   const env = process.env.NODE_ENV || 'development';
   const includeIosTheme = themes.indexOf('ios') >= 0;
@@ -121,53 +92,35 @@ function buildCore(themes, rtl, cb) {
   const output = `${getOutput()}/core`;
   const colors = `{\n${Object.keys(config.colors).map(colorName => `  ${colorName}: ${config.colors[colorName]};`).join('\n')}\n}`;
 
-  gulp.src('./src/core/framework7.less')
-    .pipe(modifyFile((content) => {
-      const newContent = content
-        .replace('//IMPORT_COMPONENTS', '')
-        .replace('$includeIosTheme', includeIosTheme)
-        .replace('$includeMdTheme', includeMdTheme)
-        .replace('$includeDarkTheme', includeDarkTheme)
-        .replace('$themeColor', config.themeColor)
-        .replace('$colors', colors)
-        .replace('$rtl', rtl);
-      return newContent;
-    }))
-    .pipe(less())
-    .on('error', (err) => {
-      if (cb) cb();
-      console.log(err.toString());
-    })
-    .pipe(autoprefixer({
-      cascade: false,
-    }))
-    .on('error', (err) => {
-      if (cb) cb();
-      console.log(err.toString());
-    })
-    .pipe(header(banner))
-    .pipe(rename((filePath) => {
-      if (rtl) filePath.basename += '.rtl';
-    }))
-    .pipe(gulp.dest(`${output}/css/`))
-    .on('end', () => {
-      if (env === 'development') {
-        if (cb) cb();
-        return;
-      }
-      gulp.src(`${output}/css/framework7${rtl ? '.rtl' : ''}.css`)
-        .pipe(cleanCSS({
-          compatibility: '*,-properties.zeroUnits',
-        }))
-        .pipe(header(banner))
-        .pipe(rename((filePath) => {
-          filePath.basename += '.min';
-        }))
-        .pipe(gulp.dest(`${output}/css/`))
-        .on('end', () => {
-          if (cb) cb();
-        });
-    });
+  let lessContent = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.less'), 'utf8');
+  lessContent = lessContent
+    .replace('//IMPORT_COMPONENTS', '')
+    .replace('$includeIosTheme', includeIosTheme)
+    .replace('$includeMdTheme', includeMdTheme)
+    .replace('$includeDarkTheme', includeDarkTheme)
+    .replace('$colors', colors)
+    .replace('$themeColor', config.themeColor)
+    .replace('$rtl', rtl);
+
+  const cssContent = await autoprefixer(
+    await less(lessContent, path.resolve(__dirname, '../src/core'))
+  );
+
+  // Write file
+  fs.writeFileSync(`${output}/css/framework7${rtl ? '.rtl' : ''}.css`, `${banner}\n${cssContent}`);
+
+  if (env === 'development') {
+    if (cb) cb();
+    return;
+  }
+
+  // Minified
+  const minifiedContent = await cleanCSS(cssContent);
+
+  // Write file
+  fs.writeFileSync(`${output}/css/framework7${rtl ? '.rtl' : ''}.min.css`, `${banner}\n${minifiedContent}`);
+
+  if (cb) cb();
 }
 
 function buildLess(cb) {

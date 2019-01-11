@@ -3,7 +3,6 @@
 /* eslint global-require: "off" */
 /* eslint no-param-reassign: ["error", { "props": false }] */
 
-const gulp = require('gulp');
 const fs = require('fs');
 
 const rollup = require('rollup');
@@ -12,10 +11,7 @@ const replace = require('rollup-plugin-replace');
 const commonjs = require('rollup-plugin-commonjs');
 const resolve = require('rollup-plugin-node-resolve');
 
-const header = require('gulp-header');
-const uglify = require('gulp-uglify');
-const sourcemaps = require('gulp-sourcemaps');
-const rename = require('gulp-rename');
+const UglifyJS = require('uglify-js');
 const bannerReact = require('./banner-react');
 const getOutput = require('./get-output.js');
 
@@ -122,7 +118,7 @@ function buildReact(cb) {
     sourcemap: env === 'development',
     sourcemapFile: `${buildPath}/react/framework7-react.js.map`,
     banner: bannerReact,
-  })).then(() => {
+  })).then((bundle) => {
     // Remove esm.bundle
     fs.unlinkSync(`${buildPath}/react/framework7-react.esm.bundle.js`);
 
@@ -130,19 +126,19 @@ function buildReact(cb) {
       if (cb) cb();
       return;
     }
-    // Minified version
-    gulp.src(`${buildPath}/react/framework7-react.js`)
-      .pipe(sourcemaps.init())
-      .pipe(uglify())
-      .pipe(header(bannerReact))
-      .pipe(rename((filePath) => {
-        filePath.basename += '.min';
-      }))
-      .pipe(sourcemaps.write('./'))
-      .pipe(gulp.dest(`${buildPath}/react/`))
-      .on('end', () => {
-        if (cb) cb();
-      });
+    const result = bundle.output[0];
+    const minified = UglifyJS.minify(result.code, {
+      sourceMap: {
+        content: result.map,
+        url: 'framework7-react.min.js.map',
+      },
+      output: {
+        preamble: bannerReact,
+      },
+    });
+    fs.writeFileSync(`${buildPath}/react/framework7-react.min.js`, minified.code);
+    fs.writeFileSync(`${buildPath}/react/framework7-react.min.js.map`, minified.map);
+    if (cb) cb();
   }).catch((err) => {
     if (cb) cb();
     console.log(err);

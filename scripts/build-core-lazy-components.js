@@ -4,18 +4,16 @@
 /* eslint no-param-reassign: ["error", { "props": false }] */
 /* eslint arrow-body-style: "off" */
 const fs = require('fs');
+const path = require('path');
 const rollup = require('rollup');
 const buble = require('rollup-plugin-buble');
 const resolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 const replace = require('rollup-plugin-replace');
-const modifyFile = require('gulp-modify-file');
-const gulp = require('gulp');
-const less = require('gulp-less');
-const autoprefixer = require('gulp-autoprefixer');
-const cleanCSS = require('gulp-clean-css');
-const uglify = require('gulp-uglify');
-const rename = require('gulp-rename');
+const UglifyJS = require('uglify-js');
+const less = require('./utils/less');
+const autoprefixer = require('./utils/autoprefixer');
+const cleanCSS = require('./utils/clean-css');
 const getConfig = require('./get-core-config.js');
 const getOutput = require('./get-output.js');
 
@@ -74,8 +72,7 @@ const outro = `
 };
 `;
 
-function buildLazyComponentsLess(rtl, components, cb) {
-  // const env = process.env.NODE_ENV || 'development';
+async function buildLazyComponentsLess(components, rtl, cb) {
   const config = getConfig();
   const output = `${getOutput()}/core`;
   const colors = `{\n${Object.keys(config.colors).map(colorName => `  ${colorName}: ${config.colors[colorName]};`).join('\n')}\n}`;
@@ -83,7 +80,7 @@ function buildLazyComponentsLess(rtl, components, cb) {
   const includeMdTheme = config.themes.indexOf('md') >= 0;
   const includeDarkTheme = config.darkTheme;
 
-  const main = fs.readFileSync('./src/core/framework7.less', 'utf8')
+  const mainLess = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.less'), 'utf8')
     .split('\n')
     .filter(line => line.indexOf('@import url(\'./components') < 0)
     .join('\n')
@@ -97,28 +94,26 @@ function buildLazyComponentsLess(rtl, components, cb) {
 
   let cbs = 0;
   const componentsToProcess = components.filter((component) => { // eslint-disable-line
-    return fs.existsSync(`./src/core/components/${component}/${component}.less`) && coreComponents.indexOf(component) < 0;
+    return fs.existsSync(path.resolve(__dirname, `../src/core/components/${component}/${component}.less`)) && coreComponents.indexOf(component) < 0;
   });
 
-  componentsToProcess.forEach((component) => {
-    gulp
-      .src(`./src/core/components/${component}/${component}.less`)
-      .pipe(modifyFile(content => `${main}\n${content}`))
-      .pipe(less())
-      .pipe(autoprefixer({
-        cascade: false,
-      }))
-      .pipe(cleanCSS({
-        compatibility: '*,-properties.zeroUnits',
-      }))
-      .pipe(rename((filePath) => {
-        if (rtl) filePath.basename += '.rtl';
-      }))
-      .pipe(gulp.dest(`${output}/components/`))
-      .on('end', () => {
-        cbs += 1;
-        if (cbs === componentsToProcess.length && cb) cb();
-      });
+  componentsToProcess.forEach(async (component) => {
+    const lessContent = fs.readFileSync(path.resolve(__dirname, `../src/core/components/${component}/${component}.less`), 'utf8');
+
+    const cssContent = await cleanCSS(
+      await autoprefixer(
+        await less(`${mainLess}\n${lessContent}`, path.resolve(__dirname, `../src/core/components/${component}/`))
+      )
+    );
+    try {
+      fs.mkdirSync(`${output}/components`, { recursive: true });
+    } catch (err) {
+      // folder exists
+    }
+    fs.writeFileSync(`${output}/components/${component}.css`, cssContent);
+
+    cbs += 1;
+    if (cbs === componentsToProcess.length && cb) cb();
   });
 }
 
@@ -192,18 +187,13 @@ function buildLazyComponentsJs(components, cb) {
             return install.replace(/COMPONENT/g, name);
           });
 
+        fileContent = UglifyJS.minify(fileContent).code;
+        fileContent = `(${fileContent}(Framework7, typeof Framework7AutoInstallComponent === 'undefined' ? undefined : Framework7AutoInstallComponent))`;
+
         fs.writeFileSync(`${output}/components/${fileName}`, `${fileContent}\n`);
 
-        gulp.src(`${output}/components/${fileName}`)
-          .pipe(uglify())
-          .pipe(modifyFile((content) => { // eslint-disable-line
-            return `(${content}(Framework7, typeof Framework7AutoInstallComponent === 'undefined' ? undefined : Framework7AutoInstallComponent))`;
-          }))
-          .pipe(gulp.dest(`${output}/components/`))
-          .on('end', () => {
-            cbs += 1;
-            if (cbs === filesToProcess.length && cb) cb();
-          });
+        cbs += 1;
+        if (cbs === filesToProcess.length && cb) cb();
       });
 
       filesToRemove.forEach((fileName) => {
@@ -227,10 +217,10 @@ function buildLazyComponents(cb) {
   }
   buildLazyComponentsJs(components, callback);
   if (env === 'production') {
-    buildLazyComponentsLess(false, components, callback);
-    buildLazyComponentsLess(true, components, callback);
+    buildLazyComponentsLess(components, false, callback);
+    buildLazyComponentsLess(components, true, callback);
   } else {
-    buildLazyComponentsLess(config.rtl, components, callback);
+    buildLazyComponentsLess(components, config.rtl, callback);
   }
 }
 
