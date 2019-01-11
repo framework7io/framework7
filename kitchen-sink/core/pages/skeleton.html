@@ -161,14 +161,14 @@
       }
     },
     methods: {
-      load(effect) {
+      load: function (effect) {
         var self = this;
         if (self.loading) return;
         self.$setState({
           effect: effect,
           loading: true,
         });
-        setTimeout(() => {
+        setTimeout(function() {
           self.$setState({ loading: false });
         }, 3000);
       }

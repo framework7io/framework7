@@ -517,7 +517,7 @@ code {
   }
   .demo-expandable-cards .card:nth-child(2),
   .demo-expandable-cards .card:nth-child(4) {
-    margin-left: 0;;
+    margin-left: 0;
   }
   .demo-expandable-cards .card:nth-child(n + 3) {
     margin-top: 0;
