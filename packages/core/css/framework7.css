@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.0-beta.14
+ * Framework7 4.0.0-beta.15
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 10, 2019
+ * Released on: January 11, 2019
  */
 /*====================
   Core
@@ -94,6 +94,9 @@
   Bars
   ==================== */
 :root {
+  /*
+  --f7-bars-link-color: var(--f7-theme-color);
+  */
   --f7-bars-bg-color: #f7f7f8;
   --f7-bars-bg-color-rgb: 247, 247, 248;
   --f7-bars-text-color: #000;
@@ -113,84 +116,6 @@
 }
 .md {
   --f7-bars-border-color: transparent;
-}
-/*====================
-  Elevation
-  ==================== */
-:root {
-  --f7-elevation-0: 0px 0px 0px 0px rgba(0, 0, 0, 0);
-  --f7-elevation-1: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14),
-    0px 1px 3px 0px rgba(0, 0, 0, 0.12);
-  --f7-elevation-2: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
-    0px 2px 2px 0px rgba(0, 0, 0, 0.14),
-    0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-  --f7-elevation-3: 0px 3px 3px -2px rgba(0, 0, 0, 0.2),
-    0px 3px 4px 0px rgba(0, 0, 0, 0.14),
-    0px 1px 8px 0px rgba(0, 0, 0, 0.12);
-  --f7-elevation-4: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
-    0px 4px 5px 0px rgba(0, 0, 0, 0.14),
-    0px 1px 10px 0px rgba(0, 0, 0, 0.12);
-  --f7-elevation-5: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
-    0px 5px 8px 0px rgba(0, 0, 0, 0.14),
-    0px 1px 14px 0px rgba(0, 0, 0, 0.12);
-  --f7-elevation-6: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
-    0px 6px 10px 0px rgba(0, 0, 0, 0.14),
-    0px 1px 18px 0px rgba(0, 0, 0, 0.12);
-  --f7-elevation-7: 0px 4px 5px -2px rgba(0, 0, 0, 0.2),
-    0px 7px 10px 1px rgba(0, 0, 0, 0.14),
-    0px 2px 16px 1px rgba(0, 0, 0, 0.12);
-  --f7-elevation-8: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
-    0px 8px 10px 1px rgba(0, 0, 0, 0.14),
-    0px 3px 14px 2px rgba(0, 0, 0, 0.12);
-  --f7-elevation-9: 0px 5px 6px -3px rgba(0, 0, 0, 0.2),
-    0px 9px 12px 1px rgba(0, 0, 0, 0.14),
-    0px 3px 16px 2px rgba(0, 0, 0, 0.12);
-  --f7-elevation-10: 0px 6px 6px -3px rgba(0, 0, 0, 0.2),
-    0px 10px 14px 1px rgba(0, 0, 0, 0.14),
-    0px 4px 18px 3px rgba(0, 0, 0, 0.12);
-  --f7-elevation-11: 0px 6px 7px -4px rgba(0, 0, 0, 0.2),
-    0px 11px 15px 1px rgba(0, 0, 0, 0.14),
-    0px 4px 20px 3px rgba(0, 0, 0, 0.12);
-  --f7-elevation-12: 0px 7px 8px -4px rgba(0, 0, 0, 0.2),
-    0px 12px 17px 2px rgba(0, 0, 0, 0.14),
-    0px 5px 22px 4px rgba(0, 0, 0, 0.12);
-  --f7-elevation-13: 0px 7px 8px -4px rgba(0, 0, 0, 0.2),
-    0px 13px 19px 2px rgba(0, 0, 0, 0.14),
-    0px 5px 24px 4px rgba(0, 0, 0, 0.12);
-  --f7-elevation-14: 0px 7px 9px -4px rgba(0, 0, 0, 0.2),
-    0px 14px 21px 2px rgba(0, 0, 0, 0.14),
-    0px 5px 26px 4px rgba(0, 0, 0, 0.12);
-  --f7-elevation-15: 0px 8px 9px -5px rgba(0, 0, 0, 0.2),
-    0px 15px 22px 2px rgba(0, 0, 0, 0.14),
-    0px 6px 28px 5px rgba(0, 0, 0, 0.12);
-  --f7-elevation-16: 0px 8px 10px -5px rgba(0, 0, 0, 0.2),
-    0px 16px 24px 2px rgba(0, 0, 0, 0.14),
-    0px 6px 30px 5px rgba(0, 0, 0, 0.12);
-  --f7-elevation-17: 0px 8px 11px -5px rgba(0, 0, 0, 0.2),
-    0px 17px 26px 2px rgba(0, 0, 0, 0.14),
-    0px 6px 32px 5px rgba(0, 0, 0, 0.12);
-  --f7-elevation-18: 0px 9px 11px -5px rgba(0, 0, 0, 0.2),
-    0px 18px 28px 2px rgba(0, 0, 0, 0.14),
-    0px 7px 34px 6px rgba(0, 0, 0, 0.12);
-  --f7-elevation-19: 0px 9px 12px -6px rgba(0, 0, 0, 0.2),
-    0px 19px 29px 2px rgba(0, 0, 0, 0.14),
-    0px 7px 36px 6px rgba(0, 0, 0, 0.12);
-  --f7-elevation-20: 0px 10px 13px -6px rgba(0, 0, 0, 0.2),
-    0px 20px 31px 3px rgba(0, 0, 0, 0.14),
-    0px 8px 38px 7px rgba(0, 0, 0, 0.12);
-  --f7-elevation-21: 0px 10px 13px -6px rgba(0, 0, 0, 0.2),
-    0px 21px 33px 3px rgba(0, 0, 0, 0.14),
-    0px 8px 40px 7px rgba(0, 0, 0, 0.12);
-  --f7-elevation-22: 0px 10px 14px -6px rgba(0, 0, 0, 0.2),
-    0px 22px 35px 3px rgba(0, 0, 0, 0.14),
-    0px 8px 42px 7px rgba(0, 0, 0, 0.12);
-  --f7-elevation-23: 0px 11px 14px -7px rgba(0, 0, 0, 0.2),
-    0px 23px 36px 3px rgba(0, 0, 0, 0.14),
-    0px 9px 44px 8px rgba(0, 0, 0, 0.12);
-  --f7-elevation-24: 0px 11px 15px -7px rgba(0, 0, 0, 0.2),
-    0px 24px 38px 3px rgba(0, 0, 0, 0.14),
-    0px 9px 46px 8px rgba(0, 0, 0, 0.12);
 }
 /*====================
   Color Themes
@@ -1116,6 +1041,12 @@ html.device-full-viewport body {
 }
 /* === Navbar === */
 :root {
+  /*
+  --f7-navbar-bg-color: var(--f7-bars-bg-color);
+  --f7-navbar-border-color: var(--f7-bars-border-color);
+  --f7-navbar-link-color: var(--f7-bars-link-color);
+  --f7-navbar-text-color: var(--f7-bars-text-color);
+  */
   --f7-navbar-hide-show-transition-duration: 400ms;
   --f7-navbar-title-line-height: 1.2;
 }
@@ -1921,6 +1852,12 @@ html.device-full-viewport body {
 }
 /* === Toolbar === */
 :root {
+  /*
+  --f7-toolbar-bg-color: var(--f7-bars-bg-color);
+  --f7-toolbar-border-color: var(--f7-bars-border-color);
+  --f7-toolbar-link-color: var(--f7-bars-link-color);
+  --f7-toolbar-text-color: var(--f7-bars-text-color);
+  */
   --f7-toolbar-hide-show-transition-duration: 400ms;
 }
 .ios {
@@ -1929,6 +1866,9 @@ html.device-full-viewport body {
   --f7-tabbar-labels-height: 50px;
   --f7-tabbar-labels-tablet-height: 56px;
   --f7-tabbar-link-inactive-color: #929292;
+  /*
+  --f7-tabbar-link-active-color: var(--f7-theme-color);
+  */
   --f7-toolbar-top-shadow-image: none;
   --f7-toolbar-bottom-shadow-image: none;
   --f7-tabbar-icon-size: 28px;
@@ -1947,6 +1887,10 @@ html.device-full-viewport body {
   --f7-tabbar-labels-height: 56px;
   --f7-tabbar-labels-tablet-height: 56px;
   --f7-tabbar-link-inactive-color: rgba(0, 0, 0, 0.54);
+  /*
+  --f7-tabbar-link-active-color: var(--f7-theme-color);
+  --f7-tabbar-link-active-border-color: var(--f7-theme-color);
+  */
   --f7-toolbar-top-shadow-image: var(--f7-bars-shadow-bottom-image);
   --f7-toolbar-bottom-shadow-image: var(--f7-bars-shadow-top-image);
   --f7-tabbar-icon-size: 24px;
@@ -2471,6 +2415,14 @@ html.device-full-viewport body {
   padding: 0 16px;
 }
 /* === Subnavbar === */
+:root {
+  /*
+  --f7-subnavbar-bg-color: var(--f7-bars-bg-color);
+  --f7-subnavbar-border-color: var(--f7-bars-border-color);
+  --f7-subnavbar-link-color: var(--f7-bars-link-color);
+  --f7-subnavbar-text-color: var(--f7-bars-text-color);
+  */
+}
 .ios {
   --f7-subnavbar-height: 44px;
   --f7-subnavbar-inner-padding-left: 8px;
@@ -3001,7 +2953,7 @@ html.device-full-viewport body {
 .block + .block-footer,
 .card + .block-footer,
 .timeline + .block-footer {
-  margin-top: calc(-1 * (var(--f7-block-margin-vertical) - var(--f7-block-footer-margi)));
+  margin-top: calc(-1 * (var(--f7-block-margin-vertical) - var(--f7-block-footer-margin)));
 }
 .block + .block-footer {
   margin-top: calc(-1 * (var(--f7-block-margin-vertical) - var(--f7-block-footer-margin)));
@@ -3088,6 +3040,9 @@ html.device-full-viewport body {
   --f7-list-item-padding-horizontal: 15px;
   --f7-list-media-item-padding-vertical: 10px;
   --f7-list-media-item-padding-horizontal: 15px;
+  /*
+  --f7-list-button-text-color: var(--f7-theme-color);
+  */
   --f7-list-button-font-size: inherit;
   --f7-list-button-font-weight: 400;
   --f7-list-button-text-align: center;
@@ -4035,7 +3990,7 @@ input[type="button"].button {
 .ios .button-large-ios,
 .md .button-large-md {
   --f7-button-height: var(--f7-button-large-height);
-  --f7-button-font-size: var(--f7-button-large-font-size, --f7-button-font-size);
+  --f7-button-font-size: var(--f7-button-large-font-size, var(--f7-button-font-size));
 }
 .button-small,
 .ios .button-small-ios,

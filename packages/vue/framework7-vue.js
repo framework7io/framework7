@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.0.0-beta.14
+ * Framework7 Vue 4.0.0-beta.15
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 10, 2019
+ * Released on: January 11, 2019
  */
 
 (function (global, factory) {
@@ -11412,7 +11412,7 @@
   };
 
   /**
-   * Framework7 Vue 4.0.0-beta.14
+   * Framework7 Vue 4.0.0-beta.15
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -11420,7 +11420,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: January 10, 2019
+   * Released on: January 11, 2019
    */
 
   var Plugin = {

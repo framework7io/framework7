@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.0-beta.14
+ * Framework7 4.0.0-beta.15
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 10, 2019
+ * Released on: January 11, 2019
  */
 /*====================
   Core
@@ -94,6 +94,9 @@
   Bars
   ==================== */
 :root {
+  /*
+  --f7-bars-link-color: var(--f7-theme-color);
+  */
   --f7-bars-bg-color: #f7f7f8;
   --f7-bars-bg-color-rgb: 247, 247, 248;
   --f7-bars-text-color: #000;
@@ -113,84 +116,6 @@
 }
 .md {
   --f7-bars-border-color: transparent;
-}
-/*====================
-  Elevation
-  ==================== */
-:root {
-  --f7-elevation-0: 0px 0px 0px 0px rgba(0, 0, 0, 0);
-  --f7-elevation-1: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14),
-    0px 1px 3px 0px rgba(0, 0, 0, 0.12);
-  --f7-elevation-2: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
-    0px 2px 2px 0px rgba(0, 0, 0, 0.14),
-    0px 1px 5px 0px rgba(0, 0, 0, 0.12);
-  --f7-elevation-3: 0px 3px 3px -2px rgba(0, 0, 0, 0.2),
-    0px 3px 4px 0px rgba(0, 0, 0, 0.14),
-    0px 1px 8px 0px rgba(0, 0, 0, 0.12);
-  --f7-elevation-4: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
-    0px 4px 5px 0px rgba(0, 0, 0, 0.14),
-    0px 1px 10px 0px rgba(0, 0, 0, 0.12);
-  --f7-elevation-5: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
-    0px 5px 8px 0px rgba(0, 0, 0, 0.14),
-    0px 1px 14px 0px rgba(0, 0, 0, 0.12);
-  --f7-elevation-6: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
-    0px 6px 10px 0px rgba(0, 0, 0, 0.14),
-    0px 1px 18px 0px rgba(0, 0, 0, 0.12);
-  --f7-elevation-7: 0px 4px 5px -2px rgba(0, 0, 0, 0.2),
-    0px 7px 10px 1px rgba(0, 0, 0, 0.14),
-    0px 2px 16px 1px rgba(0, 0, 0, 0.12);
-  --f7-elevation-8: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
-    0px 8px 10px 1px rgba(0, 0, 0, 0.14),
-    0px 3px 14px 2px rgba(0, 0, 0, 0.12);
-  --f7-elevation-9: 0px 5px 6px -3px rgba(0, 0, 0, 0.2),
-    0px 9px 12px 1px rgba(0, 0, 0, 0.14),
-    0px 3px 16px 2px rgba(0, 0, 0, 0.12);
-  --f7-elevation-10: 0px 6px 6px -3px rgba(0, 0, 0, 0.2),
-    0px 10px 14px 1px rgba(0, 0, 0, 0.14),
-    0px 4px 18px 3px rgba(0, 0, 0, 0.12);
-  --f7-elevation-11: 0px 6px 7px -4px rgba(0, 0, 0, 0.2),
-    0px 11px 15px 1px rgba(0, 0, 0, 0.14),
-    0px 4px 20px 3px rgba(0, 0, 0, 0.12);
-  --f7-elevation-12: 0px 7px 8px -4px rgba(0, 0, 0, 0.2),
-    0px 12px 17px 2px rgba(0, 0, 0, 0.14),
-    0px 5px 22px 4px rgba(0, 0, 0, 0.12);
-  --f7-elevation-13: 0px 7px 8px -4px rgba(0, 0, 0, 0.2),
-    0px 13px 19px 2px rgba(0, 0, 0, 0.14),
-    0px 5px 24px 4px rgba(0, 0, 0, 0.12);
-  --f7-elevation-14: 0px 7px 9px -4px rgba(0, 0, 0, 0.2),
-    0px 14px 21px 2px rgba(0, 0, 0, 0.14),
-    0px 5px 26px 4px rgba(0, 0, 0, 0.12);
-  --f7-elevation-15: 0px 8px 9px -5px rgba(0, 0, 0, 0.2),
-    0px 15px 22px 2px rgba(0, 0, 0, 0.14),
-    0px 6px 28px 5px rgba(0, 0, 0, 0.12);
-  --f7-elevation-16: 0px 8px 10px -5px rgba(0, 0, 0, 0.2),
-    0px 16px 24px 2px rgba(0, 0, 0, 0.14),
-    0px 6px 30px 5px rgba(0, 0, 0, 0.12);
-  --f7-elevation-17: 0px 8px 11px -5px rgba(0, 0, 0, 0.2),
-    0px 17px 26px 2px rgba(0, 0, 0, 0.14),
-    0px 6px 32px 5px rgba(0, 0, 0, 0.12);
-  --f7-elevation-18: 0px 9px 11px -5px rgba(0, 0, 0, 0.2),
-    0px 18px 28px 2px rgba(0, 0, 0, 0.14),
-    0px 7px 34px 6px rgba(0, 0, 0, 0.12);
-  --f7-elevation-19: 0px 9px 12px -6px rgba(0, 0, 0, 0.2),
-    0px 19px 29px 2px rgba(0, 0, 0, 0.14),
-    0px 7px 36px 6px rgba(0, 0, 0, 0.12);
-  --f7-elevation-20: 0px 10px 13px -6px rgba(0, 0, 0, 0.2),
-    0px 20px 31px 3px rgba(0, 0, 0, 0.14),
-    0px 8px 38px 7px rgba(0, 0, 0, 0.12);
-  --f7-elevation-21: 0px 10px 13px -6px rgba(0, 0, 0, 0.2),
-    0px 21px 33px 3px rgba(0, 0, 0, 0.14),
-    0px 8px 40px 7px rgba(0, 0, 0, 0.12);
-  --f7-elevation-22: 0px 10px 14px -6px rgba(0, 0, 0, 0.2),
-    0px 22px 35px 3px rgba(0, 0, 0, 0.14),
-    0px 8px 42px 7px rgba(0, 0, 0, 0.12);
-  --f7-elevation-23: 0px 11px 14px -7px rgba(0, 0, 0, 0.2),
-    0px 23px 36px 3px rgba(0, 0, 0, 0.14),
-    0px 9px 44px 8px rgba(0, 0, 0, 0.12);
-  --f7-elevation-24: 0px 11px 15px -7px rgba(0, 0, 0, 0.2),
-    0px 24px 38px 3px rgba(0, 0, 0, 0.14),
-    0px 9px 46px 8px rgba(0, 0, 0, 0.12);
 }
 /*====================
   Color Themes
@@ -1119,6 +1044,12 @@ html.device-full-viewport body {
 }
 /* === Navbar === */
 :root {
+  /*
+  --f7-navbar-bg-color: var(--f7-bars-bg-color);
+  --f7-navbar-border-color: var(--f7-bars-border-color);
+  --f7-navbar-link-color: var(--f7-bars-link-color);
+  --f7-navbar-text-color: var(--f7-bars-text-color);
+  */
   --f7-navbar-hide-show-transition-duration: 400ms;
   --f7-navbar-title-line-height: 1.2;
 }
@@ -1924,6 +1855,12 @@ html.device-full-viewport body {
 }
 /* === Toolbar === */
 :root {
+  /*
+  --f7-toolbar-bg-color: var(--f7-bars-bg-color);
+  --f7-toolbar-border-color: var(--f7-bars-border-color);
+  --f7-toolbar-link-color: var(--f7-bars-link-color);
+  --f7-toolbar-text-color: var(--f7-bars-text-color);
+  */
   --f7-toolbar-hide-show-transition-duration: 400ms;
 }
 .ios {
@@ -1932,6 +1869,9 @@ html.device-full-viewport body {
   --f7-tabbar-labels-height: 50px;
   --f7-tabbar-labels-tablet-height: 56px;
   --f7-tabbar-link-inactive-color: #929292;
+  /*
+  --f7-tabbar-link-active-color: var(--f7-theme-color);
+  */
   --f7-toolbar-top-shadow-image: none;
   --f7-toolbar-bottom-shadow-image: none;
   --f7-tabbar-icon-size: 28px;
@@ -1950,6 +1890,10 @@ html.device-full-viewport body {
   --f7-tabbar-labels-height: 56px;
   --f7-tabbar-labels-tablet-height: 56px;
   --f7-tabbar-link-inactive-color: rgba(0, 0, 0, 0.54);
+  /*
+  --f7-tabbar-link-active-color: var(--f7-theme-color);
+  --f7-tabbar-link-active-border-color: var(--f7-theme-color);
+  */
   --f7-toolbar-top-shadow-image: var(--f7-bars-shadow-bottom-image);
   --f7-toolbar-bottom-shadow-image: var(--f7-bars-shadow-top-image);
   --f7-tabbar-icon-size: 24px;
@@ -2475,6 +2419,14 @@ html.device-full-viewport body {
   padding: 0 16px;
 }
 /* === Subnavbar === */
+:root {
+  /*
+  --f7-subnavbar-bg-color: var(--f7-bars-bg-color);
+  --f7-subnavbar-border-color: var(--f7-bars-border-color);
+  --f7-subnavbar-link-color: var(--f7-bars-link-color);
+  --f7-subnavbar-text-color: var(--f7-bars-text-color);
+  */
+}
 .ios {
   --f7-subnavbar-height: 44px;
   --f7-subnavbar-inner-padding-left: 8px;
@@ -3005,7 +2957,7 @@ html.device-full-viewport body {
 .block + .block-footer,
 .card + .block-footer,
 .timeline + .block-footer {
-  margin-top: calc(-1 * (var(--f7-block-margin-vertical) - var(--f7-block-footer-margi)));
+  margin-top: calc(-1 * (var(--f7-block-margin-vertical) - var(--f7-block-footer-margin)));
 }
 .block + .block-footer {
   margin-top: calc(-1 * (var(--f7-block-margin-vertical) - var(--f7-block-footer-margin)));
@@ -3092,6 +3044,9 @@ html.device-full-viewport body {
   --f7-list-item-padding-horizontal: 15px;
   --f7-list-media-item-padding-vertical: 10px;
   --f7-list-media-item-padding-horizontal: 15px;
+  /*
+  --f7-list-button-text-color: var(--f7-theme-color);
+  */
   --f7-list-button-font-size: inherit;
   --f7-list-button-font-weight: 400;
   --f7-list-button-text-align: center;
@@ -4037,7 +3992,7 @@ input[type="button"].button {
 .ios .button-large-ios,
 .md .button-large-md {
   --f7-button-height: var(--f7-button-large-height);
-  --f7-button-font-size: var(--f7-button-large-font-size, --f7-button-font-size);
+  --f7-button-font-size: var(--f7-button-large-font-size, var(--f7-button-font-size));
 }
 .button-small,
 .ios .button-small-ios,
@@ -4799,6 +4754,9 @@ html.with-modal-popup .framework7-root > .panel .page-content {
   --f7-login-screen-bg-color: #fff;
   --f7-login-screen-content-bg-color: #fff;
   --f7-login-screen-blocks-max-width: 480px;
+  /*
+   --f7-login-screen-list-button-text-color: var(--f7-theme-color);
+   */
   --f7-login-screen-title-text-align: center;
   --f7-login-screen-title-text-color: inherit;
   --f7-login-screen-title-letter-spacing: 0;
@@ -5963,11 +5921,18 @@ html.with-modal-preloader .page-content {
 }
 /* === Progressbar === */
 .ios {
+  /*
+  --f7-progressbar-progress-color: var(--f7-theme-color);
+  */
   --f7-progressbar-bg-color: #b6b6b6;
   --f7-progressbar-height: 2px;
   --f7-progressbar-border-radius: 2px;
 }
 .md {
+  /*
+  --f7-progressbar-progress-color: var(--f7-theme-color);
+  --f7-progressbar-bg-color: rgba(var(--f7-theme-color-rgb), 0.5);
+  */
   --f7-progressbar-height: 4px;
   --f7-progressbar-border-radius: 0px;
 }
@@ -6584,8 +6549,10 @@ html.device-android-4 .accordion-item-content {
   --f7-list-index-width: 16px;
   --f7-list-index-font-size: 11px;
   --f7-list-index-font-weight: 600;
+  /* --f7-list-index-text-color: var(--f7-theme-color); */
   --f7-list-index-item-height: 14px;
   --f7-list-index-label-text-color: #fff;
+  /* --f7-list-index-label-bg-color: var(--f7-theme-color); */
   --f7-list-index-label-font-weight: 500;
 }
 .ios {
@@ -8139,7 +8106,16 @@ html.with-panel-right-cover .panel-right {
   --f7-input-text-color: #000000;
   --f7-input-font-size: 17px;
   --f7-input-placeholder-color: #a9a9a9;
+  /*
+  --f7-input-focused-border-color: var(--f7-list-item-border-color);
+  --f7-input-invalid-border-color: var(--f7-list-item-border-color);
+  --f7-input-invalid-text-color: var(--f7-input-error-text-color);
+  */
   --f7-label-text-color: inherit;
+  /*
+  --f7-label-focused-text-color: var(--f7-label-text-color);
+  --f7-label-invalid-text-color: var(--f7-label-text-color);
+  */
   --f7-floating-label-scale: calc(17 / 12);
   --f7-inline-label-font-size: 17px;
   --f7-inline-label-line-height: 1.4;
@@ -8156,7 +8132,16 @@ html.with-panel-right-cover .panel-right {
   --f7-input-text-color: #212121;
   --f7-input-font-size: 16px;
   --f7-input-placeholder-color: rgba(0, 0, 0, 0.35);
+  /*
+  --f7-input-focused-border-color: var(--f7-theme-color);
+  --f7-input-invalid-border-color: var(--f7-input-error-text-color);
+  --f7-input-invalid-text-color: var(--f7-input-text-color);
+  */
   --f7-label-text-color: rgba(0, 0, 0, 0.65);
+  /*
+  --f7-label-focused-text-color: var(--f7-theme-color);
+  --f7-label-invalid-text-color: var(--f7-input-error-text-color );
+  */
   --f7-floating-label-scale: calc(16 / 12);
   --f7-inline-label-font-size: 16px;
   --f7-inline-label-line-height: 1.5;
@@ -8705,6 +8690,7 @@ textarea {
 }
 /* === Checkbox === */
 :root {
+  /* --f7-checkbox-active-color: var(--f7-theme-color); */
   --f7-checkbox-icon-color: #fff;
 }
 .ios {
@@ -8839,6 +8825,9 @@ label.item-checkbox.disabled,
 }
 /* === Radio === */
 :root {
+  /*
+  --f7-radio-active-color: var(--f7-theme-color);
+  */
   --f7-radio-border-radius: 50%;
 }
 .ios {
@@ -9122,6 +9111,9 @@ label.item-radio.disabled,
 .ios {
   --f7-range-size: 28px;
   --f7-range-bar-bg-color: #b7b8b7;
+  /*
+  --f7-range-bar-active-bg-color: var(--f7-theme-color);
+  */
   --f7-range-bar-size: 1px;
   --f7-range-bar-border-radius: 2px;
   --f7-range-knob-size: 28px;
@@ -9132,32 +9124,53 @@ label.item-radio.disabled,
   --f7-range-label-bg-color: #fff;
   --f7-range-label-font-size: 12px;
   --f7-range-label-border-radius: 5px;
+  /*
+  --f7-range-scale-bg-color: var(--f7-range-bar-bg-color);
+  */
   --f7-range-scale-step-width: 1px;
   --f7-range-scale-step-height: 5px;
   --f7-range-scale-font-size: 12px;
   --f7-range-scale-font-weight: 400;
   --f7-range-scale-text-color: #666;
   --f7-range-scale-label-offset: 4px;
+  /*
+  --f7-range-scale-substep-bg-color: var(--f7-range-bar-bg-color);
+  */
   --f7-range-scale-substep-width: 1px;
   --f7-range-scale-substep-height: 4px;
 }
 .md {
   --f7-range-size: 20px;
   --f7-range-bar-bg-color: #b9b9b9;
+  /*
+  --f7-range-bar-active-bg-color: var(--f7-theme-color);
+  */
   --f7-range-bar-size: 2px;
   --f7-range-bar-border-radius: 0px;
   --f7-range-knob-size: 12px;
+  /*
+  --f7-range-knob-color: var(--f7-theme-color);
+  */
   --f7-range-knob-box-shadow: none;
   --f7-range-label-size: 26px;
   --f7-range-label-text-color: #fff;
+  /*
+  --f7-range-label-bg-color: var(--f7-theme-color);
+  */
   --f7-range-label-font-size: 10px;
   --f7-range-label-border-radius: 50%;
+  /*
+  --f7-range-scale-bg-color: var(--f7-range-bar-bg-color);
+  */
   --f7-range-scale-step-width: 2px;
   --f7-range-scale-step-height: 5px;
   --f7-range-scale-font-size: 12px;
   --f7-range-scale-font-weight: 400;
   --f7-range-scale-text-color: #666;
   --f7-range-scale-label-offset: 4px;
+  /*
+  --f7-range-scale-substep-bg-color: var(--f7-range-bar-bg-color);
+  */
   --f7-range-scale-substep-width: 1px;
   --f7-range-scale-substep-height: 4px;
 }
@@ -9671,6 +9684,12 @@ label.item-radio.disabled,
   --f7-stepper-button-pressed-bg-color: var(--f7-stepper-fill-button-pressed-bg-color, var(--f7-theme-color-shade));
 }
 /* === Smart Select === */
+.smart-select :root {
+  /*
+  --f7-smart-select-sheet-bg: var(--f7-list-bg-color);
+  --f7-smart-select-sheet-toolbar-border-color: var(--f7-bars-border-color);
+  */
+}
 .smart-select select {
   display: none;
 }
@@ -9716,7 +9735,6 @@ label.item-radio.disabled,
 .smart-select-popover .popover-inner {
   max-height: 40vh;
 }
-/* === Grid === */
 /* === Grid === */
 .ios {
   --f7-grid-gap: 15px;
@@ -10216,9 +10234,23 @@ label.item-radio.disabled,
   --f7-calendar-modal-max-width: 380px;
   --f7-calendar-modal-border-radius: 4px;
   --f7-calendar-modal-bg-color: #fff;
+  /*
+  --f7-calendar-header-bg-color: var(--f7-bars-bg-color);
+  --f7-calendar-header-link-color: var(--f7-bars-link-color);
+  --f7-calendar-header-text-color: var(--f7-bars-text-color);
+  --f7-calendar-footer-bg-color: var(--f7-bars-bg-color);
+  --f7-calendar-footer-border-color: var(--f7-bars-border-color);
+  --f7-calendar-footer-link-color: var(--f7-bars-link-color);
+  --f7-calendar-footer-text-color: var(--f7-bars-text-color);
+  --f7-calendar-week-header-bg-color: var(--f7-bars-bg-color);
+  --f7-calendar-week-header-text-color: var(--f7-bars-text-color);
+  */
   --f7-calendar-prev-next-text-color: #b8b8b8;
   --f7-calendar-disabled-text-color: #d4d4d4;
   --f7-calendar-event-dot-size: 4px;
+  /*
+  --f7-calendar-event-bg-color: var(--f7-theme-color);
+  */
 }
 .ios {
   --f7-calendar-sheet-border-color: #929499;
@@ -10237,6 +10269,9 @@ label.item-radio.disabled,
   --f7-calendar-today-text-color: #000;
   --f7-calendar-today-bg-color: #e3e3e3;
   --f7-calendar-selected-text-color: #fff;
+  /*
+  --f7-calendar-selected-bg-color: var(--f7-theme-color);
+  */
   --f7-calendar-day-size: 30px;
 }
 .ios .theme-dark,
@@ -10263,8 +10298,14 @@ label.item-radio.disabled,
   --f7-calendar-row-border-color: transparent;
   --f7-calendar-day-font-size: 14px;
   --f7-calendar-day-text-color: #000;
+  /*
+  --f7-calendar-today-text-color: var(--f7-theme-color);
+  */
   --f7-calendar-today-bg-color: none;
   --f7-calendar-selected-text-color: #fff;
+  /*
+  --f7-calendar-selected-bg-color: var(--f7-theme-color);
+  */
   --f7-calendar-day-size: 32px;
 }
 .md .theme-dark,
@@ -11001,7 +11042,9 @@ label.item-radio.disabled,
   --f7-table-edge-cell-padding-horizontal: 15px;
   --f7-table-label-cell-padding-horizontal: 15px;
   --f7-table-checkbox-cell-width: 22px;
+  /* --f7-table-actions-cell-link-color: var(--f7-theme-color); */
   --f7-table-selected-row-bg-color: #f7f7f8;
+  /* --f7-table-actions-link-color: var(--f7-theme-color); */
   --f7-table-title-font-size: 17px;
   --f7-table-title-font-weight: 600;
   --f7-table-card-header-height: 64px;
@@ -11589,6 +11632,7 @@ label.item-radio.disabled,
   --f7-fab-extended-text-font-weight: 400;
   --f7-fab-extended-text-letter-spacing: 0;
   --f7-fab-label-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.4);
+  /* --f7-fab-pressed-bg-color: var(--f7-theme-color-shade); */
 }
 .md {
   --f7-fab-size: 56px;
@@ -11598,6 +11642,7 @@ label.item-radio.disabled,
   --f7-fab-extended-text-font-weight: 500;
   --f7-fab-extended-text-letter-spacing: 0.03em;
   --f7-fab-label-box-shadow: var(--f7-elevation-3);
+  /* --f7-fab-pressed-bg-color: var(--f7-theme-color-shade); */
 }
 .fab {
   position: absolute;
@@ -11937,8 +11982,20 @@ label.item-radio.disabled,
   transition-duration: 0ms;
 }
 /* === Searchbar === */
+:root {
+  /*
+  --f7-searchbar-link-color: var(--f7-bars-link-color);
+  */
+}
 .ios {
+  /*
+  --f7-searchbar-bg-color: var(--f7-bars-bg-color);
+  --f7-searchbar-border-color: var(--f7-bars-border-color);
+  */
   --f7-searchbar-height: 44px;
+  /*
+  --f7-searchbar-link-color: var(--f7-bars-link-color, var(--f7-theme-color));
+  */
   --f7-searchbar-search-icon-color: #939398;
   --f7-searchbar-placeholder-color: #939398;
   --f7-searchbar-input-text-color: #000;
@@ -11947,6 +12004,9 @@ label.item-radio.disabled,
   --f7-searchbar-input-border-radius: 8px;
   --f7-searchbar-input-height: 32px;
   --f7-searchbar-input-padding-horizontal: 28px;
+  /*
+  --f7-searchbar-input-clear-button-color: var(--f7-input-clear-button-color);
+  */
   --f7-searchbar-backdrop-bg-color: rgba(0, 0, 0, 0.4);
   --f7-searchbar-shadow-image: none;
   --f7-searchbar-in-page-content-margin: 0px;
@@ -12983,6 +13043,9 @@ label.item-radio.disabled,
 .ios {
   --f7-messagebar-height: 44px;
   --f7-messagebar-font-size: 17px;
+  /*
+  --f7-messagebar-link-color: var(--f7-theme-color);
+  */
   --f7-messagebar-border-color: transparent;
   --f7-messagebar-shadow-image: none;
   --f7-messagebar-textarea-border-radius: 17px;
@@ -13748,6 +13811,11 @@ button.swiper-pagination-bullet {
 /* === Photo Browser === */
 :root {
   --f7-photobrowser-bg-color: #fff;
+  /*
+  --f7-photobrowser-bars-bg-color: rgba(var(--f7-bars-bg-color-rgb), 0.95);
+  --f7-photobrowser-bars-text-color: var(--f7-bars-text-color);
+  --f7-photobrowser-bars-link-color: var(--f7-bars-link-color);
+  */
   --f7-photobrowser-caption-font-size: 14px;
   --f7-photobrowser-caption-light-text-color: #000;
   --f7-photobrowser-caption-light-bg-color: rgba(255, 255, 255, 0.8);
@@ -14480,7 +14548,7 @@ button.swiper-pagination-bullet {
   padding: var(--f7-tooltip-padding);
   color: var(--f7-tooltip-text-color);
   font-size: var(--f7-tooltip-font-size);
-  font-weight: --f7-tooltip-font-weight;
+  font-weight: var(--f7-tooltip-font-weight);
   box-sizing: border-box;
   line-height: 1.2;
   opacity: 0;
@@ -14607,9 +14675,15 @@ button.swiper-pagination-bullet {
   --f7-menu-item-height: 40px;
   --f7-menu-item-dropdown-icon-color: rgba(255, 255, 255, 0.4);
   --f7-menu-item-border-radius: 8px;
+  /*
+  --f7-menu-dropdown-pressed-bg-color: var(--f7-theme-color);
+  */
   --f7-menu-dropdown-item-height: 28px;
   --f7-menu-dropdown-divider-color: rgba(255, 255, 255, 0.2);
   --f7-menu-dropdown-padding-vertical: 6px;
+  /*
+  --f7-menu-dropdown-border-radius: var(--f7-menu-item-border-radius);
+  */
 }
 .menu {
   z-index: 1000;
@@ -14852,6 +14926,81 @@ iframe#viAd {
   transform: translate(-50%, -50%);
 }
 /* === Elevation === */
+:root {
+  --f7-elevation-0: 0px 0px 0px 0px rgba(0, 0, 0, 0);
+  --f7-elevation-1: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  --f7-elevation-2: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+  --f7-elevation-3: 0px 3px 3px -2px rgba(0, 0, 0, 0.2),
+    0px 3px 4px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 8px 0px rgba(0, 0, 0, 0.12);
+  --f7-elevation-4: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  --f7-elevation-5: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0px 5px 8px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 14px 0px rgba(0, 0, 0, 0.12);
+  --f7-elevation-6: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0px 6px 10px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+  --f7-elevation-7: 0px 4px 5px -2px rgba(0, 0, 0, 0.2),
+    0px 7px 10px 1px rgba(0, 0, 0, 0.14),
+    0px 2px 16px 1px rgba(0, 0, 0, 0.12);
+  --f7-elevation-8: 0px 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0px 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+  --f7-elevation-9: 0px 5px 6px -3px rgba(0, 0, 0, 0.2),
+    0px 9px 12px 1px rgba(0, 0, 0, 0.14),
+    0px 3px 16px 2px rgba(0, 0, 0, 0.12);
+  --f7-elevation-10: 0px 6px 6px -3px rgba(0, 0, 0, 0.2),
+    0px 10px 14px 1px rgba(0, 0, 0, 0.14),
+    0px 4px 18px 3px rgba(0, 0, 0, 0.12);
+  --f7-elevation-11: 0px 6px 7px -4px rgba(0, 0, 0, 0.2),
+    0px 11px 15px 1px rgba(0, 0, 0, 0.14),
+    0px 4px 20px 3px rgba(0, 0, 0, 0.12);
+  --f7-elevation-12: 0px 7px 8px -4px rgba(0, 0, 0, 0.2),
+    0px 12px 17px 2px rgba(0, 0, 0, 0.14),
+    0px 5px 22px 4px rgba(0, 0, 0, 0.12);
+  --f7-elevation-13: 0px 7px 8px -4px rgba(0, 0, 0, 0.2),
+    0px 13px 19px 2px rgba(0, 0, 0, 0.14),
+    0px 5px 24px 4px rgba(0, 0, 0, 0.12);
+  --f7-elevation-14: 0px 7px 9px -4px rgba(0, 0, 0, 0.2),
+    0px 14px 21px 2px rgba(0, 0, 0, 0.14),
+    0px 5px 26px 4px rgba(0, 0, 0, 0.12);
+  --f7-elevation-15: 0px 8px 9px -5px rgba(0, 0, 0, 0.2),
+    0px 15px 22px 2px rgba(0, 0, 0, 0.14),
+    0px 6px 28px 5px rgba(0, 0, 0, 0.12);
+  --f7-elevation-16: 0px 8px 10px -5px rgba(0, 0, 0, 0.2),
+    0px 16px 24px 2px rgba(0, 0, 0, 0.14),
+    0px 6px 30px 5px rgba(0, 0, 0, 0.12);
+  --f7-elevation-17: 0px 8px 11px -5px rgba(0, 0, 0, 0.2),
+    0px 17px 26px 2px rgba(0, 0, 0, 0.14),
+    0px 6px 32px 5px rgba(0, 0, 0, 0.12);
+  --f7-elevation-18: 0px 9px 11px -5px rgba(0, 0, 0, 0.2),
+    0px 18px 28px 2px rgba(0, 0, 0, 0.14),
+    0px 7px 34px 6px rgba(0, 0, 0, 0.12);
+  --f7-elevation-19: 0px 9px 12px -6px rgba(0, 0, 0, 0.2),
+    0px 19px 29px 2px rgba(0, 0, 0, 0.14),
+    0px 7px 36px 6px rgba(0, 0, 0, 0.12);
+  --f7-elevation-20: 0px 10px 13px -6px rgba(0, 0, 0, 0.2),
+    0px 20px 31px 3px rgba(0, 0, 0, 0.14),
+    0px 8px 38px 7px rgba(0, 0, 0, 0.12);
+  --f7-elevation-21: 0px 10px 13px -6px rgba(0, 0, 0, 0.2),
+    0px 21px 33px 3px rgba(0, 0, 0, 0.14),
+    0px 8px 40px 7px rgba(0, 0, 0, 0.12);
+  --f7-elevation-22: 0px 10px 14px -6px rgba(0, 0, 0, 0.2),
+    0px 22px 35px 3px rgba(0, 0, 0, 0.14),
+    0px 8px 42px 7px rgba(0, 0, 0, 0.12);
+  --f7-elevation-23: 0px 11px 14px -7px rgba(0, 0, 0, 0.2),
+    0px 23px 36px 3px rgba(0, 0, 0, 0.14),
+    0px 9px 44px 8px rgba(0, 0, 0, 0.12);
+  --f7-elevation-24: 0px 11px 15px -7px rgba(0, 0, 0, 0.2),
+    0px 24px 38px 3px rgba(0, 0, 0, 0.14),
+    0px 9px 46px 8px rgba(0, 0, 0, 0.12);
+}
 .elevation-0 {
   box-shadow: var(--f7-elevation-0) !important;
 }
