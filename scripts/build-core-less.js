@@ -11,6 +11,7 @@ const cleanCSS = require('./utils/clean-css');
 const getConfig = require('./get-core-config.js');
 const getOutput = require('./get-output.js');
 const banner = require('./banner-core.js');
+const writeFileSync = require('./utils/write-file-sync');
 
 // Copy LESS
 function copyLess(config, components, cb) {
@@ -32,12 +33,12 @@ function copyLess(config, components, cb) {
     .replace('$themeColor', config.themeColor)
     .replace('$rtl', rtl);
 
-  fs.writeFileSync(`${output}/framework7.less`, lessContent);
+  writeFileSync(`${output}/framework7.less`, lessContent);
 
   // Bundle LESS
   const lessBundleContent = lessContent
     .replace('//IMPORT_COMPONENTS', components.map(component => `@import url('./components/${component}/${component}.less');`).join('\n'));
-  fs.writeFileSync(`${output}/framework7.bundle.less`, lessBundleContent);
+  writeFileSync(`${output}/framework7.bundle.less`, lessBundleContent);
 
   if (cb) cb();
 }
@@ -66,7 +67,7 @@ async function buildBundle(config, components, themes, rtl, cb) {
   );
 
   // Write file
-  fs.writeFileSync(`${output}/css/${outputFileName}.css`, `${banner}\n${cssContent}`);
+  writeFileSync(`${output}/css/${outputFileName}.css`, `${banner}\n${cssContent}`);
 
   if (env === 'development') {
     if (cb) cb();
@@ -77,7 +78,7 @@ async function buildBundle(config, components, themes, rtl, cb) {
   const minifiedContent = await cleanCSS(cssContent);
 
   // Write file
-  fs.writeFileSync(`${output}/css/${outputFileName}.min.css`, `${banner}\n${minifiedContent}`);
+  writeFileSync(`${output}/css/${outputFileName}.min.css`, `${banner}\n${minifiedContent}`);
 
   if (cb) cb();
 }
@@ -107,7 +108,7 @@ async function buildCore(themes, rtl, cb) {
   );
 
   // Write file
-  fs.writeFileSync(`${output}/css/framework7${rtl ? '.rtl' : ''}.css`, `${banner}\n${cssContent}`);
+  writeFileSync(`${output}/css/framework7${rtl ? '.rtl' : ''}.css`, `${banner}\n${cssContent}`);
 
   if (env === 'development') {
     if (cb) cb();
@@ -118,7 +119,7 @@ async function buildCore(themes, rtl, cb) {
   const minifiedContent = await cleanCSS(cssContent);
 
   // Write file
-  fs.writeFileSync(`${output}/css/framework7${rtl ? '.rtl' : ''}.min.css`, `${banner}\n${minifiedContent}`);
+  writeFileSync(`${output}/css/framework7${rtl ? '.rtl' : ''}.min.css`, `${banner}\n${minifiedContent}`);
 
   if (cb) cb();
 }

@@ -1,13 +1,13 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
-const gulp = require('gulp');
-const modifyFile = require('gulp-modify-file');
+const fs = require('fs');
 const path = require('path');
 const rollup = require('rollup');
 const buble = require('rollup-plugin-buble');
 const replace = require('rollup-plugin-replace');
 const commonjs = require('rollup-plugin-commonjs');
 const resolve = require('rollup-plugin-node-resolve');
+const writeFileSync = require('./utils/write-file-sync');
 
 // let cache;
 
@@ -23,21 +23,17 @@ function buildKs(cb) {
     f7Path = f7Path.replace(/\\/g, '/');
   }
 
-  gulp.src('./kitchen-sink/react/index.html')
-    .pipe(modifyFile((content) => {
-      if (env === 'development') {
-        return content
-          .replace('../../packages/core/css/framework7.bundle.min.css', '../../build/core/css/framework7.bundle.css')
-          .replace('../../packages/core/js/framework7.bundle.min.js', '../../build/core/js/framework7.bundle.js');
-      }
-      return content
-        .replace('../../build/core/css/framework7.bundle.css', '../../packages/core/css/framework7.bundle.min.css')
-        .replace('../../build/core/js/framework7.bundle.js', '../../packages/core/js/framework7.bundle.min.js');
-    }))
-    .pipe(gulp.dest('./kitchen-sink/react'))
-    .on('error', (err) => {
-      console.log(err);
-    });
+  let index = fs.readFileSync(path.resolve(__dirname, '../kitchen-sink/react/index.html'), 'utf8');
+  if (env === 'development') {
+    index = index
+      .replace('../../packages/core/css/framework7.bundle.min.css', '../../build/core/css/framework7.bundle.css')
+      .replace('../../packages/core/js/framework7.bundle.min.js', '../../build/core/js/framework7.bundle.js');
+  } else {
+    index = index
+      .replace('../../build/core/css/framework7.bundle.css', '../../packages/core/css/framework7.bundle.min.css')
+      .replace('../../build/core/js/framework7.bundle.js', '../../packages/core/js/framework7.bundle.min.js');
+  }
+  writeFileSync(path.resolve(__dirname, '../kitchen-sink/react/index.html'), index);
 
   rollup.rollup({
     input: './kitchen-sink/react/src/app.js',

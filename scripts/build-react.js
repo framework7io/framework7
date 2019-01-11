@@ -14,6 +14,7 @@ const resolve = require('rollup-plugin-node-resolve');
 const UglifyJS = require('uglify-js');
 const bannerReact = require('./banner-react');
 const getOutput = require('./get-output.js');
+const writeFileSync = require('./utils/write-file-sync');
 
 function esm({ banner, componentImports, componentAliases, componentExports }) {
   return `
@@ -34,7 +35,7 @@ export default Framework7React;
 function buildReact(cb) {
   const env = process.env.NODE_ENV || 'development';
   const buildPath = getOutput();
-  const pluginContent = fs.readFileSync(`./${buildPath}/react/utils/plugin.js`, 'utf-8');
+  const pluginContent = fs.readFileSync(`${buildPath}/react/utils/plugin.js`, 'utf-8');
 
   /* Replace plugin vars: utils/plugin.js */
   const newPluginContent = pluginContent
@@ -44,7 +45,7 @@ function buildReact(cb) {
     .replace(/EXTEND/g, 'params.React ? params.React.Component : React.Component')
     .replace(/COMPILER/g, '\'react\'');
 
-  fs.writeFileSync(`${buildPath}/react/utils/plugin.js`, newPluginContent);
+  writeFileSync(`${buildPath}/react/utils/plugin.js`, newPluginContent);
 
   /* Build main components esm module: framework7-react.esm.js */
   const files = fs.readdirSync(`${buildPath}/react/components`).filter(file => file.indexOf('.d.ts') < 0);
@@ -75,7 +76,7 @@ function buildReact(cb) {
     componentExports,
   });
 
-  fs.writeFileSync(`${buildPath}/react/framework7-react.esm.js`, componentsContent);
+  writeFileSync(`${buildPath}/react/framework7-react.esm.js`, componentsContent);
 
   /* Build esm module bundle for rollup UMD: components + plugin -> framework7-react.esm.bundle.js */
   const registerComponents = components
@@ -90,7 +91,7 @@ function buildReact(cb) {
     .replace(/EXTEND/g, 'params.React ? params.React.Component : React.Component')
     .replace(/COMPILER/g, '\'react\'');
 
-  fs.writeFileSync(`${buildPath}/react/framework7-react.esm.bundle.js`, bannerReact + esmBundlePluginContent);
+  writeFileSync(`${buildPath}/react/framework7-react.esm.bundle.js`, bannerReact + esmBundlePluginContent);
 
   /* Build UMD from esm bundle: framework7-react.esm.bundle.js -> framework7-react.js */
   rollup.rollup({
@@ -129,15 +130,18 @@ function buildReact(cb) {
     const result = bundle.output[0];
     const minified = UglifyJS.minify(result.code, {
       sourceMap: {
-        content: result.map,
-        url: 'framework7-react.min.js.map',
+        sourceMap: {
+          content: env === 'development' ? result.map : undefined,
+          filename: env === 'development' ? undefined : 'framework7-react.min.js',
+          url: 'framework7-react.min.js.map',
+        },
       },
       output: {
         preamble: bannerReact,
       },
     });
-    fs.writeFileSync(`${buildPath}/react/framework7-react.min.js`, minified.code);
-    fs.writeFileSync(`${buildPath}/react/framework7-react.min.js.map`, minified.map);
+    writeFileSync(`${buildPath}/react/framework7-react.min.js`, minified.code);
+    writeFileSync(`${buildPath}/react/framework7-react.min.js.map`, minified.map);
     if (cb) cb();
   }).catch((err) => {
     if (cb) cb();

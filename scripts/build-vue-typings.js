@@ -6,6 +6,7 @@
 const fs = require('fs');
 const path = require('path');
 const getOutput = require('./get-output');
+const writeFileSync = require('./utils/write-file-sync');
 
 const importLib = `
 import Vue from 'vue';
@@ -57,9 +58,9 @@ function buildTypings(cb) {
     .replace('// DECLARE_PLUGIN', declarePlugin)
     .replace('// EXPORT_PLUGIN', exportPlugin);
 
-  fs.writeFileSync(`${output}/framework7-vue.d.ts`, vueTypings);
-  fs.writeFileSync(`${output}/framework7-vue.esm.d.ts`, vueTypings);
-  fs.writeFileSync(`${output}/framework7-vue.esm.bundle.d.ts`, vueTypings);
+  writeFileSync(`${output}/framework7-vue.d.ts`, vueTypings);
+  writeFileSync(`${output}/framework7-vue.esm.d.ts`, vueTypings);
+  writeFileSync(`${output}/framework7-vue.esm.bundle.d.ts`, vueTypings);
 
   cb();
 }

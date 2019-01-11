@@ -4,6 +4,7 @@ const path = require('path');
 const postcss = require('postcss');
 const postcssFilterRules = require('postcss-filter-rules');
 const postcssCssVariables = require('postcss-css-variables');
+const writeFileSync = require('./utils/write-file-sync');
 
 const plugin = postcss.plugin('pluginname', () => (ast) => {
   ast.walkComments((comment) => {
@@ -38,7 +39,7 @@ function build() {
   ])
     .process(css, { from: './build/core/css/framework7.bundle.css', to: './build/core/css/framework7.bundle.legacy.css' })
     .then((result) => {
-      fs.writeFileSync(path.resolve(__dirname, '../build/core/css/framework7.bundle.legacy.css'), result.css);
+      writeFileSync(path.resolve(__dirname, '../build/core/css/framework7.bundle.legacy.css'), result.css);
     });
 }
 

@@ -12,6 +12,7 @@ const replace = require('rollup-plugin-replace');
 const UglifyJS = require('uglify-js');
 const bannerVue = require('./banner-vue');
 const getOutput = require('./get-output');
+const writeFileSync = require('./utils/write-file-sync');
 
 function esm({ banner, componentImports, componentExports }) {
   return `
@@ -29,7 +30,7 @@ export default Framework7Vue;
 function buildVue(cb) {
   const env = process.env.NODE_ENV || 'development';
   const buildPath = getOutput();
-  const pluginContent = fs.readFileSync(`./${buildPath}/vue/utils/plugin.js`, 'utf-8');
+  const pluginContent = fs.readFileSync(`${buildPath}/vue/utils/plugin.js`, 'utf8');
 
   /* Replace plugin vars: utils/plugin.js */
   const newPluginContent = pluginContent
@@ -39,7 +40,7 @@ function buildVue(cb) {
     .replace(/EXTEND/g, 'params.Vue || Vue')
     .replace(/COMPILER/g, '\'vue\'');
 
-  fs.writeFileSync(`${buildPath}/vue/utils/plugin.js`, newPluginContent);
+  writeFileSync(`${buildPath}/vue/utils/plugin.js`, newPluginContent);
 
   /* Build main components esm module: framework7-vue.esm.js */
   const files = fs.readdirSync(`${buildPath}/vue/components`).filter(file => file.indexOf('.d.ts') < 0);
@@ -70,7 +71,7 @@ function buildVue(cb) {
     componentExports,
   });
 
-  fs.writeFileSync(`${buildPath}/vue/framework7-vue.esm.js`, componentsContent);
+  writeFileSync(`${buildPath}/vue/framework7-vue.esm.js`, componentsContent);
 
   /* Build esm module bundle: components + plugin -> framework7-vue.esm.bundle.js */
   const registerComponents = components
@@ -85,7 +86,7 @@ function buildVue(cb) {
     .replace(/EXTEND/g, 'params.Vue || Vue')
     .replace(/COMPILER/g, '\'vue\'');
 
-  fs.writeFileSync(`${buildPath}/vue/framework7-vue.esm.bundle.js`, bannerVue + esmBundlePluginContent);
+  writeFileSync(`${buildPath}/vue/framework7-vue.esm.bundle.js`, bannerVue + esmBundlePluginContent);
 
   /* Build UMD from esm bundle: framework7-vue.esm.bundle.js -> framework7-vue.js */
   rollup.rollup({
@@ -119,15 +120,16 @@ function buildVue(cb) {
     const result = bundle.output[0];
     const minified = UglifyJS.minify(result.code, {
       sourceMap: {
-        content: result.map,
+        content: env === 'development' ? result.map : undefined,
+        filename: env === 'development' ? undefined : 'framework7-vue.min.js',
         url: 'framework7-vue.min.js.map',
       },
       output: {
         preamble: bannerVue,
       },
     });
-    fs.writeFileSync(`${buildPath}/vue/framework7-vue.min.js`, minified.code);
-    fs.writeFileSync(`${buildPath}/vue/framework7-vue.min.js.map`, minified.map);
+    writeFileSync(`${buildPath}/vue/framework7-vue.min.js`, minified.code);
+    writeFileSync(`${buildPath}/vue/framework7-vue.min.js.map`, minified.map);
     if (cb) cb();
   }).catch((err) => {
     if (cb) cb();

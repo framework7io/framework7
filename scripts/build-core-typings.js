@@ -6,6 +6,7 @@
 const fs = require('fs');
 const path = require('path');
 const getOutput = require('./get-output.js');
+const writeFileSync = require('./utils/write-file-sync');
 
 function capitalize(name) {
   return name.split('-').map((word) => { // eslint-disable-line
@@ -57,10 +58,10 @@ function buildTypings(cb) {
     .replace(/\/\/ IMPORT_COMPONENTS/, '')
     .replace(/\/\/ INSTALL/, '');
 
-  fs.writeFileSync(`${output}/js/framework7.d.ts`, coreTypings);
-  fs.writeFileSync(`${output}/js/framework7.bundle.d.ts`, bundleTypings);
-  fs.writeFileSync(`${output}/framework7.esm.d.ts`, coreTypings);
-  fs.writeFileSync(`${output}/framework7.esm.bundle.d.ts`, bundleTypings);
+  writeFileSync(`${output}/js/framework7.d.ts`, coreTypings);
+  writeFileSync(`${output}/js/framework7.bundle.d.ts`, bundleTypings);
+  writeFileSync(`${output}/framework7.esm.d.ts`, coreTypings);
+  writeFileSync(`${output}/framework7.esm.bundle.d.ts`, bundleTypings);
 
   cb();
 }

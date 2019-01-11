@@ -1,4 +1,5 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
+/* eslint no-console: "off" */
 const postcss = require('postcss');
 const autoprefixer = require('autoprefixer');
 

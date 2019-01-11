@@ -3,21 +3,18 @@
 /* eslint global-require: "off" */
 /* eslint no-param-reassign: ["error", { "props": false }] */
 
-const gulp = require('gulp');
 const fs = require('fs');
+const path = require('path');
 const rollup = require('rollup');
 const buble = require('rollup-plugin-buble');
 const replace = require('rollup-plugin-replace');
 const resolve = require('rollup-plugin-node-resolve');
-const header = require('gulp-header');
-const uglify = require('gulp-uglify');
-const sourcemaps = require('gulp-sourcemaps');
-const rename = require('gulp-rename');
-const modifyFile = require('gulp-modify-file');
+const UglifyJS = require('uglify-js');
 const commonjs = require('rollup-plugin-commonjs');
 const getConfig = require('./get-core-config.js');
 const banner = require('./banner-core.js');
 const getOutput = require('./get-output.js');
+const writeFileSync = require('./utils/write-file-sync');
 
 let cache;
 
@@ -28,52 +25,33 @@ function es(components, cb) {
   const format = 'es';
   const output = `${getOutput()}/core`;
 
-  let cbs = 0;
-  const expectCbs = 2;
+  const esContent = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.js'), 'utf8');
 
   // Bundle
-  gulp.src('./src/core/framework7.js')
-    .pipe(modifyFile((content) => {
-      let newContent = content
-        .replace('process.env.NODE_ENV', JSON.stringify(env))
-        .replace('process.env.TARGET', JSON.stringify(target))
-        .replace('process.env.FORMAT', JSON.stringify(format))
-        .replace('//IMPORT_COMPONENTS', components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'))
-        .replace('//INSTALL_COMPONENTS', components.map(component => component.capitalized).join(',\n  '))
-        .replace('//ES_IMPORT_HELPERS', "import Request from './utils/request';\nimport Utils from './utils/utils';\nimport Support from './utils/support';\nimport Device from './utils/device';")
-        .replace('//NAMED_ES_EXPORT', 'export { Template7, $ as Dom7, Request, Utils, Device, Support };');
-
-      newContent = `${banner}\n${newContent}`;
-      return newContent;
-    }))
-    .pipe(rename((file) => { file.basename += '.esm.bundle'; }))
-    .pipe(gulp.dest(output))
-    .on('end', () => {
-      cbs += 1;
-      if (cbs === expectCbs) cb();
-    });
+  const bundleContent = esContent
+    .replace('process.env.NODE_ENV', JSON.stringify(env))
+    .replace('process.env.TARGET', JSON.stringify(target))
+    .replace('process.env.FORMAT', JSON.stringify(format))
+    .replace('//IMPORT_COMPONENTS', components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'))
+    .replace('//INSTALL_COMPONENTS', components.map(component => component.capitalized).join(',\n  '))
+    .replace('//ES_IMPORT_HELPERS', "import Request from './utils/request';\nimport Utils from './utils/utils';\nimport Support from './utils/support';\nimport Device from './utils/device';")
+    .replace('//NAMED_ES_EXPORT', 'export { Template7, $ as Dom7, Request, Utils, Device, Support };');
 
   // Core
-  gulp.src('./src/core/framework7.js')
-    .pipe(modifyFile((content) => {
-      let newContent = content
-        .replace('process.env.NODE_ENV', JSON.stringify(env))
-        .replace('process.env.TARGET', JSON.stringify(target))
-        .replace('process.env.FORMAT', JSON.stringify(format))
-        .replace('//IMPORT_COMPONENTS\n', '')
-        .replace('//INSTALL_COMPONENTS\n', '')
-        .replace('//ES_IMPORT_HELPERS', "import Request from './utils/request';\nimport Utils from './utils/utils';\nimport Support from './utils/support';\nimport Device from './utils/device';")
-        .replace('//NAMED_ES_EXPORT', 'export { Template7, $ as Dom7, Request, Utils, Device, Support };');
+  const coreContent = esContent
+    .replace('process.env.NODE_ENV', JSON.stringify(env))
+    .replace('process.env.TARGET', JSON.stringify(target))
+    .replace('process.env.FORMAT', JSON.stringify(format))
+    .replace('//IMPORT_COMPONENTS\n', '')
+    .replace('//INSTALL_COMPONENTS\n', '')
+    .replace('//ES_IMPORT_HELPERS', "import Request from './utils/request';\nimport Utils from './utils/utils';\nimport Support from './utils/support';\nimport Device from './utils/device';")
+    .replace('//NAMED_ES_EXPORT', 'export { Template7, $ as Dom7, Request, Utils, Device, Support };');
 
-      newContent = `${banner}\n${newContent}`;
-      return newContent;
-    }))
-    .pipe(rename((file) => { file.basename += '.esm'; }))
-    .pipe(gulp.dest(output))
-    .on('end', () => {
-      cbs += 1;
-      if (cbs === expectCbs) cb();
-    });
+  // Save
+  writeFileSync(`${output}/framework7.esm.bundle.js`, `${banner}\n${bundleContent}`);
+  writeFileSync(`${output}/framework7.esm.js`, `${banner}\n${coreContent}`);
+
+  if (cb) cb();
 }
 function umdBundle(components, cb) {
   const config = getConfig();
@@ -114,28 +92,31 @@ function umdBundle(components, cb) {
       file: `${output}/js/framework7.bundle.js`,
       format: 'umd',
       name: 'Framework7',
-      sourcemap: env === 'development',
+      sourcemap: true,
       sourcemapFile: `${output}/js/framework7.bundle.js.map`,
       banner,
     });
-  }).then(() => {
+  }).then((bundle) => {
     if (env === 'development') {
       if (cb) cb();
       return;
     }
-    // Minified version
-    gulp.src(`${output}/js/framework7.bundle.js`)
-      .pipe(sourcemaps.init())
-      .pipe(uglify())
-      .pipe(header(banner))
-      .pipe(rename((filePath) => {
-        filePath.basename += '.min';
-      }))
-      .pipe(sourcemaps.write('./'))
-      .pipe(gulp.dest(`${output}/js/`))
-      .on('end', () => {
-        cb();
-      });
+    const result = bundle.output[0];
+    const minified = UglifyJS.minify(result.code, {
+      sourceMap: {
+        content: env === 'development' ? result.map : undefined,
+        filename: env === 'development' ? undefined : 'framework7.bundle.min.js',
+        url: 'framework7.bundle.min.js.map',
+      },
+      output: {
+        preamble: banner,
+      },
+    });
+
+    writeFileSync(`${output}/js/framework7.bundle.min.js`, minified.code);
+    writeFileSync(`${output}/js/framework7.bundle.min.js.map`, minified.map);
+
+    cb();
   }).catch((err) => {
     if (cb) cb();
     console.log(err.toString());
@@ -183,24 +164,27 @@ function umdCore(cb) {
       sourcemapFile: `${output}/js/framework7.js.map`,
       banner,
     });
-  }).then(() => {
+  }).then((bundle) => {
     if (env === 'development') {
       if (cb) cb();
       return;
     }
-    // Minified version
-    gulp.src(`${output}/js/framework7.js`)
-      .pipe(sourcemaps.init())
-      .pipe(uglify())
-      .pipe(header(banner))
-      .pipe(rename((filePath) => {
-        filePath.basename += '.min';
-      }))
-      .pipe(sourcemaps.write('./'))
-      .pipe(gulp.dest(`${output}/js/`))
-      .on('end', () => {
-        if (cb) cb();
-      });
+    const result = bundle.output[0];
+    const minified = UglifyJS.minify(result.code, {
+      sourceMap: {
+        content: env === 'development' ? result.map : undefined,
+        filename: env === 'development' ? undefined : 'framework7.min.js',
+        url: 'framework7.min.js.map',
+      },
+      output: {
+        preamble: banner,
+      },
+    });
+
+    writeFileSync(`${output}/js/framework7.min.js`, minified.code);
+    writeFileSync(`${output}/js/framework7.min.js.map`, minified.map);
+
+    cb();
   }).catch((err) => {
     if (cb) cb();
     console.log(err.toString());

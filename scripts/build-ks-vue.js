@@ -1,7 +1,6 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
-const gulp = require('gulp');
-const modifyFile = require('gulp-modify-file');
+const fs = require('fs');
 const path = require('path');
 const rollup = require('rollup');
 const buble = require('rollup-plugin-buble');
@@ -9,6 +8,7 @@ const replace = require('rollup-plugin-replace');
 const commonjs = require('rollup-plugin-commonjs');
 const resolve = require('rollup-plugin-node-resolve');
 const vue = require('rollup-plugin-vue');
+const writeFileSync = require('./utils/write-file-sync');
 
 function buildKs(cb) {
   const env = process.env.NODE_ENV || 'development';
@@ -22,18 +22,17 @@ function buildKs(cb) {
     f7Path = f7Path.replace(/\\/g, '/');
   }
 
-  gulp.src('./kitchen-sink/vue/index.html')
-    .pipe(modifyFile((content) => {
-      if (env === 'development') {
-        return content
-          .replace('../../packages/core/css/framework7.bundle.min.css', '../../build/core/css/framework7.bundle.css')
-          .replace('../../packages/core/js/framework7.bundle.min.js', '../../build/core/js/framework7.bundle.js');
-      }
-      return content
-        .replace('../../build/core/css/framework7.bundle.css', '../../packages/core/css/framework7.bundle.min.css')
-        .replace('../../build/core/js/framework7.bundle.js', '../../packages/core/js/framework7.bundle.min.js');
-    }))
-    .pipe(gulp.dest('./kitchen-sink/vue'));
+  let index = fs.readFileSync(path.resolve(__dirname, '../kitchen-sink/vue/index.html'), 'utf8');
+  if (env === 'development') {
+    index = index
+      .replace('../../packages/core/css/framework7.bundle.min.css', '../../build/core/css/framework7.bundle.css')
+      .replace('../../packages/core/js/framework7.bundle.min.js', '../../build/core/js/framework7.bundle.js');
+  } else {
+    index = index
+      .replace('../../build/core/css/framework7.bundle.css', '../../packages/core/css/framework7.bundle.min.css')
+      .replace('../../build/core/js/framework7.bundle.js', '../../packages/core/js/framework7.bundle.min.js');
+  }
+  writeFileSync(path.resolve(__dirname, '../kitchen-sink/vue/index.html'), index);
 
   rollup.rollup({
     input: './kitchen-sink/vue/src/app.js',

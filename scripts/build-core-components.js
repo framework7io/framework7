@@ -3,10 +3,11 @@
 /* eslint global-require: "off" */
 /* eslint no-param-reassign: ["error", { "props": false }] */
 const fs = require('fs');
-const gulp = require('gulp');
-const modifyFile = require('gulp-modify-file');
+const path = require('path');
+const glob = require('glob');
 const getConfig = require('./get-core-config.js');
 const getOutput = require('./get-output.js');
+const writeFileSync = require('./utils/write-file-sync');
 
 function base64Encode(file) {
   // read binary data
@@ -21,25 +22,33 @@ function build(cb) {
   const target = process.env.TARGET || config.target || 'universal';
   const format = 'es';
   const output = `${getOutput()}/core`;
-
-  gulp.src(['./src/core/**/*.*', '!./src/core/framework7.less', '!./src/core/framework7.js', '!./src/core/framework7.d.ts', '!./src/core/icons/**/**.*'])
-    .pipe(modifyFile((content) => {
-      const newContent = content
-        .replace('process.env.NODE_ENV', JSON.stringify(env))
-        .replace('process.env.TARGET', JSON.stringify(target))
-        .replace('process.env.FORMAT', JSON.stringify(format));
-      return newContent;
-    }))
-    .pipe(gulp.dest(output))
-    .on('end', () => {
-      const iconsFontBase64 = base64Encode('./src/core/icons/font/framework7-core-icons.woff');
-      const skeletonFontBase64 = base64Encode('./src/core/icons/font/framework7-skeleton.woff');
-      const appLess = fs.readFileSync(`${output}/components/app/app.less`, 'utf-8')
-        .replace('framework7_coreIconsFont()', `'${iconsFontBase64}'`)
-        .replace('framework7_skeletonFont()', `'${skeletonFontBase64}'`);
-      fs.writeFileSync(`${output}/components/app/app.less`, appLess);
-      cb();
+  glob('**/*.*', { cwd: path.resolve(__dirname, '../src/core') }, (err, files) => {
+    files.forEach((file, index) => {
+      if (file.indexOf('icons/') === 0) return;
+      if (file === 'framework7.less') return;
+      if (file === 'framework7.js') return;
+      if (file === 'framework7.d.ts') return;
+      let fileContent = fs.readFileSync(path.resolve(__dirname, '../src/core', file), 'utf8');
+      if (file.indexOf('.js') >= 0) {
+        fileContent = fileContent
+          .replace('process.env.NODE_ENV', JSON.stringify(env))
+          .replace('process.env.TARGET', JSON.stringify(target))
+          .replace('process.env.FORMAT', JSON.stringify(format));
+      }
+      if (file.indexOf('app.less') >= 0) {
+        const iconsFontBase64 = base64Encode('./src/core/icons/font/framework7-core-icons.woff');
+        const skeletonFontBase64 = base64Encode('./src/core/icons/font/framework7-skeleton.woff');
+        fileContent = fileContent
+          .replace('framework7_coreIconsFont()', `'${iconsFontBase64}'`)
+          .replace('framework7_skeletonFont()', `'${skeletonFontBase64}'`);
+      }
+      if (!fs.existsSync(path.dirname(path.resolve(output, file)))) {
+        fs.mkdirSync(path.dirname(path.resolve(output, file)), { recursive: true });
+      }
+      writeFileSync(path.resolve(output, file), fileContent);
+      if (index === files.length - 1) cb();
     });
+  });
 }
 
 module.exports = build;

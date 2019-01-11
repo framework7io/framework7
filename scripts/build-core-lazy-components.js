@@ -16,6 +16,7 @@ const autoprefixer = require('./utils/autoprefixer');
 const cleanCSS = require('./utils/clean-css');
 const getConfig = require('./get-core-config.js');
 const getOutput = require('./get-output.js');
+const writeFileSync = require('./utils/write-file-sync');
 
 const coreComponents = [
   'app',
@@ -110,7 +111,7 @@ async function buildLazyComponentsLess(components, rtl, cb) {
     } catch (err) {
       // folder exists
     }
-    fs.writeFileSync(`${output}/components/${component}.css`, cssContent);
+    writeFileSync(`${output}/components/${component}.css`, cssContent);
 
     cbs += 1;
     if (cbs === componentsToProcess.length && cb) cb();
@@ -190,7 +191,7 @@ function buildLazyComponentsJs(components, cb) {
         fileContent = UglifyJS.minify(fileContent).code;
         fileContent = `(${fileContent}(Framework7, typeof Framework7AutoInstallComponent === 'undefined' ? undefined : Framework7AutoInstallComponent))`;
 
-        fs.writeFileSync(`${output}/components/${fileName}`, `${fileContent}\n`);
+        writeFileSync(`${output}/components/${fileName}`, `${fileContent}\n`);
 
         cbs += 1;
         if (cbs === filesToProcess.length && cb) cb();

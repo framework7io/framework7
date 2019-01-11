@@ -3,9 +3,11 @@
 /* eslint global-require: "off" */
 /* eslint no-param-reassign: ["error", { "props": false }] */
 const fs = require('fs');
+const path = require('path');
 const { transformSync } = require('@babel/core');
 const phenome = require('phenome');
 const getOutput = require('./get-output');
+const writeFileSync = require('./utils/write-file-sync');
 
 function transformRestSpread(buildPath) {
   const reactFiles = fs.readdirSync(`${buildPath}/react/components`).filter(f => f[0] !== '.' && f.indexOf('.d.ts') < 0);
@@ -18,7 +20,7 @@ function transformRestSpread(buildPath) {
         ['@babel/plugin-proposal-object-rest-spread', { loose: true, useBuiltIns: true }],
       ],
     });
-    fs.writeFileSync(filePath, code);
+    writeFileSync(filePath, code);
   }
   reactFiles.forEach((fileName) => {
     transformFile(`${buildPath}/react/components/${fileName}`);
@@ -30,8 +32,7 @@ function transformRestSpread(buildPath) {
 
 // Phenome
 function build(cb) {
-  const buildPath = getOutput();
-
+  const buildPath = path.relative(process.cwd(), getOutput());
   phenome({
     paths: ['./src/phenome/**/*.js', './src/phenome/**/*.jsx'],
     react: {

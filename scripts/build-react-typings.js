@@ -6,6 +6,7 @@
 const fs = require('fs');
 const path = require('path');
 const getOutput = require('./get-output');
+const writeFileSync = require('./utils/write-file-sync');
 
 const importLib = `
 import * as React from 'react';
@@ -57,8 +58,8 @@ function buildTypings(cb) {
     .replace('// DECLARE_PLUGIN', declarePlugin)
     .replace('// EXPORT_PLUGIN', exportPlugin);
 
-  fs.writeFileSync(`${output}/framework7-react.d.ts`, reactTypings);
-  fs.writeFileSync(`${output}/framework7-react.esm.d.ts`, reactTypings);
+  writeFileSync(`${output}/framework7-react.d.ts`, reactTypings);
+  writeFileSync(`${output}/framework7-react.esm.d.ts`, reactTypings);
 
   cb();
 }
