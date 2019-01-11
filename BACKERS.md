@@ -90,6 +90,8 @@ Dave Billington
 ---
 
 ### $5+ Thank You
+Sören Wrede<br>
+LitoMore<br>
 Philip Fung<br>
 Jacob Rosenberg<br>
 Farshid Mossaiby<br>
