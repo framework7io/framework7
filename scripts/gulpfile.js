@@ -1,7 +1,7 @@
 /* eslint no-console: ["error", { allow: ["log"] }] */
 const gulp = require('gulp');
 const connect = require('gulp-connect');
-const gopen = require('gulp-open');
+const opn = require('opn');
 
 const buildKsCore = require('./build-ks-core.js');
 const buildKsVue = require('./build-ks-vue.js');
@@ -9,7 +9,7 @@ const buildKsReact = require('./build-ks-react.js');
 
 const buildCoreJs = require('./build-core-js.js');
 const buildCoreTypings = require('./build-core-typings.js');
-const buildCoreLess = require('./build-core-less.js');
+const buildCoreLess = require('./build-core-styles.js');
 const buildCoreComponents = require('./build-core-components.js');
 const buildCoreLazyComponents = require('./build-core-lazy-components.js');
 
@@ -27,7 +27,7 @@ gulp.task('ks-vue', buildKsVue);
 gulp.task('ks-react', buildKsReact);
 gulp.task('core-js', buildCoreJs);
 gulp.task('core-typings', buildCoreTypings);
-gulp.task('core-less', buildCoreLess);
+gulp.task('core-styles', buildCoreLess);
 gulp.task('core-components', buildCoreComponents);
 gulp.task('core-lazy-components', buildCoreLazyComponents);
 gulp.task('phenome', buildPhenome);
@@ -39,7 +39,7 @@ gulp.task('vue', buildVue);
 gulp.task('vue-typings', buildVueTypings);
 
 // eslint-disable-next-line
-gulp.task('build-core', gulp.series('core-js', 'core-components', 'core-typings', 'core-less', 'core-lazy-components'));
+gulp.task('build-core', gulp.series('core-js', 'core-components', 'core-typings', 'core-styles', 'core-lazy-components'));
 gulp.task('build-react', gulp.series('react', 'react-typings'));
 gulp.task('build-vue', gulp.series('vue', 'vue-typings'));
 
@@ -56,7 +56,7 @@ const watch = {
       'core-typings'
     ));
     gulp.watch('./src/core/**/*.less', gulp.series(
-      'core-less',
+      'core-styles',
       'core-components'
     ));
     gulp.watch(['./src/phenome/**/*.js', './src/phenome/**/*.jsx'], gulp.series(
@@ -83,7 +83,7 @@ const watch = {
       'core-typings'
     ));
     gulp.watch('./src/**/**/*.less', gulp.series(
-      'core-less',
+      'core-styles',
       'core-components',
       'core-lazy-components',
     ));
@@ -95,7 +95,7 @@ const watch = {
       'ks-react'
     ));
     gulp.watch('./src/core/**/*.less', gulp.series(
-      'core-less',
+      'core-styles',
       'core-components',
     ));
     gulp.watch(['./src/phenome/**/*.js', './src/phenome/**/*.jsx'], gulp.series(
@@ -114,7 +114,7 @@ const watch = {
       'ks-vue'
     ));
     gulp.watch('./src/core/**/*.less', gulp.series(
-      'core-less',
+      'core-styles',
       'core-components',
     ));
     gulp.watch(['./src/phenome/**/*.js', './src/phenome/**/*.jsx'], gulp.series(
@@ -139,22 +139,22 @@ function server() {
 gulp.task('server', () => {
   if (env === 'development') watch.all();
   server();
-  return gulp.src('./kitchen-sink/core/index.html').pipe(gopen({ uri: 'http://localhost:3000/kitchen-sink/core/' }));
+  opn('http://localhost:3000/kitchen-sink/core/');
 });
 gulp.task('server-core', () => {
   if (env === 'development') watch.core();
   server();
-  return gulp.src('./kitchen-sink/core/index.html').pipe(gopen({ uri: 'http://localhost:3000/kitchen-sink/core/' }));
+  opn('http://localhost:3000/kitchen-sink/core/');
 });
 gulp.task('server-react', () => {
   if (env === 'development') watch.react();
   server();
-  return gulp.src('./kitchen-sink/react/index.html').pipe(gopen({ uri: 'http://localhost:3000/kitchen-sink/react/' }));
+  opn('http://localhost:3000/kitchen-sink/react/');
 });
 gulp.task('server-vue', () => {
   if (env === 'development') watch.vue();
   server();
-  return gulp.src('./kitchen-sink/vue/index.html').pipe(gopen({ uri: 'http://localhost:3000/kitchen-sink/vue/' }));
+  opn('http://localhost:3000/kitchen-sink/vue/');
 });
 
 gulp.task('watch', () => {
