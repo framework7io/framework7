@@ -1,4 +1,4 @@
-const pkg = require('../packages/vue/package.json');
+const pkg = require('../../packages/react/package.json');
 
 const version = process.env.VERSION || pkg.version;
 
@@ -10,7 +10,7 @@ const date = {
 
 module.exports = `${`
 /**
- * Framework7 Vue ${version}
+ * Framework7 React ${version}
  * ${pkg.description}
  * ${pkg.homepage}
  *

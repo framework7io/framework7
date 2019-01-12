@@ -1,0 +1,17 @@
+module.exports = [
+  'app',
+  'statusbar',
+  'view',
+  'navbar',
+  'toolbar',
+  'subnavbar',
+  'touch-ripple',
+  'modal',
+  'page',
+  'link',
+  'block',
+  'list',
+  'badge',
+  'button',
+  'icon',
+];

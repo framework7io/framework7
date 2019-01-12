@@ -10,7 +10,7 @@ const buble = require('rollup-plugin-buble');
 const replace = require('rollup-plugin-replace');
 
 const UglifyJS = require('uglify-js');
-const bannerVue = require('./banner-vue');
+const bannerVue = require('./banners/vue');
 const getOutput = require('./get-output');
 const writeFileSync = require('./utils/write-file-sync');
 

@@ -12,7 +12,7 @@ const commonjs = require('rollup-plugin-commonjs');
 const resolve = require('rollup-plugin-node-resolve');
 
 const UglifyJS = require('uglify-js');
-const bannerReact = require('./banner-react');
+const bannerReact = require('./banners/react');
 const getOutput = require('./get-output.js');
 const writeFileSync = require('./utils/write-file-sync');
 

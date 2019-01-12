@@ -10,7 +10,7 @@ const autoprefixer = require('./utils/autoprefixer');
 const cleanCSS = require('./utils/clean-css');
 const getConfig = require('./get-core-config.js');
 const getOutput = require('./get-output.js');
-const banner = require('./banner-core.js');
+const banner = require('./banners/core.js');
 const writeFileSync = require('./utils/write-file-sync');
 
 // Copy LESS

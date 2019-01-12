@@ -48,20 +48,15 @@ function buildTypings(cb) {
     ].join('\n  ');
   });
 
-  const typings = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.d.ts'), 'utf8');
-  const bundleTypings = typings
+  const typings = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.d.ts'), 'utf8')
     .replace(/\/\/ IMPORT_MODULES/, importModules.join('\n'))
     .replace(/\/\/ IMPORT_COMPONENTS/, importComponents.join('\n'))
     .replace(/\/\/ INSTALL/, install.join('\n  '));
-  const coreTypings = typings
-    .replace(/\/\/ IMPORT_MODULES/, importModules.join('\n'))
-    .replace(/\/\/ IMPORT_COMPONENTS/, '')
-    .replace(/\/\/ INSTALL/, '');
 
-  writeFileSync(`${output}/js/framework7.d.ts`, coreTypings);
-  writeFileSync(`${output}/js/framework7.bundle.d.ts`, bundleTypings);
-  writeFileSync(`${output}/framework7.esm.d.ts`, coreTypings);
-  writeFileSync(`${output}/framework7.esm.bundle.d.ts`, bundleTypings);
+  writeFileSync(`${output}/js/framework7.d.ts`, typings);
+  writeFileSync(`${output}/js/framework7.bundle.d.ts`, typings);
+  writeFileSync(`${output}/framework7.esm.d.ts`, typings);
+  writeFileSync(`${output}/framework7.esm.bundle.d.ts`, typings);
 
   cb();
 }

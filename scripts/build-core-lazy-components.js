@@ -17,24 +17,7 @@ const cleanCSS = require('./utils/clean-css');
 const getConfig = require('./get-core-config.js');
 const getOutput = require('./get-output.js');
 const writeFileSync = require('./utils/write-file-sync');
-
-const coreComponents = [
-  'app',
-  'statusbar',
-  'view',
-  'navbar',
-  'toolbar',
-  'subnavbar',
-  'touch-ripple',
-  'modal',
-  'page',
-  'link',
-  'block',
-  'list',
-  'badge',
-  'button',
-  'icon',
-];
+const coreComponents = require('./core-components');
 
 const intro = `
 function framework7ComponentLoader(Framework7, Framework7AutoInstallComponent) {
