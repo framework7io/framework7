@@ -73,7 +73,6 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 
   # commit
   git add -A
-  git add -f packages/**/*.*
   git commit -m "$VERSION release"
 
   # publish
