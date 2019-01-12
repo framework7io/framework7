@@ -7,7 +7,7 @@ const buble = require('rollup-plugin-buble');
 const replace = require('rollup-plugin-replace');
 const commonjs = require('rollup-plugin-commonjs');
 const resolve = require('rollup-plugin-node-resolve');
-const vue = require('rollup-plugin-vue');
+const vue = require('rollup-plugin-vue').default;
 const writeFileSync = require('./utils/write-file-sync');
 
 function buildKs(cb) {
@@ -46,7 +46,12 @@ function buildKs(cb) {
       }),
       resolve({ jsnext: true }),
       commonjs(),
-      vue(),
+      vue({
+        css: false,
+        template: {
+          isProduction: true,
+        },
+      }),
       buble({
         objectAssign: 'Object.assign',
         exclude: ['node_modules/vue/dist/vue.runtime.esm.js'],
