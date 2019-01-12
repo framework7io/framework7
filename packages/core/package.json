@@ -1,9 +1,9 @@
 {
   "name": "framework7",
-  "version": "4.0.0-beta.16",
+  "version": "4.0.0-beta.17",
   "description": "Full featured mobile HTML framework for building iOS & Android apps",
   "main": "js/framework7.js",
-  "typings": "framework7.d.ts",
+  "typings": "js/framework7.d.ts",
   "jsnext:main": "framework7.esm.js",
   "module": "framework7.esm.js",
   "scripts": {
