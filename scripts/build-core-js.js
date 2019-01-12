@@ -9,7 +9,7 @@ const rollup = require('rollup');
 const buble = require('rollup-plugin-buble');
 const replace = require('rollup-plugin-replace');
 const resolve = require('rollup-plugin-node-resolve');
-const UglifyJS = require('uglify-js');
+const Terser = require('terser');
 const commonjs = require('rollup-plugin-commonjs');
 const getConfig = require('./get-core-config.js');
 const banner = require('./banners/core.js');
@@ -92,7 +92,7 @@ function umdBundle(components, cb) {
       file: `${output}/js/framework7.bundle.js`,
       format: 'umd',
       name: 'Framework7',
-      sourcemap: true,
+      sourcemap: env === 'development',
       sourcemapFile: `${output}/js/framework7.bundle.js.map`,
       banner,
     });
@@ -102,7 +102,7 @@ function umdBundle(components, cb) {
       return;
     }
     const result = bundle.output[0];
-    const minified = UglifyJS.minify(result.code, {
+    const minified = Terser.minify(result.code, {
       sourceMap: {
         content: env === 'development' ? result.map : undefined,
         filename: env === 'development' ? undefined : 'framework7.bundle.min.js',
@@ -160,8 +160,7 @@ function umdCore(cb) {
       file: `${output}/js/framework7.js`,
       format: 'umd',
       name: 'Framework7',
-      sourcemap: env === 'development',
-      sourcemapFile: `${output}/js/framework7.js.map`,
+      sourcemap: false,
       banner,
     });
   }).then((bundle) => {
@@ -170,10 +169,9 @@ function umdCore(cb) {
       return;
     }
     const result = bundle.output[0];
-    const minified = UglifyJS.minify(result.code, {
+    const minified = Terser.minify(result.code, {
       sourceMap: {
-        content: env === 'development' ? result.map : undefined,
-        filename: env === 'development' ? undefined : 'framework7.min.js',
+        filename: 'framework7.min.js',
         url: 'framework7.min.js.map',
       },
       output: {

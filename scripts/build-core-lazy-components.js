@@ -10,7 +10,7 @@ const buble = require('rollup-plugin-buble');
 const resolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 const replace = require('rollup-plugin-replace');
-const UglifyJS = require('uglify-js');
+const Terser = require('terser');
 const less = require('./utils/less');
 const autoprefixer = require('./utils/autoprefixer');
 const cleanCSS = require('./utils/clean-css');
@@ -171,7 +171,7 @@ function buildLazyComponentsJs(components, cb) {
             return install.replace(/COMPONENT/g, name);
           });
 
-        fileContent = UglifyJS.minify(fileContent).code;
+        fileContent = Terser.minify(fileContent).code;
         fileContent = `(${fileContent}(Framework7, typeof Framework7AutoInstallComponent === 'undefined' ? undefined : Framework7AutoInstallComponent))`;
 
         writeFileSync(`${output}/components/${fileName}`, `${fileContent}\n`);

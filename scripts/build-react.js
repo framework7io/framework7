@@ -11,7 +11,7 @@ const replace = require('rollup-plugin-replace');
 const commonjs = require('rollup-plugin-commonjs');
 const resolve = require('rollup-plugin-node-resolve');
 
-const UglifyJS = require('uglify-js');
+const Terser = require('terser');
 const bannerReact = require('./banners/react');
 const getOutput = require('./get-output.js');
 const writeFileSync = require('./utils/write-file-sync');
@@ -128,13 +128,10 @@ function buildReact(cb) {
       return;
     }
     const result = bundle.output[0];
-    const minified = UglifyJS.minify(result.code, {
+    const minified = Terser.minify(result.code, {
       sourceMap: {
-        sourceMap: {
-          content: env === 'development' ? result.map : undefined,
-          filename: env === 'development' ? undefined : 'framework7-react.min.js',
-          url: 'framework7-react.min.js.map',
-        },
+        filename: 'framework7-react.min.js',
+        url: 'framework7-react.min.js.map',
       },
       output: {
         preamble: bannerReact,

@@ -9,7 +9,7 @@ const rollup = require('rollup');
 const buble = require('rollup-plugin-buble');
 const replace = require('rollup-plugin-replace');
 
-const UglifyJS = require('uglify-js');
+const Terser = require('terser');
 const bannerVue = require('./banners/vue');
 const getOutput = require('./get-output');
 const writeFileSync = require('./utils/write-file-sync');
@@ -118,10 +118,9 @@ function buildVue(cb) {
       return;
     }
     const result = bundle.output[0];
-    const minified = UglifyJS.minify(result.code, {
+    const minified = Terser.minify(result.code, {
       sourceMap: {
-        content: env === 'development' ? result.map : undefined,
-        filename: env === 'development' ? undefined : 'framework7-vue.min.js',
+        filename: 'framework7-vue.min.js',
         url: 'framework7-vue.min.js.map',
       },
       output: {
