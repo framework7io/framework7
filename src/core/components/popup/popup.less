@@ -17,6 +17,8 @@
   background: #fff;
   z-index: 11000;
   will-change: transform;
+  overflow: hidden;
+  border-radius: var(--f7-popup-border-radius);
   &.modal-in, &.modal-out {
     transition-duration: 400ms;
   }
@@ -41,6 +43,7 @@
     margin-top: calc(-1 * var(--f7-popup-tablet-height) / 2);
     transform: translate3d(0, 100vh, 0);
     box-shadow: var(--f7-popup-box-shadow);
+    border-radius: var(--f7-popup-tablet-border-radius, var(--f7-popup-border-radius));
     &.modal-in {
       transform: translate3d(0, 0, 0);
     }
