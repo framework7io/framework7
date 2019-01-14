@@ -8,7 +8,7 @@ const buble = require('rollup-plugin-buble');
 const replace = require('rollup-plugin-replace');
 const commonjs = require('rollup-plugin-commonjs');
 const resolve = require('rollup-plugin-node-resolve');
-const vue = require('rollup-plugin-vue');
+const vue = require('rollup-plugin-vue').default;
 
 function buildKs(cb) {
   const env = process.env.NODE_ENV || 'development';
