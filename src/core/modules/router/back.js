@@ -479,16 +479,29 @@ function back(...args) {
         },
       };
     }
-    if (!previousRoute || !modalToClose) {
-      return router;
+    if (!navigateUrl || navigateUrl.replace(/[# ]/g, '').trim().length === 0) {
+      if (!previousRoute || !modalToClose) {
+        return router;
+      }
     }
-    if (router.params.pushState && navigateOptions.pushState !== false) {
-      History.back();
+    const forceOtherUrl = navigateOptions.force && previousRoute && navigateUrl;
+    if (previousRoute && modalToClose) {
+      if (router.params.pushState && navigateOptions.pushState !== false) {
+        History.back();
+      }
+      router.currentRoute = previousRoute;
+      router.history.pop();
+      router.saveHistory();
+      router.modalRemove(modalToClose);
+      if (forceOtherUrl) {
+        router.navigate(navigateUrl, { reloadCurrent: true });
+      }
+    } else if (modalToClose) {
+      router.modalRemove(modalToClose);
+      if (navigateUrl) {
+        router.navigate(navigateUrl, { reloadCurrent: true });
+      }
     }
-    router.currentRoute = previousRoute;
-    router.history.pop();
-    router.saveHistory();
-    router.modalRemove(modalToClose);
     return router;
   }
   const $previousPage = router.$el.children('.page-current').prevAll('.page-previous').eq(0);
