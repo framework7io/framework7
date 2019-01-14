@@ -9,8 +9,8 @@
   margin: var(--f7-block-margin-vertical) 0;
   padding-top: 0;
   padding-bottom: 0;
-  padding-left: calc(var(--f7-block-padding) + var(--f7-safe-area-left));
-  padding-right: calc(var(--f7-block-padding) + var(--f7-safe-area-right));
+  padding-left: calc(var(--f7-block-padding-horizontal) + var(--f7-safe-area-left));
+  padding-right: calc(var(--f7-block-padding-horizontal) + var(--f7-safe-area-right));
   .no-hairlines();
   > h1, > h2, > h3, > h4, > p {
     &:first-child {
@@ -23,8 +23,8 @@
 }
 .block-strong {
   color: var(--f7-block-strong-text-color);
-  padding-top: var(--f7-block-padding);
-  padding-bottom: var(--f7-block-padding);
+  padding-top: var(--f7-block-padding-vertical);
+  padding-bottom: var(--f7-block-padding-vertical);
   background-color: var(--f7-block-strong-bg-color);
   .hairline(top, var(--f7-block-strong-border-color));
   .hairline(bottom, var(--f7-block-strong-border-color));
@@ -42,8 +42,8 @@
   line-height: var(--f7-block-title-line-height);
   margin-top: var(--f7-block-margin-vertical);
   margin-bottom: var(--f7-block-title-margin-bottom);
-  margin-left: calc(var(--f7-block-padding)  + var(--f7-safe-area-left));
-  margin-right: calc(var(--f7-block-padding)  + var(--f7-safe-area-right));
+  margin-left: calc(var(--f7-block-padding-horizontal) + var(--f7-safe-area-left));
+  margin-right: calc(var(--f7-block-padding-horizontal) + var(--f7-safe-area-right));
   + .list, + .block, + .card, + .timeline, + .block-header {
     margin-top: 0px;
   }
@@ -88,8 +88,8 @@
 .block-footer, .block-header {
   padding-top: 0;
   padding-bottom: 0;
-  padding-left: calc(var(--f7-block-padding) + var(--f7-safe-area-left));
-  padding-right: calc(var(--f7-block-padding) + var(--f7-safe-area-right));
+  padding-left: calc(var(--f7-block-padding-horizontal) + var(--f7-safe-area-left));
+  padding-right: calc(var(--f7-block-padding-horizontal) + var(--f7-safe-area-right));
   ul, p, h1, h2, h3, h4 {
     &:first-child {
       margin-top: 0;
