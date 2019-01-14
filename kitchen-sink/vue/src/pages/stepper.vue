@@ -70,7 +70,7 @@
       </f7-row>
     </f7-block>
 
-    <f7-block-title>Raised (MD-theme only)</f7-block-title>
+    <f7-block-title>Raised</f7-block-title>
     <f7-block strong class="text-align-center">
       <f7-row>
         <f7-col>

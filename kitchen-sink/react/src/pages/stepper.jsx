@@ -84,7 +84,7 @@ export default class extends React.Component {
           </Row>
         </Block>
 
-        <BlockTitle>Raised (MD-theme only)</BlockTitle>
+        <BlockTitle>Raised</BlockTitle>
         <Block strong className="text-align-center">
           <Row>
             <Col>

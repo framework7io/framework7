@@ -35,7 +35,7 @@ export default () => (
       </Row>
     </Block>
 
-    <BlockTitle>Outline Buttons (MD-theme only)</BlockTitle>
+    <BlockTitle>Outline Buttons</BlockTitle>
     <Block>
       <Row>
         <Col>
@@ -50,7 +50,7 @@ export default () => (
       </Row>
     </Block>
 
-    <BlockTitle>Raised Buttons (MD-theme only)</BlockTitle>
+    <BlockTitle>Raised Buttons</BlockTitle>
     <Block>
       <Row tag="p">
         <Col tag="span">

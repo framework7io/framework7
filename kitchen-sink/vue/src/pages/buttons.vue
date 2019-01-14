@@ -32,7 +32,7 @@
       </f7-row>
     </f7-block>
 
-    <f7-block-title>Outline Buttons (MD-theme only)</f7-block-title>
+    <f7-block-title>Outline Buttons</f7-block-title>
     <f7-block>
       <f7-row>
         <f7-col>
@@ -47,7 +47,7 @@
       </f7-row>
     </f7-block>
 
-    <f7-block-title>Raised Buttons (MD-theme only)</f7-block-title>
+    <f7-block-title>Raised Buttons</f7-block-title>
     <f7-block>
       <f7-row tag="p">
         <f7-col tag="span">

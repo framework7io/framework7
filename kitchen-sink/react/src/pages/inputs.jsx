@@ -207,7 +207,7 @@ export default () => (
       </ListInput>
     </List>
 
-    <BlockTitle>Floating Labels (MD-theme only)</BlockTitle>
+    <BlockTitle>Floating Labels</BlockTitle>
     <List noHairlinesMd>
       <ListInput
         label="Name"
