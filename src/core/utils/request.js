@@ -301,19 +301,51 @@ function RequestShortcut(method, ...args) {
   }
   return Request(requestOptions);
 }
-Request.get = function get(...args) {
-  return RequestShortcut('get', ...args);
+function RequestShortcutPromise(method, ...args) {
+  const [url, data, dataType] = args;
+  return new Promise((resolve, reject) => {
+    RequestShortcut(
+      method,
+      url,
+      data,
+      (response) => {
+        resolve(response);
+      },
+      (xhr, status) => {
+        reject(status);
+      },
+      dataType
+    );
+  });
+}
+Object.assign(Request, {
+  get: (...args) => RequestShortcut('get', ...args),
+  post: (...args) => RequestShortcut('post', ...args),
+  json: (...args) => RequestShortcut('json', ...args),
+  getJSON: (...args) => RequestShortcut('json', ...args),
+  postJSON: (...args) => RequestShortcut('postJSON', ...args),
+});
+
+Request.promise = function requestPromise(requestOptions) {
+  return new Promise((resolve, reject) => {
+    Request(Object.assign(requestOptions, {
+      success(data) {
+        resolve(data);
+      },
+      error(xhr, status) {
+        reject(status);
+      },
+    }));
+  });
 };
-Request.post = function post(...args) {
-  return RequestShortcut('post', ...args);
-};
-Request.json = function json(...args) {
-  return RequestShortcut('json', ...args);
-};
-Request.getJSON = Request.json;
-Request.postJSON = function postJSON(...args) {
-  return RequestShortcut('postJSON', ...args);
-};
+Object.assign(Request.promise, {
+  get: (...args) => RequestShortcutPromise('get', ...args),
+  post: (...args) => RequestShortcutPromise('post', ...args),
+  json: (...args) => RequestShortcutPromise('json', ...args),
+  getJSON: (...args) => RequestShortcutPromise('json', ...args),
+  postJSON: (...args) => RequestShortcutPromise('postJSON', ...args),
+});
+
 Request.setup = function setup(options) {
   if (options.type && !options.method) {
     Utils.extend(options, { method: options.type });

@@ -50,8 +50,37 @@ interface RequestParameters {
   statusCode?: { [key: number]: any; };
 }
 
+interface RequestPromise {
+  (parameters: RequestParameters): Promise<any>
+  /** Load data from the server using a HTTP GET request */
+  get: (
+    url: string,
+    data?: any,
+    dataType?: string
+  ) => Promise<any>
+  /** Load data from the server using a HTTP POST request */
+  post: (
+    url: string,
+    data?: any,
+    dataType?: string
+  ) => Promise<any>
+  /** Load JSON-encoded data from the server using a GET HTTP request */
+  json: (
+    url: string,
+    data?: any,
+  ) => Promise<any>
+  /** Send JSON data using a HTTP POST request */
+  postJSON: (
+    url: string,
+    data?: any,
+    dataType?: string
+  ) => Promise<any>
+}
+
 export interface Request {
   (parameters: RequestParameters): RequestXHR
+  /** Promise interface */
+  promise: RequestPromise
   /** Load data from the server using a HTTP GET request */
   get: (
     url: string,
