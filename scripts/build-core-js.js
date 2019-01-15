@@ -3,7 +3,6 @@
 /* eslint global-require: "off" */
 /* eslint no-param-reassign: ["error", { "props": false }] */
 
-const fs = require('fs');
 const path = require('path');
 const rollup = require('rollup');
 const buble = require('rollup-plugin-buble');
@@ -15,6 +14,7 @@ const getConfig = require('./get-core-config.js');
 const banner = require('./banners/core.js');
 const getOutput = require('./get-output.js');
 const writeFileSync = require('./utils/write-file-sync');
+const fs = require('./utils/fs-extra');
 
 let cache;
 
@@ -25,7 +25,7 @@ function es(components, cb) {
   const format = 'es';
   const output = `${getOutput()}/core`;
 
-  const esContent = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.js'), 'utf8');
+  const esContent = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.js'));
 
   // Bundle
   const bundleContent = esContent

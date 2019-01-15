@@ -3,10 +3,9 @@
 /* eslint global-require: "off" */
 /* eslint no-param-reassign: "off" */
 
-const fs = require('fs');
 const path = require('path');
 const getOutput = require('./get-output');
-const writeFileSync = require('./utils/write-file-sync');
+const fs = require('./utils/fs-extra');
 
 const importLib = `
 import Vue from 'vue';
@@ -49,7 +48,7 @@ function buildTypings(cb) {
     componentExports.push(`  f7${componentName}`);
   });
 
-  let vueTypings = fs.readFileSync(path.resolve(__dirname, '../src/phenome/framework7-phenome.d.ts'), 'utf8');
+  let vueTypings = fs.readFileSync(path.resolve(__dirname, '../src/phenome/framework7-phenome.d.ts'));
   vueTypings = vueTypings
     .replace('// IMPORT_LIB', importLib)
     .replace('// IMPORT_COMPONENTS', componentImports.join('\n'))
@@ -58,9 +57,9 @@ function buildTypings(cb) {
     .replace('// DECLARE_PLUGIN', declarePlugin)
     .replace('// EXPORT_PLUGIN', exportPlugin);
 
-  writeFileSync(`${output}/framework7-vue.d.ts`, vueTypings);
-  writeFileSync(`${output}/framework7-vue.esm.d.ts`, vueTypings);
-  writeFileSync(`${output}/framework7-vue.esm.bundle.d.ts`, vueTypings);
+  fs.writeFileSync(`${output}/framework7-vue.d.ts`, vueTypings);
+  fs.writeFileSync(`${output}/framework7-vue.esm.d.ts`, vueTypings);
+  fs.writeFileSync(`${output}/framework7-vue.esm.bundle.d.ts`, vueTypings);
 
   cb();
 }

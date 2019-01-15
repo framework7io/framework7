@@ -3,7 +3,7 @@
 /* eslint global-require: "off" */
 /* eslint no-param-reassign: ["error", { "props": false }] */
 /* eslint arrow-body-style: "off" */
-const fs = require('fs');
+// const fs = require('fs');
 const path = require('path');
 const rollup = require('rollup');
 const buble = require('rollup-plugin-buble');
@@ -16,8 +16,8 @@ const autoprefixer = require('./utils/autoprefixer');
 const cleanCSS = require('./utils/clean-css');
 const getConfig = require('./get-core-config.js');
 const getOutput = require('./get-output.js');
-const writeFileSync = require('./utils/write-file-sync');
 const coreComponents = require('./core-components');
+const fs = require('./utils/fs-extra');
 
 const intro = `
 function framework7ComponentLoader(Framework7, Framework7AutoInstallComponent) {
@@ -64,7 +64,7 @@ async function buildLazyComponentsLess(components, rtl, cb) {
   const includeMdTheme = config.themes.indexOf('md') >= 0;
   const includeDarkTheme = config.darkTheme;
 
-  const mainLess = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.less'), 'utf8')
+  const mainLess = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.less'))
     .split('\n')
     .filter(line => line.indexOf('@import url(\'./components') < 0)
     .join('\n')
@@ -82,19 +82,14 @@ async function buildLazyComponentsLess(components, rtl, cb) {
   });
 
   componentsToProcess.forEach(async (component) => {
-    const lessContent = fs.readFileSync(path.resolve(__dirname, `../src/core/components/${component}/${component}.less`), 'utf8');
+    const lessContent = fs.readFileSync(path.resolve(__dirname, `../src/core/components/${component}/${component}.less`));
 
     const cssContent = await cleanCSS(
       await autoprefixer(
         await less(`${mainLess}\n${lessContent}`, path.resolve(__dirname, `../src/core/components/${component}/`))
       )
     );
-    try {
-      fs.mkdirSync(`${output}/components`, { recursive: true });
-    } catch (err) {
-      // folder exists
-    }
-    writeFileSync(`${output}/components/${component}.css`, cssContent);
+    fs.writeFileSync(`${output}/components/${component}.css`, cssContent);
 
     cbs += 1;
     if (cbs === componentsToProcess.length && cb) cb();
@@ -159,7 +154,7 @@ function buildLazyComponentsJs(components, cb) {
       });
       let cbs = 0;
       filesToProcess.forEach((fileName) => {
-        let fileContent = fs.readFileSync(`${output}/components/${fileName}`, 'utf8')
+        let fileContent = fs.readFileSync(`${output}/components/${fileName}`)
           .split('\n')
           .filter(line => line.indexOf('import ') !== 0)
           .map(line => line.trim().length ? `  ${line}` : line) // eslint-disable-line
@@ -174,7 +169,7 @@ function buildLazyComponentsJs(components, cb) {
         fileContent = Terser.minify(fileContent).code;
         fileContent = `(${fileContent}(Framework7, typeof Framework7AutoInstallComponent === 'undefined' ? undefined : Framework7AutoInstallComponent))`;
 
-        writeFileSync(`${output}/components/${fileName}`, `${fileContent}\n`);
+        fs.writeFileSync(`${output}/components/${fileName}`, `${fileContent}\n`);
 
         cbs += 1;
         if (cbs === filesToProcess.length && cb) cb();

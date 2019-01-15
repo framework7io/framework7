@@ -2,16 +2,16 @@
 /* eslint no-console: "off" */
 /* eslint global-require: "off" */
 /* eslint no-param-reassign: ["error", { "props": false }] */
-const fs = require('fs');
+const fsNative = require('fs');
 const path = require('path');
 const glob = require('glob');
 const getConfig = require('./get-core-config.js');
 const getOutput = require('./get-output.js');
-const writeFileSync = require('./utils/write-file-sync');
+const fs = require('./utils/fs-extra');
 
 function base64Encode(file) {
   // read binary data
-  const bitmap = fs.readFileSync(file);
+  const bitmap = fsNative.readFileSync(file);
   // convert binary data to base64 encoded string
   return Buffer.from(bitmap).toString('base64');
 }
@@ -28,7 +28,7 @@ function build(cb) {
       if (file === 'framework7.less') return;
       if (file === 'framework7.js') return;
       if (file === 'framework7.d.ts') return;
-      let fileContent = fs.readFileSync(path.resolve(__dirname, '../src/core', file), 'utf8');
+      let fileContent = fs.readFileSync(path.resolve(__dirname, '../src/core', file));
       if (file.indexOf('.js') >= 0) {
         fileContent = fileContent
           .replace('process.env.NODE_ENV', JSON.stringify(env))
@@ -42,10 +42,7 @@ function build(cb) {
           .replace('framework7_coreIconsFont()', `'${iconsFontBase64}'`)
           .replace('framework7_skeletonFont()', `'${skeletonFontBase64}'`);
       }
-      if (!fs.existsSync(path.dirname(path.resolve(output, file)))) {
-        fs.mkdirSync(path.dirname(path.resolve(output, file)), { recursive: true });
-      }
-      writeFileSync(path.resolve(output, file), fileContent);
+      fs.writeFileSync(path.resolve(output, file), fileContent);
       if (index === files.length - 1) cb();
     });
   });

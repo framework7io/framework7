@@ -3,10 +3,9 @@
 /* eslint global-require: "off" */
 /* eslint no-param-reassign: ["error", { "props": false }] */
 
-const fs = require('fs');
 const path = require('path');
 const getOutput = require('./get-output.js');
-const writeFileSync = require('./utils/write-file-sync');
+const fs = require('./utils/fs-extra');
 
 function capitalize(name) {
   return name.split('-').map((word) => { // eslint-disable-line
@@ -48,15 +47,15 @@ function buildTypings(cb) {
     ].join('\n  ');
   });
 
-  const typings = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.d.ts'), 'utf8')
+  const typings = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.d.ts'))
     .replace(/\/\/ IMPORT_MODULES/, importModules.join('\n'))
     .replace(/\/\/ IMPORT_COMPONENTS/, importComponents.join('\n'))
     .replace(/\/\/ INSTALL/, install.join('\n  '));
 
-  writeFileSync(`${output}/js/framework7.d.ts`, typings);
-  writeFileSync(`${output}/js/framework7.bundle.d.ts`, typings);
-  writeFileSync(`${output}/framework7.esm.d.ts`, typings);
-  writeFileSync(`${output}/framework7.esm.bundle.d.ts`, typings);
+  fs.writeFileSync(`${output}/js/framework7.d.ts`, typings);
+  fs.writeFileSync(`${output}/js/framework7.bundle.d.ts`, typings);
+  fs.writeFileSync(`${output}/framework7.esm.d.ts`, typings);
+  fs.writeFileSync(`${output}/framework7.esm.bundle.d.ts`, typings);
 
   cb();
 }

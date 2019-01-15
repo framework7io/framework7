@@ -3,10 +3,9 @@
 /* eslint global-require: "off" */
 /* eslint no-param-reassign: "off" */
 
-const fs = require('fs');
 const path = require('path');
 const getOutput = require('./get-output');
-const writeFileSync = require('./utils/write-file-sync');
+const fs = require('./utils/fs-extra');
 
 const importLib = `
 import * as React from 'react';
@@ -49,7 +48,7 @@ function buildTypings(cb) {
     componentExports.push(`  F7${componentName}`, `  F7${componentName} as ${componentName}`);
   });
 
-  let reactTypings = fs.readFileSync(path.resolve(__dirname, '../src/phenome/framework7-phenome.d.ts'), 'utf8');
+  let reactTypings = fs.readFileSync(path.resolve(__dirname, '../src/phenome/framework7-phenome.d.ts'));
   reactTypings = reactTypings
     .replace('// IMPORT_LIB', importLib)
     .replace('// IMPORT_COMPONENTS', componentImports.join('\n'))
@@ -58,8 +57,8 @@ function buildTypings(cb) {
     .replace('// DECLARE_PLUGIN', declarePlugin)
     .replace('// EXPORT_PLUGIN', exportPlugin);
 
-  writeFileSync(`${output}/framework7-react.d.ts`, reactTypings);
-  writeFileSync(`${output}/framework7-react.esm.d.ts`, reactTypings);
+  fs.writeFileSync(`${output}/framework7-react.d.ts`, reactTypings);
+  fs.writeFileSync(`${output}/framework7-react.esm.d.ts`, reactTypings);
 
   cb();
 }

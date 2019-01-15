@@ -3,7 +3,6 @@
 /* eslint global-require: "off" */
 /* eslint no-param-reassign: ["error", { "props": false }] */
 
-const fs = require('fs');
 
 const rollup = require('rollup');
 const buble = require('rollup-plugin-buble');
@@ -12,7 +11,7 @@ const replace = require('rollup-plugin-replace');
 const Terser = require('terser');
 const bannerVue = require('./banners/vue');
 const getOutput = require('./get-output');
-const writeFileSync = require('./utils/write-file-sync');
+const fs = require('./utils/fs-extra');
 
 function esm({ banner, componentImports, componentExports }) {
   return `
@@ -30,7 +29,7 @@ export default Framework7Vue;
 function buildVue(cb) {
   const env = process.env.NODE_ENV || 'development';
   const buildPath = getOutput();
-  const pluginContent = fs.readFileSync(`${buildPath}/vue/utils/plugin.js`, 'utf8');
+  const pluginContent = fs.readFileSync(`${buildPath}/vue/utils/plugin.js`);
 
   /* Replace plugin vars: utils/plugin.js */
   const newPluginContent = pluginContent
@@ -40,7 +39,7 @@ function buildVue(cb) {
     .replace(/EXTEND/g, 'params.Vue || Vue')
     .replace(/COMPILER/g, '\'vue\'');
 
-  writeFileSync(`${buildPath}/vue/utils/plugin.js`, newPluginContent);
+  fs.writeFileSync(`${buildPath}/vue/utils/plugin.js`, newPluginContent);
 
   /* Build main components esm module: framework7-vue.esm.js */
   const files = fs.readdirSync(`${buildPath}/vue/components`).filter(file => file.indexOf('.d.ts') < 0);
@@ -71,7 +70,7 @@ function buildVue(cb) {
     componentExports,
   });
 
-  writeFileSync(`${buildPath}/vue/framework7-vue.esm.js`, componentsContent);
+  fs.writeFileSync(`${buildPath}/vue/framework7-vue.esm.js`, componentsContent);
 
   /* Build esm module bundle: components + plugin -> framework7-vue.esm.bundle.js */
   const registerComponents = components
@@ -86,7 +85,7 @@ function buildVue(cb) {
     .replace(/EXTEND/g, 'params.Vue || Vue')
     .replace(/COMPILER/g, '\'vue\'');
 
-  writeFileSync(`${buildPath}/vue/framework7-vue.esm.bundle.js`, bannerVue + esmBundlePluginContent);
+  fs.writeFileSync(`${buildPath}/vue/framework7-vue.esm.bundle.js`, bannerVue + esmBundlePluginContent);
 
   /* Build UMD from esm bundle: framework7-vue.esm.bundle.js -> framework7-vue.js */
   rollup.rollup({
@@ -127,8 +126,8 @@ function buildVue(cb) {
         preamble: bannerVue,
       },
     });
-    writeFileSync(`${buildPath}/vue/framework7-vue.min.js`, minified.code);
-    writeFileSync(`${buildPath}/vue/framework7-vue.min.js.map`, minified.map);
+    fs.writeFileSync(`${buildPath}/vue/framework7-vue.min.js`, minified.code);
+    fs.writeFileSync(`${buildPath}/vue/framework7-vue.min.js.map`, minified.map);
     if (cb) cb();
   }).catch((err) => {
     if (cb) cb();

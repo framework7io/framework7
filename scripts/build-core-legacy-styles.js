@@ -1,10 +1,9 @@
 /* eslint-disable */
-const fs = require('fs');
 const path = require('path');
 const postcss = require('postcss');
 const postcssFilterRules = require('postcss-filter-rules');
 const postcssCssVariables = require('postcss-css-variables');
-const writeFileSync = require('./utils/write-file-sync');
+const fs = require('./utils/fs-extra');
 
 const plugin = postcss.plugin('pluginname', () => (ast) => {
   ast.walkComments((comment) => {
@@ -26,7 +25,7 @@ const plugin = postcss.plugin('pluginname', () => (ast) => {
 });
 
 function build() {
-  const css = fs.readFileSync(path.resolve(__dirname, '../build/core/css/framework7.bundle.css'), 'utf8');
+  const css = fs.readFileSync(path.resolve(__dirname, '../build/core/css/framework7.bundle.css'));
   postcss([
     postcssFilterRules({
       filter(selector, parts) {
@@ -39,7 +38,7 @@ function build() {
   ])
     .process(css, { from: './build/core/css/framework7.bundle.css', to: './build/core/css/framework7.bundle.legacy.css' })
     .then((result) => {
-      writeFileSync(path.resolve(__dirname, '../build/core/css/framework7.bundle.legacy.css'), result.css);
+      fs.writeFileSync(path.resolve(__dirname, '../build/core/css/framework7.bundle.legacy.css'), result.css);
     });
 }
 

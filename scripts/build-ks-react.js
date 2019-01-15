@@ -1,13 +1,12 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 /* eslint no-console: ["error", { allow: ["log"] }] */
-const fs = require('fs');
 const path = require('path');
 const rollup = require('rollup');
 const buble = require('rollup-plugin-buble');
 const replace = require('rollup-plugin-replace');
 const commonjs = require('rollup-plugin-commonjs');
 const resolve = require('rollup-plugin-node-resolve');
-const writeFileSync = require('./utils/write-file-sync');
+const fs = require('./utils/fs-extra');
 
 // let cache;
 
@@ -23,7 +22,7 @@ function buildKs(cb) {
     f7Path = f7Path.replace(/\\/g, '/');
   }
 
-  let index = fs.readFileSync(path.resolve(__dirname, '../kitchen-sink/react/index.html'), 'utf8');
+  let index = fs.readFileSync(path.resolve(__dirname, '../kitchen-sink/react/index.html'));
   if (env === 'development') {
     index = index
       .replace('../../packages/core/css/framework7.bundle.min.css', '../../build/core/css/framework7.bundle.css')
@@ -33,7 +32,7 @@ function buildKs(cb) {
       .replace('../../build/core/css/framework7.bundle.css', '../../packages/core/css/framework7.bundle.min.css')
       .replace('../../build/core/js/framework7.bundle.js', '../../packages/core/js/framework7.bundle.min.js');
   }
-  writeFileSync(path.resolve(__dirname, '../kitchen-sink/react/index.html'), index);
+  fs.writeFileSync(path.resolve(__dirname, '../kitchen-sink/react/index.html'), index);
 
   rollup.rollup({
     input: './kitchen-sink/react/src/app.js',

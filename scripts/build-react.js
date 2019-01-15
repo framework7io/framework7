@@ -3,7 +3,6 @@
 /* eslint global-require: "off" */
 /* eslint no-param-reassign: ["error", { "props": false }] */
 
-const fs = require('fs');
 
 const rollup = require('rollup');
 const buble = require('rollup-plugin-buble');
@@ -14,7 +13,7 @@ const resolve = require('rollup-plugin-node-resolve');
 const Terser = require('terser');
 const bannerReact = require('./banners/react');
 const getOutput = require('./get-output.js');
-const writeFileSync = require('./utils/write-file-sync');
+const fs = require('./utils/fs-extra');
 
 function esm({ banner, componentImports, componentAliases, componentExports }) {
   return `
@@ -35,7 +34,7 @@ export default Framework7React;
 function buildReact(cb) {
   const env = process.env.NODE_ENV || 'development';
   const buildPath = getOutput();
-  const pluginContent = fs.readFileSync(`${buildPath}/react/utils/plugin.js`, 'utf-8');
+  const pluginContent = fs.readFileSync(`${buildPath}/react/utils/plugin.js`);
 
   /* Replace plugin vars: utils/plugin.js */
   const newPluginContent = pluginContent
@@ -45,7 +44,7 @@ function buildReact(cb) {
     .replace(/EXTEND/g, 'params.React ? params.React.Component : React.Component')
     .replace(/COMPILER/g, '\'react\'');
 
-  writeFileSync(`${buildPath}/react/utils/plugin.js`, newPluginContent);
+  fs.writeFileSync(`${buildPath}/react/utils/plugin.js`, newPluginContent);
 
   /* Build main components esm module: framework7-react.esm.js */
   const files = fs.readdirSync(`${buildPath}/react/components`).filter(file => file.indexOf('.d.ts') < 0);
@@ -76,7 +75,7 @@ function buildReact(cb) {
     componentExports,
   });
 
-  writeFileSync(`${buildPath}/react/framework7-react.esm.js`, componentsContent);
+  fs.writeFileSync(`${buildPath}/react/framework7-react.esm.js`, componentsContent);
 
   /* Build esm module bundle for rollup UMD: components + plugin -> framework7-react.esm.bundle.js */
   const registerComponents = components
@@ -91,7 +90,7 @@ function buildReact(cb) {
     .replace(/EXTEND/g, 'params.React ? params.React.Component : React.Component')
     .replace(/COMPILER/g, '\'react\'');
 
-  writeFileSync(`${buildPath}/react/framework7-react.esm.bundle.js`, bannerReact + esmBundlePluginContent);
+  fs.writeFileSync(`${buildPath}/react/framework7-react.esm.bundle.js`, bannerReact + esmBundlePluginContent);
 
   /* Build UMD from esm bundle: framework7-react.esm.bundle.js -> framework7-react.js */
   rollup.rollup({
@@ -137,8 +136,8 @@ function buildReact(cb) {
         preamble: bannerReact,
       },
     });
-    writeFileSync(`${buildPath}/react/framework7-react.min.js`, minified.code);
-    writeFileSync(`${buildPath}/react/framework7-react.min.js.map`, minified.map);
+    fs.writeFileSync(`${buildPath}/react/framework7-react.min.js`, minified.code);
+    fs.writeFileSync(`${buildPath}/react/framework7-react.min.js.map`, minified.map);
     if (cb) cb();
   }).catch((err) => {
     if (cb) cb();
