@@ -4,6 +4,7 @@ import { window, document } from 'ssr-window';
 import Utils from '../../utils/utils';
 import Device from '../../utils/device';
 import Framework7Class from '../../utils/class';
+import EventsClass from '../../utils/events-class';
 import ConstructorMethods from '../../utils/constructor-methods';
 import ModalMethods from '../../utils/modal-methods';
 import loadModule from './load-module';
@@ -182,6 +183,10 @@ class Framework7 extends Framework7Class {
 
   static get Class() {
     return Framework7Class;
+  }
+
+  static get Events() {
+    return EventsClass;
   }
 }
 
