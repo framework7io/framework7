@@ -13,7 +13,6 @@ const commonjs = require('rollup-plugin-commonjs');
 const getConfig = require('./get-core-config.js');
 const banner = require('./banners/core.js');
 const getOutput = require('./get-output.js');
-const writeFileSync = require('./utils/write-file-sync');
 const fs = require('./utils/fs-extra');
 
 let cache;
@@ -48,8 +47,8 @@ function es(components, cb) {
     .replace('//NAMED_ES_EXPORT', 'export { Template7, $ as Dom7, Request, Utils, Device, Support };');
 
   // Save
-  writeFileSync(`${output}/framework7.esm.bundle.js`, `${banner}\n${bundleContent}`);
-  writeFileSync(`${output}/framework7.esm.js`, `${banner}\n${coreContent}`);
+  fs.writeFileSync(`${output}/framework7.esm.bundle.js`, `${banner}\n${bundleContent}`);
+  fs.writeFileSync(`${output}/framework7.esm.js`, `${banner}\n${coreContent}`);
 
   if (cb) cb();
 }
@@ -113,8 +112,8 @@ function umdBundle(components, cb) {
       },
     });
 
-    writeFileSync(`${output}/js/framework7.bundle.min.js`, minified.code);
-    writeFileSync(`${output}/js/framework7.bundle.min.js.map`, minified.map);
+    fs.writeFileSync(`${output}/js/framework7.bundle.min.js`, minified.code);
+    fs.writeFileSync(`${output}/js/framework7.bundle.min.js.map`, minified.map);
 
     cb();
   }).catch((err) => {
@@ -179,8 +178,8 @@ function umdCore(cb) {
       },
     });
 
-    writeFileSync(`${output}/js/framework7.min.js`, minified.code);
-    writeFileSync(`${output}/js/framework7.min.js.map`, minified.map);
+    fs.writeFileSync(`${output}/js/framework7.min.js`, minified.code);
+    fs.writeFileSync(`${output}/js/framework7.min.js.map`, minified.map);
 
     cb();
   }).catch((err) => {
