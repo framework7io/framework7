@@ -150,12 +150,14 @@ const Navbar = {
     }
   },
   hide(el, animate = true) {
+    const app = this;
     let $el = $(el);
     if ($el.hasClass('navbar-inner')) $el = $el.parents('.navbar');
     if (!$el.length) return;
     if ($el.hasClass('navbar-hidden')) return;
     let className = `navbar-hidden${animate ? ' navbar-transitioning' : ''}`;
-    if ($el.find('.navbar-current .title-large').length) {
+    const currentIsLarge = app.theme === 'ios' ? $el.find('.navbar-current .title-large').length : $el.find('.title-large').length;
+    if (currentIsLarge) {
       className += ' navbar-large-hidden';
     }
     $el.transitionEnd(() => {
@@ -272,7 +274,8 @@ const Navbar = {
     const $navbarEl = app.theme === 'md'
       ? $navbarInnerEl.parents('.navbar')
       : $(navbarInnerEl || app.navbar.getElByPage(pageEl)).closest('.navbar');
-    const navbarHideHeight = 44;
+    const isLarge = $navbarInnerEl.find('.title-large').length || $navbarInnerEl.hasClass('.navbar-inner-large');
+    let navbarHideHeight = 44;
     const snapPageScrollToLargeTitle = app.params.navbar.snapPageScrollToLargeTitle;
 
     let previousScrollTop;
@@ -286,7 +289,7 @@ const Navbar = {
 
     let navbarCollapsed;
     let navbarTitleLargeHeight;
-    if (needCollapse) {
+    if (needCollapse || (needHide && isLarge)) {
       navbarTitleLargeHeight = $navbarInnerEl.css('--f7-navbar-large-title-height');
       if (navbarTitleLargeHeight && navbarTitleLargeHeight.indexOf('px') >= 0) {
         navbarTitleLargeHeight = parseInt(navbarTitleLargeHeight, 10);
@@ -296,6 +299,9 @@ const Navbar = {
       } else {
         navbarTitleLargeHeight = app.theme === 'ios' ? 52 : 48;
       }
+    }
+    if (needHide && isLarge) {
+      navbarHideHeight += navbarTitleLargeHeight;
     }
 
     let scrollChanged;
