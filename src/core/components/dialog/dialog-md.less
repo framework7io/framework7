@@ -1,14 +1,8 @@
 .md {
   .dialog {
     background: var(--f7-dialog-bg-color);
-    &.modal-in {
-      opacity: 1;
-      transform: translate3d(0,0,0) scale(1);
-    }
     &.modal-out {
-      opacity: 0;
-      z-index: 13500-1;
-      transform: translate3d(0,0,0) scale(0.815);
+      transform: translate3d(0, -50%, 0) scale(0.815);
     }
   }
   .dialog-inner {

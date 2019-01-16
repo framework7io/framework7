@@ -110,14 +110,6 @@ class Modal extends Framework7Class {
     // Show Modal
     $el.show();
 
-    // Set Dialog offset
-    if (type === 'dialog') {
-      $el.css({
-        marginTop: `${-Math.round($el.outerHeight() / 2)}px`,
-      });
-    }
-
-
     /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
     modal._clientLeft = $el[0].clientLeft;
 

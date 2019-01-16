@@ -10,7 +10,7 @@
   top: 50%;
   overflow: hidden;
   opacity: 0;
-  transform: translate3d(0,0,0) scale(1.185);
+  transform: translate3d(0, -50%, 0) scale(1.185);
   transition-property: transform, opacity;
   display: none;
   transition-duration: 400ms;
@@ -24,7 +24,7 @@
   will-change: transform, opacity;
   &.modal-in {
     opacity: 1;
-    transform: translate3d(0,0,0) scale(1);
+    transform: translate3d(0, -50%, 0) scale(1);
   }
   &.modal-out {
     opacity: 0;
