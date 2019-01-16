@@ -13,6 +13,7 @@
   margin: 0;
   transform: translate3d(0,0,0);
   height: var(--f7-navbar-height);
+  background-image: var(--f7-navbar-bg-image, var(--f7-bars-bg-image));
   background-color: var(--f7-navbar-bg-color, var(--f7-bars-bg-color, var(--f7-theme-color)));
   color: var(--f7-navbar-text-color, var(--f7-bars-text-color));
   font-size: var(--f7-navbar-font-size);
@@ -185,7 +186,8 @@
   will-change: transform, opacity;
   transition-property: transform;
   overflow: hidden;
-  background: var(--f7-navbar-bg-color, var(--f7-bars-bg-color, var(--f7-theme-color)));
+  background-image: var(--f7-navbar-bg-image, var(--f7-bars-bg-image));
+  background-color: var(--f7-navbar-bg-color, var(--f7-bars-bg-color, var(--f7-theme-color)));
   height: calc(var(--f7-navbar-large-title-height) + 1px);
   z-index: 5;
   margin-top: -1px;
