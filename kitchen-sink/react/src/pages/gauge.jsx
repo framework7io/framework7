@@ -30,11 +30,11 @@ export default class extends React.Component {
             labelText="amount of something"
           />
           <Segmented tag="p" raised>
-            <Button onClick={() => this.setState({ gaugeValue: 0 })}>0%</Button>
-            <Button onClick={() => this.setState({ gaugeValue: 0.25 })}>25%</Button>
-            <Button onClick={() => this.setState({ gaugeValue: 0.5 })}>50%</Button>
-            <Button onClick={() => this.setState({ gaugeValue: 0.75 })}>75%</Button>
-            <Button onClick={() => this.setState({ gaugeValue: 1 })}>100%</Button>
+            <Button active={this.state.gaugeValue === 0} onClick={() => this.setState({ gaugeValue: 0 })}>0%</Button>
+            <Button active={this.state.gaugeValue === 0.25} onClick={() => this.setState({ gaugeValue: 0.25 })}>25%</Button>
+            <Button active={this.state.gaugeValue === 0.5} onClick={() => this.setState({ gaugeValue: 0.5 })}>50%</Button>
+            <Button active={this.state.gaugeValue === 0.75} onClick={() => this.setState({ gaugeValue: 0.75 })}>75%</Button>
+            <Button active={this.state.gaugeValue === 1} onClick={() => this.setState({ gaugeValue: 1 })}>100%</Button>
           </Segmented>
         </Block>
 

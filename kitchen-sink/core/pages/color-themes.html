@@ -136,7 +136,7 @@
         colors: colors,
       };
     },
-    mounted() {
+    mounted: function () {
       if (!stylesheet) {
         stylesheet = document.createElement('style');
         document.head.appendChild(stylesheet);
@@ -232,11 +232,11 @@
         var self = this;
         const value = e.target.value;
         const hex = value.replace(/#/g, '');
-        if (hex && (hex.length >= 3 || hex.length <= 6) && hex.match(/[a-fA-F0-9#]*/g)[0] === hex) {
-          globalCustomColor = `#${hex}`;
-          self.$setState({
-            customColor: globalCustomColor,
-          });
+        globalCustomColor = `#${hex}`;
+        self.$setState({
+          customColor: globalCustomColor,
+        });
+        if (hex && (hex.length === 3 || hex.length === 6) && hex.match(/[a-fA-F0-9#]*/g)[0] === hex) {
           globalCustomProperties = self.generateStylesheet();
           stylesheet.innerHTML = globalCustomProperties;
           self.$setState({

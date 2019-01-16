@@ -17,11 +17,11 @@
         labelText="amount of something"
       />
       <f7-segmented tag="p" raised>
-        <f7-button @click="() => gaugeValue = 0">0%</f7-button>
-        <f7-button @click="() => gaugeValue = 0.25">25%</f7-button>
-        <f7-button @click="() => gaugeValue = 0.5">50%</f7-button>
-        <f7-button @click="() => gaugeValue = 0.75">75%</f7-button>
-        <f7-button @click="() => gaugeValue = 1">100%</f7-button>
+        <f7-button :active="gaugeValue === 0" @click="() => gaugeValue = 0">0%</f7-button>
+        <f7-button :active="gaugeValue === 0.25" @click="() => gaugeValue = 0.25">25%</f7-button>
+        <f7-button :active="gaugeValue === 0.5" @click="() => gaugeValue = 0.5">50%</f7-button>
+        <f7-button :active="gaugeValue === 0.75" @click="() => gaugeValue = 0.75">75%</f7-button>
+        <f7-button :active="gaugeValue === 1" @click="() => gaugeValue = 1">100%</f7-button>
       </f7-segmented>
     </f7-block>
 

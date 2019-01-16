@@ -1,71 +1,228 @@
 import React from 'react';
-import { Navbar, Page, BlockTitle, Button, Row, Col, Block } from 'framework7-react';
+import { Navbar, Page, BlockTitle, Button, Row, Col, Block, List, ListInput, Checkbox } from 'framework7-react';
+
+var stylesheet;
+var globalTheme = 'light';
+var globalBarsStyle = 'empty';
+var globalCustomColor = '';
+var globalCustomProperties = '';
 
 export default class extends React.Component {
   constructor(props) {
     super(props);
 
-    const colors = [
+    var colors = [
       'red',
       'green',
       'blue',
       'pink',
       'yellow',
       'orange',
+      'purple',
+      'deeppurple',
+      'lightblue',
+      'teal',
+      'lime',
+      'deeporange',
       'gray',
       'black',
     ];
     this.state = {
-      colors,
-      colorsAmount: colors.length,
+      theme: globalTheme,
+      barsStyle: globalBarsStyle,
+      customColor: globalCustomColor,
+      customProperties: globalCustomProperties,
+      colors: colors,
     };
   }
   render() {
     return (
       <Page>
-        <Navbar large title="Color Themes" title-large="Color Themes" backLink="Back"></Navbar>
-        <BlockTitle>Layout Themes</BlockTitle>
-        <Block>
+        <Navbar large title="Color Themes" backLink="Back"></Navbar>
+        <BlockTitle medium>Layout Themes</BlockTitle>
+        <Block strong>
           <p>Framework7 comes with 2 main layout themes: Light (default) and Dark:</p>
           <Row>
-            <Col width="50" className="bg-color-white" onClick={() => this.setLayoutTheme('light')} style={{cursor: 'pointer', padding: '30px', border: '1px solid rgba(0,0,0,0.1)'}}></Col>
-            <Col width="50" className="bg-color-black" onClick={() => this.setLayoutTheme('dark')} style={{cursor: 'pointer', padding: '30px', border: '1px solid rgba(255,255,255,0.1)'}}></Col>
+            <Col width="50" className="bg-color-white demo-theme-picker" onClick={() => this.setLayoutTheme('light')}>
+              {this.state.theme === 'light' && (
+                <Checkbox checked disabled />
+              )}
+            </Col>
+            <Col width="50" className="bg-color-black demo-theme-picker" onClick={() => this.setLayoutTheme('dark')}>
+              {this.state.theme === 'dark' && (
+                <Checkbox checked disabled />
+              )}
+            </Col>
           </Row>
         </Block>
-        <BlockTitle>Choose Color Theme</BlockTitle>
-        <Block>
-          <p>Framework7 comes with {this.state.colorsAmount} color themes set.</p>
+        <BlockTitle medium>Navigation Bars Style</BlockTitle>
+        <Block strong>
+          <p>Switch navigation bars to filled style:</p>
+          <Row>
+            <Col width="50" className="demo-bars-picker demo-bars-picker-empty" onClick={() => this.setBarsStyle('empty')}>
+              <div className="demo-navbar"></div>
+              {this.state.barsStyle === 'empty' && (
+                <Checkbox checked disabled />
+              )}
+            </Col>
+            <Col width="50" className="demo-bars-picker demo-bars-picker-fill" onClick={() => this.setBarsStyle('fill')}>
+              <div className="demo-navbar"></div>
+              {this.state.barsStyle === 'fill' && (
+                <Checkbox checked disabled />
+              )}
+            </Col>
+          </Row>
+        </Block>
+        <BlockTitle medium>Default Color Themes</BlockTitle>
+        <Block strong>
+          <p>Framework7 comes with {this.state.colors.length} color themes set.</p>
           <Row>
             {this.state.colors.map((color, index) => (
-              <Col width="33" key={index}>
-                <Button
-                  style={{marginBottom:'1em', textTransform: 'capitalize'}}
-                  fill
-                  round
-                  raised
-                  color={color}
-                  onClick={() => this.setColorTheme(color)}
-                >
-                  {color}
-                </Button>
+              <Col width="33" tabletWidth="25" desktopWidth="20" key={index}>
+                <Button fill round small className="demo-color-picker-button" color={color} onClick={() => this.setColorTheme(color)}>{color}</Button>
               </Col>
             ))}
-            <Col width="33"></Col>
+
+            <Col width="33" tabletWidth="25" desktopWidth="20" />
+            <Col width="33" tabletWidth="25" desktopWidth="20" />
+            <Col width="33" tabletWidth="25" desktopWidth="20" />
           </Row>
         </Block>
+        <BlockTitle medium>Custom Color Theme</BlockTitle>
+        <List>
+          <ListInput
+            type="text"
+            label="HEX Color"
+            value={this.state.customColor}
+            placeholder="e.g. #ff0000"
+            onInput={(e) => this.setCustomColor(e)}
+          >
+            <div slot="media" style={{width: '28px', height: '28px', borderRadius: '4px', background: 'var(--f7-theme-color)'}}></div>
+          </ListInput>
+        </List>
+
+        <BlockTitle medium>Generated CSS Variables</BlockTitle>
+        <Block strong>
+          {this.state.customProperties && (
+            <p>Add this code block to your custom stylesheet:</p>
+          )}
+          {this.state.customProperties && (
+            <pre style={{overflow: 'auto', WebkitOverflowScrolling: 'touch', margin: 0, fontSize: '12px'}}>{this.state.customProperties}</pre>
+          )}
+          {!this.state.customProperties && (
+            <p>Change navigation bars styles or specify custom color to see custom CSS variables here</p>
+          )}
+        </Block>
       </Page>
-    )
+    );
   }
+
+  generateStylesheet() {
+    var self = this;
+    var styles = '';
+    if (self.state.customColor) {
+      const colorThemeProperties = self.$f7.utils.colorThemeCSSProperties(self.state.customColor);
+      if (Object.keys(colorThemeProperties).length) {
+        styles += `
+/* Custom color theme */
+:root {
+  ${Object.keys(colorThemeProperties)
+  .map(key => `${key}: ${colorThemeProperties[key]};`)
+  .join('\n  ')}
+}`;
+      }
+    }
+    if (self.state.barsStyle === 'fill') {
+      styles += `
+/* Invert navigation bars to fill style */
+:root,
+:root.theme-dark,
+:root .theme-dark {
+--f7-bars-bg-color: var(--f7-theme-color);
+--f7-bars-text-color: #fff;
+--f7-bars-link-color: #fff;
+--f7-navbar-subtitle-text-color: rgba(255,255,255,0.85);
+--f7-bars-border-color: transparent;
+--f7-tabbar-link-active-color: #fff;
+--f7-tabbar-link-inactive-color: rgba(255,255,255,0.54);
+--f7-searchbar-input-bg-color: #fff;
+--f7-sheet-border-color: transparent;
+--f7-tabbar-link-active-border-color: #fff;
+}
+.navbar,
+.toolbar,
+.subnavbar,
+.calendar-header,
+.calendar-footer {
+--f7-touch-ripple-color: var(--f7-touch-ripple-white);
+--f7-link-highlight-color: var(--f7-link-highlight-white);
+--f7-button-text-color: #fff;
+--f7-button-pressed-bg-color: rgba(255,255,255,0.1);
+}
+      `;
+    }
+    return styles.trim();
+  }
+
+  componentDidMount() {
+    if (!stylesheet) {
+      stylesheet = document.createElement('style');
+      document.head.appendChild(stylesheet);
+    }
+  }
+
   setLayoutTheme(theme) {
-    const self = this;
-    const app = self.$f7;
-    app.root.removeClass('theme-dark theme-light').addClass(`theme-${theme}`);
+    var self = this;
+    var $html = self.$$('html');
+    globalTheme = theme;
+    $html.removeClass('theme-dark theme-light').addClass('theme-' + globalTheme);
+    self.setState({ theme: globalTheme });
   }
+
   setColorTheme(color) {
-    const self = this;
-    const app = self.$f7;
-    const currentColorClass = app.root[0].className.match(/color-theme-([a-z]*)/);
-    if (currentColorClass) app.root.removeClass(currentColorClass[0]);
-    app.root.addClass(`color-theme-${color}`);
+    var self = this;
+    var $html = self.$$('html');
+    var currentColorClass = $html[0].className.match(/color-theme-([a-z]*)/);
+    if (currentColorClass) $html.removeClass(currentColorClass[0])
+    $html.addClass('color-theme-' + color);
+    self.unsetCustomColor();
+  }
+
+  setBarsStyle(barsStyle) {
+    var self = this;
+    globalBarsStyle = barsStyle;
+    self.setState({barsStyle: globalBarsStyle})
+    globalCustomProperties = self.generateStylesheet();
+    stylesheet.innerHTML = globalCustomProperties;
+    self.setState({customProperties: globalCustomProperties})
+  }
+
+  unsetCustomColor() {
+    var self = this;
+    globalCustomColor = '';
+    self.setState({customColor: ''})
+    globalCustomProperties = self.generateStylesheet();
+    stylesheet.innerHTML = globalCustomProperties;
+    self.setState({customProperties: globalCustomProperties})
+  }
+
+  setCustomColor (e) {
+    var self = this;
+    const value = e.target.value;
+    const hex = value.replace(/#/g, '');
+    globalCustomColor = `#${hex}`;
+    self.setState({customColor: globalCustomColor}, () => {
+      if (hex && (hex.length === 3 || hex.length === 6) && hex.match(/[a-fA-F0-9#]*/g)[0] === hex) {
+        globalCustomProperties = self.generateStylesheet();
+        stylesheet.innerHTML = globalCustomProperties;
+        self.setState({customProperties: globalCustomProperties});
+      } else if (!hex) {
+        self.unsetCustomColor();
+      } else {
+        globalCustomProperties = self.generateStylesheet();
+        stylesheet.innerHTML = globalCustomProperties;
+        self.setState({customProperties: globalCustomProperties});
+      }
+    });
   }
 };
