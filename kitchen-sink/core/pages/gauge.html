@@ -18,11 +18,11 @@
       <div class="block block-strong text-align-center">
         <div class="gauge demo-gauge"></div>
         <p class="segmented segmented-raised">
-          <a href="#" class="button" @click="setGaugeValue(0)">0%</a>
-          <a href="#" class="button" @click="setGaugeValue(25)">25%</a>
-          <a href="#" class="button" @click="setGaugeValue(50)">50%</a>
-          <a href="#" class="button" @click="setGaugeValue(75)">75%</a>
-          <a href="#" class="button" @click="setGaugeValue(100)">100%</a>
+          <a href="#" class="button {{#js_if 'this.gaugeValue === 0'}}button-active{{/js_if}}" @click="setGaugeValue(0)">0%</a>
+          <a href="#" class="button {{#js_if 'this.gaugeValue === 25'}}button-active{{/js_if}}" @click="setGaugeValue(25)">25%</a>
+          <a href="#" class="button {{#js_if 'this.gaugeValue === 50'}}button-active{{/js_if}}" @click="setGaugeValue(50)">50%</a>
+          <a href="#" class="button {{#js_if 'this.gaugeValue === 75'}}button-active{{/js_if}}" @click="setGaugeValue(75)">75%</a>
+          <a href="#" class="button {{#js_if 'this.gaugeValue === 100'}}button-active{{/js_if}}" @click="setGaugeValue(100)">100%</a>
         </p>
       </div>
       <div class="block-title">Circle Gauges</div>
@@ -150,9 +150,17 @@
 </template>
 <script>
   return {
+    data: function () {
+      return {
+        gaugeValue: 50,
+      }
+    },
     methods: {
       setGaugeValue: function(value) {
         var self = this;
+        self.$setState({
+          gaugeValue: value,
+        });
         self.demoGauge.update({
           value: value / 100,
           valueText: value + '%',

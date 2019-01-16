@@ -149,8 +149,8 @@
         if (self.customColor) {
           const colorThemeProperties = self.$app.utils.colorThemeCSSProperties(self.customColor);
           if (Object.keys(colorThemeProperties).length) {
-            // styles +=
             styles += `
+/* Custom color theme */
 :root {
   ${Object.keys(colorThemeProperties)
     .map(key => `${key}: ${colorThemeProperties[key]};`)
@@ -160,6 +160,7 @@
         }
         if (self.barsStyle === 'fill') {
           styles += `
+/* Invert navigation bars to fill style */
 :root,
 :root.theme-dark,
 :root .theme-dark {
