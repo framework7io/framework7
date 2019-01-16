@@ -13,10 +13,10 @@ const SW = {
       app.serviceWorker.container.register(path, (scope ? { scope } : {}))
         .then((reg) => {
           SW.registrations.push(reg);
-          app.emit('swRegisterSuccess', reg);
+          app.emit('serviceWorkerRegisterSuccess', reg);
           resolve(reg);
         }).catch((error) => {
-          app.emit('swRegisterError', error);
+          app.emit('serviceWorkerRegisterError', error);
           reject(error);
         });
     });
@@ -38,11 +38,11 @@ const SW = {
           if (SW.registrations.indexOf(reg) >= 0) {
             SW.registrations.splice(SW.registrations.indexOf(reg), 1);
           }
-          app.emit('swUnregisterSuccess', true);
+          app.emit('serviceWorkerUnregisterSuccess', true);
           resolve();
         })
         .catch((error) => {
-          app.emit('swUnregisterError', error);
+          app.emit('serviceWorkerUnregisterError', error);
           reject(error);
         });
     })));
