@@ -42,12 +42,17 @@ function initClicks(app) {
       });
     });
 
+
     // Load Page
     let clickedLinkData = {};
     if (isLink) {
       e.preventDefault();
       clickedLinkData = $clickedLinkEl.dataset();
     }
+
+    // Prevent Router
+    if ($clickedLinkEl.hasClass('prevent-router') || $clickedLinkEl.hasClass('router-prevent')) return;
+
     const validUrl = url && url.length > 0 && url !== '#' && !isTabLink;
     if (validUrl || $clickedLinkEl.hasClass('back')) {
       let view;
