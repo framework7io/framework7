@@ -59,6 +59,7 @@ const Mixins = {
     routeTabId: String,
     view: String,
     routeProps: Object,
+    preventRouter: Boolean,
   },
   linkRouterAttrs(props) {
     const {
@@ -89,11 +90,12 @@ const Mixins = {
     };
   },
   linkRouterClasses(props) {
-    const { back, linkBack, external } = props;
+    const { back, linkBack, external, preventRouter } = props;
 
     return {
       back: back || linkBack,
       external,
+      'prevent-router': preventRouter,
     };
   },
   linkActionsProps: {
