@@ -181,7 +181,7 @@ const Input = {
       const $inputEl = $(this);
       const tag = $inputEl[0].nodeName.toLowerCase();
       app.input.blur($inputEl);
-      if ($inputEl.dataset().validate || $inputEl.attr('validate') !== null) {
+      if ($inputEl.dataset().validate || $inputEl.attr('validate') !== null || $inputEl.attr('data-validate-on-blur') !== null) {
         app.input.validate($inputEl);
       }
       // Resize textarea
