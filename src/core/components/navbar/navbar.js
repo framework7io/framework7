@@ -330,22 +330,26 @@ const Navbar = {
       if (collapseProgress === 0 && navbarCollapsed) {
         app.navbar.expandLargeTitle($navbarInnerEl[0]);
         $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
+        $navbarInnerEl[0].style.overflow = '';
         if (app.theme === 'md') {
           $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         }
       } else if (collapseProgress === 1 && !navbarCollapsed) {
         app.navbar.collapseLargeTitle($navbarInnerEl[0]);
         $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
+        $navbarInnerEl[0].style.overflow = '';
         if (app.theme === 'md') {
           $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         }
       } else if ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed)) {
         $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
+        $navbarInnerEl[0].style.overflow = '';
         if (app.theme === 'md') {
           $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         }
       } else {
         $navbarInnerEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
+        $navbarInnerEl[0].style.overflow = 'visible';
         if (app.theme === 'md') {
           $navbarEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
         }
