@@ -140,15 +140,19 @@ class PullToRefresh extends Framework7Class {
         if (ptr.bottom) {
           maxScrollTop = scrollHeight - offsetHeight;
         }
-        $(e.target).parents().each((index, targetEl) => {
-          if (targetEl === el) {
-            targetIsEl = true;
-          }
-          if (targetIsEl) return;
-          if (targetEl.scrollHeight > targetEl.offsetHeight) {
-            targetIsScrollable = true;
-          }
-        });
+        if (e.target !== el) {
+          $(e.target).parents().each((index, targetEl) => {
+            if (targetEl === el) {
+              targetIsEl = true;
+            }
+            if (targetIsEl) {
+              return;
+            }
+            if (targetEl.scrollHeight > targetEl.offsetHeight) {
+              targetIsScrollable = true;
+            }
+          });
+        }
 
         if (targetIsScrollable || scrollTop > scrollHeight) {
           isTouched = false;
