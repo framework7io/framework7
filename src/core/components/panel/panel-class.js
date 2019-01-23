@@ -177,7 +177,7 @@ class Panel extends Framework7Class {
     const $panelParentEl = $el.parent();
     const wasInDom = $el.parents(document).length > 0;
 
-    if (!$panelParentEl.is(app.root)) {
+    if (!$panelParentEl.is(app.root) || $el.prevAll('.views, .view').length) {
       const $insertBeforeEl = app.root.children('.panel, .views, .view').eq(0);
       const $insertAfterEl = app.root.children('.statusbar').eq(0);
 
@@ -189,7 +189,19 @@ class Panel extends Framework7Class {
         app.root.prepend($el);
       }
 
-      if ($backdropEl && $backdropEl.length && !$backdropEl.parent().is(app.root) && $backdropEl.nextAll('.panel').length === 0) {
+      if ($backdropEl
+        && $backdropEl.length
+        && (
+          (
+            !$backdropEl.parent().is(app.root)
+            && $backdropEl.nextAll('.panel').length === 0
+          )
+          || (
+            $backdropEl.parent().is(app.root)
+            && $backdropEl.nextAll('.panel').length === 0
+          )
+        )
+      ) {
         $backdropEl.insertBefore($el);
       }
 
