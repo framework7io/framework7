@@ -178,6 +178,8 @@ export namespace Dialog {
       destroyPredefinedDialogs?: boolean
       /** Enables keyboard shortcuts (Enter and Esc) keys for predefined dialogs (Alert, Confirm, Prompt, Login, Password) "Ok" and "Cancel" buttons. (default true) */
       keyboardActions?: boolean
+      /** When enabled, dialog will be closed on backdrop click. (default true) */
+      closeByBackdropClick?: boolean
     } | undefined
   }
   interface AppEvents {
