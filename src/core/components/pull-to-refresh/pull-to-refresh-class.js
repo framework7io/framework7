@@ -133,28 +133,33 @@ class PullToRefresh extends Framework7Class {
 
       if (!isMoved) {
         $el.removeClass('ptr-transitioning');
-        let targetIsEl;
         let targetIsScrollable;
         scrollHeight = $el[0].scrollHeight;
         offsetHeight = $el[0].offsetHeight;
         if (ptr.bottom) {
           maxScrollTop = scrollHeight - offsetHeight;
         }
-        if (e.target !== el) {
-          $(e.target).parents().each((index, targetEl) => {
-            if (targetEl === el) {
-              targetIsEl = true;
-            }
-            if (targetIsEl) {
-              return;
-            }
-            if (targetEl.scrollHeight > targetEl.offsetHeight) {
+        if (scrollTop > scrollHeight) {
+          isTouched = false;
+          return;
+        }
+        const $ptrWatchScrollable = $(e.target).closest('.ptr-watch-scroll');
+        if ($ptrWatchScrollable.length) {
+          $ptrWatchScrollable.each((ptrScrollableIndex, ptrScrollableEl) => {
+            if (ptrScrollableEl === el) return;
+            if (
+              (ptrScrollableEl.scrollHeight > ptrScrollableEl.offsetHeight)
+              && $(ptrScrollableEl).css('overflow') === 'auto'
+              && (
+                (!ptr.bottom && ptrScrollableEl.scrollTop > 0)
+                || (ptr.bottom && ptrScrollableEl.scrollTop < ptrScrollableEl.scrollHeight - ptrScrollableEl.offsetHeight)
+              )
+            ) {
               targetIsScrollable = true;
             }
           });
         }
-
-        if (targetIsScrollable || scrollTop > scrollHeight) {
+        if (targetIsScrollable) {
           isTouched = false;
           return;
         }

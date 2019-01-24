@@ -55,7 +55,7 @@
   },
   "dependencies": {
     "dom7": "^2.1.2",
-    "path-to-regexp": "^2.4.0",
+    "path-to-regexp": "^3.0.0",
     "ssr-window": "^1.0.1",
     "template7": "^1.4.0"
   },
@@ -89,7 +89,7 @@
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-replace": "^2.1.0",
-    "rollup-plugin-vue": "^4.4.0",
+    "rollup-plugin-vue": "^4.6.1",
     "terser": "^3.14.1",
     "vue": "^2.5.21",
     "vue-template-compiler": "^2.5.21"
