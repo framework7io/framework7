@@ -124,9 +124,11 @@ class Router extends Framework7Class {
       newNavbarInner.children('.left, .right, .title, .subnavbar').each((index, navEl) => {
         newNavEls.push(animatableNavEl(navEl, newNavbarInner));
       });
-      oldNavbarInner.children('.left, .right, .title, .subnavbar').each((index, navEl) => {
-        oldNavEls.push(animatableNavEl(navEl, oldNavbarInner));
-      });
+      if (!(oldNavbarInner.hasClass('navbar-master') && router.app.width >= 768)) {
+        oldNavbarInner.children('.left, .right, .title, .subnavbar').each((index, navEl) => {
+          oldNavEls.push(animatableNavEl(navEl, oldNavbarInner));
+        });
+      }
       [oldNavEls, newNavEls].forEach((navEls) => {
         navEls.forEach((navEl) => {
           const n = navEl;
@@ -498,6 +500,7 @@ class Router extends Framework7Class {
   }
 
   flattenRoutes(routes = this.routes) {
+    const router = this;
     let flattenedRoutes = [];
     routes.forEach((route) => {
       let hasTabRoutes = false;
@@ -513,7 +516,16 @@ class Router extends Framework7Class {
           return tRoute;
         });
         hasTabRoutes = true;
-        flattenedRoutes = flattenedRoutes.concat(this.flattenRoutes(mergedPathsRoutes));
+        flattenedRoutes = flattenedRoutes.concat(router.flattenRoutes(mergedPathsRoutes));
+      }
+      if ('detailRoutes' in route) {
+        const mergedPathsRoutes = route.detailRoutes.map((detailRoute) => {
+          const dRoute = Utils.extend({}, detailRoute);
+          dRoute.masterRoute = route;
+          dRoute.masterRoutePath = route.path;
+          return dRoute;
+        });
+        flattenedRoutes = flattenedRoutes.concat(route, router.flattenRoutes(mergedPathsRoutes));
       }
       if ('routes' in route) {
         const mergedPathsRoutes = route.routes.map((childRoute) => {
@@ -522,12 +534,12 @@ class Router extends Framework7Class {
           return cRoute;
         });
         if (hasTabRoutes) {
-          flattenedRoutes = flattenedRoutes.concat(this.flattenRoutes(mergedPathsRoutes));
+          flattenedRoutes = flattenedRoutes.concat(router.flattenRoutes(mergedPathsRoutes));
         } else {
-          flattenedRoutes = flattenedRoutes.concat(route, this.flattenRoutes(mergedPathsRoutes));
+          flattenedRoutes = flattenedRoutes.concat(route, router.flattenRoutes(mergedPathsRoutes));
         }
       }
-      if (!('routes' in route) && !('tabs' in route && route.tabs)) {
+      if (!('routes' in route) && !('tabs' in route && route.tabs) && !('detailRoutes' in route)) {
         flattenedRoutes.push(route);
       }
     });
@@ -935,8 +947,8 @@ class Router extends Framework7Class {
 
   getPageData(pageEl, navbarEl, from, to, route = {}, pageFromEl) {
     const router = this;
-    const $pageEl = $(pageEl);
-    const $navbarEl = $(navbarEl);
+    const $pageEl = $(pageEl).eq(0);
+    const $navbarEl = $(navbarEl).eq(0);
     const currentPage = $pageEl[0].f7Page || {};
     let direction;
     let pageFrom;
@@ -981,8 +993,14 @@ class Router extends Framework7Class {
     const router = this;
     const $pageEl = $(pageEl);
     if (!$pageEl.length) return;
+    const $navbarEl = $(navbarEl);
     const { route } = options;
-    const restoreScrollTopOnBack = router.params.restoreScrollTopOnBack;
+    const restoreScrollTopOnBack = router.params.restoreScrollTopOnBack
+      && !(
+        router.params.masterDetailBreakpoint > 0
+        && $pageEl.hasClass('page-master')
+        && router.app.width >= router.params.masterDetailBreakpoint
+      );
     const keepAlive = $pageEl[0].f7Page && $pageEl[0].f7Page.route && $pageEl[0].f7Page.route.route && $pageEl[0].f7Page.route.route.keepAlive;
 
     if (callback === 'beforeRemove' && keepAlive) {
@@ -996,7 +1014,7 @@ class Router extends Framework7Class {
     if (callback === 'beforeRemove' && $pageEl[0].f7Page) {
       page = Utils.extend($pageEl[0].f7Page, { from, to, position: from });
     } else {
-      page = router.getPageData(pageEl, navbarEl, from, to, route, pageFromEl);
+      page = router.getPageData($pageEl[0], $navbarEl[0], from, to, route, pageFromEl);
     }
     page.swipeBack = !!options.swipeBack;
 
@@ -1294,6 +1312,13 @@ class Router extends Framework7Class {
             $pageEl.children('.navbar').remove();
           } else {
             router.$navbarEl.addClass('navbar-hidden');
+          }
+        }
+        if (router.currentRoute && router.currentRoute.route && router.currentRoute.route.master && router.params.masterDetailBreakpoint > 0) {
+          $pageEl.addClass('page-master');
+          $pageEl.trigger('page:role', { role: 'master' });
+          if ($navbarInnerEl && $navbarInnerEl.length) {
+            $navbarInnerEl.addClass('navbar-master');
           }
         }
         const initOptions = {

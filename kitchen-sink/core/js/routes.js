@@ -496,7 +496,15 @@ var routes = [
       },
     },
   },
-
+  {
+    path: '/master-detail/',
+    url: './pages/master-detail-master.html',
+    master: true,
+  },
+  {
+    path: '/master-detail/:id/',
+    templateUrl: './pages/master-detail-detail.html',
+  },
   // Default route (404 page). MUST BE THE LAST
   {
     path: '(.*)',

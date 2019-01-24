@@ -16,7 +16,7 @@ export default function (props) {
       <Panel right reveal>
         <View url="/panel-right/"/>
       </Panel>
-      <View url="/" main className="ios-edges"/>
+      <View url="/" main className="ios-edges" masterDetailBreakpoint={800} />
     </App>
   );
 };

@@ -202,6 +202,7 @@
     <f7-list class="searchbar-hide-on-search">
       <f7-list-item title="Routable Modals" link="/routable-modals/"></f7-list-item>
       <f7-list-item title="Default Route (404)" link="/load-something-that-doesnt-exist/"></f7-list-item>
+      <f7-list-item title="Master-Detail (Split View)" link="/master-detail/"></f7-list-item>
     </f7-list>
   </f7-page>
 </template>

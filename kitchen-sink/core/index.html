@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#2196f3">
   <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap:">
   <title>Framework7</title>
-  <link rel="stylesheet" href="../../packages/core/css/framework7.min.css">
+  <link rel="stylesheet" href="../../build/core/css/framework7.css">
   <link rel="stylesheet" href="css/app.css">
   <link rel="apple-touch-icon" href="img/f7-icon-square.png">
   <link rel="icon" href="img/f7-icon.png">
@@ -85,7 +85,7 @@
         </div>
       </div>
     </div>
-    <div class="view view-main view-init ios-edges" data-url="/">
+    <div class="view view-main view-init ios-edges" data-master-detail-breakpoint="800" data-url="/">
       <div class="page">
         <div class="navbar">
           <div class="navbar-inner">
@@ -619,13 +619,16 @@
               <li>
                 <a href="/load-something-that-doesnt-exist/">Default Route (404)</a>
               </li>
+              <li>
+                <a href="/master-detail/">Master-Detail (Split View)</a>
+              </li>
             </ul>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <script src="../../packages/core/js/framework7.min.js"></script>
+  <script src="../../build/core/js/framework7.js"></script>
   <script src="js/routes.js"></script>
   <script src="js/app.js"></script>
 </body>

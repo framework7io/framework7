@@ -508,3 +508,6 @@ code {
   text-align: center;
   line-height: 100px;
 }
+.view-master-detail .navbar-master-detail .link.back {
+  display: none;
+}
