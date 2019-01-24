@@ -311,7 +311,8 @@ export namespace Router {
     }
   }
   interface AppParams {
-
+    /** Set to false to disable the router. */
+    router?: false
   }
   interface AppEvents {
 
