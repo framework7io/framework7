@@ -79,6 +79,85 @@
   .page-fake-opacity();
 }
 
+.view:not(.view-master-detail) {
+  .page-master.page-master-stacked {
+    display: none;
+  }
+  .navbar-master.navbar-master-stacked {
+    display: none;
+  }
+}
+.view.view-master-detail {
+  .page.page-master,
+  .navbar-inner.navbar-master {
+    width: 320px;
+    border-right: 1px solid rgba(0,0,0,0.1);
+  }
+  .navbar-inner.navbar-master.navbar-previous {
+    pointer-events: auto;
+    .left,
+    .title,
+    .right,
+    .subnavbar {
+      opacity: 1;
+    }
+  }
+  .ios &.router-transition-css-forward,
+  .ios &.router-transition-css-backward {
+    .navbar-inner.navbar-master.sliding {
+      .left,
+      .left .icon,
+      .title,
+      .right,
+      .subnavbar {
+        opacity: 1 !important;
+        transition-duration: 0ms;
+        transform: none !important;
+      }
+    }
+    .navbar-inner.navbar-master {
+      .left.sliding,
+      .left.sliding .icon,
+      .title.sliding,
+      .right.sliding,
+      .subnavbar.sliding,
+      .sliding,
+      .fading {
+        opacity: 1 !important;
+        transition-duration: 0ms;
+        transform: none !important;
+      }
+    }
+  }
+  .page.page-master {
+    z-index: 1;
+    &:after {
+      display: none;
+    }
+  }
+  .ios &.router-transition-css-forward,
+  .ios &.router-transition-css-backward,
+  .md &.router-transition-css-forward,
+  .md &.router-transition-css-backward {
+    .page.page-master {
+      animation: none;
+    }
+  }
+  .page.page-master.page-previous {
+    transform: none;
+    pointer-events: auto;
+    &:before,
+    &:after {
+      display: none;
+    }
+  }
+  .page.page-master-detail,
+  .navbar-inner.navbar-master-detail {
+    width: calc(100% - 320px);
+    left: 320px;
+  }
+}
+
 & when (@includeIosTheme) {
   @import url('./page-ios.less');
 }

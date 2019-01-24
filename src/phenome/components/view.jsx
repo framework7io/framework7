@@ -36,6 +36,8 @@ export default {
     preloadPreviousPage: Boolean,
     allowDuplicateUrls: Boolean,
     reloadPages: Boolean,
+    reloadDetail: Boolean,
+    masterDetailBreakpoint: Number,
     removeElements: Boolean,
     removeElementsWithTimeout: Boolean,
     removeElementsTimeout: Number,

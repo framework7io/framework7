@@ -61,8 +61,10 @@ export default {
     return {
       hasSubnavbar: false,
       hasNavbarLarge: false,
-      routerClass: '',
+      routerPositionClass: '',
       routerForceUnstack: false,
+      routerPageRole: null,
+      routerPageMasterStack: false,
     };
   },
   render() {
@@ -169,7 +171,7 @@ export default {
     const classes = Utils.classNames(
       className,
       'page',
-      this.state.routerClass,
+      this.state.routerPositionClass,
       {
         stacked: stacked && !this.state.routerForceUnstack,
         tabs,
@@ -178,6 +180,9 @@ export default {
         'no-navbar': noNavbar,
         'no-toolbar': noToolbar,
         'no-swipeback': noSwipeback,
+        'page-master': this.state.routerPageRole === 'master',
+        'page-master-detail': this.state.routerPageRole === 'detail',
+        'page-master-stacked': this.state.routerPageMasterStack === true,
       },
       Mixins.colorClasses(props),
     );
@@ -240,6 +245,9 @@ export default {
       'onPageStack',
       'onPageUnstack',
       'onPagePosition',
+      'onPageRole',
+      'onPageMasterStack',
+      'onPageMasterUnstack',
     ]);
   },
   componentDidMount() {
@@ -268,6 +276,9 @@ export default {
     el.addEventListener('page:stack', self.onPageStack);
     el.addEventListener('page:unstack', self.onPageUnstack);
     el.addEventListener('page:position', self.onPagePosition);
+    el.addEventListener('page:role', self.onPageRole);
+    el.addEventListener('page:masterstack', self.onPageMasterStack);
+    el.addEventListener('page:masterunstack', self.onPageMasterUnstack);
   },
   componentWillUnmount() {
     const self = this;
@@ -290,6 +301,9 @@ export default {
     el.removeEventListener('page:stack', self.onPageStack);
     el.removeEventListener('page:unstack', self.onPageUnstack);
     el.removeEventListener('page:position', self.onPagePosition);
+    el.removeEventListener('page:role', self.onPageRole);
+    el.removeEventListener('page:masterstack', self.onPageMasterStack);
+    el.removeEventListener('page:masterunstack', self.onPageMasterUnstack);
   },
   methods: {
     onPtrPullStart(event) {
@@ -328,7 +342,22 @@ export default {
     onPagePosition(event) {
       const position = event.detail.position;
       this.setState({
-        routerClass: `page-${position}`,
+        routerPositionClass: `page-${position}`,
+      });
+    },
+    onPageRole(event) {
+      this.setState({
+        routerPageRole: event.detail.role,
+      });
+    },
+    onPageMasterStack() {
+      this.setState({
+        routerPageMasterStack: true,
+      });
+    },
+    onPageMasterUnstack() {
+      this.setState({
+        routerPageMasterStack: false,
       });
     },
     onPageInit(event) {
@@ -359,12 +388,12 @@ export default {
       const page = event.detail;
       if (page.from === 'next') {
         this.setState({
-          routerClass: 'page-next',
+          routerPositionClass: 'page-next',
         });
       }
       if (page.from === 'previous') {
         this.setState({
-          routerClass: 'page-previous',
+          routerPositionClass: 'page-previous',
         });
       }
       this.dispatchEvent('page:beforein pageBeforeIn', event, page);
@@ -377,12 +406,12 @@ export default {
       const page = event.detail;
       if (page.to === 'next') {
         this.setState({
-          routerClass: 'page-next',
+          routerPositionClass: 'page-next',
         });
       }
       if (page.to === 'previous') {
         this.setState({
-          routerClass: 'page-previous',
+          routerPositionClass: 'page-previous',
         });
       }
       this.dispatchEvent('page:afterout pageAfterOut', event, page);
@@ -390,7 +419,7 @@ export default {
     onPageAfterIn(event) {
       const page = event.detail;
       this.setState({
-        routerClass: 'page-current',
+        routerPositionClass: 'page-current',
       });
       this.dispatchEvent('page:afterin pageAfterIn', event, page);
     },

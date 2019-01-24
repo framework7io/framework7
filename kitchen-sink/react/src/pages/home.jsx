@@ -214,6 +214,7 @@ export default () => (
     <List className="searchbar-hide-on-search">
       <ListItem title="Routable Modals" link="/routable-modals/"></ListItem>
       <ListItem title="Default Route (404)" link="/load-something-that-doesnt-exist/"></ListItem>
+      <ListItem title="Master-Detail (Split View)" link="/master-detail/"></ListItem>
     </List>
   </Page>
 )

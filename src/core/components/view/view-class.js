@@ -105,6 +105,8 @@ class View extends Framework7Class {
     view.$el.trigger('view:beforedestroy', view);
     view.emit('local::beforeDestroy viewBeforeDestroy', view);
 
+    app.off('resize', view.checkmasterDetailBreakpoint);
+
     if (view.main) {
       app.views.main = null;
       delete app.views.main;
@@ -133,9 +135,39 @@ class View extends Framework7Class {
     view = null;
   }
 
+  checkmasterDetailBreakpoint() {
+    const view = this;
+    const app = view.app;
+    const wasMasterDetail = view.$el.hasClass('view-master-detail');
+    if (app.width >= view.params.masterDetailBreakpoint) {
+      view.$el.addClass('view-master-detail');
+      if (!wasMasterDetail) {
+        view.emit('local::masterDetailBreakpoint viewMasterDetailBreakpoint');
+        view.$el.trigger('view:masterDetailBreakpoint', view);
+      }
+    } else {
+      view.$el.removeClass('view-master-detail');
+      if (wasMasterDetail) {
+        view.emit('local::masterDetailBreakpoint viewMasterDetailBreakpoint');
+        view.$el.trigger('view:masterDetailBreakpoint', view);
+      }
+    }
+  }
+
+  initMasterDetail() {
+    const view = this;
+    const app = view.app;
+    view.checkmasterDetailBreakpoint = view.checkmasterDetailBreakpoint.bind(view);
+    view.checkmasterDetailBreakpoint();
+    app.on('resize', view.checkmasterDetailBreakpoint);
+  }
+
   init() {
     const view = this;
     if (view.params.router) {
+      if (view.params.masterDetailBreakpoint > 0) {
+        view.initMasterDetail();
+      }
       view.router.init();
       view.$el.trigger('view:init', view);
       view.emit('local::init viewInit', view);

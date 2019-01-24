@@ -100,6 +100,10 @@ import RoutableModals from './pages/routable-modals.jsx';
 import RoutablePopup from './pages/routable-popup.jsx';
 import RoutableActions from './pages/routable-actions.jsx';
 
+import MasterDetailMaster from './pages/master-detail-master.jsx';
+import MasterDetailDetail from './pages/master-detail-detail.jsx';
+
+
 import NotFound from './pages/404.jsx';
 
 // Pages
@@ -609,6 +613,15 @@ export default [
         },
       },
     ],
+  },
+  {
+    path: '/master-detail/',
+    component: MasterDetailMaster,
+    master: true,
+  },
+  {
+    path: '/master-detail/:id/',
+    component: MasterDetailDetail,
   },
   // Default route (404 page). MUST BE THE LAST
   {

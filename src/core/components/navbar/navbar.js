@@ -478,7 +478,7 @@ export default {
     },
   },
   on: {
-    'panelBreakpoint resize': function onResize() {
+    'panelBreakpoint resize viewMasterDetailBreakpoint': function onResize() {
       const app = this;
       $('.navbar').each((index, navbarEl) => {
         app.navbar.size(navbarEl);
