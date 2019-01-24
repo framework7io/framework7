@@ -12,9 +12,9 @@ export default () => (
     </Block>
 
     <List>
-      <ListItem link="/master-detail/1/">Detail Page 1</ListItem>
-      <ListItem link="/master-detail/2/">Detail Page 2</ListItem>
-      <ListItem link="/master-detail/3/">Detail Page 3</ListItem>
+      <ListItem reloadDetail={true} link="/master-detail/1/">Detail Page 1</ListItem>
+      <ListItem reloadDetail={true} link="/master-detail/2/">Detail Page 2</ListItem>
+      <ListItem reloadDetail={true} link="/master-detail/3/">Detail Page 3</ListItem>
     </List>
   </Page>
 );

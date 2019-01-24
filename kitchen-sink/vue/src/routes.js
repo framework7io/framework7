@@ -604,11 +604,14 @@ export default [
     path: '/master-detail/',
     component: MasterDetailMaster,
     master: true,
+    detailRoutes: [
+      {
+        path: '/master-detail/:id/',
+        component: MasterDetailDetail,
+      },
+    ]
   },
-  {
-    path: '/master-detail/:id/',
-    component: MasterDetailDetail,
-  },
+
   // Default route (404 page). MUST BE THE LAST
   {
     path: '(.*)',

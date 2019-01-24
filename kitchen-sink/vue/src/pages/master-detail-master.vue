@@ -9,9 +9,9 @@
     </f7-block>
 
     <f7-list>
-      <f7-list-item link="/master-detail/1/">Detail Page 1</f7-list-item>
-      <f7-list-item link="/master-detail/2/">Detail Page 2</f7-list-item>
-      <f7-list-item link="/master-detail/3/">Detail Page 3</f7-list-item>
+      <f7-list-item :reload-detail="true" link="/master-detail/1/">Detail Page 1</f7-list-item>
+      <f7-list-item :reload-detail="true" link="/master-detail/2/">Detail Page 2</f7-list-item>
+      <f7-list-item :reload-detail="true" link="/master-detail/3/">Detail Page 3</f7-list-item>
     </f7-list>
   </f7-page>
 </template>

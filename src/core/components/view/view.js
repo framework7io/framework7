@@ -47,7 +47,7 @@ export default {
       preloadPreviousPage: true,
       allowDuplicateUrls: false,
       reloadPages: false,
-      reloadDetail: true,
+      reloadDetail: false,
       masterDetailBreakpoint: 0,
       removeElements: true,
       removeElementsWithTimeout: false,
