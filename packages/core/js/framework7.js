@@ -6151,7 +6151,6 @@
         }
       }
     } else if (options.reloadAll) {
-      console.log('ta-da!');
       $oldPage.each(function (index, pageEl) {
         var $oldPageEl = $(pageEl);
         var $oldNavbarInnerEl = $(app.navbar.getElByPage($oldPageEl));

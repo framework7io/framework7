@@ -359,7 +359,6 @@ function forward(el, forwardOptions = {}) {
       }
     }
   } else if (options.reloadAll) {
-    console.log('ta-da!');
     $oldPage.each((index, pageEl) => {
       const $oldPageEl = $(pageEl);
       const $oldNavbarInnerEl = $(app.navbar.getElByPage($oldPageEl));
@@ -414,7 +413,7 @@ function forward(el, forwardOptions = {}) {
     if (reloadDetail) {
       masterPageEl.classList.add('page-previous');
       masterPageEl.classList.remove('page-current');
-      $(masterPageEl).trigger('page:position', { position: 'previous' })
+      $(masterPageEl).trigger('page:position', { position: 'previous' });
       if (masterPageEl.f7Page && masterPageEl.f7Page.navbarEl) {
         masterPageEl.f7Page.navbarEl.classList.add('navbar-previous');
         masterPageEl.f7Page.navbarEl.classList.remove('navbar-current');
