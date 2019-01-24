@@ -5928,7 +5928,7 @@
     // Find Detail' master page
     var isDetail;
     var reloadDetail;
-    if (masterDetailEnabled) {
+    if (masterDetailEnabled && !options.reloadAll) {
       for (var i = 0; i < $pagesInView.length; i += 1) {
         if (!masterPageEl
           && $pagesInView[i].classList.contains('page-master')
@@ -6039,7 +6039,7 @@
     if (dynamicNavbar && !separateNavbar) {
       $oldNavbarInner = $oldPage.children('.navbar').children('.navbar-inner');
     }
-    if (isDetail) {
+    if (isDetail && !options.reloadAll) {
       if ($oldPage.length > 1 || reloadDetail) {
         $oldPage = $oldPage.filter(function (pageIndex, pageEl) { return !pageEl.classList.contains('page-master'); });
       }
@@ -6151,6 +6151,7 @@
         }
       }
     } else if (options.reloadAll) {
+      console.log('ta-da!');
       $oldPage.each(function (index, pageEl) {
         var $oldPageEl = $(pageEl);
         var $oldNavbarInnerEl = $(app.navbar.getElByPage($oldPageEl));
@@ -6205,6 +6206,7 @@
       if (reloadDetail) {
         masterPageEl.classList.add('page-previous');
         masterPageEl.classList.remove('page-current');
+        $(masterPageEl).trigger('page:position', { position: 'previous' });
         if (masterPageEl.f7Page && masterPageEl.f7Page.navbarEl) {
           masterPageEl.f7Page.navbarEl.classList.add('navbar-previous');
           masterPageEl.f7Page.navbarEl.classList.remove('navbar-current');
@@ -6225,8 +6227,8 @@
     function afterAnimation() {
       var pageClasses = 'page-previous page-current page-next';
       var navbarClasses = 'navbar-previous navbar-current navbar-next';
-      $newPage.removeClass(pageClasses).addClass('page-current').removeAttr('aria-hidden');
-      $oldPage.removeClass(pageClasses).addClass('page-previous');
+      $newPage.removeClass(pageClasses).addClass('page-current').removeAttr('aria-hidden').trigger('page:position', { position: 'current' });
+      $oldPage.removeClass(pageClasses).addClass('page-previous').trigger('page:position', { position: 'previous' });
       if (!$oldPage.hasClass('page-master')) {
         $oldPage.attr('aria-hidden', 'true');
       }
@@ -6274,8 +6276,8 @@
     function setPositionClasses() {
       var pageClasses = 'page-previous page-current page-next';
       var navbarClasses = 'navbar-previous navbar-current navbar-next';
-      $oldPage.removeClass(pageClasses).addClass('page-current').removeAttr('aria-hidden');
-      $newPage.removeClass(pageClasses).addClass('page-next').removeAttr('aria-hidden');
+      $oldPage.removeClass(pageClasses).addClass('page-current').removeAttr('aria-hidden').trigger('page:position', { position: 'current' });
+      $newPage.removeClass(pageClasses).addClass('page-next').removeAttr('aria-hidden').trigger('page:position', { position: 'next' });
       if (dynamicNavbar) {
         $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-current').removeAttr('aria-hidden');
         $newNavbarInner.removeClass(navbarClasses).addClass('navbar-next').removeAttr('aria-hidden');
@@ -7342,8 +7344,8 @@
       // Set classes
       var pageClasses = 'page-previous page-current page-next';
       var navbarClasses = 'navbar-previous navbar-current navbar-next';
-      $newPage.removeClass(pageClasses).addClass('page-current').removeAttr('aria-hidden');
-      $oldPage.removeClass(pageClasses).addClass('page-next').attr('aria-hidden', 'true');
+      $newPage.removeClass(pageClasses).addClass('page-current').removeAttr('aria-hidden').trigger('page:position', { position: 'current' });
+      $oldPage.removeClass(pageClasses).addClass('page-next').attr('aria-hidden', 'true').trigger('page:position', { position: 'next' });
       if (dynamicNavbar) {
         $newNavbarInner.removeClass(navbarClasses).addClass('navbar-current').removeAttr('aria-hidden');
         $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-next').attr('aria-hidden', 'true');
@@ -7384,8 +7386,8 @@
     function setPositionClasses() {
       var pageClasses = 'page-previous page-current page-next';
       var navbarClasses = 'navbar-previous navbar-current navbar-next';
-      $oldPage.removeClass(pageClasses).addClass('page-current');
-      $newPage.removeClass(pageClasses).addClass('page-previous').removeAttr('aria-hidden');
+      $oldPage.removeClass(pageClasses).addClass('page-current').trigger('page:position', { position: 'current' });
+      $newPage.removeClass(pageClasses).addClass('page-previous').removeAttr('aria-hidden').trigger('page:position', { position: 'previous' });
       if (dynamicNavbar) {
         $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-current');
         $newNavbarInner.removeClass(navbarClasses).addClass('navbar-previous').removeAttr('aria-hidden');
@@ -11181,7 +11183,7 @@
         preloadPreviousPage: true,
         allowDuplicateUrls: false,
         reloadPages: false,
-        reloadDetail: true,
+        reloadDetail: false,
         masterDetailBreakpoint: 0,
         removeElements: true,
         removeElementsWithTimeout: false,

@@ -87,6 +87,10 @@ export namespace Router {
     beforeEnter?: Function[] | ((routeTo: Route, routeFrom: Route, resolve: Function, reject: Function) => void)
     /** Function (or array of functions) that will be executed before route unload/leave. To proceed navigation resolve must be called. In case of array then every function in array must be resolved to proceed */
     beforeLeave?: Function[] | ((routeTo: Route, routeFrom: Route, resolve: Function, reject: Function) => void)
+    /** Enables master route for Master-Detail view */
+    master?: boolean
+    /** Detail routes this master route */
+    detailRoutes?: RouteParameters[]
   }
   interface RouteOptions {
     /** whether the page should be animated or not (overwrites default router settings) */
