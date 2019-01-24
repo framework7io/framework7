@@ -61,6 +61,7 @@ declare namespace F7ListItem {
     reloadCurrent? : boolean
     reloadAll? : boolean
     reloadPrevious? : boolean
+    reloadDetail? : boolean
     routeTabId? : string
     view? : string
     routeProps? : Object

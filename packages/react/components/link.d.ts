@@ -50,6 +50,7 @@ declare namespace F7Link {
     reloadCurrent? : boolean
     reloadAll? : boolean
     reloadPrevious? : boolean
+    reloadDetail? : boolean
     routeTabId? : string
     view? : string
     routeProps? : Object

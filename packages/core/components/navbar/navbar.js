@@ -266,7 +266,7 @@ export default {
     },
   },
   on: {
-    'panelBreakpoint resize': function onResize() {
+    'panelBreakpoint resize viewMasterDetailBreakpoint': function onResize() {
       const app = this;
       if (app.theme !== 'ios') return;
       $('.navbar').each((index, navbarEl) => {

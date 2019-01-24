@@ -40,6 +40,7 @@ function SwipeBack(r) {
     const swipeBackEnabled = params[`${app.theme}SwipeBack`];
     if (!allowViewTouchMove || !swipeBackEnabled || isTouched || (app.swipeout && app.swipeout.el) || !router.allowPageChange) return;
     if ($(e.target).closest('.range-slider, .calendar-months').length > 0) return;
+    if ($(e.target).closest('.page-master, .page-master-detail').length > 0 && params.masterDetailBreakpoint > 0 && app.width >= params.masterDetailBreakpoint) return;
     isMoved = false;
     isTouched = true;
     isScrolling = undefined;

@@ -22,6 +22,8 @@ declare namespace F7View {
     preloadPreviousPage? : boolean
     allowDuplicateUrls? : boolean
     reloadPages? : boolean
+    reloadDetail? : boolean
+    masterDetailBreakpoint? : number
     removeElements? : boolean
     removeElementsWithTimeout? : boolean
     removeElementsTimeout? : number

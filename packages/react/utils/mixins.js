@@ -56,6 +56,10 @@ const Mixins = {
     reloadCurrent: Boolean,
     reloadAll: Boolean,
     reloadPrevious: Boolean,
+    reloadDetail: {
+      type: Boolean,
+      default: undefined,
+    },
     routeTabId: String,
     view: String,
     routeProps: Object,
@@ -66,6 +70,7 @@ const Mixins = {
       reloadCurrent,
       reloadPrevious,
       reloadAll,
+      reloadDetail,
       animate,
       ignoreCache,
       routeTabId,
@@ -77,11 +82,17 @@ const Mixins = {
       dataAnimate = animate.toString();
     }
 
+    let dataReloadDetail;
+    if ('reloadDetail' in props && typeof reloadDetail !== 'undefined') {
+      dataReloadDetail = reloadDetail.toString();
+    }
+
     return {
       'data-force': force || undefined,
       'data-reload-current': reloadCurrent || undefined,
       'data-reload-all': reloadAll || undefined,
       'data-reload-previous': reloadPrevious || undefined,
+      'data-reload-detail': dataReloadDetail,
       'data-animate': dataAnimate,
       'data-ignore-cache': ignoreCache || undefined,
       'data-route-tab-id': routeTabId || undefined,

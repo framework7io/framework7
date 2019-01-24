@@ -57,6 +57,7 @@ declare namespace F7Button {
     reloadCurrent? : boolean
     reloadAll? : boolean
     reloadPrevious? : boolean
+    reloadDetail? : boolean
     routeTabId? : string
     view? : string
     routeProps? : Object
