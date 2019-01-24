@@ -50,7 +50,7 @@ export namespace Autocomplete {
     /** Defines how to open Autocomplete, can be page or popup (for Standalone) or dropdown. (default page) */
     openIn?: string
     /** Function which accepts search query and render function where you need to pass array with matched items. */
-    source: (query : string, render : unknown[]) => unknown
+    source: (query: string, render: (items: any[]) => void) => void
     /** Limit number of maximum displayed items in autocomplete per query. */
     limit?: number
     /** Set to true to include Preloader to autocomplete layout. (default false) */
@@ -133,7 +133,7 @@ export namespace Autocomplete {
 
   interface Events {
     /** Event will be triggered when Autocomplete value changed. Returned value is an array with selected items */
-    change : (autocomplete : Autocomplete, value : unknown) => void
+    change : (values : any[]) => void
     /** Event will be triggered when Autocomplete starts its opening animation. As an argument event handler receives autocomplete instance */
     open : (autocomplete : Autocomplete) => void
     /** Event will be triggered after Autocomplete completes its opening animation. As an argument event handler receives autocomplete instance */
