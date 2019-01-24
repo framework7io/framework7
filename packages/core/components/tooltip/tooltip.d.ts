@@ -59,7 +59,7 @@ export namespace Tooltip {
     destroy(): void
   }
   interface AppMethods {
-    tootlip: {
+    tooltip: {
       /** create Tooltip instance */
       create(parameters: Parameters): Tooltip
       /** destroy Tooltip instance */
