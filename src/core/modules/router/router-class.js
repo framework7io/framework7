@@ -168,7 +168,7 @@ class Router extends Framework7Class {
     const dynamicNavbar = router.dynamicNavbar;
     const ios = router.app.theme === 'ios';
     // Router Animation class
-    const routerTransitionClass = `router-transition-${direction} router-transition-css-${direction}`;
+    const routerTransitionClass = `router-transition-${direction} router-transition`;
 
     let newNavEls;
     let oldNavEls;

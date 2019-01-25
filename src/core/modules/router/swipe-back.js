@@ -89,7 +89,7 @@ function SwipeBack(r) {
               });
             } else {
               if (els.indexOf(el) < 0) els.push(el);
-              el.overflow = 'visible';
+              el.overflow = 'hidden';
               el.transform = progress => `translateY(calc(${-progress} * var(--f7-navbar-large-title-height)))`;
               $navEl.find('.title-large-text, .title-large-inner').each((subIndex, subNavEl) => {
                 els.push({

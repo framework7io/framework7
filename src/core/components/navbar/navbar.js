@@ -437,6 +437,11 @@ const Navbar = {
       app.on('touchstart:passive', handeTouchStart);
       app.on('touchend:passive', handleTouchEnd);
     }
+    if (needCollapse) {
+      $pageEl.find('.page-content').each((pageContentIndex, pageContentEl) => {
+        if (pageContentEl.scrollTop > 0) handleScroll.call(pageContentEl);
+      });
+    }
     $pageEl[0].f7DetachNavbarScrollHandlers = function f7DetachNavbarScrollHandlers() {
       delete $pageEl[0].f7DetachNavbarScrollHandlers;
       $pageEl.off('scroll', '.page-content', handleScroll, true);
