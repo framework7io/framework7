@@ -26,15 +26,24 @@
   background: var(--f7-menu-bg-color);
   color: var(--f7-menu-text-color);
   border-radius: var(--f7-menu-item-border-radius);
-  margin-left: var(--f7-menu-item-spacing);
   position: relative;
   box-sizing: border-box;
   font-size: var(--f7-menu-font-size);
   font-weight: var(--f7-menu-font-weight);
   cursor: pointer;
-  &:first-child {
-    margin-left: 0;
-  }
+  .ltr({
+    margin-left: var(--f7-menu-item-spacing);
+    &:first-child {
+      margin-left: 0;
+    }
+  });
+  .rtl({
+    margin-right: var(--f7-menu-item-spacing);
+    &:first-child {
+      margin-right: 0;
+    }
+  });
+
   &.active-state:not(.menu-item-dropdown-opened) {
     background-color: rgba(0,0,0,0.7);
   }
