@@ -13,7 +13,7 @@
     </div>
     <div class="page-content">
       <div id="calendar" class="block block-strong no-padding no-margin no-hairline-top"></div>
-      <div id="calendar-events" class="list no-margin no-hairlines no-ios-left-edge">
+      <div id="calendar-events" class="list no-margin no-hairlines no-safe-area-left">
         <ul>
           {{#each eventItems}}
             <li class="item-content">
@@ -167,7 +167,7 @@
             init: function (calendar) {
               $('.navbar-calendar-title').text(monthNames[calendar.currentMonth] +', ' + calendar.currentYear);
               app.navbar.size(page.navbarEl);
-              calendar.$el.addClass('no-ios-right-edge');
+              calendar.$el.addClass('no-safe-area-right');
               self.renderEvents(calendar);
             },
             monthYearChangeStart: function (calendar) {

@@ -37,12 +37,12 @@ export default () => (
       <div className="timeline-item">
         <div className="timeline-item-date">23 <small>DEC</small></div>
         <div className="timeline-item-content">
-          <div className="card no-ios-edges">
+          <div className="card no-safe-areas">
             <div className="card-header">Card</div>
             <div className="card-content card-content-padding">Card Content</div>
             <div className="card-footer">Card Footer</div>
           </div>
-          <div className="card no-ios-edges">
+          <div className="card no-safe-areas">
             <div className="card-content card-content-padding">Another Card Content</div>
           </div>
         </div>
@@ -50,7 +50,7 @@ export default () => (
       <div className="timeline-item">
         <div className="timeline-item-date">24 <small>DEC</small></div>
         <div className="timeline-item-content">
-          <div className="list links-list inset no-ios-edges">
+          <div className="list links-list inset no-safe-areas">
             <ul>
               <li><a href="#">Item 1</a></li>
               <li><a href="#">Item 2</a></li>

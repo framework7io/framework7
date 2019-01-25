@@ -66,7 +66,7 @@ export default class extends React.Component {
         <List
           id="calendar-events"
           noHairlines
-          className="no-margin no-ios-left-edge"
+          className="no-margin no-safe-area-left"
         >
           {this.state.eventItems.map((item, index) => (
             <ListItem
@@ -126,7 +126,7 @@ export default class extends React.Component {
         init(calendar) {
           $('.navbar-calendar-title').text(`${monthNames[calendar.currentMonth]}, ${calendar.currentYear}`);
           app.navbar.size(page.navbarEl);
-          calendar.$el.addClass('no-ios-right-edge');
+          calendar.$el.addClass('no-safe-area-right');
           self.renderEvents(calendar);
         },
         monthYearChangeStart(calendar) {

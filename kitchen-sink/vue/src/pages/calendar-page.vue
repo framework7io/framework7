@@ -5,7 +5,7 @@
     </f7-navbar>
     <div class="page-content">
       <div id="calendar" class="block block-strong no-padding no-margin no-hairline-top"></div>
-      <f7-list id="calendar-events" class="no-margin no-hairlines no-ios-left-edge">
+      <f7-list id="calendar-events" class="no-margin no-hairlines no-safe-area-left">
         <f7-list-item v-for="(item, index) in eventItems"
           :key="index"
           :title="item.title"
@@ -117,7 +117,7 @@
             init(calendar) {
               $('.navbar-calendar-title').text(`${monthNames[calendar.currentMonth]}, ${calendar.currentYear}`);
               app.navbar.size(page.navbarEl);
-              calendar.$el.addClass('no-ios-right-edge');
+              calendar.$el.addClass('no-safe-area-right');
               self.renderEvents(calendar);
             },
             monthYearChangeStart(calendar) {
