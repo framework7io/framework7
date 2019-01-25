@@ -23,6 +23,8 @@
     --f7-safe-area-bottom: env(safe-area-inset-bottom);
     .ios-left-edge,
     .ios-edges,
+    .safe-area-left,
+    .safe-areas,
     .popup,
     .sheet-modal,
     .panel-left {
@@ -31,17 +33,23 @@
     }
     .ios-right-edge,
     .ios-edges,
+    .safe-area-right,
+    .safe-areas,
     .popup,
     .sheet-modal,
     .panel-right {
       --f7-safe-area-right: env(safe-area-inset-right);
       --f7-safe-area-outer-right: env(safe-area-inset-right);
     }
+    .no-safe-areas,
+    .no-safe-area-left,
     .no-ios-edges,
     .no-ios-left-edge {
       --f7-safe-area-left: 0px;
       --f7-safe-area-outer-left: 0px;
     }
+    .no-safe-areas,
+    .no-safe-area-right,
     .no-ios-edges,
     .no-ios-right-edge {
       --f7-safe-area-right: 0px;
