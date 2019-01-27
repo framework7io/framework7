@@ -123,11 +123,12 @@ function SwipeBack(r) {
           }
         }
         if ($navEl.hasClass('title-large')) return;
+        const isSliding = $navEl.hasClass('sliding') || $currentNavbarInner.hasClass('sliding');
         if (els.indexOf(el) < 0) els.push(el);
-        if (!isSubnavbar) {
+        if (!isSubnavbar || (isSubnavbar && !isSliding)) {
           el.opacity = progress => (1 - (progress ** 0.33));
         }
-        if ($navEl.hasClass('sliding') >= 0 || $currentNavbarInner.hasClass('sliding')) {
+        if (isSliding) {
           let transformTarget = el;
           if (isLeft && activeNavBackIconText.length && params.iosAnimateNavbarBackIcon) {
             const textEl = { el: activeNavBackIconText[0] };
@@ -196,11 +197,12 @@ function SwipeBack(r) {
           }
         }
         if ($navEl.hasClass('title-large')) return;
+        const isSliding = $navEl.hasClass('sliding') || $previousNavbarInner.hasClass('sliding');
         if (els.indexOf(el) < 0) els.push(el);
-        if (!isSubnavbar) {
+        if (!isSubnavbar || (isSubnavbar && !isSliding)) {
           el.opacity = progress => (progress ** 3);
         }
-        if ($navEl.hasClass('sliding') >= 0 || $previousNavbarInner.hasClass('sliding')) {
+        if (isSliding) {
           let transformTarget = el;
           if (isLeft && previousNavBackIconText.length && params.iosAnimateNavbarBackIcon) {
             const textEl = { el: activeNavBackIconText[0] };
