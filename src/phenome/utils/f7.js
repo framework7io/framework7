@@ -10,11 +10,13 @@ const f7 = {
     });
     if (routes && routes.length && !f7Params.routes) f7Params.routes = routes;
 
-    f7.instance = new f7.Framework7(f7Params);
-    if (f7.instance.initialized) {
+    const instance = new f7.Framework7(f7Params);
+    if (instance.initialized) {
+      f7.instance = instance;
       events.emit('ready', f7.instance);
     } else {
-      f7.instance.on('init', () => {
+      instance.on('init', () => {
+        f7.instance = instance;
         events.emit('ready', f7.instance);
       });
     }
