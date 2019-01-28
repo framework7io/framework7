@@ -24,13 +24,13 @@ export namespace ServiceWorker {
   }
   interface AppEvents {
     /** Event will be triggered when service worker successfully registered */
-    swRegisterSuccess: (registration: ServiceWorkerRegistration) => void
+    serviceWorkerRegisterSuccess: (registration: ServiceWorkerRegistration) => void
     /** Event will be triggered when service worker registration failed */
-    swRegisterError: (error: Error) => void
+    serviceWorkerRegisterError: (error: Error) => void
     /** Event will be triggered when service worker successfully unregistered */
-    swUnregisterSuccess: (success: boolean) => void
+    serviceWorkerUnregisterSuccess: (registration: ServiceWorkerRegistration) => void
     /** Event will be triggered when service worker unregister failed */
-    swUnregisterError: (error: Error) => void
+    serviceWorkerUnregisterError: (registration: ServiceWorkerRegistration, error: Error) => void
   }
 }
 declare const ServiceWorkerModule: Framework7Plugin;

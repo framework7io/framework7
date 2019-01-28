@@ -38,11 +38,11 @@ const SW = {
           if (SW.registrations.indexOf(reg) >= 0) {
             SW.registrations.splice(SW.registrations.indexOf(reg), 1);
           }
-          app.emit('serviceWorkerUnregisterSuccess', true);
+          app.emit('serviceWorkerUnregisterSuccess', reg);
           resolve();
         })
         .catch((error) => {
-          app.emit('serviceWorkerUnregisterError', error);
+          app.emit('serviceWorkerUnregisterError', reg, error);
           reject(error);
         });
     })));
