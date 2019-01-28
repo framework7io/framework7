@@ -46,7 +46,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ---
 
 ### $100 Silver Sponsor
-Colin Adams ([App Valley](https://appvalley.vip/))
+Colin Adams ([App Valley](https://appvalley.vip/))<br>
 Pavol Cvengros ([securCom Inc](https://www.securcom.me/))<br>
 Mason Fok ([tommy](http://mytommy.com))<br>
 
