@@ -3,7 +3,7 @@
     <f7-navbar title="Cards Expandable" back-link="Back"></f7-navbar>
 
     <f7-block>
-      <p>In addition to usual <a href="/cards/">Cards</a> there are also Expandable Cards that allow to store more information and illustrations about particular subject</p>
+      <p>In addition to usual <a href="/cards/">Cards</a> there are also Expandable Cards that allow to store more information and illustrations about particular subject.</p>
     </f7-block>
 
     <div class="demo-expandable-cards">
