@@ -9,7 +9,7 @@ export default {
     style: Object, // phenome-react-line
     raised: Boolean,
     raisedIos: Boolean,
-    raisedMD: Boolean,
+    raisedMd: Boolean,
     round: Boolean,
     roundIos: Boolean,
     roundMd: Boolean,
