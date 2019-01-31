@@ -108,13 +108,15 @@ export default {
     );
   },
   componentDidCreate() {
-    Utils.bindMethods(this, ['onClick']);
+    Utils.bindMethods(this, ['onClick', 'onOpened', 'onClosed']);
   },
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
     if (!el) return;
     el.addEventListener('click', self.onClick);
+    el.addEventListener('menu:opened', self.onOpened);
+    el.addEventListener('menu:closed', self.onClosed);
     const { routeProps } = self.props;
     if (routeProps) el.f7RouteProps = routeProps;
   },
@@ -130,6 +132,8 @@ export default {
     const el = self.refs.el;
     if (!el) return;
     el.removeEventListener('click', self.onClick);
+    el.removeEventListener('menu:opened', self.onOpened);
+    el.removeEventListener('menu:closed', self.onClosed);
     delete el.f7RouteProps;
   },
   computed: {
@@ -150,8 +154,14 @@ export default {
     },
   },
   methods: {
-    onClick(event) {
-      this.dispatchEvent('click', event);
+    onClick(e) {
+      this.dispatchEvent('click', e);
+    },
+    onOpened(e) {
+      this.dispatchEvent('menuOpened menu:opened', e);
+    },
+    onClosed(e) {
+      this.dispatchEvent('menuClosed menu:closed', e);
     },
   },
 };
