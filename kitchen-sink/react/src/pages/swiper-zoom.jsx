@@ -16,22 +16,22 @@ export default () => (
       }}
     >
       <SwiperSlide zoom>
-        <img src="http://lorempixel.com/800/800/nature/1/" />
+        <img src="https://cdn.framework7.io/placeholder/nature-800x800-1.jpg/" />
       </SwiperSlide>
       <SwiperSlide zoom>
-        <img src="http://lorempixel.com/800/800/nature/2/" />
+        <img src="https://cdn.framework7.io/placeholder/nature-800x800-2.jpg/" />
       </SwiperSlide>
       <SwiperSlide zoom>
-        <img src="http://lorempixel.com/800/800/nature/3/" />
+        <img src="https://cdn.framework7.io/placeholder/nature-800x800-3.jpg/" />
       </SwiperSlide>
       <SwiperSlide zoom>
-        <img src="http://lorempixel.com/800/800/nature/4/" />
+        <img src="https://cdn.framework7.io/placeholder/nature-800x800-4.jpg/" />
       </SwiperSlide>
       <SwiperSlide zoom>
-        <img src="http://lorempixel.com/800/800/nature/5/" />
+        <img src="https://cdn.framework7.io/placeholder/nature-800x800-5.jpg/" />
       </SwiperSlide>
       <SwiperSlide zoom>
-        <img src="http://lorempixel.com/800/800/nature/6/" />
+        <img src="https://cdn.framework7.io/placeholder/nature-800x800-6.jpg/" />
       </SwiperSlide>
     </Swiper>
   </Page>

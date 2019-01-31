@@ -10,17 +10,17 @@ export default class extends React.Component {
         {
           title: 'Yellow Submarine',
           author: 'Beatles',
-          cover: 'http://lorempixel.com/88/88/abstract/1',
+          cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-1.jpg',
         },
         {
           title: 'Don\'t Stop Me Now',
           author: 'Queen',
-          cover: 'http://lorempixel.com/88/88/abstract/2',
+          cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-2.jpg',
         },
         {
           title: 'Billie Jean',
           author: 'Michael Jackson',
-          cover: 'http://lorempixel.com/88/88/abstract/3',
+          cover: 'https://cdn.framework7.io/placeholder/abstract-88x88-3.jpg',
         },
       ],
       songs: ['Yellow Submarine', 'Don\'t Stop Me Now', 'Billie Jean', 'Californication'],
@@ -52,7 +52,7 @@ export default class extends React.Component {
     const self = this;
     setTimeout(() => {
       const { items, songs, authors } = self.state;
-      const picURL = `http://lorempixel.com/88/88/abstract/${Math.round(Math.random() * 10)}`;
+      const picURL = `https://cdn.framework7.io/placeholder/abstract-88x88-${Math.round(Math.random() * 10)}.jpg`;
       const song = songs[Math.floor(Math.random() * songs.length)];
       const author = authors[Math.floor(Math.random() * authors.length)];
       items.push({

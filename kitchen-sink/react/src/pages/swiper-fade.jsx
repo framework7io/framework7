@@ -8,10 +8,10 @@ export default () => (
     <Swiper className="demo-swiper demo-swiper-fade" pagination params={{
       effect: 'fade',
     }}>
-      <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/1024/1024/people/1/)'}}></SwiperSlide>
-      <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/1024/1024/people/2/)'}}></SwiperSlide>
-      <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/1024/1024/people/3/)'}}></SwiperSlide>
-      <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/1024/1024/people/4/)'}}></SwiperSlide>
+      <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-1024x1024-1.jpg/)'}}></SwiperSlide>
+      <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-1024x1024-2.jpg/)'}}></SwiperSlide>
+      <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-1024x1024-3.jpg/)'}}></SwiperSlide>
+      <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-1024x1024-4.jpg/)'}}></SwiperSlide>
     </Swiper>
   </Page>
 

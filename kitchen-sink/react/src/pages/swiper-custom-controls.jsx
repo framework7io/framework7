@@ -15,12 +15,12 @@ export default () => (
           }
         }}
       >
-        <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/1024/1024/nightlife/1/)'}} />
-        <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/1024/1024/nightlife/2/)'}} />
-        <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/1024/1024/nightlife/3/)'}} />
-        <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/1024/1024/nightlife/4/)'}} />
-        <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/1024/1024/nightlife/5/)'}} />
-        <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/1024/1024/nightlife/6/)'}} />
+        <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/nightlife-1024x1024-1.jpg/)'}} />
+        <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/nightlife-1024x1024-2.jpg/)'}} />
+        <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/nightlife-1024x1024-3.jpg/)'}} />
+        <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/nightlife-1024x1024-4.jpg/)'}} />
+        <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/nightlife-1024x1024-5.jpg/)'}} />
+        <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/nightlife-1024x1024-6.jpg/)'}} />
       </Swiper>
     </div>
   </Page>

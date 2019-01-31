@@ -39,7 +39,7 @@
       <f7-card-header
         class="no-border"
         valign="bottom"
-        style="background-image:url(http://lorempixel.com/1000/600/nature/3/)"
+        style="background-image:url(https://cdn.framework7.io/placeholder/nature-1000x600-3.jpg/)"
       >Journey To Mountains</f7-card-header>
       <f7-card-content>
         <p class="date">Posted on January 21, 2015</p>
@@ -54,7 +54,7 @@
       <f7-card-header
         class="no-border"
         valign="bottom"
-        style="background-image:url(http://lorempixel.com/1000/600/people/6/)"
+        style="background-image:url(https://cdn.framework7.io/placeholder/people-1000x600-6.jpg/)"
       >Journey To Mountains</f7-card-header>
       <f7-card-content>
         <p class="date">Posted on January 21, 2015</p>
@@ -69,12 +69,12 @@
     <f7-block-title>Facebook Cards</f7-block-title>
     <f7-card class="demo-facebook-card">
       <f7-card-header class="no-border">
-        <div class="demo-facebook-avatar"><img src="http://lorempixel.com/68/68/people/1/" width="34" height="34"/></div>
+        <div class="demo-facebook-avatar"><img src="https://cdn.framework7.io/placeholder/people-68x68-1.jpg/" width="34" height="34"/></div>
         <div class="demo-facebook-name">John Doe</div>
         <div class="demo-facebook-date">Monday at 3:47 PM</div>
       </f7-card-header>
       <f7-card-content :padding="false">
-        <img src="http://lorempixel.com/1000/700/nature/8/" width="100%"/>
+        <img src="https://cdn.framework7.io/placeholder/nature-1000x700-8.jpg/" width="100%"/>
       </f7-card-content>
       <f7-card-footer class="no-border">
         <f7-link>Like</f7-link>
@@ -84,12 +84,12 @@
     </f7-card>
     <f7-card class="demo-facebook-card">
       <f7-card-header class="no-border">
-        <div class="demo-facebook-avatar"><img src="http://lorempixel.com/68/68/people/1/" width="34" height="34"/></div>
+        <div class="demo-facebook-avatar"><img src="https://cdn.framework7.io/placeholder/people-68x68-1.jpg/" width="34" height="34"/></div>
         <div class="demo-facebook-name">John Doe</div>
         <div class="demo-facebook-date">Monday at 2:15 PM</div>
       </f7-card-header>
       <f7-card-content>
-        <p>What a nice photo i took yesterday!</p><img src="http://lorempixel.com/1000/700/nature/8/" width="100%"/>
+        <p>What a nice photo i took yesterday!</p><img src="https://cdn.framework7.io/placeholder/nature-1000x700-8.jpg/" width="100%"/>
         <p class="likes">Likes: 112 &nbsp;&nbsp; Comments: 43</p>
       </f7-card-content>
       <f7-card-footer class="no-border">
@@ -118,19 +118,19 @@
             title="Yellow Submarine"
             subtitle="Beatles"
           >
-            <img slot="media" src="http://lorempixel.com/88/88/fashion/4" width="44"/>
+            <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-88x88-4.jpg" width="44"/>
           </f7-list-item>
           <f7-list-item
             title="Don't Stop Me Now"
             subtitle="Queen"
           >
-            <img slot="media" src="http://lorempixel.com/88/88/fashion/5" width="44"/>
+            <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-88x88-5.jpg" width="44"/>
           </f7-list-item>
           <f7-list-item
             title="Billie Jean"
             subtitle="Michael Jackson"
           >
-            <img slot="media" src="http://lorempixel.com/88/88/fashion/6" width="44"/>
+            <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-88x88-6.jpg" width="44"/>
           </f7-list-item>
         </f7-list>
       </f7-card-content>

@@ -15,34 +15,34 @@ export default class extends React.Component {
           colorTheme="white"
           init={false}
         >
-          <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/800/800/nature/1/)'}} />
-          <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/800/800/nature/2/)'}} />
-          <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/800/800/nature/3/)'}} />
-          <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/800/800/nature/4/)'}} />
-          <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/800/800/nature/5/)'}} />
-          <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/800/800/nature/6/)'}} />
+          <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-800x800-1.jpg/)'}} />
+          <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-800x800-2.jpg/)'}} />
+          <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-800x800-3.jpg/)'}} />
+          <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-800x800-4.jpg/)'}} />
+          <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-800x800-5.jpg/)'}} />
+          <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-800x800-6.jpg/)'}} />
         </Swiper>
         <Swiper
           className="demo-swiper-gallery-thumbs"
           init={false}
         >
           <SwiperSlide>
-            <div style={{backgroundImage: 'url(http://lorempixel.com/800/800/nature/1/)'}} className="swiper-slide-pic"></div>
+            <div style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-800x800-1.jpg/)'}} className="swiper-slide-pic"></div>
           </SwiperSlide>
           <SwiperSlide>
-            <div style={{backgroundImage: 'url(http://lorempixel.com/800/800/nature/2/)'}} className="swiper-slide-pic"></div>
+            <div style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-800x800-2.jpg/)'}} className="swiper-slide-pic"></div>
           </SwiperSlide>
           <SwiperSlide>
-            <div style={{backgroundImage: 'url(http://lorempixel.com/800/800/nature/3/)'}} className="swiper-slide-pic"></div>
+            <div style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-800x800-3.jpg/)'}} className="swiper-slide-pic"></div>
           </SwiperSlide>
           <SwiperSlide>
-            <div style={{backgroundImage: 'url(http://lorempixel.com/800/800/nature/4/)'}} className="swiper-slide-pic"></div>
+            <div style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-800x800-4.jpg/)'}} className="swiper-slide-pic"></div>
           </SwiperSlide>
           <SwiperSlide>
-            <div style={{backgroundImage: 'url(http://lorempixel.com/800/800/nature/5/)'}} className="swiper-slide-pic"></div>
+            <div style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-800x800-5.jpg/)'}} className="swiper-slide-pic"></div>
           </SwiperSlide>
           <SwiperSlide>
-            <div style={{backgroundImage: 'url(http://lorempixel.com/800/800/nature/6/)'}} className="swiper-slide-pic"></div>
+            <div style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-800x800-6.jpg/)'}} className="swiper-slide-pic"></div>
           </SwiperSlide>
         </Swiper>
       </Page>

@@ -174,7 +174,7 @@ export default () => (
         subtitle="Beatles"
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
       >
-        <img slot="media" src="http://lorempixel.com/160/160/people/1" width="80" />
+        <img slot="media" src="https://cdn.framework7.io/placeholder/people-160x160-1.jpg" width="80" />
       </ListItem>
       <ListItem
         link="#"
@@ -183,7 +183,7 @@ export default () => (
         subtitle="Queen"
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
       >
-        <img slot="media" src="http://lorempixel.com/160/160/people/2" width="80" />
+        <img slot="media" src="https://cdn.framework7.io/placeholder/people-160x160-2.jpg" width="80" />
       </ListItem>
       <ListItem
         link="#"
@@ -192,7 +192,7 @@ export default () => (
         subtitle="Michael Jackson"
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
       >
-        <img slot="media" src="http://lorempixel.com/160/160/people/3" width="80" />
+        <img slot="media" src="https://cdn.framework7.io/placeholder/people-160x160-3.jpg" width="80" />
       </ListItem>
     </List>
     <BlockTitle>Mail App</BlockTitle>
@@ -231,18 +231,18 @@ export default () => (
       <ListItem
         title="Yellow Submarine"
         subtitle="Beatles">
-        <img slot="media" src="http://lorempixel.com/88/88/fashion/1" width="44" />
+        <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-88x88-1.jpg" width="44" />
       </ListItem>
       <ListItem
         link="#"
         title="Don't Stop Me Now"
         subtitle="Queen">
-        <img slot="media" src="http://lorempixel.com/88/88/fashion/2" width="44" />
+        <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-88x88-2.jpg" width="44" />
       </ListItem>
       <ListItem
         title="Billie Jean"
         subtitle="Michael Jackson">
-        <img slot="media" src="http://lorempixel.com/88/88/fashion/3" width="44" />
+        <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-88x88-3.jpg" width="44" />
       </ListItem>
     </List>
     <BlockTitle>Inset</BlockTitle>
@@ -251,19 +251,19 @@ export default () => (
         link="#"
         title="Yellow Submarine"
         subtitle="Beatles">
-        <img slot="media" src="http://lorempixel.com/88/88/fashion/4" width="44" />
+        <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-88x88-4.jpg" width="44" />
       </ListItem>
       <ListItem
         link="#"
         title="Don't Stop Me Now"
         subtitle="Queen">
-        <img slot="media" src="http://lorempixel.com/88/88/fashion/5" width="44" />
+        <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-88x88-5.jpg" width="44" />
       </ListItem>
       <ListItem
         link="#"
         title="Billie Jean"
         subtitle="Michael Jackson">
-        <img slot="media" src="http://lorempixel.com/88/88/fashion/6" width="44" />
+        <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-88x88-6.jpg" width="44" />
       </ListItem>
     </List>
     <BlockTitle>Custom Table-like Layout</BlockTitle>

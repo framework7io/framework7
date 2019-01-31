@@ -171,7 +171,7 @@
         subtitle="Beatles"
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
       >
-        <img slot="media" src="http://lorempixel.com/160/160/people/1" width="80" />
+        <img slot="media" src="https://cdn.framework7.io/placeholder/people-160x160-1.jpg" width="80" />
       </f7-list-item>
       <f7-list-item
         link="#"
@@ -180,7 +180,7 @@
         subtitle="Queen"
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
       >
-        <img slot="media" src="http://lorempixel.com/160/160/people/2" width="80" />
+        <img slot="media" src="https://cdn.framework7.io/placeholder/people-160x160-2.jpg" width="80" />
       </f7-list-item>
       <f7-list-item
         link="#"
@@ -189,7 +189,7 @@
         subtitle="Michael Jackson"
         text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus."
       >
-        <img slot="media" src="http://lorempixel.com/160/160/people/3" width="80" />
+        <img slot="media" src="https://cdn.framework7.io/placeholder/people-160x160-3.jpg" width="80" />
       </f7-list-item>
     </f7-list>
     <f7-block-title>Mail App</f7-block-title>
@@ -228,18 +228,18 @@
       <f7-list-item
         title="Yellow Submarine"
         subtitle="Beatles">
-        <img slot="media" src="http://lorempixel.com/88/88/fashion/1" width="44" />
+        <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-88x88-1.jpg" width="44" />
       </f7-list-item>
       <f7-list-item
         link="#"
         title="Don't Stop Me Now"
         subtitle="Queen">
-        <img slot="media" src="http://lorempixel.com/88/88/fashion/2" width="44" />
+        <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-88x88-2.jpg" width="44" />
       </f7-list-item>
       <f7-list-item
         title="Billie Jean"
         subtitle="Michael Jackson">
-        <img slot="media" src="http://lorempixel.com/88/88/fashion/3" width="44" />
+        <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-88x88-3.jpg" width="44" />
       </f7-list-item>
     </f7-list>
     <f7-block-title>Inset</f7-block-title>
@@ -248,19 +248,19 @@
         link="#"
         title="Yellow Submarine"
         subtitle="Beatles">
-        <img slot="media" src="http://lorempixel.com/88/88/fashion/4" width="44" />
+        <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-88x88-4.jpg" width="44" />
       </f7-list-item>
       <f7-list-item
         link="#"
         title="Don't Stop Me Now"
         subtitle="Queen">
-        <img slot="media" src="http://lorempixel.com/88/88/fashion/5" width="44" />
+        <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-88x88-5.jpg" width="44" />
       </f7-list-item>
       <f7-list-item
         link="#"
         title="Billie Jean"
         subtitle="Michael Jackson">
-        <img slot="media" src="http://lorempixel.com/88/88/fashion/6" width="44" />
+        <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-88x88-6.jpg" width="44" />
       </f7-list-item>
     </f7-list>
     <f7-block-title>Custom Table-like Layout</f7-block-title>

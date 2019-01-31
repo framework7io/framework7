@@ -42,7 +42,7 @@ export default () => (
       <CardHeader
         className="no-border"
         valign="bottom"
-        style={{ backgroundImage: 'url(http://lorempixel.com/1000/600/nature/3/)' }}
+        style={{ backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-1000x600-3.jpg/)' }}
       >Journey To Mountains</CardHeader>
       <CardContent>
         <p className="date">Posted on January 21, 2015</p>
@@ -57,7 +57,7 @@ export default () => (
       <CardHeader
         className="no-border"
         valign="bottom"
-        style={{ backgroundImage: 'url(http://lorempixel.com/1000/600/people/6/)' }}
+        style={{ backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-1000x600-6.jpg/)' }}
       >Journey To Mountains</CardHeader>
       <CardContent>
         <p className="date">Posted on January 21, 2015</p>
@@ -72,12 +72,12 @@ export default () => (
     <BlockTitle>Facebook Cards</BlockTitle>
     <Card className="demo-facebook-card">
       <CardHeader className="no-border">
-        <div className="demo-facebook-avatar"><img src="http://lorempixel.com/68/68/people/1/" width="34" height="34"/></div>
+        <div className="demo-facebook-avatar"><img src="https://cdn.framework7.io/placeholder/people-68x68-1.jpg/" width="34" height="34"/></div>
         <div className="demo-facebook-name">John Doe</div>
         <div className="demo-facebook-date">Monday at 3:47 PM</div>
       </CardHeader>
       <CardContent padding={false}>
-        <img src="http://lorempixel.com/1000/700/nature/8/" width="100%"/>
+        <img src="https://cdn.framework7.io/placeholder/nature-1000x700-8.jpg/" width="100%"/>
       </CardContent>
       <CardFooter className="no-border">
         <Link>Like</Link>
@@ -87,12 +87,12 @@ export default () => (
     </Card>
     <Card className="demo-facebook-card">
       <CardHeader className="no-border">
-        <div className="demo-facebook-avatar"><img src="http://lorempixel.com/68/68/people/1/" width="34" height="34"/></div>
+        <div className="demo-facebook-avatar"><img src="https://cdn.framework7.io/placeholder/people-68x68-1.jpg/" width="34" height="34"/></div>
         <div className="demo-facebook-name">John Doe</div>
         <div className="demo-facebook-date">Monday at 2:15 PM</div>
       </CardHeader>
       <CardContent>
-        <p>What a nice photo i took yesterday!</p><img src="http://lorempixel.com/1000/700/nature/8/" width="100%"/>
+        <p>What a nice photo i took yesterday!</p><img src="https://cdn.framework7.io/placeholder/nature-1000x700-8.jpg/" width="100%"/>
         <p className="likes">Likes: 112 &nbsp;&nbsp; Comments: 43</p>
       </CardContent>
       <CardFooter className="no-border">
@@ -121,19 +121,19 @@ export default () => (
             title="Yellow Submarine"
             subtitle="Beatles"
           >
-            <img slot="media" src="http://lorempixel.com/88/88/fashion/4" width="44"/>
+            <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-88x88-4.jpg" width="44"/>
           </ListItem>
           <ListItem
             title="Don't Stop Me Now"
             subtitle="Queen"
           >
-            <img slot="media" src="http://lorempixel.com/88/88/fashion/5" width="44"/>
+            <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-88x88-5.jpg" width="44"/>
           </ListItem>
           <ListItem
             title="Billie Jean"
             subtitle="Michael Jackson"
           >
-            <img slot="media" src="http://lorempixel.com/88/88/fashion/6" width="44"/>
+            <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-88x88-6.jpg" width="44"/>
           </ListItem>
         </List>
       </CardContent>

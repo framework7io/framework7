@@ -8,15 +8,15 @@ export default () => (
     <Swiper className="demo-swiper demo-swiper-cube" params={{
       effect: 'cube',
     }}>
-      <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/800/800/people/1/)'}}></SwiperSlide>
-      <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/800/800/people/2/)'}}></SwiperSlide>
-      <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/800/800/people/3/)'}}></SwiperSlide>
-      <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/800/800/people/4/)'}}></SwiperSlide>
-      <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/800/800/people/5/)'}}></SwiperSlide>
-      <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/800/800/people/6/)'}}></SwiperSlide>
-      <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/800/800/people/7/)'}}></SwiperSlide>
-      <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/800/800/people/8/)'}}></SwiperSlide>
-      <SwiperSlide style={{backgroundImage: 'url(http://lorempixel.com/800/800/people/9/)'}}></SwiperSlide>
+      <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-800x800-1.jpg/)'}}></SwiperSlide>
+      <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-800x800-2.jpg/)'}}></SwiperSlide>
+      <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-800x800-3.jpg/)'}}></SwiperSlide>
+      <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-800x800-4.jpg/)'}}></SwiperSlide>
+      <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-800x800-5.jpg/)'}}></SwiperSlide>
+      <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-800x800-6.jpg/)'}}></SwiperSlide>
+      <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-800x800-7.jpg/)'}}></SwiperSlide>
+      <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-800x800-8.jpg/)'}}></SwiperSlide>
+      <SwiperSlide style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-800x800-9.jpg/)'}}></SwiperSlide>
     </Swiper>
   </Page>
 );
