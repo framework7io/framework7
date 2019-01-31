@@ -112,11 +112,11 @@ function buildReact(cb) {
       react: 'React',
     },
     strict: true,
-    file: `${buildPath}/react/framework7-react.js`,
+    file: `${buildPath}/react/framework7-react.bundle.js`,
     format: 'umd',
     name: 'Framework7React',
     sourcemap: env === 'development',
-    sourcemapFile: `${buildPath}/react/framework7-react.js.map`,
+    sourcemapFile: `${buildPath}/react/framework7-react.bundle.js.map`,
     banner: bannerReact,
   })).then((bundle) => {
     // Remove esm.bundle
@@ -129,15 +129,15 @@ function buildReact(cb) {
     const result = bundle.output[0];
     const minified = Terser.minify(result.code, {
       sourceMap: {
-        filename: 'framework7-react.min.js',
-        url: 'framework7-react.min.js.map',
+        filename: 'framework7-react.bundle.min.js',
+        url: 'framework7-react.bundle.min.js.map',
       },
       output: {
         preamble: bannerReact,
       },
     });
-    fs.writeFileSync(`${buildPath}/react/framework7-react.min.js`, minified.code);
-    fs.writeFileSync(`${buildPath}/react/framework7-react.min.js.map`, minified.map);
+    fs.writeFileSync(`${buildPath}/react/framework7-react.bundle.min.js`, minified.code);
+    fs.writeFileSync(`${buildPath}/react/framework7-react.bundle.min.js.map`, minified.map);
     if (cb) cb();
   }).catch((err) => {
     if (cb) cb();

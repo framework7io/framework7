@@ -105,11 +105,11 @@ function buildVue(cb) {
       vue: 'Vue',
     },
     strict: true,
-    file: `${buildPath}/vue/framework7-vue.js`,
+    file: `${buildPath}/vue/framework7-vue.bundle.js`,
     format: 'umd',
     name: 'Framework7Vue',
     sourcemap: env === 'development',
-    sourcemapFile: `${buildPath}/vue/framework7-vue.js.map`,
+    sourcemapFile: `${buildPath}/vue/framework7-vue.bundle.js.map`,
     banner: bannerVue,
   })).then((bundle) => {
     if (env === 'development') {
@@ -119,15 +119,15 @@ function buildVue(cb) {
     const result = bundle.output[0];
     const minified = Terser.minify(result.code, {
       sourceMap: {
-        filename: 'framework7-vue.min.js',
-        url: 'framework7-vue.min.js.map',
+        filename: 'framework7-vue.bundle.min.js',
+        url: 'framework7-vue.bundle.min.js.map',
       },
       output: {
         preamble: bannerVue,
       },
     });
-    fs.writeFileSync(`${buildPath}/vue/framework7-vue.min.js`, minified.code);
-    fs.writeFileSync(`${buildPath}/vue/framework7-vue.min.js.map`, minified.map);
+    fs.writeFileSync(`${buildPath}/vue/framework7-vue.bundle.min.js`, minified.code);
+    fs.writeFileSync(`${buildPath}/vue/framework7-vue.bundle.min.js.map`, minified.map);
     if (cb) cb();
   }).catch((err) => {
     if (cb) cb();

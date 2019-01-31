@@ -58,6 +58,7 @@ function buildTypings(cb) {
     .replace('// EXPORT_PLUGIN', exportPlugin);
 
   fs.writeFileSync(`${output}/framework7-react.d.ts`, reactTypings);
+  fs.writeFileSync(`${output}/framework7-react.bundle.d.ts`, reactTypings);
   fs.writeFileSync(`${output}/framework7-react.esm.d.ts`, reactTypings);
 
   cb();

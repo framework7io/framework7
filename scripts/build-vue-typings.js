@@ -58,6 +58,7 @@ function buildTypings(cb) {
     .replace('// EXPORT_PLUGIN', exportPlugin);
 
   fs.writeFileSync(`${output}/framework7-vue.d.ts`, vueTypings);
+  fs.writeFileSync(`${output}/framework7-vue.bundle.d.ts`, vueTypings);
   fs.writeFileSync(`${output}/framework7-vue.esm.d.ts`, vueTypings);
   fs.writeFileSync(`${output}/framework7-vue.esm.bundle.d.ts`, vueTypings);
 
