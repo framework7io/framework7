@@ -31,7 +31,7 @@ export default {
   watch: {
     'props.expandableOpened': function watchOpened(expandableOpened) {
       const self = this;
-      if (opened) {
+      if (expandableOpened) {
         self.open();
       } else {
         self.close();
@@ -149,19 +149,19 @@ export default {
       self.$f7.card.close(self.refs.el);
     },
     onBeforeOpen(e) {
-      this.dispatchEvent('cardBeforeOpen card:beforeopen', e.target, e.detail.prevent);
+      this.dispatchEvent('cardBeforeOpen card:beforeopen', e, e.detail.prevent);
     },
     onOpen(e) {
-      this.dispatchEvent('cardOpen card:open', e.target);
+      this.dispatchEvent('cardOpen card:open', e);
     },
     onOpened(e) {
-      this.dispatchEvent('cardOpened card:opened', e.target);
+      this.dispatchEvent('cardOpened card:opened', e);
     },
     onClose(e) {
-      this.dispatchEvent('cardClose card:close', e.target);
+      this.dispatchEvent('cardClose card:close', e);
     },
     onClosed(e) {
-      this.dispatchEvent('cardClosed card:closed', e.target);
+      this.dispatchEvent('cardClosed card:closed', e);
     },
   },
 };
