@@ -186,7 +186,8 @@
 }
 // Transitions
 .toolbar-transitioning,
-.navbar-transitioning + .toolbar {
+.navbar-transitioning + .toolbar,
+.navbar-transitioning ~ * .toolbar {
   transition-duration: var(--f7-toolbar-hide-show-transition-duration);
 }
 
@@ -249,12 +250,18 @@
 }
 .navbar-hidden + .toolbar-top:not(.toolbar-hidden),
 .ios .navbar-hidden + .toolbar-top-ios:not(.toolbar-hidden),
-.md .navbar-hidden + .toolbar-top-md:not(.toolbar-hidden) {
+.md .navbar-hidden + .toolbar-top-md:not(.toolbar-hidden),
+.navbar-hidden ~ * .toolbar-top:not(.toolbar-hidden),
+.ios .navbar-hidden ~ * .toolbar-top-ios:not(.toolbar-hidden),
+.md .navbar-hidden ~ * .toolbar-top-md:not(.toolbar-hidden), {
   transform: translate3d(0, calc(-1 * var(--f7-navbar-height)), 0);
 }
 .navbar-large-hidden + .toolbar-top:not(.toolbar-hidden),
 .ios .navbar-large-hidden + .toolbar-top-ios:not(.toolbar-hidden),
-.md .navbar-large-hidden + .toolbar-top-md:not(.toolbar-hidden) {
+.md .navbar-large-hidden + .toolbar-top-md:not(.toolbar-hidden),
+.navbar-large-hidden ~ * .toolbar-top:not(.toolbar-hidden),
+.ios .navbar-large-hidden ~ * .toolbar-top-ios:not(.toolbar-hidden),
+.md .navbar-large-hidden ~ * .toolbar-top-md:not(.toolbar-hidden) {
   transform: translate3d(0, calc(-1 * (var(--f7-navbar-height) + var(--f7-navbar-large-title-height))), 0);
 }
 
