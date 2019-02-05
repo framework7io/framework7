@@ -15,33 +15,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
 
 * [Become a backer or sponsor on Patreon.](https://www.patreon.com/vladimirkharlampidi)
 
-### Sponsors
-
-<table>
-  <tr>
-    <td align="center" valign="middle">
-      <a href="https://wappler.io/" target="_blank">
-        <img width="200" src="https://cdn.framework7.io/i/sponsors/wappler.png">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://appvalley.vip/" target="_blank">
-        <img width="200" src="https://cdn.framework7.io/i/sponsors/appvalley.jpg">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://www.securcom.me/" target="_blank">
-        <img width="200" src="https://cdn.framework7.io/i/sponsors/securcom.png">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="http://mytommy.com" target="_blank">
-        <img width="200" src="https://cdn.framework7.io/i/sponsors/tommy.png">
-      </a>
-    </td>
-  </tr>
-</table>
-
 ## Getting Started
   * [Getting Started Guide](https://framework7.io/docs/introduction.html)
 
