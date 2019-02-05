@@ -8,6 +8,40 @@
 
 Full Featured Mobile HTML Framework For Building iOS & Android Apps
 
+
+## Supporting Framework7
+
+Framework7 is an MIT-licensed open source project with its ongoing development made possible entirely by the support of these awesome [backers](https://github.com/framework7io/framework7/blob/master/BACKERS.md). If you'd like to join them, please consider:
+
+* [Become a backer or sponsor on Patreon.](https://www.patreon.com/vladimirkharlampidi)
+
+### Sponsors
+
+<table>
+  <tr>
+    <td align="center" valign="middle">
+      <a href="https://wappler.io/" target="_blank">
+        <img width="200" src="https://cdn.framework7.io/i/sponsors/wappler.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://appvalley.vip/" target="_blank">
+        <img width="200" src="https://cdn.framework7.io/i/sponsors/appvalley.jpg">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://www.securcom.me/" target="_blank">
+        <img width="200" src="https://cdn.framework7.io/i/sponsors/securcom.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="http://mytommy.com" target="_blank">
+        <img width="200" src="https://cdn.framework7.io/i/sponsors/tommy.png">
+      </a>
+    </td>
+  </tr>
+</table>
+
 ## Getting Started
   * [Getting Started Guide](https://framework7.io/docs/introduction.html)
 

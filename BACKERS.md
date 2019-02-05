@@ -3,18 +3,23 @@
 <table>
   <tr>
     <td align="center" valign="middle">
+      <a href="https://wappler.io/" target="_blank">
+        <img width="200" src="https://cdn.framework7.io/i/sponsors/wappler.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://appvalley.vip/" target="_blank">
-        <img width="200" src="https://framework7.io/i/sponsors/appvalley.jpg">
+        <img width="200" src="https://cdn.framework7.io/i/sponsors/appvalley.jpg">
       </a>
     </td>
     <td align="center" valign="middle">
       <a href="https://www.securcom.me/" target="_blank">
-        <img width="200" src="https://framework7.io/i/sponsors/securcom.png">
+        <img width="200" src="https://cdn.framework7.io/i/sponsors/securcom.png">
       </a>
     </td>
     <td align="center" valign="middle">
       <a href="http://mytommy.com" target="_blank">
-        <img width="200" src="https://framework7.io/i/sponsors/tommy.png">
+        <img width="200" src="https://cdn.framework7.io/i/sponsors/tommy.png">
       </a>
     </td>
   </tr>
@@ -41,7 +46,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ---
 
 ### $100 Silver Sponsor
-Colin Adams ([App Valley](https://appvalley.vip/))
+Colin Adams ([App Valley](https://appvalley.vip/))<br>
 Pavol Cvengros ([securCom Inc](https://www.securcom.me/))<br>
 Mason Fok ([tommy](http://mytommy.com))<br>
 
@@ -50,6 +55,7 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 ---
 
 ### $50+ Top Supporter
+[Wappler](https://wappler.io) - Visual Web App Creator, offers full visual Framework7 builder<br>
 Aaron Iba<br>
 Olivier<br>
 Marcelo Lopetegui L.<br>
