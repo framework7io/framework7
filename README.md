@@ -1,21 +1,21 @@
+<p align="center"><a href="https://framework7.io" target="_blank" rel="noopener noreferrer"><img width="100" src="https://cdn.framework7.io/i/logo.svg" alt="Framework7"></a></p>
+
 <a href="https://www.patreon.com/vladimirkharlampidi"><img src="https://cdn.framework7.io/i/support-badge.png" height="20"></a>
-[![Join the chat at https://gitter.im/nolimits4web/Framework7](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nolimits4web/Framework7)
 [![Build Status](https://travis-ci.org/framework7io/framework7.svg?branch=master)](https://travis-ci.org/framework7io/framework7)
-[![devDependency Status](https://david-dm.org/framework7io/framework7/dev-status.svg)](https://david-dm.org/framework7io/framework7#info=devDependencies)
 [![Greenkeeper badge](https://badges.greenkeeper.io/framework7io/Framework7.svg)](https://greenkeeper.io/)
 
-# Framework7
+<h1 align="center">Framework7</h1>
 
-Full Featured Mobile HTML Framework For Building iOS & Android Apps
+<p align="center">Full Featured Mobile HTML Framework For Building iOS & Android Apps</p>
 
 
-## Supporting Framework7
+<h2 align="center">Supporting Framework7</h2>
 
 Framework7 is an MIT-licensed open source project with its ongoing development made possible entirely by the support of these awesome [backers](https://github.com/framework7io/framework7/blob/master/BACKERS.md). If you'd like to join them, please consider:
 
 * [Become a backer or sponsor on Patreon.](https://www.patreon.com/vladimirkharlampidi)
 
-### Sponsors
+<h3 align="center">Sponsors</h3>
 
 <table>
   <tr>
@@ -137,5 +137,6 @@ Appstore apps made with Framework7: http://framework7.io/showcase/
 
 ## Previous Versions
 
+* [v3 branch](https://github.com/framework7io/Framework7/tree/v3)
 * [v2 branch](https://github.com/framework7io/Framework7/tree/v2)
 * [v1 branch](https://github.com/framework7io/Framework7/tree/v1)
