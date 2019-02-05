@@ -1,5 +1,5 @@
 /**
- * Framework7 3.6.5
+ * Framework7 3.6.6
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 4, 2019
+ * Released on: February 5, 2019
  */
 
 (function (global, factory) {
@@ -17,19 +17,20 @@
 }(this, function () { 'use strict';
 
   /**
-   * Template7 1.4.0
+   * Template7 1.4.1
    * Mobile-first HTML template engine
    * 
    * http://www.idangero.us/template7/
    * 
-   * Copyright 2018, Vladimir Kharlampidi
+   * Copyright 2019, Vladimir Kharlampidi
    * The iDangero.us
    * http://www.idangero.us/
    * 
    * Licensed under MIT
    * 
-   * Released on: August 31, 2018
+   * Released on: February 5, 2019
    */
+
   var t7ctx;
   if (typeof window !== 'undefined') {
     t7ctx = window;
@@ -48,13 +49,14 @@
       return typeof func === 'function';
     },
     escape: function escape(string) {
-      return (typeof Template7Context !== 'undefined' && Template7Context.escape) ?
-        Template7Context.escape(string) :
-        string
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;');
+      if ( string === void 0 ) string = '';
+
+      return string
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
     },
     helperToSlices: function helperToSlices(string) {
       var quoteDoubleRexExp = Template7Utils.quoteDoubleRexExp;
@@ -238,9 +240,19 @@
       return blocks;
     },
     parseJsVariable: function parseJsVariable(expression, replace, object) {
-      return expression.split(/([+ \-*/^])/g).map(function (part) {
-        if (part.indexOf(replace) < 0) { return part; }
-        if (!object) { return JSON.stringify(''); }
+      return expression.split(/([+ \-*/^()&=|<>!%:?])/g).reduce(function (arr, part) {
+        if (!part) {
+          return arr;
+        }
+        if (part.indexOf(replace) < 0) {
+          arr.push(part);
+          return arr;
+        }
+        if (!object) {
+          arr.push(JSON.stringify(''));
+          return arr;
+        }
+
         var variable = object;
         if (part.indexOf((replace + ".")) >= 0) {
           part.split((replace + "."))[1].split('.').forEach(function (partName) {
@@ -252,24 +264,47 @@
           variable = JSON.stringify(variable);
         }
         if (variable === undefined) { variable = 'undefined'; }
-        return variable;
-      }).join('');
+
+        arr.push(variable);
+        return arr;
+      }, []).join('');
     },
     parseJsParents: function parseJsParents(expression, parents) {
-      return expression.split(/([+ \-*^])/g).map(function (part) {
-        if (part.indexOf('../') < 0) { return part; }
-        if (!parents || parents.length === 0) { return JSON.stringify(''); }
+      return expression.split(/([+ \-*^()&=|<>!%:?])/g).reduce(function (arr, part) {
+        if (!part) {
+          return arr;
+        }
+
+        if (part.indexOf('../') < 0) {
+          arr.push(part);
+          return arr;
+        }
+
+        if (!parents || parents.length === 0) {
+          arr.push(JSON.stringify(''));
+          return arr;
+        }
+
         var levelsUp = part.split('../').length - 1;
         var parentData = levelsUp > parents.length ? parents[parents.length - 1] : parents[levelsUp - 1];
 
         var variable = parentData;
         var parentPart = part.replace(/..\//g, '');
         parentPart.split('.').forEach(function (partName) {
-          if (variable[partName]) { variable = variable[partName]; }
+          if (typeof variable[partName] !== 'undefined') { variable = variable[partName]; }
           else { variable = 'undefined'; }
         });
-        return JSON.stringify(variable);
-      }).join('');
+        if (variable === false || variable === true) {
+          arr.push(JSON.stringify(variable));
+          return arr;
+        }
+        if (variable === null || variable === 'undefined') {
+          arr.push(JSON.stringify(''));
+          return arr;
+        }
+        arr.push(JSON.stringify(variable));
+        return arr;
+      }, []).join('');
     },
     getCompileVar: function getCompileVar(name, ctx, data) {
       if ( data === void 0 ) data = 'data_1';
@@ -329,6 +364,7 @@
   };
 
   /* eslint no-eval: "off" */
+
   var Template7Helpers = {
     _partial: function _partial(partialName, options) {
       var ctx = this;
@@ -3434,6 +3470,9 @@
       // Install Modules
       app.useModules();
 
+      // Init Data & Methods
+      app.initData();
+
       // Init
       if (app.params.init) {
         if (Device.cordova && app.params.initOnDeviceReady) {
@@ -3455,22 +3494,8 @@
     var prototypeAccessors = { $: { configurable: true },t7: { configurable: true } };
     var staticAccessors = { Dom7: { configurable: true },$: { configurable: true },Template7: { configurable: true },Class: { configurable: true } };
 
-    Framework7.prototype.init = function init () {
+    Framework7.prototype.initData = function initData () {
       var app = this;
-      if (app.initialized) { return app; }
-
-      app.root.addClass('framework7-initializing');
-
-      // RTL attr
-      if (app.rtl) {
-        $('html').attr('dir', 'rtl');
-      }
-
-      // Root class
-      app.root.addClass('framework7-root');
-
-      // Theme class
-      $('html').removeClass('ios md').addClass(app.theme);
 
       // Data
       app.data = {};
@@ -3490,6 +3515,25 @@
           }
         });
       }
+    };
+
+    Framework7.prototype.init = function init () {
+      var app = this;
+      if (app.initialized) { return app; }
+
+      app.root.addClass('framework7-initializing');
+
+      // RTL attr
+      if (app.rtl) {
+        $('html').attr('dir', 'rtl');
+      }
+
+      // Root class
+      app.root.addClass('framework7-root');
+
+      // Theme class
+      $('html').removeClass('ios md').addClass(app.theme);
+
       // Init class
       Utils.nextFrame(function () {
         app.root.removeClass('framework7-initializing');
@@ -4771,7 +4815,6 @@
    * Default configs.
    */
   var DEFAULT_DELIMITER = '/';
-  var DEFAULT_DELIMITERS = './';
 
   /**
    * The main path matching regexp utility.
@@ -4803,7 +4846,7 @@
     var index = 0;
     var path = '';
     var defaultDelimiter = (options && options.delimiter) || DEFAULT_DELIMITER;
-    var delimiters = (options && options.delimiters) || DEFAULT_DELIMITERS;
+    var whitelist = (options && options.whitelist) || undefined;
     var pathEscaped = false;
     var res;
 
@@ -4822,7 +4865,6 @@
       }
 
       var prev = '';
-      var next = str[index];
       var name = res[2];
       var capture = res[3];
       var group = res[4];
@@ -4830,9 +4872,11 @@
 
       if (!pathEscaped && path.length) {
         var k = path.length - 1;
+        var c = path[k];
+        var matches = whitelist ? whitelist.indexOf(c) > -1 : true;
 
-        if (delimiters.indexOf(path[k]) > -1) {
-          prev = path[k];
+        if (matches) {
+          prev = c;
           path = path.slice(0, k);
         }
       }
@@ -4844,11 +4888,10 @@
         pathEscaped = false;
       }
 
-      var partial = prev !== '' && next !== undefined && next !== prev;
       var repeat = modifier === '+' || modifier === '*';
       var optional = modifier === '?' || modifier === '*';
-      var delimiter = prev || defaultDelimiter;
       var pattern = capture || group;
+      var delimiter = prev || defaultDelimiter;
 
       tokens.push({
         name: name || key++,
@@ -4856,8 +4899,9 @@
         delimiter: delimiter,
         optional: optional,
         repeat: repeat,
-        partial: partial,
-        pattern: pattern ? escapeGroup(pattern) : '[^' + escapeString(delimiter) + ']+?'
+        pattern: pattern
+          ? escapeGroup(pattern)
+          : '[^' + escapeString(delimiter === defaultDelimiter ? delimiter : (delimiter + defaultDelimiter)) + ']+?'
       });
     }
 
@@ -4944,12 +4988,7 @@
           continue
         }
 
-        if (token.optional) {
-          // Prepend partial segment prefixes.
-          if (token.partial) { path += token.prefix; }
-
-          continue
-        }
+        if (token.optional) { continue }
 
         throw new TypeError('Expected "' + token.name + '" to be ' + (token.repeat ? 'an array' : 'a string'))
       }
@@ -5009,7 +5048,6 @@
           delimiter: null,
           optional: false,
           repeat: false,
-          partial: false,
           pattern: null
         });
       }
@@ -5062,11 +5100,9 @@
     var strict = options.strict;
     var start = options.start !== false;
     var end = options.end !== false;
-    var delimiter = escapeString(options.delimiter || DEFAULT_DELIMITER);
-    var delimiters = options.delimiters || DEFAULT_DELIMITERS;
+    var delimiter = options.delimiter || DEFAULT_DELIMITER;
     var endsWith = [].concat(options.endsWith || []).map(escapeString).concat('$').join('|');
     var route = start ? '^' : '';
-    var isEndDelimited = tokens.length === 0;
 
     // Iterate over the tokens and create our regexp string.
     for (var i = 0; i < tokens.length; i++) {
@@ -5074,7 +5110,6 @@
 
       if (typeof token === 'string') {
         route += escapeString(token);
-        isEndDelimited = i === tokens.length - 1 && delimiters.indexOf(token[token.length - 1]) > -1;
       } else {
         var capture = token.repeat
           ? '(?:' + token.pattern + ')(?:' + escapeString(token.delimiter) + '(?:' + token.pattern + '))*'
@@ -5083,8 +5118,8 @@
         if (keys) { keys.push(token); }
 
         if (token.optional) {
-          if (token.partial) {
-            route += escapeString(token.prefix) + '(' + capture + ')?';
+          if (!token.prefix) {
+            route += '(' + capture + ')?';
           } else {
             route += '(?:' + escapeString(token.prefix) + '(' + capture + '))?';
           }
@@ -5095,12 +5130,17 @@
     }
 
     if (end) {
-      if (!strict) { route += '(?:' + delimiter + ')?'; }
+      if (!strict) { route += '(?:' + escapeString(delimiter) + ')?'; }
 
       route += endsWith === '$' ? '$' : '(?=' + endsWith + ')';
     } else {
-      if (!strict) { route += '(?:' + delimiter + '(?=' + endsWith + '))?'; }
-      if (!isEndDelimited) { route += '(?=' + delimiter + '|' + endsWith + ')'; }
+      var endToken = tokens[tokens.length - 1];
+      var isEndDelimited = typeof endToken === 'string'
+        ? endToken[endToken.length - 1] === delimiter
+        : endToken === undefined;
+
+      if (!strict) { route += '(?:' + escapeString(delimiter) + '(?=' + endsWith + '))?'; }
+      if (!isEndDelimited) { route += '(?=' + escapeString(delimiter) + '|' + endsWith + ')'; }
     }
 
     return new RegExp(route, flags(options))
@@ -7414,16 +7454,29 @@
           },
         };
       }
-      if (!previousRoute || !modalToClose) {
-        return router;
+      if (!navigateUrl || navigateUrl.replace(/[# ]/g, '').trim().length === 0) {
+        if (!previousRoute || !modalToClose) {
+          return router;
+        }
       }
-      if (router.params.pushState && navigateOptions.pushState !== false) {
-        History.back();
+      var forceOtherUrl = navigateOptions.force && previousRoute && navigateUrl;
+      if (previousRoute && modalToClose) {
+        if (router.params.pushState && navigateOptions.pushState !== false) {
+          History.back();
+        }
+        router.currentRoute = previousRoute;
+        router.history.pop();
+        router.saveHistory();
+        router.modalRemove(modalToClose);
+        if (forceOtherUrl) {
+          router.navigate(navigateUrl, { reloadCurrent: true });
+        }
+      } else if (modalToClose) {
+        router.modalRemove(modalToClose);
+        if (navigateUrl) {
+          router.navigate(navigateUrl, { reloadCurrent: true });
+        }
       }
-      router.currentRoute = previousRoute;
-      router.history.pop();
-      router.saveHistory();
-      router.modalRemove(modalToClose);
       return router;
     }
     var $previousPage = router.$el.children('.page-current').prevAll('.page-previous').eq(0);
@@ -7589,11 +7642,12 @@
     var app = router.app;
     var separateNavbar = router.separateNavbar;
 
-    var $currentPageEl = $(router.currentPageEl);
-
     var $pagesToRemove = router.$el
       .children('.page')
-      .filter(function (index, pageInView) { return pageInView !== $currentPageEl[0]; });
+      .filter(function (index, pageInView) {
+        if (router.currentRoute && (router.currentRoute.modal || router.currentRoute.panel)) { return true; }
+        return pageInView !== router.currentPageEl;
+      });
 
     $pagesToRemove.each(function (index, pageEl) {
       var $oldPageEl = $(pageEl);
@@ -16596,7 +16650,7 @@
       var $panelParentEl = $el.parent();
       var wasInDom = $el.parents(document).length > 0;
 
-      if (!$panelParentEl.is(app.root)) {
+      if (!$panelParentEl.is(app.root) || $el.prevAll('.views, .view').length) {
         var $insertBeforeEl = app.root.children('.panel, .views, .view').eq(0);
         var $insertAfterEl = app.root.children('.statusbar').eq(0);
 
@@ -16608,7 +16662,19 @@
           app.root.prepend($el);
         }
 
-        if ($backdropEl && $backdropEl.length && !$backdropEl.parent().is(app.root) && $backdropEl.nextAll('.panel').length === 0) {
+        if ($backdropEl
+          && $backdropEl.length
+          && (
+            (
+              !$backdropEl.parent().is(app.root)
+              && $backdropEl.nextAll('.panel').length === 0
+            )
+            || (
+              $backdropEl.parent().is(app.root)
+              && $backdropEl.nextAll('.panel').length === 0
+            )
+          )
+        ) {
           $backdropEl.insertBefore($el);
         }
 
@@ -22596,19 +22662,25 @@
 
         if (!isMoved) {
           $el.removeClass('ptr-transitioning');
-          var targetIsEl;
           var targetIsScrollable;
-          $(e.target).parents().each(function (index, targetEl) {
-            if (targetEl === el) {
-              targetIsEl = true;
-            }
-            if (targetIsEl) { return; }
-            if (targetEl.scrollHeight > targetEl.offsetHeight) {
-              targetIsScrollable = true;
-            }
-          });
-
-          if (targetIsScrollable || scrollTop > $el[0].offsetHeight) {
+          if (scrollTop > $el[0].offsetHeight) {
+            isTouched = false;
+            return;
+          }
+          var $ptrWatchScrollable = $(e.target).closest('.ptr-watch-scroll');
+          if ($ptrWatchScrollable.length) {
+            $ptrWatchScrollable.each(function (ptrScrollableIndex, ptrScrollableEl) {
+              if (ptrScrollableEl === el) { return; }
+              if (
+                (ptrScrollableEl.scrollHeight > ptrScrollableEl.offsetHeight)
+                && $(ptrScrollableEl).css('overflow') === 'auto'
+                && ptrScrollableEl.scrollTop > 0
+              ) {
+                targetIsScrollable = true;
+              }
+            });
+          }
+          if (targetIsScrollable) {
             isTouched = false;
             return;
           }
