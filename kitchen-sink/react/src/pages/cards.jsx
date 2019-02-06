@@ -42,7 +42,7 @@ export default () => (
       <CardHeader
         className="no-border"
         valign="bottom"
-        style={{ backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-1000x600-3.jpg/)' }}
+        style={{ backgroundImage: 'url(https://cdn.framework7.io/placeholder/nature-1000x600-3.jpg)' }}
       >Journey To Mountains</CardHeader>
       <CardContent>
         <p className="date">Posted on January 21, 2015</p>
@@ -57,7 +57,7 @@ export default () => (
       <CardHeader
         className="no-border"
         valign="bottom"
-        style={{ backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-1000x600-6.jpg/)' }}
+        style={{ backgroundImage: 'url(https://cdn.framework7.io/placeholder/people-1000x600-6.jpg)' }}
       >Journey To Mountains</CardHeader>
       <CardContent>
         <p className="date">Posted on January 21, 2015</p>
@@ -72,12 +72,12 @@ export default () => (
     <BlockTitle>Facebook Cards</BlockTitle>
     <Card className="demo-facebook-card">
       <CardHeader className="no-border">
-        <div className="demo-facebook-avatar"><img src="https://cdn.framework7.io/placeholder/people-68x68-1.jpg/" width="34" height="34"/></div>
+        <div className="demo-facebook-avatar"><img src="https://cdn.framework7.io/placeholder/people-68x68-1.jpg" width="34" height="34"/></div>
         <div className="demo-facebook-name">John Doe</div>
         <div className="demo-facebook-date">Monday at 3:47 PM</div>
       </CardHeader>
       <CardContent padding={false}>
-        <img src="https://cdn.framework7.io/placeholder/nature-1000x700-8.jpg/" width="100%"/>
+        <img src="https://cdn.framework7.io/placeholder/nature-1000x700-8.jpg" width="100%"/>
       </CardContent>
       <CardFooter className="no-border">
         <Link>Like</Link>
@@ -87,12 +87,12 @@ export default () => (
     </Card>
     <Card className="demo-facebook-card">
       <CardHeader className="no-border">
-        <div className="demo-facebook-avatar"><img src="https://cdn.framework7.io/placeholder/people-68x68-1.jpg/" width="34" height="34"/></div>
+        <div className="demo-facebook-avatar"><img src="https://cdn.framework7.io/placeholder/people-68x68-1.jpg" width="34" height="34"/></div>
         <div className="demo-facebook-name">John Doe</div>
         <div className="demo-facebook-date">Monday at 2:15 PM</div>
       </CardHeader>
       <CardContent>
-        <p>What a nice photo i took yesterday!</p><img src="https://cdn.framework7.io/placeholder/nature-1000x700-8.jpg/" width="100%"/>
+        <p>What a nice photo i took yesterday!</p><img src="https://cdn.framework7.io/placeholder/nature-1000x700-8.jpg" width="100%"/>
         <p className="likes">Likes: 112 &nbsp;&nbsp; Comments: 43</p>
       </CardContent>
       <CardFooter className="no-border">

@@ -32,13 +32,13 @@
     <f7-block-title>Contact Chips</f7-block-title>
     <f7-block strong>
       <f7-chip text="Jane Doe">
-        <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg/"/>
+        <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg"/>
       </f7-chip>
       <f7-chip text="John Doe">
-        <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-3.jpg/"/>
+        <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-3.jpg"/>
       </f7-chip>
       <f7-chip text="Adam Smith">
-        <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg/"/>
+        <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg"/>
       </f7-chip>
       <f7-chip text="Jennifer" media-bg-color="pink" media="J"></f7-chip>
       <f7-chip text="Chris" media-bg-color="yellow" media-text-color="black" media="C"></f7-chip>
@@ -49,12 +49,12 @@
       <f7-chip text="Example Chip" deleteable @click="deleteChip"></f7-chip>
       <f7-chip text="Chris" media="C" media-bg-color="orange" text-color="black" deleteable @click="deleteChip"></f7-chip>
       <f7-chip text="Jane Doe" deleteable @click="deleteChip">
-        <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg/"/>
+        <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg"/>
       </f7-chip>
       <f7-chip text="One More Chip" deleteable @click="deleteChip"></f7-chip>
       <f7-chip text="Jennifer" media-bg-color="pink" media="J" deleteable @click="deleteChip"></f7-chip>
       <f7-chip text="Adam Smith" deleteable @click="deleteChip">
-        <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg/"/>
+        <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg"/>
       </f7-chip>
     </f7-block>
     <f7-block-title>Color Chips</f7-block-title>

@@ -41,13 +41,13 @@ export default class extends React.Component {
         <BlockTitle>Contact Chips</BlockTitle>
         <Block strong>
           <Chip text="Jane Doe">
-            <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg/" />
+            <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg" />
           </Chip>
           <Chip text="John Doe">
-            <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-3.jpg/" />
+            <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-3.jpg" />
           </Chip>
           <Chip text="Adam Smith">
-            <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg/" />
+            <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg" />
           </Chip>
           <Chip text="Jennifer" mediaBgColor="pink" media="J" />
           <Chip text="Chris" mediaBgColor="yellow" mediaTextColor="black" media="C" />
@@ -58,12 +58,12 @@ export default class extends React.Component {
           <Chip text="Example Chip" deleteable onClick={ this.deleteChipBound } />
           <Chip text="Chris" media="C" mediaBgColor="orange" textColor="black" deleteable onClick={ this.deleteChipBound } />
           <Chip text="Jane Doe" deleteable onClick={ this.deleteChipBound }>
-            <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg/"/>
+            <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-9.jpg"/>
           </Chip>
           <Chip text="One More Chip" deleteable onClick={ this.deleteChipBound } />
           <Chip text="Jennifer" mediaBgColor="pink" media="J" deleteable onClick={ this.deleteChipBound } />
           <Chip text="Adam Smith" deleteable onClick={ this.deleteChipBound }>
-            <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg/"/>
+            <img slot="media" src="https://cdn.framework7.io/placeholder/people-100x100-7.jpg"/>
           </Chip>
         </Block>
         <BlockTitle>Color Chips</BlockTitle>

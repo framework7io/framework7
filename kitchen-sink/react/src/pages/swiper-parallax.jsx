@@ -18,7 +18,7 @@ export default () => (
       <div
         slot="before-wrapper"
         data-swiper-parallax="-23%"
-        style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/nightlife-1024x1024-2.jpg/)'}}
+        style={{backgroundImage: 'url(https://cdn.framework7.io/placeholder/nightlife-1024x1024-2.jpg)'}}
         className="swiper-parallax-bg"
       ></div>
       <SwiperSlide>
