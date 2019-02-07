@@ -1,6 +1,5 @@
 import { document } from 'ssr-window';
 import $ from 'dom7';
-import Template7 from 'template7';
 import Utils from '../../utils/utils';
 import Framework7Class from '../../utils/class';
 import Device from '../../utils/device';
@@ -56,7 +55,7 @@ class VirtualList extends Framework7Class {
       vl.filteredItems = [];
     }
     if (vl.params.itemTemplate) {
-      if (typeof vl.params.itemTemplate === 'string') vl.renderItem = Template7.compile(vl.params.itemTemplate);
+      if (typeof vl.params.itemTemplate === 'string') vl.renderItem = app.t7.compile(vl.params.itemTemplate);
       else if (typeof vl.params.itemTemplate === 'function') vl.renderItem = vl.params.itemTemplate;
     } else if (vl.params.renderItem) {
       vl.renderItem = vl.params.renderItem;

@@ -16,6 +16,8 @@ import RequestModule from './modules/request/request';
 import TouchModule from './modules/touch/touch';
 import ClicksModule from './modules/clicks/clicks';
 import RouterModule from './modules/router/router';
+import RouterTemplateLoaderModule from './modules/router/template-loader';
+import RouterComponentLoaderModule from './modules/router/component-loader';
 import HistoryModule from './modules/history/history';
 import StorageModule from './modules/storage/storage';
 import ComponentModule from './modules/component/component';
@@ -29,6 +31,7 @@ import Toolbar from './components/toolbar/toolbar';
 import Subnavbar from './components/subnavbar/subnavbar';
 import TouchRipple from './components/touch-ripple/touch-ripple';
 import Modal from './components/modal/modal';
+import Router from './modules/router/router-class';
 
 //IMPORT_COMPONENTS
 
@@ -43,6 +46,11 @@ if (process.env.FORMAT !== 'es') {
 }
 
 // Install Core Modules & Components
+Router.use([
+  RouterTemplateLoaderModule,
+  RouterComponentLoaderModule,
+]);
+
 Framework7.use([
   DeviceModule,
   SupportModule,
