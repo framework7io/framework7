@@ -79,7 +79,7 @@ class Tooltip extends Framework7Class {
     }
 
     tooltip.attachEvents = function attachEvents() {
-      $el.on('transitionend webkitTransitionEnd', handleTransitionEnd);
+      $el.on('transitionend', handleTransitionEnd);
       if (Support.touch) {
         const passive = Support.passiveListener ? { passive: true } : false;
         $targetEl.on(app.touchEvents.start, handleTouchStart, passive);
@@ -91,7 +91,7 @@ class Tooltip extends Framework7Class {
       }
     };
     tooltip.detachEvents = function detachEvents() {
-      $el.off('transitionend webkitTransitionEnd', handleTransitionEnd);
+      $el.off('transitionend', handleTransitionEnd);
       if (Support.touch) {
         const passive = Support.passiveListener ? { passive: true } : false;
         $targetEl.off(app.touchEvents.start, handleTouchStart, passive);
