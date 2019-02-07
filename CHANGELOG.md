@@ -2,6 +2,9 @@
 
 # Change Log
 
+# [v4.0.0](https://github.com/framework7io/framework7/compare/v3.6.6...v4.0.0) - February 7, 2019 🎉🎉🎉
+  * [What Is New In v4](https://blog.framework7.io/the-best-framework7-yet-what-is-new-in-v4-74b2b467047c)
+
 # [v3.6.6](https://github.com/framework7io/framework7/compare/v3.6.5...v3.6.6) - February 5, 2019
   * Core
     * App `data` and `methods` now available before app initialization. Useful when you delay app initialization (like on `deviceready` event in Cordova app) and need to access data before

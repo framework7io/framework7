@@ -1,0 +1,72 @@
+/* === Sheet Modal === */
+@import url('./sheet-vars.less');
+.sheet-backdrop {
+  z-index: 11000;
+}
+.sheet-modal {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: var(--f7-sheet-height);
+  display: none;
+  box-sizing: border-box;
+  transition-property: transform;
+  transform: translate3d(0, 100%, 0);
+  background: var(--f7-sheet-bg-color);
+  z-index: 12500;
+  will-change: transform;
+  .hairline(top, var(--f7-sheet-border-color));
+  &:before {
+    z-index: 600;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+  }
+  &.modal-in, &.modal-out {
+    transition-duration: 300ms;
+  }
+  &.not-animated {
+    transition-duration: 0ms;
+  }
+  &.modal-in {
+    display: block;
+    transform: translate3d(0, 0, 0);
+  }
+  &.modal-out {
+    transform: translate3d(0, 100%, 0);
+  }
+  .sheet-modal-inner {
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  .toolbar {
+    position: relative;
+    width: 100%;
+    &:after, &:before {
+      display: none;
+    }
+    ~ * .page-content {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    + .sheet-modal-inner {
+      height: calc(100% - var(--f7-toolbar-height));
+    }
+    ~ .sheet-modal-inner .page-content {
+      padding-bottom: 0;
+      padding-top: 0;
+    }
+  }
+  .toolbar ~ .sheet-modal-inner .page-content,
+  .sheet-modal-inner > .page-content {
+    padding-bottom: var(--f7-safe-area-bottom);
+  }
+}
+
+& when (@includeIosTheme) {
+  @import url('./sheet-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./sheet-md.less');
+}

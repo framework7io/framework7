@@ -1,0 +1,74 @@
+/* === Popup === */
+@import url('./popup-vars.less');
+
+.popup-backdrop {
+  z-index: 10500;
+}
+.popup {
+  position: absolute;
+  left: 0;
+  top: var(--f7-statusbar-height);
+  width: 100%;
+  height: calc(100% - var(--f7-statusbar-height));
+  display: none;
+  box-sizing: border-box;
+  transition-property: transform;
+  transform: translate3d(0, 100%, 0);
+  background: #fff;
+  z-index: 11000;
+  will-change: transform;
+  overflow: hidden;
+  border-radius: var(--f7-popup-border-radius);
+  &.modal-in, &.modal-out {
+    transition-duration: 400ms;
+  }
+  &.not-animated {
+    transition-duration: 0ms;
+  }
+  &.modal-in {
+    display: block;
+    transform: translate3d(0, 0, 0);
+  }
+  &.modal-out {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+@media (min-width: 630px) and (min-height: 630px) {
+  .popup:not(.popup-tablet-fullscreen) {
+    width: var(--f7-popup-tablet-width);
+    height: var(--f7-popup-tablet-height);
+    left: 50%;
+    top: 50%;
+    margin-left: calc(-1 * var(--f7-popup-tablet-width) / 2);
+    margin-top: calc(-1 * var(--f7-popup-tablet-height) / 2);
+    transform: translate3d(0, 100vh, 0);
+    box-shadow: var(--f7-popup-box-shadow);
+    border-radius: var(--f7-popup-tablet-border-radius, var(--f7-popup-border-radius));
+    &.modal-in {
+      transform: translate3d(0, 0, 0);
+    }
+    &.modal-out {
+      transform: translate3d(0, 100vh, 0);
+    }
+  }
+}
+@media (max-width:629px), (max-height:629px) {
+  .popup-backdrop {
+    z-index: 9500; // less than Statusbar's 10 000
+  }
+}
+html.with-modal-popup {
+  .framework7-root {
+    > .views, > .view, > .panel {
+      .page-content {
+        .not-scrollable();
+      }
+    }
+  }
+}
+& when (@includeIosTheme) {
+  @import url('./popup-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./popup-md.less');
+}

@@ -1,0 +1,249 @@
+/* === Searchbar === */
+@import url('./searchbar-vars.less');
+
+.searchbar {
+  width: 100%;
+  position: relative;
+  z-index: 200;
+  height: var(--f7-searchbar-height);
+  background-image: var(--f7-searchbar-bg-image, var(--f7-bars-bg-image));
+  background-color: var(--f7-searchbar-bg-color, var(--f7-bars-bg-color, var(--f7-theme-color)));
+  --f7-touch-ripple-color: var(--f7-touch-ripple-black);
+  &.no-hairline, &.no-border {
+    &:after {
+      display: none !important;
+    }
+  }
+  &.no-shadow {
+    &:before {
+      display: none !important;
+    }
+  }
+  .hairline(bottom, var(--f7-searchbar-border-color, var(--f7-bars-border-color)));
+
+  .page > & {
+    z-index: 510;
+    .bar-shadow-bottom(var(--f7-searchbar-shadow-image, var(--f7-bars-shadow-bottom-image)));
+  }
+  input[type="text"], input[type="search"] {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: none;
+    appearance: none;
+    font-family: inherit;
+    font-weight: normal;
+    color: var(--f7-searchbar-input-text-color);
+    font-size: var(--f7-searchbar-input-font-size);
+    background-color: var(--f7-searchbar-input-bg-color);
+    border-radius: var(--f7-searchbar-input-border-radius);
+    position: relative;
+    padding: 0;
+    .ltr({
+      padding-left: var(--f7-searchbar-input-padding-left);
+      padding-right: var(--f7-searchbar-input-padding-right);
+    });
+    .rtl({
+      padding-left: var(--f7-searchbar-input-padding-right);
+      padding-right: var(--f7-searchbar-input-padding-left);
+    });
+    &::placeholder {
+      color: var(--f7-searchbar-placeholder-color);
+      opacity: 1;
+    }
+  }
+  input::-webkit-search-cancel-button {
+    appearance: none;
+  }
+  .searchbar-input-wrap {
+    flex-shrink: 1;
+    width: 100%;
+    height: var(--f7-searchbar-input-height);
+    position: relative;
+  }
+  a {
+    color: var(--f7-searchbar-link-color, var(--f7-bars-link-color, var(--f7-theme-color)));
+  }
+  .page > & {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  .page-content & {
+    border-radius: var(--f7-searchbar-in-page-content-border-radius);
+    margin: var(--f7-searchbar-in-page-content-margin);
+    width: auto;
+    box-shadow: var(--f7-searchbar-in-page-content-box-shadow);
+    .searchbar-inner,
+    input[type="text"],
+    input[type="search"] {
+      border-radius: var(--f7-searchbar-in-page-content-border-radius);
+    }
+  }
+  .input-clear-button {
+    color: var(--f7-searchbar-input-clear-button-color, var(--f7-input-clear-button-color));
+  }
+}
+.searchbar-expandable {
+  position: absolute;
+  transition-duration: 300ms;
+  pointer-events: none;
+}
+.navbar-inner-large .searchbar-expandable {
+  .hairline-remove(bottom);
+}
+.navbar .searchbar.searchbar-expandable {
+  --f7-searchbar-expandable-size: var(--f7-navbar-height);
+}
+.toolbar .searchbar.searchbar-expandable {
+  --f7-searchbar-expandable-size: var(--f7-toolbar-height);
+}
+.subnavbar .searchbar.searchbar-expandable {
+  --f7-searchbar-expandable-size: var(--f7-subnavbar-height);
+}
+.tabbar-labels .searchbar.searchbar-expandable {
+  --f7-searchbar-expandable-size: var(--f7-tabbar-labels-height);
+}
+.searchbar-inner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+.searchbar-disable-button {
+  cursor: pointer;
+  pointer-events: none;
+  appearance: none;
+  background: none;
+  border: none;
+  outline: 0;
+  padding: 0;
+  margin: 0;
+  width: auto;
+  opacity: 0;
+}
+.searchbar-icon {
+  pointer-events: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  &:after {
+    color: var(--f7-searchbar-search-icon-color);
+    .core-icons-font();
+  }
+}
+.searchbar-backdrop {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition-duration: 300ms;
+  transform: translate3d(0,0,0);
+  background: var(--f7-searchbar-backdrop-bg-color);
+  &.searchbar-backdrop-in {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .page-content > & {
+    position: fixed;
+  }
+}
+.searchbar-not-found {
+  display: none;
+}
+.hidden-by-searchbar {
+  &, .list &, .list.li&, .list li& {
+    display: none !important;
+  }
+}
+.navbar.with-searchbar-expandable-enabled,
+.navbar-inner.with-searchbar-expandable-enabled {
+  --f7-navbar-large-collapse-progress: 1;
+  .title-large, .title-large-text, .title-large-inner {
+    transition-duration: 300ms;
+  }
+}
+
+.page-content.with-searchbar-expandable-enabled {
+  height: calc(100% + var(--f7-navbar-large-title-height));
+  transform: translateY(calc(-1 * var(--f7-navbar-large-title-height)));
+  transition-duration: 300ms;
+  transition-property: transform;
+}
+
+// Relation with page
+.navbar ~ .page:not(.no-navbar) > .searchbar,
+.page > .navbar ~ .searchbar {
+  top: var(--f7-navbar-height);
+}
+
+.page > .searchbar ~ * .page-content,
+.page > .searchbar ~ .page-content {
+  padding-top: var(--f7-searchbar-height);
+}
+.page > .navbar ~ .searchbar ~ * .page-content,
+.page > .navbar ~ .searchbar ~ .page-content,
+.navbar ~ .page:not(.no-navbar) > .searchbar ~ .page-content,
+.navbar ~ .page:not(.no-navbar) > .searchbar ~ * .page-content {
+  padding-top: calc(var(--f7-navbar-height) + var(--f7-searchbar-height));
+}
+// Toolbar
+.page > .toolbar-top,
+.ios .page > .toolbar-top-ios,
+.md .page > .toolbar-top-md {
+  ~ .searchbar {
+    top: var(--f7-toolbar-height);
+    ~ * .page-content,
+    ~ .page-content {
+      padding-top: calc(var(--f7-toolbar-height) + var(--f7-searchbar-height));
+    }
+  }
+}
+.page > .tabbar-labels.toolbar-top,
+.ios .page > .tabbar-labels.toolbar-top-ios,
+.md .page > .tabbar-labels.toolbar-top-md {
+  ~ .searchbar {
+    top: var(--f7-tabbar-labels-height);
+    ~ * .page-content,
+    ~ .page-content {
+      padding-top: calc(var(--f7-tabbar-labels-height) + var(--f7-searchbar-height));
+    }
+  }
+}
+.page > .navbar ~ .toolbar-top,
+.ios .page > .navbar ~ .toolbar-top-ios,
+.md .page > .navbar ~ .toolbar-top-md {
+  ~ .searchbar {
+    top: calc(var(--f7-navbar-height) + var(--f7-toolbar-height));
+    ~ * .page-content,
+    ~ .page-content {
+      padding-top: calc(var(--f7-navbar-height) + var(--f7-toolbar-height) + var(--f7-searchbar-height));
+    }
+  }
+}
+.page > .navbar ~ .tabbar-labels.toolbar-top,
+.ios .page > .navbar ~ .tabbar-labels.toolbar-top-ios,
+.md .page > .navbar ~ .tabbar-labels.toolbar-top-md {
+  ~ .searchbar {
+    top: calc(var(--f7-navbar-height) + var(--f7-tabbar-labels-height));
+    ~ * .page-content,
+    ~ .page-content {
+      padding-top: calc(var(--f7-navbar-height) + var(--f7-tabbar-labels-height) + var(--f7-searchbar-height));
+    }
+  }
+}
+
+& when (@includeIosTheme) {
+  @import url('./searchbar-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./searchbar-md.less');
+}

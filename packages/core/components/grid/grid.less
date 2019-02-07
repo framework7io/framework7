@@ -1,0 +1,68 @@
+/* === Grid === */
+@import url('./grid-vars.less');
+
+@cols: 5, 10, 15, 20, 25, 30, 100/3, 35, 40, 45, 50, 55, 60, 65, 100*(2/3), 70, 75, 80, 85, 90, 95, 100;
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  --f7-cols-per-row: 1;
+  > [class*="col-"], > .col {
+    box-sizing: border-box;
+    width: calc((100% - var(--f7-grid-gap) * (var(--f7-cols-per-row) - 1)) / var(--f7-cols-per-row));
+  }
+  &.no-gap {
+    --f7-grid-gap: 0px;
+  }
+
+  each(@cols, {
+    @className: framework7_floor(@value);
+    @n: framework7_calculateN(@value);
+    .col-@{className} {
+      --f7-cols-per-row: @n;
+    }
+  });
+  each(@cols, {
+    .col:nth-last-child(@{index}), .col:nth-last-child(@{index}) ~ .col {
+      --f7-cols-per-row: @index;
+    }
+  });
+
+  @media (min-width: 768px) {
+    each(@cols, {
+      @className: framework7_floor(@value);
+      @n: framework7_calculateN(@value);
+      .tablet-@{className} {
+        --f7-cols-per-row: @n;
+      }
+    });
+    each(@cols, {
+      .tablet-auto:nth-last-child(@{index}), .tablet-auto:nth-last-child(@{index}) ~ .tablet-auto {
+        --f7-cols-per-row: @index;
+      }
+    });
+  }
+  @media (min-width: 1025px) {
+    each(@cols, {
+      @className: framework7_floor(@value);
+      @n: framework7_calculateN(@value);
+      .desktop-@{className} {
+        --f7-cols-per-row: @n;
+      }
+    });
+    each(@cols, {
+      .desktop-auto:nth-last-child(@{index}), .desktop-auto:nth-last-child(@{index}) ~ .desktop-auto {
+        --f7-cols-per-row: @index;
+      }
+    });
+  }
+}
+
+& when (@includeIosTheme) {
+  @import url('./grid-ios.less');
+}
+& when (@includeMdTheme) {
+  @import url('./grid-md.less');
+}

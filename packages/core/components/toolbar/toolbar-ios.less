@@ -1,0 +1,49 @@
+.ios {
+  .toolbar {
+    a.icon-only {
+      min-height: var(--f7-toolbar-height);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      min-width: 44px;
+    }
+  }
+  .toolbar-inner {
+    padding: 0 calc(8px + var(--f7-safe-area-right)) 0 calc(8px + var(--f7-safe-area-left));
+  }
+  .tabbar-labels {
+    a.tab-link,
+    a.link {
+      padding-top: 4px;
+      padding-bottom: 4px;
+      i + span {
+        margin: 0;
+      }
+    }
+  }
+  @media (min-width: 768px) {
+    .tabbar,
+    .tabbar-labels {
+      .toolbar-inner {
+        justify-content: center;
+      }
+      a.tab-link,
+      a.link {
+        width: auto;
+        min-width: 105px;
+      }
+    }
+  }
+
+  // Scrollable
+  .tabbar-scrollable {
+    .toolbar-inner {
+      justify-content: flex-start;
+    }
+    a.tab-link,
+    a.link {
+      padding: 0 8px;
+    }
+  }
+}
