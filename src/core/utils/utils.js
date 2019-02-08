@@ -167,14 +167,10 @@ const Utils = {
     return Date.now();
   },
   requestAnimationFrame(callback) {
-    if (window.requestAnimationFrame) return window.requestAnimationFrame(callback);
-    if (window.webkitRequestAnimationFrame) return window.webkitRequestAnimationFrame(callback);
-    return window.setTimeout(callback, 1000 / 60);
+    return window.requestAnimationFrame(callback);
   },
   cancelAnimationFrame(id) {
-    if (window.cancelAnimationFrame) return window.cancelAnimationFrame(id);
-    if (window.webkitCancelAnimationFrame) return window.webkitCancelAnimationFrame(id);
-    return window.clearTimeout(id);
+    return window.cancelAnimationFrame(id);
   },
   removeDiacritics(str) {
     return str.replace(/[^\u0000-\u007E]/g, a => diacriticsMap[a] || a);
