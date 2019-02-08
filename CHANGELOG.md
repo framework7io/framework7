@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [v4.0.1](https://github.com/framework7io/framework7/compare/v4.0.0...v4.0.1) - February 8, 2019
+  * Core
+    * Fixed issue with Safari crashing on `button-large` rendering
+    * Fixed issue with wrong active button color in bars
+    * Removed not needed animation prefixes in utils
+
 # [v4.0.0](https://github.com/framework7io/framework7/compare/v3.6.6...v4.0.0) - February 7, 2019 🎉🎉🎉
   * [What Is New In v4](https://blog.framework7.io/the-best-framework7-yet-what-is-new-in-v4-74b2b467047c)
 

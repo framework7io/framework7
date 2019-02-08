@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.0
+ * Framework7 4.0.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 7, 2019
+ * Released on: February 8, 2019
  */
 
 (function (global, factory) {
@@ -2580,14 +2580,10 @@
       return Date.now();
     },
     requestAnimationFrame: function requestAnimationFrame(callback) {
-      if (win.requestAnimationFrame) { return win.requestAnimationFrame(callback); }
-      if (win.webkitRequestAnimationFrame) { return win.webkitRequestAnimationFrame(callback); }
-      return win.setTimeout(callback, 1000 / 60);
+      return win.requestAnimationFrame(callback);
     },
     cancelAnimationFrame: function cancelAnimationFrame(id) {
-      if (win.cancelAnimationFrame) { return win.cancelAnimationFrame(id); }
-      if (win.webkitCancelAnimationFrame) { return win.webkitCancelAnimationFrame(id); }
-      return win.clearTimeout(id);
+      return win.cancelAnimationFrame(id);
     },
     removeDiacritics: function removeDiacritics(str) {
       return str.replace(/[^\u0000-\u007E]/g, function (a) { return diacriticsMap[a] || a; });
