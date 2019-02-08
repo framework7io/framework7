@@ -3,6 +3,11 @@
 <table>
   <tr>
     <td align="center" valign="middle">
+      <a href="https://yakaz.com/" target="_blank">
+        <img width="200" src="https://cdn.framework7.io/i/sponsors/yakaz.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://wappler.io/" target="_blank">
         <img width="200" src="https://cdn.framework7.io/i/sponsors/wappler.png">
       </a>
@@ -40,8 +45,9 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ---
 
 ### $250 Gold Sponsor
+[Yakaz](https://yakaz.com)<br>
 
-[Currently vacant. It could be you!](https://www.patreon.com/bePatron?patAmt=250.0&exp=1&u=4109762&rid=830877)
+[Join here!](https://www.patreon.com/bePatron?patAmt=250.0&exp=1&u=4109762&rid=830877)
 
 ---
 

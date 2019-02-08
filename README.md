@@ -21,6 +21,11 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
 <table>
   <tr>
     <td align="center" valign="middle">
+      <a href="https://yakaz.com/" target="_blank">
+        <img width="200" src="https://cdn.framework7.io/i/sponsors/yakaz.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://wappler.io/" target="_blank">
         <img width="200" src="https://cdn.framework7.io/i/sponsors/wappler.png">
       </a>
