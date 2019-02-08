@@ -62,7 +62,6 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 
 ### $50+ Top Supporter
 [Wappler](https://wappler.io) - Visual Web App Creator, offers full visual Framework7 builder<br>
-Aaron Iba<br>
 Olivier<br>
 Marcelo Lopetegui L.<br>
 Bearr Dayss<br>
@@ -74,6 +73,7 @@ Bart DJ
 ---
 
 ### $10+ Supporter
+Andy Fuchs<br>
 Noah A Neibaron<br>
 José Manuel Alarcón<br>
 Fatih Batal<br>
