@@ -61,6 +61,7 @@ export default {
     return {
       hasSubnavbar: false,
       hasNavbarLarge: false,
+      hasNavbarLargeCollapsed: false,
       routerPositionClass: '',
       routerForceUnstack: false,
       routerPageRole: null,
@@ -183,6 +184,7 @@ export default {
         'page-master': this.state.routerPageRole === 'master',
         'page-master-detail': this.state.routerPageRole === 'detail',
         'page-master-stacked': this.state.routerPageMasterStack === true,
+        'page-with-navbar-large-collapsed': this.state.hasNavbarLargeCollapsed === true,
       },
       Mixins.colorClasses(props),
     );
@@ -279,6 +281,8 @@ export default {
     el.addEventListener('page:role', self.onPageRole);
     el.addEventListener('page:masterstack', self.onPageMasterStack);
     el.addEventListener('page:masterunstack', self.onPageMasterUnstack);
+    el.addEventListener('page:navbarlargecollapsed', self.onPageNavbarLargeCollapsed);
+    el.addEventListener('page:navbarlargeexpanded', self.onPageNavbarLargeExpanded);
   },
   componentWillUnmount() {
     const self = this;
@@ -304,6 +308,8 @@ export default {
     el.removeEventListener('page:role', self.onPageRole);
     el.removeEventListener('page:masterstack', self.onPageMasterStack);
     el.removeEventListener('page:masterunstack', self.onPageMasterUnstack);
+    el.removeEventListener('page:navbarlargecollapsed', self.onPageNavbarLargeCollapsed);
+    el.removeEventListener('page:navbarlargeexpanded', self.onPageNavbarLargeExpanded);
   },
   methods: {
     onPtrPullStart(event) {
@@ -358,6 +364,16 @@ export default {
     onPageMasterUnstack() {
       this.setState({
         routerPageMasterStack: false,
+      });
+    },
+    onPageNavbarLargeCollapsed() {
+      this.setState({
+        hasNavbarLargeCollapsed: true,
+      });
+    },
+    onPageNavbarLargeExpanded() {
+      this.setState({
+        hasNavbarLargeCollapsed: false,
       });
     },
     onPageInit(event) {
