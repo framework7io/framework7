@@ -114,7 +114,7 @@ export default () => (
         </List>
       </CardContent>
     </Card>
-    <Card title="New Reelases">
+    <Card title="New Releases:">
       <CardContent padding={false}>
         <List medial-list>
           <ListItem
