@@ -111,7 +111,7 @@
         </f7-list>
       </f7-card-content>
     </f7-card>
-    <f7-card title="New Reelases">
+    <f7-card title="New Releases:">
       <f7-card-content :padding="false">
         <f7-list medial-list>
           <f7-list-item
