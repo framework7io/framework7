@@ -16,6 +16,32 @@ function capitalize(name) {
   }).join('');
 }
 
+function generateTypings(basePath, modules, components) {
+  const importModules = modules.map((f7Module) => {
+    const capitalized = capitalize(f7Module);
+    return `import {${capitalized} as ${capitalized}Namespace} from '${basePath}/modules/${f7Module}/${f7Module}';`;
+  });
+
+  const importComponents = components.map((component) => {
+    const capitalized = capitalize(component);
+    return `import {${capitalized} as ${capitalized}Namespace} from '${basePath}/components/${component}/${component}';`;
+  });
+
+  const install = [...modules, ...components].map((f7Module) => {
+    const capitalized = capitalize(f7Module);
+    return [
+      `interface Framework7Class<Events> extends ${capitalized}Namespace.AppMethods{}`,
+      `interface Framework7Params extends ${capitalized}Namespace.AppParams{}`,
+      `interface Framework7Events extends ${capitalized}Namespace.AppEvents{}`,
+    ].join('\n  ');
+  });
+
+  return fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.d.ts'))
+    .replace(/\/\/ IMPORT_MODULES/, importModules.join('\n'))
+    .replace(/\/\/ IMPORT_COMPONENTS/, importComponents.join('\n'))
+    .replace(/\/\/ INSTALL/, install.join('\n  '));
+}
+
 function buildTypings(cb) {
   const output = `${getOutput()}/core`;
 
@@ -28,34 +54,13 @@ function buildTypings(cb) {
     return fs.existsSync(`./src/core/components/${file}/${file}.d.ts`);
   });
 
-  const importModules = modules.map((f7Module) => {
-    const capitalized = capitalize(f7Module);
-    return `import {${capitalized} as ${capitalized}Namespace} from './modules/${f7Module}/${f7Module}';`;
-  });
+  const rootTypings = generateTypings('.', modules, components);
+  const jsTypings = generateTypings('..', modules, components);
 
-  const importComponents = components.map((component) => {
-    const capitalized = capitalize(component);
-    return `import {${capitalized} as ${capitalized}Namespace} from './components/${component}/${component}';`;
-  });
-
-  const install = [...modules, ...components].map((f7Module) => {
-    const capitalized = capitalize(f7Module);
-    return [
-      `interface Framework7Class<Events> extends ${capitalized}Namespace.AppMethods{}`,
-      `interface Framework7Params extends ${capitalized}Namespace.AppParams{}`,
-      `interface Framework7Events extends ${capitalized}Namespace.AppEvents{}`,
-    ].join('\n  ');
-  });
-
-  const typings = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.d.ts'))
-    .replace(/\/\/ IMPORT_MODULES/, importModules.join('\n'))
-    .replace(/\/\/ IMPORT_COMPONENTS/, importComponents.join('\n'))
-    .replace(/\/\/ INSTALL/, install.join('\n  '));
-
-  fs.writeFileSync(`${output}/js/framework7.d.ts`, typings);
-  fs.writeFileSync(`${output}/js/framework7.bundle.d.ts`, typings);
-  fs.writeFileSync(`${output}/framework7.esm.d.ts`, typings);
-  fs.writeFileSync(`${output}/framework7.esm.bundle.d.ts`, typings);
+  fs.writeFileSync(`${output}/js/framework7.d.ts`, jsTypings);
+  fs.writeFileSync(`${output}/js/framework7.bundle.d.ts`, jsTypings);
+  fs.writeFileSync(`${output}/framework7.esm.d.ts`, rootTypings);
+  fs.writeFileSync(`${output}/framework7.esm.bundle.d.ts`, rootTypings);
 
   cb();
 }
