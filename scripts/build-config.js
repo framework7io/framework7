@@ -117,6 +117,7 @@ const config = {
   themes: [
     'ios',
     'md',
+    'desktop',
   ],
   themeColor: '#007aff',
   colors: {

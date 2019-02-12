@@ -88,6 +88,9 @@
 & when (@includeMdTheme) {
   @import url('./page-md.less');
 }
+& when (@includeDesktopTheme) {
+  @import url('./page-desktop.less');
+}
 
 .view:not(.view-master-detail) {
   .page-master-stacked {

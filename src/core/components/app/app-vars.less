@@ -86,6 +86,15 @@
     --f7-text-color: rgba(255,255,255,0.87);
   }
 }
+.desktop {
+  --f7-font-family: -apple-system, system-ui, Helvetica, Arial, sans-serif;
+  --f7-text-color: #000;
+  --f7-font-size: 14px;
+  --f7-line-height: 1.5;
+  .theme-dark, &.theme-dark {
+    --f7-text-color: #fff;
+  }
+}
 
 /*====================
   Bars
@@ -125,6 +134,12 @@
 }
 .md {
   --f7-bars-border-color: transparent;
+}
+.desktop {
+  --f7-bars-border-color: #c4c4c4;
+  .theme-dark, &.theme-dark {
+    --f7-bars-border-color: #282829;
+  }
 }
 
 /*====================

@@ -95,6 +95,11 @@
   height: 24px;
   border-radius: 4px;
 }
+.desktop .demo-list-icon, .desktop .icon-f7, .desktop .icon-vi {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+}
 
 /* Lazy Demo */
 img.demo-lazy {

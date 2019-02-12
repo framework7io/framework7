@@ -1,0 +1,175 @@
+.ios {
+  .rtl({
+    .page-previous {
+      transform: translate3d(20%, 0, 0);
+    }
+    .page-next {
+      transform: translate3d(-100%, 0, 0);
+    }
+  });
+  .ltr({
+    .page-previous {
+      transform: translate3d(-20%, 0, 0);
+    }
+    .page-next {
+      transform: translate3d(100%, 0, 0);
+    }
+  });
+  .page-previous {
+    .page-opacity-effect {
+      opacity: 1;
+    }
+    &:after {
+      opacity: 1;
+    }
+  }
+  .page-current {
+    .page-shadow-effect {
+      opacity: 1;
+    }
+  }
+
+  .router-transition-forward {
+    .page-next,
+    .page-current {
+      will-change: transform;
+    }
+    .page-next {
+      animation: ios-page-next-to-current var(--f7-page-transition-duration) forwards;
+      &:before {
+        // Fake opacity
+        .page-fake-shadow();
+        animation: ios-page-element-fade-in var(--f7-page-transition-duration) forwards;
+      }
+    }
+    .page-current {
+      // From current to previous
+      animation: ios-page-current-to-previous var(--f7-page-transition-duration) forwards;
+      &:after {
+        // Fake opacity
+        .page-fake-opacity();
+        animation: ios-page-element-fade-in var(--f7-page-transition-duration) forwards;
+      }
+    }
+  }
+  .router-transition-backward {
+    .page-previous,
+    .page-current {
+      will-change: transform;
+    }
+    .page-previous {
+      // From previous to current
+      animation: ios-page-previous-to-current var(--f7-page-transition-duration) forwards;
+      &:after {
+        // Fake opacity
+        .page-fake-opacity();
+        animation: ios-page-element-fade-out var(--f7-page-transition-duration) forwards;
+      }
+    }
+    .page-current {
+      // From current to next
+      animation: ios-page-current-to-next var(--f7-page-transition-duration) forwards;
+      &:before {
+        .page-fake-shadow();
+        animation: ios-page-element-fade-out var(--f7-page-transition-duration) forwards;
+      }
+    }
+  }
+
+  .router-dynamic-navbar-inside {
+    .page-shadow-effect,
+    .page-opacity-effect {
+      top: var(--f7-navbar-height);
+    }
+    .page-next:before,
+    .page-current:after,
+    .page-current:before,
+    .page-previous:after {
+      top: var(--f7-navbar-height);
+    }
+  }
+}
+.ltr({
+  @keyframes ios-page-next-to-current {
+    from {
+      transform: translate3d(100%,0,0);
+    }
+    to {
+      transform: translate3d(0%,0,0);
+    }
+  }
+  @keyframes ios-page-previous-to-current {
+    from {
+      transform: translate3d(-20%,0,0);
+    }
+    to {
+      transform: translate3d(0%,0,0);
+    }
+  }
+  @keyframes ios-page-current-to-previous {
+    from {
+      transform: translate3d(0,0,0);
+    }
+    to {
+      transform: translate3d(-20%,0,0);
+    }
+  }
+  @keyframes ios-page-current-to-next {
+    from {
+      transform: translate3d(0,0,0);
+    }
+    to {
+      transform: translate3d(100%,0,0);
+    }
+  }
+});
+.rtl({
+  @keyframes ios-page-next-to-current {
+    from {
+      transform: translate3d(-100%,0,0);
+    }
+    to {
+      transform: translate3d(0%,0,0);
+    }
+  }
+  @keyframes ios-page-previous-to-current {
+    from {
+      transform: translate3d(20%,0,0);
+    }
+    to {
+      transform: translate3d(0%,0,0);
+    }
+  }
+  @keyframes ios-page-current-to-previous {
+    from {
+      transform: translate3d(0,0,0);
+    }
+    to {
+      transform: translate3d(20%,0,0);
+    }
+  }
+  @keyframes ios-page-current-to-next {
+    from {
+      transform: translate3d(0,0,0);
+    }
+    to {
+      transform: translate3d(-100%,0,0);
+    }
+  }
+});
+@keyframes ios-page-element-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes ios-page-element-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

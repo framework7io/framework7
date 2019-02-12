@@ -50,7 +50,8 @@ body {
     transition-duration: 0ms !important;
   }
 }
-.device-ios, .device-android {
+.device-ios,
+.device-android {
   cursor: pointer;
 }
 .device-ios {
@@ -99,4 +100,7 @@ html.device-full-viewport {
 }
 & when (@includeMdTheme) {
   @import url('./app-md.less');
+}
+& when (@includeDesktopTheme) {
+  @import url('./app-desktop.less');
 }
