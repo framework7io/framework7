@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.0.3
+ * Framework7 Vue 4.0.4
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *

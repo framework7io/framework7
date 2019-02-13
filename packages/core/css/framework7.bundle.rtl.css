@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.3
+ * Framework7 4.0.4
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -12915,7 +12915,7 @@ label.item-radio.disabled,
 }
 .message-received .message-bubble {
   color: var(--f7-message-received-text-color);
-  background: var(--f7-message-sent-bg-color);
+  background: var(--f7-message-received-bg-color);
 }
 .message-received .message-content {
   align-items: flex-end;
