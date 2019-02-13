@@ -348,6 +348,89 @@ html.with-statusbar.device-iphone-x .framework7-root {
   position: relative;
   z-index: 1;
 }
+.view:not(.view-master-detail) .page-master.page-master-stacked {
+  display: none;
+}
+.view:not(.view-master-detail) .navbar-master.navbar-master-stacked {
+  display: none;
+}
+.view.view-master-detail .page.page-master,
+.view.view-master-detail .navbar-inner.navbar-master {
+  width: 320px;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+.view.view-master-detail .navbar-inner.navbar-master.navbar-previous {
+  pointer-events: auto;
+}
+.view.view-master-detail .navbar-inner.navbar-master.navbar-previous .left,
+.view.view-master-detail .navbar-inner.navbar-master.navbar-previous .title,
+.view.view-master-detail .navbar-inner.navbar-master.navbar-previous .right,
+.view.view-master-detail .navbar-inner.navbar-master.navbar-previous .subnavbar {
+  opacity: 1;
+}
+.ios .view.view-master-detail.router-transition-css-forward .navbar-inner.navbar-master.sliding .left,
+.ios .view.view-master-detail.router-transition-css-backward .navbar-inner.navbar-master.sliding .left,
+.ios .view.view-master-detail.router-transition-css-forward .navbar-inner.navbar-master.sliding .left .icon,
+.ios .view.view-master-detail.router-transition-css-backward .navbar-inner.navbar-master.sliding .left .icon,
+.ios .view.view-master-detail.router-transition-css-forward .navbar-inner.navbar-master.sliding .title,
+.ios .view.view-master-detail.router-transition-css-backward .navbar-inner.navbar-master.sliding .title,
+.ios .view.view-master-detail.router-transition-css-forward .navbar-inner.navbar-master.sliding .right,
+.ios .view.view-master-detail.router-transition-css-backward .navbar-inner.navbar-master.sliding .right,
+.ios .view.view-master-detail.router-transition-css-forward .navbar-inner.navbar-master.sliding .subnavbar,
+.ios .view.view-master-detail.router-transition-css-backward .navbar-inner.navbar-master.sliding .subnavbar {
+  opacity: 1 !important;
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
+  -webkit-transform: none !important;
+  transform: none !important;
+}
+.ios .view.view-master-detail.router-transition-css-forward .navbar-inner.navbar-master .left.sliding,
+.ios .view.view-master-detail.router-transition-css-backward .navbar-inner.navbar-master .left.sliding,
+.ios .view.view-master-detail.router-transition-css-forward .navbar-inner.navbar-master .left.sliding .icon,
+.ios .view.view-master-detail.router-transition-css-backward .navbar-inner.navbar-master .left.sliding .icon,
+.ios .view.view-master-detail.router-transition-css-forward .navbar-inner.navbar-master .title.sliding,
+.ios .view.view-master-detail.router-transition-css-backward .navbar-inner.navbar-master .title.sliding,
+.ios .view.view-master-detail.router-transition-css-forward .navbar-inner.navbar-master .right.sliding,
+.ios .view.view-master-detail.router-transition-css-backward .navbar-inner.navbar-master .right.sliding,
+.ios .view.view-master-detail.router-transition-css-forward .navbar-inner.navbar-master .subnavbar.sliding,
+.ios .view.view-master-detail.router-transition-css-backward .navbar-inner.navbar-master .subnavbar.sliding,
+.ios .view.view-master-detail.router-transition-css-forward .navbar-inner.navbar-master .sliding,
+.ios .view.view-master-detail.router-transition-css-backward .navbar-inner.navbar-master .sliding,
+.ios .view.view-master-detail.router-transition-css-forward .navbar-inner.navbar-master .fading,
+.ios .view.view-master-detail.router-transition-css-backward .navbar-inner.navbar-master .fading {
+  opacity: 1 !important;
+  -webkit-transition-duration: 0ms;
+  transition-duration: 0ms;
+  -webkit-transform: none !important;
+  transform: none !important;
+}
+.view.view-master-detail .page.page-master {
+  z-index: 1;
+}
+.view.view-master-detail .page.page-master:after {
+  display: none;
+}
+.ios .view.view-master-detail.router-transition-css-forward .page.page-master,
+.ios .view.view-master-detail.router-transition-css-backward .page.page-master,
+.md .view.view-master-detail.router-transition-css-forward .page.page-master,
+.md .view.view-master-detail.router-transition-css-backward .page.page-master {
+  -webkit-animation: none;
+  animation: none;
+}
+.view.view-master-detail .page.page-master.page-previous {
+  -webkit-transform: none;
+  transform: none;
+  pointer-events: auto;
+}
+.view.view-master-detail .page.page-master.page-previous:before,
+.view.view-master-detail .page.page-master.page-previous:after {
+  display: none;
+}
+.view.view-master-detail .page.page-master-detail,
+.view.view-master-detail .navbar-inner.navbar-master-detail {
+  width: calc(100% - 320px);
+  left: 320px;
+}
 .ios .page-shadow-effect {
   position: absolute;
   top: 0;
