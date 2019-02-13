@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.2
+ * Framework7 4.0.3
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -12727,6 +12727,9 @@ label.item-radio.disabled,
   --f7-message-footer-font-size: 11px;
   --f7-message-name-font-size: 12px;
   --f7-message-typing-indicator-bg-color: #000;
+  /*
+  --f7-message-sent-bg-color: var(--f7-theme-color);
+  */
   --f7-message-sent-text-color: #fff;
   --f7-message-received-bg-color: #e5e5ea;
   --f7-message-received-text-color: #000;
