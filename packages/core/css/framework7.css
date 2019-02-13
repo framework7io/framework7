@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.1
+ * Framework7 4.0.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 8, 2019
+ * Released on: February 13, 2019
  */
 
 /*====================
@@ -786,6 +786,9 @@ html.device-full-viewport body {
 }
 .page.stacked {
   display: none;
+}
+.page-with-navbar-large-collapsed {
+  --f7-navbar-large-collapse-progress: 1;
 }
 .page-previous {
   pointer-events: none;
@@ -2665,6 +2668,12 @@ html.device-full-viewport body {
 .navbar ~ .subnavbar {
   top: var(--f7-navbar-height);
 }
+.navbar ~ .page-with-navbar-large:not(.no-navbar) .subnavbar,
+.page-with-subnavbar.page-with-navbar-large .navbar ~ .subnavbar,
+.page-with-subnavbar.page-with-navbar-large .navbar ~ * .subnavbar {
+  top: calc(var(--f7-navbar-height) + var(--f7-navbar-large-title-height));
+  transform: translate3d(0, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0);
+}
 .navbar .title-large ~ .subnavbar {
   top: calc(var(--f7-navbar-height) + var(--f7-navbar-large-title-height));
   transform: translate3d(0, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0);
@@ -3837,12 +3846,15 @@ li.list-group-title,
 .list.inset ul:after {
   display: none !important;
 }
+.list.inset li.swipeout:first-child,
 .list.inset li:first-child > a {
   border-radius: var(--f7-list-inset-border-radius) var(--f7-list-inset-border-radius) 0 0;
 }
+.list.inset li.swipeout:last-child,
 .list.inset li:last-child > a {
   border-radius: 0 0 var(--f7-list-inset-border-radius) var(--f7-list-inset-border-radius);
 }
+.list.inset li.swipeout:first-child:last-child,
 .list.inset li:first-child:last-child > a {
   border-radius: var(--f7-list-inset-border-radius);
 }

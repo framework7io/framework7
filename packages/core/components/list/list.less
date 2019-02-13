@@ -541,12 +541,15 @@ li.list-group-title, .list li.list-group-title {
     .hairline-remove(top);
     .hairline-remove(bottom);
   }
+  li.swipeout:first-child,
   li:first-child > a {
     border-radius: var(--f7-list-inset-border-radius) var(--f7-list-inset-border-radius) 0 0;
   }
+  li.swipeout:last-child,
   li:last-child > a {
     border-radius: 0 0 var(--f7-list-inset-border-radius) var(--f7-list-inset-border-radius);
   }
+  li.swipeout:first-child:last-child,
   li:first-child:last-child > a {
     border-radius: var(--f7-list-inset-border-radius);
   }

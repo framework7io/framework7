@@ -83,6 +83,7 @@ declare namespace F7ListItem {
     sortableDisable? : boolean | string
     sortableToggle? : boolean | string
     cardOpen? : boolean | string
+    cardPreventOpen? : boolean | string
     cardClose? : boolean | string
     menuClose? : boolean | string
     onClick? : (event?: any) => void

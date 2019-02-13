@@ -394,9 +394,10 @@ export default {
       const app = this;
       app.card.open(data.card);
     },
-    '.card-expandable': function toggleExpandableCard($clickedEl) {
+    '.card-expandable': function toggleExpandableCard($clickedEl, data, e) {
       const app = this;
       if ($clickedEl.hasClass('card-opened') || $clickedEl.hasClass('card-opening') || $clickedEl.hasClass('card-closing')) return;
+      if ($(e.target).closest('.card-prevent-open').length) return;
       app.card.open($clickedEl);
     },
     '.card-backdrop-in': function onBackdropClick() {

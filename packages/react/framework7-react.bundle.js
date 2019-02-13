@@ -1,5 +1,5 @@
 /**
- * Framework7 React 4.0.1
+ * Framework7 React 4.0.2
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 8, 2019
+ * Released on: February 13, 2019
  */
 
 (function (global, factory) {
@@ -259,6 +259,7 @@
 
       // Card
       cardOpen: [Boolean, String],
+      cardPreventOpen: [Boolean, String],
       cardClose: [Boolean, String],
 
       // Menu
@@ -335,6 +336,7 @@
       var sortableDisable = props.sortableDisable;
       var sortableToggle = props.sortableToggle;
       var cardOpen = props.cardOpen;
+      var cardPreventOpen = props.cardPreventOpen;
       var cardClose = props.cardClose;
       var menuClose = props.menuClose;
 
@@ -360,6 +362,7 @@
         'sortable-toggle': sortableToggle || sortableToggle === '',
         'card-close': cardClose || cardClose === '',
         'card-open': cardOpen || cardOpen === '',
+        'card-prevent-open': cardPreventOpen || cardPreventOpen === '',
         'menu-close': menuClose || menuClose === '',
       };
     },
@@ -8933,6 +8936,7 @@
         return {
           hasSubnavbar: false,
           hasNavbarLarge: false,
+          hasNavbarLargeCollapsed: false,
           routerPositionClass: '',
           routerForceUnstack: false,
           routerPageRole: null,
@@ -9015,6 +9019,18 @@
     F7Page.prototype.onPageMasterUnstack = function onPageMasterUnstack () {
       this.setState({
         routerPageMasterStack: false
+      });
+    };
+
+    F7Page.prototype.onPageNavbarLargeCollapsed = function onPageNavbarLargeCollapsed () {
+      this.setState({
+        hasNavbarLargeCollapsed: true
+      });
+    };
+
+    F7Page.prototype.onPageNavbarLargeExpanded = function onPageNavbarLargeExpanded () {
+      this.setState({
+        hasNavbarLargeCollapsed: false
       });
     };
 
@@ -9193,7 +9209,8 @@
         'no-swipeback': noSwipeback,
         'page-master': this.state.routerPageRole === 'master',
         'page-master-detail': this.state.routerPageRole === 'detail',
-        'page-master-stacked': this.state.routerPageMasterStack === true
+        'page-master-stacked': this.state.routerPageMasterStack === true,
+        'page-with-navbar-large-collapsed': this.state.hasNavbarLargeCollapsed === true
       }, Mixins.colorClasses(props));
 
       if (!needsPageContent) {
@@ -9257,6 +9274,8 @@
       el.removeEventListener('page:role', self.onPageRole);
       el.removeEventListener('page:masterstack', self.onPageMasterStack);
       el.removeEventListener('page:masterunstack', self.onPageMasterUnstack);
+      el.removeEventListener('page:navbarlargecollapsed', self.onPageNavbarLargeCollapsed);
+      el.removeEventListener('page:navbarlargeexpanded', self.onPageNavbarLargeExpanded);
     };
 
     F7Page.prototype.componentDidMount = function componentDidMount () {
@@ -9292,6 +9311,8 @@
       el.addEventListener('page:role', self.onPageRole);
       el.addEventListener('page:masterstack', self.onPageMasterStack);
       el.addEventListener('page:masterunstack', self.onPageMasterUnstack);
+      el.addEventListener('page:navbarlargecollapsed', self.onPageNavbarLargeCollapsed);
+      el.addEventListener('page:navbarlargeexpanded', self.onPageNavbarLargeExpanded);
     };
 
     prototypeAccessors.slots.get = function () {
@@ -12913,7 +12934,7 @@
   };
 
   /**
-   * Framework7 React 4.0.1
+   * Framework7 React 4.0.2
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -12921,7 +12942,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: February 8, 2019
+   * Released on: February 13, 2019
    */
 
   var Plugin = {

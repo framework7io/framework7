@@ -1,5 +1,4 @@
 .md {
-  @import (multiple) '../../less/colors-md.less';
   .icon-radio {
     transition-duration: 200ms;
     &:after {
@@ -32,10 +31,10 @@
     z-index: 0;
     > .icon-radio {
       .ltr({
-        margin-right: calc(var(--f7-list-item-media-margin) + var(--f7-checkbox-extra-margin))
+        margin-right: calc(var(--f7-list-item-media-margin) + var(--f7-radio-extra-margin))
       });
       .rtl({
-        margin-left: calc(var(--f7-list-item-media-margin) + var(--f7-checkbox-extra-margin))
+        margin-left: calc(var(--f7-list-item-media-margin) + var(--f7-radio-extra-margin))
       });
     }
   }

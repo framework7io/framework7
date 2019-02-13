@@ -147,6 +147,7 @@ const Mixins = {
 
     // Card
     cardOpen: [Boolean, String],
+    cardPreventOpen: [Boolean, String],
     cardClose: [Boolean, String],
 
     // Menu
@@ -226,6 +227,7 @@ const Mixins = {
       sortableDisable,
       sortableToggle,
       cardOpen,
+      cardPreventOpen,
       cardClose,
       menuClose,
     } = props;
@@ -252,6 +254,7 @@ const Mixins = {
       'sortable-toggle': sortableToggle || sortableToggle === '',
       'card-close': cardClose || cardClose === '',
       'card-open': cardOpen || cardOpen === '',
+      'card-prevent-open': cardPreventOpen || cardPreventOpen === '',
       'menu-close': menuClose || menuClose === '',
     };
   },

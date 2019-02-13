@@ -111,7 +111,7 @@
   });
   .message-bubble {
     color: var(--f7-message-sent-text-color);
-    background: var(--f7-message-sent-bg-color);
+    background: var(--f7-message-sent-bg-color, var(--f7-theme-color));
   }
   .message-content {
     .ltr({
@@ -136,7 +136,7 @@
   });
   .message-bubble {
     color: var(--f7-message-received-text-color);
-    background: var(--f7-message-received-bg-color);
+    background: var(--f7-message-sent-bg-color);
   }
   .message-content {
     .ltr({

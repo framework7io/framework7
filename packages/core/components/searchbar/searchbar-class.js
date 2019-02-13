@@ -48,18 +48,15 @@ class Searchbar extends FrameworkClass {
     $el[0].f7Searchbar = sb;
 
     let $pageEl;
-    let $navbarEl;
+    const $navbarEl = $el.parents('.navbar-inner');
     if ($el.parents('.page').length > 0) {
       $pageEl = $el.parents('.page');
-    } else {
-      $navbarEl = $el.parents('.navbar-inner');
-      if ($navbarEl.length > 0) {
-        $pageEl = $(app.navbar.getPageByEl($navbarEl[0]));
-        if (!$pageEl.length) {
-          const $currentPageEl = $el.parents('.view').find('.page-current');
-          if ($currentPageEl[0] && $currentPageEl[0].f7Page && $currentPageEl[0].f7Page.navbarEl === $navbarEl[0]) {
-            $pageEl = $currentPageEl;
-          }
+    } else if ($navbarEl.length > 0) {
+      $pageEl = $(app.navbar.getPageByEl($navbarEl[0]));
+      if (!$pageEl.length) {
+        const $currentPageEl = $el.parents('.view').find('.page-current');
+        if ($currentPageEl[0] && $currentPageEl[0].f7Page && $currentPageEl[0].f7Page.navbarEl === $navbarEl[0]) {
+          $pageEl = $currentPageEl;
         }
       }
     }
@@ -226,7 +223,7 @@ class Searchbar extends FrameworkClass {
       if (sb.params.disableOnBackdropClick && sb.$backdropEl) {
         sb.$backdropEl.on('click', disableOnClick);
       }
-      if (sb.expandable && app.theme === 'ios' && sb.view && $navbarEl && sb.$pageEl) {
+      if (sb.expandable && app.theme === 'ios' && sb.view && $navbarEl.length && sb.$pageEl) {
         sb.$pageEl.on('page:beforeout', onPageBeforeOut);
         sb.$pageEl.on('page:beforein', onPageBeforeIn);
       }
@@ -243,7 +240,7 @@ class Searchbar extends FrameworkClass {
       if (sb.params.disableOnBackdropClick && sb.$backdropEl) {
         sb.$backdropEl.off('click', disableOnClick);
       }
-      if (sb.expandable && app.theme === 'ios' && sb.view && $navbarEl && sb.$pageEl) {
+      if (sb.expandable && app.theme === 'ios' && sb.view && $navbarEl.length && sb.$pageEl) {
         sb.$pageEl.off('page:beforeout', onPageBeforeOut);
         sb.$pageEl.off('page:beforein', onPageBeforeIn);
       }

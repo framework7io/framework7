@@ -2,6 +2,22 @@
 
 # Change Log
 
+# [v4.0.2](https://github.com/framework7io/framework7/compare/v4.0.1...v4.0.2) - February 13, 2019
+  * Core
+    * Fixed issue when event handlers attached with `.once` may not be detached correctly later
+    * Router
+      * Fixed issue when routable tab with params `/:param/` in path could produce new page loading instead of switching tab
+    * Card
+      * Add `card-prevent-open` class that can be added to element inside of the expandable card. Click on that element won't open expandable card.
+    * Searchbar
+      * Fixed Searchbar position when it is used on page with large navbar
+  * Dom7 update to latest 2.1.3:
+    * Fixed issue when event handlers attached with `.once` may not be detached correctly later
+  * Phenome
+    * Card
+      * New `cardPreventOpen` prop on Link-like components to prevent expandable card open on this element click.
+  * Minor fixes
+
 # [v4.0.1](https://github.com/framework7io/framework7/compare/v4.0.0...v4.0.1) - February 8, 2019
   * Core
     * Fixed issue with Safari crashing on `button-large` rendering

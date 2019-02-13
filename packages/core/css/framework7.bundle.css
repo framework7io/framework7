@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.1
+ * Framework7 4.0.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 8, 2019
+ * Released on: February 13, 2019
  */
 
 /*====================
@@ -786,6 +786,9 @@ html.device-full-viewport body {
 }
 .page.stacked {
   display: none;
+}
+.page-with-navbar-large-collapsed {
+  --f7-navbar-large-collapse-progress: 1;
 }
 .page-previous {
   pointer-events: none;
@@ -2665,6 +2668,12 @@ html.device-full-viewport body {
 .navbar ~ .subnavbar {
   top: var(--f7-navbar-height);
 }
+.navbar ~ .page-with-navbar-large:not(.no-navbar) .subnavbar,
+.page-with-subnavbar.page-with-navbar-large .navbar ~ .subnavbar,
+.page-with-subnavbar.page-with-navbar-large .navbar ~ * .subnavbar {
+  top: calc(var(--f7-navbar-height) + var(--f7-navbar-large-title-height));
+  transform: translate3d(0, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0);
+}
 .navbar .title-large ~ .subnavbar {
   top: calc(var(--f7-navbar-height) + var(--f7-navbar-large-title-height));
   transform: translate3d(0, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0);
@@ -3837,12 +3846,15 @@ li.list-group-title,
 .list.inset ul:after {
   display: none !important;
 }
+.list.inset li.swipeout:first-child,
 .list.inset li:first-child > a {
   border-radius: var(--f7-list-inset-border-radius) var(--f7-list-inset-border-radius) 0 0;
 }
+.list.inset li.swipeout:last-child,
 .list.inset li:last-child > a {
   border-radius: 0 0 var(--f7-list-inset-border-radius) var(--f7-list-inset-border-radius);
 }
+.list.inset li.swipeout:first-child:last-child,
 .list.inset li:first-child:last-child > a {
   border-radius: var(--f7-list-inset-border-radius);
 }
@@ -5379,6 +5391,9 @@ html.with-modal-popup .framework7-root > .panel .page-content {
   justify-content: var(--f7-actions-label-justify-content);
   min-height: var(--f7-actions-label-min-height, var(--f7-actions-button-height));
 }
+.actions-label[class*=" color-"] {
+  --f7-actions-label-text-color: var(--f7-theme-color);
+}
 .actions-grid .actions-group {
   display: flex;
   flex-wrap: wrap;
@@ -6769,7 +6784,7 @@ html.device-android-4 .accordion-item-content {
 }
 .navbar ~ .subnavbar ~ .list-index,
 .page-with-subnavbar .navbar ~ .list-index {
-  top: calc(var(--f7-navbar-height) + var(--f7-subnvabar-height));
+  top: calc(var(--f7-navbar-height) + var(--f7-subnavbar-height));
 }
 .toolbar-bottom ~ .page > .list-index,
 .ios .toolbar-bottom-ios ~ .page > .list-index,
@@ -7948,6 +7963,9 @@ html.with-panel-right-cover .panel-right {
 .card-expandable .card-header:after {
   display: none !important;
 }
+.card-prevent-open {
+  pointer-events: auto;
+}
 .card-expandable-size {
   width: 0;
   height: 0;
@@ -9080,7 +9098,7 @@ label.item-radio.disabled,
   z-index: 0;
 }
 .md label.item-radio > .icon-radio {
-  margin-right: calc(var(--f7-list-item-media-margin) + var(--f7-checkbox-extra-margin));
+  margin-right: calc(var(--f7-list-item-media-margin) + var(--f7-radio-extra-margin));
 }
 /* === Toggle === */
 .ios {
@@ -12388,6 +12406,12 @@ label.item-radio.disabled,
 .page > .navbar ~ .searchbar {
   top: var(--f7-navbar-height);
 }
+.navbar ~ .page-with-navbar-large:not(.no-navbar) .searchbar,
+.page-with-navbar-large .navbar ~ .searchbar,
+.page-with-navbar-large .navbar ~ * .searchbar {
+  top: calc(var(--f7-navbar-height) + var(--f7-navbar-large-title-height));
+  transform: translate3d(0, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0);
+}
 .page > .searchbar ~ * .page-content,
 .page > .searchbar ~ .page-content {
   padding-top: var(--f7-searchbar-height);
@@ -12397,6 +12421,12 @@ label.item-radio.disabled,
 .navbar ~ .page:not(.no-navbar) > .searchbar ~ .page-content,
 .navbar ~ .page:not(.no-navbar) > .searchbar ~ * .page-content {
   padding-top: calc(var(--f7-navbar-height) + var(--f7-searchbar-height));
+}
+.page-with-navbar-large > .navbar ~ .searchbar ~ * .page-content,
+.page-with-navbar-large > .navbar ~ .searchbar ~ .page-content,
+.navbar ~ .page-with-navbar-large:not(.no-navbar) > .searchbar ~ .page-content,
+.navbar ~ .page-with-navbar-large:not(.no-navbar) > .searchbar ~ * .page-content {
+  padding-top: calc(var(--f7-navbar-height) + var(--f7-subnavbar-height) + var(--f7-navbar-large-title-height));
 }
 .page > .toolbar-top ~ .searchbar,
 .ios .page > .toolbar-top-ios ~ .searchbar,
@@ -12697,7 +12727,6 @@ label.item-radio.disabled,
   --f7-message-footer-font-size: 11px;
   --f7-message-name-font-size: 12px;
   --f7-message-typing-indicator-bg-color: #000;
-  --f7-message-sent-bg-color: var(--f7-theme-color);
   --f7-message-sent-text-color: #fff;
   --f7-message-received-bg-color: #e5e5ea;
   --f7-message-received-text-color: #000;
@@ -12857,7 +12886,7 @@ label.item-radio.disabled,
 }
 .message-sent .message-bubble {
   color: var(--f7-message-sent-text-color);
-  background: var(--f7-message-sent-bg-color);
+  background: var(--f7-message-sent-bg-color, var(--f7-theme-color));
 }
 .message-sent .message-content {
   align-items: flex-end;
@@ -12870,7 +12899,7 @@ label.item-radio.disabled,
 }
 .message-received .message-bubble {
   color: var(--f7-message-received-text-color);
-  background: var(--f7-message-received-bg-color);
+  background: var(--f7-message-sent-bg-color);
 }
 .message-received .message-content {
   align-items: flex-start;
@@ -13106,7 +13135,7 @@ label.item-radio.disabled,
 .md .message-sent.message-tail .message-bubble:before {
   border-left: 0 solid transparent;
   border-right: 8px solid transparent;
-  border-bottom: 8px solid var(--f7-message-sent-bg-color);
+  border-bottom: 8px solid var(--f7-message-sent-bg-color, var(--f7-theme-color));
   left: 100%;
 }
 .md .message + .message:not(.message-first) {
