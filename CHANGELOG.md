@@ -2,6 +2,12 @@
 
 # Change Log
 
+# [v3.6.7](https://github.com/framework7io/framework7/compare/v3.6.6...v3.6.7) - February 13, 2019
+  * Core
+    * Fixed issue when event handlers attached with `.once` may not be detached correctly later
+  * Dom7 update to latest 2.1.3
+    * Fixed issue when event handlers attached with `.once` may not be detached correctly later
+
 # [v3.6.6](https://github.com/framework7io/framework7/compare/v3.6.5...v3.6.6) - February 5, 2019
   * Core
     * App `data` and `methods` now available before app initialization. Useful when you delay app initialization (like on `deviceready` event in Cordova app) and need to access data before
