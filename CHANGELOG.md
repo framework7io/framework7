@@ -2,6 +2,24 @@
 
 # Change Log
 
+# [v3.6.7](https://github.com/framework7io/framework7/compare/v3.6.6...v3.6.7) - February 13, 2019
+  * Core
+    * Fixed issue when event handlers attached with `.once` may not be detached correctly later
+  * Dom7 update to latest 2.1.3
+    * Fixed issue when event handlers attached with `.once` may not be detached correctly later
+
+# [v3.6.6](https://github.com/framework7io/framework7/compare/v3.6.5...v3.6.6) - February 5, 2019
+  * Core
+    * App `data` and `methods` now available before app initialization. Useful when you delay app initialization (like on `deviceready` event in Cordova app) and need to access data before
+    * Pull To Refresh
+      * Support for `ptr-watch-scroll` that should be added on scollable elements inside of `ptr-content`, so pull to refresh won't trigger during their scrolling
+    * Panel
+      * Fixed issue when panel backdrop not removed for routable panel
+    * Template7 update to latest 1.4.1:
+      * Relaxed `escape` helper to escape only `<>&"'` characters
+      * Improved variables parsing in `js` and `js_if` helpers
+  * Minor fixes
+
 # [v3.6.5](https://github.com/framework7io/framework7/compare/v3.6.3...v3.6.5) - January 4, 2019
   * Core
     * Router

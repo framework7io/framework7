@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 3.6.5
+ * Framework7 Vue 3.6.7
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: January 24, 2019
+ * Released on: February 13, 2019
  */
 
 (function (global, factory) {
@@ -156,10 +156,6 @@
       reloadCurrent: Boolean,
       reloadAll: Boolean,
       reloadPrevious: Boolean,
-      reloadDetail: {
-        type: Boolean,
-        default: undefined,
-      },
       routeTabId: String,
       view: String,
       routeProps: Object,
@@ -169,7 +165,6 @@
       var reloadCurrent = props.reloadCurrent;
       var reloadPrevious = props.reloadPrevious;
       var reloadAll = props.reloadAll;
-      var reloadDetail = props.reloadDetail;
       var animate = props.animate;
       var ignoreCache = props.ignoreCache;
       var routeTabId = props.routeTabId;
@@ -180,17 +175,11 @@
         dataAnimate = animate.toString();
       }
 
-      var dataReloadDetail;
-      if ('reloadDetail' in props && typeof reloadDetail !== 'undefined') {
-        dataReloadDetail = reloadDetail.toString();
-      }
-
       return {
         'data-force': force || undefined,
         'data-reload-current': reloadCurrent || undefined,
         'data-reload-all': reloadAll || undefined,
         'data-reload-previous': reloadPrevious || undefined,
-        'data-reload-detail': dataReloadDetail,
         'data-animate': dataAnimate,
         'data-ignore-cache': ignoreCache || undefined,
         'data-route-tab-id': routeTabId || undefined,
@@ -7577,10 +7566,8 @@
       var state = (function () {
         return {
           hasSubnavbar: false,
-          routerPositionClass: '',
-          routerForceUnstack: false,
-          routerPageRole: null,
-          routerPageMasterStack: false
+          routerClass: '',
+          routerForceUnstack: false
         };
       })();
 
@@ -7659,16 +7646,13 @@
       }
 
       var forceSubnavbar = typeof subnavbar === 'undefined' && typeof withSubnavbar === 'undefined' ? hasSubnavbar || this.state.hasSubnavbar : false;
-      var classes = Utils.classNames(className, 'page', this.state.routerPositionClass, {
+      var classes = Utils.classNames(className, 'page', this.state.routerClass, {
         stacked: stacked && !this.state.routerForceUnstack,
         tabs: tabs,
         'page-with-subnavbar': subnavbar || withSubnavbar || forceSubnavbar,
         'no-navbar': noNavbar,
         'no-toolbar': noToolbar,
-        'no-swipeback': noSwipeback,
-        'page-master': this.state.routerPageRole === 'master',
-        'page-master-detail': this.state.routerPageRole === 'detail',
-        'page-master-stacked': this.state.routerPageMasterStack === true
+        'no-swipeback': noSwipeback
       }, Mixins.colorClasses(props));
 
       if (!needsPageContent) {
@@ -7734,9 +7718,6 @@
       self.onPageStack = self.onPageStack.bind(self);
       self.onPageUnstack = self.onPageUnstack.bind(self);
       self.onPagePosition = self.onPagePosition.bind(self);
-      self.onPageRole = self.onPageRole.bind(self);
-      self.onPageMasterStack = self.onPageMasterStack.bind(self);
-      self.onPageMasterUnstack = self.onPageMasterUnstack.bind(self);
 
       if (ptr) {
         el.addEventListener('ptr:pullstart', self.onPtrPullStart);
@@ -7761,9 +7742,6 @@
       el.addEventListener('page:stack', self.onPageStack);
       el.addEventListener('page:unstack', self.onPageUnstack);
       el.addEventListener('page:position', self.onPagePosition);
-      el.addEventListener('page:role', self.onPageRole);
-      el.addEventListener('page:masterstack', self.onPageMasterStack);
-      el.addEventListener('page:masterunstack', self.onPageMasterUnstack);
     },
 
     beforeDestroy: function beforeDestroy() {
@@ -7786,9 +7764,6 @@
       el.removeEventListener('page:stack', self.onPageStack);
       el.removeEventListener('page:unstack', self.onPageUnstack);
       el.removeEventListener('page:position', self.onPagePosition);
-      el.removeEventListener('page:role', self.onPageRole);
-      el.removeEventListener('page:masterstack', self.onPageMasterStack);
-      el.removeEventListener('page:masterunstack', self.onPageMasterUnstack);
     },
 
     methods: {
@@ -7837,25 +7812,7 @@
       onPagePosition: function onPagePosition(event) {
         var position = event.detail.position;
         this.setState({
-          routerPositionClass: ("page-" + position)
-        });
-      },
-
-      onPageRole: function onPageRole(event) {
-        this.setState({
-          routerPageRole: event.detail.role
-        });
-      },
-
-      onPageMasterStack: function onPageMasterStack() {
-        this.setState({
-          routerPageMasterStack: true
-        });
-      },
-
-      onPageMasterUnstack: function onPageMasterUnstack() {
-        this.setState({
-          routerPageMasterStack: false
+          routerClass: ("page-" + position)
         });
       },
 
@@ -7886,13 +7843,13 @@
 
         if (page.from === 'next') {
           this.setState({
-            routerPositionClass: 'page-next'
+            routerClass: 'page-next'
           });
         }
 
         if (page.from === 'previous') {
           this.setState({
-            routerPositionClass: 'page-previous'
+            routerClass: 'page-previous'
           });
         }
 
@@ -7909,13 +7866,13 @@
 
         if (page.to === 'next') {
           this.setState({
-            routerPositionClass: 'page-next'
+            routerClass: 'page-next'
           });
         }
 
         if (page.to === 'previous') {
           this.setState({
-            routerPositionClass: 'page-previous'
+            routerClass: 'page-previous'
           });
         }
 
@@ -7925,7 +7882,7 @@
       onPageAfterIn: function onPageAfterIn(event) {
         var page = event.detail;
         this.setState({
-          routerPositionClass: 'page-current'
+          routerClass: 'page-current'
         });
         this.dispatchEvent('page:afterin pageAfterIn', event, page);
       },
@@ -10438,8 +10395,6 @@
       preloadPreviousPage: Boolean,
       allowDuplicateUrls: Boolean,
       reloadPages: Boolean,
-      reloadDetail: Boolean,
-      masterDetailBreakpoint: Number,
       removeElements: Boolean,
       removeElementsWithTimeout: Boolean,
       removeElementsTimeout: Number,
@@ -10902,7 +10857,7 @@
   };
 
   /**
-   * Framework7 Vue 3.6.5
+   * Framework7 Vue 3.6.7
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -10910,7 +10865,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: January 24, 2019
+   * Released on: February 13, 2019
    */
 
   var Plugin = {
