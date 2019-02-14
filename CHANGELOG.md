@@ -2,6 +2,10 @@
 
 # Change Log
 
+# [v4.0.5](https://github.com/framework7io/framework7/compare/v4.0.4...v4.0.5) - February 14, 2019
+  * Core
+    * Fixed d.ts reference path
+
 # [v4.0.4](https://github.com/framework7io/framework7/compare/v4.0.3...v4.0.4) - February 13, 2019
   * Core
     * Fixed lost messages color

@@ -1,12 +1,12 @@
 import Template7 from 'template7';
 import Dom7 from 'dom7';
-import Framework7 from './components/app/app-class';
+import Framework7 from '../components/app/app-class'
 
 // Helpers
-import Request from './utils/request';
-import Utils from './utils/utils';
-import Support from './utils/support';
-import Device from './utils/device';
+import Request from '../utils/request';
+import Utils from '../utils/utils';
+import Support from '../utils/support';
+import Device from '../utils/device';
 
 // Modules
 import {Clicks as ClicksNamespace} from '../modules/clicks/clicks';
@@ -307,5 +307,6 @@ declare module './components/app/app-class' {
   interface Framework7Events extends VirtualListNamespace.AppEvents{}
 }
 
-export { Request, Utils, Support, Device, Template7, Dom7 };
+export { Request, Utils, Support, Device };
+export { Template7, Dom7 };
 export default Framework7;
