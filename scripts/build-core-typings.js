@@ -17,6 +17,17 @@ function capitalize(name) {
 }
 
 function generateTypings(basePath, modules, components) {
+  const f7Base = `import Framework7 from '${basePath}/components/app/app-class'`;
+
+  const helpers = ['request', 'utils', 'support', 'device'];
+
+  const importHelpers = helpers.map((helper) => {
+    const capitalized = capitalize(helper);
+    return `import ${capitalized} from '${basePath}/utils/${helper}';`;
+  });
+
+  const exportHelpers = helpers.map(capitalize).join(', ');
+
   const importModules = modules.map((f7Module) => {
     const capitalized = capitalize(f7Module);
     return `import {${capitalized} as ${capitalized}Namespace} from '${basePath}/modules/${f7Module}/${f7Module}';`;
@@ -37,6 +48,9 @@ function generateTypings(basePath, modules, components) {
   });
 
   return fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.d.ts'))
+    .replace(/\/\/ IMPORT_BASE/, f7Base)
+    .replace(/\/\/ IMPORT_HELPERS/, importHelpers.join('\n'))
+    .replace(/\/\/ EXPORT_HELPERS/, `export { ${exportHelpers} };`)
     .replace(/\/\/ IMPORT_MODULES/, importModules.join('\n'))
     .replace(/\/\/ IMPORT_COMPONENTS/, importComponents.join('\n'))
     .replace(/\/\/ INSTALL/, install.join('\n  '));
