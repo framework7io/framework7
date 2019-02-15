@@ -377,7 +377,7 @@ function SwipeBack(r) {
     currentPage.transform(`translate3d(${currentPageTranslate}px,0,0)`);
     if (paramsSwipeBackAnimateShadow) pageShadow[0].style.opacity = 1 - (1 * percentage);
 
-    if (app.theme !== 'md') {
+    if (app.theme === 'ios') {
       previousPage.transform(`translate3d(${previousPageTranslate}px,0,0)`);
     }
     if (paramsSwipeBackAnimateOpacity) pageOpacity[0].style.opacity = 1 - (1 * percentage);
@@ -414,7 +414,7 @@ function SwipeBack(r) {
       (timeDiff < 300 && touchesDiff > 10)
       || (timeDiff >= 300 && touchesDiff > viewContainerWidth / 2)
     ) {
-      currentPage.removeClass('page-current').addClass(`page-next${app.theme === 'md' ? ' page-next-on-right' : ''}`);
+      currentPage.removeClass('page-current').addClass(`page-next${app.theme !== 'ios' ? ' page-next-on-right' : ''}`);
       previousPage.removeClass('page-previous').addClass('page-current').removeAttr('aria-hidden');
       if (pageShadow) pageShadow[0].style.opacity = '';
       if (pageOpacity) pageOpacity[0].style.opacity = '';

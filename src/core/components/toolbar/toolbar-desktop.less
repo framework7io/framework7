@@ -1,4 +1,4 @@
-.ios {
+.desktop {
   .toolbar {
     a.icon-only {
       min-height: var(--f7-toolbar-height);
@@ -6,7 +6,21 @@
       justify-content: center;
       align-items: center;
       margin: 0;
-      min-width: 44px;
+      min-width: 38px;
+    }
+  }
+  .tabbar,
+  .tabbar-labels {
+    i.icon {
+      font-size: 18px;
+    }
+    .toolbar-inner {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    a.tab-link,
+    a.link {
+      transition-duration: 200ms;
     }
   }
   .tabbar-labels {
@@ -19,19 +33,6 @@
       }
     }
   }
-  @media (min-width: 768px) {
-    .tabbar,
-    .tabbar-labels {
-      .toolbar-inner {
-        justify-content: center;
-      }
-      a.tab-link,
-      a.link {
-        width: auto;
-        min-width: 105px;
-      }
-    }
-  }
 
   // Scrollable
   .tabbar-scrollable {
@@ -40,7 +41,7 @@
     }
     a.tab-link,
     a.link {
-      padding: 0 8px;
+      padding: 0 15px;
     }
   }
 }

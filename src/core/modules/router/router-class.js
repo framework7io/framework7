@@ -657,7 +657,15 @@ class Router extends Framework7Class {
   removeThemeElements(el) {
     const router = this;
     const theme = router.app.theme;
-    $(el).find(`.${theme === 'md' ? 'ios' : 'md'}-only, .if-${theme === 'md' ? 'ios' : 'md'}`).remove();
+    let toRemove;
+    if (theme === 'ios') {
+      toRemove = '.md-only, .desktop-only, .if-md, .if-desktop';
+    } else if (theme === 'md') {
+      toRemove = '.ios-only, .desktop-only, .if-ios, .if-desktop';
+    } else if (theme === 'desktop') {
+      toRemove = '.ios-only, .md-only, .if-ios, .if-md';
+    }
+    $(el).find(toRemove).remove();
   }
 
   getPageData(pageEl, navbarEl, from, to, route = {}, pageFromEl) {
@@ -909,6 +917,7 @@ class Router extends Framework7Class {
       if (
         (view && router.params.iosSwipeBack && app.theme === 'ios')
         || (view && router.params.mdSwipeBack && app.theme === 'md')
+        || (view && router.params.desktopSwipeBack && app.theme === 'desktop')
       ) {
         SwipeBack(router);
       }

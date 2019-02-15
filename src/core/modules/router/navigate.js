@@ -457,7 +457,7 @@ function forward(el, forwardOptions = {}) {
     router.pageCallback('afterIn', $newPage, $newNavbarInner, 'next', 'current', options);
     router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', 'previous', options);
 
-    let keepOldPage = (router.params.preloadPreviousPage || (app.theme === 'ios' ? router.params.iosSwipeBack : router.params.mdSwipeBack)) && !isMaster;
+    let keepOldPage = (router.params.preloadPreviousPage || router.params[`${app.theme}SwipeBack`]) && !isMaster;
     if (!keepOldPage) {
       if ($newPage.hasClass('smart-select-page') || $newPage.hasClass('photo-browser-page') || $newPage.hasClass('autocomplete-page')) {
         keepOldPage = true;
@@ -497,7 +497,7 @@ function forward(el, forwardOptions = {}) {
     }
   }
   if (options.animate && !(isMaster && app.width >= router.params.masterDetailBreakpoint)) {
-    const delay = router.app.theme === 'md' ? router.params.mdPageLoadDelay : router.params.iosPageLoadDelay;
+    const delay = router.params[`${router.app.theme}PageLoadDelay`];
     if (delay) {
       setTimeout(() => {
         setPositionClasses();

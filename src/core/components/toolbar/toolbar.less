@@ -106,6 +106,7 @@
   align-items: center;
   align-content: center;
   overflow: hidden;
+  padding: 0 calc(var(--f7-toolbar-inner-padding-right) + var(--f7-safe-area-right)) 0 calc(var(--f7-toolbar-inner-padding-left) + var(--f7-safe-area-left));
 }
 .tabbar,
 .tabbar-labels {
@@ -114,6 +115,10 @@
   }
   a {
     color: var(--f7-tabbar-link-inactive-color);
+  }
+  a.tab-link:not(.tab-link-active),
+  a.link:not(.tab-link-active) {
+    background-color: var(--f7-tabbar-link-inactive-bg-color, transparent);
   }
   a.link {
     line-height: 1.4;
@@ -131,9 +136,14 @@
     font-weight: var(--f7-tabbar-link-font-weight);
     letter-spacing: var(--f7-tabbar-link-letter-spacing);
     overflow: hidden;
+    border-left: var(--f7-tabbar-link-divider-border-width) solid var(--f7-tabbar-link-divider-border-color);
+    &:first-child {
+      border-left: none;
+    }
   }
   .tab-link-active {
     color: var(--f7-tabbar-link-active-color, var(--f7-theme-color));
+    background-color: var(--f7-tabbar-link-active-bg-color, transparent);
   }
   i.icon {
     font-size: var(--f7-tabbar-icon-size);
@@ -170,6 +180,7 @@
 }
 .tabbar-scrollable {
   .toolbar-inner {
+    justify-content: flex-start;
     .scrollable();
     &::-webkit-scrollbar {
       display: none !important;
@@ -270,4 +281,7 @@
 }
 & when (@includeMdTheme) {
   @import url('./toolbar-md.less');
+}
+& when (@includeDesktopTheme) {
+  @import url('./toolbar-desktop.less');
 }
