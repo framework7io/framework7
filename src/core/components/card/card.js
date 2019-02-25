@@ -385,6 +385,27 @@ export default {
       },
     });
   },
+  on: {
+    pageBeforeIn(page) {
+      const app = this;
+      if (app.params.card.hideNavbarOnOpen && page.navbarEl && page.$el.find('.card-opened.card-expandable').length) {
+        app.navbar.hide(page.navbarEl);
+      }
+
+      if (app.params.card.hideToolbarOnOpen && page.$el.find('.card-opened.card-expandable').length) {
+        let $toolbarEl = page.$el.children('.toolbar');
+        if (!$toolbarEl.length) {
+          $toolbarEl = page.$el.parents('.view').children('.toolbar');
+        }
+        if (!$toolbarEl.length) {
+          $toolbarEl = page.$el.parents('.views').children('.toolbar');
+        }
+        if ($toolbarEl && $toolbarEl.length) {
+          app.toolbar.hide($toolbarEl);
+        }
+      }
+    },
+  },
   clicks: {
     '.card-close': function closeCard($clickedEl, data) {
       const app = this;
