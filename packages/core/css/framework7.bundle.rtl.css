@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.5
+ * Framework7 4.0.6
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 14, 2019
+ * Released on: February 25, 2019
  */
 
 /*====================
@@ -4465,7 +4465,7 @@ i.icon {
   --f7-dialog-width: 280px;
   --f7-dialog-border-radius: 4px;
   --f7-dialog-text-color: #757575;
-  --f7-dialog-text-align: left;
+  --f7-dialog-text-align: right;
   --f7-dialog-font-size: 16px;
   --f7-dialog-title-text-color: #212121;
   --f7-dialog-title-font-size: 20px;
@@ -12178,6 +12178,12 @@ label.item-radio.disabled,
   --f7-searchbar-in-page-content-box-shadow: var(--f7-elevation-1);
   --f7-searchbar-in-page-content-border-radius: 4px;
 }
+.md .theme-dark,
+.md.theme-dark {
+  --f7-searchbar-bg-color: #222222;
+  --f7-searchbar-input-bg-color: #222222;
+  --f7-searchbar-input-text-color: #fff;
+}
 .searchbar {
   width: 100%;
   position: relative;
@@ -12185,7 +12191,6 @@ label.item-radio.disabled,
   height: var(--f7-searchbar-height);
   background-image: var(--f7-searchbar-bg-image, var(--f7-bars-bg-image));
   background-color: var(--f7-searchbar-bg-color, var(--f7-bars-bg-color, var(--f7-theme-color)));
-  --f7-touch-ripple-color: var(--f7-touch-ripple-black);
 }
 .searchbar.no-hairline:after,
 .searchbar.no-border:after {
@@ -12602,7 +12607,6 @@ label.item-radio.disabled,
   display: block;
   margin-top: -24px;
   color: var(--f7-searchbar-link-color, var(--f7-bars-link-color, var(--f7-theme-color)));
-  --f7-link-highlight-color: var(--f7-link-highlight-black);
 }
 .md .searchbar-disable-button:before {
   content: '';
@@ -12660,7 +12664,6 @@ label.item-radio.disabled,
   height: 48px;
   margin-top: -24px;
   left: 0;
-  --f7-link-highlight-color: var(--f7-link-highlight-black);
 }
 .md .searchbar .input-clear-button:before {
   content: '';

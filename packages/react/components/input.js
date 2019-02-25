@@ -312,7 +312,7 @@ class F7Input extends React.Component {
     inputEl.removeEventListener('input:notempty', self.onInputNotEmpty, false);
 
     if (type === 'textarea' && resizable) {
-      inputEl.removeEventListener('textarea:resze', self.onTextareaResize, false);
+      inputEl.removeEventListener('textarea:resize', self.onTextareaResize, false);
     }
 
     if (clearButton) {
@@ -375,7 +375,7 @@ class F7Input extends React.Component {
       inputEl.addEventListener('input:notempty', self.onInputNotEmpty, false);
 
       if (type === 'textarea' && resizable) {
-        inputEl.addEventListener('textarea:resze', self.onTextareaResize, false);
+        inputEl.addEventListener('textarea:resize', self.onTextareaResize, false);
       }
 
       if (clearButton) {

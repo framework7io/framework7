@@ -2,6 +2,32 @@
 
 # Change Log
 
+# [v4.0.6](https://github.com/framework7io/framework7/compare/v4.0.5...v4.0.6) - February 25, 2019
+  * Core
+    * Searchbar
+      * Tweaked/fixed styles for MD-Dark theme
+    * Pull To Refresh
+      * Now it will be ignored on opened expandable cards
+      * Now it will be ignored on elements with `ptr-ignore` class
+    * Dialog
+      * Fixed text alignment in RTL direction
+    * Swiper update to latest 4.5.0:
+      * Core
+        * New `swiper.changeDirection()` method to change direction from horizontal to vertical (and back) dynamically
+        * `direction` parameter can be used in breakpoints
+      * Virtual Slides
+        * `swiper.virtual.appendSlide` now accepts array of slides to add
+        * `swiper.virtual.prependSlide` now accepts array of slides to prepend
+        * New `swiper.virtual.removeSlide(indexes)` to remove virtual selected slides
+        * New `swiper.virtual.removeAllSlides()` to remove all virtual slides
+      * Navigation
+        * Now it emits `navigationHide` and `navigationShow` events when on nav hide/show
+      * Pagination
+        * Now it emits `paginationHide` and `paginationShow` events when on pagination hide/show
+  * Phenome
+    * Fixed broken `textarea:resize` / `textareaResize` on `Input` and `ListInput` components
+  * Minor fixes
+
 # [v4.0.5](https://github.com/framework7io/framework7/compare/v4.0.4...v4.0.5) - February 14, 2019
   * Core
     * Fixed d.ts reference path

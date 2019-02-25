@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.0.5
+ * Framework7 Vue 4.0.6
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 14, 2019
+ * Released on: February 25, 2019
  */
 
 (function (global, factory) {
@@ -3409,7 +3409,7 @@
         inputEl.addEventListener('input:notempty', self.onInputNotEmpty, false);
 
         if (type === 'textarea' && resizable) {
-          inputEl.addEventListener('textarea:resze', self.onTextareaResize, false);
+          inputEl.addEventListener('textarea:resize', self.onTextareaResize, false);
         }
 
         if (clearButton) {
@@ -3468,7 +3468,7 @@
       inputEl.removeEventListener('input:notempty', self.onInputNotEmpty, false);
 
       if (type === 'textarea' && resizable) {
-        inputEl.removeEventListener('textarea:resze', self.onTextareaResize, false);
+        inputEl.removeEventListener('textarea:resize', self.onTextareaResize, false);
       }
 
       if (clearButton) {
@@ -4434,7 +4434,7 @@
         var inputEl = self.$refs.inputEl;
         if (!inputEl) { return; }
         inputEl.addEventListener('input:notempty', self.onInputNotEmpty, false);
-        inputEl.addEventListener('textarea:resze', self.onTextareaResize, false);
+        inputEl.addEventListener('textarea:resize', self.onTextareaResize, false);
         inputEl.addEventListener('input:empty', self.onInputEmpty, false);
         inputEl.addEventListener('input:clear', self.onInputClear, false);
 
@@ -4497,7 +4497,7 @@
       var inputEl = self.$refs.inputEl;
       if (!inputEl) { return; }
       inputEl.removeEventListener('input:notempty', self.onInputNotEmpty, false);
-      inputEl.removeEventListener('textarea:resze', self.onTextareaResize, false);
+      inputEl.removeEventListener('textarea:resize', self.onTextareaResize, false);
       inputEl.removeEventListener('input:empty', self.onInputEmpty, false);
       inputEl.removeEventListener('input:clear', self.onInputClear, false);
     },
@@ -11492,7 +11492,7 @@
   };
 
   /**
-   * Framework7 Vue 4.0.5
+   * Framework7 Vue 4.0.6
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -11500,7 +11500,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: February 14, 2019
+   * Released on: February 25, 2019
    */
 
   var Plugin = {
