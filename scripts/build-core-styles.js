@@ -18,7 +18,7 @@ function copyLess(config, components, cb) {
   const colors = `{\n${Object.keys(config.colors).map(colorName => `  ${colorName}: ${config.colors[colorName]};`).join('\n')}\n}`;
   const includeIosTheme = config.themes.indexOf('ios') >= 0;
   const includeMdTheme = config.themes.indexOf('md') >= 0;
-  const includeDesktopTheme = config.themes.indexOf('desktop') >= 0;
+  const includeAuroraTheme = config.themes.indexOf('aurora') >= 0;
   const includeDarkTheme = config.darkTheme;
   const rtl = config.rtl;
 
@@ -28,7 +28,7 @@ function copyLess(config, components, cb) {
   lessContent = lessContent
     .replace('$includeIosTheme', includeIosTheme)
     .replace('$includeMdTheme', includeMdTheme)
-    .replace('$includeDesktopTheme', includeDesktopTheme)
+    .replace('$includeAuroraTheme', includeAuroraTheme)
     .replace('$includeDarkTheme', includeDarkTheme)
     .replace('$colors', colors)
     .replace('$themeColor', config.themeColor)
@@ -49,7 +49,7 @@ async function buildBundle(config, components, themes, rtl, cb) {
   const colors = `{\n${Object.keys(config.colors).map(colorName => `  ${colorName}: ${config.colors[colorName]};`).join('\n')}\n}`;
   const includeIosTheme = themes.indexOf('ios') >= 0;
   const includeMdTheme = themes.indexOf('md') >= 0;
-  const includeDesktopTheme = themes.indexOf('desktop') >= 0;
+  const includeAuroraTheme = themes.indexOf('aurora') >= 0;
   const includeDarkTheme = config.darkTheme;
   const outputFileName = `framework7.bundle${rtl ? '.rtl' : ''}`;
   const output = `${getOutput()}/core`;
@@ -59,7 +59,7 @@ async function buildBundle(config, components, themes, rtl, cb) {
     .replace('//IMPORT_COMPONENTS', components.map(component => `@import url('./components/${component}/${component}.less');`).join('\n'))
     .replace('$includeIosTheme', includeIosTheme)
     .replace('$includeMdTheme', includeMdTheme)
-    .replace('$includeDesktopTheme', includeDesktopTheme)
+    .replace('$includeAuroraTheme', includeAuroraTheme)
     .replace('$includeDarkTheme', includeDarkTheme)
     .replace('$colors', colors)
     .replace('$themeColor', config.themeColor)
@@ -92,7 +92,7 @@ async function buildCore(themes, rtl, cb) {
   const env = process.env.NODE_ENV || 'development';
   const includeIosTheme = themes.indexOf('ios') >= 0;
   const includeMdTheme = themes.indexOf('md') >= 0;
-  const includeDesktopTheme = themes.indexOf('desktop') >= 0;
+  const includeAuroraTheme = themes.indexOf('aurora') >= 0;
   const includeDarkTheme = config.darkTheme;
   const output = `${getOutput()}/core`;
   const colors = `{\n${Object.keys(config.colors).map(colorName => `  ${colorName}: ${config.colors[colorName]};`).join('\n')}\n}`;
@@ -102,7 +102,7 @@ async function buildCore(themes, rtl, cb) {
     .replace('//IMPORT_COMPONENTS', '')
     .replace('$includeIosTheme', includeIosTheme)
     .replace('$includeMdTheme', includeMdTheme)
-    .replace('$includeDesktopTheme', includeDesktopTheme)
+    .replace('$includeAuroraTheme', includeAuroraTheme)
     .replace('$includeDarkTheme', includeDarkTheme)
     .replace('$colors', colors)
     .replace('$themeColor', config.themeColor)

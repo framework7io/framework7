@@ -659,10 +659,10 @@ class Router extends Framework7Class {
     const theme = router.app.theme;
     let toRemove;
     if (theme === 'ios') {
-      toRemove = '.md-only, .desktop-only, .if-md, .if-desktop';
+      toRemove = '.md-only, .aurora-only, .if-md, .if-aurora';
     } else if (theme === 'md') {
-      toRemove = '.ios-only, .desktop-only, .if-ios, .if-desktop';
-    } else if (theme === 'desktop') {
+      toRemove = '.ios-only, .aurora-only, .if-ios, .if-aurora';
+    } else if (theme === 'aurora') {
       toRemove = '.ios-only, .md-only, .if-ios, .if-md';
     }
     $(el).find(toRemove).remove();
@@ -917,7 +917,7 @@ class Router extends Framework7Class {
       if (
         (view && router.params.iosSwipeBack && app.theme === 'ios')
         || (view && router.params.mdSwipeBack && app.theme === 'md')
-        || (view && router.params.desktopSwipeBack && app.theme === 'desktop')
+        || (view && router.params.auroraSwipeBack && app.theme === 'aurora')
       ) {
         SwipeBack(router);
       }

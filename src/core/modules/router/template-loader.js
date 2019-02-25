@@ -33,7 +33,7 @@ export default {
               $theme: {
                 ios: router.app.theme === 'ios',
                 md: router.app.theme === 'md',
-                desktop: router.app.theme === 'desktop',
+                desktop: router.app.theme === 'aurora',
               },
             }));
           }

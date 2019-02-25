@@ -30,7 +30,7 @@ export default {
             $theme: {
               ios: app.theme === 'ios',
               md: app.theme === 'md',
-              desktop: app.theme === 'desktop',
+              aurora: app.theme === 'aurora',
             },
           }
         );

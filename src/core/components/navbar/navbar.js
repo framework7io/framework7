@@ -6,7 +6,7 @@ const Navbar = {
   size(el) {
     const app = this;
     if (app.theme === 'md' && !app.params.navbar.mdCenterTitle) return;
-    if (app.theme === 'desktop' && !app.params.navbar.desktopCenterTitle) return;
+    if (app.theme === 'aurora' && !app.params.navbar.auroraCenterTitle) return;
     let $el = $(el);
     if ($el.hasClass('navbar')) {
       $el = $el.children('.navbar-inner').each((index, navbarEl) => {
@@ -27,7 +27,7 @@ const Navbar = {
     if (app.theme === 'md' && app.params.navbar.mdCenterTitle) {
       $el.addClass('navbar-inner-centered-title');
     }
-    if (app.theme === 'desktop' && app.params.navbar.desktopCenterTitle) {
+    if (app.theme === 'aurora' && app.params.navbar.auroraCenterTitle) {
       $el.addClass('navbar-inner-centered-title');
     }
     if (app.theme === 'ios' && !app.params.navbar.iosCenterTitle) {
@@ -147,7 +147,7 @@ const Navbar = {
     if (
       (app.theme === 'ios' && app.params.navbar.iosCenterTitle)
       || (app.theme === 'md' && app.params.navbar.mdCenterTitle)
-      || (app.theme === 'desktop' && app.params.navbar.desktopCenterTitle)
+      || (app.theme === 'aurora' && app.params.navbar.auroraCenterTitle)
     ) {
       let titleLeft = diff;
       if (app.rtl && noLeft && noRight && title.length > 0) titleLeft = -titleLeft;
@@ -237,7 +237,7 @@ const Navbar = {
     const $pageEl = $(app.navbar.getPageByEl($navbarInnerEl));
     $navbarInnerEl.addClass('navbar-inner-large-collapsed');
     $pageEl.eq(0).addClass('page-with-navbar-large-collapsed').trigger('page:navbarlargecollapsed');
-    if (app.theme === 'md' || app.theme === 'desktop') {
+    if (app.theme === 'md' || app.theme === 'aurora') {
       $navbarInnerEl.parents('.navbar').addClass('navbar-large-collapsed');
     }
   },
@@ -256,7 +256,7 @@ const Navbar = {
     const $pageEl = $(app.navbar.getPageByEl($navbarInnerEl));
     $navbarInnerEl.removeClass('navbar-inner-large-collapsed');
     $pageEl.eq(0).removeClass('page-with-navbar-large-collapsed').trigger('page:navbarlargeexpanded');
-    if (app.theme === 'md' || app.theme === 'desktop') {
+    if (app.theme === 'md' || app.theme === 'aurora') {
       $navbarInnerEl.parents('.navbar').removeClass('navbar-large-collapsed');
     }
   },
@@ -282,7 +282,7 @@ const Navbar = {
     const app = this;
     const $pageEl = $(pageEl);
     const $navbarInnerEl = $(navbarInnerEl);
-    const $navbarEl = app.theme === 'md' || app.theme === 'desktop'
+    const $navbarEl = app.theme === 'md' || app.theme === 'aurora'
       ? $navbarInnerEl.parents('.navbar')
       : $(navbarInnerEl || app.navbar.getElByPage(pageEl)).closest('.navbar');
     const isLarge = $navbarInnerEl.find('.title-large').length || $navbarInnerEl.hasClass('.navbar-inner-large');
@@ -307,12 +307,12 @@ const Navbar = {
         if (Number.isNaN(navbarTitleLargeHeight)) {
           if (app.theme === 'ios') navbarTitleLargeHeight = 52;
           else if (app.theme === 'md') navbarTitleLargeHeight = 48;
-          else if (app.theme === 'desktop') navbarTitleLargeHeight = 38;
+          else if (app.theme === 'aurora') navbarTitleLargeHeight = 38;
         }
       } else { // eslint-disable-next-line
         if (app.theme === 'ios') navbarTitleLargeHeight = 52;
         else if (app.theme === 'md') navbarTitleLargeHeight = 48;
-        else if (app.theme === 'desktop') navbarTitleLargeHeight = 38;
+        else if (app.theme === 'aurora') navbarTitleLargeHeight = 38;
       }
     }
     if (needHide && isLarge) {
@@ -324,7 +324,7 @@ const Navbar = {
     let scrollTimeoutId;
     let touchEndTimeoutId;
     const touchSnapTimeout = 70;
-    const desktopSnapTimeout = 300;
+    const auroraSnapTimeout = 300;
 
     function snapLargeNavbar() {
       const inSearchbarExpanded = $navbarInnerEl.hasClass('with-searchbar-expandable-enabled');
@@ -347,7 +347,7 @@ const Navbar = {
         $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         $navbarInnerEl[0].style.overflow = '';
-        if (app.theme === 'md' || app.theme === 'desktop') {
+        if (app.theme === 'md' || app.theme === 'aurora') {
           $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         }
       } else if (collapseProgress === 1 && !navbarCollapsed) {
@@ -355,21 +355,21 @@ const Navbar = {
         $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         $navbarInnerEl[0].style.overflow = '';
         $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-        if (app.theme === 'md' || app.theme === 'desktop') {
+        if (app.theme === 'md' || app.theme === 'aurora') {
           $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         }
       } else if ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed)) {
         $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         $navbarInnerEl[0].style.overflow = '';
         $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-        if (app.theme === 'md' || app.theme === 'desktop') {
+        if (app.theme === 'md' || app.theme === 'aurora') {
           $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         }
       } else {
         $navbarInnerEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
         $navbarInnerEl[0].style.overflow = 'visible';
         $pageEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
-        if (app.theme === 'md' || app.theme === 'desktop') {
+        if (app.theme === 'md' || app.theme === 'aurora') {
           $navbarEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
         }
       }
@@ -379,7 +379,7 @@ const Navbar = {
           clearTimeout(scrollTimeoutId);
           scrollTimeoutId = setTimeout(() => {
             snapLargeNavbar();
-          }, desktopSnapTimeout);
+          }, auroraSnapTimeout);
         } else if (touchEndTimeoutId) {
           clearTimeout(touchEndTimeoutId);
           touchEndTimeoutId = null;
@@ -494,7 +494,7 @@ export default {
       scrollTopOnTitleClick: true,
       iosCenterTitle: true,
       mdCenterTitle: false,
-      desktopCenterTitle: true,
+      auroraCenterTitle: true,
       hideOnPageScroll: false,
       showOnPageScrollEnd: true,
       showOnPageScrollTop: true,
@@ -553,7 +553,7 @@ export default {
       }
       if ($navbarInnerEl.hasClass('navbar-inner-large')) {
         if (app.params.navbar.collapseLargeTitleOnScroll) needCollapseOnScrollHandler = true;
-        if (app.theme === 'md' || app.theme === 'desktop') {
+        if (app.theme === 'md' || app.theme === 'aurora') {
           $navbarInnerEl.parents('.navbar').addClass('navbar-large');
         }
         page.$el.addClass('page-with-navbar-large');
@@ -589,7 +589,7 @@ export default {
       if (
         (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
         || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-        || (app.theme === 'desktop' && !app.params.navbar.desktopCenterTitle)
+        || (app.theme === 'aurora' && !app.params.navbar.auroraCenterTitle)
       ) {
         return;
       }
@@ -602,7 +602,7 @@ export default {
       if (
         (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
         || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-        || (app.theme === 'desktop' && !app.params.navbar.desktopCenterTitle)
+        || (app.theme === 'aurora' && !app.params.navbar.auroraCenterTitle)
       ) {
         return;
       }
@@ -615,7 +615,7 @@ export default {
       if (
         (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
         || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-        || (app.theme === 'desktop' && !app.params.navbar.desktopCenterTitle)
+        || (app.theme === 'aurora' && !app.params.navbar.auroraCenterTitle)
       ) {
         return;
       }
@@ -628,7 +628,7 @@ export default {
       if (
         (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
         || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-        || (app.theme === 'desktop' && !app.params.navbar.desktopCenterTitle)
+        || (app.theme === 'aurora' && !app.params.navbar.auroraCenterTitle)
       ) {
         return;
       }
@@ -679,7 +679,7 @@ export default {
         if (
           (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
           || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-          || (app.theme === 'desktop' && !app.params.navbar.desktopCenterTitle)
+          || (app.theme === 'aurora' && !app.params.navbar.auroraCenterTitle)
         ) {
           return;
         }
