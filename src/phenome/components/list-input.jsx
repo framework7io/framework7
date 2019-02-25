@@ -379,7 +379,7 @@ export default {
       if (!inputEl) return;
 
       inputEl.addEventListener('input:notempty', self.onInputNotEmpty, false);
-      inputEl.addEventListener('textarea:resze', self.onTextareaResize, false);
+      inputEl.addEventListener('textarea:resize', self.onTextareaResize, false);
       inputEl.addEventListener('input:empty', self.onInputEmpty, false);
       inputEl.addEventListener('input:clear', self.onInputClear, false);
 
@@ -436,7 +436,7 @@ export default {
     if (!inputEl) return;
 
     inputEl.removeEventListener('input:notempty', self.onInputNotEmpty, false);
-    inputEl.removeEventListener('textarea:resze', self.onTextareaResize, false);
+    inputEl.removeEventListener('textarea:resize', self.onTextareaResize, false);
     inputEl.removeEventListener('input:empty', self.onInputEmpty, false);
     inputEl.removeEventListener('input:clear', self.onInputClear, false);
   },
