@@ -336,7 +336,7 @@ export default {
 
       inputEl.addEventListener('input:notempty', self.onInputNotEmpty, false);
       if (type === 'textarea' && resizable) {
-        inputEl.addEventListener('textarea:resze', self.onTextareaResize, false);
+        inputEl.addEventListener('textarea:resize', self.onTextareaResize, false);
       }
       if (clearButton) {
         inputEl.addEventListener('input:empty', self.onInputEmpty, false);
@@ -390,7 +390,7 @@ export default {
 
     inputEl.removeEventListener('input:notempty', self.onInputNotEmpty, false);
     if (type === 'textarea' && resizable) {
-      inputEl.removeEventListener('textarea:resze', self.onTextareaResize, false);
+      inputEl.removeEventListener('textarea:resize', self.onTextareaResize, false);
     }
     if (clearButton) {
       inputEl.removeEventListener('input:empty', self.onInputEmpty, false);
