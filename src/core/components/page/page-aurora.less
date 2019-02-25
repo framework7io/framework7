@@ -28,33 +28,33 @@
   .router-transition-forward {
     .page-next {
       will-change: transform;
-      animation: desktop-page-next-to-current var(--f7-page-transition-duration) forwards;
+      animation: aurora-page-next-to-current var(--f7-page-transition-duration) forwards;
     }
     .page-current {
       animation: none;
       &:after {
         // Fake opacity
         .page-fake-opacity();
-        animation: desktop-page-element-fade-in var(--f7-page-transition-duration) forwards;
+        animation: aurora-page-element-fade-in var(--f7-page-transition-duration) forwards;
       }
     }
   }
   .router-transition-backward {
     .page-current {
       will-change: transform, opacity;
-      animation: desktop-page-current-to-next var(--f7-page-transition-duration) forwards;
+      animation: aurora-page-current-to-next var(--f7-page-transition-duration) forwards;
     }
     .page-previous {
       animation: none;
       &:after {
         // Fake opacity
         .page-fake-opacity();
-        animation: desktop-page-element-fade-out var(--f7-page-transition-duration) forwards;
+        animation: aurora-page-element-fade-out var(--f7-page-transition-duration) forwards;
       }
     }
   }
 }
-@keyframes desktop-page-next-to-current {
+@keyframes aurora-page-next-to-current {
   from {
     .ltr({
       transform: translate3d(100%, 0, 0);
@@ -67,7 +67,7 @@
     transform: translate3d(0, 0px, 0);
   }
 }
-@keyframes desktop-page-current-to-next {
+@keyframes aurora-page-current-to-next {
   from {
     transform: translate3d(0,0,0);
   }
@@ -80,7 +80,7 @@
     });
   }
 }
-@keyframes desktop-page-element-fade-in {
+@keyframes aurora-page-element-fade-in {
   from {
     opacity: 0;
   }
@@ -88,7 +88,7 @@
     opacity: 1;
   }
 }
-@keyframes desktop-page-element-fade-out {
+@keyframes aurora-page-element-fade-out {
   from {
     opacity: 1;
   }
