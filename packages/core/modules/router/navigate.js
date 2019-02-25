@@ -553,6 +553,13 @@ function load(loadParams = {}, loadOptions = {}, ignorePageChange) {
       }
       return false;
     }
+    if (!sameParams
+      && options.route.route.tab
+      && router.currentRoute.route.tab
+      && router.currentRoute.parentPath === options.route.parentPath
+    ) {
+      return router.tabLoad(options.route.route.tab, options);
+    }
   }
 
   if (

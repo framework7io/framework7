@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.1
+ * Framework7 4.0.6
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 8, 2019
+ * Released on: February 25, 2019
  */
 
 (function (global, factory) {
@@ -739,17 +739,17 @@
   } : window; // eslint-disable-line
 
   /**
-   * Dom7 2.1.2
+   * Dom7 2.1.3
    * Minimalistic JavaScript library for DOM manipulation, with a jQuery-compatible API
    * http://framework7.io/docs/dom.html
    *
-   * Copyright 2018, Vladimir Kharlampidi
+   * Copyright 2019, Vladimir Kharlampidi
    * The iDangero.us
    * http://www.idangero.us/
    *
    * Licensed under MIT
    *
-   * Released on: September 13, 2018
+   * Released on: February 11, 2019
    */
 
   var Dom7 = function Dom7(arr) {
@@ -1143,6 +1143,9 @@
             if (listener && handler.listener === listener) {
               el.removeEventListener(event, handler.proxyListener, capture);
               handlers.splice(k, 1);
+            } else if (listener && handler.listener && handler.listener.dom7proxy && handler.listener.dom7proxy === listener) {
+              el.removeEventListener(event, handler.proxyListener, capture);
+              handlers.splice(k, 1);
             } else if (!listener) {
               el.removeEventListener(event, handler.proxyListener, capture);
               handlers.splice(k, 1);
@@ -1167,14 +1170,18 @@
       (assign = args, eventName = assign[0], listener = assign[1], capture = assign[2]);
       targetSelector = undefined;
     }
-    function proxy() {
+    function onceHandler() {
       var eventArgs = [], len = arguments.length;
       while ( len-- ) eventArgs[ len ] = arguments[ len ];
 
       listener.apply(this, eventArgs);
-      dom.off(eventName, targetSelector, proxy, capture);
+      dom.off(eventName, targetSelector, onceHandler, capture);
+      if (onceHandler.dom7proxy) {
+        delete onceHandler.dom7proxy;
+      }
     }
-    return dom.on(eventName, targetSelector, proxy, capture);
+    onceHandler.dom7proxy = listener;
+    return dom.on(eventName, targetSelector, onceHandler, capture);
   }
   function trigger() {
     var args = [], len = arguments.length;
@@ -1519,7 +1526,7 @@
 
     return this;
   }
-   // eslint-disable-next-line
+  // eslint-disable-next-line
   function appendTo(parent) {
     $(parent).append(this);
     return this;
@@ -1544,7 +1551,7 @@
     }
     return this;
   }
-   // eslint-disable-next-line
+  // eslint-disable-next-line
   function prependTo(parent) {
     $(parent).prepend(this);
     return this;
@@ -2534,7 +2541,7 @@
       return mask.replace(/x/g, function () { return map[Math.floor((Math.random() * length))]; });
     },
     mdPreloaderContent: "\n    <span class=\"preloader-inner\">\n      <span class=\"preloader-inner-gap\"></span>\n      <span class=\"preloader-inner-left\">\n          <span class=\"preloader-inner-half-circle\"></span>\n      </span>\n      <span class=\"preloader-inner-right\">\n          <span class=\"preloader-inner-half-circle\"></span>\n      </span>\n    </span>\n  ".trim(),
-    iosPreloaderContent: ("\n    <span class=\"preloader-inner\">\n      " + (Array.from({ length: 12 }).map(function () { return '<span class="preloader-inner-line"></span>'; }).join('')) + "\n    </span>\n  ").trim(),
+    iosPreloaderContent: ("\n    <span class=\"preloader-inner\">\n      " + ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(function () { return '<span class="preloader-inner-line"></span>'; }).join('')) + "\n    </span>\n  ").trim(),
     eventNameToColonCase: function eventNameToColonCase(eventName) {
       var hasColon;
       return eventName.split('').map(function (char, index) {
@@ -2998,7 +3005,11 @@
 
       handler.apply(self, args);
       self.off(events, onceHandler);
+      if (onceHandler.f7proxy) {
+        delete onceHandler.f7proxy;
+      }
     }
+    onceHandler.f7proxy = handler;
     return self.on(events, onceHandler, priority);
   };
 
@@ -3010,7 +3021,7 @@
         self.eventsListeners[event] = [];
       } else if (self.eventsListeners[event]) {
         self.eventsListeners[event].forEach(function (eventHandler, index) {
-          if (eventHandler === handler) {
+          if (eventHandler === handler || (eventHandler.f7proxy && eventHandler.f7proxy === handler)) {
             self.eventsListeners[event].splice(index, 1);
           }
         });
@@ -3712,7 +3723,7 @@
         return !!((win.navigator.maxTouchPoints > 0) || ('ontouchstart' in win) || (win.DocumentTouch && doc instanceof win.DocumentTouch));
       }()),
 
-      pointerEvents: !!(win.navigator.pointerEnabled || win.PointerEvent || ('maxTouchPoints' in win.navigator)),
+      pointerEvents: !!(win.navigator.pointerEnabled || win.PointerEvent || ('maxTouchPoints' in win.navigator && win.navigator.maxTouchPoints > 0)),
       prefixedPointerEvents: !!win.navigator.msPointerEnabled,
 
       transition: (function checkTransition() {
@@ -6760,6 +6771,13 @@
           return router.tabLoad(options.route.route.tab, options);
         }
         return false;
+      }
+      if (!sameParams
+        && options.route.route.tab
+        && router.currentRoute.route.tab
+        && router.currentRoute.parentPath === options.route.parentPath
+      ) {
+        return router.tabLoad(options.route.route.tab, options);
       }
     }
 
@@ -11903,7 +11921,9 @@
           return;
         }
       }
+      var $pageEl = $(app.navbar.getPageByEl($navbarInnerEl));
       $navbarInnerEl.addClass('navbar-inner-large-collapsed');
+      $pageEl.eq(0).addClass('page-with-navbar-large-collapsed').trigger('page:navbarlargecollapsed');
       if (app.theme === 'md') {
         $navbarInnerEl.parents('.navbar').addClass('navbar-large-collapsed');
       }
@@ -11920,7 +11940,9 @@
           return;
         }
       }
+      var $pageEl = $(app.navbar.getPageByEl($navbarInnerEl));
       $navbarInnerEl.removeClass('navbar-inner-large-collapsed');
+      $pageEl.eq(0).removeClass('page-with-navbar-large-collapsed').trigger('page:navbarlargeexpanded');
       if (app.theme === 'md') {
         $navbarInnerEl.parents('.navbar').removeClass('navbar-large-collapsed');
       }
@@ -12006,6 +12028,7 @@
         if (collapseProgress === 0 && navbarCollapsed) {
           app.navbar.expandLargeTitle($navbarInnerEl[0]);
           $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
+          $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           $navbarInnerEl[0].style.overflow = '';
           if (app.theme === 'md') {
             $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
@@ -12014,18 +12037,21 @@
           app.navbar.collapseLargeTitle($navbarInnerEl[0]);
           $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           $navbarInnerEl[0].style.overflow = '';
+          $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           if (app.theme === 'md') {
             $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           }
         } else if ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed)) {
           $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           $navbarInnerEl[0].style.overflow = '';
+          $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           if (app.theme === 'md') {
             $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           }
         } else {
           $navbarInnerEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
           $navbarInnerEl[0].style.overflow = 'visible';
+          $pageEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
           if (app.theme === 'md') {
             $navbarEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
           }
@@ -18222,6 +18248,27 @@
         },
       });
     },
+    on: {
+      pageBeforeIn: function pageBeforeIn(page) {
+        var app = this;
+        if (app.params.card.hideNavbarOnOpen && page.navbarEl && page.$el.find('.card-opened.card-expandable').length) {
+          app.navbar.hide(page.navbarEl);
+        }
+
+        if (app.params.card.hideToolbarOnOpen && page.$el.find('.card-opened.card-expandable').length) {
+          var $toolbarEl = page.$el.children('.toolbar');
+          if (!$toolbarEl.length) {
+            $toolbarEl = page.$el.parents('.view').children('.toolbar');
+          }
+          if (!$toolbarEl.length) {
+            $toolbarEl = page.$el.parents('.views').children('.toolbar');
+          }
+          if ($toolbarEl && $toolbarEl.length) {
+            app.toolbar.hide($toolbarEl);
+          }
+        }
+      },
+    },
     clicks: {
       '.card-close': function closeCard($clickedEl, data) {
         var app = this;
@@ -18231,9 +18278,10 @@
         var app = this;
         app.card.open(data.card);
       },
-      '.card-expandable': function toggleExpandableCard($clickedEl) {
+      '.card-expandable': function toggleExpandableCard($clickedEl, data, e) {
         var app = this;
         if ($clickedEl.hasClass('card-opened') || $clickedEl.hasClass('card-opening') || $clickedEl.hasClass('card-closing')) { return; }
+        if ($(e.target).closest('.card-prevent-open').length) { return; }
         app.card.open($clickedEl);
       },
       '.card-backdrop-in': function onBackdropClick() {
@@ -21373,10 +21421,12 @@
 
   var IDate = /*@__PURE__*/(function (Date) {
     function IDate () {
+      var args = [], len = arguments.length;
+      while ( len-- ) args[ len ] = arguments[ len ];
+
       Date.call(this);
 
       var date;
-      var args = Array.from(arguments);
       if (args.length === 0) {
         date = Date.now();
       } else if (args.length === 1) {
@@ -24015,7 +24065,7 @@
         if ($el.hasClass('ptr-refreshing')) {
           return;
         }
-        if ($(e.target).closest('.sortable-handler').length) { return; }
+        if ($(e.target).closest('.sortable-handler, .ptr-ignore, .card-expandable.card-opened').length) { return; }
 
         isMoved = false;
         pullStarted = false;
@@ -25052,18 +25102,15 @@
       $el[0].f7Searchbar = sb;
 
       var $pageEl;
-      var $navbarEl;
+      var $navbarEl = $el.parents('.navbar-inner');
       if ($el.parents('.page').length > 0) {
         $pageEl = $el.parents('.page');
-      } else {
-        $navbarEl = $el.parents('.navbar-inner');
-        if ($navbarEl.length > 0) {
-          $pageEl = $(app.navbar.getPageByEl($navbarEl[0]));
-          if (!$pageEl.length) {
-            var $currentPageEl = $el.parents('.view').find('.page-current');
-            if ($currentPageEl[0] && $currentPageEl[0].f7Page && $currentPageEl[0].f7Page.navbarEl === $navbarEl[0]) {
-              $pageEl = $currentPageEl;
-            }
+      } else if ($navbarEl.length > 0) {
+        $pageEl = $(app.navbar.getPageByEl($navbarEl[0]));
+        if (!$pageEl.length) {
+          var $currentPageEl = $el.parents('.view').find('.page-current');
+          if ($currentPageEl[0] && $currentPageEl[0].f7Page && $currentPageEl[0].f7Page.navbarEl === $navbarEl[0]) {
+            $pageEl = $currentPageEl;
           }
         }
       }
@@ -25230,7 +25277,7 @@
         if (sb.params.disableOnBackdropClick && sb.$backdropEl) {
           sb.$backdropEl.on('click', disableOnClick);
         }
-        if (sb.expandable && app.theme === 'ios' && sb.view && $navbarEl && sb.$pageEl) {
+        if (sb.expandable && app.theme === 'ios' && sb.view && $navbarEl.length && sb.$pageEl) {
           sb.$pageEl.on('page:beforeout', onPageBeforeOut);
           sb.$pageEl.on('page:beforein', onPageBeforeIn);
         }
@@ -25247,7 +25294,7 @@
         if (sb.params.disableOnBackdropClick && sb.$backdropEl) {
           sb.$backdropEl.off('click', disableOnClick);
         }
-        if (sb.expandable && app.theme === 'ios' && sb.view && $navbarEl && sb.$pageEl) {
+        if (sb.expandable && app.theme === 'ios' && sb.view && $navbarEl.length && sb.$pageEl) {
           sb.$pageEl.off('page:beforeout', onPageBeforeOut);
           sb.$pageEl.off('page:beforein', onPageBeforeIn);
         }
@@ -26678,6 +26725,18 @@
       },
     },
   };
+
+  var Browser = (function Browser() {
+    function isSafari() {
+      var ua = win.navigator.userAgent.toLowerCase();
+      return (ua.indexOf('safari') >= 0 && ua.indexOf('chrome') < 0 && ua.indexOf('android') < 0);
+    }
+    return {
+      isIE: !!win.navigator.userAgent.match(/Trident/g) || !!win.navigator.userAgent.match(/MSIE/g),
+      isSafari: isSafari(),
+      isUiWebView: /(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/i.test(win.navigator.userAgent),
+    };
+  }());
 
   function updateSize () {
     var swiper = this;
@@ -28725,7 +28784,12 @@
       }
 
       var breakpointParams = breakpointOnlyParams || swiper.originalParams;
-      var needsReLoop = params.loop && (breakpointParams.slidesPerView !== params.slidesPerView);
+      var directionChanged = breakpointParams.direction && breakpointParams.direction !== params.direction;
+      var needsReLoop = params.loop && (breakpointParams.slidesPerView !== params.slidesPerView || directionChanged);
+
+      if (directionChanged && initialized) {
+        swiper.changeDirection();
+      }
 
       Utils.extend(swiper.params, breakpointParams);
 
@@ -28743,6 +28807,7 @@
         swiper.updateSlides();
         swiper.slideTo((activeIndex - loopedSlides) + swiper.loopedSlides, 0, false);
       }
+
       swiper.emit('breakpoint', breakpointParams);
     }
   }
@@ -28772,18 +28837,6 @@
 
   var breakpoints = { setBreakpoint: setBreakpoint, getBreakpoint: getBreakpoint };
 
-  var Browser = (function Browser() {
-    function isSafari() {
-      var ua = win.navigator.userAgent.toLowerCase();
-      return (ua.indexOf('safari') >= 0 && ua.indexOf('chrome') < 0 && ua.indexOf('android') < 0);
-    }
-    return {
-      isIE: !!win.navigator.userAgent.match(/Trident/g) || !!win.navigator.userAgent.match(/MSIE/g),
-      isSafari: isSafari(),
-      isUiWebView: /(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/i.test(win.navigator.userAgent),
-    };
-  }());
-
   function addClasses () {
     var swiper = this;
     var classNames = swiper.classNames;
@@ -28792,6 +28845,7 @@
     var $el = swiper.$el;
     var suffixes = [];
 
+    suffixes.push('initialized');
     suffixes.push(params.direction);
 
     if (params.freeMode) {
@@ -29043,6 +29097,8 @@
     // Callbacks
     runCallbacksOnInit: true,
   };
+
+  /* eslint no-param-reassign: "off" */
 
   var prototypes = {
     update: update,
@@ -29352,6 +29408,54 @@
         swiper.checkOverflow();
       }
       swiper.emit('update');
+    };
+
+    Swiper.prototype.changeDirection = function changeDirection (newDirection, needUpdate) {
+      if ( needUpdate === void 0 ) needUpdate = true;
+
+      var swiper = this;
+      var currentDirection = swiper.params.direction;
+      if (!newDirection) {
+        // eslint-disable-next-line
+        newDirection = currentDirection === 'horizontal' ? 'vertical' : 'horizontal';
+      }
+      if ((newDirection === currentDirection) || (newDirection !== 'horizontal' && newDirection !== 'vertical')) {
+        return swiper;
+      }
+
+      if (currentDirection === 'vertical') {
+        swiper.$el
+          .removeClass(((swiper.params.containerModifierClass) + "vertical wp8-vertical"))
+          .addClass(("" + (swiper.params.containerModifierClass) + newDirection));
+
+        if ((Browser.isIE || Browser.isEdge) && (Support.pointerEvents || Support.prefixedPointerEvents)) {
+          swiper.$el.addClass(((swiper.params.containerModifierClass) + "wp8-" + newDirection));
+        }
+      }
+      if (currentDirection === 'horizontal') {
+        swiper.$el
+          .removeClass(((swiper.params.containerModifierClass) + "horizontal wp8-horizontal"))
+          .addClass(("" + (swiper.params.containerModifierClass) + newDirection));
+
+        if ((Browser.isIE || Browser.isEdge) && (Support.pointerEvents || Support.prefixedPointerEvents)) {
+          swiper.$el.addClass(((swiper.params.containerModifierClass) + "wp8-" + newDirection));
+        }
+      }
+
+      swiper.params.direction = newDirection;
+
+      swiper.slides.each(function (slideIndex, slideEl) {
+        if (newDirection === 'vertical') {
+          slideEl.style.width = '';
+        } else {
+          slideEl.style.height = '';
+        }
+      });
+
+      swiper.emit('changeDirection');
+      if (needUpdate) { swiper.update(); }
+
+      return swiper;
     };
 
     Swiper.prototype.init = function init () {
@@ -29770,24 +29874,75 @@
       if (params.cache) { swiper.virtual.cache[index] = $slideEl; }
       return $slideEl;
     },
-    appendSlide: function appendSlide(slide) {
+    appendSlide: function appendSlide(slides) {
       var swiper = this;
-      swiper.virtual.slides.push(slide);
+      if (typeof slides === 'object' && 'length' in slides) {
+        for (var i = 0; i < slides.length; i += 1) {
+          if (slides[i]) { swiper.virtual.slides.push(slides[i]); }
+        }
+      } else {
+        swiper.virtual.slides.push(slides);
+      }
       swiper.virtual.update(true);
     },
-    prependSlide: function prependSlide(slide) {
+    prependSlide: function prependSlide(slides) {
       var swiper = this;
-      swiper.virtual.slides.unshift(slide);
+      var activeIndex = swiper.activeIndex;
+      var newActiveIndex = activeIndex + 1;
+      var numberOfNewSlides = 1;
+
+      if (Array.isArray(slides)) {
+        for (var i = 0; i < slides.length; i += 1) {
+          if (slides[i]) { swiper.virtual.slides.unshift(slides[i]); }
+        }
+        newActiveIndex = activeIndex + slides.length;
+        numberOfNewSlides = slides.length;
+      } else {
+        swiper.virtual.slides.unshift(slides);
+      }
       if (swiper.params.virtual.cache) {
         var cache = swiper.virtual.cache;
         var newCache = {};
         Object.keys(cache).forEach(function (cachedIndex) {
-          newCache[cachedIndex + 1] = cache[cachedIndex];
+          newCache[parseInt(cachedIndex, 10) + numberOfNewSlides] = cache[cachedIndex];
         });
         swiper.virtual.cache = newCache;
       }
       swiper.virtual.update(true);
-      swiper.slideNext(0);
+      swiper.slideTo(newActiveIndex, 0);
+    },
+    removeSlide: function removeSlide(slidesIndexes) {
+      var swiper = this;
+      if (typeof slidesIndexes === 'undefined' || slidesIndexes === null) { return; }
+      var activeIndex = swiper.activeIndex;
+      if (Array.isArray(slidesIndexes)) {
+        for (var i = slidesIndexes.length - 1; i >= 0; i -= 1) {
+          swiper.virtual.slides.splice(slidesIndexes[i], 1);
+          if (swiper.params.virtual.cache) {
+            delete swiper.virtual.cache[slidesIndexes[i]];
+          }
+          if (slidesIndexes[i] < activeIndex) { activeIndex -= 1; }
+          activeIndex = Math.max(activeIndex, 0);
+        }
+      } else {
+        swiper.virtual.slides.splice(slidesIndexes, 1);
+        if (swiper.params.virtual.cache) {
+          delete swiper.virtual.cache[slidesIndexes];
+        }
+        if (slidesIndexes < activeIndex) { activeIndex -= 1; }
+        activeIndex = Math.max(activeIndex, 0);
+      }
+      swiper.virtual.update(true);
+      swiper.slideTo(activeIndex, 0);
+    },
+    removeAllSlides: function removeAllSlides() {
+      var swiper = this;
+      swiper.virtual.slides = [];
+      if (swiper.params.virtual.cache) {
+        swiper.virtual.cache = {};
+      }
+      swiper.virtual.update(true);
+      swiper.slideTo(0, 0);
     },
   };
 
@@ -29811,6 +29966,8 @@
           update: Virtual.update.bind(swiper),
           appendSlide: Virtual.appendSlide.bind(swiper),
           prependSlide: Virtual.prependSlide.bind(swiper),
+          removeSlide: Virtual.removeSlide.bind(swiper),
+          removeAllSlides: Virtual.removeAllSlides.bind(swiper),
           renderSlide: Virtual.renderSlide.bind(swiper),
           slides: swiper.params.virtual.slides,
           cache: {},
@@ -29993,8 +30150,23 @@
           && !$(e.target).is($prevEl)
           && !$(e.target).is($nextEl)
         ) {
-          if ($nextEl) { $nextEl.toggleClass(swiper.params.navigation.hiddenClass); }
-          if ($prevEl) { $prevEl.toggleClass(swiper.params.navigation.hiddenClass); }
+          var isHidden;
+          if ($nextEl) {
+            isHidden = $nextEl.hasClass(swiper.params.navigation.hiddenClass);
+          } else if ($prevEl) {
+            isHidden = $prevEl.hasClass(swiper.params.navigation.hiddenClass);
+          }
+          if (isHidden === true) {
+            swiper.emit('navigationShow', swiper);
+          } else {
+            swiper.emit('navigationHide', swiper);
+          }
+          if ($nextEl) {
+            $nextEl.toggleClass(swiper.params.navigation.hiddenClass);
+          }
+          if ($prevEl) {
+            $prevEl.toggleClass(swiper.params.navigation.hiddenClass);
+          }
         }
       },
     },
@@ -30325,6 +30497,12 @@
           && swiper.pagination.$el.length > 0
           && !$(e.target).hasClass(swiper.params.pagination.bulletClass)
         ) {
+          var isHidden = swiper.pagination.$el.hasClass(swiper.params.pagination.hiddenClass);
+          if (isHidden === true) {
+            swiper.emit('paginationShow', swiper);
+          } else {
+            swiper.emit('paginationHide', swiper);
+          }
           swiper.pagination.$el.toggleClass(swiper.params.pagination.hiddenClass);
         }
       },
@@ -30421,7 +30599,7 @@
       } else {
         $el[0].style.display = '';
       }
-      if (swiper.params.scrollbarHide) {
+      if (swiper.params.scrollbar.hide) {
         $el[0].style.opacity = 0;
       }
       Utils.extend(scrollbar, {
@@ -30775,17 +30953,17 @@
       },
       init: function init() {
         var swiper = this;
-        if (!swiper.params.parallax) { return; }
+        if (!swiper.params.parallax.enabled) { return; }
         swiper.parallax.setTranslate();
       },
       setTranslate: function setTranslate() {
         var swiper = this;
-        if (!swiper.params.parallax) { return; }
+        if (!swiper.params.parallax.enabled) { return; }
         swiper.parallax.setTranslate();
       },
       setTransition: function setTransition(duration) {
         var swiper = this;
-        if (!swiper.params.parallax) { return; }
+        if (!swiper.params.parallax.enabled) { return; }
         swiper.parallax.setTransition(duration);
       },
     },

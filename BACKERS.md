@@ -73,6 +73,7 @@ Bart DJ
 ---
 
 ### $10+ Supporter
+Matthew Proctor<br>
 Andy Fuchs<br>
 Noah A Neibaron<br>
 José Manuel Alarcón<br>
@@ -102,6 +103,8 @@ Dave Billington
 ---
 
 ### $5+ Thank You
+Muthaiyan Rm<br>
+xPlants.it SRL<br>
 Mamadou Ndiaye<br>
 Sören Wrede<br>
 LitoMore<br>

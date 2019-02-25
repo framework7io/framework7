@@ -37,7 +37,12 @@
   --f7-dialog-width: 280px;
   --f7-dialog-border-radius: 4px;
   --f7-dialog-text-color: #757575;
-  --f7-dialog-text-align: left;
+  .ltr({
+    --f7-dialog-text-align: left;
+  });
+  .rtl({
+    --f7-dialog-text-align: right;
+  });
   --f7-dialog-font-size: 16px;
   --f7-dialog-title-text-color: #212121;
   --f7-dialog-title-font-size: 20px;

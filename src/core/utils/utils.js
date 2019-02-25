@@ -124,7 +124,7 @@ const Utils = {
   `.trim(),
   iosPreloaderContent: `
     <span class="preloader-inner">
-      ${Array.from({ length: 12 }).map(() => '<span class="preloader-inner-line"></span>').join('')}
+      ${[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(() => '<span class="preloader-inner-line"></span>').join('')}
     </span>
   `.trim(),
   eventNameToColonCase(eventName) {

@@ -67,6 +67,8 @@ declare class F7Page extends React.Component<F7Page.Props, {}> {
   onPageRole(event? : any) : unknown
   onPageMasterStack() : unknown
   onPageMasterUnstack() : unknown
+  onPageNavbarLargeCollapsed() : unknown
+  onPageNavbarLargeExpanded() : unknown
   onPageInit(event? : any) : unknown
   onPageReinit(event? : any) : unknown
   onPageBeforeIn(event? : any) : unknown

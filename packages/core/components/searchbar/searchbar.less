@@ -8,7 +8,6 @@
   height: var(--f7-searchbar-height);
   background-image: var(--f7-searchbar-bg-image, var(--f7-bars-bg-image));
   background-color: var(--f7-searchbar-bg-color, var(--f7-bars-bg-color, var(--f7-theme-color)));
-  --f7-touch-ripple-color: var(--f7-touch-ripple-black);
   &.no-hairline, &.no-border {
     &:after {
       display: none !important;
@@ -185,6 +184,14 @@
   top: var(--f7-navbar-height);
 }
 
+.navbar ~ .page-with-navbar-large:not(.no-navbar) .searchbar,
+.page-with-navbar-large .navbar ~ .searchbar,
+.page-with-navbar-large .navbar ~ * .searchbar {
+  top: calc(var(--f7-navbar-height) + var(--f7-navbar-large-title-height));
+  transform: translate3d(0, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)
+}
+
+
 .page > .searchbar ~ * .page-content,
 .page > .searchbar ~ .page-content {
   padding-top: var(--f7-searchbar-height);
@@ -195,6 +202,14 @@
 .navbar ~ .page:not(.no-navbar) > .searchbar ~ * .page-content {
   padding-top: calc(var(--f7-navbar-height) + var(--f7-searchbar-height));
 }
+
+.page-with-navbar-large > .navbar ~ .searchbar ~ * .page-content,
+.page-with-navbar-large > .navbar ~ .searchbar ~ .page-content,
+.navbar ~ .page-with-navbar-large:not(.no-navbar) > .searchbar ~ .page-content,
+.navbar ~ .page-with-navbar-large:not(.no-navbar) > .searchbar ~ * .page-content {
+  padding-top: calc(var(--f7-navbar-height) + var(--f7-subnavbar-height) + var(--f7-navbar-large-title-height));
+}
+
 // Toolbar
 .page > .toolbar-top,
 .ios .page > .toolbar-top-ios,

@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.1
+ * Framework7 4.0.6
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 8, 2019
+ * Released on: February 25, 2019
  */
 
 (function (global, factory) {
@@ -739,17 +739,17 @@
   } : window; // eslint-disable-line
 
   /**
-   * Dom7 2.1.2
+   * Dom7 2.1.3
    * Minimalistic JavaScript library for DOM manipulation, with a jQuery-compatible API
    * http://framework7.io/docs/dom.html
    *
-   * Copyright 2018, Vladimir Kharlampidi
+   * Copyright 2019, Vladimir Kharlampidi
    * The iDangero.us
    * http://www.idangero.us/
    *
    * Licensed under MIT
    *
-   * Released on: September 13, 2018
+   * Released on: February 11, 2019
    */
 
   var Dom7 = function Dom7(arr) {
@@ -1143,6 +1143,9 @@
             if (listener && handler.listener === listener) {
               el.removeEventListener(event, handler.proxyListener, capture);
               handlers.splice(k, 1);
+            } else if (listener && handler.listener && handler.listener.dom7proxy && handler.listener.dom7proxy === listener) {
+              el.removeEventListener(event, handler.proxyListener, capture);
+              handlers.splice(k, 1);
             } else if (!listener) {
               el.removeEventListener(event, handler.proxyListener, capture);
               handlers.splice(k, 1);
@@ -1167,14 +1170,18 @@
       (assign = args, eventName = assign[0], listener = assign[1], capture = assign[2]);
       targetSelector = undefined;
     }
-    function proxy() {
+    function onceHandler() {
       var eventArgs = [], len = arguments.length;
       while ( len-- ) eventArgs[ len ] = arguments[ len ];
 
       listener.apply(this, eventArgs);
-      dom.off(eventName, targetSelector, proxy, capture);
+      dom.off(eventName, targetSelector, onceHandler, capture);
+      if (onceHandler.dom7proxy) {
+        delete onceHandler.dom7proxy;
+      }
     }
-    return dom.on(eventName, targetSelector, proxy, capture);
+    onceHandler.dom7proxy = listener;
+    return dom.on(eventName, targetSelector, onceHandler, capture);
   }
   function trigger() {
     var args = [], len = arguments.length;
@@ -1519,7 +1526,7 @@
 
     return this;
   }
-   // eslint-disable-next-line
+  // eslint-disable-next-line
   function appendTo(parent) {
     $(parent).append(this);
     return this;
@@ -1544,7 +1551,7 @@
     }
     return this;
   }
-   // eslint-disable-next-line
+  // eslint-disable-next-line
   function prependTo(parent) {
     $(parent).prepend(this);
     return this;
@@ -2534,7 +2541,7 @@
       return mask.replace(/x/g, function () { return map[Math.floor((Math.random() * length))]; });
     },
     mdPreloaderContent: "\n    <span class=\"preloader-inner\">\n      <span class=\"preloader-inner-gap\"></span>\n      <span class=\"preloader-inner-left\">\n          <span class=\"preloader-inner-half-circle\"></span>\n      </span>\n      <span class=\"preloader-inner-right\">\n          <span class=\"preloader-inner-half-circle\"></span>\n      </span>\n    </span>\n  ".trim(),
-    iosPreloaderContent: ("\n    <span class=\"preloader-inner\">\n      " + (Array.from({ length: 12 }).map(function () { return '<span class="preloader-inner-line"></span>'; }).join('')) + "\n    </span>\n  ").trim(),
+    iosPreloaderContent: ("\n    <span class=\"preloader-inner\">\n      " + ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(function () { return '<span class="preloader-inner-line"></span>'; }).join('')) + "\n    </span>\n  ").trim(),
     eventNameToColonCase: function eventNameToColonCase(eventName) {
       var hasColon;
       return eventName.split('').map(function (char, index) {
@@ -2998,7 +3005,11 @@
 
       handler.apply(self, args);
       self.off(events, onceHandler);
+      if (onceHandler.f7proxy) {
+        delete onceHandler.f7proxy;
+      }
     }
+    onceHandler.f7proxy = handler;
     return self.on(events, onceHandler, priority);
   };
 
@@ -3010,7 +3021,7 @@
         self.eventsListeners[event] = [];
       } else if (self.eventsListeners[event]) {
         self.eventsListeners[event].forEach(function (eventHandler, index) {
-          if (eventHandler === handler) {
+          if (eventHandler === handler || (eventHandler.f7proxy && eventHandler.f7proxy === handler)) {
             self.eventsListeners[event].splice(index, 1);
           }
         });
@@ -3712,7 +3723,7 @@
         return !!((win.navigator.maxTouchPoints > 0) || ('ontouchstart' in win) || (win.DocumentTouch && doc instanceof win.DocumentTouch));
       }()),
 
-      pointerEvents: !!(win.navigator.pointerEnabled || win.PointerEvent || ('maxTouchPoints' in win.navigator)),
+      pointerEvents: !!(win.navigator.pointerEnabled || win.PointerEvent || ('maxTouchPoints' in win.navigator && win.navigator.maxTouchPoints > 0)),
       prefixedPointerEvents: !!win.navigator.msPointerEnabled,
 
       transition: (function checkTransition() {
@@ -6760,6 +6771,13 @@
           return router.tabLoad(options.route.route.tab, options);
         }
         return false;
+      }
+      if (!sameParams
+        && options.route.route.tab
+        && router.currentRoute.route.tab
+        && router.currentRoute.parentPath === options.route.parentPath
+      ) {
+        return router.tabLoad(options.route.route.tab, options);
       }
     }
 
@@ -11903,7 +11921,9 @@
           return;
         }
       }
+      var $pageEl = $(app.navbar.getPageByEl($navbarInnerEl));
       $navbarInnerEl.addClass('navbar-inner-large-collapsed');
+      $pageEl.eq(0).addClass('page-with-navbar-large-collapsed').trigger('page:navbarlargecollapsed');
       if (app.theme === 'md') {
         $navbarInnerEl.parents('.navbar').addClass('navbar-large-collapsed');
       }
@@ -11920,7 +11940,9 @@
           return;
         }
       }
+      var $pageEl = $(app.navbar.getPageByEl($navbarInnerEl));
       $navbarInnerEl.removeClass('navbar-inner-large-collapsed');
+      $pageEl.eq(0).removeClass('page-with-navbar-large-collapsed').trigger('page:navbarlargeexpanded');
       if (app.theme === 'md') {
         $navbarInnerEl.parents('.navbar').removeClass('navbar-large-collapsed');
       }
@@ -12006,6 +12028,7 @@
         if (collapseProgress === 0 && navbarCollapsed) {
           app.navbar.expandLargeTitle($navbarInnerEl[0]);
           $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
+          $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           $navbarInnerEl[0].style.overflow = '';
           if (app.theme === 'md') {
             $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
@@ -12014,18 +12037,21 @@
           app.navbar.collapseLargeTitle($navbarInnerEl[0]);
           $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           $navbarInnerEl[0].style.overflow = '';
+          $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           if (app.theme === 'md') {
             $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           }
         } else if ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed)) {
           $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           $navbarInnerEl[0].style.overflow = '';
+          $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           if (app.theme === 'md') {
             $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           }
         } else {
           $navbarInnerEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
           $navbarInnerEl[0].style.overflow = 'visible';
+          $pageEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
           if (app.theme === 'md') {
             $navbarEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
           }
