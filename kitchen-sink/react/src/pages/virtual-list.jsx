@@ -42,7 +42,7 @@ export default class extends React.Component {
           className="searchbar-found"
           medialList
           virtualList
-          virtualListParams={{ items: this.state.items, searchAll: this.searchAll, renderExternal: this.renderExternal.bind(this), height: this.$theme.ios ? 63 : 73}}
+          virtualListParams={{ items: this.state.items, searchAll: this.searchAll, renderExternal: this.renderExternal.bind(this), height: this.$theme.ios ? 63 : (this.$theme.md ? 73 : 52)}}
         >
           <ul>
             {this.state.vlData.items.map((item, index) => (
