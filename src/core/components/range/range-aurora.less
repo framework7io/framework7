@@ -1,0 +1,23 @@
+.aurora {
+  .range-knob-label {
+    margin-bottom: 6px;
+    transform: translateX(-50%) translateY(100%) scale(0);
+    &:before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 1px;
+      position: absolute;
+      z-index: 0;
+      background: inherit;
+      left: 50%;
+      top: 100%;
+      transform: translateX(-50%) translateY(-50%) rotate(45deg);
+      margin-top: -1px;
+      z-index: -1;
+    }
+  }
+  .range-knob-active-state .range-knob-label {
+    transform: translateX(-50%) translateY(0%) scale(1);
+  }
+}
