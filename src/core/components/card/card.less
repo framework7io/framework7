@@ -33,7 +33,8 @@
 }
 .card-outline,
 .ios .card-outline-ios,
-.md .card-outline-md {
+.md .card-outline-md,
+.aurora .card-outline-aurora {
   box-shadow: none;
   border: 1px solid var(--f7-card-outline-border-color);
   &.no-border, &.no-hairlines {
@@ -313,4 +314,7 @@
 }
 & when (@includeMdTheme) {
   @import url('./card-md.less');
+}
+& when (@includeAuroraTheme) {
+  @import url('./card-aurora.less');
 }

@@ -1,0 +1,40 @@
+.aurora {
+  .progressbar,
+  .progressbar-infinite,
+  .progressbar span,
+  .progressbar-infinite:before {
+    box-shadow: 0px 0px 0px 1px rgba(0,0,0,0.05) inset;
+  }
+  .progressbar-infinite {
+    &:before {
+      animation: aurora-progressbar-infinite 1s linear infinite;
+    }
+    &:after {
+      display: none;
+    }
+    &.color-multi:before {
+      width: 400%;
+      background-image: linear-gradient(to right, #4cd964, #5ac8fa, #007aff, #34aadc, #5856d6, #ff2d55, #5856d6, #34aadc, #007aff, #5ac8fa, #4cd964);
+      background-size: 25% 100%;
+      background-repeat: repeat-x;
+      animation: aurora-progressbar-infinite-multicolor 3s linear infinite;
+    }
+  }
+}
+
+@keyframes aurora-progressbar-infinite {
+  0% {
+    transform: translate3d(-100%, 0, 0);
+  }
+  100% {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+@keyframes aurora-progressbar-infinite-multicolor {
+  0% {
+    transform: translate3d(0%, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}

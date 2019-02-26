@@ -20,6 +20,7 @@ export default {
     if (sizeComputed) {
       preloaderStyle.width = `${sizeComputed}px`;
       preloaderStyle.height = `${sizeComputed}px`;
+      preloaderStyle['--f7-preloader-size'] = `${sizeComputed}px`;
     }
     if (style) Utils.extend(preloaderStyle, style || {});
 
@@ -36,7 +37,7 @@ export default {
           </span>
         </span>
       );
-    } else {
+    } else if (self.$theme.ios) {
       innerEl = (
         <span className="preloader-inner">
           <span className="preloader-inner-line"></span>
@@ -51,6 +52,12 @@ export default {
           <span className="preloader-inner-line"></span>
           <span className="preloader-inner-line"></span>
           <span className="preloader-inner-line"></span>
+        </span>
+      );
+    } else if (self.$theme.aurora) {
+      innerEl = (
+        <span className="preloader-inner">
+          <span className="preloader-inner-circle"></span>
         </span>
       );
     }
