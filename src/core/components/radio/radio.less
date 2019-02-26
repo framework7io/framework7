@@ -17,7 +17,8 @@
   flex-shrink: 0;
 }
 .radio .icon-radio,
-.md .icon-radio {
+.md .icon-radio,
+.aurora .icon-radio {
   border: var(--f7-radio-border-width) solid var(--f7-radio-inactive-color);
 }
 label.item-radio, .radio {
@@ -46,4 +47,7 @@ label.item-radio {
 }
 & when (@includeMdTheme) {
   @import url('./radio-md.less');
+}
+& when (@includeAuroraTheme) {
+  @import url('./radio-aurora.less');
 }
