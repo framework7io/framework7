@@ -827,13 +827,13 @@
 <script>
   return {
     data: function() {
-      var ios = this.$theme.ios;
+      var md = this.$theme.md;
       return {
-        commentsIcon: ios ? '<i class="icon f7-icons">message_fill</i>' : '<i class="icon material-icons">message</i>',
-        sortIcon: ios ? '<i class="icon f7-icons">sort</i>' : '<i class="icon material-icons">sort</i>',
-        moreIcon: ios ? '<i class="icon f7-icons">more_vertical_round</i>' : '<i class="icon material-icons">more_vert</i>',
-        trashIcon: ios ? '<i class="icon f7-icons">trash</i>' : '<i class="icon material-icons">delete</i>',
-        composeIcon: ios ? '<i class="icon f7-icons">compose</i>' : '<i class="icon material-icons">edit</i>'
+        commentsIcon: !md ? '<i class="icon f7-icons">message_fill</i>' : '<i class="icon material-icons">message</i>',
+        sortIcon: !md ? '<i class="icon f7-icons">sort</i>' : '<i class="icon material-icons">sort</i>',
+        moreIcon: !md ? '<i class="icon f7-icons">more_vertical_round</i>' : '<i class="icon material-icons">more_vert</i>',
+        trashIcon: !md ? '<i class="icon f7-icons">trash</i>' : '<i class="icon material-icons">delete</i>',
+        composeIcon: !md ? '<i class="icon f7-icons">compose</i>' : '<i class="icon material-icons">edit</i>'
       }
     }
   }

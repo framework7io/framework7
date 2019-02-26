@@ -133,7 +133,7 @@ class Popover extends Modal {
     let angleSize = 0;
     let angleLeft;
     let angleTop;
-    if (app.theme === 'ios') {
+    if (app.theme === 'ios' || app.theme === 'aurora') {
       $angleEl.removeClass('on-left on-right on-top on-bottom').css({ left: '', top: '' });
       angleSize = $angleEl.width() / 2;
     } else {
@@ -202,6 +202,7 @@ class Popover extends Modal {
         $el.addClass('popover-on-bottom');
       }
     } else {
+      // ios and aurora
       if ((height + angleSize) < targetOffsetTop) {
         // On top
         top = targetOffsetTop - height - angleSize;

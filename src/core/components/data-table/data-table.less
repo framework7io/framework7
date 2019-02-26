@@ -124,7 +124,7 @@
       font-size: 0;
       min-width: 0;
       i {
-        font-size: 20px;
+        font-size: var(--f7-table-link-icon-only-icon-size);
         vertical-align: middle;
       }
     }
@@ -402,4 +402,7 @@
 }
 & when (@includeMdTheme) {
   @import url('./data-table-md.less');
+}
+& when (@includeMdTheme) {
+  @import url('./data-table-aurora.less');
 }
