@@ -1,11 +1,12 @@
-.ios {
+.aurora {
   .toggle {
     input[type="checkbox"]:checked + .toggle-icon {
       background: var(--f7-toggle-active-color, var(--f7-theme-color));
       &:before {
-        transform: scale(0);
+        opacity: 0;
       }
       &:after {
+        background-color: #fff;
         .ltr({
           transform: translateX(calc(var(--f7-toggle-width) - var(--f7-toggle-height)));
         });
@@ -32,13 +33,12 @@
       transform: scale(1);
     }
     &:after {
-      height: calc(var(--f7-toggle-height) - 4px);
-      width: calc(var(--f7-toggle-height) - 4px);
-      top: 2px;
-      .ltr({ left: 2px; });
-      .rtl({ right: 2px; });
-      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-      border-radius: calc(var(--f7-toggle-height) - 4px);
+      height: calc(var(--f7-toggle-height) - 8px);
+      width: calc(var(--f7-toggle-height) - 8px);
+      top: 4px;
+      .ltr({ left: 4px; });
+      .rtl({ right: 4px; });
+      border-radius: calc(var(--f7-toggle-height) - 8px);
     }
   }
   .toggle-active-state {
