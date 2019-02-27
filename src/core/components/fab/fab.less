@@ -282,6 +282,7 @@
   white-space: nowrap;
   transform: translateY(-50%);
   pointer-events: none;
+  font-size: var(--f7-fab-label-font-size);
 }
 .fab[class*="fab-right-"] {
   .fab-label {
@@ -364,4 +365,7 @@
 }
 & when (@includeMdTheme) {
   @import url('./fab-md.less');
+}
+& when (@includeAuroraTheme) {
+  @import url('./fab-aurora.less');
 }
