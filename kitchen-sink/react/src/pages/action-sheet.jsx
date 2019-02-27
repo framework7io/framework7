@@ -67,29 +67,29 @@ export default class extends React.Component {
         <Actions grid={true} opened={this.state.actionGridOpened} onActionsClosed={() => this.setActionsGridOpened(false)}>
           <ActionsGroup>
             <ActionsButton>
-              <img slot="media" src="https://cdn.framework7.io/placeholder/people-96x96-1.jpg" width="48"/>
+              <img slot="media" src="https://cdn.framework7.io/placeholder/people-96x96-1.jpg" width="48" style={{maxWidth: '100%'}}/>
               <span>Button 1</span>
             </ActionsButton>
             <ActionsButton>
-              <img slot="media" src="https://cdn.framework7.io/placeholder/people-96x96-2.jpg" width="48"/>
+              <img slot="media" src="https://cdn.framework7.io/placeholder/people-96x96-2.jpg" width="48" style={{maxWidth: '100%'}}/>
               <span>Button 2</span>
             </ActionsButton>
             <ActionsButton>
-              <img slot="media" src="https://cdn.framework7.io/placeholder/people-96x96-3.jpg" width="48"/>
+              <img slot="media" src="https://cdn.framework7.io/placeholder/people-96x96-3.jpg" width="48" style={{maxWidth: '100%'}}/>
               <span>Button 3</span>
             </ActionsButton>
           </ActionsGroup>
           <ActionsGroup>
             <ActionsButton>
-              <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-96x96-4.jpg" width="48"/>
+              <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-96x96-4.jpg" width="48" style={{maxWidth: '100%'}}/>
               <span>Button 4</span>
             </ActionsButton>
             <ActionsButton>
-              <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-96x96-5.jpg" width="48"/>
+              <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-96x96-5.jpg" width="48" style={{maxWidth: '100%'}}/>
               <span>Button 5</span>
             </ActionsButton>
             <ActionsButton>
-              <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-96x96-6.jpg" width="48"/>
+              <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-96x96-6.jpg" width="48" style={{maxWidth: '100%'}}/>
               <span>Button 6</span>
             </ActionsButton>
           </ActionsGroup>

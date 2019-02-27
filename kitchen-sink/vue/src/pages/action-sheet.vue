@@ -45,29 +45,29 @@
     <f7-actions :grid="true" :opened="actionGridOpened" @actions:closed="actionGridOpened = false">
       <f7-actions-group>
         <f7-actions-button>
-          <img slot="media" src="https://cdn.framework7.io/placeholder/people-96x96-1.jpg" width="48"/>
+          <img slot="media" src="https://cdn.framework7.io/placeholder/people-96x96-1.jpg" width="48" style="max-width: 100%"/>
           <span>Button 1</span>
         </f7-actions-button>
         <f7-actions-button>
-          <img slot="media" src="https://cdn.framework7.io/placeholder/people-96x96-2.jpg" width="48"/>
+          <img slot="media" src="https://cdn.framework7.io/placeholder/people-96x96-2.jpg" width="48" style="max-width: 100%"/>
           <span>Button 2</span>
         </f7-actions-button>
         <f7-actions-button>
-          <img slot="media" src="https://cdn.framework7.io/placeholder/people-96x96-3.jpg" width="48"/>
+          <img slot="media" src="https://cdn.framework7.io/placeholder/people-96x96-3.jpg" width="48" style="max-width: 100%"/>
           <span>Button 3</span>
         </f7-actions-button>
       </f7-actions-group>
       <f7-actions-group>
         <f7-actions-button>
-          <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-96x96-4.jpg" width="48"/>
+          <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-96x96-4.jpg" width="48" style="max-width: 100%"/>
           <span>Button 4</span>
         </f7-actions-button>
         <f7-actions-button>
-          <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-96x96-5.jpg" width="48"/>
+          <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-96x96-5.jpg" width="48" style="max-width: 100%"/>
           <span>Button 5</span>
         </f7-actions-button>
         <f7-actions-button>
-          <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-96x96-6.jpg" width="48"/>
+          <img slot="media" src="https://cdn.framework7.io/placeholder/fashion-96x96-6.jpg" width="48" style="max-width: 100%"/>
           <span>Button 6</span>
         </f7-actions-button>
       </f7-actions-group>
