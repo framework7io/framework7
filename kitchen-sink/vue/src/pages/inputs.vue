@@ -266,6 +266,71 @@
       </f7-list-input>
     </f7-list>
 
+    <f7-block-title>Floating Labels + Outline Inputs</f7-block-title>
+    <f7-list no-hairlines-md>
+      <f7-list-input
+        outline
+        label="Name"
+        floating-label
+        type="text"
+        placeholder="Your name"
+        clear-button
+      >
+        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+      </f7-list-input>
+      <f7-list-input
+        outline
+        label="Password"
+        floating-label
+        type="password"
+        placeholder="Your password"
+        clear-button
+      >
+        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+      </f7-list-input>
+      <f7-list-input
+        outline
+        label="E-mail"
+        floating-label
+        type="email"
+        placeholder="Your e-mail"
+        clear-button
+      >
+        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+      </f7-list-input>
+      <f7-list-input
+        outline
+        label="URL"
+        floating-label
+        type="url"
+        placeholder="URL"
+        clear-button
+      >
+        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+      </f7-list-input>
+      <f7-list-input
+        outline
+        label="Phone"
+        floating-label
+        type="tel"
+        placeholder="Your phone number"
+        clear-button
+      >
+        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+      </f7-list-input>
+      <f7-list-input
+        outline
+        label="Bio"
+        floating-label
+        type="textarea"
+        resizable
+        placeholder="Bio"
+        clear-button
+      >
+        <f7-icon icon="demo-list-icon" slot="media"></f7-icon>
+      </f7-list-input>
+    </f7-list>
+
     <f7-block-title>Validation + Additional Info</f7-block-title>
     <f7-list no-hairlines-md>
       <f7-list-input

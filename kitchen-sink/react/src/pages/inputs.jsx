@@ -270,6 +270,71 @@ export default () => (
       </ListInput>
     </List>
 
+    <BlockTitle>Floating Labels + Outline Inputs</BlockTitle>
+    <List noHairlinesMd>
+      <ListInput
+        outline
+        label="Name"
+        floatingLabel
+        type="text"
+        placeholder="Your name"
+        clearButton
+      >
+        <Icon icon="demo-list-icon" slot="media" />
+      </ListInput>
+      <ListInput
+        outline
+        label="Password"
+        floatingLabel
+        type="password"
+        placeholder="Your password"
+        clearButton
+      >
+        <Icon icon="demo-list-icon" slot="media" />
+      </ListInput>
+      <ListInput
+        outline
+        label="E-mail"
+        floatingLabel
+        type="email"
+        placeholder="Your e-mail"
+        clearButton
+      >
+        <Icon icon="demo-list-icon" slot="media" />
+      </ListInput>
+      <ListInput
+        outline
+        label="URL"
+        floatingLabel
+        type="url"
+        placeholder="URL"
+        clearButton
+      >
+        <Icon icon="demo-list-icon" slot="media" />
+      </ListInput>
+      <ListInput
+        outline
+        label="Phone"
+        floatingLabel
+        type="tel"
+        placeholder="Your phone number"
+        clearButton
+      >
+        <Icon icon="demo-list-icon" slot="media" />
+      </ListInput>
+      <ListInput
+        outline
+        label="Bio"
+        floatingLabel
+        type="textarea"
+        resizable
+        placeholder="Bio"
+        clearButton
+      >
+        <Icon icon="demo-list-icon" slot="media" />
+      </ListInput>
+    </List>
+
     <BlockTitle>Validation + Additional Info</BlockTitle>
     <List noHairlinesMd>
       <ListInput
