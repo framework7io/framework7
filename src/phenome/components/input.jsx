@@ -57,6 +57,9 @@ export default {
     errorMessageForce: Boolean,
     info: String,
 
+    // Outline
+    outline: Boolean,
+
     // Components
     wrap: {
       type: Boolean,
@@ -121,6 +124,7 @@ export default {
       noStoreData,
       noFormStoreData,
       ignoreStoreData,
+      outline,
     } = props;
 
     const domValue = self.domValue();
@@ -289,6 +293,7 @@ export default {
         className,
         'input',
         {
+          'input-outline': outline,
           'input-dropdown': dropdown === 'auto' ? type === 'select' : dropdown,
         },
         Mixins.colorClasses(props),
