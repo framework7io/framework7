@@ -46,7 +46,8 @@
 }
 .toolbar-top,
 .ios .toolbar-top-ios,
-.md .toolbar-top-md {
+.md .toolbar-top-md,
+.aurora .toolbar-top-aurora {
   top: 0;
   .tab-link-highlight {
     bottom: 0;
@@ -69,7 +70,8 @@
 }
 .toolbar-bottom,
 .ios .toolbar-bottom-ios,
-.md .toolbar-bottom-md {
+.md .toolbar-bottom-md,
+.aurora .toolbar-bottom-aurora {
   bottom: 0;
   height: calc(var(--f7-toolbar-height) + var(--f7-safe-area-bottom));
   .tab-link-highlight {
@@ -116,8 +118,7 @@
   a {
     color: var(--f7-tabbar-link-inactive-color);
   }
-  a.tab-link:not(.tab-link-active),
-  a.link:not(.tab-link-active) {
+  a.tab-link:not(.tab-link-active) {
     background-color: var(--f7-tabbar-link-inactive-bg-color, transparent);
   }
   a.link {
@@ -201,7 +202,8 @@
 // Relation with page
 .toolbar-bottom,
 .ios .toolbar-bottom-ios,
-.md .toolbar-bottom-md {
+.md .toolbar-bottom-md,
+.aurora .toolbar-bottom-aurora {
   &.toolbar-hidden {
     transform: translate3d(0, 100%, 0);
   }
@@ -216,7 +218,8 @@
 }
 .toolbar-top,
 .ios .toolbar-top-ios,
-.md .toolbar-top-md {
+.md .toolbar-top-md,
+.aurora .toolbar-top-aurora {
   &.toolbar-hidden {
     transform: translate3d(0, -100%, 0);
   }
@@ -233,12 +236,15 @@
 .navbar ~ .toolbar-top,
 .ios .navbar ~ .toolbar-top-ios,
 .md .navbar ~ .toolbar-top-md,
+.aurora .navbar ~ .toolbar-top-aurora,
 .navbar ~ * .toolbar-top,
 .ios .navbar ~ * .toolbar-top-ios,
 .md .navbar ~ * .toolbar-top-md,
+.aurora .navbar ~ * .toolbar-top-aurora,
 .navbar ~ .page:not(.no-navbar) .toolbar-top,
 .ios .navbar ~ .page:not(.no-navbar) .toolbar-top-ios,
-.md .navbar ~ .page:not(.no-navbar) .toolbar-top-md {
+.md .navbar ~ .page:not(.no-navbar) .toolbar-top-md,
+.aurora .navbar ~ .page:not(.no-navbar) .toolbar-top-aurora {
   top: var(--f7-navbar-height);
   & ~ .page-content,
   & ~ * .page-content {
@@ -258,9 +264,11 @@
 .navbar-hidden + .toolbar-top:not(.toolbar-hidden),
 .ios .navbar-hidden + .toolbar-top-ios:not(.toolbar-hidden),
 .md .navbar-hidden + .toolbar-top-md:not(.toolbar-hidden),
+.aurora .navbar-hidden + .toolbar-top-aurora:not(.toolbar-hidden),
 .navbar-hidden ~ * .toolbar-top:not(.toolbar-hidden),
 .ios .navbar-hidden ~ * .toolbar-top-ios:not(.toolbar-hidden),
-.md .navbar-hidden ~ * .toolbar-top-md:not(.toolbar-hidden), {
+.md .navbar-hidden ~ * .toolbar-top-md:not(.toolbar-hidden),
+.aurora .navbar-hidden ~ * .toolbar-top-aurora:not(.toolbar-hidden) {
   transform: translate3d(0, calc(-1 * var(--f7-navbar-height)), 0);
 }
 .navbar-large-hidden + .toolbar-top:not(.toolbar-hidden),
@@ -268,7 +276,8 @@
 .md .navbar-large-hidden + .toolbar-top-md:not(.toolbar-hidden),
 .navbar-large-hidden ~ * .toolbar-top:not(.toolbar-hidden),
 .ios .navbar-large-hidden ~ * .toolbar-top-ios:not(.toolbar-hidden),
-.md .navbar-large-hidden ~ * .toolbar-top-md:not(.toolbar-hidden) {
+.md .navbar-large-hidden ~ * .toolbar-top-md:not(.toolbar-hidden),
+.aurora .navbar-large-hidden ~ * .toolbar-top-aurora:not(.toolbar-hidden) {
   transform: translate3d(0, calc(-1 * (var(--f7-navbar-height) + var(--f7-navbar-large-title-height))), 0);
 }
 
