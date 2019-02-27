@@ -250,6 +250,8 @@ export default {
       'onPageRole',
       'onPageMasterStack',
       'onPageMasterUnstack',
+      'onPageNavbarLargeCollapsed',
+      'onPageNavbarLargeExpanded',
     ]);
   },
   componentDidMount() {
