@@ -96,6 +96,7 @@
   box-sizing: border-box;
   transition: 300ms;
   color: var(--f7-picker-item-text-color);
+  cursor: pointer;
   span {
     padding: 0 10px;
   }
@@ -146,4 +147,7 @@
 }
 & when (@includeMdTheme) {
   @import url('./picker-md.less');
+}
+& when (@includeAuroraTheme) {
+  @import url('./picker-aurora.less');
 }
