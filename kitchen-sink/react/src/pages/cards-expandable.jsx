@@ -9,7 +9,7 @@ export default () => (
       <p>In addition to usual <a href="/cards/">Cards</a> there are also Expandable Cards that allow to store more information and illustrations about particular subject.</p>
     </Block>
 
-    <div classNmae="demo-expandable-cards">
+    <div className="demo-expandable-cards">
       <Card expandable>
         <CardContent padding={false}>
           <div className="bg-color-red" style={{height: '300px'}}>
@@ -56,7 +56,7 @@ export default () => (
 
       <Card expandable>
         <CardContent padding={false}>
-          <div style={{background: 'url(./img/beach.jpg) no-repeat center bottom', 'background-size': 'cover', height: '240px'}}></div>
+          <div style={{background: 'url(./img/beach.jpg) no-repeat center bottom', backgroundSize: 'cover', height: '240px'}}></div>
           <Link cardClose color="white" className="card-opened-fade-in" style={{position: 'absolute', right: '15px', top: '15px'}} iconF7="close_round_fill" />
           <CardHeader textColor="black" style={{height: '60px'}}>Beach, Goa</CardHeader>
           <div className="card-content-padding">
@@ -71,7 +71,7 @@ export default () => (
 
       <Card expandable>
         <CardContent padding={false}>
-          <div style={{background: 'url(./img/monkey.jpg) no-repeat center top', 'background-size': 'cover', height: '400px'}}>
+          <div style={{background: 'url(./img/monkey.jpg) no-repeat center top', backgroundSize: 'cover', height: '400px'}}>
             <CardHeader textColor="white">Monkeys</CardHeader>
             <Link cardClose color="white" className="card-opened-fade-in" style={{position: 'absolute', right: '15px', top: '15px'}} iconF7="close_round_fill" />
           </div>
