@@ -137,6 +137,11 @@
   font-size: var(--f7-timeline-item-subtitle-font-size);
   font-weight: var(--f7-timeline-item-subtitle-font-weight);
 }
+.timeline-item-text {
+  color: var(--f7-timeline-item-text-color);
+  font-size: var(--f7-timeline-item-text-font-size);
+  font-weight: var(--f7-timeline-item-text-font-weight);
+}
 .timelineItemLeft() {
   flex-direction: row-reverse;
   .ltr({
@@ -284,10 +289,14 @@
 .timeline-year-title {
   line-height: var(--f7-timeline-year-height);
   height: var(--f7-timeline-year-height);
+  font-size: var(--f7-timeline-year-font-size);
+  font-weight: var(--f7-timeline-year-font-weight);
 }
 .timeline-month-title {
   line-height: var(--f7-timeline-month-height);
   height: var(--f7-timeline-month-height);
+  font-size: var(--f7-timeline-month-font-size);
+  font-weight: var(--f7-timeline-month-font-weight);
 }
 .timeline-year-title, .timeline-month-title {
   position: absolute;
@@ -308,9 +317,6 @@
       right: calc(var(--f7-timeline-horizontal-item-padding) + var(--f7-safe-area-right));
     });
   }
-}
-.timeline-year-title {
-  font-size: 16px;
 }
 .timeline-month-title {
   span {
@@ -356,4 +362,7 @@
 }
 & when (@includeMdTheme) {
   @import url('./timeline-md.less');
+}
+& when (@includeAuroraTheme) {
+  @import url('./timeline-aurora.less');
 }
