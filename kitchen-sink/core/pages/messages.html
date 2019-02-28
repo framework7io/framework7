@@ -5,7 +5,7 @@
         <div class="left">
           <a href="#" class="link back">
             <i class="icon icon-back"></i>
-            <span class="ios-only">Back</span>
+            <span class="if-not-md">Back</span>
           </a>
         </div>
         <div class="title">Messsages</div>
@@ -14,14 +14,14 @@
     <div class="toolbar messagebar" @messagebar:attachmentdelete="deleteAttachment">
       <div class="toolbar-inner">
         <a class="link icon-only" @click="sheetToggle">
-          <i class="icon f7-icons ios-only">camera_fill</i>
+          <i class="icon f7-icons if-not-md">camera_fill</i>
           <i class="icon material-icons md-only">camera_alt</i>
         </a>
         <div class="messagebar-area">
           <textarea class="resizable" placeholder="Message"></textarea>
         </div>
         <a class="link icon-only demo-send-message-link" @click="sendMessage">
-          <i class="icon f7-icons ios-only">arrow_up_round_fill</i>
+          <i class="icon f7-icons if-not-md">arrow_up_round_fill</i>
           <i class="icon material-icons md-only">send</i>
         </a>
       </div>
