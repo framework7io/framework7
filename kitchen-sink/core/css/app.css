@@ -580,6 +580,7 @@ code {
     margin-left: 0;
   }
 }
-.view-master-detail .navbar-master-detail .link.back {
+.view-master-detail .navbar-master-detail .link.back,
+.view-master-detail .page-master-detail .navbar .link.back {
   display: none;
 }

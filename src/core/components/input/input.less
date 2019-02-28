@@ -264,7 +264,12 @@ textarea {
   select,
   input,
   textarea {
-    padding-right: 20px;
+    .ltr({
+      padding-right: 20px;
+    });
+    .rtl({
+      padding-left: 20px;
+    });
   }
 }
 
@@ -304,18 +309,33 @@ textarea {
 .input-outline.input-dropdown,
 .item-input-outline .input-dropdown-wrap {
   &:before {
-    right: 8px;
+    .ltr({
+      right: 8px;
+    });
+    .rtl({
+      left: 8px;
+    });
   }
   input,
   textarea,
   select {
-    padding-right: 20px;
+    .ltr({
+      padding-right: 20px;
+    });
+    .rtl({
+      padding-left: 20px;
+    });
   }
 }
 .input-outline,
 .item-input-outline {
   .input-clear-button {
-    right: 8px;
+    .ltr({
+      right: 8px;
+    });
+    .rtl({
+      left: 8px;
+    });
   }
 }
 .item-input-outline {
@@ -324,19 +344,34 @@ textarea {
     display: none !important;
   }
   .item-label {
-    left: var(--f7-input-outline-padding-horizontal);
+    .ltr({
+      left: var(--f7-input-outline-padding-horizontal);
+    });
+    .rtl({
+      right: var(--f7-input-outline-padding-horizontal);
+    });
   }
   .inline-labels & .item-label,
   .inline-label & .item-label,
   .inline-label .item-label,
   .inline-label.item-label {
-    left: 0;
+    .ltr({
+      left: 0;
+    });
+    .rtl({
+      right: 0;
+    });
   }
   .item-floating-label {
-    left: calc(var(--f7-input-outline-padding-horizontal) - 4px);
+    .ltr({
+      left: calc(var(--f7-input-outline-padding-horizontal) - 4px);
+    });
+    .rtl({
+      right: calc(var(--f7-input-outline-padding-horizontal) - 4px);
+    });
     padding-left: 4px;
     padding-right: 4px;
-    background: #fff;
+    background: var(--f7-page-bg-color);
     z-index: 10;
     margin-top: calc(-0.5 * (var(--f7-label-font-size) * var(--f7-label-line-height)));
   }
@@ -346,7 +381,20 @@ textarea {
   }
   .item-input-info,
   .item-input-error-message {
-    padding-left: var(--f7-input-outline-padding-horizontal);
+    .ltr({
+      padding-left: var(--f7-input-outline-padding-horizontal);
+    });
+    .rtl({
+      padding-right: var(--f7-input-outline-padding-horizontal);
+    });
+  }
+}
+.item-input-outline {
+  .block-strong & .item-floating-label {
+    background: var(--f7-block-strong-bg-color);
+  }
+  .list & .item-floating-label {
+    background: var(--f7-list-bg-color);
   }
 }
 & when (@includeIosTheme) {
