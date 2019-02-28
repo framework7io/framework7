@@ -73,6 +73,7 @@ Bart DJ
 ---
 
 ### $10+ Supporter
+Yaroslav Ermolaev<br>
 Matthew Proctor<br>
 Andy Fuchs<br>
 Noah A Neibaron<br>
