@@ -513,7 +513,8 @@ li.item-divider,
   line-height: var(--f7-list-item-divider-line-height);
   .hairline(top, var(--f7-list-item-divider-border-color));
 }
-li.list-group-title, .list li.list-group-title {
+li.list-group-title,
+.list li.list-group-title {
   position: relative;
   position: sticky;
   top: 0;
@@ -525,6 +526,9 @@ li.list-group-title, .list li.list-group-title {
   font-weight: var(--f7-list-group-title-font-weight);
   background-color: var(--f7-list-group-title-bg-color);
   line-height: var(--f7-list-group-title-line-height);
+  .page-with-navbar-large & {
+    top: calc(-1 * var(--f7-navbar-large-title-height));
+  }
 }
 .list.inset {
   margin-left: calc(var(--f7-list-inset-side-margin) + var(--f7-safe-area-outer-left));
