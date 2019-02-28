@@ -26,7 +26,7 @@ class Searchbar extends FrameworkClass {
       notFoundEl: '.searchbar-not-found',
       hideOnEnableEl: '.searchbar-hide-on-enable',
       hideOnSearchEl: '.searchbar-hide-on-search',
-      backdrop: true,
+      backdrop: app.theme !== 'aurora',
       removeDiacritics: true,
       customSearch: false,
       hideDividers: true,
