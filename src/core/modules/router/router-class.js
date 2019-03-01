@@ -938,7 +938,6 @@ class Router extends Framework7Class {
       console.warn('Framework7: wrong or not complete pushState configuration, trying to guess pushStateRoot');
       pushStateRoot = document.location.pathname.split('index.html')[0];
     }
-
     if (!pushState || !pushStateOnLoad) {
       if (!initUrl) {
         initUrl = documentUrl;
@@ -1080,7 +1079,8 @@ class Router extends Framework7Class {
           animate: pushStateAnimateOnLoad,
           once: {
             pageAfterIn() {
-              if (router.history.length > 2) {
+              const preloadPreviousPage = router.params.preloadPreviousPage || router.params[`${app.theme}SwipeBack`];
+              if (preloadPreviousPage && router.history.length > 2) {
                 router.back({ preload: true });
               }
             },

@@ -158,10 +158,10 @@ function buildLess(cb) {
   }
 
   // Build production
-  buildBundle(config, components, ['ios', 'md'], false, onCb);
-  buildBundle(config, components, ['ios', 'md'], true, onCb);
-  buildCore(['ios', 'md'], false, onCb);
-  buildCore(['ios', 'md'], true, onCb);
+  buildBundle(config, components, config.themes, false, onCb);
+  buildBundle(config, components, config.themes, true, onCb);
+  buildCore(config.themes, false, onCb);
+  buildCore(config.themes, true, onCb);
 }
 
 module.exports = buildLess;
