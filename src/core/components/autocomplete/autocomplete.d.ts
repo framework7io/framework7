@@ -77,6 +77,8 @@ export namespace Autocomplete {
     searchbarPlaceholder?: string
     /** Searchbar "Cancel" button text. (default Cancel) */
     searchbarDisableText?: string
+    /** Enables searchbar disable button. By default, disabled for Aurora theme */
+    searchbarDisableButton?: boolean
     /** Text which is displayed when no matches found. (default Nothing found) */
     notFoundText?: string
     /** Set to true to allow multiple selections. (default false) */

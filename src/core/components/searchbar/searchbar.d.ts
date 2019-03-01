@@ -29,7 +29,7 @@ export namespace Searchbar {
     hideOnEnableEl?: HTMLElement | CSSSelector
     /** CSS selector or HTMLElement of elements to be hidden on searchbar search (default ".searchbar-hide-on-search") */
     hideOnSearchEl?: HTMLElement | CSSSelector
-    /** Enables searchbar backdrop element (default true) */
+    /** Enables searchbar backdrop element. By default disabled for Aurora theme */
     backdrop?: boolean
     /** CSS selector or HTMLElement of searchbar backdrop element. If not passed and backdrop parameter is true then it will look for .searchbar-backdrop element. In case none found it will create one automatically */
     backdropEl?: HTMLElement | CSSSelector

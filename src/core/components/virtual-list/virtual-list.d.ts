@@ -80,7 +80,7 @@ export namespace VirtualList {
     rowsAfter?: number
     /** Number of items per row. Doesn't compatible when using Virtual List with dynamic height (default 1) */
     cols?: number
-    /** If number - list item height in px. If function then function should return item height. By default equals to 44 for iOS theme and 48 for MD theme */
+    /** If number - list item height in px. If function then function should return item height. By default equals to 44 for iOS theme, 48 for MD theme, and 38 for Aurora theme */
     height?: number | Function
     /** Template7 string template or Template7 compiled template that used to render single item. Template should contain full HTML layout for single item, including wrapping <li></li> tags */
     itemTemplate?: string | Function
