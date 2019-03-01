@@ -231,7 +231,7 @@ export default function (colEl, updateItems) {
     newTranslate = Math.max(Math.min(newTranslate, maxTranslate), minTranslate);
 
     // Active Index
-    const activeIndex = -Math.floor((newTranslate - maxTranslate) / itemHeight);
+    const activeIndex = Math.round(Math.abs(((newTranslate - maxTranslate) / itemHeight)));
 
     // Normalize translate
     if (!picker.params.freeMode) newTranslate = (-activeIndex * itemHeight) + maxTranslate;
@@ -273,11 +273,11 @@ export default function (colEl, updateItems) {
 
     // Normalize translate
     if (currentTranslate < minTranslate) {
-      currentTranslate = minTranslate - ((minTranslate - currentTranslate) ** 0.8);
+      currentTranslate = minTranslate;
       returnTo = 'min';
     }
     if (currentTranslate > maxTranslate) {
-      currentTranslate = maxTranslate + ((currentTranslate - maxTranslate) ** 0.8);
+      currentTranslate = maxTranslate;
       returnTo = 'max';
     }
     // Transform wrapper
@@ -301,7 +301,7 @@ export default function (colEl, updateItems) {
       newTranslate = Math.max(Math.min(newTranslate, maxTranslate), minTranslate);
 
       // Active Index
-      const activeIndex = -Math.floor((newTranslate - maxTranslate) / itemHeight);
+      const activeIndex = Math.round(Math.abs(((newTranslate - maxTranslate) / itemHeight)));
 
       // Normalize translate
       if (!picker.params.freeMode) newTranslate = (-activeIndex * itemHeight) + maxTranslate;
