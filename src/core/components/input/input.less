@@ -53,6 +53,7 @@ textarea {
     height: var(--f7-input-height);
     color: var(--f7-input-text-color);
     font-size: var(--f7-input-font-size);
+    background-color: var(--f7-input-bg-color, transparent);
     &::placeholder {
       color: var(--f7-input-placeholder-color);
     }
@@ -64,6 +65,9 @@ textarea {
     resize: none;
     line-height: 1.4;
     height: 100px;
+    background-color: var(--f7-input-bg-color, transparent);
+    padding-top: var(--f7-textarea-padding-vertical);
+    padding-bottom: var(--f7-textarea-padding-vertical);
     &::placeholder {
       color: var(--f7-input-placeholder-color);
     }
@@ -175,6 +179,7 @@ textarea {
   }
   .item-label,
   .item-floating-label {
+    padding-top: var(--f7-inline-label-padding-top);
     align-self: flex-start;
     width: 35%;
     font-size: var(--f7-inline-label-font-size);
@@ -302,7 +307,8 @@ textarea {
   input,
   textarea,
   select {
-    padding: 0 var(--f7-input-outline-padding-horizontal);
+    padding-left:var(--f7-input-outline-padding-horizontal);
+    padding-right:var(--f7-input-outline-padding-horizontal);
     border-radius: var(--f7-input-outline-border-radius);
   }
 }
@@ -402,4 +408,7 @@ textarea {
 }
 & when (@includeMdTheme) {
   @import url('./input-md.less');
+}
+& when (@includeAuroraTheme) {
+  @import url('./input-aurora.less');
 }
