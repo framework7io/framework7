@@ -5,8 +5,9 @@ import Support from '../../utils/support';
 const Navbar = {
   size(el) {
     const app = this;
-    if (app.theme === 'md' && !app.params.navbar.mdCenterTitle) return;
-    if (app.theme === 'aurora' && !app.params.navbar.auroraCenterTitle) return;
+    if (app.theme !== 'ios' && !app.params.navbar[`${app.theme}CenterTitle`]) {
+      return;
+    }
     let $el = $(el);
     if ($el.hasClass('navbar')) {
       $el = $el.children('.navbar-inner').each((index, navbarEl) => {
@@ -24,10 +25,7 @@ const Navbar = {
       return;
     }
 
-    if (app.theme === 'md' && app.params.navbar.mdCenterTitle) {
-      $el.addClass('navbar-inner-centered-title');
-    }
-    if (app.theme === 'aurora' && app.params.navbar.auroraCenterTitle) {
+    if (app.theme !== 'ios' && app.params.navbar[`${app.theme}CenterTitle`]) {
       $el.addClass('navbar-inner-centered-title');
     }
     if (app.theme === 'ios' && !app.params.navbar.iosCenterTitle) {
@@ -144,11 +142,7 @@ const Navbar = {
     }
 
     // Center title
-    if (
-      (app.theme === 'ios' && app.params.navbar.iosCenterTitle)
-      || (app.theme === 'md' && app.params.navbar.mdCenterTitle)
-      || (app.theme === 'aurora' && app.params.navbar.auroraCenterTitle)
-    ) {
+    if (app.params.navbar[`${app.theme}CenterTitle`]) {
       let titleLeft = diff;
       if (app.rtl && noLeft && noRight && title.length > 0) titleLeft = -titleLeft;
       title.css({ left: `${titleLeft}px` });
@@ -324,7 +318,7 @@ const Navbar = {
     let scrollTimeoutId;
     let touchEndTimeoutId;
     const touchSnapTimeout = 70;
-    const auroraSnapTimeout = 300;
+    const desktopSnapTimeout = 300;
 
     function snapLargeNavbar() {
       const inSearchbarExpanded = $navbarInnerEl.hasClass('with-searchbar-expandable-enabled');
@@ -379,7 +373,7 @@ const Navbar = {
           clearTimeout(scrollTimeoutId);
           scrollTimeoutId = setTimeout(() => {
             snapLargeNavbar();
-          }, auroraSnapTimeout);
+          }, desktopSnapTimeout);
         } else if (touchEndTimeoutId) {
           clearTimeout(touchEndTimeoutId);
           touchEndTimeoutId = null;
@@ -586,11 +580,7 @@ export default {
     },
     modalOpen(modal) {
       const app = this;
-      if (
-        (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
-        || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-        || (app.theme === 'aurora' && !app.params.navbar.auroraCenterTitle)
-      ) {
+      if (!app.params.navbar[`${app.theme}CenterTitle`]) {
         return;
       }
       modal.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
@@ -599,11 +589,7 @@ export default {
     },
     panelOpen(panel) {
       const app = this;
-      if (
-        (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
-        || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-        || (app.theme === 'aurora' && !app.params.navbar.auroraCenterTitle)
-      ) {
+      if (!app.params.navbar[`${app.theme}CenterTitle`]) {
         return;
       }
       panel.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
@@ -612,11 +598,7 @@ export default {
     },
     panelSwipeOpen(panel) {
       const app = this;
-      if (
-        (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
-        || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-        || (app.theme === 'aurora' && !app.params.navbar.auroraCenterTitle)
-      ) {
+      if (!app.params.navbar[`${app.theme}CenterTitle`]) {
         return;
       }
       panel.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
@@ -625,11 +607,7 @@ export default {
     },
     tabShow(tabEl) {
       const app = this;
-      if (
-        (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
-        || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-        || (app.theme === 'aurora' && !app.params.navbar.auroraCenterTitle)
-      ) {
+      if (!app.params.navbar[`${app.theme}CenterTitle`]) {
         return;
       }
       $(tabEl).find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
@@ -676,11 +654,7 @@ export default {
     'navbar-inner': {
       postpatch(vnode) {
         const app = this;
-        if (
-          (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
-          || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-          || (app.theme === 'aurora' && !app.params.navbar.auroraCenterTitle)
-        ) {
+        if (!app.params.navbar[`${app.theme}CenterTitle`]) {
           return;
         }
         app.navbar.size(vnode.elm);
