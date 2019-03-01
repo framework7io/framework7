@@ -6,13 +6,10 @@
     }
   }
   .dialog-inner {
-    padding: 15px;
     border-radius: var(--f7-dialog-border-radius) var(--f7-dialog-border-radius) 0 0;
     background: var(--f7-dialog-bg-color);
     .hairline(bottom, @dialogHairlineColor);
   }
-
-
   .dialog-title {
     + .dialog-text {
       margin-top: 5px;
@@ -46,6 +43,9 @@
       font-weight: 500;
     }
   }
+  .dialog-button[class*="color-"] {
+    --f7-dialog-button-text-color: var(--f7-theme-color);
+  }
   .dialog-buttons-vertical {
     .dialog-buttons {
       height: auto;
@@ -59,27 +59,21 @@
       }
     }
   }
-
-
-
   .dialog-no-buttons {
     .dialog-inner {
       border-radius: var(--f7-dialog-border-radius);
       .hairline-remove(bottom);
     }
   }
-
   // Inputs
   .dialog-input-field {
     margin-top: 15px;
   }
-
   .dialog-input {
     padding: 0 5px;
     + .dialog-input {
       margin-top: 5px;
     }
-
   }
   .dialog-input-double {
     + .dialog-input-double {

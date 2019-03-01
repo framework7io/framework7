@@ -1,4 +1,4 @@
-.md {
+.aurora {
   .dialog {
     background: var(--f7-dialog-bg-color);
     &.modal-out {
@@ -7,15 +7,15 @@
   }
   .dialog-title {
     + .dialog-text {
-      margin-top: 20px;
+      margin-top: 10px;
     }
   }
   .dialog-text {
     line-height: 1.5;
   }
   .dialog-buttons {
-    height: 48px;
-    padding: 6px 8px;
+    padding: var(--f7-dialog-inner-padding);
+    padding-top: 0;
     overflow: hidden;
     box-sizing: border-box;
     justify-content: flex-end;
@@ -24,46 +24,59 @@
   .dialog-button {
     border-radius: 4px;
     min-width: 64px;
-    padding: 0 8px;
+    padding: 0 10px;
     border: none;
     transition-duration: 300ms;
     transform: translate3d(0,0,0);
+    background: var(--f7-theme-color);
     &.active-state {
-      background-color: var(--f7-dialog-button-pressed-bg-color);
+      background-color: var(--f7-dialog-button-pressed-bg-color, var(--f7-theme-color-shade));
     }
     &.dialog-button-bold {
-      font-weight: 700;
+      font-weight: 600;
     }
     + .dialog-button {
-      margin-left: 4px;
+      margin-left: 15px;
     }
-  }
-  .dialog-button[class*="color-"] {
-    --f7-dialog-button-text-color: var(--f7-theme-color);
   }
 
   .dialog-buttons-vertical {
     .dialog-buttons {
-      padding: 0 0 8px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
     }
     .dialog-button {
       margin-left: 0;
-      text-align: right;
-      height: 48px;
-      line-height: 48px;
-      border-radius: 0;
-      padding-left: 16px;
-      padding-right: 16px;
+      flex-shrink: 0;
+      + .dialog-button {
+        margin-top: 5px;
+      }
     }
   }
 
   // Inputs
+  .dialog-input-field {
+    margin-top: 10px;
+    input.dialog-input {
+      margin-top: 0;
+    }
+  }
   .dialog-input {
-    padding: 0;
+    padding: 0 4px;
     transition-duration: 200ms;
     position: relative;
     + .dialog-input {
-      margin-top: 16px;
+      margin-top: 10px;
+    }
+  }
+  .dialog-input-double {
+    + .dialog-input-double {
+      margin-top: 0;
+      .dialog-input {
+        border-top: 0;
+        margin-top: 0;
+      }
     }
   }
 
@@ -76,7 +89,7 @@
   .dialog-preloader {
     .dialog-title ~ .preloader,
     .dialog-text ~ .preloader {
-      margin-top: 20px;
+      margin-top: 10px;
     }
   }
   .dialog-progress {
@@ -84,7 +97,7 @@
     .dialog-text ~ .progressbar,
     .dialog-title ~ .progressbar-infinite,
     .dialog-text ~ .progressbar-infinite {
-      margin-top: 16px;
+      margin-top: 15px;
     }
   }
 }
