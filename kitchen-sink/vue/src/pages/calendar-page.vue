@@ -116,13 +116,13 @@
           on: {
             init(calendar) {
               $('.navbar-calendar-title').text(`${monthNames[calendar.currentMonth]}, ${calendar.currentYear}`);
-              app.navbar.size(page.navbarEl);
+              app.navbar.size(app.navbar.getElByPage(page.el));
               calendar.$el.addClass('no-safe-area-right');
               self.renderEvents(calendar);
             },
             monthYearChangeStart(calendar) {
               $('.navbar-calendar-title').text(`${monthNames[calendar.currentMonth]}, ${calendar.currentYear}`);
-              app.navbar.size(page.navbarEl);
+              app.navbar.size(app.navbar.getElByPage(page.el));
             },
             change(calendar) {
               self.renderEvents(calendar);
