@@ -361,9 +361,13 @@
   .hairline(bottom, var(--f7-list-item-border-color));
 }
 
-.media-list, li.media-item {
+.media-list,
+li.media-item {
   --f7-list-item-padding-vertical: var(--f7-list-media-item-padding-vertical);
   --f7-list-item-padding-horizontal: var(--f7-list-media-item-padding-horizontal);
+  .item-title {
+    font-weight: var(--f7-list-media-item-title-font-weight, var(--f7-list-item-title-font-weight, inherit));
+  }
   .item-inner {
     display: block;
     align-self: stretch;
