@@ -20,7 +20,7 @@
   }
   .hairline(bottom, var(--f7-searchbar-border-color, var(--f7-bars-border-color)));
 
-  .page > & {
+  .page > &:not(.searchbar-inline) {
     z-index: 510;
     .bar-shadow-bottom(var(--f7-searchbar-shadow-image, var(--f7-bars-shadow-bottom-image)));
   }
@@ -64,12 +64,12 @@
   a {
     color: var(--f7-searchbar-link-color, var(--f7-bars-link-color, var(--f7-theme-color)));
   }
-  .page > & {
+  .page > &:not(.searchbar-inline) {
     position: absolute;
     left: 0;
     top: 0;
   }
-  .page-content & {
+  .page-content &:not(.searchbar-inline) {
     border-radius: var(--f7-searchbar-in-page-content-border-radius);
     margin: var(--f7-searchbar-in-page-content-margin);
     width: auto;
@@ -257,6 +257,22 @@
     ~ .page-content {
       padding-top: calc(var(--f7-navbar-height) + var(--f7-tabbar-labels-height) + var(--f7-searchbar-height));
     }
+  }
+}
+
+.searchbar.searchbar-inline {
+  width: auto;
+  height: auto;
+  background-color: transparent;
+  background-image: none;
+  &:after, &:before {
+    display: none !important;
+  }
+  .searchbar-inner {
+    padding: 0;
+    position: static;
+    width: auto;
+    height: auto;
   }
 }
 
