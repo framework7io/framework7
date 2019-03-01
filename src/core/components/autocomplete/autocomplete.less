@@ -53,6 +53,7 @@
   .list {
     margin: 0;
     color: var(--f7-autocomplete-dropdown-text-color);
+    font-size: var(--f7-autocomplete-dropdown-font-size);
     b {
       color: var(--f7-autocomplete-dropdown-text-matching-color);
       font-weight: var(--f7-autocomplete-dropdown-text-matching-font-weight);
@@ -101,4 +102,7 @@
 }
 & when (@includeMdTheme) {
   @import url('./autocomplete-md.less');
+}
+& when (@includeAuroraTheme) {
+  @import url('./autocomplete-aurora.less');
 }
