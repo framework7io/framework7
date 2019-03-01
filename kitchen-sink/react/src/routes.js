@@ -138,7 +138,7 @@ export default [
             <div class="left">
               <a href="#" class="link back">
                 <i class="icon icon-back"></i>
-                <span class="ios-only">Back</span>
+                <span class="if-not-md">Back</span>
               </a>
             </div>
             <div class="title">Panel Page 1</div>
@@ -162,7 +162,7 @@ export default [
             <div class="left">
               <a href="#" class="link back">
                 <i class="icon icon-back"></i>
-                <span class="ios-only">Back</span>
+                <span class="if-not-md">Back</span>
               </a>
             </div>
             <div class="title">Panel Page 2</div>
