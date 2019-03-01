@@ -77,7 +77,7 @@
     .searchbar-inner,
     input[type="text"],
     input[type="search"] {
-      border-radius: var(--f7-searchbar-in-page-content-border-radius);
+      border-radius: var(--f7-searchbar-in-page-content-input-border-radius, var(--f7-searchbar-input-border-radius));
     }
   }
   .input-clear-button {
@@ -113,6 +113,7 @@
   display: flex;
   align-items: center;
   box-sizing: border-box;
+  padding: 0 calc(var(--f7-searchbar-inner-padding-right) + var(--f7-safe-area-right)) 0 calc(var(--f7-searchbar-inner-padding-left) + var(--f7-safe-area-left));
 }
 .searchbar-disable-button {
   cursor: pointer;
