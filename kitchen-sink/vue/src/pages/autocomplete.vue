@@ -9,7 +9,7 @@
               <i class="searchbar-icon"></i>
               <span class="input-clear-button"></span>
             </div>
-            <span class="searchbar-disable-button">Cancel</span>
+            <span class="searchbar-disable-button" v-if="!$theme.aurora">Cancel</span>
           </div>
         </form>
       </div>

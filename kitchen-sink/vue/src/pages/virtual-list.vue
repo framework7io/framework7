@@ -6,6 +6,7 @@
           search-container=".virtual-list"
           search-item="li"
           search-in=".item-title"
+          :disable-button="!$theme.aurora"
         ></f7-searchbar>
       </f7-subnavbar>
     </f7-navbar>

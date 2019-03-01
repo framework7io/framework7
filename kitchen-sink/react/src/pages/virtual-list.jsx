@@ -28,6 +28,7 @@ export default class extends React.Component {
               searchContainer=".virtual-list"
               searchItem="li"
               searchIn=".item-title"
+              disableButton={!this.$theme.aurora}
             ></Searchbar>
           </Subnavbar>
         </Navbar>

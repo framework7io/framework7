@@ -9,6 +9,7 @@
         expandable
         search-container=".search-list"
         search-in=".item-title"
+        :disable-button="!$theme.aurora"
       ></f7-searchbar>
     </f7-navbar>
     <f7-list class="searchbar-not-found">

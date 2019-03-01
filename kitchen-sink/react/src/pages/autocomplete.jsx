@@ -13,7 +13,7 @@ export default class extends React.Component {
       <Page onPageInit={this.onPageInit.bind(this)} onPageBeforeRemove={this.onPageBeforeRemove.bind(this)}>
         <Navbar title="Autocomplete" backLink="Back">
           <Subnavbar inner={false}>
-            <Searchbar init={false} id="searchbar-autocomplete"></Searchbar>
+            <Searchbar init={false} id="searchbar-autocomplete" disableButton={!this.$theme.aurora}></Searchbar>
           </Subnavbar>
         </Navbar>
 
