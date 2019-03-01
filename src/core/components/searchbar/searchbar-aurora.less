@@ -38,36 +38,53 @@
   }
 
   .searchbar-disable-button {
-    font-size: 0 !important;
+    font-size: 14px;
+    flex-shrink: 0;
+    transform: translate3d(0,0,0);
+    transition-duration: 300ms;
+    color: var(--f7-searchbar-link-color, var(--f7-bars-link-color, var(--f7-theme-color)));
     display: none;
+    &.active-state {
+      transition-duration: 0ms;
+      opacity: 0.3 !important;
+    }
+  }
+  .searchbar-enabled {
+    .searchbar-disable-button  {
+      pointer-events: auto;
+      opacity: 1;
+      .ltr({ margin-left: 8px; });
+      .rtl({ margin-right: 8px; });
+    }
+  }
+  .searchbar:not(.searchbar-enabled) {
+    .searchbar-disable-button {
+      transition-duration: 300ms !important;
+    }
   }
 
   .searchbar-expandable {
     --f7-searchbar-expandable-size: var(--f7-searchbar-height);
     .ltr({ left: 0; });
     .rtl({ right: 0; });
-    bottom: 0;
-    opacity: 1;
+    top: 0;
+    opacity: 0;
     width: 100%;
-    height: 0%;
-    transform: translate3d(0,0,0);
+    transform: translate3d(0,0%,0);
     overflow: hidden;
+    .searchbar-disable-button {
+      .ltr({ margin-left: 8px; });
+      .rtl({ margin-right: 8px; });
+      opacity: 1;
+      display: block;
+    }
     .searchbar-inner {
       height: var(--f7-searchbar-expandable-size)
     }
   }
 
-  .navbar-inner.with-searchbar-expandable-enabled {
-    .left, .title, .right {
-      transform: translateY(calc(-1 * var(--f7-navbar-height)));
-      transition: 300ms;
-      opacity: 0;
-    }
-  }
-
   .searchbar-expandable.searchbar-enabled {
     opacity: 1;
-    height: var(--f7-searchbar-expandable-size);
     pointer-events: auto;
   }
 }

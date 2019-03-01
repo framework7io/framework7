@@ -18,6 +18,7 @@ export default {
       searchbar: false,
       searchbarPlaceholder: 'Search',
       searchbarDisableText: 'Cancel',
+      searchbarDisableButton: undefined,
       closeOnSelect: false,
       virtualList: false,
       virtualListHeight: undefined,

@@ -11,6 +11,10 @@ class SmartSelect extends Framework7Class {
       on: {},
     }, app.params.smartSelect);
 
+    if (typeof defaults.searchbarDisableButton === 'undefined') {
+      defaults.searchbarDisableButton = app.theme !== 'aurora';
+    }
+
     // Extend defaults with modules params
     ss.useModulesParams(defaults);
 
@@ -293,7 +297,9 @@ class SmartSelect extends Framework7Class {
             <i class="searchbar-icon"></i>
             <span class="input-clear-button"></span>
           </div>
+          ${ss.params.searchbarDisableButton ? `
           <span class="searchbar-disable-button">${ss.params.searchbarDisableText}</span>
+          ` : ''}
         </div>
       </form>
     `;
