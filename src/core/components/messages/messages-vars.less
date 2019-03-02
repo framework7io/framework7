@@ -17,6 +17,12 @@
   --f7-message-sent-text-color: #fff;
   --f7-message-received-bg-color: #e5e5ea;
   --f7-message-received-text-color: #000;
+  .theme-dark, &.theme-dark {
+    --f7-messages-content-bg-color: transparent;
+    --f7-message-received-bg-color: #333;
+    --f7-message-received-text-color: #fff;
+    --f7-message-typing-indicator-bg-color: #fff;
+  }
 }
 .ios {
   --f7-messages-title-text-color: #8e8e93;
@@ -31,12 +37,6 @@
   --f7-message-bubble-padding-vertical: 6px;
   --f7-message-bubble-padding-horizontal: 16px;
   --f7-message-typing-indicator-opacity: 0.35;
-  .theme-dark, &.theme-dark {
-    --f7-messages-content-bg-color: transparent;
-    --f7-message-received-bg-color: #333;
-    --f7-message-received-text-color: #fff;
-    --f7-message-typing-indicator-bg-color: #fff;
-  }
 }
 .md {
   --f7-messages-title-text-color: rgba(0,0,0,.51);
@@ -52,14 +52,10 @@
   --f7-message-bubble-padding-horizontal: 8px;
   --f7-message-typing-indicator-opacity: 0.6;
   .theme-dark, &.theme-dark {
-    --f7-messages-content-bg-color: transparent;
     --f7-messages-title-text-color: rgba(255,255,255,0.54);
     --f7-message-header-text-color: rgba(255,255,255,0.54);
     --f7-message-name-text-color: rgba(255,255,255,0.54);
     --f7-message-footer-text-color: rgba(255,255,255,0.54);
-    --f7-message-received-bg-color: #333;
-    --f7-message-received-text-color: #fff;
-    --f7-message-typing-indicator-bg-color: #fff;
   }
 }
 .aurora {
@@ -76,13 +72,9 @@
   --f7-message-bubble-padding-horizontal: 10px;
   --f7-message-typing-indicator-opacity: 0.5;
   .theme-dark, &.theme-dark {
-    --f7-messages-content-bg-color: transparent;
     --f7-messages-title-text-color: rgba(255,255,255,0.54);
     --f7-message-header-text-color: rgba(255,255,255,0.54);
     --f7-message-name-text-color: rgba(255,255,255,0.54);
     --f7-message-footer-text-color: rgba(255,255,255,0.54);
-    --f7-message-received-bg-color: #333;
-    --f7-message-received-text-color: #fff;
-    --f7-message-typing-indicator-bg-color: #fff;
   }
 }
