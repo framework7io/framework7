@@ -9,6 +9,9 @@ const config = {
   target: 'universal',
   rtl: false,
   components: [
+    // Appbar
+    'appbar',
+
     // Modals
     'dialog',
     'popup',

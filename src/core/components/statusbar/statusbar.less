@@ -33,6 +33,7 @@
   box-sizing: border-box;
   display: block;
   height: var(--f7-statusbar-height);
+  background: var(--f7-statusbar-bg-color, var(--f7-bars-bg-color));
 }
 .framework7-root {
   padding-top: var(--f7-statusbar-height);
@@ -43,4 +44,7 @@
 }
 & when (@includeMdTheme) {
   @import url('./statusbar-md.less');
+}
+& when (@includeAuroraTheme) {
+  @import url('./statusbar-aurora.less');
 }

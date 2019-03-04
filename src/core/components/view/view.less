@@ -1,14 +1,24 @@
 /* === Views === */
-.views, .view {
-    position: relative;
-    height: 100%;
-    z-index: 5000;
-    overflow: hidden;
-    box-sizing: border-box;
+.views,
+.view {
+  position: relative;
+  height: 100%;
+  z-index: 5000;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.framework7-root {
+  > .view,
+  > .views {
+    height: calc(100% - var(--f7-appbar-app-offset, 0px));
+  }
 }
 & when (@includeIosTheme) {
-@import url('./view-ios.less');
+  @import url('./view-ios.less');
 }
 & when (@includeMdTheme) {
-@import url('./view-md.less');
+  @import url('./view-md.less');
+}
+& when (@includeAuroraTheme) {
+  @import url('./view-aurora.less');
 }
