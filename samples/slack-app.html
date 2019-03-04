@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#2196f3">
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap:">
+  <title>Mail</title>
+  <link rel="stylesheet" href="../build/core/css/framework7.bundle.css">
+  <link rel="stylesheet" href="https://unpkg.com/framework7-icons">
+  <style>
+    :root {
+      --f7-panel-width: 290px;
+    }
+    .workspaces {
+      width: 68px;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: #200720;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-sizing: border-box;
+      padding-top: 15px;
+    }
+    .workspaces a {
+      width: 36px;
+      margin-bottom: 15px;
+      text-align: center;
+      color: rgba(255,255,255,0.6);
+      font-size: 12px;
+    }
+    .workspace-logo {
+      width: 36px;
+      height: 36px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      position: relative;
+    }
+    .workspace-logo:before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border: 0px solid rgba(255,255,255,0.3);
+      transition: 200ms;
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+    }
+    .workspaces a:hover .workspace-logo:before {
+      border-width: 4px;
+    }
+    .workspace-logo img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+    .workspaces + .view {
+      left: 68px;
+      width: calc(100% - 68px);
+    }
+    .channels-page {
+      --f7-bars-bg-color: #3F0F40;
+      --f7-page-bg-color: #3F0F40;
+      --f7-bars-border-color: transparent;
+      --f7-bars-text-color: #fff;
+      --f7-navbar-font-size: 18px;
+      --f7-navbar-title-font-weight: bold;
+      --f7-navbar-link-color: #fff;
+      --f7-searchbar-inner-padding-left: 15px;
+      --f7-searchbar-inner-padding-right: 15px;
+      --f7-searchbar-input-height: 32px;
+      --f7-searchbar-input-bg-color: rgba(0,0,0,0.4);
+      --f7-searchbar-input-text-color: rgba(255,255,255,0.8);
+      --f7-searchbar-input-border-radius: 6px;
+      --f7-searchbar-input-font-size: 16px;
+      --f7-list-bg-color: transparent;
+      --f7-list-border-color: transparent;
+      --f7-list-item-border-color: transparent;
+      --f7-block-title-font-size: 16px;
+      --f7-block-title-text-color: rgba(255,255,255,0.7);
+      --f7-block-title-font-weight-color: 500;
+      --f7-list-item-title-text-color: rgba(255,255,255,0.7);
+      --f7-list-item-title-font-size: 16px;
+      --f7-list-link-pressed-bg-color: rgba(0,0,0,0.2);
+      color: rgba(255,255,255,0.7);
+    }
+    .channels-page .block-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .channels-page .block-title .link {
+      color: inherit;
+    }
+    .channels-page .block-title .link:hover {
+      color: #fff;
+    }
+    .channels-page .list .item-media {
+      width: 12px;
+    }
+    .channels-page .list .icon {
+      font-size: 12px;
+      width: 12px;
+      height: 12px;
+      color: rgba(255,255,255,0.7);
+    }
+    .channels-page .list .icon-add {
+      font-size: 14px;
+      width: 14px;
+      height: 14px;
+    }
+
+    .chat-page {
+      --f7-page-bg-color: #fff;
+      --f7-navbar-height: 72px;
+      --f7-navbar-bg-color: #fff;
+      --f7-navbar-text-color: #616061;
+      --f7-navbar-link-color: #616061;
+      --f7-searchbar-input-height: 34px;
+      --f7-searchbar-input-border-color: #868686;
+      --f7-searchbar-input-border-width: 1px;
+      --f7-searchbar-input-font-size: 16px;
+      --f7-searchbar-input-border-radius: 6px;
+      --f7-messagebar-height: 68px;
+      --f7-messagebar-textarea-height: 44px;
+      --f7-messagebar-textarea-border: 2px solid #616061;
+      --f7-messagebar-textarea-border-radius: 6px;
+      --f7-messagebar-textarea-font-size: 16px;
+      --f7-messagebar-textarea-padding: 12px;
+
+    }
+    .chat-page .navbar .title {
+      font-size: 16px;
+      font-weight: bold;
+      text-align: left;
+      color: #000;
+    }
+    .chat-page .navbar .link {
+      height: auto;
+      line-height: 1;
+    }
+    .chat-page .navbar .subtitle {
+      display: flex;
+      align-items: center;
+      margin-top: 5px;
+    }
+    .chat-page .navbar .subtitle .divider {
+      margin-left: 3px;
+      margin-right: 3px;
+    }
+    .chat-page .navbar .searchbar {
+      margin: 0 10px;
+    }
+    .chat-page .navbar .right .f7-icons {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="panel panel-left panel-reveal theme-dark">
+      <div class="workspaces">
+        <a href="#">
+          <div class="workspace-logo">
+            <img src="https://cdn.framework7.io/i/logo.svg">
+          </div>
+          <div class="workspace-shortcut">⌘1</div>
+        </a>
+        <a href="#">
+          <div class="workspace-logo">A</div>
+          <div class="workspace-shortcut">⌘2</div>
+        </a>
+        <a href="#">
+          <div class="workspace-logo">B</div>
+          <div class="workspace-shortcut">⌘3</div>
+        </a>
+        <a href="#">
+          <div class="workspace-logo">C</div>
+          <div class="workspace-shortcut">⌘4</div>
+        </a>
+      </div>
+      <div class="view view-init">
+        <div class="page channels-page">
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div class="title">
+                <a href="#" class="link">Framework7 <i class="icon f7-icons">chevron_down</i></a>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="searchbar">
+              <div class="searchbar-inner">
+                <div class="searchbar-input-wrap">
+                  <input type="text" placeholder="Jump to...">
+                  <i class="searchbar-icon"></i>
+                  <span class="input-clear-button"></span>
+                </div>
+              </div>
+            </div>
+            <div class="block-title">
+              <a href="#" class="link">Channels</a>
+              <a href="#" class="link">
+                <i class="icon f7-icons">add_round</i>
+              </a>
+            </div>
+            <div class="list no-chevron">
+              <ul>
+                <li>
+                  <a href="#" class="item-link item-content">
+                    <div class="item-media">#</div>
+                    <div class="item-inner">
+                      <div class="item-title">general</div>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="item-link item-content">
+                    <div class="item-media">#</div>
+                    <div class="item-inner">
+                      <div class="item-title">random</div>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="item-link item-content">
+                    <div class="item-media">#</div>
+                    <div class="item-inner">
+                      <div class="item-title">github</div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="list no-chevron">
+              <ul>
+                <li>
+                  <a href="#" class="item-link item-content">
+                    <div class="item-media">
+                      <i class="icon f7-icons icon-add">add</i>
+                    </div>
+                    <div class="item-inner">
+                      <div class="item-title">Add a channel</div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="block-title">
+              <a href="#" class="link">Direct Messages</a>
+              <a href="#" class="link">
+                <i class="icon f7-icons">add_round</i>
+              </a>
+            </div>
+            <div class="list no-chevron">
+              <ul>
+                <li>
+                  <a href="#" class="item-link item-content">
+                    <div class="item-media">
+                      <i class="icon f7-icons text-color-green">heart_fill</i>
+                    </div>
+                    <div class="item-inner">
+                      <div class="item-title">Slackbot</div>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="item-link item-content">
+                    <div class="item-media">
+                      <i class="icon f7-icons text-color-green" style="font-size: 10px">circle_fill</i>
+                    </div>
+                    <div class="item-inner">
+                      <div class="item-title">johndoe</div>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="item-link item-content">
+                    <div class="item-media">
+                      <i class="icon f7-icons" style="font-size: 10px">circle</i>
+                    </div>
+                    <div class="item-inner">
+                      <div class="item-title">nolimits4web</div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="list no-chevron">
+              <ul>
+                <li>
+                  <a href="#" class="item-link item-content">
+                    <div class="item-media">
+                      <i class="icon f7-icons icon-add">add</i>
+                    </div>
+                    <div class="item-inner">
+                      <div class="item-title">Invite people</div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="view view-main view-init">
+      <div class="page chat-page">
+        <div class="navbar">
+          <div class="navbar-inner">
+            <div class="title">
+              <span>#general</span>
+              <div class="subtitle">
+                <a href="#" class="link">
+                  <i class="icon f7-icons">star</i>
+                </a>
+                <span class="divider"> | </span>
+                <span class="description"> Company-wide announcements and work-based matters</span>
+              </div>
+            </div>
+            <div class="right">
+              <a href="#" class="link">
+                <i class="icon f7-icons">info_round</i>
+              </a>
+              <a href="#" class="link">
+                <i class="icon f7-icons">gear</i>
+              </a>
+              <div class="searchbar searchbar-inline">
+                <div class="searchbar-input-wrap">
+                  <input type="text" placeholder="Search">
+                  <i class="searchbar-icon"></i>
+                  <span class="input-clear-button"></span>
+                </div>
+              </div>
+              <a href="#" class="link">
+                <i class="icon f7-icons">at</i>
+              </a>
+              <a href="#" class="link">
+                <i class="icon f7-icons">star</i>
+              </a>
+              <a href="#" class="link">
+                <i class="icon f7-icons">more_vertical_fill</i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="toolbar messagebar">
+          <div class="toolbar-inner">
+            <div class="messagebar-area">
+              <textarea class="resizable" style="max-height: 230px" placeholder="Message #general"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <script src="../build/core/js/framework7.bundle.js"></script>
+  <script>
+    const app = new Framework7({
+      root: '#app',
+      theme: 'aurora',
+      panel: {
+        leftBreakpoint: 1,
+      },
+      routes: [
+        {
+          path: '/',
+          master: true,
+          url: './macos-mail-app.html',
+        },
+      ],
+      navbar: {
+        auroraCenterTitle: false,
+      }
+    });
+  </script>
+</body>
+</html>

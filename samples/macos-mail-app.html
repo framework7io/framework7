@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#2196f3">
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap:">
+  <title>Mail</title>
+  <link rel="stylesheet" href="../build/core/css/framework7.bundle.css">
+  <link rel="stylesheet" href="https://unpkg.com/framework7-icons">
+  <style>
+    :root {
+      --f7-button-bg-color: #fff;
+      --f7-button-text-color: var(--f7-color-gray);
+      --f7-button-outline-border-color: #ccc;
+      --f7-button-pressed-bg-color: #f1f1f1;
+      --f7-searchbar-input-border-color: #ccc;
+      --f7-searchbar-input-border-width: 1px;
+    }
+
+    /* Buttons */
+    .button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .button i.f7-icons {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+    }
+    /* Top Appbar */
+    .appbar {
+      z-index: 6000;
+      height: var(--f7-navbar-height);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      background: #e3e3e3;
+    }
+
+    .appbar::after {
+      content: '';
+      height: 1px;
+      width: 100%;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      background: var(--f7-bars-border-color);
+      transform: scaleY(0.5);
+      transform-origin: center bottom;
+    }
+    .appbar-inner {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      padding: 0 15px;
+      justify-content: space-between;
+      align-items: center;
+      box-sizing: border-box;
+    }
+    .appbar ~ .view,
+    .appbar ~ .panel {
+      top: calc(var(--f7-navbar-height) + 24px);
+      height: calc(100% - var(--f7-navbar-height) - 24px);
+    }
+    .appbar .left {
+      margin-right: 5px;
+    }
+    .appbar .right {
+      margin-left: 5px;
+    }
+    .appbar .left,
+    .appbar .center,
+    .appbar .right {
+      display: flex;
+      align-items: center;
+    }
+    .appbar .left > a + a,
+    .appbar .center > a + a,
+    .appbar .center > a + .segmented,
+    .appbar .center .segmented + a,
+    .appbar .center .segmented + .segmented {
+      margin-left: 5px;
+    }
+    .appbar .button {
+      display: flex;
+      align-items: center;
+    }
+    .appbar-small {
+      height: 24px;
+      top: var(--f7-navbar-height);
+      --f7-button-small-height: 16px;
+      --f7-button-small-font-size: 11px;
+      --f7-button-small-font-weight: 500;
+      --f7-button-bg-color: transparent;
+      --f7-button-text-color: #666;
+      --f7-button-pressed-bg-color: rgba(0,0,0,0.1);
+    }
+    .appbar-small .button .icon-chevron {
+      font-size: 12px;
+      height: 12px;
+      width: 12px;
+      margin-right: -4px;
+      top: 1px;
+    }
+    /* Panel */
+    .panel-left {
+      border-right: 1px solid rgba(0,0,0,0.1);
+    }
+    /* Accounts Page (Panel) */
+    .page-accounts {
+      --f7-list-border-color: transparent;
+      --f7-list-item-border-color: transparent;
+      --f7-list-bg-color: transparent;
+      --f7-list-item-min-height: 26px;
+      --f7-list-item-padding-vertical: 2px;
+      --f7-list-item-title-font-size: 14px;
+
+      --f7-block-title-font-size: 12px;
+    }
+    /* Email List Page */
+    .page-email-list {
+      --f7-page-bg-color: #fff;
+      --f7-list-border-color: transparent;
+      --f7-list-margin-vertical: 0px;
+      --f7-toolbar-height: 24px;
+      --f7-list-item-subtitle-font-size: 13px;
+      --f7-list-item-title-font-size: 13px;
+      --f7-list-item-title-line-height: 1.2;
+      --f7-list-item-subtitle-line-height: 1.2;
+      --f7-list-item-after-font-size: 12px;
+      --f7-list-item-after-line-height: 1.2;
+      --f7-list-item-text-line-height: 16px;
+    }
+    /* Email Detail Page */
+    .page-email-detail {
+      --f7-page-bg-color: #fff;
+    }
+    .email-detail-actions {
+      z-index: 10;
+      position: relative;
+    }
+    .email-detail-actions:before {
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      background: #f1f1f1;
+      left: 0;
+      top: 50%;
+      content: '';
+    }
+    .email-detail-actions .segmented {
+      width: 140px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="appbar">
+      <div class="appbar-inner">
+        <div class="left">
+          <a href="#" class="button button-small button-outline">
+            <i class="icon f7-icons">email_fill</i>
+          </a>
+          <a href="#" class="button button-small button-outline">
+            <i class="icon f7-icons">compose_fill</i>
+          </a>
+        </div>
+        <div class="center">
+          <a href="#" class="button button-small button-outline">
+            <i class="icon f7-icons">box_fill</i>
+          </a>
+          <div class="segmented">
+            <a href="#" class="button button-small button-outline">
+              <i class="icon f7-icons">trash_fill</i>
+            </a>
+            <a href="#" class="button button-small button-outline">
+              <i class="icon f7-icons">alert_fill</i>
+            </a>
+          </div>
+          <div class="segmented">
+            <a href="#" class="button button-small button-outline">
+              <i class="icon f7-icons">reply_fill</i>
+            </a>
+            <a href="#" class="button button-small button-outline">
+              <i class="icon f7-icons">forward_fill</i>
+            </a>
+          </div>
+          <a href="#" class="button button-small button-outline">
+            <i class="icon f7-icons">flag_fill</i>
+          </a>
+          <a href="#" class="button button-small button-outline">
+            <i class="icon f7-icons">folder_fill</i>
+            <span>Move to ...</span>
+          </a>
+        </div>
+        <div class="right">
+          <div class="searchbar searchbar-inline searchbar-init">
+            <div class="searchbar-input-wrap">
+              <input type="text" placeholder="Search">
+              <i class="icon searchbar-icon"></i>
+              <span class="input-clear-button"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="appbar appbar-small">
+      <div class="appbar-inner">
+        <div class="left">
+          <a href="#" class="button button-small">
+            <i class="icon f7-icons">list</i>
+            <span>Accounts</span>
+          </a>
+          <a href="#" class="button button-small button-active color-gray">
+            <span>Inbox</span>
+            <i class="icon f7-icons icon-chevron">chevron_down</i>
+          </a>
+          <a href="#" class="button button-small">
+            <span>Sent</span>
+            <i class="icon f7-icons icon-chevron">chevron_down</i>
+          </a>
+          <a href="#" class="button button-small">
+            <span>Flagged</span>
+          </a>
+          <a href="#" class="button button-small">
+            <span>Drafts (1)</span>
+            <i class="icon f7-icons icon-chevron">chevron_down</i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="toolbar main-toolbar toolbar-top"></div> -->
+    <div class="panel panel-left panel-reveal">
+      <div class="page page-accounts">
+        <div class="page-content">
+          <div class="block-title">my@email.com</div>
+          <div class="list no-chevron">
+            <ul>
+              <li>
+                <a href="#" class="item-content item-link">
+                  <div class="item-media">
+                    <i class="icon f7-icons">drawer_fill</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title">Inbox</div>
+                    <div class="item-after">
+                      <div class="badge">31</div>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="item-content item-link">
+                  <div class="item-media">
+                    <i class="icon f7-icons">flag_fill</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title">Flagged</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="item-content item-link">
+                  <div class="item-media">
+                    <i class="icon f7-icons">document_fill</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title">Drafts</div>
+                    <div class="item-after">
+                        <div class="badge">1</div>
+                      </div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#"  class="item-content item-link">
+                  <div class="item-media">
+                    <i class="icon f7-icons">paper_plane_fill</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title">Sent</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#"  class="item-content item-link">
+                  <div class="item-media">
+                    <i class="icon f7-icons">alert_fill</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title">Spam</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#"  class="item-content item-link">
+                  <div class="item-media">
+                    <i class="icon f7-icons">trash_fill</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title">Trash</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#"  class="item-content item-link">
+                  <div class="item-media">
+                    <i class="icon f7-icons">box_fill</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title">Archive</div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="block-title">another@address.com</div>
+          <div class="list no-chevron">
+            <ul>
+              <li>
+                <a href="#" class="item-content item-link">
+                  <div class="item-media">
+                    <i class="icon f7-icons">drawer_fill</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title">Inbox</div>
+                    <div class="item-after">
+                      <div class="badge">14</div>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="item-content item-link">
+                  <div class="item-media">
+                    <i class="icon f7-icons">flag_fill</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title">Flagged</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="item-content item-link">
+                  <div class="item-media">
+                    <i class="icon f7-icons">document_fill</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title">Drafts</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#"  class="item-content item-link">
+                  <div class="item-media">
+                    <i class="icon f7-icons">paper_plane_fill</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title">Sent</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#"  class="item-content item-link">
+                  <div class="item-media">
+                    <i class="icon f7-icons">alert_fill</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title">Spam</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#"  class="item-content item-link">
+                  <div class="item-media">
+                    <i class="icon f7-icons">trash_fill</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title">Trash</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#"  class="item-content item-link">
+                  <div class="item-media">
+                    <i class="icon f7-icons">box_fill</i>
+                  </div>
+                  <div class="item-inner">
+                    <div class="item-title">Archive</div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="view view-main view-init" data-master-detail-breakpoint="1" data-url="/">
+      <div class="page page-email-list">
+        <div class="toolbar toolbar-top">
+          <div class="toolbar-inner">
+            <div class="left"></div>
+            <div class="right">
+              <a href="#" class="link icon-only color-gray">
+                <i class="icon f7-icons" style="font-size: 14px">sort_round</i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="page-content">
+          <div class="list media-list no-chevron">
+            <ul>
+              <li>
+                <a href="#" class="item-link item-content">
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title">Facebook</div>
+                      <div class="item-after">17:14</div>
+                    </div>
+                    <div class="item-subtitle">New messages from John Doe</div>
+                    <div class="item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus.</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="item-link item-content">
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title">John Doe (via Twitter)</div>
+                      <div class="item-after">17:11</div>
+                    </div>
+                    <div class="item-subtitle">John Doe (@_johndoe) mentioned you on Twitter!</div>
+                    <div class="item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus.</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="item-link item-content">
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title">Facebook</div>
+                      <div class="item-after">16:48</div>
+                    </div>
+                    <div class="item-subtitle">New messages from John Doe</div>
+                    <div class="item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus.</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="item-link item-content">
+                  <div class="item-inner">
+                    <div class="item-title-row">
+                      <div class="item-title">John Doe (via Twitter)</div>
+                      <div class="item-after">15:32</div>
+                    </div>
+                    <div class="item-subtitle">John Doe (@_johndoe) mentioned you on Twitter!</div>
+                    <div class="item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sagittis tellus ut turpis condimentum, ut dignissim lacus tincidunt. Cras dolor metus, ultrices condimentum sodales sit amet, pharetra sodales eros. Phasellus vel felis tellus. Mauris rutrum ligula nec dapibus feugiat. In vel dui laoreet, commodo augue id, pulvinar lacus.</div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="page page-master-detail page-email-detail">
+
+        <div class="page-content">
+          <div class="block block-strong no-margin no-hairlines">
+            <h3 class="no-margin-bottom">John Doe &lt;john@doe.com&gt;</h3>
+            <div>Hello! How are you doing?</div>
+            <div>To: <span class="chip">Vladimir Kharlampidi</span></div>
+            <div>Reply-To: <span class="chip">no-reply@doe.com</span></div>
+          </div>
+          <div class="email-detail-actions">
+            <div class="segmented">
+              <a class="button button-small button-outline">
+                <i class="icon f7-icons">trash</i>
+              </a>
+              <a class="button button-small button-outline">
+                <i class="icon f7-icons">reply</i>
+              </a>
+              <a class="button button-small button-outline">
+                <i class="icon f7-icons">forward</i>
+              </a>
+            </div>
+          </div>
+          <div class="block block-strong no-margin no-hairlines">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut luctus auctor massa pretium vestibulum. Vivamus ut tempor ligula, eget vestibulum enim. Donec magna dui, porta eu tortor in, porttitor maximus libero. Sed vitae dui tristique, dapibus nulla vitae, condimentum est. Interdum et malesuada fames ac ante ipsum primis in faucibus. Duis accumsan tellus et sapien sagittis, imperdiet egestas nulla tempus. Sed nec pulvinar lacus, eget iaculis massa.</p>
+            <p>Suspendisse eu lectus nunc. Sed sed ante sed enim commodo ultrices. Maecenas convallis porta tristique. Sed ornare massa non elit tempor, id tincidunt nisi luctus. Nulla venenatis ullamcorper lacus in porttitor. Integer pretium pharetra orci, quis venenatis sapien suscipit vel. Maecenas in mollis urna.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <script src="../build/core/js/framework7.bundle.js"></script>
+  <script>
+    const app = new Framework7({
+      root: '#app',
+      theme: 'aurora',
+      panel: {
+        leftBreakpoint: 768,
+      },
+      routes: [
+        {
+          path: '/',
+          master: true,
+          url: './macos-mail-app.html',
+        },
+      ],
+    });
+  </script>
+</body>
+</html>
