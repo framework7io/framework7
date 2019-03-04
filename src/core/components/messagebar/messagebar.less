@@ -26,6 +26,8 @@
     position: relative;
     height: auto;
     bottom: auto;
+    padding-left: calc(var(--f7-messagebar-inner-padding-left, var(--f7-toolbar-inner-padding-left)) + var(--f7-safe-area-left));
+    padding-right: calc(var(--f7-messagebar-inner-padding-right, var(--f7-toolbar-inner-padding-right)) + var(--f7-safe-area-right));
     .rtl({
       flex-direction: row-reverse;
     });

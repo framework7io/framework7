@@ -17,12 +17,6 @@
   background-color: var(--f7-navbar-bg-color, var(--f7-bars-bg-color, var(--f7-theme-color)));
   color: var(--f7-navbar-text-color, var(--f7-bars-text-color));
   font-size: var(--f7-navbar-font-size);
-  .material-icons {
-    width: 24px;
-  }
-  .f7-icons {
-    width: 28px;
-  }
   b {
     font-weight: 500;
   }
@@ -32,15 +26,14 @@
   a.link {
     display: flex;
     justify-content: flex-start;
-    line-height: var(--f7-navbar-height);
-    height: var(--f7-navbar-height);
+    line-height: var(--f7-navbar-link-line-height, var(--f7-navbar-height));
+    height: var(--f7-navbar-link-height, var(--f7-navbar-height));
   }
   .title, .left, .right {
     position: relative;
     z-index: 10;
   }
   .title {
-    text-align: center;
     position: relative;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -239,6 +232,7 @@
 .navbar ~ .page-content,
 .navbar ~ :not(.page) .page-content {
   padding-top: var(--f7-navbar-height);
+
 }
 .navbar ~ * .page:not(.no-navbar).page-with-navbar-large .page-content,
 .navbar ~ .page:not(.no-navbar).page-with-navbar-large .page-content,
