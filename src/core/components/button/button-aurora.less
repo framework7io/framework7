@@ -4,8 +4,12 @@
     transition-duration: 100ms;
     transform: translate3d(0,0,0);
   }
+  .button:not(.active-state):hover {
+    background-color: var(--f7-button-hover-bg-color, rgba(var(--f7-theme-color-rgb), .09));
+  }
   .button-fill,
-  .button-fill-md {
+  .button-fill-aurora {
+    --f7-button-hover-bg-color: var(--f7-button-fill-hover-bg-color, var(--f7-theme-color-tint));
     --f7-button-pressed-bg-color: var(--f7-button-fill-pressed-bg-color, var(--f7-theme-color-shade));
   }
 }
