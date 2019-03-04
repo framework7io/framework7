@@ -94,11 +94,6 @@ const Device = (function Device() {
   if (device.desktop) {
     device.macos = macos;
     device.windows = windows;
-    if (macos) {
-      device.os = 'macos';
-    } else if (windows) {
-      device.os = 'windows';
-    }
   }
 
   // Meta statusbar
