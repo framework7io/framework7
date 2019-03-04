@@ -47,7 +47,7 @@ const Device = (function Device() {
 
   // Windows
   if (windowsPhone) {
-    device.os = 'windows';
+    device.os = 'windowsPhone';
     device.osVersion = windowsPhone[2];
     device.windowsPhone = true;
   }
@@ -90,20 +90,15 @@ const Device = (function Device() {
   device.standalone = device.webView;
 
   // Desktop
-  device.desktop = !(device.os || device.android || device.webView);
+  device.desktop = !(device.ios || device.android || device.windowsPhone);
   if (device.desktop) {
     device.macos = macos;
     device.windows = windows;
-  }
-
-  // Minimal UI
-  if (device.os && device.os === 'ios') {
-    const osVersionArr = device.osVersion.split('.');
-    const metaViewport = document.querySelector('meta[name="viewport"]');
-    device.minimalUi = !device.webView
-      && (ipod || iphone)
-      && (osVersionArr[0] * 1 === 7 ? osVersionArr[1] * 1 >= 1 : osVersionArr[0] * 1 > 7)
-      && metaViewport && metaViewport.getAttribute('content').indexOf('minimal-ui') >= 0;
+    if (macos) {
+      device.os = 'macos';
+    } else if (windows) {
+      device.os = 'windows';
+    }
   }
 
   // Meta statusbar
@@ -111,6 +106,7 @@ const Device = (function Device() {
 
   // Check for status bar and fullscreen app mode
   device.needsStatusbarOverlay = function needsStatusbarOverlay() {
+    if (device.desktop) return false;
     if (device.standalone && device.ios && metaStatusbar && metaStatusbar.content === 'black-translucent') {
       return true;
     }
