@@ -45,15 +45,17 @@
   .list .list-button {
     transition-duration: 0ms;
   }
-  .links-list a,
-  .list .item-link {
-    &:hover:not(.active-state) {
-      background: var(--f7-list-link-hover-bg-color);
+  &.device-desktop {
+    .links-list a,
+    .list .item-link {
+      &:hover:not(.active-state):not(.no-hover) {
+        background: var(--f7-list-link-hover-bg-color);
+      }
     }
-  }
-  .list .list-button {
-    &:hover:not(.active-state) {
-      background: var(--f7-list-button-hover-bg-color);
+    .list .list-button {
+      &:hover:not(.active-state):not(.no-hover) {
+        background: var(--f7-list-button-hover-bg-color);
+      }
     }
   }
 }

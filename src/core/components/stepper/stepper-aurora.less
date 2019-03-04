@@ -5,8 +5,14 @@
     transition-duration: 100ms;
     transform: translate3d(0,0,0);
     overflow: hidden;
-    &:not(.active-state):hover {
-      background-color: var(--f7-stepper-button-hover-bg-color, rgba(var(--f7-theme-color-rgb), .05));
+  }
+  &.device-desktop {
+    .stepper-button,
+    .stepper-button-minus,
+    .stepper-button-plus {
+      &:not(.active-state):not(.no-hover):hover {
+        background-color: var(--f7-stepper-button-hover-bg-color, rgba(var(--f7-theme-color-rgb), .07));
+      }
     }
   }
   .stepper-fill,
