@@ -40,5 +40,21 @@
       });
     }
   }
+  .links-list a,
+  .list .item-link,
+  .list .list-button {
+    transition-duration: 0ms;
+  }
+  .links-list a,
+  .list .item-link {
+    &:hover:not(.active-state) {
+      background: var(--f7-list-link-hover-bg-color);
+    }
+  }
+  .list .list-button {
+    &:hover:not(.active-state) {
+      background: var(--f7-list-button-hover-bg-color);
+    }
+  }
 }
 
