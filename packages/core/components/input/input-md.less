@@ -5,8 +5,8 @@
       padding-bottom: 7px;
     }
   }
-  .item-input-wrap,
-  .input {
+  .item-input:not(.item-input-outline) .item-input-wrap,
+  .input:not(.input-outline) {
     .hairline(bottom, var(--f7-list-item-border-color));
     &:after {
       transition-duration: 200ms;
@@ -65,20 +65,20 @@
       color: var(--f7-label-focused-text-color, var(--f7-theme-color));
     }
   }
-  .item-input-focused .item-input-wrap:after,
-  .input-focused:after {
+  .item-input-focused:not(.item-input-outline) .item-input-wrap:after,
+  .input-focused:not(.input-outline):after {
     background: var(--f7-input-focused-border-color, var(--f7-theme-color));
   }
 
-  .item-input-invalid .item-input-wrap:after,
-  .item-input-focused .item-input-wrap:after,
-  .input-invalid:after,
-  .input-focused:after {
+  .item-input-invalid:not(.item-input-outline) .item-input-wrap:after,
+  .item-input-focused:not(.item-input-outline) .item-input-wrap:after,
+  .input-invalid:not(.input-outline):after,
+  .input-focused::not(.input-outline):after {
     transform: scaleY(2) !important;
   }
 
-  .item-input-invalid .item-input-wrap:after,
-  .input-invalid:after {
+  .item-input-invalid:not(.item-input-outline) .item-input-wrap:after,
+  .input-invalid:not(.input-outline):after {
     background: var(--f7-input-invalid-border-color, var(--f7-input-error-text-color));
   }
   .item-input-invalid {

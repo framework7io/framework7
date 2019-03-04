@@ -2,6 +2,22 @@
 
 # Change Log
 
+# [v4.1.0](https://github.com/framework7io/framework7/compare/v4.0.6...v4.1.0) - March 4, 2019
+  * Core
+    * Input
+      * New "outline" input styles
+    * List
+      * Fixed sticky list group titles when used with large navbar
+    * Cards
+      * Fixed issue when opened expanadble cards wasn't positioned correctly in some layouts
+    * Tooltip
+      * Fixed tooltip auto init under ios theme when it is used in navbar
+    * Calendar
+      * Fixed issue when `monthSelector` and `yearSelector` params were ignored
+  * Phenome
+    * Support for new outline inputs by adding boolean `outline` prop to `f7-list-input`/`ListInput` component
+  * Minor fixes
+
 # [v4.0.6](https://github.com/framework7io/framework7/compare/v4.0.5...v4.0.6) - February 25, 2019
   * Core
     * Searchbar

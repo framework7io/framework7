@@ -46,6 +46,7 @@ declare namespace F7ListInput {
     errorMessage? : string
     errorMessageForce? : boolean
     info? : string
+    outline? : boolean
     label? : string | number
     inlineLabel? : boolean
     floatingLabel? : boolean

@@ -98,7 +98,8 @@ textarea {
     transition-property: transform, color;
   }
   .item-floating-label {
-    transform: scale(var(--f7-floating-label-scale)) translateY(calc(var(--f7-input-height) / 2));
+    --label-height: calc(var(--f7-label-font-size) * var(--f7-label-line-height));
+    transform: scale(var(--f7-floating-label-scale)) translateY(calc((var(--f7-input-height) / 2 + 50%) / var(--f7-floating-label-scale)));
     color: var(--f7-input-placeholder-color);
     width: auto;
     max-width: calc(100% / var(--f7-floating-label-scale));
@@ -115,10 +116,10 @@ textarea {
       }
     }
     .ltr({
-      transform-origin: left bottom;
+      transform-origin: left center;
     });
     .rtl({
-      transform-origin: right bottom;
+      transform-origin: right center;
     });
   }
   .item-input-with-value .item-floating-label {
@@ -135,7 +136,9 @@ textarea {
   }
 }
 .item-input .item-inner {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 .item-input-error-message,
 .input-error-message {
@@ -144,6 +147,7 @@ textarea {
   color: var(--f7-input-error-text-color);
   font-weight: var(--f7-input-error-font-weight);
   display: none;
+  box-sizing: border-box;
 }
 .item-input-info,
 .input-info {
@@ -166,6 +170,8 @@ textarea {
 .inline-label {
   .item-inner {
     display: flex;
+    align-items: center;
+    flex-direction: row;
   }
   .item-label,
   .item-floating-label {
@@ -258,10 +264,139 @@ textarea {
   select,
   input,
   textarea {
-    padding-right: 20px;
+    .ltr({
+      padding-right: 20px;
+    });
+    .rtl({
+      padding-left: 20px;
+    });
   }
 }
 
+.input-outline:after,
+.item-input-outline .item-input-wrap:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--f7-input-outline-border-color);
+  border-radius: var(--f7-input-outline-border-radius);
+  transition-duration: 200ms;
+  pointer-events: none;
+}
+.input-outline.input-focused:after,
+.item-input-outline.item-input-focused .item-input-wrap:after {
+  border-width: 2px;
+  border-color: var(--f7-input-outline-focused-border-color, var(--f7-theme-color));
+}
+.input-outline.input-invalid:after,
+.item-input-outline.item-input-invalid .item-input-wrap:after {
+  border-width: 2px;
+  border-color: var(--f7-input-outline-invalid-border-color, var(--f7-input-error-text-color));
+}
+.input-outline,
+.item-input-outline {
+  input,
+  textarea,
+  select {
+    padding: 0 var(--f7-input-outline-padding-horizontal);
+    border-radius: var(--f7-input-outline-border-radius);
+  }
+}
+.input-outline.input-dropdown,
+.item-input-outline .input-dropdown-wrap {
+  &:before {
+    .ltr({
+      right: 8px;
+    });
+    .rtl({
+      left: 8px;
+    });
+  }
+  input,
+  textarea,
+  select {
+    .ltr({
+      padding-right: 20px;
+    });
+    .rtl({
+      padding-left: 20px;
+    });
+  }
+}
+.input-outline,
+.item-input-outline {
+  .input-clear-button {
+    .ltr({
+      right: 8px;
+    });
+    .rtl({
+      left: 8px;
+    });
+  }
+}
+.item-input-outline {
+  --f7-input-height: var(--f7-input-outline-height);
+  .item-inner:after {
+    display: none !important;
+  }
+  .item-label {
+    .ltr({
+      left: var(--f7-input-outline-padding-horizontal);
+    });
+    .rtl({
+      right: var(--f7-input-outline-padding-horizontal);
+    });
+  }
+  .inline-labels & .item-label,
+  .inline-label & .item-label,
+  .inline-label .item-label,
+  .inline-label.item-label {
+    .ltr({
+      left: 0;
+    });
+    .rtl({
+      right: 0;
+    });
+  }
+  .item-floating-label {
+    .ltr({
+      left: calc(var(--f7-input-outline-padding-horizontal) - 4px);
+    });
+    .rtl({
+      right: calc(var(--f7-input-outline-padding-horizontal) - 4px);
+    });
+    padding-left: 4px;
+    padding-right: 4px;
+    background: var(--f7-page-bg-color);
+    z-index: 10;
+    margin-top: calc(-0.5 * (var(--f7-label-font-size) * var(--f7-label-line-height)));
+  }
+  &.item-input-with-value .item-floating-label,
+  &.item-input-focused .item-floating-label {
+    transform: scale(1) translateY(50%);
+  }
+  .item-input-info,
+  .item-input-error-message {
+    .ltr({
+      padding-left: var(--f7-input-outline-padding-horizontal);
+    });
+    .rtl({
+      padding-right: var(--f7-input-outline-padding-horizontal);
+    });
+  }
+}
+.item-input-outline {
+  .block-strong & .item-floating-label {
+    background: var(--f7-block-strong-bg-color);
+  }
+  .list & .item-floating-label {
+    background: var(--f7-list-bg-color);
+  }
+}
 & when (@includeIosTheme) {
   @import url('./input-ios.less');
 }

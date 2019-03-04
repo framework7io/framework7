@@ -60,6 +60,7 @@ export default {
     errorMessage: String,
     errorMessageForce: Boolean,
     info: String,
+    outline: Boolean,
     label: [String, Number],
     inlineLabel: Boolean,
     floatingLabel: Boolean
@@ -134,6 +135,7 @@ export default {
       errorMessage,
       errorMessageForce,
       info,
+      outline,
       label,
       inlineLabel,
       floatingLabel
@@ -233,6 +235,7 @@ export default {
         disabled
       }, !wrap && Mixins.colorClasses(props), {
         'inline-label': inlineLabel,
+        'item-input-outline': outline,
         'item-input-focused': inputFocused,
         'item-input-with-info': !!info || self.$slots.info && self.$slots.info.length,
         'item-input-with-value': inputHasValue,

@@ -165,7 +165,8 @@ class F7Input extends React.Component {
       className,
       noStoreData,
       noFormStoreData,
-      ignoreStoreData
+      ignoreStoreData,
+      outline
     } = props;
     const domValue = self.domValue();
     const inputHasValue = self.inputHasValue();
@@ -278,6 +279,7 @@ class F7Input extends React.Component {
 
     if (wrap) {
       const wrapClasses = Utils.classNames(className, 'input', {
+        'input-outline': outline,
         'input-dropdown': dropdown === 'auto' ? type === 'select' : dropdown
       }, Mixins.colorClasses(props));
       return React.createElement('div', {
@@ -454,6 +456,7 @@ __reactComponentSetProps(F7Input, Object.assign({
   errorMessage: String,
   errorMessageForce: Boolean,
   info: String,
+  outline: Boolean,
   wrap: {
     type: Boolean,
     default: true

@@ -69,11 +69,24 @@ export default {
         if (!text) return;
         app.tooltip.create({ targetEl: el, text });
       });
+      if (app.theme === 'ios' && page.view && page.view.router.separateNavbar && page.$navbarEl && page.$navbarEl.length > 0) {
+        page.$navbarEl.find('.tooltip-init').each((index, el) => {
+          const text = $(el).attr('data-tooltip');
+          if (!text) return;
+          app.tooltip.create({ targetEl: el, text });
+        });
+      }
     },
     pageBeforeRemove(page) {
+      const app = this;
       page.$el.find('.tooltip-init').each((index, el) => {
         if (el.f7Tooltip) el.f7Tooltip.destroy();
       });
+      if (app.theme === 'ios' && page.view && page.view.router.separateNavbar && page.$navbarEl && page.$navbarEl.length > 0) {
+        page.$navbarEl.find('.tooltip-init').each((index, el) => {
+          if (el.f7Tooltip) el.f7Tooltip.destroy();
+        });
+      }
     },
   },
   vnode: {

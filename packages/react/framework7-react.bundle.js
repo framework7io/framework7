@@ -1,5 +1,5 @@
 /**
- * Framework7 React 4.0.6
+ * Framework7 React 4.1.0
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 25, 2019
+ * Released on: March 4, 2019
  */
 
 (function (global, factory) {
@@ -3875,6 +3875,7 @@
       var noStoreData = props.noStoreData;
       var noFormStoreData = props.noFormStoreData;
       var ignoreStoreData = props.ignoreStoreData;
+      var outline = props.outline;
       var domValue = self.domValue();
       var inputHasValue = self.inputHasValue();
       var inputEl;
@@ -3985,6 +3986,7 @@
 
       if (wrap) {
         var wrapClasses = Utils.classNames(className, 'input', {
+          'input-outline': outline,
           'input-dropdown': dropdown === 'auto' ? type === 'select' : dropdown
         }, Mixins.colorClasses(props));
         return React.createElement('div', {
@@ -4165,6 +4167,7 @@
     errorMessage: String,
     errorMessageForce: Boolean,
     info: String,
+    outline: Boolean,
     wrap: {
       type: Boolean,
       default: true
@@ -4946,6 +4949,7 @@
       var errorMessage = props.errorMessage;
       var errorMessageForce = props.errorMessageForce;
       var info = props.info;
+      var outline = props.outline;
       var label = props.label;
       var inlineLabel = props.inlineLabel;
       var floatingLabel = props.floatingLabel;
@@ -5041,6 +5045,7 @@
           disabled: disabled
         }, !wrap && Mixins.colorClasses(props), {
           'inline-label': inlineLabel,
+          'item-input-outline': outline,
           'item-input-focused': inputFocused,
           'item-input-with-info': !!info || self.slots.info && self.slots.info.length,
           'item-input-with-value': inputHasValue,
@@ -5258,6 +5263,7 @@
     errorMessage: String,
     errorMessageForce: Boolean,
     info: String,
+    outline: Boolean,
     label: [String, Number],
     inlineLabel: Boolean,
     floatingLabel: Boolean
@@ -8945,7 +8951,7 @@
       })();
 
       (function () {
-        Utils.bindMethods(this$1, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack']);
+        Utils.bindMethods(this$1, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack', 'onPageNavbarLargeCollapsed', 'onPageNavbarLargeExpanded']);
       })();
     }
 
@@ -12934,7 +12940,7 @@
   };
 
   /**
-   * Framework7 React 4.0.6
+   * Framework7 React 4.1.0
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -12942,7 +12948,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: February 25, 2019
+   * Released on: March 4, 2019
    */
 
   var Plugin = {

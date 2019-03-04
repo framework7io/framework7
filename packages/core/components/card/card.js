@@ -74,6 +74,9 @@ const CardExpandable = {
     let scaleY = maxHeight / cardHeight;
 
     let offset = $cardEl.offset();
+    let pageOffset = $pageEl.offset();
+    offset.left -= pageOffset.left;
+    offset.top -= pageOffset.top;
 
     let cardLeftOffset;
     let cardTopOffset;
@@ -151,6 +154,9 @@ const CardExpandable = {
 
       $cardEl.transform('translate3d(0px, 0px, 0) scale(1)');
       offset = $cardEl.offset();
+      pageOffset = $pageEl.offset();
+      offset.left -= pageOffset.left;
+      offset.top -= pageOffset.top;
 
       cardLeftOffset = offset.left - (pageWidth - maxWidth) / 2;
       if (app.rtl) cardLeftOffset -= $cardEl[0].scrollLeft;

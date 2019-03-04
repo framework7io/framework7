@@ -74,7 +74,7 @@ const Input = {
       }
       if ($errorEl.length > 0) {
         $itemInputEl.addClass('item-input-with-error-message');
-        $inputWrapEl.addClass('input-with-eror-message');
+        $inputWrapEl.addClass('input-with-error-message');
       }
       $itemInputEl.addClass('item-input-invalid');
       $inputWrapEl.addClass('input-invalid');
