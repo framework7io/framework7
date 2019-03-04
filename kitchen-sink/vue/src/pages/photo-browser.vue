@@ -15,15 +15,15 @@
       <f7-row>
         <f7-col>
           <f7-photo-browser :photos="photos" ref="standalone"></f7-photo-browser>
-          <f7-button raised-md outline-ios @click="$refs.standalone.open()">Standalone</f7-button>
+          <f7-button fill @click="$refs.standalone.open()">Standalone</f7-button>
         </f7-col>
         <f7-col>
           <f7-photo-browser :photos="photos" type="popup" ref="popup"></f7-photo-browser>
-          <f7-button raised-md outline-ios @click="$refs.popup.open()">Popup</f7-button>
+          <f7-button fill @click="$refs.popup.open()">Popup</f7-button>
         </f7-col>
         <f7-col>
           <f7-photo-browser :photos="photos" type="page" back-link-text="Back" ref="page"></f7-photo-browser>
-          <f7-button raised-md outline-ios @click="$refs.page.open()">Page</f7-button>
+          <f7-button fill @click="$refs.page.open()">Page</f7-button>
         </f7-col>
       </f7-row>
     </f7-block>
@@ -32,15 +32,15 @@
       <f7-row>
         <f7-col>
           <f7-photo-browser :photos="photos" theme="dark" ref="standaloneDark"></f7-photo-browser>
-          <f7-button raised-md outline-ios @click="$refs.standaloneDark.open()">Standalone</f7-button>
+          <f7-button fill @click="$refs.standaloneDark.open()">Standalone</f7-button>
         </f7-col>
         <f7-col>
           <f7-photo-browser :photos="photos" theme="dark" type="popup" ref="popupDark"></f7-photo-browser>
-          <f7-button raised-md outline-ios @click="$refs.popupDark.open()">Popup</f7-button>
+          <f7-button fill @click="$refs.popupDark.open()">Popup</f7-button>
         </f7-col>
         <f7-col>
           <f7-photo-browser :photos="photos" theme="dark" type="page" back-link-text="Back" ref="pageDark"></f7-photo-browser>
-          <f7-button raised-md outline-ios @click="$refs.pageDark.open()">Page</f7-button>
+          <f7-button fill @click="$refs.pageDark.open()">Page</f7-button>
         </f7-col>
       </f7-row>
     </f7-block>
