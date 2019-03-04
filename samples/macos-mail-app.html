@@ -16,8 +16,11 @@
       --f7-button-text-color: var(--f7-color-gray);
       --f7-button-outline-border-color: #ccc;
       --f7-button-pressed-bg-color: #f1f1f1;
+      --f7-button-hover-bg-color: #f8f8f8;
       --f7-searchbar-input-border-color: #ccc;
       --f7-searchbar-input-border-width: 1px;
+      --f7-searchbar-input-height: 22px;
+      --f7-appbar-extra-offset: 24px;
     }
 
     /* Buttons */
@@ -32,76 +35,18 @@
       height: 16px;
     }
     /* Top Appbar */
-    .appbar {
-      z-index: 6000;
-      height: var(--f7-navbar-height);
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      background: #e3e3e3;
-    }
-
-    .appbar::after {
-      content: '';
-      height: 1px;
-      width: 100%;
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      background: var(--f7-bars-border-color);
-      transform: scaleY(0.5);
-      transform-origin: center bottom;
-    }
-    .appbar-inner {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      padding: 0 15px;
-      justify-content: space-between;
-      align-items: center;
-      box-sizing: border-box;
-    }
-    .appbar ~ .view,
-    .appbar ~ .panel {
-      top: calc(var(--f7-navbar-height) + 24px);
-      height: calc(100% - var(--f7-navbar-height) - 24px);
-    }
-    .appbar .left {
-      margin-right: 5px;
-    }
-    .appbar .right {
-      margin-left: 5px;
-    }
-    .appbar .left,
-    .appbar .center,
-    .appbar .right {
-      display: flex;
-      align-items: center;
-    }
-    .appbar .left > a + a,
-    .appbar .center > a + a,
-    .appbar .center > a + .segmented,
-    .appbar .center .segmented + a,
-    .appbar .center .segmented + .segmented {
-      margin-left: 5px;
-    }
     .appbar .button {
       display: flex;
-      align-items: center;
     }
     .appbar-small {
-      height: 24px;
-      top: var(--f7-navbar-height);
+      --f7-appbar-height: 24px;
       --f7-button-small-height: 16px;
       --f7-button-small-font-size: 11px;
       --f7-button-small-font-weight: 500;
       --f7-button-bg-color: transparent;
       --f7-button-text-color: #666;
       --f7-button-pressed-bg-color: rgba(0,0,0,0.1);
+      --f7-button-hover-bg-color: rgba(0,0,0,0.05);
     }
     .appbar-small .button .icon-chevron {
       font-size: 12px;
@@ -171,15 +116,15 @@
           <a href="#" class="button button-small button-outline">
             <i class="icon f7-icons">email_fill</i>
           </a>
-          <a href="#" class="button button-small button-outline">
+          <a href="#" class="button button-small button-outline margin-left-half">
             <i class="icon f7-icons">compose_fill</i>
           </a>
         </div>
-        <div class="center">
+        <div class="center margin-horizontal-half">
           <a href="#" class="button button-small button-outline">
             <i class="icon f7-icons">box_fill</i>
           </a>
-          <div class="segmented">
+          <div class="segmented margin-left-half">
             <a href="#" class="button button-small button-outline">
               <i class="icon f7-icons">trash_fill</i>
             </a>
@@ -187,7 +132,7 @@
               <i class="icon f7-icons">alert_fill</i>
             </a>
           </div>
-          <div class="segmented">
+          <div class="segmented margin-left-half">
             <a href="#" class="button button-small button-outline">
               <i class="icon f7-icons">reply_fill</i>
             </a>
@@ -195,10 +140,10 @@
               <i class="icon f7-icons">forward_fill</i>
             </a>
           </div>
-          <a href="#" class="button button-small button-outline">
+          <a href="#" class="button button-small button-outline margin-left-half">
             <i class="icon f7-icons">flag_fill</i>
           </a>
-          <a href="#" class="button button-small button-outline">
+          <a href="#" class="button button-small button-outline margin-left-half">
             <i class="icon f7-icons">folder_fill</i>
             <span>Move to ...</span>
           </a>
