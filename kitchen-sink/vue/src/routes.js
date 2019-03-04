@@ -5,6 +5,7 @@ import About from './pages/about.vue';
 
 import Accordion from './pages/accordion.vue';
 import ActionSheet from './pages/action-sheet.vue';
+import Appbar from './pages/appbar.vue';
 import Autocomplete from './pages/autocomplete.vue';
 import Badge from './pages/badge.vue';
 import Buttons from './pages/buttons.vue';
@@ -186,6 +187,10 @@ export default [
   {
     path: '/action-sheet/',
     component: ActionSheet,
+  },
+  {
+    path: '/appbar/',
+    component: Appbar,
   },
   {
     path: '/autocomplete/',

@@ -32,6 +32,9 @@
       <f7-list-item link="/action-sheet/" title="Action Sheet">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>
+      <f7-list-item link="/appbar/" title="Appbar">
+        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+      </f7-list-item>
       <f7-list-item link="/autocomplete/" title="Autocomplete">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>
@@ -211,6 +214,7 @@
     <f7-list class="searchbar-hide-on-search">
       <f7-list-item title="iOS Theme" external link="./index.html?theme=ios"></f7-list-item>
       <f7-list-item title="Material (MD) Theme" external link="./index.html?theme=md"></f7-list-item>
+      <f7-list-item title="Aurora Desktop Theme" external link="./index.html?theme=aurora"></f7-list-item>
       <f7-list-item title="Color Themes" link="/color-themes/"></f7-list-item>
     </f7-list>
 

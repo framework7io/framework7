@@ -17,6 +17,9 @@
   color: var(--f7-appbar-text-color, var(--f7-bars-text-color));
   font-size: var(--f7-appbar-font-size);
   z-index: 7000;
+  .panel ~ .appbar {
+    z-index: 5500;
+  }
   a {
     color: var(--f7-appbar-link-color, var(--f7-bars-link-color, var(--f7-theme-color)));
   }
@@ -25,6 +28,10 @@
     justify-content: flex-start;
     line-height: var(--f7-appbar-link-line-height, var(--f7-appbar-height));
     height: var(--f7-appbar-link-height, var(--f7-appbar-height));
+  }
+  .left, .center, .right {
+    display: flex;
+    align-items: center;
   }
   &.no-hairline, &.no-border {
     &:after {

@@ -40,6 +40,9 @@ export default class extends React.Component {
           <ListItem link="/action-sheet/" title="Action Sheet">
             <Icon slot="media" icon="icon-f7" />
           </ListItem>
+          <ListItem link="/appbar/" title="Appbar">
+            <Icon slot="media" icon="icon-f7" />
+          </ListItem>
           <ListItem link="/autocomplete/" title="Autocomplete">
             <Icon slot="media" icon="icon-f7" />
           </ListItem>
@@ -219,6 +222,7 @@ export default class extends React.Component {
         <List className="searchbar-hide-on-search">
           <ListItem title="iOS Theme" external link="./index.html?theme=ios"></ListItem>
           <ListItem title="Material (MD) Theme" external link="./index.html?theme=md"></ListItem>
+          <ListItem title="Aurora Desktop Theme" external link="./index.html?theme=aurora"></ListItem>
           <ListItem title="Color Themes" link="/color-themes/"></ListItem>
         </List>
         <BlockTitle className="searchbar-hide-on-search">Page Loaders & Router</BlockTitle>

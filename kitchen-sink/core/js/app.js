@@ -11,7 +11,7 @@ if (document.location.search.indexOf('theme=') >= 0) {
 var app = new Framework7({
   id: 'io.framework7.testapp',
   root: '#app',
-  theme: 'aurora',
+  theme: 'auto',
   data: function () {
     return {
       user: {
