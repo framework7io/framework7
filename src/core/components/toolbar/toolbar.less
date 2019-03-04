@@ -204,16 +204,30 @@
 .ios .toolbar-bottom-ios,
 .md .toolbar-bottom-md,
 .aurora .toolbar-bottom-aurora {
+  ~ * {
+    --f7-page-toolbar-bottom-offset: var(--f7-toolbar-height);
+  }
+  &.tabbar-labels ~ * {
+    --f7-page-toolbar-bottom-offset: var(--f7-tabbar-labels-height);
+  }
+}
+.toolbar-bottom,
+.ios .toolbar-bottom-ios,
+.md .toolbar-bottom-md,
+.aurora .toolbar-bottom-aurora {
   &.toolbar-hidden {
     transform: translate3d(0, 100%, 0);
   }
-  & ~ .page-content,
-  & ~ * .page-content {
-    padding-bottom: calc(var(--f7-toolbar-height) + var(--f7-safe-area-bottom));
+}
+.toolbar-top,
+.ios .toolbar-top-ios,
+.md .toolbar-top-md,
+.aurora .toolbar-top-aurora {
+  ~ * {
+    --f7-page-toolbar-top-offset: var(--f7-toolbar-height);
   }
-  &.tabbar-labels ~ .page-content,
-  &.tabbar-labels ~ * .page-content {
-    padding-bottom: calc(var(--f7-tabbar-labels-height) + var(--f7-safe-area-bottom));
+  &.tabbar-labels ~ * {
+    --f7-page-toolbar-top-offset: var(--f7-tabbar-labels-height);
   }
 }
 .toolbar-top,
@@ -222,14 +236,6 @@
 .aurora .toolbar-top-aurora {
   &.toolbar-hidden {
     transform: translate3d(0, -100%, 0);
-  }
-  & ~ .page-content,
-  & ~ * .page-content {
-    padding-top: var(--f7-toolbar-height);
-  }
-  &.tabbar-labels ~ .page-content,
-  &.tabbar-labels ~ * .page-content {
-    padding-top: var(--f7-tabbar-labels-height);
   }
 }
 
@@ -246,14 +252,6 @@
 .md .navbar ~ .page:not(.no-navbar) .toolbar-top-md,
 .aurora .navbar ~ .page:not(.no-navbar) .toolbar-top-aurora {
   top: var(--f7-navbar-height);
-  & ~ .page-content,
-  & ~ * .page-content {
-    padding-top: calc(var(--f7-navbar-height) + var(--f7-toolbar-height));
-  }
-  &.tabbar-labels ~ .page-content,
-  &.tabbar-labels ~ * .page-content {
-    padding-top: calc(var(--f7-navbar-height) + var(--f7-tabbar-labels-height));
-  }
   &.toolbar-hidden {
     transform: translate3d(0, calc(-1 * (var(--f7-navbar-height) + var(--f7-toolbar-height))), 0);
     &.tabbar-labels {

@@ -227,19 +227,19 @@
 }
 
 // Relation with page
-.navbar ~ * .page:not(.no-navbar) .page-content,
-.navbar ~ .page:not(.no-navbar) .page-content,
-.navbar ~ .page-content,
-.navbar ~ :not(.page) .page-content {
-  padding-top: var(--f7-navbar-height);
+.navbar ~ * {
+  --f7-page-navbar-offset: var(--f7-navbar-height);
+}
+.navbar ~ * .page-with-navbar-large,
+.navbar ~ .page-with-navbar-large,
+.page-with-navbar-large .navbar ~ * {
+  --f7-page-navbar-offset: calc(var(--f7-navbar-height) + var(--f7-navbar-large-title-height));
+}
+.page.no-navbar,
+.page.no-navbar .navbar ~ * {
+  --f7-page-navbar-offset: 0px;
+}
 
-}
-.navbar ~ * .page:not(.no-navbar).page-with-navbar-large .page-content,
-.navbar ~ .page:not(.no-navbar).page-with-navbar-large .page-content,
-.page-with-navbar-large .navbar ~ .page-content,
-.page-with-navbar-large .navbar ~ * .page-content {
-  padding-top: calc(var(--f7-navbar-height) + var(--f7-navbar-large-title-height));
-}
 
 & when (@includeIosTheme) {
   @import url('./navbar-ios.less');

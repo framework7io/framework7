@@ -165,9 +165,8 @@
 .messagebar:not(.messagebar-sheet-visible) .messagebar-sheet {
   display: none;
 }
-.messagebar ~ .page-content,
-.messagebar ~ * .page-content {
-  padding-bottom: calc(var(--f7-messagebar-height) + var(--f7-safe-area-bottom));
+.messagebar ~ * {
+  --f7-page-toolbar-bottom-offset: var(--f7-messagebar-height);
 }
 & when (@includeIosTheme) {
   @import url('./messagebar-ios.less');

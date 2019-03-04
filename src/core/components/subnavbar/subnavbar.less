@@ -108,26 +108,11 @@
   top: calc(var(--f7-navbar-height) + var(--f7-navbar-large-title-height));
   transform: translate3d(0, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)
 }
-.page-with-subnavbar .page-content,
-.subnavbar ~ .page-content,
-.subnavbar ~ * .page-content {
-  padding-top: var(--f7-subnavbar-height);
+.page-with-subnavbar,
+.subnavbar ~ * {
+  --f7-page-subnavbar-offset: var(--f7-subnavbar-height);
 }
-.navbar ~ .page-with-subnavbar:not(.no-navbar) .page-content,
-.navbar ~ *:not(.no-navbar) .subnavbar ~ .page-content,
-.navbar ~ *:not(.no-navbar) .subnavbar ~ * .page-content,
-.navbar ~ .subnavbar ~ .page-content,
-.navbar ~ .subnavbar ~ * .page-content,
-.page-with-subnavbar .navbar ~ * .page-content,
-.page-with-subnavbar .navbar ~ .page-content {
-  padding-top: calc(var(--f7-navbar-height) + var(--f7-subnavbar-height));
-}
-.navbar ~ .page-with-subnavbar.page-with-navbar-large:not(.no-navbar) .page-content,
-.page-with-subnavbar.page-with-navbar-large .navbar ~ * .page-content,
-.page-with-subnavbar.page-with-navbar-large .navbar ~ .page-content,
-.page-with-subnavbar.page-with-navbar-large .page-content {
-  padding-top: calc(var(--f7-navbar-height) + var(--f7-subnavbar-height) + var(--f7-navbar-large-title-height));
-}
+
 & when (@includeIosTheme) {
   @import url('./subnavbar-ios.less');
 }

@@ -193,22 +193,8 @@
 }
 
 
-.page > .searchbar ~ * .page-content,
-.page > .searchbar ~ .page-content {
-  padding-top: var(--f7-searchbar-height);
-}
-.page > .navbar ~ .searchbar ~ * .page-content,
-.page > .navbar ~ .searchbar ~ .page-content,
-.navbar ~ .page:not(.no-navbar) > .searchbar ~ .page-content,
-.navbar ~ .page:not(.no-navbar) > .searchbar ~ * .page-content {
-  padding-top: calc(var(--f7-navbar-height) + var(--f7-searchbar-height));
-}
-
-.page-with-navbar-large > .navbar ~ .searchbar ~ * .page-content,
-.page-with-navbar-large > .navbar ~ .searchbar ~ .page-content,
-.navbar ~ .page-with-navbar-large:not(.no-navbar) > .searchbar ~ .page-content,
-.navbar ~ .page-with-navbar-large:not(.no-navbar) > .searchbar ~ * .page-content {
-  padding-top: calc(var(--f7-navbar-height) + var(--f7-subnavbar-height) + var(--f7-navbar-large-title-height));
+.searchbar ~ * {
+  --f7-page-searchbar-offset: var(--f7-searchbar-height);
 }
 
 // Toolbar
@@ -218,10 +204,6 @@
 .aurora .page > .toolbar-top-aurora {
   ~ .searchbar {
     top: var(--f7-toolbar-height);
-    ~ * .page-content,
-    ~ .page-content {
-      padding-top: calc(var(--f7-toolbar-height) + var(--f7-searchbar-height));
-    }
   }
 }
 .page > .tabbar-labels.toolbar-top,
@@ -230,10 +212,6 @@
 .aurora .page > .tabbar-labels.toolbar-top-aurora {
   ~ .searchbar {
     top: var(--f7-tabbar-labels-height);
-    ~ * .page-content,
-    ~ .page-content {
-      padding-top: calc(var(--f7-tabbar-labels-height) + var(--f7-searchbar-height));
-    }
   }
 }
 .page > .navbar ~ .toolbar-top,
@@ -242,10 +220,6 @@
 .aurora .page > .navbar ~ .toolbar-top-aurora {
   ~ .searchbar {
     top: calc(var(--f7-navbar-height) + var(--f7-toolbar-height));
-    ~ * .page-content,
-    ~ .page-content {
-      padding-top: calc(var(--f7-navbar-height) + var(--f7-toolbar-height) + var(--f7-searchbar-height));
-    }
   }
 }
 .page > .navbar ~ .tabbar-labels.toolbar-top,
@@ -254,10 +228,6 @@
 .aurora .page > .navbar ~ .tabbar-labels.toolbar-top-aurora {
   ~ .searchbar {
     top: calc(var(--f7-navbar-height) + var(--f7-tabbar-labels-height));
-    ~ * .page-content,
-    ~ .page-content {
-      padding-top: calc(var(--f7-navbar-height) + var(--f7-tabbar-labels-height) + var(--f7-searchbar-height));
-    }
   }
 }
 
