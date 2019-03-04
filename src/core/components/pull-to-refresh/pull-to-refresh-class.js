@@ -21,6 +21,8 @@ class PullToRefresh extends Framework7Class {
     ptr.useModulesParams({});
 
     const isMaterial = app.theme === 'md';
+    const isIos = app.theme === 'ios';
+    const isAurora = app.theme === 'aurora';
 
     // Done
     ptr.done = function done() {
@@ -41,6 +43,9 @@ class PullToRefresh extends Framework7Class {
       ptr.emit('local::refresh ptrRefresh', $el[0], ptr.done);
       return ptr;
     };
+
+    // Mousewheel
+    ptr.mouseWheel = $el.attr('data-ptr-mousewheel') === 'true';
 
     // Events handling
     let touchId;
@@ -72,8 +77,12 @@ class PullToRefresh extends Framework7Class {
     // Define trigger distance
     if ($el.attr('data-ptr-distance')) {
       dynamicTriggerDistance = true;
-    } else {
-      triggerDistance = isMaterial ? 66 : 44;
+    } else if (isMaterial) {
+      triggerDistance = 66;
+    } else if (isIos) {
+      triggerDistance = 44;
+    } else if (isAurora) {
+      triggerDistance = 38;
     }
 
     function handleTouchStart(e) {
@@ -295,6 +304,159 @@ class PullToRefresh extends Framework7Class {
       }
     }
 
+    let mouseWheelTimeout;
+    let mouseWheelMoved;
+    let mouseWheelAllow = true;
+    let mouseWheelTranslate = 0;
+
+    function handleMouseWheelRelease() {
+      mouseWheelAllow = true;
+      mouseWheelMoved = false;
+      mouseWheelTranslate = 0;
+      if (translate) {
+        $el.addClass('ptr-transitioning');
+        translate = 0;
+      }
+      if (isMaterial) {
+        $preloaderEl.transform('')
+          .find('.ptr-arrow').transform('');
+      } else {
+        // eslint-disable-next-line
+        if (ptr.bottom) {
+          $el.children().transform('');
+        } else {
+          $el.transform('');
+        }
+      }
+
+      if (refresh) {
+        $el.addClass('ptr-refreshing');
+        $el.trigger('ptr:refresh', ptr.done);
+        ptr.emit('local::refresh ptrRefresh', $el[0], ptr.done);
+      } else {
+        $el.removeClass('ptr-pull-down');
+      }
+      if (pullStarted) {
+        $el.trigger('ptr:pullend');
+        ptr.emit('local::pullEnd ptrPullEnd', $el[0]);
+      }
+    }
+    function handleMouseWheel(e) {
+      if (!mouseWheelAllow) return;
+      const { deltaX, deltaY } = e;
+      if (Math.abs(deltaX) > Math.abs(deltaY)) return;
+      if ($el.hasClass('ptr-refreshing')) {
+        return;
+      }
+      if ($(e.target).closest('.sortable-handler, .ptr-ignore, .card-expandable.card-opened').length) return;
+
+      clearTimeout(mouseWheelTimeout);
+
+      scrollTop = $el[0].scrollTop;
+
+      if (!mouseWheelMoved) {
+        $el.removeClass('ptr-transitioning');
+        let targetIsScrollable;
+        scrollHeight = $el[0].scrollHeight;
+        offsetHeight = $el[0].offsetHeight;
+        if (ptr.bottom) {
+          maxScrollTop = scrollHeight - offsetHeight;
+        }
+        if (scrollTop > scrollHeight) {
+          mouseWheelAllow = false;
+          return;
+        }
+        const $ptrWatchScrollable = $(e.target).closest('.ptr-watch-scroll');
+        if ($ptrWatchScrollable.length) {
+          $ptrWatchScrollable.each((ptrScrollableIndex, ptrScrollableEl) => {
+            if (ptrScrollableEl === el) return;
+            if (
+              (ptrScrollableEl.scrollHeight > ptrScrollableEl.offsetHeight)
+              && $(ptrScrollableEl).css('overflow') === 'auto'
+              && (
+                (!ptr.bottom && ptrScrollableEl.scrollTop > 0)
+                || (ptr.bottom && ptrScrollableEl.scrollTop < ptrScrollableEl.scrollHeight - ptrScrollableEl.offsetHeight)
+              )
+            ) {
+              targetIsScrollable = true;
+            }
+          });
+        }
+        if (targetIsScrollable) {
+          mouseWheelAllow = false;
+          return;
+        }
+        if (dynamicTriggerDistance) {
+          triggerDistance = $el.attr('data-ptr-distance');
+          if (triggerDistance.indexOf('%') >= 0) triggerDistance = (scrollHeight * parseInt(triggerDistance, 10)) / 100;
+        }
+      }
+      isMoved = true;
+      mouseWheelTranslate -= deltaY;
+      touchesDiff = mouseWheelTranslate; // pageY - touchesStart.y;
+
+      if (typeof wasScrolled === 'undefined' && (ptr.bottom ? scrollTop !== maxScrollTop : scrollTop !== 0)) wasScrolled = true;
+
+      const ptrStarted = ptr.bottom
+        ? (touchesDiff < 0 && scrollTop >= maxScrollTop) || scrollTop > maxScrollTop
+        : (touchesDiff > 0 && scrollTop <= 0) || scrollTop < 0;
+
+      if (ptrStarted) {
+        if (e.cancelable) {
+          e.preventDefault();
+        }
+
+        translate = touchesDiff;
+        if (Math.abs(translate) > triggerDistance) {
+          translate = triggerDistance + ((Math.abs(translate) - triggerDistance) ** 0.7);
+          if (ptr.bottom) translate = -translate;
+        }
+
+        if (isMaterial) {
+          $preloaderEl.transform(`translate3d(0,${translate}px,0)`)
+            .find('.ptr-arrow').transform(`rotate(${(180 * (Math.abs(touchesDiff) / 66)) + 100}deg)`);
+        } else {
+          // eslint-disable-next-line
+          if (ptr.bottom) {
+            $el.children().transform(`translate3d(0,${translate}px,0)`);
+          } else {
+            $el.transform(`translate3d(0,${translate}px,0)`);
+          }
+        }
+
+        if (Math.abs(translate) > triggerDistance) {
+          refresh = true;
+          $el.addClass('ptr-pull-up').removeClass('ptr-pull-down');
+        } else {
+          refresh = false;
+          $el.removeClass('ptr-pull-up').addClass('ptr-pull-down');
+        }
+        if (!pullStarted) {
+          $el.trigger('ptr:pullstart');
+          ptr.emit('local::pullStart ptrPullStart', $el[0]);
+          pullStarted = true;
+        }
+        $el.trigger('ptr:pullmove', {
+          event: e,
+          scrollTop,
+          translate,
+          touchesDiff,
+        });
+        ptr.emit('local::pullMove ptrPullMove', $el[0], {
+          event: e,
+          scrollTop,
+          translate,
+          touchesDiff,
+        });
+      } else {
+        pullStarted = false;
+        $el.removeClass('ptr-pull-up ptr-pull-down');
+        refresh = false;
+      }
+
+      mouseWheelTimeout = setTimeout(handleMouseWheelRelease, 300);
+    }
+
     if (!$pageEl.length || !$el.length) return ptr;
 
     $el[0].f7PullToRefresh = ptr;
@@ -305,12 +467,18 @@ class PullToRefresh extends Framework7Class {
       $el.on(app.touchEvents.start, handleTouchStart, passive);
       app.on('touchmove:active', handleTouchMove);
       app.on('touchend:passive', handleTouchEnd);
+      if (ptr.mouseWheel && !ptr.bottom) {
+        $el.on('wheel', handleMouseWheel);
+      }
     };
     ptr.detachEvents = function detachEvents() {
       const passive = Support.passiveListener ? { passive: true } : false;
       $el.off(app.touchEvents.start, handleTouchStart, passive);
       app.off('touchmove:active', handleTouchMove);
       app.off('touchend:passive', handleTouchEnd);
+      if (ptr.mouseWheel && !ptr.bottom) {
+        $el.off('wheel', handleMouseWheel);
+      }
     };
 
     // Install Modules
