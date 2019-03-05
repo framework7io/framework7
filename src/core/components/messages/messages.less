@@ -23,6 +23,7 @@
   line-height: 1;
   color: var(--f7-messages-title-text-color);
   font-size: var(--f7-messages-title-font-size);
+  font-weight: var(--f7-messages-title-font-weight);
 }
 .message {
   max-width: 70%;
@@ -34,7 +35,7 @@
   transform: translate3d(0,0,0);
 }
 .message-avatar {
-  border-radius: 50%;
+  border-radius: var(--f7-message-avatar-border-radius);
   position: relative;
   background-size: cover;
   align-self: flex-end;
@@ -62,6 +63,7 @@
 .message-name {
   color: var(--f7-message-name-text-color);
   font-size: var(--f7-message-name-font-size);
+  font-weight: var(--f7-message-name-font-weight);
 }
 .message-bubble {
   box-sizing: border-box;
