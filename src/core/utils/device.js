@@ -21,6 +21,7 @@ const Device = (function Device() {
     windows: false,
     cordova: !!(window.cordova || window.phonegap),
     phonegap: !!(window.cordova || window.phonegap),
+    electron: false,
   };
 
   const screenWidth = window.screen.width;
@@ -40,6 +41,7 @@ const Device = (function Device() {
   const firefox = ua.indexOf('Gecko/') >= 0 && ua.indexOf('Firefox/') >= 0;
   const macos = platform === 'MacIntel';
   const windows = platform === 'Win32';
+  const electron = ua.toLowerCase().indexOf('electron') >= 0;
 
   device.ie = ie;
   device.edge = edge;
@@ -90,7 +92,7 @@ const Device = (function Device() {
   device.standalone = device.webView;
 
   // Desktop
-  device.desktop = !(device.ios || device.android || device.windowsPhone);
+  device.desktop = !(device.ios || device.android || device.windowsPhone) || device.electron;
   if (device.desktop) {
     device.macos = macos;
     device.windows = windows;
