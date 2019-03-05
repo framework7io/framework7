@@ -169,12 +169,12 @@ html {
   }
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./panel-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./panel-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./panel-aurora.less');
-}
+});

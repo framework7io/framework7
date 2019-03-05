@@ -120,12 +120,12 @@ html.with-modal-dialog {
     .not-scrollable();
   }
 }
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./dialog-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./dialog-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./dialog-aurora.less');
-}
+});

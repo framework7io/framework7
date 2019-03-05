@@ -212,12 +212,12 @@
     transform: translate3d(0,0,0);
   }
 }
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./messages-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./messages-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./messages-aurora.less');
-}
+});

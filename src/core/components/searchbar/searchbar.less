@@ -250,12 +250,12 @@
 
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./searchbar-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./searchbar-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./searchbar-aurora.less');
-}
+});

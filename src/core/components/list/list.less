@@ -596,12 +596,12 @@ li.list-group-title,
   }
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./list-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./list-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./list-aurora.less');
-}
+});

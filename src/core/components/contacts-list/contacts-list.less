@@ -18,12 +18,12 @@
     .hairline-remove(bottom);
   }
 }
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./contacts-list-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./contacts-list-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./contacts-list-aurora.less');
-}
+});

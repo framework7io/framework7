@@ -406,12 +406,12 @@ textarea {
     background: var(--f7-list-bg-color);
   }
 }
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./input-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./input-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./input-aurora.less');
-}
+});

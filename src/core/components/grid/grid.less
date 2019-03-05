@@ -60,9 +60,12 @@
   }
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./grid-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./grid-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./grid-aurora.less');
+});

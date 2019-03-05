@@ -97,12 +97,12 @@
   }
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./autocomplete-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./autocomplete-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./autocomplete-aurora.less');
-}
+});

@@ -222,12 +222,12 @@
   --f7-range-scale-step-width: var(--f7-range-scale-substep-width);
   --f7-range-scale-step-height: var(--f7-range-scale-substep-height);
 }
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./range-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./range-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./range-aurora.less');
-}
+});

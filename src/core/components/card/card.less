@@ -309,12 +309,12 @@
     backdrop-filter: blur(0px);
   }
 }
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./card-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./card-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./card-aurora.less');
-}
+});

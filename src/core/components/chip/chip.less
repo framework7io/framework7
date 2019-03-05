@@ -104,12 +104,12 @@
   --f7-chip-outline-border-color: var(--f7-theme-color);
   --f7-chip-text-color: var(--f7-theme-color);
 }
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./chip-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./chip-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./chip-aurora.less');
-}
+});

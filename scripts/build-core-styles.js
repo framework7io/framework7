@@ -65,9 +65,14 @@ async function buildBundle(config, components, themes, rtl, cb) {
     .replace('$themeColor', config.themeColor)
     .replace('$rtl', rtl);
 
-  const cssContent = await autoprefixer(
-    await less(lessContent, path.resolve(__dirname, '../src/core'))
-  );
+  let cssContent;
+  try {
+    cssContent = await autoprefixer(
+      await less(lessContent, path.resolve(__dirname, '../src/core'))
+    );
+  } catch (err) {
+    console.log(err);
+  }
 
   // Write file
   fs.writeFileSync(`${output}/css/${outputFileName}.css`, `${banner}\n${cssContent}`);
@@ -108,9 +113,14 @@ async function buildCore(themes, rtl, cb) {
     .replace('$themeColor', config.themeColor)
     .replace('$rtl', rtl);
 
-  const cssContent = await autoprefixer(
-    await less(lessContent, path.resolve(__dirname, '../src/core'))
-  );
+  let cssContent;
+  try {
+    cssContent = await autoprefixer(
+      await less(lessContent, path.resolve(__dirname, '../src/core'))
+    );
+  } catch (e) {
+    console.log(e);
+  }
 
   // Write file
   fs.writeFileSync(`${output}/css/framework7${rtl ? '.rtl' : ''}.css`, `${banner}\n${cssContent}`);

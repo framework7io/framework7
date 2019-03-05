@@ -241,12 +241,12 @@
 }
 
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./navbar-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./navbar-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./navbar-aurora.less');
-}
+});

@@ -207,12 +207,12 @@
   border-color: var(--f7-theme-color-border-color) !important;
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./typography-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./typography-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./typography-aurora.less');
-}
+});

@@ -168,12 +168,12 @@
 .messagebar ~ * {
   --f7-page-toolbar-bottom-offset: var(--f7-messagebar-height);
 }
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./messagebar-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./messagebar-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./messagebar-aurora.less');
-}
+});

@@ -56,9 +56,12 @@ a.list-button,
 [class*="ripple-color-"] {
   --f7-touch-ripple-color: var(--f7-theme-color-ripple-color);
 }
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./touch-ripple-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./touch-ripple-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./touch-ripple-aurora.less');
+});

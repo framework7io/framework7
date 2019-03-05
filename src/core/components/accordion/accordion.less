@@ -132,12 +132,12 @@
   }
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./accordion-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./accordion-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./accordion-aurora.less');
-}
+});

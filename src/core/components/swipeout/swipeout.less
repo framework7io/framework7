@@ -84,12 +84,12 @@
     --f7-swipeout-button-bg-color: var(--f7-theme-color);
   }
 }
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./swipeout-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./swipeout-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./swipeout-aurora.less');
-}
+});

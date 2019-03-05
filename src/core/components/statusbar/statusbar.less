@@ -39,12 +39,12 @@
   padding-top: var(--f7-statusbar-height);
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./statusbar-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./statusbar-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./statusbar-aurora.less');
-}
+});

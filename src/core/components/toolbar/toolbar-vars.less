@@ -11,7 +11,7 @@
   --f7-tabbar-label-text-transform: none;
   --f7-toolbar-hide-show-transition-duration: 400ms;
 }
-.ios {
+.ios-vars({
   --f7-toolbar-height: 44px;
   --f7-toolbar-font-size: 17px;
   --f7-toolbar-inner-padding-left: 8px;
@@ -34,8 +34,8 @@
   --f7-tabbar-label-tablet-font-size: 14px;
   --f7-tabbar-label-font-weight: 400;
   --f7-tabbar-label-letter-spacing: 0.01;
-}
-.md {
+});
+.md-vars({
   --f7-toolbar-height: 48px;
   --f7-toolbar-font-size: 14px;
   --f7-toolbar-inner-padding-left: 0px;
@@ -64,8 +64,8 @@
   .theme-dark, &.theme-dark {
     --f7-tabbar-link-inactive-color: rgba(255,255,255,0.54);
   }
-}
-.aurora {
+});
+.aurora-vars({
   --f7-toolbar-height: 38px;
   --f7-toolbar-font-size: 14px;
   --f7-toolbar-inner-padding-left: 15px;
@@ -91,4 +91,4 @@
     --f7-tabbar-link-active-color: #fff;
     --f7-tabbar-link-inactive-bg-color: #000;
   }
-}
+});

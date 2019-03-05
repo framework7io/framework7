@@ -182,12 +182,12 @@
   box-shadow: var(--f7-stepper-raised-box-shadow);
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./stepper-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./stepper-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./stepper-aurora.less');
-}
+});

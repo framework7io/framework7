@@ -142,12 +142,12 @@
   }
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./picker-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./picker-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./picker-aurora.less');
-}
+});

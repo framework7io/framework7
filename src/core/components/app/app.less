@@ -95,12 +95,12 @@ html.device-full-viewport {
   }
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./app-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./app-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./app-aurora.less');
-}
+});

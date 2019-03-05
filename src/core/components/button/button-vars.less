@@ -15,7 +15,7 @@
   --f7-button-raised-pressed-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   --f7-segmented-raised-divider-color: rgba(0,0,0,0.1);
 }
-.ios {
+.ios-vars({
   --f7-button-height: 29px;
   --f7-button-padding-horizontal: 10px;
   --f7-button-border-radius: 5px;
@@ -35,8 +35,8 @@
   --f7-button-small-font-weight: 600;
   --f7-button-small-text-transform: uppercase;
   --f7-button-small-outline-border-width: 2px;
-}
-.md {
+});
+.md-vars({
   --f7-button-height: 36px;
   --f7-button-padding-horizontal: 8px;
   --f7-button-border-radius: 4px;
@@ -59,9 +59,8 @@
   .theme-dark, &.theme-dark {
     --f7-button-pressed-bg-color: rgba(255,255,255,0.1);
   }
-}
-
-.aurora {
+});
+.aurora-vars({
   /*
   --f7-button-hover-bg-color: rgba(var(--f7-theme-color-rgb), .07);
   --f7-button-fill-hover-bg-color: var(--f7-theme-color-tint);
@@ -87,4 +86,4 @@
   --f7-button-small-font-weight: 600;
   --f7-button-small-text-transform: none;
   --f7-button-small-outline-border-width: 1px;
-}
+});

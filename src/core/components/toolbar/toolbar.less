@@ -279,12 +279,12 @@
   transform: translate3d(0, calc(-1 * (var(--f7-navbar-height) + var(--f7-navbar-large-title-height))), 0);
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./toolbar-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./toolbar-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./toolbar-aurora.less');
-}
+});

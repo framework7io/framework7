@@ -113,12 +113,12 @@
   --f7-page-subnavbar-offset: var(--f7-subnavbar-height);
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./subnavbar-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./subnavbar-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./subnavbar-aurora.less');
-}
+});

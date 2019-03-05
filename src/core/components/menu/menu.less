@@ -187,12 +187,12 @@
   }
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./menu-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./menu-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./menu-aurora.less');
-}
+});

@@ -13,12 +13,12 @@
     height: calc(100% - var(--f7-appbar-app-offset, 0px));
   }
 }
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./view-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./view-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./view-aurora.less');
-}
+});

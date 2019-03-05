@@ -84,15 +84,15 @@
   .page-fake-opacity();
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./page-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./page-md.less');
-}
-& when (@includeAuroraTheme) {
+});
+.if-aurora-theme({
   @import url('./page-aurora.less');
-}
+});
 
 .view:not(.view-master-detail) {
   .page-master-stacked {
