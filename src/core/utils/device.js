@@ -92,8 +92,9 @@ const Device = (function Device() {
   device.standalone = device.webView;
 
   // Desktop
-  device.desktop = !(device.ios || device.android || device.windowsPhone) || device.electron;
+  device.desktop = !(device.ios || device.android || device.windowsPhone) || electron;
   if (device.desktop) {
+    device.electron = electron;
     device.macos = macos;
     device.windows = windows;
   }
