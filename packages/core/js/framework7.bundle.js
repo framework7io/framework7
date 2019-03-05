@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.6
+ * Framework7 4.1.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 25, 2019
+ * Released on: March 4, 2019
  */
 
 (function (global, factory) {
@@ -7806,7 +7806,7 @@
       router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
 
       // Preload previous page
-      var preloadPreviousPage = router.params.preloadPreviousPage || (app.theme.ios ? router.params.iosSwipeBack : router.params.mdSwipeBack);
+      var preloadPreviousPage = router.params.preloadPreviousPage || (app.theme === 'ios' ? router.params.iosSwipeBack : router.params.mdSwipeBack);
       if (preloadPreviousPage && router.history[router.history.length - 2] && !isMaster) {
         router.back(router.history[router.history.length - 2], { preload: true });
       }
@@ -9199,7 +9199,6 @@
         console.warn('Framework7: wrong or not complete pushState configuration, trying to guess pushStateRoot');
         pushStateRoot = doc.location.pathname.split('index.html')[0];
       }
-
       if (!pushState || !pushStateOnLoad) {
         if (!initUrl) {
           initUrl = documentUrl;
@@ -9341,7 +9340,8 @@
             animate: pushStateAnimateOnLoad,
             once: {
               pageAfterIn: function pageAfterIn() {
-                if (router.history.length > 2) {
+                var preloadPreviousPage = router.params.preloadPreviousPage || router.params[((app.theme) + "SwipeBack")];
+                if (preloadPreviousPage && router.history.length > 2) {
                   router.back({ preload: true });
                 }
               },
@@ -17930,6 +17930,9 @@
       var scaleY = maxHeight / cardHeight;
 
       var offset = $cardEl.offset();
+      var pageOffset = $pageEl.offset();
+      offset.left -= pageOffset.left;
+      offset.top -= pageOffset.top;
 
       var cardLeftOffset;
       var cardTopOffset;
@@ -18009,6 +18012,9 @@
 
         $cardEl.transform('translate3d(0px, 0px, 0) scale(1)');
         offset = $cardEl.offset();
+        pageOffset = $pageEl.offset();
+        offset.left -= pageOffset.left;
+        offset.top -= pageOffset.top;
 
         cardLeftOffset = offset.left - (pageWidth - maxWidth) / 2;
         if (app.rtl) { cardLeftOffset -= $cardEl[0].scrollLeft; }
@@ -18694,7 +18700,7 @@
         }
         if ($errorEl.length > 0) {
           $itemInputEl.addClass('item-input-with-error-message');
-          $inputWrapEl.addClass('input-with-eror-message');
+          $inputWrapEl.addClass('input-with-error-message');
         }
         $itemInputEl.addClass('item-input-invalid');
         $inputWrapEl.addClass('input-invalid');
@@ -22597,7 +22603,7 @@
       if (calendar.params.renderToolbar) {
         return calendar.params.renderToolbar.call(calendar, calendar);
       }
-      return ("\n    <div class=\"toolbar toolbar-top no-shadow\">\n      <div class=\"toolbar-inner\">\n        " + (calendar.renderMonthSelector()) + "\n        " + (calendar.renderYearSelector()) + "\n      </div>\n    </div>\n  ").trim();
+      return ("\n    <div class=\"toolbar toolbar-top no-shadow\">\n      <div class=\"toolbar-inner\">\n        " + (calendar.params.monthSelector ? calendar.renderMonthSelector() : '') + "\n        " + (calendar.params.yearSelector ? calendar.renderYearSelector() : '') + "\n      </div>\n    </div>\n  ").trim();
     };
     // eslint-disable-next-line
     Calendar.prototype.renderInline = function renderInline () {
@@ -35210,11 +35216,24 @@
           if (!text) { return; }
           app.tooltip.create({ targetEl: el, text: text });
         });
+        if (app.theme === 'ios' && page.view && page.view.router.separateNavbar && page.$navbarEl && page.$navbarEl.length > 0) {
+          page.$navbarEl.find('.tooltip-init').each(function (index, el) {
+            var text = $(el).attr('data-tooltip');
+            if (!text) { return; }
+            app.tooltip.create({ targetEl: el, text: text });
+          });
+        }
       },
       pageBeforeRemove: function pageBeforeRemove(page) {
+        var app = this;
         page.$el.find('.tooltip-init').each(function (index, el) {
           if (el.f7Tooltip) { el.f7Tooltip.destroy(); }
         });
+        if (app.theme === 'ios' && page.view && page.view.router.separateNavbar && page.$navbarEl && page.$navbarEl.length > 0) {
+          page.$navbarEl.find('.tooltip-init').each(function (index, el) {
+            if (el.f7Tooltip) { el.f7Tooltip.destroy(); }
+          });
+        }
       },
     },
     vnode: {

@@ -1,5 +1,5 @@
 /**
- * Framework7 4.0.6
+ * Framework7 4.1.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 25, 2019
+ * Released on: March 4, 2019
  */
 
 /*====================
@@ -3829,6 +3829,10 @@ li.list-group-title,
   font-weight: var(--f7-list-group-title-font-weight);
   background-color: var(--f7-list-group-title-bg-color);
   line-height: var(--f7-list-group-title-line-height);
+}
+.page-with-navbar-large li.list-group-title,
+.page-with-navbar-large .list li.list-group-title {
+  top: calc(-1 * var(--f7-navbar-large-title-height));
 }
 .list.inset {
   margin-left: calc(var(--f7-list-inset-side-margin) + var(--f7-safe-area-outer-left));
@@ -8237,6 +8241,18 @@ html.with-panel-right-cover .panel-right {
   --f7-input-error-font-weight: 400;
   --f7-input-info-font-size: 12px;
   --f7-input-info-line-height: 1.4;
+  --f7-input-outline-height: 40px;
+  --f7-input-outline-border-color: #999;
+  --f7-input-outline-border-radius: 4px;
+  --f7-input-outline-padding-horizontal: 12px;
+  /*
+  --f7-input-outline-focused-border-color: var(--f7-theme-color);
+  --f7-input-outline-invalid-border-color: var(--f7-input-error-text-color);
+  */
+}
+:root .theme-dark,
+:root.theme-dark {
+  --f7-input-outline-border-color: #444;
 }
 .ios {
   --f7-input-height: 44px;
@@ -8283,7 +8299,7 @@ html.with-panel-right-cover .panel-right {
   --f7-inline-label-font-size: 16px;
   --f7-inline-label-line-height: 1.5;
   --f7-input-info-text-color: rgba(0, 0, 0, 0.45);
-  --f7-input-clear-button-size: 24px;
+  --f7-input-clear-button-size: 18px;
   --f7-input-clear-button-color: #aaa;
 }
 .md .theme-dark,
@@ -8448,12 +8464,13 @@ textarea {
   transition-property: transform, color;
 }
 .list .item-floating-label {
-  transform: scale(var(--f7-floating-label-scale)) translateY(calc(var(--f7-input-height) / 2));
+  --label-height: calc(var(--f7-label-font-size) * var(--f7-label-line-height));
+  transform: scale(var(--f7-floating-label-scale)) translateY(calc((var(--f7-input-height) / 2 + 50%) / var(--f7-floating-label-scale)));
   color: var(--f7-input-placeholder-color);
   width: auto;
   max-width: calc(100% / var(--f7-floating-label-scale));
   pointer-events: none;
-  transform-origin: right bottom;
+  transform-origin: right center;
 }
 .list .item-floating-label ~ .item-input-wrap input::-webkit-input-placeholder,
 .list .item-floating-label ~ .item-input-wrap textarea::-webkit-input-placeholder {
@@ -8508,7 +8525,9 @@ textarea {
   position: relative;
 }
 .item-input .item-inner {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 .item-input-error-message,
 .input-error-message {
@@ -8517,6 +8536,7 @@ textarea {
   color: var(--f7-input-error-text-color);
   font-weight: var(--f7-input-error-font-weight);
   display: none;
+  box-sizing: border-box;
 }
 .item-input-info,
 .input-info {
@@ -8539,6 +8559,8 @@ textarea {
 .inline-labels .item-inner,
 .inline-label .item-inner {
   display: flex;
+  align-items: center;
+  flex-direction: row;
 }
 .inline-labels .item-label,
 .inline-label .item-label,
@@ -8644,7 +8666,93 @@ textarea {
 .input-dropdown input,
 .input-dropdown-wrap textarea,
 .input-dropdown textarea {
-  padding-right: 20px;
+  padding-left: 20px;
+}
+.input-outline:after,
+.item-input-outline .item-input-wrap:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--f7-input-outline-border-color);
+  border-radius: var(--f7-input-outline-border-radius);
+  transition-duration: 200ms;
+  pointer-events: none;
+}
+.input-outline.input-focused:after,
+.item-input-outline.item-input-focused .item-input-wrap:after {
+  border-width: 2px;
+  border-color: var(--f7-input-outline-focused-border-color, var(--f7-theme-color));
+}
+.input-outline.input-invalid:after,
+.item-input-outline.item-input-invalid .item-input-wrap:after {
+  border-width: 2px;
+  border-color: var(--f7-input-outline-invalid-border-color, var(--f7-input-error-text-color));
+}
+.input-outline input,
+.item-input-outline input,
+.input-outline textarea,
+.item-input-outline textarea,
+.input-outline select,
+.item-input-outline select {
+  padding: 0 var(--f7-input-outline-padding-horizontal);
+  border-radius: var(--f7-input-outline-border-radius);
+}
+.input-outline.input-dropdown:before,
+.item-input-outline .input-dropdown-wrap:before {
+  left: 8px;
+}
+.input-outline.input-dropdown input,
+.item-input-outline .input-dropdown-wrap input,
+.input-outline.input-dropdown textarea,
+.item-input-outline .input-dropdown-wrap textarea,
+.input-outline.input-dropdown select,
+.item-input-outline .input-dropdown-wrap select {
+  padding-left: 20px;
+}
+.input-outline .input-clear-button,
+.item-input-outline .input-clear-button {
+  left: 8px;
+}
+.item-input-outline {
+  --f7-input-height: var(--f7-input-outline-height);
+}
+.item-input-outline .item-inner:after {
+  display: none !important;
+}
+.item-input-outline .item-label {
+  right: var(--f7-input-outline-padding-horizontal);
+}
+.inline-labels .item-input-outline .item-label,
+.inline-label .item-input-outline .item-label,
+.item-input-outline .inline-label .item-label,
+.item-input-outline .inline-label.item-label {
+  right: 0;
+}
+.item-input-outline .item-floating-label {
+  right: calc(var(--f7-input-outline-padding-horizontal) - 4px);
+  padding-left: 4px;
+  padding-right: 4px;
+  background: var(--f7-page-bg-color);
+  z-index: 10;
+  margin-top: calc(-0.5 * (var(--f7-label-font-size) * var(--f7-label-line-height)));
+}
+.item-input-outline.item-input-with-value .item-floating-label,
+.item-input-outline.item-input-focused .item-floating-label {
+  transform: scale(1) translateY(50%);
+}
+.item-input-outline .item-input-info,
+.item-input-outline .item-input-error-message {
+  padding-right: var(--f7-input-outline-padding-horizontal);
+}
+.block-strong .item-input-outline .item-floating-label {
+  background: var(--f7-block-strong-bg-color);
+}
+.list .item-input-outline .item-floating-label {
+  background: var(--f7-list-bg-color);
 }
 .ios .list textarea {
   padding-top: 11px;
@@ -8721,12 +8829,54 @@ textarea {
   margin-left: -22px;
   margin-top: -22px;
 }
+.ios .item-input-outline .item-input-wrap,
+.ios .input-outline .item-input-wrap {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.ios .item-input-outline .item-input-error-message,
+.ios .input-outline .item-input-error-message,
+.ios .item-input-outline .item-input-info,
+.ios .input-outline .item-input-info,
+.ios .item-input-outline .input-error-message,
+.ios .input-outline .input-error-message,
+.ios .item-input-outline .input-info,
+.ios .input-outline .input-info {
+  margin-top: 0;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ios .item-input-outline .item-input-info,
+.ios .input-outline .item-input-info,
+.ios .item-input-outline .input-info,
+.ios .input-outline .input-info {
+  margin-bottom: calc(-1 * var(--f7-input-info-font-size) * var(--f7-input-info-line-height));
+}
+.ios .item-input-outline .item-input-error-message,
+.ios .input-outline .item-input-error-message,
+.ios .item-input-outline .input-error-message,
+.ios .input-outline .input-error-message {
+  margin-bottom: calc(-1 * var(--f7-input-error-font-size) * var(--f7-input-error-line-height));
+}
+.ios .item-input-outline.item-input-with-info .item-input-wrap,
+.ios .input-outline.item-input-with-info .item-input-wrap,
+.ios .item-input-outline.input-with-info .item-input-wrap,
+.ios .input-outline.input-with-info .item-input-wrap {
+  margin-bottom: calc(var(--f7-input-info-font-size) * var(--f7-input-info-line-height));
+}
+.ios .item-input-outline.item-input-with-error-message .item-input-wrap,
+.ios .input-outline.item-input-with-error-message .item-input-wrap,
+.ios .item-input-outline.input-with-error-message .item-input-wrap,
+.ios .input-outline.input-with-error-message .item-input-wrap {
+  margin-bottom: calc(var(--f7-input-error-font-size) * var(--f7-input-error-line-height));
+}
 .md .list textarea {
   padding-top: 7px;
   padding-bottom: 7px;
 }
-.md .item-input-wrap:after,
-.md .input:after {
+.md .item-input:not(.item-input-outline) .item-input-wrap:after,
+.md .input:not(.input-outline):after {
   content: '';
   position: absolute;
   background-color: var(--f7-list-item-border-color);
@@ -8741,8 +8891,8 @@ textarea {
   transform-origin: 50% 100%;
   transform: scaleY(calc(1 / var(--f7-device-pixel-ratio)));
 }
-.md .item-input-wrap:after,
-.md .input:after {
+.md .item-input:not(.item-input-outline) .item-input-wrap:after,
+.md .input:not(.input-outline):after {
   transition-duration: 200ms;
 }
 .md .item-input-wrap {
@@ -8788,18 +8938,18 @@ textarea {
 .md .item-input-focused .item-floating-label {
   color: var(--f7-label-focused-text-color, var(--f7-theme-color));
 }
-.md .item-input-focused .item-input-wrap:after,
-.md .input-focused:after {
+.md .item-input-focused:not(.item-input-outline) .item-input-wrap:after,
+.md .input-focused:not(.input-outline):after {
   background: var(--f7-input-focused-border-color, var(--f7-theme-color));
 }
-.md .item-input-invalid .item-input-wrap:after,
-.md .item-input-focused .item-input-wrap:after,
-.md .input-invalid:after,
-.md .input-focused:after {
+.md .item-input-invalid:not(.item-input-outline) .item-input-wrap:after,
+.md .item-input-focused:not(.item-input-outline) .item-input-wrap:after,
+.md .input-invalid:not(.input-outline):after,
+.md .input-focused::not(.input-outline):after {
   transform: scaleY(2) !important;
 }
-.md .item-input-invalid .item-input-wrap:after,
-.md .input-invalid:after {
+.md .item-input-invalid:not(.item-input-outline) .item-input-wrap:after,
+.md .input-invalid:not(.input-outline):after {
   background: var(--f7-input-invalid-border-color, var(--f7-input-error-text-color));
 }
 .md .item-input-invalid .item-label,
@@ -10722,6 +10872,8 @@ label.item-radio.disabled,
   width: 50%;
   max-width: 200px;
   flex-shrink: 10;
+  margin-left: auto;
+  margin-right: auto;
 }
 .calendar-month-selector .calendar-day-number,
 .calendar-year-selector .calendar-day-number {

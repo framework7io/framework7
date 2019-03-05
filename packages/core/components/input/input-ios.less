@@ -85,4 +85,41 @@
       margin-top: -22px;
     }
   }
+
+  .item-input-outline,
+  .input-outline {
+    .item-input-wrap {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+    .item-input-error-message,
+    .item-input-info,
+    .input-error-message,
+    .input-info {
+      margin-top: 0;
+      white-space: normal;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .item-input-info,
+    .input-info {
+      margin-bottom: calc(-1 * var(--f7-input-info-font-size) * var(--f7-input-info-line-height));
+    }
+    .item-input-error-message,
+    .input-error-message {
+      margin-bottom: calc(-1 * var(--f7-input-error-font-size) * var(--f7-input-error-line-height));
+    }
+    &.item-input-with-info,
+    &.input-with-info {
+      .item-input-wrap {
+        margin-bottom: calc(var(--f7-input-info-font-size) * var(--f7-input-info-line-height));;
+      }
+    }
+    &.item-input-with-error-message,
+    &.input-with-error-message {
+      .item-input-wrap {
+        margin-bottom: calc(var(--f7-input-error-font-size) * var(--f7-input-error-line-height));;
+      }
+    }
+  }
 }

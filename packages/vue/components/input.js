@@ -46,6 +46,7 @@ export default {
     errorMessage: String,
     errorMessageForce: Boolean,
     info: String,
+    outline: Boolean,
     wrap: {
       type: Boolean,
       default: true
@@ -117,7 +118,8 @@ export default {
       className,
       noStoreData,
       noFormStoreData,
-      ignoreStoreData
+      ignoreStoreData,
+      outline
     } = props;
     const domValue = self.domValue();
     const inputHasValue = self.inputHasValue();
@@ -242,6 +244,7 @@ export default {
 
     if (wrap) {
       const wrapClasses = Utils.classNames(className, 'input', {
+        'input-outline': outline,
         'input-dropdown': dropdown === 'auto' ? type === 'select' : dropdown
       }, Mixins.colorClasses(props));
       return _h('div', {

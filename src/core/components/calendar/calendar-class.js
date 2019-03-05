@@ -1094,8 +1094,8 @@ class Calendar extends Framework7Class {
     return `
     <div class="toolbar toolbar-top no-shadow">
       <div class="toolbar-inner">
-        ${calendar.renderMonthSelector()}
-        ${calendar.renderYearSelector()}
+        ${calendar.params.monthSelector ? calendar.renderMonthSelector() : ''}
+        ${calendar.params.yearSelector ? calendar.renderYearSelector() : ''}
       </div>
     </div>
   `.trim();
