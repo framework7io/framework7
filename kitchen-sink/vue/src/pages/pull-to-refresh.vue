@@ -1,5 +1,5 @@
 <template>
-  <f7-page ptr @ptr:refresh="loadMore">
+  <f7-page ptr :ptr-mousewheel="true" @ptr:refresh="loadMore">
     <f7-navbar title="Pull To Refresh" back-link="Back"></f7-navbar>
     <f7-list media-list>
       <f7-list-item
