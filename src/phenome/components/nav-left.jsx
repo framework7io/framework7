@@ -12,6 +12,10 @@ export default {
     backLink: [Boolean, String],
     backLinkUrl: String,
     backLinkForce: Boolean,
+    backLinkShowText: {
+      type: Boolean,
+      default: undefined,
+    },
     sliding: Boolean,
     ...Mixins.colorProps,
   },
@@ -21,6 +25,7 @@ export default {
       backLink,
       backLinkUrl,
       backLinkForce,
+      backLinkShowText,
       sliding,
       className,
       style,
@@ -28,6 +33,9 @@ export default {
     } = props;
 
     let linkEl;
+    let needBackLinkText = backLinkShowText;
+    if (typeof needBackLinkText === 'undefined') needBackLinkText = !this.$theme.md;
+
     if (backLink) {
       linkEl = (
         <F7Link
@@ -36,7 +44,7 @@ export default {
           icon="icon-back"
           force={backLinkForce || undefined}
           className={(backLink === true || (backLink && this.$theme.md)) ? 'icon-only' : undefined}
-          text={backLink !== true && !this.$theme.md ? backLink : undefined}
+          text={backLink !== true && needBackLinkText ? backLink : undefined}
           onClick={this.onBackClick}
         />
       );
@@ -65,7 +73,7 @@ export default {
     );
   },
   componentDidCreate() {
-    Utils.bindMethods(this, ['onBackClick'])
+    Utils.bindMethods(this, ['onBackClick']);
   },
   methods: {
     onBackClick(event) {

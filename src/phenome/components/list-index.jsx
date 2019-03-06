@@ -41,6 +41,10 @@ export default {
       type: Number,
       default: 14,
     },
+    auroraItemHeight: {
+      type: Number,
+      default: 14,
+    },
     ...Mixins.colorProps,
   },
   render() {
@@ -76,7 +80,7 @@ export default {
     self.$f7ready((f7) => {
       const el = self.refs.el;
       const {
-        listEl, indexes, iosItemHeight, mdItemHeight, scrollList, label,
+        listEl, indexes, iosItemHeight, mdItemHeight, auroraItemHeight, scrollList, label,
       } = self.props;
 
       self.f7ListIndex = f7.listIndex.create({
@@ -85,6 +89,7 @@ export default {
         indexes,
         iosItemHeight,
         mdItemHeight,
+        auroraItemHeight,
         scrollList,
         label,
         on: {

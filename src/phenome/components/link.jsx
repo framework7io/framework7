@@ -69,10 +69,9 @@ export default {
       iconIon,
       iconFa,
       iconF7,
-      iconIfMd,
-      iconIfIos,
       iconMd,
       iconIos,
+      iconAurora,
       id,
       style,
     } = props;
@@ -93,9 +92,7 @@ export default {
         </span>
       );
     }
-    const mdThemeIcon = iconIfMd || iconMd;
-    const iosThemeIcon = iconIfIos || iconIos;
-    if (icon || iconMaterial || iconIon || iconFa || iconF7 || mdThemeIcon || iosThemeIcon) {
+    if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconMd || iconIos || iconAurora) {
       if (iconBadge) {
         iconBadgeEl = <F7Badge color={badgeColor}>{iconBadge}</F7Badge>;
       }
@@ -106,8 +103,9 @@ export default {
           fa={iconFa}
           ion={iconIon}
           icon={icon}
-          md={mdThemeIcon}
-          ios={iosThemeIcon}
+          md={iconMd}
+          ios={iconIos}
+          aurora={iconAurora}
           color={iconColor}
           size={iconSize}
         >{iconBadgeEl}</F7Icon>
@@ -145,7 +143,7 @@ export default {
     },
   },
   componentDidCreate() {
-    Utils.bindMethods(this, ['onClick'])
+    Utils.bindMethods(this, ['onClick']);
   },
   componentDidMount() {
     const self = this;

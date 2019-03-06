@@ -31,21 +31,27 @@ export default {
     round: Boolean,
     roundMd: Boolean,
     roundIos: Boolean,
+    roundAurora: Boolean,
     fill: Boolean,
     fillMd: Boolean,
     fillIos: Boolean,
+    fillAurora: Boolean,
     large: Boolean,
     largeMd: Boolean,
     largeIos: Boolean,
+    largeAurora: Boolean,
     small: Boolean,
     smallMd: Boolean,
     smallIos: Boolean,
+    smallAurora: Boolean,
     raised: Boolean,
     raisedMd: Boolean,
     raisedIos: Boolean,
+    raisedAurora: Boolean,
     outline: Boolean,
     outlineMd: Boolean,
     outlineIos: Boolean,
+    outlineAurora: Boolean,
     active: Boolean,
     disabled: Boolean,
     tooltip: String,
@@ -67,10 +73,9 @@ export default {
       iconIon,
       iconFa,
       iconF7,
-      iconIfMd,
-      iconIfIos,
       iconMd,
       iconIos,
+      iconAurora,
       iconColor,
       iconSize,
       id,
@@ -80,9 +85,7 @@ export default {
     if (text) {
       textEl = (<span>{text}</span>);
     }
-    const mdThemeIcon = iconIfMd || iconMd;
-    const iosThemeIcon = iconIfIos || iconIos;
-    if (icon || iconMaterial || iconIon || iconFa || iconF7 || mdThemeIcon || iosThemeIcon) {
+    if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconMd || iconIos || iconAurora) {
       iconEl = (
         <F7Icon
           material={iconMaterial}
@@ -90,8 +93,9 @@ export default {
           fa={iconFa}
           f7={iconF7}
           icon={icon}
-          md={mdThemeIcon}
-          ios={iosThemeIcon}
+          md={iconMd}
+          ios={iconIos}
+          aurora={iconAurora}
           color={iconColor}
           size={iconSize}
         />
@@ -139,22 +143,28 @@ export default {
         tabLinkActive,
         round,
         roundIos,
+        roundAurora,
         roundMd,
         fill,
         fillIos,
+        fillAurora,
         fillMd,
         large,
         largeIos,
+        largeAurora,
         largeMd,
         small,
         smallIos,
+        smallAurora,
         smallMd,
         raised,
         raisedIos,
+        raisedAurora,
         raisedMd,
         active,
         outline,
         outlineIos,
+        outlineAurora,
         outlineMd,
         disabled,
         className,
@@ -170,22 +180,28 @@ export default {
 
           'button-round': round,
           'button-round-ios': roundIos,
+          'button-round-aurora': roundAurora,
           'button-round-md': roundMd,
           'button-fill': fill,
           'button-fill-ios': fillIos,
+          'button-fill-aurora': fillAurora,
           'button-fill-md': fillMd,
           'button-large': large,
           'button-large-ios': largeIos,
+          'button-large-aurora': largeAurora,
           'button-large-md': largeMd,
           'button-small': small,
           'button-small-ios': smallIos,
+          'button-small-aurora': smallAurora,
           'button-small-md': smallMd,
           'button-raised': raised,
           'button-raised-ios': raisedIos,
+          'button-raised-aurora': raisedAurora,
           'button-raised-md': raisedMd,
           'button-active': active,
           'button-outline': outline,
           'button-outline-ios': outlineIos,
+          'button-outline-aurora': outlineAurora,
           'button-outline-md': outlineMd,
 
           disabled,

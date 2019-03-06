@@ -147,7 +147,7 @@ export default {
       if (useDefaultBackdrop) {
         sheetParams.backdrop = f7.params.sheet && f7.params.sheet.backdrop !== undefined
           ? f7.params.sheet.backdrop
-          : self.$theme.md;
+          : !self.$theme.ios;
       } else {
         sheetParams.backdrop = backdrop;
       }

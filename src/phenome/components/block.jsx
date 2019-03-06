@@ -17,6 +17,7 @@ export default {
     noHairlines: Boolean,
     noHairlinesMd: Boolean,
     noHairlinesIos: Boolean,
+    noHairlinesAurora: Boolean,
     ...Mixins.colorProps,
   },
   componentDidCreate() {
@@ -49,6 +50,7 @@ export default {
       noHairlines,
       noHairlinesIos,
       noHairlinesMd,
+      noHairlinesAurora,
       id,
       style,
     } = props;
@@ -66,6 +68,7 @@ export default {
         'no-hairlines': noHairlines,
         'no-hairlines-md': noHairlinesMd,
         'no-hairlines-ios': noHairlinesIos,
+        'no-hairlines-aurora': noHairlinesAurora,
       },
       Mixins.colorClasses(props),
     );

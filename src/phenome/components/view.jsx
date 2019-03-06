@@ -53,6 +53,11 @@ export default {
     mdSwipeBackAnimateOpacity: Boolean,
     mdSwipeBackActiveArea: Number,
     mdSwipeBackThreshold: Number,
+    auroraSwipeBack: Boolean,
+    auroraSwipeBackAnimateShadow: Boolean,
+    auroraSwipeBackAnimateOpacity: Boolean,
+    auroraSwipeBackActiveArea: Number,
+    auroraSwipeBackThreshold: Number,
     // Push State
     pushState: Boolean,
     pushStateRoot: String,

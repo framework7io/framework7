@@ -16,6 +16,7 @@ export default {
       default: true,
     },
     ptrBottom: Boolean,
+    ptrMousewheel: Boolean,
     infinite: Boolean,
     infiniteTop: Boolean,
     infiniteDistance: Number,
@@ -38,6 +39,7 @@ export default {
       ptrPreloader,
       ptrDistance,
       ptrBottom,
+      ptrMousewheel,
       infinite,
       infinitePreloader,
       id,
@@ -68,6 +70,7 @@ export default {
         style={style}
         className={self.classes}
         data-ptr-distance={ptrDistance || undefined}
+        data-ptr-mousewheel={ptrMousewheel || undefined}
         data-infinite-distance={infiniteDistance || undefined}
         ref="el"
       >

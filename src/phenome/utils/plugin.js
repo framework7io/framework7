@@ -25,15 +25,18 @@ const Plugin = {
     const { theme } = params;
     if (theme === 'md') $theme.md = true;
     if (theme === 'ios') $theme.ios = true;
+    if (theme === 'aurora') $theme.aurora = true;
     if (!theme || theme === 'auto') {
-      $theme.ios = !!(Framework7.Device || Framework7.device).ios;
-      $theme.md = !(Framework7.Device || Framework7.device).ios;
+      $theme.ios = !!Framework7.device.ios;
+      $theme.aurora = Framework7.device.desktop && Framework7.device.electron;
+      $theme.md = !$theme.ios && !$theme.aurora;
     }
     Object.defineProperty(Extend.prototype, '$theme', {
       get() {
         return {
           ios: f7.instance ? f7.instance.theme === 'ios' : $theme.ios,
           md: f7.instance ? f7.instance.theme === 'md' : $theme.md,
+          aurora: f7.instance ? f7.instance.theme === 'aurora' : $theme.aurora,
         };
       },
     });

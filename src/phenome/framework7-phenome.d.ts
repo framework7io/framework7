@@ -32,6 +32,7 @@ export interface Framework7Extensions {
   $theme: {
     ios: boolean
     md: boolean
+    aurora: boolean
   }
 }
 

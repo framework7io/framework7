@@ -43,6 +43,7 @@ export default {
       default: true,
     },
     ptrBottom: Boolean,
+    ptrMousewheel: Boolean,
     infinite: Boolean,
     infiniteTop: Boolean,
     infiniteDistance: Number,
@@ -81,6 +82,7 @@ export default {
       ptrDistance,
       ptrPreloader,
       ptrBottom,
+      ptrMousewheel,
       infinite,
       infiniteDistance,
       infinitePreloader,
@@ -205,6 +207,7 @@ export default {
         ptrDistance={ptrDistance}
         ptrPreloader={ptrPreloader}
         ptrBottom={ptrBottom}
+        ptrMousewheel={ptrMousewheel}
         infinite={infinite}
         infiniteTop={infiniteTop}
         infiniteDistance={infiniteDistance}
