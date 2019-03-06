@@ -256,11 +256,11 @@ export default function (colEl, updateItems) {
     }, 100);
   }
 
-  let mouseWheelTimeout;
+  let mousewheelTimeout;
   function handleMouseWheel(e) {
     const { deltaX, deltaY } = e;
     if (Math.abs(deltaX) > Math.abs(deltaY)) return;
-    clearTimeout(mouseWheelTimeout);
+    clearTimeout(mousewheelTimeout);
 
     e.preventDefault();
 
@@ -284,10 +284,10 @@ export default function (colEl, updateItems) {
     col.$itemsEl.transform(`translate3d(0,${currentTranslate}px,0)`);
 
     // Update items
-    col.updateItems(undefined, currentTranslate, 0, picker.params.updateValuesOnMouseWheel);
+    col.updateItems(undefined, currentTranslate, 0, picker.params.updateValuesOnMousewheel);
 
     // On end
-    mouseWheelTimeout = setTimeout(() => {
+    mousewheelTimeout = setTimeout(() => {
       col.$itemsEl.transition('');
       if (returnTo) {
         if (returnTo === 'min') {
@@ -326,7 +326,7 @@ export default function (colEl, updateItems) {
     col.$el.on(app.touchEvents.start, handleTouchStart, activeListener);
     app.on('touchmove:active', handleTouchMove);
     app.on('touchend:passive', handleTouchEnd);
-    if (picker.params.mouseWheel) {
+    if (picker.params.mousewheel) {
       col.$el.on('wheel', handleMouseWheel);
     }
     col.items.on('click', handleClick);
@@ -335,7 +335,7 @@ export default function (colEl, updateItems) {
     col.$el.off(app.touchEvents.start, handleTouchStart, activeListener);
     app.off('touchmove:active', handleTouchMove);
     app.off('touchend:passive', handleTouchEnd);
-    if (picker.params.mouseWheel) {
+    if (picker.params.mousewheel) {
       col.$el.off('wheel', handleMouseWheel);
     }
     col.items.off('click', handleClick);

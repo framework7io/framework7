@@ -45,7 +45,7 @@ class PullToRefresh extends Framework7Class {
     };
 
     // Mousewheel
-    ptr.mouseWheel = $el.attr('data-ptr-mousewheel') === 'true';
+    ptr.mousewheel = $el.attr('data-ptr-mousewheel') === 'true';
 
     // Events handling
     let touchId;
@@ -304,15 +304,15 @@ class PullToRefresh extends Framework7Class {
       }
     }
 
-    let mouseWheelTimeout;
-    let mouseWheelMoved;
-    let mouseWheelAllow = true;
-    let mouseWheelTranslate = 0;
+    let mousewheelTimeout;
+    let mousewheelMoved;
+    let mousewheelAllow = true;
+    let mousewheelTranslate = 0;
 
     function handleMouseWheelRelease() {
-      mouseWheelAllow = true;
-      mouseWheelMoved = false;
-      mouseWheelTranslate = 0;
+      mousewheelAllow = true;
+      mousewheelMoved = false;
+      mousewheelTranslate = 0;
       if (translate) {
         $el.addClass('ptr-transitioning');
         translate = 0;
@@ -342,7 +342,7 @@ class PullToRefresh extends Framework7Class {
       }
     }
     function handleMouseWheel(e) {
-      if (!mouseWheelAllow) return;
+      if (!mousewheelAllow) return;
       const { deltaX, deltaY } = e;
       if (Math.abs(deltaX) > Math.abs(deltaY)) return;
       if ($el.hasClass('ptr-refreshing')) {
@@ -350,11 +350,11 @@ class PullToRefresh extends Framework7Class {
       }
       if ($(e.target).closest('.sortable-handler, .ptr-ignore, .card-expandable.card-opened').length) return;
 
-      clearTimeout(mouseWheelTimeout);
+      clearTimeout(mousewheelTimeout);
 
       scrollTop = $el[0].scrollTop;
 
-      if (!mouseWheelMoved) {
+      if (!mousewheelMoved) {
         $el.removeClass('ptr-transitioning');
         let targetIsScrollable;
         scrollHeight = $el[0].scrollHeight;
@@ -363,7 +363,7 @@ class PullToRefresh extends Framework7Class {
           maxScrollTop = scrollHeight - offsetHeight;
         }
         if (scrollTop > scrollHeight) {
-          mouseWheelAllow = false;
+          mousewheelAllow = false;
           return;
         }
         const $ptrWatchScrollable = $(e.target).closest('.ptr-watch-scroll');
@@ -383,7 +383,7 @@ class PullToRefresh extends Framework7Class {
           });
         }
         if (targetIsScrollable) {
-          mouseWheelAllow = false;
+          mousewheelAllow = false;
           return;
         }
         if (dynamicTriggerDistance) {
@@ -392,8 +392,8 @@ class PullToRefresh extends Framework7Class {
         }
       }
       isMoved = true;
-      mouseWheelTranslate -= deltaY;
-      touchesDiff = mouseWheelTranslate; // pageY - touchesStart.y;
+      mousewheelTranslate -= deltaY;
+      touchesDiff = mousewheelTranslate; // pageY - touchesStart.y;
 
       if (typeof wasScrolled === 'undefined' && (ptr.bottom ? scrollTop !== maxScrollTop : scrollTop !== 0)) wasScrolled = true;
 
@@ -454,7 +454,7 @@ class PullToRefresh extends Framework7Class {
         refresh = false;
       }
 
-      mouseWheelTimeout = setTimeout(handleMouseWheelRelease, 300);
+      mousewheelTimeout = setTimeout(handleMouseWheelRelease, 300);
     }
 
     if (!$pageEl.length || !$el.length) return ptr;
@@ -467,7 +467,7 @@ class PullToRefresh extends Framework7Class {
       $el.on(app.touchEvents.start, handleTouchStart, passive);
       app.on('touchmove:active', handleTouchMove);
       app.on('touchend:passive', handleTouchEnd);
-      if (ptr.mouseWheel && !ptr.bottom) {
+      if (ptr.mousewheel && !ptr.bottom) {
         $el.on('wheel', handleMouseWheel);
       }
     };
@@ -476,7 +476,7 @@ class PullToRefresh extends Framework7Class {
       $el.off(app.touchEvents.start, handleTouchStart, passive);
       app.off('touchmove:active', handleTouchMove);
       app.off('touchend:passive', handleTouchEnd);
-      if (ptr.mouseWheel && !ptr.bottom) {
+      if (ptr.mousewheel && !ptr.bottom) {
         $el.off('wheel', handleMouseWheel);
       }
     };
