@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#2196f3">
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap:">
+  <title>Chrome</title>
+  <link rel="stylesheet" href="../build/core/css/framework7.bundle.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <style>
+    .appbar {
+      --f7-appbar-height: 42px;
+      --f7-appbar-link-color: #333;
+      --f7-toolbar-bg-color: #e3e3e3;
+      --f7-tabbar-link-active-bg-color: #fff;
+      --f7-tabbar-link-inactive-bg-color: transparent;
+      --f7-toolbar-height: var(--f7-appbar-height);
+      --f7-tabbar-link-active-color: #333;
+    }
+    .appbar a.tab-link {
+      width: 240px;
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      justify-content: flex-start;
+      cursor: default;
+      height: calc(100% - 5px);
+      align-self: flex-end;
+      border-radius: 8px 8px 0 0;
+      user-select: none;
+    }
+    .appbar a.tab-link:not(.tab-link-active):hover {
+      background-color: rgba(255,255,255,0.5);
+    }
+    .appbar a.tab-link:first-child {
+      margin-left: 5px;
+    }
+    .appbar .close-tab {
+      margin-left: auto;
+      display: flex;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      cursor: default;
+    }
+    .appbar .close-tab:hover {
+      background: rgba(0,0,0,0.05);
+    }
+    .appbar .close-tab i {
+      font-size: 14px;
+    }
+    .appbar .label {
+      flex-shrink: 10;
+      min-width: 0;
+      margin-right: 5px;
+      overflow: hidden;
+      position: relative;
+      text-overflow: ellipsis;
+    }
+    .appbar .favicon {
+      max-width: 16px;
+      max-height: 16px;
+      margin-right: 10px;
+    }
+    .addressbar {
+      --f7-toolbar-bg-color: #fff;
+      --f7-toolbar-link-color: #666;
+      --f7-toolbar-inner-padding-left: 5px;
+      --f7-toolbar-inner-padding-right: 5px;
+      --f7-toolbar-link-height: 28px;
+    }
+    .addressbar .link {
+      flex-shrink: 0;
+      width: 28px;
+      border-radius: 14px;
+
+    }
+    .addressbar .link + .link {
+      margin-left: 5px;
+    }
+    .addressbar .link:hover {
+      background: rgba(0,0,0,0.05);
+    }
+    .addressbar-content {
+      justify-content: flex-start;
+    }
+
+    .addressbar .input {
+      width: 100%;
+      flex-shrink: 10;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      background: #eee;
+      border-radius: 14px;
+      margin-left: 5px;
+      margin-right: 5px;
+      overflow: hidden;
+      box-sizing: border-box;
+      padding: 0 2px;
+    }
+    .addressbar .input .link {
+      height: 24px;
+    }
+    .addressbar .input input {
+      height: 28px;
+      width: 100%;
+      flex-shrink: 10;
+      min-width: 0;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="appbar">
+      <div class="toolbar tabbar tabbar-scrollable">
+        <div class="toolbar-inner">
+          <a href="#tab-1" class="tab-link tab-link-active">
+            <img src="https://framework7.io/i/favicon.png" class="favicon">
+            <span class="label">Framework7</span>
+            <span class="close-tab">
+              <i class="material-icons">close</i>
+            </span>
+          </a>
+          <a href="#tab-2" class="tab-link">
+            <img src="https://framework7.io/i/favicon.png" class="favicon">
+            <span class="label">Ready To Use Framework7 Templates & Tools</span>
+            <span class="close-tab">
+              <i class="material-icons">close</i>
+            </span>
+          </a>
+          <a href="#tab-3" class="tab-link">
+            <img src="https://framework7.io/i/favicon.png" class="favicon">
+            <span class="label">Jobs | Framework7 Jobs</span>
+            <span class="close-tab">
+              <i class="material-icons">close</i>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="views tabs">
+      <div class="view tab tab-active" id="tab-1">
+        <div class="page">
+          <div class="addressbar toolbar toolbar-top">
+            <div class="toolbar-inner addressbar-content">
+              <a href="#" class="link">
+                <i class="icon material-icons">arrow_back</i>
+              </a>
+              <a href="#" class="link">
+                <i class="icon material-icons">arrow_forward</i>
+              </a>
+              <a href="#" class="link">
+                <i class="icon material-icons">refresh</i>
+              </a>
+              <div class="input">
+                <a href="#" class="link">
+                  <i class="icon material-icons">lock</i>
+                </a>
+                <input type="text" value="https://framework7.io">
+                <a href="#" class="link">
+                  <i class="icon material-icons">star_border</i>
+                </a>
+              </div>
+              <a href="#" class="link">
+                <i class="icon material-icons">more_vert</i>
+              </a>
+            </div>
+          </div>
+          <div class="page-content">
+            <iframe src="https://framework7.io/" frameborder="0"></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div class="view tab" id="tab-2">
+        <div class="page">
+          <div class="addressbar toolbar toolbar-top">
+            <div class="toolbar-inner addressbar-content">
+              <a href="#" class="link">
+                <i class="icon material-icons">arrow_back</i>
+              </a>
+              <a href="#" class="link">
+                <i class="icon material-icons">arrow_forward</i>
+              </a>
+              <a href="#" class="link">
+                <i class="icon material-icons">refresh</i>
+              </a>
+              <div class="input">
+                <a href="#" class="link">
+                  <i class="icon material-icons">lock</i>
+                </a>
+                <input type="text" value="https://framework7.io/templates/">
+                <a href="#" class="link">
+                  <i class="icon material-icons">star_border</i>
+                </a>
+              </div>
+              <a href="#" class="link">
+                <i class="icon material-icons">more_vert</i>
+              </a>
+            </div>
+          </div>
+          <div class="page-content">
+            <iframe src="https://framework7.io/templates/" frameborder="0"></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div class="view tab" id="tab-3">
+        <div class="page">
+          <div class="addressbar toolbar toolbar-top">
+            <div class="toolbar-inner addressbar-content">
+              <a href="#" class="link">
+                <i class="icon material-icons">arrow_back</i>
+              </a>
+              <a href="#" class="link">
+                <i class="icon material-icons">arrow_forward</i>
+              </a>
+              <a href="#" class="link">
+                <i class="icon material-icons">refresh</i>
+              </a>
+              <div class="input">
+                <a href="#" class="link">
+                  <i class="icon material-icons">lock</i>
+                </a>
+                <input type="text" value="https://jobs.framework7.io/">
+                <a href="#" class="link">
+                  <i class="icon material-icons">star_border</i>
+                </a>
+              </div>
+              <a href="#" class="link">
+                <i class="icon material-icons">more_vert</i>
+              </a>
+            </div>
+          </div>
+          <div class="page-content">
+            <iframe src="https://jobs.framework7.io/" frameborder="0"></iframe>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <script src="../build/core/js/framework7.bundle.js"></script>
+  <script>
+    const app = new Framework7({
+      root: '#app',
+      theme: 'aurora',
+    });
+  </script>
+</body>
+</html>
