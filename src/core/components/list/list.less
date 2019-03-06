@@ -26,6 +26,12 @@
     .hairline(top, var(--f7-list-border-color));
     .hairline(bottom, var(--f7-list-border-color));
     ul {
+      .ltr({
+        padding-left: calc(var(--f7-list-item-padding-horizontal) + var(--f7-list-in-list-padding-left));
+      });
+      .rtl({
+        padding-right: calc(var(--f7-list-item-padding-horizontal) + var(--f7-list-in-list-padding-left));
+      });
       .hairline-remove(top);
       .hairline-remove(bottom);
     }
