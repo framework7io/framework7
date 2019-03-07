@@ -22,8 +22,7 @@ function es(components, cb) {
   const env = process.env.NODE_ENV || 'development';
   const target = process.env.TARGET || config.target || 'universal';
   const format = 'es';
-  const output = `${getOutput()}/core`;
-
+  const output = path.resolve(`${getOutput()}`, 'core');
   const esContent = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.js'));
 
   // Bundle
@@ -57,7 +56,7 @@ function umdBundle(components, cb) {
   const env = process.env.NODE_ENV || 'development';
   const target = process.env.TARGET || config.target || 'universal';
   const format = process.env.FORMAT || config.format || 'umd';
-  const output = `${getOutput()}/core`;
+  const output = path.resolve(`${getOutput()}`, 'core');
 
   rollup.rollup({
     input: './src/core/framework7.js',
@@ -127,7 +126,7 @@ function umdCore(cb) {
   const env = process.env.NODE_ENV || 'development';
   const target = process.env.TARGET || config.target || 'universal';
   const format = process.env.FORMAT || config.format || 'umd';
-  const output = `${getOutput()}/core`;
+  const output = path.resolve(`${getOutput()}`, 'core');
 
   rollup.rollup({
     input: './src/core/framework7.js',
