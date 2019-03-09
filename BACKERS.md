@@ -73,6 +73,7 @@ Bart DJ
 ---
 
 ### $10+ Supporter
+Daniel Gonzalez<br>
 Yaroslav Ermolaev<br>
 Matthew Proctor<br>
 Andy Fuchs<br>
@@ -104,6 +105,7 @@ Dave Billington
 ---
 
 ### $5+ Thank You
+Miguel Nahara<br>
 Muthaiyan Rm<br>
 xPlants.it SRL<br>
 Mamadou Ndiaye<br>
