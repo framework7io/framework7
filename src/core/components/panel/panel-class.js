@@ -156,6 +156,17 @@ class Panel extends Framework7Class {
     if (panel.resizeHandler) {
       app.off('resize', panel.resizeHandler);
     }
+
+    if (panel.$el.hasClass('panel-visible-by-breakpoint')) {
+      const $viewEl = $(panel.getViewEl());
+      panel.$el.css('display', '').removeClass('panel-visible-by-breakpoint panel-active');
+      $viewEl.css({
+        [`margin-${panel.side}`]: '',
+      });
+      app.emit('local::breakpoint panelBreakpoint');
+      panel.$el.trigger('panel:breakpoint', panel);
+    }
+
     panel.$el.trigger('panel:destroy', panel);
     panel.emit('local::destroy panelDestroy');
     delete app.panel[panel.side];
