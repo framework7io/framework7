@@ -145,7 +145,9 @@ export default class extends React.Component {
 --f7-bars-border-color: transparent;
 --f7-tabbar-link-active-color: #fff;
 --f7-tabbar-link-inactive-color: rgba(255,255,255,0.54);
+--f7-searchbar-bg-color: var(--f7-bars-bg-color);
 --f7-searchbar-input-bg-color: #fff;
+--f7-searchbar-input-text-color: #000;
 --f7-sheet-border-color: transparent;
 --f7-tabbar-link-active-border-color: #fff;
 }

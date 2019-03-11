@@ -21,7 +21,7 @@
       class="searchbar-found"
       medial-list
       virtual-list
-      :virtual-list-params="{ items, searchAll, renderExternal, height: $theme.ios ? 63 : ($theme.md ? 73 : 52)}"
+      :virtual-list-params="{ items, searchAll, renderExternal, height: $theme.ios ? 63 : ($theme.md ? 73 : 46)}"
     >
       <ul>
         <f7-list-item

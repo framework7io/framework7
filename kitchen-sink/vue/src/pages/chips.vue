@@ -20,13 +20,13 @@
     <f7-block-title>Icon Chips</f7-block-title>
     <f7-block strong>
       <f7-chip text="Add Contact" media-bg-color="blue">
-        <f7-icon slot="media" ios="f7:add_round" md="material:add_circle"></f7-icon>
+        <f7-icon slot="media" ios="f7:add_round" aurora="f7:add_round" md="material:add_circle"></f7-icon>
       </f7-chip>
       <f7-chip text="London" media-bg-color="green">
-        <f7-icon slot="media" ios="f7:compass" md="material:location_on"></f7-icon>
+        <f7-icon slot="media" ios="f7:compass" aurora="f7:compass" md="material:location_on"></f7-icon>
       </f7-chip>
       <f7-chip text="John Doe" media-bg-color="red">
-        <f7-icon slot="media" ios="f7:person" md="material:person"></f7-icon>
+        <f7-icon slot="media" ios="f7:person" aurora="f7:person" md="material:person"></f7-icon>
       </f7-chip>
     </f7-block>
     <f7-block-title>Contact Chips</f7-block-title>

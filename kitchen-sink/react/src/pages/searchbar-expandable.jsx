@@ -10,7 +10,7 @@ export default class extends React.Component {
       <Page>
         <Navbar backLink="Back" title="Searchbar">
           <NavRight>
-            <Link searchbarEnable=".searchbar-demo" iconIos="f7:search" iconMd="material:search"></Link>
+            <Link searchbarEnable=".searchbar-demo" iconIos="f7:search" iconMd="material:search" iconAurora="f7:search"></Link>
           </NavRight>
           <Searchbar
             className="searchbar-demo"

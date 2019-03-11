@@ -496,6 +496,9 @@ code {
   text-align: center;
   line-height: 100px;
 }
+.theme-dark .elevation-demo {
+  background: none;
+}
 /* Demo Color Themes */
 .demo-theme-picker {
   cursor: pointer;
