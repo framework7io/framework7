@@ -19,7 +19,7 @@ export default class extends React.Component {
     <div class="appbar">
       <div class="appbar-inner">
         <div class="left">
-          <a href="#" class="button button-small panel-open display-flex" data-panel="left">
+          <a href="#" class="button button-small panel-toggle display-flex" data-panel="left">
             <i class="f7-icons">bars</i>
           </a>
           <a href="#" class="button button-small display-flex margin-left-half">

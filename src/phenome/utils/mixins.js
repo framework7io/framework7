@@ -118,6 +118,7 @@ const Mixins = {
     // Panel
     panelOpen: [Boolean, String],
     panelClose: [Boolean, String],
+    panelToggle: [Boolean, String],
 
     // Popup
     popupOpen: [Boolean, String],
@@ -163,6 +164,7 @@ const Mixins = {
       searchbarToggle,
       panelOpen,
       panelClose,
+      panelToggle,
       popupOpen,
       popupClose,
       actionsOpen,
@@ -186,7 +188,8 @@ const Mixins = {
                         || (Utils.isStringProp(searchbarClear) && searchbarClear)
                         || (Utils.isStringProp(searchbarToggle) && searchbarToggle) || undefined,
       'data-panel': (Utils.isStringProp(panelOpen) && panelOpen)
-                    || (Utils.isStringProp(panelClose) && panelClose) || undefined,
+                    || (Utils.isStringProp(panelClose) && panelClose)
+                    || (Utils.isStringProp(panelToggle) && panelToggle) || undefined,
       'data-popup': (Utils.isStringProp(popupOpen) && popupOpen)
                     || (Utils.isStringProp(popupClose) && popupClose) || undefined,
       'data-actions': (Utils.isStringProp(actionsOpen) && actionsOpen)
@@ -212,6 +215,7 @@ const Mixins = {
       searchbarToggle,
       panelOpen,
       panelClose,
+      panelToggle,
       popupOpen,
       popupClose,
       actionsClose,
@@ -238,6 +242,7 @@ const Mixins = {
       'searchbar-toggle': searchbarToggle || searchbarToggle === '',
       'panel-close': panelClose || panelClose === '',
       'panel-open': panelOpen || panelOpen === '',
+      'panel-toggle': panelToggle || panelToggle === '',
       'popup-close': popupClose || popupClose === '',
       'popup-open': popupOpen || popupOpen === '',
       'actions-close': actionsClose || actionsClose === '',

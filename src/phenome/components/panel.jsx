@@ -173,5 +173,11 @@ export default {
       const side = self.props.side || (self.props.left ? 'left' : 'right');
       self.$f7.panel.close(side, animate);
     },
+    toggle(animate) {
+      const self = this;
+      if (!self.$f7) return;
+      const side = self.props.side || (self.props.left ? 'left' : 'right');
+      self.$f7.panel.toggle(side, animate);
+    },
   },
 };

@@ -299,6 +299,12 @@ class Panel extends Framework7Class {
     return true;
   }
 
+  toggle(animate = true) {
+    const panel = this;
+    if (panel.opened) panel.close(animate);
+    else panel.open(animate);
+  }
+
   onOpen() {
     const panel = this;
     panel.opened = true;
