@@ -26,7 +26,10 @@ const CardExpandable = {
     if (prevented) return;
 
     let $backropEl;
-    if (app.params.card.backrop) {
+    if ($cardEl.attr('data-backdrop-el')) {
+      $backropEl = $($cardEl.attr('data-backdrop-el'));
+    }
+    if (!$backropEl && app.params.card.backrop) {
       $backropEl = $cardEl.parents('.page-content').find('.card-backdrop');
       if (!$backropEl.length) {
         $backropEl = $('<div class="card-backdrop"></div>');
@@ -82,8 +85,19 @@ const CardExpandable = {
     let cardTopOffset;
 
     if (hasTransform) {
-      cardLeftOffset = $cardEl[0].offsetLeft;
-      cardTopOffset = $cardEl[0].offsetTop - $cardEl.parents('.page-content')[0].scrollTop;
+      const transformValues = currTransform
+        .replace(/matrix\(|\)/g, '')
+        .split(',')
+        .map(el => el.trim());
+      if (transformValues && transformValues.length > 1) {
+        const scale = parseFloat(transformValues[0]);
+        cardLeftOffset = offset.left - cardWidth * (1 - scale) / 2;
+        cardTopOffset = offset.top - $pageEl.offset().top - cardHeight * (1 - scale) / 2;
+        if (app.rtl) cardLeftOffset -= $cardEl[0].scrollLeft;
+      } else {
+        cardLeftOffset = $cardEl[0].offsetLeft;
+        cardTopOffset = $cardEl[0].offsetTop - $cardEl.parents('.page-content')[0].scrollTop;
+      }
     } else {
       cardLeftOffset = offset.left;
       cardTopOffset = offset.top - $pageEl.offset().top;
@@ -290,6 +304,9 @@ const CardExpandable = {
     let $toolbarEl;
 
     let $backropEl;
+    if ($cardEl.attr('data-backdrop-el')) {
+      $backropEl = $($cardEl.attr('data-backdrop-el'));
+    }
     if (app.params.card.backrop) {
       $backropEl = $cardEl.parents('.page-content').find('.card-backdrop');
     }
@@ -316,7 +333,6 @@ const CardExpandable = {
       }
     }
     $pageEl.removeClass('page-with-card-opened');
-
 
     if ($backropEl && $backropEl.length) {
       $backropEl.removeClass('card-backdrop-in').addClass('card-backdrop-out');
