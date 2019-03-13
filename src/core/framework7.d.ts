@@ -11,7 +11,7 @@ import Dom7 from 'dom7';
 // Components
 // IMPORT_COMPONENTS
 
-declare module './components/app/app-class' {
+declare module '{{basePath}}/components/app/app-class' {
   // INSTALL
 }
 

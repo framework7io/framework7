@@ -197,7 +197,9 @@ class Autocomplete extends Framework7Class {
     }
     function onInputBlur() {
       if (ac.$dropdownEl.find('label.active-state').length > 0) return;
-      ac.close();
+      setTimeout(() => {
+        ac.close();
+      }, 0);
     }
     function onResize() {
       ac.positionDropdown();
@@ -209,7 +211,7 @@ class Autocomplete extends Framework7Class {
         ac.$inputEl.blur();
       }
     }
-    function onDropdownclick() {
+    function onDropdownClick() {
       const $clickedEl = $(this);
       let clickedItem;
       for (let i = 0; i < ac.items.length; i += 1) {
@@ -225,7 +227,6 @@ class Autocomplete extends Framework7Class {
       }
       ac.value = [clickedItem];
       ac.emit('local::change autocompleteChange', [clickedItem]);
-
       ac.close();
     }
 
@@ -264,11 +265,11 @@ class Autocomplete extends Framework7Class {
       }
     };
     ac.attachDropdownEvents = function attachDropdownEvents() {
-      ac.$dropdownEl.on('click', 'label', onDropdownclick);
+      ac.$dropdownEl.on('click', 'label', onDropdownClick);
       app.on('resize', onResize);
     };
     ac.detachDropdownEvents = function detachDropdownEvents() {
-      ac.$dropdownEl.off('click', 'label', onDropdownclick);
+      ac.$dropdownEl.off('click', 'label', onDropdownClick);
       app.off('resize', onResize);
     };
 

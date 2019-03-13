@@ -48,6 +48,7 @@ function generateTypings(basePath, modules, components) {
   });
 
   return fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.d.ts'))
+    .replace(/{{basePath}}/g, basePath)
     .replace(/\/\/ IMPORT_BASE/, f7Base)
     .replace(/\/\/ IMPORT_HELPERS/, importHelpers.join('\n'))
     .replace(/\/\/ EXPORT_HELPERS/, `export { ${exportHelpers} };`)
