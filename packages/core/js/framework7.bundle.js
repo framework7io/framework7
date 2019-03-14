@@ -10294,7 +10294,7 @@
   function elementToVNode(el, context, app, initial, isRoot) {
     if (el.nodeType === 1) {
       // element (statement adds inline SVG compatibility)
-      var tagName = (el instanceof SVGElement) ? el.nodeName :  el.nodeName.toLowerCase();
+      var tagName = (el instanceof window.SVGElement) ? el.nodeName : el.nodeName.toLowerCase();
       return h(
         tagName,
         getData(el, context, app, initial, isRoot),
