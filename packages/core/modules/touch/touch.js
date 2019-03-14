@@ -252,7 +252,9 @@ function initTouch() {
       // Upon tapping, we give the scrolling time to stop, then we grab the element based where the user tapped.
       setTimeout(() => {
         targetElement = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
-        targetElement.dispatchEvent(evt);
+        if (targetElement) {
+          targetElement.dispatchEvent(evt);
+        }
       }, 10);
     } else {
       targetElement.dispatchEvent(evt);

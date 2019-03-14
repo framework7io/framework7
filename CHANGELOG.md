@@ -2,6 +2,20 @@
 
 # Change Log
 
+# [v4.1.1](https://github.com/framework7io/framework7/compare/v4.1.0...v4.1.1) - March 14, 2019
+  * Core
+    * Form
+      * Fix form ajax event arguments (`xhr` and `data`) to be in `e.detail`
+    * Panel
+      * Unset breakpoint layout on panel destroy
+    * Autocomplete
+      * Fixed issue with autcomplete dropdown click on iOS devices
+    * Router
+      * Fixed wrong behavior of navbar back link with swipe back in `ios` theme
+    * Cards
+      * Fixed issue when opened expanadble cards wasn't positioned correctly in some layouts
+  * Minor fixes
+
 # [v4.1.0](https://github.com/framework7io/framework7/compare/v4.0.6...v4.1.0) - March 4, 2019
   * Core
     * Input

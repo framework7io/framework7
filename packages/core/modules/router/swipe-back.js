@@ -205,7 +205,7 @@ function SwipeBack(r) {
         if (isSliding) {
           let transformTarget = el;
           if (isLeft && previousNavBackIconText.length && params.iosAnimateNavbarBackIcon) {
-            const textEl = { el: activeNavBackIconText[0] };
+            const textEl = { el: previousNavBackIconText[0] };
             transformTarget = textEl;
             els.push(textEl);
           }

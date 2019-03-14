@@ -250,19 +250,19 @@ function initAjaxForm() {
       contentType,
       data,
       beforeSend(xhr) {
-        $formEl.trigger('formajax:beforesend', data, xhr);
+        $formEl.trigger('formajax:beforesend', { data, xhr });
         app.emit('formAjaxBeforeSend', $formEl[0], data, xhr);
       },
       error(xhr) {
-        $formEl.trigger('formajax:error', data, xhr);
+        $formEl.trigger('formajax:error', { data, xhr });
         app.emit('formAjaxError', $formEl[0], data, xhr);
       },
       complete(xhr) {
-        $formEl.trigger('formajax:complete', data, xhr);
+        $formEl.trigger('formajax:complete', { data, xhr });
         app.emit('formAjaxComplete', $formEl[0], data, xhr);
       },
       success(response, status, xhr) {
-        $formEl.trigger('formajax:success', data, xhr);
+        $formEl.trigger('formajax:success', { data, xhr });
         app.emit('formAjaxSuccess', $formEl[0], data, xhr);
       },
     });
