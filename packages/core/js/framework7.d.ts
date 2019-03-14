@@ -85,7 +85,7 @@ import {Vi as ViNamespace} from '../components/vi/vi';
 import {View as ViewNamespace} from '../components/view/view';
 import {VirtualList as VirtualListNamespace} from '../components/virtual-list/virtual-list';
 
-declare module './components/app/app-class' {
+declare module '../components/app/app-class' {
   interface Framework7Class<Events> extends ClicksNamespace.AppMethods{}
   interface Framework7Params extends ClicksNamespace.AppParams{}
   interface Framework7Events extends ClicksNamespace.AppEvents{}

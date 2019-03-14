@@ -1,5 +1,5 @@
 /**
- * Framework7 4.1.0
+ * Framework7 4.1.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 4, 2019
+ * Released on: March 14, 2019
  */
 
 (function (global, factory) {
@@ -4543,7 +4543,9 @@
         // Upon tapping, we give the scrolling time to stop, then we grab the element based where the user tapped.
         setTimeout(function () {
           targetElement = doc.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
-          targetElement.dispatchEvent(evt);
+          if (targetElement) {
+            targetElement.dispatchEvent(evt);
+          }
         }, 10);
       } else {
         targetElement.dispatchEvent(evt);
@@ -5763,7 +5765,7 @@
           if (isSliding) {
             var transformTarget = el;
             if (isLeft && previousNavBackIconText.length && params.iosAnimateNavbarBackIcon) {
-              var textEl = { el: activeNavBackIconText[0] };
+              var textEl = { el: previousNavBackIconText[0] };
               transformTarget = textEl;
               els.push(textEl);
             }
