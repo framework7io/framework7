@@ -19,15 +19,15 @@
   /**
    * Template7 1.4.1
    * Mobile-first HTML template engine
-   * 
+   *
    * http://www.idangero.us/template7/
-   * 
+   *
    * Copyright 2019, Vladimir Kharlampidi
    * The iDangero.us
    * http://www.idangero.us/
-   * 
+   *
    * Licensed under MIT
-   * 
+   *
    * Released on: February 5, 2019
    */
 
@@ -10293,8 +10293,8 @@
 
   function elementToVNode(el, context, app, initial, isRoot) {
     if (el.nodeType === 1) {
-      // element
-      var tagName = el.nodeName.toLowerCase();
+      // element (statement adds inline SVG compatibility)
+      var tagName = (el instanceof SVGElement) ? el.nodeName :  el.nodeName.toLowerCase();
       return h(
         tagName,
         getData(el, context, app, initial, isRoot),
