@@ -106,11 +106,12 @@ export default {
       const {
         material, f7, fa, ion, icon, md, ios, aurora, className,
       } = props;
-      if (md || ios || aurora) {
-        let themeIcon;
-        if (self.$theme.ios) themeIcon = ios;
-        else if (self.$theme.md) themeIcon = md;
-        else if (self.$theme.aurora) themeIcon = aurora;
+      let themeIcon;
+      if (self.$theme.ios) themeIcon = ios;
+      else if (self.$theme.md) themeIcon = md;
+      else if (self.$theme.aurora) themeIcon = aurora;
+
+      if (themeIcon) {
         const parts = themeIcon.split(':');
         const prop = parts[0];
         const value = parts[1];
