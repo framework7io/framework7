@@ -188,7 +188,7 @@ class Searchbar extends FrameworkClass {
     }
     function onInputBlur() {
       sb.$el.removeClass('searchbar-focused');
-      if (app.theme === 'aurora' && (!$disableButtonEl.length || !sb.params.disableButton) && !sb.query) {
+      if (app.theme === 'aurora' && (!$disableButtonEl || !$disableButtonEl.length || !sb.params.disableButton) && !sb.query) {
         sb.disable();
       }
     }
