@@ -117,12 +117,14 @@ export default class extends React.Component {
         >
           <Link
             iconIos="f7:camera_fill"
+            iconAurora="f7:camera_fill"
             iconMd="material:camera_alt"
             slot="inner-start"
             onClick={() => {this.setState({sheetVisible: !this.state.sheetVisible})}}
           ></Link>
           <Link
             iconIos="f7:arrow_up_round_fill"
+            iconAurora="f7:arrow_up_round_fill"
             iconMd="material:send"
             slot="inner-end"
             onClick={this.sendMessage.bind(this)}

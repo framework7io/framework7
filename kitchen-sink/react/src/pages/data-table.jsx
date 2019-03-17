@@ -184,7 +184,7 @@ export default () => (
             <th className="numeric-cell">Fat (g)</th>
             <th className="numeric-cell">Carbs</th>
             <th className="numeric-cell">Protein (g)</th>
-            <th className="tablet-only"><Icon ios="f7:message_fill" md="material:message"></Icon> Comments</th>
+            <th className="tablet-only"><Icon ios="f7:message_fill" aurora="f7:message_fill" md="material:message"></Icon> Comments</th>
           </tr>
         </thead>
         <tbody>
@@ -305,8 +305,8 @@ export default () => (
       <CardHeader>
         <div className="data-table-title">Nutrition</div>
         <div className="data-table-actions">
-          <Link iconIos="f7:sort" iconMd="material:sort"></Link>
-          <Link iconIos="f7:more_vertical_round" iconMd="material:more_vert"></Link>
+          <Link iconIos="f7:sort" iconAurora="f7:sort" iconMd="material:sort"></Link>
+          <Link iconIos="f7:more_vertical_round" iconAurora="f7:more_vertical_round" iconMd="material:more_vert"></Link>
         </div>
       </CardHeader>
       <CardContent padding={false}>
@@ -321,7 +321,7 @@ export default () => (
               <th className="numeric-cell">Fat (g)</th>
               <th className="numeric-cell">Carbs</th>
               <th className="numeric-cell">Protein (g)</th>
-              <th className="tablet-only"><Icon ios="f7:message_fill" md="material:message"></Icon> Comments</th>
+              <th className="tablet-only"><Icon ios="f7:message_fill" aurora="f7:message_fill" md="material:message"></Icon> Comments</th>
             </tr>
           </thead>
           <tbody>
@@ -379,8 +379,8 @@ export default () => (
       <CardHeader>
         <div className="data-table-title">Nutrition</div>
         <div className="data-table-actions">
-          <Link iconIos="f7:sort" iconMd="material:sort"></Link>
-          <Link iconIos="f7:more_vertical_round" iconMd="material:more_vert"></Link>
+          <Link iconIos="f7:sort" iconAurora="f7:sort" iconMd="material:sort"></Link>
+          <Link iconIos="f7:more_vertical_round" iconAurora="f7:more_vertical_round" iconMd="material:more_vert"></Link>
         </div>
       </CardHeader>
       <CardContent padding={false}>
@@ -395,7 +395,7 @@ export default () => (
               <th className="numeric-cell sortable-cell">Fat (g)</th>
               <th className="numeric-cell sortable-cell">Carbs</th>
               <th className="numeric-cell sortable-cell">Protein (g)</th>
-              <th className="tablet-only"><Icon ios="f7:message_fill" md="material:message"></Icon> Comments</th>
+              <th className="tablet-only"><Icon ios="f7:message_fill" aurora="f7:message_fill" md="material:message"></Icon> Comments</th>
             </tr>
           </thead>
           <tbody>
@@ -453,15 +453,15 @@ export default () => (
         <div className="data-table-header">
           <div className="data-table-title">Nutrition</div>
           <div className="data-table-actions">
-            <Link iconIos="f7:sort" iconMd="material:sort"></Link>
-            <Link iconIos="f7:more_vertical_round" iconMd="material:more_vert"></Link>
+            <Link iconIos="f7:sort" iconAurora="f7:sort" iconMd="material:sort"></Link>
+            <Link iconIos="f7:more_vertical_round" iconAurora="f7:more_vertical_round" iconMd="material:more_vert"></Link>
           </div>
         </div>
         <div className="data-table-header-selected">
           <div className="data-table-title-selected"><span className="data-table-selected-count"></span> items selected</div>
           <div className="data-table-actions">
-            <Link iconIos="f7:trash" iconMd="material:delete"></Link>
-            <Link iconIos="f7:more_vertical_round" iconMd="material:more_vert"></Link>
+            <Link iconIos="f7:trash" iconAurora="f7:trash" iconMd="material:delete"></Link>
+            <Link iconIos="f7:more_vertical_round" iconAurora="f7:more_vertical_round" iconMd="material:more_vert"></Link>
           </div>
         </div>
       </CardHeader>
@@ -477,7 +477,7 @@ export default () => (
               <th className="numeric-cell">Fat (g)</th>
               <th className="numeric-cell">Carbs</th>
               <th className="numeric-cell">Protein (g)</th>
-              <th className="tablet-only"><Icon ios="f7:message_fill" md="material:message"></Icon> Comments</th>
+              <th className="tablet-only"><Icon ios="f7:message_fill" aurora="f7:message_fill" md="material:message"></Icon> Comments</th>
             </tr>
           </thead>
           <tbody>
@@ -535,8 +535,8 @@ export default () => (
       <CardHeader>
         <div className="data-table-links"><a className="button">Add</a><a className="button">Remove</a></div>
         <div className="data-table-actions">
-          <Link iconIos="f7:sort" iconMd="material:sort"></Link>
-          <Link iconIos="f7:more_vertical_round" iconMd="material:more_vert"></Link>
+          <Link iconIos="f7:sort" iconAurora="f7:sort" iconMd="material:sort"></Link>
+          <Link iconIos="f7:more_vertical_round" iconAurora="f7:more_vertical_round" iconMd="material:more_vert"></Link>
         </div>
       </CardHeader>
       <CardContent padding={false}>
@@ -551,7 +551,7 @@ export default () => (
               <th className="numeric-cell">Fat (g)</th>
               <th className="numeric-cell">Carbs</th>
               <th className="numeric-cell">Protein (g)</th>
-              <th className="tablet-only"><Icon ios="f7:message_fill" md="material:message"></Icon> Comments</th>
+              <th className="tablet-only"><Icon ios="f7:message_fill" aurora="f7:message_fill" md="material:message"></Icon> Comments</th>
               <th></th>
             </tr>
           </thead>
@@ -567,8 +567,8 @@ export default () => (
               <td className="numeric-cell">4.0</td>
               <td className="tablet-only">I like frozen yogurt</td>
               <td className="actions-cell">
-                <Link iconIos="f7:compose" iconMd="material:edit"></Link>
-                <Link iconIos="f7:trash" iconMd="material:delete"></Link>
+                <Link iconIos="f7:compose" iconAurora="f7:compose" iconMd="material:edit"></Link>
+                <Link iconIos="f7:trash" iconAurora="f7:trash" iconMd="material:delete"></Link>
               </td>
             </tr>
             <tr>
@@ -582,8 +582,8 @@ export default () => (
               <td className="numeric-cell">4.4</td>
               <td className="tablet-only">But like ice cream more</td>
               <td className="actions-cell">
-                <Link iconIos="f7:compose" iconMd="material:edit"></Link>
-                <Link iconIos="f7:trash" iconMd="material:delete"></Link>
+                <Link iconIos="f7:compose" iconAurora="f7:compose" iconMd="material:edit"></Link>
+                <Link iconIos="f7:trash" iconAurora="f7:trash" iconMd="material:delete"></Link>
               </td>
             </tr>
             <tr>
@@ -597,8 +597,8 @@ export default () => (
               <td className="numeric-cell">6.0</td>
               <td className="tablet-only">Super tasty</td>
               <td className="actions-cell">
-                <Link iconIos="f7:compose" iconMd="material:edit"></Link>
-                <Link iconIos="f7:trash" iconMd="material:delete"></Link>
+                <Link iconIos="f7:compose" iconAurora="f7:compose" iconMd="material:edit"></Link>
+                <Link iconIos="f7:trash" iconAurora="f7:trash" iconMd="material:delete"></Link>
               </td>
             </tr>
             <tr>
@@ -612,8 +612,8 @@ export default () => (
               <td className="numeric-cell">4.3</td>
               <td className="tablet-only">Don't like it</td>
               <td className="actions-cell">
-                <Link iconIos="f7:compose" iconMd="material:edit"></Link>
-                <Link iconIos="f7:trash" iconMd="material:delete"></Link>
+                <Link iconIos="f7:compose" iconAurora="f7:compose" iconMd="material:edit"></Link>
+                <Link iconIos="f7:trash" iconAurora="f7:trash" iconMd="material:delete"></Link>
               </td>
             </tr>
           </tbody>
@@ -629,8 +629,8 @@ export default () => (
       <CardHeader>
         <div className="data-table-title">Nutrition</div>
         <div className="data-table-actions">
-          <Link iconIos="f7:sort" iconMd="material:sort"></Link>
-          <Link iconIos="f7:more_vertical_round" iconMd="material:more_vert"></Link>
+          <Link iconIos="f7:sort" iconAurora="f7:sort" iconMd="material:sort"></Link>
+          <Link iconIos="f7:more_vertical_round" iconAurora="f7:more_vertical_round" iconMd="material:more_vert"></Link>
         </div>
       </CardHeader>
       <CardContent padding={false}>

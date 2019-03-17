@@ -3,7 +3,7 @@
     <f7-navbar sliding back-link="Back" title="Badge">
       <f7-nav-right>
         <f7-link icon-only>
-          <f7-icon ios="f7:person_round_fill" md="material:person">
+          <f7-icon ios="f7:person_round_fill" aurora="f7:person_round_fill" md="material:person">
             <f7-badge color="red">5</f7-badge>
           </f7-icon>
         </f7-link>
@@ -11,19 +11,19 @@
     </f7-navbar>
     <f7-toolbar bottom tabbar labels>
       <f7-link tab-link="#tab-1" tab-link-active>
-        <f7-icon ios="f7:email_fill" md="material:email">
+        <f7-icon ios="f7:email_fill" aurora="f7:email_fill" md="material:email">
           <f7-badge color="green">5</f7-badge>
         </f7-icon>
         <span class="tabbar-label">Inbox</span>
       </f7-link>
       <f7-link tab-link="#tab-2">
-        <f7-icon ios="f7:calendar_fill" md="material:today">
+        <f7-icon ios="f7:calendar_fill" aurora="f7:calendar_fill" md="material:today">
           <f7-badge color="red">7</f7-badge>
         </f7-icon>
         <span class="tabbar-label">Calendar</span>
       </f7-link>
       <f7-link tab-link="#tab-3">
-        <f7-icon ios="f7:cloud_upload_fill" md="material:file_upload">
+        <f7-icon ios="f7:cloud_upload_fill" aurora="f7:cloud_upload_fill" md="material:file_upload">
           <f7-badge color="red">1</f7-badge>
         </f7-icon>
         <span class="tabbar-label">Upload</span>

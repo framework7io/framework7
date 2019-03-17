@@ -10,11 +10,11 @@ export default class extends React.Component {
       <Page>
         <Navbar large sliding={false}>
           <NavLeft>
-            <Link panelOpen="left" iconIos="f7:menu" iconMd="material:menu"></Link>
+            <Link panelOpen="left" iconIos="f7:menu" iconAurora="f7:menu" iconMd="material:menu"></Link>
           </NavLeft>
           <NavTitle sliding>Framework7 React</NavTitle>
           <NavRight>
-            <Link searchbarEnable=".searchbar-components" iconIos="f7:search" iconMd="material:search"></Link>
+            <Link searchbarEnable=".searchbar-components" iconIos="f7:search" iconAurora="f7:search" iconMd="material:search"></Link>
           </NavRight>
           <NavTitleLarge>Framework7 React</NavTitleLarge>
           <Searchbar

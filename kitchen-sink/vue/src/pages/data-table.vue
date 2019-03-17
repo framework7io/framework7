@@ -213,7 +213,7 @@
             <th class="numeric-cell">Fat (g)</th>
             <th class="numeric-cell">Carbs</th>
             <th class="numeric-cell">Protein (g)</th>
-            <th class="tablet-only"><f7-icon ios="f7:message_fill" md="material:message"></f7-icon> Comments</th>
+            <th class="tablet-only"><f7-icon ios="f7:message_fill" aurora="f7:message_fill" md="material:message"></f7-icon> Comments</th>
           </tr>
         </thead>
         <tbody>
@@ -345,8 +345,8 @@
       <div class="card-header">
         <div class="data-table-title">Nutrition</div>
         <div class="data-table-actions">
-          <f7-link icon-ios="f7:sort" icon-md="material:sort"></f7-link>
-          <f7-link icon-ios="f7:more_vertical_round" icon-md="material:more_vert"></f7-link>
+          <f7-link icon-ios="f7:sort" icon-aurora="f7:sort" icon-md="material:sort"></f7-link>
+          <f7-link icon-ios="f7:more_vertical_round" icon-aurora="f7:more_vertical_round" icon-md="material:more_vert"></f7-link>
         </div>
       </div>
       <div class="card-content">
@@ -364,7 +364,7 @@
               <th class="numeric-cell">Fat (g)</th>
               <th class="numeric-cell">Carbs</th>
               <th class="numeric-cell">Protein (g)</th>
-              <th class="tablet-only"><f7-icon ios="f7:message_fill" md="material:message"></f7-icon> Comments</th>
+              <th class="tablet-only"><f7-icon ios="f7:message_fill" aurora="f7:message_fill" md="material:message"></f7-icon> Comments</th>
             </tr>
           </thead>
           <tbody>
@@ -433,8 +433,8 @@
       <div class="card-header">
         <div class="data-table-title">Nutrition</div>
         <div class="data-table-actions">
-          <f7-link icon-ios="f7:sort" icon-md="material:sort"></f7-link>
-          <f7-link icon-ios="f7:more_vertical_round" icon-md="material:more_vert"></f7-link>
+          <f7-link icon-ios="f7:sort" icon-aurora="f7:sort" icon-md="material:sort"></f7-link>
+          <f7-link icon-ios="f7:more_vertical_round" icon-aurora="f7:more_vertical_round" icon-md="material:more_vert"></f7-link>
         </div>
       </div>
       <div class="card-content">
@@ -452,7 +452,7 @@
               <th class="numeric-cell sortable-cell">Fat (g)</th>
               <th class="numeric-cell sortable-cell">Carbs</th>
               <th class="numeric-cell sortable-cell">Protein (g)</th>
-              <th class="tablet-only"><f7-icon ios="f7:message_fill" md="material:message"></f7-icon> Comments</th>
+              <th class="tablet-only"><f7-icon ios="f7:message_fill" aurora="f7:message_fill" md="material:message"></f7-icon> Comments</th>
             </tr>
           </thead>
           <tbody>
@@ -522,15 +522,15 @@
         <div class="data-table-header">
           <div class="data-table-title">Nutrition</div>
           <div class="data-table-actions">
-            <f7-link icon-ios="f7:sort" icon-md="material:sort"></f7-link>
-            <f7-link icon-ios="f7:more_vertical_round" icon-md="material:more_vert"></f7-link>
+            <f7-link icon-ios="f7:sort" icon-aurora="f7:sort" icon-md="material:sort"></f7-link>
+            <f7-link icon-ios="f7:more_vertical_round" icon-aurora="f7:more_vertical_round" icon-md="material:more_vert"></f7-link>
           </div>
         </div>
         <div class="data-table-header-selected">
           <div class="data-table-title-selected"><span class="data-table-selected-count"></span> items selected</div>
           <div class="data-table-actions">
-            <f7-link icon-ios="f7:trash" icon-md="material:delete"></f7-link>
-            <f7-link icon-ios="f7:more_vertical_round" icon-md="material:more_vert"></f7-link>
+            <f7-link icon-ios="f7:trash" icon-aurora="f7:trash" icon-md="material:delete"></f7-link>
+            <f7-link icon-ios="f7:more_vertical_round" icon-aurora="f7:more_vertical_round" icon-md="material:more_vert"></f7-link>
           </div>
         </div>
       </div>
@@ -549,7 +549,7 @@
               <th class="numeric-cell">Fat (g)</th>
               <th class="numeric-cell">Carbs</th>
               <th class="numeric-cell">Protein (g)</th>
-              <th class="tablet-only"><f7-icon ios="f7:message_fill" md="material:message"></f7-icon> Comments</th>
+              <th class="tablet-only"><f7-icon ios="f7:message_fill" aurora="f7:message_fill" md="material:message"></f7-icon> Comments</th>
             </tr>
           </thead>
           <tbody>
@@ -618,8 +618,8 @@
       <div class="card-header">
         <div class="data-table-links"><a class="button">Add</a><a class="button">Remove</a></div>
         <div class="data-table-actions">
-          <f7-link icon-ios="f7:sort" icon-md="material:sort"></f7-link>
-          <f7-link icon-ios="f7:more_vertical_round" icon-md="material:more_vert"></f7-link>
+          <f7-link icon-ios="f7:sort" icon-aurora="f7:sort" icon-md="material:sort"></f7-link>
+          <f7-link icon-ios="f7:more_vertical_round" icon-aurora="f7:more_vertical_round" icon-md="material:more_vert"></f7-link>
         </div>
       </div>
       <div class="card-content">
@@ -637,7 +637,7 @@
               <th class="numeric-cell">Fat (g)</th>
               <th class="numeric-cell">Carbs</th>
               <th class="numeric-cell">Protein (g)</th>
-              <th class="tablet-only"><f7-icon ios="f7:message_fill" md="material:message"></f7-icon> Comments</th>
+              <th class="tablet-only"><f7-icon ios="f7:message_fill" aurora="f7:message_fill" md="material:message"></f7-icon> Comments</th>
               <th></th>
             </tr>
           </thead>
@@ -656,8 +656,8 @@
               <td class="numeric-cell">4.0</td>
               <td class="tablet-only">I like frozen yogurt</td>
               <td class="actions-cell">
-                <f7-link icon-ios="f7:compose" icon-md="material:edit"></f7-link>
-                <f7-link icon-ios="f7:trash" icon-md="material:delete"></f7-link>
+                <f7-link icon-ios="f7:compose" icon-aurora="f7:compose" icon-md="material:edit"></f7-link>
+                <f7-link icon-ios="f7:trash" icon-aurora="f7:trash" icon-md="material:delete"></f7-link>
               </td>
             </tr>
             <tr>
@@ -674,8 +674,8 @@
               <td class="numeric-cell">4.4</td>
               <td class="tablet-only">But like ice cream more</td>
               <td class="actions-cell">
-                <f7-link icon-ios="f7:compose" icon-md="material:edit"></f7-link>
-                <f7-link icon-ios="f7:trash" icon-md="material:delete"></f7-link>
+                <f7-link icon-ios="f7:compose" icon-aurora="f7:compose" icon-md="material:edit"></f7-link>
+                <f7-link icon-ios="f7:trash" icon-aurora="f7:trash" icon-md="material:delete"></f7-link>
               </td>
             </tr>
             <tr>
@@ -692,8 +692,8 @@
               <td class="numeric-cell">6.0</td>
               <td class="tablet-only">Super tasty</td>
               <td class="actions-cell">
-                <f7-link icon-ios="f7:compose" icon-md="material:edit"></f7-link>
-                <f7-link icon-ios="f7:trash" icon-md="material:delete"></f7-link>
+                <f7-link icon-ios="f7:compose" icon-aurora="f7:compose" icon-md="material:edit"></f7-link>
+                <f7-link icon-ios="f7:trash" icon-aurora="f7:trash" icon-md="material:delete"></f7-link>
               </td>
             </tr>
             <tr>
@@ -710,8 +710,8 @@
               <td class="numeric-cell">4.3</td>
               <td class="tablet-only">Don't like it</td>
               <td class="actions-cell">
-                <f7-link icon-ios="f7:compose" icon-md="material:edit"></f7-link>
-                <f7-link icon-ios="f7:trash" icon-md="material:delete"></f7-link>
+                <f7-link icon-ios="f7:compose" icon-aurora="f7:compose" icon-md="material:edit"></f7-link>
+                <f7-link icon-ios="f7:trash" icon-aurora="f7:trash" icon-md="material:delete"></f7-link>
               </td>
             </tr>
           </tbody>
@@ -726,8 +726,8 @@
       <div class="card-header">
         <div class="data-table-title">Nutrition</div>
         <div class="data-table-actions">
-          <f7-link icon-ios="f7:sort" icon-md="material:sort"></f7-link>
-          <f7-link icon-ios="f7:more_vertical_round" icon-md="material:more_vert"></f7-link>
+          <f7-link icon-ios="f7:sort" icon-aurora="f7:sort" icon-md="material:sort"></f7-link>
+          <f7-link icon-ios="f7:more_vertical_round" icon-aurora="f7:more_vertical_round" icon-md="material:more_vert"></f7-link>
         </div>
       </div>
       <div class="card-content">

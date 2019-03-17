@@ -81,7 +81,7 @@
         // Create toast
         if (!self.toastIcon) {
           self.toastIcon = self.$f7.toast.create({
-            icon: self.$theme.ios ? '<i class="f7-icons">star_fill</i>' : '<i class="material-icons">star</i>',
+            icon: self.$theme.ios || self.$theme.aurora ? '<i class="f7-icons">star_fill</i>' : '<i class="material-icons">star</i>',
             text: 'I\'m on center',
             position: 'center',
             closeTimeout: 2000,
