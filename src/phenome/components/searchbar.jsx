@@ -46,6 +46,7 @@ export default {
       default: 'change input compositionend',
     },
     expandable: Boolean,
+    inline: Boolean,
     searchContainer: [String, Object],
     searchIn: {
       type: String,
@@ -128,6 +129,7 @@ export default {
       style,
       id,
       value,
+      inline,
     } = props;
 
     if (clearButton) {
@@ -147,6 +149,7 @@ export default {
       className,
       'searchbar',
       {
+        'searchbar-inline': inline,
         'no-shadow': noShadow,
         'no-hairline': noHairline,
         'searchbar-expandable': expandable,
@@ -167,7 +170,7 @@ export default {
           onFocus={self.onFocus}
           onBlur={self.onBlur}
         />
-      )
+      );
     }
     if (process.env.COMPILER === 'vue') {
       inputEl = (
@@ -181,9 +184,8 @@ export default {
           onFocus={self.onFocus}
           onBlur={self.onBlur}
         />
-      )
+      );
     }
-
 
     return (
       <SearchbarTag ref="el" id={id} style={style} className={classes}>
@@ -216,13 +218,6 @@ export default {
       'onBlur',
     ]);
   },
-  componentWillUnmount() {
-    const self = this;
-    if (self.props.form && self.refs.el) {
-      self.refs.el.removeEventListener('submit', self.onSubmit, false);
-    }
-    if (self.f7Searchbar && self.f7Searchbar.destroy) self.f7Searchbar.destroy();
-  },
   componentDidMount() {
     const self = this;
     const {
@@ -248,7 +243,7 @@ export default {
       form,
     } = self.props;
 
-    const { inputEl, el, clearEl, disableEl } = self.refs;
+    const { el, clearEl, disableEl } = self.refs;
     if (form && el) {
       el.addEventListener('submit', self.onSubmit, false);
     }
@@ -307,7 +302,7 @@ export default {
   },
   componentWillUnmount() {
     const self = this;
-    const { inputEl, el, clearEl, disableEl } = self.refs;
+    const { el, clearEl, disableEl } = self.refs;
     if (self.props.form && el) {
       el.removeEventListener('submit', self.onSubmit, false);
     }
