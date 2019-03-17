@@ -74,7 +74,7 @@ export default {
     },
     backdrop: {
       type: Boolean,
-      default: true,
+      default: undefined,
     },
     backdropEl: [String, Object],
     hideOnEnableEl: {
