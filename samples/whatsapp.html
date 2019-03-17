@@ -13,39 +13,31 @@
   <link rel="stylesheet" href="../build/core/css/framework7.bundle.css">
   <link rel="stylesheet" href="https://unpkg.com/framework7-icons">
   <style>
-    div::-webkit-scrollbar {
-      width: 10px;
-    }
-  
-    div::-webkit-scrollbar-track {
-      background: white;
-      background-clip: content-box;
-    }
-
-    div::-webkit-scrollbar-thumb {
-      background: #ccc;
-    }
-
     :root {
-      --f7-panel-width: 30%;
+
       --f7-navbar-height: 60px;
       /* --f7-searchbar-height: 50px; */
+    }
+    .panel-left {
+      --f7-panel-width: 30%;
+      min-width: 250px;
     }
     .navbar {
       --f7-navbar-bg-color: #EEE;
       --f7-navbar-text-color: #5C5C5C;
       --f7-navbar-border-color: #D7D0CA;
+      --f7-navbar-link-color: var(--f7-navbar-text-color);
     }
 
-    .navbar img{
+    .navbar img {
       width: 40px;
       border-radius: 20px;
     }
     .navbar .icon {
       font-size: 28px;
     }
-    .navbar .right i{
-      padding: 0 10px;
+    .aurora .navbar .right a + a {
+      margin-left: 15px;
     }
     .panel-left {
       border-right: 1px solid #D7D0CA;
@@ -60,15 +52,15 @@
       --f7-bars-border-color: transparent;
       --f7-navbar-font-size: 18px;
       --f7-navbar-title-font-weight: bold;
-      
+
       --f7-searchbar-in-page-content-input-border-radius: 25px;
       --f7-searchbar-inner-padding-left: 15px;
       --f7-searchbar-inner-padding-right: 15px;
       --f7-searchbar-input-height: 35px;
+      --f7-searchbar-input-border-radius: 18px;
       --f7-searchbar-height: 48px;
       --f7-searchbar-bg-color: #F8F8F8;
       --f7-searchbar-input-bg-color: #FFF;
-      --f7-searchbar-input-border-radius: 12px;
       --f7-searchbar-input-text-color: #666;
 
       --f7-list-bg-color: transparent;
@@ -82,6 +74,7 @@
       --f7-list-item-title-font-size: 16px;
       --f7-list-link-pressed-bg-color: rgba(0,0,0,0.2);
       --f7-list-link-hover-bg-color: rgb(235,235,235);
+      --f7-list-media-item-padding-vertical: 12px;
       color: rgba(255,255,255,0.7);
     }
     .select-chat-page .searchbar{
@@ -97,10 +90,6 @@
     .select-chat-page .chat-menu-icon {
       display: none;
     }
-    .select-chat-page .item-content {
-      max-height: var(--f7-list-item-min-height);
-      padding-top: 12px;
-    }
     .select-chat-page .item-subtitle .text-container {
       overflow: hidden;
       white-space: nowrap;
@@ -111,7 +100,7 @@
     .select-chat-page .item-link:hover .item-subtitle .text-container {
       max-width: calc(100% - 15px);
     }
-    
+
     .select-chat-page .item-link:hover .chat-menu-icon {
       display: inline-block;
       position: absolute;
@@ -119,6 +108,7 @@
     }
 
     .chat-page {
+      --f7-page-bg-color: #e5ddd5;
       --f7-navbar-subtitle-text-align: left;
       --f7-navbar-title-margin-left: 15px;
 
@@ -131,11 +121,17 @@
       --f7-messagebar-textarea-line-height: 40px;
       --f7-messagebar-textarea-border: none;
 
+      --f7-messages-content-bg-color: transparent;
       --f7-message-sent-bg-color: #dcf8c6;
       --f7-message-sent-text-color: #262626;
       --f7-message-received-bg-color: #fff;
       --f7-message-received-text-color: #262626;
       --f7-message-bubble-border-radius: 8px;
+      --f7-message-bubble-font-size: 14px;
+
+      background-image: url('whatsapp-bg.png');
+      background-position: center;
+      background-size: contain;
     }
 
     .emoji-container{
@@ -143,7 +139,8 @@
       padding-left: 10px;
     }
 
-    .emoji-container .icon, .send-message-container .icon {
+    .emoji-container .icon,
+    .send-message-container .icon {
       font-size: 25px;
       color: #525b60;
     }
@@ -161,13 +158,6 @@
     .chat-page .message-bubble {
       min-height: 35px;
     }
-
-    .chat-page .page-content .messages{
-      background-image: url('whatsapp-bg.png');
-      background-position: center;
-      background-size: contain;
-    }
-
   </style>
 </head>
 
@@ -182,22 +172,28 @@
                 <img src="https://cdn.framework7.io/placeholder/people-100x100-1.jpg" alt="profile img">
               </div>
               <div class="right">
-                <i class="icon f7-icons">reload</i>
-                <i class="icon f7-icons">add</i>
-                <i class="icon f7-icons">more_fill</i>
+                <a href="#" class="link">
+                  <i class="icon f7-icons">reload</i>
+                </a>
+                <a href="#" class="link">
+                  <i class="icon f7-icons">add</i>
+                </a>
+                <a href="#" class="link">
+                  <i class="icon f7-icons">more_fill</i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="searchbar">
+            <div class="searchbar-inner">
+              <div class="searchbar-input-wrap">
+                <input type="text" placeholder="Buscar o empezar un chat nuevo">
+                <i class="searchbar-icon"></i>
+                <span class="input-clear-button"></span>
               </div>
             </div>
           </div>
           <div class="page-content">
-            <div class="searchbar">
-              <div class="searchbar-inner">
-                <div class="searchbar-input-wrap">
-                  <input type="text" placeholder="Buscar o empezar un chat nuevo">
-                  <i class="searchbar-icon"></i>
-                  <span class="input-clear-button"></span>
-                </div>
-              </div>
-            </div>
             <div class="list media-list no-chevron">
               <ul>
                 <li>
@@ -800,22 +796,32 @@
                   </div>
               </div>
               <div class="right">
-                <i class="icon f7-icons">search</i>
-                <i class="icon f7-icons">attachment</i>
-                <i class="icon f7-icons">more_fill</i>
+                <a href="#" class="link">
+                  <i class="icon f7-icons">search</i>
+                </a>
+                <a href="#" class="link">
+                  <i class="icon f7-icons">attachment</i>
+                </a>
+                <a href="#" class="link">
+                  <i class="icon f7-icons">more_fill</i>
+                </a>
               </div>
             </div>
           </div>
         <div class="toolbar messagebar">
           <div class="toolbar-inner">
             <div class='emoji-container'>
+              <a href="#" class="link">
                 <i class="icon f7-icons">circle</i>
+              </a>
             </div>
             <div class="messagebar-area">
               <textarea class="resizable" style="max-height: 230px" placeholder="Escribe un mensaje aquí"></textarea>
             </div>
             <div class='send-message-container'>
+              <a href="#" class="link">
                 <i class="icon f7-icons">paper_plane</i>
+              </a>
             </div>
           </div>
         </div>
