@@ -62,6 +62,7 @@ async function buildLazyComponentsLess(components, rtl, cb) {
   const colors = `{\n${Object.keys(config.colors).map(colorName => `  ${colorName}: ${config.colors[colorName]};`).join('\n')}\n}`;
   const includeIosTheme = config.themes.indexOf('ios') >= 0;
   const includeMdTheme = config.themes.indexOf('md') >= 0;
+  const includeAuroraTheme = config.themes.indexOf('aurora') >= 0;
   const includeDarkTheme = config.darkTheme;
 
   const mainLess = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.less'))
@@ -71,6 +72,7 @@ async function buildLazyComponentsLess(components, rtl, cb) {
     .replace('@import (reference) \'./less/mixins.less\';', '@import (reference) \'../../less/mixins.less\';')
     .replace('$includeIosTheme', includeIosTheme)
     .replace('$includeMdTheme', includeMdTheme)
+    .replace('$includeAuroraTheme', includeAuroraTheme)
     .replace('$includeDarkTheme', includeDarkTheme)
     .replace('$themeColor', config.themeColor)
     .replace('$colors', colors)
@@ -84,12 +86,17 @@ async function buildLazyComponentsLess(components, rtl, cb) {
   componentsToProcess.forEach(async (component) => {
     const lessContent = fs.readFileSync(path.resolve(__dirname, `../src/core/components/${component}/${component}.less`));
 
-    const cssContent = await cleanCSS(
-      await autoprefixer(
-        await less(`${mainLess}\n${lessContent}`, path.resolve(__dirname, `../src/core/components/${component}/`))
-      )
-    );
-    fs.writeFileSync(`${output}/components/${component}.css`, cssContent);
+    let cssContent;
+    try {
+      cssContent = await cleanCSS(
+        await autoprefixer(
+          await less(`${mainLess}\n${lessContent}`, path.resolve(__dirname, `../src/core/components/${component}/`))
+        )
+      );
+    } catch (err) {
+      console.log(err);
+    }
+    fs.writeFileSync(`${output}/components/${component}${rtl ? '.rtl' : ''}.css`, cssContent);
 
     cbs += 1;
     if (cbs === componentsToProcess.length && cb) cb();
