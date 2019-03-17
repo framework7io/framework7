@@ -109,6 +109,10 @@ class Panel extends Framework7Class {
         app.allowPanelOpen = true;
         app.emit('local::breakpoint panelBreakpoint');
         panel.$el.trigger('panel:breakpoint', panel);
+      } else {
+        $viewEl.css({
+          [`margin-${side}`]: `${$el.width()}px`,
+        });
       }
     } else if (wasVisible) {
       $el.css('display', '').removeClass('panel-visible-by-breakpoint panel-active');
