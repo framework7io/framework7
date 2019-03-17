@@ -241,6 +241,8 @@ export default {
       hideDividers,
       hideGroups,
       form,
+      expandable,
+      inline,
     } = self.props;
 
     const { el, clearEl, disableEl } = self.refs;
@@ -277,6 +279,8 @@ export default {
         removeDiacritics,
         hideDividers,
         hideGroups,
+        expandable,
+        inline,
         on: {
           search(searchbar, query, previousQuery) {
             self.dispatchEvent('searchbar:search searchbarSearch', searchbar, query, previousQuery);

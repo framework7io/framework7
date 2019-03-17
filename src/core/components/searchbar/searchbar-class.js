@@ -26,13 +26,14 @@ class Searchbar extends FrameworkClass {
       notFoundEl: '.searchbar-not-found',
       hideOnEnableEl: '.searchbar-hide-on-enable',
       hideOnSearchEl: '.searchbar-hide-on-search',
-      backdrop: app.theme !== 'aurora',
+      backdrop: undefined,
       removeDiacritics: true,
       customSearch: false,
       hideDividers: true,
       hideGroups: true,
       disableOnBackdropClick: true,
       expandable: false,
+      inline: false,
     };
 
     // Extend defaults with modules params
@@ -87,6 +88,15 @@ class Searchbar extends FrameworkClass {
       $hideOnSearchEl = $(params.hideOnSearchEl);
     } else if (typeof sb.params.hideOnSearchEl === 'string' && $pageEl) {
       $hideOnSearchEl = $pageEl.find(sb.params.hideOnSearchEl);
+    }
+
+
+    const expandable = sb.params.expandable || $el.hasClass('searchbar-expandable');
+    const inline = sb.params.inline || $el.hasClass('searchbar-inline');
+
+    if (typeof sb.params.backdrop === 'undefined') {
+      if (!inline) sb.params.backdrop = app.theme !== 'aurora';
+      else sb.params.backdrop = false;
     }
 
     let $backdropEl;
@@ -164,7 +174,8 @@ class Searchbar extends FrameworkClass {
       isVirtualList: $searchContainer && $searchContainer.hasClass('virtual-list'),
       virtualList: undefined,
       enabled: false,
-      expandable: sb.params.expandable || $el.hasClass('searchbar-expandable'),
+      expandable,
+      inline,
     });
 
     // Events
@@ -558,6 +569,8 @@ class Searchbar extends FrameworkClass {
 
   init() {
     const sb = this;
+    if (sb.expandable && sb.$el) sb.$el.addClass('searchbar-expandable');
+    if (sb.inline && sb.$el) sb.$el.addClass('searchbar-inline');
     sb.attachEvents();
   }
 
