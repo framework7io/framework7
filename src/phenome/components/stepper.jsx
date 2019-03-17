@@ -92,6 +92,9 @@ export default {
     smallIos: Boolean,
     smallAurora: Boolean,
     raised: Boolean,
+    raisedMd: Boolean,
+    raisedIos: Boolean,
+    raisedAurora: Boolean,
     ...Mixins.colorProps,
   },
   render() {
@@ -177,6 +180,9 @@ export default {
         smallMd,
         smallAurora,
         raised,
+        raisedMd,
+        raisedIos,
+        raisedAurora,
         disabled,
       } = props;
 
@@ -202,6 +208,9 @@ export default {
           'stepper-small-md': smallMd,
           'stepper-small-aurora': smallAurora,
           'stepper-raised': raised,
+          'stepper-raised-ios': raisedIos,
+          'stepper-raised-md': raisedMd,
+          'stepper-raised-aurora': raisedAurora,
         },
         Mixins.colorClasses(props),
       );

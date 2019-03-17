@@ -68,7 +68,7 @@ export default {
       mdSwipeBackActiveArea: 30,
       mdSwipeBackThreshold: 0,
       auroraSwipeBack: false,
-      auroraSwipeBackAnimateShadow: true,
+      auroraSwipeBackAnimateShadow: false,
       auroraSwipeBackAnimateOpacity: true,
       auroraSwipeBackActiveArea: 30,
       auroraSwipeBackThreshold: 0,
