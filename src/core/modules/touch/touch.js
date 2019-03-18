@@ -560,10 +560,18 @@ function initTouch() {
     return true;
   }
   function handleTouchMoveLight(e) {
-    const distance = params.fastClicks ? params.fastClicksDistanceThreshold : 0;
-    if (distance) {
-      const pageX = e.targetTouches[0].pageX;
-      const pageY = e.targetTouches[0].pageY;
+    let distance = 0;
+    let touch;
+    if (e.type === 'touchmove') {
+      touch = e.targetTouches[0];
+      if (touch && touch.touchType === 'stylus') {
+        distance = 5;
+      }
+    }
+
+    if (distance && touch) {
+      const pageX = touch.pageX;
+      const pageY = touch.pageY;
       if (Math.abs(pageX - touchStartX) > distance || Math.abs(pageY - touchStartY) > distance) {
         isMoved = true;
       }
