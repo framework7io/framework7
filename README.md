@@ -26,6 +26,11 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
       </a>
     </td>
     <td align="center" valign="middle">
+      <a href="https://www.activewaiter.com/" target="_blank">
+        <img width="200" src="https://cdn.framework7.io/i/sponsors/activewaiter.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://wappler.io/" target="_blank">
         <img width="200" src="https://cdn.framework7.io/i/sponsors/wappler.png">
       </a>

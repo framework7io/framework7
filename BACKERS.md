@@ -8,6 +8,11 @@
       </a>
     </td>
     <td align="center" valign="middle">
+      <a href="https://www.activewaiter.com/" target="_blank">
+        <img width="200" src="https://cdn.framework7.io/i/sponsors/activewaiter.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://wappler.io/" target="_blank">
         <img width="200" src="https://cdn.framework7.io/i/sponsors/wappler.png">
       </a>
@@ -61,6 +66,7 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 ---
 
 ### $50+ Top Supporter
+[ActiveWaiter](https://www.activewaiter.com/) - Order. Drink. Eat. Pay. Love.<br>
 [Wappler](https://wappler.io) - Visual Web App Creator, offers full visual Framework7 builder<br>
 Olivier<br>
 Marcelo Lopetegui L.<br>
