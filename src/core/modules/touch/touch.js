@@ -46,6 +46,21 @@ function initTouch() {
     if (parents.length > 0) {
       activable = activable ? activable.add(parents) : parents;
     }
+    if (activable && activable.length > 1) {
+      const newActivable = [];
+      let preventPropagation;
+      for (let i = 0; i < activable.length; i += 1) {
+        if (!preventPropagation) {
+          newActivable.push(activable[i]);
+          if (activable.eq(i).hasClass('prevent-active-state-propagation')
+            || activable.eq(i).hasClass('no-active-state-propagation')
+          ) {
+            preventPropagation = true;
+          }
+        }
+      }
+      activable = $(newActivable);
+    }
     return activable || target;
   }
 
