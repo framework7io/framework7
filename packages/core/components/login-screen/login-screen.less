@@ -72,9 +72,12 @@
   }
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./login-screen-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./login-screen-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./login-screen-aurora.less');
+});

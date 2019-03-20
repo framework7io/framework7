@@ -36,6 +36,7 @@
 }
 .dialog-inner {
   position: relative;
+  padding: var(--f7-dialog-inner-padding);
 }
 .dialog-title {
   color: var(--f7-dialog-title-text-color);
@@ -72,9 +73,6 @@
   display: block;
   cursor: pointer;
 }
-.dialog-button[class*="color-"] {
-  --f7-dialog-button-text-color: var(--f7-theme-color);
-}
 .dialog-no-buttons {
   .dialog-buttons {
     display: none;
@@ -88,7 +86,7 @@ input.dialog-input[type] {
   box-sizing: border-box;
   margin: 0;
   margin-top: 15px;
-  border-radius: 0;
+  border-radius: var(--f7-dialog-input-border-radius);
   appearance: none;
   width: 100%;
   display: block;
@@ -100,6 +98,14 @@ input.dialog-input[type] {
   border: var(--f7-dialog-input-border-width) solid var(--f7-dialog-input-border-color);
   &::placeholder {
     color: var(--f7-dialog-input-placeholder-color);
+  }
+}
+.dialog-input-double {
+  input.dialog-input {
+    border-radius: var(--f7-dialog-input-border-radius) var(--f7-dialog-input-border-radius) 0 0;
+  }
+  + .dialog-input-double input.dialog-input {
+    border-radius: 0 0 var(--f7-dialog-input-border-radius) var(--f7-dialog-input-border-radius);
   }
 }
 // Preloader
@@ -114,9 +120,12 @@ html.with-modal-dialog {
     .not-scrollable();
   }
 }
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./dialog-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./dialog-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./dialog-aurora.less');
+});

@@ -74,9 +74,12 @@
   });
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./sortable-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./sortable-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./sortable-aurora.less');
+});

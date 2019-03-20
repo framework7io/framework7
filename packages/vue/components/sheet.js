@@ -106,7 +106,7 @@ export default {
     }
     self.$f7ready(f7 => {
       if (useDefaultBackdrop) {
-        sheetParams.backdrop = f7.params.sheet && f7.params.sheet.backdrop !== undefined ? f7.params.sheet.backdrop : self.$theme.md;
+        sheetParams.backdrop = f7.params.sheet && f7.params.sheet.backdrop !== undefined ? f7.params.sheet.backdrop : !self.$theme.ios;
       } else {
         sheetParams.backdrop = backdrop;
       }

@@ -22,6 +22,8 @@ declare namespace F7List {
     noHairlinesBetweenMd? : boolean
     noHairlinesIos? : boolean
     noHairlinesBetweenIos? : boolean
+    noHairlinesAurora? : boolean
+    noHairlinesBetweenAurora? : boolean
     noChevron? : boolean
     chevronCenter? : boolean
     tab? : boolean

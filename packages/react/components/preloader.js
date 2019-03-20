@@ -34,6 +34,7 @@ class F7Preloader extends React.Component {
     if (sizeComputed) {
       preloaderStyle.width = `${sizeComputed}px`;
       preloaderStyle.height = `${sizeComputed}px`;
+      preloaderStyle['--f7-preloader-size'] = `${sizeComputed}px`;
     }
 
     if (style) Utils.extend(preloaderStyle, style || {});
@@ -53,7 +54,7 @@ class F7Preloader extends React.Component {
       }, React.createElement('span', {
         className: 'preloader-inner-half-circle'
       })));
-    } else {
+    } else if (self.$theme.ios) {
       innerEl = React.createElement('span', {
         className: 'preloader-inner'
       }, React.createElement('span', {
@@ -80,6 +81,12 @@ class F7Preloader extends React.Component {
         className: 'preloader-inner-line'
       }), React.createElement('span', {
         className: 'preloader-inner-line'
+      }));
+    } else if (self.$theme.aurora) {
+      innerEl = React.createElement('span', {
+        className: 'preloader-inner'
+      }, React.createElement('span', {
+        className: 'preloader-inner-circle'
       }));
     }
 

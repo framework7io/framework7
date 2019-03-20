@@ -14,9 +14,12 @@
   }
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./gauge-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./gauge-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./gauge-aurora.less');
+});

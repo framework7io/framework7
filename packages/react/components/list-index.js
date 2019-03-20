@@ -50,6 +50,7 @@ class F7ListIndex extends React.Component {
         indexes,
         iosItemHeight,
         mdItemHeight,
+        auroraItemHeight,
         scrollList,
         label
       } = self.props;
@@ -59,6 +60,7 @@ class F7ListIndex extends React.Component {
         indexes,
         iosItemHeight,
         mdItemHeight,
+        auroraItemHeight,
         scrollList,
         label,
         on: {
@@ -129,6 +131,10 @@ __reactComponentSetProps(F7ListIndex, Object.assign({
     default: 14
   },
   mdItemHeight: {
+    type: Number,
+    default: 14
+  },
+  auroraItemHeight: {
     type: Number,
     default: 14
   }

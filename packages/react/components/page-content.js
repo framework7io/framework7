@@ -88,6 +88,7 @@ class F7PageContent extends React.Component {
       ptrPreloader,
       ptrDistance,
       ptrBottom,
+      ptrMousewheel,
       infinite,
       infinitePreloader,
       id,
@@ -119,6 +120,7 @@ class F7PageContent extends React.Component {
       style: style,
       className: self.classes,
       'data-ptr-distance': ptrDistance || undefined,
+      'data-ptr-mousewheel': ptrMousewheel || undefined,
       'data-infinite-distance': infiniteDistance || undefined,
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
@@ -195,6 +197,7 @@ __reactComponentSetProps(F7PageContent, Object.assign({
     default: true
   },
   ptrBottom: Boolean,
+  ptrMousewheel: Boolean,
   infinite: Boolean,
   infiniteTop: Boolean,
   infiniteDistance: Number,

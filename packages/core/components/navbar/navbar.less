@@ -17,12 +17,6 @@
   background-color: var(--f7-navbar-bg-color, var(--f7-bars-bg-color, var(--f7-theme-color)));
   color: var(--f7-navbar-text-color, var(--f7-bars-text-color));
   font-size: var(--f7-navbar-font-size);
-  .material-icons {
-    width: 24px;
-  }
-  .f7-icons {
-    width: 28px;
-  }
   b {
     font-weight: 500;
   }
@@ -32,15 +26,14 @@
   a.link {
     display: flex;
     justify-content: flex-start;
-    line-height: var(--f7-navbar-height);
-    height: var(--f7-navbar-height);
+    line-height: var(--f7-navbar-link-line-height, var(--f7-navbar-height));
+    height: var(--f7-navbar-link-height, var(--f7-navbar-height));
   }
   .title, .left, .right {
     position: relative;
     z-index: 10;
   }
   .title {
-    text-align: center;
     position: relative;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -50,6 +43,7 @@
     display: inline-block;
     line-height: var(--f7-navbar-title-line-height);
     text-align: var(--f7-navbar-title-text-align);
+    font-size: var(--f7-navbar-title-font-size);
     .ltr({
       margin-left: var(--f7-navbar-title-margin-left);
       margin-right: var(--f7-navbar-title-margin-left);
@@ -101,7 +95,7 @@
     backface-visibility: hidden;
   }
   .hairline(bottom, var(--f7-navbar-border-color, var(--f7-bars-border-color)));
-  .bar-shadow-bottom(var(--f7-navbar-shadow-image, var(--f7-bars-shadow-bottom-image)));
+  .bar-shadow-bottom(var(--f7-navbar-shadow-image));
   &:after {
     z-index: 1;
   }
@@ -146,7 +140,7 @@
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  padding: 0 calc(var(--f7-navbar-inner-padding-right) + var(--f7-safe-area-right)) 0 calc(var(--f7-navbar-inner-padding-right) + var(--f7-safe-area-left));
+  padding: 0 calc(var(--f7-navbar-inner-padding-right) + var(--f7-safe-area-right)) 0 calc(var(--f7-navbar-inner-padding-left) + var(--f7-safe-area-left));
 
   &.stacked {
     display: none;
@@ -233,22 +227,26 @@
 }
 
 // Relation with page
-.navbar ~ * .page:not(.no-navbar) .page-content,
-.navbar ~ .page:not(.no-navbar) .page-content,
-.navbar ~ .page-content,
-.navbar ~ :not(.page) .page-content {
-  padding-top: var(--f7-navbar-height);
+.navbar ~ * {
+  --f7-page-navbar-offset: var(--f7-navbar-height);
 }
-.navbar ~ * .page:not(.no-navbar).page-with-navbar-large .page-content,
-.navbar ~ .page:not(.no-navbar).page-with-navbar-large .page-content,
-.page-with-navbar-large .navbar ~ .page-content,
-.page-with-navbar-large .navbar ~ * .page-content {
-  padding-top: calc(var(--f7-navbar-height) + var(--f7-navbar-large-title-height));
+.navbar ~ * .page-with-navbar-large,
+.navbar ~ .page-with-navbar-large,
+.page-with-navbar-large .navbar ~ * {
+  --f7-page-navbar-offset: calc(var(--f7-navbar-height) + var(--f7-navbar-large-title-height));
+}
+.page.no-navbar,
+.page.no-navbar .navbar ~ * {
+  --f7-page-navbar-offset: 0px;
 }
 
-& when (@includeIosTheme) {
+
+.if-ios-theme({
   @import url('./navbar-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./navbar-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./navbar-aurora.less');
+});

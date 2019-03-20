@@ -33,6 +33,7 @@ export default {
       pageTitle: undefined,
       searchbarPlaceholder: 'Search...',
       searchbarDisableText: 'Cancel',
+      searchbarDisableButton: undefined,
 
       animate: true,
 

@@ -12,9 +12,8 @@ declare namespace F7Icon {
     ion? : string
     fa? : string
     icon? : string
-    ifMd? : string
-    ifIos? : string
     ios? : string
+    aurora? : string
     md? : string
     tooltip? : string
     size? : string | number

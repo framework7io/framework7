@@ -1,5 +1,5 @@
 /**
- * Framework7 4.1.1
+ * Framework7 4.2.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 14, 2019
+ * Released on: March 20, 2019
  */
 
 import Template7 from 'template7';
@@ -48,6 +48,7 @@ import TouchRipple from './components/touch-ripple/touch-ripple';
 import Modal from './components/modal/modal';
 import Router from './modules/router/router-class';
 
+import Appbar from './components/appbar/appbar';
 import Dialog from './components/dialog/dialog';
 import Popup from './components/popup/popup';
 import LoginScreen from './components/login-screen/login-screen';
@@ -135,6 +136,7 @@ Framework7.use([
   Subnavbar,
   TouchRipple,
   Modal,
+  Appbar,
   Dialog,
   Popup,
   LoginScreen,

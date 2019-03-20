@@ -34,6 +34,7 @@ export default {
       default: 'change input compositionend'
     },
     expandable: Boolean,
+    inline: Boolean,
     searchContainer: [String, Object],
     searchIn: {
       type: String,
@@ -61,7 +62,7 @@ export default {
     },
     backdrop: {
       type: Boolean,
-      default: true
+      default: undefined
     },
     backdropEl: [String, Object],
     hideOnEnableEl: {
@@ -116,7 +117,8 @@ export default {
       className,
       style,
       id,
-      value
+      value,
+      inline
     } = props;
 
     if (clearButton) {
@@ -135,6 +137,7 @@ export default {
 
     const SearchbarTag = form ? 'form' : 'div';
     const classes = Utils.classNames(className, 'searchbar', {
+      'searchbar-inline': inline,
       'no-shadow': noShadow,
       'no-hairline': noHairline,
       'searchbar-expandable': expandable
@@ -178,16 +181,6 @@ export default {
     Utils.bindMethods(this, ['onSubmit', 'onClearButtonClick', 'onDisableButtonClick', 'onInput', 'onChange', 'onFocus', 'onBlur']);
   },
 
-  beforeDestroy() {
-    const self = this;
-
-    if (self.props.form && self.$refs.el) {
-      self.$refs.el.removeEventListener('submit', self.onSubmit, false);
-    }
-
-    if (self.f7Searchbar && self.f7Searchbar.destroy) self.f7Searchbar.destroy();
-  },
-
   mounted() {
     const self = this;
     const {
@@ -210,10 +203,11 @@ export default {
       removeDiacritics,
       hideDividers,
       hideGroups,
-      form
+      form,
+      expandable,
+      inline
     } = self.props;
     const {
-      inputEl,
       el,
       clearEl,
       disableEl
@@ -253,6 +247,8 @@ export default {
         removeDiacritics,
         hideDividers,
         hideGroups,
+        expandable,
+        inline,
         on: {
           search(searchbar, query, previousQuery) {
             self.dispatchEvent('searchbar:search searchbarSearch', searchbar, query, previousQuery);
@@ -284,7 +280,6 @@ export default {
   beforeDestroy() {
     const self = this;
     const {
-      inputEl,
       el,
       clearEl,
       disableEl

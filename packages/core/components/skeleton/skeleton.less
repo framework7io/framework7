@@ -71,10 +71,14 @@
   }
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./skeleton-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./skeleton-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./skeleton-aurora.less');
+});
+
 

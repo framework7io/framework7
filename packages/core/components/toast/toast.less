@@ -56,9 +56,12 @@
   }
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./toast-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./toast-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./toast-aurora.less');
+});

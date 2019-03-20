@@ -28,6 +28,8 @@ export default {
       // Picker settings
       updateValuesOnMomentum: false,
       updateValuesOnTouchmove: true,
+      updateValuesOnMousewheel: true,
+      mousewheel: true,
       rotateEffect: false,
       momentumRatio: 7,
       freeMode: false,

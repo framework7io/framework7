@@ -26,6 +26,8 @@
     position: relative;
     height: auto;
     bottom: auto;
+    padding-left: calc(var(--f7-messagebar-inner-padding-left, var(--f7-toolbar-inner-padding-left)) + var(--f7-safe-area-left));
+    padding-right: calc(var(--f7-messagebar-inner-padding-right, var(--f7-toolbar-inner-padding-right)) + var(--f7-safe-area-right));
     .rtl({
       flex-direction: row-reverse;
     });
@@ -163,13 +165,15 @@
 .messagebar:not(.messagebar-sheet-visible) .messagebar-sheet {
   display: none;
 }
-.messagebar ~ .page-content,
-.messagebar ~ * .page-content {
-  padding-bottom: calc(var(--f7-messagebar-height) + var(--f7-safe-area-bottom));
+.messagebar ~ * {
+  --f7-page-toolbar-bottom-offset: var(--f7-messagebar-height);
 }
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./messagebar-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./messagebar-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./messagebar-aurora.less');
+});

@@ -87,9 +87,12 @@ body, .framework7-root {
   }
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./progressbar-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./progressbar-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./progressbar-aurora.less');
+});

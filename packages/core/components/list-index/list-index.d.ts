@@ -45,6 +45,8 @@ export namespace ListIndex {
     iosItemHeight?: number
     /** Single index item height. It is required to calculate dynamic index and how many indexes fit on the screen. For MD theme. (default 14) */
     mdItemHeight?: number
+    /** Single index item height. It is required to calculate dynamic index and how many indexes fit on the screen. For Aurora theme. (default 14) */
+    auroraItemHeight?: number
     /** Object with events handlers.. */
     on: {
       [event in keyof Events]? : Events[event]

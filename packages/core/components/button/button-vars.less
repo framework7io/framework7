@@ -15,7 +15,7 @@
   --f7-button-raised-pressed-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   --f7-segmented-raised-divider-color: rgba(0,0,0,0.1);
 }
-.ios {
+.ios-vars({
   --f7-button-height: 29px;
   --f7-button-padding-horizontal: 10px;
   --f7-button-border-radius: 5px;
@@ -29,13 +29,14 @@
   --f7-button-outline-border-width: 1px;
   --f7-button-large-height: 44px;
   --f7-button-large-font-size: 17px;
+  --f7-button-large-font-weight: 400;
   --f7-button-small-height: 26px;
   --f7-button-small-font-size: 13px;
   --f7-button-small-font-weight: 600;
   --f7-button-small-text-transform: uppercase;
   --f7-button-small-outline-border-width: 2px;
-}
-.md {
+});
+.md-vars({
   --f7-button-height: 36px;
   --f7-button-padding-horizontal: 8px;
   --f7-button-border-radius: 4px;
@@ -49,12 +50,40 @@
   --f7-button-outline-border-width: 2px;
   --f7-button-large-height: 48px;
   --f7-button-large-font-size: 14px;
+  --f7-button-large-font-weight: 500;
   --f7-button-small-height: 28px;
-  --f7-button-small-font-size: 13px;
+  --f7-button-small-font-size: 12px;
   --f7-button-small-font-weight: 500;
   --f7-button-small-text-transform: uppercase;
   --f7-button-small-outline-border-width: 2px;
   .theme-dark, &.theme-dark {
     --f7-button-pressed-bg-color: rgba(255,255,255,0.1);
   }
-}
+});
+.aurora-vars({
+  /*
+  --f7-button-hover-bg-color: rgba(var(--f7-theme-color-rgb), .07);
+  --f7-button-fill-hover-bg-color: var(--f7-theme-color-tint);
+  */
+  --f7-button-font-size: 14px;
+  --f7-button-height: 28px;
+  --f7-button-min-width: 24px;
+  --f7-button-padding-horizontal: 10px;
+  --f7-button-border-radius: 4px;
+  --f7-button-font-weight: 400;
+  --f7-button-letter-spacing: 0.02;
+  --f7-button-text-transform: none;
+  /*
+  --f7-button-pressed-bg-color: rgba(var(--f7-theme-color-rgb), .15);
+  --f7-button-fill-pressed-bg-color: var(--f7-theme-color-shade);
+  */
+  --f7-button-outline-border-width: 2px;
+  --f7-button-large-height: 34px;
+  --f7-button-large-font-size: 14px;
+  --f7-button-large-font-weight: 600;
+  --f7-button-small-height: 22px;
+  --f7-button-small-font-size: 12px;
+  --f7-button-small-font-weight: 600;
+  --f7-button-small-text-transform: none;
+  --f7-button-small-outline-border-width: 1px;
+});

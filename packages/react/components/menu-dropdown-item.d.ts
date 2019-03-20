@@ -37,6 +37,7 @@ declare namespace F7MenuDropdownItem {
     searchbarToggle? : boolean | string
     panelOpen? : boolean | string
     panelClose? : boolean | string
+    panelToggle? : boolean | string
     popupOpen? : boolean | string
     popupClose? : boolean | string
     actionsOpen? : boolean | string

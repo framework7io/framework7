@@ -23,9 +23,12 @@
     position: fixed;
   }
 }
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./pull-to-refresh-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./pull-to-refresh-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./pull-to-refresh-aurora.less');
+});

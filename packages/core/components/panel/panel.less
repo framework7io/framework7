@@ -4,9 +4,9 @@
 .panel-backdrop {
   position: absolute;
   left: 0;
-  top: var(--f7-statusbar-height);
+  top: calc(var(--f7-statusbar-height) + var(--f7-appbar-app-offset, 0px));
   width: 100%;
-  height: calc(100% - var(--f7-statusbar-height));
+  height: calc(100% - var(--f7-statusbar-height) - var(--f7-appbar-app-offset, 0px));
   opacity: 0;
   z-index: 5999;
   display: none;
@@ -23,8 +23,8 @@
   display: none;
   box-sizing: border-box;
   position: absolute;
-  top: var(--f7-statusbar-height);
-  height: calc(100% - var(--f7-statusbar-height));
+  top: calc(var(--f7-statusbar-height) + var(--f7-appbar-app-offset, 0px));
+  height: calc(100% - var(--f7-statusbar-height) - var(--f7-appbar-app-offset, 0px));
   transform: translate3d(0,0,0);
   width: var(--f7-panel-width);
   background-color: var(--f7-panel-bg-color);
@@ -169,9 +169,12 @@ html {
   }
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./panel-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./panel-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./panel-aurora.less');
+});

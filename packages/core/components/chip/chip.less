@@ -88,7 +88,8 @@
 }
 .chip-outline,
 .ios .chip-outline-ios,
-.md .chip-outline-md {
+.md .chip-outline-md,
+.aurora .chip-outline-aurora {
   border: 1px solid var(--f7-chip-outline-border-color);
   background: none;
 }
@@ -98,13 +99,17 @@
 }
 .chip-outline[class*="color-"],
 .ios .chip-outline-ios[class*="color-"],
-.md .chip-outline-md[class*="color-"] {
+.md .chip-outline-md[class*="color-"],
+.aurora .chip-outline-aurora[class*="color-"] {
   --f7-chip-outline-border-color: var(--f7-theme-color);
   --f7-chip-text-color: var(--f7-theme-color);
 }
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./chip-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./chip-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./chip-aurora.less');
+});

@@ -26,9 +26,12 @@
   }
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./link-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./link-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./link-aurora.less');
+});

@@ -36,9 +36,12 @@
   --f7-badge-bg-color: var(--f7-theme-color);
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./badge-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./badge-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./badge-aurora.less');
+});

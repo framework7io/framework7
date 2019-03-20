@@ -165,7 +165,7 @@ class PhotoBrowser extends Framework7Class {
     let iconsColor = pb.params.iconsColor;
     if (!pb.params.iconsColor && pb.params.theme === 'dark') iconsColor = 'white';
 
-    const backLinkText = pb.app.theme === 'ios' && pb.params.backLinkText ? pb.params.backLinkText : '';
+    const backLinkText = (pb.app.theme === 'ios' || pb.app.theme === 'aurora') && pb.params.backLinkText ? pb.params.backLinkText : '';
 
     const isPopup = pb.params.type !== 'page';
     const navbarHtml = `

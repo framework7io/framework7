@@ -95,6 +95,10 @@ export namespace Picker {
     updateValuesOnMomentum?: boolean
     /** Updates picker and input values during touch move. (default true) */
     updateValuesOnTouchmove?: boolean
+    /** Updates picker and input values during mousewheel scrolling. (default true) */
+    updateValuesOnMousewheel?: boolean
+    /** Allow to scroll through picker with mousewheel (default true) */
+    mousewheel?: boolean
     /** Disables snapping on values. (default false) */
     freeMode?: boolean
     /** Array with initial values. Each array item represents value of related column. */

@@ -42,6 +42,7 @@ declare class F7Panel extends React.Component<F7Panel.Props, {}> {
   onBreakpoint(event? : any) : unknown
   open(animate? : any) : unknown
   close(animate? : any) : unknown
+  toggle(animate? : any) : unknown
   f7Panel: PanelNamespace.Panel
 }
 export default F7Panel;

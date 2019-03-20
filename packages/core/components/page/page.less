@@ -31,6 +31,8 @@
   height: 100%;
   position: relative;
   z-index: 1;
+  padding-top: calc(var(--f7-page-navbar-offset, 0px) + var(--f7-page-toolbar-top-offset, 0px) + var(--f7-page-subnavbar-offset, 0px) + var(--f7-page-searchbar-offset, 0px) + var(--f7-page-content-extra-padding-top, 0px));
+  padding-bottom: calc(var(--f7-page-toolbar-bottom-offset, 0px) + var(--f7-safe-area-bottom) + var(--f7-page-content-extra-padding-bottom, 0px));
 }
 .page-transitioning {
   &, .page-shadow-effect, .page-opacity-effect {
@@ -82,12 +84,15 @@
   .page-fake-opacity();
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./page-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./page-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./page-aurora.less');
+});
 
 .view:not(.view-master-detail) {
   .page-master-stacked {

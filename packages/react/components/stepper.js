@@ -61,16 +61,23 @@ class F7Stepper extends React.Component {
       round,
       roundIos,
       roundMd,
+      roundAurora,
       fill,
       fillIos,
       fillMd,
+      fillAurora,
       large,
       largeIos,
       largeMd,
+      largeAurora,
       small,
       smallIos,
       smallMd,
+      smallAurora,
       raised,
+      raisedMd,
+      raisedIos,
+      raisedAurora,
       disabled
     } = props;
     return Utils.classNames(self.props.className, 'stepper', {
@@ -78,16 +85,23 @@ class F7Stepper extends React.Component {
       'stepper-round': round,
       'stepper-round-ios': roundIos,
       'stepper-round-md': roundMd,
+      'stepper-round-aurora': roundAurora,
       'stepper-fill': fill,
       'stepper-fill-ios': fillIos,
       'stepper-fill-md': fillMd,
+      'stepper-fill-aurora': fillAurora,
       'stepper-large': large,
       'stepper-large-ios': largeIos,
       'stepper-large-md': largeMd,
+      'stepper-large-aurora': largeAurora,
       'stepper-small': small,
       'stepper-small-ios': smallIos,
       'stepper-small-md': smallMd,
-      'stepper-raised': raised
+      'stepper-small-aurora': smallAurora,
+      'stepper-raised': raised,
+      'stepper-raised-ios': raisedIos,
+      'stepper-raised-md': raisedMd,
+      'stepper-raised-aurora': raisedAurora
     }, Mixins.colorClasses(props));
   }
 
@@ -122,8 +136,7 @@ class F7Stepper extends React.Component {
           step: inputType === 'number' ? step : undefined,
           onInput: self.onInput,
           value: value,
-          readOnly: inputReadonly,
-          onInput: self.onInput
+          readOnly: inputReadonly
         });
       }
       inputWrapEl = React.createElement('div', {
@@ -312,16 +325,23 @@ __reactComponentSetProps(F7Stepper, Object.assign({
   round: Boolean,
   roundMd: Boolean,
   roundIos: Boolean,
+  roundAurora: Boolean,
   fill: Boolean,
   fillMd: Boolean,
   fillIos: Boolean,
+  fillAurora: Boolean,
   large: Boolean,
   largeMd: Boolean,
   largeIos: Boolean,
+  largeAurora: Boolean,
   small: Boolean,
   smallMd: Boolean,
   smallIos: Boolean,
-  raised: Boolean
+  smallAurora: Boolean,
+  raised: Boolean,
+  raisedMd: Boolean,
+  raisedIos: Boolean,
+  raisedAurora: Boolean
 }, Mixins.colorProps));
 
 F7Stepper.displayName = 'f7-stepper';

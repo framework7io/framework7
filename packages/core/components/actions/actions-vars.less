@@ -1,11 +1,14 @@
 :root {
-
+  --f7-actions-grid-button-font-size: 12px;
+  --f7-actions-grid-button-text-color: #757575;
 }
-.ios {
+.ios-vars({
   --f7-actions-bg-color: rgba(255,255,255,0.95);
   --f7-actions-border-radius: 13px;
   --f7-actions-button-border-color: rgba(0,0,0,0.2);
+  /*
   --f7-actions-button-text-color: var(--f7-theme-color);
+  */
   --f7-actions-button-pressed-bg-color: rgba(230,230,230,0.9);
   --f7-actions-button-padding: 0px;
   --f7-actions-button-text-align: center;
@@ -20,11 +23,9 @@
   --f7-actions-label-justify-content: center;
   --f7-actions-group-border-color: transparent;
   --f7-actions-group-margin: 8px;
-  --f7-actions-grid-button-text-color: #757575;
   --f7-actions-grid-button-icon-size: 48px;
-  --f7-actions-grid-button-font-size: 12px;
-}
-.md {
+});
+.md-vars({
   --f7-actions-bg-color: #fff;
   --f7-actions-border-radius: 0px;
   --f7-actions-button-border-color: transparent;
@@ -43,7 +44,28 @@
   --f7-actions-label-justify-content: flex-start;
   --f7-actions-group-border-color: #d2d2d6;
   --f7-actions-group-margin: 0px;
-  --f7-actions-grid-button-text-color: #757575;
   --f7-actions-grid-button-icon-size: 48px;
-  --f7-actions-grid-button-font-size: 12px;
-}
+});
+.aurora-vars({
+  --f7-actions-bg-color: #fff;
+  --f7-actions-border-radius: 4px;
+  --f7-actions-button-border-color: rgba(0,0,0,0.12);
+  /*
+  --f7-actions-button-text-color: var(--f7-theme-color);
+  */
+  --f7-actions-button-pressed-bg-color: #e5e5e5;
+  --f7-actions-button-padding: 0 15px;
+  --f7-actions-button-text-align: center;
+  --f7-actions-button-height: 32px;
+  --f7-actions-button-height-landscape: 32px;
+  --f7-actions-button-font-size: 14px;
+  --f7-actions-button-icon-size: 18px;
+  --f7-actions-button-justify-content: space-between;
+  --f7-actions-label-padding: 10px 15px;
+  --f7-actions-label-text-color: rgba(0,0,0,0.5);
+  --f7-actions-label-font-size: 12px;
+  --f7-actions-label-justify-content: center;
+  --f7-actions-group-border-color: rgba(0,0,0,0.1);
+  --f7-actions-group-margin: 15px;
+  --f7-actions-grid-button-icon-size: 32px;
+});

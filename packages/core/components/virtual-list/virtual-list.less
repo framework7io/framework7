@@ -1,7 +1,10 @@
 /* === Virtual List === */
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./virtual-list-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./virtual-list-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./virtual-list-aurora.less');
+});

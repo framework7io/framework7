@@ -40,9 +40,12 @@ html.with-modal-preloader {
 .preloader[class*="color-"] {
   --f7-preloader-color: var(--f7-theme-color);
 }
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./preloader-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./preloader-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./preloader-aurora.less');
+});

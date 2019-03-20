@@ -15,7 +15,8 @@ export default {
     accordionList: Boolean,
     noHairlines: Boolean,
     noHairlinesMd: Boolean,
-    noHairlinesIos: Boolean
+    noHairlinesIos: Boolean,
+    noHairlinesAurora: Boolean
   }, Mixins.colorProps),
 
   created() {
@@ -52,6 +53,7 @@ export default {
       noHairlines,
       noHairlinesIos,
       noHairlinesMd,
+      noHairlinesAurora,
       id,
       style
     } = props;
@@ -65,7 +67,8 @@ export default {
       'tab-active': tabActive,
       'no-hairlines': noHairlines,
       'no-hairlines-md': noHairlinesMd,
-      'no-hairlines-ios': noHairlinesIos
+      'no-hairlines-ios': noHairlinesIos,
+      'no-hairlines-aurora': noHairlinesAurora
     }, Mixins.colorClasses(props));
     return _h('div', {
       style: style,

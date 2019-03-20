@@ -12,11 +12,13 @@
   --f7-block-title-large-text-color: #000;
   --f7-block-title-large-text-transform: none;
   .theme-dark, &.theme-dark {
+    --f7-block-strong-border-color: #282829;
     --f7-block-title-medium-text-color: #fff;
     --f7-block-title-large-text-color: #fff;
+    --f7-block-strong-bg-color: #1c1c1d;
   }
 }
-.ios {
+.ios-vars({
   --f7-block-text-color: #6d6d72;
   --f7-block-padding-horizontal: 15px;
   --f7-block-padding-vertical: 15px;
@@ -39,15 +41,13 @@
   --f7-block-header-text-color: #8f8f94;
   --f7-block-footer-text-color: #8f8f94;
   .theme-dark, &.theme-dark {
-    --f7-block-strong-border-color: #282829;
     --f7-block-title-text-color: #8E8E93;
     --f7-block-header-text-color: #8E8E93;
     --f7-block-footer-text-color: #8E8E93;
-    --f7-block-strong-bg-color: #1c1c1d;
     --f7-block-strong-text-color: #fff;
   }
-}
-.md {
+});
+.md-vars({
   --f7-block-text-color: inherit;
   --f7-block-padding-horizontal: 16px;
   --f7-block-padding-vertical: 16px;
@@ -70,10 +70,37 @@
   --f7-block-header-text-color: rgba(0,0,0,0.54);
   --f7-block-footer-text-color: rgba(0,0,0,0.54);
   .theme-dark, &.theme-dark {
-    --f7-block-strong-border-color: #282829;
     --f7-block-title-text-color: #fff;
     --f7-block-header-text-color: rgba(255,255,255,0.54);
     --f7-block-footer-text-color: rgba(255,255,255,0.54);
-    --f7-block-strong-bg-color: #1c1c1d;
   }
-}
+});
+.aurora-vars({
+  --f7-block-text-color: inherit;
+  --f7-block-padding-horizontal: 15px;
+  --f7-block-padding-vertical: 15px;
+  --f7-block-margin-vertical: 15px;
+  --f7-block-strong-text-color: inherit;
+  --f7-block-strong-border-color: rgba(0,0,0,0.12);
+  --f7-block-title-text-transform: none;
+  --f7-block-title-text-color: rgba(0,0,0,0.7);
+  --f7-block-title-font-weight: 600;
+  --f7-block-title-line-height: 1.5;
+  --f7-block-title-margin-bottom: 5px;
+  --f7-block-title-medium-font-size: 20px;
+  --f7-block-title-medium-font-weight: 600;
+  --f7-block-title-medium-line-height: 1.4;
+  --f7-block-title-large-font-size: 28px;
+  --f7-block-title-large-font-weight: bold;
+  --f7-block-title-large-line-height: 1.3;
+  --f7-block-inset-side-margin: 15px;
+  --f7-block-inset-border-radius: 4px;
+  --f7-block-header-text-color: rgba(0,0,0,0.6);
+  --f7-block-footer-text-color: rgba(0,0,0,0.6);
+  .theme-dark, &.theme-dark {
+    --f7-block-title-text-color: #fff;
+    --f7-block-header-text-color: rgba(255,255,255,0.52);
+    --f7-block-footer-text-color: rgba(255,255,255,0.52);
+    --f7-block-strong-text-color: #fff;
+  }
+});

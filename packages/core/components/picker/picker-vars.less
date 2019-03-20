@@ -6,7 +6,7 @@
   --f7-picker-landscape-height: 200px;
   --f7-picker-item-height: 36px;
 }
-.ios {
+.ios-vars({
   --f7-picker-column-font-size: 24px;
   --f7-picker-divider-text-color: #000;
   --f7-picker-item-text-color: #707274;
@@ -15,10 +15,10 @@
   .theme-dark, &.theme-dark {
     --f7-picker-divider-text-color: #fff;
     --f7-picker-item-selected-text-color: #fff;
-    --f7-picker-item-selected-border-color: #282829;
+    --f7-picker-item-selected-border-color: rgba(255,255,255,0.06);
   }
-}
-.md {
+});
+.md-vars({
   --f7-picker-column-font-size: 20px;
   --f7-picker-divider-text-color: rgba(0,0,0,0.87);
   --f7-picker-item-text-color: inherit;
@@ -28,4 +28,17 @@
   --f7-picker-divider-text-color: rgba(255,255,255,0.87);
   --f7-picker-item-selected-border-color: rgba(255,255,255,0.15);
   }
-}
+});
+.aurora-vars({
+  --f7-picker-column-font-size: 16px;
+  --f7-picker-divider-text-color: #000;
+  --f7-picker-item-height: 28px;
+  --f7-picker-item-text-color: #888;
+  --f7-picker-item-selected-text-color: #000;
+  --f7-picker-item-selected-border-color: rgba(0,0,0,0.12);
+  .theme-dark, &.theme-dark {
+    --f7-picker-divider-text-color: #fff;
+    --f7-picker-item-selected-text-color: #fff;
+    --f7-picker-item-selected-border-color: rgba(255,255,255,0.06);
+  }
+});

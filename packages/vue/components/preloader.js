@@ -25,6 +25,7 @@ export default {
     if (sizeComputed) {
       preloaderStyle.width = `${sizeComputed}px`;
       preloaderStyle.height = `${sizeComputed}px`;
+      preloaderStyle['--f7-preloader-size'] = `${sizeComputed}px`;
     }
 
     if (style) Utils.extend(preloaderStyle, style || {});
@@ -44,7 +45,7 @@ export default {
       }, [_h('span', {
         class: 'preloader-inner-half-circle'
       })])]);
-    } else {
+    } else if (self.$theme.ios) {
       innerEl = _h('span', {
         class: 'preloader-inner'
       }, [_h('span', {
@@ -71,6 +72,12 @@ export default {
         class: 'preloader-inner-line'
       }), _h('span', {
         class: 'preloader-inner-line'
+      })]);
+    } else if (self.$theme.aurora) {
+      innerEl = _h('span', {
+        class: 'preloader-inner'
+      }, [_h('span', {
+        class: 'preloader-inner-circle'
       })]);
     }
 

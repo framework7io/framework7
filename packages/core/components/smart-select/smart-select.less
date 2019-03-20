@@ -36,9 +36,12 @@
 .smart-select-popover .popover-inner {
   max-height: 40vh;
 }
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./smart-select-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./smart-select-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./smart-select-aurora.less');
+});

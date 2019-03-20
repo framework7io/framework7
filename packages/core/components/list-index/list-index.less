@@ -119,9 +119,12 @@
   }
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./list-index-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./list-index-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./list-index-aurora.less');
+});

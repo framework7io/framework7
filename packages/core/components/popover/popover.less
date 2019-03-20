@@ -87,9 +87,12 @@
     .hairline-remove(bottom);
   }
 }
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./popover-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./popover-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./popover-aurora.less');
+});

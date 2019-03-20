@@ -216,7 +216,9 @@ export default function (colEl, updateItems) {
     if (returnTo) {
       if (returnTo === 'min') {
         col.$itemsEl.transform(`translate3d(0,${minTranslate}px,0)`);
-      } else col.$itemsEl.transform(`translate3d(0,${maxTranslate}px,0)`);
+      } else {
+        col.$itemsEl.transform(`translate3d(0,${maxTranslate}px,0)`);
+      }
     }
     touchEndTime = new Date().getTime();
     let newTranslate;
@@ -229,7 +231,7 @@ export default function (colEl, updateItems) {
     newTranslate = Math.max(Math.min(newTranslate, maxTranslate), minTranslate);
 
     // Active Index
-    const activeIndex = -Math.floor((newTranslate - maxTranslate) / itemHeight);
+    const activeIndex = Math.round(Math.abs(((newTranslate - maxTranslate) / itemHeight)));
 
     // Normalize translate
     if (!picker.params.freeMode) newTranslate = (-activeIndex * itemHeight) + maxTranslate;
@@ -254,6 +256,64 @@ export default function (colEl, updateItems) {
     }, 100);
   }
 
+  let mousewheelTimeout;
+  function handleMouseWheel(e) {
+    const { deltaX, deltaY } = e;
+    if (Math.abs(deltaX) > Math.abs(deltaY)) return;
+    clearTimeout(mousewheelTimeout);
+
+    e.preventDefault();
+
+    Utils.cancelAnimationFrame(animationFrameId);
+    startTranslate = Utils.getTranslate(col.$itemsEl[0], 'y');
+    col.$itemsEl.transition(0);
+
+    currentTranslate = startTranslate - deltaY;
+    returnTo = undefined;
+
+    // Normalize translate
+    if (currentTranslate < minTranslate) {
+      currentTranslate = minTranslate;
+      returnTo = 'min';
+    }
+    if (currentTranslate > maxTranslate) {
+      currentTranslate = maxTranslate;
+      returnTo = 'max';
+    }
+    // Transform wrapper
+    col.$itemsEl.transform(`translate3d(0,${currentTranslate}px,0)`);
+
+    // Update items
+    col.updateItems(undefined, currentTranslate, 0, picker.params.updateValuesOnMousewheel);
+
+    // On end
+    mousewheelTimeout = setTimeout(() => {
+      col.$itemsEl.transition('');
+      if (returnTo) {
+        if (returnTo === 'min') {
+          col.$itemsEl.transform(`translate3d(0,${minTranslate}px,0)`);
+        } else {
+          col.$itemsEl.transform(`translate3d(0,${maxTranslate}px,0)`);
+        }
+      }
+      touchEndTime = new Date().getTime();
+      let newTranslate = currentTranslate;
+      newTranslate = Math.max(Math.min(newTranslate, maxTranslate), minTranslate);
+
+      // Active Index
+      const activeIndex = Math.round(Math.abs(((newTranslate - maxTranslate) / itemHeight)));
+
+      // Normalize translate
+      if (!picker.params.freeMode) newTranslate = (-activeIndex * itemHeight) + maxTranslate;
+
+      // Transform wrapper
+      col.$itemsEl.transform(`translate3d(0,${parseInt(newTranslate, 10)}px,0)`);
+
+      // Update items
+      col.updateItems(activeIndex, newTranslate, '', true);
+    }, 200);
+  }
+
   function handleClick() {
     if (!allowItemClick) return;
     Utils.cancelAnimationFrame(animationFrameId);
@@ -266,12 +326,18 @@ export default function (colEl, updateItems) {
     col.$el.on(app.touchEvents.start, handleTouchStart, activeListener);
     app.on('touchmove:active', handleTouchMove);
     app.on('touchend:passive', handleTouchEnd);
+    if (picker.params.mousewheel) {
+      col.$el.on('wheel', handleMouseWheel);
+    }
     col.items.on('click', handleClick);
   };
   col.detachEvents = function detachColEvents() {
     col.$el.off(app.touchEvents.start, handleTouchStart, activeListener);
     app.off('touchmove:active', handleTouchMove);
     app.off('touchend:passive', handleTouchEnd);
+    if (picker.params.mousewheel) {
+      col.$el.off('wheel', handleMouseWheel);
+    }
     col.items.off('click', handleClick);
   };
 

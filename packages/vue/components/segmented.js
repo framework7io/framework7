@@ -8,9 +8,11 @@ export default {
     raised: Boolean,
     raisedIos: Boolean,
     raisedMd: Boolean,
+    raisedAurora: Boolean,
     round: Boolean,
     roundIos: Boolean,
     roundMd: Boolean,
+    roundAurora: Boolean,
     tag: {
       type: String,
       default: 'div'
@@ -25,9 +27,11 @@ export default {
       className,
       raised,
       raisedIos,
+      raisedAurora,
       raisedMd,
       round,
       roundIos,
+      roundAurora,
       roundMd,
       id,
       style,
@@ -37,9 +41,11 @@ export default {
       segmented: true,
       'segmented-raised': raised,
       'segmented-raised-ios': raisedIos,
+      'segmented-raised-aurora': raisedAurora,
       'segmented-raised-md': raisedMd,
       'segmented-round': round,
       'segmented-round-ios': roundIos,
+      'segmented-round-aurora': roundAurora,
       'segmented-round-md': roundMd
     }, Mixins.colorClasses(props));
     const SegmentedTag = tag;

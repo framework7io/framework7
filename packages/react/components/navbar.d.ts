@@ -9,6 +9,7 @@ declare namespace F7Navbar {
     backLink? : boolean | string
     backLinkUrl? : string
     backLinkForce? : boolean
+    backLinkShowText? : boolean
     sliding? : boolean
     title? : string
     subtitle? : string

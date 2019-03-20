@@ -53,6 +53,8 @@ export namespace View {
     iosPageLoadDelay?: number
     /**	Delay (in ms) after new page will be loaded and inserted to DOM and before it will be transitioned. Can be increased a bit to improve performance. Will have effect only under MD theme */
     mdPageLoadDelay?: number
+    /**	Delay (in ms) after new page will be loaded and inserted to DOM and before it will be transitioned. Can be increased a bit to improve performance. Will have effect only under Aurora theme */
+    auroraPageLoadDelay?: number
     /**	When enabled then router will pass route url query to request url query (for url, templateUrl and componentUrl route properties) */
     passRouteQueryToRequest?: boolean
     /**	When enabled then router will pass current route parameters to request url query (for url, templateUrl and componentUrl route properties) */
@@ -107,6 +109,16 @@ export namespace View {
     mdSwipeBackAnimateShadow?: boolean
     /**	Enable/disable opacity animation during swipe back action. You can disable it to improve performance. For MD theme */
     mdSwipeBackAnimateOpacity?: boolean
+    /**	Enable/disable ability to swipe back from left edge of screen to get to the previous page. For Aurora theme */
+    auroraSwipeBack?: boolean
+    /**	Value in px. Swipe back action will start if "touch distance" will be more than this value. For Aurora theme */
+    auroraSwipeBackThreshold?: number
+    /**	Value in px. Width of invisible left edge of the screen that triggers swipe back action. For Aurora theme */
+    auroraSwipeBackActiveArea?: number
+    /**	Enable/disable box-shadow animation during swipe back action. You can disable it to improve performance. For Aurora theme */
+    auroraSwipeBackAnimateShadow?: boolean
+    /**	Enable/disable opacity animation during swipe back action. You can disable it to improve performance. For Aurora theme */
+    auroraSwipeBackAnimateOpacity?: boolean
     /**	If you develop web app (not PhoneGap or Home Screen web app) it is useful to enable hash navigation (browser url will look like "http://my-webapp.com/#!/about.html"). User as well will be able to navigate through app's history by using browser's default back and forward buttons. */
     pushState?: boolean
     /**	Push state root URL separator, for example "http://my-app.com/". It is useful only in case when you use empty ("") pushStateSeparator */

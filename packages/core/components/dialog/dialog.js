@@ -67,6 +67,7 @@ export default {
               {
                 text: app.params.dialog.buttonCancel,
                 keyCodes: keyboardActions ? [27] : null,
+                color: app.theme === 'aurora' ? 'gray' : null,
               },
               {
                 text: app.params.dialog.buttonOk,
@@ -95,6 +96,7 @@ export default {
                 text: app.params.dialog.buttonCancel,
                 onClick: callbackCancel,
                 keyCodes: keyboardActions ? [27] : null,
+                color: app.theme === 'aurora' ? 'gray' : null,
               },
               {
                 text: app.params.dialog.buttonOk,
@@ -125,6 +127,7 @@ export default {
               {
                 text: app.params.dialog.buttonCancel,
                 keyCodes: keyboardActions ? [27] : null,
+                color: app.theme === 'aurora' ? 'gray' : null,
               },
               {
                 text: app.params.dialog.buttonOk,
@@ -157,6 +160,7 @@ export default {
               {
                 text: app.params.dialog.buttonCancel,
                 keyCodes: keyboardActions ? [27] : null,
+                color: app.theme === 'aurora' ? 'gray' : null,
               },
               {
                 text: app.params.dialog.buttonOk,

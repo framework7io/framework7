@@ -119,6 +119,7 @@
   text-align: center;
   transition-duration: 120ms;
   transition-property: transform;
+  box-sizing: border-box;
   transform: translateY(100%) scale(0);
   height: var(--f7-range-label-size);
   line-height: var(--f7-range-label-size);
@@ -126,7 +127,9 @@
   color: var(--f7-range-label-text-color);
   background-color: var(--f7-range-label-bg-color, var(--f7-theme-color));
   font-size: var(--f7-range-label-font-size);
+  font-weight: var(--f7-range-label-font-weight);
   border-radius: var(--f7-range-label-border-radius);
+  padding: var(--f7-range-label-padding);
 }
 .range-knob-active-state .range-knob-label {
   transform: translateY(0%) scale(1);
@@ -219,9 +222,12 @@
   --f7-range-scale-step-width: var(--f7-range-scale-substep-width);
   --f7-range-scale-step-height: var(--f7-range-scale-substep-height);
 }
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./range-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./range-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./range-aurora.less');
+});

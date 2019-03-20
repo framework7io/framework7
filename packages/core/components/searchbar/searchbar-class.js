@@ -26,13 +26,14 @@ class Searchbar extends FrameworkClass {
       notFoundEl: '.searchbar-not-found',
       hideOnEnableEl: '.searchbar-hide-on-enable',
       hideOnSearchEl: '.searchbar-hide-on-search',
-      backdrop: true,
+      backdrop: undefined,
       removeDiacritics: true,
       customSearch: false,
       hideDividers: true,
       hideGroups: true,
       disableOnBackdropClick: true,
       expandable: false,
+      inline: false,
     };
 
     // Extend defaults with modules params
@@ -87,6 +88,15 @@ class Searchbar extends FrameworkClass {
       $hideOnSearchEl = $(params.hideOnSearchEl);
     } else if (typeof sb.params.hideOnSearchEl === 'string' && $pageEl) {
       $hideOnSearchEl = $pageEl.find(sb.params.hideOnSearchEl);
+    }
+
+
+    const expandable = sb.params.expandable || $el.hasClass('searchbar-expandable');
+    const inline = sb.params.inline || $el.hasClass('searchbar-inline');
+
+    if (typeof sb.params.backdrop === 'undefined') {
+      if (!inline) sb.params.backdrop = app.theme !== 'aurora';
+      else sb.params.backdrop = false;
     }
 
     let $backdropEl;
@@ -164,7 +174,8 @@ class Searchbar extends FrameworkClass {
       isVirtualList: $searchContainer && $searchContainer.hasClass('virtual-list'),
       virtualList: undefined,
       enabled: false,
-      expandable: sb.params.expandable || $el.hasClass('searchbar-expandable'),
+      expandable,
+      inline,
     });
 
     // Events
@@ -177,6 +188,9 @@ class Searchbar extends FrameworkClass {
     }
     function onInputBlur() {
       sb.$el.removeClass('searchbar-focused');
+      if (app.theme === 'aurora' && (!$disableButtonEl || !$disableButtonEl.length || !sb.params.disableButton) && !sb.query) {
+        sb.disable();
+      }
     }
     function onInputChange() {
       const value = sb.$inputEl.val().trim();
@@ -297,7 +311,7 @@ class Searchbar extends FrameworkClass {
       if (!sb.$disableButtonEl || (sb.$disableButtonEl && sb.$disableButtonEl.length === 0)) {
         sb.$el.addClass('searchbar-enabled-no-disable-button');
       }
-      if (!sb.expandable && sb.$disableButtonEl && sb.$disableButtonEl.length > 0 && app.theme === 'ios') {
+      if (!sb.expandable && sb.$disableButtonEl && sb.$disableButtonEl.length > 0 && app.theme !== 'md') {
         if (!sb.disableButtonHasMargin) {
           sb.setDisableButtonMargin();
         }
@@ -368,7 +382,7 @@ class Searchbar extends FrameworkClass {
         }
       }
     }
-    if (!sb.expandable && sb.$disableButtonEl && sb.$disableButtonEl.length > 0 && app.theme === 'ios') {
+    if (!sb.expandable && sb.$disableButtonEl && sb.$disableButtonEl.length > 0 && app.theme !== 'md') {
       sb.$disableButtonEl.css(`margin-${app.rtl ? 'left' : 'right'}`, `${-sb.disableButtonEl.offsetWidth}px`);
     }
     if (sb.$backdropEl && ((sb.$searchContainer && sb.$searchContainer.length) || sb.params.customSearch)) {
@@ -555,6 +569,8 @@ class Searchbar extends FrameworkClass {
 
   init() {
     const sb = this;
+    if (sb.expandable && sb.$el) sb.$el.addClass('searchbar-expandable');
+    if (sb.inline && sb.$el) sb.$el.addClass('searchbar-inline');
     sb.attachEvents();
   }
 

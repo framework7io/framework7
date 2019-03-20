@@ -66,9 +66,12 @@ html.with-modal-popup {
     }
   }
 }
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./popup-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./popup-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./popup-aurora.less');
+});

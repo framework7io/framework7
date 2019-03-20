@@ -63,26 +63,24 @@ class F7MenuItem extends React.Component {
       iconIon,
       iconFa,
       iconF7,
-      iconIfMd,
-      iconIfIos,
       iconMd,
-      iconIos
+      iconIos,
+      iconAurora
     } = props;
     const slots = self.slots;
     let iconEl;
     let iconOnlyComputed;
-    const mdThemeIcon = iconIfMd || iconMd;
-    const iosThemeIcon = iconIfIos || iconIos;
 
-    if (icon || iconMaterial || iconIon || iconFa || iconF7 || mdThemeIcon || iosThemeIcon) {
+    if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconMd || iconIos || iconAurora) {
       iconEl = React.createElement(F7Icon, {
         material: iconMaterial,
         f7: iconF7,
         fa: iconFa,
         ion: iconIon,
         icon: icon,
-        md: mdThemeIcon,
-        ios: iosThemeIcon,
+        md: iconMd,
+        ios: iconIos,
+        aurora: iconAurora,
         color: iconColor,
         size: iconSize
       });

@@ -1,5 +1,5 @@
 /**
- * Framework7 4.1.1
+ * Framework7 4.2.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 14, 2019
+ * Released on: March 20, 2019
  */
 
 (function (global, factory) {
@@ -2542,6 +2542,7 @@
     },
     mdPreloaderContent: "\n    <span class=\"preloader-inner\">\n      <span class=\"preloader-inner-gap\"></span>\n      <span class=\"preloader-inner-left\">\n          <span class=\"preloader-inner-half-circle\"></span>\n      </span>\n      <span class=\"preloader-inner-right\">\n          <span class=\"preloader-inner-half-circle\"></span>\n      </span>\n    </span>\n  ".trim(),
     iosPreloaderContent: ("\n    <span class=\"preloader-inner\">\n      " + ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(function () { return '<span class="preloader-inner-line"></span>'; }).join('')) + "\n    </span>\n  ").trim(),
+    auroraPreloaderContent: "\n    <span class=\"preloader-inner\">\n      <span class=\"preloader-inner-circle\"></span>\n    </span>\n  ",
     eventNameToColonCase: function eventNameToColonCase(eventName) {
       var hasColon;
       return eventName.split('').map(function (char, index) {
@@ -2867,6 +2868,7 @@
       windows: false,
       cordova: !!(win.cordova || win.phonegap),
       phonegap: !!(win.cordova || win.phonegap),
+      electron: false,
     };
 
     var screenWidth = win.screen.width;
@@ -2886,6 +2888,7 @@
     var firefox = ua.indexOf('Gecko/') >= 0 && ua.indexOf('Firefox/') >= 0;
     var macos = platform === 'MacIntel';
     var windows = platform === 'Win32';
+    var electron = ua.toLowerCase().indexOf('electron') >= 0;
 
     device.ie = ie;
     device.edge = edge;
@@ -2893,7 +2896,7 @@
 
     // Windows
     if (windowsPhone) {
-      device.os = 'windows';
+      device.os = 'windowsPhone';
       device.osVersion = windowsPhone[2];
       device.windowsPhone = true;
     }
@@ -2936,20 +2939,11 @@
     device.standalone = device.webView;
 
     // Desktop
-    device.desktop = !(device.os || device.android || device.webView);
+    device.desktop = !(device.ios || device.android || device.windowsPhone) || electron;
     if (device.desktop) {
+      device.electron = electron;
       device.macos = macos;
       device.windows = windows;
-    }
-
-    // Minimal UI
-    if (device.os && device.os === 'ios') {
-      var osVersionArr = device.osVersion.split('.');
-      var metaViewport = doc.querySelector('meta[name="viewport"]');
-      device.minimalUi = !device.webView
-        && (ipod || iphone)
-        && (osVersionArr[0] * 1 === 7 ? osVersionArr[1] * 1 >= 1 : osVersionArr[0] * 1 > 7)
-        && metaViewport && metaViewport.getAttribute('content').indexOf('minimal-ui') >= 0;
     }
 
     // Meta statusbar
@@ -2957,6 +2951,7 @@
 
     // Check for status bar and fullscreen app mode
     device.needsStatusbarOverlay = function needsStatusbarOverlay() {
+      if (device.desktop) { return false; }
       if (device.standalone && device.ios && metaStatusbar && metaStatusbar.content === 'black-translucent') {
         return true;
       }
@@ -3503,7 +3498,9 @@
         // Theme
         theme: (function getTheme() {
           if (app.params.theme === 'auto') {
-            return Device.ios ? 'ios' : 'md';
+            if (Device.ios) { return 'ios'; }
+            if (Device.desktop && Device.electron) { return 'aurora'; }
+            return 'md';
           }
           return app.params.theme;
         }()),
@@ -3843,11 +3840,6 @@
       },
       orientationchange: function orientationchange() {
         var app = this;
-        if (app.device && app.device.minimalUi) {
-          if (win.orientation === 90 || win.orientation === -90) {
-            doc.body.scrollTop = 0;
-          }
-        }
         // Fix iPad weird body scroll
         if (app.device.ipad) {
           doc.body.scrollLeft = 0;
@@ -4336,6 +4328,21 @@
       }
       if (parents.length > 0) {
         activable = activable ? activable.add(parents) : parents;
+      }
+      if (activable && activable.length > 1) {
+        var newActivable = [];
+        var preventPropagation;
+        for (var i = 0; i < activable.length; i += 1) {
+          if (!preventPropagation) {
+            newActivable.push(activable[i]);
+            if (activable.eq(i).hasClass('prevent-active-state-propagation')
+              || activable.eq(i).hasClass('no-active-state-propagation')
+            ) {
+              preventPropagation = true;
+            }
+          }
+        }
+        activable = $(newActivable);
       }
       return activable || target;
     }
@@ -4853,10 +4860,18 @@
       return true;
     }
     function handleTouchMoveLight(e) {
-      var distance = params.fastClicks ? params.fastClicksDistanceThreshold : 0;
-      if (distance) {
-        var pageX = e.targetTouches[0].pageX;
-        var pageY = e.targetTouches[0].pageY;
+      var distance = 0;
+      var touch;
+      if (e.type === 'touchmove') {
+        touch = e.targetTouches[0];
+        if (touch && touch.touchType === 'stylus') {
+          distance = 5;
+        }
+      }
+
+      if (distance && touch) {
+        var pageX = touch.pageX;
+        var pageY = touch.pageY;
         if (Math.abs(pageX - touchStartX) > distance || Math.abs(pageY - touchStartY) > distance) {
           isMoved = true;
         }
@@ -5035,6 +5050,7 @@
         activeStateElements: 'a, button, label, span, .actions-button, .stepper-button, .stepper-button-plus, .stepper-button-minus, .card-expandable, .menu-item',
         mdTouchRipple: true,
         iosTouchRipple: false,
+        auroraTouchRipple: false,
         touchRippleElements: '.ripple, .link, .item-link, .list-button, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell:not(.input-cell), .notification-close-button, .stepper-button, .stepper-button-minus, .stepper-button-plus, .menu-item-content',
       },
     },
@@ -5942,7 +5958,7 @@
       currentPage.transform(("translate3d(" + currentPageTranslate + "px,0,0)"));
       if (paramsSwipeBackAnimateShadow) { pageShadow[0].style.opacity = 1 - (1 * percentage); }
 
-      if (app.theme !== 'md') {
+      if (app.theme === 'ios') {
         previousPage.transform(("translate3d(" + previousPageTranslate + "px,0,0)"));
       }
       if (paramsSwipeBackAnimateOpacity) { pageOpacity[0].style.opacity = 1 - (1 * percentage); }
@@ -5979,7 +5995,7 @@
         (timeDiff < 300 && touchesDiff > 10)
         || (timeDiff >= 300 && touchesDiff > viewContainerWidth / 2)
       ) {
-        currentPage.removeClass('page-current').addClass(("page-next" + (app.theme === 'md' ? ' page-next-on-right' : '')));
+        currentPage.removeClass('page-current').addClass(("page-next" + (app.theme !== 'ios' ? ' page-next-on-right' : '')));
         previousPage.removeClass('page-previous').addClass('page-current').removeAttr('aria-hidden');
         if (pageShadow) { pageShadow[0].style.opacity = ''; }
         if (pageOpacity) { pageOpacity[0].style.opacity = ''; }
@@ -6668,7 +6684,7 @@
       router.pageCallback('afterIn', $newPage, $newNavbarInner, 'next', 'current', options);
       router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', 'previous', options);
 
-      var keepOldPage = (router.params.preloadPreviousPage || (app.theme === 'ios' ? router.params.iosSwipeBack : router.params.mdSwipeBack)) && !isMaster;
+      var keepOldPage = (router.params.preloadPreviousPage || router.params[((app.theme) + "SwipeBack")]) && !isMaster;
       if (!keepOldPage) {
         if ($newPage.hasClass('smart-select-page') || $newPage.hasClass('photo-browser-page') || $newPage.hasClass('autocomplete-page')) {
           keepOldPage = true;
@@ -6708,7 +6724,7 @@
       }
     }
     if (options.animate && !(isMaster && app.width >= router.params.masterDetailBreakpoint)) {
-      var delay = router.app.theme === 'md' ? router.params.mdPageLoadDelay : router.params.iosPageLoadDelay;
+      var delay = router.params[((router.app.theme) + "PageLoadDelay")];
       if (delay) {
         setTimeout(function () {
           setPositionClasses();
@@ -7808,7 +7824,7 @@
       router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
 
       // Preload previous page
-      var preloadPreviousPage = router.params.preloadPreviousPage || (app.theme === 'ios' ? router.params.iosSwipeBack : router.params.mdSwipeBack);
+      var preloadPreviousPage = router.params.preloadPreviousPage || router.params[((app.theme) + "SwipeBack")];
       if (preloadPreviousPage && router.history[router.history.length - 2] && !isMaster) {
         router.back(router.history[router.history.length - 2], { preload: true });
       }
@@ -8912,7 +8928,15 @@
     Router.prototype.removeThemeElements = function removeThemeElements (el) {
       var router = this;
       var theme = router.app.theme;
-      $(el).find(("." + (theme === 'md' ? 'ios' : 'md') + "-only, .if-" + (theme === 'md' ? 'ios' : 'md'))).remove();
+      var toRemove;
+      if (theme === 'ios') {
+        toRemove = '.md-only, .aurora-only, .if-md, .if-aurora, .if-not-ios, .not-ios';
+      } else if (theme === 'md') {
+        toRemove = '.ios-only, .aurora-only, .if-ios, .if-aurora, .if-not-md, .not-md';
+      } else if (theme === 'aurora') {
+        toRemove = '.ios-only, .md-only, .if-ios, .if-md, .if-not-aurora, .not-aurora';
+      }
+      $(el).find(toRemove).remove();
     };
 
     Router.prototype.getPageData = function getPageData (pageEl, navbarEl, from, to, route, pageFromEl) {
@@ -9176,6 +9200,7 @@
         if (
           (view && router.params.iosSwipeBack && app.theme === 'ios')
           || (view && router.params.mdSwipeBack && app.theme === 'md')
+          || (view && router.params.auroraSwipeBack && app.theme === 'aurora')
         ) {
           SwipeBack(router);
         }
@@ -9749,6 +9774,7 @@
                 $theme: {
                   ios: router.app.theme === 'ios',
                   md: router.app.theme === 'md',
+                  aurora: router.app.theme === 'aurora',
                 },
               }));
             }
@@ -9834,6 +9860,7 @@
               $theme: {
                 ios: app.theme === 'ios',
                 md: app.theme === 'md',
+                aurora: app.theme === 'aurora',
               },
             }
           );
@@ -10295,8 +10322,8 @@
 
   function elementToVNode(el, context, app, initial, isRoot) {
     if (el.nodeType === 1) {
-      // element
-      var tagName = el.nodeName.toLowerCase();
+      // element (statement adds inline SVG compatibility)
+      var tagName = (el instanceof win.SVGElement) ? el.nodeName : el.nodeName.toLowerCase();
       return h(
         tagName,
         getData(el, context, app, initial, isRoot),
@@ -11616,6 +11643,11 @@
         mdSwipeBackAnimateOpacity: false,
         mdSwipeBackActiveArea: 30,
         mdSwipeBackThreshold: 0,
+        auroraSwipeBack: false,
+        auroraSwipeBackAnimateShadow: false,
+        auroraSwipeBackAnimateOpacity: true,
+        auroraSwipeBackActiveArea: 30,
+        auroraSwipeBackThreshold: 0,
         // Push State
         pushState: false,
         pushStateRoot: undefined,
@@ -11633,6 +11665,7 @@
         // Delays
         iosPageLoadDelay: 0,
         mdPageLoadDelay: 0,
+        auroraPageLoadDelay: 0,
         // Routes hooks
         routesBeforeEnter: null,
         routesBeforeLeave: null,
@@ -11696,7 +11729,9 @@
   var Navbar = {
     size: function size(el) {
       var app = this;
-      if (app.theme === 'md' && !app.params.navbar.mdCenterTitle) { return; }
+      if (app.theme !== 'ios' && !app.params.navbar[((app.theme) + "CenterTitle")]) {
+        return;
+      }
       var $el = $(el);
       if ($el.hasClass('navbar')) {
         $el = $el.children('.navbar-inner').each(function (index, navbarEl) {
@@ -11714,7 +11749,7 @@
         return;
       }
 
-      if (app.theme === 'md' && app.params.navbar.mdCenterTitle) {
+      if (app.theme !== 'ios' && app.params.navbar[((app.theme) + "CenterTitle")]) {
         $el.addClass('navbar-inner-centered-title');
       }
       if (app.theme === 'ios' && !app.params.navbar.iosCenterTitle) {
@@ -11831,10 +11866,7 @@
       }
 
       // Center title
-      if (
-        (app.theme === 'ios' && app.params.navbar.iosCenterTitle)
-        || (app.theme === 'md' && app.params.navbar.mdCenterTitle)
-      ) {
+      if (app.params.navbar[((app.theme) + "CenterTitle")]) {
         var titleLeft = diff;
         if (app.rtl && noLeft && noRight && title.length > 0) { titleLeft = -titleLeft; }
         title.css({ left: (titleLeft + "px") });
@@ -11849,7 +11881,9 @@
       if (!$el.length) { return; }
       if ($el.hasClass('navbar-hidden')) { return; }
       var className = "navbar-hidden" + (animate ? ' navbar-transitioning' : '');
-      var currentIsLarge = app.theme === 'ios' ? $el.find('.navbar-current .title-large').length : $el.find('.title-large').length;
+      var currentIsLarge = app.theme === 'ios'
+        ? $el.find('.navbar-current .title-large').length
+        : $el.find('.title-large').length;
       if (currentIsLarge) {
         className += ' navbar-large-hidden';
       }
@@ -11926,7 +11960,7 @@
       var $pageEl = $(app.navbar.getPageByEl($navbarInnerEl));
       $navbarInnerEl.addClass('navbar-inner-large-collapsed');
       $pageEl.eq(0).addClass('page-with-navbar-large-collapsed').trigger('page:navbarlargecollapsed');
-      if (app.theme === 'md') {
+      if (app.theme === 'md' || app.theme === 'aurora') {
         $navbarInnerEl.parents('.navbar').addClass('navbar-large-collapsed');
       }
     },
@@ -11945,7 +11979,7 @@
       var $pageEl = $(app.navbar.getPageByEl($navbarInnerEl));
       $navbarInnerEl.removeClass('navbar-inner-large-collapsed');
       $pageEl.eq(0).removeClass('page-with-navbar-large-collapsed').trigger('page:navbarlargeexpanded');
-      if (app.theme === 'md') {
+      if (app.theme === 'md' || app.theme === 'aurora') {
         $navbarInnerEl.parents('.navbar').removeClass('navbar-large-collapsed');
       }
     },
@@ -11971,7 +12005,7 @@
       var app = this;
       var $pageEl = $(pageEl);
       var $navbarInnerEl = $(navbarInnerEl);
-      var $navbarEl = app.theme === 'md'
+      var $navbarEl = app.theme === 'md' || app.theme === 'aurora'
         ? $navbarInnerEl.parents('.navbar')
         : $(navbarInnerEl || app.navbar.getElByPage(pageEl)).closest('.navbar');
       var isLarge = $navbarInnerEl.find('.title-large').length || $navbarInnerEl.hasClass('.navbar-inner-large');
@@ -11994,10 +12028,14 @@
         if (navbarTitleLargeHeight && navbarTitleLargeHeight.indexOf('px') >= 0) {
           navbarTitleLargeHeight = parseInt(navbarTitleLargeHeight, 10);
           if (Number.isNaN(navbarTitleLargeHeight)) {
-            navbarTitleLargeHeight = app.theme === 'ios' ? 52 : 48;
+            if (app.theme === 'ios') { navbarTitleLargeHeight = 52; }
+            else if (app.theme === 'md') { navbarTitleLargeHeight = 48; }
+            else if (app.theme === 'aurora') { navbarTitleLargeHeight = 38; }
           }
-        } else {
-          navbarTitleLargeHeight = app.theme === 'ios' ? 52 : 48;
+        } else { // eslint-disable-next-line
+          if (app.theme === 'ios') { navbarTitleLargeHeight = 52; }
+          else if (app.theme === 'md') { navbarTitleLargeHeight = 48; }
+          else if (app.theme === 'aurora') { navbarTitleLargeHeight = 38; }
         }
       }
       if (needHide && isLarge) {
@@ -12032,7 +12070,7 @@
           $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           $navbarInnerEl[0].style.overflow = '';
-          if (app.theme === 'md') {
+          if (app.theme === 'md' || app.theme === 'aurora') {
             $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           }
         } else if (collapseProgress === 1 && !navbarCollapsed) {
@@ -12040,21 +12078,21 @@
           $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           $navbarInnerEl[0].style.overflow = '';
           $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-          if (app.theme === 'md') {
+          if (app.theme === 'md' || app.theme === 'aurora') {
             $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           }
         } else if ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed)) {
           $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           $navbarInnerEl[0].style.overflow = '';
           $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-          if (app.theme === 'md') {
+          if (app.theme === 'md' || app.theme === 'aurora') {
             $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           }
         } else {
           $navbarInnerEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
           $navbarInnerEl[0].style.overflow = 'visible';
           $pageEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
-          if (app.theme === 'md') {
+          if (app.theme === 'md' || app.theme === 'aurora') {
             $navbarEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
           }
         }
@@ -12179,6 +12217,7 @@
         scrollTopOnTitleClick: true,
         iosCenterTitle: true,
         mdCenterTitle: false,
+        auroraCenterTitle: true,
         hideOnPageScroll: false,
         showOnPageScrollEnd: true,
         showOnPageScrollTop: true,
@@ -12237,7 +12276,7 @@
         }
         if ($navbarInnerEl.hasClass('navbar-inner-large')) {
           if (app.params.navbar.collapseLargeTitleOnScroll) { needCollapseOnScrollHandler = true; }
-          if (app.theme === 'md') {
+          if (app.theme === 'md' || app.theme === 'aurora') {
             $navbarInnerEl.parents('.navbar').addClass('navbar-large');
           }
           page.$el.addClass('page-with-navbar-large');
@@ -12270,10 +12309,7 @@
       },
       modalOpen: function modalOpen(modal) {
         var app = this;
-        if (
-          (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
-          || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-        ) {
+        if (!app.params.navbar[((app.theme) + "CenterTitle")]) {
           return;
         }
         modal.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each(function (index, navbarEl) {
@@ -12282,10 +12318,7 @@
       },
       panelOpen: function panelOpen(panel) {
         var app = this;
-        if (
-          (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
-          || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-        ) {
+        if (!app.params.navbar[((app.theme) + "CenterTitle")]) {
           return;
         }
         panel.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each(function (index, navbarEl) {
@@ -12294,10 +12327,7 @@
       },
       panelSwipeOpen: function panelSwipeOpen(panel) {
         var app = this;
-        if (
-          (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
-          || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-        ) {
+        if (!app.params.navbar[((app.theme) + "CenterTitle")]) {
           return;
         }
         panel.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each(function (index, navbarEl) {
@@ -12306,10 +12336,7 @@
       },
       tabShow: function tabShow(tabEl) {
         var app = this;
-        if (
-          (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
-          || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-        ) {
+        if (!app.params.navbar[((app.theme) + "CenterTitle")]) {
           return;
         }
         $(tabEl).find('.navbar:not(.navbar-previous):not(.stacked)').each(function (index, navbarEl) {
@@ -12356,10 +12383,7 @@
       'navbar-inner': {
         postpatch: function postpatch(vnode) {
           var app = this;
-          if (
-            (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
-            || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-          ) {
+          if (!app.params.navbar[((app.theme) + "CenterTitle")]) {
             return;
           }
           app.navbar.size(vnode.elm);
@@ -13024,6 +13048,10 @@
     },
   };
 
+  var Appbar = {
+    name: 'appbar',
+  };
+
   var Dialog = /*@__PURE__*/(function (Modal$$1) {
     function Dialog(app, params) {
       var extendedParams = Utils.extend({
@@ -13302,6 +13330,7 @@
                 {
                   text: app.params.dialog.buttonCancel,
                   keyCodes: keyboardActions ? [27] : null,
+                  color: app.theme === 'aurora' ? 'gray' : null,
                 },
                 {
                   text: app.params.dialog.buttonOk,
@@ -13336,6 +13365,7 @@
                   text: app.params.dialog.buttonCancel,
                   onClick: callbackCancel,
                   keyCodes: keyboardActions ? [27] : null,
+                  color: app.theme === 'aurora' ? 'gray' : null,
                 },
                 {
                   text: app.params.dialog.buttonOk,
@@ -13366,6 +13396,7 @@
                 {
                   text: app.params.dialog.buttonCancel,
                   keyCodes: keyboardActions ? [27] : null,
+                  color: app.theme === 'aurora' ? 'gray' : null,
                 },
                 {
                   text: app.params.dialog.buttonOk,
@@ -13401,6 +13432,7 @@
                 {
                   text: app.params.dialog.buttonCancel,
                   keyCodes: keyboardActions ? [27] : null,
+                  color: app.theme === 'aurora' ? 'gray' : null,
                 },
                 {
                   text: app.params.dialog.buttonOk,
@@ -13819,7 +13851,7 @@
       var angleSize = 0;
       var angleLeft;
       var angleTop;
-      if (app.theme === 'ios') {
+      if (app.theme === 'ios' || app.theme === 'aurora') {
         $angleEl.removeClass('on-left on-right on-top on-bottom').css({ left: '', top: '' });
         angleSize = $angleEl.width() / 2;
       } else {
@@ -13891,6 +13923,7 @@
           $el.addClass('popover-on-bottom');
         }
       } else {
+        // ios and aurora
         if ((height + angleSize) < targetOffsetTop) {
           // On top
           top = targetOffsetTop - height - angleSize;
@@ -14087,6 +14120,7 @@
             actions.params.forceToPopover
             || (app.device.ios && app.device.ipad)
             || app.width >= 768
+            || (app.device.desktop && app.theme === 'aurora')
           ) {
             convertToPopover = true;
           }
@@ -14436,7 +14470,7 @@
     create: function create() {
       var app = this;
       if (!app.passedParams.sheet || app.passedParams.sheet.backdrop === undefined) {
-        app.params.sheet.backdrop = app.theme === 'md';
+        app.params.sheet.backdrop = app.theme !== 'ios';
       }
       app.sheet = Utils.extend(
         {},
@@ -15778,9 +15812,18 @@
       Framework7Class$$1.call(this, params, [app]);
       var vl = this;
 
+      var defaultHeight;
+      if (app.theme === 'md') {
+        defaultHeight = 48;
+      } else if (app.theme === 'ios') {
+        defaultHeight = 44;
+      } else if (app.theme === 'aurora') {
+        defaultHeight = 38;
+      }
+
       var defaults = {
         cols: 1,
-        height: app.theme === 'md' ? 48 : 44,
+        height: defaultHeight,
         cache: true,
         dynamicHeightBufferSize: 1,
         showFilteredItemsOnly: false,
@@ -15802,7 +15845,7 @@
 
       vl.params = Utils.extend(defaults, params);
       if (vl.params.height === undefined || !vl.params.height) {
-        vl.params.height = app.theme === 'md' ? 48 : 44;
+        vl.params.height = defaultHeight;
       }
 
       vl.$el = $(params.el);
@@ -16367,6 +16410,7 @@
         indexes: 'auto', // or array of indexes
         iosItemHeight: 14,
         mdItemHeight: 14,
+        auroraItemHeight: 14,
         scrollList: true,
         label: false,
         // eslint-disable-next-line
@@ -16645,7 +16689,7 @@
       var el = index.el;
       var indexes = index.indexes;
       var height = el.offsetHeight;
-      var itemHeight = app.theme === 'ios' ? params.iosItemHeight : params.mdItemHeight;
+      var itemHeight = params[((app.theme) + "ItemHeight")];
       var maxItems = Math.floor(height / itemHeight);
       var items = indexes.length;
       var skipRate = 0;
@@ -17417,7 +17461,7 @@
     };
 
     Panel.prototype.setBreakpoint = function setBreakpoint () {
-      var obj, obj$1;
+      var obj, obj$1, obj$2;
 
       var panel = this;
       var app = panel.app;
@@ -17437,12 +17481,14 @@
           app.allowPanelOpen = true;
           app.emit('local::breakpoint panelBreakpoint');
           panel.$el.trigger('panel:breakpoint', panel);
+        } else {
+          $viewEl.css(( obj$1 = {}, obj$1[("margin-" + side)] = (($el.width()) + "px"), obj$1 ));
         }
       } else if (wasVisible) {
         $el.css('display', '').removeClass('panel-visible-by-breakpoint panel-active');
         panel.onClose();
         panel.onClosed();
-        $viewEl.css(( obj$1 = {}, obj$1[("margin-" + side)] = '', obj$1 ));
+        $viewEl.css(( obj$2 = {}, obj$2[("margin-" + side)] = '', obj$2 ));
         app.emit('local::breakpoint panelBreakpoint');
         panel.$el.trigger('panel:breakpoint', panel);
       }
@@ -17648,6 +17694,14 @@
       return true;
     };
 
+    Panel.prototype.toggle = function toggle (animate) {
+      if ( animate === void 0 ) animate = true;
+
+      var panel = this;
+      if (panel.opened) { panel.close(animate); }
+      else { panel.open(animate); }
+    };
+
     Panel.prototype.onOpen = function onOpen () {
       var panel = this;
       panel.opened = true;
@@ -17804,6 +17858,31 @@
           }
           return false;
         },
+        toggle: function toggle(side, animate) {
+          var $panelEl;
+          var panelSide = side;
+          if (side) {
+            panelSide = side;
+            $panelEl = $((".panel-" + panelSide));
+          } else if ($('.panel.panel-active').length) {
+            $panelEl = $('.panel.panel-active');
+            panelSide = $panelEl.hasClass('panel-left') ? 'left' : 'right';
+          } else {
+            if ($('.panel').length > 1) {
+              return false;
+            }
+            panelSide = $('.panel').hasClass('panel-left') ? 'left' : 'right';
+            $panelEl = $((".panel-" + panelSide));
+          }
+          if (!panelSide) { return false; }
+          if (app.panel[panelSide]) {
+            return app.panel[panelSide].toggle(animate);
+          }
+          if ($panelEl.length > 0) {
+            return app.panel.create({ el: $panelEl }).toggle(animate);
+          }
+          return false;
+        },
         get: function get(side) {
           var panelSide = side;
           if (!panelSide) {
@@ -17852,6 +17931,13 @@
         var app = this;
         var side = data.panel;
         app.panel.close(side, data.animate);
+      },
+      '.panel-toggle': function close(clickedEl, data) {
+        if ( data === void 0 ) data = {};
+
+        var app = this;
+        var side = data.panel;
+        app.panel.toggle(side, data.animate);
       },
       '.panel-backdrop': function close() {
         var app = this;
@@ -20377,6 +20463,10 @@
         on: {},
       }, app.params.smartSelect);
 
+      if (typeof defaults.searchbarDisableButton === 'undefined') {
+        defaults.searchbarDisableButton = app.theme !== 'aurora';
+      }
+
       // Extend defaults with modules params
       ss.useModulesParams(defaults);
 
@@ -20655,7 +20745,7 @@
     SmartSelect.prototype.renderSearchbar = function renderSearchbar () {
       var ss = this;
       if (ss.params.renderSearchbar) { return ss.params.renderSearchbar.call(ss); }
-      var searchbarHTML = "\n      <form class=\"searchbar\">\n        <div class=\"searchbar-inner\">\n          <div class=\"searchbar-input-wrap\">\n            <input type=\"search\" placeholder=\"" + (ss.params.searchbarPlaceholder) + "\"/>\n            <i class=\"searchbar-icon\"></i>\n            <span class=\"input-clear-button\"></span>\n          </div>\n          <span class=\"searchbar-disable-button\">" + (ss.params.searchbarDisableText) + "</span>\n        </div>\n      </form>\n    ";
+      var searchbarHTML = "\n      <form class=\"searchbar\">\n        <div class=\"searchbar-inner\">\n          <div class=\"searchbar-input-wrap\">\n            <input type=\"search\" placeholder=\"" + (ss.params.searchbarPlaceholder) + "\"/>\n            <i class=\"searchbar-icon\"></i>\n            <span class=\"input-clear-button\"></span>\n          </div>\n          " + (ss.params.searchbarDisableButton ? ("\n          <span class=\"searchbar-disable-button\">" + (ss.params.searchbarDisableText) + "</span>\n          ") : '') + "\n        </div>\n      </form>\n    ";
       return searchbarHTML;
     };
 
@@ -21049,6 +21139,7 @@
         searchbar: false,
         searchbarPlaceholder: 'Search',
         searchbarDisableText: 'Cancel',
+        searchbarDisableButton: undefined,
         closeOnSelect: false,
         virtualList: false,
         virtualListHeight: undefined,
@@ -21888,6 +21979,9 @@
           return !!app.device.ipad;
         }
         if (app.width >= 768) {
+          return true;
+        }
+        if (app.device.desktop && app.theme === 'aurora') {
           return true;
         }
       }
@@ -23279,7 +23373,9 @@
       if (returnTo) {
         if (returnTo === 'min') {
           col.$itemsEl.transform(("translate3d(0," + minTranslate + "px,0)"));
-        } else { col.$itemsEl.transform(("translate3d(0," + maxTranslate + "px,0)")); }
+        } else {
+          col.$itemsEl.transform(("translate3d(0," + maxTranslate + "px,0)"));
+        }
       }
       touchEndTime = new Date().getTime();
       var newTranslate;
@@ -23292,7 +23388,7 @@
       newTranslate = Math.max(Math.min(newTranslate, maxTranslate), minTranslate);
 
       // Active Index
-      var activeIndex = -Math.floor((newTranslate - maxTranslate) / itemHeight);
+      var activeIndex = Math.round(Math.abs(((newTranslate - maxTranslate) / itemHeight)));
 
       // Normalize translate
       if (!picker.params.freeMode) { newTranslate = (-activeIndex * itemHeight) + maxTranslate; }
@@ -23317,6 +23413,65 @@
       }, 100);
     }
 
+    var mousewheelTimeout;
+    function handleMouseWheel(e) {
+      var deltaX = e.deltaX;
+      var deltaY = e.deltaY;
+      if (Math.abs(deltaX) > Math.abs(deltaY)) { return; }
+      clearTimeout(mousewheelTimeout);
+
+      e.preventDefault();
+
+      Utils.cancelAnimationFrame(animationFrameId);
+      startTranslate = Utils.getTranslate(col.$itemsEl[0], 'y');
+      col.$itemsEl.transition(0);
+
+      currentTranslate = startTranslate - deltaY;
+      returnTo = undefined;
+
+      // Normalize translate
+      if (currentTranslate < minTranslate) {
+        currentTranslate = minTranslate;
+        returnTo = 'min';
+      }
+      if (currentTranslate > maxTranslate) {
+        currentTranslate = maxTranslate;
+        returnTo = 'max';
+      }
+      // Transform wrapper
+      col.$itemsEl.transform(("translate3d(0," + currentTranslate + "px,0)"));
+
+      // Update items
+      col.updateItems(undefined, currentTranslate, 0, picker.params.updateValuesOnMousewheel);
+
+      // On end
+      mousewheelTimeout = setTimeout(function () {
+        col.$itemsEl.transition('');
+        if (returnTo) {
+          if (returnTo === 'min') {
+            col.$itemsEl.transform(("translate3d(0," + minTranslate + "px,0)"));
+          } else {
+            col.$itemsEl.transform(("translate3d(0," + maxTranslate + "px,0)"));
+          }
+        }
+        touchEndTime = new Date().getTime();
+        var newTranslate = currentTranslate;
+        newTranslate = Math.max(Math.min(newTranslate, maxTranslate), minTranslate);
+
+        // Active Index
+        var activeIndex = Math.round(Math.abs(((newTranslate - maxTranslate) / itemHeight)));
+
+        // Normalize translate
+        if (!picker.params.freeMode) { newTranslate = (-activeIndex * itemHeight) + maxTranslate; }
+
+        // Transform wrapper
+        col.$itemsEl.transform(("translate3d(0," + (parseInt(newTranslate, 10)) + "px,0)"));
+
+        // Update items
+        col.updateItems(activeIndex, newTranslate, '', true);
+      }, 200);
+    }
+
     function handleClick() {
       if (!allowItemClick) { return; }
       Utils.cancelAnimationFrame(animationFrameId);
@@ -23329,12 +23484,18 @@
       col.$el.on(app.touchEvents.start, handleTouchStart, activeListener);
       app.on('touchmove:active', handleTouchMove);
       app.on('touchend:passive', handleTouchEnd);
+      if (picker.params.mousewheel) {
+        col.$el.on('wheel', handleMouseWheel);
+      }
       col.items.on('click', handleClick);
     };
     col.detachEvents = function detachColEvents() {
       col.$el.off(app.touchEvents.start, handleTouchStart, activeListener);
       app.off('touchmove:active', handleTouchMove);
       app.off('touchend:passive', handleTouchEnd);
+      if (picker.params.mousewheel) {
+        col.$el.off('wheel', handleMouseWheel);
+      }
       col.items.off('click', handleClick);
     };
 
@@ -23485,7 +23646,11 @@
         if (params.openIn === 'popover') { return true; }
         if (app.device.ios) {
           return !!app.device.ipad;
-        } if (app.width >= 768) {
+        }
+        if (app.width >= 768) {
+          return true;
+        }
+        if (app.device.desktop && app.theme === 'aurora') {
           return true;
         }
       }
@@ -23905,6 +24070,8 @@
         // Picker settings
         updateValuesOnMomentum: false,
         updateValuesOnTouchmove: true,
+        updateValuesOnMousewheel: true,
+        mousewheel: true,
         rotateEffect: false,
         momentumRatio: 7,
         freeMode: false,
@@ -24035,6 +24202,8 @@
       ptr.useModulesParams({});
 
       var isMaterial = app.theme === 'md';
+      var isIos = app.theme === 'ios';
+      var isAurora = app.theme === 'aurora';
 
       // Done
       ptr.done = function done() {
@@ -24055,6 +24224,9 @@
         ptr.emit('local::refresh ptrRefresh', $el[0], ptr.done);
         return ptr;
       };
+
+      // Mousewheel
+      ptr.mousewheel = $el.attr('data-ptr-mousewheel') === 'true';
 
       // Events handling
       var touchId;
@@ -24086,8 +24258,12 @@
       // Define trigger distance
       if ($el.attr('data-ptr-distance')) {
         dynamicTriggerDistance = true;
-      } else {
-        triggerDistance = isMaterial ? 66 : 44;
+      } else if (isMaterial) {
+        triggerDistance = 66;
+      } else if (isIos) {
+        triggerDistance = 44;
+      } else if (isAurora) {
+        triggerDistance = 38;
       }
 
       function handleTouchStart(e) {
@@ -24309,6 +24485,160 @@
         }
       }
 
+      var mousewheelTimeout;
+      var mousewheelMoved;
+      var mousewheelAllow = true;
+      var mousewheelTranslate = 0;
+
+      function handleMouseWheelRelease() {
+        mousewheelAllow = true;
+        mousewheelMoved = false;
+        mousewheelTranslate = 0;
+        if (translate) {
+          $el.addClass('ptr-transitioning');
+          translate = 0;
+        }
+        if (isMaterial) {
+          $preloaderEl.transform('')
+            .find('.ptr-arrow').transform('');
+        } else {
+          // eslint-disable-next-line
+          if (ptr.bottom) {
+            $el.children().transform('');
+          } else {
+            $el.transform('');
+          }
+        }
+
+        if (refresh) {
+          $el.addClass('ptr-refreshing');
+          $el.trigger('ptr:refresh', ptr.done);
+          ptr.emit('local::refresh ptrRefresh', $el[0], ptr.done);
+        } else {
+          $el.removeClass('ptr-pull-down');
+        }
+        if (pullStarted) {
+          $el.trigger('ptr:pullend');
+          ptr.emit('local::pullEnd ptrPullEnd', $el[0]);
+        }
+      }
+      function handleMouseWheel(e) {
+        if (!mousewheelAllow) { return; }
+        var deltaX = e.deltaX;
+        var deltaY = e.deltaY;
+        if (Math.abs(deltaX) > Math.abs(deltaY)) { return; }
+        if ($el.hasClass('ptr-refreshing')) {
+          return;
+        }
+        if ($(e.target).closest('.sortable-handler, .ptr-ignore, .card-expandable.card-opened').length) { return; }
+
+        clearTimeout(mousewheelTimeout);
+
+        scrollTop = $el[0].scrollTop;
+
+        if (!mousewheelMoved) {
+          $el.removeClass('ptr-transitioning');
+          var targetIsScrollable;
+          scrollHeight = $el[0].scrollHeight;
+          offsetHeight = $el[0].offsetHeight;
+          if (ptr.bottom) {
+            maxScrollTop = scrollHeight - offsetHeight;
+          }
+          if (scrollTop > scrollHeight) {
+            mousewheelAllow = false;
+            return;
+          }
+          var $ptrWatchScrollable = $(e.target).closest('.ptr-watch-scroll');
+          if ($ptrWatchScrollable.length) {
+            $ptrWatchScrollable.each(function (ptrScrollableIndex, ptrScrollableEl) {
+              if (ptrScrollableEl === el) { return; }
+              if (
+                (ptrScrollableEl.scrollHeight > ptrScrollableEl.offsetHeight)
+                && $(ptrScrollableEl).css('overflow') === 'auto'
+                && (
+                  (!ptr.bottom && ptrScrollableEl.scrollTop > 0)
+                  || (ptr.bottom && ptrScrollableEl.scrollTop < ptrScrollableEl.scrollHeight - ptrScrollableEl.offsetHeight)
+                )
+              ) {
+                targetIsScrollable = true;
+              }
+            });
+          }
+          if (targetIsScrollable) {
+            mousewheelAllow = false;
+            return;
+          }
+          if (dynamicTriggerDistance) {
+            triggerDistance = $el.attr('data-ptr-distance');
+            if (triggerDistance.indexOf('%') >= 0) { triggerDistance = (scrollHeight * parseInt(triggerDistance, 10)) / 100; }
+          }
+        }
+        isMoved = true;
+        mousewheelTranslate -= deltaY;
+        touchesDiff = mousewheelTranslate; // pageY - touchesStart.y;
+
+        if (typeof wasScrolled === 'undefined' && (ptr.bottom ? scrollTop !== maxScrollTop : scrollTop !== 0)) { wasScrolled = true; }
+
+        var ptrStarted = ptr.bottom
+          ? (touchesDiff < 0 && scrollTop >= maxScrollTop) || scrollTop > maxScrollTop
+          : (touchesDiff > 0 && scrollTop <= 0) || scrollTop < 0;
+
+        if (ptrStarted) {
+          if (e.cancelable) {
+            e.preventDefault();
+          }
+
+          translate = touchesDiff;
+          if (Math.abs(translate) > triggerDistance) {
+            translate = triggerDistance + (Math.pow( (Math.abs(translate) - triggerDistance), 0.7 ));
+            if (ptr.bottom) { translate = -translate; }
+          }
+
+          if (isMaterial) {
+            $preloaderEl.transform(("translate3d(0," + translate + "px,0)"))
+              .find('.ptr-arrow').transform(("rotate(" + ((180 * (Math.abs(touchesDiff) / 66)) + 100) + "deg)"));
+          } else {
+            // eslint-disable-next-line
+            if (ptr.bottom) {
+              $el.children().transform(("translate3d(0," + translate + "px,0)"));
+            } else {
+              $el.transform(("translate3d(0," + translate + "px,0)"));
+            }
+          }
+
+          if (Math.abs(translate) > triggerDistance) {
+            refresh = true;
+            $el.addClass('ptr-pull-up').removeClass('ptr-pull-down');
+          } else {
+            refresh = false;
+            $el.removeClass('ptr-pull-up').addClass('ptr-pull-down');
+          }
+          if (!pullStarted) {
+            $el.trigger('ptr:pullstart');
+            ptr.emit('local::pullStart ptrPullStart', $el[0]);
+            pullStarted = true;
+          }
+          $el.trigger('ptr:pullmove', {
+            event: e,
+            scrollTop: scrollTop,
+            translate: translate,
+            touchesDiff: touchesDiff,
+          });
+          ptr.emit('local::pullMove ptrPullMove', $el[0], {
+            event: e,
+            scrollTop: scrollTop,
+            translate: translate,
+            touchesDiff: touchesDiff,
+          });
+        } else {
+          pullStarted = false;
+          $el.removeClass('ptr-pull-up ptr-pull-down');
+          refresh = false;
+        }
+
+        mousewheelTimeout = setTimeout(handleMouseWheelRelease, 300);
+      }
+
       if (!$pageEl.length || !$el.length) { return ptr; }
 
       $el[0].f7PullToRefresh = ptr;
@@ -24319,12 +24649,18 @@
         $el.on(app.touchEvents.start, handleTouchStart, passive);
         app.on('touchmove:active', handleTouchMove);
         app.on('touchend:passive', handleTouchEnd);
+        if (ptr.mousewheel && !ptr.bottom) {
+          $el.on('wheel', handleMouseWheel);
+        }
       };
       ptr.detachEvents = function detachEvents() {
         var passive = Support.passiveListener ? { passive: true } : false;
         $el.off(app.touchEvents.start, handleTouchStart, passive);
         app.off('touchmove:active', handleTouchMove);
         app.off('touchend:passive', handleTouchEnd);
+        if (ptr.mousewheel && !ptr.bottom) {
+          $el.off('wheel', handleMouseWheel);
+        }
       };
 
       // Install Modules
@@ -25115,13 +25451,14 @@
         notFoundEl: '.searchbar-not-found',
         hideOnEnableEl: '.searchbar-hide-on-enable',
         hideOnSearchEl: '.searchbar-hide-on-search',
-        backdrop: true,
+        backdrop: undefined,
         removeDiacritics: true,
         customSearch: false,
         hideDividers: true,
         hideGroups: true,
         disableOnBackdropClick: true,
         expandable: false,
+        inline: false,
       };
 
       // Extend defaults with modules params
@@ -25176,6 +25513,15 @@
         $hideOnSearchEl = $(params.hideOnSearchEl);
       } else if (typeof sb.params.hideOnSearchEl === 'string' && $pageEl) {
         $hideOnSearchEl = $pageEl.find(sb.params.hideOnSearchEl);
+      }
+
+
+      var expandable = sb.params.expandable || $el.hasClass('searchbar-expandable');
+      var inline = sb.params.inline || $el.hasClass('searchbar-inline');
+
+      if (typeof sb.params.backdrop === 'undefined') {
+        if (!inline) { sb.params.backdrop = app.theme !== 'aurora'; }
+        else { sb.params.backdrop = false; }
       }
 
       var $backdropEl;
@@ -25253,7 +25599,8 @@
         isVirtualList: $searchContainer && $searchContainer.hasClass('virtual-list'),
         virtualList: undefined,
         enabled: false,
-        expandable: sb.params.expandable || $el.hasClass('searchbar-expandable'),
+        expandable: expandable,
+        inline: inline,
       });
 
       // Events
@@ -25266,6 +25613,9 @@
       }
       function onInputBlur() {
         sb.$el.removeClass('searchbar-focused');
+        if (app.theme === 'aurora' && (!$disableButtonEl || !$disableButtonEl.length || !sb.params.disableButton) && !sb.query) {
+          sb.disable();
+        }
       }
       function onInputChange() {
         var value = sb.$inputEl.val().trim();
@@ -25390,7 +25740,7 @@
         if (!sb.$disableButtonEl || (sb.$disableButtonEl && sb.$disableButtonEl.length === 0)) {
           sb.$el.addClass('searchbar-enabled-no-disable-button');
         }
-        if (!sb.expandable && sb.$disableButtonEl && sb.$disableButtonEl.length > 0 && app.theme === 'ios') {
+        if (!sb.expandable && sb.$disableButtonEl && sb.$disableButtonEl.length > 0 && app.theme !== 'md') {
           if (!sb.disableButtonHasMargin) {
             sb.setDisableButtonMargin();
           }
@@ -25461,7 +25811,7 @@
           }
         }
       }
-      if (!sb.expandable && sb.$disableButtonEl && sb.$disableButtonEl.length > 0 && app.theme === 'ios') {
+      if (!sb.expandable && sb.$disableButtonEl && sb.$disableButtonEl.length > 0 && app.theme !== 'md') {
         sb.$disableButtonEl.css(("margin-" + (app.rtl ? 'left' : 'right')), ((-sb.disableButtonEl.offsetWidth) + "px"));
       }
       if (sb.$backdropEl && ((sb.$searchContainer && sb.$searchContainer.length) || sb.params.customSearch)) {
@@ -25653,6 +26003,8 @@
 
     Searchbar.prototype.init = function init () {
       var sb = this;
+      if (sb.expandable && sb.$el) { sb.$el.addClass('searchbar-expandable'); }
+      if (sb.inline && sb.$el) { sb.$el.addClass('searchbar-inline'); }
       sb.attachEvents();
     };
 
@@ -33325,7 +33677,7 @@
       var iconsColor = pb.params.iconsColor;
       if (!pb.params.iconsColor && pb.params.theme === 'dark') { iconsColor = 'white'; }
 
-      var backLinkText = pb.app.theme === 'ios' && pb.params.backLinkText ? pb.params.backLinkText : '';
+      var backLinkText = (pb.app.theme === 'ios' || pb.app.theme === 'aurora') && pb.params.backLinkText ? pb.params.backLinkText : '';
 
       var isPopup = pb.params.type !== 'page';
       var navbarHtml = ("\n      <div class=\"navbar\">\n        <div class=\"navbar-inner sliding\">\n          <div class=\"left\">\n            <a href=\"#\" class=\"link " + (isPopup ? 'popup-close' : '') + " " + (!backLinkText ? 'icon-only' : '') + " " + (!isPopup ? 'back' : '') + "\" " + (isPopup ? 'data-popup=".photo-browser-popup"' : '') + ">\n              <i class=\"icon icon-back " + (iconsColor ? ("color-" + iconsColor) : '') + "\"></i>\n              " + (backLinkText ? ("<span>" + backLinkText + "</span>") : '') + "\n            </a>\n          </div>\n          <div class=\"title\">\n            <span class=\"photo-browser-current\"></span>\n            <span class=\"photo-browser-of\">" + (pb.params.navbarOfText) + "</span>\n            <span class=\"photo-browser-total\"></span>\n          </div>\n          <div class=\"right\"></div>\n        </div>\n      </div>\n    ").trim();
@@ -34108,6 +34460,9 @@
         on: {},
       }, app.params.autocomplete);
 
+      if (typeof defaults.searchbarDisableButton === 'undefined') {
+        defaults.searchbarDisableButton = app.theme !== 'aurora';
+      }
 
       // Extend defaults with modules params
       ac.useModulesParams(defaults);
@@ -34526,7 +34881,7 @@
     Autocomplete.prototype.renderSearchbar = function renderSearchbar () {
       var ac = this;
       if (ac.params.renderSearchbar) { return ac.params.renderSearchbar.call(ac); }
-      var searchbarHTML = ("\n      <form class=\"searchbar\">\n        <div class=\"searchbar-inner\">\n          <div class=\"searchbar-input-wrap\">\n            <input type=\"search\" placeholder=\"" + (ac.params.searchbarPlaceholder) + "\"/>\n            <i class=\"searchbar-icon\"></i>\n            <span class=\"input-clear-button\"></span>\n          </div>\n          <span class=\"searchbar-disable-button\">" + (ac.params.searchbarDisableText) + "</span>\n        </div>\n      </form>\n    ").trim();
+      var searchbarHTML = ("\n      <form class=\"searchbar\">\n        <div class=\"searchbar-inner\">\n          <div class=\"searchbar-input-wrap\">\n            <input type=\"search\" placeholder=\"" + (ac.params.searchbarPlaceholder) + "\"/>\n            <i class=\"searchbar-icon\"></i>\n            <span class=\"input-clear-button\"></span>\n          </div>\n          " + (ac.params.searchbarDisableButton ? ("\n          <span class=\"searchbar-disable-button\">" + (ac.params.searchbarDisableText) + "</span>\n          ") : '') + "\n        </div>\n      </form>\n    ").trim();
       return searchbarHTML;
     };
 
@@ -34856,6 +35211,7 @@
         pageTitle: undefined,
         searchbarPlaceholder: 'Search...',
         searchbarDisableText: 'Cancel',
+        searchbarDisableButton: undefined,
 
         animate: true,
 
@@ -35627,6 +35983,13 @@
       if (!el) { return; }
       var $el = $(el).closest('.menu-item-dropdown');
       if (!$el.length) { return; }
+      var $menuEl = $el.closest('.menu').eq(0);
+      if ($menuEl.length) {
+        var zIndex = $menuEl.css('z-index');
+        var originalZIndex = $menuEl[0].style.zIndex;
+        $menuEl.css('z-index', parseInt(zIndex || 0, 0) + 1);
+        $menuEl[0].f7MenuZIndex = originalZIndex;
+      }
       $el.eq(0).addClass('menu-item-dropdown-opened').trigger('menu:opened');
       app.emit('menuOpened', $el.eq(0)[0]);
     },
@@ -35637,6 +36000,12 @@
       if (!el) { return; }
       var $el = $(el).closest('.menu-item-dropdown-opened');
       if (!$el.length) { return; }
+      var $menuEl = $el.closest('.menu').eq(0);
+      if ($menuEl.length) {
+        var zIndex = $menuEl[0].f7MenuZIndex;
+        $menuEl.css('z-index', zIndex);
+        delete $menuEl[0].f7MenuZIndex;
+      }
       $el.eq(0).removeClass('menu-item-dropdown-opened').trigger('menu:closed');
       app.emit('menuClosed', $el.eq(0)[0]);
     },
@@ -35973,6 +36342,7 @@
     Subnavbar,
     TouchRipple$1,
     Modal$1,
+    Appbar,
     Dialog$1,
     Popup$1,
     LoginScreen$1,

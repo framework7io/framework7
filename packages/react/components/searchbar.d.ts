@@ -17,6 +17,7 @@ declare namespace F7Searchbar {
     value? : string | number | Array<any>
     inputEvents? : string
     expandable? : boolean
+    inline? : boolean
     searchContainer? : string | Object
     searchIn? : string
     searchItem? : string

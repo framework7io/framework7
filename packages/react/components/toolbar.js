@@ -39,16 +39,18 @@ class F7Toolbar extends React.Component {
       noBorder,
       topMd,
       topIos,
+      topAurora,
       top,
       bottomMd,
       bottomIos,
+      bottomAurora,
       bottom,
       position
     } = props;
     const classes = Utils.classNames(className, 'toolbar', {
       tabbar,
-      'toolbar-bottom': self.$theme.md && bottomMd || self.$theme.ios && bottomIos || bottom || position === 'bottom',
-      'toolbar-top': self.$theme.md && topMd || self.$theme.ios && topIos || top || position === 'top',
+      'toolbar-bottom': self.$theme.md && bottomMd || self.$theme.ios && bottomIos || self.$theme.aurora && bottomAurora || bottom || position === 'bottom',
+      'toolbar-top': self.$theme.md && topMd || self.$theme.ios && topIos || self.$theme.aurora && topAurora || top || position === 'top',
       'tabbar-labels': labels,
       'tabbar-scrollable': scrollable,
       'toolbar-hidden': hidden,
@@ -117,6 +119,10 @@ __reactComponentSetProps(F7Toolbar, Object.assign({
     type: Boolean,
     default: undefined
   },
+  topAurora: {
+    type: Boolean,
+    default: undefined
+  },
   top: {
     type: Boolean,
     default: undefined
@@ -126,6 +132,10 @@ __reactComponentSetProps(F7Toolbar, Object.assign({
     default: undefined
   },
   bottomIos: {
+    type: Boolean,
+    default: undefined
+  },
+  bottomAurora: {
     type: Boolean,
     default: undefined
   },

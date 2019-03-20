@@ -15,6 +15,7 @@ export default {
       default: true
     },
     ptrBottom: Boolean,
+    ptrMousewheel: Boolean,
     infinite: Boolean,
     infiniteTop: Boolean,
     infiniteDistance: Number,
@@ -38,6 +39,7 @@ export default {
       ptrPreloader,
       ptrDistance,
       ptrBottom,
+      ptrMousewheel,
       infinite,
       infinitePreloader,
       id,
@@ -71,6 +73,7 @@ export default {
       attrs: {
         id: id,
         'data-ptr-distance': ptrDistance || undefined,
+        'data-ptr-mousewheel': ptrMousewheel || undefined,
         'data-infinite-distance': infiniteDistance || undefined
       }
     }, [ptrBottom ? null : ptrEl, infiniteTop ? infiniteEl : null, self.$slots.default, infiniteTop ? null : infiniteEl, ptrBottom ? ptrEl : null]);

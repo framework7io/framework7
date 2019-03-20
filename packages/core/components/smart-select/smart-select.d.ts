@@ -41,6 +41,8 @@ export namespace SmartSelect {
     searchbarPlaceholder?: string
     /** Searchbar "cancel" link text. Has effect only in iOS theme (default 'Cancel') */
     searchbarDisableText?: string
+    /** Enables searchbar disable button. By default, disabled for Aurora theme */
+    searchbarDisableButton?: boolean
     /** Appends block with content that displayed when there are no Searchbar results (default false) */
     appendSearchbarNotFound?: boolean | string | HTMLElement
     /** If enabled then smart select will be automatically closed after user selectes any option (default false) */

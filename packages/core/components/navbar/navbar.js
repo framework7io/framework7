@@ -5,7 +5,9 @@ import Support from '../../utils/support';
 const Navbar = {
   size(el) {
     const app = this;
-    if (app.theme === 'md' && !app.params.navbar.mdCenterTitle) return;
+    if (app.theme !== 'ios' && !app.params.navbar[`${app.theme}CenterTitle`]) {
+      return;
+    }
     let $el = $(el);
     if ($el.hasClass('navbar')) {
       $el = $el.children('.navbar-inner').each((index, navbarEl) => {
@@ -23,7 +25,7 @@ const Navbar = {
       return;
     }
 
-    if (app.theme === 'md' && app.params.navbar.mdCenterTitle) {
+    if (app.theme !== 'ios' && app.params.navbar[`${app.theme}CenterTitle`]) {
       $el.addClass('navbar-inner-centered-title');
     }
     if (app.theme === 'ios' && !app.params.navbar.iosCenterTitle) {
@@ -140,10 +142,7 @@ const Navbar = {
     }
 
     // Center title
-    if (
-      (app.theme === 'ios' && app.params.navbar.iosCenterTitle)
-      || (app.theme === 'md' && app.params.navbar.mdCenterTitle)
-    ) {
+    if (app.params.navbar[`${app.theme}CenterTitle`]) {
       let titleLeft = diff;
       if (app.rtl && noLeft && noRight && title.length > 0) titleLeft = -titleLeft;
       title.css({ left: `${titleLeft}px` });
@@ -156,7 +155,9 @@ const Navbar = {
     if (!$el.length) return;
     if ($el.hasClass('navbar-hidden')) return;
     let className = `navbar-hidden${animate ? ' navbar-transitioning' : ''}`;
-    const currentIsLarge = app.theme === 'ios' ? $el.find('.navbar-current .title-large').length : $el.find('.title-large').length;
+    const currentIsLarge = app.theme === 'ios'
+      ? $el.find('.navbar-current .title-large').length
+      : $el.find('.title-large').length;
     if (currentIsLarge) {
       className += ' navbar-large-hidden';
     }
@@ -230,7 +231,7 @@ const Navbar = {
     const $pageEl = $(app.navbar.getPageByEl($navbarInnerEl));
     $navbarInnerEl.addClass('navbar-inner-large-collapsed');
     $pageEl.eq(0).addClass('page-with-navbar-large-collapsed').trigger('page:navbarlargecollapsed');
-    if (app.theme === 'md') {
+    if (app.theme === 'md' || app.theme === 'aurora') {
       $navbarInnerEl.parents('.navbar').addClass('navbar-large-collapsed');
     }
   },
@@ -249,7 +250,7 @@ const Navbar = {
     const $pageEl = $(app.navbar.getPageByEl($navbarInnerEl));
     $navbarInnerEl.removeClass('navbar-inner-large-collapsed');
     $pageEl.eq(0).removeClass('page-with-navbar-large-collapsed').trigger('page:navbarlargeexpanded');
-    if (app.theme === 'md') {
+    if (app.theme === 'md' || app.theme === 'aurora') {
       $navbarInnerEl.parents('.navbar').removeClass('navbar-large-collapsed');
     }
   },
@@ -275,7 +276,7 @@ const Navbar = {
     const app = this;
     const $pageEl = $(pageEl);
     const $navbarInnerEl = $(navbarInnerEl);
-    const $navbarEl = app.theme === 'md'
+    const $navbarEl = app.theme === 'md' || app.theme === 'aurora'
       ? $navbarInnerEl.parents('.navbar')
       : $(navbarInnerEl || app.navbar.getElByPage(pageEl)).closest('.navbar');
     const isLarge = $navbarInnerEl.find('.title-large').length || $navbarInnerEl.hasClass('.navbar-inner-large');
@@ -298,10 +299,14 @@ const Navbar = {
       if (navbarTitleLargeHeight && navbarTitleLargeHeight.indexOf('px') >= 0) {
         navbarTitleLargeHeight = parseInt(navbarTitleLargeHeight, 10);
         if (Number.isNaN(navbarTitleLargeHeight)) {
-          navbarTitleLargeHeight = app.theme === 'ios' ? 52 : 48;
+          if (app.theme === 'ios') navbarTitleLargeHeight = 52;
+          else if (app.theme === 'md') navbarTitleLargeHeight = 48;
+          else if (app.theme === 'aurora') navbarTitleLargeHeight = 38;
         }
-      } else {
-        navbarTitleLargeHeight = app.theme === 'ios' ? 52 : 48;
+      } else { // eslint-disable-next-line
+        if (app.theme === 'ios') navbarTitleLargeHeight = 52;
+        else if (app.theme === 'md') navbarTitleLargeHeight = 48;
+        else if (app.theme === 'aurora') navbarTitleLargeHeight = 38;
       }
     }
     if (needHide && isLarge) {
@@ -336,7 +341,7 @@ const Navbar = {
         $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         $navbarInnerEl[0].style.overflow = '';
-        if (app.theme === 'md') {
+        if (app.theme === 'md' || app.theme === 'aurora') {
           $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         }
       } else if (collapseProgress === 1 && !navbarCollapsed) {
@@ -344,21 +349,21 @@ const Navbar = {
         $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         $navbarInnerEl[0].style.overflow = '';
         $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-        if (app.theme === 'md') {
+        if (app.theme === 'md' || app.theme === 'aurora') {
           $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         }
       } else if ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed)) {
         $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         $navbarInnerEl[0].style.overflow = '';
         $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-        if (app.theme === 'md') {
+        if (app.theme === 'md' || app.theme === 'aurora') {
           $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         }
       } else {
         $navbarInnerEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
         $navbarInnerEl[0].style.overflow = 'visible';
         $pageEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
-        if (app.theme === 'md') {
+        if (app.theme === 'md' || app.theme === 'aurora') {
           $navbarEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
         }
       }
@@ -483,6 +488,7 @@ export default {
       scrollTopOnTitleClick: true,
       iosCenterTitle: true,
       mdCenterTitle: false,
+      auroraCenterTitle: true,
       hideOnPageScroll: false,
       showOnPageScrollEnd: true,
       showOnPageScrollTop: true,
@@ -541,7 +547,7 @@ export default {
       }
       if ($navbarInnerEl.hasClass('navbar-inner-large')) {
         if (app.params.navbar.collapseLargeTitleOnScroll) needCollapseOnScrollHandler = true;
-        if (app.theme === 'md') {
+        if (app.theme === 'md' || app.theme === 'aurora') {
           $navbarInnerEl.parents('.navbar').addClass('navbar-large');
         }
         page.$el.addClass('page-with-navbar-large');
@@ -574,10 +580,7 @@ export default {
     },
     modalOpen(modal) {
       const app = this;
-      if (
-        (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
-        || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-      ) {
+      if (!app.params.navbar[`${app.theme}CenterTitle`]) {
         return;
       }
       modal.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
@@ -586,10 +589,7 @@ export default {
     },
     panelOpen(panel) {
       const app = this;
-      if (
-        (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
-        || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-      ) {
+      if (!app.params.navbar[`${app.theme}CenterTitle`]) {
         return;
       }
       panel.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
@@ -598,10 +598,7 @@ export default {
     },
     panelSwipeOpen(panel) {
       const app = this;
-      if (
-        (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
-        || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-      ) {
+      if (!app.params.navbar[`${app.theme}CenterTitle`]) {
         return;
       }
       panel.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
@@ -610,10 +607,7 @@ export default {
     },
     tabShow(tabEl) {
       const app = this;
-      if (
-        (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
-        || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-      ) {
+      if (!app.params.navbar[`${app.theme}CenterTitle`]) {
         return;
       }
       $(tabEl).find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
@@ -660,10 +654,7 @@ export default {
     'navbar-inner': {
       postpatch(vnode) {
         const app = this;
-        if (
-          (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
-          || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-        ) {
+        if (!app.params.navbar[`${app.theme}CenterTitle`]) {
           return;
         }
         app.navbar.size(vnode.elm);

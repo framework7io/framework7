@@ -25,12 +25,15 @@ class F7NavLeft extends React.Component {
       backLink,
       backLinkUrl,
       backLinkForce,
+      backLinkShowText,
       sliding,
       className,
       style,
       id
     } = props;
     let linkEl;
+    let needBackLinkText = backLinkShowText;
+    if (typeof needBackLinkText === 'undefined') needBackLinkText = !this.$theme.md;
 
     if (backLink) {
       linkEl = React.createElement(F7Link, {
@@ -39,7 +42,7 @@ class F7NavLeft extends React.Component {
         icon: 'icon-back',
         force: backLinkForce || undefined,
         className: backLink === true || backLink && this.$theme.md ? 'icon-only' : undefined,
-        text: backLink !== true && !this.$theme.md ? backLink : undefined,
+        text: backLink !== true && needBackLinkText ? backLink : undefined,
         onClick: this.onBackClick
       });
     }
@@ -80,6 +83,10 @@ __reactComponentSetProps(F7NavLeft, Object.assign({
   backLink: [Boolean, String],
   backLinkUrl: String,
   backLinkForce: Boolean,
+  backLinkShowText: {
+    type: Boolean,
+    default: undefined
+  },
   sliding: Boolean
 }, Mixins.colorProps));
 

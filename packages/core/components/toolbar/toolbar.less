@@ -28,8 +28,8 @@
   }
   a.link {
     display: flex;
-    line-height: var(--f7-toolbar-height);
-    height: var(--f7-toolbar-height);
+    line-height: var(--f7-toolbar-link-line-height, var(--f7-toolbar-height));
+    height: var(--f7-toolbar-link-height, var(--f7-toolbar-height));
   }
   i.icon {
     display: block;
@@ -46,7 +46,8 @@
 }
 .toolbar-top,
 .ios .toolbar-top-ios,
-.md .toolbar-top-md {
+.md .toolbar-top-md,
+.aurora .toolbar-top-aurora {
   top: 0;
   .tab-link-highlight {
     bottom: 0;
@@ -65,11 +66,12 @@
     backface-visibility: hidden;
   }
   .hairline(bottom, var(--f7-toolbar-border-color, var(--f7-bars-border-color)));
-  .bar-shadow-bottom(var(--f7-toolbar-top-shadow-image, var(--f7-bars-shadow-bottom-image)));
+  .bar-shadow-bottom(var(--f7-toolbar-top-shadow-image));
 }
 .toolbar-bottom,
 .ios .toolbar-bottom-ios,
-.md .toolbar-bottom-md {
+.md .toolbar-bottom-md,
+.aurora .toolbar-bottom-aurora {
   bottom: 0;
   height: calc(var(--f7-toolbar-height) + var(--f7-safe-area-bottom));
   .tab-link-highlight {
@@ -92,7 +94,7 @@
   }
 
   .hairline(top, var(--f7-toolbar-border-color, var(--f7-bars-border-color)));
-  .bar-shadow-top(var(--f7-toolbar-bottom-shadow-image, var(--f7-bars-shadow-top-image)));
+  .bar-shadow-top(var(--f7-toolbar-bottom-shadow-image));
 }
 .toolbar-inner {
   position: absolute;
@@ -106,6 +108,7 @@
   align-items: center;
   align-content: center;
   overflow: hidden;
+  padding: 0 calc(var(--f7-toolbar-inner-padding-right) + var(--f7-safe-area-right)) 0 calc(var(--f7-toolbar-inner-padding-left) + var(--f7-safe-area-left));
 }
 .tabbar,
 .tabbar-labels {
@@ -114,6 +117,9 @@
   }
   a {
     color: var(--f7-tabbar-link-inactive-color);
+  }
+  a.tab-link:not(.tab-link-active) {
+    background-color: var(--f7-tabbar-link-inactive-bg-color, transparent);
   }
   a.link {
     line-height: 1.4;
@@ -134,6 +140,7 @@
   }
   .tab-link-active {
     color: var(--f7-tabbar-link-active-color, var(--f7-theme-color));
+    background-color: var(--f7-tabbar-link-active-bg-color, transparent);
   }
   i.icon {
     font-size: var(--f7-tabbar-icon-size);
@@ -170,6 +177,7 @@
 }
 .tabbar-scrollable {
   .toolbar-inner {
+    justify-content: flex-start;
     .scrollable();
     &::-webkit-scrollbar {
       display: none !important;
@@ -194,53 +202,56 @@
 // Relation with page
 .toolbar-bottom,
 .ios .toolbar-bottom-ios,
-.md .toolbar-bottom-md {
+.md .toolbar-bottom-md,
+.aurora .toolbar-bottom-aurora {
+  ~ * {
+    --f7-page-toolbar-bottom-offset: var(--f7-toolbar-height);
+  }
+  &.tabbar-labels ~ * {
+    --f7-page-toolbar-bottom-offset: var(--f7-tabbar-labels-height);
+  }
+}
+.toolbar-bottom,
+.ios .toolbar-bottom-ios,
+.md .toolbar-bottom-md,
+.aurora .toolbar-bottom-aurora {
   &.toolbar-hidden {
     transform: translate3d(0, 100%, 0);
-  }
-  & ~ .page-content,
-  & ~ * .page-content {
-    padding-bottom: calc(var(--f7-toolbar-height) + var(--f7-safe-area-bottom));
-  }
-  &.tabbar-labels ~ .page-content,
-  &.tabbar-labels ~ * .page-content {
-    padding-bottom: calc(var(--f7-tabbar-labels-height) + var(--f7-safe-area-bottom));
   }
 }
 .toolbar-top,
 .ios .toolbar-top-ios,
-.md .toolbar-top-md {
+.md .toolbar-top-md,
+.aurora .toolbar-top-aurora {
+  ~ * {
+    --f7-page-toolbar-top-offset: var(--f7-toolbar-height);
+  }
+  &.tabbar-labels ~ * {
+    --f7-page-toolbar-top-offset: var(--f7-tabbar-labels-height);
+  }
+}
+.toolbar-top,
+.ios .toolbar-top-ios,
+.md .toolbar-top-md,
+.aurora .toolbar-top-aurora {
   &.toolbar-hidden {
     transform: translate3d(0, -100%, 0);
-  }
-  & ~ .page-content,
-  & ~ * .page-content {
-    padding-top: var(--f7-toolbar-height);
-  }
-  &.tabbar-labels ~ .page-content,
-  &.tabbar-labels ~ * .page-content {
-    padding-top: var(--f7-tabbar-labels-height);
   }
 }
 
 .navbar ~ .toolbar-top,
 .ios .navbar ~ .toolbar-top-ios,
 .md .navbar ~ .toolbar-top-md,
+.aurora .navbar ~ .toolbar-top-aurora,
 .navbar ~ * .toolbar-top,
 .ios .navbar ~ * .toolbar-top-ios,
 .md .navbar ~ * .toolbar-top-md,
+.aurora .navbar ~ * .toolbar-top-aurora,
 .navbar ~ .page:not(.no-navbar) .toolbar-top,
 .ios .navbar ~ .page:not(.no-navbar) .toolbar-top-ios,
-.md .navbar ~ .page:not(.no-navbar) .toolbar-top-md {
+.md .navbar ~ .page:not(.no-navbar) .toolbar-top-md,
+.aurora .navbar ~ .page:not(.no-navbar) .toolbar-top-aurora {
   top: var(--f7-navbar-height);
-  & ~ .page-content,
-  & ~ * .page-content {
-    padding-top: calc(var(--f7-navbar-height) + var(--f7-toolbar-height));
-  }
-  &.tabbar-labels ~ .page-content,
-  &.tabbar-labels ~ * .page-content {
-    padding-top: calc(var(--f7-navbar-height) + var(--f7-tabbar-labels-height));
-  }
   &.toolbar-hidden {
     transform: translate3d(0, calc(-1 * (var(--f7-navbar-height) + var(--f7-toolbar-height))), 0);
     &.tabbar-labels {
@@ -251,9 +262,11 @@
 .navbar-hidden + .toolbar-top:not(.toolbar-hidden),
 .ios .navbar-hidden + .toolbar-top-ios:not(.toolbar-hidden),
 .md .navbar-hidden + .toolbar-top-md:not(.toolbar-hidden),
+.aurora .navbar-hidden + .toolbar-top-aurora:not(.toolbar-hidden),
 .navbar-hidden ~ * .toolbar-top:not(.toolbar-hidden),
 .ios .navbar-hidden ~ * .toolbar-top-ios:not(.toolbar-hidden),
-.md .navbar-hidden ~ * .toolbar-top-md:not(.toolbar-hidden), {
+.md .navbar-hidden ~ * .toolbar-top-md:not(.toolbar-hidden),
+.aurora .navbar-hidden ~ * .toolbar-top-aurora:not(.toolbar-hidden) {
   transform: translate3d(0, calc(-1 * var(--f7-navbar-height)), 0);
 }
 .navbar-large-hidden + .toolbar-top:not(.toolbar-hidden),
@@ -261,13 +274,17 @@
 .md .navbar-large-hidden + .toolbar-top-md:not(.toolbar-hidden),
 .navbar-large-hidden ~ * .toolbar-top:not(.toolbar-hidden),
 .ios .navbar-large-hidden ~ * .toolbar-top-ios:not(.toolbar-hidden),
-.md .navbar-large-hidden ~ * .toolbar-top-md:not(.toolbar-hidden) {
+.md .navbar-large-hidden ~ * .toolbar-top-md:not(.toolbar-hidden),
+.aurora .navbar-large-hidden ~ * .toolbar-top-aurora:not(.toolbar-hidden) {
   transform: translate3d(0, calc(-1 * (var(--f7-navbar-height) + var(--f7-navbar-large-title-height))), 0);
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./toolbar-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./toolbar-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./toolbar-aurora.less');
+});

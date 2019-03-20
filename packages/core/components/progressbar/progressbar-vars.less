@@ -1,16 +1,25 @@
-.ios {
+:root {
   /*
   --f7-progressbar-progress-color: var(--f7-theme-color);
   */
+}
+.ios-vars({
   --f7-progressbar-bg-color: #b6b6b6;
   --f7-progressbar-height: 2px;
   --f7-progressbar-border-radius: 2px;
-}
-.md {
+});
+.md-vars({
   /*
-  --f7-progressbar-progress-color: var(--f7-theme-color);
   --f7-progressbar-bg-color: rgba(var(--f7-theme-color-rgb), 0.5);
   */
   --f7-progressbar-height: 4px;
   --f7-progressbar-border-radius: 0px;
-}
+});
+.aurora-vars({
+  --f7-progressbar-bg-color: #dbdbdb;
+  --f7-progressbar-height: 6px;
+  --f7-progressbar-border-radius: 3px;
+  .theme-dark, &.theme-dark {
+    --f7-progressbar-bg-color: #444;
+  }
+});

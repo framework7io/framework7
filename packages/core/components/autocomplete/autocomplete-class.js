@@ -14,6 +14,9 @@ class Autocomplete extends Framework7Class {
       on: {},
     }, app.params.autocomplete);
 
+    if (typeof defaults.searchbarDisableButton === 'undefined') {
+      defaults.searchbarDisableButton = app.theme !== 'aurora';
+    }
 
     // Extend defaults with modules params
     ac.useModulesParams(defaults);
@@ -435,7 +438,9 @@ class Autocomplete extends Framework7Class {
             <i class="searchbar-icon"></i>
             <span class="input-clear-button"></span>
           </div>
+          ${ac.params.searchbarDisableButton ? `
           <span class="searchbar-disable-button">${ac.params.searchbarDisableText}</span>
+          ` : ''}
         </div>
       </form>
     `.trim();

@@ -33,7 +33,8 @@
 }
 .card-outline,
 .ios .card-outline-ios,
-.md .card-outline-md {
+.md .card-outline-md,
+.aurora .card-outline-aurora {
   box-shadow: none;
   border: 1px solid var(--f7-card-outline-border-color);
   &.no-border, &.no-hairlines {
@@ -308,9 +309,12 @@
     backdrop-filter: blur(0px);
   }
 }
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./card-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./card-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./card-aurora.less');
+});

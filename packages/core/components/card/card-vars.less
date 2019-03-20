@@ -15,13 +15,14 @@
   --f7-card-expandable-tablet-height: 670px;
   .theme-dark, &.theme-dark {
     --f7-card-bg-color: #1c1c1d;
+    --f7-card-expandable-bg-color: #1c1c1d;
     --f7-card-outline-border-color: #282829;
     --f7-card-header-border-color: #282829;
     --f7-card-footer-border-color: #282829;
     --f7-card-footer-text-color: #8E8E93;
   }
 }
-.ios {
+.ios-vars({
   --f7-card-margin-horizontal: 10px;
   --f7-card-margin-vertical: 10px;
   --f7-card-box-shadow: 0px 1px 2px rgba(0,0,0,0.2);
@@ -42,8 +43,8 @@
   --f7-card-expandable-tablet-border-radius: 5px;
   --f7-card-expandable-header-font-size: 27px;
   --f7-card-expandable-header-font-weight: bold;
-}
-.md {
+});
+.md-vars({
   --f7-card-margin-horizontal: 8px;
   --f7-card-margin-vertical: 8px;
   --f7-card-box-shadow: var(--f7-elevation-1);
@@ -64,5 +65,27 @@
   --f7-card-expandable-tablet-border-radius: 4px;
   --f7-card-expandable-header-font-size: 24px;
   --f7-card-expandable-header-font-weight: 500;
-}
-
+});
+.aurora-vars({
+  --f7-card-margin-horizontal: 10px;
+  --f7-card-margin-vertical: 10px;
+  --f7-card-box-shadow: 0px 1px 2px rgba(0,0,0,0.15);
+  --f7-card-content-padding-horizontal: 15px;
+  --f7-card-content-padding-vertical: 15px;
+  --f7-card-header-font-size: 14px;
+  --f7-card-header-font-weight: bold;
+  --f7-card-header-padding-vertical: 10px;
+  --f7-card-header-padding-horizontal: 15px;
+  --f7-card-header-min-height: 38px;
+  --f7-card-footer-text-color: rgba(0,0,0,0.6);
+  --f7-card-footer-padding-vertical: 10px;
+  --f7-card-footer-padding-horizontal: 15px;
+  --f7-card-footer-min-height: 38px;
+  --f7-card-expandable-margin-horizontal: 10px;
+  --f7-card-expandable-margin-vertical: 20px;
+  --f7-card-expandable-box-shadow: 0px 5px 10px rgba(0,0,0,0.15);
+  --f7-card-expandable-border-radius: 15px;
+  --f7-card-expandable-tablet-border-radius: 5px;
+  --f7-card-expandable-header-font-size: 27px;
+  --f7-card-expandable-header-font-weight: bold;
+});

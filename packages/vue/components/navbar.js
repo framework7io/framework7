@@ -12,6 +12,10 @@ export default {
     backLink: [Boolean, String],
     backLinkUrl: String,
     backLinkForce: Boolean,
+    backLinkShowText: {
+      type: Boolean,
+      default: undefined
+    },
     sliding: {
       type: Boolean,
       default: true
@@ -39,6 +43,7 @@ export default {
       backLink,
       backLinkUrl,
       backLinkForce,
+      backLinkShowText,
       sliding,
       title,
       subtitle,
@@ -59,8 +64,8 @@ export default {
     let titleEl;
     let rightEl;
     let titleLargeEl;
-    const iosLeftTitle = self.$theme && self.$theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
-    const mdCenterTitle = self.$theme && self.$theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle;
+    const addLeftTitleClass = self.$theme && self.$theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
+    const addCenterTitleClass = self.$theme && self.$theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || self.$theme && self.$theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
     const slots = self.$slots;
 
     if (inner) {
@@ -72,7 +77,8 @@ export default {
           attrs: {
             backLink: backLink,
             backLinkUrl: backLinkUrl,
-            backLinkForce: backLinkForce
+            backLinkForce: backLinkForce,
+            backLinkShowText: backLinkShowText
           }
         }, [slots['nav-left']]);
       }
@@ -105,8 +111,8 @@ export default {
         ref: 'inner',
         class: Utils.classNames('navbar-inner', innerClass, innerClassName, {
           sliding,
-          'navbar-inner-left-title': iosLeftTitle,
-          'navbar-inner-centered-title': mdCenterTitle,
+          'navbar-inner-left-title': addLeftTitleClass,
+          'navbar-inner-centered-title': addCenterTitleClass,
           'navbar-inner-large': large
         })
       }, [leftEl, titleEl, rightEl, titleLargeEl, this.$slots['default']]);

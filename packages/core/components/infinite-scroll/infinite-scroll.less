@@ -7,9 +7,12 @@
     display: block;
   }
 }
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./infinite-scroll-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./infinite-scroll-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./infinite-scroll-aurora.less');
+});

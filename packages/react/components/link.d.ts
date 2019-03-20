@@ -36,10 +36,9 @@ declare namespace F7Link {
     iconIon? : string
     iconFa? : string
     iconF7? : string
-    iconIfMd? : string
-    iconIfIos? : string
     iconIos? : string
     iconMd? : string
+    iconAurora? : string
     iconColor? : string
     iconSize? : string | number
     back? : boolean
@@ -61,6 +60,7 @@ declare namespace F7Link {
     searchbarToggle? : boolean | string
     panelOpen? : boolean | string
     panelClose? : boolean | string
+    panelToggle? : boolean | string
     popupOpen? : boolean | string
     popupClose? : boolean | string
     actionsOpen? : boolean | string

@@ -107,12 +107,14 @@
 }
 .stepper-round,
 .ios .stepper-round-ios,
-.md .stepper-round-md {
+.md .stepper-round-md,
+.aurora .stepper-round-aurora {
   --f7-stepper-border-radius: var(--f7-stepper-height);
 }
 .stepper-fill,
 .ios .stepper-fill-ios,
-.md .stepper-fill-md {
+.md .stepper-fill-md,
+.aurora .stepper-fill-aurora {
   --f7-stepper-button-bg-color: var(--f7-stepper-fill-button-bg-color, var(--f7-theme-color));
   --f7-stepper-button-text-color: var(--f7-stepper-fill-button-text-color);
   --f7-touch-ripple-color: var(--f7-touch-ripple-white);
@@ -120,9 +122,11 @@
 .stepper-fill,
 .ios .stepper-fill-ios,
 .md .stepper-fill-md,
+.aurora .stepper-fill-aurora,
 .stepper-raised,
 .ios .stepper-raised-ios,
-.md .stepper-raised-md {
+.md .stepper-raised-md,
+.aurora .stepper-raised-aurora {
   .stepper-button + .stepper-button,
   .stepper-button-minus + .stepper-button-plus {
     .ltr({
@@ -135,7 +139,8 @@
 }
 .stepper-fill,
 .ios .stepper-fill-ios,
-.md .stepper-fill-md {
+.md .stepper-fill-md,
+.aurora .stepper-fill-aurora {
   .stepper-button + .stepper-button,
   .stepper-button-minus + .stepper-button-plus {
     .ltr({
@@ -152,7 +157,8 @@
 }
 .stepper-raised:not(.stepper-fill),
 .ios .stepper-raised-ios:not(.stepper-fill-ios):not(.stepper-fill),
-.md .stepper-raised-md:not(.stepper-fill-md):not(.stepper-fill) {
+.md .stepper-raised-md:not(.stepper-fill-md):not(.stepper-fill),
+.aurora .stepper-raised-aurora:not(.stepper-fill-aurora):not(.stepper-fill) {
   .stepper-input-wrap,
   .stepper-value {
     border-left: 1px solid rgba(0,0,0,0.1);
@@ -161,12 +167,14 @@
 }
 .stepper-large,
 .ios .stepper-large-ios,
-.md .stepper-large-md {
+.md .stepper-large-md,
+.aurora .stepper-large-aurora {
   --f7-stepper-height: var(--f7-stepper-large-height);
 }
 .stepper-small,
 .ios .stepper-small-ios,
-.md .stepper-small-md {
+.md .stepper-small-md,
+.aurora .stepper-small-aurora {
   --f7-stepper-border-width: var(--f7-stepper-small-border-width);
   --f7-stepper-height: var(--f7-stepper-small-height);
 }
@@ -177,14 +185,18 @@
 }
 .stepper-raised,
 .ios .stepper-raised-ios,
-.md .stepper-raised-md {
+.md .stepper-raised-md,
+.aurora .stepper-raised-aurora {
   --f7-stepper-border-width: 0;
   box-shadow: var(--f7-stepper-raised-box-shadow);
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./stepper-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./stepper-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./stepper-aurora.less');
+});

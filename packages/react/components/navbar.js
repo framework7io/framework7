@@ -47,6 +47,7 @@ class F7Navbar extends React.Component {
       backLink,
       backLinkUrl,
       backLinkForce,
+      backLinkShowText,
       sliding,
       title,
       subtitle,
@@ -67,8 +68,8 @@ class F7Navbar extends React.Component {
     let titleEl;
     let rightEl;
     let titleLargeEl;
-    const iosLeftTitle = self.$theme && self.$theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
-    const mdCenterTitle = self.$theme && self.$theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle;
+    const addLeftTitleClass = self.$theme && self.$theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
+    const addCenterTitleClass = self.$theme && self.$theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || self.$theme && self.$theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
     const slots = self.slots;
 
     if (inner) {
@@ -77,6 +78,7 @@ class F7Navbar extends React.Component {
           backLink: backLink,
           backLinkUrl: backLinkUrl,
           backLinkForce: backLinkForce,
+          backLinkShowText: backLinkShowText,
           onBackClick: self.onBackClick
         }, slots['nav-left']);
       }
@@ -109,8 +111,8 @@ class F7Navbar extends React.Component {
         },
         className: Utils.classNames('navbar-inner', innerClass, innerClassName, {
           sliding,
-          'navbar-inner-left-title': iosLeftTitle,
-          'navbar-inner-centered-title': mdCenterTitle,
+          'navbar-inner-left-title': addLeftTitleClass,
+          'navbar-inner-centered-title': addCenterTitleClass,
           'navbar-inner-large': large
         })
       }, leftEl, titleEl, rightEl, titleLargeEl, this.slots['default']);
@@ -167,6 +169,10 @@ __reactComponentSetProps(F7Navbar, Object.assign({
   backLink: [Boolean, String],
   backLinkUrl: String,
   backLinkForce: Boolean,
+  backLinkShowText: {
+    type: Boolean,
+    default: undefined
+  },
   sliding: {
     type: Boolean,
     default: true

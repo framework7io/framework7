@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.1.1
+ * Framework7 Vue 4.2.0
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 14, 2019
+ * Released on: March 20, 2019
  */
 
 import f7AccordionContent from './components/accordion-content';
@@ -19,6 +19,7 @@ import f7ActionsGroup from './components/actions-group';
 import f7ActionsLabel from './components/actions-label';
 import f7Actions from './components/actions';
 import f7App from './components/app';
+import f7Appbar from './components/appbar';
 import f7Badge from './components/badge';
 import f7BlockFooter from './components/block-footer';
 import f7BlockHeader from './components/block-header';
@@ -110,6 +111,7 @@ export {
   f7ActionsLabel,
   f7Actions,
   f7App,
+  f7Appbar,
   f7Badge,
   f7BlockFooter,
   f7BlockHeader,

@@ -53,6 +53,7 @@
   .list {
     margin: 0;
     color: var(--f7-autocomplete-dropdown-text-color);
+    font-size: var(--f7-autocomplete-dropdown-font-size);
     b {
       color: var(--f7-autocomplete-dropdown-text-matching-color);
       font-weight: var(--f7-autocomplete-dropdown-text-matching-font-weight);
@@ -96,9 +97,12 @@
   }
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./autocomplete-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./autocomplete-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./autocomplete-aurora.less');
+});

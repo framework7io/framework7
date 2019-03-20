@@ -38,6 +38,7 @@ class F7Block extends React.Component {
       noHairlines,
       noHairlinesIos,
       noHairlinesMd,
+      noHairlinesAurora,
       id,
       style
     } = props;
@@ -51,7 +52,8 @@ class F7Block extends React.Component {
       'tab-active': tabActive,
       'no-hairlines': noHairlines,
       'no-hairlines-md': noHairlinesMd,
-      'no-hairlines-ios': noHairlinesIos
+      'no-hairlines-ios': noHairlinesIos,
+      'no-hairlines-aurora': noHairlinesAurora
     }, Mixins.colorClasses(props));
     return React.createElement('div', {
       id: id,
@@ -106,7 +108,8 @@ __reactComponentSetProps(F7Block, Object.assign({
   accordionList: Boolean,
   noHairlines: Boolean,
   noHairlinesMd: Boolean,
-  noHairlinesIos: Boolean
+  noHairlinesIos: Boolean,
+  noHairlinesAurora: Boolean
 }, Mixins.colorProps));
 
 F7Block.displayName = 'f7-block';

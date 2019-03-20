@@ -22,6 +22,7 @@ import {Utils as UtilsNamespace} from '../modules/utils/utils';
 // Components
 import {Accordion as AccordionNamespace} from '../components/accordion/accordion';
 import {Actions as ActionsNamespace} from '../components/actions/actions';
+import {Appbar as AppbarNamespace} from '../components/appbar/appbar';
 import {Autocomplete as AutocompleteNamespace} from '../components/autocomplete/autocomplete';
 import {Badge as BadgeNamespace} from '../components/badge/badge';
 import {Block as BlockNamespace} from '../components/block/block';
@@ -119,6 +120,9 @@ declare module '../components/app/app-class' {
   interface Framework7Class<Events> extends ActionsNamespace.AppMethods{}
   interface Framework7Params extends ActionsNamespace.AppParams{}
   interface Framework7Events extends ActionsNamespace.AppEvents{}
+  interface Framework7Class<Events> extends AppbarNamespace.AppMethods{}
+  interface Framework7Params extends AppbarNamespace.AppParams{}
+  interface Framework7Events extends AppbarNamespace.AppEvents{}
   interface Framework7Class<Events> extends AutocompleteNamespace.AppMethods{}
   interface Framework7Params extends AutocompleteNamespace.AppParams{}
   interface Framework7Events extends AutocompleteNamespace.AppEvents{}

@@ -38,6 +38,11 @@ declare namespace F7View {
     mdSwipeBackAnimateOpacity? : boolean
     mdSwipeBackActiveArea? : number
     mdSwipeBackThreshold? : number
+    auroraSwipeBack? : boolean
+    auroraSwipeBackAnimateShadow? : boolean
+    auroraSwipeBackAnimateOpacity? : boolean
+    auroraSwipeBackActiveArea? : number
+    auroraSwipeBackThreshold? : number
     pushState? : boolean
     pushStateRoot? : string
     pushStateAnimate? : boolean

@@ -9,6 +9,7 @@ declare namespace F7NavLeft {
     backLink? : boolean | string
     backLinkUrl? : string
     backLinkForce? : boolean
+    backLinkShowText? : boolean
     sliding? : boolean
     color? : string
     colorTheme? : string

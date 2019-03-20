@@ -74,9 +74,12 @@ label.item-checkbox {
   }
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./checkbox-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./checkbox-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./checkbox-aurora.less');
+});

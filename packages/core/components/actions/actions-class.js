@@ -88,6 +88,7 @@ class Actions extends Modal {
           actions.params.forceToPopover
           || (app.device.ios && app.device.ipad)
           || app.width >= 768
+          || (app.device.desktop && app.theme === 'aurora')
         ) {
           convertToPopover = true;
         }

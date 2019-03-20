@@ -16,9 +16,11 @@ declare namespace F7Toolbar {
     position? : string
     topMd? : boolean
     topIos? : boolean
+    topAurora? : boolean
     top? : boolean
     bottomMd? : boolean
     bottomIos? : boolean
+    bottomAurora? : boolean
     bottom? : boolean
     inner? : boolean
     color? : string

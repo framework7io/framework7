@@ -25,7 +25,8 @@
   transition-duration: 200ms;
   transition-property: left;
 }
-.swipeout-actions-left, .swipeout-actions-right {
+.swipeout-actions-left,
+.swipeout-actions-right {
   position: absolute;
   top: 0;
   height: 100%;
@@ -39,6 +40,8 @@
     align-items: center;
     position: relative;
     left: 0;
+    font-size: var(--f7-swipeout-button-font-size);
+    font-weight: var(--f7-swipeout-button-font-weight);
     &:after {
       content: '';
       pointer-events: none;
@@ -81,9 +84,12 @@
     --f7-swipeout-button-bg-color: var(--f7-theme-color);
   }
 }
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./swipeout-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./swipeout-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./swipeout-aurora.less');
+});

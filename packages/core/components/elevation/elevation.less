@@ -42,9 +42,12 @@ each(@elevations, {
   transition-property: box-shadow;
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./elevation-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./elevation-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./elevation-aurora.less');
+});

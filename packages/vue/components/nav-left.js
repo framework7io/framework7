@@ -10,6 +10,10 @@ export default {
     backLink: [Boolean, String],
     backLinkUrl: String,
     backLinkForce: Boolean,
+    backLinkShowText: {
+      type: Boolean,
+      default: undefined
+    },
     sliding: Boolean
   }, Mixins.colorProps),
 
@@ -20,12 +24,15 @@ export default {
       backLink,
       backLinkUrl,
       backLinkForce,
+      backLinkShowText,
       sliding,
       className,
       style,
       id
     } = props;
     let linkEl;
+    let needBackLinkText = backLinkShowText;
+    if (typeof needBackLinkText === 'undefined') needBackLinkText = !this.$theme.md;
 
     if (backLink) {
       linkEl = _h(F7Link, {
@@ -38,7 +45,7 @@ export default {
           back: true,
           icon: 'icon-back',
           force: backLinkForce || undefined,
-          text: backLink !== true && !this.$theme.md ? backLink : undefined
+          text: backLink !== true && needBackLinkText ? backLink : undefined
         }
       });
     }

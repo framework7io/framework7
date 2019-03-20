@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.1.1
+ * Framework7 Vue 4.2.0
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 14, 2019
+ * Released on: March 20, 2019
  */
 
 (function (global, factory) {
@@ -148,10 +148,9 @@
       iconIon: String,
       iconFa: String,
       iconF7: String,
-      iconIfMd: String,
-      iconIfIos: String,
       iconIos: String,
       iconMd: String,
+      iconAurora: String,
       iconColor: String,
       iconSize: [String, Number],
     },
@@ -231,6 +230,7 @@
       // Panel
       panelOpen: [Boolean, String],
       panelClose: [Boolean, String],
+      panelToggle: [Boolean, String],
 
       // Popup
       popupOpen: [Boolean, String],
@@ -275,6 +275,7 @@
       var searchbarToggle = props.searchbarToggle;
       var panelOpen = props.panelOpen;
       var panelClose = props.panelClose;
+      var panelToggle = props.panelToggle;
       var popupOpen = props.popupOpen;
       var popupClose = props.popupClose;
       var actionsOpen = props.actionsOpen;
@@ -297,7 +298,8 @@
                           || (Utils.isStringProp(searchbarClear) && searchbarClear)
                           || (Utils.isStringProp(searchbarToggle) && searchbarToggle) || undefined,
         'data-panel': (Utils.isStringProp(panelOpen) && panelOpen)
-                      || (Utils.isStringProp(panelClose) && panelClose) || undefined,
+                      || (Utils.isStringProp(panelClose) && panelClose)
+                      || (Utils.isStringProp(panelToggle) && panelToggle) || undefined,
         'data-popup': (Utils.isStringProp(popupOpen) && popupOpen)
                       || (Utils.isStringProp(popupClose) && popupClose) || undefined,
         'data-actions': (Utils.isStringProp(actionsOpen) && actionsOpen)
@@ -322,6 +324,7 @@
       var searchbarToggle = props.searchbarToggle;
       var panelOpen = props.panelOpen;
       var panelClose = props.panelClose;
+      var panelToggle = props.panelToggle;
       var popupOpen = props.popupOpen;
       var popupClose = props.popupClose;
       var actionsClose = props.actionsClose;
@@ -347,6 +350,7 @@
         'searchbar-toggle': searchbarToggle || searchbarToggle === '',
         'panel-close': panelClose || panelClose === '',
         'panel-open': panelOpen || panelOpen === '',
+        'panel-toggle': panelToggle || panelToggle === '',
         'popup-close': popupClose || popupClose === '',
         'popup-open': popupOpen || popupOpen === '',
         'actions-close': actionsClose || actionsClose === '',
@@ -1129,6 +1133,63 @@
     }
   };
 
+  var f7Appbar = {
+    name: 'f7-appbar',
+    props: Object.assign({
+      id: [String, Number],
+      noShadow: Boolean,
+      noHairline: Boolean,
+      inner: {
+        type: Boolean,
+        default: true
+      },
+      innerClass: String,
+      innerClassName: String
+    }, Mixins.colorProps),
+
+    render: function render() {
+      var _h = this.$createElement;
+      var self = this;
+      var props = self.props;
+      var inner = props.inner;
+      var innerClass = props.innerClass;
+      var innerClassName = props.innerClassName;
+      var className = props.className;
+      var id = props.id;
+      var style = props.style;
+      var noShadow = props.noShadow;
+      var noHairline = props.noHairline;
+      var innerEl;
+
+      if (inner) {
+        innerEl = _h('div', {
+          ref: 'inner',
+          class: Utils.classNames('appbar-inner', innerClass, innerClassName)
+        }, [this.$slots['default']]);
+      }
+
+      var classes = Utils.classNames(className, 'appbar', {
+        'no-shadow': noShadow,
+        'no-hairline': noHairline
+      }, Mixins.colorClasses(props));
+      return _h('div', {
+        ref: 'el',
+        style: style,
+        class: classes,
+        attrs: {
+          id: id
+        }
+      }, [this.$slots['before-inner'], innerEl || self.$slots.default, this.$slots['after-inner']]);
+    },
+
+    computed: {
+      props: function props() {
+        return __vueComponentProps(this);
+      }
+
+    }
+  };
+
   var F7Badge = {
     name: 'f7-badge',
     props: Object.assign({
@@ -1269,7 +1330,8 @@
       accordionList: Boolean,
       noHairlines: Boolean,
       noHairlinesMd: Boolean,
-      noHairlinesIos: Boolean
+      noHairlinesIos: Boolean,
+      noHairlinesAurora: Boolean
     }, Mixins.colorProps),
 
     created: function created() {
@@ -1305,6 +1367,7 @@
       var noHairlines = props.noHairlines;
       var noHairlinesIos = props.noHairlinesIos;
       var noHairlinesMd = props.noHairlinesMd;
+      var noHairlinesAurora = props.noHairlinesAurora;
       var id = props.id;
       var style = props.style;
       var classes = Utils.classNames(className, 'block', {
@@ -1317,7 +1380,8 @@
         'tab-active': tabActive,
         'no-hairlines': noHairlines,
         'no-hairlines-md': noHairlinesMd,
-        'no-hairlines-ios': noHairlinesIos
+        'no-hairlines-ios': noHairlinesIos,
+        'no-hairlines-aurora': noHairlinesAurora
       }, Mixins.colorClasses(props));
       return _h('div', {
         style: style,
@@ -1363,9 +1427,8 @@
       ion: String,
       fa: String,
       icon: String,
-      ifMd: String,
-      ifIos: String,
       ios: String,
+      aurora: String,
       md: String,
       tooltip: String,
       size: [String, Number]
@@ -1439,18 +1502,17 @@
         var ref = self.props;
         var material = ref.material;
         var f7 = ref.f7;
-        var ifMd = ref.ifMd;
-        var ifIos = ref.ifIos;
         var md = ref.md;
         var ios = ref.ios;
+        var aurora = ref.aurora;
         var text = material || f7;
-        var mdIcon = ifMd || md;
-        var iosIcon = ifIos || ios;
 
-        if (mdIcon && self.$theme.md && (mdIcon.indexOf('material:') >= 0 || mdIcon.indexOf('f7:') >= 0)) {
-          text = mdIcon.split(':')[1];
-        } else if (iosIcon && self.$theme.ios && (iosIcon.indexOf('material:') >= 0 || iosIcon.indexOf('f7:') >= 0)) {
-          text = iosIcon.split(':')[1];
+        if (md && self.$theme.md && (md.indexOf('material:') >= 0 || md.indexOf('f7:') >= 0)) {
+          text = md.split(':')[1];
+        } else if (ios && self.$theme.ios && (ios.indexOf('material:') >= 0 || ios.indexOf('f7:') >= 0)) {
+          text = ios.split(':')[1];
+        } else if (aurora && self.$theme.aurora && (aurora.indexOf('material:') >= 0 || aurora.indexOf('f7:') >= 0)) {
+          text = aurora.split(':')[1];
         }
 
         return text;
@@ -1462,8 +1524,6 @@
         };
         var self = this;
         var props = self.props;
-        var ifMd = props.ifMd;
-        var ifIos = props.ifIos;
         var material = props.material;
         var f7 = props.f7;
         var fa = props.fa;
@@ -1471,12 +1531,13 @@
         var icon = props.icon;
         var md = props.md;
         var ios = props.ios;
+        var aurora = props.aurora;
         var className = props.className;
-        var mdIcon = ifMd || md;
-        var iosIcon = ifIos || ios;
+        var themeIcon;
+        if (self.$theme.ios) { themeIcon = ios; }else if (self.$theme.md) { themeIcon = md; }else if (self.$theme.aurora) { themeIcon = aurora; }
 
-        if (mdIcon || iosIcon) {
-          var parts = (self.$theme.md ? mdIcon : iosIcon).split(':');
+        if (themeIcon) {
+          var parts = themeIcon.split(':');
           var prop = parts[0];
           var value = parts[1];
 
@@ -1570,21 +1631,27 @@
       round: Boolean,
       roundMd: Boolean,
       roundIos: Boolean,
+      roundAurora: Boolean,
       fill: Boolean,
       fillMd: Boolean,
       fillIos: Boolean,
+      fillAurora: Boolean,
       large: Boolean,
       largeMd: Boolean,
       largeIos: Boolean,
+      largeAurora: Boolean,
       small: Boolean,
       smallMd: Boolean,
       smallIos: Boolean,
+      smallAurora: Boolean,
       raised: Boolean,
       raisedMd: Boolean,
       raisedIos: Boolean,
+      raisedAurora: Boolean,
       outline: Boolean,
       outlineMd: Boolean,
       outlineIos: Boolean,
+      outlineAurora: Boolean,
       active: Boolean,
       disabled: Boolean,
       tooltip: String
@@ -1602,10 +1669,9 @@
       var iconIon = props.iconIon;
       var iconFa = props.iconFa;
       var iconF7 = props.iconF7;
-      var iconIfMd = props.iconIfMd;
-      var iconIfIos = props.iconIfIos;
       var iconMd = props.iconMd;
       var iconIos = props.iconIos;
+      var iconAurora = props.iconAurora;
       var iconColor = props.iconColor;
       var iconSize = props.iconSize;
       var id = props.id;
@@ -1615,10 +1681,7 @@
         textEl = _h('span', [text]);
       }
 
-      var mdThemeIcon = iconIfMd || iconMd;
-      var iosThemeIcon = iconIfIos || iconIos;
-
-      if (icon || iconMaterial || iconIon || iconFa || iconF7 || mdThemeIcon || iosThemeIcon) {
+      if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconMd || iconIos || iconAurora) {
         iconEl = _h(F7Icon, {
           attrs: {
             material: iconMaterial,
@@ -1626,8 +1689,9 @@
             fa: iconFa,
             f7: iconF7,
             icon: icon,
-            md: mdThemeIcon,
-            ios: iosThemeIcon,
+            md: iconMd,
+            ios: iconIos,
+            aurora: iconAurora,
             color: iconColor,
             size: iconSize
           }
@@ -1671,22 +1735,28 @@
         var tabLinkActive = props.tabLinkActive;
         var round = props.round;
         var roundIos = props.roundIos;
+        var roundAurora = props.roundAurora;
         var roundMd = props.roundMd;
         var fill = props.fill;
         var fillIos = props.fillIos;
+        var fillAurora = props.fillAurora;
         var fillMd = props.fillMd;
         var large = props.large;
         var largeIos = props.largeIos;
+        var largeAurora = props.largeAurora;
         var largeMd = props.largeMd;
         var small = props.small;
         var smallIos = props.smallIos;
+        var smallAurora = props.smallAurora;
         var smallMd = props.smallMd;
         var raised = props.raised;
         var raisedIos = props.raisedIos;
+        var raisedAurora = props.raisedAurora;
         var raisedMd = props.raisedMd;
         var active = props.active;
         var outline = props.outline;
         var outlineIos = props.outlineIos;
+        var outlineAurora = props.outlineAurora;
         var outlineMd = props.outlineMd;
         var disabled = props.disabled;
         var className = props.className;
@@ -1696,22 +1766,28 @@
           'no-fastclick': noFastclick || noFastClick,
           'button-round': round,
           'button-round-ios': roundIos,
+          'button-round-aurora': roundAurora,
           'button-round-md': roundMd,
           'button-fill': fill,
           'button-fill-ios': fillIos,
+          'button-fill-aurora': fillAurora,
           'button-fill-md': fillMd,
           'button-large': large,
           'button-large-ios': largeIos,
+          'button-large-aurora': largeAurora,
           'button-large-md': largeMd,
           'button-small': small,
           'button-small-ios': smallIos,
+          'button-small-aurora': smallAurora,
           'button-small-md': smallMd,
           'button-raised': raised,
           'button-raised-ios': raisedIos,
+          'button-raised-aurora': raisedAurora,
           'button-raised-md': raisedMd,
           'button-active': active,
           'button-outline': outline,
           'button-outline-ios': outlineIos,
+          'button-outline-aurora': outlineAurora,
           'button-outline-md': outlineMd,
           disabled: disabled
         }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
@@ -3647,10 +3723,9 @@
       var iconIon = props.iconIon;
       var iconFa = props.iconFa;
       var iconF7 = props.iconF7;
-      var iconIfMd = props.iconIfMd;
-      var iconIfIos = props.iconIfIos;
       var iconMd = props.iconMd;
       var iconIos = props.iconIos;
+      var iconAurora = props.iconAurora;
       var id = props.id;
       var style = props.style;
       var defaultSlots = self.$slots.default;
@@ -3670,10 +3745,7 @@
         }, [text, badgeEl]);
       }
 
-      var mdThemeIcon = iconIfMd || iconMd;
-      var iosThemeIcon = iconIfIos || iconIos;
-
-      if (icon || iconMaterial || iconIon || iconFa || iconF7 || mdThemeIcon || iosThemeIcon) {
+      if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconMd || iconIos || iconAurora) {
         if (iconBadge) {
           iconBadgeEl = _h(F7Badge, {
             attrs: {
@@ -3689,8 +3761,9 @@
             fa: iconFa,
             ion: iconIon,
             icon: icon,
-            md: mdThemeIcon,
-            ios: iosThemeIcon,
+            md: iconMd,
+            ios: iconIos,
+            aurora: iconAurora,
             color: iconColor,
             size: iconSize
           }
@@ -4042,6 +4115,10 @@
       mdItemHeight: {
         type: Number,
         default: 14
+      },
+      auroraItemHeight: {
+        type: Number,
+        default: 14
       }
     }, Mixins.colorProps),
 
@@ -4080,6 +4157,7 @@
         var indexes = ref.indexes;
         var iosItemHeight = ref.iosItemHeight;
         var mdItemHeight = ref.mdItemHeight;
+        var auroraItemHeight = ref.auroraItemHeight;
         var scrollList = ref.scrollList;
         var label = ref.label;
         self.f7ListIndex = f7.listIndex.create({
@@ -4088,6 +4166,7 @@
           indexes: indexes,
           iosItemHeight: iosItemHeight,
           mdItemHeight: mdItemHeight,
+          auroraItemHeight: auroraItemHeight,
           scrollList: scrollList,
           label: label,
           on: {
@@ -5455,6 +5534,8 @@
       noHairlinesBetweenMd: Boolean,
       noHairlinesIos: Boolean,
       noHairlinesBetweenIos: Boolean,
+      noHairlinesAurora: Boolean,
+      noHairlinesBetweenAurora: Boolean,
       noChevron: Boolean,
       chevronCenter: Boolean,
       tab: Boolean,
@@ -5537,9 +5618,11 @@
         var noHairlines = props.noHairlines;
         var noHairlinesIos = props.noHairlinesIos;
         var noHairlinesMd = props.noHairlinesMd;
+        var noHairlinesAurora = props.noHairlinesAurora;
         var noHairlinesBetween = props.noHairlinesBetween;
         var noHairlinesBetweenIos = props.noHairlinesBetweenIos;
         var noHairlinesBetweenMd = props.noHairlinesBetweenMd;
+        var noHairlinesBetweenAurora = props.noHairlinesBetweenAurora;
         var formStoreData = props.formStoreData;
         var inlineLabels = props.inlineLabels;
         var className = props.className;
@@ -5564,6 +5647,8 @@
           'no-hairlines-between-md': noHairlinesBetweenMd,
           'no-hairlines-ios': noHairlinesIos,
           'no-hairlines-between-ios': noHairlinesBetweenIos,
+          'no-hairlines-aurora': noHairlinesAurora,
+          'no-hairlines-between-aurora': noHairlinesBetweenAurora,
           'form-store-data': formStoreData,
           'inline-labels': inlineLabels,
           'no-chevron': noChevron,
@@ -6027,17 +6112,14 @@
       var iconIon = props.iconIon;
       var iconFa = props.iconFa;
       var iconF7 = props.iconF7;
-      var iconIfMd = props.iconIfMd;
-      var iconIfIos = props.iconIfIos;
       var iconMd = props.iconMd;
       var iconIos = props.iconIos;
+      var iconAurora = props.iconAurora;
       var slots = self.$slots;
       var iconEl;
       var iconOnlyComputed;
-      var mdThemeIcon = iconIfMd || iconMd;
-      var iosThemeIcon = iconIfIos || iconIos;
 
-      if (icon || iconMaterial || iconIon || iconFa || iconF7 || mdThemeIcon || iosThemeIcon) {
+      if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconMd || iconIos || iconAurora) {
         iconEl = _h(F7Icon, {
           attrs: {
             material: iconMaterial,
@@ -6045,8 +6127,9 @@
             fa: iconFa,
             ion: iconIon,
             icon: icon,
-            md: mdThemeIcon,
-            ios: iosThemeIcon,
+            md: iconMd,
+            ios: iconIos,
+            aurora: iconAurora,
             color: iconColor,
             size: iconSize
           }
@@ -7287,6 +7370,10 @@
       backLink: [Boolean, String],
       backLinkUrl: String,
       backLinkForce: Boolean,
+      backLinkShowText: {
+        type: Boolean,
+        default: undefined
+      },
       sliding: Boolean
     }, Mixins.colorProps),
 
@@ -7296,11 +7383,14 @@
       var backLink = props.backLink;
       var backLinkUrl = props.backLinkUrl;
       var backLinkForce = props.backLinkForce;
+      var backLinkShowText = props.backLinkShowText;
       var sliding = props.sliding;
       var className = props.className;
       var style = props.style;
       var id = props.id;
       var linkEl;
+      var needBackLinkText = backLinkShowText;
+      if (typeof needBackLinkText === 'undefined') { needBackLinkText = !this.$theme.md; }
 
       if (backLink) {
         linkEl = _h(F7Link, {
@@ -7313,7 +7403,7 @@
             back: true,
             icon: 'icon-back',
             force: backLinkForce || undefined,
-            text: backLink !== true && !this.$theme.md ? backLink : undefined
+            text: backLink !== true && needBackLinkText ? backLink : undefined
           }
         });
       }
@@ -7513,6 +7603,10 @@
       backLink: [Boolean, String],
       backLinkUrl: String,
       backLinkForce: Boolean,
+      backLinkShowText: {
+        type: Boolean,
+        default: undefined
+      },
       sliding: {
         type: Boolean,
         default: true
@@ -7539,6 +7633,7 @@
       var backLink = props.backLink;
       var backLinkUrl = props.backLinkUrl;
       var backLinkForce = props.backLinkForce;
+      var backLinkShowText = props.backLinkShowText;
       var sliding = props.sliding;
       var title = props.title;
       var subtitle = props.subtitle;
@@ -7558,8 +7653,8 @@
       var titleEl;
       var rightEl;
       var titleLargeEl;
-      var iosLeftTitle = self.$theme && self.$theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
-      var mdCenterTitle = self.$theme && self.$theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle;
+      var addLeftTitleClass = self.$theme && self.$theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
+      var addCenterTitleClass = self.$theme && self.$theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || self.$theme && self.$theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
       var slots = self.$slots;
 
       if (inner) {
@@ -7571,7 +7666,8 @@
             attrs: {
               backLink: backLink,
               backLinkUrl: backLinkUrl,
-              backLinkForce: backLinkForce
+              backLinkForce: backLinkForce,
+              backLinkShowText: backLinkShowText
             }
           }, [slots['nav-left']]);
         }
@@ -7604,8 +7700,8 @@
           ref: 'inner',
           class: Utils.classNames('navbar-inner', innerClass, innerClassName, {
             sliding: sliding,
-            'navbar-inner-left-title': iosLeftTitle,
-            'navbar-inner-centered-title': mdCenterTitle,
+            'navbar-inner-left-title': addLeftTitleClass,
+            'navbar-inner-centered-title': addCenterTitleClass,
             'navbar-inner-large': large
           })
         }, [leftEl, titleEl, rightEl, titleLargeEl, this.$slots['default']]);
@@ -7695,6 +7791,7 @@
         default: true
       },
       ptrBottom: Boolean,
+      ptrMousewheel: Boolean,
       infinite: Boolean,
       infiniteTop: Boolean,
       infiniteDistance: Number,
@@ -7717,6 +7814,7 @@
       var ptrPreloader = props.ptrPreloader;
       var ptrDistance = props.ptrDistance;
       var ptrBottom = props.ptrBottom;
+      var ptrMousewheel = props.ptrMousewheel;
       var infinite = props.infinite;
       var infinitePreloader = props.infinitePreloader;
       var id = props.id;
@@ -7749,6 +7847,7 @@
         attrs: {
           id: id,
           'data-ptr-distance': ptrDistance || undefined,
+          'data-ptr-mousewheel': ptrMousewheel || undefined,
           'data-infinite-distance': infiniteDistance || undefined
         }
       }, [ptrBottom ? null : ptrEl, infiniteTop ? infiniteEl : null, self.$slots.default, infiniteTop ? null : infiniteEl, ptrBottom ? ptrEl : null]);
@@ -7915,6 +8014,7 @@
         default: true
       },
       ptrBottom: Boolean,
+      ptrMousewheel: Boolean,
       infinite: Boolean,
       infiniteTop: Boolean,
       infiniteDistance: Number,
@@ -7962,6 +8062,7 @@
       var ptrDistance = props.ptrDistance;
       var ptrPreloader = props.ptrPreloader;
       var ptrBottom = props.ptrBottom;
+      var ptrMousewheel = props.ptrMousewheel;
       var infinite = props.infinite;
       var infiniteDistance = props.infiniteDistance;
       var infinitePreloader = props.infinitePreloader;
@@ -8061,6 +8162,7 @@
           ptrDistance: ptrDistance,
           ptrPreloader: ptrPreloader,
           ptrBottom: ptrBottom,
+          ptrMousewheel: ptrMousewheel,
           infinite: infinite,
           infiniteTop: infiniteTop,
           infiniteDistance: infiniteDistance,
@@ -8516,6 +8618,13 @@
         if (!self.$f7) { return; }
         var side = self.props.side || (self.props.left ? 'left' : 'right');
         self.$f7.panel.close(side, animate);
+      },
+
+      toggle: function toggle(animate) {
+        var self = this;
+        if (!self.$f7) { return; }
+        var side = self.props.side || (self.props.left ? 'left' : 'right');
+        self.$f7.panel.toggle(side, animate);
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -8988,6 +9097,7 @@
       if (sizeComputed) {
         preloaderStyle.width = sizeComputed + "px";
         preloaderStyle.height = sizeComputed + "px";
+        preloaderStyle['--f7-preloader-size'] = sizeComputed + "px";
       }
 
       if (style) { Utils.extend(preloaderStyle, style || {}); }
@@ -9007,7 +9117,7 @@
         }, [_h('span', {
           class: 'preloader-inner-half-circle'
         })])]);
-      } else {
+      } else if (self.$theme.ios) {
         innerEl = _h('span', {
           class: 'preloader-inner'
         }, [_h('span', {
@@ -9034,6 +9144,12 @@
           class: 'preloader-inner-line'
         }), _h('span', {
           class: 'preloader-inner-line'
+        })]);
+      } else if (self.$theme.aurora) {
+        innerEl = _h('span', {
+          class: 'preloader-inner'
+        }, [_h('span', {
+          class: 'preloader-inner-circle'
         })]);
       }
 
@@ -9303,6 +9419,7 @@
         default: 'change input compositionend'
       },
       expandable: Boolean,
+      inline: Boolean,
       searchContainer: [String, Object],
       searchIn: {
         type: String,
@@ -9330,7 +9447,7 @@
       },
       backdrop: {
         type: Boolean,
-        default: true
+        default: undefined
       },
       backdropEl: [String, Object],
       hideOnEnableEl: {
@@ -9385,6 +9502,7 @@
       var style = props.style;
       var id = props.id;
       var value = props.value;
+      var inline = props.inline;
 
       if (clearButton) {
         clearEl = _h('span', {
@@ -9402,6 +9520,7 @@
 
       var SearchbarTag = form ? 'form' : 'div';
       var classes = Utils.classNames(className, 'searchbar', {
+        'searchbar-inline': inline,
         'no-shadow': noShadow,
         'no-hairline': noHairline,
         'searchbar-expandable': expandable
@@ -9445,16 +9564,6 @@
       Utils.bindMethods(this, ['onSubmit', 'onClearButtonClick', 'onDisableButtonClick', 'onInput', 'onChange', 'onFocus', 'onBlur']);
     },
 
-    beforeDestroy: function beforeDestroy() {
-      var self = this;
-
-      if (self.props.form && self.$refs.el) {
-        self.$refs.el.removeEventListener('submit', self.onSubmit, false);
-      }
-
-      if (self.f7Searchbar && self.f7Searchbar.destroy) { self.f7Searchbar.destroy(); }
-    },
-
     mounted: function mounted() {
       var self = this;
       var ref = self.props;
@@ -9478,8 +9587,9 @@
       var hideDividers = ref.hideDividers;
       var hideGroups = ref.hideGroups;
       var form = ref.form;
+      var expandable = ref.expandable;
+      var inline = ref.inline;
       var ref$1 = self.$refs;
-      var inputEl = ref$1.inputEl;
       var el = ref$1.el;
       var clearEl = ref$1.clearEl;
       var disableEl = ref$1.disableEl;
@@ -9518,6 +9628,8 @@
           removeDiacritics: removeDiacritics,
           hideDividers: hideDividers,
           hideGroups: hideGroups,
+          expandable: expandable,
+          inline: inline,
           on: {
             search: function search(searchbar, query, previousQuery) {
               self.dispatchEvent('searchbar:search searchbarSearch', searchbar, query, previousQuery);
@@ -9549,7 +9661,6 @@
     beforeDestroy: function beforeDestroy() {
       var self = this;
       var ref = self.$refs;
-      var inputEl = ref.inputEl;
       var el = ref.el;
       var clearEl = ref.clearEl;
       var disableEl = ref.disableEl;
@@ -9646,9 +9757,11 @@
       raised: Boolean,
       raisedIos: Boolean,
       raisedMd: Boolean,
+      raisedAurora: Boolean,
       round: Boolean,
       roundIos: Boolean,
       roundMd: Boolean,
+      roundAurora: Boolean,
       tag: {
         type: String,
         default: 'div'
@@ -9662,9 +9775,11 @@
       var className = props.className;
       var raised = props.raised;
       var raisedIos = props.raisedIos;
+      var raisedAurora = props.raisedAurora;
       var raisedMd = props.raisedMd;
       var round = props.round;
       var roundIos = props.roundIos;
+      var roundAurora = props.roundAurora;
       var roundMd = props.roundMd;
       var id = props.id;
       var style = props.style;
@@ -9673,9 +9788,11 @@
         segmented: true,
         'segmented-raised': raised,
         'segmented-raised-ios': raisedIos,
+        'segmented-raised-aurora': raisedAurora,
         'segmented-raised-md': raisedMd,
         'segmented-round': round,
         'segmented-round-ios': roundIos,
+        'segmented-round-aurora': roundAurora,
         'segmented-round-md': roundMd
       }, Mixins.colorClasses(props));
       var SegmentedTag = tag;
@@ -9796,7 +9913,7 @@
       }
       self.$f7ready(function (f7) {
         if (useDefaultBackdrop) {
-          sheetParams.backdrop = f7.params.sheet && f7.params.sheet.backdrop !== undefined ? f7.params.sheet.backdrop : self.$theme.md;
+          sheetParams.backdrop = f7.params.sheet && f7.params.sheet.backdrop !== undefined ? f7.params.sheet.backdrop : !self.$theme.ios;
         } else {
           sheetParams.backdrop = backdrop;
         }
@@ -10109,16 +10226,23 @@
       round: Boolean,
       roundMd: Boolean,
       roundIos: Boolean,
+      roundAurora: Boolean,
       fill: Boolean,
       fillMd: Boolean,
       fillIos: Boolean,
+      fillAurora: Boolean,
       large: Boolean,
       largeMd: Boolean,
       largeIos: Boolean,
+      largeAurora: Boolean,
       small: Boolean,
       smallMd: Boolean,
       smallIos: Boolean,
-      raised: Boolean
+      smallAurora: Boolean,
+      raised: Boolean,
+      raisedMd: Boolean,
+      raisedIos: Boolean,
+      raisedAurora: Boolean
     }, Mixins.colorProps),
 
     render: function render() {
@@ -10192,32 +10316,46 @@
         var round = props.round;
         var roundIos = props.roundIos;
         var roundMd = props.roundMd;
+        var roundAurora = props.roundAurora;
         var fill = props.fill;
         var fillIos = props.fillIos;
         var fillMd = props.fillMd;
+        var fillAurora = props.fillAurora;
         var large = props.large;
         var largeIos = props.largeIos;
         var largeMd = props.largeMd;
+        var largeAurora = props.largeAurora;
         var small = props.small;
         var smallIos = props.smallIos;
         var smallMd = props.smallMd;
+        var smallAurora = props.smallAurora;
         var raised = props.raised;
+        var raisedMd = props.raisedMd;
+        var raisedIos = props.raisedIos;
+        var raisedAurora = props.raisedAurora;
         var disabled = props.disabled;
         return Utils.classNames(self.props.className, 'stepper', {
           disabled: disabled,
           'stepper-round': round,
           'stepper-round-ios': roundIos,
           'stepper-round-md': roundMd,
+          'stepper-round-aurora': roundAurora,
           'stepper-fill': fill,
           'stepper-fill-ios': fillIos,
           'stepper-fill-md': fillMd,
+          'stepper-fill-aurora': fillAurora,
           'stepper-large': large,
           'stepper-large-ios': largeIos,
           'stepper-large-md': largeMd,
+          'stepper-large-aurora': largeAurora,
           'stepper-small': small,
           'stepper-small-ios': smallIos,
           'stepper-small-md': smallMd,
-          'stepper-raised': raised
+          'stepper-small-aurora': smallAurora,
+          'stepper-raised': raised,
+          'stepper-raised-ios': raisedIos,
+          'stepper-raised-md': raisedMd,
+          'stepper-raised-aurora': raisedAurora
         }, Mixins.colorClasses(props));
       },
 
@@ -10920,6 +11058,10 @@
         type: Boolean,
         default: undefined
       },
+      topAurora: {
+        type: Boolean,
+        default: undefined
+      },
       top: {
         type: Boolean,
         default: undefined
@@ -10929,6 +11071,10 @@
         default: undefined
       },
       bottomIos: {
+        type: Boolean,
+        default: undefined
+      },
+      bottomAurora: {
         type: Boolean,
         default: undefined
       },
@@ -10959,15 +11105,17 @@
       var noBorder = props.noBorder;
       var topMd = props.topMd;
       var topIos = props.topIos;
+      var topAurora = props.topAurora;
       var top = props.top;
       var bottomMd = props.bottomMd;
       var bottomIos = props.bottomIos;
+      var bottomAurora = props.bottomAurora;
       var bottom = props.bottom;
       var position = props.position;
       var classes = Utils.classNames(className, 'toolbar', {
         tabbar: tabbar,
-        'toolbar-bottom': self.$theme.md && bottomMd || self.$theme.ios && bottomIos || bottom || position === 'bottom',
-        'toolbar-top': self.$theme.md && topMd || self.$theme.ios && topIos || top || position === 'top',
+        'toolbar-bottom': self.$theme.md && bottomMd || self.$theme.ios && bottomIos || self.$theme.aurora && bottomAurora || bottom || position === 'bottom',
+        'toolbar-top': self.$theme.md && topMd || self.$theme.ios && topIos || self.$theme.aurora && topAurora || top || position === 'top',
         'tabbar-labels': labels,
         'tabbar-scrollable': scrollable,
         'toolbar-hidden': hidden,
@@ -11058,6 +11206,11 @@
       mdSwipeBackAnimateOpacity: Boolean,
       mdSwipeBackActiveArea: Number,
       mdSwipeBackThreshold: Number,
+      auroraSwipeBack: Boolean,
+      auroraSwipeBackAnimateShadow: Boolean,
+      auroraSwipeBackAnimateOpacity: Boolean,
+      auroraSwipeBackActiveArea: Number,
+      auroraSwipeBackThreshold: Number,
       pushState: Boolean,
       pushStateRoot: String,
       pushStateAnimate: Boolean,
@@ -11498,7 +11651,7 @@
   };
 
   /**
-   * Framework7 Vue 4.1.1
+   * Framework7 Vue 4.2.0
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -11506,7 +11659,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: March 14, 2019
+   * Released on: March 20, 2019
    */
 
   var Plugin = {
@@ -11528,6 +11681,7 @@
       Vue.component('f7-actions-label', f7ActionsLabel);
       Vue.component('f7-actions', f7Actions);
       Vue.component('f7-app', f7App);
+      Vue.component('f7-appbar', f7Appbar);
       Vue.component('f7-badge', F7Badge);
       Vue.component('f7-block-footer', f7BlockFooter);
       Vue.component('f7-block-header', f7BlockHeader);
@@ -11619,15 +11773,18 @@
       var theme = params.theme;
       if (theme === 'md') { $theme.md = true; }
       if (theme === 'ios') { $theme.ios = true; }
+      if (theme === 'aurora') { $theme.aurora = true; }
       if (!theme || theme === 'auto') {
-        $theme.ios = !!(Framework7.Device || Framework7.device).ios;
-        $theme.md = !(Framework7.Device || Framework7.device).ios;
+        $theme.ios = !!Framework7.device.ios;
+        $theme.aurora = Framework7.device.desktop && Framework7.device.electron;
+        $theme.md = !$theme.ios && !$theme.aurora;
       }
       Object.defineProperty(Extend.prototype, '$theme', {
         get: function get() {
           return {
             ios: f7.instance ? f7.instance.theme === 'ios' : $theme.ios,
             md: f7.instance ? f7.instance.theme === 'md' : $theme.md,
+            aurora: f7.instance ? f7.instance.theme === 'aurora' : $theme.aurora,
           };
         },
       });

@@ -1,5 +1,5 @@
 /**
- * Framework7 4.1.1
+ * Framework7 4.2.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 14, 2019
+ * Released on: March 20, 2019
  */
 
 (function (global, factory) {
@@ -2542,6 +2542,7 @@
     },
     mdPreloaderContent: "\n    <span class=\"preloader-inner\">\n      <span class=\"preloader-inner-gap\"></span>\n      <span class=\"preloader-inner-left\">\n          <span class=\"preloader-inner-half-circle\"></span>\n      </span>\n      <span class=\"preloader-inner-right\">\n          <span class=\"preloader-inner-half-circle\"></span>\n      </span>\n    </span>\n  ".trim(),
     iosPreloaderContent: ("\n    <span class=\"preloader-inner\">\n      " + ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(function () { return '<span class="preloader-inner-line"></span>'; }).join('')) + "\n    </span>\n  ").trim(),
+    auroraPreloaderContent: "\n    <span class=\"preloader-inner\">\n      <span class=\"preloader-inner-circle\"></span>\n    </span>\n  ",
     eventNameToColonCase: function eventNameToColonCase(eventName) {
       var hasColon;
       return eventName.split('').map(function (char, index) {
@@ -2867,6 +2868,7 @@
       windows: false,
       cordova: !!(win.cordova || win.phonegap),
       phonegap: !!(win.cordova || win.phonegap),
+      electron: false,
     };
 
     var screenWidth = win.screen.width;
@@ -2886,6 +2888,7 @@
     var firefox = ua.indexOf('Gecko/') >= 0 && ua.indexOf('Firefox/') >= 0;
     var macos = platform === 'MacIntel';
     var windows = platform === 'Win32';
+    var electron = ua.toLowerCase().indexOf('electron') >= 0;
 
     device.ie = ie;
     device.edge = edge;
@@ -2893,7 +2896,7 @@
 
     // Windows
     if (windowsPhone) {
-      device.os = 'windows';
+      device.os = 'windowsPhone';
       device.osVersion = windowsPhone[2];
       device.windowsPhone = true;
     }
@@ -2936,20 +2939,11 @@
     device.standalone = device.webView;
 
     // Desktop
-    device.desktop = !(device.os || device.android || device.webView);
+    device.desktop = !(device.ios || device.android || device.windowsPhone) || electron;
     if (device.desktop) {
+      device.electron = electron;
       device.macos = macos;
       device.windows = windows;
-    }
-
-    // Minimal UI
-    if (device.os && device.os === 'ios') {
-      var osVersionArr = device.osVersion.split('.');
-      var metaViewport = doc.querySelector('meta[name="viewport"]');
-      device.minimalUi = !device.webView
-        && (ipod || iphone)
-        && (osVersionArr[0] * 1 === 7 ? osVersionArr[1] * 1 >= 1 : osVersionArr[0] * 1 > 7)
-        && metaViewport && metaViewport.getAttribute('content').indexOf('minimal-ui') >= 0;
     }
 
     // Meta statusbar
@@ -2957,6 +2951,7 @@
 
     // Check for status bar and fullscreen app mode
     device.needsStatusbarOverlay = function needsStatusbarOverlay() {
+      if (device.desktop) { return false; }
       if (device.standalone && device.ios && metaStatusbar && metaStatusbar.content === 'black-translucent') {
         return true;
       }
@@ -3503,7 +3498,9 @@
         // Theme
         theme: (function getTheme() {
           if (app.params.theme === 'auto') {
-            return Device.ios ? 'ios' : 'md';
+            if (Device.ios) { return 'ios'; }
+            if (Device.desktop && Device.electron) { return 'aurora'; }
+            return 'md';
           }
           return app.params.theme;
         }()),
@@ -3843,11 +3840,6 @@
       },
       orientationchange: function orientationchange() {
         var app = this;
-        if (app.device && app.device.minimalUi) {
-          if (win.orientation === 90 || win.orientation === -90) {
-            doc.body.scrollTop = 0;
-          }
-        }
         // Fix iPad weird body scroll
         if (app.device.ipad) {
           doc.body.scrollLeft = 0;
@@ -4336,6 +4328,21 @@
       }
       if (parents.length > 0) {
         activable = activable ? activable.add(parents) : parents;
+      }
+      if (activable && activable.length > 1) {
+        var newActivable = [];
+        var preventPropagation;
+        for (var i = 0; i < activable.length; i += 1) {
+          if (!preventPropagation) {
+            newActivable.push(activable[i]);
+            if (activable.eq(i).hasClass('prevent-active-state-propagation')
+              || activable.eq(i).hasClass('no-active-state-propagation')
+            ) {
+              preventPropagation = true;
+            }
+          }
+        }
+        activable = $(newActivable);
       }
       return activable || target;
     }
@@ -4853,10 +4860,18 @@
       return true;
     }
     function handleTouchMoveLight(e) {
-      var distance = params.fastClicks ? params.fastClicksDistanceThreshold : 0;
-      if (distance) {
-        var pageX = e.targetTouches[0].pageX;
-        var pageY = e.targetTouches[0].pageY;
+      var distance = 0;
+      var touch;
+      if (e.type === 'touchmove') {
+        touch = e.targetTouches[0];
+        if (touch && touch.touchType === 'stylus') {
+          distance = 5;
+        }
+      }
+
+      if (distance && touch) {
+        var pageX = touch.pageX;
+        var pageY = touch.pageY;
         if (Math.abs(pageX - touchStartX) > distance || Math.abs(pageY - touchStartY) > distance) {
           isMoved = true;
         }
@@ -5035,6 +5050,7 @@
         activeStateElements: 'a, button, label, span, .actions-button, .stepper-button, .stepper-button-plus, .stepper-button-minus, .card-expandable, .menu-item',
         mdTouchRipple: true,
         iosTouchRipple: false,
+        auroraTouchRipple: false,
         touchRippleElements: '.ripple, .link, .item-link, .list-button, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell:not(.input-cell), .notification-close-button, .stepper-button, .stepper-button-minus, .stepper-button-plus, .menu-item-content',
       },
     },
@@ -5942,7 +5958,7 @@
       currentPage.transform(("translate3d(" + currentPageTranslate + "px,0,0)"));
       if (paramsSwipeBackAnimateShadow) { pageShadow[0].style.opacity = 1 - (1 * percentage); }
 
-      if (app.theme !== 'md') {
+      if (app.theme === 'ios') {
         previousPage.transform(("translate3d(" + previousPageTranslate + "px,0,0)"));
       }
       if (paramsSwipeBackAnimateOpacity) { pageOpacity[0].style.opacity = 1 - (1 * percentage); }
@@ -5979,7 +5995,7 @@
         (timeDiff < 300 && touchesDiff > 10)
         || (timeDiff >= 300 && touchesDiff > viewContainerWidth / 2)
       ) {
-        currentPage.removeClass('page-current').addClass(("page-next" + (app.theme === 'md' ? ' page-next-on-right' : '')));
+        currentPage.removeClass('page-current').addClass(("page-next" + (app.theme !== 'ios' ? ' page-next-on-right' : '')));
         previousPage.removeClass('page-previous').addClass('page-current').removeAttr('aria-hidden');
         if (pageShadow) { pageShadow[0].style.opacity = ''; }
         if (pageOpacity) { pageOpacity[0].style.opacity = ''; }
@@ -6668,7 +6684,7 @@
       router.pageCallback('afterIn', $newPage, $newNavbarInner, 'next', 'current', options);
       router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', 'previous', options);
 
-      var keepOldPage = (router.params.preloadPreviousPage || (app.theme === 'ios' ? router.params.iosSwipeBack : router.params.mdSwipeBack)) && !isMaster;
+      var keepOldPage = (router.params.preloadPreviousPage || router.params[((app.theme) + "SwipeBack")]) && !isMaster;
       if (!keepOldPage) {
         if ($newPage.hasClass('smart-select-page') || $newPage.hasClass('photo-browser-page') || $newPage.hasClass('autocomplete-page')) {
           keepOldPage = true;
@@ -6708,7 +6724,7 @@
       }
     }
     if (options.animate && !(isMaster && app.width >= router.params.masterDetailBreakpoint)) {
-      var delay = router.app.theme === 'md' ? router.params.mdPageLoadDelay : router.params.iosPageLoadDelay;
+      var delay = router.params[((router.app.theme) + "PageLoadDelay")];
       if (delay) {
         setTimeout(function () {
           setPositionClasses();
@@ -7808,7 +7824,7 @@
       router.emit('routeChanged', router.currentRoute, router.previousRoute, router);
 
       // Preload previous page
-      var preloadPreviousPage = router.params.preloadPreviousPage || (app.theme === 'ios' ? router.params.iosSwipeBack : router.params.mdSwipeBack);
+      var preloadPreviousPage = router.params.preloadPreviousPage || router.params[((app.theme) + "SwipeBack")];
       if (preloadPreviousPage && router.history[router.history.length - 2] && !isMaster) {
         router.back(router.history[router.history.length - 2], { preload: true });
       }
@@ -8912,7 +8928,15 @@
     Router.prototype.removeThemeElements = function removeThemeElements (el) {
       var router = this;
       var theme = router.app.theme;
-      $(el).find(("." + (theme === 'md' ? 'ios' : 'md') + "-only, .if-" + (theme === 'md' ? 'ios' : 'md'))).remove();
+      var toRemove;
+      if (theme === 'ios') {
+        toRemove = '.md-only, .aurora-only, .if-md, .if-aurora, .if-not-ios, .not-ios';
+      } else if (theme === 'md') {
+        toRemove = '.ios-only, .aurora-only, .if-ios, .if-aurora, .if-not-md, .not-md';
+      } else if (theme === 'aurora') {
+        toRemove = '.ios-only, .md-only, .if-ios, .if-md, .if-not-aurora, .not-aurora';
+      }
+      $(el).find(toRemove).remove();
     };
 
     Router.prototype.getPageData = function getPageData (pageEl, navbarEl, from, to, route, pageFromEl) {
@@ -9176,6 +9200,7 @@
         if (
           (view && router.params.iosSwipeBack && app.theme === 'ios')
           || (view && router.params.mdSwipeBack && app.theme === 'md')
+          || (view && router.params.auroraSwipeBack && app.theme === 'aurora')
         ) {
           SwipeBack(router);
         }
@@ -9749,6 +9774,7 @@
                 $theme: {
                   ios: router.app.theme === 'ios',
                   md: router.app.theme === 'md',
+                  aurora: router.app.theme === 'aurora',
                 },
               }));
             }
@@ -9834,6 +9860,7 @@
               $theme: {
                 ios: app.theme === 'ios',
                 md: app.theme === 'md',
+                aurora: app.theme === 'aurora',
               },
             }
           );
@@ -10295,8 +10322,8 @@
 
   function elementToVNode(el, context, app, initial, isRoot) {
     if (el.nodeType === 1) {
-      // element
-      var tagName = el.nodeName.toLowerCase();
+      // element (statement adds inline SVG compatibility)
+      var tagName = (el instanceof win.SVGElement) ? el.nodeName : el.nodeName.toLowerCase();
       return h(
         tagName,
         getData(el, context, app, initial, isRoot),
@@ -11616,6 +11643,11 @@
         mdSwipeBackAnimateOpacity: false,
         mdSwipeBackActiveArea: 30,
         mdSwipeBackThreshold: 0,
+        auroraSwipeBack: false,
+        auroraSwipeBackAnimateShadow: false,
+        auroraSwipeBackAnimateOpacity: true,
+        auroraSwipeBackActiveArea: 30,
+        auroraSwipeBackThreshold: 0,
         // Push State
         pushState: false,
         pushStateRoot: undefined,
@@ -11633,6 +11665,7 @@
         // Delays
         iosPageLoadDelay: 0,
         mdPageLoadDelay: 0,
+        auroraPageLoadDelay: 0,
         // Routes hooks
         routesBeforeEnter: null,
         routesBeforeLeave: null,
@@ -11696,7 +11729,9 @@
   var Navbar = {
     size: function size(el) {
       var app = this;
-      if (app.theme === 'md' && !app.params.navbar.mdCenterTitle) { return; }
+      if (app.theme !== 'ios' && !app.params.navbar[((app.theme) + "CenterTitle")]) {
+        return;
+      }
       var $el = $(el);
       if ($el.hasClass('navbar')) {
         $el = $el.children('.navbar-inner').each(function (index, navbarEl) {
@@ -11714,7 +11749,7 @@
         return;
       }
 
-      if (app.theme === 'md' && app.params.navbar.mdCenterTitle) {
+      if (app.theme !== 'ios' && app.params.navbar[((app.theme) + "CenterTitle")]) {
         $el.addClass('navbar-inner-centered-title');
       }
       if (app.theme === 'ios' && !app.params.navbar.iosCenterTitle) {
@@ -11831,10 +11866,7 @@
       }
 
       // Center title
-      if (
-        (app.theme === 'ios' && app.params.navbar.iosCenterTitle)
-        || (app.theme === 'md' && app.params.navbar.mdCenterTitle)
-      ) {
+      if (app.params.navbar[((app.theme) + "CenterTitle")]) {
         var titleLeft = diff;
         if (app.rtl && noLeft && noRight && title.length > 0) { titleLeft = -titleLeft; }
         title.css({ left: (titleLeft + "px") });
@@ -11849,7 +11881,9 @@
       if (!$el.length) { return; }
       if ($el.hasClass('navbar-hidden')) { return; }
       var className = "navbar-hidden" + (animate ? ' navbar-transitioning' : '');
-      var currentIsLarge = app.theme === 'ios' ? $el.find('.navbar-current .title-large').length : $el.find('.title-large').length;
+      var currentIsLarge = app.theme === 'ios'
+        ? $el.find('.navbar-current .title-large').length
+        : $el.find('.title-large').length;
       if (currentIsLarge) {
         className += ' navbar-large-hidden';
       }
@@ -11926,7 +11960,7 @@
       var $pageEl = $(app.navbar.getPageByEl($navbarInnerEl));
       $navbarInnerEl.addClass('navbar-inner-large-collapsed');
       $pageEl.eq(0).addClass('page-with-navbar-large-collapsed').trigger('page:navbarlargecollapsed');
-      if (app.theme === 'md') {
+      if (app.theme === 'md' || app.theme === 'aurora') {
         $navbarInnerEl.parents('.navbar').addClass('navbar-large-collapsed');
       }
     },
@@ -11945,7 +11979,7 @@
       var $pageEl = $(app.navbar.getPageByEl($navbarInnerEl));
       $navbarInnerEl.removeClass('navbar-inner-large-collapsed');
       $pageEl.eq(0).removeClass('page-with-navbar-large-collapsed').trigger('page:navbarlargeexpanded');
-      if (app.theme === 'md') {
+      if (app.theme === 'md' || app.theme === 'aurora') {
         $navbarInnerEl.parents('.navbar').removeClass('navbar-large-collapsed');
       }
     },
@@ -11971,7 +12005,7 @@
       var app = this;
       var $pageEl = $(pageEl);
       var $navbarInnerEl = $(navbarInnerEl);
-      var $navbarEl = app.theme === 'md'
+      var $navbarEl = app.theme === 'md' || app.theme === 'aurora'
         ? $navbarInnerEl.parents('.navbar')
         : $(navbarInnerEl || app.navbar.getElByPage(pageEl)).closest('.navbar');
       var isLarge = $navbarInnerEl.find('.title-large').length || $navbarInnerEl.hasClass('.navbar-inner-large');
@@ -11994,10 +12028,14 @@
         if (navbarTitleLargeHeight && navbarTitleLargeHeight.indexOf('px') >= 0) {
           navbarTitleLargeHeight = parseInt(navbarTitleLargeHeight, 10);
           if (Number.isNaN(navbarTitleLargeHeight)) {
-            navbarTitleLargeHeight = app.theme === 'ios' ? 52 : 48;
+            if (app.theme === 'ios') { navbarTitleLargeHeight = 52; }
+            else if (app.theme === 'md') { navbarTitleLargeHeight = 48; }
+            else if (app.theme === 'aurora') { navbarTitleLargeHeight = 38; }
           }
-        } else {
-          navbarTitleLargeHeight = app.theme === 'ios' ? 52 : 48;
+        } else { // eslint-disable-next-line
+          if (app.theme === 'ios') { navbarTitleLargeHeight = 52; }
+          else if (app.theme === 'md') { navbarTitleLargeHeight = 48; }
+          else if (app.theme === 'aurora') { navbarTitleLargeHeight = 38; }
         }
       }
       if (needHide && isLarge) {
@@ -12032,7 +12070,7 @@
           $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           $navbarInnerEl[0].style.overflow = '';
-          if (app.theme === 'md') {
+          if (app.theme === 'md' || app.theme === 'aurora') {
             $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           }
         } else if (collapseProgress === 1 && !navbarCollapsed) {
@@ -12040,21 +12078,21 @@
           $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           $navbarInnerEl[0].style.overflow = '';
           $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-          if (app.theme === 'md') {
+          if (app.theme === 'md' || app.theme === 'aurora') {
             $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           }
         } else if ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed)) {
           $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           $navbarInnerEl[0].style.overflow = '';
           $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-          if (app.theme === 'md') {
+          if (app.theme === 'md' || app.theme === 'aurora') {
             $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           }
         } else {
           $navbarInnerEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
           $navbarInnerEl[0].style.overflow = 'visible';
           $pageEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
-          if (app.theme === 'md') {
+          if (app.theme === 'md' || app.theme === 'aurora') {
             $navbarEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
           }
         }
@@ -12179,6 +12217,7 @@
         scrollTopOnTitleClick: true,
         iosCenterTitle: true,
         mdCenterTitle: false,
+        auroraCenterTitle: true,
         hideOnPageScroll: false,
         showOnPageScrollEnd: true,
         showOnPageScrollTop: true,
@@ -12237,7 +12276,7 @@
         }
         if ($navbarInnerEl.hasClass('navbar-inner-large')) {
           if (app.params.navbar.collapseLargeTitleOnScroll) { needCollapseOnScrollHandler = true; }
-          if (app.theme === 'md') {
+          if (app.theme === 'md' || app.theme === 'aurora') {
             $navbarInnerEl.parents('.navbar').addClass('navbar-large');
           }
           page.$el.addClass('page-with-navbar-large');
@@ -12270,10 +12309,7 @@
       },
       modalOpen: function modalOpen(modal) {
         var app = this;
-        if (
-          (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
-          || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-        ) {
+        if (!app.params.navbar[((app.theme) + "CenterTitle")]) {
           return;
         }
         modal.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each(function (index, navbarEl) {
@@ -12282,10 +12318,7 @@
       },
       panelOpen: function panelOpen(panel) {
         var app = this;
-        if (
-          (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
-          || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-        ) {
+        if (!app.params.navbar[((app.theme) + "CenterTitle")]) {
           return;
         }
         panel.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each(function (index, navbarEl) {
@@ -12294,10 +12327,7 @@
       },
       panelSwipeOpen: function panelSwipeOpen(panel) {
         var app = this;
-        if (
-          (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
-          || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-        ) {
+        if (!app.params.navbar[((app.theme) + "CenterTitle")]) {
           return;
         }
         panel.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each(function (index, navbarEl) {
@@ -12306,10 +12336,7 @@
       },
       tabShow: function tabShow(tabEl) {
         var app = this;
-        if (
-          (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
-          || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-        ) {
+        if (!app.params.navbar[((app.theme) + "CenterTitle")]) {
           return;
         }
         $(tabEl).find('.navbar:not(.navbar-previous):not(.stacked)').each(function (index, navbarEl) {
@@ -12356,10 +12383,7 @@
       'navbar-inner': {
         postpatch: function postpatch(vnode) {
           var app = this;
-          if (
-            (app.theme === 'ios' && !app.params.navbar.iosCenterTitle)
-            || (app.theme === 'md' && !app.params.navbar.mdCenterTitle)
-          ) {
+          if (!app.params.navbar[((app.theme) + "CenterTitle")]) {
             return;
           }
           app.navbar.size(vnode.elm);

@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.1.1
+ * Framework7 Vue 4.2.0
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 14, 2019
+ * Released on: March 20, 2019
  */
 import Vue from 'vue';
 import f7AccordionContent from './components/accordion-content';
@@ -19,6 +19,7 @@ import f7ActionsGroup from './components/actions-group';
 import f7ActionsLabel from './components/actions-label';
 import f7Actions from './components/actions';
 import f7App from './components/app';
+import f7Appbar from './components/appbar';
 import f7Badge from './components/badge';
 import f7BlockFooter from './components/block-footer';
 import f7BlockHeader from './components/block-header';
@@ -120,6 +121,7 @@ const Plugin = {
     Vue.component('f7-actions-label', f7ActionsLabel);
     Vue.component('f7-actions', f7Actions);
     Vue.component('f7-app', f7App);
+    Vue.component('f7-appbar', f7Appbar);
     Vue.component('f7-badge', f7Badge);
     Vue.component('f7-block-footer', f7BlockFooter);
     Vue.component('f7-block-header', f7BlockHeader);
@@ -211,15 +213,18 @@ const Plugin = {
     const { theme } = params;
     if (theme === 'md') $theme.md = true;
     if (theme === 'ios') $theme.ios = true;
+    if (theme === 'aurora') $theme.aurora = true;
     if (!theme || theme === 'auto') {
-      $theme.ios = !!(Framework7.Device || Framework7.device).ios;
-      $theme.md = !(Framework7.Device || Framework7.device).ios;
+      $theme.ios = !!Framework7.device.ios;
+      $theme.aurora = Framework7.device.desktop && Framework7.device.electron;
+      $theme.md = !$theme.ios && !$theme.aurora;
     }
     Object.defineProperty(Extend.prototype, '$theme', {
       get() {
         return {
           ios: f7.instance ? f7.instance.theme === 'ios' : $theme.ios,
           md: f7.instance ? f7.instance.theme === 'md' : $theme.md,
+          aurora: f7.instance ? f7.instance.theme === 'aurora' : $theme.aurora,
         };
       },
     });

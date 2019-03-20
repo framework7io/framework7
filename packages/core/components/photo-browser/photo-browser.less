@@ -259,9 +259,12 @@
   }
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./photo-browser-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./photo-browser-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./photo-browser-aurora.less');
+});

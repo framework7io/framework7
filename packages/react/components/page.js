@@ -207,6 +207,7 @@ class F7Page extends React.Component {
       ptrDistance,
       ptrPreloader,
       ptrBottom,
+      ptrMousewheel,
       infinite,
       infiniteDistance,
       infinitePreloader,
@@ -305,6 +306,7 @@ class F7Page extends React.Component {
       ptrDistance: ptrDistance,
       ptrPreloader: ptrPreloader,
       ptrBottom: ptrBottom,
+      ptrMousewheel: ptrMousewheel,
       infinite: infinite,
       infiniteTop: infiniteTop,
       infiniteDistance: infiniteDistance,
@@ -444,6 +446,7 @@ __reactComponentSetProps(F7Page, Object.assign({
     default: true
   },
   ptrBottom: Boolean,
+  ptrMousewheel: Boolean,
   infinite: Boolean,
   infiniteTop: Boolean,
   infiniteDistance: Number,

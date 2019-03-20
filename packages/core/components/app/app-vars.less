@@ -68,24 +68,33 @@
 /*====================
   Fonts
   ==================== */
-.ios {
+:root {
+  --f7-font-size: 14px;
+}
+.ios-vars({
   --f7-font-family: -apple-system, SF Pro Text, SF UI Text, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;
   --f7-text-color: #000;
-  --f7-font-size: 14px;
   --f7-line-height: 1.4;
   .theme-dark, &.theme-dark {
     --f7-text-color: #fff;
   }
-}
-.md {
+});
+.md-vars({
   --f7-font-family: Roboto, system-ui, Noto, Helvetica, Arial, sans-serif;
   --f7-text-color: #212121;
-  --f7-font-size: 14px;
   --f7-line-height: 1.5;
   .theme-dark, &.theme-dark {
     --f7-text-color: rgba(255,255,255,0.87);
   }
-}
+});
+.aurora-vars({
+  --f7-font-family: -apple-system, system-ui, Helvetica, Arial, sans-serif;
+  --f7-text-color: #000;
+  --f7-line-height: 1.5;
+  .theme-dark, &.theme-dark {
+    --f7-text-color: #fff;
+  }
+});
 
 /*====================
   Bars
@@ -117,15 +126,21 @@
   --f7-bars-bg-color: #1b1b1b;
   --f7-bars-text-color: #fff;
 }
-.ios {
+.ios-vars({
   --f7-bars-border-color: #c4c4c4;
   .theme-dark, &.theme-dark {
     --f7-bars-border-color: #282829;
   }
-}
-.md {
+});
+.md-vars({
   --f7-bars-border-color: transparent;
-}
+});
+.aurora-vars({
+  --f7-bars-border-color: rgba(0,0,0,0.2);
+  .theme-dark, &.theme-dark {
+    --f7-bars-border-color: #282829;
+  }
+});
 
 /*====================
   Color Themes

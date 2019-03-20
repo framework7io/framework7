@@ -27,16 +27,23 @@ declare namespace F7Stepper {
     round? : boolean
     roundMd? : boolean
     roundIos? : boolean
+    roundAurora? : boolean
     fill? : boolean
     fillMd? : boolean
     fillIos? : boolean
+    fillAurora? : boolean
     large? : boolean
     largeMd? : boolean
     largeIos? : boolean
+    largeAurora? : boolean
     small? : boolean
     smallMd? : boolean
     smallIos? : boolean
+    smallAurora? : boolean
     raised? : boolean
+    raisedMd? : boolean
+    raisedIos? : boolean
+    raisedAurora? : boolean
     color? : string
     colorTheme? : string
     textColor? : string

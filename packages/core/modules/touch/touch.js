@@ -46,6 +46,21 @@ function initTouch() {
     if (parents.length > 0) {
       activable = activable ? activable.add(parents) : parents;
     }
+    if (activable && activable.length > 1) {
+      const newActivable = [];
+      let preventPropagation;
+      for (let i = 0; i < activable.length; i += 1) {
+        if (!preventPropagation) {
+          newActivable.push(activable[i]);
+          if (activable.eq(i).hasClass('prevent-active-state-propagation')
+            || activable.eq(i).hasClass('no-active-state-propagation')
+          ) {
+            preventPropagation = true;
+          }
+        }
+      }
+      activable = $(newActivable);
+    }
     return activable || target;
   }
 
@@ -560,10 +575,18 @@ function initTouch() {
     return true;
   }
   function handleTouchMoveLight(e) {
-    const distance = params.fastClicks ? params.fastClicksDistanceThreshold : 0;
-    if (distance) {
-      const pageX = e.targetTouches[0].pageX;
-      const pageY = e.targetTouches[0].pageY;
+    let distance = 0;
+    let touch;
+    if (e.type === 'touchmove') {
+      touch = e.targetTouches[0];
+      if (touch && touch.touchType === 'stylus') {
+        distance = 5;
+      }
+    }
+
+    if (distance && touch) {
+      const pageX = touch.pageX;
+      const pageY = touch.pageY;
       if (Math.abs(pageX - touchStartX) > distance || Math.abs(pageY - touchStartY) > distance) {
         isMoved = true;
       }
@@ -742,6 +765,7 @@ export default {
       activeStateElements: 'a, button, label, span, .actions-button, .stepper-button, .stepper-button-plus, .stepper-button-minus, .card-expandable, .menu-item',
       mdTouchRipple: true,
       iosTouchRipple: false,
+      auroraTouchRipple: false,
       touchRippleElements: '.ripple, .link, .item-link, .list-button, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell:not(.input-cell), .notification-close-button, .stepper-button, .stepper-button-minus, .stepper-button-plus, .menu-item-content',
     },
   },

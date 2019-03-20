@@ -125,7 +125,11 @@ class Picker extends Framework7Class {
       if (params.openIn === 'popover') return true;
       if (app.device.ios) {
         return !!app.device.ipad;
-      } if (app.width >= 768) {
+      }
+      if (app.width >= 768) {
+        return true;
+      }
+      if (app.device.desktop && app.theme === 'aurora') {
         return true;
       }
     }

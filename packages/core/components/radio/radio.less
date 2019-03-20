@@ -17,7 +17,8 @@
   flex-shrink: 0;
 }
 .radio .icon-radio,
-.md .icon-radio {
+.md .icon-radio,
+.aurora .icon-radio {
   border: var(--f7-radio-border-width) solid var(--f7-radio-inactive-color);
 }
 label.item-radio, .radio {
@@ -41,9 +42,12 @@ label.item-radio {
     .disabled();
   }
 }
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./radio-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./radio-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./radio-aurora.less');
+});

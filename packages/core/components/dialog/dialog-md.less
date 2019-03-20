@@ -5,9 +5,6 @@
       transform: translate3d(0, -50%, 0) scale(0.815);
     }
   }
-  .dialog-inner {
-    padding: 24px 24px 20px;
-  }
   .dialog-title {
     + .dialog-text {
       margin-top: 20px;
@@ -40,6 +37,9 @@
     + .dialog-button {
       margin-left: 4px;
     }
+  }
+  .dialog-button[class*="color-"] {
+    --f7-dialog-button-text-color: var(--f7-theme-color);
   }
 
   .dialog-buttons-vertical {

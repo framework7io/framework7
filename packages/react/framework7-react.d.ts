@@ -16,6 +16,7 @@ import F7ActionsGroup from './components/actions-group';
 import F7ActionsLabel from './components/actions-label';
 import F7Actions from './components/actions';
 import F7App from './components/app';
+import F7Appbar from './components/appbar';
 import F7Badge from './components/badge';
 import F7BlockFooter from './components/block-footer';
 import F7BlockHeader from './components/block-header';
@@ -119,6 +120,7 @@ export interface Framework7Extensions {
   $theme: {
     ios: boolean
     md: boolean
+    aurora: boolean
   }
 }
 
@@ -145,6 +147,8 @@ export {
   F7Actions as Actions,
   F7App,
   F7App as App,
+  F7Appbar,
+  F7Appbar as Appbar,
   F7Badge,
   F7Badge as Badge,
   F7BlockFooter,

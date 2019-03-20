@@ -85,7 +85,8 @@ class F7Searchbar extends React.Component {
       className,
       style,
       id,
-      value
+      value,
+      inline
     } = props;
 
     if (clearButton) {
@@ -108,6 +109,7 @@ class F7Searchbar extends React.Component {
 
     const SearchbarTag = form ? 'form' : 'div';
     const classes = Utils.classNames(className, 'searchbar', {
+      'searchbar-inline': inline,
       'no-shadow': noShadow,
       'no-hairline': noHairline,
       'searchbar-expandable': expandable
@@ -146,7 +148,6 @@ class F7Searchbar extends React.Component {
   componentWillUnmount() {
     const self = this;
     const {
-      inputEl,
       el,
       clearEl,
       disableEl
@@ -189,10 +190,11 @@ class F7Searchbar extends React.Component {
       removeDiacritics,
       hideDividers,
       hideGroups,
-      form
+      form,
+      expandable,
+      inline
     } = self.props;
     const {
-      inputEl,
       el,
       clearEl,
       disableEl
@@ -232,6 +234,8 @@ class F7Searchbar extends React.Component {
         removeDiacritics,
         hideDividers,
         hideGroups,
+        expandable,
+        inline,
         on: {
           search(searchbar, query, previousQuery) {
             self.dispatchEvent('searchbar:search searchbarSearch', searchbar, query, previousQuery);
@@ -258,16 +262,6 @@ class F7Searchbar extends React.Component {
       });
       self.f7Searchbar = self.$f7.searchbar.create(params);
     });
-  }
-
-  componentWillUnmount() {
-    const self = this;
-
-    if (self.props.form && self.refs.el) {
-      self.refs.el.removeEventListener('submit', self.onSubmit, false);
-    }
-
-    if (self.f7Searchbar && self.f7Searchbar.destroy) self.f7Searchbar.destroy();
   }
 
   get slots() {
@@ -318,6 +312,7 @@ __reactComponentSetProps(F7Searchbar, Object.assign({
     default: 'change input compositionend'
   },
   expandable: Boolean,
+  inline: Boolean,
   searchContainer: [String, Object],
   searchIn: {
     type: String,
@@ -345,7 +340,7 @@ __reactComponentSetProps(F7Searchbar, Object.assign({
   },
   backdrop: {
     type: Boolean,
-    default: true
+    default: undefined
   },
   backdropEl: [String, Object],
   hideOnEnableEl: {

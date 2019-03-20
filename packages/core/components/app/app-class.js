@@ -63,7 +63,9 @@ class Framework7 extends Framework7Class {
       // Theme
       theme: (function getTheme() {
         if (app.params.theme === 'auto') {
-          return Device.ios ? 'ios' : 'md';
+          if (Device.ios) return 'ios';
+          if (Device.desktop && Device.electron) return 'aurora';
+          return 'md';
         }
         return app.params.theme;
       }()),

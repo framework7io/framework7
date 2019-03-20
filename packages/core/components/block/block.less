@@ -150,9 +150,12 @@
   }
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./block-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./block-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./block-aurora.less');
+});

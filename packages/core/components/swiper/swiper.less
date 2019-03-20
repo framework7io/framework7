@@ -188,9 +188,12 @@
   margin-top: -16px;
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./swiper-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./swiper-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./swiper-aurora.less');
+});

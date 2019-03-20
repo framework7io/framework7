@@ -2,6 +2,69 @@
 
 # Change Log
 
+# [v4.2.0](https://github.com/framework7io/framework7/compare/v4.1.1...v4.2.0) - March 20, 2019
+  * All new Aurora theme! 🖥🎉
+  * Core
+    * New Appbar component
+    * Button
+      * New `button-round-aurora`, `button-raised-aurora`, `button-fill-aurora`, `button-small-aurora`, `button-large-aurora`, `button-outline-aurora` modifier classes for Aurora theme
+    * Cards
+      * Now it is possible to specify custom expandable card backdrop element with `data-backrop-el` attribute on card
+    * Device
+      * New `device.electron` property which is `true` when app runs in Electron environment
+    * List Index
+      * New `auroraItemHeight` parameter to specify item height in Aurora theme
+    * Navbar
+      * New `auroraCenterTitle` parameter (enabled by default) to position title at the center in Aurora theme.
+    * Panel
+      * New `app.panel.toggle(side, animate)` method to toggle (open or close) specified panel
+      * New `panel.toggle(animate)` method to toggle (open or close) current panel
+      * Support for `panel-toggle` class on links to toggle panels
+    * Picker
+      * New `mousewheel` parameter (enabled by default) to scroll picker values with mousewheel
+      * New `updateValuesOnMousewheel` parameter (enabled by default) to updates picker and input values during mousewheel scrolling
+    * Pull To Refresh
+      * Added mousewheel support with additional `data-ptr-mousewheel="true"` attribute on PTR content element
+    * Searchbar
+      * New Inline Searchbar to fit it better within other components. Can be enabled by adding `searchbar-inline` class to searchbar
+    * Stepper
+      * New `stepper-round-aurora`, `stepper-raised-aurora`, `stepper-fill-aurora`, `stepper-small-aurora`, `stepper-large-aurora` modifier classes for Aurora theme
+    * Toolbar
+      * New `toolbar-top-aurora` and `toolbar-bottom-aurora` modifier classes for Aurora theme
+    * Touch
+      * Not it is possible to prevent active state bubbling on nested active-state elements with additional `prevent-active-state-propagation` class on nested active-state element
+      * Improved clicks handling with Apple Pencil
+    * Typography
+      * New half-value margin and padding classes: `margin-half`, `margin-left-half`, `margin-right-half`, `margin-top-half`, `margin-bottom-half`, `margin-horizontal-half`, `margin-vertical-half`, `padding-half`, `padding-left-half`, `padding-right-half`, `padding-top-half`, `padding-bottom-half`, `padding-horizontal-half`, `padding-vertical-half`
+    * View / Router
+      * Router component's `$theme` object now contains boolean `aurora` property which is `true` for Aurora theme
+      * New Aurora-related parameters: `auroraPageLoadDelay`, `auroraSwipeBack`, `auroraSwipeBackThreshold`, `auroraSwipeBackActiveArea`, `auroraSwipeBackAnimateShadow`, `auroraSwipeBackAnimateOpacity`
+      * Fixed VDOM rendering with SVG elements
+  * Phenome
+    * React and Vue's component prototype `$theme`object now contains boolean `aurora` property which is `true` for Aurora theme
+    * New Appbar component
+    * Button
+      * New Aurora related modifier props: `raisedAurora`, `roundAurora`, `largeAurora`, `smallAurora`, `fillAurora`, `outlineAurora`
+    * Icon
+      * New `aurora` prop to specify icon for Aurora theme
+    * Link
+      * New `iconAurora` prop to specify icon for Aurora theme
+    * ListIndex
+      * New `auroraItemHeight` prop to specify item height in Aurora theme
+    * Navbar
+      * New boolean `backLinkForce` prop to load and ignore previous page in history
+      * New boolean `backLinkShowText` prop to hide or show back button text. By default  disable for MD theme
+    * Page
+      * New `ptrMousewheel` prop to make PTR work with mousewheel
+    * Searchbar
+      * New `inline` boolean prop to enable inline searchbar
+    * Stepper
+      * New Aurora related modifier props: `raisedAurora`, `roundAurora`, `largeAurora`, `smallAurora`, `fillAurora`
+      * New `iconAurora` prop to specify icon for Aurora theme
+    * Toolbar
+      * New `topAurora` and `bottomAurora` boolean props to set Toolbar position for Aurora theme
+  * Lots of minor fixed and improvements
+
 # [v4.1.1](https://github.com/framework7io/framework7/compare/v4.1.0...v4.1.1) - March 14, 2019
   * Core
     * Form

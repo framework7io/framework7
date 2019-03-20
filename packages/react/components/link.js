@@ -84,10 +84,9 @@ class F7Link extends React.Component {
       iconIon,
       iconFa,
       iconF7,
-      iconIfMd,
-      iconIfIos,
       iconMd,
       iconIos,
+      iconAurora,
       id,
       style
     } = props;
@@ -106,10 +105,7 @@ class F7Link extends React.Component {
       }, text, badgeEl);
     }
 
-    const mdThemeIcon = iconIfMd || iconMd;
-    const iosThemeIcon = iconIfIos || iconIos;
-
-    if (icon || iconMaterial || iconIon || iconFa || iconF7 || mdThemeIcon || iosThemeIcon) {
+    if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconMd || iconIos || iconAurora) {
       if (iconBadge) {
         iconBadgeEl = React.createElement(F7Badge, {
           color: badgeColor
@@ -122,8 +118,9 @@ class F7Link extends React.Component {
         fa: iconFa,
         ion: iconIon,
         icon: icon,
-        md: mdThemeIcon,
-        ios: iosThemeIcon,
+        md: iconMd,
+        ios: iconIos,
+        aurora: iconAurora,
         color: iconColor,
         size: iconSize
       }, iconBadgeEl);

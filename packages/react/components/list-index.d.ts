@@ -14,6 +14,7 @@ declare namespace F7ListIndex {
     label? : boolean
     iosItemHeight? : number
     mdItemHeight? : number
+    auroraItemHeight? : number
     color? : string
     colorTheme? : string
     textColor? : string

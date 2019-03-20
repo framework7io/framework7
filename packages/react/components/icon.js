@@ -27,19 +27,18 @@ class F7Icon extends React.Component {
     const {
       material,
       f7,
-      ifMd,
-      ifIos,
       md,
-      ios
+      ios,
+      aurora
     } = self.props;
     let text = material || f7;
-    const mdIcon = ifMd || md;
-    const iosIcon = ifIos || ios;
 
-    if (mdIcon && self.$theme.md && (mdIcon.indexOf('material:') >= 0 || mdIcon.indexOf('f7:') >= 0)) {
-      text = mdIcon.split(':')[1];
-    } else if (iosIcon && self.$theme.ios && (iosIcon.indexOf('material:') >= 0 || iosIcon.indexOf('f7:') >= 0)) {
-      text = iosIcon.split(':')[1];
+    if (md && self.$theme.md && (md.indexOf('material:') >= 0 || md.indexOf('f7:') >= 0)) {
+      text = md.split(':')[1];
+    } else if (ios && self.$theme.ios && (ios.indexOf('material:') >= 0 || ios.indexOf('f7:') >= 0)) {
+      text = ios.split(':')[1];
+    } else if (aurora && self.$theme.aurora && (aurora.indexOf('material:') >= 0 || aurora.indexOf('f7:') >= 0)) {
+      text = aurora.split(':')[1];
     }
 
     return text;
@@ -52,8 +51,6 @@ class F7Icon extends React.Component {
     const self = this;
     const props = self.props;
     const {
-      ifMd,
-      ifIos,
       material,
       f7,
       fa,
@@ -61,13 +58,14 @@ class F7Icon extends React.Component {
       icon,
       md,
       ios,
+      aurora,
       className
     } = props;
-    const mdIcon = ifMd || md;
-    const iosIcon = ifIos || ios;
+    let themeIcon;
+    if (self.$theme.ios) themeIcon = ios;else if (self.$theme.md) themeIcon = md;else if (self.$theme.aurora) themeIcon = aurora;
 
-    if (mdIcon || iosIcon) {
-      const parts = (self.$theme.md ? mdIcon : iosIcon).split(':');
+    if (themeIcon) {
+      const parts = themeIcon.split(':');
       const prop = parts[0];
       const value = parts[1];
 
@@ -173,9 +171,8 @@ __reactComponentSetProps(F7Icon, Object.assign({
   ion: String,
   fa: String,
   icon: String,
-  ifMd: String,
-  ifIos: String,
   ios: String,
+  aurora: String,
   md: String,
   tooltip: String,
   size: [String, Number]

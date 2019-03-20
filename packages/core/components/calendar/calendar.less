@@ -268,9 +268,12 @@
   }
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./calendar-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./calendar-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./calendar-aurora.less');
+});

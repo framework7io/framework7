@@ -1,5 +1,5 @@
 /**
- * Framework7 React 4.1.1
+ * Framework7 React 4.2.0
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 14, 2019
+ * Released on: March 20, 2019
  */
 
 import F7AccordionContent from './components/accordion-content';
@@ -19,6 +19,7 @@ import F7ActionsGroup from './components/actions-group';
 import F7ActionsLabel from './components/actions-label';
 import F7Actions from './components/actions';
 import F7App from './components/app';
+import F7Appbar from './components/appbar';
 import F7Badge from './components/badge';
 import F7BlockFooter from './components/block-footer';
 import F7BlockHeader from './components/block-header';
@@ -109,6 +110,7 @@ const ActionsGroup = F7ActionsGroup;
 const ActionsLabel = F7ActionsLabel;
 const Actions = F7Actions;
 const App = F7App;
+const Appbar = F7Appbar;
 const Badge = F7Badge;
 const BlockFooter = F7BlockFooter;
 const BlockHeader = F7BlockHeader;
@@ -208,6 +210,8 @@ export {
   Actions,
   F7App,
   App,
+  F7Appbar,
+  Appbar,
   F7Badge,
   Badge,
   F7BlockFooter,

@@ -64,9 +64,12 @@
   }
 }
 
-& when (@includeIosTheme) {
+.if-ios-theme({
   @import url('./sheet-ios.less');
-}
-& when (@includeMdTheme) {
+});
+.if-md-theme({
   @import url('./sheet-md.less');
-}
+});
+.if-aurora-theme({
+  @import url('./sheet-aurora.less');
+});

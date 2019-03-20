@@ -16,6 +16,7 @@ declare namespace F7Block {
     noHairlines? : boolean
     noHairlinesMd? : boolean
     noHairlinesIos? : boolean
+    noHairlinesAurora? : boolean
     color? : string
     colorTheme? : string
     textColor? : string

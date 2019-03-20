@@ -17,21 +17,27 @@ declare namespace F7Button {
     round? : boolean
     roundMd? : boolean
     roundIos? : boolean
+    roundAurora? : boolean
     fill? : boolean
     fillMd? : boolean
     fillIos? : boolean
+    fillAurora? : boolean
     large? : boolean
     largeMd? : boolean
     largeIos? : boolean
+    largeAurora? : boolean
     small? : boolean
     smallMd? : boolean
     smallIos? : boolean
+    smallAurora? : boolean
     raised? : boolean
     raisedMd? : boolean
     raisedIos? : boolean
+    raisedAurora? : boolean
     outline? : boolean
     outlineMd? : boolean
     outlineIos? : boolean
+    outlineAurora? : boolean
     active? : boolean
     disabled? : boolean
     tooltip? : string
@@ -47,10 +53,9 @@ declare namespace F7Button {
     iconIon? : string
     iconFa? : string
     iconF7? : string
-    iconIfMd? : string
-    iconIfIos? : string
     iconIos? : string
     iconMd? : string
+    iconAurora? : string
     iconColor? : string
     iconSize? : string | number
     back? : boolean
@@ -72,6 +77,7 @@ declare namespace F7Button {
     searchbarToggle? : boolean | string
     panelOpen? : boolean | string
     panelClose? : boolean | string
+    panelToggle? : boolean | string
     popupOpen? : boolean | string
     popupClose? : boolean | string
     actionsOpen? : boolean | string
