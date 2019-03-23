@@ -150,6 +150,7 @@
   --f7-sheet-border-color: transparent;
   --f7-tabbar-link-active-border-color: #fff;
 }
+.appbar,
 .navbar,
 .toolbar,
 .subnavbar,
