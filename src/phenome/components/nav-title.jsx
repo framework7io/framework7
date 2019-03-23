@@ -17,7 +17,7 @@ export default {
     const props = self.props;
     const { title, subtitle, id, style, sliding, className } = props;
     let subtitleEl;
-    if (self.subtitle) {
+    if (subtitle) {
       subtitleEl = (<span className="subtitle">{subtitle}</span>);
     }
 
@@ -38,7 +38,6 @@ export default {
         children.push(...slots[key]);
       });
     }
-
     return (
       <div id={id} style={style} className={classes}>
         {children}
