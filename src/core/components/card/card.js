@@ -79,7 +79,6 @@ const CardExpandable = {
     let offset = $cardEl.offset();
     let pageOffset = $pageEl.offset();
     offset.left -= pageOffset.left;
-    offset.top -= pageOffset.top;
 
     let cardLeftOffset;
     let cardTopOffset;
@@ -92,7 +91,7 @@ const CardExpandable = {
       if (transformValues && transformValues.length > 1) {
         const scale = parseFloat(transformValues[0]);
         cardLeftOffset = offset.left - cardWidth * (1 - scale) / 2;
-        cardTopOffset = offset.top - $pageEl.offset().top - cardHeight * (1 - scale) / 2;
+        cardTopOffset = offset.top - pageOffset.top - cardHeight * (1 - scale) / 2;
         if (app.rtl) cardLeftOffset -= $cardEl[0].scrollLeft;
       } else {
         cardLeftOffset = $cardEl[0].offsetLeft;
@@ -100,7 +99,7 @@ const CardExpandable = {
       }
     } else {
       cardLeftOffset = offset.left;
-      cardTopOffset = offset.top - $pageEl.offset().top;
+      cardTopOffset = offset.top - pageOffset.top;
       if (app.rtl) cardLeftOffset -= $cardEl[0].scrollLeft;
     }
 
