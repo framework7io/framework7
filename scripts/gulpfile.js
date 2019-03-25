@@ -39,9 +39,15 @@ gulp.task('vue', buildVue);
 gulp.task('vue-typings', buildVueTypings);
 
 // eslint-disable-next-line
-gulp.task('build-core', gulp.series('core-js', 'core-components', 'core-typings', 'core-styles', 'core-lazy-components'));
-gulp.task('build-react', gulp.series('react', 'react-typings'));
-gulp.task('build-vue', gulp.series('vue', 'vue-typings'));
+gulp.task('build-core', gulp.series([
+  'core-js',
+  'core-components',
+  'core-typings',
+  'core-styles',
+  ...(env === 'development' ? [] : ['core-lazy-components']),
+]));
+gulp.task('build-react', gulp.series(['react', 'react-typings']));
+gulp.task('build-vue', gulp.series(['vue', 'vue-typings']));
 
 // Watchers
 const watch = {
@@ -74,19 +80,19 @@ const watch = {
     ));
   },
   core() {
-    gulp.watch(['./src/core/**/*.js'], gulp.series(
+    gulp.watch(['./src/core/**/*.js'], gulp.series([
       'core-js',
       'core-components',
-      'core-lazy-components',
-    ));
+      ...(env === 'development' ? [] : ['core-lazy-components']),
+    ]));
     gulp.watch(['./src/core/**/*.d.ts'], gulp.series(
       'core-typings'
     ));
-    gulp.watch('./src/**/**/*.less', gulp.series(
+    gulp.watch('./src/**/**/*.less', gulp.series([
       'core-styles',
       'core-components',
-      'core-lazy-components',
-    ));
+      ...(env === 'development' ? [] : ['core-lazy-components']),
+    ]));
   },
   react() {
     gulp.watch(['./src/core/**/*.js'], gulp.series(
