@@ -107,6 +107,9 @@ const config = {
     // Menu
     'menu',
 
+    // Color Picker
+    'color-picker',
+
     // VI Video Ads
     'vi',
 

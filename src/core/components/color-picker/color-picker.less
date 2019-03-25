@@ -1,0 +1,46 @@
+/* === Color Picker === */
+@import url('./color-picker-vars.less');
+.color-picker {
+  overflow: hidden;
+  height: var(--f7-color-picker-height);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  &.modal-in {
+    display: flex;
+  }
+  @media (orientation: landscape) and (max-height: 415px) {
+    &.color-picker-sheet {
+      height: var(--f7-color-picker-sheet-landscape-height);
+    }
+  }
+  &.color-picker-inline,
+  &.color-picker-popover .color-picker {
+    position: relative;
+  }
+}
+.color-picker-sheet {
+  background: var(--f7-color-picker-sheet-bg-color);
+  &:before {
+    z-index: 600;
+  }
+  .sheet-modal-inner {
+    margin-bottom: var(--f7-safe-area-bottom);
+  }
+}
+.color-picker-popover {
+  width: var(--f7-color-picker-popover-width);
+  .color-picker {
+    height: var(--f7-color-picker-popover-height);
+    border-radius: var(--f7-popover-border-radius);
+  }
+}
+.if-ios-theme({
+  @import url('./color-picker-ios.less');
+});
+.if-md-theme({
+  @import url('./color-picker-md.less');
+});
+.if-aurora-theme({
+  @import url('./color-picker-aurora.less');
+});
