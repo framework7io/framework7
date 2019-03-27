@@ -101,10 +101,10 @@
       <f7-list-item link="/lazy-load/" title="Lazy Load">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>
-      <f7-list-item link="/list-index/" title="List Index">
+      <f7-list-item link="/list/" title="List View">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>
-      <f7-list-item link="/list/" title="List View">
+      <f7-list-item link="/list-index/" title="List Index">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>
       <f7-list-item link="/login-screen/" title="Login Screen">
