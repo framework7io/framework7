@@ -83,6 +83,7 @@ Bart DJ
 ---
 
 ### $10+ Supporter
+Jacob Gur<br>
 Daniel Gonzalez<br>
 Yaroslav Ermolaev<br>
 Matthew Proctor<br>
