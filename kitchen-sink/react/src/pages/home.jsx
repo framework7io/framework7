@@ -109,10 +109,10 @@ export default class extends React.Component {
           <ListItem link="/lazy-load/" title="Lazy Load">
             <Icon slot="media" icon="icon-f7" />
           </ListItem>
-          <ListItem link="/list-index/" title="List Index">
+          <ListItem link="/list/" title="List View">
             <Icon slot="media" icon="icon-f7" />
           </ListItem>
-          <ListItem link="/list/" title="List View">
+          <ListItem link="/list-index/" title="List Index">
             <Icon slot="media" icon="icon-f7" />
           </ListItem>
           <ListItem link="/login-screen/" title="Login Screen">
