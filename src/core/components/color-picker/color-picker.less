@@ -35,6 +35,231 @@
     border-radius: var(--f7-popover-border-radius);
   }
 }
+
+.color-picker-module + .color-picker-module {
+  margin-top: 5px;
+}
+// Spectrum
+.color-picker-sb-spectrum {
+  background-color: #000;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #000 100%), linear-gradient(to left, rgba(255, 255, 255, 0) 0%, #fff 100%);
+  position: relative;
+}
+.color-picker-sb-spectrum-handle {
+  width: 4px;
+  height: 4px;
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  &:after {
+    background-color: inherit;
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0px 0px 2px rgba(0,0,0,0.5);
+    box-sizing: border-box;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: 150ms;
+    transition-property: transform;
+    transform-origin: center;
+  }
+  &.color-picker-sb-spectrum-handle-pressed:after {
+    transform: scale(2) translate(-25%, -25%);
+  }
+}
+// Wheel
+.color-picker-wheel {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  .color-picker-wheel-handle {
+    width: calc(100% / 6);
+    height: calc(100% / 6);
+    position: absolute;
+    box-sizing: border-box;
+    border: 2px solid #fff;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
+    background: red;
+    border-radius: 50%;
+    left: 0;
+    top: 0;
+  }
+  .color-picker-sb-spectrum {
+    width: 45%;
+    height: 45%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+  }
+}
+// Slider
+.color-picker-slider-wrap {
+  display: flex;
+  align-items: center;
+  + .color-picker-slider-wrap {
+    margin-top: 5px;
+  }
+}
+.color-picker-hex-wrap {
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+}
+.color-picker-slider-label,
+.color-picker-hex-label {
+  font-size: 14px;
+  margin-right: 12px;
+  width: 10px;
+  flex-shrink: 0;
+}
+.color-picker-hex-label {
+  width: auto;
+}
+.color-picker-bar-value,
+.color-picker-slider-value,
+.color-picker-hex-value {
+  margin-left: 10px;
+  width: 64px;
+  height: 32px;
+  background: rgba(0,0,0,0.05);
+  border-radius: 4px;
+  text-align: center;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  input {
+    width: 100%;
+    height: 100%;
+    appearance: none;
+    border: none;
+    outline: 0;
+    background: transparent;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    text-align: center;
+    display: block;
+    border-radius: 4px;
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      margin: 0;
+      display: none;
+    }
+  }
+}
+
+.color-picker-hex-value {
+  width: 84px;
+}
+.color-picker-slider {
+  --f7-range-bar-active-bg-color: transparent;
+  --f7-range-bar-size: 6px;
+  --f7-range-bar-border-radius: 6px;
+  --f7-range-knob-size: 16px;
+  --f7-range-knob-box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  .range-knob {
+    transition-duration: 200ms;
+    transition-property: transform;
+  }
+  .range-knob-active-state .range-knob {
+    transform: scale(1.5);
+  }
+}
+
+// Bars
+.color-picker-module-rgb-bars {
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+  height: 200px;
+}
+.color-picker-bar {
+  --f7-range-bar-active-bg-color: transparent;
+  --f7-range-bar-size: 50px;
+  --f7-range-bar-border-radius: 2px;
+  --f7-range-knob-size: 6px;
+  --f7-range-knob-box-shadow: 0 0px 3px rgba(0,0,0,0.3);
+  --f7-range-knob-color: #fff;
+  .range-knob {
+    transition-duration: 0ms;
+    transition-property: transform;
+    border-radius: 3px;
+  }
+  .range-knob-wrap {
+    height: 6px;
+    width: 46px;
+    margin-left: -23px;
+  }
+  .range-knob-active-state .range-knob {
+    transform: scale(1);
+  }
+}
+.color-picker-bar-wrap {
+  display: flex;
+  align-items: center;
+  flex-direction: column-reverse;
+}
+.color-picker-bar-label {
+  font-size: 14px;
+  margin-top: 12px;
+  height: 10px;
+  flex-shrink: 0;
+}
+.color-picker-bar-value {
+  margin-left: 0;
+  margin-bottom: 10px;
+}
+
+// !!!!!!!!!!!!!
+.color-picker-sheet .page-content {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+// Specific Sliders
+.color-picker-slider-alpha {
+  .range-bar {
+    background-image: linear-gradient(to right, rgba(0,0,0,0), #000),
+      linear-gradient(to right, rgba(255,255,255,0.2) 50%, rgba(0,0,0,0.2) 50%),
+      linear-gradient(to left, rgba(255,255,255,0.2) 50%, rgba(0,0,0,0.2) 50%);
+    background-size: 100% 100%, 6px 3px, 6px 3px;
+    background-position: 0 0, 0px 3px, 0 0;
+    background-repeat: repeat-y, repeat-x, repeat-x;
+  }
+}
+.color-picker-slider-hue {
+  .range-bar {
+    background-image: linear-gradient(to right,
+      hsl(0,100%,50%),
+      hsl(36, 100%, 50%),
+      hsl(72, 100%, 50%),
+      hsl(108, 100%, 50%),
+      hsl(144, 100%, 50%),
+      hsl(180, 100%, 50%),
+      hsl(216, 100%, 50%),
+      hsl(252, 100%, 50%),
+      hsl(288, 100%, 50%),
+      hsl(324, 100%, 50%),
+      hsl(359, 100%, 50%)
+    );
+  }
+}
+.color-picker-slider-brightness {
+  .range-bar {
+    background-image: linear-gradient(to right, #000, #fff);
+  }
+}
+
 .if-ios-theme({
   @import url('./color-picker-ios.less');
 });

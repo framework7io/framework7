@@ -27,7 +27,23 @@ export default {
     colorPicker: {
       // Color picker settings
       closeOnSelect: false,
-      value: null,
+      value: null, // hex string or rgba array
+      modules: [
+        'prev-current-colors',
+        'current-color',
+        'wheel',
+        'hsb-sliders',
+        'rgb-sliders',
+        'alpha-slider',
+        'hex',
+        'rgb-bars',
+        'palette',
+      ],
+      palette: [
+        '#f00',
+        '#0f0',
+        '#00f',
+      ],
       // Common opener settings
       containerEl: null,
       openIn: 'auto', // or 'popover' or 'sheet' or 'popup'

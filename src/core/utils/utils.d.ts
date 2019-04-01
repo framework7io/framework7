@@ -25,6 +25,18 @@ export interface Utils {
   id: (mask: string, map: string) => string
   /** Deletes object properties */
   deleteProps: (obj: object) => void
+  /**  */
+  colorHexToRgb: (hex: string) => number[]
+  /**  */
+  colorRgbToHex: (r: number, g: number, b: number) => string
+  /**  */
+  colorRgbToHsl: (r: number, g: number, b: number) => number[]
+  /**  */
+  colorHslToRgb: (h: number, s: number, l: number) => number[]
+  /**  */
+  colorHsbToHsl: (h: number, s: number, b: number) => number[]
+  /**  */
+  colorHslToHsb: (h: number, s: number, l: number) => number[]
 }
 
 declare const Utils : Utils;

@@ -393,6 +393,33 @@ const Utils = {
     const m = l - (c / 2);
     return rgb1.map(n => Math.max(0, Math.min(255, Math.round(255 * (n + m)))));
   },
+  colorHsbToHsl(h, s, b) {
+    const HSL = {
+      h,
+      s: 0,
+      l: 0,
+    };
+    const HSB = { h, s, b };
+
+    HSL.l = (2 - HSB.s) * HSB.b / 2;
+    HSL.s = HSL.l && HSL.l < 1 ? HSB.s * HSB.b / (HSL.l < 0.5 ? HSL.l * 2 : 2 - HSL.l * 2) : HSL.s;
+
+    return [HSL.h, HSL.s, HSL.l];
+  },
+  colorHslToHsb(h, s, l) {
+    const HSB = {
+      h,
+      s: 0,
+      b: 0,
+    };
+    const HSL = { h, s, l };
+
+    const t = HSL.s * (HSL.l < 0.5 ? HSL.l : 1 - HSL.l);
+    HSB.b = HSL.l + t;
+    HSB.s = HSL.l > 0 ? 2 * t / HSB.b : HSB.s;
+
+    return [HSB.h, HSB.s, HSB.b];
+  },
   colorThemeCSSProperties(...args) {
     let hex;
     let rgb;

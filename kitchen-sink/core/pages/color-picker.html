@@ -1,0 +1,52 @@
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Color Picker</div>
+      </div>
+    </div>
+    <div class="page-content">
+
+      <div class="block-title">Wheel</div>
+      <div class="list no-hairlines-md">
+        <ul>
+          <li>
+            <div class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-input-wrap">
+                  <input type="text" placeholder="Color" readonly="readonly" id="demo-color-picker-wheel"/>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  return {
+    on: {
+      pageInit: function(e, page) {
+        var self = this;
+        var app = self.$app;
+        var $ = self.$;
+        // Default
+        self.colorPickerWheel = app.colorPicker.create({
+          inputEl: '#demo-color-picker-wheel',
+          type: 'wheel',
+        });
+      },
+      pageBeforeRemove() {
+        var self = this;
+        self.colorPickerWheel.destroy();
+      },
+    },
+  }
+</script>
