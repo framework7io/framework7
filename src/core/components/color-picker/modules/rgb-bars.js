@@ -1,29 +1,54 @@
 import $ from 'dom7';
 
 export default {
-  render() {
+  render(self) {
+    const { barLabel, barValue, barValueEditable, redLabelText, greenLabelText, blueLabelText } = self.params;
     return `
       <div class="color-picker-module color-picker-module-rgb-bars">
         <div class="color-picker-bar-wrap">
-          <div class="color-picker-bar-label">R</div>
+          ${barLabel ? `
+            <div class="color-picker-bar-label">${redLabelText}</div>
+          ` : ''}
           <div class="range-slider color-picker-bar color-picker-bar-red"></div>
-          <div class="color-picker-bar-value">
-            <input type="number" step="1" min="0" max="255" class="color-picker-value-bar-red" data-color-index="0">
-          </div>
+          ${barValue ? `
+            <div class="color-picker-bar-value">
+              ${barValueEditable ? `
+                <input type="number" step="1" min="0" max="255" class="color-picker-value-bar-red" data-color-index="0">
+              ` : `
+                <span class="color-picker-value-bar-red"></span>
+              `}
+            </div>
+          ` : ''}
         </div>
         <div class="color-picker-bar-wrap">
-          <div class="color-picker-bar-label">G</div>
+          ${barLabel ? `
+            <div class="color-picker-bar-label">${greenLabelText}</div>
+          ` : ''}
           <div class="range-slider color-picker-bar color-picker-bar-green"></div>
-          <div class="color-picker-bar-value">
-            <input type="number" step="1" min="0" max="255" class="color-picker-value-bar-green" data-color-index="1">
-          </div>
+          ${barValue ? `
+            <div class="color-picker-bar-value">
+              ${barValueEditable ? `
+                <input type="number" step="1" min="0" max="255" class="color-picker-value-bar-green" data-color-index="1">
+              ` : `
+                <span class="color-picker-value-bar-green"></span>
+              `}
+            </div>
+          ` : ''}
         </div>
         <div class="color-picker-bar-wrap">
-          <div class="color-picker-bar-label">B</div>
+          ${barLabel ? `
+            <div class="color-picker-bar-label">${blueLabelText}</div>
+          ` : ''}
           <div class="range-slider color-picker-bar color-picker-bar-blue"></div>
-          <div class="color-picker-bar-value">
-            <input type="number" step="1" min="0" max="255" class="color-picker-value-bar-blue" data-color-index="2">
-          </div>
+          ${barValue ? `
+            <div class="color-picker-bar-value">
+              ${barValueEditable ? `
+                <input type="number" step="1" min="0" max="255" class="color-picker-value-bar-blue" data-color-index="2">
+              ` : `
+                <span class="color-picker-value-bar-blue"></span>
+              `}
+            </div>
+          ` : ''}
         </div>
       </div>
     `;
@@ -96,6 +121,8 @@ export default {
       blueBar,
     } = self;
 
+    const { barValue, barValueEditable } = self.params;
+
     const { rgb } = value;
 
     redBar.value = rgb[0];
@@ -106,17 +133,19 @@ export default {
     greenBar.layout();
     blueBar.layout();
 
-    // redBar.$el[0].style.setProperty('--f7-range-knob-color', `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`);
-    // greenBar.$el[0].style.setProperty('--f7-range-knob-color', `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`);
-    // blueBar.$el[0].style.setProperty('--f7-range-knob-color', `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`);
-
     redBar.$el.find('.range-bar').css('background-image', `linear-gradient(to top, rgb(0, ${rgb[1]}, ${rgb[2]}), rgb(255, ${rgb[1]}, ${rgb[2]}))`);
     greenBar.$el.find('.range-bar').css('background-image', `linear-gradient(to top, rgb(${rgb[0]}, 0, ${rgb[2]}), rgb(${rgb[0]}, 255, ${rgb[2]}))`);
     blueBar.$el.find('.range-bar').css('background-image', `linear-gradient(to top, rgb(${rgb[0]}, ${rgb[1]}, 0), rgb(${rgb[0]}, ${rgb[1]}, 255))`);
 
-    self.$el.find('input.color-picker-value-bar-red').val(rgb[0]);
-    self.$el.find('input.color-picker-value-bar-green').val(rgb[1]);
-    self.$el.find('input.color-picker-value-bar-blue').val(rgb[2]);
+    if (barValue && barValueEditable) {
+      self.$el.find('input.color-picker-value-bar-red').val(rgb[0]);
+      self.$el.find('input.color-picker-value-bar-green').val(rgb[1]);
+      self.$el.find('input.color-picker-value-bar-blue').val(rgb[2]);
+    } else if (barValue) {
+      self.$el.find('span.color-picker-value-bar-red').text(rgb[0]);
+      self.$el.find('span.color-picker-value-bar-green').text(rgb[1]);
+      self.$el.find('span.color-picker-value-bar-blue').text(rgb[2]);
+    }
   },
   destroy(self) {
     if (self.redBar && self.redBar.destroy) {

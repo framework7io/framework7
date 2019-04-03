@@ -8,7 +8,7 @@ import moduleHex from './modules/hex';
 import moduleHsbSliders from './modules/hsb-sliders';
 import moduleHueSlider from './modules/hue-slider';
 import modulePalette from './modules/palette';
-import modulePrevCurrentColors from './modules/prev-current-colors';
+import moduleInitialCurrentColors from './modules/initial-current-colors';
 import moduleRgbBars from './modules/rgb-bars';
 import moduleRgbSliders from './modules/rgb-sliders';
 import moduleSbSpectrum from './modules/sb-spectrum';
@@ -32,9 +32,17 @@ class ColorPicker extends Framework7Class {
       $inputEl = $(self.params.inputEl);
     }
 
+    let $targetEl;
+    if (self.params.targetEl) {
+      $targetEl = $(self.params.targetEl);
+    }
+
     let view;
     if ($inputEl) {
       view = $inputEl.parents('.view').length && $inputEl.parents('.view')[0].f7View;
+    }
+    if (!view && $targetEl) {
+      view = $targetEl.parents('.view').length && $targetEl.parents('.view')[0].f7View;
     }
     if (!view) view = app.views.main;
 
@@ -45,6 +53,8 @@ class ColorPicker extends Framework7Class {
       inline: $containerEl && $containerEl.length > 0,
       $inputEl,
       inputEl: $inputEl && $inputEl[0],
+      $targetEl,
+      targetEl: $targetEl && $targetEl[0],
       initialized: false,
       opened: false,
       url: self.params.url,
@@ -56,7 +66,7 @@ class ColorPicker extends Framework7Class {
         'hsb-sliders': moduleHsbSliders,
         'hue-slider': moduleHueSlider,
         'palette': modulePalette, // eslint-disable-line
-        'prev-current-colors': modulePrevCurrentColors,
+        'initial-current-colors': moduleInitialCurrentColors,
         'rgb-bars': moduleRgbBars,
         'rgb-sliders': moduleRgbSliders,
         'sb-spectrum': moduleSbSpectrum,
@@ -70,16 +80,19 @@ class ColorPicker extends Framework7Class {
     function onInputFocus(e) {
       e.preventDefault();
     }
+    function onTargetClick() {
+      self.open();
+    }
     function onHtmlClick(e) {
-      const $targetEl = $(e.target);
-      if (self.isPopover()) return;
+      const $clickTargetEl = $(e.target);
       if (!self.opened || self.closing) return;
-      if ($targetEl.closest('[class*="backdrop"]').length) return;
+      if ($clickTargetEl.closest('[class*="backdrop"]').length) return;
+      if ($clickTargetEl.closest('.color-picker-popup, .color-picker-popover').length) return;
       if ($inputEl && $inputEl.length > 0) {
-        if ($targetEl[0] !== $inputEl[0] && $targetEl.closest('.sheet-modal, .calendar-modal').length === 0) {
+        if ($clickTargetEl[0] !== $inputEl[0] && $clickTargetEl.closest('.sheet-modal').length === 0) {
           self.close();
         }
-      } else if ($(e.target).closest('.sheet-modal, .calendar-modal').length === 0) {
+      } else if ($(e.target).closest('.sheet-modal').length === 0) {
         self.close();
       }
     }
@@ -98,6 +111,12 @@ class ColorPicker extends Framework7Class {
           self.$inputEl.off('focus mousedown', onInputFocus);
         }
       },
+      attachTargetEvents() {
+        self.$targetEl.on('click', onTargetClick);
+      },
+      detachTargetEvents() {
+        self.$targetEl.off('click', onTargetClick);
+      },
       attachHtmlEvents() {
         app.on('click', onHtmlClick);
       },
@@ -105,63 +124,6 @@ class ColorPicker extends Framework7Class {
         app.off('click', onHtmlClick);
       },
     });
-    self.attachColorPickerEvents = function attachColorPickerEvents() {
-
-
-      // function handleDayClick(e) {
-      //   if (!allowItemClick) return;
-      //   let $dayEl = $(e.target).parents('.calendar-day');
-      //   if ($dayEl.length === 0 && $(e.target).hasClass('calendar-day')) {
-      //     $dayEl = $(e.target);
-      //   }
-      //   if ($dayEl.length === 0) return;
-      //   if ($dayEl.hasClass('calendar-day-disabled')) return;
-      //   if (!self.params.rangePicker) {
-      //     if ($dayEl.hasClass('calendar-day-next')) self.nextMonth();
-      //     if ($dayEl.hasClass('calendar-day-prev')) self.prevMonth();
-      //   }
-      //   const dateYear = parseInt($dayEl.attr('data-year'), 10);
-      //   const dateMonth = parseInt($dayEl.attr('data-month'), 10);
-      //   const dateDay = parseInt($dayEl.attr('data-day'), 10);
-      //   self.emit(
-      //     'local::dayClick colorPickerDayClick',
-      //     self,
-      //     $dayEl[0],
-      //     dateYear,
-      //     dateMonth,
-      //     dateDay
-      //   );
-      //   if (!$dayEl.hasClass('calendar-day-selected') || self.params.multiple || self.params.rangePicker) {
-      //     self.addValue(new self.DateHandleClass(dateYear, dateMonth, dateDay, 0, 0, 0));
-      //   }
-      //   if (self.params.closeOnSelect) {
-      //     if (
-      //       (self.params.rangePicker && self.value.length === 2)
-      //       || !self.params.rangePicker
-      //     ) {
-      //       self.close();
-      //     }
-      //   }
-      // }
-
-
-
-      // const passiveListener = app.touchEvents.start === 'touchstart' && app.support.passiveListener ? { passive: true, capture: false } : false;
-      // // Selectors clicks
-
-      // // Touch events
-      // if (process.env.TARGET !== 'desktop') {
-      //   self.$el.on(app.touchEvents.start, handleTouchStart, passiveListener);
-      //   app.on('touchmove:active', handleTouchMove);
-      //   app.on('touchend:passive', handleTouchEnd);
-      // }
-
-      // self.detachColorPickerEvents = function detachColorPickerEvents() {
-      //   self.$el.off(app.touchEvents.start, handleTouchStart, passiveListener);
-      //   app.off('touchmove:active', handleTouchMove);
-      //   app.off('touchend:passive', handleTouchEnd);
-      // };
-    };
 
     self.init();
 
@@ -174,25 +136,21 @@ class ColorPicker extends Framework7Class {
     if (self.params.inputReadOnly) self.$inputEl.prop('readOnly', true);
   }
 
-  isPopover() {
+  getModalType() {
     const self = this;
     const { app, modal, params } = self;
-    if (params.openIn === 'sheet') return false;
-    if (modal && modal.type !== 'popover') return false;
-
-    if (!self.inline && self.inputEl) {
-      if (params.openIn === 'popover') return true;
-      if (app.device.ios) {
-        return !!app.device.ipad;
-      }
-      if (app.width >= 768) {
-        return true;
-      }
-      if (app.device.desktop && app.theme === 'aurora') {
-        return true;
-      }
+    const { openIn, openInPhone } = params;
+    if (modal && modal.type) return modal.type;
+    if (openIn !== 'auto') return openIn;
+    if (self.inline) return null;
+    if (app.device.ios) {
+      return app.device.ipad ? 'popover' : openInPhone;
     }
-    return false;
+    if (app.width >= 768 || (app.device.desktop && app.theme === 'aurora')) {
+      return 'popover';
+    }
+
+    return openInPhone;
   }
 
   formatValue() {
@@ -213,9 +171,8 @@ class ColorPicker extends Framework7Class {
     ];
   }
 
-  setValue(value) {
+  setValue(value, updateModules = true) {
     const self = this;
-    console.log('set value start', value);
     if (typeof value === 'undefined') return;
 
     let {
@@ -227,8 +184,10 @@ class ColorPicker extends Framework7Class {
       hue,
     } = (self.value || {});
 
+    let valueChanged;
 
     if (value.rgb) {
+      valueChanged = true;
       const [r, g, b, a = alpha] = value.rgb;
       rgb = [r, g, b];
       hex = Utils.colorRgbToHex(...rgb);
@@ -241,6 +200,7 @@ class ColorPicker extends Framework7Class {
     }
 
     if (value.hsl) {
+      valueChanged = true;
       const [h, s, l, a = alpha] = value.hsl;
       hsl = [h, s, l];
       rgb = Utils.colorHslToRgb(...hsl);
@@ -253,6 +213,7 @@ class ColorPicker extends Framework7Class {
     }
 
     if (value.hsb) {
+      valueChanged = true;
       const [h, s, b, a = alpha] = value.hsb;
       hsb = [h, s, b];
       hsl = Utils.colorHsbToHsl(...hsb);
@@ -265,32 +226,39 @@ class ColorPicker extends Framework7Class {
     }
 
     if (value.hex) {
-      rgb = Utils.colorHexToRgb(value.hex);
-      hex = Utils.colorRgbToHex(...rgb);
-      hsl = Utils.colorRgbToHsl(...rgb);
-      hsb = Utils.colorHslToHsb(...hsl);
-      hsl = self.normalizeHsValues(hsl);
-      hsb = self.normalizeHsValues(hsb);
-      hue = hsb[0];
+      if (value.hex !== hex) {
+        valueChanged = true;
+        rgb = Utils.colorHexToRgb(value.hex);
+        hex = Utils.colorRgbToHex(...rgb);
+        hsl = Utils.colorRgbToHsl(...rgb);
+        hsb = Utils.colorHslToHsb(...hsl);
+        hsl = self.normalizeHsValues(hsl);
+        hsb = self.normalizeHsValues(hsb);
+        hue = hsb[0];
+      }
     }
 
     if (typeof value.alpha !== 'undefined') {
-      if (alpha === value.alpha) return;
-      alpha = value.alpha;
+      if (alpha !== value.alpha) {
+        valueChanged = true;
+        alpha = value.alpha;
+      }
     }
 
     if (typeof value.hue !== 'undefined') {
-      const [h, s, l] = self.value.hsl;
-      if (h === value.hue) return;
-      hsl = [value.hue, s, l];
-      hsb = Utils.colorHslToHsb(...hsl);
-      rgb = Utils.colorHslToRgb(...hsl);
-      hex = Utils.colorRgbToHex(...rgb);
-      hsl = self.normalizeHsValues(hsl);
-      hsb = self.normalizeHsValues(hsb);
-      hue = hsb[0];
+      if (hue !== value.hue) {
+        valueChanged = true;
+        const [h, s, l] = hsl; // eslint-disable-line
+        hsl = [value.hue, s, l];
+        hsb = Utils.colorHslToHsb(...hsl);
+        rgb = Utils.colorHslToRgb(...hsl);
+        hex = Utils.colorRgbToHex(...rgb);
+        hsl = self.normalizeHsValues(hsl);
+        hsb = self.normalizeHsValues(hsb);
+        hue = hsb[0];
+      }
     }
-
+    if (!valueChanged) return;
     self.value = {
       hex,
       alpha,
@@ -299,8 +267,11 @@ class ColorPicker extends Framework7Class {
       hsl,
       hsb,
     };
+    if (!self.initialValue) self.initialValue = Utils.extend({}, self.value);
     self.updateValue();
-    self.updateModules();
+    if (self.opened && updateModules) {
+      self.updateModules();
+    }
   }
 
   getValue() {
@@ -310,6 +281,15 @@ class ColorPicker extends Framework7Class {
 
   updateValue() {
     const self = this;
+    const { $inputEl, value } = self;
+    self.emit('local::change colorPickerChange', self, value);
+    if ($inputEl && $inputEl.length) {
+      const inputValue = self.formatValue(value);
+      if ($inputEl && $inputEl.length) {
+        $inputEl.val(inputValue);
+        $inputEl.trigger('change');
+      }
+    }
   }
 
   updateModules() {
@@ -323,25 +303,7 @@ class ColorPicker extends Framework7Class {
 
   update() {
     const self = this;
-    const { currentYear, currentMonth, $wrapperEl } = self;
-    const currentDate = new self.DateHandleClass(currentYear, currentMonth);
-    const prevMonthHtml = self.renderMonth(currentDate, 'prev');
-    const currentMonthHtml = self.renderMonth(currentDate);
-    const nextMonthHtml = self.renderMonth(currentDate, 'next');
-
-    $wrapperEl
-      .transition(0)
-      .html(`${prevMonthHtml}${currentMonthHtml}${nextMonthHtml}`)
-      .transform('translate3d(0,0,0)');
-    self.$months = $wrapperEl.find('.calendar-month');
-    self.monthsTranslate = 0;
-    self.setMonthsTranslate();
-    self.$months.each((index, monthEl) => {
-      self.emit(
-        'local::monthAdd colorPickerMonthAdd',
-        monthEl
-      );
-    });
+    self.updateModules();
   }
 
   renderPicker() {
@@ -356,6 +318,23 @@ class ColorPicker extends Framework7Class {
     return html;
   }
 
+  renderNavbar() {
+    const self = this;
+    if (self.params.renderNavbar) {
+      return self.params.renderNavbar.call(self, self);
+    }
+    return `
+    <div class="navbar no-shadow">
+      <div class="navbar-inner">
+        <div class="title">${self.params.navbarTitle}</div>
+        <div class="right">
+          <a href="#" class="link popup-close" data-popup=".color-picker-popup">${self.params.navbarCloseText}</a>
+        </div>
+      </div>
+    </div>
+  `.trim();
+  }
+
   renderToolbar() {
     const self = this;
     if (self.params.renderToolbar) {
@@ -364,20 +343,21 @@ class ColorPicker extends Framework7Class {
     return `
     <div class="toolbar toolbar-top no-shadow">
       <div class="toolbar-inner">
+        <div class="left"></div>
+        <div class="right">
+          <a href="#" class="link sheet-close popover-close" data-sheet=".color-picker-sheet-modal" data-popover=".color-picker-popover">${self.params.toolbarCloseText}</a>
+        </div>
       </div>
     </div>
   `.trim();
   }
-  // eslint-disable-next-line
+
   renderInline() {
     const self = this;
-    const { cssClass, toolbar, type } = self.params;
+    const { cssClass, groupedModules } = self.params;
     const inlineHtml = `
-    <div class="color-picker color-picker-inline color-picker-type-${type} ${cssClass || ''}">
-      ${toolbar ? self.renderToolbar() : ''}
-      <div class="calendar-months">
-        ${self.renderPicker()}
-      </div>
+    <div class="color-picker color-picker-inline ${groupedModules ? 'color-picker-grouped-modules' : ''} ${cssClass || ''}">
+      ${self.renderPicker()}
     </div>
   `.trim();
 
@@ -386,10 +366,10 @@ class ColorPicker extends Framework7Class {
 
   renderSheet() {
     const self = this;
-    const { cssClass, toolbar, type } = self.params;
+    const { cssClass, toolbarSheet, groupedModules } = self.params;
     const sheetHtml = `
-    <div class="sheet-modal color-picker color-picker-sheet color-picker-type-${type} ${cssClass || ''}">
-      ${toolbar ? self.renderToolbar() : ''}
+    <div class="sheet-modal color-picker color-picker-sheet-modal ${groupedModules ? 'color-picker-grouped-modules' : ''} ${cssClass || ''}">
+      ${toolbarSheet ? self.renderToolbar() : ''}
       <div class="sheet-modal-inner">
         <div class="page-content">
           ${self.renderPicker()}
@@ -403,15 +383,15 @@ class ColorPicker extends Framework7Class {
 
   renderPopover() {
     const self = this;
-    const { cssClass, toolbar, type } = self.params;
+    const { cssClass, toolbarPopover, groupedModules } = self.params;
     const popoverHtml = `
     <div class="popover color-picker-popover">
       <div class="popover-inner">
-        <div class="color-picker color-picker-type-${type} ${cssClass || ''}">
-        ${toolbar ? self.renderToolbar() : ''}
-        <div class="calendar-months">
-          ${self.renderPicker()}
-        </div>
+        <div class="color-picker ${groupedModules ? 'color-picker-grouped-modules' : ''} ${cssClass || ''}">
+          ${toolbarPopover ? self.renderToolbar() : ''}
+          <div class="page-content">
+            ${self.renderPicker()}
+          </div>
         </div>
       </div>
     </div>
@@ -420,14 +400,31 @@ class ColorPicker extends Framework7Class {
     return popoverHtml;
   }
 
+  renderPopup() {
+    const self = this;
+    const { cssClass, navbarPopup, groupedModules } = self.params;
+    const popupHtml = `
+    <div class="popup color-picker-popup">
+      <div class="page">
+        ${navbarPopup ? self.renderNavbar() : ''}
+        <div class="color-picker ${groupedModules ? 'color-picker-grouped-modules' : ''} ${cssClass || ''}">
+          <div class="page-content">
+            ${self.renderPicker()}
+          </div>
+        </div>
+      </div>
+    </div>
+  `.trim();
+
+    return popupHtml;
+  }
+
   render() {
     const self = this;
     const { params } = self;
     if (params.render) return params.render.call(self);
     if (!self.inline) {
-      let modalType = params.openIn;
-      if (modalType === 'auto') modalType = self.isPopover() ? 'popover' : 'sheet';
-
+      const modalType = self.getModalType();
       if (modalType === 'popover') return self.renderPopover();
       if (modalType === 'sheet') return self.renderSheet();
       if (modalType === 'popup') return self.renderPopup();
@@ -442,9 +439,6 @@ class ColorPicker extends Framework7Class {
     self.opened = true;
     self.opening = true;
 
-    // Init main events
-    self.attachColorPickerEvents();
-
     params.modules.forEach((m) => {
       if (self.modules[m] && self.modules[m].init) {
         self.modules[m].init(self);
@@ -457,12 +451,13 @@ class ColorPicker extends Framework7Class {
     if (!initialized) {
       if (value) self.setValue(value);
       else if (params.value) {
-        self.setValue(params.value);
+        self.setValue(params.value, false);
       } else if (!params.value) {
-        self.setValue({ hex: '#ff0000' });
+        self.setValue({ hex: '#ff0000' }, false);
       }
     } else if (value) {
-      self.setValue();
+      self.initialValue = Utils.extend({}, value);
+      self.setValue(value, false);
     }
 
     // Update input value
@@ -507,9 +502,6 @@ class ColorPicker extends Framework7Class {
     if (self.$inputEl && app.theme === 'md') {
       self.$inputEl.trigger('blur');
     }
-    if (self.detachColorPickerEvents) {
-      self.detachColorPickerEvents();
-    }
     params.modules.forEach((m) => {
       if (self.modules[m] && self.modules[m].destroy) self.modules[m].destroy(self);
     });
@@ -549,38 +541,37 @@ class ColorPicker extends Framework7Class {
 
   open() {
     const self = this;
-    const { app, opened, inline, $inputEl, params } = self;
+    const { app, opened, inline, $inputEl, $targetEl, params } = self;
     if (opened) return;
 
     if (inline) {
       self.$el = $(self.render());
       self.$el[0].f7ColorPicker = self;
-      self.$wrapperEl = self.$el.find('.calendar-months-wrapper');
-      self.$months = self.$wrapperEl.find('.calendar-month');
       self.$containerEl.append(self.$el);
       self.onOpen();
       self.onOpened();
       return;
     }
-    let modalType = params.openIn;
-    if (modalType === 'auto') {
-      modalType = self.isPopover() ? 'popover' : 'sheet';
-    }
+    const modalType = self.getModalType();
+
     const modalContent = self.render();
 
+    let backdrop = self.params.backdrop;
+    if (backdrop === null || typeof backdrop === 'undefined') {
+      if (modalType === 'popover' && app.params.popover.backdrop !== false) backdrop = true;
+      if (modalType === 'popup') backdrop = true;
+    }
     const modalParams = {
-      targetEl: $inputEl,
-      scrollToEl: self.params.scrollToInput ? $inputEl : undefined,
+      targetEl: ($targetEl || $inputEl),
+      scrollToEl: self.params.scrollToInput ? ($targetEl || $inputEl) : undefined,
       content: modalContent,
-      backdrop: self.params.backdrop === true || (modalType === 'popover' && app.params.popover.backdrop !== false && self.params.backdrop !== false),
+      backdrop,
       closeByBackdropClick: self.params.closeByBackdropClick,
       on: {
         open() {
           const modal = this;
           self.modal = modal;
           self.$el = modalType === 'popover' || modalType === 'popup' ? modal.$el.find('.color-picker') : modal.$el;
-          // self.$wrapperEl = self.$el.find('.calendar-months-wrapper');
-          // self.$months = self.$wrapperEl.find('.calendar-month');
           self.$el[0].f7ColorPicker = self;
           self.onOpen();
         },
@@ -638,6 +629,9 @@ class ColorPicker extends Framework7Class {
     if (self.$inputEl) {
       self.attachInputEvents();
     }
+    if (self.$targetEl) {
+      self.attachTargetEvents();
+    }
     if (self.params.closeByOutsideClick) {
       self.attachHtmlEvents();
     }
@@ -656,6 +650,9 @@ class ColorPicker extends Framework7Class {
     // Detach Events
     if (self.$inputEl) {
       self.detachInputEvents();
+    }
+    if (self.$targetEl) {
+      self.detachTargetEvents();
     }
     if (self.params.closeByOutsideClick) {
       self.detachHtmlEvents();

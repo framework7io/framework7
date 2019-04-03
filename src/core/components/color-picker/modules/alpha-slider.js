@@ -1,13 +1,22 @@
 export default {
-  render() {
+  render(self) {
+    const { sliderLabel, sliderValue, sliderValueEditable, alphaLabelText } = self.params;
     return `
       <div class="color-picker-module color-picker-module-alpha-slider">
         <div class="color-picker-slider-wrap">
-          <div class="color-picker-slider-label">A</div>
+          ${sliderLabel ? `
+            <div class="color-picker-slider-label">${alphaLabelText}</div>
+          ` : ''}
           <div class="range-slider color-picker-slider color-picker-slider-alpha"></div>
-          <div class="color-picker-slider-value">
-            <input type="number" step="0.01" min="0" max="1" class="color-picker-value-alpha">
-          </div>
+          ${sliderValue ? `
+            <div class="color-picker-slider-value">
+              ${sliderValueEditable ? `
+                <input type="number" step="0.01" min="0" max="1" class="color-picker-value-alpha">
+              ` : `
+                <span class="color-picker-value-alpha"></span>
+              `}
+            </div>
+          ` : ''}
         </div>
       </div>
     `;
@@ -47,11 +56,16 @@ export default {
     const {
       value,
     } = self;
+    const { sliderValue, sliderValueEditable } = self.params;
 
     const { alpha } = value;
     self.alphaRangeSlider.value = alpha;
     self.alphaRangeSlider.layout();
-    self.$el.find('input.color-picker-value-alpha').val(alpha);
+    if (sliderValue && sliderValueEditable) {
+      self.$el.find('input.color-picker-value-alpha').val(alpha);
+    } else {
+      self.$el.find('span.color-picker-value-alpha').text(alpha);
+    }
   },
   destroy(self) {
     if (self.alphaRangeSlider && self.alphaRangeSlider.destroy) {

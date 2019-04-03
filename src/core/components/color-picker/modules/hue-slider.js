@@ -1,13 +1,22 @@
 export default {
-  render() {
+  render(self) {
+    const { sliderLabel, sliderValue, sliderValueEditable, hueLabelText } = self.params;
     return `
       <div class="color-picker-module color-picker-module-hue-slider">
         <div class="color-picker-slider-wrap">
-          <div class="color-picker-slider-label">H</div>
+          ${sliderLabel ? `
+            <div class="color-picker-slider-label">${hueLabelText}</div>
+          ` : ''}
           <div class="range-slider color-picker-slider color-picker-slider-hue"></div>
-          <div class="color-picker-slider-value">
-            <input type="number" step="0.1" min="0" max="360" class="color-picker-value-hue">
-          </div>
+          ${sliderValue ? `
+            <div class="color-picker-slider-value">
+              ${sliderValueEditable ? `
+                <input type="number" step="0.1" min="0" max="360" class="color-picker-value-hue">
+              ` : `
+                <span class="color-picker-value-hue"></span>
+              `}
+            </div>
+          ` : ''}
         </div>
       </div>
     `;
@@ -30,6 +39,7 @@ export default {
     const {
       value,
     } = self;
+    const { sliderValue, sliderValueEditable } = self.params;
 
     const { hue } = value;
 
@@ -39,8 +49,11 @@ export default {
       '--f7-range-knob-color',
       `hsl(${hue}, 100%, 50%)`
     );
-
-    self.$el.find('input.color-picker-value-hue').val(`${hue}`);
+    if (sliderValue && sliderValueEditable) {
+      self.$el.find('input.color-picker-value-hue').val(`${hue}`);
+    } else if (sliderValue) {
+      self.$el.find('span.color-picker-value-hue').text(`${hue}`);
+    }
   },
   destroy(self) {
     if (self.hueRangeSlider && self.hueRangeSlider.destroy) {

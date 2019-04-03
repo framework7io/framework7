@@ -1,11 +1,18 @@
 export default {
-  render() {
+  render(self) {
+    const { hexLabel, hexLabelText, hexValueEditable } = self.params;
     return `
       <div class="color-picker-module color-picker-module-hex">
         <div class="color-picker-hex-wrap">
-          <div class="color-picker-hex-label">HEX</div>
+          ${hexLabel ? `
+            <div class="color-picker-hex-label">${hexLabelText}</div>
+          ` : ''}
           <div class="color-picker-hex-value">
-            <input type="text" class="color-picker-value-hex">
+            ${hexValueEditable ? `
+              <input type="text" class="color-picker-value-hex">
+            ` : `
+              <span class="color-picker-value-hex"></span>
+            `}
           </div>
         </div>
       </div>
@@ -42,8 +49,14 @@ export default {
       value,
     } = self;
 
+    const { hexValueEditable } = self.params;
+
     const { hex } = value;
-    self.$el.find('input.color-picker-value-hex').val(hex);
+    if (hexValueEditable) {
+      self.$el.find('input.color-picker-value-hex').val(hex);
+    } else {
+      self.$el.find('span.color-picker-value-hex').text(hex);
+    }
   },
   destroy(self) {
     if (self.destroyHexEvents) self.destroyHexEvents();

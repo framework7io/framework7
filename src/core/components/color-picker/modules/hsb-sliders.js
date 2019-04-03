@@ -2,29 +2,54 @@ import $ from 'dom7';
 import Utils from '../../../utils/utils';
 
 export default {
-  render() {
+  render(self) {
+    const { sliderLabel, sliderValue, sliderValueEditable, hueLabelText, saturationLabelText, brightnessLabelText } = self.params;
     return `
       <div class="color-picker-module color-picker-module-hsb-sliders">
         <div class="color-picker-slider-wrap">
-          <div class="color-picker-slider-label">H</div>
+          ${sliderLabel ? `
+            <div class="color-picker-slider-label">${hueLabelText}</div>
+          ` : ''}
           <div class="range-slider color-picker-slider color-picker-slider-hue"></div>
-          <div class="color-picker-slider-value">
-            <input type="number" step="0.1" min="0" max="360" class="color-picker-value-hue" data-color-index="0">
-          </div>
+          ${sliderValue ? `
+            <div class="color-picker-slider-value">
+              ${sliderValueEditable ? `
+                <input type="number" step="0.1" min="0" max="360" class="color-picker-value-hue" data-color-index="0">
+              ` : `
+                <span class="color-picker-value-hue"></span>
+              `}
+            </div>
+          ` : ''}
         </div>
         <div class="color-picker-slider-wrap">
-          <div class="color-picker-slider-label">S</div>
+          ${sliderLabel ? `
+            <div class="color-picker-slider-label">${saturationLabelText}</div>
+          ` : ''}
           <div class="range-slider color-picker-slider color-picker-slider-saturation"></div>
-          <div class="color-picker-slider-value">
-            <input type="number" step="0.1" min="0" max="100" class="color-picker-value-saturation" data-color-index="1">
-          </div>
+          ${sliderValue ? `
+            <div class="color-picker-slider-value">
+              ${sliderValueEditable ? `
+                <input type="number" step="0.1" min="0" max="100" class="color-picker-value-saturation" data-color-index="1">
+              ` : `
+                <span class="color-picker-value-saturation"></span>
+              `}
+            </div>
+          ` : ''}
         </div>
         <div class="color-picker-slider-wrap">
-          <div class="color-picker-slider-label">B</div>
+          ${sliderLabel ? `
+            <div class="color-picker-slider-label">${brightnessLabelText}</div>
+          ` : ''}
           <div class="range-slider color-picker-slider color-picker-slider-brightness"></div>
-          <div class="color-picker-slider-value">
-            <input type="number" step="0.1" min="0" max="100" class="color-picker-value-brightness" data-color-index="2">
-          </div>
+          ${sliderValue ? `
+            <div class="color-picker-slider-value">
+              ${sliderValueEditable ? `
+                <input type="number" step="0.1" min="0" max="100" class="color-picker-value-brightness" data-color-index="2">
+              ` : `
+                <span class="color-picker-value-brightness"></span>
+              `}
+            </div>
+          ` : ''}
         </div>
       </div>
     `;
@@ -95,8 +120,10 @@ export default {
   },
   update(self) {
     const {
+      app,
       value,
     } = self;
+    const { sliderValue, sliderValueEditable } = self.params;
 
     const { hsb, hue } = value;
 
@@ -127,12 +154,18 @@ export default {
     );
     self.saturationRangeSlider.$el.find('.range-bar').css(
       'background-image',
-      `linear-gradient(to right, hsl(${hslLeft[0]}, ${hslLeft[1] * 100}%, ${hslLeft[2] * 100}%), hsl(${hslRight[0]}, ${hslRight[1] * 100}%, ${hslRight[2] * 100}%))`
+      `linear-gradient(${app.rtl ? 'to left' : 'to right'}, hsl(${hslLeft[0]}, ${hslLeft[1] * 100}%, ${hslLeft[2] * 100}%), hsl(${hslRight[0]}, ${hslRight[1] * 100}%, ${hslRight[2] * 100}%))`
     );
 
-    self.$el.find('input.color-picker-value-hue').val(`${hue}`);
-    self.$el.find('input.color-picker-value-saturation').val(`${hsb[1] * 1000 / 10}`);
-    self.$el.find('input.color-picker-value-brightness').val(`${hsb[2] * 1000 / 10}`);
+    if (sliderValue && sliderValueEditable) {
+      self.$el.find('input.color-picker-value-hue').val(`${hue}`);
+      self.$el.find('input.color-picker-value-saturation').val(`${hsb[1] * 1000 / 10}`);
+      self.$el.find('input.color-picker-value-brightness').val(`${hsb[2] * 1000 / 10}`);
+    } else if (sliderValue) {
+      self.$el.find('span.color-picker-value-hue').text(`${hue}`);
+      self.$el.find('span.color-picker-value-saturation').text(`${hsb[1] * 1000 / 10}`);
+      self.$el.find('span.color-picker-value-brightness').text(`${hsb[2] * 1000 / 10}`);
+    }
   },
   destroy(self) {
     if (self.hueRangeSlider && self.hueRangeSlider.destroy) {

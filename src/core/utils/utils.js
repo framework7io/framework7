@@ -375,6 +375,7 @@ const Utils = {
     else if (max === b) h = (r - g) / d + 4;
     const l = (min + max) / 2;
     const s = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
+    if (h < 0) h = 360 / 60 + h;
     return [h * 60, s, l];
   },
   colorHslToRgb(h, s, l) {

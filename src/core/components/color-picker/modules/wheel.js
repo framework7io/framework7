@@ -13,7 +13,7 @@ function svgWheelCircles() {
 export default {
   render() {
     return `
-      <div class="color-picker-module color-picker-module-rgb-sliders">
+      <div class="color-picker-module color-picker-module-wheel">
         <div class="color-picker-wheel">
           <svg viewBox="0 0 300 300" width="300" height="300">${svgWheelCircles()}</svg>
           <div class="color-picker-wheel-handle"></div>
@@ -119,16 +119,22 @@ export default {
       specterHandleIsTouched = false;
     }
 
+    function handleResize() {
+      self.modules.wheel.update(self);
+    }
+
     const passiveListener = app.touchEvents.start === 'touchstart' && app.support.passiveListener ? { passive: true, capture: false } : false;
 
     self.$el.on(app.touchEvents.start, handleTouchStart, passiveListener);
     app.on('touchmove:active', handleTouchMove);
     app.on('touchend:passive', handleTouchEnd);
+    app.on('resize', handleResize);
 
     self.destroyWheelEvents = function destroyWheelEvents() {
       self.$el.off(app.touchEvents.start, handleTouchStart, passiveListener);
       app.off('touchmove:active', handleTouchMove);
       app.off('touchend:passive', handleTouchEnd);
+      app.off('resize', handleResize);
     };
   },
   update(self) {
