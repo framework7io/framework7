@@ -111,6 +111,10 @@ var routes = [
     componentUrl: './pages/chips.html',
   },
   {
+    path: '/color-picker/',
+    componentUrl: './pages/color-picker.html',
+  },
+  {
     path: '/contacts-list/',
     url: './pages/contacts-list.html',
   },
