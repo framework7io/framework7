@@ -17,27 +17,27 @@ export default class extends React.Component {
 
         <BlockTitle>Default setup</BlockTitle>
         <List noHairlinesMd>
-          <ListInput type="text" placeholder="Your birth date" readonly inputId="demo-calendar-default"/>
+          <ListInput type="datepicker" placeholder="Your birth date" readonly />
         </List>
 
         <BlockTitle>Custom date format</BlockTitle>
         <List noHairlinesMd>
-          <ListInput type="text" placeholder="Select date" readonly inputId="demo-calendar-date-format"/>
+          <ListInput type="datepicker" placeholder="Select date" readonly calendarParams={{dateFormat: 'DD, MM dd, yyyy'}} />
         </List>
 
         <BlockTitle>Multiple Values</BlockTitle>
         <List noHairlinesMd>
-          <ListInput type="text" placeholder="Select multiple dates" readonly inputId="demo-calendar-multiple"/>
+          <ListInput type="datepicker" placeholder="Select multiple dates" readonly calendarParams={{ dateFormat: 'M dd yyyy', multiple: true }}/>
         </List>
 
         <BlockTitle>Range Picker</BlockTitle>
         <List noHairlinesMd>
-          <ListInput type="text" placeholder="Select date range" readonly inputId="demo-calendar-range"/>
+          <ListInput type="datepicker" placeholder="Select date range" readonly calendarParams={{ dateFormat: 'M dd yyyy', rangePicker: true }} />
         </List>
 
         <BlockTitle>Open in Modal</BlockTitle>
         <List noHairlinesMd>
-          <ListInput type="text" placeholder="Select date" readonly inputId="demo-calendar-modal"/>
+          <ListInput type="datepicker" placeholder="Select date" readonly calendarParams={{openIn: 'customModal', header: true, footer: true, dateFormat: 'MM dd yyyy'}} />
         </List>
 
         <BlockTitle>Calendar Page</BlockTitle>
@@ -52,9 +52,10 @@ export default class extends React.Component {
         <Block className="no-padding">
           <div id="demo-calendar-inline-container"></div>
         </Block>
+
         <BlockTitle>Jalali Calendar</BlockTitle>
         <List noHairlinesMd>
-          <ListInput type="text" placeholder="Your birth date in Jalali" readonly inputId="demo-jcalendar-default"/>
+          <ListInput type="datepicker" placeholder="Your birth date in Jalali" readonly calendarParams={{calendarType: 'jalali'}} />
         </List>
       </Page>
     );
@@ -63,40 +64,7 @@ export default class extends React.Component {
     const self = this;
     const app = self.$f7;
     const $ = self.$$;
-    // Default
-    self.calendarDefault = app.calendar.create({
-      inputEl: '#demo-calendar-default',
-    });
-    // Jalali
-    self.jcalendarDefault = app.calendar.create({
-      calendarType: 'jalali',
-      inputEl: '#demo-jcalendar-default',
-    });
-    // With custom date format
-    self.calendarDateFormat = app.calendar.create({
-      inputEl: '#demo-calendar-date-format',
-      dateFormat: 'DD, MM dd, yyyy',
-    });
-    // With multiple values
-    self.calendarMultiple = app.calendar.create({
-      inputEl: '#demo-calendar-multiple',
-      dateFormat: 'M dd yyyy',
-      multiple: true,
-    });
-    // Range Picker
-    self.calendarRange = app.calendar.create({
-      inputEl: '#demo-calendar-range',
-      dateFormat: 'M dd yyyy',
-      rangePicker: true,
-    });
-    // Custom modal
-    self.calendarModal = app.calendar.create({
-      inputEl: '#demo-calendar-modal',
-      openIn: 'customModal',
-      header: true,
-      footer: true,
-      dateFormat: 'MM dd yyyy',
-    });
+
     // Inline with custom toolbar
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     self.calendarInline = app.calendar.create({
@@ -135,12 +103,6 @@ export default class extends React.Component {
   }
   onPageBeforeRemove() {
     const self = this;
-    self.calendarDefault.destroy();
-    self.jcalendarDefault.destroy();
-    self.calendarDateFormat.destroy();
-    self.calendarMultiple.destroy();
-    self.calendarRange.destroy();
-    self.calendarModal.destroy();
     self.calendarInline.destroy();
   }
 };
