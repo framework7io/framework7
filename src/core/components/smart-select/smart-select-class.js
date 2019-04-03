@@ -175,6 +175,7 @@ class SmartSelect extends Framework7Class {
       ss.selectEl.value = newValue;
     }
     ss.$valueEl.text(optionText.join(', '));
+    return ss;
   }
 
   getValue() {
@@ -454,6 +455,28 @@ class SmartSelect extends Framework7Class {
     return popoverHtml;
   }
 
+  scrollToSelectedItem() {
+    const ss = this;
+    const { params, $containerEl } = ss;
+    if (!ss.opened) return ss;
+    if (params.virtualList) {
+      let selectedIndex;
+      ss.vl.items.forEach((item, index) => {
+        if (typeof selectedIndex === 'undefined' && item.selected) {
+          selectedIndex = index;
+        }
+      });
+      if (typeof selectedIndex !== 'undefined') {
+        ss.vl.scrollToItem(selectedIndex);
+      }
+    } else {
+      const $selectedItemEl = $containerEl.find('input:checked').parents('li');
+      const $pageContentEl = $containerEl.find('.page-content');
+      $pageContentEl.scrollTop($selectedItemEl.offset().top - $pageContentEl.offset().top - parseInt($pageContentEl.css('padding-top'), 10));
+    }
+    return ss;
+  }
+
   onOpen(type, containerEl) {
     const ss = this;
     const app = ss.app;
@@ -474,6 +497,9 @@ class SmartSelect extends Framework7Class {
           return false;
         },
       });
+    }
+    if (ss.params.scrollToSelectedItem) {
+      ss.scrollToSelectedItem();
     }
 
     // Init SB
