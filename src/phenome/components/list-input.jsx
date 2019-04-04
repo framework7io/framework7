@@ -182,8 +182,11 @@ export default {
         else inputValue = domValue;
       }
       const valueProps = {};
-      if ('value' in props) valueProps.value = inputValue;
-      if ('defaultValue' in props) valueProps.defaultValue = defaultValue;
+      if (type !== 'datepicker') {
+        if ('value' in props) valueProps.value = inputValue;
+        if ('defaultValue' in props) valueProps.defaultValue = defaultValue;
+      }
+
       if (process.env.COMPILER === 'react') {
         input = (
           <InputTag
