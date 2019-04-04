@@ -221,7 +221,7 @@ class ListIndex extends Framework7Class {
   // eslint-disable-next-line
   scrollListToIndex(itemContent, itemIndex) {
     const index = this;
-    const { $listEl, $pageContentEl } = index;
+    const { $listEl, $pageContentEl, app } = index;
     if (!$listEl || !$pageContentEl || $pageContentEl.length === 0) return index;
 
     let $scrollToEl;
@@ -235,9 +235,16 @@ class ListIndex extends Framework7Class {
     if (!$scrollToEl || $scrollToEl.length === 0) return index;
 
     const parentTop = $scrollToEl.parent().offset().top;
-    const paddingTop = parseInt($pageContentEl.css('padding-top'), 10);
+    let paddingTop = parseInt($pageContentEl.css('padding-top'), 10);
     const scrollTop = $pageContentEl[0].scrollTop;
     const scrollToElTop = $scrollToEl.offset().top;
+    if ($pageContentEl.parents('.page-with-navbar-large').length) {
+      const navbarInnerEl = app.navbar.getElByPage($pageContentEl.parents('.page-with-navbar-large').eq(0));
+      const $titleLargeEl = $(navbarInnerEl).find('.title-large');
+      if ($titleLargeEl.length) {
+        paddingTop -= $titleLargeEl[0].offsetHeight || 0;
+      }
+    }
 
     if (parentTop <= paddingTop) {
       $pageContentEl.scrollTop((parentTop + scrollTop) - paddingTop);

@@ -51,6 +51,8 @@ export namespace SmartSelect {
     virtualList?: boolean
     /** Virtual list item height. If number - list item height in px. If function then function should return item height */
     virtualListHeight?: number | Function
+    /** When enabled it will scroll smart select content to first selected item on open (default false) */
+    scrollToSelectedItem?: boolean
     /** Smart select page form color theme. One of the default colors */
     formColorTheme?: string
     /** Smart select navbar color theme. One of the default colors */
@@ -104,6 +106,12 @@ export namespace SmartSelect {
     /** Smart Select parameters */
     params : Parameters
 
+    /** Scroll smart select content to first selected item */
+    scrollToSelectedItem(): SmartSelect
+    /** Set new smart select value. In case of select is multiple it must be an array with new values */
+    setValue(value: string | number | any[]): SmartSelect
+    /** Returns smart select value. In case of select is multiple it returns array with selected values */
+    getValue(): string | number | any[]
     /** Open smart select. */
     open() : SmartSelect
     /** Close smart select. */

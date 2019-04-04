@@ -1,5 +1,5 @@
 /**
- * Framework7 4.2.0
+ * Framework7 4.2.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 20, 2019
+ * Released on: April 4, 2019
  */
 
 /*====================
@@ -8651,7 +8651,7 @@ html.device-android-4 .accordion-item-content {
   flex-shrink: 0;
 }
 .tabs-animated-wrap.not-animated > .tabs {
-  transition-duration: 300ms;
+  transition-duration: 0ms;
 }
 .tabs-swipeable-wrap {
   height: 100%;
@@ -9715,6 +9715,7 @@ textarea {
 .list input[type="datetime-local"] {
   max-width: 50vw;
 }
+.list input[type="time"],
 .list input[type="date"],
 .list input[type="datetime-local"] {
   line-height: var(--f7-input-height);
@@ -14650,7 +14651,7 @@ label.item-radio.disabled,
 .md .page > .searchbar,
 .md .subnavbar .searchbar,
 .md .searchbar-expandable {
-  --f7-searchbar-input-extra-padding-left: 17px + 8px;
+  --f7-searchbar-input-extra-padding-left: calc(17px + 8px);
 }
 .md .page > .searchbar .searchbar-icon,
 .md .subnavbar .searchbar .searchbar-icon,
@@ -16956,7 +16957,7 @@ button.swiper-pagination-bullet {
   overflow: hidden;
 }
 .searchbar-input-wrap .autocomplete-dropdown .item-content {
-  padding-right: var(--f7-searchbar-input-padding-left);
+  padding-right: var(--f7-searchbar-input-padding-horizontal);
 }
 .list .item-content-dropdown-expanded .item-title.item-label {
   width: 0;
@@ -16983,6 +16984,10 @@ button.swiper-pagination-bullet {
 }
 .md .autocomplete-page .navbar .autocomplete-preloader {
   margin-left: 8px;
+}
+.md .autocomplete-popup .navbar .autocomplete-preloader {
+  margin-right: 8px;
+  margin-left: 16px;
 }
 .md .autocomplete-dropdown .autocomplete-preloader {
   left: 16px;

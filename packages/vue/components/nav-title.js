@@ -24,7 +24,7 @@ export default {
     } = props;
     let subtitleEl;
 
-    if (self.subtitle) {
+    if (subtitle) {
       subtitleEl = _h('span', {
         class: 'subtitle'
       }, [subtitle]);

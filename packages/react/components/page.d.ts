@@ -77,5 +77,7 @@ declare class F7Page extends React.Component<F7Page.Props, {}> {
   onPageAfterOut(event? : any) : unknown
   onPageAfterIn(event? : any) : unknown
   onPageBeforeRemove(event? : any) : unknown
+  onCardOpen() : unknown
+  onCardClose() : unknown
 }
 export default F7Page;
