@@ -64,10 +64,11 @@ export default {
 
       // Common opener settings
       containerEl: null,
-      openIn: 'popover', // or 'popover' or 'sheet' or 'popup' or 'auto'
-      openInPhone: 'popup', // or 'popover' or 'sheet' or 'popup'
+      openIn: 'popover', // or 'popover' or 'sheet' or 'popup' or 'page' or 'auto'
+      openInPhone: 'popup', // or 'popover' or 'sheet' or 'popup' or 'page'
       formatValue: null,
       targetEl: null,
+      targetElSetBackgroundColor: false,
       inputEl: null,
       inputReadOnly: true,
       closeByOutsideClick: true,
@@ -77,7 +78,8 @@ export default {
       toolbarCloseText: 'Done',
       navbarPopup: true,
       navbarCloseText: 'Done',
-      navbarTitle: 'Color',
+      navbarTitleText: 'Color',
+      navbarBackLinkText: 'Back',
       cssClass: null,
       routableModals: true,
       view: null,

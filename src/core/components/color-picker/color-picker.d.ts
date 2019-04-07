@@ -103,7 +103,7 @@ export namespace ColorPicker {
     alphaLabelText?: string
     /** String with CSS selector or HTMLElement where to place generated Color Picker HTML. Use only for inline Color Picker. */
     containerEl?: HTMLElement | CSSSelector
-    /** Can be auto, popover (to open Color Picker in popover), sheet (to open in sheet modal) or popup (to open in popup). In case of auto will open in modal specified in openInPhone parameter on small screens and in popover on large screens. (default popover) */
+    /** Can be "auto", "popover" (to open Color Picker in popover), "sheet" (to open in sheet modal) or "popup" (to open in popup) or "page" (to open in page). In case of auto will open in modal specified in openInPhone parameter on small screens and in popover on large screens. (default popover) */
     openIn?: string
     /** Defines in what type of modal Color Picker will be opened on phone (small screen size) when openIn is set to auto (default popup) */
     openPhone?: string
@@ -111,6 +111,8 @@ export namespace ColorPicker {
     inputEl?: HTMLElement | CSSSelector
     /** String with CSS selector or HTMLElement with related target element. Popover will be opened around this element */
     targetEl?: HTMLElement | CSSSelector
+    /** When enabled it will set background color on targetEl (if passed) */
+    targetElSetBackgroundColor: boolean
     /** Scroll viewport (page-content) to input when Color Picker opened. (default true) */
     scrollToInput?: boolean
     /** Sets "readonly" attribute on specified input. (default true) */
@@ -128,9 +130,11 @@ export namespace ColorPicker {
     /** Enables Color Picker navbar when opened in Popup. (default true) */
     navbarPopup?: boolean
     /** Text for Done/Close navbar button. (default Done) */
-    navbarCloseText: 'Done',
+    navbarCloseText: string,
     /** Navbar title text. (default Color) */
-    navbarTitle: 'Color',
+    navbarTitleText: string,
+    /** Navbar's back link text (when opened in page). (default Back) */
+    navbarBackLinkText: string,
     /** Will add opened Color Picker to router history which gives ability to close Color Picker by going back in router history and set current route to the Color Picker modal. (default true) */
     routableModals?: boolean
     /** Color Picker modal URL that will be set as a current route. (default color/) */

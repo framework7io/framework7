@@ -29,7 +29,8 @@
   }
 }
 .color-picker-popover,
-.color-picker-popup {
+.color-picker-popup,
+.color-picker-page {
   .color-picker {
     height: 100%;
     .toolbar {
@@ -60,7 +61,8 @@
 
 .color-picker-popup .page-content,
 .color-picker-popover .page-content,
-.color-picker-sheet-modal .page-content {
+.color-picker-sheet-modal .page-content,
+.color-picker-page .page-content {
   display: flex;
   justify-content: flex-start;
   align-items: stretch;
@@ -342,32 +344,24 @@
   .range-bar {
     .ltr({
       background-image: linear-gradient(to right,
-        hsl(0,100%,50%),
-        hsl(36, 100%, 50%),
-        hsl(72, 100%, 50%),
-        hsl(108, 100%, 50%),
-        hsl(144, 100%, 50%),
+        hsl(0, 100%, 50%),
+        hsl(60, 100%, 50%),
+        hsl(120, 100%, 50%),
         hsl(180, 100%, 50%),
-        hsl(216, 100%, 50%),
-        hsl(252, 100%, 50%),
-        hsl(288, 100%, 50%),
-        hsl(324, 100%, 50%),
-        hsl(359, 100%, 50%)
+        hsl(240, 100%, 50%),
+        hsl(300, 100%, 50%),
+        hsl(360, 100%, 50%)
       );
     });
     .rtl({
       background-image: linear-gradient(to left,
-        hsl(0,100%,50%),
-        hsl(36, 100%, 50%),
-        hsl(72, 100%, 50%),
-        hsl(108, 100%, 50%),
-        hsl(144, 100%, 50%),
+        hsl(0, 100%, 50%),
+        hsl(60, 100%, 50%),
+        hsl(120, 100%, 50%),
         hsl(180, 100%, 50%),
-        hsl(216, 100%, 50%),
-        hsl(252, 100%, 50%),
-        hsl(288, 100%, 50%),
-        hsl(324, 100%, 50%),
-        hsl(359, 100%, 50%)
+        hsl(240, 100%, 50%),
+        hsl(300, 100%, 50%),
+        hsl(360, 100%, 50%)
       );
     });
   }
@@ -414,8 +408,8 @@
 // Initial-Current Colors
 .color-picker-module-initial-current-colors,
 .color-picker-module-current-color {
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
   border-radius: var(--f7-color-picker-initial-current-color-border-radius);
   overflow: hidden;
   flex-shrink: 0;

@@ -84,6 +84,7 @@ class ColorPicker extends Framework7Class {
       self.open();
     }
     function onHtmlClick(e) {
+      if (self.params.openIn === 'page') return;
       const $clickTargetEl = $(e.target);
       if (!self.opened || self.closing) return;
       if ($clickTargetEl.closest('[class*="backdrop"]').length) return;
@@ -171,7 +172,7 @@ class ColorPicker extends Framework7Class {
     ];
   }
 
-  setValue(value, updateModules = true) {
+  setValue(value = {}, updateModules = true) {
     const self = this;
     if (typeof value === 'undefined') return;
 
@@ -184,10 +185,27 @@ class ColorPicker extends Framework7Class {
       hue,
     } = (self.value || {});
 
+    const needChangeEvent = self.value || (!self.value && !self.params.value);
     let valueChanged;
+    Object.keys(value).forEach((k) => {
+      if (!self.value || typeof self.value[k] === 'undefined') {
+        valueChanged = true;
+        return;
+      }
+      const v = value[k];
+      if (Array.isArray(v)) {
+        v.forEach((subV, subIndex) => {
+          if (subV !== self.value[k][subIndex]) {
+            valueChanged = true;
+          }
+        });
+      } else if (v !== self.value[k]) {
+        valueChanged = true;
+      }
+    });
+    if (!valueChanged) return;
 
     if (value.rgb) {
-      valueChanged = true;
       const [r, g, b, a = alpha] = value.rgb;
       rgb = [r, g, b];
       hex = Utils.colorRgbToHex(...rgb);
@@ -200,7 +218,6 @@ class ColorPicker extends Framework7Class {
     }
 
     if (value.hsl) {
-      valueChanged = true;
       const [h, s, l, a = alpha] = value.hsl;
       hsl = [h, s, l];
       rgb = Utils.colorHslToRgb(...hsl);
@@ -213,7 +230,6 @@ class ColorPicker extends Framework7Class {
     }
 
     if (value.hsb) {
-      valueChanged = true;
       const [h, s, b, a = alpha] = value.hsb;
       hsb = [h, s, b];
       hsl = Utils.colorHsbToHsl(...hsb);
@@ -226,39 +242,29 @@ class ColorPicker extends Framework7Class {
     }
 
     if (value.hex) {
-      if (value.hex !== hex) {
-        valueChanged = true;
-        rgb = Utils.colorHexToRgb(value.hex);
-        hex = Utils.colorRgbToHex(...rgb);
-        hsl = Utils.colorRgbToHsl(...rgb);
-        hsb = Utils.colorHslToHsb(...hsl);
-        hsl = self.normalizeHsValues(hsl);
-        hsb = self.normalizeHsValues(hsb);
-        hue = hsb[0];
-      }
+      rgb = Utils.colorHexToRgb(value.hex);
+      hex = Utils.colorRgbToHex(...rgb);
+      hsl = Utils.colorRgbToHsl(...rgb);
+      hsb = Utils.colorHslToHsb(...hsl);
+      hsl = self.normalizeHsValues(hsl);
+      hsb = self.normalizeHsValues(hsb);
+      hue = hsb[0];
     }
 
     if (typeof value.alpha !== 'undefined') {
-      if (alpha !== value.alpha) {
-        valueChanged = true;
-        alpha = value.alpha;
-      }
+      alpha = value.alpha;
     }
 
     if (typeof value.hue !== 'undefined') {
-      if (hue !== value.hue) {
-        valueChanged = true;
-        const [h, s, l] = hsl; // eslint-disable-line
-        hsl = [value.hue, s, l];
-        hsb = Utils.colorHslToHsb(...hsl);
-        rgb = Utils.colorHslToRgb(...hsl);
-        hex = Utils.colorRgbToHex(...rgb);
-        hsl = self.normalizeHsValues(hsl);
-        hsb = self.normalizeHsValues(hsb);
-        hue = hsb[0];
-      }
+      const [h, s, l] = hsl; // eslint-disable-line
+      hsl = [value.hue, s, l];
+      hsb = Utils.colorHslToHsb(...hsl);
+      rgb = Utils.colorHslToRgb(...hsl);
+      hex = Utils.colorRgbToHex(...rgb);
+      hsl = self.normalizeHsValues(hsl);
+      hsb = self.normalizeHsValues(hsb);
+      hue = hsb[0];
     }
-    if (!valueChanged) return;
     self.value = {
       hex,
       alpha,
@@ -268,7 +274,7 @@ class ColorPicker extends Framework7Class {
       hsb,
     };
     if (!self.initialValue) self.initialValue = Utils.extend({}, self.value);
-    self.updateValue();
+    self.updateValue(needChangeEvent);
     if (self.opened && updateModules) {
       self.updateModules();
     }
@@ -279,15 +285,25 @@ class ColorPicker extends Framework7Class {
     return self.value;
   }
 
-  updateValue() {
+  updateValue(fireEvents = true) {
     const self = this;
-    const { $inputEl, value } = self;
-    self.emit('local::change colorPickerChange', self, value);
+    const { $inputEl, value, $targetEl } = self;
+    if ($targetEl && self.params.targetElSetBackgroundColor) {
+      const { rgb, alpha } = value;
+      $targetEl.css('background-color', `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`);
+    }
+    if (fireEvents) {
+      console.log('changed');
+      self.emit('local::change colorPickerChange', self, value);
+    }
+
     if ($inputEl && $inputEl.length) {
       const inputValue = self.formatValue(value);
       if ($inputEl && $inputEl.length) {
         $inputEl.val(inputValue);
-        $inputEl.trigger('change');
+        if (fireEvents) {
+          $inputEl.trigger('change');
+        }
       }
     }
   }
@@ -323,13 +339,24 @@ class ColorPicker extends Framework7Class {
     if (self.params.renderNavbar) {
       return self.params.renderNavbar.call(self, self);
     }
+    const { openIn, navbarTitleText, navbarBackLinkText, navbarCloseText } = self.params;
     return `
-    <div class="navbar no-shadow">
-      <div class="navbar-inner">
-        <div class="title">${self.params.navbarTitle}</div>
-        <div class="right">
-          <a href="#" class="link popup-close" data-popup=".color-picker-popup">${self.params.navbarCloseText}</a>
+    <div class="navbar">
+      <div class="navbar-inner sliding">
+        ${openIn === 'page' ? `
+        <div class="left">
+          <a class="link back" href="#">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">${navbarBackLinkText}</span>
+          </a>
         </div>
+        ` : ''}
+        <div class="title">${navbarTitleText}</div>
+        ${openIn !== 'page' ? `
+        <div class="right">
+          <a href="#" class="link popup-close" data-popup=".color-picker-popup">${navbarCloseText}</a>
+        </div>
+        ` : ''}
       </div>
     </div>
   `.trim();
@@ -419,17 +446,36 @@ class ColorPicker extends Framework7Class {
     return popupHtml;
   }
 
+  renderPage() {
+    const self = this;
+    const { cssClass, groupedModules } = self.params;
+    const pageHtml = `
+    <div class="page color-picker-page" data-name="color-picker-page">
+      ${self.renderNavbar()}
+      <div class="color-picker ${groupedModules ? 'color-picker-grouped-modules' : ''} ${cssClass || ''}">
+        <div class="page-content">
+          ${self.renderPicker()}
+        </div>
+      </div>
+    </div>
+  `.trim();
+    return pageHtml;
+  }
+
+  // eslint-disable-next-line
   render() {
     const self = this;
     const { params } = self;
     if (params.render) return params.render.call(self);
-    if (!self.inline) {
-      const modalType = self.getModalType();
-      if (modalType === 'popover') return self.renderPopover();
-      if (modalType === 'sheet') return self.renderSheet();
-      if (modalType === 'popup') return self.renderPopup();
+    if (self.inline) return self.renderInline();
+    if (params.openIn === 'page') {
+      return self.renderPage();
     }
-    return self.renderInline();
+
+    const modalType = self.getModalType();
+    if (modalType === 'popover') return self.renderPopover();
+    if (modalType === 'sheet') return self.renderSheet();
+    if (modalType === 'popup') return self.renderPopup();
   }
 
   onOpen() {
@@ -552,46 +598,84 @@ class ColorPicker extends Framework7Class {
       self.onOpened();
       return;
     }
-    const modalType = self.getModalType();
 
-    const modalContent = self.render();
+    const colorPickerContent = self.render();
 
-    let backdrop = self.params.backdrop;
-    if (backdrop === null || typeof backdrop === 'undefined') {
-      if (modalType === 'popover' && app.params.popover.backdrop !== false) backdrop = true;
-      if (modalType === 'popup') backdrop = true;
-    }
-    const modalParams = {
-      targetEl: ($targetEl || $inputEl),
-      scrollToEl: self.params.scrollToInput ? ($targetEl || $inputEl) : undefined,
-      content: modalContent,
-      backdrop,
-      closeByBackdropClick: self.params.closeByBackdropClick,
-      on: {
-        open() {
-          const modal = this;
-          self.modal = modal;
-          self.$el = modalType === 'popover' || modalType === 'popup' ? modal.$el.find('.color-picker') : modal.$el;
-          self.$el[0].f7ColorPicker = self;
-          self.onOpen();
-        },
-        opened() { self.onOpened(); },
-        close() { self.onClose(); },
-        closed() { self.onClosed(); },
-      },
-    };
-    if (self.params.routableModals) {
+    if (params.openIn === 'page') {
       self.view.router.navigate({
         url: self.url,
         route: {
+          content: colorPickerContent,
           path: self.url,
-          [modalType]: modalParams,
+          on: {
+            pageBeforeIn(e, page) {
+              self.$el = page.$el.find('.color-picker');
+              self.$el[0].f7ColorPicker = self;
+              self.onOpen();
+            },
+            pageAfterIn() {
+              self.onOpened();
+            },
+            pageBeforeOut() {
+              self.onClose();
+            },
+            pageAfterOut() {
+              self.onClosed();
+              if (self.$el && self.$el[0]) {
+                self.$el[0].f7ColorPicker = null;
+                delete self.$el[0].f7ColorPicker;
+              }
+            },
+          },
         },
       });
     } else {
-      self.modal = app[modalType].create(modalParams);
-      self.modal.open();
+      const modalType = self.getModalType();
+      let backdrop = params.backdrop;
+      if (backdrop === null || typeof backdrop === 'undefined') {
+        if (modalType === 'popover' && app.params.popover.backdrop !== false) backdrop = true;
+        if (modalType === 'popup') backdrop = true;
+      }
+      const modalParams = {
+        targetEl: ($targetEl || $inputEl),
+        scrollToEl: params.scrollToInput ? ($targetEl || $inputEl) : undefined,
+        content: colorPickerContent,
+        backdrop,
+        closeByBackdropClick: params.closeByBackdropClick,
+        on: {
+          open() {
+            const modal = this;
+            self.modal = modal;
+            self.$el = modalType === 'popover' || modalType === 'popup' ? modal.$el.find('.color-picker') : modal.$el;
+            self.$el[0].f7ColorPicker = self;
+            self.onOpen();
+          },
+          opened() { self.onOpened(); },
+          close() { self.onClose(); },
+          closed() {
+            self.onClosed();
+            if (self.$el && self.$el[0]) {
+              self.$el[0].f7ColorPicker = null;
+              delete self.$el[0].f7ColorPicker;
+            }
+          },
+        },
+      };
+      if (params.routableModals) {
+        self.view.router.navigate({
+          url: self.url,
+          route: {
+            path: self.url,
+            [modalType]: modalParams,
+          },
+        });
+      } else {
+        self.modal = app[modalType].create(modalParams);
+        self.modal.open();
+      }
     }
+
+
   }
 
   close() {
