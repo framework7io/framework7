@@ -127,13 +127,13 @@ export default class extends React.Component {
               sliderLabel: true,
               targetEl: '.rgba-picker-target',
               formatValue(value) {
-                return `rgba(${value.rgb.join(', ')}, ${value.alpha})`;
+                return `rgba(${value.rgba.join(', ')})`;
               },
             }}
           >
             <i
               slot="media"
-              style={{backgroundColor: this.state.rgbaPickerValue.rgb ? `rgba(${this.state.rgbaPickerValue.rgb.join(', ')}, ${this.state.rgbaPickerValue.alpha})` : this.state.rgbaPickerValue.hex}}
+              style={{backgroundColor: this.state.rgbaPickerValue.rgba ? `rgba(${this.state.rgbaPickerValue.rgba.join(', ')})` : this.state.rgbaPickerValue.hex}}
               className="icon demo-list-icon rgba-picker-target"
             />
           </ListInput>
@@ -288,13 +288,13 @@ export default class extends React.Component {
               ],
               targetEl: '.pro-picker-target',
               formatValue(value) {
-                return `rgba(${value.rgb.join(', ')}, ${value.alpha})`;
+                return `rgba(${value.rgba.join(', ')})`;
               },
             }}
           >
             <i
               slot="media"
-              style={{backgroundColor: this.state.proPickerValue.rgb ? `rgba(${this.state.proPickerValue.rgb.join(', ')}, ${this.state.proPickerValue.alpha})` : this.state.proPickerValue.hex}}
+              style={{backgroundColor: this.state.proPickerValue.rgba ? `rgba(${this.state.proPickerValue.rgba.join(', ')})` : this.state.proPickerValue.hex}}
               className="icon demo-list-icon pro-picker-target"
             />
           </ListInput>
@@ -310,7 +310,9 @@ export default class extends React.Component {
               Hue: {this.state.inlinePickerValue.hue}<br />
               RGB: {this.state.inlinePickerValue.rgb.join(', ')}<br />
               HSL: {this.state.inlinePickerValue.hsl.join(', ')}<br />
-              HSB: {this.state.inlinePickerValue.hsb.join(', ')}
+              HSB: {this.state.inlinePickerValue.hsb.join(', ')}<br />
+              RGBA: {this.state.inlinePickerValue.rgba.join(', ')}<br />
+              HSLA: {this.state.inlinePickerValue.hsla.join(', ')}
             </div>
           )}
           <div id="demo-color-picker-inline"></div>

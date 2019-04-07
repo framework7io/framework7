@@ -88,13 +88,13 @@
           sliderLabel: true,
           targetEl: '.rgba-picker-target',
           formatValue(value) {
-            return `rgba(${value.rgb.join(', ')}, ${value.alpha})`;
+            return `rgba(${value.rgba.join(', ')})`;
           },
         }"
       >
         <i
           slot="media"
-          :style="`background-color: ${rgbaPickerValue.rgb ? `rgba(${rgbaPickerValue.rgb.join(', ')}, ${rgbaPickerValue.alpha})` : rgbaPickerValue.hex}`"
+          :style="`background-color: ${rgbaPickerValue.rgba ? `rgba(${rgbaPickerValue.rgba.join(', ')})` : rgbaPickerValue.hex}`"
           class="icon demo-list-icon rgba-picker-target"
         ></i>
       </f7-list-input>
@@ -249,13 +249,13 @@
           ],
           targetEl: '.pro-picker-target',
           formatValue(value) {
-            return `rgba(${value.rgb.join(', ')}, ${value.alpha})`;
+            return `rgba(${value.rgba.join(', ')})`;
           },
         }"
       >
         <i
           slot="media"
-          :style="`background-color: ${proPickerValue.rgb ? `rgba(${proPickerValue.rgb.join(', ')}, ${proPickerValue.alpha})` : proPickerValue.hex}`"
+          :style="`background-color: ${proPickerValue.rgba ? `rgba(${proPickerValue.rgba.join(', ')})` : proPickerValue.hex}`"
           class="icon demo-list-icon pro-picker-target"
         ></i>
       </f7-list-input>
@@ -270,7 +270,9 @@
         Hue: {{inlinePickerValue.hue}}<br>
         RGB: {{inlinePickerValue.rgb.join(', ')}}<br>
         HSL: {{inlinePickerValue.hsl.join(', ')}}<br>
-        HSB: {{inlinePickerValue.hsb.join(', ')}}
+        HSB: {{inlinePickerValue.hsb.join(', ')}}<br>
+        RGBA: {{inlinePickerValue.rgba.join(', ')}}<br>
+        HSLA: {{inlinePickerValue.hsla.join(', ')}}
       </div>
       <div id="demo-color-picker-inline"></div>
     </div>

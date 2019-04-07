@@ -15,59 +15,7 @@
       <div class="block block-strong">
         <p>Framework7 comes with ultimate modular Color Picker component that allows to create color picker with limitless combinations of color modules.</p>
       </div>
-      <div class="block-title">Color Picker Modules</div>
-      <div class="block block-strong no-padding">
-        <div class="data-table">
-          <table>
-            <tbody>
-              <tr>
-                <th class="label-cell">current-color</th>
-                <td>currently selected color</td>
-              </tr>
-              <tr>
-                <th class="label-cell">initial-current-color</th>
-                <td>initial color and currently selected colors</td>
-              </tr>
-              <tr>
-                <th class="label-cell">wheel</th>
-                <td>HSB(V) color wheel</td>
-              </tr>
-              <tr>
-                <th class="label-cell">sb-spectrum</th>
-                <td>SB (saturation-brightness) spectrum</td>
-              </tr>
-              <tr>
-                <th class="label-cell">hex</th>
-                <td>HEX color value</td>
-              </tr>
-              <tr>
-                <th class="label-cell">rgb-sliders</th>
-                <td>RGB (red, green, blue) sliders</td>
-              </tr>
-              <tr>
-                <th class="label-cell">rgb-bar</th>
-                <td>RGB (red, green, blue) bars (vertical sliders)</td>
-              </tr>
-              <tr>
-                <th class="label-cell">hsb-sliders</th>
-                <td>HSB (hue, saturation, brightness) sliders</td>
-              </tr>
-              <tr>
-                <th class="label-cell">hue-slider</th>
-                <td>Hue slider</td>
-              </tr>
-              <tr>
-                <th class="label-cell">alpha-slider</th>
-                <td>Alpha slider</td>
-              </tr>
-              <tr>
-                <th class="label-cell">palette</th>
-                <td>predefined colors palette to select from</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+
       <div class="block-title">Color Wheel</div>
       <div class="block-header">Minimal example with color wheel in Popover</div>
       <div class="list no-hairlines-md">
@@ -249,7 +197,9 @@
           Hue: {{colorPickerInlineValue.hue}}<br>
           RGB: {{join colorPickerInlineValue.rgb delimeter=", "}}<br>
           HSL: {{join colorPickerInlineValue.hsl delimeter=", "}}<br>
-          HSB: {{join colorPickerInlineValue.hsb delimeter=", "}}
+          HSB: {{join colorPickerInlineValue.hsb delimeter=", "}}<br>
+          RGBA: {{join colorPickerInlineValue.rgba delimeter=", "}}<br>
+          HSLA: {{join colorPickerInlineValue.hsla delimeter=", "}}
         </div>
         {{/if}}
         <div id="demo-color-picker-inline"></div>
@@ -315,7 +265,7 @@
             hex: '#ff00ff',
           },
           formatValue: function (value) {
-            return 'rgba(' + value.rgb.join(', ') + ', ' + value.alpha + ')';
+            return 'rgba(' + value.rgba.join(', ') + ')';
           },
         });
         self.colorPickerHsb = app.colorPicker.create({
@@ -411,7 +361,7 @@
             ['#FFF3E0', '#FFE0B2', '#FFCC80', '#FFB74D', '#FFA726', '#FF9800', '#FB8C00', '#F57C00', '#EF6C00', '#E65100'],
           ],
           formatValue: function (value) {
-            return 'rgba(' + value.rgb.join(', ') + ', ' + value.alpha + ')';
+            return 'rgba(' + value.rgba.join(', ') + ')';
           },
           value: {
             hex: '#00ffff',
