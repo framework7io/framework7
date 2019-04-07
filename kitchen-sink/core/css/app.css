@@ -229,8 +229,14 @@ div.demo-lazy {
   color: #8e8e93;
 }
 /* Panels Demo */
+.panel {
+  min-width: 150px;
+  max-width: 90%;
+}
 .ios .panel-right.panel-active ~ .view-main:after,
-.ios .panel-right.panel-closing ~ .view-main:after {
+.ios .panel-right.panel-closing ~ .view-main:after,
+.aurora .panel-right.panel-active ~ .view-main:after,
+.aurora .panel-right.panel-closing ~ .view-main:after {
   content: '';
   height: 100%;
   width: 1px;
@@ -241,7 +247,9 @@ div.demo-lazy {
   z-index: 1000;
 }
 .ios .theme-dark .panel-right.panel-active ~ .view-main:after,
-.ios .theme-dark .panel-right.panel-closing ~ .view-main:after {
+.ios .theme-dark .panel-right.panel-closing ~ .view-main:after,
+.aurora .theme-dark .panel-right.panel-active ~ .view-main:after,
+.aurora .theme-dark .panel-right.panel-closing ~ .view-main:after {
   background: #282828;
 }
 

@@ -26,6 +26,8 @@ export namespace Panel {
     open(animate : boolean) : void
     /** Close panel. */
     close(animate : boolean) : void
+    /** Toggle panel */
+    toggle(animate : boolean) : void
     /** Destroy panel instance */
     destroy() : void
   }
@@ -39,6 +41,8 @@ export namespace Panel {
     side?: string
     /** Can be cover or reveal. If not passed then will be determined based on panel-cover or panel-reveal element classes. */
     effect?: string
+    /** Enables resizable panel */
+    resizable?: string
   }
 
   interface Events {
@@ -58,6 +62,8 @@ export namespace Panel {
     swipe: (panel : Panel, progress: number) => void
     /** Event will be triggered when it becomes visible/hidden when app width matches its breakpoint. As an argument event handler receives panel instance */
     breakpoint: (panel : Panel) => void
+    /** Event will be triggered right when resizable Panel resized */
+    resize: (panel : Panel, panelWidth: number) => void
     /** Event will be triggered right before Panel instance will be destroyed */
     beforeDestroy: (panel : Panel) => void
   }
@@ -79,6 +85,8 @@ export namespace Panel {
     'panel:swipe': () => void
     /** Event will be triggered when it becomes visible/hidden when app width matches its breakpoint */
     'panel:breakpoint': () => void
+    /** Event will be triggered right when resizable Panel resized */
+    'panel:resize': () => void
     /** Event will be triggered right before Panel instance will be destroyed */
     'panel:beforedestroy': () => void
   }
@@ -89,6 +97,8 @@ export namespace Panel {
       open(side?: 'left' | 'right', animate?: boolean) : boolean
       /** close panel */
       close(side?: 'left' | 'right', animate?: boolean) : boolean
+      /** toggle panel */
+      toggle(side?: 'left' | 'right', animate?: boolean) : boolean
       /** create new panel instance */
       create(parameters : Parameters) : Panel
       /** get Panel instance by specified side */
@@ -97,6 +107,10 @@ export namespace Panel {
       enableSwipe(side : 'left' | 'right') : void
       /** disable swipes for panel (swipe-to-close and swipe-to-open) */
       disableSwipe(side : 'left' | 'right') : void
+      /** makes panel resizable */
+      enableResizable(side : 'left' | 'right') : void
+      /** disable panel resizing */
+      disableResizable(side : 'left' | 'right') : void
       /** left panel instance */
       left : Panel
       /** right panel instance */
@@ -142,6 +156,8 @@ export namespace Panel {
     panelSwipe: (panel : Panel, progress: number) => void
     /** Event will be triggered when it becomes visible/hidden when app width matches its breakpoint. As an argument event handler receives panel instance */
     panelBreakpoint: (panel : Panel) => void
+    /** Event will be triggered right when resizable Panel resized */
+    panelResize: (panel : Panel, panelWidth: number) => void
     /** Event will be triggered right before Panel instance will be destroyed */
     panelBeforeDestroy: (panel : Panel) => void
   }

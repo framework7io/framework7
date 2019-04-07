@@ -10,10 +10,10 @@ export default function (props) {
   return (
     <App params={{ theme, routes }}>
       <Statusbar />
-      <Panel left cover>
+      <Panel left cover resizable>
         <View url="/panel-left/" linksView=".view-main" />
       </Panel>
-      <Panel right reveal>
+      <Panel right reveal resizable>
         <View url="/panel-right/"/>
       </Panel>
       <View url="/" main className="safe-areas" masterDetailBreakpoint={800} />

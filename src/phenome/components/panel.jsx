@@ -22,6 +22,7 @@ export default {
     left: Boolean,
     right: Boolean,
     opened: Boolean,
+    resizable: Boolean,
     ...Mixins.colorProps,
   },
   render() {
@@ -29,6 +30,7 @@ export default {
     const {
       id,
       style,
+      resizable,
     } = props;
     return (
       <div
@@ -38,6 +40,9 @@ export default {
         className={this.classes}
       >
         <slot />
+        {resizable && (
+          <div className="panel-resize-handler"></div>
+        )}
       </div>
     );
   },
@@ -45,7 +50,7 @@ export default {
     classes() {
       const self = this;
       const props = self.props;
-      const { left, reveal, className, opened } = props;
+      const { left, reveal, className, opened, resizable } = props;
       let { side, effect } = props;
       side = side || (left ? 'left' : 'right');
       effect = effect || (reveal ? 'reveal' : 'cover');
@@ -54,6 +59,7 @@ export default {
         'panel',
         {
           'panel-active': opened,
+          'panel-resizable': resizable,
           [`panel-${side}`]: side,
           [`panel-${effect}`]: effect,
         },
@@ -83,12 +89,13 @@ export default {
       'onPanelSwipe',
       'onPanelSwipeOpen',
       'onBreakpoint',
+      'onResize',
     ]);
   },
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
-    const { side, effect, opened, left, reveal } = self.props;
+    const { side, effect, opened, left, reveal, resizable } = self.props;
 
     if (el) {
       el.addEventListener('panel:open', self.onOpen);
@@ -99,6 +106,7 @@ export default {
       el.addEventListener('panel:swipe', self.onPanelSwipe);
       el.addEventListener('panel:swipeopen', self.onPanelSwipeOpen);
       el.addEventListener('panel:breakpoint', self.onBreakpoint);
+      el.addEventListener('panel:resize', self.onResize);
     }
 
     self.$f7ready(() => {
@@ -107,7 +115,7 @@ export default {
       if ($('.panel-backdrop').length === 0) {
         $('<div class="panel-backdrop"></div>').insertBefore(el);
       }
-      self.f7Panel = self.$f7.panel.create({ el });
+      self.f7Panel = self.$f7.panel.create({ el, resizable });
     });
 
     if (opened) {
@@ -135,6 +143,7 @@ export default {
     el.removeEventListener('panel:swipe', self.onPanelSwipe);
     el.removeEventListener('panel:swipeopen', self.onPanelSwipeOpen);
     el.removeEventListener('panel:breakpoint', self.onBreakpoint);
+    el.removeEventListener('panel:resize', self.onResize);
   },
   methods: {
     onOpen(event) {
@@ -160,6 +169,9 @@ export default {
     },
     onBreakpoint(event) {
       this.dispatchEvent('panel:breakpoint panelBreakpoint', event);
+    },
+    onResize(event) {
+      this.dispatchEvent('panel:resize panelResize', event);
     },
     open(animate) {
       const self = this;

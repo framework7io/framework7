@@ -2,6 +2,7 @@ import $ from 'dom7';
 import Utils from '../../utils/utils';
 import Framework7Class from '../../utils/class';
 import SwipePanel from './swipe-panel';
+import ResizablePanel from './resizable-panel';
 
 class Panel extends Framework7Class {
   constructor(app, params = {}) {
@@ -49,6 +50,7 @@ class Panel extends Framework7Class {
       opened,
       $backdropEl,
       backdropEl: $backdropEl[0],
+      params,
     });
 
     // Install Modules
@@ -58,23 +60,6 @@ class Panel extends Framework7Class {
     panel.init();
 
     return panel;
-  }
-
-  init() {
-    const panel = this;
-    const app = panel.app;
-    if (app.params.panel[`${panel.side}Breakpoint`]) {
-      panel.initBreakpoints();
-    }
-    if (process.env.TARGET !== 'desktop') {
-      if (
-        (app.params.panel.swipe === panel.side)
-        || (app.params.panel.swipe === 'both')
-        || (app.params.panel.swipe && app.params.panel.swipe !== panel.side && app.params.panel.swipeCloseOpposite)
-      ) {
-        panel.initSwipePanel();
-      }
-    }
   }
 
   getViewEl() {
@@ -145,41 +130,55 @@ class Panel extends Framework7Class {
     }
   }
 
-  destroy() {
-    let panel = this;
+  initResizablePanel() {
+    ResizablePanel(this);
+  }
+
+  toggle(animate = true) {
+    const panel = this;
+    if (panel.opened) panel.close(animate);
+    else panel.open(animate);
+  }
+
+  onOpen() {
+    const panel = this;
+    panel.opened = true;
+
+    panel.$el.trigger('panel:beforeopen', panel);
+    panel.emit('local::beforeOpen panelBeforeOpen', panel);
+
+    panel.$el.trigger('panel:open', panel);
+    panel.emit('local::open panelOpen', panel);
+  }
+
+  onOpened() {
+    const panel = this;
     const app = panel.app;
+    app.panel.allowOpen = true;
 
-    if (!panel.$el) {
-      // Panel already destroyed
-      return;
-    }
+    panel.$el.trigger('panel:opened', panel);
+    panel.emit('local::opened panelOpened', panel);
+  }
 
-    panel.emit('local::beforeDestroy panelBeforeDestroy', panel);
-    panel.$el.trigger('panel:beforedestroy', panel);
+  onClose() {
+    const panel = this;
+    panel.opened = false;
+    panel.$el.addClass('panel-closing');
 
-    if (panel.resizeHandler) {
-      app.off('resize', panel.resizeHandler);
-    }
+    panel.$el.trigger('panel:beforeclose', panel);
+    panel.emit('local::beforeClose panelBeforeClose', panel);
 
-    if (panel.$el.hasClass('panel-visible-by-breakpoint')) {
-      const $viewEl = $(panel.getViewEl());
-      panel.$el.css('display', '').removeClass('panel-visible-by-breakpoint panel-active');
-      $viewEl.css({
-        [`margin-${panel.side}`]: '',
-      });
-      app.emit('local::breakpoint panelBreakpoint');
-      panel.$el.trigger('panel:breakpoint', panel);
-    }
+    panel.$el.trigger('panel:close', panel);
+    panel.emit('local::close panelClose', panel);
+  }
 
-    panel.$el.trigger('panel:destroy', panel);
-    panel.emit('local::destroy panelDestroy');
-    delete app.panel[panel.side];
-    if (panel.el) {
-      panel.el.f7Panel = null;
-      delete panel.el.f7Panel;
-    }
-    Utils.deleteProps(panel);
-    panel = null;
+  onClosed() {
+    const panel = this;
+    const app = panel.app;
+    app.panel.allowOpen = true;
+    panel.$el.removeClass('panel-closing');
+    panel.$el.trigger('panel:closed', panel);
+    panel.emit('local::closed panelClosed', panel);
   }
 
   open(animate = true) {
@@ -314,43 +313,61 @@ class Panel extends Framework7Class {
     return true;
   }
 
-  toggle(animate = true) {
-    const panel = this;
-    if (panel.opened) panel.close(animate);
-    else panel.open(animate);
-  }
-
-  onOpen() {
-    const panel = this;
-    panel.opened = true;
-    panel.$el.trigger('panel:open', panel);
-    panel.emit('local::open panelOpen', panel);
-  }
-
-  onOpened() {
+  init() {
     const panel = this;
     const app = panel.app;
-    app.panel.allowOpen = true;
-
-    panel.$el.trigger('panel:opened', panel);
-    panel.emit('local::opened panelOpened', panel);
+    if (app.params.panel[`${panel.side}Breakpoint`]) {
+      panel.initBreakpoints();
+    }
+    if (process.env.TARGET !== 'desktop') {
+      if (
+        (app.params.panel.swipe === panel.side)
+        || (app.params.panel.swipe === 'both')
+        || (app.params.panel.swipe && app.params.panel.swipe !== panel.side && app.params.panel.swipeCloseOpposite)
+      ) {
+        panel.initSwipePanel();
+      }
+    }
+    if (panel.params.resizable || panel.$el.hasClass('panel-resizable')) {
+      panel.initResizablePanel();
+    }
   }
 
-  onClose() {
-    const panel = this;
-    panel.opened = false;
-    panel.$el.addClass('panel-closing');
-    panel.$el.trigger('panel:close', panel);
-    panel.emit('local::close panelClose', panel);
-  }
-
-  onClosed() {
-    const panel = this;
+  destroy() {
+    let panel = this;
     const app = panel.app;
-    app.panel.allowOpen = true;
-    panel.$el.removeClass('panel-closing');
-    panel.$el.trigger('panel:closed', panel);
-    panel.emit('local::closed panelClosed', panel);
+
+    if (!panel.$el) {
+      // Panel already destroyed
+      return;
+    }
+
+    panel.emit('local::beforeDestroy panelBeforeDestroy', panel);
+    panel.$el.trigger('panel:beforedestroy', panel);
+
+    if (panel.resizeHandler) {
+      app.off('resize', panel.resizeHandler);
+    }
+
+    if (panel.$el.hasClass('panel-visible-by-breakpoint')) {
+      const $viewEl = $(panel.getViewEl());
+      panel.$el.css('display', '').removeClass('panel-visible-by-breakpoint panel-active');
+      $viewEl.css({
+        [`margin-${panel.side}`]: '',
+      });
+      app.emit('local::breakpoint panelBreakpoint');
+      panel.$el.trigger('panel:breakpoint', panel);
+    }
+
+    panel.$el.trigger('panel:destroy', panel);
+    panel.emit('local::destroy panelDestroy');
+    delete app.panel[panel.side];
+    if (panel.el) {
+      panel.el.f7Panel = null;
+      delete panel.el.f7Panel;
+    }
+    Utils.deleteProps(panel);
+    panel = null;
   }
 }
 

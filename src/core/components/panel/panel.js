@@ -29,6 +29,49 @@ export default {
   create() {
     const app = this;
     Utils.extend(app.panel, {
+      disableResizable(panel = 'both') {
+        let side;
+        let panels = [];
+        if (typeof panel === 'string') {
+          if (panel === 'both') {
+            side = 'both';
+            panels = [app.panel.left, app.panel.right];
+          } else {
+            side = panel;
+            panels.push(app.panel[side]);
+          }
+        } else {
+          panels = [panel];
+        }
+        panels.forEach((panelInstance) => {
+          panelInstance.resizable = false;
+          panelInstance.$el.removeClass('panel-resizable');
+        });
+      },
+      enableResizable(panel = 'both') {
+        let side;
+        let panels = [];
+        if (typeof panel === 'string') {
+          if (panel === 'both') {
+            side = 'both';
+            panels = [app.panel.left, app.panel.right];
+          } else {
+            side = panel;
+            panels.push(app.panel[side]);
+          }
+        } else {
+          panels = [panel];
+        }
+        panels.forEach((panelInstance) => {
+          if (!panelInstance) return;
+          if (!panelInstance.resizableInitialized) {
+            panelInstance.initResizablePanel();
+          } else {
+            panelInstance.resizable = true;
+            panelInstance.$el.addClass('panel-resizable');
+          }
+        });
+      },
       disableSwipe(panel = 'both') {
         let side;
         let panels = [];
@@ -44,7 +87,7 @@ export default {
           panels = [panel];
         }
         panels.forEach((panelInstance) => {
-          if (panelInstance) Utils.extend(panelInstance, { swipeable: false });
+          panelInstance.swipeable = false;
         });
       },
       enableSwipe(panel = 'both') {
@@ -67,16 +110,14 @@ export default {
         } else if (panel) {
           panels.push(panel);
         }
-        if (panels.length) {
-          panels.forEach((panelInstance) => {
-            if (!panelInstance) return;
-            if (!panelInstance.swipeInitialized) {
-              panelInstance.initSwipePanel();
-            } else {
-              Utils.extend(panelInstance, { swipeable: true });
-            }
-          });
-        }
+        panels.forEach((panelInstance) => {
+          if (!panelInstance) return;
+          if (!panelInstance.swipeInitialized) {
+            panelInstance.initSwipePanel();
+          } else {
+            panelInstance.swipeable = true;
+          }
+        });
       },
       create(params) {
         return new Panel(app, params);
