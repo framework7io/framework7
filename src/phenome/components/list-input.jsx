@@ -83,6 +83,7 @@ export default {
 
     // Datepicker
     calendarParams: Object,
+    colorPickerParams: Object,
 
     // Colors
     ...Mixins.colorProps,
@@ -160,10 +161,10 @@ export default {
     const isSortable = sortable || self.state.isSortable;
 
     const createInput = (InputTag, children) => {
-      const needsValue = type !== 'file' && type !== 'datepicker';
+      const needsValue = type !== 'file' && type !== 'datepicker' && type !== 'colorpicker';
       const needsType = InputTag === 'input';
       let inputType = type;
-      if (inputType === 'datepicker') {
+      if (inputType === 'datepicker' || inputType === 'colorpicker') {
         inputType = 'text';
       }
       const inputClassName = Utils.classNames(
@@ -182,7 +183,7 @@ export default {
         else inputValue = domValue;
       }
       const valueProps = {};
-      if (type !== 'datepicker') {
+      if (type !== 'datepicker' && type !== 'colorpicker') {
         if ('value' in props) valueProps.value = inputValue;
         if ('defaultValue' in props) valueProps.defaultValue = defaultValue;
       }
@@ -380,6 +381,9 @@ export default {
       if (self.f7Calendar) {
         self.f7Calendar.setValue(self.props.value);
       }
+      if (self.f7ColorPicker) {
+        self.f7ColorPicker.setValue(self.props.value);
+      }
     },
   },
   componentDidCreate() {
@@ -392,7 +396,7 @@ export default {
     if (!el && !itemContentEl) return;
 
     self.$f7ready((f7) => {
-      const { validate, validateOnBlur, resizable, value, defaultValue, type, calendarParams } = self.props;
+      const { validate, validateOnBlur, resizable, value, defaultValue, type, calendarParams, colorPickerParams } = self.props;
 
       const inputEl = self.refs.inputEl;
       if (!inputEl) return;
@@ -411,6 +415,18 @@ export default {
             },
           },
           ...(calendarParams || {}),
+        });
+      }
+      if (type === 'colorpicker') {
+        self.f7ColorPicker = f7.colorPicker.create({
+          inputEl,
+          value,
+          on: {
+            change(colorPicker, colorPickerValue) {
+              self.dispatchEvent('colorpicker:change colorPickerChange', colorPickerValue);
+            },
+          },
+          ...(colorPickerParams || {}),
         });
       }
       if (
@@ -472,7 +488,11 @@ export default {
     if (self.f7Calendar && self.f7Calendar.destroy) {
       self.f7Calendar.destroy();
     }
+    if (self.f7ColorPicker && self.f7ColorPicker.destroy) {
+      self.f7ColorPicker.destroy();
+    }
     delete self.f7Calendar;
+    delete self.f7ColorPicker;
   },
   methods: {
     domValue() {

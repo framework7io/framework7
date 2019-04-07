@@ -72,6 +72,7 @@ export default {
 
     // Datepicker
     calendarParams: Object,
+    colorPickerParams: Object,
     ...Mixins.colorProps,
   },
   state() {
@@ -136,10 +137,10 @@ export default {
     let inputEl;
 
     const createInput = (InputTag, children) => {
-      const needsValue = type !== 'file' && type !== 'datepicker';
+      const needsValue = type !== 'file' && type !== 'datepicker' && type !== 'colorpicker';
       const needsType = InputTag === 'input';
       let inputType = type;
-      if (inputType === 'datepicker') {
+      if (inputType === 'datepicker' || inputType === 'colorpicker') {
         inputType = 'text';
       }
       const inputClassName = Utils.classNames(
@@ -159,7 +160,7 @@ export default {
         else inputValue = domValue;
       }
       const valueProps = {};
-      if (type !== 'datepicker') {
+      if (type !== 'datepicker' && type !== 'colorpicker') {
         if ('value' in props) valueProps.value = inputValue;
         if ('defaultValue' in props) valueProps.defaultValue = defaultValue;
       }
@@ -337,6 +338,9 @@ export default {
       if (self.f7Calendar) {
         self.f7Calendar.setValue(self.props.value);
       }
+      if (self.f7ColorPicker) {
+        self.f7ColorPicker.setValue(self.props.value);
+      }
     },
   },
   componentDidCreate() {
@@ -345,7 +349,9 @@ export default {
   componentDidMount() {
     const self = this;
     self.$f7ready((f7) => {
-      const { validate, validateOnBlur, resizable, type, clearButton, value, defaultValue, calendarParams } = self.props;
+      const {
+        validate, validateOnBlur, resizable, type, clearButton, value, defaultValue, calendarParams, colorPickerParams,
+      } = self.props;
       if (type === 'range' || type === 'toggle') return;
 
       const inputEl = self.refs.inputEl;
@@ -370,6 +376,18 @@ export default {
             },
           },
           ...(calendarParams || {}),
+        });
+      }
+      if (type === 'colorpicker') {
+        self.f7ColorPicker = f7.colorPicker.create({
+          inputEl,
+          value,
+          on: {
+            change(colorPicker, colorPickerValue) {
+              self.dispatchEvent('colorpicker:change colorPickerChange', colorPickerValue);
+            },
+          },
+          ...(colorPickerParams || {}),
         });
       }
 
@@ -430,7 +448,11 @@ export default {
     if (self.f7Calendar && self.f7Calendar.destroy) {
       self.f7Calendar.destroy();
     }
+    if (self.f7ColorPicker && self.f7ColorPicker.destroy) {
+      self.f7ColorPicker.destroy();
+    }
     delete self.f7Calendar;
+    delete self.f7ColorPicker;
   },
   methods: {
     domValue() {
