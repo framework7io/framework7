@@ -59,6 +59,9 @@
       <f7-list-item link="/chips/" title="Chips/Tags">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>
+      <f7-list-item link="/color-picker/" title="Color Picker">
+        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+      </f7-list-item>
       <f7-list-item link="/contacts-list/" title="Contacts List">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>

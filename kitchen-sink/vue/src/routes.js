@@ -15,6 +15,7 @@ import Cards from './pages/cards.vue';
 import CardsExpandable from './pages/cards-expandable.vue';
 import Checkbox from './pages/checkbox.vue';
 import Chips from './pages/chips.vue';
+import ColorPicker from './pages/color-picker.vue';
 import ContactsList from './pages/contacts-list.vue';
 import ContentBlock from './pages/content-block.vue';
 import DataTable from './pages/data-table.vue';
@@ -227,6 +228,10 @@ export default [
   {
     path: '/chips/',
     component: Chips,
+  },
+  {
+    path: '/color-picker/',
+    component: ColorPicker,
   },
   {
     path: '/contacts-list/',
