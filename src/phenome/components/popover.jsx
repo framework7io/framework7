@@ -19,6 +19,10 @@ export default {
     target: [String, Object],
     closeByBackdropClick: Boolean,
     closeByOutsideClick: Boolean,
+    backdrop: {
+      type: Boolean,
+      default: undefined,
+    },
     ...Mixins.colorProps,
   },
   render() {
@@ -81,6 +85,7 @@ export default {
     const {
       target,
       opened,
+      backdrop,
       closeByBackdropClick,
       closeByOutsideClick,
     } = props;
@@ -91,10 +96,12 @@ export default {
     if (process.env.COMPILER === 'vue') {
       if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') popoverParams.closeByBackdropClick = closeByBackdropClick;
       if (typeof self.$options.propsData.closeByOutsideClick !== 'undefined') popoverParams.closeByOutsideClick = closeByOutsideClick;
+      if (typeof self.$options.propsData.backdrop !== 'undefined') popoverParams.backdrop = backdrop;
     }
     if (process.env.COMPILER === 'react') {
       if ('closeByBackdropClick' in props) popoverParams.closeByBackdropClick = closeByBackdropClick;
       if ('closeByOutsideClick' in props) popoverParams.closeByOutsideClick = closeByOutsideClick;
+      if ('backdrop' in props) popoverParams.backdrop = backdrop;
     }
 
     self.$f7ready(() => {
