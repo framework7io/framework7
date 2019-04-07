@@ -181,10 +181,16 @@ class F7ListInput extends React.Component {
     const isSortable = sortable || self.state.isSortable;
 
     const createInput = (InputTag, children) => {
-      const needsValue = type !== 'file';
+      const needsValue = type !== 'file' && type !== 'datepicker';
       const needsType = InputTag === 'input';
+      let inputType = type;
+
+      if (inputType === 'datepicker') {
+        inputType = 'text';
+      }
+
       const inputClassName = Utils.classNames({
-        resizable: type === 'textarea' && resizable,
+        resizable: inputType === 'textarea' && resizable,
         'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
         'input-invalid': errorMessage && errorMessageForce || inputInvalid,
         'input-with-value': inputHasValue,
@@ -198,8 +204,12 @@ class F7ListInput extends React.Component {
       }
 
       const valueProps = {};
-      if ('value' in props) valueProps.value = inputValue;
-      if ('defaultValue' in props) valueProps.defaultValue = defaultValue;
+
+      if (type !== 'datepicker') {
+        if ('value' in props) valueProps.value = inputValue;
+        if ('defaultValue' in props) valueProps.defaultValue = defaultValue;
+      }
+
       {
         input = React.createElement(InputTag, Object.assign({
           ref: __reactNode => {
@@ -207,7 +217,7 @@ class F7ListInput extends React.Component {
           },
           style: inputStyle,
           name: name,
-          type: needsType ? type : undefined,
+          type: needsType ? inputType : undefined,
           placeholder: placeholder,
           id: inputId,
           size: size,
@@ -323,6 +333,12 @@ class F7ListInput extends React.Component {
     inputEl.removeEventListener('textarea:resize', self.onTextareaResize, false);
     inputEl.removeEventListener('input:empty', self.onInputEmpty, false);
     inputEl.removeEventListener('input:clear', self.onInputClear, false);
+
+    if (self.f7Calendar && self.f7Calendar.destroy) {
+      self.f7Calendar.destroy();
+    }
+
+    delete self.f7Calendar;
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -330,6 +346,10 @@ class F7ListInput extends React.Component {
       const self = this;
       if (!self.$f7) return;
       self.updateInputOnDidUpdate = true;
+
+      if (self.f7Calendar) {
+        self.f7Calendar.setValue(self.props.value);
+      }
     });
 
     const self = this;
@@ -381,7 +401,8 @@ class F7ListInput extends React.Component {
         resizable,
         value,
         defaultValue,
-        type
+        type,
+        calendarParams
       } = self.props;
       const inputEl = self.refs.inputEl;
       if (!inputEl) return;
@@ -389,6 +410,19 @@ class F7ListInput extends React.Component {
       inputEl.addEventListener('textarea:resize', self.onTextareaResize, false);
       inputEl.addEventListener('input:empty', self.onInputEmpty, false);
       inputEl.addEventListener('input:clear', self.onInputClear, false);
+
+      if (type === 'datepicker') {
+        self.f7Calendar = f7.calendar.create(Object.assign({
+          inputEl,
+          value,
+          on: {
+            change(calendar, calendarValue) {
+              self.dispatchEvent('calendar:change calendarChange', calendarValue);
+            }
+
+          }
+        }, calendarParams || {}));
+      }
 
       if (!(validateOnBlur || validateOnBlur === '') && (validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
         setTimeout(() => {
@@ -448,7 +482,7 @@ __reactComponentSetProps(F7ListInput, Object.assign({
     default: 'text'
   },
   name: String,
-  value: [String, Number, Array],
+  value: [String, Number, Array, Date],
   defaultValue: [String, Number, Array],
   readonly: Boolean,
   required: Boolean,
@@ -485,7 +519,8 @@ __reactComponentSetProps(F7ListInput, Object.assign({
   outline: Boolean,
   label: [String, Number],
   inlineLabel: Boolean,
-  floatingLabel: Boolean
+  floatingLabel: Boolean,
+  calendarParams: Object
 }, Mixins.colorProps));
 
 F7ListInput.displayName = 'f7-list-input';

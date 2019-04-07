@@ -133,16 +133,16 @@ export default class extends React.Component {
           <ListItem link="/panel/" title="Panel / Side Panels">
             <Icon slot="media" icon="icon-f7" />
           </ListItem>
-          <ListItem link="/picker/" title="Picker">
-            <Icon slot="media" icon="icon-f7" />
-          </ListItem>
           <ListItem link="/photo-browser/" title="Photo Browser">
             <Icon slot="media" icon="icon-f7" />
           </ListItem>
-          <ListItem link="/popup/" title="Popup">
+          <ListItem link="/picker/" title="Picker">
             <Icon slot="media" icon="icon-f7" />
           </ListItem>
           <ListItem link="/popover/" title="Popover">
+            <Icon slot="media" icon="icon-f7" />
+          </ListItem>
+          <ListItem link="/popup/" title="Popup">
             <Icon slot="media" icon="icon-f7" />
           </ListItem>
           <ListItem link="/preloader/" title="Preloader">

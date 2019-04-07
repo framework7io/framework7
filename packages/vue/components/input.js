@@ -10,7 +10,7 @@ export default {
   props: Object.assign({
     type: String,
     name: String,
-    value: [String, Number, Array],
+    value: [String, Number, Array, Date],
     defaultValue: [String, Number, Array],
     placeholder: String,
     id: [String, Number],
@@ -54,7 +54,8 @@ export default {
     dropdown: {
       type: [String, Boolean],
       default: 'auto'
-    }
+    },
+    calendarParams: Object
   }, Mixins.colorProps),
 
   data() {
@@ -126,10 +127,16 @@ export default {
     let inputEl;
 
     const createInput = (InputTag, children) => {
-      const needsValue = type !== 'file';
+      const needsValue = type !== 'file' && type !== 'datepicker';
       const needsType = InputTag === 'input';
+      let inputType = type;
+
+      if (inputType === 'datepicker') {
+        inputType = 'text';
+      }
+
       const inputClassName = Utils.classNames(!wrap && className, {
-        resizable: type === 'textarea' && resizable,
+        resizable: inputType === 'textarea' && resizable,
         'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
         'input-invalid': errorMessage && errorMessageForce || self.state.inputInvalid,
         'input-with-value': inputHasValue,
@@ -143,8 +150,12 @@ export default {
       }
 
       const valueProps = {};
-      if ('value' in props) valueProps.value = inputValue;
-      if ('defaultValue' in props) valueProps.defaultValue = defaultValue;
+
+      if (type !== 'datepicker') {
+        if ('value' in props) valueProps.value = inputValue;
+        if ('defaultValue' in props) valueProps.defaultValue = defaultValue;
+      }
+
       {
         input = _h(InputTag, {
           ref: 'inputEl',
@@ -165,7 +176,7 @@ export default {
           },
           attrs: {
             name: name,
-            type: needsType ? type : undefined,
+            type: needsType ? inputType : undefined,
             placeholder: placeholder,
             id: inputId,
             size: size,
@@ -275,6 +286,10 @@ export default {
       if (type === 'range' || type === 'toggle') return;
       if (!self.$f7) return;
       self.updateInputOnDidUpdate = true;
+
+      if (self.f7Calendar) {
+        self.f7Calendar.setValue(self.props.value);
+      }
     }
   },
 
@@ -292,7 +307,8 @@ export default {
         type,
         clearButton,
         value,
-        defaultValue
+        defaultValue,
+        calendarParams
       } = self.props;
       if (type === 'range' || type === 'toggle') return;
       const inputEl = self.$refs.inputEl;
@@ -306,6 +322,19 @@ export default {
       if (clearButton) {
         inputEl.addEventListener('input:empty', self.onInputEmpty, false);
         inputEl.addEventListener('input:clear', self.onInputClear, false);
+      }
+
+      if (type === 'datepicker') {
+        self.f7Calendar = f7.calendar.create(Object.assign({
+          inputEl,
+          value,
+          on: {
+            change(calendar, calendarValue) {
+              self.dispatchEvent('calendar:change calendarChange', calendarValue);
+            }
+
+          }
+        }, calendarParams || {}));
       }
 
       f7.input.checkEmptyState(inputEl);
@@ -368,6 +397,12 @@ export default {
       inputEl.removeEventListener('input:empty', self.onInputEmpty, false);
       inputEl.removeEventListener('input:clear', self.onInputClear, false);
     }
+
+    if (self.f7Calendar && self.f7Calendar.destroy) {
+      self.f7Calendar.destroy();
+    }
+
+    delete self.f7Calendar;
   },
 
   methods: {

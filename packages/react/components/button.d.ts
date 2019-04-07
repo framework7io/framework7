@@ -12,6 +12,7 @@ declare namespace F7Button {
     text? : string
     tabLink? : boolean | string
     tabLinkActive? : boolean
+    type? : string
     href? : string | boolean
     target? : string
     round? : boolean

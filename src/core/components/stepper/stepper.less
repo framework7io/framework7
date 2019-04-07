@@ -94,15 +94,15 @@
   border-top:  var(--f7-stepper-border-width) solid var(--f7-theme-color);
   border-bottom: var(--f7-stepper-border-width) solid  var(--f7-theme-color);
 }
-.stepper-input-wrap input,
+.stepper .stepper-input-wrap input,
 .stepper-value {
   width: 45px;
-  color: var(--f7-theme-color);
+  color: var(--f7-stepper-value-text-color, var(--f7-theme-color));
   font-size: var(--f7-stepper-value-font-size);
   font-weight: var(--f7-stepper-value-font-weight);
   text-align: center;
 }
-.stepper-input-wrap input {
+.stepper .stepper-input-wrap input {
   height: 100%;
 }
 .stepper-round,

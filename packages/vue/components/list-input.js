@@ -26,7 +26,7 @@ export default {
       default: 'text'
     },
     name: String,
-    value: [String, Number, Array],
+    value: [String, Number, Array, Date],
     defaultValue: [String, Number, Array],
     readonly: Boolean,
     required: Boolean,
@@ -63,7 +63,8 @@ export default {
     outline: Boolean,
     label: [String, Number],
     inlineLabel: Boolean,
-    floatingLabel: Boolean
+    floatingLabel: Boolean,
+    calendarParams: Object
   }, Mixins.colorProps),
 
   data() {
@@ -145,10 +146,16 @@ export default {
     const isSortable = sortable || self.state.isSortable;
 
     const createInput = (InputTag, children) => {
-      const needsValue = type !== 'file';
+      const needsValue = type !== 'file' && type !== 'datepicker';
       const needsType = InputTag === 'input';
+      let inputType = type;
+
+      if (inputType === 'datepicker') {
+        inputType = 'text';
+      }
+
       const inputClassName = Utils.classNames({
-        resizable: type === 'textarea' && resizable,
+        resizable: inputType === 'textarea' && resizable,
         'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
         'input-invalid': errorMessage && errorMessageForce || inputInvalid,
         'input-with-value': inputHasValue,
@@ -162,8 +169,12 @@ export default {
       }
 
       const valueProps = {};
-      if ('value' in props) valueProps.value = inputValue;
-      if ('defaultValue' in props) valueProps.defaultValue = defaultValue;
+
+      if (type !== 'datepicker') {
+        if ('value' in props) valueProps.value = inputValue;
+        if ('defaultValue' in props) valueProps.defaultValue = defaultValue;
+      }
+
       {
         input = _h(InputTag, {
           ref: 'inputEl',
@@ -183,7 +194,7 @@ export default {
           },
           attrs: {
             name: name,
-            type: needsType ? type : undefined,
+            type: needsType ? inputType : undefined,
             placeholder: placeholder,
             id: inputId,
             size: size,
@@ -289,6 +300,10 @@ export default {
       const self = this;
       if (!self.$f7) return;
       self.updateInputOnDidUpdate = true;
+
+      if (self.f7Calendar) {
+        self.f7Calendar.setValue(self.props.value);
+      }
     }
   },
 
@@ -308,7 +323,8 @@ export default {
         resizable,
         value,
         defaultValue,
-        type
+        type,
+        calendarParams
       } = self.props;
       const inputEl = self.$refs.inputEl;
       if (!inputEl) return;
@@ -316,6 +332,19 @@ export default {
       inputEl.addEventListener('textarea:resize', self.onTextareaResize, false);
       inputEl.addEventListener('input:empty', self.onInputEmpty, false);
       inputEl.addEventListener('input:clear', self.onInputClear, false);
+
+      if (type === 'datepicker') {
+        self.f7Calendar = f7.calendar.create(Object.assign({
+          inputEl,
+          value,
+          on: {
+            change(calendar, calendarValue) {
+              self.dispatchEvent('calendar:change calendarChange', calendarValue);
+            }
+
+          }
+        }, calendarParams || {}));
+      }
 
       if (!(validateOnBlur || validateOnBlur === '') && (validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
         setTimeout(() => {
@@ -382,6 +411,12 @@ export default {
     inputEl.removeEventListener('textarea:resize', self.onTextareaResize, false);
     inputEl.removeEventListener('input:empty', self.onInputEmpty, false);
     inputEl.removeEventListener('input:clear', self.onInputClear, false);
+
+    if (self.f7Calendar && self.f7Calendar.destroy) {
+      self.f7Calendar.destroy();
+    }
+
+    delete self.f7Calendar;
   },
 
   methods: {

@@ -408,6 +408,14 @@ class Calendar extends Framework7Class {
 
   setValue(values) {
     const calendar = this;
+    const currentValue = calendar.value;
+    if (Array.isArray(currentValue) && Array.isArray(values) && currentValue.length === values.length) {
+      let equal = true;
+      currentValue.forEach((v, index) => {
+        if (v !== values[index]) equal = false;
+      });
+      if (equal) return;
+    }
     calendar.value = values;
     calendar.updateValue();
   }

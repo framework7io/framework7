@@ -64,6 +64,7 @@ export default {
         hasSubnavbar: false,
         hasNavbarLarge: false,
         hasNavbarLargeCollapsed: false,
+        hasCardExpandableOpened: false,
         routerPositionClass: '',
         routerForceUnstack: false,
         routerPageRole: null,
@@ -171,7 +172,8 @@ export default {
       'page-master': this.state.routerPageRole === 'master',
       'page-master-detail': this.state.routerPageRole === 'detail',
       'page-master-stacked': this.state.routerPageMasterStack === true,
-      'page-with-navbar-large-collapsed': this.state.hasNavbarLargeCollapsed === true
+      'page-with-navbar-large-collapsed': this.state.hasNavbarLargeCollapsed === true,
+      'page-with-card-opened': this.state.hasCardExpandableOpened === true
     }, Mixins.colorClasses(props));
 
     if (!needsPageContent) {
@@ -217,7 +219,7 @@ export default {
   },
 
   created() {
-    Utils.bindMethods(this, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack', 'onPageNavbarLargeCollapsed', 'onPageNavbarLargeExpanded']);
+    Utils.bindMethods(this, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack', 'onPageNavbarLargeCollapsed', 'onPageNavbarLargeExpanded', 'onCardOpen', 'onCardClose']);
   },
 
   mounted() {
@@ -256,6 +258,8 @@ export default {
     el.addEventListener('page:masterunstack', self.onPageMasterUnstack);
     el.addEventListener('page:navbarlargecollapsed', self.onPageNavbarLargeCollapsed);
     el.addEventListener('page:navbarlargeexpanded', self.onPageNavbarLargeExpanded);
+    el.addEventListener('card:open', self.onCardOpen);
+    el.addEventListener('card:close', self.onCardClose);
   },
 
   beforeDestroy() {
@@ -283,6 +287,8 @@ export default {
     el.removeEventListener('page:masterunstack', self.onPageMasterUnstack);
     el.removeEventListener('page:navbarlargecollapsed', self.onPageNavbarLargeCollapsed);
     el.removeEventListener('page:navbarlargeexpanded', self.onPageNavbarLargeExpanded);
+    el.removeEventListener('card:open', self.onCardOpen);
+    el.removeEventListener('card:close', self.onCardClose);
   },
 
   methods: {
@@ -450,6 +456,18 @@ export default {
     onPageBeforeRemove(event) {
       const page = event.detail;
       this.dispatchEvent('page:beforeremove pageBeforeRemove', event, page);
+    },
+
+    onCardOpen() {
+      this.setState({
+        hasCardExpandableOpened: true
+      });
+    },
+
+    onCardClose() {
+      this.setState({
+        hasCardExpandableOpened: false
+      });
     },
 
     dispatchEvent(events, ...args) {

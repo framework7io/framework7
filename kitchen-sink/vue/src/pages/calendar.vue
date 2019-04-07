@@ -1,161 +1,75 @@
 <template>
-  <f7-page :page-content="false" @page:beforeremove="onPageBeforeRemove" @page:init="onPageInit">
+  <f7-page @page:beforeremove="onPageBeforeRemove" @page:init="onPageInit">
     <f7-navbar title="Calendar" back-link="Back"></f7-navbar>
-    <div class="page-content">
-      <div class="block">
-        <p>Calendar is a touch optimized component that provides an easy way to handle dates.</p>
-        <p>Calendar could be used as inline component or as overlay. Overlay Calendar will be automatically converted to Popover on tablets (iPad).</p>
-      </div>
-      <div class="block-title">Default setup</div>
-      <div class="list no-hairlines-md">
-        <ul>
-          <li>
-            <div class="item-content item-input">
-              <div class="item-inner">
-                <div class="item-input-wrap">
-                  <input type="text" placeholder="Your birth date" readonly="readonly" id="demo-calendar-default"/>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div class="block-title">Custom date format</div>
-      <div class="list no-hairlines-md">
-        <ul>
-          <li>
-            <div class="item-content item-input">
-              <div class="item-inner">
-                <div class="item-input-wrap">
-                  <input type="text" placeholder="Select date" readonly="readonly" id="demo-calendar-date-format"/>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div class="block-title">Multiple Values</div>
-      <div class="list no-hairlines-md">
-        <ul>
-          <li>
-            <div class="item-content item-input">
-              <div class="item-inner">
-                <div class="item-input-wrap">
-                  <input type="text" placeholder="Select multiple dates" readonly="readonly" id="demo-calendar-multiple"/>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div class="block-title">Range Picker</div>
-      <div class="list no-hairlines-md">
-        <ul>
-          <li>
-            <div class="item-content item-input">
-              <div class="item-inner">
-                <div class="item-input-wrap">
-                  <input type="text" placeholder="Select date range" readonly="readonly" id="demo-calendar-range"/>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div class="block-title">Open in Modal</div>
-      <div class="list no-hairlines-md">
-        <ul>
-          <li>
-            <div class="item-content item-input">
-              <div class="item-inner">
-                <div class="item-input-wrap">
-                  <input type="text" placeholder="Select date" readonly="readonly" id="demo-calendar-modal"/>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div class="block-title">Calendar Page</div>
-      <div class="list">
-        <ul>
-          <li>
-            <a href="/calendar-page/" class="item-content item-link">
-              <div class="item-inner">
-                <div class="item-title">Open Calendar Page</div>
-              </div>
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div class="block-title">Inline with custom toolbar</div>
-      <div class="block block-strong no-padding">
-        <div id="demo-calendar-inline-container"></div>
-      </div>
-      <div class="block-title">Jalali Calendar</div>
-      <div class="list no-hairlines-md">
-        <ul>
-          <li>
-            <div class="item-content item-input">
-              <div class="item-inner">
-                <div class="item-input-wrap">
-                  <input type="text" placeholder="Your birth date in Jalali" readonly="readonly" id="demo-jcalendar-default"/>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
+
+    <f7-block>
+      <p>Calendar is a touch optimized component that provides an easy way to handle dates.</p>
+      <p>Calendar could be used as inline component or as overlay. Overlay Calendar will be automatically converted to Popover on tablets (iPad).</p>
+    </f7-block>
+
+    <f7-block-title>Default setup</f7-block-title>
+    <f7-list no-hairlines-md>
+      <f7-list-input type="datepicker" placeholder="Your birth date" readonly />
+    </f7-list>
+
+    <f7-block-title>Custom date format</f7-block-title>
+    <f7-list no-hairlines-md>
+      <f7-list-input type="datepicker" placeholder="Select date" readonly :calendar-params="{dateFormat: 'DD, MM dd, yyyy'}" />
+    </f7-list>
+
+    <f7-block-title>Multiple Values</f7-block-title>
+    <f7-list no-hairlines-md>
+      <f7-list-input type="datepicker" placeholder="Select multiple dates" readonly :calendar-params="{ dateFormat: 'M dd yyyy', multiple: true }" />
+    </f7-list>
+
+    <f7-block-title>Range Picker</f7-block-title>
+    <f7-list no-hairlines-md>
+      <f7-list-input type="datepicker" placeholder="Select date range" readonly :calendar-params="{ dateFormat: 'M dd yyyy', rangePicker: true }" />
+    </f7-list>
+
+    <f7-block-title>Open in Modal</f7-block-title>
+    <f7-list no-hairlines-md>
+      <f7-list-input type="datepicker" placeholder="Select date" readonly :calendar-params="{openIn: 'customModal', header: true, footer: true, dateFormat: 'MM dd yyyy'}" />
+    </f7-list>
+
+    <f7-block-title>Calendar Page</f7-block-title>
+    <f7-list>
+      <f7-list-item
+        title="Open Calendar Page"
+        link="/calendar-page/"
+      />
+    </f7-list>
+
+    <f7-block-title>Inline with custom toolbar</f7-block-title>
+    <f7-block class="no-padding">
+      <div id="demo-calendar-inline-container"></div>
+    </f7-block>
+
+    <f7-block-title>Jalali Calendar</f7-block-title>
+    <f7-list no-hairlines-md>
+      <f7-list-input type="datepicker" placeholder="Your birth date in Jalali" readonly :calendar-params="{calendarType: 'jalali'}" />
+    </f7-list>
   </f7-page>
 </template>
 <script>
-  import { f7Navbar, f7Page } from 'framework7-vue';
+  import { f7Navbar, f7Page, f7Block, f7BlockTitle, f7List, f7ListInput, f7ListItem } from 'framework7-vue';
 
   export default {
     components: {
       f7Navbar,
       f7Page,
+      f7Block,
+      f7BlockTitle,
+      f7List,
+      f7ListInput,
+      f7ListItem,
     },
     methods: {
       onPageInit(e) {
         const self = this;
         const app = self.$f7;
         const $ = self.$$;
-        // Default
-        self.calendarDefault = app.calendar.create({
-          inputEl: '#demo-calendar-default',
-        });
-        // Jalali
-        self.jcalendarDefault = app.calendar.create({
-          calendarType: 'jalali',
-          inputEl: '#demo-jcalendar-default',
-        });
-        // With custom date format
-        self.calendarDateFormat = app.calendar.create({
-          inputEl: '#demo-calendar-date-format',
-          dateFormat: 'DD, MM dd, yyyy',
-        });
-        // With multiple values
-        self.calendarMultiple = app.calendar.create({
-          inputEl: '#demo-calendar-multiple',
-          dateFormat: 'M dd yyyy',
-          multiple: true,
-        });
-        // Range Picker
-        self.calendarRange = app.calendar.create({
-          inputEl: '#demo-calendar-range',
-          dateFormat: 'M dd yyyy',
-          rangePicker: true,
-        });
-        // Custom modal
-        self.calendarModal = app.calendar.create({
-          inputEl: '#demo-calendar-modal',
-          openIn: 'customModal',
-          header: true,
-          footer: true,
-          dateFormat: 'MM dd yyyy',
-        });
+
         // Inline with custom toolbar
         const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         self.calendarInline = app.calendar.create({
@@ -194,12 +108,6 @@
       },
       onPageBeforeRemove() {
         const self = this;
-        self.calendarDefault.destroy();
-        self.jcalendarDefault.destroy();
-        self.calendarDateFormat.destroy();
-        self.calendarMultiple.destroy();
-        self.calendarRange.destroy();
-        self.calendarModal.destroy();
         self.calendarInline.destroy();
       },
     },

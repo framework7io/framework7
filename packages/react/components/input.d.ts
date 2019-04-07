@@ -5,7 +5,7 @@ declare namespace F7Input {
     slot? : string
     type? : string
     name? : string
-    value? : string | number | Array<any>
+    value? : string | number | Array<any> | Date
     defaultValue? : string | number | Array<any>
     placeholder? : string
     id? : string | number
@@ -45,6 +45,7 @@ declare namespace F7Input {
     outline? : boolean
     wrap? : boolean
     dropdown? : string | boolean
+    calendarParams? : Object
     color? : string
     colorTheme? : string
     textColor? : string
@@ -53,6 +54,7 @@ declare namespace F7Input {
     rippleColor? : string
     themeDark? : boolean
     inputStyle? : React.CSSProperties
+    onCalendarChange? : (calendarValue?: any) => void
     onTextareaResize? : (event?: any) => void
     onInputNotEmpty? : (event?: any) => void
     onInputEmpty? : (event?: any) => void

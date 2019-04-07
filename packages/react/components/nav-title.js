@@ -22,7 +22,7 @@ class F7NavTitle extends React.Component {
     } = props;
     let subtitleEl;
 
-    if (self.subtitle) {
+    if (subtitle) {
       subtitleEl = React.createElement('span', {
         className: 'subtitle'
       }, subtitle);

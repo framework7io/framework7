@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.2.0
+ * Framework7 Vue 4.2.2
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 20, 2019
+ * Released on: April 4, 2019
  */
 
 (function (global, factory) {
@@ -1004,7 +1004,7 @@
     if (typeof callback === 'function') { callback(); }
   }
 
-  var RoutableModals = {
+  var f7RoutableModals = {
     name: 'f7-routable-modals',
 
     data: function data() {
@@ -1107,7 +1107,7 @@
         attrs: {
           id: id || 'framework7-root'
         }
-      }, [this.$slots['default'], _h(RoutableModals)]);
+      }, [this.$slots['default'], _h(f7RoutableModals)]);
     },
 
     mounted: function mounted() {
@@ -1190,7 +1190,7 @@
     }
   };
 
-  var F7Badge = {
+  var f7Badge = {
     name: 'f7-badge',
     props: Object.assign({
       id: [String, Number]
@@ -1418,7 +1418,7 @@
     }
   };
 
-  var F7Icon = {
+  var f7Icon = {
     name: 'f7-icon',
     props: Object.assign({
       id: [String, Number],
@@ -1623,6 +1623,7 @@
       text: String,
       tabLink: [Boolean, String],
       tabLinkActive: Boolean,
+      type: String,
       href: {
         type: [String, Boolean],
         default: '#'
@@ -1676,13 +1677,14 @@
       var iconSize = props.iconSize;
       var id = props.id;
       var style = props.style;
+      var type = props.type;
 
       if (text) {
         textEl = _h('span', [text]);
       }
 
       if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconMd || iconIos || iconAurora) {
-        iconEl = _h(F7Icon, {
+        iconEl = _h(f7Icon, {
           attrs: {
             material: iconMaterial,
             ion: iconIon,
@@ -1698,7 +1700,8 @@
         });
       }
 
-      return _h('a', __vueComponentTransformJSXProps(Object.assign({
+      var ButtonTag = type === 'submit' || type === 'reset' || type === 'button' ? 'button' : 'a';
+      return _h(ButtonTag, __vueComponentTransformJSXProps(Object.assign({
         ref: 'el',
         style: style,
         class: self.classes
@@ -1716,12 +1719,14 @@
         var href = props.href;
         var target = props.target;
         var tabLink = props.tabLink;
+        var type = props.type;
         var hrefComputed = href;
         if (href === true) { hrefComputed = '#'; }
         if (href === false) { hrefComputed = undefined; }
         return Utils.extend({
           href: hrefComputed,
           target: target,
+          type: type,
           'data-tab': Utils.isStringProp(tabLink) && tabLink || undefined
         }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
       },
@@ -1870,7 +1875,7 @@
 
   };
 
-  var F7CardContent = {
+  var f7CardContent = {
     name: 'f7-card-content',
     props: Object.assign({
       id: [String, Number],
@@ -1907,7 +1912,7 @@
     }
   };
 
-  var F7CardFooter = {
+  var f7CardFooter = {
     name: 'f7-card-footer',
     props: Object.assign({
       id: [String, Number]
@@ -1937,7 +1942,7 @@
     }
   };
 
-  var F7CardHeader = {
+  var f7CardHeader = {
     name: 'f7-card-header',
     props: Object.assign({
       id: [String, Number]
@@ -2059,11 +2064,11 @@
       }, Mixins.colorClasses(props));
 
       if (title || self.$slots && self.$slots.header) {
-        headerEl = _h(F7CardHeader, [title, this.$slots['header']]);
+        headerEl = _h(f7CardHeader, [title, this.$slots['header']]);
       }
 
       if (content || self.$slots && self.$slots.content) {
-        contentEl = _h(F7CardContent, {
+        contentEl = _h(f7CardContent, {
           attrs: {
             padding: padding
           }
@@ -2071,7 +2076,7 @@
       }
 
       if (footer || self.$slots && self.$slots.footer) {
-        footerEl = _h(F7CardFooter, [footer, this.$slots['footer']]);
+        footerEl = _h(f7CardFooter, [footer, this.$slots['footer']]);
       }
 
       return _h('div', {
@@ -2880,7 +2885,7 @@
     }
   };
 
-  var F7Toggle = {
+  var f7Toggle = {
     name: 'f7-toggle',
     props: Object.assign({
       id: [String, Number],
@@ -3004,7 +3009,7 @@
     }
   };
 
-  var F7Range = {
+  var f7Range = {
     name: 'f7-range',
     props: Object.assign({
       id: [String, Number],
@@ -3198,12 +3203,12 @@
     }
   };
 
-  var F7Input = {
+  var f7Input = {
     name: 'f7-input',
     props: Object.assign({
       type: String,
       name: String,
-      value: [String, Number, Array],
+      value: [String, Number, Array, Date],
       defaultValue: [String, Number, Array],
       placeholder: String,
       id: [String, Number],
@@ -3247,7 +3252,8 @@
       dropdown: {
         type: [String, Boolean],
         default: 'auto'
-      }
+      },
+      calendarParams: Object
     }, Mixins.colorProps),
 
     data: function data() {
@@ -3317,10 +3323,16 @@
       var inputEl;
 
       var createInput = function (InputTag, children) {
-        var needsValue = type !== 'file';
+        var needsValue = type !== 'file' && type !== 'datepicker';
         var needsType = InputTag === 'input';
+        var inputType = type;
+
+        if (inputType === 'datepicker') {
+          inputType = 'text';
+        }
+
         var inputClassName = Utils.classNames(!wrap && className, {
-          resizable: type === 'textarea' && resizable,
+          resizable: inputType === 'textarea' && resizable,
           'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
           'input-invalid': errorMessage && errorMessageForce || self.state.inputInvalid,
           'input-with-value': inputHasValue,
@@ -3334,8 +3346,12 @@
         }
 
         var valueProps = {};
-        if ('value' in props) { valueProps.value = inputValue; }
-        if ('defaultValue' in props) { valueProps.defaultValue = defaultValue; }
+
+        if (type !== 'datepicker') {
+          if ('value' in props) { valueProps.value = inputValue; }
+          if ('defaultValue' in props) { valueProps.defaultValue = defaultValue; }
+        }
+
         {
           input = _h(InputTag, {
             ref: 'inputEl',
@@ -3356,7 +3372,7 @@
             },
             attrs: {
               name: name,
-              type: needsType ? type : undefined,
+              type: needsType ? inputType : undefined,
               placeholder: placeholder,
               id: inputId,
               size: size,
@@ -3399,7 +3415,7 @@
       } else if (slotsDefault && slotsDefault.length > 0 || !type) {
         inputEl = slotsDefault;
       } else if (type === 'toggle') {
-        inputEl = _h(F7Toggle, {
+        inputEl = _h(f7Toggle, {
           on: {
             change: self.onChange
           },
@@ -3413,7 +3429,7 @@
           }
         });
       } else if (type === 'range') {
-        inputEl = _h(F7Range, {
+        inputEl = _h(f7Range, {
           on: {
             rangeChange: self.onChange
           },
@@ -3464,6 +3480,10 @@
         if (type === 'range' || type === 'toggle') { return; }
         if (!self.$f7) { return; }
         self.updateInputOnDidUpdate = true;
+
+        if (self.f7Calendar) {
+          self.f7Calendar.setValue(self.props.value);
+        }
       }
     },
 
@@ -3482,6 +3502,7 @@
         var clearButton = ref.clearButton;
         var value = ref.value;
         var defaultValue = ref.defaultValue;
+        var calendarParams = ref.calendarParams;
         if (type === 'range' || type === 'toggle') { return; }
         var inputEl = self.$refs.inputEl;
         if (!inputEl) { return; }
@@ -3494,6 +3515,19 @@
         if (clearButton) {
           inputEl.addEventListener('input:empty', self.onInputEmpty, false);
           inputEl.addEventListener('input:clear', self.onInputClear, false);
+        }
+
+        if (type === 'datepicker') {
+          self.f7Calendar = f7.calendar.create(Object.assign({
+            inputEl: inputEl,
+            value: value,
+            on: {
+              change: function change(calendar, calendarValue) {
+                self.dispatchEvent('calendar:change calendarChange', calendarValue);
+              }
+
+            }
+          }, calendarParams || {}));
         }
 
         f7.input.checkEmptyState(inputEl);
@@ -3554,6 +3588,12 @@
         inputEl.removeEventListener('input:empty', self.onInputEmpty, false);
         inputEl.removeEventListener('input:clear', self.onInputClear, false);
       }
+
+      if (self.f7Calendar && self.f7Calendar.destroy) {
+        self.f7Calendar.destroy();
+      }
+
+      delete self.f7Calendar;
     },
 
     methods: {
@@ -3668,7 +3708,7 @@
     }
   };
 
-  var F7Link = {
+  var f7Link = {
     name: 'f7-link',
     props: Object.assign({
       id: [String, Number],
@@ -3735,7 +3775,7 @@
       var iconBadgeEl;
 
       if (text) {
-        if (badge) { badgeEl = _h(F7Badge, {
+        if (badge) { badgeEl = _h(f7Badge, {
           attrs: {
             color: badgeColor
           }
@@ -3747,14 +3787,14 @@
 
       if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconMd || iconIos || iconAurora) {
         if (iconBadge) {
-          iconBadgeEl = _h(F7Badge, {
+          iconBadgeEl = _h(f7Badge, {
             attrs: {
               color: badgeColor
             }
           }, [iconBadge]);
         }
 
-        iconEl = _h(F7Icon, {
+        iconEl = _h(f7Icon, {
           attrs: {
             material: iconMaterial,
             f7: iconF7,
@@ -4236,7 +4276,7 @@
         default: 'text'
       },
       name: String,
-      value: [String, Number, Array],
+      value: [String, Number, Array, Date],
       defaultValue: [String, Number, Array],
       readonly: Boolean,
       required: Boolean,
@@ -4273,7 +4313,8 @@
       outline: Boolean,
       label: [String, Number],
       inlineLabel: Boolean,
-      floatingLabel: Boolean
+      floatingLabel: Boolean,
+      calendarParams: Object
     }, Mixins.colorProps),
 
     data: function data() {
@@ -4352,10 +4393,16 @@
       var isSortable = sortable || self.state.isSortable;
 
       var createInput = function (InputTag, children) {
-        var needsValue = type !== 'file';
+        var needsValue = type !== 'file' && type !== 'datepicker';
         var needsType = InputTag === 'input';
+        var inputType = type;
+
+        if (inputType === 'datepicker') {
+          inputType = 'text';
+        }
+
         var inputClassName = Utils.classNames({
-          resizable: type === 'textarea' && resizable,
+          resizable: inputType === 'textarea' && resizable,
           'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
           'input-invalid': errorMessage && errorMessageForce || inputInvalid,
           'input-with-value': inputHasValue,
@@ -4369,8 +4416,12 @@
         }
 
         var valueProps = {};
-        if ('value' in props) { valueProps.value = inputValue; }
-        if ('defaultValue' in props) { valueProps.defaultValue = defaultValue; }
+
+        if (type !== 'datepicker') {
+          if ('value' in props) { valueProps.value = inputValue; }
+          if ('defaultValue' in props) { valueProps.defaultValue = defaultValue; }
+        }
+
         {
           input = _h(InputTag, {
             ref: 'inputEl',
@@ -4390,7 +4441,7 @@
             },
             attrs: {
               name: name,
-              type: needsType ? type : undefined,
+              type: needsType ? inputType : undefined,
               placeholder: placeholder,
               id: inputId,
               size: size,
@@ -4496,6 +4547,10 @@
         var self = this;
         if (!self.$f7) { return; }
         self.updateInputOnDidUpdate = true;
+
+        if (self.f7Calendar) {
+          self.f7Calendar.setValue(self.props.value);
+        }
       }
     },
 
@@ -4516,12 +4571,26 @@
         var value = ref.value;
         var defaultValue = ref.defaultValue;
         var type = ref.type;
+        var calendarParams = ref.calendarParams;
         var inputEl = self.$refs.inputEl;
         if (!inputEl) { return; }
         inputEl.addEventListener('input:notempty', self.onInputNotEmpty, false);
         inputEl.addEventListener('textarea:resize', self.onTextareaResize, false);
         inputEl.addEventListener('input:empty', self.onInputEmpty, false);
         inputEl.addEventListener('input:clear', self.onInputClear, false);
+
+        if (type === 'datepicker') {
+          self.f7Calendar = f7.calendar.create(Object.assign({
+            inputEl: inputEl,
+            value: value,
+            on: {
+              change: function change(calendar, calendarValue) {
+                self.dispatchEvent('calendar:change calendarChange', calendarValue);
+              }
+
+            }
+          }, calendarParams || {}));
+        }
 
         if (!(validateOnBlur || validateOnBlur === '') && (validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
           setTimeout(function () {
@@ -4585,6 +4654,12 @@
       inputEl.removeEventListener('textarea:resize', self.onTextareaResize, false);
       inputEl.removeEventListener('input:empty', self.onInputEmpty, false);
       inputEl.removeEventListener('input:clear', self.onInputClear, false);
+
+      if (self.f7Calendar && self.f7Calendar.destroy) {
+        self.f7Calendar.destroy();
+      }
+
+      delete self.f7Calendar;
     },
 
     methods: {
@@ -4729,7 +4804,7 @@
     }
   };
 
-  var F7ListItemContent = {
+  var f7ListItemContent = {
     name: 'f7-list-item-content',
     props: Object.assign({
       id: [String, Number],
@@ -4923,7 +4998,7 @@
         }
 
         if (badge) {
-          badgeEl = _h(F7Badge, {
+          badgeEl = _h(f7Badge, {
             attrs: {
               color: badgeColor
             }
@@ -5147,7 +5222,7 @@
 
       if (!isSimple) {
         var needsEvents = !(link || href || accordionItem || smartSelect);
-        itemContentEl = _h(F7ListItemContent, {
+        itemContentEl = _h(f7ListItemContent, {
           on: needsEvents ? {
             click: self.onClick,
             change: self.onChange
@@ -6120,7 +6195,7 @@
       var iconOnlyComputed;
 
       if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconMd || iconIos || iconAurora) {
-        iconEl = _h(F7Icon, {
+        iconEl = _h(f7Icon, {
           attrs: {
             material: iconMaterial,
             f7: iconF7,
@@ -6831,7 +6906,7 @@
         class: 'toolbar-inner'
       }, [slotsInnerStart, _h('div', {
         class: 'messagebar-area'
-      }, [slotsBeforeArea, messagebarAttachmentsEl, _h(F7Input, {
+      }, [slotsBeforeArea, messagebarAttachmentsEl, _h(f7Input, {
         ref: 'area',
         on: {
           input: self.onInput,
@@ -6849,7 +6924,7 @@
           resizable: resizable,
           value: value
         }
-      }), slotsAfterArea]), (sendLink && sendLink.length > 0 || slotsSendLink) && _h(F7Link, {
+      }), slotsAfterArea]), (sendLink && sendLink.length > 0 || slotsSendLink) && _h(f7Link, {
         on: {
           click: self.onClick
         }
@@ -7363,7 +7438,7 @@
     }
   };
 
-  var F7NavLeft = {
+  var f7NavLeft = {
     name: 'f7-nav-left',
     props: Object.assign({
       id: [String, Number],
@@ -7393,7 +7468,7 @@
       if (typeof needBackLinkText === 'undefined') { needBackLinkText = !this.$theme.md; }
 
       if (backLink) {
-        linkEl = _h(F7Link, {
+        linkEl = _h(f7Link, {
           class: backLink === true || backLink && this.$theme.md ? 'icon-only' : undefined,
           on: {
             click: this.onBackClick
@@ -7454,7 +7529,7 @@
     }
   };
 
-  var F7NavRight = {
+  var f7NavRight = {
     name: 'f7-nav-right',
     props: Object.assign({
       id: [String, Number],
@@ -7539,7 +7614,7 @@
     }
   };
 
-  var F7NavTitle = {
+  var f7NavTitle = {
     name: 'f7-nav-title',
     props: Object.assign({
       id: [String, Number],
@@ -7560,7 +7635,7 @@
       var className = props.className;
       var subtitleEl;
 
-      if (self.subtitle) {
+      if (subtitle) {
         subtitleEl = _h('span', {
           class: 'subtitle'
         }, [subtitle]);
@@ -7659,7 +7734,7 @@
 
       if (inner) {
         if (backLink || slots['nav-left']) {
-          leftEl = _h(F7NavLeft, {
+          leftEl = _h(f7NavLeft, {
             on: {
               backClick: self.onBackClick
             },
@@ -7673,7 +7748,7 @@
         }
 
         if (title || subtitle || slots.title) {
-          titleEl = _h(F7NavTitle, {
+          titleEl = _h(f7NavTitle, {
             attrs: {
               title: title,
               subtitle: subtitle
@@ -7682,7 +7757,7 @@
         }
 
         if (slots['nav-right']) {
-          rightEl = _h(F7NavRight, [slots['nav-right']]);
+          rightEl = _h(f7NavRight, [slots['nav-right']]);
         }
 
         var largeTitle = titleLarge;
@@ -7778,7 +7853,7 @@
     }
   };
 
-  var F7PageContent = {
+  var f7PageContent = {
     name: 'f7-page-content',
     props: Object.assign({
       id: [String, Number],
@@ -8037,6 +8112,7 @@
           hasSubnavbar: false,
           hasNavbarLarge: false,
           hasNavbarLargeCollapsed: false,
+          hasCardExpandableOpened: false,
           routerPositionClass: '',
           routerForceUnstack: false,
           routerPageRole: null,
@@ -8141,7 +8217,8 @@
         'page-master': this.state.routerPageRole === 'master',
         'page-master-detail': this.state.routerPageRole === 'detail',
         'page-master-stacked': this.state.routerPageMasterStack === true,
-        'page-with-navbar-large-collapsed': this.state.hasNavbarLargeCollapsed === true
+        'page-with-navbar-large-collapsed': this.state.hasNavbarLargeCollapsed === true,
+        'page-with-card-opened': this.state.hasCardExpandableOpened === true
       }, Mixins.colorClasses(props));
 
       if (!needsPageContent) {
@@ -8156,7 +8233,7 @@
         }, [slotsFixed, slotsStatic, slotsDefault]);
       }
 
-      var pageContentEl = _h(F7PageContent, {
+      var pageContentEl = _h(f7PageContent, {
         attrs: {
           ptr: ptr,
           ptrDistance: ptrDistance,
@@ -8187,7 +8264,7 @@
     },
 
     created: function created() {
-      Utils.bindMethods(this, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack', 'onPageNavbarLargeCollapsed', 'onPageNavbarLargeExpanded']);
+      Utils.bindMethods(this, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack', 'onPageNavbarLargeCollapsed', 'onPageNavbarLargeExpanded', 'onCardOpen', 'onCardClose']);
     },
 
     mounted: function mounted() {
@@ -8225,6 +8302,8 @@
       el.addEventListener('page:masterunstack', self.onPageMasterUnstack);
       el.addEventListener('page:navbarlargecollapsed', self.onPageNavbarLargeCollapsed);
       el.addEventListener('page:navbarlargeexpanded', self.onPageNavbarLargeExpanded);
+      el.addEventListener('card:open', self.onCardOpen);
+      el.addEventListener('card:close', self.onCardClose);
     },
 
     beforeDestroy: function beforeDestroy() {
@@ -8252,6 +8331,8 @@
       el.removeEventListener('page:masterunstack', self.onPageMasterUnstack);
       el.removeEventListener('page:navbarlargecollapsed', self.onPageNavbarLargeCollapsed);
       el.removeEventListener('page:navbarlargeexpanded', self.onPageNavbarLargeExpanded);
+      el.removeEventListener('card:open', self.onCardOpen);
+      el.removeEventListener('card:close', self.onCardClose);
     },
 
     methods: {
@@ -8418,6 +8499,18 @@
       onPageBeforeRemove: function onPageBeforeRemove(event) {
         var page = event.detail;
         this.dispatchEvent('page:beforeremove pageBeforeRemove', event, page);
+      },
+
+      onCardOpen: function onCardOpen() {
+        this.setState({
+          hasCardExpandableOpened: true
+        });
+      },
+
+      onCardClose: function onCardClose() {
+        this.setState({
+          hasCardExpandableOpened: false
+        });
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -11651,7 +11744,7 @@
   };
 
   /**
-   * Framework7 Vue 4.2.0
+   * Framework7 Vue 4.2.2
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -11659,7 +11752,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: March 20, 2019
+   * Released on: April 4, 2019
    */
 
   var Plugin = {
@@ -11682,15 +11775,15 @@
       Vue.component('f7-actions', f7Actions);
       Vue.component('f7-app', f7App);
       Vue.component('f7-appbar', f7Appbar);
-      Vue.component('f7-badge', F7Badge);
+      Vue.component('f7-badge', f7Badge);
       Vue.component('f7-block-footer', f7BlockFooter);
       Vue.component('f7-block-header', f7BlockHeader);
       Vue.component('f7-block-title', f7BlockTitle);
       Vue.component('f7-block', f7Block);
       Vue.component('f7-button', f7Button);
-      Vue.component('f7-card-content', F7CardContent);
-      Vue.component('f7-card-footer', F7CardFooter);
-      Vue.component('f7-card-header', F7CardHeader);
+      Vue.component('f7-card-content', f7CardContent);
+      Vue.component('f7-card-footer', f7CardFooter);
+      Vue.component('f7-card-header', f7CardHeader);
       Vue.component('f7-card', f7Card);
       Vue.component('f7-checkbox', f7Checkbox);
       Vue.component('f7-chip', f7Chip);
@@ -11699,15 +11792,15 @@
       Vue.component('f7-fab-buttons', f7FabButtons);
       Vue.component('f7-fab', f7Fab);
       Vue.component('f7-gauge', f7Gauge);
-      Vue.component('f7-icon', F7Icon);
-      Vue.component('f7-input', F7Input);
-      Vue.component('f7-link', F7Link);
+      Vue.component('f7-icon', f7Icon);
+      Vue.component('f7-input', f7Input);
+      Vue.component('f7-link', f7Link);
       Vue.component('f7-list-button', f7ListButton);
       Vue.component('f7-list-group', f7ListGroup);
       Vue.component('f7-list-index', f7ListIndex);
       Vue.component('f7-list-input', f7ListInput);
       Vue.component('f7-list-item-cell', f7ListItemCell);
-      Vue.component('f7-list-item-content', F7ListItemContent);
+      Vue.component('f7-list-item-content', f7ListItemContent);
       Vue.component('f7-list-item-row', f7ListItemRow);
       Vue.component('f7-list-item', f7ListItem);
       Vue.component('f7-list', f7List);
@@ -11726,12 +11819,12 @@
       Vue.component('f7-messagebar', f7Messagebar);
       Vue.component('f7-messages-title', f7MessagesTitle);
       Vue.component('f7-messages', f7Messages);
-      Vue.component('f7-nav-left', F7NavLeft);
-      Vue.component('f7-nav-right', F7NavRight);
+      Vue.component('f7-nav-left', f7NavLeft);
+      Vue.component('f7-nav-right', f7NavRight);
       Vue.component('f7-nav-title-large', f7NavTitleLarge);
-      Vue.component('f7-nav-title', F7NavTitle);
+      Vue.component('f7-nav-title', f7NavTitle);
       Vue.component('f7-navbar', f7Navbar);
-      Vue.component('f7-page-content', F7PageContent);
+      Vue.component('f7-page-content', f7PageContent);
       Vue.component('f7-page', f7Page);
       Vue.component('f7-panel', f7Panel);
       Vue.component('f7-photo-browser', f7PhotoBrowser);
@@ -11740,8 +11833,8 @@
       Vue.component('f7-preloader', f7Preloader);
       Vue.component('f7-progressbar', f7Progressbar);
       Vue.component('f7-radio', f7Radio);
-      Vue.component('f7-range', F7Range);
-      Vue.component('f7-routable-modals', RoutableModals);
+      Vue.component('f7-range', f7Range);
+      Vue.component('f7-routable-modals', f7RoutableModals);
       Vue.component('f7-row', f7Row);
       Vue.component('f7-searchbar', f7Searchbar);
       Vue.component('f7-segmented', f7Segmented);
@@ -11757,7 +11850,7 @@
       Vue.component('f7-swiper', f7Swiper);
       Vue.component('f7-tab', f7Tab);
       Vue.component('f7-tabs', f7Tabs);
-      Vue.component('f7-toggle', F7Toggle);
+      Vue.component('f7-toggle', f7Toggle);
       Vue.component('f7-toolbar', f7Toolbar);
       Vue.component('f7-view', f7View);
       Vue.component('f7-views', f7Views);

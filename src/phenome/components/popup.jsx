@@ -18,8 +18,11 @@ export default {
     tabletFullscreen: Boolean,
     opened: Boolean,
     closeByBackdropClick: Boolean,
-    backdrop: Boolean,
     animate: Boolean,
+    backdrop: {
+      type: Boolean,
+      default: undefined,
+    },
     ...Mixins.colorProps,
   },
   render() {

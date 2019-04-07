@@ -2,6 +2,26 @@
 
 # Change Log
 
+# [v4.2.2](https://github.com/framework7io/framework7/compare/v4.2.0...v4.2.2) - April 4, 2019
+  * Core
+    * Smart Select
+      * New `scrollToSelectedItem` parameter - when enabled it will scroll smart select content to first selected item on open (default `false`)
+      * New `.scrollToSelectedItem()` smart select instance method to scroll smart select content to first selected item (when opened)
+      * Now when opened in Popup, it will render Popup's close button as a plain text link on the right side in Navbar
+    * Autocomplete
+      * Now when opened in Popup, it will render Popup's close button as a plain text link on the right side in Navbar
+    * Router
+      * Fixed issue with swipe-back when used in Master-Detail layout
+    * List Index
+      * Fixed issue with wrong positioning when used with large navbar
+  * Phenome
+    * ListInput / Input
+      * Now it accepts special type `datepicker` to open calendar on focus
+      * New prop `calendarParams` to specify calendar params for `datepicker` type
+    * Button
+      * New `type` prop. If this prop is one of `submit`, `button` or `reset` then it will be rendered as `<button>` tag
+  * Lots of minor fixes
+
 # [v4.2.0](https://github.com/framework7io/framework7/compare/v4.1.1...v4.2.0) - March 20, 2019
   * All new Aurora theme! 🖥🎉
   * Core

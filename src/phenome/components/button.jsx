@@ -23,6 +23,7 @@ export default {
     text: String,
     tabLink: [Boolean, String],
     tabLinkActive: Boolean,
+    type: String,
     href: {
       type: [String, Boolean],
       default: '#',
@@ -80,6 +81,7 @@ export default {
       iconSize,
       id,
       style,
+      type,
     } = props;
 
     if (text) {
@@ -101,8 +103,9 @@ export default {
         />
       );
     }
+    const ButtonTag = type === 'submit' || type === 'reset' || type === 'button' ? 'button' : 'a';
     return (
-      <a
+      <ButtonTag
         ref="el"
         id={id}
         style={style}
@@ -112,14 +115,14 @@ export default {
         {iconEl}
         {textEl}
         <slot />
-      </a>
+      </ButtonTag>
     );
   },
   computed: {
     attrs() {
       const self = this;
       const props = self.props;
-      const { href, target, tabLink } = props;
+      const { href, target, tabLink, type } = props;
       let hrefComputed = href;
       if (href === true) hrefComputed = '#';
       if (href === false) hrefComputed = undefined; // no href attribute
@@ -127,6 +130,7 @@ export default {
         {
           href: hrefComputed,
           target,
+          type,
           'data-tab': (Utils.isStringProp(tabLink) && tabLink) || undefined,
         },
         Mixins.linkRouterAttrs(props),

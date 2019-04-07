@@ -170,6 +170,7 @@ function forward(el, forwardOptions = {}) {
     newPagePosition = 'previous';
   }
   $newPage
+    .removeClass('page-previous page-current page-next')
     .addClass(`page-${newPagePosition}${isMaster ? ' page-master' : ''}${isDetail ? ' page-master-detail' : ''}`)
     .removeClass('stacked')
     .trigger('page:unstack')
@@ -181,6 +182,7 @@ function forward(el, forwardOptions = {}) {
 
   if (dynamicNavbar && $newNavbarInner.length) {
     $newNavbarInner
+      .removeClass('navbar-previous navbar-current navbar-next')
       .addClass(`navbar-${newPagePosition}${isMaster ? ' navbar-master' : ''}${isDetail ? ' navbar-master-detail' : ''}`)
       .removeClass('stacked');
   }
@@ -414,6 +416,10 @@ function forward(el, forwardOptions = {}) {
   if (options.reloadCurrent || options.reloadAll || reloadDetail) {
     router.allowPageChange = true;
     router.pageCallback('beforeIn', $newPage, $newNavbarInner, newPagePosition, 'current', options);
+    $newPage.removeAttr('aria-hidden');
+    if (dynamicNavbar && $newNavbarInner) {
+      $newNavbarInner.removeAttr('aria-hidden');
+    }
     router.pageCallback('afterIn', $newPage, $newNavbarInner, newPagePosition, 'current', options);
     if (options.reloadCurrent && options.clearPreviousHistory) router.clearPreviousHistory();
     if (reloadDetail) {

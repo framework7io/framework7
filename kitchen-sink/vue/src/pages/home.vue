@@ -125,16 +125,16 @@
       <f7-list-item link="/panel/" title="Panel / Side Panels">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>
-      <f7-list-item link="/picker/" title="Picker">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
-      </f7-list-item>
       <f7-list-item link="/photo-browser/" title="Photo Browser">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>
-      <f7-list-item link="/popup/" title="Popup">
+      <f7-list-item link="/picker/" title="Picker">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>
       <f7-list-item link="/popover/" title="Popover">
+        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+      </f7-list-item>
+      <f7-list-item link="/popup/" title="Popup">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>
       <f7-list-item link="/preloader/" title="Preloader">

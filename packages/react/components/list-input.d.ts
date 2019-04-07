@@ -13,7 +13,7 @@ declare namespace F7ListInput {
     input? : boolean
     type? : string
     name? : string
-    value? : string | number | Array<any>
+    value? : string | number | Array<any> | Date
     defaultValue? : string | number | Array<any>
     readonly? : boolean
     required? : boolean
@@ -50,6 +50,7 @@ declare namespace F7ListInput {
     label? : string | number
     inlineLabel? : boolean
     floatingLabel? : boolean
+    calendarParams? : Object
     color? : string
     colorTheme? : string
     textColor? : string
@@ -58,6 +59,7 @@ declare namespace F7ListInput {
     rippleColor? : string
     themeDark? : boolean
     inputStyle? : React.CSSProperties
+    onCalendarChange? : (calendarValue?: any) => void
     onTextareaResize? : (event?: any) => void
     onInputNotEmpty? : (event?: any) => void
     onInputEmpty? : (event?: any) => void

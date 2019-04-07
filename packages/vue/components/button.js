@@ -13,6 +13,7 @@ export default {
     text: String,
     tabLink: [Boolean, String],
     tabLinkActive: Boolean,
+    type: String,
     href: {
       type: [String, Boolean],
       default: '#'
@@ -66,7 +67,8 @@ export default {
       iconColor,
       iconSize,
       id,
-      style
+      style,
+      type
     } = props;
 
     if (text) {
@@ -90,7 +92,8 @@ export default {
       });
     }
 
-    return _h('a', __vueComponentTransformJSXProps(Object.assign({
+    const ButtonTag = type === 'submit' || type === 'reset' || type === 'button' ? 'button' : 'a';
+    return _h(ButtonTag, __vueComponentTransformJSXProps(Object.assign({
       ref: 'el',
       style: style,
       class: self.classes
@@ -108,7 +111,8 @@ export default {
       const {
         href,
         target,
-        tabLink
+        tabLink,
+        type
       } = props;
       let hrefComputed = href;
       if (href === true) hrefComputed = '#';
@@ -116,6 +120,7 @@ export default {
       return Utils.extend({
         href: hrefComputed,
         target,
+        type,
         'data-tab': Utils.isStringProp(tabLink) && tabLink || undefined
       }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
     },

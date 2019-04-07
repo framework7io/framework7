@@ -1,5 +1,5 @@
 /**
- * Framework7 React 4.2.0
+ * Framework7 React 4.2.2
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 20, 2019
+ * Released on: April 4, 2019
  */
 
 (function (global, factory) {
@@ -2039,12 +2039,14 @@
       var href = props.href;
       var target = props.target;
       var tabLink = props.tabLink;
+      var type = props.type;
       var hrefComputed = href;
       if (href === true) { hrefComputed = '#'; }
       if (href === false) { hrefComputed = undefined; }
       return Utils.extend({
         href: hrefComputed,
         target: target,
+        type: type,
         'data-tab': Utils.isStringProp(tabLink) && tabLink || undefined
       }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
     };
@@ -2136,6 +2138,7 @@
       var iconSize = props.iconSize;
       var id = props.id;
       var style = props.style;
+      var type = props.type;
 
       if (text) {
         textEl = React.createElement('span', null, text);
@@ -2156,7 +2159,8 @@
         });
       }
 
-      return React.createElement('a', Object.assign({
+      var ButtonTag = type === 'submit' || type === 'reset' || type === 'button' ? 'button' : 'a';
+      return React.createElement(ButtonTag, Object.assign({
         ref: function (__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
         },
@@ -2250,6 +2254,7 @@
     text: String,
     tabLink: [Boolean, String],
     tabLinkActive: Boolean,
+    type: String,
     href: {
       type: [String, Boolean],
       default: '#'
@@ -3981,10 +3986,16 @@
       var inputEl;
 
       var createInput = function (InputTag, children) {
-        var needsValue = type !== 'file';
+        var needsValue = type !== 'file' && type !== 'datepicker';
         var needsType = InputTag === 'input';
+        var inputType = type;
+
+        if (inputType === 'datepicker') {
+          inputType = 'text';
+        }
+
         var inputClassName = Utils.classNames(!wrap && className, {
-          resizable: type === 'textarea' && resizable,
+          resizable: inputType === 'textarea' && resizable,
           'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
           'input-invalid': errorMessage && errorMessageForce || self.state.inputInvalid,
           'input-with-value': inputHasValue,
@@ -3998,8 +4009,12 @@
         }
 
         var valueProps = {};
-        if ('value' in props) { valueProps.value = inputValue; }
-        if ('defaultValue' in props) { valueProps.defaultValue = defaultValue; }
+
+        if (type !== 'datepicker') {
+          if ('value' in props) { valueProps.value = inputValue; }
+          if ('defaultValue' in props) { valueProps.defaultValue = defaultValue; }
+        }
+
         {
           input = React.createElement(InputTag, Object.assign({
             ref: function (__reactNode) {
@@ -4007,7 +4022,7 @@
             },
             style: inputStyle,
             name: name,
-            type: needsType ? type : undefined,
+            type: needsType ? inputType : undefined,
             placeholder: placeholder,
             id: inputId,
             size: size,
@@ -4127,6 +4142,12 @@
         inputEl.removeEventListener('input:empty', self.onInputEmpty, false);
         inputEl.removeEventListener('input:clear', self.onInputClear, false);
       }
+
+      if (self.f7Calendar && self.f7Calendar.destroy) {
+        self.f7Calendar.destroy();
+      }
+
+      delete self.f7Calendar;
     };
 
     F7Input.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
@@ -4139,6 +4160,10 @@
         if (type === 'range' || type === 'toggle') { return; }
         if (!self.$f7) { return; }
         self.updateInputOnDidUpdate = true;
+
+        if (self.f7Calendar) {
+          self.f7Calendar.setValue(self.props.value);
+        }
       });
 
       var self = this;
@@ -4176,6 +4201,7 @@
         var clearButton = ref.clearButton;
         var value = ref.value;
         var defaultValue = ref.defaultValue;
+        var calendarParams = ref.calendarParams;
         if (type === 'range' || type === 'toggle') { return; }
         var inputEl = self.refs.inputEl;
         if (!inputEl) { return; }
@@ -4188,6 +4214,19 @@
         if (clearButton) {
           inputEl.addEventListener('input:empty', self.onInputEmpty, false);
           inputEl.addEventListener('input:clear', self.onInputClear, false);
+        }
+
+        if (type === 'datepicker') {
+          self.f7Calendar = f7.calendar.create(Object.assign({
+            inputEl: inputEl,
+            value: value,
+            on: {
+              change: function change(calendar, calendarValue) {
+                self.dispatchEvent('calendar:change calendarChange', calendarValue);
+              }
+
+            }
+          }, calendarParams || {}));
         }
 
         f7.input.checkEmptyState(inputEl);
@@ -4229,7 +4268,7 @@
   __reactComponentSetProps(F7Input, Object.assign({
     type: String,
     name: String,
-    value: [String, Number, Array],
+    value: [String, Number, Array, Date],
     defaultValue: [String, Number, Array],
     placeholder: String,
     id: [String, Number],
@@ -4275,7 +4314,8 @@
     dropdown: {
       type: [String, Boolean],
       default: 'auto'
-    }
+    },
+    calendarParams: Object
   }, Mixins.colorProps));
 
   F7Input.displayName = 'f7-input';
@@ -5061,10 +5101,16 @@
       var isSortable = sortable || self.state.isSortable;
 
       var createInput = function (InputTag, children) {
-        var needsValue = type !== 'file';
+        var needsValue = type !== 'file' && type !== 'datepicker';
         var needsType = InputTag === 'input';
+        var inputType = type;
+
+        if (inputType === 'datepicker') {
+          inputType = 'text';
+        }
+
         var inputClassName = Utils.classNames({
-          resizable: type === 'textarea' && resizable,
+          resizable: inputType === 'textarea' && resizable,
           'no-store-data': noFormStoreData || noStoreData || ignoreStoreData,
           'input-invalid': errorMessage && errorMessageForce || inputInvalid,
           'input-with-value': inputHasValue,
@@ -5078,8 +5124,12 @@
         }
 
         var valueProps = {};
-        if ('value' in props) { valueProps.value = inputValue; }
-        if ('defaultValue' in props) { valueProps.defaultValue = defaultValue; }
+
+        if (type !== 'datepicker') {
+          if ('value' in props) { valueProps.value = inputValue; }
+          if ('defaultValue' in props) { valueProps.defaultValue = defaultValue; }
+        }
+
         {
           input = React.createElement(InputTag, Object.assign({
             ref: function (__reactNode) {
@@ -5087,7 +5137,7 @@
             },
             style: inputStyle,
             name: name,
-            type: needsType ? type : undefined,
+            type: needsType ? inputType : undefined,
             placeholder: placeholder,
             id: inputId,
             size: size,
@@ -5203,6 +5253,12 @@
       inputEl.removeEventListener('textarea:resize', self.onTextareaResize, false);
       inputEl.removeEventListener('input:empty', self.onInputEmpty, false);
       inputEl.removeEventListener('input:clear', self.onInputClear, false);
+
+      if (self.f7Calendar && self.f7Calendar.destroy) {
+        self.f7Calendar.destroy();
+      }
+
+      delete self.f7Calendar;
     };
 
     F7ListInput.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
@@ -5212,6 +5268,10 @@
         var self = this$1;
         if (!self.$f7) { return; }
         self.updateInputOnDidUpdate = true;
+
+        if (self.f7Calendar) {
+          self.f7Calendar.setValue(self.props.value);
+        }
       });
 
       var self = this;
@@ -5261,12 +5321,26 @@
         var value = ref.value;
         var defaultValue = ref.defaultValue;
         var type = ref.type;
+        var calendarParams = ref.calendarParams;
         var inputEl = self.refs.inputEl;
         if (!inputEl) { return; }
         inputEl.addEventListener('input:notempty', self.onInputNotEmpty, false);
         inputEl.addEventListener('textarea:resize', self.onTextareaResize, false);
         inputEl.addEventListener('input:empty', self.onInputEmpty, false);
         inputEl.addEventListener('input:clear', self.onInputClear, false);
+
+        if (type === 'datepicker') {
+          self.f7Calendar = f7.calendar.create(Object.assign({
+            inputEl: inputEl,
+            value: value,
+            on: {
+              change: function change(calendar, calendarValue) {
+                self.dispatchEvent('calendar:change calendarChange', calendarValue);
+              }
+
+            }
+          }, calendarParams || {}));
+        }
 
         if (!(validateOnBlur || validateOnBlur === '') && (validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
           setTimeout(function () {
@@ -5332,7 +5406,7 @@
       default: 'text'
     },
     name: String,
-    value: [String, Number, Array],
+    value: [String, Number, Array, Date],
     defaultValue: [String, Number, Array],
     readonly: Boolean,
     required: Boolean,
@@ -5369,7 +5443,8 @@
     outline: Boolean,
     label: [String, Number],
     inlineLabel: Boolean,
-    floatingLabel: Boolean
+    floatingLabel: Boolean,
+    calendarParams: Object
   }, Mixins.colorProps));
 
   F7ListInput.displayName = 'f7-list-input';
@@ -8588,7 +8663,7 @@
       var className = props.className;
       var subtitleEl;
 
-      if (self.subtitle) {
+      if (subtitle) {
         subtitleEl = React.createElement('span', {
           className: 'subtitle'
         }, subtitle);
@@ -9066,6 +9141,7 @@
           hasSubnavbar: false,
           hasNavbarLarge: false,
           hasNavbarLargeCollapsed: false,
+          hasCardExpandableOpened: false,
           routerPositionClass: '',
           routerForceUnstack: false,
           routerPageRole: null,
@@ -9074,7 +9150,7 @@
       })();
 
       (function () {
-        Utils.bindMethods(this$1, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack', 'onPageNavbarLargeCollapsed', 'onPageNavbarLargeExpanded']);
+        Utils.bindMethods(this$1, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack', 'onPageNavbarLargeCollapsed', 'onPageNavbarLargeExpanded', 'onCardOpen', 'onCardClose']);
       })();
     }
 
@@ -9249,6 +9325,18 @@
       this.dispatchEvent('page:beforeremove pageBeforeRemove', event, page);
     };
 
+    F7Page.prototype.onCardOpen = function onCardOpen () {
+      this.setState({
+        hasCardExpandableOpened: true
+      });
+    };
+
+    F7Page.prototype.onCardClose = function onCardClose () {
+      this.setState({
+        hasCardExpandableOpened: false
+      });
+    };
+
     F7Page.prototype.render = function render () {
       var this$1 = this;
 
@@ -9340,7 +9428,8 @@
         'page-master': this.state.routerPageRole === 'master',
         'page-master-detail': this.state.routerPageRole === 'detail',
         'page-master-stacked': this.state.routerPageMasterStack === true,
-        'page-with-navbar-large-collapsed': this.state.hasNavbarLargeCollapsed === true
+        'page-with-navbar-large-collapsed': this.state.hasNavbarLargeCollapsed === true,
+        'page-with-card-opened': this.state.hasCardExpandableOpened === true
       }, Mixins.colorClasses(props));
 
       if (!needsPageContent) {
@@ -9407,6 +9496,8 @@
       el.removeEventListener('page:masterunstack', self.onPageMasterUnstack);
       el.removeEventListener('page:navbarlargecollapsed', self.onPageNavbarLargeCollapsed);
       el.removeEventListener('page:navbarlargeexpanded', self.onPageNavbarLargeExpanded);
+      el.removeEventListener('card:open', self.onCardOpen);
+      el.removeEventListener('card:close', self.onCardClose);
     };
 
     F7Page.prototype.componentDidMount = function componentDidMount () {
@@ -9444,6 +9535,8 @@
       el.addEventListener('page:masterunstack', self.onPageMasterUnstack);
       el.addEventListener('page:navbarlargecollapsed', self.onPageNavbarLargeCollapsed);
       el.addEventListener('page:navbarlargeexpanded', self.onPageNavbarLargeExpanded);
+      el.addEventListener('card:open', self.onCardOpen);
+      el.addEventListener('card:close', self.onCardClose);
     };
 
     prototypeAccessors.slots.get = function () {
@@ -13116,7 +13209,7 @@
   };
 
   /**
-   * Framework7 React 4.2.0
+   * Framework7 React 4.2.2
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -13124,7 +13217,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: March 20, 2019
+   * Released on: April 4, 2019
    */
 
   var Plugin = {

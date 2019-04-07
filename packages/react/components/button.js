@@ -27,7 +27,8 @@ class F7Button extends React.Component {
     const {
       href,
       target,
-      tabLink
+      tabLink,
+      type
     } = props;
     let hrefComputed = href;
     if (href === true) hrefComputed = '#';
@@ -35,6 +36,7 @@ class F7Button extends React.Component {
     return Utils.extend({
       href: hrefComputed,
       target,
+      type,
       'data-tab': Utils.isStringProp(tabLink) && tabLink || undefined
     }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
   }
@@ -126,7 +128,8 @@ class F7Button extends React.Component {
       iconColor,
       iconSize,
       id,
-      style
+      style,
+      type
     } = props;
 
     if (text) {
@@ -148,7 +151,8 @@ class F7Button extends React.Component {
       });
     }
 
-    return React.createElement('a', Object.assign({
+    const ButtonTag = type === 'submit' || type === 'reset' || type === 'button' ? 'button' : 'a';
+    return React.createElement(ButtonTag, Object.assign({
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
       },
@@ -236,6 +240,7 @@ __reactComponentSetProps(F7Button, Object.assign({
   text: String,
   tabLink: [Boolean, String],
   tabLinkActive: Boolean,
+  type: String,
   href: {
     type: [String, Boolean],
     default: '#'
