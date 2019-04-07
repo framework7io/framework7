@@ -12,7 +12,62 @@
       </div>
     </div>
     <div class="page-content">
-
+      <div class="block block-strong">
+        <p>Framework7 comes with ultimate modular Color Picker component that allows to create color picker with limitless combinations of color modules.</p>
+      </div>
+      <div class="block-title">Color Picker Modules</div>
+      <div class="block block-strong no-padding">
+        <div class="data-table">
+          <table>
+            <tbody>
+              <tr>
+                <th class="label-cell">current-color</th>
+                <td>currently selected color</td>
+              </tr>
+              <tr>
+                <th class="label-cell">initial-current-color</th>
+                <td>initial color and currently selected colors</td>
+              </tr>
+              <tr>
+                <th class="label-cell">wheel</th>
+                <td>HSB(V) color wheel</td>
+              </tr>
+              <tr>
+                <th class="label-cell">sb-spectrum</th>
+                <td>SB (saturation-brightness) spectrum</td>
+              </tr>
+              <tr>
+                <th class="label-cell">hex</th>
+                <td>HEX color value</td>
+              </tr>
+              <tr>
+                <th class="label-cell">rgb-sliders</th>
+                <td>RGB (red, green, blue) sliders</td>
+              </tr>
+              <tr>
+                <th class="label-cell">rgb-bar</th>
+                <td>RGB (red, green, blue) bars (vertical sliders)</td>
+              </tr>
+              <tr>
+                <th class="label-cell">hsb-sliders</th>
+                <td>HSB (hue, saturation, brightness) sliders</td>
+              </tr>
+              <tr>
+                <th class="label-cell">hue-slider</th>
+                <td>Hue slider</td>
+              </tr>
+              <tr>
+                <th class="label-cell">alpha-slider</th>
+                <td>Alpha slider</td>
+              </tr>
+              <tr>
+                <th class="label-cell">palette</th>
+                <td>predefined colors palette to select from</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
       <div class="block-title">Color Wheel</div>
       <div class="block-header">Minimal example with color wheel in Popover</div>
       <div class="list no-hairlines-md">
@@ -219,34 +274,27 @@
         self.colorPickerWheel = app.colorPicker.create({
           inputEl: '#demo-color-picker-wheel',
           targetEl: '#demo-color-picker-wheel-value',
+          targetElSetBackgroundColor: true,
           modules: ['wheel'],
           openIn: 'popover',
           value: {
             hex: '#00ff00',
           },
-          on: {
-            change(cp, value) {
-              cp.$targetEl.css('background-color', value.hex);
-            },
-          },
         });
         self.colorPickerSpectrum = app.colorPicker.create({
           inputEl: '#demo-color-picker-spectrum',
           targetEl: '#demo-color-picker-spectrum-value',
+          targetElSetBackgroundColor: true,
           modules: ['sb-spectrum', 'hue-slider'],
           openIn: 'popover',
           value: {
             hex: '#ff0000',
           },
-          on: {
-            change(cp, value) {
-              cp.$targetEl.css('background-color', value.hex);
-            },
-          },
         });
         self.colorPickerRgb = app.colorPicker.create({
           inputEl: '#demo-color-picker-rgb',
           targetEl: '#demo-color-picker-rgb-value',
+          targetElSetBackgroundColor: true,
           modules: ['rgb-sliders'],
           openIn: 'popover',
           sliderValue: true,
@@ -254,15 +302,11 @@
           value: {
             hex: '#0000ff',
           },
-          on: {
-            change(cp, value) {
-              cp.$targetEl.css('background-color', value.hex);
-            },
-          },
         });
         self.colorPickerRgba = app.colorPicker.create({
           inputEl: '#demo-color-picker-rgba',
           targetEl: '#demo-color-picker-rgba-value',
+          targetElSetBackgroundColor: true,
           modules: ['rgb-sliders', 'alpha-slider'],
           openIn: 'popover',
           sliderValue: true,
@@ -273,15 +317,11 @@
           formatValue: function (value) {
             return 'rgba(' + value.rgb.join(', ') + ', ' + value.alpha + ')';
           },
-          on: {
-            change(cp, value) {
-              cp.$targetEl.css('background-color', 'rgba(' + value.rgb.join(', ') + ', ' + value.alpha + ')');
-            },
-          },
         });
         self.colorPickerHsb = app.colorPicker.create({
           inputEl: '#demo-color-picker-hsb',
           targetEl: '#demo-color-picker-hsb-value',
+          targetElSetBackgroundColor: true,
           modules: ['hsb-sliders'],
           openIn: 'popover',
           sliderValue: true,
@@ -292,15 +332,11 @@
           value: {
             hex: '#00ff00',
           },
-          on: {
-            change(cp, value) {
-              cp.$targetEl.css('background-color', value.hex);
-            },
-          },
         });
         self.colorPickerRgbBars = app.colorPicker.create({
           inputEl: '#demo-color-picker-rgb-bars',
           targetEl: '#demo-color-picker-rgb-bars-value',
+          targetElSetBackgroundColor: true,
           modules: ['rgb-bars'],
           openIn: 'auto',
           barValue: true,
@@ -311,15 +347,11 @@
           value: {
             hex: '#0000ff',
           },
-          on: {
-            change(cp, value) {
-              cp.$targetEl.css('background-color', value.hex);
-            },
-          },
         });
         self.colorPickerRgbPrevCurrentColors = app.colorPicker.create({
           inputEl: '#demo-color-picker-rgb-initial-current-colors',
           targetEl: '#demo-color-picker-rgb-initial-current-colors-value',
+          targetElSetBackgroundColor: true,
           modules: ['initial-current-colors', 'rgb-sliders'],
           openIn: 'popover',
           sliderValue: true,
@@ -330,15 +362,11 @@
           value: {
             hex: '#ffff00',
           },
-          on: {
-            change(cp, value) {
-              cp.$targetEl.css('background-color', value.hex);
-            },
-          },
         });
         self.colorPickerPalette = app.colorPicker.create({
           inputEl: '#demo-color-picker-palette',
           targetEl: '#demo-color-picker-palette-value',
+          targetElSetBackgroundColor: true,
           modules: ['palette'],
           openIn: 'auto',
           openInPhone: 'sheet',
@@ -358,17 +386,13 @@
           formatValue: function (value) {
             return value.hex;
           },
-          on: {
-            change(cp, value) {
-              cp.$targetEl.css('background-color', value.hex);
-            },
-          },
         });
 
         self.colorPickerRgbPro = app.colorPicker.create({
           inputEl: '#demo-color-picker-pro',
           targetEl: '#demo-color-picker-pro-value',
-          modules: ['initial-current-colors', 'hsb-sliders', 'rgb-sliders', 'alpha-slider', 'hex', 'palette'],
+          targetElSetBackgroundColor: true,
+          modules: ['initial-current-colors', 'sb-spectrum', 'hsb-sliders', 'rgb-sliders', 'alpha-slider', 'hex', 'palette'],
           openIn: 'auto',
           sliderValue: true,
           sliderValueEditable: true,
@@ -391,11 +415,6 @@
           },
           value: {
             hex: '#00ffff',
-          },
-          on: {
-            change(cp, value) {
-              cp.$targetEl.css('background-color', 'rgba(' + value.rgb.join(', ') + ', ' + value.alpha + ')');
-            },
           },
         });
 
