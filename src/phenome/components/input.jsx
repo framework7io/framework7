@@ -10,7 +10,7 @@ export default {
     // Inputs
     type: String,
     name: String,
-    value: [String, Number, Array, Date],
+    value: [String, Number, Array, Date, Object],
     defaultValue: [String, Number, Array],
     placeholder: String,
     id: [String, Number],

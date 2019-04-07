@@ -30,7 +30,7 @@ export default {
       default: 'text',
     },
     name: String,
-    value: [String, Number, Array, Date],
+    value: [String, Number, Array, Date, Object],
     defaultValue: [String, Number, Array],
     readonly: Boolean,
     required: Boolean,
