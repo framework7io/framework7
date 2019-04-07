@@ -14,6 +14,7 @@ import Cards from './pages/cards.jsx';
 import CardsExpandable from './pages/cards-expandable.jsx';
 import Checkbox from './pages/checkbox.jsx';
 import Chips from './pages/chips.jsx';
+import ColorPicker from './pages/color-picker.jsx';
 import ContactsList from './pages/contacts-list.jsx';
 import ContentBlock from './pages/content-block.jsx';
 import DataTable from './pages/data-table.jsx';
@@ -226,6 +227,10 @@ export default [
   {
     path: '/chips/',
     component: Chips,
+  },
+  {
+    path: '/color-picker/',
+    component: ColorPicker,
   },
   {
     path: '/contacts-list/',

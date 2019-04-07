@@ -1,62 +1,9 @@
 <template>
-  <f7-page @page:beforeremove="onPageBeforeRemove" @page:init="onPageInit">
+  <f7-page>
     <f7-navbar title="Color Picker" back-link="Back"></f7-navbar>
 
     <f7-block strong>
       <p>Framework7 comes with ultimate modular Color Picker component that allows to create color picker with limitless combinations of color modules.</p>
-    </f7-block>
-    <f7-block-title>Color Picker Modules</f7-block-title>
-    <f7-block class="no-padding">
-      <div class="data-table">
-        <table>
-          <tbody>
-            <tr>
-              <th class="label-cell">current-color</th>
-              <td>currently selected color</td>
-            </tr>
-            <tr>
-              <th class="label-cell">initial-current-color</th>
-              <td>initial color and currently selected colors</td>
-            </tr>
-            <tr>
-              <th class="label-cell">wheel</th>
-              <td>HSB(V) color wheel</td>
-            </tr>
-            <tr>
-              <th class="label-cell">sb-spectrum</th>
-              <td>SB (saturation-brightness) spectrum</td>
-            </tr>
-            <tr>
-              <th class="label-cell">hex</th>
-              <td>HEX color value</td>
-            </tr>
-            <tr>
-              <th class="label-cell">rgb-sliders</th>
-              <td>RGB (red, green, blue) sliders</td>
-            </tr>
-            <tr>
-              <th class="label-cell">rgb-bar</th>
-              <td>RGB (red, green, blue) bars (vertical sliders)</td>
-            </tr>
-            <tr>
-              <th class="label-cell">hsb-sliders</th>
-              <td>HSB (hue, saturation, brightness) sliders</td>
-            </tr>
-            <tr>
-              <th class="label-cell">hue-slider</th>
-              <td>Hue slider</td>
-            </tr>
-            <tr>
-              <th class="label-cell">alpha-slider</th>
-              <td>Alpha slider</td>
-            </tr>
-            <tr>
-              <th class="label-cell">palette</th>
-              <td>predefined colors palette to select from</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
     </f7-block>
 
     <f7-block-title>Color Wheel</f7-block-title>
@@ -68,11 +15,14 @@
         readonly
         :value="wheePickerValue"
         @colorpicker:change="(value) => wheePickerValue = value"
+        :color-picker-params="{
+          targetEl: '.wheel-picker-target'
+        }"
       >
         <i
           slot="media"
           :style="`background-color: ${wheePickerValue.hex}`"
-          class="icon demo-list-icon"
+          class="icon demo-list-icon wheel-picker-target"
         ></i>
       </f7-list-input>
     </f7-list>
@@ -87,13 +37,14 @@
         :value="spectrumPickerValue"
         @colorpicker:change="(value) => spectrumPickerValue = value"
         :color-picker-params="{
-          modules: ['sb-spectrum', 'hue-slider']
+          modules: ['sb-spectrum', 'hue-slider'],
+          targetEl: '.spectrum-picker-target'
         }"
       >
         <i
           slot="media"
           :style="`background-color: ${spectrumPickerValue.hex}`"
-          class="icon demo-list-icon"
+          class="icon demo-list-icon spectrum-picker-target"
         ></i>
       </f7-list-input>
     </f7-list>
@@ -111,12 +62,13 @@
           modules: ['rgb-sliders'],
           sliderValue: true,
           sliderLabel: true,
+          targetEl: '.rgb-picker-target',
         }"
       >
         <i
           slot="media"
           :style="`background-color: ${rgbPickerValue.hex}`"
-          class="icon demo-list-icon"
+          class="icon demo-list-icon rgb-picker-target"
         ></i>
       </f7-list-input>
     </f7-list>
@@ -134,6 +86,7 @@
           modules: ['rgb-sliders', 'alpha-slider'],
           sliderValue: true,
           sliderLabel: true,
+          targetEl: '.rgba-picker-target',
           formatValue(value) {
             return `rgba(${value.rgb.join(', ')}, ${value.alpha})`;
           },
@@ -142,7 +95,7 @@
         <i
           slot="media"
           :style="`background-color: ${rgbaPickerValue.rgb ? `rgba(${rgbaPickerValue.rgb.join(', ')}, ${rgbaPickerValue.alpha})` : rgbaPickerValue.hex}`"
-          class="icon demo-list-icon"
+          class="icon demo-list-icon rgba-picker-target"
         ></i>
       </f7-list-input>
     </f7-list>
@@ -160,6 +113,7 @@
           modules: ['hsb-sliders'],
           sliderValue: true,
           sliderLabel: true,
+          targetEl: '.hsb-picker-target',
           formatValue(value) {
             return `hsb(${value.hsb[0]}, ${value.hsb[1] * 1000 / 10}%, ${value.hsb[2] * 1000 / 10}%)`
           },
@@ -168,7 +122,7 @@
         <i
           slot="media"
           :style="`background-color: ${hsbPickerValue.hex}`"
-          class="icon demo-list-icon"
+          class="icon demo-list-icon hsb-picker-target"
         ></i>
       </f7-list-input>
     </f7-list>
@@ -187,6 +141,7 @@
           openIn: 'auto',
           barValue: true,
           barLabel: true,
+          targetEl: '.rgb-bars-picker-target',
           formatValue(value) {
             return `rgb(${value.rgb.join(', ')})`;
           },
@@ -195,7 +150,7 @@
         <i
           slot="media"
           :style="`background-color: ${rgbBarsPickerValue.hex}`"
-          class="icon demo-list-icon"
+          class="icon demo-list-icon rgb-bars-picker-target"
         ></i>
       </f7-list-input>
     </f7-list>
@@ -213,6 +168,7 @@
           modules: ['initial-current-colors', 'rgb-sliders'],
           sliderValue: true,
           sliderLabel: true,
+          targetEl: '.rgb-sliders-colors-picker-target',
           formatValue(value) {
             return `rgb(${value.rgb.join(', ')})`;
           },
@@ -221,7 +177,7 @@
         <i
           slot="media"
           :style="`background-color: ${rgbSlidersColorsPickerValue.hex}`"
-          class="icon demo-list-icon"
+          class="icon demo-list-icon rgb-sliders-colors-picker-target"
         ></i>
       </f7-list-input>
     </f7-list>
@@ -249,6 +205,7 @@
             ['#FFFDE7', '#FFF9C4', '#FFF59D', '#FFF176', '#FFEE58', '#FFEB3B', '#FDD835', '#FBC02D', '#F9A825', '#F57F17'],
             ['#FFF3E0', '#FFE0B2', '#FFCC80', '#FFB74D', '#FFA726', '#FF9800', '#FB8C00', '#F57C00', '#EF6C00', '#E65100'],
           ],
+          targetEl: '.palette-picker-target',
           formatValue(value) {
             return value.hex;
           },
@@ -257,7 +214,7 @@
         <i
           slot="media"
           :style="`background-color: ${palettePickerValue.hex}`"
-          class="icon demo-list-icon"
+          class="icon demo-list-icon palette-picker-target"
         ></i>
       </f7-list-input>
     </f7-list>
@@ -290,6 +247,7 @@
             ['#FFFDE7', '#FFF9C4', '#FFF59D', '#FFF176', '#FFEE58', '#FFEB3B', '#FDD835', '#FBC02D', '#F9A825', '#F57F17'],
             ['#FFF3E0', '#FFE0B2', '#FFCC80', '#FFB74D', '#FFA726', '#FF9800', '#FB8C00', '#F57C00', '#EF6C00', '#E65100'],
           ],
+          targetEl: '.pro-picker-target',
           formatValue(value) {
             return `rgba(${value.rgb.join(', ')}, ${value.alpha})`;
           },
@@ -298,7 +256,7 @@
         <i
           slot="media"
           :style="`background-color: ${proPickerValue.rgb ? `rgba(${proPickerValue.rgb.join(', ')}, ${proPickerValue.alpha})` : proPickerValue.hex}`"
-          class="icon demo-list-icon"
+          class="icon demo-list-icon pro-picker-target"
         ></i>
       </f7-list-input>
     </f7-list>
@@ -346,26 +304,24 @@
         inlinePickerValue: { hex: '#77ff66' },
       };
     },
-    methods: {
-      onPageInit(e) {
-        const self = this;
-        const app = self.$f7;
+    mounted() {
+      const self = this;
+      const app = self.$f7;
 
-        self.colorPickerInline = app.colorPicker.create({
-          value: self.inlinePickerValue,
-          containerEl: '#demo-color-picker-inline',
-          modules: ['sb-spectrum', 'hsb-sliders', 'alpha-slider'],
-          on: {
-            change(cp, value) {
-              self.inlinePickerValue = value;
-            },
+      self.colorPickerInline = app.colorPicker.create({
+        value: self.inlinePickerValue,
+        containerEl: '#demo-color-picker-inline',
+        modules: ['sb-spectrum', 'hsb-sliders', 'alpha-slider'],
+        on: {
+          change(cp, value) {
+            self.inlinePickerValue = value;
           },
-        });
-      },
-      onPageBeforeRemove() {
-        const self = this;
-        self.colorPickerInline.destroy();
-      },
+        },
+      });
+    },
+    beforeDestroy() {
+      const self = this;
+      self.colorPickerInline.destroy();
     },
   };
 </script>

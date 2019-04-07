@@ -67,6 +67,9 @@ export default class extends React.Component {
           <ListItem link="/chips/" title="Chips/Tags">
             <Icon slot="media" icon="icon-f7" />
           </ListItem>
+          <ListItem link="/color-picker/" title="Color Picker">
+            <Icon slot="media" icon="icon-f7" />
+          </ListItem>
           <ListItem link="/contacts-list/" title="Contacts List">
             <Icon slot="media" icon="icon-f7" />
           </ListItem>
