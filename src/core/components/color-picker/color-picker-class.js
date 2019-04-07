@@ -293,7 +293,6 @@ class ColorPicker extends Framework7Class {
       $targetEl.css('background-color', `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`);
     }
     if (fireEvents) {
-      console.log('changed');
       self.emit('local::change colorPickerChange', self, value);
     }
 
@@ -412,9 +411,9 @@ class ColorPicker extends Framework7Class {
     const self = this;
     const { cssClass, toolbarPopover, groupedModules } = self.params;
     const popoverHtml = `
-    <div class="popover color-picker-popover">
+    <div class="popover color-picker-popover ${cssClass || ''}">
       <div class="popover-inner">
-        <div class="color-picker ${groupedModules ? 'color-picker-grouped-modules' : ''} ${cssClass || ''}">
+        <div class="color-picker ${groupedModules ? 'color-picker-grouped-modules' : ''}">
           ${toolbarPopover ? self.renderToolbar() : ''}
           <div class="page-content">
             ${self.renderPicker()}
@@ -431,10 +430,10 @@ class ColorPicker extends Framework7Class {
     const self = this;
     const { cssClass, navbarPopup, groupedModules } = self.params;
     const popupHtml = `
-    <div class="popup color-picker-popup">
+    <div class="popup color-picker-popup ${cssClass || ''}">
       <div class="page">
         ${navbarPopup ? self.renderNavbar() : ''}
-        <div class="color-picker ${groupedModules ? 'color-picker-grouped-modules' : ''} ${cssClass || ''}">
+        <div class="color-picker ${groupedModules ? 'color-picker-grouped-modules' : ''}">
           <div class="page-content">
             ${self.renderPicker()}
           </div>
@@ -450,9 +449,9 @@ class ColorPicker extends Framework7Class {
     const self = this;
     const { cssClass, groupedModules } = self.params;
     const pageHtml = `
-    <div class="page color-picker-page" data-name="color-picker-page">
+    <div class="page color-picker-page ${cssClass || ''}" data-name="color-picker-page">
       ${self.renderNavbar()}
-      <div class="color-picker ${groupedModules ? 'color-picker-grouped-modules' : ''} ${cssClass || ''}">
+      <div class="color-picker ${groupedModules ? 'color-picker-grouped-modules' : ''}">
         <div class="page-content">
           ${self.renderPicker()}
         </div>
