@@ -131,6 +131,34 @@ class ColorPicker extends Framework7Class {
     return self;
   }
 
+  attachEvents() {
+    const self = this;
+    self.centerModules = self.centerModules.bind(self);
+    if (self.params.centerModules) {
+      self.app.on('resize', self.centerModules);
+    }
+  }
+
+  detachEvents() {
+    const self = this;
+    if (self.params.centerModules) {
+      self.app.off('resize', self.centerModules);
+    }
+  }
+
+  centerModules() {
+    const self = this;
+    if (!self.opened || !self.$el || self.inline) return;
+    const $pageContentEl = self.$el.find('.page-content');
+    if (!$pageContentEl.length) return;
+    const { scrollHeight, offsetHeight } = $pageContentEl[0];
+    if (scrollHeight <= offsetHeight) {
+      $pageContentEl.addClass('justify-content-center');
+    } else {
+      $pageContentEl.removeClass('justify-content-center');
+    }
+  }
+
   initInput() {
     const self = this;
     if (!self.$inputEl) return;
@@ -183,6 +211,8 @@ class ColorPicker extends Framework7Class {
       hsb,
       alpha = 1,
       hue,
+      rgba,
+      hsla,
     } = (self.value || {});
 
     const needChangeEvent = self.value || (!self.value && !self.params.value);
@@ -205,8 +235,8 @@ class ColorPicker extends Framework7Class {
     });
     if (!valueChanged) return;
 
-    if (value.rgb) {
-      const [r, g, b, a = alpha] = value.rgb;
+    if (value.rgb || value.rgba) {
+      const [r, g, b, a = alpha] = (value.rgb || value.rgba);
       rgb = [r, g, b];
       hex = Utils.colorRgbToHex(...rgb);
       hsl = Utils.colorRgbToHsl(...rgb);
@@ -215,10 +245,12 @@ class ColorPicker extends Framework7Class {
       hsb = self.normalizeHsValues(hsb);
       hue = hsb[0];
       alpha = a;
+      rgba = [rgb[0], rgb[1], rgb[2], a];
+      hsla = [hsl[0], hsl[1], hsl[2], a];
     }
 
-    if (value.hsl) {
-      const [h, s, l, a = alpha] = value.hsl;
+    if (value.hsl || value.hsla) {
+      const [h, s, l, a = alpha] = (value.hsl || value.hsla);
       hsl = [h, s, l];
       rgb = Utils.colorHslToRgb(...hsl);
       hex = Utils.colorRgbToHex(...rgb);
@@ -227,6 +259,8 @@ class ColorPicker extends Framework7Class {
       hsb = self.normalizeHsValues(hsb);
       hue = hsb[0];
       alpha = a;
+      rgba = [rgb[0], rgb[1], rgb[2], a];
+      hsla = [hsl[0], hsl[1], hsl[2], a];
     }
 
     if (value.hsb) {
@@ -239,6 +273,8 @@ class ColorPicker extends Framework7Class {
       hsb = self.normalizeHsValues(hsb);
       hue = hsb[0];
       alpha = a;
+      rgba = [rgb[0], rgb[1], rgb[2], a];
+      hsla = [hsl[0], hsl[1], hsl[2], a];
     }
 
     if (value.hex) {
@@ -249,10 +285,18 @@ class ColorPicker extends Framework7Class {
       hsl = self.normalizeHsValues(hsl);
       hsb = self.normalizeHsValues(hsb);
       hue = hsb[0];
+      rgba = [rgb[0], rgb[1], rgb[2], alpha];
+      hsla = [hsl[0], hsl[1], hsl[2], alpha];
     }
 
     if (typeof value.alpha !== 'undefined') {
       alpha = value.alpha;
+      if (typeof rgb !== 'undefined') {
+        rgba = [rgb[0], rgb[1], rgb[2], alpha];
+      }
+      if (typeof hsl !== 'undefined') {
+        hsla = [hsl[0], hsl[1], hsl[2], alpha];
+      }
     }
 
     if (typeof value.hue !== 'undefined') {
@@ -264,6 +308,8 @@ class ColorPicker extends Framework7Class {
       hsl = self.normalizeHsValues(hsl);
       hsb = self.normalizeHsValues(hsb);
       hue = hsb[0];
+      rgba = [rgb[0], rgb[1], rgb[2], alpha];
+      hsla = [hsl[0], hsl[1], hsl[2], alpha];
     }
     self.value = {
       hex,
@@ -272,6 +318,8 @@ class ColorPicker extends Framework7Class {
       rgb,
       hsl,
       hsb,
+      rgba,
+      hsla,
     };
     if (!self.initialValue) self.initialValue = Utils.extend({}, self.value);
     self.updateValue(needChangeEvent);
@@ -289,8 +337,8 @@ class ColorPicker extends Framework7Class {
     const self = this;
     const { $inputEl, value, $targetEl } = self;
     if ($targetEl && self.params.targetElSetBackgroundColor) {
-      const { rgb, alpha } = value;
-      $targetEl.css('background-color', `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`);
+      const { rgba } = value;
+      $targetEl.css('background-color', `rgba(${rgba.join(', ')})`);
     }
     if (fireEvents) {
       self.emit('local::change colorPickerChange', self, value);
@@ -484,6 +532,9 @@ class ColorPicker extends Framework7Class {
     self.opened = true;
     self.opening = true;
 
+    // Init main events
+    self.attachEvents();
+
     params.modules.forEach((m) => {
       if (self.modules[m] && self.modules[m].init) {
         self.modules[m].init(self);
@@ -508,6 +559,11 @@ class ColorPicker extends Framework7Class {
     // Update input value
     if (updateValue) self.updateValue();
     self.updateModules();
+
+    // Center modules
+    if (params.centerModules) {
+      self.centerModules();
+    }
 
     // Extra focus
     if (!inline && $inputEl && $inputEl.length && app.theme === 'md') {
@@ -543,6 +599,9 @@ class ColorPicker extends Framework7Class {
     const { app, params } = self;
     self.opening = false;
     self.closing = true;
+
+    // Detach events
+    self.detachEvents();
 
     if (self.$inputEl && app.theme === 'md') {
       self.$inputEl.trigger('blur');
@@ -673,8 +732,6 @@ class ColorPicker extends Framework7Class {
         self.modal.open();
       }
     }
-
-
   }
 
   close() {
@@ -731,6 +788,7 @@ class ColorPicker extends Framework7Class {
     self.close();
 
     // Detach Events
+    self.detachEvents();
     if (self.$inputEl) {
       self.detachInputEvents();
     }

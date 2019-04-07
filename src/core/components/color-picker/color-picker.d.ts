@@ -10,6 +10,8 @@ export namespace ColorPicker {
     rgb?: number[]
     hsl?: number[]
     hsb?: number[]
+    rgba?: number[]
+    hsla?: number[]
   }
 
   interface ColorPicker extends Framework7EventsClass<Events> {
@@ -67,6 +69,8 @@ export namespace ColorPicker {
     modules?: string[]
     /** Array with pallette values. Each value is a HEX value string. Or array with palette "rows" where each row is an array with HEX palette value */
     palette?: any[]
+    /** Center modules vertically if there is an extra space in color picker container */
+    centerModules?: boolean
     /** Add additional highlighting to sliders and HEX modules (default false) */
     groupedModules?: boolean
     /** Enables sliders' labels (default false) */
