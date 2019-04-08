@@ -80,12 +80,12 @@
         <ul>
           <li class="item-content item-input">
             <div class="item-media align-self-flex-end">
-              <div style="width: 28px; height: 28px; border-radius: 4px; background: var(--f7-theme-color)"></div>
+              <div id="color-theme-picker-color" style="width: 28px; height: 28px; border-radius: 4px; background: var(--f7-theme-color)"></div>
             </div>
             <div class="item-inner">
               <div class="item-label">HEX Color</div>
               <div class="item-input-wrap">
-                <input type="text" value="{{customColor}}" @input="setCustomColor" placeholder="e.g. #ff0000">
+                <input id="color-theme-picker" type="text" readonly placeholder="e.g. #ff0000">
               </div>
             </div>
           </li>
@@ -134,6 +134,7 @@
         customColor: globalCustomColor,
         customProperties: globalCustomProperties,
         colors: colors,
+        themeColor: globalCustomColor || this.$('html').css('--f7-theme-color').trim(),
       };
     },
     mounted: function () {
@@ -206,6 +207,10 @@
         if (currentColorClass) $html.removeClass(currentColorClass[0])
         $html.addClass('color-theme-' + color);
         self.unsetCustomColor();
+        self.$setState({themeColor: $html.css('--f7-color-' + color).trim()});
+        self.colorPicker.setValue({
+          hex: self.themeColor,
+        });
       },
       setBarsStyle: function (barsStyle) {
         var self = this;
@@ -219,7 +224,7 @@
           customProperties: globalCustomProperties,
         });
       },
-      unsetCustomColor: function () {
+      unsetCustomColor: function (defaultColor) {
         var self = this;
         globalCustomColor = '';
         self.$setState({
@@ -231,29 +236,44 @@
           customProperties: globalCustomProperties,
         });
       },
-      setCustomColor: function (e) {
+      setCustomColor: function (color) {
         var self = this;
-        const value = e.target.value;
-        const hex = value.replace(/#/g, '');
-        globalCustomColor = `#${hex}`;
+        globalCustomColor = color;
         self.$setState({
           customColor: globalCustomColor,
         });
-        if (hex && (hex.length === 3 || hex.length === 6) && hex.match(/[a-fA-F0-9#]*/g)[0] === hex) {
-          globalCustomProperties = self.generateStylesheet();
-          stylesheet.innerHTML = globalCustomProperties;
-          self.$setState({
-            customProperties: globalCustomProperties,
-          });
-        } else if (!hex) {
-          self.unsetCustomColor();
-        } else {
-          globalCustomProperties = self.generateStylesheet();
-          stylesheet.innerHTML = globalCustomProperties;
-          self.$setState({
-            customProperties: globalCustomProperties,
-          });
-        }
+        globalCustomProperties = self.generateStylesheet();
+        stylesheet.innerHTML = globalCustomProperties;
+        self.$setState({
+          customProperties: globalCustomProperties,
+        });
+      },
+    },
+    on: {
+      pageInit(e, page) {
+        var self = this;
+        var timeout;
+
+        self.colorPicker = self.$f7.colorPicker.create({
+          inputEl: '#color-theme-picker',
+          targetEl: '#color-theme-picker-color',
+          value: {
+            hex: self.themeColor,
+          },
+          on: {
+            change(cp, value) {
+              clearTimeout(timeout);
+              timeout = setTimeout(function () {
+                if (self.themeColor === value.hex) return;
+                self.setCustomColor(value.hex);
+              }, 200);
+            },
+          },
+        });
+      },
+      pageBeforeRemove() {
+        var self = this;
+        self.colorPicker.destroy();
       },
     }
   }

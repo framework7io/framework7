@@ -42,13 +42,21 @@
     <f7-block-title medium>Custom Color Theme</f7-block-title>
     <f7-list>
       <f7-list-input
-        type="text"
+        type="colorpicker"
         label="HEX Color"
-        :value="customColor"
-        @input="setCustomColor"
         placeholder="e.g. #ff0000"
+        readonly
+        :value="{hex: customColor || themeColor}"
+        :color-picker-params="{
+          targetEl: '#color-theme-picker-color',
+        }"
+        @colorpicker:change="value => setCustomColor(value.hex)"
       >
-        <div slot="media" style="width: 28px; height: 28px; border-radius: 4px; background: var(--f7-theme-color)"></div>
+        <div
+          slot="media"
+          id="color-theme-picker-color"
+          style="width: 28px; height: 28px; border-radius: 4px; background: var(--f7-theme-color)"
+        ></div>
       </f7-list-input>
     </f7-list>
 
@@ -107,6 +115,7 @@
         customColor: globalCustomColor,
         customProperties: globalCustomProperties,
         colors: colors,
+        themeColor: this.$$('html').css('--f7-theme-color').trim(),
       };
     },
     mounted() {
@@ -179,6 +188,7 @@
         if (currentColorClass) $html.removeClass(currentColorClass[0])
         $html.addClass('color-theme-' + color);
         self.unsetCustomColor();
+        self.themeColor = $html.css('--f7-color-' + color).trim();
       },
       setBarsStyle: function (barsStyle) {
         var self = this;
@@ -196,23 +206,17 @@
         stylesheet.innerHTML = globalCustomProperties;
         self.customProperties = globalCustomProperties;
       },
-      setCustomColor: function (e) {
+      setCustomColor: function (color) {
         var self = this;
-        const value = e.target.value;
-        const hex = value.replace(/#/g, '');
-        globalCustomColor = `#${hex}`;
-        self.customColor = globalCustomColor;
-        if (hex && (hex.length === 3 || hex.length === 6) && hex.match(/[a-fA-F0-9#]*/g)[0] === hex) {
+        if (self.themeColor === color) return;
+        clearTimeout(self.timeout);
+        self.timeout = setTimeout(() => {
+          globalCustomColor = color;
+          self.customColor = globalCustomColor;
           globalCustomProperties = self.generateStylesheet();
           stylesheet.innerHTML = globalCustomProperties;
           self.customProperties = globalCustomProperties;
-        } else if (!hex) {
-          self.unsetCustomColor();
-        } else {
-          globalCustomProperties = self.generateStylesheet();
-          stylesheet.innerHTML = globalCustomProperties;
-          self.customProperties = globalCustomProperties;
-        }
+        }, 300);
       },
     },
   };

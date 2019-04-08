@@ -33,6 +33,7 @@ export default class extends React.Component {
       customColor: globalCustomColor,
       customProperties: globalCustomProperties,
       colors: colors,
+      themeColor: this.$$('html').css('--f7-theme-color').trim(),
     };
   }
   render() {
@@ -91,13 +92,21 @@ export default class extends React.Component {
         <BlockTitle medium>Custom Color Theme</BlockTitle>
         <List>
           <ListInput
-            type="text"
+            type="colorpicker"
             label="HEX Color"
-            value={this.state.customColor}
             placeholder="e.g. #ff0000"
-            onInput={(e) => this.setCustomColor(e)}
+            readonly
+            value={{hex: this.state.customColor || this.state.themeColor}}
+            onColorPickerChange={value => this.setCustomColor(value.hex)}
+            colorPickerParams={{
+              targetEl: '#color-theme-picker-color',
+            }}
           >
-            <div slot="media" style={{width: '28px', height: '28px', borderRadius: '4px', background: 'var(--f7-theme-color)'}}></div>
+            <div
+              slot="media"
+              id="color-theme-picker-color"
+              style={{width: '28px', height: '28px', borderRadius: '4px', background: 'var(--f7-theme-color)'}}
+            ></div>
           </ListInput>
         </List>
 
@@ -189,6 +198,9 @@ export default class extends React.Component {
     if (currentColorClass) $html.removeClass(currentColorClass[0])
     $html.addClass('color-theme-' + color);
     self.unsetCustomColor();
+    self.setState({
+      themeColor: $html.css('--f7-color-' + color).trim(),
+    });
   }
 
   setBarsStyle(barsStyle) {
@@ -209,23 +221,17 @@ export default class extends React.Component {
     self.setState({customProperties: globalCustomProperties})
   }
 
-  setCustomColor (e) {
+  setCustomColor (color) {
     var self = this;
-    const value = e.target.value;
-    const hex = value.replace(/#/g, '');
-    globalCustomColor = `#${hex}`;
-    self.setState({customColor: globalCustomColor}, () => {
-      if (hex && (hex.length === 3 || hex.length === 6) && hex.match(/[a-fA-F0-9#]*/g)[0] === hex) {
+    if (self.state.themeColor === color) return;
+    clearTimeout(self.timeout);
+    self.timeout = setTimeout(() => {
+      globalCustomColor = color;
+      self.setState({customColor: globalCustomColor}, () => {
         globalCustomProperties = self.generateStylesheet();
         stylesheet.innerHTML = globalCustomProperties;
         self.setState({customProperties: globalCustomProperties});
-      } else if (!hex) {
-        self.unsetCustomColor();
-      } else {
-        globalCustomProperties = self.generateStylesheet();
-        stylesheet.innerHTML = globalCustomProperties;
-        self.setState({customProperties: globalCustomProperties});
-      }
-    });
+      });
+    }, 300);
   }
 };
