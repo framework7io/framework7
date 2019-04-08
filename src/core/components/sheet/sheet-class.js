@@ -96,7 +96,16 @@ class Sheet extends Modal {
       }
     }
 
+    function onKeyDown(e) {
+      const keyCode = e.keyCode;
+      if (keyCode === 27 && sheet.params.closeOnEscape) {
+        sheet.close();
+      }
+    }
     sheet.on('sheetOpen', () => {
+      if (sheet.params.closeOnEscape) {
+        $(document).on('keydown', onKeyDown);
+      }
       if (sheet.params.scrollToEl) {
         scrollToOpen();
       }
@@ -107,6 +116,9 @@ class Sheet extends Modal {
       }
     });
     sheet.on('sheetClose', () => {
+      if (sheet.params.closeOnEscape) {
+        $(document).off('keydown', onKeyDown);
+      }
       if (sheet.params.scrollToEl) {
         scrollToClose();
       }

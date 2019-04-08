@@ -172,6 +172,22 @@ class Actions extends Modal {
       }
     }
 
+    function onKeyDown(e) {
+      const keyCode = e.keyCode;
+      if (keyCode === 27 && actions.params.closeOnEscape) {
+        actions.close();
+      }
+    }
+
+    if (actions.params.closeOnEscape) {
+      actions.on('open', () => {
+        $(document).on('keydown', onKeyDown);
+      });
+      actions.on('close', () => {
+        $(document).off('keydown', onKeyDown);
+      });
+    }
+
     actions.on('opened', () => {
       if (actions.params.closeByBackdropClick || actions.params.closeByOutsideClick) {
         app.on('click', handleClick);

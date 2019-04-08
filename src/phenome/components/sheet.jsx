@@ -19,6 +19,7 @@ export default {
     backdrop: Boolean,
     closeByBackdropClick: Boolean,
     closeByOutsideClick: Boolean,
+    closeOnEscape: Boolean,
     ...Mixins.colorProps,
   },
   render() {
@@ -125,6 +126,7 @@ export default {
       backdrop,
       closeByBackdropClick,
       closeByOutsideClick,
+      closeOnEscape,
     } = props;
 
     const sheetParams = {
@@ -136,11 +138,13 @@ export default {
       useDefaultBackdrop = self.$options.propsData.backdrop === undefined;
       if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') sheetParams.closeByBackdropClick = closeByBackdropClick;
       if (typeof self.$options.propsData.closeByOutsideClick !== 'undefined') sheetParams.closeByOutsideClick = closeByOutsideClick;
+      if (typeof self.$options.propsData.closeOnEscape !== 'undefined') sheetParams.closeOnEscape = closeOnEscape;
     }
     if (process.env.COMPILER === 'react') {
       useDefaultBackdrop = typeof backdrop === 'undefined';
       if ('closeByBackdropClick' in props) sheetParams.closeByBackdropClick = closeByBackdropClick;
       if ('closeByOutsideClick' in props) sheetParams.closeByOutsideClick = closeByOutsideClick;
+      if ('closeOnEscape' in props) sheetParams.closeOnEscape = closeOnEscape;
     }
 
     self.$f7ready((f7) => {

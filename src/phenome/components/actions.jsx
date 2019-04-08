@@ -22,6 +22,7 @@ export default {
     target: [String, Object],
     closeByBackdropClick: Boolean,
     closeByOutsideClick: Boolean,
+    closeOnEscape: Boolean,
     ...Mixins.colorProps,
   },
   render() {
@@ -86,6 +87,7 @@ export default {
       opened,
       closeByBackdropClick,
       closeByOutsideClick,
+      closeOnEscape,
     } = props;
 
     const actionsParams = {
@@ -99,12 +101,14 @@ export default {
       if (typeof self.$options.propsData.forceToPopover !== 'undefined') actionsParams.forceToPopover = forceToPopover;
       if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') actionsParams.closeByBackdropClick = closeByBackdropClick;
       if (typeof self.$options.propsData.closeByOutsideClick !== 'undefined') actionsParams.closeByOutsideClick = closeByOutsideClick;
+      if (typeof self.$options.propsData.closeOnEscape !== 'undefined') actionsParams.closeOnEscape = closeOnEscape;
     }
     if (process.env.COMPILER === 'react') {
       if ('convertToPopover' in props) actionsParams.convertToPopover = convertToPopover;
       if ('forceToPopover' in props) actionsParams.forceToPopover = forceToPopover;
       if ('closeByBackdropClick' in props) actionsParams.closeByBackdropClick = closeByBackdropClick;
       if ('closeByOutsideClick' in props) actionsParams.closeByOutsideClick = closeByOutsideClick;
+      if ('closeOnEscape' in props) actionsParams.closeOnEscape = closeOnEscape;
     }
 
     self.$f7ready(() => {

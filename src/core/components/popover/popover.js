@@ -10,6 +10,7 @@ export default {
       closeByBackdropClick: true,
       closeByOutsideClick: true,
       backdrop: true,
+      closeOnEscape: false,
     },
   },
   static: {

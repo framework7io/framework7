@@ -81,6 +81,21 @@ class Popup extends Modal {
       }
     }
 
+    function onKeyDown(e) {
+      const keyCode = e.keyCode;
+      if (keyCode === 27 && popup.params.closeOnEscape) {
+        popup.close();
+      }
+    }
+    if (popup.params.closeOnEscape) {
+      popup.on('popupOpen', () => {
+        $(document).on('keydown', onKeyDown);
+      });
+      popup.on('popupClose', () => {
+        $(document).off('keydown', onKeyDown);
+      });
+    }
+
     popup.on('popupOpened', () => {
       if (popup.params.closeByBackdropClick) {
         app.on('click', handleClick);

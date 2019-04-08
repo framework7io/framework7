@@ -88,7 +88,7 @@ class Dialog extends Modal {
       if (button.close !== false) dialog.close();
     }
     let addKeyboardHander;
-    function onKeyPress(e) {
+    function onKeyDown(e) {
       const keyCode = e.keyCode;
       buttons.forEach((button, index) => {
         if (button.keyCodes && button.keyCodes.indexOf(keyCode) >= 0) {
@@ -112,7 +112,7 @@ class Dialog extends Modal {
           && !app.device.android
           && !app.device.cordova
         ) {
-          $(document).on('keydown', onKeyPress);
+          $(document).on('keydown', onKeyDown);
         }
       });
       dialog.on('close', () => {
@@ -125,7 +125,7 @@ class Dialog extends Modal {
           && !app.device.android
           && !app.device.cordova
         ) {
-          $(document).off('keydown', onKeyPress);
+          $(document).off('keydown', onKeyDown);
         }
         addKeyboardHander = false;
       });

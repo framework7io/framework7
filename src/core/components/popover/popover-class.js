@@ -108,6 +108,22 @@ class Popover extends Modal {
       }
     }
 
+    function onKeyDown(e) {
+      const keyCode = e.keyCode;
+      if (keyCode === 27 && popover.params.closeOnEscape) {
+        popover.close();
+      }
+    }
+
+    if (popover.params.closeOnEscape) {
+      popover.on('popoverOpen', () => {
+        $(document).on('keydown', onKeyDown);
+      });
+      popover.on('popoverClose', () => {
+        $(document).off('keydown', onKeyDown);
+      });
+    }
+
     popover.on('popoverOpened', () => {
       if (popover.params.closeByOutsideClick || popover.params.closeByBackdropClick) {
         app.on('click', handleClick);

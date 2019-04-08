@@ -9,6 +9,7 @@ export default {
     sheet: {
       closeByBackdropClick: true,
       closeByOutsideClick: false,
+      closeOnEscape: false,
     },
   },
   static: {

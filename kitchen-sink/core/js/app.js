@@ -26,6 +26,18 @@ var app = new Framework7({
     },
   },
   routes: routes,
+  popup: {
+    closeOnEscape: true,
+  },
+  sheet: {
+    closeOnEscape: true,
+  },
+  popover: {
+    closeOnEscape: true,
+  },
+  actions: {
+    closeOnEscape: true,
+  },
   vi: {
     placementId: 'pltd4o7ibb9rc653x14',
   },

@@ -18,6 +18,7 @@ export default {
     tabletFullscreen: Boolean,
     opened: Boolean,
     closeByBackdropClick: Boolean,
+    closeOnEscape: Boolean,
     animate: Boolean,
     backdrop: {
       type: Boolean,
@@ -85,17 +86,19 @@ export default {
     el.addEventListener('popup:closed', self.onClosed);
 
     const props = self.props;
-    const { closeByBackdropClick, backdrop, animate } = props;
+    const { closeByBackdropClick, backdrop, animate, closeOnEscape } = props;
 
     const popupParams = { el };
 
     if (process.env.COMPILER === 'vue') {
       if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') popupParams.closeByBackdropClick = closeByBackdropClick;
+      if (typeof self.$options.propsData.closeOnEscape !== 'undefined') popupParams.closeOnEscape = closeOnEscape;
       if (typeof self.$options.propsData.animate !== 'undefined') popupParams.animate = animate;
       if (typeof self.$options.propsData.backdrop !== 'undefined') popupParams.backdrop = backdrop;
     }
     if (process.env.COMPILER === 'react') {
       if ('closeByBackdropClick' in props) popupParams.closeByBackdropClick = closeByBackdropClick;
+      if ('closeOnEscape' in props) popupParams.closeOnEscape = closeOnEscape;
       if ('animate' in props) popupParams.animate = animate;
       if ('backdrop' in props) popupParams.backdrop = backdrop;
     }

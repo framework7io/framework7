@@ -7,6 +7,7 @@ export default {
     popup: {
       backdrop: true,
       closeByBackdropClick: true,
+      closeOnEscape: false,
     },
   },
   static: {

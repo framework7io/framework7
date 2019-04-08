@@ -11,6 +11,7 @@ export default {
       render: null,
       renderPopover: null,
       backdrop: true,
+      closeOnEscape: false,
     },
   },
   static: {

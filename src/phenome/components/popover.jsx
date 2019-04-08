@@ -19,6 +19,7 @@ export default {
     target: [String, Object],
     closeByBackdropClick: Boolean,
     closeByOutsideClick: Boolean,
+    closeOnEscape: Boolean,
     backdrop: {
       type: Boolean,
       default: undefined,
@@ -88,6 +89,7 @@ export default {
       backdrop,
       closeByBackdropClick,
       closeByOutsideClick,
+      closeOnEscape,
     } = props;
 
     const popoverParams = { el };
@@ -96,11 +98,13 @@ export default {
     if (process.env.COMPILER === 'vue') {
       if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') popoverParams.closeByBackdropClick = closeByBackdropClick;
       if (typeof self.$options.propsData.closeByOutsideClick !== 'undefined') popoverParams.closeByOutsideClick = closeByOutsideClick;
+      if (typeof self.$options.propsData.closeOnEscape !== 'undefined') popoverParams.closeOnEscape = closeOnEscape;
       if (typeof self.$options.propsData.backdrop !== 'undefined') popoverParams.backdrop = backdrop;
     }
     if (process.env.COMPILER === 'react') {
       if ('closeByBackdropClick' in props) popoverParams.closeByBackdropClick = closeByBackdropClick;
       if ('closeByOutsideClick' in props) popoverParams.closeByOutsideClick = closeByOutsideClick;
+      if ('closeOnEscape' in props) popoverParams.closeOnEscape = closeOnEscape;
       if ('backdrop' in props) popoverParams.backdrop = backdrop;
     }
 
