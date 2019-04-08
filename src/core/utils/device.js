@@ -121,6 +121,51 @@ const Device = (function Device() {
   // Pixel Ratio
   device.pixelRatio = window.devicePixelRatio || 1;
 
+  // Color Scheme
+  const DARK = '(prefers-color-scheme: dark)';
+  const LIGHT = '(prefers-color-scheme: light)';
+  let mqDark;
+  let mqLight;
+  if (window.matchMedia) {
+    mqDark = window.matchMedia(DARK);
+    mqLight = window.matchMedia(LIGHT);
+  }
+  function colorSchemeListener({ matches, media }) {
+    if (!matches) {
+      return;
+    }
+    const html = document.querySelector('html');
+    if (media === DARK) {
+      html.classList.add('theme-dark');
+    } else if (media === LIGHT) {
+      html.classList.remove('theme-dark');
+    }
+  }
+  device.prefersColorScheme = function prefersColorTheme() {
+    let theme;
+    if (window.matchMedia && window.matchMedia(LIGHT).matches) {
+      theme = 'light';
+    }
+    if (window.matchMedia && window.matchMedia(DARK).matches) {
+      theme = 'dark';
+    }
+    return theme;
+  };
+  device.enableAutoDarkTheme = function enableAutoDarkTheme() {
+    const html = document.querySelector('html');
+    if (mqDark) mqDark.addListener(colorSchemeListener);
+    if (mqLight) mqLight.addListener(colorSchemeListener);
+    if (mqDark && mqDark.matches) {
+      html.classList.add('theme-dark');
+    } else if (mqLight && mqLight.matches) {
+      html.classList.remove('theme-dark');
+    }
+  };
+  device.disableAutoDarkTheme = function disableAutoDarkTheme() {
+    if (mqDark) mqDark.removeListener(colorSchemeListener);
+    if (mqLight) mqLight.removeListener(colorSchemeListener);
+  };
+
   // Export object
   return device;
 }());

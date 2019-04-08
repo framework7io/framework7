@@ -35,6 +35,7 @@ class Framework7 extends Framework7Class {
       lazyModulesPath: null,
       initOnDeviceReady: true,
       init: true,
+      autoDarkTheme: false,
     };
 
     // Extend defaults with modules params

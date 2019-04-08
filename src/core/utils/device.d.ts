@@ -45,6 +45,12 @@ export interface Device {
   statusbar: boolean
   /** Returns true if app running in full-screen mode and requires Status Bar overlay */
   needsStatusbarOverlay() : boolean
+  /** Returns 'dark' or 'light if (prefers-color-theme) media supported, otherwise returns undefined */
+  prefersColorScheme() : string
+  /** Enables auto dark theme detection */
+  enableAutoDarkTheme() : void
+  /** Disables auto dark theme detection */
+  disableAutoDarkTheme() : void
 }
 
 declare const Device : Device;
