@@ -360,7 +360,9 @@ function forward(el, forwardOptions = {}) {
       }
     } else {
       // Page remove event
-      router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'previous', undefined, options);
+      router.pageCallback('beforeOut', $oldPage, $oldNavbarInner, 'current', undefined, options);
+      router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', undefined, options);
+      router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'current', undefined, options);
       router.removePage($oldPage);
       if (separateNavbar && $oldNavbarInner && $oldNavbarInner.length) {
         router.removeNavbar($oldNavbarInner);
@@ -378,6 +380,10 @@ function forward(el, forwardOptions = {}) {
         }
       } else {
         // Page remove event
+        if ($oldPageEl.hasClass('page-current')) {
+          router.pageCallback('beforeOut', $oldPage, $oldNavbarInner, 'current', undefined, options);
+          router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', undefined, options);
+        }
         router.pageCallback('beforeRemove', $oldPageEl, $oldNavbarInner && $oldNavbarInner.eq(index), 'previous', undefined, options);
         router.removePage($oldPageEl);
         if (separateNavbar && $oldNavbarInnerEl.length) {
