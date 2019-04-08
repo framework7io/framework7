@@ -82,6 +82,8 @@ class Sheet extends Modal {
     function handleClick(e) {
       const target = e.target;
       const $target = $(target);
+      const keyboardOpened = !app.device.desktop && app.device.cordova && ((window.Keyboard && window.Keyboard.isVisible) || (window.cordova.plugins && window.cordova.plugins.Keyboard && window.cordova.plugins.Keyboard.isVisible));
+      if (keyboardOpened) return;
       if ($target.closest(sheet.el).length === 0) {
         if (
           sheet.params.closeByBackdropClick

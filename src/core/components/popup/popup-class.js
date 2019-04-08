@@ -54,6 +54,8 @@ class Popup extends Modal {
     function handleClick(e) {
       const target = e.target;
       const $target = $(target);
+      const keyboardOpened = !app.device.desktop && app.device.cordova && ((window.Keyboard && window.Keyboard.isVisible) || (window.cordova.plugins && window.cordova.plugins.Keyboard && window.cordova.plugins.Keyboard.isVisible));
+      if (keyboardOpened) return;
       if ($target.closest(popup.el).length === 0) {
         if (
           popup.params
