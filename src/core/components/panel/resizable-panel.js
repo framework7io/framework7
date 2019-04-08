@@ -11,6 +11,7 @@ function resizablePanel(panel) {
   });
   const $htmlEl = $('html');
   const { $el, $backdropEl, side, effect } = panel;
+  if (!$el) return;
 
   let isTouched;
   let isMoved;
@@ -81,7 +82,7 @@ function resizablePanel(panel) {
     $htmlEl[0].style.setProperty(`--f7-panel-${side}-width`, `${newPanelWidth}px`);
 
     if ($el.hasClass('panel-visible-by-breakpoint')) {
-      panel.setBreakpoint();
+      panel.setBreakpoint(false);
     }
 
     $el.trigger('panel:resize', panel, newPanelWidth);
@@ -130,7 +131,7 @@ function resizablePanel(panel) {
   // Add Events
   const passive = Support.passiveListener ? { passive: true } : false;
 
-  panel.$resizeHandlerEl.on(app.touchEvents.start, handleTouchStart, passive);
+  panel.$el.on(app.touchEvents.start, '.panel-resize-handler', handleTouchStart, passive);
   app.on('touchmove:active', handleTouchMove);
   app.on('touchend:passive', handleTouchEnd);
   app.on('resize', handleResize);
@@ -139,10 +140,7 @@ function resizablePanel(panel) {
   panel.once('panelDestroy', () => {
     $el.removeClass('panel-resizable');
     panel.$resizeHandlerEl.remove();
-    if (panel.resizableWidth) {
-      $htmlEl[0].style.removeProperty(`--f7-panel-${side}-width`);
-    }
-    panel.$resizeHandlerEl.off(app.touchEvents.start, handleTouchStart, passive);
+    panel.$el.off(app.touchEvents.start, '.panel-resize-handler', handleTouchStart, passive);
     app.off('touchmove:active', handleTouchMove);
     app.off('touchend:passive', handleTouchEnd);
     app.off('resize', handleResize);

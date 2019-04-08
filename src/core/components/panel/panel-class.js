@@ -74,7 +74,7 @@ class Panel extends Framework7Class {
     return viewEl;
   }
 
-  setBreakpoint() {
+  setBreakpoint(emitEvents = true) {
     const panel = this;
     const app = panel.app;
     const { side, $el } = panel;
@@ -92,8 +92,10 @@ class Panel extends Framework7Class {
           [`margin-${side}`]: `${$el.width()}px`,
         });
         app.allowPanelOpen = true;
-        app.emit('local::breakpoint panelBreakpoint');
-        panel.$el.trigger('panel:breakpoint', panel);
+        if (emitEvents) {
+          app.emit('local::breakpoint panelBreakpoint');
+          panel.$el.trigger('panel:breakpoint', panel);
+        }
       } else {
         $viewEl.css({
           [`margin-${side}`]: `${$el.width()}px`,
@@ -106,8 +108,10 @@ class Panel extends Framework7Class {
       $viewEl.css({
         [`margin-${side}`]: '',
       });
-      app.emit('local::breakpoint panelBreakpoint');
-      panel.$el.trigger('panel:breakpoint', panel);
+      if (emitEvents) {
+        app.emit('local::breakpoint panelBreakpoint');
+        panel.$el.trigger('panel:breakpoint', panel);
+      }
     }
   }
 

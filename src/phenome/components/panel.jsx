@@ -68,6 +68,13 @@ export default {
     },
   },
   watch: {
+    'props.resizable': function watchResizable(resizable) {
+      const self = this;
+      if (!resizable) return;
+      if (self.f7Panel && !self.f7Panel.resizableInitialized) {
+        self.f7Panel.initResizablePanel();
+      }
+    },
     'props.opened': function watchOpened(opened) {
       const self = this;
       if (!self.$f7) return;
