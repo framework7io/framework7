@@ -135,30 +135,22 @@ export default {
       el: self.refs.el,
     };
 
-    let useDefaultBackdrop;
     if (process.env.COMPILER === 'vue') {
-      useDefaultBackdrop = self.$options.propsData.backdrop === undefined;
+      if (typeof self.$options.propsData.backdrop !== 'undefined') sheetParams.backdrop = backdrop;
       if (typeof self.$options.propsData.backdropEl !== 'undefined') sheetParams.backdropEl = backdropEl;
       if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') sheetParams.closeByBackdropClick = closeByBackdropClick;
       if (typeof self.$options.propsData.closeByOutsideClick !== 'undefined') sheetParams.closeByOutsideClick = closeByOutsideClick;
       if (typeof self.$options.propsData.closeOnEscape !== 'undefined') sheetParams.closeOnEscape = closeOnEscape;
     }
     if (process.env.COMPILER === 'react') {
-      useDefaultBackdrop = typeof backdrop === 'undefined';
+      if ('backdrop' in props && typeof backdrop !== 'undefined') sheetParams.backdrop = backdrop;
       if ('backdropEl' in props) sheetParams.backdropEl = backdropEl;
       if ('closeByBackdropClick' in props) sheetParams.closeByBackdropClick = closeByBackdropClick;
       if ('closeByOutsideClick' in props) sheetParams.closeByOutsideClick = closeByOutsideClick;
       if ('closeOnEscape' in props) sheetParams.closeOnEscape = closeOnEscape;
     }
 
-    self.$f7ready((f7) => {
-      if (useDefaultBackdrop) {
-        sheetParams.backdrop = f7.params.sheet && f7.params.sheet.backdrop !== undefined
-          ? f7.params.sheet.backdrop
-          : !self.$theme.ios;
-      } else {
-        sheetParams.backdrop = backdrop;
-      }
+    self.$f7ready(() => {
       self.f7Sheet = self.$f7.sheet.create(sheetParams);
       if (opened) {
         self.f7Sheet.open(false);

@@ -16,6 +16,9 @@ class Sheet extends Modal {
     const sheet = this;
 
     sheet.params = extendedParams;
+    if (typeof sheet.params.backdrop === 'undefined') {
+      sheet.params.backdrop = app.theme !== 'ios';
+    }
 
     // Find Element
     let $el;
