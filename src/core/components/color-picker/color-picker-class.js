@@ -357,9 +357,12 @@ class ColorPicker extends Framework7Class {
 
   updateModules() {
     const self = this;
+    const { modules } = self;
     self.params.modules.forEach((m) => {
-      if (self.modules[m] && self.modules[m].update) {
-        self.modules[m].update(self);
+      if (typeof m === 'string' && modules[m] && modules[m].update) {
+        modules[m].update(self);
+      } else if (m && m.update) {
+        m.update(self);
       }
     });
   }
@@ -375,7 +378,11 @@ class ColorPicker extends Framework7Class {
     let html = '';
 
     params.modules.forEach((m) => {
-      if (modules[m] && modules[m].render) html += modules[m].render(self);
+      if (typeof m === 'string' && modules[m] && modules[m].render) {
+        html += modules[m].render(self);
+      } else if (m && m.render) {
+        html += m.render(self);
+      }
     });
 
     return html;
@@ -527,7 +534,7 @@ class ColorPicker extends Framework7Class {
 
   onOpen() {
     const self = this;
-    const { initialized, $el, app, $inputEl, inline, value, params } = self;
+    const { initialized, $el, app, $inputEl, inline, value, params, modules } = self;
     self.closing = false;
     self.opened = true;
     self.opening = true;
@@ -536,8 +543,10 @@ class ColorPicker extends Framework7Class {
     self.attachEvents();
 
     params.modules.forEach((m) => {
-      if (self.modules[m] && self.modules[m].init) {
-        self.modules[m].init(self);
+      if (typeof m === 'string' && modules[m] && modules[m].render) {
+        modules[m].init(self);
+      } else if (m && m.init) {
+        m.init(self);
       }
     });
 
@@ -596,7 +605,7 @@ class ColorPicker extends Framework7Class {
 
   onClose() {
     const self = this;
-    const { app, params } = self;
+    const { app, params, modules } = self;
     self.opening = false;
     self.closing = true;
 
@@ -607,7 +616,11 @@ class ColorPicker extends Framework7Class {
       self.$inputEl.trigger('blur');
     }
     params.modules.forEach((m) => {
-      if (self.modules[m] && self.modules[m].destroy) self.modules[m].destroy(self);
+      if (typeof m === 'string' && modules[m] && modules[m].update) {
+        modules[m].destroy(self);
+      } else if (m && m.destroy) {
+        m.destroy(self);
+      }
     });
 
     if (self.$el) {
