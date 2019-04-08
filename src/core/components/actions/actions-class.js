@@ -49,7 +49,9 @@ class Actions extends Modal {
 
     // Backdrop
     let $backdropEl;
-    if (actions.params.backdrop) {
+    if (actions.params.backdrop && actions.params.backdropEl) {
+      $backdropEl = $(actions.params.backdropEl);
+    } else if (actions.params.backdrop) {
       $backdropEl = app.root.children('.actions-backdrop');
       if ($backdropEl.length === 0) {
         $backdropEl = $('<div class="actions-backdrop"></div>');

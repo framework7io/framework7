@@ -7,11 +7,12 @@ export default {
     actions: {
       convertToPopover: true,
       forceToPopover: false,
+      backdrop: true,
+      backdropEl: undefined,
       closeByBackdropClick: true,
+      closeOnEscape: false,
       render: null,
       renderPopover: null,
-      backdrop: true,
-      closeOnEscape: false,
     },
   },
   static: {

@@ -17,6 +17,7 @@ export default {
     style: Object, // phenome-react-line
     opened: Boolean,
     backdrop: Boolean,
+    backdropEl: [String, Object, window.HTMLElement],
     closeByBackdropClick: Boolean,
     closeByOutsideClick: Boolean,
     closeOnEscape: Boolean,
@@ -124,6 +125,7 @@ export default {
     const {
       opened,
       backdrop,
+      backdropEl,
       closeByBackdropClick,
       closeByOutsideClick,
       closeOnEscape,
@@ -136,12 +138,14 @@ export default {
     let useDefaultBackdrop;
     if (process.env.COMPILER === 'vue') {
       useDefaultBackdrop = self.$options.propsData.backdrop === undefined;
+      if (typeof self.$options.propsData.backdropEl !== 'undefined') sheetParams.backdropEl = backdropEl;
       if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') sheetParams.closeByBackdropClick = closeByBackdropClick;
       if (typeof self.$options.propsData.closeByOutsideClick !== 'undefined') sheetParams.closeByOutsideClick = closeByOutsideClick;
       if (typeof self.$options.propsData.closeOnEscape !== 'undefined') sheetParams.closeOnEscape = closeOnEscape;
     }
     if (process.env.COMPILER === 'react') {
       useDefaultBackdrop = typeof backdrop === 'undefined';
+      if ('backdropEl' in props) sheetParams.backdropEl = backdropEl;
       if ('closeByBackdropClick' in props) sheetParams.closeByBackdropClick = closeByBackdropClick;
       if ('closeByOutsideClick' in props) sheetParams.closeByOutsideClick = closeByOutsideClick;
       if ('closeOnEscape' in props) sheetParams.closeOnEscape = closeOnEscape;

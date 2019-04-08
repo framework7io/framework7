@@ -7,6 +7,8 @@ export default {
   name: 'sheet',
   params: {
     sheet: {
+      backdrop: undefined,
+      backdropEl: undefined,
       closeByBackdropClick: true,
       closeByOutsideClick: false,
       closeOnEscape: false,

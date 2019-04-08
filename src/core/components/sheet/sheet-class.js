@@ -33,7 +33,10 @@ class Sheet extends Modal {
       return sheet.destroy();
     }
     let $backdropEl;
-    if (sheet.params.backdrop) {
+
+    if (sheet.params.backdrop && sheet.params.backdropEl) {
+      $backdropEl = $(sheet.params.backdropEl);
+    } else if (sheet.params.backdrop) {
       $backdropEl = app.root.children('.sheet-backdrop');
       if ($backdropEl.length === 0) {
         $backdropEl = $('<div class="sheet-backdrop"></div>');

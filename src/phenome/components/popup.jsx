@@ -17,13 +17,11 @@ export default {
     style: Object, // phenome-react-line
     tabletFullscreen: Boolean,
     opened: Boolean,
+    animate: Boolean,
+    backdrop: Boolean,
+    backdropEl: [String, Object, window.HTMLElement],
     closeByBackdropClick: Boolean,
     closeOnEscape: Boolean,
-    animate: Boolean,
-    backdrop: {
-      type: Boolean,
-      default: undefined,
-    },
     ...Mixins.colorProps,
   },
   render() {
@@ -86,7 +84,7 @@ export default {
     el.addEventListener('popup:closed', self.onClosed);
 
     const props = self.props;
-    const { closeByBackdropClick, backdrop, animate, closeOnEscape } = props;
+    const { closeByBackdropClick, backdrop, backdropEl, animate, closeOnEscape } = props;
 
     const popupParams = { el };
 
@@ -95,12 +93,14 @@ export default {
       if (typeof self.$options.propsData.closeOnEscape !== 'undefined') popupParams.closeOnEscape = closeOnEscape;
       if (typeof self.$options.propsData.animate !== 'undefined') popupParams.animate = animate;
       if (typeof self.$options.propsData.backdrop !== 'undefined') popupParams.backdrop = backdrop;
+      if (typeof self.$options.propsData.backdropEl !== 'undefined') popupParams.backdropEl = backdropEl;
     }
     if (process.env.COMPILER === 'react') {
       if ('closeByBackdropClick' in props) popupParams.closeByBackdropClick = closeByBackdropClick;
       if ('closeOnEscape' in props) popupParams.closeOnEscape = closeOnEscape;
       if ('animate' in props) popupParams.animate = animate;
       if ('backdrop' in props) popupParams.backdrop = backdrop;
+      if ('backdropEl' in props) popupParams.backdropEl = backdropEl;
     }
 
     self.$f7ready(() => {

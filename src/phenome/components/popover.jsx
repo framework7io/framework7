@@ -17,13 +17,11 @@ export default {
     style: Object, // phenome-react-line
     opened: Boolean,
     target: [String, Object],
+    backdrop: Boolean,
+    backdropEl: [String, Object, window.HTMLElement],
     closeByBackdropClick: Boolean,
     closeByOutsideClick: Boolean,
     closeOnEscape: Boolean,
-    backdrop: {
-      type: Boolean,
-      default: undefined,
-    },
     ...Mixins.colorProps,
   },
   render() {
@@ -87,6 +85,7 @@ export default {
       target,
       opened,
       backdrop,
+      backdropEl,
       closeByBackdropClick,
       closeByOutsideClick,
       closeOnEscape,
@@ -100,12 +99,14 @@ export default {
       if (typeof self.$options.propsData.closeByOutsideClick !== 'undefined') popoverParams.closeByOutsideClick = closeByOutsideClick;
       if (typeof self.$options.propsData.closeOnEscape !== 'undefined') popoverParams.closeOnEscape = closeOnEscape;
       if (typeof self.$options.propsData.backdrop !== 'undefined') popoverParams.backdrop = backdrop;
+      if (typeof self.$options.propsData.backdropEl !== 'undefined') popoverParams.backdropEl = backdropEl;
     }
     if (process.env.COMPILER === 'react') {
       if ('closeByBackdropClick' in props) popoverParams.closeByBackdropClick = closeByBackdropClick;
       if ('closeByOutsideClick' in props) popoverParams.closeByOutsideClick = closeByOutsideClick;
       if ('closeOnEscape' in props) popoverParams.closeOnEscape = closeOnEscape;
       if ('backdrop' in props) popoverParams.backdrop = backdrop;
+      if ('backdropEl' in props) popoverParams.backdropEl = backdropEl;
     }
 
     self.$f7ready(() => {

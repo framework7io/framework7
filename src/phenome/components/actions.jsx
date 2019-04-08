@@ -20,6 +20,8 @@ export default {
     convertToPopover: Boolean,
     forceToPopover: Boolean,
     target: [String, Object],
+    backdrop: Boolean,
+    backdropEl: [String, Object, window.HTMLElement],
     closeByBackdropClick: Boolean,
     closeByOutsideClick: Boolean,
     closeOnEscape: Boolean,
@@ -88,6 +90,8 @@ export default {
       closeByBackdropClick,
       closeByOutsideClick,
       closeOnEscape,
+      backdrop,
+      backdropEl,
     } = props;
 
     const actionsParams = {
@@ -99,6 +103,8 @@ export default {
     if (process.env.COMPILER === 'vue') {
       if (typeof self.$options.propsData.convertToPopover !== 'undefined') actionsParams.convertToPopover = convertToPopover;
       if (typeof self.$options.propsData.forceToPopover !== 'undefined') actionsParams.forceToPopover = forceToPopover;
+      if (typeof self.$options.propsData.backdrop !== 'undefined') actionsParams.backdrop = backdrop;
+      if (typeof self.$options.propsData.backdropEl !== 'undefined') actionsParams.backdropEl = backdropEl;
       if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') actionsParams.closeByBackdropClick = closeByBackdropClick;
       if (typeof self.$options.propsData.closeByOutsideClick !== 'undefined') actionsParams.closeByOutsideClick = closeByOutsideClick;
       if (typeof self.$options.propsData.closeOnEscape !== 'undefined') actionsParams.closeOnEscape = closeOnEscape;
@@ -106,6 +112,8 @@ export default {
     if (process.env.COMPILER === 'react') {
       if ('convertToPopover' in props) actionsParams.convertToPopover = convertToPopover;
       if ('forceToPopover' in props) actionsParams.forceToPopover = forceToPopover;
+      if ('backdrop' in props) actionsParams.backdrop = backdrop;
+      if ('backdropEl' in props) actionsParams.backdropEl = backdropEl;
       if ('closeByBackdropClick' in props) actionsParams.closeByBackdropClick = closeByBackdropClick;
       if ('closeByOutsideClick' in props) actionsParams.closeByOutsideClick = closeByOutsideClick;
       if ('closeOnEscape' in props) actionsParams.closeOnEscape = closeOnEscape;
