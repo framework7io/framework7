@@ -86,8 +86,10 @@ class Popover extends Modal {
     popover.on('popoverOpen', () => {
       popover.resize();
       app.on('resize', handleResize);
+      $(window).on('keyboardDidShow keyboardDidHide', handleResize);
       popover.on('popoverClose popoverBeforeDestroy', () => {
         app.off('resize', handleResize);
+        $(window).off('keyboardDidShow keyboardDidHide', handleResize);
       });
     });
 
