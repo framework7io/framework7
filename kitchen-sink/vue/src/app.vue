@@ -30,9 +30,21 @@
 
       return {
         f7Params: {
+          id: 'io.framework7.testapp',
           theme,
           routes,
-          id: 'io.framework7.testapp',
+          popup: {
+            closeOnEscape: true,
+          },
+          sheet: {
+            closeOnEscape: true,
+          },
+          popover: {
+            closeOnEscape: true,
+          },
+          actions: {
+            closeOnEscape: true,
+          },
         },
       };
     },
