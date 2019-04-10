@@ -64,15 +64,15 @@ class Actions extends Modal {
 
     let popover;
     function buttonOnClick(e) {
-      const buttonEl = this;
+      const $buttonEl = $(this);
       let buttonIndex;
       let groupIndex;
-      if ($(buttonEl).hasClass('list-button')) {
-        buttonIndex = $(buttonEl).parents('li').index();
-        groupIndex = $(buttonEl).parents('.list').index();
+      if ($buttonEl.hasClass('list-button') || $buttonEl.hasClass('item-link')) {
+        buttonIndex = $buttonEl.parents('li').index();
+        groupIndex = $buttonEl.parents('.list').index();
       } else {
-        buttonIndex = $(buttonEl).index();
-        groupIndex = $(buttonEl).parents('.actions-group').index();
+        buttonIndex = $buttonEl.index();
+        groupIndex = $buttonEl.parents('.actions-group').index();
       }
       if (typeof groups !== 'undefined') {
         const button = groups[groupIndex][buttonIndex];
@@ -107,12 +107,12 @@ class Actions extends Modal {
         });
         popover.open(animate);
         popover.once('popoverOpened', () => {
-          popover.$el.find('.list-button').each((groupIndex, buttonEl) => {
+          popover.$el.find('.list-button, .item-link').each((groupIndex, buttonEl) => {
             $(buttonEl).on('click', buttonOnClick);
           });
         });
         popover.once('popoverClosed', () => {
-          popover.$el.find('.list-button').each((groupIndex, buttonEl) => {
+          popover.$el.find('.list-button, .item-link').each((groupIndex, buttonEl) => {
             $(buttonEl).off('click', buttonOnClick);
           });
           Utils.nextTick(() => {
