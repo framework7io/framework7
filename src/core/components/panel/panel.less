@@ -40,6 +40,7 @@
     top: 0;
     width: 20px;
     height: 100%;
+    transition-property: transform, opacity;
   }
   &, &:after {
     transition-duration: var(--f7-panel-transition-duration);
@@ -82,11 +83,12 @@
   }
   &.panel-reveal {
     &:after {
-      right: 100%;
+      right: 0;
+      transform: translate3d(calc(-1 * var(--f7-panel-left-width, var(--f7-panel-width))), 0, 0);
       background: linear-gradient(to left, var(--f7-panel-shadow));
       html.with-panel-left-reveal & {
         opacity: 1;
-        transform: translate3d(var(--f7-panel-left-width, var(--f7-panel-width)), 0, 0);
+        transform: translate3d(0, 0, 0);
       }
     }
   }
@@ -106,11 +108,12 @@
   }
   &.panel-reveal {
     &:after {
-      left: 100%;
+      left: 0;
       background: linear-gradient(to right, var(--f7-panel-shadow));
+      transform: translate3d(var(--f7-panel-right-width, var(--f7-panel-width)), 0, 0);
       html.with-panel-right-reveal & {
         opacity: 1;
-        transform: translate3d(calc(-1 * (var(--f7-panel-right-width, var(--f7-panel-width)))), 0, 0);
+        transform: translate3d(0, 0, 0);
       }
     }
   }

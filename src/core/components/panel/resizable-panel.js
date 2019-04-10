@@ -23,6 +23,7 @@ function resizablePanel(panel) {
 
   let panelMinWidth;
   let panelMaxWidth;
+  let visibleByBreakpoint;
 
   function transformCSSWidth(v) {
     if (!v) return null;
@@ -46,6 +47,7 @@ function resizablePanel(panel) {
     isTouched = true;
     panelMinWidth = transformCSSWidth($el.css('min-width'));
     panelMaxWidth = transformCSSWidth($el.css('max-width'));
+    visibleByBreakpoint = $el.hasClass('panel-visible-by-breakpoint');
   }
   function handleTouchMove(e) {
     if (!isTouched) return;
@@ -56,8 +58,10 @@ function resizablePanel(panel) {
       $el.transition(0);
       $el.addClass('panel-resizing');
       $htmlEl.css('cursor', 'col-resize');
-      if (effect === 'reveal') {
+      if (effect === 'reveal' || visibleByBreakpoint) {
         $viewEl = $(panel.getViewEl());
+      }
+      if (effect === 'reveal' && !visibleByBreakpoint) {
         $backdropEl.transition(0);
         $viewEl.transition(0);
       }
@@ -79,10 +83,16 @@ function resizablePanel(panel) {
     newPanelWidth = Math.min(Math.max(newPanelWidth, 0), app.width);
 
     panel.resizableWidth = newPanelWidth;
-    $htmlEl[0].style.setProperty(`--f7-panel-${side}-width`, `${newPanelWidth}px`);
-
-    if ($el.hasClass('panel-visible-by-breakpoint')) {
-      panel.setBreakpoint(false);
+    $el[0].style.width = `${newPanelWidth}px`;
+    if (effect === 'reveal' && !visibleByBreakpoint) {
+      if ($viewEl) {
+        $viewEl.transform(`translate3d(${side === 'left' ? newPanelWidth : -newPanelWidth}px, 0, 0)`);
+      }
+      if ($backdropEl) {
+        $backdropEl.transform(`translate3d(${side === 'left' ? newPanelWidth : -newPanelWidth}px, 0, 0)`);
+      }
+    } else if (visibleByBreakpoint && $viewEl) {
+      $viewEl.css(`margin-${side}`, `${newPanelWidth}px`);
     }
 
     $el.trigger('panel:resize', panel, newPanelWidth);
@@ -97,12 +107,22 @@ function resizablePanel(panel) {
     }
     isTouched = false;
     isMoved = false;
-    $el.removeClass('panel-resizing');
-    $el.transition('');
-    if (effect === 'reveal') {
-      $backdropEl.transition('');
-      if ($viewEl) $viewEl.transition('');
+
+    $htmlEl[0].style.setProperty(`--f7-panel-${side}-width`, `${panel.resizableWidth}px`);
+    $el[0].style.width = '';
+    if (effect === 'reveal' && !visibleByBreakpoint) {
+      $viewEl.transform('');
+      $backdropEl.transform('');
     }
+    $el.removeClass('panel-resizing');
+    Utils.nextFrame(() => {
+      if (visibleByBreakpoint) return;
+      $el.transition('');
+      if (effect === 'reveal') {
+        $backdropEl.transition('');
+        if ($viewEl) $viewEl.transition('');
+      }
+    });
   }
 
   function handleResize() {
