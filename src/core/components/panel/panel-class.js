@@ -246,13 +246,10 @@ class Panel extends Framework7Class {
       .addClass('panel-active');
 
     $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
-    $backdropEl.show();
+    $backdropEl.css({ display: 'block' });
 
     /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
-    panel._clientLeft = $el[0].clientLeft;
-
-    $('html').addClass(`with-panel with-panel-${side}-${effect}`);
-    panel.onOpen();
+    // panel._clientLeft = $el[0].clientLeft;
 
     // Transition End;
     const transitionEndTarget = effect === 'reveal' ? $el.nextAll('.view, .views').eq(0) : $el;
@@ -270,9 +267,16 @@ class Panel extends Framework7Class {
         } else panelTransitionEnd();
       });
     }
+
     if (animate) {
-      panelTransitionEnd();
+      Utils.nextFrame(() => {
+        $('html').addClass(`with-panel with-panel-${side}-${effect}`);
+        panel.onOpen();
+        panelTransitionEnd();
+      });
     } else {
+      $('html').addClass(`with-panel with-panel-${side}-${effect}`);
+      panel.onOpen();
       panel.onOpened();
       $backdropEl.css({ display: '' });
     }
@@ -285,7 +289,6 @@ class Panel extends Framework7Class {
     const app = panel.app;
 
     const { side, effect, $el, $backdropEl, opened } = panel;
-
     if (!opened || $el.hasClass('panel-visible-by-breakpoint') || !$el.hasClass('panel-active')) return false;
 
     $el[animate ? 'removeClass' : 'addClass']('not-animated');

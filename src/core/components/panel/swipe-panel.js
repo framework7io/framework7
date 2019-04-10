@@ -166,8 +166,8 @@ function swipePanel(panel) {
 
     if (!isMoved) {
       if (!panel.opened) {
-        $el.show();
-        $backdropEl.show();
+        $el.css('display', 'block');
+        $backdropEl.css('display', 'block');
         $el.trigger('panel:swipeopen', panel);
         panel.emit('local::swipeOpen panelSwipeOpen', panel);
       }
