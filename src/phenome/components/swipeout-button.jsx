@@ -8,6 +8,7 @@ export default {
     className: String, // phenome-react-line
     style: Object, // phenome-react-line
     text: String,
+    confirmTitle: String,
     confirmText: String,
     overswipe: Boolean,
     close: Boolean,
@@ -25,6 +26,7 @@ export default {
       delete: deleteProp,
       close,
       href,
+      confirmTitle,
       confirmText,
       text,
     } = props;
@@ -46,6 +48,7 @@ export default {
         id={id}
         style={style}
         data-confirm={confirmText || undefined}
+        data-confirm-title={confirmTitle || undefined}
         className={classes}
       >
         <slot>{text}</slot>
