@@ -28,7 +28,7 @@ export default class TouchRipple {
     return ripple;
   }
 
-  onRemove() {
+  destroy() {
     let ripple = this;
     if (ripple.$rippleWaveEl) {
       ripple.$rippleWaveEl.remove();
@@ -46,7 +46,7 @@ export default class TouchRipple {
     const $rippleWaveEl = this.$rippleWaveEl;
     const rippleTransform = this.rippleTransform;
     let removeTimeout = Utils.nextTick(() => {
-      ripple.onRemove();
+      ripple.destroy();
     }, 400);
     ripple.removing = true;
     $rippleWaveEl
@@ -60,12 +60,12 @@ export default class TouchRipple {
             .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'));
 
           removeTimeout = Utils.nextTick(() => {
-            ripple.onRemove();
+            ripple.destroy();
           }, 700);
 
           $rippleWaveEl.transitionEnd(() => {
             clearTimeout(removeTimeout);
-            ripple.onRemove();
+            ripple.destroy();
           });
         });
       });
