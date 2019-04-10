@@ -8,11 +8,33 @@
         <f7-button class="col" fill @click="createSheet">Create Dynamic Sheet</f7-button>
       </f7-row>
       <p>
+        <f7-button class="col" fill sheet-open=".demo-sheet-top">Top Sheet</f7-button>
+      </p>
+      <p>
         <f7-button class="col" fill @click="sheetOpened = true">Open Via Prop Change</f7-button>
       </p>
     </f7-block>
     <f7-sheet class="demo-sheet" :opened="sheetOpened" @sheet:closed="sheetOpened = false">
       <f7-toolbar>
+        <div class="left"></div>
+        <div class="right">
+          <f7-link sheet-close>Close</f7-link>
+        </div>
+      </f7-toolbar>
+      <!-- Scrollable sheet content -->
+      <f7-page-content>
+        <f7-block>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae ducimus dolorum ipsa aliquid accusamus perferendis laboriosam delectus numquam minima animi, libero illo in tempora harum sequi corporis alias ex adipisci.</p>
+          <p>Sunt magni enim saepe quasi aspernatur delectus consectetur fugiat necessitatibus qui sed, similique quis facere tempora, laudantium quae expedita ea, aperiam dolores. Aut deserunt soluta alias magnam. Consequatur, nisi, enim.</p>
+          <p>Eaque maiores ducimus, impedit unde culpa qui, explicabo accusamus, non vero corporis voluptatibus similique odit ab. Quaerat quasi consectetur quidem libero? Repudiandae adipisci vel voluptatum, autem libero minus dignissimos repellat.</p>
+          <p>Iusto, est corrupti! Totam minus voluptas natus esse possimus nobis, delectus veniam expedita sapiente ut cum reprehenderit aliquid odio amet praesentium vero temporibus obcaecati beatae aspernatur incidunt, perferendis voluptates doloribus?</p>
+          <p>Illum id laborum tempore, doloribus culpa labore ex iusto odit. Quibusdam consequuntur totam nam obcaecati, enim cumque nobis, accusamus, quos voluptates, voluptatibus sapiente repellendus nesciunt praesentium velit ipsa illo iusto.</p>
+        </f7-block>
+      </f7-page-content>
+    </f7-sheet>
+
+    <f7-sheet top class="demo-sheet-top">
+      <f7-toolbar bottom>
         <div class="left"></div>
         <div class="right">
           <f7-link sheet-close>Close</f7-link>

@@ -13,15 +13,39 @@
     </div>
     <div class="page-content">
       <div class="block block-strong">
-        <p>Sheet Modals slide up from the bottom of the screen to reveal more content. Such modals allow to create custom overlays with custom content.</p>
+        <p>Sheet Modals slide up from the bottom (or down from the top) of the screen to reveal more content. Such modals allow to create custom overlays with custom content.</p>
         <p class="row">
           <a class="col button button-fill sheet-open" data-sheet=".demo-sheet">Open Sheet</a>
           <a class="col button button-fill" @click="createSheet">Create Dynamic Sheet</a>
+        </p>
+        <p>
+          <a class="col button button-fill sheet-open" data-sheet=".demo-sheet-top">Top Sheet</a>
         </p>
       </div>
     </div>
     <div class="sheet-modal demo-sheet">
       <div class="toolbar">
+        <div class="toolbar-inner">
+          <div class="left"></div>
+          <div class="right">
+            <a class="link sheet-close">Close</a>
+          </div>
+        </div>
+      </div>
+      <div class="sheet-modal-inner">
+        <div class="page-content">
+          <div class="block">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae ducimus dolorum ipsa aliquid accusamus perferendis laboriosam delectus numquam minima animi, libero illo in tempora harum sequi corporis alias ex adipisci.</p>
+            <p>Sunt magni enim saepe quasi aspernatur delectus consectetur fugiat necessitatibus qui sed, similique quis facere tempora, laudantium quae expedita ea, aperiam dolores. Aut deserunt soluta alias magnam. Consequatur, nisi, enim.</p>
+            <p>Eaque maiores ducimus, impedit unde culpa qui, explicabo accusamus, non vero corporis voluptatibus similique odit ab. Quaerat quasi consectetur quidem libero? Repudiandae adipisci vel voluptatum, autem libero minus dignissimos repellat.</p>
+            <p>Iusto, est corrupti! Totam minus voluptas natus esse possimus nobis, delectus veniam expedita sapiente ut cum reprehenderit aliquid odio amet praesentium vero temporibus obcaecati beatae aspernatur incidunt, perferendis voluptates doloribus?</p>
+            <p>Illum id laborum tempore, doloribus culpa labore ex iusto odit. Quibusdam consequuntur totam nam obcaecati, enim cumque nobis, accusamus, quos voluptates, voluptatibus sapiente repellendus nesciunt praesentium velit ipsa illo iusto.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sheet-modal sheet-modal-top demo-sheet-top">
+      <div class="toolbar toolbar-bottom">
         <div class="toolbar-inner">
           <div class="left"></div>
           <div class="right">

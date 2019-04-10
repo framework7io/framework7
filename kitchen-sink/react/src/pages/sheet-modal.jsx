@@ -20,12 +20,34 @@ export default class extends React.Component {
             <Button className="col" fill onClick={this.createSheet.bind(this)}>Create Dynamic Sheet</Button>
           </Row>
           <p>
+            <Button className="col" fill sheetOpen=".demo-sheet-top">Top Sheet</Button>
+          </p>
+          <p>
             <Button className="col" fill onClick={() => {this.setState({sheetOpened: true})}}>Open Via Prop Change</Button>
           </p>
         </Block>
 
         <Sheet className="demo-sheet" opened={this.state.sheetOpened} onSheetClosed={() => {this.setState({sheetOpened: false})}}>
           <Toolbar>
+            <div className="left"></div>
+            <div className="right">
+              <Link sheetClose>Close</Link>
+            </div>
+          </Toolbar>
+          {/*  Scrollable sheet content */}
+          <PageContent>
+            <Block>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae ducimus dolorum ipsa aliquid accusamus perferendis laboriosam delectus numquam minima animi, libero illo in tempora harum sequi corporis alias ex adipisci.</p>
+              <p>Sunt magni enim saepe quasi aspernatur delectus consectetur fugiat necessitatibus qui sed, similique quis facere tempora, laudantium quae expedita ea, aperiam dolores. Aut deserunt soluta alias magnam. Consequatur, nisi, enim.</p>
+              <p>Eaque maiores ducimus, impedit unde culpa qui, explicabo accusamus, non vero corporis voluptatibus similique odit ab. Quaerat quasi consectetur quidem libero? Repudiandae adipisci vel voluptatum, autem libero minus dignissimos repellat.</p>
+              <p>Iusto, est corrupti! Totam minus voluptas natus esse possimus nobis, delectus veniam expedita sapiente ut cum reprehenderit aliquid odio amet praesentium vero temporibus obcaecati beatae aspernatur incidunt, perferendis voluptates doloribus?</p>
+              <p>Illum id laborum tempore, doloribus culpa labore ex iusto odit. Quibusdam consequuntur totam nam obcaecati, enim cumque nobis, accusamus, quos voluptates, voluptatibus sapiente repellendus nesciunt praesentium velit ipsa illo iusto.</p>
+            </Block>
+          </PageContent>
+        </Sheet>
+
+        <Sheet top className="demo-sheet-top">
+          <Toolbar bottom>
             <div className="left"></div>
             <div className="right">
               <Link sheetClose>Close</Link>
