@@ -6,7 +6,11 @@ import f7 from './f7';
 
 const Plugin = {
   name: 'phenomePlugin',
+  installed: false,
   install(params = {}) {
+    if (Plugin.installed) return;
+    Plugin.installed = true;
+
     const Framework7 = this;
     f7.Framework7 = Framework7;
 
