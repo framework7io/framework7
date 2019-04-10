@@ -16,6 +16,9 @@ export default {
     className: String, // phenome-react-line
     style: Object, // phenome-react-line
     opened: Boolean,
+    top: Boolean,
+    bottom: Boolean,
+    position: String,
     backdrop: Boolean,
     backdropEl: [String, Object, window.HTMLElement],
     closeByBackdropClick: Boolean,
@@ -32,6 +35,9 @@ export default {
       id,
       style,
       className,
+      top,
+      bottom,
+      position,
     } = props;
 
     let fixedTags;
@@ -74,9 +80,15 @@ export default {
       <div className="sheet-modal-inner">{staticList}</div>
     );
 
+    let positionComputed = 'bottom';
+    if (position) positionComputed = position;
+    else if (top) positionComputed = 'top';
+    else if (bottom) positionComputed = 'bottom';
+
     const classes = Utils.classNames(
       className,
       'sheet-modal',
+      `sheet-modal-${positionComputed}`,
       Mixins.colorClasses(props),
     );
 
