@@ -1,14 +1,22 @@
 .md {
   --f7-ptr-top: -4px;
   .ptr-preloader {
-    left: 50%;
+
     width: var(--f7-ptr-size);
     border-radius: 50%;
     background: #fff;
-    margin-left: calc(-1 * var(--f7-ptr-size) / 2);
+
     margin-top: calc(-1 * var(--f7-ptr-size));
     z-index: 100;
     box-shadow: var(--f7-elevation-1);
+    .ltr({
+      left: 50%;
+      margin-left: calc(-1 * var(--f7-ptr-size) / 2);
+    });
+    .rtl({
+      right: 50%;
+      margin-right: calc(-1 * var(--f7-ptr-size) / 2);
+    });
     .preloader {
       .preloader-inner-gap,
       .preloader-inner-half-circle {
