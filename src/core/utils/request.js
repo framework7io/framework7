@@ -185,6 +185,9 @@ function Request(requestOptions) {
       xhr.setRequestHeader('Content-Type', options.contentType);
     }
   }
+  if (options.dataType === 'json' && (!options.headers || !options.headers.Accept)) {
+    xhr.setRequestHeader('Accept', 'application/json');
+  }
 
   // Additional headers
   if (options.headers) {
