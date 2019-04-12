@@ -11,7 +11,6 @@ export default {
   },
   on: {
     init() {
-      const app = this;
       const classNames = [];
       const html = document.querySelector('html');
       const metaStatusbar = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
@@ -48,11 +47,6 @@ export default {
       }
       if (Device.cordova || Device.phonegap) {
         classNames.push('device-cordova');
-      }
-
-      // Dark theme
-      if (app.params.autoDarkTheme) {
-        Device.enableAutoDarkTheme();
       }
 
       // Add html classes
