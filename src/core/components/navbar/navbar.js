@@ -165,8 +165,11 @@ const Navbar = {
       $el.removeClass('navbar-transitioning');
     });
     $el.addClass(className);
+    $el.trigger('navbar:hide');
+    app.emit('navbarHide', $el[0]);
   },
   show(el = '.navbar-hidden', animate = true) {
+    const app = this;
     let $el = $(el);
     if ($el.hasClass('navbar-inner')) $el = $el.parents('.navbar');
     if (!$el.length) return;
@@ -178,6 +181,8 @@ const Navbar = {
       });
     }
     $el.removeClass('navbar-hidden navbar-large-hidden');
+    $el.trigger('navbar:show');
+    app.emit('navbarShow', $el[0]);
   },
   getElByPage(page) {
     let $pageEl;
@@ -231,9 +236,12 @@ const Navbar = {
     const $pageEl = $(app.navbar.getPageByEl($navbarInnerEl));
     $navbarInnerEl.addClass('navbar-inner-large-collapsed');
     $pageEl.eq(0).addClass('page-with-navbar-large-collapsed').trigger('page:navbarlargecollapsed');
+    const $navbarEl = $navbarInnerEl.parents('.navbar');
     if (app.theme === 'md' || app.theme === 'aurora') {
-      $navbarInnerEl.parents('.navbar').addClass('navbar-large-collapsed');
+      $navbarEl.addClass('navbar-large-collapsed');
     }
+    $navbarEl.trigger('navbar:collapse');
+    app.emit('navbarCollapse', $navbarEl[0]);
   },
   expandLargeTitle(navbarInnerEl) {
     const app = this;
@@ -250,9 +258,12 @@ const Navbar = {
     const $pageEl = $(app.navbar.getPageByEl($navbarInnerEl));
     $navbarInnerEl.removeClass('navbar-inner-large-collapsed');
     $pageEl.eq(0).removeClass('page-with-navbar-large-collapsed').trigger('page:navbarlargeexpanded');
+    const $navbarEl = $navbarInnerEl.parents('.navbar');
     if (app.theme === 'md' || app.theme === 'aurora') {
-      $navbarInnerEl.parents('.navbar').removeClass('navbar-large-collapsed');
+      $navbarEl.removeClass('navbar-large-collapsed');
     }
+    $navbarEl.trigger('navbar:expand');
+    app.emit('navbarExpand', $navbarEl[0]);
   },
   toggleLargeTitle(navbarInnerEl) {
     const app = this;

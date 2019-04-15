@@ -109,7 +109,7 @@ export default {
       }
       innerEl = (
         <div
-          ref="inner"
+          ref="innerEl"
           className={Utils.classNames(
             'navbar-inner',
             innerClass,
@@ -151,7 +151,18 @@ export default {
     );
   },
   componentDidCreate() {
-    Utils.bindMethods(this, ['onBackClick']);
+    Utils.bindMethods(this, ['onBackClick', 'onHide', 'onShow', 'onExpand', 'onCollapse']);
+  },
+  componentDidMount() {
+    const self = this;
+    const { innerEl } = self.refs;
+    if (!innerEl) return;
+    self.$f7ready((f7) => {
+      f7.on('navbarShow', self.onShow);
+      f7.on('navbarHide', self.onHide);
+      f7.on('navbarCollapse', self.onCollapse);
+      f7.on('navbarExpand', self.onExpand);
+    });
   },
   componentDidUpdate() {
     const self = this;
@@ -159,11 +170,51 @@ export default {
     const el = self.refs.el;
     if (el && el.children && el.children.length) {
       self.$f7.navbar.size(el);
-    } else if (self.refs.inner) {
-      self.$f7.navbar.size(self.refs.inner);
+    } else if (self.refs.innerEl) {
+      self.$f7.navbar.size(self.refs.innerEl);
     }
   },
+  componentWillUnmount() {
+    const self = this;
+    if (!self.props.inner) return;
+    const { innerEl } = self.refs;
+    if (!innerEl) return;
+    const f7 = self.$f7;
+    if (!f7) return;
+    f7.off('navbarShow', self.onShow);
+    f7.off('navbarHide', self.onHide);
+    f7.off('navbarCollapse', self.onCollapse);
+    f7.off('navbarExpand', self.onExpand);
+  },
   methods: {
+    onHide(navbarEl) {
+      const self = this;
+      const { el, innerEl } = self.refs;
+      if (navbarEl === el || (innerEl && innerEl.parentNode === navbarEl)) {
+        self.dispatchEvent('navbar:hide navbarHide');
+      }
+    },
+    onShow(navbarEl) {
+      const self = this;
+      const { el, innerEl } = self.refs;
+      if (navbarEl === el || (innerEl && innerEl.parentNode === navbarEl)) {
+        self.dispatchEvent('navbar:show navbarShow');
+      }
+    },
+    onExpand(navbarEl) {
+      const self = this;
+      const { el, innerEl } = self.refs;
+      if (navbarEl === el || (innerEl && innerEl.parentNode === navbarEl)) {
+        self.dispatchEvent('navbar:expand navbarExpand');
+      }
+    },
+    onCollapse(navbarEl) {
+      const self = this;
+      const { el, innerEl } = self.refs;
+      if (navbarEl === el || (innerEl && innerEl.parentNode === navbarEl)) {
+        self.dispatchEvent('navbar:collapse navbarCollapse');
+      }
+    },
     hide(animate) {
       const self = this;
       if (!self.$f7) return;
