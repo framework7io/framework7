@@ -3,11 +3,6 @@
 <table>
   <tr>
     <td align="center" valign="middle">
-      <a href="https://yakaz.com/" target="_blank">
-        <img width="200" src="https://cdn.framework7.io/i/sponsors/yakaz.png">
-      </a>
-    </td>
-    <td align="center" valign="middle">
       <a href="https://www.activewaiter.com/" target="_blank">
         <img width="200" src="https://cdn.framework7.io/i/sponsors/activewaiter.png">
       </a>
@@ -35,7 +30,6 @@
       </a>
     </td>
     <td></td>
-    <td></td>
   </tr>
 </table>
 
@@ -54,7 +48,6 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ---
 
 ### $250 Gold Sponsor
-[Yakaz](https://yakaz.com)<br>
 
 [Join here!](https://www.patreon.com/bePatron?patAmt=250.0&exp=1&u=4109762&rid=830877)
 
@@ -70,6 +63,7 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 ---
 
 ### $50+ Top Supporter
+Alexey Victorov<br>
 [ActiveWaiter](https://www.activewaiter.com/) - Order. Drink. Eat. Pay. Love.<br>
 [Wappler](https://wappler.io) - Visual Web App Creator, offers full visual Framework7 builder<br>
 Olivier<br>
@@ -83,6 +77,7 @@ Bart DJ
 ---
 
 ### $10+ Supporter
+Jorge Pagano<br>
 Jacob Gur<br>
 Daniel Gonzalez<br>
 Yaroslav Ermolaev<br>
