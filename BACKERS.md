@@ -77,6 +77,7 @@ Bart DJ
 ---
 
 ### $10+ Supporter
+Will Mero<br>
 Jorge Pagano<br>
 Jacob Gur<br>
 Daniel Gonzalez<br>
