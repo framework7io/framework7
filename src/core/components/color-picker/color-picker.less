@@ -49,9 +49,20 @@
     border-top-left-radius: var(--f7-popover-border-radius);
     border-top-right-radius: var(--f7-popover-border-radius);
   }
+  .color-picker-module-palette {
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .color-picker-module-palette:first-child {
+    border-top-left-radius: var(--f7-popover-border-radius);
+    border-top-right-radius: var(--f7-popover-border-radius);
+  }
+  .color-picker-module-palette:last-child {
+    border-bottom-left-radius: var(--f7-popover-border-radius);
+    border-bottom-right-radius: var(--f7-popover-border-radius);
+  }
   .color-picker-module-palette:first-child:last-child {
     border-radius: var(--f7-popover-border-radius);
-    overflow: hidden;
   }
   .toolbar ~ .page-content .color-picker-module-palette:first-child {
     border-top-left-radius: 0;
@@ -122,8 +133,8 @@
 }
 // Wheel
 .color-picker-module-wheel {
-  margin-left: 15px;
-  margin-right: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 .color-picker-wheel {
   position: relative;
@@ -379,10 +390,11 @@
 // Palette
 .color-picker-module-palette {
   margin-top: 15px;
-  margin-left: 5px;
-  margin-right: 5px;
   &:first-child {
-    margin-top: 5px;
+    margin-top: 0;
+  }
+  &:last-child {
+    margin-bottom: 0;
   }
   &:first-child:last-child {
     margin: 0;
@@ -431,8 +443,8 @@
 .color-picker-module-alpha-slider,
 .color-picker-module-hue-slider,
 .color-picker-module-hex {
-  margin-left: 15px;
-  margin-right: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 .color-picker-grouped-modules {
   .color-picker-module-rgb-sliders,
