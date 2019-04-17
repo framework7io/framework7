@@ -14,8 +14,56 @@ class F7Navbar extends React.Component {
     this.__reactRefs = {};
 
     (() => {
-      Utils.bindMethods(this, ['onBackClick']);
+      Utils.bindMethods(this, ['onBackClick', 'onHide', 'onShow', 'onExpand', 'onCollapse']);
     })();
+  }
+
+  onHide(navbarEl) {
+    const self = this;
+    const {
+      el,
+      innerEl
+    } = self.refs;
+
+    if (navbarEl === el || innerEl && innerEl.parentNode === navbarEl) {
+      self.dispatchEvent('navbar:hide navbarHide');
+    }
+  }
+
+  onShow(navbarEl) {
+    const self = this;
+    const {
+      el,
+      innerEl
+    } = self.refs;
+
+    if (navbarEl === el || innerEl && innerEl.parentNode === navbarEl) {
+      self.dispatchEvent('navbar:show navbarShow');
+    }
+  }
+
+  onExpand(navbarEl) {
+    const self = this;
+    const {
+      el,
+      innerEl
+    } = self.refs;
+
+    if (navbarEl === el || innerEl && innerEl.parentNode === navbarEl) {
+      self.dispatchEvent('navbar:expand navbarExpand');
+    }
+  }
+
+  onCollapse(navbarEl) {
+    const self = this;
+    const {
+      el,
+      innerEl
+    } = self.refs;
+
+    if (navbarEl === el || innerEl && innerEl.parentNode === navbarEl) {
+      self.dispatchEvent('navbar:collapse navbarCollapse');
+    }
   }
 
   hide(animate) {
@@ -107,7 +155,7 @@ class F7Navbar extends React.Component {
 
       innerEl = React.createElement('div', {
         ref: __reactNode => {
-          this.__reactRefs['inner'] = __reactNode;
+          this.__reactRefs['innerEl'] = __reactNode;
         },
         className: Utils.classNames('navbar-inner', innerClass, innerClassName, {
           sliding,
@@ -134,6 +182,21 @@ class F7Navbar extends React.Component {
     }, this.slots['before-inner'], innerEl, this.slots['after-inner']);
   }
 
+  componentWillUnmount() {
+    const self = this;
+    if (!self.props.inner) return;
+    const {
+      innerEl
+    } = self.refs;
+    if (!innerEl) return;
+    const f7 = self.$f7;
+    if (!f7) return;
+    f7.off('navbarShow', self.onShow);
+    f7.off('navbarHide', self.onHide);
+    f7.off('navbarCollapse', self.onCollapse);
+    f7.off('navbarExpand', self.onExpand);
+  }
+
   componentDidUpdate() {
     const self = this;
     if (!self.$f7) return;
@@ -141,9 +204,23 @@ class F7Navbar extends React.Component {
 
     if (el && el.children && el.children.length) {
       self.$f7.navbar.size(el);
-    } else if (self.refs.inner) {
-      self.$f7.navbar.size(self.refs.inner);
+    } else if (self.refs.innerEl) {
+      self.$f7.navbar.size(self.refs.innerEl);
     }
+  }
+
+  componentDidMount() {
+    const self = this;
+    const {
+      innerEl
+    } = self.refs;
+    if (!innerEl) return;
+    self.$f7ready(f7 => {
+      f7.on('navbarShow', self.onShow);
+      f7.on('navbarHide', self.onHide);
+      f7.on('navbarCollapse', self.onCollapse);
+      f7.on('navbarExpand', self.onExpand);
+    });
   }
 
   get slots() {

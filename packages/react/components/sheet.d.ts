@@ -8,9 +8,14 @@ declare namespace F7Sheet {
     className? : string
     style? : React.CSSProperties
     opened? : boolean
+    top? : boolean
+    bottom? : boolean
+    position? : string
     backdrop? : boolean
+    backdropEl? : string | Object | any
     closeByBackdropClick? : boolean
     closeByOutsideClick? : boolean
+    closeOnEscape? : boolean
     color? : string
     colorTheme? : string
     textColor? : string

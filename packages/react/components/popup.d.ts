@@ -9,9 +9,11 @@ declare namespace F7Popup {
     style? : React.CSSProperties
     tabletFullscreen? : boolean
     opened? : boolean
-    closeByBackdropClick? : boolean
-    backdrop? : boolean
     animate? : boolean
+    backdrop? : boolean
+    backdropEl? : string | Object | any
+    closeByBackdropClick? : boolean
+    closeOnEscape? : boolean
     color? : string
     colorTheme? : string
     textColor? : string

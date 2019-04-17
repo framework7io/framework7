@@ -7,9 +7,14 @@ export default {
   props: Object.assign({
     id: [String, Number],
     opened: Boolean,
+    top: Boolean,
+    bottom: Boolean,
+    position: String,
     backdrop: Boolean,
+    backdropEl: [String, Object, window.HTMLElement],
     closeByBackdropClick: Boolean,
-    closeByOutsideClick: Boolean
+    closeByOutsideClick: Boolean,
+    closeOnEscape: Boolean
   }, Mixins.colorProps),
 
   render() {
@@ -21,7 +26,10 @@ export default {
     const {
       id,
       style,
-      className
+      className,
+      top,
+      bottom,
+      position
     } = props;
     let fixedTags;
     fixedTags = 'navbar toolbar tabbar subnavbar searchbar messagebar fab list-index'.split(' ');
@@ -52,7 +60,9 @@ export default {
       class: 'sheet-modal-inner'
     }, [staticList]);
 
-    const classes = Utils.classNames(className, 'sheet-modal', Mixins.colorClasses(props));
+    let positionComputed = 'bottom';
+    if (position) positionComputed = position;else if (top) positionComputed = 'top';else if (bottom) positionComputed = 'bottom';
+    const classes = Utils.classNames(className, 'sheet-modal', `sheet-modal-${positionComputed}`, Mixins.colorClasses(props));
     return _h('div', {
       ref: 'el',
       style: style,
@@ -92,25 +102,22 @@ export default {
     const {
       opened,
       backdrop,
+      backdropEl,
       closeByBackdropClick,
-      closeByOutsideClick
+      closeByOutsideClick,
+      closeOnEscape
     } = props;
     const sheetParams = {
       el: self.$refs.el
     };
-    let useDefaultBackdrop;
     {
-      useDefaultBackdrop = self.$options.propsData.backdrop === undefined;
+      if (typeof self.$options.propsData.backdrop !== 'undefined') sheetParams.backdrop = backdrop;
+      if (typeof self.$options.propsData.backdropEl !== 'undefined') sheetParams.backdropEl = backdropEl;
       if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') sheetParams.closeByBackdropClick = closeByBackdropClick;
       if (typeof self.$options.propsData.closeByOutsideClick !== 'undefined') sheetParams.closeByOutsideClick = closeByOutsideClick;
+      if (typeof self.$options.propsData.closeOnEscape !== 'undefined') sheetParams.closeOnEscape = closeOnEscape;
     }
-    self.$f7ready(f7 => {
-      if (useDefaultBackdrop) {
-        sheetParams.backdrop = f7.params.sheet && f7.params.sheet.backdrop !== undefined ? f7.params.sheet.backdrop : !self.$theme.ios;
-      } else {
-        sheetParams.backdrop = backdrop;
-      }
-
+    self.$f7ready(() => {
       self.f7Sheet = self.$f7.sheet.create(sheetParams);
 
       if (opened) {

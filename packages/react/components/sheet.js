@@ -52,7 +52,10 @@ class F7Sheet extends React.Component {
     const {
       id,
       style,
-      className
+      className,
+      top,
+      bottom,
+      position
     } = props;
     let fixedTags;
     fixedTags = 'navbar toolbar tabbar subnavbar searchbar messagebar fab list-index'.split(' ').map(tagName => `f7-${tagName}`);
@@ -80,7 +83,9 @@ class F7Sheet extends React.Component {
     const innerEl = React.createElement('div', {
       className: 'sheet-modal-inner'
     }, staticList);
-    const classes = Utils.classNames(className, 'sheet-modal', Mixins.colorClasses(props));
+    let positionComputed = 'bottom';
+    if (position) positionComputed = position;else if (top) positionComputed = 'top';else if (bottom) positionComputed = 'bottom';
+    const classes = Utils.classNames(className, 'sheet-modal', `sheet-modal-${positionComputed}`, Mixins.colorClasses(props));
     return React.createElement('div', {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
@@ -114,25 +119,22 @@ class F7Sheet extends React.Component {
     const {
       opened,
       backdrop,
+      backdropEl,
       closeByBackdropClick,
-      closeByOutsideClick
+      closeByOutsideClick,
+      closeOnEscape
     } = props;
     const sheetParams = {
       el: self.refs.el
     };
-    let useDefaultBackdrop;
     {
-      useDefaultBackdrop = typeof backdrop === 'undefined';
+      if ('backdrop' in props && typeof backdrop !== 'undefined') sheetParams.backdrop = backdrop;
+      if ('backdropEl' in props) sheetParams.backdropEl = backdropEl;
       if ('closeByBackdropClick' in props) sheetParams.closeByBackdropClick = closeByBackdropClick;
       if ('closeByOutsideClick' in props) sheetParams.closeByOutsideClick = closeByOutsideClick;
+      if ('closeOnEscape' in props) sheetParams.closeOnEscape = closeOnEscape;
     }
-    self.$f7ready(f7 => {
-      if (useDefaultBackdrop) {
-        sheetParams.backdrop = f7.params.sheet && f7.params.sheet.backdrop !== undefined ? f7.params.sheet.backdrop : !self.$theme.ios;
-      } else {
-        sheetParams.backdrop = backdrop;
-      }
-
+    self.$f7ready(() => {
       self.f7Sheet = self.$f7.sheet.create(sheetParams);
 
       if (opened) {
@@ -175,9 +177,14 @@ __reactComponentSetProps(F7Sheet, Object.assign({
   className: String,
   style: Object,
   opened: Boolean,
+  top: Boolean,
+  bottom: Boolean,
+  position: String,
   backdrop: Boolean,
+  backdropEl: [String, Object, window.HTMLElement],
   closeByBackdropClick: Boolean,
-  closeByOutsideClick: Boolean
+  closeByOutsideClick: Boolean,
+  closeOnEscape: Boolean
 }, Mixins.colorProps));
 
 F7Sheet.displayName = 'f7-sheet';

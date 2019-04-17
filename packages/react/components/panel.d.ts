@@ -14,6 +14,7 @@ declare namespace F7Panel {
     left? : boolean
     right? : boolean
     opened? : boolean
+    resizable? : boolean
     color? : string
     colorTheme? : string
     textColor? : string
@@ -29,6 +30,7 @@ declare namespace F7Panel {
     onPanelSwipe? : (event?: any) => void
     onPanelSwipeOpen? : (event?: any) => void
     onPanelBreakpoint? : (event?: any) => void
+    onPanelResize? : (event?: any) => void
   }
 }
 declare class F7Panel extends React.Component<F7Panel.Props, {}> {
@@ -40,6 +42,7 @@ declare class F7Panel extends React.Component<F7Panel.Props, {}> {
   onPanelSwipe(event? : any) : unknown
   onPanelSwipeOpen(event? : any) : unknown
   onBreakpoint(event? : any) : unknown
+  onResize(event? : any) : unknown
   open(animate? : any) : unknown
   close(animate? : any) : unknown
   toggle(animate? : any) : unknown

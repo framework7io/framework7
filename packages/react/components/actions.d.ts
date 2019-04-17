@@ -12,8 +12,11 @@ declare namespace F7Actions {
     convertToPopover? : boolean
     forceToPopover? : boolean
     target? : string | Object
+    backdrop? : boolean
+    backdropEl? : string | Object | any
     closeByBackdropClick? : boolean
     closeByOutsideClick? : boolean
+    closeOnEscape? : boolean
     color? : string
     colorTheme? : string
     textColor? : string

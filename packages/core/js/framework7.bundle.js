@@ -1,5 +1,5 @@
 /**
- * Framework7 4.2.2
+ * Framework7 4.3.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 4, 2019
+ * Released on: April 17, 2019
  */
 
 (function (global, factory) {
@@ -2801,6 +2801,7 @@
       else if (max === b) { h = (r - g) / d + 4; }
       var l = (min + max) / 2;
       var s = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
+      if (h < 0) { h = 360 / 60 + h; }
       return [h * 60, s, l];
     },
     colorHslToRgb: function colorHslToRgb(h, s, l) {
@@ -2818,6 +2819,33 @@
       else if (hp <= 6) { rgb1 = [c, 0, x]; }
       var m = l - (c / 2);
       return rgb1.map(function (n) { return Math.max(0, Math.min(255, Math.round(255 * (n + m)))); });
+    },
+    colorHsbToHsl: function colorHsbToHsl(h, s, b) {
+      var HSL = {
+        h: h,
+        s: 0,
+        l: 0,
+      };
+      var HSB = { h: h, s: s, b: b };
+
+      HSL.l = (2 - HSB.s) * HSB.b / 2;
+      HSL.s = HSL.l && HSL.l < 1 ? HSB.s * HSB.b / (HSL.l < 0.5 ? HSL.l * 2 : 2 - HSL.l * 2) : HSL.s;
+
+      return [HSL.h, HSL.s, HSL.l];
+    },
+    colorHslToHsb: function colorHslToHsb(h, s, l) {
+      var HSB = {
+        h: h,
+        s: 0,
+        b: 0,
+      };
+      var HSL = { h: h, s: s, l: l };
+
+      var t = HSL.s * (HSL.l < 0.5 ? HSL.l : 1 - HSL.l);
+      HSB.b = HSL.l + t;
+      HSB.s = HSL.l > 0 ? 2 * t / HSB.b : HSB.s;
+
+      return [HSB.h, HSB.s, HSB.b];
     },
     colorThemeCSSProperties: function colorThemeCSSProperties() {
       var args = [], len = arguments.length;
@@ -2967,6 +2995,20 @@
 
     // Pixel Ratio
     device.pixelRatio = win.devicePixelRatio || 1;
+
+    // Color Scheme
+    var DARK = '(prefers-color-scheme: dark)';
+    var LIGHT = '(prefers-color-scheme: light)';
+    device.prefersColorScheme = function prefersColorTheme() {
+      var theme;
+      if (win.matchMedia && win.matchMedia(LIGHT).matches) {
+        theme = 'light';
+      }
+      if (win.matchMedia && win.matchMedia(DARK).matches) {
+        theme = 'dark';
+      }
+      return theme;
+    };
 
     // Export object
     return device;
@@ -3470,6 +3512,7 @@
         lazyModulesPath: null,
         initOnDeviceReady: true,
         init: true,
+        autoDarkTheme: false,
       };
 
       // Extend defaults with modules params
@@ -3519,6 +3562,28 @@
       // Init Data & Methods
       app.initData();
 
+      // Auto Dark Theme
+      var DARK = '(prefers-color-scheme: dark)';
+      var LIGHT = '(prefers-color-scheme: light)';
+      app.mq = {};
+      if (win.matchMedia) {
+        app.mq.dark = win.matchMedia(DARK);
+        app.mq.light = win.matchMedia(LIGHT);
+      }
+      app.colorSchemeListener = function colorSchemeListener(ref) {
+        var matches = ref.matches;
+        var media = ref.media;
+
+        if (!matches) {
+          return;
+        }
+        var html = doc.querySelector('html');
+        if (media === DARK) {
+          html.classList.add('theme-dark');
+        } else if (media === LIGHT) {
+          html.classList.remove('theme-dark');
+        }
+      };
       // Init
       if (app.params.init) {
         if (Device.cordova && app.params.initOnDeviceReady) {
@@ -3563,6 +3628,28 @@
       }
     };
 
+    Framework7.prototype.enableAutoDarkTheme = function enableAutoDarkTheme () {
+      if (!win.matchMedia) { return; }
+      var app = this;
+      var html = doc.querySelector('html');
+      if (app.mq.dark && app.mq.light) {
+        app.mq.dark.addListener(app.colorSchemeListener);
+        app.mq.light.addListener(app.colorSchemeListener);
+      }
+      if (app.mq.dark && app.mq.dark.matches) {
+        html.classList.add('theme-dark');
+      } else if (app.mq.light && app.mq.light.matches) {
+        html.classList.remove('theme-dark');
+      }
+    };
+
+    Framework7.prototype.disableAutoDarkTheme = function disableAutoDarkTheme () {
+      if (!win.matchMedia) { return; }
+      var app = this;
+      if (app.mq.dark) { app.mq.dark.removeListener(app.colorSchemeListener); }
+      if (app.mq.light) { app.mq.light.removeListener(app.colorSchemeListener); }
+    };
+
     Framework7.prototype.init = function init () {
       var app = this;
       if (app.initialized) { return app; }
@@ -3572,6 +3659,11 @@
       // RTL attr
       if (app.rtl) {
         $('html').attr('dir', 'rtl');
+      }
+
+      // Auto Dark Theme
+      if (app.params.autoDarkTheme) {
+        app.enableAutoDarkTheme();
       }
 
       // Root class
@@ -4042,6 +4134,9 @@
         xhr.setRequestHeader('Content-Type', options.contentType);
       }
     }
+    if (options.dataType === 'json' && (!options.headers || !options.headers.Accept)) {
+      xhr.setRequestHeader('Accept', 'application/json');
+    }
 
     // Additional headers
     if (options.headers) {
@@ -4484,9 +4579,12 @@
         : isInsideScrollableViewLight(rippleTarget);
 
       if (!inScrollable) {
+        removeRipple();
         createRipple(rippleTarget, touchStartX, touchStartY);
       } else {
+        clearTimeout(rippleTimeout);
         rippleTimeout = setTimeout(function () {
+          removeRipple();
           createRipple(rippleTarget, touchStartX, touchStartY);
         }, 80);
       }
@@ -4496,9 +4594,7 @@
       removeRipple();
     }
     function rippleTouchEnd() {
-      if (rippleWave) {
-        removeRipple();
-      } else if (rippleTarget && !isMoved) {
+      if (!rippleWave && rippleTarget && !isMoved) {
         clearTimeout(rippleTimeout);
         createRipple(rippleTarget, touchStartX, touchStartY);
         setTimeout(removeRipple, 0);
@@ -4866,6 +4962,8 @@
         touch = e.targetTouches[0];
         if (touch && touch.touchType === 'stylus') {
           distance = 5;
+        } else {
+          distance = 3;
         }
       }
 
@@ -6592,7 +6690,9 @@
         }
       } else {
         // Page remove event
-        router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'previous', undefined, options);
+        router.pageCallback('beforeOut', $oldPage, $oldNavbarInner, 'current', undefined, options);
+        router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', undefined, options);
+        router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'current', undefined, options);
         router.removePage($oldPage);
         if (separateNavbar && $oldNavbarInner && $oldNavbarInner.length) {
           router.removeNavbar($oldNavbarInner);
@@ -6610,6 +6710,10 @@
           }
         } else {
           // Page remove event
+          if ($oldPageEl.hasClass('page-current')) {
+            router.pageCallback('beforeOut', $oldPage, $oldNavbarInner, 'current', undefined, options);
+            router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', undefined, options);
+          }
           router.pageCallback('beforeRemove', $oldPageEl, $oldNavbarInner && $oldNavbarInner.eq(index), 'previous', undefined, options);
           router.removePage($oldPageEl);
           if (separateNavbar && $oldNavbarInnerEl.length) {
@@ -6697,7 +6801,7 @@
 
       var keepOldPage = (router.params.preloadPreviousPage || router.params[((app.theme) + "SwipeBack")]) && !isMaster;
       if (!keepOldPage) {
-        if ($newPage.hasClass('smart-select-page') || $newPage.hasClass('photo-browser-page') || $newPage.hasClass('autocomplete-page')) {
+        if ($newPage.hasClass('smart-select-page') || $newPage.hasClass('photo-browser-page') || $newPage.hasClass('autocomplete-page') || $newPage.hasClass('color-picker-page')) {
           keepOldPage = true;
         }
       }
@@ -11902,11 +12006,14 @@
         $el.removeClass('navbar-transitioning');
       });
       $el.addClass(className);
+      $el.trigger('navbar:hide');
+      app.emit('navbarHide', $el[0]);
     },
     show: function show(el, animate) {
       if ( el === void 0 ) el = '.navbar-hidden';
       if ( animate === void 0 ) animate = true;
 
+      var app = this;
       var $el = $(el);
       if ($el.hasClass('navbar-inner')) { $el = $el.parents('.navbar'); }
       if (!$el.length) { return; }
@@ -11918,6 +12025,8 @@
         });
       }
       $el.removeClass('navbar-hidden navbar-large-hidden');
+      $el.trigger('navbar:show');
+      app.emit('navbarShow', $el[0]);
     },
     getElByPage: function getElByPage(page) {
       var $pageEl;
@@ -11971,9 +12080,12 @@
       var $pageEl = $(app.navbar.getPageByEl($navbarInnerEl));
       $navbarInnerEl.addClass('navbar-inner-large-collapsed');
       $pageEl.eq(0).addClass('page-with-navbar-large-collapsed').trigger('page:navbarlargecollapsed');
+      var $navbarEl = $navbarInnerEl.parents('.navbar');
       if (app.theme === 'md' || app.theme === 'aurora') {
-        $navbarInnerEl.parents('.navbar').addClass('navbar-large-collapsed');
+        $navbarEl.addClass('navbar-large-collapsed');
       }
+      $navbarEl.trigger('navbar:collapse');
+      app.emit('navbarCollapse', $navbarEl[0]);
     },
     expandLargeTitle: function expandLargeTitle(navbarInnerEl) {
       var app = this;
@@ -11990,9 +12102,12 @@
       var $pageEl = $(app.navbar.getPageByEl($navbarInnerEl));
       $navbarInnerEl.removeClass('navbar-inner-large-collapsed');
       $pageEl.eq(0).removeClass('page-with-navbar-large-collapsed').trigger('page:navbarlargeexpanded');
+      var $navbarEl = $navbarInnerEl.parents('.navbar');
       if (app.theme === 'md' || app.theme === 'aurora') {
-        $navbarInnerEl.parents('.navbar').removeClass('navbar-large-collapsed');
+        $navbarEl.removeClass('navbar-large-collapsed');
       }
+      $navbarEl.trigger('navbar:expand');
+      app.emit('navbarExpand', $navbarEl[0]);
     },
     toggleLargeTitle: function toggleLargeTitle(navbarInnerEl) {
       var app = this;
@@ -12237,7 +12352,7 @@
       },
     },
     on: {
-      'panelBreakpoint resize viewMasterDetailBreakpoint': function onResize() {
+      'panelBreakpoint panelResize resize viewMasterDetailBreakpoint': function onResize() {
         var app = this;
         $('.navbar').each(function (index, navbarEl) {
           app.navbar.size(navbarEl);
@@ -12641,8 +12756,6 @@
 
     $el.prepend(ripple.$rippleWaveEl);
 
-    /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
-    // ripple._clientLeft = ripple.$rippleWaveEl[0].clientLeft;
     ripple.rippleTransform = "translate3d(" + (-center.x + (width / 2)) + "px, " + (-center.y + (height / 2)) + "px, 0) scale(1)";
 
     Utils.nextFrame(function () {
@@ -12653,7 +12766,7 @@
     return ripple;
   };
 
-  TouchRipple.prototype.onRemove = function onRemove () {
+  TouchRipple.prototype.destroy = function destroy () {
     var ripple = this;
     if (ripple.$rippleWaveEl) {
       ripple.$rippleWaveEl.remove();
@@ -12671,7 +12784,7 @@
     var $rippleWaveEl = this.$rippleWaveEl;
     var rippleTransform = this.rippleTransform;
     var removeTimeout = Utils.nextTick(function () {
-      ripple.onRemove();
+      ripple.destroy();
     }, 400);
     ripple.removing = true;
     $rippleWaveEl
@@ -12685,12 +12798,12 @@
             .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'));
 
           removeTimeout = Utils.nextTick(function () {
-            ripple.onRemove();
+            ripple.destroy();
           }, 700);
 
           $rippleWaveEl.transitionEnd(function () {
             clearTimeout(removeTimeout);
-            ripple.onRemove();
+            ripple.destroy();
           });
         });
       });
@@ -13138,7 +13251,7 @@
         if (button.close !== false) { dialog.close(); }
       }
       var addKeyboardHander;
-      function onKeyPress(e) {
+      function onKeyDown(e) {
         var keyCode = e.keyCode;
         buttons.forEach(function (button, index) {
           if (button.keyCodes && button.keyCodes.indexOf(keyCode) >= 0) {
@@ -13162,7 +13275,7 @@
             && !app.device.android
             && !app.device.cordova
           ) {
-            $(doc).on('keydown', onKeyPress);
+            $(doc).on('keydown', onKeyDown);
           }
         });
         dialog.on('close', function () {
@@ -13175,7 +13288,7 @@
             && !app.device.android
             && !app.device.cordova
           ) {
-            $(doc).off('keydown', onKeyPress);
+            $(doc).off('keydown', onKeyDown);
           }
           addKeyboardHander = false;
         });
@@ -13533,7 +13646,9 @@
       }
 
       var $backdropEl;
-      if (popup.params.backdrop) {
+      if (popup.params.backdrop && popup.params.backdropEl) {
+        $backdropEl = $(popup.params.backdropEl);
+      } else if (popup.params.backdrop) {
         $backdropEl = app.root.children('.popup-backdrop');
         if ($backdropEl.length === 0) {
           $backdropEl = $('<div class="popup-backdrop"></div>');
@@ -13553,6 +13668,8 @@
       function handleClick(e) {
         var target = e.target;
         var $target = $(target);
+        var keyboardOpened = !app.device.desktop && app.device.cordova && ((window.Keyboard && window.Keyboard.isVisible) || (window.cordova.plugins && window.cordova.plugins.Keyboard && window.cordova.plugins.Keyboard.isVisible));
+        if (keyboardOpened) { return; }
         if ($target.closest(popup.el).length === 0) {
           if (
             popup.params
@@ -13578,6 +13695,21 @@
             }
           }
         }
+      }
+
+      function onKeyDown(e) {
+        var keyCode = e.keyCode;
+        if (keyCode === 27 && popup.params.closeOnEscape) {
+          popup.close();
+        }
+      }
+      if (popup.params.closeOnEscape) {
+        popup.on('popupOpen', function () {
+          $(document).on('keydown', onKeyDown);
+        });
+        popup.on('popupClose', function () {
+          $(document).off('keydown', onKeyDown);
+        });
       }
 
       popup.on('popupOpened', function () {
@@ -13608,7 +13740,9 @@
     params: {
       popup: {
         backdrop: true,
+        backdropEl: undefined,
         closeByBackdropClick: true,
+        closeOnEscape: false,
       },
     },
     static: {
@@ -13751,7 +13885,9 @@
 
       // Backdrop
       var $backdropEl;
-      if (popover.params.backdrop) {
+      if (popover.params.backdrop && popover.params.backdropEl) {
+        $backdropEl = $(popover.params.backdropEl);
+      } else if (popover.params.backdrop) {
         $backdropEl = app.root.children('.popover-backdrop');
         if ($backdropEl.length === 0) {
           $backdropEl = $('<div class="popover-backdrop"></div>');
@@ -13804,14 +13940,18 @@
       popover.on('popoverOpen', function () {
         popover.resize();
         app.on('resize', handleResize);
+        $(window).on('keyboardDidShow keyboardDidHide', handleResize);
         popover.on('popoverClose popoverBeforeDestroy', function () {
           app.off('resize', handleResize);
+          $(window).off('keyboardDidShow keyboardDidHide', handleResize);
         });
       });
 
       function handleClick(e) {
         var target = e.target;
         var $target = $(target);
+        var keyboardOpened = !app.device.desktop && app.device.cordova && ((window.Keyboard && window.Keyboard.isVisible) || (window.cordova.plugins && window.cordova.plugins.Keyboard && window.cordova.plugins.Keyboard.isVisible));
+        if (keyboardOpened) { return; }
         if ($target.closest(popover.el).length === 0) {
           if (
             popover.params.closeByBackdropClick
@@ -13824,6 +13964,22 @@
             popover.close();
           }
         }
+      }
+
+      function onKeyDown(e) {
+        var keyCode = e.keyCode;
+        if (keyCode === 27 && popover.params.closeOnEscape) {
+          popover.close();
+        }
+      }
+
+      if (popover.params.closeOnEscape) {
+        popover.on('popoverOpen', function () {
+          $(document).on('keydown', onKeyDown);
+        });
+        popover.on('popoverClose', function () {
+          $(document).off('keydown', onKeyDown);
+        });
       }
 
       popover.on('popoverOpened', function () {
@@ -13866,7 +14022,7 @@
         $angleEl.removeClass('on-left on-right on-top on-bottom').css({ left: '', top: '' });
         angleSize = $angleEl.width() / 2;
       } else {
-        $el.removeClass('popover-on-left popover-on-right popover-on-top popover-on-bottom').css({ left: '', top: '' });
+        $el.removeClass('popover-on-left popover-on-right popover-on-top popover-on-bottom popover-on-middle').css({ left: '', top: '' });
       }
 
       var targetWidth;
@@ -13902,37 +14058,33 @@
         if (height < app.height - targetOffsetTop - targetHeight) {
           // On bottom
           position = 'bottom';
-          top = targetOffsetTop;
+          top = targetOffsetTop + targetHeight;
         } else if (height < targetOffsetTop) {
           // On top
-          top = (targetOffsetTop - height) + targetHeight;
+          top = targetOffsetTop - height;
           position = 'top';
         } else {
           // On middle
-          position = 'bottom';
-          top = targetOffsetTop;
+          position = 'middle';
+          top = ((targetHeight / 2) + targetOffsetTop) - (height / 2);
         }
-
-        if (top <= 0) {
-          top = 8;
-        } else if (top + height >= app.height) {
-          top = app.height - height - 8;
-        }
+        top = Math.max(8, Math.min(top, app.height - height - 8));
 
         // Horizontal Position
-        left = (targetOffsetLeft + targetWidth) - width - 8;
-        if (left + width >= app.width - 8) {
-          left = (targetOffsetLeft + targetWidth) - width - 8;
+        var hPosition;
+        if (targetOffsetLeft < app.width / 2) {
+          hPosition = 'right';
+          left = position === 'middle'
+            ? targetOffsetLeft + targetWidth
+            : targetOffsetLeft;
+        } else {
+          hPosition = 'left';
+          left = position === 'middle'
+            ? targetOffsetLeft - width
+            : (targetOffsetLeft + targetWidth) - width;
         }
-        if (left < 8) {
-          left = 8;
-        }
-        if (position === 'top') {
-          $el.addClass('popover-on-top');
-        }
-        if (position === 'bottom') {
-          $el.addClass('popover-on-bottom');
-        }
+        left = Math.max(8, Math.min(left, app.width - width - 8));
+        $el.addClass(("popover-on-" + position + " popover-on-" + hPosition));
       } else {
         // ios and aurora
         if ((height + angleSize) < targetOffsetTop) {
@@ -13947,11 +14099,7 @@
           position = 'middle';
           top = ((targetHeight / 2) + targetOffsetTop) - (height / 2);
           diff = top;
-          if (top <= 0) {
-            top = 5;
-          } else if (top + height >= app.height) {
-            top = app.height - height - 5;
-          }
+          top = Math.max(5, Math.min(top, app.height - height - 5));
           diff -= top;
         }
 
@@ -13959,9 +14107,7 @@
         if (position === 'top' || position === 'bottom') {
           left = ((targetWidth / 2) + targetOffsetLeft) - (width / 2);
           diff = left;
-          if (left < 5) { left = 5; }
-          if (left + width > app.width) { left = app.width - width - 5; }
-          if (left < 0) { left = 0; }
+          left = Math.max(5, Math.min(left, app.width - width - 5));
           if (position === 'top') {
             $angleEl.addClass('on-bottom');
           }
@@ -13997,9 +14143,11 @@
     name: 'popover',
     params: {
       popover: {
+        backdrop: true,
+        backdropEl: undefined,
         closeByBackdropClick: true,
         closeByOutsideClick: true,
-        backdrop: true,
+        closeOnEscape: false,
       },
     },
     static: {
@@ -14087,7 +14235,9 @@
 
       // Backdrop
       var $backdropEl;
-      if (actions.params.backdrop) {
+      if (actions.params.backdrop && actions.params.backdropEl) {
+        $backdropEl = $(actions.params.backdropEl);
+      } else if (actions.params.backdrop) {
         $backdropEl = app.root.children('.actions-backdrop');
         if ($backdropEl.length === 0) {
           $backdropEl = $('<div class="actions-backdrop"></div>');
@@ -14100,15 +14250,15 @@
 
       var popover;
       function buttonOnClick(e) {
-        var buttonEl = this;
+        var $buttonEl = $(this);
         var buttonIndex;
         var groupIndex;
-        if ($(buttonEl).hasClass('list-button')) {
-          buttonIndex = $(buttonEl).parents('li').index();
-          groupIndex = $(buttonEl).parents('.list').index();
+        if ($buttonEl.hasClass('list-button') || $buttonEl.hasClass('item-link')) {
+          buttonIndex = $buttonEl.parents('li').index();
+          groupIndex = $buttonEl.parents('.list').index();
         } else {
-          buttonIndex = $(buttonEl).index();
-          groupIndex = $(buttonEl).parents('.actions-group').index();
+          buttonIndex = $buttonEl.index();
+          groupIndex = $buttonEl.parents('.actions-group').index();
         }
         if (typeof groups !== 'undefined') {
           var button = groups[groupIndex][buttonIndex];
@@ -14148,12 +14298,12 @@
           });
           popover.open(animate);
           popover.once('popoverOpened', function () {
-            popover.$el.find('.list-button').each(function (groupIndex, buttonEl) {
+            popover.$el.find('.list-button, .item-link').each(function (groupIndex, buttonEl) {
               $(buttonEl).on('click', buttonOnClick);
             });
           });
           popover.once('popoverClosed', function () {
-            popover.$el.find('.list-button').each(function (groupIndex, buttonEl) {
+            popover.$el.find('.list-button, .item-link').each(function (groupIndex, buttonEl) {
               $(buttonEl).off('click', buttonOnClick);
             });
             Utils.nextTick(function () {
@@ -14201,6 +14351,8 @@
       function handleClick(e) {
         var target = e.target;
         var $target = $(target);
+        var keyboardOpened = !app.device.desktop && app.device.cordova && ((window.Keyboard && window.Keyboard.isVisible) || (window.cordova.plugins && window.cordova.plugins.Keyboard && window.cordova.plugins.Keyboard.isVisible));
+        if (keyboardOpened) { return; }
         if ($target.closest(actions.el).length === 0) {
           if (
             actions.params.closeByBackdropClick
@@ -14213,6 +14365,22 @@
             actions.close();
           }
         }
+      }
+
+      function onKeyDown(e) {
+        var keyCode = e.keyCode;
+        if (keyCode === 27 && actions.params.closeOnEscape) {
+          actions.close();
+        }
+      }
+
+      if (actions.params.closeOnEscape) {
+        actions.on('open', function () {
+          $(document).on('keydown', onKeyDown);
+        });
+        actions.on('close', function () {
+          $(document).off('keydown', onKeyDown);
+        });
       }
 
       actions.on('opened', function () {
@@ -14300,10 +14468,12 @@
       actions: {
         convertToPopover: true,
         forceToPopover: false,
+        backdrop: true,
+        backdropEl: undefined,
         closeByBackdropClick: true,
+        closeOnEscape: false,
         render: null,
         renderPopover: null,
-        backdrop: true,
       },
     },
     static: {
@@ -14347,6 +14517,9 @@
       var sheet = this;
 
       sheet.params = extendedParams;
+      if (typeof sheet.params.backdrop === 'undefined') {
+        sheet.params.backdrop = app.theme !== 'ios';
+      }
 
       // Find Element
       var $el;
@@ -14364,7 +14537,10 @@
         return sheet.destroy();
       }
       var $backdropEl;
-      if (sheet.params.backdrop) {
+
+      if (sheet.params.backdrop && sheet.params.backdropEl) {
+        $backdropEl = $(sheet.params.backdropEl);
+      } else if (sheet.params.backdrop) {
         $backdropEl = app.root.children('.sheet-backdrop');
         if ($backdropEl.length === 0) {
           $backdropEl = $('<div class="sheet-backdrop"></div>');
@@ -14413,6 +14589,8 @@
       function handleClick(e) {
         var target = e.target;
         var $target = $(target);
+        var keyboardOpened = !app.device.desktop && app.device.cordova && ((window.Keyboard && window.Keyboard.isVisible) || (window.cordova.plugins && window.cordova.plugins.Keyboard && window.cordova.plugins.Keyboard.isVisible));
+        if (keyboardOpened) { return; }
         if ($target.closest(sheet.el).length === 0) {
           if (
             sheet.params.closeByBackdropClick
@@ -14427,7 +14605,16 @@
         }
       }
 
+      function onKeyDown(e) {
+        var keyCode = e.keyCode;
+        if (keyCode === 27 && sheet.params.closeOnEscape) {
+          sheet.close();
+        }
+      }
       sheet.on('sheetOpen', function () {
+        if (sheet.params.closeOnEscape) {
+          $(document).on('keydown', onKeyDown);
+        }
         if (sheet.params.scrollToEl) {
           scrollToOpen();
         }
@@ -14438,6 +14625,9 @@
         }
       });
       sheet.on('sheetClose', function () {
+        if (sheet.params.closeOnEscape) {
+          $(document).off('keydown', onKeyDown);
+        }
         if (sheet.params.scrollToEl) {
           scrollToClose();
         }
@@ -14471,8 +14661,11 @@
     name: 'sheet',
     params: {
       sheet: {
+        backdrop: undefined,
+        backdropEl: undefined,
         closeByBackdropClick: true,
         closeByOutsideClick: false,
+        closeOnEscape: false,
       },
     },
     static: {
@@ -14480,9 +14673,6 @@
     },
     create: function create() {
       var app = this;
-      if (!app.passedParams.sheet || app.passedParams.sheet.backdrop === undefined) {
-        app.params.sheet.backdrop = app.theme !== 'ios';
-      }
       app.sheet = Utils.extend(
         {},
         ModalMethods({
@@ -15688,8 +15878,6 @@
       },
     },
   };
-
-  /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
 
   var Accordion = {
     toggleClicked: function toggleClicked($clickedEl) {
@@ -17231,8 +17419,8 @@
 
       if (!isMoved) {
         if (!panel.opened) {
-          $el.show();
-          $backdropEl.show();
+          $el.css('display', 'block');
+          $backdropEl.css('display', 'block');
           $el.trigger('panel:swipeopen', panel);
           panel.emit('local::swipeOpen panelSwipeOpen', panel);
         }
@@ -17386,6 +17574,175 @@
     });
   }
 
+  function resizablePanel(panel) {
+    var app = panel.app;
+    Utils.extend(panel, {
+      resizable: true,
+      resizableWidth: null,
+      resizableInitialized: true,
+    });
+    var $htmlEl = $('html');
+    var $el = panel.$el;
+    var $backdropEl = panel.$backdropEl;
+    var side = panel.side;
+    var effect = panel.effect;
+    if (!$el) { return; }
+
+    var isTouched;
+    var isMoved;
+    var touchesStart = {};
+    var touchesDiff;
+    var panelWidth;
+
+    var $viewEl;
+
+    var panelMinWidth;
+    var panelMaxWidth;
+    var visibleByBreakpoint;
+
+    function transformCSSWidth(v) {
+      if (!v) { return null; }
+      if (v.indexOf('%') >= 0 || v.indexOf('vw') >= 0) {
+        return parseInt(v, 10) / 100 * app.width;
+      }
+      var newV = parseInt(v, 10);
+      if (Number.isNaN(newV)) { return null; }
+      return newV;
+    }
+
+    function isResizable() {
+      return panel.resizable && $el.hasClass('panel-resizable');
+    }
+
+    function handleTouchStart(e) {
+      if (!isResizable()) { return; }
+      touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+      touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+      isMoved = false;
+      isTouched = true;
+      panelMinWidth = transformCSSWidth($el.css('min-width'));
+      panelMaxWidth = transformCSSWidth($el.css('max-width'));
+      visibleByBreakpoint = $el.hasClass('panel-visible-by-breakpoint');
+    }
+    function handleTouchMove(e) {
+      if (!isTouched) { return; }
+      var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+
+      if (!isMoved) {
+        panelWidth = $el[0].offsetWidth;
+        $el.transition(0);
+        $el.addClass('panel-resizing');
+        $htmlEl.css('cursor', 'col-resize');
+        if (effect === 'reveal' || visibleByBreakpoint) {
+          $viewEl = $(panel.getViewEl());
+        }
+        if (effect === 'reveal' && !visibleByBreakpoint) {
+          $backdropEl.transition(0);
+          $viewEl.transition(0);
+        }
+      }
+
+      isMoved = true;
+
+      e.preventDefault();
+
+      touchesDiff = (pageX - touchesStart.x);
+
+      var newPanelWidth = side === 'left' ? panelWidth + touchesDiff : panelWidth - touchesDiff;
+      if (panelMinWidth && !Number.isNaN(panelMinWidth)) {
+        newPanelWidth = Math.max(newPanelWidth, panelMinWidth);
+      }
+      if (panelMaxWidth && !Number.isNaN(panelMaxWidth)) {
+        newPanelWidth = Math.min(newPanelWidth, panelMaxWidth);
+      }
+      newPanelWidth = Math.min(Math.max(newPanelWidth, 0), app.width);
+
+      panel.resizableWidth = newPanelWidth;
+      $el[0].style.width = newPanelWidth + "px";
+      if (effect === 'reveal' && !visibleByBreakpoint) {
+        if ($viewEl) {
+          $viewEl.transform(("translate3d(" + (side === 'left' ? newPanelWidth : -newPanelWidth) + "px, 0, 0)"));
+        }
+        if ($backdropEl) {
+          $backdropEl.transform(("translate3d(" + (side === 'left' ? newPanelWidth : -newPanelWidth) + "px, 0, 0)"));
+        }
+      } else if (visibleByBreakpoint && $viewEl) {
+        $viewEl.css(("margin-" + side), (newPanelWidth + "px"));
+      }
+
+      $el.trigger('panel:resize', panel, newPanelWidth);
+      panel.emit('local::resize panelResize', panel, newPanelWidth);
+    }
+    function handleTouchEnd() {
+      $('html').css('cursor', '');
+      if (!isTouched || !isMoved) {
+        isTouched = false;
+        isMoved = false;
+        return;
+      }
+      isTouched = false;
+      isMoved = false;
+
+      $htmlEl[0].style.setProperty(("--f7-panel-" + side + "-width"), ((panel.resizableWidth) + "px"));
+      $el[0].style.width = '';
+      if (effect === 'reveal' && !visibleByBreakpoint) {
+        $viewEl.transform('');
+        $backdropEl.transform('');
+      }
+      $el.removeClass('panel-resizing');
+      Utils.nextFrame(function () {
+        if (visibleByBreakpoint) { return; }
+        $el.transition('');
+        if (effect === 'reveal') {
+          $backdropEl.transition('');
+          if ($viewEl) { $viewEl.transition(''); }
+        }
+      });
+    }
+
+    function handleResize() {
+      if (!panel.opened || !panel.resizableWidth) { return; }
+      panelMinWidth = transformCSSWidth($el.css('min-width'));
+      panelMaxWidth = transformCSSWidth($el.css('max-width'));
+
+      if (panelMinWidth && !Number.isNaN(panelMinWidth) && panel.resizableWidth < panelMinWidth) {
+        panel.resizableWidth = Math.max(panel.resizableWidth, panelMinWidth);
+      }
+      if (panelMaxWidth && !Number.isNaN(panelMaxWidth) && panel.resizableWidth > panelMaxWidth) {
+        panel.resizableWidth = Math.min(panel.resizableWidth, panelMaxWidth);
+      }
+      panel.resizableWidth = Math.min(Math.max(panel.resizableWidth, 0), app.width);
+
+      $htmlEl[0].style.setProperty(("--f7-panel-" + side + "-width"), ((panel.resizableWidth) + "px"));
+    }
+
+    if (panel.$el.find('.panel-resize-handler').length === 0) {
+      panel.$el.append('<div class="panel-resize-handler"></div>');
+    }
+    panel.$resizeHandlerEl = panel.$el.children('.panel-resize-handler');
+
+    $el.addClass('panel-resizable');
+
+    // Add Events
+    var passive = Support.passiveListener ? { passive: true } : false;
+
+    panel.$el.on(app.touchEvents.start, '.panel-resize-handler', handleTouchStart, passive);
+    app.on('touchmove:active', handleTouchMove);
+    app.on('touchend:passive', handleTouchEnd);
+    app.on('resize', handleResize);
+    panel.on('beforeOpen', handleResize);
+
+    panel.once('panelDestroy', function () {
+      $el.removeClass('panel-resizable');
+      panel.$resizeHandlerEl.remove();
+      panel.$el.off(app.touchEvents.start, '.panel-resize-handler', handleTouchStart, passive);
+      app.off('touchmove:active', handleTouchMove);
+      app.off('touchend:passive', handleTouchEnd);
+      app.off('resize', handleResize);
+      panel.off('beforeOpen', handleResize);
+    });
+  }
+
   var Panel = /*@__PURE__*/(function (Framework7Class) {
     function Panel(app, params) {
       var obj;
@@ -17435,6 +17792,7 @@
         opened: opened,
         $backdropEl: $backdropEl,
         backdropEl: $backdropEl[0],
+        params: params,
       });
 
       // Install Modules
@@ -17450,23 +17808,6 @@
     Panel.prototype = Object.create( Framework7Class && Framework7Class.prototype );
     Panel.prototype.constructor = Panel;
 
-    Panel.prototype.init = function init () {
-      var panel = this;
-      var app = panel.app;
-      if (app.params.panel[((panel.side) + "Breakpoint")]) {
-        panel.initBreakpoints();
-      }
-      {
-        if (
-          (app.params.panel.swipe === panel.side)
-          || (app.params.panel.swipe === 'both')
-          || (app.params.panel.swipe && app.params.panel.swipe !== panel.side && app.params.panel.swipeCloseOpposite)
-        ) {
-          panel.initSwipePanel();
-        }
-      }
-    };
-
     Panel.prototype.getViewEl = function getViewEl () {
       var panel = this;
       var app = panel.app;
@@ -17479,9 +17820,10 @@
       return viewEl;
     };
 
-    Panel.prototype.setBreakpoint = function setBreakpoint () {
+    Panel.prototype.setBreakpoint = function setBreakpoint (emitEvents) {
       var obj, obj$1, obj$2;
 
+      if ( emitEvents === void 0 ) emitEvents = true;
       var panel = this;
       var app = panel.app;
       var side = panel.side;
@@ -17498,8 +17840,10 @@
           panel.onOpened();
           $viewEl.css(( obj = {}, obj[("margin-" + side)] = (($el.width()) + "px"), obj ));
           app.allowPanelOpen = true;
-          app.emit('local::breakpoint panelBreakpoint');
-          panel.$el.trigger('panel:breakpoint', panel);
+          if (emitEvents) {
+            app.emit('local::breakpoint panelBreakpoint');
+            panel.$el.trigger('panel:breakpoint', panel);
+          }
         } else {
           $viewEl.css(( obj$1 = {}, obj$1[("margin-" + side)] = (($el.width()) + "px"), obj$1 ));
         }
@@ -17508,8 +17852,10 @@
         panel.onClose();
         panel.onClosed();
         $viewEl.css(( obj$2 = {}, obj$2[("margin-" + side)] = '', obj$2 ));
-        app.emit('local::breakpoint panelBreakpoint');
-        panel.$el.trigger('panel:breakpoint', panel);
+        if (emitEvents) {
+          app.emit('local::breakpoint panelBreakpoint');
+          panel.$el.trigger('panel:breakpoint', panel);
+        }
       }
     };
 
@@ -17532,41 +17878,57 @@
       }
     };
 
-    Panel.prototype.destroy = function destroy () {
-      var obj;
+    Panel.prototype.initResizablePanel = function initResizablePanel () {
+      resizablePanel(this);
+    };
+
+    Panel.prototype.toggle = function toggle (animate) {
+      if ( animate === void 0 ) animate = true;
 
       var panel = this;
+      if (panel.opened) { panel.close(animate); }
+      else { panel.open(animate); }
+    };
+
+    Panel.prototype.onOpen = function onOpen () {
+      var panel = this;
+      panel.opened = true;
+
+      panel.$el.trigger('panel:beforeopen', panel);
+      panel.emit('local::beforeOpen panelBeforeOpen', panel);
+
+      panel.$el.trigger('panel:open', panel);
+      panel.emit('local::open panelOpen', panel);
+    };
+
+    Panel.prototype.onOpened = function onOpened () {
+      var panel = this;
       var app = panel.app;
+      app.panel.allowOpen = true;
 
-      if (!panel.$el) {
-        // Panel already destroyed
-        return;
-      }
+      panel.$el.trigger('panel:opened', panel);
+      panel.emit('local::opened panelOpened', panel);
+    };
 
-      panel.emit('local::beforeDestroy panelBeforeDestroy', panel);
-      panel.$el.trigger('panel:beforedestroy', panel);
+    Panel.prototype.onClose = function onClose () {
+      var panel = this;
+      panel.opened = false;
+      panel.$el.addClass('panel-closing');
 
-      if (panel.resizeHandler) {
-        app.off('resize', panel.resizeHandler);
-      }
+      panel.$el.trigger('panel:beforeclose', panel);
+      panel.emit('local::beforeClose panelBeforeClose', panel);
 
-      if (panel.$el.hasClass('panel-visible-by-breakpoint')) {
-        var $viewEl = $(panel.getViewEl());
-        panel.$el.css('display', '').removeClass('panel-visible-by-breakpoint panel-active');
-        $viewEl.css(( obj = {}, obj[("margin-" + (panel.side))] = '', obj ));
-        app.emit('local::breakpoint panelBreakpoint');
-        panel.$el.trigger('panel:breakpoint', panel);
-      }
+      panel.$el.trigger('panel:close', panel);
+      panel.emit('local::close panelClose', panel);
+    };
 
-      panel.$el.trigger('panel:destroy', panel);
-      panel.emit('local::destroy panelDestroy');
-      delete app.panel[panel.side];
-      if (panel.el) {
-        panel.el.f7Panel = null;
-        delete panel.el.f7Panel;
-      }
-      Utils.deleteProps(panel);
-      panel = null;
+    Panel.prototype.onClosed = function onClosed () {
+      var panel = this;
+      var app = panel.app;
+      app.panel.allowOpen = true;
+      panel.$el.removeClass('panel-closing');
+      panel.$el.trigger('panel:closed', panel);
+      panel.emit('local::closed panelClosed', panel);
     };
 
     Panel.prototype.open = function open (animate) {
@@ -17636,13 +17998,10 @@
         .addClass('panel-active');
 
       $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
-      $backdropEl.show();
+      $backdropEl.css({ display: 'block' });
 
       /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
-      panel._clientLeft = $el[0].clientLeft;
-
-      $('html').addClass(("with-panel with-panel-" + side + "-" + effect));
-      panel.onOpen();
+      // panel._clientLeft = $el[0].clientLeft;
 
       // Transition End;
       var transitionEndTarget = effect === 'reveal' ? $el.nextAll('.view, .views').eq(0) : $el;
@@ -17660,9 +18019,16 @@
           } else { panelTransitionEnd(); }
         });
       }
+
       if (animate) {
-        panelTransitionEnd();
+        Utils.nextFrame(function () {
+          $('html').addClass(("with-panel with-panel-" + side + "-" + effect));
+          panel.onOpen();
+          panelTransitionEnd();
+        });
       } else {
+        $('html').addClass(("with-panel with-panel-" + side + "-" + effect));
+        panel.onOpen();
         panel.onOpened();
         $backdropEl.css({ display: '' });
       }
@@ -17681,7 +18047,6 @@
       var $el = panel.$el;
       var $backdropEl = panel.$backdropEl;
       var opened = panel.opened;
-
       if (!opened || $el.hasClass('panel-visible-by-breakpoint') || !$el.hasClass('panel-active')) { return false; }
 
       $el[animate ? 'removeClass' : 'addClass']('not-animated');
@@ -17713,45 +18078,61 @@
       return true;
     };
 
-    Panel.prototype.toggle = function toggle (animate) {
-      if ( animate === void 0 ) animate = true;
-
-      var panel = this;
-      if (panel.opened) { panel.close(animate); }
-      else { panel.open(animate); }
-    };
-
-    Panel.prototype.onOpen = function onOpen () {
-      var panel = this;
-      panel.opened = true;
-      panel.$el.trigger('panel:open', panel);
-      panel.emit('local::open panelOpen', panel);
-    };
-
-    Panel.prototype.onOpened = function onOpened () {
+    Panel.prototype.init = function init () {
       var panel = this;
       var app = panel.app;
-      app.panel.allowOpen = true;
-
-      panel.$el.trigger('panel:opened', panel);
-      panel.emit('local::opened panelOpened', panel);
+      if (app.params.panel[((panel.side) + "Breakpoint")]) {
+        panel.initBreakpoints();
+      }
+      {
+        if (
+          (app.params.panel.swipe === panel.side)
+          || (app.params.panel.swipe === 'both')
+          || (app.params.panel.swipe && app.params.panel.swipe !== panel.side && app.params.panel.swipeCloseOpposite)
+        ) {
+          panel.initSwipePanel();
+        }
+      }
+      if (panel.params.resizable || panel.$el.hasClass('panel-resizable')) {
+        panel.initResizablePanel();
+      }
     };
 
-    Panel.prototype.onClose = function onClose () {
-      var panel = this;
-      panel.opened = false;
-      panel.$el.addClass('panel-closing');
-      panel.$el.trigger('panel:close', panel);
-      panel.emit('local::close panelClose', panel);
-    };
+    Panel.prototype.destroy = function destroy () {
+      var obj;
 
-    Panel.prototype.onClosed = function onClosed () {
       var panel = this;
       var app = panel.app;
-      app.panel.allowOpen = true;
-      panel.$el.removeClass('panel-closing');
-      panel.$el.trigger('panel:closed', panel);
-      panel.emit('local::closed panelClosed', panel);
+
+      if (!panel.$el) {
+        // Panel already destroyed
+        return;
+      }
+
+      panel.emit('local::beforeDestroy panelBeforeDestroy', panel);
+      panel.$el.trigger('panel:beforedestroy', panel);
+
+      if (panel.resizeHandler) {
+        app.off('resize', panel.resizeHandler);
+      }
+
+      if (panel.$el.hasClass('panel-visible-by-breakpoint')) {
+        var $viewEl = $(panel.getViewEl());
+        panel.$el.css('display', '').removeClass('panel-visible-by-breakpoint panel-active');
+        $viewEl.css(( obj = {}, obj[("margin-" + (panel.side))] = '', obj ));
+        app.emit('local::breakpoint panelBreakpoint');
+        panel.$el.trigger('panel:breakpoint', panel);
+      }
+
+      panel.$el.trigger('panel:destroy', panel);
+      panel.emit('local::destroy panelDestroy');
+      delete app.panel[panel.side];
+      if (panel.el) {
+        panel.el.f7Panel = null;
+        delete panel.el.f7Panel;
+      }
+      Utils.deleteProps(panel);
+      panel = null;
     };
 
     return Panel;
@@ -17784,6 +18165,53 @@
     create: function create() {
       var app = this;
       Utils.extend(app.panel, {
+        disableResizable: function disableResizable(panel) {
+          if ( panel === void 0 ) panel = 'both';
+
+          var side;
+          var panels = [];
+          if (typeof panel === 'string') {
+            if (panel === 'both') {
+              side = 'both';
+              panels = [app.panel.left, app.panel.right];
+            } else {
+              side = panel;
+              panels.push(app.panel[side]);
+            }
+          } else {
+            panels = [panel];
+          }
+          panels.forEach(function (panelInstance) {
+            panelInstance.resizable = false;
+            panelInstance.$el.removeClass('panel-resizable');
+          });
+        },
+        enableResizable: function enableResizable(panel) {
+          if ( panel === void 0 ) panel = 'both';
+
+          var side;
+          var panels = [];
+          if (typeof panel === 'string') {
+            if (panel === 'both') {
+              side = 'both';
+              panels = [app.panel.left, app.panel.right];
+            } else {
+              side = panel;
+              panels.push(app.panel[side]);
+            }
+          } else {
+            panels = [panel];
+          }
+          panels.forEach(function (panelInstance) {
+            if (!panelInstance) { return; }
+            if (!panelInstance.resizableInitialized) {
+              panelInstance.initResizablePanel();
+            } else {
+              panelInstance.resizable = true;
+              panelInstance.$el.addClass('panel-resizable');
+            }
+          });
+        },
         disableSwipe: function disableSwipe(panel) {
           if ( panel === void 0 ) panel = 'both';
 
@@ -17801,7 +18229,7 @@
             panels = [panel];
           }
           panels.forEach(function (panelInstance) {
-            if (panelInstance) { Utils.extend(panelInstance, { swipeable: false }); }
+            panelInstance.swipeable = false;
           });
         },
         enableSwipe: function enableSwipe(panel) {
@@ -17826,16 +18254,14 @@
           } else if (panel) {
             panels.push(panel);
           }
-          if (panels.length) {
-            panels.forEach(function (panelInstance) {
-              if (!panelInstance) { return; }
-              if (!panelInstance.swipeInitialized) {
-                panelInstance.initSwipePanel();
-              } else {
-                Utils.extend(panelInstance, { swipeable: true });
-              }
-            });
-          }
+          panels.forEach(function (panelInstance) {
+            if (!panelInstance) { return; }
+            if (!panelInstance.swipeInitialized) {
+              panelInstance.initSwipePanel();
+            } else {
+              panelInstance.swipeable = true;
+            }
+          });
         },
         create: function create(params) {
           return new Panel(app, params);
@@ -17999,15 +18425,17 @@
 
       if (prevented) { return; }
 
+      var $pageContentEl = $cardEl.parents('.page-content');
+
       var $backropEl;
       if ($cardEl.attr('data-backdrop-el')) {
         $backropEl = $($cardEl.attr('data-backdrop-el'));
       }
       if (!$backropEl && app.params.card.backrop) {
-        $backropEl = $cardEl.parents('.page-content').find('.card-backdrop');
+        $backropEl = $pageContentEl.find('.card-backdrop');
         if (!$backropEl.length) {
           $backropEl = $('<div class="card-backdrop"></div>');
-          $cardEl.parents('.page-content').append($backropEl);
+          $pageContentEl.append($backropEl);
         }
       }
 
@@ -18069,7 +18497,7 @@
           if (app.rtl) { cardLeftOffset -= $cardEl[0].scrollLeft; }
         } else {
           cardLeftOffset = $cardEl[0].offsetLeft;
-          cardTopOffset = $cardEl[0].offsetTop - $cardEl.parents('.page-content')[0].scrollTop;
+          cardTopOffset = $cardEl[0].offsetTop - ($pageContentEl.length ? $pageContentEl[0].scrollTop : 0);
         }
       } else {
         cardLeftOffset = offset.left;
@@ -18275,6 +18703,7 @@
       if (!$cardEl.hasClass('card-opened') || $cardEl.hasClass('card-opening') || $cardEl.hasClass('card-closing')) { return; }
 
       var $cardContentEl = $cardEl.children('.card-content');
+      var $pageContentEl = $cardEl.parents('.page-content');
 
       var $pageEl = $cardEl.parents('.page').eq(0);
       if (!$pageEl.length) { return; }
@@ -18310,7 +18739,15 @@
           app.toolbar.show($toolbarEl, animate);
         }
       }
+
       $pageEl.removeClass('page-with-card-opened');
+
+      if (Device.ios && $pageContentEl.length) {
+        $cardEl.parents('.page-content').css('height', (($pageContentEl[0].offsetHeight + 1) + "px"));
+        setTimeout(function () {
+          $cardEl.parents('.page-content').css('height', '');
+        });
+      }
 
       if ($backropEl && $backropEl.length) {
         $backropEl.removeClass('card-backdrop-in').addClass('card-backdrop-out');
@@ -36110,6 +36547,1829 @@
     },
   };
 
+  var moduleAlphaSlider = {
+    render: function render(self) {
+      var ref = self.params;
+      var sliderLabel = ref.sliderLabel;
+      var sliderValue = ref.sliderValue;
+      var sliderValueEditable = ref.sliderValueEditable;
+      var alphaLabelText = ref.alphaLabelText;
+      return ("\n      <div class=\"color-picker-module color-picker-module-alpha-slider\">\n        <div class=\"color-picker-slider-wrap\">\n          " + (sliderLabel ? ("\n            <div class=\"color-picker-slider-label\">" + alphaLabelText + "</div>\n          ") : '') + "\n          <div class=\"range-slider color-picker-slider color-picker-slider-alpha\"></div>\n          " + (sliderValue ? ("\n            <div class=\"color-picker-slider-value\">\n              " + (sliderValueEditable ? "\n                <input type=\"number\" step=\"0.01\" min=\"0\" max=\"1\" class=\"color-picker-value-alpha\">\n              " : "\n                <span class=\"color-picker-value-alpha\"></span>\n              ") + "\n            </div>\n          ") : '') + "\n        </div>\n      </div>\n    ");
+    },
+    init: function init(self) {
+      self.alphaRangeSlider = self.app.range.create({
+        el: self.$el.find('.color-picker-slider-alpha'),
+        min: 0,
+        max: 1,
+        step: 0.01,
+        value: 1,
+        on: {
+          change: function change(range, value) {
+            var alpha = Math.floor(value * 100) / 100;
+            self.setValue({ alpha: alpha });
+          },
+        },
+      });
+      function handleInputChange(e) {
+        var alpha = self.value.alpha;
+        var value = parseFloat(e.target.value);
+        if (Number.isNaN(value)) {
+          e.target.value = alpha;
+          return;
+        }
+        value = Math.max(0, Math.min(1, value));
+        self.setValue({ alpha: value });
+      }
+
+      self.$el.on('change', '.color-picker-module-alpha-slider input', handleInputChange);
+
+      self.destroyAlphaSliderEvents = function destroyAlphaSliderEvents() {
+        self.$el.off('change', '.color-picker-module-alpha-slider input', handleInputChange);
+      };
+    },
+    update: function update(self) {
+      var value = self.value;
+      var ref = self.params;
+      var sliderValue = ref.sliderValue;
+      var sliderValueEditable = ref.sliderValueEditable;
+
+      var alpha = value.alpha;
+      self.alphaRangeSlider.value = alpha;
+      self.alphaRangeSlider.layout();
+      if (sliderValue && sliderValueEditable) {
+        self.$el.find('input.color-picker-value-alpha').val(alpha);
+      } else {
+        self.$el.find('span.color-picker-value-alpha').text(alpha);
+      }
+    },
+    destroy: function destroy(self) {
+      if (self.alphaRangeSlider && self.alphaRangeSlider.destroy) {
+        self.alphaRangeSlider.destroy();
+      }
+      delete self.alphaRangeSlider;
+
+      if (self.destroyAlphaSliderEvents) { self.destroyAlphaSliderEvents(); }
+      delete self.destroyAlphaSliderEvents;
+    },
+  };
+
+  var moduleCurrentColor = {
+    render: function render() {
+      return "\n      <div class=\"color-picker-module color-picker-module-current-color\">\n        <div class=\"color-picker-current-color\"></div>\n      </div>\n    ";
+    },
+    update: function update(self) {
+      self.$el.find('.color-picker-module-current-color .color-picker-current-color').css(
+        'background-color',
+        self.value.hex
+      );
+    },
+  };
+
+  var moduleHex = {
+    render: function render(self) {
+      var ref = self.params;
+      var hexLabel = ref.hexLabel;
+      var hexLabelText = ref.hexLabelText;
+      var hexValueEditable = ref.hexValueEditable;
+      return ("\n      <div class=\"color-picker-module color-picker-module-hex\">\n        <div class=\"color-picker-hex-wrap\">\n          " + (hexLabel ? ("\n            <div class=\"color-picker-hex-label\">" + hexLabelText + "</div>\n          ") : '') + "\n          <div class=\"color-picker-hex-value\">\n            " + (hexValueEditable ? "\n              <input type=\"text\" class=\"color-picker-value-hex\">\n            " : "\n              <span class=\"color-picker-value-hex\"></span>\n            ") + "\n          </div>\n        </div>\n      </div>\n    ");
+    },
+    init: function init(self) {
+      function handleInputChange(e) {
+        var hex = self.value.hex;
+        var value = e.target.value.replace(/#/g, '');
+        if (Number.isNaN(value) || !value || (value.length !== 3 && value.length !== 6)) {
+          e.target.value = hex;
+          return;
+        }
+        var min = 0;
+        var current = parseInt(value, 16);
+        var max = parseInt('ffffff', 16); // eslint-disable-line
+        if (current > max) {
+          value = 'fff';
+        }
+        if (current < min) {
+          value = '000';
+        }
+        self.setValue({ hex: value });
+      }
+
+      self.$el.on('change', '.color-picker-module-hex input', handleInputChange);
+
+      self.destroyHexEvents = function destroyHexEvents() {
+        self.$el.off('change', '.color-picker-module-hex input', handleInputChange);
+      };
+    },
+    update: function update(self) {
+      var value = self.value;
+
+      var ref = self.params;
+      var hexValueEditable = ref.hexValueEditable;
+
+      var hex = value.hex;
+      if (hexValueEditable) {
+        self.$el.find('input.color-picker-value-hex').val(hex);
+      } else {
+        self.$el.find('span.color-picker-value-hex').text(hex);
+      }
+    },
+    destroy: function destroy(self) {
+      if (self.destroyHexEvents) { self.destroyHexEvents(); }
+      delete self.destroyHexEvents;
+    },
+  };
+
+  var moduleHsbSliders = {
+    render: function render(self) {
+      var ref = self.params;
+      var sliderLabel = ref.sliderLabel;
+      var sliderValue = ref.sliderValue;
+      var sliderValueEditable = ref.sliderValueEditable;
+      var hueLabelText = ref.hueLabelText;
+      var saturationLabelText = ref.saturationLabelText;
+      var brightnessLabelText = ref.brightnessLabelText;
+      return ("\n      <div class=\"color-picker-module color-picker-module-hsb-sliders\">\n        <div class=\"color-picker-slider-wrap\">\n          " + (sliderLabel ? ("\n            <div class=\"color-picker-slider-label\">" + hueLabelText + "</div>\n          ") : '') + "\n          <div class=\"range-slider color-picker-slider color-picker-slider-hue\"></div>\n          " + (sliderValue ? ("\n            <div class=\"color-picker-slider-value\">\n              " + (sliderValueEditable ? "\n                <input type=\"number\" step=\"0.1\" min=\"0\" max=\"360\" class=\"color-picker-value-hue\" data-color-index=\"0\">\n              " : "\n                <span class=\"color-picker-value-hue\"></span>\n              ") + "\n            </div>\n          ") : '') + "\n        </div>\n        <div class=\"color-picker-slider-wrap\">\n          " + (sliderLabel ? ("\n            <div class=\"color-picker-slider-label\">" + saturationLabelText + "</div>\n          ") : '') + "\n          <div class=\"range-slider color-picker-slider color-picker-slider-saturation\"></div>\n          " + (sliderValue ? ("\n            <div class=\"color-picker-slider-value\">\n              " + (sliderValueEditable ? "\n                <input type=\"number\" step=\"0.1\" min=\"0\" max=\"100\" class=\"color-picker-value-saturation\" data-color-index=\"1\">\n              " : "\n                <span class=\"color-picker-value-saturation\"></span>\n              ") + "\n            </div>\n          ") : '') + "\n        </div>\n        <div class=\"color-picker-slider-wrap\">\n          " + (sliderLabel ? ("\n            <div class=\"color-picker-slider-label\">" + brightnessLabelText + "</div>\n          ") : '') + "\n          <div class=\"range-slider color-picker-slider color-picker-slider-brightness\"></div>\n          " + (sliderValue ? ("\n            <div class=\"color-picker-slider-value\">\n              " + (sliderValueEditable ? "\n                <input type=\"number\" step=\"0.1\" min=\"0\" max=\"100\" class=\"color-picker-value-brightness\" data-color-index=\"2\">\n              " : "\n                <span class=\"color-picker-value-brightness\"></span>\n              ") + "\n            </div>\n          ") : '') + "\n        </div>\n      </div>\n    ");
+    },
+    init: function init(self) {
+      self.hueRangeSlider = self.app.range.create({
+        el: self.$el.find('.color-picker-slider-hue'),
+        min: 0,
+        max: 360,
+        step: 0.1,
+        value: 0,
+        on: {
+          change: function change(range, value) {
+            self.setValue({ hue: value });
+          },
+        },
+      });
+      self.saturationRangeSlider = self.app.range.create({
+        el: self.$el.find('.color-picker-slider-saturation'),
+        min: 0,
+        max: 1,
+        step: 0.001,
+        value: 0,
+        on: {
+          change: function change(range, value) {
+            var s = Math.floor(value * 1000) / 1000;
+            self.setValue({ hsb: [self.value.hsb[0], s, self.value.hsb[2]] });
+          },
+        },
+      });
+      self.brightnessRangeSlider = self.app.range.create({
+        el: self.$el.find('.color-picker-slider-brightness'),
+        min: 0,
+        max: 1,
+        step: 0.001,
+        value: 0,
+        on: {
+          change: function change(range, value) {
+            var b = Math.floor(value * 1000) / 1000;
+            self.setValue({ hsb: [self.value.hsb[0], self.value.hsb[1], b] });
+          },
+        },
+      });
+
+      function handleInputChange(e) {
+        var hsb = [].concat( self.value.hsb );
+        var index = parseInt($(e.target).attr('data-color-index'), 10);
+        var value = parseFloat(e.target.value);
+        if (Number.isNaN(value)) {
+          e.target.value = hsb[index];
+          return;
+        }
+        if (index === 0) {
+          value = Math.max(0, Math.min(360, value));
+        } else {
+          value = Math.max(0, Math.min(100, value)) / 100;
+        }
+
+        hsb[index] = value;
+        self.setValue({ hsb: hsb });
+      }
+
+      self.$el.on('change', '.color-picker-module-hsb-sliders input', handleInputChange);
+
+      self.destroyHsbSlidersEvents = function destroyHsbSlidersEvents() {
+        self.$el.off('change', '.color-picker-module-hsb-sliders input', handleInputChange);
+      };
+    },
+    update: function update(self) {
+      var app = self.app;
+      var value = self.value;
+      var ref = self.params;
+      var sliderValue = ref.sliderValue;
+      var sliderValueEditable = ref.sliderValueEditable;
+
+      var hsb = value.hsb;
+      var hue = value.hue;
+
+      self.hueRangeSlider.value = hue;
+      self.saturationRangeSlider.value = hsb[1];
+      self.brightnessRangeSlider.value = hsb[2];
+
+      self.hueRangeSlider.layout();
+      self.saturationRangeSlider.layout();
+      self.brightnessRangeSlider.layout();
+
+      var hslCurrent = Utils.colorHsbToHsl(hsb[0], hsb[1], 1);
+      var hslLeft = Utils.colorHsbToHsl(hsb[0], 0, 1);
+      var hslRight = Utils.colorHsbToHsl(hsb[0], 1, 1);
+      var brightness = hsb[2];
+
+      self.hueRangeSlider.$el[0].style.setProperty(
+        '--f7-range-knob-color',
+        ("hsl(" + hue + ", 100%, 50%)")
+      );
+      self.saturationRangeSlider.$el[0].style.setProperty(
+        '--f7-range-knob-color',
+        ("hsl(" + (hslCurrent[0]) + ", " + (hslCurrent[1] * 100) + "%, " + (hslCurrent[2] * 100) + "%)")
+      );
+      self.brightnessRangeSlider.$el[0].style.setProperty(
+        '--f7-range-knob-color',
+        ("rgb(" + (brightness * 255) + ", " + (brightness * 255) + ", " + (brightness * 255) + ")")
+      );
+      self.saturationRangeSlider.$el.find('.range-bar').css(
+        'background-image',
+        ("linear-gradient(" + (app.rtl ? 'to left' : 'to right') + ", hsl(" + (hslLeft[0]) + ", " + (hslLeft[1] * 100) + "%, " + (hslLeft[2] * 100) + "%), hsl(" + (hslRight[0]) + ", " + (hslRight[1] * 100) + "%, " + (hslRight[2] * 100) + "%))")
+      );
+
+      if (sliderValue && sliderValueEditable) {
+        self.$el.find('input.color-picker-value-hue').val(("" + hue));
+        self.$el.find('input.color-picker-value-saturation').val(("" + (hsb[1] * 1000 / 10)));
+        self.$el.find('input.color-picker-value-brightness').val(("" + (hsb[2] * 1000 / 10)));
+      } else if (sliderValue) {
+        self.$el.find('span.color-picker-value-hue').text(("" + hue));
+        self.$el.find('span.color-picker-value-saturation').text(("" + (hsb[1] * 1000 / 10)));
+        self.$el.find('span.color-picker-value-brightness').text(("" + (hsb[2] * 1000 / 10)));
+      }
+    },
+    destroy: function destroy(self) {
+      if (self.hueRangeSlider && self.hueRangeSlider.destroy) {
+        self.hueRangeSlider.destroy();
+      }
+      if (self.saturationRangeSlider && self.saturationRangeSlider.destroy) {
+        self.saturationRangeSlider.destroy();
+      }
+      if (self.brightnessRangeSlider && self.brightnessRangeSlider.destroy) {
+        self.brightnessRangeSlider.destroy();
+      }
+
+      delete self.hueRangeSlider;
+      delete self.saturationRangeSlider;
+      delete self.brightnessRangeSlider;
+
+      if (self.destroyHsbSlidersEvents) { self.destroyHsbSlidersEvents(); }
+      delete self.destroyHsbSlidersEvents;
+    },
+  };
+
+  var moduleHueSlider = {
+    render: function render(self) {
+      var ref = self.params;
+      var sliderLabel = ref.sliderLabel;
+      var sliderValue = ref.sliderValue;
+      var sliderValueEditable = ref.sliderValueEditable;
+      var hueLabelText = ref.hueLabelText;
+      return ("\n      <div class=\"color-picker-module color-picker-module-hue-slider\">\n        <div class=\"color-picker-slider-wrap\">\n          " + (sliderLabel ? ("\n            <div class=\"color-picker-slider-label\">" + hueLabelText + "</div>\n          ") : '') + "\n          <div class=\"range-slider color-picker-slider color-picker-slider-hue\"></div>\n          " + (sliderValue ? ("\n            <div class=\"color-picker-slider-value\">\n              " + (sliderValueEditable ? "\n                <input type=\"number\" step=\"0.1\" min=\"0\" max=\"360\" class=\"color-picker-value-hue\">\n              " : "\n                <span class=\"color-picker-value-hue\"></span>\n              ") + "\n            </div>\n          ") : '') + "\n        </div>\n      </div>\n    ");
+    },
+    init: function init(self) {
+      self.hueRangeSlider = self.app.range.create({
+        el: self.$el.find('.color-picker-slider-hue'),
+        min: 0,
+        max: 360,
+        step: 0.1,
+        value: 0,
+        on: {
+          change: function change(range, value) {
+            self.setValue({ hue: value });
+          },
+        },
+      });
+    },
+    update: function update(self) {
+      var value = self.value;
+      var ref = self.params;
+      var sliderValue = ref.sliderValue;
+      var sliderValueEditable = ref.sliderValueEditable;
+
+      var hue = value.hue;
+
+      self.hueRangeSlider.value = hue;
+      self.hueRangeSlider.layout();
+      self.hueRangeSlider.$el[0].style.setProperty(
+        '--f7-range-knob-color',
+        ("hsl(" + hue + ", 100%, 50%)")
+      );
+      if (sliderValue && sliderValueEditable) {
+        self.$el.find('input.color-picker-value-hue').val(("" + hue));
+      } else if (sliderValue) {
+        self.$el.find('span.color-picker-value-hue').text(("" + hue));
+      }
+    },
+    destroy: function destroy(self) {
+      if (self.hueRangeSlider && self.hueRangeSlider.destroy) {
+        self.hueRangeSlider.destroy();
+      }
+      delete self.hueRangeSlider;
+    },
+  };
+
+  /* eslint indent: ["off"] */
+
+  var modulePalette = {
+    render: function render(self) {
+      return ("\n      <div class=\"color-picker-module color-picker-module-palette\">\n        <div class=\"color-picker-palette\">\n          " + (self.params.palette.map(function (p) {
+              if (Array.isArray(p)) {
+                var row = '<div class="color-picker-palette-row">';
+                row += p.map(function (c) { return ("\n                <div class=\"color-picker-palette-value\" data-palette-color=\"" + c + "\" style=\"background-color: " + c + "\"></div>\n              "); }).join('');
+                row += '</div>';
+                return row;
+              }
+              return ("\n              <div class=\"color-picker-palette-value\" data-palette-color=\"" + p + "\" style=\"background-color: " + p + "\"></div>\n            ");
+            }).join('')) + "\n        </div>\n      </div>\n    ");
+    },
+    init: function init(self) {
+      function handlePaletteClick(e) {
+        var hex = $(e.target).attr('data-palette-color');
+        self.setValue({
+          hex: hex,
+        });
+      }
+
+      self.$el.on('click', '.color-picker-module-palette .color-picker-palette-value', handlePaletteClick);
+
+      self.destroyPaletteEvents = function destroyPaletteEvents() {
+        self.$el.off('click', '.color-picker-module-hex input', handlePaletteClick);
+      };
+    },
+    destroy: function destroy(self) {
+      if (self.destroyPaletteEvents) {
+        self.destroyPaletteEvents();
+      }
+      delete self.destroyPaletteEvents;
+    },
+  };
+
+  var moduleInitialCurrentColors = {
+    render: function render() {
+      return "\n      <div class=\"color-picker-module color-picker-module-initial-current-colors\">\n        <div class=\"color-picker-initial-current-colors\">\n          <div class=\"color-picker-initial-color\"></div>\n          <div class=\"color-picker-current-color\"></div>\n        </div>\n      </div>\n    ";
+    },
+    init: function init(self) {
+      function handleInitialColorClick() {
+        if (self.initialValue) {
+          var ref = self.initialValue;
+          var hex = ref.hex;
+          var alpha = ref.alpha;
+          self.setValue({
+            hex: hex,
+            alpha: alpha,
+          });
+        }
+      }
+      self.$el.on('click', '.color-picker-initial-color', handleInitialColorClick);
+      self.destroyInitialCurrentEvents = function destroyInitialCurrentEvents() {
+        self.$el.off('click', '.color-picker-initial-color', handleInitialColorClick);
+      };
+    },
+    update: function update(self) {
+      self.$el.find('.color-picker-module-initial-current-colors .color-picker-initial-color').css(
+        'background-color',
+        self.initialValue.hex
+      );
+      self.$el.find('.color-picker-module-initial-current-colors .color-picker-current-color').css(
+        'background-color',
+        self.value.hex
+      );
+    },
+    destroy: function destroy(self) {
+      if (self.destroyInitialCurrentEvents) {
+        self.destroyInitialCurrentEvents();
+      }
+      delete self.destroyInitialCurrentEvents;
+    },
+  };
+
+  var moduleRgbBars = {
+    render: function render(self) {
+      var ref = self.params;
+      var barLabel = ref.barLabel;
+      var barValue = ref.barValue;
+      var barValueEditable = ref.barValueEditable;
+      var redLabelText = ref.redLabelText;
+      var greenLabelText = ref.greenLabelText;
+      var blueLabelText = ref.blueLabelText;
+      return ("\n      <div class=\"color-picker-module color-picker-module-rgb-bars\">\n        <div class=\"color-picker-bar-wrap\">\n          " + (barLabel ? ("\n            <div class=\"color-picker-bar-label\">" + redLabelText + "</div>\n          ") : '') + "\n          <div class=\"range-slider color-picker-bar color-picker-bar-red\"></div>\n          " + (barValue ? ("\n            <div class=\"color-picker-bar-value\">\n              " + (barValueEditable ? "\n                <input type=\"number\" step=\"1\" min=\"0\" max=\"255\" class=\"color-picker-value-bar-red\" data-color-index=\"0\">\n              " : "\n                <span class=\"color-picker-value-bar-red\"></span>\n              ") + "\n            </div>\n          ") : '') + "\n        </div>\n        <div class=\"color-picker-bar-wrap\">\n          " + (barLabel ? ("\n            <div class=\"color-picker-bar-label\">" + greenLabelText + "</div>\n          ") : '') + "\n          <div class=\"range-slider color-picker-bar color-picker-bar-green\"></div>\n          " + (barValue ? ("\n            <div class=\"color-picker-bar-value\">\n              " + (barValueEditable ? "\n                <input type=\"number\" step=\"1\" min=\"0\" max=\"255\" class=\"color-picker-value-bar-green\" data-color-index=\"1\">\n              " : "\n                <span class=\"color-picker-value-bar-green\"></span>\n              ") + "\n            </div>\n          ") : '') + "\n        </div>\n        <div class=\"color-picker-bar-wrap\">\n          " + (barLabel ? ("\n            <div class=\"color-picker-bar-label\">" + blueLabelText + "</div>\n          ") : '') + "\n          <div class=\"range-slider color-picker-bar color-picker-bar-blue\"></div>\n          " + (barValue ? ("\n            <div class=\"color-picker-bar-value\">\n              " + (barValueEditable ? "\n                <input type=\"number\" step=\"1\" min=\"0\" max=\"255\" class=\"color-picker-value-bar-blue\" data-color-index=\"2\">\n              " : "\n                <span class=\"color-picker-value-bar-blue\"></span>\n              ") + "\n            </div>\n          ") : '') + "\n        </div>\n      </div>\n    ");
+    },
+    init: function init(self) {
+      self.redBar = self.app.range.create({
+        el: self.$el.find('.color-picker-bar-red'),
+        min: 0,
+        max: 255,
+        step: 1,
+        value: 0,
+        vertical: true,
+        on: {
+          change: function change(range, value) {
+            self.setValue({ rgb: [value, self.value.rgb[1], self.value.rgb[2]] });
+          },
+        },
+      });
+      self.greenBar = self.app.range.create({
+        el: self.$el.find('.color-picker-bar-green'),
+        min: 0,
+        max: 255,
+        step: 1,
+        value: 0,
+        vertical: true,
+        on: {
+          change: function change(range, value) {
+            self.setValue({ rgb: [self.value.rgb[0], value, self.value.rgb[2]] });
+          },
+        },
+      });
+      self.blueBar = self.app.range.create({
+        el: self.$el.find('.color-picker-bar-blue'),
+        min: 0,
+        max: 255,
+        step: 1,
+        value: 0,
+        vertical: true,
+        on: {
+          change: function change(range, value) {
+            self.setValue({ rgb: [self.value.rgb[0], self.value.rgb[1], value] });
+          },
+        },
+      });
+
+      function handleInputChange(e) {
+        var rgb = [].concat( self.value.rgb );
+        var index = parseInt($(e.target).attr('data-color-index'), 10);
+        var value = parseInt(e.target.value, 10);
+        if (Number.isNaN(value)) {
+          e.target.value = rgb[index];
+          return;
+        }
+        value = Math.max(0, Math.min(255, value));
+        rgb[index] = value;
+        self.setValue({ rgb: rgb });
+      }
+
+      self.$el.on('change', '.color-picker-module-rgb-bars input', handleInputChange);
+
+      self.destroyRgbBarsEvents = function destroyRgbBarsEvents() {
+        self.$el.off('change', '.color-picker-module-rgb-bars input', handleInputChange);
+      };
+    },
+    update: function update(self) {
+      var value = self.value;
+      var redBar = self.redBar;
+      var greenBar = self.greenBar;
+      var blueBar = self.blueBar;
+
+      var ref = self.params;
+      var barValue = ref.barValue;
+      var barValueEditable = ref.barValueEditable;
+
+      var rgb = value.rgb;
+
+      redBar.value = rgb[0];
+      greenBar.value = rgb[1];
+      blueBar.value = rgb[2];
+
+      redBar.layout();
+      greenBar.layout();
+      blueBar.layout();
+
+      redBar.$el.find('.range-bar').css('background-image', ("linear-gradient(to top, rgb(0, " + (rgb[1]) + ", " + (rgb[2]) + "), rgb(255, " + (rgb[1]) + ", " + (rgb[2]) + "))"));
+      greenBar.$el.find('.range-bar').css('background-image', ("linear-gradient(to top, rgb(" + (rgb[0]) + ", 0, " + (rgb[2]) + "), rgb(" + (rgb[0]) + ", 255, " + (rgb[2]) + "))"));
+      blueBar.$el.find('.range-bar').css('background-image', ("linear-gradient(to top, rgb(" + (rgb[0]) + ", " + (rgb[1]) + ", 0), rgb(" + (rgb[0]) + ", " + (rgb[1]) + ", 255))"));
+
+      if (barValue && barValueEditable) {
+        self.$el.find('input.color-picker-value-bar-red').val(rgb[0]);
+        self.$el.find('input.color-picker-value-bar-green').val(rgb[1]);
+        self.$el.find('input.color-picker-value-bar-blue').val(rgb[2]);
+      } else if (barValue) {
+        self.$el.find('span.color-picker-value-bar-red').text(rgb[0]);
+        self.$el.find('span.color-picker-value-bar-green').text(rgb[1]);
+        self.$el.find('span.color-picker-value-bar-blue').text(rgb[2]);
+      }
+    },
+    destroy: function destroy(self) {
+      if (self.redBar && self.redBar.destroy) {
+        self.redBar.destroy();
+      }
+      if (self.greenBar && self.greenBar.destroy) {
+        self.greenBar.destroy();
+      }
+      if (self.blueBar && self.blueBar.destroy) {
+        self.blueBar.destroy();
+      }
+
+      delete self.redBar;
+      delete self.greenBar;
+      delete self.blueBar;
+
+      if (self.destroyRgbBarsEvents) { self.destroyRgbBarsEvents(); }
+      delete self.destroyRgbBarsEvents;
+    },
+  };
+
+  var moduleRgbSliders = {
+    render: function render(self) {
+      var ref = self.params;
+      var sliderLabel = ref.sliderLabel;
+      var sliderValue = ref.sliderValue;
+      var sliderValueEditable = ref.sliderValueEditable;
+      var redLabelText = ref.redLabelText;
+      var greenLabelText = ref.greenLabelText;
+      var blueLabelText = ref.blueLabelText;
+      return ("\n      <div class=\"color-picker-module color-picker-module-rgb-sliders\">\n        <div class=\"color-picker-slider-wrap\">\n          " + (sliderLabel ? ("\n            <div class=\"color-picker-slider-label\">" + redLabelText + "</div>\n          ") : '') + "\n          <div class=\"range-slider color-picker-slider color-picker-slider-red\"></div>\n          " + (sliderValue ? ("\n            <div class=\"color-picker-slider-value\">\n              " + (sliderValueEditable ? "\n                <input type=\"number\" step=\"1\" min=\"0\" max=\"255\" class=\"color-picker-value-red\" data-color-index=\"0\">\n              " : "\n                <span class=\"color-picker-value-red\"></span>\n              ") + "\n            </div>\n          ") : '') + "\n        </div>\n        <div class=\"color-picker-slider-wrap\">\n          " + (sliderLabel ? ("\n            <div class=\"color-picker-slider-label\">" + greenLabelText + "</div>\n          ") : '') + "\n          <div class=\"range-slider color-picker-slider color-picker-slider-green\"></div>\n          " + (sliderValue ? ("\n            <div class=\"color-picker-slider-value\">\n              " + (sliderValueEditable ? "\n                <input type=\"number\" step=\"1\" min=\"0\" max=\"255\" class=\"color-picker-value-green\" data-color-index=\"1\">\n              " : "\n                <span class=\"color-picker-value-green\"></span>\n              ") + "\n            </div>\n          ") : '') + "\n        </div>\n        <div class=\"color-picker-slider-wrap\">\n          " + (sliderLabel ? ("\n            <div class=\"color-picker-slider-label\">" + blueLabelText + "</div>\n          ") : '') + "\n          <div class=\"range-slider color-picker-slider color-picker-slider-blue\"></div>\n          " + (sliderValue ? ("\n            <div class=\"color-picker-slider-value\">\n              " + (sliderValueEditable ? "\n                <input type=\"number\" step=\"1\" min=\"0\" max=\"255\" class=\"color-picker-value-blue\" data-color-index=\"2\">\n              " : "\n                <span class=\"color-picker-value-blue\"></span>\n              ") + "\n            </div>\n          ") : '') + "\n        </div>\n      </div>\n    ");
+    },
+    init: function init(self) {
+      self.redRangeSlider = self.app.range.create({
+        el: self.$el.find('.color-picker-slider-red'),
+        min: 0,
+        max: 255,
+        step: 1,
+        value: 0,
+        on: {
+          change: function change(range, value) {
+            self.setValue({ rgb: [value, self.value.rgb[1], self.value.rgb[2]] });
+          },
+        },
+      });
+      self.greenRangeSlider = self.app.range.create({
+        el: self.$el.find('.color-picker-slider-green'),
+        min: 0,
+        max: 255,
+        step: 1,
+        value: 0,
+        on: {
+          change: function change(range, value) {
+            self.setValue({ rgb: [self.value.rgb[0], value, self.value.rgb[2]] });
+          },
+        },
+      });
+      self.blueRangeSlider = self.app.range.create({
+        el: self.$el.find('.color-picker-slider-blue'),
+        min: 0,
+        max: 255,
+        step: 1,
+        value: 0,
+        on: {
+          change: function change(range, value) {
+            self.setValue({ rgb: [self.value.rgb[0], self.value.rgb[1], value] });
+          },
+        },
+      });
+
+      function handleInputChange(e) {
+        var rgb = [].concat( self.value.rgb );
+        var index = parseInt($(e.target).attr('data-color-index'), 10);
+        var value = parseInt(e.target.value, 10);
+        if (Number.isNaN(value)) {
+          e.target.value = rgb[index];
+          return;
+        }
+        value = Math.max(0, Math.min(255, value));
+        rgb[index] = value;
+        self.setValue({ rgb: rgb });
+      }
+
+      self.$el.on('change', '.color-picker-module-rgb-sliders input', handleInputChange);
+
+      self.destroyRgbSlidersEvents = function destroyRgbSlidersEvents() {
+        self.$el.off('change', '.color-picker-module-rgb-sliders input', handleInputChange);
+      };
+    },
+    update: function update(self) {
+      var app = self.app;
+      var value = self.value;
+      var redRangeSlider = self.redRangeSlider;
+      var greenRangeSlider = self.greenRangeSlider;
+      var blueRangeSlider = self.blueRangeSlider;
+
+      var ref = self.params;
+      var sliderValue = ref.sliderValue;
+      var sliderValueEditable = ref.sliderValueEditable;
+
+      var rgb = value.rgb;
+
+      redRangeSlider.value = rgb[0];
+      greenRangeSlider.value = rgb[1];
+      blueRangeSlider.value = rgb[2];
+
+      redRangeSlider.layout();
+      greenRangeSlider.layout();
+      blueRangeSlider.layout();
+
+      redRangeSlider.$el[0].style.setProperty('--f7-range-knob-color', ("rgb(" + (rgb[0]) + ", " + (rgb[1]) + ", " + (rgb[2]) + ")"));
+      greenRangeSlider.$el[0].style.setProperty('--f7-range-knob-color', ("rgb(" + (rgb[0]) + ", " + (rgb[1]) + ", " + (rgb[2]) + ")"));
+      blueRangeSlider.$el[0].style.setProperty('--f7-range-knob-color', ("rgb(" + (rgb[0]) + ", " + (rgb[1]) + ", " + (rgb[2]) + ")"));
+
+      var direction = app.rtl ? 'to left' : 'to right';
+
+      redRangeSlider.$el.find('.range-bar').css('background-image', ("linear-gradient(" + direction + ", rgb(0, " + (rgb[1]) + ", " + (rgb[2]) + "), rgb(255, " + (rgb[1]) + ", " + (rgb[2]) + "))"));
+      greenRangeSlider.$el.find('.range-bar').css('background-image', ("linear-gradient(" + direction + ", rgb(" + (rgb[0]) + ", 0, " + (rgb[2]) + "), rgb(" + (rgb[0]) + ", 255, " + (rgb[2]) + "))"));
+      blueRangeSlider.$el.find('.range-bar').css('background-image', ("linear-gradient(" + direction + ", rgb(" + (rgb[0]) + ", " + (rgb[1]) + ", 0), rgb(" + (rgb[0]) + ", " + (rgb[1]) + ", 255))"));
+
+      if (sliderValue && sliderValueEditable) {
+        self.$el.find('input.color-picker-value-red').val(rgb[0]);
+        self.$el.find('input.color-picker-value-green').val(rgb[1]);
+        self.$el.find('input.color-picker-value-blue').val(rgb[2]);
+      } else if (sliderValue) {
+        self.$el.find('span.color-picker-value-red').text(rgb[0]);
+        self.$el.find('span.color-picker-value-green').text(rgb[1]);
+        self.$el.find('span.color-picker-value-blue').text(rgb[2]);
+      }
+    },
+    destroy: function destroy(self) {
+      if (self.redRangeSlider && self.redRangeSlider.destroy) {
+        self.redRangeSlider.destroy();
+      }
+      if (self.greenRangeSlider && self.greenRangeSlider.destroy) {
+        self.greenRangeSlider.destroy();
+      }
+      if (self.blueRangeSlider && self.blueRangeSlider.destroy) {
+        self.blueRangeSlider.destroy();
+      }
+
+      delete self.redRangeSlider;
+      delete self.greenRangeSlider;
+      delete self.blueRangeSlider;
+
+      if (self.destroyRgbSlidersEvents) { self.destroyRgbSlidersEvents(); }
+      delete self.destroyRgbSlidersEvents;
+    },
+  };
+
+  var moduleSbSpectrum = {
+    render: function render() {
+      return "\n      <div class=\"color-picker-module color-picker-module-sb-spectrum\">\n        <div class=\"color-picker-sb-spectrum\" style=\"background-color: hsl(0, 100%, 50%)\">\n          <div class=\"color-picker-sb-spectrum-handle\"></div>\n        </div>\n      </div>\n    ";
+    },
+    init: function init(self) {
+      var app = self.app;
+
+      var isTouched;
+      var isMoved;
+      var touchStartX;
+      var touchStartY;
+      var touchCurrentX;
+      var touchCurrentY;
+
+      var specterRect;
+      var specterIsTouched;
+      var specterHandleIsTouched;
+
+      var $el = self.$el;
+
+      function setSBFromSpecterCoords(x, y) {
+        var s = (x - specterRect.left) / specterRect.width;
+        var b = (y - specterRect.top) / specterRect.height;
+        s = Math.max(0, Math.min(1, s));
+        b = 1 - Math.max(0, Math.min(1, b));
+
+        self.setValue({ hsb: [self.value.hue, s, b] });
+      }
+
+      function handleTouchStart(e) {
+        if (isMoved || isTouched) { return; }
+        touchStartX = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+        touchCurrentX = touchStartX;
+        touchStartY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+        touchCurrentY = touchStartY;
+        var $targetEl = $(e.target);
+        specterHandleIsTouched = $targetEl.closest('.color-picker-sb-spectrum-handle').length > 0;
+        if (!specterHandleIsTouched) {
+          specterIsTouched = $targetEl.closest('.color-picker-sb-spectrum').length > 0;
+        }
+        if (specterIsTouched) {
+          specterRect = $el.find('.color-picker-sb-spectrum')[0].getBoundingClientRect();
+          setSBFromSpecterCoords(touchStartX, touchStartY);
+        }
+        if (specterHandleIsTouched || specterIsTouched) {
+          $el.find('.color-picker-sb-spectrum-handle').addClass('color-picker-sb-spectrum-handle-pressed');
+        }
+      }
+      function handleTouchMove(e) {
+        if (!(specterIsTouched || specterHandleIsTouched)) { return; }
+        touchCurrentX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+        touchCurrentY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+        e.preventDefault();
+        if (!isMoved) {
+          // First move
+          isMoved = true;
+          if (specterHandleIsTouched) {
+            specterRect = $el.find('.color-picker-sb-spectrum')[0].getBoundingClientRect();
+          }
+        }
+        if (specterIsTouched || specterHandleIsTouched) {
+          setSBFromSpecterCoords(touchCurrentX, touchCurrentY);
+        }
+      }
+      function handleTouchEnd() {
+        isMoved = false;
+        if (specterIsTouched || specterHandleIsTouched) {
+          $el.find('.color-picker-sb-spectrum-handle').removeClass('color-picker-sb-spectrum-handle-pressed');
+        }
+        specterIsTouched = false;
+        specterHandleIsTouched = false;
+      }
+
+      function handleResize() {
+        self.modules['sb-spectrum'].update(self);
+      }
+
+      var passiveListener = app.touchEvents.start === 'touchstart' && app.support.passiveListener ? { passive: true, capture: false } : false;
+
+      self.$el.on(app.touchEvents.start, handleTouchStart, passiveListener);
+      app.on('touchmove:active', handleTouchMove);
+      app.on('touchend:passive', handleTouchEnd);
+      app.on('resize', handleResize);
+
+      self.destroySpectrumEvents = function destroySpectrumEvents() {
+        self.$el.off(app.touchEvents.start, handleTouchStart, passiveListener);
+        app.off('touchmove:active', handleTouchMove);
+        app.off('touchend:passive', handleTouchEnd);
+        app.off('resize', handleResize);
+      };
+    },
+    update: function update(self) {
+      var value = self.value;
+
+      var hsl = value.hsl;
+      var hsb = value.hsb;
+
+      var specterWidth = self.$el.find('.color-picker-sb-spectrum')[0].offsetWidth;
+      var specterHeight = self.$el.find('.color-picker-sb-spectrum')[0].offsetHeight;
+
+      self.$el.find('.color-picker-sb-spectrum')
+        .css('background-color', ("hsl(" + (hsl[0]) + ", 100%, 50%)"));
+
+      self.$el.find('.color-picker-sb-spectrum-handle')
+        .css('background-color', ("hsl(" + (hsl[0]) + ", " + (hsl[1] * 100) + "%, " + (hsl[2] * 100) + "%)"))
+        .transform(("translate(" + (specterWidth * hsb[1]) + "px, " + (specterHeight * (1 - hsb[2])) + "px)"));
+    },
+    destroy: function destroy(self) {
+      if (self.destroySpectrumEvents) { self.destroySpectrumEvents(); }
+      delete self.destroySpectrumEvents;
+    },
+  };
+
+  function svgWheelCircles() {
+    var total = 256;
+    var circles = '';
+    for (var i = total; i > 0; i -= 1) {
+      var angle = i * Math.PI / (total / 2);
+      var hue = 360 / total * i;
+      circles += "<circle cx=\"" + (150 - Math.sin(angle) * 125) + "\" cy=\"" + (150 - Math.cos(angle) * 125) + "\" r=\"25\" fill=\"hsl(" + hue + ", 100%, 50%)\"></circle>";
+    }
+    return circles;
+  }
+  var moduleWheel = {
+    render: function render() {
+      return ("\n      <div class=\"color-picker-module color-picker-module-wheel\">\n        <div class=\"color-picker-wheel\">\n          <svg viewBox=\"0 0 300 300\" width=\"300\" height=\"300\">" + (svgWheelCircles()) + "</svg>\n          <div class=\"color-picker-wheel-handle\"></div>\n          <div class=\"color-picker-sb-spectrum\" style=\"background-color: hsl(0, 100%, 50%)\">\n            <div class=\"color-picker-sb-spectrum-handle\"></div>\n          </div>\n        </div>\n      </div>\n    ");
+    },
+    init: function init(self) {
+      var app = self.app;
+
+      var isTouched;
+      var isMoved;
+      var touchStartX;
+      var touchStartY;
+      var touchCurrentX;
+      var touchCurrentY;
+
+      var wheelRect;
+      var wheelIsTouched;
+      var wheelHandleIsTouched;
+      var specterRect;
+      var specterIsTouched;
+      var specterHandleIsTouched;
+
+      var $el = self.$el;
+
+      function setHueFromWheelCoords(x, y) {
+        var wheelCenterX = wheelRect.left + wheelRect.width / 2;
+        var wheelCenterY = wheelRect.top + wheelRect.height / 2;
+        var angleRad = Math.atan2(y - wheelCenterY, x - wheelCenterX);
+        var angleDeg = angleRad * 180 / Math.PI + 90;
+        if (angleDeg < 0) { angleDeg += 360; }
+        angleDeg = 360 - angleDeg;
+        self.setValue({ hue: angleDeg });
+      }
+      function setSBFromSpecterCoords(x, y) {
+        var s = (x - specterRect.left) / specterRect.width;
+        var b = (y - specterRect.top) / specterRect.height;
+        s = Math.max(0, Math.min(1, s));
+        b = 1 - Math.max(0, Math.min(1, b));
+
+        self.setValue({ hsb: [self.value.hue, s, b] });
+      }
+
+      function handleTouchStart(e) {
+        if (isMoved || isTouched) { return; }
+        touchStartX = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
+        touchCurrentX = touchStartX;
+        touchStartY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+        touchCurrentY = touchStartY;
+        var $targetEl = $(e.target);
+        wheelHandleIsTouched = $targetEl.closest('.color-picker-wheel-handle').length > 0;
+        wheelIsTouched = $targetEl.closest('circle').length > 0;
+        specterHandleIsTouched = $targetEl.closest('.color-picker-sb-spectrum-handle').length > 0;
+        if (!specterHandleIsTouched) {
+          specterIsTouched = $targetEl.closest('.color-picker-sb-spectrum').length > 0;
+        }
+        if (wheelIsTouched) {
+          wheelRect = $el.find('.color-picker-wheel')[0].getBoundingClientRect();
+          setHueFromWheelCoords(touchStartX, touchStartY);
+        }
+        if (specterIsTouched) {
+          specterRect = $el.find('.color-picker-sb-spectrum')[0].getBoundingClientRect();
+          setSBFromSpecterCoords(touchStartX, touchStartY);
+        }
+        if (specterHandleIsTouched || specterIsTouched) {
+          $el.find('.color-picker-sb-spectrum-handle').addClass('color-picker-sb-spectrum-handle-pressed');
+        }
+      }
+      function handleTouchMove(e) {
+        if (!(wheelIsTouched || wheelHandleIsTouched) && !(specterIsTouched || specterHandleIsTouched)) { return; }
+        touchCurrentX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
+        touchCurrentY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+        e.preventDefault();
+        if (!isMoved) {
+          // First move
+          isMoved = true;
+          if (wheelHandleIsTouched) {
+            wheelRect = $el.find('.color-picker-wheel')[0].getBoundingClientRect();
+          }
+          if (specterHandleIsTouched) {
+            specterRect = $el.find('.color-picker-sb-spectrum')[0].getBoundingClientRect();
+          }
+        }
+        if (wheelIsTouched || wheelHandleIsTouched) {
+          setHueFromWheelCoords(touchCurrentX, touchCurrentY);
+        }
+        if (specterIsTouched || specterHandleIsTouched) {
+          setSBFromSpecterCoords(touchCurrentX, touchCurrentY);
+        }
+      }
+      function handleTouchEnd() {
+        isMoved = false;
+        if (specterIsTouched || specterHandleIsTouched) {
+          $el.find('.color-picker-sb-spectrum-handle').removeClass('color-picker-sb-spectrum-handle-pressed');
+        }
+        wheelIsTouched = false;
+        wheelHandleIsTouched = false;
+        specterIsTouched = false;
+        specterHandleIsTouched = false;
+      }
+
+      function handleResize() {
+        self.modules.wheel.update(self);
+      }
+
+      var passiveListener = app.touchEvents.start === 'touchstart' && app.support.passiveListener ? { passive: true, capture: false } : false;
+
+      self.$el.on(app.touchEvents.start, handleTouchStart, passiveListener);
+      app.on('touchmove:active', handleTouchMove);
+      app.on('touchend:passive', handleTouchEnd);
+      app.on('resize', handleResize);
+
+      self.destroyWheelEvents = function destroyWheelEvents() {
+        self.$el.off(app.touchEvents.start, handleTouchStart, passiveListener);
+        app.off('touchmove:active', handleTouchMove);
+        app.off('touchend:passive', handleTouchEnd);
+        app.off('resize', handleResize);
+      };
+    },
+    update: function update(self) {
+      var value = self.value;
+
+      var hsl = value.hsl;
+      var hsb = value.hsb;
+
+      var specterWidth = self.$el.find('.color-picker-sb-spectrum')[0].offsetWidth;
+      var specterHeight = self.$el.find('.color-picker-sb-spectrum')[0].offsetHeight;
+      var wheelSize = self.$el.find('.color-picker-wheel')[0].offsetWidth;
+      var wheelHalfSize = wheelSize / 2;
+      var angleRad = value.hue * Math.PI / 180;
+      var handleSize = wheelSize / 6;
+      var handleHalfSize = handleSize / 2;
+      var tX = wheelHalfSize - Math.sin(angleRad) * (wheelHalfSize - handleHalfSize) - handleHalfSize;
+      var tY = wheelHalfSize - Math.cos(angleRad) * (wheelHalfSize - handleHalfSize) - handleHalfSize;
+      self.$el.find('.color-picker-wheel-handle')
+        .css('background-color', ("hsl(" + (hsl[0]) + ", 100%, 50%)"))
+        .transform(("translate(" + tX + "px, " + tY + "px)"));
+
+      self.$el.find('.color-picker-sb-spectrum')
+        .css('background-color', ("hsl(" + (hsl[0]) + ", 100%, 50%)"));
+
+      self.$el.find('.color-picker-sb-spectrum-handle')
+        .css('background-color', ("hsl(" + (hsl[0]) + ", " + (hsl[1] * 100) + "%, " + (hsl[2] * 100) + "%)"))
+        .transform(("translate(" + (specterWidth * hsb[1]) + "px, " + (specterHeight * (1 - hsb[2])) + "px)"));
+    },
+    destroy: function destroy(self) {
+      if (self.destroyWheelEvents) { self.destroyWheelEvents(); }
+      delete self.destroyWheelEvents;
+    },
+  };
+
+  var ColorPicker = /*@__PURE__*/(function (Framework7Class) {
+    function ColorPicker(app, params) {
+      if ( params === void 0 ) params = {};
+
+      Framework7Class.call(this, params, [app]);
+      var self = this;
+
+      self.params = Utils.extend({}, app.params.colorPicker, params);
+
+      var $containerEl;
+      if (self.params.containerEl) {
+        $containerEl = $(self.params.containerEl);
+        if ($containerEl.length === 0) { return self; }
+      }
+
+      var $inputEl;
+      if (self.params.inputEl) {
+        $inputEl = $(self.params.inputEl);
+      }
+
+      var $targetEl;
+      if (self.params.targetEl) {
+        $targetEl = $(self.params.targetEl);
+      }
+
+      var view;
+      if ($inputEl) {
+        view = $inputEl.parents('.view').length && $inputEl.parents('.view')[0].f7View;
+      }
+      if (!view && $targetEl) {
+        view = $targetEl.parents('.view').length && $targetEl.parents('.view')[0].f7View;
+      }
+      if (!view) { view = app.views.main; }
+
+      Utils.extend(self, {
+        app: app,
+        $containerEl: $containerEl,
+        containerEl: $containerEl && $containerEl[0],
+        inline: $containerEl && $containerEl.length > 0,
+        $inputEl: $inputEl,
+        inputEl: $inputEl && $inputEl[0],
+        $targetEl: $targetEl,
+        targetEl: $targetEl && $targetEl[0],
+        initialized: false,
+        opened: false,
+        url: self.params.url,
+        view: view,
+        modules: {
+          'alpha-slider': moduleAlphaSlider,
+          'current-color': moduleCurrentColor,
+          'hex': moduleHex, // eslint-disable-line
+          'hsb-sliders': moduleHsbSliders,
+          'hue-slider': moduleHueSlider,
+          'palette': modulePalette, // eslint-disable-line
+          'initial-current-colors': moduleInitialCurrentColors,
+          'rgb-bars': moduleRgbBars,
+          'rgb-sliders': moduleRgbSliders,
+          'sb-spectrum': moduleSbSpectrum,
+          'wheel': moduleWheel, // eslint-disable-line
+        },
+      });
+
+      function onInputClick() {
+        self.open();
+      }
+      function onInputFocus(e) {
+        e.preventDefault();
+      }
+      function onTargetClick() {
+        self.open();
+      }
+      function onHtmlClick(e) {
+        if (self.params.openIn === 'page') { return; }
+        var $clickTargetEl = $(e.target);
+        if (!self.opened || self.closing) { return; }
+        if ($clickTargetEl.closest('[class*="backdrop"]').length) { return; }
+        if ($clickTargetEl.closest('.color-picker-popup, .color-picker-popover').length) { return; }
+        if ($inputEl && $inputEl.length > 0) {
+          if ($clickTargetEl[0] !== $inputEl[0] && $clickTargetEl.closest('.sheet-modal').length === 0) {
+            self.close();
+          }
+        } else if ($(e.target).closest('.sheet-modal').length === 0) {
+          self.close();
+        }
+      }
+
+      // Events
+      Utils.extend(self, {
+        attachInputEvents: function attachInputEvents() {
+          self.$inputEl.on('click', onInputClick);
+          if (self.params.inputReadOnly) {
+            self.$inputEl.on('focus mousedown', onInputFocus);
+          }
+        },
+        detachInputEvents: function detachInputEvents() {
+          self.$inputEl.off('click', onInputClick);
+          if (self.params.inputReadOnly) {
+            self.$inputEl.off('focus mousedown', onInputFocus);
+          }
+        },
+        attachTargetEvents: function attachTargetEvents() {
+          self.$targetEl.on('click', onTargetClick);
+        },
+        detachTargetEvents: function detachTargetEvents() {
+          self.$targetEl.off('click', onTargetClick);
+        },
+        attachHtmlEvents: function attachHtmlEvents() {
+          app.on('click', onHtmlClick);
+        },
+        detachHtmlEvents: function detachHtmlEvents() {
+          app.off('click', onHtmlClick);
+        },
+      });
+
+      self.init();
+
+      return self;
+    }
+
+    if ( Framework7Class ) ColorPicker.__proto__ = Framework7Class;
+    ColorPicker.prototype = Object.create( Framework7Class && Framework7Class.prototype );
+    ColorPicker.prototype.constructor = ColorPicker;
+
+    ColorPicker.prototype.attachEvents = function attachEvents () {
+      var self = this;
+      self.centerModules = self.centerModules.bind(self);
+      if (self.params.centerModules) {
+        self.app.on('resize', self.centerModules);
+      }
+    };
+
+    ColorPicker.prototype.detachEvents = function detachEvents () {
+      var self = this;
+      if (self.params.centerModules) {
+        self.app.off('resize', self.centerModules);
+      }
+    };
+
+    ColorPicker.prototype.centerModules = function centerModules () {
+      var self = this;
+      if (!self.opened || !self.$el || self.inline) { return; }
+      var $pageContentEl = self.$el.find('.page-content');
+      if (!$pageContentEl.length) { return; }
+      var ref = $pageContentEl[0];
+      var scrollHeight = ref.scrollHeight;
+      var offsetHeight = ref.offsetHeight;
+      if (scrollHeight <= offsetHeight) {
+        $pageContentEl.addClass('justify-content-center');
+      } else {
+        $pageContentEl.removeClass('justify-content-center');
+      }
+    };
+
+    ColorPicker.prototype.initInput = function initInput () {
+      var self = this;
+      if (!self.$inputEl) { return; }
+      if (self.params.inputReadOnly) { self.$inputEl.prop('readOnly', true); }
+    };
+
+    ColorPicker.prototype.getModalType = function getModalType () {
+      var self = this;
+      var app = self.app;
+      var modal = self.modal;
+      var params = self.params;
+      var openIn = params.openIn;
+      var openInPhone = params.openInPhone;
+      if (modal && modal.type) { return modal.type; }
+      if (openIn !== 'auto') { return openIn; }
+      if (self.inline) { return null; }
+      if (app.device.ios) {
+        return app.device.ipad ? 'popover' : openInPhone;
+      }
+      if (app.width >= 768 || (app.device.desktop && app.theme === 'aurora')) {
+        return 'popover';
+      }
+
+      return openInPhone;
+    };
+
+    ColorPicker.prototype.formatValue = function formatValue () {
+      var self = this;
+      var value = self.value;
+      if (self.params.formatValue) {
+        return self.params.formatValue.call(self, value);
+      }
+      return value.hex;
+    };
+
+    // eslint-disable-next-line
+    ColorPicker.prototype.normalizeHsValues = function normalizeHsValues (arr) {
+      return [
+        Math.floor(arr[0] * 10) / 10,
+        Math.floor(arr[1] * 1000) / 1000,
+        Math.floor(arr[2] * 1000) / 1000 ];
+    };
+
+    ColorPicker.prototype.setValue = function setValue (value, updateModules) {
+      if ( value === void 0 ) value = {};
+      if ( updateModules === void 0 ) updateModules = true;
+
+      var self = this;
+      if (typeof value === 'undefined') { return; }
+
+      var ref = (self.value || {});
+      var hex = ref.hex;
+      var rgb = ref.rgb;
+      var hsl = ref.hsl;
+      var hsb = ref.hsb;
+      var alpha = ref.alpha; if ( alpha === void 0 ) alpha = 1;
+      var hue = ref.hue;
+      var rgba = ref.rgba;
+      var hsla = ref.hsla;
+
+      var needChangeEvent = self.value || (!self.value && !self.params.value);
+      var valueChanged;
+      Object.keys(value).forEach(function (k) {
+        if (!self.value || typeof self.value[k] === 'undefined') {
+          valueChanged = true;
+          return;
+        }
+        var v = value[k];
+        if (Array.isArray(v)) {
+          v.forEach(function (subV, subIndex) {
+            if (subV !== self.value[k][subIndex]) {
+              valueChanged = true;
+            }
+          });
+        } else if (v !== self.value[k]) {
+          valueChanged = true;
+        }
+      });
+      if (!valueChanged) { return; }
+
+      if (value.rgb || value.rgba) {
+        var ref$1 = (value.rgb || value.rgba);
+        var r = ref$1[0];
+        var g = ref$1[1];
+        var b = ref$1[2];
+        var a = ref$1[3]; if ( a === void 0 ) a = alpha;
+        rgb = [r, g, b];
+        hex = Utils.colorRgbToHex.apply(Utils, rgb);
+        hsl = Utils.colorRgbToHsl.apply(Utils, rgb);
+        hsb = Utils.colorHslToHsb.apply(Utils, hsl);
+        hsl = self.normalizeHsValues(hsl);
+        hsb = self.normalizeHsValues(hsb);
+        hue = hsb[0];
+        alpha = a;
+        rgba = [rgb[0], rgb[1], rgb[2], a];
+        hsla = [hsl[0], hsl[1], hsl[2], a];
+      }
+
+      if (value.hsl || value.hsla) {
+        var ref$2 = (value.hsl || value.hsla);
+        var h = ref$2[0];
+        var s = ref$2[1];
+        var l = ref$2[2];
+        var a$1 = ref$2[3]; if ( a$1 === void 0 ) a$1 = alpha;
+        hsl = [h, s, l];
+        rgb = Utils.colorHslToRgb.apply(Utils, hsl);
+        hex = Utils.colorRgbToHex.apply(Utils, rgb);
+        hsb = Utils.colorHslToHsb.apply(Utils, hsl);
+        hsl = self.normalizeHsValues(hsl);
+        hsb = self.normalizeHsValues(hsb);
+        hue = hsb[0];
+        alpha = a$1;
+        rgba = [rgb[0], rgb[1], rgb[2], a$1];
+        hsla = [hsl[0], hsl[1], hsl[2], a$1];
+      }
+
+      if (value.hsb) {
+        var ref$3 = value.hsb;
+        var h$1 = ref$3[0];
+        var s$1 = ref$3[1];
+        var b$1 = ref$3[2];
+        var a$2 = ref$3[3]; if ( a$2 === void 0 ) a$2 = alpha;
+        hsb = [h$1, s$1, b$1];
+        hsl = Utils.colorHsbToHsl.apply(Utils, hsb);
+        rgb = Utils.colorHslToRgb.apply(Utils, hsl);
+        hex = Utils.colorRgbToHex.apply(Utils, rgb);
+        hsl = self.normalizeHsValues(hsl);
+        hsb = self.normalizeHsValues(hsb);
+        hue = hsb[0];
+        alpha = a$2;
+        rgba = [rgb[0], rgb[1], rgb[2], a$2];
+        hsla = [hsl[0], hsl[1], hsl[2], a$2];
+      }
+
+      if (value.hex) {
+        rgb = Utils.colorHexToRgb(value.hex);
+        hex = Utils.colorRgbToHex.apply(Utils, rgb);
+        hsl = Utils.colorRgbToHsl.apply(Utils, rgb);
+        hsb = Utils.colorHslToHsb.apply(Utils, hsl);
+        hsl = self.normalizeHsValues(hsl);
+        hsb = self.normalizeHsValues(hsb);
+        hue = hsb[0];
+        rgba = [rgb[0], rgb[1], rgb[2], alpha];
+        hsla = [hsl[0], hsl[1], hsl[2], alpha];
+      }
+
+      if (typeof value.alpha !== 'undefined') {
+        alpha = value.alpha;
+        if (typeof rgb !== 'undefined') {
+          rgba = [rgb[0], rgb[1], rgb[2], alpha];
+        }
+        if (typeof hsl !== 'undefined') {
+          hsla = [hsl[0], hsl[1], hsl[2], alpha];
+        }
+      }
+
+      if (typeof value.hue !== 'undefined') {
+        var h$2 = hsl[0];
+        var s$2 = hsl[1];
+        var l$1 = hsl[2]; // eslint-disable-line
+        hsl = [value.hue, s$2, l$1];
+        hsb = Utils.colorHslToHsb.apply(Utils, hsl);
+        rgb = Utils.colorHslToRgb.apply(Utils, hsl);
+        hex = Utils.colorRgbToHex.apply(Utils, rgb);
+        hsl = self.normalizeHsValues(hsl);
+        hsb = self.normalizeHsValues(hsb);
+        hue = hsb[0];
+        rgba = [rgb[0], rgb[1], rgb[2], alpha];
+        hsla = [hsl[0], hsl[1], hsl[2], alpha];
+      }
+      self.value = {
+        hex: hex,
+        alpha: alpha,
+        hue: hue,
+        rgb: rgb,
+        hsl: hsl,
+        hsb: hsb,
+        rgba: rgba,
+        hsla: hsla,
+      };
+      if (!self.initialValue) { self.initialValue = Utils.extend({}, self.value); }
+      self.updateValue(needChangeEvent);
+      if (self.opened && updateModules) {
+        self.updateModules();
+      }
+    };
+
+    ColorPicker.prototype.getValue = function getValue () {
+      var self = this;
+      return self.value;
+    };
+
+    ColorPicker.prototype.updateValue = function updateValue (fireEvents) {
+      if ( fireEvents === void 0 ) fireEvents = true;
+
+      var self = this;
+      var $inputEl = self.$inputEl;
+      var value = self.value;
+      var $targetEl = self.$targetEl;
+      if ($targetEl && self.params.targetElSetBackgroundColor) {
+        var rgba = value.rgba;
+        $targetEl.css('background-color', ("rgba(" + (rgba.join(', ')) + ")"));
+      }
+      if (fireEvents) {
+        self.emit('local::change colorPickerChange', self, value);
+      }
+
+      if ($inputEl && $inputEl.length) {
+        var inputValue = self.formatValue(value);
+        if ($inputEl && $inputEl.length) {
+          $inputEl.val(inputValue);
+          if (fireEvents) {
+            $inputEl.trigger('change');
+          }
+        }
+      }
+    };
+
+    ColorPicker.prototype.updateModules = function updateModules () {
+      var self = this;
+      var modules = self.modules;
+      self.params.modules.forEach(function (m) {
+        if (typeof m === 'string' && modules[m] && modules[m].update) {
+          modules[m].update(self);
+        } else if (m && m.update) {
+          m.update(self);
+        }
+      });
+    };
+
+    ColorPicker.prototype.update = function update () {
+      var self = this;
+      self.updateModules();
+    };
+
+    ColorPicker.prototype.renderPicker = function renderPicker () {
+      var self = this;
+      var params = self.params;
+      var modules = self.modules;
+      var html = '';
+
+      params.modules.forEach(function (m) {
+        if (typeof m === 'string' && modules[m] && modules[m].render) {
+          html += modules[m].render(self);
+        } else if (m && m.render) {
+          html += m.render(self);
+        }
+      });
+
+      return html;
+    };
+
+    ColorPicker.prototype.renderNavbar = function renderNavbar () {
+      var self = this;
+      if (self.params.renderNavbar) {
+        return self.params.renderNavbar.call(self, self);
+      }
+      var ref = self.params;
+      var openIn = ref.openIn;
+      var navbarTitleText = ref.navbarTitleText;
+      var navbarBackLinkText = ref.navbarBackLinkText;
+      var navbarCloseText = ref.navbarCloseText;
+      return ("\n    <div class=\"navbar\">\n      <div class=\"navbar-inner sliding\">\n        " + (openIn === 'page' ? ("\n        <div class=\"left\">\n          <a class=\"link back\" href=\"#\">\n            <i class=\"icon icon-back\"></i>\n            <span class=\"if-not-md\">" + navbarBackLinkText + "</span>\n          </a>\n        </div>\n        ") : '') + "\n        <div class=\"title\">" + navbarTitleText + "</div>\n        " + (openIn !== 'page' ? ("\n        <div class=\"right\">\n          <a href=\"#\" class=\"link popup-close\" data-popup=\".color-picker-popup\">" + navbarCloseText + "</a>\n        </div>\n        ") : '') + "\n      </div>\n    </div>\n  ").trim();
+    };
+
+    ColorPicker.prototype.renderToolbar = function renderToolbar () {
+      var self = this;
+      if (self.params.renderToolbar) {
+        return self.params.renderToolbar.call(self, self);
+      }
+      return ("\n    <div class=\"toolbar toolbar-top no-shadow\">\n      <div class=\"toolbar-inner\">\n        <div class=\"left\"></div>\n        <div class=\"right\">\n          <a href=\"#\" class=\"link sheet-close popover-close\" data-sheet=\".color-picker-sheet-modal\" data-popover=\".color-picker-popover\">" + (self.params.toolbarCloseText) + "</a>\n        </div>\n      </div>\n    </div>\n  ").trim();
+    };
+
+    ColorPicker.prototype.renderInline = function renderInline () {
+      var self = this;
+      var ref = self.params;
+      var cssClass = ref.cssClass;
+      var groupedModules = ref.groupedModules;
+      var inlineHtml = ("\n    <div class=\"color-picker color-picker-inline " + (groupedModules ? 'color-picker-grouped-modules' : '') + " " + (cssClass || '') + "\">\n      " + (self.renderPicker()) + "\n    </div>\n  ").trim();
+
+      return inlineHtml;
+    };
+
+    ColorPicker.prototype.renderSheet = function renderSheet () {
+      var self = this;
+      var ref = self.params;
+      var cssClass = ref.cssClass;
+      var toolbarSheet = ref.toolbarSheet;
+      var groupedModules = ref.groupedModules;
+      var sheetHtml = ("\n    <div class=\"sheet-modal color-picker color-picker-sheet-modal " + (groupedModules ? 'color-picker-grouped-modules' : '') + " " + (cssClass || '') + "\">\n      " + (toolbarSheet ? self.renderToolbar() : '') + "\n      <div class=\"sheet-modal-inner\">\n        <div class=\"page-content\">\n          " + (self.renderPicker()) + "\n        </div>\n      </div>\n    </div>\n  ").trim();
+
+      return sheetHtml;
+    };
+
+    ColorPicker.prototype.renderPopover = function renderPopover () {
+      var self = this;
+      var ref = self.params;
+      var cssClass = ref.cssClass;
+      var toolbarPopover = ref.toolbarPopover;
+      var groupedModules = ref.groupedModules;
+      var popoverHtml = ("\n    <div class=\"popover color-picker-popover " + (cssClass || '') + "\">\n      <div class=\"popover-inner\">\n        <div class=\"color-picker " + (groupedModules ? 'color-picker-grouped-modules' : '') + "\">\n          " + (toolbarPopover ? self.renderToolbar() : '') + "\n          <div class=\"page-content\">\n            " + (self.renderPicker()) + "\n          </div>\n        </div>\n      </div>\n    </div>\n  ").trim();
+
+      return popoverHtml;
+    };
+
+    ColorPicker.prototype.renderPopup = function renderPopup () {
+      var self = this;
+      var ref = self.params;
+      var cssClass = ref.cssClass;
+      var navbarPopup = ref.navbarPopup;
+      var groupedModules = ref.groupedModules;
+      var popupHtml = ("\n    <div class=\"popup color-picker-popup " + (cssClass || '') + "\">\n      <div class=\"page\">\n        " + (navbarPopup ? self.renderNavbar() : '') + "\n        <div class=\"color-picker " + (groupedModules ? 'color-picker-grouped-modules' : '') + "\">\n          <div class=\"page-content\">\n            " + (self.renderPicker()) + "\n          </div>\n        </div>\n      </div>\n    </div>\n  ").trim();
+
+      return popupHtml;
+    };
+
+    ColorPicker.prototype.renderPage = function renderPage () {
+      var self = this;
+      var ref = self.params;
+      var cssClass = ref.cssClass;
+      var groupedModules = ref.groupedModules;
+      var pageHtml = ("\n    <div class=\"page color-picker-page " + (cssClass || '') + "\" data-name=\"color-picker-page\">\n      " + (self.renderNavbar()) + "\n      <div class=\"color-picker " + (groupedModules ? 'color-picker-grouped-modules' : '') + "\">\n        <div class=\"page-content\">\n          " + (self.renderPicker()) + "\n        </div>\n      </div>\n    </div>\n  ").trim();
+      return pageHtml;
+    };
+
+    // eslint-disable-next-line
+    ColorPicker.prototype.render = function render () {
+      var self = this;
+      var params = self.params;
+      if (params.render) { return params.render.call(self); }
+      if (self.inline) { return self.renderInline(); }
+      if (params.openIn === 'page') {
+        return self.renderPage();
+      }
+
+      var modalType = self.getModalType();
+      if (modalType === 'popover') { return self.renderPopover(); }
+      if (modalType === 'sheet') { return self.renderSheet(); }
+      if (modalType === 'popup') { return self.renderPopup(); }
+    };
+
+    ColorPicker.prototype.onOpen = function onOpen () {
+      var self = this;
+      var initialized = self.initialized;
+      var $el = self.$el;
+      var app = self.app;
+      var $inputEl = self.$inputEl;
+      var inline = self.inline;
+      var value = self.value;
+      var params = self.params;
+      var modules = self.modules;
+      self.closing = false;
+      self.opened = true;
+      self.opening = true;
+
+      // Init main events
+      self.attachEvents();
+
+      params.modules.forEach(function (m) {
+        if (typeof m === 'string' && modules[m] && modules[m].render) {
+          modules[m].init(self);
+        } else if (m && m.init) {
+          m.init(self);
+        }
+      });
+
+      var updateValue = !value && params.value;
+
+      // Set value
+      if (!initialized) {
+        if (value) { self.setValue(value); }
+        else if (params.value) {
+          self.setValue(params.value, false);
+        } else if (!params.value) {
+          self.setValue({ hex: '#ff0000' }, false);
+        }
+      } else if (value) {
+        self.initialValue = Utils.extend({}, value);
+        self.setValue(value, false);
+      }
+
+      // Update input value
+      if (updateValue) { self.updateValue(); }
+      self.updateModules();
+
+      // Center modules
+      if (params.centerModules) {
+        self.centerModules();
+      }
+
+      // Extra focus
+      if (!inline && $inputEl && $inputEl.length && app.theme === 'md') {
+        $inputEl.trigger('focus');
+      }
+
+      self.initialized = true;
+
+      // Trigger events
+      if ($el) {
+        $el.trigger('colorpicker:open', self);
+      }
+      if ($inputEl) {
+        $inputEl.trigger('colorpicker:open', self);
+      }
+      self.emit('local::open colorPickerOpen', self);
+    };
+
+    ColorPicker.prototype.onOpened = function onOpened () {
+      var self = this;
+      self.opening = false;
+      if (self.$el) {
+        self.$el.trigger('colorpicker:opened', self);
+      }
+      if (self.$inputEl) {
+        self.$inputEl.trigger('colorpicker:opened', self);
+      }
+      self.emit('local::opened colorPickerOpened', self);
+    };
+
+    ColorPicker.prototype.onClose = function onClose () {
+      var self = this;
+      var app = self.app;
+      var params = self.params;
+      var modules = self.modules;
+      self.opening = false;
+      self.closing = true;
+
+      // Detach events
+      self.detachEvents();
+
+      if (self.$inputEl && app.theme === 'md') {
+        self.$inputEl.trigger('blur');
+      }
+      params.modules.forEach(function (m) {
+        if (typeof m === 'string' && modules[m] && modules[m].update) {
+          modules[m].destroy(self);
+        } else if (m && m.destroy) {
+          m.destroy(self);
+        }
+      });
+
+      if (self.$el) {
+        self.$el.trigger('colorpicker:close', self);
+      }
+      if (self.$inputEl) {
+        self.$inputEl.trigger('colorpicker:close', self);
+      }
+      self.emit('local::close colorPickerClose', self);
+    };
+
+    ColorPicker.prototype.onClosed = function onClosed () {
+      var self = this;
+      self.opened = false;
+      self.closing = false;
+
+      if (!self.inline) {
+        Utils.nextTick(function () {
+          if (self.modal && self.modal.el && self.modal.destroy) {
+            if (!self.params.routableModals) {
+              self.modal.destroy();
+            }
+          }
+          delete self.modal;
+        });
+      }
+      if (self.$el) {
+        self.$el.trigger('colorpicker:closed', self);
+      }
+      if (self.$inputEl) {
+        self.$inputEl.trigger('colorpicker:closed', self);
+      }
+      self.emit('local::closed colorPickerClosed', self);
+    };
+
+    ColorPicker.prototype.open = function open () {
+      var obj;
+
+      var self = this;
+      var app = self.app;
+      var opened = self.opened;
+      var inline = self.inline;
+      var $inputEl = self.$inputEl;
+      var $targetEl = self.$targetEl;
+      var params = self.params;
+      if (opened) { return; }
+
+      if (inline) {
+        self.$el = $(self.render());
+        self.$el[0].f7ColorPicker = self;
+        self.$containerEl.append(self.$el);
+        self.onOpen();
+        self.onOpened();
+        return;
+      }
+
+      var colorPickerContent = self.render();
+
+      if (params.openIn === 'page') {
+        self.view.router.navigate({
+          url: self.url,
+          route: {
+            content: colorPickerContent,
+            path: self.url,
+            on: {
+              pageBeforeIn: function pageBeforeIn(e, page) {
+                self.$el = page.$el.find('.color-picker');
+                self.$el[0].f7ColorPicker = self;
+                self.onOpen();
+              },
+              pageAfterIn: function pageAfterIn() {
+                self.onOpened();
+              },
+              pageBeforeOut: function pageBeforeOut() {
+                self.onClose();
+              },
+              pageAfterOut: function pageAfterOut() {
+                self.onClosed();
+                if (self.$el && self.$el[0]) {
+                  self.$el[0].f7ColorPicker = null;
+                  delete self.$el[0].f7ColorPicker;
+                }
+              },
+            },
+          },
+        });
+      } else {
+        var modalType = self.getModalType();
+        var backdrop = params.backdrop;
+        if (backdrop === null || typeof backdrop === 'undefined') {
+          if (modalType === 'popover' && app.params.popover.backdrop !== false) { backdrop = true; }
+          if (modalType === 'popup') { backdrop = true; }
+        }
+        var modalParams = {
+          targetEl: ($targetEl || $inputEl),
+          scrollToEl: params.scrollToInput ? ($targetEl || $inputEl) : undefined,
+          content: colorPickerContent,
+          backdrop: backdrop,
+          closeByBackdropClick: params.closeByBackdropClick,
+          on: {
+            open: function open() {
+              var modal = this;
+              self.modal = modal;
+              self.$el = modalType === 'popover' || modalType === 'popup' ? modal.$el.find('.color-picker') : modal.$el;
+              self.$el[0].f7ColorPicker = self;
+              self.onOpen();
+            },
+            opened: function opened() { self.onOpened(); },
+            close: function close() { self.onClose(); },
+            closed: function closed() {
+              self.onClosed();
+              if (self.$el && self.$el[0]) {
+                self.$el[0].f7ColorPicker = null;
+                delete self.$el[0].f7ColorPicker;
+              }
+            },
+          },
+        };
+        if (params.routableModals) {
+          self.view.router.navigate({
+            url: self.url,
+            route: ( obj = {
+              path: self.url
+            }, obj[modalType] = modalParams, obj ),
+          });
+        } else {
+          self.modal = app[modalType].create(modalParams);
+          self.modal.open();
+        }
+      }
+    };
+
+    ColorPicker.prototype.close = function close () {
+      var self = this;
+      var opened = self.opened;
+      var inline = self.inline;
+      if (!opened) { return; }
+      if (inline) {
+        self.onClose();
+        self.onClosed();
+        return;
+      }
+      if (self.params.routableModals) {
+        self.view.router.back();
+      } else {
+        self.modal.close();
+      }
+    };
+
+    ColorPicker.prototype.init = function init () {
+      var self = this;
+
+      self.initInput();
+
+      if (self.inline) {
+        self.open();
+        self.emit('local::init colorPickerInit', self);
+        return;
+      }
+
+      if (!self.initialized && self.params.value) {
+        self.setValue(self.params.value);
+      }
+
+      // Attach input Events
+      if (self.$inputEl) {
+        self.attachInputEvents();
+      }
+      if (self.$targetEl) {
+        self.attachTargetEvents();
+      }
+      if (self.params.closeByOutsideClick) {
+        self.attachHtmlEvents();
+      }
+      self.emit('local::init colorPickerInit', self);
+    };
+
+    ColorPicker.prototype.destroy = function destroy () {
+      var self = this;
+      if (self.destroyed) { return; }
+      var $el = self.$el;
+      self.emit('local::beforeDestroy colorPickerBeforeDestroy', self);
+      if ($el) { $el.trigger('colorpicker:beforedestroy', self); }
+
+      self.close();
+
+      // Detach Events
+      self.detachEvents();
+      if (self.$inputEl) {
+        self.detachInputEvents();
+      }
+      if (self.$targetEl) {
+        self.detachTargetEvents();
+      }
+      if (self.params.closeByOutsideClick) {
+        self.detachHtmlEvents();
+      }
+
+      if ($el && $el.length) { delete self.$el[0].f7ColorPicker; }
+      Utils.deleteProps(self);
+      self.destroyed = true;
+    };
+
+    return ColorPicker;
+  }(Framework7Class));
+
+  var ColorPicker$1 = {
+    name: 'colorPicker',
+    static: {
+      ColorPicker: ColorPicker,
+    },
+    create: function create() {
+      var app = this;
+      app.colorPicker = ConstructorMethods({
+        defaultSelector: '.color-picker',
+        constructor: ColorPicker,
+        app: app,
+        domProp: 'f7ColorPicker',
+      });
+      app.colorPicker.close = function close(el) {
+        if ( el === void 0 ) el = '.color-picker';
+
+        var $el = $(el);
+        if ($el.length === 0) { return; }
+        var colorPicker = $el[0].f7ColorPicker;
+        if (!colorPicker || (colorPicker && !colorPicker.opened)) { return; }
+        colorPicker.close();
+      };
+    },
+    params: {
+      colorPicker: {
+        // Color picker settings
+        value: null,
+        modules: [
+          'wheel' ],
+        palette: [
+          ['#FFEBEE', '#FFCDD2', '#EF9A9A', '#E57373', '#EF5350', '#F44336', '#E53935', '#D32F2F', '#C62828', '#B71C1C'],
+          ['#F3E5F5', '#E1BEE7', '#CE93D8', '#BA68C8', '#AB47BC', '#9C27B0', '#8E24AA', '#7B1FA2', '#6A1B9A', '#4A148C'],
+          ['#E8EAF6', '#C5CAE9', '#9FA8DA', '#7986CB', '#5C6BC0', '#3F51B5', '#3949AB', '#303F9F', '#283593', '#1A237E'],
+          ['#E1F5FE', '#B3E5FC', '#81D4FA', '#4FC3F7', '#29B6F6', '#03A9F4', '#039BE5', '#0288D1', '#0277BD', '#01579B'],
+          ['#E0F2F1', '#B2DFDB', '#80CBC4', '#4DB6AC', '#26A69A', '#009688', '#00897B', '#00796B', '#00695C', '#004D40'],
+          ['#F1F8E9', '#DCEDC8', '#C5E1A5', '#AED581', '#9CCC65', '#8BC34A', '#7CB342', '#689F38', '#558B2F', '#33691E'],
+          ['#FFFDE7', '#FFF9C4', '#FFF59D', '#FFF176', '#FFEE58', '#FFEB3B', '#FDD835', '#FBC02D', '#F9A825', '#F57F17'],
+          ['#FFF3E0', '#FFE0B2', '#FFCC80', '#FFB74D', '#FFA726', '#FF9800', '#FB8C00', '#F57C00', '#EF6C00', '#E65100'] ],
+        groupedModules: false,
+        centerModules: true,
+
+        sliderLabel: false,
+        sliderValue: false,
+        sliderValueEdiable: false,
+
+        barLabel: false,
+        barValue: false,
+        barValueEdiable: false,
+
+        hexLabel: false,
+        hexValueEditable: false,
+
+        redLabelText: 'R',
+        greenLabelText: 'G',
+        blueLabelText: 'B',
+        hueLabelText: 'H',
+        saturationLabelText: 'S',
+        brightnessLabelText: 'B',
+        hexLabelText: 'HEX',
+        alphaLabelText: 'A',
+
+        // Common opener settings
+        containerEl: null,
+        openIn: 'popover', // or 'popover' or 'sheet' or 'popup' or 'page' or 'auto'
+        openInPhone: 'popup', // or 'popover' or 'sheet' or 'popup' or 'page'
+        formatValue: null,
+        targetEl: null,
+        targetElSetBackgroundColor: false,
+        inputEl: null,
+        inputReadOnly: true,
+        closeByOutsideClick: true,
+        scrollToInput: true,
+        toolbarSheet: true,
+        toolbarPopover: false,
+        toolbarCloseText: 'Done',
+        navbarPopup: true,
+        navbarCloseText: 'Done',
+        navbarTitleText: 'Color',
+        navbarBackLinkText: 'Back',
+        cssClass: null,
+        routableModals: true,
+        view: null,
+        url: 'color/',
+        backdrop: null,
+        closeByBackdropClick: true,
+        // Render functions
+        renderToolbar: null,
+        renderNavbar: null,
+        renderInline: null,
+        renderPopover: null,
+        renderSheet: null,
+        renderPopup: null,
+        render: null,
+      },
+    },
+  };
+
   var ViAd = /*@__PURE__*/(function (Framework7Class) {
     function ViAd(app, params) {
       if ( params === void 0 ) params = {};
@@ -36451,6 +38711,7 @@
     Gauge$1,
     Skeleton,
     Menu$1,
+    ColorPicker$1,
     Vi,
     Elevation,
     Typography

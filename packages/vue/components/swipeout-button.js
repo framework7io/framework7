@@ -7,6 +7,7 @@ export default {
   props: Object.assign({
     id: [String, Number],
     text: String,
+    confirmTitle: String,
     confirmText: String,
     overswipe: Boolean,
     close: Boolean,
@@ -25,6 +26,7 @@ export default {
       delete: deleteProp,
       close,
       href,
+      confirmTitle,
       confirmText,
       text
     } = props;
@@ -40,7 +42,8 @@ export default {
       attrs: {
         href: href || '#',
         id: id,
-        'data-confirm': confirmText || undefined
+        'data-confirm': confirmText || undefined,
+        'data-confirm-title': confirmTitle || undefined
       }
     }, [this.$slots['default'] || [text]]);
   },

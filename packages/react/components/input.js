@@ -173,11 +173,11 @@ class F7Input extends React.Component {
     let inputEl;
 
     const createInput = (InputTag, children) => {
-      const needsValue = type !== 'file' && type !== 'datepicker';
+      const needsValue = type !== 'file' && type !== 'datepicker' && type !== 'colorpicker';
       const needsType = InputTag === 'input';
       let inputType = type;
 
-      if (inputType === 'datepicker') {
+      if (inputType === 'datepicker' || inputType === 'colorpicker') {
         inputType = 'text';
       }
 
@@ -197,7 +197,7 @@ class F7Input extends React.Component {
 
       const valueProps = {};
 
-      if (type !== 'datepicker') {
+      if (type !== 'datepicker' && type !== 'colorpicker') {
         if ('value' in props) valueProps.value = inputValue;
         if ('defaultValue' in props) valueProps.defaultValue = defaultValue;
       }
@@ -336,7 +336,12 @@ class F7Input extends React.Component {
       self.f7Calendar.destroy();
     }
 
+    if (self.f7ColorPicker && self.f7ColorPicker.destroy) {
+      self.f7ColorPicker.destroy();
+    }
+
     delete self.f7Calendar;
+    delete self.f7ColorPicker;
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -351,6 +356,10 @@ class F7Input extends React.Component {
 
       if (self.f7Calendar) {
         self.f7Calendar.setValue(self.props.value);
+      }
+
+      if (self.f7ColorPicker) {
+        self.f7ColorPicker.setValue(self.props.value);
       }
     });
 
@@ -390,7 +399,8 @@ class F7Input extends React.Component {
         clearButton,
         value,
         defaultValue,
-        calendarParams
+        calendarParams,
+        colorPickerParams
       } = self.props;
       if (type === 'range' || type === 'toggle') return;
       const inputEl = self.refs.inputEl;
@@ -417,6 +427,19 @@ class F7Input extends React.Component {
 
           }
         }, calendarParams || {}));
+      }
+
+      if (type === 'colorpicker') {
+        self.f7ColorPicker = f7.colorPicker.create(Object.assign({
+          inputEl,
+          value,
+          on: {
+            change(colorPicker, colorPickerValue) {
+              self.dispatchEvent('colorpicker:change colorPickerChange', colorPickerValue);
+            }
+
+          }
+        }, colorPickerParams || {}));
       }
 
       f7.input.checkEmptyState(inputEl);
@@ -452,7 +475,7 @@ class F7Input extends React.Component {
 __reactComponentSetProps(F7Input, Object.assign({
   type: String,
   name: String,
-  value: [String, Number, Array, Date],
+  value: [String, Number, Array, Date, Object],
   defaultValue: [String, Number, Array],
   placeholder: String,
   id: [String, Number],
@@ -499,7 +522,8 @@ __reactComponentSetProps(F7Input, Object.assign({
     type: [String, Boolean],
     default: 'auto'
   },
-  calendarParams: Object
+  calendarParams: Object,
+  colorPickerParams: Object
 }, Mixins.colorProps));
 
 F7Input.displayName = 'f7-input';

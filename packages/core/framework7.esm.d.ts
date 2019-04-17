@@ -31,6 +31,7 @@ import {Calendar as CalendarNamespace} from './components/calendar/calendar';
 import {Card as CardNamespace} from './components/card/card';
 import {Checkbox as CheckboxNamespace} from './components/checkbox/checkbox';
 import {Chip as ChipNamespace} from './components/chip/chip';
+import {ColorPicker as ColorPickerNamespace} from './components/color-picker/color-picker';
 import {ContactsList as ContactsListNamespace} from './components/contacts-list/contacts-list';
 import {DataTable as DataTableNamespace} from './components/data-table/data-table';
 import {Dialog as DialogNamespace} from './components/dialog/dialog';
@@ -147,6 +148,9 @@ declare module './components/app/app-class' {
   interface Framework7Class<Events> extends ChipNamespace.AppMethods{}
   interface Framework7Params extends ChipNamespace.AppParams{}
   interface Framework7Events extends ChipNamespace.AppEvents{}
+  interface Framework7Class<Events> extends ColorPickerNamespace.AppMethods{}
+  interface Framework7Params extends ColorPickerNamespace.AppParams{}
+  interface Framework7Events extends ColorPickerNamespace.AppEvents{}
   interface Framework7Class<Events> extends ContactsListNamespace.AppMethods{}
   interface Framework7Params extends ContactsListNamespace.AppParams{}
   interface Framework7Events extends ContactsListNamespace.AppEvents{}

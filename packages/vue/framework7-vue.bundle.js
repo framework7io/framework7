@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.2.2
+ * Framework7 Vue 4.3.0
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 4, 2019
+ * Released on: April 17, 2019
  */
 
 (function (global, factory) {
@@ -769,8 +769,11 @@
       convertToPopover: Boolean,
       forceToPopover: Boolean,
       target: [String, Object],
+      backdrop: Boolean,
+      backdropEl: [String, Object, window.HTMLElement],
       closeByBackdropClick: Boolean,
-      closeByOutsideClick: Boolean
+      closeByOutsideClick: Boolean,
+      closeOnEscape: Boolean
     }, Mixins.colorProps),
 
     render: function render() {
@@ -827,6 +830,9 @@
       var opened = props.opened;
       var closeByBackdropClick = props.closeByBackdropClick;
       var closeByOutsideClick = props.closeByOutsideClick;
+      var closeOnEscape = props.closeOnEscape;
+      var backdrop = props.backdrop;
+      var backdropEl = props.backdropEl;
       var actionsParams = {
         el: self.$refs.el,
         grid: grid
@@ -835,8 +841,11 @@
       {
         if (typeof self.$options.propsData.convertToPopover !== 'undefined') { actionsParams.convertToPopover = convertToPopover; }
         if (typeof self.$options.propsData.forceToPopover !== 'undefined') { actionsParams.forceToPopover = forceToPopover; }
+        if (typeof self.$options.propsData.backdrop !== 'undefined') { actionsParams.backdrop = backdrop; }
+        if (typeof self.$options.propsData.backdropEl !== 'undefined') { actionsParams.backdropEl = backdropEl; }
         if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') { actionsParams.closeByBackdropClick = closeByBackdropClick; }
         if (typeof self.$options.propsData.closeByOutsideClick !== 'undefined') { actionsParams.closeByOutsideClick = closeByOutsideClick; }
+        if (typeof self.$options.propsData.closeOnEscape !== 'undefined') { actionsParams.closeOnEscape = closeOnEscape; }
       }
       self.$f7ready(function () {
         self.f7Actions = self.$f7.actions.create(actionsParams);
@@ -3208,7 +3217,7 @@
     props: Object.assign({
       type: String,
       name: String,
-      value: [String, Number, Array, Date],
+      value: [String, Number, Array, Date, Object],
       defaultValue: [String, Number, Array],
       placeholder: String,
       id: [String, Number],
@@ -3253,7 +3262,8 @@
         type: [String, Boolean],
         default: 'auto'
       },
-      calendarParams: Object
+      calendarParams: Object,
+      colorPickerParams: Object
     }, Mixins.colorProps),
 
     data: function data() {
@@ -3323,11 +3333,11 @@
       var inputEl;
 
       var createInput = function (InputTag, children) {
-        var needsValue = type !== 'file' && type !== 'datepicker';
+        var needsValue = type !== 'file' && type !== 'datepicker' && type !== 'colorpicker';
         var needsType = InputTag === 'input';
         var inputType = type;
 
-        if (inputType === 'datepicker') {
+        if (inputType === 'datepicker' || inputType === 'colorpicker') {
           inputType = 'text';
         }
 
@@ -3347,7 +3357,7 @@
 
         var valueProps = {};
 
-        if (type !== 'datepicker') {
+        if (type !== 'datepicker' && type !== 'colorpicker') {
           if ('value' in props) { valueProps.value = inputValue; }
           if ('defaultValue' in props) { valueProps.defaultValue = defaultValue; }
         }
@@ -3484,6 +3494,10 @@
         if (self.f7Calendar) {
           self.f7Calendar.setValue(self.props.value);
         }
+
+        if (self.f7ColorPicker) {
+          self.f7ColorPicker.setValue(self.props.value);
+        }
       }
     },
 
@@ -3503,6 +3517,7 @@
         var value = ref.value;
         var defaultValue = ref.defaultValue;
         var calendarParams = ref.calendarParams;
+        var colorPickerParams = ref.colorPickerParams;
         if (type === 'range' || type === 'toggle') { return; }
         var inputEl = self.$refs.inputEl;
         if (!inputEl) { return; }
@@ -3528,6 +3543,19 @@
 
             }
           }, calendarParams || {}));
+        }
+
+        if (type === 'colorpicker') {
+          self.f7ColorPicker = f7.colorPicker.create(Object.assign({
+            inputEl: inputEl,
+            value: value,
+            on: {
+              change: function change(colorPicker, colorPickerValue) {
+                self.dispatchEvent('colorpicker:change colorPickerChange', colorPickerValue);
+              }
+
+            }
+          }, colorPickerParams || {}));
         }
 
         f7.input.checkEmptyState(inputEl);
@@ -3593,7 +3621,12 @@
         self.f7Calendar.destroy();
       }
 
+      if (self.f7ColorPicker && self.f7ColorPicker.destroy) {
+        self.f7ColorPicker.destroy();
+      }
+
       delete self.f7Calendar;
+      delete self.f7ColorPicker;
     },
 
     methods: {
@@ -4276,7 +4309,7 @@
         default: 'text'
       },
       name: String,
-      value: [String, Number, Array, Date],
+      value: [String, Number, Array, Date, Object],
       defaultValue: [String, Number, Array],
       readonly: Boolean,
       required: Boolean,
@@ -4314,7 +4347,8 @@
       label: [String, Number],
       inlineLabel: Boolean,
       floatingLabel: Boolean,
-      calendarParams: Object
+      calendarParams: Object,
+      colorPickerParams: Object
     }, Mixins.colorProps),
 
     data: function data() {
@@ -4393,11 +4427,11 @@
       var isSortable = sortable || self.state.isSortable;
 
       var createInput = function (InputTag, children) {
-        var needsValue = type !== 'file' && type !== 'datepicker';
+        var needsValue = type !== 'file' && type !== 'datepicker' && type !== 'colorpicker';
         var needsType = InputTag === 'input';
         var inputType = type;
 
-        if (inputType === 'datepicker') {
+        if (inputType === 'datepicker' || inputType === 'colorpicker') {
           inputType = 'text';
         }
 
@@ -4417,7 +4451,7 @@
 
         var valueProps = {};
 
-        if (type !== 'datepicker') {
+        if (type !== 'datepicker' && type !== 'colorpicker') {
           if ('value' in props) { valueProps.value = inputValue; }
           if ('defaultValue' in props) { valueProps.defaultValue = defaultValue; }
         }
@@ -4551,6 +4585,10 @@
         if (self.f7Calendar) {
           self.f7Calendar.setValue(self.props.value);
         }
+
+        if (self.f7ColorPicker) {
+          self.f7ColorPicker.setValue(self.props.value);
+        }
       }
     },
 
@@ -4572,6 +4610,7 @@
         var defaultValue = ref.defaultValue;
         var type = ref.type;
         var calendarParams = ref.calendarParams;
+        var colorPickerParams = ref.colorPickerParams;
         var inputEl = self.$refs.inputEl;
         if (!inputEl) { return; }
         inputEl.addEventListener('input:notempty', self.onInputNotEmpty, false);
@@ -4590,6 +4629,19 @@
 
             }
           }, calendarParams || {}));
+        }
+
+        if (type === 'colorpicker') {
+          self.f7ColorPicker = f7.colorPicker.create(Object.assign({
+            inputEl: inputEl,
+            value: value,
+            on: {
+              change: function change(colorPicker, colorPickerValue) {
+                self.dispatchEvent('colorpicker:change colorPickerChange', colorPickerValue);
+              }
+
+            }
+          }, colorPickerParams || {}));
         }
 
         if (!(validateOnBlur || validateOnBlur === '') && (validate || validate === '') && (typeof value !== 'undefined' && value !== null && value !== '' || typeof defaultValue !== 'undefined' && defaultValue !== null && defaultValue !== '')) {
@@ -4659,7 +4711,12 @@
         self.f7Calendar.destroy();
       }
 
+      if (self.f7ColorPicker && self.f7ColorPicker.destroy) {
+        self.f7ColorPicker.destroy();
+      }
+
       delete self.f7Calendar;
+      delete self.f7ColorPicker;
     },
 
     methods: {
@@ -5738,7 +5795,7 @@
     },
 
     created: function created() {
-      Utils.bindMethods(this, ['onSortableEnable', 'onSortableDisable', 'onSortableSort', 'onTabShow', 'onTabHide']);
+      Utils.bindMethods(this, ['onSortableEnable', 'onSortableDisable', 'onSortableSort', 'onTabShow', 'onTabHide', 'onSubmit']);
     },
 
     mounted: function mounted() {
@@ -5747,6 +5804,7 @@
       var ref = self.props;
       var virtualList = ref.virtualList;
       var virtualListParams = ref.virtualListParams;
+      var form = ref.form;
 
       if (el) {
         el.addEventListener('sortable:enable', self.onSortableEnable);
@@ -5754,6 +5812,10 @@
         el.addEventListener('sortable:sort', self.onSortableSort);
         el.addEventListener('tab:show', self.onTabShow);
         el.addEventListener('tab:hide', self.onTabHide);
+
+        if (form) {
+          el.addEventListener('submit', self.onSubmit);
+        }
       }
 
       if (!virtualList) { return; }
@@ -5810,6 +5872,10 @@
         el.removeEventListener('sortable:sort', self.onSortableSort);
         el.removeEventListener('tab:show', self.onTabShow);
         el.removeEventListener('tab:hide', self.onTabHide);
+
+        if (self.props.form) {
+          el.removeEventListener('submit', self.onSubmit);
+        }
       }
 
       if (!(self.virtualList && self.f7VirtualList)) { return; }
@@ -5817,6 +5883,10 @@
     },
 
     methods: {
+      onSubmit: function onSubmit(event) {
+        this.dispatchEvent('submit', event);
+      },
+
       onSortableEnable: function onSortableEnable(event) {
         this.dispatchEvent('sortable:enable sortableEnable', event);
       },
@@ -7772,7 +7842,7 @@
         }
 
         innerEl = _h('div', {
-          ref: 'inner',
+          ref: 'innerEl',
           class: Utils.classNames('navbar-inner', innerClass, innerClassName, {
             sliding: sliding,
             'navbar-inner-left-title': addLeftTitleClass,
@@ -7799,7 +7869,20 @@
     },
 
     created: function created() {
-      Utils.bindMethods(this, ['onBackClick']);
+      Utils.bindMethods(this, ['onBackClick', 'onHide', 'onShow', 'onExpand', 'onCollapse']);
+    },
+
+    mounted: function mounted() {
+      var self = this;
+      var ref = self.$refs;
+      var innerEl = ref.innerEl;
+      if (!innerEl) { return; }
+      self.$f7ready(function (f7) {
+        f7.on('navbarShow', self.onShow);
+        f7.on('navbarHide', self.onHide);
+        f7.on('navbarCollapse', self.onCollapse);
+        f7.on('navbarExpand', self.onExpand);
+      });
     },
 
     updated: function updated() {
@@ -7809,12 +7892,70 @@
 
       if (el && el.children && el.children.length) {
         self.$f7.navbar.size(el);
-      } else if (self.$refs.inner) {
-        self.$f7.navbar.size(self.$refs.inner);
+      } else if (self.$refs.innerEl) {
+        self.$f7.navbar.size(self.$refs.innerEl);
       }
     },
 
+    beforeDestroy: function beforeDestroy() {
+      var self = this;
+      if (!self.props.inner) { return; }
+      var ref = self.$refs;
+      var innerEl = ref.innerEl;
+      if (!innerEl) { return; }
+      var f7 = self.$f7;
+      if (!f7) { return; }
+      f7.off('navbarShow', self.onShow);
+      f7.off('navbarHide', self.onHide);
+      f7.off('navbarCollapse', self.onCollapse);
+      f7.off('navbarExpand', self.onExpand);
+    },
+
     methods: {
+      onHide: function onHide(navbarEl) {
+        var self = this;
+        var ref = self.$refs;
+        var el = ref.el;
+        var innerEl = ref.innerEl;
+
+        if (navbarEl === el || innerEl && innerEl.parentNode === navbarEl) {
+          self.dispatchEvent('navbar:hide navbarHide');
+        }
+      },
+
+      onShow: function onShow(navbarEl) {
+        var self = this;
+        var ref = self.$refs;
+        var el = ref.el;
+        var innerEl = ref.innerEl;
+
+        if (navbarEl === el || innerEl && innerEl.parentNode === navbarEl) {
+          self.dispatchEvent('navbar:show navbarShow');
+        }
+      },
+
+      onExpand: function onExpand(navbarEl) {
+        var self = this;
+        var ref = self.$refs;
+        var el = ref.el;
+        var innerEl = ref.innerEl;
+
+        if (navbarEl === el || innerEl && innerEl.parentNode === navbarEl) {
+          self.dispatchEvent('navbar:expand navbarExpand');
+        }
+      },
+
+      onCollapse: function onCollapse(navbarEl) {
+        var self = this;
+        var ref = self.$refs;
+        var el = ref.el;
+        var innerEl = ref.innerEl;
+
+        if (navbarEl === el || innerEl && innerEl.parentNode === navbarEl) {
+          self.dispatchEvent('navbar:collapse navbarCollapse');
+        }
+      },
+
       hide: function hide(animate) {
         var self = this;
         if (!self.$f7) { return; }
@@ -8543,7 +8684,8 @@
       reveal: Boolean,
       left: Boolean,
       right: Boolean,
-      opened: Boolean
+      opened: Boolean,
+      resizable: Boolean
     }, Mixins.colorProps),
 
     render: function render() {
@@ -8551,6 +8693,7 @@
       var props = this.props;
       var id = props.id;
       var style = props.style;
+      var resizable = props.resizable;
       return _h('div', {
         ref: 'el',
         style: style,
@@ -8558,7 +8701,9 @@
         attrs: {
           id: id
         }
-      }, [this.$slots['default']]);
+      }, [this.$slots['default'], resizable && _h('div', {
+        class: 'panel-resize-handler'
+      })]);
     },
 
     computed: {
@@ -8571,12 +8716,14 @@
         var reveal = props.reveal;
         var className = props.className;
         var opened = props.opened;
+        var resizable = props.resizable;
         var side = props.side;
         var effect = props.effect;
         side = side || (left ? 'left' : 'right');
         effect = effect || (reveal ? 'reveal' : 'cover');
         return Utils.classNames(className, 'panel', ( obj = {
-          'panel-active': opened
+          'panel-active': opened,
+          'panel-resizable': resizable
         }, obj[("panel-" + side)] = side, obj[("panel-" + effect)] = effect, obj ), Mixins.colorClasses(props));
       },
 
@@ -8586,6 +8733,14 @@
 
     },
     watch: {
+      'props.resizable': function watchResizable(resizable) {
+        var self = this;
+        if (!resizable) { return; }
+
+        if (self.f7Panel && !self.f7Panel.resizableInitialized) {
+          self.f7Panel.initResizablePanel();
+        }
+      },
       'props.opened': function watchOpened(opened) {
         var self = this;
         if (!self.$f7) { return; }
@@ -8600,7 +8755,7 @@
     },
 
     created: function created() {
-      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed', 'onBackdropClick', 'onPanelSwipe', 'onPanelSwipeOpen', 'onBreakpoint']);
+      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed', 'onBackdropClick', 'onPanelSwipe', 'onPanelSwipeOpen', 'onBreakpoint', 'onResize']);
     },
 
     mounted: function mounted() {
@@ -8612,6 +8767,7 @@
       var opened = ref.opened;
       var left = ref.left;
       var reveal = ref.reveal;
+      var resizable = ref.resizable;
 
       if (el) {
         el.addEventListener('panel:open', self.onOpen);
@@ -8622,6 +8778,7 @@
         el.addEventListener('panel:swipe', self.onPanelSwipe);
         el.addEventListener('panel:swipeopen', self.onPanelSwipeOpen);
         el.addEventListener('panel:breakpoint', self.onBreakpoint);
+        el.addEventListener('panel:resize', self.onResize);
       }
 
       self.$f7ready(function () {
@@ -8633,7 +8790,8 @@
         }
 
         self.f7Panel = self.$f7.panel.create({
-          el: el
+          el: el,
+          resizable: resizable
         });
       });
 
@@ -8664,6 +8822,7 @@
       el.removeEventListener('panel:swipe', self.onPanelSwipe);
       el.removeEventListener('panel:swipeopen', self.onPanelSwipeOpen);
       el.removeEventListener('panel:breakpoint', self.onBreakpoint);
+      el.removeEventListener('panel:resize', self.onResize);
     },
 
     methods: {
@@ -8697,6 +8856,10 @@
 
       onBreakpoint: function onBreakpoint(event) {
         this.dispatchEvent('panel:breakpoint panelBreakpoint', event);
+      },
+
+      onResize: function onResize(event) {
+        this.dispatchEvent('panel:resize panelResize', event);
       },
 
       open: function open(animate) {
@@ -8907,8 +9070,11 @@
       id: [String, Number],
       opened: Boolean,
       target: [String, Object],
+      backdrop: Boolean,
+      backdropEl: [String, Object, window.HTMLElement],
       closeByBackdropClick: Boolean,
-      closeByOutsideClick: Boolean
+      closeByOutsideClick: Boolean,
+      closeOnEscape: Boolean
     }, Mixins.colorProps),
 
     render: function render() {
@@ -8961,8 +9127,11 @@
       var props = self.props;
       var target = props.target;
       var opened = props.opened;
+      var backdrop = props.backdrop;
+      var backdropEl = props.backdropEl;
       var closeByBackdropClick = props.closeByBackdropClick;
       var closeByOutsideClick = props.closeByOutsideClick;
+      var closeOnEscape = props.closeOnEscape;
       var popoverParams = {
         el: el
       };
@@ -8970,6 +9139,9 @@
       {
         if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') { popoverParams.closeByBackdropClick = closeByBackdropClick; }
         if (typeof self.$options.propsData.closeByOutsideClick !== 'undefined') { popoverParams.closeByOutsideClick = closeByOutsideClick; }
+        if (typeof self.$options.propsData.closeOnEscape !== 'undefined') { popoverParams.closeOnEscape = closeOnEscape; }
+        if (typeof self.$options.propsData.backdrop !== 'undefined') { popoverParams.backdrop = backdrop; }
+        if (typeof self.$options.propsData.backdropEl !== 'undefined') { popoverParams.backdropEl = backdropEl; }
       }
       self.$f7ready(function () {
         self.f7Popover = self.$f7.popover.create(popoverParams);
@@ -9042,9 +9214,11 @@
       id: [String, Number],
       tabletFullscreen: Boolean,
       opened: Boolean,
-      closeByBackdropClick: Boolean,
+      animate: Boolean,
       backdrop: Boolean,
-      animate: Boolean
+      backdropEl: [String, Object, window.HTMLElement],
+      closeByBackdropClick: Boolean,
+      closeOnEscape: Boolean
     }, Mixins.colorProps),
 
     render: function render() {
@@ -9096,14 +9270,18 @@
       var props = self.props;
       var closeByBackdropClick = props.closeByBackdropClick;
       var backdrop = props.backdrop;
+      var backdropEl = props.backdropEl;
       var animate = props.animate;
+      var closeOnEscape = props.closeOnEscape;
       var popupParams = {
         el: el
       };
       {
         if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') { popupParams.closeByBackdropClick = closeByBackdropClick; }
+        if (typeof self.$options.propsData.closeOnEscape !== 'undefined') { popupParams.closeOnEscape = closeOnEscape; }
         if (typeof self.$options.propsData.animate !== 'undefined') { popupParams.animate = animate; }
         if (typeof self.$options.propsData.backdrop !== 'undefined') { popupParams.backdrop = backdrop; }
+        if (typeof self.$options.propsData.backdropEl !== 'undefined') { popupParams.backdropEl = backdropEl; }
       }
       self.$f7ready(function () {
         self.f7Popup = self.$f7.popup.create(popupParams);
@@ -9911,9 +10089,14 @@
     props: Object.assign({
       id: [String, Number],
       opened: Boolean,
+      top: Boolean,
+      bottom: Boolean,
+      position: String,
       backdrop: Boolean,
+      backdropEl: [String, Object, window.HTMLElement],
       closeByBackdropClick: Boolean,
-      closeByOutsideClick: Boolean
+      closeByOutsideClick: Boolean,
+      closeOnEscape: Boolean
     }, Mixins.colorProps),
 
     render: function render() {
@@ -9925,6 +10108,9 @@
       var id = props.id;
       var style = props.style;
       var className = props.className;
+      var top = props.top;
+      var bottom = props.bottom;
+      var position = props.position;
       var fixedTags;
       fixedTags = 'navbar toolbar tabbar subnavbar searchbar messagebar fab list-index'.split(' ');
       var slotsDefault = self.$slots.default;
@@ -9954,7 +10140,9 @@
         class: 'sheet-modal-inner'
       }, [staticList]);
 
-      var classes = Utils.classNames(className, 'sheet-modal', Mixins.colorClasses(props));
+      var positionComputed = 'bottom';
+      if (position) { positionComputed = position; }else if (top) { positionComputed = 'top'; }else if (bottom) { positionComputed = 'bottom'; }
+      var classes = Utils.classNames(className, 'sheet-modal', ("sheet-modal-" + positionComputed), Mixins.colorClasses(props));
       return _h('div', {
         ref: 'el',
         style: style,
@@ -9993,24 +10181,21 @@
       var props = self.props;
       var opened = props.opened;
       var backdrop = props.backdrop;
+      var backdropEl = props.backdropEl;
       var closeByBackdropClick = props.closeByBackdropClick;
       var closeByOutsideClick = props.closeByOutsideClick;
+      var closeOnEscape = props.closeOnEscape;
       var sheetParams = {
         el: self.$refs.el
       };
-      var useDefaultBackdrop;
       {
-        useDefaultBackdrop = self.$options.propsData.backdrop === undefined;
+        if (typeof self.$options.propsData.backdrop !== 'undefined') { sheetParams.backdrop = backdrop; }
+        if (typeof self.$options.propsData.backdropEl !== 'undefined') { sheetParams.backdropEl = backdropEl; }
         if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') { sheetParams.closeByBackdropClick = closeByBackdropClick; }
         if (typeof self.$options.propsData.closeByOutsideClick !== 'undefined') { sheetParams.closeByOutsideClick = closeByOutsideClick; }
+        if (typeof self.$options.propsData.closeOnEscape !== 'undefined') { sheetParams.closeOnEscape = closeOnEscape; }
       }
-      self.$f7ready(function (f7) {
-        if (useDefaultBackdrop) {
-          sheetParams.backdrop = f7.params.sheet && f7.params.sheet.backdrop !== undefined ? f7.params.sheet.backdrop : !self.$theme.ios;
-        } else {
-          sheetParams.backdrop = backdrop;
-        }
-
+      self.$f7ready(function () {
         self.f7Sheet = self.$f7.sheet.create(sheetParams);
 
         if (opened) {
@@ -10681,6 +10866,7 @@
     props: Object.assign({
       id: [String, Number],
       text: String,
+      confirmTitle: String,
       confirmText: String,
       overswipe: Boolean,
       close: Boolean,
@@ -10698,6 +10884,7 @@
       var deleteProp = props.delete;
       var close = props.close;
       var href = props.href;
+      var confirmTitle = props.confirmTitle;
       var confirmText = props.confirmText;
       var text = props.text;
       var classes = Utils.classNames(className, {
@@ -10712,7 +10899,8 @@
         attrs: {
           href: href || '#',
           id: id,
-          'data-confirm': confirmText || undefined
+          'data-confirm': confirmText || undefined,
+          'data-confirm-title': confirmTitle || undefined
         }
       }, [this.$slots['default'] || [text]]);
     },
@@ -11744,7 +11932,7 @@
   };
 
   /**
-   * Framework7 Vue 4.2.2
+   * Framework7 Vue 4.3.0
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -11752,13 +11940,17 @@
    *
    * Released under the MIT License
    *
-   * Released on: April 4, 2019
+   * Released on: April 17, 2019
    */
 
   var Plugin = {
     name: 'phenomePlugin',
+    installed: false,
     install: function install(params) {
       if ( params === void 0 ) params = {};
+
+      if (Plugin.installed) { return; }
+      Plugin.installed = true;
 
       var Framework7 = this;
       f7.Framework7 = Framework7;

@@ -7,9 +7,11 @@ export default {
   name: 'popover',
   params: {
     popover: {
+      backdrop: true,
+      backdropEl: undefined,
       closeByBackdropClick: true,
       closeByOutsideClick: true,
-      backdrop: true,
+      closeOnEscape: false,
     },
   },
   static: {

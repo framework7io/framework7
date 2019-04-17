@@ -1,5 +1,6 @@
 import $ from 'dom7';
 import Utils from '../../utils/utils';
+import Device from '../../utils/device';
 import Support from '../../utils/support';
 
 const CardExpandable = {
@@ -25,15 +26,17 @@ const CardExpandable = {
 
     if (prevented) return;
 
+    const $pageContentEl = $cardEl.parents('.page-content');
+
     let $backropEl;
     if ($cardEl.attr('data-backdrop-el')) {
       $backropEl = $($cardEl.attr('data-backdrop-el'));
     }
     if (!$backropEl && app.params.card.backrop) {
-      $backropEl = $cardEl.parents('.page-content').find('.card-backdrop');
+      $backropEl = $pageContentEl.find('.card-backdrop');
       if (!$backropEl.length) {
         $backropEl = $('<div class="card-backdrop"></div>');
-        $cardEl.parents('.page-content').append($backropEl);
+        $pageContentEl.append($backropEl);
       }
     }
 
@@ -95,7 +98,7 @@ const CardExpandable = {
         if (app.rtl) cardLeftOffset -= $cardEl[0].scrollLeft;
       } else {
         cardLeftOffset = $cardEl[0].offsetLeft;
-        cardTopOffset = $cardEl[0].offsetTop - $cardEl.parents('.page-content')[0].scrollTop;
+        cardTopOffset = $cardEl[0].offsetTop - ($pageContentEl.length ? $pageContentEl[0].scrollTop : 0);
       }
     } else {
       cardLeftOffset = offset.left;
@@ -296,6 +299,7 @@ const CardExpandable = {
     if (!$cardEl.hasClass('card-opened') || $cardEl.hasClass('card-opening') || $cardEl.hasClass('card-closing')) return;
 
     const $cardContentEl = $cardEl.children('.card-content');
+    const $pageContentEl = $cardEl.parents('.page-content');
 
     const $pageEl = $cardEl.parents('.page').eq(0);
     if (!$pageEl.length) return;
@@ -331,7 +335,15 @@ const CardExpandable = {
         app.toolbar.show($toolbarEl, animate);
       }
     }
+
     $pageEl.removeClass('page-with-card-opened');
+
+    if (Device.ios && $pageContentEl.length) {
+      $cardEl.parents('.page-content').css('height', `${$pageContentEl[0].offsetHeight + 1}px`);
+      setTimeout(() => {
+        $cardEl.parents('.page-content').css('height', '');
+      });
+    }
 
     if ($backropEl && $backropEl.length) {
       $backropEl.removeClass('card-backdrop-in').addClass('card-backdrop-out');

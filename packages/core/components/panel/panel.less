@@ -30,6 +30,7 @@
   background-color: var(--f7-panel-bg-color);
   overflow: visible;
   will-change: transform;
+  transition-property: transform;
   &:after {
     pointer-events: none;
     opacity: 0;
@@ -39,6 +40,7 @@
     top: 0;
     width: 20px;
     height: 100%;
+    transition-property: transform, opacity;
   }
   &, &:after {
     transition-duration: var(--f7-panel-transition-duration);
@@ -53,12 +55,22 @@
       transition-duration: 0ms !important;
     }
   }
+  &.panel-resizing {
+    user-select: none;
+    &,
+    &:after,
+    & ~ .views,
+    & ~ .view {
+      transition-duration: 0ms !important;
+    }
+  }
 }
 .panel-cover {
   z-index: 6000;
 }
 .panel-left {
   left: 0;
+  width: var(--f7-panel-left-width, var(--f7-panel-width));
   &.panel-cover {
     transform: translate3d(-100%, 0, 0);
     &:after {
@@ -71,17 +83,19 @@
   }
   &.panel-reveal {
     &:after {
-      right: 100%;
+      right: 0;
+      transform: translate3d(calc(-1 * var(--f7-panel-left-width, var(--f7-panel-width))), 0, 0);
       background: linear-gradient(to left, var(--f7-panel-shadow));
       html.with-panel-left-reveal & {
         opacity: 1;
-        transform: translate3d(var(--f7-panel-width), 0, 0);
+        transform: translate3d(0, 0, 0);
       }
     }
   }
 }
 .panel-right {
   right: 0;
+  width: var(--f7-panel-right-width, var(--f7-panel-width));
   &.panel-cover {
     transform: translate3d(100%, 0, 0);
     &:after {
@@ -94,11 +108,12 @@
   }
   &.panel-reveal {
     &:after {
-      left: 100%;
+      left: 0;
       background: linear-gradient(to right, var(--f7-panel-shadow));
+      transform: translate3d(var(--f7-panel-right-width, var(--f7-panel-width)), 0, 0);
       html.with-panel-right-reveal & {
         opacity: 1;
-        transform: translate3d(calc(-1 * (var(--f7-panel-width))), 0, 0);
+        transform: translate3d(0, 0, 0);
       }
     }
   }
@@ -147,14 +162,14 @@ html {
     .views,
     .framework7-root > .view,
     .panel-backdrop {
-      transform: translate3d(var(--f7-panel-width),0,0);
+      transform: translate3d(var(--f7-panel-left-width, var(--f7-panel-width)),0,0);
     }
   }
   &.with-panel-right-reveal {
     .views,
     .framework7-root > .view,
     .panel-backdrop {
-      transform: translate3d(calc(-1 * var(--f7-panel-width)),0,0);
+      transform: translate3d(calc(-1 * var(--f7-panel-right-width, var(--f7-panel-width))),0,0);
     }
   }
   &.with-panel-left-cover {
@@ -166,6 +181,30 @@ html {
     .panel-right {
       transform: translate3d(0px,0,0);
     }
+  }
+}
+.panel-resize-handler {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 6px;
+  cursor: col-resize;
+  z-index: 6000;
+  display: none;
+  .panel-resizable & {
+    display: block;
+  }
+  .panel-left.panel-cover & {
+    right: -3px;
+  }
+  .panel-left.panel-reveal & {
+    right: 0;
+  }
+  .panel-right.panel-cover & {
+    left: -3px;
+  }
+  .panel-right.panel-reveal & {
+    left: 0;
   }
 }
 

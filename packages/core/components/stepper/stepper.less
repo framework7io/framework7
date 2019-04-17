@@ -6,7 +6,11 @@
   align-items: stretch;
   height: var(--f7-stepper-height);
   border-radius: var(--f7-stepper-border-radius);
+  .rtl({
+    flex-direction: row-reverse;
+  });
 }
+
 .stepper-button,
 .stepper-button-minus,
 .stepper-button-plus {
@@ -29,34 +33,20 @@
     background-color: var(--f7-stepper-button-pressed-bg-color, rgba(var(--f7-theme-color-rgb), 0.15));
     color: var(--f7-stepper-button-pressed-text-color, var(--f7-stepper-button-text-color, var(--f7-theme-color)));
   }
-  .ltr({
-    &:first-child {
-      border-radius: var(--f7-stepper-border-radius) 0 0 var(--f7-stepper-border-radius);
-    }
-    &:last-child {
-      border-radius: 0 var(--f7-stepper-border-radius) var(--f7-stepper-border-radius) 0;
-    }
-  });
-  .rtl({
-    &:first-child {
-      border-radius: 0 var(--f7-stepper-border-radius) var(--f7-stepper-border-radius) 0;
-    }
-    &:last-child {
-      border-radius: var(--f7-stepper-border-radius) 0 0 var(--f7-stepper-border-radius);
-    }
-  });
+  &:first-child {
+    border-radius: var(--f7-stepper-border-radius) 0 0 var(--f7-stepper-border-radius);
+  }
+  &:last-child {
+    border-radius: 0 var(--f7-stepper-border-radius) var(--f7-stepper-border-radius) 0;
+  }
+
   .icon {
     pointer-events: none;
   }
   + .stepper-button,
   + .stepper-button-minus,
   + .stepper-button-plus {
-    .ltr({
-      border-left: none;
-    });
-    .rtl({
-      border-right: none;
-    });
+    border-left: none;
   }
 }
 .stepper-button-plus,
@@ -94,15 +84,15 @@
   border-top:  var(--f7-stepper-border-width) solid var(--f7-theme-color);
   border-bottom: var(--f7-stepper-border-width) solid  var(--f7-theme-color);
 }
-.stepper-input-wrap input,
+.stepper .stepper-input-wrap input,
 .stepper-value {
   width: 45px;
-  color: var(--f7-theme-color);
+  color: var(--f7-stepper-value-text-color, var(--f7-theme-color));
   font-size: var(--f7-stepper-value-font-size);
   font-weight: var(--f7-stepper-value-font-weight);
   text-align: center;
 }
-.stepper-input-wrap input {
+.stepper .stepper-input-wrap input {
   height: 100%;
 }
 .stepper-round,
@@ -129,12 +119,7 @@
 .aurora .stepper-raised-aurora {
   .stepper-button + .stepper-button,
   .stepper-button-minus + .stepper-button-plus {
-    .ltr({
-      border-left: 1px solid rgba(0,0,0,0.1);
-    });
-    .rtl({
-      border-right: 1px solid rgba(0,0,0,0.1);
-    });
+    border-left: 1px solid rgba(0,0,0,0.1);
   }
 }
 .stepper-fill,
@@ -143,16 +128,9 @@
 .aurora .stepper-fill-aurora {
   .stepper-button + .stepper-button,
   .stepper-button-minus + .stepper-button-plus {
-    .ltr({
-      &.active-state {
-        border-left-color: var(--f7-stepper-button-pressed-bg-color);
-      }
-    });
-    .rtl({
-      &.active-state {
-        border-right-color: var(--f7-stepper-button-pressed-bg-color);
-      }
-    });
+    &.active-state {
+      border-left-color: var(--f7-stepper-button-pressed-bg-color);
+    }
   }
 }
 .stepper-raised:not(.stepper-fill),

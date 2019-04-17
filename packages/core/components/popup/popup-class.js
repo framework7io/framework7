@@ -34,7 +34,9 @@ class Popup extends Modal {
     }
 
     let $backdropEl;
-    if (popup.params.backdrop) {
+    if (popup.params.backdrop && popup.params.backdropEl) {
+      $backdropEl = $(popup.params.backdropEl);
+    } else if (popup.params.backdrop) {
       $backdropEl = app.root.children('.popup-backdrop');
       if ($backdropEl.length === 0) {
         $backdropEl = $('<div class="popup-backdrop"></div>');
@@ -54,6 +56,8 @@ class Popup extends Modal {
     function handleClick(e) {
       const target = e.target;
       const $target = $(target);
+      const keyboardOpened = !app.device.desktop && app.device.cordova && ((window.Keyboard && window.Keyboard.isVisible) || (window.cordova.plugins && window.cordova.plugins.Keyboard && window.cordova.plugins.Keyboard.isVisible));
+      if (keyboardOpened) return;
       if ($target.closest(popup.el).length === 0) {
         if (
           popup.params
@@ -79,6 +83,21 @@ class Popup extends Modal {
           }
         }
       }
+    }
+
+    function onKeyDown(e) {
+      const keyCode = e.keyCode;
+      if (keyCode === 27 && popup.params.closeOnEscape) {
+        popup.close();
+      }
+    }
+    if (popup.params.closeOnEscape) {
+      popup.on('popupOpen', () => {
+        $(document).on('keydown', onKeyDown);
+      });
+      popup.on('popupClose', () => {
+        $(document).off('keydown', onKeyDown);
+      });
     }
 
     popup.on('popupOpened', () => {

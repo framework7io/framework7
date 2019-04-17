@@ -23,8 +23,26 @@ export interface Utils {
   uniqueNumber: () => number
   /** Generates random ID-like string */
   id: (mask: string, map: string) => string
+  /** Returns preloader inner content for MD theme */
+  mdPreloaderContent: () => string
+  /** Returns preloader inner content for iOS theme */
+  iosPreloaderContent: () => string
+  /** Returns preloader inner content for Aurora theme */
+  auroraPreloaderContent: () => string
   /** Deletes object properties */
   deleteProps: (obj: object) => void
+  /**  */
+  colorHexToRgb: (hex: string) => number[]
+  /**  */
+  colorRgbToHex: (r: number, g: number, b: number) => string
+  /**  */
+  colorRgbToHsl: (r: number, g: number, b: number) => number[]
+  /**  */
+  colorHslToRgb: (h: number, s: number, l: number) => number[]
+  /**  */
+  colorHsbToHsl: (h: number, s: number, b: number) => number[]
+  /**  */
+  colorHslToHsb: (h: number, s: number, l: number) => number[]
 }
 
 declare const Utils : Utils;

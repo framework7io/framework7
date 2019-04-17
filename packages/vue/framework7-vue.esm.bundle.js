@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.2.2
+ * Framework7 Vue 4.3.0
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 4, 2019
+ * Released on: April 17, 2019
  */
 import Vue from 'vue';
 import f7AccordionContent from './components/accordion-content';
@@ -106,7 +106,11 @@ import f7 from './utils/f7';
 
 const Plugin = {
   name: 'phenomePlugin',
+  installed: false,
   install(params = {}) {
+    if (Plugin.installed) return;
+    Plugin.installed = true;
+
     const Framework7 = this;
     f7.Framework7 = Framework7;
 

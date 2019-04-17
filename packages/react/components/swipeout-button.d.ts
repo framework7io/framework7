@@ -7,6 +7,7 @@ declare namespace F7SwipeoutButton {
     className? : string
     style? : React.CSSProperties
     text? : string
+    confirmTitle? : string
     confirmText? : string
     overswipe? : boolean
     close? : boolean

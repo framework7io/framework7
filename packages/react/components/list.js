@@ -11,8 +11,12 @@ class F7List extends React.Component {
     this.__reactRefs = {};
 
     (() => {
-      Utils.bindMethods(this, ['onSortableEnable', 'onSortableDisable', 'onSortableSort', 'onTabShow', 'onTabHide']);
+      Utils.bindMethods(this, ['onSortableEnable', 'onSortableDisable', 'onSortableSort', 'onTabShow', 'onTabHide', 'onSubmit']);
     })();
+  }
+
+  onSubmit(event) {
+    this.dispatchEvent('submit', event);
   }
 
   onSortableEnable(event) {
@@ -162,6 +166,10 @@ class F7List extends React.Component {
       el.removeEventListener('sortable:sort', self.onSortableSort);
       el.removeEventListener('tab:show', self.onTabShow);
       el.removeEventListener('tab:hide', self.onTabHide);
+
+      if (self.props.form) {
+        el.removeEventListener('submit', self.onSubmit);
+      }
     }
 
     if (!(self.virtualList && self.f7VirtualList)) return;
@@ -173,7 +181,8 @@ class F7List extends React.Component {
     const el = self.refs.el;
     const {
       virtualList,
-      virtualListParams
+      virtualListParams,
+      form
     } = self.props;
 
     if (el) {
@@ -182,6 +191,10 @@ class F7List extends React.Component {
       el.addEventListener('sortable:sort', self.onSortableSort);
       el.addEventListener('tab:show', self.onTabShow);
       el.addEventListener('tab:hide', self.onTabHide);
+
+      if (form) {
+        el.addEventListener('submit', self.onSubmit);
+      }
     }
 
     if (!virtualList) return;

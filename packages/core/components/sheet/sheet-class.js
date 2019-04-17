@@ -16,6 +16,9 @@ class Sheet extends Modal {
     const sheet = this;
 
     sheet.params = extendedParams;
+    if (typeof sheet.params.backdrop === 'undefined') {
+      sheet.params.backdrop = app.theme !== 'ios';
+    }
 
     // Find Element
     let $el;
@@ -33,7 +36,10 @@ class Sheet extends Modal {
       return sheet.destroy();
     }
     let $backdropEl;
-    if (sheet.params.backdrop) {
+
+    if (sheet.params.backdrop && sheet.params.backdropEl) {
+      $backdropEl = $(sheet.params.backdropEl);
+    } else if (sheet.params.backdrop) {
       $backdropEl = app.root.children('.sheet-backdrop');
       if ($backdropEl.length === 0) {
         $backdropEl = $('<div class="sheet-backdrop"></div>');
@@ -82,6 +88,8 @@ class Sheet extends Modal {
     function handleClick(e) {
       const target = e.target;
       const $target = $(target);
+      const keyboardOpened = !app.device.desktop && app.device.cordova && ((window.Keyboard && window.Keyboard.isVisible) || (window.cordova.plugins && window.cordova.plugins.Keyboard && window.cordova.plugins.Keyboard.isVisible));
+      if (keyboardOpened) return;
       if ($target.closest(sheet.el).length === 0) {
         if (
           sheet.params.closeByBackdropClick
@@ -96,7 +104,16 @@ class Sheet extends Modal {
       }
     }
 
+    function onKeyDown(e) {
+      const keyCode = e.keyCode;
+      if (keyCode === 27 && sheet.params.closeOnEscape) {
+        sheet.close();
+      }
+    }
     sheet.on('sheetOpen', () => {
+      if (sheet.params.closeOnEscape) {
+        $(document).on('keydown', onKeyDown);
+      }
       if (sheet.params.scrollToEl) {
         scrollToOpen();
       }
@@ -107,6 +124,9 @@ class Sheet extends Modal {
       }
     });
     sheet.on('sheetClose', () => {
+      if (sheet.params.closeOnEscape) {
+        $(document).off('keydown', onKeyDown);
+      }
       if (sheet.params.scrollToEl) {
         scrollToClose();
       }

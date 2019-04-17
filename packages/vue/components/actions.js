@@ -11,8 +11,11 @@ export default {
     convertToPopover: Boolean,
     forceToPopover: Boolean,
     target: [String, Object],
+    backdrop: Boolean,
+    backdropEl: [String, Object, window.HTMLElement],
     closeByBackdropClick: Boolean,
-    closeByOutsideClick: Boolean
+    closeByOutsideClick: Boolean,
+    closeOnEscape: Boolean
   }, Mixins.colorProps),
 
   render() {
@@ -71,7 +74,10 @@ export default {
       forceToPopover,
       opened,
       closeByBackdropClick,
-      closeByOutsideClick
+      closeByOutsideClick,
+      closeOnEscape,
+      backdrop,
+      backdropEl
     } = props;
     const actionsParams = {
       el: self.$refs.el,
@@ -81,8 +87,11 @@ export default {
     {
       if (typeof self.$options.propsData.convertToPopover !== 'undefined') actionsParams.convertToPopover = convertToPopover;
       if (typeof self.$options.propsData.forceToPopover !== 'undefined') actionsParams.forceToPopover = forceToPopover;
+      if (typeof self.$options.propsData.backdrop !== 'undefined') actionsParams.backdrop = backdrop;
+      if (typeof self.$options.propsData.backdropEl !== 'undefined') actionsParams.backdropEl = backdropEl;
       if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') actionsParams.closeByBackdropClick = closeByBackdropClick;
       if (typeof self.$options.propsData.closeByOutsideClick !== 'undefined') actionsParams.closeByOutsideClick = closeByOutsideClick;
+      if (typeof self.$options.propsData.closeOnEscape !== 'undefined') actionsParams.closeOnEscape = closeOnEscape;
     }
     self.$f7ready(() => {
       self.f7Actions = self.$f7.actions.create(actionsParams);

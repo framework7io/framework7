@@ -90,8 +90,11 @@ class F7Popover extends React.Component {
     const {
       target,
       opened,
+      backdrop,
+      backdropEl,
       closeByBackdropClick,
-      closeByOutsideClick
+      closeByOutsideClick,
+      closeOnEscape
     } = props;
     const popoverParams = {
       el
@@ -100,6 +103,9 @@ class F7Popover extends React.Component {
     {
       if ('closeByBackdropClick' in props) popoverParams.closeByBackdropClick = closeByBackdropClick;
       if ('closeByOutsideClick' in props) popoverParams.closeByOutsideClick = closeByOutsideClick;
+      if ('closeOnEscape' in props) popoverParams.closeOnEscape = closeOnEscape;
+      if ('backdrop' in props) popoverParams.backdrop = backdrop;
+      if ('backdropEl' in props) popoverParams.backdropEl = backdropEl;
     }
     self.$f7ready(() => {
       self.f7Popover = self.$f7.popover.create(popoverParams);
@@ -145,8 +151,11 @@ __reactComponentSetProps(F7Popover, Object.assign({
   style: Object,
   opened: Boolean,
   target: [String, Object],
+  backdrop: Boolean,
+  backdropEl: [String, Object, window.HTMLElement],
   closeByBackdropClick: Boolean,
-  closeByOutsideClick: Boolean
+  closeByOutsideClick: Boolean,
+  closeOnEscape: Boolean
 }, Mixins.colorProps));
 
 F7Popover.displayName = 'f7-popover';

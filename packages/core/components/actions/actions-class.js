@@ -49,7 +49,9 @@ class Actions extends Modal {
 
     // Backdrop
     let $backdropEl;
-    if (actions.params.backdrop) {
+    if (actions.params.backdrop && actions.params.backdropEl) {
+      $backdropEl = $(actions.params.backdropEl);
+    } else if (actions.params.backdrop) {
       $backdropEl = app.root.children('.actions-backdrop');
       if ($backdropEl.length === 0) {
         $backdropEl = $('<div class="actions-backdrop"></div>');
@@ -62,15 +64,15 @@ class Actions extends Modal {
 
     let popover;
     function buttonOnClick(e) {
-      const buttonEl = this;
+      const $buttonEl = $(this);
       let buttonIndex;
       let groupIndex;
-      if ($(buttonEl).hasClass('list-button')) {
-        buttonIndex = $(buttonEl).parents('li').index();
-        groupIndex = $(buttonEl).parents('.list').index();
+      if ($buttonEl.hasClass('list-button') || $buttonEl.hasClass('item-link')) {
+        buttonIndex = $buttonEl.parents('li').index();
+        groupIndex = $buttonEl.parents('.list').index();
       } else {
-        buttonIndex = $(buttonEl).index();
-        groupIndex = $(buttonEl).parents('.actions-group').index();
+        buttonIndex = $buttonEl.index();
+        groupIndex = $buttonEl.parents('.actions-group').index();
       }
       if (typeof groups !== 'undefined') {
         const button = groups[groupIndex][buttonIndex];
@@ -105,12 +107,12 @@ class Actions extends Modal {
         });
         popover.open(animate);
         popover.once('popoverOpened', () => {
-          popover.$el.find('.list-button').each((groupIndex, buttonEl) => {
+          popover.$el.find('.list-button, .item-link').each((groupIndex, buttonEl) => {
             $(buttonEl).on('click', buttonOnClick);
           });
         });
         popover.once('popoverClosed', () => {
-          popover.$el.find('.list-button').each((groupIndex, buttonEl) => {
+          popover.$el.find('.list-button, .item-link').each((groupIndex, buttonEl) => {
             $(buttonEl).off('click', buttonOnClick);
           });
           Utils.nextTick(() => {
@@ -158,6 +160,8 @@ class Actions extends Modal {
     function handleClick(e) {
       const target = e.target;
       const $target = $(target);
+      const keyboardOpened = !app.device.desktop && app.device.cordova && ((window.Keyboard && window.Keyboard.isVisible) || (window.cordova.plugins && window.cordova.plugins.Keyboard && window.cordova.plugins.Keyboard.isVisible));
+      if (keyboardOpened) return;
       if ($target.closest(actions.el).length === 0) {
         if (
           actions.params.closeByBackdropClick
@@ -170,6 +174,22 @@ class Actions extends Modal {
           actions.close();
         }
       }
+    }
+
+    function onKeyDown(e) {
+      const keyCode = e.keyCode;
+      if (keyCode === 27 && actions.params.closeOnEscape) {
+        actions.close();
+      }
+    }
+
+    if (actions.params.closeOnEscape) {
+      actions.on('open', () => {
+        $(document).on('keydown', onKeyDown);
+      });
+      actions.on('close', () => {
+        $(document).off('keydown', onKeyDown);
+      });
     }
 
     actions.on('opened', () => {

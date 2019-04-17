@@ -121,6 +121,20 @@ const Device = (function Device() {
   // Pixel Ratio
   device.pixelRatio = window.devicePixelRatio || 1;
 
+  // Color Scheme
+  const DARK = '(prefers-color-scheme: dark)';
+  const LIGHT = '(prefers-color-scheme: light)';
+  device.prefersColorScheme = function prefersColorTheme() {
+    let theme;
+    if (window.matchMedia && window.matchMedia(LIGHT).matches) {
+      theme = 'light';
+    }
+    if (window.matchMedia && window.matchMedia(DARK).matches) {
+      theme = 'dark';
+    }
+    return theme;
+  };
+
   // Export object
   return device;
 }());

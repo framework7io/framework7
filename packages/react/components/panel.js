@@ -12,7 +12,7 @@ class F7Panel extends React.Component {
     this.__reactRefs = {};
 
     (() => {
-      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed', 'onBackdropClick', 'onPanelSwipe', 'onPanelSwipeOpen', 'onBreakpoint']);
+      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed', 'onBackdropClick', 'onPanelSwipe', 'onPanelSwipeOpen', 'onBreakpoint', 'onResize']);
     })();
   }
 
@@ -48,6 +48,10 @@ class F7Panel extends React.Component {
     this.dispatchEvent('panel:breakpoint panelBreakpoint', event);
   }
 
+  onResize(event) {
+    this.dispatchEvent('panel:resize panelResize', event);
+  }
+
   open(animate) {
     const self = this;
     if (!self.$f7) return;
@@ -76,7 +80,8 @@ class F7Panel extends React.Component {
       left,
       reveal,
       className,
-      opened
+      opened,
+      resizable
     } = props;
     let {
       side,
@@ -86,6 +91,7 @@ class F7Panel extends React.Component {
     effect = effect || (reveal ? 'reveal' : 'cover');
     return Utils.classNames(className, 'panel', {
       'panel-active': opened,
+      'panel-resizable': resizable,
       [`panel-${side}`]: side,
       [`panel-${effect}`]: effect
     }, Mixins.colorClasses(props));
@@ -95,7 +101,8 @@ class F7Panel extends React.Component {
     const props = this.props;
     const {
       id,
-      style
+      style,
+      resizable
     } = props;
     return React.createElement('div', {
       ref: __reactNode => {
@@ -104,7 +111,9 @@ class F7Panel extends React.Component {
       id: id,
       style: style,
       className: this.classes
-    }, this.slots['default']);
+    }, this.slots['default'], resizable && React.createElement('div', {
+      className: 'panel-resize-handler'
+    }));
   }
 
   componentWillUnmount() {
@@ -120,6 +129,7 @@ class F7Panel extends React.Component {
     el.removeEventListener('panel:swipe', self.onPanelSwipe);
     el.removeEventListener('panel:swipeopen', self.onPanelSwipeOpen);
     el.removeEventListener('panel:breakpoint', self.onBreakpoint);
+    el.removeEventListener('panel:resize', self.onResize);
   }
 
   componentDidMount() {
@@ -130,7 +140,8 @@ class F7Panel extends React.Component {
       effect,
       opened,
       left,
-      reveal
+      reveal,
+      resizable
     } = self.props;
 
     if (el) {
@@ -142,6 +153,7 @@ class F7Panel extends React.Component {
       el.addEventListener('panel:swipe', self.onPanelSwipe);
       el.addEventListener('panel:swipeopen', self.onPanelSwipeOpen);
       el.addEventListener('panel:breakpoint', self.onBreakpoint);
+      el.addEventListener('panel:resize', self.onResize);
     }
 
     self.$f7ready(() => {
@@ -153,7 +165,8 @@ class F7Panel extends React.Component {
       }
 
       self.f7Panel = self.$f7.panel.create({
-        el
+        el,
+        resizable
       });
     });
 
@@ -186,6 +199,15 @@ class F7Panel extends React.Component {
   set refs(refs) {}
 
   componentDidUpdate(prevProps, prevState) {
+    __reactComponentWatch(this, 'props.resizable', prevProps, prevState, resizable => {
+      const self = this;
+      if (!resizable) return;
+
+      if (self.f7Panel && !self.f7Panel.resizableInitialized) {
+        self.f7Panel.initResizablePanel();
+      }
+    });
+
     __reactComponentWatch(this, 'props.opened', prevProps, prevState, opened => {
       const self = this;
       if (!self.$f7) return;
@@ -211,7 +233,8 @@ __reactComponentSetProps(F7Panel, Object.assign({
   reveal: Boolean,
   left: Boolean,
   right: Boolean,
-  opened: Boolean
+  opened: Boolean,
+  resizable: Boolean
 }, Mixins.colorProps));
 
 F7Panel.displayName = 'f7-panel';

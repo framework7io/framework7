@@ -201,9 +201,12 @@ function initTouch() {
       : isInsideScrollableViewLight(rippleTarget);
 
     if (!inScrollable) {
+      removeRipple();
       createRipple(rippleTarget, touchStartX, touchStartY);
     } else {
+      clearTimeout(rippleTimeout);
       rippleTimeout = setTimeout(() => {
+        removeRipple();
         createRipple(rippleTarget, touchStartX, touchStartY);
       }, 80);
     }
@@ -213,9 +216,7 @@ function initTouch() {
     removeRipple();
   }
   function rippleTouchEnd() {
-    if (rippleWave) {
-      removeRipple();
-    } else if (rippleTarget && !isMoved) {
+    if (!rippleWave && rippleTarget && !isMoved) {
       clearTimeout(rippleTimeout);
       createRipple(rippleTarget, touchStartX, touchStartY);
       setTimeout(removeRipple, 0);
@@ -581,6 +582,8 @@ function initTouch() {
       touch = e.targetTouches[0];
       if (touch && touch.touchType === 'stylus') {
         distance = 5;
+      } else {
+        distance = 3;
       }
     }
 

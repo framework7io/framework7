@@ -155,7 +155,7 @@ export default {
   },
 
   created() {
-    Utils.bindMethods(this, ['onSortableEnable', 'onSortableDisable', 'onSortableSort', 'onTabShow', 'onTabHide']);
+    Utils.bindMethods(this, ['onSortableEnable', 'onSortableDisable', 'onSortableSort', 'onTabShow', 'onTabHide', 'onSubmit']);
   },
 
   mounted() {
@@ -163,7 +163,8 @@ export default {
     const el = self.$refs.el;
     const {
       virtualList,
-      virtualListParams
+      virtualListParams,
+      form
     } = self.props;
 
     if (el) {
@@ -172,6 +173,10 @@ export default {
       el.addEventListener('sortable:sort', self.onSortableSort);
       el.addEventListener('tab:show', self.onTabShow);
       el.addEventListener('tab:hide', self.onTabHide);
+
+      if (form) {
+        el.addEventListener('submit', self.onSubmit);
+      }
     }
 
     if (!virtualList) return;
@@ -228,6 +233,10 @@ export default {
       el.removeEventListener('sortable:sort', self.onSortableSort);
       el.removeEventListener('tab:show', self.onTabShow);
       el.removeEventListener('tab:hide', self.onTabHide);
+
+      if (self.props.form) {
+        el.removeEventListener('submit', self.onSubmit);
+      }
     }
 
     if (!(self.virtualList && self.f7VirtualList)) return;
@@ -235,6 +244,10 @@ export default {
   },
 
   methods: {
+    onSubmit(event) {
+      this.dispatchEvent('submit', event);
+    },
+
     onSortableEnable(event) {
       this.dispatchEvent('sortable:enable sortableEnable', event);
     },

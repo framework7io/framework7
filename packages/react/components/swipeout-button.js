@@ -29,6 +29,7 @@ class F7SwipeoutButton extends React.Component {
       delete: deleteProp,
       close,
       href,
+      confirmTitle,
       confirmText,
       text
     } = props;
@@ -45,6 +46,7 @@ class F7SwipeoutButton extends React.Component {
       id: id,
       style: style,
       'data-confirm': confirmText || undefined,
+      'data-confirm-title': confirmTitle || undefined,
       className: classes
     }, this.slots['default'], !this.slots.default && text);
   }
@@ -78,6 +80,7 @@ __reactComponentSetProps(F7SwipeoutButton, Object.assign({
   className: String,
   style: Object,
   text: String,
+  confirmTitle: String,
   confirmText: String,
   overswipe: Boolean,
   close: Boolean,

@@ -8,9 +8,11 @@ export default {
     id: [String, Number],
     tabletFullscreen: Boolean,
     opened: Boolean,
-    closeByBackdropClick: Boolean,
+    animate: Boolean,
     backdrop: Boolean,
-    animate: Boolean
+    backdropEl: [String, Object, window.HTMLElement],
+    closeByBackdropClick: Boolean,
+    closeOnEscape: Boolean
   }, Mixins.colorProps),
 
   render() {
@@ -65,15 +67,19 @@ export default {
     const {
       closeByBackdropClick,
       backdrop,
-      animate
+      backdropEl,
+      animate,
+      closeOnEscape
     } = props;
     const popupParams = {
       el
     };
     {
       if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') popupParams.closeByBackdropClick = closeByBackdropClick;
+      if (typeof self.$options.propsData.closeOnEscape !== 'undefined') popupParams.closeOnEscape = closeOnEscape;
       if (typeof self.$options.propsData.animate !== 'undefined') popupParams.animate = animate;
       if (typeof self.$options.propsData.backdrop !== 'undefined') popupParams.backdrop = backdrop;
+      if (typeof self.$options.propsData.backdropEl !== 'undefined') popupParams.backdropEl = backdropEl;
     }
     self.$f7ready(() => {
       self.f7Popup = self.$f7.popup.create(popupParams);

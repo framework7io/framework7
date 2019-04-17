@@ -1,5 +1,5 @@
 /**
- * Framework7 4.2.2
+ * Framework7 4.3.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 4, 2019
+ * Released on: April 17, 2019
  */
 
 (function (global, factory) {
@@ -2801,6 +2801,7 @@
       else if (max === b) { h = (r - g) / d + 4; }
       var l = (min + max) / 2;
       var s = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1));
+      if (h < 0) { h = 360 / 60 + h; }
       return [h * 60, s, l];
     },
     colorHslToRgb: function colorHslToRgb(h, s, l) {
@@ -2818,6 +2819,33 @@
       else if (hp <= 6) { rgb1 = [c, 0, x]; }
       var m = l - (c / 2);
       return rgb1.map(function (n) { return Math.max(0, Math.min(255, Math.round(255 * (n + m)))); });
+    },
+    colorHsbToHsl: function colorHsbToHsl(h, s, b) {
+      var HSL = {
+        h: h,
+        s: 0,
+        l: 0,
+      };
+      var HSB = { h: h, s: s, b: b };
+
+      HSL.l = (2 - HSB.s) * HSB.b / 2;
+      HSL.s = HSL.l && HSL.l < 1 ? HSB.s * HSB.b / (HSL.l < 0.5 ? HSL.l * 2 : 2 - HSL.l * 2) : HSL.s;
+
+      return [HSL.h, HSL.s, HSL.l];
+    },
+    colorHslToHsb: function colorHslToHsb(h, s, l) {
+      var HSB = {
+        h: h,
+        s: 0,
+        b: 0,
+      };
+      var HSL = { h: h, s: s, l: l };
+
+      var t = HSL.s * (HSL.l < 0.5 ? HSL.l : 1 - HSL.l);
+      HSB.b = HSL.l + t;
+      HSB.s = HSL.l > 0 ? 2 * t / HSB.b : HSB.s;
+
+      return [HSB.h, HSB.s, HSB.b];
     },
     colorThemeCSSProperties: function colorThemeCSSProperties() {
       var args = [], len = arguments.length;
@@ -2967,6 +2995,20 @@
 
     // Pixel Ratio
     device.pixelRatio = win.devicePixelRatio || 1;
+
+    // Color Scheme
+    var DARK = '(prefers-color-scheme: dark)';
+    var LIGHT = '(prefers-color-scheme: light)';
+    device.prefersColorScheme = function prefersColorTheme() {
+      var theme;
+      if (win.matchMedia && win.matchMedia(LIGHT).matches) {
+        theme = 'light';
+      }
+      if (win.matchMedia && win.matchMedia(DARK).matches) {
+        theme = 'dark';
+      }
+      return theme;
+    };
 
     // Export object
     return device;
@@ -3470,6 +3512,7 @@
         lazyModulesPath: null,
         initOnDeviceReady: true,
         init: true,
+        autoDarkTheme: false,
       };
 
       // Extend defaults with modules params
@@ -3519,6 +3562,28 @@
       // Init Data & Methods
       app.initData();
 
+      // Auto Dark Theme
+      var DARK = '(prefers-color-scheme: dark)';
+      var LIGHT = '(prefers-color-scheme: light)';
+      app.mq = {};
+      if (win.matchMedia) {
+        app.mq.dark = win.matchMedia(DARK);
+        app.mq.light = win.matchMedia(LIGHT);
+      }
+      app.colorSchemeListener = function colorSchemeListener(ref) {
+        var matches = ref.matches;
+        var media = ref.media;
+
+        if (!matches) {
+          return;
+        }
+        var html = doc.querySelector('html');
+        if (media === DARK) {
+          html.classList.add('theme-dark');
+        } else if (media === LIGHT) {
+          html.classList.remove('theme-dark');
+        }
+      };
       // Init
       if (app.params.init) {
         if (Device.cordova && app.params.initOnDeviceReady) {
@@ -3563,6 +3628,28 @@
       }
     };
 
+    Framework7.prototype.enableAutoDarkTheme = function enableAutoDarkTheme () {
+      if (!win.matchMedia) { return; }
+      var app = this;
+      var html = doc.querySelector('html');
+      if (app.mq.dark && app.mq.light) {
+        app.mq.dark.addListener(app.colorSchemeListener);
+        app.mq.light.addListener(app.colorSchemeListener);
+      }
+      if (app.mq.dark && app.mq.dark.matches) {
+        html.classList.add('theme-dark');
+      } else if (app.mq.light && app.mq.light.matches) {
+        html.classList.remove('theme-dark');
+      }
+    };
+
+    Framework7.prototype.disableAutoDarkTheme = function disableAutoDarkTheme () {
+      if (!win.matchMedia) { return; }
+      var app = this;
+      if (app.mq.dark) { app.mq.dark.removeListener(app.colorSchemeListener); }
+      if (app.mq.light) { app.mq.light.removeListener(app.colorSchemeListener); }
+    };
+
     Framework7.prototype.init = function init () {
       var app = this;
       if (app.initialized) { return app; }
@@ -3572,6 +3659,11 @@
       // RTL attr
       if (app.rtl) {
         $('html').attr('dir', 'rtl');
+      }
+
+      // Auto Dark Theme
+      if (app.params.autoDarkTheme) {
+        app.enableAutoDarkTheme();
       }
 
       // Root class
@@ -4042,6 +4134,9 @@
         xhr.setRequestHeader('Content-Type', options.contentType);
       }
     }
+    if (options.dataType === 'json' && (!options.headers || !options.headers.Accept)) {
+      xhr.setRequestHeader('Accept', 'application/json');
+    }
 
     // Additional headers
     if (options.headers) {
@@ -4484,9 +4579,12 @@
         : isInsideScrollableViewLight(rippleTarget);
 
       if (!inScrollable) {
+        removeRipple();
         createRipple(rippleTarget, touchStartX, touchStartY);
       } else {
+        clearTimeout(rippleTimeout);
         rippleTimeout = setTimeout(function () {
+          removeRipple();
           createRipple(rippleTarget, touchStartX, touchStartY);
         }, 80);
       }
@@ -4496,9 +4594,7 @@
       removeRipple();
     }
     function rippleTouchEnd() {
-      if (rippleWave) {
-        removeRipple();
-      } else if (rippleTarget && !isMoved) {
+      if (!rippleWave && rippleTarget && !isMoved) {
         clearTimeout(rippleTimeout);
         createRipple(rippleTarget, touchStartX, touchStartY);
         setTimeout(removeRipple, 0);
@@ -4866,6 +4962,8 @@
         touch = e.targetTouches[0];
         if (touch && touch.touchType === 'stylus') {
           distance = 5;
+        } else {
+          distance = 3;
         }
       }
 
@@ -6592,7 +6690,9 @@
         }
       } else {
         // Page remove event
-        router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'previous', undefined, options);
+        router.pageCallback('beforeOut', $oldPage, $oldNavbarInner, 'current', undefined, options);
+        router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', undefined, options);
+        router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'current', undefined, options);
         router.removePage($oldPage);
         if (separateNavbar && $oldNavbarInner && $oldNavbarInner.length) {
           router.removeNavbar($oldNavbarInner);
@@ -6610,6 +6710,10 @@
           }
         } else {
           // Page remove event
+          if ($oldPageEl.hasClass('page-current')) {
+            router.pageCallback('beforeOut', $oldPage, $oldNavbarInner, 'current', undefined, options);
+            router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', undefined, options);
+          }
           router.pageCallback('beforeRemove', $oldPageEl, $oldNavbarInner && $oldNavbarInner.eq(index), 'previous', undefined, options);
           router.removePage($oldPageEl);
           if (separateNavbar && $oldNavbarInnerEl.length) {
@@ -6697,7 +6801,7 @@
 
       var keepOldPage = (router.params.preloadPreviousPage || router.params[((app.theme) + "SwipeBack")]) && !isMaster;
       if (!keepOldPage) {
-        if ($newPage.hasClass('smart-select-page') || $newPage.hasClass('photo-browser-page') || $newPage.hasClass('autocomplete-page')) {
+        if ($newPage.hasClass('smart-select-page') || $newPage.hasClass('photo-browser-page') || $newPage.hasClass('autocomplete-page') || $newPage.hasClass('color-picker-page')) {
           keepOldPage = true;
         }
       }
@@ -11902,11 +12006,14 @@
         $el.removeClass('navbar-transitioning');
       });
       $el.addClass(className);
+      $el.trigger('navbar:hide');
+      app.emit('navbarHide', $el[0]);
     },
     show: function show(el, animate) {
       if ( el === void 0 ) el = '.navbar-hidden';
       if ( animate === void 0 ) animate = true;
 
+      var app = this;
       var $el = $(el);
       if ($el.hasClass('navbar-inner')) { $el = $el.parents('.navbar'); }
       if (!$el.length) { return; }
@@ -11918,6 +12025,8 @@
         });
       }
       $el.removeClass('navbar-hidden navbar-large-hidden');
+      $el.trigger('navbar:show');
+      app.emit('navbarShow', $el[0]);
     },
     getElByPage: function getElByPage(page) {
       var $pageEl;
@@ -11971,9 +12080,12 @@
       var $pageEl = $(app.navbar.getPageByEl($navbarInnerEl));
       $navbarInnerEl.addClass('navbar-inner-large-collapsed');
       $pageEl.eq(0).addClass('page-with-navbar-large-collapsed').trigger('page:navbarlargecollapsed');
+      var $navbarEl = $navbarInnerEl.parents('.navbar');
       if (app.theme === 'md' || app.theme === 'aurora') {
-        $navbarInnerEl.parents('.navbar').addClass('navbar-large-collapsed');
+        $navbarEl.addClass('navbar-large-collapsed');
       }
+      $navbarEl.trigger('navbar:collapse');
+      app.emit('navbarCollapse', $navbarEl[0]);
     },
     expandLargeTitle: function expandLargeTitle(navbarInnerEl) {
       var app = this;
@@ -11990,9 +12102,12 @@
       var $pageEl = $(app.navbar.getPageByEl($navbarInnerEl));
       $navbarInnerEl.removeClass('navbar-inner-large-collapsed');
       $pageEl.eq(0).removeClass('page-with-navbar-large-collapsed').trigger('page:navbarlargeexpanded');
+      var $navbarEl = $navbarInnerEl.parents('.navbar');
       if (app.theme === 'md' || app.theme === 'aurora') {
-        $navbarInnerEl.parents('.navbar').removeClass('navbar-large-collapsed');
+        $navbarEl.removeClass('navbar-large-collapsed');
       }
+      $navbarEl.trigger('navbar:expand');
+      app.emit('navbarExpand', $navbarEl[0]);
     },
     toggleLargeTitle: function toggleLargeTitle(navbarInnerEl) {
       var app = this;
@@ -12237,7 +12352,7 @@
       },
     },
     on: {
-      'panelBreakpoint resize viewMasterDetailBreakpoint': function onResize() {
+      'panelBreakpoint panelResize resize viewMasterDetailBreakpoint': function onResize() {
         var app = this;
         $('.navbar').each(function (index, navbarEl) {
           app.navbar.size(navbarEl);
@@ -12641,8 +12756,6 @@
 
     $el.prepend(ripple.$rippleWaveEl);
 
-    /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
-    // ripple._clientLeft = ripple.$rippleWaveEl[0].clientLeft;
     ripple.rippleTransform = "translate3d(" + (-center.x + (width / 2)) + "px, " + (-center.y + (height / 2)) + "px, 0) scale(1)";
 
     Utils.nextFrame(function () {
@@ -12653,7 +12766,7 @@
     return ripple;
   };
 
-  TouchRipple.prototype.onRemove = function onRemove () {
+  TouchRipple.prototype.destroy = function destroy () {
     var ripple = this;
     if (ripple.$rippleWaveEl) {
       ripple.$rippleWaveEl.remove();
@@ -12671,7 +12784,7 @@
     var $rippleWaveEl = this.$rippleWaveEl;
     var rippleTransform = this.rippleTransform;
     var removeTimeout = Utils.nextTick(function () {
-      ripple.onRemove();
+      ripple.destroy();
     }, 400);
     ripple.removing = true;
     $rippleWaveEl
@@ -12685,12 +12798,12 @@
             .transform(rippleTransform.replace('scale(1)', 'scale(1.01)'));
 
           removeTimeout = Utils.nextTick(function () {
-            ripple.onRemove();
+            ripple.destroy();
           }, 700);
 
           $rippleWaveEl.transitionEnd(function () {
             clearTimeout(removeTimeout);
-            ripple.onRemove();
+            ripple.destroy();
           });
         });
       });

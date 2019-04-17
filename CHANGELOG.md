@@ -2,6 +2,80 @@
 
 # Change Log
 
+# [v4.3.0](https://github.com/framework7io/framework7/compare/v4.2.2...v4.3.0) - April 17, 2019
+  * Core
+    * Color Picker - all new modular Color Picker component 🎉
+    * Auto Dark Theme
+      * Now it can be set automatically based on user system color scheme preference (where supported). To enable `autoDarkTheme: true` must be passed to app init parameters
+      * New `app.enableAutoDarkTheme()` to enable this feature manually (where supported)
+      * New `app.disableAutoDarkTheme()` to disable this feature manually
+    * Panel
+      * Now side panels can be resizable 🎊. Requires `panel-resizable` class on panel element to enable
+    * Device
+      * New `prefersColorScheme()` that returns `dark` or `light` where supported, or `undefined` where not supported
+    * Cards
+      * Fixed issue whith "jumpy" layout when expandable card closes on iOS
+    * Navbar
+      * New `navbar:hide` and `navbar:show` events when navbar hidden/shown
+      * New `navbar:collapse` and `navbar:expand` events when navbar collapsed/expanded to large title navbar
+    * Popover
+      * New `closeOnEscape` parameter to allow to close it when `ESC` keyboard key pressed (disabled by default)
+      * New `backdropEl` parameter to pass custom backdrop element
+      * Now it won't be closed on backdrop click if onscreen keyboard opened (requires cordova keyboard plugin)
+      * Now it will be repositioned when onscreen keyboard opens and closes (requires cordova keyboard plugin)
+      * Reworked/tweaked positioning in MD theme
+    * Popup
+      * New `closeOnEscape` parameter to allow to close it when `ESC` keyboard key pressed (disabled by default)
+      * New `backdropEl` parameter to pass custom backdrop element
+      * Now it won't be closed on backdrop click if onscreen keyboard opened (requires cordova keyboard plugin)
+    * Actions
+      * New `closeOnEscape` parameter to allow to close it when `ESC` keyboard key pressed (disabled by default)
+      * New `backdropEl` parameter to pass custom backdrop element
+      * Now it won't be closed on backdrop click if onscreen keyboard opened (requires cordova keyboard plugin)
+    * Sheet
+      * New `closeOnEscape` parameter to allow to close it when `ESC` keyboard key pressed (disabled by default)
+      * New `backdropEl` parameter to pass custom backdrop element
+      * Now it won't be closed on backdrop click if onscreen keyboard opened (requires cordova keyboard plugin)
+      * Now it can be opened from top (instead of bottom) by adding `sheet-modal-top` class to sheet modal element
+    * Stepper
+      * Reworked RTL layout to be in same direction as in LTR
+    * Request
+      * Now it automatically set `Accept: 'application/json'` header when `dataType: 'json'` parameter passed
+    * Touch
+      * Fixed issue with not-removed touch-ripple with very fast clicks or multi-touch
+    * Utils
+      * New `utils.colorHsbToHsl(h, s, b)` method to convert HSB(V) color to HSL color
+      * New `utils.colorHslToHsb(h, s, l)` method to convert HSL color to HSB(V) color
+  * Phenome
+    * Panel
+      * New `resizable` prop to enable resizable panel
+    * Navbar
+      * New `navbar:hide`/`navbarHide` and `navbar:show`/`navbarShow` events when navbar hidden/shown
+      * New `navbar:collapse`/`navbarCollapse` and `navbar:expand`/`navbarExpand` events when navbar collapsed/expanded to large title navbar
+    * Popover
+      * Added `backdrop` prop to enable/disable backdrop
+      * New `closeOnEscape` prop to allow to close it when `ESC` keyboard key pressed (disabled by default)
+      * New `backdropEl` prop to pass custom backdrop element
+    * Popup
+      * New `closeOnEscape` prop to allow to close it when `ESC` keyboard key pressed (disabled by default)
+      * New `backdropEl` prop to pass custom backdrop element
+    * Actions
+      * Added `backdrop` prop to enable/disable backdrop
+      * New `closeOnEscape` prop to allow to close it when `ESC` keyboard key pressed (disabled by default)
+      * New `backdropEl` prop to pass custom backdrop element
+    * Sheet
+      * New `closeOnEscape` prop to allow to close it when `ESC` keyboard key pressed (disabled by default)
+      * New `backdropEl` prop to pass custom backdrop element
+      * New `position` prop, can be `top` or `bottom` (default) to define how to open Sheet
+      * New `top` prop, alias for `position="top"`
+      * New `bottom` prop, alias for `position="bottom"`
+    * ListInput / Input
+      * Now it accepts special type `colorpicker` to open color picker on focus
+      * New prop `colorPickerParams` to specify color picker params for `colorpicker` type
+    * SwipeoutButton
+      * New `confirmTitle` prop to set confirm dialog title
+  * Lots of minor fixes and improvements
+
 # [v4.2.2](https://github.com/framework7io/framework7/compare/v4.2.0...v4.2.2) - April 4, 2019
   * Core
     * Smart Select

@@ -93,7 +93,10 @@ class F7Actions extends React.Component {
       forceToPopover,
       opened,
       closeByBackdropClick,
-      closeByOutsideClick
+      closeByOutsideClick,
+      closeOnEscape,
+      backdrop,
+      backdropEl
     } = props;
     const actionsParams = {
       el: self.refs.el,
@@ -103,8 +106,11 @@ class F7Actions extends React.Component {
     {
       if ('convertToPopover' in props) actionsParams.convertToPopover = convertToPopover;
       if ('forceToPopover' in props) actionsParams.forceToPopover = forceToPopover;
+      if ('backdrop' in props) actionsParams.backdrop = backdrop;
+      if ('backdropEl' in props) actionsParams.backdropEl = backdropEl;
       if ('closeByBackdropClick' in props) actionsParams.closeByBackdropClick = closeByBackdropClick;
       if ('closeByOutsideClick' in props) actionsParams.closeByOutsideClick = closeByOutsideClick;
+      if ('closeOnEscape' in props) actionsParams.closeOnEscape = closeOnEscape;
     }
     self.$f7ready(() => {
       self.f7Actions = self.$f7.actions.create(actionsParams);
@@ -153,8 +159,11 @@ __reactComponentSetProps(F7Actions, Object.assign({
   convertToPopover: Boolean,
   forceToPopover: Boolean,
   target: [String, Object],
+  backdrop: Boolean,
+  backdropEl: [String, Object, window.HTMLElement],
   closeByBackdropClick: Boolean,
-  closeByOutsideClick: Boolean
+  closeByOutsideClick: Boolean,
+  closeOnEscape: Boolean
 }, Mixins.colorProps));
 
 F7Actions.displayName = 'f7-actions';

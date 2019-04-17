@@ -35,6 +35,7 @@ class Framework7 extends Framework7Class {
       lazyModulesPath: null,
       initOnDeviceReady: true,
       init: true,
+      autoDarkTheme: false,
     };
 
     // Extend defaults with modules params
@@ -84,6 +85,25 @@ class Framework7 extends Framework7Class {
     // Init Data & Methods
     app.initData();
 
+    // Auto Dark Theme
+    const DARK = '(prefers-color-scheme: dark)';
+    const LIGHT = '(prefers-color-scheme: light)';
+    app.mq = {};
+    if (window.matchMedia) {
+      app.mq.dark = window.matchMedia(DARK);
+      app.mq.light = window.matchMedia(LIGHT);
+    }
+    app.colorSchemeListener = function colorSchemeListener({ matches, media }) {
+      if (!matches) {
+        return;
+      }
+      const html = document.querySelector('html');
+      if (media === DARK) {
+        html.classList.add('theme-dark');
+      } else if (media === LIGHT) {
+        html.classList.remove('theme-dark');
+      }
+    };
     // Init
     if (app.params.init) {
       if (Device.cordova && app.params.initOnDeviceReady) {
@@ -121,6 +141,28 @@ class Framework7 extends Framework7Class {
     }
   }
 
+  enableAutoDarkTheme() {
+    if (!window.matchMedia) return;
+    const app = this;
+    const html = document.querySelector('html');
+    if (app.mq.dark && app.mq.light) {
+      app.mq.dark.addListener(app.colorSchemeListener);
+      app.mq.light.addListener(app.colorSchemeListener);
+    }
+    if (app.mq.dark && app.mq.dark.matches) {
+      html.classList.add('theme-dark');
+    } else if (app.mq.light && app.mq.light.matches) {
+      html.classList.remove('theme-dark');
+    }
+  }
+
+  disableAutoDarkTheme() {
+    if (!window.matchMedia) return;
+    const app = this;
+    if (app.mq.dark) app.mq.dark.removeListener(app.colorSchemeListener);
+    if (app.mq.light) app.mq.light.removeListener(app.colorSchemeListener);
+  }
+
   init() {
     const app = this;
     if (app.initialized) return app;
@@ -130,6 +172,11 @@ class Framework7 extends Framework7Class {
     // RTL attr
     if (app.rtl) {
       $('html').attr('dir', 'rtl');
+    }
+
+    // Auto Dark Theme
+    if (app.params.autoDarkTheme) {
+      app.enableAutoDarkTheme();
     }
 
     // Root class

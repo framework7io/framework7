@@ -44,6 +44,7 @@ declare namespace F7List {
     onVirtualBeforeClear? : (vl?: any, fragment?: any) => void
     onVirtualItemsBeforeInsert? : (vl?: any, fragment?: any) => void
     onVirtualItemsAfterInsert? : (vl?: any, fragment?: any) => void
+    onSubmit? : (event?: any) => void
     onSortableEnable? : (event?: any) => void
     onSortableDisable? : (event?: any) => void
     onSortableSort? : (event?: any, sortData?: any) => void
@@ -52,6 +53,7 @@ declare namespace F7List {
   }
 }
 declare class F7List extends React.Component<F7List.Props, {}> {
+  onSubmit(event? : any) : unknown
   onSortableEnable(event? : any) : unknown
   onSortableDisable(event? : any) : unknown
   onSortableSort(event? : any) : unknown
