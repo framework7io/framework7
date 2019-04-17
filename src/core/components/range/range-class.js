@@ -244,12 +244,8 @@ class Range extends Framework7Class {
       const pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
       const pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
 
-      if (typeof isScrolling === 'undefined') {
-        if (range.vertical) {
-          isScrolling = !(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
-        } else {
-          isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
-        }
+      if (typeof isScrolling === 'undefined' && !range.vertical) {
+        isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
       }
       if (isScrolling) {
         isTouched = false;
