@@ -4,8 +4,9 @@ import Device from '../../utils/device';
 import Support from '../../utils/support';
 
 const CardExpandable = {
-  open(cardEl = '.card-expandable', animate = true) {
+  open(cardEl = '.card-expandable', animate) {
     const app = this;
+
     if ($('.card-opened').length) return;
     const $cardEl = $(cardEl).eq(0);
 
@@ -25,6 +26,13 @@ const CardExpandable = {
     app.emit('cardBeforeOpen', $cardEl[0], prevent);
 
     if (prevented) return;
+
+    if (typeof animate === 'undefined') {
+      animate = $cardEl.dataset().animate;
+    }
+    if (typeof animate === 'undefined') {
+      animate = true;
+    }
 
     const $pageContentEl = $cardEl.parents('.page-content');
 
@@ -292,7 +300,7 @@ const CardExpandable = {
       app.on('touchend:passive', onTouchEnd);
     }
   },
-  close(cardEl = '.card-expandable.card-opened', animate = true) {
+  close(cardEl = '.card-expandable.card-opened', animate) {
     const app = this;
     const $cardEl = $(cardEl).eq(0);
     if (!$cardEl || !$cardEl.length) return;
@@ -303,6 +311,14 @@ const CardExpandable = {
 
     const $pageEl = $cardEl.parents('.page').eq(0);
     if (!$pageEl.length) return;
+
+    if (typeof animate === 'undefined') {
+      animate = $cardEl.dataset().animate;
+    }
+    if (typeof animate === 'undefined') {
+      animate = true;
+    }
+
     let $navbarEl;
     let $toolbarEl;
 

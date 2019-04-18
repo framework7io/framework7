@@ -18,6 +18,10 @@ export default {
     footer: [String, Number],
     outline: Boolean,
     expandable: Boolean,
+    expandableAnimate: {
+      type: Boolean,
+      default: undefined,
+    },
     expandableAnimateWidth: Boolean,
     expandableOpened: Boolean,
     noShadow: Boolean,
@@ -81,6 +85,7 @@ export default {
       padding,
       outline,
       expandable,
+      expandableAnimate,
       expandableAnimateWidth,
       noShadow,
       noBorder,
@@ -129,7 +134,7 @@ export default {
     }
 
     return (
-      <div id={id} style={style} className={classes} ref="el">
+      <div id={id} style={style} className={classes} ref="el" data-animate={expandableAnimate}>
         {headerEl}
         {contentEl}
         {footerEl}
