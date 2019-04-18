@@ -257,7 +257,7 @@ export default {
       'onPageMasterUnstack',
       'onPageNavbarLargeCollapsed',
       'onPageNavbarLargeExpanded',
-      'onCardOpen',
+      'onCardOpened',
       'onCardClose',
     ]);
   },
@@ -292,7 +292,7 @@ export default {
     el.addEventListener('page:masterunstack', self.onPageMasterUnstack);
     el.addEventListener('page:navbarlargecollapsed', self.onPageNavbarLargeCollapsed);
     el.addEventListener('page:navbarlargeexpanded', self.onPageNavbarLargeExpanded);
-    el.addEventListener('card:open', self.onCardOpen);
+    el.addEventListener('card:opened', self.onCardOpened);
     el.addEventListener('card:close', self.onCardClose);
   },
   componentWillUnmount() {
@@ -321,7 +321,7 @@ export default {
     el.removeEventListener('page:masterunstack', self.onPageMasterUnstack);
     el.removeEventListener('page:navbarlargecollapsed', self.onPageNavbarLargeCollapsed);
     el.removeEventListener('page:navbarlargeexpanded', self.onPageNavbarLargeExpanded);
-    el.removeEventListener('card:open', self.onCardOpen);
+    el.removeEventListener('card:opened', self.onCardOpened);
     el.removeEventListener('card:close', self.onCardClose);
   },
   methods: {
@@ -456,7 +456,7 @@ export default {
       const page = event.detail;
       this.dispatchEvent('page:beforeremove pageBeforeRemove', event, page);
     },
-    onCardOpen() {
+    onCardOpened() {
       this.setState({ hasCardExpandableOpened: true });
     },
     onCardClose() {
