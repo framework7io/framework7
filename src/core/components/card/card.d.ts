@@ -20,7 +20,7 @@ export namespace Card {
       /** Allows to close expandable card with swipe (default true) */
       swipeToClose?: boolean
       /** Enables expandable card backdrop layer (default true) */
-      backrop?: boolean
+      backdrop?: boolean
       /** When enabled, expandable card will be closed on backdrop click. (default true) */
       closeByBackdropClick?: boolean
     } | undefined
