@@ -1,3 +1,4 @@
+/* eslint no-param-reassign: "off" */
 import $ from 'dom7';
 import Utils from '../../utils/utils';
 import Device from '../../utils/device';
