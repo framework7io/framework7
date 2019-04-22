@@ -77,6 +77,7 @@ Bart DJ
 ---
 
 ### $10+ Supporter
+Josué Marinho<br>
 Will Mero<br>
 Jorge Pagano<br>
 Jacob Gur<br>
@@ -102,7 +103,6 @@ Zakery Kates<br>
 Dan Boschen<br>
 Ferry van de Graaf<br>
 Denis Bousselier<br>
-Firestream<br>
 Matthew Becker<br>
 Timo Ernst<br>
 Dave Billington
