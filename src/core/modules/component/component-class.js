@@ -18,6 +18,7 @@ class Framework7Component {
         $app: app,
         $f7: app,
         $options: Utils.extend({ id }, options),
+        $id: options.id || id,
       }
     );
     const { $options } = self;
