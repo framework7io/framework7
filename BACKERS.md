@@ -3,6 +3,11 @@
 <table>
   <tr>
     <td align="center" valign="middle">
+      <a href="https://blokt.com/" target="_blank">
+        <img width="200" src="https://cdn.framework7.io/i/sponsors/blokt.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://www.activewaiter.com/" target="_blank">
         <img width="200" src="https://cdn.framework7.io/i/sponsors/activewaiter.png">
       </a>
@@ -12,13 +17,13 @@
         <img width="200" src="https://cdn.framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://appvalley.vip/" target="_blank">
         <img width="200" src="https://cdn.framework7.io/i/sponsors/appvalley.jpg">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.securcom.me/" target="_blank">
         <img width="200" src="https://cdn.framework7.io/i/sponsors/securcom.png">
@@ -29,7 +34,6 @@
         <img width="200" src="https://cdn.framework7.io/i/sponsors/tommy.png">
       </a>
     </td>
-    <td></td>
   </tr>
 </table>
 
@@ -63,6 +67,7 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 ---
 
 ### $50+ Top Supporter
+[Blokt](https://blokt.com/) - Cryptocurrency News<br>
 Alexey Victorov<br>
 [ActiveWaiter](https://www.activewaiter.com/) - Order. Drink. Eat. Pay. Love.<br>
 [Wappler](https://wappler.io) - Visual Web App Creator, offers full visual Framework7 builder<br>
