@@ -19,6 +19,8 @@ export namespace Touch {
       fastClicksDelayBetweenClicks? : number
       /** This parameter allows to specify elements not handled by fast clicks by passing CSS selector of such elements. */
       fastClicksExclude? : string
+      /** Distance threshold (in px) to prevent short swipes. So if tap/move distance is larger than this value then "click" will not be triggered. (default 5) */
+      touchClicksDistanceThreshold? : number
       /** . (default true) */
       disableContextMenu? : boolean
       /** Enables tap hold. (default false) */
