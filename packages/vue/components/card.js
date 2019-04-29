@@ -16,6 +16,30 @@ export default {
     expandable: Boolean,
     expandableAnimateWidth: Boolean,
     expandableOpened: Boolean,
+    animate: {
+      type: Boolean,
+      default: undefined
+    },
+    hideNavbarOnOpen: {
+      type: Boolean,
+      default: undefined
+    },
+    hideToolbarOnOpen: {
+      type: Boolean,
+      default: undefined
+    },
+    swipeToClose: {
+      type: Boolean,
+      default: undefined
+    },
+    closeByBackdropClick: {
+      type: Boolean,
+      default: undefined
+    },
+    backdrop: {
+      type: Boolean,
+      default: undefined
+    },
     noShadow: Boolean,
     noBorder: Boolean,
     padding: {
@@ -84,6 +108,12 @@ export default {
       outline,
       expandable,
       expandableAnimateWidth,
+      animate,
+      hideNavbarOnOpen,
+      hideToolbarOnOpen,
+      swipeToClose,
+      closeByBackdropClick,
+      backdrop,
       noShadow,
       noBorder
     } = props;
@@ -119,7 +149,13 @@ export default {
       class: classes,
       ref: 'el',
       attrs: {
-        id: id
+        id: id,
+        'data-animate': typeof animate === 'undefined' ? animate : animate.toString(),
+        'data-hide-navbar-on-open': typeof hideNavbarOnOpen === 'undefined' ? hideNavbarOnOpen : hideNavbarOnOpen.toString(),
+        'data-hide-toolbar-on-open': typeof hideToolbarOnOpen === 'undefined' ? hideToolbarOnOpen : hideToolbarOnOpen.toString(),
+        'data-swipe-to-close': typeof swipeToClose === 'undefined' ? swipeToClose : swipeToClose.toString(),
+        'data-close-by-backdrop-click': typeof closeByBackdropClick === 'undefined' ? closeByBackdropClick : closeByBackdropClick.toString(),
+        'data-backdrop': typeof backdrop === 'undefined' ? backdrop : backdrop.toString()
       }
     }, [headerEl, contentEl, footerEl, this.$slots['default']]);
   },

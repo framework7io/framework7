@@ -1,5 +1,5 @@
 /**
- * Framework7 4.3.0
+ * Framework7 4.3.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 17, 2019
+ * Released on: April 29, 2019
  */
 
 (function (global, factory) {
@@ -4956,15 +4956,16 @@
       return true;
     }
     function handleTouchMoveLight(e) {
-      var distance = 0;
       var touch;
+      var distance;
       if (e.type === 'touchmove') {
         touch = e.targetTouches[0];
-        if (touch && touch.touchType === 'stylus') {
-          distance = 5;
-        } else {
-          distance = 3;
-        }
+        distance = params.touchClicksDistanceThreshold;
+        // if (touch && touch.touchType === 'stylus') {
+        //   distance = 5;
+        // } else {
+        //   distance = 3;
+        // }
       }
 
       if (distance && touch) {
@@ -5137,6 +5138,8 @@
         fastClicksDistanceThreshold: 10,
         fastClicksDelayBetweenClicks: 50,
         fastClicksExclude: '', // CSS selector
+        // Clicks
+        touchClicksDistanceThreshold: 5,
         // ContextMenu
         disableContextMenu: false,
         // Tap Hold
@@ -6133,7 +6136,7 @@
 
         // Page before animation callback
         router.pageCallback('beforeOut', $currentPageEl, $currentNavbarInnerEl, 'current', 'next', { route: $currentPageEl[0].f7Page.route, swipeBack: true });
-        router.pageCallback('beforeIn', $previousPageEl, $previousNavbarInnerEl, 'previous', 'current', { route: $previousPageEl[0].f7Page.route, swipeBack: true });
+        router.pageCallback('beforeIn', $previousPageEl, $previousNavbarInnerEl, 'previous', 'current', { route: $previousPageEl[0].f7Page.route, swipeBack: true }, $currentPageEl[0]);
 
         $el.trigger('swipeback:beforechange', callbackData);
         router.emit('swipebackBeforeChange', callbackData);
@@ -11091,6 +11094,7 @@
         $app: app,
         $f7: app,
         $options: Utils.extend({ id: id }, options),
+        $id: options.id || id,
       }
     );
     var $options = self.$options;

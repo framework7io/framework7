@@ -2,6 +2,25 @@
 
 # Change Log
 
+# [v4.3.1](https://github.com/framework7io/framework7/compare/v4.3.0...v4.3.1) - April 29, 2019
+  * Core
+    * Range Slider
+      * Fixed issue with vertical slider not working correctly with side swipes
+    * Cards
+      * Fixed issue with expandable cards glitches in iOS
+      * Expandable card app parameters can now be set on each card individually with `data-` attributes: `data-animate`, `data-backdrop`, `data-swipe-to-close`, `data-close-by-backdrop-click`, `data-hide-navbar-on-open`, `data-hide-toolbar-on-open`
+    * Router
+      * Fixed missing reference to `pageFrom` in swipe-back data
+      * Router component has new `$id` property
+    * Touch
+      * Now touch clicks threshold is configurable with `app.touch.touchClicksDistanceThreshold` parameter
+  * Phenome
+    * Card
+      * Expandable card app parameters can now be set on each card individually with new props: `animate`, `hideNavbarOnOpen`, `hideToolbarOnOpen`, `swipeToClose`, `closeByBackdropClick`, `backdrop`
+    * Navbar
+      * Now it should return all children correctly when `inner: false` passed
+  * Minor fixes
+
 # [v4.3.0](https://github.com/framework7io/framework7/compare/v4.2.2...v4.3.0) - April 17, 2019
   * Core
     * Color Picker - all new modular Color Picker component 🎉

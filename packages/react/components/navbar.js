@@ -119,59 +119,67 @@ class F7Navbar extends React.Component {
     const addLeftTitleClass = self.$theme && self.$theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
     const addCenterTitleClass = self.$theme && self.$theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || self.$theme && self.$theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
     const slots = self.slots;
-
-    if (inner) {
-      if (backLink || slots['nav-left']) {
-        leftEl = React.createElement(F7NavLeft, {
-          backLink: backLink,
-          backLinkUrl: backLinkUrl,
-          backLinkForce: backLinkForce,
-          backLinkShowText: backLinkShowText,
-          onBackClick: self.onBackClick
-        }, slots['nav-left']);
-      }
-
-      if (title || subtitle || slots.title) {
-        titleEl = React.createElement(F7NavTitle, {
-          title: title,
-          subtitle: subtitle
-        }, slots.title);
-      }
-
-      if (slots['nav-right']) {
-        rightEl = React.createElement(F7NavRight, null, slots['nav-right']);
-      }
-
-      let largeTitle = titleLarge;
-      if (!largeTitle && large && title) largeTitle = title;
-
-      if (largeTitle) {
-        titleLargeEl = React.createElement('div', {
-          className: 'title-large'
-        }, React.createElement('div', {
-          className: 'title-large-text'
-        }, largeTitle));
-      }
-
-      innerEl = React.createElement('div', {
-        ref: __reactNode => {
-          this.__reactRefs['innerEl'] = __reactNode;
-        },
-        className: Utils.classNames('navbar-inner', innerClass, innerClassName, {
-          sliding,
-          'navbar-inner-left-title': addLeftTitleClass,
-          'navbar-inner-centered-title': addCenterTitleClass,
-          'navbar-inner-large': large
-        })
-      }, leftEl, titleEl, rightEl, titleLargeEl, this.slots['default']);
-    }
-
     const classes = Utils.classNames(className, 'navbar', {
       'navbar-hidden': hidden,
       'no-shadow': noShadow,
       'no-hairline': noHairline,
       'navbar-large': large
     }, Mixins.colorClasses(props));
+
+    if (!inner) {
+      return React.createElement('div', {
+        ref: __reactNode => {
+          this.__reactRefs['el'] = __reactNode;
+        },
+        id: id,
+        style: style,
+        className: classes
+      }, this.slots['default']);
+    }
+
+    if (backLink || slots['nav-left']) {
+      leftEl = React.createElement(F7NavLeft, {
+        backLink: backLink,
+        backLinkUrl: backLinkUrl,
+        backLinkForce: backLinkForce,
+        backLinkShowText: backLinkShowText,
+        onBackClick: self.onBackClick
+      }, slots['nav-left']);
+    }
+
+    if (title || subtitle || slots.title) {
+      titleEl = React.createElement(F7NavTitle, {
+        title: title,
+        subtitle: subtitle
+      }, slots.title);
+    }
+
+    if (slots['nav-right']) {
+      rightEl = React.createElement(F7NavRight, null, slots['nav-right']);
+    }
+
+    let largeTitle = titleLarge;
+    if (!largeTitle && large && title) largeTitle = title;
+
+    if (largeTitle) {
+      titleLargeEl = React.createElement('div', {
+        className: 'title-large'
+      }, React.createElement('div', {
+        className: 'title-large-text'
+      }, largeTitle));
+    }
+
+    innerEl = React.createElement('div', {
+      ref: __reactNode => {
+        this.__reactRefs['innerEl'] = __reactNode;
+      },
+      className: Utils.classNames('navbar-inner', innerClass, innerClassName, {
+        sliding,
+        'navbar-inner-left-title': addLeftTitleClass,
+        'navbar-inner-centered-title': addCenterTitleClass,
+        'navbar-inner-large': large
+      })
+    }, leftEl, titleEl, rightEl, titleLargeEl, this.slots['default']);
     return React.createElement('div', {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;

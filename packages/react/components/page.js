@@ -25,7 +25,7 @@ class F7Page extends React.Component {
     })();
 
     (() => {
-      Utils.bindMethods(this, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack', 'onPageNavbarLargeCollapsed', 'onPageNavbarLargeExpanded', 'onCardOpen', 'onCardClose']);
+      Utils.bindMethods(this, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack', 'onPageNavbarLargeCollapsed', 'onPageNavbarLargeExpanded', 'onCardOpened', 'onCardClose']);
     })();
   }
 
@@ -195,7 +195,7 @@ class F7Page extends React.Component {
     this.dispatchEvent('page:beforeremove pageBeforeRemove', event, page);
   }
 
-  onCardOpen() {
+  onCardOpened() {
     this.setState({
       hasCardExpandableOpened: true
     });
@@ -367,7 +367,7 @@ class F7Page extends React.Component {
     el.removeEventListener('page:masterunstack', self.onPageMasterUnstack);
     el.removeEventListener('page:navbarlargecollapsed', self.onPageNavbarLargeCollapsed);
     el.removeEventListener('page:navbarlargeexpanded', self.onPageNavbarLargeExpanded);
-    el.removeEventListener('card:open', self.onCardOpen);
+    el.removeEventListener('card:opened', self.onCardOpened);
     el.removeEventListener('card:close', self.onCardClose);
   }
 
@@ -407,7 +407,7 @@ class F7Page extends React.Component {
     el.addEventListener('page:masterunstack', self.onPageMasterUnstack);
     el.addEventListener('page:navbarlargecollapsed', self.onPageNavbarLargeCollapsed);
     el.addEventListener('page:navbarlargeexpanded', self.onPageNavbarLargeExpanded);
-    el.addEventListener('card:open', self.onCardOpen);
+    el.addEventListener('card:opened', self.onCardOpened);
     el.addEventListener('card:close', self.onCardClose);
   }
 

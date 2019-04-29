@@ -1,5 +1,5 @@
 /**
- * Framework7 4.3.0
+ * Framework7 4.3.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 17, 2019
+ * Released on: April 29, 2019
  */
 
 (function (global, factory) {
@@ -4956,15 +4956,16 @@
       return true;
     }
     function handleTouchMoveLight(e) {
-      var distance = 0;
       var touch;
+      var distance;
       if (e.type === 'touchmove') {
         touch = e.targetTouches[0];
-        if (touch && touch.touchType === 'stylus') {
-          distance = 5;
-        } else {
-          distance = 3;
-        }
+        distance = params.touchClicksDistanceThreshold;
+        // if (touch && touch.touchType === 'stylus') {
+        //   distance = 5;
+        // } else {
+        //   distance = 3;
+        // }
       }
 
       if (distance && touch) {
@@ -5137,6 +5138,8 @@
         fastClicksDistanceThreshold: 10,
         fastClicksDelayBetweenClicks: 50,
         fastClicksExclude: '', // CSS selector
+        // Clicks
+        touchClicksDistanceThreshold: 5,
         // ContextMenu
         disableContextMenu: false,
         // Tap Hold
@@ -6133,7 +6136,7 @@
 
         // Page before animation callback
         router.pageCallback('beforeOut', $currentPageEl, $currentNavbarInnerEl, 'current', 'next', { route: $currentPageEl[0].f7Page.route, swipeBack: true });
-        router.pageCallback('beforeIn', $previousPageEl, $previousNavbarInnerEl, 'previous', 'current', { route: $previousPageEl[0].f7Page.route, swipeBack: true });
+        router.pageCallback('beforeIn', $previousPageEl, $previousNavbarInnerEl, 'previous', 'current', { route: $previousPageEl[0].f7Page.route, swipeBack: true }, $currentPageEl[0]);
 
         $el.trigger('swipeback:beforechange', callbackData);
         router.emit('swipebackBeforeChange', callbackData);
@@ -11091,6 +11094,7 @@
         $app: app,
         $f7: app,
         $options: Utils.extend({ id: id }, options),
+        $id: options.id || id,
       }
     );
     var $options = self.$options;
@@ -18398,6 +18402,8 @@
     },
   };
 
+  /* eslint no-param-reassign: "off" */
+
   var CardExpandable = {
     open: function open(cardEl, animate) {
       var assign;
@@ -18405,6 +18411,7 @@
       if ( cardEl === void 0 ) cardEl = '.card-expandable';
       if ( animate === void 0 ) animate = true;
       var app = this;
+
       if ($('.card-opened').length) { return; }
       var $cardEl = $(cardEl).eq(0);
 
@@ -18425,29 +18432,31 @@
 
       if (prevented) { return; }
 
+      var cardParams = Object.assign({ animate: animate }, app.params.card, $cardEl.dataset());
+
       var $pageContentEl = $cardEl.parents('.page-content');
 
-      var $backropEl;
+      var $backdropEl;
       if ($cardEl.attr('data-backdrop-el')) {
-        $backropEl = $($cardEl.attr('data-backdrop-el'));
+        $backdropEl = $($cardEl.attr('data-backdrop-el'));
       }
-      if (!$backropEl && app.params.card.backrop) {
-        $backropEl = $pageContentEl.find('.card-backdrop');
-        if (!$backropEl.length) {
-          $backropEl = $('<div class="card-backdrop"></div>');
-          $pageContentEl.append($backropEl);
+      if (!$backdropEl && cardParams.backdrop) {
+        $backdropEl = $pageContentEl.find('.card-backdrop');
+        if (!$backdropEl.length) {
+          $backdropEl = $('<div class="card-backdrop"></div>');
+          $pageContentEl.append($backdropEl);
         }
       }
 
       var $navbarEl;
       var $toolbarEl;
-      if (app.params.card.hideNavbarOnOpen) {
+      if (cardParams.hideNavbarOnOpen) {
         $navbarEl = $pageEl.children('.navbar');
         if (!$navbarEl.length) {
           if ($pageEl[0].f7Page) { $navbarEl = $pageEl[0].f7Page.$navbarEl; }
         }
       }
-      if (app.params.card.hideToolbarOnOpen) {
+      if (cardParams.hideToolbarOnOpen) {
         $toolbarEl = $pageEl.children('.toolbar');
         if (!$toolbarEl.length) {
           $toolbarEl = $pageEl.parents('.view').children('.toolbar');
@@ -18515,22 +18524,29 @@
       var cardBottomOffset = maxHeight - cardHeight - cardTopOffset;
       var translateX = (cardRightOffset - cardLeftOffset) / 2;
       var translateY = (cardBottomOffset - cardTopOffset) / 2;
-      if (app.params.card.hideNavbarOnOpen && $navbarEl && $navbarEl.length) {
-        app.navbar.hide($navbarEl, animate);
+      if (cardParams.hideNavbarOnOpen && $navbarEl && $navbarEl.length) {
+        app.navbar.hide($navbarEl, cardParams.animate);
       }
-      if (app.params.card.hideToolbarOnOpen && $toolbarEl && $toolbarEl.length) {
-        app.toolbar.hide($toolbarEl, animate);
+      if (cardParams.hideToolbarOnOpen && $toolbarEl && $toolbarEl.length) {
+        app.toolbar.hide($toolbarEl, cardParams.animate);
       }
-      if ($backropEl) {
-        $backropEl.removeClass('card-backdrop-out').addClass('card-backdrop-in');
+      if ($backdropEl) {
+        $backdropEl.removeClass('card-backdrop-out').addClass('card-backdrop-in');
       }
       $cardEl.removeClass('card-transitioning');
-      if (animate) {
+      if (cardParams.animate) {
         $cardEl.addClass('card-opening');
       }
       $cardEl.trigger('card:open');
       app.emit('cardOpen', $cardEl[0]);
       function transitionEnd() {
+        $pageEl.addClass('page-with-card-opened');
+        if (app.device.ios && $pageContentEl.length) {
+          $pageContentEl.css('height', (($pageContentEl[0].offsetHeight + 1) + "px"));
+          setTimeout(function () {
+            $pageContentEl.css('height', '');
+          });
+        }
         $cardEl.addClass('card-opened');
         $cardEl.removeClass('card-opening');
         $cardEl.trigger('card:opened');
@@ -18545,15 +18561,13 @@
 
       $cardEl
         .transform(("translate3d(" + translateX + "px, " + translateY + "px, 0) scale(" + scaleX + ", " + scaleY + ")"));
-      if (animate) {
+      if (cardParams.animate) {
         $cardEl.transitionEnd(function () {
           transitionEnd();
         });
       } else {
         transitionEnd();
       }
-
-      $pageEl.addClass('page-with-card-opened');
 
       function onResize() {
         var assign;
@@ -18679,7 +18693,7 @@
 
       $cardEl[0].detachEventHandlers = function detachEventHandlers() {
         app.off('resize', onResize);
-        if (Support.touch && app.params.card.swipeToClose) {
+        if (Support.touch && cardParams.swipeToClose) {
           app.off('touchstart:passive', onTouchStart);
           app.off('touchmove:active', onTouchMove);
           app.off('touchend:passive', onTouchEnd);
@@ -18687,7 +18701,7 @@
       };
 
       app.on('resize', onResize);
-      if (Support.touch && app.params.card.swipeToClose) {
+      if (Support.touch && cardParams.swipeToClose) {
         app.on('touchstart:passive', onTouchStart);
         app.on('touchmove:active', onTouchMove);
         app.on('touchend:passive', onTouchEnd);
@@ -18707,27 +18721,30 @@
 
       var $pageEl = $cardEl.parents('.page').eq(0);
       if (!$pageEl.length) { return; }
+
+      var cardParams = Object.assign({ animate: animate }, app.params.card, $cardEl.dataset());
+
       var $navbarEl;
       var $toolbarEl;
 
-      var $backropEl;
+      var $backdropEl;
       if ($cardEl.attr('data-backdrop-el')) {
-        $backropEl = $($cardEl.attr('data-backdrop-el'));
+        $backdropEl = $($cardEl.attr('data-backdrop-el'));
       }
-      if (app.params.card.backrop) {
-        $backropEl = $cardEl.parents('.page-content').find('.card-backdrop');
+      if (cardParams.backdrop) {
+        $backdropEl = $cardEl.parents('.page-content').find('.card-backdrop');
       }
 
-      if (app.params.card.hideNavbarOnOpen) {
+      if (cardParams.hideNavbarOnOpen) {
         $navbarEl = $pageEl.children('.navbar');
         if (!$navbarEl.length) {
           if ($pageEl[0].f7Page) { $navbarEl = $pageEl[0].f7Page.$navbarEl; }
         }
         if ($navbarEl && $navbarEl.length) {
-          app.navbar.show($navbarEl, animate);
+          app.navbar.show($navbarEl, cardParams.animate);
         }
       }
-      if (app.params.card.hideToolbarOnOpen) {
+      if (cardParams.hideToolbarOnOpen) {
         $toolbarEl = $pageEl.children('.toolbar');
         if (!$toolbarEl.length) {
           $toolbarEl = $pageEl.parents('.view').children('.toolbar');
@@ -18736,25 +18753,25 @@
           $toolbarEl = $pageEl.parents('.views').children('.toolbar');
         }
         if ($toolbarEl && $toolbarEl.length) {
-          app.toolbar.show($toolbarEl, animate);
+          app.toolbar.show($toolbarEl, cardParams.animate);
         }
       }
 
       $pageEl.removeClass('page-with-card-opened');
 
-      if (Device.ios && $pageContentEl.length) {
-        $cardEl.parents('.page-content').css('height', (($pageContentEl[0].offsetHeight + 1) + "px"));
+      if (app.device.ios && $pageContentEl.length) {
+        $pageContentEl.css('height', (($pageContentEl[0].offsetHeight + 1) + "px"));
         setTimeout(function () {
-          $cardEl.parents('.page-content').css('height', '');
+          $pageContentEl.css('height', '');
         });
       }
 
-      if ($backropEl && $backropEl.length) {
-        $backropEl.removeClass('card-backdrop-in').addClass('card-backdrop-out');
+      if ($backdropEl && $backdropEl.length) {
+        $backdropEl.removeClass('card-backdrop-in').addClass('card-backdrop-out');
       }
 
       $cardEl.removeClass('card-opened card-transitioning');
-      if (animate) {
+      if (cardParams.animate) {
         $cardEl.addClass('card-closing');
       } else {
         $cardEl.addClass('card-no-transition');
@@ -18811,7 +18828,7 @@
         hideToolbarOnOpen: true,
         swipeToClose: true,
         closeByBackdropClick: true,
-        backrop: true,
+        backdrop: true,
       },
     },
     create: function create() {
@@ -18848,16 +18865,16 @@
     clicks: {
       '.card-close': function closeCard($clickedEl, data) {
         var app = this;
-        app.card.close(data.card);
+        app.card.close(data.card, data.animate);
       },
       '.card-open': function closeCard($clickedEl, data) {
         var app = this;
-        app.card.open(data.card);
+        app.card.open(data.card, data.animate);
       },
       '.card-expandable': function toggleExpandableCard($clickedEl, data, e) {
         var app = this;
         if ($clickedEl.hasClass('card-opened') || $clickedEl.hasClass('card-opening') || $clickedEl.hasClass('card-closing')) { return; }
-        if ($(e.target).closest('.card-prevent-open').length) { return; }
+        if ($(e.target).closest('.card-prevent-open, .card-close').length) { return; }
         app.card.open($clickedEl);
       },
       '.card-backdrop-in': function onBackdropClick() {
@@ -19978,12 +19995,8 @@
         var pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
         var pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
 
-        if (typeof isScrolling === 'undefined') {
-          if (range.vertical) {
-            isScrolling = !(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
-          } else {
-            isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
-          }
+        if (typeof isScrolling === 'undefined' && !range.vertical) {
+          isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
         }
         if (isScrolling) {
           isTouched = false;

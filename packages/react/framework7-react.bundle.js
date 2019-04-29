@@ -1,5 +1,5 @@
 /**
- * Framework7 React 4.3.0
+ * Framework7 React 4.3.1
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 17, 2019
+ * Released on: April 29, 2019
  */
 
 (function (global, factory) {
@@ -2500,6 +2500,12 @@
       var outline = props.outline;
       var expandable = props.expandable;
       var expandableAnimateWidth = props.expandableAnimateWidth;
+      var animate = props.animate;
+      var hideNavbarOnOpen = props.hideNavbarOnOpen;
+      var hideToolbarOnOpen = props.hideToolbarOnOpen;
+      var swipeToClose = props.swipeToClose;
+      var closeByBackdropClick = props.closeByBackdropClick;
+      var backdrop = props.backdrop;
       var noShadow = props.noShadow;
       var noBorder = props.noBorder;
       var headerEl;
@@ -2533,7 +2539,13 @@
         className: classes,
         ref: function (__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
-        }
+        },
+        'data-animate': typeof animate === 'undefined' ? animate : animate.toString(),
+        'data-hide-navbar-on-open': typeof hideNavbarOnOpen === 'undefined' ? hideNavbarOnOpen : hideNavbarOnOpen.toString(),
+        'data-hide-toolbar-on-open': typeof hideToolbarOnOpen === 'undefined' ? hideToolbarOnOpen : hideToolbarOnOpen.toString(),
+        'data-swipe-to-close': typeof swipeToClose === 'undefined' ? swipeToClose : swipeToClose.toString(),
+        'data-close-by-backdrop-click': typeof closeByBackdropClick === 'undefined' ? closeByBackdropClick : closeByBackdropClick.toString(),
+        'data-backdrop': typeof backdrop === 'undefined' ? backdrop : backdrop.toString()
       }, headerEl, contentEl, footerEl, this.slots['default']);
     };
 
@@ -2614,6 +2626,30 @@
     expandable: Boolean,
     expandableAnimateWidth: Boolean,
     expandableOpened: Boolean,
+    animate: {
+      type: Boolean,
+      default: undefined
+    },
+    hideNavbarOnOpen: {
+      type: Boolean,
+      default: undefined
+    },
+    hideToolbarOnOpen: {
+      type: Boolean,
+      default: undefined
+    },
+    swipeToClose: {
+      type: Boolean,
+      default: undefined
+    },
+    closeByBackdropClick: {
+      type: Boolean,
+      default: undefined
+    },
+    backdrop: {
+      type: Boolean,
+      default: undefined
+    },
     noShadow: Boolean,
     noBorder: Boolean,
     padding: {
@@ -8899,59 +8935,67 @@
       var addLeftTitleClass = self.$theme && self.$theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
       var addCenterTitleClass = self.$theme && self.$theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || self.$theme && self.$theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
       var slots = self.slots;
-
-      if (inner) {
-        if (backLink || slots['nav-left']) {
-          leftEl = React.createElement(F7NavLeft, {
-            backLink: backLink,
-            backLinkUrl: backLinkUrl,
-            backLinkForce: backLinkForce,
-            backLinkShowText: backLinkShowText,
-            onBackClick: self.onBackClick
-          }, slots['nav-left']);
-        }
-
-        if (title || subtitle || slots.title) {
-          titleEl = React.createElement(F7NavTitle$1, {
-            title: title,
-            subtitle: subtitle
-          }, slots.title);
-        }
-
-        if (slots['nav-right']) {
-          rightEl = React.createElement(F7NavRight, null, slots['nav-right']);
-        }
-
-        var largeTitle = titleLarge;
-        if (!largeTitle && large && title) { largeTitle = title; }
-
-        if (largeTitle) {
-          titleLargeEl = React.createElement('div', {
-            className: 'title-large'
-          }, React.createElement('div', {
-            className: 'title-large-text'
-          }, largeTitle));
-        }
-
-        innerEl = React.createElement('div', {
-          ref: function (__reactNode) {
-            this$1.__reactRefs['innerEl'] = __reactNode;
-          },
-          className: Utils.classNames('navbar-inner', innerClass, innerClassName, {
-            sliding: sliding,
-            'navbar-inner-left-title': addLeftTitleClass,
-            'navbar-inner-centered-title': addCenterTitleClass,
-            'navbar-inner-large': large
-          })
-        }, leftEl, titleEl, rightEl, titleLargeEl, this.slots['default']);
-      }
-
       var classes = Utils.classNames(className, 'navbar', {
         'navbar-hidden': hidden,
         'no-shadow': noShadow,
         'no-hairline': noHairline,
         'navbar-large': large
       }, Mixins.colorClasses(props));
+
+      if (!inner) {
+        return React.createElement('div', {
+          ref: function (__reactNode) {
+            this$1.__reactRefs['el'] = __reactNode;
+          },
+          id: id,
+          style: style,
+          className: classes
+        }, this.slots['default']);
+      }
+
+      if (backLink || slots['nav-left']) {
+        leftEl = React.createElement(F7NavLeft, {
+          backLink: backLink,
+          backLinkUrl: backLinkUrl,
+          backLinkForce: backLinkForce,
+          backLinkShowText: backLinkShowText,
+          onBackClick: self.onBackClick
+        }, slots['nav-left']);
+      }
+
+      if (title || subtitle || slots.title) {
+        titleEl = React.createElement(F7NavTitle$1, {
+          title: title,
+          subtitle: subtitle
+        }, slots.title);
+      }
+
+      if (slots['nav-right']) {
+        rightEl = React.createElement(F7NavRight, null, slots['nav-right']);
+      }
+
+      var largeTitle = titleLarge;
+      if (!largeTitle && large && title) { largeTitle = title; }
+
+      if (largeTitle) {
+        titleLargeEl = React.createElement('div', {
+          className: 'title-large'
+        }, React.createElement('div', {
+          className: 'title-large-text'
+        }, largeTitle));
+      }
+
+      innerEl = React.createElement('div', {
+        ref: function (__reactNode) {
+          this$1.__reactRefs['innerEl'] = __reactNode;
+        },
+        className: Utils.classNames('navbar-inner', innerClass, innerClassName, {
+          sliding: sliding,
+          'navbar-inner-left-title': addLeftTitleClass,
+          'navbar-inner-centered-title': addCenterTitleClass,
+          'navbar-inner-large': large
+        })
+      }, leftEl, titleEl, rightEl, titleLargeEl, this.slots['default']);
       return React.createElement('div', {
         ref: function (__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
@@ -9296,7 +9340,7 @@
       })();
 
       (function () {
-        Utils.bindMethods(this$1, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack', 'onPageNavbarLargeCollapsed', 'onPageNavbarLargeExpanded', 'onCardOpen', 'onCardClose']);
+        Utils.bindMethods(this$1, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack', 'onPageNavbarLargeCollapsed', 'onPageNavbarLargeExpanded', 'onCardOpened', 'onCardClose']);
       })();
     }
 
@@ -9471,7 +9515,7 @@
       this.dispatchEvent('page:beforeremove pageBeforeRemove', event, page);
     };
 
-    F7Page.prototype.onCardOpen = function onCardOpen () {
+    F7Page.prototype.onCardOpened = function onCardOpened () {
       this.setState({
         hasCardExpandableOpened: true
       });
@@ -9642,7 +9686,7 @@
       el.removeEventListener('page:masterunstack', self.onPageMasterUnstack);
       el.removeEventListener('page:navbarlargecollapsed', self.onPageNavbarLargeCollapsed);
       el.removeEventListener('page:navbarlargeexpanded', self.onPageNavbarLargeExpanded);
-      el.removeEventListener('card:open', self.onCardOpen);
+      el.removeEventListener('card:opened', self.onCardOpened);
       el.removeEventListener('card:close', self.onCardClose);
     };
 
@@ -9681,7 +9725,7 @@
       el.addEventListener('page:masterunstack', self.onPageMasterUnstack);
       el.addEventListener('page:navbarlargecollapsed', self.onPageNavbarLargeCollapsed);
       el.addEventListener('page:navbarlargeexpanded', self.onPageNavbarLargeExpanded);
-      el.addEventListener('card:open', self.onCardOpen);
+      el.addEventListener('card:opened', self.onCardOpened);
       el.addEventListener('card:close', self.onCardClose);
     };
 
@@ -13403,7 +13447,7 @@
   };
 
   /**
-   * Framework7 React 4.3.0
+   * Framework7 React 4.3.1
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -13411,7 +13455,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: April 17, 2019
+   * Released on: April 29, 2019
    */
 
   var Plugin = {

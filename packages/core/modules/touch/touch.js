@@ -576,15 +576,16 @@ function initTouch() {
     return true;
   }
   function handleTouchMoveLight(e) {
-    let distance = 0;
     let touch;
+    let distance;
     if (e.type === 'touchmove') {
       touch = e.targetTouches[0];
-      if (touch && touch.touchType === 'stylus') {
-        distance = 5;
-      } else {
-        distance = 3;
-      }
+      distance = params.touchClicksDistanceThreshold;
+      // if (touch && touch.touchType === 'stylus') {
+      //   distance = 5;
+      // } else {
+      //   distance = 3;
+      // }
     }
 
     if (distance && touch) {
@@ -757,6 +758,8 @@ export default {
       fastClicksDistanceThreshold: 10,
       fastClicksDelayBetweenClicks: 50,
       fastClicksExclude: '', // CSS selector
+      // Clicks
+      touchClicksDistanceThreshold: 5,
       // ContextMenu
       disableContextMenu: false,
       // Tap Hold

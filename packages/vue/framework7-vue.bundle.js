@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.3.0
+ * Framework7 Vue 4.3.1
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 17, 2019
+ * Released on: April 29, 2019
  */
 
 (function (global, factory) {
@@ -1992,6 +1992,30 @@
       expandable: Boolean,
       expandableAnimateWidth: Boolean,
       expandableOpened: Boolean,
+      animate: {
+        type: Boolean,
+        default: undefined
+      },
+      hideNavbarOnOpen: {
+        type: Boolean,
+        default: undefined
+      },
+      hideToolbarOnOpen: {
+        type: Boolean,
+        default: undefined
+      },
+      swipeToClose: {
+        type: Boolean,
+        default: undefined
+      },
+      closeByBackdropClick: {
+        type: Boolean,
+        default: undefined
+      },
+      backdrop: {
+        type: Boolean,
+        default: undefined
+      },
       noShadow: Boolean,
       noBorder: Boolean,
       padding: {
@@ -2059,6 +2083,12 @@
       var outline = props.outline;
       var expandable = props.expandable;
       var expandableAnimateWidth = props.expandableAnimateWidth;
+      var animate = props.animate;
+      var hideNavbarOnOpen = props.hideNavbarOnOpen;
+      var hideToolbarOnOpen = props.hideToolbarOnOpen;
+      var swipeToClose = props.swipeToClose;
+      var closeByBackdropClick = props.closeByBackdropClick;
+      var backdrop = props.backdrop;
       var noShadow = props.noShadow;
       var noBorder = props.noBorder;
       var headerEl;
@@ -2093,7 +2123,13 @@
         class: classes,
         ref: 'el',
         attrs: {
-          id: id
+          id: id,
+          'data-animate': typeof animate === 'undefined' ? animate : animate.toString(),
+          'data-hide-navbar-on-open': typeof hideNavbarOnOpen === 'undefined' ? hideNavbarOnOpen : hideNavbarOnOpen.toString(),
+          'data-hide-toolbar-on-open': typeof hideToolbarOnOpen === 'undefined' ? hideToolbarOnOpen : hideToolbarOnOpen.toString(),
+          'data-swipe-to-close': typeof swipeToClose === 'undefined' ? swipeToClose : swipeToClose.toString(),
+          'data-close-by-backdrop-click': typeof closeByBackdropClick === 'undefined' ? closeByBackdropClick : closeByBackdropClick.toString(),
+          'data-backdrop': typeof backdrop === 'undefined' ? backdrop : backdrop.toString()
         }
       }, [headerEl, contentEl, footerEl, this.$slots['default']]);
     },
@@ -7801,63 +7837,71 @@
       var addLeftTitleClass = self.$theme && self.$theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
       var addCenterTitleClass = self.$theme && self.$theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || self.$theme && self.$theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
       var slots = self.$slots;
-
-      if (inner) {
-        if (backLink || slots['nav-left']) {
-          leftEl = _h(f7NavLeft, {
-            on: {
-              backClick: self.onBackClick
-            },
-            attrs: {
-              backLink: backLink,
-              backLinkUrl: backLinkUrl,
-              backLinkForce: backLinkForce,
-              backLinkShowText: backLinkShowText
-            }
-          }, [slots['nav-left']]);
-        }
-
-        if (title || subtitle || slots.title) {
-          titleEl = _h(f7NavTitle, {
-            attrs: {
-              title: title,
-              subtitle: subtitle
-            }
-          }, [slots.title]);
-        }
-
-        if (slots['nav-right']) {
-          rightEl = _h(f7NavRight, [slots['nav-right']]);
-        }
-
-        var largeTitle = titleLarge;
-        if (!largeTitle && large && title) { largeTitle = title; }
-
-        if (largeTitle) {
-          titleLargeEl = _h('div', {
-            class: 'title-large'
-          }, [_h('div', {
-            class: 'title-large-text'
-          }, [largeTitle])]);
-        }
-
-        innerEl = _h('div', {
-          ref: 'innerEl',
-          class: Utils.classNames('navbar-inner', innerClass, innerClassName, {
-            sliding: sliding,
-            'navbar-inner-left-title': addLeftTitleClass,
-            'navbar-inner-centered-title': addCenterTitleClass,
-            'navbar-inner-large': large
-          })
-        }, [leftEl, titleEl, rightEl, titleLargeEl, this.$slots['default']]);
-      }
-
       var classes = Utils.classNames(className, 'navbar', {
         'navbar-hidden': hidden,
         'no-shadow': noShadow,
         'no-hairline': noHairline,
         'navbar-large': large
       }, Mixins.colorClasses(props));
+
+      if (!inner) {
+        return _h('div', {
+          ref: 'el',
+          style: style,
+          class: classes,
+          attrs: {
+            id: id
+          }
+        }, [this.$slots['default']]);
+      }
+
+      if (backLink || slots['nav-left']) {
+        leftEl = _h(f7NavLeft, {
+          on: {
+            backClick: self.onBackClick
+          },
+          attrs: {
+            backLink: backLink,
+            backLinkUrl: backLinkUrl,
+            backLinkForce: backLinkForce,
+            backLinkShowText: backLinkShowText
+          }
+        }, [slots['nav-left']]);
+      }
+
+      if (title || subtitle || slots.title) {
+        titleEl = _h(f7NavTitle, {
+          attrs: {
+            title: title,
+            subtitle: subtitle
+          }
+        }, [slots.title]);
+      }
+
+      if (slots['nav-right']) {
+        rightEl = _h(f7NavRight, [slots['nav-right']]);
+      }
+
+      var largeTitle = titleLarge;
+      if (!largeTitle && large && title) { largeTitle = title; }
+
+      if (largeTitle) {
+        titleLargeEl = _h('div', {
+          class: 'title-large'
+        }, [_h('div', {
+          class: 'title-large-text'
+        }, [largeTitle])]);
+      }
+
+      innerEl = _h('div', {
+        ref: 'innerEl',
+        class: Utils.classNames('navbar-inner', innerClass, innerClassName, {
+          sliding: sliding,
+          'navbar-inner-left-title': addLeftTitleClass,
+          'navbar-inner-centered-title': addCenterTitleClass,
+          'navbar-inner-large': large
+        })
+      }, [leftEl, titleEl, rightEl, titleLargeEl, this.$slots['default']]);
       return _h('div', {
         ref: 'el',
         style: style,
@@ -8405,7 +8449,7 @@
     },
 
     created: function created() {
-      Utils.bindMethods(this, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack', 'onPageNavbarLargeCollapsed', 'onPageNavbarLargeExpanded', 'onCardOpen', 'onCardClose']);
+      Utils.bindMethods(this, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack', 'onPageNavbarLargeCollapsed', 'onPageNavbarLargeExpanded', 'onCardOpened', 'onCardClose']);
     },
 
     mounted: function mounted() {
@@ -8443,7 +8487,7 @@
       el.addEventListener('page:masterunstack', self.onPageMasterUnstack);
       el.addEventListener('page:navbarlargecollapsed', self.onPageNavbarLargeCollapsed);
       el.addEventListener('page:navbarlargeexpanded', self.onPageNavbarLargeExpanded);
-      el.addEventListener('card:open', self.onCardOpen);
+      el.addEventListener('card:opened', self.onCardOpened);
       el.addEventListener('card:close', self.onCardClose);
     },
 
@@ -8472,7 +8516,7 @@
       el.removeEventListener('page:masterunstack', self.onPageMasterUnstack);
       el.removeEventListener('page:navbarlargecollapsed', self.onPageNavbarLargeCollapsed);
       el.removeEventListener('page:navbarlargeexpanded', self.onPageNavbarLargeExpanded);
-      el.removeEventListener('card:open', self.onCardOpen);
+      el.removeEventListener('card:opened', self.onCardOpened);
       el.removeEventListener('card:close', self.onCardClose);
     },
 
@@ -8642,7 +8686,7 @@
         this.dispatchEvent('page:beforeremove pageBeforeRemove', event, page);
       },
 
-      onCardOpen: function onCardOpen() {
+      onCardOpened: function onCardOpened() {
         this.setState({
           hasCardExpandableOpened: true
         });
@@ -11932,7 +11976,7 @@
   };
 
   /**
-   * Framework7 Vue 4.3.0
+   * Framework7 Vue 4.3.1
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -11940,7 +11984,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: April 17, 2019
+   * Released on: April 29, 2019
    */
 
   var Plugin = {

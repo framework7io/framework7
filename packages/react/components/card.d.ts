@@ -13,6 +13,12 @@ declare namespace F7Card {
     expandable? : boolean
     expandableAnimateWidth? : boolean
     expandableOpened? : boolean
+    animate? : boolean
+    hideNavbarOnOpen? : boolean
+    hideToolbarOnOpen? : boolean
+    swipeToClose? : boolean
+    closeByBackdropClick? : boolean
+    backdrop? : boolean
     noShadow? : boolean
     noBorder? : boolean
     padding? : boolean

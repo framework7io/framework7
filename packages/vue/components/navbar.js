@@ -67,63 +67,71 @@ export default {
     const addLeftTitleClass = self.$theme && self.$theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
     const addCenterTitleClass = self.$theme && self.$theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || self.$theme && self.$theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
     const slots = self.$slots;
-
-    if (inner) {
-      if (backLink || slots['nav-left']) {
-        leftEl = _h(F7NavLeft, {
-          on: {
-            backClick: self.onBackClick
-          },
-          attrs: {
-            backLink: backLink,
-            backLinkUrl: backLinkUrl,
-            backLinkForce: backLinkForce,
-            backLinkShowText: backLinkShowText
-          }
-        }, [slots['nav-left']]);
-      }
-
-      if (title || subtitle || slots.title) {
-        titleEl = _h(F7NavTitle, {
-          attrs: {
-            title: title,
-            subtitle: subtitle
-          }
-        }, [slots.title]);
-      }
-
-      if (slots['nav-right']) {
-        rightEl = _h(F7NavRight, [slots['nav-right']]);
-      }
-
-      let largeTitle = titleLarge;
-      if (!largeTitle && large && title) largeTitle = title;
-
-      if (largeTitle) {
-        titleLargeEl = _h('div', {
-          class: 'title-large'
-        }, [_h('div', {
-          class: 'title-large-text'
-        }, [largeTitle])]);
-      }
-
-      innerEl = _h('div', {
-        ref: 'innerEl',
-        class: Utils.classNames('navbar-inner', innerClass, innerClassName, {
-          sliding,
-          'navbar-inner-left-title': addLeftTitleClass,
-          'navbar-inner-centered-title': addCenterTitleClass,
-          'navbar-inner-large': large
-        })
-      }, [leftEl, titleEl, rightEl, titleLargeEl, this.$slots['default']]);
-    }
-
     const classes = Utils.classNames(className, 'navbar', {
       'navbar-hidden': hidden,
       'no-shadow': noShadow,
       'no-hairline': noHairline,
       'navbar-large': large
     }, Mixins.colorClasses(props));
+
+    if (!inner) {
+      return _h('div', {
+        ref: 'el',
+        style: style,
+        class: classes,
+        attrs: {
+          id: id
+        }
+      }, [this.$slots['default']]);
+    }
+
+    if (backLink || slots['nav-left']) {
+      leftEl = _h(F7NavLeft, {
+        on: {
+          backClick: self.onBackClick
+        },
+        attrs: {
+          backLink: backLink,
+          backLinkUrl: backLinkUrl,
+          backLinkForce: backLinkForce,
+          backLinkShowText: backLinkShowText
+        }
+      }, [slots['nav-left']]);
+    }
+
+    if (title || subtitle || slots.title) {
+      titleEl = _h(F7NavTitle, {
+        attrs: {
+          title: title,
+          subtitle: subtitle
+        }
+      }, [slots.title]);
+    }
+
+    if (slots['nav-right']) {
+      rightEl = _h(F7NavRight, [slots['nav-right']]);
+    }
+
+    let largeTitle = titleLarge;
+    if (!largeTitle && large && title) largeTitle = title;
+
+    if (largeTitle) {
+      titleLargeEl = _h('div', {
+        class: 'title-large'
+      }, [_h('div', {
+        class: 'title-large-text'
+      }, [largeTitle])]);
+    }
+
+    innerEl = _h('div', {
+      ref: 'innerEl',
+      class: Utils.classNames('navbar-inner', innerClass, innerClassName, {
+        sliding,
+        'navbar-inner-left-title': addLeftTitleClass,
+        'navbar-inner-centered-title': addCenterTitleClass,
+        'navbar-inner-large': large
+      })
+    }, [leftEl, titleEl, rightEl, titleLargeEl, this.$slots['default']]);
     return _h('div', {
       ref: 'el',
       style: style,
