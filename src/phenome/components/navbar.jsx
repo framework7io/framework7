@@ -73,63 +73,6 @@ export default {
 
     const slots = self.slots;
 
-    if (inner) {
-      if (backLink || slots['nav-left']) {
-        leftEl = (
-          <F7NavLeft
-            backLink={backLink}
-            backLinkUrl={backLinkUrl}
-            backLinkForce={backLinkForce}
-            backLinkShowText={backLinkShowText}
-            onBackClick={self.onBackClick}
-          >{slots['nav-left']}</F7NavLeft>
-        );
-      }
-      if (title || subtitle || slots.title) {
-        titleEl = (
-          <F7NavTitle
-            title={title}
-            subtitle={subtitle}
-          >{slots.title}</F7NavTitle>
-        );
-      }
-      if (slots['nav-right']) {
-        rightEl = (
-          <F7NavRight>{slots['nav-right']}</F7NavRight>
-        );
-      }
-      let largeTitle = titleLarge;
-      if (!largeTitle && large && title) largeTitle = title;
-      if (largeTitle) {
-        titleLargeEl = (
-          <div className="title-large">
-            <div className="title-large-text">{largeTitle}</div>
-          </div>
-        );
-      }
-      innerEl = (
-        <div
-          ref="innerEl"
-          className={Utils.classNames(
-            'navbar-inner',
-            innerClass,
-            innerClassName,
-            {
-              sliding,
-              'navbar-inner-left-title': addLeftTitleClass,
-              'navbar-inner-centered-title': addCenterTitleClass,
-              'navbar-inner-large': large,
-            }
-          )}
-        >
-          {leftEl}
-          {titleEl}
-          {rightEl}
-          {titleLargeEl}
-          <slot />
-        </div>
-      );
-    }
     const classes = Utils.classNames(
       className,
       'navbar',
@@ -140,6 +83,71 @@ export default {
         'navbar-large': large,
       },
       Mixins.colorClasses(props),
+    );
+
+    if (!inner) {
+      return (
+        <div ref="el" id={id} style={style} className={classes}>
+          <slot />
+        </div>
+      );
+    }
+
+
+    if (backLink || slots['nav-left']) {
+      leftEl = (
+        <F7NavLeft
+          backLink={backLink}
+          backLinkUrl={backLinkUrl}
+          backLinkForce={backLinkForce}
+          backLinkShowText={backLinkShowText}
+          onBackClick={self.onBackClick}
+        >{slots['nav-left']}</F7NavLeft>
+      );
+    }
+    if (title || subtitle || slots.title) {
+      titleEl = (
+        <F7NavTitle
+          title={title}
+          subtitle={subtitle}
+        >{slots.title}</F7NavTitle>
+      );
+    }
+    if (slots['nav-right']) {
+      rightEl = (
+        <F7NavRight>{slots['nav-right']}</F7NavRight>
+      );
+    }
+    let largeTitle = titleLarge;
+    if (!largeTitle && large && title) largeTitle = title;
+    if (largeTitle) {
+      titleLargeEl = (
+        <div className="title-large">
+          <div className="title-large-text">{largeTitle}</div>
+        </div>
+      );
+    }
+    innerEl = (
+      <div
+        ref="innerEl"
+        className={Utils.classNames(
+          'navbar-inner',
+          innerClass,
+          innerClassName,
+          {
+            sliding,
+            'navbar-inner-left-title': addLeftTitleClass,
+            'navbar-inner-centered-title': addCenterTitleClass,
+            'navbar-inner-large': large,
+          }
+        )}
+      >
+        {leftEl}
+        {titleEl}
+        {rightEl}
+        {titleLargeEl}
+        <slot />
+      </div>
     );
 
     return (
