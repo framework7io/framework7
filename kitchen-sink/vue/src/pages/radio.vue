@@ -9,7 +9,7 @@
 
     <f7-block-title>Radio Group</f7-block-title>
     <f7-list>
-      <f7-list-item radio checked title="Books" name="demo-radio" checked></f7-list-item>
+      <f7-list-item radio title="Books" name="demo-radio" checked></f7-list-item>
       <f7-list-item radio title="Movies" name="demo-radio"></f7-list-item>
       <f7-list-item radio title="Food" name="demo-radio"></f7-list-item>
       <f7-list-item radio title="Drinks" name="demo-radio"></f7-list-item>
