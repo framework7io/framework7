@@ -206,10 +206,43 @@ class Autocomplete extends Framework7Class {
     }
 
     function onKeyDown(e) {
-      if (ac.opened && e.keyCode === 13) {
+      if (!ac.opened) return;
+      if (e.keyCode === 27) {
+        // ESC
         e.preventDefault();
         ac.$inputEl.blur();
+        return;
       }
+      if (e.keyCode === 13) {
+        // Enter
+        const $selectedItemLabel = ac.$dropdownEl.find('.autocomplete-dropdown-selected label');
+        if ($selectedItemLabel.length) {
+          e.preventDefault();
+          $selectedItemLabel.trigger('click');
+          ac.$inputEl.blur();
+          return;
+        }
+        if (ac.params.typeahead) {
+          e.preventDefault();
+          ac.$inputEl.blur();
+        }
+        return;
+      }
+      if (e.keyCode !== 40 && e.keyCode !== 38) return;
+      e.preventDefault();
+      const $selectedItem = ac.$dropdownEl.find('.autocomplete-dropdown-selected');
+      let $newItem;
+      if ($selectedItem.length) {
+        $newItem = $selectedItem[e.keyCode === 40 ? 'next' : 'prev']('li');
+        if (!$newItem.length) {
+          $newItem = ac.$dropdownEl.find('li').eq(e.keyCode === 40 ? 0 : ac.$dropdownEl.find('li').length - 1);
+        }
+      } else {
+        $newItem = ac.$dropdownEl.find('li').eq(e.keyCode === 40 ? 0 : ac.$dropdownEl.find('li').length - 1);
+      }
+      if ($newItem.hasClass('autocomplete-dropdown-placeholder')) return;
+      $selectedItem.removeClass('autocomplete-dropdown-selected');
+      $newItem.addClass('autocomplete-dropdown-selected');
     }
     function onDropdownClick() {
       const $clickedEl = $(this);
@@ -242,9 +275,7 @@ class Autocomplete extends Framework7Class {
         } else {
           ac.$inputEl.on('blur', onInputBlur);
         }
-        if (ac.params.typeahead) {
-          ac.$inputEl.on('keydown', onKeyDown);
-        }
+        ac.$inputEl.on('keydown', onKeyDown);
       }
     };
     ac.detachEvents = function attachEvents() {
@@ -259,9 +290,7 @@ class Autocomplete extends Framework7Class {
         } else {
           ac.$inputEl.off('blur', onInputBlur);
         }
-        if (ac.params.typeahead) {
-          ac.$inputEl.off('keydown', onKeyDown);
-        }
+        ac.$inputEl.off('keydown', onKeyDown);
       }
     };
     ac.attachDropdownEvents = function attachDropdownEvents() {
