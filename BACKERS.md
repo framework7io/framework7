@@ -3,6 +3,11 @@
 <table>
   <tr>
     <td align="center" valign="middle">
+      <a href="https://edubirdie.com/" target="_blank">
+        <img width="200" src="https://cdn.framework7.io/i/sponsors/birdie.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://blokt.com/" target="_blank">
         <img width="200" src="https://cdn.framework7.io/i/sponsors/blokt.png">
       </a>
@@ -34,6 +39,7 @@
         <img width="200" src="https://cdn.framework7.io/i/sponsors/tommy.png">
       </a>
     </td>
+    <td></td>
   </tr>
 </table>
 
@@ -67,6 +73,7 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 ---
 
 ### $50+ Top Supporter
+[EduBirdie](https://edubirdie.com/) - Professional Essay Writing Service<br>
 [Blokt](https://blokt.com/) - Cryptocurrency News<br>
 Alexey Victorov<br>
 [ActiveWaiter](https://www.activewaiter.com/) - Order. Drink. Eat. Pay. Love.<br>
