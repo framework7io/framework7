@@ -34,6 +34,7 @@ function initClicks(app) {
     Object.keys(app.modules).forEach((moduleName) => {
       const moduleClicks = app.modules[moduleName].clicks;
       if (!moduleClicks) return;
+      if (e.preventF7Router) return;
       Object.keys(moduleClicks).forEach((clickSelector) => {
         const matchingClickedElement = $clickedEl.closest(clickSelector).eq(0);
         if (matchingClickedElement.length > 0) {
@@ -41,7 +42,6 @@ function initClicks(app) {
         }
       });
     });
-
 
     // Load Page
     let clickedLinkData = {};
@@ -51,6 +51,7 @@ function initClicks(app) {
     }
 
     // Prevent Router
+    if (e.preventF7Router) return;
     if ($clickedLinkEl.hasClass('prevent-router') || $clickedLinkEl.hasClass('router-prevent')) return;
 
     const validUrl = url && url.length > 0 && url !== '#' && !isTabLink;
