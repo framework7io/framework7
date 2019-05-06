@@ -110,6 +110,9 @@ const config = {
     // Color Picker
     'color-picker',
 
+    // Tree View
+    'treeview',
+
     // VI Video Ads
     'vi',
 
