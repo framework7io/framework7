@@ -461,6 +461,10 @@ var routes = [
     componentUrl: './pages/tooltip.html',
   },
   {
+    path: '/treeview/',
+    componentUrl: './pages/treeview.html',
+  },
+  {
     path: '/timeline/',
     url: './pages/timeline.html',
   },
