@@ -89,6 +89,7 @@ Bart DJ
 ---
 
 ### $10+ Supporter
+Nicolas Hinze<br>
 Josué Marinho<br>
 Will Mero<br>
 Jorge Pagano<br>
