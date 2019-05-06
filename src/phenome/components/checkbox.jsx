@@ -8,6 +8,7 @@ export default {
     className: String, // phenome-react-line
     style: Object, // phenome-react-line
     checked: Boolean,
+    indeterminate: Boolean,
     name: [Number, String],
     value: [Number, String, Boolean],
     disabled: Boolean,
@@ -79,6 +80,22 @@ export default {
   },
   componentDidCreate() {
     Utils.bindMethods(this, ['onChange'])
+  },
+  componentDidMount() {
+    const self = this;
+    const { inputEl } = self.refs;
+    const { indeterminate } = self.props;
+    if (indeterminate && inputEl) {
+      inputEl.indeterminate = true;
+    }
+  },
+  componentDidUpdate() {
+    const self = this;
+    const { inputEl } = self.refs;
+    const { indeterminate } = self.props;
+    if (inputEl) {
+      inputEl.indeterminate = indeterminate;
+    }
   },
   methods: {
     onChange(event) {

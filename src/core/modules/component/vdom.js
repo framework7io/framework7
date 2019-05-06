@@ -4,8 +4,8 @@ import { window, document } from 'ssr-window';
 import h from './snabbdom/h';
 
 const selfClosing = 'area base br col command embed hr img input keygen link menuitem meta param source track wbr'.split(' ');
-const propsAttrs = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple value'.split(' ');
-const booleanProps = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple readOnly'.split(' ');
+const propsAttrs = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple value indeterminate'.split(' ');
+const booleanProps = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple readOnly indeterminate'.split(' ');
 const tempDom = document.createElement('div');
 
 function getHooks(data, app, initial, isRoot) {
