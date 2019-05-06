@@ -14,6 +14,37 @@
       <f7-list-item checkbox title="Drinks" name="demo-checkbox"></f7-list-item>
     </f7-list>
 
+    <f7-block-title>Indeterminate State</f7-block-title>
+    <f7-list>
+      <f7-list-item
+        checkbox
+        title="Movies"
+        name="demo-checkbox"
+        :checked="movies.length === 2"
+        :indeterminate="movies.length === 1"
+        @change="onMoviesChange"
+      >
+        <ul slot="root">
+          <f7-list-item
+            checkbox
+            title="Movie 1"
+            name="demo-checkbox"
+            value="Movie 1"
+            :checked="movies.indexOf('Movie 1') >= 0"
+            @change="onMovieChange"
+          />
+          <f7-list-item
+            checkbox
+            title="Movie 2"
+            name="demo-checkbox"
+            value="Movie 2"
+            :checked="movies.indexOf('Movie 2') >= 0"
+            @change="onMovieChange"
+          />
+        </ul>
+      </f7-list-item>
+    </f7-list>
+
     <f7-block-title>With Media Lists</f7-block-title>
     <f7-list media-list>
       <f7-list-item
@@ -65,5 +96,31 @@
       f7ListItem,
       f7Checkbox,
     },
+    data: function () {
+      return {
+        movies: ['Movie 1'],
+      };
+    },
+    methods: {
+      onMovieChange: function (e) {
+        var self = this;
+        var value = e.target.value;
+        var movies = self.movies;
+        if (e.target.checked) {
+          movies.push(value);
+        } else {
+          movies.splice(movies.indexOf(value), 1);
+        }
+      },
+      onMoviesChange: function (e) {
+        var self = this;
+        var movies = self.movies;
+        if (movies.length === 1 || movies.length === 0) {
+          self.movies = ['Movie 1', 'Movie 2'];
+        } else if (movies.length === 2) {
+          self.movies = [];
+        }
+      },
+    }
   };
 </script>
