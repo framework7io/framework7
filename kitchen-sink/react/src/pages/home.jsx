@@ -214,6 +214,9 @@ export default class extends React.Component {
           <ListItem link="/tooltip/" title="Tooltip">
             <Icon slot="media" icon="icon-f7" />
           </ListItem>
+          <ListItem link="/treeview/" title="Treeview">
+            <Icon slot="media" icon="icon-f7" />
+          </ListItem>
           <ListItem link="/virtual-list/" title="Virtual List">
             <Icon slot="media" icon="icon-f7" />
           </ListItem>

@@ -5,7 +5,7 @@
         <div class="left">
           <a href="#" class="link back">
             <i class="icon icon-back"></i>
-            <span class="if-not-md">Framework7</span>
+            <span class="if-not-md">Back</span>
           </a>
         </div>
         <div class="title">Treeview</div>
@@ -490,6 +490,7 @@
         var self = this;
         var done = e.detail;
         setTimeout(function () {
+          // call done() to hide preloader
           done();
           self.$setState({
             loadedChildren: [

@@ -95,6 +95,7 @@ import Timeline from './pages/timeline.jsx';
 import TimelineVertical from './pages/timeline-vertical.jsx';
 import TimelineHorizontal from './pages/timeline-horizontal.jsx';
 import TimelineHorizontalCalendar from './pages/timeline-horizontal-calendar.jsx';
+import Treeview from './pages/treeview.jsx';
 import VirtualList from './pages/virtual-list.jsx';
 import ColorThemes from './pages/color-themes.jsx';
 
@@ -593,6 +594,10 @@ export default [
   {
     path: '/timeline-horizontal-calendar/',
     component: TimelineHorizontalCalendar,
+  },
+  {
+    path: '/treeview/',
+    component: Treeview,
   },
   {
     path: '/virtual-list/',

@@ -206,6 +206,9 @@
       <f7-list-item link="/tooltip/" title="Tooltip">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>
+      <f7-list-item link="/treeview/" title="Treeview">
+        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+      </f7-list-item>
       <f7-list-item link="/virtual-list/" title="Virtual List">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>
