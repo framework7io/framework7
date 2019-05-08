@@ -537,7 +537,7 @@ class Autocomplete extends Framework7Class {
       `
       : `
         <div class="left sliding">
-          <a href="#" class="link back">
+          <a class="link back">
             <i class="icon icon-back"></i>
             <span class="if-not-md">${ac.params.pageBackLinkText}</span>
           </a>
@@ -546,7 +546,7 @@ class Autocomplete extends Framework7Class {
     const navbarRight = inPopup
       ? `
         <div class="right">
-          <a href="#" class="link popup-close" data-popup=".autocomplete-popup">
+          <a class="link popup-close" data-popup=".autocomplete-popup">
             ${ac.params.popupCloseLinkText}
           </a>
         </div>

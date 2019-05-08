@@ -55,7 +55,7 @@ export default {
     }
     if (deleteable) {
       deleteEl = (
-        <a ref="deleteEl" href="#" className="chip-delete" />
+        <a ref="deleteEl" className="chip-delete" />
       );
     }
 

@@ -1040,11 +1040,11 @@ class Calendar extends Framework7Class {
 
     return `
     <div class="calendar-month-selector">
-      <a href="#" class="link icon-only calendar-prev-month-button">
+      <a class="link icon-only calendar-prev-month-button">
         <i class="icon icon-prev"></i>
       </a>
       <span class="current-month-value"></span>
-      <a href="#" class="link icon-only calendar-next-month-button">
+      <a class="link icon-only calendar-next-month-button">
         <i class="icon icon-next"></i>
       </a>
     </div>
@@ -1058,11 +1058,11 @@ class Calendar extends Framework7Class {
     }
     return `
     <div class="calendar-year-selector">
-      <a href="#" class="link icon-only calendar-prev-year-button">
+      <a class="link icon-only calendar-prev-year-button">
         <i class="icon icon-prev"></i>
       </a>
       <span class="current-year-value"></span>
-      <a href="#" class="link icon-only calendar-next-year-button">
+      <a class="link icon-only calendar-next-year-button">
         <i class="icon icon-next"></i>
       </a>
     </div>
@@ -1089,7 +1089,7 @@ class Calendar extends Framework7Class {
     }
     return `
     <div class="calendar-footer">
-      <a href="#" class="${app.theme === 'md' ? 'button' : 'link'} calendar-close sheet-close popover-close">${calendar.params.toolbarCloseText}</a>
+      <a class="${app.theme === 'md' ? 'button' : 'link'} calendar-close sheet-close popover-close">${calendar.params.toolbarCloseText}</a>
     </div>
   `.trim();
   }

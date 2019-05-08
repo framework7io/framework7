@@ -172,7 +172,7 @@ class PhotoBrowser extends Framework7Class {
       <div class="navbar">
         <div class="navbar-inner sliding">
           <div class="left">
-            <a href="#" class="link ${isPopup ? 'popup-close' : ''} ${!backLinkText ? 'icon-only' : ''} ${!isPopup ? 'back' : ''}" ${isPopup ? 'data-popup=".photo-browser-popup"' : ''}>
+            <a class="link ${isPopup ? 'popup-close' : ''} ${!backLinkText ? 'icon-only' : ''} ${!isPopup ? 'back' : ''}" ${isPopup ? 'data-popup=".photo-browser-popup"' : ''}>
               <i class="icon icon-back ${iconsColor ? `color-${iconsColor}` : ''}"></i>
               ${backLinkText ? `<span>${backLinkText}</span>` : ''}
             </a>
@@ -199,10 +199,10 @@ class PhotoBrowser extends Framework7Class {
     const toolbarHtml = `
       <div class="toolbar toolbar-bottom tabbar">
         <div class="toolbar-inner">
-          <a href="#" class="link photo-browser-prev">
+          <a class="link photo-browser-prev">
             <i class="icon icon-back ${iconsColor ? `color-${iconsColor}` : ''}"></i>
           </a>
-          <a href="#" class="link photo-browser-next">
+          <a class="link photo-browser-next">
             <i class="icon icon-forward ${iconsColor ? `color-${iconsColor}` : ''}"></i>
           </a>
         </div>
