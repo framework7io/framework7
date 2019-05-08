@@ -62,7 +62,6 @@ function getHooks(data, app, initial, isRoot) {
 }
 function getEventHandler(handlerString, context, { stop, prevent, once } = {}) {
   let fired = false;
-
   let methodName;
   let method;
   let customArgs = [];
@@ -108,7 +107,13 @@ function getEventHandler(handlerString, context, { stop, prevent, once } = {}) {
     if (handlerString.indexOf('(') < 0) {
       customArgs = args;
     } else {
-      handlerString.split('(')[1].split(')')[0].split(',').forEach((argument) => {
+      const handlerArguments = handlerString
+        .split('(')[1]
+        .split(')')[0]
+        .replace(/'[^']*'|"[^"]*"/g, a => a.replace(/,/g, '<_comma_>'))
+        .split(',')
+        .map(a => a.replace(/<_comma_>/g, ','));
+      handlerArguments.forEach((argument) => {
         let arg = argument.trim();
         // eslint-disable-next-line
         if (!isNaN(arg)) arg = parseFloat(arg);
