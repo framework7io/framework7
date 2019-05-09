@@ -595,3 +595,38 @@ code {
 .view-master-detail .page-master-detail .navbar .link.back {
   display: none;
 }
+
+/* Demo Popup Swipe To Close */
+.demo-popup-swipe-handler {
+  --f7-popup-border-radius: 15px 15px 0 0;
+  --f7-popup-tablet-border-radius: 15px;
+  --f7-page-bg-color: #fff;
+  --f7-block-strong-border-color: transparent;
+  height: calc(100% - var(--f7-navbar-height) - var(--f7-statusbar-height));
+  top: calc(var(--f7-navbar-height) + var(--f7-statusbar-height))
+}
+.demo-popup-swipe-handler .swipe-handler {
+  height: 16px;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: 0;
+  background: #fff;
+  cursor: pointer;
+  z-index: 10;
+}
+.demo-popup-swipe-handler .swipe-handler:after {
+  content: '';
+  width: 36px;
+  height: 6px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -18px;
+  margin-top: -3px;
+  border-radius: 3px;
+  background: #666;
+}
+.demo-popup-swipe-handler .page-content {
+  padding-top: 16px;
+}
