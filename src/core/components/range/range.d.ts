@@ -25,6 +25,8 @@ export namespace Range {
     vertical?: boolean
     /** Makes vertical range slider reversed */
     verticalReversed?: boolean
+    /** Limit knob position to the size of range bar */
+    limitKnobPosition?: boolean
     /** Object with events handlers.. */
     on?: {
       [event in keyof Events]? : Events[event]

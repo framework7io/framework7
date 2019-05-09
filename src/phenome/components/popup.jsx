@@ -22,6 +22,11 @@ export default {
     backdropEl: [String, Object, window.HTMLElement],
     closeByBackdropClick: Boolean,
     closeOnEscape: Boolean,
+    swipeToClose: {
+      type: [Boolean, String],
+      default: false,
+    },
+    swipeToCloseHander: [String, Object, window.HTMLElement],
     ...Mixins.colorProps,
   },
   render() {
@@ -84,7 +89,7 @@ export default {
     el.addEventListener('popup:closed', self.onClosed);
 
     const props = self.props;
-    const { closeByBackdropClick, backdrop, backdropEl, animate, closeOnEscape } = props;
+    const { closeByBackdropClick, backdrop, backdropEl, animate, closeOnEscape, swipeToClose, swipeToCloseHander } = props;
 
     const popupParams = { el };
 
@@ -94,6 +99,8 @@ export default {
       if (typeof self.$options.propsData.animate !== 'undefined') popupParams.animate = animate;
       if (typeof self.$options.propsData.backdrop !== 'undefined') popupParams.backdrop = backdrop;
       if (typeof self.$options.propsData.backdropEl !== 'undefined') popupParams.backdropEl = backdropEl;
+      if (typeof self.$options.propsData.swipeToClose !== 'undefined') popupParams.swipeToClose = swipeToClose;
+      if (typeof self.$options.propsData.swipeToCloseHander !== 'undefined') popupParams.swipeToCloseHander = swipeToCloseHander;
     }
     if (process.env.COMPILER === 'react') {
       if ('closeByBackdropClick' in props) popupParams.closeByBackdropClick = closeByBackdropClick;
@@ -101,6 +108,8 @@ export default {
       if ('animate' in props) popupParams.animate = animate;
       if ('backdrop' in props) popupParams.backdrop = backdrop;
       if ('backdropEl' in props) popupParams.backdropEl = backdropEl;
+      if ('swipeToClose' in props) popupParams.swipeToClose = swipeToClose;
+      if ('swipeToCloseHander' in props) popupParams.swipeToCloseHander = swipeToCloseHander;
     }
 
     self.$f7ready(() => {
