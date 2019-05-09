@@ -184,14 +184,12 @@ export default {
 
       // Link
       if (link || href || accordionItem || smartSelect) {
-        const linkAttrs = Utils.extend(
-          {
-            href: link === true || accordionItem || smartSelect ? '#' : link || href,
-            target,
-          },
-          Mixins.linkRouterAttrs(props),
-          Mixins.linkActionsAttrs(props),
-        );
+        const linkAttrs = {
+          href: link === true ? '' : link || href,
+          target,
+          ...Mixins.linkRouterAttrs(props),
+          ...Mixins.linkActionsAttrs(props),
+        };
         const linkClasses = Utils.classNames(
           {
             'item-link': true,
