@@ -26,6 +26,7 @@ class Range extends Framework7Class {
       scaleSteps: 5,
       scaleSubSteps: 0,
       formatScaleLabel: null,
+      limitKnobPosition: app.theme === 'ios',
     };
 
     // Extend defaults with modules params
@@ -71,7 +72,7 @@ class Range extends Framework7Class {
     }
 
     const {
-      dual, step, label, min, max, value, vertical, verticalReversed, scale, scaleSteps, scaleSubSteps,
+      dual, step, label, min, max, value, vertical, verticalReversed, scale, scaleSteps, scaleSubSteps, limitKnobPosition,
     } = range.params;
 
     Utils.extend(range, {
@@ -92,6 +93,7 @@ class Range extends Framework7Class {
       scale,
       scaleSteps,
       scaleSubSteps,
+      limitKnobPosition,
     });
 
     if ($inputEl) {
@@ -188,6 +190,7 @@ class Range extends Framework7Class {
     let $touchedKnobEl;
     let dualValueIndex;
     let valueChangedByTouch;
+    let targetTouchIdentifier;
     function onTouchChange() {
       valueChangedByTouch = true;
     }
@@ -201,6 +204,9 @@ class Range extends Framework7Class {
       valueChangedByTouch = false;
       touchesStart.x = e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX;
       touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
+      if (e.type === 'touchstart') {
+        targetTouchIdentifier = e.targetTouches[0].identifier;
+      }
 
       isTouched = true;
       isScrolling = undefined;
@@ -241,8 +247,20 @@ class Range extends Framework7Class {
     }
     function handleTouchMove(e) {
       if (!isTouched) return;
-      const pageX = e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX;
-      const pageY = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
+      let pageX;
+      let pageY;
+      if (e.type === 'touchmove') {
+        for (let i = 0; i < e.targetTouches.length; i += 1) {
+          if (e.targetTouches[i].identifier === targetTouchIdentifier) {
+            pageX = e.targetTouches[i].pageX;
+            pageY = e.targetTouches[i].pageY;
+          }
+        }
+      } else {
+        pageX = e.pageX;
+        pageY = e.pageY;
+      }
+      if (typeof pageX === 'undefined' && typeof pageY === 'undefined') return;
 
       if (typeof isScrolling === 'undefined' && !range.vertical) {
         isScrolling = !!(isScrolling || Math.abs(pageY - touchesStart.y) > Math.abs(pageX - touchesStart.x));
@@ -284,7 +302,14 @@ class Range extends Framework7Class {
       }
       range.setValue(newValue, true);
     }
-    function handleTouchEnd() {
+    function handleTouchEnd(e) {
+      if (e.type === 'touchend') {
+        let touchEnded;
+        for (let i = 0; i < e.changedTouches.length; i += 1) {
+          if (e.changedTouches[i].identifier === targetTouchIdentifier) touchEnded = true;
+        }
+        if (!touchEnded) return;
+      }
       if (!isTouched) {
         if (isScrolling) $touchedKnobEl.removeClass('range-knob-active-state');
         isTouched = false;
@@ -400,6 +425,7 @@ class Range extends Framework7Class {
       labels,
       vertical,
       verticalReversed,
+      limitKnobPosition,
     } = range;
     const knobSize = vertical ? knobHeight : knobWidth;
     const rangeSize = vertical ? rangeHeight : rangeWidth;
@@ -415,7 +441,7 @@ class Range extends Framework7Class {
       });
       knobs.forEach(($knobEl, knobIndex) => {
         let startPos = rangeSize * progress[knobIndex];
-        if (app.theme === 'ios') {
+        if (limitKnobPosition) {
           const realStartPos = (rangeSize * progress[knobIndex]) - (knobSize / 2);
           if (realStartPos < 0) startPos = knobSize / 2;
           if ((realStartPos + knobSize) > rangeSize) startPos = rangeSize - (knobSize / 2);
@@ -428,7 +454,7 @@ class Range extends Framework7Class {
       $barActiveEl.css(vertical ? 'height' : 'width', `${progress * 100}%`);
 
       let startPos = rangeSize * progress;
-      if (app.theme === 'ios') {
+      if (limitKnobPosition) {
         const realStartPos = (rangeSize * progress) - (knobSize / 2);
         if (realStartPos < 0) startPos = knobSize / 2;
         if ((realStartPos + knobSize) > rangeSize) startPos = rangeSize - (knobSize / 2);
