@@ -1,5 +1,5 @@
 import React from 'react';
-import { Page, Navbar, Sheet, PageContent, Toolbar, Block, Button, Link, Row } from 'framework7-react';
+import { Page, Navbar, Sheet, PageContent, Toolbar, BlockTitle, Block, Button, Link, Row, List, ListItem } from 'framework7-react';
 
 export default class extends React.Component {
   constructor(props) {
@@ -24,6 +24,18 @@ export default class extends React.Component {
           </p>
           <p>
             <Button className="col" fill onClick={() => {this.setState({sheetOpened: true})}}>Open Via Prop Change</Button>
+          </p>
+        </Block>
+
+        <BlockTitle>Swipeable Sheet</BlockTitle>
+        <Block strong>
+          <p>Sheet modal can be closed with swipe to top (for top Sheet) or bottom (for default Bottom sheet):</p>
+          <p>
+            <Button fill sheetOpen=".demo-sheet-swipe-to-close">Swipe To Close</Button>
+          </p>
+          <p>Also there is swipe-step that can be set on Sheet modal to expand it with swipe:</p>
+          <p>
+            <Button fill sheetOpen=".demo-sheet-swipe-to-step">Swipe To Step</Button>
           </p>
         </Block>
 
@@ -64,8 +76,61 @@ export default class extends React.Component {
             </Block>
           </PageContent>
         </Sheet>
+
+        <Sheet
+          className="demo-sheet-swipe-to-close"
+          style={{height: 'auto'}}
+          swipeToClose
+          backdrop
+        >
+          <div className="swipe-handler"></div>
+
+          <PageContent>
+            <BlockTitle large>Hello!</BlockTitle>
+            <Block>
+              <p>Eaque maiores ducimus, impedit unde culpa qui, explicabo accusamus, non vero corporis voluptatibus similique odit ab. Quaerat quasi consectetur quidem libero? Repudiandae adipisci vel voluptatum, autem libero minus dignissimos repellat.</p>
+              <p>Iusto, est corrupti! Totam minus voluptas natus esse possimus nobis, delectus veniam expedita sapiente ut cum reprehenderit aliquid odio amet praesentium vero temporibus obcaecati beatae aspernatur incidunt, perferendis voluptates doloribus?</p>
+            </Block>
+          </PageContent>
+        </Sheet>
+
+        <Sheet
+          className="demo-sheet-swipe-to-step"
+          style={{height: 'auto'}}
+          swipeToClose
+          swipeToStep
+          backdrop
+        >
+          <div className="swipe-handler" onClick={() => this.toggleSwipeStep()}></div>
+          <div className="sheet-modal-swipe-step">
+            <div className="display-flex padding justify-content-space-between align-items-center">
+              <div style={{fontSize: '18px'}}><b>Total:</b></div>
+              <div style={{fontSize: '22px'}}><b>$500</b></div>
+            </div>
+            <div className="padding-horizontal padding-bottom">
+              <Button large fill>Make Payment</Button>
+              <div className="margin-top text-align-center">Swipe up for more details</div>
+            </div>
+          </div>
+          <BlockTitle medium className="margin-top">Your order:</BlockTitle>
+          <List noHairlines>
+            <ListItem title="Item 1">
+              <b slot="after" className="text-color-black">$200</b>
+            </ListItem>
+            <ListItem title="Item 2">
+              <b slot="after" className="text-color-black">$180</b>
+            </ListItem>
+            <ListItem title="Delivery">
+              <b slot="after" className="text-color-black">$120</b>
+            </ListItem>
+          </List>
+        </Sheet>
       </Page>
     );
+  }
+  toggleSwipeStep() {
+    const self = this;
+    self.$f7.sheet.stepToggle('.demo-sheet-swipe-to-step');
   }
   createSheet() {
     const self = this;
@@ -74,15 +139,15 @@ export default class extends React.Component {
     if (!self.sheet) {
       self.sheet = self.$f7.sheet.create({
         content: `
-          <div class="sheet-modal">
-            <div class="toolbar">
-              <div class="toolbar-inner justify-content-flex-end">
-                <a href="#" class="link sheet-close">Close</a>
+          <div className="sheet-modal">
+            <div className="toolbar">
+              <div className="toolbar-inner justify-content-flex-end">
+                <a href="#" className="link sheet-close">Close</a>
               </div>
             </div>
-            <div class="sheet-modal-inner">
-              <div class="page-content">
-                <div class="block">
+            <div className="sheet-modal-inner">
+              <div className="page-content">
+                <div className="block">
                   <p>This sheet modal was created dynamically</p>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse faucibus mauris leo, eu bibendum neque congue non. Ut leo mauris, eleifend eu commodo a, egestas ac urna. Maecenas in lacus faucibus, viverra ipsum pulvinar, molestie arcu. Etiam lacinia venenatis dignissim. Suspendisse non nisl semper tellus malesuada suscipit eu et eros. Nulla eu enim quis quam elementum vulputate. Mauris ornare consequat nunc viverra pellentesque. Aenean semper eu massa sit amet aliquam. Integer et neque sed libero mollis elementum at vitae ligula. Vestibulum pharetra sed libero sed porttitor. Suspendisse a faucibus lectus.</p>
                 </div>

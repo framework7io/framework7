@@ -22,7 +22,21 @@
           <a class="col button button-fill sheet-open" data-sheet=".demo-sheet-top">Top Sheet</a>
         </p>
       </div>
+
+      <div class="block-title">Swipeable Sheet</div>
+      <div class="block block-strong">
+        <p>Sheet modal can be closed with swipe to top (for top Sheet) or bottom (for default Bottom sheet):</p>
+        <p>
+          <a href="#" class="button button-fill sheet-open" data-sheet=".demo-sheet-swipe-to-close">Swipe To Close</a>
+        </p>
+        <p>Also there is swipe-step that can be set on Sheet modal to expand it with swipe:</p>
+        <p>
+            <a href="#" class="button button-fill sheet-open" data-sheet=".demo-sheet-swipe-to-step">Swipe To Step</a>
+          </p>
+      </div>
     </div>
+
+
     <div class="sheet-modal demo-sheet">
       <div class="toolbar">
         <div class="toolbar-inner">
@@ -65,11 +79,68 @@
         </div>
       </div>
     </div>
+
+    <div class="sheet-modal demo-sheet-swipe-to-close" style="height:auto">
+      <div class="sheet-modal-inner">
+        <div class="swipe-handler"></div>
+        <div class="page-content">
+          <div class="block-title block-title-large">Hello!</div>
+          <div class="block">
+            <p>Eaque maiores ducimus, impedit unde culpa qui, explicabo accusamus, non vero corporis voluptatibus similique odit ab. Quaerat quasi consectetur quidem libero? Repudiandae adipisci vel voluptatum, autem libero minus dignissimos repellat.</p>
+            <p>Iusto, est corrupti! Totam minus voluptas natus esse possimus nobis, delectus veniam expedita sapiente ut cum reprehenderit aliquid odio amet praesentium vero temporibus obcaecati beatae aspernatur incidunt, perferendis voluptates doloribus?</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet-modal demo-sheet-swipe-to-step" style="height:auto">
+      <div class="sheet-modal-inner">
+        <div class="swipe-handler" @click="toggleSwipeStep"></div>
+        <div class="sheet-modal-swipe-step">
+          <div class="display-flex padding justify-content-space-between align-items-center">
+            <div style="font-size: 18px"><b>Total:</b></div>
+            <div style="font-size: 22px"><b>$500</b></div>
+          </div>
+          <div class="padding-horizontal padding-bottom">
+            <a class="button button-large button-fill">Make Payment</a>
+            <div class="margin-top text-align-center">Swipe up for more details</div>
+          </div>
+        </div>
+        <div class="block-title block-title-medium margin-top">Your order:</div>
+        <div class="list no-hairlines">
+          <ul>
+            <li class="item-content">
+              <div class="item-inner">
+                <div class="item-title">Item 1</div>
+                <div class="item-after text-color-black"><b>$200</b></div>
+              </div>
+            </li>
+            <li class="item-content">
+              <div class="item-inner">
+                <div class="item-title">Item 2</div>
+                <div class="item-after text-color-black"><b>$180</b></div>
+              </div>
+            </li>
+            <li class="item-content">
+              <div class="item-inner">
+                <div class="item-title">Delivery</div>
+                <div class="item-after text-color-black"><b>$120</b></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
   </div>
 </template>
 <script>
 return {
   methods: {
+    toggleSwipeStep: function () {
+      var self = this;
+      self.sheetSwipeToStep.stepToggle();
+    },
     createSheet: function () {
       var self = this;
       // Create sheet modal
@@ -101,6 +172,20 @@ return {
     },
   },
   on: {
+    pageInit: function () {
+      var self = this;
+      self.sheetSwipeToClose = self.$app.sheet.create({
+        el: '.demo-sheet-swipe-to-close',
+        swipeToClose: true,
+        backdrop: true,
+      });
+      self.sheetSwipeToStep = self.$app.sheet.create({
+        el: '.demo-sheet-swipe-to-step',
+        swipeToClose: true,
+        swipeToStep: true,
+        backdrop: true,
+      });
+    },
     pageBeforeOut: function () {
       var self = this;
       // Close opened sheets on page out

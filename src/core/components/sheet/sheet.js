@@ -12,6 +12,9 @@ export default {
       closeByBackdropClick: true,
       closeByOutsideClick: false,
       closeOnEscape: false,
+      swipeToClose: false,
+      swipeToStep: false,
+      swipeHandler: null,
     },
   },
   static: {
@@ -25,7 +28,24 @@ export default {
         app,
         constructor: Sheet,
         defaultSelector: '.sheet-modal.modal-in',
-      })
+      }),
+      {
+        stepOpen(sheet) {
+          const sheetInstance = app.sheet.get(sheet);
+          if (sheetInstance && sheetInstance.stepOpen) return sheetInstance.stepOpen();
+          return undefined;
+        },
+        stepClose(sheet) {
+          const sheetInstance = app.sheet.get(sheet);
+          if (sheetInstance && sheetInstance.stepClose) return sheetInstance.stepClose();
+          return undefined;
+        },
+        stepToggle(sheet) {
+          const sheetInstance = app.sheet.get(sheet);
+          if (sheetInstance && sheetInstance.stepToggle) return sheetInstance.stepToggle();
+          return undefined;
+        },
+      },
     );
   },
   clicks: {
