@@ -10,7 +10,7 @@ export default {
       closeByBackdropClick: true,
       closeOnEscape: false,
       swipeToClose: false,
-      swipeToCloseHandler: null,
+      swipeHandler: null,
     },
   },
   static: {

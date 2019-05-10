@@ -128,7 +128,7 @@ class Popup extends Modal {
 
     function handleTouchStart(e) {
       if (isTouched || !allowSwipeToClose) return;
-      if (popup.params.swipeToCloseHandler && $(e.target).closest(popup.params.swipeToCloseHandler).length === 0) {
+      if (popup.params.swipeHandler && $(e.target).closest(popup.params.swipeHandler).length === 0) {
         return;
       }
       isTouched = true;
@@ -139,7 +139,7 @@ class Popup extends Modal {
       };
       touchStartTime = Utils.now();
       isScrolling = undefined;
-      if (!popup.params.swipeToCloseHandler && e.type === 'touchstart') {
+      if (!popup.params.swipeHandler && e.type === 'touchstart') {
         pageContentEl = $(e.target).closest('.page-content')[0];
       }
     }

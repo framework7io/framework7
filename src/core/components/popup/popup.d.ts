@@ -28,7 +28,7 @@ export namespace Popup {
     /** When enabled it will be possible to close popup with swipe, can be false, true, 'to-bottom', 'to-top' (default false) */
     swipeToClose?: boolean
     /** When enabled it will be possible to close popup with swipe only on specified handler element (default null) */
-    swipeToCloseHandler?: HTMLElement | CSSSelector
+    swipeHandler?: HTMLElement | CSSSelector
 
     /** Object with events handlers.. */
     on?: {

@@ -65,7 +65,7 @@ export default class extends React.Component {
           </Page>
         </Popup>
 
-        <Popup className="demo-popup-swipe-handler" swipeToClose="to-bottom" swipeToCloseHandler=".swipe-handler">
+        <Popup className="demo-popup-swipe-handler" swipeToClose="to-bottom" swipeHandler=".swipe-handler">
           <Page>
             <div slot="fixed" className="swipe-handler"></div>
             <BlockTitle large>Hello!</BlockTitle>

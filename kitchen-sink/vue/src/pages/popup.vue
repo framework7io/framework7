@@ -53,7 +53,7 @@
       </f7-page>
     </f7-popup>
 
-    <f7-popup class="demo-popup-swipe-handler" swipe-to-close="to-bottom" swipe-to-close-handler=".swipe-handler">
+    <f7-popup class="demo-popup-swipe-handler" swipe-to-close="to-bottom" swipe-handler=".swipe-handler">
       <f7-page>
         <div slot="fixed" class="swipe-handler"></div>
         <f7-block-title large>Hello!</f7-block-title>
