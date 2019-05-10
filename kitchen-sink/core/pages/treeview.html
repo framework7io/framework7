@@ -217,6 +217,114 @@
         </div>
       </div>
 
+      <div class="block-title">With checkboxes</div>
+      <div class="block block-strong no-padding-horizontal">
+        <div class="treeview">
+          <div class="treeview-item">
+            <div class="treeview-item-root">
+              <div class="treeview-toggle"></div>
+              <div class="treeview-item-content">
+                <label class="checkbox">
+                  <input type="checkbox">
+                  <i class="icon-checkbox"></i>
+                </label>
+                <i class="icon f7-icons">folder_fill</i>
+                <div class="treeview-item-label">images</div>
+              </div>
+            </div>
+            <div class="treeview-item-children">
+              <div class="treeview-item">
+                <div class="treeview-item-root">
+                  <div class="treeview-item-content">
+                    <label class="checkbox">
+                      <input type="checkbox">
+                      <i class="icon-checkbox"></i>
+                    </label>
+                    <i class="icon f7-icons">images_fill</i>
+                    <div class="treeview-item-label">avatar.png</div>
+                  </div>
+                </div>
+              </div>
+              <div class="treeview-item">
+                <div class="treeview-item-root">
+                  <div class="treeview-item-content">
+                    <label class="checkbox">
+                      <input type="checkbox">
+                      <i class="icon-checkbox"></i>
+                    </label>
+                    <i class="icon f7-icons">images_fill</i>
+                    <div class="treeview-item-label">background.jpg</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="treeview-item">
+            <div class="treeview-item-root">
+              <div class="treeview-toggle"></div>
+              <div class="treeview-item-content">
+                <label class="checkbox">
+                  <input type="checkbox">
+                  <i class="icon-checkbox"></i>
+                </label>
+                <i class="icon f7-icons">folder_fill</i>
+                <div class="treeview-item-label">documents</div>
+              </div>
+            </div>
+            <div class="treeview-item-children">
+              <div class="treeview-item">
+                <div class="treeview-item-root">
+                  <div class="treeview-item-content">
+                    <label class="checkbox">
+                      <input type="checkbox">
+                      <i class="icon-checkbox"></i>
+                    </label>
+                    <i class="icon f7-icons">document_text_fill</i>
+                    <div class="treeview-item-label">cv.docx</div>
+                  </div>
+                </div>
+              </div>
+              <div class="treeview-item">
+                <div class="treeview-item-root">
+                  <div class="treeview-item-content">
+                    <label class="checkbox">
+                      <input type="checkbox">
+                      <i class="icon-checkbox"></i>
+                    </label>
+                    <i class="icon f7-icons">document_text_fill</i>
+                    <div class="treeview-item-label">info.docx</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="treeview-item">
+            <div class="treeview-item-root">
+              <div class="treeview-item-content">
+                <label class="checkbox">
+                  <input type="checkbox">
+                  <i class="icon-checkbox"></i>
+                </label>
+                <i class="icon f7-icons">logo_github</i>
+                <div class="treeview-item-label">.gitignore</div>
+              </div>
+            </div>
+          </div>
+          <div class="treeview-item">
+            <div class="treeview-item-root">
+              <div class="treeview-item-content">
+                <label class="checkbox">
+                  <input type="checkbox">
+                  <i class="icon-checkbox"></i>
+                </label>
+                <i class="icon f7-icons">document_text_fill</i>
+                <div class="treeview-item-label">index.html</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="block-title">Whole item as toggle</div>
       <div class="block block-strong no-padding-horizontal">
         <div class="treeview">
@@ -508,5 +616,26 @@
         }, 2000);
       },
     },
+    on: {
+      pageInit: function () {
+        var self = this;
+        var $ = self.$;
+        $(self.$el).find('input[type="checkbox"]').on('change', function (e) {
+          var $rootEl = $(e.target).closest('.treeview-item-root');
+          var $itemEl = $rootEl.parent('.treeview-item');
+          var $childrenCheckboxes = $itemEl.find('.treeview-item-children input[type="checkbox"]');
+          var $parentItemEl = $itemEl.parents('.treeview-item');
+          var $parentCheckbox = $parentItemEl.children('.treeview-item-root').find('input[type="checkbox"]');
+          if ($childrenCheckboxes.length) {
+            $childrenCheckboxes.prop('checked', e.target.checked);
+          }
+          if ($parentItemEl) {
+            var checkedChildren = $parentItemEl.find('.treeview-item-children input[type="checkbox"]:checked').length;
+            $parentCheckbox.prop('checked', checkedChildren > 0);
+            $parentCheckbox.prop('indeterminate', checkedChildren === 1);
+          }
+        })
+      }
+    }
   };
 </script>

@@ -1,10 +1,22 @@
 import React from 'react';
-import { Page, Navbar, BlockTitle, Block, Treeview, TreeviewItem } from 'framework7-react';
+import { Page, Navbar, BlockTitle, Block, Treeview, TreeviewItem, Checkbox } from 'framework7-react';
 
 export default class extends React.Component {
   constructor() {
     super();
     this.state = {
+      checkboxes: {
+        images: {
+          'avatar.png': false,
+          'background.jpg': false,
+        },
+        documents: {
+          'cv.docx': false,
+          'info.docx': false,
+        },
+        '.gitignore': false,
+        '.index.html': false,
+      },
       selectedItem: null,
       loadedChildren: [],
     };
@@ -83,6 +95,80 @@ export default class extends React.Component {
             </TreeviewItem>
             <TreeviewItem label=".gitignore" iconF7="logo_github" />
             <TreeviewItem label="index.html" iconF7="document_text_fill" />
+          </Treeview>
+        </Block>
+
+        <BlockTitle>With checkboxes</BlockTitle>
+        <Block strong className="no-padding-horizontal">
+          <Treeview>
+            <TreeviewItem label="images" iconF7="folder_fill">
+              <Checkbox slot="content-start"
+                checked={Object.values(this.state.checkboxes.images).indexOf(false) < 0}
+                indeterminate={Object.values(this.state.checkboxes.images).indexOf(false) >= 0 && Object.values(this.state.checkboxes.images).indexOf(true) >= 0}
+                onChange={(e) => {
+                  Object.keys(this.state.checkboxes.images).forEach(k => this.state.checkboxes.images[k] = e.target.checked);
+                  this.setState({...this.state});
+                }}
+              />
+              <TreeviewItem label="avatar.png" iconF7="images_fill">
+                <Checkbox slot="content-start"
+                  checked={this.state.checkboxes.images['avatar.png']}
+                  onChange={(e) => {
+                    this.state.checkboxes.images['avatar.png'] = e.target.checked;
+                    this.setState({...this.state});
+                  }}
+                />
+              </TreeviewItem>
+              <TreeviewItem label="background.jpg" iconF7="images_fill">
+                <Checkbox slot="content-start"
+                  checked={this.state.checkboxes.images['background.jpg']}
+                  onChange={(e) => {
+                    this.state.checkboxes.images['background.jpg'] = e.target.checked;
+                    this.setState({...this.state});
+                  }}
+                />
+              </TreeviewItem>
+            </TreeviewItem>
+            <TreeviewItem label="documents" iconF7="folder_fill">
+              <Checkbox slot="content-start"
+                checked={Object.values(this.state.checkboxes.documents).indexOf(false) < 0}
+                indeterminate={Object.values(this.state.checkboxes.documents).indexOf(false) >= 0 && Object.values(this.state.checkboxes.documents).indexOf(true) >= 0}
+                onChange={(e) => {
+                  Object.keys(this.state.checkboxes.documents).forEach(k => this.state.checkboxes.documents[k] = e.target.checked);
+                  this.setState({...this.state});
+                }}
+              />
+              <TreeviewItem label="cv.docx" iconF7="document_text_fill">
+                <Checkbox slot="content-start"
+                  checked={this.state.checkboxes.documents['cv.docx']}
+                  onChange={(e) => {
+                    this.state.checkboxes.documents['cv.docx'] = e.target.checked;
+                    this.setState({...this.state});
+                  }}
+                />
+              </TreeviewItem>
+              <TreeviewItem label="info.docx" iconF7="document_text_fill">
+                <Checkbox slot="content-start"
+                  checked={this.state.checkboxes.documents['info.docx']}
+                  onChange={(e) => {
+                    this.state.checkboxes.documents['info.docx'] = e.target.checked;
+                    this.setState({...this.state});
+                  }}
+                />
+              </TreeviewItem>
+            </TreeviewItem>
+            <TreeviewItem label=".gitignore" iconF7="logo_github">
+              <Checkbox slot="content-start" checked={this.state.checkboxes['.gitignore']} onChange={(e) => {
+                this.state.checkboxes['.gitignore'] = e.target.checked;
+                this.setState({...this.state});
+              }}/>
+            </TreeviewItem>
+            <TreeviewItem label="index.html" iconF7="document_text_fill">
+              <Checkbox slot="content-start" checked={this.state.checkboxes['index.html']} onChange={(e) => {
+                this.state.checkboxes['index.html'] = e.target.checked;
+                this.setState({...this.state});
+              }}/>
+            </TreeviewItem>
           </Treeview>
         </Block>
 

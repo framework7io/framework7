@@ -45,6 +45,62 @@
       </f7-treeview>
     </f7-block>
 
+    <f7-block-title>With checkboxes</f7-block-title>
+    <f7-block strong class="no-padding-horizontal">
+      <f7-treeview>
+        <f7-treeview-item label="images" icon-f7="folder_fill">
+          <f7-checkbox slot="content-start"
+            :checked="Object.values(checkboxes.images).indexOf(false) < 0"
+            :indeterminate="Object.values(checkboxes.images).indexOf(false) >= 0 && Object.values(checkboxes.images).indexOf(true) >= 0"
+            @change="(e) => Object.keys(checkboxes.images).forEach(k => checkboxes.images[k] = e.target.checked)"
+          />
+          <f7-treeview-item label="avatar.png" icon-f7="images_fill">
+            <f7-checkbox slot="content-start"
+              :checked="checkboxes.images['avatar.png']"
+              @change="checkboxes.images['avatar.png'] = $event.target.checked"
+            />
+          </f7-treeview-item>
+          <f7-treeview-item label="background.jpg" icon-f7="images_fill">
+            <f7-checkbox slot="content-start"
+              :checked="checkboxes.images['background.jpg']"
+              @change="checkboxes.images['background.jpg'] = $event.target.checked"
+            />
+          </f7-treeview-item>
+        </f7-treeview-item>
+        <f7-treeview-item label="documents" icon-f7="folder_fill">
+          <f7-checkbox slot="content-start"
+            :checked="Object.values(checkboxes.documents).indexOf(false) < 0"
+            :indeterminate="Object.values(checkboxes.documents).indexOf(false) >= 0 && Object.values(checkboxes.documents).indexOf(true) >= 0"
+            @change="(e) => Object.keys(checkboxes.documents).forEach(k => checkboxes.documents[k] = e.target.checked)"
+          />
+          <f7-treeview-item label="cv.docx" icon-f7="document_text_fill">
+            <f7-checkbox slot="content-start"
+              :checked="checkboxes.documents['cv.docx']"
+              @change="checkboxes.documents['cv.docx'] = $event.target.checked"
+            />
+          </f7-treeview-item>
+          <f7-treeview-item label="info.docx" icon-f7="document_text_fill">
+            <f7-checkbox slot="content-start"
+              :checked="checkboxes.documents['info.docx']"
+              @change="checkboxes.documents['info.docx'] = $event.target.checked"
+            />
+          </f7-treeview-item>
+        </f7-treeview-item>
+        <f7-treeview-item label=".gitignore" icon-f7="logo_github">
+          <f7-checkbox slot="content-start"
+            :checked="checkboxes['.gitignore']"
+            @change="checkboxes['.gitignore'] = $event.target.checked"
+          />
+        </f7-treeview-item>
+        <f7-treeview-item label="index.html" icon-f7="document_text_fill">
+          <f7-checkbox slot="content-start"
+            :checked="checkboxes['index.html']"
+            @change="checkboxes['index.html'] = $event.target.checked"
+          />
+        </f7-treeview-item>
+      </f7-treeview>
+    </f7-block>
+
     <f7-block-title>Whole item as toggle</f7-block-title>
     <f7-block strong class="no-padding-horizontal">
       <f7-treeview>
@@ -162,14 +218,26 @@
   </f7-page>
 </template>
 <script>
-  import { f7Page, f7Navbar, f7BlockTitle, f7Block, f7Treeview, f7TreeviewItem } from 'framework7-vue';
+  import { f7Page, f7Navbar, f7BlockTitle, f7Block, f7Treeview, f7TreeviewItem, f7Checkbox } from 'framework7-vue';
 
   export default {
     components: {
-      f7Page, f7Navbar, f7BlockTitle, f7Block, f7Treeview, f7TreeviewItem,
+      f7Page, f7Navbar, f7BlockTitle, f7Block, f7Treeview, f7TreeviewItem, f7Checkbox
     },
     data: function () {
       return {
+        checkboxes: {
+          images: {
+            'avatar.png': false,
+            'background.jpg': false,
+          },
+          documents: {
+            'cv.docx': false,
+            'info.docx': false,
+          },
+          '.gitignore': false,
+          '.index.html': false,
+        },
         selectedItem: null,
         loadedChildren: [],
       };

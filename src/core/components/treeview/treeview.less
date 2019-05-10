@@ -19,7 +19,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  i, .f7-icons, .material-icons {
+  > i, > .f7-icons, > .material-icons {
     width: var(--f7-treeview-icon-size);
     height: var(--f7-treeview-icon-size);
     font-size: var(--f7-treeview-icon-size);
@@ -34,19 +34,19 @@
     });
 
   }
+  > * + * {
+    .ltr({
+      margin-left: 5px;
+    });
+    .rtl({
+      margin-right: 5px;
+    });
+  }
 }
 .treeview-item-label {
   font-size: var(--f7-treeview-label-font-size);
   font-weight: var(--f7-treeview-label-font-weight);
   color: var(--f7-treeview-label-text-color);
-}
-.treeview-item-label:nth-child(n + 2) {
-  .ltr({
-    margin-left: 5px;
-  });
-  .rtl({
-    margin-right: 5px;
-  });
 }
 .treeview-toggle {
   width: var(--f7-treeview-toggle-size);
