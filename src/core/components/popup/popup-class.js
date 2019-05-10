@@ -127,7 +127,7 @@ class Popup extends Modal {
     let pageContentScrollHeight;
 
     function handleTouchStart(e) {
-      if (isTouched || !allowSwipeToClose) return;
+      if (isTouched || !allowSwipeToClose || !popup.params.swipeToClose) return;
       if (popup.params.swipeHandler && $(e.target).closest(popup.params.swipeHandler).length === 0) {
         return;
       }
