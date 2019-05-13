@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.3.1
+ * Framework7 Vue 4.4.0
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 29, 2019
+ * Released on: May 13, 2019
  */
 import Vue from 'vue';
 import f7AccordionContent from './components/accordion-content';
@@ -97,6 +97,8 @@ import f7Tab from './components/tab';
 import f7Tabs from './components/tabs';
 import f7Toggle from './components/toggle';
 import f7Toolbar from './components/toolbar';
+import f7TreeviewItem from './components/treeview-item';
+import f7Treeview from './components/treeview';
 import f7View from './components/view';
 import f7Views from './components/views';
 
@@ -203,6 +205,8 @@ const Plugin = {
     Vue.component('f7-tabs', f7Tabs);
     Vue.component('f7-toggle', f7Toggle);
     Vue.component('f7-toolbar', f7Toolbar);
+    Vue.component('f7-treeview-item', f7TreeviewItem);
+    Vue.component('f7-treeview', f7Treeview);
     Vue.component('f7-view', f7View);
     Vue.component('f7-views', f7Views);
 

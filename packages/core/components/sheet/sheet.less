@@ -16,12 +16,6 @@
   background: var(--f7-sheet-bg-color);
   z-index: 12500;
   will-change: transform;
-  .hairline(top, var(--f7-sheet-border-color));
-  &:before {
-    z-index: 600;
-    backface-visibility: hidden;
-    transform-style: preserve-3d;
-  }
   &.modal-in, &.modal-out {
     transition-duration: 300ms;
   }
@@ -31,6 +25,10 @@
   &.modal-in {
     display: block;
     transform: translate3d(0, 0, 0);
+  }
+  &.modal-in-swipe-step {
+    display: block;
+    transform: translate3d(0, var(--f7-sheet-swipe-step, 0), 0);
   }
   &.modal-out {
     transform: translate3d(0, 100%, 0);
@@ -58,7 +56,22 @@
       padding-top: 0;
     }
   }
-
+}
+.sheet-modal-top {
+  .hairline(bottom, var(--f7-sheet-border-color));
+  &:after {
+    z-index: 600;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+  }
+}
+.sheet-modal-bottom, .sheet-modal:not(.sheet-modal-top) {
+  .hairline(top, var(--f7-sheet-border-color));
+  &:before {
+    z-index: 600;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+  }
 }
 .sheet-modal-bottom,
 .sheet-modal:not(.sheet-modal-top) {

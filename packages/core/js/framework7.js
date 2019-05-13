@@ -1,5 +1,5 @@
 /**
- * Framework7 4.3.1
+ * Framework7 4.4.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 29, 2019
+ * Released on: May 13, 2019
  */
 
 (function (global, factory) {
@@ -5148,7 +5148,7 @@
         tapHoldPreventClicks: true,
         // Active State
         activeState: true,
-        activeStateElements: 'a, button, label, span, .actions-button, .stepper-button, .stepper-button-plus, .stepper-button-minus, .card-expandable, .menu-item',
+        activeStateElements: 'a, button, label, span, .actions-button, .stepper-button, .stepper-button-plus, .stepper-button-minus, .card-expandable, .menu-item, .link, .item-link',
         mdTouchRipple: true,
         iosTouchRipple: false,
         auroraTouchRipple: false,
@@ -9782,6 +9782,7 @@
       Object.keys(app.modules).forEach(function (moduleName) {
         var moduleClicks = app.modules[moduleName].clicks;
         if (!moduleClicks) { return; }
+        if (e.preventF7Router) { return; }
         Object.keys(moduleClicks).forEach(function (clickSelector) {
           var matchingClickedElement = $clickedEl.closest(clickSelector).eq(0);
           if (matchingClickedElement.length > 0) {
@@ -9789,7 +9790,6 @@
           }
         });
       });
-
 
       // Load Page
       var clickedLinkData = {};
@@ -9799,6 +9799,7 @@
       }
 
       // Prevent Router
+      if (e.preventF7Router) { return; }
       if ($clickedLinkEl.hasClass('prevent-router') || $clickedLinkEl.hasClass('router-prevent')) { return; }
 
       var validUrl = url && url.length > 0 && url !== '#' && !isTabLink;
@@ -10198,8 +10199,8 @@
   /* eslint no-use-before-define: "off" */
 
   var selfClosing = 'area base br col command embed hr img input keygen link menuitem meta param source track wbr'.split(' ');
-  var propsAttrs = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple value'.split(' ');
-  var booleanProps = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple readOnly'.split(' ');
+  var propsAttrs = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple value indeterminate'.split(' ');
+  var booleanProps = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple readOnly indeterminate'.split(' ');
   var tempDom = doc.createElement('div');
 
   function getHooks(data, app, initial, isRoot) {
@@ -10261,7 +10262,6 @@
     var once = ref.once;
 
     var fired = false;
-
     var methodName;
     var method;
     var customArgs = [];
@@ -10310,7 +10310,13 @@
       if (handlerString.indexOf('(') < 0) {
         customArgs = args;
       } else {
-        handlerString.split('(')[1].split(')')[0].split(',').forEach(function (argument) {
+        var handlerArguments = handlerString
+          .split('(')[1]
+          .split(')')[0]
+          .replace(/'[^']*'|"[^"]*"/g, function (a) { return a.replace(/,/g, '<_comma_>'); })
+          .split(',')
+          .map(function (a) { return a.replace(/<_comma_>/g, ','); });
+        handlerArguments.forEach(function (argument) {
           var arg = argument.trim();
           // eslint-disable-next-line
           if (!isNaN(arg)) { arg = parseFloat(arg); }

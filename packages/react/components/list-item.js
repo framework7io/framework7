@@ -136,6 +136,7 @@ class F7ListItem extends React.Component {
       radio,
       checked,
       defaultChecked,
+      indeterminate,
       name,
       value,
       readonly,
@@ -167,6 +168,7 @@ class F7ListItem extends React.Component {
         checkbox: checkbox,
         checked: checked,
         defaultChecked: defaultChecked,
+        indeterminate: indeterminate,
         radio: radio,
         name: name,
         value: value,
@@ -178,8 +180,8 @@ class F7ListItem extends React.Component {
       }, this.slots['content-start'], this.slots['content'], this.slots['content-end'], this.slots['media'], this.slots['inner-start'], this.slots['inner'], this.slots['inner-end'], this.slots['after-start'], this.slots['after'], this.slots['after-end'], this.slots['header'], this.slots['footer'], this.slots['before-title'], this.slots['title'], this.slots['after-title'], this.slots['subtitle'], this.slots['text'], swipeout || accordionItem ? null : self.slots.default);
 
       if (link || href || accordionItem || smartSelect) {
-        const linkAttrs = Utils.extend({
-          href: link === true || accordionItem || smartSelect ? '#' : link || href,
+        const linkAttrs = Object.assign({
+          href: link === true ? '' : link || href,
           target
         }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
         const linkClasses = Utils.classNames({
@@ -473,6 +475,7 @@ __reactComponentSetProps(F7ListItem, Object.assign({
   radio: Boolean,
   checked: Boolean,
   defaultChecked: Boolean,
+  indeterminate: Boolean,
   name: String,
   value: [String, Number, Array],
   readonly: Boolean,

@@ -91,7 +91,9 @@ class F7Popup extends React.Component {
       backdrop,
       backdropEl,
       animate,
-      closeOnEscape
+      closeOnEscape,
+      swipeToClose,
+      swipeHandler
     } = props;
     const popupParams = {
       el
@@ -102,6 +104,8 @@ class F7Popup extends React.Component {
       if ('animate' in props) popupParams.animate = animate;
       if ('backdrop' in props) popupParams.backdrop = backdrop;
       if ('backdropEl' in props) popupParams.backdropEl = backdropEl;
+      if ('swipeToClose' in props) popupParams.swipeToClose = swipeToClose;
+      if ('swipeHandler' in props) popupParams.swipeHandler = swipeHandler;
     }
     self.$f7ready(() => {
       self.f7Popup = self.$f7.popup.create(popupParams);
@@ -151,7 +155,12 @@ __reactComponentSetProps(F7Popup, Object.assign({
   backdrop: Boolean,
   backdropEl: [String, Object, window.HTMLElement],
   closeByBackdropClick: Boolean,
-  closeOnEscape: Boolean
+  closeOnEscape: Boolean,
+  swipeToClose: {
+    type: [Boolean, String],
+    default: false
+  },
+  swipeHandler: [String, Object, window.HTMLElement]
 }, Mixins.colorProps));
 
 F7Popup.displayName = 'f7-popup';

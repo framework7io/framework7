@@ -82,6 +82,7 @@ import {Toggle as ToggleNamespace} from './components/toggle/toggle';
 import {Toolbar as ToolbarNamespace} from './components/toolbar/toolbar';
 import {Tooltip as TooltipNamespace} from './components/tooltip/tooltip';
 import {TouchRipple as TouchRippleNamespace} from './components/touch-ripple/touch-ripple';
+import {Treeview as TreeviewNamespace} from './components/treeview/treeview';
 import {Typography as TypographyNamespace} from './components/typography/typography';
 import {Vi as ViNamespace} from './components/vi/vi';
 import {View as ViewNamespace} from './components/view/view';
@@ -301,6 +302,9 @@ declare module './components/app/app-class' {
   interface Framework7Class<Events> extends TouchRippleNamespace.AppMethods{}
   interface Framework7Params extends TouchRippleNamespace.AppParams{}
   interface Framework7Events extends TouchRippleNamespace.AppEvents{}
+  interface Framework7Class<Events> extends TreeviewNamespace.AppMethods{}
+  interface Framework7Params extends TreeviewNamespace.AppParams{}
+  interface Framework7Events extends TreeviewNamespace.AppEvents{}
   interface Framework7Class<Events> extends TypographyNamespace.AppMethods{}
   interface Framework7Params extends TypographyNamespace.AppParams{}
   interface Framework7Events extends TypographyNamespace.AppEvents{}

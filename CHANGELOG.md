@@ -2,6 +2,53 @@
 
 # Change Log
 
+# [v4.4.0](https://github.com/framework7io/framework7/compare/v4.3.1...v4.4.0) - May 13, 2019
+  * Core
+    * All new Treeview component 🎉
+    * Popup
+      * Added "swipe-to-close" feature
+      * New `swipeToClose` parameter that will allow to close Popup with swipe
+      * New `swipeHandler` parameter to specify swipe to close handler element
+    * Sheet Modal
+      * Added "swipe-to-close" feature
+      * Added "swipe-to-step" feature
+      * New `swipeToClose` parameter that will allow to close Sheet modal with swipe
+      * New `swipeToStep` parameter that will allow to expand Sheet modal with swipe
+      * New `swipeHandler` parameter to specify swipe to close handler element
+      * New `stepOpen()`, `stepClose()` and `stepToggle()` sheet instance methods to open, close and toggle swipe step.
+      * New `app.sheet.stepOpen()`, `app.sheet.stepClose()` and `app.sheet.stepToggle()` app sheet methods to open, close and toggle swipe step.
+      * New `sheet:stepopen`, `sheet:stepclose` sheet DOM events
+      * New `stepOpen`, `stepClose` sheet instance events
+      * New `sheetStepOpen`, `sheetStepClose` app instance events
+    * Autocomplete
+      * Now it is possible to select dropdown values with keyboard UP and DOWN keys
+      * Now it will close dropdown on ESC key
+    * Checkbox
+      * Added support for indeterminate checkboxes
+    * Data Table
+      * Now it uses indeterminate checkbox in head when some of the rows are selected
+    * Range Slider
+      * New `limitKnobPosition` boolean property to limit knob position to size of the bar. By default enabled for iOS theme
+  * Phenome
+    * Treeview
+      * New `Treeview` and `TreeviewItem` components
+    * Popup
+      * Added "swipe-to-close" feature
+      * New `swipeToClose` prop that will allow to close Popup with swipe
+      * New `swipeHandler` prop to specify swipe to close handler element
+    * Sheet Modal
+      * Added "swipe-to-close" feature
+      * Added "swipe-to-step" feature
+      * New `swipeToClose` parameter that will allow to close Sheet modal with swipe
+      * New `swipeToStep` parameter that will allow to expand Sheet modal with swipe
+      * New `swipeHandler` parameter to specify swipe to close handler element
+      * New `sheet:stepopen` (`sheetStepOpen`), `sheet:stepclose` (`sheetStepClose`) sheet events
+    * Checkbox/ListItem
+      * New `indeterminate` prop to make checkbox indeterminate
+    * Range Slider
+      * New `limitKnobPosition` boolean property to limit knob position to size of the bar. By default enabled for iOS theme
+  * Minor fixes
+
 # [v4.3.1](https://github.com/framework7io/framework7/compare/v4.3.0...v4.3.1) - April 29, 2019
   * Core
     * Range Slider

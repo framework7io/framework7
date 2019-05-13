@@ -1,5 +1,5 @@
 /**
- * Framework7 React 4.3.1
+ * Framework7 React 4.4.0
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 29, 2019
+ * Released on: May 13, 2019
  */
 
 (function (global, factory) {
@@ -2732,6 +2732,30 @@
       }, inputEl, iconEl, this.slots['default']);
     };
 
+    F7Checkbox.prototype.componentDidUpdate = function componentDidUpdate () {
+      var self = this;
+      var ref = self.refs;
+      var inputEl = ref.inputEl;
+      var ref$1 = self.props;
+      var indeterminate = ref$1.indeterminate;
+
+      if (inputEl) {
+        inputEl.indeterminate = indeterminate;
+      }
+    };
+
+    F7Checkbox.prototype.componentDidMount = function componentDidMount () {
+      var self = this;
+      var ref = self.refs;
+      var inputEl = ref.inputEl;
+      var ref$1 = self.props;
+      var indeterminate = ref$1.indeterminate;
+
+      if (indeterminate && inputEl) {
+        inputEl.indeterminate = true;
+      }
+    };
+
     prototypeAccessors.slots.get = function () {
       return __reactComponentSlots(this.props);
     };
@@ -2759,6 +2783,7 @@
     className: String,
     style: Object,
     checked: Boolean,
+    indeterminate: Boolean,
     name: [Number, String],
     value: [Number, String, Boolean],
     disabled: Boolean,
@@ -2830,7 +2855,6 @@
           ref: function (__reactNode) {
             this$1.__reactRefs['deleteEl'] = __reactNode;
           },
-          href: '#',
           className: 'chip-delete'
         });
       }
@@ -3739,6 +3763,7 @@
         var scaleSteps = props.scaleSteps;
         var scaleSubSteps = props.scaleSubSteps;
         var formatScaleLabel = props.formatScaleLabel;
+        var limitKnobPosition = props.limitKnobPosition;
         self.f7Range = f7.range.create(Utils.noUndefinedProps({
           el: self.refs.el,
           value: value,
@@ -3755,6 +3780,7 @@
           scaleSteps: scaleSteps,
           scaleSubSteps: scaleSubSteps,
           formatScaleLabel: formatScaleLabel,
+          limitKnobPosition: limitKnobPosition,
           on: {
             change: function change(range, val) {
               self.dispatchEvent('range:change rangeChange', val);
@@ -3859,6 +3885,10 @@
       default: 0
     },
     formatScaleLabel: Function,
+    limitKnobPosition: {
+      type: Boolean,
+      default: undefined
+    },
     name: String,
     input: Boolean,
     inputId: String,
@@ -5829,11 +5859,30 @@
       el.removeEventListener('click', self.onClick);
     };
 
+    F7ListItemContent.prototype.componentDidUpdate = function componentDidUpdate () {
+      var self = this;
+      var ref = self.refs;
+      var inputEl = ref.inputEl;
+      var ref$1 = self.props;
+      var indeterminate = ref$1.indeterminate;
+
+      if (inputEl) {
+        inputEl.indeterminate = indeterminate;
+      }
+    };
+
     F7ListItemContent.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var ref = self.refs;
-      var innerEl = ref.innerEl;
       var el = ref.el;
+      var inputEl = ref.inputEl;
+      var ref$1 = self.props;
+      var indeterminate = ref$1.indeterminate;
+
+      if (indeterminate && inputEl) {
+        inputEl.indeterminate = true;
+      }
+
       el.addEventListener('click', self.onClick);
     };
 
@@ -5877,6 +5926,7 @@
     checkbox: Boolean,
     checked: Boolean,
     defaultChecked: Boolean,
+    indeterminate: Boolean,
     radio: Boolean,
     name: String,
     value: [String, Number, Array],
@@ -6066,6 +6116,7 @@
       var radio = props.radio;
       var checked = props.checked;
       var defaultChecked = props.defaultChecked;
+      var indeterminate = props.indeterminate;
       var name = props.name;
       var value = props.value;
       var readonly = props.readonly;
@@ -6096,6 +6147,7 @@
           checkbox: checkbox,
           checked: checked,
           defaultChecked: defaultChecked,
+          indeterminate: indeterminate,
           radio: radio,
           name: name,
           value: value,
@@ -6107,8 +6159,8 @@
         }, this.slots['content-start'], this.slots['content'], this.slots['content-end'], this.slots['media'], this.slots['inner-start'], this.slots['inner'], this.slots['inner-end'], this.slots['after-start'], this.slots['after'], this.slots['after-end'], this.slots['header'], this.slots['footer'], this.slots['before-title'], this.slots['title'], this.slots['after-title'], this.slots['subtitle'], this.slots['text'], swipeout || accordionItem ? null : self.slots.default);
 
         if (link || href || accordionItem || smartSelect) {
-          var linkAttrs = Utils.extend({
-            href: link === true || accordionItem || smartSelect ? '#' : link || href,
+          var linkAttrs = Object.assign({
+            href: link === true ? '' : link || href,
             target: target
           }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
           var linkClasses = Utils.classNames({
@@ -6402,6 +6454,7 @@
     radio: Boolean,
     checked: Boolean,
     defaultChecked: Boolean,
+    indeterminate: Boolean,
     name: String,
     value: [String, Number, Array],
     readonly: Boolean,
@@ -10486,6 +10539,8 @@
       var backdropEl = props.backdropEl;
       var animate = props.animate;
       var closeOnEscape = props.closeOnEscape;
+      var swipeToClose = props.swipeToClose;
+      var swipeHandler = props.swipeHandler;
       var popupParams = {
         el: el
       };
@@ -10495,6 +10550,8 @@
         if ('animate' in props) { popupParams.animate = animate; }
         if ('backdrop' in props) { popupParams.backdrop = backdrop; }
         if ('backdropEl' in props) { popupParams.backdropEl = backdropEl; }
+        if ('swipeToClose' in props) { popupParams.swipeToClose = swipeToClose; }
+        if ('swipeHandler' in props) { popupParams.swipeHandler = swipeHandler; }
       }
       self.$f7ready(function () {
         self.f7Popup = self.$f7.popup.create(popupParams);
@@ -10552,7 +10609,12 @@
     backdrop: Boolean,
     backdropEl: [String, Object, window.HTMLElement],
     closeByBackdropClick: Boolean,
-    closeOnEscape: Boolean
+    closeOnEscape: Boolean,
+    swipeToClose: {
+      type: [Boolean, String],
+      default: false
+    },
+    swipeHandler: [String, Object, window.HTMLElement]
   }, Mixins.colorProps));
 
   F7Popup.displayName = 'f7-popup';
@@ -11394,7 +11456,7 @@
       this.__reactRefs = {};
 
       (function () {
-        Utils.bindMethods(this$1, ['onOpen', 'onOpened', 'onClose', 'onClosed']);
+        Utils.bindMethods(this$1, ['onOpen', 'onOpened', 'onClose', 'onClosed', 'onStepOpen', 'onStepClose']);
       })();
     }
 
@@ -11403,6 +11465,14 @@
     F7Sheet.prototype.constructor = F7Sheet;
 
     var prototypeAccessors = { slots: { configurable: true },refs: { configurable: true } };
+
+    F7Sheet.prototype.onStepOpen = function onStepOpen (event) {
+      this.dispatchEvent('sheet:stepopen sheetStepOpen', event);
+    };
+
+    F7Sheet.prototype.onStepClose = function onStepClose (event) {
+      this.dispatchEvent('sheet:stepclose sheetStepClose', event);
+    };
 
     F7Sheet.prototype.onOpen = function onOpen (event) {
       this.dispatchEvent('sheet:open sheetOpen', event);
@@ -11457,6 +11527,7 @@
             var tag = child.type && (child.type.displayName || child.type.name);
 
             if (!tag) {
+              staticList.push(child);
               return;
             }
 
@@ -11489,10 +11560,12 @@
       if (self.f7Sheet) { self.f7Sheet.destroy(); }
       var el = self.refs.el;
       if (!el) { return; }
-      el.removeEventListener('popup:open', self.onOpen);
-      el.removeEventListener('popup:opened', self.onOpened);
-      el.removeEventListener('popup:close', self.onClose);
-      el.removeEventListener('popup:closed', self.onClosed);
+      el.removeEventListener('sheet:open', self.onOpen);
+      el.removeEventListener('sheet:opened', self.onOpened);
+      el.removeEventListener('sheet:close', self.onClose);
+      el.removeEventListener('sheet:closed', self.onClosed);
+      el.removeEventListener('sheet:stepopen', self.onStepOpen);
+      el.removeEventListener('sheet:stepclose', self.onStepClose);
     };
 
     F7Sheet.prototype.componentDidMount = function componentDidMount () {
@@ -11503,6 +11576,8 @@
       el.addEventListener('sheet:opened', self.onOpened);
       el.addEventListener('sheet:close', self.onClose);
       el.addEventListener('sheet:closed', self.onClosed);
+      el.addEventListener('sheet:stepopen', self.onStepOpen);
+      el.addEventListener('sheet:stepclose', self.onStepClose);
       var props = self.props;
       var opened = props.opened;
       var backdrop = props.backdrop;
@@ -11510,6 +11585,9 @@
       var closeByBackdropClick = props.closeByBackdropClick;
       var closeByOutsideClick = props.closeByOutsideClick;
       var closeOnEscape = props.closeOnEscape;
+      var swipeToClose = props.swipeToClose;
+      var swipeToStep = props.swipeToStep;
+      var swipeHandler = props.swipeHandler;
       var sheetParams = {
         el: self.refs.el
       };
@@ -11519,6 +11597,9 @@
         if ('closeByBackdropClick' in props) { sheetParams.closeByBackdropClick = closeByBackdropClick; }
         if ('closeByOutsideClick' in props) { sheetParams.closeByOutsideClick = closeByOutsideClick; }
         if ('closeOnEscape' in props) { sheetParams.closeOnEscape = closeOnEscape; }
+        if ('swipeToClose' in props) { sheetParams.swipeToClose = swipeToClose; }
+        if ('swipeToStep' in props) { sheetParams.swipeToStep = swipeToStep; }
+        if ('swipeHandler' in props) { sheetParams.swipeHandler = swipeHandler; }
       }
       self.$f7ready(function () {
         self.f7Sheet = self.$f7.sheet.create(sheetParams);
@@ -11578,7 +11659,10 @@
     backdropEl: [String, Object, window.HTMLElement],
     closeByBackdropClick: Boolean,
     closeByOutsideClick: Boolean,
-    closeOnEscape: Boolean
+    closeOnEscape: Boolean,
+    swipeToClose: Boolean,
+    swipeToStep: Boolean,
+    swipeHandler: [String, Object, window.HTMLElement]
   }, Mixins.colorProps));
 
   F7Sheet.displayName = 'f7-sheet';
@@ -12947,6 +13031,248 @@
 
   F7Toolbar.displayName = 'f7-toolbar';
 
+  var F7TreeviewItem = /*@__PURE__*/(function (superclass) {
+    function F7TreeviewItem(props, context) {
+      var this$1 = this;
+
+      superclass.call(this, props, context);
+      this.__reactRefs = {};
+
+      (function () {
+        Utils.bindMethods(this$1, ['onClick', 'onOpen', 'onClose', 'onLoadChildren']);
+      })();
+    }
+
+    if ( superclass ) F7TreeviewItem.__proto__ = superclass;
+    F7TreeviewItem.prototype = Object.create( superclass && superclass.prototype );
+    F7TreeviewItem.prototype.constructor = F7TreeviewItem;
+
+    var prototypeAccessors = { itemRootAttrs: { configurable: true },itemRootClasses: { configurable: true },classes: { configurable: true },slots: { configurable: true },refs: { configurable: true } };
+
+    F7TreeviewItem.prototype.onClick = function onClick (event) {
+      this.dispatchEvent('click', event);
+    };
+
+    F7TreeviewItem.prototype.onOpen = function onOpen (event) {
+      this.dispatchEvent('treeview:open treeviewOpen', event);
+    };
+
+    F7TreeviewItem.prototype.onClose = function onClose (event) {
+      this.dispatchEvent('treeview:close treeviewClose', event);
+    };
+
+    F7TreeviewItem.prototype.onLoadChildren = function onLoadChildren (event) {
+      this.dispatchEvent('treeview:loadchildren treeviewLoadChildren', event, event.detail);
+    };
+
+    prototypeAccessors.itemRootAttrs.get = function () {
+      var self = this;
+      var props = self.props;
+      var link = props.link;
+      var href = link;
+      if (link === true) { href = '#'; }
+      if (link === false) { href = undefined; }
+      return Utils.extend({
+        href: href
+      }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
+    };
+
+    prototypeAccessors.itemRootClasses.get = function () {
+      var self = this;
+      var props = self.props;
+      var selectable = props.selectable;
+      var selected = props.selected;
+      var itemToggle = props.itemToggle;
+      return Utils.classNames('treeview-item-root', {
+        'treeview-item-selectable': selectable,
+        'treeview-item-selected': selected,
+        'treeview-item-toggle': itemToggle
+      }, Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
+    };
+
+    prototypeAccessors.classes.get = function () {
+      var self = this;
+      var props = self.props;
+      var className = props.className;
+      var opened = props.opened;
+      var loadChildren = props.loadChildren;
+      return Utils.classNames(className, 'treeview-item', {
+        'treeview-item-opened': opened,
+        'treeview-load-children': loadChildren
+      }, Mixins.colorClasses(props));
+    };
+
+    F7TreeviewItem.prototype.render = function render () {
+      var this$1 = this;
+
+      var self = this;
+      var props = self.props;
+      var id = props.id;
+      var style = props.style;
+      var toggle = props.toggle;
+      var label = props.label;
+      var icon = props.icon;
+      var iconMaterial = props.iconMaterial;
+      var iconIon = props.iconIon;
+      var iconFa = props.iconFa;
+      var iconF7 = props.iconF7;
+      var iconMd = props.iconMd;
+      var iconIos = props.iconIos;
+      var iconAurora = props.iconAurora;
+      var iconSize = props.iconSize;
+      var iconColor = props.iconColor;
+      var link = props.link;
+      var slots = self.slots;
+      var hasChildren = slots.default && slots.default.length || slots.children && slots.children.length || slots['children-start'] && slots['children-start'].length;
+      var needToggle = typeof toggle === 'undefined' ? hasChildren : toggle;
+      var iconEl;
+
+      if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconMd || iconIos || iconAurora) {
+        iconEl = React.createElement(F7Icon, {
+          material: iconMaterial,
+          f7: iconF7,
+          fa: iconFa,
+          ion: iconIon,
+          icon: icon,
+          md: iconMd,
+          ios: iconIos,
+          aurora: iconAurora,
+          color: iconColor,
+          size: iconSize
+        });
+      }
+
+      var TreeviewRootTag = link || link === '' ? 'a' : 'div';
+      return React.createElement('div', {
+        ref: function (__reactNode) {
+          this$1.__reactRefs['el'] = __reactNode;
+        },
+        id: id,
+        style: style,
+        className: self.classes
+      }, React.createElement(TreeviewRootTag, Object.assign({
+        ref: function (__reactNode) {
+          this$1.__reactRefs['rootEl'] = __reactNode;
+        },
+        className: self.itemRootClasses
+      }, self.itemRootAttrs), this.slots['root-start'], needToggle && React.createElement('div', {
+        className: 'treeview-toggle'
+      }), React.createElement('div', {
+        className: 'treeview-item-content'
+      }, this.slots['content-start'], iconEl, this.slots['media'], React.createElement('div', {
+        className: 'treeview-item-label'
+      }, this.slots['label-start'], label, this.slots['label']), this.slots['content'], this.slots['content-end']), this.slots['root'], this.slots['root-end']), hasChildren && React.createElement('div', {
+        className: 'treeview-item-children'
+      }, this.slots['children-start'], this.slots['default'], this.slots['children']));
+    };
+
+    F7TreeviewItem.prototype.componentWillUnmount = function componentWillUnmount () {
+      var self = this;
+      var ref = self.refs;
+      var el = ref.el;
+      var rootEl = ref.rootEl;
+      rootEl.removeEventListener('click', self.onClick);
+      el.removeEventListener('treeview:open', self.onOpen);
+      el.removeEventListener('treeview:close', self.onClose);
+      el.removeEventListener('treeview:loadchildren', self.onLoadChildren);
+    };
+
+    F7TreeviewItem.prototype.componentDidMount = function componentDidMount () {
+      var self = this;
+      var ref = self.refs;
+      var el = ref.el;
+      var rootEl = ref.rootEl;
+      rootEl.addEventListener('click', self.onClick);
+      el.addEventListener('treeview:open', self.onOpen);
+      el.addEventListener('treeview:close', self.onClose);
+      el.addEventListener('treeview:loadchildren', self.onLoadChildren);
+    };
+
+    prototypeAccessors.slots.get = function () {
+      return __reactComponentSlots(this.props);
+    };
+
+    F7TreeviewItem.prototype.dispatchEvent = function dispatchEvent (events) {
+      var args = [], len = arguments.length - 1;
+      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+
+      return __reactComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+    };
+
+    prototypeAccessors.refs.get = function () {
+      return this.__reactRefs;
+    };
+
+    prototypeAccessors.refs.set = function (refs) {};
+
+    Object.defineProperties( F7TreeviewItem.prototype, prototypeAccessors );
+
+    return F7TreeviewItem;
+  }(React.Component));
+
+  __reactComponentSetProps(F7TreeviewItem, Object.assign({
+    id: [String, Number],
+    className: String,
+    style: Object,
+    toggle: {
+      type: Boolean,
+      default: undefined
+    },
+    itemToggle: Boolean,
+    selectable: Boolean,
+    selected: Boolean,
+    opened: Boolean,
+    label: String,
+    loadChildren: Boolean,
+    link: {
+      type: [Boolean, String],
+      default: undefined
+    }
+  }, Mixins.colorProps, Mixins.linkActionsProps, Mixins.linkRouterProps, Mixins.linkIconProps));
+
+  F7TreeviewItem.displayName = 'f7-treeview-item';
+
+  var F7Treeview = /*@__PURE__*/(function (superclass) {
+    function F7Treeview(props, context) {
+      superclass.call(this, props, context);
+    }
+
+    if ( superclass ) F7Treeview.__proto__ = superclass;
+    F7Treeview.prototype = Object.create( superclass && superclass.prototype );
+    F7Treeview.prototype.constructor = F7Treeview;
+
+    var prototypeAccessors = { slots: { configurable: true } };
+
+    F7Treeview.prototype.render = function render () {
+      var props = this.props;
+      var className = props.className;
+      var id = props.id;
+      var style = props.style;
+      var classes = Utils.classNames(className, 'treeview', Mixins.colorClasses(props));
+      return React.createElement('div', {
+        id: id,
+        style: style,
+        className: classes
+      }, this.slots['default']);
+    };
+
+    prototypeAccessors.slots.get = function () {
+      return __reactComponentSlots(this.props);
+    };
+
+    Object.defineProperties( F7Treeview.prototype, prototypeAccessors );
+
+    return F7Treeview;
+  }(React.Component));
+
+  __reactComponentSetProps(F7Treeview, Object.assign({
+    id: [String, Number],
+    className: String,
+    style: Object
+  }, Mixins.colorProps));
+
+  F7Treeview.displayName = 'f7-treeview';
+
   var F7View = /*@__PURE__*/(function (superclass) {
     function F7View(props, context) {
       var this$1 = this;
@@ -13447,7 +13773,7 @@
   };
 
   /**
-   * Framework7 React 4.3.1
+   * Framework7 React 4.4.0
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -13455,7 +13781,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: April 29, 2019
+   * Released on: May 13, 2019
    */
 
   var Plugin = {
@@ -13559,6 +13885,8 @@
       window.Tabs = F7Tabs;
       window.Toggle = F7Toggle;
       window.Toolbar = F7Toolbar;
+      window.TreeviewItem = F7TreeviewItem;
+      window.Treeview = F7Treeview;
       window.View = F7View;
       window.Views = F7Views;
 

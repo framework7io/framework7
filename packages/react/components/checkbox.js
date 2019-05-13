@@ -71,6 +71,34 @@ class F7Checkbox extends React.Component {
     }, inputEl, iconEl, this.slots['default']);
   }
 
+  componentDidUpdate() {
+    const self = this;
+    const {
+      inputEl
+    } = self.refs;
+    const {
+      indeterminate
+    } = self.props;
+
+    if (inputEl) {
+      inputEl.indeterminate = indeterminate;
+    }
+  }
+
+  componentDidMount() {
+    const self = this;
+    const {
+      inputEl
+    } = self.refs;
+    const {
+      indeterminate
+    } = self.props;
+
+    if (indeterminate && inputEl) {
+      inputEl.indeterminate = true;
+    }
+  }
+
   get slots() {
     return __reactComponentSlots(this.props);
   }
@@ -92,6 +120,7 @@ __reactComponentSetProps(F7Checkbox, Object.assign({
   className: String,
   style: Object,
   checked: Boolean,
+  indeterminate: Boolean,
   name: [Number, String],
   value: [Number, String, Boolean],
   disabled: Boolean,

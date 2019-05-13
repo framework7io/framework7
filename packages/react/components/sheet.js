@@ -12,8 +12,16 @@ class F7Sheet extends React.Component {
     this.__reactRefs = {};
 
     (() => {
-      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed']);
+      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed', 'onStepOpen', 'onStepClose']);
     })();
+  }
+
+  onStepOpen(event) {
+    this.dispatchEvent('sheet:stepopen sheetStepOpen', event);
+  }
+
+  onStepClose(event) {
+    this.dispatchEvent('sheet:stepclose sheetStepClose', event);
   }
 
   onOpen(event) {
@@ -69,6 +77,7 @@ class F7Sheet extends React.Component {
           const tag = child.type && (child.type.displayName || child.type.name);
 
           if (!tag) {
+            staticList.push(child);
             return;
           }
 
@@ -101,10 +110,12 @@ class F7Sheet extends React.Component {
     if (self.f7Sheet) self.f7Sheet.destroy();
     const el = self.refs.el;
     if (!el) return;
-    el.removeEventListener('popup:open', self.onOpen);
-    el.removeEventListener('popup:opened', self.onOpened);
-    el.removeEventListener('popup:close', self.onClose);
-    el.removeEventListener('popup:closed', self.onClosed);
+    el.removeEventListener('sheet:open', self.onOpen);
+    el.removeEventListener('sheet:opened', self.onOpened);
+    el.removeEventListener('sheet:close', self.onClose);
+    el.removeEventListener('sheet:closed', self.onClosed);
+    el.removeEventListener('sheet:stepopen', self.onStepOpen);
+    el.removeEventListener('sheet:stepclose', self.onStepClose);
   }
 
   componentDidMount() {
@@ -115,6 +126,8 @@ class F7Sheet extends React.Component {
     el.addEventListener('sheet:opened', self.onOpened);
     el.addEventListener('sheet:close', self.onClose);
     el.addEventListener('sheet:closed', self.onClosed);
+    el.addEventListener('sheet:stepopen', self.onStepOpen);
+    el.addEventListener('sheet:stepclose', self.onStepClose);
     const props = self.props;
     const {
       opened,
@@ -122,7 +135,10 @@ class F7Sheet extends React.Component {
       backdropEl,
       closeByBackdropClick,
       closeByOutsideClick,
-      closeOnEscape
+      closeOnEscape,
+      swipeToClose,
+      swipeToStep,
+      swipeHandler
     } = props;
     const sheetParams = {
       el: self.refs.el
@@ -133,6 +149,9 @@ class F7Sheet extends React.Component {
       if ('closeByBackdropClick' in props) sheetParams.closeByBackdropClick = closeByBackdropClick;
       if ('closeByOutsideClick' in props) sheetParams.closeByOutsideClick = closeByOutsideClick;
       if ('closeOnEscape' in props) sheetParams.closeOnEscape = closeOnEscape;
+      if ('swipeToClose' in props) sheetParams.swipeToClose = swipeToClose;
+      if ('swipeToStep' in props) sheetParams.swipeToStep = swipeToStep;
+      if ('swipeHandler' in props) sheetParams.swipeHandler = swipeHandler;
     }
     self.$f7ready(() => {
       self.f7Sheet = self.$f7.sheet.create(sheetParams);
@@ -184,7 +203,10 @@ __reactComponentSetProps(F7Sheet, Object.assign({
   backdropEl: [String, Object, window.HTMLElement],
   closeByBackdropClick: Boolean,
   closeByOutsideClick: Boolean,
-  closeOnEscape: Boolean
+  closeOnEscape: Boolean,
+  swipeToClose: Boolean,
+  swipeToStep: Boolean,
+  swipeHandler: [String, Object, window.HTMLElement]
 }, Mixins.colorProps));
 
 F7Sheet.displayName = 'f7-sheet';

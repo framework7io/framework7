@@ -37,6 +37,7 @@ declare namespace F7ListItem {
     radio? : boolean
     checked? : boolean
     defaultChecked? : boolean
+    indeterminate? : boolean
     name? : string
     value? : string | number | Array<any>
     readonly? : boolean

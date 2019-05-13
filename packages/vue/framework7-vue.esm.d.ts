@@ -94,6 +94,8 @@ import f7Tab from './components/tab';
 import f7Tabs from './components/tabs';
 import f7Toggle from './components/toggle';
 import f7Toolbar from './components/toolbar';
+import f7TreeviewItem from './components/treeview-item';
+import f7Treeview from './components/treeview';
 import f7View from './components/view';
 import f7Views from './components/views';
 
@@ -216,6 +218,8 @@ export {
   f7Tabs,
   f7Toggle,
   f7Toolbar,
+  f7TreeviewItem,
+  f7Treeview,
   f7View,
   f7Views
 }

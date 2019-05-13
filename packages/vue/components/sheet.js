@@ -14,7 +14,10 @@ export default {
     backdropEl: [String, Object, window.HTMLElement],
     closeByBackdropClick: Boolean,
     closeByOutsideClick: Boolean,
-    closeOnEscape: Boolean
+    closeOnEscape: Boolean,
+    swipeToClose: Boolean,
+    swipeToStep: Boolean,
+    swipeHandler: [String, Object, window.HTMLElement]
   }, Mixins.colorProps),
 
   render() {
@@ -87,7 +90,7 @@ export default {
   },
 
   created() {
-    Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed']);
+    Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed', 'onStepOpen', 'onStepClose']);
   },
 
   mounted() {
@@ -98,6 +101,8 @@ export default {
     el.addEventListener('sheet:opened', self.onOpened);
     el.addEventListener('sheet:close', self.onClose);
     el.addEventListener('sheet:closed', self.onClosed);
+    el.addEventListener('sheet:stepopen', self.onStepOpen);
+    el.addEventListener('sheet:stepclose', self.onStepClose);
     const props = self.props;
     const {
       opened,
@@ -105,7 +110,10 @@ export default {
       backdropEl,
       closeByBackdropClick,
       closeByOutsideClick,
-      closeOnEscape
+      closeOnEscape,
+      swipeToClose,
+      swipeToStep,
+      swipeHandler
     } = props;
     const sheetParams = {
       el: self.$refs.el
@@ -116,6 +124,9 @@ export default {
       if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') sheetParams.closeByBackdropClick = closeByBackdropClick;
       if (typeof self.$options.propsData.closeByOutsideClick !== 'undefined') sheetParams.closeByOutsideClick = closeByOutsideClick;
       if (typeof self.$options.propsData.closeOnEscape !== 'undefined') sheetParams.closeOnEscape = closeOnEscape;
+      if (typeof self.$options.propsData.swipeToClose !== 'undefined') sheetParams.swipeToClose = swipeToClose;
+      if (typeof self.$options.propsData.swipeToStep !== 'undefined') sheetParams.swipeToStep = swipeToStep;
+      if (typeof self.$options.propsData.swipeHandler !== 'undefined') sheetParams.swipeHandler = swipeHandler;
     }
     self.$f7ready(() => {
       self.f7Sheet = self.$f7.sheet.create(sheetParams);
@@ -131,13 +142,23 @@ export default {
     if (self.f7Sheet) self.f7Sheet.destroy();
     const el = self.$refs.el;
     if (!el) return;
-    el.removeEventListener('popup:open', self.onOpen);
-    el.removeEventListener('popup:opened', self.onOpened);
-    el.removeEventListener('popup:close', self.onClose);
-    el.removeEventListener('popup:closed', self.onClosed);
+    el.removeEventListener('sheet:open', self.onOpen);
+    el.removeEventListener('sheet:opened', self.onOpened);
+    el.removeEventListener('sheet:close', self.onClose);
+    el.removeEventListener('sheet:closed', self.onClosed);
+    el.removeEventListener('sheet:stepopen', self.onStepOpen);
+    el.removeEventListener('sheet:stepclose', self.onStepClose);
   },
 
   methods: {
+    onStepOpen(event) {
+      this.dispatchEvent('sheet:stepopen sheetStepOpen', event);
+    },
+
+    onStepClose(event) {
+      this.dispatchEvent('sheet:stepclose sheetStepClose', event);
+    },
+
     onOpen(event) {
       this.dispatchEvent('sheet:open sheetOpen', event);
     },

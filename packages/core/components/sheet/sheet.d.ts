@@ -29,6 +29,12 @@ export namespace Sheet {
     closeByOutsideClick?: boolean
     /** Whether the Sheet Modal should be opened/closed with animation or not. Can be overwritten in .open() and .close() methods. (default true) */
     animate?: boolean
+    /** When enabled it will be possible to close sheet with swipe, can be false or true (default false) */
+    swipeToClose?: boolean
+    /** When enabled it will be possible to split opened sheet into two states: partially opened and fully opened that can be controlled with swipe (default false) */
+    swipeToStep?: boolean
+    /** When enabled it will be possible to close sheet with swipe only on specified handler element (default null) */
+    swipeHandler?: HTMLElement | CSSSelector
 
     /** Object with events handlers.. */
     on?: {

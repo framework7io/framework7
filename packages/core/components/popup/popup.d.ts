@@ -25,6 +25,10 @@ export namespace Popup {
     closeByBackdropClick?: boolean
     /** Whether the Popup should be opened/closed with animation or not. Can be overwritten in .open() and .close() methods. (default true) */
     animate?: boolean
+    /** When enabled it will be possible to close popup with swipe, can be false, true, 'to-bottom', 'to-top' (default false) */
+    swipeToClose?: boolean
+    /** When enabled it will be possible to close popup with swipe only on specified handler element (default null) */
+    swipeHandler?: HTMLElement | CSSSelector
 
     /** Object with events handlers.. */
     on?: {

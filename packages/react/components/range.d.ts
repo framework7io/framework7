@@ -22,6 +22,7 @@ declare namespace F7Range {
     scaleSteps? : number
     scaleSubSteps? : number
     formatScaleLabel? : Function
+    limitKnobPosition? : boolean
     name? : string
     input? : boolean
     inputId? : string

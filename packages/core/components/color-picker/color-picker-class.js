@@ -399,7 +399,7 @@ class ColorPicker extends Framework7Class {
       <div class="navbar-inner sliding">
         ${openIn === 'page' ? `
         <div class="left">
-          <a class="link back" href="#">
+          <a class="link back">
             <i class="icon icon-back"></i>
             <span class="if-not-md">${navbarBackLinkText}</span>
           </a>
@@ -408,7 +408,7 @@ class ColorPicker extends Framework7Class {
         <div class="title">${navbarTitleText}</div>
         ${openIn !== 'page' ? `
         <div class="right">
-          <a href="#" class="link popup-close" data-popup=".color-picker-popup">${navbarCloseText}</a>
+          <a class="link popup-close" data-popup=".color-picker-popup">${navbarCloseText}</a>
         </div>
         ` : ''}
       </div>
@@ -426,7 +426,7 @@ class ColorPicker extends Framework7Class {
       <div class="toolbar-inner">
         <div class="left"></div>
         <div class="right">
-          <a href="#" class="link sheet-close popover-close" data-sheet=".color-picker-sheet-modal" data-popover=".color-picker-popover">${self.params.toolbarCloseText}</a>
+          <a class="link sheet-close popover-close" data-sheet=".color-picker-sheet-modal" data-popover=".color-picker-popover">${self.params.toolbarCloseText}</a>
         </div>
       </div>
     </div>

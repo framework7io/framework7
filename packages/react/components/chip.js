@@ -59,7 +59,6 @@ class F7Chip extends React.Component {
         ref: __reactNode => {
           this.__reactRefs['deleteEl'] = __reactNode;
         },
-        href: '#',
         className: 'chip-delete'
       });
     }

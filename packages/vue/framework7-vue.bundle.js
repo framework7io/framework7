@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.3.1
+ * Framework7 Vue 4.4.0
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 29, 2019
+ * Released on: May 13, 2019
  */
 
 (function (global, factory) {
@@ -2188,6 +2188,7 @@
     props: Object.assign({
       id: [String, Number],
       checked: Boolean,
+      indeterminate: Boolean,
       name: [Number, String],
       value: [Number, String, Boolean],
       disabled: Boolean,
@@ -2262,6 +2263,30 @@
       Utils.bindMethods(this, ['onChange']);
     },
 
+    mounted: function mounted() {
+      var self = this;
+      var ref = self.$refs;
+      var inputEl = ref.inputEl;
+      var ref$1 = self.props;
+      var indeterminate = ref$1.indeterminate;
+
+      if (indeterminate && inputEl) {
+        inputEl.indeterminate = true;
+      }
+    },
+
+    updated: function updated() {
+      var self = this;
+      var ref = self.$refs;
+      var inputEl = ref.inputEl;
+      var ref$1 = self.props;
+      var indeterminate = ref$1.indeterminate;
+
+      if (inputEl) {
+        inputEl.indeterminate = indeterminate;
+      }
+    },
+
     methods: {
       onChange: function onChange(event) {
         this.dispatchEvent('change', event);
@@ -2322,10 +2347,7 @@
       if (deleteable) {
         deleteEl = _h('a', {
           ref: 'deleteEl',
-          class: 'chip-delete',
-          attrs: {
-            href: '#'
-          }
+          class: 'chip-delete'
         });
       }
 
@@ -3112,6 +3134,10 @@
         default: 0
       },
       formatScaleLabel: Function,
+      limitKnobPosition: {
+        type: Boolean,
+        default: undefined
+      },
       name: String,
       input: Boolean,
       inputId: String,
@@ -3181,6 +3207,7 @@
         var scaleSteps = props.scaleSteps;
         var scaleSubSteps = props.scaleSubSteps;
         var formatScaleLabel = props.formatScaleLabel;
+        var limitKnobPosition = props.limitKnobPosition;
         self.f7Range = f7.range.create(Utils.noUndefinedProps({
           el: self.$refs.el,
           value: value,
@@ -3197,6 +3224,7 @@
           scaleSteps: scaleSteps,
           scaleSubSteps: scaleSubSteps,
           formatScaleLabel: formatScaleLabel,
+          limitKnobPosition: limitKnobPosition,
           on: {
             change: function change(range, val) {
               self.dispatchEvent('range:change rangeChange', val);
@@ -4915,6 +4943,7 @@
       checkbox: Boolean,
       checked: Boolean,
       defaultChecked: Boolean,
+      indeterminate: Boolean,
       radio: Boolean,
       name: String,
       value: [String, Number, Array],
@@ -5140,9 +5169,28 @@
     mounted: function mounted() {
       var self = this;
       var ref = self.$refs;
-      var innerEl = ref.innerEl;
       var el = ref.el;
+      var inputEl = ref.inputEl;
+      var ref$1 = self.props;
+      var indeterminate = ref$1.indeterminate;
+
+      if (indeterminate && inputEl) {
+        inputEl.indeterminate = true;
+      }
+
       el.addEventListener('click', self.onClick);
+    },
+
+    updated: function updated() {
+      var self = this;
+      var ref = self.$refs;
+      var inputEl = ref.inputEl;
+      var ref$1 = self.props;
+      var indeterminate = ref$1.indeterminate;
+
+      if (inputEl) {
+        inputEl.indeterminate = indeterminate;
+      }
     },
 
     beforeDestroy: function beforeDestroy() {
@@ -5241,6 +5289,7 @@
       radio: Boolean,
       checked: Boolean,
       defaultChecked: Boolean,
+      indeterminate: Boolean,
       name: String,
       value: [String, Number, Array],
       readonly: Boolean,
@@ -5300,6 +5349,7 @@
       var radio = props.radio;
       var checked = props.checked;
       var defaultChecked = props.defaultChecked;
+      var indeterminate = props.indeterminate;
       var name = props.name;
       var value = props.value;
       var readonly = props.readonly;
@@ -5335,6 +5385,7 @@
             checkbox: checkbox,
             checked: checked,
             defaultChecked: defaultChecked,
+            indeterminate: indeterminate,
             radio: radio,
             name: name,
             value: value,
@@ -5345,8 +5396,8 @@
         }, [this.$slots['content-start'], this.$slots['content'], this.$slots['content-end'], this.$slots['media'], this.$slots['inner-start'], this.$slots['inner'], this.$slots['inner-end'], this.$slots['after-start'], this.$slots['after'], this.$slots['after-end'], this.$slots['header'], this.$slots['footer'], this.$slots['before-title'], this.$slots['title'], this.$slots['after-title'], this.$slots['subtitle'], this.$slots['text'], swipeout || accordionItem ? null : self.$slots.default]);
 
         if (link || href || accordionItem || smartSelect) {
-          var linkAttrs = Utils.extend({
-            href: link === true || accordionItem || smartSelect ? '#' : link || href,
+          var linkAttrs = Object.assign({
+            href: link === true ? '' : link || href,
             target: target
           }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
           var linkClasses = Utils.classNames({
@@ -9262,7 +9313,12 @@
       backdrop: Boolean,
       backdropEl: [String, Object, window.HTMLElement],
       closeByBackdropClick: Boolean,
-      closeOnEscape: Boolean
+      closeOnEscape: Boolean,
+      swipeToClose: {
+        type: [Boolean, String],
+        default: false
+      },
+      swipeHandler: [String, Object, window.HTMLElement]
     }, Mixins.colorProps),
 
     render: function render() {
@@ -9317,6 +9373,8 @@
       var backdropEl = props.backdropEl;
       var animate = props.animate;
       var closeOnEscape = props.closeOnEscape;
+      var swipeToClose = props.swipeToClose;
+      var swipeHandler = props.swipeHandler;
       var popupParams = {
         el: el
       };
@@ -9326,6 +9384,8 @@
         if (typeof self.$options.propsData.animate !== 'undefined') { popupParams.animate = animate; }
         if (typeof self.$options.propsData.backdrop !== 'undefined') { popupParams.backdrop = backdrop; }
         if (typeof self.$options.propsData.backdropEl !== 'undefined') { popupParams.backdropEl = backdropEl; }
+        if (typeof self.$options.propsData.swipeToClose !== 'undefined') { popupParams.swipeToClose = swipeToClose; }
+        if (typeof self.$options.propsData.swipeHandler !== 'undefined') { popupParams.swipeHandler = swipeHandler; }
       }
       self.$f7ready(function () {
         self.f7Popup = self.$f7.popup.create(popupParams);
@@ -10140,7 +10200,10 @@
       backdropEl: [String, Object, window.HTMLElement],
       closeByBackdropClick: Boolean,
       closeByOutsideClick: Boolean,
-      closeOnEscape: Boolean
+      closeOnEscape: Boolean,
+      swipeToClose: Boolean,
+      swipeToStep: Boolean,
+      swipeHandler: [String, Object, window.HTMLElement]
     }, Mixins.colorProps),
 
     render: function render() {
@@ -10211,7 +10274,7 @@
     },
 
     created: function created() {
-      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed']);
+      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed', 'onStepOpen', 'onStepClose']);
     },
 
     mounted: function mounted() {
@@ -10222,6 +10285,8 @@
       el.addEventListener('sheet:opened', self.onOpened);
       el.addEventListener('sheet:close', self.onClose);
       el.addEventListener('sheet:closed', self.onClosed);
+      el.addEventListener('sheet:stepopen', self.onStepOpen);
+      el.addEventListener('sheet:stepclose', self.onStepClose);
       var props = self.props;
       var opened = props.opened;
       var backdrop = props.backdrop;
@@ -10229,6 +10294,9 @@
       var closeByBackdropClick = props.closeByBackdropClick;
       var closeByOutsideClick = props.closeByOutsideClick;
       var closeOnEscape = props.closeOnEscape;
+      var swipeToClose = props.swipeToClose;
+      var swipeToStep = props.swipeToStep;
+      var swipeHandler = props.swipeHandler;
       var sheetParams = {
         el: self.$refs.el
       };
@@ -10238,6 +10306,9 @@
         if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') { sheetParams.closeByBackdropClick = closeByBackdropClick; }
         if (typeof self.$options.propsData.closeByOutsideClick !== 'undefined') { sheetParams.closeByOutsideClick = closeByOutsideClick; }
         if (typeof self.$options.propsData.closeOnEscape !== 'undefined') { sheetParams.closeOnEscape = closeOnEscape; }
+        if (typeof self.$options.propsData.swipeToClose !== 'undefined') { sheetParams.swipeToClose = swipeToClose; }
+        if (typeof self.$options.propsData.swipeToStep !== 'undefined') { sheetParams.swipeToStep = swipeToStep; }
+        if (typeof self.$options.propsData.swipeHandler !== 'undefined') { sheetParams.swipeHandler = swipeHandler; }
       }
       self.$f7ready(function () {
         self.f7Sheet = self.$f7.sheet.create(sheetParams);
@@ -10253,13 +10324,23 @@
       if (self.f7Sheet) { self.f7Sheet.destroy(); }
       var el = self.$refs.el;
       if (!el) { return; }
-      el.removeEventListener('popup:open', self.onOpen);
-      el.removeEventListener('popup:opened', self.onOpened);
-      el.removeEventListener('popup:close', self.onClose);
-      el.removeEventListener('popup:closed', self.onClosed);
+      el.removeEventListener('sheet:open', self.onOpen);
+      el.removeEventListener('sheet:opened', self.onOpened);
+      el.removeEventListener('sheet:close', self.onClose);
+      el.removeEventListener('sheet:closed', self.onClosed);
+      el.removeEventListener('sheet:stepopen', self.onStepOpen);
+      el.removeEventListener('sheet:stepclose', self.onStepClose);
     },
 
     methods: {
+      onStepOpen: function onStepOpen(event) {
+        this.dispatchEvent('sheet:stepopen sheetStepOpen', event);
+      },
+
+      onStepClose: function onStepClose(event) {
+        this.dispatchEvent('sheet:stepclose sheetStepClose', event);
+      },
+
       onOpen: function onOpen(event) {
         this.dispatchEvent('sheet:open sheetOpen', event);
       },
@@ -11496,6 +11577,216 @@
     }
   };
 
+  var f7TreeviewItem = {
+    props: Object.assign({
+      id: [String, Number],
+      toggle: {
+        type: Boolean,
+        default: undefined
+      },
+      itemToggle: Boolean,
+      selectable: Boolean,
+      selected: Boolean,
+      opened: Boolean,
+      label: String,
+      loadChildren: Boolean,
+      link: {
+        type: [Boolean, String],
+        default: undefined
+      }
+    }, Mixins.colorProps, Mixins.linkActionsProps, Mixins.linkRouterProps, Mixins.linkIconProps),
+    name: 'f7-treeview-item',
+
+    render: function render() {
+      var _h = this.$createElement;
+      var self = this;
+      var props = self.props;
+      var id = props.id;
+      var style = props.style;
+      var toggle = props.toggle;
+      var label = props.label;
+      var icon = props.icon;
+      var iconMaterial = props.iconMaterial;
+      var iconIon = props.iconIon;
+      var iconFa = props.iconFa;
+      var iconF7 = props.iconF7;
+      var iconMd = props.iconMd;
+      var iconIos = props.iconIos;
+      var iconAurora = props.iconAurora;
+      var iconSize = props.iconSize;
+      var iconColor = props.iconColor;
+      var link = props.link;
+      var slots = self.$slots;
+      var hasChildren = slots.default && slots.default.length || slots.children && slots.children.length || slots['children-start'] && slots['children-start'].length;
+      var needToggle = typeof toggle === 'undefined' ? hasChildren : toggle;
+      var iconEl;
+
+      if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconMd || iconIos || iconAurora) {
+        iconEl = _h(f7Icon, {
+          attrs: {
+            material: iconMaterial,
+            f7: iconF7,
+            fa: iconFa,
+            ion: iconIon,
+            icon: icon,
+            md: iconMd,
+            ios: iconIos,
+            aurora: iconAurora,
+            color: iconColor,
+            size: iconSize
+          }
+        });
+      }
+
+      var TreeviewRootTag = link || link === '' ? 'a' : 'div';
+      return _h('div', {
+        ref: 'el',
+        style: style,
+        class: self.classes,
+        attrs: {
+          id: id
+        }
+      }, [_h(TreeviewRootTag, __vueComponentTransformJSXProps(Object.assign({
+        ref: 'rootEl',
+        class: self.itemRootClasses
+      }, self.itemRootAttrs)), [this.$slots['root-start'], needToggle && _h('div', {
+        class: 'treeview-toggle'
+      }), _h('div', {
+        class: 'treeview-item-content'
+      }, [this.$slots['content-start'], iconEl, this.$slots['media'], _h('div', {
+        class: 'treeview-item-label'
+      }, [this.$slots['label-start'], label, this.$slots['label']]), this.$slots['content'], this.$slots['content-end']]), this.$slots['root'], this.$slots['root-end']]), hasChildren && _h('div', {
+        class: 'treeview-item-children'
+      }, [this.$slots['children-start'], this.$slots['default'], this.$slots['children']])]);
+    },
+
+    computed: {
+      itemRootAttrs: function itemRootAttrs() {
+        var self = this;
+        var props = self.props;
+        var link = props.link;
+        var href = link;
+        if (link === true) { href = '#'; }
+        if (link === false) { href = undefined; }
+        return Utils.extend({
+          href: href
+        }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
+      },
+
+      itemRootClasses: function itemRootClasses() {
+        var self = this;
+        var props = self.props;
+        var selectable = props.selectable;
+        var selected = props.selected;
+        var itemToggle = props.itemToggle;
+        return Utils.classNames('treeview-item-root', {
+          'treeview-item-selectable': selectable,
+          'treeview-item-selected': selected,
+          'treeview-item-toggle': itemToggle
+        }, Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
+      },
+
+      classes: function classes() {
+        var self = this;
+        var props = self.props;
+        var className = props.className;
+        var opened = props.opened;
+        var loadChildren = props.loadChildren;
+        return Utils.classNames(className, 'treeview-item', {
+          'treeview-item-opened': opened,
+          'treeview-load-children': loadChildren
+        }, Mixins.colorClasses(props));
+      },
+
+      props: function props() {
+        return __vueComponentProps(this);
+      }
+
+    },
+
+    created: function created() {
+      Utils.bindMethods(this, ['onClick', 'onOpen', 'onClose', 'onLoadChildren']);
+    },
+
+    mounted: function mounted() {
+      var self = this;
+      var ref = self.$refs;
+      var el = ref.el;
+      var rootEl = ref.rootEl;
+      rootEl.addEventListener('click', self.onClick);
+      el.addEventListener('treeview:open', self.onOpen);
+      el.addEventListener('treeview:close', self.onClose);
+      el.addEventListener('treeview:loadchildren', self.onLoadChildren);
+    },
+
+    beforeDestroy: function beforeDestroy() {
+      var self = this;
+      var ref = self.$refs;
+      var el = ref.el;
+      var rootEl = ref.rootEl;
+      rootEl.removeEventListener('click', self.onClick);
+      el.removeEventListener('treeview:open', self.onOpen);
+      el.removeEventListener('treeview:close', self.onClose);
+      el.removeEventListener('treeview:loadchildren', self.onLoadChildren);
+    },
+
+    methods: {
+      onClick: function onClick(event) {
+        this.dispatchEvent('click', event);
+      },
+
+      onOpen: function onOpen(event) {
+        this.dispatchEvent('treeview:open treeviewOpen', event);
+      },
+
+      onClose: function onClose(event) {
+        this.dispatchEvent('treeview:close treeviewClose', event);
+      },
+
+      onLoadChildren: function onLoadChildren(event) {
+        this.dispatchEvent('treeview:loadchildren treeviewLoadChildren', event, event.detail);
+      },
+
+      dispatchEvent: function dispatchEvent(events) {
+        var args = [], len = arguments.length - 1;
+        while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+
+        __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+      }
+
+    }
+  };
+
+  var f7Treeview = {
+    props: Object.assign({
+      id: [String, Number]
+    }, Mixins.colorProps),
+    name: 'f7-treeview',
+
+    render: function render() {
+      var _h = this.$createElement;
+      var props = this.props;
+      var className = props.className;
+      var id = props.id;
+      var style = props.style;
+      var classes = Utils.classNames(className, 'treeview', Mixins.colorClasses(props));
+      return _h('div', {
+        style: style,
+        class: classes,
+        attrs: {
+          id: id
+        }
+      }, [this.$slots['default']]);
+    },
+
+    computed: {
+      props: function props() {
+        return __vueComponentProps(this);
+      }
+
+    }
+  };
+
   var f7View = {
     name: 'f7-view',
     props: Object.assign({
@@ -11976,7 +12267,7 @@
   };
 
   /**
-   * Framework7 Vue 4.3.1
+   * Framework7 Vue 4.4.0
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -11984,7 +12275,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: April 29, 2019
+   * Released on: May 13, 2019
    */
 
   var Plugin = {
@@ -12088,6 +12379,8 @@
       Vue.component('f7-tabs', f7Tabs);
       Vue.component('f7-toggle', f7Toggle);
       Vue.component('f7-toolbar', f7Toolbar);
+      Vue.component('f7-treeview-item', f7TreeviewItem);
+      Vue.component('f7-treeview', f7Treeview);
       Vue.component('f7-view', f7View);
       Vue.component('f7-views', f7Views);
 

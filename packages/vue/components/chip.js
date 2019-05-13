@@ -49,10 +49,7 @@ export default {
     if (deleteable) {
       deleteEl = _h('a', {
         ref: 'deleteEl',
-        class: 'chip-delete',
-        attrs: {
-          href: '#'
-        }
+        class: 'chip-delete'
       });
     }
 

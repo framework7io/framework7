@@ -1,5 +1,5 @@
 /**
- * Framework7 React 4.3.1
+ * Framework7 React 4.4.0
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 29, 2019
+ * Released on: May 13, 2019
  */
 
 import F7AccordionContent from './components/accordion-content';
@@ -97,6 +97,8 @@ import F7Tab from './components/tab';
 import F7Tabs from './components/tabs';
 import F7Toggle from './components/toggle';
 import F7Toolbar from './components/toolbar';
+import F7TreeviewItem from './components/treeview-item';
+import F7Treeview from './components/treeview';
 import F7View from './components/view';
 import F7Views from './components/views';
 import Framework7React from './utils/plugin';
@@ -188,6 +190,8 @@ const Tab = F7Tab;
 const Tabs = F7Tabs;
 const Toggle = F7Toggle;
 const Toolbar = F7Toolbar;
+const TreeviewItem = F7TreeviewItem;
+const Treeview = F7Treeview;
 const View = F7View;
 const Views = F7Views;
 
@@ -366,6 +370,10 @@ export {
   Toggle,
   F7Toolbar,
   Toolbar,
+  F7TreeviewItem,
+  TreeviewItem,
+  F7Treeview,
+  Treeview,
   F7View,
   View,
   F7Views,

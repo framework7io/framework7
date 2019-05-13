@@ -14,6 +14,8 @@ declare namespace F7Popup {
     backdropEl? : string | Object | any
     closeByBackdropClick? : boolean
     closeOnEscape? : boolean
+    swipeToClose? : boolean | string
+    swipeHandler? : string | Object | any
     color? : string
     colorTheme? : string
     textColor? : string

@@ -7,6 +7,7 @@ export default {
   props: Object.assign({
     id: [String, Number],
     checked: Boolean,
+    indeterminate: Boolean,
     name: [Number, String],
     value: [Number, String, Boolean],
     disabled: Boolean,
@@ -83,6 +84,34 @@ export default {
 
   created() {
     Utils.bindMethods(this, ['onChange']);
+  },
+
+  mounted() {
+    const self = this;
+    const {
+      inputEl
+    } = self.$refs;
+    const {
+      indeterminate
+    } = self.props;
+
+    if (indeterminate && inputEl) {
+      inputEl.indeterminate = true;
+    }
+  },
+
+  updated() {
+    const self = this;
+    const {
+      inputEl
+    } = self.$refs;
+    const {
+      indeterminate
+    } = self.props;
+
+    if (inputEl) {
+      inputEl.indeterminate = indeterminate;
+    }
   },
 
   methods: {

@@ -85,7 +85,8 @@ class F7Range extends React.Component {
         scale,
         scaleSteps,
         scaleSubSteps,
-        formatScaleLabel
+        formatScaleLabel,
+        limitKnobPosition
       } = props;
       self.f7Range = f7.range.create(Utils.noUndefinedProps({
         el: self.refs.el,
@@ -103,6 +104,7 @@ class F7Range extends React.Component {
         scaleSteps,
         scaleSubSteps,
         formatScaleLabel,
+        limitKnobPosition,
         on: {
           change(range, val) {
             self.dispatchEvent('range:change rangeChange', val);
@@ -199,6 +201,10 @@ __reactComponentSetProps(F7Range, Object.assign({
     default: 0
   },
   formatScaleLabel: Function,
+  limitKnobPosition: {
+    type: Boolean,
+    default: undefined
+  },
   name: String,
   input: Boolean,
   inputId: String,

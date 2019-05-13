@@ -768,7 +768,7 @@ export default {
       tapHoldPreventClicks: true,
       // Active State
       activeState: true,
-      activeStateElements: 'a, button, label, span, .actions-button, .stepper-button, .stepper-button-plus, .stepper-button-minus, .card-expandable, .menu-item',
+      activeStateElements: 'a, button, label, span, .actions-button, .stepper-button, .stepper-button-plus, .stepper-button-minus, .card-expandable, .menu-item, .link, .item-link',
       mdTouchRipple: true,
       iosTouchRipple: false,
       auroraTouchRipple: false,

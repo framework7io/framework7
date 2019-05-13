@@ -279,7 +279,7 @@ class Actions extends Modal {
                   itemClasses.push('list-button');
                   return `
                     <li>
-                      <a href="#" class="${itemClasses.join(' ')}">${text}</a>
+                      <a class="${itemClasses.join(' ')}">${text}</a>
                     </li>
                   `;
                 }).join('')}

@@ -20,6 +20,7 @@ declare namespace F7ListItemContent {
     checkbox? : boolean
     checked? : boolean
     defaultChecked? : boolean
+    indeterminate? : boolean
     radio? : boolean
     name? : string
     value? : string | number | Array<any>

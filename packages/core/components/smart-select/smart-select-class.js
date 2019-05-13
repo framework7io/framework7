@@ -358,7 +358,7 @@ class SmartSelect extends Framework7Class {
         <div class="navbar ${ss.params.navbarColorTheme ? `color-${ss.params.navbarColorTheme}` : ''}">
           <div class="navbar-inner sliding ${ss.params.navbarColorTheme ? `color-${ss.params.navbarColorTheme}` : ''}">
             <div class="left">
-              <a href="#" class="link back">
+              <a class="link back">
                 <i class="icon icon-back"></i>
                 <span class="if-not-md">${ss.params.pageBackLinkText}</span>
               </a>
@@ -395,7 +395,7 @@ class SmartSelect extends Framework7Class {
               <div class="navbar-inner sliding">
                 ${pageTitle ? `<div class="title">${pageTitle}</div>` : ''}
                 <div class="right">
-                  <a href="#" class="link popup-close" data-popup=".smart-select-popup[data-select-name='${ss.selectName}']">${ss.params.popupCloseLinkText}</span></a>
+                  <a class="link popup-close" data-popup=".smart-select-popup[data-select-name='${ss.selectName}']">${ss.params.popupCloseLinkText}</span></a>
                 </div>
                 ${ss.params.searchbar ? `<div class="subnavbar">${ss.renderSearchbar()}</div>` : ''}
               </div>

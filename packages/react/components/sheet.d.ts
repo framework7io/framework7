@@ -16,6 +16,9 @@ declare namespace F7Sheet {
     closeByBackdropClick? : boolean
     closeByOutsideClick? : boolean
     closeOnEscape? : boolean
+    swipeToClose? : boolean
+    swipeToStep? : boolean
+    swipeHandler? : string | Object | any
     color? : string
     colorTheme? : string
     textColor? : string
@@ -23,6 +26,8 @@ declare namespace F7Sheet {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
+    onSheetStepOpen? : (event?: any) => void
+    onSheetStepClose? : (event?: any) => void
     onSheetOpen? : (event?: any) => void
     onSheetOpened? : (event?: any) => void
     onSheetClose? : (event?: any) => void
@@ -30,6 +35,8 @@ declare namespace F7Sheet {
   }
 }
 declare class F7Sheet extends React.Component<F7Sheet.Props, {}> {
+  onStepOpen(event? : any) : unknown
+  onStepClose(event? : any) : unknown
   onOpen(event? : any) : unknown
   onOpened(event? : any) : unknown
   onClose(event? : any) : unknown

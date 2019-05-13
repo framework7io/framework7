@@ -1,5 +1,5 @@
 /**
- * Framework7 4.3.1
+ * Framework7 4.4.0
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: April 29, 2019
+ * Released on: May 13, 2019
  */
 
 /*====================
@@ -679,6 +679,10 @@ a {
   cursor: pointer;
   text-decoration: none;
   color: var(--f7-theme-color);
+}
+.link,
+.item-link {
+  cursor: pointer;
 }
 p {
   margin: 1em 0;
@@ -4729,9 +4733,9 @@ input[type="button"].button {
 }
 .ripple,
 .fab a,
-a.link,
-a.item-link,
-a.list-button,
+.link,
+.item-link,
+.list-button,
 .button,
 .dialog-button,
 .tab-link,

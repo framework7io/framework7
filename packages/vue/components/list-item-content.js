@@ -21,6 +21,7 @@ export default {
     checkbox: Boolean,
     checked: Boolean,
     defaultChecked: Boolean,
+    indeterminate: Boolean,
     radio: Boolean,
     name: String,
     value: [String, Number, Array],
@@ -248,10 +249,32 @@ export default {
   mounted() {
     const self = this;
     const {
-      innerEl,
-      el
+      el,
+      inputEl
     } = self.$refs;
+    const {
+      indeterminate
+    } = self.props;
+
+    if (indeterminate && inputEl) {
+      inputEl.indeterminate = true;
+    }
+
     el.addEventListener('click', self.onClick);
+  },
+
+  updated() {
+    const self = this;
+    const {
+      inputEl
+    } = self.$refs;
+    const {
+      indeterminate
+    } = self.props;
+
+    if (inputEl) {
+      inputEl.indeterminate = indeterminate;
+    }
   },
 
   beforeDestroy() {

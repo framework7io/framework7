@@ -12,7 +12,12 @@ export default {
     backdrop: Boolean,
     backdropEl: [String, Object, window.HTMLElement],
     closeByBackdropClick: Boolean,
-    closeOnEscape: Boolean
+    closeOnEscape: Boolean,
+    swipeToClose: {
+      type: [Boolean, String],
+      default: false
+    },
+    swipeHandler: [String, Object, window.HTMLElement]
   }, Mixins.colorProps),
 
   render() {
@@ -69,7 +74,9 @@ export default {
       backdrop,
       backdropEl,
       animate,
-      closeOnEscape
+      closeOnEscape,
+      swipeToClose,
+      swipeHandler
     } = props;
     const popupParams = {
       el
@@ -80,6 +87,8 @@ export default {
       if (typeof self.$options.propsData.animate !== 'undefined') popupParams.animate = animate;
       if (typeof self.$options.propsData.backdrop !== 'undefined') popupParams.backdrop = backdrop;
       if (typeof self.$options.propsData.backdropEl !== 'undefined') popupParams.backdropEl = backdropEl;
+      if (typeof self.$options.propsData.swipeToClose !== 'undefined') popupParams.swipeToClose = swipeToClose;
+      if (typeof self.$options.propsData.swipeHandler !== 'undefined') popupParams.swipeHandler = swipeHandler;
     }
     self.$f7ready(() => {
       self.f7Popup = self.$f7.popup.create(popupParams);

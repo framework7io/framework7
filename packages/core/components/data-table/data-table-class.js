@@ -58,16 +58,20 @@ class DataTable extends Framework7Class {
           .find(`tbody tr td:nth-child(${columnIndex + 1}) input`)
           .prop('checked', checked)
           .trigger('change', { sentByF7DataTable: true });
+        $inputEl.prop('indeterminate', false);
       } else {
         if (columnIndex === 0) {
           $inputEl.parents('tr')[checked ? 'addClass' : 'removeClass']('data-table-row-selected');
         }
-
+        const checkedRows = $el.find(`tbody .checkbox-cell:nth-child(${columnIndex + 1}) input[type="checkbox"]:checked`).length;
+        const totalRows = $el.find('tbody tr').length;
+        const $headCheckboxEl = $el.find(`thead .checkbox-cell:nth-child(${columnIndex + 1}) input[type="checkbox"]`);
         if (!checked) {
-          $el.find(`thead .checkbox-cell:nth-child(${columnIndex + 1}) input[type="checkbox"]`).prop('checked', false);
-        } else if ($el.find(`tbody .checkbox-cell:nth-child(${columnIndex + 1}) input[type="checkbox"]:checked`).length === $el.find('tbody tr').length) {
-          $el.find(`thead .checkbox-cell:nth-child(${columnIndex + 1}) input[type="checkbox"]`).prop('checked', true).trigger('change', { sentByF7DataTable: true });
+          $headCheckboxEl.prop('checked', false);
+        } else if (checkedRows === totalRows) {
+          $headCheckboxEl.prop('checked', true).trigger('change', { sentByF7DataTable: true });
         }
+        $headCheckboxEl.prop('indeterminate', checkedRows > 0 && checkedRows < totalRows);
       }
       table.checkSelectedHeader();
     }

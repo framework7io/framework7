@@ -7,6 +7,7 @@ declare namespace F7Checkbox {
     className? : string
     style? : React.CSSProperties
     checked? : boolean
+    indeterminate? : boolean
     name? : number | string
     value? : number | string | boolean
     disabled? : boolean

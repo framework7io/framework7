@@ -33,6 +33,11 @@
     transform: translate3d(0, 100%, 0);
   }
 }
+.popup.swipe-close-to-top {
+  &.modal-out {
+    transform: translate3d(0, -100%, 0);
+  }
+}
 @media (min-width: 630px) and (min-height: 630px) {
   .popup:not(.popup-tablet-fullscreen) {
     width: var(--f7-popup-tablet-width);
@@ -49,6 +54,9 @@
     }
     &.modal-out {
       transform: translate3d(0, 100vh, 0);
+    }
+    &.swipe-close-to-top.modal-out {
+      transform: translate3d(0, -100vh, 0);
     }
   }
 }
