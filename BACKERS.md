@@ -3,6 +3,11 @@
 <table>
   <tr>
     <td align="center" valign="middle">
+      <a href="https://hicapps.cl/web/" target="_blank">
+        <img width="200" src="https://cdn.framework7.io/i/sponsors/hicapps.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://edubirdie.com/" target="_blank">
         <img width="200" src="https://cdn.framework7.io/i/sponsors/birdie.png">
       </a>
@@ -17,13 +22,13 @@
         <img width="200" src="https://cdn.framework7.io/i/sponsors/activewaiter.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://wappler.io/" target="_blank">
         <img width="200" src="https://cdn.framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://appvalley.vip/" target="_blank">
         <img width="200" src="https://cdn.framework7.io/i/sponsors/appvalley.jpg">
@@ -39,7 +44,6 @@
         <img width="200" src="https://cdn.framework7.io/i/sponsors/tommy.png">
       </a>
     </td>
-    <td></td>
   </tr>
 </table>
 
@@ -73,6 +77,8 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 ---
 
 ### $50+ Top Supporter
+[HICAPPS](https://hicapps.cl/web/) - Health Informatics Custom APPs
+Michael Russell
 [EduBirdie](https://edubirdie.com/) - Professional Essay Writing Service<br>
 [Blokt](https://blokt.com/) - Cryptocurrency News<br>
 Alexey Victorov<br>
