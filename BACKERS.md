@@ -77,7 +77,7 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 ---
 
 ### $50+ Top Supporter
-[HICAPPS](https://hicapps.cl/web/) - Health Informatics Custom APPs
+[HICAPPS](https://hicapps.cl/web/) - Health Informatics Custom APPs<br>
 Michael Russell
 [EduBirdie](https://edubirdie.com/) - Professional Essay Writing Service<br>
 [Blokt](https://blokt.com/) - Cryptocurrency News<br>
