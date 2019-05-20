@@ -117,6 +117,7 @@ export default {
             max={inputType === 'number' ? max : undefined}
             step={inputType === 'number' ? step : undefined}
             onInput={self.onInput}
+            onChange={self.onChange}
             value={value}
             readOnly={inputReadonly}
           />
@@ -131,6 +132,7 @@ export default {
             max={inputType === 'number' ? max : undefined}
             step={inputType === 'number' ? step : undefined}
             onInput={self.onInput}
+            onChange={self.onChange}
             domProps={{
               readOnly: inputReadonly,
               value,
@@ -297,6 +299,10 @@ export default {
     onInput(event) {
       const stepper = this.f7Stepper;
       this.dispatchEvent('input', event, stepper);
+    },
+    onChange(event) {
+      const stepper = this.f7Stepper;
+      this.dispatchEvent('change', event, stepper);
     },
     onMinusClick(event) {
       const stepper = this.f7Stepper;
