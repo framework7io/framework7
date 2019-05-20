@@ -88,7 +88,7 @@
     "rollup-plugin-node-resolve": "^5.0.0",
     "rollup-plugin-replace": "^2.2.0",
     "rollup-plugin-vue": "^5.0.0",
-    "terser": "^3.17.0",
+    "terser": "^4.0.0",
     "vue": "^2.6.10",
     "vue-template-compiler": "^2.6.10"
   }
