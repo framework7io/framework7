@@ -101,7 +101,7 @@ function buildReact(cb) {
         delimiters: ['', ''],
         'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
       }),
-      resolve({ jsnext: true }),
+      resolve({ mainFields: ['module', 'main', 'jsnext'] }),
       commonjs(),
       buble({
         objectAssign: 'Object.assign',

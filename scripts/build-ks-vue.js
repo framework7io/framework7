@@ -43,7 +43,7 @@ function buildKs(cb) {
         "'framework7-vue'": () => `'${f7VuePath}'`,
         "'framework7/framework7.esm.bundle'": () => `'${f7Path}'`,
       }),
-      resolve({ jsnext: true }),
+      resolve({ mainFields: ['module', 'main', 'jsnext'] }),
       commonjs(),
       vue({
         css: false,

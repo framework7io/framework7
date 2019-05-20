@@ -125,7 +125,7 @@ function buildLazyComponentsJs(components, cb) {
           'process.env.TARGET': JSON.stringify(target),
           'process.env.FORMAT': JSON.stringify(format),
         }),
-        resolve({ jsnext: true }),
+        resolve({ mainFields: ['module', 'main', 'jsnext'] }),
         commonjs(),
         buble(),
       ],

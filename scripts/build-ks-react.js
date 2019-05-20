@@ -45,7 +45,7 @@ function buildKs(cb) {
         "'framework7-react'": () => `'${f7ReactPath}'`,
         "'framework7/framework7.esm.bundle'": () => `'${f7Path}'`,
       }),
-      resolve({ jsnext: true }),
+      resolve({ mainFields: ['module', 'main', 'jsnext'] }),
       commonjs(),
       buble({
         objectAssign: 'Object.assign',
