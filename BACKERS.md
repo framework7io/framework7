@@ -3,6 +3,16 @@
 <table>
   <tr>
     <td align="center" valign="middle">
+      <a href="https://www.thoriumbuilder.com/" target="_blank">
+        <img width="160" src="https://cdn.framework7.io/i/sponsors/thorium.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://kidoverse.app" target="_blank">
+        <img width="160" src="https://cdn.framework7.io/i/sponsors/kidoverse.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://www.cyberbrain.nl/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/cyberbrain.png">
       </a>
@@ -17,6 +27,9 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/birdie.png">
       </a>
     </td>
+
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://blokt.com/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/blokt.png">
@@ -27,8 +40,6 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/activewaiter.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://wappler.io/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/wappler.png">
@@ -44,11 +55,16 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/securcom.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="http://mytommy.com" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/tommy.png">
       </a>
     </td>
+    <td></td>
+    <td></td>
+    <td></td>
     <td></td>
   </tr>
 </table>
@@ -74,6 +90,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ---
 
 ### $100 Silver Sponsor
+[Thorium Builder](https://www.thoriumbuilder.com/) - Full visual Framework7 app builder<br>
 Colin Adams ([App Valley](https://appvalley.vip/))<br>
 Pavol Cvengros ([securCom Inc](https://www.securcom.me/))<br>
 Mason Fok ([tommy](http://mytommy.com))<br>
@@ -83,6 +100,7 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 ---
 
 ### $50+ Top Supporter
+[Kidoverse](https://kidoverse.app) - App for kids to learn, play, create and explore<br>
 [CyberBrain IT Services](https://www.cyberbrain.nl/)<br>
 [HICAPPS](https://hicapps.cl/web/) - Health Informatics Custom APPs<br>
 Michael Russell
