@@ -64,7 +64,7 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://appvalley.vip/" target="_blank">
+      <a href="https://app-valley.vip/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/appvalley.jpg">
       </a>
     </td>
