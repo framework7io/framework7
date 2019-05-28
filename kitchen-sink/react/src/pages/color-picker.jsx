@@ -7,6 +7,7 @@ export default class extends React.Component {
     this.state = {
       wheePickerValue: { hex: '#00ff00' },
       spectrumPickerValue: { hex: '#ff0000' },
+      hsSpectrumPickerValue: { hex: '#ff0000' },
       rgbPickerValue: { hex: '#0000ff' },
       rgbaPickerValue: { hex: '#ff00ff' },
       hsbPickerValue: { hex: '#00ff00' },
@@ -84,6 +85,28 @@ export default class extends React.Component {
               slot="media"
               style={{backgroundColor: `${this.state.spectrumPickerValue.hex}`}}
               className="icon demo-list-icon spectrum-picker-target"
+            />
+          </ListInput>
+        </List>
+
+        <BlockTitle>Hue-Saturation Spectrum</BlockTitle>
+        <BlockHeader>HS Spectrum + Brightness Slider in Popover</BlockHeader>
+        <List noHairlinesMd>
+          <ListInput
+            type="colorpicker"
+            placeholder="Color"
+            readonly
+            value={this.state.hsSpectrumPickerValue}
+            onColorPickerChange={(value) => this.setState({hsSpectrumPickerValue: value})}
+            colorPickerParams={{
+              modules: ['hs-spectrum', 'brightness-slider'],
+              targetEl: '.hs-spectrum-picker-target'
+            }}
+          >
+            <i
+              slot="media"
+              style={{backgroundColor: `${this.state.hsSpectrumPickerValue.hex}`}}
+              className="icon demo-list-icon hs-spectrum-picker-target"
             />
           </ListInput>
         </List>

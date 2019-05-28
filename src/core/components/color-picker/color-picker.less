@@ -88,13 +88,15 @@
   }
 }
 // Spectrum
-.color-picker-module-sb-spectrum {
+.color-picker-module-sb-spectrum,
+.color-picker-module-hs-spectrum {
   margin-left: 10px;
   margin-right: 10px;
   &:first-child {
     margin-top: 10px;
   }
-  .color-picker-sb-spectrum {
+  .color-picker-sb-spectrum,
+  .color-picker-hs-spectrum {
     border-radius: 4px;
     height: var(--f7-color-picker-sb-spectrum-height);
   }
@@ -104,12 +106,35 @@
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #000 100%), linear-gradient(to left, rgba(255, 255, 255, 0) 0%, #fff 100%);
   position: relative;
 }
-.color-picker-sb-spectrum-handle {
+.color-picker-hs-spectrum {
+  position: relative;
+  background-image: linear-gradient(to right,
+    hsl(0, 100%, 50%),
+    hsl(60, 100%, 50%),
+    hsl(120, 100%, 50%),
+    hsl(180, 100%, 50%),
+    hsl(240, 100%, 50%),
+    hsl(300, 100%, 50%),
+    hsl(360, 100%, 50%)
+  );
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
+  }
+}
+.color-picker-sb-spectrum-handle,
+.color-picker-hs-spectrum-handle {
   width: 4px;
   height: 4px;
   position: absolute;
   left: -2px;
   top: -2px;
+  z-index: 1;
   &:after {
     background-color: inherit;
     content: '';
@@ -127,7 +152,8 @@
     transition-property: transform;
     transform-origin: center;
   }
-  &.color-picker-sb-spectrum-handle-pressed:after {
+  &.color-picker-sb-spectrum-handle-pressed:after,
+  &.color-picker-hs-spectrum-handle-pressed:after {
     transform: scale(1.5) translate(-33.333%, -33.333%);
   }
 }
@@ -443,6 +469,7 @@
 .color-picker-module-hsb-sliders,
 .color-picker-module-alpha-slider,
 .color-picker-module-hue-slider,
+.color-picker-module-brightness-slider,
 .color-picker-module-hex {
   margin-left: 10px;
   margin-right: 10px;
@@ -452,6 +479,7 @@
   .color-picker-module-hsb-sliders,
   .color-picker-module-alpha-slider,
   .color-picker-module-hue-slider,
+  .color-picker-module-brightness-slider,
   .color-picker-module-hex {
     background: var(--f7-color-picker-group-bg-color);
     padding: 5px;
@@ -479,7 +507,8 @@
   .color-picker-module-rgb-sliders,
   .color-picker-module-hsb-sliders,
   .color-picker-module-alpha-slider,
-  .color-picker-module-hue-slider {
+  .color-picker-module-hue-slider,
+  .color-picker-module-brightness-slider {
     .range-slider:first-child {
       .ltr({
         margin-left: 5px;

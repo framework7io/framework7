@@ -49,6 +49,28 @@
       </f7-list-input>
     </f7-list>
 
+    <f7-block-title>Hue-Saturation Spectrum</f7-block-title>
+    <f7-block-header>HS Spectrum + Brightness Slider in Popover</f7-block-header>
+    <f7-list no-hairlines-md>
+      <f7-list-input
+        type="colorpicker"
+        placeholder="Color"
+        readonly
+        :value="hsSpectrumPickerValue"
+        @colorpicker:change="(value) => hsSpectrumPickerValue = value"
+        :color-picker-params="{
+          modules: ['hs-spectrum', 'brightness-slider'],
+          targetEl: '.hs-spectrum-picker-target'
+        }"
+      >
+        <i
+          slot="media"
+          :style="`background-color: ${hsSpectrumPickerValue.hex}`"
+          class="icon demo-list-icon hs-spectrum-picker-target"
+        ></i>
+      </f7-list-input>
+    </f7-list>
+
     <f7-block-title>RGB Sliders</f7-block-title>
     <f7-block-header>RGB sliders with labels and values in Popover</f7-block-header>
     <f7-list no-hairlines-md>
@@ -296,6 +318,7 @@
       return {
         wheePickerValue: { hex: '#00ff00' },
         spectrumPickerValue: { hex: '#ff0000' },
+        hsSpectrumPickerValue: { hex: '#ff0000' },
         rgbPickerValue: { hex: '#0000ff' },
         rgbaPickerValue: { hex: '#ff00ff' },
         hsbPickerValue: { hex: '#00ff00' },

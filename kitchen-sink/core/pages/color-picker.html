@@ -54,6 +54,25 @@
         </ul>
       </div>
 
+      <div class="block-title">Hue-Saturation Spectrum</div>
+      <div class="block-header">HS Spectrum + Brightness Slider in Popover</div>
+      <div class="list no-hairlines-md">
+        <ul>
+          <li>
+            <div class="item-content item-input">
+              <div class="item-media">
+                <i class="icon demo-list-icon" id="demo-color-picker-hs-spectrum-value"></i>
+              </div>
+              <div class="item-inner">
+                <div class="item-input-wrap">
+                  <input type="text" placeholder="Color" readonly="readonly" id="demo-color-picker-hs-spectrum"/>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
       <div class="block-title">RGB Sliders</div>
       <div class="block-header">RGB sliders with labels and values in Popover</div>
       <div class="list no-hairlines-md">
@@ -241,6 +260,16 @@
             hex: '#ff0000',
           },
         });
+        self.colorPickerHsSpectrum = app.colorPicker.create({
+          inputEl: '#demo-color-picker-hs-spectrum',
+          targetEl: '#demo-color-picker-hs-spectrum-value',
+          targetElSetBackgroundColor: true,
+          modules: ['hs-spectrum', 'brightness-slider'],
+          openIn: 'popover',
+          value: {
+            hex: '#ff0000',
+          },
+        });
         self.colorPickerRgb = app.colorPicker.create({
           inputEl: '#demo-color-picker-rgb',
           targetEl: '#demo-color-picker-rgb-value',
@@ -388,6 +417,7 @@
         var self = this;
         self.colorPickerWheel.destroy();
         self.colorPickerSpectrum.destroy();
+        self.colorPickerHsSpectrum.destroy();
         self.colorPickerRgb.destroy();
         self.colorPickerRgba.destroy();
         self.colorPickerHsb.destroy();
