@@ -12,7 +12,7 @@ class Sheet extends Modal {
     );
 
     // Extends with open/close Modal methods;
-    super(app, extendedParams);
+    super(extendedParams, app);
 
     const sheet = this;
 
