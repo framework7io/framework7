@@ -120,6 +120,7 @@ Bart DJ
 ---
 
 ### $10+ Supporter
+Daniel Morales<br>
 Azad Zain<br>
 Nicolas Hinze<br>
 Josué Marinho<br>
@@ -139,7 +140,6 @@ Jonathan Pugh<br>
 Danny Redfern<br>
 Marc Hildmann<br>
 Kyle Hammond<br>
-En-Yang Lin<br>
 VOUSYS<br>
 David Fall<br>
 Almaz Kazakov<br>
@@ -161,7 +161,6 @@ Miguel Nahara<br>
 Muthaiyan Rm<br>
 xPlants.it SRL<br>
 Mamadou Ndiaye<br>
-Sören Wrede<br>
 LitoMore<br>
 Philip Fung<br>
 Jacob Rosenberg<br>
