@@ -306,8 +306,8 @@ function backward(el, backwardOptions) {
   router.pageCallback('init', $newPage, $newNavbarInner, 'previous', 'current', options, $oldPage);
 
   // Before animation callback
-  router.pageCallback('beforeIn', $newPage, $newNavbarInner, 'previous', 'current', options);
   router.pageCallback('beforeOut', $oldPage, $oldNavbarInner, 'current', 'next', options);
+  router.pageCallback('beforeIn', $newPage, $newNavbarInner, 'previous', 'current', options);
 
   // Animation
   function afterAnimation() {
@@ -322,8 +322,8 @@ function backward(el, backwardOptions) {
     }
 
     // After animation event
-    router.pageCallback('afterIn', $newPage, $newNavbarInner, 'previous', 'current', options);
     router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', 'next', options);
+    router.pageCallback('afterIn', $newPage, $newNavbarInner, 'previous', 'current', options);
 
     // Remove Old Page
     if (router.params.stackPages && router.initialPages.indexOf($oldPage[0]) >= 0) {
