@@ -110,13 +110,13 @@ export namespace VirtualList {
     }
   }
   interface Events {
-    itemBeforeInsert: (virutalList: VirtualList, itemEl: HTMLElement, item: any) => void
-    itemsBeforeInsert: (virutalList: VirtualList, fragment: DocumentFragment) => void
-    beforeClear: (virutalList: VirtualList, fragment: DocumentFragment) => void
-    itemsAfterInsert: (virutalList: VirtualList, fragment: DocumentFragment) => void
+    itemBeforeInsert: (virtualList: VirtualList, itemEl: HTMLElement, item: any) => void
+    itemsBeforeInsert: (virtualList: VirtualList, fragment: DocumentFragment) => void
+    beforeClear: (virtualList: VirtualList, fragment: DocumentFragment) => void
+    itemsAfterInsert: (virtualList: VirtualList, fragment: DocumentFragment) => void
   }
   interface AppMethods {
-    virutalList: {
+    virtualList: {
       /** initialize virtual list with parameters */
       create(parameters: Parameters): VirtualList
       /** destroy Virtual List instance */
@@ -126,13 +126,13 @@ export namespace VirtualList {
     }
   }
   interface AppParams {
-    virutalList?: Parameters | undefined
+    virtualList?: Parameters | undefined
   }
   interface AppEvents {
-    vlItemBeforeInsert: (virutalList: VirtualList, itemEl: HTMLElement, item: any) => void
-    vlItemsBeforeInsert: (virutalList: VirtualList, fragment: DocumentFragment) => void
-    vlBeforeClear: (virutalList: VirtualList, fragment: DocumentFragment) => void
-    vlItemsAfterInsert: (virutalList: VirtualList, fragment: DocumentFragment) => void
+    vlItemBeforeInsert: (virtualList: VirtualList, itemEl: HTMLElement, item: any) => void
+    vlItemsBeforeInsert: (virtualList: VirtualList, fragment: DocumentFragment) => void
+    vlBeforeClear: (virtualList: VirtualList, fragment: DocumentFragment) => void
+    vlItemsAfterInsert: (virtualList: VirtualList, fragment: DocumentFragment) => void
   }
 }
 
