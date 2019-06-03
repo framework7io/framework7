@@ -5,10 +5,12 @@ import F7ListItemContent from './list-item-content';
 import Mixins from '../utils/mixins';
 
 /* phenome-dts-imports
+import { Tooltip as TooltipNamespace } from 'framework7/components/tooltip/tooltip';
 import { SmartSelect as SmartSelectNamespace } from 'framework7/components/smart-select/smart-select';
 */
 
 /* phenome-dts-instance
+f7Tooltip: TooltipNamespace.Tooltip
 f7SmartSelect: SmartSelectNamespace.SmartSelect
 */
 
@@ -25,6 +27,9 @@ export default {
     subtitle: [String, Number],
     header: [String, Number],
     footer: [String, Number],
+
+    // Tooltip
+    tooltip: String,
 
     // Link Props
     link: [Boolean, String],
@@ -262,6 +267,11 @@ export default {
     );
   },
   watch: {
+    'props.tooltip': function watchTooltip(newText) {
+      const self = this;
+      if (!newText || !self.f7Tooltip) return;
+      self.f7Tooltip.setText(newText);
+    },
     'props.swipeoutOpened': function watchSwipeoutOpened(opened) {
       const self = this;
       if (!self.props.swipeout) return;
@@ -298,7 +308,9 @@ export default {
     const self = this;
     const { el, linkEl } = self.refs;
     if (!el) return;
-    const { link, href, smartSelect, swipeout, swipeoutOpened, accordionItem, smartSelectParams, routeProps } = self.props;
+    const {
+      link, href, smartSelect, swipeout, swipeoutOpened, accordionItem, smartSelectParams, routeProps, tooltip,
+    } = self.props;
     const needsEvents = !(link || href || accordionItem || smartSelect);
     if (!needsEvents && linkEl) {
       linkEl.addEventListener('click', self.onClick);
@@ -345,6 +357,12 @@ export default {
       }
       if (swipeoutOpened) {
         f7.swipeout.open(el);
+      }
+      if (tooltip) {
+        self.f7Tooltip = f7.tooltip.create({
+          targetEl: el,
+          text: tooltip,
+        });
       }
     });
   },
@@ -404,6 +422,11 @@ export default {
     }
     if (smartSelect && self.f7SmartSelect) {
       self.f7SmartSelect.destroy();
+    }
+    if (self.f7Tooltip && self.f7Tooltip.destroy) {
+      self.f7Tooltip.destroy();
+      self.f7Tooltip = null;
+      delete self.f7Tooltip;
     }
   },
   methods: {
