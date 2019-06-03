@@ -10,7 +10,7 @@ function initClicks(app) {
     const $clickedLinkEl = $clickedEl.closest('a');
     const isLink = $clickedLinkEl.length > 0;
     const url = isLink && $clickedLinkEl.attr('href');
-    const isTabLink = isLink && $clickedLinkEl.hasClass('tab-link') && ($clickedLinkEl.attr('data-tab') || (url && url.indexOf('#') === 0));
+    // const isTabLink = isLink && $clickedLinkEl.hasClass('tab-link') && ($clickedLinkEl.attr('data-tab') || (url && url.indexOf('#') === 0));
 
     // Check if link is external
     if (isLink) {
