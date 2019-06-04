@@ -2,7 +2,7 @@
 
 # Change Log
 
-# [v4.4.2](https://github.com/framework7io/framework7/compare/v4.4.0...v4.4.2) - June 4, 2019
+# [v4.4.3](https://github.com/framework7io/framework7/compare/v4.4.0...v4.4.3) - June 4, 2019
   * Core
     * Color Picker
       * New Hue-Saturation spectrum module (`hs-spectrum`)
