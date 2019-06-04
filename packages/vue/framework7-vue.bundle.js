@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.4.0
+ * Framework7 Vue 4.4.2
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: May 13, 2019
+ * Released on: June 4, 2019
  */
 
 (function (global, factory) {
@@ -4075,7 +4075,8 @@
       tabLinkActive: Boolean,
       link: [Boolean, String],
       href: [Boolean, String],
-      target: String
+      target: String,
+      tooltip: String
     }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
 
     render: function render() {
@@ -4135,6 +4136,13 @@
       }
 
     },
+    watch: {
+      'props.tooltip': function watchTooltip(newText) {
+        var self = this;
+        if (!newText || !self.f7Tooltip) { return; }
+        self.f7Tooltip.setText(newText);
+      }
+    },
 
     created: function created() {
       Utils.bindMethods(this, ['onClick']);
@@ -4145,12 +4153,21 @@
       var linkEl = self.$refs.linkEl;
       var ref = self.props;
       var routeProps = ref.routeProps;
+      var tooltip = ref.tooltip;
 
       if (routeProps) {
         linkEl.f7RouteProps = routeProps;
       }
 
       linkEl.addEventListener('click', self.onClick);
+      self.$f7ready(function (f7) {
+        if (tooltip) {
+          self.f7Tooltip = f7.tooltip.create({
+            targetEl: linkEl,
+            text: tooltip
+          });
+        }
+      });
     },
 
     updated: function updated() {
@@ -4169,6 +4186,12 @@
       var linkEl = self.$refs.linkEl;
       linkEl.removeEventListener('click', this.onClick);
       delete linkEl.f7RouteProps;
+
+      if (self.f7Tooltip && self.f7Tooltip.destroy) {
+        self.f7Tooltip.destroy();
+        self.f7Tooltip = null;
+        delete self.f7Tooltip;
+      }
     },
 
     methods: {
@@ -5265,6 +5288,7 @@
       subtitle: [String, Number],
       header: [String, Number],
       footer: [String, Number],
+      tooltip: String,
       link: [Boolean, String],
       target: String,
       noFastclick: Boolean,
@@ -5465,6 +5489,11 @@
     },
 
     watch: {
+      'props.tooltip': function watchTooltip(newText) {
+        var self = this;
+        if (!newText || !self.f7Tooltip) { return; }
+        self.f7Tooltip.setText(newText);
+      },
       'props.swipeoutOpened': function watchSwipeoutOpened(opened) {
         var self = this;
         if (!self.props.swipeout) { return; }
@@ -5497,6 +5526,7 @@
       var accordionItem = ref$1.accordionItem;
       var smartSelectParams = ref$1.smartSelectParams;
       var routeProps = ref$1.routeProps;
+      var tooltip = ref$1.tooltip;
       var needsEvents = !(link || href || accordionItem || smartSelect);
 
       if (!needsEvents && linkEl) {
@@ -5548,6 +5578,13 @@
 
         if (swipeoutOpened) {
           f7.swipeout.open(el);
+        }
+
+        if (tooltip) {
+          self.f7Tooltip = f7.tooltip.create({
+            targetEl: el,
+            text: tooltip
+          });
         }
       });
     },
@@ -5634,6 +5671,12 @@
 
       if (smartSelect && self.f7SmartSelect) {
         self.f7SmartSelect.destroy();
+      }
+
+      if (self.f7Tooltip && self.f7Tooltip.destroy) {
+        self.f7Tooltip.destroy();
+        self.f7Tooltip = null;
+        delete self.f7Tooltip;
       }
     },
 
@@ -10588,6 +10631,8 @@
         default: 1
       },
       formatValue: Function,
+      name: String,
+      inputId: String,
       input: {
         type: Boolean,
         default: true
@@ -10662,6 +10707,8 @@
       var step = props.step;
       var id = props.id;
       var style = props.style;
+      var name = props.name;
+      var inputId = props.inputId;
       var inputWrapEl;
       var valueEl;
 
@@ -10675,9 +10722,12 @@
               value: value
             },
             on: {
-              input: self.onInput
+              input: self.onInput,
+              change: self.onChange
             },
             attrs: {
+              name: name,
+              id: inputId,
               type: inputType,
               min: inputType === 'number' ? min : undefined,
               max: inputType === 'number' ? max : undefined,
@@ -10875,6 +10925,11 @@
       onInput: function onInput(event) {
         var stepper = this.f7Stepper;
         this.dispatchEvent('input', event, stepper);
+      },
+
+      onChange: function onChange(event) {
+        var stepper = this.f7Stepper;
+        this.dispatchEvent('change', event, stepper);
       },
 
       onMinusClick: function onMinusClick(event) {
@@ -12267,7 +12322,7 @@
   };
 
   /**
-   * Framework7 Vue 4.4.0
+   * Framework7 Vue 4.4.2
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -12275,7 +12330,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: May 13, 2019
+   * Released on: June 4, 2019
    */
 
   var Plugin = {

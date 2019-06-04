@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Tooltip as TooltipNamespace } from 'framework7/components/tooltip/tooltip';
 import { SmartSelect as SmartSelectNamespace } from 'framework7/components/smart-select/smart-select';
 
 declare namespace F7ListItem {
@@ -13,6 +14,7 @@ declare namespace F7ListItem {
     subtitle? : string | number
     header? : string | number
     footer? : string | number
+    tooltip? : string
     link? : boolean | string
     target? : string
     noFastclick? : boolean
@@ -127,6 +129,7 @@ declare class F7ListItem extends React.Component<F7ListItem.Props, {}> {
   onAccOpened(event? : any) : unknown
   onChange(event? : any) : unknown
   onInput(event? : any) : unknown
+  f7Tooltip: TooltipNamespace.Tooltip
   f7SmartSelect: SmartSelectNamespace.SmartSelect
 }
 export default F7ListItem;

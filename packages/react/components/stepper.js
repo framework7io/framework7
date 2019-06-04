@@ -44,6 +44,11 @@ class F7Stepper extends React.Component {
     this.dispatchEvent('input', event, stepper);
   }
 
+  onChange(event) {
+    const stepper = this.f7Stepper;
+    this.dispatchEvent('change', event, stepper);
+  }
+
   onMinusClick(event) {
     const stepper = this.f7Stepper;
     this.dispatchEvent('stepper:minusclick stepperMinusClick', event, stepper);
@@ -118,7 +123,9 @@ class F7Stepper extends React.Component {
       max,
       step,
       id,
-      style
+      style,
+      name,
+      inputId
     } = props;
     let inputWrapEl;
     let valueEl;
@@ -130,11 +137,14 @@ class F7Stepper extends React.Component {
           ref: __reactNode => {
             this.__reactRefs['inputEl'] = __reactNode;
           },
+          name: name,
+          id: inputId,
           type: inputType,
           min: inputType === 'number' ? min : undefined,
           max: inputType === 'number' ? max : undefined,
           step: inputType === 'number' ? step : undefined,
           onInput: self.onInput,
+          onChange: self.onChange,
           value: value,
           readOnly: inputReadonly
         });
@@ -284,6 +294,8 @@ __reactComponentSetProps(F7Stepper, Object.assign({
     default: 1
   },
   formatValue: Function,
+  name: String,
+  inputId: String,
   input: {
     type: Boolean,
     default: true

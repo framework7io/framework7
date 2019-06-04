@@ -15,6 +15,7 @@ export default {
     subtitle: [String, Number],
     header: [String, Number],
     footer: [String, Number],
+    tooltip: String,
     link: [Boolean, String],
     target: String,
     noFastclick: Boolean,
@@ -217,6 +218,11 @@ export default {
   },
 
   watch: {
+    'props.tooltip': function watchTooltip(newText) {
+      const self = this;
+      if (!newText || !self.f7Tooltip) return;
+      self.f7Tooltip.setText(newText);
+    },
     'props.swipeoutOpened': function watchSwipeoutOpened(opened) {
       const self = this;
       if (!self.props.swipeout) return;
@@ -249,7 +255,8 @@ export default {
       swipeoutOpened,
       accordionItem,
       smartSelectParams,
-      routeProps
+      routeProps,
+      tooltip
     } = self.props;
     const needsEvents = !(link || href || accordionItem || smartSelect);
 
@@ -302,6 +309,13 @@ export default {
 
       if (swipeoutOpened) {
         f7.swipeout.open(el);
+      }
+
+      if (tooltip) {
+        self.f7Tooltip = f7.tooltip.create({
+          targetEl: el,
+          text: tooltip
+        });
       }
     });
   },
@@ -394,6 +408,12 @@ export default {
 
     if (smartSelect && self.f7SmartSelect) {
       self.f7SmartSelect.destroy();
+    }
+
+    if (self.f7Tooltip && self.f7Tooltip.destroy) {
+      self.f7Tooltip.destroy();
+      self.f7Tooltip = null;
+      delete self.f7Tooltip;
     }
   },
 

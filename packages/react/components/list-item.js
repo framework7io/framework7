@@ -299,9 +299,21 @@ class F7ListItem extends React.Component {
     if (smartSelect && self.f7SmartSelect) {
       self.f7SmartSelect.destroy();
     }
+
+    if (self.f7Tooltip && self.f7Tooltip.destroy) {
+      self.f7Tooltip.destroy();
+      self.f7Tooltip = null;
+      delete self.f7Tooltip;
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
+    __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, newText => {
+      const self = this;
+      if (!newText || !self.f7Tooltip) return;
+      self.f7Tooltip.setText(newText);
+    });
+
     __reactComponentWatch(this, 'props.swipeoutOpened', prevProps, prevState, opened => {
       const self = this;
       if (!self.props.swipeout) return;
@@ -368,7 +380,8 @@ class F7ListItem extends React.Component {
       swipeoutOpened,
       accordionItem,
       smartSelectParams,
-      routeProps
+      routeProps,
+      tooltip
     } = self.props;
     const needsEvents = !(link || href || accordionItem || smartSelect);
 
@@ -422,6 +435,13 @@ class F7ListItem extends React.Component {
       if (swipeoutOpened) {
         f7.swipeout.open(el);
       }
+
+      if (tooltip) {
+        self.f7Tooltip = f7.tooltip.create({
+          targetEl: el,
+          text: tooltip
+        });
+      }
     });
   }
 
@@ -451,6 +471,7 @@ __reactComponentSetProps(F7ListItem, Object.assign({
   subtitle: [String, Number],
   header: [String, Number],
   footer: [String, Number],
+  tooltip: String,
   link: [Boolean, String],
   target: String,
   noFastclick: Boolean,

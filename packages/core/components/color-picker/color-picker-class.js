@@ -7,11 +7,13 @@ import moduleCurrentColor from './modules/current-color';
 import moduleHex from './modules/hex';
 import moduleHsbSliders from './modules/hsb-sliders';
 import moduleHueSlider from './modules/hue-slider';
+import moduleBrightnessSlider from './modules/brightness-slider';
 import modulePalette from './modules/palette';
 import moduleInitialCurrentColors from './modules/initial-current-colors';
 import moduleRgbBars from './modules/rgb-bars';
 import moduleRgbSliders from './modules/rgb-sliders';
 import moduleSbSpectrum from './modules/sb-spectrum';
+import moduleHsSpectrum from './modules/hs-spectrum';
 import moduleWheel from './modules/wheel';
 
 class ColorPicker extends Framework7Class {
@@ -65,11 +67,13 @@ class ColorPicker extends Framework7Class {
         'hex': moduleHex, // eslint-disable-line
         'hsb-sliders': moduleHsbSliders,
         'hue-slider': moduleHueSlider,
+        'brightness-slider': moduleBrightnessSlider,
         'palette': modulePalette, // eslint-disable-line
         'initial-current-colors': moduleInitialCurrentColors,
         'rgb-bars': moduleRgbBars,
         'rgb-sliders': moduleRgbSliders,
         'sb-spectrum': moduleSbSpectrum,
+        'hs-spectrum': moduleHsSpectrum,
         'wheel': moduleWheel, // eslint-disable-line
       },
     });

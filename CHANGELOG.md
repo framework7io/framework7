@@ -2,6 +2,26 @@
 
 # Change Log
 
+# [v4.4.2](https://github.com/framework7io/framework7/compare/v4.4.0...v4.4.2) - June 4, 2019
+  * Core
+    * Color Picker
+      * New Hue-Saturation spectrum module (`hs-spectrum`)
+      * New Brightness slider module (`brightness-slider`)
+    * Router
+      * Fixed issue when `beforeIn` page callback called before `beforeOut` of other page
+    * Virtual List
+      * Now it is possible to pass custom scrollable parent element with new `scrollableParentEl` parameter
+  * Phenome
+    * Range
+      * New `name` prop to specify input's "name" attribute
+    * Stepper
+      * New `name` prop to specify input's "name" attribute
+    * ListButton
+      * Now also supports `tooltip` property to display tooltip
+    * ListItem
+      * Now also supports `tooltip` property to display tooltip
+  * Minor fixes
+
 # [v4.4.0](https://github.com/framework7io/framework7/compare/v4.3.1...v4.4.0) - May 13, 2019
   * Core
     * All new Treeview component 🎉

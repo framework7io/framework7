@@ -1,5 +1,5 @@
 /**
- * Framework7 4.4.0
+ * Framework7 4.4.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: May 13, 2019
+ * Released on: June 4, 2019
  */
 
 /*====================
@@ -13282,7 +13282,8 @@ label.item-radio.disabled,
 .data-table {
   overflow-x: auto;
 }
-.data-table table {
+.data-table table,
+table.data-table {
   width: 100%;
   border: none;
   padding: 0;
@@ -17632,14 +17633,19 @@ button.swiper-pagination-bullet {
 .color-picker-module:last-child {
   margin-bottom: 5px;
 }
-.color-picker-module-sb-spectrum {
+.color-picker-module-sb-spectrum,
+.color-picker-module-hs-spectrum {
   margin-left: 10px;
   margin-right: 10px;
 }
-.color-picker-module-sb-spectrum:first-child {
+.color-picker-module-sb-spectrum:first-child,
+.color-picker-module-hs-spectrum:first-child {
   margin-top: 10px;
 }
-.color-picker-module-sb-spectrum .color-picker-sb-spectrum {
+.color-picker-module-sb-spectrum .color-picker-sb-spectrum,
+.color-picker-module-hs-spectrum .color-picker-sb-spectrum,
+.color-picker-module-sb-spectrum .color-picker-hs-spectrum,
+.color-picker-module-hs-spectrum .color-picker-hs-spectrum {
   border-radius: 4px;
   height: var(--f7-color-picker-sb-spectrum-height);
 }
@@ -17648,14 +17654,30 @@ button.swiper-pagination-bullet {
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #000 100%), linear-gradient(to left, rgba(255, 255, 255, 0) 0%, #fff 100%);
   position: relative;
 }
-.color-picker-sb-spectrum-handle {
+.color-picker-hs-spectrum {
+  position: relative;
+  background-image: linear-gradient(to right, hsl(0, 100%, 50%), hsl(60, 100%, 50%), hsl(120, 100%, 50%), hsl(180, 100%, 50%), hsl(240, 100%, 50%), hsl(300, 100%, 50%), hsl(0, 100%, 50%));
+}
+.color-picker-hs-spectrum:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), #ffffff);
+}
+.color-picker-sb-spectrum-handle,
+.color-picker-hs-spectrum-handle {
   width: 4px;
   height: 4px;
   position: absolute;
   left: -2px;
   top: -2px;
+  z-index: 1;
 }
-.color-picker-sb-spectrum-handle:after {
+.color-picker-sb-spectrum-handle:after,
+.color-picker-hs-spectrum-handle:after {
   background-color: inherit;
   content: '';
   position: absolute;
@@ -17672,7 +17694,10 @@ button.swiper-pagination-bullet {
   transition-property: transform;
   transform-origin: center;
 }
-.color-picker-sb-spectrum-handle.color-picker-sb-spectrum-handle-pressed:after {
+.color-picker-sb-spectrum-handle.color-picker-sb-spectrum-handle-pressed:after,
+.color-picker-hs-spectrum-handle.color-picker-sb-spectrum-handle-pressed:after,
+.color-picker-sb-spectrum-handle.color-picker-hs-spectrum-handle-pressed:after,
+.color-picker-hs-spectrum-handle.color-picker-hs-spectrum-handle-pressed:after {
   transform: scale(1.5) translate(-33.333%, -33.333%);
 }
 .color-picker-module-wheel {
@@ -17929,6 +17954,7 @@ button.swiper-pagination-bullet {
 .color-picker-module-hsb-sliders,
 .color-picker-module-alpha-slider,
 .color-picker-module-hue-slider,
+.color-picker-module-brightness-slider,
 .color-picker-module-hex {
   margin-left: 10px;
   margin-right: 10px;
@@ -17937,6 +17963,7 @@ button.swiper-pagination-bullet {
 .color-picker-grouped-modules .color-picker-module-hsb-sliders,
 .color-picker-grouped-modules .color-picker-module-alpha-slider,
 .color-picker-grouped-modules .color-picker-module-hue-slider,
+.color-picker-grouped-modules .color-picker-module-brightness-slider,
 .color-picker-grouped-modules .color-picker-module-hex {
   background: var(--f7-color-picker-group-bg-color);
   padding: 5px;
@@ -17949,6 +17976,7 @@ button.swiper-pagination-bullet {
 .color-picker-grouped-modules .color-picker-module-hsb-sliders:last-child,
 .color-picker-grouped-modules .color-picker-module-alpha-slider:last-child,
 .color-picker-grouped-modules .color-picker-module-hue-slider:last-child,
+.color-picker-grouped-modules .color-picker-module-brightness-slider:last-child,
 .color-picker-grouped-modules .color-picker-module-hex:last-child {
   margin-bottom: 15px;
 }
@@ -17963,13 +17991,15 @@ button.swiper-pagination-bullet {
 .color-picker-grouped-modules .color-picker-module-rgb-sliders .range-slider:first-child,
 .color-picker-grouped-modules .color-picker-module-hsb-sliders .range-slider:first-child,
 .color-picker-grouped-modules .color-picker-module-alpha-slider .range-slider:first-child,
-.color-picker-grouped-modules .color-picker-module-hue-slider .range-slider:first-child {
+.color-picker-grouped-modules .color-picker-module-hue-slider .range-slider:first-child,
+.color-picker-grouped-modules .color-picker-module-brightness-slider .range-slider:first-child {
   margin-right: 5px;
 }
 .color-picker-grouped-modules .color-picker-module-rgb-sliders .range-slider:last-child,
 .color-picker-grouped-modules .color-picker-module-hsb-sliders .range-slider:last-child,
 .color-picker-grouped-modules .color-picker-module-alpha-slider .range-slider:last-child,
-.color-picker-grouped-modules .color-picker-module-hue-slider .range-slider:last-child {
+.color-picker-grouped-modules .color-picker-module-hue-slider .range-slider:last-child,
+.color-picker-grouped-modules .color-picker-module-brightness-slider .range-slider:last-child {
   margin-left: 5px;
 }
 /* === Treeview === */
@@ -18640,6 +18670,18 @@ iframe#viAd {
 }
 .flex-shrink-10 {
   flex-shrink: 10 !important;
+}
+.flex-direction-row {
+  flex-direction: row !important;
+}
+.flex-direction-row-reverse {
+  flex-direction: row-reverse !important;
+}
+.flex-direction-column {
+  flex-direction: column !important;
+}
+.flex-direction-column-reverse {
+  flex-direction: column-reverse !important;
 }
 .justify-content-flex-start {
   justify-content: flex-start !important;

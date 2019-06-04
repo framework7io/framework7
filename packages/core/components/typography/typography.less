@@ -17,6 +17,10 @@
 @shrinks: 0,1,2,3,4,5,6,7,8,9,10;
 .rules-loop(@shrinks, flex-shrink);
 
+// Flex Direction
+@directions: row, row-reverse, column, column-reverse;
+.rules-loop(@directions, flex-direction);
+
 // Justify Content
 @justify: flex-start, center, flex-end, space-between, space-around, space-evenly, stretch, start, end, left, right;
 .rules-loop(@justify, justify-content);

@@ -1,5 +1,5 @@
 /**
- * Framework7 React 4.4.0
+ * Framework7 React 4.4.2
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: May 13, 2019
+ * Released on: June 4, 2019
  */
 
 (function (global, factory) {
@@ -4764,9 +4764,23 @@
       var linkEl = self.refs.linkEl;
       linkEl.removeEventListener('click', this.onClick);
       delete linkEl.f7RouteProps;
+
+      if (self.f7Tooltip && self.f7Tooltip.destroy) {
+        self.f7Tooltip.destroy();
+        self.f7Tooltip = null;
+        delete self.f7Tooltip;
+      }
     };
 
-    F7ListButton.prototype.componentDidUpdate = function componentDidUpdate () {
+    F7ListButton.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
+      var this$1 = this;
+
+      __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
+        var self = this$1;
+        if (!newText || !self.f7Tooltip) { return; }
+        self.f7Tooltip.setText(newText);
+      });
+
       var self = this;
       var linkEl = self.refs.linkEl;
       var ref = self.props;
@@ -4782,12 +4796,21 @@
       var linkEl = self.refs.linkEl;
       var ref = self.props;
       var routeProps = ref.routeProps;
+      var tooltip = ref.tooltip;
 
       if (routeProps) {
         linkEl.f7RouteProps = routeProps;
       }
 
       linkEl.addEventListener('click', self.onClick);
+      self.$f7ready(function (f7) {
+        if (tooltip) {
+          self.f7Tooltip = f7.tooltip.create({
+            targetEl: linkEl,
+            text: tooltip
+          });
+        }
+      });
     };
 
     prototypeAccessors.slots.get = function () {
@@ -4824,7 +4847,8 @@
     tabLinkActive: Boolean,
     link: [Boolean, String],
     href: [Boolean, String],
-    target: String
+    target: String,
+    tooltip: String
   }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
 
   F7ListButton.displayName = 'f7-list-button';
@@ -6276,10 +6300,22 @@
       if (smartSelect && self.f7SmartSelect) {
         self.f7SmartSelect.destroy();
       }
+
+      if (self.f7Tooltip && self.f7Tooltip.destroy) {
+        self.f7Tooltip.destroy();
+        self.f7Tooltip = null;
+        delete self.f7Tooltip;
+      }
     };
 
     F7ListItem.prototype.componentDidUpdate = function componentDidUpdate (prevProps, prevState) {
       var this$1 = this;
+
+      __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
+        var self = this$1;
+        if (!newText || !self.f7Tooltip) { return; }
+        self.f7Tooltip.setText(newText);
+      });
 
       __reactComponentWatch(this, 'props.swipeoutOpened', prevProps, prevState, function (opened) {
         var self = this$1;
@@ -6343,6 +6379,7 @@
       var accordionItem = ref$1.accordionItem;
       var smartSelectParams = ref$1.smartSelectParams;
       var routeProps = ref$1.routeProps;
+      var tooltip = ref$1.tooltip;
       var needsEvents = !(link || href || accordionItem || smartSelect);
 
       if (!needsEvents && linkEl) {
@@ -6395,6 +6432,13 @@
         if (swipeoutOpened) {
           f7.swipeout.open(el);
         }
+
+        if (tooltip) {
+          self.f7Tooltip = f7.tooltip.create({
+            targetEl: el,
+            text: tooltip
+          });
+        }
       });
     };
 
@@ -6430,6 +6474,7 @@
     subtitle: [String, Number],
     header: [String, Number],
     footer: [String, Number],
+    tooltip: String,
     link: [Boolean, String],
     target: String,
     noFastclick: Boolean,
@@ -11926,6 +11971,11 @@
       this.dispatchEvent('input', event, stepper);
     };
 
+    F7Stepper.prototype.onChange = function onChange (event) {
+      var stepper = this.f7Stepper;
+      this.dispatchEvent('change', event, stepper);
+    };
+
     F7Stepper.prototype.onMinusClick = function onMinusClick (event) {
       var stepper = this.f7Stepper;
       this.dispatchEvent('stepper:minusclick stepperMinusClick', event, stepper);
@@ -12000,6 +12050,8 @@
       var step = props.step;
       var id = props.id;
       var style = props.style;
+      var name = props.name;
+      var inputId = props.inputId;
       var inputWrapEl;
       var valueEl;
 
@@ -12010,11 +12062,14 @@
             ref: function (__reactNode) {
               this$1.__reactRefs['inputEl'] = __reactNode;
             },
+            name: name,
+            id: inputId,
             type: inputType,
             min: inputType === 'number' ? min : undefined,
             max: inputType === 'number' ? max : undefined,
             step: inputType === 'number' ? step : undefined,
             onInput: self.onInput,
+            onChange: self.onChange,
             value: value,
             readOnly: inputReadonly
           });
@@ -12167,6 +12222,8 @@
       default: 1
     },
     formatValue: Function,
+    name: String,
+    inputId: String,
     input: {
       type: Boolean,
       default: true
@@ -13773,7 +13830,7 @@
   };
 
   /**
-   * Framework7 React 4.4.0
+   * Framework7 React 4.4.2
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -13781,7 +13838,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: May 13, 2019
+   * Released on: June 4, 2019
    */
 
   var Plugin = {

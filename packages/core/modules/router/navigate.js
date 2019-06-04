@@ -445,8 +445,8 @@ function forward(el, forwardOptions = {}) {
   }
 
   // Before animation event
-  router.pageCallback('beforeIn', $newPage, $newNavbarInner, 'next', 'current', options);
   router.pageCallback('beforeOut', $oldPage, $oldNavbarInner, 'current', 'previous', options);
+  router.pageCallback('beforeIn', $newPage, $newNavbarInner, 'next', 'current', options);
 
   // Animation
   function afterAnimation() {
@@ -466,8 +466,8 @@ function forward(el, forwardOptions = {}) {
     }
     // After animation event
     router.allowPageChange = true;
-    router.pageCallback('afterIn', $newPage, $newNavbarInner, 'next', 'current', options);
     router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', 'previous', options);
+    router.pageCallback('afterIn', $newPage, $newNavbarInner, 'next', 'current', options);
 
     let keepOldPage = (router.params.preloadPreviousPage || router.params[`${app.theme}SwipeBack`]) && !isMaster;
     if (!keepOldPage) {

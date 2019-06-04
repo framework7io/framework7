@@ -10,7 +10,7 @@ class Notification extends Modal {
     }, app.params.notification, params);
 
     // Extends with open/close Modal methods;
-    super(app, extendedParams);
+    super(extendedParams, app);
 
     const notification = this;
 

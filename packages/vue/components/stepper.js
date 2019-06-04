@@ -27,6 +27,8 @@ export default {
       default: 1
     },
     formatValue: Function,
+    name: String,
+    inputId: String,
     input: {
       type: Boolean,
       default: true
@@ -101,7 +103,9 @@ export default {
       max,
       step,
       id,
-      style
+      style,
+      name,
+      inputId
     } = props;
     let inputWrapEl;
     let valueEl;
@@ -116,9 +120,12 @@ export default {
             value
           },
           on: {
-            input: self.onInput
+            input: self.onInput,
+            change: self.onChange
           },
           attrs: {
+            name: name,
+            id: inputId,
             type: inputType,
             min: inputType === 'number' ? min : undefined,
             max: inputType === 'number' ? max : undefined,
@@ -321,6 +328,11 @@ export default {
     onInput(event) {
       const stepper = this.f7Stepper;
       this.dispatchEvent('input', event, stepper);
+    },
+
+    onChange(event) {
+      const stepper = this.f7Stepper;
+      this.dispatchEvent('change', event, stepper);
     },
 
     onMinusClick(event) {

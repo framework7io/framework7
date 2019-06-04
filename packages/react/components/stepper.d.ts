@@ -13,6 +13,8 @@ declare namespace F7Stepper {
     max? : number
     step? : number
     formatValue? : Function
+    name? : string
+    inputId? : string
     input? : boolean
     inputType? : string
     inputReadonly? : boolean
@@ -53,6 +55,7 @@ declare namespace F7Stepper {
     themeDark? : boolean
     onStepperChange? : (newValue?: any) => void
     onInput? : (event?: any, stepper?: any) => void
+    onChange? : (event?: any, stepper?: any) => void
     onStepperMinusClick? : (event?: any, stepper?: any) => void
     onStepperPlusClick? : (event?: any, stepper?: any) => void
   }
@@ -63,6 +66,7 @@ declare class F7Stepper extends React.Component<F7Stepper.Props, {}> {
   setValue(newValue? : any) : unknown
   getValue() : unknown
   onInput(event? : any) : unknown
+  onChange(event? : any) : unknown
   onMinusClick(event? : any) : unknown
   onPlusClick(event? : any) : unknown
   f7Stepper: StepperNamespace.Stepper

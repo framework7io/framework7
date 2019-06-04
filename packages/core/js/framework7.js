@@ -1,5 +1,5 @@
 /**
- * Framework7 4.4.0
+ * Framework7 4.4.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: May 13, 2019
+ * Released on: June 4, 2019
  */
 
 (function (global, factory) {
@@ -6778,8 +6778,8 @@
     }
 
     // Before animation event
-    router.pageCallback('beforeIn', $newPage, $newNavbarInner, 'next', 'current', options);
     router.pageCallback('beforeOut', $oldPage, $oldNavbarInner, 'current', 'previous', options);
+    router.pageCallback('beforeIn', $newPage, $newNavbarInner, 'next', 'current', options);
 
     // Animation
     function afterAnimation() {
@@ -6799,8 +6799,8 @@
       }
       // After animation event
       router.allowPageChange = true;
-      router.pageCallback('afterIn', $newPage, $newNavbarInner, 'next', 'current', options);
       router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', 'previous', options);
+      router.pageCallback('afterIn', $newPage, $newNavbarInner, 'next', 'current', options);
 
       var keepOldPage = (router.params.preloadPreviousPage || router.params[((app.theme) + "SwipeBack")]) && !isMaster;
       if (!keepOldPage) {
@@ -7904,8 +7904,8 @@
     router.pageCallback('init', $newPage, $newNavbarInner, 'previous', 'current', options, $oldPage);
 
     // Before animation callback
-    router.pageCallback('beforeIn', $newPage, $newNavbarInner, 'previous', 'current', options);
     router.pageCallback('beforeOut', $oldPage, $oldNavbarInner, 'current', 'next', options);
+    router.pageCallback('beforeIn', $newPage, $newNavbarInner, 'previous', 'current', options);
 
     // Animation
     function afterAnimation() {
@@ -7920,8 +7920,8 @@
       }
 
       // After animation event
-      router.pageCallback('afterIn', $newPage, $newNavbarInner, 'previous', 'current', options);
       router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', 'next', options);
+      router.pageCallback('afterIn', $newPage, $newNavbarInner, 'previous', 'current', options);
 
       // Remove Old Page
       if (router.params.stackPages && router.initialPages.indexOf($oldPage[0]) >= 0) {
@@ -9758,7 +9758,7 @@
       var $clickedLinkEl = $clickedEl.closest('a');
       var isLink = $clickedLinkEl.length > 0;
       var url = isLink && $clickedLinkEl.attr('href');
-      var isTabLink = isLink && $clickedLinkEl.hasClass('tab-link') && ($clickedLinkEl.attr('data-tab') || (url && url.indexOf('#') === 0));
+      // const isTabLink = isLink && $clickedLinkEl.hasClass('tab-link') && ($clickedLinkEl.attr('data-tab') || (url && url.indexOf('#') === 0));
 
       // Check if link is external
       if (isLink) {
@@ -9802,7 +9802,7 @@
       if (e.preventF7Router) { return; }
       if ($clickedLinkEl.hasClass('prevent-router') || $clickedLinkEl.hasClass('router-prevent')) { return; }
 
-      var validUrl = url && url.length > 0 && url !== '#' && !isTabLink;
+      var validUrl = url && url.length > 0 && url[0] !== '#';
       if (validUrl || $clickedLinkEl.hasClass('back')) {
         var view;
         if (clickedLinkData.view) {
@@ -13091,7 +13091,7 @@
       }, params);
 
       // Extends with open/close Modal methods;
-      Modal.call(this, app, extendedParams);
+      Modal.call(this, extendedParams, app);
 
       var customModal = this;
 

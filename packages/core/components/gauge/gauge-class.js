@@ -6,7 +6,7 @@ import Framework7Class from '../../utils/class';
 class Gauge extends Framework7Class {
   constructor(app, params = {}) {
     // Extends with open/close Modal methods;
-    super(app, params);
+    super(params, app);
 
     const gauge = this;
 
