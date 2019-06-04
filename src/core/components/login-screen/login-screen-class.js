@@ -9,7 +9,7 @@ class LoginScreen extends Modal {
     }, params);
 
     // Extends with open/close Modal methods;
-    super(extendedParams, app);
+    super(app, extendedParams);
 
     const loginScreen = this;
 

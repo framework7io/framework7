@@ -5,7 +5,7 @@ import Framework7Class from '../../utils/class';
 
 class Tooltip extends Framework7Class {
   constructor(app, params = {}) {
-    super(params, app);
+    super(params, [app]);
 
     const tooltip = this;
 

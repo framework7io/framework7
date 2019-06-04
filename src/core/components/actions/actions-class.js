@@ -12,7 +12,7 @@ class Actions extends Modal {
     );
 
     // Extends with open/close Modal methods;
-    super(extendedParams, app);
+    super(app, extendedParams);
 
     const actions = this;
 
