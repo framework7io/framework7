@@ -10,7 +10,7 @@ class Toast extends Modal {
     }, app.params.toast, params);
 
     // Extends with open/close Modal methods;
-    super(extendedParams, app);
+    super(app, extendedParams);
 
     const toast = this;
 

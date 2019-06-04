@@ -1,5 +1,5 @@
 /**
- * Framework7 4.4.2
+ * Framework7 4.4.3
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -13091,7 +13091,7 @@
       }, params);
 
       // Extends with open/close Modal methods;
-      Modal.call(this, extendedParams, app);
+      Modal.call(this, app, extendedParams);
 
       var customModal = this;
 
@@ -13204,7 +13204,7 @@
       }
 
       // Extends with open/close Modal methods;
-      Modal.call(this, extendedParams, app);
+      Modal.call(this, app, extendedParams);
 
       var dialog = this;
 
@@ -13633,7 +13633,7 @@
       );
 
       // Extends with open/close Modal methods;
-      Modal.call(this, extendedParams, app);
+      Modal.call(this, app, extendedParams);
 
       var popup = this;
 
@@ -13913,7 +13913,7 @@
       }, params);
 
       // Extends with open/close Modal methods;
-      Modal.call(this, extendedParams, app);
+      Modal.call(this, app, extendedParams);
 
       var loginScreen = this;
 
@@ -13992,7 +13992,7 @@
       );
 
       // Extends with open/close Modal methods;
-      Modal.call(this, extendedParams, app);
+      Modal.call(this, app, extendedParams);
 
       var popover = this;
 
@@ -14332,7 +14332,7 @@
       );
 
       // Extends with open/close Modal methods;
-      Modal.call(this, extendedParams, app);
+      Modal.call(this, app, extendedParams);
 
       var actions = this;
 
@@ -14646,7 +14646,7 @@
       );
 
       // Extends with open/close Modal methods;
-      Modal.call(this, extendedParams, app);
+      Modal.call(this, app, extendedParams);
 
       var sheet = this;
 
@@ -15061,7 +15061,7 @@
       }, app.params.toast, params);
 
       // Extends with open/close Modal methods;
-      Modal.call(this, extendedParams, app);
+      Modal.call(this, app, extendedParams);
 
       var toast = this;
 
@@ -35098,7 +35098,7 @@
       }, app.params.notification, params);
 
       // Extends with open/close Modal methods;
-      Modal.call(this, extendedParams, app);
+      Modal.call(this, app, extendedParams);
 
       var notification = this;
 
@@ -36203,7 +36203,7 @@
     function Tooltip(app, params) {
       if ( params === void 0 ) params = {};
 
-      Framework7Class.call(this, params, app);
+      Framework7Class.call(this, params, [app]);
 
       var tooltip = this;
 
@@ -36575,7 +36575,7 @@
       if ( params === void 0 ) params = {};
 
       // Extends with open/close Modal methods;
-      Framework7Class.call(this, params, app);
+      Framework7Class.call(this, params, [app]);
 
       var gauge = this;
 

@@ -11,7 +11,7 @@ class CustomModal extends Modal {
     }, params);
 
     // Extends with open/close Modal methods;
-    super(extendedParams, app);
+    super(app, extendedParams);
 
     const customModal = this;
 

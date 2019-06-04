@@ -21,7 +21,7 @@ class Dialog extends Modal {
     }
 
     // Extends with open/close Modal methods;
-    super(extendedParams, app);
+    super(app, extendedParams);
 
     const dialog = this;
 

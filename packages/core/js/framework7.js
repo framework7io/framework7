@@ -1,5 +1,5 @@
 /**
- * Framework7 4.4.2
+ * Framework7 4.4.3
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -13091,7 +13091,7 @@
       }, params);
 
       // Extends with open/close Modal methods;
-      Modal.call(this, extendedParams, app);
+      Modal.call(this, app, extendedParams);
 
       var customModal = this;
 
