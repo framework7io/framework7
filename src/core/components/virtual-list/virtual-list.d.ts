@@ -43,7 +43,7 @@ export namespace VirtualList {
     /** Prepend array with items to virtual list */
     prependItems(items: any[]): void
     /** Replace item at specified index with the new one */
-    replaceItem(index: number, items: any[]): void
+    replaceItem(index: number, item: any): void
     /** Replace all items with arrays of new items */
     replaceAllItems(items: any[]): void
     /** Move virtual item from oldIndex to newIndex */
