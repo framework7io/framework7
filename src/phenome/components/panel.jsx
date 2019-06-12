@@ -82,7 +82,7 @@ export default {
       if (opened) {
         self.$f7.panel.open(side);
       } else {
-        self.$f7.panel.open(side);
+        self.$f7.panel.close(side);
       }
     },
   },
