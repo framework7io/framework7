@@ -3,6 +3,11 @@
 <table>
   <tr>
     <td align="center" valign="middle">
+      <a href="https://usave.co.uk/utilities/broadband" target="_blank">
+        <img width="160" src="https://cdn.framework7.io/i/sponsors/usave.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://unlikelyit.com/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/unlikely-it.png">
       </a>
@@ -22,13 +27,14 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/cyberbrain.png">
       </a>
     </td>
+
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://hicapps.cl/web/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/hicapps.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://edubirdie.com/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/birdie.png">
@@ -49,14 +55,13 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://app-valley.vip/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/appvalley.jpg">
       </a>
     </td>
-
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.securcom.me/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/securcom.png">
@@ -67,7 +72,6 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/tommy.png">
       </a>
     </td>
-    <td></td>
     <td></td>
     <td></td>
   </tr>
@@ -104,6 +108,7 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 ---
 
 ### $50+ Top Supporter
+[usave](https://usave.co.uk/utilities/broadband) - compare broadband deals on usave.co.uk<br>
 [Unlikely IT](https://unlikelyit.com/) - Making I.T. a little more human<br>
 [Kidoverse](https://kidoverse.app) - App for kids to learn, play, create and explore<br>
 [CyberBrain IT Services](https://www.cyberbrain.nl/)<br>
