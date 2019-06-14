@@ -1,7 +1,6 @@
 /* eslint array-callback-return: "off" */
 /* eslint consistent-return: "off" */
 import f7 from '../utils/f7';
-import events from '../utils/events';
 
 export default {
   name: 'f7-routable-modals',
@@ -32,7 +31,7 @@ export default {
   componentDidUpdate() {
     const self = this;
     if (!self.routerData) return;
-    events.emit('modalsRouterDidUpdate', self.routerData);
+    f7.events.emit('modalsRouterDidUpdate', self.routerData);
   },
   componentWillUnmount() {
     const self = this;
@@ -44,10 +43,13 @@ export default {
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
-    self.setState({ modals: [] });
     self.routerData = {
+      modals: self.state.modals,
       el,
       component: self,
+      setModals(modals) {
+        self.setState({ modals });
+      },
     };
     f7.routers.modals = self.routerData;
   },

@@ -22,11 +22,6 @@ export default {
     */
     ...Mixins.colorProps,
   },
-  state() {
-    return {
-      modals: [],
-    };
-  },
   render() {
     const self = this;
     const props = self.props;

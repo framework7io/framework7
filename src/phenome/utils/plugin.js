@@ -13,6 +13,7 @@ const Plugin = {
 
     const Framework7 = this;
     f7.Framework7 = Framework7;
+    f7.events = new Framework7.Events();
 
     const Extend = EXTEND; // eslint-disable-line
 

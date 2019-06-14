@@ -1,6 +1,5 @@
 /* eslint array-callback-return: "off" */
 /* eslint consistent-return: "off" */
-import events from '../utils/events';
 import f7 from '../utils/f7';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
@@ -65,7 +64,7 @@ export default {
   componentDidUpdate() {
     const self = this;
     if (!self.routerData) return;
-    events.emit('tabRouterDidUpdate', self.routerData);
+    f7.events.emit('tabRouterDidUpdate', self.routerData);
   },
   componentWillUnmount() {
     const self = this;
@@ -93,6 +92,9 @@ export default {
       self.routerData = {
         el,
         component: self,
+        setTabContent(tabContent) {
+          self.setState({ tabContent });
+        },
       };
       f7.routers.tabs.push(self.routerData);
     });
