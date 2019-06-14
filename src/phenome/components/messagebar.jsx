@@ -116,6 +116,9 @@ export default {
       });
     }
 
+    const valueProps = {};
+    if ('value' in self.props) valueProps.value = value;
+
     return (
       <div ref="el" id={id} style={style} className={self.classes}>
         {slotsBeforeInner}
@@ -133,11 +136,11 @@ export default {
               name={name}
               readonly={readonly}
               resizable={resizable}
-              value={value}
               onInput={self.onInput}
               onChange={self.onChange}
               onFocus={self.onFocus}
               onBlur={self.onBlur}
+              {...valueProps}
             />
             {slotsAfterArea}
           </div>
