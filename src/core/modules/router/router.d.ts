@@ -93,6 +93,8 @@ export namespace Router {
     master?: boolean
     /** Detail routes this master route */
     detailRoutes?: RouteParameters[]
+    /** Route page events */
+    on? : { [event : string] : (e: Event, page: any) => void }
   }
   interface RouteOptions {
     /** whether the page should be animated or not (overwrites default router settings) */
