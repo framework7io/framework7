@@ -145,7 +145,7 @@ const CardExpandable = {
       $cardEl.addClass('card-opened');
       $cardEl.removeClass('card-opening');
       $cardEl.trigger('card:opened');
-      app.emit('cardOpened', $cardEl[0]);
+      app.emit('cardOpened', $cardEl[0], $pageEl[0]);
     }
     $cardContentEl
       .css({
@@ -374,7 +374,7 @@ const CardExpandable = {
       $cardEl.removeClass('card-closing card-no-transition');
       $cardEl.trigger('card:closed');
       $cardEl.find('.card-expandable-size').remove();
-      app.emit('cardClosed', $cardEl[0]);
+      app.emit('cardClosed', $cardEl[0], $pageEl[0]);
     }
     $cardContentEl
       .css({
