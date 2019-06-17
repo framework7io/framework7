@@ -133,9 +133,9 @@ export namespace Router {
     /** route path */
     path : string
     /** object with route query. If the url is `/page/?id=5&foo=bar` then it will contain the following object `{id: '5', foo: 'bar'}` */
-    query : { [ queryParameter : string ] : number | string | undefined }
+    query : { [ queryParameter : string ] : string | undefined }
     /** route params. If we have matching route with `/page/user/:userId/post/:postId/` path and url of the page is `/page/user/55/post/12/` then it will be the following object `{userId: '55', postId: '12'}` */
-    params : { [ routeParameter : string ] : number | string | undefined }
+    params : { [ routeParameter : string ] : string | undefined }
     /** route name */
     name : string
     /** route URL hash */
