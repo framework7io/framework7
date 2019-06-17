@@ -522,7 +522,11 @@ class Router extends Framework7Class {
         keys.forEach((keyObj, index) => {
           if (typeof keyObj.name === 'number') return;
           const paramValue = matched[index + 1];
-          params[keyObj.name] = paramValue;
+          if (typeof paramValue === 'undefined' || paramValue === null) {
+            params[keyObj.name] = paramValue;
+          } else {
+            params[keyObj.name] = decodeURIComponent(paramValue);
+          }
         });
 
         let parentPath;
