@@ -3,6 +3,11 @@
 <table>
   <tr>
     <td align="center" valign="middle">
+      <a href="https://rise.co" target="_blank">
+        <img width="160" src="https://cdn.framework7.io/i/sponsors/rise.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://usave.co.uk/utilities/broadband" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/usave.png">
       </a>
@@ -22,14 +27,14 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/kidoverse.png">
       </a>
     </td>
+
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.cyberbrain.nl/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/cyberbrain.png">
       </a>
     </td>
-
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://hicapps.cl/web/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/hicapps.png">
@@ -50,13 +55,13 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/activewaiter.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://wappler.io/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://app-valley.vip/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/appvalley.jpg">
@@ -72,7 +77,6 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/tommy.png">
       </a>
     </td>
-    <td></td>
     <td></td>
   </tr>
 </table>
@@ -108,6 +112,7 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 ---
 
 ### $50+ Top Supporter
+[Rise](https://rise.co) - Creative Web Development Agency
 [usave](https://usave.co.uk/utilities/broadband) - compare broadband deals on usave.co.uk<br>
 [Unlikely IT](https://unlikelyit.com/) - Making I.T. a little more human<br>
 [Kidoverse](https://kidoverse.app) - App for kids to learn, play, create and explore<br>
