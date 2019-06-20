@@ -112,6 +112,7 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 ---
 
 ### $50+ Top Supporter
+Vinay Samant
 [Rise](https://rise.co) - Creative Web Development Agency
 [usave](https://usave.co.uk/utilities/broadband) - compare broadband deals on usave.co.uk<br>
 [Unlikely IT](https://unlikelyit.com/) - Making I.T. a little more human<br>
