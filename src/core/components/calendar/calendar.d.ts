@@ -20,6 +20,10 @@ export namespace Calendar {
     $inputEl : Dom7Instance
     /** Array where each item represents selected date */
     value : Date[]
+    /** Calendar view current month. Number, from 0 to 11 */
+    currentMonth: number
+    /** Calendar view current year. Number, for example 2020 */
+    currentYear: number
     /** true if Calendar is currently opened */
     opened : boolean
     /** true when inline calendar is in use */
