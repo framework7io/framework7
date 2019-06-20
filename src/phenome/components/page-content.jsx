@@ -1,5 +1,6 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
+import Preloader from './preloader';
 
 export default {
   name: 'f7-page-content',
@@ -54,14 +55,14 @@ export default {
     if (ptr && (ptrPreloader)) {
       ptrEl = (
         <div className="ptr-preloader">
-          <div className="preloader" />
+          <Preloader />
           <div className="ptr-arrow" />
         </div>
       );
     }
     if ((infinite) && infinitePreloader) {
       infiniteEl = (
-        <div className="preloader infinite-scroll-preloader" />
+        <Preloader className="infinite-scroll-preloader" />
       );
     }
     return (
