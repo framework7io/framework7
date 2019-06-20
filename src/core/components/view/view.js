@@ -3,28 +3,28 @@ import Utils from '../../utils/utils';
 import View from './view-class';
 
 function getCurrentView(app) {
-  const popoverView = $('.popover.modal-in .view');
-  const popupView = $('.popup.modal-in .view');
-  const panelView = $('.panel.panel-active .view');
-  let appViews = $('.views');
-  if (appViews.length === 0) appViews = app.root;
+  const $popoverView = $('.popover.modal-in .view');
+  const $popupView = $('.popup.modal-in .view');
+  const $panelView = $('.panel.panel-active .view');
+  let $viewsEl = $('.views');
+  if ($viewsEl.length === 0) $viewsEl = app.root;
   // Find active view as tab
-  let appView = appViews.children('.view');
+  let $viewEl = $viewsEl.children('.view');
   // Propably in tabs or split view
-  if (appView.length > 1) {
-    if (appView.hasClass('tab')) {
+  if ($viewEl.length > 1) {
+    if ($viewEl.hasClass('tab')) {
       // Tabs
-      appView = appViews.children('.view.tab-active');
+      $viewEl = $viewEl.children('.view.tab-active');
     } else {
       // Split View, leave appView intact
     }
   }
-  if (popoverView.length > 0 && popoverView[0].f7View) return popoverView[0].f7View;
-  if (popupView.length > 0 && popupView[0].f7View) return popupView[0].f7View;
-  if (panelView.length > 0 && panelView[0].f7View) return panelView[0].f7View;
-  if (appView.length > 0) {
-    if (appView.length === 1 && appView[0].f7View) return appView[0].f7View;
-    if (appView.length > 1) {
+  if ($popoverView.length > 0 && $popoverView[0].f7View) return $popoverView[0].f7View;
+  if ($popupView.length > 0 && $popupView[0].f7View) return $popupView[0].f7View;
+  if ($panelView.length > 0 && $panelView[0].f7View) return $panelView[0].f7View;
+  if ($viewEl.length > 0) {
+    if ($viewEl.length === 1 && $viewEl[0].f7View) return $viewEl[0].f7View;
+    if ($viewEl.length > 1) {
       return app.views.main;
     }
   }
