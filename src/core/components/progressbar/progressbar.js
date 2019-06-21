@@ -136,4 +136,18 @@ export default {
       });
     },
   },
+  vnode: {
+    progressbar: {
+      insert(vnode) {
+        const app = this;
+        const el = vnode.elm;
+        app.progressbar.set(el, el.getAttribute('data-progress'));
+      },
+      update(vnode) {
+        const app = this;
+        const el = vnode.elm;
+        app.progressbar.set(el, el.getAttribute('data-progress'));
+      },
+    },
+  },
 };
