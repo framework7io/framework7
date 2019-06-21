@@ -802,6 +802,8 @@ function navigate(navigateParams, navigateOptions = {}) {
         reloadAll: navigateOptions.reloadAll,
         reloadCurrent: navigateOptions.reloadCurrent,
         reloadPrevious: navigateOptions.reloadPrevious,
+        pushState: !navigateOptions.initial,
+        history: !navigateOptions.initial,
         once: {
           pageAfterIn() {
             router.navigate(navigateParams, Utils.extend({}, navigateOptions, {
@@ -809,6 +811,8 @@ function navigate(navigateParams, navigateOptions = {}) {
               reloadAll: false,
               reloadCurrent: false,
               reloadPrevious: false,
+              history: !navigateOptions.initial,
+              pushState: !navigateOptions.initial,
             }));
           },
         },

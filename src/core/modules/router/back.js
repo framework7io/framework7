@@ -16,6 +16,7 @@ function backward(el, backwardOptions) {
   const options = Utils.extend({
     animate: router.params.animate,
     pushState: true,
+    replaceState: false,
   }, backwardOptions);
 
   const masterDetailEnabled = router.params.masterDetailBreakpoint > 0;
@@ -91,6 +92,10 @@ function backward(el, backwardOptions) {
     isDetail = !isMaster
       && masterPageEl
       && (router.history.indexOf(options.route.url) > router.history.indexOf(masterPageEl.f7Page.route.url));
+
+    if (!isDetail && !isMaster && masterPageEl && masterPageEl.f7Page && options.route.route.masterRoute) {
+      isDetail = options.route.route.masterRoute.path === masterPageEl.f7Page.route.route.path;
+    }
   }
 
 
@@ -266,16 +271,32 @@ function backward(el, backwardOptions) {
   // History State
   if (!(Device.ie || Device.edge || (Device.firefox && !Device.ios))) {
     if (router.params.pushState && options.pushState) {
-      if (backIndex) History.go(-backIndex);
-      else History.back();
+      if (options.replaceState) {
+        const pushStateRoot = router.params.pushStateRoot || '';
+        History.replace(
+          view.id,
+          {
+            url: options.route.url,
+          },
+          pushStateRoot + router.params.pushStateSeparator + options.route.url
+        );
+      } else if (backIndex) {
+        History.go(-backIndex);
+      } else {
+        History.back();
+      }
     }
   }
 
   // Update History
-  if (router.history.length === 1) {
-    router.history.unshift(router.url);
+  if (options.replaceState) {
+    router.history[router.history.length - 1] = options.route.url;;
+  } else {
+    if (router.history.length === 1) {
+      router.history.unshift(router.url);
+    }
+    router.history.pop();
   }
-  router.history.pop();
   router.saveHistory();
 
   // Current Page & Navbar
@@ -292,8 +313,20 @@ function backward(el, backwardOptions) {
   // History State
   if (Device.ie || Device.edge || (Device.firefox && !Device.ios)) {
     if (router.params.pushState && options.pushState) {
-      if (backIndex) History.go(-backIndex);
-      else History.back();
+      if (options.replaceState) {
+        const pushStateRoot = router.params.pushStateRoot || '';
+        History.replace(
+          view.id,
+          {
+            url: options.route.url,
+          },
+          pushStateRoot + router.params.pushStateSeparator + options.route.url
+        );
+      } else if (backIndex) {
+        History.go(-backIndex);
+      } else {
+        History.back();
+      }
     }
   }
 
