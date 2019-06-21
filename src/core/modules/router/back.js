@@ -290,7 +290,7 @@ function backward(el, backwardOptions) {
 
   // Update History
   if (options.replaceState) {
-    router.history[router.history.length - 1] = options.route.url;;
+    router.history[router.history.length - 1] = options.route.url;
   } else {
     if (router.history.length === 1) {
       router.history.unshift(router.url);
