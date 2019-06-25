@@ -47,6 +47,10 @@ export namespace View {
     preloadPreviousPage?: boolean
     /**	When enabled, View will always reload currently active page without loading new one */
     reloadPages?: boolean
+    /** When enabled it will reload every detail page when navigating (by default false) */
+    reloadDetail?: boolean
+    /** Minimum app width to enable Master Detail view for master routes (routes with master: true parameter) */
+    masterDetailBreakpoint?: number
     /**	When enabled it will restore page scroll top when you get back to this page */
     restoreScrollTopOnBack?: boolean
     /**	Delay (in ms) after new page will be loaded and inserted to DOM and before it will be transitioned. Can be increased a bit to improve performance. Will have effect only under iOS theme */
