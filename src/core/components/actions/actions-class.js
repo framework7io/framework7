@@ -29,9 +29,9 @@ class Actions extends Modal {
     // Find Element
     let $el;
     if (actions.params.el) {
-      $el = $(actions.params.el);
+      $el = $(actions.params.el).eq(0);
     } else if (actions.params.content) {
-      $el = $(actions.params.content);
+      $el = $(actions.params.content).filter((elIndex, node) => node.nodeType === 1).eq(0);
     } else if (actions.params.buttons) {
       if (actions.params.convertToPopover) {
         actions.popoverHtml = actions.renderPopover();

@@ -18,9 +18,9 @@ class LoginScreen extends Modal {
     // Find Element
     let $el;
     if (!loginScreen.params.el) {
-      $el = $(loginScreen.params.content);
+      $el = $(loginScreen.params.content).filter((elIndex, node) => node.nodeType === 1).eq(0);
     } else {
-      $el = $(loginScreen.params.el);
+      $el = $(loginScreen.params.el).eq(0);
     }
 
     if ($el && $el.length > 0 && $el[0].f7Modal) {
