@@ -5,7 +5,7 @@
 # [v4.4.5](https://github.com/framework7io/framework7/compare/v4.4.3...v4.4.5) - June 27, 2019
   * Core
     * Router
-      * Improved Mater-Detail behavior with `pushState` enabled
+      * Improved Master-Detail behavior with `pushState` enabled
       * Fixed issue when routable modal template contains comments before actual template
       * Route `params` now url-decoded
     * Router Component
