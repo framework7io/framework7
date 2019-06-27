@@ -1,4 +1,3 @@
-import events from '../utils/events';
 import f7 from '../utils/f7';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
@@ -64,7 +63,7 @@ export default {
   updated() {
     const self = this;
     if (!self.routerData) return;
-    events.emit('tabRouterDidUpdate', self.routerData);
+    f7.events.emit('tabRouterDidUpdate', self.routerData);
   },
 
   beforeDestroy() {
@@ -97,7 +96,14 @@ export default {
     self.$f7ready(() => {
       self.routerData = {
         el,
-        component: self
+        component: self,
+
+        setTabContent(tabContent) {
+          self.setState({
+            tabContent
+          });
+        }
+
       };
       f7.routers.tabs.push(self.routerData);
     });

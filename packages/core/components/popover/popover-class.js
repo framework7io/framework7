@@ -20,9 +20,9 @@ class Popover extends Modal {
     // Find Element
     let $el;
     if (!popover.params.el) {
-      $el = $(popover.params.content);
+      $el = $(popover.params.content).filter((elIndex, node) => node.nodeType === 1).eq(0);
     } else {
-      $el = $(popover.params.el);
+      $el = $(popover.params.el).eq(0);
     }
 
     if ($el && $el.length > 0 && $el[0].f7Modal) {

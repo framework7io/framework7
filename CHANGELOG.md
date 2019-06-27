@@ -2,6 +2,19 @@
 
 # Change Log
 
+# [v4.4.5](https://github.com/framework7io/framework7/compare/v4.4.3...v4.4.5) - June 27, 2019
+  * Core
+    * Router
+      * Improved Mater-Detail behavior with `pushState` enabled
+      * Fixed issue when routable modal template contains comments before actual template
+      * Route `params` now url-decoded
+    * Router Component
+      * Fixed issue when Progressbar progress wasn't updated with `$setState`
+  * Phenome
+    * Page
+      * Fixed issue with not correctly rendered preloader when infinite or ptr preloader property set dynamically
+  * Minor tweaks and fixes
+
 # [v4.4.3](https://github.com/framework7io/framework7/compare/v4.4.0...v4.4.3) - June 4, 2019
   * Core
     * Color Picker

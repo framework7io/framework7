@@ -1,5 +1,4 @@
 import f7 from '../utils/f7';
-import events from '../utils/events';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentSetState from '../runtime-helpers/vue-component-set-state.js';
@@ -119,49 +118,61 @@ export default {
 
   created() {
     const self = this;
-    Utils.bindMethods(this, ['onSwipeBackMove', 'onSwipeBackBeforeChange', 'onSwipeBackAfterChange', 'onSwipeBackBeforeReset', 'onSwipeBackAfterReset', 'onTabShow', 'onTabHide', 'onViewInit']);
+    Utils.bindMethods(self, ['onSwipeBackMove', 'onSwipeBackBeforeChange', 'onSwipeBackAfterChange', 'onSwipeBackBeforeReset', 'onSwipeBackAfterReset', 'onTabShow', 'onTabHide', 'onViewInit']);
   },
 
   mounted() {
     const self = this;
     const el = self.$refs.el;
-    el.addEventListener('swipeback:move', self.onSwipeBackMove);
-    el.addEventListener('swipeback:beforechange', self.onSwipeBackBeforeChange);
-    el.addEventListener('swipeback:afterchange', self.onSwipeBackAfterChange);
-    el.addEventListener('swipeback:beforereset', self.onSwipeBackBeforeReset);
-    el.addEventListener('swipeback:afterreset', self.onSwipeBackAfterReset);
-    el.addEventListener('tab:show', self.onTabShow);
-    el.addEventListener('tab:hide', self.onTabHide);
-    el.addEventListener('view:init', self.onViewInit);
-    self.setState({
-      pages: []
-    });
     self.$f7ready(f7Instance => {
+      f7Instance.on('tabShow', self.onTabShow);
+      f7Instance.on('tabHide', self.onTabHide);
       self.routerData = {
         el,
         component: self,
-        instance: null
+        pages: self.state.pages,
+        instance: null,
+
+        setPages(pages) {
+          self.setState({
+            pages
+          });
+        }
+
       };
       f7.routers.views.push(self.routerData);
       if (!self.props.init) return;
-      self.routerData.instance = f7Instance.views.create(el, Utils.noUndefinedProps(self.$options.propsData || {}));
+      self.routerData.instance = f7Instance.views.create(el, Object.assign({
+        on: {
+          init: self.onViewInit
+        }
+      }, Utils.noUndefinedProps(self.$options.propsData || {})));
       self.f7View = self.routerData.instance;
+      self.f7View.on('swipebackMove', self.onSwipeBackMove);
+      self.f7View.on('swipebackBeforeChange', self.onSwipeBackBeforeChange);
+      self.f7View.on('swipebackAfterChange', self.onSwipeBackAfterChange);
+      self.f7View.on('swipebackBeforeReset', self.onSwipeBackBeforeReset);
+      self.f7View.on('swipebackAfterReset', self.onSwipeBackAfterReset);
     });
   },
 
   beforeDestroy() {
     const self = this;
-    const el = self.$refs.el;
-    el.removeEventListener('swipeback:move', self.onSwipeBackMove);
-    el.removeEventListener('swipeback:beforechange', self.onSwipeBackBeforeChange);
-    el.removeEventListener('swipeback:afterchange', self.onSwipeBackAfterChange);
-    el.removeEventListener('swipeback:beforereset', self.onSwipeBackBeforeReset);
-    el.removeEventListener('swipeback:afterreset', self.onSwipeBackAfterReset);
-    el.removeEventListener('tab:show', self.onTabShow);
-    el.removeEventListener('tab:hide', self.onTabHide);
-    el.removeEventListener('view:init', self.onViewInit);
-    if (!self.props.init) return;
-    if (self.f7View && self.f7View.destroy) self.f7View.destroy();
+
+    if (f7.instance) {
+      f7.instance.off('tabShow', self.onTabShow);
+      f7.instance.off('tabHide', self.onTabHide);
+    }
+
+    if (self.f7View) {
+      self.f7View.off('swipebackMove', self.onSwipeBackMove);
+      self.f7View.off('swipebackBeforeChange', self.onSwipeBackBeforeChange);
+      self.f7View.off('swipebackAfterChange', self.onSwipeBackAfterChange);
+      self.f7View.off('swipebackBeforeReset', self.onSwipeBackBeforeReset);
+      self.f7View.off('swipebackAfterReset', self.onSwipeBackAfterReset);
+      if (self.f7View.destroy) self.f7View.destroy();
+    }
+
     f7.routers.views.splice(f7.routers.views.indexOf(self.routerData), 1);
     self.routerData = null;
     delete self.routerData;
@@ -170,14 +181,13 @@ export default {
   updated() {
     const self = this;
     if (!self.routerData) return;
-    events.emit('viewRouterDidUpdate', self.routerData);
+    f7.events.emit('viewRouterDidUpdate', self.routerData);
   },
 
   methods: {
-    onViewInit(event) {
+    onViewInit(view) {
       const self = this;
-      const view = event.detail;
-      self.dispatchEvent('view:init viewInit', event, view);
+      self.dispatchEvent('view:init viewInit', view);
 
       if (!self.props.init) {
         self.routerData.instance = view;
@@ -185,37 +195,41 @@ export default {
       }
     },
 
-    onSwipeBackMove(event) {
-      const swipeBackData = event.detail;
-      this.dispatchEvent('swipeback:move swipeBackMove', event, swipeBackData);
+    onSwipeBackMove(data) {
+      const swipeBackData = data;
+      this.dispatchEvent('swipeback:move swipeBackMove', swipeBackData);
     },
 
-    onSwipeBackBeforeChange(event) {
-      const swipeBackData = event.detail;
-      this.dispatchEvent('swipeback:beforechange swipeBackBeforeChange', event, swipeBackData);
+    onSwipeBackBeforeChange(data) {
+      const swipeBackData = data;
+      this.dispatchEvent('swipeback:beforechange swipeBackBeforeChange', swipeBackData);
     },
 
-    onSwipeBackAfterChange(event) {
-      const swipeBackData = event.detail;
-      this.dispatchEvent('swipeback:afterchange swipeBackAfterChange', event, swipeBackData);
+    onSwipeBackAfterChange(data) {
+      const swipeBackData = data;
+      this.dispatchEvent('swipeback:afterchange swipeBackAfterChange', swipeBackData);
     },
 
-    onSwipeBackBeforeReset(event) {
-      const swipeBackData = event.detail;
-      this.dispatchEvent('swipeback:beforereset swipeBackBeforeReset', event, swipeBackData);
+    onSwipeBackBeforeReset(data) {
+      const swipeBackData = data;
+      this.dispatchEvent('swipeback:beforereset swipeBackBeforeReset', swipeBackData);
     },
 
-    onSwipeBackAfterReset(event) {
-      const swipeBackData = event.detail;
-      this.dispatchEvent('swipeback:afterreset swipeBackAfterReset', event, swipeBackData);
+    onSwipeBackAfterReset(data) {
+      const swipeBackData = data;
+      this.dispatchEvent('swipeback:afterreset swipeBackAfterReset', swipeBackData);
     },
 
-    onTabShow(event) {
-      this.dispatchEvent('tab:show tabShow', event);
+    onTabShow(el) {
+      if (el === this.$refs.el) {
+        this.dispatchEvent('tab:show tabShow');
+      }
     },
 
-    onTabHide(event) {
-      this.dispatchEvent('tab:hide tabHide', event);
+    onTabHide(el) {
+      if (el === this.$refs.el) {
+        this.dispatchEvent('tab:hide tabHide');
+      }
     },
 
     dispatchEvent(events, ...args) {

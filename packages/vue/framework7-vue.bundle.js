@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.4.3
+ * Framework7 Vue 4.4.5
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 4, 2019
+ * Released on: June 27, 2019
  */
 
 (function (global, factory) {
@@ -912,76 +912,28 @@
     }
   };
 
-  var eventsEmitter = {
-    listeners: {},
-    on: function on(events, handler) {
-      events.split(' ').forEach(function (event) {
-        if (!eventsEmitter.listeners[event]) { eventsEmitter.listeners[event] = []; }
-        eventsEmitter.listeners[event].unshift(handler);
-      });
-    },
-    off: function off(events, handler) {
-      events.split(' ').forEach(function (event) {
-        if (!eventsEmitter.listeners[event]) { return; }
-        if (typeof handler === 'undefined') {
-          eventsEmitter.listeners[event] = [];
-        } else {
-          eventsEmitter.listeners[event].forEach(function (eventHandler, index) {
-            if (eventHandler === handler) {
-              eventsEmitter.listeners[event].splice(index, 1);
-            }
-          });
-        }
-      });
-    },
-    once: function once(events, handler) {
-      if (typeof handler !== 'function') { return; }
-      function onceHandler() {
-        var args = [], len = arguments.length;
-        while ( len-- ) args[ len ] = arguments[ len ];
-
-        handler.apply(void 0, args);
-        eventsEmitter.off(events, onceHandler);
-      }
-      eventsEmitter.on(events, onceHandler);
-    },
-    emit: function emit(events) {
-      var args = [], len = arguments.length - 1;
-      while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-
-      events.split(' ').forEach(function (event) {
-        if (eventsEmitter.listeners && eventsEmitter.listeners[event]) {
-          var handlers = [];
-          eventsEmitter.listeners[event].forEach(function (eventHandler) {
-            handlers.push(eventHandler);
-          });
-          handlers.forEach(function (eventHandler) {
-            eventHandler.apply(void 0, args);
-          });
-        }
-      });
-    },
-  };
-
   var f7 = {
     instance: null,
     Framework7: null,
+    events: null,
     init: function init(rootEl, params, routes) {
       if ( params === void 0 ) params = {};
 
+      var events = f7.events;
+      var Framework7 = f7.Framework7;
       var f7Params = Utils.extend({}, params, {
         root: rootEl,
       });
       if (routes && routes.length && !f7Params.routes) { f7Params.routes = routes; }
 
-      var instance = new f7.Framework7(f7Params);
+      var instance = new Framework7(f7Params);
       if (instance.initialized) {
         f7.instance = instance;
-        eventsEmitter.emit('ready', f7.instance);
+        events.emit('ready', f7.instance);
       } else {
         instance.on('init', function () {
           f7.instance = instance;
-          eventsEmitter.emit('ready', f7.instance);
+          events.emit('ready', f7.instance);
         });
       }
     },
@@ -989,7 +941,7 @@
       if (!callback) { return; }
       if (f7.instance) { callback(f7.instance); }
       else {
-        eventsEmitter.once('ready', callback);
+        f7.events.once('ready', callback);
       }
     },
     routers: {
@@ -1047,7 +999,7 @@
     updated: function updated() {
       var self = this;
       if (!self.routerData) { return; }
-      eventsEmitter.emit('modalsRouterDidUpdate', self.routerData);
+      f7.events.emit('modalsRouterDidUpdate', self.routerData);
     },
 
     beforeDestroy: function beforeDestroy() {
@@ -1061,12 +1013,17 @@
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
-      self.setState({
-        modals: []
-      });
       self.routerData = {
+        modals: self.state.modals,
         el: el,
-        component: self
+        component: self,
+
+        setModals: function setModals(modals) {
+          self.setState({
+            modals: modals
+          });
+        }
+
       };
       f7.routers.modals = self.routerData;
     },
@@ -1086,20 +1043,6 @@
       params: Object,
       routes: Array
     }, Mixins.colorProps),
-
-    data: function data() {
-      var props = __vueComponentProps(this);
-
-      var state = (function () {
-        return {
-          modals: []
-        };
-      })();
-
-      return {
-        state: state
-      };
-    },
 
     render: function render() {
       var _h = this.$createElement;
@@ -7095,6 +7038,8 @@
         });
       }
 
+      var valueProps = {};
+      if ('value' in self.props) { valueProps.value = value; }
       return _h('div', {
         ref: 'el',
         style: style,
@@ -7106,8 +7051,9 @@
         class: 'toolbar-inner'
       }, [slotsInnerStart, _h('div', {
         class: 'messagebar-area'
-      }, [slotsBeforeArea, messagebarAttachmentsEl, _h(f7Input, {
-        ref: 'area',
+      }, [slotsBeforeArea, messagebarAttachmentsEl, _h(f7Input, __vueComponentTransformJSXProps(Object.assign({
+        ref: 'area'
+      }, valueProps, {
         on: {
           input: self.onInput,
           change: self.onChange,
@@ -7121,10 +7067,9 @@
           disabled: disabled,
           name: name,
           readonly: readonly,
-          resizable: resizable,
-          value: value
+          resizable: resizable
         }
-      }), slotsAfterArea]), (sendLink && sendLink.length > 0 || slotsSendLink) && _h(f7Link, {
+      }))), slotsAfterArea]), (sendLink && sendLink.length > 0 || slotsSendLink) && _h(f7Link, {
         on: {
           click: self.onClick
         }
@@ -8132,6 +8077,110 @@
     }
   };
 
+  var f7Preloader = {
+    name: 'f7-preloader',
+    props: Object.assign({
+      id: [String, Number],
+      size: [Number, String]
+    }, Mixins.colorProps),
+
+    render: function render() {
+      var _h = this.$createElement;
+      var self = this;
+      var sizeComputed = self.sizeComputed;
+      var props = self.props;
+      var id = props.id;
+      var style = props.style;
+      var className = props.className;
+      var preloaderStyle = {};
+
+      if (sizeComputed) {
+        preloaderStyle.width = sizeComputed + "px";
+        preloaderStyle.height = sizeComputed + "px";
+        preloaderStyle['--f7-preloader-size'] = sizeComputed + "px";
+      }
+
+      if (style) { Utils.extend(preloaderStyle, style || {}); }
+      var innerEl;
+
+      if (self.$theme.md) {
+        innerEl = _h('span', {
+          class: 'preloader-inner'
+        }, [_h('span', {
+          class: 'preloader-inner-gap'
+        }), _h('span', {
+          class: 'preloader-inner-left'
+        }, [_h('span', {
+          class: 'preloader-inner-half-circle'
+        })]), _h('span', {
+          class: 'preloader-inner-right'
+        }, [_h('span', {
+          class: 'preloader-inner-half-circle'
+        })])]);
+      } else if (self.$theme.ios) {
+        innerEl = _h('span', {
+          class: 'preloader-inner'
+        }, [_h('span', {
+          class: 'preloader-inner-line'
+        }), _h('span', {
+          class: 'preloader-inner-line'
+        }), _h('span', {
+          class: 'preloader-inner-line'
+        }), _h('span', {
+          class: 'preloader-inner-line'
+        }), _h('span', {
+          class: 'preloader-inner-line'
+        }), _h('span', {
+          class: 'preloader-inner-line'
+        }), _h('span', {
+          class: 'preloader-inner-line'
+        }), _h('span', {
+          class: 'preloader-inner-line'
+        }), _h('span', {
+          class: 'preloader-inner-line'
+        }), _h('span', {
+          class: 'preloader-inner-line'
+        }), _h('span', {
+          class: 'preloader-inner-line'
+        }), _h('span', {
+          class: 'preloader-inner-line'
+        })]);
+      } else if (self.$theme.aurora) {
+        innerEl = _h('span', {
+          class: 'preloader-inner'
+        }, [_h('span', {
+          class: 'preloader-inner-circle'
+        })]);
+      }
+
+      var classes = Utils.classNames(className, 'preloader', Mixins.colorClasses(props));
+      return _h('span', {
+        style: preloaderStyle,
+        class: classes,
+        attrs: {
+          id: id
+        }
+      }, [innerEl]);
+    },
+
+    computed: {
+      sizeComputed: function sizeComputed() {
+        var s = this.props.size;
+
+        if (s && typeof s === 'string' && s.indexOf('px') >= 0) {
+          s = s.replace('px', '');
+        }
+
+        return s;
+      },
+
+      props: function props() {
+        return __vueComponentProps(this);
+      }
+
+    }
+  };
+
   var f7PageContent = {
     name: 'f7-page-content',
     props: Object.assign({
@@ -8181,16 +8230,14 @@
       if (ptr && ptrPreloader) {
         ptrEl = _h('div', {
           class: 'ptr-preloader'
-        }, [_h('div', {
-          class: 'preloader'
-        }), _h('div', {
+        }, [_h(f7Preloader), _h('div', {
           class: 'ptr-arrow'
         })]);
       }
 
       if (infinite && infinitePreloader) {
-        infiniteEl = _h('div', {
-          class: 'preloader infinite-scroll-preloader'
+        infiniteEl = _h(f7Preloader, {
+          class: 'infinite-scroll-preloader'
         });
       }
 
@@ -8887,7 +8934,7 @@
         if (opened) {
           self.$f7.panel.open(side);
         } else {
-          self.$f7.panel.open(side);
+          self.$f7.panel.close(side);
         }
       }
     },
@@ -8906,19 +8953,6 @@
       var left = ref.left;
       var reveal = ref.reveal;
       var resizable = ref.resizable;
-
-      if (el) {
-        el.addEventListener('panel:open', self.onOpen);
-        el.addEventListener('panel:opened', self.onOpened);
-        el.addEventListener('panel:close', self.onClose);
-        el.addEventListener('panel:closed', self.onClosed);
-        el.addEventListener('panel:backdrop-click', self.onBackdropClick);
-        el.addEventListener('panel:swipe', self.onPanelSwipe);
-        el.addEventListener('panel:swipeopen', self.onPanelSwipeOpen);
-        el.addEventListener('panel:breakpoint', self.onBreakpoint);
-        el.addEventListener('panel:resize', self.onResize);
-      }
-
       self.$f7ready(function () {
         var $ = self.$$;
         if (!$) { return; }
@@ -8929,7 +8963,18 @@
 
         self.f7Panel = self.$f7.panel.create({
           el: el,
-          resizable: resizable
+          resizable: resizable,
+          on: {
+            open: self.onOpen,
+            opened: self.onOpened,
+            close: self.onClose,
+            closed: self.onClosed,
+            backdropClick: self.onBackdropClick,
+            swipe: self.onPanelSwipe,
+            swipeOpen: self.onPanelSwipeOpen,
+            breakpoint: self.onBreakpoint,
+            resize: self.onResize
+          }
         });
       });
 
@@ -8949,18 +8994,10 @@
 
     beforeDestroy: function beforeDestroy() {
       var self = this;
-      if (self.f7Panel) { self.f7Panel.destroy(); }
-      var el = self.$refs.el;
-      if (!el) { return; }
-      el.removeEventListener('panel:open', self.onOpen);
-      el.removeEventListener('panel:opened', self.onOpened);
-      el.removeEventListener('panel:close', self.onClose);
-      el.removeEventListener('panel:closed', self.onClosed);
-      el.removeEventListener('panel:backdrop-click', self.onBackdropClick);
-      el.removeEventListener('panel:swipe', self.onPanelSwipe);
-      el.removeEventListener('panel:swipeopen', self.onPanelSwipeOpen);
-      el.removeEventListener('panel:breakpoint', self.onBreakpoint);
-      el.removeEventListener('panel:resize', self.onResize);
+
+      if (self.f7Panel) {
+        self.f7Panel.destroy();
+      }
     },
 
     methods: {
@@ -9488,110 +9525,6 @@
 
     },
     computed: {
-      props: function props() {
-        return __vueComponentProps(this);
-      }
-
-    }
-  };
-
-  var f7Preloader = {
-    name: 'f7-preloader',
-    props: Object.assign({
-      id: [String, Number],
-      size: [Number, String]
-    }, Mixins.colorProps),
-
-    render: function render() {
-      var _h = this.$createElement;
-      var self = this;
-      var sizeComputed = self.sizeComputed;
-      var props = self.props;
-      var id = props.id;
-      var style = props.style;
-      var className = props.className;
-      var preloaderStyle = {};
-
-      if (sizeComputed) {
-        preloaderStyle.width = sizeComputed + "px";
-        preloaderStyle.height = sizeComputed + "px";
-        preloaderStyle['--f7-preloader-size'] = sizeComputed + "px";
-      }
-
-      if (style) { Utils.extend(preloaderStyle, style || {}); }
-      var innerEl;
-
-      if (self.$theme.md) {
-        innerEl = _h('span', {
-          class: 'preloader-inner'
-        }, [_h('span', {
-          class: 'preloader-inner-gap'
-        }), _h('span', {
-          class: 'preloader-inner-left'
-        }, [_h('span', {
-          class: 'preloader-inner-half-circle'
-        })]), _h('span', {
-          class: 'preloader-inner-right'
-        }, [_h('span', {
-          class: 'preloader-inner-half-circle'
-        })])]);
-      } else if (self.$theme.ios) {
-        innerEl = _h('span', {
-          class: 'preloader-inner'
-        }, [_h('span', {
-          class: 'preloader-inner-line'
-        }), _h('span', {
-          class: 'preloader-inner-line'
-        }), _h('span', {
-          class: 'preloader-inner-line'
-        }), _h('span', {
-          class: 'preloader-inner-line'
-        }), _h('span', {
-          class: 'preloader-inner-line'
-        }), _h('span', {
-          class: 'preloader-inner-line'
-        }), _h('span', {
-          class: 'preloader-inner-line'
-        }), _h('span', {
-          class: 'preloader-inner-line'
-        }), _h('span', {
-          class: 'preloader-inner-line'
-        }), _h('span', {
-          class: 'preloader-inner-line'
-        }), _h('span', {
-          class: 'preloader-inner-line'
-        }), _h('span', {
-          class: 'preloader-inner-line'
-        })]);
-      } else if (self.$theme.aurora) {
-        innerEl = _h('span', {
-          class: 'preloader-inner'
-        }, [_h('span', {
-          class: 'preloader-inner-circle'
-        })]);
-      }
-
-      var classes = Utils.classNames(className, 'preloader', Mixins.colorClasses(props));
-      return _h('span', {
-        style: preloaderStyle,
-        class: classes,
-        attrs: {
-          id: id
-        }
-      }, [innerEl]);
-    },
-
-    computed: {
-      sizeComputed: function sizeComputed() {
-        var s = this.props.size;
-
-        if (s && typeof s === 'string' && s.indexOf('px') >= 0) {
-          s = s.replace('px', '');
-        }
-
-        return s;
-      },
-
       props: function props() {
         return __vueComponentProps(this);
       }
@@ -11365,7 +11298,7 @@
     updated: function updated() {
       var self = this;
       if (!self.routerData) { return; }
-      eventsEmitter.emit('tabRouterDidUpdate', self.routerData);
+      f7.events.emit('tabRouterDidUpdate', self.routerData);
     },
 
     beforeDestroy: function beforeDestroy() {
@@ -11398,7 +11331,14 @@
       self.$f7ready(function () {
         self.routerData = {
           el: el,
-          component: self
+          component: self,
+
+          setTabContent: function setTabContent(tabContent) {
+            self.setState({
+              tabContent: tabContent
+            });
+          }
+
         };
         f7.routers.tabs.push(self.routerData);
       });
@@ -11953,49 +11893,62 @@
     },
 
     created: function created() {
-      Utils.bindMethods(this, ['onSwipeBackMove', 'onSwipeBackBeforeChange', 'onSwipeBackAfterChange', 'onSwipeBackBeforeReset', 'onSwipeBackAfterReset', 'onTabShow', 'onTabHide', 'onViewInit']);
+      var self = this;
+      Utils.bindMethods(self, ['onSwipeBackMove', 'onSwipeBackBeforeChange', 'onSwipeBackAfterChange', 'onSwipeBackBeforeReset', 'onSwipeBackAfterReset', 'onTabShow', 'onTabHide', 'onViewInit']);
     },
 
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
-      el.addEventListener('swipeback:move', self.onSwipeBackMove);
-      el.addEventListener('swipeback:beforechange', self.onSwipeBackBeforeChange);
-      el.addEventListener('swipeback:afterchange', self.onSwipeBackAfterChange);
-      el.addEventListener('swipeback:beforereset', self.onSwipeBackBeforeReset);
-      el.addEventListener('swipeback:afterreset', self.onSwipeBackAfterReset);
-      el.addEventListener('tab:show', self.onTabShow);
-      el.addEventListener('tab:hide', self.onTabHide);
-      el.addEventListener('view:init', self.onViewInit);
-      self.setState({
-        pages: []
-      });
       self.$f7ready(function (f7Instance) {
+        f7Instance.on('tabShow', self.onTabShow);
+        f7Instance.on('tabHide', self.onTabHide);
         self.routerData = {
           el: el,
           component: self,
-          instance: null
+          pages: self.state.pages,
+          instance: null,
+
+          setPages: function setPages(pages) {
+            self.setState({
+              pages: pages
+            });
+          }
+
         };
         f7.routers.views.push(self.routerData);
         if (!self.props.init) { return; }
-        self.routerData.instance = f7Instance.views.create(el, Utils.noUndefinedProps(self.$options.propsData || {}));
+        self.routerData.instance = f7Instance.views.create(el, Object.assign({
+          on: {
+            init: self.onViewInit
+          }
+        }, Utils.noUndefinedProps(self.$options.propsData || {})));
         self.f7View = self.routerData.instance;
+        self.f7View.on('swipebackMove', self.onSwipeBackMove);
+        self.f7View.on('swipebackBeforeChange', self.onSwipeBackBeforeChange);
+        self.f7View.on('swipebackAfterChange', self.onSwipeBackAfterChange);
+        self.f7View.on('swipebackBeforeReset', self.onSwipeBackBeforeReset);
+        self.f7View.on('swipebackAfterReset', self.onSwipeBackAfterReset);
       });
     },
 
     beforeDestroy: function beforeDestroy() {
       var self = this;
-      var el = self.$refs.el;
-      el.removeEventListener('swipeback:move', self.onSwipeBackMove);
-      el.removeEventListener('swipeback:beforechange', self.onSwipeBackBeforeChange);
-      el.removeEventListener('swipeback:afterchange', self.onSwipeBackAfterChange);
-      el.removeEventListener('swipeback:beforereset', self.onSwipeBackBeforeReset);
-      el.removeEventListener('swipeback:afterreset', self.onSwipeBackAfterReset);
-      el.removeEventListener('tab:show', self.onTabShow);
-      el.removeEventListener('tab:hide', self.onTabHide);
-      el.removeEventListener('view:init', self.onViewInit);
-      if (!self.props.init) { return; }
-      if (self.f7View && self.f7View.destroy) { self.f7View.destroy(); }
+
+      if (f7.instance) {
+        f7.instance.off('tabShow', self.onTabShow);
+        f7.instance.off('tabHide', self.onTabHide);
+      }
+
+      if (self.f7View) {
+        self.f7View.off('swipebackMove', self.onSwipeBackMove);
+        self.f7View.off('swipebackBeforeChange', self.onSwipeBackBeforeChange);
+        self.f7View.off('swipebackAfterChange', self.onSwipeBackAfterChange);
+        self.f7View.off('swipebackBeforeReset', self.onSwipeBackBeforeReset);
+        self.f7View.off('swipebackAfterReset', self.onSwipeBackAfterReset);
+        if (self.f7View.destroy) { self.f7View.destroy(); }
+      }
+
       f7.routers.views.splice(f7.routers.views.indexOf(self.routerData), 1);
       self.routerData = null;
       delete self.routerData;
@@ -12004,14 +11957,13 @@
     updated: function updated() {
       var self = this;
       if (!self.routerData) { return; }
-      eventsEmitter.emit('viewRouterDidUpdate', self.routerData);
+      f7.events.emit('viewRouterDidUpdate', self.routerData);
     },
 
     methods: {
-      onViewInit: function onViewInit(event) {
+      onViewInit: function onViewInit(view) {
         var self = this;
-        var view = event.detail;
-        self.dispatchEvent('view:init viewInit', event, view);
+        self.dispatchEvent('view:init viewInit', view);
 
         if (!self.props.init) {
           self.routerData.instance = view;
@@ -12019,37 +11971,41 @@
         }
       },
 
-      onSwipeBackMove: function onSwipeBackMove(event) {
-        var swipeBackData = event.detail;
-        this.dispatchEvent('swipeback:move swipeBackMove', event, swipeBackData);
+      onSwipeBackMove: function onSwipeBackMove(data) {
+        var swipeBackData = data;
+        this.dispatchEvent('swipeback:move swipeBackMove', swipeBackData);
       },
 
-      onSwipeBackBeforeChange: function onSwipeBackBeforeChange(event) {
-        var swipeBackData = event.detail;
-        this.dispatchEvent('swipeback:beforechange swipeBackBeforeChange', event, swipeBackData);
+      onSwipeBackBeforeChange: function onSwipeBackBeforeChange(data) {
+        var swipeBackData = data;
+        this.dispatchEvent('swipeback:beforechange swipeBackBeforeChange', swipeBackData);
       },
 
-      onSwipeBackAfterChange: function onSwipeBackAfterChange(event) {
-        var swipeBackData = event.detail;
-        this.dispatchEvent('swipeback:afterchange swipeBackAfterChange', event, swipeBackData);
+      onSwipeBackAfterChange: function onSwipeBackAfterChange(data) {
+        var swipeBackData = data;
+        this.dispatchEvent('swipeback:afterchange swipeBackAfterChange', swipeBackData);
       },
 
-      onSwipeBackBeforeReset: function onSwipeBackBeforeReset(event) {
-        var swipeBackData = event.detail;
-        this.dispatchEvent('swipeback:beforereset swipeBackBeforeReset', event, swipeBackData);
+      onSwipeBackBeforeReset: function onSwipeBackBeforeReset(data) {
+        var swipeBackData = data;
+        this.dispatchEvent('swipeback:beforereset swipeBackBeforeReset', swipeBackData);
       },
 
-      onSwipeBackAfterReset: function onSwipeBackAfterReset(event) {
-        var swipeBackData = event.detail;
-        this.dispatchEvent('swipeback:afterreset swipeBackAfterReset', event, swipeBackData);
+      onSwipeBackAfterReset: function onSwipeBackAfterReset(data) {
+        var swipeBackData = data;
+        this.dispatchEvent('swipeback:afterreset swipeBackAfterReset', swipeBackData);
       },
 
-      onTabShow: function onTabShow(event) {
-        this.dispatchEvent('tab:show tabShow', event);
+      onTabShow: function onTabShow(el) {
+        if (el === this.$refs.el) {
+          this.dispatchEvent('tab:show tabShow');
+        }
       },
 
-      onTabHide: function onTabHide(event) {
-        this.dispatchEvent('tab:hide tabHide', event);
+      onTabHide: function onTabHide(el) {
+        if (el === this.$refs.el) {
+          this.dispatchEvent('tab:hide tabHide');
+        }
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -12116,14 +12072,14 @@
       pageComponentLoader: function pageComponentLoader(routerEl, component, componentUrl, options, resolve, reject) {
         var router = this;
         var el = routerEl;
-        var routerComponent;
+        var viewRouter;
         f7.routers.views.forEach(function (data) {
           if (data.el && data.el === routerEl) {
-            routerComponent = data.component;
+            viewRouter = data;
           }
         });
 
-        if (!routerComponent || !routerComponent.state.pages) {
+        if (!viewRouter) {
           reject();
           return;
         }
@@ -12141,13 +12097,15 @@
             options.props || {}
           ),
         };
-        routerComponent.$f7router = router;
-        routerComponent.$f7route = options.route;
+        if (viewRouter.component) {
+          viewRouter.component.$f7router = router;
+          viewRouter.component.$f7route = options.route;
+        }
 
         var resolved;
         function onDidUpdate(componentRouterData) {
-          if (componentRouterData.component !== routerComponent || resolved) { return; }
-          eventsEmitter.off('viewRouterDidUpdate', onDidUpdate);
+          if (componentRouterData !== viewRouter || resolved) { return; }
+          f7.events.off('viewRouterDidUpdate', onDidUpdate);
 
           var pageEl = el.children[el.children.length - 1];
           pageData.el = pageEl;
@@ -12156,10 +12114,10 @@
           resolved = true;
         }
 
-        eventsEmitter.on('viewRouterDidUpdate', onDidUpdate);
+        f7.events.on('viewRouterDidUpdate', onDidUpdate);
 
-        routerComponent.state.pages.push(pageData);
-        routerComponent.setState({ pages: routerComponent.state.pages });
+        viewRouter.pages.push(pageData);
+        viewRouter.setPages(viewRouter.pages);
       },
       removePage: function removePage($pageEl) {
         if (!$pageEl) { return; }
@@ -12171,10 +12129,10 @@
           router.app.$($pageEl).remove();
           return;
         }
-        var routerComponent;
+        var viewRouter;
         f7.routers.views.forEach(function (data) {
           if (data.el && data.el === router.el) {
-            routerComponent = data.component;
+            viewRouter = data;
           }
         });
 
@@ -12189,11 +12147,11 @@
         if (!pageEl) { return; }
 
         var pageComponentFound;
-        routerComponent.state.pages.forEach(function (page, index) {
+        viewRouter.pages.forEach(function (page, index) {
           if (page.el === pageEl) {
             pageComponentFound = true;
-            routerComponent.state.pages.splice(index, 1);
-            routerComponent.setState({ pages: routerComponent.state.pages });
+            viewRouter.pages.splice(index, 1);
+            viewRouter.setPages(viewRouter.pages);
           }
         });
         if (!pageComponentFound) {
@@ -12204,13 +12162,13 @@
         var router = this;
         if (!tabEl) { reject(); }
 
-        var tabsComponent;
+        var tabRouter;
         f7.routers.tabs.forEach(function (tabData) {
           if (tabData.el && tabData.el === tabEl) {
-            tabsComponent = tabData.component;
+            tabRouter = tabData;
           }
         });
-        if (!tabsComponent) {
+        if (!tabRouter) {
           reject();
           return;
         }
@@ -12229,13 +12187,15 @@
           ),
         };
 
-        tabsComponent.$f7router = router;
-        tabsComponent.$f7route = options.route;
+        if (tabRouter.component) {
+          tabRouter.component.$f7router = router;
+          tabRouter.component.$f7route = options.route;
+        }
 
         var resolved;
         function onDidUpdate(componentRouterData) {
-          if (componentRouterData.component !== tabsComponent || resolved) { return; }
-          eventsEmitter.off('tabRouterDidUpdate', onDidUpdate);
+          if (componentRouterData !== tabRouter || resolved) { return; }
+          f7.events.off('tabRouterDidUpdate', onDidUpdate);
 
           var tabContentEl = tabEl.children[0];
           resolve(tabContentEl);
@@ -12243,32 +12203,31 @@
           resolved = true;
         }
 
-        eventsEmitter.on('tabRouterDidUpdate', onDidUpdate);
+        f7.events.on('tabRouterDidUpdate', onDidUpdate);
 
-        tabsComponent.setState({ tabContent: tabContent });
+        tabRouter.setTabContent(tabContent);
       },
       removeTabContent: function removeTabContent(tabEl) {
         if (!tabEl) { return; }
 
-        var tabComponent;
+        var tabRouter;
         f7.routers.tabs.forEach(function (tabData) {
           if (tabData.el && tabData.el === tabEl) {
-            tabComponent = tabData.component;
+            tabRouter = tabData;
           }
         });
-        var hasComponent = !!tabComponent.state.tabContent;
-        if (!tabComponent || !hasComponent) {
+        var hasComponent = !!tabRouter.tabContent;
+        if (!tabRouter || !hasComponent) {
           tabEl.innerHTML = ''; // eslint-disable-line
           return;
         }
-        tabComponent.setState({ tabContent: null });
+        tabRouter.setTabContent(null);
       },
       modalComponentLoader: function modalComponentLoader(rootEl, component, componentUrl, options, resolve, reject) {
         var router = this;
-        var modalsComponent = f7.routers.modals && f7.routers.modals.component;
-        var modalsComponentEl = f7.routers.modals && f7.routers.modals.el;
+        var modalsRouter = f7.routers.modals;
 
-        if (!modalsComponent || !modalsComponent.state.modals) {
+        if (!modalsRouter) {
           reject();
           return;
         }
@@ -12286,43 +12245,45 @@
             options.props || {}
           ),
         };
-        modalsComponent.$f7router = router;
-        modalsComponent.$f7route = options.route;
+        if (modalsRouter.component) {
+          modalsRouter.component.$f7router = router;
+          modalsRouter.component.$f7route = options.route;
+        }
 
         var resolved;
-        function onDidUpdate(componentRouterData) {
-          if (componentRouterData.component !== modalsComponent || resolved) { return; }
-          eventsEmitter.off('modalsRouterDidUpdate', onDidUpdate);
+        function onDidUpdate() {
+          if (resolved) { return; }
+          f7.events.off('modalsRouterDidUpdate', onDidUpdate);
 
-          var modalEl = modalsComponentEl.children[modalsComponentEl.children.length - 1];
+          var modalEl = modalsRouter.el.children[modalsRouter.el.children.length - 1];
           modalData.el = modalEl;
 
           resolve(modalEl);
           resolved = true;
         }
 
-        eventsEmitter.on('modalsRouterDidUpdate', onDidUpdate);
+        f7.events.on('modalsRouterDidUpdate', onDidUpdate);
 
-        modalsComponent.state.modals.push(modalData);
-        modalsComponent.setState({ modals: modalsComponent.state.modals });
+        modalsRouter.modals.push(modalData);
+        modalsRouter.setModals(modalsRouter.modals);
       },
       removeModal: function removeModal(modalEl) {
-        var modalsComponent = f7.routers.modals && f7.routers.modals.component;
-        if (!modalsComponent) { return; }
+        var modalsRouter = f7.routers.modals;
+        if (!modalsRouter) { return; }
 
         var modalDataToRemove;
-        modalsComponent.state.modals.forEach(function (modalData) {
+        modalsRouter.modals.forEach(function (modalData) {
           if (modalData.el === modalEl) { modalDataToRemove = modalData; }
         });
 
-        modalsComponent.state.modals.splice(modalsComponent.state.modals.indexOf(modalDataToRemove), 1);
-        modalsComponent.setState({ modals: modalsComponent.state.modals });
+        modalsRouter.modals.splice(modalsRouter.modals.indexOf(modalDataToRemove), 1);
+        modalsRouter.setModals(modalsRouter.modals);
       },
     },
   };
 
   /**
-   * Framework7 Vue 4.4.3
+   * Framework7 Vue 4.4.5
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -12330,7 +12291,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: June 4, 2019
+   * Released on: June 27, 2019
    */
 
   var Plugin = {
@@ -12344,6 +12305,7 @@
 
       var Framework7 = this;
       f7.Framework7 = Framework7;
+      f7.events = new Framework7.Events();
 
       var Extend = params.Vue || Vue; // eslint-disable-line
 

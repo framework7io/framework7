@@ -2,7 +2,16 @@ import Framework7, { Framework7EventsClass, Framework7Plugin, CSSSelector } from
 import { Dom7Instance } from 'dom7';
 import { View } from '../../components/view/view';
 
+import { Actions } from '../../components/actions/actions';
+import { Popup } from 'framework7/components/popup/popup';
+import { LoginScreen } from 'framework7/components/login-screen/login-screen';
+import { Popover } from 'framework7/components/popover/popover';
+import { Modal } from 'framework7/components/modal/modal';
+import { Sheet } from 'framework7/components/sheet/sheet';
+import { Panel } from 'framework7/components/panel/panel';
+
 export namespace Router {
+
   interface Component {
     /** Template7 template string. Will be compiled as Template7 template */
     template? : string
@@ -32,6 +41,26 @@ export namespace Router {
     /** Called when component destroyed */
     destroyed? : () => void
   }
+
+  interface ModalRouteParameters {
+    /** Creates dynamic page from specified content string */
+    content?: string | HTMLElement | Dom7Instance | HTMLElement[];
+    /** Load page content via Ajax. */
+    url?: string;
+    /** Load page content from passed Template7 template string or function */
+    template?: string | Function
+    /** Load page content from url via Ajax, and compile it using Template7 */
+    templateUrl?: string
+    /** Load page from passed Framework7 Router Component */
+    component?: Component
+    /** load pages as a component via Ajax */
+    componentUrl?: string
+    /** Do required asynchronous manipulation and the return required route content and options */
+    async?(routeTo: Route, routeFrom: Route, resolve: Function, reject: Function): void
+  }
+
+  // interface AP extends Actions.Parameters{}
+
   interface RouteParameters {
     /** Route name, e.g. home */
     name?: string
@@ -67,17 +96,17 @@ export namespace Router {
     /** Array with tab routes */
     tabs?: RouteParameters[]
     /** Action Sheet route */
-    actions?: RouteParameters
+    actions?: Actions.Parameters & ModalRouteParameters
     /** Popup route */
-    popup?: RouteParameters
+    popup?: Popup.Parameters & ModalRouteParameters
     /** Login screen route */
-    loginScreen?: RouteParameters
+    loginScreen?: LoginScreen.Parameters & ModalRouteParameters
     /** Popover route */
-    popover?: RouteParameters
+    popover?: Popover.Parameters & ModalRouteParameters
     /** Sheet route */
-    sheet?: RouteParameters
+    sheet?: Sheet.Parameters & ModalRouteParameters
     /** Panel route */
-    panel?: RouteParameters
+    panel?: Panel.Parameters & ModalRouteParameters
 
     /** Route alias, or array with route aliases. We need to specify here alias path */
     alias?: string | any[]
@@ -93,6 +122,8 @@ export namespace Router {
     master?: boolean
     /** Detail routes this master route */
     detailRoutes?: RouteParameters[]
+    /** Route page events */
+    on? : { [event : string] : (e: Event, page: any) => void }
   }
   interface RouteOptions {
     /** whether the page should be animated or not (overwrites default router settings) */
@@ -131,9 +162,9 @@ export namespace Router {
     /** route path */
     path : string
     /** object with route query. If the url is `/page/?id=5&foo=bar` then it will contain the following object `{id: '5', foo: 'bar'}` */
-    query : { [ queryParameter : string ] : number | string | undefined }
+    query : { [ queryParameter : string ] : string | undefined }
     /** route params. If we have matching route with `/page/user/:userId/post/:postId/` path and url of the page is `/page/user/55/post/12/` then it will be the following object `{userId: '55', postId: '12'}` */
-    params : { [ routeParameter : string ] : number | string | undefined }
+    params : { [ routeParameter : string ] : string | undefined }
     /** route name */
     name : string
     /** route URL hash */

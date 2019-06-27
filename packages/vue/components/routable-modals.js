@@ -1,5 +1,4 @@
 import f7 from '../utils/f7';
-import events from '../utils/events';
 import __vueComponentSetState from '../runtime-helpers/vue-component-set-state.js';
 export default {
   name: 'f7-routable-modals',
@@ -35,7 +34,7 @@ export default {
   updated() {
     const self = this;
     if (!self.routerData) return;
-    events.emit('modalsRouterDidUpdate', self.routerData);
+    f7.events.emit('modalsRouterDidUpdate', self.routerData);
   },
 
   beforeDestroy() {
@@ -49,12 +48,17 @@ export default {
   mounted() {
     const self = this;
     const el = self.$refs.el;
-    self.setState({
-      modals: []
-    });
     self.routerData = {
+      modals: self.state.modals,
       el,
-      component: self
+      component: self,
+
+      setModals(modals) {
+        self.setState({
+          modals
+        });
+      }
+
     };
     f7.routers.modals = self.routerData;
   },

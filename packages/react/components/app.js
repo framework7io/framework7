@@ -10,12 +10,6 @@ class F7App extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.__reactRefs = {};
-
-    this.state = (() => {
-      return {
-        modals: []
-      };
-    })();
   }
 
   render() {

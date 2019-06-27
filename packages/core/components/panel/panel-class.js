@@ -27,9 +27,7 @@ class Panel extends Framework7Class {
     if (typeof effect === 'undefined') effect = $el.hasClass('panel-cover') ? 'cover' : 'reveal';
 
     if (!app.panel[side]) {
-      Utils.extend(app.panel, {
-        [side]: panel,
-      });
+      app.panel[side] = panel;
     } else {
       throw new Error(`Framework7: Can't create panel; app already has a ${side} panel!`);
     }
@@ -374,6 +372,7 @@ class Panel extends Framework7Class {
       delete panel.el.f7Panel;
     }
     Utils.deleteProps(panel);
+
     panel = null;
   }
 }

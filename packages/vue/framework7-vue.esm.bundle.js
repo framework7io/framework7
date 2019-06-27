@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.4.3
+ * Framework7 Vue 4.4.5
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 4, 2019
+ * Released on: June 27, 2019
  */
 import Vue from 'vue';
 import f7AccordionContent from './components/accordion-content';
@@ -115,6 +115,7 @@ const Plugin = {
 
     const Framework7 = this;
     f7.Framework7 = Framework7;
+    f7.events = new Framework7.Events();
 
     const Extend = params.Vue || Vue; // eslint-disable-line
 

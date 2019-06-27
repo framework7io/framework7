@@ -1,6 +1,7 @@
 import React from 'react';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
+import Preloader from './preloader';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
@@ -102,16 +103,14 @@ class F7PageContent extends React.Component {
     if (ptr && ptrPreloader) {
       ptrEl = React.createElement('div', {
         className: 'ptr-preloader'
-      }, React.createElement('div', {
-        className: 'preloader'
-      }), React.createElement('div', {
+      }, React.createElement(Preloader, null), React.createElement('div', {
         className: 'ptr-arrow'
       }));
     }
 
     if (infinite && infinitePreloader) {
-      infiniteEl = React.createElement('div', {
-        className: 'preloader infinite-scroll-preloader'
+      infiniteEl = React.createElement(Preloader, {
+        className: 'infinite-scroll-preloader'
       });
     }
 

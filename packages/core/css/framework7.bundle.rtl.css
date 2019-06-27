@@ -1,5 +1,5 @@
 /**
- * Framework7 4.4.3
+ * Framework7 4.4.5
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 4, 2019
+ * Released on: June 27, 2019
  */
 
 /*====================
@@ -16214,6 +16214,9 @@ table.data-table {
 .swiper-container-rtl .swiper-button-prev:after {
   content: 'swiper_next';
 }
+.swiper-button-lock {
+  display: none;
+}
 .swiper-pagination {
   position: absolute;
   text-align: center;
@@ -16337,6 +16340,9 @@ button.swiper-pagination-bullet {
   height: 100%;
   left: 0;
   top: 0;
+}
+.swiper-pagination-lock {
+  display: none;
 }
 .preloader.swiper-lazy-preloader {
   position: absolute;

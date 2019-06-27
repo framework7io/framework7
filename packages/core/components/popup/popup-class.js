@@ -21,9 +21,9 @@ class Popup extends Modal {
     // Find Element
     let $el;
     if (!popup.params.el) {
-      $el = $(popup.params.content);
+      $el = $(popup.params.content).filter((elIndex, node) => node.nodeType === 1).eq(0);
     } else {
-      $el = $(popup.params.el);
+      $el = $(popup.params.el).eq(0);
     }
 
     if ($el && $el.length > 0 && $el[0].f7Modal) {

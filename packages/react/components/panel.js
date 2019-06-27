@@ -118,18 +118,10 @@ class F7Panel extends React.Component {
 
   componentWillUnmount() {
     const self = this;
-    if (self.f7Panel) self.f7Panel.destroy();
-    const el = self.refs.el;
-    if (!el) return;
-    el.removeEventListener('panel:open', self.onOpen);
-    el.removeEventListener('panel:opened', self.onOpened);
-    el.removeEventListener('panel:close', self.onClose);
-    el.removeEventListener('panel:closed', self.onClosed);
-    el.removeEventListener('panel:backdrop-click', self.onBackdropClick);
-    el.removeEventListener('panel:swipe', self.onPanelSwipe);
-    el.removeEventListener('panel:swipeopen', self.onPanelSwipeOpen);
-    el.removeEventListener('panel:breakpoint', self.onBreakpoint);
-    el.removeEventListener('panel:resize', self.onResize);
+
+    if (self.f7Panel) {
+      self.f7Panel.destroy();
+    }
   }
 
   componentDidMount() {
@@ -143,19 +135,6 @@ class F7Panel extends React.Component {
       reveal,
       resizable
     } = self.props;
-
-    if (el) {
-      el.addEventListener('panel:open', self.onOpen);
-      el.addEventListener('panel:opened', self.onOpened);
-      el.addEventListener('panel:close', self.onClose);
-      el.addEventListener('panel:closed', self.onClosed);
-      el.addEventListener('panel:backdrop-click', self.onBackdropClick);
-      el.addEventListener('panel:swipe', self.onPanelSwipe);
-      el.addEventListener('panel:swipeopen', self.onPanelSwipeOpen);
-      el.addEventListener('panel:breakpoint', self.onBreakpoint);
-      el.addEventListener('panel:resize', self.onResize);
-    }
-
     self.$f7ready(() => {
       const $ = self.$$;
       if (!$) return;
@@ -166,7 +145,18 @@ class F7Panel extends React.Component {
 
       self.f7Panel = self.$f7.panel.create({
         el,
-        resizable
+        resizable,
+        on: {
+          open: self.onOpen,
+          opened: self.onOpened,
+          close: self.onClose,
+          closed: self.onClosed,
+          backdropClick: self.onBackdropClick,
+          swipe: self.onPanelSwipe,
+          swipeOpen: self.onPanelSwipeOpen,
+          breakpoint: self.onBreakpoint,
+          resize: self.onResize
+        }
       });
     });
 
@@ -216,7 +206,7 @@ class F7Panel extends React.Component {
       if (opened) {
         self.$f7.panel.open(side);
       } else {
-        self.$f7.panel.open(side);
+        self.$f7.panel.close(side);
       }
     });
   }

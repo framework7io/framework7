@@ -1,5 +1,6 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
+import Preloader from './preloader';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
 export default {
@@ -53,16 +54,14 @@ export default {
     if (ptr && ptrPreloader) {
       ptrEl = _h('div', {
         class: 'ptr-preloader'
-      }, [_h('div', {
-        class: 'preloader'
-      }), _h('div', {
+      }, [_h(Preloader), _h('div', {
         class: 'ptr-arrow'
       })]);
     }
 
     if (infinite && infinitePreloader) {
-      infiniteEl = _h('div', {
-        class: 'preloader infinite-scroll-preloader'
+      infiniteEl = _h(Preloader, {
+        class: 'infinite-scroll-preloader'
       });
     }
 

@@ -1,6 +1,5 @@
 /* eslint no-underscore-dangle: "off" */
 import f7 from './f7';
-import events from './events';
 import Utils from './utils';
 
 let routerComponentIdCounter = 0;
@@ -10,14 +9,14 @@ export default {
     pageComponentLoader(routerEl, component, componentUrl, options, resolve, reject) {
       const router = this;
       const el = routerEl;
-      let routerComponent;
+      let viewRouter;
       f7.routers.views.forEach((data) => {
         if (data.el && data.el === routerEl) {
-          routerComponent = data.component;
+          viewRouter = data;
         }
       });
 
-      if (!routerComponent || !routerComponent.state.pages) {
+      if (!viewRouter) {
         reject();
         return;
       }
@@ -35,13 +34,15 @@ export default {
           options.props || {},
         ),
       };
-      routerComponent.$f7router = router;
-      routerComponent.$f7route = options.route;
+      if (viewRouter.component) {
+        viewRouter.component.$f7router = router;
+        viewRouter.component.$f7route = options.route;
+      }
 
       let resolved;
       function onDidUpdate(componentRouterData) {
-        if (componentRouterData.component !== routerComponent || resolved) return;
-        events.off('viewRouterDidUpdate', onDidUpdate);
+        if (componentRouterData !== viewRouter || resolved) return;
+        f7.events.off('viewRouterDidUpdate', onDidUpdate);
 
         const pageEl = el.children[el.children.length - 1];
         pageData.el = pageEl;
@@ -50,10 +51,10 @@ export default {
         resolved = true;
       }
 
-      events.on('viewRouterDidUpdate', onDidUpdate);
+      f7.events.on('viewRouterDidUpdate', onDidUpdate);
 
-      routerComponent.state.pages.push(pageData);
-      routerComponent.setState({ pages: routerComponent.state.pages });
+      viewRouter.pages.push(pageData);
+      viewRouter.setPages(viewRouter.pages);
     },
     removePage($pageEl) {
       if (!$pageEl) return;
@@ -65,10 +66,10 @@ export default {
         router.app.$($pageEl).remove();
         return;
       }
-      let routerComponent;
+      let viewRouter;
       f7.routers.views.forEach((data) => {
         if (data.el && data.el === router.el) {
-          routerComponent = data.component;
+          viewRouter = data;
         }
       });
 
@@ -83,11 +84,11 @@ export default {
       if (!pageEl) return;
 
       let pageComponentFound;
-      routerComponent.state.pages.forEach((page, index) => {
+      viewRouter.pages.forEach((page, index) => {
         if (page.el === pageEl) {
           pageComponentFound = true;
-          routerComponent.state.pages.splice(index, 1);
-          routerComponent.setState({ pages: routerComponent.state.pages });
+          viewRouter.pages.splice(index, 1);
+          viewRouter.setPages(viewRouter.pages);
         }
       });
       if (!pageComponentFound) {
@@ -98,13 +99,13 @@ export default {
       const router = this;
       if (!tabEl) reject();
 
-      let tabsComponent;
+      let tabRouter;
       f7.routers.tabs.forEach((tabData) => {
         if (tabData.el && tabData.el === tabEl) {
-          tabsComponent = tabData.component;
+          tabRouter = tabData;
         }
       });
-      if (!tabsComponent) {
+      if (!tabRouter) {
         reject();
         return;
       }
@@ -123,13 +124,15 @@ export default {
         ),
       };
 
-      tabsComponent.$f7router = router;
-      tabsComponent.$f7route = options.route;
+      if (tabRouter.component) {
+        tabRouter.component.$f7router = router;
+        tabRouter.component.$f7route = options.route;
+      }
 
       let resolved;
       function onDidUpdate(componentRouterData) {
-        if (componentRouterData.component !== tabsComponent || resolved) return;
-        events.off('tabRouterDidUpdate', onDidUpdate);
+        if (componentRouterData !== tabRouter || resolved) return;
+        f7.events.off('tabRouterDidUpdate', onDidUpdate);
 
         const tabContentEl = tabEl.children[0];
         resolve(tabContentEl);
@@ -137,32 +140,31 @@ export default {
         resolved = true;
       }
 
-      events.on('tabRouterDidUpdate', onDidUpdate);
+      f7.events.on('tabRouterDidUpdate', onDidUpdate);
 
-      tabsComponent.setState({ tabContent });
+      tabRouter.setTabContent(tabContent);
     },
     removeTabContent(tabEl) {
       if (!tabEl) return;
 
-      let tabComponent;
+      let tabRouter;
       f7.routers.tabs.forEach((tabData) => {
         if (tabData.el && tabData.el === tabEl) {
-          tabComponent = tabData.component;
+          tabRouter = tabData;
         }
       });
-      const hasComponent = !!tabComponent.state.tabContent;
-      if (!tabComponent || !hasComponent) {
+      const hasComponent = !!tabRouter.tabContent;
+      if (!tabRouter || !hasComponent) {
         tabEl.innerHTML = ''; // eslint-disable-line
         return;
       }
-      tabComponent.setState({ tabContent: null });
+      tabRouter.setTabContent(null);
     },
     modalComponentLoader(rootEl, component, componentUrl, options, resolve, reject) {
       const router = this;
-      const modalsComponent = f7.routers.modals && f7.routers.modals.component;
-      const modalsComponentEl = f7.routers.modals && f7.routers.modals.el;
+      const modalsRouter = f7.routers.modals;
 
-      if (!modalsComponent || !modalsComponent.state.modals) {
+      if (!modalsRouter) {
         reject();
         return;
       }
@@ -180,37 +182,39 @@ export default {
           options.props || {},
         ),
       };
-      modalsComponent.$f7router = router;
-      modalsComponent.$f7route = options.route;
+      if (modalsRouter.component) {
+        modalsRouter.component.$f7router = router;
+        modalsRouter.component.$f7route = options.route;
+      }
 
       let resolved;
-      function onDidUpdate(componentRouterData) {
-        if (componentRouterData.component !== modalsComponent || resolved) return;
-        events.off('modalsRouterDidUpdate', onDidUpdate);
+      function onDidUpdate() {
+        if (resolved) return;
+        f7.events.off('modalsRouterDidUpdate', onDidUpdate);
 
-        const modalEl = modalsComponentEl.children[modalsComponentEl.children.length - 1];
+        const modalEl = modalsRouter.el.children[modalsRouter.el.children.length - 1];
         modalData.el = modalEl;
 
         resolve(modalEl);
         resolved = true;
       }
 
-      events.on('modalsRouterDidUpdate', onDidUpdate);
+      f7.events.on('modalsRouterDidUpdate', onDidUpdate);
 
-      modalsComponent.state.modals.push(modalData);
-      modalsComponent.setState({ modals: modalsComponent.state.modals });
+      modalsRouter.modals.push(modalData);
+      modalsRouter.setModals(modalsRouter.modals);
     },
     removeModal(modalEl) {
-      const modalsComponent = f7.routers.modals && f7.routers.modals.component;
-      if (!modalsComponent) return;
+      const modalsRouter = f7.routers.modals;
+      if (!modalsRouter) return;
 
       let modalDataToRemove;
-      modalsComponent.state.modals.forEach((modalData) => {
+      modalsRouter.modals.forEach((modalData) => {
         if (modalData.el === modalEl) modalDataToRemove = modalData;
       });
 
-      modalsComponent.state.modals.splice(modalsComponent.state.modals.indexOf(modalDataToRemove), 1);
-      modalsComponent.setState({ modals: modalsComponent.state.modals });
+      modalsRouter.modals.splice(modalsRouter.modals.indexOf(modalDataToRemove), 1);
+      modalsRouter.setModals(modalsRouter.modals);
     },
   },
 };

@@ -236,6 +236,7 @@ const Navbar = {
     const $pageEl = $(app.navbar.getPageByEl($navbarInnerEl));
     $navbarInnerEl.addClass('navbar-inner-large-collapsed');
     $pageEl.eq(0).addClass('page-with-navbar-large-collapsed').trigger('page:navbarlargecollapsed');
+    app.emit('pageNavbarLargeCollapsed', $pageEl[0]);
     const $navbarEl = $navbarInnerEl.parents('.navbar');
     if (app.theme === 'md' || app.theme === 'aurora') {
       $navbarEl.addClass('navbar-large-collapsed');
@@ -258,6 +259,7 @@ const Navbar = {
     const $pageEl = $(app.navbar.getPageByEl($navbarInnerEl));
     $navbarInnerEl.removeClass('navbar-inner-large-collapsed');
     $pageEl.eq(0).removeClass('page-with-navbar-large-collapsed').trigger('page:navbarlargeexpanded');
+    app.emit('pageNavbarLargeExpanded', $pageEl[0]);
     const $navbarEl = $navbarInnerEl.parents('.navbar');
     if (app.theme === 'md' || app.theme === 'aurora') {
       $navbarEl.removeClass('navbar-large-collapsed');

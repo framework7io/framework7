@@ -11,20 +11,6 @@ export default {
     routes: Array
   }, Mixins.colorProps),
 
-  data() {
-    const props = __vueComponentProps(this);
-
-    const state = (() => {
-      return {
-        modals: []
-      };
-    })();
-
-    return {
-      state
-    };
-  },
-
   render() {
     const _h = this.$createElement;
     const self = this;

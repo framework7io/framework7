@@ -1,6 +1,5 @@
 import React from 'react';
 import f7 from '../utils/f7';
-import events from '../utils/events';
 
 class F7RoutableModals extends React.Component {
   constructor(props, context) {
@@ -33,12 +32,17 @@ class F7RoutableModals extends React.Component {
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
-    self.setState({
-      modals: []
-    });
     self.routerData = {
+      modals: self.state.modals,
       el,
-      component: self
+      component: self,
+
+      setModals(modals) {
+        self.setState({
+          modals
+        });
+      }
+
     };
     f7.routers.modals = self.routerData;
   }
@@ -54,7 +58,7 @@ class F7RoutableModals extends React.Component {
   componentDidUpdate() {
     const self = this;
     if (!self.routerData) return;
-    events.emit('modalsRouterDidUpdate', self.routerData);
+    f7.events.emit('modalsRouterDidUpdate', self.routerData);
   }
 
   get refs() {

@@ -1,5 +1,5 @@
 /**
- * Framework7 4.4.3
+ * Framework7 4.4.5
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: June 4, 2019
+ * Released on: June 27, 2019
  */
 
 (function (global, factory) {
@@ -17,7 +17,7 @@
 }(this, function () { 'use strict';
 
   /**
-   * Template7 1.4.1
+   * Template7 1.4.2
    * Mobile-first HTML template engine
    * 
    * http://www.idangero.us/template7/
@@ -28,7 +28,7 @@
    * 
    * Licensed under MIT
    * 
-   * Released on: February 5, 2019
+   * Released on: June 14, 2019
    */
 
   var t7ctx;
@@ -260,7 +260,11 @@
             else { variable = undefined; }
           });
         }
-        if (typeof variable === 'string') {
+        if (
+          (typeof variable === 'string')
+          || Array.isArray(variable)
+          || (variable.constructor && variable.constructor === Object)
+        ) {
           variable = JSON.stringify(variable);
         }
         if (variable === undefined) { variable = 'undefined'; }
@@ -268,6 +272,7 @@
         arr.push(variable);
         return arr;
       }, []).join('');
+
     },
     parseJsParents: function parseJsParents(expression, parents) {
       return expression.split(/([+ \-*^()&=|<>!%:?])/g).reduce(function (arr, part) {
@@ -379,6 +384,7 @@
       return p.compiled(ctx, options.data, options.root);
     },
     escape: function escape(context) {
+      if (typeof context === 'undefined' || context === null) { return ''; }
       if (typeof context !== 'string') {
         throw new Error('Template7: Passed context to "escape" helper should be a string');
       }
@@ -4729,7 +4735,7 @@
         activeTimeout = setTimeout(addActive, 0);
       }
       if (useRipple) {
-        rippleTouchStart(targetElement, touchStartX, touchStartY);
+        rippleTouchStart(targetElement);
       }
       return true;
     }
@@ -4951,7 +4957,7 @@
         }
       }
       if (useRipple) {
-        rippleTouchStart(targetElement, touchStartX, touchStartY);
+        rippleTouchStart(targetElement);
       }
       return true;
     }
@@ -6010,7 +6016,7 @@
             $previousNavbarInnerEl = $previousNavbarInnerEl.eq($previousNavbarInnerEl.length - 1);
           }
 
-          animatableNavEls = animatableNavElements($previousNavbarInnerEl, $currentNavbarInnerEl);
+          animatableNavEls = animatableNavElements();
         }
 
         // Close/Hide Any Picker
@@ -6508,6 +6514,9 @@
       .removeClass('stacked')
       .trigger('page:unstack')
       .trigger('page:position', { position: newPagePosition });
+    router.emit('pageUnstack', $newPage[0]);
+    router.emit('pagePosition', $newPage[0], newPagePosition);
+
     if (isMaster || isDetail) {
       $newPage.trigger('page:role', { role: isMaster ? 'master' : 'detail' });
     }
@@ -6547,6 +6556,7 @@
           ) {
             $pagesInView.eq(i$2).addClass('page-master-stacked');
             $pagesInView.eq(i$2).trigger('page:masterstack');
+            router.emit('pageMasterStack', $pagesInView[i$2]);
             if (separateNavbar) {
               $(app.navbar.getElByPage(masterPageEl)).addClass('navbar-master-stacked');
             }
@@ -6556,6 +6566,7 @@
           if (router.params.stackPages) {
             $pagesInView.eq(i$2).addClass('stacked');
             $pagesInView.eq(i$2).trigger('page:stack');
+            router.emit('pageStack', $pagesInView[i$2]);
             if (separateNavbar) {
               $(oldNavbarInnerEl).addClass('stacked');
             }
@@ -6688,6 +6699,7 @@
       if (router.params.stackPages && router.initialPages.indexOf($oldPage[0]) >= 0) {
         $oldPage.addClass('stacked');
         $oldPage.trigger('page:stack');
+        router.emit('pageStack', $oldPage[0]);
         if (separateNavbar) {
           $oldNavbarInner.addClass('stacked');
         }
@@ -6708,6 +6720,7 @@
         if (router.params.stackPages && router.initialPages.indexOf($oldPageEl[0]) >= 0) {
           $oldPageEl.addClass('stacked');
           $oldPageEl.trigger('page:stack');
+          router.emit('pageStack', $oldPageEl[0]);
           if (separateNavbar) {
             $oldNavbarInnerEl.addClass('stacked');
           }
@@ -6728,6 +6741,7 @@
       if (router.params.stackPages && router.initialPages.indexOf($oldPage[0]) >= 0) {
         $oldPage.addClass('stacked');
         $oldPage.trigger('page:stack');
+        router.emit('pageStack', $oldPage[0]);
         if (separateNavbar) {
           $oldNavbarInner.addClass('stacked');
         }
@@ -6765,6 +6779,8 @@
         masterPageEl.classList.add('page-previous');
         masterPageEl.classList.remove('page-current');
         $(masterPageEl).trigger('page:position', { position: 'previous' });
+        router.emit('pagePosition', masterPageEl, 'previous');
+
         if (masterPageEl.f7Page && masterPageEl.f7Page.navbarEl) {
           masterPageEl.f7Page.navbarEl.classList.add('navbar-previous');
           masterPageEl.f7Page.navbarEl.classList.remove('navbar-current');
@@ -6786,7 +6802,10 @@
       var pageClasses = 'page-previous page-current page-next';
       var navbarClasses = 'navbar-previous navbar-current navbar-next';
       $newPage.removeClass(pageClasses).addClass('page-current').removeAttr('aria-hidden').trigger('page:position', { position: 'current' });
+      router.emit('pagePosition', $newPage[0], 'current');
       $oldPage.removeClass(pageClasses).addClass('page-previous').trigger('page:position', { position: 'previous' });
+      router.emit('pagePosition', $oldPage[0], 'previous');
+
       if (!$oldPage.hasClass('page-master')) {
         $oldPage.attr('aria-hidden', 'true');
       }
@@ -6812,6 +6831,7 @@
         if (router.params.stackPages) {
           $oldPage.addClass('stacked');
           $oldPage.trigger('page:stack');
+          router.emit('pageStack', $oldPage[0]);
           if (separateNavbar) {
             $oldNavbarInner.addClass('stacked');
           }
@@ -6835,7 +6855,9 @@
       var pageClasses = 'page-previous page-current page-next';
       var navbarClasses = 'navbar-previous navbar-current navbar-next';
       $oldPage.removeClass(pageClasses).addClass('page-current').removeAttr('aria-hidden').trigger('page:position', { position: 'current' });
+      router.emit('pagePosition', $oldPage[0], 'current');
       $newPage.removeClass(pageClasses).addClass('page-next').removeAttr('aria-hidden').trigger('page:position', { position: 'next' });
+      router.emit('pagePosition', $newPage[0], 'next');
       if (dynamicNavbar) {
         $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-current').removeAttr('aria-hidden');
         $newNavbarInner.removeClass(navbarClasses).addClass('navbar-next').removeAttr('aria-hidden');
@@ -7133,6 +7155,8 @@
           reloadAll: navigateOptions.reloadAll,
           reloadCurrent: navigateOptions.reloadCurrent,
           reloadPrevious: navigateOptions.reloadPrevious,
+          pushState: !navigateOptions.initial,
+          history: !navigateOptions.initial,
           once: {
             pageAfterIn: function pageAfterIn() {
               router.navigate(navigateParams, Utils.extend({}, navigateOptions, {
@@ -7140,6 +7164,8 @@
                 reloadAll: false,
                 reloadCurrent: false,
                 reloadPrevious: false,
+                history: !navigateOptions.initial,
+                pushState: !navigateOptions.initial,
               }));
             },
           },
@@ -7614,6 +7640,7 @@
     var options = Utils.extend({
       animate: router.params.animate,
       pushState: true,
+      replaceState: false,
     }, backwardOptions);
 
     var masterDetailEnabled = router.params.masterDetailBreakpoint > 0;
@@ -7689,6 +7716,10 @@
       isDetail = !isMaster
         && masterPageEl
         && (router.history.indexOf(options.route.url) > router.history.indexOf(masterPageEl.f7Page.route.url));
+
+      if (!isDetail && !isMaster && masterPageEl && masterPageEl.f7Page && options.route.route.masterRoute) {
+        isDetail = options.route.route.masterRoute.path === masterPageEl.f7Page.route.route.path;
+      }
     }
 
 
@@ -7699,6 +7730,8 @@
       .removeAttr('aria-hidden')
       .trigger('page:unstack')
       .trigger('page:position', { position: 'previous' });
+    router.emit('pageUnstack', $newPage[0]);
+    router.emit('pagePosition', $newPage[0], 'previous');
     if (isMaster || isDetail) {
       $newPage.trigger('page:role', { role: isMaster ? 'master' : 'detail' });
     }
@@ -7736,6 +7769,7 @@
               if (router.initialPages.indexOf($pageToRemove[0]) >= 0) {
                 $pageToRemove.addClass('stacked');
                 $pageToRemove.trigger('page:stack');
+                router.emit('pageStack', $pageToRemove[0]);
                 if (separateNavbar) {
                   $navbarToRemove.addClass('stacked');
                 }
@@ -7758,6 +7792,7 @@
           if (router.params.stackPages && router.initialPages.indexOf($pageToRemove[0]) >= 0) {
             $pageToRemove.addClass('stacked');
             $pageToRemove.trigger('page:stack');
+            router.emit('pageStack', $pageToRemove[0]);
             $navbarToRemove.addClass('stacked');
           } else if ($pageToRemove.length > 0) {
             router.pageCallback('beforeRemove', $pageToRemove, $navbarToRemove, 'previous', undefined, options);
@@ -7821,6 +7856,7 @@
         $newPage
           .removeClass('page-master-stacked')
           .trigger('page:masterunstack');
+        router.emit('pageMasterUnstack', $newPage[0]);
         if (separateNavbar) {
           $(app.navbar.getElByPage($newPage)).removeClass('navbar-master-stacked');
         }
@@ -7839,6 +7875,7 @@
           if (router.params.stackPages && router.initialPages.indexOf(pageToRemove) >= 0) {
             $pageToRemove.addClass('stacked');
             $pageToRemove.trigger('page:stack');
+            router.emit('pageStack', $pageToRemove[0]);
             if (separateNavbar) {
               $navbarToRemove.addClass('stacked');
             }
@@ -7858,16 +7895,32 @@
     // History State
     if (!(Device.ie || Device.edge || (Device.firefox && !Device.ios))) {
       if (router.params.pushState && options.pushState) {
-        if (backIndex) { History.go(-backIndex); }
-        else { History.back(); }
+        if (options.replaceState) {
+          var pushStateRoot = router.params.pushStateRoot || '';
+          History.replace(
+            view.id,
+            {
+              url: options.route.url,
+            },
+            pushStateRoot + router.params.pushStateSeparator + options.route.url
+          );
+        } else if (backIndex) {
+          History.go(-backIndex);
+        } else {
+          History.back();
+        }
       }
     }
 
     // Update History
-    if (router.history.length === 1) {
-      router.history.unshift(router.url);
+    if (options.replaceState) {
+      router.history[router.history.length - 1] = options.route.url;
+    } else {
+      if (router.history.length === 1) {
+        router.history.unshift(router.url);
+      }
+      router.history.pop();
     }
-    router.history.pop();
     router.saveHistory();
 
     // Current Page & Navbar
@@ -7884,8 +7937,20 @@
     // History State
     if (Device.ie || Device.edge || (Device.firefox && !Device.ios)) {
       if (router.params.pushState && options.pushState) {
-        if (backIndex) { History.go(-backIndex); }
-        else { History.back(); }
+        if (options.replaceState) {
+          var pushStateRoot$1 = router.params.pushStateRoot || '';
+          History.replace(
+            view.id,
+            {
+              url: options.route.url,
+            },
+            pushStateRoot$1 + router.params.pushStateSeparator + options.route.url
+          );
+        } else if (backIndex) {
+          History.go(-backIndex);
+        } else {
+          History.back();
+        }
       }
     }
 
@@ -7913,7 +7978,9 @@
       var pageClasses = 'page-previous page-current page-next';
       var navbarClasses = 'navbar-previous navbar-current navbar-next';
       $newPage.removeClass(pageClasses).addClass('page-current').removeAttr('aria-hidden').trigger('page:position', { position: 'current' });
+      router.emit('pagePosition', $newPage[0], 'current');
       $oldPage.removeClass(pageClasses).addClass('page-next').attr('aria-hidden', 'true').trigger('page:position', { position: 'next' });
+      router.emit('pagePosition', $oldPage[0], 'next');
       if (dynamicNavbar) {
         $newNavbarInner.removeClass(navbarClasses).addClass('navbar-current').removeAttr('aria-hidden');
         $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-next').attr('aria-hidden', 'true');
@@ -7927,6 +7994,7 @@
       if (router.params.stackPages && router.initialPages.indexOf($oldPage[0]) >= 0) {
         $oldPage.addClass('stacked');
         $oldPage.trigger('page:stack');
+        router.emit('pageStack', $oldPage[0]);
         if (separateNavbar) {
           $oldNavbarInner.addClass('stacked');
         }
@@ -7955,7 +8023,9 @@
       var pageClasses = 'page-previous page-current page-next';
       var navbarClasses = 'navbar-previous navbar-current navbar-next';
       $oldPage.removeClass(pageClasses).addClass('page-current').trigger('page:position', { position: 'current' });
+      router.emit('pagePosition', $oldPage[0], 'current');
       $newPage.removeClass(pageClasses).addClass('page-previous').removeAttr('aria-hidden').trigger('page:position', { position: 'previous' });
+      router.emit('pagePosition', $newPage[0], 'previous');
       if (dynamicNavbar) {
         $oldNavbarInner.removeClass(navbarClasses).addClass('navbar-current');
         $newNavbarInner.removeClass(navbarClasses).addClass('navbar-previous').removeAttr('aria-hidden');
@@ -8908,7 +8978,11 @@
           keys.forEach(function (keyObj, index) {
             if (typeof keyObj.name === 'number') { return; }
             var paramValue = matched[index + 1];
-            params[keyObj.name] = paramValue;
+            if (typeof paramValue === 'undefined' || paramValue === null) {
+              params[keyObj.name] = paramValue;
+            } else {
+              params[keyObj.name] = decodeURIComponent(paramValue);
+            }
           });
 
           var parentPath;
@@ -11014,7 +11088,7 @@
     var on = vnode.data.on;
     // call event handler(s) if exists
     if (on && on[name]) {
-      invokeHandler(on[name], event, args, vnode);
+      invokeHandler(on[name], event, args);
     }
   }
   function createListener() {
@@ -11706,26 +11780,26 @@
   };
 
   function getCurrentView(app) {
-    var popoverView = $('.popover.modal-in .view');
-    var popupView = $('.popup.modal-in .view');
-    var panelView = $('.panel.panel-active .view');
-    var appViews = $('.views');
-    if (appViews.length === 0) { appViews = app.root; }
+    var $popoverView = $('.popover.modal-in .view');
+    var $popupView = $('.popup.modal-in .view');
+    var $panelView = $('.panel.panel-active .view');
+    var $viewsEl = $('.views');
+    if ($viewsEl.length === 0) { $viewsEl = app.root; }
     // Find active view as tab
-    var appView = appViews.children('.view');
+    var $viewEl = $viewsEl.children('.view');
     // Propably in tabs or split view
-    if (appView.length > 1) {
-      if (appView.hasClass('tab')) {
+    if ($viewEl.length > 1) {
+      if ($viewEl.hasClass('tab')) {
         // Tabs
-        appView = appViews.children('.view.tab-active');
+        $viewEl = $viewEl.children('.view.tab-active');
       }
     }
-    if (popoverView.length > 0 && popoverView[0].f7View) { return popoverView[0].f7View; }
-    if (popupView.length > 0 && popupView[0].f7View) { return popupView[0].f7View; }
-    if (panelView.length > 0 && panelView[0].f7View) { return panelView[0].f7View; }
-    if (appView.length > 0) {
-      if (appView.length === 1 && appView[0].f7View) { return appView[0].f7View; }
-      if (appView.length > 1) {
+    if ($popoverView.length > 0 && $popoverView[0].f7View) { return $popoverView[0].f7View; }
+    if ($popupView.length > 0 && $popupView[0].f7View) { return $popupView[0].f7View; }
+    if ($panelView.length > 0 && $panelView[0].f7View) { return $panelView[0].f7View; }
+    if ($viewEl.length > 0) {
+      if ($viewEl.length === 1 && $viewEl[0].f7View) { return $viewEl[0].f7View; }
+      if ($viewEl.length > 1) {
         return app.views.main;
       }
     }
@@ -12090,6 +12164,7 @@
       var $pageEl = $(app.navbar.getPageByEl($navbarInnerEl));
       $navbarInnerEl.addClass('navbar-inner-large-collapsed');
       $pageEl.eq(0).addClass('page-with-navbar-large-collapsed').trigger('page:navbarlargecollapsed');
+      app.emit('pageNavbarLargeCollapsed', $pageEl[0]);
       var $navbarEl = $navbarInnerEl.parents('.navbar');
       if (app.theme === 'md' || app.theme === 'aurora') {
         $navbarEl.addClass('navbar-large-collapsed');
@@ -12112,6 +12187,7 @@
       var $pageEl = $(app.navbar.getPageByEl($navbarInnerEl));
       $navbarInnerEl.removeClass('navbar-inner-large-collapsed');
       $pageEl.eq(0).removeClass('page-with-navbar-large-collapsed').trigger('page:navbarlargeexpanded');
+      app.emit('pageNavbarLargeExpanded', $pageEl[0]);
       var $navbarEl = $navbarInnerEl.parents('.navbar');
       if (app.theme === 'md' || app.theme === 'aurora') {
         $navbarEl.removeClass('navbar-large-collapsed');
@@ -13642,9 +13718,9 @@
       // Find Element
       var $el;
       if (!popup.params.el) {
-        $el = $(popup.params.content);
+        $el = $(popup.params.content).filter(function (elIndex, node) { return node.nodeType === 1; }).eq(0);
       } else {
-        $el = $(popup.params.el);
+        $el = $(popup.params.el).eq(0);
       }
 
       if ($el && $el.length > 0 && $el[0].f7Modal) {
@@ -13922,9 +13998,9 @@
       // Find Element
       var $el;
       if (!loginScreen.params.el) {
-        $el = $(loginScreen.params.content);
+        $el = $(loginScreen.params.content).filter(function (elIndex, node) { return node.nodeType === 1; }).eq(0);
       } else {
-        $el = $(loginScreen.params.el);
+        $el = $(loginScreen.params.el).eq(0);
       }
 
       if ($el && $el.length > 0 && $el[0].f7Modal) {
@@ -14001,9 +14077,9 @@
       // Find Element
       var $el;
       if (!popover.params.el) {
-        $el = $(popover.params.content);
+        $el = $(popover.params.content).filter(function (elIndex, node) { return node.nodeType === 1; }).eq(0);
       } else {
-        $el = $(popover.params.el);
+        $el = $(popover.params.el).eq(0);
       }
 
       if ($el && $el.length > 0 && $el[0].f7Modal) {
@@ -14349,9 +14425,9 @@
       // Find Element
       var $el;
       if (actions.params.el) {
-        $el = $(actions.params.el);
+        $el = $(actions.params.el).eq(0);
       } else if (actions.params.content) {
-        $el = $(actions.params.content);
+        $el = $(actions.params.content).filter(function (elIndex, node) { return node.nodeType === 1; }).eq(0);
       } else if (actions.params.buttons) {
         if (actions.params.convertToPopover) {
           actions.popoverHtml = actions.renderPopover();
@@ -14658,9 +14734,9 @@
       // Find Element
       var $el;
       if (!sheet.params.el) {
-        $el = $(sheet.params.content);
+        $el = $(sheet.params.content).filter(function (elIndex, node) { return node.nodeType === 1; }).eq(0);
       } else {
-        $el = $(sheet.params.el);
+        $el = $(sheet.params.el).eq(0);
       }
 
       if ($el && $el.length > 0 && $el[0].f7Modal) {
@@ -15408,6 +15484,20 @@
           var $progressbarEl = $(progressbarEl);
           app.progressbar.set($progressbarEl, $progressbarEl.attr('data-progress'));
         });
+      },
+    },
+    vnode: {
+      progressbar: {
+        insert: function insert(vnode) {
+          var app = this;
+          var el = vnode.elm;
+          app.progressbar.set(el, el.getAttribute('data-progress'));
+        },
+        update: function update(vnode) {
+          var app = this;
+          var el = vnode.elm;
+          app.progressbar.set(el, el.getAttribute('data-progress'));
+        },
       },
     },
   };
@@ -18105,9 +18195,8 @@
 
   var Panel = /*@__PURE__*/(function (Framework7Class) {
     function Panel(app, params) {
-      var obj;
-
       if ( params === void 0 ) params = {};
+
       Framework7Class.call(this, params, [app]);
       var panel = this;
 
@@ -18131,7 +18220,7 @@
       if (typeof effect === 'undefined') { effect = $el.hasClass('panel-cover') ? 'cover' : 'reveal'; }
 
       if (!app.panel[side]) {
-        Utils.extend(app.panel, ( obj = {}, obj[side] = panel, obj ));
+        app.panel[side] = panel;
       } else {
         throw new Error(("Framework7: Can't create panel; app already has a " + side + " panel!"));
       }
@@ -18492,6 +18581,7 @@
         delete panel.el.f7Panel;
       }
       Utils.deleteProps(panel);
+
       panel = null;
     };
 
@@ -18906,7 +18996,7 @@
         $cardEl.addClass('card-opened');
         $cardEl.removeClass('card-opening');
         $cardEl.trigger('card:opened');
-        app.emit('cardOpened', $cardEl[0]);
+        app.emit('cardOpened', $cardEl[0], $pageEl[0]);
       }
       $cardContentEl
         .css({
@@ -19140,7 +19230,7 @@
         $cardEl.removeClass('card-closing card-no-transition');
         $cardEl.trigger('card:closed');
         $cardEl.find('.card-expandable-size').remove();
-        app.emit('cardClosed', $cardEl[0]);
+        app.emit('cardClosed', $cardEl[0], $pageEl[0]);
       }
       $cardContentEl
         .css({
@@ -20009,7 +20099,7 @@
         toggle.emit('local::change toggleChange', toggle);
       }
       toggle.attachEvents = function attachEvents() {
-        if (Support.touch) {
+        if ( Support.touch) {
           var passive = Support.passiveListener ? { passive: true } : false;
           $el.on(app.touchEvents.start, handleTouchStart, passive);
           app.on('touchmove', handleTouchMove);
@@ -20018,7 +20108,7 @@
         toggle.$inputEl.on('change', handleInputChange);
       };
       toggle.detachEvents = function detachEvents() {
-        if (Support.touch) {
+        if ( Support.touch) {
           var passive = Support.passiveListener ? { passive: true } : false;
           $el.off(app.touchEvents.start, handleTouchStart, passive);
           app.off('touchmove', handleTouchMove);

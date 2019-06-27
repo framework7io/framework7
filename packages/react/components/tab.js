@@ -1,5 +1,4 @@
 import React from 'react';
-import events from '../utils/events';
 import f7 from '../utils/f7';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
@@ -80,7 +79,14 @@ class F7Tab extends React.Component {
     self.$f7ready(() => {
       self.routerData = {
         el,
-        component: self
+        component: self,
+
+        setTabContent(tabContent) {
+          self.setState({
+            tabContent
+          });
+        }
+
       };
       f7.routers.tabs.push(self.routerData);
     });
@@ -104,7 +110,7 @@ class F7Tab extends React.Component {
   componentDidUpdate() {
     const self = this;
     if (!self.routerData) return;
-    events.emit('tabRouterDidUpdate', self.routerData);
+    f7.events.emit('tabRouterDidUpdate', self.routerData);
   }
 
   get slots() {

@@ -57,7 +57,7 @@ export interface Framework7Params {
   /** App root methods. Object with methods.  Note, that this inside of each method points to app Framework7 instance.. (default {}) */
   methods? : { [name : string] : () => any }
   /** Enables auto dark theme */
-  autoDarkTheme: boolean
+  autoDarkTheme?: boolean
   /** Lazy modules path */
   lazyModulesPath?: string
   /** By default Framework7 will be initialized automatically when you call new Framework7(). If you want to prevent this behavior you can disable it with this option and then initialize it manually with init() when you need it.. (default true) */

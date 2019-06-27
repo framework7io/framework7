@@ -182,6 +182,8 @@ class F7Messagebar extends React.Component {
       });
     }
 
+    const valueProps = {};
+    if ('value' in self.props) valueProps.value = value;
     return React.createElement('div', {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
@@ -193,7 +195,7 @@ class F7Messagebar extends React.Component {
       className: 'toolbar-inner'
     }, slotsInnerStart, React.createElement('div', {
       className: 'messagebar-area'
-    }, slotsBeforeArea, messagebarAttachmentsEl, React.createElement(F7Input, {
+    }, slotsBeforeArea, messagebarAttachmentsEl, React.createElement(F7Input, Object.assign({
       ref: __reactNode => {
         this.__reactRefs['area'] = __reactNode;
       },
@@ -204,12 +206,11 @@ class F7Messagebar extends React.Component {
       name: name,
       readonly: readonly,
       resizable: resizable,
-      value: value,
       onInput: self.onInput,
       onChange: self.onChange,
       onFocus: self.onFocus,
       onBlur: self.onBlur
-    }), slotsAfterArea), (sendLink && sendLink.length > 0 || slotsSendLink) && React.createElement(F7Link, {
+    }, valueProps)), slotsAfterArea), (sendLink && sendLink.length > 0 || slotsSendLink) && React.createElement(F7Link, {
       onClick: self.onClick
     }, slotsSendLink || sendLink), slotsInnerEnd, innerEndEls), slotsAfterInner, messagebarSheetEl);
   }

@@ -2,6 +2,7 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import F7Input from './input';
 import F7Link from './link';
+import __vueComponentTransformJSXProps from '../runtime-helpers/vue-component-transform-jsx-props.js';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
 export default {
@@ -92,6 +93,8 @@ export default {
       });
     }
 
+    const valueProps = {};
+    if ('value' in self.props) valueProps.value = value;
     return _h('div', {
       ref: 'el',
       style: style,
@@ -103,8 +106,9 @@ export default {
       class: 'toolbar-inner'
     }, [slotsInnerStart, _h('div', {
       class: 'messagebar-area'
-    }, [slotsBeforeArea, messagebarAttachmentsEl, _h(F7Input, {
-      ref: 'area',
+    }, [slotsBeforeArea, messagebarAttachmentsEl, _h(F7Input, __vueComponentTransformJSXProps(Object.assign({
+      ref: 'area'
+    }, valueProps, {
       on: {
         input: self.onInput,
         change: self.onChange,
@@ -118,10 +122,9 @@ export default {
         disabled: disabled,
         name: name,
         readonly: readonly,
-        resizable: resizable,
-        value: value
+        resizable: resizable
       }
-    }), slotsAfterArea]), (sendLink && sendLink.length > 0 || slotsSendLink) && _h(F7Link, {
+    }))), slotsAfterArea]), (sendLink && sendLink.length > 0 || slotsSendLink) && _h(F7Link, {
       on: {
         click: self.onClick
       }

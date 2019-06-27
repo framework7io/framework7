@@ -24,9 +24,9 @@ class Sheet extends Modal {
     // Find Element
     let $el;
     if (!sheet.params.el) {
-      $el = $(sheet.params.content);
+      $el = $(sheet.params.content).filter((elIndex, node) => node.nodeType === 1).eq(0);
     } else {
-      $el = $(sheet.params.el);
+      $el = $(sheet.params.el).eq(0);
     }
 
     if ($el && $el.length > 0 && $el[0].f7Modal) {
