@@ -48,17 +48,15 @@ class Framework7Component {
       set() {},
     });
 
-    // Apply context
+    // Bind hooks
     ('beforeCreate created beforeMount mounted beforeDestroy destroyed updated').split(' ').forEach((cycleKey) => {
       if ($options[cycleKey]) $options[cycleKey] = $options[cycleKey].bind(self);
     });
 
-    if ($options.data) {
-      $options.data = $options.data.bind(self);
-      // Data
-      Utils.extend(self, $options.data());
-    }
+    // Bind render
     if ($options.render) $options.render = $options.render.bind(self);
+
+    // Bind methods
     if ($options.methods) {
       Object.keys($options.methods).forEach((methodName) => {
         self[methodName] = $options.methods[methodName].bind(self);
@@ -77,41 +75,51 @@ class Framework7Component {
       });
     }
 
-    // Before create hook
-    if ($options.beforeCreate) $options.beforeCreate();
+    // Bind Data
+    if ($options.data) $options.data = $options.data.bind(self);
 
-    // Render
-    let html = self.$render();
+    return new Promise((resolve, reject) => {
+      self.$hook('data')
+        .then((data) => {
+          if (data) Utils.extend(self, data);
+          return self.$hook('beforeCreate');
+        })
+        .then(() => {
+          let html = self.$render();
 
-    // Make Dom
-    if (html && typeof html === 'string') {
-      html = html.trim();
-      self.$vnode = vdom(html, self, app, true);
-      self.el = document.createElement('div');
-      patch(self.el, self.$vnode);
-    } else if (html) {
-      self.el = html;
-    }
-    self.$el = $(self.el);
+          // Make Dom
+          if (html && typeof html === 'string') {
+            html = html.trim();
+            self.$vnode = vdom(html, self, app, true);
+            self.el = document.createElement('div');
+            patch(self.el, self.$vnode);
+          } else if (html) {
+            self.el = html;
+          }
+          self.$el = $(self.el);
 
-    // Set styles scope ID
-    if ($options.style) {
-      self.$styleEl = document.createElement('style');
-      self.$styleEl.innerHTML = $options.style;
-      if ($options.styleScoped) {
-        self.el.setAttribute(`data-f7-${$options.id}`, '');
-      }
-    }
+          // Set styles scope ID
+          if ($options.style) {
+            self.$styleEl = document.createElement('style');
+            self.$styleEl.innerHTML = $options.style;
+            if ($options.styleScoped) {
+              self.el.setAttribute(`data-f7-${$options.id}`, '');
+            }
+          }
 
-    self.$attachEvents();
+          self.$attachEvents();
 
-    // Created callback
-    if ($options.created) $options.created();
+          self.el.f7Component = self;
 
-    // Store component instance
-    self.el.f7Component = self;
-
-    return self;
+          return self.$hook('created');
+        })
+        .then(() => {
+          resolve(self);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
   }
 
   $attachEvents() {
@@ -185,28 +193,59 @@ class Framework7Component {
 
   $mount(mountMethod) {
     const self = this;
-    if (self.$options.beforeMount) self.$options.beforeMount();
-    if (self.$styleEl) $('head').append(self.$styleEl);
-    if (mountMethod) mountMethod(self.el);
-    if (self.$options.mounted) self.$options.mounted();
+    return self.$hook('beforeMount')
+      .then(() => {
+        if (self.$styleEl) $('head').append(self.$styleEl);
+        if (mountMethod) mountMethod(self.el);
+        return self.$hook('mounted');
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
   }
 
   $destroy() {
     const self = this;
-    if (self.$options.beforeDestroy) self.$options.beforeDestroy();
-    if (self.$styleEl) $(self.$styleEl).remove();
-    self.$detachEvents();
-    if (self.$options.destroyed) self.$options.destroyed();
-    // Delete component instance
-    if (self.el && self.el.f7Component) {
-      self.el.f7Component = null;
-      delete self.el.f7Component;
-    }
-    // Patch with empty node
-    if (self.$vnode) {
-      self.$vnode = patch(self.$vnode, { sel: self.$vnode.sel, data: {} });
-    }
-    Utils.deleteProps(self);
+    return self.$hook('beforeDestroy')
+      .then(() => {
+        if (self.$styleEl) $(self.$styleEl).remove();
+        self.$detachEvents();
+        return self.$hook('destroyed');
+      })
+      .then(() => {
+        // Delete component instance
+        if (self.el && self.el.f7Component) {
+          self.el.f7Component = null;
+          delete self.el.f7Component;
+        }
+        // Patch with empty node
+        if (self.$vnode) {
+          self.$vnode = patch(self.$vnode, { sel: self.$vnode.sel, data: {} });
+        }
+        Utils.deleteProps(self);
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
+  }
+
+  $hook(name) {
+    const self = this;
+    return new Promise((resolve, reject) => {
+      if (!self.$options[name]) resolve();
+      const result = self.$options[name]();
+      if (result instanceof Promise) {
+        result
+          .then((res) => {
+            resolve(res);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      } else {
+        resolve(result);
+      }
+    });
   }
 }
 

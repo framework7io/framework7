@@ -117,7 +117,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
     // Load Tab Props
     const { url, content, el, template, templateUrl, component, componentUrl } = loadTabParams;
     // Component/Template Callbacks
-    function resolve(contentEl) {
+    async function resolve(contentEl) {
       router.allowPageChange = true;
       if (!contentEl) return;
       if (typeof contentEl === 'string') {
@@ -125,7 +125,7 @@ function tabLoad(tabRoute, loadOptions = {}) {
       } else {
         $newTabEl.html('');
         if (contentEl.f7Component) {
-          contentEl.f7Component.$mount((componentEl) => {
+          await contentEl.f7Component.$mount((componentEl) => {
             $newTabEl.append(componentEl);
           });
         } else {

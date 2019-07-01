@@ -34,8 +34,15 @@ export default {
             },
           }
         );
-        const createdComponent = app.component.create(componentOptions, extendContext);
-        resolve(createdComponent.el);
+        // const createdComponent = app.component.create(componentOptions, extendContext);
+        app.component.create(componentOptions, extendContext)
+          .then((createdComponent) => {
+            resolve(createdComponent.el);
+          })
+          .catch((err) => {
+            reject();
+            throw new Error(err);
+          });
       }
       let cachedComponent;
       if (compiledUrl) {
