@@ -2,6 +2,11 @@
 
 # Change Log
 
+# [v4.4.6](https://github.com/framework7io/framework7/compare/v4.4.5...v4.4.6) - July 1, 2019
+  * Core
+    * Router
+      * Fixed issue when loading detail page in (Master Detail) with `reloadAll` loaded only detail page
+
 # [v4.4.5](https://github.com/framework7io/framework7/compare/v4.4.3...v4.4.5) - June 27, 2019
   * Core
     * Router

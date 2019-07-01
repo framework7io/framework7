@@ -788,15 +788,28 @@ function navigate(navigateParams, navigateOptions = {}) {
   if (router.params.masterDetailBreakpoint > 0 && route.route.masterRoute) {
     // load detail route
     let preloadMaster = true;
+    let masterLoaded = false;
     if (router.currentRoute && router.currentRoute.route) {
-      if (router.currentRoute.route.master && (router.currentRoute.route === route.route.masterRoute || router.currentRoute.route.path === route.route.masterRoute.path)) {
+      if (
+        router.currentRoute.route.master
+        && (
+          router.currentRoute.route === route.route.masterRoute
+          || router.currentRoute.route.path === route.route.masterRoute.path
+        )
+      ) {
         preloadMaster = false;
       }
-      if (router.currentRoute.route.masterRoute && ((router.currentRoute.route.masterRoute === route.route.masterRoute) || (router.currentRoute.route.masterRoute.path === route.route.masterRoute.path))) {
+      if (
+        router.currentRoute.route.masterRoute
+        && (router.currentRoute.route.masterRoute === route.route.masterRoute
+          || router.currentRoute.route.masterRoute.path === route.route.masterRoute.path
+        )
+      ) {
         preloadMaster = false;
+        masterLoaded = true;
       }
     }
-    if (preloadMaster) {
+    if (preloadMaster || (masterLoaded && navigateOptions.reloadAll)) {
       router.navigate(route.route.masterRoute.path, {
         animate: false,
         reloadAll: navigateOptions.reloadAll,
