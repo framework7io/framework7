@@ -6,7 +6,7 @@ import vdom from './vdom';
 import patch from './patch';
 
 class Framework7Component {
-  constructor(app, options, extendContext = {}) {
+  constructor(app, options, extendContext = {}, children = []) {
     const id = Utils.id();
     const self = Utils.merge(
       this,
@@ -19,6 +19,7 @@ class Framework7Component {
         $f7: app,
         $options: Utils.extend({ id }, options),
         $id: options.id || id,
+        $children: children,
       }
     );
     const { $options } = self;
@@ -49,9 +50,10 @@ class Framework7Component {
     });
 
     // Bind hooks
-    ('beforeCreate created beforeMount mounted beforeDestroy destroyed updated').split(' ').forEach((cycleKey) => {
-      if ($options[cycleKey]) $options[cycleKey] = $options[cycleKey].bind(self);
-    });
+    ['beforeCreate', 'created', 'beforeMount', 'mounted', 'beforeDestroy', 'destroyed', 'updated']
+      .forEach((cycleKey) => {
+        if ($options[cycleKey]) $options[cycleKey] = $options[cycleKey].bind(self);
+      });
 
     // Bind render
     if ($options.render) $options.render = $options.render.bind(self);
@@ -79,41 +81,61 @@ class Framework7Component {
     if ($options.data) $options.data = $options.data.bind(self);
 
     return new Promise((resolve, reject) => {
-      self.$hook('data')
+      self.$hook('data', true)
         .then((data) => {
           if (data) Utils.extend(self, data);
-          return self.$hook('beforeCreate');
-        })
-        .then(() => {
+          self.$hook('beforeCreate');
           let html = self.$render();
 
+          if (self.$options.el) {
+            html = html.trim();
+            self.$vnode = vdom(html, self, true);
+            if ($options.style) {
+              self.$styleEl = document.createElement('style');
+              self.$styleEl.innerHTML = $options.style;
+              if ($options.styleScoped) {
+                self.$vnode.data.attrs[`data-f7-${$options.id}`] = '';
+              }
+            }
+            self.el = self.$options.el;
+            patch(self.el, self.$vnode);
+            self.el = self.$vnode.elm;
+            self.$el = $(self.el);
+
+            self.$attachEvents();
+            self.el.f7Component = self;
+            self.$hook('created');
+            self.$mount();
+            resolve(self);
+            return;
+          }
           // Make Dom
           if (html && typeof html === 'string') {
             html = html.trim();
-            self.$vnode = vdom(html, self, app, true);
-            self.el = document.createElement('div');
+            self.$vnode = vdom(html, self, true);
+            if ($options.style && $options.styleScoped) {
+              self.$vnode.data.attrs[`data-f7-${$options.id}`] = '';
+            }
+            self.el = document.createElement(self.$vnode.sel || 'div');
             patch(self.el, self.$vnode);
+            self.$el = $(self.el);
           } else if (html) {
             self.el = html;
+            self.$el = $(self.el);
+            if ($options.style && $options.styleScoped) {
+              self.el.setAttribute(`data-f7-${$options.id}`, '');
+            }
           }
-          self.$el = $(self.el);
-
-          // Set styles scope ID
           if ($options.style) {
             self.$styleEl = document.createElement('style');
             self.$styleEl.innerHTML = $options.style;
-            if ($options.styleScoped) {
-              self.el.setAttribute(`data-f7-${$options.id}`, '');
-            }
           }
 
           self.$attachEvents();
 
           self.el.f7Component = self;
 
-          return self.$hook('created');
-        })
-        .then(() => {
+          self.$hook('created');
           resolve(self);
         })
         .catch((err) => {
@@ -180,7 +202,7 @@ class Framework7Component {
     // Make Dom
     if (html && typeof html === 'string') {
       html = html.trim();
-      const newVNode = vdom(html, self, self.$app);
+      const newVNode = vdom(html, self, false);
       self.$vnode = patch(self.$vnode, newVNode);
     }
   }
@@ -193,59 +215,51 @@ class Framework7Component {
 
   $mount(mountMethod) {
     const self = this;
-    return self.$hook('beforeMount')
-      .then(() => {
-        if (self.$styleEl) $('head').append(self.$styleEl);
-        if (mountMethod) mountMethod(self.el);
-        return self.$hook('mounted');
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
+    self.$hook('beforeMount');
+    if (self.$styleEl) $('head').append(self.$styleEl);
+    if (mountMethod) mountMethod(self.el);
+    self.$hook('mounted');
   }
 
   $destroy() {
     const self = this;
-    return self.$hook('beforeDestroy')
-      .then(() => {
-        if (self.$styleEl) $(self.$styleEl).remove();
-        self.$detachEvents();
-        return self.$hook('destroyed');
-      })
-      .then(() => {
-        // Delete component instance
-        if (self.el && self.el.f7Component) {
-          self.el.f7Component = null;
-          delete self.el.f7Component;
-        }
-        // Patch with empty node
-        if (self.$vnode) {
-          self.$vnode = patch(self.$vnode, { sel: self.$vnode.sel, data: {} });
-        }
-        Utils.deleteProps(self);
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
+    self.$hook('beforeDestroy')
+
+    if (self.$styleEl) $(self.$styleEl).remove();
+    self.$detachEvents();
+    self.$hook('destroyed');
+    // Delete component instance
+    if (self.el && self.el.f7Component) {
+      self.el.f7Component = null;
+      delete self.el.f7Component;
+    }
+    // Patch with empty node
+    if (self.$vnode) {
+      self.$vnode = patch(self.$vnode, { sel: self.$vnode.sel, data: {} });
+    }
+    Utils.deleteProps(self);
   }
 
-  $hook(name) {
+  $hook(name, async) {
     const self = this;
-    return new Promise((resolve, reject) => {
-      if (!self.$options[name]) resolve();
-      const result = self.$options[name]();
-      if (result instanceof Promise) {
-        result
-          .then((res) => {
-            resolve(res);
-          })
-          .catch((err) => {
-            reject(err);
-          });
-      } else {
+    if (async) {
+      return new Promise((resolve, reject) => {
+        if (!self.$options[name]) {
+          resolve();
+          return;
+        }
+        const result = self.$options[name]();
+        if (result instanceof Promise) {
+          result
+            .then(res => resolve(res))
+            .catch(err => reject(err));
+          return;
+        }
         resolve(result);
-      }
-    });
+      });
+    }
+    if (self.$options[name]) return self.$options[name]();
+    return undefined;
   }
 }
 

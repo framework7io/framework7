@@ -15,7 +15,7 @@ function refreshPage() {
   });
 }
 
-async function forward(el, forwardOptions = {}) {
+function forward(el, forwardOptions = {}) {
   const router = this;
   const $el = $(el);
   const app = router.app;
@@ -309,7 +309,7 @@ async function forward(el, forwardOptions = {}) {
   const f7Component = $newPage[0].f7Component;
   if (options.reloadPrevious) {
     if (f7Component && !newPageInDom) {
-      await f7Component.$mount((componentEl) => {
+      f7Component.$mount((componentEl) => {
         $(componentEl).insertBefore($oldPage);
       });
     } else {
@@ -331,7 +331,7 @@ async function forward(el, forwardOptions = {}) {
   } else {
     if ($oldPage.next('.page')[0] !== $newPage[0]) {
       if (f7Component && !newPageInDom) {
-        await f7Component.$mount((componentEl) => {
+        f7Component.$mount((componentEl) => {
           $viewEl.append(componentEl);
         });
       } else {

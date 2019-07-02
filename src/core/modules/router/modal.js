@@ -107,12 +107,12 @@ function modalLoad(modalType, route, loadOptions = {}) {
     const { url, content, template, templateUrl, component, componentUrl } = loadModalParams;
 
     // Component/Template Callbacks
-    async function resolve(contentEl) {
+    function resolve(contentEl) {
       if (contentEl) {
         if (typeof contentEl === 'string') {
           modalParams.content = contentEl;
         } else if (contentEl.f7Component) {
-          await contentEl.f7Component.$mount((componentEl) => {
+          contentEl.f7Component.$mount((componentEl) => {
             modalParams.el = componentEl;
             app.root.append(componentEl);
           });

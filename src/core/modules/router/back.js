@@ -7,7 +7,7 @@ import redirect from './redirect';
 import processRouteQueue from './process-route-queue';
 import appRouterCheck from './app-router-check';
 
-async function backward(el, backwardOptions) {
+function backward(el, backwardOptions) {
   const router = this;
   const $el = $(el);
   const app = router.app;
@@ -185,10 +185,10 @@ async function backward(el, backwardOptions) {
   const newPageInDom = $newPage.parents(document).length > 0;
   const f7Component = $newPage[0].f7Component;
 
-  async function insertPage() {
+  function insertPage() {
     if ($newPage.next($oldPage).length === 0) {
       if (!newPageInDom && f7Component) {
-        await f7Component.$mount((componentEl) => {
+        f7Component.$mount((componentEl) => {
           $(componentEl).insertBefore($oldPage);
         });
       } else {
@@ -219,7 +219,7 @@ async function backward(el, backwardOptions) {
 
   if (options.preload) {
     // Insert Page
-    await insertPage();
+    insertPage();
     // Tab route
     if (options.route.route.tab) {
       router.tabLoad(options.route.route.tab, Utils.extend({}, options, {
@@ -331,7 +331,7 @@ async function backward(el, backwardOptions) {
   }
 
   // Insert Page
-  await insertPage();
+  insertPage();
 
   // Load Tab
   if (options.route.route.tab) {

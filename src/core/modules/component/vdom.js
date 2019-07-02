@@ -37,6 +37,7 @@ function getHooks(data, app, initial, isRoot) {
   if (insert.length === 0 && destroy.length === 0 && update.length === 0 && postpatch.length === 0) {
     return hooks;
   }
+
   if (insert.length) {
     hooks.insert = (vnode) => {
       insert.forEach(f => f(vnode));
@@ -234,7 +235,9 @@ function getChildren(el, context, app, initial) {
   for (let i = 0; i < nodes.length; i += 1) {
     const childNode = nodes[i];
     const child = elementToVNode(childNode, context, app, initial);
-    if (child) {
+    if (Array.isArray(child)) {
+      children.push(...child);
+    } else if (child) {
       children.push(child);
     }
   }
@@ -242,23 +245,34 @@ function getChildren(el, context, app, initial) {
 }
 
 function elementToVNode(el, context, app, initial, isRoot) {
-  if (el.nodeType === 1) {
-    // element (statement adds inline SVG compatibility)
-    const tagName = (el instanceof window.SVGElement) ? el.nodeName : el.nodeName.toLowerCase();
-    return h(
-      tagName,
-      getData(el, context, app, initial, isRoot),
-      selfClosing.indexOf(tagName) >= 0 ? [] : getChildren(el, context, app, initial)
-    );
-  }
   if (el.nodeType === 3) {
     // text
     return el.textContent;
   }
-  return null;
+  if (el.nodeType !== 1) return null;
+  // element (statement adds inline SVG compatibility)
+  const tagName = (el instanceof window.SVGElement) ? el.nodeName : el.nodeName.toLowerCase();
+  // proceed slots
+  if (tagName === 'slot' && context.$children) {
+    if (!context.$children.length) return null;
+    const children = [];
+    const slotName = el.getAttribute('name') || 'default';
+    for (let i = 0; i < context.$children.length; i += 1) {
+      const childSlotName = context.$children[i].getAttribute('slot') || 'default';
+      if (childSlotName === slotName) {
+        children.push(elementToVNode(context.$children[i], context, app, initial));
+      }
+    }
+    return children;
+  }
+  return h(
+    tagName,
+    getData(el, context, app, initial, isRoot),
+    selfClosing.indexOf(tagName) >= 0 ? [] : getChildren(el, context, app, initial)
+  );
 }
 
-export default function (html = '', context, app, initial) {
+export default function (html = '', context, initial) {
   // Save to temp dom
   tempDom.innerHTML = html.trim();
 
@@ -269,7 +283,7 @@ export default function (html = '', context, app, initial) {
       rootEl = tempDom.childNodes[i];
     }
   }
-  const result = elementToVNode(rootEl, context, app, initial, true);
+  const result = elementToVNode(rootEl, context, context.$app, initial, true);
 
   // Clean
   tempDom.innerHTML = '';
