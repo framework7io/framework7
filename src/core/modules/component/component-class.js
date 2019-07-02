@@ -223,7 +223,7 @@ class Framework7Component {
 
   $destroy() {
     const self = this;
-    self.$hook('beforeDestroy')
+    self.$hook('beforeDestroy');
 
     if (self.$styleEl) $(self.$styleEl).remove();
     self.$detachEvents();
