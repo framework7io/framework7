@@ -195,7 +195,7 @@ class Framework7Component {
     return html;
   }
 
-  $forceUpdate() {
+  $update() {
     const self = this;
     let html = self.$render();
 
@@ -210,7 +210,7 @@ class Framework7Component {
   $setState(mergeState) {
     const self = this;
     Utils.merge(self, mergeState);
-    self.$forceUpdate();
+    self.$update();
   }
 
   $mount(mountMethod) {
