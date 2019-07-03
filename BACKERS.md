@@ -112,8 +112,9 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 ---
 
 ### $50+ Top Supporter
-Vinay Samant
-[Rise](https://rise.co) - Creative Web Development Agency
+Fatih Batal<br>
+Vinay Samant<br>
+[Rise](https://rise.co) - Creative Web Development Agency<br>
 [usave](https://usave.co.uk/utilities/broadband) - compare broadband deals on usave.co.uk<br>
 [Unlikely IT](https://unlikelyit.com/) - Making I.T. a little more human<br>
 [Kidoverse](https://kidoverse.app) - App for kids to learn, play, create and explore<br>
@@ -136,6 +137,7 @@ Bart DJ
 ---
 
 ### $10+ Supporter
+JK<br>
 Daniel Morales<br>
 Azad Zain<br>
 Nicolas Hinze<br>
@@ -149,7 +151,6 @@ Matthew Proctor<br>
 Andy Fuchs<br>
 Noah A Neibaron<br>
 José Manuel Alarcón<br>
-Fatih Batal<br>
 Matt Davis<br>
 Arsen Huang<br>
 Jonathan Pugh<br>
