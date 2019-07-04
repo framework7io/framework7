@@ -83,7 +83,7 @@ class Panel extends Framework7Class {
     if (app.width >= breakpoint) {
       if (!wasVisible) {
         $('html').removeClass(`with-panel-${side}-reveal with-panel-${side}-cover with-panel`);
-        $el.css('display', '').addClass('panel-visible-by-breakpoint').removeClass('panel-active');
+        $el.addClass('panel-visible-by-breakpoint').removeClass('panel-active');
         panel.onOpen();
         panel.onOpened();
         $viewEl.css({
@@ -100,7 +100,7 @@ class Panel extends Framework7Class {
         });
       }
     } else if (wasVisible) {
-      $el.css('display', '').removeClass('panel-visible-by-breakpoint panel-active');
+      $el.removeClass('panel-visible-by-breakpoint panel-active');
       panel.onClose();
       panel.onClosed();
       $viewEl.css({
@@ -239,9 +239,7 @@ class Panel extends Framework7Class {
     app.panel.allowOpen = false;
 
     $el[animate ? 'removeClass' : 'addClass']('not-animated');
-    $el
-      .css({ display: 'block' })
-      .addClass('panel-active');
+    $el.addClass('panel-active');
 
     $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
     $backdropEl.css({ display: 'block' });
@@ -302,7 +300,6 @@ class Panel extends Framework7Class {
     if (animate) {
       transitionEndTarget.transitionEnd(() => {
         if ($el.hasClass('panel-active')) return;
-        $el.css({ display: '' });
         $('html').removeClass('with-panel-transitioning');
         panel.onClosed();
       });
@@ -310,7 +307,6 @@ class Panel extends Framework7Class {
         .removeClass(`with-panel with-panel-${side}-${effect}`)
         .addClass('with-panel-transitioning');
     } else {
-      $el.css({ display: '' });
       $el.removeClass('not-animated');
       $('html').removeClass(`with-panel with-panel-transitioning with-panel-${side}-${effect}`);
       panel.onClosed();
@@ -356,7 +352,7 @@ class Panel extends Framework7Class {
 
     if (panel.$el.hasClass('panel-visible-by-breakpoint')) {
       const $viewEl = $(panel.getViewEl());
-      panel.$el.css('display', '').removeClass('panel-visible-by-breakpoint panel-active');
+      panel.$el.removeClass('panel-visible-by-breakpoint panel-active');
       $viewEl.css({
         [`margin-${panel.side}`]: '',
       });

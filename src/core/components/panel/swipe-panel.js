@@ -166,7 +166,6 @@ function swipePanel(panel) {
 
     if (!isMoved) {
       if (!panel.opened) {
-        $el.css('display', 'block');
         $backdropEl.css('display', 'block');
         $el.trigger('panel:swipeopen', panel);
         panel.emit('local::swipeOpen panelSwipeOpen', panel);
@@ -288,13 +287,12 @@ function swipePanel(panel) {
     if (action === 'reset') {
       if (!panel.opened) {
         if (edge) {
-          $el.css({ display: '' });
+          // edge position
         } else {
           const target = effect === 'reveal' ? $viewEl : $el;
           $('html').addClass('with-panel-transitioning');
           target.transitionEnd(() => {
             if ($el.hasClass('panel-active')) return;
-            $el.css({ display: '' });
             $('html').removeClass('with-panel-transitioning');
           });
         }
