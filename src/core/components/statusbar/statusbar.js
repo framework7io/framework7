@@ -5,7 +5,6 @@ import Device from '../../utils/device';
 
 const Statusbar = {
   hide() {
-    $('html').removeClass('with-statusbar');
     if (Device.cordova && window.StatusBar) {
       window.StatusBar.hide();
     }
@@ -13,14 +12,7 @@ const Statusbar = {
   show() {
     if (Device.cordova && window.StatusBar) {
       window.StatusBar.show();
-      Utils.nextTick(() => {
-        if (Device.needsStatusbarOverlay()) {
-          $('html').addClass('with-statusbar');
-        }
-      });
-      return;
     }
-    $('html').addClass('with-statusbar');
   },
   onClick() {
     const app = this;
@@ -57,12 +49,7 @@ const Statusbar = {
       }
     }
   },
-  setIosTextColor(color) {
-    if (!Device.ios) return;
-    Statusbar.setTextColor(color);
-  },
   setBackgroundColor(color) {
-    $('.statusbar').css('background-color', color);
     if (Device.cordova && window.StatusBar) {
       window.StatusBar.backgroundColorByHexString(color);
     }
@@ -76,52 +63,12 @@ const Statusbar = {
   overlaysWebView(overlays = true) {
     if (Device.cordova && window.StatusBar) {
       window.StatusBar.overlaysWebView(overlays);
-      if (overlays) {
-        $('html').addClass('with-statusbar');
-      } else {
-        $('html').removeClass('with-statusbar');
-      }
-    }
-  },
-  checkOverlay() {
-    if (Device.needsStatusbarOverlay()) {
-      $('html').addClass('with-statusbar');
-    } else {
-      $('html').removeClass('with-statusbar');
     }
   },
   init() {
     const app = this;
     const params = app.params.statusbar;
     if (!params.enabled) return;
-
-    if (params.overlay === 'auto') {
-      if (Device.needsStatusbarOverlay()) {
-        $('html').addClass('with-statusbar');
-      } else {
-        $('html').removeClass('with-statusbar');
-      }
-
-      if (Device.ios && (Device.cordova || Device.webView)) {
-        if (window.orientation === 0) {
-          app.once('resize', () => {
-            Statusbar.checkOverlay();
-          });
-        }
-
-        $(document).on('resume', () => {
-          Statusbar.checkOverlay();
-        }, false);
-
-        app.on(Device.ios ? 'orientationchange' : 'orientationchange resize', () => {
-          Statusbar.checkOverlay();
-        });
-      }
-    } else if (params.overlay === true) {
-      $('html').addClass('with-statusbar');
-    } else if (params.overlay === false) {
-      $('html').removeClass('with-statusbar');
-    }
 
     if (Device.cordova && window.StatusBar) {
       if (params.scrollTopOnClick) {
@@ -155,8 +102,8 @@ const Statusbar = {
     if (params.iosBackgroundColor && Device.ios) {
       Statusbar.setBackgroundColor(params.iosBackgroundColor);
     }
-    if ((params.materialBackgroundColor || params.androidBackgroundColor) && Device.android) {
-      Statusbar.setBackgroundColor(params.materialBackgroundColor || params.androidBackgroundColor);
+    if (params.androidBackgroundColor && Device.android) {
+      Statusbar.setBackgroundColor(params.androidBackgroundColor);
     }
   },
 };
@@ -166,7 +113,7 @@ export default {
   params: {
     statusbar: {
       enabled: true,
-      overlay: 'auto',
+
       scrollTopOnClick: true,
 
       iosOverlaysWebView: true,
@@ -182,7 +129,6 @@ export default {
     const app = this;
     Utils.extend(app, {
       statusbar: {
-        checkOverlay: Statusbar.checkOverlay,
         hide: Statusbar.hide,
         show: Statusbar.show,
         overlaysWebView: Statusbar.overlaysWebView,
@@ -197,14 +143,6 @@ export default {
     init() {
       const app = this;
       Statusbar.init.call(app);
-    },
-  },
-  clicks: {
-    '.statusbar': function onStatusbarClick() {
-      const app = this;
-      if (!app.params.statusbar.enabled) return;
-      if (!app.params.statusbar.scrollTopOnClick) return;
-      Statusbar.onClick.call(app);
     },
   },
 };

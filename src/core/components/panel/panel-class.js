@@ -195,12 +195,9 @@ class Panel extends Framework7Class {
 
     if (!$panelParentEl.is(app.root) || $el.prevAll('.views, .view').length) {
       const $insertBeforeEl = app.root.children('.panel, .views, .view').eq(0);
-      const $insertAfterEl = app.root.children('.statusbar').eq(0);
 
       if ($insertBeforeEl.length) {
         $el.insertBefore($insertBeforeEl);
-      } else if ($insertAfterEl.length) {
-        $el.insertAfter($insertBeforeEl);
       } else {
         app.root.prepend($el);
       }
