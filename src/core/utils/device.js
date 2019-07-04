@@ -49,8 +49,10 @@ const Device = (function Device() {
     && macos
     && Support.touch
     && (
-      (screenWidth === 1024 && screenHeight === 1366)
-      || (screenWidth === 768 && screenHeight === 1024)
+      (screenWidth === 1024 && screenHeight === 1366) // Pro 12.9
+      || (screenWidth === 834 && screenHeight === 1194) // Pro 11
+      || (screenWidth === 834 && screenHeight === 1112) // Pro 10.5
+      || (screenWidth === 768 && screenHeight === 1024) // other
     )
   ) {
     ipad = ua.match(/(Version)\/([\d.]+)/);
