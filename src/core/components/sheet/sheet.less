@@ -82,10 +82,10 @@
 }
 .sheet-modal-top {
   bottom: auto;
-  top: var(--f7-statusbar-height);
-  transform: translate3d(0, calc(-100% - var(--f7-statusbar-height)), 0);
+  top: var(--f7-safe-area-top);
+  transform: translate3d(0, calc(-100% - var(-f7-safe-area-top)), 0);
   &.modal-out {
-    transform: translate3d(0, calc(-100% - var(--f7-statusbar-height)), 0);
+    transform: translate3d(0, calc(-100% - var(-f7-safe-area-top)), 0);
   }
   .toolbar-bottom {
     position: absolute;
