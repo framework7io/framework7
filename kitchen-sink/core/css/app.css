@@ -233,9 +233,9 @@ div.demo-lazy {
   min-width: 150px;
   max-width: 90%;
 }
-.ios .panel-right.panel-active ~ .view-main:after,
+.ios .panel-right.panel-opened ~ .view-main:after,
 .ios .panel-right.panel-closing ~ .view-main:after,
-.aurora .panel-right.panel-active ~ .view-main:after,
+.aurora .panel-right.panel-opened ~ .view-main:after,
 .aurora .panel-right.panel-closing ~ .view-main:after {
   content: '';
   height: 100%;
@@ -246,9 +246,9 @@ div.demo-lazy {
   background: #ddd;
   z-index: 1000;
 }
-.ios .theme-dark .panel-right.panel-active ~ .view-main:after,
+.ios .theme-dark .panel-right.panel-opened ~ .view-main:after,
 .ios .theme-dark .panel-right.panel-closing ~ .view-main:after,
-.aurora .theme-dark .panel-right.panel-active ~ .view-main:after,
+.aurora .theme-dark .panel-right.panel-opened ~ .view-main:after,
 .aurora .theme-dark .panel-right.panel-closing ~ .view-main:after {
   background: #282828;
 }
@@ -636,4 +636,7 @@ code {
   margin-top: -3px;
   border-radius: 3px;
   background: #666;
+}
+:root {
+  --f7-safe-area-top: 34px;
 }

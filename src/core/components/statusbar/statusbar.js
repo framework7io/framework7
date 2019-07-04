@@ -28,9 +28,9 @@ const Statusbar = {
     if ($('.popup.modal-in').length > 0) {
       // Check for opened popup
       pageContent = $('.popup.modal-in').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
-    } else if ($('.panel.panel-active').length > 0) {
+    } else if ($('.panel.panel-opened').length > 0) {
       // Check for opened panel
-      pageContent = $('.panel.panel-active').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
+      pageContent = $('.panel.panel-opened').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
     } else if ($('.views > .view.tab-active').length > 0) {
       // View in tab bar app layout
       pageContent = $('.views > .view.tab-active').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');

@@ -113,12 +113,12 @@ function swipePanel(panel) {
       if (
         (side === 'left'
           && (
-            direction === 'to-left' && !$el.hasClass('panel-active')
+            direction === 'to-left' && !$el.hasClass('panel-opened')
           )
         )
         || (side === 'right'
           && (
-            direction === 'to-right' && !$el.hasClass('panel-active')
+            direction === 'to-right' && !$el.hasClass('panel-opened')
           )
         )
       ) {
@@ -151,11 +151,11 @@ function swipePanel(panel) {
         if (timeDiff < 300) {
           if (direction === 'to-left') {
             if (side === 'right') app.panel.open(side);
-            if (side === 'left' && $el.hasClass('panel-active')) app.panel.close();
+            if (side === 'left' && $el.hasClass('panel-opened')) app.panel.close();
           }
           if (direction === 'to-right') {
             if (side === 'left') app.panel.open(side);
-            if (side === 'right' && $el.hasClass('panel-active')) app.panel.close();
+            if (side === 'right' && $el.hasClass('panel-opened')) app.panel.close();
           }
         }
         isTouched = false;
@@ -166,7 +166,6 @@ function swipePanel(panel) {
 
     if (!isMoved) {
       if (!panel.opened) {
-        $backdropEl.css('display', 'block');
         $el.trigger('panel:swipeopen', panel);
         panel.emit('local::swipeOpen panelSwipeOpen', panel);
       }
@@ -292,7 +291,7 @@ function swipePanel(panel) {
           const target = effect === 'reveal' ? $viewEl : $el;
           $('html').addClass('with-panel-transitioning');
           target.transitionEnd(() => {
-            if ($el.hasClass('panel-active')) return;
+            if ($el.hasClass('panel-opened')) return;
             $('html').removeClass('with-panel-transitioning');
           });
         }
@@ -305,7 +304,7 @@ function swipePanel(panel) {
       });
     }
     $el.transition('').transform('');
-    $backdropEl.css({ display: '' }).transform('').transition('').css('opacity', '');
+    $backdropEl.transform('').transition('').css('opacity', '');
   }
 
   // Add Events

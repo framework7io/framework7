@@ -147,7 +147,7 @@ export default {
           panelSide = side;
           $panelEl = $(`.panel-${panelSide}`);
         } else {
-          $panelEl = $('.panel.panel-active');
+          $panelEl = $('.panel.panel-opened');
           panelSide = $panelEl.hasClass('panel-left') ? 'left' : 'right';
         }
         if (!panelSide) return false;
@@ -165,8 +165,8 @@ export default {
         if (side) {
           panelSide = side;
           $panelEl = $(`.panel-${panelSide}`);
-        } else if ($('.panel.panel-active').length) {
-          $panelEl = $('.panel.panel-active');
+        } else if ($('.panel.panel-opened').length) {
+          $panelEl = $('.panel.panel-opened');
           panelSide = $panelEl.hasClass('panel-left') ? 'left' : 'right';
         } else {
           if ($('.panel').length > 1) {
@@ -236,7 +236,7 @@ export default {
     },
     '.panel-backdrop': function close() {
       const app = this;
-      const $panelEl = $('.panel-active');
+      const $panelEl = $('.panel-opened');
       const instance = $panelEl[0] && $panelEl[0].f7Panel;
       $panelEl.trigger('panel:backdrop-click');
       if (instance) {

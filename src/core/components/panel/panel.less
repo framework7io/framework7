@@ -9,11 +9,12 @@
   height: calc(100% - var(--f7-appbar-app-offset, 0px));
   opacity: 0;
   z-index: 5999;
-  display: none;
+  visibility: hidden;
+  pointer-events: none;
   transform: translate3d(0,0,0);
   background-color: var(--f7-panel-backdrop-bg-color);
   transition-duration: var(--f7-panel-transition-duration);
-  will-change: transform, opacity;
+  transition-property: transform, opacity, visibility;
   &.not-animated {
     transition-duration: 0ms !important;
   }
@@ -30,6 +31,10 @@
   overflow: visible;
   will-change: transform;
   transition-property: transform;
+  visibility: hidden;
+  .framework7-root & {
+    visibility: visible;
+  }
   &:after {
     pointer-events: none;
     opacity: 0;
@@ -136,8 +141,8 @@ html {
       transition-property: transform;
     }
     .panel-backdrop {
-      background: rgba(0,0,0,0);
-      display: block;
+      visibility: visible;
+      pointer-events: auto;
       opacity: 0;
     }
   }
@@ -152,7 +157,8 @@ html {
   &.with-panel-left-cover,
   &.with-panel-right-cover {
     .panel-backdrop {
-      display: block;
+      visibility: visible;
+      pointer-events: auto;
       opacity: 1;
     }
   }
