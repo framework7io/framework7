@@ -602,8 +602,8 @@ code {
   --f7-popup-tablet-border-radius: 15px;
   --f7-page-bg-color: #fff;
   --f7-block-strong-border-color: transparent;
-  height: calc(100% - var(--f7-navbar-height) - var(--f7-statusbar-height));
-  top: calc(var(--f7-navbar-height) + var(--f7-statusbar-height))
+  height: calc(100% - var(--f7-navbar-height) - var(--f7-safe-area-top));
+  top: calc(var(--f7-navbar-height) + var(--f7-safe-area-top))
 }
 .demo-popup-swipe-handler .page-content {
   padding-top: 16px;

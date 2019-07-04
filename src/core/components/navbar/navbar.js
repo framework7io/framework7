@@ -345,30 +345,26 @@ const Navbar = {
     }
 
     function handleLargeNavbarCollapse() {
+      const isHidden = $navbarEl.hasClass('navbar-hidden');
+      if (isHidden) return;
       const collapseProgress = Math.min(Math.max((currentScrollTop / navbarTitleLargeHeight), 0), 1);
       const inSearchbarExpanded = $navbarInnerEl.hasClass('with-searchbar-expandable-enabled');
       if (inSearchbarExpanded) return;
       navbarCollapsed = $navbarInnerEl.hasClass('navbar-inner-large-collapsed');
+
       if (collapseProgress === 0 && navbarCollapsed) {
         app.navbar.expandLargeTitle($navbarInnerEl[0]);
-        $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-        $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-        $navbarInnerEl[0].style.overflow = '';
-        if (app.theme === 'md' || app.theme === 'aurora') {
-          $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-        }
       } else if (collapseProgress === 1 && !navbarCollapsed) {
         app.navbar.collapseLargeTitle($navbarInnerEl[0]);
+      }
+      if (
+        (collapseProgress === 0 && navbarCollapsed)
+        || (collapseProgress === 1 && !navbarCollapsed)
+        || ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed))
+      ) {
         $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-        $navbarInnerEl[0].style.overflow = '';
         $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-        if (app.theme === 'md' || app.theme === 'aurora') {
-          $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-        }
-      } else if ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed)) {
-        $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         $navbarInnerEl[0].style.overflow = '';
-        $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         if (app.theme === 'md' || app.theme === 'aurora') {
           $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         }

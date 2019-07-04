@@ -12,7 +12,7 @@
   box-sizing: border-box;
   margin: 0;
   transform: translate3d(0,0,0);
-  height: var(--f7-navbar-height);
+  height: calc(var(--f7-navbar-height) + var(--f7-safe-area-top));
   background-image: var(--f7-navbar-bg-image, var(--f7-bars-bg-image));
   background-color: var(--f7-navbar-bg-color, var(--f7-bars-bg-color, var(--f7-theme-color)));
   color: var(--f7-navbar-text-color, var(--f7-bars-text-color));
@@ -109,7 +109,9 @@
 .navbar-transitioning {
   &,
   &:before,
+  & .left,
   & .title,
+  & .right,
   & .title-large,
   & .title-large-inner,
   & .title-large-text,
@@ -126,7 +128,15 @@
 }
 // Hidden
 .navbar-hidden {
-  transform: translate3d(0, -100%, 0);
+  transform: translate3d(0, calc(-100% + var(--f7-safe-area-top)), 0);
+  .navbar-inner {
+    pointer-events: none;
+    > .left,
+    > .title,
+    > .right {
+      opacity: 0;
+    }
+  }
 }
 .navbar-large-hidden {
   --f7-navbar-large-collapse-progress: 1;
@@ -134,7 +144,7 @@
 .navbar-inner {
   position: absolute;
   left: 0;
-  top: 0;
+  bottom: 0;
   width: 100%;
   height: var(--f7-navbar-height);
   display: flex;
@@ -228,16 +238,16 @@
 
 // Relation with page
 .navbar ~ * {
-  --f7-page-navbar-offset: var(--f7-navbar-height);
+  --f7-page-navbar-offset: calc(var(--f7-navbar-height) + var(--f7-safe-area-top));
 }
 .navbar ~ * .page-with-navbar-large,
 .navbar ~ .page-with-navbar-large,
 .page-with-navbar-large .navbar ~ * {
-  --f7-page-navbar-offset: calc(var(--f7-navbar-height) + var(--f7-navbar-large-title-height));
+  --f7-page-navbar-offset: calc(var(--f7-navbar-height) + var(--f7-navbar-large-title-height) + var(--f7-safe-area-top));
 }
 .page.no-navbar,
 .page.no-navbar .navbar ~ * {
-  --f7-page-navbar-offset: 0px;
+  --f7-page-navbar-offset: var(--f7-safe-area-top);
 }
 
 

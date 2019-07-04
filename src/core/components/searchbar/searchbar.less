@@ -183,13 +183,13 @@
 // Relation with page
 .navbar ~ .page:not(.no-navbar) > .searchbar,
 .page > .navbar ~ .searchbar {
-  top: var(--f7-navbar-height);
+  top: calc(var(--f7-navbar-height) + var(--f7-safe-area-top));
 }
 
 .navbar ~ .page-with-navbar-large:not(.no-navbar) .searchbar,
 .page-with-navbar-large .navbar ~ .searchbar,
 .page-with-navbar-large .navbar ~ * .searchbar {
-  top: calc(var(--f7-navbar-height) + var(--f7-navbar-large-title-height));
+  top: calc(var(--f7-navbar-height) + var(--f7-navbar-large-title-height) + var(--f7-safe-area-top));
   transform: translate3d(0, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)
 }
 
@@ -220,7 +220,7 @@
 .md .page > .navbar ~ .toolbar-top-md,
 .aurora .page > .navbar ~ .toolbar-top-aurora {
   ~ .searchbar {
-    top: calc(var(--f7-navbar-height) + var(--f7-toolbar-height));
+    top: calc(var(--f7-navbar-height) + var(--f7-toolbar-height) + var(--f7-safe-area-top));
   }
 }
 .page > .navbar ~ .tabbar-labels.toolbar-top,
@@ -228,7 +228,7 @@
 .md .page > .navbar ~ .tabbar-labels.toolbar-top-md,
 .aurora .page > .navbar ~ .tabbar-labels.toolbar-top-aurora {
   ~ .searchbar {
-    top: calc(var(--f7-navbar-height) + var(--f7-tabbar-labels-height));
+    top: calc(var(--f7-navbar-height) + var(--f7-tabbar-labels-height) + var(--f7-safe-area-top));
   }
 }
 

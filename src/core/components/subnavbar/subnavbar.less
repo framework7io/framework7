@@ -94,18 +94,14 @@
 .page-with-subnavbar .navbar ~ * .subnavbar,
 .navbar ~ .page-with-subnavbar:not(.no-navbar) .subnavbar,
 .navbar ~ .subnavbar {
-  top: var(--f7-navbar-height);
+  top: calc(var(--f7-navbar-height) + var(--f7-safe-area-top));
 }
 
 .navbar ~ .page-with-navbar-large:not(.no-navbar) .subnavbar,
 .page-with-subnavbar.page-with-navbar-large .navbar ~ .subnavbar,
-.page-with-subnavbar.page-with-navbar-large .navbar ~ * .subnavbar {
-  top: calc(var(--f7-navbar-height) + var(--f7-navbar-large-title-height));
-  transform: translate3d(0, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)
-}
-
+.page-with-subnavbar.page-with-navbar-large .navbar ~ * .subnavbar,
 .navbar .title-large ~ .subnavbar {
-  top: calc(var(--f7-navbar-height) + var(--f7-navbar-large-title-height));
+  top: calc(var(--f7-navbar-height) + var(--f7-navbar-large-title-height) + var(--f7-safe-area-top));
   transform: translate3d(0, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)
 }
 .page-with-subnavbar,
