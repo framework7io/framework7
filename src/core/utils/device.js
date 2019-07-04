@@ -1,4 +1,5 @@
 import { window, document } from 'ssr-window';
+import Support from './support';
 
 const Device = (function Device() {
   const platform = window.navigator.platform;
@@ -29,7 +30,7 @@ const Device = (function Device() {
 
   const windowsPhone = ua.match(/(Windows Phone);?[\s\/]+([\d.]+)?/); // eslint-disable-line
   const android = ua.match(/(Android);?[\s\/]+([\d.]+)?/); // eslint-disable-line
-  const ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
+  let ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
   const ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
   const iphone = !ipad && ua.match(/(iPhone\sOS|iOS)\s([\d_]+)/);
   const iphoneX = iphone && (
@@ -39,9 +40,24 @@ const Device = (function Device() {
   const ie = ua.indexOf('MSIE ') >= 0 || ua.indexOf('Trident/') >= 0;
   const edge = ua.indexOf('Edge/') >= 0;
   const firefox = ua.indexOf('Gecko/') >= 0 && ua.indexOf('Firefox/') >= 0;
-  const macos = platform === 'MacIntel';
   const windows = platform === 'Win32';
   const electron = ua.toLowerCase().indexOf('electron') >= 0;
+  let macos = platform === 'MacIntel';
+
+  // iPadOs 13 fix
+  if (!ipad
+    && macos
+    && Support.touch
+    && (
+      (screenWidth === 1024 && screenHeight === 1366) // Pro 12.9
+      || (screenWidth === 834 && screenHeight === 1194) // Pro 11
+      || (screenWidth === 834 && screenHeight === 1112) // Pro 10.5
+      || (screenWidth === 768 && screenHeight === 1024) // other
+    )
+  ) {
+    ipad = ua.match(/(Version)\/([\d.]+)/);
+    macos = false;
+  }
 
   device.ie = ie;
   device.edge = edge;
