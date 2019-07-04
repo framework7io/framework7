@@ -300,7 +300,7 @@
 // Relation with navbar
 .navbar ~ * .fab[class*="-top"],
 .navbar ~ .fab[class*="-top"] {
-  margin-top: var(--f7-navbar-height);
+  margin-top: calc(var(--f7-navbar-height) + var(--f7-safe-area-top));
 }
 // Relation with toolbar
 .toolbar-top ~ * .fab[class*="-top"],
@@ -347,7 +347,7 @@
   .md & + .toolbar-top-ios {
     ~ * .fab[class*="-top"],
     ~ .fab[class*="-top"] {
-      margin-top: calc(var(--f7-toolbar-height) + var(--f7-navbar-height));
+      margin-top: calc(var(--f7-toolbar-height) + var(--f7-navbar-height) + var(--f7-safe-area-top));
     }
   }
   + .toolbar-top.tabbar-labels,
@@ -355,7 +355,7 @@
   .md & + .toolbar-top-ios.tabbar-labels {
     ~ * .fab[class*="-top"],
     ~ .fab[class*="-top"] {
-      margin-top: calc(var(--f7-tabbar-labels-height) + var(--f7-navbar-height));
+      margin-top: calc(var(--f7-tabbar-labels-height) + var(--f7-navbar-height) + var(--f7-safe-area-top));
     }
   }
 }
