@@ -169,7 +169,6 @@ class Sheet extends Modal {
       }
 
       touchesDiff = startTouch.y - currentTouch.y;
-
       if (!isMoved) {
         sheetElOffsetHeight = $el[0].offsetHeight;
         startTranslate = Utils.getTranslate($el[0], 'y');
@@ -188,6 +187,17 @@ class Sheet extends Modal {
       $el
         .transition(0)
         .transform(`translate3d(0,${currentTranslate}px,0)`);
+      if (sheet.params.swipeToStep) {
+        let progress;
+        if (isTopSheetModal) {
+          progress = 1 - (currentTranslate / swipeStepTranslate);
+        } else {
+          progress = (swipeStepTranslate - currentTranslate) / swipeStepTranslate;
+        }
+        progress = Math.min(Math.max(progress, 0), 1);
+        $el.trigger('sheet:stepprogress', progress);
+        sheet.emit('local::stepProgress sheetStepProgress', sheet, progress);
+      }
     }
     function handleTouchEnd() {
       isTouched = false;
@@ -223,6 +233,8 @@ class Sheet extends Modal {
         if (direction === openDirection && absCurrentTranslate < absSwipeStepTranslate) {
           // open step
           $el.removeClass('modal-in-swipe-step');
+          $el.trigger('sheet:stepprogress', 1);
+          sheet.emit('local::stepProgress sheetStepProgress', sheet, 1);
           $el.trigger('sheet:stepopen');
           sheet.emit('local::stepOpen sheetStepOpen', sheet);
         }
@@ -233,6 +245,8 @@ class Sheet extends Modal {
           } else {
             // close step
             $el.addClass('modal-in-swipe-step');
+            $el.trigger('sheet:stepprogress', 0);
+            sheet.emit('local::stepProgress sheetStepProgress', sheet, 0);
             $el.trigger('sheet:stepclose');
             sheet.emit('local::stepClose sheetStepClose', sheet);
           }
@@ -240,6 +254,8 @@ class Sheet extends Modal {
         if (direction === closeDirection && absCurrentTranslate <= absSwipeStepTranslate) {
           // close step
           $el.addClass('modal-in-swipe-step');
+          $el.trigger('sheet:stepprogress', 0);
+          sheet.emit('local::stepProgress sheetStepProgress', sheet, 0);
           $el.trigger('sheet:stepclose');
           sheet.emit('local::stepClose sheetStepClose', sheet);
         }
@@ -251,6 +267,8 @@ class Sheet extends Modal {
           if (absCurrentTranslate < (absSwipeStepTranslate / 2)) {
             // open step
             $el.removeClass('modal-in-swipe-step');
+            $el.trigger('sheet:stepprogress', 1);
+            sheet.emit('local::stepProgress sheetStepProgress', sheet, 1);
             $el.trigger('sheet:stepopen');
             sheet.emit('local::stepOpen sheetStepOpen', sheet);
           } else if ((absCurrentTranslate - absSwipeStepTranslate) > (sheetElOffsetHeight - absSwipeStepTranslate) / 2) {
@@ -264,6 +282,8 @@ class Sheet extends Modal {
           } else if (absCurrentTranslate > absSwipeStepTranslate / 2) {
             // close step
             $el.addClass('modal-in-swipe-step');
+            $el.trigger('sheet:stepprogress', 0);
+            sheet.emit('local::stepProgress sheetStepProgress', sheet, 0);
             $el.trigger('sheet:stepclose');
             sheet.emit('local::stepClose sheetStepClose', sheet);
           }

@@ -127,6 +127,7 @@ export default {
       'onClosed',
       'onStepOpen',
       'onStepClose',
+      'onStepProgress',
     ]);
   },
   componentDidMount() {
@@ -140,6 +141,7 @@ export default {
     el.addEventListener('sheet:closed', self.onClosed);
     el.addEventListener('sheet:stepopen', self.onStepOpen);
     el.addEventListener('sheet:stepclose', self.onStepClose);
+    el.addEventListener('sheet:stepprogress', self.onStepProgress);
 
     const props = self.props;
     const {
@@ -198,8 +200,12 @@ export default {
     el.removeEventListener('sheet:closed', self.onClosed);
     el.removeEventListener('sheet:stepopen', self.onStepOpen);
     el.removeEventListener('sheet:stepclose', self.onStepClose);
+    el.removeEventListener('sheet:stepprogress', self.onStepProgress);
   },
   methods: {
+    onStepProgress(event) {
+      this.dispatchEvent('sheet:stepprogress sheetStepProgress', event.detail);
+    },
     onStepOpen(event) {
       this.dispatchEvent('sheet:stepopen sheetStepOpen', event);
     },
