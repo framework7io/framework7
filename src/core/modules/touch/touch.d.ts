@@ -31,7 +31,7 @@ export namespace Touch {
       tapHoldPreventClicks? : boolean
       /** When enabled, app will add "active-state" class to currently touched (:active) element.. (default true) */
       activeState? : boolean
-      /** CSS selector of elements where enabled activeState will add appropriate active class. (default a, button, label, span, .actions-button) */
+      /** CSS selector of elements where enabled activeState will add appropriate active class. (default a, button, label, span, .actions-button, .stepper-button, .stepper-button-plus, .stepper-button-minus, .card-expandable, .menu-item, .link, .item-link) */
       activeStateElements? : string
       /** Enables MD-theme specific touch ripple effect. (default true) */
       mdTouchRipple? : boolean
