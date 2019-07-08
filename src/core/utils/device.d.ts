@@ -7,12 +7,8 @@ export interface Device {
   androidChrome: boolean
   /** true for desktop browser */
   desktop: boolean
-  /** true for Windows Phone device */
-  windowsPhone: boolean
   /** true for iPhone */
   iphone: boolean
-  /** true for iPhone X */
-  iphoneX: boolean
   /** true for iPod */
   ipod: boolean
   /** true for iPad */
