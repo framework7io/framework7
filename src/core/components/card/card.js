@@ -120,10 +120,22 @@ const CardExpandable = {
     let translateX = (cardRightOffset - cardLeftOffset) / 2;
     let translateY = (cardBottomOffset - cardTopOffset) / 2;
     if (cardParams.hideNavbarOnOpen && $navbarEl && $navbarEl.length) {
-      app.navbar.hide($navbarEl, cardParams.animate, cardParams.hideStatusbarOnOpen);
+      if ($navbarEl.closest('.navbar-hidden').length) {
+        // Was hidden
+        $cardEl[0].f7KeepNavbarOnClose = true;
+      } else {
+        delete $cardEl[0].f7KeepNavbarOnClose;
+        app.navbar.hide($navbarEl, cardParams.animate, cardParams.hideStatusbarOnOpen);
+      }
     }
     if (cardParams.hideToolbarOnOpen && $toolbarEl && $toolbarEl.length) {
-      app.toolbar.hide($toolbarEl, cardParams.animate);
+      if ($toolbarEl.closest('.toolbar-hidden').length) {
+        // Was hidden
+        $cardEl[0].f7KeepToolbarOnClose = true;
+      } else {
+        delete $cardEl[0].f7KeepToolbarOnClose;
+        app.toolbar.hide($toolbarEl, cardParams.animate);
+      }
     }
     if ($backdropEl) {
       $backdropEl.removeClass('card-backdrop-out').addClass('card-backdrop-in');
@@ -330,7 +342,7 @@ const CardExpandable = {
       if (!$navbarEl.length) {
         if ($pageEl[0].f7Page) $navbarEl = $pageEl[0].f7Page.$navbarEl;
       }
-      if ($navbarEl && $navbarEl.length) {
+      if ($navbarEl && $navbarEl.length && !$cardEl[0].f7KeepNavbarOnClose) {
         app.navbar.show($navbarEl, cardParams.animate);
       }
     }
@@ -342,7 +354,7 @@ const CardExpandable = {
       if (!$toolbarEl.length) {
         $toolbarEl = $pageEl.parents('.views').children('.toolbar');
       }
-      if ($toolbarEl && $toolbarEl.length) {
+      if ($toolbarEl && $toolbarEl.length && !$cardEl[0].f7KeepToolbarOnClose) {
         app.toolbar.show($toolbarEl, cardParams.animate);
       }
     }
