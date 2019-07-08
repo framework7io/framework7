@@ -36,7 +36,7 @@ function Request(requestOptions) {
       beforeCreate (options),
       beforeOpen (xhr, options),
       beforeSend (xhr, options),
-      error (xhr, status),
+      error (xhr, status, message),
       complete (xhr, stautus),
       success (response, status, xhr),
       statusCode ()
@@ -100,7 +100,7 @@ function Request(requestOptions) {
     script.type = 'text/javascript';
     script.onerror = function onerror() {
       clearTimeout(abortTimeout);
-      fireCallback('error', null, 'scripterror');
+      fireCallback('error', null, 'scripterror', 'scripterror');
       fireCallback('complete', null, 'scripterror');
     };
     script.src = requestUrl;
@@ -119,7 +119,7 @@ function Request(requestOptions) {
       abortTimeout = setTimeout(() => {
         script.parentNode.removeChild(script);
         script = null;
-        fireCallback('error', null, 'timeout');
+        fireCallback('error', null, 'timeout', 'timeout');
       }, options.timeout);
     }
 
@@ -227,14 +227,14 @@ function Request(requestOptions) {
         if (!parseError) {
           fireCallback('success', responseData, xhr.status, xhr);
         } else {
-          fireCallback('error', xhr, 'parseerror');
+          fireCallback('error', xhr, 'parseerror', 'parseerror');
         }
       } else {
         responseData = xhr.responseType === 'text' || xhr.responseType === '' ? xhr.responseText : xhr.response;
         fireCallback('success', responseData, xhr.status, xhr);
       }
     } else {
-      fireCallback('error', xhr, xhr.status);
+      fireCallback('error', xhr, xhr.status, xhr.statusText);
     }
     if (options.statusCode) {
       if (globals.statusCode && globals.statusCode[xhr.status]) globals.statusCode[xhr.status](xhr);
@@ -245,7 +245,7 @@ function Request(requestOptions) {
 
   xhr.onerror = function onerror() {
     if (xhrTimeout) clearTimeout(xhrTimeout);
-    fireCallback('error', xhr, xhr.status);
+    fireCallback('error', xhr, xhr.status, xhr.status);
     fireCallback('complete', xhr, 'error');
   };
 
@@ -256,7 +256,7 @@ function Request(requestOptions) {
     };
     xhrTimeout = setTimeout(() => {
       xhr.abort();
-      fireCallback('error', xhr, 'timeout');
+      fireCallback('error', xhr, 'timeout', 'timeout');
       fireCallback('complete', xhr, 'timeout');
     }, options.timeout);
   }
@@ -311,11 +311,12 @@ function RequestShortcutPromise(method, ...args) {
       method,
       url,
       data,
-      (response) => {
-        resolve(response);
+      (responseData, status, xhr) => {
+        resolve({ data: responseData, status, xhr });
       },
-      (xhr, status) => {
-        reject(status);
+      (xhr, status, message) => {
+        // eslint-disable-next-line
+        reject({ xhr, status, message });
       },
       dataType
     );
@@ -332,11 +333,12 @@ Object.assign(Request, {
 Request.promise = function requestPromise(requestOptions) {
   return new Promise((resolve, reject) => {
     Request(Object.assign(requestOptions, {
-      success(data) {
-        resolve(data);
+      success(data, status, xhr) {
+        resolve({ data, status, xhr });
       },
-      error(xhr, status) {
-        reject(status);
+      error(xhr, status, message) {
+        // eslint-disable-next-line
+        reject({ xhr, status, message });
       },
     }));
   });
