@@ -32,6 +32,10 @@ export default {
       type: Boolean,
       default: undefined,
     },
+    hideStatusbarOnOpen: {
+      type: Boolean,
+      default: undefined,
+    },
     swipeToClose: {
       type: Boolean,
       default: undefined,
@@ -42,6 +46,10 @@ export default {
     },
     backdrop: {
       type: Boolean,
+      default: undefined,
+    },
+    backdropEl: {
+      type: String,
       default: undefined,
     },
     noShadow: Boolean,
@@ -109,9 +117,11 @@ export default {
       animate,
       hideNavbarOnOpen,
       hideToolbarOnOpen,
+      hideStatusbarOnOpen,
       swipeToClose,
       closeByBackdropClick,
       backdrop,
+      backdropEl,
       noShadow,
       noBorder,
     } = props;
@@ -167,9 +177,11 @@ export default {
         data-animate={typeof animate === 'undefined' ? animate : animate.toString()}
         data-hide-navbar-on-open={typeof hideNavbarOnOpen === 'undefined' ? hideNavbarOnOpen : hideNavbarOnOpen.toString()}
         data-hide-toolbar-on-open={typeof hideToolbarOnOpen === 'undefined' ? hideToolbarOnOpen : hideToolbarOnOpen.toString()}
+        data-hide-statusbar-on-open={typeof hideStatusbarOnOpen === 'undefined' ? hideStatusbarOnOpen : hideStatusbarOnOpen.toString()}
         data-swipe-to-close={typeof swipeToClose === 'undefined' ? swipeToClose : swipeToClose.toString()}
         data-close-by-backdrop-click={typeof closeByBackdropClick === 'undefined' ? closeByBackdropClick : closeByBackdropClick.toString()}
         data-backdrop={typeof backdrop === 'undefined' ? backdrop : backdrop.toString()}
+        data-backdrop-el={backdropEl}
       >
         {headerEl}
         {contentEl}

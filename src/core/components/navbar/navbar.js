@@ -148,7 +148,7 @@ const Navbar = {
       title.css({ left: `${titleLeft}px` });
     }
   },
-  hide(el, animate = true) {
+  hide(el, animate = true, hideStatusbar = false) {
     const app = this;
     let $el = $(el);
     if ($el.hasClass('navbar-inner')) $el = $el.parents('.navbar');
@@ -160,6 +160,9 @@ const Navbar = {
       : $el.find('.title-large').length;
     if (currentIsLarge) {
       className += ' navbar-large-hidden';
+    }
+    if (hideStatusbar) {
+      className += ' navbar-hidden-statusbar';
     }
     $el.transitionEnd(() => {
       $el.removeClass('navbar-transitioning');
@@ -180,7 +183,7 @@ const Navbar = {
         $el.removeClass('navbar-transitioning');
       });
     }
-    $el.removeClass('navbar-hidden navbar-large-hidden');
+    $el.removeClass('navbar-hidden navbar-large-hidden navbar-hidden-statusbar');
     $el.trigger('navbar:show');
     app.emit('navbarShow', $el[0]);
   },

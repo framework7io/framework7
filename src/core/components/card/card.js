@@ -120,7 +120,7 @@ const CardExpandable = {
     let translateX = (cardRightOffset - cardLeftOffset) / 2;
     let translateY = (cardBottomOffset - cardTopOffset) / 2;
     if (cardParams.hideNavbarOnOpen && $navbarEl && $navbarEl.length) {
-      app.navbar.hide($navbarEl, cardParams.animate);
+      app.navbar.hide($navbarEl, cardParams.animate, cardParams.hideStatusbarOnOpen);
     }
     if (cardParams.hideToolbarOnOpen && $toolbarEl && $toolbarEl.length) {
       app.toolbar.hide($toolbarEl, cardParams.animate);
@@ -413,6 +413,7 @@ export default {
   params: {
     card: {
       hideNavbarOnOpen: true,
+      hideStatusbarOnOpen: true,
       hideToolbarOnOpen: true,
       swipeToClose: true,
       closeByBackdropClick: true,
@@ -433,7 +434,7 @@ export default {
     pageBeforeIn(page) {
       const app = this;
       if (app.params.card.hideNavbarOnOpen && page.navbarEl && page.$el.find('.card-opened.card-expandable').length) {
-        app.navbar.hide(page.navbarEl);
+        app.navbar.hide(page.navbarEl, true, app.params.card.hideStatusbarOnOpen);
       }
 
       if (app.params.card.hideToolbarOnOpen && page.$el.find('.card-opened.card-expandable').length) {
