@@ -47,11 +47,13 @@ class Popup extends Modal {
 
     Utils.extend(popup, {
       app,
+      push: $el.hasClass('popup-push') || popup.params.push,
       $el,
       el: $el[0],
       $backdropEl,
       backdropEl: $backdropEl && $backdropEl[0],
       type: 'popup',
+      $htmlEl: $('html'),
     });
 
     function handleClick(e) {
@@ -92,26 +94,6 @@ class Popup extends Modal {
         popup.close();
       }
     }
-    if (popup.params.closeOnEscape) {
-      popup.on('popupOpen', () => {
-        $(document).on('keydown', onKeyDown);
-      });
-      popup.on('popupClose', () => {
-        $(document).off('keydown', onKeyDown);
-      });
-    }
-
-    popup.on('popupOpened', () => {
-      $el.removeClass('swipe-close-to-bottom swipe-close-to-top');
-      if (popup.params.closeByBackdropClick) {
-        app.on('click', handleClick);
-      }
-    });
-    popup.on('popupClose', () => {
-      if (popup.params.closeByBackdropClick) {
-        app.off('click', handleClick);
-      }
-    });
 
     let allowSwipeToClose = true;
     let isTouched = false;
@@ -235,6 +217,45 @@ class Popup extends Modal {
     }
 
     $el[0].f7Modal = popup;
+
+    let pushOffset;
+    popup.on('open', () => {
+      if (popup.params.closeOnEscape) {
+        $(document).on('keydown', onKeyDown);
+      }
+      if (popup.push) {
+        pushOffset = parseInt($el.css('--f7-popup-push-offset'), 10);
+        if (Number.isNaN(pushOffset)) pushOffset = 0;
+        if (pushOffset) {
+          $el.addClass('popup-push');
+          popup.$htmlEl.addClass('with-popup-push');
+          popup.$htmlEl[0].style.setProperty('--f7-popup-push-scale', (app.height - pushOffset * 2) / app.height);
+        }
+      }
+    });
+    popup.on('opened', () => {
+      $el.removeClass('swipe-close-to-bottom swipe-close-to-top');
+      if (popup.params.closeByBackdropClick) {
+        app.on('click', handleClick);
+      }
+    });
+    popup.on('close', () => {
+      if (popup.params.closeOnEscape) {
+        $(document).off('keydown', onKeyDown);
+      }
+      if (popup.params.closeByBackdropClick) {
+        app.off('click', handleClick);
+      }
+      if (popup.push && pushOffset) {
+        popup.$htmlEl.removeClass('with-popup-push');
+        popup.$htmlEl.addClass('with-popup-push-closing');
+      }
+    });
+    popup.on('closed', () => {
+      if (popup.push && pushOffset) {
+        popup.$htmlEl.removeClass('with-popup-push-closing');
+      }
+    });
 
     return popup;
   }
