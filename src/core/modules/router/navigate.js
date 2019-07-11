@@ -714,6 +714,16 @@ function navigate(navigateParams, navigateOptions = {}) {
   if (!route) {
     return router;
   }
+  if (route.route && route.route.viewName) {
+    const anotherViewName = route.route.viewName;
+    const anotherView = app.views[anotherViewName];
+    if (!anotherView) {
+      throw new Error(`Framework7: There is no View with "${anotherViewName}" name that was specified in this route`);
+    }
+    if (anotherView !== router.view) {
+      return anotherView.router.navigate(navigateParams, navigateOptions);
+    }
+  }
 
   if (route.route.redirect) {
     return redirect.call(router, 'navigate', route, navigateOptions);
