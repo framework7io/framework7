@@ -1,3 +1,4 @@
+/* eslint no-underscore-dangle: "off" */
 import { window, document } from 'ssr-window';
 import $ from 'dom7';
 import Template7 from 'template7';
@@ -195,16 +196,36 @@ class Framework7Component {
     return html;
   }
 
+  $tick(callback) {
+    const self = this;
+    window.requestAnimationFrame(() => {
+      if (self.__updateIsPending) {
+        window.requestAnimationFrame(() => {
+          callback();
+        });
+      } else {
+        callback();
+      }
+    });
+  }
+
   $update() {
     const self = this;
-    let html = self.$render();
+    window.cancelAnimationFrame(self.__requestAnimationFrameId);
+    delete self.__requestAnimationFrameId;
+    self.__updateIsPending = true;
+    self.__requestAnimationFrameId = window.requestAnimationFrame(() => {
+      let html = self.$render();
 
-    // Make Dom
-    if (html && typeof html === 'string') {
-      html = html.trim();
-      const newVNode = vdom(html, self, false);
-      self.$vnode = patch(self.$vnode, newVNode);
-    }
+      // Make Dom
+      if (html && typeof html === 'string') {
+        html = html.trim();
+        const newVNode = vdom(html, self, false);
+        self.$vnode = patch(self.$vnode, newVNode);
+      }
+      self.__updateIsPending = false;
+      delete self.__updateIsPending;
+    });
   }
 
   $setState(mergeState) {
@@ -237,6 +258,10 @@ class Framework7Component {
     if (self.$vnode) {
       self.$vnode = patch(self.$vnode, { sel: self.$vnode.sel, data: {} });
     }
+    // Clear update queue
+    window.cancelAnimationFrame(self.__requestAnimationFrameId);
+
+    // Delete all props
     Utils.deleteProps(self);
   }
 
