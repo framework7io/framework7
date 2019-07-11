@@ -9,9 +9,9 @@
       <p><a href="http://alistapart.com/article/the-era-of-symbol-fonts" class="external" target="_blank">Ligatures</a> allow rendering of an icon glyph simply by using its textual name. The replacement is done automatically by the web browser and provides more readable code than the equivalent numeric character reference.</p>
     </f7-block>
     <f7-block-header>
-      <f7-segmented>
-        <f7-button outline tab-link="#tab-f7" tab-link-active>F7 Icons</f7-button>
-        <f7-button outline tab-link="#tab-md">Material Icons</f7-button>
+      <f7-segmented strong>
+        <f7-button tab-link="#tab-f7" tab-link-active>F7 Icons</f7-button>
+        <f7-button tab-link="#tab-md">Material Icons</f7-button>
       </f7-segmented>
     </f7-block-header>
     <f7-block strong class="tabs">

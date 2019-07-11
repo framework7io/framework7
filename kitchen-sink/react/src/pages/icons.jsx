@@ -16,9 +16,9 @@ export default () => (
       <p><a href="http://alistapart.com/article/the-era-of-symbol-fonts" className="external" target="_blank">Ligatures</a> allow rendering of an icon glyph simply by using its textual name. The replacement is done automatically by the web browser and provides more readable code than the equivalent numeric character reference.</p>
     </Block>
     <BlockHeader>
-      <Segmented>
-        <Button outline tabLink="#tab-f7" tabLinkActive>F7 Icons</Button>
-        <Button outline tabLink="#tab-md">Material Icons</Button>
+      <Segmented strong>
+        <Button tabLink="#tab-f7" tabLinkActive>F7 Icons</Button>
+        <Button tabLink="#tab-md">Material Icons</Button>
       </Segmented>
     </BlockHeader>
     <Block strong className="tabs">

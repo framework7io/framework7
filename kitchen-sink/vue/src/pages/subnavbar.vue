@@ -2,10 +2,10 @@
   <f7-page>
     <f7-navbar title="Subnavbar" back-link="Back">
       <f7-subnavbar>
-        <f7-segmented>
-          <f7-button outline active>Link 1</f7-button>
-          <f7-button outline>Link 2</f7-button>
-          <f7-button outline>Link 3</f7-button>
+        <f7-segmented strong>
+          <f7-button active>Link 1</f7-button>
+          <f7-button>Link 2</f7-button>
+          <f7-button>Link 3</f7-button>
         </f7-segmented>
       </f7-subnavbar>
     </f7-navbar>
