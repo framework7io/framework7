@@ -166,6 +166,8 @@ function swipePanel(panel) {
 
     if (!isMoved) {
       if (!panel.opened) {
+        $el.css('visibility', 'visible');
+        $backdropEl.css('visibility', 'visible');
         $el.trigger('panel:swipeopen', panel);
         panel.emit('local::swipeOpen panelSwipeOpen', panel);
       }
@@ -287,11 +289,13 @@ function swipePanel(panel) {
       if (!panel.opened) {
         if (edge) {
           // edge position
+          $el.css('visibility', '');
         } else {
           const target = effect === 'reveal' ? $viewEl : $el;
           $('html').addClass('with-panel-transitioning');
           target.transitionEnd(() => {
             if ($el.hasClass('panel-opened')) return;
+            $el.css('visibility', '');
             $('html').removeClass('with-panel-transitioning');
           });
         }
@@ -303,8 +307,8 @@ function swipePanel(panel) {
         $viewEl.transform('');
       });
     }
-    $el.transition('').transform('');
-    $backdropEl.transform('').transition('').css('opacity', '');
+    $el.css('visibility', '').transition('').transform('');
+    $backdropEl.transform('').transition('').css({ opacity: '', visibility: '' });
   }
 
   // Add Events

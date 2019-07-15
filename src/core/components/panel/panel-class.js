@@ -259,11 +259,9 @@ class Panel extends Framework7Class {
     }
 
     if (animate) {
-      // Utils.nextFrame(() => {
       $('html').addClass(`with-panel with-panel-${side}-${effect}`);
       panel.onOpen();
       panelTransitionEnd();
-      // });
     } else {
       $('html').addClass(`with-panel with-panel-${side}-${effect}`);
       panel.onOpen();
