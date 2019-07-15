@@ -74,8 +74,8 @@ html.with-modal-popup {
   html.with-popup-push,
   html.with-popup-push-closing {
     .popup-push {
-      top: calc(var(--f7-popup-push-offset, var(--f7-safe-area-top)) + 10px);
-      height: calc(100% - var(--f7-popup-push-offset, var(--f7-safe-area-top)) - 10px);
+      top: calc(var(--f7-popup-push-offset) + 10px);
+      height: calc(100% - var(--f7-popup-push-offset) - 10px);
       border-radius: var(--f7-popup-push-border-radius);
       .view, .page {
         --f7-safe-area-top: 0px;
