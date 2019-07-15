@@ -351,10 +351,19 @@
   }
   --f7-navbar-large-bg-center-top: translateX(0) translateY(calc(-1 * var(--f7-navbar-large-title-height)));
   --f7-navbar-large-bg-center-bottom: translateX(0) translateY(0);
-  --f7-navbar-large-bg-left-top: translateX(-100%) translateY(calc(-1 * var(--f7-navbar-large-title-height)));
-  --f7-navbar-large-bg-left-bottom: translateX(-100%) translateY(0);
-  --f7-navbar-large-bg-right-top: translateX(100%) translateY(calc(-1 * var(--f7-navbar-large-title-height)));
-  --f7-navbar-large-bg-right-bottom: translateX(100%) translateY(0);
+  .ltr({
+    --f7-navbar-large-bg-left-top: translateX(-100%) translateY(calc(-1 * var(--f7-navbar-large-title-height)));
+    --f7-navbar-large-bg-left-bottom: translateX(-100%) translateY(0);
+    --f7-navbar-large-bg-right-top: translateX(100%) translateY(calc(-1 * var(--f7-navbar-large-title-height)));
+    --f7-navbar-large-bg-right-bottom: translateX(100%) translateY(0);
+  });
+  .rtl({
+    --f7-navbar-large-bg-left-top: translateX(100%) translateY(calc(-1 * var(--f7-navbar-large-title-height)));
+    --f7-navbar-large-bg-left-bottom: translateX(100%) translateY(0);
+    --f7-navbar-large-bg-right-top: translateX(-100%) translateY(calc(-1 * var(--f7-navbar-large-title-height)));
+    --f7-navbar-large-bg-right-bottom: translateX(-100%) translateY(0);
+  });
+
 
   .router-transition-forward {
     .navbar-current {
@@ -484,12 +493,23 @@
     transform: translateX(0px) translateY(0%) scale(1);
   }
   100% {
-    transform: translateX(calc(var(--f7-navbarLeftTextOffset) - var(--f7-navbarTitleLargeOffset))) translateY(calc(-1 * (var(--f7-navbar-height) + var(--f7-navbar-large-title-height)) / 2)) scale(0.5);
+    .ltr({
+      transform: translateX(calc(var(--f7-navbarLeftTextOffset) - var(--f7-navbarTitleLargeOffset))) translateY(calc(-1 * (var(--f7-navbar-height) + var(--f7-navbar-large-title-height)) / 2)) scale(0.5);
+    });
+    .rtl({
+      transform: translateX(calc(-1 * (var(--f7-navbarLeftTextOffset) - var(--f7-navbarTitleLargeOffset)))) translateY(calc(-1 * (var(--f7-navbar-height) + var(--f7-navbar-large-title-height)) / 2)) scale(0.5);
+    });
   }
 }
 @keyframes ios-navbar-title-large-text-slide-down {
   0% {
-    transform: translateX(calc(var(--f7-navbarLeftTextOffset) - var(--f7-navbarTitleLargeOffset))) translateY(calc(-1 * (var(--f7-navbar-height) + var(--f7-navbar-large-title-height)) / 2)) scale(0.5);
+    .ltr({
+      transform: translateX(calc(var(--f7-navbarLeftTextOffset) - var(--f7-navbarTitleLargeOffset))) translateY(calc(-1 * (var(--f7-navbar-height) + var(--f7-navbar-large-title-height)) / 2)) scale(0.5);
+    });
+    .rtl({
+      transform: translateX(calc(-1 * (var(--f7-navbarLeftTextOffset) - var(--f7-navbarTitleLargeOffset)))) translateY(calc(-1 * (var(--f7-navbar-height) + var(--f7-navbar-large-title-height)) / 2)) scale(0.5);
+    });
+
   }
   100% {
     transform: translateX(0px) translateY(0%) scale(1);
@@ -584,13 +604,24 @@
   }
   100% {
     opacity: 0;
-    transform: translateX(calc(var(--f7-navbarTitleLargeOffset) - var(--f7-navbarLeftTextOffset))) translateY(calc((var(--f7-navbar-height) + var(--f7-navbar-large-title-height)) / 2)) scale(2);
+    .ltr({
+      transform: translateX(calc(var(--f7-navbarTitleLargeOffset) - var(--f7-navbarLeftTextOffset))) translateY(calc((var(--f7-navbar-height) + var(--f7-navbar-large-title-height)) / 2)) scale(2);
+    });
+    .rtl({
+      transform: translateX(calc(-1 * (var(--f7-navbarTitleLargeOffset) - var(--f7-navbarLeftTextOffset)))) translateY(calc((var(--f7-navbar-height) + var(--f7-navbar-large-title-height)) / 2)) scale(2);
+    });
+
   }
 }
 @keyframes ios-navbar-back-text-next-to-current {
   0% {
     opacity: 0;
-    transform: translateX(calc(var(--f7-navbarTitleLargeOffset) - var(--f7-navbarLeftTextOffset))) translateY(calc((var(--f7-navbar-height) + var(--f7-navbar-large-title-height)) / 2)) scale(2);
+    .ltr({
+      transform: translateX(calc(var(--f7-navbarTitleLargeOffset) - var(--f7-navbarLeftTextOffset))) translateY(calc((var(--f7-navbar-height) + var(--f7-navbar-large-title-height)) / 2)) scale(2);
+    });
+    .rtl({
+      transform: translateX(calc(-1 * (var(--f7-navbarTitleLargeOffset) - var(--f7-navbarLeftTextOffset)))) translateY(calc((var(--f7-navbar-height) + var(--f7-navbar-large-title-height)) / 2)) scale(2);
+    });
   }
   20% {
     opacity: 0;
