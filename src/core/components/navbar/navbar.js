@@ -593,24 +593,25 @@ export default {
         app.navbar.size(navbarEl);
       });
     },
-    panelOpen(panel) {
-      const app = this;
-      if (!app.params.navbar[`${app.theme}CenterTitle`]) {
-        return;
-      }
-      panel.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
-        app.navbar.size(navbarEl);
-      });
-    },
-    panelSwipeOpen(panel) {
-      const app = this;
-      if (!app.params.navbar[`${app.theme}CenterTitle`]) {
-        return;
-      }
-      panel.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
-        app.navbar.size(navbarEl);
-      });
-    },
+    // TODO: check if really need it
+    // panelOpen(panel) {
+    //   const app = this;
+    //   if (!app.params.navbar[`${app.theme}CenterTitle`]) {
+    //     return;
+    //   }
+    //   panel.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
+    //     app.navbar.size(navbarEl);
+    //   });
+    // },
+    // panelSwipeOpen(panel) {
+    //   const app = this;
+    //   if (!app.params.navbar[`${app.theme}CenterTitle`]) {
+    //     return;
+    //   }
+    //   panel.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
+    //     app.navbar.size(navbarEl);
+    //   });
+    // },
     tabShow(tabEl) {
       const app = this;
       if (!app.params.navbar[`${app.theme}CenterTitle`]) {
