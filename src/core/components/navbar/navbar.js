@@ -50,18 +50,10 @@ const Navbar = {
 
     let router;
     let dynamicNavbar;
-    let separateNavbar;
-    let separateNavbarRightOffset = 0;
-    let separateNavbarLeftOffset = 0;
 
     if ($viewEl.length > 0 && $viewEl[0].f7View) {
       router = $viewEl[0].f7View.router;
       dynamicNavbar = router && router.dynamicNavbar;
-      separateNavbar = router && router.separateNavbar;
-      if (!separateNavbar) {
-        separateNavbarRightOffset = navbarWidth;
-        separateNavbarLeftOffset = navbarWidth / 5;
-      }
     }
 
     let currLeft;
@@ -93,8 +85,8 @@ const Navbar = {
 
     if (dynamicNavbar && app.theme === 'ios') {
       if (title.hasClass('sliding') || (title.length > 0 && sliding)) {
-        let titleLeftOffset = (-(currLeft + diff) * inverter) + separateNavbarLeftOffset;
-        const titleRightOffset = ((navbarInnerWidth - currLeft - diff - titleWidth) * inverter) - separateNavbarRightOffset;
+        let titleLeftOffset = -(currLeft + diff) * inverter;
+        const titleRightOffset = (navbarInnerWidth - currLeft - diff - titleWidth) * inverter;
 
         if (isPrevious) {
           if (router && router.params.iosAnimateNavbarBackIcon) {
@@ -112,8 +104,8 @@ const Navbar = {
           left[0].f7NavbarLeftOffset = (-(navbarInnerWidth - left[0].offsetWidth) / 2) * inverter;
           left[0].f7NavbarRightOffset = leftWidth * inverter;
         } else {
-          left[0].f7NavbarLeftOffset = -leftWidth + separateNavbarLeftOffset;
-          left[0].f7NavbarRightOffset = ((navbarInnerWidth - left[0].offsetWidth) / 2) - separateNavbarRightOffset;
+          left[0].f7NavbarLeftOffset = -leftWidth;
+          left[0].f7NavbarRightOffset = ((navbarInnerWidth - left[0].offsetWidth) / 2);
           if (router && router.params.iosAnimateNavbarBackIcon && left.find('.back .icon').length > 0) {
             if (left.find('.back .icon ~ span').length) {
               const leftOffset = left[0].f7NavbarLeftOffset;
@@ -131,13 +123,13 @@ const Navbar = {
           right[0].f7NavbarLeftOffset = -rightWidth * inverter;
           right[0].f7NavbarRightOffset = ((navbarInnerWidth - right[0].offsetWidth) / 2) * inverter;
         } else {
-          right[0].f7NavbarLeftOffset = (-(navbarInnerWidth - right[0].offsetWidth) / 2) + separateNavbarLeftOffset;
-          right[0].f7NavbarRightOffset = rightWidth - separateNavbarRightOffset;
+          right[0].f7NavbarLeftOffset = -(navbarInnerWidth - right[0].offsetWidth) / 2;
+          right[0].f7NavbarRightOffset = rightWidth;
         }
       }
       if (subnavbar.length && (subnavbar.hasClass('sliding') || sliding)) {
-        subnavbar[0].f7NavbarLeftOffset = app.rtl ? subnavbar[0].offsetWidth : (-subnavbar[0].offsetWidth + separateNavbarLeftOffset);
-        subnavbar[0].f7NavbarRightOffset = (-subnavbar[0].f7NavbarLeftOffset - separateNavbarRightOffset) + separateNavbarLeftOffset;
+        subnavbar[0].f7NavbarLeftOffset = app.rtl ? subnavbar[0].offsetWidth : -subnavbar[0].offsetWidth;
+        subnavbar[0].f7NavbarRightOffset = -subnavbar[0].f7NavbarLeftOffset;
       }
     }
 
@@ -325,6 +317,7 @@ const Navbar = {
         else if (app.theme === 'aurora') navbarTitleLargeHeight = 38;
       }
     }
+
     if (needHide && isLarge) {
       navbarHideHeight += navbarTitleLargeHeight;
     }
@@ -379,6 +372,7 @@ const Navbar = {
           $navbarEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
         }
       }
+
 
       if (snapPageScrollToLargeTitle) {
         if (!Support.touch) {

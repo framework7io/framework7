@@ -78,8 +78,6 @@ export default {
       'navbar',
       {
         'navbar-hidden': hidden,
-        'no-shadow': noShadow,
-        'no-hairline': noHairline,
         'navbar-large': large,
       },
       Mixins.colorClasses(props),
@@ -136,12 +134,15 @@ export default {
           innerClassName,
           {
             sliding,
+            'no-shadow': noShadow,
+            'no-hairline': noHairline,
             'navbar-inner-left-title': addLeftTitleClass,
             'navbar-inner-centered-title': addCenterTitleClass,
             'navbar-inner-large': large,
           }
         )}
       >
+        <div className="navbar-bg" />
         {leftEl}
         {titleEl}
         {rightEl}

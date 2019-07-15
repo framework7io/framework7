@@ -90,6 +90,7 @@ export default class extends React.Component {
             <div className="page">
               <div className="navbar">
                 <div className="navbar-inner">
+                  <div className="navbar-bg">
                   <div className="title">Dynamic Popup</div>
                   <div className="right"><a href="#" className="link popup-close">Close</a></div>
                 </div>

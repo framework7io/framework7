@@ -20,7 +20,6 @@ function SwipeBack(r) {
   let $currentNavbarInnerEl = [];
   let $previousNavbarInnerEl = [];
   let dynamicNavbar;
-  let separateNavbar;
   let $pageShadowEl;
   let $pageOpacityEl;
 
@@ -76,7 +75,6 @@ function SwipeBack(r) {
         if (fromLarge) {
           if (isTitle) return;
           if ($navEl.hasClass('title-large')) {
-            if (!separateNavbar) return;
             if (toLarge) {
               if (els.indexOf(el) < 0) els.push(el);
               el.overflow = 'visible';
@@ -104,12 +102,11 @@ function SwipeBack(r) {
         if (toLarge) {
           if (!fromLarge) {
             if ($navEl.hasClass('title-large')) {
-              if (!separateNavbar) return;
               if (els.indexOf(el) < 0) els.push(el);
               el.opacity = 0;
             }
           }
-          if (isLeft && separateNavbar) {
+          if (isLeft) {
             if (els.indexOf(el) < 0) els.push(el);
             el.opacity = progress => (1 - (progress ** 0.33));
             $navEl.find('.back span').each((subIndex, subNavEl) => {
@@ -138,7 +135,7 @@ function SwipeBack(r) {
           transformTarget.transform = (progress) => {
             let activeNavTranslate = progress * transformTarget.el.f7NavbarRightOffset;
             if (Device.pixelRatio === 1) activeNavTranslate = Math.round(activeNavTranslate);
-            if (isSubnavbar && currentNavIsLarge && separateNavbar) {
+            if (isSubnavbar && currentNavIsLarge) {
               return `translate3d(${activeNavTranslate}px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)`;
             }
             return `translate3d(${activeNavTranslate}px,0,0)`;
@@ -159,7 +156,6 @@ function SwipeBack(r) {
           if (els.indexOf(el) < 0) els.push(el);
 
           if ($navEl.hasClass('title-large')) {
-            if (!separateNavbar) return;
             if (fromLarge) {
               el.opacity = 1;
               el.overflow = 'visible';
@@ -212,7 +208,7 @@ function SwipeBack(r) {
           transformTarget.transform = (progress) => {
             let previousNavTranslate = transformTarget.el.f7NavbarLeftOffset * (1 - progress);
             if (Device.pixelRatio === 1) previousNavTranslate = Math.round(previousNavTranslate);
-            if (isSubnavbar && previousNavIsLarge && separateNavbar) {
+            if (isSubnavbar && previousNavIsLarge) {
               return `translate3d(${previousNavTranslate}px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)`;
             }
             return `translate3d(${previousNavTranslate}px,0,0)`;
@@ -257,7 +253,6 @@ function SwipeBack(r) {
     touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
     touchStartTime = Utils.now();
     dynamicNavbar = router.dynamicNavbar;
-    separateNavbar = router.separateNavbar;
   }
   function handleTouchMove(e) {
     if (!isTouched) return;
@@ -317,13 +312,8 @@ function SwipeBack(r) {
       }
 
       if (dynamicNavbar) {
-        if (separateNavbar) {
-          $currentNavbarInnerEl = $navbarEl.find('.navbar-current:not(.stacked)');
-          $previousNavbarInnerEl = $navbarEl.find('.navbar-previous:not(.stacked)');
-        } else {
-          $currentNavbarInnerEl = $currentPageEl.children('.navbar').children('.navbar-inner');
-          $previousNavbarInnerEl = $previousPageEl.children('.navbar').children('.navbar-inner');
-        }
+        $currentNavbarInnerEl = $navbarEl.find('.navbar-current:not(.stacked)');
+        $previousNavbarInnerEl = $navbarEl.find('.navbar-previous:not(.stacked)');
         if ($previousNavbarInnerEl.length > 1) {
           $previousNavbarInnerEl = $previousNavbarInnerEl.eq($previousNavbarInnerEl.length - 1);
         }
@@ -490,13 +480,13 @@ function SwipeBack(r) {
         // Remove Old Page
         if (params.stackPages && router.initialPages.indexOf($currentPageEl[0]) >= 0) {
           $currentPageEl.addClass('stacked');
-          if (separateNavbar) {
+          if (dynamicNavbar) {
             $currentNavbarInnerEl.addClass('stacked');
           }
         } else {
           router.pageCallback('beforeRemove', $currentPageEl, $currentNavbarInnerEl, 'next', { swipeBack: true });
           router.removePage($currentPageEl);
-          if (separateNavbar) {
+          if (dynamicNavbar) {
             router.removeNavbar($currentNavbarInnerEl);
           }
         }

@@ -138,6 +138,7 @@ export default [
       <div class="page">
         <div class="navbar">
           <div class="navbar-inner sliding">
+            <div class="navbar-bg"></div>
             <div class="left">
               <a href="#" class="link back">
                 <i class="icon icon-back"></i>
@@ -162,6 +163,7 @@ export default [
       <div class="page">
         <div class="navbar">
           <div class="navbar-inner sliding">
+            <div class="navbar-bg"></div>
             <div class="left">
               <a href="#" class="link back">
                 <i class="icon icon-back"></i>

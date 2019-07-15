@@ -83,7 +83,6 @@ export default {
       animate: true,
       // iOS Dynamic Navbar
       iosDynamicNavbar: true,
-      iosSeparateDynamicNavbar: true,
       // Animate iOS Navbar Back Icon
       iosAnimateNavbarBackIcon: true,
       // Delays

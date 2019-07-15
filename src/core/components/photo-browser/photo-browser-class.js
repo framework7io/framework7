@@ -171,6 +171,7 @@ class PhotoBrowser extends Framework7Class {
     const navbarHtml = `
       <div class="navbar">
         <div class="navbar-inner sliding">
+          <div class="navbar-bg"></div>
           <div class="left">
             <a class="link ${isPopup ? 'popup-close' : ''} ${!backLinkText ? 'icon-only' : ''} ${!isPopup ? 'back' : ''}" ${isPopup ? 'data-popup=".photo-browser-popup"' : ''}>
               <i class="icon icon-back ${iconsColor ? `color-${iconsColor}` : ''}"></i>

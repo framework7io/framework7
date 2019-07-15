@@ -97,6 +97,7 @@
                 <div class="page">
                   <div class="navbar">
                     <div class="navbar-inner">
+                      <div class="navbar-bg"></div>
                       <div class="title">Dynamic Popup</div>
                       <div class="right"><a href="#" class="link popup-close">Close</a></div>
                     </div>
