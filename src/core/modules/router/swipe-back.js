@@ -36,11 +36,13 @@ function SwipeBack(r) {
     const els = [];
     const inverter = app.rtl ? -1 : 1;
     const currentNavIsLarge = $currentNavbarInnerEl.hasClass('navbar-inner-large');
+    const currentNavIsCollapsed = $currentNavbarInnerEl.hasClass('navbar-inner-large-collapsed');
     const previousNavIsLarge = $previousNavbarInnerEl.hasClass('navbar-inner-large');
-    const fromLarge = currentNavIsLarge && !$currentNavbarInnerEl.hasClass('navbar-inner-large-collapsed');
-    const toLarge = previousNavIsLarge && !$previousNavbarInnerEl.hasClass('navbar-inner-large-collapsed');
-    const $currentNavElements = $currentNavbarInnerEl.children('.left, .title, .right, .subnavbar, .fading, .title-large');
-    const $previousNavElements = $previousNavbarInnerEl.children('.left, .title, .right, .subnavbar, .fading, .title-large');
+    const previousNavIsCollapsed = $previousNavbarInnerEl.hasClass('navbar-inner-large-collapsed');
+    const fromLarge = currentNavIsLarge && !currentNavIsCollapsed;
+    const toLarge = previousNavIsLarge && !previousNavIsCollapsed;
+    const $currentNavElements = $currentNavbarInnerEl.children('.left, .title, .right, .subnavbar, .fading, .title-large, .navbar-bg');
+    const $previousNavElements = $previousNavbarInnerEl.children('.left, .title, .right, .subnavbar, .fading, .title-large, .navbar-bg');
     let activeNavBackIconText;
     let previousNavBackIconText;
 
@@ -68,6 +70,7 @@ function SwipeBack(r) {
         const isSubnavbar = $navEl.hasClass('subnavbar');
         const isLeft = $navEl.hasClass('left');
         const isTitle = $navEl.hasClass('title');
+        const isBg = $navEl.hasClass('navbar-bg');
         if (!fromLarge && $navEl.hasClass('.title-large')) return;
         const el = {
           el: navEl,
@@ -119,6 +122,27 @@ function SwipeBack(r) {
             return;
           }
         }
+        if (isBg) {
+          if (els.indexOf(el) < 0) els.push(el);
+          if (!fromLarge && !toLarge) {
+            if (currentNavIsCollapsed) {
+              el.transform = progress => `translateX(${100 * progress * inverter}%) translateY(calc(-1 * var(--f7-navbar-large-title-height)))`;
+            } else {
+              el.transform = progress => `translateX(${100 * progress * inverter}%)`;
+            }
+          }
+          if (!fromLarge && toLarge) {
+            $navEl.addClass('ios-swipeback-navbar-bg-large');
+            el.transform = progress => `translateX(${100 * progress * inverter}%) translateY(calc(-1 * ${1 - progress} * var(--f7-navbar-large-title-height)))`;
+          }
+          if (fromLarge && toLarge) {
+            el.transform = progress => `translateX(${100 * progress * inverter}%)`;
+          }
+          if (fromLarge && !toLarge) {
+            el.transform = progress => `translateX(${100 * progress * inverter}%) translateY(calc(-${progress} * var(--f7-navbar-large-title-height)))`;
+          }
+          return;
+        }
         if ($navEl.hasClass('title-large')) return;
         const isSliding = $navEl.hasClass('sliding') || $currentNavbarInnerEl.hasClass('sliding');
         if (els.indexOf(el) < 0) els.push(el);
@@ -148,6 +172,7 @@ function SwipeBack(r) {
         const isSubnavbar = $navEl.hasClass('subnavbar');
         const isLeft = $navEl.hasClass('left');
         const isTitle = $navEl.hasClass('title');
+        const isBg = $navEl.hasClass('navbar-bg');
         const el = {
           el: navEl,
         };
@@ -191,6 +216,28 @@ function SwipeBack(r) {
             });
             return;
           }
+        }
+        if (isBg) {
+          if (els.indexOf(el) < 0) els.push(el);
+          if (!fromLarge && !toLarge) {
+            if (previousNavIsCollapsed) {
+              el.transform = progress => `translateX(${-100 + 100 * progress * inverter}%) translateY(calc(-1 * var(--f7-navbar-large-title-height)))`;
+            } else {
+              el.transform = progress => `translateX(${-100 + 100 * progress * inverter}%)`;
+            }
+          }
+          if (!fromLarge && toLarge) {
+            el.transform = progress => `translateX(${-100 + 100 * progress * inverter}%) translateY(calc(-1 * ${1 - progress} * var(--f7-navbar-large-title-height)))`;
+          }
+          if (fromLarge && !toLarge) {
+            $navEl.addClass('ios-swipeback-navbar-bg-large');
+            el.transform = progress => `translateX(${-100 + 100 * progress * inverter}%) translateY(calc(-${progress} * var(--f7-navbar-large-title-height)))`;
+          }
+          if (fromLarge && toLarge) {
+            el.transform = progress => `translateX(${-100 + 100 * progress * inverter}%)`;
+          }
+
+          return;
         }
         if ($navEl.hasClass('title-large')) return;
         const isSliding = $navEl.hasClass('sliding') || $previousNavbarInnerEl.hasClass('sliding');
