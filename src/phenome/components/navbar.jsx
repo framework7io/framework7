@@ -34,6 +34,7 @@ export default {
     innerClass: String,
     innerClassName: String,
     large: Boolean,
+    largeTransparent: Boolean,
     titleLarge: String,
     ...Mixins.colorProps,
   },
@@ -58,6 +59,7 @@ export default {
       noShadow,
       noHairline,
       large,
+      largeTransparent,
       titleLarge,
     } = props;
 
@@ -139,6 +141,7 @@ export default {
             'navbar-inner-left-title': addLeftTitleClass,
             'navbar-inner-centered-title': addCenterTitleClass,
             'navbar-inner-large': large,
+            'navbar-inner-large-transparent': largeTransparent,
           }
         )}
       >
