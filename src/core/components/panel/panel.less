@@ -13,8 +13,12 @@
   pointer-events: none;
   transform: translate3d(0,0,0);
   background-color: var(--f7-panel-backdrop-bg-color);
+  transition-property: transform, opacity;
   transition-duration: var(--f7-panel-transition-duration);
-  transition-property: transform, opacity, visibility;
+  .with-panel,
+  .with-panel-transitioning {
+    visibility: visible;
+  }
   &.not-animated {
     transition-duration: 0ms !important;
   }
@@ -29,8 +33,13 @@
   width: var(--f7-panel-width);
   background-color: var(--f7-panel-bg-color);
   overflow: visible;
-  transition-property: transform, visibility;
+  transition-property: transform;
   visibility: hidden;
+  transition-duration: var(--f7-panel-transition-duration);
+  &.panel-opened,
+  &.panel-closing {
+    visibility: visible;
+  }
   &:after {
     pointer-events: none;
     opacity: 0;
@@ -41,8 +50,6 @@
     width: 20px;
     height: 100%;
     transition-property: transform, opacity;
-  }
-  &, &:after {
     transition-duration: var(--f7-panel-transition-duration);
   }
   &.not-animated {
