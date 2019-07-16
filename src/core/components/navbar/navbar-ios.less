@@ -225,13 +225,13 @@
       .title-large {
         overflow: visible;
         .title-large-text {
-          animation: ios-navbar-title-large-text-slide-up var(--f7-page-transition-duration) forwards, ios-navbar-title-large-text-fade-out var(--f7-page-transition-duration) forwards;
+          animation: ios-navbar-large-title-text-slide-up var(--f7-page-transition-duration) forwards, ios-navbar-large-title-text-fade-out var(--f7-page-transition-duration) forwards;
         }
       }
     }
     .navbar-current.router-navbar-transition-from-large {
       .title-large-inner {
-        animation: ios-navbar-title-large-inner-current-to-previous var(--f7-page-transition-duration) forwards;
+        animation: ios-navbar-large-title-inner-current-to-previous var(--f7-page-transition-duration) forwards;
       }
     }
 
@@ -253,7 +253,7 @@
         overflow: visible;
         .title-large-text,
         .title-large-inner {
-          animation: ios-navbar-title-large-text-slide-left var(--f7-page-transition-duration) forwards;
+          animation: ios-navbar-large-title-text-slide-left var(--f7-page-transition-duration) forwards;
         }
       }
     }
@@ -261,7 +261,7 @@
       .title-large {
         .title-large-text,
         .title-large-inner {
-          animation: ios-navbar-title-large-text-slide-left var(--f7-page-transition-duration) forwards;
+          animation: ios-navbar-large-title-text-slide-left var(--f7-page-transition-duration) forwards;
         }
       }
     }
@@ -299,7 +299,7 @@
         overflow: visible;
         .title-large-text,
         .title-large-inner {
-          animation: ios-navbar-title-large-text-slide-right var(--f7-page-transition-duration) forwards;
+          animation: ios-navbar-large-title-text-slide-right var(--f7-page-transition-duration) forwards;
         }
       }
     }
@@ -307,7 +307,7 @@
       .title-large {
         .title-large-text,
         .title-large-inner {
-          animation: ios-navbar-title-large-text-slide-right var(--f7-page-transition-duration) forwards;
+          animation: ios-navbar-large-title-text-slide-right var(--f7-page-transition-duration) forwards;
         }
       }
     }
@@ -322,13 +322,13 @@
         overflow: visible;
         opacity: 1;
         .title-large-text {
-          animation: ios-navbar-title-large-text-slide-down var(--f7-page-transition-duration) forwards, ios-navbar-title-large-text-fade-in var(--f7-page-transition-duration) forwards;
+          animation: ios-navbar-large-title-text-slide-down var(--f7-page-transition-duration) forwards, ios-navbar-large-title-text-fade-in var(--f7-page-transition-duration) forwards;
         }
       }
     }
     .navbar-previous.router-navbar-transition-to-large {
       .title-large-inner {
-        animation: ios-navbar-title-large-inner-previous-to-current var(--f7-page-transition-duration) forwards;
+        animation: ios-navbar-large-title-inner-previous-to-current var(--f7-page-transition-duration) forwards;
       }
     }
 
@@ -510,26 +510,26 @@
   }
 }
 
-@keyframes ios-navbar-title-large-text-slide-up {
+@keyframes ios-navbar-large-title-text-slide-up {
   0% {
     transform: translateX(0px) translateY(0%) scale(1);
   }
   100% {
     .ltr({
-      transform: translateX(calc(var(--f7-navbarLeftTextOffset) - var(--f7-navbarTitleLargeOffset))) translateY(calc(-1 * (var(--f7-navbar-height) + var(--f7-navbar-large-title-height)) / 2)) scale(0.5);
+      transform: translateX(calc(var(--f7-navbarLeftTextOffset) - var(--f7-navbarTitleLargeOffset))) translateY(calc(-1 * var(--f7-navbar-large-title-height) + var(--f7-navbar-large-title-padding-vertical) / 2)) scale(0.5);
     });
     .rtl({
-      transform: translateX(calc(-1 * (var(--f7-navbarLeftTextOffset) - var(--f7-navbarTitleLargeOffset)))) translateY(calc(-1 * (var(--f7-navbar-height) + var(--f7-navbar-large-title-height)) / 2)) scale(0.5);
+      transform: translateX(calc(-1 * (var(--f7-navbarLeftTextOffset) - var(--f7-navbarTitleLargeOffset)))) translateY(calc(-1 * var(--f7-navbar-large-title-height) + var(--f7-navbar-large-title-padding-vertical) / 2)) scale(0.5);
     });
   }
 }
-@keyframes ios-navbar-title-large-text-slide-down {
+@keyframes ios-navbar-large-title-text-slide-down {
   0% {
     .ltr({
-      transform: translateX(calc(var(--f7-navbarLeftTextOffset) - var(--f7-navbarTitleLargeOffset))) translateY(calc(-1 * (var(--f7-navbar-height) + var(--f7-navbar-large-title-height)) / 2)) scale(0.5);
+      transform: translateX(calc(var(--f7-navbarLeftTextOffset) - var(--f7-navbarTitleLargeOffset))) translateY(calc(-1 * var(--f7-navbar-large-title-height) + var(--f7-navbar-large-title-padding-vertical) / 2)) scale(0.5);
     });
     .rtl({
-      transform: translateX(calc(-1 * (var(--f7-navbarLeftTextOffset) - var(--f7-navbarTitleLargeOffset)))) translateY(calc(-1 * (var(--f7-navbar-height) + var(--f7-navbar-large-title-height)) / 2)) scale(0.5);
+      transform: translateX(calc(-1 * (var(--f7-navbarLeftTextOffset) - var(--f7-navbarTitleLargeOffset)))) translateY(calc(-1 * var(--f7-navbar-large-title-height) + var(--f7-navbar-large-title-padding-vertical) / 2)) scale(0.5);
     });
 
   }
@@ -537,7 +537,7 @@
     transform: translateX(0px) translateY(0%) scale(1);
   }
 }
-@keyframes ios-navbar-title-large-text-slide-left {
+@keyframes ios-navbar-large-title-text-slide-left {
   0% {
     .ltr({
       transform: translateX(100%);
@@ -550,7 +550,7 @@
     transform: translateX(0%);
   }
 }
-@keyframes ios-navbar-title-large-text-slide-right {
+@keyframes ios-navbar-large-title-text-slide-right {
   0% {
     transform: translateX(0%);
   }
@@ -564,7 +564,7 @@
   }
 }
 
-@keyframes ios-navbar-title-large-text-fade-out {
+@keyframes ios-navbar-large-title-text-fade-out {
   0% {
     opacity: 1;
   }
@@ -575,7 +575,7 @@
     opacity: 0;
   }
 }
-@keyframes ios-navbar-title-large-text-fade-in {
+@keyframes ios-navbar-large-title-text-fade-in {
   0% {
     opacity: 0;
   }
@@ -597,10 +597,10 @@
   100% {
     opacity: 0;
     .ltr({
-      transform: translateX(calc(var(--f7-navbarTitleLargeOffset) - var(--f7-navbarLeftTextOffset))) translateY(calc((var(--f7-navbar-height) + var(--f7-navbar-large-title-height)) / 2)) scale(2);
+      transform: translateX(calc(var(--f7-navbarTitleLargeOffset) - var(--f7-navbarLeftTextOffset))) translateY(calc(1 * var(--f7-navbar-large-title-height) + var(--f7-navbar-large-title-padding-vertical) / 2)) scale(2);
     });
     .rtl({
-      transform: translateX(calc(-1 * (var(--f7-navbarTitleLargeOffset) - var(--f7-navbarLeftTextOffset)))) translateY(calc((var(--f7-navbar-height) + var(--f7-navbar-large-title-height)) / 2)) scale(2);
+      transform: translateX(calc(-1 * (var(--f7-navbarTitleLargeOffset) - var(--f7-navbarLeftTextOffset)))) translateY(calc(1 * var(--f7-navbar-large-title-height) + var(--f7-navbar-large-title-padding-vertical) / 2)) scale(2);
     });
 
   }
@@ -609,10 +609,10 @@
   0% {
     opacity: 0;
     .ltr({
-      transform: translateX(calc(var(--f7-navbarTitleLargeOffset) - var(--f7-navbarLeftTextOffset))) translateY(calc((var(--f7-navbar-height) + var(--f7-navbar-large-title-height)) / 2)) scale(2);
+      transform: translateX(calc(var(--f7-navbarTitleLargeOffset) - var(--f7-navbarLeftTextOffset))) translateY(calc(1 * var(--f7-navbar-large-title-height) + var(--f7-navbar-large-title-padding-vertical) / 2)) scale(2);
     });
     .rtl({
-      transform: translateX(calc(-1 * (var(--f7-navbarTitleLargeOffset) - var(--f7-navbarLeftTextOffset)))) translateY(calc((var(--f7-navbar-height) + var(--f7-navbar-large-title-height)) / 2)) scale(2);
+      transform: translateX(calc(-1 * (var(--f7-navbarTitleLargeOffset) - var(--f7-navbarLeftTextOffset)))) translateY(calc(1 * var(--f7-navbar-large-title-height) + var(--f7-navbar-large-title-padding-vertical) / 2)) scale(2);
     });
   }
   20% {
@@ -623,7 +623,7 @@
     transform: translateX(0px) translateY(0px) scale(1);
   }
 }
-@keyframes ios-navbar-title-large-inner-current-to-previous {
+@keyframes ios-navbar-large-title-inner-current-to-previous {
   0% {
     transform: translateX(0%);
     opacity: 1;
@@ -638,7 +638,7 @@
     opacity: 0;
   }
 }
-@keyframes ios-navbar-title-large-inner-previous-to-current {
+@keyframes ios-navbar-large-title-inner-previous-to-current {
   0% {
     .ltr({
       transform: translateX(-100%);

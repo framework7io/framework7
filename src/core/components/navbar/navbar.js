@@ -287,7 +287,8 @@ const Navbar = {
     const $navbarEl = app.theme === 'md' || app.theme === 'aurora'
       ? $navbarInnerEl.parents('.navbar')
       : $(navbarInnerEl || app.navbar.getElByPage(pageEl)).closest('.navbar');
-    const isLarge = $navbarInnerEl.find('.title-large').length || $navbarInnerEl.hasClass('.navbar-inner-large');
+    const $titleLargeEl = $navbarInnerEl.find('.title-large');
+    const isLarge = $titleLargeEl.length || $navbarInnerEl.hasClass('.navbar-inner-large');
     let navbarHideHeight = 44;
     const snapPageScrollToLargeTitle = app.params.navbar.snapPageScrollToLargeTitle;
 
@@ -304,13 +305,18 @@ const Navbar = {
     let navbarTitleLargeHeight;
     if (needCollapse || (needHide && isLarge)) {
       navbarTitleLargeHeight = $navbarInnerEl.css('--f7-navbar-large-title-height');
+
       if (navbarTitleLargeHeight && navbarTitleLargeHeight.indexOf('px') >= 0) {
         navbarTitleLargeHeight = parseInt(navbarTitleLargeHeight, 10);
-        if (Number.isNaN(navbarTitleLargeHeight)) {
+        if (Number.isNaN(navbarTitleLargeHeight) && $titleLargeEl.length) {
+          navbarTitleLargeHeight = $titleLargeEl[0].offsetHeight;
+        } else if (Number.isNaN(navbarTitleLargeHeight)) {
           if (app.theme === 'ios') navbarTitleLargeHeight = 52;
           else if (app.theme === 'md') navbarTitleLargeHeight = 48;
           else if (app.theme === 'aurora') navbarTitleLargeHeight = 38;
         }
+      } else if ($titleLargeEl.length) {
+        navbarTitleLargeHeight = $titleLargeEl[0].offsetHeight;
       } else { // eslint-disable-next-line
         if (app.theme === 'ios') navbarTitleLargeHeight = 52;
         else if (app.theme === 'md') navbarTitleLargeHeight = 48;

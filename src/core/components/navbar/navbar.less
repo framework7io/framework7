@@ -221,12 +221,11 @@
   right: 0;
   top: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   white-space: nowrap;
   overflow: hidden;
-  height: calc(var(--f7-navbar-large-title-height) + 1px);
+  height: var(--f7-navbar-large-title-height);
   z-index: 5;
-  margin-top: -1px;
 }
 .title-large-text,
 .title-large-inner .title {
@@ -239,7 +238,8 @@
   line-height: var(--f7-navbar-large-title-line-height);
   padding-left: calc(var(--f7-navbar-large-title-padding-left) + var(--f7-safe-area-left));
   padding-right: calc(var(--f7-navbar-large-title-padding-right) + var(--f7-safe-area-right));
-
+  padding-top: var(--f7-navbar-large-title-padding-vertical);
+  padding-bottom: var(--f7-navbar-large-title-padding-vertical);
 }
 .title-large-text,
 .title-large-inner {
