@@ -359,7 +359,6 @@ const Navbar = {
         || ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed))
       ) {
         $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-        $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         $navbarInnerEl[0].style.overflow = '';
         if (app.theme === 'md' || app.theme === 'aurora') {
           $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
@@ -367,7 +366,6 @@ const Navbar = {
       } else {
         $navbarInnerEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
         $navbarInnerEl[0].style.overflow = 'visible';
-        $pageEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
         if (app.theme === 'md' || app.theme === 'aurora') {
           $navbarEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
         }
