@@ -31,14 +31,20 @@ function SwipeBack(r) {
   const paramsSwipeBackThreshold = params[`${app.theme}SwipeBackThreshold`];
 
   const transformOrigin = app.rtl ? 'right center' : 'left center';
+  const transformOriginTitleLarge = app.rtl
+    ? 'calc(100% - var(--f7-navbar-large-title-padding-left) - var(--f7-safe-area-left)) center'
+    : 'calc(var(--f7-navbar-large-title-padding-left) + var(--f7-safe-area-left)) center';
+
 
   function animatableNavElements() {
     const els = [];
     const inverter = app.rtl ? -1 : 1;
     const currentNavIsLarge = $currentNavbarInnerEl.hasClass('navbar-inner-large');
     const currentNavIsCollapsed = $currentNavbarInnerEl.hasClass('navbar-inner-large-collapsed');
+    const currentNavIsTransparent = $currentNavbarInnerEl.hasClass('navbar-inner-large-transparent');
     const previousNavIsLarge = $previousNavbarInnerEl.hasClass('navbar-inner-large');
     const previousNavIsCollapsed = $previousNavbarInnerEl.hasClass('navbar-inner-large-collapsed');
+    const previousNavIsTransparent = $previousNavbarInnerEl.hasClass('navbar-inner-large-transparent');
     const fromLarge = currentNavIsLarge && !currentNavIsCollapsed;
     const toLarge = previousNavIsLarge && !previousNavIsCollapsed;
     const $currentNavElements = $currentNavbarInnerEl.children('.left, .title, .right, .subnavbar, .fading, .title-large, .navbar-bg');
@@ -78,27 +84,14 @@ function SwipeBack(r) {
         if (fromLarge) {
           if (isTitle) return;
           if ($navEl.hasClass('title-large')) {
-            if (toLarge) {
-              if (els.indexOf(el) < 0) els.push(el);
-              el.overflow = 'visible';
-              el.transform = 'translateX(100%)';
-              $navEl.find('.title-large-text, .title-large-inner').each((subIndex, subNavEl) => {
-                els.push({
-                  el: subNavEl,
-                  transform: progress => `translateX(${-100 + progress * 100 * inverter}%)`,
-                });
+            if (els.indexOf(el) < 0) els.push(el);
+            el.overflow = 'visible';
+            $navEl.find('.title-large-text, .title-large-inner').each((subIndex, subNavEl) => {
+              els.push({
+                el: subNavEl,
+                transform: progress => `translateX(${progress * 100 * inverter}%)`,
               });
-            } else {
-              if (els.indexOf(el) < 0) els.push(el);
-              el.overflow = 'hidden';
-              el.transform = progress => `translateY(calc(${-progress} * var(--f7-navbar-large-title-height)))`;
-              $navEl.find('.title-large-text, .title-large-inner').each((subIndex, subNavEl) => {
-                els.push({
-                  el: subNavEl,
-                  transform: progress => `translateX(${progress * 100 * inverter}%) translateY(calc(${progress} * var(--f7-navbar-large-title-height)))`,
-                });
-              });
-            }
+            });
             return;
           }
         }
@@ -116,7 +109,7 @@ function SwipeBack(r) {
               els.push({
                 el: subNavEl,
                 'transform-origin': transformOrigin,
-                transform: progress => `translateY(calc(var(--f7-navbar-height) * ${progress})) scale(${1 + (1 * progress)})`,
+                transform: progress => `translateX(calc(${progress} * (var(--f7-navbarTitleLargeOffset) - var(--f7-navbarLeftTextOffset)))) translateY(calc(${progress} * (var(--f7-navbar-large-title-height) + var(--f7-navbar-large-title-padding-vertical) / 2))) scale(${1 + (1 * progress)})`,
               });
             });
             return;
@@ -126,13 +119,16 @@ function SwipeBack(r) {
           if (els.indexOf(el) < 0) els.push(el);
           if (!fromLarge && !toLarge) {
             if (currentNavIsCollapsed) {
+              if (currentNavIsTransparent) {
+                el.className = 'ios-swipeback-navbar-bg-large';
+              }
               el.transform = progress => `translateX(${100 * progress * inverter}%) translateY(calc(-1 * var(--f7-navbar-large-title-height)))`;
             } else {
               el.transform = progress => `translateX(${100 * progress * inverter}%)`;
             }
           }
           if (!fromLarge && toLarge) {
-            $navEl.addClass('ios-swipeback-navbar-bg-large');
+            el.className = 'ios-swipeback-navbar-bg-large';
             el.transform = progress => `translateX(${100 * progress * inverter}%) translateY(calc(-1 * ${1 - progress} * var(--f7-navbar-large-title-height)))`;
           }
           if (fromLarge && toLarge) {
@@ -181,35 +177,20 @@ function SwipeBack(r) {
           if (els.indexOf(el) < 0) els.push(el);
 
           if ($navEl.hasClass('title-large')) {
-            if (fromLarge) {
-              el.opacity = 1;
-              el.overflow = 'visible';
-              el.transform = 'translateY(0)';
-              $navEl.find('.title-large-text').each((subIndex, subNavEl) => {
-                els.push({
-                  el: subNavEl,
-                  'transform-origin': transformOrigin,
-                  opacity: progress => (progress ** 3),
-                  transform: progress => `translateY(calc(${-1 + progress * 1} * var(--f7-navbar-large-title-height))) scale(${0.5 + progress * 0.5})`,
-                });
+            el.opacity = 1;
+            el.overflow = 'visible';
+            $navEl.find('.title-large-text').each((subIndex, subNavEl) => {
+              els.push({
+                el: subNavEl,
+                'transform-origin': transformOriginTitleLarge,
+                opacity: progress => (progress ** 3),
+                transform: progress => `translateX(calc(${1 - progress} * (var(--f7-navbarLeftTextOffset) - var(--f7-navbarTitleLargeOffset)))) translateY(calc(${progress - 1} * var(--f7-navbar-large-title-height) + ${1 - progress} * var(--f7-navbar-large-title-padding-vertical) / 2)) scale(${0.5 + progress * 0.5})`,
               });
-            } else {
-              el.transform = progress => `translateY(calc(${progress - 1} * var(--f7-navbar-large-title-height)))`;
-              el.opacity = 1;
-              el.overflow = 'hidden';
-              $navEl.find('.title-large-text').each((subIndex, subNavEl) => {
-                els.push({
-                  el: subNavEl,
-                  'transform-origin': transformOrigin,
-                  opacity: progress => (progress ** 3),
-                  transform: progress => `scale(${0.5 + progress * 0.5})`,
-                });
-              });
-            }
+            });
             $navEl.find('.title-large-inner').each((subIndex, subNavEl) => {
               els.push({
                 el: subNavEl,
-                'transform-origin': transformOrigin,
+                'transform-origin': transformOriginTitleLarge,
                 opacity: progress => (progress ** 3),
                 transform: progress => `translateX(${-100 * (1 - progress) * inverter}%)`,
               });
@@ -221,6 +202,9 @@ function SwipeBack(r) {
           if (els.indexOf(el) < 0) els.push(el);
           if (!fromLarge && !toLarge) {
             if (previousNavIsCollapsed) {
+              if (previousNavIsTransparent) {
+                el.className = 'ios-swipeback-navbar-bg-large';
+              }
               el.transform = progress => `translateX(${-100 + 100 * progress * inverter}%) translateY(calc(-1 * var(--f7-navbar-large-title-height)))`;
             } else {
               el.transform = progress => `translateX(${-100 + 100 * progress * inverter}%)`;
@@ -230,7 +214,7 @@ function SwipeBack(r) {
             el.transform = progress => `translateX(${-100 + 100 * progress * inverter}%) translateY(calc(-1 * ${1 - progress} * var(--f7-navbar-large-title-height)))`;
           }
           if (fromLarge && !toLarge) {
-            $navEl.addClass('ios-swipeback-navbar-bg-large');
+            el.className = 'ios-swipeback-navbar-bg-large';
             el.transform = progress => `translateX(${-100 + 100 * progress * inverter}%) translateY(calc(-${progress} * var(--f7-navbar-large-title-height)))`;
           }
           if (fromLarge && toLarge) {
@@ -272,6 +256,13 @@ function SwipeBack(r) {
       if (el && el.el) {
         if (transition === true) el.el.classList.add('navbar-page-transitioning');
         if (transition === false) el.el.classList.remove('navbar-page-transitioning');
+        if (el.className && !el.classNameSet && !reset) {
+          el.el.classList.add(el.className);
+          el.classNameSet = true;
+        }
+        if (el.className && reset) {
+          el.el.classList.remove(el.className);
+        }
         for (let j = 0; j < styles.length; j += 1) {
           const styleProp = styles[j];
           if (el[styleProp]) {

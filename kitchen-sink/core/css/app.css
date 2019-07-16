@@ -638,9 +638,6 @@ code {
   background: #666;
 }
 
-:root {
-  /* --f7-safe-area-top: 44px; */
-}
 .page-home,
 .page-about {
   --f7-page-bg-color: #fff;
