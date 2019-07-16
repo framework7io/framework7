@@ -1,6 +1,6 @@
 <template>
-  <f7-page>
-    <f7-navbar large :sliding="false">
+  <f7-page class="page-home">
+    <f7-navbar large largeTransparent :sliding="false">
       <f7-nav-left>
         <f7-link panel-open="left" icon-ios="f7:menu" icon-aurora="f7:menu" icon-md="material:menu"></f7-link>
       </f7-nav-left>
@@ -24,7 +24,7 @@
       </f7-list-item>
     </f7-list>
 
-    <f7-block-title class="searchbar-found">Components</f7-block-title>
+    <f7-block-title medium class="searchbar-found">Components</f7-block-title>
     <f7-list class="components-list searchbar-found">
       <f7-list-item link="/accordion/" title="Accordion">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
@@ -216,7 +216,7 @@
     <f7-list class="searchbar-not-found">
       <f7-list-item title="Nothing found"></f7-list-item>
     </f7-list>
-    <f7-block-title class="searchbar-hide-on-search">Themes</f7-block-title>
+    <f7-block-title medium class="searchbar-hide-on-search">Themes</f7-block-title>
     <f7-list class="searchbar-hide-on-search">
       <f7-list-item title="iOS Theme" external link="./index.html?theme=ios"></f7-list-item>
       <f7-list-item title="Material (MD) Theme" external link="./index.html?theme=md"></f7-list-item>
@@ -224,7 +224,7 @@
       <f7-list-item title="Color Themes" link="/color-themes/"></f7-list-item>
     </f7-list>
 
-    <f7-block-title class="searchbar-hide-on-search">Page Loaders & Router</f7-block-title>
+    <f7-block-title medium class="searchbar-hide-on-search">Page Loaders & Router</f7-block-title>
     <f7-list class="searchbar-hide-on-search">
       <f7-list-item title="Routable Modals" link="/routable-modals/"></f7-list-item>
       <f7-list-item title="Default Route (404)" link="/load-something-that-doesnt-exist/"></f7-list-item>

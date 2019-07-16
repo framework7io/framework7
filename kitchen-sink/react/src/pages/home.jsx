@@ -7,8 +7,8 @@ export default class extends React.Component {
   }
   render() {
     return (
-      <Page>
-        <Navbar large sliding={false}>
+      <Page className="page-home">
+        <Navbar large largeTransparent sliding={false}>
           <NavLeft>
             <Link panelOpen="left" iconIos="f7:menu" iconAurora="f7:menu" iconMd="material:menu"></Link>
           </NavLeft>
@@ -32,7 +32,7 @@ export default class extends React.Component {
           </ListItem>
         </List>
 
-        <BlockTitle className="searchbar-found">Components</BlockTitle>
+        <BlockTitle medium className="searchbar-found">Components</BlockTitle>
         <List className="components-list searchbar-found">
           <ListItem link="/accordion/" title="Accordion">
             <Icon slot="media" icon="icon-f7" />
@@ -224,14 +224,14 @@ export default class extends React.Component {
         <List className="searchbar-not-found">
           <ListItem title="Nothing found"></ListItem>
         </List>
-        <BlockTitle className="searchbar-hide-on-search">Themes</BlockTitle>
+        <BlockTitle medium className="searchbar-hide-on-search">Themes</BlockTitle>
         <List className="searchbar-hide-on-search">
           <ListItem title="iOS Theme" external link="./index.html?theme=ios"></ListItem>
           <ListItem title="Material (MD) Theme" external link="./index.html?theme=md"></ListItem>
           <ListItem title="Aurora Desktop Theme" external link="./index.html?theme=aurora"></ListItem>
           <ListItem title="Color Themes" link="/color-themes/"></ListItem>
         </List>
-        <BlockTitle className="searchbar-hide-on-search">Page Loaders & Router</BlockTitle>
+        <BlockTitle medium className="searchbar-hide-on-search">Page Loaders & Router</BlockTitle>
         <List className="searchbar-hide-on-search">
           <ListItem title="Routable Modals" link="/routable-modals/"></ListItem>
           <ListItem title="Default Route (404)" link="/load-something-that-doesnt-exist/"></ListItem>

@@ -637,3 +637,14 @@ code {
   border-radius: 3px;
   background: #666;
 }
+
+:root {
+  /* --f7-safe-area-top: 44px; */
+}
+.page-home,
+.page-about {
+  --f7-page-bg-color: #fff;
+  --f7-list-border-color: transparent;
+  --f7-block-strong-border-color: transparent;
+  --f7-block-font-size: 16px;
+}
