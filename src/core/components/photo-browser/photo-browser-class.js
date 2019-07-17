@@ -170,7 +170,7 @@ class PhotoBrowser extends Framework7Class {
     const isPopup = pb.params.type !== 'page';
     const navbarHtml = `
       <div class="navbar">
-        <div class="navbar-inner sliding">
+        <div class="navbar-inner navbar-inner-photo-browser ${pb.params.theme === 'dark' ? 'navbar-inner-photo-browser-dark' : ''} sliding">
           <div class="navbar-bg"></div>
           <div class="left">
             <a class="link ${isPopup ? 'popup-close' : ''} ${!backLinkText ? 'icon-only' : ''} ${!isPopup ? 'back' : ''}" ${isPopup ? 'data-popup=".photo-browser-popup"' : ''}>
