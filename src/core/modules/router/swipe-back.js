@@ -364,7 +364,7 @@ function SwipeBack(r) {
         app.sheet.close($('.sheet.modal-in'));
       }
     }
-    e.f7PreventPanelSwipe = true;
+    e.f7PreventSwipePanel = true;
     isMoved = true;
     app.preventSwipePanelBySwipeBack = true;
     e.preventDefault();
