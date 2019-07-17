@@ -86,12 +86,14 @@
   }
 }
 .searchbar-expandable {
+  --f7-searchbar-expandable-size: var(--f7-searchbar-height);
   position: absolute;
   transition-duration: 300ms;
   pointer-events: none;
 }
-.navbar-inner-large .searchbar-expandable {
+.navbar-inner .searchbar-expandable {
   .hairline-remove(bottom);
+  background: transparent;
 }
 .navbar .searchbar.searchbar-expandable {
   --f7-searchbar-expandable-size: var(--f7-navbar-height);
@@ -165,10 +167,20 @@
     display: none !important;
   }
 }
+.navbar.with-searchbar-expandable-enabled-no-transition,
+.navbar-inner.with-searchbar-expandable-enabled-no-transition {
+  --f7-navbar-large-collapse-progress: 1;
+}
 .navbar.with-searchbar-expandable-enabled,
 .navbar-inner.with-searchbar-expandable-enabled {
   --f7-navbar-large-collapse-progress: 1;
-  .title-large, .title-large-text, .title-large-inner {
+  .navbar-bg, .title-large, .title-large-text, .title-large-inner {
+    transition-duration: 300ms;
+  }
+}
+.navbar.with-searchbar-expandable-closing,
+.navbar-inner.with-searchbar-expandable-closing {
+  .navbar-bg, .title-large, .title-large-text, .title-large-inner {
     transition-duration: 300ms;
   }
 }
@@ -178,6 +190,9 @@
   transform: translateY(calc(-1 * var(--f7-navbar-large-title-height)));
   transition-duration: 300ms;
   transition-property: transform;
+}
+.page-content.with-searchbar-expandable-closing {
+  transition-duration: 300ms;
 }
 
 // Relation with page

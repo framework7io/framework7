@@ -86,10 +86,9 @@
     }
   }
   .searchbar-expandable {
-    --f7-searchbar-expandable-size: var(--f7-searchbar-height);
-    height: 100%;
+    height: var(--f7-searchbar-expandable-size);
     opacity: 0;
-    top: 50%;
+    bottom: 0;
     border-radius: calc(var(--f7-searchbar-expandable-size));
     width: calc(var(--f7-searchbar-expandable-size));
     margin-top: calc(var(--f7-searchbar-expandable-size) * -1 / 2);
@@ -109,7 +108,6 @@
     border-radius: 0;
     opacity: 1;
     pointer-events: auto;
-    top: 0;
     margin-top: 0;
     .ltr({
       left: 0;

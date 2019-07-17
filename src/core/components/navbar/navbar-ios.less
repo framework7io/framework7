@@ -200,6 +200,12 @@
       opacity: 1 !important;
     }
   }
+  .router-transition-backward .navbar-previous.with-searchbar-expandable-enabled-no-transition,
+  .router-transition-backward .navbar-previous.with-searchbar-expandable-enabled {
+    .left, > .title, .right, .subnavbar {
+      animation: none;
+    }
+  }
   .router-transition-forward {
     // CURRENT
     .navbar-current.router-navbar-transition-from-large.router-navbar-transition-to-large,
