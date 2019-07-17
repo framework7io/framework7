@@ -645,6 +645,3 @@ code {
   --f7-block-strong-border-color: transparent;
   --f7-block-font-size: 16px;
 }
-:root {
-  --f7-safe-area-top: 44px;
-}
