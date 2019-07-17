@@ -16,7 +16,7 @@
   transition-property: transform, opacity;
   transition-duration: var(--f7-panel-transition-duration);
   .with-panel,
-  .with-panel-transitioning {
+  .with-panel-closing {
     visibility: visible;
   }
   &.not-animated {
@@ -35,7 +35,7 @@
   overflow: visible;
   transition-property: transform;
   transition-duration: var(--f7-panel-transition-duration);
-  &:not(.panel-in):not(.panel-out):not(.panel-visible-by-breakpoint) {
+  &:not(.panel-in):not(.panel-out):not(.panel-in-breakpoint):not(.panel-in-collapsed):not(.panel-in-swipe) {
     display: none;
   }
 
@@ -124,7 +124,7 @@
     }
   }
 }
-.panel-visible-by-breakpoint {
+.panel-in-breakpoint {
   transform: translate3d(0,0,0) !important;
   transition-duration: 0ms;
   &:after {
@@ -137,7 +137,7 @@
 html {
   &.with-panel-left-reveal,
   &.with-panel-right-reveal,
-  &.with-panel-transitioning {
+  &.with-panel-closing {
     .views,
     .framework7-root > .view {
       transition-duration: var(--f7-panel-transition-duration);
@@ -208,6 +208,27 @@ html {
   }
   .panel-right.panel-reveal & {
     left: 0;
+  }
+}
+
+.panel-left.panel-in-collapsed {
+  & ~ .views,
+  & ~ .view {
+    margin-left: var(--f7-panel-left-collapsed-width, var(--f7-panel-collapsed-width));
+  }
+  html.with-panel-left-reveal & ~ .views,
+  html.with-panel-left-reveal & ~ .view {
+    transform: translate3d(calc(var(--f7-panel-left-width, var(--f7-panel-width)) - var(--f7-panel-left-collapsed-width, var(--f7-panel-collapsed-width))), 0, 0);
+  }
+}
+.panel-right.panel-in-collapsed {
+  & ~ .views,
+  & ~ .view {
+    margin-right: var(--f7-panel-right-collapsed-width, var(--f7-panel-collapsed-width));
+  }
+  html.with-panel-right-reveal & ~ .views,
+  html.with-panel-right-reveal & ~ .view {
+    transform: translate3d(calc(var(--f7-panel-right-collapsed-width, var(--f7-panel-collapsed-width)) - var(--f7-panel-right-width, var(--f7-panel-width))), 0, 0);
   }
 }
 

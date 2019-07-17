@@ -507,7 +507,7 @@ export default {
     },
   },
   on: {
-    'panelBreakpoint panelResize resize viewMasterDetailBreakpoint': function onResize() {
+    'panelBreakpoint panelCollapsedBreakpoint panelResize resize viewMasterDetailBreakpoint': function onPanelResize() {
       const app = this;
       $('.navbar').each((index, navbarEl) => {
         app.navbar.size(navbarEl);
@@ -588,34 +588,15 @@ export default {
         app.navbar.initNavbarOnScroll(page.el, $navbarInnerEl[0], needHideOnScrollHandler, needCollapseOnScrollHandler);
       }
     },
-    modalOpen(modal) {
+    'panelOpen panelSwipeOpen modalOpen': function onPanelModalOpen(instance) {
       const app = this;
       if (!app.params.navbar[`${app.theme}CenterTitle`]) {
         return;
       }
-      modal.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
+      instance.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
         app.navbar.size(navbarEl);
       });
     },
-    // TODO: check if really need it
-    // panelOpen(panel) {
-    //   const app = this;
-    //   if (!app.params.navbar[`${app.theme}CenterTitle`]) {
-    //     return;
-    //   }
-    //   panel.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
-    //     app.navbar.size(navbarEl);
-    //   });
-    // },
-    // panelSwipeOpen(panel) {
-    //   const app = this;
-    //   if (!app.params.navbar[`${app.theme}CenterTitle`]) {
-    //     return;
-    //   }
-    //   panel.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
-    //     app.navbar.size(navbarEl);
-    //   });
-    // },
     tabShow(tabEl) {
       const app = this;
       if (!app.params.navbar[`${app.theme}CenterTitle`]) {

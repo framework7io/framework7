@@ -23,6 +23,32 @@ export default {
     right: Boolean,
     opened: Boolean,
     resizable: Boolean,
+    backdrop: {
+      type: Boolean,
+      default: true,
+    },
+    backdropEl: {
+      type: String,
+      default: undefined,
+    },
+    visibleBreakpoint: {
+      type: Number,
+      default: undefined,
+    },
+    collapsedBreakpoint: {
+      type: Number,
+      default: undefined,
+    },
+    swipe: Boolean,
+    swipeOnlyClose: Boolean,
+    swipeActiveArea: {
+      type: Number,
+      default: 0,
+    },
+    swipeThreshold: {
+      type: Number,
+      default: 0,
+    },
     ...Mixins.colorProps,
   },
   render() {
@@ -50,7 +76,7 @@ export default {
     classes() {
       const self = this;
       const props = self.props;
-      const { left, reveal, className, opened, resizable } = props;
+      const { left, reveal, className, resizable } = props;
       let { side, effect } = props;
       side = side || (left ? 'left' : 'right');
       effect = effect || (reveal ? 'reveal' : 'cover');
@@ -58,7 +84,6 @@ export default {
         className,
         'panel',
         {
-          'panel-in': opened,
           'panel-resizable': resizable,
           [`panel-${side}`]: side,
           [`panel-${effect}`]: effect,
@@ -70,19 +95,17 @@ export default {
   watch: {
     'props.resizable': function watchResizable(resizable) {
       const self = this;
-      if (!resizable) return;
-      if (self.f7Panel && !self.f7Panel.resizableInitialized) {
-        self.f7Panel.initResizablePanel();
-      }
+      if (!self.f7Panel) return;
+      if (resizable) self.f7Panel.enableResizable();
+      else self.f7Panel.disableResizable();
     },
     'props.opened': function watchOpened(opened) {
       const self = this;
-      if (!self.$f7) return;
-      const side = self.props.side || (self.props.left ? 'left' : 'right');
+      if (!self.f7Panel) return;
       if (opened) {
-        self.$f7.panel.open(side);
+        self.f7Panel.open();
       } else {
-        self.$f7.panel.close(side);
+        self.f7Panel.close();
       }
     },
   },
@@ -93,16 +116,28 @@ export default {
       'onClose',
       'onClosed',
       'onBackdropClick',
-      'onPanelSwipe',
-      'onPanelSwipeOpen',
+      'onSwipe',
+      'onSwipeOpen',
       'onBreakpoint',
+      'onCollapsedBreakpoint',
       'onResize',
     ]);
   },
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
-    const { side, effect, opened, left, reveal, resizable } = self.props;
+    const {
+      opened,
+      resizable,
+      backdrop,
+      backdropEl,
+      visibleBreakpoint,
+      collapsedBreakpoint,
+      swipe,
+      swipeOnlyClose,
+      swipeActiveArea,
+      swipeThreshold,
+    } = self.props;
 
     self.$f7ready(() => {
       const $ = self.$$;
@@ -110,40 +145,39 @@ export default {
       if ($('.panel-backdrop').length === 0) {
         $('<div class="panel-backdrop"></div>').insertBefore(el);
       }
-      self.f7Panel = self.$f7.panel.create({
+      const params = Utils.noUndefinedProps({
         el,
         resizable,
+        backdrop,
+        backdropEl,
+        visibleBreakpoint,
+        collapsedBreakpoint,
+        swipe,
+        swipeOnlyClose,
+        swipeActiveArea,
+        swipeThreshold,
+        on: {
+          open: self.onOpen,
+          opened: self.onOpened,
+          close: self.onClose,
+          closed: self.onClosed,
+          backdropClick: self.onBackdropClick,
+          swipe: self.onSwipe,
+          swipeOpen: self.onSwipeOpen,
+          collapsedBreakpoint: self.onCollapsedBreakpoint,
+          breakpoint: self.onBreakpoint,
+          resize: self.onResize,
+        },
       });
-      const events = {
-        open: self.onOpen,
-        opened: self.onOpened,
-        close: self.onClose,
-        closed: self.onClosed,
-        backdropClick: self.onBackdropClick,
-        swipe: self.onPanelSwipe,
-        swipeOpen: self.onPanelSwipeOpen,
-        breakpoint: self.onBreakpoint,
-        resize: self.onResize,
-      };
-      Object.keys(events).forEach((ev) => {
-        self.f7Panel.on(ev, events[ev]);
-      });
+      self.f7Panel = self.$f7.panel.create(params);
+      if (opened) {
+        self.f7Panel.open(false);
+      }
     });
-
-    if (opened) {
-      el.style.display = 'block';
-    }
-    const $ = self.$$;
-    if (!$) return;
-    const panelSide = side || (left ? 'left' : 'right');
-    const panelEffect = effect || (reveal ? 'reveal' : 'cover');
-    if (opened) {
-      $('html').addClass(`with-panel-${panelSide}-${panelEffect}`);
-    }
   },
   componentWillUnmount() {
     const self = this;
-    if (self.f7Panel) {
+    if (self.f7Panel && self.f7Panel.destroy) {
       self.f7Panel.destroy();
     }
   },
@@ -163,35 +197,35 @@ export default {
     onBackdropClick(event) {
       this.dispatchEvent('panel:backdrop-click panelBackdropClick', event);
     },
-    onPanelSwipe(event) {
+    onSwipe(event) {
       this.dispatchEvent('panel:swipe panelSwipe', event);
     },
-    onPanelSwipeOpen(event) {
+    onSwipeOpen(event) {
       this.dispatchEvent('panel:swipeopen panelSwipeOpen', event);
     },
     onBreakpoint(event) {
       this.dispatchEvent('panel:breakpoint panelBreakpoint', event);
+    },
+    onCollapsedBreakpoint(event) {
+      this.dispatchEvent('panel:collapsedbreakpoint panelCollapsedBreakpoint', event);
     },
     onResize(event) {
       this.dispatchEvent('panel:resize panelResize', event);
     },
     open(animate) {
       const self = this;
-      if (!self.$f7) return;
-      const side = self.props.side || (self.props.left ? 'left' : 'right');
-      self.$f7.panel.open(side, animate);
+      if (!self.f7Panel) return;
+      self.f7Panel.open(animate);
     },
     close(animate) {
       const self = this;
-      if (!self.$f7) return;
-      const side = self.props.side || (self.props.left ? 'left' : 'right');
-      self.$f7.panel.close(side, animate);
+      if (!self.f7Panel) return;
+      self.f7Panel.close(animate);
     },
     toggle(animate) {
       const self = this;
-      if (!self.$f7) return;
-      const side = self.props.side || (self.props.left ? 'left' : 'right');
-      self.$f7.panel.toggle(side, animate);
+      if (!self.f7Panel) return;
+      self.f7Panel.toggle(animate);
     },
   },
 };

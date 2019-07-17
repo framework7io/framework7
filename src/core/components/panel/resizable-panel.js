@@ -4,6 +4,7 @@ import Support from '../../utils/support';
 
 function resizablePanel(panel) {
   const app = panel.app;
+  if (panel.resizableInitialized) return;
   Utils.extend(panel, {
     resizable: true,
     resizableWidth: null,
@@ -47,7 +48,7 @@ function resizablePanel(panel) {
     isTouched = true;
     panelMinWidth = transformCSSWidth($el.css('min-width'));
     panelMaxWidth = transformCSSWidth($el.css('max-width'));
-    visibleByBreakpoint = $el.hasClass('panel-visible-by-breakpoint');
+    visibleByBreakpoint = $el.hasClass('panel-in-breakpoint');
   }
   function handleTouchMove(e) {
     if (!isTouched) return;

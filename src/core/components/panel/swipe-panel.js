@@ -3,11 +3,14 @@ import Utils from '../../utils/utils';
 
 function swipePanel(panel) {
   const app = panel.app;
+  if (panel.swipeInitialized) {
+    return;
+  }
   Utils.extend(panel, {
     swipeable: true,
     swipeInitialized: true,
   });
-  const params = app.params.panel;
+  const params = panel.params;
   const { $el, $backdropEl, side, effect } = panel;
   let otherPanel;
 
@@ -29,10 +32,13 @@ function swipePanel(panel) {
     if (!panel.swipeable) return;
     if (!app.panel.allowOpen || (!params.swipe && !params.swipeOnlyClose) || isTouched) return;
     if ($('.modal-in:not(.toast):not(.notification), .photo-browser-in').length > 0) return;
-    otherPanel = app.panel[side === 'left' ? 'right' : 'left'] || {};
-    if (!panel.opened && otherPanel.opened) return;
-    if (!(params.swipeCloseOpposite || params.swipeOnlyClose)) {
-      if (otherPanel.opened) return;
+    otherPanel = app.panel.get(side === 'left' ? 'right' : 'left') || {};
+    const otherPanelOpened = otherPanel.opened && otherPanel.$el && !otherPanel.$el.hasClass('panel-in-breakpoint');
+    if (!panel.opened && otherPanelOpened) {
+      return;
+    }
+    if (!params.swipeOnlyClose) {
+      if (otherPanelOpened) return;
     }
     if (e.target && e.target.nodeName.toLowerCase() === 'input' && e.target.type === 'range') return;
     if ($(e.target).closest('.range-slider, .tabs-swipeable-wrap, .calendar-months, .no-swipe-panel, .card-opened').length > 0) return;
@@ -41,23 +47,12 @@ function swipePanel(panel) {
     if (params.swipeOnlyClose && !panel.opened) {
       return;
     }
-    if (params.swipe !== 'both' && params.swipeCloseOpposite && params.swipe !== side && !panel.opened) {
-      return;
-    }
     if (params.swipeActiveArea && !panel.opened) {
       if (side === 'left') {
         if (touchesStart.x > params.swipeActiveArea) return;
       }
       if (side === 'right') {
         if (touchesStart.x < app.width - params.swipeActiveArea) return;
-      }
-    }
-    if (params.swipeCloseActiveAreaSide && panel.opened) {
-      if (side === 'left') {
-        if (touchesStart.x < ($el[0].offsetWidth - params.swipeCloseActiveAreaSide)) return;
-      }
-      if (side === 'right') {
-        if (touchesStart.x > ((app.width - $el[0].offsetWidth) + params.swipeCloseActiveAreaSide)) return;
       }
     }
     touchMoves = 0;
@@ -93,19 +88,17 @@ function swipePanel(panel) {
         direction = 'to-left';
       }
 
-      if (params.swipe === 'both') {
-        if (params.swipeActiveArea > 0 && !panel.opened) {
-          if (side === 'left' && touchesStart.x > params.swipeActiveArea) {
-            isTouched = false;
-            return;
-          }
-          if (side === 'right' && touchesStart.x < app.width - params.swipeActiveArea) {
-            isTouched = false;
-            return;
-          }
+      if (params.swipeActiveArea > 0 && !panel.opened) {
+        if (side === 'left' && touchesStart.x > params.swipeActiveArea) {
+          isTouched = false;
+          return;
+        }
+        if (side === 'right' && touchesStart.x < app.width - params.swipeActiveArea) {
+          isTouched = false;
+          return;
         }
       }
-      if ($el.hasClass('panel-visible-by-breakpoint')) {
+      if ($el.hasClass('panel-in-breakpoint')) {
         isTouched = false;
         return;
       }
@@ -132,12 +125,15 @@ function swipePanel(panel) {
 
     if (!isMoved) {
       if (!panel.opened) {
-        $el.css('visibility', 'visible');
+        $el.addClass('panel-in-swipe');
         $backdropEl.css('visibility', 'visible');
         $el.trigger('panel:swipeopen', panel);
         panel.emit('local::swipeOpen panelSwipeOpen', panel);
       }
       panelWidth = $el[0].offsetWidth;
+      if (effect === 'reveal' && $el.hasClass('panel-in-collapsed')) {
+        panelWidth -= parseFloat($viewEl.css(`margin-${side}`));
+      }
       $el.transition(0);
     }
 
@@ -251,18 +247,20 @@ function swipePanel(panel) {
         panel.open(!edge);
       }
     }
+    let removePanelInClass = true;
     if (action === 'reset') {
       if (!panel.opened) {
         if (edge) {
           // edge position
-          $el.css('visibility', '');
+          $el.removeClass('panel-in-swipe');
         } else {
+          removePanelInClass = false;
           const target = effect === 'reveal' ? $viewEl : $el;
-          $('html').addClass('with-panel-transitioning');
+          $('html').addClass('with-panel-closing');
           target.transitionEnd(() => {
             if ($el.hasClass('panel-in')) return;
-            $el.css('visibility', '');
-            $('html').removeClass('with-panel-transitioning');
+            $el.removeClass('panel-in-swipe');
+            $('html').removeClass('with-panel-closing');
           });
         }
       }
@@ -273,7 +271,10 @@ function swipePanel(panel) {
         $viewEl.transform('');
       });
     }
-    $el.css('visibility', '').transition('').transform('');
+    if (removePanelInClass) {
+      $el.removeClass('panel-in-swipe');
+    }
+    $el.transition('').transform('');
     $backdropEl.transform('').transition('').css({ opacity: '', visibility: '' });
   }
 
