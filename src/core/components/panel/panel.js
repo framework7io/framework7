@@ -8,12 +8,10 @@ export default {
     panel: {
       leftBreakpoint: 0,
       rightBreakpoint: 0,
-      swipe: undefined, // or 'left' or 'right' or 'both'
+      swipe: undefined, // or true
       swipeActiveArea: 0,
       swipeCloseActiveAreaSide: 0,
-      swipeCloseOpposite: true,
       swipeOnlyClose: false,
-      swipeNoFollow: false,
       swipeThreshold: 0,
       closeByBackdropClick: true,
     },
@@ -147,7 +145,7 @@ export default {
           panelSide = side;
           $panelEl = $(`.panel-${panelSide}`);
         } else {
-          $panelEl = $('.panel.panel-opened');
+          $panelEl = $('.panel.panel-in');
           panelSide = $panelEl.hasClass('panel-left') ? 'left' : 'right';
         }
         if (!panelSide) return false;
@@ -165,8 +163,8 @@ export default {
         if (side) {
           panelSide = side;
           $panelEl = $(`.panel-${panelSide}`);
-        } else if ($('.panel.panel-opened').length) {
-          $panelEl = $('.panel.panel-opened');
+        } else if ($('.panel.panel-in').length) {
+          $panelEl = $('.panel.panel-in');
           panelSide = $panelEl.hasClass('panel-left') ? 'left' : 'right';
         } else {
           if ($('.panel').length > 1) {
@@ -236,7 +234,7 @@ export default {
     },
     '.panel-backdrop': function close() {
       const app = this;
-      const $panelEl = $('.panel-opened');
+      const $panelEl = $('.panel-in');
       const instance = $panelEl[0] && $panelEl[0].f7Panel;
       $panelEl.trigger('panel:backdrop-click');
       if (instance) {

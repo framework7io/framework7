@@ -113,12 +113,12 @@ function swipePanel(panel) {
       if (
         (side === 'left'
           && (
-            direction === 'to-left' && !$el.hasClass('panel-opened')
+            direction === 'to-left' && !$el.hasClass('panel-in')
           )
         )
         || (side === 'right'
           && (
-            direction === 'to-right' && !$el.hasClass('panel-opened')
+            direction === 'to-right' && !$el.hasClass('panel-in')
           )
         )
       ) {
@@ -129,40 +129,6 @@ function swipePanel(panel) {
 
     let threshold = panel.opened ? 0 : -params.swipeThreshold;
     if (side === 'right') threshold = -threshold;
-
-    if (params.swipeNoFollow) {
-      const touchesDiffNoFollow = (pageX - touchesStart.x);
-      const timeDiff = (new Date()).getTime() - touchStartTime;
-      let needToSwitch;
-      if (!panel.opened && (
-        (side === 'left' && touchesDiffNoFollow > -threshold)
-        || (side === 'right' && -touchesDiffNoFollow > threshold)
-      )) {
-        needToSwitch = true;
-      }
-      if (panel.opened && (
-        (side === 'left' && touchesDiffNoFollow < 0)
-        || (side === 'right' && touchesDiffNoFollow > 0)
-      )) {
-        needToSwitch = true;
-      }
-
-      if (needToSwitch) {
-        if (timeDiff < 300) {
-          if (direction === 'to-left') {
-            if (side === 'right') app.panel.open(side);
-            if (side === 'left' && $el.hasClass('panel-opened')) app.panel.close();
-          }
-          if (direction === 'to-right') {
-            if (side === 'left') app.panel.open(side);
-            if (side === 'right' && $el.hasClass('panel-opened')) app.panel.close();
-          }
-        }
-        isTouched = false;
-        isMoved = false;
-      }
-      return;
-    }
 
     if (!isMoved) {
       if (!panel.opened) {
@@ -294,7 +260,7 @@ function swipePanel(panel) {
           const target = effect === 'reveal' ? $viewEl : $el;
           $('html').addClass('with-panel-transitioning');
           target.transitionEnd(() => {
-            if ($el.hasClass('panel-opened')) return;
+            if ($el.hasClass('panel-in')) return;
             $el.css('visibility', '');
             $('html').removeClass('with-panel-transitioning');
           });

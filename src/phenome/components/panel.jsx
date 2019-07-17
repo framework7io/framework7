@@ -58,7 +58,7 @@ export default {
         className,
         'panel',
         {
-          'panel-opened': opened,
+          'panel-in': opened,
           'panel-resizable': resizable,
           [`panel-${side}`]: side,
           [`panel-${effect}`]: effect,

@@ -131,8 +131,6 @@ export namespace Panel {
       swipeCloseOpposite? : boolean
       /** This parameter allows to close (but not open) panels with swipes. (default false) */
       swipeOnlyClose? : boolean
-      /** Fallback option for potentially better performance on old/slow devices. If you enable it, then side panel will not follow your finger during touch, it will be automatically opened/closed on swipe left/right.. (default false) */
-      swipeNoFollow? : boolean
       /** Panel will not move with swipe if "touch distance" will be less than this value (in px).. (default 0) */
       swipeThreshold? : number
       /** Enable/disable ability to close panel by clicking outside of panel (on panel's backdrop). (default true) */

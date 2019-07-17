@@ -34,12 +34,11 @@
   background-color: var(--f7-panel-bg-color);
   overflow: visible;
   transition-property: transform;
-  visibility: hidden;
   transition-duration: var(--f7-panel-transition-duration);
-  &.panel-opened,
-  &.panel-closing {
-    visibility: visible;
+  &:not(.panel-in):not(.panel-out):not(.panel-visible-by-breakpoint) {
+    display: none;
   }
+
   &:after {
     pointer-events: none;
     opacity: 0;
@@ -127,7 +126,6 @@
 }
 .panel-visible-by-breakpoint {
   transform: translate3d(0,0,0) !important;
-  visibility: visible;
   transition-duration: 0ms;
   &:after {
     display: none;
@@ -173,9 +171,6 @@ html {
     .panel-backdrop {
       transform: translate3d(var(--f7-panel-left-width, var(--f7-panel-width)),0,0);
     }
-    .panel-left {
-      visibility: visible;
-    }
   }
   &.with-panel-right-reveal {
     .views,
@@ -183,21 +178,12 @@ html {
     .panel-backdrop {
       transform: translate3d(calc(-1 * var(--f7-panel-right-width, var(--f7-panel-width))),0,0);
     }
-    .panel-right {
-      visibility: visible;
-    }
   }
-  &.with-panel-left-cover {
-    .panel-left {
-      transform: translate3d(0px,0,0);
-      visibility: visible;
-    }
+  &.with-panel-left-cover .panel-left {
+    transform: translate3d(0px,0,0);
   }
-  &.with-panel-right-cover {
-    .panel-right {
-      transform: translate3d(0px,0,0);
-      visibility: visible;
-    }
+  &.with-panel-right-cover .panel-right {
+    transform: translate3d(0px,0,0);
   }
 }
 .panel-resize-handler {

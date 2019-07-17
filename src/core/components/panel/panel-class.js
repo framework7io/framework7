@@ -22,7 +22,7 @@ class Panel extends Framework7Class {
     $el[0].f7Panel = panel;
 
     let { opened, side, effect } = params;
-    if (typeof opened === 'undefined') opened = $el.hasClass('panel-opened');
+    if (typeof opened === 'undefined') opened = $el.hasClass('panel-in');
     if (typeof side === 'undefined') side = $el.hasClass('panel-left') ? 'left' : 'right';
     if (typeof effect === 'undefined') effect = $el.hasClass('panel-cover') ? 'cover' : 'reveal';
 
@@ -83,7 +83,7 @@ class Panel extends Framework7Class {
     if (app.width >= breakpoint) {
       if (!wasVisible) {
         $('html').removeClass(`with-panel-${side}-reveal with-panel-${side}-cover with-panel`);
-        $el.addClass('panel-visible-by-breakpoint').removeClass('panel-opened');
+        $el.addClass('panel-visible-by-breakpoint').removeClass('panel-in');
         panel.onOpen();
         panel.onOpened();
         $viewEl.css({
@@ -100,7 +100,7 @@ class Panel extends Framework7Class {
         });
       }
     } else if (wasVisible) {
-      $el.removeClass('panel-visible-by-breakpoint panel-opened');
+      $el.removeClass('panel-visible-by-breakpoint panel-in');
       panel.onClose();
       panel.onClosed();
       $viewEl.css({
@@ -228,7 +228,7 @@ class Panel extends Framework7Class {
     }
 
     // Ignore if opened
-    if (opened || $el.hasClass('panel-visible-by-breakpoint') || $el.hasClass('panel-opened')) return false;
+    if (opened || $el.hasClass('panel-visible-by-breakpoint') || $el.hasClass('panel-in')) return false;
 
     // Close if some panel is opened
     app.panel.close(side === 'left' ? 'right' : 'left', animate);
@@ -236,7 +236,7 @@ class Panel extends Framework7Class {
     app.panel.allowOpen = false;
 
     $el[animate ? 'removeClass' : 'addClass']('not-animated');
-    $el.addClass('panel-opened');
+    $el.addClass('panel-in');
 
     $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
 
@@ -249,7 +249,7 @@ class Panel extends Framework7Class {
     function panelTransitionEnd() {
       transitionEndTarget.transitionEnd((e) => {
         if ($(e.target).is(transitionEndTarget)) {
-          if ($el.hasClass('panel-opened')) {
+          if ($el.hasClass('panel-in')) {
             panel.onOpened();
           } else {
             panel.onClosed();
@@ -276,10 +276,10 @@ class Panel extends Framework7Class {
     const app = panel.app;
 
     const { side, effect, $el, $backdropEl, opened } = panel;
-    if (!opened || $el.hasClass('panel-visible-by-breakpoint') || !$el.hasClass('panel-opened')) return false;
+    if (!opened || $el.hasClass('panel-visible-by-breakpoint') || !$el.hasClass('panel-in')) return false;
 
     $el[animate ? 'removeClass' : 'addClass']('not-animated');
-    $el.removeClass('panel-opened');
+    $el.removeClass('panel-in');
 
     $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
 
@@ -290,7 +290,7 @@ class Panel extends Framework7Class {
 
     if (animate) {
       transitionEndTarget.transitionEnd(() => {
-        if ($el.hasClass('panel-opened')) return;
+        if ($el.hasClass('panel-in')) return;
         $('html').removeClass('with-panel-transitioning');
         panel.onClosed();
       });
@@ -343,7 +343,7 @@ class Panel extends Framework7Class {
 
     if (panel.$el.hasClass('panel-visible-by-breakpoint')) {
       const $viewEl = $(panel.getViewEl());
-      panel.$el.removeClass('panel-visible-by-breakpoint panel-opened');
+      panel.$el.removeClass('panel-visible-by-breakpoint panel-in');
       $viewEl.css({
         [`margin-${panel.side}`]: '',
       });
