@@ -95,6 +95,13 @@ class Popup extends Modal {
       }
     }
 
+    let pushOffset;
+    let isPush;
+
+    function pushViewScale(offset) {
+      return (app.height - offset * 2) / app.height;
+    }
+
     let allowSwipeToClose = true;
     let isTouched = false;
     let startTouch;
@@ -107,6 +114,8 @@ class Popup extends Modal {
     let pageContentScrollTop;
     let pageContentOffsetHeight;
     let pageContentScrollHeight;
+    let popupHeight;
+    let $pushViewEl;
 
     function handleTouchStart(e) {
       if (isTouched || !allowSwipeToClose || !popup.params.swipeToClose) return;
@@ -142,6 +151,9 @@ class Popup extends Modal {
       }
 
       touchesDiff = startTouch.y - currentTouch.y;
+      if (isPush && pushOffset && touchesDiff > 0) {
+        touchesDiff = 0;
+      }
       const direction = touchesDiff < 0 ? 'to-bottom' : 'to-top';
       $el.transition(0);
 
@@ -151,6 +163,10 @@ class Popup extends Modal {
       }
 
       if (!isMoved) {
+        if (isPush && pushOffset) {
+          popupHeight = $el[0].offsetHeight;
+          $pushViewEl = app.root.children('.view, .views');
+        }
         if (pageContentEl) {
           pageContentScrollTop = pageContentEl.scrollTop;
           pageContentScrollHeight = pageContentEl.scrollHeight;
@@ -169,6 +185,11 @@ class Popup extends Modal {
         isMoved = true;
       }
       e.preventDefault();
+      if (isPush && pushOffset) {
+        const pushProgress = 1 - Math.abs(touchesDiff / popupHeight);
+        const scale = 1 - (1 - pushViewScale(pushOffset)) * pushProgress;
+        $pushViewEl.transition(0).transform(`translate3d(0,0,0) scale(${scale})`);
+      }
       $el.transition(0).transform(`translate3d(0,${-touchesDiff}px,0)`);
     }
     function handleTouchEnd() {
@@ -179,7 +200,10 @@ class Popup extends Modal {
       isMoved = false;
       allowSwipeToClose = false;
       $el.transition('');
-      const direction = touchesDiff < 0 ? 'to-bottom' : 'to-top';
+      if (isPush && pushOffset) {
+        $pushViewEl.transition('').transform('');
+      }
+      const direction = touchesDiff <= 0 ? 'to-bottom' : 'to-top';
       if ((typeof popup.params.swipeToClose === 'string' && direction !== popup.params.swipeToClose)) {
         $el.transform('');
         allowSwipeToClose = true;
@@ -216,20 +240,23 @@ class Popup extends Modal {
       });
     }
 
-    $el[0].f7Modal = popup;
-
-    let pushOffset;
     popup.on('open', () => {
       if (popup.params.closeOnEscape) {
         $(document).on('keydown', onKeyDown);
       }
       if (popup.push) {
+        isPush = popup.push && (
+          (app.width < 630 || app.height < 630)
+          || $el.hasClass('popup-tablet-fullscreen')
+        );
+      }
+      if (isPush) {
         pushOffset = parseInt($el.css('--f7-popup-push-offset'), 10);
         if (Number.isNaN(pushOffset)) pushOffset = 0;
         if (pushOffset) {
           $el.addClass('popup-push');
-          popup.$htmlEl.addClass('with-popup-push');
-          popup.$htmlEl[0].style.setProperty('--f7-popup-push-scale', (app.height - pushOffset * 2) / app.height);
+          popup.$htmlEl.addClass('with-modal-popup-push');
+          popup.$htmlEl[0].style.setProperty('--f7-popup-push-scale', pushViewScale(pushOffset));
         }
       }
     });
@@ -246,16 +273,19 @@ class Popup extends Modal {
       if (popup.params.closeByBackdropClick) {
         app.off('click', handleClick);
       }
-      if (popup.push && pushOffset) {
-        popup.$htmlEl.removeClass('with-popup-push');
-        popup.$htmlEl.addClass('with-popup-push-closing');
+      if (isPush && pushOffset) {
+        popup.$htmlEl.removeClass('with-modal-popup-push');
+        popup.$htmlEl.addClass('with-modal-popup-push-closing');
       }
     });
     popup.on('closed', () => {
-      if (popup.push && pushOffset) {
-        popup.$htmlEl.removeClass('with-popup-push-closing');
+      if (isPush && pushOffset) {
+        popup.$htmlEl.removeClass('with-modal-popup-push-closing');
+        popup.$htmlEl[0].style.removeProperty('--f7-popup-push-scale');
       }
     });
+
+    $el[0].f7Modal = popup;
 
     return popup;
   }
