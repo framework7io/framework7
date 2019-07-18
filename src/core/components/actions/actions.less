@@ -47,7 +47,8 @@
     .hairline-remove(bottom);
   }
 }
-.actions-button, .actions-label {
+.actions-button,
+.actions-label {
   width: 100%;
   font-weight: normal;
   margin: 0;
@@ -57,6 +58,7 @@
   overflow: hidden;
   text-align: var(--f7-actions-button-text-align);
   background: var(--f7-actions-bg-color);
+  .translucent(var(--f7-actions-bg-color-rgb));
   .hairline(bottom, var(--f7-actions-button-border-color));
   &:first-child {
     border-radius: var(--f7-actions-border-radius) var(--f7-actions-border-radius) 0 0;
@@ -93,6 +95,9 @@
   &[class*="color-"] {
     color: var(--f7-theme-color);
   }
+}
+.actions-button.active-state {
+  .translucent(var(--f7-actions-button-pressed-bg-color-rgb));
 }
 
 .actions-button-media {
@@ -182,6 +187,9 @@
     height: 1.33em;
     font-size: var(--f7-actions-grid-button-font-size);
   }
+}
+.actions-grid .actions-group {
+  .translucent(var(--f7-actions-bg-color-rgb));
 }
 .if-ios-theme({
   @import url('./actions-ios.less');
