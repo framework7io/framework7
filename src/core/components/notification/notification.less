@@ -2,6 +2,8 @@
 @import url('./notification-vars.less');
 
 .notification {
+  --f7-link-highlight-color: var(--f7-link-highlight-black);
+  --f7-touch-ripple-color: var(--f7-touch-ripple-black);
   position: absolute;
   left: var(--f7-notification-margin);
   top: var(--f7-notification-margin);
@@ -20,8 +22,7 @@
   box-shadow: var(--f7-notification-box-shadow);
   background: var(--f7-notification-bg-color);
   margin-top: var(--f7-safe-area-top);
-  --f7-link-highlight-color: var(--f7-link-highlight-black);
-  --f7-touch-ripple-color: var(--f7-touch-ripple-black);
+  .translucent(var(--f7-notification-bg-color-rgb));
   @media (min-width: 568px) {
     left: 50%;
     width: var(--f7-notification-max-width);

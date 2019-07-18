@@ -128,9 +128,11 @@
   --f7-bars-text-color: #fff;
 }
 .ios-vars({
-  --f7-bars-border-color: #c4c4c4;
+  --f7-bars-border-color: rgba(0,0,0,0.25);
   .theme-dark, &.theme-dark {
-    --f7-bars-border-color: #282829;
+    --f7-bars-bg-color: #121212;
+    --f7-bars-bg-color-rgb: 19, 19, 19;
+    --f7-bars-border-color: rgba(255,255,255,0.1);
   }
 });
 .md-vars({
@@ -139,7 +141,7 @@
 .aurora-vars({
   --f7-bars-border-color: rgba(0,0,0,0.2);
   .theme-dark, &.theme-dark {
-    --f7-bars-border-color: #282829;
+    --f7-bars-border-color: rgba(255, 255, 255, 0.1);
   }
 });
 

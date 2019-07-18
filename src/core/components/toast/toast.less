@@ -2,6 +2,7 @@
 @import url('./toast-vars.less');
 
 .toast {
+  --f7-touch-ripple-color: var(--f7-touch-ripple-white);
   transition-property: transform, opacity;
   position: absolute;
   max-width: 568px;
@@ -11,7 +12,7 @@
   box-sizing: border-box;
   background-color: var(--f7-toast-bg-color);
   opacity: 0;
-  --f7-touch-ripple-color: var(--f7-touch-ripple-white);
+  .translucent(var(--f7-toast-bg-color-rgb));
   &.modal-in {
     opacity: 1;
   }
