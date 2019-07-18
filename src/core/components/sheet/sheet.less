@@ -17,7 +17,7 @@
   z-index: 12500;
   will-change: transform;
   &.modal-in, &.modal-out {
-    transition-duration: 300ms;
+    transition-duration: var(--f7-sheet-transition-duration);
   }
   &.not-animated {
     transition-duration: 0ms;
@@ -85,6 +85,36 @@
   }
   .page-content {
     padding-top: var(--f7-safe-area-top);
+  }
+}
+
+html.with-modal-sheet-push,
+html.with-modal-sheet-push-closing {
+  .sheet-modal-push {
+    border-radius: var(--f7-sheet-push-border-radius) var(--f7-sheet-push-border-radius) 0 0;
+    overflow: hidden;
+    .view, .page {
+      --f7-safe-area-top: 0px;
+    }
+    &.sheet-modal-top {
+      border-radius: 0 0 var(--f7-sheet-push-border-radius) var(--f7-sheet-push-border-radius);
+    }
+  }
+  .framework7-root {
+    background: #000;
+    > .views,
+    > .view {
+      transition-duration: var(--f7-sheet-transition-duration);
+    }
+  }
+}
+html.with-modal-sheet-push {
+  .framework7-root {
+    > .views,
+    > .view {
+      border-radius: var(--f7-sheet-push-border-radius);
+      transform: translate3d(0, 0, 0px) scale(var(--f7-sheet-push-scale, 1));
+    }
   }
 }
 

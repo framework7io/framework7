@@ -24,6 +24,7 @@ export default {
     closeByBackdropClick: Boolean,
     closeByOutsideClick: Boolean,
     closeOnEscape: Boolean,
+    push: Boolean,
     swipeToClose: Boolean,
     swipeToStep: Boolean,
     swipeHandler: [String, Object, window.HTMLElement],
@@ -41,6 +42,7 @@ export default {
       top,
       bottom,
       position,
+      push,
     } = props;
 
     let fixedTags;
@@ -93,6 +95,9 @@ export default {
       className,
       'sheet-modal',
       `sheet-modal-${positionComputed}`,
+      {
+        'sheet-modal-push': push,
+      },
       Mixins.colorClasses(props),
     );
 
