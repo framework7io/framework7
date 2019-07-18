@@ -147,6 +147,7 @@
 :root.theme-dark,
 :root .theme-dark {
   --f7-bars-bg-color: var(--f7-theme-color);
+  --f7-bars-bg-color-rgb: var(--f7-theme-color-rgb);
   --f7-bars-text-color: #fff;
   --f7-bars-link-color: #fff;
   --f7-navbar-subtitle-text-color: rgba(255,255,255,0.85);

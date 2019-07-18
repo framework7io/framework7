@@ -105,8 +105,9 @@
   z-index: 0;
   background: var(--f7-navbar-bg-color);
   background-image: var(--f7-navbar-bg-image, var(--f7-bars-bg-image));
-  background-color: var(--f7-navbar-bg-color, var(--f7-bars-bg-color, var(--f7-theme-color)));
+  background-color: var(--f7-navbar-bg-color, var(--f7-bars-bg-color));
   transition-property: transform;
+  .translucent(var(--f7-navbar-bg-color-rgb, var(--f7-bars-bg-color-rgb)));
   &:after,
   &:before {
     backface-visibility: hidden;

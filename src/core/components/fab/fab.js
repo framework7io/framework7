@@ -76,7 +76,8 @@ const Fab = {
         $fabEl
           .transform(`translate3d(${-diffX}px, ${-diffY}px, 0) scale(${scaleX}, ${scaleY})`)
           .css('border-radius', `${borderRadius}px`)
-          .css('box-shadow', 'none');
+          .css('box-shadow', 'none')
+          .css('opacity', '0');
       });
       app.on('resize', $fabEl[0].f7FabMorphResizeHandler);
       if ($targetEl.parents('.page-content').length > 0) {
@@ -113,6 +114,7 @@ const Fab = {
       .transition('')
       .css('box-shadow', '')
       .css('border-radius', '')
+      .css('opacity', '1')
       .transform(`translate3d(${-diffX}px, ${-diffY}px, 0)`);
     $fabEl.transitionEnd(() => {
       $fabEl

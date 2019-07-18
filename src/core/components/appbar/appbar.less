@@ -13,10 +13,11 @@
   transform: translate3d(0,0,0);
   height: calc(var(--f7-appbar-height) + var(--f7-safe-area-top));
   background-image: var(--f7-appbar-bg-image, var(--f7-bars-bg-image));
-  background-color: var(--f7-appbar-bg-color, var(--f7-bars-bg-color, var(--f7-theme-color)));
+  background-color: var(--f7-appbar-bg-color, var(--f7-bars-bg-color));
   color: var(--f7-appbar-text-color, var(--f7-bars-text-color));
   font-size: var(--f7-appbar-font-size);
   z-index: 7000;
+  .translucent(var(--f7-appbar-bg-color-rgb, var(--f7-bars-bg-color-rgb)));
   .panel ~ .appbar {
     z-index: 5500;
   }

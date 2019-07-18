@@ -1,4 +1,3 @@
-import { document } from 'ssr-window';
 import Support from '../../utils/support';
 
 export default {
@@ -8,16 +7,5 @@ export default {
   },
   static: {
     support: Support,
-  },
-  on: {
-    init() {
-      const html = document.querySelector('html');
-      if (!html) return;
-      const classNames = [];
-      // Add html classes
-      classNames.forEach((className) => {
-        html.classList.add(className);
-      });
-    },
   },
 };

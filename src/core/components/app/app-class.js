@@ -36,6 +36,7 @@ class Framework7 extends Framework7Class {
       initOnDeviceReady: true,
       init: true,
       autoDarkTheme: false,
+      iosTranslucent: true,
     };
 
     // Extend defaults with modules params
@@ -183,7 +184,12 @@ class Framework7 extends Framework7Class {
     app.root.addClass('framework7-root');
 
     // Theme class
-    $('html').removeClass('ios md').addClass(app.theme);
+    $('html').removeClass('ios md aurora').addClass(app.theme);
+
+    // iOS Translucent
+    if (app.theme === 'ios' && app.params.iosTranslucent) {
+      $('html').addClass('ios-translucent');
+    }
 
     // Init class
     Utils.nextFrame(() => {
