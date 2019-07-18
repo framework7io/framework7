@@ -27,6 +27,14 @@ export default class extends React.Component {
           </p>
         </Block>
 
+        <BlockTitle>Push View</BlockTitle>
+        <Block strong>
+          <p>Sheet can push view behind on open. By default it has effect only when `safe-area-inset-top` is more than zero (iOS fullscreen webapp or iOS cordova app)</p>
+          <p>
+            <Button fill sheetOpen=".demo-sheet-push">Sheet Push</Button>
+          </p>
+        </Block>
+
         <BlockTitle>Swipeable Sheet</BlockTitle>
         <Block strong>
           <p>Sheet modal can be closed with swipe to top (for top Sheet) or bottom (for default Bottom sheet):</p>
@@ -77,10 +85,29 @@ export default class extends React.Component {
           </PageContent>
         </Sheet>
 
+        <Sheet className="demo-sheet-push" push>
+          <Toolbar>
+            <div className="left"></div>
+            <div className="right">
+              <Link sheetClose>Close</Link>
+            </div>
+          </Toolbar>
+          <PageContent>
+            <Block>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae ducimus dolorum ipsa aliquid accusamus perferendis laboriosam delectus numquam minima animi, libero illo in tempora harum sequi corporis alias ex adipisci.</p>
+              <p>Sunt magni enim saepe quasi aspernatur delectus consectetur fugiat necessitatibus qui sed, similique quis facere tempora, laudantium quae expedita ea, aperiam dolores. Aut deserunt soluta alias magnam. Consequatur, nisi, enim.</p>
+              <p>Eaque maiores ducimus, impedit unde culpa qui, explicabo accusamus, non vero corporis voluptatibus similique odit ab. Quaerat quasi consectetur quidem libero? Repudiandae adipisci vel voluptatum, autem libero minus dignissimos repellat.</p>
+              <p>Iusto, est corrupti! Totam minus voluptas natus esse possimus nobis, delectus veniam expedita sapiente ut cum reprehenderit aliquid odio amet praesentium vero temporibus obcaecati beatae aspernatur incidunt, perferendis voluptates doloribus?</p>
+              <p>Illum id laborum tempore, doloribus culpa labore ex iusto odit. Quibusdam consequuntur totam nam obcaecati, enim cumque nobis, accusamus, quos voluptates, voluptatibus sapiente repellendus nesciunt praesentium velit ipsa illo iusto.</p>
+            </Block>
+          </PageContent>
+        </Sheet>
+
         <Sheet
           className="demo-sheet-swipe-to-close"
           style={{height: 'auto'}}
           swipeToClose
+          push
           backdrop
         >
           <div className="swipe-handler"></div>
@@ -99,6 +126,7 @@ export default class extends React.Component {
           style={{height: 'auto'}}
           swipeToClose
           swipeToStep
+          push
           backdrop
         >
           <div className="swipe-handler" onClick={() => this.toggleSwipeStep()}></div>

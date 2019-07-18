@@ -15,6 +15,14 @@
       </p>
     </f7-block>
 
+    <f7-block-title>Push View</f7-block-title>
+    <f7-block strong>
+      <p>Sheet can push view behind on open. By default it has effect only when `safe-area-inset-top` is more than zero (iOS fullscreen webapp or iOS cordova app)</p>
+      <p>
+        <f7-button fill sheet-open=".demo-sheet-push">Sheet Push</f7-button>
+      </p>
+    </f7-block>
+
     <f7-block-title>Swipeable Sheet</f7-block-title>
     <f7-block strong>
       <p>Sheet modal can be closed with swipe to top (for top Sheet) or bottom (for default Bottom sheet):</p>
@@ -65,10 +73,30 @@
       </f7-page-content>
     </f7-sheet>
 
+    <f7-sheet class="demo-sheet-push" push>
+      <f7-toolbar>
+        <div class="left"></div>
+        <div class="right">
+          <f7-link sheet-close>Close</f7-link>
+        </div>
+      </f7-toolbar>
+      <!-- Scrollable sheet content -->
+      <f7-page-content>
+        <f7-block>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae ducimus dolorum ipsa aliquid accusamus perferendis laboriosam delectus numquam minima animi, libero illo in tempora harum sequi corporis alias ex adipisci.</p>
+          <p>Sunt magni enim saepe quasi aspernatur delectus consectetur fugiat necessitatibus qui sed, similique quis facere tempora, laudantium quae expedita ea, aperiam dolores. Aut deserunt soluta alias magnam. Consequatur, nisi, enim.</p>
+          <p>Eaque maiores ducimus, impedit unde culpa qui, explicabo accusamus, non vero corporis voluptatibus similique odit ab. Quaerat quasi consectetur quidem libero? Repudiandae adipisci vel voluptatum, autem libero minus dignissimos repellat.</p>
+          <p>Iusto, est corrupti! Totam minus voluptas natus esse possimus nobis, delectus veniam expedita sapiente ut cum reprehenderit aliquid odio amet praesentium vero temporibus obcaecati beatae aspernatur incidunt, perferendis voluptates doloribus?</p>
+          <p>Illum id laborum tempore, doloribus culpa labore ex iusto odit. Quibusdam consequuntur totam nam obcaecati, enim cumque nobis, accusamus, quos voluptates, voluptatibus sapiente repellendus nesciunt praesentium velit ipsa illo iusto.</p>
+        </f7-block>
+      </f7-page-content>
+    </f7-sheet>
+
     <f7-sheet
       class="demo-sheet-swipe-to-close"
       style="height:auto"
       swipe-to-close
+      push
       backdrop
     >
       <div class="swipe-handler"></div>
@@ -87,6 +115,7 @@
       style="height:auto"
       swipe-to-close
       swipe-to-step
+      push
       backdrop
     >
       <div class="swipe-handler" @click="toggleSwipeStep"></div>

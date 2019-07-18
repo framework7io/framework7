@@ -24,6 +24,14 @@
         </p>
       </div>
 
+      <div class="block-title">Push View</div>
+      <div class="block block-strong">
+        <p>Sheet can push view behind on open. By default it has effect only when `safe-area-inset-top` is more than zero (iOS fullscreen webapp or iOS cordova app)</p>
+        <p>
+          <a href="#" class="button button-fill sheet-open" data-sheet=".demo-sheet-push">Sheet Push</a>
+        </p>
+      </div>
+
       <div class="block-title">Swipeable Sheet</div>
       <div class="block block-strong">
         <p>Sheet modal can be closed with swipe to top (for top Sheet) or bottom (for default Bottom sheet):</p>
@@ -32,8 +40,8 @@
         </p>
         <p>Also there is swipe-step that can be set on Sheet modal to expand it with swipe:</p>
         <p>
-            <a href="#" class="button button-fill sheet-open" data-sheet=".demo-sheet-swipe-to-step">Swipe To Step</a>
-          </p>
+          <a href="#" class="button button-fill sheet-open" data-sheet=".demo-sheet-swipe-to-step">Swipe To Step</a>
+        </p>
       </div>
     </div>
 
@@ -61,6 +69,28 @@
     </div>
     <div class="sheet-modal sheet-modal-top demo-sheet-top">
       <div class="toolbar toolbar-bottom">
+        <div class="toolbar-inner">
+          <div class="left"></div>
+          <div class="right">
+            <a class="link sheet-close">Close</a>
+          </div>
+        </div>
+      </div>
+      <div class="sheet-modal-inner">
+        <div class="page-content">
+          <div class="block">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae ducimus dolorum ipsa aliquid accusamus perferendis laboriosam delectus numquam minima animi, libero illo in tempora harum sequi corporis alias ex adipisci.</p>
+            <p>Sunt magni enim saepe quasi aspernatur delectus consectetur fugiat necessitatibus qui sed, similique quis facere tempora, laudantium quae expedita ea, aperiam dolores. Aut deserunt soluta alias magnam. Consequatur, nisi, enim.</p>
+            <p>Eaque maiores ducimus, impedit unde culpa qui, explicabo accusamus, non vero corporis voluptatibus similique odit ab. Quaerat quasi consectetur quidem libero? Repudiandae adipisci vel voluptatum, autem libero minus dignissimos repellat.</p>
+            <p>Iusto, est corrupti! Totam minus voluptas natus esse possimus nobis, delectus veniam expedita sapiente ut cum reprehenderit aliquid odio amet praesentium vero temporibus obcaecati beatae aspernatur incidunt, perferendis voluptates doloribus?</p>
+            <p>Illum id laborum tempore, doloribus culpa labore ex iusto odit. Quibusdam consequuntur totam nam obcaecati, enim cumque nobis, accusamus, quos voluptates, voluptatibus sapiente repellendus nesciunt praesentium velit ipsa illo iusto.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet-modal demo-sheet-push">
+      <div class="toolbar">
         <div class="toolbar-inner">
           <div class="left"></div>
           <div class="right">
@@ -175,15 +205,22 @@ return {
   on: {
     pageInit: function () {
       var self = this;
+      self.sheetPush = self.$app.sheet.create({
+        el: '.demo-sheet-push',
+        push: true,
+        backdrop: true,
+      });
       self.sheetSwipeToClose = self.$app.sheet.create({
         el: '.demo-sheet-swipe-to-close',
         swipeToClose: true,
+        push: true,
         backdrop: true,
       });
       self.sheetSwipeToStep = self.$app.sheet.create({
         el: '.demo-sheet-swipe-to-step',
         swipeToClose: true,
         swipeToStep: true,
+        push: true,
         backdrop: true,
       });
     },
@@ -196,6 +233,9 @@ return {
       var self = this;
       // Destroy sheet modal when page removed
       if (self.sheet) self.sheet.destroy();
+      if (self.sheetPush) self.sheetPush.destroy();
+      if (self.sheetSwipeToClose) self.sheetSwipeToClose.destroy();
+      if (self.sheetSwipeToStep) self.sheetSwipeToStep.destroy();
     },
   }
 }
