@@ -22,13 +22,6 @@
           <a href="#" class="button button-fill" @click="createPopup">Create Dynamic Popup</a>
         </p>
       </div>
-      <div class="block-title">Push View</div>
-      <div class="block block-strong">
-        <p>Popup can push view behind. By default has effect only when `safe-area-inset-top` is more than zero (iOS fullscreen webapp or iOS cordova app)</p>
-        <p>
-          <a href="#" class="button button-fill popup-open" data-popup=".demo-popup-push">Push Popup</a>
-        </p>
-      </div>
       <div class="block-title">Swipe To Close</div>
       <div class="block block-strong">
         <p>Popup can be closed with swipe to top or bottom:</p>
@@ -38,6 +31,13 @@
         <p>Or it can be closed with swipe on special swipe handler and, for example, only to bottom:</p>
         <p>
           <a href="#" class="button button-fill popup-open" data-popup=".demo-popup-swipe-handler">With Swipe Handler</a>
+        </p>
+      </div>
+      <div class="block-title">Push View</div>
+      <div class="block block-strong">
+        <p>Popup can push view behind. By default it has effect only when `safe-area-inset-top` is more than zero (iOS fullscreen webapp or iOS cordova app)</p>
+        <p>
+          <a href="#" class="button button-fill popup-open" data-popup=".demo-popup-push">Popup Push</a>
         </p>
       </div>
     </div>
@@ -60,7 +60,7 @@
       </div>
     </div>
 
-    <div class="popup popup-push demo-popup-push" style="--f7-page-bg-color: #fff">
+    <div class="popup demo-popup-push" style="--f7-page-bg-color: #fff">
       <div class="view view-init">
         <div class="page page-with-navbar-large">
           <div class="navbar">
@@ -156,6 +156,7 @@
         if (self.popup) self.popup.destroy();
         if (self.popupSwipe) self.popupSwipe.destroy();
         if (self.popupSwipeHandler) self.popupSwipeHandler.destroy();
+        if (self.popupPush) self.popupPush.destroy();
       },
       pageInit: function () {
         var self = this;
@@ -167,6 +168,11 @@
           el: '.demo-popup-swipe-handler',
           swipeToClose: 'to-bottom',
           swipeHandler: '.swipe-handler'
+        });
+        self.popupPush = self.$f7.popup.create({
+          el: '.demo-popup-push',
+          swipeToClose: true,
+          push: true,
         });
       },
     }

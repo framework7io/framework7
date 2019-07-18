@@ -25,13 +25,7 @@ export default class extends React.Component {
             <Button fill onClick={this.createPopup.bind(this)}>Create Dynamic Popup</Button>
           </p>
         </Block>
-        <BlockTitle>Push View</BlockTitle>
-        <Block strong>
-          <p>Popup can push view behind. By default has effect only when `safe-area-inset-top` is more than zero (iOS fullscreen webapp or iOS cordova app)</p>
-          <p>
-            <Button fill popupOpen=".demo-popup-push">Push Popup</Button>
-          </p>
-        </Block>
+
         <BlockTitle>Swipe To Close</BlockTitle>
         <Block strong>
           <p>Popup can be closed with swipe to top or bottom:</p>
@@ -43,6 +37,15 @@ export default class extends React.Component {
             <Button fill popupOpen=".demo-popup-swipe-handler">With Swipe Handler</Button>
           </p>
         </Block>
+
+        <BlockTitle>Push View</BlockTitle>
+        <Block strong>
+          <p>Popup can push view behind. By default has effect only when `safe-area-inset-top` is more than zero (iOS fullscreen webapp or iOS cordova app)</p>
+          <p>
+            <Button fill popupOpen=".demo-popup-push">Popup Push</Button>
+          </p>
+        </Block>
+
         <Popup className="demo-popup" opened={this.state.popupOpened} onPopupClosed={() => this.setState({popupOpened : false})}>
           <Page>
             <Navbar title="Popup Title">

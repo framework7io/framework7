@@ -13,13 +13,7 @@
         <f7-button fill @click="createPopup">Create Dynamic Popup</f7-button>
       </p>
     </f7-block>
-    <f7-block-title>Push View</f7-block-title>
-    <f7-block strong>
-      <p>Popup can push view behind. By default has effect only when `safe-area-inset-top` is more than zero (iOS fullscreen webapp or iOS cordova app)</p>
-      <p>
-        <f7-button fill popup-open=".demo-popup-push">Push Popup</f7-button>
-      </p>
-    </f7-block>
+
     <f7-block-title>Swipe To Close</f7-block-title>
     <f7-block strong>
       <p>Popup can be closed with swipe to top or bottom:</p>
@@ -31,6 +25,15 @@
         <f7-button fill popup-open=".demo-popup-swipe-handler">With Swipe Handler</f7-button>
       </p>
     </f7-block>
+
+    <f7-block-title>Push View</f7-block-title>
+    <f7-block strong>
+      <p>Popup can push view behind. By default has effect only when `safe-area-inset-top` is more than zero (iOS fullscreen webapp or iOS cordova app)</p>
+      <p>
+        <f7-button fill popup-open=".demo-popup-push">Popup Push</f7-button>
+      </p>
+    </f7-block>
+
     <f7-popup class="demo-popup" :opened="popupOpened" @popup:closed="popupOpened = false">
       <f7-page>
         <f7-navbar title="Popup Title">
