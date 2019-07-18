@@ -7,7 +7,6 @@
   }
   .dialog-inner {
     border-radius: var(--f7-dialog-border-radius) var(--f7-dialog-border-radius) 0 0;
-    background: var(--f7-dialog-bg-color);
     .hairline(bottom, @dialogHairlineColor);
   }
   .dialog-title {
@@ -24,11 +23,7 @@
     padding: 0 5px;
     -webkit-box-flex:1;
     -ms-flex:1;
-    background: var(--f7-dialog-bg-color);
     .hairline(right, @dialogHairlineColor);
-    &.active-state {
-      background-color: var(--f7-dialog-button-pressed-bg-color);
-    }
     &:first-child {
       border-radius: 0 0 0 var(--f7-dialog-border-radius);
     }
