@@ -54,6 +54,8 @@ textarea {
     color: var(--f7-input-text-color);
     font-size: var(--f7-input-font-size);
     background-color: var(--f7-input-bg-color, transparent);
+    padding-left: var(--f7-input-padding-left);
+    padding-right: var(--f7-input-padding-right);
     &::placeholder {
       color: var(--f7-input-placeholder-color);
     }
@@ -64,10 +66,12 @@ textarea {
     font-size: var(--f7-input-font-size);
     resize: none;
     line-height: 1.4;
-    height: 100px;
+    height: var(--f7-textarea-height);
     background-color: var(--f7-input-bg-color, transparent);
     padding-top: var(--f7-textarea-padding-vertical);
     padding-bottom: var(--f7-textarea-padding-vertical);
+    padding-left: var(--f7-input-padding-left);
+    padding-right: var(--f7-input-padding-right);
     &::placeholder {
       color: var(--f7-input-placeholder-color);
     }
@@ -110,6 +114,12 @@ textarea {
     width: auto;
     max-width: calc(100% / var(--f7-floating-label-scale));
     pointer-events: none;
+    .ltr({
+      left: var(--f7-input-padding-left);
+    });
+    .rtl({
+      right: var(--f7-input-padding-right);
+    });
     ~ .item-input-wrap input,
     ~ .item-input-wrap textarea, {
       &::placeholder {
@@ -275,10 +285,10 @@ textarea {
   input,
   textarea {
     .ltr({
-      padding-right: 20px;
+      padding-right: calc(20px + var(--f7-input-padding-right));
     });
     .rtl({
-      padding-left: 20px;
+      padding-left: calc(20px + var(--f7-input-padding-left));
     });
   }
 }
@@ -308,13 +318,14 @@ textarea {
   border-color: var(--f7-input-outline-invalid-border-color, var(--f7-input-error-text-color));
 }
 .input-outline,
-.item-input-outline {
+.item-input-outline,
+.list .item-input-outline {
   input,
   textarea,
   select {
-    padding-left:var(--f7-input-outline-padding-horizontal);
-    padding-right:var(--f7-input-outline-padding-horizontal);
     border-radius: var(--f7-input-outline-border-radius);
+    padding-left: var(--f7-input-outline-padding-horizontal);
+    padding-right: var(--f7-input-outline-padding-horizontal);
   }
 }
 .input-outline.input-dropdown,

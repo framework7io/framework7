@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.4.6
+ * Framework7 Vue 4.4.7
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 1, 2019
+ * Released on: July 19, 2019
  */
 
 (function (global, factory) {
@@ -8963,18 +8963,21 @@
 
         self.f7Panel = self.$f7.panel.create({
           el: el,
-          resizable: resizable,
-          on: {
-            open: self.onOpen,
-            opened: self.onOpened,
-            close: self.onClose,
-            closed: self.onClosed,
-            backdropClick: self.onBackdropClick,
-            swipe: self.onPanelSwipe,
-            swipeOpen: self.onPanelSwipeOpen,
-            breakpoint: self.onBreakpoint,
-            resize: self.onResize
-          }
+          resizable: resizable
+        });
+        var events = {
+          open: self.onOpen,
+          opened: self.onOpened,
+          close: self.onClose,
+          closed: self.onClosed,
+          backdropClick: self.onBackdropClick,
+          swipe: self.onPanelSwipe,
+          swipeOpen: self.onPanelSwipeOpen,
+          breakpoint: self.onBreakpoint,
+          resize: self.onResize
+        };
+        Object.keys(events).forEach(function (ev) {
+          self.f7Panel.on(ev, events[ev]);
         });
       });
 
@@ -10250,7 +10253,7 @@
     },
 
     created: function created() {
-      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed', 'onStepOpen', 'onStepClose']);
+      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed', 'onStepOpen', 'onStepClose', 'onStepProgress']);
     },
 
     mounted: function mounted() {
@@ -10263,6 +10266,7 @@
       el.addEventListener('sheet:closed', self.onClosed);
       el.addEventListener('sheet:stepopen', self.onStepOpen);
       el.addEventListener('sheet:stepclose', self.onStepClose);
+      el.addEventListener('sheet:stepprogress', self.onStepProgress);
       var props = self.props;
       var opened = props.opened;
       var backdrop = props.backdrop;
@@ -10306,9 +10310,14 @@
       el.removeEventListener('sheet:closed', self.onClosed);
       el.removeEventListener('sheet:stepopen', self.onStepOpen);
       el.removeEventListener('sheet:stepclose', self.onStepClose);
+      el.removeEventListener('sheet:stepprogress', self.onStepProgress);
     },
 
     methods: {
+      onStepProgress: function onStepProgress(event) {
+        this.dispatchEvent('sheet:stepprogress sheetStepProgress', event.detail);
+      },
+
       onStepOpen: function onStepOpen(event) {
         this.dispatchEvent('sheet:stepopen sheetStepOpen', event);
       },
@@ -12216,7 +12225,7 @@
             tabRouter = tabData;
           }
         });
-        var hasComponent = !!tabRouter.tabContent;
+        var hasComponent = tabRouter && tabRouter.component;
         if (!tabRouter || !hasComponent) {
           tabEl.innerHTML = ''; // eslint-disable-line
           return;
@@ -12283,7 +12292,7 @@
   };
 
   /**
-   * Framework7 Vue 4.4.6
+   * Framework7 Vue 4.4.7
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -12291,7 +12300,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: July 1, 2019
+   * Released on: July 19, 2019
    */
 
   var Plugin = {

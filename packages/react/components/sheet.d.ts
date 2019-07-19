@@ -26,6 +26,7 @@ declare namespace F7Sheet {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
+    onSheetStepProgress? : (...args: any[]) => void
     onSheetStepOpen? : (event?: any) => void
     onSheetStepClose? : (event?: any) => void
     onSheetOpen? : (event?: any) => void
@@ -35,6 +36,7 @@ declare namespace F7Sheet {
   }
 }
 declare class F7Sheet extends React.Component<F7Sheet.Props, {}> {
+  onStepProgress(event? : any) : unknown
   onStepOpen(event? : any) : unknown
   onStepClose(event? : any) : unknown
   onOpen(event? : any) : unknown

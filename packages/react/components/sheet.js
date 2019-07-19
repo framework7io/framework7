@@ -12,8 +12,12 @@ class F7Sheet extends React.Component {
     this.__reactRefs = {};
 
     (() => {
-      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed', 'onStepOpen', 'onStepClose']);
+      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed', 'onStepOpen', 'onStepClose', 'onStepProgress']);
     })();
+  }
+
+  onStepProgress(event) {
+    this.dispatchEvent('sheet:stepprogress sheetStepProgress', event.detail);
   }
 
   onStepOpen(event) {
@@ -116,6 +120,7 @@ class F7Sheet extends React.Component {
     el.removeEventListener('sheet:closed', self.onClosed);
     el.removeEventListener('sheet:stepopen', self.onStepOpen);
     el.removeEventListener('sheet:stepclose', self.onStepClose);
+    el.removeEventListener('sheet:stepprogress', self.onStepProgress);
   }
 
   componentDidMount() {
@@ -128,6 +133,7 @@ class F7Sheet extends React.Component {
     el.addEventListener('sheet:closed', self.onClosed);
     el.addEventListener('sheet:stepopen', self.onStepOpen);
     el.addEventListener('sheet:stepclose', self.onStepClose);
+    el.addEventListener('sheet:stepprogress', self.onStepProgress);
     const props = self.props;
     const {
       opened,

@@ -34,7 +34,7 @@ export namespace Picker {
     params : Parameters
 
     /** Set new picker value. values is array where each item represents value for each column. duration - transition duration in ms */
-    setValue(values : unknown[], duration : number) : void
+    setValue(values : unknown[], duration? : number) : void
     /** Returns current picker value */
     getValue() : unknown
     /** Adds value to the values array. Useful in case if multiple selection is enabled (with multiple: true parameter) */
@@ -62,7 +62,7 @@ export namespace Picker {
     activeIndex: number
 
     /** Set new value for current column. value is a new value, duration - transition duration in ms */
-    setValue(value : unknown, duration: number) : void
+    setValue(value : unknown, duration?: number) : void
     /** Replace column values and displayValues with new ones */
     replaceValues(values : unknown[], displayValues : unknown[]) : void
   }

@@ -39,7 +39,8 @@ class Autocomplete extends Framework7Class {
     if (ac.params.view) {
       view = ac.params.view;
     } else if ($openerEl || $inputEl) {
-      view = app.views.get($openerEl || $inputEl);
+      const $el = $openerEl || $inputEl;
+      view = $el.closest('.view').length && $el.closest('.view')[0].f7View;
     }
     if (!view) view = app.views.main;
 

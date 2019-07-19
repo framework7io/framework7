@@ -1,5 +1,5 @@
 /**
- * Framework7 4.4.6
+ * Framework7 4.4.7
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 1, 2019
+ * Released on: July 19, 2019
  */
 
 (function (global, factory) {
@@ -2881,6 +2881,65 @@
     },
   };
 
+  var Support = (function Support() {
+    var testDiv = doc.createElement('div');
+
+    return {
+      touch: (function checkTouch() {
+        return !!((win.navigator.maxTouchPoints > 0) || ('ontouchstart' in win) || (win.DocumentTouch && doc instanceof win.DocumentTouch));
+      }()),
+
+      pointerEvents: !!(win.navigator.pointerEnabled || win.PointerEvent || ('maxTouchPoints' in win.navigator && win.navigator.maxTouchPoints > 0)),
+      prefixedPointerEvents: !!win.navigator.msPointerEnabled,
+
+      transition: (function checkTransition() {
+        var style = testDiv.style;
+        return ('transition' in style || 'webkitTransition' in style || 'MozTransition' in style);
+      }()),
+      transforms3d: (win.Modernizr && win.Modernizr.csstransforms3d === true) || (function checkTransforms3d() {
+        var style = testDiv.style;
+        return ('webkitPerspective' in style || 'MozPerspective' in style || 'OPerspective' in style || 'MsPerspective' in style || 'perspective' in style);
+      }()),
+
+      flexbox: (function checkFlexbox() {
+        var div = doc.createElement('div').style;
+        var styles = ('alignItems webkitAlignItems webkitBoxAlign msFlexAlign mozBoxAlign webkitFlexDirection msFlexDirection mozBoxDirection mozBoxOrient webkitBoxDirection webkitBoxOrient').split(' ');
+        for (var i = 0; i < styles.length; i += 1) {
+          if (styles[i] in div) { return true; }
+        }
+        return false;
+      }()),
+
+      observer: (function checkObserver() {
+        return ('MutationObserver' in win || 'WebkitMutationObserver' in win);
+      }()),
+
+      passiveListener: (function checkPassiveListener() {
+        var supportsPassive = false;
+        try {
+          var opts = Object.defineProperty({}, 'passive', {
+            // eslint-disable-next-line
+            get: function get() {
+              supportsPassive = true;
+            },
+          });
+          win.addEventListener('testPassiveListener', null, opts);
+        } catch (e) {
+          // No support
+        }
+        return supportsPassive;
+      }()),
+
+      gestures: (function checkGestures() {
+        return 'ongesturestart' in win;
+      }()),
+
+      intersectionObserver: (function checkObserver() {
+        return ('IntersectionObserver' in win);
+      }()),
+    };
+  }());
+
   var Device = (function Device() {
     var platform = win.navigator.platform;
     var ua = win.navigator.userAgent;
@@ -2920,9 +2979,24 @@
     var ie = ua.indexOf('MSIE ') >= 0 || ua.indexOf('Trident/') >= 0;
     var edge = ua.indexOf('Edge/') >= 0;
     var firefox = ua.indexOf('Gecko/') >= 0 && ua.indexOf('Firefox/') >= 0;
-    var macos = platform === 'MacIntel';
     var windows = platform === 'Win32';
     var electron = ua.toLowerCase().indexOf('electron') >= 0;
+    var macos = platform === 'MacIntel';
+
+    // iPadOs 13 fix
+    if (!ipad
+      && macos
+      && Support.touch
+      && (
+        (screenWidth === 1024 && screenHeight === 1366) // Pro 12.9
+        || (screenWidth === 834 && screenHeight === 1194) // Pro 11
+        || (screenWidth === 834 && screenHeight === 1112) // Pro 10.5
+        || (screenWidth === 768 && screenHeight === 1024) // other
+      )
+    ) {
+      ipad = ua.match(/(Version)\/([\d.]+)/);
+      macos = false;
+    }
 
     device.ie = ie;
     device.edge = edge;
@@ -3809,65 +3883,6 @@
       },
     },
   };
-
-  var Support = (function Support() {
-    var testDiv = doc.createElement('div');
-
-    return {
-      touch: (function checkTouch() {
-        return !!((win.navigator.maxTouchPoints > 0) || ('ontouchstart' in win) || (win.DocumentTouch && doc instanceof win.DocumentTouch));
-      }()),
-
-      pointerEvents: !!(win.navigator.pointerEnabled || win.PointerEvent || ('maxTouchPoints' in win.navigator && win.navigator.maxTouchPoints > 0)),
-      prefixedPointerEvents: !!win.navigator.msPointerEnabled,
-
-      transition: (function checkTransition() {
-        var style = testDiv.style;
-        return ('transition' in style || 'webkitTransition' in style || 'MozTransition' in style);
-      }()),
-      transforms3d: (win.Modernizr && win.Modernizr.csstransforms3d === true) || (function checkTransforms3d() {
-        var style = testDiv.style;
-        return ('webkitPerspective' in style || 'MozPerspective' in style || 'OPerspective' in style || 'MsPerspective' in style || 'perspective' in style);
-      }()),
-
-      flexbox: (function checkFlexbox() {
-        var div = doc.createElement('div').style;
-        var styles = ('alignItems webkitAlignItems webkitBoxAlign msFlexAlign mozBoxAlign webkitFlexDirection msFlexDirection mozBoxDirection mozBoxOrient webkitBoxDirection webkitBoxOrient').split(' ');
-        for (var i = 0; i < styles.length; i += 1) {
-          if (styles[i] in div) { return true; }
-        }
-        return false;
-      }()),
-
-      observer: (function checkObserver() {
-        return ('MutationObserver' in win || 'WebkitMutationObserver' in win);
-      }()),
-
-      passiveListener: (function checkPassiveListener() {
-        var supportsPassive = false;
-        try {
-          var opts = Object.defineProperty({}, 'passive', {
-            // eslint-disable-next-line
-            get: function get() {
-              supportsPassive = true;
-            },
-          });
-          win.addEventListener('testPassiveListener', null, opts);
-        } catch (e) {
-          // No support
-        }
-        return supportsPassive;
-      }()),
-
-      gestures: (function checkGestures() {
-        return 'ongesturestart' in win;
-      }()),
-
-      intersectionObserver: (function checkObserver() {
-        return ('IntersectionObserver' in win);
-      }()),
-    };
-  }());
 
   var SupportModule = {
     name: 'support',
@@ -11804,7 +11819,7 @@
     if ($viewEl.length > 1) {
       if ($viewEl.hasClass('tab')) {
         // Tabs
-        $viewEl = $viewEl.children('.view.tab-active');
+        $viewEl = $viewsEl.children('.view.tab-active');
       }
     }
     if ($popoverView.length > 0 && $popoverView[0].f7View) { return $popoverView[0].f7View; }
@@ -14892,7 +14907,6 @@
         }
 
         touchesDiff = startTouch.y - currentTouch.y;
-
         if (!isMoved) {
           sheetElOffsetHeight = $el[0].offsetHeight;
           startTranslate = Utils.getTranslate($el[0], 'y');
@@ -14911,6 +14925,17 @@
         $el
           .transition(0)
           .transform(("translate3d(0," + currentTranslate + "px,0)"));
+        if (sheet.params.swipeToStep) {
+          var progress;
+          if (isTopSheetModal) {
+            progress = 1 - (currentTranslate / swipeStepTranslate);
+          } else {
+            progress = (swipeStepTranslate - currentTranslate) / swipeStepTranslate;
+          }
+          progress = Math.min(Math.max(progress, 0), 1);
+          $el.trigger('sheet:stepprogress', progress);
+          sheet.emit('local::stepProgress sheetStepProgress', sheet, progress);
+        }
       }
       function handleTouchEnd() {
         isTouched = false;
@@ -14946,6 +14971,8 @@
           if (direction === openDirection && absCurrentTranslate < absSwipeStepTranslate) {
             // open step
             $el.removeClass('modal-in-swipe-step');
+            $el.trigger('sheet:stepprogress', 1);
+            sheet.emit('local::stepProgress sheetStepProgress', sheet, 1);
             $el.trigger('sheet:stepopen');
             sheet.emit('local::stepOpen sheetStepOpen', sheet);
           }
@@ -14956,6 +14983,8 @@
             } else {
               // close step
               $el.addClass('modal-in-swipe-step');
+              $el.trigger('sheet:stepprogress', 0);
+              sheet.emit('local::stepProgress sheetStepProgress', sheet, 0);
               $el.trigger('sheet:stepclose');
               sheet.emit('local::stepClose sheetStepClose', sheet);
             }
@@ -14963,6 +14992,8 @@
           if (direction === closeDirection && absCurrentTranslate <= absSwipeStepTranslate) {
             // close step
             $el.addClass('modal-in-swipe-step');
+            $el.trigger('sheet:stepprogress', 0);
+            sheet.emit('local::stepProgress sheetStepProgress', sheet, 0);
             $el.trigger('sheet:stepclose');
             sheet.emit('local::stepClose sheetStepClose', sheet);
           }
@@ -14974,6 +15005,8 @@
             if (absCurrentTranslate < (absSwipeStepTranslate / 2)) {
               // open step
               $el.removeClass('modal-in-swipe-step');
+              $el.trigger('sheet:stepprogress', 1);
+              sheet.emit('local::stepProgress sheetStepProgress', sheet, 1);
               $el.trigger('sheet:stepopen');
               sheet.emit('local::stepOpen sheetStepOpen', sheet);
             } else if ((absCurrentTranslate - absSwipeStepTranslate) > (sheetElOffsetHeight - absSwipeStepTranslate) / 2) {
@@ -14987,6 +15020,8 @@
             } else if (absCurrentTranslate > absSwipeStepTranslate / 2) {
               // close step
               $el.addClass('modal-in-swipe-step');
+              $el.trigger('sheet:stepprogress', 0);
+              sheet.emit('local::stepProgress sheetStepProgress', sheet, 0);
               $el.trigger('sheet:stepclose');
               sheet.emit('local::stepClose sheetStepClose', sheet);
             }
@@ -19342,9 +19377,9 @@
         if (app.params.card.closeByBackdropClick) { needToClose = true; }
         var $openedCardEl = $('.card-opened');
         if (!$openedCardEl.length) { return; }
-        if ($openedCardEl.attr('data-close-on-backdrop-click') === 'true') {
+        if ($openedCardEl.attr('data-close-by-backdrop-click') === 'true') {
           needToClose = true;
-        } else if ($openedCardEl.attr('data-close-on-backdrop-click') === 'false') {
+        } else if ($openedCardEl.attr('data-close-by-backdrop-click') === 'false') {
           needToClose = false;
         }
         if (needToClose) { app.card.close($openedCardEl); }
@@ -35481,7 +35516,8 @@
       if (ac.params.view) {
         view = ac.params.view;
       } else if ($openerEl || $inputEl) {
-        view = app.views.get($openerEl || $inputEl);
+        var $el = $openerEl || $inputEl;
+        view = $el.closest('.view').length && $el.closest('.view')[0].f7View;
       }
       if (!view) { view = app.views.main; }
 
@@ -36662,6 +36698,13 @@
           var text = $(el).attr('data-tooltip');
           if (!text) { return; }
           app.tooltip.create({ targetEl: el, text: text });
+        },
+        update: function update(vnode) {
+          var el = vnode.elm;
+          if (!el.f7Tooltip) { return; }
+          if (vnode && vnode.data && vnode.data.attrs && vnode.data.attrs['data-tooltip']) {
+            el.f7Tooltip.setText(vnode.data.attrs['data-tooltip']);
+          }
         },
         destroy: function destroy(vnode) {
           var el = vnode.elm;
