@@ -14,6 +14,10 @@ declare namespace F7Segmented {
     roundIos? : boolean
     roundMd? : boolean
     roundAurora? : boolean
+    strong? : boolean
+    strongIos? : boolean
+    strongMd? : boolean
+    strongAurora? : boolean
     tag? : string
     color? : string
     colorTheme? : string

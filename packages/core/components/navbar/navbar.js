@@ -50,18 +50,10 @@ const Navbar = {
 
     let router;
     let dynamicNavbar;
-    let separateNavbar;
-    let separateNavbarRightOffset = 0;
-    let separateNavbarLeftOffset = 0;
 
     if ($viewEl.length > 0 && $viewEl[0].f7View) {
       router = $viewEl[0].f7View.router;
       dynamicNavbar = router && router.dynamicNavbar;
-      separateNavbar = router && router.separateNavbar;
-      if (!separateNavbar) {
-        separateNavbarRightOffset = navbarWidth;
-        separateNavbarLeftOffset = navbarWidth / 5;
-      }
     }
 
     let currLeft;
@@ -93,8 +85,8 @@ const Navbar = {
 
     if (dynamicNavbar && app.theme === 'ios') {
       if (title.hasClass('sliding') || (title.length > 0 && sliding)) {
-        let titleLeftOffset = (-(currLeft + diff) * inverter) + separateNavbarLeftOffset;
-        const titleRightOffset = ((navbarInnerWidth - currLeft - diff - titleWidth) * inverter) - separateNavbarRightOffset;
+        let titleLeftOffset = -(currLeft + diff) * inverter;
+        const titleRightOffset = (navbarInnerWidth - currLeft - diff - titleWidth) * inverter;
 
         if (isPrevious) {
           if (router && router.params.iosAnimateNavbarBackIcon) {
@@ -112,8 +104,8 @@ const Navbar = {
           left[0].f7NavbarLeftOffset = (-(navbarInnerWidth - left[0].offsetWidth) / 2) * inverter;
           left[0].f7NavbarRightOffset = leftWidth * inverter;
         } else {
-          left[0].f7NavbarLeftOffset = -leftWidth + separateNavbarLeftOffset;
-          left[0].f7NavbarRightOffset = ((navbarInnerWidth - left[0].offsetWidth) / 2) - separateNavbarRightOffset;
+          left[0].f7NavbarLeftOffset = -leftWidth;
+          left[0].f7NavbarRightOffset = ((navbarInnerWidth - left[0].offsetWidth) / 2);
           if (router && router.params.iosAnimateNavbarBackIcon && left.find('.back .icon').length > 0) {
             if (left.find('.back .icon ~ span').length) {
               const leftOffset = left[0].f7NavbarLeftOffset;
@@ -131,13 +123,13 @@ const Navbar = {
           right[0].f7NavbarLeftOffset = -rightWidth * inverter;
           right[0].f7NavbarRightOffset = ((navbarInnerWidth - right[0].offsetWidth) / 2) * inverter;
         } else {
-          right[0].f7NavbarLeftOffset = (-(navbarInnerWidth - right[0].offsetWidth) / 2) + separateNavbarLeftOffset;
-          right[0].f7NavbarRightOffset = rightWidth - separateNavbarRightOffset;
+          right[0].f7NavbarLeftOffset = -(navbarInnerWidth - right[0].offsetWidth) / 2;
+          right[0].f7NavbarRightOffset = rightWidth;
         }
       }
       if (subnavbar.length && (subnavbar.hasClass('sliding') || sliding)) {
-        subnavbar[0].f7NavbarLeftOffset = app.rtl ? subnavbar[0].offsetWidth : (-subnavbar[0].offsetWidth + separateNavbarLeftOffset);
-        subnavbar[0].f7NavbarRightOffset = (-subnavbar[0].f7NavbarLeftOffset - separateNavbarRightOffset) + separateNavbarLeftOffset;
+        subnavbar[0].f7NavbarLeftOffset = app.rtl ? subnavbar[0].offsetWidth : -subnavbar[0].offsetWidth;
+        subnavbar[0].f7NavbarRightOffset = -subnavbar[0].f7NavbarLeftOffset;
       }
     }
 
@@ -148,7 +140,7 @@ const Navbar = {
       title.css({ left: `${titleLeft}px` });
     }
   },
-  hide(el, animate = true) {
+  hide(el, animate = true, hideStatusbar = false) {
     const app = this;
     let $el = $(el);
     if ($el.hasClass('navbar-inner')) $el = $el.parents('.navbar');
@@ -160,6 +152,9 @@ const Navbar = {
       : $el.find('.title-large').length;
     if (currentIsLarge) {
       className += ' navbar-large-hidden';
+    }
+    if (hideStatusbar) {
+      className += ' navbar-hidden-statusbar';
     }
     $el.transitionEnd(() => {
       $el.removeClass('navbar-transitioning');
@@ -180,7 +175,7 @@ const Navbar = {
         $el.removeClass('navbar-transitioning');
       });
     }
-    $el.removeClass('navbar-hidden navbar-large-hidden');
+    $el.removeClass('navbar-hidden navbar-large-hidden navbar-hidden-statusbar');
     $el.trigger('navbar:show');
     app.emit('navbarShow', $el[0]);
   },
@@ -292,7 +287,8 @@ const Navbar = {
     const $navbarEl = app.theme === 'md' || app.theme === 'aurora'
       ? $navbarInnerEl.parents('.navbar')
       : $(navbarInnerEl || app.navbar.getElByPage(pageEl)).closest('.navbar');
-    const isLarge = $navbarInnerEl.find('.title-large').length || $navbarInnerEl.hasClass('.navbar-inner-large');
+    const $titleLargeEl = $navbarInnerEl.find('.title-large');
+    const isLarge = $titleLargeEl.length || $navbarInnerEl.hasClass('.navbar-inner-large');
     let navbarHideHeight = 44;
     const snapPageScrollToLargeTitle = app.params.navbar.snapPageScrollToLargeTitle;
 
@@ -309,19 +305,25 @@ const Navbar = {
     let navbarTitleLargeHeight;
     if (needCollapse || (needHide && isLarge)) {
       navbarTitleLargeHeight = $navbarInnerEl.css('--f7-navbar-large-title-height');
+
       if (navbarTitleLargeHeight && navbarTitleLargeHeight.indexOf('px') >= 0) {
         navbarTitleLargeHeight = parseInt(navbarTitleLargeHeight, 10);
-        if (Number.isNaN(navbarTitleLargeHeight)) {
+        if (Number.isNaN(navbarTitleLargeHeight) && $titleLargeEl.length) {
+          navbarTitleLargeHeight = $titleLargeEl[0].offsetHeight;
+        } else if (Number.isNaN(navbarTitleLargeHeight)) {
           if (app.theme === 'ios') navbarTitleLargeHeight = 52;
           else if (app.theme === 'md') navbarTitleLargeHeight = 48;
           else if (app.theme === 'aurora') navbarTitleLargeHeight = 38;
         }
+      } else if ($titleLargeEl.length) {
+        navbarTitleLargeHeight = $titleLargeEl[0].offsetHeight;
       } else { // eslint-disable-next-line
         if (app.theme === 'ios') navbarTitleLargeHeight = 52;
         else if (app.theme === 'md') navbarTitleLargeHeight = 48;
         else if (app.theme === 'aurora') navbarTitleLargeHeight = 38;
       }
     }
+
     if (needHide && isLarge) {
       navbarHideHeight += navbarTitleLargeHeight;
     }
@@ -345,41 +347,36 @@ const Navbar = {
     }
 
     function handleLargeNavbarCollapse() {
+      const isHidden = $navbarEl.hasClass('navbar-hidden');
+      if (isHidden) return;
       const collapseProgress = Math.min(Math.max((currentScrollTop / navbarTitleLargeHeight), 0), 1);
       const inSearchbarExpanded = $navbarInnerEl.hasClass('with-searchbar-expandable-enabled');
       if (inSearchbarExpanded) return;
       navbarCollapsed = $navbarInnerEl.hasClass('navbar-inner-large-collapsed');
+
       if (collapseProgress === 0 && navbarCollapsed) {
         app.navbar.expandLargeTitle($navbarInnerEl[0]);
-        $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-        $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-        $navbarInnerEl[0].style.overflow = '';
-        if (app.theme === 'md' || app.theme === 'aurora') {
-          $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-        }
       } else if (collapseProgress === 1 && !navbarCollapsed) {
         app.navbar.collapseLargeTitle($navbarInnerEl[0]);
+      }
+      if (
+        (collapseProgress === 0 && navbarCollapsed)
+        || (collapseProgress === 1 && !navbarCollapsed)
+        || ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed))
+      ) {
         $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         $navbarInnerEl[0].style.overflow = '';
-        $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-        if (app.theme === 'md' || app.theme === 'aurora') {
-          $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-        }
-      } else if ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed)) {
-        $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-        $navbarInnerEl[0].style.overflow = '';
-        $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         if (app.theme === 'md' || app.theme === 'aurora') {
           $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
         }
       } else {
         $navbarInnerEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
         $navbarInnerEl[0].style.overflow = 'visible';
-        $pageEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
         if (app.theme === 'md' || app.theme === 'aurora') {
           $navbarEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
         }
       }
+
 
       if (snapPageScrollToLargeTitle) {
         if (!Support.touch) {
@@ -510,7 +507,7 @@ export default {
     },
   },
   on: {
-    'panelBreakpoint panelResize resize viewMasterDetailBreakpoint': function onResize() {
+    'panelBreakpoint panelCollapsedBreakpoint panelResize resize viewMasterDetailBreakpoint': function onPanelResize() {
       const app = this;
       $('.navbar').each((index, navbarEl) => {
         app.navbar.size(navbarEl);
@@ -591,30 +588,12 @@ export default {
         app.navbar.initNavbarOnScroll(page.el, $navbarInnerEl[0], needHideOnScrollHandler, needCollapseOnScrollHandler);
       }
     },
-    modalOpen(modal) {
+    'panelOpen panelSwipeOpen modalOpen': function onPanelModalOpen(instance) {
       const app = this;
       if (!app.params.navbar[`${app.theme}CenterTitle`]) {
         return;
       }
-      modal.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
-        app.navbar.size(navbarEl);
-      });
-    },
-    panelOpen(panel) {
-      const app = this;
-      if (!app.params.navbar[`${app.theme}CenterTitle`]) {
-        return;
-      }
-      panel.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
-        app.navbar.size(navbarEl);
-      });
-    },
-    panelSwipeOpen(panel) {
-      const app = this;
-      if (!app.params.navbar[`${app.theme}CenterTitle`]) {
-        return;
-      }
-      panel.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
+      instance.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
         app.navbar.size(navbarEl);
       });
     },

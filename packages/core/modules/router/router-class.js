@@ -45,7 +45,6 @@ class Router extends Framework7Class {
         scrollHistory: view.scrollHistory,
         cache: app.cache,
         dynamicNavbar: app.theme === 'ios' && view.params.iosDynamicNavbar,
-        separateNavbar: app.theme === 'ios' && view.params.iosDynamicNavbar && view.params.iosSeparateDynamicNavbar,
         initialPages: [],
         initialNavbars: [],
       });
@@ -94,7 +93,6 @@ class Router extends Framework7Class {
   animatableNavElements(newNavbarInner, oldNavbarInner, toLarge, fromLarge, direction) {
     const router = this;
     const dynamicNavbar = router.dynamicNavbar;
-    const separateNavbar = router.separateNavbar;
     const animateIcon = router.params.iosAnimateNavbarBackIcon;
 
     let newNavEls;
@@ -124,15 +122,15 @@ class Router extends Framework7Class {
       oldNavEls = [];
       newNavbarInner.children('.left, .right, .title, .subnavbar').each((index, navEl) => {
         const $navEl = $(navEl);
-        if ($navEl.hasClass('left') && fromLarge && direction === 'forward' && separateNavbar) return;
+        if ($navEl.hasClass('left') && fromLarge && direction === 'forward') return;
         if ($navEl.hasClass('title') && toLarge) return;
         newNavEls.push(animatableNavEl($navEl, newNavbarInner));
       });
       if (!(oldNavbarInner.hasClass('navbar-master') && router.params.masterDetailBreakpoint > 0 && router.app.width >= router.params.masterDetailBreakpoint)) {
         oldNavbarInner.children('.left, .right, .title, .subnavbar').each((index, navEl) => {
           const $navEl = $(navEl);
-          if ($navEl.hasClass('left') && toLarge && !fromLarge && direction === 'forward' && separateNavbar) return;
-          if ($navEl.hasClass('left') && toLarge && direction === 'backward' && separateNavbar) return;
+          if ($navEl.hasClass('left') && toLarge && !fromLarge && direction === 'forward') return;
+          if ($navEl.hasClass('left') && toLarge && direction === 'backward') return;
           if ($navEl.hasClass('title') && fromLarge) {
             return;
           }
@@ -927,11 +925,6 @@ class Router extends Framework7Class {
       }
     }
 
-    // Dynamic not separated navbbar
-    if (router.dynamicNavbar && !router.separateNavbar) {
-      router.$el.addClass('router-dynamic-navbar-inside');
-    }
-
     let initUrl = router.params.url;
     let documentUrl = document.location.href.split(document.location.origin)[1];
     let historyRestored;
@@ -1008,7 +1001,7 @@ class Router extends Framework7Class {
       router.$el.children('.page').each((index, pageEl) => {
         const $pageEl = $(pageEl);
         router.initialPages.push($pageEl[0]);
-        if (router.separateNavbar && $pageEl.children('.navbar').length > 0) {
+        if (router.dynamicNavbar && $pageEl.children('.navbar').length > 0) {
           router.initialNavbars.push($pageEl.children('.navbar').find('.navbar-inner')[0]);
         }
       });
@@ -1029,7 +1022,7 @@ class Router extends Framework7Class {
         const $pageEl = $(pageEl);
         let $navbarInnerEl;
         $pageEl.addClass('page-current');
-        if (router.separateNavbar) {
+        if (router.dynamicNavbar) {
           $navbarInnerEl = $pageEl.children('.navbar').children('.navbar-inner');
           if ($navbarInnerEl.length > 0) {
             if (!router.$navbarEl.parents(document).length) {
@@ -1062,11 +1055,11 @@ class Router extends Framework7Class {
           Utils.extend(initOptions, router.currentRoute.route.options);
         }
         router.currentPageEl = $pageEl[0];
-        if (router.separateNavbar && $navbarInnerEl.length) {
+        if (router.dynamicNavbar && $navbarInnerEl.length) {
           router.currentNavbarEl = $navbarInnerEl[0];
         }
         router.removeThemeElements($pageEl);
-        if (router.separateNavbar && $navbarInnerEl.length) {
+        if (router.dynamicNavbar && $navbarInnerEl.length) {
           router.removeThemeElements($navbarInnerEl);
         }
         if (initOptions.route.route.tab) {

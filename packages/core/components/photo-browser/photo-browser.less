@@ -174,12 +174,15 @@
     top: 50%;
   }
 }
-.photo-browser-page,
-.view.with-photo-browser-page {
+.photo-browser-page .navbar-bg,
+.navbar-inner-photo-browser .navbar-bg,
+.photo-browser-page .toolbar {
+  background-color: var(--f7-photobrowser-bars-bg-color, rgba(var(--f7-bars-bg-color-rgb), 0.95));
+  background-image: var(--f7-photobrowser-bars-bg-image);
+}
+.photo-browser-page {
   .navbar,
   .toolbar {
-    background-color: var(--f7-photobrowser-bars-bg-color, rgba(var(--f7-bars-bg-color-rgb), 0.95));
-    background-image: var(--f7-photobrowser-bars-bg-image);
     transition: 400ms;
     color: var(--f7-photobrowser-bars-text-color, var(--f7-bars-text-color));
     a {
@@ -192,7 +195,7 @@
   .toolbar {
     opacity: 0;
     visibility: hidden;
-    pointer-events:none;
+    pointer-events: none;
   }
   .toolbar ~ .photo-browser-captions {
     transform: translate3d(0,  var(--f7-toolbar-height), 0);
@@ -208,25 +211,35 @@
 .view.with-photo-browser-page-exposed {
   .navbar {
     opacity: 0;
+    pointer-events: none;
   }
 }
+
+.photo-browser-page-dark .navbar-bg,
+.navbar-inner-photo-browser-dark .navbar-bg,
+.photo-browser-page-dark .toolbar {
+  background: var(--f7-photobrowser-dark-bars-bg-color);
+  .hairline-remove(top);
+  .hairline-remove(bottom);
+}
+
+.navbar-inner-photo-browser-dark,
+.photo-browser-dark .navbar,
+.photo-browser-dark .toolbar,
+.photo-browser-dark-page .navbar,
+.photo-browser-dark-page .toolbar {
+  --f7-touch-ripple-color: var(--f7-touch-ripple-white);
+  --f7-link-highlight-color: var(--f7-link-highlight-white);
+  color: var(--f7-photobrowser-dark-bars-text-color);
+  a {
+    color: var(--f7-photobrowser-dark-bars-link-color);
+  }
+}
+
 .photo-browser-dark,
-.photo-browser-page-dark,
-.view.with-photo-browser-page-dark {
+.photo-browser-page-dark {
   .photo-browser-swiper-container {
     background: var(--f7-photobrowser-dark-bg-color);
-  }
-  .navbar,
-  .toolbar {
-    --f7-touch-ripple-color: var(--f7-touch-ripple-white);
-    --f7-link-highlight-color: var(--f7-link-highlight-white);
-    background: var(--f7-photobrowser-dark-bars-bg-color);
-    .hairline-remove(top);
-    .hairline-remove(bottom);
-    color: var(--f7-photobrowser-dark-bars-text-color);
-    a {
-      color: var(--f7-photobrowser-dark-bars-link-color);
-    }
   }
 }
 

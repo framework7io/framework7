@@ -51,10 +51,12 @@ class F7Popup extends React.Component {
       className,
       id,
       style,
-      tabletFullscreen
+      tabletFullscreen,
+      push
     } = props;
     const classes = Utils.classNames(className, 'popup', {
-      'popup-tablet-fullscreen': tabletFullscreen
+      'popup-tablet-fullscreen': tabletFullscreen,
+      'popup-push': push
     }, Mixins.colorClasses(props));
     return React.createElement('div', {
       ref: __reactNode => {
@@ -160,7 +162,8 @@ __reactComponentSetProps(F7Popup, Object.assign({
     type: [Boolean, String],
     default: false
   },
-  swipeHandler: [String, Object, window.HTMLElement]
+  swipeHandler: [String, Object, window.HTMLElement],
+  push: Boolean
 }, Mixins.colorProps));
 
 F7Popup.displayName = 'f7-popup';

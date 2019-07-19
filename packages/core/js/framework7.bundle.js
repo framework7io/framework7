@@ -1,5 +1,5 @@
 /**
- * Framework7 4.4.7
+ * Framework7 5.0.0-beta.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -2949,9 +2949,7 @@
       android: false,
       androidChrome: false,
       desktop: false,
-      windowsPhone: false,
       iphone: false,
-      iphoneX: false,
       ipod: false,
       ipad: false,
       edge: false,
@@ -2972,10 +2970,6 @@
     var ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
     var ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
     var iphone = !ipad && ua.match(/(iPhone\sOS|iOS)\s([\d_]+)/);
-    var iphoneX = iphone && (
-      (screenWidth === 375 && screenHeight === 812) // X/XS
-      || (screenWidth === 414 && screenHeight === 896) // XR / XS Max
-    );
     var ie = ua.indexOf('MSIE ') >= 0 || ua.indexOf('Trident/') >= 0;
     var edge = ua.indexOf('Edge/') >= 0;
     var firefox = ua.indexOf('Gecko/') >= 0 && ua.indexOf('Firefox/') >= 0;
@@ -3002,12 +2996,6 @@
     device.edge = edge;
     device.firefox = firefox;
 
-    // Windows
-    if (windowsPhone) {
-      device.os = 'windowsPhone';
-      device.osVersion = windowsPhone[2];
-      device.windowsPhone = true;
-    }
     // Android
     if (android && !windows) {
       device.os = 'android';
@@ -3023,7 +3011,6 @@
     if (iphone && !ipod) {
       device.osVersion = iphone[2].replace(/_/g, '.');
       device.iphone = true;
-      device.iphoneX = iphoneX;
     }
     if (ipad) {
       device.osVersion = ipad[2].replace(/_/g, '.');
@@ -3047,7 +3034,7 @@
     device.standalone = device.webView;
 
     // Desktop
-    device.desktop = !(device.ios || device.android || device.windowsPhone) || electron;
+    device.desktop = !(device.ios || device.android || windowsPhone) || electron;
     if (device.desktop) {
       device.electron = electron;
       device.macos = macos;
@@ -3064,9 +3051,6 @@
         return true;
       }
       if ((device.webView || (device.android && device.cordova)) && (win.innerWidth * win.innerHeight === win.screen.width * win.screen.height)) {
-        if (device.iphoneX && (win.orientation === 90 || win.orientation === -90)) {
-          return false;
-        }
         return true;
       }
       return false;
@@ -3593,6 +3577,7 @@
         initOnDeviceReady: true,
         init: true,
         autoDarkTheme: false,
+        iosTranslucent: true,
       };
 
       // Extend defaults with modules params
@@ -3750,7 +3735,12 @@
       app.root.addClass('framework7-root');
 
       // Theme class
-      $('html').removeClass('ios md').addClass(app.theme);
+      $('html').removeClass('ios md aurora').addClass(app.theme);
+
+      // iOS Translucent
+      if (app.theme === 'ios' && app.params.iosTranslucent) {
+        $('html').addClass('ios-translucent');
+      }
 
       // Init class
       Utils.nextFrame(function () {
@@ -3863,9 +3853,6 @@
             for (var i = major - 1; i >= 6; i -= 1) {
               classNames.push(("device-ios-gt-" + i));
             }
-            if (Device.iphoneX) {
-              classNames.push('device-iphone-x');
-            }
           }
         } else if (Device.desktop) {
           classNames.push('device-desktop');
@@ -3891,17 +3878,6 @@
     },
     static: {
       support: Support,
-    },
-    on: {
-      init: function init() {
-        var html = doc.querySelector('html');
-        if (!html) { return; }
-        var classNames = [];
-        // Add html classes
-        classNames.forEach(function (className) {
-          html.classList.add(className);
-        });
-      },
     },
   };
 
@@ -4006,7 +3982,7 @@
         beforeCreate (options),
         beforeOpen (xhr, options),
         beforeSend (xhr, options),
-        error (xhr, status),
+        error (xhr, status, message),
         complete (xhr, stautus),
         success (response, status, xhr),
         statusCode ()
@@ -4070,7 +4046,7 @@
       script.type = 'text/javascript';
       script.onerror = function onerror() {
         clearTimeout(abortTimeout);
-        fireCallback('error', null, 'scripterror');
+        fireCallback('error', null, 'scripterror', 'scripterror');
         fireCallback('complete', null, 'scripterror');
       };
       script.src = requestUrl;
@@ -4089,7 +4065,7 @@
         abortTimeout = setTimeout(function () {
           script.parentNode.removeChild(script);
           script = null;
-          fireCallback('error', null, 'timeout');
+          fireCallback('error', null, 'timeout', 'timeout');
         }, options.timeout);
       }
 
@@ -4197,14 +4173,14 @@
           if (!parseError) {
             fireCallback('success', responseData, xhr.status, xhr);
           } else {
-            fireCallback('error', xhr, 'parseerror');
+            fireCallback('error', xhr, 'parseerror', 'parseerror');
           }
         } else {
           responseData = xhr.responseType === 'text' || xhr.responseType === '' ? xhr.responseText : xhr.response;
           fireCallback('success', responseData, xhr.status, xhr);
         }
       } else {
-        fireCallback('error', xhr, xhr.status);
+        fireCallback('error', xhr, xhr.status, xhr.statusText);
       }
       if (options.statusCode) {
         if (globals.statusCode && globals.statusCode[xhr.status]) { globals.statusCode[xhr.status](xhr); }
@@ -4215,7 +4191,7 @@
 
     xhr.onerror = function onerror() {
       if (xhrTimeout) { clearTimeout(xhrTimeout); }
-      fireCallback('error', xhr, xhr.status);
+      fireCallback('error', xhr, xhr.status, xhr.status);
       fireCallback('complete', xhr, 'error');
     };
 
@@ -4226,7 +4202,7 @@
       };
       xhrTimeout = setTimeout(function () {
         xhr.abort();
-        fireCallback('error', xhr, 'timeout');
+        fireCallback('error', xhr, 'timeout', 'timeout');
         fireCallback('complete', xhr, 'timeout');
       }, options.timeout);
     }
@@ -4295,11 +4271,12 @@
         method,
         url,
         data,
-        function (response) {
-          resolve(response);
+        function (responseData, status, xhr) {
+          resolve({ data: responseData, status: status, xhr: xhr });
         },
-        function (xhr, status) {
-          reject(status);
+        function (xhr, status, message) {
+          // eslint-disable-next-line
+          reject({ xhr: xhr, status: status, message: message });
         },
         dataType
       );
@@ -4341,11 +4318,12 @@
   Request.promise = function requestPromise(requestOptions) {
     return new Promise(function (resolve, reject) {
       Request(Object.assign(requestOptions, {
-        success: function success(data) {
-          resolve(data);
+        success: function success(data, status, xhr) {
+          resolve({ data: data, status: status, xhr: xhr });
         },
-        error: function error(xhr, status) {
-          reject(status);
+        error: function error(xhr, status, message) {
+          // eslint-disable-next-line
+          reject({ xhr: xhr, status: status, message: message });
         },
       }));
     });
@@ -5718,7 +5696,6 @@
     var $currentNavbarInnerEl = [];
     var $previousNavbarInnerEl = [];
     var dynamicNavbar;
-    var separateNavbar;
     var $pageShadowEl;
     var $pageOpacityEl;
 
@@ -5730,16 +5707,24 @@
     var paramsSwipeBackThreshold = params[((app.theme) + "SwipeBackThreshold")];
 
     var transformOrigin = app.rtl ? 'right center' : 'left center';
+    var transformOriginTitleLarge = app.rtl
+      ? 'calc(100% - var(--f7-navbar-large-title-padding-left) - var(--f7-safe-area-left)) center'
+      : 'calc(var(--f7-navbar-large-title-padding-left) + var(--f7-safe-area-left)) center';
+
 
     function animatableNavElements() {
       var els = [];
       var inverter = app.rtl ? -1 : 1;
       var currentNavIsLarge = $currentNavbarInnerEl.hasClass('navbar-inner-large');
+      var currentNavIsCollapsed = $currentNavbarInnerEl.hasClass('navbar-inner-large-collapsed');
+      var currentNavIsTransparent = $currentNavbarInnerEl.hasClass('navbar-inner-large-transparent');
       var previousNavIsLarge = $previousNavbarInnerEl.hasClass('navbar-inner-large');
-      var fromLarge = currentNavIsLarge && !$currentNavbarInnerEl.hasClass('navbar-inner-large-collapsed');
-      var toLarge = previousNavIsLarge && !$previousNavbarInnerEl.hasClass('navbar-inner-large-collapsed');
-      var $currentNavElements = $currentNavbarInnerEl.children('.left, .title, .right, .subnavbar, .fading, .title-large');
-      var $previousNavElements = $previousNavbarInnerEl.children('.left, .title, .right, .subnavbar, .fading, .title-large');
+      var previousNavIsCollapsed = $previousNavbarInnerEl.hasClass('navbar-inner-large-collapsed');
+      var previousNavIsTransparent = $previousNavbarInnerEl.hasClass('navbar-inner-large-transparent');
+      var fromLarge = currentNavIsLarge && !currentNavIsCollapsed;
+      var toLarge = previousNavIsLarge && !previousNavIsCollapsed;
+      var $currentNavElements = $currentNavbarInnerEl.children('.left, .title, .right, .subnavbar, .fading, .title-large, .navbar-bg');
+      var $previousNavElements = $previousNavbarInnerEl.children('.left, .title, .right, .subnavbar, .fading, .title-large, .navbar-bg');
       var activeNavBackIconText;
       var previousNavBackIconText;
 
@@ -5767,6 +5752,7 @@
           var isSubnavbar = $navEl.hasClass('subnavbar');
           var isLeft = $navEl.hasClass('left');
           var isTitle = $navEl.hasClass('title');
+          var isBg = $navEl.hasClass('navbar-bg');
           if (!fromLarge && $navEl.hasClass('.title-large')) { return; }
           var el = {
             el: navEl,
@@ -5774,51 +5760,60 @@
           if (fromLarge) {
             if (isTitle) { return; }
             if ($navEl.hasClass('title-large')) {
-              if (!separateNavbar) { return; }
-              if (toLarge) {
-                if (els.indexOf(el) < 0) { els.push(el); }
-                el.overflow = 'visible';
-                el.transform = 'translateX(100%)';
-                $navEl.find('.title-large-text, .title-large-inner').each(function (subIndex, subNavEl) {
-                  els.push({
-                    el: subNavEl,
-                    transform: function (progress) { return ("translateX(" + (-100 + progress * 100 * inverter) + "%)"); },
-                  });
+              if (els.indexOf(el) < 0) { els.push(el); }
+              el.overflow = 'visible';
+              $navEl.find('.title-large-text, .title-large-inner').each(function (subIndex, subNavEl) {
+                els.push({
+                  el: subNavEl,
+                  transform: function (progress) { return ("translateX(" + (progress * 100 * inverter) + "%)"); },
                 });
-              } else {
-                if (els.indexOf(el) < 0) { els.push(el); }
-                el.overflow = 'hidden';
-                el.transform = function (progress) { return ("translateY(calc(" + (-progress) + " * var(--f7-navbar-large-title-height)))"); };
-                $navEl.find('.title-large-text, .title-large-inner').each(function (subIndex, subNavEl) {
-                  els.push({
-                    el: subNavEl,
-                    transform: function (progress) { return ("translateX(" + (progress * 100 * inverter) + "%) translateY(calc(" + progress + " * var(--f7-navbar-large-title-height)))"); },
-                  });
-                });
-              }
+              });
               return;
             }
           }
           if (toLarge) {
             if (!fromLarge) {
               if ($navEl.hasClass('title-large')) {
-                if (!separateNavbar) { return; }
                 if (els.indexOf(el) < 0) { els.push(el); }
                 el.opacity = 0;
               }
             }
-            if (isLeft && separateNavbar) {
+            if (isLeft) {
               if (els.indexOf(el) < 0) { els.push(el); }
               el.opacity = function (progress) { return (1 - (Math.pow( progress, 0.33 ))); };
               $navEl.find('.back span').each(function (subIndex, subNavEl) {
                 els.push({
                   el: subNavEl,
                   'transform-origin': transformOrigin,
-                  transform: function (progress) { return ("translateY(calc(var(--f7-navbar-height) * " + progress + ")) scale(" + (1 + (1 * progress)) + ")"); },
+                  transform: function (progress) { return ("translateX(calc(" + progress + " * (var(--f7-navbarTitleLargeOffset) - var(--f7-navbarLeftTextOffset)))) translateY(calc(" + progress + " * (var(--f7-navbar-large-title-height) + var(--f7-navbar-large-title-padding-vertical) / 2))) scale(" + (1 + (1 * progress)) + ")"); },
                 });
               });
               return;
             }
+          }
+          if (isBg) {
+            if (els.indexOf(el) < 0) { els.push(el); }
+            if (!fromLarge && !toLarge) {
+              if (currentNavIsCollapsed) {
+                if (currentNavIsTransparent) {
+                  el.className = 'ios-swipeback-navbar-bg-large';
+                }
+                el.transform = function (progress) { return ("translateX(" + (100 * progress * inverter) + "%) translateY(calc(-1 * var(--f7-navbar-large-title-height)))"); };
+              } else {
+                el.transform = function (progress) { return ("translateX(" + (100 * progress * inverter) + "%)"); };
+              }
+            }
+            if (!fromLarge && toLarge) {
+              el.className = 'ios-swipeback-navbar-bg-large';
+              el.transform = function (progress) { return ("translateX(" + (100 * progress * inverter) + "%) translateY(calc(-1 * " + (1 - progress) + " * var(--f7-navbar-large-title-height)))"); };
+            }
+            if (fromLarge && toLarge) {
+              el.transform = function (progress) { return ("translateX(" + (100 * progress * inverter) + "%)"); };
+            }
+            if (fromLarge && !toLarge) {
+              el.transform = function (progress) { return ("translateX(" + (100 * progress * inverter) + "%) translateY(calc(-" + progress + " * var(--f7-navbar-large-title-height)))"); };
+            }
+            return;
           }
           if ($navEl.hasClass('title-large')) { return; }
           var isSliding = $navEl.hasClass('sliding') || $currentNavbarInnerEl.hasClass('sliding');
@@ -5836,7 +5831,7 @@
             transformTarget.transform = function (progress) {
               var activeNavTranslate = progress * transformTarget.el.f7NavbarRightOffset;
               if (Device.pixelRatio === 1) { activeNavTranslate = Math.round(activeNavTranslate); }
-              if (isSubnavbar && currentNavIsLarge && separateNavbar) {
+              if (isSubnavbar && currentNavIsLarge) {
                 return ("translate3d(" + activeNavTranslate + "px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)");
               }
               return ("translate3d(" + activeNavTranslate + "px,0,0)");
@@ -5849,6 +5844,7 @@
           var isSubnavbar = $navEl.hasClass('subnavbar');
           var isLeft = $navEl.hasClass('left');
           var isTitle = $navEl.hasClass('title');
+          var isBg = $navEl.hasClass('navbar-bg');
           var el = {
             el: navEl,
           };
@@ -5857,42 +5853,51 @@
             if (els.indexOf(el) < 0) { els.push(el); }
 
             if ($navEl.hasClass('title-large')) {
-              if (!separateNavbar) { return; }
-              if (fromLarge) {
-                el.opacity = 1;
-                el.overflow = 'visible';
-                el.transform = 'translateY(0)';
-                $navEl.find('.title-large-text').each(function (subIndex, subNavEl) {
-                  els.push({
-                    el: subNavEl,
-                    'transform-origin': transformOrigin,
-                    opacity: function (progress) { return (Math.pow( progress, 3 )); },
-                    transform: function (progress) { return ("translateY(calc(" + (-1 + progress * 1) + " * var(--f7-navbar-large-title-height))) scale(" + (0.5 + progress * 0.5) + ")"); },
-                  });
+              el.opacity = 1;
+              el.overflow = 'visible';
+              $navEl.find('.title-large-text').each(function (subIndex, subNavEl) {
+                els.push({
+                  el: subNavEl,
+                  'transform-origin': transformOriginTitleLarge,
+                  opacity: function (progress) { return (Math.pow( progress, 3 )); },
+                  transform: function (progress) { return ("translateX(calc(" + (1 - progress) + " * (var(--f7-navbarLeftTextOffset) - var(--f7-navbarTitleLargeOffset)))) translateY(calc(" + (progress - 1) + " * var(--f7-navbar-large-title-height) + " + (1 - progress) + " * var(--f7-navbar-large-title-padding-vertical) / 2)) scale(" + (0.5 + progress * 0.5) + ")"); },
                 });
-              } else {
-                el.transform = function (progress) { return ("translateY(calc(" + (progress - 1) + " * var(--f7-navbar-large-title-height)))"); };
-                el.opacity = 1;
-                el.overflow = 'hidden';
-                $navEl.find('.title-large-text').each(function (subIndex, subNavEl) {
-                  els.push({
-                    el: subNavEl,
-                    'transform-origin': transformOrigin,
-                    opacity: function (progress) { return (Math.pow( progress, 3 )); },
-                    transform: function (progress) { return ("scale(" + (0.5 + progress * 0.5) + ")"); },
-                  });
-                });
-              }
+              });
               $navEl.find('.title-large-inner').each(function (subIndex, subNavEl) {
                 els.push({
                   el: subNavEl,
-                  'transform-origin': transformOrigin,
+                  'transform-origin': transformOriginTitleLarge,
                   opacity: function (progress) { return (Math.pow( progress, 3 )); },
                   transform: function (progress) { return ("translateX(" + (-100 * (1 - progress) * inverter) + "%)"); },
                 });
               });
               return;
             }
+          }
+          if (isBg) {
+            if (els.indexOf(el) < 0) { els.push(el); }
+            if (!fromLarge && !toLarge) {
+              if (previousNavIsCollapsed) {
+                if (previousNavIsTransparent) {
+                  el.className = 'ios-swipeback-navbar-bg-large';
+                }
+                el.transform = function (progress) { return ("translateX(" + (-100 + 100 * progress * inverter) + "%) translateY(calc(-1 * var(--f7-navbar-large-title-height)))"); };
+              } else {
+                el.transform = function (progress) { return ("translateX(" + (-100 + 100 * progress * inverter) + "%)"); };
+              }
+            }
+            if (!fromLarge && toLarge) {
+              el.transform = function (progress) { return ("translateX(" + (-100 + 100 * progress * inverter) + "%) translateY(calc(-1 * " + (1 - progress) + " * var(--f7-navbar-large-title-height)))"); };
+            }
+            if (fromLarge && !toLarge) {
+              el.className = 'ios-swipeback-navbar-bg-large';
+              el.transform = function (progress) { return ("translateX(" + (-100 + 100 * progress * inverter) + "%) translateY(calc(-" + progress + " * var(--f7-navbar-large-title-height)))"); };
+            }
+            if (fromLarge && toLarge) {
+              el.transform = function (progress) { return ("translateX(" + (-100 + 100 * progress * inverter) + "%)"); };
+            }
+
+            return;
           }
           if ($navEl.hasClass('title-large')) { return; }
           var isSliding = $navEl.hasClass('sliding') || $previousNavbarInnerEl.hasClass('sliding');
@@ -5910,7 +5915,7 @@
             transformTarget.transform = function (progress) {
               var previousNavTranslate = transformTarget.el.f7NavbarLeftOffset * (1 - progress);
               if (Device.pixelRatio === 1) { previousNavTranslate = Math.round(previousNavTranslate); }
-              if (isSubnavbar && previousNavIsLarge && separateNavbar) {
+              if (isSubnavbar && previousNavIsLarge) {
                 return ("translate3d(" + previousNavTranslate + "px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)");
               }
               return ("translate3d(" + previousNavTranslate + "px,0,0)");
@@ -5932,6 +5937,13 @@
         if (el && el.el) {
           if (transition === true) { el.el.classList.add('navbar-page-transitioning'); }
           if (transition === false) { el.el.classList.remove('navbar-page-transitioning'); }
+          if (el.className && !el.classNameSet && !reset) {
+            el.el.classList.add(el.className);
+            el.classNameSet = true;
+          }
+          if (el.className && reset) {
+            el.el.classList.remove(el.className);
+          }
           for (var j = 0; j < styles.length; j += 1) {
             var styleProp = styles[j];
             if (el[styleProp]) {
@@ -5960,7 +5972,6 @@
       touchesStart.y = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
       touchStartTime = Utils.now();
       dynamicNavbar = router.dynamicNavbar;
-      separateNavbar = router.separateNavbar;
     }
     function handleTouchMove(e) {
       if (!isTouched) { return; }
@@ -6020,13 +6031,8 @@
         }
 
         if (dynamicNavbar) {
-          if (separateNavbar) {
-            $currentNavbarInnerEl = $navbarEl.find('.navbar-current:not(.stacked)');
-            $previousNavbarInnerEl = $navbarEl.find('.navbar-previous:not(.stacked)');
-          } else {
-            $currentNavbarInnerEl = $currentPageEl.children('.navbar').children('.navbar-inner');
-            $previousNavbarInnerEl = $previousPageEl.children('.navbar').children('.navbar-inner');
-          }
+          $currentNavbarInnerEl = $navbarEl.find('.navbar-current:not(.stacked)');
+          $previousNavbarInnerEl = $navbarEl.find('.navbar-previous:not(.stacked)');
           if ($previousNavbarInnerEl.length > 1) {
             $previousNavbarInnerEl = $previousNavbarInnerEl.eq($previousNavbarInnerEl.length - 1);
           }
@@ -6039,7 +6045,7 @@
           app.sheet.close($('.sheet.modal-in'));
         }
       }
-      e.f7PreventPanelSwipe = true;
+      e.f7PreventSwipePanel = true;
       isMoved = true;
       app.preventSwipePanelBySwipeBack = true;
       e.preventDefault();
@@ -6193,13 +6199,13 @@
           // Remove Old Page
           if (params.stackPages && router.initialPages.indexOf($currentPageEl[0]) >= 0) {
             $currentPageEl.addClass('stacked');
-            if (separateNavbar) {
+            if (dynamicNavbar) {
               $currentNavbarInnerEl.addClass('stacked');
             }
           } else {
             router.pageCallback('beforeRemove', $currentPageEl, $currentNavbarInnerEl, 'next', { swipeBack: true });
             router.removePage($currentPageEl);
-            if (separateNavbar) {
+            if (dynamicNavbar) {
               router.removeNavbar($currentNavbarInnerEl);
             }
           }
@@ -6425,7 +6431,6 @@
     }
 
     var dynamicNavbar = router.dynamicNavbar;
-    var separateNavbar = router.separateNavbar;
 
     var $viewEl = router.$el;
     var $newPage = $el;
@@ -6449,15 +6454,13 @@
 
     if (dynamicNavbar) {
       $newNavbarInner = $newPage.children('.navbar').children('.navbar-inner');
-      if (separateNavbar) {
-        $navbarEl = router.$navbarEl;
-        if ($newNavbarInner.length > 0) {
-          $newPage.children('.navbar').remove();
-        }
-        if ($newNavbarInner.length === 0 && $newPage[0] && $newPage[0].f7Page) {
-          // Try from pageData
-          $newNavbarInner = $newPage[0].f7Page.$navbarEl;
-        }
+      $navbarEl = router.$navbarEl;
+      if ($newNavbarInner.length > 0) {
+        $newPage.children('.navbar').remove();
+      }
+      if ($newNavbarInner.length === 0 && $newPage[0] && $newPage[0].f7Page) {
+        // Try from pageData
+        $newNavbarInner = $newPage[0].f7Page.$navbarEl;
       }
     }
 
@@ -6475,7 +6478,7 @@
 
     // Navbars In View
     var $navbarsInView;
-    if (separateNavbar) {
+    if (dynamicNavbar) {
       $navbarsInView = $navbarEl
         .children('.navbar-inner:not(.stacked)')
         .filter(function (index, navbarInView) { return navbarInView !== $newNavbarInner[0]; });
@@ -6547,19 +6550,19 @@
     // Find Old Page
     if (options.reloadCurrent || reloadDetail) {
       $oldPage = $pagesInView.eq($pagesInView.length - 1);
-      if (separateNavbar) {
+      if (dynamicNavbar) {
         // $oldNavbarInner = $navbarsInView.eq($pagesInView.length - 1);
         $oldNavbarInner = $(app.navbar.getElByPage($oldPage));
       }
     } else if (options.reloadPrevious) {
       $oldPage = $pagesInView.eq($pagesInView.length - 2);
-      if (separateNavbar) {
+      if (dynamicNavbar) {
         // $oldNavbarInner = $navbarsInView.eq($pagesInView.length - 2);
         $oldNavbarInner = $(app.navbar.getElByPage($oldPage));
       }
     } else if (options.reloadAll) {
       $oldPage = $pagesInView.filter(function (index, pageEl) { return pageEl !== $newPage[0]; });
-      if (separateNavbar) {
+      if (dynamicNavbar) {
         $oldNavbarInner = $navbarsInView.filter(function (index, navbarEl) { return navbarEl !== $newNavbarInner[0]; });
       }
     } else {
@@ -6572,7 +6575,7 @@
             $pagesInView.eq(i$2).addClass('page-master-stacked');
             $pagesInView.eq(i$2).trigger('page:masterstack');
             router.emit('pageMasterStack', $pagesInView[i$2]);
-            if (separateNavbar) {
+            if (dynamicNavbar) {
               $(app.navbar.getElByPage(masterPageEl)).addClass('navbar-master-stacked');
             }
             continue; // eslint-disable-line
@@ -6582,14 +6585,14 @@
             $pagesInView.eq(i$2).addClass('stacked');
             $pagesInView.eq(i$2).trigger('page:stack');
             router.emit('pageStack', $pagesInView[i$2]);
-            if (separateNavbar) {
+            if (dynamicNavbar) {
               $(oldNavbarInnerEl).addClass('stacked');
             }
           } else {
             // Page remove event
             router.pageCallback('beforeRemove', $pagesInView[i$2], $navbarsInView && $navbarsInView[i$2], 'previous', undefined, options);
             router.removePage($pagesInView[i$2]);
-            if (separateNavbar && oldNavbarInnerEl) {
+            if (dynamicNavbar && oldNavbarInnerEl) {
               router.removeNavbar(oldNavbarInnerEl);
             }
           }
@@ -6598,16 +6601,13 @@
       $oldPage = $viewEl
         .children('.page:not(.stacked)')
         .filter(function (index, page) { return page !== $newPage[0]; });
-      if (separateNavbar) {
+      if (dynamicNavbar) {
         $oldNavbarInner = $navbarEl
           .children('.navbar-inner:not(.stacked)')
           .filter(function (index, navbarInner) { return navbarInner !== $newNavbarInner[0]; });
       }
     }
 
-    if (dynamicNavbar && !separateNavbar) {
-      $oldNavbarInner = $oldPage.children('.navbar').children('.navbar-inner');
-    }
     if (isDetail && !options.reloadAll) {
       if ($oldPage.length > 1 || reloadDetail) {
         $oldPage = $oldPage.filter(function (pageIndex, pageEl) { return !pageEl.classList.contains('page-master'); });
@@ -6669,7 +6669,7 @@
       } else {
         $newPage.insertBefore($oldPage);
       }
-      if (separateNavbar && $newNavbarInner.length) {
+      if (dynamicNavbar && $newNavbarInner.length) {
         if ($newNavbarInner.children('.title-large').length) {
           $newNavbarInner.addClass('navbar-inner-large');
         }
@@ -6692,7 +6692,7 @@
           $viewEl.append($newPage[0]);
         }
       }
-      if (separateNavbar && $newNavbarInner.length) {
+      if (dynamicNavbar && $newNavbarInner.length) {
         if ($newNavbarInner.children('.title-large').length) {
           $newNavbarInner.addClass('navbar-inner-large');
         }
@@ -6703,10 +6703,10 @@
       }
     }
     if (!newPageInDom) {
-      router.pageCallback('mounted', $newPage, $newNavbarInner, newPagePosition, reload ? newPagePosition : 'current', options, $oldPage);
+      router.pageCallback('mounted', $newPage, $newNavbarInner, newPagePosition, (reload ? newPagePosition : 'current'), options, $oldPage);
     } else if (options.route && options.route.route && options.route.route.keepAlive && !$newPage[0].f7PageMounted) {
       $newPage[0].f7PageMounted = true;
-      router.pageCallback('mounted', $newPage, $newNavbarInner, newPagePosition, reload ? newPagePosition : 'current', options, $oldPage);
+      router.pageCallback('mounted', $newPage, $newNavbarInner, newPagePosition, (reload ? newPagePosition : 'current'), options, $oldPage);
     }
 
     // Remove old page
@@ -6715,7 +6715,7 @@
         $oldPage.addClass('stacked');
         $oldPage.trigger('page:stack');
         router.emit('pageStack', $oldPage[0]);
-        if (separateNavbar) {
+        if (dynamicNavbar) {
           $oldNavbarInner.addClass('stacked');
         }
       } else {
@@ -6724,7 +6724,7 @@
         router.pageCallback('afterOut', $oldPage, $oldNavbarInner, 'current', undefined, options);
         router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'current', undefined, options);
         router.removePage($oldPage);
-        if (separateNavbar && $oldNavbarInner && $oldNavbarInner.length) {
+        if (dynamicNavbar && $oldNavbarInner && $oldNavbarInner.length) {
           router.removeNavbar($oldNavbarInner);
         }
       }
@@ -6736,7 +6736,7 @@
           $oldPageEl.addClass('stacked');
           $oldPageEl.trigger('page:stack');
           router.emit('pageStack', $oldPageEl[0]);
-          if (separateNavbar) {
+          if (dynamicNavbar) {
             $oldNavbarInnerEl.addClass('stacked');
           }
         } else {
@@ -6747,7 +6747,7 @@
           }
           router.pageCallback('beforeRemove', $oldPageEl, $oldNavbarInner && $oldNavbarInner.eq(index), 'previous', undefined, options);
           router.removePage($oldPageEl);
-          if (separateNavbar && $oldNavbarInnerEl.length) {
+          if (dynamicNavbar && $oldNavbarInnerEl.length) {
             router.removeNavbar($oldNavbarInnerEl);
           }
         }
@@ -6757,14 +6757,14 @@
         $oldPage.addClass('stacked');
         $oldPage.trigger('page:stack');
         router.emit('pageStack', $oldPage[0]);
-        if (separateNavbar) {
+        if (dynamicNavbar) {
           $oldNavbarInner.addClass('stacked');
         }
       } else {
         // Page remove event
         router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'previous', undefined, options);
         router.removePage($oldPage);
-        if (separateNavbar && $oldNavbarInner && $oldNavbarInner.length) {
+        if (dynamicNavbar && $oldNavbarInner && $oldNavbarInner.length) {
           router.removeNavbar($oldNavbarInner);
         }
       }
@@ -6847,14 +6847,14 @@
           $oldPage.addClass('stacked');
           $oldPage.trigger('page:stack');
           router.emit('pageStack', $oldPage[0]);
-          if (separateNavbar) {
+          if (dynamicNavbar) {
             $oldNavbarInner.addClass('stacked');
           }
         } else if (!($newPage.attr('data-name') && $newPage.attr('data-name') === 'smart-select-page')) {
           // Remove event
           router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'previous', undefined, options);
           router.removePage($oldPage);
-          if (separateNavbar && $oldNavbarInner.length) {
+          if (dynamicNavbar && $oldNavbarInner.length) {
             router.removeNavbar($oldNavbarInner);
           }
         }
@@ -7079,6 +7079,16 @@
 
     if (!route) {
       return router;
+    }
+    if (route.route && route.route.viewName) {
+      var anotherViewName = route.route.viewName;
+      var anotherView = app.views[anotherViewName];
+      if (!anotherView) {
+        throw new Error(("Framework7: There is no View with \"" + anotherViewName + "\" name that was specified in this route"));
+      }
+      if (anotherView !== router.view) {
+        return anotherView.router.navigate(navigateParams, navigateOptions);
+      }
     }
 
     if (route.route.redirect) {
@@ -7676,7 +7686,6 @@
     var masterPageEl;
 
     var dynamicNavbar = router.dynamicNavbar;
-    var separateNavbar = router.separateNavbar;
 
     var $newPage = $el;
     var $oldPage = router.$el.children('.page-current');
@@ -7693,19 +7702,15 @@
 
     if (dynamicNavbar) {
       $newNavbarInner = $newPage.children('.navbar').children('.navbar-inner');
-      if (separateNavbar) {
-        $navbarEl = router.$navbarEl;
-        if ($newNavbarInner.length > 0) {
-          $newPage.children('.navbar').remove();
-        }
-        if ($newNavbarInner.length === 0 && $newPage[0] && $newPage[0].f7Page) {
-          // Try from pageData
-          $newNavbarInner = $newPage[0].f7Page.$navbarEl;
-        }
-        $oldNavbarInner = $navbarEl.find('.navbar-current');
-      } else {
-        $oldNavbarInner = $oldPage.children('.navbar').children('.navbar-inner');
+      $navbarEl = router.$navbarEl;
+      if ($newNavbarInner.length > 0) {
+        $newPage.children('.navbar').remove();
       }
+      if ($newNavbarInner.length === 0 && $newPage[0] && $newPage[0].f7Page) {
+        // Try from pageData
+        $newNavbarInner = $newPage[0].f7Page.$navbarEl;
+      }
+      $oldNavbarInner = $navbarEl.find('.navbar-current');
     }
 
     router.allowPageChange = false;
@@ -7789,7 +7794,7 @@
           $oldPage.prevAll('.page-previous').each(function (index, pageToRemove) {
             var $pageToRemove = $(pageToRemove);
             var $navbarToRemove;
-            if (separateNavbar) {
+            if (dynamicNavbar) {
               // $navbarToRemove = $oldNavbarInner.prevAll('.navbar-previous').eq(index);
               $navbarToRemove = $(app.navbar.getElByPage($pageToRemove));
             }
@@ -7798,13 +7803,13 @@
                 $pageToRemove.addClass('stacked');
                 $pageToRemove.trigger('page:stack');
                 router.emit('pageStack', $pageToRemove[0]);
-                if (separateNavbar) {
+                if (dynamicNavbar) {
                   $navbarToRemove.addClass('stacked');
                 }
               } else {
                 router.pageCallback('beforeRemove', $pageToRemove, $navbarToRemove, 'previous', undefined, options);
                 router.removePage($pageToRemove);
-                if (separateNavbar && $navbarToRemove.length > 0) {
+                if (dynamicNavbar && $navbarToRemove.length > 0) {
                   router.removeNavbar($navbarToRemove);
                 }
               }
@@ -7813,7 +7818,7 @@
         } else {
           var $pageToRemove = $oldPage.prev('.page-previous:not(.stacked)');
           var $navbarToRemove;
-          if (separateNavbar) {
+          if (dynamicNavbar) {
             // $navbarToRemove = $oldNavbarInner.prev('.navbar-inner:not(.stacked)');
             $navbarToRemove = $(app.navbar.getElByPage($pageToRemove));
           }
@@ -7825,7 +7830,7 @@
           } else if ($pageToRemove.length > 0) {
             router.pageCallback('beforeRemove', $pageToRemove, $navbarToRemove, 'previous', undefined, options);
             router.removePage($pageToRemove);
-            if (separateNavbar && $navbarToRemove.length) {
+            if (dynamicNavbar && $navbarToRemove.length) {
               router.removeNavbar($navbarToRemove);
             }
           }
@@ -7847,7 +7852,7 @@
           $newPage.insertBefore($oldPage);
         }
       }
-      if (separateNavbar && $newNavbarInner.length) {
+      if (dynamicNavbar && $newNavbarInner.length) {
         if ($newNavbarInner.children('.title-large').length) {
           $newNavbarInner.addClass('navbar-inner-large');
         }
@@ -7885,7 +7890,7 @@
           .removeClass('page-master-stacked')
           .trigger('page:masterunstack');
         router.emit('pageMasterUnstack', $newPage[0]);
-        if (separateNavbar) {
+        if (dynamicNavbar) {
           $(app.navbar.getElByPage($newPage)).removeClass('navbar-master-stacked');
         }
       }
@@ -7896,7 +7901,7 @@
         $previousPages.each(function (index, pageToRemove) {
           var $pageToRemove = $(pageToRemove);
           var $navbarToRemove;
-          if (separateNavbar) {
+          if (dynamicNavbar) {
             // $navbarToRemove = $newNavbarInner.prevAll('.navbar-previous:not(.stacked)').eq(index);
             $navbarToRemove = $(app.navbar.getElByPage($pageToRemove));
           }
@@ -7904,13 +7909,13 @@
             $pageToRemove.addClass('stacked');
             $pageToRemove.trigger('page:stack');
             router.emit('pageStack', $pageToRemove[0]);
-            if (separateNavbar) {
+            if (dynamicNavbar) {
               $navbarToRemove.addClass('stacked');
             }
           } else {
             router.pageCallback('beforeRemove', $pageToRemove, $navbarToRemove, 'previous', undefined);
             router.removePage($pageToRemove);
-            if (separateNavbar && $navbarToRemove.length) {
+            if (dynamicNavbar && $navbarToRemove.length) {
               router.removeNavbar($navbarToRemove);
             }
           }
@@ -8023,13 +8028,13 @@
         $oldPage.addClass('stacked');
         $oldPage.trigger('page:stack');
         router.emit('pageStack', $oldPage[0]);
-        if (separateNavbar) {
+        if (dynamicNavbar) {
           $oldNavbarInner.addClass('stacked');
         }
       } else {
         router.pageCallback('beforeRemove', $oldPage, $oldNavbarInner, 'next', undefined, options);
         router.removePage($oldPage);
-        if (separateNavbar && $oldNavbarInner.length) {
+        if (dynamicNavbar && $oldNavbarInner.length) {
           router.removeNavbar($oldNavbarInner);
         }
       }
@@ -8440,7 +8445,7 @@
     var router = this;
     appRouterCheck(router, 'clearPreviousPages');
     var app = router.app;
-    var separateNavbar = router.separateNavbar;
+    var dynamicNavbar = router.dynamicNavbar;
 
     var $pagesToRemove = router.$el
       .children('.page')
@@ -8454,14 +8459,14 @@
       var $oldNavbarInnerEl = $(app.navbar.getElByPage($oldPageEl));
       if (router.params.stackPages && router.initialPages.indexOf($oldPageEl[0]) >= 0) {
         $oldPageEl.addClass('stacked');
-        if (separateNavbar) {
+        if (dynamicNavbar) {
           $oldNavbarInnerEl.addClass('stacked');
         }
       } else {
         // Page remove event
         router.pageCallback('beforeRemove', $oldPageEl, $oldNavbarInnerEl, 'previous', undefined, {});
         router.removePage($oldPageEl);
-        if (separateNavbar && $oldNavbarInnerEl.length) {
+        if (dynamicNavbar && $oldNavbarInnerEl.length) {
           router.removeNavbar($oldNavbarInnerEl);
         }
       }
@@ -8512,7 +8517,6 @@
           scrollHistory: view.scrollHistory,
           cache: app.cache,
           dynamicNavbar: app.theme === 'ios' && view.params.iosDynamicNavbar,
-          separateNavbar: app.theme === 'ios' && view.params.iosDynamicNavbar && view.params.iosSeparateDynamicNavbar,
           initialPages: [],
           initialNavbars: [],
         });
@@ -8567,7 +8571,6 @@
     Router.prototype.animatableNavElements = function animatableNavElements (newNavbarInner, oldNavbarInner, toLarge, fromLarge, direction) {
       var router = this;
       var dynamicNavbar = router.dynamicNavbar;
-      var separateNavbar = router.separateNavbar;
       var animateIcon = router.params.iosAnimateNavbarBackIcon;
 
       var newNavEls;
@@ -8597,15 +8600,15 @@
         oldNavEls = [];
         newNavbarInner.children('.left, .right, .title, .subnavbar').each(function (index, navEl) {
           var $navEl = $(navEl);
-          if ($navEl.hasClass('left') && fromLarge && direction === 'forward' && separateNavbar) { return; }
+          if ($navEl.hasClass('left') && fromLarge && direction === 'forward') { return; }
           if ($navEl.hasClass('title') && toLarge) { return; }
           newNavEls.push(animatableNavEl($navEl, newNavbarInner));
         });
         if (!(oldNavbarInner.hasClass('navbar-master') && router.params.masterDetailBreakpoint > 0 && router.app.width >= router.params.masterDetailBreakpoint)) {
           oldNavbarInner.children('.left, .right, .title, .subnavbar').each(function (index, navEl) {
             var $navEl = $(navEl);
-            if ($navEl.hasClass('left') && toLarge && !fromLarge && direction === 'forward' && separateNavbar) { return; }
-            if ($navEl.hasClass('left') && toLarge && direction === 'backward' && separateNavbar) { return; }
+            if ($navEl.hasClass('left') && toLarge && !fromLarge && direction === 'forward') { return; }
+            if ($navEl.hasClass('left') && toLarge && direction === 'backward') { return; }
             if ($navEl.hasClass('title') && fromLarge) {
               return;
             }
@@ -9426,11 +9429,6 @@
         }
       }
 
-      // Dynamic not separated navbbar
-      if (router.dynamicNavbar && !router.separateNavbar) {
-        router.$el.addClass('router-dynamic-navbar-inside');
-      }
-
       var initUrl = router.params.url;
       var documentUrl = doc.location.href.split(doc.location.origin)[1];
       var historyRestored;
@@ -9512,7 +9510,7 @@
         router.$el.children('.page').each(function (index, pageEl) {
           var $pageEl = $(pageEl);
           router.initialPages.push($pageEl[0]);
-          if (router.separateNavbar && $pageEl.children('.navbar').length > 0) {
+          if (router.dynamicNavbar && $pageEl.children('.navbar').length > 0) {
             router.initialNavbars.push($pageEl.children('.navbar').find('.navbar-inner')[0]);
           }
         });
@@ -9533,7 +9531,7 @@
           var $pageEl = $(pageEl);
           var $navbarInnerEl;
           $pageEl.addClass('page-current');
-          if (router.separateNavbar) {
+          if (router.dynamicNavbar) {
             $navbarInnerEl = $pageEl.children('.navbar').children('.navbar-inner');
             if ($navbarInnerEl.length > 0) {
               if (!router.$navbarEl.parents(doc).length) {
@@ -9566,11 +9564,11 @@
             Utils.extend(initOptions, router.currentRoute.route.options);
           }
           router.currentPageEl = $pageEl[0];
-          if (router.separateNavbar && $navbarInnerEl.length) {
+          if (router.dynamicNavbar && $navbarInnerEl.length) {
             router.currentNavbarEl = $navbarInnerEl[0];
           }
           router.removeThemeElements($pageEl);
-          if (router.separateNavbar && $navbarInnerEl.length) {
+          if (router.dynamicNavbar && $navbarInnerEl.length) {
             router.removeThemeElements($navbarInnerEl);
           }
           if (initOptions.route.route.tab) {
@@ -9706,7 +9704,7 @@
 
       // DynamicNavbar
       var $navbarEl;
-      if (app.theme === 'ios' && view.params.iosDynamicNavbar && view.params.iosSeparateDynamicNavbar) {
+      if (app.theme === 'ios' && view.params.iosDynamicNavbar) {
         $navbarEl = $el.children('.navbar').eq(0);
         if ($navbarEl.length === 0) {
           $navbarEl = $('<div class="navbar"></div>');
@@ -10085,8 +10083,15 @@
               },
             }
           );
-          var createdComponent = app.component.create(componentOptions, extendContext);
-          resolve(createdComponent.el);
+          // const createdComponent = app.component.create(componentOptions, extendContext);
+          app.component.create(componentOptions, extendContext)
+            .then(function (createdComponent) {
+              resolve(createdComponent.el);
+            })
+            .catch(function (err) {
+              reject();
+              throw new Error(err);
+            });
         }
         var cachedComponent;
         if (compiledUrl) {
@@ -10334,6 +10339,7 @@
     if (insert.length === 0 && destroy.length === 0 && update.length === 0 && postpatch.length === 0) {
       return hooks;
     }
+
     if (insert.length) {
       hooks.insert = function (vnode) {
         insert.forEach(function (f) { return f(vnode); });
@@ -10539,7 +10545,9 @@
     for (var i = 0; i < nodes.length; i += 1) {
       var childNode = nodes[i];
       var child = elementToVNode(childNode, context, app, initial);
-      if (child) {
+      if (Array.isArray(child)) {
+        children.push.apply(children, child);
+      } else if (child) {
         children.push(child);
       }
     }
@@ -10547,23 +10555,34 @@
   }
 
   function elementToVNode(el, context, app, initial, isRoot) {
-    if (el.nodeType === 1) {
-      // element (statement adds inline SVG compatibility)
-      var tagName = (el instanceof win.SVGElement) ? el.nodeName : el.nodeName.toLowerCase();
-      return h(
-        tagName,
-        getData(el, context, app, initial, isRoot),
-        selfClosing.indexOf(tagName) >= 0 ? [] : getChildren(el, context, app, initial)
-      );
-    }
     if (el.nodeType === 3) {
       // text
       return el.textContent;
     }
-    return null;
+    if (el.nodeType !== 1) { return null; }
+    // element (statement adds inline SVG compatibility)
+    var tagName = (el instanceof win.SVGElement) ? el.nodeName : el.nodeName.toLowerCase();
+    // proceed slots
+    if (tagName === 'slot' && context.$children) {
+      if (!context.$children.length) { return null; }
+      var children = [];
+      var slotName = el.getAttribute('name') || 'default';
+      for (var i = 0; i < context.$children.length; i += 1) {
+        var childSlotName = context.$children[i].getAttribute('slot') || 'default';
+        if (childSlotName === slotName) {
+          children.push(elementToVNode(context.$children[i], context, app, initial));
+        }
+      }
+      return children;
+    }
+    return h(
+      tagName,
+      getData(el, context, app, initial, isRoot),
+      selfClosing.indexOf(tagName) >= 0 ? [] : getChildren(el, context, app, initial)
+    );
   }
 
-  function vdom (html, context, app, initial) {
+  function vdom (html, context, initial) {
     if ( html === void 0 ) html = '';
 
     // Save to temp dom
@@ -10576,7 +10595,7 @@
         rootEl = tempDom.childNodes[i];
       }
     }
-    var result = elementToVNode(rootEl, context, app, initial, true);
+    var result = elementToVNode(rootEl, context, context.$app, initial, true);
 
     // Clean
     tempDom.innerHTML = '';
@@ -11188,8 +11207,11 @@
     styleModule,
     eventListenersModule ]);
 
-  var Framework7Component = function Framework7Component(app, options, extendContext) {
+  /* eslint no-underscore-dangle: "off" */
+
+  var Framework7Component = function Framework7Component(app, options, extendContext, children) {
     if ( extendContext === void 0 ) extendContext = {};
+    if ( children === void 0 ) children = [];
 
     var id = Utils.id();
     var self = Utils.merge(
@@ -11203,6 +11225,7 @@
         $f7: app,
         $options: Utils.extend({ id: id }, options),
         $id: options.id || id,
+        $children: children,
       }
     );
     var $options = self.$options;
@@ -11232,17 +11255,16 @@
       set: function set() {},
     });
 
-    // Apply context
-    ('beforeCreate created beforeMount mounted beforeDestroy destroyed updated').split(' ').forEach(function (cycleKey) {
-      if ($options[cycleKey]) { $options[cycleKey] = $options[cycleKey].bind(self); }
-    });
+    // Bind hooks
+    ['beforeCreate', 'created', 'beforeMount', 'mounted', 'beforeDestroy', 'destroyed', 'updated']
+      .forEach(function (cycleKey) {
+        if ($options[cycleKey]) { $options[cycleKey] = $options[cycleKey].bind(self); }
+      });
 
-    if ($options.data) {
-      $options.data = $options.data.bind(self);
-      // Data
-      Utils.extend(self, $options.data());
-    }
+    // Bind render
     if ($options.render) { $options.render = $options.render.bind(self); }
+
+    // Bind methods
     if ($options.methods) {
       Object.keys($options.methods).forEach(function (methodName) {
         self[methodName] = $options.methods[methodName].bind(self);
@@ -11261,41 +11283,71 @@
       });
     }
 
-    // Before create hook
-    if ($options.beforeCreate) { $options.beforeCreate(); }
+    // Bind Data
+    if ($options.data) { $options.data = $options.data.bind(self); }
 
-    // Render
-    var html = self.$render();
+    return new Promise(function (resolve, reject) {
+      self.$hook('data', true)
+        .then(function (data) {
+          if (data) { Utils.extend(self, data); }
+          self.$hook('beforeCreate');
+          var html = self.$render();
 
-    // Make Dom
-    if (html && typeof html === 'string') {
-      html = html.trim();
-      self.$vnode = vdom(html, self, app, true);
-      self.el = doc.createElement('div');
-      patch(self.el, self.$vnode);
-    } else if (html) {
-      self.el = html;
-    }
-    self.$el = $(self.el);
+          if (self.$options.el) {
+            html = html.trim();
+            self.$vnode = vdom(html, self, true);
+            if ($options.style) {
+              self.$styleEl = doc.createElement('style');
+              self.$styleEl.innerHTML = $options.style;
+              if ($options.styleScoped) {
+                self.$vnode.data.attrs[("data-f7-" + ($options.id))] = '';
+              }
+            }
+            self.el = self.$options.el;
+            patch(self.el, self.$vnode);
+            self.el = self.$vnode.elm;
+            self.$el = $(self.el);
 
-    // Set styles scope ID
-    if ($options.style) {
-      self.$styleEl = doc.createElement('style');
-      self.$styleEl.innerHTML = $options.style;
-      if ($options.styleScoped) {
-        self.el.setAttribute(("data-f7-" + ($options.id)), '');
-      }
-    }
+            self.$attachEvents();
+            self.el.f7Component = self;
+            self.$hook('created');
+            self.$mount();
+            resolve(self);
+            return;
+          }
+          // Make Dom
+          if (html && typeof html === 'string') {
+            html = html.trim();
+            self.$vnode = vdom(html, self, true);
+            if ($options.style && $options.styleScoped) {
+              self.$vnode.data.attrs[("data-f7-" + ($options.id))] = '';
+            }
+            self.el = doc.createElement(self.$vnode.sel || 'div');
+            patch(self.el, self.$vnode);
+            self.$el = $(self.el);
+          } else if (html) {
+            self.el = html;
+            self.$el = $(self.el);
+            if ($options.style && $options.styleScoped) {
+              self.el.setAttribute(("data-f7-" + ($options.id)), '');
+            }
+          }
+          if ($options.style) {
+            self.$styleEl = doc.createElement('style');
+            self.$styleEl.innerHTML = $options.style;
+          }
 
-    self.$attachEvents();
+          self.$attachEvents();
 
-    // Created callback
-    if ($options.created) { $options.created(); }
+          self.el.f7Component = self;
 
-    // Store component instance
-    self.el.f7Component = self;
-
-    return self;
+          self.$hook('created');
+          resolve(self);
+        })
+        .catch(function (err) {
+          reject(err);
+        });
+    });
   };
 
   Framework7Component.prototype.$attachEvents = function $attachEvents () {
@@ -11351,38 +11403,59 @@
     return html;
   };
 
-  Framework7Component.prototype.$forceUpdate = function $forceUpdate () {
+  Framework7Component.prototype.$tick = function $tick (callback) {
     var self = this;
-    var html = self.$render();
+    win.requestAnimationFrame(function () {
+      if (self.__updateIsPending) {
+        win.requestAnimationFrame(function () {
+          callback();
+        });
+      } else {
+        callback();
+      }
+    });
+  };
 
-    // Make Dom
-    if (html && typeof html === 'string') {
-      html = html.trim();
-      var newVNode = vdom(html, self, self.$app);
-      self.$vnode = patch(self.$vnode, newVNode);
-    }
+  Framework7Component.prototype.$update = function $update () {
+    var self = this;
+    win.cancelAnimationFrame(self.__requestAnimationFrameId);
+    delete self.__requestAnimationFrameId;
+    self.__updateIsPending = true;
+    self.__requestAnimationFrameId = win.requestAnimationFrame(function () {
+      var html = self.$render();
+
+      // Make Dom
+      if (html && typeof html === 'string') {
+        html = html.trim();
+        var newVNode = vdom(html, self, false);
+        self.$vnode = patch(self.$vnode, newVNode);
+      }
+      self.__updateIsPending = false;
+      delete self.__updateIsPending;
+    });
   };
 
   Framework7Component.prototype.$setState = function $setState (mergeState) {
     var self = this;
     Utils.merge(self, mergeState);
-    self.$forceUpdate();
+    self.$update();
   };
 
   Framework7Component.prototype.$mount = function $mount (mountMethod) {
     var self = this;
-    if (self.$options.beforeMount) { self.$options.beforeMount(); }
+    self.$hook('beforeMount');
     if (self.$styleEl) { $('head').append(self.$styleEl); }
     if (mountMethod) { mountMethod(self.el); }
-    if (self.$options.mounted) { self.$options.mounted(); }
+    self.$hook('mounted');
   };
 
   Framework7Component.prototype.$destroy = function $destroy () {
     var self = this;
-    if (self.$options.beforeDestroy) { self.$options.beforeDestroy(); }
+    self.$hook('beforeDestroy');
+
     if (self.$styleEl) { $(self.$styleEl).remove(); }
     self.$detachEvents();
-    if (self.$options.destroyed) { self.$options.destroyed(); }
+    self.$hook('destroyed');
     // Delete component instance
     if (self.el && self.el.f7Component) {
       self.el.f7Component = null;
@@ -11392,7 +11465,33 @@
     if (self.$vnode) {
       self.$vnode = patch(self.$vnode, { sel: self.$vnode.sel, data: {} });
     }
+    // Clear update queue
+    win.cancelAnimationFrame(self.__requestAnimationFrameId);
+
+    // Delete all props
     Utils.deleteProps(self);
+  };
+
+  Framework7Component.prototype.$hook = function $hook (name, async) {
+    var self = this;
+    if (async) {
+      return new Promise(function (resolve, reject) {
+        if (!self.$options[name]) {
+          resolve();
+          return;
+        }
+        var result = self.$options[name]();
+        if (result instanceof Promise) {
+          result
+            .then(function (res) { return resolve(res); })
+            .catch(function (err) { return reject(err); });
+          return;
+        }
+        resolve(result);
+      });
+    }
+    if (self.$options[name]) { return self.$options[name](); }
+    return undefined;
   };
 
   function parseComponent(componentString) {
@@ -11601,7 +11700,6 @@
 
   var Statusbar = {
     hide: function hide() {
-      $('html').removeClass('with-statusbar');
       if (Device.cordova && win.StatusBar) {
         win.StatusBar.hide();
       }
@@ -11609,14 +11707,7 @@
     show: function show() {
       if (Device.cordova && win.StatusBar) {
         win.StatusBar.show();
-        Utils.nextTick(function () {
-          if (Device.needsStatusbarOverlay()) {
-            $('html').addClass('with-statusbar');
-          }
-        });
-        return;
       }
-      $('html').addClass('with-statusbar');
     },
     onClick: function onClick() {
       var app = this;
@@ -11624,9 +11715,9 @@
       if ($('.popup.modal-in').length > 0) {
         // Check for opened popup
         pageContent = $('.popup.modal-in').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
-      } else if ($('.panel.panel-active').length > 0) {
+      } else if ($('.panel.panel-in').length > 0) {
         // Check for opened panel
-        pageContent = $('.panel.panel-active').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
+        pageContent = $('.panel.panel-in').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
       } else if ($('.views > .view.tab-active').length > 0) {
         // View in tab bar app layout
         pageContent = $('.views > .view.tab-active').find('.page:not(.page-previous):not(.page-next):not(.cached)').find('.page-content');
@@ -11653,12 +11744,7 @@
         }
       }
     },
-    setIosTextColor: function setIosTextColor(color) {
-      if (!Device.ios) { return; }
-      Statusbar.setTextColor(color);
-    },
     setBackgroundColor: function setBackgroundColor(color) {
-      $('.statusbar').css('background-color', color);
       if (Device.cordova && win.StatusBar) {
         win.StatusBar.backgroundColorByHexString(color);
       }
@@ -11674,52 +11760,12 @@
 
       if (Device.cordova && win.StatusBar) {
         win.StatusBar.overlaysWebView(overlays);
-        if (overlays) {
-          $('html').addClass('with-statusbar');
-        } else {
-          $('html').removeClass('with-statusbar');
-        }
-      }
-    },
-    checkOverlay: function checkOverlay() {
-      if (Device.needsStatusbarOverlay()) {
-        $('html').addClass('with-statusbar');
-      } else {
-        $('html').removeClass('with-statusbar');
       }
     },
     init: function init() {
       var app = this;
       var params = app.params.statusbar;
       if (!params.enabled) { return; }
-
-      if (params.overlay === 'auto') {
-        if (Device.needsStatusbarOverlay()) {
-          $('html').addClass('with-statusbar');
-        } else {
-          $('html').removeClass('with-statusbar');
-        }
-
-        if (Device.ios && (Device.cordova || Device.webView)) {
-          if (win.orientation === 0) {
-            app.once('resize', function () {
-              Statusbar.checkOverlay();
-            });
-          }
-
-          $(doc).on('resume', function () {
-            Statusbar.checkOverlay();
-          }, false);
-
-          app.on(Device.ios ? 'orientationchange' : 'orientationchange resize', function () {
-            Statusbar.checkOverlay();
-          });
-        }
-      } else if (params.overlay === true) {
-        $('html').addClass('with-statusbar');
-      } else if (params.overlay === false) {
-        $('html').removeClass('with-statusbar');
-      }
 
       if (Device.cordova && win.StatusBar) {
         if (params.scrollTopOnClick) {
@@ -11753,8 +11799,8 @@
       if (params.iosBackgroundColor && Device.ios) {
         Statusbar.setBackgroundColor(params.iosBackgroundColor);
       }
-      if ((params.materialBackgroundColor || params.androidBackgroundColor) && Device.android) {
-        Statusbar.setBackgroundColor(params.materialBackgroundColor || params.androidBackgroundColor);
+      if (params.androidBackgroundColor && Device.android) {
+        Statusbar.setBackgroundColor(params.androidBackgroundColor);
       }
     },
   };
@@ -11764,7 +11810,7 @@
     params: {
       statusbar: {
         enabled: true,
-        overlay: 'auto',
+
         scrollTopOnClick: true,
 
         iosOverlaysWebView: true,
@@ -11780,7 +11826,6 @@
       var app = this;
       Utils.extend(app, {
         statusbar: {
-          checkOverlay: Statusbar.checkOverlay,
           hide: Statusbar.hide,
           show: Statusbar.show,
           overlaysWebView: Statusbar.overlaysWebView,
@@ -11797,20 +11842,12 @@
         Statusbar.init.call(app);
       },
     },
-    clicks: {
-      '.statusbar': function onStatusbarClick() {
-        var app = this;
-        if (!app.params.statusbar.enabled) { return; }
-        if (!app.params.statusbar.scrollTopOnClick) { return; }
-        Statusbar.onClick.call(app);
-      },
-    },
   };
 
   function getCurrentView(app) {
     var $popoverView = $('.popover.modal-in .view');
     var $popupView = $('.popup.modal-in .view');
-    var $panelView = $('.panel.panel-active .view');
+    var $panelView = $('.panel.panel-in .view');
     var $viewsEl = $('.views');
     if ($viewsEl.length === 0) { $viewsEl = app.root; }
     // Find active view as tab
@@ -11886,7 +11923,6 @@
         animate: true,
         // iOS Dynamic Navbar
         iosDynamicNavbar: true,
-        iosSeparateDynamicNavbar: true,
         // Animate iOS Navbar Back Icon
         iosAnimateNavbarBackIcon: true,
         // Delays
@@ -12001,18 +12037,10 @@
 
       var router;
       var dynamicNavbar;
-      var separateNavbar;
-      var separateNavbarRightOffset = 0;
-      var separateNavbarLeftOffset = 0;
 
       if ($viewEl.length > 0 && $viewEl[0].f7View) {
         router = $viewEl[0].f7View.router;
         dynamicNavbar = router && router.dynamicNavbar;
-        separateNavbar = router && router.separateNavbar;
-        if (!separateNavbar) {
-          separateNavbarRightOffset = navbarWidth;
-          separateNavbarLeftOffset = navbarWidth / 5;
-        }
       }
 
       var currLeft;
@@ -12044,8 +12072,8 @@
 
       if (dynamicNavbar && app.theme === 'ios') {
         if (title.hasClass('sliding') || (title.length > 0 && sliding)) {
-          var titleLeftOffset = (-(currLeft + diff) * inverter) + separateNavbarLeftOffset;
-          var titleRightOffset = ((navbarInnerWidth - currLeft - diff - titleWidth) * inverter) - separateNavbarRightOffset;
+          var titleLeftOffset = -(currLeft + diff) * inverter;
+          var titleRightOffset = (navbarInnerWidth - currLeft - diff - titleWidth) * inverter;
 
           if (isPrevious) {
             if (router && router.params.iosAnimateNavbarBackIcon) {
@@ -12063,8 +12091,8 @@
             left[0].f7NavbarLeftOffset = (-(navbarInnerWidth - left[0].offsetWidth) / 2) * inverter;
             left[0].f7NavbarRightOffset = leftWidth * inverter;
           } else {
-            left[0].f7NavbarLeftOffset = -leftWidth + separateNavbarLeftOffset;
-            left[0].f7NavbarRightOffset = ((navbarInnerWidth - left[0].offsetWidth) / 2) - separateNavbarRightOffset;
+            left[0].f7NavbarLeftOffset = -leftWidth;
+            left[0].f7NavbarRightOffset = ((navbarInnerWidth - left[0].offsetWidth) / 2);
             if (router && router.params.iosAnimateNavbarBackIcon && left.find('.back .icon').length > 0) {
               if (left.find('.back .icon ~ span').length) {
                 var leftOffset = left[0].f7NavbarLeftOffset;
@@ -12082,13 +12110,13 @@
             right[0].f7NavbarLeftOffset = -rightWidth * inverter;
             right[0].f7NavbarRightOffset = ((navbarInnerWidth - right[0].offsetWidth) / 2) * inverter;
           } else {
-            right[0].f7NavbarLeftOffset = (-(navbarInnerWidth - right[0].offsetWidth) / 2) + separateNavbarLeftOffset;
-            right[0].f7NavbarRightOffset = rightWidth - separateNavbarRightOffset;
+            right[0].f7NavbarLeftOffset = -(navbarInnerWidth - right[0].offsetWidth) / 2;
+            right[0].f7NavbarRightOffset = rightWidth;
           }
         }
         if (subnavbar.length && (subnavbar.hasClass('sliding') || sliding)) {
-          subnavbar[0].f7NavbarLeftOffset = app.rtl ? subnavbar[0].offsetWidth : (-subnavbar[0].offsetWidth + separateNavbarLeftOffset);
-          subnavbar[0].f7NavbarRightOffset = (-subnavbar[0].f7NavbarLeftOffset - separateNavbarRightOffset) + separateNavbarLeftOffset;
+          subnavbar[0].f7NavbarLeftOffset = app.rtl ? subnavbar[0].offsetWidth : -subnavbar[0].offsetWidth;
+          subnavbar[0].f7NavbarRightOffset = -subnavbar[0].f7NavbarLeftOffset;
         }
       }
 
@@ -12099,8 +12127,9 @@
         title.css({ left: (titleLeft + "px") });
       }
     },
-    hide: function hide(el, animate) {
+    hide: function hide(el, animate, hideStatusbar) {
       if ( animate === void 0 ) animate = true;
+      if ( hideStatusbar === void 0 ) hideStatusbar = false;
 
       var app = this;
       var $el = $(el);
@@ -12113,6 +12142,9 @@
         : $el.find('.title-large').length;
       if (currentIsLarge) {
         className += ' navbar-large-hidden';
+      }
+      if (hideStatusbar) {
+        className += ' navbar-hidden-statusbar';
       }
       $el.transitionEnd(function () {
         $el.removeClass('navbar-transitioning');
@@ -12136,7 +12168,7 @@
           $el.removeClass('navbar-transitioning');
         });
       }
-      $el.removeClass('navbar-hidden navbar-large-hidden');
+      $el.removeClass('navbar-hidden navbar-large-hidden navbar-hidden-statusbar');
       $el.trigger('navbar:show');
       app.emit('navbarShow', $el[0]);
     },
@@ -12248,7 +12280,8 @@
       var $navbarEl = app.theme === 'md' || app.theme === 'aurora'
         ? $navbarInnerEl.parents('.navbar')
         : $(navbarInnerEl || app.navbar.getElByPage(pageEl)).closest('.navbar');
-      var isLarge = $navbarInnerEl.find('.title-large').length || $navbarInnerEl.hasClass('.navbar-inner-large');
+      var $titleLargeEl = $navbarInnerEl.find('.title-large');
+      var isLarge = $titleLargeEl.length || $navbarInnerEl.hasClass('.navbar-inner-large');
       var navbarHideHeight = 44;
       var snapPageScrollToLargeTitle = app.params.navbar.snapPageScrollToLargeTitle;
 
@@ -12265,19 +12298,25 @@
       var navbarTitleLargeHeight;
       if (needCollapse || (needHide && isLarge)) {
         navbarTitleLargeHeight = $navbarInnerEl.css('--f7-navbar-large-title-height');
+
         if (navbarTitleLargeHeight && navbarTitleLargeHeight.indexOf('px') >= 0) {
           navbarTitleLargeHeight = parseInt(navbarTitleLargeHeight, 10);
-          if (Number.isNaN(navbarTitleLargeHeight)) {
+          if (Number.isNaN(navbarTitleLargeHeight) && $titleLargeEl.length) {
+            navbarTitleLargeHeight = $titleLargeEl[0].offsetHeight;
+          } else if (Number.isNaN(navbarTitleLargeHeight)) {
             if (app.theme === 'ios') { navbarTitleLargeHeight = 52; }
             else if (app.theme === 'md') { navbarTitleLargeHeight = 48; }
             else if (app.theme === 'aurora') { navbarTitleLargeHeight = 38; }
           }
+        } else if ($titleLargeEl.length) {
+          navbarTitleLargeHeight = $titleLargeEl[0].offsetHeight;
         } else { // eslint-disable-next-line
           if (app.theme === 'ios') { navbarTitleLargeHeight = 52; }
           else if (app.theme === 'md') { navbarTitleLargeHeight = 48; }
           else if (app.theme === 'aurora') { navbarTitleLargeHeight = 38; }
         }
       }
+
       if (needHide && isLarge) {
         navbarHideHeight += navbarTitleLargeHeight;
       }
@@ -12301,41 +12340,36 @@
       }
 
       function handleLargeNavbarCollapse() {
+        var isHidden = $navbarEl.hasClass('navbar-hidden');
+        if (isHidden) { return; }
         var collapseProgress = Math.min(Math.max((currentScrollTop / navbarTitleLargeHeight), 0), 1);
         var inSearchbarExpanded = $navbarInnerEl.hasClass('with-searchbar-expandable-enabled');
         if (inSearchbarExpanded) { return; }
         navbarCollapsed = $navbarInnerEl.hasClass('navbar-inner-large-collapsed');
+
         if (collapseProgress === 0 && navbarCollapsed) {
           app.navbar.expandLargeTitle($navbarInnerEl[0]);
-          $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-          $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-          $navbarInnerEl[0].style.overflow = '';
-          if (app.theme === 'md' || app.theme === 'aurora') {
-            $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-          }
         } else if (collapseProgress === 1 && !navbarCollapsed) {
           app.navbar.collapseLargeTitle($navbarInnerEl[0]);
+        }
+        if (
+          (collapseProgress === 0 && navbarCollapsed)
+          || (collapseProgress === 1 && !navbarCollapsed)
+          || ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed))
+        ) {
           $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           $navbarInnerEl[0].style.overflow = '';
-          $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-          if (app.theme === 'md' || app.theme === 'aurora') {
-            $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-          }
-        } else if ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed)) {
-          $navbarInnerEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
-          $navbarInnerEl[0].style.overflow = '';
-          $pageEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           if (app.theme === 'md' || app.theme === 'aurora') {
             $navbarEl[0].style.removeProperty('--f7-navbar-large-collapse-progress');
           }
         } else {
           $navbarInnerEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
           $navbarInnerEl[0].style.overflow = 'visible';
-          $pageEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
           if (app.theme === 'md' || app.theme === 'aurora') {
             $navbarEl[0].style.setProperty('--f7-navbar-large-collapse-progress', collapseProgress);
           }
         }
+
 
         if (snapPageScrollToLargeTitle) {
           if (!Support.touch) {
@@ -12466,7 +12500,7 @@
       },
     },
     on: {
-      'panelBreakpoint panelResize resize viewMasterDetailBreakpoint': function onResize() {
+      'panelBreakpoint panelCollapsedBreakpoint panelResize resize viewMasterDetailBreakpoint': function onPanelResize() {
         var app = this;
         $('.navbar').each(function (index, navbarEl) {
           app.navbar.size(navbarEl);
@@ -12547,30 +12581,12 @@
           app.navbar.initNavbarOnScroll(page.el, $navbarInnerEl[0], needHideOnScrollHandler, needCollapseOnScrollHandler);
         }
       },
-      modalOpen: function modalOpen(modal) {
+      'panelOpen panelSwipeOpen modalOpen': function onPanelModalOpen(instance) {
         var app = this;
         if (!app.params.navbar[((app.theme) + "CenterTitle")]) {
           return;
         }
-        modal.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each(function (index, navbarEl) {
-          app.navbar.size(navbarEl);
-        });
-      },
-      panelOpen: function panelOpen(panel) {
-        var app = this;
-        if (!app.params.navbar[((app.theme) + "CenterTitle")]) {
-          return;
-        }
-        panel.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each(function (index, navbarEl) {
-          app.navbar.size(navbarEl);
-        });
-      },
-      panelSwipeOpen: function panelSwipeOpen(panel) {
-        var app = this;
-        if (!app.params.navbar[((app.theme) + "CenterTitle")]) {
-          return;
-        }
-        panel.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each(function (index, navbarEl) {
+        instance.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each(function (index, navbarEl) {
           app.navbar.size(navbarEl);
         });
       },
@@ -13772,11 +13788,13 @@
 
       Utils.extend(popup, {
         app: app,
+        push: $el.hasClass('popup-push') || popup.params.push,
         $el: $el,
         el: $el[0],
         $backdropEl: $backdropEl,
         backdropEl: $backdropEl && $backdropEl[0],
         type: 'popup',
+        $htmlEl: $('html'),
       });
 
       function handleClick(e) {
@@ -13817,26 +13835,13 @@
           popup.close();
         }
       }
-      if (popup.params.closeOnEscape) {
-        popup.on('popupOpen', function () {
-          $(document).on('keydown', onKeyDown);
-        });
-        popup.on('popupClose', function () {
-          $(document).off('keydown', onKeyDown);
-        });
-      }
 
-      popup.on('popupOpened', function () {
-        $el.removeClass('swipe-close-to-bottom swipe-close-to-top');
-        if (popup.params.closeByBackdropClick) {
-          app.on('click', handleClick);
-        }
-      });
-      popup.on('popupClose', function () {
-        if (popup.params.closeByBackdropClick) {
-          app.off('click', handleClick);
-        }
-      });
+      var pushOffset;
+      var isPush;
+
+      function pushViewScale(offset) {
+        return (app.height - offset * 2) / app.height;
+      }
 
       var allowSwipeToClose = true;
       var isTouched = false;
@@ -13850,6 +13855,8 @@
       var pageContentScrollTop;
       var pageContentOffsetHeight;
       var pageContentScrollHeight;
+      var popupHeight;
+      var $pushViewEl;
 
       function handleTouchStart(e) {
         if (isTouched || !allowSwipeToClose || !popup.params.swipeToClose) { return; }
@@ -13885,6 +13892,9 @@
         }
 
         touchesDiff = startTouch.y - currentTouch.y;
+        if (isPush && pushOffset && touchesDiff > 0) {
+          touchesDiff = 0;
+        }
         var direction = touchesDiff < 0 ? 'to-bottom' : 'to-top';
         $el.transition(0);
 
@@ -13894,6 +13904,10 @@
         }
 
         if (!isMoved) {
+          if (isPush && pushOffset) {
+            popupHeight = $el[0].offsetHeight;
+            $pushViewEl = app.root.children('.view, .views');
+          }
           if (pageContentEl) {
             pageContentScrollTop = pageContentEl.scrollTop;
             pageContentScrollHeight = pageContentEl.scrollHeight;
@@ -13912,6 +13926,11 @@
           isMoved = true;
         }
         e.preventDefault();
+        if (isPush && pushOffset) {
+          var pushProgress = 1 - Math.abs(touchesDiff / popupHeight);
+          var scale = 1 - (1 - pushViewScale(pushOffset)) * pushProgress;
+          $pushViewEl.transition(0).transform(("translate3d(0,0,0) scale(" + scale + ")"));
+        }
         $el.transition(0).transform(("translate3d(0," + (-touchesDiff) + "px,0)"));
       }
       function handleTouchEnd() {
@@ -13922,7 +13941,10 @@
         isMoved = false;
         allowSwipeToClose = false;
         $el.transition('');
-        var direction = touchesDiff < 0 ? 'to-bottom' : 'to-top';
+        if (isPush && pushOffset) {
+          $pushViewEl.transition('').transform('');
+        }
+        var direction = touchesDiff <= 0 ? 'to-bottom' : 'to-top';
         if ((typeof popup.params.swipeToClose === 'string' && direction !== popup.params.swipeToClose)) {
           $el.transform('');
           allowSwipeToClose = true;
@@ -13959,6 +13981,51 @@
         });
       }
 
+      popup.on('open', function () {
+        if (popup.params.closeOnEscape) {
+          $(document).on('keydown', onKeyDown);
+        }
+        if (popup.push) {
+          isPush = popup.push && (
+            (app.width < 630 || app.height < 630)
+            || $el.hasClass('popup-tablet-fullscreen')
+          );
+        }
+        if (isPush) {
+          pushOffset = parseInt($el.css('--f7-popup-push-offset'), 10);
+          if (Number.isNaN(pushOffset)) { pushOffset = 0; }
+          if (pushOffset) {
+            $el.addClass('popup-push');
+            popup.$htmlEl.addClass('with-modal-popup-push');
+            popup.$htmlEl[0].style.setProperty('--f7-popup-push-scale', pushViewScale(pushOffset));
+          }
+        }
+      });
+      popup.on('opened', function () {
+        $el.removeClass('swipe-close-to-bottom swipe-close-to-top');
+        if (popup.params.closeByBackdropClick) {
+          app.on('click', handleClick);
+        }
+      });
+      popup.on('close', function () {
+        if (popup.params.closeOnEscape) {
+          $(document).off('keydown', onKeyDown);
+        }
+        if (popup.params.closeByBackdropClick) {
+          app.off('click', handleClick);
+        }
+        if (isPush && pushOffset) {
+          popup.$htmlEl.removeClass('with-modal-popup-push');
+          popup.$htmlEl.addClass('with-modal-popup-push-closing');
+        }
+      });
+      popup.on('closed', function () {
+        if (isPush && pushOffset) {
+          popup.$htmlEl.removeClass('with-modal-popup-push-closing');
+          popup.$htmlEl[0].style.removeProperty('--f7-popup-push-scale');
+        }
+      });
+
       $el[0].f7Modal = popup;
 
       return popup;
@@ -13981,6 +14048,7 @@
         closeOnEscape: false,
         swipeToClose: false,
         swipeHandler: null,
+        push: false,
       },
     },
     static: {
@@ -14788,11 +14856,13 @@
 
       Utils.extend(sheet, {
         app: app,
+        push: $el.hasClass('sheet-modal-push') || sheet.params.push,
         $el: $el,
         el: $el[0],
         $backdropEl: $backdropEl,
         backdropEl: $backdropEl && $backdropEl[0],
         type: 'sheet',
+        $htmlEl: $('html'),
       });
 
       var $pageContentEl;
@@ -14859,6 +14929,12 @@
         }
       }
 
+      var pushOffset;
+
+      function pushViewScale(offset) {
+        return (app.height - offset * 2) / app.height;
+      }
+
 
       var isTouched = false;
       var startTouch;
@@ -14874,6 +14950,12 @@
       var sheetElOffsetHeight;
       var minTranslate;
       var maxTranslate;
+      var $pushViewEl;
+      var pushBorderRadius;
+      var sheetPageContentEl;
+      var sheetPageContentScrollTop;
+      var sheetPageContentScrollHeight;
+      var sheetPageContentOffsetHeight;
 
       function handleTouchStart(e) {
         if (isTouched || !(sheet.params.swipeToClose || sheet.params.swipeToStep)) { return; }
@@ -14889,6 +14971,9 @@
         touchStartTime = Utils.now();
         isScrolling = undefined;
         isTopSheetModal = $el.hasClass('sheet-modal-top');
+        if (!sheet.params.swipeHandler && e.type === 'touchstart') {
+          sheetPageContentEl = $(e.target).closest('.page-content')[0];
+        }
       }
       function handleTouchMove(e) {
         if (!isTouched) { return; }
@@ -14907,7 +14992,29 @@
         }
 
         touchesDiff = startTouch.y - currentTouch.y;
+
+        var direction = touchesDiff < 0 ? 'to-bottom' : 'to-top';
+
+
         if (!isMoved) {
+          if (sheetPageContentEl && !$el.hasClass('modal-in-swipe-step')) {
+            sheetPageContentScrollTop = sheetPageContentEl.scrollTop;
+            sheetPageContentScrollHeight = sheetPageContentEl.scrollHeight;
+            sheetPageContentOffsetHeight = sheetPageContentEl.offsetHeight;
+            if (
+              !(sheetPageContentScrollHeight === sheetPageContentOffsetHeight)
+              && !(direction === 'to-bottom' && sheetPageContentScrollTop === 0)
+              && !(direction === 'to-top' && sheetPageContentScrollTop === (sheetPageContentScrollHeight - sheetPageContentOffsetHeight))
+            ) {
+              $el.transform('');
+              isTouched = false;
+              isMoved = false;
+              return;
+            }
+          }
+          if (sheet.push && pushOffset) {
+            $pushViewEl = app.root.children('.view, .views');
+          }
           sheetElOffsetHeight = $el[0].offsetHeight;
           startTranslate = Utils.getTranslate($el[0], 'y');
           if (isTopSheetModal) {
@@ -14922,19 +15029,37 @@
         currentTranslate = startTranslate - touchesDiff;
         currentTranslate = Math.min(Math.max(currentTranslate, minTranslate), maxTranslate);
         e.preventDefault();
+        if (sheet.push && pushOffset) {
+          var progress = (currentTranslate - startTranslate) / sheetElOffsetHeight;
+          if (sheet.params.swipeToStep) {
+            if (isTopSheetModal) {
+              progress = (currentTranslate / swipeStepTranslate);
+            } else {
+              progress = 1 - (swipeStepTranslate - currentTranslate) / swipeStepTranslate;
+            }
+          }
+          progress = Math.abs(progress);
+          progress = Math.min(Math.max(progress, 0), 1);
+          var pushProgress = 1 - progress;
+          var scale = 1 - (1 - pushViewScale(pushOffset)) * pushProgress;
+          $pushViewEl.transition(0).transform(("translate3d(0,0,0) scale(" + scale + ")"));
+          if (sheet.params.swipeToStep) {
+            $pushViewEl.css('border-radius', ((pushBorderRadius * pushProgress) + "px"));
+          }
+        }
         $el
           .transition(0)
           .transform(("translate3d(0," + currentTranslate + "px,0)"));
         if (sheet.params.swipeToStep) {
-          var progress;
+          var progress$1;
           if (isTopSheetModal) {
-            progress = 1 - (currentTranslate / swipeStepTranslate);
+            progress$1 = 1 - (currentTranslate / swipeStepTranslate);
           } else {
-            progress = (swipeStepTranslate - currentTranslate) / swipeStepTranslate;
+            progress$1 = (swipeStepTranslate - currentTranslate) / swipeStepTranslate;
           }
-          progress = Math.min(Math.max(progress, 0), 1);
-          $el.trigger('sheet:stepprogress', progress);
-          sheet.emit('local::stepProgress sheetStepProgress', sheet, progress);
+          progress$1 = Math.min(Math.max(progress$1, 0), 1);
+          $el.trigger('sheet:stepprogress', progress$1);
+          sheet.emit('local::stepProgress sheetStepProgress', sheet, progress$1);
         }
       }
       function handleTouchEnd() {
@@ -14944,6 +15069,10 @@
         }
         isMoved = false;
         $el.transform('').transition('');
+        if (sheet.push && pushOffset) {
+          $pushViewEl.transition('').transform('');
+          $pushViewEl.css('border-radius', '');
+        }
 
         var direction = touchesDiff < 0 ? 'to-bottom' : 'to-top';
 
@@ -14975,6 +15104,10 @@
             sheet.emit('local::stepProgress sheetStepProgress', sheet, 1);
             $el.trigger('sheet:stepopen');
             sheet.emit('local::stepOpen sheetStepOpen', sheet);
+            if (sheet.push && pushOffset) {
+              sheet.$htmlEl[0].style.setProperty('--f7-sheet-push-scale', pushViewScale(pushOffset));
+              $pushViewEl.css('border-radius', '');
+            }
           }
           if (direction === closeDirection && absCurrentTranslate > absSwipeStepTranslate) {
             // close sheet
@@ -14987,6 +15120,10 @@
               sheet.emit('local::stepProgress sheetStepProgress', sheet, 0);
               $el.trigger('sheet:stepclose');
               sheet.emit('local::stepClose sheetStepClose', sheet);
+              if (sheet.push && pushOffset) {
+                sheet.$htmlEl[0].style.removeProperty('--f7-sheet-push-scale');
+                $pushViewEl.css('border-radius', '0px');
+              }
             }
           }
           if (direction === closeDirection && absCurrentTranslate <= absSwipeStepTranslate) {
@@ -14996,6 +15133,10 @@
             sheet.emit('local::stepProgress sheetStepProgress', sheet, 0);
             $el.trigger('sheet:stepclose');
             sheet.emit('local::stepClose sheetStepClose', sheet);
+            if (sheet.push && pushOffset) {
+              sheet.$htmlEl[0].style.removeProperty('--f7-sheet-push-scale');
+              $pushViewEl.css('border-radius', '0px');
+            }
           }
           return;
         }
@@ -15009,6 +15150,10 @@
               sheet.emit('local::stepProgress sheetStepProgress', sheet, 1);
               $el.trigger('sheet:stepopen');
               sheet.emit('local::stepOpen sheetStepOpen', sheet);
+              if (sheet.push && pushOffset) {
+                sheet.$htmlEl[0].style.setProperty('--f7-sheet-push-scale', pushViewScale(pushOffset));
+                $pushViewEl.css('border-radius', '');
+              }
             } else if ((absCurrentTranslate - absSwipeStepTranslate) > (sheetElOffsetHeight - absSwipeStepTranslate) / 2) {
               // close sheet
               if (sheet.params.swipeToClose) { sheet.close(); }
@@ -15024,6 +15169,10 @@
               sheet.emit('local::stepProgress sheetStepProgress', sheet, 0);
               $el.trigger('sheet:stepclose');
               sheet.emit('local::stepClose sheetStepClose', sheet);
+              if (sheet.push && pushOffset) {
+                sheet.$htmlEl[0].style.removeProperty('--f7-sheet-push-scale');
+                $pushViewEl.css('border-radius', '0px');
+              }
             }
           }
         }
@@ -15059,7 +15208,7 @@
         });
       }
 
-      sheet.on('sheetOpen', function () {
+      sheet.on('open', function () {
         if (sheet.params.closeOnEscape) {
           $(document).on('keydown', onKeyDown);
         }
@@ -15070,13 +15219,29 @@
         if (sheet.params.scrollToEl) {
           scrollToElementOnOpen();
         }
+
+        if (sheet.push) {
+          pushOffset = parseInt($el.css('--f7-sheet-push-offset'), 10);
+          if (Number.isNaN(pushOffset)) { pushOffset = 0; }
+          if (pushOffset) {
+            $el.addClass('sheet-modal-push');
+            sheet.$htmlEl.addClass('with-modal-sheet-push');
+            if (!sheet.params.swipeToStep) {
+              sheet.$htmlEl[0].style.setProperty('--f7-sheet-push-scale', pushViewScale(pushOffset));
+            } else {
+              $pushViewEl = app.root.children('.view, .views');
+              pushBorderRadius = parseFloat($el.css(("border-" + (isTopSheetModal ? 'bottom' : 'top') + "-left-radius")));
+              $pushViewEl.css('border-radius', '0px');
+            }
+          }
+        }
       });
-      sheet.on('sheetOpened', function () {
+      sheet.on('opened', function () {
         if (sheet.params.closeByOutsideClick || sheet.params.closeByBackdropClick) {
           app.on('click', handleClick);
         }
       });
-      sheet.on('sheetClose', function () {
+      sheet.on('close', function () {
         if (sheet.params.swipeToStep) {
           $el.removeClass('modal-in-swipe-step');
           app.off('resize', onResize);
@@ -15090,13 +15255,35 @@
         if (sheet.params.closeByOutsideClick || sheet.params.closeByBackdropClick) {
           app.off('click', handleClick);
         }
+        if (sheet.push && pushOffset) {
+          sheet.$htmlEl.removeClass('with-modal-sheet-push');
+          sheet.$htmlEl.addClass('with-modal-sheet-push-closing');
+        }
+      });
+      sheet.on('closed', function () {
+        if (sheet.push && pushOffset) {
+          sheet.$htmlEl.removeClass('with-modal-sheet-push-closing');
+          sheet.$htmlEl[0].style.removeProperty('--f7-sheet-push-scale');
+        }
       });
 
       sheet.stepOpen = function stepOpen() {
         $el.removeClass('modal-in-swipe-step');
+        if (sheet.push) {
+          if (!pushOffset) {
+            pushOffset = parseInt($el.css('--f7-sheet-push-offset'), 10);
+            if (Number.isNaN(pushOffset)) { pushOffset = 0; }
+          }
+          if (pushOffset) {
+            sheet.$htmlEl[0].style.setProperty('--f7-sheet-push-scale', pushViewScale(pushOffset));
+          }
+        }
       };
       sheet.stepClose = function stepClose() {
         $el.addClass('modal-in-swipe-step');
+        if (sheet.push) {
+          sheet.$htmlEl[0].style.removeProperty('--f7-sheet-push-scale');
+        }
       };
       sheet.stepToggle = function stepToggle() {
         $el.toggleClass('modal-in-swipe-step');
@@ -15118,6 +15305,7 @@
     name: 'sheet',
     params: {
       sheet: {
+        push: false,
         backdrop: undefined,
         backdropEl: undefined,
         closeByBackdropClick: true,
@@ -17751,11 +17939,14 @@
 
   function swipePanel(panel) {
     var app = panel.app;
+    if (panel.swipeInitialized) {
+      return;
+    }
     Utils.extend(panel, {
       swipeable: true,
       swipeInitialized: true,
     });
-    var params = app.params.panel;
+    var params = panel.params;
     var $el = panel.$el;
     var $backdropEl = panel.$backdropEl;
     var side = panel.side;
@@ -17780,10 +17971,13 @@
       if (!panel.swipeable) { return; }
       if (!app.panel.allowOpen || (!params.swipe && !params.swipeOnlyClose) || isTouched) { return; }
       if ($('.modal-in:not(.toast):not(.notification), .photo-browser-in').length > 0) { return; }
-      otherPanel = app.panel[side === 'left' ? 'right' : 'left'] || {};
-      if (!panel.opened && otherPanel.opened) { return; }
-      if (!(params.swipeCloseOpposite || params.swipeOnlyClose)) {
-        if (otherPanel.opened) { return; }
+      otherPanel = app.panel.get(side === 'left' ? 'right' : 'left') || {};
+      var otherPanelOpened = otherPanel.opened && otherPanel.$el && !otherPanel.$el.hasClass('panel-in-breakpoint');
+      if (!panel.opened && otherPanelOpened) {
+        return;
+      }
+      if (!params.swipeOnlyClose) {
+        if (otherPanelOpened) { return; }
       }
       if (e.target && e.target.nodeName.toLowerCase() === 'input' && e.target.type === 'range') { return; }
       if ($(e.target).closest('.range-slider, .tabs-swipeable-wrap, .calendar-months, .no-swipe-panel, .card-opened').length > 0) { return; }
@@ -17792,23 +17986,12 @@
       if (params.swipeOnlyClose && !panel.opened) {
         return;
       }
-      if (params.swipe !== 'both' && params.swipeCloseOpposite && params.swipe !== side && !panel.opened) {
-        return;
-      }
       if (params.swipeActiveArea && !panel.opened) {
         if (side === 'left') {
           if (touchesStart.x > params.swipeActiveArea) { return; }
         }
         if (side === 'right') {
           if (touchesStart.x < app.width - params.swipeActiveArea) { return; }
-        }
-      }
-      if (params.swipeCloseActiveAreaSide && panel.opened) {
-        if (side === 'left') {
-          if (touchesStart.x < ($el[0].offsetWidth - params.swipeCloseActiveAreaSide)) { return; }
-        }
-        if (side === 'right') {
-          if (touchesStart.x > ((app.width - $el[0].offsetWidth) + params.swipeCloseActiveAreaSide)) { return; }
         }
       }
       touchMoves = 0;
@@ -17844,19 +18027,17 @@
           direction = 'to-left';
         }
 
-        if (params.swipe === 'both') {
-          if (params.swipeActiveArea > 0 && !panel.opened) {
-            if (side === 'left' && touchesStart.x > params.swipeActiveArea) {
-              isTouched = false;
-              return;
-            }
-            if (side === 'right' && touchesStart.x < app.width - params.swipeActiveArea) {
-              isTouched = false;
-              return;
-            }
+        if (params.swipeActiveArea > 0 && !panel.opened) {
+          if (side === 'left' && touchesStart.x > params.swipeActiveArea) {
+            isTouched = false;
+            return;
+          }
+          if (side === 'right' && touchesStart.x < app.width - params.swipeActiveArea) {
+            isTouched = false;
+            return;
           }
         }
-        if ($el.hasClass('panel-visible-by-breakpoint')) {
+        if ($el.hasClass('panel-in-breakpoint')) {
           isTouched = false;
           return;
         }
@@ -17864,12 +18045,12 @@
         if (
           (side === 'left'
             && (
-              direction === 'to-left' && !$el.hasClass('panel-active')
+              direction === 'to-left' && !$el.hasClass('panel-in')
             )
           )
           || (side === 'right'
             && (
-              direction === 'to-right' && !$el.hasClass('panel-active')
+              direction === 'to-right' && !$el.hasClass('panel-in')
             )
           )
         ) {
@@ -17881,48 +18062,17 @@
       var threshold = panel.opened ? 0 : -params.swipeThreshold;
       if (side === 'right') { threshold = -threshold; }
 
-      if (params.swipeNoFollow) {
-        var touchesDiffNoFollow = (pageX - touchesStart.x);
-        var timeDiff = (new Date()).getTime() - touchStartTime;
-        var needToSwitch;
-        if (!panel.opened && (
-          (side === 'left' && touchesDiffNoFollow > -threshold)
-          || (side === 'right' && -touchesDiffNoFollow > threshold)
-        )) {
-          needToSwitch = true;
-        }
-        if (panel.opened && (
-          (side === 'left' && touchesDiffNoFollow < 0)
-          || (side === 'right' && touchesDiffNoFollow > 0)
-        )) {
-          needToSwitch = true;
-        }
-
-        if (needToSwitch) {
-          if (timeDiff < 300) {
-            if (direction === 'to-left') {
-              if (side === 'right') { app.panel.open(side); }
-              if (side === 'left' && $el.hasClass('panel-active')) { app.panel.close(); }
-            }
-            if (direction === 'to-right') {
-              if (side === 'left') { app.panel.open(side); }
-              if (side === 'right' && $el.hasClass('panel-active')) { app.panel.close(); }
-            }
-          }
-          isTouched = false;
-          isMoved = false;
-        }
-        return;
-      }
-
       if (!isMoved) {
         if (!panel.opened) {
-          $el.css('display', 'block');
-          $backdropEl.css('display', 'block');
+          $el.addClass('panel-in-swipe');
+          $backdropEl.css('visibility', 'visible');
           $el.trigger('panel:swipeopen', panel);
           panel.emit('local::swipeOpen panelSwipeOpen', panel);
         }
         panelWidth = $el[0].offsetWidth;
+        if (effect === 'reveal' && $el.hasClass('panel-in-collapsed')) {
+          panelWidth -= parseFloat($viewEl.css(("margin-" + side)));
+        }
         $el.transition(0);
       }
 
@@ -18036,17 +18186,20 @@
           panel.open(!edge);
         }
       }
+      var removePanelInClass = true;
       if (action === 'reset') {
         if (!panel.opened) {
           if (edge) {
-            $el.css({ display: '' });
+            // edge position
+            $el.removeClass('panel-in-swipe');
           } else {
+            removePanelInClass = false;
             var target = effect === 'reveal' ? $viewEl : $el;
-            $('html').addClass('with-panel-transitioning');
+            $('html').addClass('with-panel-closing');
             target.transitionEnd(function () {
-              if ($el.hasClass('panel-active')) { return; }
-              $el.css({ display: '' });
-              $('html').removeClass('with-panel-transitioning');
+              if ($el.hasClass('panel-in')) { return; }
+              $el.removeClass('panel-in-swipe');
+              $('html').removeClass('with-panel-closing');
             });
           }
         }
@@ -18057,8 +18210,11 @@
           $viewEl.transform('');
         });
       }
+      if (removePanelInClass) {
+        $el.removeClass('panel-in-swipe');
+      }
       $el.transition('').transform('');
-      $backdropEl.css({ display: '' }).transform('').transition('').css('opacity', '');
+      $backdropEl.transform('').transition('').css({ opacity: '', visibility: '' });
     }
 
     // Add Events
@@ -18074,6 +18230,7 @@
 
   function resizablePanel(panel) {
     var app = panel.app;
+    if (panel.resizableInitialized) { return; }
     Utils.extend(panel, {
       resizable: true,
       resizableWidth: null,
@@ -18120,7 +18277,7 @@
       isTouched = true;
       panelMinWidth = transformCSSWidth($el.css('min-width'));
       panelMaxWidth = transformCSSWidth($el.css('max-width'));
-      visibleByBreakpoint = $el.hasClass('panel-visible-by-breakpoint');
+      visibleByBreakpoint = $el.hasClass('panel-in-breakpoint');
     }
     function handleTouchMove(e) {
       if (!isTouched) { return; }
@@ -18245,51 +18402,58 @@
     function Panel(app, params) {
       if ( params === void 0 ) params = {};
 
-      Framework7Class.call(this, params, [app]);
+      var extendedParams = Utils.extend(
+        { on: {} },
+        app.params.panel,
+        params
+      );
+      Framework7Class.call(this, extendedParams, [app]);
+
       var panel = this;
 
-      var el = params.el;
+      panel.params = extendedParams;
 
-      if (!el && params.content) {
-        el = params.content;
+      var $el;
+      if (panel.params.el) {
+        $el = $(panel.params.el).eq(0);
+      } else if (panel.params.content) {
+        $el = $(panel.params.content).filter(function (elIndex, node) { return node.nodeType === 1; }).eq(0);
       }
 
-      var $el = $(el);
       if ($el.length === 0) { return panel; }
       if ($el[0].f7Panel) { return $el[0].f7Panel; }
 
       $el[0].f7Panel = panel;
 
-      var opened = params.opened;
-      var side = params.side;
-      var effect = params.effect;
-      if (typeof opened === 'undefined') { opened = $el.hasClass('panel-active'); }
+      var ref = panel.params;
+      var side = ref.side;
+      var effect = ref.effect;
+      var resizable = ref.resizable;
       if (typeof side === 'undefined') { side = $el.hasClass('panel-left') ? 'left' : 'right'; }
       if (typeof effect === 'undefined') { effect = $el.hasClass('panel-cover') ? 'cover' : 'reveal'; }
+      if (typeof resizable === 'undefined') { resizable = $el.hasClass('panel-resizable'); }
 
-      if (!app.panel[side]) {
-        app.panel[side] = panel;
-      } else {
-        throw new Error(("Framework7: Can't create panel; app already has a " + side + " panel!"));
-      }
-
-      var $backdropEl = $('.panel-backdrop');
-
-      if ($backdropEl.length === 0) {
-        $backdropEl = $('<div class="panel-backdrop"></div>');
-        $backdropEl.insertBefore($el);
+      var $backdropEl;
+      if (panel.params.backdrop && panel.params.backdropEl) {
+        $backdropEl = $(panel.params.backdropEl);
+      } else if (panel.params.backdrop) {
+        $backdropEl = app.root.children('.panel-backdrop');
+        if ($backdropEl.length === 0) {
+          $backdropEl = $('<div class="panel-backdrop"></div>');
+          app.root.prepend($backdropEl);
+        }
       }
 
       Utils.extend(panel, {
         app: app,
         side: side,
         effect: effect,
+        resizable: resizable,
         $el: $el,
         el: $el[0],
-        opened: opened,
+        opened: false,
         $backdropEl: $backdropEl,
-        backdropEl: $backdropEl[0],
-        params: params,
+        backdropEl: $backdropEl && $backdropEl[0],
       });
 
       // Install Modules
@@ -18317,23 +18481,52 @@
       return viewEl;
     };
 
-    Panel.prototype.setBreakpoint = function setBreakpoint (emitEvents) {
+    Panel.prototype.enableVisibleBreakpoint = function enableVisibleBreakpoint () {
+      var panel = this;
+      panel.visibleBreakpointDisabled = false;
+      panel.setVisibleBreakpoint();
+      return panel;
+    };
+
+    Panel.prototype.disableVisibleBreakpoint = function disableVisibleBreakpoint () {
+      var panel = this;
+      panel.visibleBreakpointDisabled = true;
+      panel.setVisibleBreakpoint();
+      return panel;
+    };
+
+    Panel.prototype.toggleVisibleBreakpoint = function toggleVisibleBreakpoint () {
+      var panel = this;
+      panel.visibleBreakpointDisabled = !panel.visibleBreakpointDisabled;
+      panel.setVisibleBreakpoint();
+      return panel;
+    };
+
+    Panel.prototype.setVisibleBreakpoint = function setVisibleBreakpoint (emitEvents) {
       var obj, obj$1, obj$2;
 
       if ( emitEvents === void 0 ) emitEvents = true;
       var panel = this;
       var app = panel.app;
+      if (!panel.visibleBreakpointResizeHandler) {
+        panel.visibleBreakpointResizeHandler = function visibleBreakpointResizeHandler() {
+          panel.setVisibleBreakpoint();
+        };
+        app.on('resize', panel.visibleBreakpointResizeHandler);
+      }
       var side = panel.side;
       var $el = panel.$el;
+      var params = panel.params;
+      var visibleBreakpointDisabled = panel.visibleBreakpointDisabled;
+      var breakpoint = params.visibleBreakpoint;
       var $viewEl = $(panel.getViewEl());
-      var breakpoint = app.params.panel[(side + "Breakpoint")];
-      var wasVisible = $el.hasClass('panel-visible-by-breakpoint');
+      var wasVisible = $el.hasClass('panel-in-breakpoint');
 
-      if (app.width >= breakpoint) {
+      if (app.width >= breakpoint && typeof breakpoint !== 'undefined' && breakpoint !== null && !visibleBreakpointDisabled) {
         if (!wasVisible) {
           $('html').removeClass(("with-panel-" + side + "-reveal with-panel-" + side + "-cover with-panel"));
-          $el.css('display', '').addClass('panel-visible-by-breakpoint').removeClass('panel-active');
-          panel.onOpen();
+          $el.addClass('panel-in-breakpoint').removeClass('panel-in panel-in-collapsed');
+          panel.onOpen(false);
           panel.onOpened();
           $viewEl.css(( obj = {}, obj[("margin-" + side)] = (($el.width()) + "px"), obj ));
           app.allowPanelOpen = true;
@@ -18345,7 +18538,7 @@
           $viewEl.css(( obj$1 = {}, obj$1[("margin-" + side)] = (($el.width()) + "px"), obj$1 ));
         }
       } else if (wasVisible) {
-        $el.css('display', '').removeClass('panel-visible-by-breakpoint panel-active');
+        $el.removeClass('panel-in-breakpoint panel-in');
         panel.onClose();
         panel.onClosed();
         $viewEl.css(( obj$2 = {}, obj$2[("margin-" + side)] = '', obj$2 ));
@@ -18356,43 +18549,117 @@
       }
     };
 
-    Panel.prototype.initBreakpoints = function initBreakpoints () {
+    Panel.prototype.enableCollapsedBreakpoint = function enableCollapsedBreakpoint () {
       var panel = this;
-      var app = panel.app;
-      panel.resizeHandler = function resizeHandler() {
-        panel.setBreakpoint();
-      };
-      if (app.params.panel[((panel.side) + "Breakpoint")]) {
-        app.on('resize', panel.resizeHandler);
-      }
-      panel.setBreakpoint();
+      panel.collapsedBreakpointDisabled = false;
+      panel.setCollapsedBreakpoint();
       return panel;
     };
 
-    Panel.prototype.initSwipePanel = function initSwipePanel () {
-      {
-        swipePanel(this);
+    Panel.prototype.disableCollapsedBreakpoint = function disableCollapsedBreakpoint () {
+      var panel = this;
+      panel.collapsedBreakpointDisabled = true;
+      panel.setCollapsedBreakpoint();
+      return panel;
+    };
+
+    Panel.prototype.toggleCollapsedBreakpoint = function toggleCollapsedBreakpoint () {
+      var panel = this;
+      panel.collapsedBreakpointDisabled = !panel.collapsedBreakpointDisabled;
+      panel.setCollapsedBreakpoint();
+      return panel;
+    };
+
+    Panel.prototype.setCollapsedBreakpoint = function setCollapsedBreakpoint (emitEvents) {
+      var panel = this;
+      var app = panel.app;
+      if (!panel.collapsedBreakpointResizeHandler) {
+        panel.collapsedBreakpointResizeHandler = function collapsedBreakpointResizeHandler() {
+          panel.setCollapsedBreakpoint();
+        };
+        app.on('resize', panel.collapsedBreakpointResizeHandler);
+      }
+      var side = panel.side;
+      var $el = panel.$el;
+      var params = panel.params;
+      var collapsedBreakpointDisabled = panel.collapsedBreakpointDisabled;
+      if ($el.hasClass('panel-in-breakpoint')) { return; }
+      var breakpoint = params.collapsedBreakpoint;
+      var wasVisible = $el.hasClass('panel-in-collapsed');
+
+      if (app.width >= breakpoint && typeof breakpoint !== 'undefined' && breakpoint !== null && !collapsedBreakpointDisabled) {
+        if (!wasVisible) {
+          $('html').removeClass(("with-panel-" + side + "-reveal with-panel-" + side + "-cover with-panel"));
+          $el.addClass('panel-in-collapsed').removeClass('panel-in');
+          panel.collapsed = true;
+          app.allowPanelOpen = true;
+          if (emitEvents) {
+            app.emit('local::collapsedBreakpoint panelCollapsedBreakpoint');
+            panel.$el.trigger('panel:collapsedbreakpoint', panel);
+          }
+        }
+      } else if (wasVisible) {
+        $el.removeClass('panel-in-collapsed panel-in');
+        panel.collapsed = false;
+        if (emitEvents) {
+          app.emit('local::collapsedBreakpoint panelCollapsedBreakpoint');
+          panel.$el.trigger('panel:collapsedbreakpoint', panel);
+        }
       }
     };
 
-    Panel.prototype.initResizablePanel = function initResizablePanel () {
-      resizablePanel(this);
+    Panel.prototype.enableResizable = function enableResizable () {
+      var panel = this;
+      if (panel.resizableInitialized) {
+        panel.resizable = true;
+        panel.$el.addClass('panel-resizable');
+      } else {
+        resizablePanel(panel);
+      }
+      return panel;
     };
 
-    Panel.prototype.toggle = function toggle (animate) {
-      if ( animate === void 0 ) animate = true;
-
+    Panel.prototype.disableResizable = function disableResizable () {
       var panel = this;
-      if (panel.opened) { panel.close(animate); }
-      else { panel.open(animate); }
+      panel.resizable = false;
+      panel.$el.removeClass('panel-resizable');
+      return panel;
     };
 
-    Panel.prototype.onOpen = function onOpen () {
+    Panel.prototype.enableSwipe = function enableSwipe () {
       var panel = this;
+      if (panel.swipeInitialized) {
+        panel.swipeable = true;
+      } else {
+        // eslint-disable-next-line
+        {
+          swipePanel(panel);
+        }
+      }
+      return panel;
+    };
+
+    Panel.prototype.disableSwipe = function disableSwipe () {
+      var panel = this;
+      panel.swipeable = false;
+      return panel;
+    };
+
+    Panel.prototype.onOpen = function onOpen (modifyHtmlClasses) {
+      if ( modifyHtmlClasses === void 0 ) modifyHtmlClasses = true;
+
+      var panel = this;
+      var app = panel.app;
+
       panel.opened = true;
+      app.panel.allowOpen = false;
 
       panel.$el.trigger('panel:beforeopen', panel);
       panel.emit('local::beforeOpen panelBeforeOpen', panel);
+
+      if (modifyHtmlClasses) {
+        $('html').addClass(("with-panel with-panel-" + (panel.side) + "-" + (panel.effect)));
+      }
 
       panel.$el.trigger('panel:open', panel);
       panel.emit('local::open panelOpen', panel);
@@ -18401,6 +18668,7 @@
     Panel.prototype.onOpened = function onOpened () {
       var panel = this;
       var app = panel.app;
+
       app.panel.allowOpen = true;
 
       panel.$el.trigger('panel:opened', panel);
@@ -18409,11 +18677,16 @@
 
     Panel.prototype.onClose = function onClose () {
       var panel = this;
+      var app = panel.app;
+
       panel.opened = false;
-      panel.$el.addClass('panel-closing');
+      app.panel.allowOpen = false;
 
       panel.$el.trigger('panel:beforeclose', panel);
       panel.emit('local::beforeClose panelBeforeClose', panel);
+
+      $('html').addClass('with-panel-closing');
+      $('html').removeClass(("with-panel with-panel-" + (panel.side) + "-" + (panel.effect)));
 
       panel.$el.trigger('panel:close', panel);
       panel.emit('local::close panelClose', panel);
@@ -18423,9 +18696,24 @@
       var panel = this;
       var app = panel.app;
       app.panel.allowOpen = true;
-      panel.$el.removeClass('panel-closing');
+      $('html').removeClass('with-panel-closing');
+      panel.$el.removeClass('panel-out');
       panel.$el.trigger('panel:closed', panel);
       panel.emit('local::closed panelClosed', panel);
+    };
+
+    Panel.prototype.toggle = function toggle (animate) {
+      if ( animate === void 0 ) animate = true;
+
+      var panel = this;
+      var breakpoint = panel.params.visibleBreakpoint;
+      var app = panel.app;
+      if (app.width >= breakpoint && typeof breakpoint !== 'undefined' && breakpoint !== null) {
+        return panel.toggleVisibleBreakpoint();
+      }
+      if (panel.opened) { panel.close(animate); }
+      else { panel.open(animate); }
+      return panel;
     };
 
     Panel.prototype.open = function open (animate) {
@@ -18433,25 +18721,29 @@
 
       var panel = this;
       var app = panel.app;
+
       if (!app.panel.allowOpen) { return false; }
 
-      var side = panel.side;
       var effect = panel.effect;
       var $el = panel.$el;
       var $backdropEl = panel.$backdropEl;
       var opened = panel.opened;
+
+      if (!$el || $el.hasClass('panel-in')) {
+        return panel;
+      }
 
       var $panelParentEl = $el.parent();
       var wasInDom = $el.parents(document).length > 0;
 
       if (!$panelParentEl.is(app.root) || $el.prevAll('.views, .view').length) {
         var $insertBeforeEl = app.root.children('.panel, .views, .view').eq(0);
-        var $insertAfterEl = app.root.children('.statusbar').eq(0);
+        var $insertAfterEl = app.root.children('.panel-backdrop').eq(0);
 
         if ($insertBeforeEl.length) {
           $el.insertBefore($insertBeforeEl);
-        } else if ($insertAfterEl.length) {
-          $el.insertAfter($insertBeforeEl);
+        } else if ($insertAfterEl) {
+          $el.insertBefore($insertAfterEl);
         } else {
           app.root.prepend($el);
         }
@@ -18482,52 +18774,54 @@
       }
 
       // Ignore if opened
-      if (opened || $el.hasClass('panel-visible-by-breakpoint') || $el.hasClass('panel-active')) { return false; }
+      if (opened || $el.hasClass('panel-in-breakpoint') || $el.hasClass('panel-in')) { return false; }
 
       // Close if some panel is opened
-      app.panel.close(side === 'left' ? 'right' : 'left', animate);
-
-      app.panel.allowOpen = false;
+      var otherOpenedPanel = app.panel.get('.panel-in');
+      if (otherOpenedPanel && otherOpenedPanel !== panel) {
+        otherOpenedPanel.close(animate);
+      }
 
       $el[animate ? 'removeClass' : 'addClass']('not-animated');
-      $el
-        .css({ display: 'block' })
-        .addClass('panel-active');
+      $el.addClass('panel-in');
 
       $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
-      $backdropEl.css({ display: 'block' });
 
-      /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
-      // panel._clientLeft = $el[0].clientLeft;
+      if (panel.effect === 'cover') {
+        /* eslint no-underscore-dangle: ["error", { "allow": ["_clientLeft"] }] */
+        panel._clientLeft = $el[0].clientLeft;
+      }
 
-      // Transition End;
+      // Transitionend
       var transitionEndTarget = effect === 'reveal' ? $el.nextAll('.view, .views').eq(0) : $el;
 
       function panelTransitionEnd() {
         transitionEndTarget.transitionEnd(function (e) {
           if ($(e.target).is(transitionEndTarget)) {
-            if ($el.hasClass('panel-active')) {
-              panel.onOpened();
-              $backdropEl.css({ display: '' });
-            } else {
+            if ($el.hasClass('panel-out')) {
               panel.onClosed();
-              $backdropEl.css({ display: '' });
+            } else {
+              panel.onOpened();
             }
           } else { panelTransitionEnd(); }
         });
       }
-
       if (animate) {
-        Utils.nextFrame(function () {
-          $('html').addClass(("with-panel with-panel-" + side + "-" + effect));
-          panel.onOpen();
-          panelTransitionEnd();
-        });
+        if ($backdropEl) {
+          $backdropEl.removeClass('not-animated');
+        }
+        panelTransitionEnd();
+        $el
+          .removeClass('panel-out not-animated')
+          .addClass('panel-in');
+        panel.onOpen();
       } else {
-        $('html').addClass(("with-panel with-panel-" + side + "-" + effect));
+        if ($backdropEl) {
+          $backdropEl.addClass('not-animated');
+        }
+        $el.removeClass('panel-out').addClass('panel-in not-animated');
         panel.onOpen();
         panel.onOpened();
-        $backdropEl.css({ display: '' });
       }
 
       return true;
@@ -18537,61 +18831,63 @@
       if ( animate === void 0 ) animate = true;
 
       var panel = this;
-      var app = panel.app;
 
-      var side = panel.side;
       var effect = panel.effect;
       var $el = panel.$el;
       var $backdropEl = panel.$backdropEl;
       var opened = panel.opened;
-      if (!opened || $el.hasClass('panel-visible-by-breakpoint') || !$el.hasClass('panel-active')) { return false; }
+      if (!opened || $el.hasClass('panel-in-breakpoint') || !$el.hasClass('panel-in')) { return panel; }
 
       $el[animate ? 'removeClass' : 'addClass']('not-animated');
-      $el.removeClass('panel-active');
-
       $backdropEl[animate ? 'removeClass' : 'addClass']('not-animated');
 
       var transitionEndTarget = effect === 'reveal' ? $el.nextAll('.view, .views').eq(0) : $el;
 
-      panel.onClose();
-      app.panel.allowOpen = false;
-
-      if (animate) {
-        transitionEndTarget.transitionEnd(function () {
-          if ($el.hasClass('panel-active')) { return; }
-          $el.css({ display: '' });
-          $('html').removeClass('with-panel-transitioning');
+      function transitionEnd() {
+        if ($el.hasClass('panel-out')) {
           panel.onClosed();
-        });
-        $('html')
-          .removeClass(("with-panel with-panel-" + side + "-" + effect))
-          .addClass('with-panel-transitioning');
+        } else if ($el.hasClass('panel-in')) {
+          panel.onOpened();
+        }
+        $('html').removeClass('with-panel-closing');
+      }
+      if (animate) {
+        transitionEndTarget
+          .transitionEnd(function () {
+            transitionEnd();
+          });
+        $el
+          .removeClass('panel-in')
+          .addClass('panel-out');
+        // Emit close
+        panel.onClose();
       } else {
-        $el.css({ display: '' });
-        $el.removeClass('not-animated');
-        $('html').removeClass(("with-panel with-panel-transitioning with-panel-" + side + "-" + effect));
+        $el
+          .addClass('not-animated')
+          .removeClass('panel-in')
+          .addClass('panel-out');
+        // Emit close
+        panel.onClose();
         panel.onClosed();
       }
-      return true;
+
+      return panel;
     };
 
     Panel.prototype.init = function init () {
       var panel = this;
-      var app = panel.app;
-      if (app.params.panel[((panel.side) + "Breakpoint")]) {
-        panel.initBreakpoints();
+      // const app = panel.app;
+      if (typeof panel.params.visibleBreakpoint !== 'undefined') {
+        panel.setVisibleBreakpoint();
       }
-      {
-        if (
-          (app.params.panel.swipe === panel.side)
-          || (app.params.panel.swipe === 'both')
-          || (app.params.panel.swipe && app.params.panel.swipe !== panel.side && app.params.panel.swipeCloseOpposite)
-        ) {
-          panel.initSwipePanel();
-        }
+      if (typeof panel.params.collapsedBreakpoint !== 'undefined') {
+        panel.setCollapsedBreakpoint();
       }
-      if (panel.params.resizable || panel.$el.hasClass('panel-resizable')) {
-        panel.initResizablePanel();
+      if (panel.params.swipe) {
+        panel.enableSwipe();
+      }
+      if (panel.resizable) {
+        panel.enableResizable();
       }
     };
 
@@ -18609,13 +18905,15 @@
       panel.emit('local::beforeDestroy panelBeforeDestroy', panel);
       panel.$el.trigger('panel:beforedestroy', panel);
 
-      if (panel.resizeHandler) {
-        app.off('resize', panel.resizeHandler);
+      if (panel.visibleBreakpointResizeHandler) {
+        app.off('resize', panel.visibleBreakpointResizeHandler);
       }
-
-      if (panel.$el.hasClass('panel-visible-by-breakpoint')) {
+      if (panel.collapsedBreakpointResizeHandler) {
+        app.off('resize', panel.collapsedBreakpointResizeHandler);
+      }
+      if (panel.$el.hasClass('panel-in-breakpoint') || panel.$el.hasClass('panel-in-collapsed')) {
         var $viewEl = $(panel.getViewEl());
-        panel.$el.css('display', '').removeClass('panel-visible-by-breakpoint panel-active');
+        panel.$el.removeClass('panel-in-breakpoint panel-in-collapsed panel-in');
         $viewEl.css(( obj = {}, obj[("margin-" + (panel.side))] = '', obj ));
         app.emit('local::breakpoint panelBreakpoint');
         panel.$el.trigger('panel:breakpoint', panel);
@@ -18623,7 +18921,6 @@
 
       panel.$el.trigger('panel:destroy', panel);
       panel.emit('local::destroy panelDestroy');
-      delete app.panel[panel.side];
       if (panel.el) {
         panel.el.f7Panel = null;
         delete panel.el.f7Panel;
@@ -18640,14 +18937,17 @@
     name: 'panel',
     params: {
       panel: {
-        leftBreakpoint: 0,
-        rightBreakpoint: 0,
-        swipe: undefined, // or 'left' or 'right' or 'both'
-        swipeActiveArea: 0,
-        swipeCloseActiveAreaSide: 0,
-        swipeCloseOpposite: true,
+        opened: undefined, // default based on panel-in class
+        side: undefined, // default based on panel class
+        effect: undefined, // default based on panel class
+        resizable: undefined, // default based on panel-resizable class
+        backdrop: true,
+        backdropEl: undefined,
+        visibleBreakpoint: undefined,
+        collapsedBreakpoint: undefined,
+        swipe: false, // or true
         swipeOnlyClose: false,
-        swipeNoFollow: false,
+        swipeActiveArea: 0,
         swipeThreshold: 0,
         closeByBackdropClick: true,
       },
@@ -18663,184 +18963,58 @@
     create: function create() {
       var app = this;
       Utils.extend(app.panel, {
-        disableResizable: function disableResizable(panel) {
-          if ( panel === void 0 ) panel = 'both';
-
-          var side;
-          var panels = [];
-          if (typeof panel === 'string') {
-            if (panel === 'both') {
-              side = 'both';
-              panels = [app.panel.left, app.panel.right];
-            } else {
-              side = panel;
-              panels.push(app.panel[side]);
-            }
-          } else {
-            panels = [panel];
-          }
-          panels.forEach(function (panelInstance) {
-            panelInstance.resizable = false;
-            panelInstance.$el.removeClass('panel-resizable');
-          });
-        },
-        enableResizable: function enableResizable(panel) {
-          if ( panel === void 0 ) panel = 'both';
-
-          var side;
-          var panels = [];
-          if (typeof panel === 'string') {
-            if (panel === 'both') {
-              side = 'both';
-              panels = [app.panel.left, app.panel.right];
-            } else {
-              side = panel;
-              panels.push(app.panel[side]);
-            }
-          } else {
-            panels = [panel];
-          }
-          panels.forEach(function (panelInstance) {
-            if (!panelInstance) { return; }
-            if (!panelInstance.resizableInitialized) {
-              panelInstance.initResizablePanel();
-            } else {
-              panelInstance.resizable = true;
-              panelInstance.$el.addClass('panel-resizable');
-            }
-          });
-        },
-        disableSwipe: function disableSwipe(panel) {
-          if ( panel === void 0 ) panel = 'both';
-
-          var side;
-          var panels = [];
-          if (typeof panel === 'string') {
-            if (panel === 'both') {
-              side = 'both';
-              panels = [app.panel.left, app.panel.right];
-            } else {
-              side = panel;
-              panels.push(app.panel[side]);
-            }
-          } else {
-            panels = [panel];
-          }
-          panels.forEach(function (panelInstance) {
-            panelInstance.swipeable = false;
-          });
-        },
-        enableSwipe: function enableSwipe(panel) {
-          if ( panel === void 0 ) panel = 'both';
-
-          var panels = [];
-          var side;
-          if (typeof panel === 'string') {
-            side = panel;
-            if (
-              (app.params.panel.swipe === 'left' && side === 'right')
-              || (app.params.panel.swipe === 'right' && side === 'left')
-              || side === 'both'
-            ) {
-              side = 'both';
-              app.params.panel.swipe = side;
-              panels = [app.panel.left, app.panel.right];
-            } else {
-              app.params.panel.swipe = side;
-              panels.push(app.panel[side]);
-            }
-          } else if (panel) {
-            panels.push(panel);
-          }
-          panels.forEach(function (panelInstance) {
-            if (!panelInstance) { return; }
-            if (!panelInstance.swipeInitialized) {
-              panelInstance.initSwipePanel();
-            } else {
-              panelInstance.swipeable = true;
-            }
-          });
-        },
         create: function create(params) {
           return new Panel(app, params);
         },
-        open: function open(side, animate) {
-          var panelSide = side;
-          if (!panelSide) {
-            if ($('.panel').length > 1) {
-              return false;
-            }
-            panelSide = $('.panel').hasClass('panel-left') ? 'left' : 'right';
-          }
-          if (!panelSide) { return false; }
-          if (app.panel[panelSide]) {
-            return app.panel[panelSide].open(animate);
-          }
-          var $panelEl = $((".panel-" + panelSide));
-          if ($panelEl.length > 0) {
-            return app.panel.create({ el: $panelEl }).open(animate);
-          }
-          return false;
+        get: function get(el) {
+          if ( el === void 0 ) el = '.panel';
+
+          if (el instanceof Panel) { return el; }
+          if (el === 'left' || el === 'right') { el = ".panel-" + el; } // eslint-disable-line
+          var $el = $(el);
+          if ($el.length === 0 || $el.length > 1) { return undefined; }
+          return $el[0].f7Panel;
         },
-        close: function close(side, animate) {
-          var $panelEl;
-          var panelSide;
-          if (panelSide) {
-            panelSide = side;
-            $panelEl = $((".panel-" + panelSide));
-          } else {
-            $panelEl = $('.panel.panel-active');
-            panelSide = $panelEl.hasClass('panel-left') ? 'left' : 'right';
-          }
-          if (!panelSide) { return false; }
-          if (app.panel[panelSide]) {
-            return app.panel[panelSide].close(animate);
-          }
-          if ($panelEl.length > 0) {
-            return app.panel.create({ el: $panelEl }).close(animate);
-          }
-          return false;
+        destroy: function destroy(el) {
+          if ( el === void 0 ) el = '.panel';
+
+          var panel = app.panel.get(el);
+          if (panel && panel.destroy) { return panel.destroy(); }
+          return undefined;
         },
-        toggle: function toggle(side, animate) {
-          var $panelEl;
-          var panelSide = side;
-          if (side) {
-            panelSide = side;
-            $panelEl = $((".panel-" + panelSide));
-          } else if ($('.panel.panel-active').length) {
-            $panelEl = $('.panel.panel-active');
-            panelSide = $panelEl.hasClass('panel-left') ? 'left' : 'right';
-          } else {
-            if ($('.panel').length > 1) {
-              return false;
-            }
-            panelSide = $('.panel').hasClass('panel-left') ? 'left' : 'right';
-            $panelEl = $((".panel-" + panelSide));
+        open: function open(el, animate) {
+          if ( el === void 0 ) el = '.panel';
+
+          if (el === 'left' || el === 'right') { el = ".panel-" + el; } // eslint-disable-line
+          var panel = app.panel.get(el);
+          if (panel && panel.open) { return panel.open(animate); }
+          if (!panel) {
+            panel = app.panel.create({ el: el });
+            return panel.open(animate);
           }
-          if (!panelSide) { return false; }
-          if (app.panel[panelSide]) {
-            return app.panel[panelSide].toggle(animate);
-          }
-          if ($panelEl.length > 0) {
-            return app.panel.create({ el: $panelEl }).toggle(animate);
-          }
-          return false;
+          return undefined;
         },
-        get: function get(side) {
-          var panelSide = side;
-          if (!panelSide) {
-            if ($('.panel').length > 1) {
-              return undefined;
-            }
-            panelSide = $('.panel').hasClass('panel-left') ? 'left' : 'right';
+        close: function close(el, animate) {
+          if ( el === void 0 ) el = '.panel-in';
+
+          if (el === 'left' || el === 'right') { el = ".panel-" + el; } // eslint-disable-line
+          var panel = app.panel.get(el);
+          if (panel && panel.open) { return panel.close(animate); }
+          if (!panel) {
+            panel = app.panel.create({ el: el });
+            return panel.close(animate);
           }
-          if (!panelSide) { return undefined; }
-          if (app.panel[panelSide]) {
-            return app.panel[panelSide];
-          }
-          var $panelEl = $((".panel-" + panelSide));
-          if ($panelEl.length > 0) {
-            return app.panel.create({ el: $panelEl });
+          return undefined;
+        },
+        toggle: function toggle(el, animate) {
+          if ( el === void 0 ) el = '.panel';
+
+          if (el === 'left' || el === 'right') { el = ".panel-" + el; } // eslint-disable-line
+          var panel = app.panel.get(el);
+          if (panel && panel.toggle) { return panel.toggle(animate); }
+          if (!panel) {
+            panel = app.panel.create({ el: el });
+            return panel.toggle(animate);
           }
           return undefined;
         },
@@ -18849,11 +19023,29 @@
     on: {
       init: function init() {
         var app = this;
-
-        // Create Panels
-        $('.panel').each(function (index, panelEl) {
-          var side = $(panelEl).hasClass('panel-left') ? 'left' : 'right';
-          app.panel[side] = app.panel.create({ el: panelEl, side: side });
+        $('.panel-init').each(function (index, panelEl) {
+          var params = Object.assign(
+            { el: panelEl },
+            $(panelEl).dataset() || {}
+          );
+          app.panel.create(params);
+        });
+      },
+      pageInit: function pageInit(page) {
+        var app = this;
+        page.$el.find('.panel-init').each(function (index, panelEl) {
+          var params = Object.assign(
+            { el: panelEl },
+            $(panelEl).dataset() || {}
+          );
+          app.panel.create(params);
+        });
+      },
+      pageBeforeRemove: function pageBeforeRemove(page) {
+        var app = this;
+        page.$el.find('.panel-init').each(function (index, panelEl) {
+          var panel = app.panel.get(panelEl);
+          if (panel && panel.destroy) { panel.destroy(); }
         });
       },
     },
@@ -18862,29 +19054,24 @@
         if ( data === void 0 ) data = {};
 
         var app = this;
-        var side = 'left';
-        if (data.panel === 'right' || ($('.panel').length === 1 && $('.panel').hasClass('panel-right'))) {
-          side = 'right';
-        }
-        app.panel.open(side, data.animate);
+        app.panel.open(data.panel, data.animate);
       },
       '.panel-close': function close(clickedEl, data) {
         if ( data === void 0 ) data = {};
 
         var app = this;
-        var side = data.panel;
-        app.panel.close(side, data.animate);
+        app.panel.close(data.panel, data.animate);
       },
       '.panel-toggle': function close(clickedEl, data) {
         if ( data === void 0 ) data = {};
 
         var app = this;
-        var side = data.panel;
-        app.panel.toggle(side, data.animate);
+        app.panel.toggle(data.panel, data.animate);
       },
       '.panel-backdrop': function close() {
         var app = this;
-        var $panelEl = $('.panel-active');
+        var $panelEl = $('.panel-in:not(.panel-out)');
+        if (!$panelEl.length) { return; }
         var instance = $panelEl[0] && $panelEl[0].f7Panel;
         $panelEl.trigger('panel:backdrop-click');
         if (instance) {
@@ -19019,10 +19206,22 @@
       var translateX = (cardRightOffset - cardLeftOffset) / 2;
       var translateY = (cardBottomOffset - cardTopOffset) / 2;
       if (cardParams.hideNavbarOnOpen && $navbarEl && $navbarEl.length) {
-        app.navbar.hide($navbarEl, cardParams.animate);
+        if ($navbarEl.closest('.navbar-hidden').length) {
+          // Was hidden
+          $cardEl[0].f7KeepNavbarOnClose = true;
+        } else {
+          delete $cardEl[0].f7KeepNavbarOnClose;
+          app.navbar.hide($navbarEl, cardParams.animate, cardParams.hideStatusbarOnOpen);
+        }
       }
       if (cardParams.hideToolbarOnOpen && $toolbarEl && $toolbarEl.length) {
-        app.toolbar.hide($toolbarEl, cardParams.animate);
+        if ($toolbarEl.closest('.toolbar-hidden').length) {
+          // Was hidden
+          $cardEl[0].f7KeepToolbarOnClose = true;
+        } else {
+          delete $cardEl[0].f7KeepToolbarOnClose;
+          app.toolbar.hide($toolbarEl, cardParams.animate);
+        }
       }
       if ($backdropEl) {
         $backdropEl.removeClass('card-backdrop-out').addClass('card-backdrop-in');
@@ -19234,7 +19433,7 @@
         if (!$navbarEl.length) {
           if ($pageEl[0].f7Page) { $navbarEl = $pageEl[0].f7Page.$navbarEl; }
         }
-        if ($navbarEl && $navbarEl.length) {
+        if ($navbarEl && $navbarEl.length && !$cardEl[0].f7KeepNavbarOnClose) {
           app.navbar.show($navbarEl, cardParams.animate);
         }
       }
@@ -19246,7 +19445,7 @@
         if (!$toolbarEl.length) {
           $toolbarEl = $pageEl.parents('.views').children('.toolbar');
         }
-        if ($toolbarEl && $toolbarEl.length) {
+        if ($toolbarEl && $toolbarEl.length && !$cardEl[0].f7KeepToolbarOnClose) {
           app.toolbar.show($toolbarEl, cardParams.animate);
         }
       }
@@ -19319,6 +19518,7 @@
     params: {
       card: {
         hideNavbarOnOpen: true,
+        hideStatusbarOnOpen: true,
         hideToolbarOnOpen: true,
         swipeToClose: true,
         closeByBackdropClick: true,
@@ -19339,7 +19539,7 @@
       pageBeforeIn: function pageBeforeIn(page) {
         var app = this;
         if (app.params.card.hideNavbarOnOpen && page.navbarEl && page.$el.find('.card-opened.card-expandable').length) {
-          app.navbar.hide(page.navbarEl);
+          app.navbar.hide(page.navbarEl, true, app.params.card.hideStatusbarOnOpen);
         }
 
         if (app.params.card.hideToolbarOnOpen && page.$el.find('.card-opened.card-expandable').length) {
@@ -21769,7 +21969,7 @@
         pageTitle = $itemTitleEl.length ? $itemTitleEl.text().trim() : '';
       }
       var cssClass = ss.params.cssClass;
-      var pageHtml = "\n      <div class=\"page smart-select-page " + cssClass + "\" data-name=\"smart-select-page\" data-select-name=\"" + (ss.selectName) + "\">\n        <div class=\"navbar " + (ss.params.navbarColorTheme ? ("color-" + (ss.params.navbarColorTheme)) : '') + "\">\n          <div class=\"navbar-inner sliding " + (ss.params.navbarColorTheme ? ("color-" + (ss.params.navbarColorTheme)) : '') + "\">\n            <div class=\"left\">\n              <a class=\"link back\">\n                <i class=\"icon icon-back\"></i>\n                <span class=\"if-not-md\">" + (ss.params.pageBackLinkText) + "</span>\n              </a>\n            </div>\n            " + (pageTitle ? ("<div class=\"title\">" + pageTitle + "</div>") : '') + "\n            " + (ss.params.searchbar ? ("<div class=\"subnavbar\">" + (ss.renderSearchbar()) + "</div>") : '') + "\n          </div>\n        </div>\n        " + (ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : '') + "\n        <div class=\"page-content\">\n          <div class=\"list smart-select-list-" + (ss.id) + " " + (ss.params.virtualList ? ' virtual-list' : '') + " " + (ss.params.formColorTheme ? ("color-" + (ss.params.formColorTheme)) : '') + "\">\n            <ul>" + (!ss.params.virtualList && ss.renderItems(ss.items)) + "</ul>\n          </div>\n        </div>\n      </div>\n    ";
+      var pageHtml = "\n      <div class=\"page smart-select-page " + cssClass + "\" data-name=\"smart-select-page\" data-select-name=\"" + (ss.selectName) + "\">\n        <div class=\"navbar " + (ss.params.navbarColorTheme ? ("color-" + (ss.params.navbarColorTheme)) : '') + "\">\n          <div class=\"navbar-inner sliding " + (ss.params.navbarColorTheme ? ("color-" + (ss.params.navbarColorTheme)) : '') + "\">\n            <div class=\"navbar-bg\"></div>\n            <div class=\"left\">\n              <a class=\"link back\">\n                <i class=\"icon icon-back\"></i>\n                <span class=\"if-not-md\">" + (ss.params.pageBackLinkText) + "</span>\n              </a>\n            </div>\n            " + (pageTitle ? ("<div class=\"title\">" + pageTitle + "</div>") : '') + "\n            " + (ss.params.searchbar ? ("<div class=\"subnavbar\">" + (ss.renderSearchbar()) + "</div>") : '') + "\n          </div>\n        </div>\n        " + (ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : '') + "\n        <div class=\"page-content\">\n          <div class=\"list smart-select-list-" + (ss.id) + " " + (ss.params.virtualList ? ' virtual-list' : '') + " " + (ss.params.formColorTheme ? ("color-" + (ss.params.formColorTheme)) : '') + "\">\n            <ul>" + (!ss.params.virtualList && ss.renderItems(ss.items)) + "</ul>\n          </div>\n        </div>\n      </div>\n    ";
       return pageHtml;
     };
 
@@ -21782,7 +21982,7 @@
         pageTitle = $itemTitleEl.length ? $itemTitleEl.text().trim() : '';
       }
       var cssClass = ss.params.cssClass || '';
-      var popupHtml = "\n      <div class=\"popup smart-select-popup " + cssClass + " " + (ss.params.popupTabletFullscreen ? 'popup-tablet-fullscreen' : '') + "\" data-select-name=\"" + (ss.selectName) + "\">\n        <div class=\"view\">\n          <div class=\"page smart-select-page " + (ss.params.searchbar ? 'page-with-subnavbar' : '') + "\" data-name=\"smart-select-page\">\n            <div class=\"navbar " + (ss.params.navbarColorTheme ? ("color-" + (ss.params.navbarColorTheme)) : '') + "\">\n              <div class=\"navbar-inner sliding\">\n                " + (pageTitle ? ("<div class=\"title\">" + pageTitle + "</div>") : '') + "\n                <div class=\"right\">\n                  <a class=\"link popup-close\" data-popup=\".smart-select-popup[data-select-name='" + (ss.selectName) + "']\">" + (ss.params.popupCloseLinkText) + "</span></a>\n                </div>\n                " + (ss.params.searchbar ? ("<div class=\"subnavbar\">" + (ss.renderSearchbar()) + "</div>") : '') + "\n              </div>\n            </div>\n            " + (ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : '') + "\n            <div class=\"page-content\">\n              <div class=\"list smart-select-list-" + (ss.id) + " " + (ss.params.virtualList ? ' virtual-list' : '') + " " + (ss.params.formColorTheme ? ("color-" + (ss.params.formColorTheme)) : '') + "\">\n                <ul>" + (!ss.params.virtualList && ss.renderItems(ss.items)) + "</ul>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    ";
+      var popupHtml = "\n      <div class=\"popup smart-select-popup " + cssClass + " " + (ss.params.popupTabletFullscreen ? 'popup-tablet-fullscreen' : '') + "\" data-select-name=\"" + (ss.selectName) + "\">\n        <div class=\"view\">\n          <div class=\"page smart-select-page " + (ss.params.searchbar ? 'page-with-subnavbar' : '') + "\" data-name=\"smart-select-page\">\n            <div class=\"navbar " + (ss.params.navbarColorTheme ? ("color-" + (ss.params.navbarColorTheme)) : '') + "\">\n              <div class=\"navbar-inner sliding\">\n                <div class=\"navbar-bg\"></div>\n                " + (pageTitle ? ("<div class=\"title\">" + pageTitle + "</div>") : '') + "\n                <div class=\"right\">\n                  <a class=\"link popup-close\" data-popup=\".smart-select-popup[data-select-name='" + (ss.selectName) + "']\">" + (ss.params.popupCloseLinkText) + "</span></a>\n                </div>\n                " + (ss.params.searchbar ? ("<div class=\"subnavbar\">" + (ss.renderSearchbar()) + "</div>") : '') + "\n              </div>\n            </div>\n            " + (ss.params.searchbar ? '<div class="searchbar-backdrop"></div>' : '') + "\n            <div class=\"page-content\">\n              <div class=\"list smart-select-list-" + (ss.id) + " " + (ss.params.virtualList ? ' virtual-list' : '') + " " + (ss.params.formColorTheme ? ("color-" + (ss.params.formColorTheme)) : '') + "\">\n                <ul>" + (!ss.params.virtualList && ss.renderItems(ss.items)) + "</ul>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n    ";
       return popupHtml;
     };
 
@@ -26321,7 +26521,8 @@
           $fabEl
             .transform(("translate3d(" + (-diffX) + "px, " + (-diffY) + "px, 0) scale(" + scaleX + ", " + scaleY + ")"))
             .css('border-radius', (borderRadius + "px"))
-            .css('box-shadow', 'none');
+            .css('box-shadow', 'none')
+            .css('opacity', '0');
         });
         app.on('resize', $fabEl[0].f7FabMorphResizeHandler);
         if ($targetEl.parents('.page-content').length > 0) {
@@ -26360,6 +26561,7 @@
         .transition('')
         .css('box-shadow', '')
         .css('border-radius', '')
+        .css('opacity', '1')
         .transform(("translate3d(" + (-diffX) + "px, " + (-diffY) + "px, 0)"));
       $fabEl.transitionEnd(function () {
         $fabEl
@@ -26672,7 +26874,7 @@
         if (sb.enabled) {
           sb.$el.removeClass('searchbar-enabled');
           if (sb.expandable) {
-            sb.$el.parents('.navbar-inner').removeClass('with-searchbar-expandable-enabled');
+            sb.$el.parents('.navbar-inner').removeClass('with-searchbar-expandable-enabled with-searchbar-expandable-enabled-no-transition');
           }
         }
       }
@@ -26681,7 +26883,7 @@
         if (sb.enabled) {
           sb.$el.addClass('searchbar-enabled');
           if (sb.expandable) {
-            sb.$el.parents('.navbar-inner').addClass('with-searchbar-expandable-enabled');
+            sb.$el.parents('.navbar-inner').addClass('with-searchbar-expandable-enabled-no-transition');
           }
         }
       }
@@ -26831,12 +27033,25 @@
       sb.$el.removeClass('searchbar-enabled searchbar-focused searchbar-enabled-no-disable-button');
       if (sb.expandable) {
         if (sb.$el.parents('.navbar-inner').hasClass('navbar-inner-large') && sb.$pageEl) {
-          sb.$pageEl.find('.page-content').removeClass('with-searchbar-expandable-enabled');
+          sb.$pageEl.find('.page-content').removeClass('with-searchbar-expandable-enabled').addClass('with-searchbar-expandable-closing');
+          sb.$el.transitionEnd(function () {
+            sb.$pageEl.find('.page-content').removeClass('with-searchbar-expandable-closing');
+          });
         }
         if (app.theme === 'md' && sb.$el.parent('.navbar-inner').parent('.navbar').length) {
-          sb.$el.parent('.navbar-inner').parent('.navbar').removeClass('with-searchbar-expandable-enabled');
+          sb.$el.parent('.navbar-inner').parent('.navbar')
+            .removeClass('with-searchbar-expandable-enabled with-searchbar-expandable-enabled-no-transition')
+            .addClass('with-searchbar-expandable-closing');
+          sb.$el.transitionEnd(function () {
+            sb.$el.parent('.navbar-inner').parent('.navbar').removeClass('with-searchbar-expandable-closing');
+          });
         } else {
-          sb.$el.parent('.navbar-inner').removeClass('with-searchbar-expandable-enabled');
+          sb.$el.parent('.navbar-inner')
+            .removeClass('with-searchbar-expandable-enabled with-searchbar-expandable-enabled-no-transition')
+            .addClass('with-searchbar-expandable-closing');
+          sb.$el.transitionEnd(function () {
+            sb.$el.parent('.navbar-inner').removeClass('with-searchbar-expandable-closing');
+          });
           if (sb.$pageEl) {
             sb.$pageEl.find('.page-content').trigger('scroll');
           }
@@ -27090,7 +27305,7 @@
           var $searchbarEl = $(searchbarEl);
           app.searchbar.create(Utils.extend($searchbarEl.dataset(), { el: searchbarEl }));
         });
-        if (app.theme === 'ios' && page.view && page.view.router.separateNavbar && page.$navbarEl && page.$navbarEl.length > 0) {
+        if (app.theme === 'ios' && page.view && page.view.router.dynamicNavbar && page.$navbarEl && page.$navbarEl.length > 0) {
           page.$navbarEl.find('.searchbar-init').each(function (index, searchbarEl) {
             var $searchbarEl = $(searchbarEl);
             app.searchbar.create(Utils.extend($searchbarEl.dataset(), { el: searchbarEl }));
@@ -27104,7 +27319,7 @@
             searchbarEl.f7Searchbar.destroy();
           }
         });
-        if (app.theme === 'ios' && page.view && page.view.router.separateNavbar && page.$navbarEl && page.$navbarEl.length > 0) {
+        if (app.theme === 'ios' && page.view && page.view.router.dynamicNavbar && page.$navbarEl && page.$navbarEl.length > 0) {
           page.$navbarEl.find('.searchbar-init').each(function (index, searchbarEl) {
             if (searchbarEl.f7Searchbar && searchbarEl.f7Searchbar.destroy) {
               searchbarEl.f7Searchbar.destroy();
@@ -34711,7 +34926,7 @@
       var backLinkText = (pb.app.theme === 'ios' || pb.app.theme === 'aurora') && pb.params.backLinkText ? pb.params.backLinkText : '';
 
       var isPopup = pb.params.type !== 'page';
-      var navbarHtml = ("\n      <div class=\"navbar\">\n        <div class=\"navbar-inner sliding\">\n          <div class=\"left\">\n            <a class=\"link " + (isPopup ? 'popup-close' : '') + " " + (!backLinkText ? 'icon-only' : '') + " " + (!isPopup ? 'back' : '') + "\" " + (isPopup ? 'data-popup=".photo-browser-popup"' : '') + ">\n              <i class=\"icon icon-back " + (iconsColor ? ("color-" + iconsColor) : '') + "\"></i>\n              " + (backLinkText ? ("<span>" + backLinkText + "</span>") : '') + "\n            </a>\n          </div>\n          <div class=\"title\">\n            <span class=\"photo-browser-current\"></span>\n            <span class=\"photo-browser-of\">" + (pb.params.navbarOfText) + "</span>\n            <span class=\"photo-browser-total\"></span>\n          </div>\n          <div class=\"right\"></div>\n        </div>\n      </div>\n    ").trim();
+      var navbarHtml = ("\n      <div class=\"navbar\">\n        <div class=\"navbar-inner navbar-inner-photo-browser " + (pb.params.theme === 'dark' ? 'navbar-inner-photo-browser-dark' : '') + " sliding\">\n          <div class=\"navbar-bg\"></div>\n          <div class=\"left\">\n            <a class=\"link " + (isPopup ? 'popup-close' : '') + " " + (!backLinkText ? 'icon-only' : '') + " " + (!isPopup ? 'back' : '') + "\" " + (isPopup ? 'data-popup=".photo-browser-popup"' : '') + ">\n              <i class=\"icon icon-back " + (iconsColor ? ("color-" + iconsColor) : '') + "\"></i>\n              " + (backLinkText ? ("<span>" + backLinkText + "</span>") : '') + "\n            </a>\n          </div>\n          <div class=\"title\">\n            <span class=\"photo-browser-current\"></span>\n            <span class=\"photo-browser-of\">" + (pb.params.navbarOfText) + "</span>\n            <span class=\"photo-browser-total\"></span>\n          </div>\n          <div class=\"right\"></div>\n        </div>\n      </div>\n    ").trim();
       return navbarHtml;
     };
 
@@ -35977,7 +36192,7 @@
       var navbarRight = inPopup
         ? ("\n        <div class=\"right\">\n          <a class=\"link popup-close\" data-popup=\".autocomplete-popup\">\n            " + (ac.params.popupCloseLinkText) + "\n          </a>\n        </div>\n      ")
         : ("\n        " + (ac.params.preloader ? ("\n        <div class=\"right\">\n          " + (ac.renderPreloader()) + "\n        </div>\n        ") : '') + "\n      ");
-      var navbarHtml = ("\n      <div class=\"navbar " + (ac.params.navbarColorTheme ? ("color-" + (ac.params.navbarColorTheme)) : '') + "\">\n        <div class=\"navbar-inner " + (ac.params.navbarColorTheme ? ("color-" + (ac.params.navbarColorTheme)) : '') + "\">\n          " + navbarLeft + "\n          " + (pageTitle ? ("<div class=\"title sliding\">" + pageTitle + "</div>") : '') + "\n          " + navbarRight + "\n          <div class=\"subnavbar sliding\">" + (ac.renderSearchbar()) + "</div>\n        </div>\n      </div>\n    ").trim();
+      var navbarHtml = ("\n      <div class=\"navbar " + (ac.params.navbarColorTheme ? ("color-" + (ac.params.navbarColorTheme)) : '') + "\">\n        <div class=\"navbar-inner " + (ac.params.navbarColorTheme ? ("color-" + (ac.params.navbarColorTheme)) : '') + "\">\n          <div class=\"navbar-bg\"></div>\n          " + navbarLeft + "\n          " + (pageTitle ? ("<div class=\"title sliding\">" + pageTitle + "</div>") : '') + "\n          " + navbarRight + "\n          <div class=\"subnavbar sliding\">" + (ac.renderSearchbar()) + "</div>\n        </div>\n      </div>\n    ").trim();
       return navbarHtml;
     };
 
@@ -36670,7 +36885,7 @@
           if (!text) { return; }
           app.tooltip.create({ targetEl: el, text: text });
         });
-        if (app.theme === 'ios' && page.view && page.view.router.separateNavbar && page.$navbarEl && page.$navbarEl.length > 0) {
+        if (app.theme === 'ios' && page.view && page.view.router.dynamicNavbar && page.$navbarEl && page.$navbarEl.length > 0) {
           page.$navbarEl.find('.tooltip-init').each(function (index, el) {
             var text = $(el).attr('data-tooltip');
             if (!text) { return; }
@@ -36683,7 +36898,7 @@
         page.$el.find('.tooltip-init').each(function (index, el) {
           if (el.f7Tooltip) { el.f7Tooltip.destroy(); }
         });
-        if (app.theme === 'ios' && page.view && page.view.router.separateNavbar && page.$navbarEl && page.$navbarEl.length > 0) {
+        if (app.theme === 'ios' && page.view && page.view.router.dynamicNavbar && page.$navbarEl && page.$navbarEl.length > 0) {
           page.$navbarEl.find('.tooltip-init').each(function (index, el) {
             if (el.f7Tooltip) { el.f7Tooltip.destroy(); }
           });
@@ -38642,7 +38857,7 @@
       var navbarTitleText = ref.navbarTitleText;
       var navbarBackLinkText = ref.navbarBackLinkText;
       var navbarCloseText = ref.navbarCloseText;
-      return ("\n    <div class=\"navbar\">\n      <div class=\"navbar-inner sliding\">\n        " + (openIn === 'page' ? ("\n        <div class=\"left\">\n          <a class=\"link back\">\n            <i class=\"icon icon-back\"></i>\n            <span class=\"if-not-md\">" + navbarBackLinkText + "</span>\n          </a>\n        </div>\n        ") : '') + "\n        <div class=\"title\">" + navbarTitleText + "</div>\n        " + (openIn !== 'page' ? ("\n        <div class=\"right\">\n          <a class=\"link popup-close\" data-popup=\".color-picker-popup\">" + navbarCloseText + "</a>\n        </div>\n        ") : '') + "\n      </div>\n    </div>\n  ").trim();
+      return ("\n    <div class=\"navbar\">\n      <div class=\"navbar-inner sliding\">\n        <div class=\"navbar-bg\"></div>\n        " + (openIn === 'page' ? ("\n        <div class=\"left\">\n          <a class=\"link back\">\n            <i class=\"icon icon-back\"></i>\n            <span class=\"if-not-md\">" + navbarBackLinkText + "</span>\n          </a>\n        </div>\n        ") : '') + "\n        <div class=\"title\">" + navbarTitleText + "</div>\n        " + (openIn !== 'page' ? ("\n        <div class=\"right\">\n          <a class=\"link popup-close\" data-popup=\".color-picker-popup\">" + navbarCloseText + "</a>\n        </div>\n        ") : '') + "\n      </div>\n    </div>\n  ").trim();
     };
 
     ColorPicker.prototype.renderToolbar = function renderToolbar () {

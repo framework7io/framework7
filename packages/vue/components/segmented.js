@@ -13,6 +13,10 @@ export default {
     roundIos: Boolean,
     roundMd: Boolean,
     roundAurora: Boolean,
+    strong: Boolean,
+    strongIos: Boolean,
+    strongMd: Boolean,
+    strongAurora: Boolean,
     tag: {
       type: String,
       default: 'div'
@@ -33,6 +37,10 @@ export default {
       roundIos,
       roundAurora,
       roundMd,
+      strong,
+      strongIos,
+      strongMd,
+      strongAurora,
       id,
       style,
       tag
@@ -46,7 +54,11 @@ export default {
       'segmented-round': round,
       'segmented-round-ios': roundIos,
       'segmented-round-aurora': roundAurora,
-      'segmented-round-md': roundMd
+      'segmented-round-md': roundMd,
+      'segmented-strong': strong,
+      'segmented-strong-ios': strongIos,
+      'segmented-strong-md': strongMd,
+      'segmented-strong-aurora': strongAurora
     }, Mixins.colorClasses(props));
     const SegmentedTag = tag;
     return _h(SegmentedTag, {

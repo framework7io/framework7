@@ -4,9 +4,12 @@
   */
 }
 .ios-vars({
-  --f7-progressbar-bg-color: #b6b6b6;
+  --f7-progressbar-bg-color: rgba(0,0,0,0.3);
   --f7-progressbar-height: 2px;
   --f7-progressbar-border-radius: 2px;
+  .theme-dark, &.theme-dark {
+    --f7-progressbar-bg-color: rgba(255,255,255,0.3);
+  }
 });
 .md-vars({
   /*

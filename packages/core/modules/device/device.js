@@ -36,9 +36,6 @@ export default {
           for (let i = major - 1; i >= 6; i -= 1) {
             classNames.push(`device-ios-gt-${i}`);
           }
-          if (Device.iphoneX) {
-            classNames.push('device-iphone-x');
-          }
         }
       } else if (Device.desktop) {
         classNames.push('device-desktop');

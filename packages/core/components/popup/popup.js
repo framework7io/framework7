@@ -11,6 +11,7 @@ export default {
       closeOnEscape: false,
       swipeToClose: false,
       swipeHandler: null,
+      push: false,
     },
   },
   static: {

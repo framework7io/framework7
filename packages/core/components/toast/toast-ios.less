@@ -3,10 +3,6 @@
     transition-duration: 300ms;
     width: 100%;
     left: 0;
-    @supports (backdrop-filter: blur(10px)) {
-      background: var(--f7-toast-translucent-bg-color-ios);
-      backdrop-filter: blur(10px);
-    }
     &.toast-top {
       top: 0;
       transform: translate3d(0, -100%, 0);
@@ -31,6 +27,12 @@
       }
     }
     @media (max-width: 568px) {
+      &.toast-top {
+        margin-top: 0;
+      }
+      &.toast-top .toast-content {
+        padding-top: calc(var(--f7-toast-padding-vertical) + var(--f7-safe-area-top));
+      }
       &.toast-bottom .toast-content {
         padding-bottom: calc(var(--f7-toast-padding-vertical) + var(--f7-safe-area-bottom));
       }

@@ -20,6 +20,7 @@ declare namespace F7Navbar {
     innerClass? : string
     innerClassName? : string
     large? : boolean
+    largeTransparent? : boolean
     titleLarge? : string
     color? : string
     colorTheme? : string

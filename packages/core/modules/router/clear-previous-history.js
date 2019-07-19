@@ -5,7 +5,7 @@ function clearPreviousPages() {
   const router = this;
   appRouterCheck(router, 'clearPreviousPages');
   const app = router.app;
-  const separateNavbar = router.separateNavbar;
+  const dynamicNavbar = router.dynamicNavbar;
 
   const $pagesToRemove = router.$el
     .children('.page')
@@ -19,14 +19,14 @@ function clearPreviousPages() {
     const $oldNavbarInnerEl = $(app.navbar.getElByPage($oldPageEl));
     if (router.params.stackPages && router.initialPages.indexOf($oldPageEl[0]) >= 0) {
       $oldPageEl.addClass('stacked');
-      if (separateNavbar) {
+      if (dynamicNavbar) {
         $oldNavbarInnerEl.addClass('stacked');
       }
     } else {
       // Page remove event
       router.pageCallback('beforeRemove', $oldPageEl, $oldNavbarInnerEl, 'previous', undefined, {});
       router.removePage($oldPageEl);
-      if (separateNavbar && $oldNavbarInnerEl.length) {
+      if (dynamicNavbar && $oldNavbarInnerEl.length) {
         router.removeNavbar($oldNavbarInnerEl);
       }
     }

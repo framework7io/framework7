@@ -1,27 +1,17 @@
 :root {
   --f7-sheet-height: 260px;
-}
-.ios-vars({
-  --f7-sheet-bg-color: #cfd5da;
-  --f7-sheet-border-color: #929499;
+  --f7-sheet-bg-color: #fff;
+  --f7-sheet-border-color: transparent;
+  --f7-sheet-transition-duration: 300ms;
+  --f7-sheet-push-border-radius: 10px;
+  --f7-sheet-push-offset: var(--f7-safe-area-top);
   .theme-dark, &.theme-dark {
     --f7-sheet-bg-color: #171717;
-    --f7-sheet-border-color: var(--f7-bars-border-color);
   }
-});
-.md-vars({
-  --f7-sheet-bg-color: #fff;
-  --f7-sheet-border-color: transparent;
+}
+.ios-vars({
+  --f7-sheet-border-color: var(--f7-bars-border-color);
   .theme-dark, &.theme-dark {
-    --f7-sheet-bg-color: #202020;
-    --f7-sheet-border-color: transparent;
-  }
-});
-.aurora-vars({
-  --f7-sheet-bg-color: #fff;
-  --f7-sheet-border-color: transparent;
-  .theme-dark, &.theme-dark {
-    --f7-sheet-bg-color: #202020;
-    --f7-sheet-border-color: transparent;
+    --f7-sheet-bg-color: #000;
   }
 });

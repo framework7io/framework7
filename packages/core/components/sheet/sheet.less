@@ -17,7 +17,7 @@
   z-index: 12500;
   will-change: transform;
   &.modal-in, &.modal-out {
-    transition-duration: 300ms;
+    transition-duration: var(--f7-sheet-transition-duration);
   }
   &.not-animated {
     transition-duration: 0ms;
@@ -39,21 +39,18 @@
     overflow: hidden;
   }
   .toolbar {
+    --f7-safe-area-bottom: 0px;
     position: relative;
     width: 100%;
     &:after, &:before {
       display: none;
     }
-    ~ * .page-content {
-      padding-top: 0;
-      padding-bottom: 0;
-    }
     + .sheet-modal-inner {
       height: calc(100% - var(--f7-toolbar-height));
-    }
-    ~ .sheet-modal-inner .page-content {
-      padding-bottom: 0;
-      padding-top: 0;
+      .page-content {
+        --f7-page-toolbar-top-offset: 0px;
+        --f7-page-toolbar-bottom-offset: 0px;
+      }
     }
   }
 }
@@ -65,7 +62,9 @@
     transform-style: preserve-3d;
   }
 }
-.sheet-modal-bottom, .sheet-modal:not(.sheet-modal-top) {
+.sheet-modal-bottom,
+.sheet-modal:not(.sheet-modal-top) {
+  --f7-safe-area-top: 0px;
   .hairline(top, var(--f7-sheet-border-color));
   &:before {
     z-index: 600;
@@ -73,25 +72,49 @@
     transform-style: preserve-3d;
   }
 }
-.sheet-modal-bottom,
-.sheet-modal:not(.sheet-modal-top) {
-  .toolbar ~ .sheet-modal-inner .page-content,
-  .sheet-modal-inner > .page-content {
-    padding-bottom: var(--f7-safe-area-bottom);
-  }
-}
 .sheet-modal-top {
+  --f7-safe-area-bottom: 0px;
   bottom: auto;
-  top: var(--f7-statusbar-height);
-  transform: translate3d(0, calc(-100% - var(--f7-statusbar-height)), 0);
+  top: 0;
+  transform: translate3d(0, -100%, 0);
   &.modal-out {
-    transform: translate3d(0, calc(-100% - var(--f7-statusbar-height)), 0);
+    transform: translate3d(0, -100%, 0);
   }
   .toolbar-bottom {
     position: absolute;
   }
-  .toolbar-top ~ .sheet-modal-inner .page-content {
-    padding-top: 0;
+  .page-content {
+    padding-top: var(--f7-safe-area-top);
+  }
+}
+
+html.with-modal-sheet-push,
+html.with-modal-sheet-push-closing {
+  .sheet-modal-push {
+    border-radius: var(--f7-sheet-push-border-radius) var(--f7-sheet-push-border-radius) 0 0;
+    overflow: hidden;
+    .view, .page {
+      --f7-safe-area-top: 0px;
+    }
+    &.sheet-modal-top {
+      border-radius: 0 0 var(--f7-sheet-push-border-radius) var(--f7-sheet-push-border-radius);
+    }
+  }
+  .framework7-root {
+    background: #000;
+    > .views,
+    > .view {
+      transition-duration: var(--f7-sheet-transition-duration);
+    }
+  }
+}
+html.with-modal-sheet-push {
+  .framework7-root {
+    > .views,
+    > .view {
+      border-radius: var(--f7-sheet-push-border-radius);
+      transform: translate3d(0, 0, 0px) scale(var(--f7-sheet-push-scale, 1));
+    }
   }
 }
 

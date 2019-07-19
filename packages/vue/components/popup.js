@@ -17,7 +17,8 @@ export default {
       type: [Boolean, String],
       default: false
     },
-    swipeHandler: [String, Object, window.HTMLElement]
+    swipeHandler: [String, Object, window.HTMLElement],
+    push: Boolean
   }, Mixins.colorProps),
 
   render() {
@@ -28,10 +29,12 @@ export default {
       className,
       id,
       style,
-      tabletFullscreen
+      tabletFullscreen,
+      push
     } = props;
     const classes = Utils.classNames(className, 'popup', {
-      'popup-tablet-fullscreen': tabletFullscreen
+      'popup-tablet-fullscreen': tabletFullscreen,
+      'popup-push': push
     }, Mixins.colorClasses(props));
     return _h('div', {
       ref: 'el',

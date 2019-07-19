@@ -4,7 +4,7 @@ export namespace Navbar {
   interface AppMethods {
     navbar: {
       /** Hide navbar */
-      hide(navbarEl : HTMLElement | CSSSelector, animate?: boolean) : void
+      hide(navbarEl : HTMLElement | CSSSelector, animate?: boolean, hideStatusbar?: boolean) : void
       /** Show navbar */
       show(navbarEl : HTMLElement | CSSSelector, isAnimated?: boolean) : void
       /** Recalculate positional styles for Navbar elements. It could be useful after you change some of Navbar elements dynamically. This will have effect only in iOS theme */

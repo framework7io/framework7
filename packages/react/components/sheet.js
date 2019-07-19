@@ -67,7 +67,8 @@ class F7Sheet extends React.Component {
       className,
       top,
       bottom,
-      position
+      position,
+      push
     } = props;
     let fixedTags;
     fixedTags = 'navbar toolbar tabbar subnavbar searchbar messagebar fab list-index'.split(' ').map(tagName => `f7-${tagName}`);
@@ -98,7 +99,9 @@ class F7Sheet extends React.Component {
     }, staticList);
     let positionComputed = 'bottom';
     if (position) positionComputed = position;else if (top) positionComputed = 'top';else if (bottom) positionComputed = 'bottom';
-    const classes = Utils.classNames(className, 'sheet-modal', `sheet-modal-${positionComputed}`, Mixins.colorClasses(props));
+    const classes = Utils.classNames(className, 'sheet-modal', `sheet-modal-${positionComputed}`, {
+      'sheet-modal-push': push
+    }, Mixins.colorClasses(props));
     return React.createElement('div', {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
@@ -210,6 +213,7 @@ __reactComponentSetProps(F7Sheet, Object.assign({
   closeByBackdropClick: Boolean,
   closeByOutsideClick: Boolean,
   closeOnEscape: Boolean,
+  push: Boolean,
   swipeToClose: Boolean,
   swipeToStep: Boolean,
   swipeHandler: [String, Object, window.HTMLElement]

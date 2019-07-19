@@ -4,33 +4,41 @@
 .panel-backdrop {
   position: absolute;
   left: 0;
-  top: calc(var(--f7-statusbar-height) + var(--f7-appbar-app-offset, 0px));
+  top: var(--f7-appbar-app-offset, 0px);
   width: 100%;
-  height: calc(100% - var(--f7-statusbar-height) - var(--f7-appbar-app-offset, 0px));
+  height: calc(100% - var(--f7-appbar-app-offset, 0px));
   opacity: 0;
   z-index: 5999;
-  display: none;
+  visibility: hidden;
+  pointer-events: none;
   transform: translate3d(0,0,0);
   background-color: var(--f7-panel-backdrop-bg-color);
+  transition-property: transform, opacity;
   transition-duration: var(--f7-panel-transition-duration);
-  will-change: transform, opacity;
+  .with-panel,
+  .with-panel-closing {
+    visibility: visible;
+  }
   &.not-animated {
     transition-duration: 0ms !important;
   }
 }
 .panel {
   z-index: 1000;
-  display: none;
   box-sizing: border-box;
   position: absolute;
-  top: calc(var(--f7-statusbar-height) + var(--f7-appbar-app-offset, 0px));
-  height: calc(100% - var(--f7-statusbar-height) - var(--f7-appbar-app-offset, 0px));
+  top: var(--f7-appbar-app-offset, 0px);
+  height: calc(100% - var(--f7-appbar-app-offset, 0px));
   transform: translate3d(0,0,0);
   width: var(--f7-panel-width);
   background-color: var(--f7-panel-bg-color);
   overflow: visible;
-  will-change: transform;
   transition-property: transform;
+  transition-duration: var(--f7-panel-transition-duration);
+  &:not(.panel-in):not(.panel-out):not(.panel-in-breakpoint):not(.panel-in-collapsed):not(.panel-in-swipe) {
+    display: none;
+  }
+
   &:after {
     pointer-events: none;
     opacity: 0;
@@ -41,8 +49,6 @@
     width: 20px;
     height: 100%;
     transition-property: transform, opacity;
-  }
-  &, &:after {
     transition-duration: var(--f7-panel-transition-duration);
   }
   &.not-animated {
@@ -118,9 +124,9 @@
     }
   }
 }
-.panel-visible-by-breakpoint {
-  display: block;
+.panel-in-breakpoint {
   transform: translate3d(0,0,0) !important;
+  transition-duration: 0ms;
   &:after {
     display: none;
   }
@@ -131,15 +137,15 @@
 html {
   &.with-panel-left-reveal,
   &.with-panel-right-reveal,
-  &.with-panel-transitioning {
+  &.with-panel-closing {
     .views,
     .framework7-root > .view {
       transition-duration: var(--f7-panel-transition-duration);
       transition-property: transform;
     }
     .panel-backdrop {
-      background: rgba(0,0,0,0);
-      display: block;
+      visibility: visible;
+      pointer-events: auto;
       opacity: 0;
     }
   }
@@ -154,7 +160,8 @@ html {
   &.with-panel-left-cover,
   &.with-panel-right-cover {
     .panel-backdrop {
-      display: block;
+      visibility: visible;
+      pointer-events: auto;
       opacity: 1;
     }
   }
@@ -172,15 +179,11 @@ html {
       transform: translate3d(calc(-1 * var(--f7-panel-right-width, var(--f7-panel-width))),0,0);
     }
   }
-  &.with-panel-left-cover {
-    .panel-left {
-      transform: translate3d(0px,0,0);
-    }
+  &.with-panel-left-cover .panel-left {
+    transform: translate3d(0px,0,0);
   }
-  &.with-panel-right-cover {
-    .panel-right {
-      transform: translate3d(0px,0,0);
-    }
+  &.with-panel-right-cover .panel-right {
+    transform: translate3d(0px,0,0);
   }
 }
 .panel-resize-handler {
@@ -205,6 +208,27 @@ html {
   }
   .panel-right.panel-reveal & {
     left: 0;
+  }
+}
+
+.panel-left.panel-in-collapsed {
+  & ~ .views,
+  & ~ .view {
+    margin-left: var(--f7-panel-left-collapsed-width, var(--f7-panel-collapsed-width));
+  }
+  html.with-panel-left-reveal & ~ .views,
+  html.with-panel-left-reveal & ~ .view {
+    transform: translate3d(calc(var(--f7-panel-left-width, var(--f7-panel-width)) - var(--f7-panel-left-collapsed-width, var(--f7-panel-collapsed-width))), 0, 0);
+  }
+}
+.panel-right.panel-in-collapsed {
+  & ~ .views,
+  & ~ .view {
+    margin-right: var(--f7-panel-right-collapsed-width, var(--f7-panel-collapsed-width));
+  }
+  html.with-panel-right-reveal & ~ .views,
+  html.with-panel-right-reveal & ~ .view {
+    transform: translate3d(calc(var(--f7-panel-right-collapsed-width, var(--f7-panel-collapsed-width)) - var(--f7-panel-right-width, var(--f7-panel-width))), 0, 0);
   }
 }
 

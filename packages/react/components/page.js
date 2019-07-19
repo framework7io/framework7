@@ -300,7 +300,8 @@ class F7Page extends React.Component {
       'page-master-detail': this.state.routerPageRole === 'detail',
       'page-master-stacked': this.state.routerPageMasterStack === true,
       'page-with-navbar-large-collapsed': this.state.hasNavbarLargeCollapsed === true,
-      'page-with-card-opened': this.state.hasCardExpandableOpened === true
+      'page-with-card-opened': this.state.hasCardExpandableOpened === true,
+      'login-screen-page': loginScreen
     }, Mixins.colorClasses(props));
 
     if (!needsPageContent) {

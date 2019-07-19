@@ -59,7 +59,6 @@
     }
   }
   .searchbar-expandable {
-    --f7-searchbar-expandable-size: var(--f7-searchbar-height);
     .ltr({ left: 0; });
     .rtl({ right: 0; });
     bottom: 0;
@@ -78,12 +77,20 @@
       height: var(--f7-searchbar-expandable-size)
     }
   }
-
-  .navbar-inner.with-searchbar-expandable-enabled {
+  .navbar-inner.with-searchbar-expandable-enabled,
+  .navbar-inner.with-searchbar-expandable-closing {
+    .navbar-bg {
+      transition-property: transform, opacity;
+    }
+    .navbar-bg, .left, .title, .right {
+      transition-duration: 300ms;
+    }
+  }
+  .navbar-inner.with-searchbar-expandable-enabled,
+  .navbar-inner.with-searchbar-expandable-enabled-no-transition {
     .left, .title, .right {
       transform: translateY(calc(-1 * var(--f7-navbar-height)));
-      transition: 300ms;
-      opacity: 0;
+      opacity: 0 !important;
     }
   }
 

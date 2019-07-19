@@ -1,6 +1,7 @@
 :root {
   /*
   --f7-toolbar-bg-color: var(--f7-bars-bg-color);
+  --f7-toolbar-bg-color-rgb: var(--f7-bars-bg-color-rgb);
   --f7-toolbar-bg-image: var(--f7-bars-bg-image);
   --f7-toolbar-border-color: var(--f7-bars-border-color);
   --f7-toolbar-link-color: var(--f7-bars-link-color);
@@ -22,7 +23,7 @@
   */
   --f7-tabbar-labels-height: 50px;
   --f7-tabbar-labels-tablet-height: 56px;
-  --f7-tabbar-link-inactive-color: #929292;
+  --f7-tabbar-link-inactive-color: rgba(0,0,0,0.4);
   --f7-toolbar-top-shadow-image: none;
   --f7-toolbar-bottom-shadow-image: none;
   --f7-tabbar-icon-size: 28px;
@@ -34,6 +35,11 @@
   --f7-tabbar-label-tablet-font-size: 14px;
   --f7-tabbar-label-font-weight: 400;
   --f7-tabbar-label-letter-spacing: 0.01;
+
+  .theme-dark, &.theme-dark {
+    --f7-tabbar-link-inactive-color: rgba(255,255,255,0.54);
+  }
+
 });
 .md-vars({
   --f7-toolbar-height: 48px;

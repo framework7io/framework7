@@ -47,11 +47,13 @@ class Popup extends Modal {
 
     Utils.extend(popup, {
       app,
+      push: $el.hasClass('popup-push') || popup.params.push,
       $el,
       el: $el[0],
       $backdropEl,
       backdropEl: $backdropEl && $backdropEl[0],
       type: 'popup',
+      $htmlEl: $('html'),
     });
 
     function handleClick(e) {
@@ -92,26 +94,13 @@ class Popup extends Modal {
         popup.close();
       }
     }
-    if (popup.params.closeOnEscape) {
-      popup.on('popupOpen', () => {
-        $(document).on('keydown', onKeyDown);
-      });
-      popup.on('popupClose', () => {
-        $(document).off('keydown', onKeyDown);
-      });
-    }
 
-    popup.on('popupOpened', () => {
-      $el.removeClass('swipe-close-to-bottom swipe-close-to-top');
-      if (popup.params.closeByBackdropClick) {
-        app.on('click', handleClick);
-      }
-    });
-    popup.on('popupClose', () => {
-      if (popup.params.closeByBackdropClick) {
-        app.off('click', handleClick);
-      }
-    });
+    let pushOffset;
+    let isPush;
+
+    function pushViewScale(offset) {
+      return (app.height - offset * 2) / app.height;
+    }
 
     let allowSwipeToClose = true;
     let isTouched = false;
@@ -125,6 +114,8 @@ class Popup extends Modal {
     let pageContentScrollTop;
     let pageContentOffsetHeight;
     let pageContentScrollHeight;
+    let popupHeight;
+    let $pushViewEl;
 
     function handleTouchStart(e) {
       if (isTouched || !allowSwipeToClose || !popup.params.swipeToClose) return;
@@ -160,6 +151,9 @@ class Popup extends Modal {
       }
 
       touchesDiff = startTouch.y - currentTouch.y;
+      if (isPush && pushOffset && touchesDiff > 0) {
+        touchesDiff = 0;
+      }
       const direction = touchesDiff < 0 ? 'to-bottom' : 'to-top';
       $el.transition(0);
 
@@ -169,6 +163,10 @@ class Popup extends Modal {
       }
 
       if (!isMoved) {
+        if (isPush && pushOffset) {
+          popupHeight = $el[0].offsetHeight;
+          $pushViewEl = app.root.children('.view, .views');
+        }
         if (pageContentEl) {
           pageContentScrollTop = pageContentEl.scrollTop;
           pageContentScrollHeight = pageContentEl.scrollHeight;
@@ -187,6 +185,11 @@ class Popup extends Modal {
         isMoved = true;
       }
       e.preventDefault();
+      if (isPush && pushOffset) {
+        const pushProgress = 1 - Math.abs(touchesDiff / popupHeight);
+        const scale = 1 - (1 - pushViewScale(pushOffset)) * pushProgress;
+        $pushViewEl.transition(0).transform(`translate3d(0,0,0) scale(${scale})`);
+      }
       $el.transition(0).transform(`translate3d(0,${-touchesDiff}px,0)`);
     }
     function handleTouchEnd() {
@@ -197,7 +200,10 @@ class Popup extends Modal {
       isMoved = false;
       allowSwipeToClose = false;
       $el.transition('');
-      const direction = touchesDiff < 0 ? 'to-bottom' : 'to-top';
+      if (isPush && pushOffset) {
+        $pushViewEl.transition('').transform('');
+      }
+      const direction = touchesDiff <= 0 ? 'to-bottom' : 'to-top';
       if ((typeof popup.params.swipeToClose === 'string' && direction !== popup.params.swipeToClose)) {
         $el.transform('');
         allowSwipeToClose = true;
@@ -233,6 +239,51 @@ class Popup extends Modal {
         app.off('touchend:passive', handleTouchEnd);
       });
     }
+
+    popup.on('open', () => {
+      if (popup.params.closeOnEscape) {
+        $(document).on('keydown', onKeyDown);
+      }
+      if (popup.push) {
+        isPush = popup.push && (
+          (app.width < 630 || app.height < 630)
+          || $el.hasClass('popup-tablet-fullscreen')
+        );
+      }
+      if (isPush) {
+        pushOffset = parseInt($el.css('--f7-popup-push-offset'), 10);
+        if (Number.isNaN(pushOffset)) pushOffset = 0;
+        if (pushOffset) {
+          $el.addClass('popup-push');
+          popup.$htmlEl.addClass('with-modal-popup-push');
+          popup.$htmlEl[0].style.setProperty('--f7-popup-push-scale', pushViewScale(pushOffset));
+        }
+      }
+    });
+    popup.on('opened', () => {
+      $el.removeClass('swipe-close-to-bottom swipe-close-to-top');
+      if (popup.params.closeByBackdropClick) {
+        app.on('click', handleClick);
+      }
+    });
+    popup.on('close', () => {
+      if (popup.params.closeOnEscape) {
+        $(document).off('keydown', onKeyDown);
+      }
+      if (popup.params.closeByBackdropClick) {
+        app.off('click', handleClick);
+      }
+      if (isPush && pushOffset) {
+        popup.$htmlEl.removeClass('with-modal-popup-push');
+        popup.$htmlEl.addClass('with-modal-popup-push-closing');
+      }
+    });
+    popup.on('closed', () => {
+      if (isPush && pushOffset) {
+        popup.$htmlEl.removeClass('with-modal-popup-push-closing');
+        popup.$htmlEl[0].style.removeProperty('--f7-popup-push-scale');
+      }
+    });
 
     $el[0].f7Modal = popup;
 

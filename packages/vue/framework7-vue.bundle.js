@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.4.7
+ * Framework7 Vue 5.0.0-beta.1
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -1947,6 +1947,10 @@
         type: Boolean,
         default: undefined
       },
+      hideStatusbarOnOpen: {
+        type: Boolean,
+        default: undefined
+      },
       swipeToClose: {
         type: Boolean,
         default: undefined
@@ -1957,6 +1961,10 @@
       },
       backdrop: {
         type: Boolean,
+        default: undefined
+      },
+      backdropEl: {
+        type: String,
         default: undefined
       },
       noShadow: Boolean,
@@ -2029,9 +2037,11 @@
       var animate = props.animate;
       var hideNavbarOnOpen = props.hideNavbarOnOpen;
       var hideToolbarOnOpen = props.hideToolbarOnOpen;
+      var hideStatusbarOnOpen = props.hideStatusbarOnOpen;
       var swipeToClose = props.swipeToClose;
       var closeByBackdropClick = props.closeByBackdropClick;
       var backdrop = props.backdrop;
+      var backdropEl = props.backdropEl;
       var noShadow = props.noShadow;
       var noBorder = props.noBorder;
       var headerEl;
@@ -2070,9 +2080,11 @@
           'data-animate': typeof animate === 'undefined' ? animate : animate.toString(),
           'data-hide-navbar-on-open': typeof hideNavbarOnOpen === 'undefined' ? hideNavbarOnOpen : hideNavbarOnOpen.toString(),
           'data-hide-toolbar-on-open': typeof hideToolbarOnOpen === 'undefined' ? hideToolbarOnOpen : hideToolbarOnOpen.toString(),
+          'data-hide-statusbar-on-open': typeof hideStatusbarOnOpen === 'undefined' ? hideStatusbarOnOpen : hideStatusbarOnOpen.toString(),
           'data-swipe-to-close': typeof swipeToClose === 'undefined' ? swipeToClose : swipeToClose.toString(),
           'data-close-by-backdrop-click': typeof closeByBackdropClick === 'undefined' ? closeByBackdropClick : closeByBackdropClick.toString(),
-          'data-backdrop': typeof backdrop === 'undefined' ? backdrop : backdrop.toString()
+          'data-backdrop': typeof backdrop === 'undefined' ? backdrop : backdrop.toString(),
+          'data-backdrop-el': backdropEl
         }
       }, [headerEl, contentEl, footerEl, this.$slots['default']]);
     },
@@ -7843,6 +7855,7 @@
       innerClass: String,
       innerClassName: String,
       large: Boolean,
+      largeTransparent: Boolean,
       titleLarge: String
     }, Mixins.colorProps),
 
@@ -7867,6 +7880,7 @@
       var noShadow = props.noShadow;
       var noHairline = props.noHairline;
       var large = props.large;
+      var largeTransparent = props.largeTransparent;
       var titleLarge = props.titleLarge;
       var innerEl;
       var leftEl;
@@ -7878,8 +7892,6 @@
       var slots = self.$slots;
       var classes = Utils.classNames(className, 'navbar', {
         'navbar-hidden': hidden,
-        'no-shadow': noShadow,
-        'no-hairline': noHairline,
         'navbar-large': large
       }, Mixins.colorClasses(props));
 
@@ -7936,11 +7948,16 @@
         ref: 'innerEl',
         class: Utils.classNames('navbar-inner', innerClass, innerClassName, {
           sliding: sliding,
+          'no-shadow': noShadow,
+          'no-hairline': noHairline,
           'navbar-inner-left-title': addLeftTitleClass,
           'navbar-inner-centered-title': addCenterTitleClass,
-          'navbar-inner-large': large
+          'navbar-inner-large': large,
+          'navbar-inner-large-transparent': largeTransparent
         })
-      }, [leftEl, titleEl, rightEl, titleLargeEl, this.$slots['default']]);
+      }, [_h('div', {
+        class: 'navbar-bg'
+      }), leftEl, titleEl, rightEl, titleLargeEl, this.$slots['default']]);
       return _h('div', {
         ref: 'el',
         style: style,
@@ -8544,7 +8561,8 @@
         'page-master-detail': this.state.routerPageRole === 'detail',
         'page-master-stacked': this.state.routerPageMasterStack === true,
         'page-with-navbar-large-collapsed': this.state.hasNavbarLargeCollapsed === true,
-        'page-with-card-opened': this.state.hasCardExpandableOpened === true
+        'page-with-card-opened': this.state.hasCardExpandableOpened === true,
+        'login-screen-page': loginScreen
       }, Mixins.colorClasses(props));
 
       if (!needsPageContent) {
@@ -8870,7 +8888,33 @@
       left: Boolean,
       right: Boolean,
       opened: Boolean,
-      resizable: Boolean
+      resizable: Boolean,
+      backdrop: {
+        type: Boolean,
+        default: true
+      },
+      backdropEl: {
+        type: String,
+        default: undefined
+      },
+      visibleBreakpoint: {
+        type: Number,
+        default: undefined
+      },
+      collapsedBreakpoint: {
+        type: Number,
+        default: undefined
+      },
+      swipe: Boolean,
+      swipeOnlyClose: Boolean,
+      swipeActiveArea: {
+        type: Number,
+        default: 0
+      },
+      swipeThreshold: {
+        type: Number,
+        default: 0
+      }
     }, Mixins.colorProps),
 
     render: function render() {
@@ -8900,14 +8944,12 @@
         var left = props.left;
         var reveal = props.reveal;
         var className = props.className;
-        var opened = props.opened;
         var resizable = props.resizable;
         var side = props.side;
         var effect = props.effect;
         side = side || (left ? 'left' : 'right');
         effect = effect || (reveal ? 'reveal' : 'cover');
         return Utils.classNames(className, 'panel', ( obj = {
-          'panel-active': opened,
           'panel-resizable': resizable
         }, obj[("panel-" + side)] = side, obj[("panel-" + effect)] = effect, obj ), Mixins.colorClasses(props));
       },
@@ -8920,39 +8962,39 @@
     watch: {
       'props.resizable': function watchResizable(resizable) {
         var self = this;
-        if (!resizable) { return; }
-
-        if (self.f7Panel && !self.f7Panel.resizableInitialized) {
-          self.f7Panel.initResizablePanel();
-        }
+        if (!self.f7Panel) { return; }
+        if (resizable) { self.f7Panel.enableResizable(); }else { self.f7Panel.disableResizable(); }
       },
       'props.opened': function watchOpened(opened) {
         var self = this;
-        if (!self.$f7) { return; }
-        var side = self.props.side || (self.props.left ? 'left' : 'right');
+        if (!self.f7Panel) { return; }
 
         if (opened) {
-          self.$f7.panel.open(side);
+          self.f7Panel.open();
         } else {
-          self.$f7.panel.close(side);
+          self.f7Panel.close();
         }
       }
     },
 
     created: function created() {
-      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed', 'onBackdropClick', 'onPanelSwipe', 'onPanelSwipeOpen', 'onBreakpoint', 'onResize']);
+      Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed', 'onBackdropClick', 'onSwipe', 'onSwipeOpen', 'onBreakpoint', 'onCollapsedBreakpoint', 'onResize']);
     },
 
     mounted: function mounted() {
       var self = this;
       var el = self.$refs.el;
       var ref = self.props;
-      var side = ref.side;
-      var effect = ref.effect;
       var opened = ref.opened;
-      var left = ref.left;
-      var reveal = ref.reveal;
       var resizable = ref.resizable;
+      var backdrop = ref.backdrop;
+      var backdropEl = ref.backdropEl;
+      var visibleBreakpoint = ref.visibleBreakpoint;
+      var collapsedBreakpoint = ref.collapsedBreakpoint;
+      var swipe = ref.swipe;
+      var swipeOnlyClose = ref.swipeOnlyClose;
+      var swipeActiveArea = ref.swipeActiveArea;
+      var swipeThreshold = ref.swipeThreshold;
       self.$f7ready(function () {
         var $ = self.$$;
         if (!$) { return; }
@@ -8961,44 +9003,42 @@
           $('<div class="panel-backdrop"></div>').insertBefore(el);
         }
 
-        self.f7Panel = self.$f7.panel.create({
+        var params = Utils.noUndefinedProps({
           el: el,
-          resizable: resizable
+          resizable: resizable,
+          backdrop: backdrop,
+          backdropEl: backdropEl,
+          visibleBreakpoint: visibleBreakpoint,
+          collapsedBreakpoint: collapsedBreakpoint,
+          swipe: swipe,
+          swipeOnlyClose: swipeOnlyClose,
+          swipeActiveArea: swipeActiveArea,
+          swipeThreshold: swipeThreshold,
+          on: {
+            open: self.onOpen,
+            opened: self.onOpened,
+            close: self.onClose,
+            closed: self.onClosed,
+            backdropClick: self.onBackdropClick,
+            swipe: self.onSwipe,
+            swipeOpen: self.onSwipeOpen,
+            collapsedBreakpoint: self.onCollapsedBreakpoint,
+            breakpoint: self.onBreakpoint,
+            resize: self.onResize
+          }
         });
-        var events = {
-          open: self.onOpen,
-          opened: self.onOpened,
-          close: self.onClose,
-          closed: self.onClosed,
-          backdropClick: self.onBackdropClick,
-          swipe: self.onPanelSwipe,
-          swipeOpen: self.onPanelSwipeOpen,
-          breakpoint: self.onBreakpoint,
-          resize: self.onResize
-        };
-        Object.keys(events).forEach(function (ev) {
-          self.f7Panel.on(ev, events[ev]);
-        });
+        self.f7Panel = self.$f7.panel.create(params);
+
+        if (opened) {
+          self.f7Panel.open(false);
+        }
       });
-
-      if (opened) {
-        el.style.display = 'block';
-      }
-
-      var $ = self.$$;
-      if (!$) { return; }
-      var panelSide = side || (left ? 'left' : 'right');
-      var panelEffect = effect || (reveal ? 'reveal' : 'cover');
-
-      if (opened) {
-        $('html').addClass(("with-panel-" + panelSide + "-" + panelEffect));
-      }
     },
 
     beforeDestroy: function beforeDestroy() {
       var self = this;
 
-      if (self.f7Panel) {
+      if (self.f7Panel && self.f7Panel.destroy) {
         self.f7Panel.destroy();
       }
     },
@@ -9024,16 +9064,20 @@
         this.dispatchEvent('panel:backdrop-click panelBackdropClick', event);
       },
 
-      onPanelSwipe: function onPanelSwipe(event) {
+      onSwipe: function onSwipe(event) {
         this.dispatchEvent('panel:swipe panelSwipe', event);
       },
 
-      onPanelSwipeOpen: function onPanelSwipeOpen(event) {
+      onSwipeOpen: function onSwipeOpen(event) {
         this.dispatchEvent('panel:swipeopen panelSwipeOpen', event);
       },
 
       onBreakpoint: function onBreakpoint(event) {
         this.dispatchEvent('panel:breakpoint panelBreakpoint', event);
+      },
+
+      onCollapsedBreakpoint: function onCollapsedBreakpoint(event) {
+        this.dispatchEvent('panel:collapsedbreakpoint panelCollapsedBreakpoint', event);
       },
 
       onResize: function onResize(event) {
@@ -9042,23 +9086,20 @@
 
       open: function open(animate) {
         var self = this;
-        if (!self.$f7) { return; }
-        var side = self.props.side || (self.props.left ? 'left' : 'right');
-        self.$f7.panel.open(side, animate);
+        if (!self.f7Panel) { return; }
+        self.f7Panel.open(animate);
       },
 
       close: function close(animate) {
         var self = this;
-        if (!self.$f7) { return; }
-        var side = self.props.side || (self.props.left ? 'left' : 'right');
-        self.$f7.panel.close(side, animate);
+        if (!self.f7Panel) { return; }
+        self.f7Panel.close(animate);
       },
 
       toggle: function toggle(animate) {
         var self = this;
-        if (!self.$f7) { return; }
-        var side = self.props.side || (self.props.left ? 'left' : 'right');
-        self.$f7.panel.toggle(side, animate);
+        if (!self.f7Panel) { return; }
+        self.f7Panel.toggle(animate);
       },
 
       dispatchEvent: function dispatchEvent(events) {
@@ -9401,7 +9442,8 @@
         type: [Boolean, String],
         default: false
       },
-      swipeHandler: [String, Object, window.HTMLElement]
+      swipeHandler: [String, Object, window.HTMLElement],
+      push: Boolean
     }, Mixins.colorProps),
 
     render: function render() {
@@ -9412,8 +9454,10 @@
       var id = props.id;
       var style = props.style;
       var tabletFullscreen = props.tabletFullscreen;
+      var push = props.push;
       var classes = Utils.classNames(className, 'popup', {
-        'popup-tablet-fullscreen': tabletFullscreen
+        'popup-tablet-fullscreen': tabletFullscreen,
+        'popup-push': push
       }, Mixins.colorClasses(props));
       return _h('div', {
         ref: 'el',
@@ -10116,6 +10160,10 @@
       roundIos: Boolean,
       roundMd: Boolean,
       roundAurora: Boolean,
+      strong: Boolean,
+      strongIos: Boolean,
+      strongMd: Boolean,
+      strongAurora: Boolean,
       tag: {
         type: String,
         default: 'div'
@@ -10135,6 +10183,10 @@
       var roundIos = props.roundIos;
       var roundAurora = props.roundAurora;
       var roundMd = props.roundMd;
+      var strong = props.strong;
+      var strongIos = props.strongIos;
+      var strongMd = props.strongMd;
+      var strongAurora = props.strongAurora;
       var id = props.id;
       var style = props.style;
       var tag = props.tag;
@@ -10147,7 +10199,11 @@
         'segmented-round': round,
         'segmented-round-ios': roundIos,
         'segmented-round-aurora': roundAurora,
-        'segmented-round-md': roundMd
+        'segmented-round-md': roundMd,
+        'segmented-strong': strong,
+        'segmented-strong-ios': strongIos,
+        'segmented-strong-md': strongMd,
+        'segmented-strong-aurora': strongAurora
       }, Mixins.colorClasses(props));
       var SegmentedTag = tag;
       return _h(SegmentedTag, {
@@ -10180,6 +10236,7 @@
       closeByBackdropClick: Boolean,
       closeByOutsideClick: Boolean,
       closeOnEscape: Boolean,
+      push: Boolean,
       swipeToClose: Boolean,
       swipeToStep: Boolean,
       swipeHandler: [String, Object, window.HTMLElement]
@@ -10197,6 +10254,7 @@
       var top = props.top;
       var bottom = props.bottom;
       var position = props.position;
+      var push = props.push;
       var fixedTags;
       fixedTags = 'navbar toolbar tabbar subnavbar searchbar messagebar fab list-index'.split(' ');
       var slotsDefault = self.$slots.default;
@@ -10228,7 +10286,9 @@
 
       var positionComputed = 'bottom';
       if (position) { positionComputed = position; }else if (top) { positionComputed = 'top'; }else if (bottom) { positionComputed = 'bottom'; }
-      var classes = Utils.classNames(className, 'sheet-modal', ("sheet-modal-" + positionComputed), Mixins.colorClasses(props));
+      var classes = Utils.classNames(className, 'sheet-modal', ("sheet-modal-" + positionComputed), {
+        'sheet-modal-push': push
+      }, Mixins.colorClasses(props));
       return _h('div', {
         ref: 'el',
         style: style,
@@ -12292,7 +12352,7 @@
   };
 
   /**
-   * Framework7 Vue 4.4.7
+   * Framework7 Vue 5.0.0-beta.1
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *

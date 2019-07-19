@@ -17,6 +17,8 @@ export namespace Card {
       hideNavbarOnOpen?: boolean
       /** Will hide Toolbar on expandable card open. (default true) */
       hideToolbarOnOpen?: boolean
+      /** Will hide "Statusbar" on expandable card open. (default true) */
+      hideStatusbarOnOpen?: boolean
       /** Allows to close expandable card with swipe (default true) */
       swipeToClose?: boolean
       /** Enables expandable card backdrop layer (default true) */

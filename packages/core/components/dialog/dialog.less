@@ -22,6 +22,7 @@
   color: var(--f7-dialog-text-color);
   font-size: var(--f7-dialog-font-size);
   will-change: transform, opacity;
+  .translucent(var(--f7-dialog-bg-color-rgb));
   &.modal-in {
     opacity: 1;
     transform: translate3d(0, -50%, 0) scale(1);
@@ -72,6 +73,9 @@
   text-transform: var(--f7-dialog-button-text-transform);
   display: block;
   cursor: pointer;
+  &.active-state {
+    background-color: var(--f7-dialog-button-pressed-bg-color);
+  }
 }
 .dialog-no-buttons {
   .dialog-buttons {
@@ -120,6 +124,8 @@ html.with-modal-dialog {
     .not-scrollable();
   }
 }
+
+
 .if-ios-theme({
   @import url('./dialog-ios.less');
 });

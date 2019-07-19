@@ -89,8 +89,6 @@ export namespace View {
     xhrCacheDuration?: number
     /**	Enables dynamic navbar for iOS theme */
     iosDynamicNavbar?: boolean
-    /**	When enabled will extract dynamic navbar HTML element from page element and put it as a child of Views element. It improves dynamic navbar transition appearance, but in case you need dynamic navbar to be always as a page's child, then disable this parameter */
-    iosSeparateDynamicNavbar?: boolean
     /**	This option (when enabled) gives more native look for dynamic navbar left back-link icon animation. Useful only when you use dynamic navbar with default back-link icon on left side set as "sliding". */
     iosAnimateNavbarBackIcon?: boolean
     /**	Enable/disable ability to swipe back from left edge of screen to get to the previous page. For iOS theme */

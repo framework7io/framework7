@@ -2,10 +2,6 @@
   .notification {
     transition-duration: 450ms;
     transform: translate3d(0%, -200%, 0);
-    @supports (backdrop-filter: blur(10px)) {
-      background: var(--f7-notification-translucent-bg-color-ios);
-      backdrop-filter: blur(10px);
-    }
     &.modal-in {
       transform: translate3d(0%, 0%, 0);
       opacity: 1;

@@ -6,14 +6,17 @@ export default {
   name: 'panel',
   params: {
     panel: {
-      leftBreakpoint: 0,
-      rightBreakpoint: 0,
-      swipe: undefined, // or 'left' or 'right' or 'both'
-      swipeActiveArea: 0,
-      swipeCloseActiveAreaSide: 0,
-      swipeCloseOpposite: true,
+      opened: undefined, // default based on panel-in class
+      side: undefined, // default based on panel class
+      effect: undefined, // default based on panel class
+      resizable: undefined, // default based on panel-resizable class
+      backdrop: true,
+      backdropEl: undefined,
+      visibleBreakpoint: undefined,
+      collapsedBreakpoint: undefined,
+      swipe: false, // or true
       swipeOnlyClose: false,
-      swipeNoFollow: false,
+      swipeActiveArea: 0,
       swipeThreshold: 0,
       closeByBackdropClick: true,
     },
@@ -29,176 +32,48 @@ export default {
   create() {
     const app = this;
     Utils.extend(app.panel, {
-      disableResizable(panel = 'both') {
-        let side;
-        let panels = [];
-        if (typeof panel === 'string') {
-          if (panel === 'both') {
-            side = 'both';
-            panels = [app.panel.left, app.panel.right];
-          } else {
-            side = panel;
-            panels.push(app.panel[side]);
-          }
-        } else {
-          panels = [panel];
-        }
-        panels.forEach((panelInstance) => {
-          panelInstance.resizable = false;
-          panelInstance.$el.removeClass('panel-resizable');
-        });
-      },
-      enableResizable(panel = 'both') {
-        let side;
-        let panels = [];
-        if (typeof panel === 'string') {
-          if (panel === 'both') {
-            side = 'both';
-            panels = [app.panel.left, app.panel.right];
-          } else {
-            side = panel;
-            panels.push(app.panel[side]);
-          }
-        } else {
-          panels = [panel];
-        }
-        panels.forEach((panelInstance) => {
-          if (!panelInstance) return;
-          if (!panelInstance.resizableInitialized) {
-            panelInstance.initResizablePanel();
-          } else {
-            panelInstance.resizable = true;
-            panelInstance.$el.addClass('panel-resizable');
-          }
-        });
-      },
-      disableSwipe(panel = 'both') {
-        let side;
-        let panels = [];
-        if (typeof panel === 'string') {
-          if (panel === 'both') {
-            side = 'both';
-            panels = [app.panel.left, app.panel.right];
-          } else {
-            side = panel;
-            panels.push(app.panel[side]);
-          }
-        } else {
-          panels = [panel];
-        }
-        panels.forEach((panelInstance) => {
-          panelInstance.swipeable = false;
-        });
-      },
-      enableSwipe(panel = 'both') {
-        let panels = [];
-        let side;
-        if (typeof panel === 'string') {
-          side = panel;
-          if (
-            (app.params.panel.swipe === 'left' && side === 'right')
-            || (app.params.panel.swipe === 'right' && side === 'left')
-            || side === 'both'
-          ) {
-            side = 'both';
-            app.params.panel.swipe = side;
-            panels = [app.panel.left, app.panel.right];
-          } else {
-            app.params.panel.swipe = side;
-            panels.push(app.panel[side]);
-          }
-        } else if (panel) {
-          panels.push(panel);
-        }
-        panels.forEach((panelInstance) => {
-          if (!panelInstance) return;
-          if (!panelInstance.swipeInitialized) {
-            panelInstance.initSwipePanel();
-          } else {
-            panelInstance.swipeable = true;
-          }
-        });
-      },
       create(params) {
         return new Panel(app, params);
       },
-      open(side, animate) {
-        let panelSide = side;
-        if (!panelSide) {
-          if ($('.panel').length > 1) {
-            return false;
-          }
-          panelSide = $('.panel').hasClass('panel-left') ? 'left' : 'right';
-        }
-        if (!panelSide) return false;
-        if (app.panel[panelSide]) {
-          return app.panel[panelSide].open(animate);
-        }
-        const $panelEl = $(`.panel-${panelSide}`);
-        if ($panelEl.length > 0) {
-          return app.panel.create({ el: $panelEl }).open(animate);
-        }
-        return false;
+      get(el = '.panel') {
+        if (el instanceof Panel) return el;
+        if (el === 'left' || el === 'right') el = `.panel-${el}`; // eslint-disable-line
+        const $el = $(el);
+        if ($el.length === 0 || $el.length > 1) return undefined;
+        return $el[0].f7Panel;
       },
-      close(side, animate) {
-        let $panelEl;
-        let panelSide;
-        if (panelSide) {
-          panelSide = side;
-          $panelEl = $(`.panel-${panelSide}`);
-        } else {
-          $panelEl = $('.panel.panel-active');
-          panelSide = $panelEl.hasClass('panel-left') ? 'left' : 'right';
-        }
-        if (!panelSide) return false;
-        if (app.panel[panelSide]) {
-          return app.panel[panelSide].close(animate);
-        }
-        if ($panelEl.length > 0) {
-          return app.panel.create({ el: $panelEl }).close(animate);
-        }
-        return false;
+      destroy(el = '.panel') {
+        const panel = app.panel.get(el);
+        if (panel && panel.destroy) return panel.destroy();
+        return undefined;
       },
-      toggle(side, animate) {
-        let $panelEl;
-        let panelSide = side;
-        if (side) {
-          panelSide = side;
-          $panelEl = $(`.panel-${panelSide}`);
-        } else if ($('.panel.panel-active').length) {
-          $panelEl = $('.panel.panel-active');
-          panelSide = $panelEl.hasClass('panel-left') ? 'left' : 'right';
-        } else {
-          if ($('.panel').length > 1) {
-            return false;
-          }
-          panelSide = $('.panel').hasClass('panel-left') ? 'left' : 'right';
-          $panelEl = $(`.panel-${panelSide}`);
+      open(el = '.panel', animate) {
+        if (el === 'left' || el === 'right') el = `.panel-${el}`; // eslint-disable-line
+        let panel = app.panel.get(el);
+        if (panel && panel.open) return panel.open(animate);
+        if (!panel) {
+          panel = app.panel.create({ el });
+          return panel.open(animate);
         }
-        if (!panelSide) return false;
-        if (app.panel[panelSide]) {
-          return app.panel[panelSide].toggle(animate);
-        }
-        if ($panelEl.length > 0) {
-          return app.panel.create({ el: $panelEl }).toggle(animate);
-        }
-        return false;
+        return undefined;
       },
-      get(side) {
-        let panelSide = side;
-        if (!panelSide) {
-          if ($('.panel').length > 1) {
-            return undefined;
-          }
-          panelSide = $('.panel').hasClass('panel-left') ? 'left' : 'right';
+      close(el = '.panel-in', animate) {
+        if (el === 'left' || el === 'right') el = `.panel-${el}`; // eslint-disable-line
+        let panel = app.panel.get(el);
+        if (panel && panel.open) return panel.close(animate);
+        if (!panel) {
+          panel = app.panel.create({ el });
+          return panel.close(animate);
         }
-        if (!panelSide) return undefined;
-        if (app.panel[panelSide]) {
-          return app.panel[panelSide];
-        }
-        const $panelEl = $(`.panel-${panelSide}`);
-        if ($panelEl.length > 0) {
-          return app.panel.create({ el: $panelEl });
+        return undefined;
+      },
+      toggle(el = '.panel', animate) {
+        if (el === 'left' || el === 'right') el = `.panel-${el}`; // eslint-disable-line
+        let panel = app.panel.get(el);
+        if (panel && panel.toggle) return panel.toggle(animate);
+        if (!panel) {
+          panel = app.panel.create({ el });
+          return panel.toggle(animate);
         }
         return undefined;
       },
@@ -207,36 +82,49 @@ export default {
   on: {
     init() {
       const app = this;
-
-      // Create Panels
-      $('.panel').each((index, panelEl) => {
-        const side = $(panelEl).hasClass('panel-left') ? 'left' : 'right';
-        app.panel[side] = app.panel.create({ el: panelEl, side });
+      $('.panel-init').each((index, panelEl) => {
+        const params = Object.assign(
+          { el: panelEl },
+          $(panelEl).dataset() || {}
+        );
+        app.panel.create(params);
+      });
+    },
+    pageInit(page) {
+      const app = this;
+      page.$el.find('.panel-init').each((index, panelEl) => {
+        const params = Object.assign(
+          { el: panelEl },
+          $(panelEl).dataset() || {}
+        );
+        app.panel.create(params);
+      });
+    },
+    pageBeforeRemove(page) {
+      const app = this;
+      page.$el.find('.panel-init').each((index, panelEl) => {
+        const panel = app.panel.get(panelEl);
+        if (panel && panel.destroy) panel.destroy();
       });
     },
   },
   clicks: {
     '.panel-open': function open(clickedEl, data = {}) {
       const app = this;
-      let side = 'left';
-      if (data.panel === 'right' || ($('.panel').length === 1 && $('.panel').hasClass('panel-right'))) {
-        side = 'right';
-      }
-      app.panel.open(side, data.animate);
+      app.panel.open(data.panel, data.animate);
     },
     '.panel-close': function close(clickedEl, data = {}) {
       const app = this;
-      const side = data.panel;
-      app.panel.close(side, data.animate);
+      app.panel.close(data.panel, data.animate);
     },
     '.panel-toggle': function close(clickedEl, data = {}) {
       const app = this;
-      const side = data.panel;
-      app.panel.toggle(side, data.animate);
+      app.panel.toggle(data.panel, data.animate);
     },
     '.panel-backdrop': function close() {
       const app = this;
-      const $panelEl = $('.panel-active');
+      const $panelEl = $('.panel-in:not(.panel-out)');
+      if (!$panelEl.length) return;
       const instance = $panelEl[0] && $panelEl[0].f7Panel;
       $panelEl.trigger('panel:backdrop-click');
       if (instance) {

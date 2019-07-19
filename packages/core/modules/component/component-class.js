@@ -1,3 +1,4 @@
+/* eslint no-underscore-dangle: "off" */
 import { window, document } from 'ssr-window';
 import $ from 'dom7';
 import Template7 from 'template7';
@@ -6,7 +7,7 @@ import vdom from './vdom';
 import patch from './patch';
 
 class Framework7Component {
-  constructor(app, options, extendContext = {}) {
+  constructor(app, options, extendContext = {}, children = []) {
     const id = Utils.id();
     const self = Utils.merge(
       this,
@@ -19,6 +20,7 @@ class Framework7Component {
         $f7: app,
         $options: Utils.extend({ id }, options),
         $id: options.id || id,
+        $children: children,
       }
     );
     const { $options } = self;
@@ -48,17 +50,16 @@ class Framework7Component {
       set() {},
     });
 
-    // Apply context
-    ('beforeCreate created beforeMount mounted beforeDestroy destroyed updated').split(' ').forEach((cycleKey) => {
-      if ($options[cycleKey]) $options[cycleKey] = $options[cycleKey].bind(self);
-    });
+    // Bind hooks
+    ['beforeCreate', 'created', 'beforeMount', 'mounted', 'beforeDestroy', 'destroyed', 'updated']
+      .forEach((cycleKey) => {
+        if ($options[cycleKey]) $options[cycleKey] = $options[cycleKey].bind(self);
+      });
 
-    if ($options.data) {
-      $options.data = $options.data.bind(self);
-      // Data
-      Utils.extend(self, $options.data());
-    }
+    // Bind render
     if ($options.render) $options.render = $options.render.bind(self);
+
+    // Bind methods
     if ($options.methods) {
       Object.keys($options.methods).forEach((methodName) => {
         self[methodName] = $options.methods[methodName].bind(self);
@@ -77,41 +78,71 @@ class Framework7Component {
       });
     }
 
-    // Before create hook
-    if ($options.beforeCreate) $options.beforeCreate();
+    // Bind Data
+    if ($options.data) $options.data = $options.data.bind(self);
 
-    // Render
-    let html = self.$render();
+    return new Promise((resolve, reject) => {
+      self.$hook('data', true)
+        .then((data) => {
+          if (data) Utils.extend(self, data);
+          self.$hook('beforeCreate');
+          let html = self.$render();
 
-    // Make Dom
-    if (html && typeof html === 'string') {
-      html = html.trim();
-      self.$vnode = vdom(html, self, app, true);
-      self.el = document.createElement('div');
-      patch(self.el, self.$vnode);
-    } else if (html) {
-      self.el = html;
-    }
-    self.$el = $(self.el);
+          if (self.$options.el) {
+            html = html.trim();
+            self.$vnode = vdom(html, self, true);
+            if ($options.style) {
+              self.$styleEl = document.createElement('style');
+              self.$styleEl.innerHTML = $options.style;
+              if ($options.styleScoped) {
+                self.$vnode.data.attrs[`data-f7-${$options.id}`] = '';
+              }
+            }
+            self.el = self.$options.el;
+            patch(self.el, self.$vnode);
+            self.el = self.$vnode.elm;
+            self.$el = $(self.el);
 
-    // Set styles scope ID
-    if ($options.style) {
-      self.$styleEl = document.createElement('style');
-      self.$styleEl.innerHTML = $options.style;
-      if ($options.styleScoped) {
-        self.el.setAttribute(`data-f7-${$options.id}`, '');
-      }
-    }
+            self.$attachEvents();
+            self.el.f7Component = self;
+            self.$hook('created');
+            self.$mount();
+            resolve(self);
+            return;
+          }
+          // Make Dom
+          if (html && typeof html === 'string') {
+            html = html.trim();
+            self.$vnode = vdom(html, self, true);
+            if ($options.style && $options.styleScoped) {
+              self.$vnode.data.attrs[`data-f7-${$options.id}`] = '';
+            }
+            self.el = document.createElement(self.$vnode.sel || 'div');
+            patch(self.el, self.$vnode);
+            self.$el = $(self.el);
+          } else if (html) {
+            self.el = html;
+            self.$el = $(self.el);
+            if ($options.style && $options.styleScoped) {
+              self.el.setAttribute(`data-f7-${$options.id}`, '');
+            }
+          }
+          if ($options.style) {
+            self.$styleEl = document.createElement('style');
+            self.$styleEl.innerHTML = $options.style;
+          }
 
-    self.$attachEvents();
+          self.$attachEvents();
 
-    // Created callback
-    if ($options.created) $options.created();
+          self.el.f7Component = self;
 
-    // Store component instance
-    self.el.f7Component = self;
-
-    return self;
+          self.$hook('created');
+          resolve(self);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
   }
 
   $attachEvents() {
@@ -165,38 +196,59 @@ class Framework7Component {
     return html;
   }
 
-  $forceUpdate() {
+  $tick(callback) {
     const self = this;
-    let html = self.$render();
+    window.requestAnimationFrame(() => {
+      if (self.__updateIsPending) {
+        window.requestAnimationFrame(() => {
+          callback();
+        });
+      } else {
+        callback();
+      }
+    });
+  }
 
-    // Make Dom
-    if (html && typeof html === 'string') {
-      html = html.trim();
-      const newVNode = vdom(html, self, self.$app);
-      self.$vnode = patch(self.$vnode, newVNode);
-    }
+  $update() {
+    const self = this;
+    window.cancelAnimationFrame(self.__requestAnimationFrameId);
+    delete self.__requestAnimationFrameId;
+    self.__updateIsPending = true;
+    self.__requestAnimationFrameId = window.requestAnimationFrame(() => {
+      let html = self.$render();
+
+      // Make Dom
+      if (html && typeof html === 'string') {
+        html = html.trim();
+        const newVNode = vdom(html, self, false);
+        self.$vnode = patch(self.$vnode, newVNode);
+      }
+      self.__updateIsPending = false;
+      delete self.__updateIsPending;
+    });
   }
 
   $setState(mergeState) {
     const self = this;
     Utils.merge(self, mergeState);
-    self.$forceUpdate();
+    self.$update();
   }
 
   $mount(mountMethod) {
     const self = this;
-    if (self.$options.beforeMount) self.$options.beforeMount();
+    self.$hook('beforeMount');
     if (self.$styleEl) $('head').append(self.$styleEl);
     if (mountMethod) mountMethod(self.el);
-    if (self.$options.mounted) self.$options.mounted();
+    self.$hook('mounted');
   }
 
   $destroy() {
     const self = this;
-    if (self.$options.beforeDestroy) self.$options.beforeDestroy();
+    self.$hook('beforeDestroy');
+
     if (self.$styleEl) $(self.$styleEl).remove();
     self.$detachEvents();
-    if (self.$options.destroyed) self.$options.destroyed();
+    self.$hook('destroyed');
     // Delete component instance
     if (self.el && self.el.f7Component) {
       self.el.f7Component = null;
@@ -206,7 +258,33 @@ class Framework7Component {
     if (self.$vnode) {
       self.$vnode = patch(self.$vnode, { sel: self.$vnode.sel, data: {} });
     }
+    // Clear update queue
+    window.cancelAnimationFrame(self.__requestAnimationFrameId);
+
+    // Delete all props
     Utils.deleteProps(self);
+  }
+
+  $hook(name, async) {
+    const self = this;
+    if (async) {
+      return new Promise((resolve, reject) => {
+        if (!self.$options[name]) {
+          resolve();
+          return;
+        }
+        const result = self.$options[name]();
+        if (result instanceof Promise) {
+          result
+            .then(res => resolve(res))
+            .catch(err => reject(err));
+          return;
+        }
+        resolve(result);
+      });
+    }
+    if (self.$options[name]) return self.$options[name]();
+    return undefined;
   }
 }
 

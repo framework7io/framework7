@@ -224,8 +224,9 @@
     top: 0;
     width: 100%;
     height: var(--f7-timeline-horizontal-date-height);
-    background-color: var(--f7-bars-bg-color, var(--f7-theme-color));
+    background-color: var(--f7-bars-bg-color);
     color: var(--f7-bars-text-color);
+    .translucent(var(--f7-bars-bg-color-rgb));
     .hairline(bottom, var(--f7-timeline-horizontal-item-date-border-color));
     .bar-shadow-bottom(var(--f7-timeline-horizontal-item-date-shadow-image));
     .ltr({
@@ -308,8 +309,9 @@
   width: 100%;
   box-sizing: border-box;
   padding: 0 var(--f7-timeline-horizontal-item-padding);
-  background-color: var(--f7-bars-bg-color, var(--f7-theme-color));
+  background-color: var(--f7-bars-bg-color);
   color: var(--f7-bars-text-color);
+  .translucent(var(--f7-bars-bg-color-rgb));
   span {
     display: inline-block;
     position: sticky;

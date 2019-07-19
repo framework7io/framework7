@@ -401,6 +401,7 @@ class ColorPicker extends Framework7Class {
     return `
     <div class="navbar">
       <div class="navbar-inner sliding">
+        <div class="navbar-bg"></div>
         ${openIn === 'page' ? `
         <div class="left">
           <a class="link back">

@@ -16,6 +16,7 @@ declare namespace F7Sheet {
     closeByBackdropClick? : boolean
     closeByOutsideClick? : boolean
     closeOnEscape? : boolean
+    push? : boolean
     swipeToClose? : boolean
     swipeToStep? : boolean
     swipeHandler? : string | Object | any

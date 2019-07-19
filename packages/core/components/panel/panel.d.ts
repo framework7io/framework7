@@ -2,6 +2,61 @@ import { Dom7Instance } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
 export namespace Panel {
+  interface Events {
+    /** Event will be triggered when Panel starts its opening animation. As an argument event handler receives panel instance */
+    open: (panel : Panel) => void
+    /** Event will be triggered when Panel completes its opening animation. As an argument event handler receives panel instance */
+    opened: (panel : Panel) => void
+    /** Event will be triggered when Panel starts its closing animation. As an argument event handler receives panel instance */
+    close: (panel : Panel) => void
+    /** Event will be triggered after Notification completes its closing animation. As an argument event handler receives notification instance */
+    closed: (panel : Panel) => void
+    /** Event will be triggered when the panel backdrop is clicked. As an argument event handler receives panel instance */
+    backdropClick: (panel : Panel) => void
+    /** Event will be triggered in the very beginning of opening it with swipe. As an argument event handler receives panel instance */
+    swipeOpen: (panel : Panel) => void
+    /** Event will be triggered for swipe panel during touch swipe action. As an argument event handler receives panel instance and opened progress (from 0 to 1) */
+    swipe: (panel : Panel, progress: number) => void
+    /** Event will be triggered when it becomes collapsed/hidden when app width matches its collapsedBreakpoint. As an argument event handler receives panel instance */
+    collapsedBreakpoint: (panel : Panel) => void
+    /** Event will be triggered when it becomes visible/hidden when app width matches its breakpoint. As an argument event handler receives panel instance */
+    breakpoint: (panel : Panel) => void
+    /** Event will be triggered right when resizable Panel resized */
+    resize: (panel : Panel, panelWidth: number) => void
+    /** Event will be triggered right before Panel instance will be destroyed */
+    beforeDestroy: (panel : Panel) => void
+  }
+  interface Parameters {
+    /** Panel element. */
+    el?: HTMLElement
+    /** Panel element HTML string. */
+    content?: string
+    /** Can be left or right. If not passed then will be determined based on panel-left or panel-right element classes. */
+    side?: string
+    /** Can be cover or reveal. If not passed then will be determined based on panel-cover or panel-reveal element classes. */
+    effect?: string
+    /** Enables resizable panel */
+    resizable?: string
+    /** Enables Panel backdrop (dark semi transparent layer behind). (default true) */
+    backdrop?: boolean
+    /** Option to pass custom backdrop element */
+    backdropEl?: HTMLElement | CSSSelector
+    /** Minimal app width (in px) when panel becomes always visible. */
+    visibleBreakpoint?: number
+    /** Minimal app width (in px) when panel becomes visible but collapsed. */
+    collapsedBreakpoint?: number
+    /** Enables ability to open/close panel with swipe (default false) */
+    swipe?: boolean
+    /** This parameter allows to close (but not open) panel with swipes. (default false) */
+    swipeOnlyClose?: boolean
+    /** Width (in px) of invisible edge from the screen that triggers swipe panel. (default 0) */
+    swipeActiveArea?: number
+    /** Panel will not move with swipe if "touch distance" will be less than this value (in px).. (default 0) */
+    swipeThreshold?: number
+    /** Enable/disable ability to close panel by clicking outside of panel (on panel's backdrop). (default true) */
+    closeByBackdropClick? : boolean
+  }
+
   interface Panel extends Framework7EventsClass<Events>{
     /** Link to global app instance */
     app : Framework7
@@ -30,43 +85,32 @@ export namespace Panel {
     toggle(animate : boolean) : void
     /** Destroy panel instance */
     destroy() : void
+
+    /** Enable visible breakpoint */
+    enableVisibleBreakpoint() : void
+    /** Disable visible breakpoint */
+    disableVisibleBreakpoint() : void
+    /** Toggle visible breakpoint */
+    toggleVisibleBreakpoint() : void
+
+    /** Enable collapsed breakpoint */
+    enableCollapsedBreakpoint() : void
+    /** Disable collapsed breakpoint */
+    disableCollapsedBreakpoint() : void
+    /** Toggle collapsed breakpoint */
+    toggleCollapsedBreakpoint() : void
+
+    /** Enable resizable panel */
+    enableResizable() : void
+    /** Disable resizable panel */
+    disableResizable() : void
+
+    /** Enable swipeable panel */
+    enableSwipe() : void
+    /** Disable swipeable panel */
+    disableSwipe() : void
   }
 
-  interface Parameters {
-    /** Panel element. */
-    el?: HTMLElement
-    /** Panel element HTML string. */
-    content?: string
-    /** Can be left or right. If not passed then will be determined based on panel-left or panel-right element classes. */
-    side?: string
-    /** Can be cover or reveal. If not passed then will be determined based on panel-cover or panel-reveal element classes. */
-    effect?: string
-    /** Enables resizable panel */
-    resizable?: string
-  }
-
-  interface Events {
-    /** Event will be triggered when Panel starts its opening animation. As an argument event handler receives panel instance */
-    open: (panel : Panel) => void
-    /** Event will be triggered when Panel completes its opening animation. As an argument event handler receives panel instance */
-    opened: (panel : Panel) => void
-    /** Event will be triggered when Panel starts its closing animation. As an argument event handler receives panel instance */
-    close: (panel : Panel) => void
-    /** Event will be triggered after Notification completes its closing animation. As an argument event handler receives notification instance */
-    closed: (panel : Panel) => void
-    /** Event will be triggered when the panel backdrop is clicked. As an argument event handler receives panel instance */
-    backdropClick: (panel : Panel) => void
-    /** Event will be triggered in the very beginning of opening it with swipe. As an argument event handler receives panel instance */
-    swipeOpen: (panel : Panel) => void
-    /** Event will be triggered for swipe panel during touch swipe action. As an argument event handler receives panel instance and opened progress (from 0 to 1) */
-    swipe: (panel : Panel, progress: number) => void
-    /** Event will be triggered when it becomes visible/hidden when app width matches its breakpoint. As an argument event handler receives panel instance */
-    breakpoint: (panel : Panel) => void
-    /** Event will be triggered right when resizable Panel resized */
-    resize: (panel : Panel, panelWidth: number) => void
-    /** Event will be triggered right before Panel instance will be destroyed */
-    beforeDestroy: (panel : Panel) => void
-  }
 
   interface DomEvents {
     /** Event will be triggered when Panel starts its opening animation */
@@ -85,6 +129,8 @@ export namespace Panel {
     'panel:swipe': () => void
     /** Event will be triggered when it becomes visible/hidden when app width matches its breakpoint */
     'panel:breakpoint': () => void
+    /** Event will be triggered when it becomes collapsed/hidden when app width matches its collapsedBreakpoint */
+    'panel:collapsedbreakpoint': () => void
     /** Event will be triggered right when resizable Panel resized */
     'panel:resize': () => void
     /** Event will be triggered right before Panel instance will be destroyed */
@@ -93,51 +139,22 @@ export namespace Panel {
 
   interface AppMethods {
     panel: {
-      /** open panel */
-      open(side?: 'left' | 'right', animate?: boolean) : boolean
-      /** close panel */
-      close(side?: 'left' | 'right', animate?: boolean) : boolean
-      /** toggle panel */
-      toggle(side?: 'left' | 'right', animate?: boolean) : boolean
       /** create new panel instance */
       create(parameters : Parameters) : Panel
+      /** open panel */
+      open(el?: HTMLElement | CSSSelector | Panel | 'left' | 'right', animate?: boolean) : boolean
+      /** close panel */
+      close(el?: HTMLElement | CSSSelector | Panel | 'left' | 'right', animate?: boolean) : boolean
+      /** toggle panel */
+      toggle(el?: HTMLElement | CSSSelector | Panel | 'left' | 'right', animate?: boolean) : boolean
       /** get Panel instance by specified side */
-      get(side : 'left' | 'right') : Panel
-      /** enable swipes for panel (swipe-to-close and swipe-to-open) */
-      enableSwipe(side : 'left' | 'right') : void
-      /** disable swipes for panel (swipe-to-close and swipe-to-open) */
-      disableSwipe(side : 'left' | 'right') : void
-      /** makes panel resizable */
-      enableResizable(side : 'left' | 'right') : void
-      /** disable panel resizing */
-      disableResizable(side : 'left' | 'right') : void
-      /** left panel instance */
-      left : Panel
-      /** right panel instance */
-      right : Panel
+      get(el?: HTMLElement | CSSSelector | Panel | 'left' | 'right', animate?: boolean) : Panel
+      /** destroy Panel instance */
+      destroy(el : HTMLElement | CSSSelector | Panel | 'left' | 'right') : void
     }
   }
   interface AppParams {
-    panel?: {
-      /** Minimal app width (in px) when left panel becomes always visible. */
-      leftBreakpoint? : number
-      /** Minimal app width (in px) when right panel becomes always visible. */
-      rightBreakpoint? : number
-      /** Disabled by default. If you want to enable ability to open/close side panels with swipe you can pass here left (for left panel) or right (for right panel) or both (for both panels).. */
-      swipe? : string
-      /** Width (in px) of invisible edge from the screen that triggers swipe panel. (default 0) */
-      swipeActiveArea? : number
-      /** This parameter gives ability to close opposite panel by swipe. For example, if your swipePanel is "left", then you could close "right" panel also with swipe.. (default true) */
-      swipeCloseOpposite? : boolean
-      /** This parameter allows to close (but not open) panels with swipes. (default false) */
-      swipeOnlyClose? : boolean
-      /** Fallback option for potentially better performance on old/slow devices. If you enable it, then side panel will not follow your finger during touch, it will be automatically opened/closed on swipe left/right.. (default false) */
-      swipeNoFollow? : boolean
-      /** Panel will not move with swipe if "touch distance" will be less than this value (in px).. (default 0) */
-      swipeThreshold? : number
-      /** Enable/disable ability to close panel by clicking outside of panel (on panel's backdrop). (default true) */
-      closeByBackdropClick? : boolean
-    } | undefined
+    panel?: Parameters | undefined
   }
   interface AppEvents {
     /** Event will be triggered when Panel starts its opening animation. As an argument event handler receives panel instance */
@@ -154,6 +171,8 @@ export namespace Panel {
     panelSwipeOpen: (panel : Panel) => void
     /** Event will be triggered for swipe panel during touch swipe action. As an argument event handler receives panel instance and opened progress (from 0 to 1) */
     panelSwipe: (panel : Panel, progress: number) => void
+    /** Event will be triggered when it becomes collapsed/hidden when app width matches its collapsedBreakpoint. As an argument event handler receives panel instance */
+    panelCollapsedBreakpoint: (panel : Panel) => void
     /** Event will be triggered when it becomes visible/hidden when app width matches its breakpoint. As an argument event handler receives panel instance */
     panelBreakpoint: (panel : Panel) => void
     /** Event will be triggered right when resizable Panel resized */

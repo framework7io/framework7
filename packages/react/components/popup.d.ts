@@ -16,6 +16,7 @@ declare namespace F7Popup {
     closeOnEscape? : boolean
     swipeToClose? : boolean | string
     swipeHandler? : string | Object | any
+    push? : boolean
     color? : string
     colorTheme? : string
     textColor? : string

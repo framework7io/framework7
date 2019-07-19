@@ -5,7 +5,7 @@ import View from './view-class';
 function getCurrentView(app) {
   const $popoverView = $('.popover.modal-in .view');
   const $popupView = $('.popup.modal-in .view');
-  const $panelView = $('.panel.panel-active .view');
+  const $panelView = $('.panel.panel-in .view');
   let $viewsEl = $('.views');
   if ($viewsEl.length === 0) $viewsEl = app.root;
   // Find active view as tab
@@ -83,7 +83,6 @@ export default {
       animate: true,
       // iOS Dynamic Navbar
       iosDynamicNavbar: true,
-      iosSeparateDynamicNavbar: true,
       // Animate iOS Navbar Back Icon
       iosAnimateNavbarBackIcon: true,
       // Delays

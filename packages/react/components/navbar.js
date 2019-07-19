@@ -109,6 +109,7 @@ class F7Navbar extends React.Component {
       noShadow,
       noHairline,
       large,
+      largeTransparent,
       titleLarge
     } = props;
     let innerEl;
@@ -121,8 +122,6 @@ class F7Navbar extends React.Component {
     const slots = self.slots;
     const classes = Utils.classNames(className, 'navbar', {
       'navbar-hidden': hidden,
-      'no-shadow': noShadow,
-      'no-hairline': noHairline,
       'navbar-large': large
     }, Mixins.colorClasses(props));
 
@@ -175,11 +174,16 @@ class F7Navbar extends React.Component {
       },
       className: Utils.classNames('navbar-inner', innerClass, innerClassName, {
         sliding,
+        'no-shadow': noShadow,
+        'no-hairline': noHairline,
         'navbar-inner-left-title': addLeftTitleClass,
         'navbar-inner-centered-title': addCenterTitleClass,
-        'navbar-inner-large': large
+        'navbar-inner-large': large,
+        'navbar-inner-large-transparent': largeTransparent
       })
-    }, leftEl, titleEl, rightEl, titleLargeEl, this.slots['default']);
+    }, React.createElement('div', {
+      className: 'navbar-bg'
+    }), leftEl, titleEl, rightEl, titleLargeEl, this.slots['default']);
     return React.createElement('div', {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
@@ -274,6 +278,7 @@ __reactComponentSetProps(F7Navbar, Object.assign({
   innerClass: String,
   innerClassName: String,
   large: Boolean,
+  largeTransparent: Boolean,
   titleLarge: String
 }, Mixins.colorProps));
 
