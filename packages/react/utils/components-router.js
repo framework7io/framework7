@@ -153,7 +153,7 @@ export default {
           tabRouter = tabData;
         }
       });
-      const hasComponent = !!tabRouter.tabContent;
+      const hasComponent = tabRouter && tabRouter.component;
       if (!tabRouter || !hasComponent) {
         tabEl.innerHTML = ''; // eslint-disable-line
         return;

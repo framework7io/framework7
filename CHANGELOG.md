@@ -2,6 +2,24 @@
 
 # Change Log
 
+# [v4.4.7](https://github.com/framework7io/framework7/compare/v4.4.6...v4.4.7) - July 19, 2019
+  * Core
+    * Card
+      * Fixed issue when `data-close-by-backdrop-click` was ignored
+    * Sheet
+      * New `sheet:stepprogress` and `sheetStepPropgress` events firing during swipe step
+    * Inputs
+      * New `--f7-input-padding-left` and `--f7-input-padding-right` CSS variables
+      * New `--f7-textarea-height` CSS variable
+    * Device
+      * Fixed iOS 13 iPad detection when it is in desktop mode
+    * View/Router
+      * Fixed issue when `currentView` may not return View in tabs layout
+      * Fixed issue when returning to previous page could block its scroll in iOS
+    * Tooltip
+      * Fixed issue when tooltip wasn't initialized if added dynamically with VDOM
+  * Minor fixes
+
 # [v4.4.6](https://github.com/framework7io/framework7/compare/v4.4.5...v4.4.6) - July 1, 2019
   * Core
     * Router

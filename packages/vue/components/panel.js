@@ -113,18 +113,21 @@ export default {
 
       self.f7Panel = self.$f7.panel.create({
         el,
-        resizable,
-        on: {
-          open: self.onOpen,
-          opened: self.onOpened,
-          close: self.onClose,
-          closed: self.onClosed,
-          backdropClick: self.onBackdropClick,
-          swipe: self.onPanelSwipe,
-          swipeOpen: self.onPanelSwipeOpen,
-          breakpoint: self.onBreakpoint,
-          resize: self.onResize
-        }
+        resizable
+      });
+      const events = {
+        open: self.onOpen,
+        opened: self.onOpened,
+        close: self.onClose,
+        closed: self.onClosed,
+        backdropClick: self.onBackdropClick,
+        swipe: self.onPanelSwipe,
+        swipeOpen: self.onPanelSwipeOpen,
+        breakpoint: self.onBreakpoint,
+        resize: self.onResize
+      };
+      Object.keys(events).forEach(ev => {
+        self.f7Panel.on(ev, events[ev]);
       });
     });
 

@@ -1,5 +1,5 @@
 /**
- * Framework7 4.4.6
+ * Framework7 4.4.7
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 1, 2019
+ * Released on: July 19, 2019
  */
 
 /*====================
@@ -824,8 +824,9 @@ html.device-full-viewport body {
   top: 0;
   width: 100%;
   height: 100%;
-  transform: translate3d(0, 0, 0);
+  transform: none;
   background-color: var(--f7-page-bg-color);
+  z-index: 1;
 }
 .page.stacked {
   display: none;
@@ -1174,7 +1175,7 @@ html.device-full-viewport body {
   left: var(--f7-page-master-width);
 }
 .view-master-detail .page-master {
-  z-index: 1;
+  z-index: 2;
   transform: none;
   pointer-events: auto;
 }
@@ -2716,6 +2717,10 @@ html.device-full-viewport body {
 .md .tabbar-labels a.link {
   padding-left: 0;
   padding-right: 0;
+}
+.md .tabbar a.icon-only,
+.md .tabbar-labels a.icon-only {
+  flex-shrink: initial;
 }
 .md .tabbar a.tab-link,
 .md .tabbar-labels a.tab-link {
@@ -9580,6 +9585,8 @@ html.with-panel-right-cover .panel-right {
   --f7-input-bg-color: transparent;
   --f7-label-font-weight: 400;
   --f7-label-line-height: 1.2;
+  --f7-input-padding-left: 0px;
+  --f7-input-padding-right: 0px;
   --f7-input-error-text-color: #ff3b30;
   --f7-input-error-font-size: 12px;
   --f7-input-error-line-height: 1.4;
@@ -9590,6 +9597,7 @@ html.with-panel-right-cover .panel-right {
   --f7-input-outline-border-color: #999;
   --f7-input-outline-border-radius: 4px;
   --f7-input-outline-padding-horizontal: 12px;
+  --f7-textarea-height: 100px;
   /*
   --f7-input-outline-focused-border-color: var(--f7-theme-color);
   --f7-input-outline-invalid-border-color: var(--f7-input-error-text-color);
@@ -9747,6 +9755,8 @@ textarea {
   color: var(--f7-input-text-color);
   font-size: var(--f7-input-font-size);
   background-color: var(--f7-input-bg-color, transparent);
+  padding-left: var(--f7-input-padding-left);
+  padding-right: var(--f7-input-padding-right);
 }
 .list input[type="text"]::-webkit-input-placeholder,
 .list input[type="password"]::-webkit-input-placeholder,
@@ -9806,10 +9816,12 @@ textarea {
   font-size: var(--f7-input-font-size);
   resize: none;
   line-height: 1.4;
-  height: 100px;
+  height: var(--f7-textarea-height);
   background-color: var(--f7-input-bg-color, transparent);
   padding-top: var(--f7-textarea-padding-vertical);
   padding-bottom: var(--f7-textarea-padding-vertical);
+  padding-left: var(--f7-input-padding-left);
+  padding-right: var(--f7-input-padding-right);
 }
 .list textarea::-webkit-input-placeholder {
   color: var(--f7-input-placeholder-color);
@@ -9853,6 +9865,7 @@ textarea {
   width: auto;
   max-width: calc(100% / var(--f7-floating-label-scale));
   pointer-events: none;
+  left: var(--f7-input-padding-left);
   transform-origin: left center;
 }
 .list .item-floating-label ~ .item-input-wrap input::-webkit-input-placeholder,
@@ -10053,7 +10066,7 @@ textarea {
 .input-dropdown input,
 .input-dropdown-wrap textarea,
 .input-dropdown textarea {
-  padding-right: 20px;
+  padding-right: calc(20px + var(--f7-input-padding-right));
 }
 .input-outline:after,
 .item-input-outline .item-input-wrap:after {
@@ -10081,13 +10094,16 @@ textarea {
 }
 .input-outline input,
 .item-input-outline input,
+.list .item-input-outline input,
 .input-outline textarea,
 .item-input-outline textarea,
+.list .item-input-outline textarea,
 .input-outline select,
-.item-input-outline select {
+.item-input-outline select,
+.list .item-input-outline select {
+  border-radius: var(--f7-input-outline-border-radius);
   padding-left: var(--f7-input-outline-padding-horizontal);
   padding-right: var(--f7-input-outline-padding-horizontal);
-  border-radius: var(--f7-input-outline-border-radius);
 }
 .input-outline.input-dropdown:before,
 .item-input-outline .input-dropdown-wrap:before {

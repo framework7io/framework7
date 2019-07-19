@@ -1,5 +1,5 @@
 /**
- * Framework7 4.4.6
+ * Framework7 4.4.7
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 1, 2019
+ * Released on: July 19, 2019
  */
 
 /*====================
@@ -824,8 +824,9 @@ html.device-full-viewport body {
   top: 0;
   width: 100%;
   height: 100%;
-  transform: translate3d(0, 0, 0);
+  transform: none;
   background-color: var(--f7-page-bg-color);
+  z-index: 1;
 }
 .page.stacked {
   display: none;
@@ -1174,7 +1175,7 @@ html.device-full-viewport body {
   left: var(--f7-page-master-width);
 }
 .view-master-detail .page-master {
-  z-index: 1;
+  z-index: 2;
   transform: none;
   pointer-events: auto;
 }
@@ -2716,6 +2717,10 @@ html.device-full-viewport body {
 .md .tabbar-labels a.link {
   padding-left: 0;
   padding-right: 0;
+}
+.md .tabbar a.icon-only,
+.md .tabbar-labels a.icon-only {
+  flex-shrink: initial;
 }
 .md .tabbar a.tab-link,
 .md .tabbar-labels a.tab-link {
