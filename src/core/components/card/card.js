@@ -471,9 +471,9 @@ export default {
       if (app.params.card.closeByBackdropClick) needToClose = true;
       const $openedCardEl = $('.card-opened');
       if (!$openedCardEl.length) return;
-      if ($openedCardEl.attr('data-close-on-backdrop-click') === 'true') {
+      if ($openedCardEl.attr('data-close-by-backdrop-click') === 'true') {
         needToClose = true;
-      } else if ($openedCardEl.attr('data-close-on-backdrop-click') === 'false') {
+      } else if ($openedCardEl.attr('data-close-by-backdrop-click') === 'false') {
         needToClose = false;
       }
       if (needToClose) app.card.close($openedCardEl);
