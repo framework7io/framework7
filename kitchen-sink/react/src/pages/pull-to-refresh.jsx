@@ -58,7 +58,7 @@ export default class extends React.Component {
       items.push({
         title: song,
         author,
-        img: picURL,
+        cover: picURL,
       });
       self.setState({ items });
 
