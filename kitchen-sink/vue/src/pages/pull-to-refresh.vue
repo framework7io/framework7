@@ -62,7 +62,7 @@
           self.items.push({
             title: song,
             author,
-            img: picURL,
+            cover: picURL,
           });
 
           done();
