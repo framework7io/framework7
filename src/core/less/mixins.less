@@ -277,8 +277,16 @@
   font-size: 20px;
 }
 
-.translucent(@color) {
-  .ios-translucent & {
+.ios-translucent-bars(@color) {
+  .ios-translucent-bars & {
+    @supports (backdrop-filter: blur(20px)) {
+      background-color: rgba(@color, var(--f7-bars-translucent-alpha));
+      backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
+    }
+  }
+}
+.ios-translucent-modals(@color) {
+  .ios-translucent-modals & {
     @supports (backdrop-filter: blur(20px)) {
       background-color: rgba(@color, 0.8);
       backdrop-filter: saturate(180%) blur(20px);
