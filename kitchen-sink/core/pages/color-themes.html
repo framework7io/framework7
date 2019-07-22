@@ -161,7 +161,7 @@
           }
         }
         if (self.barsStyle === 'fill') {
-          const colorThemeRgb = self.$('html').css('--f7-theme-color-rgb').trim().split(', ');
+          const colorThemeRgb = self.$('html').css('--f7-theme-color-rgb').trim().split(',').map(c => c.trim());
           styles += `
 /* Invert navigation bars to fill style */
 :root,
