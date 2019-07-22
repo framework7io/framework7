@@ -431,8 +431,11 @@ const Navbar = {
       previousScrollTop = currentScrollTop;
     }
 
-    function handleScroll() {
+    function handleScroll(e) {
       scrollContent = this;
+      if (e && e.target && e.target !== scrollContent) {
+        return;
+      }
       currentScrollTop = scrollContent.scrollTop;
       scrollChanged = currentScrollTop;
 
