@@ -49,7 +49,7 @@
       </f7-page>
     </f7-popup>
 
-    <f7-popup push class="demo-popup-push" style="--f7-page-bg-color: #fff">
+    <f7-popup push class="demo-popup-push">
       <f7-view>
         <f7-page>
           <f7-navbar title="Push Popup" large largeTransparent>

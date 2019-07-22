@@ -600,20 +600,25 @@ code {
 .demo-popup-swipe-handler {
   --f7-popup-border-radius: 15px 15px 0 0;
   --f7-popup-tablet-border-radius: 15px;
-  --f7-page-bg-color: #fff;
   --f7-block-strong-border-color: transparent;
   height: calc(100% - var(--f7-navbar-height) - var(--f7-safe-area-top));
   top: calc(var(--f7-navbar-height) + var(--f7-safe-area-top))
+}
+.demo-popup-swipe-handler .swipe-handler {
+  background: var(--f7-page-bg-color);
 }
 .demo-popup-swipe-handler .page-content {
   padding-top: 16px;
 }
 .demo-sheet-swipe-to-close,
 .demo-sheet-swipe-to-step {
-  --f7-sheet-bg-color: #fff;
   --f7-sheet-border-color: transparent;
   border-radius: 15px 15px 0 0;
   overflow: hidden;
+}
+.demo-sheet-swipe-to-close .swipe-handler,
+.demo-sheet-swipe-to-step .swipe-handler {
+  background: none;
 }
 .swipe-handler {
   height: 16px;

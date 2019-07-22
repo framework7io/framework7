@@ -61,7 +61,7 @@ export default class extends React.Component {
           </Page>
         </Popup>
 
-        <Popup push className="demo-popup-push" style={{'--f7-page-bg-color': '#fff'}}>
+        <Popup push className="demo-popup-push">
           <View>
             <Page>
               <Navbar title="Push Popup" large largeTransparent>
