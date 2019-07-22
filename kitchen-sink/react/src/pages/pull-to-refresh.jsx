@@ -52,13 +52,13 @@ export default class extends React.Component {
     const self = this;
     setTimeout(() => {
       const { items, songs, authors } = self.state;
-      const picURL = `https://cdn.framework7.io/placeholder/abstract-88x88-${Math.round(Math.random() * 10)}.jpg`;
+      const picURL = `https://cdn.framework7.io/placeholder/abstract-88x88-${(Math.floor(Math.random() * 10) + 1)}.jpg`;
       const song = songs[Math.floor(Math.random() * songs.length)];
       const author = authors[Math.floor(Math.random() * authors.length)];
       items.push({
         title: song,
         author,
-        img: picURL,
+        cover: picURL,
       });
       self.setState({ items });
 
