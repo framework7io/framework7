@@ -640,8 +640,11 @@ code {
 
 .page-home,
 .page-about {
-  --f7-page-bg-color: #fff;
   --f7-list-border-color: transparent;
   --f7-block-strong-border-color: transparent;
   --f7-block-font-size: 16px;
+}
+:root:not(.theme-dark) .page-home,
+:root:not(.theme-dark) .page-about {
+  --f7-page-bg-color: #fff;
 }
