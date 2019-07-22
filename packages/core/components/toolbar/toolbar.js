@@ -89,8 +89,11 @@ const Toolbar = {
     let reachEnd;
     let action;
     let toolbarHidden;
-    function handleScroll() {
+    function handleScroll(e) {
       const scrollContent = this;
+      if (e && e.target && e.target !== scrollContent) {
+        return;
+      }
       if ($pageEl.hasClass('page-previous')) return;
       currentScrollTop = scrollContent.scrollTop;
       scrollHeight = scrollContent.scrollHeight;

@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.0-beta.1
+ * Framework7 5.0.0-beta.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 19, 2019
+ * Released on: July 22, 2019
  */
 
 (function (global, factory) {
@@ -12421,8 +12421,11 @@
         previousScrollTop = currentScrollTop;
       }
 
-      function handleScroll() {
+      function handleScroll(e) {
         scrollContent = this;
+        if (e && e.target && e.target !== scrollContent) {
+          return;
+        }
         currentScrollTop = scrollContent.scrollTop;
         scrollChanged = currentScrollTop;
 
@@ -12740,8 +12743,11 @@
       var reachEnd;
       var action;
       var toolbarHidden;
-      function handleScroll() {
+      function handleScroll(e) {
         var scrollContent = this;
+        if (e && e.target && e.target !== scrollContent) {
+          return;
+        }
         if ($pageEl.hasClass('page-previous')) { return; }
         currentScrollTop = scrollContent.scrollTop;
         scrollHeight = scrollContent.scrollHeight;
@@ -25361,13 +25367,20 @@
     create: function create(el) {
       var $el = $(el);
       var app = this;
-      $el.on('scroll', function handle(e) {
+      function scrollHandler(e) {
         app.infiniteScroll.handle(this, e);
+      }
+      $el.each(function (index, element) {
+        element.f7InfiniteScrollHandler = scrollHandler;
+        element.addEventListener('scroll', element.f7InfiniteScrollHandler);
       });
     },
     destroy: function destroy(el) {
       var $el = $(el);
-      $el.off('scroll');
+      $el.each(function (index, element) {
+        element.removeEventListener('scroll', element.f7InfiniteScrollHandler);
+        delete element.f7InfiniteScrollHandler;
+      });
     },
   };
   var InfiniteScroll$1 = {
