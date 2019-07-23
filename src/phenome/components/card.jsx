@@ -44,6 +44,10 @@ export default {
       type: Boolean,
       default: undefined,
     },
+    backdropEl: {
+      type: String,
+      default: undefined,
+    },
     noShadow: Boolean,
     noBorder: Boolean,
     padding: {
@@ -112,6 +116,7 @@ export default {
       swipeToClose,
       closeByBackdropClick,
       backdrop,
+      backdropEl,
       noShadow,
       noBorder,
     } = props;
@@ -170,6 +175,7 @@ export default {
         data-swipe-to-close={typeof swipeToClose === 'undefined' ? swipeToClose : swipeToClose.toString()}
         data-close-by-backdrop-click={typeof closeByBackdropClick === 'undefined' ? closeByBackdropClick : closeByBackdropClick.toString()}
         data-backdrop={typeof backdrop === 'undefined' ? backdrop : backdrop.toString()}
+        data-backdrop-el={backdropEl}
       >
         {headerEl}
         {contentEl}
