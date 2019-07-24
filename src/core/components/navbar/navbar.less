@@ -130,7 +130,6 @@
   & .left,
   & .title,
   & .right,
-  & .title-large-inner,
   & .title-large-text,
   & .navbar-bg,
   & .subnavbar {
@@ -140,7 +139,6 @@
 .navbar-page-transitioning {
   transition-duration: var(--f7-page-swipeback-transition-duration) !important;
   .title-large-text,
-  .title-large-inner,
   .navbar-bg {
     transition-duration: var(--f7-page-swipeback-transition-duration) !important;
   }
@@ -228,8 +226,7 @@
   height: var(--f7-navbar-large-title-height);
   z-index: 5;
 }
-.title-large-text,
-.title-large-inner .title {
+.title-large-text {
   text-overflow: ellipsis;
   white-space: nowrap;
   color: var(--f7-navbar-large-title-text-color);
@@ -241,9 +238,6 @@
   padding-right: calc(var(--f7-navbar-large-title-padding-right) + var(--f7-safe-area-right));
   padding-top: var(--f7-navbar-large-title-padding-vertical);
   padding-bottom: var(--f7-navbar-large-title-padding-vertical);
-}
-.title-large-text,
-.title-large-inner {
   box-sizing: border-box;
   overflow: hidden;
   width: 100%;
@@ -254,10 +248,9 @@
   .rtl({
     transform-origin: calc(100% - var(--f7-navbar-large-title-padding-left) - var(--f7-safe-area-left)) center;
   });
-
 }
 .navbar-no-title-large-transition {
-  .title-large-text, .title-large-inner {
+  .title-large-text {
     transition-duration: 0ms;
   }
 }

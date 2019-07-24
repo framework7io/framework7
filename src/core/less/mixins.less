@@ -280,7 +280,7 @@
 .ios-translucent-bars(@color) {
   .ios-translucent-bars & {
     @supports (backdrop-filter: blur(20px)) {
-      background-color: rgba(@color, var(--f7-bars-translucent-alpha));
+      background-color: rgba(@color, var(--f7-bars-translucent-opacity));
       backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
     }
   }

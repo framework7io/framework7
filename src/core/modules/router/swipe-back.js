@@ -86,7 +86,7 @@ function SwipeBack(r) {
           if ($navEl.hasClass('title-large')) {
             if (els.indexOf(el) < 0) els.push(el);
             el.overflow = 'visible';
-            $navEl.find('.title-large-text, .title-large-inner').each((subIndex, subNavEl) => {
+            $navEl.find('.title-large-text').each((subIndex, subNavEl) => {
               els.push({
                 el: subNavEl,
                 transform: progress => `translateX(${progress * 100 * inverter}%)`,
@@ -187,14 +187,6 @@ function SwipeBack(r) {
                 transform: progress => `translateX(calc(${1 - progress} * (var(--f7-navbarLeftTextOffset) - var(--f7-navbarTitleLargeOffset)))) translateY(calc(${progress - 1} * var(--f7-navbar-large-title-height) + ${1 - progress} * var(--f7-navbar-large-title-padding-vertical) / 2)) scale(${0.5 + progress * 0.5})`,
               });
             });
-            $navEl.find('.title-large-inner').each((subIndex, subNavEl) => {
-              els.push({
-                el: subNavEl,
-                'transform-origin': transformOriginTitleLarge,
-                opacity: progress => (progress ** 3),
-                transform: progress => `translateX(${-100 * (1 - progress) * inverter}%)`,
-              });
-            });
             return;
           }
         }
@@ -205,20 +197,20 @@ function SwipeBack(r) {
               if (previousNavIsTransparent) {
                 el.className = 'ios-swipeback-navbar-bg-large';
               }
-              el.transform = progress => `translateX(${-100 + 100 * progress * inverter}%) translateY(calc(-1 * var(--f7-navbar-large-title-height)))`;
+              el.transform = progress => `translateX(${(-100 + 100 * progress) * inverter}%) translateY(calc(-1 * var(--f7-navbar-large-title-height)))`;
             } else {
-              el.transform = progress => `translateX(${-100 + 100 * progress * inverter}%)`;
+              el.transform = progress => `translateX(${(-100 + 100 * progress) * inverter}%)`;
             }
           }
           if (!fromLarge && toLarge) {
-            el.transform = progress => `translateX(${-100 + 100 * progress * inverter}%) translateY(calc(-1 * ${1 - progress} * var(--f7-navbar-large-title-height)))`;
+            el.transform = progress => `translateX(${(-100 + 100 * progress) * inverter}%) translateY(calc(-1 * ${1 - progress} * var(--f7-navbar-large-title-height)))`;
           }
           if (fromLarge && !toLarge) {
             el.className = 'ios-swipeback-navbar-bg-large';
-            el.transform = progress => `translateX(${-100 + 100 * progress * inverter}%) translateY(calc(-${progress} * var(--f7-navbar-large-title-height)))`;
+            el.transform = progress => `translateX(${(-100 + 100 * progress) * inverter}%) translateY(calc(-${progress} * var(--f7-navbar-large-title-height)))`;
           }
           if (fromLarge && toLarge) {
-            el.transform = progress => `translateX(${-100 + 100 * progress * inverter}%)`;
+            el.transform = progress => `translateX(${(-100 + 100 * progress) * inverter}%)`;
           }
 
           return;
