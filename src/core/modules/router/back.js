@@ -69,6 +69,7 @@ function backward(el, backwardOptions) {
 
   // Pages In View
   let isDetail;
+  let isDetailRoot;
   if (masterDetailEnabled) {
     const $pagesInView = router.$el
       .children('.page:not(.stacked)')
@@ -92,11 +93,14 @@ function backward(el, backwardOptions) {
       isDetail = options.route.route.masterRoute.path === masterPageEl.f7Page.route.route.path;
     }
   }
+  if (isDetail && masterPageEl && masterPageEl.f7Page) {
+    isDetailRoot = router.history.indexOf(options.route.url) - router.history.indexOf(masterPageEl.f7Page.route.url) === 1;
+  }
 
 
   // New Page
   $newPage
-    .addClass(`page-previous${isMaster ? ' page-master' : ''}${isDetail ? ' page-master-detail' : ''}`)
+    .addClass(`page-previous${isMaster ? ' page-master' : ''}${isDetail ? ' page-master-detail' : ''}${isDetailRoot ? ' page-master-detail-root' : ''}`)
     .removeClass('stacked')
     .removeAttr('aria-hidden')
     .trigger('page:unstack')
@@ -104,12 +108,13 @@ function backward(el, backwardOptions) {
   router.emit('pageUnstack', $newPage[0]);
   router.emit('pagePosition', $newPage[0], 'previous');
   if (isMaster || isDetail) {
-    $newPage.trigger('page:role', { role: isMaster ? 'master' : 'detail' });
+    $newPage.trigger('page:role', { role: isMaster ? 'master' : 'detail', root: !!isDetailRoot });
+    router.emit('pageRole', $newPage[0], { role: isMaster ? 'master' : 'detail', detailRoot: !!isDetailRoot });
   }
 
   if (dynamicNavbar && $newNavbarInner.length > 0) {
     $newNavbarInner
-      .addClass(`navbar-previous${isMaster ? ' navbar-master' : ''}${isDetail ? ' navbar-master-detail' : ''}`)
+      .addClass(`navbar-previous${isMaster ? ' navbar-master' : ''}${isDetail ? ' navbar-master-detail' : ''}${isDetailRoot ? ' navbar-master-detail-root' : ''}`)
       .removeClass('stacked')
       .removeAttr('aria-hidden');
   }

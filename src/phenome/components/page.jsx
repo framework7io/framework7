@@ -67,6 +67,7 @@ export default {
       routerPositionClass: '',
       routerForceUnstack: false,
       routerPageRole: null,
+      routerPageRoleDetailRoot: false,
       routerPageMasterStack: false,
     };
   },
@@ -186,6 +187,7 @@ export default {
         'no-swipeback': noSwipeback,
         'page-master': this.state.routerPageRole === 'master',
         'page-master-detail': this.state.routerPageRole === 'detail',
+        'page-master-detail-root': this.state.routerPageRoleDetailRoot === true,
         'page-master-stacked': this.state.routerPageMasterStack === true,
         'page-with-navbar-large-collapsed': this.state.hasNavbarLargeCollapsed === true,
         'page-with-card-opened': this.state.hasCardExpandableOpened === true,
@@ -368,6 +370,7 @@ export default {
     onPageRole(event) {
       this.setState({
         routerPageRole: event.detail.role,
+        routerPageRoleDetailRoot: event.detail.detailRoot,
       });
     },
     onPageMasterStack() {

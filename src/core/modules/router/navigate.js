@@ -133,6 +133,7 @@ function forward(el, forwardOptions = {}) {
   // Find Detail' master page
   let isDetail;
   let reloadDetail;
+  let isDetailRoot;
   if (masterDetailEnabled && !options.reloadAll) {
     for (let i = 0; i < $pagesInView.length; i += 1) {
       if (!masterPageEl
@@ -158,6 +159,9 @@ function forward(el, forwardOptions = {}) {
     }
     reloadDetail = isDetail && options.reloadDetail && app.width >= router.params.masterDetailBreakpoint && masterPageEl;
   }
+  if (isDetail) {
+    isDetailRoot = !otherDetailPageEl || reloadDetail || options.reloadAll || options.reloadCurrent;
+  }
 
   // New Page
   let newPagePosition = 'next';
@@ -168,7 +172,7 @@ function forward(el, forwardOptions = {}) {
   }
   $newPage
     .removeClass('page-previous page-current page-next')
-    .addClass(`page-${newPagePosition}${isMaster ? ' page-master' : ''}${isDetail ? ' page-master-detail' : ''}`)
+    .addClass(`page-${newPagePosition}${isMaster ? ' page-master' : ''}${isDetail ? ' page-master-detail' : ''}${isDetailRoot ? ' page-master-detail-root' : ''}`)
     .removeClass('stacked')
     .trigger('page:unstack')
     .trigger('page:position', { position: newPagePosition });
@@ -176,14 +180,14 @@ function forward(el, forwardOptions = {}) {
   router.emit('pagePosition', $newPage[0], newPagePosition);
 
   if (isMaster || isDetail) {
-    $newPage.trigger('page:role', { role: isMaster ? 'master' : 'detail' });
+    $newPage.trigger('page:role', { role: isMaster ? 'master' : 'detail', root: !!isDetailRoot });
+    router.emit('pageRole', $newPage[0], { role: isMaster ? 'master' : 'detail', detailRoot: !!isDetailRoot });
   }
-
 
   if (dynamicNavbar && $newNavbarInner.length) {
     $newNavbarInner
       .removeClass('navbar-previous navbar-current navbar-next')
-      .addClass(`navbar-${newPagePosition}${isMaster ? ' navbar-master' : ''}${isDetail ? ' navbar-master-detail' : ''}`)
+      .addClass(`navbar-${newPagePosition}${isMaster ? ' navbar-master' : ''}${isDetail ? ' navbar-master-detail' : ''}${isDetailRoot ? ' navbar-master-detail-root' : ''}`)
       .removeClass('stacked');
   }
 
