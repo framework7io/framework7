@@ -405,7 +405,7 @@ function SwipeBack(r) {
     if (app.theme === 'ios') {
       $previousPageEl.transform(`translate3d(${previousPageTranslate}px,0,0)`);
     }
-    if (paramsSwipeBackAnimateOpacity) $pageShadowEl[0].style.opacity = 1 - (1 * percentage);
+    if (paramsSwipeBackAnimateOpacity) $pageOpacityEl[0].style.opacity = 1 - (1 * percentage);
 
     // Dynamic Navbars Animation
     if (!dynamicNavbar) return;
