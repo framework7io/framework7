@@ -70,14 +70,18 @@ export default {
     tabMounted(tabEl) {
       const app = this;
       const $tabEl = $(tabEl);
-      $tabEl.find('.infinite-scroll-content').each((index, el) => {
+      const $isEls = $tabEl.find('.infinite-scroll-content');
+      if ($tabEl.is('.infinite-scroll-content')) $isEls.add($tabEl);
+      $isEls.each((index, el) => {
         app.infiniteScroll.create(el);
       });
     },
     tabBeforeRemove(tabEl) {
       const $tabEl = $(tabEl);
       const app = this;
-      $tabEl.find('.infinite-scroll-content').each((index, el) => {
+      const $isEls = $tabEl.find('.infinite-scroll-content');
+      if ($tabEl.is('.infinite-scroll-content')) $isEls.add($tabEl);
+      $isEls.each((index, el) => {
         app.infiniteScroll.destroy(el);
       });
     },
