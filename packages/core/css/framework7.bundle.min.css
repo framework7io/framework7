@@ -1,5 +1,5 @@
 /**
- * Framework7 4.4.9
+ * Framework7 4.4.10
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *

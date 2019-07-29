@@ -2,6 +2,11 @@
 
 # Change Log
 
+# [v4.4.10](https://github.com/framework7io/framework7/compare/v4.4.9...v4.4.10) - July 29, 2019
+  * Core
+    * Device
+      * Fixed `device-desktop` class
+
 # [v4.4.9](https://github.com/framework7io/framework7/compare/v4.4.7...v4.4.9) - July 29, 2019
   * Core
     * Infinite Scroll
