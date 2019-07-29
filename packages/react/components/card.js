@@ -71,6 +71,7 @@ class F7Card extends React.Component {
       swipeToClose,
       closeByBackdropClick,
       backdrop,
+      backdropEl,
       noShadow,
       noBorder
     } = props;
@@ -111,7 +112,8 @@ class F7Card extends React.Component {
       'data-hide-toolbar-on-open': typeof hideToolbarOnOpen === 'undefined' ? hideToolbarOnOpen : hideToolbarOnOpen.toString(),
       'data-swipe-to-close': typeof swipeToClose === 'undefined' ? swipeToClose : swipeToClose.toString(),
       'data-close-by-backdrop-click': typeof closeByBackdropClick === 'undefined' ? closeByBackdropClick : closeByBackdropClick.toString(),
-      'data-backdrop': typeof backdrop === 'undefined' ? backdrop : backdrop.toString()
+      'data-backdrop': typeof backdrop === 'undefined' ? backdrop : backdrop.toString(),
+      'data-backdrop-el': backdropEl
     }, headerEl, contentEl, footerEl, this.slots['default']);
   }
 
@@ -206,6 +208,10 @@ __reactComponentSetProps(F7Card, Object.assign({
   },
   backdrop: {
     type: Boolean,
+    default: undefined
+  },
+  backdropEl: {
+    type: String,
     default: undefined
   },
   noShadow: Boolean,

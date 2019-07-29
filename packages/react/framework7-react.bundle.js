@@ -1,5 +1,5 @@
 /**
- * Framework7 React 4.4.7
+ * Framework7 React 4.4.8
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 19, 2019
+ * Released on: July 29, 2019
  */
 
 (function (global, factory) {
@@ -2457,6 +2457,7 @@
       var swipeToClose = props.swipeToClose;
       var closeByBackdropClick = props.closeByBackdropClick;
       var backdrop = props.backdrop;
+      var backdropEl = props.backdropEl;
       var noShadow = props.noShadow;
       var noBorder = props.noBorder;
       var headerEl;
@@ -2496,7 +2497,8 @@
         'data-hide-toolbar-on-open': typeof hideToolbarOnOpen === 'undefined' ? hideToolbarOnOpen : hideToolbarOnOpen.toString(),
         'data-swipe-to-close': typeof swipeToClose === 'undefined' ? swipeToClose : swipeToClose.toString(),
         'data-close-by-backdrop-click': typeof closeByBackdropClick === 'undefined' ? closeByBackdropClick : closeByBackdropClick.toString(),
-        'data-backdrop': typeof backdrop === 'undefined' ? backdrop : backdrop.toString()
+        'data-backdrop': typeof backdrop === 'undefined' ? backdrop : backdrop.toString(),
+        'data-backdrop-el': backdropEl
       }, headerEl, contentEl, footerEl, this.slots['default']);
     };
 
@@ -2599,6 +2601,10 @@
     },
     backdrop: {
       type: Boolean,
+      default: undefined
+    },
+    backdropEl: {
+      type: String,
       default: undefined
     },
     noShadow: Boolean,
@@ -13807,7 +13813,7 @@
   };
 
   /**
-   * Framework7 React 4.4.7
+   * Framework7 React 4.4.8
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -13815,7 +13821,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: July 19, 2019
+   * Released on: July 29, 2019
    */
 
   var Plugin = {

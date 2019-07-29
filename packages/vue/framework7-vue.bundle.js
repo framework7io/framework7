@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.4.7
+ * Framework7 Vue 4.4.8
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 19, 2019
+ * Released on: July 29, 2019
  */
 
 (function (global, factory) {
@@ -1959,6 +1959,10 @@
         type: Boolean,
         default: undefined
       },
+      backdropEl: {
+        type: String,
+        default: undefined
+      },
       noShadow: Boolean,
       noBorder: Boolean,
       padding: {
@@ -2032,6 +2036,7 @@
       var swipeToClose = props.swipeToClose;
       var closeByBackdropClick = props.closeByBackdropClick;
       var backdrop = props.backdrop;
+      var backdropEl = props.backdropEl;
       var noShadow = props.noShadow;
       var noBorder = props.noBorder;
       var headerEl;
@@ -2072,7 +2077,8 @@
           'data-hide-toolbar-on-open': typeof hideToolbarOnOpen === 'undefined' ? hideToolbarOnOpen : hideToolbarOnOpen.toString(),
           'data-swipe-to-close': typeof swipeToClose === 'undefined' ? swipeToClose : swipeToClose.toString(),
           'data-close-by-backdrop-click': typeof closeByBackdropClick === 'undefined' ? closeByBackdropClick : closeByBackdropClick.toString(),
-          'data-backdrop': typeof backdrop === 'undefined' ? backdrop : backdrop.toString()
+          'data-backdrop': typeof backdrop === 'undefined' ? backdrop : backdrop.toString(),
+          'data-backdrop-el': backdropEl
         }
       }, [headerEl, contentEl, footerEl, this.$slots['default']]);
     },
@@ -12292,7 +12298,7 @@
   };
 
   /**
-   * Framework7 Vue 4.4.7
+   * Framework7 Vue 4.4.8
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -12300,7 +12306,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: July 19, 2019
+   * Released on: July 29, 2019
    */
 
   var Plugin = {

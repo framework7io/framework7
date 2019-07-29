@@ -19,6 +19,7 @@ declare namespace F7Card {
     swipeToClose? : boolean
     closeByBackdropClick? : boolean
     backdrop? : boolean
+    backdropEl? : string
     noShadow? : boolean
     noBorder? : boolean
     padding? : boolean
