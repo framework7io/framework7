@@ -1,5 +1,5 @@
 /**
- * Framework7 4.4.8
+ * Framework7 4.4.9
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -3052,6 +3052,12 @@
       device.electron = electron;
       device.macos = macos;
       device.windows = windows;
+      if (device.macos) {
+        device.os = 'macos';
+      }
+      if (device.windows) {
+        device.os = 'windows';
+      }
     }
 
     // Meta statusbar
