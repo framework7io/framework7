@@ -25,7 +25,7 @@ export default {
         classNames.push('device-retina');
       }
       // OS classes
-      if (Device.os) {
+      if (Device.os && !Device.desktop) {
         classNames.push(
           `device-${Device.os}`,
           `device-${Device.os}-${Device.osVersion.split('.')[0]}`,
@@ -42,8 +42,9 @@ export default {
         }
       } else if (Device.desktop) {
         classNames.push('device-desktop');
-        if (Device.macos) classNames.push('device-macos');
-        else if (Device.windows) classNames.push('device-windows');
+        if (Device.os) {
+          classNames.push(`device-${Device.os}`);
+        }
       }
       if (Device.cordova || Device.phonegap) {
         classNames.push('device-cordova');
