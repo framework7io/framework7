@@ -351,6 +351,7 @@ const Navbar = {
     function handleLargeNavbarCollapse() {
       const isHidden = $navbarEl.hasClass('navbar-hidden') || $navbarEl.parent('.navbars').hasClass('navbar-hidden');
       if (isHidden) return;
+      const isLargeTransparent = $navbarEl.hasClass('navbar-large-transparent');
       const collapseProgress = Math.min(Math.max((currentScrollTop / navbarTitleLargeHeight), 0), 1);
       const inSearchbarExpanded = $navbarEl.hasClass('with-searchbar-expandable-enabled');
       if (inSearchbarExpanded) return;
@@ -367,10 +368,20 @@ const Navbar = {
         || ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed))
       ) {
         $navbarEl.find('.title').css('opacity', '');
-        $navbarEl.find('.navbar-bg, .title-large-text').css('transform', '');
+        $navbarEl.find('.title-large-text').css('transform', '');
+        if (isLargeTransparent) {
+          $navbarEl.find('.navbar-bg').css('opacity', '');
+        } else {
+          $navbarEl.find('.navbar-bg').css('transform', '');
+        }
       } else {
         $navbarEl.find('.title').css('opacity', collapseProgress);
-        $navbarEl.find('.navbar-bg, .title-large-text').css('transform', `translate3d(0px, ${-1 * collapseProgress * navbarTitleLargeHeight}px, 0)`);
+        $navbarEl.find('.title-large-text').css('transform', `translate3d(0px, ${-1 * collapseProgress * navbarTitleLargeHeight}px, 0)`);
+        if (isLargeTransparent) {
+          $navbarEl.find('.navbar-bg').css('opacity', collapseProgress);
+        } else {
+          $navbarEl.find('.navbar-bg').css('transform', `translate3d(0px, ${-1 * collapseProgress * navbarTitleLargeHeight}px, 0)`);
+        }
       }
 
       if (snapPageScrollToLargeTitle) {

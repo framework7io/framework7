@@ -164,6 +164,7 @@ class Router extends Framework7Class {
     }
     const dynamicNavbar = router.dynamicNavbar;
     const ios = router.app.theme === 'ios';
+
     // Router Animation class
     const routerTransitionClass = `router-transition-${direction} router-transition`;
 
@@ -177,10 +178,17 @@ class Router extends Framework7Class {
     let newIsLarge;
 
     if (ios && dynamicNavbar) {
-      oldIsLarge = $oldNavbarEl && $oldNavbarEl.hasClass('navbar-large');
-      newIsLarge = $newNavbarEl && $newNavbarEl.hasClass('navbar-large');
-      fromLarge = oldIsLarge && !$oldNavbarEl.hasClass('navbar-large-collapsed');
-      toLarge = newIsLarge && !$newNavbarEl.hasClass('navbar-large-collapsed');
+      const betweenMasterAndDetail = router.params.masterDetailBreakpoint > 0 && router.app.width >= router.params.masterDetailBreakpoint
+        && (
+          ($oldNavbarEl.hasClass('navbar-master') && $newNavbarEl.hasClass('navbar-master-detail'))
+          || ($oldNavbarEl.hasClass('navbar-master-detail') && $newNavbarEl.hasClass('navbar-master'))
+        );
+      if (!betweenMasterAndDetail) {
+        oldIsLarge = $oldNavbarEl && $oldNavbarEl.hasClass('navbar-large');
+        newIsLarge = $newNavbarEl && $newNavbarEl.hasClass('navbar-large');
+        fromLarge = oldIsLarge && !$oldNavbarEl.hasClass('navbar-large-collapsed');
+        toLarge = newIsLarge && !$newNavbarEl.hasClass('navbar-large-collapsed');
+      }
       const navEls = router.animatableNavElements($newNavbarEl, $oldNavbarEl, toLarge, fromLarge, direction);
       newNavEls = navEls.newNavEls;
       oldNavEls = navEls.oldNavEls;
@@ -1047,6 +1055,7 @@ class Router extends Framework7Class {
           if ($navbarEl && $navbarEl.length) {
             $navbarEl.addClass('navbar-master');
           }
+          view.checkMasterDetailBreakpoint();
         }
         const initOptions = {
           route: router.currentRoute,
