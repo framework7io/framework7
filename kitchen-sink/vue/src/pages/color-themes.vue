@@ -170,7 +170,7 @@
   --f7-button-text-color: #fff;
   --f7-button-pressed-bg-color: rgba(255,255,255,0.1);
 }
-.navbar-inner-large-transparent {
+.navbar-large-transparent {
   --f7-navbar-large-title-text-color: #000;
 
   --r: ${colorThemeRgb[0]};
@@ -183,7 +183,7 @@
     calc(var(--b) + (255 - var(--b)) * var(--progress))
   );
 }
-.theme-dark .navbar-inner-large-transparent {
+.theme-dark .navbar-large-transparent {
   --f7-navbar-large-title-text-color: #fff;
 }
           `;

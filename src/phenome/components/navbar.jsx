@@ -63,7 +63,6 @@ export default {
       titleLarge,
     } = props;
 
-    let innerEl;
     let leftEl;
     let titleEl;
     let rightEl;
@@ -81,6 +80,7 @@ export default {
       {
         'navbar-hidden': hidden,
         'navbar-large': large,
+        'navbar-large-transparent': largeTransparent,
       },
       Mixins.colorClasses(props),
     );
@@ -128,9 +128,8 @@ export default {
         </div>
       );
     }
-    innerEl = (
+    const innerEl = (
       <div
-        ref="innerEl"
         className={Utils.classNames(
           'navbar-inner',
           innerClass,
@@ -141,8 +140,6 @@ export default {
             'no-hairline': noHairline,
             'navbar-inner-left-title': addLeftTitleClass,
             'navbar-inner-centered-title': addCenterTitleClass,
-            'navbar-inner-large': large,
-            'navbar-inner-large-transparent': largeTransparent,
           }
         )}
       >
@@ -168,8 +165,8 @@ export default {
   },
   componentDidMount() {
     const self = this;
-    const { innerEl } = self.refs;
-    if (!innerEl) return;
+    const { el } = self.refs;
+    if (!el) return;
     self.$f7ready((f7) => {
       f7.on('navbarShow', self.onShow);
       f7.on('navbarHide', self.onHide);
@@ -181,17 +178,12 @@ export default {
     const self = this;
     if (!self.$f7) return;
     const el = self.refs.el;
-    if (el && el.children && el.children.length) {
-      self.$f7.navbar.size(el);
-    } else if (self.refs.innerEl) {
-      self.$f7.navbar.size(self.refs.innerEl);
-    }
+    self.$f7.navbar.size(el);
   },
   componentWillUnmount() {
     const self = this;
-    if (!self.props.inner) return;
-    const { innerEl } = self.refs;
-    if (!innerEl) return;
+    const { el } = self.refs;
+    if (!el) return;
     const f7 = self.$f7;
     if (!f7) return;
     f7.off('navbarShow', self.onShow);
@@ -202,29 +194,29 @@ export default {
   methods: {
     onHide(navbarEl) {
       const self = this;
-      const { el, innerEl } = self.refs;
-      if (navbarEl === el || (innerEl && innerEl.parentNode === navbarEl)) {
+      const { el } = self.refs;
+      if (navbarEl === el) {
         self.dispatchEvent('navbar:hide navbarHide');
       }
     },
     onShow(navbarEl) {
       const self = this;
-      const { el, innerEl } = self.refs;
-      if (navbarEl === el || (innerEl && innerEl.parentNode === navbarEl)) {
+      const { el } = self.refs;
+      if (navbarEl === el) {
         self.dispatchEvent('navbar:show navbarShow');
       }
     },
     onExpand(navbarEl) {
       const self = this;
-      const { el, innerEl } = self.refs;
-      if (navbarEl === el || (innerEl && innerEl.parentNode === navbarEl)) {
+      const { el } = self.refs;
+      if (navbarEl === el) {
         self.dispatchEvent('navbar:expand navbarExpand');
       }
     },
     onCollapse(navbarEl) {
       const self = this;
-      const { el, innerEl } = self.refs;
-      if (navbarEl === el || (innerEl && innerEl.parentNode === navbarEl)) {
+      const { el } = self.refs;
+      if (navbarEl === el) {
         self.dispatchEvent('navbar:collapse navbarCollapse');
       }
     },

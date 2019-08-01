@@ -406,7 +406,7 @@ export default {
       }
 
       if (typeof withNavbarLarge === 'undefined' && typeof navbarLarge === 'undefined') {
-        if (page.$navbarEl && page.$navbarEl.hasClass('navbar-inner-large')) {
+        if (page.$navbarEl && page.$navbarEl.hasClass('navbar-large')) {
           this.setState({ hasNavbarLarge: true });
         }
       }
