@@ -70,7 +70,7 @@ class PullToRefresh extends Framework7Class {
     let maxScrollTop;
     const $pageEl = $el.parents('.page');
 
-    if ($pageEl.find('.navbar').length > 0 || $pageEl.parents('.view').children('.navbar').length > 0) hasNavbar = true;
+    if ($pageEl.find('.navbar').length > 0 || $pageEl.parents('.view').children('.navbars').length > 0) hasNavbar = true;
     if ($pageEl.hasClass('no-navbar')) hasNavbar = false;
     if (!hasNavbar && !ptr.bottom) $el.addClass('ptr-no-navbar');
 

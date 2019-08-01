@@ -88,6 +88,7 @@ export default {
     if (!inner) {
       return (
         <div ref="el" id={id} style={style} className={classes}>
+          <div className="navbar-bg" />
           <slot />
         </div>
       );
@@ -145,7 +146,6 @@ export default {
           }
         )}
       >
-        <div className="navbar-bg" />
         {leftEl}
         {titleEl}
         {rightEl}
@@ -156,6 +156,7 @@ export default {
 
     return (
       <div ref="el" id={id} style={style} className={classes}>
+        <div className="navbar-bg" />
         <slot name="before-inner" />
         {innerEl}
         <slot name="after-inner" />

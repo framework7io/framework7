@@ -299,7 +299,9 @@
 
 // Relation with navbar
 .navbar ~ * .fab[class*="-top"],
-.navbar ~ .fab[class*="-top"] {
+.navbar ~ .fab[class*="-top"],
+.navbars ~ * .fab[class*="-top"],
+.navbars ~ .fab[class*="-top"] {
   margin-top: calc(var(--f7-navbar-height) + var(--f7-safe-area-top));
 }
 // Relation with toolbar
@@ -353,6 +355,22 @@
   + .toolbar-top.tabbar-labels,
   .ios & + .toolbar-top-ios.tabbar-labels,
   .md & + .toolbar-top-ios.tabbar-labels {
+    ~ * .fab[class*="-top"],
+    ~ .fab[class*="-top"] {
+      margin-top: calc(var(--f7-tabbar-labels-height) + var(--f7-navbar-height) + var(--f7-safe-area-top));
+    }
+  }
+}
+.navbars {
+  + .toolbar-top,
+  .ios & + .toolbar-top-ios {
+    ~ * .fab[class*="-top"],
+    ~ .fab[class*="-top"] {
+      margin-top: calc(var(--f7-toolbar-height) + var(--f7-navbar-height) + var(--f7-safe-area-top));
+    }
+  }
+  + .toolbar-top.tabbar-labels,
+  .ios & + .toolbar-top-ios.tabbar-labels {
     ~ * .fab[class*="-top"],
     ~ .fab[class*="-top"] {
       margin-top: calc(var(--f7-tabbar-labels-height) + var(--f7-navbar-height) + var(--f7-safe-area-top));

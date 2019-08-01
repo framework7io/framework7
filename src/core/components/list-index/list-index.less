@@ -80,12 +80,15 @@
   }
 }
 .navbar ~ .page > .list-index,
+.navbars ~ .page > .list-index,
 .navbar ~ .list-index {
   top: var(--f7-navbar-height);
 }
 
 .navbar ~ .toolbar-top,
+.navbars ~ .toolbar-top,
 .ios .navbar ~ .toolbar-top-ios,
+.ios .navbars ~ .toolbar-top-ios
 .md .navbar ~ .toolbar-top-md {
   ~ .list-index {
     top: calc(var(--f7-navbar-height) + var(--f7-toolbar-height));
@@ -98,6 +101,7 @@
 }
 
 .navbar ~ .subnavbar ~ .list-index,
+.navbars ~ .subnavbar ~ .list-index,
 .page-with-subnavbar .navbar ~ .list-index {
   top: calc(var(--f7-navbar-height) + var(--f7-subnavbar-height));
 }

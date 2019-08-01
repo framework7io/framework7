@@ -27,7 +27,7 @@
   .hairline(bottom, var(--f7-searchbar-border-color, var(--f7-bars-border-color)));
 
   .page > &:not(.searchbar-inline) {
-    z-index: 510;
+    z-index: 600;
     .bar-shadow-bottom(var(--f7-searchbar-shadow-image));
   }
   input[type="text"],
@@ -97,7 +97,7 @@
   transition-duration: 300ms;
   pointer-events: none;
 }
-.navbar-inner .searchbar-expandable {
+.navbar .searchbar-expandable {
   .hairline-remove(bottom);
   background: transparent;
 }
@@ -174,18 +174,18 @@
   }
 }
 .navbar.with-searchbar-expandable-enabled-no-transition,
-.navbar-inner.with-searchbar-expandable-enabled-no-transition {
+.navbar.with-searchbar-expandable-enabled-no-transition {
   --f7-navbar-large-collapse-progress: 1;
 }
 .navbar.with-searchbar-expandable-enabled,
-.navbar-inner.with-searchbar-expandable-enabled {
+.navbar.with-searchbar-expandable-enabled {
   --f7-navbar-large-collapse-progress: 1;
   .navbar-bg, .title-large, .title-large-text {
     transition-duration: 300ms;
   }
 }
 .navbar.with-searchbar-expandable-closing,
-.navbar-inner.with-searchbar-expandable-closing {
+.navbar.with-searchbar-expandable-closing {
   .navbar-bg, .title-large, .title-large-text {
     transition-duration: 300ms;
   }
@@ -203,17 +203,18 @@
 
 // Relation with page
 .navbar ~ .page:not(.no-navbar) > .searchbar,
+.navbars ~ .page:not(.no-navbar) > .searchbar,
 .page > .navbar ~ .searchbar {
   top: calc(var(--f7-navbar-height) + var(--f7-safe-area-top));
 }
 
 .navbar ~ .page-with-navbar-large:not(.no-navbar) .searchbar,
+.navbars ~ .page-with-navbar-large:not(.no-navbar) .searchbar,
 .page-with-navbar-large .navbar ~ .searchbar,
 .page-with-navbar-large .navbar ~ * .searchbar {
   top: calc(var(--f7-navbar-height) + var(--f7-navbar-large-title-height) + var(--f7-safe-area-top));
   transform: translate3d(0, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0)
 }
-
 
 .searchbar ~ * {
   --f7-page-searchbar-offset: var(--f7-searchbar-height);
