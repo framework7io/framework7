@@ -32,7 +32,7 @@ export default {
       <div className={classes} id={id} style={style}>
         {inner ? (
           <div className="subnavbar-inner">
-            {title && <div className="title">{title}</div>}
+            {title && <div className="subnavbar-title">{title}</div>}
             <slot />
           </div>
         ) : (
