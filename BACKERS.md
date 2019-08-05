@@ -3,6 +3,11 @@
 <table>
   <tr>
     <td align="center" valign="middle">
+      <a href="https://www.sparheld.de/" target="_blank">
+        <img width="160" src="https://cdn.framework7.io/i/sponsors/sparheld.jpg">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://rise.co" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/rise.png">
       </a>
@@ -22,14 +27,13 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/thorium.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://kidoverse.app" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/kidoverse.png">
       </a>
     </td>
-
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.cyberbrain.nl/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/cyberbrain.png">
@@ -50,13 +54,13 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/blokt.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.activewaiter.com/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/activewaiter.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://wappler.io/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/wappler.png">
@@ -77,7 +81,6 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/tommy.png">
       </a>
     </td>
-    <td></td>
   </tr>
 </table>
 
@@ -96,6 +99,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ---
 
 ### $250 Gold Sponsor
+[Sparheld.de](https://www.sparheld.de/) - Sparheld.de - save shopping online
 Steven Roussey<br>
 [Join here!](https://www.patreon.com/bePatron?patAmt=250.0&exp=1&u=4109762&rid=830877)
 
