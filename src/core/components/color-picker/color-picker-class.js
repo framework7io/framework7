@@ -547,7 +547,7 @@ class ColorPicker extends Framework7Class {
     self.attachEvents();
 
     params.modules.forEach((m) => {
-      if (typeof m === 'string' && modules[m] && modules[m].render) {
+      if (typeof m === 'string' && modules[m] && modules[m].init) {
         modules[m].init(self);
       } else if (m && m.init) {
         m.init(self);
