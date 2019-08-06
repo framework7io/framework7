@@ -37,7 +37,7 @@ export default {
     }, [inner ? _h('div', {
       class: 'subnavbar-inner'
     }, [title && _h('div', {
-      class: 'title'
+      class: 'subnavbar-title'
     }, [title]), this.$slots['default']]) : this.$slots['default']]);
   },
 

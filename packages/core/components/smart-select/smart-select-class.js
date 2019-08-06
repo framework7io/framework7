@@ -358,8 +358,8 @@ class SmartSelect extends Framework7Class {
     const pageHtml = `
       <div class="page smart-select-page ${cssClass}" data-name="smart-select-page" data-select-name="${ss.selectName}">
         <div class="navbar ${ss.params.navbarColorTheme ? `color-${ss.params.navbarColorTheme}` : ''}">
+          <div class="navbar-bg"></div>
           <div class="navbar-inner sliding ${ss.params.navbarColorTheme ? `color-${ss.params.navbarColorTheme}` : ''}">
-            <div class="navbar-bg"></div>
             <div class="left">
               <a class="link back">
                 <i class="icon icon-back"></i>
@@ -395,8 +395,8 @@ class SmartSelect extends Framework7Class {
         <div class="view">
           <div class="page smart-select-page ${ss.params.searchbar ? 'page-with-subnavbar' : ''}" data-name="smart-select-page">
             <div class="navbar ${ss.params.navbarColorTheme ? `color-${ss.params.navbarColorTheme}` : ''}">
+              <div class="navbar-bg"></div>
               <div class="navbar-inner sliding">
-                <div class="navbar-bg"></div>
                 ${pageTitle ? `<div class="title">${pageTitle}</div>` : ''}
                 <div class="right">
                   <a class="link popup-close" data-popup=".smart-select-popup[data-select-name='${ss.selectName}']">${ss.params.popupCloseLinkText}</span></a>

@@ -7,7 +7,7 @@
   margin: 0;
   transform: translate3d(0,0,0);
   backface-visibility: hidden;
-  z-index: 500;
+  z-index: 600;
   box-sizing: border-box;
   left: 0;
   height: var(--f7-toolbar-height);
@@ -15,7 +15,7 @@
   background-color: var(--f7-toolbar-bg-color, var(--f7-bars-bg-color));
   color: var(--f7-toolbar-text-color, var(--f7-bars-text-color));
   font-size: var(--f7-toolbar-font-size);
-  .translucent(var(--f7-toolbar-bg-color-rgb, var(--f7-bars-bg-color-rgb)));
+  .ios-translucent-bars(var(--f7-toolbar-bg-color-rgb, var(--f7-bars-bg-color-rgb)));
   b {
     font-weight: 600;
   }
@@ -241,15 +241,21 @@
 }
 
 .navbar ~ .toolbar-top,
+.navbars ~ .toolbar-top,
 .ios .navbar ~ .toolbar-top-ios,
+.ios .navbars ~ .toolbar-top-ios,
 .md .navbar ~ .toolbar-top-md,
 .aurora .navbar ~ .toolbar-top-aurora,
 .navbar ~ * .toolbar-top,
+.navbars ~ * .toolbar-top,
 .ios .navbar ~ * .toolbar-top-ios,
+.ios .navbars ~ * .toolbar-top-ios,
 .md .navbar ~ * .toolbar-top-md,
 .aurora .navbar ~ * .toolbar-top-aurora,
 .navbar ~ .page:not(.no-navbar) .toolbar-top,
+.navbars ~ .page:not(.no-navbar) .toolbar-top,
 .ios .navbar ~ .page:not(.no-navbar) .toolbar-top-ios,
+.ios .navbars ~ .page:not(.no-navbar) .toolbar-top-ios,
 .md .navbar ~ .page:not(.no-navbar) .toolbar-top-md,
 .aurora .navbar ~ .page:not(.no-navbar) .toolbar-top-aurora {
   top: calc(var(--f7-navbar-height) + var(--f7-safe-area-top));

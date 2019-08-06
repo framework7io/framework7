@@ -21,7 +21,7 @@
   --f7-notification-title-font-weight: 400;
   --f7-notification-title-letter-spacing: 0.02em;
 
-  --f7-notification-title-right-color: #444a51;
+  --f7-notification-title-right-color: rgba(0,0,0,0.45);
   --f7-notification-title-right-font-size: 13px;
 
   --f7-notification-subtitle-color: #000;
@@ -31,6 +31,14 @@
   --f7-notification-text-color: #000;
   --f7-notification-text-font-size: 15px;
   --f7-notification-text-line-height: 1.2;
+  .theme-dark, &.theme-dark {
+    --f7-notification-bg-color: rgba(30,30,30,0.95);
+    --f7-notification-bg-color-rgb: 30, 30, 30;
+    --f7-notification-subtitle-color: #fff;
+    --f7-notification-title-color: #fff;
+    --f7-notification-text-color: #fff;
+    --f7-notification-title-right-color: rgba(255,255,255,0.55);
+  }
 });
 .md-vars({
   --f7-notification-margin: 0px;
@@ -46,16 +54,22 @@
   --f7-notification-title-line-height: 1;
   --f7-notification-title-font-weight: 400;
 
-  --f7-notification-title-right-color: #757575;
+  --f7-notification-title-right-color: rgba(0,0,0,0.54);
   --f7-notification-title-right-font-size: 12px;
 
   --f7-notification-subtitle-color: #212121;
   --f7-notification-subtitle-font-size: 14px;
   --f7-notification-subtitle-font-weight: 400;
 
-  --f7-notification-text-color: #757575;
+  --f7-notification-text-color: rgba(0,0,0,0.54);
   --f7-notification-text-font-size: 14px;
   --f7-notification-text-line-height: 1.35;
+  .theme-dark, &.theme-dark {
+    --f7-notification-bg-color: #242424;
+    --f7-notification-subtitle-color: #fff;
+    --f7-notification-title-right-color: rgba(255,255,255,0.54);
+    --f7-notification-text-color: rgba(255,255,255,0.54);
+  }
 });
 .aurora-vars({
   --f7-notification-margin: 10px;
@@ -82,4 +96,11 @@
   --f7-notification-text-color: #000;
   --f7-notification-text-font-size: 12px;
   --f7-notification-text-line-height: 1.2;
+  .theme-dark, &.theme-dark {
+    --f7-notification-bg-color: #242424;
+    --f7-notification-title-color: #fff;
+    --f7-notification-subtitle-color: #fff;
+    --f7-notification-text-color: #fff;
+    --f7-notification-title-right-color: rgba(255,255,255,0.54);
+  }
 });

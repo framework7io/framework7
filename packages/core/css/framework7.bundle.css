@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.0-beta.2
+ * Framework7 5.0.0-beta.3
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 22, 2019
+ * Released on: August 6, 2019
  */
 
 /*====================
@@ -119,13 +119,13 @@
   --f7-bars-bg-image: none;
   --f7-bars-bg-color: #f7f7f8;
   --f7-bars-bg-color-rgb: 247, 247, 248;
+  --f7-bars-translucent-opacity: 0.8;
+  --f7-bars-translucent-blur: 20px;
   --f7-bars-text-color: #000;
   --f7-bars-shadow-bottom-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.08) 40%, rgba(0, 0, 0, 0.04) 50%, rgba(0, 0, 0, 0) 90%, rgba(0, 0, 0, 0) 100%);
   --f7-bars-shadow-top-image: linear-gradient(to top, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.08) 40%, rgba(0, 0, 0, 0.04) 50%, rgba(0, 0, 0, 0) 90%, rgba(0, 0, 0, 0) 100%);
 }
 .theme-dark {
-  --f7-bars-bg-color: #1b1b1b;
-  --f7-bars-bg-color-rgb: 27, 27, 27;
   --f7-bars-text-color: #fff;
 }
 .ios {
@@ -140,11 +140,16 @@
 .md {
   --f7-bars-border-color: transparent;
 }
+.md .theme-dark,
+.md.theme-dark {
+  --f7-bars-bg-color: #202020;
+}
 .aurora {
   --f7-bars-border-color: rgba(0, 0, 0, 0.2);
 }
 .aurora .theme-dark,
 .aurora.theme-dark {
+  --f7-bars-bg-color: #202020;
   --f7-bars-border-color: rgba(255, 255, 255, 0.1);
 }
 /*====================
@@ -772,7 +777,7 @@ html.device-full-viewport body {
 }
 .md .theme-dark,
 .md.theme-dark {
-  --f7-page-bg-color: #171717;
+  --f7-page-bg-color: #121212;
 }
 .aurora {
   --f7-page-bg-color: #f3f3f3;
@@ -780,7 +785,7 @@ html.device-full-viewport body {
 }
 .aurora .theme-dark,
 .aurora.theme-dark {
-  --f7-page-bg-color: #171717;
+  --f7-page-bg-color: #121212;
 }
 .theme-dark {
   --f7-page-master-border-color: rgba(255, 255, 255, 0.1);
@@ -1225,8 +1230,8 @@ html.device-full-viewport body {
   --f7-navbar-large-title-font-weight: 700;
   --f7-navbar-large-title-letter-spacing: -0.03em;
   --f7-navbar-large-title-padding-vertical: 6px;
-  --f7-navbar-large-title-padding-left: 15px;
-  --f7-navbar-large-title-padding-right: 15px;
+  --f7-navbar-large-title-padding-left: 16px;
+  --f7-navbar-large-title-padding-right: 16px;
   /*
   --f7-navbar-link-height: var(--f7-navbar-height);
   --f7-navbar-link-line-height: var(--f7-navbar-height);
@@ -1270,8 +1275,8 @@ html.device-full-viewport body {
   --f7-navbar-height: 38px;
   --f7-navbar-tablet-height: 38px;
   --f7-navbar-font-size: 14px;
-  --f7-navbar-inner-padding-left: 15px;
-  --f7-navbar-inner-padding-right: 15px;
+  --f7-navbar-inner-padding-left: 16px;
+  --f7-navbar-inner-padding-right: 16px;
   --f7-navbar-title-font-weight: 600;
   --f7-navbar-title-margin-left: 0;
   --f7-navbar-title-margin-right: 0;
@@ -1285,8 +1290,8 @@ html.device-full-viewport body {
   --f7-navbar-large-title-font-weight: bold;
   --f7-navbar-large-title-letter-spacing: -0.03em;
   --f7-navbar-large-title-padding-vertical: 4px;
-  --f7-navbar-large-title-padding-left: 15px;
-  --f7-navbar-large-title-padding-right: 15px;
+  --f7-navbar-large-title-padding-left: 16px;
+  --f7-navbar-large-title-padding-right: 16px;
   --f7-navbar-link-height: auto;
   --f7-navbar-link-line-height: inherit;
 }
@@ -1294,18 +1299,26 @@ html.device-full-viewport body {
 .aurora.theme-dark {
   --f7-navbar-subtitle-text-color: rgba(255, 255, 255, 0.5);
 }
+.navbars,
 .navbar {
-  --f7-navbar-large-collapse-progress: 0;
-  position: relative;
+  z-index: 500;
   left: 0;
   top: 0;
   width: 100%;
-  z-index: 500;
+}
+.navbars {
+  position: absolute;
+}
+.navbars .navbar {
+  z-index: auto;
+}
+.navbar {
+  --f7-navbar-large-collapse-progress: 0;
+  position: relative;
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
   box-sizing: border-box;
   margin: 0;
-  transform: translate3d(0, 0, 0);
   height: calc(var(--f7-navbar-height) + var(--f7-safe-area-top));
   color: var(--f7-navbar-text-color, var(--f7-bars-text-color));
   font-size: var(--f7-navbar-font-size);
@@ -1378,7 +1391,8 @@ html.device-full-viewport body {
 .navbar .no-shadow .navbar-bg:before {
   display: none !important;
 }
-.navbar.navbar-hidden .navbar-bg:before {
+.navbar.navbar-hidden .navbar-bg:before,
+.navbar-hidden .navbar .navbar-bg:before {
   opacity: 0 !important;
 }
 .navbar-bg {
@@ -1395,10 +1409,10 @@ html.device-full-viewport body {
   transition-property: transform;
 }
 @supports ((-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px))) {
-  .ios-translucent .navbar-bg {
-    background-color: rgba(var(--f7-navbar-bg-color-rgb, var(--f7-bars-bg-color-rgb)), 0.8);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-            backdrop-filter: saturate(180%) blur(20px);
+  .ios-translucent-bars .navbar-bg {
+    background-color: rgba(var(--f7-navbar-bg-color-rgb, var(--f7-bars-bg-color-rgb)), var(--f7-bars-translucent-opacity));
+    -webkit-backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
+            backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
   }
 }
 .navbar-bg:after,
@@ -1441,26 +1455,24 @@ html.device-full-viewport body {
   }
 }
 .navbar-transitioning,
-.navbar-transitioning:before,
 .navbar-transitioning .left,
 .navbar-transitioning .title,
 .navbar-transitioning .right,
-.navbar-transitioning .title-large-inner,
 .navbar-transitioning .title-large-text,
 .navbar-transitioning .navbar-bg,
-.navbar-transitioning .subnavbar {
+.navbar-transitioning .subnavbar,
+.navbar-transitioning .navbar-bg:before {
   transition-duration: var(--f7-navbar-hide-show-transition-duration);
 }
 .navbar-page-transitioning {
   transition-duration: var(--f7-page-swipeback-transition-duration) !important;
 }
 .navbar-page-transitioning .title-large-text,
-.navbar-page-transitioning .title-large-inner,
 .navbar-page-transitioning .navbar-bg {
   transition-duration: var(--f7-page-swipeback-transition-duration) !important;
 }
 .navbar-hidden {
-  transform: translate3d(0, calc(-100% + var(--f7-safe-area-top)), 0);
+  transform: translate3d(0, calc(-1 * var(--f7-navbar-height)), 0);
 }
 .navbar-hidden .navbar-inner {
   pointer-events: none;
@@ -1468,12 +1480,12 @@ html.device-full-viewport body {
 .navbar-hidden .navbar-inner > .left,
 .navbar-hidden .navbar-inner > .title,
 .navbar-hidden .navbar-inner > .right {
-  opacity: 0;
+  opacity: 0 !important;
 }
 .navbar-hidden-statusbar {
-  transform: translate3d(0, -100%, 0);
+  transform: translate3d(0, calc(-1 * var(--f7-navbar-height) - var(--f7-safe-area-top)), 0);
 }
-.navbar-large-hidden {
+.navbar-large-hidden .navbar-large {
   --f7-navbar-large-collapse-progress: 1;
 }
 .navbar-inner {
@@ -1492,35 +1504,33 @@ html.device-full-viewport body {
 }
 .views > .navbar,
 .view > .navbar,
-.page > .navbar {
+.page > .navbar,
+.navbars > .navbar {
   position: absolute;
 }
 .navbar-large .navbar-bg,
-.navbar-inner-large .navbar-bg,
 .ios .router-navbar-transition-to-large .navbar-bg,
 .ios .router-navbar-transition-from-large .navbar-bg,
 .navbar-bg.ios-swipeback-navbar-bg-large,
-.navbar-inner-large-transparent .navbar-bg.ios-swipeback-navbar-bg-large {
+.navbar-large-transparent .navbar-bg.ios-swipeback-navbar-bg-large {
   height: calc(100% + var(--f7-navbar-large-title-height));
   transform: translate3d(0px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0);
 }
-.navbar-inner-large-transparent .navbar-bg {
+.navbar-large-transparent .navbar-bg {
   opacity: var(--f7-navbar-large-collapse-progress);
   height: 100%;
   transform: none;
 }
-.ios .navbar-inner:not(.navbar-inner-large) .navbar-bg {
+.ios .navbar:not(.navbar-large) .navbar-bg {
   --f7-navbar-large-collapse-progress: 1;
 }
-.navbar-inner-large > .title {
-  opacity: calc(-1 + 2 * var(--f7-navbar-large-collapse-progress));
+.navbar-large .title {
+  opacity: var(--f7-navbar-large-collapse-progress);
 }
-.navbar-large-collapsed,
-.navbar-inner-large-collapsed {
+.navbar-large-collapsed {
   --f7-navbar-large-collapse-progress: 1;
 }
-.navbar-large-collapsed .title-large,
-.navbar-inner-large-collapsed .title-large {
+.navbar-large-collapsed .title-large {
   pointer-events: none;
 }
 .navbar .title-large {
@@ -1536,8 +1546,7 @@ html.device-full-viewport body {
   height: var(--f7-navbar-large-title-height);
   z-index: 5;
 }
-.title-large-text,
-.title-large-inner .title {
+.navbar .title-large-text {
   text-overflow: ellipsis;
   white-space: nowrap;
   color: var(--f7-navbar-large-title-text-color);
@@ -1549,24 +1558,23 @@ html.device-full-viewport body {
   padding-right: calc(var(--f7-navbar-large-title-padding-right) + var(--f7-safe-area-right));
   padding-top: var(--f7-navbar-large-title-padding-vertical);
   padding-bottom: var(--f7-navbar-large-title-padding-vertical);
-}
-.title-large-text,
-.title-large-inner {
   box-sizing: border-box;
   overflow: hidden;
   width: 100%;
   transform: translate3d(0px, calc(-1 * var(--f7-navbar-large-collapse-progress) * var(--f7-navbar-large-title-height)), 0);
   transform-origin: calc(var(--f7-navbar-large-title-padding-left) + var(--f7-safe-area-left)) center;
 }
-.navbar-no-title-large-transition .title-large-text,
-.navbar-no-title-large-transition .title-large-inner {
+.navbar-no-title-large-transition .title-large-text {
   transition-duration: 0ms;
 }
-.navbar ~ * {
+.navbar ~ *,
+.navbars ~ * {
   --f7-page-navbar-offset: calc(var(--f7-navbar-height) + var(--f7-safe-area-top));
 }
 .navbar ~ * .page-with-navbar-large,
 .navbar ~ .page-with-navbar-large,
+.navbars ~ * .page-with-navbar-large,
+.navbars ~ .page-with-navbar-large,
 .page-with-navbar-large .navbar ~ * {
   --f7-page-navbar-offset: calc(var(--f7-navbar-height) + var(--f7-navbar-large-title-height) + var(--f7-safe-area-top));
 }
@@ -1578,10 +1586,9 @@ html.device-full-viewport body {
   --f7-navbarLeftTextOffset: calc(4px + 12px + var(--f7-navbar-inner-padding-left));
   --f7-navbarTitleLargeOffset: var(--f7-navbar-large-title-padding-left);
   --f7-navbar-large-transparent-bg-center: translateX(0);
-  --f7-navbar-large-transparent-bg-left: translateX(-100%);
-  --f7-navbar-large-transparent-bg-right: translateX(100%);
   --f7-navbar-large-bg-center-top: translateX(0) translateY(calc(-1 * var(--f7-navbar-large-title-height)));
   --f7-navbar-large-bg-center-bottom: translateX(0) translateY(0);
+  --f7-navbar-large-transparent-bg-left: translateX(-100%);
   --f7-navbar-large-bg-left-top: translateX(-100%) translateY(calc(-1 * var(--f7-navbar-large-title-height)));
   --f7-navbar-large-bg-left-bottom: translateX(-100%) translateY(0);
   --f7-navbar-large-bg-right-top: translateX(100%) translateY(calc(-1 * var(--f7-navbar-large-title-height)));
@@ -1600,7 +1607,7 @@ html.device-full-viewport body {
 }
 .ios .navbar .left a + a,
 .ios .navbar .right a + a {
-  margin-left: 15px;
+  margin-left: 16px;
 }
 .ios .navbar b {
   font-weight: 600;
@@ -1627,17 +1634,26 @@ html.device-full-viewport body {
   text-align: left;
   margin-right: 10px;
 }
+.ios .view-master-detail .navbar-previous:not(.navbar-master) .left,
+.ios .view:not(.view-master-detail) .navbar-previous .left,
+.ios .navbar-next .left,
+.ios .view-master-detail .navbar-previous:not(.navbar-master) .title,
+.ios .view:not(.view-master-detail) .navbar-previous .title,
+.ios .navbar-next .title,
+.ios .view-master-detail .navbar-previous:not(.navbar-master) .right,
+.ios .view:not(.view-master-detail) .navbar-previous .right,
+.ios .navbar-next .right,
+.ios .view-master-detail .navbar-previous:not(.navbar-master) .subnavbar,
+.ios .view:not(.view-master-detail) .navbar-previous .subnavbar,
+.ios .navbar-next .subnavbar,
+.ios .view-master-detail .navbar-previous:not(.navbar-master) .fading,
+.ios .view:not(.view-master-detail) .navbar-previous .fading,
+.ios .navbar-next .fading {
+  opacity: 0;
+}
 .ios .view-master-detail .navbar-previous:not(.navbar-master),
 .ios .view:not(.view-master-detail) .navbar-previous {
   pointer-events: none;
-}
-.ios .view-master-detail .navbar-previous:not(.navbar-master) .navbar-bg,
-.ios .view:not(.view-master-detail) .navbar-previous .navbar-bg {
-  transform: translateX(-100%);
-}
-.ios .view-master-detail .navbar-previous:not(.navbar-master).navbar-large-collapsed,
-.ios .view:not(.view-master-detail) .navbar-previous.navbar-large-collapsed {
-  transform: translateX(-100%) translateY(calc(-1 * var(--f7-navbar-large-title-height)));
 }
 .ios .view-master-detail .navbar-previous:not(.navbar-master) .title-large,
 .ios .view:not(.view-master-detail) .navbar-previous .title-large {
@@ -1649,34 +1665,16 @@ html.device-full-viewport body {
   transform: scale(0.5);
   transition-duration: 0ms;
 }
-.ios .view-master-detail .navbar-previous:not(.navbar-master) .title-large .title-large-inner,
-.ios .view:not(.view-master-detail) .navbar-previous .title-large .title-large-inner {
-  transform: translateX(-100%);
-  opacity: 0;
-  transition-duration: 0ms;
-}
-.ios .view-master-detail .navbar-previous:not(.navbar-master) .left,
-.ios .view:not(.view-master-detail) .navbar-previous .left,
-.ios .view-master-detail .navbar-previous:not(.navbar-master) .right,
-.ios .view:not(.view-master-detail) .navbar-previous .right,
-.ios .view-master-detail .navbar-previous:not(.navbar-master) > .title,
-.ios .view:not(.view-master-detail) .navbar-previous > .title,
-.ios .view-master-detail .navbar-previous:not(.navbar-master) .subnavbar,
-.ios .view:not(.view-master-detail) .navbar-previous .subnavbar,
-.ios .view-master-detail .navbar-previous:not(.navbar-master) .fading,
-.ios .view:not(.view-master-detail) .navbar-previous .fading {
-  opacity: 0;
-}
-.ios .view-master-detail .navbar-previous:not(.navbar-master) .sliding,
-.ios .view:not(.view-master-detail) .navbar-previous .sliding {
-  opacity: 0;
-}
 .ios .view-master-detail .navbar-previous:not(.navbar-master) .subnavbar.sliding,
 .ios .view:not(.view-master-detail) .navbar-previous .subnavbar.sliding,
-.ios .view-master-detail .navbar-previous:not(.navbar-master).sliding .subnavbar,
-.ios .view:not(.view-master-detail) .navbar-previous.sliding .subnavbar {
+.ios .view-master-detail .navbar-previous:not(.navbar-master) .sliding .subnavbar,
+.ios .view:not(.view-master-detail) .navbar-previous .sliding .subnavbar {
   opacity: 1;
   transform: translate3d(-100%, 0, 0);
+}
+.ios .view:not(.view-master-detail) .navbar-previous .navbar-bg,
+.ios .view-master-detail .navbar-previous:not(.navbar-master) .navbar-bg {
+  transform: translateX(-100%);
 }
 .ios .navbar-next {
   pointer-events: none;
@@ -1684,29 +1682,12 @@ html.device-full-viewport body {
 .ios .navbar-next .navbar-bg {
   transform: translateX(100%);
 }
-.ios .navbar-next .title-large .title-large-text,
-.ios .navbar-next .title-large .title-large-inner {
+.ios .navbar-next .title-large .title-large-text {
   transition-duration: 0ms;
   transform: translateX(100%) translateY(calc(-1 * var(--f7-navbar-large-title-height)));
 }
-.ios .navbar-next .left,
-.ios .navbar-next .right,
-.ios .navbar-next > .title,
-.ios .navbar-next .subnavbar,
-.ios .navbar-next .fading {
-  opacity: 0;
-}
-.ios .navbar-next .sliding {
-  opacity: 0;
-}
-.ios .navbar-next.sliding .left,
-.ios .navbar-next.sliding .right,
-.ios .navbar-next.sliding > .title,
-.ios .navbar-next.sliding .subnavbar {
-  opacity: 0;
-}
 .ios .navbar-next .subnavbar.sliding,
-.ios .navbar-next.sliding .subnavbar {
+.ios .navbar-next .sliding .subnavbar {
   opacity: 1;
   transform: translate3d(100%, 0, 0);
 }
@@ -1723,22 +1704,24 @@ html.device-full-viewport body {
   transition-duration: 0ms;
 }
 .ios .router-transition .navbar-current .left,
-.ios .router-transition .navbar-current > .title,
+.ios .router-transition .navbar-current .title,
 .ios .router-transition .navbar-current .right,
 .ios .router-transition .navbar-current .subnavbar {
   animation: ios-navbar-element-fade-out var(--f7-page-transition-duration) forwards;
 }
-.ios .router-transition .navbar-current .sliding,
-.ios .router-transition .navbar-current .left.sliding .icon + span,
-.ios .router-transition .navbar-current.sliding .left,
-.ios .router-transition .navbar-current.sliding .left .icon + span,
-.ios .router-transition .navbar-current.sliding > .title,
-.ios .router-transition .navbar-current.sliding .right {
+.ios .router-transition .navbar-current .sliding.left,
+.ios .router-transition .navbar-current .sliding.left .icon + span,
+.ios .router-transition .navbar-current .sliding.title,
+.ios .router-transition .navbar-current .sliding.right,
+.ios .router-transition .navbar-current .sliding .left,
+.ios .router-transition .navbar-current .sliding .left .icon + span,
+.ios .router-transition .navbar-current .sliding .title,
+.ios .router-transition .navbar-current .sliding .right {
   transition-duration: var(--f7-page-transition-duration);
   opacity: 0 !important;
   animation: none;
 }
-.ios .router-transition .navbar-current.sliding .subnavbar,
+.ios .router-transition .navbar-current .sliding .subnavbar,
 .ios .router-transition .navbar-current .sliding.subnavbar {
   transition-duration: var(--f7-page-transition-duration);
   animation: none;
@@ -1746,28 +1729,32 @@ html.device-full-viewport body {
 }
 .ios .router-transition-forward .navbar-next .left,
 .ios .router-transition-backward .navbar-previous .left,
-.ios .router-transition-forward .navbar-next > .title,
-.ios .router-transition-backward .navbar-previous > .title,
+.ios .router-transition-forward .navbar-next .title,
+.ios .router-transition-backward .navbar-previous .title,
 .ios .router-transition-forward .navbar-next .right,
 .ios .router-transition-backward .navbar-previous .right,
 .ios .router-transition-forward .navbar-next .subnavbar,
 .ios .router-transition-backward .navbar-previous .subnavbar {
   animation: ios-navbar-element-fade-in var(--f7-page-transition-duration) forwards;
 }
-.ios .router-transition-forward .navbar-next .sliding,
-.ios .router-transition-backward .navbar-previous .sliding,
-.ios .router-transition-forward .navbar-next .left.sliding .icon + span,
-.ios .router-transition-backward .navbar-previous .left.sliding .icon + span,
-.ios .router-transition-forward .navbar-next.sliding .left,
-.ios .router-transition-backward .navbar-previous.sliding .left,
-.ios .router-transition-forward .navbar-next.sliding .left .icon + span,
-.ios .router-transition-backward .navbar-previous.sliding .left .icon + span,
-.ios .router-transition-forward .navbar-next.sliding > .title,
-.ios .router-transition-backward .navbar-previous.sliding > .title,
-.ios .router-transition-forward .navbar-next.sliding .right,
-.ios .router-transition-backward .navbar-previous.sliding .right,
-.ios .router-transition-forward .navbar-next.sliding .subnavbar,
-.ios .router-transition-backward .navbar-previous.sliding .subnavbar {
+.ios .router-transition-forward .navbar-next .sliding.left,
+.ios .router-transition-backward .navbar-previous .sliding.left,
+.ios .router-transition-forward .navbar-next .sliding.left .icon + span,
+.ios .router-transition-backward .navbar-previous .sliding.left .icon + span,
+.ios .router-transition-forward .navbar-next .sliding.title,
+.ios .router-transition-backward .navbar-previous .sliding.title,
+.ios .router-transition-forward .navbar-next .sliding.right,
+.ios .router-transition-backward .navbar-previous .sliding.right,
+.ios .router-transition-forward .navbar-next .sliding .left,
+.ios .router-transition-backward .navbar-previous .sliding .left,
+.ios .router-transition-forward .navbar-next .sliding .left .icon + span,
+.ios .router-transition-backward .navbar-previous .sliding .left .icon + span,
+.ios .router-transition-forward .navbar-next .sliding .title,
+.ios .router-transition-backward .navbar-previous .sliding .title,
+.ios .router-transition-forward .navbar-next .sliding .right,
+.ios .router-transition-backward .navbar-previous .sliding .right,
+.ios .router-transition-forward .navbar-next .sliding .subnavbar,
+.ios .router-transition-backward .navbar-previous .sliding .subnavbar {
   transition-duration: var(--f7-page-transition-duration);
   animation: none;
   transform: translate3d(0, 0, 0) !important;
@@ -1775,8 +1762,8 @@ html.device-full-viewport body {
 }
 .ios .router-transition-backward .navbar-previous.with-searchbar-expandable-enabled-no-transition .left,
 .ios .router-transition-backward .navbar-previous.with-searchbar-expandable-enabled .left,
-.ios .router-transition-backward .navbar-previous.with-searchbar-expandable-enabled-no-transition > .title,
-.ios .router-transition-backward .navbar-previous.with-searchbar-expandable-enabled > .title,
+.ios .router-transition-backward .navbar-previous.with-searchbar-expandable-enabled-no-transition .title,
+.ios .router-transition-backward .navbar-previous.with-searchbar-expandable-enabled .title,
 .ios .router-transition-backward .navbar-previous.with-searchbar-expandable-enabled-no-transition .right,
 .ios .router-transition-backward .navbar-previous.with-searchbar-expandable-enabled .right,
 .ios .router-transition-backward .navbar-previous.with-searchbar-expandable-enabled-no-transition .subnavbar,
@@ -1791,9 +1778,6 @@ html.device-full-viewport body {
 .ios .router-transition-forward .navbar-current.router-navbar-transition-from-large:not(.router-navbar-transition-to-large) .title-large .title-large-text {
   animation: ios-navbar-large-title-text-slide-up var(--f7-page-transition-duration) forwards, ios-navbar-large-title-text-fade-out var(--f7-page-transition-duration) forwards;
 }
-.ios .router-transition-forward .navbar-current.router-navbar-transition-from-large .title-large-inner {
-  animation: ios-navbar-large-title-inner-current-to-previous var(--f7-page-transition-duration) forwards;
-}
 .ios .router-transition-forward .navbar-next.router-navbar-transition-from-large .left .back span {
   animation: ios-navbar-back-text-next-to-current var(--f7-page-transition-duration) forwards;
   transition: none;
@@ -1802,16 +1786,14 @@ html.device-full-viewport body {
 .ios .router-transition-forward .navbar-next.router-navbar-transition-from-large.router-navbar-transition-to-large .title-large {
   overflow: visible;
 }
-.ios .router-transition-forward .navbar-next.router-navbar-transition-from-large.router-navbar-transition-to-large .title-large .title-large-text,
-.ios .router-transition-forward .navbar-next.router-navbar-transition-from-large.router-navbar-transition-to-large .title-large .title-large-inner {
+.ios .router-transition-forward .navbar-next.router-navbar-transition-from-large.router-navbar-transition-to-large .title-large .title-large-text {
   animation: ios-navbar-large-title-text-slide-left var(--f7-page-transition-duration) forwards;
 }
-.ios .router-transition-forward .navbar-next.router-navbar-transition-to-large:not(.router-navbar-transition-from-large) .title-large .title-large-text,
-.ios .router-transition-forward .navbar-next.router-navbar-transition-to-large:not(.router-navbar-transition-from-large) .title-large .title-large-inner {
+.ios .router-transition-forward .navbar-next.router-navbar-transition-to-large:not(.router-navbar-transition-from-large) .title-large .title-large-text {
   animation: ios-navbar-large-title-text-slide-left var(--f7-page-transition-duration) forwards;
 }
-.ios .router-transition-forward .navbar-next.navbar-inner-large:not(.navbar-inner-large-collapsed) > .title,
-.ios .router-transition-forward .navbar-current.navbar-inner-large:not(.navbar-inner-large-collapsed) > .title {
+.ios .router-transition-forward .navbar-next.navbar-large:not(.navbar-large-collapsed) .title,
+.ios .router-transition-forward .navbar-current.navbar-large:not(.navbar-large-collapsed) .title {
   animation: none;
   opacity: 0 !important;
   transition-duration: 0;
@@ -1824,12 +1806,10 @@ html.device-full-viewport body {
 .ios .router-transition-backward .navbar-current.router-navbar-transition-from-large.router-navbar-transition-to-large .title-large {
   overflow: visible;
 }
-.ios .router-transition-backward .navbar-current.router-navbar-transition-from-large.router-navbar-transition-to-large .title-large .title-large-text,
-.ios .router-transition-backward .navbar-current.router-navbar-transition-from-large.router-navbar-transition-to-large .title-large .title-large-inner {
+.ios .router-transition-backward .navbar-current.router-navbar-transition-from-large.router-navbar-transition-to-large .title-large .title-large-text {
   animation: ios-navbar-large-title-text-slide-right var(--f7-page-transition-duration) forwards;
 }
-.ios .router-transition-backward .navbar-current.router-navbar-transition-from-large:not(.router-navbar-transition-to-large) .title-large .title-large-text,
-.ios .router-transition-backward .navbar-current.router-navbar-transition-from-large:not(.router-navbar-transition-to-large) .title-large .title-large-inner {
+.ios .router-transition-backward .navbar-current.router-navbar-transition-from-large:not(.router-navbar-transition-to-large) .title-large .title-large-text {
   animation: ios-navbar-large-title-text-slide-right var(--f7-page-transition-duration) forwards;
 }
 .ios .router-transition-backward .navbar-current.router-navbar-transition-to-large:not(.router-navbar-transition-from-large) .title-large {
@@ -1844,11 +1824,8 @@ html.device-full-viewport body {
 .ios .router-transition-backward .navbar-previous.router-navbar-transition-to-large:not(.router-navbar-transition-from-large) .title-large .title-large-text {
   animation: ios-navbar-large-title-text-slide-down var(--f7-page-transition-duration) forwards, ios-navbar-large-title-text-fade-in var(--f7-page-transition-duration) forwards;
 }
-.ios .router-transition-backward .navbar-previous.router-navbar-transition-to-large .title-large-inner {
-  animation: ios-navbar-large-title-inner-previous-to-current var(--f7-page-transition-duration) forwards;
-}
-.ios .router-transition-backward .navbar-current.navbar-inner-large:not(.navbar-inner-large-collapsed) > .title,
-.ios .router-transition-backward .navbar-previous.navbar-inner-large:not(.navbar-inner-large-collapsed) > .title {
+.ios .router-transition-backward .navbar-current.navbar-large:not(.navbar-large-collapsed) .title,
+.ios .router-transition-backward .navbar-previous.navbar-large:not(.navbar-large-collapsed) .title {
   animation: none;
   opacity: 0 !important;
   transition-duration: 0;
@@ -1865,10 +1842,10 @@ html.device-full-viewport body {
 .ios .router-transition-forward .navbar-current:not(.router-navbar-transition-from-large).router-navbar-transition-to-large .navbar-bg {
   animation-name: ios-navbar-bg-from-ct-to-lb;
 }
-.ios .router-transition-forward .navbar-current.navbar-inner-large-collapsed:not(.router-navbar-transition-to-large) .navbar-bg {
+.ios .router-transition-forward .navbar-current.navbar-large-collapsed:not(.router-navbar-transition-to-large) .navbar-bg {
   animation-name: ios-navbar-bg-from-ct-to-lt;
 }
-.ios .router-transition-forward .navbar-current.navbar-inner-large-collapsed.navbar-inner-large-transparent:not(.router-navbar-transition-to-large) .navbar-bg {
+.ios .router-transition-forward .navbar-current.navbar-large-collapsed.navbar-large-transparent:not(.router-navbar-transition-to-large) .navbar-bg {
   animation-name: ios-navbar-transparent-bg-from-c-to-l;
 }
 .ios .router-transition-forward .navbar-next .navbar-bg {
@@ -1892,7 +1869,7 @@ html.device-full-viewport body {
 .ios .router-transition-backward .navbar-current.router-navbar-transition-from-large:not(.router-navbar-transition-to-large) .navbar-bg {
   animation-name: ios-navbar-bg-from-cb-to-rt;
 }
-.ios .router-transition-backward .navbar-current.navbar-inner-large-collapsed .navbar-bg {
+.ios .router-transition-backward .navbar-current.navbar-large-collapsed .navbar-bg {
   animation-name: ios-navbar-bg-from-ct-to-rt;
 }
 .ios .router-transition-backward .navbar-previous .navbar-bg {
@@ -1904,47 +1881,67 @@ html.device-full-viewport body {
 .ios .router-transition-backward .navbar-previous.router-navbar-transition-from-large:not(.router-navbar-transition-to-large) .navbar-bg {
   animation-name: ios-navbar-bg-from-lb-to-ct;
 }
-.ios .router-transition-backward .navbar-previous.navbar-inner-large-collapsed .navbar-bg {
+.ios .router-transition-backward .navbar-previous.navbar-large-collapsed .navbar-bg {
   animation-name: ios-navbar-bg-from-lt-to-ct;
 }
-.ios .router-transition-backward .navbar-previous.navbar-inner-large-collapsed.navbar-inner-large-transparent .navbar-bg {
+.ios .router-transition-backward .navbar-previous.navbar-large-collapsed.navbar-large-transparent .navbar-bg {
   animation-name: ios-navbar-transparent-bg-from-l-to-c;
 }
-.ios .router-transition-backward .navbar-previous.navbar-inner-large-collapsed.navbar-inner-large-transparent.router-navbar-transition-from-large .navbar-bg {
+.ios .router-transition-backward .navbar-previous.navbar-large-collapsed.navbar-large-transparent.router-navbar-transition-from-large .navbar-bg {
   animation-name: ios-navbar-bg-from-lb-to-ct;
+}
+.view-master-detail .navbars {
+  z-index: auto;
+}
+.view-master-detail .page-master {
+  z-index: 525;
+}
+.view-master-detail .navbar-master .navbar-inner,
+.view-master-detail .navbar-master .navbar-bg {
+  z-index: 550;
+}
+.view-master-detail .navbar-master-detail .navbar-inner,
+.view-master-detail .navbar-master-detail .navbar-bg {
+  z-index: 500;
 }
 .view-master-detail .navbar-master.navbar-previous {
   pointer-events: auto;
 }
 .view-master-detail .navbar-master.navbar-previous .left,
-.view-master-detail .navbar-master.navbar-previous:not(.navbar-inner-large) .title,
+.view-master-detail .navbar-master.navbar-previous:not(.navbar-large) .title,
 .view-master-detail .navbar-master.navbar-previous .right,
 .view-master-detail .navbar-master.navbar-previous .subnavbar {
   opacity: 1;
 }
-.ios .view-master-detail.router-transition .navbar-master .left,
-.ios .view-master-detail.router-transition .navbar-master .left .icon + span,
-.ios .view-master-detail.router-transition .navbar-master:not(.navbar-inner-large) .title,
-.ios .view-master-detail.router-transition .navbar-master .right,
-.ios .view-master-detail.router-transition .navbar-master .subnavbar,
-.ios .view-master-detail.router-transition .navbar-master .sliding,
-.ios .view-master-detail.router-transition .navbar-master .fading {
+.view-master-detail.router-transition .navbar-master .left,
+.view-master-detail.router-transition .navbar-master .left .icon + span,
+.view-master-detail.router-transition .navbar-master:not(.navbar-large) .title,
+.view-master-detail.router-transition .navbar-master .right,
+.view-master-detail.router-transition .navbar-master .subnavbar,
+.view-master-detail.router-transition .navbar-master .fading {
   opacity: 1 !important;
   transition-duration: 0ms;
   transform: none !important;
   animation: none !important;
 }
-.ios .view-master-detail.router-transition .navbar-master.navbar-inner-large .title {
+.view-master-detail.router-transition .navbar-master .navbar-bg {
+  transition-duration: 0ms;
+  animation: none !important;
+}
+.view-master-detail.router-transition .navbar-master.navbar-large .title {
   opacity: calc(-1 + 2 * var(--f7-navbar-large-collapse-progress)) !important;
   transition-duration: 0ms;
   transform: none !important;
   animation: none !important;
 }
-.ios .view-master-detail.router-transition .navbar-master.navbar-inner-large .title-large,
-.ios .view-master-detail.router-transition .navbar-master.navbar-inner-large .title-large-text,
-.ios .view-master-detail.router-transition .navbar-master.navbar-inner-large .title-large-inner {
+.view-master-detail.router-transition .navbar-master.navbar-large .title-large,
+.view-master-detail.router-transition .navbar-master.navbar-large .title-large-text {
   transition-duration: 0ms;
   animation: none !important;
+}
+.view-master-detail.router-transition .navbar-master.navbar-large-transparent .navbar-bg {
+  height: 100% !important;
+  opacity: var(--f7-navbar-large-collapse-progress) !important;
 }
 @keyframes ios-navbar-element-fade-in {
   0% {
@@ -2046,26 +2043,6 @@ html.device-full-viewport body {
   100% {
     opacity: 1;
     transform: translateX(0px) translateY(0px) scale(1);
-  }
-}
-@keyframes ios-navbar-large-title-inner-current-to-previous {
-  0% {
-    transform: translateX(0%);
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-}
-@keyframes ios-navbar-large-title-inner-previous-to-current {
-  0% {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0%);
-    opacity: 1;
   }
 }
 @keyframes ios-navbar-bg-from-cb-to-lb {
@@ -2246,6 +2223,13 @@ html.device-full-viewport body {
 }
 .md .navbar-inner {
   justify-content: flex-start;
+  overflow: hidden;
+}
+.md .navbar-large:not(.navbar-large-collapsed) .navbar-inner {
+  overflow: visible;
+}
+.md .page.page-with-subnavbar .navbar-inner {
+  overflow: visible;
 }
 .md .navbar-inner-centered-title {
   justify-content: space-between;
@@ -2274,7 +2258,7 @@ html.device-full-viewport body {
   margin-left: 10px;
 }
 .aurora .navbar .right:first-child {
-  right: calc(15px + var(--f7-safe-area-right));
+  right: calc(16px + var(--f7-safe-area-right));
 }
 .aurora .navbar-inner {
   justify-content: space-between;
@@ -2322,9 +2306,9 @@ html.device-full-viewport body {
   --f7-tabbar-link-text-transform: none;
   --f7-tabbar-link-font-weight: 400;
   --f7-tabbar-link-letter-spacing: 0;
-  --f7-tabbar-label-font-size: 10px;
+  --f7-tabbar-label-font-size: 12px;
   --f7-tabbar-label-tablet-font-size: 14px;
-  --f7-tabbar-label-font-weight: 400;
+  --f7-tabbar-label-font-weight: 500;
   --f7-tabbar-label-letter-spacing: 0.01;
 }
 .ios .theme-dark,
@@ -2364,8 +2348,8 @@ html.device-full-viewport body {
 .aurora {
   --f7-toolbar-height: 38px;
   --f7-toolbar-font-size: 14px;
-  --f7-toolbar-inner-padding-left: 15px;
-  --f7-toolbar-inner-padding-right: 15px;
+  --f7-toolbar-inner-padding-left: 16px;
+  --f7-toolbar-inner-padding-right: 16px;
   --f7-toolbar-link-height: auto;
   --f7-toolbar-link-line-height: inherit;
   --f7-tabbar-labels-height: 44px;
@@ -2394,7 +2378,7 @@ html.device-full-viewport body {
   transform: translate3d(0, 0, 0);
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
-  z-index: 500;
+  z-index: 600;
   box-sizing: border-box;
   left: 0;
   height: var(--f7-toolbar-height);
@@ -2404,10 +2388,10 @@ html.device-full-viewport body {
   font-size: var(--f7-toolbar-font-size);
 }
 @supports ((-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px))) {
-  .ios-translucent .toolbar {
-    background-color: rgba(var(--f7-toolbar-bg-color-rgb, var(--f7-bars-bg-color-rgb)), 0.8);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-            backdrop-filter: saturate(180%) blur(20px);
+  .ios-translucent-bars .toolbar {
+    background-color: rgba(var(--f7-toolbar-bg-color-rgb, var(--f7-bars-bg-color-rgb)), var(--f7-bars-translucent-opacity));
+    -webkit-backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
+            backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
   }
 }
 .toolbar b {
@@ -2730,43 +2714,61 @@ html.device-full-viewport body {
   transform: translate3d(0, -100%, 0);
 }
 .navbar ~ .toolbar-top,
+.navbars ~ .toolbar-top,
 .ios .navbar ~ .toolbar-top-ios,
+.ios .navbars ~ .toolbar-top-ios,
 .md .navbar ~ .toolbar-top-md,
 .aurora .navbar ~ .toolbar-top-aurora,
 .navbar ~ * .toolbar-top,
+.navbars ~ * .toolbar-top,
 .ios .navbar ~ * .toolbar-top-ios,
+.ios .navbars ~ * .toolbar-top-ios,
 .md .navbar ~ * .toolbar-top-md,
 .aurora .navbar ~ * .toolbar-top-aurora,
 .navbar ~ .page:not(.no-navbar) .toolbar-top,
+.navbars ~ .page:not(.no-navbar) .toolbar-top,
 .ios .navbar ~ .page:not(.no-navbar) .toolbar-top-ios,
+.ios .navbars ~ .page:not(.no-navbar) .toolbar-top-ios,
 .md .navbar ~ .page:not(.no-navbar) .toolbar-top-md,
 .aurora .navbar ~ .page:not(.no-navbar) .toolbar-top-aurora {
   top: calc(var(--f7-navbar-height) + var(--f7-safe-area-top));
 }
 .navbar ~ .toolbar-top.toolbar-hidden,
+.navbars ~ .toolbar-top.toolbar-hidden,
 .ios .navbar ~ .toolbar-top-ios.toolbar-hidden,
+.ios .navbars ~ .toolbar-top-ios.toolbar-hidden,
 .md .navbar ~ .toolbar-top-md.toolbar-hidden,
 .aurora .navbar ~ .toolbar-top-aurora.toolbar-hidden,
 .navbar ~ * .toolbar-top.toolbar-hidden,
+.navbars ~ * .toolbar-top.toolbar-hidden,
 .ios .navbar ~ * .toolbar-top-ios.toolbar-hidden,
+.ios .navbars ~ * .toolbar-top-ios.toolbar-hidden,
 .md .navbar ~ * .toolbar-top-md.toolbar-hidden,
 .aurora .navbar ~ * .toolbar-top-aurora.toolbar-hidden,
 .navbar ~ .page:not(.no-navbar) .toolbar-top.toolbar-hidden,
+.navbars ~ .page:not(.no-navbar) .toolbar-top.toolbar-hidden,
 .ios .navbar ~ .page:not(.no-navbar) .toolbar-top-ios.toolbar-hidden,
+.ios .navbars ~ .page:not(.no-navbar) .toolbar-top-ios.toolbar-hidden,
 .md .navbar ~ .page:not(.no-navbar) .toolbar-top-md.toolbar-hidden,
 .aurora .navbar ~ .page:not(.no-navbar) .toolbar-top-aurora.toolbar-hidden {
   transform: translate3d(0, calc(-1 * (var(--f7-navbar-height) + var(--f7-toolbar-height) + var(--f7-safe-area-top))), 0);
 }
 .navbar ~ .toolbar-top.toolbar-hidden.tabbar-labels,
+.navbars ~ .toolbar-top.toolbar-hidden.tabbar-labels,
 .ios .navbar ~ .toolbar-top-ios.toolbar-hidden.tabbar-labels,
+.ios .navbars ~ .toolbar-top-ios.toolbar-hidden.tabbar-labels,
 .md .navbar ~ .toolbar-top-md.toolbar-hidden.tabbar-labels,
 .aurora .navbar ~ .toolbar-top-aurora.toolbar-hidden.tabbar-labels,
 .navbar ~ * .toolbar-top.toolbar-hidden.tabbar-labels,
+.navbars ~ * .toolbar-top.toolbar-hidden.tabbar-labels,
 .ios .navbar ~ * .toolbar-top-ios.toolbar-hidden.tabbar-labels,
+.ios .navbars ~ * .toolbar-top-ios.toolbar-hidden.tabbar-labels,
 .md .navbar ~ * .toolbar-top-md.toolbar-hidden.tabbar-labels,
 .aurora .navbar ~ * .toolbar-top-aurora.toolbar-hidden.tabbar-labels,
 .navbar ~ .page:not(.no-navbar) .toolbar-top.toolbar-hidden.tabbar-labels,
+.navbars ~ .page:not(.no-navbar) .toolbar-top.toolbar-hidden.tabbar-labels,
 .ios .navbar ~ .page:not(.no-navbar) .toolbar-top-ios.toolbar-hidden.tabbar-labels,
+.ios .navbars ~ .page:not(.no-navbar) .toolbar-top-ios.toolbar-hidden.tabbar-labels,
 .md .navbar ~ .page:not(.no-navbar) .toolbar-top-md.toolbar-hidden.tabbar-labels,
 .aurora .navbar ~ .page:not(.no-navbar) .toolbar-top-aurora.toolbar-hidden.tabbar-labels {
   transform: translate3d(0, calc(-1 * (var(--f7-navbar-height) + var(--f7-tabbar-labels-height) + var(--f7-safe-area-top))), 0);
@@ -2929,7 +2931,7 @@ html.device-full-viewport body {
 }
 .aurora .tabbar-scrollable a.tab-link,
 .aurora .tabbar-scrollable a.link {
-  padding: 0 15px;
+  padding: 0 16px;
 }
 /* === Subnavbar === */
 :root {
@@ -2950,7 +2952,7 @@ html.device-full-viewport body {
   --f7-subnavbar-title-font-size: 34px;
   --f7-subnavbar-title-font-weight: 700;
   --f7-subnavbar-title-letter-spacing: -0.03em;
-  --f7-subnavbar-title-margin-left: 7px;
+  --f7-subnavbar-title-margin-left: 8px;
   --f7-subnavbar-shadow-image: none;
   /*
   --f7-subnavbar-link-height: var(--f7-subnavbar-height);
@@ -2973,8 +2975,8 @@ html.device-full-viewport body {
 }
 .aurora {
   --f7-subnavbar-height: 38px;
-  --f7-subnavbar-inner-padding-left: 15px;
-  --f7-subnavbar-inner-padding-right: 15px;
+  --f7-subnavbar-inner-padding-left: 16px;
+  --f7-subnavbar-inner-padding-right: 16px;
   --f7-subnavbar-title-font-size: 26px;
   --f7-subnavbar-title-font-weight: bold;
   --f7-subnavbar-title-letter-spacing: -0.03em;
@@ -2988,7 +2990,7 @@ html.device-full-viewport body {
   position: absolute;
   left: 0;
   top: 0;
-  z-index: 500;
+  z-index: 600;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
@@ -2998,13 +3000,13 @@ html.device-full-viewport body {
   color: var(--f7-subnavbar-text-color, var(--f7-bars-text-color));
 }
 @supports ((-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px))) {
-  .ios-translucent .subnavbar {
-    background-color: rgba(var(--f7-subnavbar-bg-color-rgb, var(--f7-bars-bg-color-rgb)), 0.8);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-            backdrop-filter: saturate(180%) blur(20px);
+  .ios-translucent-bars .subnavbar {
+    background-color: rgba(var(--f7-subnavbar-bg-color-rgb, var(--f7-bars-bg-color-rgb)), var(--f7-bars-translucent-opacity));
+    -webkit-backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
+            backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
   }
 }
-.subnavbar .title {
+.subnavbar .subnavbar-title {
   position: relative;
   overflow: hidden;
   text-overflow: ellpsis;
@@ -3099,13 +3101,17 @@ html.device-full-viewport body {
   position: absolute;
 }
 .navbar ~ * .subnavbar,
+.navbars ~ * .subnavbar,
 .page-with-subnavbar .navbar ~ .subnavbar,
 .page-with-subnavbar .navbar ~ * .subnavbar,
 .navbar ~ .page-with-subnavbar:not(.no-navbar) .subnavbar,
-.navbar ~ .subnavbar {
+.navbar ~ .subnavbar,
+.navbars ~ .page-with-subnavbar:not(.no-navbar) .subnavbar,
+.navbars ~ .subnavbar {
   top: calc(var(--f7-navbar-height) + var(--f7-safe-area-top));
 }
 .navbar ~ .page-with-navbar-large:not(.no-navbar) .subnavbar,
+.navbars ~ .page-with-navbar-large:not(.no-navbar) .subnavbar,
 .page-with-subnavbar.page-with-navbar-large .navbar ~ .subnavbar,
 .page-with-subnavbar.page-with-navbar-large .navbar ~ * .subnavbar,
 .navbar .title-large ~ .subnavbar {
@@ -3127,7 +3133,7 @@ html.device-full-viewport body {
 }
 .ios .subnavbar .left a + a,
 .ios .subnavbar .right a + a {
-  margin-left: 15px;
+  margin-left: 16px;
 }
 .ios .subnavbar .left {
   margin-right: 10px;
@@ -3206,7 +3212,7 @@ html.device-full-viewport body {
   margin-left: 10px;
 }
 .aurora .subnavbar .right:first-child {
-  right: 15px;
+  right: 16px;
 }
 .aurora .subnavbar a.link {
   justify-content: flex-start;
@@ -3217,6 +3223,8 @@ html.device-full-viewport body {
 }
 /* === Content Block === */
 :root {
+  --f7-block-padding-horizontal: 16px;
+  --f7-block-padding-vertical: 16px;
   --f7-block-font-size: inherit;
   --f7-block-text-color: inherit;
   --f7-block-strong-bg-color: #fff;
@@ -3230,17 +3238,17 @@ html.device-full-viewport body {
   --f7-block-title-medium-text-transform: none;
   --f7-block-title-large-text-color: #000;
   --f7-block-title-large-text-transform: none;
+  --f7-block-inset-side-margin: 16px;
 }
 :root .theme-dark,
 :root.theme-dark {
+  --f7-block-title-text-color: #fff;
   --f7-block-strong-border-color: rgba(255, 255, 255, 0.15);
   --f7-block-title-medium-text-color: #fff;
   --f7-block-title-large-text-color: #fff;
   --f7-block-strong-bg-color: #1c1c1d;
 }
 .ios {
-  --f7-block-padding-horizontal: 15px;
-  --f7-block-padding-vertical: 15px;
   --f7-block-margin-vertical: 35px;
   --f7-block-strong-text-color: #000;
   --f7-block-strong-border-color: rgba(0, 0, 0, 0.22);
@@ -3255,21 +3263,17 @@ html.device-full-viewport body {
   --f7-block-title-large-font-size: 30px;
   --f7-block-title-large-font-weight: bold;
   --f7-block-title-large-line-height: 1.3;
-  --f7-block-inset-side-margin: 15px;
   --f7-block-inset-border-radius: 7px;
   --f7-block-header-text-color: rgba(0, 0, 0, 0.45);
   --f7-block-footer-text-color: rgba(0, 0, 0, 0.45);
 }
 .ios .theme-dark,
 .ios.theme-dark {
-  --f7-block-title-text-color: #fff;
   --f7-block-header-text-color: rgba(255, 255, 255, 0.55);
   --f7-block-footer-text-color: rgba(255, 255, 255, 0.55);
   --f7-block-strong-text-color: #fff;
 }
 .md {
-  --f7-block-padding-horizontal: 16px;
-  --f7-block-padding-vertical: 16px;
   --f7-block-margin-vertical: 32px;
   --f7-block-strong-text-color: inherit;
   --f7-block-strong-border-color: rgba(0, 0, 0, 0.12);
@@ -3284,20 +3288,16 @@ html.device-full-viewport body {
   --f7-block-title-large-font-size: 34px;
   --f7-block-title-large-font-weight: 500;
   --f7-block-title-large-line-height: 1.2;
-  --f7-block-inset-side-margin: 16px;
   --f7-block-inset-border-radius: 4px;
   --f7-block-header-text-color: rgba(0, 0, 0, 0.54);
   --f7-block-footer-text-color: rgba(0, 0, 0, 0.54);
 }
 .md .theme-dark,
 .md.theme-dark {
-  --f7-block-title-text-color: #fff;
   --f7-block-header-text-color: rgba(255, 255, 255, 0.54);
   --f7-block-footer-text-color: rgba(255, 255, 255, 0.54);
 }
 .aurora {
-  --f7-block-padding-horizontal: 15px;
-  --f7-block-padding-vertical: 15px;
   --f7-block-margin-vertical: 15px;
   --f7-block-strong-text-color: inherit;
   --f7-block-strong-border-color: rgba(0, 0, 0, 0.12);
@@ -3312,16 +3312,14 @@ html.device-full-viewport body {
   --f7-block-title-large-font-size: 28px;
   --f7-block-title-large-font-weight: bold;
   --f7-block-title-large-line-height: 1.3;
-  --f7-block-inset-side-margin: 15px;
   --f7-block-inset-border-radius: 4px;
   --f7-block-header-text-color: rgba(0, 0, 0, 0.6);
   --f7-block-footer-text-color: rgba(0, 0, 0, 0.6);
 }
 .aurora .theme-dark,
 .aurora.theme-dark {
-  --f7-block-title-text-color: #fff;
-  --f7-block-header-text-color: rgba(255, 255, 255, 0.52);
-  --f7-block-footer-text-color: rgba(255, 255, 255, 0.52);
+  --f7-block-header-text-color: rgba(255, 255, 255, 0.54);
+  --f7-block-footer-text-color: rgba(255, 255, 255, 0.54);
   --f7-block-strong-text-color: #fff;
 }
 .block {
@@ -3593,6 +3591,10 @@ html.device-full-viewport body {
 }
 /* === List View === */
 :root {
+  --f7-list-inset-side-margin: 16px;
+  --f7-list-item-cell-margin: 16px;
+  --f7-list-item-padding-horizontal: 16px;
+  --f7-list-media-item-padding-horizontal: 16px;
   --f7-list-bg-color: #fff;
   --f7-list-item-text-max-lines: 2;
   --f7-list-chevron-icon-color: rgba(0, 0, 0, 0.2);
@@ -3632,7 +3634,6 @@ html.device-full-viewport body {
 }
 .ios {
   --f7-list-in-list-padding-left: 30px;
-  --f7-list-inset-side-margin: 15px;
   --f7-list-inset-border-radius: 7px;
   --f7-list-margin-vertical: 35px;
   --f7-list-font-size: 17px;
@@ -3650,13 +3651,10 @@ html.device-full-viewport body {
   --f7-list-item-after-padding: 5px;
   --f7-list-item-footer-text-color: rgba(0, 0, 0, 0.45);
   --f7-list-item-min-height: 44px;
-  --f7-list-item-media-margin: 15px;
+  --f7-list-item-media-margin: 16px;
   --f7-list-item-media-icons-margin: 5px;
-  --f7-list-item-cell-margin: 15px;
   --f7-list-item-padding-vertical: 8px;
-  --f7-list-item-padding-horizontal: 15px;
   --f7-list-media-item-padding-vertical: 10px;
-  --f7-list-media-item-padding-horizontal: 15px;
   --f7-list-media-item-title-font-weight: 600;
   /*
   --f7-list-button-text-color: var(--f7-theme-color);
@@ -3689,7 +3687,6 @@ html.device-full-viewport body {
 }
 .md {
   --f7-list-in-list-padding-left: 40px;
-  --f7-list-inset-side-margin: 16px;
   --f7-list-inset-border-radius: 4px;
   --f7-list-margin-vertical: 32px;
   --f7-list-font-size: 16px;
@@ -3709,11 +3706,8 @@ html.device-full-viewport body {
   --f7-list-item-min-height: 48px;
   --f7-list-item-media-margin: 16px;
   --f7-list-item-media-icons-margin: 8px;
-  --f7-list-item-cell-margin: 16px;
   --f7-list-item-padding-vertical: 8px;
-  --f7-list-item-padding-horizontal: 16px;
   --f7-list-media-item-padding-vertical: 14px;
-  --f7-list-media-item-padding-horizontal: 16px;
   /*
   --f7-list-media-item-title-font-weight: var(--f7-list-item-title-font-weight);
   */
@@ -3745,8 +3739,7 @@ html.device-full-viewport body {
   --f7-list-item-footer-text-color: rgba(255, 255, 255, 0.54);
 }
 .aurora {
-  --f7-list-in-list-padding-left: 15px;
-  --f7-list-inset-side-margin: 15px;
+  --f7-list-in-list-padding-left: 16px;
   --f7-list-inset-border-radius: 4px;
   --f7-list-margin-vertical: 15px;
   --f7-list-font-size: 14px;
@@ -3770,11 +3763,8 @@ html.device-full-viewport body {
   --f7-list-item-min-height: 32px;
   --f7-list-item-media-margin: 10px;
   --f7-list-item-media-icons-margin: 5px;
-  --f7-list-item-cell-margin: 15px;
   --f7-list-item-padding-vertical: 5px;
-  --f7-list-item-padding-horizontal: 15px;
   --f7-list-media-item-padding-vertical: 5px;
-  --f7-list-media-item-padding-horizontal: 15px;
   --f7-list-media-item-title-font-weight: 600;
   /*
   --f7-list-button-text-color: var(--f7-theme-color);
@@ -3797,9 +3787,9 @@ html.device-full-viewport body {
 }
 .aurora .theme-dark,
 .aurora.theme-dark {
-  --f7-list-item-text-text-color: rgba(255, 255, 255, 0.52);
-  --f7-list-item-after-text-color: rgba(255, 255, 255, 0.52);
-  --f7-list-item-footer-text-color: rgba(255, 255, 255, 0.52);
+  --f7-list-item-text-text-color: rgba(255, 255, 255, 0.54);
+  --f7-list-item-after-text-color: rgba(255, 255, 255, 0.54);
+  --f7-list-item-footer-text-color: rgba(255, 255, 255, 0.54);
   --f7-list-item-divider-text-color: rgba(255, 255, 255, 0.6);
   --f7-list-group-title-text-color: rgba(255, 255, 255, 0.6);
   --f7-list-link-pressed-bg-color: rgba(255, 255, 255, 0.05);
@@ -4574,12 +4564,14 @@ li.list-group-title,
   --f7-button-fill-bg-color: var(--f7-theme-color);
   --f7-button-outline-border-color: var(--f7-theme-color);
   */
+  --f7-button-outline-border-width: 2px;
   --f7-button-raised-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0,0,0,0.24);
   --f7-button-raised-pressed-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0,0,0,0.23);
   --f7-segmented-raised-divider-color: rgba(0, 0, 0, 0.1);
   --f7-segmented-strong-bg-color: rgba(0, 0, 0, 0.07);
   --f7-segmented-strong-padding: 2px;
   --f7-segmented-strong-between-buttons: 4px;
+  --f7-segmented-strong-button-font-weight: 500;
   --f7-segmented-strong-button-text-color: #000;
   --f7-segmented-strong-button-pressed-bg-color: rgba(0, 0, 0, 0.07);
   --f7-segmented-strong-button-hover-bg-color: rgba(0, 0, 0, 0.04);
@@ -4608,7 +4600,6 @@ li.list-group-title,
   --f7-button-pressed-bg-color: rgba(var(--f7-theme-color-rgb), .15);
   --f7-button-fill-pressed-bg-color: var(--f7-theme-color-tint);
   */
-  --f7-button-outline-border-width: 2px;
   --f7-button-large-height: 44px;
   --f7-button-large-font-size: 17px;
   --f7-button-large-font-weight: 500;
@@ -4619,7 +4610,6 @@ li.list-group-title,
   --f7-button-small-text-transform: uppercase;
   --f7-button-small-outline-border-width: 2px;
   --f7-segmented-strong-button-text-transform: none;
-  --f7-segmented-strong-button-font-weight: 500;
   --f7-segmented-strong-button-active-font-weight: 600;
 }
 .md {
@@ -4634,7 +4624,6 @@ li.list-group-title,
   /*
   --f7-button-fill-pressed-bg-color: var(--f7-theme-color-shade);
   */
-  --f7-button-outline-border-width: 2px;
   --f7-button-large-height: 48px;
   --f7-button-large-font-size: 14px;
   --f7-button-large-font-weight: 500;
@@ -4645,7 +4634,6 @@ li.list-group-title,
   --f7-button-small-text-transform: uppercase;
   --f7-button-small-outline-border-width: 2px;
   --f7-segmented-strong-button-text-transform: uppercase;
-  --f7-segmented-strong-button-font-weight: 500;
   --f7-segmented-strong-button-active-font-weight: 500;
 }
 .md .theme-dark,
@@ -4669,7 +4657,6 @@ li.list-group-title,
   --f7-button-pressed-bg-color: rgba(var(--f7-theme-color-rgb), .15);
   --f7-button-fill-pressed-bg-color: var(--f7-theme-color-shade);
   */
-  --f7-button-outline-border-width: 2px;
   --f7-button-large-height: 34px;
   --f7-button-large-font-size: 14px;
   --f7-button-large-font-weight: 600;
@@ -4680,7 +4667,6 @@ li.list-group-title,
   --f7-button-small-text-transform: none;
   --f7-button-small-outline-border-width: 1px;
   --f7-segmented-strong-button-text-transform: none;
-  --f7-segmented-strong-button-font-weight: 500;
   --f7-segmented-strong-button-active-font-weight: 600;
 }
 button {
@@ -5224,8 +5210,8 @@ i.icon {
 }
 .aurora {
   --f7-appbar-height: 38px;
-  --f7-appbar-inner-padding-left: 15px;
-  --f7-appbar-inner-padding-right: 15px;
+  --f7-appbar-inner-padding-left: 16px;
+  --f7-appbar-inner-padding-right: 16px;
 }
 .appbar {
   position: relative;
@@ -5246,10 +5232,10 @@ i.icon {
   z-index: 7000;
 }
 @supports ((-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px))) {
-  .ios-translucent .appbar {
-    background-color: rgba(var(--f7-appbar-bg-color-rgb, var(--f7-bars-bg-color-rgb)), 0.8);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-            backdrop-filter: saturate(180%) blur(20px);
+  .ios-translucent-bars .appbar {
+    background-color: rgba(var(--f7-appbar-bg-color-rgb, var(--f7-bars-bg-color-rgb)), var(--f7-bars-translucent-opacity));
+    -webkit-backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
+            backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
   }
 }
 .appbar .panel ~ .appbar {
@@ -5354,7 +5340,7 @@ i.icon {
   --f7-dialog-bg-color-rgb: 255, 255, 255;
   --f7-dialog-box-shadow: none;
   --f7-dialog-width: 270px;
-  --f7-dialog-inner-padding: 15px;
+  --f7-dialog-inner-padding: 16px;
   --f7-dialog-border-radius: 13px;
   --f7-dialog-text-color: #000;
   --f7-dialog-text-align: center;
@@ -5454,9 +5440,10 @@ i.icon {
   color: var(--f7-dialog-text-color);
   font-size: var(--f7-dialog-font-size);
   will-change: transform, opacity;
+  background: var(--f7-dialog-bg-color);
 }
 @supports ((-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px))) {
-  .ios-translucent .dialog {
+  .ios-translucent-modals .dialog {
     background-color: rgba(var(--f7-dialog-bg-color-rgb), 0.8);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
             backdrop-filter: saturate(180%) blur(20px);
@@ -5783,7 +5770,7 @@ html.with-modal-dialog .page-content {
   font-weight: 600;
 }
 .aurora .dialog-button + .dialog-button {
-  margin-left: 15px;
+  margin-left: 16px;
 }
 .aurora .dialog-buttons-vertical .dialog-buttons {
   display: flex;
@@ -5978,14 +5965,14 @@ html.with-modal-popup-push .framework7-root > .view {
 }
 .md .theme-dark,
 .md.theme-dark {
-  --f7-login-screen-bg-color: #171717;
+  --f7-login-screen-bg-color: #121212;
 }
 .aurora {
   --f7-login-screen-blocks-margin-vertical: 15px;
 }
 .aurora .theme-dark,
 .aurora.theme-dark {
-  --f7-login-screen-bg-color: #171717;
+  --f7-login-screen-bg-color: #121212;
 }
 .login-screen {
   position: absolute;
@@ -6123,7 +6110,7 @@ html.with-modal-popup-push .framework7-root > .view {
 }
 .md .theme-dark,
 .md.theme-dark {
-  --f7-popover-bg-color: #202020;
+  --f7-popover-bg-color: #1c1c1d;
   --f7-popover-actions-label-text-color: rgba(255, 255, 255, 0.54);
 }
 .aurora {
@@ -6136,7 +6123,7 @@ html.with-modal-popup-push .framework7-root > .view {
 }
 .aurora .theme-dark,
 .aurora.theme-dark {
-  --f7-popover-bg-color: #202020;
+  --f7-popover-bg-color: #1c1c1d;
   --f7-popover-actions-label-text-color: rgba(255, 255, 255, 0.6);
 }
 .popover {
@@ -6439,9 +6426,17 @@ html.with-modal-popup-push .framework7-root > .view {
   --f7-actions-label-text-color: rgba(0, 0, 0, 0.54);
   --f7-actions-label-font-size: 16px;
   --f7-actions-label-justify-content: flex-start;
-  --f7-actions-group-border-color: #d2d2d6;
+  --f7-actions-group-border-color: rgba(0, 0, 0, 0.12);
   --f7-actions-group-margin: 0px;
   --f7-actions-grid-button-icon-size: 48px;
+}
+.md .theme-dark,
+.md.theme-dark {
+  --f7-actions-bg-color: #202020;
+  --f7-actions-button-text-color: #fff;
+  --f7-actions-button-pressed-bg-color: #2e2e2e;
+  --f7-actions-label-text-color: rgba(255, 255, 255, 0.55);
+  --f7-actions-group-border-color: rgba(255, 255, 255, 0.15);
 }
 .aurora {
   --f7-actions-bg-color: #fff;
@@ -6451,20 +6446,29 @@ html.with-modal-popup-push .framework7-root > .view {
   --f7-actions-button-text-color: var(--f7-theme-color);
   */
   --f7-actions-button-pressed-bg-color: #e5e5e5;
-  --f7-actions-button-padding: 0 15px;
+  --f7-actions-button-padding: 0 16px;
   --f7-actions-button-text-align: center;
   --f7-actions-button-height: 32px;
   --f7-actions-button-height-landscape: 32px;
   --f7-actions-button-font-size: 14px;
   --f7-actions-button-icon-size: 18px;
   --f7-actions-button-justify-content: space-between;
-  --f7-actions-label-padding: 10px 15px;
+  --f7-actions-label-padding: 10px 16px;
   --f7-actions-label-text-color: rgba(0, 0, 0, 0.5);
   --f7-actions-label-font-size: 12px;
   --f7-actions-label-justify-content: center;
   --f7-actions-group-border-color: rgba(0, 0, 0, 0.1);
-  --f7-actions-group-margin: 15px;
+  --f7-actions-group-margin: 16px;
   --f7-actions-grid-button-icon-size: 32px;
+}
+.aurora .theme-dark,
+.aurora.theme-dark {
+  --f7-actions-bg-color: #202020;
+  --f7-actions-button-text-color: #fff;
+  --f7-actions-button-border-color: rgba(255, 255, 255, 0.15);
+  --f7-actions-button-pressed-bg-color: #2e2e2e;
+  --f7-actions-label-text-color: rgba(255, 255, 255, 0.55);
+  --f7-actions-group-border-color: rgba(255, 255, 255, 0.15);
 }
 .actions-modal {
   position: absolute;
@@ -6544,8 +6548,8 @@ html.with-modal-popup-push .framework7-root > .view {
   background: var(--f7-actions-bg-color);
 }
 @supports ((-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px))) {
-  .ios-translucent .actions-button,
-  .ios-translucent .actions-label {
+  .ios-translucent-modals .actions-button,
+  .ios-translucent-modals .actions-label {
     background-color: rgba(var(--f7-actions-bg-color-rgb), 0.8);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
             backdrop-filter: saturate(180%) blur(20px);
@@ -6613,7 +6617,7 @@ html.with-modal-popup-push .framework7-root > .view {
   color: var(--f7-theme-color);
 }
 @supports ((-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px))) {
-  .ios-translucent .actions-button.active-state {
+  .ios-translucent-modals .actions-button.active-state {
     background-color: rgba(var(--f7-actions-button-pressed-bg-color-rgb), 0.8);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
             backdrop-filter: saturate(180%) blur(20px);
@@ -6710,18 +6714,18 @@ html.with-modal-popup-push .framework7-root > .view {
   font-size: var(--f7-actions-grid-button-font-size);
 }
 @supports ((-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px))) {
-  .ios-translucent .actions-grid .actions-group {
+  .ios-translucent-modals .actions-grid .actions-group {
     background-color: rgba(var(--f7-actions-bg-color-rgb), 0.8);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
             backdrop-filter: saturate(180%) blur(20px);
   }
 }
 .ios .actions-button-media {
-  margin-left: 15px;
+  margin-left: 16px;
 }
 .ios .actions-button-media + .actions-button-text {
   text-align: left;
-  margin-left: 15px;
+  margin-left: 16px;
 }
 .md .actions-button {
   transition-duration: 300ms;
@@ -6733,11 +6737,11 @@ html.with-modal-popup-push .framework7-root > .view {
   margin-left: 16px;
 }
 .aurora .actions-button-media {
-  margin-left: 15px;
+  margin-left: 16px;
 }
 .aurora .actions-button-media + .actions-button-text {
   text-align: left;
-  margin-left: 15px;
+  margin-left: 16px;
 }
 /* === Sheet Modal === */
 :root {
@@ -6750,7 +6754,7 @@ html.with-modal-popup-push .framework7-root > .view {
 }
 :root .theme-dark,
 :root.theme-dark {
-  --f7-sheet-bg-color: #171717;
+  --f7-sheet-bg-color: #121212;
 }
 .ios {
   --f7-sheet-border-color: var(--f7-bars-border-color);
@@ -6920,7 +6924,7 @@ html.with-modal-sheet-push .framework7-root > .view {
 .ios {
   --f7-toast-bg-color: rgba(0, 0, 0, 0.75);
   --f7-toast-bg-color-rgb: 0, 0, 0;
-  --f7-toast-padding-horizontal: 15px;
+  --f7-toast-padding-horizontal: 16px;
   --f7-toast-padding-vertical: 12px;
   --f7-toast-border-radius: 8px;
   --f7-toast-button-min-width: 64px;
@@ -6952,7 +6956,7 @@ html.with-modal-sheet-push .framework7-root > .view {
   opacity: 0;
 }
 @supports ((-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px))) {
-  .ios-translucent .toast {
+  .ios-translucent-modals .toast {
     background-color: rgba(var(--f7-toast-bg-color-rgb), 0.8);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
             backdrop-filter: saturate(180%) blur(20px);
@@ -7044,13 +7048,13 @@ html.with-modal-sheet-push .framework7-root > .view {
     border-radius: var(--f7-toast-border-radius);
   }
   .ios .toast.toast-top {
-    top: 15px;
+    top: 16px;
   }
   .ios .toast.toast-center {
     margin-left: 0;
   }
   .ios .toast.toast-bottom {
-    margin-bottom: calc(15px + var(--f7-safe-area-bottom));
+    margin-bottom: calc(16px + var(--f7-safe-area-bottom));
   }
 }
 @media (min-width: 1024px) {
@@ -7060,11 +7064,11 @@ html.with-modal-sheet-push .framework7-root > .view {
   }
   .ios .toast.toast-bottom,
   .ios .toast.toast-top {
-    left: 15px;
+    left: 16px;
   }
 }
 .ios .toast-button {
-  margin-left: 15px;
+  margin-left: 16px;
   margin-right: calc(-1 * var(--f7-button-padding-horizontal));
 }
 .md .toast {
@@ -8338,20 +8342,24 @@ html.device-android-4 .accordion-item-content {
   font-weight: var(--f7-list-index-label-font-weight);
 }
 .navbar ~ .page > .list-index,
+.navbars ~ .page > .list-index,
 .navbar ~ .list-index {
   top: var(--f7-navbar-height);
 }
 .navbar ~ .toolbar-top ~ .list-index,
+.navbars ~ .toolbar-top ~ .list-index,
 .ios .navbar ~ .toolbar-top-ios ~ .list-index,
-.md .navbar ~ .toolbar-top-md ~ .list-index {
+.ios .navbars ~ .toolbar-top-ios .md .navbar ~ .toolbar-top-md ~ .list-index {
   top: calc(var(--f7-navbar-height) + var(--f7-toolbar-height));
 }
 .navbar ~ .toolbar-top.tabbar-labels ~ .list-index,
+.navbars ~ .toolbar-top.tabbar-labels ~ .list-index,
 .ios .navbar ~ .toolbar-top-ios.tabbar-labels ~ .list-index,
-.md .navbar ~ .toolbar-top-md.tabbar-labels ~ .list-index {
+.ios .navbars ~ .toolbar-top-ios .md .navbar ~ .toolbar-top-md.tabbar-labels ~ .list-index {
   top: calc(var(--f7-navbar-height) + var(--f7-tabbar-labels-height));
 }
 .navbar ~ .subnavbar ~ .list-index,
+.navbars ~ .subnavbar ~ .list-index,
 .page-with-subnavbar .navbar ~ .list-index {
   top: calc(var(--f7-navbar-height) + var(--f7-subnavbar-height));
 }
@@ -8416,6 +8424,8 @@ html.device-android-4 .accordion-item-content {
 }
 /* === Timeline === */
 :root {
+  --f7-timeline-inner-block-margin-vertical: 16px;
+  --f7-timeline-divider-margin-horizontal: 16px;
   --f7-timeline-horizontal-date-height: 34px;
   --f7-timeline-year-height: 24px;
   --f7-timeline-year-font-weight: inherit;
@@ -8433,10 +8443,8 @@ html.device-android-4 .accordion-item-content {
   --f7-timeline-horizontal-item-date-border-color: rgba(255, 255, 255, 0.15);
 }
 .ios {
-  --f7-timeline-padding-horizontal: 15px;
+  --f7-timeline-padding-horizontal: 16px;
   --f7-timeline-margin-vertical: 35px;
-  --f7-timeline-divider-margin-horizontal: 15px;
-  --f7-timeline-inner-block-margin-vertical: 15px;
   --f7-timeline-item-inner-border-radius: 7px;
   --f7-timeline-item-inner-box-shadow: none;
   --f7-timeline-item-time-font-size: 13px;
@@ -8462,8 +8470,6 @@ html.device-android-4 .accordion-item-content {
 .md {
   --f7-timeline-padding-horizontal: 16px;
   --f7-timeline-margin-vertical: 32px;
-  --f7-timeline-divider-margin-horizontal: 16px;
-  --f7-timeline-inner-block-margin-vertical: 16px;
   --f7-timeline-item-inner-border-radius: 4px;
   --f7-timeline-item-inner-box-shadow: var(--f7-elevation-1);
   --f7-timeline-item-time-font-size: 13px;
@@ -8489,8 +8495,6 @@ html.device-android-4 .accordion-item-content {
 .aurora {
   --f7-timeline-padding-horizontal: 10px;
   --f7-timeline-margin-vertical: 15px;
-  --f7-timeline-divider-margin-horizontal: 15px;
-  --f7-timeline-inner-block-margin-vertical: 15px;
   --f7-timeline-item-inner-border-radius: 4px;
   --f7-timeline-item-inner-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
   --f7-timeline-item-time-font-size: 12px;
@@ -8512,8 +8516,8 @@ html.device-android-4 .accordion-item-content {
 }
 .aurora .theme-dark,
 .aurora.theme-dark {
-  --f7-timeline-item-time-text-color: rgba(255, 255, 255, 0.52);
-  --f7-timeline-item-text-color: rgba(255, 255, 255, 0.52);
+  --f7-timeline-item-time-text-color: rgba(255, 255, 255, 0.54);
+  --f7-timeline-item-text-color: rgba(255, 255, 255, 0.54);
 }
 .timeline {
   box-sizing: border-box;
@@ -8772,10 +8776,10 @@ html.device-android-4 .accordion-item-content {
   text-align: left;
 }
 @supports ((-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px))) {
-  .ios-translucent .timeline-horizontal .timeline-item-date {
-    background-color: rgba(var(--f7-bars-bg-color-rgb), 0.8);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-            backdrop-filter: saturate(180%) blur(20px);
+  .ios-translucent-bars .timeline-horizontal .timeline-item-date {
+    background-color: rgba(var(--f7-bars-bg-color-rgb), var(--f7-bars-translucent-opacity));
+    -webkit-backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
+            backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
   }
 }
 .timeline-horizontal .timeline-item-date:after {
@@ -9026,11 +9030,11 @@ html.device-android-4 .accordion-item-content {
   color: var(--f7-bars-text-color);
 }
 @supports ((-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px))) {
-  .ios-translucent .timeline-year-title,
-  .ios-translucent .timeline-month-title {
-    background-color: rgba(var(--f7-bars-bg-color-rgb), 0.8);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-            backdrop-filter: saturate(180%) blur(20px);
+  .ios-translucent-bars .timeline-year-title,
+  .ios-translucent-bars .timeline-month-title {
+    background-color: rgba(var(--f7-bars-bg-color-rgb), var(--f7-bars-translucent-opacity));
+    -webkit-backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
+            backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
   }
 }
 .timeline-year-title span,
@@ -9378,6 +9382,8 @@ html.with-panel-right-reveal .panel-right.panel-in-collapsed ~ .view {
 }
 /* === Card === */
 :root {
+  --f7-card-content-padding-horizontal: 16px;
+  --f7-card-content-padding-vertical: 16px;
   --f7-card-bg-color: #fff;
   --f7-card-outline-border-color: rgba(0, 0, 0, 0.12);
   --f7-card-border-radius: 4px;
@@ -9385,9 +9391,11 @@ html.with-panel-right-reveal .panel-right.panel-in-collapsed ~ .view {
   --f7-card-header-text-color: inherit;
   --f7-card-header-font-weight: 400;
   --f7-card-header-border-color: rgba(0, 0, 0, 0.1);
+  --f7-card-header-padding-horizontal: 16px;
   --f7-card-footer-border-color: rgba(0, 0, 0, 0.1);
   --f7-card-footer-font-weight: 400;
   --f7-card-footer-font-size: inherit;
+  --f7-card-footer-padding-horizontal: 16px;
   --f7-card-expandable-bg-color: #fff;
   --f7-card-expandable-font-size: 16px;
   --f7-card-expandable-tablet-width: 670px;
@@ -9406,15 +9414,11 @@ html.with-panel-right-reveal .panel-right.panel-in-collapsed ~ .view {
   --f7-card-margin-horizontal: 10px;
   --f7-card-margin-vertical: 10px;
   --f7-card-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
-  --f7-card-content-padding-horizontal: 15px;
-  --f7-card-content-padding-vertical: 15px;
   --f7-card-header-font-size: 17px;
   --f7-card-header-padding-vertical: 10px;
-  --f7-card-header-padding-horizontal: 15px;
   --f7-card-header-min-height: 44px;
   --f7-card-footer-text-color: rgba(0, 0, 0, 0.45);
   --f7-card-footer-padding-vertical: 10px;
-  --f7-card-footer-padding-horizontal: 15px;
   --f7-card-footer-min-height: 44px;
   --f7-card-expandable-margin-horizontal: 20px;
   --f7-card-expandable-margin-vertical: 30px;
@@ -9428,15 +9432,11 @@ html.with-panel-right-reveal .panel-right.panel-in-collapsed ~ .view {
   --f7-card-margin-horizontal: 8px;
   --f7-card-margin-vertical: 8px;
   --f7-card-box-shadow: var(--f7-elevation-1);
-  --f7-card-content-padding-horizontal: 16px;
-  --f7-card-content-padding-vertical: 16px;
   --f7-card-header-font-size: 16px;
   --f7-card-header-padding-vertical: 4px;
-  --f7-card-header-padding-horizontal: 16px;
   --f7-card-header-min-height: 48px;
-  --f7-card-footer-text-color: #757575;
+  --f7-card-footer-text-color: rgba(0, 0, 0, 0.54);
   --f7-card-footer-padding-vertical: 4px;
-  --f7-card-footer-padding-horizontal: 16px;
   --f7-card-footer-min-height: 48px;
   --f7-card-expandable-margin-horizontal: 12px;
   --f7-card-expandable-margin-vertical: 24px;
@@ -9450,16 +9450,12 @@ html.with-panel-right-reveal .panel-right.panel-in-collapsed ~ .view {
   --f7-card-margin-horizontal: 10px;
   --f7-card-margin-vertical: 10px;
   --f7-card-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
-  --f7-card-content-padding-horizontal: 15px;
-  --f7-card-content-padding-vertical: 15px;
   --f7-card-header-font-size: 14px;
   --f7-card-header-font-weight: bold;
   --f7-card-header-padding-vertical: 10px;
-  --f7-card-header-padding-horizontal: 15px;
   --f7-card-header-min-height: 38px;
   --f7-card-footer-text-color: rgba(0, 0, 0, 0.6);
   --f7-card-footer-padding-vertical: 10px;
-  --f7-card-footer-padding-horizontal: 15px;
   --f7-card-footer-min-height: 38px;
   --f7-card-expandable-margin-horizontal: 10px;
   --f7-card-expandable-margin-vertical: 20px;
@@ -11813,20 +11809,20 @@ label.item-radio.disabled,
   --f7-stepper-fill-button-bg-color: var(--f7-theme-color);
   */
   --f7-stepper-raised-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0,0,0,0.24);
+  --f7-stepper-value-font-weight: 500;
+  --f7-stepper-border-width: 2px;
 }
 .ios {
-  --f7-stepper-height: 29px;
+  --f7-stepper-height: 28px;
   --f7-stepper-border-radius: 5px;
   /*
   --f7-stepper-button-pressed-bg-color: rgba(var(--f7-theme-color-rgb), .15);
   --f7-stepper-fill-button-pressed-bg-color: var(--f7-theme-color-tint);
   */
-  --f7-stepper-border-width: 1px;
   --f7-stepper-large-height: 44px;
   --f7-stepper-small-height: 26px;
   --f7-stepper-small-border-width: 2px;
   --f7-stepper-value-font-size: 17px;
-  --f7-stepper-value-font-weight: 400;
 }
 .md {
   --f7-stepper-height: 36px;
@@ -11835,12 +11831,10 @@ label.item-radio.disabled,
   /*
   --f7-stepper-fill-button-pressed-bg-color: var(--f7-theme-color-shade);
   */
-  --f7-stepper-border-width: 2px;
   --f7-stepper-large-height: 48px;
   --f7-stepper-small-border-width: 2px;
   --f7-stepper-small-height: 28px;
   --f7-stepper-value-font-size: 14px;
-  --f7-stepper-value-font-weight: 500;
 }
 .md .theme-dark,
 .md.theme-dark {
@@ -11857,12 +11851,10 @@ label.item-radio.disabled,
   --f7-stepper-button-pressed-bg-color: rgba(var(--f7-theme-color-rgb), .15);
   --f7-stepper-fill-button-pressed-bg-color: var(--f7-theme-color-shade);
   */
-  --f7-stepper-border-width: 2px;
   --f7-stepper-large-height: 34px;
   --f7-stepper-small-border-width: 1px;
   --f7-stepper-small-height: 22px;
   --f7-stepper-value-font-size: 14px;
-  --f7-stepper-value-font-weight: 500;
 }
 .stepper {
   display: inline-flex;
@@ -11938,6 +11930,7 @@ label.item-radio.disabled,
   top: 50%;
   transform: translate(-50%, -50%);
   background-color: var(--f7-stepper-button-text-color, var(--f7-theme-color));
+  border-radius: 2px;
 }
 .stepper-button-plus:after,
 .stepper-button-minus:after {
@@ -12169,14 +12162,8 @@ label.item-radio.disabled,
   max-height: 40vh;
 }
 /* === Grid === */
-.ios {
-  --f7-grid-gap: 15px;
-}
-.md {
+:root {
   --f7-grid-gap: 16px;
-}
-.aurora {
-  --f7-grid-gap: 15px;
 }
 .row {
   display: flex;
@@ -12698,8 +12685,8 @@ label.item-radio.disabled,
 :root .theme-dark,
 :root.theme-dark {
   --f7-calendar-sheet-border-color: var(--f7-bars-border-color);
-  --f7-calendar-modal-bg-color: #171717;
-  --f7-calendar-sheet-bg-color: #171717;
+  --f7-calendar-modal-bg-color: #121212;
+  --f7-calendar-sheet-bg-color: #121212;
 }
 .ios {
   --f7-calendar-sheet-border-color: #929499;
@@ -13618,7 +13605,7 @@ label.item-radio.disabled,
   --f7-table-footer-font-size: 12px;
   --f7-table-input-height: 24px;
   --f7-table-input-font-size: 14px;
-  --f7-table-collapsible-cell-padding: 15px;
+  --f7-table-collapsible-cell-padding: 16px;
   --f7-table-link-icon-only-icon-size: 20px;
   --f7-table-sortable-icon-color: #000;
 }
@@ -13636,9 +13623,9 @@ label.item-radio.disabled,
   --f7-table-body-cell-height: 44px;
   --f7-table-cell-border-color: rgba(0, 0, 0, 0.22);
   --f7-table-cell-padding-vertical: 0px;
-  --f7-table-cell-padding-horizontal: 15px;
-  --f7-table-edge-cell-padding-horizontal: 15px;
-  --f7-table-label-cell-padding-horizontal: 15px;
+  --f7-table-cell-padding-horizontal: 16px;
+  --f7-table-edge-cell-padding-horizontal: 16px;
+  --f7-table-label-cell-padding-horizontal: 16px;
   --f7-table-checkbox-cell-width: 22px;
   /* --f7-table-actions-cell-link-color: var(--f7-theme-color); */
   --f7-table-selected-row-bg-color: rgba(0, 0, 0, 0.03);
@@ -13696,8 +13683,8 @@ label.item-radio.disabled,
   --f7-table-cell-border-color: rgba(0, 0, 0, 0.12);
   --f7-table-cell-padding-vertical: 5px;
   --f7-table-cell-padding-horizontal: 10px;
-  --f7-table-edge-cell-padding-horizontal: 15px;
-  --f7-table-label-cell-padding-horizontal: 15px;
+  --f7-table-edge-cell-padding-horizontal: 16px;
+  --f7-table-label-cell-padding-horizontal: 16px;
   --f7-table-checkbox-cell-width: 22px;
   /* --f7-table-actions-cell-link-color: var(--f7-theme-color); */
   --f7-table-selected-row-bg-color: rgba(0, 0, 0, 0.03);
@@ -13712,8 +13699,8 @@ label.item-radio.disabled,
 .aurora .theme-dark,
 .aurora.theme-dark {
   --f7-table-selected-row-bg-color: rgba(255, 255, 255, 0.03);
-  --f7-table-head-text-color: rgba(255, 255, 255, 0.52);
-  --f7-table-footer-text-color: rgba(255, 255, 255, 0.52);
+  --f7-table-head-text-color: rgba(255, 255, 255, 0.54);
+  --f7-table-footer-text-color: rgba(255, 255, 255, 0.54);
 }
 .data-table {
   overflow-x: auto;
@@ -14130,7 +14117,7 @@ table.data-table {
 }
 .ios .data-table th.actions-cell a.link + a.link,
 .ios .data-table td.actions-cell a.link + a.link {
-  margin-left: 15px;
+  margin-left: 16px;
 }
 .ios .sortable-cell:not(.numeric-cell):after {
   margin-left: 5px;
@@ -14142,7 +14129,7 @@ table.data-table {
 .ios .data-table-actions a.link + a.link,
 .ios .data-table-links .button + .button,
 .ios .data-table-actions .button + .button {
-  margin-left: 15px;
+  margin-left: 16px;
 }
 .ios .data-table-actions a.link.icon-only {
   width: 44px;
@@ -14160,7 +14147,7 @@ table.data-table {
   margin-left: 20px;
 }
 .ios .data-table-pagination-label {
-  margin-right: 15px;
+  margin-right: 16px;
 }
 .md .data-table th.actions-cell a.link + a.link,
 .md .data-table td.actions-cell a.link + a.link {
@@ -14252,7 +14239,7 @@ table.data-table {
   height: 32px;
 }
 .aurora .data-table-rows-select + .data-table-pagination {
-  margin-left: 15px;
+  margin-left: 16px;
 }
 .aurora .data-table-rows-select .input {
   margin-left: 10px;
@@ -14262,6 +14249,7 @@ table.data-table {
 }
 /* === FAB === */
 :root {
+  --f7-fab-margin: 16px;
   --f7-fab-text-color: #fff;
   --f7-fab-extended-text-font-size: 14px;
   --f7-fab-extended-text-padding: 0 20px;
@@ -14275,9 +14263,8 @@ table.data-table {
 .ios {
   --f7-fab-size: 50px;
   --f7-fab-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
-  --f7-fab-margin: 15px;
   --f7-fab-extended-size: 50px;
-  --f7-fab-extended-text-font-weight: 400;
+  --f7-fab-extended-text-font-weight: 600;
   --f7-fab-extended-text-letter-spacing: 0;
   --f7-fab-label-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.4);
   --f7-fab-label-font-size: inherit;
@@ -14285,7 +14272,6 @@ table.data-table {
 .md {
   --f7-fab-size: 56px;
   --f7-fab-box-shadow: var(--f7-elevation-6);
-  --f7-fab-margin: 16px;
   --f7-fab-extended-size: 48px;
   --f7-fab-extended-text-font-weight: 500;
   --f7-fab-extended-text-letter-spacing: 0.03em;
@@ -14295,7 +14281,6 @@ table.data-table {
 .aurora {
   --f7-fab-size: 40px;
   --f7-fab-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
-  --f7-fab-margin: 15px;
   --f7-fab-extended-size: 38px;
   --f7-fab-extended-text-font-weight: 500;
   --f7-fab-extended-text-letter-spacing: 0;
@@ -14581,7 +14566,9 @@ table.data-table {
   margin-left: 8px;
 }
 .navbar ~ * .fab[class*="-top"],
-.navbar ~ .fab[class*="-top"] {
+.navbar ~ .fab[class*="-top"],
+.navbars ~ * .fab[class*="-top"],
+.navbars ~ .fab[class*="-top"] {
   margin-top: calc(var(--f7-navbar-height) + var(--f7-safe-area-top));
 }
 .toolbar-top ~ * .fab[class*="-top"],
@@ -14634,6 +14621,18 @@ table.data-table {
 .navbar + .toolbar-top.tabbar-labels ~ .fab[class*="-top"],
 .ios .navbar + .toolbar-top-ios.tabbar-labels ~ .fab[class*="-top"],
 .md .navbar + .toolbar-top-ios.tabbar-labels ~ .fab[class*="-top"] {
+  margin-top: calc(var(--f7-tabbar-labels-height) + var(--f7-navbar-height) + var(--f7-safe-area-top));
+}
+.navbars + .toolbar-top ~ * .fab[class*="-top"],
+.ios .navbars + .toolbar-top-ios ~ * .fab[class*="-top"],
+.navbars + .toolbar-top ~ .fab[class*="-top"],
+.ios .navbars + .toolbar-top-ios ~ .fab[class*="-top"] {
+  margin-top: calc(var(--f7-toolbar-height) + var(--f7-navbar-height) + var(--f7-safe-area-top));
+}
+.navbars + .toolbar-top.tabbar-labels ~ * .fab[class*="-top"],
+.ios .navbars + .toolbar-top-ios.tabbar-labels ~ * .fab[class*="-top"],
+.navbars + .toolbar-top.tabbar-labels ~ .fab[class*="-top"],
+.ios .navbars + .toolbar-top-ios.tabbar-labels ~ .fab[class*="-top"] {
   margin-top: calc(var(--f7-tabbar-labels-height) + var(--f7-navbar-height) + var(--f7-safe-area-top));
 }
 .ios .fab > a.active-state,
@@ -14720,8 +14719,8 @@ table.data-table {
 }
 .md .theme-dark,
 .md.theme-dark {
-  --f7-searchbar-bg-color: #222222;
-  --f7-searchbar-input-bg-color: #222222;
+  --f7-searchbar-bg-color: #202020;
+  --f7-searchbar-input-bg-color: #202020;
 }
 .aurora {
   /*
@@ -14770,10 +14769,10 @@ table.data-table {
   background-color: var(--f7-searchbar-bg-color, var(--f7-bars-bg-color));
 }
 @supports ((-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px))) {
-  .ios-translucent .searchbar {
-    background-color: rgba(var(--f7-searchbar-bg-color-rgb, var(--f7-bars-bg-color-rgb)), 0.8);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-            backdrop-filter: saturate(180%) blur(20px);
+  .ios-translucent-bars .searchbar {
+    background-color: rgba(var(--f7-searchbar-bg-color-rgb, var(--f7-bars-bg-color-rgb)), var(--f7-bars-translucent-opacity));
+    -webkit-backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
+            backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
   }
 }
 .ios .subnavbar .searchbar {
@@ -14807,7 +14806,7 @@ table.data-table {
   transform: scaleY(calc(1 / var(--f7-device-pixel-ratio)));
 }
 .page > .searchbar:not(.searchbar-inline) {
-  z-index: 510;
+  z-index: 600;
 }
 .page > .searchbar:not(.searchbar-inline):before {
   content: '';
@@ -14899,10 +14898,10 @@ table.data-table {
   transition-duration: 300ms;
   pointer-events: none;
 }
-.navbar-inner .searchbar-expandable {
+.navbar .searchbar-expandable {
   background: transparent;
 }
-.navbar-inner .searchbar-expandable:after {
+.navbar .searchbar-expandable:after {
   display: none !important;
 }
 .navbar .searchbar.searchbar-expandable {
@@ -14999,31 +14998,27 @@ table.data-table {
   display: none !important;
 }
 .navbar.with-searchbar-expandable-enabled-no-transition,
-.navbar-inner.with-searchbar-expandable-enabled-no-transition {
+.navbar.with-searchbar-expandable-enabled-no-transition {
   --f7-navbar-large-collapse-progress: 1;
 }
 .navbar.with-searchbar-expandable-enabled,
-.navbar-inner.with-searchbar-expandable-enabled {
+.navbar.with-searchbar-expandable-enabled {
   --f7-navbar-large-collapse-progress: 1;
 }
 .navbar.with-searchbar-expandable-enabled .navbar-bg,
-.navbar-inner.with-searchbar-expandable-enabled .navbar-bg,
+.navbar.with-searchbar-expandable-enabled .navbar-bg,
 .navbar.with-searchbar-expandable-enabled .title-large,
-.navbar-inner.with-searchbar-expandable-enabled .title-large,
+.navbar.with-searchbar-expandable-enabled .title-large,
 .navbar.with-searchbar-expandable-enabled .title-large-text,
-.navbar-inner.with-searchbar-expandable-enabled .title-large-text,
-.navbar.with-searchbar-expandable-enabled .title-large-inner,
-.navbar-inner.with-searchbar-expandable-enabled .title-large-inner {
+.navbar.with-searchbar-expandable-enabled .title-large-text {
   transition-duration: 300ms;
 }
 .navbar.with-searchbar-expandable-closing .navbar-bg,
-.navbar-inner.with-searchbar-expandable-closing .navbar-bg,
+.navbar.with-searchbar-expandable-closing .navbar-bg,
 .navbar.with-searchbar-expandable-closing .title-large,
-.navbar-inner.with-searchbar-expandable-closing .title-large,
+.navbar.with-searchbar-expandable-closing .title-large,
 .navbar.with-searchbar-expandable-closing .title-large-text,
-.navbar-inner.with-searchbar-expandable-closing .title-large-text,
-.navbar.with-searchbar-expandable-closing .title-large-inner,
-.navbar-inner.with-searchbar-expandable-closing .title-large-inner {
+.navbar.with-searchbar-expandable-closing .title-large-text {
   transition-duration: 300ms;
 }
 .page-content.with-searchbar-expandable-enabled {
@@ -15036,10 +15031,12 @@ table.data-table {
   transition-duration: 300ms;
 }
 .navbar ~ .page:not(.no-navbar) > .searchbar,
+.navbars ~ .page:not(.no-navbar) > .searchbar,
 .page > .navbar ~ .searchbar {
   top: calc(var(--f7-navbar-height) + var(--f7-safe-area-top));
 }
 .navbar ~ .page-with-navbar-large:not(.no-navbar) .searchbar,
+.navbars ~ .page-with-navbar-large:not(.no-navbar) .searchbar,
 .page-with-navbar-large .navbar ~ .searchbar,
 .page-with-navbar-large .navbar ~ * .searchbar {
   top: calc(var(--f7-navbar-height) + var(--f7-navbar-large-title-height) + var(--f7-safe-area-top));
@@ -15155,26 +15152,26 @@ table.data-table {
 .ios .searchbar-expandable .searchbar-inner {
   height: var(--f7-searchbar-expandable-size);
 }
-.ios .navbar-inner.with-searchbar-expandable-enabled .navbar-bg,
-.ios .navbar-inner.with-searchbar-expandable-closing .navbar-bg {
+.ios .navbar.with-searchbar-expandable-enabled .navbar-bg,
+.ios .navbar.with-searchbar-expandable-closing .navbar-bg {
   transition-property: transform, opacity;
 }
-.ios .navbar-inner.with-searchbar-expandable-enabled .navbar-bg,
-.ios .navbar-inner.with-searchbar-expandable-closing .navbar-bg,
-.ios .navbar-inner.with-searchbar-expandable-enabled .left,
-.ios .navbar-inner.with-searchbar-expandable-closing .left,
-.ios .navbar-inner.with-searchbar-expandable-enabled .title,
-.ios .navbar-inner.with-searchbar-expandable-closing .title,
-.ios .navbar-inner.with-searchbar-expandable-enabled .right,
-.ios .navbar-inner.with-searchbar-expandable-closing .right {
+.ios .navbar.with-searchbar-expandable-enabled .navbar-bg,
+.ios .navbar.with-searchbar-expandable-closing .navbar-bg,
+.ios .navbar.with-searchbar-expandable-enabled .left,
+.ios .navbar.with-searchbar-expandable-closing .left,
+.ios .navbar.with-searchbar-expandable-enabled .title,
+.ios .navbar.with-searchbar-expandable-closing .title,
+.ios .navbar.with-searchbar-expandable-enabled .right,
+.ios .navbar.with-searchbar-expandable-closing .right {
   transition-duration: 300ms;
 }
-.ios .navbar-inner.with-searchbar-expandable-enabled .left,
-.ios .navbar-inner.with-searchbar-expandable-enabled-no-transition .left,
-.ios .navbar-inner.with-searchbar-expandable-enabled .title,
-.ios .navbar-inner.with-searchbar-expandable-enabled-no-transition .title,
-.ios .navbar-inner.with-searchbar-expandable-enabled .right,
-.ios .navbar-inner.with-searchbar-expandable-enabled-no-transition .right {
+.ios .navbar.with-searchbar-expandable-enabled .left,
+.ios .navbar.with-searchbar-expandable-enabled-no-transition .left,
+.ios .navbar.with-searchbar-expandable-enabled .title,
+.ios .navbar.with-searchbar-expandable-enabled-no-transition .title,
+.ios .navbar.with-searchbar-expandable-enabled .right,
+.ios .navbar.with-searchbar-expandable-enabled-no-transition .right {
   transform: translateY(calc(-1 * var(--f7-navbar-height)));
   opacity: 0 !important;
 }
@@ -15478,10 +15475,10 @@ table.data-table {
 }
 .aurora .theme-dark,
 .aurora.theme-dark {
-  --f7-messages-title-text-color: rgba(255, 255, 255, 0.52);
-  --f7-message-header-text-color: rgba(255, 255, 255, 0.52);
-  --f7-message-name-text-color: rgba(255, 255, 255, 0.52);
-  --f7-message-footer-text-color: rgba(255, 255, 255, 0.52);
+  --f7-messages-title-text-color: rgba(255, 255, 255, 0.54);
+  --f7-message-header-text-color: rgba(255, 255, 255, 0.54);
+  --f7-message-name-text-color: rgba(255, 255, 255, 0.54);
+  --f7-message-footer-text-color: rgba(255, 255, 255, 0.54);
 }
 .messages-content,
 .messages {
@@ -15921,7 +15918,7 @@ table.data-table {
   border-bottom-right-radius: var(--f7-message-bubble-border-radius);
 }
 .aurora .message-received {
-  margin-left: calc(15px + var(--f7-safe-area-left));
+  margin-left: calc(16px + var(--f7-safe-area-left));
 }
 .aurora .message-received .message-avatar + .message-content {
   margin-left: 5px;
@@ -15940,7 +15937,7 @@ table.data-table {
   transform-origin: right bottom;
 }
 .aurora .message-sent {
-  margin-right: calc(15px + var(--f7-safe-area-right));
+  margin-right: calc(16px + var(--f7-safe-area-right));
 }
 .aurora .message-sent .message-avatar + .message-content {
   margin-right: 5px;
@@ -16017,7 +16014,7 @@ table.data-table {
   */
   --f7-messagebar-border-color: transparent;
   --f7-messagebar-textarea-border-radius: 17px;
-  --f7-messagebar-textarea-padding: 6px 15px;
+  --f7-messagebar-textarea-padding: 6px 16px;
   --f7-messagebar-textarea-height: 34px;
   --f7-messagebar-textarea-text-color: #000;
   --f7-messagebar-textarea-font-size: 17px;
@@ -16051,7 +16048,7 @@ table.data-table {
 }
 .md .theme-dark,
 .md.theme-dark {
-  --f7-messagebar-border-color: rgba(255, 255, 255, 0.15);
+  --f7-messagebar-border-color: transparent;
   --f7-messagebar-link-color: rgba(255, 255, 255, 0.87);
   --f7-messagebar-textarea-text-color: rgba(255, 255, 255, 0.87);
   --f7-messagebar-attachments-border-color: rgba(255, 255, 255, 0.2);
@@ -16116,10 +16113,10 @@ table.data-table {
   background: var(--f7-messagebar-shadow-image);
 }
 @supports ((-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px))) {
-  .ios-translucent .messagebar {
-    background-color: rgba(var(--f7-messagebar-bg-color-rgb), 0.8);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-            backdrop-filter: saturate(180%) blur(20px);
+  .ios-translucent-bars .messagebar {
+    background-color: rgba(var(--f7-messagebar-bg-color-rgb), var(--f7-bars-translucent-opacity));
+    -webkit-backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
+            backdrop-filter: saturate(180%) blur(var(--f7-bars-translucent-blur));
   }
 }
 .messagebar.no-hairline:before,
@@ -17028,7 +17025,7 @@ button.swiper-pagination-bullet {
   top: 50%;
 }
 .photo-browser-page .navbar-bg,
-.navbar-inner-photo-browser .navbar-bg,
+.navbar-photo-browser .navbar-bg,
 .photo-browser-page .toolbar {
   background-color: var(--f7-photobrowser-bars-bg-color, rgba(var(--f7-bars-bg-color-rgb), 0.95));
   background-image: var(--f7-photobrowser-bars-bg-image);
@@ -17063,21 +17060,21 @@ button.swiper-pagination-bullet {
   pointer-events: none;
 }
 .photo-browser-page-dark .navbar-bg,
-.navbar-inner-photo-browser-dark .navbar-bg,
+.navbar-photo-browser-dark .navbar-bg,
 .photo-browser-page-dark .toolbar {
   background: var(--f7-photobrowser-dark-bars-bg-color);
 }
 .photo-browser-page-dark .navbar-bg:before,
-.navbar-inner-photo-browser-dark .navbar-bg:before,
+.navbar-photo-browser-dark .navbar-bg:before,
 .photo-browser-page-dark .toolbar:before {
   display: none !important;
 }
 .photo-browser-page-dark .navbar-bg:after,
-.navbar-inner-photo-browser-dark .navbar-bg:after,
+.navbar-photo-browser-dark .navbar-bg:after,
 .photo-browser-page-dark .toolbar:after {
   display: none !important;
 }
-.navbar-inner-photo-browser-dark,
+.navbar-photo-browser-dark,
 .photo-browser-dark .navbar,
 .photo-browser-dark .toolbar,
 .photo-browser-dark-page .navbar,
@@ -17086,7 +17083,7 @@ button.swiper-pagination-bullet {
   --f7-link-highlight-color: var(--f7-link-highlight-white);
   color: var(--f7-photobrowser-dark-bars-text-color);
 }
-.navbar-inner-photo-browser-dark a,
+.navbar-photo-browser-dark a,
 .photo-browser-dark .navbar a,
 .photo-browser-dark .toolbar a,
 .photo-browser-dark-page .navbar a,
@@ -17147,7 +17144,7 @@ button.swiper-pagination-bullet {
   --f7-notification-title-line-height: 1.4;
   --f7-notification-title-font-weight: 400;
   --f7-notification-title-letter-spacing: 0.02em;
-  --f7-notification-title-right-color: #444a51;
+  --f7-notification-title-right-color: rgba(0, 0, 0, 0.45);
   --f7-notification-title-right-font-size: 13px;
   --f7-notification-subtitle-color: #000;
   --f7-notification-subtitle-font-size: 15px;
@@ -17155,6 +17152,15 @@ button.swiper-pagination-bullet {
   --f7-notification-text-color: #000;
   --f7-notification-text-font-size: 15px;
   --f7-notification-text-line-height: 1.2;
+}
+.ios .theme-dark,
+.ios.theme-dark {
+  --f7-notification-bg-color: rgba(30, 30, 30, 0.95);
+  --f7-notification-bg-color-rgb: 30, 30, 30;
+  --f7-notification-subtitle-color: #fff;
+  --f7-notification-title-color: #fff;
+  --f7-notification-text-color: #fff;
+  --f7-notification-title-right-color: rgba(255, 255, 255, 0.55);
 }
 .md {
   --f7-notification-margin: 0px;
@@ -17168,14 +17174,21 @@ button.swiper-pagination-bullet {
   --f7-notification-title-text-transform: none;
   --f7-notification-title-line-height: 1;
   --f7-notification-title-font-weight: 400;
-  --f7-notification-title-right-color: #757575;
+  --f7-notification-title-right-color: rgba(0, 0, 0, 0.54);
   --f7-notification-title-right-font-size: 12px;
   --f7-notification-subtitle-color: #212121;
   --f7-notification-subtitle-font-size: 14px;
   --f7-notification-subtitle-font-weight: 400;
-  --f7-notification-text-color: #757575;
+  --f7-notification-text-color: rgba(0, 0, 0, 0.54);
   --f7-notification-text-font-size: 14px;
   --f7-notification-text-line-height: 1.35;
+}
+.md .theme-dark,
+.md.theme-dark {
+  --f7-notification-bg-color: #242424;
+  --f7-notification-subtitle-color: #fff;
+  --f7-notification-title-right-color: rgba(255, 255, 255, 0.54);
+  --f7-notification-text-color: rgba(255, 255, 255, 0.54);
 }
 .aurora {
   --f7-notification-margin: 10px;
@@ -17198,6 +17211,14 @@ button.swiper-pagination-bullet {
   --f7-notification-text-color: #000;
   --f7-notification-text-font-size: 12px;
   --f7-notification-text-line-height: 1.2;
+}
+.aurora .theme-dark,
+.aurora.theme-dark {
+  --f7-notification-bg-color: #242424;
+  --f7-notification-title-color: #fff;
+  --f7-notification-subtitle-color: #fff;
+  --f7-notification-text-color: #fff;
+  --f7-notification-title-right-color: rgba(255, 255, 255, 0.54);
 }
 .notification {
   --f7-link-highlight-color: var(--f7-link-highlight-black);
@@ -17222,7 +17243,7 @@ button.swiper-pagination-bullet {
   margin-top: var(--f7-safe-area-top);
 }
 @supports ((-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px))) {
-  .ios-translucent .notification {
+  .ios-translucent-modals .notification {
     background-color: rgba(var(--f7-notification-bg-color-rgb), 0.8);
     -webkit-backdrop-filter: saturate(180%) blur(20px);
             backdrop-filter: saturate(180%) blur(20px);
@@ -17351,6 +17372,10 @@ button.swiper-pagination-bullet {
   height: 44px;
   margin-left: -22px;
   margin-top: -22px;
+}
+.ios .theme-dark,
+.ios.theme-dark .notification-close-button:after {
+  color: #fff;
 }
 .md .notification {
   transform: translate3d(0, -150%, 0);
@@ -17485,6 +17510,10 @@ button.swiper-pagination-bullet {
   height: 38px;
   margin-left: -19px;
   margin-top: -19px;
+}
+.aurora .theme-dark,
+.aurora.theme-dark .notification-close-button:after {
+  color: #fff;
 }
 /* === Autocomplete === */
 :root {
@@ -17630,7 +17659,7 @@ button.swiper-pagination-bullet {
   width: 100%;
 }
 .ios .autocomplete-dropdown .autocomplete-preloader {
-  right: 15px;
+  right: 16px;
   margin-bottom: 12px;
 }
 .ios .searchbar-input-wrap .autocomplete-dropdown {
@@ -17657,7 +17686,7 @@ button.swiper-pagination-bullet {
   border-width: 3px;
 }
 .aurora .autocomplete-dropdown .autocomplete-preloader {
-  right: 15px;
+  right: 16px;
   margin-bottom: 2px;
 }
 .aurora .searchbar-input-wrap .autocomplete-dropdown {
@@ -18039,8 +18068,8 @@ button.swiper-pagination-bullet {
 }
 :root .theme-dark,
 :root.theme-dark {
-  --f7-color-picker-sheet-bg-color: #171717;
-  --f7-color-picker-popup-bg-color: #171717;
+  --f7-color-picker-sheet-bg-color: #121212;
+  --f7-color-picker-popup-bg-color: #121212;
   --f7-color-picker-value-bg-color: rgba(255, 255, 255, 0.1);
   --f7-color-picker-group-bg-color: #000;
   --f7-color-picker-group-value-bg-color: rgba(255, 255, 255, 0.12);
@@ -18320,8 +18349,8 @@ button.swiper-pagination-bullet {
 .color-picker-slider .range-knob:after {
   width: 30px;
   height: 30px;
-  margin-left: -15px;
-  margin-top: -15px;
+  margin-left: -16px;
+  margin-top: -16px;
 }
 .color-picker-slider .range-knob-active-state .range-knob {
   transform: scale(1.5);
@@ -18398,7 +18427,7 @@ button.swiper-pagination-bullet {
   background-image: linear-gradient(to right, #000, #fff);
 }
 .color-picker-module-palette {
-  margin-top: 15px;
+  margin-top: 16px;
 }
 .color-picker-module-palette:first-child {
   margin-top: 0;
@@ -18463,7 +18492,7 @@ button.swiper-pagination-bullet {
   background: var(--f7-color-picker-group-bg-color);
   padding: 5px;
   border-radius: 4px;
-  margin-top: 15px;
+  margin-top: 16px;
   margin-left: 5px;
   margin-right: 5px;
 }
@@ -18473,7 +18502,7 @@ button.swiper-pagination-bullet {
 .color-picker-grouped-modules .color-picker-module-hue-slider:last-child,
 .color-picker-grouped-modules .color-picker-module-brightness-slider:last-child,
 .color-picker-grouped-modules .color-picker-module-hex:last-child {
-  margin-bottom: 15px;
+  margin-bottom: 16px;
 }
 .color-picker-grouped-modules .color-picker-slider-value,
 .color-picker-grouped-modules .color-picker-hex-value {
@@ -18499,6 +18528,8 @@ button.swiper-pagination-bullet {
 }
 /* === Treeview === */
 :root {
+  --f7-treeview-item-padding-left: 16px;
+  --f7-treeview-item-padding-right: 16px;
   --f7-treeview-toggle-size: 24px;
   --f7-treeview-toggle-color: rgba(0, 0, 0, 0.5);
   --f7-treeview-toggle-hover-bg-color: rgba(0, 0, 0, 0.1);
@@ -18526,22 +18557,16 @@ button.swiper-pagination-bullet {
 }
 .ios {
   --f7-treeview-item-height: 34px;
-  --f7-treeview-item-padding-left: 15px;
-  --f7-treeview-item-padding-right: 15px;
   --f7-treeview-label-font-size: 17px;
   --f7-treeview-icon-size: 24px;
 }
 .md {
   --f7-treeview-item-height: 34px;
-  --f7-treeview-item-padding-left: 16px;
-  --f7-treeview-item-padding-right: 16px;
   --f7-treeview-label-font-size: 16px;
   --f7-treeview-icon-size: 24px;
 }
 .aurora {
   --f7-treeview-item-height: 28px;
-  --f7-treeview-item-padding-left: 15px;
-  --f7-treeview-item-padding-right: 15px;
   --f7-treeview-label-font-size: 14px;
   --f7-treeview-icon-size: 20px;
 }
@@ -19103,17 +19128,9 @@ iframe#viAd {
   transition-property: box-shadow;
 }
 /* === Typography === */
-.ios {
-  --f7-typography-padding: 15px;
-  --f7-typography-margin: 15px;
-}
-.md {
+:root {
   --f7-typography-padding: 16px;
   --f7-typography-margin: 16px;
-}
-.aurora {
-  --f7-typography-padding: 15px;
-  --f7-typography-margin: 15px;
 }
 .display-flex {
   display: flex !important;

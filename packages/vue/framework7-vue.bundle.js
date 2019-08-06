@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 5.0.0-beta.2
+ * Framework7 Vue 5.0.0-beta.3
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 22, 2019
+ * Released on: August 6, 2019
  */
 
 (function (global, factory) {
@@ -7882,7 +7882,6 @@
       var large = props.large;
       var largeTransparent = props.largeTransparent;
       var titleLarge = props.titleLarge;
-      var innerEl;
       var leftEl;
       var titleEl;
       var rightEl;
@@ -7892,7 +7891,8 @@
       var slots = self.$slots;
       var classes = Utils.classNames(className, 'navbar', {
         'navbar-hidden': hidden,
-        'navbar-large': large
+        'navbar-large': large,
+        'navbar-large-transparent': largeTransparent
       }, Mixins.colorClasses(props));
 
       if (!inner) {
@@ -7903,7 +7903,9 @@
           attrs: {
             id: id
           }
-        }, [this.$slots['default']]);
+        }, [_h('div', {
+          class: 'navbar-bg'
+        }), this.$slots['default']]);
       }
 
       if (backLink || slots['nav-left']) {
@@ -7944,20 +7946,16 @@
         }, [largeTitle])]);
       }
 
-      innerEl = _h('div', {
-        ref: 'innerEl',
+      var innerEl = _h('div', {
         class: Utils.classNames('navbar-inner', innerClass, innerClassName, {
           sliding: sliding,
           'no-shadow': noShadow,
           'no-hairline': noHairline,
           'navbar-inner-left-title': addLeftTitleClass,
-          'navbar-inner-centered-title': addCenterTitleClass,
-          'navbar-inner-large': large,
-          'navbar-inner-large-transparent': largeTransparent
+          'navbar-inner-centered-title': addCenterTitleClass
         })
-      }, [_h('div', {
-        class: 'navbar-bg'
-      }), leftEl, titleEl, rightEl, titleLargeEl, this.$slots['default']]);
+      }, [leftEl, titleEl, rightEl, titleLargeEl, this.$slots['default']]);
+
       return _h('div', {
         ref: 'el',
         style: style,
@@ -7965,7 +7963,9 @@
         attrs: {
           id: id
         }
-      }, [this.$slots['before-inner'], innerEl, this.$slots['after-inner']]);
+      }, [_h('div', {
+        class: 'navbar-bg'
+      }), this.$slots['before-inner'], innerEl, this.$slots['after-inner']]);
     },
 
     created: function created() {
@@ -7975,8 +7975,8 @@
     mounted: function mounted() {
       var self = this;
       var ref = self.$refs;
-      var innerEl = ref.innerEl;
-      if (!innerEl) { return; }
+      var el = ref.el;
+      if (!el) { return; }
       self.$f7ready(function (f7) {
         f7.on('navbarShow', self.onShow);
         f7.on('navbarHide', self.onHide);
@@ -7989,20 +7989,14 @@
       var self = this;
       if (!self.$f7) { return; }
       var el = self.$refs.el;
-
-      if (el && el.children && el.children.length) {
-        self.$f7.navbar.size(el);
-      } else if (self.$refs.innerEl) {
-        self.$f7.navbar.size(self.$refs.innerEl);
-      }
+      self.$f7.navbar.size(el);
     },
 
     beforeDestroy: function beforeDestroy() {
       var self = this;
-      if (!self.props.inner) { return; }
       var ref = self.$refs;
-      var innerEl = ref.innerEl;
-      if (!innerEl) { return; }
+      var el = ref.el;
+      if (!el) { return; }
       var f7 = self.$f7;
       if (!f7) { return; }
       f7.off('navbarShow', self.onShow);
@@ -8016,9 +8010,8 @@
         var self = this;
         var ref = self.$refs;
         var el = ref.el;
-        var innerEl = ref.innerEl;
 
-        if (navbarEl === el || innerEl && innerEl.parentNode === navbarEl) {
+        if (navbarEl === el) {
           self.dispatchEvent('navbar:hide navbarHide');
         }
       },
@@ -8027,9 +8020,8 @@
         var self = this;
         var ref = self.$refs;
         var el = ref.el;
-        var innerEl = ref.innerEl;
 
-        if (navbarEl === el || innerEl && innerEl.parentNode === navbarEl) {
+        if (navbarEl === el) {
           self.dispatchEvent('navbar:show navbarShow');
         }
       },
@@ -8038,9 +8030,8 @@
         var self = this;
         var ref = self.$refs;
         var el = ref.el;
-        var innerEl = ref.innerEl;
 
-        if (navbarEl === el || innerEl && innerEl.parentNode === navbarEl) {
+        if (navbarEl === el) {
           self.dispatchEvent('navbar:expand navbarExpand');
         }
       },
@@ -8049,9 +8040,8 @@
         var self = this;
         var ref = self.$refs;
         var el = ref.el;
-        var innerEl = ref.innerEl;
 
-        if (navbarEl === el || innerEl && innerEl.parentNode === navbarEl) {
+        if (navbarEl === el) {
           self.dispatchEvent('navbar:collapse navbarCollapse');
         }
       },
@@ -8459,6 +8449,7 @@
           routerPositionClass: '',
           routerForceUnstack: false,
           routerPageRole: null,
+          routerPageRoleDetailRoot: false,
           routerPageMasterStack: false
         };
       })();
@@ -8559,6 +8550,7 @@
         'no-swipeback': noSwipeback,
         'page-master': this.state.routerPageRole === 'master',
         'page-master-detail': this.state.routerPageRole === 'detail',
+        'page-master-detail-root': this.state.routerPageRoleDetailRoot === true,
         'page-master-stacked': this.state.routerPageMasterStack === true,
         'page-with-navbar-large-collapsed': this.state.hasNavbarLargeCollapsed === true,
         'page-with-card-opened': this.state.hasCardExpandableOpened === true,
@@ -8731,7 +8723,8 @@
 
       onPageRole: function onPageRole(event) {
         this.setState({
-          routerPageRole: event.detail.role
+          routerPageRole: event.detail.role,
+          routerPageRoleDetailRoot: event.detail.detailRoot
         });
       },
 
@@ -8776,7 +8769,7 @@
         }
 
         if (typeof withNavbarLarge === 'undefined' && typeof navbarLarge === 'undefined') {
-          if (page.$navbarEl && page.$navbarEl.hasClass('navbar-inner-large')) {
+          if (page.$navbarEl && page.$navbarEl.hasClass('navbar-large')) {
             this.setState({
               hasNavbarLarge: true
             });
@@ -10988,7 +10981,7 @@
       }, [inner ? _h('div', {
         class: 'subnavbar-inner'
       }, [title && _h('div', {
-        class: 'title'
+        class: 'subnavbar-title'
       }, [title]), this.$slots['default']]) : this.$slots['default']]);
     },
 
@@ -12352,7 +12345,7 @@
   };
 
   /**
-   * Framework7 Vue 5.0.0-beta.2
+   * Framework7 Vue 5.0.0-beta.3
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -12360,7 +12353,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: July 22, 2019
+   * Released on: August 6, 2019
    */
 
   var Plugin = {

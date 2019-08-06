@@ -30,7 +30,7 @@ class F7Subnavbar extends React.Component {
     }, inner ? React.createElement('div', {
       className: 'subnavbar-inner'
     }, title && React.createElement('div', {
-      className: 'title'
+      className: 'subnavbar-title'
     }, title), this.slots['default']) : this.slots['default']);
   }
 

@@ -106,6 +106,8 @@
   --f7-bars-bg-image: none;
   --f7-bars-bg-color: #f7f7f8;
   --f7-bars-bg-color-rgb: 247, 247, 248;
+  --f7-bars-translucent-opacity: 0.8;
+  --f7-bars-translucent-blur: 20px;
   --f7-bars-text-color: #000;
   --f7-bars-shadow-bottom-image: linear-gradient(to bottom,
     rgba(0,0,0,0.25) 0%,
@@ -123,8 +125,6 @@
   );
 }
 .theme-dark {
-  --f7-bars-bg-color: #1b1b1b;
-  --f7-bars-bg-color-rgb: 27, 27, 27;
   --f7-bars-text-color: #fff;
 }
 .ios-vars({
@@ -137,10 +137,14 @@
 });
 .md-vars({
   --f7-bars-border-color: transparent;
+  .theme-dark, &.theme-dark {
+    --f7-bars-bg-color: #202020;
+  }
 });
 .aurora-vars({
   --f7-bars-border-color: rgba(0,0,0,0.2);
   .theme-dark, &.theme-dark {
+    --f7-bars-bg-color: #202020;
     --f7-bars-border-color: rgba(255, 255, 255, 0.1);
   }
 });

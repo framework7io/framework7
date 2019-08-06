@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.0.0-beta.2
+ * Framework7 React 5.0.0-beta.3
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 22, 2019
+ * Released on: August 6, 2019
  */
 
 (function (global, factory) {
@@ -8904,9 +8904,8 @@
       var self = this;
       var ref = self.refs;
       var el = ref.el;
-      var innerEl = ref.innerEl;
 
-      if (navbarEl === el || innerEl && innerEl.parentNode === navbarEl) {
+      if (navbarEl === el) {
         self.dispatchEvent('navbar:hide navbarHide');
       }
     };
@@ -8915,9 +8914,8 @@
       var self = this;
       var ref = self.refs;
       var el = ref.el;
-      var innerEl = ref.innerEl;
 
-      if (navbarEl === el || innerEl && innerEl.parentNode === navbarEl) {
+      if (navbarEl === el) {
         self.dispatchEvent('navbar:show navbarShow');
       }
     };
@@ -8926,9 +8924,8 @@
       var self = this;
       var ref = self.refs;
       var el = ref.el;
-      var innerEl = ref.innerEl;
 
-      if (navbarEl === el || innerEl && innerEl.parentNode === navbarEl) {
+      if (navbarEl === el) {
         self.dispatchEvent('navbar:expand navbarExpand');
       }
     };
@@ -8937,9 +8934,8 @@
       var self = this;
       var ref = self.refs;
       var el = ref.el;
-      var innerEl = ref.innerEl;
 
-      if (navbarEl === el || innerEl && innerEl.parentNode === navbarEl) {
+      if (navbarEl === el) {
         self.dispatchEvent('navbar:collapse navbarCollapse');
       }
     };
@@ -8990,7 +8986,6 @@
       var large = props.large;
       var largeTransparent = props.largeTransparent;
       var titleLarge = props.titleLarge;
-      var innerEl;
       var leftEl;
       var titleEl;
       var rightEl;
@@ -9000,7 +8995,8 @@
       var slots = self.slots;
       var classes = Utils.classNames(className, 'navbar', {
         'navbar-hidden': hidden,
-        'navbar-large': large
+        'navbar-large': large,
+        'navbar-large-transparent': largeTransparent
       }, Mixins.colorClasses(props));
 
       if (!inner) {
@@ -9011,7 +9007,9 @@
           id: id,
           style: style,
           className: classes
-        }, this.slots['default']);
+        }, React.createElement('div', {
+          className: 'navbar-bg'
+        }), this.slots['default']);
       }
 
       if (backLink || slots['nav-left']) {
@@ -9046,22 +9044,15 @@
         }, largeTitle));
       }
 
-      innerEl = React.createElement('div', {
-        ref: function (__reactNode) {
-          this$1.__reactRefs['innerEl'] = __reactNode;
-        },
+      var innerEl = React.createElement('div', {
         className: Utils.classNames('navbar-inner', innerClass, innerClassName, {
           sliding: sliding,
           'no-shadow': noShadow,
           'no-hairline': noHairline,
           'navbar-inner-left-title': addLeftTitleClass,
-          'navbar-inner-centered-title': addCenterTitleClass,
-          'navbar-inner-large': large,
-          'navbar-inner-large-transparent': largeTransparent
+          'navbar-inner-centered-title': addCenterTitleClass
         })
-      }, React.createElement('div', {
-        className: 'navbar-bg'
-      }), leftEl, titleEl, rightEl, titleLargeEl, this.slots['default']);
+      }, leftEl, titleEl, rightEl, titleLargeEl, this.slots['default']);
       return React.createElement('div', {
         ref: function (__reactNode) {
           this$1.__reactRefs['el'] = __reactNode;
@@ -9069,15 +9060,16 @@
         id: id,
         style: style,
         className: classes
-      }, this.slots['before-inner'], innerEl, this.slots['after-inner']);
+      }, React.createElement('div', {
+        className: 'navbar-bg'
+      }), this.slots['before-inner'], innerEl, this.slots['after-inner']);
     };
 
     F7Navbar.prototype.componentWillUnmount = function componentWillUnmount () {
       var self = this;
-      if (!self.props.inner) { return; }
       var ref = self.refs;
-      var innerEl = ref.innerEl;
-      if (!innerEl) { return; }
+      var el = ref.el;
+      if (!el) { return; }
       var f7 = self.$f7;
       if (!f7) { return; }
       f7.off('navbarShow', self.onShow);
@@ -9090,19 +9082,14 @@
       var self = this;
       if (!self.$f7) { return; }
       var el = self.refs.el;
-
-      if (el && el.children && el.children.length) {
-        self.$f7.navbar.size(el);
-      } else if (self.refs.innerEl) {
-        self.$f7.navbar.size(self.refs.innerEl);
-      }
+      self.$f7.navbar.size(el);
     };
 
     F7Navbar.prototype.componentDidMount = function componentDidMount () {
       var self = this;
       var ref = self.refs;
-      var innerEl = ref.innerEl;
-      if (!innerEl) { return; }
+      var el = ref.el;
+      if (!el) { return; }
       self.$f7ready(function (f7) {
         f7.on('navbarShow', self.onShow);
         f7.on('navbarHide', self.onHide);
@@ -9511,6 +9498,7 @@
           routerPositionClass: '',
           routerForceUnstack: false,
           routerPageRole: null,
+          routerPageRoleDetailRoot: false,
           routerPageMasterStack: false
         };
       })();
@@ -9577,7 +9565,8 @@
 
     F7Page.prototype.onPageRole = function onPageRole (event) {
       this.setState({
-        routerPageRole: event.detail.role
+        routerPageRole: event.detail.role,
+        routerPageRoleDetailRoot: event.detail.detailRoot
       });
     };
 
@@ -9622,7 +9611,7 @@
       }
 
       if (typeof withNavbarLarge === 'undefined' && typeof navbarLarge === 'undefined') {
-        if (page.$navbarEl && page.$navbarEl.hasClass('navbar-inner-large')) {
+        if (page.$navbarEl && page.$navbarEl.hasClass('navbar-large')) {
           this.setState({
             hasNavbarLarge: true
           });
@@ -9793,6 +9782,7 @@
         'no-swipeback': noSwipeback,
         'page-master': this.state.routerPageRole === 'master',
         'page-master-detail': this.state.routerPageRole === 'detail',
+        'page-master-detail-root': this.state.routerPageRoleDetailRoot === true,
         'page-master-stacked': this.state.routerPageMasterStack === true,
         'page-with-navbar-large-collapsed': this.state.hasNavbarLargeCollapsed === true,
         'page-with-card-opened': this.state.hasCardExpandableOpened === true,
@@ -12325,7 +12315,7 @@
       }, inner ? React.createElement('div', {
         className: 'subnavbar-inner'
       }, title && React.createElement('div', {
-        className: 'title'
+        className: 'subnavbar-title'
       }, title), this.slots['default']) : this.slots['default']);
     };
 
@@ -13867,7 +13857,7 @@
   };
 
   /**
-   * Framework7 React 5.0.0-beta.2
+   * Framework7 React 5.0.0-beta.3
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -13875,7 +13865,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: July 22, 2019
+   * Released on: August 6, 2019
    */
 
   var Plugin = {

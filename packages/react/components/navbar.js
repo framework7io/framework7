@@ -21,11 +21,10 @@ class F7Navbar extends React.Component {
   onHide(navbarEl) {
     const self = this;
     const {
-      el,
-      innerEl
+      el
     } = self.refs;
 
-    if (navbarEl === el || innerEl && innerEl.parentNode === navbarEl) {
+    if (navbarEl === el) {
       self.dispatchEvent('navbar:hide navbarHide');
     }
   }
@@ -33,11 +32,10 @@ class F7Navbar extends React.Component {
   onShow(navbarEl) {
     const self = this;
     const {
-      el,
-      innerEl
+      el
     } = self.refs;
 
-    if (navbarEl === el || innerEl && innerEl.parentNode === navbarEl) {
+    if (navbarEl === el) {
       self.dispatchEvent('navbar:show navbarShow');
     }
   }
@@ -45,11 +43,10 @@ class F7Navbar extends React.Component {
   onExpand(navbarEl) {
     const self = this;
     const {
-      el,
-      innerEl
+      el
     } = self.refs;
 
-    if (navbarEl === el || innerEl && innerEl.parentNode === navbarEl) {
+    if (navbarEl === el) {
       self.dispatchEvent('navbar:expand navbarExpand');
     }
   }
@@ -57,11 +54,10 @@ class F7Navbar extends React.Component {
   onCollapse(navbarEl) {
     const self = this;
     const {
-      el,
-      innerEl
+      el
     } = self.refs;
 
-    if (navbarEl === el || innerEl && innerEl.parentNode === navbarEl) {
+    if (navbarEl === el) {
       self.dispatchEvent('navbar:collapse navbarCollapse');
     }
   }
@@ -112,7 +108,6 @@ class F7Navbar extends React.Component {
       largeTransparent,
       titleLarge
     } = props;
-    let innerEl;
     let leftEl;
     let titleEl;
     let rightEl;
@@ -122,7 +117,8 @@ class F7Navbar extends React.Component {
     const slots = self.slots;
     const classes = Utils.classNames(className, 'navbar', {
       'navbar-hidden': hidden,
-      'navbar-large': large
+      'navbar-large': large,
+      'navbar-large-transparent': largeTransparent
     }, Mixins.colorClasses(props));
 
     if (!inner) {
@@ -133,7 +129,9 @@ class F7Navbar extends React.Component {
         id: id,
         style: style,
         className: classes
-      }, this.slots['default']);
+      }, React.createElement('div', {
+        className: 'navbar-bg'
+      }), this.slots['default']);
     }
 
     if (backLink || slots['nav-left']) {
@@ -168,22 +166,15 @@ class F7Navbar extends React.Component {
       }, largeTitle));
     }
 
-    innerEl = React.createElement('div', {
-      ref: __reactNode => {
-        this.__reactRefs['innerEl'] = __reactNode;
-      },
+    const innerEl = React.createElement('div', {
       className: Utils.classNames('navbar-inner', innerClass, innerClassName, {
         sliding,
         'no-shadow': noShadow,
         'no-hairline': noHairline,
         'navbar-inner-left-title': addLeftTitleClass,
-        'navbar-inner-centered-title': addCenterTitleClass,
-        'navbar-inner-large': large,
-        'navbar-inner-large-transparent': largeTransparent
+        'navbar-inner-centered-title': addCenterTitleClass
       })
-    }, React.createElement('div', {
-      className: 'navbar-bg'
-    }), leftEl, titleEl, rightEl, titleLargeEl, this.slots['default']);
+    }, leftEl, titleEl, rightEl, titleLargeEl, this.slots['default']);
     return React.createElement('div', {
       ref: __reactNode => {
         this.__reactRefs['el'] = __reactNode;
@@ -191,16 +182,17 @@ class F7Navbar extends React.Component {
       id: id,
       style: style,
       className: classes
-    }, this.slots['before-inner'], innerEl, this.slots['after-inner']);
+    }, React.createElement('div', {
+      className: 'navbar-bg'
+    }), this.slots['before-inner'], innerEl, this.slots['after-inner']);
   }
 
   componentWillUnmount() {
     const self = this;
-    if (!self.props.inner) return;
     const {
-      innerEl
+      el
     } = self.refs;
-    if (!innerEl) return;
+    if (!el) return;
     const f7 = self.$f7;
     if (!f7) return;
     f7.off('navbarShow', self.onShow);
@@ -213,20 +205,15 @@ class F7Navbar extends React.Component {
     const self = this;
     if (!self.$f7) return;
     const el = self.refs.el;
-
-    if (el && el.children && el.children.length) {
-      self.$f7.navbar.size(el);
-    } else if (self.refs.innerEl) {
-      self.$f7.navbar.size(self.refs.innerEl);
-    }
+    self.$f7.navbar.size(el);
   }
 
   componentDidMount() {
     const self = this;
     const {
-      innerEl
+      el
     } = self.refs;
-    if (!innerEl) return;
+    if (!el) return;
     self.$f7ready(f7 => {
       f7.on('navbarShow', self.onShow);
       f7.on('navbarHide', self.onHide);

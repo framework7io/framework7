@@ -35,11 +35,11 @@ class View extends Framework7Class {
     }
 
     // DynamicNavbar
-    let $navbarEl;
+    let $navbarsEl;
     if (app.theme === 'ios' && view.params.iosDynamicNavbar) {
-      $navbarEl = $el.children('.navbar').eq(0);
-      if ($navbarEl.length === 0) {
-        $navbarEl = $('<div class="navbar"></div>');
+      $navbarsEl = $el.children('.navbars').eq(0);
+      if ($navbarsEl.length === 0) {
+        $navbarsEl = $('<div class="navbars"></div>');
       }
     }
 
@@ -50,8 +50,8 @@ class View extends Framework7Class {
       el: $el[0],
       name: view.params.name,
       main: view.params.main || $el.hasClass('view-main'),
-      $navbarEl,
-      navbarEl: $navbarEl ? $navbarEl[0] : undefined,
+      $navbarsEl,
+      navbarsEl: $navbarsEl ? $navbarsEl[0] : undefined,
       selector,
       history: [],
       scrollHistory: {},
@@ -105,7 +105,7 @@ class View extends Framework7Class {
     view.$el.trigger('view:beforedestroy', view);
     view.emit('local::beforeDestroy viewBeforeDestroy', view);
 
-    app.off('resize', view.checkmasterDetailBreakpoint);
+    app.off('resize', view.checkMasterDetailBreakpoint);
 
     if (view.main) {
       app.views.main = null;
@@ -135,11 +135,12 @@ class View extends Framework7Class {
     view = null;
   }
 
-  checkmasterDetailBreakpoint() {
+  checkMasterDetailBreakpoint(force) {
     const view = this;
     const app = view.app;
     const wasMasterDetail = view.$el.hasClass('view-master-detail');
-    if (app.width >= view.params.masterDetailBreakpoint) {
+    const isMasterDetail = app.width >= view.params.masterDetailBreakpoint && view.$el.children('.page-master').length;
+    if ((typeof force === 'undefined' && isMasterDetail) || force === true) {
       view.$el.addClass('view-master-detail');
       if (!wasMasterDetail) {
         view.emit('local::masterDetailBreakpoint viewMasterDetailBreakpoint');
@@ -157,9 +158,9 @@ class View extends Framework7Class {
   initMasterDetail() {
     const view = this;
     const app = view.app;
-    view.checkmasterDetailBreakpoint = view.checkmasterDetailBreakpoint.bind(view);
-    view.checkmasterDetailBreakpoint();
-    app.on('resize', view.checkmasterDetailBreakpoint);
+    view.checkMasterDetailBreakpoint = view.checkMasterDetailBreakpoint.bind(view);
+    view.checkMasterDetailBreakpoint();
+    app.on('resize', view.checkMasterDetailBreakpoint);
   }
 
   init() {

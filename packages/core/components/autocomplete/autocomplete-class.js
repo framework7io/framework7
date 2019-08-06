@@ -561,8 +561,8 @@ class Autocomplete extends Framework7Class {
       `;
     const navbarHtml = `
       <div class="navbar ${ac.params.navbarColorTheme ? `color-${ac.params.navbarColorTheme}` : ''}">
+        <div class="navbar-bg"></div>
         <div class="navbar-inner ${ac.params.navbarColorTheme ? `color-${ac.params.navbarColorTheme}` : ''}">
-          <div class="navbar-bg"></div>
           ${navbarLeft}
           ${pageTitle ? `<div class="title sliding">${pageTitle}</div>` : ''}
           ${navbarRight}

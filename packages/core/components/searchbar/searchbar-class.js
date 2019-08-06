@@ -49,7 +49,7 @@ class Searchbar extends FrameworkClass {
     $el[0].f7Searchbar = sb;
 
     let $pageEl;
-    const $navbarEl = $el.parents('.navbar-inner');
+    const $navbarEl = $el.parents('.navbar');
     if ($el.parents('.page').length > 0) {
       $pageEl = $el.parents('.page');
     } else if ($navbarEl.length > 0) {
@@ -216,7 +216,7 @@ class Searchbar extends FrameworkClass {
       if (sb.enabled) {
         sb.$el.removeClass('searchbar-enabled');
         if (sb.expandable) {
-          sb.$el.parents('.navbar-inner').removeClass('with-searchbar-expandable-enabled with-searchbar-expandable-enabled-no-transition');
+          sb.$el.parents('.navbar').removeClass('with-searchbar-expandable-enabled with-searchbar-expandable-enabled-no-transition');
         }
       }
     }
@@ -225,7 +225,7 @@ class Searchbar extends FrameworkClass {
       if (sb.enabled) {
         sb.$el.addClass('searchbar-enabled');
         if (sb.expandable) {
-          sb.$el.parents('.navbar-inner').addClass('with-searchbar-expandable-enabled-no-transition');
+          sb.$el.parents('.navbar').addClass('with-searchbar-expandable-enabled-no-transition');
         }
       }
     }
@@ -318,14 +318,14 @@ class Searchbar extends FrameworkClass {
         sb.$disableButtonEl.css(`margin-${app.rtl ? 'left' : 'right'}`, '0px');
       }
       if (sb.expandable) {
-        if (sb.$el.parents('.navbar-inner').hasClass('navbar-inner-large') && sb.$pageEl) {
+        if (sb.$el.parents('.navbar').hasClass('navbar-large') && sb.$pageEl) {
           sb.$pageEl.find('.page-content').addClass('with-searchbar-expandable-enabled');
         }
-        if (app.theme === 'md' && sb.$el.parent('.navbar-inner').parent('.navbar').length) {
-          sb.$el.parent('.navbar-inner').parent('.navbar').addClass('with-searchbar-expandable-enabled');
+        if (app.theme === 'md' && sb.$el.parents('.navbar').length) {
+          sb.$el.parents('.navbar').addClass('with-searchbar-expandable-enabled');
         } else {
-          sb.$el.parent('.navbar-inner').addClass('with-searchbar-expandable-enabled');
-          sb.$el.parent('.navbar-inner-large').addClass('navbar-inner-large-collapsed');
+          sb.$el.parents('.navbar').addClass('with-searchbar-expandable-enabled');
+          sb.$el.parents('.navbar-large').addClass('navbar-large-collapsed');
         }
       }
       if (sb.$hideOnEnableEl) sb.$hideOnEnableEl.addClass('hidden-by-searchbar');
@@ -356,7 +356,7 @@ class Searchbar extends FrameworkClass {
     } else {
       if (needsFocus) sb.$inputEl.focus();
       if (app.theme === 'md' && sb.expandable) {
-        sb.$el.parents('.page, .view, .navbar-inner').scrollLeft(0);
+        sb.$el.parents('.page, .view, .navbar-inner, .navbar').scrollLeft(0);
       }
       enable();
     }
@@ -370,25 +370,25 @@ class Searchbar extends FrameworkClass {
     sb.$inputEl.val('').trigger('change');
     sb.$el.removeClass('searchbar-enabled searchbar-focused searchbar-enabled-no-disable-button');
     if (sb.expandable) {
-      if (sb.$el.parents('.navbar-inner').hasClass('navbar-inner-large') && sb.$pageEl) {
+      if (sb.$el.parents('.navbar').hasClass('navbar-large') && sb.$pageEl) {
         sb.$pageEl.find('.page-content').removeClass('with-searchbar-expandable-enabled').addClass('with-searchbar-expandable-closing');
         sb.$el.transitionEnd(() => {
           sb.$pageEl.find('.page-content').removeClass('with-searchbar-expandable-closing');
         });
       }
-      if (app.theme === 'md' && sb.$el.parent('.navbar-inner').parent('.navbar').length) {
-        sb.$el.parent('.navbar-inner').parent('.navbar')
+      if (app.theme === 'md' && sb.$el.parents('.navbar').length) {
+        sb.$el.parents('.navbar')
           .removeClass('with-searchbar-expandable-enabled with-searchbar-expandable-enabled-no-transition')
           .addClass('with-searchbar-expandable-closing');
         sb.$el.transitionEnd(() => {
-          sb.$el.parent('.navbar-inner').parent('.navbar').removeClass('with-searchbar-expandable-closing');
+          sb.$el.parents('.navbar').removeClass('with-searchbar-expandable-closing');
         });
       } else {
-        sb.$el.parent('.navbar-inner')
+        sb.$el.parents('.navbar')
           .removeClass('with-searchbar-expandable-enabled with-searchbar-expandable-enabled-no-transition')
           .addClass('with-searchbar-expandable-closing');
         sb.$el.transitionEnd(() => {
-          sb.$el.parent('.navbar-inner').removeClass('with-searchbar-expandable-closing');
+          sb.$el.parents('.navbar').removeClass('with-searchbar-expandable-closing');
         });
         if (sb.$pageEl) {
           sb.$pageEl.find('.page-content').trigger('scroll');

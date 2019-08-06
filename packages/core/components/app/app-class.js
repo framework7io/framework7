@@ -36,7 +36,8 @@ class Framework7 extends Framework7Class {
       initOnDeviceReady: true,
       init: true,
       autoDarkTheme: false,
-      iosTranslucent: true,
+      iosTranslucentBars: true,
+      iosTranslucentModals: true,
     };
 
     // Extend defaults with modules params
@@ -187,8 +188,11 @@ class Framework7 extends Framework7Class {
     $('html').removeClass('ios md aurora').addClass(app.theme);
 
     // iOS Translucent
-    if (app.theme === 'ios' && app.params.iosTranslucent) {
-      $('html').addClass('ios-translucent');
+    if (app.theme === 'ios' && app.params.iosTranslucentBars) {
+      $('html').addClass('ios-translucent-bars');
+    }
+    if (app.theme === 'ios' && app.params.iosTranslucentModals) {
+      $('html').addClass('ios-translucent-modals');
     }
 
     // Init class
