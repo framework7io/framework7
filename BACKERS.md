@@ -8,6 +8,11 @@
       </a>
     </td>
     <td align="center" valign="middle">
+      <a href="https://www.colognewebdesign.de/" target="_blank">
+        <img width="160" src="https://cdn.framework7.io/i/sponsors/colognewebdesign.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://rise.co" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/rise.png">
       </a>
@@ -22,13 +27,13 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/unlikely-it.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.thoriumbuilder.com/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/thorium.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://kidoverse.app" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/kidoverse.png">
@@ -49,13 +54,13 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/birdie.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://blokt.com/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/blokt.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.activewaiter.com/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/activewaiter.png">
@@ -76,11 +81,17 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/securcom.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="http://mytommy.com" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/tommy.png">
       </a>
     </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
   </tr>
 </table>
 
@@ -116,6 +127,7 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 ---
 
 ### $50+ Top Supporter
+[COLOGNE WEBDESIGN](https://www.colognewebdesign.de/)<br>
 Fatih Batal<br>
 Vinay Samant<br>
 [Rise](https://rise.co) - Creative Web Development Agency<br>
