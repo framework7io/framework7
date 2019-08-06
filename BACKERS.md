@@ -141,6 +141,7 @@ Bart DJ
 ---
 
 ### $10+ Supporter
+iOS Haven<br>
 Dirk Holtwick<br>
 JK<br>
 Daniel Morales<br>
