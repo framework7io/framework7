@@ -68,7 +68,7 @@
     "clean-css": "^4.2.1",
     "cross-env": "^5.2.0",
     "eslint": "^6.0.1",
-    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.0",
     "eslint-plugin-react": "^7.14.2",
     "glob": "^7.1.4",
