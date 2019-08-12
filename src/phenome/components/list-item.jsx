@@ -47,7 +47,10 @@ export default {
     groupTitle: Boolean,
     swipeout: Boolean,
     swipeoutOpened: Boolean,
-    sortable: Boolean,
+    sortable: {
+      type: Boolean,
+      default: undefined,
+    },
     accordionItem: Boolean,
     accordionItemOpened: Boolean,
 
@@ -228,6 +231,7 @@ export default {
         disabled: disabled && !(radio || checkbox),
         'no-chevron': noChevron,
         'chevron-center': chevronCenter,
+        'disallow-sorting': sortable === false,
       },
       Mixins.colorClasses(props),
     );
@@ -259,7 +263,7 @@ export default {
           )
           : linkItemEl
         }
-        {isSortable && (<div className="sortable-handler" />)}
+        {isSortable && sortable !== false && (<div className="sortable-handler" />)}
         {(swipeout || accordionItem) && self.slots.default}
         <slot name="root" />
         <slot name="root-end" />

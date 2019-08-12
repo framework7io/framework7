@@ -37,7 +37,7 @@ const Sortable = {
       if ($listGroup.length && $listGroup.parents($sortableContainer).length) {
         $sortableContainer = $listGroup;
       }
-      $sortingItems = $sortableContainer.children('ul').children('li');
+      $sortingItems = $sortableContainer.children('ul').children('li:not(.disallow-sorting):not(.no-sorting)');
       if (app.panel) app.panel.allowOpen = false;
       if (app.swipeout) app.swipeout.allow = false;
     }
