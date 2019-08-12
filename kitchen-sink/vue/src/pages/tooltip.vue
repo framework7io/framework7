@@ -1,6 +1,6 @@
 <template>
   <f7-page @page:init="onPageInit" @page:beforeremove="onPageBeforeRemove">
-    <f7-navbar title="Action Sheet" back-link="Back">
+    <f7-navbar title="Tooltip" back-link="Back">
       <f7-nav-right>
         <f7-link class="navbar-tooltip">
           <f7-icon ios="f7:info_round_fill" aurora="f7:info_round_fill" md="material:info_outline" />

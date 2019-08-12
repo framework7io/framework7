@@ -35,14 +35,18 @@ export default {
     tabMounted(tabEl) {
       const app = this;
       const $tabEl = $(tabEl);
-      $tabEl.find('.ptr-content').each((index, el) => {
+      const $ptrEls = $tabEl.find('.ptr-content');
+      if ($tabEl.is('.ptr-content')) $ptrEls.add($tabEl);
+      $ptrEls.each((index, el) => {
         app.ptr.create(el);
       });
     },
     tabBeforeRemove(tabEl) {
       const $tabEl = $(tabEl);
       const app = this;
-      $tabEl.find('.ptr-content').each((index, el) => {
+      const $ptrEls = $tabEl.find('.ptr-content');
+      if ($tabEl.is('.ptr-content')) $ptrEls.add($tabEl);
+      $ptrEls.each((index, el) => {
         app.ptr.destroy(el);
       });
     },
