@@ -123,7 +123,7 @@ class SmartSelect extends Framework7Class {
       }
 
       ss.$selectEl.trigger('change');
-      ss.$valueEl.text(optionText.join(', '));
+      ss.$valueEl.text(ss.formatValue(optionText));
       if (ss.params.closeOnSelect && ss.inputType === 'radio') {
         ss.close();
       }
@@ -176,7 +176,7 @@ class SmartSelect extends Framework7Class {
       }
       ss.selectEl.value = newValue;
     }
-    ss.$valueEl.text(optionText.join(', '));
+    ss.$valueEl.text(ss.formatValue(optionText));
     return ss;
   }
 
@@ -214,6 +214,17 @@ class SmartSelect extends Framework7Class {
     }
   }
 
+  formatValue(values) {
+    const ss = this;
+    let textValue;
+    if (ss.params.formatValue) {
+      textValue = ss.params.formatValue.call(ss, values, ss);
+    } else {
+      textValue = values.join(', ');
+    }
+    return textValue;
+  }
+
   setTextValue(value) {
     const ss = this;
     let valueArray = [];
@@ -236,7 +247,7 @@ class SmartSelect extends Framework7Class {
         }
       });
     }
-    ss.$valueEl.text(valueArray.join(', '));
+    ss.$valueEl.text(ss.formatValue(valueArray));
   }
 
   getItemsData() {

@@ -64,6 +64,9 @@ export namespace SmartSelect {
     /** Additional CSS class name to be set on Smart Select container (Page, Popup, Popover or Sheet) */
     cssClass?: string
 
+    /** Custom function to format smart select text value that appears on list item */
+    formatValue?: (values: any[]) => string,
+
     /** Function to render smart select page, must return full page HTML string */
     renderPage?: (items: any[]) => string,
     /** Function to render smart select popup, must return full popup HTML string */

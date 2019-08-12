@@ -28,6 +28,7 @@ export default {
       routableModals: true,
       url: 'select/',
       cssClass: '',
+      formatValue: null,
       /*
         Custom render functions
       */
