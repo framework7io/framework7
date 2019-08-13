@@ -50,6 +50,12 @@ export default {
         app.preloader.init(preloaderEl);
       });
     },
+    tabMounted(tabEl) {
+      const app = this;
+      $(tabEl).find('.preloader').each((index, preloaderEl) => {
+        app.preloader.init(preloaderEl);
+      });
+    },
     pageInit(page) {
       const app = this;
       page.$el.find('.preloader').each((index, preloaderEl) => {

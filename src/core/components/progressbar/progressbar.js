@@ -128,6 +128,13 @@ export default {
     });
   },
   on: {
+    tabMounted(tabEl) {
+      const app = this;
+      $(tabEl).find('.progressbar').each((index, progressbarEl) => {
+        const $progressbarEl = $(progressbarEl);
+        app.progressbar.set($progressbarEl, $progressbarEl.attr('data-progress'));
+      });
+    },
     pageInit(page) {
       const app = this;
       page.$el.find('.progressbar').each((index, progressbarEl) => {
