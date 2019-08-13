@@ -61,7 +61,6 @@ export default {
       titleLarge,
     } = props;
 
-    let innerEl;
     let leftEl;
     let titleEl;
     let rightEl;
@@ -94,7 +93,7 @@ export default {
     }
 
 
-    if (backLink || slots['nav-left']) {
+    if (backLink || slots['nav-left'] || slots.left) {
       leftEl = (
         <F7NavLeft
           backLink={backLink}
@@ -102,7 +101,7 @@ export default {
           backLinkForce={backLinkForce}
           backLinkShowText={backLinkShowText}
           onBackClick={self.onBackClick}
-        >{slots['nav-left']}</F7NavLeft>
+        >{slots['nav-left']}{slots.left}</F7NavLeft>
       );
     }
     if (title || subtitle || slots.title) {
@@ -113,21 +112,24 @@ export default {
         >{slots.title}</F7NavTitle>
       );
     }
-    if (slots['nav-right']) {
+    if (slots['nav-right'] || slots.right) {
       rightEl = (
-        <F7NavRight>{slots['nav-right']}</F7NavRight>
+        <F7NavRight>{slots['nav-right']}{slots.right}</F7NavRight>
       );
     }
     let largeTitle = titleLarge;
     if (!largeTitle && large && title) largeTitle = title;
-    if (largeTitle) {
+    if (largeTitle || slots['title-large']) {
       titleLargeEl = (
         <div className="title-large">
-          <div className="title-large-text">{largeTitle}</div>
+          <div className="title-large-text">
+            {largeTitle || ''}
+            <slot name="title-large" />
+          </div>
         </div>
       );
     }
-    innerEl = (
+    const innerEl = (
       <div
         ref="innerEl"
         className={Utils.classNames(
