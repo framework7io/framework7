@@ -30,13 +30,16 @@ class SmartSelect extends Framework7Class {
     const $selectEl = $el.find('select').eq(0);
     if ($selectEl.length === 0) return ss;
 
-    let $valueEl = $(ss.params.valueEl);
-    if ($valueEl.length === 0) {
-      $valueEl = $el.find('.item-after');
-    }
-    if ($valueEl.length === 0) {
-      $valueEl = $('<div class="item-after"></div>');
-      $valueEl.insertAfter($el.find('.item-title'));
+    let $valueEl;
+    if (ss.params.setValueText) {
+      $valueEl = $(ss.params.valueEl);
+      if ($valueEl.length === 0) {
+        $valueEl = $el.find('.item-after');
+      }
+      if ($valueEl.length === 0) {
+        $valueEl = $('<div class="item-after"></div>');
+        $valueEl.insertAfter($el.find('.item-title'));
+      }
     }
 
     // View
@@ -60,7 +63,7 @@ class SmartSelect extends Framework7Class {
       $selectEl,
       selectEl: $selectEl[0],
       $valueEl,
-      valueEl: $valueEl[0],
+      valueEl: $valueEl && $valueEl[0],
       url,
       multiple,
       inputType,
@@ -81,7 +84,7 @@ class SmartSelect extends Framework7Class {
       const value = ss.$selectEl.val();
       ss.$el.trigger('smartselect:change', ss, value);
       ss.emit('local::change smartSelectChange', ss, value);
-      ss.setTextValue();
+      ss.setValueText();
     }
     ss.attachEvents = function attachEvents() {
       $el.on('click', onClick);
@@ -123,7 +126,9 @@ class SmartSelect extends Framework7Class {
       }
 
       ss.$selectEl.trigger('change');
-      ss.$valueEl.text(ss.formatValue(optionText));
+      if (ss.params.setValueText) {
+        ss.$valueEl.text(ss.formatValueText(optionText));
+      }
       if (ss.params.closeOnSelect && ss.inputType === 'radio') {
         ss.close();
       }
@@ -176,7 +181,9 @@ class SmartSelect extends Framework7Class {
       }
       ss.selectEl.value = newValue;
     }
-    ss.$valueEl.text(ss.formatValue(optionText));
+    if (ss.params.setValueText) {
+      ss.$valueEl.text(ss.formatValueText(optionText));
+    }
     return ss;
   }
 
@@ -214,18 +221,18 @@ class SmartSelect extends Framework7Class {
     }
   }
 
-  formatValue(values) {
+  formatValueText(values) {
     const ss = this;
     let textValue;
-    if (ss.params.formatValue) {
-      textValue = ss.params.formatValue.call(ss, values, ss);
+    if (ss.params.formatValueText) {
+      textValue = ss.params.formatValueText.call(ss, values, ss);
     } else {
       textValue = values.join(', ');
     }
     return textValue;
   }
 
-  setTextValue(value) {
+  setValueText(value) {
     const ss = this;
     let valueArray = [];
     if (typeof value !== 'undefined') {
@@ -247,7 +254,9 @@ class SmartSelect extends Framework7Class {
         }
       });
     }
-    ss.$valueEl.text(ss.formatValue(valueArray));
+    if (ss.params.setValueText) {
+      ss.$valueEl.text(ss.formatValueText(valueArray));
+    }
   }
 
   getItemsData() {
@@ -791,7 +800,7 @@ class SmartSelect extends Framework7Class {
   init() {
     const ss = this;
     ss.attachEvents();
-    ss.setTextValue();
+    ss.setValueText();
   }
 
   destroy() {

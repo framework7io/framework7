@@ -23,6 +23,10 @@ export namespace SmartSelect {
     view?: View.View
     /** Visual element where to insert selected value. If not passed then it will look for <div class="item-after"> element */
     valueEl?: HTMLElement | CSSSelector
+    /** When enabled then smart select will automaticall insert value text into "valueEl" in format returned by "formatValueText"  */
+    setValueText?: boolean
+    /** Custom function to format smart select text value that appears on list item */
+    formatValueText?: (values: any[]) => string,
     /** Defines how to open Smart Select. Can be page or popup or popover or sheet (default is "page") */
     openIn?: 'page' | 'popup' | 'popover' | 'sheet'
     /** Smart select page title. If not passed then it will be the <div class="item-title"> text */
@@ -63,9 +67,6 @@ export namespace SmartSelect {
     url?: string
     /** Additional CSS class name to be set on Smart Select container (Page, Popup, Popover or Sheet) */
     cssClass?: string
-
-    /** Custom function to format smart select text value that appears on list item */
-    formatValue?: (values: any[]) => string,
 
     /** Function to render smart select page, must return full page HTML string */
     renderPage?: (items: any[]) => string,

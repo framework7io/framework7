@@ -9,6 +9,8 @@ export default {
     smartSelect: {
       el: undefined,
       valueEl: undefined,
+      setValueText: true,
+      formatValueText: null,
       openIn: 'page', // or 'popup' or 'sheet' or 'popover'
       pageTitle: undefined,
       pageBackLinkText: 'Back',
@@ -28,7 +30,6 @@ export default {
       routableModals: true,
       url: 'select/',
       cssClass: '',
-      formatValue: null,
       /*
         Custom render functions
       */
