@@ -3,6 +3,16 @@
 <table>
   <tr>
     <td align="center" valign="middle">
+      <a href="https://www.sparheld.de/" target="_blank">
+        <img width="160" src="https://cdn.framework7.io/i/sponsors/sparheld.jpg">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://www.colognewebdesign.de/" target="_blank">
+        <img width="160" src="https://cdn.framework7.io/i/sponsors/colognewebdesign.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://rise.co" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/rise.png">
       </a>
@@ -17,6 +27,8 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/unlikely-it.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.thoriumbuilder.com/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/thorium.png">
@@ -27,9 +39,6 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/kidoverse.png">
       </a>
     </td>
-
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.cyberbrain.nl/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/cyberbrain.png">
@@ -45,6 +54,8 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/birdie.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://blokt.com/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/blokt.png">
@@ -55,8 +66,6 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/activewaiter.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://wappler.io/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/wappler.png">
@@ -72,11 +81,16 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/securcom.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="http://mytommy.com" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/tommy.png">
       </a>
     </td>
+    <td></td>
+    <td></td>
+    <td></td>
     <td></td>
   </tr>
 </table>
@@ -96,6 +110,7 @@ Support Framework7 development by [pledging on Patreon](https://www.patreon.com/
 ---
 
 ### $250 Gold Sponsor
+[Sparheld.de](https://www.sparheld.de/) - Sparheld.de - save shopping online
 Steven Roussey<br>
 [Join here!](https://www.patreon.com/bePatron?patAmt=250.0&exp=1&u=4109762&rid=830877)
 
@@ -112,6 +127,7 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 ---
 
 ### $50+ Top Supporter
+[COLOGNE WEBDESIGN](https://www.colognewebdesign.de/)<br>
 Fatih Batal<br>
 Vinay Samant<br>
 [Rise](https://rise.co) - Creative Web Development Agency<br>
@@ -137,6 +153,8 @@ Bart DJ
 ---
 
 ### $10+ Supporter
+shastox<br>
+iOS Haven<br>
 Dirk Holtwick<br>
 JK<br>
 Daniel Morales<br>
@@ -175,6 +193,7 @@ Dave Billington
 ---
 
 ### $5+ Thank You
+[FanBattle.app](https://fanbattle.ru/)<br>
 Miguel Nahara<br>
 Muthaiyan Rm<br>
 xPlants.it SRL<br>

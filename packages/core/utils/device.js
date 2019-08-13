@@ -100,6 +100,12 @@ const Device = (function Device() {
     device.electron = electron;
     device.macos = macos;
     device.windows = windows;
+    if (device.macos) {
+      device.os = 'macos';
+    }
+    if (device.windows) {
+      device.os = 'windows';
+    }
   }
 
   // Meta statusbar

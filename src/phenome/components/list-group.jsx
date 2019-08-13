@@ -9,6 +9,10 @@ export default {
     style: Object, // phenome-react-line
     mediaList: Boolean,
     sortable: Boolean,
+    sortableMoveElements: {
+      type: Boolean,
+      default: undefined,
+    },
     ...Mixins.colorProps,
   },
   render() {
@@ -20,6 +24,7 @@ export default {
       style,
       mediaList,
       sortable,
+      sortableMoveElements,
     } = props;
 
     const classes = Utils.classNames(
@@ -33,7 +38,7 @@ export default {
     );
 
     return (
-      <div id={id} style={style} className={classes}>
+      <div id={id} style={style} className={classes} data-sortable-move-elements={typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined}>
         <ul>
           <slot />
         </ul>

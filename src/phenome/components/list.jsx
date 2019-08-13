@@ -21,6 +21,10 @@ export default {
     mediaList: Boolean,
     sortable: Boolean,
     sortableEnabled: Boolean,
+    sortableMoveElements: {
+      type: Boolean,
+      default: undefined,
+    },
     accordionList: Boolean,
     contactsList: Boolean,
     simpleList: Boolean,
@@ -60,6 +64,7 @@ export default {
       id,
       style,
       form,
+      sortableMoveElements,
     } = props;
 
     const { list: slotsList, default: slotsDefault } = self.slots;
@@ -112,6 +117,7 @@ export default {
           ref="el"
           style={style}
           className={self.classes}
+          data-sortable-move-elements={typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined}
         >
           {self.slots['before-list']}
           {rootChildrenBeforeList}
@@ -129,6 +135,7 @@ export default {
           ref="el"
           style={style}
           className={self.classes}
+          data-sortable-move-elements={typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined}
         >
           {self.slots['before-list']}
           {rootChildrenBeforeList}

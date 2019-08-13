@@ -9,7 +9,10 @@ export default {
     id: [String, Number],
     style: Object, // phenome-react-line
     className: String, // phenome-react-line
-    sortable: Boolean,
+    sortable: {
+      type: Boolean,
+      default: undefined,
+    },
     media: String,
     dropdown: {
       type: [String, Boolean],

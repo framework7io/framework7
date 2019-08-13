@@ -2,6 +2,23 @@
 
 # Change Log
 
+# [v4.4.10](https://github.com/framework7io/framework7/compare/v4.4.9...v4.4.10) - July 29, 2019
+  * Core
+    * Device
+      * Fixed `device-desktop` class
+
+# [v4.4.9](https://github.com/framework7io/framework7/compare/v4.4.7...v4.4.9) - July 29, 2019
+  * Core
+    * Infinite Scroll
+      * Fixed issue when destroying infinite scroll could detach all other `scroll` event listeners
+    * Navbar/Toolbar
+      * Fixed issue with enabled `hideNavbar/ToolbarOnScroll` could hide toolbar on nested elements scrolling
+    * Device
+      * On desktop `device.os` will contain `macos` or `windows` if it is running under these OS
+  * Phenome
+    * Card
+      * Added `backdropEl` property to specify custom card backdrop
+
 # [v4.4.7](https://github.com/framework7io/framework7/compare/v4.4.6...v4.4.7) - July 19, 2019
   * Core
     * Card
