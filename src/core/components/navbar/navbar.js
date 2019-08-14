@@ -26,10 +26,10 @@ const Navbar = {
     }
 
     if (app.theme !== 'ios' && app.params.navbar[`${app.theme}CenterTitle`]) {
-      $el.addClass('navbar-inner-centered-title');
+      $el.children('.navbar-inner').addClass('navbar-inner-centered-title');
     }
     if (app.theme === 'ios' && !app.params.navbar.iosCenterTitle) {
-      $el.addClass('navbar-inner-left-title');
+      $el.children('.navbar-inner').addClass('navbar-inner-left-title');
     }
 
     const $viewEl = $el.parents('.view').eq(0);
