@@ -6,7 +6,9 @@ import Utils from '../../utils/utils';
 import vdom from './vdom';
 import patch from './patch';
 
-class Framework7Component {
+const globalMixins = {};
+
+class Component {
   constructor(app, options, extendContext = {}, children = []) {
     const id = Utils.id();
     const self = Utils.merge(
@@ -24,6 +26,16 @@ class Framework7Component {
       }
     );
     const { $options } = self;
+
+    if ($options.mixins && $options.mixins.length) {
+      for (let i = $options.mixins.length - 1; i >= 0; i -= 1) {
+        const mixin = $options.mixins[i];
+        if (typeof mixin === 'string') {
+          if (globalMixins[mixin]) $options.mixins[i] = globalMixins[mixin];
+          else $options.mixins.splice(i, 1);
+        }
+      }
+    }
 
     // Root data and methods
     Object.defineProperty(self, '$root', {
@@ -50,19 +62,22 @@ class Framework7Component {
       set() {},
     });
 
-    // Bind hooks
-    ['beforeCreate', 'created', 'beforeMount', 'mounted', 'beforeDestroy', 'destroyed', 'updated']
-      .forEach((cycleKey) => {
-        if ($options[cycleKey]) $options[cycleKey] = $options[cycleKey].bind(self);
-      });
-
     // Bind render
     if ($options.render) $options.render = $options.render.bind(self);
 
     // Bind methods
     if ($options.methods) {
-      Object.keys($options.methods).forEach((methodName) => {
-        self[methodName] = $options.methods[methodName].bind(self);
+      const methods = {};
+      if ($options.mixins && $options.mixins.length) {
+        $options.mixins.forEach((mixin) => {
+          if (mixin.methods) Object.assign(methods, mixin.methods);
+        });
+      }
+      if ($options.methods) {
+        Object.assign(methods, $options.methods);
+      }
+      Object.keys(methods).forEach((methodName) => {
+        self[methodName] = methods[methodName].bind(self);
       });
     }
 
@@ -78,13 +93,14 @@ class Framework7Component {
       });
     }
 
-    // Bind Data
-    if ($options.data) $options.data = $options.data.bind(self);
-
     return new Promise((resolve, reject) => {
       self.$hook('data', true)
-        .then((data) => {
-          if (data) Utils.extend(self, data);
+        .then((datas) => {
+          const data = {};
+          datas.forEach((dt) => {
+            Object.assign(data, dt || {});
+          });
+          Utils.extend(self, data);
           self.$hook('beforeCreate');
           let html = self.$render();
 
@@ -148,6 +164,27 @@ class Framework7Component {
   $attachEvents() {
     const self = this;
     const { $options, $el } = self;
+    if (self.$options.mixins && self.$options.mixins.length) {
+      self.$detachEventsHandlers = {};
+      self.$options.mixins.forEach((mixin) => {
+        if (mixin.on) {
+          Object.keys(mixin.on).forEach((eventName) => {
+            const handler = mixin.on[eventName].bind(self);
+            if (!self.$detachEventsHandlers[eventName]) self.$detachEventsHandlers[eventName] = [];
+            self.$detachEventsHandlers[eventName].push(handler);
+            $el.on(Utils.eventNameToColonCase(eventName), handler);
+          });
+        }
+        if (mixin.once) {
+          Object.keys(mixin.once).forEach((eventName) => {
+            const handler = mixin.once[eventName].bind(self);
+            if (!self.$detachEventsHandlers[eventName]) self.$detachEventsHandlers[eventName] = [];
+            self.$detachEventsHandlers[eventName].push(handler);
+            $el.once(Utils.eventNameToColonCase(eventName), handler);
+          });
+        }
+      });
+    }
     if ($options.on) {
       Object.keys($options.on).forEach((eventName) => {
         $el.on(Utils.eventNameToColonCase(eventName), $options.on[eventName]);
@@ -173,6 +210,17 @@ class Framework7Component {
         $el.off(Utils.eventNameToColonCase(eventName), $options.once[eventName]);
       });
     }
+    if (!self.$detachEventsHandlers) return;
+    Object.keys(self.$detachEventsHandlers).forEach((eventName) => {
+      const handlers = self.$detachEventsHandlers[eventName];
+      handlers.forEach((handler) => {
+        $el.off(Utils.eventNameToColonCase(eventName), handler);
+      });
+      self.$detachEventsHandlers[eventName] = [];
+      delete self.$detachEventsHandlers[eventName];
+    });
+    self.$detachEventsHandlers = null;
+    delete self.$detachEventsHandlers;
   }
 
   $render() {
@@ -268,24 +316,34 @@ class Framework7Component {
   $hook(name, async) {
     const self = this;
     if (async) {
-      return new Promise((resolve, reject) => {
-        if (!self.$options[name]) {
-          resolve();
-          return;
+      const promises = [];
+      if (self.$options.mixins && self.$options.mixins.length) {
+        self.$options.mixins.forEach((mixin) => {
+          if (mixin[name]) promises.push(mixin[name].call(self));
+        });
+      }
+      if (self.$options[name]) {
+        promises.push(self.$options[name].call(self));
+      }
+      return Promise.all(promises);
+    }
+    if (self.$options.mixins && self.$options.mixins.length) {
+      self.$options.mixins.forEach((mixin) => {
+        if (mixin[name] && typeof mixin[name] === 'function') {
+          mixin[name].call(self);
         }
-        const result = self.$options[name]();
-        if (result instanceof Promise) {
-          result
-            .then(res => resolve(res))
-            .catch(err => reject(err));
-          return;
-        }
-        resolve(result);
       });
     }
-    if (self.$options[name]) return self.$options[name]();
+    if (self.$options[name]) return self.$options[name].call(self);
     return undefined;
   }
 }
 
-export default Framework7Component;
+function registerComponentMixin(name, mixin) {
+  globalMixins[name] = mixin;
+}
+
+Component.registerComponentMixin = registerComponentMixin;
+
+export default Component;
+export { registerComponentMixin };
