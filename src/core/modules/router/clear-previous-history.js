@@ -1,8 +1,7 @@
 import $ from 'dom7';
 import appRouterCheck from './app-router-check';
 
-function clearPreviousPages() {
-  const router = this;
+function clearPreviousPages(router) {
   appRouterCheck(router, 'clearPreviousPages');
   const app = router.app;
   const dynamicNavbar = router.dynamicNavbar;
@@ -38,11 +37,11 @@ function clearPreviousHistory() {
   appRouterCheck(router, 'clearPreviousHistory');
   const url = router.history[router.history.length - 1];
 
-  router.clearPreviousPages();
+  clearPreviousPages(router);
 
   router.history = [url];
   router.view.history = [url];
   router.saveHistory();
 }
 
-export { clearPreviousHistory, clearPreviousPages }; // eslint-disable-line
+export { clearPreviousHistory }; // eslint-disable-line

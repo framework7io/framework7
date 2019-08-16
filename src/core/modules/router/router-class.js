@@ -10,7 +10,7 @@ import { refreshPage, forward, load, navigate } from './navigate';
 import { tabLoad, tabRemove } from './tab';
 import { modalLoad, modalRemove } from './modal';
 import { backward, loadBack, back } from './back';
-import { clearPreviousHistory, clearPreviousPages } from './clear-previous-history';
+import { clearPreviousHistory } from './clear-previous-history';
 import appRouterCheck from './app-router-check';
 
 class Router extends Framework7Class {
@@ -1136,8 +1136,6 @@ Router.prototype.modalRemove = modalRemove;
 Router.prototype.backward = backward;
 Router.prototype.loadBack = loadBack;
 Router.prototype.back = back;
-// Clear previoius pages from the DOM
-Router.prototype.clearPreviousPages = clearPreviousPages;
 // Clear history
 Router.prototype.clearPreviousHistory = clearPreviousHistory;
 
