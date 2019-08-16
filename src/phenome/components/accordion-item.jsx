@@ -17,23 +17,28 @@ export default {
     const self = this;
     const el = self.refs.el;
     if (!el) return;
-    el.addEventListener('accordion:beforeopen', self.onBeforeOpen);
-    el.addEventListener('accordion:open', self.onOpen);
-    el.addEventListener('accordion:opened', self.onOpened);
-    el.addEventListener('accordion:beforeclose', self.onBeforeClose);
-    el.addEventListener('accordion:close', self.onClose);
-    el.addEventListener('accordion:closed', self.onClosed);
+    self.eventTargetEl = el;
+    self.$f7ready((f7) => {
+      f7.on('accordionBeforeOpen', self.onBeforeOpen);
+      f7.on('accordionOpen', self.onOpen);
+      f7.on('accordionOpened', self.onOpened);
+      f7.on('accordionBeforeClose', self.onBeforeClose);
+      f7.on('accordionClose', self.onClose);
+      f7.on('accordionClosed', self.onClosed);
+    });
   },
   componentWillUnmount() {
     const self = this;
     const el = self.refs.el;
-    if (!el) return;
-    el.removeEventListener('accordion:beforeopen', self.onBeforeOpen);
-    el.removeEventListener('accordion:open', self.onOpen);
-    el.removeEventListener('accordion:opened', self.onOpened);
-    el.removeEventListener('accordion:beforeclose', self.onBeforeClose);
-    el.removeEventListener('accordion:close', self.onClose);
-    el.removeEventListener('accordion:closed', self.onClosed);
+    if (!el || !self.$f7) return;
+    const f7 = self.$f7;
+    f7.off('accordionBeforeOpen', self.onBeforeOpen);
+    f7.off('accordionOpen', self.onOpen);
+    f7.off('accordionOpened', self.onOpened);
+    f7.off('accordionBeforeClose', self.onBeforeClose);
+    f7.off('accordionClose', self.onClose);
+    f7.off('accordionClosed', self.onClosed);
+    delete this.eventTargetEl;
   },
   render() {
     const props = this.props;
@@ -58,23 +63,29 @@ export default {
     );
   },
   methods: {
-    onBeforeOpen(event) {
-      this.dispatchEvent('accordionBeforeOpen accordion:beforeopen', event, event.detail.prevent);
+    onBeforeOpen(el, prevent) {
+      if (this.eventTargetEl !== el) return;
+      this.dispatchEvent('accordionBeforeOpen accordion:beforeopen', prevent);
     },
-    onOpen(event) {
-      this.dispatchEvent('accordionOpen accordion:open', event);
+    onOpen(el) {
+      if (this.eventTargetEl !== el) return;
+      this.dispatchEvent('accordionOpen accordion:open');
     },
-    onOpened(event) {
-      this.dispatchEvent('accordionOpened accordion:opened', event);
+    onOpened(el) {
+      if (this.eventTargetEl !== el) return;
+      this.dispatchEvent('accordionOpened accordion:opened');
     },
-    onBeforeClose(event) {
-      this.dispatchEvent('accordionBeforeClose accordion:beforeclose', event, event.detail.prevent);
+    onBeforeClose(el, prevent) {
+      if (this.eventTargetEl !== el) return;
+      this.dispatchEvent('accordionBeforeClose accordion:beforeclose', prevent);
     },
-    onClose(event) {
-      this.dispatchEvent('accordionClose accordion:close', event);
+    onClose(el) {
+      if (this.eventTargetEl !== el) return;
+      this.dispatchEvent('accordionClose accordion:close');
     },
-    onClosed(event) {
-      this.dispatchEvent('accordionClosed accordion:closed', event);
+    onClosed(el) {
+      if (this.eventTargetEl !== el) return;
+      this.dispatchEvent('accordionClosed accordion:closed');
     },
   },
 };

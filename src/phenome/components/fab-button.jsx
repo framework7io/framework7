@@ -62,10 +62,7 @@ export default {
     );
   },
   componentDidCreate() {
-    Utils.bindMethods(this, ['onClick'])
-  },
-  componentDidCreate() {
-    this.onClick = this.onClick.bind(this);
+    Utils.bindMethods(this, ['onClick']);
   },
   componentDidMount() {
     const self = this;

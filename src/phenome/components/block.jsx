@@ -24,16 +24,21 @@ export default {
     Utils.bindMethods(this, ['onTabShow', 'onTabHide']);
   },
   componentDidMount() {
-    const el = this.refs.el;
+    const self = this;
+    const el = self.refs.el;
     if (!el) return;
-    el.addEventListener('tab:show', this.onTabShow);
-    el.addEventListener('tab:hide', this.onTabHide);
+    self.eventTargetEl = el;
+    self.$f7ready((f7) => {
+      f7.on('tabShow', self.onTabShow);
+      f7.on('tabHide', self.onTabHide);
+    });
   },
   componentWillUnmount() {
     const el = this.refs.el;
-    if (!el) return;
-    el.removeEventListener('tab:show', this.onTabShow);
-    el.removeEventListener('tab:hide', this.onTabHide);
+    if (!el || !this.$f7) return;
+    this.$f7.off('tabShow', this.onTabShow);
+    this.$f7.off('tabHide', this.onTabHide);
+    delete this.eventTargetEl;
   },
   render() {
     const self = this;
@@ -84,11 +89,13 @@ export default {
     );
   },
   methods: {
-    onTabShow(event) {
-      this.dispatchEvent('tabShow tab:show', event);
+    onTabShow(el) {
+      if (this.eventTargetEl !== el) return;
+      this.dispatchEvent('tabShow tab:show', el);
     },
-    onTabHide(event) {
-      this.dispatchEvent('tabHide tab:hide', event);
+    onTabHide(el) {
+      if (this.eventTargetEl !== el) return;
+      this.dispatchEvent('tabHide tab:hide', el);
     },
   },
 };

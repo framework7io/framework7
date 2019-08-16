@@ -78,27 +78,29 @@ export default {
     if (!self.props.expandable) return;
     const el = self.refs.el;
     if (!el) return;
-    el.addEventListener('card:beforeopen', self.onBeforeOpen);
-    el.addEventListener('card:open', self.onOpen);
-    el.addEventListener('card:opened', self.onOpened);
-    el.addEventListener('card:close', self.onClose);
-    el.addEventListener('card:closed', self.onClosed);
-    if (self.props.expandable && self.props.expandableOpened) {
-      self.$f7ready(() => {
+    self.eventTargetEl = el;
+    self.$f7ready((f7) => {
+      f7.on('cardBeforeOpen', self.onBeforeOpen);
+      f7.on('cardOpen', self.onOpen);
+      f7.on('cardOpened', self.onOpened);
+      f7.on('cardClose', self.onClose);
+      f7.on('cardClosed', self.onClosed);
+      if (self.props.expandable && self.props.expandableOpened) {
         self.$f7.card.open(el, false);
-      });
-    }
+      }
+    });
   },
   componentWillUnmount() {
     const self = this;
     if (!self.props.expandable) return;
     const el = self.refs.el;
-    if (!el) return;
-    el.removeEventListener('card:beforeopen', self.onBeforeOpen);
-    el.removeEventListener('card:open', self.onOpen);
-    el.removeEventListener('card:opened', self.onOpened);
-    el.removeEventListener('card:close', self.onClose);
-    el.removeEventListener('card:closed', self.onClosed);
+    if (!el || !self.$f7) return;
+    self.$f7.off('cardBeforeOpen', self.onBeforeOpen);
+    self.$f7.off('cardOpen', self.onOpen);
+    self.$f7.off('cardOpened', self.onOpened);
+    self.$f7.off('cardClose', self.onClose);
+    self.$f7.off('cardClosed', self.onClosed);
+    delete self.eventTargetEl;
   },
   render() {
     const self = this;
@@ -201,20 +203,25 @@ export default {
       if (!self.refs.el) return;
       self.$f7.card.close(self.refs.el);
     },
-    onBeforeOpen(e) {
-      this.dispatchEvent('cardBeforeOpen card:beforeopen', e, e.detail.prevent);
+    onBeforeOpen(el, prevent) {
+      if (this.eventTargetEl !== el) return;
+      this.dispatchEvent('cardBeforeOpen card:beforeopen', el, prevent);
     },
-    onOpen(e) {
-      this.dispatchEvent('cardOpen card:open', e);
+    onOpen(el) {
+      if (this.eventTargetEl !== el) return;
+      this.dispatchEvent('cardOpen card:open', el);
     },
-    onOpened(e) {
-      this.dispatchEvent('cardOpened card:opened', e);
+    onOpened(el, pageEl) {
+      if (this.eventTargetEl !== el) return;
+      this.dispatchEvent('cardOpened card:opened', el, pageEl);
     },
-    onClose(e) {
-      this.dispatchEvent('cardClose card:close', e);
+    onClose(el) {
+      if (this.eventTargetEl !== el) return;
+      this.dispatchEvent('cardClose card:close', el);
     },
-    onClosed(e) {
-      this.dispatchEvent('cardClosed card:closed', e);
+    onClosed(el, pageEl) {
+      if (this.eventTargetEl !== el) return;
+      this.dispatchEvent('cardClosed card:closed', el, pageEl);
     },
   },
 };
