@@ -69,15 +69,15 @@ declare namespace F7TreeviewItem {
     iconColor? : string
     iconSize? : string | number
     onClick? : (event?: any) => void
-    onTreeviewOpen? : (event?: any) => void
-    onTreeviewClose? : (event?: any) => void
-    onTreeviewLoadChildren? : (...args: any[]) => void
+    onTreeviewOpen? : (el?: any) => void
+    onTreeviewClose? : (el?: any) => void
+    onTreeviewLoadChildren? : (el?: any, done?: any) => void
   }
 }
 declare class F7TreeviewItem extends React.Component<F7TreeviewItem.Props, {}> {
   onClick(event? : any) : unknown
-  onOpen(event? : any) : unknown
-  onClose(event? : any) : unknown
-  onLoadChildren(event? : any) : unknown
+  onOpen(el? : any) : unknown
+  onClose(el? : any) : unknown
+  onLoadChildren(el? : any, done? : any) : unknown
 }
 export default F7TreeviewItem;

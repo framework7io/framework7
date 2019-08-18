@@ -19,47 +19,23 @@ class F7Navbar extends React.Component {
   }
 
   onHide(navbarEl) {
-    const self = this;
-    const {
-      el
-    } = self.refs;
-
-    if (navbarEl === el) {
-      self.dispatchEvent('navbar:hide navbarHide');
-    }
+    if (this.eventTargetEl !== navbarEl) return;
+    this.dispatchEvent('navbar:hide navbarHide');
   }
 
   onShow(navbarEl) {
-    const self = this;
-    const {
-      el
-    } = self.refs;
-
-    if (navbarEl === el) {
-      self.dispatchEvent('navbar:show navbarShow');
-    }
+    if (this.eventTargetEl !== navbarEl) return;
+    this.dispatchEvent('navbar:show navbarShow');
   }
 
   onExpand(navbarEl) {
-    const self = this;
-    const {
-      el
-    } = self.refs;
-
-    if (navbarEl === el) {
-      self.dispatchEvent('navbar:expand navbarExpand');
-    }
+    if (this.eventTargetEl !== navbarEl) return;
+    this.dispatchEvent('navbar:expand navbarExpand');
   }
 
   onCollapse(navbarEl) {
-    const self = this;
-    const {
-      el
-    } = self.refs;
-
-    if (navbarEl === el) {
-      self.dispatchEvent('navbar:collapse navbarCollapse');
-    }
+    if (this.eventTargetEl !== navbarEl) return;
+    this.dispatchEvent('navbar:collapse navbarCollapse');
   }
 
   hide(animate) {
@@ -95,7 +71,6 @@ class F7Navbar extends React.Component {
       sliding,
       title,
       subtitle,
-      inner,
       innerClass,
       innerClassName,
       className,
@@ -121,27 +96,14 @@ class F7Navbar extends React.Component {
       'navbar-large-transparent': largeTransparent
     }, Mixins.colorClasses(props));
 
-    if (!inner) {
-      return React.createElement('div', {
-        ref: __reactNode => {
-          this.__reactRefs['el'] = __reactNode;
-        },
-        id: id,
-        style: style,
-        className: classes
-      }, React.createElement('div', {
-        className: 'navbar-bg'
-      }), this.slots['default']);
-    }
-
-    if (backLink || slots['nav-left']) {
+    if (backLink || slots['nav-left'] || slots.left) {
       leftEl = React.createElement(F7NavLeft, {
         backLink: backLink,
         backLinkUrl: backLinkUrl,
         backLinkForce: backLinkForce,
         backLinkShowText: backLinkShowText,
         onBackClick: self.onBackClick
-      }, slots['nav-left']);
+      }, slots['nav-left'], slots.left);
     }
 
     if (title || subtitle || slots.title) {
@@ -151,19 +113,19 @@ class F7Navbar extends React.Component {
       }, slots.title);
     }
 
-    if (slots['nav-right']) {
-      rightEl = React.createElement(F7NavRight, null, slots['nav-right']);
+    if (slots['nav-right'] || slots.right) {
+      rightEl = React.createElement(F7NavRight, null, slots['nav-right'], slots.right);
     }
 
     let largeTitle = titleLarge;
     if (!largeTitle && large && title) largeTitle = title;
 
-    if (largeTitle) {
+    if (largeTitle || slots['title-large']) {
       titleLargeEl = React.createElement('div', {
         className: 'title-large'
       }, React.createElement('div', {
         className: 'title-large-text'
-      }, largeTitle));
+      }, largeTitle || '', this.slots['title-large']));
     }
 
     const innerEl = React.createElement('div', {
@@ -192,13 +154,14 @@ class F7Navbar extends React.Component {
     const {
       el
     } = self.refs;
-    if (!el) return;
+    if (!el || !self.$f7) return;
     const f7 = self.$f7;
-    if (!f7) return;
     f7.off('navbarShow', self.onShow);
     f7.off('navbarHide', self.onHide);
     f7.off('navbarCollapse', self.onCollapse);
     f7.off('navbarExpand', self.onExpand);
+    self.eventTargetEl = null;
+    delete self.eventTargetEl;
   }
 
   componentDidUpdate() {
@@ -215,6 +178,7 @@ class F7Navbar extends React.Component {
     } = self.refs;
     if (!el) return;
     self.$f7ready(f7 => {
+      self.eventTargetEl = el;
       f7.on('navbarShow', self.onShow);
       f7.on('navbarHide', self.onHide);
       f7.on('navbarCollapse', self.onCollapse);
@@ -258,10 +222,6 @@ __reactComponentSetProps(F7Navbar, Object.assign({
   hidden: Boolean,
   noShadow: Boolean,
   noHairline: Boolean,
-  inner: {
-    type: Boolean,
-    default: true
-  },
   innerClass: String,
   innerClassName: String,
   large: Boolean,

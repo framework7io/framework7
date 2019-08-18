@@ -24,12 +24,12 @@ declare namespace F7Block {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onTabShow? : (event?: any) => void
-    onTabHide? : (event?: any) => void
+    onTabShow? : (el?: any) => void
+    onTabHide? : (el?: any) => void
   }
 }
 declare class F7Block extends React.Component<F7Block.Props, {}> {
-  onTabShow(event? : any) : unknown
-  onTabHide(event? : any) : unknown
+  onTabShow(el? : any) : unknown
+  onTabHide(el? : any) : unknown
 }
 export default F7Block;

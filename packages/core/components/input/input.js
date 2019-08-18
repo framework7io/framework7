@@ -48,10 +48,12 @@ const Input = {
     if (currentHeight !== scrollHeight) {
       if (scrollHeight > initialHeight) {
         $textareaEl.css('height', `${scrollHeight}px`);
-        $textareaEl.trigger('textarea:resize', { initialHeight, currentHeight, scrollHeight });
       } else if (scrollHeight < currentHeight) {
         $textareaEl.css('height', '');
+      }
+      if (scrollHeight > initialHeight || scrollHeight < currentHeight) {
         $textareaEl.trigger('textarea:resize', { initialHeight, currentHeight, scrollHeight });
+        app.emit('textareaResize', { initialHeight, currentHeight, scrollHeight });
       }
     }
   },
@@ -106,6 +108,7 @@ const Input = {
     $inputEl.removeClass('input-focused');
   },
   checkEmptyState(inputEl) {
+    const app = this;
     let $inputEl = $(inputEl);
     if (!$inputEl.is('input, select, textarea')) {
       $inputEl = $inputEl.find('input, select, textarea').eq(0);
@@ -120,11 +123,13 @@ const Input = {
       $inputWrapEl.addClass('input-with-value');
       $inputEl.addClass('input-with-value');
       $inputEl.trigger('input:notempty');
+      app.emit('inputNotEmpty', $inputEl[0]);
     } else {
       $itemInputEl.removeClass('item-input-with-value');
       $inputWrapEl.removeClass('input-with-value');
       $inputEl.removeClass('input-with-value');
       $inputEl.trigger('input:empty');
+      app.emit('inputEmpty', $inputEl[0]);
     }
   },
   scrollIntoView(inputEl, duration = 0, centered, force) {
@@ -224,6 +229,7 @@ const Input = {
         .trigger('input change')
         .focus()
         .trigger('input:clear', previousValue);
+      app.emit('inputClear', previousValue);
     }
     $(document).on('click', '.input-clear-button', clearInput);
     $(document).on('change input', 'input, textarea, select', onChange, true);

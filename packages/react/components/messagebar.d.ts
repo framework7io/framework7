@@ -37,9 +37,9 @@ declare namespace F7Messagebar {
     onSubmit? : (value?: any, clear?: any) => void
     onSend? : (value?: any, clear?: any) => void
     onClick? : (event?: any) => void
-    onMessagebarAttachmentDelete? : (event?: any) => void
-    onMessagebarAttachmentClick? : (event?: any) => void
-    onMessagebarResizePage? : (event?: any) => void
+    onMessagebarAttachmentDelete? : (instance?: any, attachmentEl?: any, attachmentElIndex?: any) => void
+    onMessagebarAttachmentClick? : (instance?: any, attachmentEl?: any, attachmentElIndex?: any) => void
+    onMessagebarResizePage? : (instance?: any) => void
   }
 }
 declare class F7Messagebar extends React.Component<F7Messagebar.Props, {}> {
@@ -61,9 +61,9 @@ declare class F7Messagebar extends React.Component<F7Messagebar.Props, {}> {
   onFocus(event? : any) : unknown
   onBlur(event? : any) : unknown
   onClick(event? : any) : unknown
-  onDeleteAttachment(event? : any) : unknown
-  onClickAttachment(event? : any) : unknown
-  onResizePage(event? : any) : unknown
+  onAttachmentDelete(instance? : any, attachmentEl? : any, attachmentElIndex? : any) : unknown
+  onAttachmentClick(instance? : any, attachmentEl? : any, attachmentElIndex? : any) : unknown
+  onResizePage(instance? : any) : unknown
   f7Messagebar: MessagebarNamespace.Messagebar
 }
 export default F7Messagebar;

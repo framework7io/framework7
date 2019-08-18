@@ -14,20 +14,20 @@ declare namespace F7AccordionItem {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onAccordionBeforeOpen? : (...args: any[]) => void
-    onAccordionOpen? : (event?: any) => void
-    onAccordionOpened? : (event?: any) => void
-    onAccordionBeforeClose? : (...args: any[]) => void
-    onAccordionClose? : (event?: any) => void
-    onAccordionClosed? : (event?: any) => void
+    onAccordionBeforeOpen? : (prevent?: any) => void
+    onAccordionOpen? : (...args: any[]) => void
+    onAccordionOpened? : (...args: any[]) => void
+    onAccordionBeforeClose? : (prevent?: any) => void
+    onAccordionClose? : (...args: any[]) => void
+    onAccordionClosed? : (...args: any[]) => void
   }
 }
 declare class F7AccordionItem extends React.Component<F7AccordionItem.Props, {}> {
-  onBeforeOpen(event? : any) : unknown
-  onOpen(event? : any) : unknown
-  onOpened(event? : any) : unknown
-  onBeforeClose(event? : any) : unknown
-  onClose(event? : any) : unknown
-  onClosed(event? : any) : unknown
+  onBeforeOpen(el? : any, prevent? : any) : unknown
+  onOpen(el? : any) : unknown
+  onOpened(el? : any) : unknown
+  onBeforeClose(el? : any, prevent? : any) : unknown
+  onClose(el? : any) : unknown
+  onClosed(el? : any) : unknown
 }
 export default F7AccordionItem;

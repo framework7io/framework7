@@ -21,18 +21,18 @@ declare namespace F7Popover {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onPopoverOpen? : (event?: any) => void
-    onPopoverOpened? : (event?: any) => void
-    onPopoverClose? : (event?: any) => void
-    onPopoverClosed? : (event?: any) => void
+    onPopoverOpen? : (instance?: any) => void
+    onPopoverOpened? : (instance?: any) => void
+    onPopoverClose? : (instance?: any) => void
+    onPopoverClosed? : (instance?: any) => void
   }
 }
 declare class F7Popover extends React.Component<F7Popover.Props, {}> {
-  onOpen(event? : any) : unknown
-  onOpened(event? : any) : unknown
-  onClose(event? : any) : unknown
-  onClosed(event? : any) : unknown
-  open(target? : any, animate? : any) : unknown
+  onOpen(instance? : any) : unknown
+  onOpened(instance? : any) : unknown
+  onClose(instance? : any) : unknown
+  onClosed(instance? : any) : unknown
+  open(animate? : any) : unknown
   close(animate? : any) : unknown
   f7Popover: PopoverNamespace.Popover
 }

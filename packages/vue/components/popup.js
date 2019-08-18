@@ -67,10 +67,6 @@ export default {
     const self = this;
     const el = self.$refs.el;
     if (!el) return;
-    el.addEventListener('popup:open', self.onOpen);
-    el.addEventListener('popup:opened', self.onOpened);
-    el.addEventListener('popup:close', self.onClose);
-    el.addEventListener('popup:closed', self.onClosed);
     const props = self.props;
     const {
       closeByBackdropClick,
@@ -82,16 +78,23 @@ export default {
       swipeHandler
     } = props;
     const popupParams = {
-      el
+      el,
+      on: {
+        open: self.onOpen,
+        opened: self.onOpened,
+        close: self.onClose,
+        closed: self.onClosed
+      }
     };
     {
-      if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') popupParams.closeByBackdropClick = closeByBackdropClick;
-      if (typeof self.$options.propsData.closeOnEscape !== 'undefined') popupParams.closeOnEscape = closeOnEscape;
-      if (typeof self.$options.propsData.animate !== 'undefined') popupParams.animate = animate;
-      if (typeof self.$options.propsData.backdrop !== 'undefined') popupParams.backdrop = backdrop;
-      if (typeof self.$options.propsData.backdropEl !== 'undefined') popupParams.backdropEl = backdropEl;
-      if (typeof self.$options.propsData.swipeToClose !== 'undefined') popupParams.swipeToClose = swipeToClose;
-      if (typeof self.$options.propsData.swipeHandler !== 'undefined') popupParams.swipeHandler = swipeHandler;
+      const propsData = self.$options.propsData;
+      if (typeof propsData.closeByBackdropClick !== 'undefined') popupParams.closeByBackdropClick = closeByBackdropClick;
+      if (typeof propsData.closeOnEscape !== 'undefined') popupParams.closeOnEscape = closeOnEscape;
+      if (typeof propsData.animate !== 'undefined') popupParams.animate = animate;
+      if (typeof propsData.backdrop !== 'undefined') popupParams.backdrop = backdrop;
+      if (typeof propsData.backdropEl !== 'undefined') popupParams.backdropEl = backdropEl;
+      if (typeof propsData.swipeToClose !== 'undefined') popupParams.swipeToClose = swipeToClose;
+      if (typeof propsData.swipeHandler !== 'undefined') popupParams.swipeHandler = swipeHandler;
     }
     self.$f7ready(() => {
       self.f7Popup = self.$f7.popup.create(popupParams);
@@ -105,41 +108,35 @@ export default {
   beforeDestroy() {
     const self = this;
     if (self.f7Popup) self.f7Popup.destroy();
-    const el = self.$refs.el;
-    if (!el) return;
-    el.removeEventListener('popup:open', self.onOpen);
-    el.removeEventListener('popup:opened', self.onOpened);
-    el.removeEventListener('popup:close', self.onClose);
-    el.removeEventListener('popup:closed', self.onClosed);
   },
 
   methods: {
-    onOpen(event) {
-      this.dispatchEvent('popup:open popupOpen', event);
+    onOpen(instance) {
+      this.dispatchEvent('popup:open popupOpen', instance);
     },
 
-    onOpened(event) {
-      this.dispatchEvent('popup:opened popupOpened', event);
+    onOpened(instance) {
+      this.dispatchEvent('popup:opened popupOpened', instance);
     },
 
-    onClose(event) {
-      this.dispatchEvent('popup:close popupClose', event);
+    onClose(instance) {
+      this.dispatchEvent('popup:close popupClose', instance);
     },
 
-    onClosed(event) {
-      this.dispatchEvent('popup:closed popupClosed', event);
+    onClosed(instance) {
+      this.dispatchEvent('popup:closed popupClosed', instance);
     },
 
     open(animate) {
       const self = this;
-      if (!self.$f7) return undefined;
-      return self.$f7.popup.open(self.$refs.el, animate);
+      if (!self.f7Popup) return undefined;
+      return self.f7Popup.open(animate);
     },
 
     close(animate) {
       const self = this;
-      if (!self.$f7) return undefined;
-      return self.$f7.popup.close(self.$refs.el, animate);
+      if (!self.f7Popup) return undefined;
+      return self.f7Popup.close(animate);
     },
 
     dispatchEvent(events, ...args) {

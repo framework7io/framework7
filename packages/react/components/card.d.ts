@@ -31,20 +31,20 @@ declare namespace F7Card {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onCardBeforeOpen? : (...args: any[]) => void
-    onCardOpen? : (e?: any) => void
-    onCardOpened? : (e?: any) => void
-    onCardClose? : (e?: any) => void
-    onCardClosed? : (e?: any) => void
+    onCardBeforeOpen? : (el?: any, prevent?: any) => void
+    onCardOpen? : (el?: any) => void
+    onCardOpened? : (el?: any, pageEl?: any) => void
+    onCardClose? : (el?: any) => void
+    onCardClosed? : (el?: any, pageEl?: any) => void
   }
 }
 declare class F7Card extends React.Component<F7Card.Props, {}> {
   open() : unknown
   close() : unknown
-  onBeforeOpen(e? : any) : unknown
-  onOpen(e? : any) : unknown
-  onOpened(e? : any) : unknown
-  onClose(e? : any) : unknown
-  onClosed(e? : any) : unknown
+  onBeforeOpen(el? : any, prevent? : any) : unknown
+  onOpen(el? : any) : unknown
+  onOpened(el? : any, pageEl? : any) : unknown
+  onClose(el? : any) : unknown
+  onClosed(el? : any, pageEl? : any) : unknown
 }
 export default F7Card;

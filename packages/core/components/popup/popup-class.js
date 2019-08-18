@@ -177,6 +177,7 @@ class Popup extends Modal {
             && !(direction === 'to-top' && pageContentScrollTop === (pageContentScrollHeight - pageContentOffsetHeight))
           ) {
             $el.transform('');
+            $el.transition('');
             isTouched = false;
             isMoved = false;
             return;

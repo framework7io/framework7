@@ -29,24 +29,24 @@ declare namespace F7PageContent {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onPtrPullStart? : (event?: any) => void
-    onPtrPullMove? : (event?: any) => void
-    onPtrPullEnd? : (event?: any) => void
-    onPtrRefresh? : (event?: any, done?: any) => void
-    onPtrDone? : (event?: any) => void
-    onInfinite? : (event?: any) => void
-    onTabShow? : (event?: any) => void
-    onTabHide? : (event?: any) => void
+    onPtrPullStart? : (el?: any) => void
+    onPtrPullMove? : (el?: any) => void
+    onPtrPullEnd? : (el?: any) => void
+    onPtrRefresh? : (el?: any, done?: any) => void
+    onPtrDone? : (el?: any) => void
+    onInfinite? : (el?: any) => void
+    onTabShow? : (el?: any) => void
+    onTabHide? : (el?: any) => void
   }
 }
 declare class F7PageContent extends React.Component<F7PageContent.Props, {}> {
-  onPtrPullStart(event? : any) : unknown
-  onPtrPullMove(event? : any) : unknown
-  onPtrPullEnd(event? : any) : unknown
-  onPtrRefresh(event? : any) : unknown
-  onPtrDone(event? : any) : unknown
-  onInfinite(event? : any) : unknown
-  onTabShow(event? : any) : unknown
-  onTabHide(event? : any) : unknown
+  onPtrPullStart(el? : any) : unknown
+  onPtrPullMove(el? : any) : unknown
+  onPtrPullEnd(el? : any) : unknown
+  onPtrRefresh(el? : any, done? : any) : unknown
+  onPtrDone(el? : any) : unknown
+  onInfinite(el? : any) : unknown
+  onTabShow(el? : any) : unknown
+  onTabHide(el? : any) : unknown
 }
 export default F7PageContent;

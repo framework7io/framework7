@@ -35,8 +35,9 @@ export default {
     if (typeof needBackLinkText === 'undefined') needBackLinkText = !this.$theme.md;
 
     if (backLink) {
+      const text = backLink !== true && needBackLinkText ? backLink : undefined;
       linkEl = _h(F7Link, {
-        class: backLink === true || backLink && this.$theme.md ? 'icon-only' : undefined,
+        class: !text ? 'icon-only' : undefined,
         on: {
           click: this.onBackClick
         },
@@ -45,7 +46,7 @@ export default {
           back: true,
           icon: 'icon-back',
           force: backLinkForce || undefined,
-          text: backLink !== true && needBackLinkText ? backLink : undefined
+          text: text
         }
       });
     }

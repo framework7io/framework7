@@ -68,32 +68,30 @@ export default {
 
   beforeDestroy() {
     const self = this;
-    const el = self.$refs.el;
 
-    if (el) {
-      el.removeEventListener('tab:show', self.onTabShow);
-      el.removeEventListener('tab:hide', self.onTabHide);
+    if (self.$f7) {
+      self.$f7.off('tabShow', self.onTabShow);
+      self.$f7.off('tabHide', self.onTabHide);
     }
 
     if (!self.routerData) return;
     f7.routers.tabs.splice(f7.routers.tabs.indexOf(self.routerData), 1);
     self.routerData = null;
+    self.eventTargetEl = null;
     delete self.routerData;
+    delete self.eventTargetEl;
   },
 
   mounted() {
     const self = this;
     const el = self.$refs.el;
-
-    if (el) {
-      el.addEventListener('tab:show', self.onTabShow);
-      el.addEventListener('tab:hide', self.onTabHide);
-    }
-
     self.setState({
       tabContent: null
     });
     self.$f7ready(() => {
+      self.$f7.on('tabShow', self.onTabShow);
+      self.$f7.on('tabHide', self.onTabHide);
+      self.eventTargetEl = el;
       self.routerData = {
         el,
         component: self,
@@ -115,12 +113,14 @@ export default {
       this.$f7.tab.show(this.$refs.el, animate);
     },
 
-    onTabShow(event) {
-      this.dispatchEvent('tab:show tabShow', event);
+    onTabShow(el) {
+      if (this.eventTargetEl !== el) return;
+      this.dispatchEvent('tab:show tabShow', el);
     },
 
-    onTabHide(event) {
-      this.dispatchEvent('tab:hide tabHide', event);
+    onTabHide(el) {
+      if (this.eventTargetEl !== el) return;
+      this.dispatchEvent('tab:hide tabHide', el);
     },
 
     dispatchEvent(events, ...args) {

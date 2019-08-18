@@ -8,6 +8,7 @@ declare namespace F7ListGroup {
     style? : React.CSSProperties
     mediaList? : boolean
     sortable? : boolean
+    sortableMoveElements? : boolean
     color? : string
     colorTheme? : string
     textColor? : string

@@ -38,46 +38,46 @@ declare namespace F7Page {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onPtrPullStart? : (event?: any) => void
-    onPtrPullMove? : (event?: any) => void
-    onPtrPullEnd? : (event?: any) => void
-    onPtrRefresh? : (event?: any, done?: any) => void
-    onPtrDone? : (event?: any) => void
-    onInfinite? : (event?: any) => void
-    onPageMounted? : (event?: any, page?: any) => void
-    onPageInit? : (event?: any, page?: any) => void
-    onPageReinit? : (event?: any, page?: any) => void
-    onPageBeforeIn? : (event?: any, page?: any) => void
-    onPageBeforeOut? : (event?: any, page?: any) => void
-    onPageAfterOut? : (event?: any, page?: any) => void
-    onPageAfterIn? : (event?: any, page?: any) => void
-    onPageBeforeRemove? : (event?: any, page?: any) => void
+    onPtrPullStart? : (...args: any[]) => void
+    onPtrPullMove? : (...args: any[]) => void
+    onPtrPullEnd? : (...args: any[]) => void
+    onPtrRefresh? : (...args: any[]) => void
+    onPtrDone? : (...args: any[]) => void
+    onInfinite? : (...args: any[]) => void
+    onPageMounted? : (page?: any) => void
+    onPageInit? : (page?: any) => void
+    onPageReinit? : (page?: any) => void
+    onPageBeforeIn? : (page?: any) => void
+    onPageBeforeOut? : (page?: any) => void
+    onPageAfterOut? : (page?: any) => void
+    onPageAfterIn? : (page?: any) => void
+    onPageBeforeRemove? : (page?: any) => void
   }
 }
 declare class F7Page extends React.Component<F7Page.Props, {}> {
-  onPtrPullStart(event? : any) : unknown
-  onPtrPullMove(event? : any) : unknown
-  onPtrPullEnd(event? : any) : unknown
-  onPtrRefresh(event? : any) : unknown
-  onPtrDone(event? : any) : unknown
-  onInfinite(event? : any) : unknown
-  onPageMounted(event? : any) : unknown
-  onPageStack() : unknown
-  onPageUnstack() : unknown
-  onPagePosition(event? : any) : unknown
-  onPageRole(event? : any) : unknown
-  onPageMasterStack() : unknown
-  onPageMasterUnstack() : unknown
-  onPageNavbarLargeCollapsed() : unknown
-  onPageNavbarLargeExpanded() : unknown
-  onPageInit(event? : any) : unknown
-  onPageReinit(event? : any) : unknown
-  onPageBeforeIn(event? : any) : unknown
-  onPageBeforeOut(event? : any) : unknown
-  onPageAfterOut(event? : any) : unknown
-  onPageAfterIn(event? : any) : unknown
-  onPageBeforeRemove(event? : any) : unknown
-  onCardOpened() : unknown
-  onCardClose() : unknown
+  onPtrPullStart(...args : any[]) : unknown
+  onPtrPullMove(...args : any[]) : unknown
+  onPtrPullEnd(...args : any[]) : unknown
+  onPtrRefresh(...args : any[]) : unknown
+  onPtrDone(...args : any[]) : unknown
+  onInfinite(...args : any[]) : unknown
+  onPageMounted(page? : any) : unknown
+  onPageInit(page? : any) : unknown
+  onPageReinit(page? : any) : unknown
+  onPageBeforeIn(page? : any) : unknown
+  onPageBeforeOut(page? : any) : unknown
+  onPageAfterOut(page? : any) : unknown
+  onPageAfterIn(page? : any) : unknown
+  onPageBeforeRemove(page? : any) : unknown
+  onPageStack(pageEl? : any) : unknown
+  onPageUnstack(pageEl? : any) : unknown
+  onPagePosition(pageEl? : any, position? : any) : unknown
+  onPageRole(pageEl? : any, rolesData? : any) : unknown
+  onPageMasterStack(pageEl? : any) : unknown
+  onPageMasterUnstack(pageEl? : any) : unknown
+  onPageNavbarLargeCollapsed(pageEl? : any) : unknown
+  onPageNavbarLargeExpanded(pageEl? : any) : unknown
+  onCardOpened(cardEl? : any, pageEl? : any) : unknown
+  onCardClose(cardEl? : any, pageEl? : any) : unknown
 }
 export default F7Page;

@@ -1,8 +1,12 @@
-import Framework7Component from './component-class';
+import Component, { registerComponentMixin } from './component-class';
 import parseComponent from './parse-component';
 
 export default {
   name: 'component',
+  static: {
+    Component,
+    registerComponentMixin,
+  },
   create() {
     const app = this;
     app.component = {
@@ -10,7 +14,7 @@ export default {
         return parseComponent(componentString);
       },
       create(options, extendContext) {
-        return new Framework7Component(app, options, extendContext);
+        return new Component(app, options, extendContext);
       },
     };
   },

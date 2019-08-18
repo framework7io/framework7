@@ -24,17 +24,17 @@ declare namespace F7Actions {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onActionsOpen? : (event?: any) => void
-    onActionsOpened? : (event?: any) => void
-    onActionsClose? : (event?: any) => void
-    onActionsClosed? : (event?: any) => void
+    onActionsOpen? : (instance?: any) => void
+    onActionsOpened? : (instance?: any) => void
+    onActionsClose? : (instance?: any) => void
+    onActionsClosed? : (instance?: any) => void
   }
 }
 declare class F7Actions extends React.Component<F7Actions.Props, {}> {
-  onOpen(event? : any) : unknown
-  onOpened(event? : any) : unknown
-  onClose(event? : any) : unknown
-  onClosed(event? : any) : unknown
+  onOpen(instance? : any) : unknown
+  onOpened(instance? : any) : unknown
+  onClose(instance? : any) : unknown
+  onClosed(instance? : any) : unknown
   open(animate? : any) : unknown
   close(animate? : any) : unknown
   f7Actions: ActionsNamespace.Actions

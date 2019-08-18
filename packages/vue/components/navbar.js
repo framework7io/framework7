@@ -25,10 +25,6 @@ export default {
     hidden: Boolean,
     noShadow: Boolean,
     noHairline: Boolean,
-    inner: {
-      type: Boolean,
-      default: true
-    },
     innerClass: String,
     innerClassName: String,
     large: Boolean,
@@ -48,7 +44,6 @@ export default {
       sliding,
       title,
       subtitle,
-      inner,
       innerClass,
       innerClassName,
       className,
@@ -74,20 +69,7 @@ export default {
       'navbar-large-transparent': largeTransparent
     }, Mixins.colorClasses(props));
 
-    if (!inner) {
-      return _h('div', {
-        ref: 'el',
-        style: style,
-        class: classes,
-        attrs: {
-          id: id
-        }
-      }, [_h('div', {
-        class: 'navbar-bg'
-      }), this.$slots['default']]);
-    }
-
-    if (backLink || slots['nav-left']) {
+    if (backLink || slots['nav-left'] || slots.left) {
       leftEl = _h(F7NavLeft, {
         on: {
           backClick: self.onBackClick
@@ -98,7 +80,7 @@ export default {
           backLinkForce: backLinkForce,
           backLinkShowText: backLinkShowText
         }
-      }, [slots['nav-left']]);
+      }, [slots['nav-left'], slots.left]);
     }
 
     if (title || subtitle || slots.title) {
@@ -110,19 +92,19 @@ export default {
       }, [slots.title]);
     }
 
-    if (slots['nav-right']) {
-      rightEl = _h(F7NavRight, [slots['nav-right']]);
+    if (slots['nav-right'] || slots.right) {
+      rightEl = _h(F7NavRight, [slots['nav-right'], slots.right]);
     }
 
     let largeTitle = titleLarge;
     if (!largeTitle && large && title) largeTitle = title;
 
-    if (largeTitle) {
+    if (largeTitle || slots['title-large']) {
       titleLargeEl = _h('div', {
         class: 'title-large'
       }, [_h('div', {
         class: 'title-large-text'
-      }, [largeTitle])]);
+      }, [largeTitle || '', this.$slots['title-large']])]);
     }
 
     const innerEl = _h('div', {
@@ -158,6 +140,7 @@ export default {
     } = self.$refs;
     if (!el) return;
     self.$f7ready(f7 => {
+      self.eventTargetEl = el;
       f7.on('navbarShow', self.onShow);
       f7.on('navbarHide', self.onHide);
       f7.on('navbarCollapse', self.onCollapse);
@@ -177,58 +160,35 @@ export default {
     const {
       el
     } = self.$refs;
-    if (!el) return;
+    if (!el || !self.$f7) return;
     const f7 = self.$f7;
-    if (!f7) return;
     f7.off('navbarShow', self.onShow);
     f7.off('navbarHide', self.onHide);
     f7.off('navbarCollapse', self.onCollapse);
     f7.off('navbarExpand', self.onExpand);
+    self.eventTargetEl = null;
+    delete self.eventTargetEl;
   },
 
   methods: {
     onHide(navbarEl) {
-      const self = this;
-      const {
-        el
-      } = self.$refs;
-
-      if (navbarEl === el) {
-        self.dispatchEvent('navbar:hide navbarHide');
-      }
+      if (this.eventTargetEl !== navbarEl) return;
+      this.dispatchEvent('navbar:hide navbarHide');
     },
 
     onShow(navbarEl) {
-      const self = this;
-      const {
-        el
-      } = self.$refs;
-
-      if (navbarEl === el) {
-        self.dispatchEvent('navbar:show navbarShow');
-      }
+      if (this.eventTargetEl !== navbarEl) return;
+      this.dispatchEvent('navbar:show navbarShow');
     },
 
     onExpand(navbarEl) {
-      const self = this;
-      const {
-        el
-      } = self.$refs;
-
-      if (navbarEl === el) {
-        self.dispatchEvent('navbar:expand navbarExpand');
-      }
+      if (this.eventTargetEl !== navbarEl) return;
+      this.dispatchEvent('navbar:expand navbarExpand');
     },
 
     onCollapse(navbarEl) {
-      const self = this;
-      const {
-        el
-      } = self.$refs;
-
-      if (navbarEl === el) {
-        self.dispatchEvent('navbar:collapse navbarCollapse');
-      }
+      if (this.eventTargetEl !== navbarEl) return;
+      this.dispatchEvent('navbar:collapse navbarCollapse');
     },
 
     hide(animate) {

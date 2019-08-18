@@ -23,6 +23,11 @@
     position: fixed;
   }
 }
+.ptr-with-navbar-large-transparent {
+  .ptr-preloader {
+    top: calc(-1 * var(--f7-page-navbar-offset, 0px));
+  }
+}
 .if-ios-theme({
   @import url('./pull-to-refresh-ios.less');
 });

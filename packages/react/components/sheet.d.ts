@@ -27,23 +27,23 @@ declare namespace F7Sheet {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onSheetStepProgress? : (...args: any[]) => void
-    onSheetStepOpen? : (event?: any) => void
-    onSheetStepClose? : (event?: any) => void
-    onSheetOpen? : (event?: any) => void
-    onSheetOpened? : (event?: any) => void
-    onSheetClose? : (event?: any) => void
-    onSheetClosed? : (event?: any) => void
+    onSheetStepProgress? : (instance?: any, progress?: any) => void
+    onSheetStepOpen? : (instance?: any) => void
+    onSheetStepClose? : (instance?: any) => void
+    onSheetOpen? : (instance?: any) => void
+    onSheetOpened? : (instance?: any) => void
+    onSheetClose? : (instance?: any) => void
+    onSheetClosed? : (instance?: any) => void
   }
 }
 declare class F7Sheet extends React.Component<F7Sheet.Props, {}> {
-  onStepProgress(event? : any) : unknown
-  onStepOpen(event? : any) : unknown
-  onStepClose(event? : any) : unknown
-  onOpen(event? : any) : unknown
-  onOpened(event? : any) : unknown
-  onClose(event? : any) : unknown
-  onClosed(event? : any) : unknown
+  onStepProgress(instance? : any, progress? : any) : unknown
+  onStepOpen(instance? : any) : unknown
+  onStepClose(instance? : any) : unknown
+  onOpen(instance? : any) : unknown
+  onOpened(instance? : any) : unknown
+  onClose(instance? : any) : unknown
+  onClosed(instance? : any) : unknown
   open(animate? : any) : unknown
   close(animate? : any) : unknown
   f7Sheet: SheetNamespace.Sheet

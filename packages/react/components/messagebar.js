@@ -14,7 +14,7 @@ class F7Messagebar extends React.Component {
     this.__reactRefs = {};
 
     (() => {
-      Utils.bindMethods(this, ['onChange', 'onInput', 'onFocus', 'onBlur', 'onClick', 'onDeleteAttachment', 'onClickAttachment', 'onResizePage']);
+      Utils.bindMethods(this, ['onChange', 'onInput', 'onFocus', 'onBlur', 'onClick', 'onAttachmentDelete', 'onAttachmentClick,', 'onResizePage']);
     })();
   }
 
@@ -113,16 +113,16 @@ class F7Messagebar extends React.Component {
     this.dispatchEvent('click', event);
   }
 
-  onDeleteAttachment(event) {
-    this.dispatchEvent('messagebar:attachmentdelete messagebarAttachmentDelete', event);
+  onAttachmentDelete(instance, attachmentEl, attachmentElIndex) {
+    this.dispatchEvent('messagebar:attachmentdelete messagebarAttachmentDelete', instance, attachmentEl, attachmentElIndex);
   }
 
-  onClickAttachment(event) {
-    this.dispatchEvent('messagebar:attachmentclick messagebarAttachmentClick', event);
+  onAttachmentClick(instance, attachmentEl, attachmentElIndex) {
+    this.dispatchEvent('messagebar:attachmentclick messagebarAttachmentClick', instance, attachmentEl, attachmentElIndex);
   }
 
-  onResizePage(event) {
-    this.dispatchEvent('messagebar:resizepage messagebarResizePage', event);
+  onResizePage(instance) {
+    this.dispatchEvent('messagebar:resizepage messagebarResizePage', instance);
   }
 
   get classes() {
@@ -218,11 +218,6 @@ class F7Messagebar extends React.Component {
   componentWillUnmount() {
     const self = this;
     if (self.f7Messagebar && self.f7Messagebar.destroy) self.f7Messagebar.destroy();
-    const el = self.refs.el;
-    if (!el) return;
-    el.removeEventListener('messagebar:attachmentdelete', self.onDeleteAttachment);
-    el.removeEventListener('messagebar:attachmentclick', self.onClickAttachment);
-    el.removeEventListener('messagebar:resizepage', self.onResizePage);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -271,16 +266,18 @@ class F7Messagebar extends React.Component {
     if (!init) return;
     const el = self.refs.el;
     if (!el) return;
-    el.addEventListener('messagebar:attachmentdelete', self.onDeleteAttachment);
-    el.addEventListener('messagebar:attachmentclick', self.onClickAttachment);
-    el.addEventListener('messagebar:resizepage', self.onResizePage);
     const params = Utils.noUndefinedProps({
       el,
       top,
       resizePage,
       bottomOffset,
       topOffset,
-      maxHeight
+      maxHeight,
+      on: {
+        attachmentDelete: self.onAttachmentDelete,
+        attachmentClick: self.onAttachmentClick,
+        resizePage: self.onResizePage
+      }
     });
     self.$f7ready(() => {
       self.f7Messagebar = self.$f7.messagebar.create(params);

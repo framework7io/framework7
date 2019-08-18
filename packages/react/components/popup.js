@@ -16,32 +16,32 @@ class F7Popup extends React.Component {
     })();
   }
 
-  onOpen(event) {
-    this.dispatchEvent('popup:open popupOpen', event);
+  onOpen(instance) {
+    this.dispatchEvent('popup:open popupOpen', instance);
   }
 
-  onOpened(event) {
-    this.dispatchEvent('popup:opened popupOpened', event);
+  onOpened(instance) {
+    this.dispatchEvent('popup:opened popupOpened', instance);
   }
 
-  onClose(event) {
-    this.dispatchEvent('popup:close popupClose', event);
+  onClose(instance) {
+    this.dispatchEvent('popup:close popupClose', instance);
   }
 
-  onClosed(event) {
-    this.dispatchEvent('popup:closed popupClosed', event);
+  onClosed(instance) {
+    this.dispatchEvent('popup:closed popupClosed', instance);
   }
 
   open(animate) {
     const self = this;
-    if (!self.$f7) return undefined;
-    return self.$f7.popup.open(self.refs.el, animate);
+    if (!self.f7Popup) return undefined;
+    return self.f7Popup.open(animate);
   }
 
   close(animate) {
     const self = this;
-    if (!self.$f7) return undefined;
-    return self.$f7.popup.close(self.refs.el, animate);
+    if (!self.f7Popup) return undefined;
+    return self.f7Popup.close(animate);
   }
 
   render() {
@@ -71,22 +71,12 @@ class F7Popup extends React.Component {
   componentWillUnmount() {
     const self = this;
     if (self.f7Popup) self.f7Popup.destroy();
-    const el = self.refs.el;
-    if (!el) return;
-    el.removeEventListener('popup:open', self.onOpen);
-    el.removeEventListener('popup:opened', self.onOpened);
-    el.removeEventListener('popup:close', self.onClose);
-    el.removeEventListener('popup:closed', self.onClosed);
   }
 
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
     if (!el) return;
-    el.addEventListener('popup:open', self.onOpen);
-    el.addEventListener('popup:opened', self.onOpened);
-    el.addEventListener('popup:close', self.onClose);
-    el.addEventListener('popup:closed', self.onClosed);
     const props = self.props;
     const {
       closeByBackdropClick,
@@ -98,7 +88,13 @@ class F7Popup extends React.Component {
       swipeHandler
     } = props;
     const popupParams = {
-      el
+      el,
+      on: {
+        open: self.onOpen,
+        opened: self.onOpened,
+        close: self.onClose,
+        closed: self.onClosed
+      }
     };
     {
       if ('closeByBackdropClick' in props) popupParams.closeByBackdropClick = closeByBackdropClick;

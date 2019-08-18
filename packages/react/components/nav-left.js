@@ -36,13 +36,14 @@ class F7NavLeft extends React.Component {
     if (typeof needBackLinkText === 'undefined') needBackLinkText = !this.$theme.md;
 
     if (backLink) {
+      const text = backLink !== true && needBackLinkText ? backLink : undefined;
       linkEl = React.createElement(F7Link, {
         href: backLinkUrl || '#',
         back: true,
         icon: 'icon-back',
         force: backLinkForce || undefined,
-        className: backLink === true || backLink && this.$theme.md ? 'icon-only' : undefined,
-        text: backLink !== true && needBackLinkText ? backLink : undefined,
+        className: !text ? 'icon-only' : undefined,
+        text: text,
         onClick: this.onBackClick
       });
     }

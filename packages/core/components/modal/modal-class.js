@@ -162,6 +162,9 @@ class Modal extends Framework7Class {
     }
 
     if (!$el || !$el.hasClass('modal-in')) {
+      if (dialogsQueue.indexOf(modal) >= 0) {
+        dialogsQueue.splice(dialogsQueue.indexOf(modal), 1);
+      }
       return modal;
     }
 

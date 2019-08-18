@@ -26,10 +26,10 @@ const Navbar = {
     }
 
     if (app.theme !== 'ios' && app.params.navbar[`${app.theme}CenterTitle`]) {
-      $el.addClass('navbar-inner-centered-title');
+      $el.children('.navbar-inner').addClass('navbar-inner-centered-title');
     }
     if (app.theme === 'ios' && !app.params.navbar.iosCenterTitle) {
-      $el.addClass('navbar-inner-left-title');
+      $el.children('.navbar-inner').addClass('navbar-inner-left-title');
     }
 
     const $viewEl = $el.parents('.view').eq(0);
@@ -368,7 +368,7 @@ const Navbar = {
         || ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed))
       ) {
         $navbarEl.find('.title').css('opacity', '');
-        $navbarEl.find('.title-large-text').css('transform', '');
+        $navbarEl.find('.title-large-text, .subnavbar').css('transform', '');
         if (isLargeTransparent) {
           $navbarEl.find('.navbar-bg').css('opacity', '');
         } else {
@@ -376,7 +376,7 @@ const Navbar = {
         }
       } else {
         $navbarEl.find('.title').css('opacity', collapseProgress);
-        $navbarEl.find('.title-large-text').css('transform', `translate3d(0px, ${-1 * collapseProgress * navbarTitleLargeHeight}px, 0)`);
+        $navbarEl.find('.title-large-text, .subnavbar').css('transform', `translate3d(0px, ${-1 * collapseProgress * navbarTitleLargeHeight}px, 0)`);
         if (isLargeTransparent) {
           $navbarEl.find('.navbar-bg').css('opacity', collapseProgress);
         } else {

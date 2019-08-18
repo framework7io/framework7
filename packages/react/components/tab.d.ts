@@ -14,13 +14,13 @@ declare namespace F7Tab {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onTabShow? : (event?: any) => void
-    onTabHide? : (event?: any) => void
+    onTabShow? : (el?: any) => void
+    onTabHide? : (el?: any) => void
   }
 }
 declare class F7Tab extends React.Component<F7Tab.Props, {}> {
   show(animate? : any) : unknown
-  onTabShow(event? : any) : unknown
-  onTabHide(event? : any) : unknown
+  onTabShow(el? : any) : unknown
+  onTabHide(el? : any) : unknown
 }
 export default F7Tab;

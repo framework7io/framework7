@@ -16,7 +16,6 @@ declare namespace F7Navbar {
     hidden? : boolean
     noShadow? : boolean
     noHairline? : boolean
-    inner? : boolean
     innerClass? : string
     innerClassName? : string
     large? : boolean

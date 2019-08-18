@@ -15,17 +15,17 @@ declare namespace F7LoginScreen {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onLoginScreenOpen? : (event?: any) => void
-    onLoginScreenOpened? : (event?: any) => void
-    onLoginScreenClose? : (event?: any) => void
-    onLoginScreenClosed? : (event?: any) => void
+    onLoginScreenOpen? : (instance?: any) => void
+    onLoginScreenOpened? : (instance?: any) => void
+    onLoginScreenClose? : (instance?: any) => void
+    onLoginScreenClosed? : (instance?: any) => void
   }
 }
 declare class F7LoginScreen extends React.Component<F7LoginScreen.Props, {}> {
-  onOpen(event? : any) : unknown
-  onOpened(event? : any) : unknown
-  onClose(event? : any) : unknown
-  onClosed(event? : any) : unknown
+  onOpen(instance? : any) : unknown
+  onOpened(instance? : any) : unknown
+  onClose(instance? : any) : unknown
+  onClosed(instance? : any) : unknown
   open(animate? : any) : unknown
   close(animate? : any) : unknown
   f7LoginScreen: LoginScreenNamespace.LoginScreen

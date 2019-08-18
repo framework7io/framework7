@@ -11,6 +11,10 @@ export default {
     mediaList: Boolean,
     sortable: Boolean,
     sortableEnabled: Boolean,
+    sortableMoveElements: {
+      type: Boolean,
+      default: undefined
+    },
     accordionList: Boolean,
     contactsList: Boolean,
     simpleList: Boolean,
@@ -41,7 +45,8 @@ export default {
     const {
       id,
       style,
-      form
+      form,
+      sortableMoveElements
     } = props;
     const {
       list: slotsList,
@@ -74,7 +79,8 @@ export default {
         style: style,
         class: self.classes,
         attrs: {
-          id: id
+          id: id,
+          'data-sortable-move-elements': typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined
         }
       }, [self.$slots['before-list'], rootChildrenBeforeList, _h('ul', [ulChildren]), self.$slots['after-list'], rootChildrenAfterList]);
     } else {
@@ -83,7 +89,8 @@ export default {
         style: style,
         class: self.classes,
         attrs: {
-          id: id
+          id: id,
+          'data-sortable-move-elements': typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined
         }
       }, [self.$slots['before-list'], rootChildrenBeforeList, self.$slots['after-list'], rootChildrenAfterList]);
     }
@@ -134,12 +141,12 @@ export default {
         tab,
         'tab-active': tabActive,
         'no-hairlines': noHairlines,
-        'no-hairlines-between': noHairlinesBetween,
         'no-hairlines-md': noHairlinesMd,
-        'no-hairlines-between-md': noHairlinesBetweenMd,
         'no-hairlines-ios': noHairlinesIos,
-        'no-hairlines-between-ios': noHairlinesBetweenIos,
         'no-hairlines-aurora': noHairlinesAurora,
+        'no-hairlines-between': noHairlinesBetween,
+        'no-hairlines-between-md': noHairlinesBetweenMd,
+        'no-hairlines-between-ios': noHairlinesBetweenIos,
         'no-hairlines-between-aurora': noHairlinesBetweenAurora,
         'form-store-data': formStoreData,
         'inline-labels': inlineLabels,
@@ -166,21 +173,19 @@ export default {
       virtualListParams,
       form
     } = self.props;
-
-    if (el) {
-      el.addEventListener('sortable:enable', self.onSortableEnable);
-      el.addEventListener('sortable:disable', self.onSortableDisable);
-      el.addEventListener('sortable:sort', self.onSortableSort);
-      el.addEventListener('tab:show', self.onTabShow);
-      el.addEventListener('tab:hide', self.onTabHide);
+    self.$f7ready(f7 => {
+      self.eventTargetEl = el;
+      f7.on('sortableEnable', self.onSortableEnable);
+      f7.on('sortableDisable', self.onSortableDisable);
+      f7.on('sortableSort', self.onSortableSort);
+      f7.on('tabShow', self.onTabShow);
+      f7.on('tabHide', self.onTabHide);
 
       if (form) {
         el.addEventListener('submit', self.onSubmit);
       }
-    }
 
-    if (!virtualList) return;
-    self.$f7ready(f7 => {
+      if (!virtualList) return;
       const $$ = self.$$;
       const $el = $$(el);
       const templateScript = $el.find('script');
@@ -226,19 +231,16 @@ export default {
   beforeDestroy() {
     const self = this;
     const el = self.$refs.el;
-
-    if (el) {
-      el.removeEventListener('sortable:enable', self.onSortableEnable);
-      el.removeEventListener('sortable:disable', self.onSortableDisable);
-      el.removeEventListener('sortable:sort', self.onSortableSort);
-      el.removeEventListener('tab:show', self.onTabShow);
-      el.removeEventListener('tab:hide', self.onTabHide);
-
-      if (self.props.form) {
-        el.removeEventListener('submit', self.onSubmit);
-      }
-    }
-
+    const f7 = self.$f7;
+    if (!el || !f7) return;
+    f7.off('sortableEnable', self.onSortableEnable);
+    f7.off('sortableDisable', self.onSortableDisable);
+    f7.off('sortableSort', self.onSortableSort);
+    f7.off('tabShow', self.onTabShow);
+    f7.off('tabHide', self.onTabHide);
+    el.removeEventListener('submit', self.onSubmit);
+    self.eventTargetEl = null;
+    delete self.eventTargetEl;
     if (!(self.virtualList && self.f7VirtualList)) return;
     if (self.f7VirtualList.destroy) self.f7VirtualList.destroy();
   },
@@ -248,25 +250,29 @@ export default {
       this.dispatchEvent('submit', event);
     },
 
-    onSortableEnable(event) {
-      this.dispatchEvent('sortable:enable sortableEnable', event);
+    onSortableEnable(el) {
+      if (this.eventTargetEl !== el) return;
+      this.dispatchEvent('sortable:enable sortableEnable', el);
     },
 
-    onSortableDisable(event) {
-      this.dispatchEvent('sortable:disable sortableDisable', event);
+    onSortableDisable(el) {
+      if (this.eventTargetEl !== el) return;
+      this.dispatchEvent('sortable:disable sortableDisable', el);
     },
 
-    onSortableSort(event) {
-      const sortData = event.detail;
-      this.dispatchEvent('sortable:sort sortableSort', event, sortData);
+    onSortableSort(el, sortData) {
+      if (this.eventTargetEl !== el) return;
+      this.dispatchEvent('sortable:sort sortableSort', el, sortData);
     },
 
-    onTabShow(event) {
-      this.dispatchEvent('tab:show tabShow', event);
+    onTabShow(el) {
+      if (this.eventTargetEl !== el) return;
+      this.dispatchEvent('tab:show tabShow', el);
     },
 
-    onTabHide(event) {
-      this.dispatchEvent('tab:hide tabHide', event);
+    onTabHide(el) {
+      if (this.eventTargetEl !== el) return;
+      this.dispatchEvent('tab:hide tabHide', el);
     },
 
     dispatchEvent(events, ...args) {

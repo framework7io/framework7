@@ -33,64 +33,79 @@ class F7ListItem extends React.Component {
     }
   }
 
-  onSwipeoutOverswipeEnter(event) {
-    this.dispatchEvent('swipeout:overswipeenter swipeoutOverswipeEnter', event);
+  onSwipeoutOverswipeEnter(el) {
+    if (this.eventTargetEl !== el) return;
+    this.dispatchEvent('swipeout:overswipeenter swipeoutOverswipeEnter', el);
   }
 
-  onSwipeoutOverswipeExit(event) {
-    this.dispatchEvent('swipeout:overswipeexit swipeoutOverswipeExit', event);
+  onSwipeoutOverswipeExit(el) {
+    if (this.eventTargetEl !== el) return;
+    this.dispatchEvent('swipeout:overswipeexit swipeoutOverswipeExit', el);
   }
 
-  onSwipeoutDeleted(event) {
-    this.dispatchEvent('swipeout:deleted swipeoutDeleted', event);
+  onSwipeoutDeleted(el) {
+    if (this.eventTargetEl !== el) return;
+    this.dispatchEvent('swipeout:deleted swipeoutDeleted', el);
   }
 
-  onSwipeoutDelete(event) {
-    this.dispatchEvent('swipeout:delete swipeoutDelete', event);
+  onSwipeoutDelete(el) {
+    if (this.eventTargetEl !== el) return;
+    this.dispatchEvent('swipeout:delete swipeoutDelete', el);
   }
 
-  onSwipeoutClose(event) {
-    this.dispatchEvent('swipeout:close swipeoutClose', event);
+  onSwipeoutClose(el) {
+    if (this.eventTargetEl !== el) return;
+    this.dispatchEvent('swipeout:close swipeoutClose', el);
   }
 
-  onSwipeoutClosed(event) {
-    this.dispatchEvent('swipeout:closed swipeoutClosed', event);
+  onSwipeoutClosed(el) {
+    if (this.eventTargetEl !== el) return;
+    this.dispatchEvent('swipeout:closed swipeoutClosed', el);
   }
 
-  onSwipeoutOpen(event) {
-    this.dispatchEvent('swipeout:open swipeoutOpen', event);
+  onSwipeoutOpen(el) {
+    if (this.eventTargetEl !== el) return;
+    this.dispatchEvent('swipeout:open swipeoutOpen', el);
   }
 
-  onSwipeoutOpened(event) {
-    this.dispatchEvent('swipeout:opened swipeoutOpened', event);
+  onSwipeoutOpened(el) {
+    if (this.eventTargetEl !== el) return;
+    this.dispatchEvent('swipeout:opened swipeoutOpened', el);
   }
 
-  onSwipeout(event) {
-    this.dispatchEvent('swipeout', event);
+  onSwipeout(el) {
+    if (this.eventTargetEl !== el) return;
+    this.dispatchEvent('swipeout', el);
   }
 
-  onAccBeforeClose(event) {
-    this.dispatchEvent('accordion:beforeclose accordionBeforeClose', event, event.detail.prevent);
+  onAccBeforeClose(el, prevent) {
+    if (this.eventTargetEl !== el) return;
+    this.dispatchEvent('accordion:beforeclose accordionBeforeClose', el, prevent);
   }
 
-  onAccClose(event) {
-    this.dispatchEvent('accordion:close accordionClose', event);
+  onAccClose(el) {
+    if (this.eventTargetEl !== el) return;
+    this.dispatchEvent('accordion:close accordionClose', el);
   }
 
-  onAccClosed(event) {
-    this.dispatchEvent('accordion:closed accordionClosed', event);
+  onAccClosed(el) {
+    if (this.eventTargetEl !== el) return;
+    this.dispatchEvent('accordion:closed accordionClosed', el);
   }
 
-  onAccBeforeOpen(event) {
-    this.dispatchEvent('accordion:beforeopen accordionBeforeOpen', event, event.detail.prevent);
+  onAccBeforeOpen(el, prevent) {
+    if (this.eventTargetEl !== el) return;
+    this.dispatchEvent('accordion:beforeopen accordionBeforeOpen', el, prevent);
   }
 
-  onAccOpen(event) {
-    this.dispatchEvent('accordion:open accordionOpen', event);
+  onAccOpen(el) {
+    if (this.eventTargetEl !== el) return;
+    this.dispatchEvent('accordion:open accordionOpen', el);
   }
 
-  onAccOpened(event) {
-    this.dispatchEvent('accordion:opened accordionOpened', event);
+  onAccOpened(el) {
+    if (this.eventTargetEl !== el) return;
+    this.dispatchEvent('accordion:opened accordionOpened', el);
   }
 
   onChange(event) {
@@ -207,7 +222,8 @@ class F7ListItem extends React.Component {
       'accordion-item-opened': accordionItemOpened,
       disabled: disabled && !(radio || checkbox),
       'no-chevron': noChevron,
-      'chevron-center': chevronCenter
+      'chevron-center': chevronCenter,
+      'disallow-sorting': sortable === false
     }, Mixins.colorClasses(props));
 
     if (divider || groupTitle) {
@@ -245,7 +261,7 @@ class F7ListItem extends React.Component {
       'data-virtual-list-index': virtualListIndex
     }, this.slots['root-start'], swipeout ? React.createElement('div', {
       className: 'swipeout-content'
-    }, linkItemEl) : linkItemEl, isSortable && React.createElement('div', {
+    }, linkItemEl) : linkItemEl, isSortable && sortable !== false && React.createElement('div', {
       className: 'sortable-handler'
     }), (swipeout || accordionItem) && self.slots.default, this.slots['root'], this.slots['root-end']);
   }
@@ -253,7 +269,6 @@ class F7ListItem extends React.Component {
   componentWillUnmount() {
     const self = this;
     const {
-      el,
       linkEl
     } = self.refs;
     const {
@@ -273,26 +288,28 @@ class F7ListItem extends React.Component {
       delete linkEl.f7RouteProps;
     }
 
-    if (el) {
+    if (self.$f7) {
+      const f7 = self.$f7;
+
       if (swipeout) {
-        el.removeEventListener('swipeout:open', self.onSwipeoutOpen);
-        el.removeEventListener('swipeout:opened', self.onSwipeoutOpened);
-        el.removeEventListener('swipeout:close', self.onSwipeoutClose);
-        el.removeEventListener('swipeout:closed', self.onSwipeoutClosed);
-        el.removeEventListener('swipeout:delete', self.onSwipeoutDelete);
-        el.removeEventListener('swipeout:deleted', self.onSwipeoutDeleted);
-        el.removeEventListener('swipeout:overswipeenter', self.onSwipeoutOverswipeEnter);
-        el.removeEventListener('swipeout:overswipeexit', self.onSwipeoutOverswipeExit);
-        el.removeEventListener('swipeout', self.onSwipeout);
+        f7.off('swipeoutOpen', self.onSwipeoutOpen);
+        f7.off('swipeoutOpened', self.onSwipeoutOpened);
+        f7.off('swipeoutClose', self.onSwipeoutClose);
+        f7.off('swipeoutClosed', self.onSwipeoutClosed);
+        f7.off('swipeoutDelete', self.onSwipeoutDelete);
+        f7.off('swipeoutDeleted', self.onSwipeoutDeleted);
+        f7.off('swipeoutOverswipeEnter', self.onSwipeoutOverswipeEnter);
+        f7.off('swipeoutOverswipeExit', self.onSwipeoutOverswipeExit);
+        f7.off('swipeout', self.onSwipeout);
       }
 
       if (accordionItem) {
-        el.removeEventListener('accordion:beforeopen', self.onAccBeforeOpen);
-        el.removeEventListener('accordion:open', self.onAccOpen);
-        el.removeEventListener('accordion:opened', self.onAccOpened);
-        el.removeEventListener('accordion:beforeclose', self.onAccBeforeClose);
-        el.removeEventListener('accordion:close', self.onAccClose);
-        el.removeEventListener('accordion:closed', self.onAccClosed);
+        f7.off('accordionBeforeOpen', self.onAccBeforeOpen);
+        f7.off('accordionOpen', self.onAccOpen);
+        f7.off('accordionOpened', self.onAccOpened);
+        f7.off('accordionBeforeClose', self.onAccBeforeClose);
+        f7.off('accordionClose', self.onAccClose);
+        f7.off('accordionClosed', self.onAccClosed);
       }
     }
 
@@ -305,11 +322,30 @@ class F7ListItem extends React.Component {
       self.f7Tooltip = null;
       delete self.f7Tooltip;
     }
+
+    self.eventTargetEl = null;
+    delete self.eventTargetEl;
   }
 
   componentDidUpdate(prevProps, prevState) {
     __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, newText => {
       const self = this;
+
+      if (!newText && self.f7Tooltip) {
+        self.f7Tooltip.destroy();
+        self.f7Tooltip = null;
+        delete self.f7Tooltip;
+        return;
+      }
+
+      if (newText && !self.f7Tooltip && self.$f7) {
+        self.f7Tooltip = self.$f7.tooltip.create({
+          targetEl: self.refs.el,
+          text: newText
+        });
+        return;
+      }
+
       if (!newText || !self.f7Tooltip) return;
       self.f7Tooltip.setText(newText);
     });
@@ -403,28 +439,30 @@ class F7ListItem extends React.Component {
       });
     }
 
-    if (swipeout) {
-      el.addEventListener('swipeout:open', self.onSwipeoutOpen);
-      el.addEventListener('swipeout:opened', self.onSwipeoutOpened);
-      el.addEventListener('swipeout:close', self.onSwipeoutClose);
-      el.addEventListener('swipeout:closed', self.onSwipeoutClosed);
-      el.addEventListener('swipeout:delete', self.onSwipeoutDelete);
-      el.addEventListener('swipeout:deleted', self.onSwipeoutDeleted);
-      el.addEventListener('swipeout:overswipeenter', self.onSwipeoutOverswipeEnter);
-      el.addEventListener('swipeout:overswipeexit', self.onSwipeoutOverswipeExit);
-      el.addEventListener('swipeout', self.onSwipeout);
-    }
-
-    if (accordionItem) {
-      el.addEventListener('accordion:beforeopen', self.onAccBeforeOpen);
-      el.addEventListener('accordion:open', self.onAccOpen);
-      el.addEventListener('accordion:opened', self.onAccOpened);
-      el.addEventListener('accordion:beforeclose', self.onAccBeforeClose);
-      el.addEventListener('accordion:close', self.onAccClose);
-      el.addEventListener('accordion:closed', self.onAccClosed);
-    }
-
     self.$f7ready(f7 => {
+      self.eventTargetEl = el;
+
+      if (swipeout) {
+        f7.on('swipeoutOpen', self.onSwipeoutOpen);
+        f7.on('swipeoutOpened', self.onSwipeoutOpened);
+        f7.on('swipeoutClose', self.onSwipeoutClose);
+        f7.on('swipeoutClosed', self.onSwipeoutClosed);
+        f7.on('swipeoutDelete', self.onSwipeoutDelete);
+        f7.on('swipeoutDeleted', self.onSwipeoutDeleted);
+        f7.on('swipeoutOverswipeEnter', self.onSwipeoutOverswipeEnter);
+        f7.on('swipeoutOverswipeExit', self.onSwipeoutOverswipeExit);
+        f7.on('swipeout', self.onSwipeout);
+      }
+
+      if (accordionItem) {
+        f7.on('accordionBeforeOpen', self.onAccBeforeOpen);
+        f7.on('accordionOpen', self.onAccOpen);
+        f7.on('accordionOpened', self.onAccOpened);
+        f7.on('accordionBeforeClose', self.onAccBeforeClose);
+        f7.on('accordionClose', self.onAccClose);
+        f7.on('accordionClosed', self.onAccClosed);
+      }
+
       if (smartSelect) {
         const ssParams = Utils.extend({
           el: el.querySelector('a.smart-select')
@@ -485,7 +523,10 @@ __reactComponentSetProps(F7ListItem, Object.assign({
   groupTitle: Boolean,
   swipeout: Boolean,
   swipeoutOpened: Boolean,
-  sortable: Boolean,
+  sortable: {
+    type: Boolean,
+    default: undefined
+  },
   accordionItem: Boolean,
   accordionItemOpened: Boolean,
   smartSelect: Boolean,

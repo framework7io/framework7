@@ -20,12 +20,14 @@ class F7MenuItem extends React.Component {
     this.dispatchEvent('click', e);
   }
 
-  onOpened(e) {
-    this.dispatchEvent('menuOpened menu:opened', e);
+  onOpened(el) {
+    if (this.eventTargetEl !== el) return;
+    this.dispatchEvent('menuOpened menu:opened', el);
   }
 
-  onClosed(e) {
-    this.dispatchEvent('menuClosed menu:closed', e);
+  onClosed(el) {
+    if (this.eventTargetEl !== el) return;
+    this.dispatchEvent('menuClosed menu:closed', el);
   }
 
   get attrs() {
@@ -115,11 +117,13 @@ class F7MenuItem extends React.Component {
   componentWillUnmount() {
     const self = this;
     const el = self.refs.el;
-    if (!el) return;
+    if (!el || !self.$f7) return;
     el.removeEventListener('click', self.onClick);
-    el.removeEventListener('menu:opened', self.onOpened);
-    el.removeEventListener('menu:closed', self.onClosed);
+    self.$f7.off('menuOpened', self.onOpened);
+    self.$f7.off('menuClosed', self.onOpened);
+    self.eventTargetEl = null;
     delete el.f7RouteProps;
+    delete self.eventTargetEl;
   }
 
   componentDidUpdate() {
@@ -136,13 +140,16 @@ class F7MenuItem extends React.Component {
     const self = this;
     const el = self.refs.el;
     if (!el) return;
+    self.eventTargetEl = el;
     el.addEventListener('click', self.onClick);
-    el.addEventListener('menu:opened', self.onOpened);
-    el.addEventListener('menu:closed', self.onClosed);
     const {
       routeProps
     } = self.props;
     if (routeProps) el.f7RouteProps = routeProps;
+    self.$f7ready(f7 => {
+      f7.on('menuOpened', self.onOpened);
+      f7.on('menuClosed', self.onClosed);
+    });
   }
 
   get slots() {

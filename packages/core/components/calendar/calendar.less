@@ -99,10 +99,10 @@
   left: 50%;
   min-width: 300px;
   max-width: var(--f7-calendar-modal-max-width);
-  transform: translate3d(-50%, 100%, 0);
+  transform: translate3d(-50%, 100vh, 0);
   transition-property: transform;
   display: flex;
-  z-index: 12000;
+  z-index: 13500;
   background: var(--f7-calendar-modal-bg-color);
   width: 90%;
   border-radius: var(--f7-calendar-modal-border-radius);
@@ -115,7 +115,7 @@
     transform: translate3d(-50%, -50%, 0);
   }
   &.modal-out {
-    transform: translate3d(-50%, 100%, 0);
+    transform: translate3d(-50%, 100vh, 0);
   }
 }
 .calendar-week-header {

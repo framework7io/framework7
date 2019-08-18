@@ -16,32 +16,32 @@ class F7Actions extends React.Component {
     })();
   }
 
-  onOpen(event) {
-    this.dispatchEvent('actions:open actionsOpen', event);
+  onOpen(instance) {
+    this.dispatchEvent('actions:open actionsOpen', instance);
   }
 
-  onOpened(event) {
-    this.dispatchEvent('actions:opened actionsOpened', event);
+  onOpened(instance) {
+    this.dispatchEvent('actions:opened actionsOpened', instance);
   }
 
-  onClose(event) {
-    this.dispatchEvent('actions:close actionsClose', event);
+  onClose(instance) {
+    this.dispatchEvent('actions:close actionsClose', instance);
   }
 
-  onClosed(event) {
-    this.dispatchEvent('actions:closed actionsClosed', event);
+  onClosed(instance) {
+    this.dispatchEvent('actions:closed actionsClosed', instance);
   }
 
   open(animate) {
     const self = this;
-    if (!self.$f7) return undefined;
-    return self.$f7.actions.open(self.refs.el, animate);
+    if (!self.f7Actions) return undefined;
+    return self.f7Actions.open(animate);
   }
 
   close(animate) {
     const self = this;
-    if (!self.$f7) return undefined;
-    return self.$f7.actions.close(self.refs.el, animate);
+    if (!self.f7Actions) return undefined;
+    return self.f7Actions.close(animate);
   }
 
   render() {
@@ -69,22 +69,13 @@ class F7Actions extends React.Component {
   componentWillUnmount() {
     const self = this;
     if (self.f7Actions) self.f7Actions.destroy();
-    const el = self.refs.el;
-    if (!el) return;
-    el.removeEventListener('actions:open', self.onOpen);
-    el.removeEventListener('actions:opened', self.onOpened);
-    el.removeEventListener('actions:close', self.onClose);
-    el.removeEventListener('actions:closed', self.onClosed);
+    delete self.f7Actions;
   }
 
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
     if (!el) return;
-    el.addEventListener('actions:open', self.onOpen);
-    el.addEventListener('actions:opened', self.onOpened);
-    el.addEventListener('actions:close', self.onClose);
-    el.addEventListener('actions:closed', self.onClosed);
     const props = self.props;
     const {
       grid,
@@ -99,8 +90,14 @@ class F7Actions extends React.Component {
       backdropEl
     } = props;
     const actionsParams = {
-      el: self.refs.el,
-      grid
+      el,
+      grid,
+      on: {
+        open: self.onOpen,
+        opened: self.onOpened,
+        close: self.onClose,
+        closed: self.onClosed
+      }
     };
     if (target) actionsParams.targetEl = target;
     {
