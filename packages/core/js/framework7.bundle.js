@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.0-beta.5
+ * Framework7 5.0.0-beta.6
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -14002,6 +14002,7 @@
 
         if (typeof popup.params.swipeToClose === 'string' && direction !== popup.params.swipeToClose) {
           $el.transform('');
+          $el.transition('');
           return;
         }
 
@@ -35001,8 +35002,10 @@
           $totalEl = $(navbarEl).find('.photo-browser-total');
         }
       }
-      $currentEl.text(current);
-      $totalEl.text(total);
+      if ($currentEl.length && $totalEl.length) {
+        $currentEl.text(current);
+        $totalEl.text(total);
+      }
 
       // Update captions
       if (pb.captions.length > 0) {
@@ -35095,8 +35098,10 @@
 
       var backLinkText = (pb.app.theme === 'ios' || pb.app.theme === 'aurora') && pb.params.backLinkText ? pb.params.backLinkText : '';
 
+      var renderNavbarCount = typeof pb.params.navbarShowCount === 'undefined' ? pb.params.photos.length > 0 : pb.params.navbarShowCount;
+
       var isPopup = pb.params.type !== 'page';
-      var navbarHtml = ("\n      <div class=\"navbar navbar-photo-browser " + (pb.params.theme === 'dark' ? 'navbar-photo-browser-dark' : '') + "\">\n        <div class=\"navbar-bg\"></div>\n        <div class=\"navbar-inner sliding\">\n          <div class=\"left\">\n            <a class=\"link " + (isPopup ? 'popup-close' : '') + " " + (!backLinkText ? 'icon-only' : '') + " " + (!isPopup ? 'back' : '') + "\" " + (isPopup ? 'data-popup=".photo-browser-popup"' : '') + ">\n              <i class=\"icon icon-back " + (iconsColor ? ("color-" + iconsColor) : '') + "\"></i>\n              " + (backLinkText ? ("<span>" + backLinkText + "</span>") : '') + "\n            </a>\n          </div>\n          <div class=\"title\">\n            <span class=\"photo-browser-current\"></span>\n            <span class=\"photo-browser-of\">" + (pb.params.navbarOfText) + "</span>\n            <span class=\"photo-browser-total\"></span>\n          </div>\n          <div class=\"right\"></div>\n        </div>\n      </div>\n    ").trim();
+      var navbarHtml = ("\n      <div class=\"navbar navbar-photo-browser " + (pb.params.theme === 'dark' ? 'navbar-photo-browser-dark' : '') + "\">\n        <div class=\"navbar-bg\"></div>\n        <div class=\"navbar-inner sliding\">\n          <div class=\"left\">\n            <a class=\"link " + (isPopup ? 'popup-close' : '') + " " + (!backLinkText ? 'icon-only' : '') + " " + (!isPopup ? 'back' : '') + "\" " + (isPopup ? 'data-popup=".photo-browser-popup"' : '') + ">\n              <i class=\"icon icon-back " + (iconsColor ? ("color-" + iconsColor) : '') + "\"></i>\n              " + (backLinkText ? ("<span>" + backLinkText + "</span>") : '') + "\n            </a>\n          </div>\n          " + (renderNavbarCount ? ("\n          <div class=\"title\">\n            <span class=\"photo-browser-current\"></span>\n            <span class=\"photo-browser-of\">" + (pb.params.navbarOfText) + "</span>\n            <span class=\"photo-browser-total\"></span>\n          </div>\n          ") : '') + "\n          <div class=\"right\"></div>\n        </div>\n      </div>\n    ").trim();
       return navbarHtml;
     };
 
@@ -35564,6 +35569,7 @@
         swipeToClose: true,
         backLinkText: 'Close',
         navbarOfText: 'of',
+        navbarShowCount: undefined,
         view: undefined,
         url: 'photos/',
         routableModals: true,

@@ -17,6 +17,7 @@ export default {
       swipeToClose: true,
       backLinkText: 'Close',
       navbarOfText: 'of',
+      navbarShowCount: undefined,
       view: undefined,
       url: 'photos/',
       routableModals: true,

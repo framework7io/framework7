@@ -73,8 +73,10 @@ class PhotoBrowser extends Framework7Class {
         $totalEl = $(navbarEl).find('.photo-browser-total');
       }
     }
-    $currentEl.text(current);
-    $totalEl.text(total);
+    if ($currentEl.length && $totalEl.length) {
+      $currentEl.text(current);
+      $totalEl.text(total);
+    }
 
     // Update captions
     if (pb.captions.length > 0) {
@@ -167,6 +169,8 @@ class PhotoBrowser extends Framework7Class {
 
     const backLinkText = (pb.app.theme === 'ios' || pb.app.theme === 'aurora') && pb.params.backLinkText ? pb.params.backLinkText : '';
 
+    const renderNavbarCount = typeof pb.params.navbarShowCount === 'undefined' ? pb.params.photos.length > 0 : pb.params.navbarShowCount;
+
     const isPopup = pb.params.type !== 'page';
     const navbarHtml = `
       <div class="navbar navbar-photo-browser ${pb.params.theme === 'dark' ? 'navbar-photo-browser-dark' : ''}">
@@ -178,11 +182,13 @@ class PhotoBrowser extends Framework7Class {
               ${backLinkText ? `<span>${backLinkText}</span>` : ''}
             </a>
           </div>
+          ${renderNavbarCount ? `
           <div class="title">
             <span class="photo-browser-current"></span>
             <span class="photo-browser-of">${pb.params.navbarOfText}</span>
             <span class="photo-browser-total"></span>
           </div>
+          ` : ''}
           <div class="right"></div>
         </div>
       </div>

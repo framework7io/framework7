@@ -159,6 +159,7 @@ class Popup extends Modal {
 
       if (typeof popup.params.swipeToClose === 'string' && direction !== popup.params.swipeToClose) {
         $el.transform('');
+        $el.transition('');
         return;
       }
 
