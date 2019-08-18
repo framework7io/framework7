@@ -27,10 +27,6 @@ export default {
     hidden: Boolean,
     noShadow: Boolean,
     noHairline: Boolean,
-    inner: {
-      type: Boolean,
-      default: true,
-    },
     innerClass: String,
     innerClassName: String,
     large: Boolean,
@@ -49,7 +45,6 @@ export default {
       sliding,
       title,
       subtitle,
-      inner,
       innerClass,
       innerClassName,
       className,
@@ -84,16 +79,6 @@ export default {
       },
       Mixins.colorClasses(props),
     );
-
-    if (!inner) {
-      return (
-        <div ref="el" id={id} style={style} className={classes}>
-          <div className="navbar-bg" />
-          <slot />
-        </div>
-      );
-    }
-
 
     if (backLink || slots['nav-left'] || slots.left) {
       leftEl = (
@@ -171,6 +156,7 @@ export default {
     const { el } = self.refs;
     if (!el) return;
     self.$f7ready((f7) => {
+      self.eventTargetEl = el;
       f7.on('navbarShow', self.onShow);
       f7.on('navbarHide', self.onHide);
       f7.on('navbarCollapse', self.onCollapse);
@@ -186,42 +172,30 @@ export default {
   componentWillUnmount() {
     const self = this;
     const { el } = self.refs;
-    if (!el) return;
+    if (!el || !self.$f7) return;
     const f7 = self.$f7;
-    if (!f7) return;
     f7.off('navbarShow', self.onShow);
     f7.off('navbarHide', self.onHide);
     f7.off('navbarCollapse', self.onCollapse);
     f7.off('navbarExpand', self.onExpand);
+    delete self.eventTargetEl;
   },
   methods: {
     onHide(navbarEl) {
-      const self = this;
-      const { el } = self.refs;
-      if (navbarEl === el) {
-        self.dispatchEvent('navbar:hide navbarHide');
-      }
+      if (this.eventTargetEl !== navbarEl) return;
+      this.dispatchEvent('navbar:hide navbarHide');
     },
     onShow(navbarEl) {
-      const self = this;
-      const { el } = self.refs;
-      if (navbarEl === el) {
-        self.dispatchEvent('navbar:show navbarShow');
-      }
+      if (this.eventTargetEl !== navbarEl) return;
+      this.dispatchEvent('navbar:show navbarShow');
     },
     onExpand(navbarEl) {
-      const self = this;
-      const { el } = self.refs;
-      if (navbarEl === el) {
-        self.dispatchEvent('navbar:expand navbarExpand');
-      }
+      if (this.eventTargetEl !== navbarEl) return;
+      this.dispatchEvent('navbar:expand navbarExpand');
     },
     onCollapse(navbarEl) {
-      const self = this;
-      const { el } = self.refs;
-      if (navbarEl === el) {
-        self.dispatchEvent('navbar:collapse navbarCollapse');
-      }
+      if (this.eventTargetEl !== navbarEl) return;
+      this.dispatchEvent('navbar:collapse navbarCollapse');
     },
     hide(animate) {
       const self = this;
