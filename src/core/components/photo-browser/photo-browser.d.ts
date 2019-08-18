@@ -40,6 +40,8 @@ export namespace PhotoBrowser {
     backLinkText?: string
     /** Text of "of" in photos counter: "3 of 5" (default "of") */
     navbarOfText?: string
+    /** Defines should it display "3 of 5" text in navbar title or not. If not specified (undefined) then it will show this text if there is more than 1 item  */
+    navbarShowCount?: boolean | undefined
     /** One of the default colors */
     iconsColor?: string
     /** Swiper parameters */
