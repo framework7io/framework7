@@ -106,7 +106,6 @@ export default {
     } = props;
     const fixedList = [];
     const staticList = [];
-    const needsPageContent = pageContent;
 
     const { static: slotsStatic, fixed: slotsFixed, default: slotsDefault } = self.slots;
 
@@ -129,7 +128,7 @@ export default {
         if (process.env.COMPILER === 'react') {
           const tag = child.type && (child.type.displayName || child.type.name);
           if (!tag) {
-            if (needsPageContent) staticList.push(child);
+            if (pageContent) staticList.push(child);
             return;
           }
           if (tag === 'F7Subnavbar' || tag === 'f7-subnavbar') hasSubnavbar = true;
@@ -144,7 +143,7 @@ export default {
         if (process.env.COMPILER === 'vue') {
           const tag = child.tag;
           if (!tag) {
-            if (needsPageContent) staticList.push(child);
+            if (pageContent) staticList.push(child);
             return;
           }
           if (tag.indexOf('subnavbar') >= 0) hasSubnavbar = true;
@@ -158,7 +157,7 @@ export default {
             }
           }
         }
-        if (needsPageContent) {
+        if (pageContent) {
           if (isFixedTag) fixedList.push(child);
           else staticList.push(child);
         }
@@ -196,7 +195,7 @@ export default {
       Mixins.colorClasses(props),
     );
 
-    if (!needsPageContent) {
+    if (!pageContent) {
       return (
         <div ref="el" id={id} style={style} className={classes} data-name={name}>
           {slotsFixed}
@@ -222,6 +221,12 @@ export default {
         hideToolbarOnScroll={hideToolbarOnScroll}
         messagesContent={messagesContent || hasMessages}
         loginScreen={loginScreen}
+        onPtrPullStart={self.onPtrPullStart}
+        onPtrPullMove={self.onPtrPullMove}
+        onPtrPullEnd={self.onPtrPullEnd}
+        onPtrRefresh={self.onPtrRefresh}
+        onPtrDone={self.onPtrDone}
+        onInfinite={self.onInfinite}
       >
         {slotsStatic}
         {staticList}
@@ -244,6 +249,7 @@ export default {
       'onPtrRefresh',
       'onPtrDone',
       'onInfinite',
+
       'onPageMounted',
       'onPageInit',
       'onPageReinit',
@@ -267,134 +273,79 @@ export default {
   componentDidMount() {
     const self = this;
     const el = self.refs.el;
-    const { ptr, infinite } = self.props;
-
-    if (ptr) {
-      el.addEventListener('ptr:pullstart', self.onPtrPullStart);
-      el.addEventListener('ptr:pullmove', self.onPtrPullMove);
-      el.addEventListener('ptr:pullend', self.onPtrPullEnd);
-      el.addEventListener('ptr:refresh', self.onPtrRefresh);
-      el.addEventListener('ptr:done', self.onPtrDone);
-    }
-    if (infinite) {
-      el.addEventListener('infinite', self.onInfinite);
-    }
-    el.addEventListener('page:mounted', self.onPageMounted);
-    el.addEventListener('page:init', self.onPageInit);
-    el.addEventListener('page:reinit', self.onPageReinit);
-    el.addEventListener('page:beforein', self.onPageBeforeIn);
-    el.addEventListener('page:beforeout', self.onPageBeforeOut);
-    el.addEventListener('page:afterout', self.onPageAfterOut);
-    el.addEventListener('page:afterin', self.onPageAfterIn);
-    el.addEventListener('page:beforeremove', self.onPageBeforeRemove);
-    el.addEventListener('page:stack', self.onPageStack);
-    el.addEventListener('page:unstack', self.onPageUnstack);
-    el.addEventListener('page:position', self.onPagePosition);
-    el.addEventListener('page:role', self.onPageRole);
-    el.addEventListener('page:masterstack', self.onPageMasterStack);
-    el.addEventListener('page:masterunstack', self.onPageMasterUnstack);
-    el.addEventListener('page:navbarlargecollapsed', self.onPageNavbarLargeCollapsed);
-    el.addEventListener('page:navbarlargeexpanded', self.onPageNavbarLargeExpanded);
-    el.addEventListener('card:opened', self.onCardOpened);
-    el.addEventListener('card:close', self.onCardClose);
+    self.$f7ready((f7) => {
+      self.eventTargetEl = el;
+      f7.on('pageMounted', self.onPageMounted);
+      f7.on('pageInit', self.onPageInit);
+      f7.on('pageReinit', self.onPageReinit);
+      f7.on('pageBeforeOn', self.onPageBeforeIn);
+      f7.on('pageBeforeOut', self.onPageBeforeOut);
+      f7.on('pageAfterOut', self.onPageAfterOut);
+      f7.on('pageAfterIn', self.onPageAfterIn);
+      f7.on('pageBeforeRemove', self.onPageBeforeRemove);
+      f7.on('pageStack', self.onPageStack);
+      f7.on('pageUnstack', self.onPageUnstack);
+      f7.on('pagePosition', self.onPagePosition);
+      f7.on('pageRole', self.onPageRole);
+      f7.on('pageMasterStack', self.onPageMasterStack);
+      f7.on('pageMasterUnstack', self.onPageMasterUnstack);
+      f7.on('pageNavbarLargeCollapsed', self.onPageNavbarLargeCollapsed);
+      f7.on('pageNavbarLargeExpanded', self.onPageNavbarLargeExpanded);
+      f7.on('card:opened', self.onCardOpened);
+      f7.on('card:close', self.onCardClose);
+    });
   },
   componentWillUnmount() {
     const self = this;
-    const el = self.refs.el;
-
-    el.removeEventListener('ptr:pullstart', self.onPtrPullStart);
-    el.removeEventListener('ptr:pullmove', self.onPtrPullMove);
-    el.removeEventListener('ptr:pullend', self.onPtrPullEnd);
-    el.removeEventListener('ptr:refresh', self.onPtrRefresh);
-    el.removeEventListener('ptr:done', self.onPtrDone);
-    el.removeEventListener('infinite', self.onInfinite);
-    el.removeEventListener('page:mounted', self.onPageMounted);
-    el.removeEventListener('page:init', self.onPageInit);
-    el.removeEventListener('page:reinit', self.onPageReinit);
-    el.removeEventListener('page:beforein', self.onPageBeforeIn);
-    el.removeEventListener('page:beforeout', self.onPageBeforeOut);
-    el.removeEventListener('page:afterout', self.onPageAfterOut);
-    el.removeEventListener('page:afterin', self.onPageAfterIn);
-    el.removeEventListener('page:beforeremove', self.onPageBeforeRemove);
-    el.removeEventListener('page:stack', self.onPageStack);
-    el.removeEventListener('page:unstack', self.onPageUnstack);
-    el.removeEventListener('page:position', self.onPagePosition);
-    el.removeEventListener('page:role', self.onPageRole);
-    el.removeEventListener('page:masterstack', self.onPageMasterStack);
-    el.removeEventListener('page:masterunstack', self.onPageMasterUnstack);
-    el.removeEventListener('page:navbarlargecollapsed', self.onPageNavbarLargeCollapsed);
-    el.removeEventListener('page:navbarlargeexpanded', self.onPageNavbarLargeExpanded);
-    el.removeEventListener('card:opened', self.onCardOpened);
-    el.removeEventListener('card:close', self.onCardClose);
+    if (!self.$f7) return;
+    const f7 = self.$f7;
+    f7.off('pageMounted', self.onPageMounted);
+    f7.off('pageInit', self.onPageInit);
+    f7.off('pageReinit', self.onPageReinit);
+    f7.off('pageBeforeOn', self.onPageBeforeIn);
+    f7.off('pageBeforeOut', self.onPageBeforeOut);
+    f7.off('pageAfterOut', self.onPageAfterOut);
+    f7.off('pageAfterIn', self.onPageAfterIn);
+    f7.off('pageBeforeRemove', self.onPageBeforeRemove);
+    f7.off('pageStack', self.onPageStack);
+    f7.off('pageUnstack', self.onPageUnstack);
+    f7.off('pagePosition', self.onPagePosition);
+    f7.off('pageRole', self.onPageRole);
+    f7.off('pageMasterStack', self.onPageMasterStack);
+    f7.off('pageMasterUnstack', self.onPageMasterUnstack);
+    f7.off('pageNavbarLargeCollapsed', self.onPageNavbarLargeCollapsed);
+    f7.off('pageNavbarLargeExpanded', self.onPageNavbarLargeExpanded);
+    f7.off('card:opened', self.onCardOpened);
+    f7.off('card:close', self.onCardClose);
+    self.eventTargetEl = null;
+    delete self.eventTargetEl;
   },
   methods: {
-    onPtrPullStart(event) {
-      this.dispatchEvent('ptr:pullstart ptrPullStart', event);
+    onPtrPullStart(...args) {
+      this.dispatchEvent('ptr:pullstart ptrPullStart', ...args);
     },
-    onPtrPullMove(event) {
-      this.dispatchEvent('ptr:pullmove ptrPullMove', event);
+    onPtrPullMove(...args) {
+      this.dispatchEvent('ptr:pullmove ptrPullMove', ...args);
     },
-    onPtrPullEnd(event) {
-      this.dispatchEvent('ptr:pullend ptrPullEnd', event);
+    onPtrPullEnd(...args) {
+      this.dispatchEvent('ptr:pullend ptrPullEnd', ...args);
     },
-    onPtrRefresh(event) {
-      const done = event.detail;
-      this.dispatchEvent('ptr:refresh ptrRefresh', event, done);
+    onPtrRefresh(...args) {
+      this.dispatchEvent('ptr:refresh ptrRefresh', ...args);
     },
-    onPtrDone(event) {
-      this.dispatchEvent('ptr:done ptrDone', event);
+    onPtrDone(...args) {
+      this.dispatchEvent('ptr:done ptrDone', ...args);
     },
-    onInfinite(event) {
-      this.dispatchEvent('infinite', event);
+    onInfinite(...args) {
+      this.dispatchEvent('infinite', ...args);
     },
-    onPageMounted(event) {
-      const page = event.detail;
-      this.dispatchEvent('page:mounted pageMounted', event, page);
+    // Main Page Events
+    onPageMounted(page) {
+      if (this.eventTargetEl !== page.el) return;
+      this.dispatchEvent('page:mounted pageMounted', page);
     },
-    onPageStack() {
-      this.setState({
-        routerForceUnstack: false,
-      });
-    },
-    onPageUnstack() {
-      this.setState({
-        routerForceUnstack: true,
-      });
-    },
-    onPagePosition(event) {
-      const position = event.detail.position;
-      this.setState({
-        routerPositionClass: `page-${position}`,
-      });
-    },
-    onPageRole(event) {
-      this.setState({
-        routerPageRole: event.detail.role,
-        routerPageRoleDetailRoot: event.detail.detailRoot,
-      });
-    },
-    onPageMasterStack() {
-      this.setState({
-        routerPageMasterStack: true,
-      });
-    },
-    onPageMasterUnstack() {
-      this.setState({
-        routerPageMasterStack: false,
-      });
-    },
-    onPageNavbarLargeCollapsed() {
-      this.setState({
-        hasNavbarLargeCollapsed: true,
-      });
-    },
-    onPageNavbarLargeExpanded() {
-      this.setState({
-        hasNavbarLargeCollapsed: false,
-      });
-    },
-    onPageInit(event) {
-      const page = event.detail;
+    onPageInit(page) {
+      if (this.eventTargetEl !== page.el) return;
       const { withSubnavbar, subnavbar, withNavbarLarge, navbarLarge } = this.props;
       if (typeof withSubnavbar === 'undefined' && typeof subnavbar === 'undefined') {
         if (
@@ -411,14 +362,14 @@ export default {
         }
       }
 
-      this.dispatchEvent('page:init pageInit', event, page);
+      this.dispatchEvent('page:init pageInit', page);
     },
-    onPageReinit(event) {
-      const page = event.detail;
-      this.dispatchEvent('page:reinit pageReinit', event, page);
+    onPageReinit(page) {
+      if (this.eventTargetEl !== page.el) return;
+      this.dispatchEvent('page:reinit pageReinit', page);
     },
-    onPageBeforeIn(event) {
-      const page = event.detail;
+    onPageBeforeIn(page) {
+      if (this.eventTargetEl !== page.el) return;
       if (page.from === 'next') {
         this.setState({
           routerPositionClass: 'page-next',
@@ -429,14 +380,14 @@ export default {
           routerPositionClass: 'page-previous',
         });
       }
-      this.dispatchEvent('page:beforein pageBeforeIn', event, page);
+      this.dispatchEvent('page:beforein pageBeforeIn', page);
     },
-    onPageBeforeOut(event) {
-      const page = event.detail;
-      this.dispatchEvent('page:beforeout pageBeforeOut', event, page);
+    onPageBeforeOut(page) {
+      if (this.eventTargetEl !== page.el) return;
+      this.dispatchEvent('page:beforeout pageBeforeOut', page);
     },
-    onPageAfterOut(event) {
-      const page = event.detail;
+    onPageAfterOut(page) {
+      if (this.eventTargetEl !== page.el) return;
       if (page.to === 'next') {
         this.setState({
           routerPositionClass: 'page-next',
@@ -447,23 +398,75 @@ export default {
           routerPositionClass: 'page-previous',
         });
       }
-      this.dispatchEvent('page:afterout pageAfterOut', event, page);
+      this.dispatchEvent('page:afterout pageAfterOut', page);
     },
-    onPageAfterIn(event) {
-      const page = event.detail;
+    onPageAfterIn(page) {
+      if (this.eventTargetEl !== page.el) return;
       this.setState({
         routerPositionClass: 'page-current',
       });
-      this.dispatchEvent('page:afterin pageAfterIn', event, page);
+      this.dispatchEvent('page:afterin pageAfterIn', page);
     },
-    onPageBeforeRemove(event) {
-      const page = event.detail;
-      this.dispatchEvent('page:beforeremove pageBeforeRemove', event, page);
+    onPageBeforeRemove(page) {
+      if (this.eventTargetEl !== page.el) return;
+      this.dispatchEvent('page:beforeremove pageBeforeRemove', page);
     },
-    onCardOpened() {
+    // Helper events
+    onPageStack(pageEl) {
+      if (this.eventTargetEl !== pageEl) return;
+      this.setState({
+        routerForceUnstack: false,
+      });
+    },
+    onPageUnstack(pageEl) {
+      if (this.eventTargetEl !== pageEl) return;
+      this.setState({
+        routerForceUnstack: true,
+      });
+    },
+    onPagePosition(pageEl, position) {
+      if (this.eventTargetEl !== pageEl) return;
+      this.setState({
+        routerPositionClass: `page-${position}`,
+      });
+    },
+    onPageRole(pageEl, rolesData) {
+      if (this.eventTargetEl !== pageEl) return;
+      this.setState({
+        routerPageRole: rolesData.role,
+        routerPageRoleDetailRoot: rolesData.detailRoot,
+      });
+    },
+    onPageMasterStack(pageEl) {
+      if (this.eventTargetEl !== pageEl) return;
+      this.setState({
+        routerPageMasterStack: true,
+      });
+    },
+    onPageMasterUnstack(pageEl) {
+      if (this.eventTargetEl !== pageEl) return;
+      this.setState({
+        routerPageMasterStack: false,
+      });
+    },
+    onPageNavbarLargeCollapsed(pageEl) {
+      if (this.eventTargetEl !== pageEl) return;
+      this.setState({
+        hasNavbarLargeCollapsed: true,
+      });
+    },
+    onPageNavbarLargeExpanded(pageEl) {
+      if (this.eventTargetEl !== pageEl) return;
+      this.setState({
+        hasNavbarLargeCollapsed: false,
+      });
+    },
+    onCardOpened(cardEl, pageEl) {
+      if (this.eventTargetEl !== pageEl) return;
       this.setState({ hasCardExpandableOpened: true });
     },
-    onCardClose() {
+    onCardClose(cardEl, pageEl) {
+      if (this.eventTargetEl !== pageEl) return;
       this.setState({ hasCardExpandableOpened: false });
     },
   },

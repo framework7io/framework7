@@ -168,31 +168,42 @@ export default {
   componentDidMount() {
     const self = this;
     const { el, rootEl } = self.refs;
+    
     rootEl.addEventListener('click', self.onClick);
-    el.addEventListener('treeview:open', self.onOpen);
-    el.addEventListener('treeview:close', self.onClose);
-    el.addEventListener('treeview:loadchildren', self.onLoadChildren);
+    if (!el) return;
+    self.eventTargetEl = el;
+    self.$f7ready((f7) => {
+      f7.on('treeviewOpen', self.onOpen);
+      f7.on('treeviewClose', self.onClose);
+      f7.on('treeviewLoadChildren', self.onLoadChildren);
+    });
   },
   componentWillUnmount() {
     const self = this;
     const { el, rootEl } = self.refs;
     rootEl.removeEventListener('click', self.onClick);
-    el.removeEventListener('treeview:open', self.onOpen);
-    el.removeEventListener('treeview:close', self.onClose);
-    el.removeEventListener('treeview:loadchildren', self.onLoadChildren);
+    if (!el || self.$f7) return;
+    self.$f7.off('treeviewOpen', self.onOpen);
+    self.$f7.off('treeviewClose', self.onClose);
+    self.$f7.off('treeviewLoadChildren', self.onLoadChildren);
+    self.eventTargetEl = null;
+    delete self.eventTargetEl;
   },
   methods: {
     onClick(event) {
       this.dispatchEvent('click', event);
     },
-    onOpen(event) {
-      this.dispatchEvent('treeview:open treeviewOpen', event);
+    onOpen(el) {
+      if (this.eventTargetEl !== el) return;
+      this.dispatchEvent('treeview:open treeviewOpen', el);
     },
-    onClose(event) {
-      this.dispatchEvent('treeview:close treeviewClose', event);
+    onClose(el) {
+      if (this.eventTargetEl !== el) return;
+      this.dispatchEvent('treeview:close treeviewClose', el);
     },
-    onLoadChildren(event) {
-      this.dispatchEvent('treeview:loadchildren treeviewLoadChildren', event, event.detail);
+    onLoadChildren(el, done) {
+      if (this.eventTargetEl !== el) return;
+      this.dispatchEvent('treeview:loadchildren treeviewLoadChildren', el, done);
     },
   },
 };

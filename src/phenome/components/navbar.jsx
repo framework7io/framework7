@@ -178,6 +178,7 @@ export default {
     f7.off('navbarHide', self.onHide);
     f7.off('navbarCollapse', self.onCollapse);
     f7.off('navbarExpand', self.onExpand);
+    self.eventTargetEl = null;
     delete self.eventTargetEl;
   },
   methods: {

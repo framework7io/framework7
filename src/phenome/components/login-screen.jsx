@@ -68,14 +68,15 @@ export default {
 
     const el = self.refs.el;
     if (!el) return;
-    el.addEventListener('loginscreen:open', self.onOpen);
-    el.addEventListener('loginscreen:opened', self.onOpened);
-    el.addEventListener('loginscreen:close', self.onClose);
-    el.addEventListener('loginscreen:closed', self.onClosed);
-
     self.$f7ready(() => {
       self.f7LoginScreen = self.$f7.loginScreen.create({
         el,
+        on: {
+          open: self.onOpen,
+          opened: self.onOpened,
+          close: self.onClose,
+          closed: self.onClosed,
+        },
       });
       if (self.props.opened) {
         self.f7LoginScreen.open(false);
@@ -84,38 +85,30 @@ export default {
   },
   componentWillUnmount() {
     const self = this;
-    const el = self.refs.el;
     if (self.f7LoginScreen) self.f7LoginScreen.destroy();
-    if (!el) return;
-    el.removeEventListener('loginscreen:open', self.onOpen);
-    el.removeEventListener('loginscreen:opened', self.onOpened);
-    el.removeEventListener('loginscreen:close', self.onClose);
-    el.removeEventListener('loginscreen:closed', self.onClosed);
   },
   methods: {
-    onOpen(event) {
-      this.dispatchEvent('loginscreen:open loginScreenOpen', event);
+    onOpen(instance) {
+      this.dispatchEvent('loginscreen:open loginScreenOpen', instance);
     },
-    onOpened(event) {
-      this.dispatchEvent('loginscreen:opened loginScreenOpened', event);
+    onOpened(instance) {
+      this.dispatchEvent('loginscreen:opened loginScreenOpened', instance);
     },
-    onClose(event) {
-      this.dispatchEvent('loginscreen:close loginScreenClose', event);
+    onClose(instance) {
+      this.dispatchEvent('loginscreen:close loginScreenClose', instance);
     },
-    onClosed(event) {
-      this.dispatchEvent('loginscreen:closed loginScreenClosed', event);
+    onClosed(instance) {
+      this.dispatchEvent('loginscreen:closed loginScreenClosed', instance);
     },
     open(animate) {
       const self = this;
-      const el = self.refs.el;
-      if (!self.$f7 || !el) return undefined;
-      return self.$f7.loginScreen.open(el, animate);
+      if (!self.f7LoginScreen) return undefined;
+      return self.f7LoginScreen.open(animate);
     },
     close(animate) {
       const self = this;
-      const el = self.refs.el;
-      if (!self.$f7 || !el) return undefined;
-      return self.$f7.loginScreen.close(el, animate);
+      if (!self.f7LoginScreen) return undefined;
+      return self.f7LoginScreen.close(animate);
     },
   },
 };

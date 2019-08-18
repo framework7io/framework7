@@ -140,13 +140,6 @@ export default {
 
     const el = self.refs.el;
     if (!el) return;
-    el.addEventListener('sheet:open', self.onOpen);
-    el.addEventListener('sheet:opened', self.onOpened);
-    el.addEventListener('sheet:close', self.onClose);
-    el.addEventListener('sheet:closed', self.onClosed);
-    el.addEventListener('sheet:stepopen', self.onStepOpen);
-    el.addEventListener('sheet:stepclose', self.onStepClose);
-    el.addEventListener('sheet:stepprogress', self.onStepProgress);
 
     const props = self.props;
     const {
@@ -163,17 +156,27 @@ export default {
 
     const sheetParams = {
       el: self.refs.el,
+      on: {
+        open: self.onOpen,
+        opened: self.onOpened,
+        close: self.onClose,
+        closed: self.onClosed,
+        stepOpen: self.onStepOpen,
+        stepClose: self.onStepClose,
+        stepProgress: self.onStepProgress,
+      },
     };
 
     if (process.env.COMPILER === 'vue') {
-      if (typeof self.$options.propsData.backdrop !== 'undefined') sheetParams.backdrop = backdrop;
-      if (typeof self.$options.propsData.backdropEl !== 'undefined') sheetParams.backdropEl = backdropEl;
-      if (typeof self.$options.propsData.closeByBackdropClick !== 'undefined') sheetParams.closeByBackdropClick = closeByBackdropClick;
-      if (typeof self.$options.propsData.closeByOutsideClick !== 'undefined') sheetParams.closeByOutsideClick = closeByOutsideClick;
-      if (typeof self.$options.propsData.closeOnEscape !== 'undefined') sheetParams.closeOnEscape = closeOnEscape;
-      if (typeof self.$options.propsData.swipeToClose !== 'undefined') sheetParams.swipeToClose = swipeToClose;
-      if (typeof self.$options.propsData.swipeToStep !== 'undefined') sheetParams.swipeToStep = swipeToStep;
-      if (typeof self.$options.propsData.swipeHandler !== 'undefined') sheetParams.swipeHandler = swipeHandler;
+      const propsData = self.$options.propsData;
+      if (typeof propsData.backdrop !== 'undefined') sheetParams.backdrop = backdrop;
+      if (typeof propsData.backdropEl !== 'undefined') sheetParams.backdropEl = backdropEl;
+      if (typeof propsData.closeByBackdropClick !== 'undefined') sheetParams.closeByBackdropClick = closeByBackdropClick;
+      if (typeof propsData.closeByOutsideClick !== 'undefined') sheetParams.closeByOutsideClick = closeByOutsideClick;
+      if (typeof propsData.closeOnEscape !== 'undefined') sheetParams.closeOnEscape = closeOnEscape;
+      if (typeof propsData.swipeToClose !== 'undefined') sheetParams.swipeToClose = swipeToClose;
+      if (typeof propsData.swipeToStep !== 'undefined') sheetParams.swipeToStep = swipeToStep;
+      if (typeof propsData.swipeHandler !== 'undefined') sheetParams.swipeHandler = swipeHandler;
     }
     if (process.env.COMPILER === 'react') {
       if ('backdrop' in props && typeof backdrop !== 'undefined') sheetParams.backdrop = backdrop;
@@ -196,48 +199,38 @@ export default {
   componentWillUnmount() {
     const self = this;
     if (self.f7Sheet) self.f7Sheet.destroy();
-
-    const el = self.refs.el;
-    if (!el) return;
-    el.removeEventListener('sheet:open', self.onOpen);
-    el.removeEventListener('sheet:opened', self.onOpened);
-    el.removeEventListener('sheet:close', self.onClose);
-    el.removeEventListener('sheet:closed', self.onClosed);
-    el.removeEventListener('sheet:stepopen', self.onStepOpen);
-    el.removeEventListener('sheet:stepclose', self.onStepClose);
-    el.removeEventListener('sheet:stepprogress', self.onStepProgress);
   },
   methods: {
-    onStepProgress(event) {
-      this.dispatchEvent('sheet:stepprogress sheetStepProgress', event.detail);
+    onStepProgress(instance, progress) {
+      this.dispatchEvent('sheet:stepprogress sheetStepProgress', instance, progress);
     },
-    onStepOpen(event) {
-      this.dispatchEvent('sheet:stepopen sheetStepOpen', event);
+    onStepOpen(instance) {
+      this.dispatchEvent('sheet:stepopen sheetStepOpen', instance);
     },
-    onStepClose(event) {
-      this.dispatchEvent('sheet:stepclose sheetStepClose', event);
+    onStepClose(instance) {
+      this.dispatchEvent('sheet:stepclose sheetStepClose', instance);
     },
-    onOpen(event) {
-      this.dispatchEvent('sheet:open sheetOpen', event);
+    onOpen(instance) {
+      this.dispatchEvent('sheet:open sheetOpen', instance);
     },
-    onOpened(event) {
-      this.dispatchEvent('sheet:opened sheetOpened', event);
+    onOpened(instance) {
+      this.dispatchEvent('sheet:opened sheetOpened', instance);
     },
-    onClose(event) {
-      this.dispatchEvent('sheet:close sheetClose', event);
+    onClose(instance) {
+      this.dispatchEvent('sheet:close sheetClose', instance);
     },
-    onClosed(event) {
-      this.dispatchEvent('sheet:closed sheetClosed', event);
+    onClosed(instance) {
+      this.dispatchEvent('sheet:closed sheetClosed', instance);
     },
     open(animate) {
       const self = this;
-      if (!self.$f7) return undefined;
-      return self.$f7.sheet.open(self.refs.el, animate);
+      if (!self.f7Sheet) return undefined;
+      return self.f7Sheet.open(animate);
     },
     close(animate) {
       const self = this;
-      if (!self.$f7) return undefined;
-      return self.$f7.sheet.close(self.refs.el, animate);
+      if (!self.f7Sheet) return undefined;
+      return self.f7Sheet.close(animate);
     },
   },
 };

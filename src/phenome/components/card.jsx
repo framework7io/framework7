@@ -100,6 +100,7 @@ export default {
     self.$f7.off('cardOpened', self.onOpened);
     self.$f7.off('cardClose', self.onClose);
     self.$f7.off('cardClosed', self.onClosed);
+    self.eventTargetEl = null;
     delete self.eventTargetEl;
   },
   render() {
