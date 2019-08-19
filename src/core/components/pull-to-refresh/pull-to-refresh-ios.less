@@ -12,7 +12,7 @@
     z-index: 10;
     transform: rotate(0deg) translate3d(0,0,0);
     transition-duration: 300ms;
-    transition-property: transform;
+    transition-property: transform, opacity;
     width: 12px;
     height: 20px;
     margin-left: -6px;
@@ -84,6 +84,35 @@
     &.ptr-pull-up {
       .ptr-arrow {
         transform: rotate(0deg) translate3d(0,0,0);
+      }
+    }
+  }
+  .ptr-with-navbar-large-transparent {
+    .ptr-preloader {
+      .preloader,
+      .ptr-arrow {
+        opacity: 0;
+        transition-duration: 300ms;
+        transition-property: transform, opacity;
+      }
+    }
+    &.ptr-pull-down,
+    &.ptr-pull-up,
+    &.ptr-refreshing {
+      .ptr-preloader {
+        .preloader,
+        .ptr-arrow {
+          opacity: 1;
+        }
+      }
+    }
+    &.ptr-closing {
+      .ptr-preloader {
+        .preloader,
+        .ptr-arrow {
+          opacity: 0;
+          transition-duration: 300ms;
+        }
       }
     }
   }
