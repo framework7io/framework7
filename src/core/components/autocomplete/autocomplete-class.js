@@ -766,6 +766,8 @@ class Autocomplete extends Framework7Class {
     const popupParams = {
       content: popupHtml,
       animate: ac.params.animate,
+      push: ac.params.popupPush,
+      swipeToClose: ac.params.popupSwipeToClose,
       on: {
         popupOpen(popup) {
           ac.onOpen('popup', popup.el);

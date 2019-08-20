@@ -153,6 +153,10 @@ export namespace Calendar {
     containerEl?: HTMLElement | CSSSelector
     /** Can be auto, popover (to open calendar in popover), sheet (to open in sheet modal) or customModal (to open in custom Calendar modal overlay). In case of auto will open in sheet modal on small screens and in popover on large screens.. (default auto) */
     openIn?: string
+    /** Enables Calendar sheet to push view/s behind on open */
+    sheetPush?: boolean
+    /** Enables ability to close Calendar sheet with swipe */
+    sheetSwipeToClose?: boolean | undefined
     /** String with CSS selector or HTMLElement with related input element. */
     inputEl?: HTMLElement | CSSSelector
     /** Scroll viewport (page-content) to input when calendar opened. (default true) */

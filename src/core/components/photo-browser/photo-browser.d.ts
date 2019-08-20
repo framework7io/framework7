@@ -20,6 +20,8 @@ export namespace PhotoBrowser {
     expositionHideCaptions?: boolean
     /** You can close Photo Browser with swipe up/down when this parameter is enabled (default true) */
     swipeToClose?: boolean
+    /** Enables Photo Browser popup to push view/s behind on open */
+    popupPush?: boolean
     /** Will add opened photo browser to router history which gives ability to close photo browser by going back in router history and set current route to the photo browser modal (default true) */
     routableModals?: boolean
     /** Photo browser modal URL that will be set as a current route (default "photos/") */

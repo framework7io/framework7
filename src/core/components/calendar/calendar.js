@@ -62,6 +62,8 @@ export default {
       // Common opener settings
       containerEl: null,
       openIn: 'auto', // or 'popover' or 'sheet' or 'customModal'
+      sheetPush: false,
+      sheetSwipeToClose: undefined,
       formatValue: null,
       inputEl: null,
       inputReadOnly: true,

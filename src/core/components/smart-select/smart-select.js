@@ -12,6 +12,10 @@ export default {
       setValueText: true,
       formatValueText: null,
       openIn: 'page', // or 'popup' or 'sheet' or 'popover'
+      popupPush: true,
+      popupSwipeToClose: undefined, // defaults to app
+      sheetPush: false,
+      sheetSwipeToClose: undefined, // defaults to app
       pageTitle: undefined,
       pageBackLinkText: 'Back',
       popupCloseLinkText: 'Close',

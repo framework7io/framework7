@@ -29,6 +29,14 @@ export namespace SmartSelect {
     formatValueText?: (values: any[]) => string,
     /** Defines how to open Smart Select. Can be page or popup or popover or sheet (default is "page") */
     openIn?: 'page' | 'popup' | 'popover' | 'sheet'
+    /** Enables smart select popup to push view/s behind on open */
+    popupPush?: boolean
+    /** Enables ability to close smart select popup with swipe */
+    popupSwipeToClose?: boolean | undefined
+    /** Enables smart select sheet to push view/s behind on open */
+    sheetPush?: boolean
+    /** Enables ability to close smart select sheet with swipe */
+    sheetSwipeToClose?: boolean | undefined
     /** Smart select page title. If not passed then it will be the <div class="item-title"> text */
     pageTitle?: string
     /** Smart select Page back link text (default 'Back') */

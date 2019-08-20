@@ -14,6 +14,7 @@ export default {
       theme: 'light',
       captionsTheme: undefined,
       iconsColor: undefined,
+      popupPush: false,
       swipeToClose: true,
       backLinkText: 'Close',
       navbarOfText: 'of',

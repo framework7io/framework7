@@ -1345,10 +1345,10 @@ class Calendar extends Framework7Class {
 
     const modalParams = {
       targetEl: $inputEl,
-      scrollToEl: calendar.params.scrollToInput ? $inputEl : undefined,
+      scrollToEl: params.scrollToInput ? $inputEl : undefined,
       content: modalContent,
-      backdrop: calendar.params.backdrop === true || (modalType === 'popover' && app.params.popover.backdrop !== false && calendar.params.backdrop !== false),
-      closeByBackdropClick: calendar.params.closeByBackdropClick,
+      backdrop: params.backdrop === true || (modalType === 'popover' && app.params.popover.backdrop !== false && params.backdrop !== false),
+      closeByBackdropClick: params.closeByBackdropClick,
       on: {
         open() {
           const modal = this;
@@ -1369,7 +1369,11 @@ class Calendar extends Framework7Class {
         closed() { calendar.onClosed(); },
       },
     };
-    if (calendar.params.routableModals) {
+    if (modalType === 'sheet') {
+      modalParams.push = params.sheetPush;
+      modalParams.swipeToClose = params.sheetSwipeToClose;
+    }
+    if (params.routableModals) {
       calendar.view.router.navigate({
         url: calendar.url,
         route: {
