@@ -184,7 +184,25 @@ class SmartSelect extends Framework7Class {
     if (ss.params.setValueText) {
       ss.$valueEl.text(ss.formatValueText(optionText));
     }
+    ss.$selectEl.trigger('change');
     return ss;
+  }
+
+  unsetValue() {
+    const ss = this;
+    if (ss.params.setValueText) {
+      ss.$valueEl.text(ss.formatValueText([]));
+    }
+    ss.$selectEl.find('option').each((optionIndex, optionEl) => {
+      optionEl.selected = false;
+      optionEl.checked = false;
+    });
+    ss.$selectEl[0].value = null;
+
+    if (ss.$containerEl) {
+      ss.$containerEl.find(`input[name="${ss.inputName}"][type="checkbox"], input[name="${ss.inputName}"][type="radio"]`).prop('checked', false);
+    }
+    ss.$selectEl.trigger('change');
   }
 
   getValue() {
