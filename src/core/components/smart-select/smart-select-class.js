@@ -771,6 +771,15 @@ class SmartSelect extends Framework7Class {
   open(type) {
     const ss = this;
     if (ss.opened) return ss;
+    let prevented = false;
+    function prevent() {
+      prevented = true;
+    }
+    if (ss.$el) {
+      ss.$el.trigger('smartselect:beforeopen', { prevent });
+    }
+    ss.emit('local::beforeOpen smartSelectBeforeOpen', ss, prevent);
+    if (prevented) return ss;
     const openIn = type || ss.params.openIn;
     ss[`open${openIn.split('').map((el, index) => {
       if (index === 0) return el.toUpperCase();
