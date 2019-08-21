@@ -114,20 +114,20 @@ export default () => (
     <Block>
       <p>Grid cells have different size on Phone/Tablet</p>
       <Row>
-        <Col width="100" tabletWidth="50">.col-100.tablet-50</Col>
-        <Col width="100" tabletWidth="50">.col-100.tablet-50</Col>
+        <Col width="100" medium="50">.col-100.medium-50</Col>
+        <Col width="100" medium="50">.col-100.medium-50</Col>
       </Row>
       <Row>
-        <Col width="50" tabletWidth="25">.col-50.tablet-25</Col>
-        <Col width="50" tabletWidth="25">.col-50.tablet-25</Col>
-        <Col width="50" tabletWidth="25">.col-50.tablet-25</Col>
-        <Col width="50" tabletWidth="25">.col-50.tablet-25</Col>
+        <Col width="50" medium="25">.col-50.medium-25</Col>
+        <Col width="50" medium="25">.col-50.medium-25</Col>
+        <Col width="50" medium="25">.col-50.medium-25</Col>
+        <Col width="50" medium="25">.col-50.medium-25</Col>
       </Row>
       <Row>
-        <Col width="100" tabletWidth="40">.col-100.tablet-40</Col>
-        <Col width="50" tabletWidth="60">.col-50.tablet-60</Col>
-        <Col width="50" tabletWidth="66">.col-50.tablet-66</Col>
-        <Col width="100" tabletWidth="33">.col-100.tablet-33</Col>
+        <Col width="100" medium="40">.col-100.medium-40</Col>
+        <Col width="50" medium="60">.col-50.medium-60</Col>
+        <Col width="50" medium="66">.col-50.medium-66</Col>
+        <Col width="100" medium="33">.col-100.medium-33</Col>
       </Row>
     </Block>
   </Page>

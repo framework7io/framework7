@@ -136,6 +136,7 @@
   .hairline-remove(top);
   .hairline-remove(bottom);
 }
+
 @media (min-width:768px) {
   .block.tablet-inset {
     border-radius: var(--f7-block-inset-border-radius);
@@ -149,6 +150,20 @@
     .hairline-remove(bottom);
   }
 }
+
+// @media (min-width:@f7-breakpoints[xs]) {
+//   .block.xs-inset {
+//     border-radius: var(--f7-block-inset-border-radius);
+//     margin-left: calc(var(--f7-block-inset-side-margin) + var(--f7-safe-area-outer-left));
+//     margin-right: calc(var(--f7-block-inset-side-margin) + var(--f7-safe-area-outer-right));
+//     --f7-safe-area-left: 0px;
+//     --f7-safe-area-right: 0px;
+//   }
+//   .block-strong.xs-inset {
+//     .hairline-remove(top);
+//     .hairline-remove(bottom);
+//   }
+// }
 
 .if-ios-theme({
   @import url('./block-ios.less');

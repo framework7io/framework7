@@ -111,20 +111,20 @@
     <f7-block>
       <p>Grid cells have different size on Phone/Tablet</p>
       <f7-row>
-        <f7-col width="100" tablet-width="50">.col-100.tablet-50</f7-col>
-        <f7-col width="100" tablet-width="50">.col-100.tablet-50</f7-col>
+        <f7-col width="100" medium="50">.col-100.medium-50</f7-col>
+        <f7-col width="100" medium="50">.col-100.medium-50</f7-col>
       </f7-row>
       <f7-row>
-        <f7-col width="50" tablet-width="25">.col-50.tablet-25</f7-col>
-        <f7-col width="50" tablet-width="25">.col-50.tablet-25</f7-col>
-        <f7-col width="50" tablet-width="25">.col-50.tablet-25</f7-col>
-        <f7-col width="50" tablet-width="25">.col-50.tablet-25</f7-col>
+        <f7-col width="50" medium="25">.col-50.medium-25</f7-col>
+        <f7-col width="50" medium="25">.col-50.medium-25</f7-col>
+        <f7-col width="50" medium="25">.col-50.medium-25</f7-col>
+        <f7-col width="50" medium="25">.col-50.medium-25</f7-col>
       </f7-row>
       <f7-row>
-        <f7-col width="100" tablet-width="40">.col-100.tablet-40</f7-col>
-        <f7-col width="50" tablet-width="60">.col-50.tablet-60</f7-col>
-        <f7-col width="50" tablet-width="66">.col-50.tablet-66</f7-col>
-        <f7-col width="100" tablet-width="33">.col-100.tablet-33</f7-col>
+        <f7-col width="100" medium="40">.col-100.medium-40</f7-col>
+        <f7-col width="50" medium="60">.col-50.medium-60</f7-col>
+        <f7-col width="50" medium="66">.col-50.medium-66</f7-col>
+        <f7-col width="100" medium="33">.col-100.medium-33</f7-col>
       </f7-row>
     </f7-block>
   </f7-page>

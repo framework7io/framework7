@@ -15,12 +15,11 @@ export default {
       type: [Number, String],
       default: 'auto',
     },
-    tabletWidth: {
-      type: [Number, String],
-    },
-    desktopWidth: {
-      type: [Number, String],
-    },
+    xsmall: { type: [Number, String] },
+    small: { type: [Number, String] },
+    medium: { type: [Number, String] },
+    large: { type: [Number, String] },
+    xlarge: { type: [Number, String] },
     ...Mixins.colorProps,
   },
   render() {
@@ -32,8 +31,11 @@ export default {
       style,
       tag,
       width,
-      tabletWidth,
-      desktopWidth,
+      xsmall,
+      small,
+      medium,
+      large,
+      xlarge,
     } = props;
 
     const ColTag = tag;
@@ -43,8 +45,11 @@ export default {
       {
         col: width === 'auto',
         [`col-${width}`]: width !== 'auto',
-        [`tablet-${tabletWidth}`]: tabletWidth,
-        [`desktop-${desktopWidth}`]: desktopWidth,
+        [`xsmall-${xsmall}`]: xsmall,
+        [`small-${small}`]: small,
+        [`medium-${medium}`]: medium,
+        [`large-${large}`]: large,
+        [`xlarge-${xlarge}`]: xlarge,
       },
       Mixins.colorClasses(props),
     );
