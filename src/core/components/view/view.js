@@ -44,6 +44,7 @@ export default {
       xhrCacheIgnore: [],
       xhrCacheIgnoreGetParameters: false,
       xhrCacheDuration: 1000 * 60 * 10, // Ten minutes
+      componentCache: true,
       preloadPreviousPage: true,
       allowDuplicateUrls: false,
       reloadPages: false,
