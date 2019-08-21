@@ -111,7 +111,6 @@ class F7Navbar extends React.Component {
       large,
       titleLarge
     } = props;
-    let innerEl;
     let leftEl;
     let titleEl;
     let rightEl;
@@ -137,14 +136,14 @@ class F7Navbar extends React.Component {
       }, this.slots['default']);
     }
 
-    if (backLink || slots['nav-left']) {
+    if (backLink || slots['nav-left'] || slots.left) {
       leftEl = React.createElement(F7NavLeft, {
         backLink: backLink,
         backLinkUrl: backLinkUrl,
         backLinkForce: backLinkForce,
         backLinkShowText: backLinkShowText,
         onBackClick: self.onBackClick
-      }, slots['nav-left']);
+      }, slots['nav-left'], slots.left);
     }
 
     if (title || subtitle || slots.title) {
@@ -154,22 +153,22 @@ class F7Navbar extends React.Component {
       }, slots.title);
     }
 
-    if (slots['nav-right']) {
-      rightEl = React.createElement(F7NavRight, null, slots['nav-right']);
+    if (slots['nav-right'] || slots.right) {
+      rightEl = React.createElement(F7NavRight, null, slots['nav-right'], slots.right);
     }
 
     let largeTitle = titleLarge;
     if (!largeTitle && large && title) largeTitle = title;
 
-    if (largeTitle) {
+    if (largeTitle || slots['title-large']) {
       titleLargeEl = React.createElement('div', {
         className: 'title-large'
       }, React.createElement('div', {
         className: 'title-large-text'
-      }, largeTitle));
+      }, largeTitle || '', this.slots['title-large']));
     }
 
-    innerEl = React.createElement('div', {
+    const innerEl = React.createElement('div', {
       ref: __reactNode => {
         this.__reactRefs['innerEl'] = __reactNode;
       },

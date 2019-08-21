@@ -2,6 +2,43 @@
 
 # Change Log
 
+# [v4.5.0](https://github.com/framework7io/framework7/compare/v4.4.10...v4.5.0) - August 21, 2019
+  * Core
+    * Router Component
+      * Fixed issue breaking rendering when root component element is not a `div`
+    * Searchbar
+      * Fixed issue with scroll for expandable Searchbar in RTL direction
+    * Sortable
+      * Now new `no-sorting` or `disallow-sorting` class can be added to specific list item to disable sorting for it
+    * Infinite Scroll
+      * Fixed issue when it may not work on routable tab if routable tab content is infinite-scroll element
+    * Pull To Refresh
+      * Fixed issue when it may not work on routable tab if routable tab content is PTR element
+    * Dialog
+      * Fixed issue when calling `.close()` on queued dialog would still open it
+    * Smart Select
+      * New `formatValueText(values)` parameter to return formatted (custom) text value that appears on list item (in `item-after`)
+      * New `setValueText` (by default is `true`) parameter to set formatted text value on list item (in `item-after`)
+      * Now it emits `beforeOpen(instance, prevent)` event that allows to prevent its opening by calling `prevent()` function
+    * Preloader
+      * Fixed issue when it didn't initialize correctly in routable tab
+    * Progressbar
+      * Fixed issue when it didn't initialize correctly in routable tab
+    * Popover
+      * Fixed issue when during positioning it didn't consider top safe area
+  * Phenome
+    * Button, FabButton, Fab, Icon, Link, ListButton, ListItem
+      * Imporved `tooltip` prop reactivity to change, set or unset tooltip correctly
+    * ListItem
+      * Now settings `sortable: false` prop on it, will prevent this specific item from sorting
+    * Navbar
+      * `nav-left` slot is also available as `left` slot
+      * `nav-right` slot is also available as `right` slot
+      * New `title-large` slot to add custom content/layout to large title text 
+    * List, ListGroup
+      * New `sortableMoveElements` (boolean) prop that allow to override same `sortable.moveElements` global app parameter. That when disabled (`false`) won't move DOM elements on sort
+  * Minor fixes
+
 # [v4.4.10](https://github.com/framework7io/framework7/compare/v4.4.9...v4.4.10) - July 29, 2019
   * Core
     * Device

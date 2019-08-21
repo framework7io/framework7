@@ -207,7 +207,8 @@ class F7ListItem extends React.Component {
       'accordion-item-opened': accordionItemOpened,
       disabled: disabled && !(radio || checkbox),
       'no-chevron': noChevron,
-      'chevron-center': chevronCenter
+      'chevron-center': chevronCenter,
+      'disallow-sorting': sortable === false
     }, Mixins.colorClasses(props));
 
     if (divider || groupTitle) {
@@ -245,7 +246,7 @@ class F7ListItem extends React.Component {
       'data-virtual-list-index': virtualListIndex
     }, this.slots['root-start'], swipeout ? React.createElement('div', {
       className: 'swipeout-content'
-    }, linkItemEl) : linkItemEl, isSortable && React.createElement('div', {
+    }, linkItemEl) : linkItemEl, isSortable && sortable !== false && React.createElement('div', {
       className: 'sortable-handler'
     }), (swipeout || accordionItem) && self.slots.default, this.slots['root'], this.slots['root-end']);
   }
@@ -310,6 +311,22 @@ class F7ListItem extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, newText => {
       const self = this;
+
+      if (!newText && self.f7Tooltip) {
+        self.f7Tooltip.destroy();
+        self.f7Tooltip = null;
+        delete self.f7Tooltip;
+        return;
+      }
+
+      if (newText && !self.f7Tooltip && self.$f7) {
+        self.f7Tooltip = self.$f7.tooltip.create({
+          targetEl: self.refs.el,
+          text: newText
+        });
+        return;
+      }
+
       if (!newText || !self.f7Tooltip) return;
       self.f7Tooltip.setText(newText);
     });
@@ -485,7 +502,10 @@ __reactComponentSetProps(F7ListItem, Object.assign({
   groupTitle: Boolean,
   swipeout: Boolean,
   swipeoutOpened: Boolean,
-  sortable: Boolean,
+  sortable: {
+    type: Boolean,
+    default: undefined
+  },
   accordionItem: Boolean,
   accordionItemOpened: Boolean,
   smartSelect: Boolean,

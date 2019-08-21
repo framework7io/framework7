@@ -5,6 +5,8 @@ import { Searchbar } from '../searchbar/searchbar';
 
 export namespace SmartSelect {
   interface Events {
+    /** Event will be triggered before Smart Select open. As second argument it receives "prevent" function that can be called to prevent Smart Select from opening */
+    beforeOpen: (smartSelect: SmartSelect, prevent: () => void) => void
     /** Event will be triggered when Smart Select starts its opening animation. As an argument event handler receives smart select instance */
     open: (smartSelect : SmartSelect) => void
     /** Event will be triggered when Smart Select completes its opening animation. As an argument event handler receives smart select instance */
@@ -23,6 +25,10 @@ export namespace SmartSelect {
     view?: View.View
     /** Visual element where to insert selected value. If not passed then it will look for <div class="item-after"> element */
     valueEl?: HTMLElement | CSSSelector
+    /** When enabled then smart select will automaticall insert value text into "valueEl" in format returned by "formatValueText"  */
+    setValueText?: boolean
+    /** Custom function to format smart select text value that appears on list item */
+    formatValueText?: (values: any[]) => string,
     /** Defines how to open Smart Select. Can be page or popup or popover or sheet (default is "page") */
     openIn?: 'page' | 'popup' | 'popover' | 'sheet'
     /** Smart select page title. If not passed then it will be the <div class="item-title"> text */
@@ -120,6 +126,8 @@ export namespace SmartSelect {
     destroy() : void
   }
   interface DomEvents {
+    /** Event will be triggered before Smart Select open. event.detail.prevent is a function that can be called to prevent Smart Select from opening */
+    'smartselect:before' : () => void
     /** Event will be triggered when Smart Select starts its opening animation */
     'smartselect:open' : () => void
     /** Event will be triggered after Smart Select completes its opening animation */
@@ -150,6 +158,8 @@ export namespace SmartSelect {
     smartSelect?: Parameters | undefined
   }
   interface AppEvents {
+    /** Event will be triggered before Smart Select open. As second argument it receives "prevent" function that can be called to prevent Smart Select from opening */
+    smartSelectBeforeOpen: (smartSelect : SmartSelect, prevent: () => void) => void
     /** Event will be triggered when Smart Select starts its opening animation. As an argument event handler receives smart select instance */
     smartSelectOpen: (smartSelect : SmartSelect) => void
     /** Event will be triggered when Smart Select completes its opening animation. As an argument event handler receives smart select instance */

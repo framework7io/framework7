@@ -12,6 +12,7 @@ declare namespace F7List {
     mediaList? : boolean
     sortable? : boolean
     sortableEnabled? : boolean
+    sortableMoveElements? : boolean
     accordionList? : boolean
     contactsList? : boolean
     simpleList? : boolean

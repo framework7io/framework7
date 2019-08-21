@@ -29,7 +29,10 @@ export default {
     groupTitle: Boolean,
     swipeout: Boolean,
     swipeoutOpened: Boolean,
-    sortable: Boolean,
+    sortable: {
+      type: Boolean,
+      default: undefined
+    },
     accordionItem: Boolean,
     accordionItemOpened: Boolean,
     smartSelect: Boolean,
@@ -174,7 +177,8 @@ export default {
       'accordion-item-opened': accordionItemOpened,
       disabled: disabled && !(radio || checkbox),
       'no-chevron': noChevron,
-      'chevron-center': chevronCenter
+      'chevron-center': chevronCenter,
+      'disallow-sorting': sortable === false
     }, Mixins.colorClasses(props));
 
     if (divider || groupTitle) {
@@ -212,7 +216,7 @@ export default {
       }
     }, [this.$slots['root-start'], swipeout ? _h('div', {
       class: 'swipeout-content'
-    }, [linkItemEl]) : linkItemEl, isSortable && _h('div', {
+    }, [linkItemEl]) : linkItemEl, isSortable && sortable !== false && _h('div', {
       class: 'sortable-handler'
     }), (swipeout || accordionItem) && self.$slots.default, this.$slots['root'], this.$slots['root-end']]);
   },
@@ -220,6 +224,22 @@ export default {
   watch: {
     'props.tooltip': function watchTooltip(newText) {
       const self = this;
+
+      if (!newText && self.f7Tooltip) {
+        self.f7Tooltip.destroy();
+        self.f7Tooltip = null;
+        delete self.f7Tooltip;
+        return;
+      }
+
+      if (newText && !self.f7Tooltip && self.$f7) {
+        self.f7Tooltip = self.$f7.tooltip.create({
+          targetEl: self.$refs.el,
+          text: newText
+        });
+        return;
+      }
+
       if (!newText || !self.f7Tooltip) return;
       self.f7Tooltip.setText(newText);
     },

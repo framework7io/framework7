@@ -17,7 +17,8 @@ class F7ListGroup extends React.Component {
       id,
       style,
       mediaList,
-      sortable
+      sortable,
+      sortableMoveElements
     } = props;
     const classes = Utils.classNames(className, 'list-group', {
       'media-list': mediaList,
@@ -26,7 +27,8 @@ class F7ListGroup extends React.Component {
     return React.createElement('div', {
       id: id,
       style: style,
-      className: classes
+      className: classes,
+      'data-sortable-move-elements': typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined
     }, React.createElement('ul', null, this.slots['default']));
   }
 
@@ -41,7 +43,11 @@ __reactComponentSetProps(F7ListGroup, Object.assign({
   className: String,
   style: Object,
   mediaList: Boolean,
-  sortable: Boolean
+  sortable: Boolean,
+  sortableMoveElements: {
+    type: Boolean,
+    default: undefined
+  }
 }, Mixins.colorProps));
 
 F7ListGroup.displayName = 'f7-list-group';

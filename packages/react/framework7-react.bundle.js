@@ -1,5 +1,5 @@
 /**
- * Framework7 React 4.4.10
+ * Framework7 React 4.5.0
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 29, 2019
+ * Released on: August 21, 2019
  */
 
 (function (global, factory) {
@@ -1948,6 +1948,22 @@
 
       __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
         var self = this$1;
+
+        if (!newText && self.f7Tooltip) {
+          self.f7Tooltip.destroy();
+          self.f7Tooltip = null;
+          delete self.f7Tooltip;
+          return;
+        }
+
+        if (newText && !self.f7Tooltip && self.$f7) {
+          self.f7Tooltip = self.$f7.tooltip.create({
+            targetEl: self.refs.el,
+            text: newText
+          });
+          return;
+        }
+
         if (!newText || !self.f7Tooltip) { return; }
         self.f7Tooltip.setText(newText);
       });
@@ -2153,6 +2169,22 @@
 
       __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
         var self = this$1;
+
+        if (!newText && self.f7Tooltip) {
+          self.f7Tooltip.destroy();
+          self.f7Tooltip = null;
+          delete self.f7Tooltip;
+          return;
+        }
+
+        if (newText && !self.f7Tooltip && self.$f7) {
+          self.f7Tooltip = self.$f7.tooltip.create({
+            targetEl: self.refs.el,
+            text: newText
+          });
+          return;
+        }
+
         if (!newText || !self.f7Tooltip) { return; }
         self.f7Tooltip.setText(newText);
       });
@@ -3088,6 +3120,22 @@
 
       __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
         var self = this$1;
+
+        if (!newText && self.f7Tooltip) {
+          self.f7Tooltip.destroy();
+          self.f7Tooltip = null;
+          delete self.f7Tooltip;
+          return;
+        }
+
+        if (newText && !self.f7Tooltip && self.$f7) {
+          self.f7Tooltip = self.$f7.tooltip.create({
+            targetEl: self.refs.el,
+            text: newText
+          });
+          return;
+        }
+
         if (!newText || !self.f7Tooltip) { return; }
         self.f7Tooltip.setText(newText);
       });
@@ -3302,6 +3350,22 @@
 
       __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
         var self = this$1;
+
+        if (!newText && self.f7Tooltip) {
+          self.f7Tooltip.destroy();
+          self.f7Tooltip = null;
+          delete self.f7Tooltip;
+          return;
+        }
+
+        if (newText && !self.f7Tooltip && self.$f7) {
+          self.f7Tooltip = self.$f7.tooltip.create({
+            targetEl: self.refs.el,
+            text: newText
+          });
+          return;
+        }
+
         if (!newText || !self.f7Tooltip) { return; }
         self.f7Tooltip.setText(newText);
       });
@@ -4541,6 +4605,22 @@
 
       __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
         var self = this$1;
+
+        if (!newText && self.f7Tooltip) {
+          self.f7Tooltip.destroy();
+          self.f7Tooltip = null;
+          delete self.f7Tooltip;
+          return;
+        }
+
+        if (newText && !self.f7Tooltip && self.$f7) {
+          self.f7Tooltip = self.$f7.tooltip.create({
+            targetEl: self.refs.el,
+            text: newText
+          });
+          return;
+        }
+
         if (!newText || !self.f7Tooltip) { return; }
         self.f7Tooltip.setText(newText);
       });
@@ -4734,6 +4814,22 @@
 
       __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
         var self = this$1;
+
+        if (!newText && self.f7Tooltip) {
+          self.f7Tooltip.destroy();
+          self.f7Tooltip = null;
+          delete self.f7Tooltip;
+          return;
+        }
+
+        if (newText && !self.f7Tooltip && self.$f7) {
+          self.f7Tooltip = self.$f7.tooltip.create({
+            targetEl: self.refs.el,
+            text: newText
+          });
+          return;
+        }
+
         if (!newText || !self.f7Tooltip) { return; }
         self.f7Tooltip.setText(newText);
       });
@@ -4829,6 +4925,7 @@
       var style = props.style;
       var mediaList = props.mediaList;
       var sortable = props.sortable;
+      var sortableMoveElements = props.sortableMoveElements;
       var classes = Utils.classNames(className, 'list-group', {
         'media-list': mediaList,
         sortable: sortable
@@ -4836,7 +4933,8 @@
       return React.createElement('div', {
         id: id,
         style: style,
-        className: classes
+        className: classes,
+        'data-sortable-move-elements': typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined
       }, React.createElement('ul', null, this.slots['default']));
     };
 
@@ -4854,7 +4952,11 @@
     className: String,
     style: Object,
     mediaList: Boolean,
-    sortable: Boolean
+    sortable: Boolean,
+    sortableMoveElements: {
+      type: Boolean,
+      default: undefined
+    }
   }, Mixins.colorProps));
 
   F7ListGroup.displayName = 'f7-list-group';
@@ -5495,7 +5597,10 @@
     id: [String, Number],
     style: Object,
     className: String,
-    sortable: Boolean,
+    sortable: {
+      type: Boolean,
+      default: undefined
+    },
     media: String,
     dropdown: {
       type: [String, Boolean],
@@ -6167,7 +6272,8 @@
         'accordion-item-opened': accordionItemOpened,
         disabled: disabled && !(radio || checkbox),
         'no-chevron': noChevron,
-        'chevron-center': chevronCenter
+        'chevron-center': chevronCenter,
+        'disallow-sorting': sortable === false
       }, Mixins.colorClasses(props));
 
       if (divider || groupTitle) {
@@ -6205,7 +6311,7 @@
         'data-virtual-list-index': virtualListIndex
       }, this.slots['root-start'], swipeout ? React.createElement('div', {
         className: 'swipeout-content'
-      }, linkItemEl) : linkItemEl, isSortable && React.createElement('div', {
+      }, linkItemEl) : linkItemEl, isSortable && sortable !== false && React.createElement('div', {
         className: 'sortable-handler'
       }), (swipeout || accordionItem) && self.slots.default, this.slots['root'], this.slots['root-end']);
     };
@@ -6270,6 +6376,22 @@
 
       __reactComponentWatch(this, 'props.tooltip', prevProps, prevState, function (newText) {
         var self = this$1;
+
+        if (!newText && self.f7Tooltip) {
+          self.f7Tooltip.destroy();
+          self.f7Tooltip = null;
+          delete self.f7Tooltip;
+          return;
+        }
+
+        if (newText && !self.f7Tooltip && self.$f7) {
+          self.f7Tooltip = self.$f7.tooltip.create({
+            targetEl: self.refs.el,
+            text: newText
+          });
+          return;
+        }
+
         if (!newText || !self.f7Tooltip) { return; }
         self.f7Tooltip.setText(newText);
       });
@@ -6445,7 +6567,10 @@
     groupTitle: Boolean,
     swipeout: Boolean,
     swipeoutOpened: Boolean,
-    sortable: Boolean,
+    sortable: {
+      type: Boolean,
+      default: undefined
+    },
     accordionItem: Boolean,
     accordionItemOpened: Boolean,
     smartSelect: Boolean,
@@ -6574,6 +6699,7 @@
       var id = props.id;
       var style = props.style;
       var form = props.form;
+      var sortableMoveElements = props.sortableMoveElements;
       var ref = self.slots;
       var slotsList = ref.list;
       var slotsDefault = ref.default;
@@ -6609,7 +6735,8 @@
             this$1.__reactRefs['el'] = __reactNode;
           },
           style: style,
-          className: self.classes
+          className: self.classes,
+          'data-sortable-move-elements': typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined
         }, self.slots['before-list'], rootChildrenBeforeList, React.createElement('ul', null, ulChildren), self.slots['after-list'], rootChildrenAfterList);
       } else {
         return React.createElement(ListTag, {
@@ -6618,7 +6745,8 @@
             this$1.__reactRefs['el'] = __reactNode;
           },
           style: style,
-          className: self.classes
+          className: self.classes,
+          'data-sortable-move-elements': typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined
         }, self.slots['before-list'], rootChildrenBeforeList, self.slots['after-list'], rootChildrenAfterList);
       }
     };
@@ -6738,6 +6866,10 @@
     mediaList: Boolean,
     sortable: Boolean,
     sortableEnabled: Boolean,
+    sortableMoveElements: {
+      type: Boolean,
+      default: undefined
+    },
     accordionList: Boolean,
     contactsList: Boolean,
     simpleList: Boolean,
@@ -8639,13 +8771,14 @@
       if (typeof needBackLinkText === 'undefined') { needBackLinkText = !this.$theme.md; }
 
       if (backLink) {
+        var text = backLink !== true && needBackLinkText ? backLink : undefined;
         linkEl = React.createElement(F7Link, {
           href: backLinkUrl || '#',
           back: true,
           icon: 'icon-back',
           force: backLinkForce || undefined,
-          className: backLink === true || backLink && this.$theme.md ? 'icon-only' : undefined,
-          text: backLink !== true && needBackLinkText ? backLink : undefined,
+          className: !text ? 'icon-only' : undefined,
+          text: text,
           onClick: this.onBackClick
         });
       }
@@ -8983,7 +9116,6 @@
       var noHairline = props.noHairline;
       var large = props.large;
       var titleLarge = props.titleLarge;
-      var innerEl;
       var leftEl;
       var titleEl;
       var rightEl;
@@ -9009,14 +9141,14 @@
         }, this.slots['default']);
       }
 
-      if (backLink || slots['nav-left']) {
+      if (backLink || slots['nav-left'] || slots.left) {
         leftEl = React.createElement(F7NavLeft, {
           backLink: backLink,
           backLinkUrl: backLinkUrl,
           backLinkForce: backLinkForce,
           backLinkShowText: backLinkShowText,
           onBackClick: self.onBackClick
-        }, slots['nav-left']);
+        }, slots['nav-left'], slots.left);
       }
 
       if (title || subtitle || slots.title) {
@@ -9026,22 +9158,22 @@
         }, slots.title);
       }
 
-      if (slots['nav-right']) {
-        rightEl = React.createElement(F7NavRight, null, slots['nav-right']);
+      if (slots['nav-right'] || slots.right) {
+        rightEl = React.createElement(F7NavRight, null, slots['nav-right'], slots.right);
       }
 
       var largeTitle = titleLarge;
       if (!largeTitle && large && title) { largeTitle = title; }
 
-      if (largeTitle) {
+      if (largeTitle || slots['title-large']) {
         titleLargeEl = React.createElement('div', {
           className: 'title-large'
         }, React.createElement('div', {
           className: 'title-large-text'
-        }, largeTitle));
+        }, largeTitle || '', this.slots['title-large']));
       }
 
-      innerEl = React.createElement('div', {
+      var innerEl = React.createElement('div', {
         ref: function (__reactNode) {
           this$1.__reactRefs['innerEl'] = __reactNode;
         },
@@ -13813,7 +13945,7 @@
   };
 
   /**
-   * Framework7 React 4.4.10
+   * Framework7 React 4.5.0
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -13821,7 +13953,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: July 29, 2019
+   * Released on: August 21, 2019
    */
 
   var Plugin = {

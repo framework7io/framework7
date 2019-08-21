@@ -59,7 +59,6 @@ export default {
       large,
       titleLarge
     } = props;
-    let innerEl;
     let leftEl;
     let titleEl;
     let rightEl;
@@ -85,7 +84,7 @@ export default {
       }, [this.$slots['default']]);
     }
 
-    if (backLink || slots['nav-left']) {
+    if (backLink || slots['nav-left'] || slots.left) {
       leftEl = _h(F7NavLeft, {
         on: {
           backClick: self.onBackClick
@@ -96,7 +95,7 @@ export default {
           backLinkForce: backLinkForce,
           backLinkShowText: backLinkShowText
         }
-      }, [slots['nav-left']]);
+      }, [slots['nav-left'], slots.left]);
     }
 
     if (title || subtitle || slots.title) {
@@ -108,22 +107,22 @@ export default {
       }, [slots.title]);
     }
 
-    if (slots['nav-right']) {
-      rightEl = _h(F7NavRight, [slots['nav-right']]);
+    if (slots['nav-right'] || slots.right) {
+      rightEl = _h(F7NavRight, [slots['nav-right'], slots.right]);
     }
 
     let largeTitle = titleLarge;
     if (!largeTitle && large && title) largeTitle = title;
 
-    if (largeTitle) {
+    if (largeTitle || slots['title-large']) {
       titleLargeEl = _h('div', {
         class: 'title-large'
       }, [_h('div', {
         class: 'title-large-text'
-      }, [largeTitle])]);
+      }, [largeTitle || '', this.$slots['title-large']])]);
     }
 
-    innerEl = _h('div', {
+    const innerEl = _h('div', {
       ref: 'innerEl',
       class: Utils.classNames('navbar-inner', innerClass, innerClassName, {
         sliding,
@@ -132,6 +131,7 @@ export default {
         'navbar-inner-large': large
       })
     }, [leftEl, titleEl, rightEl, titleLargeEl, this.$slots['default']]);
+
     return _h('div', {
       ref: 'el',
       style: style,

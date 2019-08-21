@@ -7,7 +7,10 @@ export default {
   name: 'f7-list-input',
   props: Object.assign({
     id: [String, Number],
-    sortable: Boolean,
+    sortable: {
+      type: Boolean,
+      default: undefined
+    },
     media: String,
     dropdown: {
       type: [String, Boolean],

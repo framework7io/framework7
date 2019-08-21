@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 4.4.10
+ * Framework7 Vue 4.5.0
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: July 29, 2019
+ * Released on: August 21, 2019
  */
 
 (function (global, factory) {
@@ -1407,6 +1407,22 @@
     watch: {
       'props.tooltip': function watchTooltip(newText) {
         var self = this;
+
+        if (!newText && self.f7Tooltip) {
+          self.f7Tooltip.destroy();
+          self.f7Tooltip = null;
+          delete self.f7Tooltip;
+          return;
+        }
+
+        if (newText && !self.f7Tooltip && self.$f7) {
+          self.f7Tooltip = self.$f7.tooltip.create({
+            targetEl: self.$refs.el,
+            text: newText
+          });
+          return;
+        }
+
         if (!newText || !self.f7Tooltip) { return; }
         self.f7Tooltip.setText(newText);
       }
@@ -1771,6 +1787,22 @@
     watch: {
       'props.tooltip': function watchTooltip(newText) {
         var self = this;
+
+        if (!newText && self.f7Tooltip) {
+          self.f7Tooltip.destroy();
+          self.f7Tooltip = null;
+          delete self.f7Tooltip;
+          return;
+        }
+
+        if (newText && !self.f7Tooltip && self.$f7) {
+          self.f7Tooltip = self.$f7.tooltip.create({
+            targetEl: self.$refs.el,
+            text: newText
+          });
+          return;
+        }
+
         if (!newText || !self.f7Tooltip) { return; }
         self.f7Tooltip.setText(newText);
       }
@@ -2529,6 +2561,22 @@
     watch: {
       'props.tooltip': function watchTooltip(newText) {
         var self = this;
+
+        if (!newText && self.f7Tooltip) {
+          self.f7Tooltip.destroy();
+          self.f7Tooltip = null;
+          delete self.f7Tooltip;
+          return;
+        }
+
+        if (newText && !self.f7Tooltip && self.$f7) {
+          self.f7Tooltip = self.$f7.tooltip.create({
+            targetEl: self.$refs.el,
+            text: newText
+          });
+          return;
+        }
+
         if (!newText || !self.f7Tooltip) { return; }
         self.f7Tooltip.setText(newText);
       }
@@ -2663,6 +2711,22 @@
     watch: {
       'props.tooltip': function watchTooltip(newText) {
         var self = this;
+
+        if (!newText && self.f7Tooltip) {
+          self.f7Tooltip.destroy();
+          self.f7Tooltip = null;
+          delete self.f7Tooltip;
+          return;
+        }
+
+        if (newText && !self.f7Tooltip && self.$f7) {
+          self.f7Tooltip = self.$f7.tooltip.create({
+            targetEl: self.$refs.el,
+            text: newText
+          });
+          return;
+        }
+
         if (!newText || !self.f7Tooltip) { return; }
         self.f7Tooltip.setText(newText);
       }
@@ -3876,6 +3940,22 @@
     watch: {
       'props.tooltip': function watchTooltip(newText) {
         var self = this;
+
+        if (!newText && self.f7Tooltip) {
+          self.f7Tooltip.destroy();
+          self.f7Tooltip = null;
+          delete self.f7Tooltip;
+          return;
+        }
+
+        if (newText && !self.f7Tooltip && self.$f7) {
+          self.f7Tooltip = self.$f7.tooltip.create({
+            targetEl: self.$refs.el,
+            text: newText
+          });
+          return;
+        }
+
         if (!newText || !self.f7Tooltip) { return; }
         self.f7Tooltip.setText(newText);
       }
@@ -4088,6 +4168,22 @@
     watch: {
       'props.tooltip': function watchTooltip(newText) {
         var self = this;
+
+        if (!newText && self.f7Tooltip) {
+          self.f7Tooltip.destroy();
+          self.f7Tooltip = null;
+          delete self.f7Tooltip;
+          return;
+        }
+
+        if (newText && !self.f7Tooltip && self.$f7) {
+          self.f7Tooltip = self.$f7.tooltip.create({
+            targetEl: self.$refs.el,
+            text: newText
+          });
+          return;
+        }
+
         if (!newText || !self.f7Tooltip) { return; }
         self.f7Tooltip.setText(newText);
       }
@@ -4163,7 +4259,11 @@
     props: Object.assign({
       id: [String, Number],
       mediaList: Boolean,
-      sortable: Boolean
+      sortable: Boolean,
+      sortableMoveElements: {
+        type: Boolean,
+        default: undefined
+      }
     }, Mixins.colorProps),
 
     render: function render() {
@@ -4175,6 +4275,7 @@
       var style = props.style;
       var mediaList = props.mediaList;
       var sortable = props.sortable;
+      var sortableMoveElements = props.sortableMoveElements;
       var classes = Utils.classNames(className, 'list-group', {
         'media-list': mediaList,
         sortable: sortable
@@ -4183,7 +4284,8 @@
         style: style,
         class: classes,
         attrs: {
-          id: id
+          id: id,
+          'data-sortable-move-elements': typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined
         }
       }, [_h('ul', [this.$slots['default']])]);
     },
@@ -4326,7 +4428,10 @@
     name: 'f7-list-input',
     props: Object.assign({
       id: [String, Number],
-      sortable: Boolean,
+      sortable: {
+        type: Boolean,
+        default: undefined
+      },
       media: String,
       dropdown: {
         type: [String, Boolean],
@@ -5251,7 +5356,10 @@
       groupTitle: Boolean,
       swipeout: Boolean,
       swipeoutOpened: Boolean,
-      sortable: Boolean,
+      sortable: {
+        type: Boolean,
+        default: undefined
+      },
       accordionItem: Boolean,
       accordionItemOpened: Boolean,
       smartSelect: Boolean,
@@ -5394,7 +5502,8 @@
         'accordion-item-opened': accordionItemOpened,
         disabled: disabled && !(radio || checkbox),
         'no-chevron': noChevron,
-        'chevron-center': chevronCenter
+        'chevron-center': chevronCenter,
+        'disallow-sorting': sortable === false
       }, Mixins.colorClasses(props));
 
       if (divider || groupTitle) {
@@ -5432,7 +5541,7 @@
         }
       }, [this.$slots['root-start'], swipeout ? _h('div', {
         class: 'swipeout-content'
-      }, [linkItemEl]) : linkItemEl, isSortable && _h('div', {
+      }, [linkItemEl]) : linkItemEl, isSortable && sortable !== false && _h('div', {
         class: 'sortable-handler'
       }), (swipeout || accordionItem) && self.$slots.default, this.$slots['root'], this.$slots['root-end']]);
     },
@@ -5440,6 +5549,22 @@
     watch: {
       'props.tooltip': function watchTooltip(newText) {
         var self = this;
+
+        if (!newText && self.f7Tooltip) {
+          self.f7Tooltip.destroy();
+          self.f7Tooltip = null;
+          delete self.f7Tooltip;
+          return;
+        }
+
+        if (newText && !self.f7Tooltip && self.$f7) {
+          self.f7Tooltip = self.$f7.tooltip.create({
+            targetEl: self.$refs.el,
+            text: newText
+          });
+          return;
+        }
+
         if (!newText || !self.f7Tooltip) { return; }
         self.f7Tooltip.setText(newText);
       },
@@ -5735,6 +5860,10 @@
       mediaList: Boolean,
       sortable: Boolean,
       sortableEnabled: Boolean,
+      sortableMoveElements: {
+        type: Boolean,
+        default: undefined
+      },
       accordionList: Boolean,
       contactsList: Boolean,
       simpleList: Boolean,
@@ -5765,6 +5894,7 @@
       var id = props.id;
       var style = props.style;
       var form = props.form;
+      var sortableMoveElements = props.sortableMoveElements;
       var ref = self.$slots;
       var slotsList = ref.list;
       var slotsDefault = ref.default;
@@ -5795,7 +5925,8 @@
           style: style,
           class: self.classes,
           attrs: {
-            id: id
+            id: id,
+            'data-sortable-move-elements': typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined
           }
         }, [self.$slots['before-list'], rootChildrenBeforeList, _h('ul', [ulChildren]), self.$slots['after-list'], rootChildrenAfterList]);
       } else {
@@ -5804,7 +5935,8 @@
           style: style,
           class: self.classes,
           attrs: {
-            id: id
+            id: id,
+            'data-sortable-move-elements': typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined
           }
         }, [self.$slots['before-list'], rootChildrenBeforeList, self.$slots['after-list'], rootChildrenAfterList]);
       }
@@ -7619,8 +7751,9 @@
       if (typeof needBackLinkText === 'undefined') { needBackLinkText = !this.$theme.md; }
 
       if (backLink) {
+        var text = backLink !== true && needBackLinkText ? backLink : undefined;
         linkEl = _h(f7Link, {
-          class: backLink === true || backLink && this.$theme.md ? 'icon-only' : undefined,
+          class: !text ? 'icon-only' : undefined,
           on: {
             click: this.onBackClick
           },
@@ -7629,7 +7762,7 @@
             back: true,
             icon: 'icon-back',
             force: backLinkForce || undefined,
-            text: backLink !== true && needBackLinkText ? backLink : undefined
+            text: text
           }
         });
       }
@@ -7874,7 +8007,6 @@
       var noHairline = props.noHairline;
       var large = props.large;
       var titleLarge = props.titleLarge;
-      var innerEl;
       var leftEl;
       var titleEl;
       var rightEl;
@@ -7900,7 +8032,7 @@
         }, [this.$slots['default']]);
       }
 
-      if (backLink || slots['nav-left']) {
+      if (backLink || slots['nav-left'] || slots.left) {
         leftEl = _h(f7NavLeft, {
           on: {
             backClick: self.onBackClick
@@ -7911,7 +8043,7 @@
             backLinkForce: backLinkForce,
             backLinkShowText: backLinkShowText
           }
-        }, [slots['nav-left']]);
+        }, [slots['nav-left'], slots.left]);
       }
 
       if (title || subtitle || slots.title) {
@@ -7923,22 +8055,22 @@
         }, [slots.title]);
       }
 
-      if (slots['nav-right']) {
-        rightEl = _h(f7NavRight, [slots['nav-right']]);
+      if (slots['nav-right'] || slots.right) {
+        rightEl = _h(f7NavRight, [slots['nav-right'], slots.right]);
       }
 
       var largeTitle = titleLarge;
       if (!largeTitle && large && title) { largeTitle = title; }
 
-      if (largeTitle) {
+      if (largeTitle || slots['title-large']) {
         titleLargeEl = _h('div', {
           class: 'title-large'
         }, [_h('div', {
           class: 'title-large-text'
-        }, [largeTitle])]);
+        }, [largeTitle || '', this.$slots['title-large']])]);
       }
 
-      innerEl = _h('div', {
+      var innerEl = _h('div', {
         ref: 'innerEl',
         class: Utils.classNames('navbar-inner', innerClass, innerClassName, {
           sliding: sliding,
@@ -7947,6 +8079,7 @@
           'navbar-inner-large': large
         })
       }, [leftEl, titleEl, rightEl, titleLargeEl, this.$slots['default']]);
+
       return _h('div', {
         ref: 'el',
         style: style,
@@ -12298,7 +12431,7 @@
   };
 
   /**
-   * Framework7 Vue 4.4.10
+   * Framework7 Vue 4.5.0
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -12306,7 +12439,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: July 29, 2019
+   * Released on: August 21, 2019
    */
 
   var Plugin = {

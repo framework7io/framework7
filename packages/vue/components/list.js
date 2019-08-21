@@ -11,6 +11,10 @@ export default {
     mediaList: Boolean,
     sortable: Boolean,
     sortableEnabled: Boolean,
+    sortableMoveElements: {
+      type: Boolean,
+      default: undefined
+    },
     accordionList: Boolean,
     contactsList: Boolean,
     simpleList: Boolean,
@@ -41,7 +45,8 @@ export default {
     const {
       id,
       style,
-      form
+      form,
+      sortableMoveElements
     } = props;
     const {
       list: slotsList,
@@ -74,7 +79,8 @@ export default {
         style: style,
         class: self.classes,
         attrs: {
-          id: id
+          id: id,
+          'data-sortable-move-elements': typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined
         }
       }, [self.$slots['before-list'], rootChildrenBeforeList, _h('ul', [ulChildren]), self.$slots['after-list'], rootChildrenAfterList]);
     } else {
@@ -83,7 +89,8 @@ export default {
         style: style,
         class: self.classes,
         attrs: {
-          id: id
+          id: id,
+          'data-sortable-move-elements': typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined
         }
       }, [self.$slots['before-list'], rootChildrenBeforeList, self.$slots['after-list'], rootChildrenAfterList]);
     }

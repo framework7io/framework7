@@ -104,7 +104,8 @@ class F7List extends React.Component {
     const {
       id,
       style,
-      form
+      form,
+      sortableMoveElements
     } = props;
     const {
       list: slotsList,
@@ -142,7 +143,8 @@ class F7List extends React.Component {
           this.__reactRefs['el'] = __reactNode;
         },
         style: style,
-        className: self.classes
+        className: self.classes,
+        'data-sortable-move-elements': typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined
       }, self.slots['before-list'], rootChildrenBeforeList, React.createElement('ul', null, ulChildren), self.slots['after-list'], rootChildrenAfterList);
     } else {
       return React.createElement(ListTag, {
@@ -151,7 +153,8 @@ class F7List extends React.Component {
           this.__reactRefs['el'] = __reactNode;
         },
         style: style,
-        className: self.classes
+        className: self.classes,
+        'data-sortable-move-elements': typeof sortableMoveElements !== 'undefined' ? sortableMoveElements.toString() : undefined
       }, self.slots['before-list'], rootChildrenBeforeList, self.slots['after-list'], rootChildrenAfterList);
     }
   }
@@ -266,6 +269,10 @@ __reactComponentSetProps(F7List, Object.assign({
   mediaList: Boolean,
   sortable: Boolean,
   sortableEnabled: Boolean,
+  sortableMoveElements: {
+    type: Boolean,
+    default: undefined
+  },
   accordionList: Boolean,
   contactsList: Boolean,
   simpleList: Boolean,

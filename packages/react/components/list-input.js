@@ -486,7 +486,10 @@ __reactComponentSetProps(F7ListInput, Object.assign({
   id: [String, Number],
   style: Object,
   className: String,
-  sortable: Boolean,
+  sortable: {
+    type: Boolean,
+    default: undefined
+  },
   media: String,
   dropdown: {
     type: [String, Boolean],

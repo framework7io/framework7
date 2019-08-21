@@ -356,7 +356,7 @@ class Searchbar extends FrameworkClass {
     } else {
       if (needsFocus) sb.$inputEl.focus();
       if (app.theme === 'md' && sb.expandable) {
-        sb.$el.parents('.page, .view, .navbar-inner').scrollLeft(0);
+        sb.$el.parents('.page, .view, .navbar-inner').scrollLeft(app.rtl ? 100 : 0);
       }
       enable();
     }

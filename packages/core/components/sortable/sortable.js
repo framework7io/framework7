@@ -37,7 +37,7 @@ const Sortable = {
       if ($listGroup.length && $listGroup.parents($sortableContainer).length) {
         $sortableContainer = $listGroup;
       }
-      $sortingItems = $sortableContainer.children('ul').children('li');
+      $sortingItems = $sortableContainer.children('ul').children('li:not(.disallow-sorting):not(.no-sorting)');
       if (app.panel) app.panel.allowOpen = false;
       if (app.swipeout) app.swipeout.allow = false;
     }
@@ -139,7 +139,12 @@ const Sortable = {
       if ($insertAfterEl) indexTo = $insertAfterEl.index();
       else if ($insertBeforeEl) indexTo = $insertBeforeEl.index();
 
-      if (app.params.sortable.moveElements) {
+      let moveElements = $sortableContainer.dataset().sortableMoveElements;
+      if (typeof moveElements === 'undefined') {
+        moveElements = app.params.sortable.moveElements;
+      }
+
+      if (moveElements) {
         if ($insertAfterEl) {
           $sortingEl.insertAfter($insertAfterEl);
         }
