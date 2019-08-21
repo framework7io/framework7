@@ -166,6 +166,8 @@ class Popover extends Modal {
     let targetHeight;
     let targetOffsetLeft;
     let targetOffsetTop;
+    let safeAreaTop = parseInt($('html').css('--f7-safe-area-top'), 10);
+    if (Number.isNaN(safeAreaTop)) safeAreaTop = 0;
     if ($targetEl && $targetEl.length > 0) {
       targetWidth = $targetEl.outerWidth();
       targetHeight = $targetEl.outerHeight();
@@ -193,7 +195,7 @@ class Popover extends Modal {
         // On bottom
         position = 'bottom';
         top = targetOffsetTop + targetHeight;
-      } else if (height < targetOffsetTop) {
+      } else if (height < targetOffsetTop - safeAreaTop) {
         // On top
         top = targetOffsetTop - height;
         position = 'top';
@@ -221,7 +223,7 @@ class Popover extends Modal {
       $el.addClass(`popover-on-${position} popover-on-${hPosition}`);
     } else {
       // ios and aurora
-      if ((height + angleSize) < targetOffsetTop) {
+      if ((height + angleSize) < targetOffsetTop - safeAreaTop) {
         // On top
         top = targetOffsetTop - height - angleSize;
       } else if ((height + angleSize) < app.height - targetOffsetTop - targetHeight) {
