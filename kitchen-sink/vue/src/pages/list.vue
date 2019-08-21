@@ -142,7 +142,7 @@
       </f7-block-footer>
     </f7-list>
     <f7-block-title>Tablet inset</f7-block-title>
-    <f7-list tablet-inset>
+    <f7-list medium-inset>
       <f7-list-item link="#" title="Ivan Petrov" after="CEO">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>

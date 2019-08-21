@@ -27,7 +27,7 @@
     </f7-block>
 
     <f7-block-title>Tablet Inset</f7-block-title>
-    <f7-block strong tablet-inset>
+    <f7-block strong medium-inset>
       <p>Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis. </p>
     </f7-block>
 

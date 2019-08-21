@@ -386,19 +386,22 @@
     }
   }
   // Responsive queries
-  .tablet-only, .tablet-landscape-only {
-    display: none;
-  }
-  @media (min-width: 768px) {
-    .tablet-only {
-      display: table-cell;
+  each(@breakpoints, {
+    .@{key}-only,
+    .@{key}-landscape-only {
+      display: none;
     }
-  }
-  @media (min-width: 768px) and (orientation:landscape) {
-    .tablet-landscape-only {
-      display: table-cell;
+    @media (min-width: @value) {
+      .@{key}-only {
+        display: table-cell;
+      }
     }
-  }
+    @media (min-width: @value) and (orientation:landscape) {
+      .@{key}-landscape-only {
+        display: table-cell;
+      }
+    }
+  });
 }
 
 .if-ios-theme({

@@ -30,7 +30,7 @@ export default () => (
     </Block>
 
     <BlockTitle>Tablet Inset</BlockTitle>
-    <Block strong tabletInset>
+    <Block strong mediumInset>
       <p>Donec et nulla auctor massa pharetra adipiscing ut sit amet sem. Suspendisse molestie velit vitae mattis tincidunt. Ut sit amet quam mollis, vulputate turpis vel, sagittis felis. </p>
     </Block>
 

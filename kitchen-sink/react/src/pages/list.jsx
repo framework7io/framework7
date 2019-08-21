@@ -145,7 +145,7 @@ export default () => (
       </BlockFooter>
     </List>
     <BlockTitle>Tablet inset</BlockTitle>
-    <List tabletInset>
+    <List mediumInset>
       <ListItem link="#" title="Ivan Petrov" after="CEO">
         <Icon slot="media" icon="icon-f7"></Icon>
       </ListItem>

@@ -8,7 +8,11 @@ export default {
     className: String, // phenome-react-line
     style: Object, // phenome-react-line
     inset: Boolean,
-    tabletInset: Boolean,
+    xsmallInset: Boolean,
+    smallInset: Boolean,
+    mediumInset: Boolean,
+    largeInset: Boolean,
+    xlargeInset: Boolean,
     strong: Boolean,
     tabs: Boolean,
     tab: Boolean,
@@ -46,9 +50,14 @@ export default {
     const {
       className,
       inset,
+      xsmallInset,
+      smallInset,
+      mediumInset,
+      largeInset,
+      xlargeInset,
       strong,
       accordionList,
-      tabletInset,
+      
       tabs,
       tab,
       tabActive,
@@ -64,9 +73,13 @@ export default {
       'block',
       {
         inset,
+        'xsmall-inset': xsmallInset,
+        'small-inset': smallInset,
+        'medium-inset': mediumInset,
+        'large-inset': largeInset,
+        'xlarge-inset': xlargeInset,
         'block-strong': strong,
         'accordion-list': accordionList,
-        'tablet-inset': tabletInset,
         tabs,
         tab,
         'tab-active': tabActive,
