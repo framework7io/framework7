@@ -56,6 +56,10 @@ class Popup extends Modal {
       $htmlEl: $('html'),
     });
 
+    if (popup.params.push) {
+      $el.addClass('sheet-modal-push');
+    }
+
     function handleClick(e) {
       const target = e.target;
       const $target = $(target);

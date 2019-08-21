@@ -90,7 +90,7 @@
   .ptr-refreshing {
     .ptr-preloader {
       transition-duration: 300ms;
-      transition-property: transform;
+      transition-property: transform, opacity;
     }
   }
 
@@ -102,6 +102,24 @@
     &.ptr-refreshing {
       .ptr-preloader {
         transform: translate3d(0, -66px, 0);
+      }
+    }
+  }
+  .ptr-with-navbar-large-transparent {
+    .ptr-preloader {
+      opacity: 0;
+    }
+    &.ptr-pull-down,
+    &.ptr-pull-up,
+    &.ptr-refreshing {
+      .ptr-preloader {
+        opacity: 1;
+      }
+    }
+    &.ptr-closing {
+      .ptr-preloader {
+        opacity: 0;
+        transition-duration: 300ms;
       }
     }
   }

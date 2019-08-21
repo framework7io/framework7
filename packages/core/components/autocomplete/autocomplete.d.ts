@@ -79,6 +79,10 @@ export namespace Autocomplete {
     searchbarDisableText?: string
     /** Enables searchbar disable button. By default, disabled for Aurora theme */
     searchbarDisableButton?: boolean
+    /** Enables Autocomplete popup to push view/s behind on open */
+    popupPush?: boolean
+    /** Enables ability to close Autocomplete popup with swipe */
+    popupSwipeToClose?: boolean | undefined
     /** Text which is displayed when no matches found. (default Nothing found) */
     notFoundText?: string
     /** Set to true to allow multiple selections. (default false) */

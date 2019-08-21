@@ -109,7 +109,7 @@ function SwipeBack(r) {
               els.push({
                 el: subNavEl,
                 'transform-origin': transformOrigin,
-                transform: progress => `translateX(calc(${progress} * (var(--f7-navbarTitleLargeOffset) - var(--f7-navbarLeftTextOffset)))) translateY(calc(${progress} * (var(--f7-navbar-large-title-height) + var(--f7-navbar-large-title-padding-vertical) / 2))) scale(${1 + (1 * progress)})`,
+                transform: progress => `translateX(calc(${progress} * (var(--f7-navbarTitleLargeOffset) - var(--f7-navbarLeftTextOffset)))) translateY(calc(${progress} * (var(--f7-navbar-large-title-height) - var(--f7-navbar-large-title-padding-vertical) / 2))) scale(${1 + (1 * progress)})`,
               });
             });
             return;
@@ -184,7 +184,7 @@ function SwipeBack(r) {
                 el: subNavEl,
                 'transform-origin': transformOriginTitleLarge,
                 opacity: progress => (progress ** 3),
-                transform: progress => `translateX(calc(${1 - progress} * (var(--f7-navbarLeftTextOffset) - var(--f7-navbarTitleLargeOffset)))) translateY(calc(${progress - 1} * var(--f7-navbar-large-title-height) + ${1 - progress} * var(--f7-navbar-large-title-padding-vertical) / 2)) scale(${0.5 + progress * 0.5})`,
+                transform: progress => `translateX(calc(${1 - progress} * (var(--f7-navbarLeftTextOffset) - var(--f7-navbarTitleLargeOffset)))) translateY(calc(${progress - 1} * var(--f7-navbar-large-title-height) + ${1 - progress} * var(--f7-navbar-large-title-padding-vertical))) scale(${0.5 + progress * 0.5})`,
               });
             });
             return;

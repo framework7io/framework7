@@ -737,6 +737,14 @@ class ColorPicker extends Framework7Class {
           },
         },
       };
+      if (modalType === 'popup') {
+        modalParams.push = params.popupPush;
+        modalParams.swipeToClose = params.popupSwipeToClose;
+      }
+      if (modalType === 'sheet') {
+        modalParams.push = params.sheetPush;
+        modalParams.swipeToClose = params.sheetSwipeToClose;
+      }
       if (params.routableModals) {
         self.view.router.navigate({
           url: self.url,

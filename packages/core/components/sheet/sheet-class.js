@@ -59,6 +59,10 @@ class Sheet extends Modal {
       $htmlEl: $('html'),
     });
 
+    if (sheet.params.push) {
+      $el.addClass('sheet-modal-push');
+    }
+
     let $pageContentEl;
     function scrollToElementOnOpen() {
       const $scrollEl = $(sheet.params.scrollToEl).eq(0);

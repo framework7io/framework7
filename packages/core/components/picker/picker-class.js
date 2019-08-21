@@ -432,10 +432,10 @@ class Picker extends Framework7Class {
 
   open() {
     const picker = this;
-    const { app, opened, inline, $inputEl } = picker;
+    const { app, opened, inline, $inputEl, params } = picker;
     if (opened) return;
-    if (picker.cols.length === 0 && picker.params.cols.length) {
-      picker.params.cols.forEach((col) => {
+    if (picker.cols.length === 0 && params.cols.length) {
+      params.cols.forEach((col) => {
         picker.cols.push(col);
       });
     }
@@ -451,7 +451,7 @@ class Picker extends Framework7Class {
     const modalType = isPopover ? 'popover' : 'sheet';
     const modalParams = {
       targetEl: $inputEl,
-      scrollToEl: picker.params.scrollToInput ? $inputEl : undefined,
+      scrollToEl: params.scrollToInput ? $inputEl : undefined,
       content: picker.render(),
       backdrop: isPopover,
       on: {
@@ -467,7 +467,11 @@ class Picker extends Framework7Class {
         closed() { picker.onClosed(); },
       },
     };
-    if (picker.params.routableModals) {
+    if (modalType === 'sheet') {
+      modalParams.push = params.sheetPush;
+      modalParams.swipeToClose = params.sheetSwipeToClose;
+    }
+    if (params.routableModals) {
       picker.view.router.navigate({
         url: picker.url,
         route: {

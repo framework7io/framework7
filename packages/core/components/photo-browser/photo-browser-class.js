@@ -169,7 +169,7 @@ class PhotoBrowser extends Framework7Class {
 
     const backLinkText = (pb.app.theme === 'ios' || pb.app.theme === 'aurora') && pb.params.backLinkText ? pb.params.backLinkText : '';
 
-    const renderNavbarCount = typeof pb.params.navbarShowCount === 'undefined' ? pb.params.photos.length > 0 : pb.params.navbarShowCount;
+    const renderNavbarCount = typeof pb.params.navbarShowCount === 'undefined' ? pb.params.photos.length > 1 : pb.params.navbarShowCount;
 
     const isPopup = pb.params.type !== 'page';
     const navbarHtml = `
@@ -548,6 +548,7 @@ class PhotoBrowser extends Framework7Class {
 
     const popupParams = {
       content: popupHtml,
+      push: pb.params.popupPush,
       on: {
         popupOpen(popup) {
           pb.onOpen('popup', popup.el);

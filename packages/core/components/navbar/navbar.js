@@ -365,8 +365,11 @@ const Navbar = {
       if (
         (collapseProgress === 0 && navbarCollapsed)
         || (collapseProgress === 1 && !navbarCollapsed)
-        || ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed))
+        // || ((collapseProgress === 1 && navbarCollapsed) || (collapseProgress === 0 && !navbarCollapsed))
       ) {
+        if (app.theme === 'md') {
+          $navbarEl.find('.navbar-inner').css('overflow', '');
+        }
         $navbarEl.find('.title').css('opacity', '');
         $navbarEl.find('.title-large-text, .subnavbar').css('transform', '');
         if (isLargeTransparent) {
@@ -374,7 +377,10 @@ const Navbar = {
         } else {
           $navbarEl.find('.navbar-bg').css('transform', '');
         }
-      } else {
+      } else if (collapseProgress > 0 && collapseProgress < 1) {
+        if (app.theme === 'md') {
+          $navbarEl.find('.navbar-inner').css('overflow', 'visible');
+        }
         $navbarEl.find('.title').css('opacity', collapseProgress);
         $navbarEl.find('.title-large-text, .subnavbar').css('transform', `translate3d(0px, ${-1 * collapseProgress * navbarTitleLargeHeight}px, 0)`);
         if (isLargeTransparent) {

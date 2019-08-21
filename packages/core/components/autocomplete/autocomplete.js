@@ -35,6 +35,9 @@ export default {
       searchbarDisableText: 'Cancel',
       searchbarDisableButton: undefined,
 
+      popupPush: true,
+      popupSwipeToClose: undefined,
+
       animate: true,
 
       autoFocus: false,

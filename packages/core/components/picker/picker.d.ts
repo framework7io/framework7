@@ -117,6 +117,10 @@ export namespace Picker {
     containerEl?: HTMLElement | CSSSelector
     /** Can be auto, popover (to open picker in popover), sheet (to open in sheet modal). In case of auto will open in sheet modal on small screens and in popover on large screens.. (default auto) */
     openIn?: string
+    /** Enables Picker sheet to push view/s behind on open */
+    sheetPush?: boolean
+    /** Enables ability to close Picker sheet with swipe */
+    sheetSwipeToClose?: boolean | undefined
     /** String with CSS selector or HTMLElement with related input element. */
     inputEl?: HTMLElement | CSSSelector
     /** Scroll viewport (page-content) to input when picker opened. (default true) */

@@ -28,11 +28,11 @@ class PullToRefresh extends Framework7Class {
     ptr.done = function done() {
       const $transitionTarget = isMaterial ? $preloaderEl : $el;
       $transitionTarget.transitionEnd(() => {
-        $el.removeClass('ptr-transitioning ptr-pull-up ptr-pull-down');
+        $el.removeClass('ptr-transitioning ptr-pull-up ptr-pull-down ptr-closing');
         $el.trigger('ptr:done');
         ptr.emit('local::done ptrDone', $el[0]);
       });
-      $el.removeClass('ptr-refreshing').addClass('ptr-transitioning');
+      $el.removeClass('ptr-refreshing').addClass('ptr-transitioning ptr-closing');
       return ptr;
     };
 
