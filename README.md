@@ -112,7 +112,7 @@ If you have questions about Framework7 or want to help others you are welcome to
 
 ## Docs
 
-Documentation available at http://framework7.io/docs/
+Documentation available at http://v1.framework7.io/docs/
 
 ## Tutorials
 
