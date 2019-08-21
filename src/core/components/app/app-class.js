@@ -74,6 +74,7 @@ class Framework7 extends Framework7Class {
       }()),
       // Initially passed parameters
       passedParams,
+      online: window.navigator.onLine,
     });
 
     // Save Root
@@ -181,6 +182,18 @@ class Framework7 extends Framework7Class {
       app.enableAutoDarkTheme();
     }
 
+    // Watch for online/offline state
+    window.addEventListener('offline', () => {
+      app.online = false;
+      app.emit('offline');
+      app.emit('connection', false);
+    });
+    window.addEventListener('online', () => {
+      app.online = true;
+      app.emit('online');
+      app.emit('connection', true);
+    });
+
     // Root class
     app.root.addClass('framework7-root');
 
@@ -188,10 +201,10 @@ class Framework7 extends Framework7Class {
     $('html').removeClass('ios md aurora').addClass(app.theme);
 
     // iOS Translucent
-    if (app.theme === 'ios' && app.params.iosTranslucentBars && Device.ios) {
+    if (app.params.iosTranslucentBars && app.theme === 'ios' && Device.ios) {
       $('html').addClass('ios-translucent-bars');
     }
-    if (app.theme === 'ios' && app.params.iosTranslucentModals && Device.ios) {
+    if (app.params.iosTranslucentModals && app.theme === 'ios' && Device.ios) {
       $('html').addClass('ios-translucent-modals');
     }
 
