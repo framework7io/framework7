@@ -22,22 +22,22 @@ export default class extends React.Component {
 
         <BlockTitle>Custom date format</BlockTitle>
         <List noHairlinesMd>
-          <ListInput type="datepicker" placeholder="Select date" readonly calendarParams={{dateFormat: 'DD, MM dd, yyyy'}} />
+          <ListInput type="datepicker" placeholder="Select date" readonly calendarParams={{dateFormat: { weekday: 'long', month: 'long', day: '2-digit', year: 'numeric' }}} />
         </List>
 
         <BlockTitle>Multiple Values</BlockTitle>
         <List noHairlinesMd>
-          <ListInput type="datepicker" placeholder="Select multiple dates" readonly calendarParams={{ dateFormat: 'M dd yyyy', multiple: true }}/>
+          <ListInput type="datepicker" placeholder="Select multiple dates" readonly calendarParams={{ dateFormat: { month: 'short', day: 'numeric' }, multiple: true }}/>
         </List>
 
         <BlockTitle>Range Picker</BlockTitle>
         <List noHairlinesMd>
-          <ListInput type="datepicker" placeholder="Select date range" readonly calendarParams={{ dateFormat: 'M dd yyyy', rangePicker: true }} />
+          <ListInput type="datepicker" placeholder="Select date range" readonly calendarParams={{ rangePicker: true }} />
         </List>
 
         <BlockTitle>Open in Modal</BlockTitle>
         <List noHairlinesMd>
-          <ListInput type="datepicker" placeholder="Select date" readonly calendarParams={{openIn: 'customModal', header: true, footer: true, dateFormat: 'MM dd yyyy'}} />
+          <ListInput type="datepicker" placeholder="Select date" readonly calendarParams={{openIn: 'customModal', header: true, footer: true}} />
         </List>
 
         <BlockTitle>Calendar Page</BlockTitle>
@@ -53,10 +53,6 @@ export default class extends React.Component {
           <div id="demo-calendar-inline-container"></div>
         </Block>
 
-        <BlockTitle>Jalali Calendar</BlockTitle>
-        <List noHairlinesMd>
-          <ListInput type="datepicker" placeholder="Your birth date in Jalali" readonly calendarParams={{calendarType: 'jalali'}} />
-        </List>
       </Page>
     );
   }

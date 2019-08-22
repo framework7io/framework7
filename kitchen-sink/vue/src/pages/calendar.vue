@@ -14,22 +14,22 @@
 
     <f7-block-title>Custom date format</f7-block-title>
     <f7-list no-hairlines-md>
-      <f7-list-input type="datepicker" placeholder="Select date" readonly :calendar-params="{dateFormat: 'DD, MM dd, yyyy'}" />
+      <f7-list-input type="datepicker" placeholder="Select date" readonly :calendar-params="{dateFormat: { weekday: 'long', month: 'long', day: '2-digit', year: 'numeric' }}" />
     </f7-list>
 
     <f7-block-title>Multiple Values</f7-block-title>
     <f7-list no-hairlines-md>
-      <f7-list-input type="datepicker" placeholder="Select multiple dates" readonly :calendar-params="{ dateFormat: 'M dd yyyy', multiple: true }" />
+      <f7-list-input type="datepicker" placeholder="Select multiple dates" readonly :calendar-params="{ dateFormat: { month: 'short', day: 'numeric' }, multiple: true }" />
     </f7-list>
 
     <f7-block-title>Range Picker</f7-block-title>
     <f7-list no-hairlines-md>
-      <f7-list-input type="datepicker" placeholder="Select date range" readonly :calendar-params="{ dateFormat: 'M dd yyyy', rangePicker: true }" />
+      <f7-list-input type="datepicker" placeholder="Select date range" readonly :calendar-params="{ rangePicker: true }" />
     </f7-list>
 
     <f7-block-title>Open in Modal</f7-block-title>
     <f7-list no-hairlines-md>
-      <f7-list-input type="datepicker" placeholder="Select date" readonly :calendar-params="{openIn: 'customModal', header: true, footer: true, dateFormat: 'MM dd yyyy'}" />
+      <f7-list-input type="datepicker" placeholder="Select date" readonly :calendar-params="{openIn: 'customModal', header: true, footer: true}" />
     </f7-list>
 
     <f7-block-title>Calendar Page</f7-block-title>
@@ -45,10 +45,6 @@
       <div id="demo-calendar-inline-container"></div>
     </f7-block>
 
-    <f7-block-title>Jalali Calendar</f7-block-title>
-    <f7-list no-hairlines-md>
-      <f7-list-input type="datepicker" placeholder="Your birth date in Jalali" readonly :calendar-params="{calendarType: 'jalali'}" />
-    </f7-list>
   </f7-page>
 </template>
 <script>
