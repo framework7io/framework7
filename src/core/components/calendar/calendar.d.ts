@@ -105,7 +105,7 @@ export namespace Calendar {
     weekendDays?: number[]
     
     /** Default date format. (default undefined - current locale format) */
-    dateFormat?: string | object | Function
+    dateFormat?: string | Intl.DateTimeFormatOptions | Function
     /** Enable to allows select multiple dates/values. (default false) */
     multiple?: boolean
     /** Enable to enable range picker. Not compatible with multiple. (default false) */
@@ -130,8 +130,22 @@ export namespace Calendar {
     weekHeader?: boolean
     /** Enable month selector in toolbar. (default true) */
     monthSelector?: boolean
-    /** Enable year picker in toolbar. (default true) */
+    /** Enables month picker to select a month when clicked on a month selector in toolbar (default true) */
+    monthPicker?: boolean
+    /** Enable year selector in toolbar. (default true) */
     yearSelector?: boolean
+    /** Enables year picker to select a year when clicked on a year selector in toolbar (default true) */
+    yearPicker?: boolean
+    /** Minimum available year for year picker, by default is today minus 100 years */
+    yearPickerMin?: number
+    /** Maximum available year for year picker, by default is today plus 100 years */
+    yearPickerMax?: number
+    /** Enables time picker (default false) */
+    timePicker?: boolean
+    /** Time format displayed in time selector. (default { hour: 'numeric', minute: 'numeric' }) */
+    timePickerFormat?: Intl.DateTimeFormatOptions
+    /** Text to display in time selector placeholder. (default "Select time") */
+    timePickerPlaceholder?: string
 
     // Container/opener-specific parameters
     /** String with CSS selector or HTMLElement where to place generated Calendar HTML. Use only for inline calendar. */
@@ -154,8 +168,10 @@ export namespace Calendar {
     closeByOutsideClick?: boolean
     /** Enables calendar toolbar. (default true) */
     toolbar?: boolean
-    /** Text for Done/Close toolbar button. (default Done) */
+    /** Text for Done/Close footer button. (default Done) */
     toolbarCloseText?: string
+    /** Enables footer with Done/Close button */
+    footer?: boolean
     /** Enables calendar header. (default false) */
     header?: boolean
     /** Default calendar header placeholder text. (default Select date) */

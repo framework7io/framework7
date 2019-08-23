@@ -53,6 +53,9 @@ export default {
       yearPicker: true,
       yearPickerMin: undefined,
       yearPickerMax: undefined,
+      timePicker: false,
+      timePickerFormat: { hour: 'numeric', minute: 'numeric' },
+      timePickerPlaceholder: 'Select time',
       weekHeader: true,
       value: null,
       // Common opener settings
@@ -76,9 +79,6 @@ export default {
       url: 'date/',
       backdrop: null,
       closeByBackdropClick: true,
-      timePicker: false,
-      timePickerFormat: { hour: 'numeric', minute: 'numeric' },
-      timePickerPlaceholder: 'Choose time',
       // Render functions
       renderWeekHeader: null,
       renderMonths: null,

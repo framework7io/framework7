@@ -1257,8 +1257,14 @@ class Calendar extends Framework7Class {
   renderYearPicker() {
     const calendar = this;
     const currentYear = calendar.currentYear;
-    const yearMin = calendar.params.yearPickerMin || new Date().getFullYear() - 100;
-    const yearMax = calendar.params.yearPickerMax || new Date().getFullYear() + 100;
+    let yearMin = calendar.params.yearPickerMin || new Date().getFullYear() - 100;
+    if (calendar.params.minDate) {
+      yearMin = Math.max(yearMin, new Date(calendar.params.minDate).getFullYear());
+    }
+    let yearMax = calendar.params.yearPickerMax || new Date().getFullYear() + 100;
+    if (calendar.params.maxDate) {
+      yearMax = Math.min(yearMax, new Date(calendar.params.maxDate).getFullYear());
+    }
     const years = [];
     for (let i = yearMin; i <= yearMax; i += 1) {
       years.push(i);
