@@ -343,7 +343,7 @@ function registerComponentMixin(name, mixin) {
   globalMixins[name] = mixin;
 }
 
-Component.registerComponentMixin = registerComponentMixin;
+Component.registerMixin = registerComponentMixin;
 
 export default Component;
 export { registerComponentMixin };
