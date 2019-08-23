@@ -59,7 +59,7 @@ export default {
   create() {
     const app = this;
     app.photoBrowser = ConstructorMethods({
-      defaultSelector: '.photo-browser',
+      defaultSelector: '.photo-browser-popup, .photo-browser-page',
       constructor: PhotoBrowser,
       app,
       domProp: 'f7PhotoBrowser',
