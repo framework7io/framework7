@@ -127,7 +127,7 @@ function swipePanel(panel) {
       if (!panel.opened) {
         $el.addClass('panel-in-swipe');
         $backdropEl.css('visibility', 'visible');
-        $el.trigger('panel:swipeopen', panel);
+        $el.trigger('panel:swipeopen');
         panel.emit('local::swipeOpen panelSwipeOpen', panel);
       }
       panelWidth = $el[0].offsetWidth;
@@ -168,7 +168,7 @@ function swipePanel(panel) {
       $viewEl.transform(`translate3d(${translate}px,0,0)`).transition(0);
       $backdropEl.transform(`translate3d(${translate}px,0,0)`).transition(0);
 
-      $el.trigger('panel:swipe', panel, Math.abs(translate / panelWidth));
+      $el.trigger('panel:swipe', Math.abs(translate / panelWidth));
       panel.emit('local::swipe panelSwipe', panel, Math.abs(translate / panelWidth));
     } else {
       if (side === 'left') translate -= panelWidth;
@@ -178,7 +178,7 @@ function swipePanel(panel) {
       backdropOpacity = 1 - Math.abs(translate / panelWidth);
       $backdropEl.css({ opacity: backdropOpacity });
 
-      $el.trigger('panel:swipe', panel, Math.abs(translate / panelWidth));
+      $el.trigger('panel:swipe', Math.abs(translate / panelWidth));
       panel.emit('local::swipe panelSwipe', panel, Math.abs(translate / panelWidth));
     }
   }

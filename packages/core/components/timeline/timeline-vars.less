@@ -10,11 +10,11 @@
   --f7-timeline-item-inner-bg-color: #fff;
   --f7-timeline-item-text-font-weight: inherit;
   --f7-timeline-item-subtitle-font-weight: inherit;
-  .theme-dark, &.theme-dark {
+  .dark-vars({
     --f7-timeline-item-inner-bg-color: #1c1c1d;
     --f7-timeline-horizontal-item-border-color: rgba(255, 255, 255, 0.15);
     --f7-timeline-horizontal-item-date-border-color: rgba(255, 255, 255, 0.15);
-  }
+  });
 }
 .ios-vars({
   --f7-timeline-padding-horizontal: 16px;
@@ -36,9 +36,9 @@
   --f7-timeline-horizontal-item-border-color: rgba(0,0,0,0.22);
   --f7-timeline-horizontal-item-date-border-color: rgba(0,0,0,0.22);
   --f7-timeline-horizontal-item-date-shadow-image: none;
-  .theme-dark, &.theme-dark {
+  .dark-vars({
     --f7-timeline-item-time-text-color: rgba(255,255,255,0.55);
-  }
+  });
 });
 .md-vars({
   --f7-timeline-padding-horizontal: 16px;
@@ -60,9 +60,9 @@
   --f7-timeline-horizontal-item-border-color: rgba(0,0,0,.12);
   --f7-timeline-horizontal-item-date-border-color: transparent;
   --f7-timeline-horizontal-item-date-shadow-image: var(--f7-bars-shadow-bottom-image);
-  .theme-dark, &.theme-dark {
+  .dark-vars({
     --f7-timeline-item-time-text-color: rgba(255,255,255,0.54);
-  }
+  });
 });
 .aurora-vars({
   --f7-timeline-padding-horizontal: 10px;
@@ -85,8 +85,8 @@
   --f7-timeline-horizontal-item-border-color: rgba(0,0,0,0.2);
   --f7-timeline-horizontal-item-date-border-color: rgba(0,0,0,0.2);
   --f7-timeline-horizontal-item-date-shadow-image: none;
-  .theme-dark, &.theme-dark {
+  .dark-vars({
     --f7-timeline-item-time-text-color: rgba(255,255,255,0.54);
     --f7-timeline-item-text-color: rgba(255,255,255,0.54);
-  }
+  });
 });

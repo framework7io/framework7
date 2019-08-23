@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.0-beta.7
+ * Framework7 5.0.0-beta.10
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: August 21, 2019
+ * Released on: August 23, 2019
  */
 
 (function (global, factory) {
@@ -3047,22 +3047,6 @@
       }
     }
 
-    // Meta statusbar
-    var metaStatusbar = doc.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
-
-    // Check for status bar and fullscreen app mode
-    device.needsStatusbarOverlay = function needsStatusbarOverlay() {
-      if (device.desktop) { return false; }
-      if (device.standalone && device.ios && metaStatusbar && metaStatusbar.content === 'black-translucent') {
-        return true;
-      }
-      if ((device.webView || (device.android && device.cordova)) && (win.innerWidth * win.innerHeight === win.screen.width * win.screen.height)) {
-        return true;
-      }
-      return false;
-    };
-    device.statusbar = device.needsStatusbarOverlay();
-
     // Pixel Ratio
     device.pixelRatio = win.devicePixelRatio || 1;
 
@@ -3621,6 +3605,7 @@
         }()),
         // Initially passed parameters
         passedParams: passedParams,
+        online: win.navigator.onLine,
       });
 
       // Save Root
@@ -3738,6 +3723,18 @@
         app.enableAutoDarkTheme();
       }
 
+      // Watch for online/offline state
+      win.addEventListener('offline', function () {
+        app.online = false;
+        app.emit('offline');
+        app.emit('connection', false);
+      });
+      win.addEventListener('online', function () {
+        app.online = true;
+        app.emit('online');
+        app.emit('connection', true);
+      });
+
       // Root class
       app.root.addClass('framework7-root');
 
@@ -3745,10 +3742,10 @@
       $('html').removeClass('ios md aurora').addClass(app.theme);
 
       // iOS Translucent
-      if (app.theme === 'ios' && app.params.iosTranslucentBars && Device.ios) {
+      if (app.params.iosTranslucentBars && app.theme === 'ios' && Device.ios) {
         $('html').addClass('ios-translucent-bars');
       }
-      if (app.theme === 'ios' && app.params.iosTranslucentModals && Device.ios) {
+      if (app.params.iosTranslucentModals && app.theme === 'ios' && Device.ios) {
         $('html').addClass('ios-translucent-modals');
       }
 
@@ -3854,16 +3851,8 @@
         // OS classes
         if (Device.os && !Device.desktop) {
           classNames.push(
-            ("device-" + (Device.os)),
-            ("device-" + (Device.os) + "-" + (Device.osVersion.split('.')[0])),
-            ("device-" + (Device.os) + "-" + (Device.osVersion.replace(/\./g, '-')))
+            ("device-" + (Device.os))
           );
-          if (Device.os === 'ios') {
-            var major = parseInt(Device.osVersion.split('.')[0], 10);
-            for (var i = major - 1; i >= 6; i -= 1) {
-              classNames.push(("device-ios-gt-" + i));
-            }
-          }
         } else if (Device.desktop) {
           classNames.push('device-desktop');
           if (Device.os) {
@@ -9803,7 +9792,7 @@
       var view = this;
       var app = view.app;
 
-      view.$el.trigger('view:beforedestroy', view);
+      view.$el.trigger('view:beforedestroy');
       view.emit('local::beforeDestroy viewBeforeDestroy', view);
 
       app.off('resize', view.checkMasterDetailBreakpoint);
@@ -9844,14 +9833,14 @@
       if ((typeof force === 'undefined' && isMasterDetail) || force === true) {
         view.$el.addClass('view-master-detail');
         if (!wasMasterDetail) {
-          view.emit('local::masterDetailBreakpoint viewMasterDetailBreakpoint');
-          view.$el.trigger('view:masterDetailBreakpoint', view);
+          view.emit('local::masterDetailBreakpoint viewMasterDetailBreakpoint', view);
+          view.$el.trigger('view:masterDetailBreakpoint');
         }
       } else {
         view.$el.removeClass('view-master-detail');
         if (wasMasterDetail) {
-          view.emit('local::masterDetailBreakpoint viewMasterDetailBreakpoint');
-          view.$el.trigger('view:masterDetailBreakpoint', view);
+          view.emit('local::masterDetailBreakpoint viewMasterDetailBreakpoint', view);
+          view.$el.trigger('view:masterDetailBreakpoint');
         }
       }
     };
@@ -9871,7 +9860,7 @@
           view.initMasterDetail();
         }
         view.router.init();
-        view.$el.trigger('view:init', view);
+        view.$el.trigger('view:init');
         view.emit('local::init viewInit', view);
       }
     };
@@ -10124,7 +10113,7 @@
             });
         }
         var cachedComponent;
-        if (compiledUrl) {
+        if (compiledUrl && router.params.componentCache) {
           router.cache.components.forEach(function (cached) {
             if (cached.url === compiledUrl) { cachedComponent = cached.component; }
           });
@@ -10141,10 +10130,12 @@
             .xhrRequest(url, options)
             .then(function (loadedComponent) {
               var parsedComponent = app.component.parse(loadedComponent);
-              router.cache.components.push({
-                url: compiledUrl,
-                component: parsedComponent,
-              });
+              if (router.params.componentCache) {
+                router.cache.components.push({
+                  url: compiledUrl,
+                  component: parsedComponent,
+                });
+              }
               compile(parsedComponent);
             })
             .catch(function (err) {
@@ -11579,7 +11570,7 @@
     globalMixins[name] = mixin;
   }
 
-  Component.registerComponentMixin = registerComponentMixin;
+  Component.registerMixin = registerComponentMixin;
 
   function parseComponent(componentString) {
     var id = Utils.id();
@@ -11975,6 +11966,7 @@
         xhrCacheIgnore: [],
         xhrCacheIgnoreGetParameters: false,
         xhrCacheDuration: 1000 * 60 * 10, // Ten minutes
+        componentCache: true,
         preloadPreviousPage: true,
         allowDuplicateUrls: false,
         reloadPages: false,
@@ -12083,16 +12075,23 @@
   var Navbar = {
     size: function size(el) {
       var app = this;
-      if (app.theme !== 'ios' && !app.params.navbar[((app.theme) + "CenterTitle")]) {
-        return;
-      }
+
       var $el = $(el);
+
       if ($el.hasClass('navbars')) {
         $el = $el.children('.navbar').each(function (index, navbarEl) {
           app.navbar.size(navbarEl);
         });
         return;
       }
+
+      var needCenterTitle = (
+        $el.children('.navbar-inner').hasClass('navbar-inner-centered-title')
+        || app.params.navbar[((app.theme) + "CenterTitle")]
+      );
+      var needLeftTitle = app.theme === 'ios' && !app.params.navbar[((app.theme) + "CenterTitle")];
+
+      if (!needCenterTitle && !needLeftTitle) { return; }
 
       if (
         $el.hasClass('stacked')
@@ -12213,7 +12212,7 @@
       }
 
       // Center title
-      if (app.params.navbar[((app.theme) + "CenterTitle")]) {
+      if (needCenterTitle) {
         var titleLeft = diff;
         if (app.rtl && noLeft && noRight && title.length > 0) { titleLeft = -titleLeft; }
         title.css({ left: (titleLeft + "px") });
@@ -12685,18 +12684,12 @@
       },
       'panelOpen panelSwipeOpen modalOpen': function onPanelModalOpen(instance) {
         var app = this;
-        if (!app.params.navbar[((app.theme) + "CenterTitle")]) {
-          return;
-        }
         instance.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each(function (index, navbarEl) {
           app.navbar.size(navbarEl);
         });
       },
       tabShow: function tabShow(tabEl) {
         var app = this;
-        if (!app.params.navbar[((app.theme) + "CenterTitle")]) {
-          return;
-        }
         $(tabEl).find('.navbar:not(.navbar-previous):not(.stacked)').each(function (index, navbarEl) {
           app.navbar.size(navbarEl);
         });
@@ -12741,9 +12734,6 @@
       navbar: {
         postpatch: function postpatch(vnode) {
           var app = this;
-          if (!app.params.navbar[((app.theme) + "CenterTitle")]) {
-            return;
-          }
           app.navbar.size(vnode.elm);
         },
       },
@@ -13098,13 +13088,13 @@
       modal.opened = true;
       openedModals.push(modal);
       $('html').addClass(("with-modal-" + (modal.type.toLowerCase())));
-      modal.$el.trigger(("modal:open " + (modal.type.toLowerCase()) + ":open"), modal);
+      modal.$el.trigger(("modal:open " + (modal.type.toLowerCase()) + ":open"));
       modal.emit(("local::open modalOpen " + (modal.type) + "Open"), modal);
     };
 
     Modal.prototype.onOpened = function onOpened () {
       var modal = this;
-      modal.$el.trigger(("modal:opened " + (modal.type.toLowerCase()) + ":opened"), modal);
+      modal.$el.trigger(("modal:opened " + (modal.type.toLowerCase()) + ":opened"));
       modal.emit(("local::opened modalOpened " + (modal.type) + "Opened"), modal);
     };
 
@@ -13114,7 +13104,7 @@
       if (!modal.type || !modal.$el) { return; }
       openedModals.splice(openedModals.indexOf(modal), 1);
       $('html').removeClass(("with-modal-" + (modal.type.toLowerCase())));
-      modal.$el.trigger(("modal:close " + (modal.type.toLowerCase()) + ":close"), modal);
+      modal.$el.trigger(("modal:close " + (modal.type.toLowerCase()) + ":close"));
       modal.emit(("local::close modalClose " + (modal.type) + "Close"), modal);
     };
 
@@ -13123,7 +13113,7 @@
       if (!modal.type || !modal.$el) { return; }
       modal.$el.removeClass('modal-out');
       modal.$el.hide();
-      modal.$el.trigger(("modal:closed " + (modal.type.toLowerCase()) + ":closed"), modal);
+      modal.$el.trigger(("modal:closed " + (modal.type.toLowerCase()) + ":closed"));
       modal.emit(("local::closed modalClosed " + (modal.type) + "Closed"), modal);
     };
 
@@ -13298,7 +13288,7 @@
       if (modal.destroyed) { return; }
       modal.emit(("local::beforeDestroy modalBeforeDestroy " + (modal.type) + "BeforeDestroy"), modal);
       if (modal.$el) {
-        modal.$el.trigger(("modal:beforedestroy " + (modal.type.toLowerCase()) + ":beforedestroy"), modal);
+        modal.$el.trigger(("modal:beforedestroy " + (modal.type.toLowerCase()) + ":beforedestroy"));
         if (modal.$el.length && modal.$el[0].f7Modal) {
           delete modal.$el[0].f7Modal;
         }

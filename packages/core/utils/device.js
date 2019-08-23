@@ -1,4 +1,4 @@
-import { window, document } from 'ssr-window';
+import { window } from 'ssr-window';
 import Support from './support';
 
 const Device = (function Device() {
@@ -107,22 +107,6 @@ const Device = (function Device() {
       device.os = 'windows';
     }
   }
-
-  // Meta statusbar
-  const metaStatusbar = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
-
-  // Check for status bar and fullscreen app mode
-  device.needsStatusbarOverlay = function needsStatusbarOverlay() {
-    if (device.desktop) return false;
-    if (device.standalone && device.ios && metaStatusbar && metaStatusbar.content === 'black-translucent') {
-      return true;
-    }
-    if ((device.webView || (device.android && device.cordova)) && (window.innerWidth * window.innerHeight === window.screen.width * window.screen.height)) {
-      return true;
-    }
-    return false;
-  };
-  device.statusbar = device.needsStatusbarOverlay();
 
   // Pixel Ratio
   device.pixelRatio = window.devicePixelRatio || 1;

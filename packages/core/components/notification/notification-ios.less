@@ -45,7 +45,11 @@
       margin-top: -22px;
     }
   }
-  .theme-dark, &.theme-dark .notification-close-button:after {
-    color: #fff;
-  }
+  .if-dark-theme({
+    .theme-dark, &.theme-dark {
+      .notification-close-button:after {
+        color: #fff;
+      }
+    }
+  });
 }

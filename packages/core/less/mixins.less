@@ -25,6 +25,11 @@
     @ruleset();
   }
 }
+.if-dark-theme(@ruleset) {
+  & when(@includeDarkTheme) {
+    @ruleset();
+  }
+}
 .ios-vars(@ruleset) {
   & when (@includeIosTheme) {
     .ios {
@@ -42,6 +47,13 @@
 .aurora-vars(@ruleset) {
   & when (@includeAuroraTheme) {
     .aurora {
+      @ruleset();
+    }
+  }
+}
+.dark-vars(@ruleset) {
+  & when (@includeAuroraTheme) {
+    .theme-dark, &.theme-dark {
       @ruleset();
     }
   }

@@ -504,7 +504,7 @@ class PullToRefresh extends Framework7Class {
   destroy() {
     let ptr = this;
     ptr.emit('local::beforeDestroy ptrBeforeDestroy', ptr);
-    ptr.$el.trigger('ptr:beforedestroy', ptr);
+    ptr.$el.trigger('ptr:beforedestroy');
     delete ptr.el.f7PullToRefresh;
     ptr.detachEvents();
     Utils.deleteProps(ptr);

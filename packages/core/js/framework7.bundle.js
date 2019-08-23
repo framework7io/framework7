@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.0-beta.7
+ * Framework7 5.0.0-beta.10
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: August 21, 2019
+ * Released on: August 23, 2019
  */
 
 (function (global, factory) {
@@ -3047,22 +3047,6 @@
       }
     }
 
-    // Meta statusbar
-    var metaStatusbar = doc.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
-
-    // Check for status bar and fullscreen app mode
-    device.needsStatusbarOverlay = function needsStatusbarOverlay() {
-      if (device.desktop) { return false; }
-      if (device.standalone && device.ios && metaStatusbar && metaStatusbar.content === 'black-translucent') {
-        return true;
-      }
-      if ((device.webView || (device.android && device.cordova)) && (win.innerWidth * win.innerHeight === win.screen.width * win.screen.height)) {
-        return true;
-      }
-      return false;
-    };
-    device.statusbar = device.needsStatusbarOverlay();
-
     // Pixel Ratio
     device.pixelRatio = win.devicePixelRatio || 1;
 
@@ -3621,6 +3605,7 @@
         }()),
         // Initially passed parameters
         passedParams: passedParams,
+        online: win.navigator.onLine,
       });
 
       // Save Root
@@ -3738,6 +3723,18 @@
         app.enableAutoDarkTheme();
       }
 
+      // Watch for online/offline state
+      win.addEventListener('offline', function () {
+        app.online = false;
+        app.emit('offline');
+        app.emit('connection', false);
+      });
+      win.addEventListener('online', function () {
+        app.online = true;
+        app.emit('online');
+        app.emit('connection', true);
+      });
+
       // Root class
       app.root.addClass('framework7-root');
 
@@ -3745,10 +3742,10 @@
       $('html').removeClass('ios md aurora').addClass(app.theme);
 
       // iOS Translucent
-      if (app.theme === 'ios' && app.params.iosTranslucentBars && Device.ios) {
+      if (app.params.iosTranslucentBars && app.theme === 'ios' && Device.ios) {
         $('html').addClass('ios-translucent-bars');
       }
-      if (app.theme === 'ios' && app.params.iosTranslucentModals && Device.ios) {
+      if (app.params.iosTranslucentModals && app.theme === 'ios' && Device.ios) {
         $('html').addClass('ios-translucent-modals');
       }
 
@@ -3854,16 +3851,8 @@
         // OS classes
         if (Device.os && !Device.desktop) {
           classNames.push(
-            ("device-" + (Device.os)),
-            ("device-" + (Device.os) + "-" + (Device.osVersion.split('.')[0])),
-            ("device-" + (Device.os) + "-" + (Device.osVersion.replace(/\./g, '-')))
+            ("device-" + (Device.os))
           );
-          if (Device.os === 'ios') {
-            var major = parseInt(Device.osVersion.split('.')[0], 10);
-            for (var i = major - 1; i >= 6; i -= 1) {
-              classNames.push(("device-ios-gt-" + i));
-            }
-          }
         } else if (Device.desktop) {
           classNames.push('device-desktop');
           if (Device.os) {
@@ -9803,7 +9792,7 @@
       var view = this;
       var app = view.app;
 
-      view.$el.trigger('view:beforedestroy', view);
+      view.$el.trigger('view:beforedestroy');
       view.emit('local::beforeDestroy viewBeforeDestroy', view);
 
       app.off('resize', view.checkMasterDetailBreakpoint);
@@ -9844,14 +9833,14 @@
       if ((typeof force === 'undefined' && isMasterDetail) || force === true) {
         view.$el.addClass('view-master-detail');
         if (!wasMasterDetail) {
-          view.emit('local::masterDetailBreakpoint viewMasterDetailBreakpoint');
-          view.$el.trigger('view:masterDetailBreakpoint', view);
+          view.emit('local::masterDetailBreakpoint viewMasterDetailBreakpoint', view);
+          view.$el.trigger('view:masterDetailBreakpoint');
         }
       } else {
         view.$el.removeClass('view-master-detail');
         if (wasMasterDetail) {
-          view.emit('local::masterDetailBreakpoint viewMasterDetailBreakpoint');
-          view.$el.trigger('view:masterDetailBreakpoint', view);
+          view.emit('local::masterDetailBreakpoint viewMasterDetailBreakpoint', view);
+          view.$el.trigger('view:masterDetailBreakpoint');
         }
       }
     };
@@ -9871,7 +9860,7 @@
           view.initMasterDetail();
         }
         view.router.init();
-        view.$el.trigger('view:init', view);
+        view.$el.trigger('view:init');
         view.emit('local::init viewInit', view);
       }
     };
@@ -10124,7 +10113,7 @@
             });
         }
         var cachedComponent;
-        if (compiledUrl) {
+        if (compiledUrl && router.params.componentCache) {
           router.cache.components.forEach(function (cached) {
             if (cached.url === compiledUrl) { cachedComponent = cached.component; }
           });
@@ -10141,10 +10130,12 @@
             .xhrRequest(url, options)
             .then(function (loadedComponent) {
               var parsedComponent = app.component.parse(loadedComponent);
-              router.cache.components.push({
-                url: compiledUrl,
-                component: parsedComponent,
-              });
+              if (router.params.componentCache) {
+                router.cache.components.push({
+                  url: compiledUrl,
+                  component: parsedComponent,
+                });
+              }
               compile(parsedComponent);
             })
             .catch(function (err) {
@@ -11579,7 +11570,7 @@
     globalMixins[name] = mixin;
   }
 
-  Component.registerComponentMixin = registerComponentMixin;
+  Component.registerMixin = registerComponentMixin;
 
   function parseComponent(componentString) {
     var id = Utils.id();
@@ -11975,6 +11966,7 @@
         xhrCacheIgnore: [],
         xhrCacheIgnoreGetParameters: false,
         xhrCacheDuration: 1000 * 60 * 10, // Ten minutes
+        componentCache: true,
         preloadPreviousPage: true,
         allowDuplicateUrls: false,
         reloadPages: false,
@@ -12083,16 +12075,23 @@
   var Navbar = {
     size: function size(el) {
       var app = this;
-      if (app.theme !== 'ios' && !app.params.navbar[((app.theme) + "CenterTitle")]) {
-        return;
-      }
+
       var $el = $(el);
+
       if ($el.hasClass('navbars')) {
         $el = $el.children('.navbar').each(function (index, navbarEl) {
           app.navbar.size(navbarEl);
         });
         return;
       }
+
+      var needCenterTitle = (
+        $el.children('.navbar-inner').hasClass('navbar-inner-centered-title')
+        || app.params.navbar[((app.theme) + "CenterTitle")]
+      );
+      var needLeftTitle = app.theme === 'ios' && !app.params.navbar[((app.theme) + "CenterTitle")];
+
+      if (!needCenterTitle && !needLeftTitle) { return; }
 
       if (
         $el.hasClass('stacked')
@@ -12213,7 +12212,7 @@
       }
 
       // Center title
-      if (app.params.navbar[((app.theme) + "CenterTitle")]) {
+      if (needCenterTitle) {
         var titleLeft = diff;
         if (app.rtl && noLeft && noRight && title.length > 0) { titleLeft = -titleLeft; }
         title.css({ left: (titleLeft + "px") });
@@ -12685,18 +12684,12 @@
       },
       'panelOpen panelSwipeOpen modalOpen': function onPanelModalOpen(instance) {
         var app = this;
-        if (!app.params.navbar[((app.theme) + "CenterTitle")]) {
-          return;
-        }
         instance.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each(function (index, navbarEl) {
           app.navbar.size(navbarEl);
         });
       },
       tabShow: function tabShow(tabEl) {
         var app = this;
-        if (!app.params.navbar[((app.theme) + "CenterTitle")]) {
-          return;
-        }
         $(tabEl).find('.navbar:not(.navbar-previous):not(.stacked)').each(function (index, navbarEl) {
           app.navbar.size(navbarEl);
         });
@@ -12741,9 +12734,6 @@
       navbar: {
         postpatch: function postpatch(vnode) {
           var app = this;
-          if (!app.params.navbar[((app.theme) + "CenterTitle")]) {
-            return;
-          }
           app.navbar.size(vnode.elm);
         },
       },
@@ -13098,13 +13088,13 @@
       modal.opened = true;
       openedModals.push(modal);
       $('html').addClass(("with-modal-" + (modal.type.toLowerCase())));
-      modal.$el.trigger(("modal:open " + (modal.type.toLowerCase()) + ":open"), modal);
+      modal.$el.trigger(("modal:open " + (modal.type.toLowerCase()) + ":open"));
       modal.emit(("local::open modalOpen " + (modal.type) + "Open"), modal);
     };
 
     Modal.prototype.onOpened = function onOpened () {
       var modal = this;
-      modal.$el.trigger(("modal:opened " + (modal.type.toLowerCase()) + ":opened"), modal);
+      modal.$el.trigger(("modal:opened " + (modal.type.toLowerCase()) + ":opened"));
       modal.emit(("local::opened modalOpened " + (modal.type) + "Opened"), modal);
     };
 
@@ -13114,7 +13104,7 @@
       if (!modal.type || !modal.$el) { return; }
       openedModals.splice(openedModals.indexOf(modal), 1);
       $('html').removeClass(("with-modal-" + (modal.type.toLowerCase())));
-      modal.$el.trigger(("modal:close " + (modal.type.toLowerCase()) + ":close"), modal);
+      modal.$el.trigger(("modal:close " + (modal.type.toLowerCase()) + ":close"));
       modal.emit(("local::close modalClose " + (modal.type) + "Close"), modal);
     };
 
@@ -13123,7 +13113,7 @@
       if (!modal.type || !modal.$el) { return; }
       modal.$el.removeClass('modal-out');
       modal.$el.hide();
-      modal.$el.trigger(("modal:closed " + (modal.type.toLowerCase()) + ":closed"), modal);
+      modal.$el.trigger(("modal:closed " + (modal.type.toLowerCase()) + ":closed"));
       modal.emit(("local::closed modalClosed " + (modal.type) + "Closed"), modal);
     };
 
@@ -13298,7 +13288,7 @@
       if (modal.destroyed) { return; }
       modal.emit(("local::beforeDestroy modalBeforeDestroy " + (modal.type) + "BeforeDestroy"), modal);
       if (modal.$el) {
-        modal.$el.trigger(("modal:beforedestroy " + (modal.type.toLowerCase()) + ":beforedestroy"), modal);
+        modal.$el.trigger(("modal:beforedestroy " + (modal.type.toLowerCase()) + ":beforedestroy"));
         if (modal.$el.length && modal.$el[0].f7Modal) {
           delete modal.$el[0].f7Modal;
         }
@@ -17529,9 +17519,9 @@
         }
         var itemContent = index.indexes[itemIndex];
 
-        index.$el.trigger('listindex:click', itemContent, itemIndex);
+        index.$el.trigger('listindex:click', { content: itemContent, index: itemIndex });
         index.emit('local::click listIndexClick', index, itemContent, itemIndex);
-        index.$el.trigger('listindex:select', itemContent, itemIndex);
+        index.$el.trigger('listindex:select', { content: itemContent, index: itemIndex });
         index.emit('local::select listIndexSelect', index, itemContent, itemIndex);
 
         if (index.$listEl && index.params.scrollList) {
@@ -17590,7 +17580,7 @@
 
         previousIndex = itemIndex;
 
-        index.$el.trigger('listindex:select', index);
+        index.$el.trigger('listindex:select');
         index.emit('local::select listIndexSelect', index, itemContent, itemIndex);
       }
       function handleTouchEnd() {
@@ -17771,7 +17761,7 @@
     ListIndex.prototype.destroy = function destroy () {
       var index = this;
       index.$el.trigger('listindex:beforedestroy', index);
-      index.emit('local::beforeDestroy listIndexBeforeDestroy', index);
+      index.emit('local::beforeDestroy listIndexBeforeDestroy');
       index.detachEvents();
       if (index.$el[0]) {
         index.$el[0].f7ListIndex = null;
@@ -18204,7 +18194,7 @@
         if (!panel.opened) {
           $el.addClass('panel-in-swipe');
           $backdropEl.css('visibility', 'visible');
-          $el.trigger('panel:swipeopen', panel);
+          $el.trigger('panel:swipeopen');
           panel.emit('local::swipeOpen panelSwipeOpen', panel);
         }
         panelWidth = $el[0].offsetWidth;
@@ -18245,7 +18235,7 @@
         $viewEl.transform(("translate3d(" + translate + "px,0,0)")).transition(0);
         $backdropEl.transform(("translate3d(" + translate + "px,0,0)")).transition(0);
 
-        $el.trigger('panel:swipe', panel, Math.abs(translate / panelWidth));
+        $el.trigger('panel:swipe', Math.abs(translate / panelWidth));
         panel.emit('local::swipe panelSwipe', panel, Math.abs(translate / panelWidth));
       } else {
         if (side === 'left') { translate -= panelWidth; }
@@ -18255,7 +18245,7 @@
         backdropOpacity = 1 - Math.abs(translate / panelWidth);
         $backdropEl.css({ opacity: backdropOpacity });
 
-        $el.trigger('panel:swipe', panel, Math.abs(translate / panelWidth));
+        $el.trigger('panel:swipe', Math.abs(translate / panelWidth));
         panel.emit('local::swipe panelSwipe', panel, Math.abs(translate / panelWidth));
       }
     }
@@ -18463,7 +18453,7 @@
         $viewEl.css(("margin-" + side), (newPanelWidth + "px"));
       }
 
-      $el.trigger('panel:resize', panel, newPanelWidth);
+      $el.trigger('panel:resize', newPanelWidth);
       panel.emit('local::resize panelResize', panel, newPanelWidth);
     }
     function handleTouchEnd() {
@@ -18670,7 +18660,7 @@
           app.allowPanelOpen = true;
           if (emitEvents) {
             app.emit('local::breakpoint panelBreakpoint');
-            panel.$el.trigger('panel:breakpoint', panel);
+            panel.$el.trigger('panel:breakpoint');
           }
         } else {
           $viewEl.css(( obj$1 = {}, obj$1[("margin-" + side)] = (($el.width()) + "px"), obj$1 ));
@@ -18682,7 +18672,7 @@
         $viewEl.css(( obj$2 = {}, obj$2[("margin-" + side)] = '', obj$2 ));
         if (emitEvents) {
           app.emit('local::breakpoint panelBreakpoint');
-          panel.$el.trigger('panel:breakpoint', panel);
+          panel.$el.trigger('panel:breakpoint');
         }
       }
     };
@@ -18733,7 +18723,7 @@
           app.allowPanelOpen = true;
           if (emitEvents) {
             app.emit('local::collapsedBreakpoint panelCollapsedBreakpoint');
-            panel.$el.trigger('panel:collapsedbreakpoint', panel);
+            panel.$el.trigger('panel:collapsedbreakpoint');
           }
         }
       } else if (wasVisible) {
@@ -18741,7 +18731,7 @@
         panel.collapsed = false;
         if (emitEvents) {
           app.emit('local::collapsedBreakpoint panelCollapsedBreakpoint');
-          panel.$el.trigger('panel:collapsedbreakpoint', panel);
+          panel.$el.trigger('panel:collapsedbreakpoint');
         }
       }
     };
@@ -18792,14 +18782,14 @@
       panel.opened = true;
       app.panel.allowOpen = false;
 
-      panel.$el.trigger('panel:beforeopen', panel);
+      panel.$el.trigger('panel:beforeopen');
       panel.emit('local::beforeOpen panelBeforeOpen', panel);
 
       if (modifyHtmlClasses) {
         $('html').addClass(("with-panel with-panel-" + (panel.side) + "-" + (panel.effect)));
       }
 
-      panel.$el.trigger('panel:open', panel);
+      panel.$el.trigger('panel:open');
       panel.emit('local::open panelOpen', panel);
     };
 
@@ -18809,7 +18799,7 @@
 
       app.panel.allowOpen = true;
 
-      panel.$el.trigger('panel:opened', panel);
+      panel.$el.trigger('panel:opened');
       panel.emit('local::opened panelOpened', panel);
     };
 
@@ -18820,13 +18810,13 @@
       panel.opened = false;
       app.panel.allowOpen = false;
 
-      panel.$el.trigger('panel:beforeclose', panel);
+      panel.$el.trigger('panel:beforeclose');
       panel.emit('local::beforeClose panelBeforeClose', panel);
 
       $('html').addClass('with-panel-closing');
       $('html').removeClass(("with-panel with-panel-" + (panel.side) + "-" + (panel.effect)));
 
-      panel.$el.trigger('panel:close', panel);
+      panel.$el.trigger('panel:close');
       panel.emit('local::close panelClose', panel);
     };
 
@@ -18836,7 +18826,7 @@
       app.panel.allowOpen = true;
       $('html').removeClass('with-panel-closing');
       panel.$el.removeClass('panel-out');
-      panel.$el.trigger('panel:closed', panel);
+      panel.$el.trigger('panel:closed');
       panel.emit('local::closed panelClosed', panel);
     };
 
@@ -19041,7 +19031,7 @@
       }
 
       panel.emit('local::beforeDestroy panelBeforeDestroy', panel);
-      panel.$el.trigger('panel:beforedestroy', panel);
+      panel.$el.trigger('panel:beforedestroy');
 
       if (panel.visibleBreakpointResizeHandler) {
         app.off('resize', panel.visibleBreakpointResizeHandler);
@@ -19054,10 +19044,10 @@
         panel.$el.removeClass('panel-in-breakpoint panel-in-collapsed panel-in');
         $viewEl.css(( obj = {}, obj[("margin-" + (panel.side))] = '', obj ));
         app.emit('local::breakpoint panelBreakpoint');
-        panel.$el.trigger('panel:breakpoint', panel);
+        panel.$el.trigger('panel:breakpoint');
       }
 
-      panel.$el.trigger('panel:destroy', panel);
+      panel.$el.trigger('panel:destroy');
       panel.emit('local::destroy panelDestroy');
       if (panel.el) {
         panel.el.f7Panel = null;
@@ -20487,7 +20477,7 @@
         }
       }
       function handleInputChange() {
-        toggle.$el.trigger('toggle:change', toggle);
+        toggle.$el.trigger('toggle:change');
         toggle.emit('local::change toggleChange', toggle);
       }
       toggle.attachEvents = function attachEvents() {
@@ -20532,7 +20522,7 @@
 
     Toggle.prototype.destroy = function destroy () {
       var toggle = this;
-      toggle.$el.trigger('toggle:beforedestroy', toggle);
+      toggle.$el.trigger('toggle:beforedestroy');
       toggle.emit('local::beforeDestroy toggleBeforeDestroy', toggle);
       delete toggle.$el[0].f7Toggle;
       toggle.detachEvents();
@@ -20926,7 +20916,7 @@
               && range.previousValue !== range.value
             )
           ) {
-            range.$el.trigger('range:changed', range, range.value);
+            range.$el.trigger('range:changed', range.value);
             range.emit('local::changed rangeChanged', range, range.value);
           }
         }
@@ -21101,7 +21091,7 @@
       }
       // Events
       if (!valueChanged) { return range; }
-      range.$el.trigger('range:change', range, range.value);
+      range.$el.trigger('range:change', range.value);
       if (range.$inputEl && !range.dual) {
         range.$inputEl.val(range.value);
         if (!byTouchMove) {
@@ -21111,7 +21101,7 @@
         }
       }
       if (!byTouchMove) {
-        range.$el.trigger('range:changed', range, range.value);
+        range.$el.trigger('range:changed', range.value);
         range.emit('local::changed rangeChanged', range, range.value);
       }
       range.emit('local::change rangeChange', range, range.value);
@@ -21195,7 +21185,7 @@
 
     Range.prototype.destroy = function destroy () {
       var range = this;
-      range.$el.trigger('range:beforedestroy', range);
+      range.$el.trigger('range:beforedestroy');
       range.emit('local::beforeDestroy rangeBeforeDestroy', range);
       delete range.$el[0].f7Range;
       range.detachEvents();
@@ -21598,7 +21588,7 @@
       // Events
       if (!valueChanged && !forceUpdate) { return stepper; }
 
-      stepper.$el.trigger('stepper:change', stepper, stepper.value);
+      stepper.$el.trigger('stepper:change', stepper.value);
       var formattedValue = stepper.formatValue(stepper.value);
       if (stepper.$inputEl && stepper.$inputEl.length) {
         stepper.$inputEl.val(formattedValue);
@@ -21630,7 +21620,7 @@
       }
       stepper.typeModeChanged = false;
 
-      stepper.$el.trigger('stepper:change', stepper, stepper.value);
+      stepper.$el.trigger('stepper:change', stepper.value);
       var formattedValue = stepper.formatValue(stepper.value);
       if (stepper.$inputEl && stepper.$inputEl.length) {
         stepper.$inputEl.val(formattedValue);
@@ -21700,7 +21690,7 @@
 
     Stepper.prototype.destroy = function destroy () {
       var stepper = this;
-      stepper.$el.trigger('stepper:beforedestroy', stepper);
+      stepper.$el.trigger('stepper:beforedestroy');
       stepper.emit('local::beforeDestroy stepperBeforeDestroy', stepper);
       delete stepper.$el[0].f7Stepper;
       stepper.detachEvents();
@@ -21867,7 +21857,7 @@
       }
       function onChange() {
         var value = ss.$selectEl.val();
-        ss.$el.trigger('smartselect:change', ss, value);
+        ss.$el.trigger('smartselect:change', value);
         ss.emit('local::change smartSelectChange', ss, value);
         ss.setValueText();
       }
@@ -21973,7 +21963,25 @@
       if (ss.params.setValueText) {
         ss.$valueEl.text(ss.formatValueText(optionText));
       }
+      ss.$selectEl.trigger('change');
       return ss;
+    };
+
+    SmartSelect.prototype.unsetValue = function unsetValue () {
+      var ss = this;
+      if (ss.params.setValueText) {
+        ss.$valueEl.text(ss.formatValueText([]));
+      }
+      ss.$selectEl.find('option').each(function (optionIndex, optionEl) {
+        optionEl.selected = false;
+        optionEl.checked = false;
+      });
+      ss.$selectEl[0].value = null;
+
+      if (ss.$containerEl) {
+        ss.$containerEl.find(("input[name=\"" + (ss.inputName) + "\"][type=\"checkbox\"], input[name=\"" + (ss.inputName) + "\"][type=\"radio\"]")).prop('checked', false);
+      }
+      ss.$selectEl.trigger('change');
     };
 
     SmartSelect.prototype.getValue = function getValue () {
@@ -22262,14 +22270,14 @@
       // Attach input events
       ss.attachInputsEvents();
 
-      ss.$el.trigger('smartselect:open', ss);
+      ss.$el.trigger('smartselect:open');
       ss.emit('local::open smartSelectOpen', ss);
     };
 
     SmartSelect.prototype.onOpened = function onOpened () {
       var ss = this;
 
-      ss.$el.trigger('smartselect:opened', ss);
+      ss.$el.trigger('smartselect:opened');
       ss.emit('local::opened smartSelectOpened', ss);
     };
 
@@ -22293,7 +22301,7 @@
       // Detach events
       ss.detachInputsEvents();
 
-      ss.$el.trigger('smartselect:close', ss);
+      ss.$el.trigger('smartselect:close');
       ss.emit('local::close smartSelectClose', ss);
     };
 
@@ -22304,7 +22312,7 @@
       ss.$containerEl = null;
       delete ss.$containerEl;
 
-      ss.$el.trigger('smartselect:closed', ss);
+      ss.$el.trigger('smartselect:closed');
       ss.emit('local::closed smartSelectClosed', ss);
     };
 
@@ -22509,7 +22517,7 @@
     SmartSelect.prototype.destroy = function destroy () {
       var ss = this;
       ss.emit('local::beforeDestroy smartSelectBeforeDestroy', ss);
-      ss.$el.trigger('smartselect:beforedestroy', ss);
+      ss.$el.trigger('smartselect:beforedestroy');
       ss.detachEvents();
       delete ss.$el[0].f7SmartSelect;
       Utils.deleteProps(ss);
@@ -22647,406 +22655,6 @@
     name: 'grid',
   };
 
-  /*
-  Converts a Gregorian date to Jalaali.
-  */
-  function toJalaali (gy, gm, gd) {
-    if (Object.prototype.toString.call(gy) === '[object Date]') {
-      gd = gy.getDate();
-      gm = gy.getMonth() + 1;
-      gy = gy.getFullYear();
-    }
-    return d2j(g2d(gy, gm, gd))
-  }
-
-  /*
-  Converts a Jalaali date to Gregorian.
-  */
-  function toGregorian (jy, jm, jd) {
-    return d2g(j2d(jy, jm, jd))
-  }
-
-  // /*
-  // Checks whether a Jalaali date is valid or not.
-  // */
-  // function isValidJalaaliDate (jy, jm, jd) {
-  //   return jy >= -61 && jy <= 3177 &&
-  //         jm >= 1 && jm <= 12 &&
-  //         jd >= 1 && jd <= monthLength(jy, jm)
-  // }
-
-  /*
-  Is this a leap year or not?
-  */
-  function isLeapJalaaliYear (jy) {
-    return jalCal(jy).leap === 0
-  }
-
-  /*
-  Number of days in a given month in a Jalaali year.
-  */
-  function monthLength (jy, jm) {
-    if (jm <= 6) { return 31 }
-    if (jm <= 11) { return 30 }
-    if (isLeapJalaaliYear(jy)) { return 30 }
-    return 29
-  }
-
-  /*
-  This function determines if the Jalaali (Persian) year is
-  leap (366-day long) or is the common year (365 days), and
-  finds the day in March (Gregorian calendar) of the first
-  day of the Jalaali year (jy).
-  @param jy Jalaali calendar year (-61 to 3177)
-  @return
-    leap: number of years since the last leap year (0 to 4)
-    gy: Gregorian year of the beginning of Jalaali year
-    march: the March day of Farvardin the 1st (1st day of jy)
-  @see: http://www.astro.uni.torun.pl/~kb/Papers/EMP/PersianC-EMP.htm
-  @see: http://www.fourmilab.ch/documents/calendar/
-  */
-  function jalCal (jy) {
-  // Jalaali years starting the 33-year rule.
-    var breaks = [-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178];
-    var bl = breaks.length;
-    var gy = jy + 621;
-    var leapJ = -14;
-    var jp = breaks[0];
-    var jm;
-    var jump;
-    var leap;
-    var leapG;
-    var march;
-    var n;
-    var i;
-
-    if (jy < jp || jy >= breaks[bl - 1]) { throw new Error('Invalid Jalaali year ' + jy) }
-
-    // Find the limiting years for the Jalaali year jy.
-    for (i = 1; i < bl; i += 1) {
-      jm = breaks[i];
-      jump = jm - jp;
-      if (jy < jm) { break }
-      leapJ = leapJ + div(jump, 33) * 8 + div(mod(jump, 33), 4);
-      jp = jm;
-    }
-    n = jy - jp;
-
-    // Find the number of leap years from AD 621 to the beginning
-    // of the current Jalaali year in the Persian calendar.
-    leapJ = leapJ + div(n, 33) * 8 + div(mod(n, 33) + 3, 4);
-    if (mod(jump, 33) === 4 && jump - n === 4) { leapJ += 1; }
-
-    // And the same in the Gregorian calendar (until the year gy).
-    leapG = div(gy, 4) - div((div(gy, 100) + 1) * 3, 4) - 150;
-
-    // Determine the Gregorian date of Farvardin the 1st.
-    march = 20 + leapJ - leapG;
-
-    // Find how many years have passed since the last leap year.
-    if (jump - n < 6) { n = n - jump + div(jump + 4, 33) * 33; }
-    leap = mod(mod(n + 1, 33) - 1, 4);
-    if (leap === -1) {
-      leap = 4;
-    }
-
-    return { leap: leap,
-      gy: gy,
-      march: march
-    }
-  }
-
-  /*
-  Converts a date of the Jalaali calendar to the Julian Day number.
-  @param jy Jalaali year (1 to 3100)
-  @param jm Jalaali month (1 to 12)
-  @param jd Jalaali day (1 to 29/31)
-  @return Julian Day number
-  */
-  function j2d (jy, jm, jd) {
-    var r = jalCal(jy);
-    return g2d(r.gy, 3, r.march) + (jm - 1) * 31 - div(jm, 7) * (jm - 7) + jd - 1
-  }
-
-  /*
-  Converts the Julian Day number to a date in the Jalaali calendar.
-  @param jdn Julian Day number
-  @return
-    jy: Jalaali year (1 to 3100)
-    jm: Jalaali month (1 to 12)
-    jd: Jalaali day (1 to 29/31)
-  */
-  function d2j (jdn) {
-    var gy = d2g(jdn).gy; // Calculate Gregorian year (gy).
-    var jy = gy - 621;
-    var r = jalCal(jy);
-    var jdn1f = g2d(gy, 3, r.march);
-    var jd;
-    var jm;
-    var k;
-
-    // Find number of days that passed since 1 Farvardin.
-    k = jdn - jdn1f;
-    if (k >= 0) {
-      if (k <= 185) {
-      // The first 6 months.
-        jm = 1 + div(k, 31);
-        jd = mod(k, 31) + 1;
-        return { jy: jy,
-          jm: jm,
-          jd: jd
-        }
-      } else {
-      // The remaining months.
-        k -= 186;
-      }
-    } else {
-    // Previous Jalaali year.
-      jy -= 1;
-      k += 179;
-      if (r.leap === 1) { k += 1; }
-    }
-    jm = 7 + div(k, 30);
-    jd = mod(k, 30) + 1;
-    return { jy: jy,
-      jm: jm,
-      jd: jd
-    }
-  }
-
-  /*
-  Calculates the Julian Day number from Gregorian or Julian
-  calendar dates. This integer number corresponds to the noon of
-  the date (i.e. 12 hours of Universal Time).
-  The procedure was tested to be good since 1 March, -100100 (of both
-  calendars) up to a few million years into the future.
-  @param gy Calendar year (years BC numbered 0, -1, -2, ...)
-  @param gm Calendar month (1 to 12)
-  @param gd Calendar day of the month (1 to 28/29/30/31)
-  @return Julian Day number
-  */
-  function g2d (gy, gm, gd) {
-    var d = div((gy + div(gm - 8, 6) + 100100) * 1461, 4) +
-      div(153 * mod(gm + 9, 12) + 2, 5) +
-      gd - 34840408;
-    d = d - div(div(gy + 100100 + div(gm - 8, 6), 100) * 3, 4) + 752;
-    return d
-  }
-
-  /*
-  Calculates Gregorian and Julian calendar dates from the Julian Day number
-  (jdn) for the period since jdn=-34839655 (i.e. the year -100100 of both
-  calendars) to some millions years ahead of the present.
-  @param jdn Julian Day number
-  @return
-    gy: Calendar year (years BC numbered 0, -1, -2, ...)
-    gm: Calendar month (1 to 12)
-    gd: Calendar day of the month M (1 to 28/29/30/31)
-  */
-  function d2g (jdn) {
-    var j,
-      i,
-      gd,
-      gm,
-      gy;
-    j = 4 * jdn + 139361631;
-    j = j + div(div(4 * jdn + 183187720, 146097) * 3, 4) * 4 - 3908;
-    i = div(mod(j, 1461), 4) * 5 + 308;
-    gd = div(mod(i, 153), 5) + 1;
-    gm = mod(div(i, 153), 12) + 1;
-    gy = div(j, 1461) - 100100 + div(8 - gm, 6);
-    return { gy: gy,
-      gm: gm,
-      gd: gd
-    }
-  }
-
-  /*
-  Utility helper functions.
-  */
-
-  function div (a, b) {
-    return ~~(a / b)
-  }
-
-  function mod (a, b) {
-    return a - ~~(a / b) * b
-  }
-
-  function fixDate (y, m, d) {
-    if (m > 11) {
-      y += Math.floor(m / 12);
-      m = m % 12;
-    }
-    while (m < 0) {
-      y -= 1;
-      m += 12;
-    }
-    while (d > monthLength(y, m + 1)) {
-      m = m !== 11 ? m + 1 : 0;
-      y = m === 0 ? y + 1 : y;
-      d -= monthLength(y, m + 1);
-    }
-    while (d <= 0) {
-      m = m !== 0 ? m - 1 : 11;
-      y = m === 11 ? y - 1 : y;
-      d += monthLength(y, m + 1);
-    }
-    return [y, m || 0, d || 1]
-  }
-
-  /*
-    Copyright nainemom <nainemom@gmail.com>
-    https://github.com/nainemom/idate/blob/dev/package.json
-  */
-
-  var methods = [
-    'getHours',
-    'getMilliseconds',
-    'getMinutes',
-    'getSeconds',
-    'getTime',
-    'getTimezoneOffset',
-    'getUTCDate',
-    'getUTCDay',
-    'getUTCFullYear',
-    'getUTCHours',
-    'getUTCMilliseconds',
-    'getUTCMinutes',
-    'getUTCMonth',
-    'getUTCSeconds',
-    'now',
-    'parse',
-    'setHours',
-    'setMilliseconds',
-    'setMinutes',
-    'setSeconds',
-    'setTime',
-    'setUTCDate',
-    'setUTCFullYear',
-    'setUTCHours',
-    'setUTCMilliseconds',
-    'setUTCMinutes',
-    'setUTCMonth',
-    'setUTCSeconds',
-    'toDateString',
-    'toISOString',
-    'toJSON',
-    'toLocaleDateString',
-    'toLocaleTimeString',
-    'toLocaleString',
-    'toTimeString',
-    'toUTCString',
-    'UTC',
-    'valueOf'
-  ];
-
-  var DAY_NAMES = ['Shanbe', 'Yekshanbe', 'Doshanbe', 'Seshanbe', 'Chaharshanbe', 'Panjshanbe', 'Jom\'e'];
-  var PERSIAN_DAY_NAMES = ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه'];
-  var MONTH_NAMES = ['Farvardin', 'Ordibehesht', 'Khordad', 'Tir', 'Mordad', 'Shahrivar', 'Mehr', 'Aban', 'Azar', 'Dey', 'Bahman', 'Esfand'];
-  var PERSIAN_MONTH_NAMES = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
-  var PERSIAN_NUMBERS = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-
-  var IDate = /*@__PURE__*/(function (Date) {
-    function IDate () {
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-
-      Date.call(this);
-
-      var date;
-      if (args.length === 0) {
-        date = Date.now();
-      } else if (args.length === 1) {
-        date = args[0] instanceof Date ? args[0].getTime() : args[0];
-      } else {
-        var fixed = fixDate(
-          args[0],
-          args[1] || 0,
-          typeof args[2] === 'undefined' ? 1 : args[2]);
-        var converted$1 = toGregorian(fixed[0], fixed[1] + 1, fixed[2]);
-        date = [converted$1.gy, converted$1.gm - 1, converted$1.gd].concat([args[3] || 0, args[4] || 0, args[5] || 0, args[6] || 0]);
-      }
-
-      if (Array.isArray(date)) {
-        this.gdate = new (Function.prototype.bind.apply( Date, [ null ].concat( date) ));
-      } else {
-        this.gdate = new Date(date);
-      }
-
-      var converted = toJalaali(this.gdate.getFullYear(), this.gdate.getMonth() + 1, this.gdate.getDate());
-      this.jdate = [converted.jy, converted.jm - 1, converted.jd];
-
-      methods.forEach(function (method) {
-        IDate.prototype[method] = function () {
-          var ref;
-
-          return (ref = this.gdate)[method].apply(ref, arguments)
-        };
-      });
-    }
-
-    if ( Date ) IDate.__proto__ = Date;
-    IDate.prototype = Object.create( Date && Date.prototype );
-    IDate.prototype.constructor = IDate;
-
-    IDate.prototype.getFullYear = function getFullYear () {
-      return this.jdate[0]
-    };
-
-    IDate.prototype.setFullYear = function setFullYear (value) {
-      this.jdate = fixDate(value, this.jdate[1], this.jdate[2]);
-      this.syncDate();
-      return this.gdate.getTime()
-    };
-
-    IDate.prototype.getMonth = function getMonth () {
-      return this.jdate[1]
-    };
-
-    IDate.prototype.setMonth = function setMonth (value) {
-      this.jdate = fixDate(this.jdate[0], value, this.jdate[2]);
-      this.syncDate();
-      return this.gdate.getTime()
-    };
-
-    IDate.prototype.getDate = function getDate () {
-      return this.jdate[2]
-    };
-
-    IDate.prototype.setDate = function setDate (value) {
-      this.jdate = fixDate(this.jdate[0], this.jdate[1], value);
-      this.syncDate();
-      return this.gdate.getTime()
-    };
-
-    IDate.prototype.getDay = function getDay () {
-      return (this.gdate.getDay() + 1) % 7
-    };
-
-    IDate.prototype.syncDate = function syncDate () {
-      var converted = toGregorian(this.jdate[0], this.jdate[1] + 1, this.jdate[2]);
-      this.gdate.setFullYear(converted.gy);
-      this.gdate.setMonth(converted.gm - 1);
-      this.gdate.setDate(converted.gd);
-    };
-    IDate.prototype.toString = function toString (persianString) {
-      if ( persianString === void 0 ) persianString = true;
-
-      var replaceNums = function (str) {
-        return str.replace(/./g, function (c) { return PERSIAN_NUMBERS[c] || c; })
-      };
-      var padNumber = function (num) { return num.toString().length === 1 ? ("0" + num) : num.toString(); };
-      var time = (padNumber(this.getHours())) + ":" + (padNumber(this.getMinutes())) + ":" + (padNumber(this.getSeconds()));
-      if (persianString) {
-        return replaceNums(((PERSIAN_DAY_NAMES[this.getDay()]) + " " + (this.getDate()) + " " + (PERSIAN_MONTH_NAMES[this.getMonth()]) + " " + (this.getFullYear()) + " ساعت " + time))
-      }
-      return ((DAY_NAMES[this.getDay()]) + " " + (this.getDate()) + " " + (MONTH_NAMES[this.getMonth()]) + " " + (this.getFullYear()) + " " + time)
-    };
-
-    return IDate;
-  }(Date));
-
   var Calendar = /*@__PURE__*/(function (Framework7Class) {
     function Calendar(app, params) {
       if ( params === void 0 ) params = {};
@@ -23055,20 +22663,6 @@
       var calendar = this;
 
       calendar.params = Utils.extend({}, app.params.calendar, params);
-
-      if (calendar.params.calendarType === 'jalali') {
-        Object.keys(calendar.params.jalali).forEach(function (param) {
-          if (!params[param]) {
-            calendar.params[param] = calendar.params.jalali[param];
-          }
-        });
-      }
-
-      if (calendar.params.calendarType === 'jalali') {
-        calendar.DateHandleClass = IDate;
-      } else {
-        calendar.DateHandleClass = Date;
-      }
 
       var $containerEl;
       if (calendar.params.containerEl) {
@@ -23108,6 +22702,34 @@
         inverter: inverter,
         view: view,
         animating: false,
+        hasTimePicker: calendar.params.timePicker && !calendar.params.rangePicker && !calendar.params.multiple,
+        dayFormatter: new Intl.DateTimeFormat(calendar.params.locale, { day: 'numeric' }),
+        monthFormatter: new Intl.DateTimeFormat(calendar.params.locale, { month: 'long' }),
+        yearFormatter: new Intl.DateTimeFormat(calendar.params.locale, { year: 'numeric' }),
+        timeSelectorFormatter: new Intl.DateTimeFormat(calendar.params.locale, calendar.params.timePickerFormat),
+      });
+
+      // Auto names
+      var ref = calendar.params;
+      var monthNames = ref.monthNames;
+      var monthNamesShort = ref.monthNamesShort;
+      var dayNames = ref.dayNames;
+      var dayNamesShort = ref.dayNamesShort;
+      var ref$1 = calendar.getIntlNames();
+      var monthNamesIntl = ref$1.monthNamesIntl;
+      var monthNamesShortIntl = ref$1.monthNamesShortIntl;
+      var dayNamesIntl = ref$1.dayNamesIntl;
+      var dayNamesShortIntl = ref$1.dayNamesShortIntl;
+      if (monthNames === 'auto') { monthNames = monthNamesIntl; }
+      if (monthNamesShort === 'auto') { monthNamesShort = monthNamesShortIntl; }
+      if (dayNames === 'auto') { dayNames = dayNamesIntl; }
+      if (dayNamesShort === 'auto') { dayNamesShort = dayNamesShortIntl; }
+
+      Utils.extend(calendar, {
+        monthNames: monthNames,
+        monthNamesShort: monthNamesShort,
+        dayNames: dayNames,
+        dayNamesShort: dayNamesShort,
       });
 
       function onInputClick() {
@@ -23178,7 +22800,7 @@
           touchCurrentX = touchStartX;
           touchStartY = e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY;
           touchCurrentY = touchStartY;
-          touchStartTime = (new calendar.DateHandleClass()).getTime();
+          touchStartTime = (new Date()).getTime();
           percentage = 0;
           allowItemClick = true;
           isScrolling = undefined;
@@ -23227,7 +22849,7 @@
           isTouched = false;
           isMoved = false;
 
-          touchEndTime = new calendar.DateHandleClass().getTime();
+          touchEndTime = new Date().getTime();
           if (touchEndTime - touchStartTime < 300) {
             if (Math.abs(touchesDiff) < 10) {
               calendar.resetMonth();
@@ -23276,7 +22898,15 @@
             dateDay
           );
           if (!$dayEl.hasClass('calendar-day-selected') || calendar.params.multiple || calendar.params.rangePicker) {
-            calendar.addValue(new calendar.DateHandleClass(dateYear, dateMonth, dateDay, 0, 0, 0));
+            var valueToAdd = new Date(dateYear, dateMonth, dateDay, 0, 0, 0);
+            if (calendar.hasTimePicker) {
+              if (calendar.value && calendar.value[0]) {
+                valueToAdd.setHours(calendar.value[0].getHours(), calendar.value[0].getMinutes());
+              } else {
+                valueToAdd.setHours(new Date().getHours(), new Date().getMinutes());
+              }
+            }
+            calendar.addValue(valueToAdd);
           }
           if (calendar.params.closeOnSelect) {
             if (
@@ -23304,12 +22934,78 @@
           calendar.prevYear();
         }
 
+        function onMonthSelectorClick() {
+          $el.append(calendar.renderMonthPicker());
+        }
+        function onMonthSelectorItemClick() {
+          var $clickedEl = $(this);
+          if ($clickedEl.hasClass('calendar-month-picker-item-current')) {
+            $el.find('.calendar-month-picker').remove();
+            return;
+          }
+          $el.find('.calendar-month-picker-item-current').add($clickedEl).toggleClass('calendar-month-picker-item-current');
+          var index = $clickedEl.index();
+          var localeMonthIndex = parseInt(calendar.$el.find('.calendar-month-current').attr('data-locale-month'), 10);
+          var monthIndex = calendar.currentMonth;
+          var diff = localeMonthIndex - monthIndex;
+          var diffIndex = index - diff;
+          calendar.setYearMonth(calendar.currentYear, diffIndex, 0);
+          setTimeout(function () {
+            $el.find('.calendar-month-picker').remove();
+          }, 200);
+        }
+
+        function onYearSelectorClick() {
+          $el.append(calendar.renderYearPicker());
+          var $currentEl = $el.find('.calendar-year-picker-item-current');
+          var $yearPickerEl = $el.find('.calendar-year-picker');
+          if (!$currentEl || !$currentEl.length) { return; }
+          $yearPickerEl.scrollTop(
+            $currentEl[0].offsetTop
+            - $yearPickerEl[0].offsetHeight / 2
+            + $currentEl[0].offsetHeight / 2
+          );
+        }
+
+        function onYearSelectorItemClick() {
+          var $clickedEl = $(this);
+          if ($clickedEl.hasClass('calendar-year-picker-item-current')) {
+            $el.find('.calendar-year-picker').remove();
+            return;
+          }
+          $el.find('.calendar-year-picker-item-current').add($clickedEl).toggleClass('calendar-year-picker-item-current');
+          var year = parseInt($clickedEl.attr('data-year'), 10);
+          calendar.setYearMonth(year, undefined, 0);
+          setTimeout(function () {
+            $el.find('.calendar-year-picker').remove();
+          }, 200);
+        }
+
+        function onTimeSelectorClick() {
+          calendar.openTimePicker();
+        }
+        function onTimePickerCloseClick() {
+          calendar.closeTimePicker();
+        }
+
         var passiveListener = app.touchEvents.start === 'touchstart' && app.support.passiveListener ? { passive: true, capture: false } : false;
         // Selectors clicks
         $el.find('.calendar-prev-month-button').on('click', onPrevMonthClick);
         $el.find('.calendar-next-month-button').on('click', onNextMonthClick);
         $el.find('.calendar-prev-year-button').on('click', onPrevYearClick);
         $el.find('.calendar-next-year-button').on('click', onNextYearClick);
+        if (calendar.params.monthPicker) {
+          $el.find('.current-month-value').on('click', onMonthSelectorClick);
+          $el.on('click', '.calendar-month-picker-item', onMonthSelectorItemClick);
+        }
+        if (calendar.params.yearPicker) {
+          $el.find('.current-year-value').on('click', onYearSelectorClick);
+          $el.on('click', '.calendar-year-picker-item', onYearSelectorItemClick);
+        }
+        if (calendar.hasTimePicker) {
+          $el.find('.calendar-time-selector a').on('click', onTimeSelectorClick);
+          $el.on('click', '.calendar-time-picker-close', onTimePickerCloseClick);
+        }
         // Day clicks
         $wrapperEl.on('click', handleDayClick);
         // Touch events
@@ -23326,6 +23022,18 @@
           $el.find('.calendar-next-month-button').off('click', onNextMonthClick);
           $el.find('.calendar-prev-year-button').off('click', onPrevYearClick);
           $el.find('.calendar-next-year-button').off('click', onNextYearClick);
+          if (calendar.params.monthPicker) {
+            $el.find('.current-month-value').off('click', onMonthSelectorClick);
+            $el.off('click', '.calendar-month-picker-item', onMonthSelectorItemClick);
+          }
+          if (calendar.params.yearPicker) {
+            $el.find('.current-year-value').off('click', onYearSelectorClick);
+            $el.off('click', '.calendar-year-picker-item', onYearSelectorItemClick);
+          }
+          if (calendar.hasTimePicker) {
+            $el.find('.calendar-time-selector a').off('click', onTimeSelectorClick);
+            $el.off('click', '.calendar-time-picker-close', onTimePickerCloseClick);
+          }
           $wrapperEl.off('click', handleDayClick);
           {
             if (calendar.params.touchMove) {
@@ -23345,11 +23053,61 @@
     if ( Framework7Class ) Calendar.__proto__ = Framework7Class;
     Calendar.prototype = Object.create( Framework7Class && Framework7Class.prototype );
     Calendar.prototype.constructor = Calendar;
-    // eslint-disable-next-line
+
+    Calendar.prototype.getIntlNames = function getIntlNames () {
+      var calendar = this;
+      var locale = calendar.params.locale;
+
+      var monthNamesIntl = [];
+      var monthNamesShortIntl = [];
+      var dayNamesIntl = [];
+      var dayNamesShortIntl = [];
+      var formatterMonthNames = new Intl.DateTimeFormat(locale, { month: 'long' });
+      var formatterMonthNamesShort = new Intl.DateTimeFormat(locale, { month: 'short' });
+      var formatterDayNames = new Intl.DateTimeFormat(locale, { weekday: 'long' });
+      var formatterDayNamesShort = new Intl.DateTimeFormat(locale, { weekday: 'short' });
+      var year;
+      var yearStarted;
+      var yearEnded;
+      for (var i = 0; i < 24; i += 1) {
+        var date = new Date().setMonth(i, 1);
+        var currentYear = calendar.yearFormatter.format(date);
+
+        if (year && currentYear !== year) {
+          if (yearStarted) { yearEnded = true; }
+          yearStarted = true;
+          year = currentYear;
+        }
+        if (!year) {
+          year = currentYear;
+        }
+        if (yearStarted && year === currentYear && !yearEnded) {
+          monthNamesIntl.push(formatterMonthNames.format(date));
+          monthNamesShortIntl.push(formatterMonthNamesShort.format(date));
+        }
+      }
+      var weekDay = new Date().getDay();
+      for (var i$1 = 0; i$1 < 7; i$1 += 1) {
+        var date$1 = new Date().getTime() + (i$1 - weekDay) * 24 * 60 * 60 * 1000;
+        dayNamesIntl.push(formatterDayNames.format(date$1));
+        dayNamesShortIntl.push(formatterDayNamesShort.format(date$1));
+      }
+
+      return {
+        monthNamesIntl: monthNamesIntl,
+        monthNamesShortIntl: monthNamesShortIntl,
+        dayNamesIntl: dayNamesIntl,
+        dayNamesShortIntl: dayNamesShortIntl,
+      };
+    };
+
     Calendar.prototype.normalizeDate = function normalizeDate (date) {
       var calendar = this;
-      var d = new calendar.DateHandleClass(date);
-      return new calendar.DateHandleClass(d.getFullYear(), d.getMonth(), d.getDate());
+      var d = new Date(date);
+      if (calendar.hasTimePicker) {
+        return new Date(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes());
+      }
+      return new Date(d.getFullYear(), d.getMonth(), d.getDate());
     };
 
     Calendar.prototype.normalizeValues = function normalizeValues (values) {
@@ -23392,30 +23150,38 @@
 
     Calendar.prototype.formatDate = function formatDate (d) {
       var calendar = this;
-      var date = new calendar.DateHandleClass(d);
+      var date = new Date(d);
       var year = date.getFullYear();
       var month = date.getMonth();
       var month1 = month + 1;
       var day = date.getDate();
       var weekDay = date.getDay();
+      var monthNames = calendar.monthNames;
+      var monthNamesShort = calendar.monthNamesShort;
+      var dayNames = calendar.dayNames;
+      var dayNamesShort = calendar.dayNamesShort;
       var ref = calendar.params;
       var dateFormat = ref.dateFormat;
-      var monthNames = ref.monthNames;
-      var monthNamesShort = ref.monthNamesShort;
-      var dayNames = ref.dayNames;
-      var dayNamesShort = ref.dayNamesShort;
-
-      return dateFormat
-        .replace(/yyyy/g, year)
-        .replace(/yy/g, String(year).substring(2))
-        .replace(/mm/g, month1 < 10 ? ("0" + month1) : month1)
-        .replace(/m(\W+)/g, (month1 + "$1"))
-        .replace(/MM/g, monthNames[month])
-        .replace(/M(\W+)/g, ((monthNamesShort[month]) + "$1"))
-        .replace(/dd/g, day < 10 ? ("0" + day) : day)
-        .replace(/d(\W+)/g, (day + "$1"))
-        .replace(/DD/g, dayNames[weekDay])
-        .replace(/D(\W+)/g, ((dayNamesShort[weekDay]) + "$1"));
+      var locale = ref.locale;
+      if (typeof dateFormat === 'string') {
+        return dateFormat
+          .replace(/yyyy/g, year)
+          .replace(/yy/g, String(year).substring(2))
+          .replace(/mm/g, month1 < 10 ? ("0" + month1) : month1)
+          .replace(/m(\W+)/g, (month1 + "$1"))
+          .replace(/MM/g, monthNames[month])
+          .replace(/M(\W+)/g, ((monthNamesShort[month]) + "$1"))
+          .replace(/dd/g, day < 10 ? ("0" + day) : day)
+          .replace(/d(\W+)/g, (day + "$1"))
+          .replace(/DD/g, dayNames[weekDay])
+          .replace(/D(\W+)/g, ((dayNamesShort[weekDay]) + "$1"));
+      }
+      if (typeof dateFormat === 'function') {
+        return dateFormat(date);
+      }
+      // Intl Object
+      var formatter = new Intl.DateTimeFormat(locale, dateFormat);
+      return formatter.format(date);
     };
 
     Calendar.prototype.formatValue = function formatValue () {
@@ -23440,7 +23206,7 @@
         if (!calendar.value) { calendar.value = []; }
         var inValuesIndex;
         for (var i = 0; i < calendar.value.length; i += 1) {
-          if (new calendar.DateHandleClass(newValue).getTime() === new calendar.DateHandleClass(calendar.value[i]).getTime()) {
+          if (new Date(newValue).getTime() === new Date(calendar.value[i]).getTime()) {
             inValuesIndex = i;
           }
         }
@@ -23499,13 +23265,13 @@
         $wrapperEl.find('.calendar-day-selected').removeClass('calendar-day-selected');
         var valueDate;
         if (params.rangePicker && value.length === 2) {
-          for (i = new calendar.DateHandleClass(value[0]).getTime(); i <= new calendar.DateHandleClass(value[1]).getTime(); i += 24 * 60 * 60 * 1000) {
-            valueDate = new calendar.DateHandleClass(i);
+          for (i = new Date(value[0]).getTime(); i <= new Date(value[1]).getTime(); i += 24 * 60 * 60 * 1000) {
+            valueDate = new Date(i);
             $wrapperEl.find((".calendar-day[data-date=\"" + (valueDate.getFullYear()) + "-" + (valueDate.getMonth()) + "-" + (valueDate.getDate()) + "\"]")).addClass('calendar-day-selected');
           }
         } else {
           for (i = 0; i < calendar.value.length; i += 1) {
-            valueDate = new calendar.DateHandleClass(value[i]);
+            valueDate = new Date(value[i]);
             $wrapperEl.find((".calendar-day[data-date=\"" + (valueDate.getFullYear()) + "-" + (valueDate.getMonth()) + "-" + (valueDate.getDate()) + "\"]")).addClass('calendar-day-selected');
           }
         }
@@ -23514,6 +23280,9 @@
         calendar.emit('local::change calendarChange', calendar, value);
       }
 
+      if ($el && $el.length > 0 && calendar.hasTimePicker) {
+        $el.find('.calendar-time-selector a').text(value && value.length ? calendar.timeSelectorFormatter.format(value[0]) : calendar.params.timePickerPlaceholder);
+      }
 
       if (($inputEl && $inputEl.length) || params.header) {
         var inputValue = calendar.formatValue(value);
@@ -23531,16 +23300,22 @@
       var calendar = this;
       var $months = calendar.$months;
       var $el = calendar.$el;
-      var params = calendar.params;
+      var monthNames = calendar.monthNames;
+      var currentLocaleMonth;
+      var currentLocaleYear;
       if (typeof dir === 'undefined') {
         calendar.currentMonth = parseInt($months.eq(1).attr('data-month'), 10);
         calendar.currentYear = parseInt($months.eq(1).attr('data-year'), 10);
+        currentLocaleMonth = $months.eq(1).attr('data-locale-month');
+        currentLocaleYear = $months.eq(1).attr('data-locale-year');
       } else {
         calendar.currentMonth = parseInt($months.eq(dir === 'next' ? ($months.length - 1) : 0).attr('data-month'), 10);
         calendar.currentYear = parseInt($months.eq(dir === 'next' ? ($months.length - 1) : 0).attr('data-year'), 10);
+        currentLocaleMonth = $months.eq(dir === 'next' ? ($months.length - 1) : 0).attr('data-locale-month');
+        currentLocaleYear = $months.eq(dir === 'next' ? ($months.length - 1) : 0).attr('data-locale-year');
       }
-      $el.find('.current-month-value').text(params.monthNames[calendar.currentMonth]);
-      $el.find('.current-year-value').text(calendar.currentYear);
+      $el.find('.current-month-value').text(monthNames[currentLocaleMonth]);
+      $el.find('.current-year-value').text(currentLocaleYear);
     };
 
     Calendar.prototype.update = function update () {
@@ -23548,7 +23323,7 @@
       var currentYear = calendar.currentYear;
       var currentMonth = calendar.currentMonth;
       var $wrapperEl = calendar.$wrapperEl;
-      var currentDate = new calendar.DateHandleClass(currentYear, currentMonth);
+      var currentDate = new Date(currentYear, currentMonth);
       var prevMonthHtml = calendar.renderMonth(currentDate, 'prev');
       var currentMonthHtml = calendar.renderMonth(currentDate);
       var nextMonthHtml = calendar.renderMonth(currentDate, 'next');
@@ -23607,11 +23382,11 @@
         rebuildBoth = true; // eslint-disable-line
       }
       if (!rebuildBoth) {
-        currentMonthHtml = calendar.renderMonth(new calendar.DateHandleClass(currentYear, currentMonth), dir);
+        currentMonthHtml = calendar.renderMonth(new Date(currentYear, currentMonth), dir);
       } else {
         $wrapperEl.find('.calendar-month-next, .calendar-month-prev').remove();
-        prevMonthHtml = calendar.renderMonth(new calendar.DateHandleClass(currentYear, currentMonth), 'prev');
-        nextMonthHtml = calendar.renderMonth(new calendar.DateHandleClass(currentYear, currentMonth), 'next');
+        prevMonthHtml = calendar.renderMonth(new Date(currentYear, currentMonth), 'prev');
+        nextMonthHtml = calendar.renderMonth(new Date(currentYear, currentMonth), 'next');
       }
       if (dir === 'next' || rebuildBoth) {
         $wrapperEl.append(currentMonthHtml || nextMonthHtml);
@@ -23672,11 +23447,11 @@
       }
       var nextMonth = parseInt(calendar.$months.eq(calendar.$months.length - 1).attr('data-month'), 10);
       var nextYear = parseInt(calendar.$months.eq(calendar.$months.length - 1).attr('data-year'), 10);
-      var nextDate = new calendar.DateHandleClass(nextYear, nextMonth);
+      var nextDate = new Date(nextYear, nextMonth);
       var nextDateTime = nextDate.getTime();
       var transitionEndCallback = !calendar.animating;
       if (params.maxDate) {
-        if (nextDateTime > new calendar.DateHandleClass(params.maxDate).getTime()) {
+        if (nextDateTime > new Date(params.maxDate).getTime()) {
           calendar.resetMonth();
           return;
         }
@@ -23721,12 +23496,12 @@
       }
       var prevMonth = parseInt(calendar.$months.eq(0).attr('data-month'), 10);
       var prevYear = parseInt(calendar.$months.eq(0).attr('data-year'), 10);
-      var prevDate = new calendar.DateHandleClass(prevYear, prevMonth + 1, -1);
+      var prevDate = new Date(prevYear, prevMonth + 1, -1);
       var prevDateTime = prevDate.getTime();
       var transitionEndCallback = !calendar.animating;
       if (params.minDate) {
-        var minDate = new calendar.DateHandleClass(params.minDate);
-        minDate = new calendar.DateHandleClass(minDate.getFullYear(), minDate.getMonth(), 1);
+        var minDate = new Date(params.minDate);
+        minDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
         if (prevDateTime < minDate.getTime()) {
           calendar.resetMonth();
           return;
@@ -23793,27 +23568,27 @@
       }
       var targetDate;
       if (year < calendar.currentYear) {
-        targetDate = new calendar.DateHandleClass(year, month + 1, -1).getTime();
+        targetDate = new Date(year, month + 1, -1).getTime();
       } else {
-        targetDate = new calendar.DateHandleClass(year, month).getTime();
+        targetDate = new Date(year, month).getTime();
       }
-      if (params.maxDate && targetDate > new calendar.DateHandleClass(params.maxDate).getTime()) {
+      if (params.maxDate && targetDate > new Date(params.maxDate).getTime()) {
         return false;
       }
       if (params.minDate) {
-        var minDate = new calendar.DateHandleClass(params.minDate);
-        minDate = new calendar.DateHandleClass(minDate.getFullYear(), minDate.getMonth(), 1);
+        var minDate = new Date(params.minDate);
+        minDate = new Date(minDate.getFullYear(), minDate.getMonth(), 1);
         if (targetDate < minDate.getTime()) {
           return false;
         }
       }
-      var currentDate = new calendar.DateHandleClass(calendar.currentYear, calendar.currentMonth).getTime();
+      var currentDate = new Date(calendar.currentYear, calendar.currentMonth).getTime();
       var dir = targetDate > currentDate ? 'next' : 'prev';
-      var newMonthHTML = calendar.renderMonth(new calendar.DateHandleClass(year, month));
+      var newMonthHTML = calendar.renderMonth(new Date(year, month));
       calendar.monthsTranslate = calendar.monthsTranslate || 0;
       var prevTranslate = calendar.monthsTranslate;
       var monthTranslate;
-      var transitionEndCallback = !calendar.animating;
+      var transitionEndCallback = !calendar.animating && transition !== 0;
       if (targetDate > currentDate) {
         // To next
         calendar.monthsTranslate -= 1;
@@ -23855,8 +23630,8 @@
           calendar.onMonthChangeEnd(dir, true);
         });
       }
-      if (!params.animate) {
-        calendar.onMonthChangeEnd(dir);
+      if (!params.animate || transition === 0) {
+        calendar.onMonthChangeEnd(dir, true);
       }
     };
 
@@ -23871,7 +23646,6 @@
     };
     // eslint-disable-next-line
     Calendar.prototype.dateInRange = function dateInRange (dayDate, range) {
-      var calendar = this;
       var match = false;
       var i;
       if (!range) { return false; }
@@ -23879,52 +23653,51 @@
         for (i = 0; i < range.length; i += 1) {
           if (range[i].from || range[i].to) {
             if (range[i].from && range[i].to) {
-              if ((dayDate <= new calendar.DateHandleClass(range[i].to).getTime()) && (dayDate >= new calendar.DateHandleClass(range[i].from).getTime())) {
+              if ((dayDate <= new Date(range[i].to).getTime()) && (dayDate >= new Date(range[i].from).getTime())) {
                 match = true;
               }
             } else if (range[i].from) {
-              if (dayDate >= new calendar.DateHandleClass(range[i].from).getTime()) {
+              if (dayDate >= new Date(range[i].from).getTime()) {
                 match = true;
               }
             } else if (range[i].to) {
-              if (dayDate <= new calendar.DateHandleClass(range[i].to).getTime()) {
+              if (dayDate <= new Date(range[i].to).getTime()) {
                 match = true;
               }
             }
           } else if (range[i].date) {
-            if (dayDate === new calendar.DateHandleClass(range[i].date).getTime()) {
+            if (dayDate === new Date(range[i].date).getTime()) {
               match = true;
             }
-          } else if (dayDate === new calendar.DateHandleClass(range[i]).getTime()) {
+          } else if (dayDate === new Date(range[i]).getTime()) {
             match = true;
           }
         }
       } else if (range.from || range.to) {
         if (range.from && range.to) {
-          if ((dayDate <= new calendar.DateHandleClass(range.to).getTime()) && (dayDate >= new calendar.DateHandleClass(range.from).getTime())) {
+          if ((dayDate <= new Date(range.to).getTime()) && (dayDate >= new Date(range.from).getTime())) {
             match = true;
           }
         } else if (range.from) {
-          if (dayDate >= new calendar.DateHandleClass(range.from).getTime()) {
+          if (dayDate >= new Date(range.from).getTime()) {
             match = true;
           }
         } else if (range.to) {
-          if (dayDate <= new calendar.DateHandleClass(range.to).getTime()) {
+          if (dayDate <= new Date(range.to).getTime()) {
             match = true;
           }
         }
       } else if (range.date) {
-        match = dayDate === new calendar.DateHandleClass(range.date).getTime();
+        match = dayDate === new Date(range.date).getTime();
       } else if (typeof range === 'function') {
-        match = range(new calendar.DateHandleClass(dayDate));
+        match = range(new Date(dayDate));
       }
       return match;
     };
     // eslint-disable-next-line
     Calendar.prototype.daysInMonth = function daysInMonth (date) {
-      var calendar = this;
-      var d = new calendar.DateHandleClass(date);
-      return new calendar.DateHandleClass(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+      var d = new Date(date);
+      return new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
     };
 
     Calendar.prototype.renderMonths = function renderMonths (date) {
@@ -23942,30 +23715,36 @@
       if (params.renderMonth) {
         return params.renderMonth.call(calendar, d, offset);
       }
-      var date = new calendar.DateHandleClass(d);
+      var date = new Date(d);
       var year = date.getFullYear();
       var month = date.getMonth();
+      var localeMonth = calendar.monthNames.indexOf(calendar.monthFormatter.format(date));
+      if (localeMonth < 0) { localeMonth = month; }
+      var localeYear = calendar.yearFormatter.format(date);
 
       if (offset === 'next') {
-        if (month === 11) { date = new calendar.DateHandleClass(year + 1, 0); }
-        else { date = new calendar.DateHandleClass(year, month + 1, 1); }
+        if (month === 11) { date = new Date(year + 1, 0); }
+        else { date = new Date(year, month + 1, 1); }
       }
       if (offset === 'prev') {
-        if (month === 0) { date = new calendar.DateHandleClass(year - 1, 11); }
-        else { date = new calendar.DateHandleClass(year, month - 1, 1); }
+        if (month === 0) { date = new Date(year - 1, 11); }
+        else { date = new Date(year, month - 1, 1); }
       }
       if (offset === 'next' || offset === 'prev') {
         month = date.getMonth();
         year = date.getFullYear();
+        localeMonth = calendar.monthNames.indexOf(calendar.monthFormatter.format(date));
+        if (localeMonth < 0) { localeMonth = month; }
+        localeYear = calendar.yearFormatter.format(date);
       }
 
       var currentValues = [];
-      var today = new calendar.DateHandleClass().setHours(0, 0, 0, 0);
-      var minDate = params.minDate ? new calendar.DateHandleClass(params.minDate).getTime() : null;
-      var maxDate = params.maxDate ? new calendar.DateHandleClass(params.maxDate).getTime() : null;
+      var today = new Date().setHours(0, 0, 0, 0);
+      var minDate = params.minDate ? new Date(params.minDate).getTime() : null;
+      var maxDate = params.maxDate ? new Date(params.maxDate).getTime() : null;
       var rows = 6;
       var cols = 7;
-      var daysInPrevMonth = calendar.daysInMonth(new calendar.DateHandleClass(date.getFullYear(), date.getMonth()).getTime() - (10 * 24 * 60 * 60 * 1000));
+      var daysInPrevMonth = calendar.daysInMonth(new Date(date.getFullYear(), date.getMonth()).getTime() - (10 * 24 * 60 * 60 * 1000));
       var daysInMonth = calendar.daysInMonth(date);
       var minDayNumber = params.firstDay === 6 ? 0 : 1;
 
@@ -23973,12 +23752,12 @@
       var dayIndex = 0 + (params.firstDay - 1);
       var disabled;
       var hasEvents;
-      var firstDayOfMonthIndex = new calendar.DateHandleClass(date.getFullYear(), date.getMonth()).getDay();
+      var firstDayOfMonthIndex = new Date(date.getFullYear(), date.getMonth()).getDay();
       if (firstDayOfMonthIndex === 0) { firstDayOfMonthIndex = 7; }
 
       if (value && value.length) {
         for (var i = 0; i < value.length; i += 1) {
-          currentValues.push(new calendar.DateHandleClass(value[i]).setHours(0, 0, 0, 0));
+          currentValues.push(new Date(value[i]).setHours(0, 0, 0, 0));
         }
       }
 
@@ -24001,15 +23780,15 @@
           if (dayNumber < 0) {
             dayNumber = daysInPrevMonth + dayNumber + 1;
             addClass += ' calendar-day-prev';
-            dayDate = new calendar.DateHandleClass(month - 1 < 0 ? year - 1 : year, month - 1 < 0 ? 11 : month - 1, dayNumber).getTime();
+            dayDate = new Date(month - 1 < 0 ? year - 1 : year, month - 1 < 0 ? 11 : month - 1, dayNumber).getTime();
           } else {
             dayNumber += 1;
             if (dayNumber > daysInMonth) {
               dayNumber -= daysInMonth;
               addClass += ' calendar-day-next';
-              dayDate = new calendar.DateHandleClass(month + 1 > 11 ? year + 1 : year, month + 1 > 11 ? 0 : month + 1, dayNumber).getTime();
+              dayDate = new Date(month + 1 > 11 ? year + 1 : year, month + 1 > 11 ? 0 : month + 1, dayNumber).getTime();
             } else {
-              dayDate = new calendar.DateHandleClass(year, month, dayNumber).getTime();
+              dayDate = new Date(year, month, dayNumber).getTime();
             }
           }
           // Today
@@ -24067,16 +23846,17 @@
             addClass += ' calendar-day-disabled';
           }
 
-          dayDate = new calendar.DateHandleClass(dayDate);
+          dayDate = new Date(dayDate);
           var dayYear = dayDate.getFullYear();
           var dayMonth = dayDate.getMonth();
-          rowHtml += ("\n          <div data-year=\"" + dayYear + "\" data-month=\"" + dayMonth + "\" data-day=\"" + dayNumber + "\" class=\"calendar-day" + addClass + "\" data-date=\"" + dayYear + "-" + dayMonth + "-" + dayNumber + "\">\n            <span class=\"calendar-day-number\">" + dayNumber + eventsHtml + "</span>\n          </div>").trim();
+          var dayNumberDisplay = calendar.dayFormatter.format(dayDate);
+          rowHtml += ("\n          <div data-year=\"" + dayYear + "\" data-month=\"" + dayMonth + "\" data-day=\"" + dayNumber + "\" class=\"calendar-day" + addClass + "\" data-date=\"" + dayYear + "-" + dayMonth + "-" + dayNumber + "\">\n            <span class=\"calendar-day-number\">" + dayNumberDisplay + eventsHtml + "</span>\n          </div>").trim();
         };
 
         for (var col = 1; col <= cols; col += 1) loop( col );
         monthHtml += "<div class=\"calendar-row\">" + rowHtml + "</div>";
       }
-      monthHtml = "<div class=\"calendar-month\" data-year=\"" + year + "\" data-month=\"" + month + "\">" + monthHtml + "</div>";
+      monthHtml = "<div class=\"calendar-month\" data-year=\"" + year + "\" data-month=\"" + month + "\" data-locale-year=\"" + localeYear + "\" data-locale-month=\"" + localeMonth + "\">" + monthHtml + "</div>";
       return monthHtml;
     };
 
@@ -24091,7 +23871,7 @@
         var dayIndex = (i + params.firstDay > 6)
           ? ((i - 7) + params.firstDay)
           : (i + params.firstDay);
-        var dayName = params.dayNamesShort[dayIndex];
+        var dayName = calendar.dayNamesShort[dayIndex];
         weekDaysHtml += "<div class=\"calendar-week-day\">" + dayName + "</div>";
       }
       return ("\n    <div class=\"calendar-week-header\">\n      " + weekDaysHtml + "\n    </div>\n  ").trim();
@@ -24103,7 +23883,13 @@
         return calendar.params.renderMonthSelector.call(calendar);
       }
 
-      return "\n    <div class=\"calendar-month-selector\">\n      <a class=\"link icon-only calendar-prev-month-button\">\n        <i class=\"icon icon-prev\"></i>\n      </a>\n      <span class=\"current-month-value\"></span>\n      <a class=\"link icon-only calendar-next-month-button\">\n        <i class=\"icon icon-next\"></i>\n      </a>\n    </div>\n  ".trim();
+      return ("\n    <div class=\"calendar-month-selector\">\n      <a class=\"link icon-only calendar-prev-month-button\">\n        <i class=\"icon icon-prev\"></i>\n      </a>\n      " + (calendar.params.monthPicker ? "\n        <a class=\"current-month-value link\"></a>\n      " : "\n        <span class=\"current-month-value\"></span>\n      ") + "\n      <a class=\"link icon-only calendar-next-month-button\">\n        <i class=\"icon icon-next\"></i>\n      </a>\n    </div>\n  ").trim();
+    };
+
+    Calendar.prototype.renderMonthPicker = function renderMonthPicker () {
+      var calendar = this;
+      var localeMonth = parseInt(calendar.$el.find('.calendar-month-current').attr('data-locale-month'), 10);
+      return ("\n      <div class=\"calendar-month-picker\">\n        " + (calendar.monthNames.map(function (m, index) { return ("\n          <div class=\"calendar-month-picker-item " + (localeMonth === index ? 'calendar-month-picker-item-current' : '') + "\">\n            <span>" + m + "</span>\n          </div>\n        "); }).join('')) + "\n      </div>\n    ");
     };
 
     Calendar.prototype.renderYearSelector = function renderYearSelector () {
@@ -24111,7 +23897,34 @@
       if (calendar.params.renderYearSelector) {
         return calendar.params.renderYearSelector.call(calendar);
       }
-      return "\n    <div class=\"calendar-year-selector\">\n      <a class=\"link icon-only calendar-prev-year-button\">\n        <i class=\"icon icon-prev\"></i>\n      </a>\n      <span class=\"current-year-value\"></span>\n      <a class=\"link icon-only calendar-next-year-button\">\n        <i class=\"icon icon-next\"></i>\n      </a>\n    </div>\n  ".trim();
+      return ("\n    <div class=\"calendar-year-selector\">\n      <a class=\"link icon-only calendar-prev-year-button\">\n        <i class=\"icon icon-prev\"></i>\n      </a>\n      " + (calendar.params.yearPicker ? "\n        <a class=\"current-year-value link\"></a>\n      " : "\n        <span class=\"current-year-value\"></span>\n      ") + "\n      <a class=\"link icon-only calendar-next-year-button\">\n        <i class=\"icon icon-next\"></i>\n      </a>\n    </div>\n  ").trim();
+    };
+
+    Calendar.prototype.renderYearPicker = function renderYearPicker () {
+      var calendar = this;
+      var currentYear = calendar.currentYear;
+      var yearMin = calendar.params.yearPickerMin || new Date().getFullYear() - 100;
+      if (calendar.params.minDate) {
+        yearMin = Math.max(yearMin, new Date(calendar.params.minDate).getFullYear());
+      }
+      var yearMax = calendar.params.yearPickerMax || new Date().getFullYear() + 100;
+      if (calendar.params.maxDate) {
+        yearMax = Math.min(yearMax, new Date(calendar.params.maxDate).getFullYear());
+      }
+      var years = [];
+      for (var i = yearMin; i <= yearMax; i += 1) {
+        years.push(i);
+      }
+      return ("\n      <div class=\"calendar-year-picker\">\n        " + (years.map(function (year) { return ("\n          <div data-year=\"" + year + "\" class=\"calendar-year-picker-item " + (year === currentYear ? 'calendar-year-picker-item-current' : '') + "\">\n            <span>" + (calendar.yearFormatter.format(new Date().setFullYear(year))) + "</span>\n          </div>\n        "); }).join('')) + "\n      </div>\n    ");
+    };
+
+    // eslint-disable-next-line
+    Calendar.prototype.renderTimeSelector = function renderTimeSelector () {
+      var calendar = this;
+      var value = calendar.value && calendar.value[0];
+      var timeString;
+      if (value) { timeString = calendar.timeSelectorFormatter.format(value); }
+      return ("\n      <div class=\"calendar-time-selector\"><a class=\"link\">" + (timeString || calendar.params.timePickerPlaceholder) + "</a></div>\n    ");
     };
 
     Calendar.prototype.renderHeader = function renderHeader () {
@@ -24149,8 +23962,9 @@
       var rangePicker = ref.rangePicker;
       var weekHeader = ref.weekHeader;
       var value = calendar.value;
-      var date = value && value.length ? value[0] : new calendar.DateHandleClass().setHours(0, 0, 0);
-      var inlineHtml = ("\n    <div class=\"calendar calendar-inline " + (rangePicker ? 'calendar-range' : '') + " " + (cssClass || '') + "\">\n      " + (header ? calendar.renderHeader() : '') + "\n      " + (toolbar ? calendar.renderToolbar() : '') + "\n      " + (weekHeader ? calendar.renderWeekHeader() : '') + "\n      <div class=\"calendar-months\">\n        " + (calendar.renderMonths(date)) + "\n      </div>\n      " + (footer ? calendar.renderFooter() : '') + "\n    </div>\n  ").trim();
+      var hasTimePicker = calendar.hasTimePicker;
+      var date = value && value.length ? value[0] : new Date().setHours(0, 0, 0);
+      var inlineHtml = ("\n    <div class=\"calendar calendar-inline " + (rangePicker ? 'calendar-range' : '') + " " + (cssClass || '') + "\">\n      " + (header ? calendar.renderHeader() : '') + "\n      " + (toolbar ? calendar.renderToolbar() : '') + "\n      " + (weekHeader ? calendar.renderWeekHeader() : '') + "\n      <div class=\"calendar-months\">\n        " + (calendar.renderMonths(date)) + "\n      </div>\n      " + (hasTimePicker ? calendar.renderTimeSelector() : '') + "\n      " + (footer ? calendar.renderFooter() : '') + "\n    </div>\n  ").trim();
 
       return inlineHtml;
     };
@@ -24165,8 +23979,9 @@
       var rangePicker = ref.rangePicker;
       var weekHeader = ref.weekHeader;
       var value = calendar.value;
-      var date = value && value.length ? value[0] : new calendar.DateHandleClass().setHours(0, 0, 0);
-      var sheetHtml = ("\n    <div class=\"calendar calendar-modal " + (rangePicker ? 'calendar-range' : '') + " " + (cssClass || '') + "\">\n      " + (header ? calendar.renderHeader() : '') + "\n      " + (toolbar ? calendar.renderToolbar() : '') + "\n      " + (weekHeader ? calendar.renderWeekHeader() : '') + "\n      <div class=\"calendar-months\">\n        " + (calendar.renderMonths(date)) + "\n      </div>\n      " + (footer ? calendar.renderFooter() : '') + "\n    </div>\n  ").trim();
+      var hasTimePicker = calendar.hasTimePicker;
+      var date = value && value.length ? value[0] : new Date().setHours(0, 0, 0);
+      var sheetHtml = ("\n    <div class=\"calendar calendar-modal " + (rangePicker ? 'calendar-range' : '') + " " + (cssClass || '') + "\">\n      " + (header ? calendar.renderHeader() : '') + "\n      " + (toolbar ? calendar.renderToolbar() : '') + "\n      " + (weekHeader ? calendar.renderWeekHeader() : '') + "\n      <div class=\"calendar-months\">\n        " + (calendar.renderMonths(date)) + "\n      </div>\n      " + (hasTimePicker ? calendar.renderTimeSelector() : '') + "\n      " + (footer ? calendar.renderFooter() : '') + "\n    </div>\n  ").trim();
 
       return sheetHtml;
     };
@@ -24181,8 +23996,9 @@
       var rangePicker = ref.rangePicker;
       var weekHeader = ref.weekHeader;
       var value = calendar.value;
-      var date = value && value.length ? value[0] : new calendar.DateHandleClass().setHours(0, 0, 0);
-      var sheetHtml = ("\n    <div class=\"sheet-modal calendar calendar-sheet " + (rangePicker ? 'calendar-range' : '') + " " + (cssClass || '') + "\">\n      " + (header ? calendar.renderHeader() : '') + "\n      " + (toolbar ? calendar.renderToolbar() : '') + "\n      " + (weekHeader ? calendar.renderWeekHeader() : '') + "\n      <div class=\"sheet-modal-inner calendar-months\">\n        " + (calendar.renderMonths(date)) + "\n      </div>\n      " + (footer ? calendar.renderFooter() : '') + "\n    </div>\n  ").trim();
+      var hasTimePicker = calendar.hasTimePicker;
+      var date = value && value.length ? value[0] : new Date().setHours(0, 0, 0);
+      var sheetHtml = ("\n    <div class=\"sheet-modal calendar calendar-sheet " + (rangePicker ? 'calendar-range' : '') + " " + (cssClass || '') + "\">\n      " + (header ? calendar.renderHeader() : '') + "\n      " + (toolbar ? calendar.renderToolbar() : '') + "\n      " + (weekHeader ? calendar.renderWeekHeader() : '') + "\n      <div class=\"sheet-modal-inner calendar-months\">\n        " + (calendar.renderMonths(date)) + "\n      </div>\n      " + (hasTimePicker ? calendar.renderTimeSelector() : '') + "\n      " + (footer ? calendar.renderFooter() : '') + "\n    </div>\n  ").trim();
 
       return sheetHtml;
     };
@@ -24197,8 +24013,9 @@
       var rangePicker = ref.rangePicker;
       var weekHeader = ref.weekHeader;
       var value = calendar.value;
-      var date = value && value.length ? value[0] : new calendar.DateHandleClass().setHours(0, 0, 0);
-      var popoverHtml = ("\n    <div class=\"popover calendar-popover\">\n      <div class=\"popover-inner\">\n        <div class=\"calendar " + (rangePicker ? 'calendar-range' : '') + " " + (cssClass || '') + "\">\n        " + (header ? calendar.renderHeader() : '') + "\n        " + (toolbar ? calendar.renderToolbar() : '') + "\n        " + (weekHeader ? calendar.renderWeekHeader() : '') + "\n        <div class=\"calendar-months\">\n          " + (calendar.renderMonths(date)) + "\n        </div>\n        " + (footer ? calendar.renderFooter() : '') + "\n        </div>\n      </div>\n    </div>\n  ").trim();
+      var hasTimePicker = calendar.hasTimePicker;
+      var date = value && value.length ? value[0] : new Date().setHours(0, 0, 0);
+      var popoverHtml = ("\n    <div class=\"popover calendar-popover\">\n      <div class=\"popover-inner\">\n        <div class=\"calendar " + (rangePicker ? 'calendar-range' : '') + " " + (cssClass || '') + "\">\n        " + (header ? calendar.renderHeader() : '') + "\n        " + (toolbar ? calendar.renderToolbar() : '') + "\n        " + (weekHeader ? calendar.renderWeekHeader() : '') + "\n        <div class=\"calendar-months\">\n          " + (calendar.renderMonths(date)) + "\n        </div>\n        " + (hasTimePicker ? calendar.renderTimeSelector() : '') + "\n        " + (footer ? calendar.renderFooter() : '') + "\n        </div>\n      </div>\n    </div>\n  ").trim();
 
       return popoverHtml;
     };
@@ -24216,6 +24033,68 @@
         return calendar.renderCustomModal();
       }
       return calendar.renderInline();
+    };
+
+    Calendar.prototype.openTimePicker = function openTimePicker () {
+      var calendar = this;
+      var $el = calendar.$el;
+      var app = calendar.app;
+      if (!$el || !$el.length) { return; }
+      $el.append('<div class="calendar-time-picker"></div>');
+      var hoursArr = [];
+      var minutesArr = [];
+      for (var i = 0; i <= 23; i += 1) { hoursArr.push(i); }
+      for (var i$1 = 0; i$1 <= 59; i$1 += 1) { minutesArr.push(i$1); }
+      var value;
+      if (calendar.value && calendar.value.length) {
+        value = [calendar.value[0].getHours(), calendar.value[0].getMinutes()];
+      } else {
+        value = [new Date().getHours(), new Date().getMinutes()];
+      }
+      calendar.timePickerInstance = app.picker.create({
+        containerEl: $el.find('.calendar-time-picker'),
+        value: value,
+        toolbar: true,
+        rotateEffect: false,
+        toolbarCloseText: calendar.params.toolbarCloseText,
+        cols: [
+          {
+            values: hoursArr,
+          },
+          {
+            divider: true,
+            content: ':',
+          },
+          {
+            values: minutesArr,
+            displayValues: minutesArr.map(function (m) { return (m < 10 ? ("0" + m) : m); }),
+          } ],
+      });
+      calendar.timePickerInstance.$el.find('.toolbar a').removeClass('sheet-close popover-close').addClass('calendar-time-picker-close');
+    };
+
+    Calendar.prototype.closeTimePicker = function closeTimePicker () {
+      var calendar = this;
+      if (calendar.timePickerInstance) {
+        var ref = calendar.timePickerInstance.value.map(function (v) { return parseInt(v, 10); });
+        var hours = ref[0];
+        var minutes = ref[1];
+        var value = calendar.value && calendar.value.length && calendar.value[0];
+        if (!value) {
+          value = new Date();
+          value.setHours(hours, minutes, 0, 0);
+        } else {
+          value = new Date(value);
+          value.setHours(hours, minutes);
+        }
+        calendar.setValue([value]);
+        calendar.timePickerInstance.close();
+        calendar.timePickerInstance.destroy();
+        delete calendar.timePickerInstance;
+      }
+      if (calendar.$el && calendar.$el.length) {
+        calendar.$el.find('.calendar-time-picker').remove();
+      }
     };
 
     Calendar.prototype.onOpen = function onOpen () {
@@ -24272,10 +24151,10 @@
 
       // Trigger events
       if ($el) {
-        $el.trigger('calendar:open', calendar);
+        $el.trigger('calendar:open');
       }
       if ($inputEl) {
-        $inputEl.trigger('calendar:open', calendar);
+        $inputEl.trigger('calendar:open');
       }
       calendar.emit('local::open calendarOpen', calendar);
     };
@@ -24284,10 +24163,10 @@
       var calendar = this;
       calendar.opening = false;
       if (calendar.$el) {
-        calendar.$el.trigger('calendar:opened', calendar);
+        calendar.$el.trigger('calendar:opened');
       }
       if (calendar.$inputEl) {
-        calendar.$inputEl.trigger('calendar:opened', calendar);
+        calendar.$inputEl.trigger('calendar:opened');
       }
       calendar.emit('local::opened calendarOpened', calendar);
     };
@@ -24306,10 +24185,10 @@
       }
 
       if (calendar.$el) {
-        calendar.$el.trigger('calendar:close', calendar);
+        calendar.$el.trigger('calendar:close');
       }
       if (calendar.$inputEl) {
-        calendar.$inputEl.trigger('calendar:close', calendar);
+        calendar.$inputEl.trigger('calendar:close');
       }
       calendar.emit('local::close calendarClose', calendar);
     };
@@ -24329,11 +24208,15 @@
           delete calendar.modal;
         });
       }
+      if (calendar.timePickerInstance) {
+        if (calendar.timePickerInstance.destroy) { calendar.timePickerInstance.destroy(); }
+        delete calendar.timePickerInstance;
+      }
       if (calendar.$el) {
-        calendar.$el.trigger('calendar:closed', calendar);
+        calendar.$el.trigger('calendar:closed');
       }
       if (calendar.$inputEl) {
-        calendar.$inputEl.trigger('calendar:closed', calendar);
+        calendar.$inputEl.trigger('calendar:closed');
       }
       calendar.emit('local::closed calendarClosed', calendar);
     };
@@ -24455,7 +24338,7 @@
       if (calendar.destroyed) { return; }
       var $el = calendar.$el;
       calendar.emit('local::beforeDestroy calendarBeforeDestroy', calendar);
-      if ($el) { $el.trigger('calendar:beforedestroy', calendar); }
+      if ($el) { $el.trigger('calendar:beforedestroy'); }
 
       calendar.close();
 
@@ -24465,6 +24348,11 @@
       }
       if (calendar.params.closeByOutsideClick) {
         calendar.detachHtmlEvents();
+      }
+
+      if (calendar.timePickerInstance) {
+        if (calendar.timePickerInstance.destroy) { calendar.timePickerInstance.destroy(); }
+        delete calendar.timePickerInstance;
       }
 
       if ($el && $el.length) { delete calendar.$el[0].f7Calendar; }
@@ -24501,26 +24389,18 @@
     params: {
       calendar: {
         // Calendar settings
-        calendarType: 'gregorian', // or 'jalali'
-        monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-        dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        dateFormat: undefined,
+        monthNames: 'auto',
+        monthNamesShort: 'auto',
+        dayNames: 'auto',
+        dayNamesShort: 'auto',
+        locale: undefined,
         firstDay: 1, // First day of the week, Monday
         weekendDays: [0, 6], // Sunday and Saturday
-        jalali: {
-          monthNames: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
-          monthNamesShort: ['فَر', 'اُر', 'خُر', 'تیر', 'مُر', 'شَه', 'مهر', 'آب', 'آذر', 'دی', 'بَه', 'اِس'],
-          dayNames: ['یک‌شنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنج‌شنبه', 'جمعه', 'شنبه'],
-          dayNamesShort: ['1ش', '۲ش', '۳ش', '۴ش', '۵ش', 'ج', 'ش'],
-          firstDay: 6, // Saturday
-          weekendDays: [5], // Friday
-        },
         multiple: false,
         rangePicker: false,
         rangePickerMinDays: 1, // when calendar is used as rangePicker
         rangePickerMaxDays: 0, // when calendar is used as rangePicker, 0 means unlimited
-        dateFormat: 'yyyy-mm-dd',
         direction: 'horizontal', // or 'vertical'
         minDate: null,
         maxDate: null,
@@ -24531,7 +24411,14 @@
         animate: true,
         closeOnSelect: false,
         monthSelector: true,
+        monthPicker: true,
         yearSelector: true,
+        yearPicker: true,
+        yearPickerMin: undefined,
+        yearPickerMax: undefined,
+        timePicker: false,
+        timePickerFormat: { hour: 'numeric', minute: 'numeric' },
+        timePickerPlaceholder: 'Select time',
         weekHeader: true,
         value: null,
         // Common opener settings
@@ -24546,9 +24433,9 @@
         scrollToInput: true,
         header: false,
         headerPlaceholder: 'Select date',
-        footer: false,
         toolbar: true,
         toolbarCloseText: 'Done',
+        footer: false,
         cssClass: null,
         routableModals: true,
         view: null,
@@ -25265,10 +25152,10 @@
 
       // Trigger events
       if ($el) {
-        $el.trigger('picker:open', picker);
+        $el.trigger('picker:open');
       }
       if ($inputEl) {
-        $inputEl.trigger('picker:open', picker);
+        $inputEl.trigger('picker:open');
       }
       picker.emit('local::open pickerOpen', picker);
     };
@@ -25278,10 +25165,10 @@
       picker.opening = false;
 
       if (picker.$el) {
-        picker.$el.trigger('picker:opened', picker);
+        picker.$el.trigger('picker:opened');
       }
       if (picker.$inputEl) {
-        picker.$inputEl.trigger('picker:opened', picker);
+        picker.$inputEl.trigger('picker:opened');
       }
       picker.emit('local::opened pickerOpened', picker);
     };
@@ -25303,10 +25190,10 @@
       }
 
       if (picker.$el) {
-        picker.$el.trigger('picker:close', picker);
+        picker.$el.trigger('picker:close');
       }
       if (picker.$inputEl) {
-        picker.$inputEl.trigger('picker:close', picker);
+        picker.$inputEl.trigger('picker:close');
       }
       picker.emit('local::close pickerClose', picker);
     };
@@ -25328,10 +25215,10 @@
       }
 
       if (picker.$el) {
-        picker.$el.trigger('picker:closed', picker);
+        picker.$el.trigger('picker:closed');
       }
       if (picker.$inputEl) {
-        picker.$inputEl.trigger('picker:closed', picker);
+        picker.$inputEl.trigger('picker:closed');
       }
       picker.emit('local::closed pickerClosed', picker);
     };
@@ -25443,7 +25330,7 @@
       if (picker.destroyed) { return; }
       var $el = picker.$el;
       picker.emit('local::beforeDestroy pickerBeforeDestroy', picker);
-      if ($el) { $el.trigger('picker:beforedestroy', picker); }
+      if ($el) { $el.trigger('picker:beforedestroy'); }
 
       picker.close();
 
@@ -26124,7 +26011,7 @@
     PullToRefresh.prototype.destroy = function destroy () {
       var ptr = this;
       ptr.emit('local::beforeDestroy ptrBeforeDestroy', ptr);
-      ptr.$el.trigger('ptr:beforedestroy', ptr);
+      ptr.$el.trigger('ptr:beforedestroy');
       delete ptr.el.f7PullToRefresh;
       ptr.detachEvents();
       Utils.deleteProps(ptr);
@@ -26591,7 +26478,7 @@
     DataTable.prototype.destroy = function destroy () {
       var table = this;
 
-      table.$el.trigger('datatable:beforedestroy', table);
+      table.$el.trigger('datatable:beforedestroy');
       table.emit('local::beforeDestroy dataTableBeforeDestroy', table);
 
       table.attachEvents();
@@ -27356,7 +27243,7 @@
       }
 
       if (sb.params.customSearch) {
-        $el.trigger('searchbar:search', query, sb.previousQuery);
+        $el.trigger('searchbar:search', { query: query, previousQuery: sb.previousQuery });
         sb.emit('local::search searchbarSearch', sb, query, sb.previousQuery);
         return sb;
       }
@@ -27369,7 +27256,7 @@
           sb.virtualList.resetFilter();
           if ($notFoundEl) { $notFoundEl.hide(); }
           if ($foundEl) { $foundEl.show(); }
-          $el.trigger('searchbar:search', query, sb.previousQuery);
+          $el.trigger('searchbar:search', { query: query, previousQuery: sb.previousQuery });
           sb.emit('local::search searchbarSearch', sb, query, sb.previousQuery);
           return sb;
         }
@@ -27458,7 +27345,7 @@
         sb.virtualList.filterItems(foundItems);
       }
 
-      $el.trigger('searchbar:search', query, sb.previousQuery, foundItems);
+      $el.trigger('searchbar:search', { query: query, previousQuery: sb.previousQuery, foundItems: foundItems });
       sb.emit('local::search searchbarSearch', sb, query, sb.previousQuery, foundItems);
 
       return sb;
@@ -27474,7 +27361,7 @@
     Searchbar.prototype.destroy = function destroy () {
       var sb = this;
       sb.emit('local::beforeDestroy searchbarBeforeDestroy', sb);
-      sb.$el.trigger('searchbar:beforedestroy', sb);
+      sb.$el.trigger('searchbar:beforedestroy');
       sb.detachEvents();
       if (sb.$el[0]) {
         sb.$el[0].f7Searchbar = null;
@@ -28080,7 +27967,7 @@
     Messages.prototype.destroy = function destroy () {
       var m = this;
       m.emit('local::beforeDestroy messagesBeforeDestroy', m);
-      m.$el.trigger('messages:beforedestroy', m);
+      m.$el.trigger('messages:beforedestroy');
       if (m.$el[0]) {
         m.$el[0].f7Messages = null;
         delete m.$el[0].f7Messages;
@@ -28507,7 +28394,7 @@
     Messagebar.prototype.destroy = function destroy () {
       var messagebar = this;
       messagebar.emit('local::beforeDestroy messagebarBeforeDestroy', messagebar);
-      messagebar.$el.trigger('messagebar:beforedestroy', messagebar);
+      messagebar.$el.trigger('messagebar:beforedestroy');
       messagebar.detachEvents();
       if (messagebar.$el[0]) {
         messagebar.$el[0].f7Messagebar = null;
@@ -35142,12 +35029,12 @@
       var iconsColor = pb.params.iconsColor;
       if (!pb.params.iconsColor && pb.params.theme === 'dark') { iconsColor = 'white'; }
 
-      var backLinkText = (pb.app.theme === 'ios' || pb.app.theme === 'aurora') && pb.params.backLinkText ? pb.params.backLinkText : '';
+      var pageBackLinkText = (pb.app.theme === 'ios' || pb.app.theme === 'aurora') && pb.params.pageBackLinkText ? pb.params.pageBackLinkText : '';
 
       var renderNavbarCount = typeof pb.params.navbarShowCount === 'undefined' ? pb.params.photos.length > 1 : pb.params.navbarShowCount;
 
       var isPopup = pb.params.type !== 'page';
-      var navbarHtml = ("\n      <div class=\"navbar navbar-photo-browser " + (pb.params.theme === 'dark' ? 'navbar-photo-browser-dark' : '') + "\">\n        <div class=\"navbar-bg\"></div>\n        <div class=\"navbar-inner sliding\">\n          <div class=\"left\">\n            <a class=\"link " + (isPopup ? 'popup-close' : '') + " " + (!backLinkText ? 'icon-only' : '') + " " + (!isPopup ? 'back' : '') + "\" " + (isPopup ? 'data-popup=".photo-browser-popup"' : '') + ">\n              <i class=\"icon icon-back " + (iconsColor ? ("color-" + iconsColor) : '') + "\"></i>\n              " + (backLinkText ? ("<span>" + backLinkText + "</span>") : '') + "\n            </a>\n          </div>\n          " + (renderNavbarCount ? ("\n          <div class=\"title\">\n            <span class=\"photo-browser-current\"></span>\n            <span class=\"photo-browser-of\">" + (pb.params.navbarOfText) + "</span>\n            <span class=\"photo-browser-total\"></span>\n          </div>\n          ") : '') + "\n          <div class=\"right\"></div>\n        </div>\n      </div>\n    ").trim();
+      var navbarHtml = ("\n      <div class=\"navbar navbar-photo-browser " + (pb.params.theme === 'dark' ? 'navbar-photo-browser-dark' : '') + "\">\n        <div class=\"navbar-bg\"></div>\n        <div class=\"navbar-inner navbar-inner-centered-title sliding\">\n          " + (!isPopup ? ("\n          <div class=\"left\">\n            <a class=\"link " + (!pageBackLinkText ? 'icon-only' : '') + " back\">\n              <i class=\"icon icon-back " + (iconsColor ? ("color-" + iconsColor) : '') + "\"></i>\n              " + (pageBackLinkText ? ("<span>" + pageBackLinkText + "</span>") : '') + "\n            </a>\n          </div>\n          ") : '') + "\n          " + (renderNavbarCount ? ("\n          <div class=\"title\">\n            <span class=\"photo-browser-current\"></span>\n            <span class=\"photo-browser-of\">" + (pb.params.navbarOfText) + "</span>\n            <span class=\"photo-browser-total\"></span>\n          </div>\n          ") : '') + "\n          " + (isPopup ? ("\n          <div class=\"right\">\n            <a class=\"link popup-close\" data-popup=\".photo-browser-popup\">\n              <span>" + (pb.params.popupCloseLinkText) + "</span>\n            </a>\n          </div>\n          ") : '') + "\n        </div>\n      </div>\n    ").trim();
       return navbarHtml;
     };
 
@@ -35615,7 +35502,8 @@
         iconsColor: undefined,
         popupPush: false,
         swipeToClose: true,
-        backLinkText: 'Close',
+        pageBackLinkText: 'Back',
+        popupCloseLinkText: 'Close',
         navbarOfText: 'of',
         navbarShowCount: undefined,
         view: undefined,
@@ -35657,7 +35545,7 @@
     create: function create() {
       var app = this;
       app.photoBrowser = ConstructorMethods({
-        defaultSelector: '.photo-browser',
+        defaultSelector: '.photo-browser-popup, .photo-browser-page',
         constructor: PhotoBrowser,
         app: app,
         domProp: 'f7PhotoBrowser',
@@ -36979,10 +36867,10 @@
       var $aroundEl = $(aroundEl);
       tooltip.visible = true;
       tooltip.opened = true;
-      $targetEl.trigger('tooltip:show', tooltip);
-      $el.trigger('tooltip:show', tooltip);
+      $targetEl.trigger('tooltip:show');
+      $el.trigger('tooltip:show');
       if ($aroundEl.length && $aroundEl[0] !== $targetEl[0]) {
-        $aroundEl.trigger('tooltip:show', tooltip);
+        $aroundEl.trigger('tooltip:show');
       }
       tooltip.emit('local::show tooltipShow', tooltip);
       $el.removeClass('tooltip-out').addClass('tooltip-in');
@@ -36995,8 +36883,8 @@
       var $targetEl = tooltip.$targetEl;
       tooltip.visible = false;
       tooltip.opened = false;
-      $targetEl.trigger('tooltip:hide', tooltip);
-      $el.trigger('tooltip:hide', tooltip);
+      $targetEl.trigger('tooltip:hide');
+      $el.trigger('tooltip:hide');
       tooltip.emit('local::hide tooltipHide', tooltip);
       $el.addClass('tooltip-out').removeClass('tooltip-in');
       return tooltip;
@@ -37035,7 +36923,7 @@
     Tooltip.prototype.destroy = function destroy () {
       var tooltip = this;
       if (!tooltip.$targetEl || tooltip.destroyed) { return; }
-      tooltip.$targetEl.trigger('tooltip:beforedestroy', tooltip);
+      tooltip.$targetEl.trigger('tooltip:beforedestroy');
       tooltip.emit('local::beforeDestroy tooltipBeforeDestroy', tooltip);
       tooltip.$el.remove();
       delete tooltip.$targetEl[0].f7Tooltip;
@@ -37398,7 +37286,7 @@
     Gauge.prototype.destroy = function destroy () {
       var gauge = this;
       if (!gauge.$el || gauge.destroyed) { return; }
-      gauge.$el.trigger('gauge:beforedestroy', gauge);
+      gauge.$el.trigger('gauge:beforedestroy');
       gauge.emit('local::beforeDestroy gaugeBeforeDestroy', gauge);
       gauge.$gaugeSvgEl.remove();
       delete gauge.$el[0].f7Gauge;
@@ -39223,10 +39111,10 @@
 
       // Trigger events
       if ($el) {
-        $el.trigger('colorpicker:open', self);
+        $el.trigger('colorpicker:open');
       }
       if ($inputEl) {
-        $inputEl.trigger('colorpicker:open', self);
+        $inputEl.trigger('colorpicker:open');
       }
       self.emit('local::open colorPickerOpen', self);
     };
@@ -39235,10 +39123,10 @@
       var self = this;
       self.opening = false;
       if (self.$el) {
-        self.$el.trigger('colorpicker:opened', self);
+        self.$el.trigger('colorpicker:opened');
       }
       if (self.$inputEl) {
-        self.$inputEl.trigger('colorpicker:opened', self);
+        self.$inputEl.trigger('colorpicker:opened');
       }
       self.emit('local::opened colorPickerOpened', self);
     };
@@ -39266,10 +39154,10 @@
       });
 
       if (self.$el) {
-        self.$el.trigger('colorpicker:close', self);
+        self.$el.trigger('colorpicker:close');
       }
       if (self.$inputEl) {
-        self.$inputEl.trigger('colorpicker:close', self);
+        self.$inputEl.trigger('colorpicker:close');
       }
       self.emit('local::close colorPickerClose', self);
     };
@@ -39290,10 +39178,10 @@
         });
       }
       if (self.$el) {
-        self.$el.trigger('colorpicker:closed', self);
+        self.$el.trigger('colorpicker:closed');
       }
       if (self.$inputEl) {
-        self.$inputEl.trigger('colorpicker:closed', self);
+        self.$inputEl.trigger('colorpicker:closed');
       }
       self.emit('local::closed colorPickerClosed', self);
     };
@@ -39453,7 +39341,7 @@
       if (self.destroyed) { return; }
       var $el = self.$el;
       self.emit('local::beforeDestroy colorPickerBeforeDestroy', self);
-      if ($el) { $el.trigger('colorpicker:beforedestroy', self); }
+      if ($el) { $el.trigger('colorpicker:beforedestroy'); }
 
       self.close();
 

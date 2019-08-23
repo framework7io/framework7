@@ -30,30 +30,77 @@
     }
   });
 
-  @media (min-width: 768px) {
+  @media (min-width: @breakpoints[xsmall]) {
     each(@cols, {
       @className: framework7_floor(@value);
       @n: framework7_calculateN(@value);
-      .tablet-@{className} {
+      .xsmall-@{className} {
         --f7-cols-per-row: @n;
       }
     });
     each(@cols, {
-      .tablet-auto:nth-last-child(@{index}), .tablet-auto:nth-last-child(@{index}) ~ .tablet-auto {
+      .xsmall-auto:nth-last-child(@{index}),
+      .xsmall-auto:nth-last-child(@{index}) ~ .xsmall-auto {
         --f7-cols-per-row: @index;
       }
     });
   }
-  @media (min-width: 1025px) {
+  @media (min-width: @breakpoints[small]) {
     each(@cols, {
       @className: framework7_floor(@value);
       @n: framework7_calculateN(@value);
-      .desktop-@{className} {
+      .small-@{className} {
         --f7-cols-per-row: @n;
       }
     });
     each(@cols, {
-      .desktop-auto:nth-last-child(@{index}), .desktop-auto:nth-last-child(@{index}) ~ .desktop-auto {
+      .small-auto:nth-last-child(@{index}),
+      .small-auto:nth-last-child(@{index}) ~ .small-auto {
+        --f7-cols-per-row: @index;
+      }
+    });
+  }
+  @media (min-width: @breakpoints[medium]) {
+    each(@cols, {
+      @className: framework7_floor(@value);
+      @n: framework7_calculateN(@value);
+      .medium-@{className} {
+        --f7-cols-per-row: @n;
+      }
+    });
+    each(@cols, {
+      .medium-auto:nth-last-child(@{index}),
+      .medium-auto:nth-last-child(@{index}) ~ .medium-auto {
+        --f7-cols-per-row: @index;
+      }
+    });
+  }
+  @media (min-width: @breakpoints[large]) {
+    each(@cols, {
+      @className: framework7_floor(@value);
+      @n: framework7_calculateN(@value);
+      .large-@{className} {
+        --f7-cols-per-row: @n;
+      }
+    });
+    each(@cols, {
+      .large-auto:nth-last-child(@{index}),
+      .large-auto:nth-last-child(@{index}) ~ .large-auto {
+        --f7-cols-per-row: @index;
+      }
+    });
+  }
+  @media (min-width: @breakpoints[xlarge]) {
+    each(@cols, {
+      @className: framework7_floor(@value);
+      @n: framework7_calculateN(@value);
+      .xlarge-@{className} {
+        --f7-cols-per-row: @n;
+      }
+    });
+    each(@cols, {
+      .xlarge-auto:nth-last-child(@{index}),
+      .xlarge-auto:nth-last-child(@{index}) ~ .xlarge-auto {
         --f7-cols-per-row: @index;
       }
     });

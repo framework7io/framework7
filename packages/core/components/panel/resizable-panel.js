@@ -96,7 +96,7 @@ function resizablePanel(panel) {
       $viewEl.css(`margin-${side}`, `${newPanelWidth}px`);
     }
 
-    $el.trigger('panel:resize', panel, newPanelWidth);
+    $el.trigger('panel:resize', newPanelWidth);
     panel.emit('local::resize panelResize', panel, newPanelWidth);
   }
   function handleTouchEnd() {

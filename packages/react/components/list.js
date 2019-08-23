@@ -49,7 +49,11 @@ class F7List extends React.Component {
     const props = self.props;
     const {
       inset,
-      tabletInset,
+      xsmallInset,
+      smallInset,
+      mediumInset,
+      largeInset,
+      xlargeInset,
       mediaList,
       simpleList,
       linksList,
@@ -76,7 +80,11 @@ class F7List extends React.Component {
     } = props;
     return Utils.classNames(className, 'list', {
       inset,
-      'tablet-inset': tabletInset,
+      'xsmall-inset': xsmallInset,
+      'small-inset': smallInset,
+      'medium-inset': mediumInset,
+      'large-inset': largeInset,
+      'xlarge-inset': xlargeInset,
       'media-list': mediaList,
       'simple-list': simpleList,
       'links-list': linksList,
@@ -264,7 +272,11 @@ __reactComponentSetProps(F7List, Object.assign({
   className: String,
   style: Object,
   inset: Boolean,
-  tabletInset: Boolean,
+  xsmallInset: Boolean,
+  smallInset: Boolean,
+  mediumInset: Boolean,
+  largeInset: Boolean,
+  xlargeInset: Boolean,
   mediaList: Boolean,
   sortable: Boolean,
   sortableEnabled: Boolean,

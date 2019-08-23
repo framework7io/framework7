@@ -79,8 +79,6 @@ export namespace Calendar {
   }
 
   interface Parameters {
-    /** Calendar type, can be gregorian or jalali. (default gregorian) */
-    calendarType?: string
     /** Array with initial selected dates. Each array item represents selected date. */
     value?: Date[]
     /** Additonal disabled dates. Parameter accepts so called Date Range (look below for details). */
@@ -91,36 +89,23 @@ export namespace Calendar {
     rangesClasses?: RangeClass[]
     /** Function to format input value, should return new/formatted string value. values is array where each item represents selected date. */
     formatValue?: (values : Date) => string
-    /** Array with full month names. (default ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August' , 'September' , 'October', 'November', 'December']) */
-    monthNames?: string[]
-    /** Array with short month names. (default ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']) */
-    monthNamesShort?: string[]
-    /** Array with week day names. (default ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']) */
-    dayNames?: string[]
-    /** Array with week day short names. (default ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']) */
-    dayNamesShort?: string[]
+    /** Intl locale string. see https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat */
+    locale?: string
+    /** Array with full month names. (default "auto") */
+    monthNames?: string | string[]
+    /** Array with short month names. (default "auto") */
+    monthNamesShort?: string | string[]
+    /** Array with week day names. (default "auto") */
+    dayNames?: string | string[]
+    /** Array with week day short names. (default "auto") */
+    dayNamesShort?: string | string[]
     /** First day of the week. By default 1 - Monday. (default 1) */
     firstDay?: number
     /** Array with index numeber of weekend days, by default it is Saturday and Sunday. (default [0, 6]) */
     weekendDays?: number[]
-    /** Object with configuration for Jalali type calendar. (default object) */
-    jalali?: {
-      /** Array with full month names. (default ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August' , 'September' , 'October', 'November', 'December']) */
-      monthNames?: string[]
-      /** Array with short month names. (default ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']) */
-      monthNamesShort?: string[]
-      /** Array with week day names. (default ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']) */
-      dayNames?: string[]
-      /** Array with week day short names. (default ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']) */
-      dayNamesShort?: string[]
-      /** First day of the week. By default 1 - Monday. (default 1) */
-      firstDay?: number
-      /** Array with index numeber of weekend days, by default it is Saturday and Sunday. (default [0, 6]) */
-      weekendDays?: number[]
-      /** Object with configuration for Jalali type calendar. (default object) */
-    }
-    /** Default date format. (default 'yyyy-mm-dd') */
-    dateFormat?: string
+    
+    /** Default date format. (default undefined - current locale format) */
+    dateFormat?: string | Intl.DateTimeFormatOptions | Function
     /** Enable to allows select multiple dates/values. (default false) */
     multiple?: boolean
     /** Enable to enable range picker. Not compatible with multiple. (default false) */
@@ -145,8 +130,22 @@ export namespace Calendar {
     weekHeader?: boolean
     /** Enable month selector in toolbar. (default true) */
     monthSelector?: boolean
-    /** Enable year picker in toolbar. (default true) */
+    /** Enables month picker to select a month when clicked on a month selector in toolbar (default true) */
+    monthPicker?: boolean
+    /** Enable year selector in toolbar. (default true) */
     yearSelector?: boolean
+    /** Enables year picker to select a year when clicked on a year selector in toolbar (default true) */
+    yearPicker?: boolean
+    /** Minimum available year for year picker, by default is today minus 100 years */
+    yearPickerMin?: number
+    /** Maximum available year for year picker, by default is today plus 100 years */
+    yearPickerMax?: number
+    /** Enables time picker (default false) */
+    timePicker?: boolean
+    /** Time format displayed in time selector. (default { hour: 'numeric', minute: 'numeric' }) */
+    timePickerFormat?: Intl.DateTimeFormatOptions
+    /** Text to display in time selector placeholder. (default "Select time") */
+    timePickerPlaceholder?: string
 
     // Container/opener-specific parameters
     /** String with CSS selector or HTMLElement where to place generated Calendar HTML. Use only for inline calendar. */
@@ -169,8 +168,10 @@ export namespace Calendar {
     closeByOutsideClick?: boolean
     /** Enables calendar toolbar. (default true) */
     toolbar?: boolean
-    /** Text for Done/Close toolbar button. (default Done) */
+    /** Text for Done/Close footer button. (default Done) */
     toolbarCloseText?: string
+    /** Enables footer with Done/Close button */
+    footer?: boolean
     /** Enables calendar header. (default false) */
     header?: boolean
     /** Default calendar header placeholder text. (default Select date) */

@@ -4,15 +4,14 @@
     @offset: 1000% / 5;
     .preloader-inner-line {
       display: block;
-      width: 8%;
-      min-width: 2px;
-      height: 25%;
+      width: 7.15%;
+      height: 28.5%;
       border-radius: 100px;
       background: var(--f7-preloader-color);
       position: absolute;
       left: 50%;
       top: 50%;
-      transform-origin: center @offset;
+      transform-origin: center 175%;
     }
     @indexes: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11;
     each(@indexes, {
@@ -20,7 +19,7 @@
       @degrees: 360deg / 12 * @value;
       @opacity: 0.27 + (0.85 - 0.27) * @value / 11;
       .preloader-inner-line:nth-child(@{index_plus_one}) {
-        transform: translate(-50%, -@offset) rotate(@degrees);
+        transform: translate(-50%, -175%) rotate(@degrees);
         opacity: @opacity;
       }
     });

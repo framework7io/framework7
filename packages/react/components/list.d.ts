@@ -8,7 +8,11 @@ declare namespace F7List {
     className? : string
     style? : React.CSSProperties
     inset? : boolean
-    tabletInset? : boolean
+    xsmallInset? : boolean
+    smallInset? : boolean
+    mediumInset? : boolean
+    largeInset? : boolean
+    xlargeInset? : boolean
     mediaList? : boolean
     sortable? : boolean
     sortableEnabled? : boolean

@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.0.0-beta.7
+ * Framework7 React 5.0.0-beta.10
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: August 21, 2019
+ * Released on: August 23, 2019
  */
 
 (function (global, factory) {
@@ -1714,9 +1714,13 @@
       var props = self.props;
       var className = props.className;
       var inset = props.inset;
+      var xsmallInset = props.xsmallInset;
+      var smallInset = props.smallInset;
+      var mediumInset = props.mediumInset;
+      var largeInset = props.largeInset;
+      var xlargeInset = props.xlargeInset;
       var strong = props.strong;
       var accordionList = props.accordionList;
-      var tabletInset = props.tabletInset;
       var tabs = props.tabs;
       var tab = props.tab;
       var tabActive = props.tabActive;
@@ -1728,9 +1732,13 @@
       var style = props.style;
       var classes = Utils.classNames(className, 'block', {
         inset: inset,
+        'xsmall-inset': xsmallInset,
+        'small-inset': smallInset,
+        'medium-inset': mediumInset,
+        'large-inset': largeInset,
+        'xlarge-inset': xlargeInset,
         'block-strong': strong,
         'accordion-list': accordionList,
-        'tablet-inset': tabletInset,
         tabs: tabs,
         tab: tab,
         'tab-active': tabActive,
@@ -1795,7 +1803,11 @@
     className: String,
     style: Object,
     inset: Boolean,
-    tabletInset: Boolean,
+    xsmallInset: Boolean,
+    smallInset: Boolean,
+    mediumInset: Boolean,
+    largeInset: Boolean,
+    xlargeInset: Boolean,
     strong: Boolean,
     tabs: Boolean,
     tab: Boolean,
@@ -2975,12 +2987,15 @@
       var style = props.style;
       var tag = props.tag;
       var width = props.width;
-      var tabletWidth = props.tabletWidth;
-      var desktopWidth = props.desktopWidth;
+      var xsmall = props.xsmall;
+      var small = props.small;
+      var medium = props.medium;
+      var large = props.large;
+      var xlarge = props.xlarge;
       var ColTag = tag;
       var classes = Utils.classNames(className, ( obj = {
         col: width === 'auto'
-      }, obj[("col-" + width)] = width !== 'auto', obj[("tablet-" + tabletWidth)] = tabletWidth, obj[("desktop-" + desktopWidth)] = desktopWidth, obj ), Mixins.colorClasses(props));
+      }, obj[("col-" + width)] = width !== 'auto', obj[("xsmall-" + xsmall)] = xsmall, obj[("small-" + small)] = small, obj[("medium-" + medium)] = medium, obj[("large-" + large)] = large, obj[("xlarge-" + xlarge)] = xlarge, obj ), Mixins.colorClasses(props));
       return React.createElement(ColTag, {
         id: id,
         style: style,
@@ -3033,10 +3048,19 @@
       type: [Number, String],
       default: 'auto'
     },
-    tabletWidth: {
+    xsmall: {
       type: [Number, String]
     },
-    desktopWidth: {
+    small: {
+      type: [Number, String]
+    },
+    medium: {
+      type: [Number, String]
+    },
+    large: {
+      type: [Number, String]
+    },
+    xlarge: {
       type: [Number, String]
     }
   }, Mixins.colorProps));
@@ -6689,7 +6713,11 @@
       var self = this;
       var props = self.props;
       var inset = props.inset;
-      var tabletInset = props.tabletInset;
+      var xsmallInset = props.xsmallInset;
+      var smallInset = props.smallInset;
+      var mediumInset = props.mediumInset;
+      var largeInset = props.largeInset;
+      var xlargeInset = props.xlargeInset;
       var mediaList = props.mediaList;
       var simpleList = props.simpleList;
       var linksList = props.linksList;
@@ -6715,7 +6743,11 @@
       var chevronCenter = props.chevronCenter;
       return Utils.classNames(className, 'list', {
         inset: inset,
-        'tablet-inset': tabletInset,
+        'xsmall-inset': xsmallInset,
+        'small-inset': smallInset,
+        'medium-inset': mediumInset,
+        'large-inset': largeInset,
+        'xlarge-inset': xlargeInset,
         'media-list': mediaList,
         'simple-list': simpleList,
         'links-list': linksList,
@@ -6907,7 +6939,11 @@
     className: String,
     style: Object,
     inset: Boolean,
-    tabletInset: Boolean,
+    xsmallInset: Boolean,
+    smallInset: Boolean,
+    mediumInset: Boolean,
+    largeInset: Boolean,
+    xlargeInset: Boolean,
     mediaList: Boolean,
     sortable: Boolean,
     sortableEnabled: Boolean,
@@ -10488,7 +10524,7 @@
         var self = this$1;
         var pb = self.f7PhotoBrowser;
         if (!pb) { return; }
-        self.f7PhotoBrowser.photos = newValue;
+        self.f7PhotoBrowser.params.photos = newValue;
 
         if (pb.opened && pb.swiper) {
           pb.swiper.update();
@@ -10541,11 +10577,21 @@
       type: Boolean,
       default: true
     },
-    backLinkText: {
-      type: String
+    pageBackLinkText: {
+      type: String,
+      default: undefined
+    },
+    popupBackLinkText: {
+      type: String,
+      default: undefined
     },
     navbarOfText: {
-      type: String
+      type: String,
+      default: undefined
+    },
+    navbarShowCount: {
+      type: Boolean,
+      default: undefined
     },
     swiper: {
       type: Object
@@ -14019,7 +14065,7 @@
   };
 
   /**
-   * Framework7 React 5.0.0-beta.7
+   * Framework7 React 5.0.0-beta.10
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -14027,7 +14073,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: August 21, 2019
+   * Released on: August 23, 2019
    */
 
   var Plugin = {

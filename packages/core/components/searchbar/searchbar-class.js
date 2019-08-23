@@ -472,7 +472,7 @@ class Searchbar extends FrameworkClass {
     }
 
     if (sb.params.customSearch) {
-      $el.trigger('searchbar:search', query, sb.previousQuery);
+      $el.trigger('searchbar:search', { query, previousQuery: sb.previousQuery });
       sb.emit('local::search searchbarSearch', sb, query, sb.previousQuery);
       return sb;
     }
@@ -485,7 +485,7 @@ class Searchbar extends FrameworkClass {
         sb.virtualList.resetFilter();
         if ($notFoundEl) $notFoundEl.hide();
         if ($foundEl) $foundEl.show();
-        $el.trigger('searchbar:search', query, sb.previousQuery);
+        $el.trigger('searchbar:search', { query, previousQuery: sb.previousQuery });
         sb.emit('local::search searchbarSearch', sb, query, sb.previousQuery);
         return sb;
       }
@@ -574,7 +574,7 @@ class Searchbar extends FrameworkClass {
       sb.virtualList.filterItems(foundItems);
     }
 
-    $el.trigger('searchbar:search', query, sb.previousQuery, foundItems);
+    $el.trigger('searchbar:search', { query, previousQuery: sb.previousQuery, foundItems });
     sb.emit('local::search searchbarSearch', sb, query, sb.previousQuery, foundItems);
 
     return sb;
@@ -590,7 +590,7 @@ class Searchbar extends FrameworkClass {
   destroy() {
     const sb = this;
     sb.emit('local::beforeDestroy searchbarBeforeDestroy', sb);
-    sb.$el.trigger('searchbar:beforedestroy', sb);
+    sb.$el.trigger('searchbar:beforedestroy');
     sb.detachEvents();
     if (sb.$el[0]) {
       sb.$el[0].f7Searchbar = null;

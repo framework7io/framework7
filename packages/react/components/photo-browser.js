@@ -84,7 +84,7 @@ class F7PhotoBrowser extends React.Component {
       const self = this;
       const pb = self.f7PhotoBrowser;
       if (!pb) return;
-      self.f7PhotoBrowser.photos = newValue;
+      self.f7PhotoBrowser.params.photos = newValue;
 
       if (pb.opened && pb.swiper) {
         pb.swiper.update();
@@ -136,11 +136,21 @@ __reactComponentSetProps(F7PhotoBrowser, {
     type: Boolean,
     default: true
   },
-  backLinkText: {
-    type: String
+  pageBackLinkText: {
+    type: String,
+    default: undefined
+  },
+  popupBackLinkText: {
+    type: String,
+    default: undefined
   },
   navbarOfText: {
-    type: String
+    type: String,
+    default: undefined
+  },
+  navbarShowCount: {
+    type: Boolean,
+    default: undefined
   },
   swiper: {
     type: Object

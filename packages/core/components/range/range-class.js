@@ -336,7 +336,7 @@ class Range extends Framework7Class {
             && range.previousValue !== range.value
           )
         ) {
-          range.$el.trigger('range:changed', range, range.value);
+          range.$el.trigger('range:changed', range.value);
           range.emit('local::changed rangeChanged', range, range.value);
         }
       }
@@ -508,7 +508,7 @@ class Range extends Framework7Class {
     }
     // Events
     if (!valueChanged) return range;
-    range.$el.trigger('range:change', range, range.value);
+    range.$el.trigger('range:change', range.value);
     if (range.$inputEl && !range.dual) {
       range.$inputEl.val(range.value);
       if (!byTouchMove) {
@@ -518,7 +518,7 @@ class Range extends Framework7Class {
       }
     }
     if (!byTouchMove) {
-      range.$el.trigger('range:changed', range, range.value);
+      range.$el.trigger('range:changed', range.value);
       range.emit('local::changed rangeChanged', range, range.value);
     }
     range.emit('local::change rangeChange', range, range.value);
@@ -600,7 +600,7 @@ class Range extends Framework7Class {
 
   destroy() {
     let range = this;
-    range.$el.trigger('range:beforedestroy', range);
+    range.$el.trigger('range:beforedestroy');
     range.emit('local::beforeDestroy rangeBeforeDestroy', range);
     delete range.$el[0].f7Range;
     range.detachEvents();

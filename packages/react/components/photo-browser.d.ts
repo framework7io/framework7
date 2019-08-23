@@ -19,8 +19,10 @@ declare namespace F7PhotoBrowser {
     captionsTheme? : string
     iconsColor? : string
     swipeToClose? : boolean
-    backLinkText? : string
+    pageBackLinkText? : string
+    popupBackLinkText? : string
     navbarOfText? : string
+    navbarShowCount? : boolean
     swiper? : Object
     url? : string
     routableModals? : boolean

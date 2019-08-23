@@ -14,10 +14,19 @@ export default {
       type: [Number, String],
       default: 'auto'
     },
-    tabletWidth: {
+    xsmall: {
       type: [Number, String]
     },
-    desktopWidth: {
+    small: {
+      type: [Number, String]
+    },
+    medium: {
+      type: [Number, String]
+    },
+    large: {
+      type: [Number, String]
+    },
+    xlarge: {
       type: [Number, String]
     }
   }, Mixins.colorProps),
@@ -32,15 +41,21 @@ export default {
       style,
       tag,
       width,
-      tabletWidth,
-      desktopWidth
+      xsmall,
+      small,
+      medium,
+      large,
+      xlarge
     } = props;
     const ColTag = tag;
     const classes = Utils.classNames(className, {
       col: width === 'auto',
       [`col-${width}`]: width !== 'auto',
-      [`tablet-${tabletWidth}`]: tabletWidth,
-      [`desktop-${desktopWidth}`]: desktopWidth
+      [`xsmall-${xsmall}`]: xsmall,
+      [`small-${small}`]: small,
+      [`medium-${medium}`]: medium,
+      [`large-${large}`]: large,
+      [`xlarge-${xlarge}`]: xlarge
     }, Mixins.colorClasses(props));
     return _h(ColTag, {
       style: style,

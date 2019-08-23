@@ -141,7 +141,7 @@ class DataTable extends Framework7Class {
   destroy() {
     let table = this;
 
-    table.$el.trigger('datatable:beforedestroy', table);
+    table.$el.trigger('datatable:beforedestroy');
     table.emit('local::beforeDestroy dataTableBeforeDestroy', table);
 
     table.attachEvents();

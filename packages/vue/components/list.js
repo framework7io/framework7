@@ -7,7 +7,11 @@ export default {
   props: Object.assign({
     id: [String, Number],
     inset: Boolean,
-    tabletInset: Boolean,
+    xsmallInset: Boolean,
+    smallInset: Boolean,
+    mediumInset: Boolean,
+    largeInset: Boolean,
+    xlargeInset: Boolean,
     mediaList: Boolean,
     sortable: Boolean,
     sortableEnabled: Boolean,
@@ -102,7 +106,11 @@ export default {
       const props = self.props;
       const {
         inset,
-        tabletInset,
+        xsmallInset,
+        smallInset,
+        mediumInset,
+        largeInset,
+        xlargeInset,
         mediaList,
         simpleList,
         linksList,
@@ -129,7 +137,11 @@ export default {
       } = props;
       return Utils.classNames(className, 'list', {
         inset,
-        'tablet-inset': tabletInset,
+        'xsmall-inset': xsmallInset,
+        'small-inset': smallInset,
+        'medium-inset': mediumInset,
+        'large-inset': largeInset,
+        'xlarge-inset': xlargeInset,
         'media-list': mediaList,
         'simple-list': simpleList,
         'links-list': linksList,

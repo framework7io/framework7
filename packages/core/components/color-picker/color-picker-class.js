@@ -588,10 +588,10 @@ class ColorPicker extends Framework7Class {
 
     // Trigger events
     if ($el) {
-      $el.trigger('colorpicker:open', self);
+      $el.trigger('colorpicker:open');
     }
     if ($inputEl) {
-      $inputEl.trigger('colorpicker:open', self);
+      $inputEl.trigger('colorpicker:open');
     }
     self.emit('local::open colorPickerOpen', self);
   }
@@ -600,10 +600,10 @@ class ColorPicker extends Framework7Class {
     const self = this;
     self.opening = false;
     if (self.$el) {
-      self.$el.trigger('colorpicker:opened', self);
+      self.$el.trigger('colorpicker:opened');
     }
     if (self.$inputEl) {
-      self.$inputEl.trigger('colorpicker:opened', self);
+      self.$inputEl.trigger('colorpicker:opened');
     }
     self.emit('local::opened colorPickerOpened', self);
   }
@@ -629,10 +629,10 @@ class ColorPicker extends Framework7Class {
     });
 
     if (self.$el) {
-      self.$el.trigger('colorpicker:close', self);
+      self.$el.trigger('colorpicker:close');
     }
     if (self.$inputEl) {
-      self.$inputEl.trigger('colorpicker:close', self);
+      self.$inputEl.trigger('colorpicker:close');
     }
     self.emit('local::close colorPickerClose', self);
   }
@@ -653,10 +653,10 @@ class ColorPicker extends Framework7Class {
       });
     }
     if (self.$el) {
-      self.$el.trigger('colorpicker:closed', self);
+      self.$el.trigger('colorpicker:closed');
     }
     if (self.$inputEl) {
-      self.$inputEl.trigger('colorpicker:closed', self);
+      self.$inputEl.trigger('colorpicker:closed');
     }
     self.emit('local::closed colorPickerClosed', self);
   }
@@ -809,7 +809,7 @@ class ColorPicker extends Framework7Class {
     if (self.destroyed) return;
     const { $el } = self;
     self.emit('local::beforeDestroy colorPickerBeforeDestroy', self);
-    if ($el) $el.trigger('colorpicker:beforedestroy', self);
+    if ($el) $el.trigger('colorpicker:beforedestroy');
 
     self.close();
 

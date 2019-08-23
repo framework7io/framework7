@@ -7,7 +7,11 @@ declare namespace F7Block {
     className? : string
     style? : React.CSSProperties
     inset? : boolean
-    tabletInset? : boolean
+    xsmallInset? : boolean
+    smallInset? : boolean
+    mediumInset? : boolean
+    largeInset? : boolean
+    xlargeInset? : boolean
     strong? : boolean
     tabs? : boolean
     tab? : boolean
