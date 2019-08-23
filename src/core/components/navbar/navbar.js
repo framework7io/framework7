@@ -5,16 +5,23 @@ import Support from '../../utils/support';
 const Navbar = {
   size(el) {
     const app = this;
-    if (app.theme !== 'ios' && !app.params.navbar[`${app.theme}CenterTitle`]) {
-      return;
-    }
+    
     let $el = $(el);
+
     if ($el.hasClass('navbars')) {
       $el = $el.children('.navbar').each((index, navbarEl) => {
         app.navbar.size(navbarEl);
       });
       return;
     }
+
+    const needCenterTitle = (
+      $el.children('.navbar-inner').hasClass('navbar-inner-centered-title')
+      || app.params.navbar[`${app.theme}CenterTitle`]
+    );
+    const needLeftTitle = app.theme === 'ios' && !app.params.navbar[`${app.theme}CenterTitle`];
+
+    if (!needCenterTitle && !needLeftTitle) return;
 
     if (
       $el.hasClass('stacked')
@@ -135,7 +142,7 @@ const Navbar = {
     }
 
     // Center title
-    if (app.params.navbar[`${app.theme}CenterTitle`]) {
+    if (needCenterTitle) {
       let titleLeft = diff;
       if (app.rtl && noLeft && noRight && title.length > 0) titleLeft = -titleLeft;
       title.css({ left: `${titleLeft}px` });
@@ -601,18 +608,12 @@ export default {
     },
     'panelOpen panelSwipeOpen modalOpen': function onPanelModalOpen(instance) {
       const app = this;
-      if (!app.params.navbar[`${app.theme}CenterTitle`]) {
-        return;
-      }
       instance.$el.find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
         app.navbar.size(navbarEl);
       });
     },
     tabShow(tabEl) {
       const app = this;
-      if (!app.params.navbar[`${app.theme}CenterTitle`]) {
-        return;
-      }
       $(tabEl).find('.navbar:not(.navbar-previous):not(.stacked)').each((index, navbarEl) => {
         app.navbar.size(navbarEl);
       });
@@ -657,9 +658,6 @@ export default {
     navbar: {
       postpatch(vnode) {
         const app = this;
-        if (!app.params.navbar[`${app.theme}CenterTitle`]) {
-          return;
-        }
         app.navbar.size(vnode.elm);
       },
     },
