@@ -1,4 +1,4 @@
-import { window, document } from 'ssr-window';
+import { window } from 'ssr-window';
 import Support from './support';
 
 const Device = (function Device() {
