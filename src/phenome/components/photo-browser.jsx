@@ -54,12 +54,15 @@ export default {
     },
     pageBackLinkText: {
       type: String,
+      default: undefined,
     },
     popupBackLinkText: {
       type: String,
+      default: undefined,
     },
     navbarOfText: {
       type: String,
+      default: undefined,
     },
     navbarShowCount: {
       type: Boolean,
