@@ -25,6 +25,11 @@ export default class extends React.Component {
           <ListInput type="datepicker" placeholder="Select date" readonly calendarParams={{dateFormat: { weekday: 'long', month: 'long', day: '2-digit', year: 'numeric' }}} />
         </List>
 
+        <BlockTitle>Date + Time</BlockTitle>
+        <List noHairlinesMd>
+          <ListInput type="datepicker" placeholder="Select date and time" readonly calendarParams={{dateFormat: { month: 'numeric', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' }}} />
+        </List>
+
         <BlockTitle>Multiple Values</BlockTitle>
         <List noHairlinesMd>
           <ListInput type="datepicker" placeholder="Select multiple dates" readonly calendarParams={{ dateFormat: { month: 'short', day: 'numeric' }, multiple: true }}/>

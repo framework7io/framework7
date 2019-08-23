@@ -17,6 +17,11 @@
       <f7-list-input type="datepicker" placeholder="Select date" readonly :calendar-params="{dateFormat: { weekday: 'long', month: 'long', day: '2-digit', year: 'numeric' }}" />
     </f7-list>
 
+    <f7-block-title>Date + Time</f7-block-title>
+    <f7-list no-hairlines-md>
+      <f7-list-input type="datepicker" placeholder="Select date and time" readonly :calendar-params="{dateFormat: { month: 'numeric', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' }}"/>
+    </f7-list>
+
     <f7-block-title>Multiple Values</f7-block-title>
     <f7-list no-hairlines-md>
       <f7-list-input type="datepicker" placeholder="Select multiple dates" readonly :calendar-params="{ dateFormat: { month: 'short', day: 'numeric' }, multiple: true }" />

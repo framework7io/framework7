@@ -45,6 +45,20 @@
           </li>
         </ul>
       </div>
+      <div class="block-title">Date + Time</div>
+      <div class="list no-hairlines-md">
+        <ul>
+          <li>
+            <div class="item-content item-input">
+              <div class="item-inner">
+                <div class="item-input-wrap">
+                  <input type="text" placeholder="Select date and time" readonly="readonly" id="demo-calendar-date-time"/>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
       <div class="block-title">Multiple Values</div>
       <div class="list no-hairlines-md">
         <ul>
@@ -124,6 +138,14 @@
           inputEl: '#demo-calendar-date-format',
           dateFormat: { weekday: 'long', month: 'long', day: '2-digit', year: 'numeric' },
         });
+
+        // Date + Time
+        self.calendarDateTime = app.calendar.create({
+          inputEl: '#demo-calendar-date-time',
+          timePicker: true,
+          dateFormat: { month: 'numeric', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' },
+        });
+
         // With multiple values
         self.calendarMultiple = app.calendar.create({
           inputEl: '#demo-calendar-multiple',
@@ -180,6 +202,7 @@
         var self = this;
         self.calendarDefault.destroy();
         self.calendarDateFormat.destroy();
+        self.calendarDateTime.destroy();
         self.calendarMultiple.destroy();
         self.calendarRange.destroy();
         self.calendarModal.destroy();
