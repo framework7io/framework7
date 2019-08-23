@@ -39,7 +39,7 @@ export namespace Touch {
       iosTouchRipple? : boolean
       /** Enables Aurora-theme specific touch ripple effect. (default false) */
       auroraTouchRipple? : boolean
-      /** CSS selector of elements to apply touch ripple effect on click. (default .ripple, .link, .item-link, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell, .notification-close-button) */
+      /** CSS selector of elements to apply touch ripple effect on click. (default .ripple, .link, .item-link, .list-button, .links-list a, .button, button, .input-clear-button, .dialog-button, .tab-link, .item-radio, .item-checkbox, .actions-button, .searchbar-disable-button, .fab a, .checkbox, .radio, .data-table .sortable-cell:not(.input-cell), .notification-close-button, .stepper-button, .stepper-button-minus, .stepper-button-plus, .menu-item-content) */
       touchRippleElements? : string
     } | undefined
   }
