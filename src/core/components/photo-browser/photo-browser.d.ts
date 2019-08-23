@@ -38,8 +38,10 @@ export namespace PhotoBrowser {
     navbar?: boolean
     /** Set to false to remove Photo Browser's Toolbar (default true) */
     toolbar?: boolean
-    /** Text on back link in Photo Browser's navbar (default "Close") */
-    backLinkText?: string
+    /** Text on back link in Photo Browser's navbar (default "Back") */
+    pageBackLinkText?: string
+    /** Text on close link in Photo Browser's navbar when opened in Popup or as Standalone (default "Close") */
+    popupCloseLinkText?: string
     /** Text of "of" in photos counter: "3 of 5" (default "of") */
     navbarOfText?: string
     /** Defines should it display "3 of 5" text in navbar title or not. If not specified (undefined) then it will show this text if there is more than 1 item  */

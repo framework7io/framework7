@@ -167,7 +167,7 @@ class PhotoBrowser extends Framework7Class {
     let iconsColor = pb.params.iconsColor;
     if (!pb.params.iconsColor && pb.params.theme === 'dark') iconsColor = 'white';
 
-    const backLinkText = (pb.app.theme === 'ios' || pb.app.theme === 'aurora') && pb.params.backLinkText ? pb.params.backLinkText : '';
+    const pageBackLinkText = (pb.app.theme === 'ios' || pb.app.theme === 'aurora') && pb.params.pageBackLinkText ? pb.params.pageBackLinkText : '';
 
     const renderNavbarCount = typeof pb.params.navbarShowCount === 'undefined' ? pb.params.photos.length > 1 : pb.params.navbarShowCount;
 
@@ -176,12 +176,14 @@ class PhotoBrowser extends Framework7Class {
       <div class="navbar navbar-photo-browser ${pb.params.theme === 'dark' ? 'navbar-photo-browser-dark' : ''}">
         <div class="navbar-bg"></div>
         <div class="navbar-inner sliding">
+          ${!isPopup ? `
           <div class="left">
-            <a class="link ${isPopup ? 'popup-close' : ''} ${!backLinkText ? 'icon-only' : ''} ${!isPopup ? 'back' : ''}" ${isPopup ? 'data-popup=".photo-browser-popup"' : ''}>
+            <a class="link ${!pageBackLinkText ? 'icon-only' : ''} back">
               <i class="icon icon-back ${iconsColor ? `color-${iconsColor}` : ''}"></i>
-              ${backLinkText ? `<span>${backLinkText}</span>` : ''}
+              ${pageBackLinkText ? `<span>${pageBackLinkText}</span>` : ''}
             </a>
           </div>
+          ` : ''}
           ${renderNavbarCount ? `
           <div class="title">
             <span class="photo-browser-current"></span>
@@ -189,7 +191,13 @@ class PhotoBrowser extends Framework7Class {
             <span class="photo-browser-total"></span>
           </div>
           ` : ''}
-          <div class="right"></div>
+          ${isPopup ? `
+          <div class="right">
+            <a class="link popup-close" data-popup=".photo-browser-popup">
+              <span>${pb.params.popupCloseLinkText}</span>
+            </a>
+          </div>
+          ` : ''}
         </div>
       </div>
     `.trim();
