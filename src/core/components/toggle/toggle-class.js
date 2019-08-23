@@ -131,7 +131,7 @@ class Toggle extends Framework7Class {
       }
     }
     function handleInputChange() {
-      toggle.$el.trigger('toggle:change', toggle);
+      toggle.$el.trigger('toggle:change');
       toggle.emit('local::change toggleChange', toggle);
     }
     toggle.attachEvents = function attachEvents() {
@@ -172,7 +172,7 @@ class Toggle extends Framework7Class {
 
   destroy() {
     let toggle = this;
-    toggle.$el.trigger('toggle:beforedestroy', toggle);
+    toggle.$el.trigger('toggle:beforedestroy');
     toggle.emit('local::beforeDestroy toggleBeforeDestroy', toggle);
     delete toggle.$el[0].f7Toggle;
     toggle.detachEvents();

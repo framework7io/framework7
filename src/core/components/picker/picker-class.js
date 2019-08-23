@@ -359,10 +359,10 @@ class Picker extends Framework7Class {
 
     // Trigger events
     if ($el) {
-      $el.trigger('picker:open', picker);
+      $el.trigger('picker:open');
     }
     if ($inputEl) {
-      $inputEl.trigger('picker:open', picker);
+      $inputEl.trigger('picker:open');
     }
     picker.emit('local::open pickerOpen', picker);
   }
@@ -372,10 +372,10 @@ class Picker extends Framework7Class {
     picker.opening = false;
 
     if (picker.$el) {
-      picker.$el.trigger('picker:opened', picker);
+      picker.$el.trigger('picker:opened');
     }
     if (picker.$inputEl) {
-      picker.$inputEl.trigger('picker:opened', picker);
+      picker.$inputEl.trigger('picker:opened');
     }
     picker.emit('local::opened pickerOpened', picker);
   }
@@ -397,10 +397,10 @@ class Picker extends Framework7Class {
     }
 
     if (picker.$el) {
-      picker.$el.trigger('picker:close', picker);
+      picker.$el.trigger('picker:close');
     }
     if (picker.$inputEl) {
-      picker.$inputEl.trigger('picker:close', picker);
+      picker.$inputEl.trigger('picker:close');
     }
     picker.emit('local::close pickerClose', picker);
   }
@@ -422,10 +422,10 @@ class Picker extends Framework7Class {
     }
 
     if (picker.$el) {
-      picker.$el.trigger('picker:closed', picker);
+      picker.$el.trigger('picker:closed');
     }
     if (picker.$inputEl) {
-      picker.$inputEl.trigger('picker:closed', picker);
+      picker.$inputEl.trigger('picker:closed');
     }
     picker.emit('local::closed pickerClosed', picker);
   }
@@ -531,7 +531,7 @@ class Picker extends Framework7Class {
     if (picker.destroyed) return;
     const { $el } = picker;
     picker.emit('local::beforeDestroy pickerBeforeDestroy', picker);
-    if ($el) $el.trigger('picker:beforedestroy', picker);
+    if ($el) $el.trigger('picker:beforedestroy');
 
     picker.close();
 

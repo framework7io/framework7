@@ -102,7 +102,7 @@ class View extends Framework7Class {
     let view = this;
     const app = view.app;
 
-    view.$el.trigger('view:beforedestroy', view);
+    view.$el.trigger('view:beforedestroy');
     view.emit('local::beforeDestroy viewBeforeDestroy', view);
 
     app.off('resize', view.checkMasterDetailBreakpoint);
@@ -143,14 +143,14 @@ class View extends Framework7Class {
     if ((typeof force === 'undefined' && isMasterDetail) || force === true) {
       view.$el.addClass('view-master-detail');
       if (!wasMasterDetail) {
-        view.emit('local::masterDetailBreakpoint viewMasterDetailBreakpoint');
-        view.$el.trigger('view:masterDetailBreakpoint', view);
+        view.emit('local::masterDetailBreakpoint viewMasterDetailBreakpoint', view);
+        view.$el.trigger('view:masterDetailBreakpoint');
       }
     } else {
       view.$el.removeClass('view-master-detail');
       if (wasMasterDetail) {
-        view.emit('local::masterDetailBreakpoint viewMasterDetailBreakpoint');
-        view.$el.trigger('view:masterDetailBreakpoint', view);
+        view.emit('local::masterDetailBreakpoint viewMasterDetailBreakpoint', view);
+        view.$el.trigger('view:masterDetailBreakpoint');
       }
     }
   }
@@ -170,7 +170,7 @@ class View extends Framework7Class {
         view.initMasterDetail();
       }
       view.router.init();
-      view.$el.trigger('view:init', view);
+      view.$el.trigger('view:init');
       view.emit('local::init viewInit', view);
     }
   }

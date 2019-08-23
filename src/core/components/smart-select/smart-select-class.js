@@ -82,7 +82,7 @@ class SmartSelect extends Framework7Class {
     }
     function onChange() {
       const value = ss.$selectEl.val();
-      ss.$el.trigger('smartselect:change', ss, value);
+      ss.$el.trigger('smartselect:change', value);
       ss.emit('local::change smartSelectChange', ss, value);
       ss.setValueText();
     }
@@ -592,14 +592,14 @@ class SmartSelect extends Framework7Class {
     // Attach input events
     ss.attachInputsEvents();
 
-    ss.$el.trigger('smartselect:open', ss);
+    ss.$el.trigger('smartselect:open');
     ss.emit('local::open smartSelectOpen', ss);
   }
 
   onOpened() {
     const ss = this;
 
-    ss.$el.trigger('smartselect:opened', ss);
+    ss.$el.trigger('smartselect:opened');
     ss.emit('local::opened smartSelectOpened', ss);
   }
 
@@ -623,7 +623,7 @@ class SmartSelect extends Framework7Class {
     // Detach events
     ss.detachInputsEvents();
 
-    ss.$el.trigger('smartselect:close', ss);
+    ss.$el.trigger('smartselect:close');
     ss.emit('local::close smartSelectClose', ss);
   }
 
@@ -634,7 +634,7 @@ class SmartSelect extends Framework7Class {
     ss.$containerEl = null;
     delete ss.$containerEl;
 
-    ss.$el.trigger('smartselect:closed', ss);
+    ss.$el.trigger('smartselect:closed');
     ss.emit('local::closed smartSelectClosed', ss);
   }
 
@@ -839,7 +839,7 @@ class SmartSelect extends Framework7Class {
   destroy() {
     const ss = this;
     ss.emit('local::beforeDestroy smartSelectBeforeDestroy', ss);
-    ss.$el.trigger('smartselect:beforedestroy', ss);
+    ss.$el.trigger('smartselect:beforedestroy');
     ss.detachEvents();
     delete ss.$el[0].f7SmartSelect;
     Utils.deleteProps(ss);

@@ -303,7 +303,7 @@ class Gauge extends Framework7Class {
   destroy() {
     const gauge = this;
     if (!gauge.$el || gauge.destroyed) return;
-    gauge.$el.trigger('gauge:beforedestroy', gauge);
+    gauge.$el.trigger('gauge:beforedestroy');
     gauge.emit('local::beforeDestroy gaugeBeforeDestroy', gauge);
     gauge.$gaugeSvgEl.remove();
     delete gauge.$el[0].f7Gauge;

@@ -111,9 +111,9 @@ class ListIndex extends Framework7Class {
       }
       const itemContent = index.indexes[itemIndex];
 
-      index.$el.trigger('listindex:click', itemContent, itemIndex);
+      index.$el.trigger('listindex:click', { content: itemContent, index: itemIndex });
       index.emit('local::click listIndexClick', index, itemContent, itemIndex);
-      index.$el.trigger('listindex:select', itemContent, itemIndex);
+      index.$el.trigger('listindex:select', { content: itemContent, index: itemIndex });
       index.emit('local::select listIndexSelect', index, itemContent, itemIndex);
 
       if (index.$listEl && index.params.scrollList) {
@@ -172,7 +172,7 @@ class ListIndex extends Framework7Class {
 
       previousIndex = itemIndex;
 
-      index.$el.trigger('listindex:select', index);
+      index.$el.trigger('listindex:select');
       index.emit('local::select listIndexSelect', index, itemContent, itemIndex);
     }
     function handleTouchEnd() {
@@ -342,7 +342,7 @@ class ListIndex extends Framework7Class {
   destroy() {
     let index = this;
     index.$el.trigger('listindex:beforedestroy', index);
-    index.emit('local::beforeDestroy listIndexBeforeDestroy', index);
+    index.emit('local::beforeDestroy listIndexBeforeDestroy');
     index.detachEvents();
     if (index.$el[0]) {
       index.$el[0].f7ListIndex = null;

@@ -1536,10 +1536,10 @@ class Calendar extends Framework7Class {
 
     // Trigger events
     if ($el) {
-      $el.trigger('calendar:open', calendar);
+      $el.trigger('calendar:open');
     }
     if ($inputEl) {
-      $inputEl.trigger('calendar:open', calendar);
+      $inputEl.trigger('calendar:open');
     }
     calendar.emit('local::open calendarOpen', calendar);
   }
@@ -1548,10 +1548,10 @@ class Calendar extends Framework7Class {
     const calendar = this;
     calendar.opening = false;
     if (calendar.$el) {
-      calendar.$el.trigger('calendar:opened', calendar);
+      calendar.$el.trigger('calendar:opened');
     }
     if (calendar.$inputEl) {
-      calendar.$inputEl.trigger('calendar:opened', calendar);
+      calendar.$inputEl.trigger('calendar:opened');
     }
     calendar.emit('local::opened calendarOpened', calendar);
   }
@@ -1570,10 +1570,10 @@ class Calendar extends Framework7Class {
     }
 
     if (calendar.$el) {
-      calendar.$el.trigger('calendar:close', calendar);
+      calendar.$el.trigger('calendar:close');
     }
     if (calendar.$inputEl) {
-      calendar.$inputEl.trigger('calendar:close', calendar);
+      calendar.$inputEl.trigger('calendar:close');
     }
     calendar.emit('local::close calendarClose', calendar);
   }
@@ -1598,10 +1598,10 @@ class Calendar extends Framework7Class {
       delete calendar.timePickerInstance;
     }
     if (calendar.$el) {
-      calendar.$el.trigger('calendar:closed', calendar);
+      calendar.$el.trigger('calendar:closed');
     }
     if (calendar.$inputEl) {
-      calendar.$inputEl.trigger('calendar:closed', calendar);
+      calendar.$inputEl.trigger('calendar:closed');
     }
     calendar.emit('local::closed calendarClosed', calendar);
   }
@@ -1717,7 +1717,7 @@ class Calendar extends Framework7Class {
     if (calendar.destroyed) return;
     const { $el } = calendar;
     calendar.emit('local::beforeDestroy calendarBeforeDestroy', calendar);
-    if ($el) $el.trigger('calendar:beforedestroy', calendar);
+    if ($el) $el.trigger('calendar:beforedestroy');
 
     calendar.close();
 

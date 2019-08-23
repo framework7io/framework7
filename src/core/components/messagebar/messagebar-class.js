@@ -368,7 +368,7 @@ class Messagebar extends Framework7Class {
   destroy() {
     const messagebar = this;
     messagebar.emit('local::beforeDestroy messagebarBeforeDestroy', messagebar);
-    messagebar.$el.trigger('messagebar:beforedestroy', messagebar);
+    messagebar.$el.trigger('messagebar:beforedestroy');
     messagebar.detachEvents();
     if (messagebar.$el[0]) {
       messagebar.$el[0].f7Messagebar = null;

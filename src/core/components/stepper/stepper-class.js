@@ -312,7 +312,7 @@ class Stepper extends Framework7Class {
     // Events
     if (!valueChanged && !forceUpdate) return stepper;
 
-    stepper.$el.trigger('stepper:change', stepper, stepper.value);
+    stepper.$el.trigger('stepper:change', stepper.value);
     const formattedValue = stepper.formatValue(stepper.value);
     if (stepper.$inputEl && stepper.$inputEl.length) {
       stepper.$inputEl.val(formattedValue);
@@ -343,7 +343,7 @@ class Stepper extends Framework7Class {
     }
     stepper.typeModeChanged = false;
 
-    stepper.$el.trigger('stepper:change', stepper, stepper.value);
+    stepper.$el.trigger('stepper:change', stepper.value);
     const formattedValue = stepper.formatValue(stepper.value);
     if (stepper.$inputEl && stepper.$inputEl.length) {
       stepper.$inputEl.val(formattedValue);
@@ -413,7 +413,7 @@ class Stepper extends Framework7Class {
 
   destroy() {
     let stepper = this;
-    stepper.$el.trigger('stepper:beforedestroy', stepper);
+    stepper.$el.trigger('stepper:beforedestroy');
     stepper.emit('local::beforeDestroy stepperBeforeDestroy', stepper);
     delete stepper.$el[0].f7Stepper;
     stepper.detachEvents();
