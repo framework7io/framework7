@@ -37,10 +37,6 @@ export interface Device {
   osVersion: string
   /** Device pixel ratio */
   pixelRatio: number
-  /** true if app running in full-screen mode and requires Status Bar overlay */
-  statusbar: boolean
-  /** Returns true if app running in full-screen mode and requires Status Bar overlay */
-  needsStatusbarOverlay() : boolean
   /** Returns 'dark' or 'light if (prefers-color-theme) media supported, otherwise returns undefined */
   prefersColorScheme() : string
 }
