@@ -5,7 +5,7 @@ import Support from '../../utils/support';
 const Navbar = {
   size(el) {
     const app = this;
-    
+
     let $el = $(el);
 
     if ($el.hasClass('navbars')) {
