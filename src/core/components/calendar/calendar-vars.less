@@ -1,5 +1,5 @@
 :root {
-  --f7-calendar-height: 320px;
+  --f7-calendar-height: 340px;
   --f7-calendar-sheet-landscape-height: 220px;
   --f7-calendar-sheet-bg-color: #fff;
   --f7-calendar-popover-width: 320px;
@@ -32,10 +32,19 @@
   /*
   --f7-calendar-event-bg-color: var(--f7-theme-color);
   */
+  --f7-calendar-picker-bg-color: #fff;
+  --f7-calendar-picker-pressed-bg-color: rgba(0,0,0,0.1);
+  --f7-calendar-picker-hover-bg-color: rgba(0,0,0,0.03);
+  /*
+  --f7-calendar-picker-selected-text-color: var(--f7-theme-color);
+  */
   .dark-vars({
     --f7-calendar-sheet-border-color: var(--f7-bars-border-color);
     --f7-calendar-modal-bg-color: #121212;
     --f7-calendar-sheet-bg-color: #121212;
+    --f7-calendar-picker-bg-color: #1c1c1d;
+    --f7-calendar-picker-pressed-bg-color: rgba(255,255,255,0.08);
+    --f7-calendar-picker-hover-bg-color: rgba(255,255,255,0.03);
   });
 }
 .ios-vars({
@@ -52,6 +61,8 @@
   --f7-calendar-today-text-color: #000;
   --f7-calendar-today-bg-color: #e3e3e3;
   --f7-calendar-day-size: 30px;
+  --f7-calendar-picker-font-size: 17px;
+  --f7-calendar-time-selector-font-size: 17px;
   .dark-vars({
     --f7-calendar-row-border-color: var(--f7-bars-border-color);
     --f7-calendar-day-text-color: #fff;
@@ -75,6 +86,8 @@
   */
   --f7-calendar-today-bg-color: none;
   --f7-calendar-day-size: 32px;
+  --f7-calendar-picker-font-size: 14px;
+  --f7-calendar-time-selector-font-size: 14px;
   .dark-vars({
     --f7-calendar-day-text-color: rgba(255,255,255,0.87);
   });
@@ -93,6 +106,8 @@
   --f7-calendar-today-text-color: #000;
   --f7-calendar-today-bg-color: #e3e3e3;
   --f7-calendar-day-size: 30px;
+  --f7-calendar-picker-font-size: 14px;
+  --f7-calendar-time-selector-font-size: 14px;
   .dark-vars({
     --f7-calendar-row-border-color: var(--f7-bars-border-color);
     --f7-calendar-day-text-color: #fff;
