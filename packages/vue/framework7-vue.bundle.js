@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 5.0.0-beta.10
+ * Framework7 Vue 5.0.0-beta.11
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: August 23, 2019
+ * Released on: August 26, 2019
  */
 
 (function (global, factory) {
@@ -8702,7 +8702,7 @@
             if (tag.indexOf('subnavbar') >= 0) { hasSubnavbar = true; }
 
             if (tag.indexOf('navbar') >= 0) {
-              if (child.componentOptions && child.componentOptions.propsData && 'large' in child.componentOptions.propsData && child.componentOptions.propsData !== false) { hasNavbarLarge = true; }
+              if (child.componentOptions && child.componentOptions.propsData && 'large' in child.componentOptions.propsData && child.componentOptions.propsData.large) { hasNavbarLarge = true; }
             }
 
             if (typeof hasMessages === 'undefined' && tag.indexOf('messages') >= 0) { hasMessages = true; }
@@ -12559,7 +12559,7 @@
   };
 
   /**
-   * Framework7 Vue 5.0.0-beta.10
+   * Framework7 Vue 5.0.0-beta.11
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -12567,7 +12567,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: August 23, 2019
+   * Released on: August 26, 2019
    */
 
   var Plugin = {

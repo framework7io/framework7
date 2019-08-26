@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.0-beta.10
+ * Framework7 5.0.0-beta.11
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: August 23, 2019
+ * Released on: August 26, 2019
  */
 
 (function (global, factory) {
@@ -22703,11 +22703,11 @@
         view: view,
         animating: false,
         hasTimePicker: calendar.params.timePicker && !calendar.params.rangePicker && !calendar.params.multiple,
-        dayFormatter: new Intl.DateTimeFormat(calendar.params.locale, { day: 'numeric' }),
-        monthFormatter: new Intl.DateTimeFormat(calendar.params.locale, { month: 'long' }),
-        yearFormatter: new Intl.DateTimeFormat(calendar.params.locale, { year: 'numeric' }),
-        timeSelectorFormatter: new Intl.DateTimeFormat(calendar.params.locale, calendar.params.timePickerFormat),
       });
+      calendar.dayFormatter = new Intl.DateTimeFormat(calendar.params.locale, { day: 'numeric' });
+      calendar.monthFormatter = new Intl.DateTimeFormat(calendar.params.locale, { month: 'long' });
+      calendar.yearFormatter = new Intl.DateTimeFormat(calendar.params.locale, { year: 'numeric' });
+      calendar.timeSelectorFormatter = new Intl.DateTimeFormat(calendar.params.locale, calendar.params.timePickerFormat);
 
       // Auto names
       var ref = calendar.params;
