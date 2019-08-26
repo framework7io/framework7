@@ -117,10 +117,7 @@ class PhotoBrowser extends Framework7Class {
     e.preventDefault();
     swipeToClose.current = e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY;
     swipeToClose.diff = swipeToClose.start - swipeToClose.current;
-    const opacity = 1 - (Math.abs(swipeToClose.diff) / 300);
-    const color = pb.exposed || pb.params.theme === 'dark' ? 0 : 255;
-    swipeToClose.activeSlide.transform(`translate3d(0,${-swipeToClose.diff}px,0)`);
-    pb.swiper.$el.css('background-color', `rgba(${color}, ${color}, ${color}, ${opacity})`).transition(0);
+    pb.$el.transition(0).transform(`translate3d(0,${-swipeToClose.diff}px,0)`);
   }
 
   onTouchEnd() {
@@ -142,21 +139,22 @@ class PhotoBrowser extends Framework7Class {
           else pb.$el.addClass('swipe-close-to-top');
         }
         pb.emit('local::swipeToClose', pb);
+        const color = pb.exposed || pb.params.theme === 'dark' ? 0 : 255;
+        pb.$el.transform('').transition('');
         pb.close();
         swipeToClose.allow = true;
       });
       return;
     }
     if (diff !== 0) {
-      swipeToClose.activeSlide.addClass('photo-browser-transitioning').transitionEnd(() => {
+      pb.$el.addClass('photo-browser-transitioning').transitionEnd(() => {
         swipeToClose.allow = true;
-        swipeToClose.activeSlide.removeClass('photo-browser-transitioning');
+        pb.$el.removeClass('photo-browser-transitioning');
       });
     } else {
       swipeToClose.allow = true;
     }
-    pb.swiper.$el.transition('').css('background-color', '');
-    swipeToClose.activeSlide.transform('');
+    pb.$el.transition('').transform('');
   }
 
   // Render Functions
