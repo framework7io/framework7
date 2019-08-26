@@ -139,7 +139,6 @@ class PhotoBrowser extends Framework7Class {
           else pb.$el.addClass('swipe-close-to-top');
         }
         pb.emit('local::swipeToClose', pb);
-        const color = pb.exposed || pb.params.theme === 'dark' ? 0 : 255;
         pb.$el.transform('').transition('');
         pb.close();
         swipeToClose.allow = true;
