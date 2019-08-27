@@ -41,6 +41,7 @@ export default {
     removeElementsWithTimeout: Boolean,
     removeElementsTimeout: Number,
     restoreScrollTopOnBack: Boolean,
+    loadInitialPage: Boolean,
     // Swipe Back
     iosSwipeBack: Boolean,
     iosSwipeBackAnimateShadow: Boolean,
