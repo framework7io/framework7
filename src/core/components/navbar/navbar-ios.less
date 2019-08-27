@@ -399,7 +399,12 @@
       &.navbar-large-collapsed .navbar-bg {
         animation-name: ios-navbar-bg-from-ct-to-rt;
       }
-
+      &.navbar-large-collapsed.navbar-large-transparent .navbar-bg {
+        animation-name: ios-navbar-bg-from-cb-to-rb;
+      }
+      &.navbar-large-collapsed.router-navbar-transition-to-large .navbar-bg {
+        animation-name: ios-navbar-bg-from-ct-to-rb;
+      }
     }
     .navbar-previous {
       .navbar-bg {
