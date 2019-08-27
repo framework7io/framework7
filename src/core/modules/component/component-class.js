@@ -9,7 +9,7 @@ import patch from './patch';
 const globalMixins = {};
 
 class Component {
-  constructor(app, options, extendContext = {}, children = []) {
+  constructor(app, options, extendContext = {}) {
     const id = Utils.id();
     const self = Utils.merge(
       this,
