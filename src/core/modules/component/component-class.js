@@ -22,7 +22,6 @@ class Component {
         $f7: app,
         $options: Utils.extend({ id }, options),
         $id: options.id || id,
-        $children: children,
       }
     );
     const { $options } = self;

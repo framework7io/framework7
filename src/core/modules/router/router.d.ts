@@ -1,46 +1,77 @@
 import Framework7, { Framework7EventsClass, Framework7Plugin, CSSSelector } from '../../components/app/app-class';
-import { Dom7Instance } from 'dom7';
+import { Dom7, Dom7Instance } from 'dom7';
 import { View } from '../../components/view/view';
 
 import { Actions } from '../../components/actions/actions';
-import { Popup } from 'framework7/components/popup/popup';
-import { LoginScreen } from 'framework7/components/login-screen/login-screen';
-import { Popover } from 'framework7/components/popover/popover';
-import { Modal } from 'framework7/components/modal/modal';
-import { Sheet } from 'framework7/components/sheet/sheet';
-import { Panel } from 'framework7/components/panel/panel';
+import { Popup } from '../../components/popup/popup';
+import { LoginScreen } from '../../components/login-screen/login-screen';
+import { Popover } from '../../components/popover/popover';
+import { Modal } from '../../components/modal/modal';
+import { Sheet } from '../../components/sheet/sheet';
+import { Panel } from '../../components/panel/panel';
 
 export namespace Router {
 
-  interface Component {
+  class Component {
+    constructor(app: Framework7, options: ComponentOptions, extendContext?: object);
+    $id: string | number
+    $: Dom7
+    $$: Dom7
+    $dom7: Dom7
+    $route: Route
+    $router: Router
+    $f7route: Route
+    $f7router: Router
+    $f7: Framework7
+    $app: Framework7
+    $theme: {
+      ios: boolean
+      md: boolean
+      aurora: boolean
+    }
+    $options: ComponentOptions
+    $root: object
+    $el: Dom7Instance
+    el: HTMLElement
+    $tick: (callback?: () => void) => void
+    $update: () => void
+    $setState: (mergeState?: object) => void
+    static registerMixin(mixinName: string, mixin: ComponentOptions): void
+  }
+
+  interface ComponentOptions {
+    mixins?: ComponentOptions[] | string[]
     /** Template7 template string. Will be compiled as Template7 template */
     template? : string
     /** Render function to render component. Must return full html string or HTMLElement */
-    render? : () => string | HTMLElement
+    render? : (this: Component) => string | HTMLElement
     /** Component data, function must return component context data */
-    data? : () => any
+    data? : (this: Component) => any
     /** Component CSS styles. Styles will be added to the document after component will be mounted (added to DOM), and removed after component will be destroyed (removed from the DOM) */
     style? : string
     /** Object with additional component methods which extend component context */
-    methods? : { [name : string] : (...args: any) => any }
+    methods? : { [name : string] : (this: Component, ...args: any) => any }
     /** Object with page events handlers */
-    on? : { [event : string] : (e: Event, page: any) => void }
+    on? : { [event : string] : (this: Component, e: Event, page: any) => void }
+    /** Object with page events once handlers */
+    once? : { [event : string] : (this: Component, e: Event, page: any) => void }
 
     /** Called synchronously immediately after the component has been initialized, before data and event/watcher setup. */
-    beforeCreate? : () => void
+    beforeCreate? : (this: Component) => void
     /** Called synchronously after the component is created, context data and methods are available and component element $el is also created and available */
-    created? : () => void
+    created? : (this: Component) => void
     /** Called right before component will be added to DOM */
-    beforeMount? : () => void
+    beforeMount? : (this: Component) => void
     /** Called right after component was be added to DOM */
-    mounted? : () => void
+    mounted? : (this: Component) => void
     /** Called right after component VDOM has been patched */
-    updated? : () => void
+    updated? : (this: Component) => void
     /** Called right before component will be destoyed */
-    beforeDestroy? : () => void
+    beforeDestroy? : (this: Component) => void
     /** Called when component destroyed */
-    destroyed? : () => void
+    destroyed? : (this: Component) => void
   }
+
 
   interface ModalRouteParameters {
     /** Creates dynamic page from specified content string */
@@ -52,7 +83,7 @@ export namespace Router {
     /** Load page content from url via Ajax, and compile it using Template7 */
     templateUrl?: string
     /** Load page from passed Framework7 Router Component */
-    component?: Component
+    component?: ComponentOptions
     /** load pages as a component via Ajax */
     componentUrl?: string
     /** Do required asynchronous manipulation and the return required route content and options */
@@ -85,7 +116,7 @@ export namespace Router {
     /** Load page content from url via Ajax, and compile it using Template7 */
     templateUrl?: string
     /** Load page from passed Framework7 Router Component */
-    component?: Component
+    component?: ComponentOptions
     /** load pages as a component via Ajax */
     componentUrl?: string
     /** Do required asynchronous manipulation and the return required route content and options */
