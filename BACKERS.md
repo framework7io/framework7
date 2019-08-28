@@ -142,7 +142,6 @@ Michael Russell
 Alexey Victorov<br>
 [ActiveWaiter](https://www.activewaiter.com/) - Order. Drink. Eat. Pay. Love.<br>
 [Wappler](https://wappler.io) - Visual Web App Creator, offers full visual Framework7 builder<br>
-Olivier<br>
 Marcelo Lopetegui L.<br>
 Bearr Dayss<br>
 Kris Reddy<br>
@@ -157,7 +156,6 @@ shastox<br>
 iOS Haven<br>
 Dirk Holtwick<br>
 JK<br>
-Daniel Morales<br>
 Azad Zain<br>
 Nicolas Hinze<br>
 Josué Marinho<br>
@@ -180,7 +178,6 @@ VOUSYS<br>
 David Fall<br>
 Almaz Kazakov<br>
 plpl<br>
-Zakery Kates<br>
 Dan Boschen<br>
 Ferry van de Graaf<br>
 Denis Bousselier<br>
