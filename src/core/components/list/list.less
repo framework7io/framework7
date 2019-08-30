@@ -189,8 +189,10 @@
   .item-text {
     position: relative;
     overflow: hidden;
-    text-overflow: hidden;
+    text-overflow: ellipsis;
+    /* autoprefixer: ignore next */
     -webkit-line-clamp: var(--f7-list-item-text-max-lines);
+    /* autoprefixer: ignore next */
     -webkit-box-orient: vertical;
     display: -webkit-box;
     font-size: var(--f7-list-item-text-font-size);
