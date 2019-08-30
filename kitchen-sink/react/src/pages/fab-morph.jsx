@@ -5,18 +5,18 @@ export default () => (
   <Page>
     <Navbar title="Floating Action Button Morph" backLink="Back"></Navbar>
     <Toolbar tabbar labels bottom className="fab-morph-target">
-      <Link tabLink tabLinkActive iconIos="f7:email_fill" iconAurora="f7:email_fill" iconMd="material:email" text="Inbox"/>
+      <Link tabLink tabLinkActive iconIos="f7:envelope_fill" iconAurora="f7:envelope_fill" iconMd="material:email" text="Inbox"/>
       <Link tabLink iconIos="f7:calendar_fill" iconAurora="f7:calendar_fill" iconMd="material:today" text="Calendar"/>
       <Link tabLink iconIos="f7:cloud_upload_fill" iconAurora="f7:cloud_upload_fill" iconMd="material:file_upload" text="Upload"/>
     </Toolbar>
     <Fab position="right-bottom" morphTo=".toolbar.fab-morph-target">
-      <Icon ios="f7:add" aurora="f7:add" md="material:add"></Icon>
+      <Icon ios="f7:plus" aurora="f7:plus" md="material:add"></Icon>
     </Fab>
     <Fab position="left-bottom" morphTo=".demo-fab-sheet.fab-morph-target">
-      <Icon ios="f7:add" aurora="f7:add" md="material:add"></Icon>
+      <Icon ios="f7:plus" aurora="f7:plus" md="material:add"></Icon>
     </Fab>
     <Fab position="center-bottom" morphTo=".demo-fab-fullscreen-sheet.fab-morph-target">
-      <Icon ios="f7:add" aurora="f7:add" md="material:add"></Icon>
+      <Icon ios="f7:plus" aurora="f7:plus" md="material:add"></Icon>
     </Fab>
     <div className="list links-list demo-fab-sheet fab-morph-target" slot="fixed">
       <ul>

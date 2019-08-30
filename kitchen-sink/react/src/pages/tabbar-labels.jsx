@@ -18,11 +18,11 @@ export default class extends React.Component {
       <Page pageContent={false}>
         <Navbar title="Tabbar Labels" backLink="Back">
           <NavRight>
-            <Link iconMd="material:compare_arrows" iconIos="f7:reload" iconAurora="f7:reload" onClick={() => {this.toggleToolbarPosition()}}></Link>
+            <Link iconMd="material:compare_arrows" iconIos="f7:arrow_up_arrow_down_circle_fill" iconAurora="f7:arrow_up_arrow_down_circle_fill" onClick={() => {this.toggleToolbarPosition()}}></Link>
           </NavRight>
         </Navbar>
         <Toolbar tabbar labels position={this.state.toolbarPosition}>
-          <Link tabLink="#tab-1" tabLinkActive text="Tab 1" iconIos="f7:email_fill" iconAurora="f7:email_fill" iconMd="material:email"></Link>
+          <Link tabLink="#tab-1" tabLinkActive text="Tab 1" iconIos="f7:envelope_fill" iconAurora="f7:envelope_fill" iconMd="material:email"></Link>
           <Link tabLink="#tab-2" text="Tab 2" iconIos="f7:calendar_fill" iconAurora="f7:calendar_fill" iconMd="material:today"></Link>
           <Link tabLink="#tab-3" text="Tab 3" iconIos="f7:cloud_upload_fill" iconAurora="f7:cloud_upload_fill" iconMd="material:file_upload"></Link>
         </Toolbar>

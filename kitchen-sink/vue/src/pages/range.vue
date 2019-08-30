@@ -6,7 +6,7 @@
     <f7-list simple-list>
       <f7-list-item>
         <f7-list-item-cell class="width-auto flex-shrink-0">
-          <f7-icon ios="f7:volume_mute_fill" aurora="f7:volume_mute_fill" md="material:volume_mute"></f7-icon>
+          <f7-icon ios="f7:speaker_fill" aurora="f7:speaker_fill" md="material:volume_mute"></f7-icon>
         </f7-list-item-cell>
         <f7-list-item-cell class="flex-shrink-3">
           <f7-range
@@ -17,7 +17,7 @@
           ></f7-range>
         </f7-list-item-cell>
         <f7-list-item-cell class="width-auto flex-shrink-0">
-          <f7-icon ios="f7:volume_fill" aurora="f7:volume_fill" md="material:volume_up"></f7-icon>
+          <f7-icon ios="f7:speaker_3_fill" aurora="f7:speaker_3_fill" md="material:volume_up"></f7-icon>
         </f7-list-item-cell>
       </f7-list-item>
     </f7-list>
@@ -26,7 +26,7 @@
     <f7-list simple-list>
       <f7-list-item>
         <f7-list-item-cell class="width-auto flex-shrink-0">
-          <f7-icon ios="f7:circle" aurora="f7:circle" md="material:brightness_low"></f7-icon>
+          <f7-icon ios="f7:sun_min" aurora="f7:sun_min" md="material:brightness_low"></f7-icon>
         </f7-list-item-cell>
         <f7-list-item-cell class="flex-shrink-3">
           <f7-range
@@ -39,7 +39,7 @@
           ></f7-range>
         </f7-list-item-cell>
         <f7-list-item-cell class="width-auto flex-shrink-0">
-          <f7-icon ios="f7:circle_half" aurora="f7:circle_half" md="material:brightness_high"></f7-icon>
+          <f7-icon ios="f7:sun_max_fill" aurora="f7:sun_max_fill" md="material:brightness_high"></f7-icon>
         </f7-list-item-cell>
       </f7-list-item>
     </f7-list>
@@ -48,7 +48,7 @@
     <f7-list simple-list>
       <f7-list-item>
         <f7-list-item-cell class="width-auto flex-shrink-0">
-          <f7-icon ios="f7:money_dollar_round" aurora="f7:money_dollar_round" md="material:attach_money"></f7-icon>
+          <f7-icon ios="f7:money_dollar_circle" aurora="f7:money_dollar_circle" md="material:attach_money"></f7-icon>
         </f7-list-item-cell>
         <f7-list-item-cell class="flex-shrink-3">
           <f7-range
@@ -63,7 +63,7 @@
           ></f7-range>
         </f7-list-item-cell>
         <f7-list-item-cell class="width-auto flex-shrink-0">
-          <f7-icon ios="f7:money_dollar_round_fill" aurora="f7:money_dollar_round_fill" md="material:monetization_on"></f7-icon>
+          <f7-icon ios="f7:money_dollar_circle_fill" aurora="f7:money_dollar_circle_fill" md="material:monetization_on"></f7-icon>
         </f7-list-item-cell>
       </f7-list-item>
     </f7-list>

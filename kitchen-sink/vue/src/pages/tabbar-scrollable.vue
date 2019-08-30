@@ -2,7 +2,7 @@
   <f7-page :page-content="false">
     <f7-navbar title="Tabbar Scrollable" back-link="Back">
       <f7-nav-right>
-        <f7-link icon-md="material:compare_arrows" icon-ios="f7:reload" icon-aurora="f7:reload" @click="toggleToolbarPosition"></f7-link>
+        <f7-link icon-md="material:compare_arrows" icon-ios="f7:arrow_up_arrow_down_circle_fill" icon-aurora="f7:arrow_up_arrow_down_circle_fill" @click="toggleToolbarPosition"></f7-link>
       </f7-nav-right>
     </f7-navbar>
     <f7-toolbar :position="toolbarPosition" tabbar scrollable>

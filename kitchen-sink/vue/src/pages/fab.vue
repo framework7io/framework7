@@ -3,8 +3,8 @@
     <f7-navbar title="Floating Action Button" back-link="Back"></f7-navbar>
 
     <f7-fab position="right-top" slot="fixed">
-      <f7-icon ios="f7:add" aurora="f7:add" md="material:add"></f7-icon>
-      <f7-icon ios="f7:close" aurora="f7:close" md="material:close"></f7-icon>
+      <f7-icon ios="f7:plus" aurora="f7:plus" md="material:add"></f7-icon>
+      <f7-icon ios="f7:xmark" aurora="f7:xmark" md="material:close"></f7-icon>
       <f7-fab-buttons position="left">
         <f7-fab-button>1</f7-fab-button>
         <f7-fab-button>2</f7-fab-button>
@@ -13,8 +13,8 @@
     </f7-fab>
 
     <f7-fab position="right-bottom" slot="fixed">
-      <f7-icon ios="f7:add" aurora="f7:add" md="material:add"></f7-icon>
-      <f7-icon ios="f7:close" aurora="f7:close" md="material:close"></f7-icon>
+      <f7-icon ios="f7:plus" aurora="f7:plus" md="material:add"></f7-icon>
+      <f7-icon ios="f7:xmark" aurora="f7:xmark" md="material:close"></f7-icon>
       <f7-fab-buttons position="top">
         <f7-fab-button label="Action 1">1</f7-fab-button>
         <f7-fab-button label="Action 2">2</f7-fab-button>
@@ -23,8 +23,8 @@
     </f7-fab>
 
     <f7-fab position="left-bottom" slot="fixed">
-      <f7-icon ios="f7:add" aurora="f7:add" md="material:add"></f7-icon>
-      <f7-icon ios="f7:close" aurora="f7:close" md="material:close"></f7-icon>
+      <f7-icon ios="f7:plus" aurora="f7:plus" md="material:add"></f7-icon>
+      <f7-icon ios="f7:xmark" aurora="f7:xmark" md="material:close"></f7-icon>
       <f7-fab-buttons position="top">
         <f7-fab-button>1</f7-fab-button>
         <f7-fab-button>2</f7-fab-button>
@@ -33,8 +33,8 @@
     </f7-fab>
 
     <f7-fab position="left-top" slot="fixed">
-      <f7-icon ios="f7:add" aurora="f7:add" md="material:add"></f7-icon>
-      <f7-icon ios="f7:close" aurora="f7:close" md="material:close"></f7-icon>
+      <f7-icon ios="f7:plus" aurora="f7:plus" md="material:add"></f7-icon>
+      <f7-icon ios="f7:xmark" aurora="f7:xmark" md="material:close"></f7-icon>
       <f7-fab-buttons position="bottom">
         <f7-fab-button>1</f7-fab-button>
         <f7-fab-button>2</f7-fab-button>
@@ -43,8 +43,8 @@
     </f7-fab>
 
     <f7-fab position="center-center" slot="fixed">
-      <f7-icon ios="f7:add" aurora="f7:add" md="material:add"></f7-icon>
-      <f7-icon ios="f7:close" aurora="f7:close" md="material:close"></f7-icon>
+      <f7-icon ios="f7:plus" aurora="f7:plus" md="material:add"></f7-icon>
+      <f7-icon ios="f7:xmark" aurora="f7:xmark" md="material:close"></f7-icon>
       <f7-fab-buttons position="center">
         <f7-fab-button>1</f7-fab-button>
         <f7-fab-button>2</f7-fab-button>
@@ -54,7 +54,7 @@
     </f7-fab>
 
     <f7-fab position="center-bottom" slot="fixed" text="Create">
-      <f7-icon ios="f7:add" aurora="f7:add" md="material:add"></f7-icon>
+      <f7-icon ios="f7:plus" aurora="f7:plus" md="material:add"></f7-icon>
     </f7-fab>
 
     <f7-block>

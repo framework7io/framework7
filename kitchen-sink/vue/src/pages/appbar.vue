@@ -38,13 +38,13 @@
                 <i class="f7-icons">bars</i>
               </a>
               <a href="#" class="button button-small display-flex margin-left-half">
-                <i class="f7-icons">list</i>
+                <i class="f7-icons">square_list</i>
               </a>
               <a href="#" class="button button-small display-flex margin-left-half">
-                <i class="f7-icons">reply_fill</i>
+                <i class="f7-icons">arrowshape_turn_up_left_fill</i>
               </a>
               <a href="#" class="button button-small display-flex margin-left-half">
-                <i class="f7-icons">forward_fill</i>
+                <i class="f7-icons">arrowshape_turn_up_right_fill</i>
               </a>
             </div>
             <div class="right">

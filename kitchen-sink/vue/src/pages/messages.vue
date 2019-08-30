@@ -18,8 +18,8 @@
         @click="sheetVisible = !sheetVisible"
       ></f7-link>
       <f7-link
-        icon-ios="f7:arrow_up_round_fill"
-        icon-aurora="f7:arrow_up_round_fill"
+        icon-ios="f7:arrow_up_circle_fill"
+        icon-aurora="f7:arrow_up_circle_fill"
         icon-md="material:send"
         slot="inner-end"
         @click="sendMessage"

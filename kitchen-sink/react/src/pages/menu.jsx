@@ -66,8 +66,8 @@ export default class extends React.Component {
           <Menu>
             <MenuItem href="#" text="Item 1" />
             <MenuItem href="#" text="Item 2" />
-            <MenuItem href="#" iconF7="edit" />
-            <MenuItem href="#" iconF7="share" />
+            <MenuItem href="#" iconF7="pencil" />
+            <MenuItem href="#" iconF7="square_arrow_up" />
           </Menu>
         </Block>
 
@@ -116,7 +116,7 @@ export default class extends React.Component {
               </MenuDropdown>
             </MenuItem>
 
-            <MenuItem style={{marginLeft: 'auto'}} iconF7="share" dropdown>
+            <MenuItem style={{marginLeft: 'auto'}} iconF7="square_arrow_up" dropdown>
               <MenuDropdown right>
                 <MenuDropdownItem href="#">
                   <span>Share on Facebook</span>
@@ -129,7 +129,7 @@ export default class extends React.Component {
               </MenuDropdown>
             </MenuItem>
 
-            <MenuItem href="#" iconF7="edit" />
+            <MenuItem href="#" iconF7="pencil" />
           </Menu>
         </Block>
 

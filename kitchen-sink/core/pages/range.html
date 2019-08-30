@@ -18,7 +18,7 @@
         <ul>
           <li>
             <div class="item-cell width-auto flex-shrink-0">
-              <i class="icon f7-icons if-not-md" style="width:28px">volume_mute_fill</i>
+              <i class="icon f7-icons if-not-md" style="width:28px">speaker_fill</i>
               <i class="icon material-icons md-only" style="width:24px">volume_mute</i>
             </div>
             <div class="item-cell flex-shrink-3">
@@ -27,7 +27,7 @@
               </div>
             </div>
             <div class="item-cell width-auto flex-shrink-0">
-              <i class="icon f7-icons if-not-md" style="width:28px">volume_fill</i>
+              <i class="icon f7-icons if-not-md" style="width:28px">speaker_3_fill</i>
               <i class="icon material-icons md-only" style="width:24px">volume_up</i>
             </div>
           </li>
@@ -38,7 +38,7 @@
         <ul>
           <li>
             <div class="item-cell width-auto flex-shrink-0">
-              <i class="icon f7-icons if-not-md" style="width:28px">circle</i>
+              <i class="icon f7-icons if-not-md" style="width:28px">sun_min</i>
               <i class="icon material-icons md-only" style="width:24px">brightness_low</i>
             </div>
             <div class="item-cell flex-shrink-3">
@@ -47,7 +47,7 @@
               </div>
             </div>
             <div class="item-cell width-auto flex-shrink-0">
-              <i class="icon f7-icons if-not-md" style="width:28px">circle_half</i>
+              <i class="icon f7-icons if-not-md" style="width:28px">sun_max_fill</i>
               <i class="icon material-icons md-only" style="width:24px">brightness_high</i>
             </div>
           </li>
@@ -58,7 +58,7 @@
         <ul>
           <li class="item-row">
             <div class="item-cell width-auto flex-shrink-0">
-              <i class="icon f7-icons if-not-md" style="width:28px">money_dollar_round</i>
+              <i class="icon f7-icons if-not-md" style="width:28px">money_dollar_circle</i>
               <i class="icon material-icons md-only" style="width:24px">attach_money</i>
             </div>
             <div class="item-cell item-cell-shrink-3">
@@ -73,7 +73,7 @@
               ></div>
             </div>
             <div class="item-cell width-auto flex-shrink-0">
-              <i class="icon f7-icons if-not-md" style="width:28px">money_dollar_round_fill</i>
+              <i class="icon f7-icons if-not-md" style="width:28px">money_dollar_circle_fill</i>
               <i class="icon material-icons md-only" style="width:24px">monetization_on</i>
             </div>
           </li>
@@ -190,7 +190,8 @@
       }
     },
     methods: {
-      onPriceChange: function (e, range) {
+      onPriceChange: function (e) {
+        var range = this.$f7.range.get(e.target);
         this.$setState({
           priceMin: range.value[0],
           priceMax: range.value[1],

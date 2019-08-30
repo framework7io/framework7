@@ -29,7 +29,7 @@ export default class extends React.Component {
         <BlockTitle>Icon Chips</BlockTitle>
         <Block strong>
           <Chip text="Add Contact" mediaBgColor="blue">
-            <Icon slot="media" ios="f7:add_round" aurora="f7:add_round" md="material:add_circle"></Icon>
+            <Icon slot="media" ios="f7:plus_circle" aurora="f7:plus_circle" md="material:add_circle"></Icon>
           </Chip>
           <Chip text="London" mediaBgColor="green">
             <Icon slot="media" ios="f7:compass" aurora="f7:compass" md="material:location_on"></Icon>

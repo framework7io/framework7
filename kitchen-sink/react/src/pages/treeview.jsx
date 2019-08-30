@@ -86,15 +86,15 @@ export default class extends React.Component {
         <Block strong className="no-padding-horizontal">
           <Treeview>
             <TreeviewItem label="images" iconF7="folder_fill">
-              <TreeviewItem label="avatar.png" iconF7="images_fill" />
-              <TreeviewItem label="background.jpg" iconF7="images_fill" />
+              <TreeviewItem label="avatar.png" iconF7="photo_fill" />
+              <TreeviewItem label="background.jpg" iconF7="photo_fill" />
             </TreeviewItem>
             <TreeviewItem label="documents" iconF7="folder_fill">
-              <TreeviewItem label="cv.docx" iconF7="document_text_fill" />
-              <TreeviewItem label="info.docx" iconF7="document_text_fill" />
+              <TreeviewItem label="cv.docx" iconF7="doc_text_fill" />
+              <TreeviewItem label="info.docx" iconF7="doc_text_fill" />
             </TreeviewItem>
             <TreeviewItem label=".gitignore" iconF7="logo_github" />
-            <TreeviewItem label="index.html" iconF7="document_text_fill" />
+            <TreeviewItem label="index.html" iconF7="doc_text_fill" />
           </Treeview>
         </Block>
 
@@ -110,7 +110,7 @@ export default class extends React.Component {
                   this.setState({...this.state});
                 }}
               />
-              <TreeviewItem label="avatar.png" iconF7="images_fill">
+              <TreeviewItem label="avatar.png" iconF7="photo_fill">
                 <Checkbox slot="content-start"
                   checked={this.state.checkboxes.images['avatar.png']}
                   onChange={(e) => {
@@ -119,7 +119,7 @@ export default class extends React.Component {
                   }}
                 />
               </TreeviewItem>
-              <TreeviewItem label="background.jpg" iconF7="images_fill">
+              <TreeviewItem label="background.jpg" iconF7="photo_fill">
                 <Checkbox slot="content-start"
                   checked={this.state.checkboxes.images['background.jpg']}
                   onChange={(e) => {
@@ -138,7 +138,7 @@ export default class extends React.Component {
                   this.setState({...this.state});
                 }}
               />
-              <TreeviewItem label="cv.docx" iconF7="document_text_fill">
+              <TreeviewItem label="cv.docx" iconF7="doc_text_fill">
                 <Checkbox slot="content-start"
                   checked={this.state.checkboxes.documents['cv.docx']}
                   onChange={(e) => {
@@ -147,7 +147,7 @@ export default class extends React.Component {
                   }}
                 />
               </TreeviewItem>
-              <TreeviewItem label="info.docx" iconF7="document_text_fill">
+              <TreeviewItem label="info.docx" iconF7="doc_text_fill">
                 <Checkbox slot="content-start"
                   checked={this.state.checkboxes.documents['info.docx']}
                   onChange={(e) => {
@@ -163,7 +163,7 @@ export default class extends React.Component {
                 this.setState({...this.state});
               }}/>
             </TreeviewItem>
-            <TreeviewItem label="index.html" iconF7="document_text_fill">
+            <TreeviewItem label="index.html" iconF7="doc_text_fill">
               <Checkbox slot="content-start" checked={this.state.checkboxes['index.html']} onChange={(e) => {
                 this.state.checkboxes['index.html'] = e.target.checked;
                 this.setState({...this.state});
@@ -176,15 +176,15 @@ export default class extends React.Component {
         <Block strong className="no-padding-horizontal">
           <Treeview>
             <TreeviewItem itemToggle label="images" iconF7="folder_fill">
-              <TreeviewItem label="avatar.png" iconF7="images_fill" />
-              <TreeviewItem label="background.jpg" iconF7="images_fill" />
+              <TreeviewItem label="avatar.png" iconF7="photo_fill" />
+              <TreeviewItem label="background.jpg" iconF7="photo_fill" />
             </TreeviewItem>
             <TreeviewItem itemToggle label="documents" iconF7="folder_fill">
-              <TreeviewItem label="cv.docx" iconF7="document_text_fill" />
-              <TreeviewItem label="info.docx" iconF7="document_text_fill" />
+              <TreeviewItem label="cv.docx" iconF7="doc_text_fill" />
+              <TreeviewItem label="info.docx" iconF7="doc_text_fill" />
             </TreeviewItem>
             <TreeviewItem label=".gitignore" iconF7="logo_github" />
-            <TreeviewItem label="index.html" iconF7="document_text_fill" />
+            <TreeviewItem label="index.html" iconF7="doc_text_fill" />
           </Treeview>
         </Block>
 
@@ -202,14 +202,14 @@ export default class extends React.Component {
                 selectable
                 selected={this.state.selectedItem === 'avatar.png'}
                 label="avatar.png"
-                iconF7="images_fill"
+                iconF7="photo_fill"
                 onClick={(e) => this.toggleSelectable(e, 'avatar.png')}
               />
               <TreeviewItem
                 selectable
                 selected={this.state.selectedItem === 'background.jpg'}
                 label="background.jpg"
-                iconF7="images_fill"
+                iconF7="photo_fill"
                 onClick={(e) => this.toggleSelectable(e, 'background.jpg')}
               />
             </TreeviewItem>
@@ -224,14 +224,14 @@ export default class extends React.Component {
                 selectable
                 selected={this.state.selectedItem === 'cv.docx'}
                 label="cv.docx"
-                iconF7="document_text_fill"
+                iconF7="doc_text_fill"
                 onClick={(e) => this.toggleSelectable(e, 'cv.docx')}
               />
               <TreeviewItem
                 selectable
                 selected={this.state.selectedItem === 'info.docx'}
                 label="info.docx"
-                iconF7="document_text_fill"
+                iconF7="doc_text_fill"
                 onClick={(e) => this.toggleSelectable(e, 'info.docx')}
               />
             </TreeviewItem>
@@ -246,7 +246,7 @@ export default class extends React.Component {
               selectable
               selected={this.state.selectedItem === 'index.html'}
               label="index.html"
-              iconF7="document_text_fill"
+              iconF7="doc_text_fill"
               onClick={(e) => this.toggleSelectable(e, 'index.html')}
             />
           </Treeview>
@@ -258,14 +258,14 @@ export default class extends React.Component {
             <TreeviewItem
               toggle
               loadChildren
-              iconF7="persons"
+              iconF7="person_2_fill"
               label="Users"
               onTreeviewLoadChildren={(e, done) => this.loadChildren(done)}
             >
               {this.state.loadedChildren.map((item, index) => (
                 <TreeviewItem
                   key={index}
-                  iconF7="person"
+                  iconF7="person_fill"
                   label={item.name}
                 />
               ))}
@@ -276,12 +276,12 @@ export default class extends React.Component {
         <BlockTitle>With links</BlockTitle>
         <Block strong className="no-padding-horizontal">
           <Treeview>
-            <TreeviewItem iconF7="data_fill" itemToggle label="Modals">
+            <TreeviewItem iconF7="square_grid_2x2_fill" itemToggle label="Modals">
               <TreeviewItem link="/popup/" iconF7="link" label="Popup" />
               <TreeviewItem link="/dialog/" iconF7="link" label="Dialog" />
               <TreeviewItem link="/action-sheet/" iconF7="link" label="Action Sheet" />
             </TreeviewItem>
-            <TreeviewItem iconF7="data_fill" itemToggle label="Navigation Bars">
+            <TreeviewItem iconF7="square_grid_2x2_fill" itemToggle label="Navigation Bars">
               <TreeviewItem link="/navbar/" iconF7="link" label="Navbar" />
               <TreeviewItem link="/toolbar-tabbar/" iconF7="link" label="Toolbar & Tabbar" />
             </TreeviewItem>

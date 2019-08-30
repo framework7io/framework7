@@ -9,8 +9,8 @@
       <f7-menu>
         <f7-menu-item href="#" text="Item 1"></f7-menu-item>
         <f7-menu-item href="#" text="Item 2"></f7-menu-item>
-        <f7-menu-item href="#" icon-f7="edit"></f7-menu-item>
-        <f7-menu-item href="#" icon-f7="share"></f7-menu-item>
+        <f7-menu-item href="#" icon-f7="pencil"></f7-menu-item>
+        <f7-menu-item href="#" icon-f7="square_arrow_up"></f7-menu-item>
       </f7-menu>
     </f7-block>
 
@@ -59,7 +59,7 @@
           </f7-menu-dropdown>
         </f7-menu-item>
 
-        <f7-menu-item style="margin-left: auto" icon-f7="share" dropdown>
+        <f7-menu-item style="margin-left: auto" icon-f7="square_arrow_up" dropdown>
           <f7-menu-dropdown right>
             <f7-menu-dropdown-item href="#">
               <span>Share on Facebook</span>
@@ -72,7 +72,7 @@
           </f7-menu-dropdown>
         </f7-menu-item>
 
-        <f7-menu-item href="#" icon-f7="edit"></f7-menu-item>
+        <f7-menu-item href="#" icon-f7="pencil"></f7-menu-item>
       </f7-menu>
     </f7-block>
 

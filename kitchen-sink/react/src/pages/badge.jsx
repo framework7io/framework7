@@ -14,7 +14,7 @@ export default () => (
     </Navbar>
     <Toolbar bottom tabbar labels>
       <Link tabLink="#tab-1" tabLinkActive>
-        <Icon ios="f7:email_fill" aurora="f7:email_fill" md="material:email">
+        <Icon ios="f7:envelope_fill" aurora="f7:envelope_fill" md="material:email">
           <Badge color="green">5</Badge>
         </Icon>
         <span className="tabbar-label">Inbox</span>

@@ -19,7 +19,7 @@ export default class extends React.Component {
         <List simpleList>
           <ListItem>
             <ListItemCell className="width-auto flex-shrink-0">
-              <Icon ios="f7:volume_mute_fill" aurora="f7:volume_mute_fill" md="material:volume_mute"></Icon>
+              <Icon ios="f7:speaker_fill" aurora="f7:speaker_fill" md="material:volume_mute"></Icon>
             </ListItemCell>
             <ListItemCell className="flex-shrink-3">
               <Range
@@ -30,7 +30,7 @@ export default class extends React.Component {
               ></Range>
             </ListItemCell>
             <ListItemCell className="width-auto flex-shrink-0">
-              <Icon ios="f7:volume_fill" aurora="f7:volume_fill" md="material:volume_up"></Icon>
+              <Icon ios="f7:speaker_3_fill" aurora="f7:speaker_3_fill" md="material:volume_up"></Icon>
             </ListItemCell>
           </ListItem>
         </List>
@@ -39,7 +39,7 @@ export default class extends React.Component {
         <List simpleList>
           <ListItem>
             <ListItemCell className="width-auto flex-shrink-0">
-              <Icon ios="f7:circle" aurora="f7:circle" md="material:brightness_low"></Icon>
+              <Icon ios="f7:sun_min" aurora="f7:sun_min" md="material:brightness_low"></Icon>
             </ListItemCell>
             <ListItemCell className="flex-shrink-3">
               <Range
@@ -52,7 +52,7 @@ export default class extends React.Component {
               ></Range>
             </ListItemCell>
             <ListItemCell className="width-auto flex-shrink-0">
-              <Icon ios="f7:circle_half" aurora="f7:circle_half" md="material:brightness_high"></Icon>
+              <Icon ios="f7:sun_max_fill" aurora="f7:sun_max_fill" md="material:brightness_high"></Icon>
             </ListItemCell>
           </ListItem>
         </List>
@@ -61,7 +61,7 @@ export default class extends React.Component {
         <List simpleList>
           <ListItem>
             <ListItemCell className="width-auto flex-shrink-0">
-              <Icon ios="f7:money_dollar_round" aurora="f7:money_dollar_round" md="material:attach_money"></Icon>
+              <Icon ios="f7:money_dollar_circle" aurora="f7:money_dollar_circle" md="material:attach_money"></Icon>
             </ListItemCell>
             <ListItemCell className="flex-shrink-3">
               <Range
@@ -76,7 +76,7 @@ export default class extends React.Component {
               ></Range>
             </ListItemCell>
             <ListItemCell className="width-auto flex-shrink-0">
-              <Icon ios="f7:money_dollar_round_fill" aurora="f7:money_dollar_round_fill" md="material:monetization_on"></Icon>
+              <Icon ios="f7:money_dollar_circle_fill" aurora="f7:money_dollar_circle_fill" md="material:monetization_on"></Icon>
             </ListItemCell>
           </ListItem>
         </List>

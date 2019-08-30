@@ -2,11 +2,11 @@
   <f7-page :page-content="false">
     <f7-navbar title="Tabbar Labels" back-link="Back">
       <f7-nav-right>
-        <f7-link icon-md="material:compare_arrows" icon-ios="f7:reload" icon-aurora="f7:reload" @click="toggleToolbarPosition"></f7-link>
+        <f7-link icon-md="material:compare_arrows" icon-ios="f7:arrow_up_arrow_down_circle_fill" icon-aurora="f7:arrow_up_arrow_down_circle_fill" @click="toggleToolbarPosition"></f7-link>
       </f7-nav-right>
     </f7-navbar>
     <f7-toolbar :position="toolbarPosition" tabbar labels>
-      <f7-link tab-link="#tab-1" tab-link-active text="Tab 1" icon-ios="f7:email_fill" icon-aurora="f7:email_fill" icon-md="material:email"></f7-link>
+      <f7-link tab-link="#tab-1" tab-link-active text="Tab 1" icon-ios="f7:envelope_fill" icon-aurora="f7:envelope_fill" icon-md="material:email"></f7-link>
       <f7-link tab-link="#tab-2" text="Tab 2" icon-ios="f7:calendar_fill" icon-aurora="f7:calendar_fill" icon-md="material:today"></f7-link>
       <f7-link tab-link="#tab-3" text="Tab 3" icon-ios="f7:cloud_upload_fill" icon-aurora="f7:cloud_upload_fill" icon-md="material:file_upload"></f7-link>
     </f7-toolbar>

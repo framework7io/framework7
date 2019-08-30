@@ -11,7 +11,7 @@
     </f7-navbar>
     <f7-toolbar bottom tabbar labels>
       <f7-link tab-link="#tab-1" tab-link-active>
-        <f7-icon ios="f7:email_fill" aurora="f7:email_fill" md="material:email">
+        <f7-icon ios="f7:envelope_fill" aurora="f7:envelope_fill" md="material:email">
           <f7-badge color="green">5</f7-badge>
         </f7-icon>
         <span class="tabbar-label">Inbox</span>
