@@ -70,7 +70,7 @@ class ViAd extends Framework7Class {
     function createOverlay(videoEl) {
       if (!videoEl) return;
       vi.$overlayEl = $(`
-        <div class="vi-overlay no-fastclick">
+        <div class="vi-overlay">
           ${vi.params.fallbackOverlayText ? `<div class="vi-overlay-text">${vi.params.fallbackOverlayText}</div>` : ''}
           <div class="vi-overlay-play-button"></div>
         </div>

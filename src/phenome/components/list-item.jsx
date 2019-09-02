@@ -34,8 +34,6 @@ export default {
     // Link Props
     link: [Boolean, String],
     target: String,
-    noFastclick: Boolean,
-    noFastClick: Boolean,
 
     after: [String, Number],
     badge: [String, Number],
@@ -105,8 +103,6 @@ export default {
       link,
       href,
       target,
-      noFastclick,
-      noFastClick,
       after,
       badge,
       badgeColor,
@@ -201,7 +197,6 @@ export default {
         const linkClasses = Utils.classNames(
           {
             'item-link': true,
-            'no-fastclick': noFastclick || noFastClick,
             'smart-select': smartSelect,
           },
           Mixins.linkRouterClasses(props),

@@ -15,8 +15,6 @@ export default {
     id: [String, Number],
     className: String, // phenome-react-line
     style: Object, // phenome-react-line
-    noFastclick: Boolean,
-    noFastClick: Boolean,
     title: [String, Number],
     text: [String, Number],
     tabLink: [Boolean, String],
@@ -74,8 +72,6 @@ export default {
       const self = this;
       const props = self.props;
       const {
-        noFastclick,
-        noFastClick,
         tabLink,
         tabLinkActive,
       } = props;
@@ -85,7 +81,6 @@ export default {
           'list-button': true,
           'tab-link': tabLink || tabLink === '',
           'tab-link-active': tabLinkActive,
-          'no-fastclick': noFastclick || noFastClick,
         },
         Mixins.colorClasses(props),
         Mixins.linkRouterClasses(props),

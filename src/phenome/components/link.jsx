@@ -22,8 +22,6 @@ export default {
     className: String, // phenome-react-line
     style: Object, // phenome-react-line
     noLinkClass: Boolean,
-    noFastClick: Boolean,
-    noFastclick: Boolean,
     text: String,
     tabLink: [Boolean, String],
     tabLinkActive: Boolean,
@@ -232,8 +230,6 @@ export default {
       const self = this;
       const props = self.props;
       const {
-        noFastclick,
-        noFastClick,
         tabLink,
         tabLinkActive,
         noLinkClass,
@@ -248,7 +244,6 @@ export default {
           'icon-only': self.iconOnlyComputed,
           'tab-link': tabLink || tabLink === '',
           'tab-link-active': tabLinkActive,
-          'no-fastclick': noFastclick || noFastClick,
           'smart-select': smartSelect,
         },
         Mixins.colorClasses(props),

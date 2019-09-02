@@ -18,8 +18,6 @@ export default {
     id: [String, Number],
     className: String, // phenome-react-line
     style: Object, // phenome-react-line
-    noFastclick: Boolean,
-    noFastClick: Boolean,
     text: String,
     tabLink: [Boolean, String],
     tabLinkActive: Boolean,
@@ -137,8 +135,6 @@ export default {
       const self = this;
       const props = self.props;
       const {
-        noFastclick,
-        noFastClick,
         tabLink,
         tabLinkActive,
         round,
@@ -176,7 +172,6 @@ export default {
         {
           'tab-link': tabLink || tabLink === '',
           'tab-link-active': tabLinkActive,
-          'no-fastclick': noFastclick || noFastClick,
 
           'button-round': round,
           'button-round-ios': roundIos,
