@@ -30,6 +30,11 @@
   </tr>
   <tr>
     <td align="center" valign="middle">
+      <a href="https://bid4papers.com/write-my-essay.html" target="_blank">
+        <img width="160" src="https://cdn.framework7.io/i/sponsors/bid4papers.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://kidoverse.app" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/kidoverse.png">
       </a>
@@ -42,11 +47,6 @@
     <td align="center" valign="middle">
       <a href="https://hicapps.cl/web/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/hicapps.png">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://edubirdie.com/" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/birdie.png">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -116,6 +116,7 @@ Mason Fok ([tommy](http://mytommy.com))<br>
 ---
 
 ### $50+ Top Supporter
+[Bid4Papers](https://bid4papers.com/write-my-essay.html) - Bid4Papers - Write My Essay<br>
 [COLOGNE WEBDESIGN](https://www.colognewebdesign.de/)<br>
 Fatih Batal<br>
 Vinay Samant<br>
@@ -125,7 +126,6 @@ Vinay Samant<br>
 [CyberBrain IT Services](https://www.cyberbrain.nl/)<br>
 [HICAPPS](https://hicapps.cl/web/) - Health Informatics Custom APPs<br>
 Michael Russell
-[EduBirdie](https://edubirdie.com/) - Professional Essay Writing Service<br>
 [Blokt](https://blokt.com/) - Cryptocurrency News<br>
 Alexey Victorov<br>
 [ActiveWaiter](https://www.activewaiter.com/) - Order. Drink. Eat. Pay. Love.<br>

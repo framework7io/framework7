@@ -48,6 +48,11 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
   </tr>
   <tr>
     <td align="center" valign="middle">
+      <a href="https://bid4papers.com/write-my-essay.html" target="_blank">
+        <img width="160" src="https://cdn.framework7.io/i/sponsors/bid4papers.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://kidoverse.app" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/kidoverse.png">
       </a>
@@ -60,11 +65,6 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
     <td align="center" valign="middle">
       <a href="https://hicapps.cl/web/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/hicapps.png">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://edubirdie.com/" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/birdie.png">
       </a>
     </td>
     <td align="center" valign="middle">
