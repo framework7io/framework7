@@ -70,6 +70,7 @@ async function buildLazyComponentsLess(components, rtl, cb) {
     .filter(line => line.indexOf('@import url(\'./components') < 0)
     .join('\n')
     .replace('@import (reference) \'./less/mixins.less\';', '@import (reference) \'../../less/mixins.less\';')
+    .replace('@import (reference) \'./less/vars.less\';', '@import (reference) \'../../less/vars.less\';')
     .replace('$includeIosTheme', includeIosTheme)
     .replace('$includeMdTheme', includeMdTheme)
     .replace('$includeAuroraTheme', includeAuroraTheme)
