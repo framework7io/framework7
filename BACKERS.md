@@ -23,17 +23,12 @@
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://unlikelyit.com/" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/unlikely-it.png">
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" valign="middle">
       <a href="https://www.thoriumbuilder.com/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/thorium.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://kidoverse.app" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/kidoverse.png">
@@ -54,13 +49,13 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/birdie.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://blokt.com/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/blokt.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.activewaiter.com/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/activewaiter.png">
@@ -81,17 +76,11 @@
         <img width="160" src="https://cdn.framework7.io/i/sponsors/securcom.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="http://mytommy.com" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/tommy.png">
       </a>
     </td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
   </tr>
 </table>
 
@@ -132,7 +121,6 @@ Fatih Batal<br>
 Vinay Samant<br>
 [Rise](https://rise.co) - Creative Web Development Agency<br>
 [usave](https://usave.co.uk/utilities/broadband) - compare broadband deals on usave.co.uk<br>
-[Unlikely IT](https://unlikelyit.com/) - Making I.T. a little more human<br>
 [Kidoverse](https://kidoverse.app) - App for kids to learn, play, create and explore<br>
 [CyberBrain IT Services](https://www.cyberbrain.nl/)<br>
 [HICAPPS](https://hicapps.cl/web/) - Health Informatics Custom APPs<br>
