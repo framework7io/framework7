@@ -57,6 +57,7 @@ export default {
       unloadTabContent: true,
       passRouteQueryToRequest: true,
       passRouteParamsToRequest: false,
+      loadInitialPage: true,
       // Swipe Back
       iosSwipeBack: true,
       iosSwipeBackAnimateShadow: true,

@@ -9,7 +9,7 @@ import patch from './patch';
 const globalMixins = {};
 
 class Component {
-  constructor(app, options, extendContext = {}, children = []) {
+  constructor(app, options, extendContext = {}) {
     const id = Utils.id();
     const self = Utils.merge(
       this,
@@ -22,7 +22,6 @@ class Component {
         $f7: app,
         $options: Utils.extend({ id }, options),
         $id: options.id || id,
-        $children: children,
       }
     );
     const { $options } = self;

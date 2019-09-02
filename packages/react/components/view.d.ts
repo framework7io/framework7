@@ -28,6 +28,7 @@ declare namespace F7View {
     removeElementsWithTimeout? : boolean
     removeElementsTimeout? : number
     restoreScrollTopOnBack? : boolean
+    loadInitialPage? : boolean
     iosSwipeBack? : boolean
     iosSwipeBackAnimateShadow? : boolean
     iosSwipeBackAnimateOpacity? : boolean

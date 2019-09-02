@@ -124,7 +124,7 @@ class Panel extends Framework7Class {
         });
         app.allowPanelOpen = true;
         if (emitEvents) {
-          app.emit('local::breakpoint panelBreakpoint');
+          panel.emit('local::breakpoint panelBreakpoint');
           panel.$el.trigger('panel:breakpoint');
         }
       } else {
@@ -140,7 +140,7 @@ class Panel extends Framework7Class {
         [`margin-${side}`]: '',
       });
       if (emitEvents) {
-        app.emit('local::breakpoint panelBreakpoint');
+        panel.emit('local::breakpoint panelBreakpoint');
         panel.$el.trigger('panel:breakpoint');
       }
     }
@@ -495,7 +495,7 @@ class Panel extends Framework7Class {
       $viewEl.css({
         [`margin-${panel.side}`]: '',
       });
-      app.emit('local::breakpoint panelBreakpoint');
+      panel.emit('local::breakpoint panelBreakpoint');
       panel.$el.trigger('panel:breakpoint');
     }
 

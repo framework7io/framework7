@@ -207,6 +207,7 @@ __reactComponentSetProps(F7View, Object.assign({
   removeElementsWithTimeout: Boolean,
   removeElementsTimeout: Number,
   restoreScrollTopOnBack: Boolean,
+  loadInitialPage: Boolean,
   iosSwipeBack: Boolean,
   iosSwipeBackAnimateShadow: Boolean,
   iosSwipeBackAnimateOpacity: Boolean,

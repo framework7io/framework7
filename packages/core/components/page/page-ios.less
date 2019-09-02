@@ -30,10 +30,6 @@
   }
 
   .router-transition-forward {
-    .page-next,
-    .page-current {
-      will-change: transform;
-    }
     .page-next {
       animation: ios-page-next-to-current var(--f7-page-transition-duration) forwards;
       &:before {
@@ -53,10 +49,6 @@
     }
   }
   .router-transition-backward {
-    .page-previous,
-    .page-current {
-      will-change: transform;
-    }
     .page-previous {
       // From previous to current
       animation: ios-page-previous-to-current var(--f7-page-transition-duration) forwards;

@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.0-beta.11
+ * Framework7 5.0.0-beta.12
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: August 26, 2019
+ * Released on: September 2, 2019
  */
 
 (function (global, factory) {
@@ -9535,14 +9535,14 @@
         });
       }
 
-      if (router.$el.children('.page:not(.stacked)').length === 0 && initUrl) {
+      if (router.$el.children('.page:not(.stacked)').length === 0 && initUrl && router.params.loadInitialPage) {
         // No pages presented in DOM, reload new page
         router.navigate(initUrl, {
           initial: true,
           reloadCurrent: true,
           pushState: false,
         });
-      } else {
+      } else if (router.$el.children('.page:not(.stacked)').length) {
         // Init current DOM page
         var hasTabRoute;
         router.currentRoute = currentRoute;
@@ -11232,9 +11232,8 @@
 
   var globalMixins = {};
 
-  var Component = function Component(app, options, extendContext, children) {
+  var Component = function Component(app, options, extendContext) {
     if ( extendContext === void 0 ) extendContext = {};
-    if ( children === void 0 ) children = [];
 
     var id = Utils.id();
     var self = Utils.merge(
@@ -11248,7 +11247,6 @@
         $f7: app,
         $options: Utils.extend({ id: id }, options),
         $id: options.id || id,
-        $children: children,
       }
     );
     var $options = self.$options;
@@ -11979,6 +11977,7 @@
         unloadTabContent: true,
         passRouteQueryToRequest: true,
         passRouteParamsToRequest: false,
+        loadInitialPage: true,
         // Swipe Back
         iosSwipeBack: true,
         iosSwipeBackAnimateShadow: true,

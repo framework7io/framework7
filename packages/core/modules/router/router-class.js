@@ -1015,14 +1015,14 @@ class Router extends Framework7Class {
       });
     }
 
-    if (router.$el.children('.page:not(.stacked)').length === 0 && initUrl) {
+    if (router.$el.children('.page:not(.stacked)').length === 0 && initUrl && router.params.loadInitialPage) {
       // No pages presented in DOM, reload new page
       router.navigate(initUrl, {
         initial: true,
         reloadCurrent: true,
         pushState: false,
       });
-    } else {
+    } else if (router.$el.children('.page:not(.stacked)').length) {
       // Init current DOM page
       let hasTabRoute;
       router.currentRoute = currentRoute;

@@ -15,7 +15,6 @@
   // Animations
   .router-transition-forward {
     .page-next {
-      will-change: transform, opacity;
       animation: md-page-next-to-current var(--f7-page-transition-duration) forwards;
     }
     .page-current {
@@ -24,7 +23,6 @@
   }
   .router-transition-backward {
     .page-current {
-      will-change: transform, opacity;
       animation: md-page-current-to-next var(--f7-page-transition-duration) forwards;
     }
     .page-previous {

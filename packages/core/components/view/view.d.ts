@@ -87,6 +87,10 @@ export namespace View {
     xhrCacheIgnoreGetParameters?: boolean
     /**	Duration in ms (milliseconds) while app will use cache instead of loading page with another Ajax request. By default it takes 10 minutes. */
     xhrCacheDuration?: number
+    /** When enabled, Router will cache components specified via `componentUrl` (default true) */
+    componentCache?: number
+    /** When enabled, and there is no children pages inside of the View. It will load initial page that matches to initial URL (default true) */
+    loadInitialPage?: boolean
     /**	Enables dynamic navbar for iOS theme */
     iosDynamicNavbar?: boolean
     /**	This option (when enabled) gives more native look for dynamic navbar left back-link icon animation. Useful only when you use dynamic navbar with default back-link icon on left side set as "sliding". */

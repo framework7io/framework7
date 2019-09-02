@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.0-beta.11
+ * Framework7 5.0.0-beta.12
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: August 26, 2019
+ * Released on: September 2, 2019
  */
 
 /*====================
@@ -881,10 +881,6 @@ html.device-full-viewport body {
 .ios .page-current .page-shadow-effect {
   opacity: 1;
 }
-.ios .router-transition-forward .page-next,
-.ios .router-transition-forward .page-current {
-  will-change: transform;
-}
 .ios .router-transition-forward .page-next {
   animation: ios-page-next-to-current var(--f7-page-transition-duration) forwards;
 }
@@ -914,10 +910,6 @@ html.device-full-viewport body {
   opacity: 0;
   z-index: 10000;
   animation: ios-page-element-fade-in var(--f7-page-transition-duration) forwards;
-}
-.ios .router-transition-backward .page-previous,
-.ios .router-transition-backward .page-current {
-  will-change: transform;
 }
 .ios .router-transition-backward .page-previous {
   animation: ios-page-previous-to-current var(--f7-page-transition-duration) forwards;
@@ -1006,14 +998,12 @@ html.device-full-viewport body {
   transform: translate3d(100%, 0, 0);
 }
 .md .router-transition-forward .page-next {
-  will-change: transform, opacity;
   animation: md-page-next-to-current var(--f7-page-transition-duration) forwards;
 }
 .md .router-transition-forward .page-current {
   animation: none;
 }
 .md .router-transition-backward .page-current {
-  will-change: transform, opacity;
   animation: md-page-current-to-next var(--f7-page-transition-duration) forwards;
 }
 .md .router-transition-backward .page-previous {
@@ -1053,7 +1043,6 @@ html.device-full-viewport body {
   opacity: 1;
 }
 .aurora .router-transition-forward .page-next {
-  will-change: transform;
   animation: aurora-page-next-to-current var(--f7-page-transition-duration) forwards;
 }
 .aurora .router-transition-forward .page-current {
@@ -1072,7 +1061,6 @@ html.device-full-viewport body {
   animation: aurora-page-element-fade-in var(--f7-page-transition-duration) forwards;
 }
 .aurora .router-transition-backward .page-current {
-  will-change: transform, opacity;
   animation: aurora-page-current-to-next var(--f7-page-transition-duration) forwards;
 }
 .aurora .router-transition-backward .page-previous {
@@ -1171,7 +1159,6 @@ html.device-full-viewport body {
   justify-content: center;
   position: relative;
   box-sizing: border-box;
-  transform: translate3d(0, 0, 0);
   z-index: 1;
 }
 .link i + span,
@@ -1369,7 +1356,6 @@ html.device-full-viewport body {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  transform: translate3d(0, 0, 0);
 }
 .navbar .right:first-child {
   position: absolute;
@@ -1871,6 +1857,12 @@ html.device-full-viewport body {
 }
 .ios .router-transition-backward .navbar-current.navbar-large-collapsed .navbar-bg {
   animation-name: ios-navbar-bg-from-ct-to-rt;
+}
+.ios .router-transition-backward .navbar-current.navbar-large-collapsed.navbar-large-transparent .navbar-bg {
+  animation-name: ios-navbar-bg-from-cb-to-rb;
+}
+.ios .router-transition-backward .navbar-current.navbar-large-collapsed.router-navbar-transition-to-large .navbar-bg {
+  animation-name: ios-navbar-bg-from-ct-to-rb;
 }
 .ios .router-transition-backward .navbar-previous .navbar-bg {
   animation-name: ios-navbar-bg-from-lb-to-cb;
@@ -4025,8 +4017,11 @@ html.device-full-viewport body {
 .list .item-text {
   position: relative;
   overflow: hidden;
-  text-overflow: hidden;
+  text-overflow: ellipsis;
+  /* autoprefixer: ignore next */
   -webkit-line-clamp: var(--f7-list-item-text-max-lines);
+  /* autoprefixer: ignore next */
+  -webkit-box-orient: vertical;
   display: -webkit-box;
   font-size: var(--f7-list-item-text-font-size);
   font-weight: var(--f7-list-item-text-font-weight);
@@ -5167,7 +5162,6 @@ input[type="button"].button {
   transform: translate3d(0px, 0px, 0) scale(0);
   transition-duration: 1400ms;
   background-color: var(--f7-touch-ripple-color);
-  will-change: transform, opacity;
 }
 .ripple-wave.ripple-wave-fill {
   transition-duration: 300ms;

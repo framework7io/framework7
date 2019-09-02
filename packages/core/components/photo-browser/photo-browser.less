@@ -10,6 +10,7 @@
   z-index: 400;
 }
 .photo-browser-standalone {
+
   &.modal-in {
     transition-duration: 0ms;
     animation: photo-browser-in 400ms;
@@ -21,6 +22,10 @@
     &.swipe-close-to-top {
       animation: none;
     }
+  }
+  &.photo-browser-transitioning {
+    transition: 400ms;
+    transition-property: transform;
   }
 }
 .photo-browser-popup {
@@ -129,11 +134,6 @@
   align-items: center;
   flex-shrink: 0;
   box-sizing: border-box;
-
-  &.photo-browser-transitioning {
-    transition: 400ms;
-    transition-property: transform;
-  }
   span.swiper-zoom-container {
     display: none;
   }
