@@ -37,8 +37,6 @@ export default {
       iconColor,
       iconSize,
       iconMaterial,
-      iconIon,
-      iconFa,
       iconF7,
       iconMd,
       iconIos,
@@ -49,13 +47,11 @@ export default {
 
     let iconEl;
     let iconOnlyComputed;
-    if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconMd || iconIos || iconAurora) {
+    if (icon || iconMaterial || iconF7 || iconMd || iconIos || iconAurora) {
       iconEl = (
         <F7Icon
           material={iconMaterial}
           f7={iconF7}
-          fa={iconFa}
-          ion={iconIon}
           icon={icon}
           md={iconMd}
           ios={iconIos}

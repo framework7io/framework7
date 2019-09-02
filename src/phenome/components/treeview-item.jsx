@@ -37,8 +37,6 @@ export default {
       label,
       icon,
       iconMaterial,
-      iconIon,
-      iconFa,
       iconF7,
       iconMd,
       iconIos,
@@ -55,13 +53,11 @@ export default {
     const needToggle = typeof toggle === 'undefined' ? hasChildren : toggle;
 
     let iconEl;
-    if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconMd || iconIos || iconAurora) {
+    if (icon || iconMaterial || iconF7 || iconMd || iconIos || iconAurora) {
       iconEl = (
         <F7Icon
           material={iconMaterial}
           f7={iconF7}
-          fa={iconFa}
-          ion={iconIon}
           icon={icon}
           md={iconMd}
           ios={iconIos}
@@ -168,7 +164,7 @@ export default {
   componentDidMount() {
     const self = this;
     const { el, rootEl } = self.refs;
-    
+
     rootEl.addEventListener('click', self.onClick);
     if (!el) return;
     self.eventTargetEl = el;

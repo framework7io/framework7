@@ -17,8 +17,6 @@ export default {
     style: Object, // phenome-react-line
     material: String, // Material Icons
     f7: String, // Framework7 Icons
-    ion: String, // Ionicons
-    fa: String, // Font Awesome
     icon: String, // Custom
     ios: String,
     aurora: String,
@@ -117,7 +115,7 @@ export default {
       const self = this;
       const props = self.props;
       const {
-        material, f7, fa, ion, icon, md, ios, aurora, className,
+        material, f7, icon, md, ios, aurora, className,
       } = props;
       let themeIcon;
       if (self.$theme.ios) themeIcon = ios;
@@ -133,9 +131,7 @@ export default {
           classes['material-icons'] = prop === 'material';
           classes['f7-icons'] = prop === 'f7';
         }
-        if (prop === 'fa' || prop === 'ion') {
-          classes[`${prop}-${value}`] = true;
-        }
+
         if (prop === 'icon') {
           classes[value] = true;
         }
@@ -144,10 +140,7 @@ export default {
           icon: true,
           'material-icons': material,
           'f7-icons': f7,
-          fa,
         };
-        if (ion) classes[`ion-${ion}`] = true;
-        if (fa) classes[`fa-${fa}`] = true;
         if (icon) classes[icon] = true;
       }
       return Utils.classNames(

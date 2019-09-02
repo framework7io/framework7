@@ -71,8 +71,6 @@ export default {
       text,
       icon,
       iconMaterial,
-      iconIon,
-      iconFa,
       iconF7,
       iconMd,
       iconIos,
@@ -87,12 +85,10 @@ export default {
     if (text) {
       textEl = (<span>{text}</span>);
     }
-    if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconMd || iconIos || iconAurora) {
+    if (icon || iconMaterial || iconF7 || iconMd || iconIos || iconAurora) {
       iconEl = (
         <F7Icon
           material={iconMaterial}
-          ion={iconIon}
-          fa={iconFa}
           f7={iconF7}
           icon={icon}
           md={iconMd}
