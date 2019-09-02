@@ -18,9 +18,11 @@ function esm({ banner, componentImports, componentExports }) {
 ${banner}
 
 ${componentImports.join('\n')}
-import Framework7Vue from './utils/plugin';
+import Framework7Vue, { f7, f7ready, theme } from './utils/plugin';
 
 export {\n${componentExports.join(',\n')}\n};
+
+export { f7, f7ready, theme, f7 as $f7, f7ready as $f7ready, theme as $theme };
 
 export default Framework7Vue;
   `.trim();

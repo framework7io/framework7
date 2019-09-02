@@ -20,11 +20,13 @@ function esm({ banner, componentImports, componentAliases, componentExports }) {
 ${banner}
 
 ${componentImports.join('\n')}
-import Framework7React from './utils/plugin';
+import Framework7React, { f7, f7ready, theme } from './utils/plugin';
 
 ${componentAliases.join('\n')}
 
 export {\n${componentExports.join(',\n')}\n};
+
+export { f7, f7ready, theme, f7 as $f7, f7ready as $f7ready, theme as $theme };
 
 export default Framework7React;
   `.trim();

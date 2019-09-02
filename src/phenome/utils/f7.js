@@ -1,5 +1,8 @@
 import Utils from './utils';
 
+// eslint-disable-next-line
+let f7Instance;
+
 const f7 = {
   instance: null,
   Framework7: null,
@@ -12,12 +15,15 @@ const f7 = {
     if (routes && routes.length && !f7Params.routes) f7Params.routes = routes;
 
     const instance = new Framework7(f7Params);
+    f7Instance = instance;
     if (instance.initialized) {
       f7.instance = instance;
+      f7Instance = instance;
       events.emit('ready', f7.instance);
     } else {
       instance.on('init', () => {
         f7.instance = instance;
+        f7Instance = instance;
         events.emit('ready', f7.instance);
       });
     }
@@ -35,5 +41,5 @@ const f7 = {
     modals: null,
   },
 };
-
+export { f7Instance };
 export default f7;

@@ -28,7 +28,9 @@ export default {
         props: Utils.extend(
           {
             f7route: options.route,
+            $f7route: options.route,
             f7router: router,
+            $f7router: router,
           },
           options.route.params,
           options.props || {},
@@ -117,7 +119,9 @@ export default {
         props: Utils.extend(
           {
             f7route: options.route,
+            $f7route: options.route,
             f7router: router,
+            $f7router: router,
           },
           options.route.params,
           options.props || {},
@@ -176,7 +180,9 @@ export default {
         props: Utils.extend(
           {
             f7route: options.route,
+            $f7route: options.route,
             f7router: router,
+            $f7router: router,
           },
           options.route.params,
           options.props || {},

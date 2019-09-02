@@ -9,6 +9,12 @@ import { Utils } from 'framework7/utils/utils';
 
 // IMPORT_COMPONENTS
 
+export interface Framework7Theme {
+  ios: boolean
+  md: boolean
+  aurora: boolean
+}
+
 export interface Framework7Extensions {
   /** Main Framework7's initialized instance. It allows you to use any of Framework7 APIs */
   $f7: Framework7
@@ -29,16 +35,28 @@ export interface Framework7Extensions {
   /** Access to Utils object with few useful utilities */
   $utils: Utils
   /** Object with boolean properties with information about currently used theme (iOS or MD) */
-  $theme: {
-    ios: boolean
-    md: boolean
-    aurora: boolean
-  }
+  $theme: Framework7Theme
 }
+
+/** Object with boolean properties with information about currently used theme (iOS or MD) */
+declare const theme : Framework7Theme;
+/** Main Framework7's initialized instance. It allows you to use any of Framework7 APIs */
+declare const f7 : Framework7;
+/** Callback function that will be executed when Framework7 fully intialized. Useful to use in components when you need to access Framework7 API and to be sure it is ready. So it is safe to put all Framework7 related logic into this callback. As an argument it receives initialized Framework7 instance */
+declare const f7ready: (onF7Ready: (f7: Framework7) => void) => void;
 
 // LIB_EXTENSION
 
 // EXPORT_COMPONENTS
+
+export {
+  theme,
+  theme as $theme,
+  f7,
+  f7 as $f7,
+  f7ready,
+  f7ready as $f7ready,
+}
 
 // DECLARE_PLUGIN
 // EXPORT_PLUGIN
