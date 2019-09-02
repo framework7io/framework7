@@ -184,7 +184,6 @@ Muthaiyan Rm<br>
 xPlants.it SRL<br>
 Mamadou Ndiaye<br>
 LitoMore<br>
-Philip Fung<br>
 Jacob Rosenberg<br>
 Farshid Mossaiby<br>
 Byron<br>
