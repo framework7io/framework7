@@ -6,7 +6,7 @@ import Utils from '../../utils/utils';
 import vdom from './vdom';
 import patch from './patch';
 
-const globalMixins = {};
+import componentMixins from './component-mixins';
 
 class Component {
   constructor(app, extendContext = {}, options = {}) {
@@ -32,7 +32,7 @@ class Component {
       for (let i = self.$mixins.length - 1; i >= 0; i -= 1) {
         const mixin = self.$mixins[i];
         if (typeof mixin === 'string') {
-          if (globalMixins[mixin]) self.$mixins[i] = globalMixins[mixin];
+          if (componentMixins[mixin]) self.$mixins[i] = componentMixins[mixin];
           else self.$mixins.splice(i, 1);
         }
       }
@@ -352,11 +352,4 @@ class Component {
   }
 }
 
-function registerComponentMixin(name, mixin) {
-  globalMixins[name] = mixin;
-}
-
-Component.registerMixin = registerComponentMixin;
-
 export default Component;
-export { registerComponentMixin };

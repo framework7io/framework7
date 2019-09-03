@@ -43,8 +43,6 @@ export class ComponentClass {
   $update: () => void
   /** Component method where you pass mergeState object that will be merged with current component state */
   $setState: (mergeState?: object) => void
-  /** Register component mixin */
-  static registerMixin(mixinName: string, mixin: ComponentOptions): void
 }
 export interface ComponentOptions {
   mixins?: ComponentOptions[] | string[]

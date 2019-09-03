@@ -1,5 +1,14 @@
-import Component, { registerComponentMixin } from './component-class';
+import Component from './component-class';
 import parseComponent from './parse-component';
+import customComponents from './custom-components';
+import componentMixins from './component-mixins';
+
+function registerComponentMixin(name, mixin) {
+  componentMixins[name] = mixin;
+}
+function registerComponent(tagName, component) {
+  customComponents[tagName] = component;
+}
 
 export { Component };
 export default {
@@ -7,6 +16,7 @@ export default {
   static: {
     Component,
     registerComponentMixin,
+    registerComponent,
   },
   create() {
     const app = this;
