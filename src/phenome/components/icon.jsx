@@ -32,11 +32,15 @@ export default {
       id,
       style,
     } = props;
+    let size = props.size;
+    if (typeof size === 'number' || parseFloat(size) === size * 1) {
+      size = `${size}px`;
+    }
     return (
       <i
         ref="el"
         id={id}
-        style={Utils.extend({ fontSize: self.sizeComputed }, style)}
+        style={Utils.extend({ fontSize: size, width: size, height: size }, style)}
         className={self.classes}
       >
         {self.iconTextComputed}
@@ -87,14 +91,6 @@ export default {
     }
   },
   computed: {
-    sizeComputed() {
-      const self = this;
-      let size = self.props.size;
-      if (typeof size === 'number' || parseFloat(size) === size * 1) {
-        size = `${size}px`;
-      }
-      return size;
-    },
     iconTextComputed() {
       const self = this;
       const { material, f7, md, ios, aurora } = self.props;
@@ -126,8 +122,7 @@ export default {
         const parts = themeIcon.split(':');
         const prop = parts[0];
         const value = parts[1];
-        if (prop === 'material' || prop === 'fa' || prop === 'f7') {
-          classes.fa = prop === 'fa';
+        if (prop === 'material' || prop === 'f7') {
           classes['material-icons'] = prop === 'material';
           classes['f7-icons'] = prop === 'f7';
         }
