@@ -7,6 +7,7 @@ import Dom7 from 'dom7';
 
 // Modules
 // IMPORT_MODULES
+import {ComponentClass as Component} from '{{basePath}}/modules/component/component';
 
 // Components
 // IMPORT_COMPONENTS
@@ -16,5 +17,5 @@ declare module '{{basePath}}/components/app/app-class' {
 }
 
 // EXPORT_HELPERS
-export { Template7, Dom7 };
+export { Template7, Dom7, Component };
 export default Framework7;

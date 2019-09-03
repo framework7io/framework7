@@ -20,7 +20,7 @@ import RouterTemplateLoaderModule from './modules/router/template-loader';
 import RouterComponentLoaderModule from './modules/router/component-loader';
 import HistoryModule from './modules/history/history';
 import StorageModule from './modules/storage/storage';
-import ComponentModule from './modules/component/component';
+import ComponentModule, { Component } from './modules/component/component';
 import ServiceWorkerModule from './modules/service-worker/service-worker';
 
 // Core Components

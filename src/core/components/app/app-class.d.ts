@@ -5,6 +5,7 @@ import { Device } from '../../utils/device';
 import { Request } from '../../utils/request';
 import { Support } from '../../utils/support';
 import { Utils } from '../../utils/utils';
+import { ComponentClass } from '../../modules/component/component';
 
 // Css Selector string is an option on many F7 methods
 // Giving this alias makes the typename show in the intellisense
@@ -166,6 +167,7 @@ declare class Framework7 implements Framework7 {
   static support: Support;
   static utils: Utils;
   static Events: Events;
+  static Component: ComponentClass;
 }
 
 export default Framework7;
