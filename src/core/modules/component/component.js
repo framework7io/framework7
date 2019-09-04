@@ -21,6 +21,8 @@ export default {
   create() {
     const app = this;
     app.component = {
+      registerComponentMixin,
+      registerComponent,
       parse(componentString) {
         return parseComponent(componentString);
       },
