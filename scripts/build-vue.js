@@ -22,7 +22,7 @@ import Framework7Vue, { f7, f7ready, theme } from './utils/plugin';
 
 export {\n${componentExports.join(',\n')}\n};
 
-export { f7, f7ready, theme, f7 as $f7, f7ready as $f7ready, theme as $theme };
+export { f7, f7ready, theme };
 
 export default Framework7Vue;
   `.trim();
@@ -95,6 +95,7 @@ function buildVue(cb) {
     external: ['vue'],
     plugins: [
       replace({
+        'export { f7ready, f7Instance as f7, f7Theme as theme };': '',
         delimiters: ['', ''],
         'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
       }),
