@@ -19,7 +19,6 @@ import RouterModule from './modules/router/router';
 import RouterTemplateLoaderModule from './modules/router/template-loader';
 import RouterComponentLoaderModule from './modules/router/component-loader';
 import HistoryModule from './modules/history/history';
-import StorageModule from './modules/storage/storage';
 import ComponentModule, { Component } from './modules/component/component';
 import ServiceWorkerModule from './modules/service-worker/service-worker';
 
@@ -61,7 +60,6 @@ Framework7.use([
   ClicksModule,
   RouterModule,
   HistoryModule,
-  StorageModule,
   ComponentModule,
   ServiceWorkerModule,
   Statusbar,
