@@ -148,7 +148,9 @@ export default {
           }
           if (tag.indexOf('subnavbar') >= 0) hasSubnavbar = true;
           if (tag.indexOf('navbar') >= 0) {
-            if (child.componentOptions && child.componentOptions.propsData && ('large' in child.componentOptions.propsData) && child.componentOptions.propsData.large) hasNavbarLarge = true;
+            if (child.componentOptions && child.componentOptions.propsData && ('large' in child.componentOptions.propsData) && (child.componentOptions.propsData.large || child.componentOptions.propsData.large === '')) {
+              hasNavbarLarge = true;
+            }
           }
           if (typeof hasMessages === 'undefined' && tag.indexOf('messages') >= 0) hasMessages = true;
           for (let j = 0; j < fixedTags.length; j += 1) {
