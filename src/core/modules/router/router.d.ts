@@ -23,7 +23,7 @@ export namespace Router {
     /** Load page content from url via Ajax, and compile it using Template7 */
     templateUrl?: string
     /** Load page from passed Framework7 Router Component */
-    component?: ComponentOptions | ComponentClass
+    component?: ComponentOptions | ComponentClass | Function
     /** load pages as a component via Ajax */
     componentUrl?: string
     /** Do required asynchronous manipulation and the return required route content and options */
@@ -56,7 +56,7 @@ export namespace Router {
     /** Load page content from url via Ajax, and compile it using Template7 */
     templateUrl?: string
     /** Load page from passed Framework7 Router Component */
-    component?: ComponentOptions | ComponentClass
+    component?: ComponentOptions | ComponentClass | Function
     /** load pages as a component via Ajax */
     componentUrl?: string
     /** Do required asynchronous manipulation and the return required route content and options */
