@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.0.0-beta.12
+ * Framework7 React 5.0.0-beta.14
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 2, 2019
+ * Released on: September 4, 2019
  */
 
 import F7AccordionContent from './components/accordion-content';
@@ -101,7 +101,7 @@ import F7TreeviewItem from './components/treeview-item';
 import F7Treeview from './components/treeview';
 import F7View from './components/view';
 import F7Views from './components/views';
-import Framework7React from './utils/plugin';
+import Framework7React, { f7, f7ready, theme } from './utils/plugin';
 
 const AccordionContent = F7AccordionContent;
 const AccordionItem = F7AccordionItem;
@@ -379,5 +379,7 @@ export {
   F7Views,
   Views
 };
+
+export { f7, f7ready, theme };
 
 export default Framework7React;

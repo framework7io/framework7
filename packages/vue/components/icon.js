@@ -7,8 +7,6 @@ export default {
     id: [String, Number],
     material: String,
     f7: String,
-    ion: String,
-    fa: String,
     icon: String,
     ios: String,
     aurora: String,
@@ -25,10 +23,18 @@ export default {
       id,
       style
     } = props;
+    let size = props.size;
+
+    if (typeof size === 'number' || parseFloat(size) === size * 1) {
+      size = `${size}px`;
+    }
+
     return _h('i', {
       ref: 'el',
       style: Utils.extend({
-        fontSize: self.sizeComputed
+        fontSize: size,
+        width: size,
+        height: size
       }, style),
       class: self.classes,
       attrs: {
@@ -88,17 +94,6 @@ export default {
   },
 
   computed: {
-    sizeComputed() {
-      const self = this;
-      let size = self.props.size;
-
-      if (typeof size === 'number' || parseFloat(size) === size * 1) {
-        size = `${size}px`;
-      }
-
-      return size;
-    },
-
     iconTextComputed() {
       const self = this;
       const {
@@ -130,8 +125,6 @@ export default {
       const {
         material,
         f7,
-        fa,
-        ion,
         icon,
         md,
         ios,
@@ -146,14 +139,9 @@ export default {
         const prop = parts[0];
         const value = parts[1];
 
-        if (prop === 'material' || prop === 'fa' || prop === 'f7') {
-          classes.fa = prop === 'fa';
+        if (prop === 'material' || prop === 'f7') {
           classes['material-icons'] = prop === 'material';
           classes['f7-icons'] = prop === 'f7';
-        }
-
-        if (prop === 'fa' || prop === 'ion') {
-          classes[`${prop}-${value}`] = true;
         }
 
         if (prop === 'icon') {
@@ -163,11 +151,8 @@ export default {
         classes = {
           icon: true,
           'material-icons': material,
-          'f7-icons': f7,
-          fa
+          'f7-icons': f7
         };
-        if (ion) classes[`ion-${ion}`] = true;
-        if (fa) classes[`fa-${fa}`] = true;
         if (icon) classes[icon] = true;
       }
 

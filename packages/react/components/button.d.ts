@@ -7,8 +7,6 @@ declare namespace F7Button {
     id? : string | number
     className? : string
     style? : React.CSSProperties
-    noFastclick? : boolean
-    noFastClick? : boolean
     text? : string
     tabLink? : boolean | string
     tabLinkActive? : boolean
@@ -51,8 +49,6 @@ declare namespace F7Button {
     themeDark? : boolean
     icon? : string
     iconMaterial? : string
-    iconIon? : string
-    iconFa? : string
     iconF7? : string
     iconIos? : string
     iconMd? : string

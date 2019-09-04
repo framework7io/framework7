@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.0-beta.12
+ * Framework7 5.0.0-beta.14
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 2, 2019
+ * Released on: September 4, 2019
  */
 
 (function (global, factory) {
@@ -4392,12 +4392,7 @@
 
     var touchStartX;
     var touchStartY;
-    var touchStartTime;
     var targetElement;
-    var trackClick;
-    var activeSelection;
-    var scrollParent;
-    var lastClickTime;
     var isMoved;
     var tapHoldFired;
     var tapHoldTimeout;
@@ -4405,9 +4400,6 @@
 
     var activableElement;
     var activeTimeout;
-
-    var needsFastClick;
-    var needsFastClickTimeOut;
 
     var rippleWave;
     var rippleTarget;
@@ -4441,28 +4433,11 @@
       return activable || target;
     }
 
-    function isInsideScrollableViewLight(el) {
+    function isInsideScrollableView(el) {
       var pageContent = el.parents('.page-content');
       return pageContent.length > 0;
     }
-    function isInsideScrollableView(el) {
-      var pageContent = el.parents('.page-content');
 
-      if (pageContent.length === 0) {
-        return false;
-      }
-
-      // This event handler covers the "tap to stop scrolling".
-      if (pageContent.prop('scrollHandlerSet') !== 'yes') {
-        pageContent.on('scroll', function () {
-          clearTimeout(activeTimeout);
-          clearTimeout(rippleTimeout);
-        });
-        pageContent.prop('scrollHandlerSet', 'yes');
-      }
-
-      return true;
-    }
     function addActive() {
       if (!activableElement) { return; }
       activableElement.addClass('active-state');
@@ -4471,70 +4446,6 @@
       if (!activableElement) { return; }
       activableElement.removeClass('active-state');
       activableElement = null;
-    }
-    function isFormElement(el) {
-      var nodes = ('input select textarea label').split(' ');
-      if (el.nodeName && nodes.indexOf(el.nodeName.toLowerCase()) >= 0) { return true; }
-      return false;
-    }
-    function androidNeedsBlur(el) {
-      var noBlur = ('button input textarea select').split(' ');
-      if (doc.activeElement && el !== doc.activeElement && doc.activeElement !== doc.body) {
-        if (noBlur.indexOf(el.nodeName.toLowerCase()) >= 0) {
-          return false;
-        }
-        return true;
-      }
-      return false;
-    }
-    function targetNeedsFastClick(el) {
-      /*
-      if (
-        Device.ios
-        &&
-        (
-          Device.osVersion.split('.')[0] > 9
-          ||
-          (Device.osVersion.split('.')[0] * 1 === 9 && Device.osVersion.split('.')[1] >= 1)
-        )
-      ) {
-        return false;
-      }
-      */
-      var $el = $(el);
-      if (el.nodeName.toLowerCase() === 'input' && (el.type === 'file' || el.type === 'range')) { return false; }
-      if (el.nodeName.toLowerCase() === 'select' && Device.android) { return false; }
-      if ($el.hasClass('no-fastclick') || $el.parents('.no-fastclick').length > 0) { return false; }
-      if (params.fastClicksExclude && $el.closest(params.fastClicksExclude).length > 0) { return false; }
-
-      return true;
-    }
-    function targetNeedsFocus(el) {
-      if (doc.activeElement === el) {
-        return false;
-      }
-      var tag = el.nodeName.toLowerCase();
-      var skipInputs = ('button checkbox file image radio submit').split(' ');
-      if (el.disabled || el.readOnly) { return false; }
-      if (tag === 'textarea') { return true; }
-      if (tag === 'select') {
-        if (Device.android) { return false; }
-        return true;
-      }
-      if (tag === 'input' && skipInputs.indexOf(el.type) < 0) { return true; }
-      return false;
-    }
-    function targetNeedsPrevent(el) {
-      var $el = $(el);
-      var prevent = true;
-      if ($el.is('label') || $el.parents('label').length > 0) {
-        if (Device.android) {
-          prevent = false;
-        } else if (Device.ios && $el.is('input')) {
-          prevent = true;
-        } else { prevent = false; }
-      }
-      return prevent;
     }
 
     // Ripple handlers
@@ -4573,9 +4484,7 @@
         rippleTarget = undefined;
         return;
       }
-      var inScrollable = params.fastClicks
-        ? isInsideScrollableView(rippleTarget)
-        : isInsideScrollableViewLight(rippleTarget);
+      var inScrollable = isInsideScrollableView(rippleTarget);
 
       if (!inScrollable) {
         removeRipple();
@@ -4629,223 +4538,7 @@
       }
     }
 
-    // Send Click
-    function sendClick(e) {
-      var touch = e.changedTouches[0];
-      var evt = doc.createEvent('MouseEvents');
-      var eventType = 'click';
-      if (Device.android && targetElement.nodeName.toLowerCase() === 'select') {
-        eventType = 'mousedown';
-      }
-      evt.initMouseEvent(eventType, true, true, win, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
-      evt.forwardedTouchEvent = true;
-
-      if (app.device.ios && win.navigator.standalone) {
-        // Fix the issue happens in iOS home screen apps where the wrong element is selected during a momentum scroll.
-        // Upon tapping, we give the scrolling time to stop, then we grab the element based where the user tapped.
-        setTimeout(function () {
-          targetElement = doc.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
-          if (targetElement) {
-            targetElement.dispatchEvent(evt);
-          }
-        }, 10);
-      } else {
-        targetElement.dispatchEvent(evt);
-      }
-    }
-
-    // Touch Handlers
-    function handleTouchStart(e) {
-      var this$1 = this;
-
-      isMoved = false;
-      tapHoldFired = false;
-      if (e.targetTouches.length > 1) {
-        if (activableElement) { removeActive(); }
-        return true;
-      }
-      if (e.touches.length > 1 && activableElement) {
-        removeActive();
-      }
-      if (params.tapHold) {
-        if (tapHoldTimeout) { clearTimeout(tapHoldTimeout); }
-        tapHoldTimeout = setTimeout(function () {
-          if (e && e.touches && e.touches.length > 1) { return; }
-          tapHoldFired = true;
-          e.preventDefault();
-          $(e.target).trigger('taphold');
-        }, params.tapHoldDelay);
-      }
-      if (needsFastClickTimeOut) { clearTimeout(needsFastClickTimeOut); }
-      needsFastClick = targetNeedsFastClick(e.target);
-
-      if (!needsFastClick) {
-        trackClick = false;
-        return true;
-      }
-      if (Device.ios || (Device.android && 'getSelection' in win)) {
-        var selection = win.getSelection();
-        if (
-          selection.rangeCount
-          && selection.focusNode !== doc.body
-          && (!selection.isCollapsed || doc.activeElement === selection.focusNode)
-        ) {
-          activeSelection = true;
-          return true;
-        }
-
-        activeSelection = false;
-      }
-      if (Device.android) {
-        if (androidNeedsBlur(e.target)) {
-          doc.activeElement.blur();
-        }
-      }
-
-      trackClick = true;
-      targetElement = e.target;
-      touchStartTime = (new Date()).getTime();
-      touchStartX = e.targetTouches[0].pageX;
-      touchStartY = e.targetTouches[0].pageY;
-
-      // Detect scroll parent
-      if (Device.ios) {
-        scrollParent = undefined;
-        $(targetElement).parents().each(function () {
-          var parent = this$1;
-          if (parent.scrollHeight > parent.offsetHeight && !scrollParent) {
-            scrollParent = parent;
-            scrollParent.f7ScrollTop = scrollParent.scrollTop;
-          }
-        });
-      }
-      if ((touchStartTime - lastClickTime) < params.fastClicksDelayBetweenClicks) {
-        e.preventDefault();
-      }
-
-      if (params.activeState) {
-        activableElement = findActivableElement(targetElement);
-        activeTimeout = setTimeout(addActive, 0);
-      }
-      if (useRipple) {
-        rippleTouchStart(targetElement);
-      }
-      return true;
-    }
-    function handleTouchMove(e) {
-      if (!trackClick) { return; }
-      var distance = params.fastClicksDistanceThreshold;
-      if (distance) {
-        var pageX = e.targetTouches[0].pageX;
-        var pageY = e.targetTouches[0].pageY;
-        if (Math.abs(pageX - touchStartX) > distance || Math.abs(pageY - touchStartY) > distance) {
-          isMoved = true;
-        }
-      } else {
-        isMoved = true;
-      }
-      if (isMoved) {
-        trackClick = false;
-        targetElement = null;
-        isMoved = true;
-        if (params.tapHold) {
-          clearTimeout(tapHoldTimeout);
-        }
-        if (params.activeState) {
-          clearTimeout(activeTimeout);
-          removeActive();
-        }
-        if (useRipple) {
-          rippleTouchMove();
-        }
-      }
-    }
-    function handleTouchEnd(e) {
-      clearTimeout(activeTimeout);
-      clearTimeout(tapHoldTimeout);
-
-      var touchEndTime = (new Date()).getTime();
-
-      if (!trackClick) {
-        if (!activeSelection && needsFastClick) {
-          if (!(Device.android && !e.cancelable) && e.cancelable) {
-            e.preventDefault();
-          }
-        }
-        if (params.activeState) { removeActive(); }
-        if (useRipple) {
-          rippleTouchEnd();
-        }
-        return true;
-      }
-
-      if (doc.activeElement === e.target) {
-        if (params.activeState) { removeActive(); }
-        if (useRipple) {
-          rippleTouchEnd();
-        }
-        return true;
-      }
-
-      if (!activeSelection) {
-        e.preventDefault();
-      }
-
-      if ((touchEndTime - lastClickTime) < params.fastClicksDelayBetweenClicks) {
-        setTimeout(removeActive, 0);
-        if (useRipple) {
-          rippleTouchEnd();
-        }
-        return true;
-      }
-
-      lastClickTime = touchEndTime;
-
-      trackClick = false;
-
-      if (Device.ios && scrollParent) {
-        if (scrollParent.scrollTop !== scrollParent.f7ScrollTop) {
-          return false;
-        }
-      }
-
-      // Add active-state here because, in a very fast tap, the timeout didn't
-      // have the chance to execute. Removing active-state in a timeout gives
-      // the chance to the animation execute.
-      if (params.activeState) {
-        addActive();
-        setTimeout(removeActive, 0);
-      }
-      // Remove Ripple
-      if (useRipple) {
-        rippleTouchEnd();
-      }
-
-      // Trigger focus when required
-      if (targetNeedsFocus(targetElement)) {
-        if (Device.ios && Device.webView) {
-          targetElement.focus();
-          return false;
-        }
-
-        targetElement.focus();
-      }
-
-      // Blur active elements
-      if (doc.activeElement && targetElement !== doc.activeElement && doc.activeElement !== doc.body && targetElement.nodeName.toLowerCase() !== 'label') {
-        doc.activeElement.blur();
-      }
-
-      // Send click
-      e.preventDefault();
-      if (params.tapHoldPreventClicks && tapHoldFired) {
-        return false;
-      }
-      sendClick(e);
-      return false;
-    }
     function handleTouchCancel() {
-      trackClick = false;
       targetElement = null;
 
       // Remove Active State
@@ -4861,62 +4554,7 @@
       }
     }
 
-    function handleClick(e) {
-      var allowClick = false;
-      if (trackClick) {
-        targetElement = null;
-        trackClick = false;
-        return true;
-      }
-      if ((e.target.type === 'submit' && e.detail === 0) || e.target.type === 'file') {
-        return true;
-      }
-      if (!targetElement) {
-        if (!isFormElement(e.target)) {
-          allowClick = true;
-        }
-      }
-      if (!needsFastClick) {
-        allowClick = true;
-      }
-      if (doc.activeElement === targetElement) {
-        allowClick = true;
-      }
-      if (e.forwardedTouchEvent) {
-        allowClick = true;
-      }
-      if (!e.cancelable) {
-        allowClick = true;
-      }
-      if (params.tapHold && params.tapHoldPreventClicks && tapHoldFired) {
-        allowClick = false;
-      }
-      if (!allowClick) {
-        e.stopImmediatePropagation();
-        e.stopPropagation();
-        if (targetElement) {
-          if (targetNeedsPrevent(targetElement) || isMoved) {
-            e.preventDefault();
-          }
-        } else {
-          e.preventDefault();
-        }
-        targetElement = null;
-      }
-      needsFastClickTimeOut = setTimeout(function () {
-        needsFastClick = false;
-      }, (Device.ios || Device.androidChrome ? 100 : 400));
-
-      if (params.tapHold) {
-        tapHoldTimeout = setTimeout(function () {
-          tapHoldFired = false;
-        }, (Device.ios || Device.androidChrome ? 100 : 400));
-      }
-
-      return allowClick;
-    }
-
-    function handleTouchStartLight(e) {
+    function handleTouchStart(e) {
       isMoved = false;
       tapHoldFired = false;
       preventClick = false;
@@ -4943,7 +4581,7 @@
 
       if (params.activeState) {
         activableElement = findActivableElement(targetElement);
-        if (!isInsideScrollableViewLight(activableElement)) {
+        if (!isInsideScrollableView(activableElement)) {
           addActive();
         } else {
           activeTimeout = setTimeout(addActive, 80);
@@ -4954,17 +4592,12 @@
       }
       return true;
     }
-    function handleTouchMoveLight(e) {
+    function handleTouchMove(e) {
       var touch;
       var distance;
       if (e.type === 'touchmove') {
         touch = e.targetTouches[0];
         distance = params.touchClicksDistanceThreshold;
-        // if (touch && touch.touchType === 'stylus') {
-        //   distance = 5;
-        // } else {
-        //   distance = 3;
-        // }
       }
 
       if (distance && touch) {
@@ -4990,7 +4623,7 @@
         }
       }
     }
-    function handleTouchEndLight(e) {
+    function handleTouchEnd(e) {
       clearTimeout(activeTimeout);
       clearTimeout(tapHoldTimeout);
       if (doc.activeElement === e.target) {
@@ -5014,7 +4647,7 @@
       }
       return true;
     }
-    function handleClickLight(e) {
+    function handleClick(e) {
       var localPreventClick = preventClick;
       if (targetElement && e.target !== targetElement) {
         localPreventClick = true;
@@ -5099,17 +4732,10 @@
     }
 
     if (Support.touch) {
-      if (params.fastClicks) {
-        app.on('click', handleClick);
-        app.on('touchstart', handleTouchStart);
-        app.on('touchmove', handleTouchMove);
-        app.on('touchend', handleTouchEnd);
-      } else {
-        app.on('click', handleClickLight);
-        app.on('touchstart', handleTouchStartLight);
-        app.on('touchmove', handleTouchMoveLight);
-        app.on('touchend', handleTouchEndLight);
-      }
+      app.on('click', handleClick);
+      app.on('touchstart', handleTouchStart);
+      app.on('touchmove', handleTouchMove);
+      app.on('touchend', handleTouchEnd);
 
       doc.addEventListener('touchcancel', handleTouchCancel, { passive: true });
     } else if (params.activeState) {
@@ -5132,11 +4758,6 @@
     name: 'touch',
     params: {
       touch: {
-        // Fast clicks
-        fastClicks: false,
-        fastClicksDistanceThreshold: 10,
-        fastClicksDelayBetweenClicks: 50,
-        fastClicksExclude: '', // CSS selector
         // Clicks
         touchClicksDistanceThreshold: 5,
         // ContextMenu
@@ -10102,7 +9723,6 @@
               },
             }
           );
-          // const createdComponent = app.component.create(componentOptions, extendContext);
           app.component.create(componentOptions, extendContext)
             .then(function (createdComponent) {
               resolve(createdComponent.el);
@@ -10184,83 +9804,6 @@
     },
   };
 
-  var keyPrefix = 'f7storage-';
-  var Storage = {
-    get: function get(key) {
-      return new Promise(function (resolve, reject) {
-        try {
-          var value = JSON.parse(win.localStorage.getItem(("" + keyPrefix + key)));
-          resolve(value);
-        } catch (e) {
-          reject(e);
-        }
-      });
-    },
-    set: function set(key, value) {
-      return new Promise(function (resolve, reject) {
-        try {
-          win.localStorage.setItem(("" + keyPrefix + key), JSON.stringify(value));
-          resolve();
-        } catch (e) {
-          reject(e);
-        }
-      });
-    },
-    remove: function remove(key) {
-      return new Promise(function (resolve, reject) {
-        try {
-          win.localStorage.removeItem(("" + keyPrefix + key));
-          resolve();
-        } catch (e) {
-          reject(e);
-        }
-      });
-    },
-    clear: function clear() {
-
-    },
-    length: function length() {
-
-    },
-    keys: function keys() {
-      return new Promise(function (resolve, reject) {
-        try {
-          var keys = Object.keys(win.localStorage)
-            .filter(function (keyName) { return keyName.indexOf(keyPrefix) === 0; })
-            .map(function (keyName) { return keyName.replace(keyPrefix, ''); });
-          resolve(keys);
-        } catch (e) {
-          reject(e);
-        }
-      });
-    },
-    forEach: function forEach(callback) {
-      return new Promise(function (resolve, reject) {
-        try {
-          Object.keys(win.localStorage)
-            .filter(function (keyName) { return keyName.indexOf(keyPrefix) === 0; })
-            .forEach(function (keyName, index) {
-              var key = keyName.replace(keyPrefix, '');
-              Storage.get(key).then(function (value) {
-                callback(key, value, index);
-              });
-            });
-          resolve();
-        } catch (e) {
-          reject(e);
-        }
-      });
-    },
-  };
-
-  var StorageModule = {
-    name: 'storage',
-    static: {
-      Storage: Storage,
-      storage: Storage,
-    },
-  };
-
   function vnode(sel, data, children, text, elm) {
       var key = data === undefined ? undefined : data.key;
       return { sel: sel, data: data, children: children,
@@ -10324,6 +9867,8 @@
       return vnode(sel, data, children, text, undefined);
   }
 
+  var customComponents = {};
+
   /* eslint no-use-before-define: "off" */
 
   var selfClosing = 'area base br col command embed hr img input keygen link menuitem meta param source track wbr'.split(' ');
@@ -10331,22 +9876,80 @@
   var booleanProps = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple readOnly indeterminate'.split(' ');
   var tempDom = doc.createElement('div');
 
-  function getHooks(data, app, initial, isRoot) {
+  function toCamelCase$1(name) {
+    return name
+      .split('-')
+      .map(function (word, index) {
+        if (index === 0) { return word.toLowerCase(); }
+        return word[0].toUpperCase() + word.substr(1);
+      })
+      .join('');
+  }
+  function contextFromAttrs() {
+    var args = [], len = arguments.length;
+    while ( len-- ) args[ len ] = arguments[ len ];
+
+    var context = {};
+    args.forEach(function (obj) {
+      if ( obj === void 0 ) obj = {};
+
+      Object.keys(obj).forEach(function (key) {
+        context[toCamelCase$1(key)] = obj[key];
+      });
+    });
+
+    return context;
+  }
+
+  function getHooks(data, app, initial, isRoot, tagName) {
     var hooks = {};
-    if (!data || !data.attrs || !data.attrs.class) { return hooks; }
-    var classNames = data.attrs.class;
     var insert = [];
     var destroy = [];
     var update = [];
     var postpatch = [];
-    classNames.split(' ').forEach(function (className) {
-      if (!initial) {
-        insert.push.apply(insert, app.getVnodeHooks('insert', className));
-      }
-      destroy.push.apply(destroy, app.getVnodeHooks('destroy', className));
-      update.push.apply(update, app.getVnodeHooks('update', className));
-      postpatch.push.apply(postpatch, app.getVnodeHooks('postpatch', className));
-    });
+    var isCustomComponent = tagName && tagName.indexOf('-') > 0 && customComponents[tagName];
+
+    if (isCustomComponent) {
+      insert.push(function (vnode) {
+        if (vnode.sel !== tagName) { return; }
+        app.component.create(Object.assign({ el: vnode.elm }, customComponents[tagName]), contextFromAttrs(data.attrs || {}, data.props || {})).then(function (c) {
+          // eslint-disable-next-line
+          vnode.elm.__component__ = c;
+        });
+      });
+      destroy.push(function (vnode) {
+        // eslint-disable-next-line
+        var component = vnode && vnode.elm && vnode.elm.__component__;
+        if (component) {
+          var el = component.el;
+          if (component.$destroy) { component.$destroy(); }
+          if (el && el.parentNode) { el.parentNode.removeChild(el); }
+          delete vnode.elm.__component__; // eslint-disable-line
+        }
+      });
+      update.push(function (oldVnode, vnode) {
+        // eslint-disable-next-line
+        var component = vnode && vnode.elm && vnode.elm.__component__;
+        if (!component) { return; }
+        var newData = contextFromAttrs(vnode.data.attrs || {}, vnode.data.props || {});
+        Object.assign(component, newData);
+        component.$update();
+      });
+    }
+
+    if (!isCustomComponent) {
+      if (!data || !data.attrs || !data.attrs.class) { return hooks; }
+
+      var classNames = data.attrs.class;
+      classNames.split(' ').forEach(function (className) {
+        if (!initial) {
+          insert.push.apply(insert, app.getVnodeHooks('insert', className));
+        }
+        destroy.push.apply(destroy, app.getVnodeHooks('destroy', className));
+        update.push.apply(update, app.getVnodeHooks('update', className));
+        postpatch.push.apply(postpatch, app.getVnodeHooks('postpatch', className));
+      });
+    }
 
     if (isRoot && !initial) {
       postpatch.push(function (oldVnode, vnode) {
@@ -10475,10 +10078,8 @@
     return handler;
   }
 
-  function getData(el, context, app, initial, isRoot) {
-    var data = {
-      context: context,
-    };
+  function getData(el, context, app, initial, isRoot, tagName) {
+    var data = { context: context };
     var attributes = el.attributes;
     Array.prototype.forEach.call(attributes, function (attr) {
       var attrName = attr.name;
@@ -10540,7 +10141,7 @@
         }
       }
     });
-    var hooks = getHooks(data, app, initial, isRoot);
+    var hooks = getHooks(data, app, initial, isRoot, tagName);
     hooks.prepatch = function (oldVnode, vnode) {
       if (!oldVnode || !vnode) { return; }
       if (oldVnode && oldVnode.data && oldVnode.data.props) {
@@ -10583,22 +10184,10 @@
     if (el.nodeType !== 1) { return null; }
     // element (statement adds inline SVG compatibility)
     var tagName = (el instanceof win.SVGElement) ? el.nodeName : el.nodeName.toLowerCase();
-    // proceed slots
-    if (tagName === 'slot' && context.$children) {
-      if (!context.$children.length) { return null; }
-      var children = [];
-      var slotName = el.getAttribute('name') || 'default';
-      for (var i = 0; i < context.$children.length; i += 1) {
-        var childSlotName = context.$children[i].getAttribute('slot') || 'default';
-        if (childSlotName === slotName) {
-          children.push(elementToVNode(context.$children[i], context, app, initial));
-        }
-      }
-      return children;
-    }
+
     return h(
       tagName,
-      getData(el, context, app, initial, isRoot),
+      getData(el, context, app, initial, isRoot, tagName),
       selfClosing.indexOf(tagName) >= 0 ? [] : getChildren(el, context, app, initial)
     );
   }
@@ -10637,6 +10226,9 @@
       return document.createComment(text);
   }
   function insertBefore$1(parentNode, newNode, referenceNode) {
+      if (referenceNode && referenceNode.parentNode !== parentNode) {
+        if (referenceNode.__component__) { referenceNode = referenceNode.__component__.el; }
+      }
       parentNode.insertBefore(newNode, referenceNode);
   }
   function removeChild(node, child) {
@@ -11228,16 +10820,18 @@
     styleModule,
     eventListenersModule ]);
 
+  var componentMixins = {};
+
   /* eslint no-underscore-dangle: "off" */
 
-  var globalMixins = {};
-
-  var Component = function Component(app, options, extendContext) {
+  var Component = function Component(app, extendContext, options) {
     if ( extendContext === void 0 ) extendContext = {};
+    if ( options === void 0 ) options = {};
 
     var id = Utils.id();
-    var self = Utils.merge(
-      this,
+    var self = this;
+    Utils.merge(
+      self,
       extendContext,
       {
         $: $,
@@ -11246,17 +10840,18 @@
         $app: app,
         $f7: app,
         $options: Utils.extend({ id: id }, options),
-        $id: options.id || id,
+        $id: options.isClassComponent ? self.constructor.id : (options.id || id),
+        $mixins: options.isClassComponent ? self.constructor.mixins : options.mixins,
       }
     );
     var $options = self.$options;
 
-    if ($options.mixins && $options.mixins.length) {
-      for (var i = $options.mixins.length - 1; i >= 0; i -= 1) {
-        var mixin = $options.mixins[i];
+    if (self.$mixins && self.$mixins.length) {
+      for (var i = self.$mixins.length - 1; i >= 0; i -= 1) {
+        var mixin = self.$mixins[i];
         if (typeof mixin === 'string') {
-          if (globalMixins[mixin]) { $options.mixins[i] = globalMixins[mixin]; }
-          else { $options.mixins.splice(i, 1); }
+          if (componentMixins[mixin]) { self.$mixins[i] = componentMixins[mixin]; }
+          else { self.$mixins.splice(i, 1); }
         }
       }
     }
@@ -11290,20 +10885,18 @@
     if ($options.render) { $options.render = $options.render.bind(self); }
 
     // Bind methods
-    if ($options.methods) {
-      var methods = {};
-      if ($options.mixins && $options.mixins.length) {
-        $options.mixins.forEach(function (mixin) {
-          if (mixin.methods) { Object.assign(methods, mixin.methods); }
-        });
-      }
-      if ($options.methods) {
-        Object.assign(methods, $options.methods);
-      }
-      Object.keys(methods).forEach(function (methodName) {
-        self[methodName] = methods[methodName].bind(self);
+    var methods = {};
+    if (self.$mixins && self.$mixins.length) {
+      self.$mixins.forEach(function (mixin) {
+        if (mixin.methods) { Object.assign(methods, mixin.methods); }
       });
     }
+    if ($options.methods) {
+      Object.assign(methods, $options.methods);
+    }
+    Object.keys(methods).forEach(function (methodName) {
+      self[methodName] = methods[methodName].bind(self);
+    });
 
     // Bind Events
     if ($options.on) {
@@ -11327,15 +10920,17 @@
           Utils.extend(self, data);
           self.$hook('beforeCreate');
           var html = self.$render();
+          var style = $options.isClassComponent ? self.constructor.style : $options.style;
+          var styleScoped = $options.isClassComponent ? self.constructor.styleScoped : $options.styleScoped;
 
           if (self.$options.el) {
             html = html.trim();
             self.$vnode = vdom(html, self, true);
-            if ($options.style) {
+            if (style) {
               self.$styleEl = doc.createElement('style');
-              self.$styleEl.innerHTML = $options.style;
-              if ($options.styleScoped) {
-                self.$vnode.data.attrs[("data-f7-" + ($options.id))] = '';
+              self.$styleEl.innerHTML = style;
+              if (styleScoped) {
+                self.$vnode.data.attrs[("data-f7-" + (self.$id))] = '';
               }
             }
             self.el = self.$options.el;
@@ -11354,8 +10949,8 @@
           if (html && typeof html === 'string') {
             html = html.trim();
             self.$vnode = vdom(html, self, true);
-            if ($options.style && $options.styleScoped) {
-              self.$vnode.data.attrs[("data-f7-" + ($options.id))] = '';
+            if (style && styleScoped) {
+              self.$vnode.data.attrs[("data-f7-" + (self.$id))] = '';
             }
             self.el = doc.createElement(self.$vnode.sel || 'div');
             patch(self.el, self.$vnode);
@@ -11363,18 +10958,20 @@
           } else if (html) {
             self.el = html;
             self.$el = $(self.el);
-            if ($options.style && $options.styleScoped) {
-              self.el.setAttribute(("data-f7-" + ($options.id)), '');
+            if (style && styleScoped) {
+              self.el.setAttribute(("data-f7-" + (self.$id)), '');
             }
           }
-          if ($options.style) {
+          if (style) {
             self.$styleEl = doc.createElement('style');
-            self.$styleEl.innerHTML = $options.style;
+            self.$styleEl.innerHTML = style;
           }
 
           self.$attachEvents();
 
-          self.el.f7Component = self;
+          if (self.el) {
+            self.el.f7Component = self;
+          }
 
           self.$hook('created');
           resolve(self);
@@ -11389,9 +10986,9 @@
     var self = this;
     var $options = self.$options;
       var $el = self.$el;
-    if (self.$options.mixins && self.$options.mixins.length) {
+    if (self.$mixins && self.$mixins.length) {
       self.$detachEventsHandlers = {};
-      self.$options.mixins.forEach(function (mixin) {
+      self.$mixins.forEach(function (mixin) {
         if (mixin.on) {
           Object.keys(mixin.on).forEach(function (eventName) {
             var handler = mixin.on[eventName].bind(self);
@@ -11455,6 +11052,8 @@
     var html = '';
     if ($options.render) {
       html = $options.render();
+    } else if (self.render) {
+      html = self.render.call(self);
     } else if ($options.template) {
       if (typeof $options.template === 'string') {
         try {
@@ -11472,14 +11071,18 @@
 
   Component.prototype.$tick = function $tick (callback) {
     var self = this;
-    win.requestAnimationFrame(function () {
-      if (self.__updateIsPending) {
-        win.requestAnimationFrame(function () {
+    return new Promise(function (resolve) {
+      win.requestAnimationFrame(function () {
+        if (self.__updateIsPending) {
+          win.requestAnimationFrame(function () {
+            resolve();
+            callback();
+          });
+        } else {
+          resolve();
           callback();
-        });
-      } else {
-        callback();
-      }
+        }
+      });
     });
   };
 
@@ -11543,32 +11146,30 @@
     var self = this;
     if (async) {
       var promises = [];
-      if (self.$options.mixins && self.$options.mixins.length) {
-        self.$options.mixins.forEach(function (mixin) {
+      if (self.$mixins && self.$mixins.length) {
+        self.$mixins.forEach(function (mixin) {
           if (mixin[name]) { promises.push(mixin[name].call(self)); }
         });
+      }
+      if (self[name]) {
+        promises.push(self[name].call(self));
       }
       if (self.$options[name]) {
         promises.push(self.$options[name].call(self));
       }
       return Promise.all(promises);
     }
-    if (self.$options.mixins && self.$options.mixins.length) {
-      self.$options.mixins.forEach(function (mixin) {
+    if (self.$mixins && self.$mixins.length) {
+      self.$mixins.forEach(function (mixin) {
         if (mixin[name] && typeof mixin[name] === 'function') {
           mixin[name].call(self);
         }
       });
     }
     if (self.$options[name]) { return self.$options[name].call(self); }
+    if (self[name]) { return self[name].call(self); }
     return undefined;
   };
-
-  function registerComponentMixin(name, mixin) {
-    globalMixins[name] = mixin;
-  }
-
-  Component.registerMixin = registerComponentMixin;
 
   function parseComponent(componentString) {
     var id = Utils.id();
@@ -11634,6 +11235,7 @@
     $('head').append(scriptEl);
 
     var component = win[callbackCreateName]();
+    var isClassComponent = typeof component === 'function';
 
     // Remove Script El
     $(scriptEl).remove();
@@ -11647,7 +11249,14 @@
     }
     if (component.template) {
       if (component.templateType === 't7') {
-        component.template = Template7.compile(component.template);
+        if (isClassComponent) {
+          var templateFunction = Template7.compile(component.template);
+          component.prototype.render = function render() {
+            return templateFunction(this);
+          };
+        } else {
+          component.template = Template7.compile(component.template);
+        }
       }
       if (component.templateType === 'es') {
         var renderContent = "window." + callbackRenderName + " = function () {\n        return function render() {\n          return `" + (component.template) + "`;\n        }\n      }";
@@ -11655,13 +11264,22 @@
         scriptEl.innerHTML = renderContent;
         $('head').append(scriptEl);
 
-        component.render = win[callbackRenderName]();
+        if (isClassComponent) {
+          component.prototype.render = component.template;
+        } else {
+          component.render = win[callbackRenderName]();
+        }
 
         // Remove Script El
         $(scriptEl).remove();
         win[callbackRenderName] = null;
         delete win[callbackRenderName];
       }
+    }
+
+    if (isClassComponent) {
+      delete component.template;
+      delete component.templateType;
     }
 
     // Assign Style
@@ -11675,20 +11293,33 @@
     return component;
   }
 
+  function registerComponentMixin(name, mixin) {
+    componentMixins[name] = mixin;
+  }
+  function registerComponent(tagName, component) {
+    customComponents[tagName] = component;
+  }
   var ComponentModule = {
     name: 'component',
     static: {
       Component: Component,
       registerComponentMixin: registerComponentMixin,
+      registerComponent: registerComponent,
     },
     create: function create() {
       var app = this;
       app.component = {
+        registerComponentMixin: registerComponentMixin,
+        registerComponent: registerComponent,
         parse: function parse(componentString) {
           return parseComponent(componentString);
         },
-        create: function create(options, extendContext) {
-          return new Component(app, options, extendContext);
+        create: function create(options, context) {
+          if (typeof options === 'function') {
+            // eslint-disable-next-line
+            return new options(app, context, { isClassComponent: true });
+          }
+          return new Component(app, context, options);
         },
       };
     },
@@ -39598,7 +39229,7 @@
       }
       function createOverlay(videoEl) {
         if (!videoEl) { return; }
-        vi.$overlayEl = $(("\n        <div class=\"vi-overlay no-fastclick\">\n          " + (vi.params.fallbackOverlayText ? ("<div class=\"vi-overlay-text\">" + (vi.params.fallbackOverlayText) + "</div>") : '') + "\n          <div class=\"vi-overlay-play-button\"></div>\n        </div>\n      ").trim());
+        vi.$overlayEl = $(("\n        <div class=\"vi-overlay\">\n          " + (vi.params.fallbackOverlayText ? ("<div class=\"vi-overlay-text\">" + (vi.params.fallbackOverlayText) + "</div>") : '') + "\n          <div class=\"vi-overlay-play-button\"></div>\n        </div>\n      ").trim());
 
         var touchStartTime;
         vi.$overlayEl.on('touchstart', function () {
@@ -39814,7 +39445,6 @@
     ClicksModule,
     RouterModule,
     HistoryModule,
-    StorageModule,
     ComponentModule,
     ServiceWorkerModule,
     Statusbar$1,

@@ -17,8 +17,6 @@ declare namespace F7ListItem {
     tooltip? : string
     link? : boolean | string
     target? : string
-    noFastclick? : boolean
-    noFastClick? : boolean
     after? : string | number
     badge? : string | number
     badgeColor? : string

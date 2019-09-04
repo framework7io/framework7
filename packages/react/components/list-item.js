@@ -134,8 +134,6 @@ class F7ListItem extends React.Component {
       link,
       href,
       target,
-      noFastclick,
-      noFastClick,
       after,
       badge,
       badgeColor,
@@ -201,7 +199,6 @@ class F7ListItem extends React.Component {
         }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
         const linkClasses = Utils.classNames({
           'item-link': true,
-          'no-fastclick': noFastclick || noFastClick,
           'smart-select': smartSelect
         }, Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
         linkEl = React.createElement('a', Object.assign({
@@ -512,8 +509,6 @@ __reactComponentSetProps(F7ListItem, Object.assign({
   tooltip: String,
   link: [Boolean, String],
   target: String,
-  noFastclick: Boolean,
-  noFastClick: Boolean,
   after: [String, Number],
   badge: [String, Number],
   badgeColor: String,

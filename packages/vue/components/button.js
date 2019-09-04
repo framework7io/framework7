@@ -8,8 +8,6 @@ export default {
   name: 'f7-button',
   props: Object.assign({
     id: [String, Number],
-    noFastclick: Boolean,
-    noFastClick: Boolean,
     text: String,
     tabLink: [Boolean, String],
     tabLinkActive: Boolean,
@@ -58,8 +56,6 @@ export default {
       text,
       icon,
       iconMaterial,
-      iconIon,
-      iconFa,
       iconF7,
       iconMd,
       iconIos,
@@ -75,12 +71,10 @@ export default {
       textEl = _h('span', [text]);
     }
 
-    if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconMd || iconIos || iconAurora) {
+    if (icon || iconMaterial || iconF7 || iconMd || iconIos || iconAurora) {
       iconEl = _h(F7Icon, {
         attrs: {
           material: iconMaterial,
-          ion: iconIon,
-          fa: iconFa,
           f7: iconF7,
           icon: icon,
           md: iconMd,
@@ -129,8 +123,6 @@ export default {
       const self = this;
       const props = self.props;
       const {
-        noFastclick,
-        noFastClick,
         tabLink,
         tabLinkActive,
         round,
@@ -164,7 +156,6 @@ export default {
       return Utils.classNames(className, 'button', {
         'tab-link': tabLink || tabLink === '',
         'tab-link-active': tabLinkActive,
-        'no-fastclick': noFastclick || noFastClick,
         'button-round': round,
         'button-round-ios': roundIos,
         'button-round-aurora': roundAurora,

@@ -11,14 +11,6 @@ export namespace Touch {
   interface AppParams {
     /** Object with touch-module related parameters */
     touch?: {
-      /** Fast clicks is a built-in library that removes 300ms delay from links and form elements in mobile browser while you click them. You can disable this built-in library if you want to use other third party fast clicks script.. (default true) */
-      fastClicks? : boolean
-      /** Distance threshold (in px) to prevent short taps. So if tap/move distance is larger than this value then "click" will not be triggered. (default 10) */
-      fastClicksDistanceThreshold? : number
-      /** Minimal allowed delay (in ms) between multiple clicks. (default 50) */
-      fastClicksDelayBetweenClicks? : number
-      /** This parameter allows to specify elements not handled by fast clicks by passing CSS selector of such elements. */
-      fastClicksExclude? : string
       /** Distance threshold (in px) to prevent short swipes. So if tap/move distance is larger than this value then "click" will not be triggered. (default 5) */
       touchClicksDistanceThreshold? : number
       /** . (default true) */

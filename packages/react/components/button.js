@@ -45,8 +45,6 @@ class F7Button extends React.Component {
     const self = this;
     const props = self.props;
     const {
-      noFastclick,
-      noFastClick,
       tabLink,
       tabLinkActive,
       round,
@@ -80,7 +78,6 @@ class F7Button extends React.Component {
     return Utils.classNames(className, 'button', {
       'tab-link': tabLink || tabLink === '',
       'tab-link-active': tabLinkActive,
-      'no-fastclick': noFastclick || noFastClick,
       'button-round': round,
       'button-round-ios': roundIos,
       'button-round-aurora': roundAurora,
@@ -119,8 +116,6 @@ class F7Button extends React.Component {
       text,
       icon,
       iconMaterial,
-      iconIon,
-      iconFa,
       iconF7,
       iconMd,
       iconIos,
@@ -136,11 +131,9 @@ class F7Button extends React.Component {
       textEl = React.createElement('span', null, text);
     }
 
-    if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconMd || iconIos || iconAurora) {
+    if (icon || iconMaterial || iconF7 || iconMd || iconIos || iconAurora) {
       iconEl = React.createElement(F7Icon, {
         material: iconMaterial,
-        ion: iconIon,
-        fa: iconFa,
         f7: iconF7,
         icon: icon,
         md: iconMd,
@@ -251,8 +244,6 @@ __reactComponentSetProps(F7Button, Object.assign({
   id: [String, Number],
   className: String,
   style: Object,
-  noFastclick: Boolean,
-  noFastClick: Boolean,
   text: String,
   tabLink: [Boolean, String],
   tabLinkActive: Boolean,

@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.0-beta.12
+ * Framework7 5.0.0-beta.14
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 2, 2019
+ * Released on: September 4, 2019
  */
 
 import Template7 from 'template7';
@@ -34,8 +34,7 @@ import RouterModule from './modules/router/router';
 import RouterTemplateLoaderModule from './modules/router/template-loader';
 import RouterComponentLoaderModule from './modules/router/component-loader';
 import HistoryModule from './modules/history/history';
-import StorageModule from './modules/storage/storage';
-import ComponentModule from './modules/component/component';
+import ComponentModule, { Component } from './modules/component/component';
 import ServiceWorkerModule from './modules/service-worker/service-worker';
 
 // Core Components
@@ -128,7 +127,6 @@ Framework7.use([
   ClicksModule,
   RouterModule,
   HistoryModule,
-  StorageModule,
   ComponentModule,
   ServiceWorkerModule,
   Statusbar,
@@ -193,5 +191,5 @@ Framework7.use([
   Typography
 ]);
 
-export { Template7, $ as Dom7, Request, Utils, Device, Support };
+export { Template7, $ as Dom7, Request, Utils, Device, Support, Component };
 export default Framework7;

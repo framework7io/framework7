@@ -11,6 +11,9 @@ function createComment(text) {
     return document.createComment(text);
 }
 function insertBefore(parentNode, newNode, referenceNode) {
+    if (referenceNode && referenceNode.parentNode !== parentNode) {
+      if (referenceNode.__component__) referenceNode = referenceNode.__component__.el;
+    }
     parentNode.insertBefore(newNode, referenceNode);
 }
 function removeChild(node, child) {

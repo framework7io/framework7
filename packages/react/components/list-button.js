@@ -40,16 +40,13 @@ class F7ListButton extends React.Component {
     const self = this;
     const props = self.props;
     const {
-      noFastclick,
-      noFastClick,
       tabLink,
       tabLinkActive
     } = props;
     return Utils.classNames({
       'list-button': true,
       'tab-link': tabLink || tabLink === '',
-      'tab-link-active': tabLinkActive,
-      'no-fastclick': noFastclick || noFastClick
+      'tab-link-active': tabLinkActive
     }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
   }
 
@@ -166,8 +163,6 @@ __reactComponentSetProps(F7ListButton, Object.assign({
   id: [String, Number],
   className: String,
   style: Object,
-  noFastclick: Boolean,
-  noFastClick: Boolean,
   title: [String, Number],
   text: [String, Number],
   tabLink: [Boolean, String],

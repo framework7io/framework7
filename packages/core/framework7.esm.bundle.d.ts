@@ -10,6 +10,7 @@ import Device from './utils/device';
 
 // Modules
 import {Clicks as ClicksNamespace} from './modules/clicks/clicks';
+import {Component as ComponentNamespace} from './modules/component/component';
 import {Device as DeviceNamespace} from './modules/device/device';
 import {Request as RequestNamespace} from './modules/request/request';
 import {Resize as ResizeNamespace} from './modules/resize/resize';
@@ -18,6 +19,7 @@ import {ServiceWorker as ServiceWorkerNamespace} from './modules/service-worker/
 import {Support as SupportNamespace} from './modules/support/support';
 import {Touch as TouchNamespace} from './modules/touch/touch';
 import {Utils as UtilsNamespace} from './modules/utils/utils';
+import {ComponentClass as Component} from './modules/component/component';
 
 // Components
 import {Accordion as AccordionNamespace} from './components/accordion/accordion';
@@ -92,6 +94,9 @@ declare module './components/app/app-class' {
   interface Framework7Class<Events> extends ClicksNamespace.AppMethods{}
   interface Framework7Params extends ClicksNamespace.AppParams{}
   interface Framework7Events extends ClicksNamespace.AppEvents{}
+  interface Framework7Class<Events> extends ComponentNamespace.AppMethods{}
+  interface Framework7Params extends ComponentNamespace.AppParams{}
+  interface Framework7Events extends ComponentNamespace.AppEvents{}
   interface Framework7Class<Events> extends DeviceNamespace.AppMethods{}
   interface Framework7Params extends DeviceNamespace.AppParams{}
   interface Framework7Events extends DeviceNamespace.AppEvents{}
@@ -320,5 +325,5 @@ declare module './components/app/app-class' {
 }
 
 export { Request, Utils, Support, Device };
-export { Template7, Dom7 };
+export { Template7, Dom7, Component };
 export default Framework7;

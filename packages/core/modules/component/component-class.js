@@ -6,13 +6,14 @@ import Utils from '../../utils/utils';
 import vdom from './vdom';
 import patch from './patch';
 
-const globalMixins = {};
+import componentMixins from './component-mixins';
 
 class Component {
-  constructor(app, options, extendContext = {}) {
+  constructor(app, extendContext = {}, options = {}) {
     const id = Utils.id();
-    const self = Utils.merge(
-      this,
+    const self = this;
+    Utils.merge(
+      self,
       extendContext,
       {
         $,
@@ -21,17 +22,18 @@ class Component {
         $app: app,
         $f7: app,
         $options: Utils.extend({ id }, options),
-        $id: options.id || id,
+        $id: options.isClassComponent ? self.constructor.id : (options.id || id),
+        $mixins: options.isClassComponent ? self.constructor.mixins : options.mixins,
       }
     );
     const { $options } = self;
 
-    if ($options.mixins && $options.mixins.length) {
-      for (let i = $options.mixins.length - 1; i >= 0; i -= 1) {
-        const mixin = $options.mixins[i];
+    if (self.$mixins && self.$mixins.length) {
+      for (let i = self.$mixins.length - 1; i >= 0; i -= 1) {
+        const mixin = self.$mixins[i];
         if (typeof mixin === 'string') {
-          if (globalMixins[mixin]) $options.mixins[i] = globalMixins[mixin];
-          else $options.mixins.splice(i, 1);
+          if (componentMixins[mixin]) self.$mixins[i] = componentMixins[mixin];
+          else self.$mixins.splice(i, 1);
         }
       }
     }
@@ -65,20 +67,18 @@ class Component {
     if ($options.render) $options.render = $options.render.bind(self);
 
     // Bind methods
-    if ($options.methods) {
-      const methods = {};
-      if ($options.mixins && $options.mixins.length) {
-        $options.mixins.forEach((mixin) => {
-          if (mixin.methods) Object.assign(methods, mixin.methods);
-        });
-      }
-      if ($options.methods) {
-        Object.assign(methods, $options.methods);
-      }
-      Object.keys(methods).forEach((methodName) => {
-        self[methodName] = methods[methodName].bind(self);
+    const methods = {};
+    if (self.$mixins && self.$mixins.length) {
+      self.$mixins.forEach((mixin) => {
+        if (mixin.methods) Object.assign(methods, mixin.methods);
       });
     }
+    if ($options.methods) {
+      Object.assign(methods, $options.methods);
+    }
+    Object.keys(methods).forEach((methodName) => {
+      self[methodName] = methods[methodName].bind(self);
+    });
 
     // Bind Events
     if ($options.on) {
@@ -102,15 +102,17 @@ class Component {
           Utils.extend(self, data);
           self.$hook('beforeCreate');
           let html = self.$render();
+          const style = $options.isClassComponent ? self.constructor.style : $options.style;
+          const styleScoped = $options.isClassComponent ? self.constructor.styleScoped : $options.styleScoped;
 
           if (self.$options.el) {
             html = html.trim();
             self.$vnode = vdom(html, self, true);
-            if ($options.style) {
+            if (style) {
               self.$styleEl = document.createElement('style');
-              self.$styleEl.innerHTML = $options.style;
-              if ($options.styleScoped) {
-                self.$vnode.data.attrs[`data-f7-${$options.id}`] = '';
+              self.$styleEl.innerHTML = style;
+              if (styleScoped) {
+                self.$vnode.data.attrs[`data-f7-${self.$id}`] = '';
               }
             }
             self.el = self.$options.el;
@@ -129,8 +131,8 @@ class Component {
           if (html && typeof html === 'string') {
             html = html.trim();
             self.$vnode = vdom(html, self, true);
-            if ($options.style && $options.styleScoped) {
-              self.$vnode.data.attrs[`data-f7-${$options.id}`] = '';
+            if (style && styleScoped) {
+              self.$vnode.data.attrs[`data-f7-${self.$id}`] = '';
             }
             self.el = document.createElement(self.$vnode.sel || 'div');
             patch(self.el, self.$vnode);
@@ -138,18 +140,20 @@ class Component {
           } else if (html) {
             self.el = html;
             self.$el = $(self.el);
-            if ($options.style && $options.styleScoped) {
-              self.el.setAttribute(`data-f7-${$options.id}`, '');
+            if (style && styleScoped) {
+              self.el.setAttribute(`data-f7-${self.$id}`, '');
             }
           }
-          if ($options.style) {
+          if (style) {
             self.$styleEl = document.createElement('style');
-            self.$styleEl.innerHTML = $options.style;
+            self.$styleEl.innerHTML = style;
           }
 
           self.$attachEvents();
 
-          self.el.f7Component = self;
+          if (self.el) {
+            self.el.f7Component = self;
+          }
 
           self.$hook('created');
           resolve(self);
@@ -163,9 +167,9 @@ class Component {
   $attachEvents() {
     const self = this;
     const { $options, $el } = self;
-    if (self.$options.mixins && self.$options.mixins.length) {
+    if (self.$mixins && self.$mixins.length) {
       self.$detachEventsHandlers = {};
-      self.$options.mixins.forEach((mixin) => {
+      self.$mixins.forEach((mixin) => {
         if (mixin.on) {
           Object.keys(mixin.on).forEach((eventName) => {
             const handler = mixin.on[eventName].bind(self);
@@ -228,6 +232,8 @@ class Component {
     let html = '';
     if ($options.render) {
       html = $options.render();
+    } else if (self.render) {
+      html = self.render.call(self);
     } else if ($options.template) {
       if (typeof $options.template === 'string') {
         try {
@@ -245,14 +251,18 @@ class Component {
 
   $tick(callback) {
     const self = this;
-    window.requestAnimationFrame(() => {
-      if (self.__updateIsPending) {
-        window.requestAnimationFrame(() => {
+    return new Promise((resolve) => {
+      window.requestAnimationFrame(() => {
+        if (self.__updateIsPending) {
+          window.requestAnimationFrame(() => {
+            resolve();
+            callback();
+          });
+        } else {
+          resolve();
           callback();
-        });
-      } else {
-        callback();
-      }
+        }
+      });
     });
   }
 
@@ -316,33 +326,30 @@ class Component {
     const self = this;
     if (async) {
       const promises = [];
-      if (self.$options.mixins && self.$options.mixins.length) {
-        self.$options.mixins.forEach((mixin) => {
+      if (self.$mixins && self.$mixins.length) {
+        self.$mixins.forEach((mixin) => {
           if (mixin[name]) promises.push(mixin[name].call(self));
         });
+      }
+      if (self[name]) {
+        promises.push(self[name].call(self));
       }
       if (self.$options[name]) {
         promises.push(self.$options[name].call(self));
       }
       return Promise.all(promises);
     }
-    if (self.$options.mixins && self.$options.mixins.length) {
-      self.$options.mixins.forEach((mixin) => {
+    if (self.$mixins && self.$mixins.length) {
+      self.$mixins.forEach((mixin) => {
         if (mixin[name] && typeof mixin[name] === 'function') {
           mixin[name].call(self);
         }
       });
     }
     if (self.$options[name]) return self.$options[name].call(self);
+    if (self[name]) return self[name].call(self);
     return undefined;
   }
 }
 
-function registerComponentMixin(name, mixin) {
-  globalMixins[name] = mixin;
-}
-
-Component.registerMixin = registerComponentMixin;
-
 export default Component;
-export { registerComponentMixin };

@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 5.0.0-beta.12
+ * Framework7 Vue 5.0.0-beta.14
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 2, 2019
+ * Released on: September 4, 2019
  */
 import Vue from 'vue';
 import f7AccordionContent from './components/accordion-content';
@@ -104,7 +104,13 @@ import f7Views from './components/views';
 
 /* eslint no-underscore-dangle: "off" */
 import componentsRouter from './utils/components-router';
-import f7 from './utils/f7';
+import f7, { f7Instance } from './utils/f7';
+
+function f7ready(callback) {
+  f7.ready(callback);
+}
+
+const f7Theme = {};
 
 const Plugin = {
   name: 'phenomePlugin',
@@ -218,36 +224,32 @@ const Plugin = {
       },
     });
 
-    const $theme = {};
     const { theme } = params;
-    if (theme === 'md') $theme.md = true;
-    if (theme === 'ios') $theme.ios = true;
-    if (theme === 'aurora') $theme.aurora = true;
+    if (theme === 'md') f7Theme.md = true;
+    if (theme === 'ios') f7Theme.ios = true;
+    if (theme === 'aurora') f7Theme.aurora = true;
     if (!theme || theme === 'auto') {
-      $theme.ios = !!Framework7.device.ios;
-      $theme.aurora = Framework7.device.desktop && Framework7.device.electron;
-      $theme.md = !$theme.ios && !$theme.aurora;
+      f7Theme.ios = !!Framework7.device.ios;
+      f7Theme.aurora = Framework7.device.desktop && Framework7.device.electron;
+      f7Theme.md = !f7Theme.ios && !f7Theme.aurora;
     }
     Object.defineProperty(Extend.prototype, '$theme', {
       get() {
         return {
-          ios: f7.instance ? f7.instance.theme === 'ios' : $theme.ios,
-          md: f7.instance ? f7.instance.theme === 'md' : $theme.md,
-          aurora: f7.instance ? f7.instance.theme === 'aurora' : $theme.aurora,
+          ios: f7.instance ? f7.instance.theme === 'ios' : f7Theme.ios,
+          md: f7.instance ? f7.instance.theme === 'md' : f7Theme.md,
+          aurora: f7.instance ? f7.instance.theme === 'aurora' : f7Theme.aurora,
         };
       },
     });
 
-    function f7ready(callback) {
-      f7.ready(callback);
-    }
+
     Extend.prototype.Dom7 = Framework7.$;
     Extend.prototype.$$ = Framework7.$;
     Extend.prototype.$device = Framework7.device;
     Extend.prototype.$request = Framework7.request;
     Extend.prototype.$utils = Framework7.utils;
     Extend.prototype.$f7ready = f7ready;
-    Extend.prototype.$f7Ready = f7ready;
 
     Object.defineProperty(Extend.prototype, '$f7route', {
       get() {
@@ -312,4 +314,5 @@ const Plugin = {
   },
 };
 
+export { f7ready, f7Instance as f7, f7Theme as theme };
 export default Plugin;

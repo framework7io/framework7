@@ -7,8 +7,6 @@ export default {
   name: 'f7-list-button',
   props: Object.assign({
     id: [String, Number],
-    noFastclick: Boolean,
-    noFastClick: Boolean,
     title: [String, Number],
     text: [String, Number],
     tabLink: [Boolean, String],
@@ -64,16 +62,13 @@ export default {
       const self = this;
       const props = self.props;
       const {
-        noFastclick,
-        noFastClick,
         tabLink,
         tabLinkActive
       } = props;
       return Utils.classNames({
         'list-button': true,
         'tab-link': tabLink || tabLink === '',
-        'tab-link-active': tabLinkActive,
-        'no-fastclick': noFastclick || noFastClick
+        'tab-link-active': tabLinkActive
       }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
     },
 

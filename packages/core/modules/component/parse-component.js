@@ -67,6 +67,7 @@ function parseComponent(componentString) {
   $('head').append(scriptEl);
 
   const component = window[callbackCreateName]();
+  const isClassComponent = typeof component === 'function';
 
   // Remove Script El
   $(scriptEl).remove();
@@ -80,7 +81,14 @@ function parseComponent(componentString) {
   }
   if (component.template) {
     if (component.templateType === 't7') {
-      component.template = Template7.compile(component.template);
+      if (isClassComponent) {
+        const templateFunction = Template7.compile(component.template);
+        component.prototype.render = function render() {
+          return templateFunction(this);
+        };
+      } else {
+        component.template = Template7.compile(component.template);
+      }
     }
     if (component.templateType === 'es') {
       const renderContent = `window.${callbackRenderName} = function () {
@@ -92,13 +100,22 @@ function parseComponent(componentString) {
       scriptEl.innerHTML = renderContent;
       $('head').append(scriptEl);
 
-      component.render = window[callbackRenderName]();
+      if (isClassComponent) {
+        component.prototype.render = component.template;
+      } else {
+        component.render = window[callbackRenderName]();
+      }
 
       // Remove Script El
       $(scriptEl).remove();
       window[callbackRenderName] = null;
       delete window[callbackRenderName];
     }
+  }
+
+  if (isClassComponent) {
+    delete component.template;
+    delete component.templateType;
   }
 
   // Assign Style

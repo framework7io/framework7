@@ -11,8 +11,6 @@ export default {
   props: Object.assign({
     id: [String, Number],
     noLinkClass: Boolean,
-    noFastClick: Boolean,
-    noFastclick: Boolean,
     text: String,
     tabLink: [Boolean, String],
     tabLinkActive: Boolean,
@@ -59,8 +57,6 @@ export default {
       iconColor,
       iconSize,
       iconMaterial,
-      iconIon,
-      iconFa,
       iconF7,
       iconMd,
       iconIos,
@@ -85,7 +81,7 @@ export default {
       }, [text, badgeEl]);
     }
 
-    if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconMd || iconIos || iconAurora) {
+    if (icon || iconMaterial || iconF7 || iconMd || iconIos || iconAurora) {
       if (iconBadge) {
         iconBadgeEl = _h(F7Badge, {
           attrs: {
@@ -98,8 +94,6 @@ export default {
         attrs: {
           material: iconMaterial,
           f7: iconF7,
-          fa: iconFa,
-          ion: iconIon,
           icon: icon,
           md: iconMd,
           ios: iconIos,
@@ -246,8 +240,6 @@ export default {
       const self = this;
       const props = self.props;
       const {
-        noFastclick,
-        noFastClick,
         tabLink,
         tabLinkActive,
         noLinkClass,
@@ -259,7 +251,6 @@ export default {
         'icon-only': self.iconOnlyComputed,
         'tab-link': tabLink || tabLink === '',
         'tab-link-active': tabLinkActive,
-        'no-fastclick': noFastclick || noFastClick,
         'smart-select': smartSelect
       }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
     },

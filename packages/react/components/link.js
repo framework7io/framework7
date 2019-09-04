@@ -50,8 +50,6 @@ class F7Link extends React.Component {
     const self = this;
     const props = self.props;
     const {
-      noFastclick,
-      noFastClick,
       tabLink,
       tabLinkActive,
       noLinkClass,
@@ -63,7 +61,6 @@ class F7Link extends React.Component {
       'icon-only': self.iconOnlyComputed,
       'tab-link': tabLink || tabLink === '',
       'tab-link-active': tabLinkActive,
-      'no-fastclick': noFastclick || noFastClick,
       'smart-select': smartSelect
     }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
   }
@@ -81,8 +78,6 @@ class F7Link extends React.Component {
       iconColor,
       iconSize,
       iconMaterial,
-      iconIon,
-      iconFa,
       iconF7,
       iconMd,
       iconIos,
@@ -105,7 +100,7 @@ class F7Link extends React.Component {
       }, text, badgeEl);
     }
 
-    if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconMd || iconIos || iconAurora) {
+    if (icon || iconMaterial || iconF7 || iconMd || iconIos || iconAurora) {
       if (iconBadge) {
         iconBadgeEl = React.createElement(F7Badge, {
           color: badgeColor
@@ -115,8 +110,6 @@ class F7Link extends React.Component {
       iconEl = React.createElement(F7Icon, {
         material: iconMaterial,
         f7: iconF7,
-        fa: iconFa,
-        ion: iconIon,
         icon: icon,
         md: iconMd,
         ios: iconIos,
@@ -253,8 +246,6 @@ __reactComponentSetProps(F7Link, Object.assign({
   className: String,
   style: Object,
   noLinkClass: Boolean,
-  noFastClick: Boolean,
-  noFastclick: Boolean,
   text: String,
   tabLink: [Boolean, String],
   tabLinkActive: Boolean,

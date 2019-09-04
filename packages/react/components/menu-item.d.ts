@@ -21,8 +21,6 @@ declare namespace F7MenuItem {
     themeDark? : boolean
     icon? : string
     iconMaterial? : string
-    iconIon? : string
-    iconFa? : string
     iconF7? : string
     iconIos? : string
     iconMd? : string

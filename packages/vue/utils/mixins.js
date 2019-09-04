@@ -34,8 +34,6 @@ const Mixins = {
   linkIconProps: {
     icon: String,
     iconMaterial: String,
-    iconIon: String,
-    iconFa: String,
     iconF7: String,
     iconIos: String,
     iconMd: String,

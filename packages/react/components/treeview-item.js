@@ -88,8 +88,6 @@ class F7TreeviewItem extends React.Component {
       label,
       icon,
       iconMaterial,
-      iconIon,
-      iconFa,
       iconF7,
       iconMd,
       iconIos,
@@ -103,12 +101,10 @@ class F7TreeviewItem extends React.Component {
     const needToggle = typeof toggle === 'undefined' ? hasChildren : toggle;
     let iconEl;
 
-    if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconMd || iconIos || iconAurora) {
+    if (icon || iconMaterial || iconF7 || iconMd || iconIos || iconAurora) {
       iconEl = React.createElement(F7Icon, {
         material: iconMaterial,
         f7: iconF7,
-        fa: iconFa,
-        ion: iconIon,
         icon: icon,
         md: iconMd,
         ios: iconIos,

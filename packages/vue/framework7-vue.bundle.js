@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 5.0.0-beta.12
+ * Framework7 Vue 5.0.0-beta.14
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 2, 2019
+ * Released on: September 4, 2019
  */
 
 (function (global, factory) {
@@ -145,8 +145,6 @@
     linkIconProps: {
       icon: String,
       iconMaterial: String,
-      iconIon: String,
-      iconFa: String,
       iconF7: String,
       iconIos: String,
       iconMd: String,
@@ -1404,8 +1402,6 @@
       id: [String, Number],
       material: String,
       f7: String,
-      ion: String,
-      fa: String,
       icon: String,
       ios: String,
       aurora: String,
@@ -1420,10 +1416,18 @@
       var props = self.props;
       var id = props.id;
       var style = props.style;
+      var size = props.size;
+
+      if (typeof size === 'number' || parseFloat(size) === size * 1) {
+        size = size + "px";
+      }
+
       return _h('i', {
         ref: 'el',
         style: Utils.extend({
-          fontSize: self.sizeComputed
+          fontSize: size,
+          width: size,
+          height: size
         }, style),
         class: self.classes,
         attrs: {
@@ -1482,17 +1486,6 @@
     },
 
     computed: {
-      sizeComputed: function sizeComputed() {
-        var self = this;
-        var size = self.props.size;
-
-        if (typeof size === 'number' || parseFloat(size) === size * 1) {
-          size = size + "px";
-        }
-
-        return size;
-      },
-
       iconTextComputed: function iconTextComputed() {
         var self = this;
         var ref = self.props;
@@ -1522,8 +1515,6 @@
         var props = self.props;
         var material = props.material;
         var f7 = props.f7;
-        var fa = props.fa;
-        var ion = props.ion;
         var icon = props.icon;
         var md = props.md;
         var ios = props.ios;
@@ -1537,14 +1528,9 @@
           var prop = parts[0];
           var value = parts[1];
 
-          if (prop === 'material' || prop === 'fa' || prop === 'f7') {
-            classes.fa = prop === 'fa';
+          if (prop === 'material' || prop === 'f7') {
             classes['material-icons'] = prop === 'material';
             classes['f7-icons'] = prop === 'f7';
-          }
-
-          if (prop === 'fa' || prop === 'ion') {
-            classes[(prop + "-" + value)] = true;
           }
 
           if (prop === 'icon') {
@@ -1554,11 +1540,8 @@
           classes = {
             icon: true,
             'material-icons': material,
-            'f7-icons': f7,
-            fa: fa
+            'f7-icons': f7
           };
-          if (ion) { classes[("ion-" + ion)] = true; }
-          if (fa) { classes[("fa-" + fa)] = true; }
           if (icon) { classes[icon] = true; }
         }
 
@@ -1614,8 +1597,6 @@
     name: 'f7-button',
     props: Object.assign({
       id: [String, Number],
-      noFastclick: Boolean,
-      noFastClick: Boolean,
       text: String,
       tabLink: [Boolean, String],
       tabLinkActive: Boolean,
@@ -1663,8 +1644,6 @@
       var text = props.text;
       var icon = props.icon;
       var iconMaterial = props.iconMaterial;
-      var iconIon = props.iconIon;
-      var iconFa = props.iconFa;
       var iconF7 = props.iconF7;
       var iconMd = props.iconMd;
       var iconIos = props.iconIos;
@@ -1679,12 +1658,10 @@
         textEl = _h('span', [text]);
       }
 
-      if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconMd || iconIos || iconAurora) {
+      if (icon || iconMaterial || iconF7 || iconMd || iconIos || iconAurora) {
         iconEl = _h(f7Icon, {
           attrs: {
             material: iconMaterial,
-            ion: iconIon,
-            fa: iconFa,
             f7: iconF7,
             icon: icon,
             md: iconMd,
@@ -1730,8 +1707,6 @@
       classes: function classes() {
         var self = this;
         var props = self.props;
-        var noFastclick = props.noFastclick;
-        var noFastClick = props.noFastClick;
         var tabLink = props.tabLink;
         var tabLinkActive = props.tabLinkActive;
         var round = props.round;
@@ -1764,7 +1739,6 @@
         return Utils.classNames(className, 'button', {
           'tab-link': tabLink || tabLink === '',
           'tab-link-active': tabLinkActive,
-          'no-fastclick': noFastclick || noFastClick,
           'button-round': round,
           'button-round-ios': roundIos,
           'button-round-aurora': roundAurora,
@@ -3873,8 +3847,6 @@
     props: Object.assign({
       id: [String, Number],
       noLinkClass: Boolean,
-      noFastClick: Boolean,
-      noFastclick: Boolean,
       text: String,
       tabLink: [Boolean, String],
       tabLinkActive: Boolean,
@@ -3920,8 +3892,6 @@
       var iconColor = props.iconColor;
       var iconSize = props.iconSize;
       var iconMaterial = props.iconMaterial;
-      var iconIon = props.iconIon;
-      var iconFa = props.iconFa;
       var iconF7 = props.iconF7;
       var iconMd = props.iconMd;
       var iconIos = props.iconIos;
@@ -3945,7 +3915,7 @@
         }, [text, badgeEl]);
       }
 
-      if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconMd || iconIos || iconAurora) {
+      if (icon || iconMaterial || iconF7 || iconMd || iconIos || iconAurora) {
         if (iconBadge) {
           iconBadgeEl = _h(f7Badge, {
             attrs: {
@@ -3958,8 +3928,6 @@
           attrs: {
             material: iconMaterial,
             f7: iconF7,
-            fa: iconFa,
-            ion: iconIon,
             icon: icon,
             md: iconMd,
             ios: iconIos,
@@ -4101,8 +4069,6 @@
       classes: function classes() {
         var self = this;
         var props = self.props;
-        var noFastclick = props.noFastclick;
-        var noFastClick = props.noFastClick;
         var tabLink = props.tabLink;
         var tabLinkActive = props.tabLinkActive;
         var noLinkClass = props.noLinkClass;
@@ -4113,7 +4079,6 @@
           'icon-only': self.iconOnlyComputed,
           'tab-link': tabLink || tabLink === '',
           'tab-link-active': tabLinkActive,
-          'no-fastclick': noFastclick || noFastClick,
           'smart-select': smartSelect
         }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
       },
@@ -4146,8 +4111,6 @@
     name: 'f7-list-button',
     props: Object.assign({
       id: [String, Number],
-      noFastclick: Boolean,
-      noFastClick: Boolean,
       title: [String, Number],
       text: [String, Number],
       tabLink: [Boolean, String],
@@ -4198,15 +4161,12 @@
       classes: function classes() {
         var self = this;
         var props = self.props;
-        var noFastclick = props.noFastclick;
-        var noFastClick = props.noFastClick;
         var tabLink = props.tabLink;
         var tabLinkActive = props.tabLinkActive;
         return Utils.classNames({
           'list-button': true,
           'tab-link': tabLink || tabLink === '',
-          'tab-link-active': tabLinkActive,
-          'no-fastclick': noFastclick || noFastClick
+          'tab-link-active': tabLinkActive
         }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
       },
 
@@ -5395,8 +5355,6 @@
       tooltip: String,
       link: [Boolean, String],
       target: String,
-      noFastclick: Boolean,
-      noFastClick: Boolean,
       after: [String, Number],
       badge: [String, Number],
       badgeColor: String,
@@ -5463,8 +5421,6 @@
       var link = props.link;
       var href = props.href;
       var target = props.target;
-      var noFastclick = props.noFastclick;
-      var noFastClick = props.noFastClick;
       var after = props.after;
       var badge = props.badge;
       var badgeColor = props.badgeColor;
@@ -5533,7 +5489,6 @@
           }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
           var linkClasses = Utils.classNames({
             'item-link': true,
-            'no-fastclick': noFastclick || noFastClick,
             'smart-select': smartSelect
           }, Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
           linkEl = _h('a', __vueComponentTransformJSXProps(Object.assign({
@@ -6541,8 +6496,6 @@
       var iconColor = props.iconColor;
       var iconSize = props.iconSize;
       var iconMaterial = props.iconMaterial;
-      var iconIon = props.iconIon;
-      var iconFa = props.iconFa;
       var iconF7 = props.iconF7;
       var iconMd = props.iconMd;
       var iconIos = props.iconIos;
@@ -6551,13 +6504,11 @@
       var iconEl;
       var iconOnlyComputed;
 
-      if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconMd || iconIos || iconAurora) {
+      if (icon || iconMaterial || iconF7 || iconMd || iconIos || iconAurora) {
         iconEl = _h(f7Icon, {
           attrs: {
             material: iconMaterial,
             f7: iconF7,
-            fa: iconFa,
-            ion: iconIon,
             icon: icon,
             md: iconMd,
             ios: iconIos,
@@ -8702,7 +8653,9 @@
             if (tag.indexOf('subnavbar') >= 0) { hasSubnavbar = true; }
 
             if (tag.indexOf('navbar') >= 0) {
-              if (child.componentOptions && child.componentOptions.propsData && 'large' in child.componentOptions.propsData && child.componentOptions.propsData.large) { hasNavbarLarge = true; }
+              if (child.componentOptions && child.componentOptions.propsData && 'large' in child.componentOptions.propsData && (child.componentOptions.propsData.large || child.componentOptions.propsData.large === '')) {
+                hasNavbarLarge = true;
+              }
             }
 
             if (typeof hasMessages === 'undefined' && tag.indexOf('messages') >= 0) { hasMessages = true; }
@@ -11868,8 +11821,6 @@
       var label = props.label;
       var icon = props.icon;
       var iconMaterial = props.iconMaterial;
-      var iconIon = props.iconIon;
-      var iconFa = props.iconFa;
       var iconF7 = props.iconF7;
       var iconMd = props.iconMd;
       var iconIos = props.iconIos;
@@ -11882,13 +11833,11 @@
       var needToggle = typeof toggle === 'undefined' ? hasChildren : toggle;
       var iconEl;
 
-      if (icon || iconMaterial || iconIon || iconFa || iconF7 || iconMd || iconIos || iconAurora) {
+      if (icon || iconMaterial || iconF7 || iconMd || iconIos || iconAurora) {
         iconEl = _h(f7Icon, {
           attrs: {
             material: iconMaterial,
             f7: iconF7,
-            fa: iconFa,
-            ion: iconIon,
             icon: icon,
             md: iconMd,
             ios: iconIos,
@@ -12368,7 +12317,9 @@
           props: Utils.extend(
             {
               f7route: options.route,
+              $f7route: options.route,
               f7router: router,
+              $f7router: router,
             },
             options.route.params,
             options.props || {}
@@ -12457,7 +12408,9 @@
           props: Utils.extend(
             {
               f7route: options.route,
+              $f7route: options.route,
               f7router: router,
+              $f7router: router,
             },
             options.route.params,
             options.props || {}
@@ -12516,7 +12469,9 @@
           props: Utils.extend(
             {
               f7route: options.route,
+              $f7route: options.route,
               f7router: router,
+              $f7router: router,
             },
             options.route.params,
             options.props || {}
@@ -12560,7 +12515,7 @@
   };
 
   /**
-   * Framework7 Vue 5.0.0-beta.12
+   * Framework7 Vue 5.0.0-beta.14
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -12568,8 +12523,14 @@
    *
    * Released under the MIT License
    *
-   * Released on: September 2, 2019
+   * Released on: September 4, 2019
    */
+
+  function f7ready(callback) {
+    f7.ready(callback);
+  }
+
+  var f7Theme = {};
 
   var Plugin = {
     name: 'phenomePlugin',
@@ -12685,36 +12646,32 @@
         },
       });
 
-      var $theme = {};
       var theme = params.theme;
-      if (theme === 'md') { $theme.md = true; }
-      if (theme === 'ios') { $theme.ios = true; }
-      if (theme === 'aurora') { $theme.aurora = true; }
+      if (theme === 'md') { f7Theme.md = true; }
+      if (theme === 'ios') { f7Theme.ios = true; }
+      if (theme === 'aurora') { f7Theme.aurora = true; }
       if (!theme || theme === 'auto') {
-        $theme.ios = !!Framework7.device.ios;
-        $theme.aurora = Framework7.device.desktop && Framework7.device.electron;
-        $theme.md = !$theme.ios && !$theme.aurora;
+        f7Theme.ios = !!Framework7.device.ios;
+        f7Theme.aurora = Framework7.device.desktop && Framework7.device.electron;
+        f7Theme.md = !f7Theme.ios && !f7Theme.aurora;
       }
       Object.defineProperty(Extend.prototype, '$theme', {
         get: function get() {
           return {
-            ios: f7.instance ? f7.instance.theme === 'ios' : $theme.ios,
-            md: f7.instance ? f7.instance.theme === 'md' : $theme.md,
-            aurora: f7.instance ? f7.instance.theme === 'aurora' : $theme.aurora,
+            ios: f7.instance ? f7.instance.theme === 'ios' : f7Theme.ios,
+            md: f7.instance ? f7.instance.theme === 'md' : f7Theme.md,
+            aurora: f7.instance ? f7.instance.theme === 'aurora' : f7Theme.aurora,
           };
         },
       });
 
-      function f7ready(callback) {
-        f7.ready(callback);
-      }
+
       Extend.prototype.Dom7 = Framework7.$;
       Extend.prototype.$$ = Framework7.$;
       Extend.prototype.$device = Framework7.device;
       Extend.prototype.$request = Framework7.request;
       Extend.prototype.$utils = Framework7.utils;
       Extend.prototype.$f7ready = f7ready;
-      Extend.prototype.$f7Ready = f7ready;
 
       Object.defineProperty(Extend.prototype, '$f7route', {
         get: function get() {

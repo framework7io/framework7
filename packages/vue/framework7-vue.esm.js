@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 5.0.0-beta.12
+ * Framework7 Vue 5.0.0-beta.14
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 2, 2019
+ * Released on: September 4, 2019
  */
 
 import f7AccordionContent from './components/accordion-content';
@@ -101,7 +101,7 @@ import f7TreeviewItem from './components/treeview-item';
 import f7Treeview from './components/treeview';
 import f7View from './components/view';
 import f7Views from './components/views';
-import Framework7Vue from './utils/plugin';
+import Framework7Vue, { f7, f7ready, theme } from './utils/plugin';
 
 export {
   f7AccordionContent,
@@ -196,5 +196,7 @@ export {
   f7View,
   f7Views
 };
+
+export { f7, f7ready, theme };
 
 export default Framework7Vue;

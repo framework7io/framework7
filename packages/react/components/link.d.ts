@@ -9,8 +9,6 @@ declare namespace F7Link {
     className? : string
     style? : React.CSSProperties
     noLinkClass? : boolean
-    noFastClick? : boolean
-    noFastclick? : boolean
     text? : string
     tabLink? : boolean | string
     tabLinkActive? : boolean
@@ -33,8 +31,6 @@ declare namespace F7Link {
     themeDark? : boolean
     icon? : string
     iconMaterial? : string
-    iconIon? : string
-    iconFa? : string
     iconF7? : string
     iconIos? : string
     iconMd? : string

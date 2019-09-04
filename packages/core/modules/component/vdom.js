@@ -2,28 +2,82 @@
 /* eslint import/no-named-as-default: "off" */
 import { window, document } from 'ssr-window';
 import h from './snabbdom/h';
+import customComponents from './custom-components';
 
 const selfClosing = 'area base br col command embed hr img input keygen link menuitem meta param source track wbr'.split(' ');
 const propsAttrs = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple value indeterminate'.split(' ');
 const booleanProps = 'hidden checked disabled readonly selected autocomplete autofocus autoplay required multiple readOnly indeterminate'.split(' ');
 const tempDom = document.createElement('div');
 
-function getHooks(data, app, initial, isRoot) {
+function toCamelCase(name) {
+  return name
+    .split('-')
+    .map((word, index) => {
+      if (index === 0) return word.toLowerCase();
+      return word[0].toUpperCase() + word.substr(1);
+    })
+    .join('');
+}
+function contextFromAttrs(...args) {
+  const context = {};
+  args.forEach((obj = {}) => {
+    Object.keys(obj).forEach((key) => {
+      context[toCamelCase(key)] = obj[key];
+    });
+  });
+
+  return context;
+}
+
+function getHooks(data, app, initial, isRoot, tagName) {
   const hooks = {};
-  if (!data || !data.attrs || !data.attrs.class) return hooks;
-  const classNames = data.attrs.class;
   const insert = [];
   const destroy = [];
   const update = [];
   const postpatch = [];
-  classNames.split(' ').forEach((className) => {
-    if (!initial) {
-      insert.push(...app.getVnodeHooks('insert', className));
-    }
-    destroy.push(...app.getVnodeHooks('destroy', className));
-    update.push(...app.getVnodeHooks('update', className));
-    postpatch.push(...app.getVnodeHooks('postpatch', className));
-  });
+  const isCustomComponent = tagName && tagName.indexOf('-') > 0 && customComponents[tagName];
+
+  if (isCustomComponent) {
+    insert.push((vnode) => {
+      if (vnode.sel !== tagName) return;
+      app.component.create(Object.assign({ el: vnode.elm }, customComponents[tagName]), contextFromAttrs(data.attrs || {}, data.props || {})).then((c) => {
+        // eslint-disable-next-line
+        vnode.elm.__component__ = c;
+      });
+    });
+    destroy.push((vnode) => {
+      // eslint-disable-next-line
+      const component = vnode && vnode.elm && vnode.elm.__component__;
+      if (component) {
+        const el = component.el;
+        if (component.$destroy) component.$destroy();
+        if (el && el.parentNode) el.parentNode.removeChild(el);
+        delete vnode.elm.__component__; // eslint-disable-line
+      }
+    });
+    update.push((oldVnode, vnode) => {
+      // eslint-disable-next-line
+      const component = vnode && vnode.elm && vnode.elm.__component__;
+      if (!component) return;
+      const newData = contextFromAttrs(vnode.data.attrs || {}, vnode.data.props || {});
+      Object.assign(component, newData);
+      component.$update();
+    });
+  }
+
+  if (!isCustomComponent) {
+    if (!data || !data.attrs || !data.attrs.class) return hooks;
+
+    const classNames = data.attrs.class;
+    classNames.split(' ').forEach((className) => {
+      if (!initial) {
+        insert.push(...app.getVnodeHooks('insert', className));
+      }
+      destroy.push(...app.getVnodeHooks('destroy', className));
+      update.push(...app.getVnodeHooks('update', className));
+      postpatch.push(...app.getVnodeHooks('postpatch', className));
+    });
+  }
 
   if (isRoot && !initial) {
     postpatch.push((oldVnode, vnode) => {
@@ -144,10 +198,8 @@ function getEventHandler(handlerString, context, { stop, prevent, once } = {}) {
   return handler;
 }
 
-function getData(el, context, app, initial, isRoot) {
-  const data = {
-    context,
-  };
+function getData(el, context, app, initial, isRoot, tagName) {
+  const data = { context };
   const attributes = el.attributes;
   Array.prototype.forEach.call(attributes, (attr) => {
     let attrName = attr.name;
@@ -209,7 +261,7 @@ function getData(el, context, app, initial, isRoot) {
       }
     }
   });
-  const hooks = getHooks(data, app, initial, isRoot);
+  const hooks = getHooks(data, app, initial, isRoot, tagName);
   hooks.prepatch = (oldVnode, vnode) => {
     if (!oldVnode || !vnode) return;
     if (oldVnode && oldVnode.data && oldVnode.data.props) {
@@ -252,22 +304,10 @@ function elementToVNode(el, context, app, initial, isRoot) {
   if (el.nodeType !== 1) return null;
   // element (statement adds inline SVG compatibility)
   const tagName = (el instanceof window.SVGElement) ? el.nodeName : el.nodeName.toLowerCase();
-  // proceed slots
-  if (tagName === 'slot' && context.$children) {
-    if (!context.$children.length) return null;
-    const children = [];
-    const slotName = el.getAttribute('name') || 'default';
-    for (let i = 0; i < context.$children.length; i += 1) {
-      const childSlotName = context.$children[i].getAttribute('slot') || 'default';
-      if (childSlotName === slotName) {
-        children.push(elementToVNode(context.$children[i], context, app, initial));
-      }
-    }
-    return children;
-  }
+
   return h(
     tagName,
-    getData(el, context, app, initial, isRoot),
+    getData(el, context, app, initial, isRoot, tagName),
     selfClosing.indexOf(tagName) >= 0 ? [] : getChildren(el, context, app, initial)
   );
 }

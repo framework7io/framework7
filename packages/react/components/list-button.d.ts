@@ -7,8 +7,6 @@ declare namespace F7ListButton {
     id? : string | number
     className? : string
     style? : React.CSSProperties
-    noFastclick? : boolean
-    noFastClick? : boolean
     title? : string | number
     text? : string | number
     tabLink? : boolean | string

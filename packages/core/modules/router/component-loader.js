@@ -34,7 +34,6 @@ export default {
             },
           }
         );
-        // const createdComponent = app.component.create(componentOptions, extendContext);
         app.component.create(componentOptions, extendContext)
           .then((createdComponent) => {
             resolve(createdComponent.el);
