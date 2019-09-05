@@ -75,6 +75,12 @@ class Calendar extends Framework7Class {
     function onInputFocus(e) {
       e.preventDefault();
     }
+    function onInputClear() {
+      calendar.setValue([]);
+      if (calendar.opened) {
+        calendar.update();
+      }
+    }
     function onHtmlClick(e) {
       const $targetEl = $(e.target);
       if (calendar.isPopover()) return;
@@ -93,12 +99,14 @@ class Calendar extends Framework7Class {
     Utils.extend(calendar, {
       attachInputEvents() {
         calendar.$inputEl.on('click', onInputClick);
+        calendar.$inputEl.on('input:clear', onInputClear);
         if (calendar.params.inputReadOnly) {
           calendar.$inputEl.on('focus mousedown', onInputFocus);
         }
       },
       detachInputEvents() {
         calendar.$inputEl.off('click', onInputClick);
+        calendar.$inputEl.off('input:clear', onInputClear);
         if (calendar.params.inputReadOnly) {
           calendar.$inputEl.off('focus mousedown', onInputFocus);
         }

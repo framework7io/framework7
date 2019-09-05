@@ -463,7 +463,10 @@ export default {
     },
     inputHasValue() {
       const self = this;
-      const { value } = self.props;
+      const { value, type } = self.props;
+      if (type === 'datepicker' && Array.isArray(value) && value.length === 0) {
+        return false;
+      }
       const domValue = self.domValue();
       return typeof value === 'undefined'
         ? (domValue || domValue === 0)
