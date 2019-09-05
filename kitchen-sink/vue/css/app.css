@@ -132,7 +132,7 @@ div.demo-lazy {
   position: absolute;
   left: 10px;
   right: 10px;
-  top: 64px;
+  top: calc(64px + var(--f7-safe-area-top));
   bottom: 0;
   background: #fff;
   z-index: 1600;
