@@ -84,6 +84,9 @@ class SmartSelect extends Framework7Class {
       const value = ss.$selectEl.val();
       ss.$el.trigger('smartselect:change', value);
       ss.emit('local::change smartSelectChange', ss, value);
+      if (ss.vl) {
+        ss.vl.clearCache();
+      }
       ss.setValueText();
     }
     ss.attachEvents = function attachEvents() {
@@ -354,10 +357,19 @@ class SmartSelect extends Framework7Class {
     if (item.isLabel) {
       itemHtml = `<li class="item-divider">${item.groupLabel}</li>`;
     } else {
+      let selected = item.selected;
+      let disabled;
+      if (ss.params.virtualList) {
+        const ssValue = ss.getValue();
+        selected = ss.multiple ? ssValue.indexOf(item.value) >= 0 : ssValue === item.value;
+        if (ss.multiple) {
+          disabled = ss.multiple && !selected && ssValue.length === parseInt(ss.maxLength, 10);
+        }
+      }
       itemHtml = `
-        <li class="${item.className || ''}">
+        <li class="${item.className || ''}${disabled ? ' disabled' : ''}">
           <label class="item-${item.inputType} item-content">
-            <input type="${item.inputType}" name="${item.inputName}" value="${item.value}" ${item.selected ? 'checked' : ''}/>
+            <input type="${item.inputType}" name="${item.inputName}" value="${item.value}" ${selected ? 'checked' : ''}/>
             <i class="icon icon-${item.inputType}"></i>
             ${item.hasMedia ? `
               <div class="item-media">
