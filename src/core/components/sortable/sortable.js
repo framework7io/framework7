@@ -173,7 +173,7 @@ const Sortable = {
       }
       if (typeof indexTo !== 'undefined' && !Number.isNaN(indexTo) && indexTo !== indexFrom) {
         $sortingEl.trigger('sortable:sort', { from: indexFrom, to: indexTo });
-        app.emit('sortableSort', $sortingEl[0], { from: indexFrom, to: indexTo });
+        app.emit('sortableSort', $sortingEl[0], { from: indexFrom, to: indexTo, el: $sortingEl[0] }, $sortableContainer[0]);
       }
 
       $insertBeforeEl = undefined;
