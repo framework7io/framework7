@@ -57,7 +57,7 @@ export default {
       xlargeInset,
       strong,
       accordionList,
-      
+
       tabs,
       tab,
       tabActive,
@@ -104,11 +104,11 @@ export default {
   methods: {
     onTabShow(el) {
       if (this.eventTargetEl !== el) return;
-      this.dispatchEvent('tabShow tab:show', el);
+      this.dispatchEvent('tabShow tab:show');
     },
     onTabHide(el) {
       if (this.eventTargetEl !== el) return;
-      this.dispatchEvent('tabHide tab:hide', el);
+      this.dispatchEvent('tabHide tab:hide');
     },
   },
 };
