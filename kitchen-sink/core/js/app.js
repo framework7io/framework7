@@ -42,3 +42,4 @@ var app = new Framework7({
     placementId: 'pltd4o7ibb9rc653x14',
   },
 });
+app.views.main.router.navigate('/text-editor/', { reloadAll: true })

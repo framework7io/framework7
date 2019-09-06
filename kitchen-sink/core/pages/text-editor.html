@@ -1,0 +1,39 @@
+<template>
+<div class="page page-about">
+  <div class="navbar">
+    <div class="navbar-bg"></div>
+    <div class="navbar-inner sliding">
+      <div class="left">
+        <a href="#" class="link back">
+          <i class="icon icon-back"></i>
+          <span class="if-not-md">Back</span>
+        </a>
+      </div>
+      <div class="title">Text Editor</div>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="text-editor text-editor-init">
+      <div class="text-editor-toolbar"></div>
+      <div class="text-editor-content" contenteditable>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius perspiciatis illum, culpa dolorem magnam fuga odio enim similique autem. Illo quas temporibus odit voluptates sit accusantium nemo obcaecati, voluptatum expedita.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+<script>
+    return {
+      methods: {
+        bold(e) {
+          e.preventDefault();
+          document.execCommand('bold', false);
+          return false;
+        },
+        exec(command, showUi, value) {
+          console.log(arguments);
+          document.execCommand(command, showUi, value);
+        }
+      }
+    }
+</script>

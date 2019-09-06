@@ -429,6 +429,10 @@ var routes = [
     ],
   },
   {
+    path: '/text-editor/',
+    componentUrl: './pages/text-editor.html'
+  },
+  {
     path: '/toast/',
     componentUrl: './pages/toast.html',
   },

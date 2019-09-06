@@ -116,6 +116,9 @@ const config = {
     // VI Video Ads
     'vi',
 
+    // WYSIWYG Editor
+    'text-editor',
+
     // Elevation
     'elevation',
 

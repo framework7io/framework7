@@ -1,0 +1,85 @@
+/* === Stepper === */
+@import url('./text-editor-vars.less');
+
+.text-editor {
+  margin: 16px;
+  background: #fff;
+  display: block;
+  position: relative;
+  border: 1px solid #eee;
+}
+.text-editor-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  background: #fff;
+  z-index: 100;
+  position: relative;
+  position: sticky;
+  left: 0;
+  top: 0;
+  padding: 6px;
+  button {
+    appearance: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    outline: 0;
+    font-family: inherit;
+    background: transparent;
+    cursor: pointer;
+    box-shadow: none;
+    border-radius: 0;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    width: auto;
+    overflow: hidden;
+    width: 28px;
+    height: 28px;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 300ms;
+    margin: 2px;
+    &.active-state {
+      opacity: 0.3;
+      transition-duration: 0ms;
+    }
+    i {
+      font-size: 20px;
+      font-style: normal;
+      sup, sub {
+        font-size: 60%;
+      }
+    }
+  }
+}
+.text-editor-toolbar-divider {
+  width: 1px;
+  background: #eee;
+  margin: 0 2px;
+}
+.text-editor-content {
+  -webkit-user-modify: read-write;
+  appearance: none;
+  border: none;
+  outline: 0;
+  background: #f1f1f1;
+  height: 300px;
+  color: #000;
+  user-select: text;
+  padding: 8px;
+  overflow: auto;
+  a {
+    pointer-events: none;
+  }
+}
+
+.if-ios-theme({
+  @import url('./text-editor-ios.less');
+});
+.if-md-theme({
+  @import url('./text-editor-md.less');
+});
+.if-aurora-theme({
+  @import url('./text-editor-aurora.less');
+});
