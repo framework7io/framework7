@@ -10,6 +10,10 @@ export default {
     animated: Boolean,
     swipeable: Boolean,
     routable: Boolean,
+    swiperParams: {
+      type: Object,
+      default: undefined,
+    },
     ...Mixins.colorProps,
   },
   render() {
@@ -32,7 +36,7 @@ export default {
 
     if (animated || swipeable) {
       return (
-        <div id={id} style={style} className={Utils.classNames(wrapClasses, classes)}>
+        <div id={id} style={style} className={Utils.classNames(wrapClasses, classes)} ref="wrapEl">
           <div className={tabsClasses}>
             <slot />
           </div>
@@ -45,5 +49,13 @@ export default {
         <slot />
       </div>
     );
+  },
+  componentDidMount() {
+    const self = this;
+    const { swipeable, swiperParams } = self.props;
+    if (!swipeable || !swiperParams) return;
+    const wrapEl = self.refs.wrapEl;
+    if (!wrapEl) return;
+    wrapEl.f7SwiperParams = swiperParams;
   },
 };

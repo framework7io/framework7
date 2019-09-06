@@ -30,6 +30,8 @@ function initSwiper(swiperEl) {
   }
   if ($swiperEl.attr('data-swiper')) {
     params = JSON.parse($swiperEl.attr('data-swiper'));
+  } else if ($swiperEl[0].f7SwiperParams) {
+    params = $swiperEl[0].f7SwiperParams;
   } else {
     params = $swiperEl.dataset();
     Object.keys(params).forEach((key) => {
@@ -48,6 +50,17 @@ function initSwiper(swiperEl) {
   }
 
   const swiper = app.swiper.create($swiperEl[0], params);
+  function updateSwiper() {
+    swiper.update();
+  }
+  $swiperEl.parents('.popup, .login-screen, .sheet-modal, .popover').on('modal:open', updateSwiper);
+  $swiperEl.parents('.panel').on('panel:open', updateSwiper);
+  $swiperEl.parents('.tab').on('tab:show', updateSwiper);
+  swiper.on('beforeDestroy', () => {
+    $swiperEl.parents('.popup, .login-screen, .sheet-modal, .popover').off('modal:open', updateSwiper);
+    $swiperEl.parents('.panel').off('panel:open', updateSwiper);
+    $swiperEl.parents('.tab').off('tab:show', updateSwiper);
+  });
   if (isTabs) {
     swiper.on('slideChange', () => {
       if (isRoutableTabs) {
