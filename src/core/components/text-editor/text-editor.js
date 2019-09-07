@@ -8,7 +8,7 @@ export default {
   params: {
     textEditor: {
       el: null,
-      type: 'toolbar', // or bubble
+      type: 'toolbar', // or 'popover'
       buttons: [
         ['bold', 'italic', 'underline', 'strikeThrough'],
         ['orderedList', 'unorderedList'],
@@ -18,6 +18,10 @@ export default {
         ['indent', 'outdent'],
       ],
       dividers: true,
+      imageUrlText: 'Insert image URL',
+      linkUrlText: 'Insert link URL',
+      placeholder: null,
+      clearFormattingOnPaste: true,
     },
   },
   create() {

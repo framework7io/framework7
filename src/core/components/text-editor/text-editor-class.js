@@ -42,27 +42,56 @@ class TextEditor extends Framework7Class {
 
     if ($el[0].f7TextEditor) return $el[0].f7TextEditor;
 
+    let $contentEl = $el.children('.text-editor-content');
+    if (!$contentEl.length) {
+      $el.append('<div class="text-editor-content" contenteditable></div>');
+      $contentEl = $el.children('.text-editor-content');
+    }
+
     Utils.extend(self, {
       app,
       $el,
       el: $el[0],
+      $contentEl,
+      contentEl: $contentEl[0],
     });
 
     $el[0].f7TextEditor = self;
 
     // Bind
     self.onButtonClick = self.onButtonClick.bind(self);
+    self.onFocus = self.onFocus.bind(self);
+    self.onBlur = self.onBlur.bind(self);
+    self.onInput = self.onInput.bind(self);
+    self.onPaste = self.onPaste.bind(self);
+    self.onSelectionChange = self.onSelectionChange.bind(self);
 
     // Handle Events
     self.attachEvents = function attachEvents() {
       if (self.params.type === 'toolbar') {
         self.$el.find('.text-editor-toolbar').on('click', 'button', self.onButtonClick);
       }
+      if (self.params.type === 'popover' && self.popover) {
+        self.popover.$el.on('click', 'button', self.onButtonClick);
+      }
+      self.$contentEl.on('paste', self.onPaste);
+      self.$contentEl.on('focus', self.onFocus);
+      self.$contentEl.on('blur', self.onBlur);
+      self.$contentEl.on('input', self.onInput);
+      $(document).on('selectionchange', self.onSelectionChange);
     };
     self.detachEvents = function detachEvents() {
       if (self.params.type === 'toolbar') {
         self.$el.find('.text-editor-toolbar').off('click', 'button', self.onButtonClick);
       }
+      if (self.params.type === 'popover' && self.popover) {
+        self.popover.$el.off('click', 'button', self.onButtonClick);
+      }
+      self.$contentEl.off('paste', self.onPaste);
+      self.$contentEl.off('focus', self.onFocus);
+      self.$contentEl.off('blur', self.onBlur);
+      self.$contentEl.off('input', self.onInput);
+      $(document).off('selectionchange', self.onSelectionChange);
     };
 
     // Install Modules
@@ -74,62 +103,191 @@ class TextEditor extends Framework7Class {
     return self;
   }
 
-  setValue() {
-
+  setValue(newValue) {
+    const self = this;
+    const currentValue = self.value;
+    if (currentValue === newValue) return;
+    self.value = newValue;
+    self.$contentEl.html(newValue);
+    self.$el.trigger('texteditor:change', self.value);
+    self.emit('local::change textEditorChange', self, self.value);
   }
 
   getValue() {
-    return this.value;
+    const self = this;
+    return self.value;
+  }
+
+  createLink() {
+    const self = this;
+    const currentSelection = window.getSelection();
+    const selectedNodes = [];
+    let $selectedLinks;
+    if (currentSelection && currentSelection.anchorNode && $(currentSelection.anchorNode).parents(self.$el).length) {
+      let anchorNode = currentSelection.anchorNode;
+      while (anchorNode) {
+        selectedNodes.push(anchorNode);
+        if (!anchorNode.nextSibling || anchorNode === currentSelection.focusNode) {
+          anchorNode = null;
+        }
+        if (anchorNode) {
+          anchorNode = anchorNode.nextSibling;
+        }
+      }
+      $selectedLinks = $(selectedNodes).closest('a').add($(selectedNodes).children('a'));
+    }
+    if ($selectedLinks && $selectedLinks.length) {
+      $selectedLinks.each((linkIndex, linkNode) => {
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(linkNode);
+        selection.removeAllRanges();
+        selection.addRange(range);
+        document.execCommand('unlink', false);
+        selection.removeAllRanges();
+      });
+      return self;
+    }
+    const currentRange = self.saveSelection();
+    if (!currentRange) return self;
+    const dialog = self.app.dialog.prompt(self.params.linkUrlText, '', (link) => {
+      if (link && link.trim().length) {
+        self.restoreSelection(currentRange);
+        document.execCommand('createLink', false, link.trim());
+      }
+    });
+    dialog.$el.find('input').focus();
+    return self;
+  }
+
+  insertImage() {
+    const self = this;
+    const currentRange = self.saveSelection();
+    if (!currentRange) return self;
+    const dialog = self.app.dialog.prompt(self.params.imageUrlText, '', (imageUrl) => {
+      if (imageUrl && imageUrl.trim().length) {
+        self.restoreSelection(currentRange);
+        document.execCommand('insertImage', false, imageUrl.trim());
+      }
+    });
+    dialog.$el.find('input').focus();
+    return self;
+  }
+
+  removePlaceholder() {
+    const self = this;
+    self.$contentEl.find('.text-editor-placeholder').remove();
+  }
+
+  insertPlaceholder() {
+    const self = this;
+    self.$contentEl.append(`<div class="text-editor-placeholder">${self.params.placeholder}</div>`);
+  }
+
+  onSelectionChange() {
+    const self = this;
+    if (self.params.type === 'toolbar') return;
+    const selection = window.getSelection();
+    const selectionIsInContent = $(selection.anchorNode).parents(self.contentEl).length;
+    if (!selectionIsInContent) return;
+
+    if (!selection.isCollapsed && selection.rangeCount) {
+      const range = selection.getRangeAt(0);
+      const rect = range.getBoundingClientRect();
+      self.openPopover(rect.x, rect.y, rect.width, rect.height);
+    } else if (selection.isCollapsed) {
+      self.closePopover();
+    }
+  }
+
+  onPaste(e) {
+    const self = this;
+    if (self.params.clearFormattingOnPaste && e.clipboardData && e.clipboardData.getData) {
+      const text = e.clipboardData.getData('text/plain');
+      e.preventDefault();
+      document.execCommand('insertText', false, text);
+    }
+  }
+
+  onInput() {
+    const self = this;
+    const value = self.$contentEl.html();
+
+    self.$el.trigger('texteditor:input');
+    self.emit('local:input textEditorInput', self);
+
+    self.value = value;
+    self.$el.trigger('texteditor:change', self.value);
+    self.emit('local::change textEditorChange', self, self.value);
+  }
+
+  onFocus() {
+    const self = this;
+    self.removePlaceholder();
+    self.$contentEl.focus();
+    self.$el.trigger('texteditor:focus');
+    self.emit('local::focus textEditorFocus', self);
+  }
+
+  onBlur() {
+    const self = this;
+    if (self.params.placeholder && self.$contentEl.html() === '') {
+      self.insertPlaceholder();
+    }
+    if (self.params.type === 'popover') {
+      const selection = window.getSelection();
+      const selectionIsInContent = $(selection.anchorNode).parents(self.contentEl).length;
+      const inPopover = document.activeElement && self.popover && $(document.activeElement).closest(self.popover.$el).length;
+      if (!inPopover && !selectionIsInContent) {
+        self.closePopover();
+      }
+    }
+    self.$el.trigger('texteditor:blur');
+    self.emit('local::blur textEditorBlur', self);
   }
 
   onButtonClick(e) {
     const self = this;
+    const selectionIsInContent = $(window.getSelection().anchorNode).parents(self.contentEl).length;
+    if (!selectionIsInContent) return;
     const button = $(e.target).closest('button').attr('data-button');
     if (!button || !textEditorButtonsMap[button]) return;
     const command = textEditorButtonsMap[button][2];
     if (command === 'createLink') {
-      const currentSelection = window.getSelection();
-      const selectedNodes = [];
-      let $selectedLinks;
-      if (currentSelection && currentSelection.anchorNode && $(currentSelection.anchorNode).parents(self.$el).length) {
-        let anchorNode = currentSelection.anchorNode;
-        while (anchorNode) {
-          selectedNodes.push(anchorNode);
-          if (!anchorNode.nextSibling || anchorNode === currentSelection.focusNode) {
-            anchorNode = null;
-          }
-          if (anchorNode) {
-            anchorNode = anchorNode.nextSibling;
-          }
-        }
-        $selectedLinks = $(selectedNodes).closest('a').add($(selectedNodes).children('a'));
-      }
-      if ($selectedLinks && $selectedLinks.length) {
-        $selectedLinks.each((linkIndex, linkNode) => {
-          const selection = window.getSelection();
-          const range = document.createRange();
-          range.selectNodeContents(linkNode);
-          selection.removeAllRanges();
-          selection.addRange(range);
-          document.execCommand('unlink', false);
-          selection.removeAllRanges();
-        });
-        return;
-      }
-      const link = window.prompt('Link please');
-      if (link && link.trim().length) {
-        document.execCommand(command, false, link.trim());
-      }
+      self.createLink();
       return;
     }
     if (command === 'insertImage') {
-      const imageUrl = window.prompt('image url please');
-      if (imageUrl && imageUrl.trim().length) {
-        document.execCommand(command, false, imageUrl.trim());
-      }
+      self.insertImage();
       return;
     }
     document.execCommand(command, false);
+  }
+
+  // eslint-disable-next-line
+  saveSelection() {
+    if (window.getSelection) {
+      const sel = window.getSelection();
+      if (sel.getRangeAt && sel.rangeCount) {
+        return sel.getRangeAt(0);
+      }
+    } else if (document.selection && document.selection.createRange) {
+      return document.selection.createRange();
+    }
+    return null;
+  }
+
+  // eslint-disable-next-line
+  restoreSelection(range) {
+    if (range) {
+      if (window.getSelection) {
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+      } else if (document.selection && range.select) {
+        range.select();
+      }
+    }
   }
 
   renderButtons() {
@@ -138,7 +296,7 @@ class TextEditor extends Framework7Class {
     function renderButton(button) {
       const iconClass = self.app.theme === 'md' ? 'material-icons' : 'f7-icons';
       const iconContent = textEditorButtonsMap[button][self.app.theme === 'md' ? 1 : 0];
-      return `<button data-button="${button}">${iconContent.indexOf('<') >= 0 ? iconContent : `<i class="${iconClass}">${iconContent}</i>`}</button>`.trim();
+      return `<button class="text-editor-button" data-button="${button}">${iconContent.indexOf('<') >= 0 ? iconContent : `<i class="${iconClass}">${iconContent}</i>`}</button>`.trim();
     }
     self.params.buttons.forEach((button, buttonIndex) => {
       if (Array.isArray(button)) {
@@ -146,7 +304,7 @@ class TextEditor extends Framework7Class {
           html += renderButton(b);
         });
         if (buttonIndex < self.params.buttons.length - 1 && self.params.dividers) {
-          html += '<div class="text-editor-toolbar-divider"></div>';
+          html += '<div class="text-editor-button-divider"></div>';
         }
       } else {
         html += renderButton(button);
@@ -155,17 +313,66 @@ class TextEditor extends Framework7Class {
     return html;
   }
 
-  render() {
+  createToolbar() {
     const self = this;
-    const buttonsHtml = self.renderButtons();
-    if (self.params.type === 'toolbar') {
-      self.$el.find('.text-editor-toolbar').html(buttonsHtml);
-    }
+    self.$el.prepend(`<div class="text-editor-toolbar">${self.renderButtons()}</div>`);
+  }
+
+  createPopover() {
+    const self = this;
+    const isDark = self.$el.closest('.theme-dark').length === 0;
+    self.popover = self.app.popover.create({
+      content: `
+        <div class="popover ${isDark ? 'theme-dark' : ''} text-editor-popover">
+          <div class="popover-inner">${self.renderButtons()}</div>
+        </div>
+      `,
+      closeByOutsideClick: false,
+      backdrop: false,
+    });
+  }
+
+  openPopover(targetX, targetY, targetWidth, targetHeight) {
+    const self = this;
+    if (!self.popover) return;
+    Object.assign(self.popover.params, {
+      targetX,
+      targetY,
+      targetWidth,
+      targetHeight,
+    });
+    clearTimeout(self.popoverTimeout);
+    self.popoverTimeout = setTimeout(() => {
+      if (!self.popover) return;
+      if (self.popover.opened) {
+        self.popover.resize();
+      } else {
+        self.popover.open();
+      }
+    }, 400);
+  }
+
+  closePopover() {
+    const self = this;
+    clearTimeout(self.popoverTimeout);
+    if (!self.popover || !self.popover.opened) return;
+    self.popoverTimeout = setTimeout(() => {
+      if (!self.popover) return;
+      self.popover.close();
+    }, 400);
   }
 
   init() {
     const self = this;
-    self.render();
+    if (self.params.placeholder && self.$contentEl.html() === '') {
+      self.insertPlaceholder();
+    }
+    if (self.params.type === 'toolbar') {
+      self.createToolbar();
+    } else if (self.params.type === 'popover') {
+      self.createPopover();
+    }
+
     self.attachEvents();
     return self;
   }
@@ -174,8 +381,12 @@ class TextEditor extends Framework7Class {
     let self = this;
     self.$el.trigger('texteditor:beforedestroy');
     self.emit('local::beforeDestroy textEditorBeforeDestroy', self);
-    delete self.$el[0].f7TextEditor;
     self.detachEvents();
+    if (self.popover) {
+      self.popover.close(false);
+      self.popover.destroy();
+    }
+    delete self.$el[0].f7TextEditor;
     Utils.deleteProps(self);
     self = null;
   }
