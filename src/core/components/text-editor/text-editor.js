@@ -8,11 +8,13 @@ export default {
   params: {
     textEditor: {
       el: null,
-      type: 'toolbar', // or 'popover'
+      mode: 'toolbar', // or 'popover'
+      value: undefined, // will use html content
       buttons: [
         ['bold', 'italic', 'underline', 'strikeThrough'],
         ['orderedList', 'unorderedList'],
         ['link', 'image'],
+        ['paragraph', 'h1', 'h2', 'h3'],
         ['alignLeft', 'alignCenter', 'alignRight', 'alignJustify'],
         ['subscript', 'superscript'],
         ['indent', 'outdent'],

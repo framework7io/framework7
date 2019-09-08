@@ -1,117 +1,140 @@
 import { Dom7Instance } from 'dom7';
 import Framework7, { CSSSelector, Framework7EventsClass, Framework7Plugin } from '../app/app-class';
 
-export namespace Stepper {
+export namespace TextEditor {
   interface Parameters {
-    /** Stepper element. HTMLElement or string with CSS selector of stepper element */
+    /** Editor element. HTMLElement or string with CSS selector of editor element */
     el: HTMLElement | CSSSelector
-    /** Stepper input element or CSS selector of input element. If not specified, will try to look for <input> inside of stepper element */
-    inputEl?: HTMLElement | CSSSelector
-    /** Minimal step between values (default 1) */
-    step?: number
-    /** Minimum value (default 0) */
-    min?: number
-    /** Maximum value (default 100) */
-    max?: number
-    /** Initial value (default 0) */
-    value?: number
-    /** When enabled, incrementing beyond maximum value sets value to minimum value; likewise, decrementing below minimum value sets value to maximum value (default false) */
-    wraps?: boolean
-    /** When enabled it will repeatedly increase/decrease values while you tap and hold plus/minus buttons (default false) */
-    autorepeat?: boolean
-    /** When enabled it will increase autorepeat ratio based on how long you hold the button (default false) */
-    autorepeatDynamic?: boolean
-    /** Stepper value element or CSS selector of this element where Stepper will insert value. If not specified, and there is no inputEl passed will try to look for <div class="stepper-value"> inside of stepper element */
-    valueEl?: HTMLElement | CSSSelector
-    /** Function to format value in required format. It accepts current value and must return new formatted value */
-    formatValue?: (value: number) => string | number
-    /**  */
-    manualInputMode?: boolean
-    /** Enables manual input mode. This mode allows to type value from keyboar and check fractional part with defined accurancy. Also, step parameter is ignored when typing in this mode */
-    decimalPoint?: number
-    /** Number of digits after dot, when in manual input mode */
-    buttonsEndInputMode?: boolean
+    /** Text editor mode: Can be "toolbar", "popover" or "keyboard-toolbar" (default "toolbar") */
+    mode?: string
+    /** Default value. Should be HTML string. If not passed then it will treat inner HTML content as default value (default undefined) */
+    value?: string
+    /** Placeholder (default null) */
+    palceholder?: string
+    /** Set of editor toolbar buttons */
+    buttons?: string[] | Array[]
+    /** Adds visual divider between buttons group (default true) */
+    dividers?: boolean
+    /** Prompt text that appears on image url request (default "Insert image URL") */
+    imageUrlText?: string
+    /** Prompt text that appears on link url request (default "Insert link URL") */
+    linkUrlText?: string
+    /** When enabled it will clear any formatting on paste from clipboard (default true) */
+    clearFormattingOnPaste?: boolean
     /** Object with events handlers.. */
     on?: {
       [event in keyof Events]? : Events[event]
     }
   }
-  interface Stepper extends Framework7EventsClass<Events> {
+  interface TextEditor extends Framework7EventsClass<Events> {
     /** Link to global app instance */
     app : Framework7
-    /** Stepper HTML element */
+    /** Editor HTML element */
     el : HTMLElement
-    /** Dom7 instance with stepper HTML element */
+    /** Dom7 instance with editor HTML element */
     $el : Dom7Instance
-    /** Stepper min value */
-    min: number
-    /** Stepper max value */
-    max: number
-    /** Stepper value */
-    value: number
-    /** Stepper input HTML element */
-    inputEl: HTMLElement
-    /** Dom7 instance with stepper input HTML element */
-    $inputEl: Dom7Instance
-    /** Stepper value container HTML element */
-    valueEl: HTMLElement
-    /** Dom7 instance with stepper value container HTML element */
-    $valueEl: HTMLElement
-    /** Stepper parameters */
+    /** Editor contenteditable content element */
+    contentEl: HTMLElement
+    /** Dom7 instance with editor contenteditable content element */
+    $contentEl: Dom7Instance
+    /** Current editor value (html string) */
+    value: string
+
+    /** Editor parameters */
     params : Parameters
-    /** Returns stepper value */
+    /** Returns editor value */
     getValue(): number
-    /** Set new stepper value */
-    setValue(value: number): Stepper
-    /** Increment stepper value, similar to clicking on its "plus" button */
-    incremenet(): Stepper
-    /** Increment stepper value, similar to clicking on its "plus" button */
-    plus(): Stepper
-    /** Decrement stepper value, similar to clicking on its "minus" button */
-    decrement(): Stepper
-    /** Decrement stepper value, similar to clicking on its "minus" button */
-    minus(): Stepper
-    /** Destroy stepper */
+    /** Set new editor value */
+    setValue(value: string): TextEditor
+    /** Returns current selection Range */
+    saveSelection(): Range
+    /** Set selection based on passed Range */
+    restoreSelection(range: Range): void
+    /** Destroy text editor */
     destroy() : void
   }
   interface Events {
-    /** Event will be triggered when stepper value has been changed. As an argument event handler receives stepper instance and stepper value */
-    change: (stepper : Stepper, value: number) => void
-    /** Event will be triggered right before Stepper instance will be destroyed. As an argument event handler receives stepper instance */
-    beforeDestroy: (stepper : Stepper) => void
+    /** Event will be triggered when editor value has been changed. As an argument event handler receives editor instance and value */
+    change: (editor : TextEditor, value: string) => void
+    /** Event will be triggered on editor's content "input" event. As an argument event handler receives editor instance */
+    input: (editor : TextEditor) => void
+    /** Event will be triggered on editor's content focus. As an argument event handler receives editor instance */
+    focus: (editor : TextEditor) => void
+    /** Event will be triggered on editor's content blur. As an argument event handler receives editor instance */
+    blur: (editor : TextEditor) => void
+    /** Event will be triggered on editor button click. As an argument event handler receives editor instance and name of the clicked button, e.g. "bold" */
+    buttonClick: (editor : TextEditor, button: string) => void
+    /** Event will be triggered when editor keyboard toolbar appears. As an argument event handler receives editor instance */
+    keyboardOpen: (editor : TextEditor) => void
+    /** Event will be triggered when editor keyboard toolbar disappears. As an argument event handler receives editor instance */
+    keyboardClose: (editor : TextEditor) => void
+    /** Event will be triggered on editor popover open. As an argument event handler receives editor instance */
+    popoverOpen: (editor : TextEditor) => void
+    /** Event will be triggered on editor popover close. As an argument event handler receives editor instance */
+    popoverClose: (editor : TextEditor) => void
+    /** Event will be triggered right before Text Editor instance will be destroyed. As an argument event handler receives Text Editor instance */
+    beforeDestroy: (editor : TextEditor) => void
   }
   interface DomEvents {
-    /** Event will be triggered when Stepper value has been changed*/
-    'stepper:change' : () => void
-    /** Event will be triggered right before Stepper instance will be destroyed */
-    'stepper:beforedestroy' : () => void
+    /** Event will be triggered when editor value has been changed. */
+    'texteditor:change': () => void
+    /** Event will be triggered on editor's content "input" event. */
+    'texteditor:input': () => void
+    /** Event will be triggered on editor's content focus.*/
+    'texteditor:focus': () => void
+    /** Event will be triggered on editor's content blur.*/
+    'texteditor:blur': () => void
+    /** Event will be triggered on editor button click. */
+    'texteditor:buttonclick': () => void
+    /** Event will be triggered when editor keyboard toolbar appears.*/
+    'texteditor:keyboardopen': () => void
+    /** Event will be triggered when editor keyboard toolbar disappears.*/
+    'texteditor:keyboardclose': () => void
+    /** Event will be triggered on editor popover open.*/
+    'texteditor:popoveropen': () => void
+    /** Event will be triggered on editor popover close.*/
+    'texteditor:popoverclose': () => void
+    /** Event will be triggered right before Text Editor instance will be destroyed.*/
+    'texteditor:beforedestroy': () => void
   }
 
   interface AppMethods {
-    stepper: {
-      /** create Stepper instance */
-      create(parameters: Parameters): Stepper
-      /** get Stepper instance by HTML element */
-      get(el: HTMLElement | CSSSelector | Stepper): Stepper
-      /** get Stepper value */
-      getValue(el: HTMLElement | CSSSelector | Stepper): number | number[]
-      /** set new Stepper value */
-      setValue(el: HTMLElement | CSSSelector | Stepper, value: number | number[]): void
-      /** destroy Stepper instance */
-      destroy(el : HTMLElement | CSSSelector | Stepper) : void
+    textEditor: {
+      /** create Text Editor instance */
+      create(parameters: Parameters): TextEditor
+      /** get Text Editor instance by HTML element */
+      get(el: HTMLElement | CSSSelector | TextEditor): TextEditor
+      /** destroy Text Editor instance */
+      destroy(el : HTMLElement | CSSSelector | TextEditor) : void
     }
   }
   interface AppParams {
-    stepper?: Parameters | undefined
+    textEditor?: Parameters | undefined
   }
   interface AppEvents {
-    /** Event will be triggered when stepper value has been changed. As an argument event handler receives stepper instance and stepper value */
-    stepperChange: (stepper : Stepper, value: number) => void
-    /** Event will be triggered right before Stepper instance will be destroyed. As an argument event handler receives stepper instance */
-    stepperBeforeDestroy: (stepper : Stepper) => void
+    /** Event will be triggered when editor value has been changed. As an argument event handler receives editor instance and value */
+    textEditorChange: (editor : TextEditor, value: string) => void
+    /** Event will be triggered on editor's content "input" event. As an argument event handler receives editor instance */
+    textEditorInput: (editor : TextEditor) => void
+    /** Event will be triggered on editor's content focus. As an argument event handler receives editor instance */
+    textEditorFocus: (editor : TextEditor) => void
+    /** Event will be triggered on editor's content blur. As an argument event handler receives editor instance */
+    textEditorBlur: (editor : TextEditor) => void
+    /** Event will be triggered on editor button click. As an argument event handler receives editor instance and name of the clicked button, e.g. "bold" */
+    textEditorButtonClick: (editor : TextEditor, button: string) => void
+    /** Event will be triggered when editor keyboard toolbar appears. As an argument event handler receives editor instance */
+    textEditorKeyboardOpen: (editor : TextEditor) => void
+    /** Event will be triggered when editor keyboard toolbar disappears. As an argument event handler receives editor instance */
+    textEditorKeyboardClose: (editor : TextEditor) => void
+    /** Event will be triggered on editor popover open. As an argument event handler receives editor instance */
+    textEditorPopoverOpen: (editor : TextEditor) => void
+    /** Event will be triggered on editor popover close. As an argument event handler receives editor instance */
+    textEditorPopoverClose: (editor : TextEditor) => void
+    /** Event will be triggered right before Text Editor instance will be destroyed. As an argument event handler receives Text Editor instance */
+    textEditorBeforeDestroy: (editor : TextEditor) => void
   }
 }
 
-declare const StepperComponent: Framework7Plugin;
+declare const TextEditorComponent: Framework7Plugin;
 
-export default StepperComponent;
+export default TextEditorComponent;
