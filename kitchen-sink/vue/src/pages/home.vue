@@ -191,6 +191,9 @@
       <f7-list-item link="/tabs/" title="Tabs">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>
+      <f7-list-item link="/text-editor/" title="Text Editor">
+        <f7-icon slot="media" icon="icon-f7"></f7-icon>
+      </f7-list-item>
       <f7-list-item link="/timeline/" title="Timeline">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>

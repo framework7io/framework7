@@ -84,6 +84,7 @@ import TabsStatic from './pages/tabs-static.vue';
 import TabsAnimated from './pages/tabs-animated.vue';
 import TabsSwipeable from './pages/tabs-swipeable.vue';
 import TabsRoutable from './pages/tabs-routable.vue';
+import TextEditor from './pages/text-editor.vue';
 import Toast from './pages/toast.vue';
 import Toggle from './pages/toggle.vue';
 import ToolbarTabbar from './pages/toolbar-tabbar.vue';
@@ -547,6 +548,10 @@ export default [
         `,
       },
     ],
+  },
+  {
+    path: '/text-editor/',
+    component: TextEditor,
   },
   {
     path: '/toast/',

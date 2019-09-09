@@ -3,6 +3,8 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 
+import F7TextEditor from './text-editor';
+
 export default {
   name: 'f7-list-input',
   props: {
@@ -86,7 +88,10 @@ export default {
 
     // Datepicker
     calendarParams: Object,
+    // Colorpicker
     colorPickerParams: Object,
+    // Text editor
+    textEditorParams: Object,
 
     // Colors
     ...Mixins.colorProps,
@@ -156,6 +161,7 @@ export default {
       label,
       inlineLabel,
       floatingLabel,
+      textEditorParams,
     } = props;
 
     const domValue = self.domValue();
@@ -292,6 +298,19 @@ export default {
         } else {
           inputEl = createInput('textarea');
         }
+      } else if (type === 'texteditor') {
+        inputEl = (
+          <F7TextEditor
+            value={value}
+            resizable={resizable}
+            placeholder={placeholder}
+            onTextEditorFocus={self.onFocus}
+            onTextEditorBlur={self.onBlur}
+            onTextEditorInput={self.onInput}
+            onTextEditorChange={self.onChange}
+            {...textEditorParams}
+          />
+        );
       } else {
         inputEl = createInput('input');
       }
@@ -542,29 +561,32 @@ export default {
     onInputClear(event) {
       this.dispatchEvent('input:clear inputClear', event);
     },
-    onInput(event) {
+    onInput(...args) {
       const self = this;
       const { validate, validateOnBlur } = self.props;
-      self.dispatchEvent('input', event);
+      self.dispatchEvent('input', ...args);
       if (!(validateOnBlur || validateOnBlur === '') && (validate || validate === '') && self.refs && self.refs.inputEl) {
         self.validateInput(self.refs.inputEl);
       }
     },
-    onFocus(event) {
-      this.dispatchEvent('focus', event);
+    onFocus(...args) {
+      this.dispatchEvent('focus', ...args);
       this.setState({ inputFocused: true });
     },
-    onBlur(event) {
+    onBlur(...args) {
       const self = this;
       const { validate, validateOnBlur } = self.props;
-      self.dispatchEvent('blur', event);
+      self.dispatchEvent('blur', ...args);
       if ((validate || validate === '' || validateOnBlur || validateOnBlur === '') && self.refs && self.refs.inputEl) {
         self.validateInput(self.refs.inputEl);
       }
       self.setState({ inputFocused: false });
     },
-    onChange(event) {
-      this.dispatchEvent('change', event);
+    onChange(...args) {
+      this.dispatchEvent('change', ...args);
+      if (this.props.type === 'texteditor') {
+        this.dispatchEvent('texteditor:change textEditorChange', args[1]);
+      }
     },
   },
 };

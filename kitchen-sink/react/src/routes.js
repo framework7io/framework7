@@ -83,6 +83,7 @@ import TabsStatic from './pages/tabs-static.jsx';
 import TabsAnimated from './pages/tabs-animated.jsx';
 import TabsSwipeable from './pages/tabs-swipeable.jsx';
 import TabsRoutable from './pages/tabs-routable.jsx';
+import TextEditor from './pages/text-editor.jsx';
 import Toast from './pages/toast.jsx';
 import Toggle from './pages/toggle.jsx';
 import ToolbarTabbar from './pages/toolbar-tabbar.jsx';
@@ -546,6 +547,10 @@ export default [
         `,
       },
     ],
+  },
+  {
+    path: '/text-editor/',
+    component: TextEditor,
   },
   {
     path: '/toast/',

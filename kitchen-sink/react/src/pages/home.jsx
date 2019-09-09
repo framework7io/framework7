@@ -199,6 +199,9 @@ export default class extends React.Component {
           <ListItem link="/tabs/" title="Tabs">
             <Icon slot="media" icon="icon-f7" />
           </ListItem>
+          <ListItem link="/text-editor/" title="Text Editor">
+            <Icon slot="media" icon="icon-f7" />
+          </ListItem>
           <ListItem link="/timeline/" title="Timeline">
             <Icon slot="media" icon="icon-f7" />
           </ListItem>
