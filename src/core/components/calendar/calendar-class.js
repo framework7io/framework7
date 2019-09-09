@@ -72,6 +72,7 @@ class Calendar extends Framework7Class {
     }
     function onHtmlClick(e) {
       const $targetEl = $(e.target);
+      if (calendar.destroyed || !calendar.params) return;
       if (calendar.isPopover()) return;
       if (!calendar.opened || calendar.closing) return;
       if ($targetEl.closest('[class*="backdrop"]').length) return;
