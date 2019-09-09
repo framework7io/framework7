@@ -13,6 +13,8 @@ export namespace TextEditor {
     palceholder?: string
     /** Set of editor toolbar buttons */
     buttons?: string[] | Array[]
+    /** Define custom buttons */
+    customButtons?: object
     /** Adds visual divider between buttons group (default true) */
     dividers?: boolean
     /** Prompt text that appears on image url request (default "Insert image URL") */
@@ -47,9 +49,9 @@ export namespace TextEditor {
     /** Set new editor value */
     setValue(value: string): TextEditor
     /** Returns current selection Range */
-    saveSelection(): Range
+    getSelectionRange(): Range
     /** Set selection based on passed Range */
-    restoreSelection(range: Range): void
+    setSelectionRange(range: Range): void
     /** Destroy text editor */
     destroy() : void
   }

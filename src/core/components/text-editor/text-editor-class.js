@@ -176,11 +176,11 @@ class TextEditor extends Framework7Class {
       });
       return self;
     }
-    const currentRange = self.saveSelection();
+    const currentRange = self.get();
     if (!currentRange) return self;
     const dialog = self.app.dialog.prompt(self.params.linkUrlText, '', (link) => {
       if (link && link.trim().length) {
-        self.restoreSelection(currentRange);
+        self.setSelectionRange(currentRange);
         document.execCommand('createLink', false, link.trim());
       }
     });
@@ -190,11 +190,11 @@ class TextEditor extends Framework7Class {
 
   insertImage() {
     const self = this;
-    const currentRange = self.saveSelection();
+    const currentRange = self.get();
     if (!currentRange) return self;
     const dialog = self.app.dialog.prompt(self.params.imageUrlText, '', (imageUrl) => {
       if (imageUrl && imageUrl.trim().length) {
-        self.restoreSelection(currentRange);
+        self.setSelectionRange(currentRange);
         document.execCommand('insertImage', false, imageUrl.trim());
       }
     });
@@ -301,10 +301,14 @@ class TextEditor extends Framework7Class {
     if (!selectionIsInContent) return;
     const $buttonEl = $(e.target).closest('button');
     const button = $buttonEl.attr('data-button');
-    if (!button || !textEditorButtonsMap[button]) return;
+    const buttonData = self.params.customButtons && self.params.customButtons[button];
+    if (!button || !(textEditorButtonsMap[button] || buttonData)) return;
     $buttonEl.trigger('texteditor:buttonclick', button);
     self.emit('local::buttonClick textEditorButtonClick', self, button);
-
+    if (buttonData) {
+      if (buttonData.onClick) buttonData.onClick();
+      return;
+    }
     const command = textEditorButtonsMap[button][2];
     if (command === 'createLink') {
       self.createLink();
@@ -328,7 +332,7 @@ class TextEditor extends Framework7Class {
   }
 
   // eslint-disable-next-line
-  saveSelection() {
+  getSelectionRange() {
     if (window.getSelection) {
       const sel = window.getSelection();
       if (sel.getRangeAt && sel.rangeCount) {
@@ -341,7 +345,7 @@ class TextEditor extends Framework7Class {
   }
 
   // eslint-disable-next-line
-  restoreSelection(range) {
+  setSelectionRange(range) {
     if (range) {
       if (window.getSelection) {
         const sel = window.getSelection();
@@ -358,6 +362,10 @@ class TextEditor extends Framework7Class {
     let html = '';
     function renderButton(button) {
       const iconClass = self.app.theme === 'md' ? 'material-icons' : 'f7-icons';
+      if (self.params.customButtons && self.params.customButtons[button]) {
+        const buttonData = self.params.customButtons[button];
+        return `<button class="text-editor-button" data-button="${button}">${buttonData.content || ''}</button>`;
+      }
       const iconContent = textEditorButtonsMap[button][self.app.theme === 'md' ? 1 : 0];
       return `<button class="text-editor-button" data-button="${button}">${iconContent.indexOf('<') >= 0 ? iconContent : `<i class="${iconClass}">${iconContent}</i>`}</button>`.trim();
     }

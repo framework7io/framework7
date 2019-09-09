@@ -10,6 +10,7 @@ export default {
       el: null,
       mode: 'toolbar', // or 'popover'
       value: undefined, // will use html content
+      customButtons: null,
       buttons: [
         ['bold', 'italic', 'underline', 'strikeThrough'],
         ['orderedList', 'unorderedList'],
