@@ -29,9 +29,9 @@ export default {
       create(options, context) {
         if (typeof options === 'function') {
           // eslint-disable-next-line
-          return new options(app, context, { isClassComponent: true });
+          return new options(app, { isClassComponent: true }, context);
         }
-        return new Component(app, context, options);
+        return new Component(app, options, context);
       },
     };
   },
