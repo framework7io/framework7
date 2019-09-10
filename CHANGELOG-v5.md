@@ -11,8 +11,19 @@ v5: Core: Device - remove needsStatusbarOverlay(), remove .statusbar …
     * New `iosTranslucentBars` parameter to enable translucent effect (blur background) on navigation bars (by default enabled)
     * New `iosTranslucentModals` parameter to enable translucent effect (blur background) on modals (Dialog, Popover, Actions) (by default enabled)
     * Most of CSS variables related to colors (especially "gray" colors) reworked to `rgba` colors to appear better on custom designs
+    * Statusbar
+      * Statusbar overlay element (`<div class="statusbar">`) and related functionality has been removed in favor of using that space by navigation bars and other elements to provide true full-screen experience and customization. Statusbar cordova's API is there as it was before.
+    * Device
+      * `.needsStatusbarOverlay()` method has been removed
+      * `.statusbar` property and detection has been removed
+      * `.iphoneX` property and detection has been removed
+      * `.windowsPhone` property and detection has been removed
+      * It doesn't set `device-ios-gt-{version}` classes on `html` element anymore
+      * It doesn't set `device-{os}-{version}` classes on `html` element anymore
     * Sheet Modal
       * In iOS theme it now has white background color by default
+    * Picker
+      * Font size on picker items became smaller in iOS and MD themes
     * Sortable
       * Sortable `sort` event data now also contain `el` property with reference to sorted item
     * Smart Select
@@ -31,8 +42,9 @@ v5: Core: Device - remove needsStatusbarOverlay(), remove .statusbar …
       * New `yearPickerMin` parameter to specify minimum available year for year picker, by default is today minus 100 years
       * New `yearPickerMax` parameter to specify maximum available year for year picker, by default is today plus 100 years
       * New time picker functionality (to select a time in addition to date) with new `timePicker` parameter (by default false)
-      * New `timePickerFormat` parameter to specify time format displayed in time selector. (default { hour: 'numeric', minute: 'numeric' }) */
+      * New `timePickerFormat` parameter to specify time format displayed in time selector. (default { hour: 'numeric', minute: 'numeric' })
       * New `timePickerPlaceholder` parameter to specify time picker placeholder text (default "Select time")
+      * Jalali calendar and `IDate` dependency removed in favor of new Intl api
     * Touch
       * Fast clicks functionality has been completely removed. Following `app.touch`' parameters are not supported anymore: `fastClicks`, `fastClicksDistanceThreshold`, `fastClicksDelayBetweenClicks` and `fastClicksExclude`
     * View/Router
@@ -147,3 +159,5 @@ v5: Core: Device - remove needsStatusbarOverlay(), remove .statusbar …
       * `backLinkText` prop renamed to `pageBackLinkText`
       * New `popupCloseLinkText` prop to specify "close" link text when it is opened as Popup or as Standalone
       * New `navbarShowCount` prop to define should it display "3 of 5" text in navbar title or not. If not specified (undefined) then it will show this text if there is more than 1 item
+    * Statusbar
+      * `Statusbar` component has been removed
