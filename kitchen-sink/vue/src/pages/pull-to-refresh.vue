@@ -51,7 +51,7 @@
       };
     },
     methods: {
-      loadMore(event, done) {
+      loadMore(done) {
         const self = this;
 
         setTimeout(() => {

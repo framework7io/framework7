@@ -48,7 +48,7 @@ export default class extends React.Component {
       </Page>
     );
   }
-  loadMore(event, done) {
+  loadMore(done) {
     const self = this;
     setTimeout(() => {
       const { items, songs, authors } = self.state;
