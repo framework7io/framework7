@@ -6,7 +6,13 @@ v5: Core: Device - remove needsStatusbarOverlay(), remove .statusbar …
 
 # [v5.0.0](https://github.com/framework7io/framework7/compare/v4.5.0...v5.0.0) - August 21, 2019
   * Core
-    * All new Rich Text Editor component 🎉
+    * All new Rich Text Editor component
+    * iOS Dark theme colors reworked to match iOS 13 dark theme colors
+    * New `iosTranslucentBars` parameter to enable translucent effect (blur background) on navigation bars (by default enabled)
+    * New `iosTranslucentModals` parameter to enable translucent effect (blur background) on modals (Dialog, Popover, Actions) (by default enabled)
+    * Most of CSS variables related to colors (especially "gray" colors) reworked to `rgba` colors to appear better on custom designs
+    * Sheet Modal
+      * In iOS theme it now has white background color by default
     * Sortable
       * Sortable `sort` event data now also contain `el` property with reference to sorted item
     * Smart Select
@@ -37,7 +43,7 @@ v5: Core: Device - remove needsStatusbarOverlay(), remove .statusbar …
       * New `popupCloseLinkText` parameter to specify "close" link text when it is opened as Popup or as Standalone
       * New `navbarShowCount` parameter to define should it display "3 of 5" text in navbar title or not. If not specified (undefined) then it will show this text if there is more than 1 ite
     * Component (previously Router Component)
-      * Now it supports async `data` method (where it must return Promise) 🎉
+      * Now it supports async `data` method (where it must return Promise)
         ```js
         export default {
           async data() {
@@ -71,7 +77,7 @@ v5: Core: Device - remove needsStatusbarOverlay(), remove .statusbar …
         }
         ```
       * It is also possible to register global mixins with new method `Framework7.registerComponentMixin(mixinName, mixin)`
-      * Now it is possible to create custom reusable components with new method `Framework7.registerComponent(tagName, component)` 🎉🎉🎉
+      * Now it is possible to create custom reusable components with new method `Framework7.registerComponent(tagName, component)`
         ```js
         Framework7.registerComponent('my-list-item', {
           data() {
