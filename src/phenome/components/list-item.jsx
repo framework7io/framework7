@@ -484,9 +484,9 @@ export default {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('swipeout:opened swipeoutOpened');
     },
-    onSwipeout(el) {
+    onSwipeout(el, progress) {
       if (this.eventTargetEl !== el) return;
-      this.dispatchEvent('swipeout');
+      this.dispatchEvent('swipeout', progress);
     },
     onAccBeforeClose(el, prevent) {
       if (this.eventTargetEl !== el) return;
