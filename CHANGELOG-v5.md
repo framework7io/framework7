@@ -1,4 +1,4 @@
-# [v5.0.0](https://github.com/framework7io/framework7/compare/v4.5.0...v5.0.0) - August 21, 2019
+# [v5.0.0](https://github.com/framework7io/framework7/compare/v4.5.0...v5.0.0)
 
 ## CSS & Theming
 
