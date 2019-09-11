@@ -1,0 +1,58 @@
+// cover
+.router-transition-cover-forward,
+.router-transition-cover-backward {
+  background: #000;
+  perspective: 1200px;
+}
+.router-transition-cover-forward {
+  .page-next {
+    animation: cover-next-to-current 400ms forwards;
+  }
+  .page-current {
+    animation: cover-current-to-prev 400ms forwards;
+  }
+}
+.router-transition-cover-backward {
+  .page-current {
+    animation: cover-current-to-next 400ms forwards;
+  }
+  .page-previous {
+    animation: cover-prev-to-current 400ms forwards;
+  }
+}
+@keyframes cover-next-to-current {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+@keyframes cover-current-to-next {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+@keyframes cover-current-to-prev {
+  from {
+    transform: translateZ(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateZ(-300px);
+    opacity: 0.5;
+  }
+}
+@keyframes cover-prev-to-current {
+  from {
+    transform: translateZ(-300px);
+    opacity: 0.5;
+  }
+  to {
+    transform: translateZ(0);
+    opacity: 1;
+  }
+}

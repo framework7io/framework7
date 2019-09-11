@@ -156,7 +156,7 @@ class Router extends Framework7Class {
     return { newNavEls, oldNavEls };
   }
 
-  animate($oldPageEl, $newPageEl, $oldNavbarEl, $newNavbarEl, direction, callback) {
+  animate($oldPageEl, $newPageEl, $oldNavbarEl, $newNavbarEl, direction, transition, callback) {
     const router = this;
     if (router.params.animateCustom) {
       router.params.animateCustom.apply(router, [$oldPageEl, $newPageEl, $oldNavbarEl, $newNavbarEl, direction, callback]);
@@ -164,6 +164,38 @@ class Router extends Framework7Class {
     }
     const dynamicNavbar = router.dynamicNavbar;
     const ios = router.app.theme === 'ios';
+    if (transition) {
+      const routerCustomTransitionClass = `router-transition-custom router-transition-${transition}-${direction}`;
+      // Animate
+      const onCustomTransitionDone = () => {
+        router.$el.removeClass(routerCustomTransitionClass);
+        if (dynamicNavbar && router.$navbarsEl.length) {
+          if ($newNavbarEl) {
+            router.$navbarsEl.prepend($newNavbarEl);
+          }
+          if ($oldNavbarEl) {
+            router.$navbarsEl.prepend($oldNavbarEl);
+          }
+        }
+        if (callback) callback();
+      };
+
+      (direction === 'forward' ? $newPageEl : $oldPageEl).animationEnd(onCustomTransitionDone);
+      if (dynamicNavbar) {
+        if ($newNavbarEl && $newPageEl) {
+          $newNavbarEl.removeClass('navbar-next navbar-previous navbar-current');
+          $newPageEl.prepend($newNavbarEl);
+        }
+        if ($oldNavbarEl && $oldPageEl) {
+          $oldNavbarEl.removeClass('navbar-next navbar-previous navbar-current');
+          $oldPageEl.prepend($oldNavbarEl);
+        }
+      }
+
+      router.$el.addClass(routerCustomTransitionClass);
+      return;
+    }
+
 
     // Router Animation class
     const routerTransitionClass = `router-transition-${direction} router-transition`;

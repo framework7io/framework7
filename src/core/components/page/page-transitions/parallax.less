@@ -1,0 +1,49 @@
+// parallax
+.router-transition-parallax-forward {
+  .page-next {
+    animation: parallax-next-to-current 400ms forwards;
+  }
+  .page-current {
+    animation: parallax-current-to-prev 400ms forwards;
+  }
+}
+.router-transition-parallax-backward {
+  .page-current {
+    animation: parallax-current-to-next 400ms forwards;
+  }
+  .page-previous {
+    animation: parallax-prev-to-current 400ms forwards;
+  }
+}
+@keyframes parallax-next-to-current {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+@keyframes parallax-current-to-next {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+@keyframes parallax-current-to-prev {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-20%);
+  }
+}
+@keyframes parallax-prev-to-current {
+  from {
+    transform: translateX(-20%);
+  }
+  to {
+    transform: translateX(-0%);
+  }
+}

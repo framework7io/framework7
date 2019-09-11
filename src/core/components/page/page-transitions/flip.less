@@ -1,0 +1,58 @@
+// flip
+.router-transition-flip-forward,
+.router-transition-flip-backward {
+  background: #000;
+  perspective: 1200px;
+  animation: flip-container 700ms forwards;
+  .page {
+    backface-visibility: hidden;
+  }
+}
+.router-transition-flip-forward {
+  .page-next {
+    animation: flip-next-to-current 700ms forwards;
+  }
+  .page-current {
+    animation: flip-current-to-prev 700ms forwards;
+  }
+}
+.router-transition-flip-backward {
+  .page-current {
+    animation: flip-current-to-next 700ms forwards;
+  }
+  .page-previous {
+    animation: flip-prev-to-current 700ms forwards;
+  }
+}
+@keyframes flip-next-to-current {
+  from {
+    transform: translateZ(-100vmax) rotateY(180deg);
+  }
+  to {
+    transform: translateZ(0px) rotateY(0deg);
+  }
+}
+@keyframes flip-current-to-next {
+  from {
+    transform: translateZ(0px) rotateY(0deg);
+  }
+  to {
+    transform: translateZ(-100vmax) rotateY(180deg);
+  }
+}
+@keyframes flip-current-to-prev {
+  from {
+    transform: translateZ(0px) rotateY(0deg);
+  }
+  to {
+    transform: translateZ(-100vmax) rotateY(-180deg);
+  }
+}
+@keyframes flip-prev-to-current {
+  from {
+    transform: translateZ(-100vmax) rotateY(-180deg);
+  }
+  to {
+    transform: translateZ(0px) rotateY(0deg);
+  }
+}

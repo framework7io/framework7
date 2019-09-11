@@ -1,0 +1,74 @@
+// dive
+.router-transition-dive-forward,
+.router-transition-dive-backward {
+  background: var(--f7-page-bg-color);
+  perspective: 1200px;
+}
+.router-transition-dive-forward {
+  .page-next {
+    animation: dive-next-to-current 400ms forwards;
+  }
+  .page-current {
+    animation: dive-current-to-prev 400ms forwards;
+  }
+}
+.router-transition-dive-backward {
+  .page-current {
+    animation: dive-current-to-next 400ms forwards;
+  }
+  .page-previous {
+    animation: dive-prev-to-current 400ms forwards;
+  }
+}
+@keyframes dive-next-to-current {
+  from {
+    opacity: 0;
+    transform: translateZ(-150px);
+  }
+  50% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(0px);
+  }
+}
+@keyframes dive-current-to-next {
+  from {
+    opacity: 1;
+    transform: translateZ(0px);
+  }
+  50% {
+    opacity: 0;
+  }
+  to {
+    opacity: 0;
+    transform: translateZ(-150px);
+  }
+}
+@keyframes dive-current-to-prev {
+  from {
+    transform: translateZ(0px);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  to {
+    opacity: 0;
+    transform: translateZ(150px);
+  }
+}
+@keyframes dive-prev-to-current {
+  from {
+    opacity: 0;
+    transform: translateZ(150px);
+  }
+  50% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(0px);
+  }
+}

@@ -1,0 +1,49 @@
+// Push
+.router-transition-push-forward {
+  .page-next {
+    animation: push-next-to-current 400ms forwards;
+  }
+  .page-current {
+    animation: push-current-to-prev 400ms forwards;
+  }
+}
+.router-transition-push-backward {
+  .page-current {
+    animation: push-current-to-next 400ms forwards;
+  }
+  .page-previous {
+    animation: push-prev-to-current 400ms forwards;
+  }
+}
+@keyframes push-next-to-current {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+@keyframes push-current-to-next {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+@keyframes push-current-to-prev {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+@keyframes push-prev-to-current {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(-0%);
+  }
+}
