@@ -41,15 +41,15 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://unlikelyit.com/" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/unlikely-it.png">
+      <a href="https://www.thoriumbuilder.com/" target="_blank">
+        <img width="160" src="https://cdn.framework7.io/i/sponsors/thorium.png">
       </a>
     </td>
   </tr>
   <tr>
     <td align="center" valign="middle">
-      <a href="https://www.thoriumbuilder.com/" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/thorium.png">
+      <a href="https://bid4papers.com/write-my-essay.html" target="_blank">
+        <img width="160" src="https://cdn.framework7.io/i/sponsors/bid4papers.png">
       </a>
     </td>
     <td align="center" valign="middle">
@@ -68,17 +68,12 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://edubirdie.com/" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/birdie.png">
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" valign="middle">
       <a href="https://blokt.com/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/blokt.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://www.activewaiter.com/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/activewaiter.png">
@@ -99,17 +94,11 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img width="160" src="https://cdn.framework7.io/i/sponsors/securcom.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="http://mytommy.com" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/tommy.png">
       </a>
     </td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
   </tr>
 </table>
 

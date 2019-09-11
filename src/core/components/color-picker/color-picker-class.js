@@ -88,6 +88,7 @@ class ColorPicker extends Framework7Class {
       self.open();
     }
     function onHtmlClick(e) {
+      if (self.destroyed || !self.params) return;
       if (self.params.openIn === 'page') return;
       const $clickTargetEl = $(e.target);
       if (!self.opened || self.closing) return;
