@@ -10,9 +10,6 @@ var routes = [
     path: '/about/',
     url: './pages/about.html',
     name: 'about',
-    options: {
-      transition: 'test',
-    }
   },
   // Right Panel pages
   {

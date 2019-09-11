@@ -41,9 +41,6 @@ var app = new Framework7({
   vi: {
     placementId: 'pltd4o7ibb9rc653x14',
   },
-  view: {
-    transition: 'fade',
-  },
   touch: {
     mdTouchRipple: false,
   },
