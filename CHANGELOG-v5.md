@@ -6,38 +6,37 @@
     * CSS and Theming
       * iOS Dark theme colors reworked to match iOS 13 dark theme colors
       * Most of CSS variables related to colors (especially "gray" colors) reworked to `rgba` colors to appear better on custom designs
-    * New iOS Translucent elements
-      * New `iosTranslucentBars` app parameter to enable translucent effect (blur background) on navigation bars (by default enabled)
-      * New `iosTranslucentModals` app parameter to enable translucent effect (blur background) on modals (Dialog, Popover, Actions) (by default enabled)
-    * New Connection API
-      * New F7 instance's `online` boolean props that is `true` when app online and `false` otherwise
-      * Now app emits `online` event when app goes online
-      * Now app emits `offline` event when app goes offline
-      * Now app emits `connection` event on app connection change
-    * CSS Breakpoints
       * New CSS breakpoints. Now there are new names for app sizes instead of `tablet-` and `desktop-` before. Now they are:
         * `xsmall` - width more than `480px`
         * `small` - width more than `568px`
         * `medium` - width more than `768px`
         * `large` - width more than `1024px`
         * `xlarge` - width more than `1200px`
-    * Grid
-      * Now it uses new breakpoint names for responsive columns classes (e.g. `tablet-50` -> `medium-50`, etc.)
-    * List
-      * Now it uses new breakpoint names for `{size}-inset` classes (e.g. `tablet-inset` -> `medium-inset`, etc.)
-      * Removed declaration for list icon default color (that could make it harder to customize)
+    * New iOS Translucent elements
+      * New `iosTranslucentBars` app parameter to enable translucent effect (blur background) on navigation bars (by default enabled)
+      * New `iosTranslucentModals` app parameter to enable translucent effect (blur background) on modals (Dialog, Popover, Actions) (by default enabled)
+    * Connection API
+      * New F7 instance's `online` boolean props that is `true` when app online and `false` otherwise
+      * Now app emits `online` event when app goes online
+      * Now app emits `offline` event when app goes offline
+      * Now app emits `connection` event on app connection change
+    * Action Sheet
+      * Now it also appears in dark when dark theme enabled
+    * Autocomplete
+      * New `popupPush` parameter - enables Autocomplete popup to push view(s) behind on open
+      * New `popupSwipeToClose` parameter - enables ability to close Autocomplete popup with swipe
     * Block
       * Now it uses new breakpoint names for `{size}-inset` classes (e.g. `tablet-inset` -> `medium-inset`, etc.)
       * Block title in iOS theme is now larger and bolder
     * Data Table
       * Removed support for `tablet-only` and `desktop-only` classes for table columns. Now it uses new breakpoint names and classes accordingly (e.g. `medium-inset`, `xlarge-inset`, etc.)
-    * Autocomplete
-      * New `popupPush` parameter - enables Autocomplete popup to push view(s) behind on open
-      * New `popupSwipeToClose` parameter - enables ability to close Autocomplete popup with swipe
     * Dialog
       * Now it also appears in dark when dark theme enabled
-    * Action Sheet
-      * Now it also appears in dark when dark theme enabled
+    * Grid
+      * Now it uses new breakpoint names for responsive columns classes (e.g. `tablet-50` -> `medium-50`, etc.)
+    * List
+      * Now it uses new breakpoint names for `{size}-inset` classes (e.g. `tablet-inset` -> `medium-inset`, etc.)
+      * Removed declaration for list icon default color (that could make it harder to customize)
     * Statusbar
       * Statusbar overlay element (`<div class="statusbar">`) and related functionality has been removed in favor of using that space by navigation bars and other elements to provide true full-screen experience and customization. Statusbar cordova's API is there as it was before.
     * Device API
@@ -187,7 +186,6 @@
       * Subnavbar's title element (`<div class="title">`) now should be used with class `subnavbar-title` instead (`<div class="subnavbar-title">`)
     * Toolbar
       * Tabbar labels size increased in iOS theme
-
     * Component (previously Router Component)
       * Now it supports async `data` method (where it must return Promise)
         ```js
