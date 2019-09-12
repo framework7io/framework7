@@ -43,6 +43,9 @@
   * Root (first) detail page (in master-detail layout) will now have extra `page-master-detail-root`
   * Root (first) detail navbar (in master-detail layout) will now have extra `navbar-master-detail-root`.
   * Route declaration now supports new `viewName` property. And whatever View such route requested, it will be loaded in View specified in `viewName` property.
+  * Added custom page transitions support and 8 new page transitions: `f7-circle`, `f7-cover`, `f7-cover-v`, `f7-dive`, `f7-fade`, `f7-flip`, `f7-parallax`, `f7-push`
+  * Route declaration now supports new `options.transition` string property to specify custom transition for this route
+  * Custom transition can now also be specified via `data-transition` attribute on links
 
 ## Core Components
 
@@ -326,6 +329,8 @@
 * **Block**
   * `tabletInset` prop has been removed
   * New inset props to reflect new breakpoint names: `xsmallInset`, `smallInset`, `mediumInset`, `largeInset`, `xlargeInset`
+* **Button**
+  * New `transition` (string) prop to specify custom page transition name for list link
 * **Grid**
   * `Col` component now uses new breakpoint names for responsive size props. So there are new props instead of `tabletWidth` and `desktopWidth`: `xsmall`, `small`, `medium`, `large`, `xlarge`.
     ```html
@@ -334,6 +339,8 @@
 * **Icon**
   * `size` prop will also set element `width` and `height` in addition to just `font-size` (like before)
   * Removed support for Font Awesome and Ionic icons, props `fa` and `ion` and not supported anymore
+* **Link**
+  * New `transition` (string) prop to specify custom page transition name for list link
 * **List**
   * Sortable `sort` event data now also contain `el` property with reference to sorted item
   * Sortable `sort` event data now contains `sortableData` property as first argument
@@ -342,6 +349,7 @@
 * **ListItem**
   * `accordionBeforeOpen`, `accordionBeforeClose` events now contain `prevent` method as first argument
   * `swipeout` event now contains swipeout `progress` as first argument
+  * New `transition` (string) prop to specify custom page transition name for list link
 * **ListInput/Input**
   * Support for new `type="texteditor"` prop to make it appear as Text Editor
   * New `textEditorParams` prop to specify text editor parameters
