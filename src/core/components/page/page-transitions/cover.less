@@ -1,42 +1,52 @@
-// cover
-.router-transition-cover-forward,
-.router-transition-cover-backward {
+// f7-cover
+.router-transition-f7-cover-forward,
+.router-transition-f7-cover-backward {
   background: #000;
   perspective: 1200px;
 }
-.router-transition-cover-forward {
+.router-transition-f7-cover-forward {
   .page-next {
-    animation: cover-next-to-current 400ms forwards;
+    animation: f7-cover-next-to-current 450ms forwards;
   }
   .page-current {
-    animation: cover-current-to-prev 400ms forwards;
+    animation: f7-cover-current-to-prev 450ms forwards;
   }
 }
-.router-transition-cover-backward {
+.router-transition-f7-cover-backward {
   .page-current {
-    animation: cover-current-to-next 400ms forwards;
+    animation: f7-cover-current-to-next 450ms forwards;
   }
   .page-previous {
-    animation: cover-prev-to-current 400ms forwards;
+    animation: f7-cover-prev-to-current 450ms forwards;
   }
 }
-@keyframes cover-next-to-current {
+@keyframes f7-cover-next-to-current {
   from {
-    transform: translateX(100%);
+    .ltr({
+      transform: translateX(100%);
+    });
+    .rtl({
+      transform: translateX(-100%);
+    });
   }
   to {
     transform: translateX(0%);
   }
 }
-@keyframes cover-current-to-next {
+@keyframes f7-cover-current-to-next {
   from {
     transform: translateX(0%);
   }
   to {
-    transform: translateX(100%);
+    .ltr({
+      transform: translateX(100%);
+    });
+    .rtl({
+      transform: translateX(-100%);
+    });
   }
 }
-@keyframes cover-current-to-prev {
+@keyframes f7-cover-current-to-prev {
   from {
     transform: translateZ(0);
     opacity: 1;
@@ -46,7 +56,7 @@
     opacity: 0.5;
   }
 }
-@keyframes cover-prev-to-current {
+@keyframes f7-cover-prev-to-current {
   from {
     transform: translateZ(-300px);
     opacity: 0.5;

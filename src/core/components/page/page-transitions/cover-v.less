@@ -1,0 +1,58 @@
+// f7-cover-v
+.router-transition-f7-cover-v-forward,
+.router-transition-f7-cover-v-backward {
+  background: #000;
+  perspective: 1200px;
+}
+.router-transition-f7-cover-v-forward {
+  .page-next {
+    animation: f7-cover-v-next-to-current 450ms forwards;
+  }
+  .page-current {
+    animation: f7-cover-v-current-to-prev 450ms forwards;
+  }
+}
+.router-transition-f7-cover-v-backward {
+  .page-current {
+    animation: f7-cover-v-current-to-next 450ms forwards;
+  }
+  .page-previous {
+    animation: f7-cover-v-prev-to-current 450ms forwards;
+  }
+}
+@keyframes f7-cover-v-next-to-current {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+@keyframes f7-cover-v-current-to-next {
+  from {
+    transform: translateY(0%);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+@keyframes f7-cover-v-current-to-prev {
+  from {
+    transform: translateZ(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateZ(-300px);
+    opacity: 0.5;
+  }
+}
+@keyframes f7-cover-v-prev-to-current {
+  from {
+    transform: translateZ(-300px);
+    opacity: 0.5;
+  }
+  to {
+    transform: translateZ(0);
+    opacity: 1;
+  }
+}

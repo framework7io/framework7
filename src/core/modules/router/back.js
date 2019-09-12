@@ -424,6 +424,12 @@ function backward(el, backwardOptions) {
       delete $oldPage[0].f7PageTransition;
     }
     if (options.transition) transition = options.transition;
+    if (!transition && router.previousRoute && router.previousRoute.route) {
+      transition = router.previousRoute.route.transition;
+    }
+    if (!transition && router.previousRoute && router.previousRoute.route && router.previousRoute.route.options) {
+      transition = router.previousRoute.route.options.transition;
+    }
     setPositionClasses();
     router.animate($oldPage, $newPage, $oldNavbarEl, $newNavbarEl, 'backward', transition, () => {
       afterAnimation();

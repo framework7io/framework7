@@ -119,6 +119,8 @@ export namespace Router {
     force?: boolean
     /** pass React/Vue component props */
     props?: object
+    /** custom page transition name */
+    transition?: string
   }
   interface NavigateParameters {
     query?: { [ queryParameter : string ] : number | string | undefined }

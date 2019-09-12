@@ -1,26 +1,26 @@
-// dive
-.router-transition-dive-forward,
-.router-transition-dive-backward {
+// f7-dive
+.router-transition-f7-dive-forward,
+.router-transition-f7-dive-backward {
   background: var(--f7-page-bg-color);
   perspective: 1200px;
 }
-.router-transition-dive-forward {
+.router-transition-f7-dive-forward {
   .page-next {
-    animation: dive-next-to-current 400ms forwards;
+    animation: f7-dive-next-to-current 500ms forwards;
   }
   .page-current {
-    animation: dive-current-to-prev 400ms forwards;
+    animation: f7-dive-current-to-prev 500ms forwards;
   }
 }
-.router-transition-dive-backward {
+.router-transition-f7-dive-backward {
   .page-current {
-    animation: dive-current-to-next 400ms forwards;
+    animation: f7-dive-current-to-next 500ms forwards;
   }
   .page-previous {
-    animation: dive-prev-to-current 400ms forwards;
+    animation: f7-dive-prev-to-current 500ms forwards;
   }
 }
-@keyframes dive-next-to-current {
+@keyframes f7-dive-next-to-current {
   from {
     opacity: 0;
     transform: translateZ(-150px);
@@ -33,7 +33,7 @@
     transform: translateZ(0px);
   }
 }
-@keyframes dive-current-to-next {
+@keyframes f7-dive-current-to-next {
   from {
     opacity: 1;
     transform: translateZ(0px);
@@ -46,7 +46,7 @@
     transform: translateZ(-150px);
   }
 }
-@keyframes dive-current-to-prev {
+@keyframes f7-dive-current-to-prev {
   from {
     transform: translateZ(0px);
     opacity: 1;
@@ -59,7 +59,7 @@
     transform: translateZ(150px);
   }
 }
-@keyframes dive-prev-to-current {
+@keyframes f7-dive-prev-to-current {
   from {
     opacity: 0;
     transform: translateZ(150px);

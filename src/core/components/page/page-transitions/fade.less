@@ -1,25 +1,26 @@
 // fade
-.router-transition-fade-forward,
-.router-transition-fade-backward {
+.router-transition-f7-fade-forward,
+.router-transition-f7-fade-backward {
   background: var(--f7-page-bg-color);
 }
-.router-transition-fade-forward {
+.router-transition-f7-fade-forward {
   .page-next {
-    animation: fade-in 400ms forwards;
+    opacity: 0 !important;
+    animation: f7-fade-in 500ms forwards;
   }
   .page-current {
-    animation: fade-out 400ms forwards;
+    animation: f7-fade-out 500ms forwards;
   }
 }
-.router-transition-fade-backward {
+.router-transition-f7-fade-backward {
   .page-current {
-    animation: fade-out 400ms forwards;
+    animation: f7-fade-out 500ms forwards;
   }
   .page-previous {
-    animation: fade-in 400ms forwards;
+    animation: f7-fade-in 500ms forwards;
   }
 }
-@keyframes fade-in {
+@keyframes f7-fade-in {
   from {
     opacity: 0;
   }
@@ -30,7 +31,7 @@
     opacity: 1;
   }
 }
-@keyframes fade-out {
+@keyframes f7-fade-out {
   from {
     opacity: 1;
   }

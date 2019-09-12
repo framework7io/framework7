@@ -137,6 +137,8 @@ export namespace View {
     pushStateSeparator?: string
     /**	Disable to ignore parsing push state URL and loading page on app load */
     pushStateOnLoad?: boolean
+    /** Custom page transition effect name */
+    transition?: string
     /** Object with events handlers.. */
     on?: {
       [event in keyof Events]? : Events[event]

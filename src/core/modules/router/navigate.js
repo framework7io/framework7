@@ -528,6 +528,12 @@ function forward(el, forwardOptions = {}) {
     const delay = router.params[`${router.app.theme}PageLoadDelay`];
     let transition = router.params.transition;
     if (options.transition) transition = options.transition;
+    if (!transition && router.currentRoute && router.currentRoute.route) {
+      transition = router.currentRoute.route.transition;
+    }
+    if (!transition && router.currentRoute && router.currentRoute.route.options) {
+      transition = router.currentRoute.route.options.transition;
+    }
     if (transition) {
       $newPage[0].f7PageTransition = transition;
     }
