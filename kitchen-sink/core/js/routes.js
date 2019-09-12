@@ -505,6 +505,16 @@ var routes = [
     componentUrl: './pages/color-themes.html',
   },
 
+  // Effects
+  {
+    path: '/page-transitions/',
+    componentUrl: './pages/page-transitions.html',
+  },
+  {
+    path: '/page-transitions/:effect',
+    componentUrl: './pages/page-transitions-effect.html',
+  },
+
   // Page Loaders
   {
     path: '/page-loader-template7/:user/:userId/:posts/:postId/',

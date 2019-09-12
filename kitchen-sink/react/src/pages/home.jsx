@@ -236,6 +236,7 @@ export default class extends React.Component {
         </List>
         <BlockTitle medium className="searchbar-hide-on-search">Page Loaders & Router</BlockTitle>
         <List className="searchbar-hide-on-search">
+          <ListItem title="Page Transitions" link="/page-transitions/"></ListItem>
           <ListItem title="Routable Modals" link="/routable-modals/"></ListItem>
           <ListItem title="Default Route (404)" link="/load-something-that-doesnt-exist/"></ListItem>
           <ListItem title="Master-Detail (Split View)" link="/master-detail/"></ListItem>

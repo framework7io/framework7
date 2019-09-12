@@ -100,6 +100,9 @@ import Treeview from './pages/treeview.jsx';
 import VirtualList from './pages/virtual-list.jsx';
 import ColorThemes from './pages/color-themes.jsx';
 
+import PageTransitions from './pages/page-transitions.jsx';
+import PageTransitionsEffect from './pages/page-transitions-effect.jsx';
+
 import RoutableModals from './pages/routable-modals.jsx';
 import RoutablePopup from './pages/routable-popup.jsx';
 import RoutableActions from './pages/routable-actions.jsx';
@@ -615,6 +618,16 @@ export default [
   {
     path: '/color-themes/',
     component: ColorThemes,
+  },
+
+  // Page Transitions
+  {
+    path: '/page-transitions/',
+    component: PageTransitions,
+  },
+  {
+    path: '/page-transitions/:effect/',
+    component: PageTransitionsEffect,
   },
 
   // Routable Modals
