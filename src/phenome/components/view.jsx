@@ -67,6 +67,7 @@ export default {
     pushStateOnLoad: Boolean,
     // Animate Pages
     animate: Boolean,
+    transition: String,
     // iOS Dynamic Navbar
     iosDynamicNavbar: Boolean,
     iosSeparateDynamicNavbar: Boolean,

@@ -43,6 +43,8 @@ export namespace View {
     allowDuplicateUrls?: boolean
     /**	Enables transitions between pages */
     animate?: boolean
+    /** Custom page transition effect name */
+    transition?: string
     /**	Enable/disable preloading of previous page when you go deep in navigation. Should be enabled for correct work of "swipe back page" feature. */
     preloadPreviousPage?: boolean
     /**	When enabled, View will always reload currently active page without loading new one */
@@ -137,8 +139,6 @@ export namespace View {
     pushStateSeparator?: string
     /**	Disable to ignore parsing push state URL and loading page on app load */
     pushStateOnLoad?: boolean
-    /** Custom page transition effect name */
-    transition?: string
     /** Object with events handlers.. */
     on?: {
       [event in keyof Events]? : Events[event]
