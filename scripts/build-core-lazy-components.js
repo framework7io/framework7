@@ -16,7 +16,7 @@ const autoprefixer = require('./utils/autoprefixer');
 const cleanCSS = require('./utils/clean-css');
 const getConfig = require('./get-core-config.js');
 const getOutput = require('./get-output.js');
-const coreComponents = require('./core-components');
+const coreComponents = require('./core-components-list');
 const fs = require('./utils/fs-extra');
 
 const intro = `
@@ -64,6 +64,7 @@ async function buildLazyComponentsLess(components, rtl, cb) {
   const includeMdTheme = config.themes.indexOf('md') >= 0;
   const includeAuroraTheme = config.themes.indexOf('aurora') >= 0;
   const includeDarkTheme = config.darkTheme;
+  const includeLightTheme = config.lightTheme;
 
   const mainLess = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.less'))
     .split('\n')
@@ -75,6 +76,7 @@ async function buildLazyComponentsLess(components, rtl, cb) {
     .replace('$includeMdTheme', includeMdTheme)
     .replace('$includeAuroraTheme', includeAuroraTheme)
     .replace('$includeDarkTheme', includeDarkTheme)
+    .replace('$includeLightTheme', includeLightTheme)
     .replace('$themeColor', config.themeColor)
     .replace('$colors', colors)
     .replace('$rtl', rtl);

@@ -1,5 +1,4 @@
 :root {
-  --f7-messages-content-bg-color: #fff;
   --f7-message-text-header-text-color: inherit;
   --f7-message-text-header-opacity: 0.65;
   --f7-message-text-header-font-size: 12px;
@@ -11,15 +10,18 @@
   --f7-message-footer-font-size: 11px;
   --f7-message-name-font-size: 12px;
   --f7-message-name-font-weight: inherit;
-  --f7-message-typing-indicator-bg-color: #000;
   --f7-message-avatar-border-radius: 50%;
   --f7-messages-title-font-weight: inherit;
   /*
   --f7-message-sent-bg-color: var(--f7-theme-color);
   */
   --f7-message-sent-text-color: #fff;
-  --f7-message-received-bg-color: #e5e5ea;
-  --f7-message-received-text-color: #000;
+  .light-vars({
+    --f7-messages-content-bg-color: #fff;
+    --f7-message-typing-indicator-bg-color: #000;
+    --f7-message-received-bg-color: #e5e5ea;
+    --f7-message-received-text-color: #000;
+  });
   .dark-vars({
     --f7-messages-content-bg-color: transparent;
     --f7-message-received-bg-color: #333;
@@ -43,11 +45,7 @@
   --f7-message-typing-indicator-opacity: 0.35;
 });
 .md-vars({
-  --f7-messages-title-text-color: rgba(0,0,0,.51);
   --f7-messages-title-font-size: 12px;
-  --f7-message-header-text-color: rgba(0,0,0,.51);
-  --f7-message-footer-text-color: rgba(0,0,0,.51);
-  --f7-message-name-text-color: rgba(0,0,0,.51);
   --f7-message-avatar-size: 32px;
   --f7-message-margin: 16px;
   --f7-message-bubble-min-height: 32px;
@@ -56,6 +54,12 @@
   --f7-message-bubble-padding-vertical: 6px;
   --f7-message-bubble-padding-horizontal: 8px;
   --f7-message-typing-indicator-opacity: 0.6;
+  .light-vars({
+    --f7-messages-title-text-color: rgba(0,0,0,.51);
+    --f7-message-header-text-color: rgba(0,0,0,.51);
+    --f7-message-footer-text-color: rgba(0,0,0,.51);
+    --f7-message-name-text-color: rgba(0,0,0,.51);
+  });
   .dark-vars({
     --f7-messages-title-text-color: rgba(255,255,255,0.54);
     --f7-message-header-text-color: rgba(255,255,255,0.54);
@@ -64,11 +68,7 @@
   });
 });
 .aurora-vars({
-  --f7-messages-title-text-color: rgba(0,0,0,.51);
   --f7-messages-title-font-size: 12px;
-  --f7-message-header-text-color: rgba(0,0,0,.51);
-  --f7-message-footer-text-color: rgba(0,0,0,.51);
-  --f7-message-name-text-color: rgba(0,0,0,.51);
   --f7-message-avatar-size: 24px;
   --f7-message-margin: 10px;
   --f7-message-bubble-min-height: 28px;
@@ -78,6 +78,12 @@
   --f7-message-bubble-padding-vertical: 5px;
   --f7-message-bubble-padding-horizontal: 10px;
   --f7-message-typing-indicator-opacity: 0.5;
+  .light-vars({
+    --f7-messages-title-text-color: rgba(0,0,0,.51);
+    --f7-message-header-text-color: rgba(0,0,0,.51);
+    --f7-message-footer-text-color: rgba(0,0,0,.51);
+    --f7-message-name-text-color: rgba(0,0,0,.51);
+  });
   .dark-vars({
     --f7-messages-title-text-color: rgba(255,255,255,0.54);
     --f7-message-header-text-color: rgba(255,255,255,0.54);

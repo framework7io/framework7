@@ -20,6 +20,7 @@ function copyLess(config, components, cb) {
   const includeMdTheme = config.themes.indexOf('md') >= 0;
   const includeAuroraTheme = config.themes.indexOf('aurora') >= 0;
   const includeDarkTheme = config.darkTheme;
+  const includeLightTheme = config.lightTheme;
   const rtl = config.rtl;
 
   // Core LESS
@@ -30,6 +31,7 @@ function copyLess(config, components, cb) {
     .replace('$includeMdTheme', includeMdTheme)
     .replace('$includeAuroraTheme', includeAuroraTheme)
     .replace('$includeDarkTheme', includeDarkTheme)
+    .replace('$includeLightTheme', includeLightTheme)
     .replace('$colors', colors)
     .replace('$themeColor', config.themeColor)
     .replace('$rtl', rtl);
@@ -51,6 +53,7 @@ async function buildBundle(config, components, themes, rtl, cb) {
   const includeMdTheme = themes.indexOf('md') >= 0;
   const includeAuroraTheme = themes.indexOf('aurora') >= 0;
   const includeDarkTheme = config.darkTheme;
+  const includeLightTheme = config.lightTheme;
   const outputFileName = `framework7.bundle${rtl ? '.rtl' : ''}`;
   const output = `${getOutput()}/core`;
 
@@ -61,6 +64,7 @@ async function buildBundle(config, components, themes, rtl, cb) {
     .replace('$includeMdTheme', includeMdTheme)
     .replace('$includeAuroraTheme', includeAuroraTheme)
     .replace('$includeDarkTheme', includeDarkTheme)
+    .replace('$includeLightTheme', includeLightTheme)
     .replace('$colors', colors)
     .replace('$themeColor', config.themeColor)
     .replace('$rtl', rtl);
@@ -99,6 +103,7 @@ async function buildCore(themes, rtl, cb) {
   const includeMdTheme = themes.indexOf('md') >= 0;
   const includeAuroraTheme = themes.indexOf('aurora') >= 0;
   const includeDarkTheme = config.darkTheme;
+  const includeLightTheme = config.lightTheme;
   const output = `${getOutput()}/core`;
   const colors = `{\n${Object.keys(config.colors).map(colorName => `  ${colorName}: ${config.colors[colorName]};`).join('\n')}\n}`;
 
@@ -109,6 +114,7 @@ async function buildCore(themes, rtl, cb) {
     .replace('$includeMdTheme', includeMdTheme)
     .replace('$includeAuroraTheme', includeAuroraTheme)
     .replace('$includeDarkTheme', includeDarkTheme)
+    .replace('$includeLightTheme', includeLightTheme)
     .replace('$colors', colors)
     .replace('$themeColor', config.themeColor)
     .replace('$rtl', rtl);

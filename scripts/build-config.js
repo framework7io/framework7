@@ -126,6 +126,7 @@ const config = {
     'typography',
   ],
   darkTheme: true,
+  lightTheme: true,
   themes: [
     'ios',
     'md',

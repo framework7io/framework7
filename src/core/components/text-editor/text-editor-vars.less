@@ -1,22 +1,24 @@
 :root {
-  --f7-text-editor-text-color: #000;
   --f7-text-editor-font-size: inherit;
   --f7-text-editor-font-weight: inherit;
-  --f7-text-editor-bg-color: #fff;
-  --f7-text-editor-border-color: rgba(0,0,0,0.1);
   --f7-text-editor-border-width: 1px;
-  --f7-text-editor-toolbar-bg-color: #fff;
   --f7-text-editor-height: 250px;
   --f7-text-editor-margin: 16px;
   --f7-text-editor-padding: 8px;
-  --f7-text-editor-button-text-color: #333;
   --f7-text-editor-button-bg-color: transparent;
   --f7-text-editor-button-size: 28px;
   --f7-text-editor-button-icon-size: 20px;
   --f7-text-editor-button-margin: 2px;
-  --f7-text-editor-button-divider-color: rgba(0,0,0,0.15);
   --f7-text-editor-button-border-radius: 2px;
-  --f7-text-editor-placeholder-color: rgba(0,0,0,0.35);
+  .light-vars({
+    --f7-text-editor-text-color: #000;
+    --f7-text-editor-bg-color: #fff;
+    --f7-text-editor-border-color: rgba(0,0,0,0.1);
+    --f7-text-editor-toolbar-bg-color: #fff;
+    --f7-text-editor-button-text-color: #333;
+    --f7-text-editor-button-divider-color: rgba(0,0,0,0.15);
+    --f7-text-editor-placeholder-color: rgba(0,0,0,0.35);
+  });
   .dark-vars({
     --f7-text-editor-bg-color: #121212;
     --f7-text-editor-border-color: rgba(255,255,255,0.1);
@@ -29,7 +31,9 @@
 }
 .ios-vars({
   --f7-text-editor-toolbar-padding: 6px;
-  --f7-text-editor-toolbar-border-color: rgba(0,0,0,0.25);
+  .light-vars({
+    --f7-text-editor-toolbar-border-color: rgba(0,0,0,0.25);
+  });
   .dark-vars({
     --f7-text-editor-toolbar-bg-color: #121212;
     --f7-text-editor-toolbar-border-color: rgba(255,255,255,0.1);
@@ -41,7 +45,9 @@
 });
 .aurora-vars({
   --f7-text-editor-toolbar-padding: 3px;
-  --f7-text-editor-toolbar-border-color: rgba(0,0,0,0.25);
+  .light-vars({
+    --f7-text-editor-toolbar-border-color: rgba(0,0,0,0.25);
+  });
   .dark-vars({
     --f7-text-editor-toolbar-border-color: rgba(255,255,255,0.1);
   });

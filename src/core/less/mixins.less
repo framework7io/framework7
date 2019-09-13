@@ -52,8 +52,15 @@
   }
 }
 .dark-vars(@ruleset) {
-  & when (@includeAuroraTheme) {
+  & when (@includeDarkTheme) {
     .theme-dark, &.theme-dark {
+      @ruleset();
+    }
+  }
+}
+.light-vars(@ruleset) {
+  & when (@includeLightTheme) {
+    & {
       @ruleset();
     }
   }
