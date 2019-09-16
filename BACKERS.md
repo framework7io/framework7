@@ -150,7 +150,6 @@ Josué Marinho<br>
 Will Mero<br>
 Jorge Pagano<br>
 Jacob Gur<br>
-Daniel Gonzalez<br>
 Yaroslav Ermolaev<br>
 Matthew Proctor<br>
 Andy Fuchs<br>
