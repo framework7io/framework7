@@ -66,7 +66,7 @@
     "acorn-jsx": "^5.0.1",
     "autoprefixer": "^9.6.0",
     "clean-css": "^4.2.1",
-    "cross-env": "^5.2.0",
+    "cross-env": "^6.0.0",
     "eslint": "^6.0.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.18.0",
