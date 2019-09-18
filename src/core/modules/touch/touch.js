@@ -31,6 +31,9 @@ function initTouch() {
   function findActivableElement(el) {
     const target = $(el);
     const parents = target.parents(params.activeStateElements);
+    if (target.closest('.no-active-state').length) {
+      return null;
+    }
     let activable;
     if (target.is(params.activeStateElements)) {
       activable = target;
@@ -136,12 +139,16 @@ function initTouch() {
 
   // Mouse Handlers
   function handleMouseDown(e) {
-    findActivableElement(e.target).addClass('active-state');
-    if ('which' in e && e.which === 3) {
-      setTimeout(() => {
-        $('.active-state').removeClass('active-state');
-      }, 0);
+    const $activableEl = findActivableElement(e.target);
+    if ($activableEl) {
+      $activableEl.addClass('active-state');
+      if ('which' in e && e.which === 3) {
+        setTimeout(() => {
+          $('.active-state').removeClass('active-state');
+        }, 0);
+      }
     }
+
     if (useRipple) {
       touchStartX = e.pageX;
       touchStartY = e.pageY;
@@ -204,9 +211,9 @@ function initTouch() {
 
     if (params.activeState) {
       activableElement = findActivableElement(targetElement);
-      if (!isInsideScrollableView(activableElement)) {
+      if (activableElement && !isInsideScrollableView(activableElement)) {
         addActive();
-      } else {
+      } else if (activableElement) {
         activeTimeout = setTimeout(addActive, 80);
       }
     }
