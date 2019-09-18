@@ -255,8 +255,8 @@ export default {
       f7.on('pageMasterUnstack', self.onPageMasterUnstack);
       f7.on('pageNavbarLargeCollapsed', self.onPageNavbarLargeCollapsed);
       f7.on('pageNavbarLargeExpanded', self.onPageNavbarLargeExpanded);
-      f7.on('card:opened', self.onCardOpened);
-      f7.on('card:close', self.onCardClose);
+      f7.on('cardOpened', self.onCardOpened);
+      f7.on('cardClose', self.onCardClose);
     });
   },
 
@@ -280,8 +280,8 @@ export default {
     f7.off('pageMasterUnstack', self.onPageMasterUnstack);
     f7.off('pageNavbarLargeCollapsed', self.onPageNavbarLargeCollapsed);
     f7.off('pageNavbarLargeExpanded', self.onPageNavbarLargeExpanded);
-    f7.off('card:opened', self.onCardOpened);
-    f7.off('card:close', self.onCardClose);
+    f7.off('cardOpened', self.onCardOpened);
+    f7.off('cardClose', self.onCardClose);
     self.eventTargetEl = null;
     delete self.eventTargetEl;
   },

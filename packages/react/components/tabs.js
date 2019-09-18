@@ -7,6 +7,7 @@ import __reactComponentSetProps from '../runtime-helpers/react-component-set-pro
 class F7Tabs extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.__reactRefs = {};
   }
 
   render() {
@@ -34,7 +35,10 @@ class F7Tabs extends React.Component {
       return React.createElement('div', {
         id: id,
         style: style,
-        className: Utils.classNames(wrapClasses, classes)
+        className: Utils.classNames(wrapClasses, classes),
+        ref: __reactNode => {
+          this.__reactRefs['wrapEl'] = __reactNode;
+        }
       }, React.createElement('div', {
         className: tabsClasses
       }, this.slots['default']));
@@ -47,9 +51,27 @@ class F7Tabs extends React.Component {
     }, this.slots['default']);
   }
 
+  componentDidMount() {
+    const self = this;
+    const {
+      swipeable,
+      swiperParams
+    } = self.props;
+    if (!swipeable || !swiperParams) return;
+    const wrapEl = self.refs.wrapEl;
+    if (!wrapEl) return;
+    wrapEl.f7SwiperParams = swiperParams;
+  }
+
   get slots() {
     return __reactComponentSlots(this.props);
   }
+
+  get refs() {
+    return this.__reactRefs;
+  }
+
+  set refs(refs) {}
 
 }
 
@@ -59,7 +81,11 @@ __reactComponentSetProps(F7Tabs, Object.assign({
   style: Object,
   animated: Boolean,
   swipeable: Boolean,
-  routable: Boolean
+  routable: Boolean,
+  swiperParams: {
+    type: Object,
+    default: undefined
+  }
 }, Mixins.colorProps));
 
 F7Tabs.displayName = 'f7-tabs';

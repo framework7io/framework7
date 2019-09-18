@@ -115,12 +115,12 @@ export default {
 
     onTabShow(el) {
       if (this.eventTargetEl !== el) return;
-      this.dispatchEvent('tab:show tabShow', el);
+      this.dispatchEvent('tab:show tabShow');
     },
 
     onTabHide(el) {
       if (this.eventTargetEl !== el) return;
-      this.dispatchEvent('tab:hide tabHide', el);
+      this.dispatchEvent('tab:hide tabHide');
     },
 
     dispatchEvent(events, ...args) {

@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.0.0-beta.14
+ * Framework7 React 5.0.0-beta.15
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 4, 2019
+ * Released on: September 18, 2019
  */
 
 import F7AccordionContent from './components/accordion-content';
@@ -95,6 +95,7 @@ import F7SwiperSlide from './components/swiper-slide';
 import F7Swiper from './components/swiper';
 import F7Tab from './components/tab';
 import F7Tabs from './components/tabs';
+import F7TextEditor from './components/text-editor';
 import F7Toggle from './components/toggle';
 import F7Toolbar from './components/toolbar';
 import F7TreeviewItem from './components/treeview-item';
@@ -188,6 +189,7 @@ const SwiperSlide = F7SwiperSlide;
 const Swiper = F7Swiper;
 const Tab = F7Tab;
 const Tabs = F7Tabs;
+const TextEditor = F7TextEditor;
 const Toggle = F7Toggle;
 const Toolbar = F7Toolbar;
 const TreeviewItem = F7TreeviewItem;
@@ -366,6 +368,8 @@ export {
   Tab,
   F7Tabs,
   Tabs,
+  F7TextEditor,
+  TextEditor,
   F7Toggle,
   Toggle,
   F7Toolbar,

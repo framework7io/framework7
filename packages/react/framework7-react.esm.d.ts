@@ -92,6 +92,7 @@ import F7SwiperSlide from './components/swiper-slide';
 import F7Swiper from './components/swiper';
 import F7Tab from './components/tab';
 import F7Tabs from './components/tabs';
+import F7TextEditor from './components/text-editor';
 import F7Toggle from './components/toggle';
 import F7Toolbar from './components/toolbar';
 import F7TreeviewItem from './components/treeview-item';
@@ -310,6 +311,8 @@ export {
   F7Tab as Tab,
   F7Tabs,
   F7Tabs as Tabs,
+  F7TextEditor,
+  F7TextEditor as TextEditor,
   F7Toggle,
   F7Toggle as Toggle,
   F7Toolbar,

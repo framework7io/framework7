@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 5.0.0-beta.14
+ * Framework7 Vue 5.0.0-beta.15
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 4, 2019
+ * Released on: September 18, 2019
  */
 
 import f7AccordionContent from './components/accordion-content';
@@ -95,6 +95,7 @@ import f7SwiperSlide from './components/swiper-slide';
 import f7Swiper from './components/swiper';
 import f7Tab from './components/tab';
 import f7Tabs from './components/tabs';
+import f7TextEditor from './components/text-editor';
 import f7Toggle from './components/toggle';
 import f7Toolbar from './components/toolbar';
 import f7TreeviewItem from './components/treeview-item';
@@ -189,6 +190,7 @@ export {
   f7Swiper,
   f7Tab,
   f7Tabs,
+  f7TextEditor,
   f7Toggle,
   f7Toolbar,
   f7TreeviewItem,

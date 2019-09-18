@@ -66,49 +66,16 @@
   }
 }
 /*====================
-  Fonts
+  Fonts & Bars
   ==================== */
 :root {
   --f7-font-size: 14px;
-}
-.ios-vars({
-  --f7-font-family: -apple-system, SF Pro Text, SF UI Text, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;
-  --f7-text-color: #000;
-  --f7-line-height: 1.4;
-  .dark-vars({
-    --f7-text-color: #fff;
-  });
-});
-.md-vars({
-  --f7-font-family: Roboto, system-ui, Noto, Helvetica, Arial, sans-serif;
-  --f7-text-color: #212121;
-  --f7-line-height: 1.5;
-  .dark-vars({
-    --f7-text-color: rgba(255,255,255,0.87);
-  });
-});
-.aurora-vars({
-  --f7-font-family: -apple-system, system-ui, Helvetica, Arial, sans-serif;
-  --f7-text-color: #000;
-  --f7-line-height: 1.5;
-  .dark-vars({
-    --f7-text-color: #fff;
-  });
-});
-
-/*====================
-  Bars
-  ==================== */
-:root {
   /*
   --f7-bars-link-color: var(--f7-theme-color);
   */
   --f7-bars-bg-image: none;
-  --f7-bars-bg-color: #f7f7f8;
-  --f7-bars-bg-color-rgb: 247, 247, 248;
   --f7-bars-translucent-opacity: 0.8;
   --f7-bars-translucent-blur: 20px;
-  --f7-bars-text-color: #000;
   --f7-bars-shadow-bottom-image: linear-gradient(to bottom,
     rgba(0,0,0,0.25) 0%,
     rgba(0,0,0,0.08) 40%,
@@ -123,31 +90,50 @@
     rgba(0,0,0,0) 90%,
     rgba(0,0,0,0) 100%
   );
-}
-.if-dark-theme({
-  .theme-dark {
-    --f7-bars-text-color: #fff;
-  }
-});
-
-.ios-vars({
-  --f7-bars-border-color: rgba(0,0,0,0.25);
+  .light-vars({
+    --f7-bars-text-color: #000;
+    --f7-bars-bg-color: #f7f7f8;
+    --f7-bars-bg-color-rgb: 247, 247, 248;
+  });
   .dark-vars({
+    --f7-bars-text-color: #fff;
+  });
+}
+.ios-vars({
+  --f7-font-family: -apple-system, SF Pro Text, SF UI Text, system-ui, Helvetica Neue, Helvetica, Arial, sans-serif;
+  --f7-line-height: 1.4;
+  .light-vars({
+    --f7-text-color: #000;
+    --f7-bars-border-color: rgba(0,0,0,0.25);
+  });
+  .dark-vars({
+    --f7-text-color: #fff;
     --f7-bars-bg-color: #121212;
     --f7-bars-bg-color-rgb: 19, 19, 19;
     --f7-bars-border-color: rgba(255,255,255,0.1);
   });
-  
 });
 .md-vars({
+  --f7-font-family: Roboto, system-ui, Noto, Helvetica, Arial, sans-serif;
+  --f7-line-height: 1.5;
   --f7-bars-border-color: transparent;
+  .light-vars({
+    --f7-text-color: #212121;
+  });
   .dark-vars({
+    --f7-text-color: rgba(255,255,255,0.87);
     --f7-bars-bg-color: #202020;
   });
 });
 .aurora-vars({
-  --f7-bars-border-color: rgba(0,0,0,0.2);
+  --f7-font-family: -apple-system, system-ui, Helvetica, Arial, sans-serif;
+  --f7-line-height: 1.5;
+  .light-vars({
+    --f7-text-color: #000;
+    --f7-bars-border-color: rgba(0,0,0,0.2);
+  });
   .dark-vars({
+    --f7-text-color: #fff;
     --f7-bars-bg-color: #202020;
     --f7-bars-border-color: rgba(255, 255, 255, 0.1);
   });

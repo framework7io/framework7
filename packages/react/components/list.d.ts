@@ -50,18 +50,18 @@ declare namespace F7List {
     onVirtualItemsBeforeInsert? : (vl?: any, fragment?: any) => void
     onVirtualItemsAfterInsert? : (vl?: any, fragment?: any) => void
     onSubmit? : (event?: any) => void
-    onSortableEnable? : (el?: any) => void
-    onSortableDisable? : (el?: any) => void
-    onSortableSort? : (el?: any, sortData?: any) => void
-    onTabShow? : (el?: any) => void
-    onTabHide? : (el?: any) => void
+    onSortableEnable? : (...args: any[]) => void
+    onSortableDisable? : (...args: any[]) => void
+    onSortableSort? : (sortData?: any) => void
+    onTabShow? : (...args: any[]) => void
+    onTabHide? : (...args: any[]) => void
   }
 }
 declare class F7List extends React.Component<F7List.Props, {}> {
   onSubmit(event? : any) : unknown
   onSortableEnable(el? : any) : unknown
   onSortableDisable(el? : any) : unknown
-  onSortableSort(el? : any, sortData? : any) : unknown
+  onSortableSort(el? : any, sortData? : any, listEl? : any) : unknown
   onTabShow(el? : any) : unknown
   onTabHide(el? : any) : unknown
   f7VirtualList: VirtualListNamespace.VirtualList

@@ -6,8 +6,6 @@ export namespace Statusbar {
     statusbar?: {
       /** Enables statusbar handling by Framework7. Disable it if you don't want Framework7 to handle statusbar behavior */
       enabled?:boolean
-      /** Can be true, false, auto. Defines whether the statusbar overlay should be visible or not. In case of auto Framework7 will detect it automatically depending whether the app is in fullscreen mode or not */
-      overlay?: string | boolean
       /** If enabled, then click on statusbar overlay will scroll top page content to the top.This functionality is only available when app is running under cordova/phonegap environment with installed cordova-plugin-statusbar */
       scrollTopOnClick?:boolean
       /** Hex string (#RRGGBB) with background color when app running under iOS device. If passed then it will override CSS value */

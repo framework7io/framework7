@@ -68,6 +68,7 @@ declare namespace F7Button {
     view? : string
     routeProps? : Object
     preventRouter? : boolean
+    transition? : string
     searchbarEnable? : boolean | string
     searchbarDisable? : boolean | string
     searchbarClear? : boolean | string

@@ -188,7 +188,7 @@ class Panel extends Framework7Class {
         panel.collapsed = true;
         app.allowPanelOpen = true;
         if (emitEvents) {
-          app.emit('local::collapsedBreakpoint panelCollapsedBreakpoint');
+          panel.emit('local::collapsedBreakpoint panelCollapsedBreakpoint');
           panel.$el.trigger('panel:collapsedbreakpoint');
         }
       }
@@ -196,7 +196,7 @@ class Panel extends Framework7Class {
       $el.removeClass('panel-in-collapsed panel-in');
       panel.collapsed = false;
       if (emitEvents) {
-        app.emit('local::collapsedBreakpoint panelCollapsedBreakpoint');
+        panel.emit('local::collapsedBreakpoint panelCollapsedBreakpoint');
         panel.$el.trigger('panel:collapsedbreakpoint');
       }
     }

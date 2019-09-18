@@ -39,6 +39,11 @@ const Plugin = {
       f7Theme.aurora = Framework7.device.desktop && Framework7.device.electron;
       f7Theme.md = !f7Theme.ios && !f7Theme.aurora;
     }
+    f7.ready(() => {
+      f7Theme.ios = f7.instance.theme === 'ios';
+      f7Theme.md = f7.instance.theme === 'md';
+      f7Theme.aurora = f7.instance.theme === 'aurora';
+    });
     Object.defineProperty(Extend.prototype, '$theme', {
       get() {
         return {

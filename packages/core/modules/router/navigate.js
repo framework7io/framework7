@@ -526,16 +526,28 @@ function forward(el, forwardOptions = {}) {
   }
   if (options.animate && !(isMaster && app.width >= router.params.masterDetailBreakpoint)) {
     const delay = router.params[`${router.app.theme}PageLoadDelay`];
+    let transition = router.params.transition;
+    if (options.transition) transition = options.transition;
+    if (!transition && router.currentRoute && router.currentRoute.route) {
+      transition = router.currentRoute.route.transition;
+    }
+    if (!transition && router.currentRoute && router.currentRoute.route.options) {
+      transition = router.currentRoute.route.options.transition;
+    }
+    if (transition) {
+      $newPage[0].f7PageTransition = transition;
+    }
+
     if (delay) {
       setTimeout(() => {
         setPositionClasses();
-        router.animate($oldPage, $newPage, $oldNavbarEl, $newNavbarEl, 'forward', () => {
+        router.animate($oldPage, $newPage, $oldNavbarEl, $newNavbarEl, 'forward', transition, () => {
           afterAnimation();
         });
       }, delay);
     } else {
       setPositionClasses();
-      router.animate($oldPage, $newPage, $oldNavbarEl, $newNavbarEl, 'forward', () => {
+      router.animate($oldPage, $newPage, $oldNavbarEl, $newNavbarEl, 'forward', transition, () => {
         afterAnimation();
       });
     }

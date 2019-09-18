@@ -17,12 +17,12 @@ class F7Block extends React.Component {
 
   onTabShow(el) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('tabShow tab:show', el);
+    this.dispatchEvent('tabShow tab:show');
   }
 
   onTabHide(el) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('tabHide tab:hide', el);
+    this.dispatchEvent('tabHide tab:hide');
   }
 
   render() {

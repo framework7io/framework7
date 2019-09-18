@@ -9,11 +9,12 @@ import patch from './patch';
 import componentMixins from './component-mixins';
 
 class Component {
-  constructor(app, extendContext = {}, options = {}) {
+  constructor(app, options = {}, extendContext = {}) {
     const id = Utils.id();
     const self = this;
     Utils.merge(
       self,
+      { $props: {} },
       extendContext,
       {
         $,

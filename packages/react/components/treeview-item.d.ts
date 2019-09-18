@@ -58,6 +58,7 @@ declare namespace F7TreeviewItem {
     view? : string
     routeProps? : Object
     preventRouter? : boolean
+    transition? : string
     icon? : string
     iconMaterial? : string
     iconF7? : string

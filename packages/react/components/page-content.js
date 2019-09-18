@@ -18,42 +18,42 @@ class F7PageContent extends React.Component {
 
   onPtrPullStart(el) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('ptr:pullstart ptrPullStart', el);
+    this.dispatchEvent('ptr:pullstart ptrPullStart');
   }
 
   onPtrPullMove(el) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('ptr:pullmove ptrPullMove', el);
+    this.dispatchEvent('ptr:pullmove ptrPullMove');
   }
 
   onPtrPullEnd(el) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('ptr:pullend ptrPullEnd', el);
+    this.dispatchEvent('ptr:pullend ptrPullEnd');
   }
 
   onPtrRefresh(el, done) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('ptr:refresh ptrRefresh', el, done);
+    this.dispatchEvent('ptr:refresh ptrRefresh', done);
   }
 
   onPtrDone(el) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('ptr:done ptrDone', el);
+    this.dispatchEvent('ptr:done ptrDone');
   }
 
   onInfinite(el) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('infinite', el);
+    this.dispatchEvent('infinite');
   }
 
   onTabShow(el) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('tab:show tabShow', el);
+    this.dispatchEvent('tab:show tabShow');
   }
 
   onTabHide(el) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('tab:hide tabHide', el);
+    this.dispatchEvent('tab:hide tabHide');
   }
 
   get classes() {

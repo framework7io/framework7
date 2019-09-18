@@ -3,6 +3,7 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import F7Toggle from './toggle';
 import F7Range from './range';
+import F7TextEditor from './text-editor';
 import __reactComponentWatch from '../runtime-helpers/react-component-watch.js';
 import __reactComponentDispatchEvent from '../runtime-helpers/react-component-dispatch-event.js';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
@@ -37,8 +38,14 @@ class F7Input extends React.Component {
   inputHasValue() {
     const self = this;
     const {
-      value
+      value,
+      type
     } = self.props;
+
+    if (type === 'datepicker' && Array.isArray(value) && value.length === 0) {
+      return false;
+    }
+
     const domValue = self.domValue();
     return typeof value === 'undefined' ? domValue || domValue === 0 : value || value === 0;
   }
@@ -79,33 +86,33 @@ class F7Input extends React.Component {
     this.dispatchEvent('input:clear inputClear', event);
   }
 
-  onInput(event) {
+  onInput(...args) {
     const self = this;
     const {
       validate,
       validateOnBlur
     } = self.props;
-    self.dispatchEvent('input', event);
+    self.dispatchEvent('input', ...args);
 
     if (!(validateOnBlur || validateOnBlur === '') && (validate || validate === '') && self.refs && self.refs.inputEl) {
       self.validateInput(self.refs.inputEl);
     }
   }
 
-  onFocus(event) {
-    this.dispatchEvent('focus', event);
+  onFocus(...args) {
+    this.dispatchEvent('focus', ...args);
     this.setState({
       inputFocused: true
     });
   }
 
-  onBlur(event) {
+  onBlur(...args) {
     const self = this;
     const {
       validate,
       validateOnBlur
     } = self.props;
-    self.dispatchEvent('blur', event);
+    self.dispatchEvent('blur', ...args);
 
     if ((validate || validate === '' || validateOnBlur || validateOnBlur === '') && self.refs && self.refs.inputEl) {
       self.validateInput(self.refs.inputEl);
@@ -116,8 +123,12 @@ class F7Input extends React.Component {
     });
   }
 
-  onChange(event) {
-    this.dispatchEvent('change', event);
+  onChange(...args) {
+    this.dispatchEvent('change', ...args);
+
+    if (this.props.type === 'texteditor') {
+      this.dispatchEvent('texteditor:change textEditorChange', args[1]);
+    }
   }
 
   render() {
@@ -166,7 +177,8 @@ class F7Input extends React.Component {
       noStoreData,
       noFormStoreData,
       ignoreStoreData,
-      outline
+      outline,
+      textEditorParams
     } = props;
     const domValue = self.domValue();
     const inputHasValue = self.inputHasValue();
@@ -283,6 +295,16 @@ class F7Input extends React.Component {
         input: true,
         onRangeChange: self.onChange
       });
+    } else if (type === 'texteditor') {
+      inputEl = React.createElement(F7TextEditor, Object.assign({
+        value: value,
+        resizable: resizable,
+        placeholder: placeholder,
+        onTextEditorFocus: self.onFocus,
+        onTextEditorBlur: self.onBlur,
+        onTextEditorInput: self.onInput,
+        onTextEditorChange: self.onChange
+      }, textEditorParams));
     } else {
       inputEl = createInput('input');
     }
@@ -523,7 +545,8 @@ __reactComponentSetProps(F7Input, Object.assign({
     default: 'auto'
   },
   calendarParams: Object,
-  colorPickerParams: Object
+  colorPickerParams: Object,
+  textEditorParams: Object
 }, Mixins.colorProps));
 
 F7Input.displayName = 'f7-input';

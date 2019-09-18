@@ -35,77 +35,77 @@ class F7ListItem extends React.Component {
 
   onSwipeoutOverswipeEnter(el) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('swipeout:overswipeenter swipeoutOverswipeEnter', el);
+    this.dispatchEvent('swipeout:overswipeenter swipeoutOverswipeEnter');
   }
 
   onSwipeoutOverswipeExit(el) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('swipeout:overswipeexit swipeoutOverswipeExit', el);
+    this.dispatchEvent('swipeout:overswipeexit swipeoutOverswipeExit');
   }
 
   onSwipeoutDeleted(el) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('swipeout:deleted swipeoutDeleted', el);
+    this.dispatchEvent('swipeout:deleted swipeoutDeleted');
   }
 
   onSwipeoutDelete(el) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('swipeout:delete swipeoutDelete', el);
+    this.dispatchEvent('swipeout:delete swipeoutDelete');
   }
 
   onSwipeoutClose(el) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('swipeout:close swipeoutClose', el);
+    this.dispatchEvent('swipeout:close swipeoutClose');
   }
 
   onSwipeoutClosed(el) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('swipeout:closed swipeoutClosed', el);
+    this.dispatchEvent('swipeout:closed swipeoutClosed');
   }
 
   onSwipeoutOpen(el) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('swipeout:open swipeoutOpen', el);
+    this.dispatchEvent('swipeout:open swipeoutOpen');
   }
 
   onSwipeoutOpened(el) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('swipeout:opened swipeoutOpened', el);
+    this.dispatchEvent('swipeout:opened swipeoutOpened');
   }
 
-  onSwipeout(el) {
+  onSwipeout(el, progress) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('swipeout', el);
+    this.dispatchEvent('swipeout', progress);
   }
 
   onAccBeforeClose(el, prevent) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('accordion:beforeclose accordionBeforeClose', el, prevent);
+    this.dispatchEvent('accordion:beforeclose accordionBeforeClose', prevent);
   }
 
   onAccClose(el) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('accordion:close accordionClose', el);
+    this.dispatchEvent('accordion:close accordionClose');
   }
 
   onAccClosed(el) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('accordion:closed accordionClosed', el);
+    this.dispatchEvent('accordion:closed accordionClosed');
   }
 
   onAccBeforeOpen(el, prevent) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('accordion:beforeopen accordionBeforeOpen', el, prevent);
+    this.dispatchEvent('accordion:beforeopen accordionBeforeOpen', prevent);
   }
 
   onAccOpen(el) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('accordion:open accordionOpen', el);
+    this.dispatchEvent('accordion:open accordionOpen');
   }
 
   onAccOpened(el) {
     if (this.eventTargetEl !== el) return;
-    this.dispatchEvent('accordion:opened accordionOpened', el);
+    this.dispatchEvent('accordion:opened accordionOpened');
   }
 
   onChange(event) {

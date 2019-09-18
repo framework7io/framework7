@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.0-beta.14
+ * Framework7 5.0.0-beta.15
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 4, 2019
+ * Released on: September 18, 2019
  */
 
 (function (global, factory) {
@@ -2326,113 +2326,6 @@
     });
   });
 
-  /**
-   * https://github.com/gre/bezier-easing
-   * BezierEasing - use bezier curve for transition easing function
-   * by Gaëtan Renaudeau 2014 - 2015 – MIT License
-   */
-
-  /* eslint-disable */
-
-  // These values are established by empiricism with tests (tradeoff: performance VS precision)
-  var NEWTON_ITERATIONS = 4;
-  var NEWTON_MIN_SLOPE = 0.001;
-  var SUBDIVISION_PRECISION = 0.0000001;
-  var SUBDIVISION_MAX_ITERATIONS = 10;
-
-  var kSplineTableSize = 11;
-  var kSampleStepSize = 1.0 / (kSplineTableSize - 1.0);
-
-  var float32ArraySupported = typeof Float32Array === 'function';
-
-  function A (aA1, aA2) { return 1.0 - 3.0 * aA2 + 3.0 * aA1; }
-  function B (aA1, aA2) { return 3.0 * aA2 - 6.0 * aA1; }
-  function C (aA1)      { return 3.0 * aA1; }
-
-  // Returns x(t) given t, x1, and x2, or y(t) given t, y1, and y2.
-  function calcBezier (aT, aA1, aA2) { return ((A(aA1, aA2) * aT + B(aA1, aA2)) * aT + C(aA1)) * aT; }
-
-  // Returns dx/dt given t, x1, and x2, or dy/dt given t, y1, and y2.
-  function getSlope (aT, aA1, aA2) { return 3.0 * A(aA1, aA2) * aT * aT + 2.0 * B(aA1, aA2) * aT + C(aA1); }
-
-  function binarySubdivide (aX, aA, aB, mX1, mX2) {
-    var currentX, currentT, i = 0;
-    do {
-      currentT = aA + (aB - aA) / 2.0;
-      currentX = calcBezier(currentT, mX1, mX2) - aX;
-      if (currentX > 0.0) {
-        aB = currentT;
-      } else {
-        aA = currentT;
-      }
-    } while (Math.abs(currentX) > SUBDIVISION_PRECISION && ++i < SUBDIVISION_MAX_ITERATIONS);
-    return currentT;
-  }
-
-  function newtonRaphsonIterate (aX, aGuessT, mX1, mX2) {
-   for (var i = 0; i < NEWTON_ITERATIONS; ++i) {
-     var currentSlope = getSlope(aGuessT, mX1, mX2);
-     if (currentSlope === 0.0) {
-       return aGuessT;
-     }
-     var currentX = calcBezier(aGuessT, mX1, mX2) - aX;
-     aGuessT -= currentX / currentSlope;
-   }
-   return aGuessT;
-  }
-
-  function bezier (mX1, mY1, mX2, mY2) {
-    if (!(0 <= mX1 && mX1 <= 1 && 0 <= mX2 && mX2 <= 1)) {
-      throw new Error('bezier x values must be in [0, 1] range');
-    }
-
-    // Precompute samples table
-    var sampleValues = float32ArraySupported ? new Float32Array(kSplineTableSize) : new Array(kSplineTableSize);
-    if (mX1 !== mY1 || mX2 !== mY2) {
-      for (var i = 0; i < kSplineTableSize; ++i) {
-        sampleValues[i] = calcBezier(i * kSampleStepSize, mX1, mX2);
-      }
-    }
-
-    function getTForX (aX) {
-      var intervalStart = 0.0;
-      var currentSample = 1;
-      var lastSample = kSplineTableSize - 1;
-
-      for (; currentSample !== lastSample && sampleValues[currentSample] <= aX; ++currentSample) {
-        intervalStart += kSampleStepSize;
-      }
-      --currentSample;
-
-      // Interpolate to provide an initial guess for t
-      var dist = (aX - sampleValues[currentSample]) / (sampleValues[currentSample + 1] - sampleValues[currentSample]);
-      var guessForT = intervalStart + dist * kSampleStepSize;
-
-      var initialSlope = getSlope(guessForT, mX1, mX2);
-      if (initialSlope >= NEWTON_MIN_SLOPE) {
-        return newtonRaphsonIterate(aX, guessForT, mX1, mX2);
-      } else if (initialSlope === 0.0) {
-        return guessForT;
-      } else {
-        return binarySubdivide(aX, intervalStart, intervalStart + kSampleStepSize, mX1, mX2);
-      }
-    }
-
-    return function BezierEasing (x) {
-      if (mX1 === mY1 && mX2 === mY2) {
-        return x; // linear
-      }
-      // Because JavaScript number are imprecise, we should guarantee the extremes are right.
-      if (x === 0) {
-        return 0;
-      }
-      if (x === 1) {
-        return 1;
-      }
-      return calcBezier(getTForX(x), mY1, mY2);
-    };
-  }
-
   /* eslint no-control-regex: "off" */
 
   // Remove Diacritics
@@ -2573,12 +2466,6 @@
           // something got wrong
         }
       });
-    },
-    bezier: function bezier$1() {
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-
-      return bezier.apply(void 0, args);
     },
     nextTick: function nextTick(callback, delay) {
       if ( delay === void 0 ) delay = 0;
@@ -4408,6 +4295,9 @@
     function findActivableElement(el) {
       var target = $(el);
       var parents = target.parents(params.activeStateElements);
+      if (target.closest('.no-active-state').length) {
+        return null;
+      }
       var activable;
       if (target.is(params.activeStateElements)) {
         activable = target;
@@ -4513,12 +4403,16 @@
 
     // Mouse Handlers
     function handleMouseDown(e) {
-      findActivableElement(e.target).addClass('active-state');
-      if ('which' in e && e.which === 3) {
-        setTimeout(function () {
-          $('.active-state').removeClass('active-state');
-        }, 0);
+      var $activableEl = findActivableElement(e.target);
+      if ($activableEl) {
+        $activableEl.addClass('active-state');
+        if ('which' in e && e.which === 3) {
+          setTimeout(function () {
+            $('.active-state').removeClass('active-state');
+          }, 0);
+        }
       }
+
       if (useRipple) {
         touchStartX = e.pageX;
         touchStartY = e.pageY;
@@ -4581,9 +4475,9 @@
 
       if (params.activeState) {
         activableElement = findActivableElement(targetElement);
-        if (!isInsideScrollableView(activableElement)) {
+        if (activableElement && !isInsideScrollableView(activableElement)) {
           addActive();
-        } else {
+        } else if (activableElement) {
           activeTimeout = setTimeout(addActive, 80);
         }
       }
@@ -6499,16 +6393,28 @@
     }
     if (options.animate && !(isMaster && app.width >= router.params.masterDetailBreakpoint)) {
       var delay = router.params[((router.app.theme) + "PageLoadDelay")];
+      var transition = router.params.transition;
+      if (options.transition) { transition = options.transition; }
+      if (!transition && router.currentRoute && router.currentRoute.route) {
+        transition = router.currentRoute.route.transition;
+      }
+      if (!transition && router.currentRoute && router.currentRoute.route.options) {
+        transition = router.currentRoute.route.options.transition;
+      }
+      if (transition) {
+        $newPage[0].f7PageTransition = transition;
+      }
+
       if (delay) {
         setTimeout(function () {
           setPositionClasses();
-          router.animate($oldPage, $newPage, $oldNavbarEl, $newNavbarEl, 'forward', function () {
+          router.animate($oldPage, $newPage, $oldNavbarEl, $newNavbarEl, 'forward', transition, function () {
             afterAnimation();
           });
         }, delay);
       } else {
         setPositionClasses();
-        router.animate($oldPage, $newPage, $oldNavbarEl, $newNavbarEl, 'forward', function () {
+        router.animate($oldPage, $newPage, $oldNavbarEl, $newNavbarEl, 'forward', transition, function () {
           afterAnimation();
         });
       }
@@ -7699,8 +7605,20 @@
     }
 
     if (options.animate && !(currentIsMaster && app.width >= router.params.masterDetailBreakpoint)) {
+      var transition = router.params.transition;
+      if ($oldPage[0] && $oldPage[0].f7PageTransition) {
+        transition = $oldPage[0].f7PageTransition;
+        delete $oldPage[0].f7PageTransition;
+      }
+      if (options.transition) { transition = options.transition; }
+      if (!transition && router.previousRoute && router.previousRoute.route) {
+        transition = router.previousRoute.route.transition;
+      }
+      if (!transition && router.previousRoute && router.previousRoute.route && router.previousRoute.route.options) {
+        transition = router.previousRoute.route.options.transition;
+      }
       setPositionClasses();
-      router.animate($oldPage, $newPage, $oldNavbarEl, $newNavbarEl, 'backward', function () {
+      router.animate($oldPage, $newPage, $oldNavbarEl, $newNavbarEl, 'backward', transition, function () {
         afterAnimation();
       });
     } else {
@@ -8267,7 +8185,7 @@
       return { newNavEls: newNavEls, oldNavEls: oldNavEls };
     };
 
-    Router.prototype.animate = function animate ($oldPageEl, $newPageEl, $oldNavbarEl, $newNavbarEl, direction, callback) {
+    Router.prototype.animate = function animate ($oldPageEl, $newPageEl, $oldNavbarEl, $newNavbarEl, direction, transition, callback) {
       var router = this;
       if (router.params.animateCustom) {
         router.params.animateCustom.apply(router, [$oldPageEl, $newPageEl, $oldNavbarEl, $newNavbarEl, direction, callback]);
@@ -8275,6 +8193,38 @@
       }
       var dynamicNavbar = router.dynamicNavbar;
       var ios = router.app.theme === 'ios';
+      if (transition) {
+        var routerCustomTransitionClass = "router-transition-custom router-transition-" + transition + "-" + direction;
+        // Animate
+        var onCustomTransitionDone = function () {
+          router.$el.removeClass(routerCustomTransitionClass);
+          if (dynamicNavbar && router.$navbarsEl.length) {
+            if ($newNavbarEl) {
+              router.$navbarsEl.prepend($newNavbarEl);
+            }
+            if ($oldNavbarEl) {
+              router.$navbarsEl.prepend($oldNavbarEl);
+            }
+          }
+          if (callback) { callback(); }
+        };
+
+        (direction === 'forward' ? $newPageEl : $oldPageEl).animationEnd(onCustomTransitionDone);
+        if (dynamicNavbar) {
+          if ($newNavbarEl && $newPageEl) {
+            $newNavbarEl.removeClass('navbar-next navbar-previous navbar-current');
+            $newPageEl.prepend($newNavbarEl);
+          }
+          if ($oldNavbarEl && $oldPageEl) {
+            $oldNavbarEl.removeClass('navbar-next navbar-previous navbar-current');
+            $oldPageEl.prepend($oldNavbarEl);
+          }
+        }
+
+        router.$el.addClass(routerCustomTransitionClass);
+        return;
+      }
+
 
       // Router Animation class
       var routerTransitionClass = "router-transition-" + direction + " router-transition";
@@ -9545,7 +9495,9 @@
       var validUrl = url && url.length > 0 && url[0] !== '#';
       if (validUrl || $clickedLinkEl.hasClass('back')) {
         var view;
-        if (clickedLinkData.view) {
+        if (clickedLinkData.view && clickedLinkData.view === 'current') {
+          view = app.views.current;
+        } else if (clickedLinkData.view) {
           view = $(clickedLinkData.view)[0].f7View;
         } else {
           view = $clickedEl.parents('.view')[0] && $clickedEl.parents('.view')[0].f7View;
@@ -9912,7 +9864,12 @@
     if (isCustomComponent) {
       insert.push(function (vnode) {
         if (vnode.sel !== tagName) { return; }
-        app.component.create(Object.assign({ el: vnode.elm }, customComponents[tagName]), contextFromAttrs(data.attrs || {}, data.props || {})).then(function (c) {
+        app.component.create(
+          Object.assign({ el: vnode.elm }, customComponents[tagName]),
+          {
+            $props: contextFromAttrs(data.attrs || {}, data.props || {}),
+          }
+        ).then(function (c) {
           // eslint-disable-next-line
           vnode.elm.__component__ = c;
         });
@@ -9931,8 +9888,8 @@
         // eslint-disable-next-line
         var component = vnode && vnode.elm && vnode.elm.__component__;
         if (!component) { return; }
-        var newData = contextFromAttrs(vnode.data.attrs || {}, vnode.data.props || {});
-        Object.assign(component, newData);
+        var newProps = contextFromAttrs(vnode.data.attrs || {}, vnode.data.props || {});
+        Object.assign(component.$props, newProps);
         component.$update();
       });
     }
@@ -10824,14 +10781,15 @@
 
   /* eslint no-underscore-dangle: "off" */
 
-  var Component = function Component(app, extendContext, options) {
-    if ( extendContext === void 0 ) extendContext = {};
+  var Component = function Component(app, options, extendContext) {
     if ( options === void 0 ) options = {};
+    if ( extendContext === void 0 ) extendContext = {};
 
     var id = Utils.id();
     var self = this;
     Utils.merge(
       self,
+      { $props: {} },
       extendContext,
       {
         $: $,
@@ -11203,17 +11161,20 @@
     } else if (componentString.indexOf('<style scoped>') >= 0) {
       styleScoped = true;
       style = componentString.split('<style scoped>')[1].split('</style>')[0];
-      style = style.split('\n').map(function (line) {
-        var trimmedLine = line.trim();
-        if (trimmedLine.indexOf('@') === 0) { return line; }
-        if (line.indexOf('{') >= 0) {
-          if (line.indexOf('{{this}}') >= 0) {
-            return line.replace('{{this}}', ("[data-f7-" + id + "]"));
-          }
-          return ("[data-f7-" + id + "] " + (line.trim()));
-        }
-        return line;
-      }).join('\n');
+      style = style
+        .replace(/{{this}}/g, ("[data-f7-" + id + "]"))
+        .replace(/[\n]?([^{^}]*){/ig, function (string, rules) {
+          // eslint-disable-next-line
+          rules = rules
+            .split(',')
+            .map(function (rule) {
+              if (rule.indexOf(("[data-f7-" + id + "]")) >= 0) { return rule; }
+              return ("[data-f7-" + id + "] " + (rule.trim()));
+            })
+            .join(', ');
+
+          return ("\n" + rules + " {");
+        });
     }
 
     // Parse Script
@@ -11317,9 +11278,9 @@
         create: function create(options, context) {
           if (typeof options === 'function') {
             // eslint-disable-next-line
-            return new options(app, context, { isClassComponent: true });
+            return new options(app, { isClassComponent: true }, context);
           }
-          return new Component(app, context, options);
+          return new Component(app, options, context);
         },
       };
     },

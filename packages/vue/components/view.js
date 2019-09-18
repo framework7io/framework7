@@ -52,6 +52,7 @@ export default {
     pushStateSeparator: String,
     pushStateOnLoad: Boolean,
     animate: Boolean,
+    transition: String,
     iosDynamicNavbar: Boolean,
     iosSeparateDynamicNavbar: Boolean,
     iosAnimateNavbarBackIcon: Boolean,

@@ -47,7 +47,7 @@ export default {
       type: String,
       default: undefined
     },
-    popupBackLinkText: {
+    popupCloseLinkText: {
       type: String,
       default: undefined
     },

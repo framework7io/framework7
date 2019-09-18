@@ -40,6 +40,7 @@ declare namespace F7MenuItem {
     view? : string
     routeProps? : Object
     preventRouter? : boolean
+    transition? : string
     searchbarEnable? : boolean | string
     searchbarDisable? : boolean | string
     searchbarClear? : boolean | string

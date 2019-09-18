@@ -153,7 +153,9 @@ class PhotoBrowser extends Framework7Class {
     } else {
       swipeToClose.allow = true;
     }
-    pb.$el.transition('').transform('');
+    Utils.nextTick(() => {
+      pb.$el.transform('').transition('');
+    });
   }
 
   // Render Functions
@@ -436,7 +438,9 @@ class PhotoBrowser extends Framework7Class {
 
   onOpened() {
     const pb = this;
-
+    if (pb.$el && pb.params.type === 'standalone') {
+      pb.$el.css('animation', 'none');
+    }
     if (pb.$el) {
       pb.$el.trigger('photobrowser:opened');
     }

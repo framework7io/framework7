@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.0-beta.14
+ * Framework7 5.0.0-beta.15
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 4, 2019
+ * Released on: September 18, 2019
  */
 
 (function (global, factory) {
@@ -2326,113 +2326,6 @@
     });
   });
 
-  /**
-   * https://github.com/gre/bezier-easing
-   * BezierEasing - use bezier curve for transition easing function
-   * by Gaëtan Renaudeau 2014 - 2015 – MIT License
-   */
-
-  /* eslint-disable */
-
-  // These values are established by empiricism with tests (tradeoff: performance VS precision)
-  var NEWTON_ITERATIONS = 4;
-  var NEWTON_MIN_SLOPE = 0.001;
-  var SUBDIVISION_PRECISION = 0.0000001;
-  var SUBDIVISION_MAX_ITERATIONS = 10;
-
-  var kSplineTableSize = 11;
-  var kSampleStepSize = 1.0 / (kSplineTableSize - 1.0);
-
-  var float32ArraySupported = typeof Float32Array === 'function';
-
-  function A (aA1, aA2) { return 1.0 - 3.0 * aA2 + 3.0 * aA1; }
-  function B (aA1, aA2) { return 3.0 * aA2 - 6.0 * aA1; }
-  function C (aA1)      { return 3.0 * aA1; }
-
-  // Returns x(t) given t, x1, and x2, or y(t) given t, y1, and y2.
-  function calcBezier (aT, aA1, aA2) { return ((A(aA1, aA2) * aT + B(aA1, aA2)) * aT + C(aA1)) * aT; }
-
-  // Returns dx/dt given t, x1, and x2, or dy/dt given t, y1, and y2.
-  function getSlope (aT, aA1, aA2) { return 3.0 * A(aA1, aA2) * aT * aT + 2.0 * B(aA1, aA2) * aT + C(aA1); }
-
-  function binarySubdivide (aX, aA, aB, mX1, mX2) {
-    var currentX, currentT, i = 0;
-    do {
-      currentT = aA + (aB - aA) / 2.0;
-      currentX = calcBezier(currentT, mX1, mX2) - aX;
-      if (currentX > 0.0) {
-        aB = currentT;
-      } else {
-        aA = currentT;
-      }
-    } while (Math.abs(currentX) > SUBDIVISION_PRECISION && ++i < SUBDIVISION_MAX_ITERATIONS);
-    return currentT;
-  }
-
-  function newtonRaphsonIterate (aX, aGuessT, mX1, mX2) {
-   for (var i = 0; i < NEWTON_ITERATIONS; ++i) {
-     var currentSlope = getSlope(aGuessT, mX1, mX2);
-     if (currentSlope === 0.0) {
-       return aGuessT;
-     }
-     var currentX = calcBezier(aGuessT, mX1, mX2) - aX;
-     aGuessT -= currentX / currentSlope;
-   }
-   return aGuessT;
-  }
-
-  function bezier (mX1, mY1, mX2, mY2) {
-    if (!(0 <= mX1 && mX1 <= 1 && 0 <= mX2 && mX2 <= 1)) {
-      throw new Error('bezier x values must be in [0, 1] range');
-    }
-
-    // Precompute samples table
-    var sampleValues = float32ArraySupported ? new Float32Array(kSplineTableSize) : new Array(kSplineTableSize);
-    if (mX1 !== mY1 || mX2 !== mY2) {
-      for (var i = 0; i < kSplineTableSize; ++i) {
-        sampleValues[i] = calcBezier(i * kSampleStepSize, mX1, mX2);
-      }
-    }
-
-    function getTForX (aX) {
-      var intervalStart = 0.0;
-      var currentSample = 1;
-      var lastSample = kSplineTableSize - 1;
-
-      for (; currentSample !== lastSample && sampleValues[currentSample] <= aX; ++currentSample) {
-        intervalStart += kSampleStepSize;
-      }
-      --currentSample;
-
-      // Interpolate to provide an initial guess for t
-      var dist = (aX - sampleValues[currentSample]) / (sampleValues[currentSample + 1] - sampleValues[currentSample]);
-      var guessForT = intervalStart + dist * kSampleStepSize;
-
-      var initialSlope = getSlope(guessForT, mX1, mX2);
-      if (initialSlope >= NEWTON_MIN_SLOPE) {
-        return newtonRaphsonIterate(aX, guessForT, mX1, mX2);
-      } else if (initialSlope === 0.0) {
-        return guessForT;
-      } else {
-        return binarySubdivide(aX, intervalStart, intervalStart + kSampleStepSize, mX1, mX2);
-      }
-    }
-
-    return function BezierEasing (x) {
-      if (mX1 === mY1 && mX2 === mY2) {
-        return x; // linear
-      }
-      // Because JavaScript number are imprecise, we should guarantee the extremes are right.
-      if (x === 0) {
-        return 0;
-      }
-      if (x === 1) {
-        return 1;
-      }
-      return calcBezier(getTForX(x), mY1, mY2);
-    };
-  }
-
   /* eslint no-control-regex: "off" */
 
   // Remove Diacritics
@@ -2573,12 +2466,6 @@
           // something got wrong
         }
       });
-    },
-    bezier: function bezier$1() {
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-
-      return bezier.apply(void 0, args);
     },
     nextTick: function nextTick(callback, delay) {
       if ( delay === void 0 ) delay = 0;
@@ -4408,6 +4295,9 @@
     function findActivableElement(el) {
       var target = $(el);
       var parents = target.parents(params.activeStateElements);
+      if (target.closest('.no-active-state').length) {
+        return null;
+      }
       var activable;
       if (target.is(params.activeStateElements)) {
         activable = target;
@@ -4513,12 +4403,16 @@
 
     // Mouse Handlers
     function handleMouseDown(e) {
-      findActivableElement(e.target).addClass('active-state');
-      if ('which' in e && e.which === 3) {
-        setTimeout(function () {
-          $('.active-state').removeClass('active-state');
-        }, 0);
+      var $activableEl = findActivableElement(e.target);
+      if ($activableEl) {
+        $activableEl.addClass('active-state');
+        if ('which' in e && e.which === 3) {
+          setTimeout(function () {
+            $('.active-state').removeClass('active-state');
+          }, 0);
+        }
       }
+
       if (useRipple) {
         touchStartX = e.pageX;
         touchStartY = e.pageY;
@@ -4581,9 +4475,9 @@
 
       if (params.activeState) {
         activableElement = findActivableElement(targetElement);
-        if (!isInsideScrollableView(activableElement)) {
+        if (activableElement && !isInsideScrollableView(activableElement)) {
           addActive();
-        } else {
+        } else if (activableElement) {
           activeTimeout = setTimeout(addActive, 80);
         }
       }
@@ -6499,16 +6393,28 @@
     }
     if (options.animate && !(isMaster && app.width >= router.params.masterDetailBreakpoint)) {
       var delay = router.params[((router.app.theme) + "PageLoadDelay")];
+      var transition = router.params.transition;
+      if (options.transition) { transition = options.transition; }
+      if (!transition && router.currentRoute && router.currentRoute.route) {
+        transition = router.currentRoute.route.transition;
+      }
+      if (!transition && router.currentRoute && router.currentRoute.route.options) {
+        transition = router.currentRoute.route.options.transition;
+      }
+      if (transition) {
+        $newPage[0].f7PageTransition = transition;
+      }
+
       if (delay) {
         setTimeout(function () {
           setPositionClasses();
-          router.animate($oldPage, $newPage, $oldNavbarEl, $newNavbarEl, 'forward', function () {
+          router.animate($oldPage, $newPage, $oldNavbarEl, $newNavbarEl, 'forward', transition, function () {
             afterAnimation();
           });
         }, delay);
       } else {
         setPositionClasses();
-        router.animate($oldPage, $newPage, $oldNavbarEl, $newNavbarEl, 'forward', function () {
+        router.animate($oldPage, $newPage, $oldNavbarEl, $newNavbarEl, 'forward', transition, function () {
           afterAnimation();
         });
       }
@@ -7699,8 +7605,20 @@
     }
 
     if (options.animate && !(currentIsMaster && app.width >= router.params.masterDetailBreakpoint)) {
+      var transition = router.params.transition;
+      if ($oldPage[0] && $oldPage[0].f7PageTransition) {
+        transition = $oldPage[0].f7PageTransition;
+        delete $oldPage[0].f7PageTransition;
+      }
+      if (options.transition) { transition = options.transition; }
+      if (!transition && router.previousRoute && router.previousRoute.route) {
+        transition = router.previousRoute.route.transition;
+      }
+      if (!transition && router.previousRoute && router.previousRoute.route && router.previousRoute.route.options) {
+        transition = router.previousRoute.route.options.transition;
+      }
       setPositionClasses();
-      router.animate($oldPage, $newPage, $oldNavbarEl, $newNavbarEl, 'backward', function () {
+      router.animate($oldPage, $newPage, $oldNavbarEl, $newNavbarEl, 'backward', transition, function () {
         afterAnimation();
       });
     } else {
@@ -8267,7 +8185,7 @@
       return { newNavEls: newNavEls, oldNavEls: oldNavEls };
     };
 
-    Router.prototype.animate = function animate ($oldPageEl, $newPageEl, $oldNavbarEl, $newNavbarEl, direction, callback) {
+    Router.prototype.animate = function animate ($oldPageEl, $newPageEl, $oldNavbarEl, $newNavbarEl, direction, transition, callback) {
       var router = this;
       if (router.params.animateCustom) {
         router.params.animateCustom.apply(router, [$oldPageEl, $newPageEl, $oldNavbarEl, $newNavbarEl, direction, callback]);
@@ -8275,6 +8193,38 @@
       }
       var dynamicNavbar = router.dynamicNavbar;
       var ios = router.app.theme === 'ios';
+      if (transition) {
+        var routerCustomTransitionClass = "router-transition-custom router-transition-" + transition + "-" + direction;
+        // Animate
+        var onCustomTransitionDone = function () {
+          router.$el.removeClass(routerCustomTransitionClass);
+          if (dynamicNavbar && router.$navbarsEl.length) {
+            if ($newNavbarEl) {
+              router.$navbarsEl.prepend($newNavbarEl);
+            }
+            if ($oldNavbarEl) {
+              router.$navbarsEl.prepend($oldNavbarEl);
+            }
+          }
+          if (callback) { callback(); }
+        };
+
+        (direction === 'forward' ? $newPageEl : $oldPageEl).animationEnd(onCustomTransitionDone);
+        if (dynamicNavbar) {
+          if ($newNavbarEl && $newPageEl) {
+            $newNavbarEl.removeClass('navbar-next navbar-previous navbar-current');
+            $newPageEl.prepend($newNavbarEl);
+          }
+          if ($oldNavbarEl && $oldPageEl) {
+            $oldNavbarEl.removeClass('navbar-next navbar-previous navbar-current');
+            $oldPageEl.prepend($oldNavbarEl);
+          }
+        }
+
+        router.$el.addClass(routerCustomTransitionClass);
+        return;
+      }
+
 
       // Router Animation class
       var routerTransitionClass = "router-transition-" + direction + " router-transition";
@@ -9545,7 +9495,9 @@
       var validUrl = url && url.length > 0 && url[0] !== '#';
       if (validUrl || $clickedLinkEl.hasClass('back')) {
         var view;
-        if (clickedLinkData.view) {
+        if (clickedLinkData.view && clickedLinkData.view === 'current') {
+          view = app.views.current;
+        } else if (clickedLinkData.view) {
           view = $(clickedLinkData.view)[0].f7View;
         } else {
           view = $clickedEl.parents('.view')[0] && $clickedEl.parents('.view')[0].f7View;
@@ -9912,7 +9864,12 @@
     if (isCustomComponent) {
       insert.push(function (vnode) {
         if (vnode.sel !== tagName) { return; }
-        app.component.create(Object.assign({ el: vnode.elm }, customComponents[tagName]), contextFromAttrs(data.attrs || {}, data.props || {})).then(function (c) {
+        app.component.create(
+          Object.assign({ el: vnode.elm }, customComponents[tagName]),
+          {
+            $props: contextFromAttrs(data.attrs || {}, data.props || {}),
+          }
+        ).then(function (c) {
           // eslint-disable-next-line
           vnode.elm.__component__ = c;
         });
@@ -9931,8 +9888,8 @@
         // eslint-disable-next-line
         var component = vnode && vnode.elm && vnode.elm.__component__;
         if (!component) { return; }
-        var newData = contextFromAttrs(vnode.data.attrs || {}, vnode.data.props || {});
-        Object.assign(component, newData);
+        var newProps = contextFromAttrs(vnode.data.attrs || {}, vnode.data.props || {});
+        Object.assign(component.$props, newProps);
         component.$update();
       });
     }
@@ -10824,14 +10781,15 @@
 
   /* eslint no-underscore-dangle: "off" */
 
-  var Component = function Component(app, extendContext, options) {
-    if ( extendContext === void 0 ) extendContext = {};
+  var Component = function Component(app, options, extendContext) {
     if ( options === void 0 ) options = {};
+    if ( extendContext === void 0 ) extendContext = {};
 
     var id = Utils.id();
     var self = this;
     Utils.merge(
       self,
+      { $props: {} },
       extendContext,
       {
         $: $,
@@ -11203,17 +11161,20 @@
     } else if (componentString.indexOf('<style scoped>') >= 0) {
       styleScoped = true;
       style = componentString.split('<style scoped>')[1].split('</style>')[0];
-      style = style.split('\n').map(function (line) {
-        var trimmedLine = line.trim();
-        if (trimmedLine.indexOf('@') === 0) { return line; }
-        if (line.indexOf('{') >= 0) {
-          if (line.indexOf('{{this}}') >= 0) {
-            return line.replace('{{this}}', ("[data-f7-" + id + "]"));
-          }
-          return ("[data-f7-" + id + "] " + (line.trim()));
-        }
-        return line;
-      }).join('\n');
+      style = style
+        .replace(/{{this}}/g, ("[data-f7-" + id + "]"))
+        .replace(/[\n]?([^{^}]*){/ig, function (string, rules) {
+          // eslint-disable-next-line
+          rules = rules
+            .split(',')
+            .map(function (rule) {
+              if (rule.indexOf(("[data-f7-" + id + "]")) >= 0) { return rule; }
+              return ("[data-f7-" + id + "] " + (rule.trim()));
+            })
+            .join(', ');
+
+          return ("\n" + rules + " {");
+        });
     }
 
     // Parse Script
@@ -11317,9 +11278,9 @@
         create: function create(options, context) {
           if (typeof options === 'function') {
             // eslint-disable-next-line
-            return new options(app, context, { isClassComponent: true });
+            return new options(app, { isClassComponent: true }, context);
           }
-          return new Component(app, context, options);
+          return new Component(app, options, context);
         },
       };
     },
@@ -13526,7 +13487,7 @@
       });
 
       if (popup.params.push) {
-        $el.addClass('sheet-modal-push');
+        $el.addClass('popup-push');
       }
 
       function handleClick(e) {
@@ -15662,7 +15623,7 @@
         }
         if (typeof indexTo !== 'undefined' && !Number.isNaN(indexTo) && indexTo !== indexFrom) {
           $sortingEl.trigger('sortable:sort', { from: indexFrom, to: indexTo });
-          app.emit('sortableSort', $sortingEl[0], { from: indexFrom, to: indexTo });
+          app.emit('sortableSort', $sortingEl[0], { from: indexFrom, to: indexTo, el: $sortingEl[0] }, $sortableContainer[0]);
         }
 
         $insertBeforeEl = undefined;
@@ -18352,7 +18313,7 @@
           panel.collapsed = true;
           app.allowPanelOpen = true;
           if (emitEvents) {
-            app.emit('local::collapsedBreakpoint panelCollapsedBreakpoint');
+            panel.emit('local::collapsedBreakpoint panelCollapsedBreakpoint');
             panel.$el.trigger('panel:collapsedbreakpoint');
           }
         }
@@ -18360,7 +18321,7 @@
         $el.removeClass('panel-in-collapsed panel-in');
         panel.collapsed = false;
         if (emitEvents) {
-          app.emit('local::collapsedBreakpoint panelCollapsedBreakpoint');
+          panel.emit('local::collapsedBreakpoint panelCollapsedBreakpoint');
           panel.$el.trigger('panel:collapsedbreakpoint');
         }
       }
@@ -19775,12 +19736,18 @@
     checkEmptyState: function checkEmptyState(inputEl) {
       var app = this;
       var $inputEl = $(inputEl);
-      if (!$inputEl.is('input, select, textarea')) {
-        $inputEl = $inputEl.find('input, select, textarea').eq(0);
+      if (!$inputEl.is('input, select, textarea, .item-input [contenteditable]')) {
+        $inputEl = $inputEl.find('input, select, textarea, .item-input [contenteditable]').eq(0);
       }
       if (!$inputEl.length) { return; }
-
-      var value = $inputEl.val();
+      var isContentEditable = $inputEl[0].hasAttribute('contenteditable');
+      var value;
+      if (isContentEditable) {
+        if ($inputEl.find('.text-editor-placeholder').length) { value = ''; }
+        else { value = $inputEl.html(); }
+      } else {
+        value = $inputEl.val();
+      }
       var $itemInputEl = $inputEl.parents('.item-input');
       var $inputWrapEl = $inputEl.parents('.input');
       if ((value && (typeof value === 'string' && value.trim() !== '')) || (Array.isArray(value) && value.length > 0)) {
@@ -19865,10 +19832,12 @@
         var $inputEl = $(this);
         var type = $inputEl.attr('type');
         var tag = $inputEl[0].nodeName.toLowerCase();
+        var isContentEditable = $inputEl[0].hasAttribute('contenteditable');
         if (Input.ignoreTypes.indexOf(type) >= 0) { return; }
 
         // Check Empty State
         app.input.checkEmptyState($inputEl);
+        if (isContentEditable) { return; }
 
         // Check validation
         if ($inputEl.attr('data-validate-on-blur') === null && ($inputEl.dataset().validate || $inputEl.attr('validate') !== null)) {
@@ -19899,9 +19868,9 @@
         app.emit('inputClear', previousValue);
       }
       $(doc).on('click', '.input-clear-button', clearInput);
-      $(doc).on('change input', 'input, textarea, select', onChange, true);
-      $(doc).on('focus', 'input, textarea, select', onFocus, true);
-      $(doc).on('blur', 'input, textarea, select', onBlur, true);
+      $(doc).on('change input', 'input, textarea, select, .item-input [contenteditable]', onChange, true);
+      $(doc).on('focus', 'input, textarea, select, .item-input [contenteditable]', onFocus, true);
+      $(doc).on('blur', 'input, textarea, select, .item-input [contenteditable]', onBlur, true);
       $(doc).on('invalid', 'input, textarea, select', onInvalid, true);
     },
   };
@@ -19941,7 +19910,7 @@
         var $tabEl = $(tabEl);
         $tabEl.find('.item-input, .input').each(function (itemInputIndex, itemInputEl) {
           var $itemInputEl = $(itemInputEl);
-          $itemInputEl.find('input, select, textarea').each(function (inputIndex, inputEl) {
+          $itemInputEl.find('input, select, textarea, [contenteditable]').each(function (inputIndex, inputEl) {
             var $inputEl = $(inputEl);
             if (Input.ignoreTypes.indexOf($inputEl.attr('type')) >= 0) { return; }
             app.input.checkEmptyState($inputEl);
@@ -19956,7 +19925,7 @@
         var $pageEl = page.$el;
         $pageEl.find('.item-input, .input').each(function (itemInputIndex, itemInputEl) {
           var $itemInputEl = $(itemInputEl);
-          $itemInputEl.find('input, select, textarea').each(function (inputIndex, inputEl) {
+          $itemInputEl.find('input, select, textarea, [contenteditable]').each(function (inputIndex, inputEl) {
             var $inputEl = $(inputEl);
             if (Input.ignoreTypes.indexOf($inputEl.attr('type')) >= 0) { return; }
             app.input.checkEmptyState($inputEl);
@@ -21489,6 +21458,9 @@
         var value = ss.$selectEl.val();
         ss.$el.trigger('smartselect:change', value);
         ss.emit('local::change smartSelectChange', ss, value);
+        if (ss.vl) {
+          ss.vl.clearCache();
+        }
         ss.setValueText();
       }
       ss.attachEvents = function attachEvents() {
@@ -21750,7 +21722,16 @@
       if (item.isLabel) {
         itemHtml = "<li class=\"item-divider\">" + (item.groupLabel) + "</li>";
       } else {
-        itemHtml = "\n        <li class=\"" + (item.className || '') + "\">\n          <label class=\"item-" + (item.inputType) + " item-content\">\n            <input type=\"" + (item.inputType) + "\" name=\"" + (item.inputName) + "\" value=\"" + (item.value) + "\" " + (item.selected ? 'checked' : '') + "/>\n            <i class=\"icon icon-" + (item.inputType) + "\"></i>\n            " + (item.hasMedia ? ("\n              <div class=\"item-media\">\n                " + (item.icon ? ("<i class=\"icon " + (item.icon) + "\"></i>") : '') + "\n                " + (item.image ? ("<img src=\"" + (item.image) + "\">") : '') + "\n              </div>\n            ") : '') + "\n            <div class=\"item-inner\">\n              <div class=\"item-title" + (item.color ? (" color-" + (item.color)) : '') + "\">" + (item.text) + "</div>\n            </div>\n          </label>\n        </li>\n      ";
+        var selected = item.selected;
+        var disabled;
+        if (ss.params.virtualList) {
+          var ssValue = ss.getValue();
+          selected = ss.multiple ? ssValue.indexOf(item.value) >= 0 : ssValue === item.value;
+          if (ss.multiple) {
+            disabled = ss.multiple && !selected && ssValue.length === parseInt(ss.maxLength, 10);
+          }
+        }
+        itemHtml = "\n        <li class=\"" + (item.className || '') + (disabled ? ' disabled' : '') + "\">\n          <label class=\"item-" + (item.inputType) + " item-content\">\n            <input type=\"" + (item.inputType) + "\" name=\"" + (item.inputName) + "\" value=\"" + (item.value) + "\" " + (selected ? 'checked' : '') + "/>\n            <i class=\"icon icon-" + (item.inputType) + "\"></i>\n            " + (item.hasMedia ? ("\n              <div class=\"item-media\">\n                " + (item.icon ? ("<i class=\"icon " + (item.icon) + "\"></i>") : '') + "\n                " + (item.image ? ("<img src=\"" + (item.image) + "\">") : '') + "\n              </div>\n            ") : '') + "\n            <div class=\"item-inner\">\n              <div class=\"item-title" + (item.color ? (" color-" + (item.color)) : '') + "\">" + (item.text) + "</div>\n            </div>\n          </label>\n        </li>\n      ";
       }
       return itemHtml;
     };
@@ -22368,8 +22349,15 @@
       function onInputFocus(e) {
         e.preventDefault();
       }
+      function onInputClear() {
+        calendar.setValue([]);
+        if (calendar.opened) {
+          calendar.update();
+        }
+      }
       function onHtmlClick(e) {
         var $targetEl = $(e.target);
+        if (calendar.destroyed || !calendar.params) { return; }
         if (calendar.isPopover()) { return; }
         if (!calendar.opened || calendar.closing) { return; }
         if ($targetEl.closest('[class*="backdrop"]').length) { return; }
@@ -22386,12 +22374,14 @@
       Utils.extend(calendar, {
         attachInputEvents: function attachInputEvents() {
           calendar.$inputEl.on('click', onInputClick);
+          calendar.$inputEl.on('input:clear', onInputClear);
           if (calendar.params.inputReadOnly) {
             calendar.$inputEl.on('focus mousedown', onInputFocus);
           }
         },
         detachInputEvents: function detachInputEvents() {
           calendar.$inputEl.off('click', onInputClick);
+          calendar.$inputEl.off('input:clear', onInputClear);
           if (calendar.params.inputReadOnly) {
             calendar.$inputEl.off('focus mousedown', onInputFocus);
           }
@@ -24500,6 +24490,7 @@
         e.preventDefault();
       }
       function onHtmlClick(e) {
+        if (picker.destroyed || !picker.params) { return; }
         var $targetEl = $(e.target);
         if (picker.isPopover()) { return; }
         if (!picker.opened || picker.closing) { return; }
@@ -34361,6 +34352,8 @@
     }
     if ($swiperEl.attr('data-swiper')) {
       params = JSON.parse($swiperEl.attr('data-swiper'));
+    } else if ($swiperEl[0].f7SwiperParams) {
+      params = $swiperEl[0].f7SwiperParams;
     } else {
       params = $swiperEl.dataset();
       Object.keys(params).forEach(function (key) {
@@ -34379,6 +34372,17 @@
     }
 
     var swiper = app.swiper.create($swiperEl[0], params);
+    function updateSwiper() {
+      swiper.update();
+    }
+    $swiperEl.parents('.popup, .login-screen, .sheet-modal, .popover').on('modal:open', updateSwiper);
+    $swiperEl.parents('.panel').on('panel:open', updateSwiper);
+    $swiperEl.parents('.tab').on('tab:show', updateSwiper);
+    swiper.on('beforeDestroy', function () {
+      $swiperEl.parents('.popup, .login-screen, .sheet-modal, .popover').off('modal:open', updateSwiper);
+      $swiperEl.parents('.panel').off('panel:open', updateSwiper);
+      $swiperEl.parents('.tab').off('tab:show', updateSwiper);
+    });
     if (isTabs) {
       swiper.on('slideChange', function () {
         if (isRoutableTabs) {
@@ -34645,7 +34649,9 @@
       } else {
         swipeToClose.allow = true;
       }
-      pb.$el.transition('').transform('');
+      Utils.nextTick(function () {
+        pb.$el.transform('').transition('');
+      });
     };
 
     // Render Functions
@@ -34874,7 +34880,9 @@
 
     PhotoBrowser.prototype.onOpened = function onOpened () {
       var pb = this;
-
+      if (pb.$el && pb.params.type === 'standalone') {
+        pb.$el.css('animation', 'none');
+      }
       if (pb.$el) {
         pb.$el.trigger('photobrowser:opened');
       }
@@ -38258,6 +38266,7 @@
         self.open();
       }
       function onHtmlClick(e) {
+        if (self.destroyed || !self.params) { return; }
         if (self.params.openIn === 'page') { return; }
         var $clickTargetEl = $(e.target);
         if (!self.opened || self.closing) { return; }
@@ -39412,6 +39421,581 @@
     },
   };
 
+  var textEditorButtonsMap = {
+    // f7-icon, material-icon, command
+    bold: ['bold', 'format_bold', 'bold'],
+    italic: ['italic', 'format_italic', 'italic'],
+    underline: ['underline', 'format_underline', 'underline'],
+    strikeThrough: ['strikethrough', 'strikethrough_s', 'strikeThrough'],
+    orderedList: ['list_number', 'format_list_numbered', 'insertOrderedList'],
+    unorderedList: ['list_bullet', 'format_list_bulleted', 'insertUnorderedList'],
+    link: ['link', 'link', 'createLink'],
+    image: ['photo', 'image', 'insertImage'],
+    paragraph: ['paragraph', '<i class="icon">¶</i>', 'formatBlock.P'],
+    h1: ['<i class="icon">H<sub>1</sub></i>', '<i class="icon">H<sub>1</sub></i>', 'formatBlock.H1'],
+    h2: ['<i class="icon">H<sub>2</sub></i>', '<i class="icon">H<sub>2</sub></i>', 'formatBlock.H2'],
+    h3: ['<i class="icon">H<sub>3</sub></i>', '<i class="icon">H<sub>3</sub></i>', 'formatBlock.H3'],
+    alignLeft: ['text_alignleft', 'format_align_left', 'justifyLeft'],
+    alignCenter: ['text_aligncenter', 'format_align_center', 'justifyCenter'],
+    alignRight: ['text_alignright', 'format_align_right', 'justifyRight'],
+    alignJustify: ['text_justify', 'format_align_justify', 'justifyFull'],
+    subscript: ['textformat_subscript', '<i class="icon">A<sub>1</sub></i>', 'subscript'],
+    superscript: ['textformat_superscript', '<i class="icon">A<sup>1</sup></i>', 'superscript'],
+    indent: ['increase_indent', 'format_indent_increase', 'indent'],
+    outdent: ['decrease_indent', 'format_indent_decrease', 'outdent'],
+  };
+
+  var TextEditor = /*@__PURE__*/(function (Framework7Class) {
+    function TextEditor(app, params) {
+      Framework7Class.call(this, params, [app]);
+      var self = this;
+
+      var defaults = Utils.extend({}, app.params.textEditor);
+
+      // Extend defaults with modules params
+      self.useModulesParams(defaults);
+
+      self.params = Utils.extend(defaults, params);
+
+      var el = self.params.el;
+      if (!el) { return self; }
+
+      var $el = $(el);
+      if ($el.length === 0) { return self; }
+
+      if ($el[0].f7TextEditor) { return $el[0].f7TextEditor; }
+
+      var $contentEl = $el.children('.text-editor-content');
+      if (!$contentEl.length) {
+        $el.append('<div class="text-editor-content" contenteditable></div>');
+        $contentEl = $el.children('.text-editor-content');
+      }
+
+      Utils.extend(self, {
+        app: app,
+        $el: $el,
+        el: $el[0],
+        $contentEl: $contentEl,
+        contentEl: $contentEl[0],
+      });
+      if ('value' in params) {
+        self.value = self.params.value;
+      }
+
+      if (self.params.mode === 'keyboard-toolbar') {
+        if (!app.device.cordova && !app.device.android) {
+          self.params.mode = 'popover';
+        }
+      }
+
+      if (typeof self.params.buttons === 'string') {
+        try {
+          self.params.buttons = JSON.parse(self.params.buttons);
+        } catch (err) {
+          throw new Error('Framework7: TextEditor: wrong "buttons" parameter format');
+        }
+      }
+
+      $el[0].f7TextEditor = self;
+
+      // Bind
+      self.onButtonClick = self.onButtonClick.bind(self);
+      self.onFocus = self.onFocus.bind(self);
+      self.onBlur = self.onBlur.bind(self);
+      self.onInput = self.onInput.bind(self);
+      self.onPaste = self.onPaste.bind(self);
+      self.onSelectionChange = self.onSelectionChange.bind(self);
+
+      // Handle Events
+      self.attachEvents = function attachEvents() {
+        if (self.params.mode === 'toolbar') {
+          self.$el.find('.text-editor-toolbar').on('click', 'button', self.onButtonClick);
+        }
+        if (self.params.mode === 'keyboard-toolbar') {
+          self.$keyboardToolbarEl.on('click', 'button', self.onButtonClick);
+        }
+        if (self.params.mode === 'popover' && self.popover) {
+          self.popover.$el.on('click', 'button', self.onButtonClick);
+        }
+        self.$contentEl.on('paste', self.onPaste);
+        self.$contentEl.on('focus', self.onFocus);
+        self.$contentEl.on('blur', self.onBlur);
+        self.$contentEl.on('input', self.onInput, true);
+        $(document).on('selectionchange', self.onSelectionChange);
+      };
+      self.detachEvents = function detachEvents() {
+        if (self.params.mode === 'toolbar') {
+          self.$el.find('.text-editor-toolbar').off('click', 'button', self.onButtonClick);
+        }
+        if (self.params.mode === 'keyboard-toolbar') {
+          self.$keyboardToolbarEl.off('click', 'button', self.onButtonClick);
+        }
+        if (self.params.mode === 'popover' && self.popover) {
+          self.popover.$el.off('click', 'button', self.onButtonClick);
+        }
+        self.$contentEl.off('paste', self.onPaste);
+        self.$contentEl.off('focus', self.onFocus);
+        self.$contentEl.off('blur', self.onBlur);
+        self.$contentEl.off('input', self.onInput, true);
+        $(document).off('selectionchange', self.onSelectionChange);
+      };
+
+      // Install Modules
+      self.useModules();
+
+      // Init
+      self.init();
+
+      return self;
+    }
+
+    if ( Framework7Class ) TextEditor.__proto__ = Framework7Class;
+    TextEditor.prototype = Object.create( Framework7Class && Framework7Class.prototype );
+    TextEditor.prototype.constructor = TextEditor;
+
+    TextEditor.prototype.setValue = function setValue (newValue) {
+      var self = this;
+      var currentValue = self.value;
+      if (currentValue === newValue) { return self; }
+      self.value = newValue;
+      self.$contentEl.html(newValue);
+      self.$el.trigger('texteditor:change', self.value);
+      self.emit('local::change textEditorChange', self, self.value);
+      return self;
+    };
+
+    TextEditor.prototype.getValue = function getValue () {
+      var self = this;
+      return self.value;
+    };
+
+    TextEditor.prototype.createLink = function createLink () {
+      var self = this;
+      var currentSelection = window.getSelection();
+      var selectedNodes = [];
+      var $selectedLinks;
+      if (currentSelection && currentSelection.anchorNode && $(currentSelection.anchorNode).parents(self.$el).length) {
+        var anchorNode = currentSelection.anchorNode;
+        while (anchorNode) {
+          selectedNodes.push(anchorNode);
+          if (!anchorNode.nextSibling || anchorNode === currentSelection.focusNode) {
+            anchorNode = null;
+          }
+          if (anchorNode) {
+            anchorNode = anchorNode.nextSibling;
+          }
+        }
+        $selectedLinks = $(selectedNodes).closest('a').add($(selectedNodes).children('a'));
+      }
+      if ($selectedLinks && $selectedLinks.length) {
+        $selectedLinks.each(function (linkIndex, linkNode) {
+          var selection = window.getSelection();
+          var range = document.createRange();
+          range.selectNodeContents(linkNode);
+          selection.removeAllRanges();
+          selection.addRange(range);
+          document.execCommand('unlink', false);
+          selection.removeAllRanges();
+        });
+        return self;
+      }
+      var currentRange = self.getSelectionRange();
+      if (!currentRange) { return self; }
+      var dialog = self.app.dialog.prompt(self.params.linkUrlText, '', function (link) {
+        if (link && link.trim().length) {
+          self.setSelectionRange(currentRange);
+          document.execCommand('createLink', false, link.trim());
+        }
+      });
+      dialog.$el.find('input').focus();
+      return self;
+    };
+
+    TextEditor.prototype.insertImage = function insertImage () {
+      var self = this;
+      var currentRange = self.getSelectionRange();
+      if (!currentRange) { return self; }
+      var dialog = self.app.dialog.prompt(self.params.imageUrlText, '', function (imageUrl) {
+        if (imageUrl && imageUrl.trim().length) {
+          self.setSelectionRange(currentRange);
+          document.execCommand('insertImage', false, imageUrl.trim());
+        }
+      });
+      dialog.$el.find('input').focus();
+      return self;
+    };
+
+    TextEditor.prototype.removePlaceholder = function removePlaceholder () {
+      var self = this;
+      self.$contentEl.find('.text-editor-placeholder').remove();
+    };
+
+    TextEditor.prototype.insertPlaceholder = function insertPlaceholder () {
+      var self = this;
+      self.$contentEl.append(("<div class=\"text-editor-placeholder\">" + (self.params.placeholder) + "</div>"));
+    };
+
+    TextEditor.prototype.onSelectionChange = function onSelectionChange () {
+      var self = this;
+      if (self.params.mode === 'toolbar') { return; }
+      var selection = window.getSelection();
+      var selectionIsInContent = $(selection.anchorNode).parents(self.contentEl).length || selection.anchorNode === self.contentEl;
+      if (self.params.mode === 'keyboard-toolbar') {
+        if (!selectionIsInContent) {
+          self.closeKeyboardToolbar();
+        } else {
+          self.openKeyboardToolbar();
+        }
+        return;
+      }
+      if (self.params.mode === 'popover') {
+        var selectionIsInPopover = $(selection.anchorNode).parents(self.popover.el).length || selection.anchorNode === self.popover.el;
+        if (!selectionIsInContent && !selectionIsInPopover) {
+          self.closePopover();
+          return;
+        }
+        if (!selection.isCollapsed && selection.rangeCount) {
+          var range = selection.getRangeAt(0);
+          var rect = range.getBoundingClientRect();
+          self.openPopover(rect.x + (window.scrollX || 0), rect.y + (window.scrollY || 0), rect.width, rect.height);
+        } else if (selection.isCollapsed) {
+          self.closePopover();
+        }
+      }
+    };
+
+    TextEditor.prototype.onPaste = function onPaste (e) {
+      var self = this;
+      if (self.params.clearFormattingOnPaste && e.clipboardData && e.clipboardData.getData) {
+        var text = e.clipboardData.getData('text/plain');
+        e.preventDefault();
+        document.execCommand('insertText', false, text);
+      }
+    };
+
+    TextEditor.prototype.onInput = function onInput () {
+      var self = this;
+      var value = self.$contentEl.html();
+
+      self.$el.trigger('texteditor:input');
+      self.emit('local:input textEditorInput', self);
+
+      self.value = value;
+      self.$el.trigger('texteditor:change', self.value);
+      self.emit('local::change textEditorChange', self, self.value);
+    };
+
+    TextEditor.prototype.onFocus = function onFocus () {
+      var self = this;
+      self.removePlaceholder();
+      self.$contentEl.focus();
+      self.$el.trigger('texteditor:focus');
+      self.emit('local::focus textEditorFocus', self);
+    };
+
+    TextEditor.prototype.onBlur = function onBlur () {
+      var self = this;
+      if (self.params.placeholder && self.$contentEl.html() === '') {
+        self.insertPlaceholder();
+      }
+      if (self.params.mode === 'popover') {
+        var selection = window.getSelection();
+        var selectionIsInContent = $(selection.anchorNode).parents(self.contentEl).length || selection.anchorNode === self.contentEl;
+        var inPopover = document.activeElement && self.popover && $(document.activeElement).closest(self.popover.$el).length;
+        if (!inPopover && !selectionIsInContent) {
+          self.closePopover();
+        }
+      }
+      if (self.params.mode === 'keyboard-toolbar') {
+        var selection$1 = window.getSelection();
+        var selectionIsInContent$1 = $(selection$1.anchorNode).parents(self.contentEl).length || selection$1.anchorNode === self.contentEl;
+        if (!selectionIsInContent$1) {
+          self.closeKeyboardToolbar();
+        }
+      }
+      self.$el.trigger('texteditor:blur');
+      self.emit('local::blur textEditorBlur', self);
+    };
+
+    TextEditor.prototype.onButtonClick = function onButtonClick (e) {
+      var self = this;
+      var selection = window.getSelection();
+      var selectionIsInContent = $(selection.anchorNode).parents(self.contentEl).length || selection.anchorNode === self.contentEl;
+      if (!selectionIsInContent) { return; }
+      var $buttonEl = $(e.target).closest('button');
+      var button = $buttonEl.attr('data-button');
+      var buttonData = self.params.customButtons && self.params.customButtons[button];
+      if (!button || !(textEditorButtonsMap[button] || buttonData)) { return; }
+      $buttonEl.trigger('texteditor:buttonclick', button);
+      self.emit('local::buttonClick textEditorButtonClick', self, button);
+      if (buttonData) {
+        if (buttonData.onClick) { buttonData.onClick(); }
+        return;
+      }
+      var command = textEditorButtonsMap[button][2];
+      if (command === 'createLink') {
+        self.createLink();
+        return;
+      }
+      if (command === 'insertImage') {
+        self.insertImage();
+        return;
+      }
+      if (command.indexOf('formatBlock') === 0) {
+        var tagName = command.split('.')[1];
+        var $anchorNode = $(selection.anchorNode);
+        if ($anchorNode.parents(tagName.toLowerCase()).length || $anchorNode.is(tagName)) {
+          document.execCommand('formatBlock', false, 'div');
+        } else {
+          document.execCommand('formatBlock', false, tagName);
+        }
+        return;
+      }
+      document.execCommand(command, false);
+    };
+
+    // eslint-disable-next-line
+    TextEditor.prototype.getSelectionRange = function getSelectionRange () {
+      if (window.getSelection) {
+        var sel = window.getSelection();
+        if (sel.getRangeAt && sel.rangeCount) {
+          return sel.getRangeAt(0);
+        }
+      } else if (document.selection && document.selection.createRange) {
+        return document.selection.createRange();
+      }
+      return null;
+    };
+
+    // eslint-disable-next-line
+    TextEditor.prototype.setSelectionRange = function setSelectionRange (range) {
+      if (range) {
+        if (window.getSelection) {
+          var sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+        } else if (document.selection && range.select) {
+          range.select();
+        }
+      }
+    };
+
+    TextEditor.prototype.renderButtons = function renderButtons () {
+      var self = this;
+      var html = '';
+      function renderButton(button) {
+        var iconClass = self.app.theme === 'md' ? 'material-icons' : 'f7-icons';
+        if (self.params.customButtons && self.params.customButtons[button]) {
+          var buttonData = self.params.customButtons[button];
+          return ("<button class=\"text-editor-button\" data-button=\"" + button + "\">" + (buttonData.content || '') + "</button>");
+        }
+        var iconContent = textEditorButtonsMap[button][self.app.theme === 'md' ? 1 : 0];
+        return ("<button class=\"text-editor-button\" data-button=\"" + button + "\">" + (iconContent.indexOf('<') >= 0 ? iconContent : ("<i class=\"" + iconClass + "\">" + iconContent + "</i>")) + "</button>").trim();
+      }
+      self.params.buttons.forEach(function (button, buttonIndex) {
+        if (Array.isArray(button)) {
+          button.forEach(function (b) {
+            html += renderButton(b);
+          });
+          if (buttonIndex < self.params.buttons.length - 1 && self.params.dividers) {
+            html += '<div class="text-editor-button-divider"></div>';
+          }
+        } else {
+          html += renderButton(button);
+        }
+      });
+      return html;
+    };
+
+    TextEditor.prototype.createToolbar = function createToolbar () {
+      var self = this;
+      self.$el.prepend(("<div class=\"text-editor-toolbar\">" + (self.renderButtons()) + "</div>"));
+    };
+
+    TextEditor.prototype.createKeyboardToolbar = function createKeyboardToolbar () {
+      var self = this;
+      var isDark = self.$el.closest('.theme-dark').length > 0 || self.app.device.prefersColorScheme() === 'dark';
+      self.$keyboardToolbarEl = $(("<div class=\"toolbar toolbar-bottom text-editor-keyboard-toolbar " + (isDark ? 'theme-dark' : '') + "\"><div class=\"toolbar-inner\">" + (self.renderButtons()) + "</div></div>"));
+    };
+
+    TextEditor.prototype.createPopover = function createPopover () {
+      var self = this;
+      var isDark = self.$el.closest('.theme-dark').length > 0;
+      self.popover = self.app.popover.create({
+        content: ("\n        <div class=\"popover " + (isDark ? 'theme-light' : 'theme-dark') + " text-editor-popover\">\n          <div class=\"popover-inner\">" + (self.renderButtons()) + "</div>\n        </div>\n      "),
+        closeByOutsideClick: false,
+        backdrop: false,
+      });
+    };
+
+    TextEditor.prototype.openKeyboardToolbar = function openKeyboardToolbar () {
+      var self = this;
+      if (self.$keyboardToolbarEl.parent(self.app.root).length) { return; }
+      self.$el.trigger('texteditor:keyboardopen');
+      self.emit('local::keyboardOpen textEditorKeyboardOpen', self);
+      self.app.root.append(self.$keyboardToolbarEl);
+    };
+
+    TextEditor.prototype.closeKeyboardToolbar = function closeKeyboardToolbar () {
+      var self = this;
+      self.$keyboardToolbarEl.remove();
+      self.$el.trigger('texteditor:keyboardclose');
+      self.emit('local::keyboardClose textEditorKeyboardClose', self);
+    };
+
+    TextEditor.prototype.openPopover = function openPopover (targetX, targetY, targetWidth, targetHeight) {
+      var self = this;
+
+      if (!self.popover) { return; }
+      Object.assign(self.popover.params, {
+        targetX: targetX,
+        targetY: targetY,
+        targetWidth: targetWidth,
+        targetHeight: targetHeight,
+      });
+      clearTimeout(self.popoverTimeout);
+      self.popoverTimeout = setTimeout(function () {
+        if (!self.popover) { return; }
+        if (self.popover.opened) {
+          self.popover.resize();
+        } else {
+          self.$el.trigger('texteditor:popoveropen');
+          self.emit('local::popoverOpen textEditorPopoverOpen', self);
+          self.popover.open();
+        }
+      }, 400);
+    };
+
+    TextEditor.prototype.closePopover = function closePopover () {
+      var self = this;
+      clearTimeout(self.popoverTimeout);
+      if (!self.popover || !self.popover.opened) { return; }
+      self.popoverTimeout = setTimeout(function () {
+        if (!self.popover) { return; }
+        self.$el.trigger('texteditor:popoverclose');
+        self.emit('local::popoverClose textEditorPopoverClose', self);
+        self.popover.close();
+      }, 400);
+    };
+
+    TextEditor.prototype.init = function init () {
+      var self = this;
+      if (self.value) {
+        self.$contentEl.html(self.value);
+      } else {
+        self.value = self.$contentEl.html();
+      }
+      if (self.params.placeholder && self.value === '') {
+        self.insertPlaceholder();
+      }
+      if (self.params.mode === 'toolbar') {
+        self.createToolbar();
+      } else if (self.params.mode === 'popover') {
+        self.createPopover();
+      } else if (self.params.mode === 'keyboard-toolbar') {
+        self.createKeyboardToolbar();
+      }
+
+      self.attachEvents();
+      return self;
+    };
+
+    TextEditor.prototype.destroy = function destroy () {
+      var self = this;
+      self.$el.trigger('texteditor:beforedestroy');
+      self.emit('local::beforeDestroy textEditorBeforeDestroy', self);
+      self.detachEvents();
+      if (self.popover) {
+        self.popover.close(false);
+        self.popover.destroy();
+      }
+      delete self.$el[0].f7TextEditor;
+      Utils.deleteProps(self);
+      self = null;
+    };
+
+    return TextEditor;
+  }(Framework7Class));
+
+  var TextEditor$1 = {
+    name: 'textEditor',
+    params: {
+      textEditor: {
+        el: null,
+        mode: 'toolbar', // or 'popover'
+        value: undefined, // will use html content
+        customButtons: null,
+        buttons: [
+          ['bold', 'italic', 'underline', 'strikeThrough'],
+          ['orderedList', 'unorderedList'],
+          ['link', 'image'],
+          ['paragraph', 'h1', 'h2', 'h3'],
+          ['alignLeft', 'alignCenter', 'alignRight', 'alignJustify'],
+          ['subscript', 'superscript'],
+          ['indent', 'outdent'] ],
+        dividers: true,
+        imageUrlText: 'Insert image URL',
+        linkUrlText: 'Insert link URL',
+        placeholder: null,
+        clearFormattingOnPaste: true,
+      },
+    },
+    create: function create() {
+      var app = this;
+      app.textEditor = Utils.extend(
+        ConstructorMethods({
+          defaultSelector: '.text-editor',
+          constructor: TextEditor,
+          app: app,
+          domProp: 'f7TextEditor',
+        })
+      );
+    },
+    static: {
+      TextEditor: TextEditor,
+    },
+    on: {
+      tabMounted: function tabMounted(tabEl) {
+        var app = this;
+        $(tabEl).find('.text-editor-init').each(function (index, editorEl) {
+          var dataset = $(editorEl).dataset();
+          app.textEditor.create(Utils.extend({ el: editorEl }, dataset || {}));
+        });
+      },
+      tabBeforeRemove: function tabBeforeRemove(tabEl) {
+        $(tabEl).find('.text-editor-init').each(function (index, editorEl) {
+          if (editorEl.f7TextEditor) { editorEl.f7TextEditor.destroy(); }
+        });
+      },
+      pageInit: function pageInit(page) {
+        var app = this;
+        page.$el.find('.text-editor-init').each(function (index, editorEl) {
+          var dataset = $(editorEl).dataset();
+          app.textEditor.create(Utils.extend({ el: editorEl }, dataset || {}));
+        });
+      },
+      pageBeforeRemove: function pageBeforeRemove(page) {
+        page.$el.find('.text-editor-init').each(function (index, editorEl) {
+          if (editorEl.f7TextEditor) { editorEl.f7TextEditor.destroy(); }
+        });
+      },
+    },
+    vnode: {
+      'text-editor-init': {
+        insert: function insert(vnode) {
+          var app = this;
+          var editorEl = vnode.elm;
+          var dataset = $(editorEl).dataset();
+          app.textEditor.create(Utils.extend({ el: editorEl }, dataset || {}));
+        },
+        destroy: function destroy(vnode) {
+          var editorEl = vnode.elm;
+          if (editorEl.f7TextEditor) { editorEl.f7TextEditor.destroy(); }
+        },
+      },
+    },
+  };
+
   var Elevation = {
     name: 'elevation',
   };
@@ -39505,6 +40089,7 @@
     ColorPicker$1,
     Treeview$1,
     Vi,
+    TextEditor$1,
     Elevation,
     Typography
   ]);

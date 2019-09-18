@@ -140,7 +140,7 @@ __reactComponentSetProps(F7PhotoBrowser, {
     type: String,
     default: undefined
   },
-  popupBackLinkText: {
+  popupCloseLinkText: {
     type: String,
     default: undefined
   },

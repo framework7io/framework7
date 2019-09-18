@@ -17,15 +17,16 @@
   }
   &.modal-out {
     transition-duration: 0ms;
-    animation: photo-browser-out 400ms;
+    animation: photo-browser-out 400ms !important;
     &.swipe-close-to-bottom,
     &.swipe-close-to-top {
-      animation: none;
+      animation: none !important;
     }
   }
   &.photo-browser-transitioning {
     transition: 400ms;
     transition-property: transform;
+    animation: none !important;
   }
 }
 .photo-browser-popup {

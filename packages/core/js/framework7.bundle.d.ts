@@ -78,6 +78,7 @@ import {Subnavbar as SubnavbarNamespace} from '../components/subnavbar/subnavbar
 import {Swipeout as SwipeoutNamespace} from '../components/swipeout/swipeout';
 import {Swiper as SwiperNamespace} from '../components/swiper/swiper';
 import {Tabs as TabsNamespace} from '../components/tabs/tabs';
+import {TextEditor as TextEditorNamespace} from '../components/text-editor/text-editor';
 import {Timeline as TimelineNamespace} from '../components/timeline/timeline';
 import {Toast as ToastNamespace} from '../components/toast/toast';
 import {Toggle as ToggleNamespace} from '../components/toggle/toggle';
@@ -289,6 +290,9 @@ declare module '../components/app/app-class' {
   interface Framework7Class<Events> extends TabsNamespace.AppMethods{}
   interface Framework7Params extends TabsNamespace.AppParams{}
   interface Framework7Events extends TabsNamespace.AppEvents{}
+  interface Framework7Class<Events> extends TextEditorNamespace.AppMethods{}
+  interface Framework7Params extends TextEditorNamespace.AppParams{}
+  interface Framework7Events extends TextEditorNamespace.AppEvents{}
   interface Framework7Class<Events> extends TimelineNamespace.AppMethods{}
   interface Framework7Params extends TimelineNamespace.AppParams{}
   interface Framework7Events extends TimelineNamespace.AppEvents{}

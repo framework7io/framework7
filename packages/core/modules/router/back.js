@@ -418,8 +418,20 @@ function backward(el, backwardOptions) {
   }
 
   if (options.animate && !(currentIsMaster && app.width >= router.params.masterDetailBreakpoint)) {
+    let transition = router.params.transition;
+    if ($oldPage[0] && $oldPage[0].f7PageTransition) {
+      transition = $oldPage[0].f7PageTransition;
+      delete $oldPage[0].f7PageTransition;
+    }
+    if (options.transition) transition = options.transition;
+    if (!transition && router.previousRoute && router.previousRoute.route) {
+      transition = router.previousRoute.route.transition;
+    }
+    if (!transition && router.previousRoute && router.previousRoute.route && router.previousRoute.route.options) {
+      transition = router.previousRoute.route.options.transition;
+    }
     setPositionClasses();
-    router.animate($oldPage, $newPage, $oldNavbarEl, $newNavbarEl, 'backward', () => {
+    router.animate($oldPage, $newPage, $oldNavbarEl, $newNavbarEl, 'backward', transition, () => {
       afterAnimation();
     });
   } else {

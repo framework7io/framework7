@@ -198,22 +198,10 @@ export default {
       }
 
       if (!virtualList) return;
-      const $$ = self.$$;
-      const $el = $$(el);
-      const templateScript = $el.find('script');
-      let template = templateScript.html();
-
-      if (!template && templateScript.length > 0) {
-        template = templateScript[0].outerHTML;
-        template = /\<script type="text\/template7"\>(.*)<\/script>/.exec(template)[1];
-      }
-
       const vlParams = virtualListParams || {};
-      if (!template && !vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal) return;
-      if (template) template = self.$t7.compile(template);
+      if (!vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal) return;
       self.f7VirtualList = f7.virtualList.create(Utils.extend({
         el,
-        itemTemplate: template,
         on: {
           itemBeforeInsert(itemEl, item) {
             const vl = this;
@@ -264,27 +252,27 @@ export default {
 
     onSortableEnable(el) {
       if (this.eventTargetEl !== el) return;
-      this.dispatchEvent('sortable:enable sortableEnable', el);
+      this.dispatchEvent('sortable:enable sortableEnable');
     },
 
     onSortableDisable(el) {
       if (this.eventTargetEl !== el) return;
-      this.dispatchEvent('sortable:disable sortableDisable', el);
+      this.dispatchEvent('sortable:disable sortableDisable');
     },
 
-    onSortableSort(el, sortData) {
-      if (this.eventTargetEl !== el) return;
-      this.dispatchEvent('sortable:sort sortableSort', el, sortData);
+    onSortableSort(el, sortData, listEl) {
+      if (this.eventTargetEl !== listEl) return;
+      this.dispatchEvent('sortable:sort sortableSort', sortData);
     },
 
     onTabShow(el) {
       if (this.eventTargetEl !== el) return;
-      this.dispatchEvent('tab:show tabShow', el);
+      this.dispatchEvent('tab:show tabShow');
     },
 
     onTabHide(el) {
       if (this.eventTargetEl !== el) return;
-      this.dispatchEvent('tab:hide tabHide', el);
+      this.dispatchEvent('tab:hide tabHide');
     },
 
     dispatchEvent(events, ...args) {

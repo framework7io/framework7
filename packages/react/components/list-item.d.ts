@@ -64,6 +64,7 @@ declare namespace F7ListItem {
     view? : string
     routeProps? : Object
     preventRouter? : boolean
+    transition? : string
     searchbarEnable? : boolean | string
     searchbarDisable? : boolean | string
     searchbarClear? : boolean | string
@@ -89,21 +90,21 @@ declare namespace F7ListItem {
     cardClose? : boolean | string
     menuClose? : boolean | string
     onClick? : (event?: any) => void
-    onSwipeoutOverswipeEnter? : (el?: any) => void
-    onSwipeoutOverswipeExit? : (el?: any) => void
-    onSwipeoutDeleted? : (el?: any) => void
-    onSwipeoutDelete? : (el?: any) => void
-    onSwipeoutClose? : (el?: any) => void
-    onSwipeoutClosed? : (el?: any) => void
-    onSwipeoutOpen? : (el?: any) => void
-    onSwipeoutOpened? : (el?: any) => void
-    onSwipeout? : (el?: any) => void
-    onAccordionBeforeClose? : (el?: any, prevent?: any) => void
-    onAccordionClose? : (el?: any) => void
-    onAccordionClosed? : (el?: any) => void
-    onAccordionBeforeOpen? : (el?: any, prevent?: any) => void
-    onAccordionOpen? : (el?: any) => void
-    onAccordionOpened? : (el?: any) => void
+    onSwipeoutOverswipeEnter? : (...args: any[]) => void
+    onSwipeoutOverswipeExit? : (...args: any[]) => void
+    onSwipeoutDeleted? : (...args: any[]) => void
+    onSwipeoutDelete? : (...args: any[]) => void
+    onSwipeoutClose? : (...args: any[]) => void
+    onSwipeoutClosed? : (...args: any[]) => void
+    onSwipeoutOpen? : (...args: any[]) => void
+    onSwipeoutOpened? : (...args: any[]) => void
+    onSwipeout? : (progress?: any) => void
+    onAccordionBeforeClose? : (prevent?: any) => void
+    onAccordionClose? : (...args: any[]) => void
+    onAccordionClosed? : (...args: any[]) => void
+    onAccordionBeforeOpen? : (prevent?: any) => void
+    onAccordionOpen? : (...args: any[]) => void
+    onAccordionOpened? : (...args: any[]) => void
     onChange? : (event?: any) => void
     onInput? : (event?: any) => void
   }
@@ -118,7 +119,7 @@ declare class F7ListItem extends React.Component<F7ListItem.Props, {}> {
   onSwipeoutClosed(el? : any) : unknown
   onSwipeoutOpen(el? : any) : unknown
   onSwipeoutOpened(el? : any) : unknown
-  onSwipeout(el? : any) : unknown
+  onSwipeout(el? : any, progress? : any) : unknown
   onAccBeforeClose(el? : any, prevent? : any) : unknown
   onAccClose(el? : any) : unknown
   onAccClosed(el? : any) : unknown

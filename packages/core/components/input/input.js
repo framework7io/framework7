@@ -110,12 +110,18 @@ const Input = {
   checkEmptyState(inputEl) {
     const app = this;
     let $inputEl = $(inputEl);
-    if (!$inputEl.is('input, select, textarea')) {
-      $inputEl = $inputEl.find('input, select, textarea').eq(0);
+    if (!$inputEl.is('input, select, textarea, .item-input [contenteditable]')) {
+      $inputEl = $inputEl.find('input, select, textarea, .item-input [contenteditable]').eq(0);
     }
     if (!$inputEl.length) return;
-
-    const value = $inputEl.val();
+    const isContentEditable = $inputEl[0].hasAttribute('contenteditable');
+    let value;
+    if (isContentEditable) {
+      if ($inputEl.find('.text-editor-placeholder').length) value = '';
+      else value = $inputEl.html();
+    } else {
+      value = $inputEl.val();
+    }
     const $itemInputEl = $inputEl.parents('.item-input');
     const $inputWrapEl = $inputEl.parents('.input');
     if ((value && (typeof value === 'string' && value.trim() !== '')) || (Array.isArray(value) && value.length > 0)) {
@@ -198,10 +204,12 @@ const Input = {
       const $inputEl = $(this);
       const type = $inputEl.attr('type');
       const tag = $inputEl[0].nodeName.toLowerCase();
+      const isContentEditable = $inputEl[0].hasAttribute('contenteditable');
       if (Input.ignoreTypes.indexOf(type) >= 0) return;
 
       // Check Empty State
       app.input.checkEmptyState($inputEl);
+      if (isContentEditable) return;
 
       // Check validation
       if ($inputEl.attr('data-validate-on-blur') === null && ($inputEl.dataset().validate || $inputEl.attr('validate') !== null)) {
@@ -232,9 +240,9 @@ const Input = {
       app.emit('inputClear', previousValue);
     }
     $(document).on('click', '.input-clear-button', clearInput);
-    $(document).on('change input', 'input, textarea, select', onChange, true);
-    $(document).on('focus', 'input, textarea, select', onFocus, true);
-    $(document).on('blur', 'input, textarea, select', onBlur, true);
+    $(document).on('change input', 'input, textarea, select, .item-input [contenteditable]', onChange, true);
+    $(document).on('focus', 'input, textarea, select, .item-input [contenteditable]', onFocus, true);
+    $(document).on('blur', 'input, textarea, select, .item-input [contenteditable]', onBlur, true);
     $(document).on('invalid', 'input, textarea, select', onInvalid, true);
   },
 };
@@ -274,7 +282,7 @@ export default {
       const $tabEl = $(tabEl);
       $tabEl.find('.item-input, .input').each((itemInputIndex, itemInputEl) => {
         const $itemInputEl = $(itemInputEl);
-        $itemInputEl.find('input, select, textarea').each((inputIndex, inputEl) => {
+        $itemInputEl.find('input, select, textarea, [contenteditable]').each((inputIndex, inputEl) => {
           const $inputEl = $(inputEl);
           if (Input.ignoreTypes.indexOf($inputEl.attr('type')) >= 0) return;
           app.input.checkEmptyState($inputEl);
@@ -289,7 +297,7 @@ export default {
       const $pageEl = page.$el;
       $pageEl.find('.item-input, .input').each((itemInputIndex, itemInputEl) => {
         const $itemInputEl = $(itemInputEl);
-        $itemInputEl.find('input, select, textarea').each((inputIndex, inputEl) => {
+        $itemInputEl.find('input, select, textarea, [contenteditable]').each((inputIndex, inputEl) => {
           const $inputEl = $(inputEl);
           if (Input.ignoreTypes.indexOf($inputEl.attr('type')) >= 0) return;
           app.input.checkEmptyState($inputEl);

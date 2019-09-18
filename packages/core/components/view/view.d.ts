@@ -43,6 +43,8 @@ export namespace View {
     allowDuplicateUrls?: boolean
     /**	Enables transitions between pages */
     animate?: boolean
+    /** Custom page transition effect name */
+    transition?: string
     /**	Enable/disable preloading of previous page when you go deep in navigation. Should be enabled for correct work of "swipe back page" feature. */
     preloadPreviousPage?: boolean
     /**	When enabled, View will always reload currently active page without loading new one */
@@ -88,7 +90,7 @@ export namespace View {
     /**	Duration in ms (milliseconds) while app will use cache instead of loading page with another Ajax request. By default it takes 10 minutes. */
     xhrCacheDuration?: number
     /** When enabled, Router will cache components specified via `componentUrl` (default true) */
-    componentCache?: number
+    componentCache?: boolean
     /** When enabled, and there is no children pages inside of the View. It will load initial page that matches to initial URL (default true) */
     loadInitialPage?: boolean
     /**	Enables dynamic navbar for iOS theme */

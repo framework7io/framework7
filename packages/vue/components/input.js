@@ -2,6 +2,8 @@ import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import F7Toggle from './toggle';
 import F7Range from './range';
+import F7TextEditor from './text-editor';
+import __vueComponentTransformJSXProps from '../runtime-helpers/vue-component-transform-jsx-props.js';
 import __vueComponentSetState from '../runtime-helpers/vue-component-set-state.js';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
@@ -56,7 +58,8 @@ export default {
       default: 'auto'
     },
     calendarParams: Object,
-    colorPickerParams: Object
+    colorPickerParams: Object,
+    textEditorParams: Object
   }, Mixins.colorProps),
 
   data() {
@@ -121,7 +124,8 @@ export default {
       noStoreData,
       noFormStoreData,
       ignoreStoreData,
-      outline
+      outline,
+      textEditorParams
     } = props;
     const domValue = self.domValue();
     const inputHasValue = self.inputHasValue();
@@ -250,6 +254,20 @@ export default {
           input: true
         }
       });
+    } else if (type === 'texteditor') {
+      inputEl = _h(F7TextEditor, __vueComponentTransformJSXProps(Object.assign({}, textEditorParams, {
+        on: {
+          textEditorFocus: self.onFocus,
+          textEditorBlur: self.onBlur,
+          textEditorInput: self.onInput,
+          textEditorChange: self.onChange
+        },
+        attrs: {
+          value: value,
+          resizable: resizable,
+          placeholder: placeholder
+        }
+      })));
     } else {
       inputEl = createInput('input');
     }
@@ -442,8 +460,14 @@ export default {
     inputHasValue() {
       const self = this;
       const {
-        value
+        value,
+        type
       } = self.props;
+
+      if (type === 'datepicker' && Array.isArray(value) && value.length === 0) {
+        return false;
+      }
+
       const domValue = self.domValue();
       return typeof value === 'undefined' ? domValue || domValue === 0 : value || value === 0;
     },
@@ -484,33 +508,33 @@ export default {
       this.dispatchEvent('input:clear inputClear', event);
     },
 
-    onInput(event) {
+    onInput(...args) {
       const self = this;
       const {
         validate,
         validateOnBlur
       } = self.props;
-      self.dispatchEvent('input', event);
+      self.dispatchEvent('input', ...args);
 
       if (!(validateOnBlur || validateOnBlur === '') && (validate || validate === '') && self.$refs && self.$refs.inputEl) {
         self.validateInput(self.$refs.inputEl);
       }
     },
 
-    onFocus(event) {
-      this.dispatchEvent('focus', event);
+    onFocus(...args) {
+      this.dispatchEvent('focus', ...args);
       this.setState({
         inputFocused: true
       });
     },
 
-    onBlur(event) {
+    onBlur(...args) {
       const self = this;
       const {
         validate,
         validateOnBlur
       } = self.props;
-      self.dispatchEvent('blur', event);
+      self.dispatchEvent('blur', ...args);
 
       if ((validate || validate === '' || validateOnBlur || validateOnBlur === '') && self.$refs && self.$refs.inputEl) {
         self.validateInput(self.$refs.inputEl);
@@ -521,8 +545,12 @@ export default {
       });
     },
 
-    onChange(event) {
-      this.dispatchEvent('change', event);
+    onChange(...args) {
+      this.dispatchEvent('change', ...args);
+
+      if (this.props.type === 'texteditor') {
+        this.dispatchEvent('texteditor:change textEditorChange', args[1]);
+      }
     },
 
     dispatchEvent(events, ...args) {

@@ -7,7 +7,11 @@ export default {
     id: [String, Number],
     animated: Boolean,
     swipeable: Boolean,
-    routable: Boolean
+    routable: Boolean,
+    swiperParams: {
+      type: Object,
+      default: undefined
+    }
   }, Mixins.colorProps),
 
   render() {
@@ -36,6 +40,7 @@ export default {
       return _h('div', {
         style: style,
         class: Utils.classNames(wrapClasses, classes),
+        ref: 'wrapEl',
         attrs: {
           id: id
         }
@@ -51,6 +56,18 @@ export default {
         id: id
       }
     }, [this.$slots['default']]);
+  },
+
+  mounted() {
+    const self = this;
+    const {
+      swipeable,
+      swiperParams
+    } = self.props;
+    if (!swipeable || !swiperParams) return;
+    const wrapEl = self.$refs.wrapEl;
+    if (!wrapEl) return;
+    wrapEl.f7SwiperParams = swiperParams;
   },
 
   computed: {

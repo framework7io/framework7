@@ -1,6 +1,5 @@
 /* eslint no-control-regex: "off" */
 import { window } from 'ssr-window';
-import bezier from './bezier';
 
 // Remove Diacritics
 const defaultDiacriticsRemovalap = [
@@ -156,9 +155,6 @@ const Utils = {
         // something got wrong
       }
     });
-  },
-  bezier(...args) {
-    return bezier(...args);
   },
   nextTick(callback, delay = 0) {
     return setTimeout(callback, delay);

@@ -52,6 +52,7 @@ class Picker extends Framework7Class {
       e.preventDefault();
     }
     function onHtmlClick(e) {
+      if (picker.destroyed || !picker.params) return;
       const $targetEl = $(e.target);
       if (picker.isPopover()) return;
       if (!picker.opened || picker.closing) return;

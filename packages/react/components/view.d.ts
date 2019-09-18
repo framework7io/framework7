@@ -51,6 +51,7 @@ declare namespace F7View {
     pushStateSeparator? : string
     pushStateOnLoad? : boolean
     animate? : boolean
+    transition? : string
     iosDynamicNavbar? : boolean
     iosSeparateDynamicNavbar? : boolean
     iosAnimateNavbarBackIcon? : boolean

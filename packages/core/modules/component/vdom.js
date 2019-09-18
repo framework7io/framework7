@@ -40,7 +40,12 @@ function getHooks(data, app, initial, isRoot, tagName) {
   if (isCustomComponent) {
     insert.push((vnode) => {
       if (vnode.sel !== tagName) return;
-      app.component.create(Object.assign({ el: vnode.elm }, customComponents[tagName]), contextFromAttrs(data.attrs || {}, data.props || {})).then((c) => {
+      app.component.create(
+        Object.assign({ el: vnode.elm }, customComponents[tagName]),
+        {
+          $props: contextFromAttrs(data.attrs || {}, data.props || {}),
+        },
+      ).then((c) => {
         // eslint-disable-next-line
         vnode.elm.__component__ = c;
       });
@@ -59,8 +64,8 @@ function getHooks(data, app, initial, isRoot, tagName) {
       // eslint-disable-next-line
       const component = vnode && vnode.elm && vnode.elm.__component__;
       if (!component) return;
-      const newData = contextFromAttrs(vnode.data.attrs || {}, vnode.data.props || {});
-      Object.assign(component, newData);
+      const newProps = contextFromAttrs(vnode.data.attrs || {}, vnode.data.props || {});
+      Object.assign(component.$props, newProps);
       component.$update();
     });
   }

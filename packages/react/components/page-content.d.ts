@@ -29,14 +29,14 @@ declare namespace F7PageContent {
     borderColor? : string
     rippleColor? : string
     themeDark? : boolean
-    onPtrPullStart? : (el?: any) => void
-    onPtrPullMove? : (el?: any) => void
-    onPtrPullEnd? : (el?: any) => void
-    onPtrRefresh? : (el?: any, done?: any) => void
-    onPtrDone? : (el?: any) => void
-    onInfinite? : (el?: any) => void
-    onTabShow? : (el?: any) => void
-    onTabHide? : (el?: any) => void
+    onPtrPullStart? : (...args: any[]) => void
+    onPtrPullMove? : (...args: any[]) => void
+    onPtrPullEnd? : (...args: any[]) => void
+    onPtrRefresh? : (done?: any) => void
+    onPtrDone? : (...args: any[]) => void
+    onInfinite? : (...args: any[]) => void
+    onTabShow? : (...args: any[]) => void
+    onTabHide? : (...args: any[]) => void
   }
 }
 declare class F7PageContent extends React.Component<F7PageContent.Props, {}> {

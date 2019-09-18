@@ -9,6 +9,7 @@ declare namespace F7Tabs {
     animated? : boolean
     swipeable? : boolean
     routable? : boolean
+    swiperParams? : Object
     color? : string
     colorTheme? : string
     textColor? : string
