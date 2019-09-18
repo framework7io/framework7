@@ -57,7 +57,9 @@ function initClicks(app) {
     const validUrl = url && url.length > 0 && url[0] !== '#';
     if (validUrl || $clickedLinkEl.hasClass('back')) {
       let view;
-      if (clickedLinkData.view) {
+      if (clickedLinkData.view && clickedLinkData.view === 'current') {
+        view = app.views.current;
+      } else if (clickedLinkData.view) {
         view = $(clickedLinkData.view)[0].f7View;
       } else {
         view = $clickedEl.parents('.view')[0] && $clickedEl.parents('.view')[0].f7View;
