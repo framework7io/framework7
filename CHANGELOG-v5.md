@@ -11,6 +11,8 @@
   * `medium` - width more than `768px`
   * `large` - width more than `1024px`
   * `xlarge` - width more than `1200px`
+* Dark Theme can now be excluded from bundle (custom build)
+* Light Theme can now also be excluded from bundle (custom build)
 
 ## Core APIs & Modules
 
@@ -36,6 +38,7 @@
     * Statusbar overlay element (`<div class="statusbar">`) and related functionality has been removed in favor of using that space by navigation bars and other elements to provide true full-screen experience and customization. Statusbar cordova's API is there as it was before.
 * **Touch**
   * Fast clicks functionality has been completely removed. Following `app.touch`' parameters are not supported anymore: `fastClicks`, `fastClicksDistanceThreshold`, `fastClicksDelayBetweenClicks` and `fastClicksExclude`
+  * Added support to disable "active state" on specific elements by adding `no-active-state` class to such elements
 * **View/Router**
   * New `loadInitialPage` (boolean) parameter. When enabled, and there is no children pages inside of the View. It will load initial page that matches to initial URL (default true)
   * New `componentCache` (boolean) parameter. When enabled, Router will cache components specified via `componentUrl` (default true)
@@ -46,6 +49,7 @@
   * Added custom page transitions support and 8 new page transitions: `f7-circle`, `f7-cover`, `f7-cover-v`, `f7-dive`, `f7-fade`, `f7-flip`, `f7-parallax`, `f7-push`
   * Route declaration now supports new `options.transition` string property to specify custom transition for this route
   * Custom transition can now also be specified via `data-transition` attribute on links
+  * It is now possible to specify "current" view for link to load the page with `data-view="current"` attribute
 
 ## Core Components
 
