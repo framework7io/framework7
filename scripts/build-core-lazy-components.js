@@ -107,9 +107,7 @@ async function buildLazyComponentsLess(components, rtl, cb) {
 }
 
 function buildLazyComponentsJs(components, cb) {
-  const config = getConfig();
   const env = process.env.NODE_ENV || 'development';
-  const target = process.env.TARGET || config.target || 'universal';
   const format = 'umd';
   const output = `${getOutput()}/core`;
 
@@ -125,7 +123,6 @@ function buildLazyComponentsJs(components, cb) {
         replace({
           delimiters: ['', ''],
           'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
-          'process.env.TARGET': JSON.stringify(target),
           'process.env.FORMAT': JSON.stringify(format),
         }),
         resolve({ mainFields: ['module', 'main', 'jsnext'] }),

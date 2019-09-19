@@ -18,9 +18,7 @@ const fs = require('./utils/fs-extra');
 let cache;
 
 function es(components, cb) {
-  const config = getConfig();
   const env = process.env.NODE_ENV || 'development';
-  const target = process.env.TARGET || config.target || 'universal';
   const format = 'es';
   const output = path.resolve(`${getOutput()}`, 'core');
   const esContent = fs.readFileSync(path.resolve(__dirname, '../src/core/framework7.js'));
@@ -28,7 +26,6 @@ function es(components, cb) {
   // Bundle
   const bundleContent = esContent
     .replace('process.env.NODE_ENV', JSON.stringify(env))
-    .replace('process.env.TARGET', JSON.stringify(target))
     .replace('process.env.FORMAT', JSON.stringify(format))
     .replace('//IMPORT_COMPONENTS', components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'))
     .replace('//INSTALL_COMPONENTS', components.map(component => component.capitalized).join(',\n  '))
@@ -38,7 +35,6 @@ function es(components, cb) {
   // Core
   const coreContent = esContent
     .replace('process.env.NODE_ENV', JSON.stringify(env))
-    .replace('process.env.TARGET', JSON.stringify(target))
     .replace('process.env.FORMAT', JSON.stringify(format))
     .replace('//IMPORT_COMPONENTS\n', '')
     .replace('//INSTALL_COMPONENTS\n', '')
@@ -54,7 +50,6 @@ function es(components, cb) {
 function umdBundle(components, cb) {
   const config = getConfig();
   const env = process.env.NODE_ENV || 'development';
-  const target = process.env.TARGET || config.target || 'universal';
   const format = process.env.FORMAT || config.format || 'umd';
   const output = path.resolve(`${getOutput()}`, 'core');
 
@@ -65,7 +60,6 @@ function umdBundle(components, cb) {
       replace({
         delimiters: ['', ''],
         'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
-        'process.env.TARGET': JSON.stringify(target),
         'process.env.FORMAT': JSON.stringify(format),
         '//IMPORT_COMPONENTS': components.map(component => `import ${component.capitalized} from './components/${component.name}/${component.name}';`).join('\n'),
         '//INSTALL_COMPONENTS': components.map(component => component.capitalized).join(',\n  '),
@@ -124,7 +118,6 @@ function umdBundle(components, cb) {
 function umdCore(cb) {
   const config = getConfig();
   const env = process.env.NODE_ENV || 'development';
-  const target = process.env.TARGET || config.target || 'universal';
   const format = process.env.FORMAT || config.format || 'umd';
   const output = path.resolve(`${getOutput()}`, 'core');
 
@@ -134,7 +127,6 @@ function umdCore(cb) {
       replace({
         delimiters: ['', ''],
         'process.env.NODE_ENV': JSON.stringify(env), // or 'production'
-        'process.env.TARGET': JSON.stringify(target),
         'process.env.FORMAT': JSON.stringify(format),
         '//IMPORT_COMPONENTS': '',
         '//INSTALL_COMPONENTS': '',

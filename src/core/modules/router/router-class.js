@@ -955,14 +955,12 @@ class Router extends Framework7Class {
     const { app, view } = router;
 
     // Init Swipeback
-    if (process.env.TARGET !== 'desktop') {
-      if (
-        (view && router.params.iosSwipeBack && app.theme === 'ios')
-        || (view && router.params.mdSwipeBack && app.theme === 'md')
-        || (view && router.params.auroraSwipeBack && app.theme === 'aurora')
-      ) {
-        SwipeBack(router);
-      }
+    if (
+      (view && router.params.iosSwipeBack && app.theme === 'ios')
+      || (view && router.params.mdSwipeBack && app.theme === 'md')
+      || (view && router.params.auroraSwipeBack && app.theme === 'aurora')
+    ) {
+      SwipeBack(router);
     }
 
     let initUrl = router.params.url;

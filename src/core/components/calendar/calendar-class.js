@@ -354,12 +354,10 @@ class Calendar extends Framework7Class {
       // Day clicks
       $wrapperEl.on('click', handleDayClick);
       // Touch events
-      if (process.env.TARGET !== 'desktop') {
-        if (calendar.params.touchMove) {
-          $wrapperEl.on(app.touchEvents.start, handleTouchStart, passiveListener);
-          app.on('touchmove:active', handleTouchMove);
-          app.on('touchend:passive', handleTouchEnd);
-        }
+      if (calendar.params.touchMove) {
+        $wrapperEl.on(app.touchEvents.start, handleTouchStart, passiveListener);
+        app.on('touchmove:active', handleTouchMove);
+        app.on('touchend:passive', handleTouchEnd);
       }
 
       calendar.detachCalendarEvents = function detachCalendarEvents() {
@@ -380,12 +378,10 @@ class Calendar extends Framework7Class {
           $el.off('click', '.calendar-time-picker-close', onTimePickerCloseClick);
         }
         $wrapperEl.off('click', handleDayClick);
-        if (process.env.TARGET !== 'desktop') {
-          if (calendar.params.touchMove) {
-            $wrapperEl.off(app.touchEvents.start, handleTouchStart, passiveListener);
-            app.off('touchmove:active', handleTouchMove);
-            app.off('touchend:passive', handleTouchEnd);
-          }
+        if (calendar.params.touchMove) {
+          $wrapperEl.off(app.touchEvents.start, handleTouchStart, passiveListener);
+          app.off('touchmove:active', handleTouchMove);
+          app.off('touchend:passive', handleTouchEnd);
         }
       };
     };

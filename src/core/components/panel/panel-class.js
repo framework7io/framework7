@@ -225,10 +225,7 @@ class Panel extends Framework7Class {
     if (panel.swipeInitialized) {
       panel.swipeable = true;
     } else {
-      // eslint-disable-next-line
-      if (process.env.TARGET !== 'desktop') {
-        SwipePanel(panel);
-      }
+      SwipePanel(panel);
     }
     return panel;
   }

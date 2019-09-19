@@ -11,7 +11,6 @@ const fs = require('./utils/fs-extra');
 
 function buildKs(cb) {
   const env = process.env.NODE_ENV || 'development';
-  const target = process.env.TARGET || 'universal';
   const buildPath = env === 'development' ? './build' : './packages';
 
   let f7VuePath = path.resolve(__dirname, `../${buildPath}/vue/framework7-vue.esm.js`);
@@ -39,7 +38,6 @@ function buildKs(cb) {
       replace({
         delimiters: ['', ''],
         'process.env.NODE_ENV': JSON.stringify(env),
-        'process.env.TARGET': JSON.stringify(target),
         "'framework7-vue'": () => `'${f7VuePath}'`,
         "'framework7/framework7.esm.bundle'": () => `'${f7Path}'`,
       }),

@@ -149,18 +149,14 @@ class Notification extends Modal {
     }
 
     function attachTouchEvents() {
-      if (process.env.TARGET !== 'desktop') {
-        notification.$el.on(app.touchEvents.start, handleTouchStart, { passive: true });
-        app.on('touchmove:active', handleTouchMove);
-        app.on('touchend:passive', handleTouchEnd);
-      }
+      notification.$el.on(app.touchEvents.start, handleTouchStart, { passive: true });
+      app.on('touchmove:active', handleTouchMove);
+      app.on('touchend:passive', handleTouchEnd);
     }
     function detachTouchEvents() {
-      if (process.env.TARGET !== 'desktop') {
-        notification.$el.off(app.touchEvents.start, handleTouchStart, { passive: true });
-        app.off('touchmove:active', handleTouchMove);
-        app.off('touchend:passive', handleTouchEnd);
-      }
+      notification.$el.off(app.touchEvents.start, handleTouchStart, { passive: true });
+      app.off('touchmove:active', handleTouchMove);
+      app.off('touchend:passive', handleTouchEnd);
     }
 
     let timeoutId;
