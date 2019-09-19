@@ -140,6 +140,7 @@ Bart DJ
 ---
 
 ### $10+ Supporter
+Michael Powers<br>
 shastox<br>
 iOS Haven<br>
 Dirk Holtwick<br>
