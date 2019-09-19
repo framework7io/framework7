@@ -1,0 +1,97 @@
+.ios {
+  .dialog {
+    &.modal-out {
+      transform: translate3d(0, -50%, 0) scale(1);
+    }
+  }
+  .dialog-inner {
+    border-radius: var(--f7-dialog-border-radius) var(--f7-dialog-border-radius) 0 0;
+    .hairline(bottom, var(--f7-dialog-border-divider-color));
+  }
+  .dialog-title {
+    + .dialog-text {
+      margin-top: 5px;
+    }
+  }
+  .dialog-buttons {
+    height: 44px;
+    justify-content: center;
+  }
+  .dialog-button {
+    width: 100%;
+    padding: 0 5px;
+    -webkit-box-flex:1;
+    -ms-flex:1;
+    .hairline(right, var(--f7-dialog-border-divider-color));
+    &:first-child {
+      border-radius: 0 0 0 var(--f7-dialog-border-radius);
+    }
+    &:last-child {
+      .hairline-remove(right);
+      border-radius: 0 0 var(--f7-dialog-border-radius) 0;
+    }
+    &:first-child:last-child {
+      border-radius: 0 0 var(--f7-dialog-border-radius) var(--f7-dialog-border-radius);
+    }
+    &.dialog-button-bold {
+      font-weight: 500;
+    }
+  }
+  .dialog-button[class*="color-"] {
+    --f7-dialog-button-text-color: var(--f7-theme-color);
+  }
+  .dialog-buttons-vertical {
+    .dialog-buttons {
+      height: auto;
+    }
+    .dialog-button {
+      border-radius: 0;
+      .hairline(bottom, var(--f7-dialog-border-divider-color));
+      &:last-child {
+        border-radius: 0 0 var(--f7-dialog-border-radius) var(--f7-dialog-border-radius);
+        .hairline-remove(bottom);
+      }
+    }
+  }
+  .dialog-no-buttons {
+    .dialog-inner {
+      border-radius: var(--f7-dialog-border-radius);
+      .hairline-remove(bottom);
+    }
+  }
+  // Inputs
+  .dialog-input-field {
+    margin-top: 15px;
+  }
+  .dialog-input {
+    padding: 0 5px;
+    + .dialog-input {
+      margin-top: 5px;
+    }
+  }
+  .dialog-input-double {
+    + .dialog-input-double {
+      margin-top: 0;
+      .dialog-input {
+        border-top: 0;
+        margin-top: 0;
+      }
+    }
+  }
+
+  // Preloader
+  .dialog-preloader {
+    .dialog-title ~ .preloader,
+    .dialog-text ~ .preloader {
+      margin-top: 15px;
+    }
+  }
+  .dialog-progress {
+    .dialog-title ~ .progressbar,
+    .dialog-text ~ .progressbar,
+    .dialog-title ~ .progressbar-infinite,
+    .dialog-text ~ .progressbar-infinite {
+      margin-top: 15px;
+    }
+  }
+}

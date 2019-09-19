@@ -1,0 +1,26 @@
+.aurora {
+  .list .accordion-item-toggle .item-inner,
+  .list:not(.media-list) .accordion-item:not(.media-item) .accordion-item-toggle .item-inner,
+  .list:not(.media-list) .accordion-item:not(.media-item) > .item-link .item-inner,
+  .media-list .accordion-item .accordion-item-toggle .item-title-row,
+  .media-list .accordion-item > .item-link .item-title-row,
+  .accordion-item.media-item .accordion-item-toggle .item-title-row,
+  .accordion-item.media-item > .item-link .item-title-row,
+  .links-list .accordion-item > a {
+    &:before {
+      content: 'chevron_down_aurora';
+    }
+  }
+  .list .accordion-item-toggle.accordion-item-opened .item-inner,
+  .list:not(.media-list) .accordion-item-opened:not(.media-item) .accordion-item-toggle .item-inner,
+  .list:not(.media-list) .accordion-item-opened:not(.media-item) > .item-link .item-inner,
+  .media-list .accordion-item-opened .accordion-item-toggle .item-title-row,
+  .media-list .accordion-item-opened > .item-link .item-title-row,
+  .accordion-item-opened.media-item .accordion-item-toggle .item-title-row,
+  .accordion-item-opened.media-item > .item-link .item-title-row,
+  .links-list .accordion-item-opened > a {
+    &:before {
+      content: 'chevron_up_aurora';
+    }
+  }
+}

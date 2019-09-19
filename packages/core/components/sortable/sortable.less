@@ -1,0 +1,86 @@
+/* === Sortable === */
+@import url('./sortable-vars.less');
+
+.sortable {
+  .sortable-handler {
+    width: var(--f7-sortable-handler-width);
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+    cursor: move;
+    transition-duration: 300ms;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    &:after {
+      .core-icons-font();
+      transition-duration: 300ms;
+      transform: translateX(10px);
+      color: var(--f7-sortable-handler-color);
+      overflow: hidden;
+      height: 20px;
+      width: 18px;
+    }
+    .ltr({
+      right: var(--f7-safe-area-right);
+    });
+    .rtl({
+      left: var(--f7-safe-area-left);
+    });
+  }
+  .item-inner {
+    transition-duration: 300ms;
+  }
+  li.sorting {
+    z-index: 50;
+    background: var(--f7-sortable-sorting-item-bg-color);
+    transition-duration: 0ms;
+    box-shadow: var(--f7-sortable-sorting-item-box-shadow);
+    .item-inner {
+      .hairline-remove(bottom);
+    }
+  }
+}
+.sortable-sorting li {
+  transition-duration: 300ms;
+}
+.sortable-enabled li:not(.no-sorting):not(.disallow-sorting) {
+  .sortable-handler {
+    pointer-events: auto;
+    opacity: 1;
+    &:after {
+      transform: translateX(0px);
+    }
+  }
+  .item-link .item-inner,
+  .item-link .item-title-row {
+    background-image: none !important;
+  }
+}
+.list.sortable-enabled li:not(.no-sorting):not(.disallow-sorting) .item-inner,
+.list.sortable-enabled li:not(.no-sorting):not(.disallow-sorting) .item-link .item-inner,
+.list.sortable-enabled li:not(.no-sorting):not(.disallow-sorting) .item-link.no-chevron .item-inner,
+.list.sortable-enabled.no-chevron li:not(.no-sorting):not(.disallow-sorting) .item-link .item-inner,
+.list.sortable-enabled .no-chevron .item-link .item-inner,
+.no-chevron .list.sortable-enabled li:not(.no-sorting):not(.disallow-sorting) .item-link .item-inner {
+  .ltr({
+    padding-right: calc(var(--f7-sortable-handler-width) + var(--f7-safe-area-right));
+  });
+  .rtl({
+    padding-left: calc(var(--f7-sortable-handler-width) + var(--f7-safe-area-right));
+  });
+}
+
+.if-ios-theme({
+  @import url('./sortable-ios.less');
+});
+.if-md-theme({
+  @import url('./sortable-md.less');
+});
+.if-aurora-theme({
+  @import url('./sortable-aurora.less');
+});

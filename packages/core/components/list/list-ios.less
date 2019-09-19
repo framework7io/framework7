@@ -1,0 +1,15 @@
+.ios {
+  .item-link.active-state .item-inner,
+  .list-button.active-state,
+  .links-list a.active-state {
+    .hairline-color(bottom, transparent);
+  }
+
+  .links-list a,
+  .list .item-link,
+  .list .list-button {
+    &.active-state {
+      transition-duration: 0ms;
+    }
+  }
+}

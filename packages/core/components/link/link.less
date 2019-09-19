@@ -1,0 +1,37 @@
+/* === Link === */
+@import url('./link-vars.less');
+
+.link,
+.tab-link {
+  display: inline-flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+  // transform: translate3d(0, 0, 0);
+  z-index: 1;
+}
+.link {
+  i + span,
+  i + i,
+  span + i,
+  span + span {
+    .ltr({
+      margin-left: 4px;
+    });
+    .rtl({
+      margin-right: 4px;
+    });
+  }
+}
+
+.if-ios-theme({
+  @import url('./link-ios.less');
+});
+.if-md-theme({
+  @import url('./link-md.less');
+});
+.if-aurora-theme({
+  @import url('./link-aurora.less');
+});

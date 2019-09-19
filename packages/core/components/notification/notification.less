@@ -1,0 +1,95 @@
+/* === Notifications === */
+@import url('./notification-vars.less');
+
+.notification {
+  --f7-link-highlight-color: var(--f7-link-highlight-black);
+  --f7-touch-ripple-color: var(--f7-touch-ripple-black);
+  position: absolute;
+  left: var(--f7-notification-margin);
+  top: var(--f7-notification-margin);
+  width: calc(100% - var(--f7-notification-margin) * 2);
+  z-index: 20000;
+  font-size: 14px;
+  margin: 0;
+  border: none;
+  display: none;
+  box-sizing: border-box;
+  transition-property: transform;
+  direction: ltr;
+  max-width: var(--f7-notification-max-width);
+  padding: var(--f7-notification-padding);
+  border-radius: var(--f7-notification-border-radius);
+  box-shadow: var(--f7-notification-box-shadow);
+  background: var(--f7-notification-bg-color);
+  margin-top: var(--f7-safe-area-top);
+  .ios-translucent-modals(var(--f7-notification-bg-color-rgb));
+  @media (min-width: 568px) {
+    left: 50%;
+    width: var(--f7-notification-max-width);
+    margin-left: calc(-1 * var(--f7-notification-max-width) / 2);
+  }
+}
+.notification-title {
+  color: var(--f7-notification-title-color, var(--f7-theme-color));
+  font-size: var(--f7-notification-title-font-size);
+  text-transform: var(--f7-notification-title-text-transform);
+  line-height: var(--f7-notification-title-line-height);
+  font-weight: var(--f7-notification-title-font-weight);
+  letter-spacing: var(--f7-notification-title-letter-spacing);
+}
+.notification-subtitle {
+  color: var(--f7-notification-subtitle-color);
+  font-size: var(--f7-notification-subtitle-font-size);
+  text-transform: var(--f7-notification-subtitle-text-transform);
+  line-height: var(--f7-notification-subtitle-line-height);
+  font-weight: var(--f7-notification-subtitle-font-weight);
+}
+.notification-text {
+  color: var(--f7-notification-text-color);
+  font-size: var(--f7-notification-text-font-size);
+  text-transform: var(--f7-notification-text-text-transform);
+  line-height: var(--f7-notification-text-line-height);
+  font-weight: var(--f7-notification-text-font-weight);
+}
+.notification-title-right-text {
+  color: var(--f7-notification-title-right-color);
+  font-size: var(--f7-notification-title-right-font-size);
+}
+.notification-icon {
+  font-size: 0;
+  line-height: var(--f7-notification-icon-size);
+  i, & {
+    width: var(--f7-notification-icon-size) !important;
+    height: var(--f7-notification-icon-size) !important;
+  }
+  i {
+    font-size: var(--f7-notification-icon-size);
+  }
+}
+.notification-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.notification-close-button {
+  margin-left: auto;
+  cursor: pointer;
+  position: relative;
+  &:after {
+    .core-icons-font();
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    text-align: center;
+  }
+}
+
+.if-ios-theme({
+  @import url('./notification-ios.less');
+});
+.if-md-theme({
+  @import url('./notification-md.less');
+});
+.if-aurora-theme({
+  @import url('./notification-aurora.less');
+});

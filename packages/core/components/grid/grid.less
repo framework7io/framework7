@@ -1,0 +1,118 @@
+/* === Grid === */
+@import url('./grid-vars.less');
+
+@cols: 5, 10, 15, 20, 25, 30, 100/3, 35, 40, 45, 50, 55, 60, 65, 100*(2/3), 70, 75, 80, 85, 90, 95, 100;
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  --f7-cols-per-row: 1;
+  > [class*="col-"], > .col {
+    box-sizing: border-box;
+    width: calc((100% - var(--f7-grid-gap) * (var(--f7-cols-per-row) - 1)) / var(--f7-cols-per-row));
+  }
+  &.no-gap {
+    --f7-grid-gap: 0px;
+  }
+
+  each(@cols, {
+    @className: framework7_floor(@value);
+    @n: framework7_calculateN(@value);
+    .col-@{className} {
+      --f7-cols-per-row: @n;
+    }
+  });
+  each(@cols, {
+    .col:nth-last-child(@{index}), .col:nth-last-child(@{index}) ~ .col {
+      --f7-cols-per-row: @index;
+    }
+  });
+
+  @media (min-width: @breakpoints[xsmall]) {
+    each(@cols, {
+      @className: framework7_floor(@value);
+      @n: framework7_calculateN(@value);
+      .xsmall-@{className} {
+        --f7-cols-per-row: @n;
+      }
+    });
+    each(@cols, {
+      .xsmall-auto:nth-last-child(@{index}),
+      .xsmall-auto:nth-last-child(@{index}) ~ .xsmall-auto {
+        --f7-cols-per-row: @index;
+      }
+    });
+  }
+  @media (min-width: @breakpoints[small]) {
+    each(@cols, {
+      @className: framework7_floor(@value);
+      @n: framework7_calculateN(@value);
+      .small-@{className} {
+        --f7-cols-per-row: @n;
+      }
+    });
+    each(@cols, {
+      .small-auto:nth-last-child(@{index}),
+      .small-auto:nth-last-child(@{index}) ~ .small-auto {
+        --f7-cols-per-row: @index;
+      }
+    });
+  }
+  @media (min-width: @breakpoints[medium]) {
+    each(@cols, {
+      @className: framework7_floor(@value);
+      @n: framework7_calculateN(@value);
+      .medium-@{className} {
+        --f7-cols-per-row: @n;
+      }
+    });
+    each(@cols, {
+      .medium-auto:nth-last-child(@{index}),
+      .medium-auto:nth-last-child(@{index}) ~ .medium-auto {
+        --f7-cols-per-row: @index;
+      }
+    });
+  }
+  @media (min-width: @breakpoints[large]) {
+    each(@cols, {
+      @className: framework7_floor(@value);
+      @n: framework7_calculateN(@value);
+      .large-@{className} {
+        --f7-cols-per-row: @n;
+      }
+    });
+    each(@cols, {
+      .large-auto:nth-last-child(@{index}),
+      .large-auto:nth-last-child(@{index}) ~ .large-auto {
+        --f7-cols-per-row: @index;
+      }
+    });
+  }
+  @media (min-width: @breakpoints[xlarge]) {
+    each(@cols, {
+      @className: framework7_floor(@value);
+      @n: framework7_calculateN(@value);
+      .xlarge-@{className} {
+        --f7-cols-per-row: @n;
+      }
+    });
+    each(@cols, {
+      .xlarge-auto:nth-last-child(@{index}),
+      .xlarge-auto:nth-last-child(@{index}) ~ .xlarge-auto {
+        --f7-cols-per-row: @index;
+      }
+    });
+  }
+}
+
+.if-ios-theme({
+  @import url('./grid-ios.less');
+});
+.if-md-theme({
+  @import url('./grid-md.less');
+});
+.if-aurora-theme({
+  @import url('./grid-aurora.less');
+});

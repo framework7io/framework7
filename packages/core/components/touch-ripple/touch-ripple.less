@@ -1,0 +1,66 @@
+/* === Touch Ripple === */
+@import url('./touch-ripple-vars.less');
+// Ripple Elements
+.ripple,
+.fab a,
+.link,
+.item-link,
+.list-button,
+.button,
+.dialog-button,
+.tab-link,
+.radio,
+.checkbox,
+.actions-button,
+.speed-dial-buttons a {
+  -webkit-user-select: none;
+  user-select: none;
+}
+// Ripple
+.ripple-wave {
+  left: 0;
+  top: 0;
+  position: absolute !important;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index:-1;
+  padding: 0;
+  margin: 0;
+  font-size: 0;
+  transform: translate3d(0px, 0px, 0) scale(0);
+  transition-duration: 1400ms;
+  background-color: var(--f7-touch-ripple-color);
+  &.ripple-wave-fill {
+    transition-duration: 300ms;
+    opacity: 0.35;
+  }
+  &.ripple-wave-out {
+    transition-duration: 600ms;
+    opacity: 0;
+  }
+  .button-fill &,
+  .picker-calendar-day &,
+  .menu & {
+    z-index: 1;
+  }
+}
+.checkbox,
+.radio,
+.data-table .sortable-cell {
+  .ripple-wave {
+    z-index: 0;
+  }
+}
+
+[class*="ripple-color-"] {
+  --f7-touch-ripple-color: var(--f7-theme-color-ripple-color);
+}
+.if-ios-theme({
+  @import url('./touch-ripple-ios.less');
+});
+.if-md-theme({
+  @import url('./touch-ripple-md.less');
+});
+.if-aurora-theme({
+  @import url('./touch-ripple-aurora.less');
+});

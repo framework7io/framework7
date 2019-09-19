@@ -1,0 +1,430 @@
+/* === Input === */
+@import url('./input-vars.less');
+
+input[type="text"],
+input[type="password"],
+input[type="search"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+input[type="date"],
+input[type="datetime-local"],
+input[type="time"],
+input[type="number"],
+select,
+textarea {
+  box-sizing: border-box;
+  appearance: none;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  outline: 0;
+  display: block;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  background: none;
+  resize: none;
+  font-size: inherit;
+  color: inherit;
+}
+.textarea-resizable-shadow {
+  opacity: 0;
+  position: absolute;
+  z-index: -1000;
+  pointer-events: none;
+  left: -1000px;
+  top: -1000px;
+  visibility: hidden;
+}
+.list {
+  input[type="text"],
+  input[type="password"],
+  input[type="search"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="date"],
+  input[type="datetime-local"],
+  input[type="time"],
+  input[type="number"],
+  select {
+    width: 100%;
+    height: var(--f7-input-height);
+    color: var(--f7-input-text-color);
+    font-size: var(--f7-input-font-size);
+    background-color: var(--f7-input-bg-color, transparent);
+    padding-left: var(--f7-input-padding-left);
+    padding-right: var(--f7-input-padding-right);
+    &::placeholder {
+      color: var(--f7-input-placeholder-color);
+    }
+  }
+  textarea {
+    width: 100%;
+    color: var(--f7-input-text-color);
+    font-size: var(--f7-input-font-size);
+    resize: none;
+    line-height: 1.4;
+    height: var(--f7-textarea-height);
+    background-color: var(--f7-input-bg-color, transparent);
+    padding-top: var(--f7-textarea-padding-vertical);
+    padding-bottom: var(--f7-textarea-padding-vertical);
+    padding-left: var(--f7-input-padding-left);
+    padding-right: var(--f7-input-padding-right);
+    &::placeholder {
+      color: var(--f7-input-placeholder-color);
+    }
+    &.resizable {
+      height: var(--f7-input-height);
+    }
+  }
+  input[type="datetime-local"] {
+    max-width: 50vw;
+  }
+  input[type="time"],
+  input[type="date"],
+  input[type="datetime-local"] {
+    line-height: var(--f7-input-height);
+  }
+  .rtl({
+    input[type="date"],
+    input[type="datetime-local"] {
+      text-align: right;
+      flex-direction: row-reverse;
+      width: auto;
+    }
+  });
+  .item-label,
+  .item-floating-label {
+    width: 100%;
+    vertical-align: top;
+    flex-shrink: 0;
+    font-size: var(--f7-label-font-size);
+    font-weight: var(--f7-label-font-weight);
+    line-height: var(--f7-label-line-height);
+    color: var(--f7-label-text-color);
+    transition-duration: 200ms;
+    transition-property: transform, color;
+  }
+  .item-floating-label {
+    --label-height: calc(var(--f7-label-font-size) * var(--f7-label-line-height));
+    transform: scale(var(--f7-floating-label-scale)) translateY(calc((var(--f7-input-height) / 2 + 50%) / var(--f7-floating-label-scale)));
+    color: var(--f7-input-placeholder-color);
+    width: auto;
+    max-width: calc(100% / var(--f7-floating-label-scale));
+    pointer-events: none;
+    .ltr({
+      left: var(--f7-input-padding-left);
+    });
+    .rtl({
+      right: var(--f7-input-padding-right);
+    });
+    ~ .item-input-wrap input,
+    ~ .item-input-wrap textarea, {
+      &::placeholder {
+        opacity: 0;
+        transition-duration: 100ms;
+      }
+      &.input-focused::placeholder{
+        opacity: 1;
+        transition-duration: 300ms;
+      }
+    }
+    .ltr({
+      transform-origin: left center;
+    });
+    .rtl({
+      transform-origin: right center;
+    });
+  }
+  .item-input-with-value .item-floating-label {
+    color: var(--f7-label-text-color);
+  }
+  .item-input-with-value .item-floating-label,
+  .item-input-focused .item-floating-label {
+    transform: scale(1) translateY(0);
+  }
+  .item-input-wrap {
+    width: 100%;
+    flex-shrink: 1;
+    position: relative;
+  }
+}
+.item-input .item-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.item-input-error-message,
+.input-error-message {
+  font-size: var(--f7-input-error-font-size);
+  line-height: var(--f7-input-error-line-height);
+  color: var(--f7-input-error-text-color);
+  font-weight: var(--f7-input-error-font-weight);
+  display: none;
+  box-sizing: border-box;
+}
+.item-input-info,
+.input-info {
+  font-size: var(--f7-input-info-font-size);
+  line-height: var(--f7-input-info-line-height);
+  color: var(--f7-input-info-text-color);
+}
+.item-input-invalid,
+.input-invalid {
+  .item-input-error-message,
+  .input-error-message {
+    display: block;
+  }
+  .item-input-info,
+  .input-info {
+    display: none;
+  }
+}
+.inline-labels,
+.inline-label {
+  .item-inner {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+  }
+  .item-label,
+  .item-floating-label {
+    padding-top: var(--f7-inline-label-padding-top);
+    align-self: flex-start;
+    width: 35%;
+    font-size: var(--f7-inline-label-font-size);
+    line-height: var(--f7-inline-label-line-height);
+    + .item-input-wrap {
+      .ltr({
+        margin-left: 8px;
+      });
+      .rtl({
+        margin-right: 8px;
+      });
+    }
+  }
+}
+.input {
+  position: relative;
+  input, select, textarea {
+    width: 100%;
+  }
+}
+.input-clear-button {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition-duration: 100ms;
+  position: absolute;
+  top: 50%;
+  border: none;
+  padding: 0;
+  margin: 0;
+  outline: 0;
+  z-index: 1;
+  cursor: pointer;
+  background: none;
+  width: var(--f7-input-clear-button-size);
+  height: var(--f7-input-clear-button-size);
+  margin-top: calc(-1 * var(--f7-input-clear-button-size) / 2);
+  color: var(--f7-input-clear-button-color);
+  .ltr({
+    right: 0;
+  });
+  .rtl({
+    left: 0;
+  });
+  &:after {
+    .core-icons-font();
+  }
+  &:before {
+    position: absolute;
+    content: '';
+    left: 50%;
+    top: 50%;
+  }
+  .item-input-wrap & {
+    top: calc(var(--f7-input-height) / 2);
+  }
+  &.active-state {
+    opacity: 0.75 !important;
+  }
+}
+
+.input-with-value ~ .input-clear-button,
+.item-input-with-value .input-clear-button,
+.input-with-value .input-clear-button {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
+.input-dropdown-wrap,
+.input-dropdown {
+  position: relative;
+  &:before {
+    content: '';
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    margin-top: -2px;
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid #727272;
+    .ltr({
+      right: 6px;
+    });
+    .rtl({
+      left: 6px;
+    });
+  }
+  select,
+  input,
+  textarea {
+    .ltr({
+      padding-right: calc(20px + var(--f7-input-padding-right));
+    });
+    .rtl({
+      padding-left: calc(20px + var(--f7-input-padding-left));
+    });
+  }
+}
+
+.input-outline:after,
+.item-input-outline .item-input-wrap:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--f7-input-outline-border-color);
+  border-radius: var(--f7-input-outline-border-radius);
+  transition-duration: 200ms;
+  pointer-events: none;
+}
+.input-outline.input-focused:after,
+.item-input-outline.item-input-focused .item-input-wrap:after {
+  border-width: 2px;
+  border-color: var(--f7-input-outline-focused-border-color, var(--f7-theme-color));
+}
+.input-outline.input-invalid:after,
+.item-input-outline.item-input-invalid .item-input-wrap:after {
+  border-width: 2px;
+  border-color: var(--f7-input-outline-invalid-border-color, var(--f7-input-error-text-color));
+}
+.input-outline,
+.item-input-outline,
+.list .item-input-outline {
+  input,
+  textarea,
+  select {
+    border-radius: var(--f7-input-outline-border-radius);
+    padding-left: var(--f7-input-outline-padding-horizontal);
+    padding-right: var(--f7-input-outline-padding-horizontal);
+  }
+}
+.input-outline.input-dropdown,
+.item-input-outline .input-dropdown-wrap {
+  &:before {
+    .ltr({
+      right: 8px;
+    });
+    .rtl({
+      left: 8px;
+    });
+  }
+  input,
+  textarea,
+  select {
+    .ltr({
+      padding-right: 20px;
+    });
+    .rtl({
+      padding-left: 20px;
+    });
+  }
+}
+.input-outline,
+.item-input-outline {
+  .input-clear-button {
+    .ltr({
+      right: 8px;
+    });
+    .rtl({
+      left: 8px;
+    });
+  }
+}
+.item-input-outline {
+  --f7-input-height: var(--f7-input-outline-height);
+  .item-inner:after {
+    display: none !important;
+  }
+  .item-label {
+    .ltr({
+      left: var(--f7-input-outline-padding-horizontal);
+    });
+    .rtl({
+      right: var(--f7-input-outline-padding-horizontal);
+    });
+  }
+  .inline-labels & .item-label,
+  .inline-label & .item-label,
+  .inline-label .item-label,
+  .inline-label.item-label {
+    .ltr({
+      left: 0;
+    });
+    .rtl({
+      right: 0;
+    });
+  }
+  .item-floating-label {
+    .ltr({
+      left: calc(var(--f7-input-outline-padding-horizontal) - 4px);
+    });
+    .rtl({
+      right: calc(var(--f7-input-outline-padding-horizontal) - 4px);
+    });
+    padding-left: 4px;
+    padding-right: 4px;
+    background: var(--f7-page-bg-color);
+    z-index: 10;
+    margin-top: calc(-0.5 * (var(--f7-label-font-size) * var(--f7-label-line-height)));
+  }
+  &.item-input-with-value .item-floating-label,
+  &.item-input-focused .item-floating-label {
+    transform: scale(1) translateY(50%);
+  }
+  .item-input-info,
+  .item-input-error-message {
+    .ltr({
+      padding-left: var(--f7-input-outline-padding-horizontal);
+    });
+    .rtl({
+      padding-right: var(--f7-input-outline-padding-horizontal);
+    });
+  }
+}
+.item-input-outline {
+  .block-strong & .item-floating-label {
+    background: var(--f7-block-strong-bg-color);
+  }
+  .list & .item-floating-label {
+    background: var(--f7-list-bg-color);
+  }
+}
+.if-ios-theme({
+  @import url('./input-ios.less');
+});
+.if-md-theme({
+  @import url('./input-md.less');
+});
+.if-aurora-theme({
+  @import url('./input-aurora.less');
+});
