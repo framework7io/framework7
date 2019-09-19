@@ -1,5 +1,5 @@
 import $ from 'dom7';
-import Swiper from './swiper-class/swiper';
+import Swiper from './swiper-class';
 import ConstructorMethods from '../../utils/constructor-methods';
 
 if (process.env.FORMAT !== 'es') {
