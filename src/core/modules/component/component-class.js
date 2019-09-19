@@ -267,29 +267,33 @@ class Component {
     });
   }
 
-  $update() {
+  $update(callback) {
     const self = this;
     window.cancelAnimationFrame(self.__requestAnimationFrameId);
     delete self.__requestAnimationFrameId;
     self.__updateIsPending = true;
-    self.__requestAnimationFrameId = window.requestAnimationFrame(() => {
-      let html = self.$render();
+    return new Promise((resolve) => {
+      self.__requestAnimationFrameId = window.requestAnimationFrame(() => {
+        let html = self.$render();
 
-      // Make Dom
-      if (html && typeof html === 'string') {
-        html = html.trim();
-        const newVNode = vdom(html, self, false);
-        self.$vnode = patch(self.$vnode, newVNode);
-      }
-      self.__updateIsPending = false;
-      delete self.__updateIsPending;
+        // Make Dom
+        if (html && typeof html === 'string') {
+          html = html.trim();
+          const newVNode = vdom(html, self, false);
+          self.$vnode = patch(self.$vnode, newVNode);
+        }
+        self.__updateIsPending = false;
+        delete self.__updateIsPending;
+        if (callback) callback();
+        resolve();
+      });
     });
   }
 
-  $setState(mergeState) {
+  $setState(mergeState, callback) {
     const self = this;
     Utils.merge(self, mergeState);
-    self.$update();
+    return self.$update(callback);
   }
 
   $mount(mountMethod) {
