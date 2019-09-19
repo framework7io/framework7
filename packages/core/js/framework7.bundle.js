@@ -1,5 +1,5 @@
 /**
- * Framework7 4.5.0
+ * Framework7 4.5.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: August 21, 2019
+ * Released on: September 19, 2019
  */
 
 (function (global, factory) {
@@ -11434,17 +11434,20 @@
     } else if (componentString.indexOf('<style scoped>') >= 0) {
       styleScoped = true;
       style = componentString.split('<style scoped>')[1].split('</style>')[0];
-      style = style.split('\n').map(function (line) {
-        var trimmedLine = line.trim();
-        if (trimmedLine.indexOf('@') === 0) { return line; }
-        if (line.indexOf('{') >= 0) {
-          if (line.indexOf('{{this}}') >= 0) {
-            return line.replace('{{this}}', ("[data-f7-" + id + "]"));
-          }
-          return ("[data-f7-" + id + "] " + (line.trim()));
-        }
-        return line;
-      }).join('\n');
+      style = style
+        .replace(/{{this}}/g, ("[data-f7-" + id + "]"))
+        .replace(/[\n]?([^{^}]*){/ig, function (string, rules) {
+          // eslint-disable-next-line
+          rules = rules
+            .split(',')
+            .map(function (rule) {
+              if (rule.indexOf(("[data-f7-" + id + "]")) >= 0) { return rule; }
+              return ("[data-f7-" + id + "] " + (rule.trim()));
+            })
+            .join(', ');
+
+          return ("\n" + rules + " {");
+        });
     }
 
     // Parse Script
@@ -18374,7 +18377,7 @@
           $viewEl.css(( obj = {}, obj[("margin-" + side)] = (($el.width()) + "px"), obj ));
           app.allowPanelOpen = true;
           if (emitEvents) {
-            app.emit('local::breakpoint panelBreakpoint');
+            panel.emit('local::breakpoint panelBreakpoint');
             panel.$el.trigger('panel:breakpoint', panel);
           }
         } else {
@@ -18386,7 +18389,7 @@
         panel.onClosed();
         $viewEl.css(( obj$2 = {}, obj$2[("margin-" + side)] = '', obj$2 ));
         if (emitEvents) {
-          app.emit('local::breakpoint panelBreakpoint');
+          panel.emit('local::breakpoint panelBreakpoint');
           panel.$el.trigger('panel:breakpoint', panel);
         }
       }
@@ -18653,7 +18656,7 @@
         var $viewEl = $(panel.getViewEl());
         panel.$el.css('display', '').removeClass('panel-visible-by-breakpoint panel-active');
         $viewEl.css(( obj = {}, obj[("margin-" + (panel.side))] = '', obj ));
-        app.emit('local::breakpoint panelBreakpoint');
+        panel.emit('local::breakpoint panelBreakpoint');
         panel.$el.trigger('panel:breakpoint', panel);
       }
 
@@ -22802,6 +22805,7 @@
       }
       function onHtmlClick(e) {
         var $targetEl = $(e.target);
+        if (calendar.destroyed || !calendar.params) { return; }
         if (calendar.isPopover()) { return; }
         if (!calendar.opened || calendar.closing) { return; }
         if ($targetEl.closest('[class*="backdrop"]').length) { return; }
@@ -24661,6 +24665,7 @@
         e.preventDefault();
       }
       function onHtmlClick(e) {
+        if (picker.destroyed || !picker.params) { return; }
         var $targetEl = $(e.target);
         if (picker.isPopover()) { return; }
         if (!picker.opened || picker.closing) { return; }
@@ -38381,6 +38386,7 @@
         self.open();
       }
       function onHtmlClick(e) {
+        if (self.destroyed || !self.params) { return; }
         if (self.params.openIn === 'page') { return; }
         var $clickTargetEl = $(e.target);
         if (!self.opened || self.closing) { return; }
@@ -38896,7 +38902,7 @@
         self.$inputEl.trigger('blur');
       }
       params.modules.forEach(function (m) {
-        if (typeof m === 'string' && modules[m] && modules[m].update) {
+        if (typeof m === 'string' && modules[m] && modules[m].destroy) {
           modules[m].destroy(self);
         } else if (m && m.destroy) {
           m.destroy(self);
