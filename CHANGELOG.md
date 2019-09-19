@@ -2,6 +2,17 @@
 
 # Change Log
 
+# [v4.5.1](https://github.com/framework7io/framework7/compare/v4.5.0...v4.5.1) - September 19, 2019
+  * Core
+    * Router Component
+      * Improved scoped styles parsing algorithm
+    * Swiper
+      * Fixed error in swiper lazy module
+    * Color Picker
+      * Fixed error with "Current Color" module destroy
+    * Panel
+      * Fixed issue with not working `breakpoint` events
+
 # [v4.5.0](https://github.com/framework7io/framework7/compare/v4.4.10...v4.5.0) - August 21, 2019
   * Core
     * Router Component
@@ -34,7 +45,7 @@
     * Navbar
       * `nav-left` slot is also available as `left` slot
       * `nav-right` slot is also available as `right` slot
-      * New `title-large` slot to add custom content/layout to large title text 
+      * New `title-large` slot to add custom content/layout to large title text
     * List, ListGroup
       * New `sortableMoveElements` (boolean) prop that allow to override same `sortable.moveElements` global app parameter. That when disabled (`false`) won't move DOM elements on sort
   * Minor fixes

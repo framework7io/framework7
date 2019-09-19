@@ -622,7 +622,7 @@ class ColorPicker extends Framework7Class {
       self.$inputEl.trigger('blur');
     }
     params.modules.forEach((m) => {
-      if (typeof m === 'string' && modules[m] && modules[m].update) {
+      if (typeof m === 'string' && modules[m] && modules[m].destroy) {
         modules[m].destroy(self);
       } else if (m && m.destroy) {
         m.destroy(self);
