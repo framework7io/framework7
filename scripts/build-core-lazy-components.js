@@ -172,6 +172,12 @@ function buildLazyComponentsJs(components, cb) {
           .replace(/export default ([a-zA-Z_]*);/, (line, name) => { // eslint-disable-line
             return install.replace(/COMPONENT/g, name);
           });
+        if (fileContent.indexOf('Support$1') >= 0) {
+          fileContent = fileContent.replace('var Support = Framework7.support;', 'var Support$1 = Framework7.support;');
+        }
+        if (fileContent.indexOf('Device$1') >= 0) {
+          fileContent = fileContent.replace('var Device = Framework7.device;', 'var Device$1 = Framework7.device;');
+        }
 
         fileContent = Terser.minify(fileContent).code;
         fileContent = `(${fileContent}(Framework7, typeof Framework7AutoInstallComponent === 'undefined' ? undefined : Framework7AutoInstallComponent))`;

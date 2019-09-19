@@ -5,7 +5,6 @@
 const fsNative = require('fs');
 const path = require('path');
 const glob = require('glob');
-const getConfig = require('./get-core-config.js');
 const getOutput = require('./get-output.js');
 const fs = require('./utils/fs-extra');
 
