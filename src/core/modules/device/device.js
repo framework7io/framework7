@@ -21,9 +21,6 @@ export default {
 
       // Pixel Ratio
       classNames.push(`device-pixel-ratio-${Math.floor(Device.pixelRatio)}`);
-      if (Device.pixelRatio >= 2) {
-        classNames.push('device-retina');
-      }
       // OS classes
       if (Device.os && !Device.desktop) {
         classNames.push(
