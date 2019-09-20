@@ -9,7 +9,7 @@
     </td>
     <td align="center" valign="middle">
       <a href="https://staffaugmentation.ro" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/staffaugmentation.png">
+        <img width="160" src="https://cdn.framework7.io/i/sponsors/staffaugmentation.jpg">
       </a>
     </td>
     <td align="center" valign="middle">
