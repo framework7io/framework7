@@ -37,6 +37,8 @@ export namespace Router {
     name?: string
     /** Route path. Means this route will be loaded when we click link that match to this path, or can be loaded by this path using API */
     path: string
+    /** View name where this route will be forced to load */
+    viewName?: string
     /** Object with additional route options (optional) */
     options?: RouteOptions
     /** Array with nested routes */
