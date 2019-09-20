@@ -31,6 +31,7 @@
   * `.windowsPhone` property and detection has been removed
   * It doesn't set `device-ios-gt-{version}` classes on `html` element anymore
   * It doesn't set `device-{os}-{version}` classes on `html` element anymore
+  * It doesn't set `retina` class on `html` element anymore
 * **Request**
   * Request "promise" methods now will be resolved with `{ data, status, xhr }` object (rather than with just `data` like before)
   * Request "promise" methods now will be rejected with `{ message, status, xhr }` object (rather than with just `status` like before)
@@ -91,7 +92,7 @@
   * New `sheetPush` parameter - enables Color Picker sheet to push view(s) behind on open
   * New `sheetSwipeToClose` parameter - enables ability to close Color Picker sheet with swipe
 * **Data Table**
-  * Removed support for `tablet-only` and `desktop-only` classes for table columns. Now it uses new breakpoint names and classes accordingly (e.g. `medium-inset`, `xlarge-inset`, etc.)
+  * Removed support for `tablet-only` and `desktop-only` classes for table columns. Now it uses new breakpoint names and classes accordingly (e.g. `medium-only`, `xlarge-only`, etc.)
 * **Dialog**
   * Now it also appears in dark when dark theme enabled
 * **Grid**
@@ -253,13 +254,21 @@
   this.$setState({foo: 'bar'});
   this.$setState({john: 'doe'});
   this.$tick(() => {
-    // DOM update
+    // DOM updated
   });
   ```
-* Component context has new `$update()` method that can be used instead of `$setState` to just trigger DOM update:
+* `$setState` now also receives second callback argument that will be fired on DOM update:
+  ```js
+  this.$setState({foo: 'bar'}, () => {
+    // DOM updated
+  });
+  ```
+* Component context has new `$update(callback)` method that can be used instead of `$setState` to just trigger DOM update:
   ```js
   this.foo = 'bar';
-  this.$update();
+  this.$update(() => {
+    // DOM updated
+  });
   ```
 * Added support for mixins that can be re-used in components. Mixin can extend any component lifecycle hook, methods and `data`. Mixins should be passed in component's `mixins` property as an array:
   ```js
