@@ -70,7 +70,6 @@ export default {
     transition: String,
     // iOS Dynamic Navbar
     iosDynamicNavbar: Boolean,
-    iosSeparateDynamicNavbar: Boolean,
     // Animate iOS Navbar Back Icon
     iosAnimateNavbarBackIcon: Boolean,
     // MD Theme delay
