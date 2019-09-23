@@ -54,6 +54,7 @@
   * Route declaration now supports new `options.transition` string property to specify custom transition for this route
   * Custom transition can now also be specified via `data-transition` attribute on links
   * It is now possible to specify "current" view for link to load the page with `data-view="current"` attribute
+  * `iosSeparateDynamicNavbar` parameter has been removed and behavior that uses with `iosSeparateDynamicNavbar: false` is not supported anymore
 
 ## Core Components
 
