@@ -25,7 +25,7 @@ fs.readdirSync('./src/core/components').forEach((component) => {
     if (line.indexOf('.ios') >= 0) iosBegan = true;
     if (line.indexOf('.md') >= 0) mdBegan = true;
     if (line.indexOf('.aurora') >= 0) auroraBegan = true;
-    if (line.indexOf('.theme-dark') >= 0) {
+    if (line.indexOf('.dark-vars') >= 0) {
       if (auroraBegan) auroraDarkBegan = true;
       else if (mdBegan) mdDarkBegan = true;
       else if (iosBegan) iosDarkBegan = true;
