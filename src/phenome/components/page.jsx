@@ -280,7 +280,7 @@ export default {
       f7.on('pageMounted', self.onPageMounted);
       f7.on('pageInit', self.onPageInit);
       f7.on('pageReinit', self.onPageReinit);
-      f7.on('pageBeforeOn', self.onPageBeforeIn);
+      f7.on('pageBeforeIn', self.onPageBeforeIn);
       f7.on('pageBeforeOut', self.onPageBeforeOut);
       f7.on('pageAfterOut', self.onPageAfterOut);
       f7.on('pageAfterIn', self.onPageAfterIn);
@@ -304,7 +304,7 @@ export default {
     f7.off('pageMounted', self.onPageMounted);
     f7.off('pageInit', self.onPageInit);
     f7.off('pageReinit', self.onPageReinit);
-    f7.off('pageBeforeOn', self.onPageBeforeIn);
+    f7.off('pageBeforeIn', self.onPageBeforeIn);
     f7.off('pageBeforeOut', self.onPageBeforeOut);
     f7.off('pageAfterOut', self.onPageAfterOut);
     f7.off('pageAfterIn', self.onPageAfterIn);
