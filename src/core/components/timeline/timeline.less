@@ -73,16 +73,14 @@
     color: inherit;
   }
   .block-strong {
-    .hairline-remove(top);
-    .hairline-remove(bottom);
+    .hairline-remove-top-bottom();
     padding-left: 0;
     padding-right: 0;
     margin: 0;
   }
   .list {
     ul {
-      .hairline-remove(top);
-      .hairline-remove(bottom);
+      .hairline-remove-top-bottom();
     }
   }
 
@@ -188,11 +186,13 @@
     .timelineItemLeft();
   }
 }
-@media (min-width:768px) {
-  .tablet-sides {
-    .timeline-sides;
+each(@breakpoints, {
+  @media (min-width:@value) {
+    .@{key}-sides {
+      .timeline-sides;
+    }
   }
-}
+});
 
 .timeline-horizontal {
   height: 100%;
