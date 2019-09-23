@@ -14,6 +14,9 @@
 * Dark Theme can now be excluded from bundle (custom build)
 * Light Theme can now also be excluded from bundle (custom build)
 
+## Core Package
+* Now core package contains new `framework7-lite.js`, `framework7-lite.bundle.js` scripts. Difference with usual scripts is that these "lite" versions don't contain Component (Router Component) functionality. This version is recommended to use with F7-Vue/React versions where you anyway use Vue/React components instead.
+
 ## Core APIs & Modules
 
 * **iOS Translucent**
@@ -221,6 +224,8 @@
     * With `--swiper-navigation-size` (defaults to `44px`) it is now possible to change size of the navigation buttons (and icons)
 * **Text Editor**
   * All new touch-friendly Rich Text Editor component
+* **Timeline**
+  * Now it uses new breakpoint names for `{size}-sides` classes (e.g. `tablet-sides` -> `medium-sides`, etc.)
 * **Toolbar**
   * Tabbar labels size increased in iOS theme
 
