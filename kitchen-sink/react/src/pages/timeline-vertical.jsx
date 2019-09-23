@@ -67,7 +67,7 @@ export default () => (
       </div>
     </div>
     <BlockTitle>Only Tablet Side By Side</BlockTitle>
-    <div className="timeline tablet-sides">
+    <div className="timeline medium-sides">
       <div className="timeline-item">
         <div className="timeline-item-date">21 <small>DEC</small></div>
         <div className="timeline-item-divider"></div>

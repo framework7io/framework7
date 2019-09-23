@@ -64,7 +64,7 @@
       </div>
     </div>
     <f7-block-title>Only Tablet Side By Side</f7-block-title>
-    <div class="timeline tablet-sides">
+    <div class="timeline medium-sides">
       <div class="timeline-item">
         <div class="timeline-item-date">21 <small>DEC</small></div>
         <div class="timeline-item-divider"></div>
