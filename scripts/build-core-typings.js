@@ -74,8 +74,12 @@ function buildTypings(cb) {
 
   fs.writeFileSync(`${output}/js/framework7.d.ts`, jsTypings);
   fs.writeFileSync(`${output}/js/framework7.bundle.d.ts`, jsTypings);
+  fs.writeFileSync(`${output}/js/framework7-lite.d.ts`, jsTypings);
+  fs.writeFileSync(`${output}/js/framework7-lite.bundle.d.ts`, jsTypings);
   fs.writeFileSync(`${output}/framework7.esm.d.ts`, rootTypings);
   fs.writeFileSync(`${output}/framework7.esm.bundle.d.ts`, rootTypings);
+  fs.writeFileSync(`${output}/framework7-lite.esm.d.ts`, rootTypings);
+  fs.writeFileSync(`${output}/framework7-lite.esm.bundle.d.ts`, rootTypings);
 
   cb();
 }

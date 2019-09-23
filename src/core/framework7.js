@@ -16,10 +16,10 @@ import RequestModule from './modules/request/request';
 import TouchModule from './modules/touch/touch';
 import ClicksModule from './modules/clicks/clicks';
 import RouterModule from './modules/router/router';
-import RouterTemplateLoaderModule from './modules/router/template-loader';
-import RouterComponentLoaderModule from './modules/router/component-loader';
+import RouterTemplateLoaderModule from './modules/router/template-loader'; //NO_LITE
+import RouterComponentLoaderModule from './modules/router/component-loader'; //NO_LITE
+import ComponentModule, { Component } from './modules/component/component'; //NO_LITE
 import HistoryModule from './modules/history/history';
-import ComponentModule, { Component } from './modules/component/component';
 import ServiceWorkerModule from './modules/service-worker/service-worker';
 
 // Core Components
@@ -30,7 +30,7 @@ import Toolbar from './components/toolbar/toolbar';
 import Subnavbar from './components/subnavbar/subnavbar';
 import TouchRipple from './components/touch-ripple/touch-ripple';
 import Modal from './components/modal/modal';
-import Router from './modules/router/router-class';
+import Router from './modules/router/router-class';//NO_LITE
 
 //IMPORT_COMPONENTS
 
@@ -45,10 +45,10 @@ if (process.env.FORMAT !== 'es') {
 }
 
 // Install Core Modules & Components
-Router.use([
-  RouterTemplateLoaderModule,
-  RouterComponentLoaderModule,
-]);
+Router.use([ //NO_LITE
+  RouterTemplateLoaderModule, //NO_LITE
+  RouterComponentLoaderModule, //NO_LITE
+]); //NO_LITE
 
 Framework7.use([
   DeviceModule,
@@ -60,7 +60,7 @@ Framework7.use([
   ClicksModule,
   RouterModule,
   HistoryModule,
-  ComponentModule,
+  ComponentModule, //NO_LITE
   ServiceWorkerModule,
   Statusbar,
   View,
