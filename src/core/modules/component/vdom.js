@@ -29,6 +29,49 @@ function contextFromAttrs(...args) {
   return context;
 }
 
+function createCustomComponent({ app, vnode, tagName, data }) {
+  app.component.create(
+    Object.assign({ el: vnode.elm }, customComponents[tagName]),
+    {
+      $props: contextFromAttrs(data.attrs || {}, data.props || {}),
+    },
+    vnode.children,
+  ).then((c) => {
+    if (vnode.data && vnode.data.on && c && c.$el) {
+      Object.keys(vnode.data.on).forEach((eventName) => {
+        c.$el.on(eventName, vnode.data.on[eventName]);
+      });
+    }
+    // eslint-disable-next-line
+    vnode.elm.__component__ = c;
+  });
+}
+function updateCustomComponent(vnode) {
+  // eslint-disable-next-line
+  const component = vnode && vnode.elm && vnode.elm.__component__;
+  if (!component) return;
+  const newProps = contextFromAttrs(vnode.data.attrs || {}, vnode.data.props || {});
+  component.$children = vnode.children;
+  Object.assign(component.$props, newProps);
+  component.$update();
+}
+function destroyCustomComponent(vnode) {
+  // eslint-disable-next-line
+  const component = vnode && vnode.elm && vnode.elm.__component__;
+
+  if (component) {
+    const { el, $el } = component;
+    if (vnode.data && vnode.data.on && $el) {
+      Object.keys(vnode.data.on).forEach((eventName) => {
+        $el.off(eventName, vnode.data.on[eventName]);
+      });
+    }
+    if (component.$destroy) component.$destroy();
+    if (el && el.parentNode) el.parentNode.removeChild(el);
+    delete vnode.elm.__component__; // eslint-disable-line
+  }
+}
+
 function getHooks(data, app, initial, isRoot, tagName) {
   const hooks = {};
   const insert = [];
@@ -40,33 +83,13 @@ function getHooks(data, app, initial, isRoot, tagName) {
   if (isCustomComponent) {
     insert.push((vnode) => {
       if (vnode.sel !== tagName) return;
-      app.component.create(
-        Object.assign({ el: vnode.elm }, customComponents[tagName]),
-        {
-          $props: contextFromAttrs(data.attrs || {}, data.props || {}),
-        },
-      ).then((c) => {
-        // eslint-disable-next-line
-        vnode.elm.__component__ = c;
-      });
+      createCustomComponent({ app, vnode, tagName, data });
     });
     destroy.push((vnode) => {
-      // eslint-disable-next-line
-      const component = vnode && vnode.elm && vnode.elm.__component__;
-      if (component) {
-        const el = component.el;
-        if (component.$destroy) component.$destroy();
-        if (el && el.parentNode) el.parentNode.removeChild(el);
-        delete vnode.elm.__component__; // eslint-disable-line
-      }
+      destroyCustomComponent(vnode);
     });
     update.push((oldVnode, vnode) => {
-      // eslint-disable-next-line
-      const component = vnode && vnode.elm && vnode.elm.__component__;
-      if (!component) return;
-      const newProps = contextFromAttrs(vnode.data.attrs || {}, vnode.data.props || {});
-      Object.assign(component.$props, newProps);
-      component.$update();
+      updateCustomComponent(vnode);
     });
   }
 
@@ -301,6 +324,22 @@ function getChildren(el, context, app, initial) {
   return children;
 }
 
+function getSlots(slotEl, context, app, initial) {
+  const slotName = slotEl.getAttribute('name') || 'default';
+  const slots = (context.$children || [])
+    .filter((childEl) => {
+      let childSlotName = 'default';
+      if (childEl.data) {
+        childSlotName = (childEl.data.attrs && childEl.data.attrs.slot) || 'default';
+      }
+      return childSlotName === slotName;
+    });
+  if (slots.length === 0) {
+    return getChildren(slotEl, context, app, initial);
+  }
+  return slots;
+}
+
 function elementToVNode(el, context, app, initial, isRoot) {
   if (el.nodeType === 3) {
     // text
@@ -309,7 +348,9 @@ function elementToVNode(el, context, app, initial, isRoot) {
   if (el.nodeType !== 1) return null;
   // element (statement adds inline SVG compatibility)
   const tagName = (el instanceof window.SVGElement) ? el.nodeName : el.nodeName.toLowerCase();
-
+  if (tagName === 'slot') {
+    return getSlots(el, context, app, initial);
+  }
   return h(
     tagName,
     getData(el, context, app, initial, isRoot, tagName),

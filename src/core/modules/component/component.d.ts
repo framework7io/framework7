@@ -37,6 +37,8 @@ export class ComponentClass {
   $el: Dom7Instance
   /** Component's HTML element */
   el: HTMLElement
+  /** Props passed to custom component */
+  $props: object
   /** Defer the callback to be executed after the next DOM update cycle. Use it immediately after you’ve changed some data to wait for the DOM update.  */
   $tick: (callback?: () => void) => Promise<any>
   /** Update/rerender component when state/data changed  */
