@@ -1,5 +1,6 @@
 import Utils from '../../utils/utils';
 import History from '../../utils/history';
+import asyncComponent from './async-component';
 
 function modalLoad(modalType, route, loadOptions = {}) {
   const router = this;
@@ -183,6 +184,9 @@ function modalLoad(modalType, route, loadOptions = {}) {
   }
   if (modalParams.async) {
     modalParams.async.call(router, options.route, router.currentRoute, asyncResolve, asyncReject);
+  }
+  if (modalParams.asyncComponent) {
+    asyncComponent(router, modalParams.asyncComponent, asyncResolve, asyncReject);
   }
   return router;
 }

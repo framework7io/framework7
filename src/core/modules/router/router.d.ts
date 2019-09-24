@@ -28,6 +28,8 @@ export namespace Router {
     componentUrl?: string
     /** Do required asynchronous manipulation and the return required route content and options */
     async?(routeTo: Route, routeFrom: Route, resolve: Function, reject: Function): void
+    /** Function that should return Promise resolved with Component or ES module with `.default` property containing Component */
+    asyncComponent?(): Promise<any>
   }
 
   // interface AP extends Actions.Parameters{}
@@ -63,6 +65,8 @@ export namespace Router {
     componentUrl?: string
     /** Do required asynchronous manipulation and the return required route content and options */
     async?(routeTo: Route, routeFrom: Route, resolve: Function, reject: Function): void
+    /** Function that should return Promise resolved with Component or ES module with `.default` property containing Component */
+    asyncComponent?(): Promise<any>
 
     /** tab id */
     id?: string

@@ -49,10 +49,11 @@
   * Removed `.clearPreviousPages()` method. Now there is only `.clearPreviousHistory()` that removes both history and pages from DOM
   * Root (first) detail page (in master-detail layout) will now have extra `page-master-detail-root`
   * Root (first) detail navbar (in master-detail layout) will now have extra `navbar-master-detail-root`.
-  * Route declaration now supports new `viewName` property. And whatever View such route requested, it will be loaded in View specified in `viewName` property.
   * Added custom page transitions support and 8 new page transitions: `f7-circle`, `f7-cover`, `f7-cover-v`, `f7-dive`, `f7-fade`, `f7-flip`, `f7-parallax`, `f7-push`
-  * Route declaration now supports new `options.transition` string property to specify custom transition for this route
   * Custom transition can now also be specified via `data-transition` attribute on links
+  * Route declaration now supports new `viewName` property. And whatever View such route requested, it will be loaded in View specified in `viewName` property.
+  * Route declaration now supports new `options.transition` string property to specify custom transition for this route
+  * Route declaration now supports new `asyncComponent` method that should return Promise resolved with Component or ES module with `.default` property containing Component
   * It is now possible to specify "current" view for link to load the page with `data-view="current"` attribute
   * `iosSeparateDynamicNavbar` parameter has been removed and behavior that uses with `iosSeparateDynamicNavbar: false` is not supported anymore
 

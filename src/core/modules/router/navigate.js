@@ -5,6 +5,7 @@ import History from '../../utils/history';
 import redirect from './redirect';
 import processRouteQueue from './process-route-queue';
 import appRouterCheck from './app-router-check';
+import asyncComponent from './async-component';
 
 function refreshPage() {
   const router = this;
@@ -799,8 +800,10 @@ function navigate(navigateParams, navigateOptions = {}) {
     }
     if (route.route.async) {
       router.allowPageChange = false;
-
       route.route.async.call(router, options.route, router.currentRoute, asyncResolve, asyncReject);
+    }
+    if (route.route.asyncComponent) {
+      asyncComponent(router, route.route.asyncComponent, asyncResolve, asyncReject);
     }
   }
   function reject() {
