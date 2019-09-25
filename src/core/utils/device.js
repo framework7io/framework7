@@ -26,7 +26,6 @@ const Device = (function Device() {
   const screenWidth = window.screen.width;
   const screenHeight = window.screen.height;
 
-  const windowsPhone = ua.match(/(Windows Phone);?[\s\/]+([\d.]+)?/); // eslint-disable-line
   const android = ua.match(/(Android);?[\s\/]+([\d.]+)?/); // eslint-disable-line
   let ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
   const ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
@@ -95,7 +94,7 @@ const Device = (function Device() {
   device.standalone = device.webView;
 
   // Desktop
-  device.desktop = !(device.ios || device.android || windowsPhone) || electron;
+  device.desktop = !(device.ios || device.android) || electron;
   if (device.desktop) {
     device.electron = electron;
     device.macos = macos;
