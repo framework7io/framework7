@@ -573,12 +573,19 @@ function back(...args) {
     }
     const forceOtherUrl = navigateOptions.force && previousRoute && navigateUrl;
     if (previousRoute && modalToClose) {
-      if (router.params.pushState && navigateOptions.pushState !== false) {
+      const isBrokenPushState = Device.ie || Device.edge || (Device.firefox && !Device.ios);
+      const needHistoryBack = router.params.pushState && navigateOptions.pushState !== false;
+      if (needHistoryBack && !isBrokenPushState) {
         History.back();
       }
       router.currentRoute = previousRoute;
       router.history.pop();
       router.saveHistory();
+
+      if (needHistoryBack && isBrokenPushState) {
+        History.back();
+      }
+
       router.modalRemove(modalToClose);
       if (forceOtherUrl) {
         router.navigate(navigateUrl, { reloadCurrent: true });
