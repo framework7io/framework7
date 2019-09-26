@@ -281,10 +281,10 @@ const Swipeout = {
           }
         }
         if (overswipeRight) {
-          $actionsRight.find('.swipeout-overswipe')[0].click();
+          $actionsRight.find('.swipeout-overswipe').trigger('click', 'f7Overswipe');
         }
         if (overswipeLeft) {
-          $actionsLeft.find('.swipeout-overswipe')[0].click();
+          $actionsLeft.find('.swipeout-overswipe').trigger('click', 'f7Overswipe');
         }
       } else {
         $swipeoutEl.trigger('swipeout:close');

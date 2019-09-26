@@ -278,9 +278,14 @@ function initTouch() {
     return true;
   }
   function handleClick(e) {
+    const isOverswipe = e && e.detail && e.detail === 'f7Overswipe';
     let localPreventClick = preventClick;
     if (targetElement && e.target !== targetElement) {
-      localPreventClick = true;
+      if (isOverswipe) {
+        localPreventClick = false;
+      } else {
+        localPreventClick = true;
+      }
     }
     if (params.tapHold && params.tapHoldPreventClicks && tapHoldFired) {
       localPreventClick = true;

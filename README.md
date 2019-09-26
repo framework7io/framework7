@@ -26,6 +26,33 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
       </a>
     </td>
     <td align="center" valign="middle">
+      <a href="https://staffaugmentation.ro" target="_blank">
+        <img width="160" src="https://cdn.framework7.io/i/sponsors/staffaugmentation.jpg">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://www.thoriumbuilder.com/" target="_blank">
+        <img width="160" src="https://cdn.framework7.io/i/sponsors/thorium.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="https://app-valley.vip/" target="_blank">
+        <img width="160" src="https://cdn.framework7.io/i/sponsors/appvalley.jpg">
+      </a>
+    </td>
+    <td align="center" valign="middle">
+      <a href="http://mytommy.com" target="_blank">
+        <img width="160" src="https://cdn.framework7.io/i/sponsors/tommy.png">
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" valign="middle">
+      <a href="https://www.securcom.me/" target="_blank">
+        <img width="160" src="https://cdn.framework7.io/i/sponsors/securcom.png">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://www.colognewebdesign.de/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/colognewebdesign.png">
       </a>
@@ -41,17 +68,12 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
       </a>
     </td>
     <td align="center" valign="middle">
-      <a href="https://www.thoriumbuilder.com/" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/thorium.png">
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" valign="middle">
       <a href="https://bid4papers.com/write-my-essay.html" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/bid4papers.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://kidoverse.app" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/kidoverse.png">
@@ -72,31 +94,16 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img width="160" src="https://cdn.framework7.io/i/sponsors/blokt.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.activewaiter.com/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/activewaiter.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://wappler.io/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/wappler.png">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://app-valley.vip/" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/appvalley.jpg">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="https://www.securcom.me/" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/securcom.png">
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href="http://mytommy.com" target="_blank">
-        <img width="160" src="https://cdn.framework7.io/i/sponsors/tommy.png">
       </a>
     </td>
   </tr>
