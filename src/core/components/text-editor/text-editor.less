@@ -3,7 +3,7 @@
 
 .text-editor {
   margin: var(--f7-text-editor-margin);
-  background: var(--f7-text-editor-bg-color);
+  background-color: var(--f7-text-editor-bg-color);
   display: block;
   position: relative;
   border: var(--f7-text-editor-border-width) solid var(--f7-text-editor-border-color);
@@ -75,9 +75,7 @@ button.text-editor-button {
   appearance: none;
   border: none;
   outline: 0;
-  background: var(--f7-text-editor-bg-color);
   height: 100%;
-  color: var(--f7--text-editor-text-color);
   user-select: text;
   padding: var(--f7-text-editor-padding);
   overflow: auto;
@@ -127,13 +125,15 @@ button.text-editor-button {
   .text-editor {
     border: none;
     margin: 0;
+    background-color: var(--f7-input-bg-color, transparent);
   }
   .text-editor-content {
     padding-top: var(--f7-textarea-padding-vertical);
     padding-bottom: var(--f7-textarea-padding-vertical);
     padding-left: var(--f7-input-padding-left);
     padding-right: var(--f7-input-padding-right);
-    background-color: var(--f7-input-bg-color, transparent);
+    color: var(--f7-input-text-color);
+    font-size: var(--f7-input-font-size);
   }
   .text-editor-toolbar {
     box-shadow: none;
