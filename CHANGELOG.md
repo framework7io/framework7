@@ -290,7 +290,7 @@
     * Button
       * New `button-round-aurora`, `button-raised-aurora`, `button-fill-aurora`, `button-small-aurora`, `button-large-aurora`, `button-outline-aurora` modifier classes for Aurora theme
     * Cards
-      * Now it is possible to specify custom expandable card backdrop element with `data-backrop-el` attribute on card
+      * Now it is possible to specify custom expandable card backdrop element with `data-backdrop-el` attribute on card
     * Device
       * New `device.electron` property which is `true` when app runs in Electron environment
     * List Index
