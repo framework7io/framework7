@@ -113,11 +113,11 @@ const config = {
     // Tree View
     'treeview',
 
-    // VI Video Ads
-    'vi',
-
     // WYSIWYG Editor
     'text-editor',
+
+    // VI Video Ads
+    'vi',
 
     // Elevation
     'elevation',
