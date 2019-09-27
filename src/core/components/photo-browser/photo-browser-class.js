@@ -654,6 +654,7 @@ class PhotoBrowser extends Framework7Class {
     } else {
       pb.modal.once('modalClosed', () => {
         Utils.nextTick(() => {
+          if (pb.destroyed) return;
           pb.modal.destroy();
           delete pb.modal;
         });
@@ -674,6 +675,7 @@ class PhotoBrowser extends Framework7Class {
       delete pb.$el[0].f7PhotoBrowser;
     }
     Utils.deleteProps(pb);
+    pb.destroyed = true;
     pb = null;
   }
 }

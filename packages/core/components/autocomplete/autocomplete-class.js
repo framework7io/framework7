@@ -844,6 +844,7 @@ class Autocomplete extends Framework7Class {
     } else {
       ac.modal.once('modalClosed', () => {
         Utils.nextTick(() => {
+          if (ac.destroyed) return;
           ac.modal.destroy();
           delete ac.modal;
         });
