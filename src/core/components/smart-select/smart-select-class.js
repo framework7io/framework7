@@ -797,6 +797,7 @@ class SmartSelect extends Framework7Class {
     } else {
       ss.modal.once('modalClosed', () => {
         Utils.nextTick(() => {
+          if (ss.destroyed) return;
           ss.modal.destroy();
           delete ss.modal;
         });
