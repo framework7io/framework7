@@ -2,6 +2,21 @@
 
 # Change Log
 
+# [v4.5.2](https://github.com/framework7io/framework7/compare/v4.5.1...v4.5.2) - September 27, 2019
+  * Core
+    * Router
+      * Fixed issue in Firefox when going back from routable modal could reload the page in (#3316)
+    * Card
+      * Fixed issue with expandable card close, when it is opened in view with sidebar (#3315)
+    * Swipeout
+      * Fixed issue when overswipe didn't work with single item (#3279)
+    * SmartSelect
+      * Fixed issue when destroying it on close could throw and error
+    * Autocomplete
+      * Fixed issue when destroying it on close could throw and error
+    * Photo Browser
+      * Fixed issue when destroying it on close could throw and error
+
 # [v4.5.1](https://github.com/framework7io/framework7/compare/v4.5.0...v4.5.1) - September 19, 2019
   * Core
     * Router Component

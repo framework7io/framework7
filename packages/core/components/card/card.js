@@ -370,17 +370,30 @@ const CardExpandable = {
     $cardEl.trigger('card:close');
     app.emit('cardClose', $cardEl[0]);
 
+    const animateWidth = $cardEl.hasClass('card-expandable-animate-width');
+
     function transitionEnd() {
+      if (!animateWidth) {
+        $cardContentEl
+          .css({
+            width: '',
+            height: '',
+          });
+      }
       $cardEl.removeClass('card-closing card-no-transition');
       $cardEl.trigger('card:closed');
       $cardEl.find('.card-expandable-size').remove();
       app.emit('cardClosed', $cardEl[0], $pageEl[0]);
     }
+    if (animateWidth) {
+      $cardContentEl
+        .css({
+          width: '',
+          height: '',
+        });
+    }
+
     $cardContentEl
-      .css({
-        width: '',
-        height: '',
-      })
       .transform('')
       .scrollTop(0, animate ? 300 : 0);
     if (animate) {

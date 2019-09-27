@@ -1,5 +1,5 @@
 /**
- * Framework7 4.5.1
+ * Framework7 4.5.2
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 19, 2019
+ * Released on: September 27, 2019
  */
 
 (function (global, factory) {
@@ -5044,9 +5044,14 @@
       return true;
     }
     function handleClickLight(e) {
+      var isOverswipe = e && e.detail && e.detail === 'f7Overswipe';
       var localPreventClick = preventClick;
       if (targetElement && e.target !== targetElement) {
-        localPreventClick = true;
+        if (isOverswipe) {
+          localPreventClick = false;
+        } else {
+          localPreventClick = true;
+        }
       }
       if (params.tapHold && params.tapHoldPreventClicks && tapHoldFired) {
         localPreventClick = true;
@@ -8244,12 +8249,19 @@
       }
       var forceOtherUrl = navigateOptions.force && previousRoute && navigateUrl;
       if (previousRoute && modalToClose) {
-        if (router.params.pushState && navigateOptions.pushState !== false) {
+        var isBrokenPushState = Device.ie || Device.edge || (Device.firefox && !Device.ios);
+        var needHistoryBack = router.params.pushState && navigateOptions.pushState !== false;
+        if (needHistoryBack && !isBrokenPushState) {
           History.back();
         }
         router.currentRoute = previousRoute;
         router.history.pop();
         router.saveHistory();
+
+        if (needHistoryBack && isBrokenPushState) {
+          History.back();
+        }
+
         router.modalRemove(modalToClose);
         if (forceOtherUrl) {
           router.navigate(navigateUrl, { reloadCurrent: true });
