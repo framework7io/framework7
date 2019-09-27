@@ -9,7 +9,7 @@ import patch from './patch';
 import componentMixins from './component-mixins';
 
 class Component {
-  constructor(app, options = {}, extendContext = {}) {
+  constructor(app, options = {}, extendContext = {}, children) {
     const id = Utils.id();
     const self = this;
     Utils.merge(
@@ -25,9 +25,11 @@ class Component {
         $options: Utils.extend({ id }, options),
         $id: options.isClassComponent ? self.constructor.id : (options.id || id),
         $mixins: options.isClassComponent ? self.constructor.mixins : options.mixins,
+        $children: children || [],
       }
     );
     const { $options } = self;
+
 
     if (self.$mixins && self.$mixins.length) {
       for (let i = self.$mixins.length - 1; i >= 0; i -= 1) {
@@ -38,6 +40,24 @@ class Component {
         }
       }
     }
+
+    Object.defineProperty(self, '$slots', {
+      enumerable: true,
+      configurable: true,
+      get() {
+        const slots = {};
+        self.$children.forEach((childVNode) => {
+          let childSlotName = 'default';
+          if (childVNode.data) {
+            childSlotName = (childVNode.data.attrs && childVNode.data.attrs.slot) || 'default';
+          }
+          if (!slots[childSlotName]) slots[childSlotName] = [];
+          slots[childSlotName].push(childVNode);
+        });
+        return slots;
+      },
+    });
+
 
     // Root data and methods
     Object.defineProperty(self, '$root', {
@@ -267,29 +287,33 @@ class Component {
     });
   }
 
-  $update() {
+  $update(callback) {
     const self = this;
     window.cancelAnimationFrame(self.__requestAnimationFrameId);
     delete self.__requestAnimationFrameId;
     self.__updateIsPending = true;
-    self.__requestAnimationFrameId = window.requestAnimationFrame(() => {
-      let html = self.$render();
+    return new Promise((resolve) => {
+      self.__requestAnimationFrameId = window.requestAnimationFrame(() => {
+        let html = self.$render();
 
-      // Make Dom
-      if (html && typeof html === 'string') {
-        html = html.trim();
-        const newVNode = vdom(html, self, false);
-        self.$vnode = patch(self.$vnode, newVNode);
-      }
-      self.__updateIsPending = false;
-      delete self.__updateIsPending;
+        // Make Dom
+        if (html && typeof html === 'string') {
+          html = html.trim();
+          const newVNode = vdom(html, self, false);
+          self.$vnode = patch(self.$vnode, newVNode);
+        }
+        self.__updateIsPending = false;
+        delete self.__updateIsPending;
+        if (callback) callback();
+        resolve();
+      });
     });
   }
 
-  $setState(mergeState) {
+  $setState(mergeState, callback) {
     const self = this;
     Utils.merge(self, mergeState);
-    self.$update();
+    return self.$update(callback);
   }
 
   $mount(mountMethod) {

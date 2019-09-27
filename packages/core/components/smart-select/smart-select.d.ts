@@ -31,13 +31,13 @@ export namespace SmartSelect {
     formatValueText?: (values: any[]) => string,
     /** Defines how to open Smart Select. Can be page or popup or popover or sheet (default is "page") */
     openIn?: 'page' | 'popup' | 'popover' | 'sheet'
-    /** Enables smart select popup to push view/s behind on open */
+    /** Enables smart select popup to push view/s behind on open (default false) */
     popupPush?: boolean
-    /** Enables ability to close smart select popup with swipe */
+    /** Enables ability to close smart select popup with swipe (default undefined) */
     popupSwipeToClose?: boolean | undefined
-    /** Enables smart select sheet to push view/s behind on open */
+    /** Enables smart select sheet to push view/s behind on open (default false) */
     sheetPush?: boolean
-    /** Enables ability to close smart select sheet with swipe */
+    /** Enables ability to close smart select sheet with swipe (default undefined) */
     sheetSwipeToClose?: boolean | undefined
     /** Smart select page title. If not passed then it will be the <div class="item-title"> text */
     pageTitle?: string
@@ -124,6 +124,8 @@ export namespace SmartSelect {
     scrollToSelectedItem(): SmartSelect
     /** Set new smart select value. In case of select is multiple it must be an array with new values */
     setValue(value: string | number | any[]): SmartSelect
+    /** Unset smart select value */
+    unsetValue(): SmartSelect
     /** Returns smart select value. In case of select is multiple it returns array with selected values */
     getValue(): string | number | any[]
     /** Open smart select. */

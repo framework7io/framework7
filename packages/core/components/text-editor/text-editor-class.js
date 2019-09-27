@@ -366,6 +366,7 @@ class TextEditor extends Framework7Class {
         const buttonData = self.params.customButtons[button];
         return `<button class="text-editor-button" data-button="${button}">${buttonData.content || ''}</button>`;
       }
+      if (!textEditorButtonsMap[button]) return '';
       const iconContent = textEditorButtonsMap[button][self.app.theme === 'md' ? 1 : 0];
       return `<button class="text-editor-button" data-button="${button}">${iconContent.indexOf('<') >= 0 ? iconContent : `<i class="${iconClass}">${iconContent}</i>`}</button>`.trim();
     }

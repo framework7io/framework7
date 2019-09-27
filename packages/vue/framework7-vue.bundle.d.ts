@@ -83,7 +83,6 @@ import f7Segmented from './components/segmented';
 import f7Sheet from './components/sheet';
 import f7SkeletonBlock from './components/skeleton-block';
 import f7SkeletonText from './components/skeleton-text';
-import f7Statusbar from './components/statusbar';
 import f7Stepper from './components/stepper';
 import f7Subnavbar from './components/subnavbar';
 import f7SwipeoutActions from './components/swipeout-actions';
@@ -217,7 +216,6 @@ export {
   f7Sheet,
   f7SkeletonBlock,
   f7SkeletonText,
-  f7Statusbar,
   f7Stepper,
   f7Subnavbar,
   f7SwipeoutActions,

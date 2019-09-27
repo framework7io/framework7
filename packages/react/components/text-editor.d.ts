@@ -23,25 +23,25 @@ declare namespace F7TextEditor {
     placeholder? : string
     clearFormattingOnPaste? : boolean
     resizable? : boolean
-    onTextEditorChange? : (editor?: any, value?: any) => void
-    onTextEditorFocus? : (editor?: any) => void
-    onTextEditorBlur? : (editor?: any) => void
-    onTextEditorButtonClick? : (editor?: any, button?: any) => void
-    onTextEditorKeyboardOpen? : (editor?: any) => void
-    onTextEditorKeyboardClose? : (editor?: any) => void
-    onTextEditorPopoverOpen? : (editor?: any) => void
-    onTextEditorPopoverClose? : (editor?: any) => void
+    onTextEditorChange? : (value?: any) => void
+    onTextEditorFocus? : (...args: any[]) => void
+    onTextEditorBlur? : (...args: any[]) => void
+    onTextEditorButtonClick? : (button?: any) => void
+    onTextEditorKeyboardOpen? : (...args: any[]) => void
+    onTextEditorKeyboardClose? : (...args: any[]) => void
+    onTextEditorPopoverOpen? : (...args: any[]) => void
+    onTextEditorPopoverClose? : (...args: any[]) => void
   }
 }
 declare class F7TextEditor extends React.Component<F7TextEditor.Props, {}> {
   onChange(editor? : any, value? : any) : unknown
-  onInput(editor? : any) : unknown
-  onFocus(editor? : any) : unknown
-  onBlur(editor? : any) : unknown
+  onInput() : unknown
+  onFocus() : unknown
+  onBlur() : unknown
   onButtonClick(editor? : any, button? : any) : unknown
-  onKeyboardOpen(editor? : any) : unknown
-  onKeyboardClose(editor? : any) : unknown
-  onPopoverOpen(editor? : any) : unknown
-  onPopoverClose(editor? : any) : unknown
+  onKeyboardOpen() : unknown
+  onKeyboardClose() : unknown
+  onPopoverOpen() : unknown
+  onPopoverClose() : unknown
 }
 export default F7TextEditor;

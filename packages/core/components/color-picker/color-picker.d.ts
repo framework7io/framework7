@@ -109,16 +109,16 @@ export namespace ColorPicker {
     containerEl?: HTMLElement | CSSSelector
     /** Can be "auto", "popover" (to open Color Picker in popover), "sheet" (to open in sheet modal) or "popup" (to open in popup) or "page" (to open in page). In case of auto will open in modal specified in openInPhone parameter on small screens and in popover on large screens. (default popover) */
     openIn?: string
-    /** Enables Color Picker popup to push view/s behind on open */
+    /** Enables Color Picker popup to push view/s behind on open (default false) */
     popupPush?: boolean
-    /** Enables ability to close Color Picker popup with swipe */
+    /** Enables ability to close Color Picker popup with swipe (default undefined) */
     popupSwipeToClose?: boolean | undefined
-    /** Enables Color Picker sheet to push view/s behind on open */
+    /** Enables Color Picker sheet to push view/s behind on open (default false) */
     sheetPush?: boolean
-    /** Enables ability to close Color Picker sheet with swipe */
+    /** Enables ability to close Color Picker sheet with swipe (default undefined) */
     sheetSwipeToClose?: boolean | undefined
     /** Defines in what type of modal Color Picker will be opened on phone (small screen size) when openIn is set to auto (default popup) */
-    openPhone?: string
+    openInPhone?: string
     /** String with CSS selector or HTMLElement with related input element. */
     inputEl?: HTMLElement | CSSSelector
     /** String with CSS selector or HTMLElement with related target element. Popover will be opened around this element */

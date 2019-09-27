@@ -232,7 +232,6 @@ __reactComponentSetProps(F7View, Object.assign({
   animate: Boolean,
   transition: String,
   iosDynamicNavbar: Boolean,
-  iosSeparateDynamicNavbar: Boolean,
   iosAnimateNavbarBackIcon: Boolean,
   materialPageLoadDelay: Number,
   passRouteQueryToRequest: Boolean,

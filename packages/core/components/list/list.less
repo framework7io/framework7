@@ -32,8 +32,7 @@
       .rtl({
         padding-right: calc(var(--f7-list-item-padding-horizontal) + var(--f7-list-in-list-padding-left));
       });
-      .hairline-remove(top);
-      .hairline-remove(bottom);
+      .hairline-remove-top-bottom();
     }
   }
   li {
@@ -554,8 +553,7 @@ li.list-group-title,
   }
   ul {
     border-radius: var(--f7-list-inset-border-radius);
-    .hairline-remove(top);
-    .hairline-remove(bottom);
+    .hairline-remove-top-bottom();
   }
   li.swipeout:first-child,
   li:first-child > a {
@@ -570,141 +568,35 @@ li.list-group-title,
     border-radius: var(--f7-list-inset-border-radius);
   }
 }
-@media (min-width: @breakpoints[xsmall]) {
-  .list.xsmall-inset {
-    margin-left: calc(var(--f7-list-inset-side-margin) + var(--f7-safe-area-outer-left));
-    margin-right: calc(var(--f7-list-inset-side-margin) + var(--f7-safe-area-outer-right));
-    border-radius: var(--f7-list-inset-border-radius);
-    --f7-safe-area-left: 0px;
-    --f7-safe-area-right: 0px;
-    .block-title {
-      margin-left: 0;
-      margin-right: 0;
-    }
-    ul {
+each(@breakpoints, {
+  @media (min-width:@value) {
+    .list.@{key}-inset {
+      margin-left: calc(var(--f7-list-inset-side-margin) + var(--f7-safe-area-outer-left));
+      margin-right: calc(var(--f7-list-inset-side-margin) + var(--f7-safe-area-outer-right));
       border-radius: var(--f7-list-inset-border-radius);
-      .hairline-remove(top);
-      .hairline-remove(bottom);
-    }
-    li:first-child > a {
-      border-radius: var(--f7-list-inset-border-radius) var(--f7-list-inset-border-radius) 0 0;
-    }
-    li:last-child > a {
-      border-radius: 0 0 var(--f7-list-inset-border-radius) var(--f7-list-inset-border-radius);
-    }
-    li:first-child:last-child > a {
-      border-radius: var(--f7-list-inset-border-radius);
+      --f7-safe-area-left: 0px;
+      --f7-safe-area-right: 0px;
+      .block-title {
+        margin-left: 0;
+        margin-right: 0;
+      }
+      ul {
+        border-radius: var(--f7-list-inset-border-radius);
+        .hairline-remove-top-bottom();
+      }
+      li:first-child > a {
+        border-radius: var(--f7-list-inset-border-radius) var(--f7-list-inset-border-radius) 0 0;
+      }
+      li:last-child > a {
+        border-radius: 0 0 var(--f7-list-inset-border-radius) var(--f7-list-inset-border-radius);
+      }
+      li:first-child:last-child > a {
+        border-radius: var(--f7-list-inset-border-radius);
+      }
     }
   }
-}
-@media (min-width: @breakpoints[small]) {
-  .list.small-inset {
-    margin-left: calc(var(--f7-list-inset-side-margin) + var(--f7-safe-area-outer-left));
-    margin-right: calc(var(--f7-list-inset-side-margin) + var(--f7-safe-area-outer-right));
-    border-radius: var(--f7-list-inset-border-radius);
-    --f7-safe-area-left: 0px;
-    --f7-safe-area-right: 0px;
-    .block-title {
-      margin-left: 0;
-      margin-right: 0;
-    }
-    ul {
-      border-radius: var(--f7-list-inset-border-radius);
-      .hairline-remove(top);
-      .hairline-remove(bottom);
-    }
-    li:first-child > a {
-      border-radius: var(--f7-list-inset-border-radius) var(--f7-list-inset-border-radius) 0 0;
-    }
-    li:last-child > a {
-      border-radius: 0 0 var(--f7-list-inset-border-radius) var(--f7-list-inset-border-radius);
-    }
-    li:first-child:last-child > a {
-      border-radius: var(--f7-list-inset-border-radius);
-    }
-  }
-}
-@media (min-width: @breakpoints[medium]) {
-  .list.medium-inset {
-    margin-left: calc(var(--f7-list-inset-side-margin) + var(--f7-safe-area-outer-left));
-    margin-right: calc(var(--f7-list-inset-side-margin) + var(--f7-safe-area-outer-right));
-    border-radius: var(--f7-list-inset-border-radius);
-    --f7-safe-area-left: 0px;
-    --f7-safe-area-right: 0px;
-    .block-title {
-      margin-left: 0;
-      margin-right: 0;
-    }
-    ul {
-      border-radius: var(--f7-list-inset-border-radius);
-      .hairline-remove(top);
-      .hairline-remove(bottom);
-    }
-    li:first-child > a {
-      border-radius: var(--f7-list-inset-border-radius) var(--f7-list-inset-border-radius) 0 0;
-    }
-    li:last-child > a {
-      border-radius: 0 0 var(--f7-list-inset-border-radius) var(--f7-list-inset-border-radius);
-    }
-    li:first-child:last-child > a {
-      border-radius: var(--f7-list-inset-border-radius);
-    }
-  }
-}
-@media (min-width: @breakpoints[large]) {
-  .list.large-inset {
-    margin-left: calc(var(--f7-list-inset-side-margin) + var(--f7-safe-area-outer-left));
-    margin-right: calc(var(--f7-list-inset-side-margin) + var(--f7-safe-area-outer-right));
-    border-radius: var(--f7-list-inset-border-radius);
-    --f7-safe-area-left: 0px;
-    --f7-safe-area-right: 0px;
-    .block-title {
-      margin-left: 0;
-      margin-right: 0;
-    }
-    ul {
-      border-radius: var(--f7-list-inset-border-radius);
-      .hairline-remove(top);
-      .hairline-remove(bottom);
-    }
-    li:first-child > a {
-      border-radius: var(--f7-list-inset-border-radius) var(--f7-list-inset-border-radius) 0 0;
-    }
-    li:last-child > a {
-      border-radius: 0 0 var(--f7-list-inset-border-radius) var(--f7-list-inset-border-radius);
-    }
-    li:first-child:last-child > a {
-      border-radius: var(--f7-list-inset-border-radius);
-    }
-  }
-}
-@media (min-width: @breakpoints[xlarge]) {
-  .list.xlarge-inset {
-    margin-left: calc(var(--f7-list-inset-side-margin) + var(--f7-safe-area-outer-left));
-    margin-right: calc(var(--f7-list-inset-side-margin) + var(--f7-safe-area-outer-right));
-    border-radius: var(--f7-list-inset-border-radius);
-    --f7-safe-area-left: 0px;
-    --f7-safe-area-right: 0px;
-    .block-title {
-      margin-left: 0;
-      margin-right: 0;
-    }
-    ul {
-      border-radius: var(--f7-list-inset-border-radius);
-      .hairline-remove(top);
-      .hairline-remove(bottom);
-    }
-    li:first-child > a {
-      border-radius: var(--f7-list-inset-border-radius) var(--f7-list-inset-border-radius) 0 0;
-    }
-    li:last-child > a {
-      border-radius: 0 0 var(--f7-list-inset-border-radius) var(--f7-list-inset-border-radius);
-    }
-    li:first-child:last-child > a {
-      border-radius: var(--f7-list-inset-border-radius);
-    }
-  }
-}
+});
+
 .list {
   &.no-chevron, .no-chevron {
     --f7-list-chevron-icon-color: transparent;

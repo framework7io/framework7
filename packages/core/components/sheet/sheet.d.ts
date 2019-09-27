@@ -35,6 +35,8 @@ export namespace Sheet {
     swipeToStep?: boolean
     /** When enabled it will be possible to close sheet with swipe only on specified handler element (default null) */
     swipeHandler?: HTMLElement | CSSSelector
+    /** When enabled it will push view behind on open. Works only when top safe area is in place. It can also be enabled by adding `sheet-modal-push` class to Sheet element. (default false) */
+    push?: boolean
 
     /** Object with events handlers.. */
     on?: {

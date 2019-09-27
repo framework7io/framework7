@@ -17,39 +17,39 @@ class F7TextEditor extends React.Component {
   }
 
   onChange(editor, value) {
-    this.dispatchEvent('texteditor:change textEditorChange', editor, value);
+    this.dispatchEvent('texteditor:change textEditorChange', value);
   }
 
-  onInput(editor) {
-    this.dispatchEvent('texteditor:change textEditorChange', editor);
+  onInput() {
+    this.dispatchEvent('texteditor:change textEditorChange');
   }
 
-  onFocus(editor) {
-    this.dispatchEvent('texteditor:focus textEditorFocus', editor);
+  onFocus() {
+    this.dispatchEvent('texteditor:focus textEditorFocus');
   }
 
-  onBlur(editor) {
-    this.dispatchEvent('texteditor:blur textEditorBlur', editor);
+  onBlur() {
+    this.dispatchEvent('texteditor:blur textEditorBlur');
   }
 
   onButtonClick(editor, button) {
-    this.dispatchEvent('texteditor:buttonclick textEditorButtonClick', editor, button);
+    this.dispatchEvent('texteditor:buttonclick textEditorButtonClick', button);
   }
 
-  onKeyboardOpen(editor) {
-    this.dispatchEvent('texteditor:keyboardopen textEditorKeyboardOpen', editor);
+  onKeyboardOpen() {
+    this.dispatchEvent('texteditor:keyboardopen textEditorKeyboardOpen');
   }
 
-  onKeyboardClose(editor) {
-    this.dispatchEvent('texteditor:keyboardclose textEditorKeyboardClose', editor);
+  onKeyboardClose() {
+    this.dispatchEvent('texteditor:keyboardclose textEditorKeyboardClose');
   }
 
-  onPopoverOpen(editor) {
-    this.dispatchEvent('texteditor:popoveropen textEditorPopoverOpen', editor);
+  onPopoverOpen() {
+    this.dispatchEvent('texteditor:popoveropen textEditorPopoverOpen');
   }
 
-  onPopoverClose(editor) {
-    this.dispatchEvent('texteditor:popoverclose textEditorPopoverClose', editor);
+  onPopoverClose() {
+    this.dispatchEvent('texteditor:popoverclose textEditorPopoverClose');
   }
 
   render() {

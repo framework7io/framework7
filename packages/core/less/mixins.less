@@ -110,8 +110,7 @@
   .ios &.no-hairlines-ios ul,
   .aurora &.no-hairlines-aurora,
   .aurora &.no-hairlines-aurora ul {
-    .hairline-remove(top);
-    .hairline-remove(bottom);
+    .hairline-remove-top-bottom();
   }
   &.no-hairline-top,
   &.no-hairline-top ul,
@@ -200,6 +199,11 @@
     height: 100%;
     transform-origin: 100% 50%;
     transform: scaleX(calc(1 / var(--f7-device-pixel-ratio)))
+  }
+}
+.hairline-remove-top-bottom() {
+  &:before, &:after {
+    display: none !important;
   }
 }
 // For right and bottom

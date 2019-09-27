@@ -53,7 +53,6 @@ declare namespace F7View {
     animate? : boolean
     transition? : string
     iosDynamicNavbar? : boolean
-    iosSeparateDynamicNavbar? : boolean
     iosAnimateNavbarBackIcon? : boolean
     materialPageLoadDelay? : number
     passRouteQueryToRequest? : boolean

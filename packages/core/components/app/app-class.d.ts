@@ -65,6 +65,10 @@ export interface Framework7Params {
   init? : boolean
   /** If automatic initialization is enabled with init: true parameter and app is running under cordova environment then it will be initialized on deviceready event.. (default true) */
   initOnDeviceReady? : boolean
+  /** Enable translucent effect (blur background) on navigation bars for iOS theme (on iOS devices) (by default enabled) */
+  iosTranslucentBars? : boolean
+  /** Enable translucent effect (blur background) on modals (Dialog, Popover, Actions) for iOS theme (on iOS devices) (by default enabled) */
+  iosTranslucentModals? : boolean
   /** Object with events handlers.. (default {}) */
   on?: {
     [event in keyof Framework7Events]? : Framework7Events[event]

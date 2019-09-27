@@ -26,12 +26,12 @@ export default {
       parse(componentString) {
         return parseComponent(componentString);
       },
-      create(options, context) {
+      create(options, context, children) {
         if (typeof options === 'function') {
           // eslint-disable-next-line
-          return new options(app, { isClassComponent: true }, context);
+          return new options(app, { isClassComponent: true }, context, children);
         }
-        return new Component(app, options, context);
+        return new Component(app, options, context, children);
       },
     };
   },

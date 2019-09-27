@@ -28,6 +28,8 @@ export namespace Router {
     componentUrl?: string
     /** Do required asynchronous manipulation and the return required route content and options */
     async?(routeTo: Route, routeFrom: Route, resolve: Function, reject: Function): void
+    /** Function that should return Promise resolved with Component or ES module with `.default` property containing Component */
+    asyncComponent?(): Promise<any>
   }
 
   // interface AP extends Actions.Parameters{}
@@ -37,6 +39,8 @@ export namespace Router {
     name?: string
     /** Route path. Means this route will be loaded when we click link that match to this path, or can be loaded by this path using API */
     path: string
+    /** View name where this route will be forced to load */
+    viewName?: string
     /** Object with additional route options (optional) */
     options?: RouteOptions
     /** Array with nested routes */
@@ -61,6 +65,8 @@ export namespace Router {
     componentUrl?: string
     /** Do required asynchronous manipulation and the return required route content and options */
     async?(routeTo: Route, routeFrom: Route, resolve: Function, reject: Function): void
+    /** Function that should return Promise resolved with Component or ES module with `.default` property containing Component */
+    asyncComponent?(): Promise<any>
 
     /** tab id */
     id?: string
