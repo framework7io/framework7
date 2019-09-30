@@ -6,7 +6,6 @@
 */
 
 const config = {
-  target: 'universal',
   rtl: false,
   components: [
     // Appbar
@@ -116,14 +115,14 @@ const config = {
     // WYSIWYG Editor
     'text-editor',
 
-    // VI Video Ads
-    'vi',
-
     // Elevation
     'elevation',
 
     // Typography
     'typography',
+
+    // VI Video Ads
+    'vi',
   ],
   darkTheme: true,
   lightTheme: true,
