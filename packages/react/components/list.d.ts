@@ -15,6 +15,7 @@ declare namespace F7List {
     xlargeInset? : boolean
     mediaList? : boolean
     sortable? : boolean
+    sortableTapHold? : boolean
     sortableEnabled? : boolean
     sortableMoveElements? : boolean
     accordionList? : boolean

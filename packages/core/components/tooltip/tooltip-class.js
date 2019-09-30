@@ -86,8 +86,8 @@ class Tooltip extends Framework7Class {
         app.on('touchmove', handleTouchMove);
         app.on('touchend:passive', handleTouchEnd);
       } else {
-        $targetEl.on('mouseenter', handleMouseEnter);
-        $targetEl.on('mouseleave', handleMouseLeave);
+        $targetEl.on((Support.pointerEvents ? 'pointerenter' : 'mousenter'), handleMouseEnter);
+        $targetEl.on((Support.pointerEvents ? 'pointerleave' : 'mouseleave'), handleMouseLeave);
       }
     };
     tooltip.detachEvents = function detachEvents() {
@@ -98,8 +98,8 @@ class Tooltip extends Framework7Class {
         app.off('touchmove', handleTouchMove);
         app.off('touchend:passive', handleTouchEnd);
       } else {
-        $targetEl.off('mouseenter', handleMouseEnter);
-        $targetEl.off('mouseleave', handleMouseLeave);
+        $targetEl.off((Support.pointerEvents ? 'pointerenter' : 'mousenter'), handleMouseEnter);
+        $targetEl.off((Support.pointerEvents ? 'pointerleave' : 'mouseleave'), handleMouseLeave);
       }
     };
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { window, document } from 'ssr-window';
 import $ from 'dom7';
 import Support from '../../utils/support';
@@ -202,7 +203,8 @@ function initTouch() {
         tapHoldFired = true;
         e.preventDefault();
         preventClick = true;
-        $(e.target).trigger('taphold');
+        $(e.target).trigger('taphold', e);
+        app.emit('taphold', e);
       }, params.tapHoldDelay);
     }
     targetElement = e.target;
@@ -412,9 +414,9 @@ export default {
   },
   instance: {
     touchEvents: {
-      start: Support.touch ? 'touchstart' : 'mousedown',
-      move: Support.touch ? 'touchmove' : 'mousemove',
-      end: Support.touch ? 'touchend' : 'mouseup',
+      start: Support.touch ? 'touchstart' : (Support.pointerEvents ? 'pointerdown' : 'mousedown'),
+      move: Support.touch ? 'touchmove' : (Support.pointerEvents ? 'pointermove' : 'mousemove'),
+      end: Support.touch ? 'touchend' : (Support.pointerEvents ? 'pointerup' : 'mouseup'),
     },
   },
   on: {

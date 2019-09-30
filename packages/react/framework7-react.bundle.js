@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.0.0-beta.17
+ * Framework7 React 5.0.0-beta.19
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 27, 2019
+ * Released on: September 30, 2019
  */
 
 (function (global, factory) {
@@ -5176,7 +5176,8 @@
       var sortableMoveElements = props.sortableMoveElements;
       var classes = Utils.classNames(className, 'list-group', {
         'media-list': mediaList,
-        sortable: sortable
+        sortable: sortable,
+        'sortable-tap-hold': sortableTapHold
       }, Mixins.colorClasses(props));
       return React.createElement('div', {
         id: id,
@@ -5201,6 +5202,7 @@
     style: Object,
     mediaList: Boolean,
     sortable: Boolean,
+    sortableTapHold: Boolean,
     sortableMoveElements: {
       type: Boolean,
       default: undefined
@@ -6952,10 +6954,11 @@
       var simpleList = props.simpleList;
       var linksList = props.linksList;
       var sortable = props.sortable;
+      var sortableTapHold = props.sortableTapHold;
+      var sortableEnabled = props.sortableEnabled;
       var accordionList = props.accordionList;
       var contactsList = props.contactsList;
       var virtualList = props.virtualList;
-      var sortableEnabled = props.sortableEnabled;
       var tab = props.tab;
       var tabActive = props.tabActive;
       var noHairlines = props.noHairlines;
@@ -6982,10 +6985,11 @@
         'simple-list': simpleList,
         'links-list': linksList,
         sortable: sortable,
+        'sortable-tap-hold': sortableTapHold,
+        'sortable-enabled': sortableEnabled,
         'accordion-list': accordionList,
         'contacts-list': contactsList,
         'virtual-list': virtualList,
-        'sortable-enabled': sortableEnabled,
         tab: tab,
         'tab-active': tabActive,
         'no-hairlines': noHairlines,
@@ -7164,6 +7168,7 @@
     xlargeInset: Boolean,
     mediaList: Boolean,
     sortable: Boolean,
+    sortableTapHold: Boolean,
     sortableEnabled: Boolean,
     sortableMoveElements: {
       type: Boolean,
@@ -14268,7 +14273,7 @@
   };
 
   /**
-   * Framework7 React 5.0.0-beta.17
+   * Framework7 React 5.0.0-beta.19
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -14276,7 +14281,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: September 27, 2019
+   * Released on: September 30, 2019
    */
 
   function f7ready(callback) {

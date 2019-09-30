@@ -88,16 +88,6 @@ function initClicks(app) {
   }
 
   app.on('click', handleClicks);
-
-  // TODO: check if need this in iOS
-  // Prevent scrolling on overlays
-  // function preventScrolling(e) {
-  //   e.preventDefault();
-  // }
-  // if (Support.touch && !Device.android) {
-  //   const activeListener = Support.passiveListener ? { passive: false, capture: false } : false;
-  //   $(document).on((app.params.touch.fastClicks ? 'touchstart' : 'touchmove'), '.panel-backdrop, .dialog-backdrop, .preloader-backdrop, .popup-backdrop, .searchbar-backdrop', preventScrolling, activeListener);
-  // }
 }
 export default {
   name: 'clicks',

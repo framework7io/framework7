@@ -22,7 +22,8 @@ class F7ListGroup extends React.Component {
     } = props;
     const classes = Utils.classNames(className, 'list-group', {
       'media-list': mediaList,
-      sortable
+      sortable,
+      'sortable-tap-hold': sortableTapHold
     }, Mixins.colorClasses(props));
     return React.createElement('div', {
       id: id,
@@ -44,6 +45,7 @@ __reactComponentSetProps(F7ListGroup, Object.assign({
   style: Object,
   mediaList: Boolean,
   sortable: Boolean,
+  sortableTapHold: Boolean,
   sortableMoveElements: {
     type: Boolean,
     default: undefined

@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.0-beta.17
+ * Framework7 5.0.0-beta.19
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 27, 2019
+ * Released on: September 30, 2019
  */
 
 /*====================
@@ -2027,12 +2027,6 @@ html.device-full-viewport body {
   --f7-navbar-large-bg-right-top: translateX(-100%) translateY(calc(-1 * var(--f7-navbar-large-title-height)));
   --f7-navbar-large-bg-right-bottom: translateX(-100%) translateY(0);
 }
-.ios .navbar .material-icons {
-  width: 24px;
-}
-.ios .navbar .f7-icons {
-  width: 28px;
-}
 .ios .navbar a.icon-only {
   width: 44px;
   margin: 0;
@@ -2619,12 +2613,6 @@ html.device-full-viewport body {
   to {
     transform: var(--f7-navbar-large-transparent-bg-left);
   }
-}
-.md .navbar .material-icons {
-  width: 24px;
-}
-.md .navbar .f7-icons {
-  width: 28px;
 }
 .md .navbar a.link {
   padding: 0 16px;
@@ -5600,6 +5588,11 @@ input[type="button"].button {
   --f7-touch-ripple-color: var(--f7-theme-color-ripple-color);
 }
 /* === Icon === */
+.f7-icons,
+.material-icons {
+  width: 1em;
+  height: 1em;
+}
 i.icon {
   display: inline-block;
   vertical-align: middle;
@@ -5654,11 +5647,6 @@ i.icon {
 .ios .icon-next:after {
   font-size: 16px;
 }
-.ios .item-media .f7-icons {
-  font-size: 28px;
-  width: 28px;
-  height: 28px;
-}
 .ios .icon-back:after,
 .ios .icon-prev:after {
   content: 'chevron_right_ios';
@@ -5679,11 +5667,6 @@ i.icon {
 .md .icon-next:after,
 .md .icon-prev:after {
   line-height: 1.2;
-}
-.md .item-media .material-icons {
-  font-size: 24px;
-  width: 24px;
-  height: 24px;
 }
 .md .icon-back:after {
   content: 'arrow_right_md';
@@ -5714,11 +5697,6 @@ i.icon {
 .aurora .icon-forward:after,
 .aurora .icon-next:after {
   line-height: inherit;
-}
-.aurora .item-media .f7-icons {
-  font-size: 18px;
-  width: 18px;
-  height: 18px;
 }
 .aurora .icon-back:after,
 .aurora .icon-prev:after {
@@ -7592,8 +7570,6 @@ html.with-modal-sheet-push .framework7-root > .view {
 .toast.toast-with-icon .toast-icon .f7-icons,
 .toast.toast-with-icon .toast-icon .material-icons {
   font-size: var(--f7-toast-icon-size);
-  width: var(--f7-toast-icon-size);
-  height: var(--f7-toast-icon-size);
 }
 .toast.toast-center {
   top: 50%;
@@ -15078,8 +15054,6 @@ table.data-table {
 .data-table thead i.material-icons {
   vertical-align: top;
   font-size: var(--f7-table-head-icon-size);
-  width: var(--f7-table-head-icon-size);
-  height: var(--f7-table-head-icon-size);
 }
 .data-table tbody {
   font-size: var(--f7-table-body-font-size);
@@ -20025,8 +19999,6 @@ button.swiper-pagination-bullet {
 .treeview-item-content > i,
 .treeview-item-content > .f7-icons,
 .treeview-item-content > .material-icons {
-  width: var(--f7-treeview-icon-size);
-  height: var(--f7-treeview-icon-size);
   font-size: var(--f7-treeview-icon-size);
   color: var(--f7-treeview-icon-color);
 }
