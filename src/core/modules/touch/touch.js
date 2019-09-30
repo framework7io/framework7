@@ -203,7 +203,8 @@ function initTouch() {
         tapHoldFired = true;
         e.preventDefault();
         preventClick = true;
-        $(e.target).trigger('taphold');
+        $(e.target).trigger('taphold', e);
+        app.emit('taphold', e);
       }, params.tapHoldDelay);
     }
     targetElement = e.target;
