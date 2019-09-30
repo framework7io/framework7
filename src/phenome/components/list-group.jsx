@@ -9,6 +9,7 @@ export default {
     style: Object, // phenome-react-line
     mediaList: Boolean,
     sortable: Boolean,
+    sortableTapHold: Boolean,
     sortableMoveElements: {
       type: Boolean,
       default: undefined,
@@ -33,6 +34,7 @@ export default {
       {
         'media-list': mediaList,
         sortable,
+        'sortable-tap-hold': sortableTapHold,
       },
       Mixins.colorClasses(props),
     );

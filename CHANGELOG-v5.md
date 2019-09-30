@@ -193,6 +193,7 @@
   * Swipeable Sheet Modal now correctly handles scrolling inside of nested `page-content` element
 * **Sortable**
   * Sortable `sort` event data now also contain `el` property with reference to sorted item
+  * Now sorting can be done on tap-hold. It can be enabled by adding additional `sortable-tap-hold` to `sortable` container. Also `app.touch.tapHold` should be enabled to emit `taphold` events.
 * **Smart Select**
   * Fixed behavior when it is `multiple` and with Virtual List enabled
   * New `.unsetValue()` method to unset smart select value
@@ -386,6 +387,7 @@
 * **List**
   * Sortable `sort` event data now also contain `el` property with reference to sorted item
   * Sortable `sort` event data now contains `sortableData` property as first argument
+  * New `sortableTapHold` prop to enable sorting on tap hold. Also `app.touch.tapHold` parameter should be enable to emit `taphold` events.
   * `tabletInset` prop has been removed
   * New inset props to reflect new breakpoint names: `xsmallInset`, `smallInset`, `mediumInset`, `largeInset`, `xlargeInset`
 * **ListItem**
