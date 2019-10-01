@@ -125,6 +125,7 @@ function swipePanel(panel) {
 
     if (!isMoved) {
       if (!panel.opened) {
+        panel.insertToRoot();
         $el.addClass('panel-in-swipe');
         $backdropEl.css('visibility', 'visible');
         $el.trigger('panel:swipeopen');
