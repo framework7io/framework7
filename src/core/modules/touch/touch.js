@@ -339,6 +339,13 @@ function initTouch() {
   function appTouchEndPassive(e) {
     emitAppTouchEvent('touchend:passive', e);
   }
+  function appGestureActive(e) {
+    emitAppTouchEvent(`${e.type} ${e.type}:active`, e);
+  }
+  function appGesturePassive(e) {
+    emitAppTouchEvent(`${e.type}:passive`, e);
+  }
+
 
   const passiveListener = Support.passiveListener ? { passive: true } : false;
   const activeListener = Support.passiveListener ? { passive: false } : false;
@@ -353,6 +360,15 @@ function initTouch() {
     document.addEventListener(app.touchEvents.start, appTouchStartPassive, passiveListener);
     document.addEventListener(app.touchEvents.move, appTouchMovePassive, passiveListener);
     document.addEventListener(app.touchEvents.end, appTouchEndPassive, passiveListener);
+    if (Support.touch && Support.gestures) {
+      document.addEventListener('gesturestart', appGestureActive, activeListener);
+      document.addEventListener('gesturechange', appGestureActive, activeListener);
+      document.addEventListener('gestureend', appGestureActive, activeListener);
+
+      document.addEventListener('gesturestart', appGesturePassive, passiveListener);
+      document.addEventListener('gesturechange', appGesturePassive, passiveListener);
+      document.addEventListener('gestureend', appGesturePassive, passiveListener);
+    }
   } else {
     document.addEventListener(app.touchEvents.start, (e) => {
       appTouchStartActive(e);
@@ -366,6 +382,20 @@ function initTouch() {
       appTouchEndActive(e);
       appTouchEndPassive(e);
     }, false);
+    if (Support.touch && Support.gestures) {
+      document.addEventListener('gesturestart', (e) => {
+        appGestureActive(e);
+        appGesturePassive(e);
+      }, false);
+      document.addEventListener('gesturechange', (e) => {
+        appGestureActive(e);
+        appGesturePassive(e);
+      }, false);
+      document.addEventListener('gestureend', (e) => {
+        appGestureActive(e);
+        appGesturePassive(e);
+      }, false);
+    }
   }
 
   if (Support.touch) {
@@ -373,7 +403,6 @@ function initTouch() {
     app.on('touchstart', handleTouchStart);
     app.on('touchmove', handleTouchMove);
     app.on('touchend', handleTouchEnd);
-
     document.addEventListener('touchcancel', handleTouchCancel, { passive: true });
   } else if (params.activeState) {
     app.on('touchstart', handleMouseDown);
