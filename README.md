@@ -177,26 +177,27 @@ Framework7 uses LESS for CSS compilations, and ES modules JS files.
 
 The project uses [.editorconfig](http://editorconfig.org/) and [ESLint](https://eslint.org/) to define and lint the coding style of each file. We recommend that you install the Editor Config and ESLint extension for your preferred IDE.
 
-If you want to help in Framework7 development and make it event better visit this page: http://framework7.io/contribute/
+If you want to help in Framework7 development and make it event better visit this page: https://framework7.io/contribute/
 
 ## Forum
 
-If you have questions about Framework7 or want to help others you are welcome to special forum at http://forum.framework7.io/
+If you have questions about Framework7 or want to help others you are welcome to special forum at https://forum.framework7.io/
 
 ## Docs
 
-Documentation available at http://framework7.io/docs/
+Documentation available at https://framework7.io/docs/
 
 ## Tutorials
 
-Tutorials available at http://framework7.io/tutorials/
+Tutorials available at https://framework7.io/tutorials/
 
 ## Showcase
 
-Appstore apps made with Framework7: http://framework7.io/showcase/
+Appstore apps made with Framework7: https://framework7.io/showcase/
 
 ## Previous Versions
 
+* [v4 branch](https://github.com/framework7io/Framework7/tree/v4)
 * [v3 branch](https://github.com/framework7io/Framework7/tree/v3)
 * [v2 branch](https://github.com/framework7io/Framework7/tree/v2)
 * [v1 branch](https://github.com/framework7io/Framework7/tree/v1)
