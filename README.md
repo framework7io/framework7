@@ -24,6 +24,11 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
       </a>
     </td>
     <td align="center" valign="middle">
+      <a href="https://monovm.com/linux-vps/" target="_blank">
+        <img width="160" src="https://cdn.framework7.io/i/sponsors/monovm.jpg">
+      </a>
+    </td>
+    <td align="center" valign="middle">
       <a href="https://staffaugmentation.ro" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/staffaugmentation.jpg">
       </a>
@@ -38,13 +43,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img width="160" src="https://cdn.framework7.io/i/sponsors/appvalley.jpg">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="http://mytommy.com" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/tommy.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://www.securcom.me/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/securcom.png">
@@ -65,13 +70,13 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img width="160" src="https://cdn.framework7.io/i/sponsors/usave.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://bid4papers.com/write-my-essay.html" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/bid4papers.png">
       </a>
     </td>
-  </tr>
-  <tr>
     <td align="center" valign="middle">
       <a href="https://kidoverse.app" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/kidoverse.png">
@@ -92,11 +97,17 @@ Framework7 is an MIT-licensed open source project with its ongoing development m
         <img width="160" src="https://cdn.framework7.io/i/sponsors/blokt.png">
       </a>
     </td>
+  </tr>
+  <tr>
     <td align="center" valign="middle">
       <a href="https://wappler.io/" target="_blank">
         <img width="160" src="https://cdn.framework7.io/i/sponsors/wappler.png">
       </a>
     </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
   </tr>
 </table>
 
