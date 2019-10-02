@@ -25,6 +25,18 @@ export default {
     size: [String, Number],
     ...Mixins.colorProps,
   },
+  state() {
+    const self = this;
+    const $f7 = self.$f7;
+    if (!$f7) {
+      self.$f7ready(() => {
+        self.setState({ _theme: self.$theme });
+      });
+    }
+    return {
+      _theme: $f7 ? self.$theme : null,
+    };
+  },
   render() {
     const self = this;
     const props = self.props;
@@ -94,12 +106,14 @@ export default {
     iconTextComputed() {
       const self = this;
       const { material, f7, md, ios, aurora } = self.props;
+      // eslint-disable-next-line
+      const theme = self.state._theme;
       let text = material || f7;
-      if (md && self.$theme.md && (md.indexOf('material:') >= 0 || md.indexOf('f7:') >= 0)) {
+      if (md && theme && theme.md && (md.indexOf('material:') >= 0 || md.indexOf('f7:') >= 0)) {
         text = md.split(':')[1];
-      } else if (ios && self.$theme.ios && (ios.indexOf('material:') >= 0 || ios.indexOf('f7:') >= 0)) {
+      } else if (ios && theme && theme.ios && (ios.indexOf('material:') >= 0 || ios.indexOf('f7:') >= 0)) {
         text = ios.split(':')[1];
-      } else if (aurora && self.$theme.aurora && (aurora.indexOf('material:') >= 0 || aurora.indexOf('f7:') >= 0)) {
+      } else if (aurora && theme && theme.aurora && (aurora.indexOf('material:') >= 0 || aurora.indexOf('f7:') >= 0)) {
         text = aurora.split(':')[1];
       }
       return text;
@@ -110,13 +124,15 @@ export default {
       };
       const self = this;
       const props = self.props;
+      // eslint-disable-next-line
+      const theme = self.state._theme;
       const {
         material, f7, icon, md, ios, aurora, className,
       } = props;
       let themeIcon;
-      if (self.$theme.ios) themeIcon = ios;
-      else if (self.$theme.md) themeIcon = md;
-      else if (self.$theme.aurora) themeIcon = aurora;
+      if (theme && theme.ios) themeIcon = ios;
+      else if (theme && theme.md) themeIcon = md;
+      else if (theme && theme.aurora) themeIcon = aurora;
 
       if (themeIcon) {
         const parts = themeIcon.split(':');
