@@ -6,9 +6,6 @@
   "typings": "framework7-vue.d.ts",
   "jsnext:main": "framework7-vue.esm.js",
   "module": "framework7-vue.esm.js",
-  "scripts": {
-    "postinstall": "node -e \"console.log('\\u001b[35m\\u001b[1mLove Framework7 Vue? Support project by donating or pledging on patreon:\\u001b[22m\\u001b[39m\\n > \\u001b[32mhttps://patreon.com/vladimirkharlampidi\\u001b[0m\\n')\""
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/framework7io/framework7.git"
