@@ -257,11 +257,7 @@ class Component {
       html = self.render.call(self);
     } else if ($options.template) {
       if (typeof $options.template === 'string') {
-        try {
-          html = Template7.compile($options.template)(self);
-        } catch (err) {
-          throw err;
-        }
+        html = Template7.compile($options.template)(self);
       } else {
         // Supposed to be function
         html = $options.template(self);

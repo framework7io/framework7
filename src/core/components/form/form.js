@@ -16,11 +16,7 @@ const FormData = {
     app.form.data[`form-${formId}`] = data;
 
     // Store form data in local storage also
-    try {
-      window.localStorage[`f7form-${formId}`] = JSON.stringify(data);
-    } catch (e) {
-      throw e;
-    }
+    window.localStorage[`f7form-${formId}`] = JSON.stringify(data);
   },
   get(form) {
     const app = this;
@@ -31,12 +27,8 @@ const FormData = {
       formId = $formEl.attr('id');
     }
 
-    try {
-      if (window.localStorage[`f7form-${formId}`]) {
-        return JSON.parse(window.localStorage[`f7form-${formId}`]);
-      }
-    } catch (e) {
-      throw e;
+    if (window.localStorage[`f7form-${formId}`]) {
+      return JSON.parse(window.localStorage[`f7form-${formId}`]);
     }
     if (app.form.data[`form-${formId}`]) {
       return app.form.data[`form-${formId}`];
@@ -59,13 +51,9 @@ const FormData = {
     }
 
     // Delete form data from local storage also
-    try {
-      if (window.localStorage[`f7form-${formId}`]) {
-        window.localStorage[`f7form-${formId}`] = '';
-        window.localStorage.removeItem(`f7form-${formId}`);
-      }
-    } catch (e) {
-      throw e;
+    if (window.localStorage[`f7form-${formId}`]) {
+      window.localStorage[`f7form-${formId}`] = '';
+      window.localStorage.removeItem(`f7form-${formId}`);
     }
   },
 };
