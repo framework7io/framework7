@@ -37,10 +37,28 @@ module.exports = {
     'no-param-reassign': ['error', {
       props: false,
     }],
+    'no-mixed-operators': ['error', {
+      // the list of arthmetic groups disallows mixing `%` and `**`
+      // with other arithmetic operators.
+      groups: [
+        ['%', '**'],
+        ['%', '+'],
+        ['%', '-'],
+        ['%', '*'],
+        ['%', '/'],
+        ['&', '|', '<<', '>>', '>>>'],
+        ['==', '!=', '===', '!=='],
+        ['&&', '||'],
+      ],
+      allowSamePrecedence: false
+    }],
     'prefer-destructuring': ['off'],
+    'prefer-ob': ['off'],
     'react/react-in-jsx-scope': ['off'],
     'react/no-string-refs': ['off'],
     'react/prop-types': ['off'],
-    'linebreak-style': ['off']
+    'linebreak-style': ['off'],
+    'arrow-parens': ['off'],
+    'prefer-object-spread': ['off'],
   },
 };
