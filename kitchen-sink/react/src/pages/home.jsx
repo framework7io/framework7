@@ -181,9 +181,6 @@ export default class extends React.Component {
           <ListItem link="/sortable/" title="Sortable List">
             <Icon slot="media" icon="icon-f7" />
           </ListItem>
-          <ListItem link="/statusbar/" title="Statusbar">
-            <Icon slot="media" icon="icon-f7" />
-          </ListItem>
           <ListItem link="/stepper/" title="Stepper">
             <Icon slot="media" icon="icon-f7" />
           </ListItem>

@@ -273,10 +273,6 @@ var routes = [
     url: './pages/sortable.html',
   },
   {
-    path: '/statusbar/',
-    componentUrl: './pages/statusbar.html',
-  },
-  {
     path: '/stepper/',
     componentUrl: './pages/stepper.html',
   },

@@ -1,6 +1,5 @@
 <template>
   <f7-app :params="f7Params">
-    <f7-statusbar></f7-statusbar>
     <f7-panel left cover resizable>
       <f7-view url="/panel-left/" links-view=".view-main"></f7-view>
     </f7-panel>
@@ -11,7 +10,7 @@
   </f7-app>
 </template>
 <script>
-  import { f7App, f7Panel, f7View, f7Statusbar } from 'framework7-vue';
+  import { f7App, f7Panel, f7View } from 'framework7-vue';
   import routes from './routes';
 
   export default {
@@ -19,7 +18,6 @@
       f7App,
       f7Panel,
       f7View,
-      f7Statusbar,
     },
     data() {
       // Demo Theme

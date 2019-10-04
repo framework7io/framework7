@@ -55,7 +55,6 @@ import SheetModal from './pages/sheet-modal.vue';
 import Skeleton from './pages/skeleton.vue';
 import SmartSelect from './pages/smart-select.vue';
 import Sortable from './pages/sortable.vue';
-import Statusbar from './pages/statusbar.vue';
 import Stepper from './pages/stepper.vue';
 import Subnavbar from './pages/subnavbar.vue';
 import SubnavbarTitle from './pages/subnavbar-title.vue';
@@ -395,10 +394,6 @@ export default [
   {
     path: '/sortable/',
     component: Sortable,
-  },
-  {
-    path: '/statusbar/',
-    component: Statusbar,
   },
   {
     path: '/stepper/',

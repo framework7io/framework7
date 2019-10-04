@@ -1,5 +1,5 @@
 import React from 'react';
-import { App, Panel, View, Statusbar } from 'framework7-react';
+import { App, Panel, View } from 'framework7-react';
 import routes from './routes';
 
 export default function (props) {
@@ -26,7 +26,6 @@ export default function (props) {
   }
   return (
     <App params={ f7Params }>
-      <Statusbar />
       <Panel left cover resizable>
         <View url="/panel-left/" linksView=".view-main" />
       </Panel>

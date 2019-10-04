@@ -173,9 +173,6 @@
       <f7-list-item link="/sortable/" title="Sortable List">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>
-      <f7-list-item link="/statusbar/" title="Statusbar">
-        <f7-icon slot="media" icon="icon-f7"></f7-icon>
-      </f7-list-item>
       <f7-list-item link="/stepper/" title="Stepper">
         <f7-icon slot="media" icon="icon-f7"></f7-icon>
       </f7-list-item>
