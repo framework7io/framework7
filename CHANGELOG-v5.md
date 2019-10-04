@@ -230,9 +230,9 @@
 * **Timeline**
   * Now it uses new breakpoint names for `{size}-sides` classes (e.g. `tablet-sides` -> `medium-sides`, etc.)
 * **Toolbar**
-  * Tabbar labels size increased in iOS theme
+  * Tabbar labels text (font) size increased in iOS theme
 
-## Framework7.Component (previously Router Component)
+## Framework7 Router Component
 
 * Now it supports async `data` method (where it must return Promise)
   ```js
@@ -347,7 +347,7 @@
     }
     mounted() {
       console.log('mounted');
-      this.onMount(); // call method
+      this.onMounted(); // call method
     }
     onMounted() {
       // ...
