@@ -19,16 +19,16 @@
       }
     }
   }
-  @media (min-width: 768px) {
+  @media (min-width: 768px) and (min-height: 600px) {
     .tabbar,
     .tabbar-labels {
-      .toolbar-inner {
-        justify-content: center;
-      }
       .tab-link,
       .link {
-        width: auto;
-        min-width: 105px;
+        justify-content: center;
+        flex-direction: row;
+        i + span {
+          margin-left: 5px;
+        }
       }
     }
   }
