@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.0-beta.19
+ * Framework7 5.0.0-beta.20
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 30, 2019
+ * Released on: October 5, 2019
  */
 
 (function (global, factory) {
@@ -4579,6 +4579,13 @@
     function appTouchEndPassive(e) {
       emitAppTouchEvent('touchend:passive', e);
     }
+    function appGestureActive(e) {
+      emitAppTouchEvent(((e.type) + " " + (e.type) + ":active"), e);
+    }
+    function appGesturePassive(e) {
+      emitAppTouchEvent(((e.type) + ":passive"), e);
+    }
+
 
     var passiveListener = Support.passiveListener ? { passive: true } : false;
     var activeListener = Support.passiveListener ? { passive: false } : false;
@@ -4593,6 +4600,15 @@
       doc.addEventListener(app.touchEvents.start, appTouchStartPassive, passiveListener);
       doc.addEventListener(app.touchEvents.move, appTouchMovePassive, passiveListener);
       doc.addEventListener(app.touchEvents.end, appTouchEndPassive, passiveListener);
+      if (Support.touch && Support.gestures) {
+        doc.addEventListener('gesturestart', appGestureActive, activeListener);
+        doc.addEventListener('gesturechange', appGestureActive, activeListener);
+        doc.addEventListener('gestureend', appGestureActive, activeListener);
+
+        doc.addEventListener('gesturestart', appGesturePassive, passiveListener);
+        doc.addEventListener('gesturechange', appGesturePassive, passiveListener);
+        doc.addEventListener('gestureend', appGesturePassive, passiveListener);
+      }
     } else {
       doc.addEventListener(app.touchEvents.start, function (e) {
         appTouchStartActive(e);
@@ -4606,6 +4622,20 @@
         appTouchEndActive(e);
         appTouchEndPassive(e);
       }, false);
+      if (Support.touch && Support.gestures) {
+        doc.addEventListener('gesturestart', function (e) {
+          appGestureActive(e);
+          appGesturePassive(e);
+        }, false);
+        doc.addEventListener('gesturechange', function (e) {
+          appGestureActive(e);
+          appGesturePassive(e);
+        }, false);
+        doc.addEventListener('gestureend', function (e) {
+          appGestureActive(e);
+          appGesturePassive(e);
+        }, false);
+      }
     }
 
     if (Support.touch) {
@@ -4613,7 +4643,6 @@
       app.on('touchstart', handleTouchStart);
       app.on('touchmove', handleTouchMove);
       app.on('touchend', handleTouchEnd);
-
       doc.addEventListener('touchcancel', handleTouchCancel, { passive: true });
     } else if (params.activeState) {
       app.on('touchstart', handleMouseDown);
@@ -4783,26 +4812,27 @@
    * @return {!function(Object=, Object=)}
    */
   function compile (str, options) {
-    return tokensToFunction(parse(str, options))
+    return tokensToFunction(parse(str, options), options)
   }
 
   /**
    * Expose a method for transforming tokens into the path function.
    */
-  function tokensToFunction (tokens) {
+  function tokensToFunction (tokens, options) {
     // Compile all the tokens into regexps.
     var matches = new Array(tokens.length);
 
     // Compile all the patterns before compilation.
     for (var i = 0; i < tokens.length; i++) {
       if (typeof tokens[i] === 'object') {
-        matches[i] = new RegExp('^(?:' + tokens[i].pattern + ')$');
+        matches[i] = new RegExp('^(?:' + tokens[i].pattern + ')$', flags(options));
       }
     }
 
     return function (data, options) {
       var path = '';
       var encode = (options && options.encode) || encodeURIComponent;
+      var validate = options ? options.validate !== false : true;
 
       for (var i = 0; i < tokens.length; i++) {
         var token = tokens[i];
@@ -4829,7 +4859,7 @@
           for (var j = 0; j < value.length; j++) {
             segment = encode(value[j], token);
 
-            if (!matches[i].test(segment)) {
+            if (validate && !matches[i].test(segment)) {
               throw new TypeError('Expected all "' + token.name + '" to match "' + token.pattern + '"')
             }
 
@@ -4842,7 +4872,7 @@
         if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
           segment = encode(String(value), token);
 
-          if (!matches[i].test(segment)) {
+          if (validate && !matches[i].test(segment)) {
             throw new TypeError('Expected "' + token.name + '" to match "' + token.pattern + '", but got "' + segment + '"')
           }
 
@@ -11080,11 +11110,7 @@
       html = self.render.call(self);
     } else if ($options.template) {
       if (typeof $options.template === 'string') {
-        try {
-          html = Template7.compile($options.template)(self);
-        } catch (err) {
-          throw err;
-        }
+        html = Template7.compile($options.template)(self);
       } else {
         // Supposed to be function
         html = $options.template(self);
@@ -17770,6 +17796,7 @@
     var otherPanel;
 
     var isTouched;
+    var isGestureStarted;
     var isMoved;
     var isScrolling;
     var touchesStart = {};
@@ -17784,7 +17811,7 @@
 
     var touchMoves = 0;
     function handleTouchStart(e) {
-      if (!panel.swipeable) { return; }
+      if (!panel.swipeable || isGestureStarted) { return; }
       if (!app.panel.allowOpen || (!params.swipe && !params.swipeOnlyClose) || isTouched) { return; }
       if ($('.modal-in:not(.toast):not(.notification), .photo-browser-in').length > 0) { return; }
       otherPanel = app.panel.get(side === 'left' ? 'right' : 'left') || {};
@@ -17820,7 +17847,7 @@
       direction = undefined;
     }
     function handleTouchMove(e) {
-      if (!isTouched) { return; }
+      if (!isTouched || isGestureStarted) { return; }
       touchMoves += 1;
       if (touchMoves < 2) { return; }
       if (e.f7PreventSwipePanel || app.preventSwipePanelBySwipeBack || app.preventSwipePanel) {
@@ -17880,6 +17907,7 @@
 
       if (!isMoved) {
         if (!panel.opened) {
+          panel.insertToRoot();
           $el.addClass('panel-in-swipe');
           $backdropEl.css('visibility', 'visible');
           $el.trigger('panel:swipeopen');
@@ -17937,12 +17965,13 @@
         panel.emit('local::swipe panelSwipe', panel, Math.abs(translate / panelWidth));
       }
     }
-    function handleTouchEnd() {
+    function handleTouchEnd(e) {
       if (!isTouched || !isMoved) {
         isTouched = false;
         isMoved = false;
         return;
       }
+      var isGesture = e.type === 'gesturestart' || isGestureStarted;
       isTouched = false;
       isMoved = false;
       var timeDiff = (new Date()).getTime() - touchStartTime;
@@ -17951,7 +17980,9 @@
 
       var threshold = params.swipeThreshold || 0;
 
-      if (!panel.opened) {
+      if (isGesture) {
+        action = 'reset';
+      } else if (!panel.opened) {
         if (Math.abs(touchesDiff) < threshold) {
           action = 'reset';
         } else if (effect === 'cover') {
@@ -18032,15 +18063,26 @@
       $el.transition('').transform('');
       $backdropEl.transform('').transition('').css({ opacity: '', visibility: '' });
     }
+    function handleGestureStart(e) {
+      isGestureStarted = true;
+      handleTouchEnd(e);
+    }
+    function handleGestureEnd() {
+      isGestureStarted = false;
+    }
 
     // Add Events
     app.on('touchstart:passive', handleTouchStart);
     app.on('touchmove:active', handleTouchMove);
     app.on('touchend:passive', handleTouchEnd);
+    app.on('gesturestart', handleGestureStart);
+    app.on('gestureend', handleGestureEnd);
     panel.on('panelDestroy', function () {
       app.off('touchstart:passive', handleTouchStart);
       app.off('touchmove:active', handleTouchMove);
       app.off('touchend:passive', handleTouchEnd);
+      app.off('gesturestart', handleGestureStart);
+      app.off('gestureend', handleGestureEnd);
     });
   }
 
@@ -18529,23 +18571,11 @@
       return panel;
     };
 
-    Panel.prototype.open = function open (animate) {
-      if ( animate === void 0 ) animate = true;
-
+    Panel.prototype.insertToRoot = function insertToRoot () {
       var panel = this;
-      var app = panel.app;
-
-      if (!app.panel.allowOpen) { return false; }
-
-      var effect = panel.effect;
       var $el = panel.$el;
+      var app = panel.app;
       var $backdropEl = panel.$backdropEl;
-      var opened = panel.opened;
-
-      if (!$el || $el.hasClass('panel-in')) {
-        return panel;
-      }
-
       var $panelParentEl = $el.parent();
       var wasInDom = $el.parents(document).length > 0;
 
@@ -18585,6 +18615,26 @@
           }
         });
       }
+    };
+
+    Panel.prototype.open = function open (animate) {
+      if ( animate === void 0 ) animate = true;
+
+      var panel = this;
+      var app = panel.app;
+
+      if (!app.panel.allowOpen) { return false; }
+
+      var effect = panel.effect;
+      var $el = panel.$el;
+      var $backdropEl = panel.$backdropEl;
+      var opened = panel.opened;
+
+      if (!$el || $el.hasClass('panel-in')) {
+        return panel;
+      }
+
+      panel.insertToRoot();
 
       // Ignore if opened
       if (opened || $el.hasClass('panel-in-breakpoint') || $el.hasClass('panel-in')) { return false; }
@@ -19431,11 +19481,7 @@
       app.form.data[("form-" + formId)] = data;
 
       // Store form data in local storage also
-      try {
-        win.localStorage[("f7form-" + formId)] = JSON.stringify(data);
-      } catch (e) {
-        throw e;
-      }
+      win.localStorage[("f7form-" + formId)] = JSON.stringify(data);
     },
     get: function get(form) {
       var app = this;
@@ -19446,12 +19492,8 @@
         formId = $formEl.attr('id');
       }
 
-      try {
-        if (win.localStorage[("f7form-" + formId)]) {
-          return JSON.parse(win.localStorage[("f7form-" + formId)]);
-        }
-      } catch (e) {
-        throw e;
+      if (win.localStorage[("f7form-" + formId)]) {
+        return JSON.parse(win.localStorage[("f7form-" + formId)]);
       }
       if (app.form.data[("form-" + formId)]) {
         return app.form.data[("form-" + formId)];
@@ -19474,13 +19516,9 @@
       }
 
       // Delete form data from local storage also
-      try {
-        if (win.localStorage[("f7form-" + formId)]) {
-          win.localStorage[("f7form-" + formId)] = '';
-          win.localStorage.removeItem(("f7form-" + formId));
-        }
-      } catch (e) {
-        throw e;
+      if (win.localStorage[("f7form-" + formId)]) {
+        win.localStorage[("f7form-" + formId)] = '';
+        win.localStorage.removeItem(("f7form-" + formId));
       }
     },
   };
@@ -40374,6 +40412,14 @@
     },
   };
 
+  var Elevation = {
+    name: 'elevation',
+  };
+
+  var Typography = {
+    name: 'typography',
+  };
+
   var ViAd = /*@__PURE__*/(function (Framework7Class) {
     function ViAd(app, params) {
       if ( params === void 0 ) params = {};
@@ -40624,14 +40670,6 @@
     },
   };
 
-  var Elevation = {
-    name: 'elevation',
-  };
-
-  var Typography = {
-    name: 'typography',
-  };
-
   {
     if (typeof window !== 'undefined') {
       // Template7
@@ -40717,9 +40755,9 @@
     ColorPicker$1,
     Treeview$1,
     TextEditor$1,
-    Vi,
     Elevation,
-    Typography
+    Typography,
+    Vi
   ]);
 
   return Framework7;

@@ -8,6 +8,23 @@ class F7Toolbar extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.__reactRefs = {};
+
+    this.state = (() => {
+      const self = this;
+      const $f7 = self.$f7;
+
+      if (!$f7) {
+        self.$f7ready(() => {
+          self.setState({
+            _theme: self.$theme
+          });
+        });
+      }
+
+      return {
+        _theme: $f7 ? self.$theme : null
+      };
+    })();
   }
 
   hide(animate) {
@@ -47,10 +64,11 @@ class F7Toolbar extends React.Component {
       bottom,
       position
     } = props;
+    const theme = self.state._theme;
     const classes = Utils.classNames(className, 'toolbar', {
       tabbar,
-      'toolbar-bottom': self.$theme.md && bottomMd || self.$theme.ios && bottomIos || self.$theme.aurora && bottomAurora || bottom || position === 'bottom',
-      'toolbar-top': self.$theme.md && topMd || self.$theme.ios && topIos || self.$theme.aurora && topAurora || top || position === 'top',
+      'toolbar-bottom': theme && theme.md && bottomMd || theme && theme.ios && bottomIos || theme && theme.aurora && bottomAurora || bottom || position === 'bottom',
+      'toolbar-top': theme && theme.md && topMd || theme && theme.ios && topIos || theme && theme.aurora && topAurora || top || position === 'top',
       'tabbar-labels': labels,
       'tabbar-scrollable': scrollable,
       'toolbar-hidden': hidden,

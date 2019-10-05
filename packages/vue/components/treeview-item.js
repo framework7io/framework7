@@ -21,7 +21,7 @@ export default {
       type: [Boolean, String],
       default: undefined
     }
-  }, Mixins.colorProps, Mixins.linkActionsProps, Mixins.linkRouterProps, Mixins.linkIconProps),
+  }, Mixins.colorProps, {}, Mixins.linkActionsProps, {}, Mixins.linkRouterProps, {}, Mixins.linkIconProps),
   name: 'f7-treeview-item',
 
   render() {

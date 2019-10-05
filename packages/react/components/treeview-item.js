@@ -203,7 +203,7 @@ __reactComponentSetProps(F7TreeviewItem, Object.assign({
     type: [Boolean, String],
     default: undefined
   }
-}, Mixins.colorProps, Mixins.linkActionsProps, Mixins.linkRouterProps, Mixins.linkIconProps));
+}, Mixins.colorProps, {}, Mixins.linkActionsProps, {}, Mixins.linkRouterProps, {}, Mixins.linkIconProps));
 
 F7TreeviewItem.displayName = 'f7-treeview-item';
 export default F7TreeviewItem;

@@ -262,7 +262,7 @@ __reactComponentSetProps(F7Link, Object.assign({
   tooltip: String,
   smartSelect: Boolean,
   smartSelectParams: Object
-}, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
+}, Mixins.colorProps, {}, Mixins.linkIconProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps));
 
 F7Link.displayName = 'f7-link';
 export default F7Link;

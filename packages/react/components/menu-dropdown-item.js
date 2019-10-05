@@ -121,7 +121,7 @@ __reactComponentSetProps(F7MenuDropdownItem, Object.assign({
   href: String,
   target: String,
   divider: Boolean
-}, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
+}, Mixins.colorProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps));
 
 F7MenuDropdownItem.displayName = 'f7-menu-dropdown-item';
 export default F7MenuDropdownItem;

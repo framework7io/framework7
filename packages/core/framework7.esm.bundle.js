@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.0-beta.19
+ * Framework7 5.0.0-beta.20
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 30, 2019
+ * Released on: October 5, 2019
  */
 
 import Template7 from 'template7';
@@ -98,9 +98,9 @@ import Menu from './components/menu/menu';
 import ColorPicker from './components/color-picker/color-picker';
 import Treeview from './components/treeview/treeview';
 import TextEditor from './components/text-editor/text-editor';
-import Vi from './components/vi/vi';
 import Elevation from './components/elevation/elevation';
 import Typography from './components/typography/typography';
+import Vi from './components/vi/vi';
 
 if ("es" !== 'es') {
   if (typeof window !== 'undefined') {
@@ -188,9 +188,9 @@ Framework7.use([
   ColorPicker,
   Treeview,
   TextEditor,
-  Vi,
   Elevation,
-  Typography
+  Typography,
+  Vi
 ]);
 
 export { Template7, $ as Dom7, Request, Utils, Device, Support, Component };

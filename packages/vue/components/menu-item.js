@@ -14,7 +14,7 @@ export default {
     link: Boolean,
     target: String,
     dropdown: Boolean
-  }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
+  }, Mixins.colorProps, {}, Mixins.linkIconProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps),
 
   render() {
     const _h = this.$createElement;

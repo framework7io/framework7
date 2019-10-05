@@ -27,7 +27,7 @@ export default {
     tooltip: String,
     smartSelect: Boolean,
     smartSelectParams: Object
-  }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
+  }, Mixins.colorProps, {}, Mixins.linkIconProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps),
 
   data() {
     const props = __vueComponentProps(this);

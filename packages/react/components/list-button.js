@@ -171,7 +171,7 @@ __reactComponentSetProps(F7ListButton, Object.assign({
   href: [Boolean, String],
   target: String,
   tooltip: String
-}, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
+}, Mixins.colorProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps));
 
 F7ListButton.displayName = 'f7-list-button';
 export default F7ListButton;

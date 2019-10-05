@@ -15,6 +15,7 @@ function swipePanel(panel) {
   let otherPanel;
 
   let isTouched;
+  let isGestureStarted;
   let isMoved;
   let isScrolling;
   const touchesStart = {};
@@ -29,7 +30,7 @@ function swipePanel(panel) {
 
   let touchMoves = 0;
   function handleTouchStart(e) {
-    if (!panel.swipeable) return;
+    if (!panel.swipeable || isGestureStarted) return;
     if (!app.panel.allowOpen || (!params.swipe && !params.swipeOnlyClose) || isTouched) return;
     if ($('.modal-in:not(.toast):not(.notification), .photo-browser-in').length > 0) return;
     otherPanel = app.panel.get(side === 'left' ? 'right' : 'left') || {};
@@ -65,7 +66,7 @@ function swipePanel(panel) {
     direction = undefined;
   }
   function handleTouchMove(e) {
-    if (!isTouched) return;
+    if (!isTouched || isGestureStarted) return;
     touchMoves += 1;
     if (touchMoves < 2) return;
     if (e.f7PreventSwipePanel || app.preventSwipePanelBySwipeBack || app.preventSwipePanel) {
@@ -125,6 +126,7 @@ function swipePanel(panel) {
 
     if (!isMoved) {
       if (!panel.opened) {
+        panel.insertToRoot();
         $el.addClass('panel-in-swipe');
         $backdropEl.css('visibility', 'visible');
         $el.trigger('panel:swipeopen');
@@ -182,12 +184,13 @@ function swipePanel(panel) {
       panel.emit('local::swipe panelSwipe', panel, Math.abs(translate / panelWidth));
     }
   }
-  function handleTouchEnd() {
+  function handleTouchEnd(e) {
     if (!isTouched || !isMoved) {
       isTouched = false;
       isMoved = false;
       return;
     }
+    const isGesture = e.type === 'gesturestart' || isGestureStarted;
     isTouched = false;
     isMoved = false;
     const timeDiff = (new Date()).getTime() - touchStartTime;
@@ -196,7 +199,9 @@ function swipePanel(panel) {
 
     const threshold = params.swipeThreshold || 0;
 
-    if (!panel.opened) {
+    if (isGesture) {
+      action = 'reset';
+    } else if (!panel.opened) {
       if (Math.abs(touchesDiff) < threshold) {
         action = 'reset';
       } else if (effect === 'cover') {
@@ -277,15 +282,26 @@ function swipePanel(panel) {
     $el.transition('').transform('');
     $backdropEl.transform('').transition('').css({ opacity: '', visibility: '' });
   }
+  function handleGestureStart(e) {
+    isGestureStarted = true;
+    handleTouchEnd(e);
+  }
+  function handleGestureEnd() {
+    isGestureStarted = false;
+  }
 
   // Add Events
   app.on('touchstart:passive', handleTouchStart);
   app.on('touchmove:active', handleTouchMove);
   app.on('touchend:passive', handleTouchEnd);
+  app.on('gesturestart', handleGestureStart);
+  app.on('gestureend', handleGestureEnd);
   panel.on('panelDestroy', () => {
     app.off('touchstart:passive', handleTouchStart);
     app.off('touchmove:active', handleTouchMove);
     app.off('touchend:passive', handleTouchEnd);
+    app.off('gesturestart', handleGestureStart);
+    app.off('gestureend', handleGestureEnd);
   });
 }
 

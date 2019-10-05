@@ -48,7 +48,7 @@ export default {
     required: Boolean,
     disabled: Boolean,
     virtualListIndex: Number
-  }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
+  }, Mixins.colorProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps),
 
   data() {
     const props = __vueComponentProps(this);
@@ -151,7 +151,7 @@ export default {
         const linkAttrs = Object.assign({
           href: link === true ? '' : link || href,
           target
-        }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
+        }, Mixins.linkRouterAttrs(props), {}, Mixins.linkActionsAttrs(props));
         const linkClasses = Utils.classNames({
           'item-link': true,
           'smart-select': smartSelect

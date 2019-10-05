@@ -303,18 +303,9 @@ class Panel extends Framework7Class {
     return panel;
   }
 
-  open(animate = true) {
+  insertToRoot() {
     const panel = this;
-    const app = panel.app;
-
-    if (!app.panel.allowOpen) return false;
-
-    const { effect, $el, $backdropEl, opened } = panel;
-
-    if (!$el || $el.hasClass('panel-in')) {
-      return panel;
-    }
-
+    const { $el, app, $backdropEl } = panel;
     const $panelParentEl = $el.parent();
     const wasInDom = $el.parents(document).length > 0;
 
@@ -354,6 +345,21 @@ class Panel extends Framework7Class {
         }
       });
     }
+  }
+
+  open(animate = true) {
+    const panel = this;
+    const app = panel.app;
+
+    if (!app.panel.allowOpen) return false;
+
+    const { effect, $el, $backdropEl, opened } = panel;
+
+    if (!$el || $el.hasClass('panel-in')) {
+      return panel;
+    }
+
+    panel.insertToRoot();
 
     // Ignore if opened
     if (opened || $el.hasClass('panel-in-breakpoint') || $el.hasClass('panel-in')) return false;

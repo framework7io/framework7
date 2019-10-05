@@ -12,7 +12,7 @@ export default {
     href: String,
     target: String,
     divider: Boolean
-  }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
+  }, Mixins.colorProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps),
 
   render() {
     const _h = this.$createElement;

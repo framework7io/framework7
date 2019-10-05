@@ -196,7 +196,7 @@ class F7ListItem extends React.Component {
         const linkAttrs = Object.assign({
           href: link === true ? '' : link || href,
           target
-        }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
+        }, Mixins.linkRouterAttrs(props), {}, Mixins.linkActionsAttrs(props));
         const linkClasses = Utils.classNames({
           'item-link': true,
           'smart-select': smartSelect
@@ -539,7 +539,7 @@ __reactComponentSetProps(F7ListItem, Object.assign({
   required: Boolean,
   disabled: Boolean,
   virtualListIndex: Number
-}, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
+}, Mixins.colorProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps));
 
 F7ListItem.displayName = 'f7-list-item';
 export default F7ListItem;

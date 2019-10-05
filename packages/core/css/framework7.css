@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.0-beta.19
+ * Framework7 5.0.0-beta.20
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 30, 2019
+ * Released on: October 5, 2019
  */
 
 /*====================
@@ -107,8 +107,8 @@
 .ios.theme-dark {
   --f7-text-color: #fff;
   --f7-bars-bg-color: #121212;
-  --f7-bars-bg-color-rgb: 19, 19, 19;
-  --f7-bars-border-color: rgba(255, 255, 255, 0.1);
+  --f7-bars-bg-color-rgb: 22, 22, 22;
+  --f7-bars-border-color: rgba(255, 255, 255, 0.16);
 }
 .md {
   --f7-font-family: Roboto, system-ui, Noto, Helvetica, Arial, sans-serif;
@@ -1879,7 +1879,7 @@ html.device-full-viewport body {
 .navbar-bg:after {
   z-index: 1;
 }
-@media (min-width: 768px) {
+@media (min-width: 768px) and (min-height: 600px) {
   :root {
     --f7-navbar-height: var(--f7-navbar-tablet-height);
   }
@@ -2720,7 +2720,7 @@ html.device-full-viewport body {
   --f7-toolbar-link-line-height: var(--f7-toolbar-height);
   */
   --f7-tabbar-labels-height: 50px;
-  --f7-tabbar-labels-tablet-height: 56px;
+  --f7-tabbar-labels-tablet-height: 50px;
   --f7-toolbar-top-shadow-image: none;
   --f7-toolbar-bottom-shadow-image: none;
   --f7-tabbar-icon-size: 28px;
@@ -3071,7 +3071,7 @@ html.device-full-viewport body {
   font-weight: var(--f7-tabbar-label-font-weight);
   letter-spacing: var(--f7-tabbar-label-letter-spacing);
 }
-@media (min-width: 768px) {
+@media (min-width: 768px) and (min-height: 600px) {
   :root {
     --f7-tabbar-labels-height: var(--f7-tabbar-labels-tablet-height);
     --f7-tabbar-label-font-size: var(--f7-tabbar-label-tablet-font-size);
@@ -3231,17 +3231,19 @@ html.device-full-viewport body {
 .ios .tabbar-labels .link i + span {
   margin: 0;
 }
-@media (min-width: 768px) {
-  .ios .tabbar .toolbar-inner,
-  .ios .tabbar-labels .toolbar-inner {
-    justify-content: center;
-  }
+@media (min-width: 768px) and (min-height: 600px) {
   .ios .tabbar .tab-link,
   .ios .tabbar-labels .tab-link,
   .ios .tabbar .link,
   .ios .tabbar-labels .link {
-    width: auto;
-    min-width: 105px;
+    justify-content: center;
+    flex-direction: row;
+  }
+  .ios .tabbar .tab-link i + span,
+  .ios .tabbar-labels .tab-link i + span,
+  .ios .tabbar .link i + span,
+  .ios .tabbar-labels .link i + span {
+    margin-left: 5px;
   }
 }
 .ios .tabbar-scrollable .toolbar-inner {

@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.0-beta.19
+ * Framework7 5.0.0-beta.20
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 30, 2019
+ * Released on: October 5, 2019
  */
 
 /*====================
@@ -107,8 +107,8 @@
 .ios.theme-dark {
   --f7-text-color: #fff;
   --f7-bars-bg-color: #121212;
-  --f7-bars-bg-color-rgb: 19, 19, 19;
-  --f7-bars-border-color: rgba(255, 255, 255, 0.1);
+  --f7-bars-bg-color-rgb: 22, 22, 22;
+  --f7-bars-border-color: rgba(255, 255, 255, 0.16);
 }
 .md {
   --f7-font-family: Roboto, system-ui, Noto, Helvetica, Arial, sans-serif;
@@ -1879,7 +1879,7 @@ html.device-full-viewport body {
 .navbar-bg:after {
   z-index: 1;
 }
-@media (min-width: 768px) {
+@media (min-width: 768px) and (min-height: 600px) {
   :root {
     --f7-navbar-height: var(--f7-navbar-tablet-height);
   }
@@ -2720,7 +2720,7 @@ html.device-full-viewport body {
   --f7-toolbar-link-line-height: var(--f7-toolbar-height);
   */
   --f7-tabbar-labels-height: 50px;
-  --f7-tabbar-labels-tablet-height: 56px;
+  --f7-tabbar-labels-tablet-height: 50px;
   --f7-toolbar-top-shadow-image: none;
   --f7-toolbar-bottom-shadow-image: none;
   --f7-tabbar-icon-size: 28px;
@@ -3071,7 +3071,7 @@ html.device-full-viewport body {
   font-weight: var(--f7-tabbar-label-font-weight);
   letter-spacing: var(--f7-tabbar-label-letter-spacing);
 }
-@media (min-width: 768px) {
+@media (min-width: 768px) and (min-height: 600px) {
   :root {
     --f7-tabbar-labels-height: var(--f7-tabbar-labels-tablet-height);
     --f7-tabbar-label-font-size: var(--f7-tabbar-label-tablet-font-size);
@@ -3231,17 +3231,19 @@ html.device-full-viewport body {
 .ios .tabbar-labels .link i + span {
   margin: 0;
 }
-@media (min-width: 768px) {
-  .ios .tabbar .toolbar-inner,
-  .ios .tabbar-labels .toolbar-inner {
-    justify-content: center;
-  }
+@media (min-width: 768px) and (min-height: 600px) {
   .ios .tabbar .tab-link,
   .ios .tabbar-labels .tab-link,
   .ios .tabbar .link,
   .ios .tabbar-labels .link {
-    width: auto;
-    min-width: 105px;
+    justify-content: center;
+    flex-direction: row;
+  }
+  .ios .tabbar .tab-link i + span,
+  .ios .tabbar-labels .tab-link i + span,
+  .ios .tabbar .link i + span,
+  .ios .tabbar-labels .link i + span {
+    margin-left: 5px;
   }
 }
 .ios .tabbar-scrollable .toolbar-inner {
@@ -20369,67 +20371,6 @@ button.text-editor-button i sub {
   opacity: 0.3;
   transition-duration: 0ms;
 }
-iframe#viAd {
-  z-index: 12900 !important;
-  background: #000 !important;
-}
-.vi-overlay {
-  background: rgba(0, 0, 0, 0.85);
-  z-index: 13100;
-  position: absolute;
-  left: 0%;
-  top: 0%;
-  width: 100%;
-  height: 100%;
-  border-radius: 3px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  align-content: center;
-  text-align: center;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
-}
-@supports ((-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px))) {
-  .vi-overlay {
-    background: rgba(0, 0, 0, 0.65);
-    -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
-  }
-}
-.vi-overlay .vi-overlay-text {
-  text-align: center;
-  color: #fff;
-  max-width: 80%;
-}
-.vi-overlay .vi-overlay-text + .vi-overlay-play-button {
-  margin-top: 15px;
-}
-.vi-overlay .vi-overlay-play-button {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 2px solid #fff;
-  position: relative;
-}
-.vi-overlay .vi-overlay-play-button.active-state {
-  opacity: 0.55;
-}
-.vi-overlay .vi-overlay-play-button:before {
-  content: '';
-  width: 0;
-  height: 0;
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-  border-left: 14px solid #fff;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: 2px;
-  transform: translate(-50%, -50%);
-}
 /* === Elevation === */
 :root {
   --f7-elevation-0: 0px 0px 0px 0px rgba(0, 0, 0, 0);
@@ -21105,4 +21046,65 @@ iframe#viAd {
 }
 [class*="border-color-"] {
   border-color: var(--f7-theme-color-border-color) !important;
+}
+iframe#viAd {
+  z-index: 12900 !important;
+  background: #000 !important;
+}
+.vi-overlay {
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 13100;
+  position: absolute;
+  left: 0%;
+  top: 0%;
+  width: 100%;
+  height: 100%;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+@supports ((-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px))) {
+  .vi-overlay {
+    background: rgba(0, 0, 0, 0.65);
+    -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+  }
+}
+.vi-overlay .vi-overlay-text {
+  text-align: center;
+  color: #fff;
+  max-width: 80%;
+}
+.vi-overlay .vi-overlay-text + .vi-overlay-play-button {
+  margin-top: 15px;
+}
+.vi-overlay .vi-overlay-play-button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  position: relative;
+}
+.vi-overlay .vi-overlay-play-button.active-state {
+  opacity: 0.55;
+}
+.vi-overlay .vi-overlay-play-button:before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 14px solid #fff;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: 2px;
+  transform: translate(-50%, -50%);
 }

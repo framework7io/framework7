@@ -13,6 +13,23 @@ class F7Navbar extends React.Component {
     super(props, context);
     this.__reactRefs = {};
 
+    this.state = (() => {
+      const self = this;
+      const $f7 = self.$f7;
+
+      if (!$f7) {
+        self.$f7ready(() => {
+          self.setState({
+            _theme: self.$theme
+          });
+        });
+      }
+
+      return {
+        _theme: $f7 ? self.$theme : null
+      };
+    })();
+
     (() => {
       Utils.bindMethods(this, ['onBackClick', 'onHide', 'onShow', 'onExpand', 'onCollapse']);
     })();
@@ -83,12 +100,13 @@ class F7Navbar extends React.Component {
       largeTransparent,
       titleLarge
     } = props;
+    const theme = self.state.theme;
     let leftEl;
     let titleEl;
     let rightEl;
     let titleLargeEl;
-    const addLeftTitleClass = self.$theme && self.$theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
-    const addCenterTitleClass = self.$theme && self.$theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || self.$theme && self.$theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
+    const addLeftTitleClass = theme && theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
+    const addCenterTitleClass = theme && theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || theme && theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
     const slots = self.slots;
     const classes = Utils.classNames(className, 'navbar', {
       'navbar-hidden': hidden,

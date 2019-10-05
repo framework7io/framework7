@@ -44,7 +44,7 @@ export default {
     active: Boolean,
     disabled: Boolean,
     tooltip: String
-  }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
+  }, Mixins.colorProps, {}, Mixins.linkIconProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps),
 
   render() {
     const _h = this.$createElement;

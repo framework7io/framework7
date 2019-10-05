@@ -1,5 +1,5 @@
 /**
- * Framework7 Vue 5.0.0-beta.19
+ * Framework7 Vue 5.0.0-beta.20
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 30, 2019
+ * Released on: October 5, 2019
  */
 
 (function (global, factory) {
@@ -1413,6 +1413,33 @@
       size: [String, Number]
     }, Mixins.colorProps),
 
+    data: function data() {
+      var this$1 = this;
+
+      var props = __vueComponentProps(this);
+
+      var state = (function () {
+        var self = this$1;
+        var $f7 = self.$f7;
+
+        if (!$f7) {
+          self.$f7ready(function () {
+            self.setState({
+              _theme: self.$theme
+            });
+          });
+        }
+
+        return {
+          _theme: $f7 ? self.$theme : null
+        };
+      })();
+
+      return {
+        state: state
+      };
+    },
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -1497,13 +1524,14 @@
         var md = ref.md;
         var ios = ref.ios;
         var aurora = ref.aurora;
+        var theme = self.state._theme;
         var text = material || f7;
 
-        if (md && self.$theme.md && (md.indexOf('material:') >= 0 || md.indexOf('f7:') >= 0)) {
+        if (md && theme && theme.md && (md.indexOf('material:') >= 0 || md.indexOf('f7:') >= 0)) {
           text = md.split(':')[1];
-        } else if (ios && self.$theme.ios && (ios.indexOf('material:') >= 0 || ios.indexOf('f7:') >= 0)) {
+        } else if (ios && theme && theme.ios && (ios.indexOf('material:') >= 0 || ios.indexOf('f7:') >= 0)) {
           text = ios.split(':')[1];
-        } else if (aurora && self.$theme.aurora && (aurora.indexOf('material:') >= 0 || aurora.indexOf('f7:') >= 0)) {
+        } else if (aurora && theme && theme.aurora && (aurora.indexOf('material:') >= 0 || aurora.indexOf('f7:') >= 0)) {
           text = aurora.split(':')[1];
         }
 
@@ -1516,6 +1544,7 @@
         };
         var self = this;
         var props = self.props;
+        var theme = self.state._theme;
         var material = props.material;
         var f7 = props.f7;
         var icon = props.icon;
@@ -1524,7 +1553,7 @@
         var aurora = props.aurora;
         var className = props.className;
         var themeIcon;
-        if (self.$theme.ios) { themeIcon = ios; }else if (self.$theme.md) { themeIcon = md; }else if (self.$theme.aurora) { themeIcon = aurora; }
+        if (theme && theme.ios) { themeIcon = ios; }else if (theme && theme.md) { themeIcon = md; }else if (theme && theme.aurora) { themeIcon = aurora; }
 
         if (themeIcon) {
           var parts = themeIcon.split(':');
@@ -1553,6 +1582,12 @@
 
       props: function props() {
         return __vueComponentProps(this);
+      }
+
+    },
+    methods: {
+      setState: function setState(updater, callback) {
+        __vueComponentSetState(this, updater, callback);
       }
 
     }
@@ -1636,7 +1671,7 @@
       active: Boolean,
       disabled: Boolean,
       tooltip: String
-    }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
+    }, Mixins.colorProps, {}, Mixins.linkIconProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps),
 
     render: function render() {
       var _h = this.$createElement;
@@ -4084,7 +4119,7 @@
       tooltip: String,
       smartSelect: Boolean,
       smartSelectParams: Object
-    }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
+    }, Mixins.colorProps, {}, Mixins.linkIconProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps),
 
     data: function data() {
       var props = __vueComponentProps(this);
@@ -4340,7 +4375,7 @@
       href: [Boolean, String],
       target: String,
       tooltip: String
-    }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
+    }, Mixins.colorProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps),
 
     render: function render() {
       var _h = this.$createElement;
@@ -5648,7 +5683,7 @@
       required: Boolean,
       disabled: Boolean,
       virtualListIndex: Number
-    }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
+    }, Mixins.colorProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps),
 
     data: function data() {
       var props = __vueComponentProps(this);
@@ -5749,7 +5784,7 @@
           var linkAttrs = Object.assign({
             href: link === true ? '' : link || href,
             target: target
-          }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
+          }, Mixins.linkRouterAttrs(props), {}, Mixins.linkActionsAttrs(props));
           var linkClasses = Utils.classNames({
             'item-link': true,
             'smart-select': smartSelect
@@ -6572,7 +6607,7 @@
       href: String,
       target: String,
       divider: Boolean
-    }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
+    }, Mixins.colorProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps),
 
     render: function render() {
       var _h = this.$createElement;
@@ -6732,7 +6767,7 @@
       link: Boolean,
       target: String,
       dropdown: Boolean
-    }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
+    }, Mixins.colorProps, {}, Mixins.linkIconProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps),
 
     render: function render() {
       var _h = this.$createElement;
@@ -8267,6 +8302,33 @@
       titleLarge: String
     }, Mixins.colorProps),
 
+    data: function data() {
+      var this$1 = this;
+
+      var props = __vueComponentProps(this);
+
+      var state = (function () {
+        var self = this$1;
+        var $f7 = self.$f7;
+
+        if (!$f7) {
+          self.$f7ready(function () {
+            self.setState({
+              _theme: self.$theme
+            });
+          });
+        }
+
+        return {
+          _theme: $f7 ? self.$theme : null
+        };
+      })();
+
+      return {
+        state: state
+      };
+    },
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -8289,12 +8351,13 @@
       var large = props.large;
       var largeTransparent = props.largeTransparent;
       var titleLarge = props.titleLarge;
+      var theme = self.state.theme;
       var leftEl;
       var titleEl;
       var rightEl;
       var titleLargeEl;
-      var addLeftTitleClass = self.$theme && self.$theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
-      var addCenterTitleClass = self.$theme && self.$theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || self.$theme && self.$theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
+      var addLeftTitleClass = theme && theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
+      var addCenterTitleClass = theme && theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || theme && theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
       var slots = self.$slots;
       var classes = Utils.classNames(className, 'navbar', {
         'navbar-hidden': hidden,
@@ -8449,6 +8512,10 @@
         while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
 
         __vueComponentDispatchEvent.apply(void 0, [ this, events ].concat( args ));
+      },
+
+      setState: function setState(updater, callback) {
+        __vueComponentSetState(this, updater, callback);
       }
 
     },
@@ -8467,6 +8534,33 @@
       size: [Number, String]
     }, Mixins.colorProps),
 
+    data: function data() {
+      var this$1 = this;
+
+      var props = __vueComponentProps(this);
+
+      var state = (function () {
+        var self = this$1;
+        var $f7 = self.$f7;
+
+        if (!$f7) {
+          self.$f7ready(function () {
+            self.setState({
+              _theme: self.$theme
+            });
+          });
+        }
+
+        return {
+          _theme: $f7 ? self.$theme : null
+        };
+      })();
+
+      return {
+        state: state
+      };
+    },
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -8475,6 +8569,7 @@
       var id = props.id;
       var style = props.style;
       var className = props.className;
+      var theme = self.state._theme;
       var preloaderStyle = {};
 
       if (sizeComputed) {
@@ -8486,7 +8581,7 @@
       if (style) { Utils.extend(preloaderStyle, style || {}); }
       var innerEl;
 
-      if (self.$theme.md) {
+      if (theme && theme.md) {
         innerEl = _h('span', {
           class: 'preloader-inner'
         }, [_h('span', {
@@ -8500,7 +8595,7 @@
         }, [_h('span', {
           class: 'preloader-inner-half-circle'
         })])]);
-      } else if (self.$theme.ios) {
+      } else if (theme && theme.ios) {
         innerEl = _h('span', {
           class: 'preloader-inner'
         }, [_h('span', {
@@ -8528,7 +8623,7 @@
         }), _h('span', {
           class: 'preloader-inner-line'
         })]);
-      } else if (self.$theme.aurora) {
+      } else if (theme && theme.aurora) {
         innerEl = _h('span', {
           class: 'preloader-inner'
         }, [_h('span', {
@@ -8559,6 +8654,12 @@
 
       props: function props() {
         return __vueComponentProps(this);
+      }
+
+    },
+    methods: {
+      setState: function setState(updater, callback) {
+        __vueComponentSetState(this, updater, callback);
       }
 
     }
@@ -11948,6 +12049,33 @@
       }
     }, Mixins.colorProps),
 
+    data: function data() {
+      var this$1 = this;
+
+      var props = __vueComponentProps(this);
+
+      var state = (function () {
+        var self = this$1;
+        var $f7 = self.$f7;
+
+        if (!$f7) {
+          self.$f7ready(function () {
+            self.setState({
+              _theme: self.$theme
+            });
+          });
+        }
+
+        return {
+          _theme: $f7 ? self.$theme : null
+        };
+      })();
+
+      return {
+        state: state
+      };
+    },
+
     render: function render() {
       var _h = this.$createElement;
       var self = this;
@@ -11972,10 +12100,11 @@
       var bottomAurora = props.bottomAurora;
       var bottom = props.bottom;
       var position = props.position;
+      var theme = self.state._theme;
       var classes = Utils.classNames(className, 'toolbar', {
         tabbar: tabbar,
-        'toolbar-bottom': self.$theme.md && bottomMd || self.$theme.ios && bottomIos || self.$theme.aurora && bottomAurora || bottom || position === 'bottom',
-        'toolbar-top': self.$theme.md && topMd || self.$theme.ios && topIos || self.$theme.aurora && topAurora || top || position === 'top',
+        'toolbar-bottom': theme && theme.md && bottomMd || theme && theme.ios && bottomIos || theme && theme.aurora && bottomAurora || bottom || position === 'bottom',
+        'toolbar-top': theme && theme.md && topMd || theme && theme.ios && topIos || theme && theme.aurora && topAurora || top || position === 'top',
         'tabbar-labels': labels,
         'tabbar-scrollable': scrollable,
         'toolbar-hidden': hidden,
@@ -12020,6 +12149,10 @@
         var self = this;
         if (!self.$f7) { return; }
         self.$f7.toolbar.show(this.$refs.el, animate);
+      },
+
+      setState: function setState(updater, callback) {
+        __vueComponentSetState(this, updater, callback);
       }
 
     },
@@ -12048,7 +12181,7 @@
         type: [Boolean, String],
         default: undefined
       }
-    }, Mixins.colorProps, Mixins.linkActionsProps, Mixins.linkRouterProps, Mixins.linkIconProps),
+    }, Mixins.colorProps, {}, Mixins.linkActionsProps, {}, Mixins.linkRouterProps, {}, Mixins.linkIconProps),
     name: 'f7-treeview-item',
 
     render: function render() {
@@ -12755,7 +12888,7 @@
   };
 
   /**
-   * Framework7 Vue 5.0.0-beta.19
+   * Framework7 Vue 5.0.0-beta.20
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
@@ -12763,7 +12896,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: September 30, 2019
+   * Released on: October 5, 2019
    */
 
   function f7ready(callback) {

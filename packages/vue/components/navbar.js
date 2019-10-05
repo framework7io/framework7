@@ -3,6 +3,7 @@ import Mixins from '../utils/mixins';
 import F7NavLeft from './nav-left';
 import F7NavTitle from './nav-title';
 import F7NavRight from './nav-right';
+import __vueComponentSetState from '../runtime-helpers/vue-component-set-state.js';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
 export default {
@@ -32,6 +33,31 @@ export default {
     titleLarge: String
   }, Mixins.colorProps),
 
+  data() {
+    const props = __vueComponentProps(this);
+
+    const state = (() => {
+      const self = this;
+      const $f7 = self.$f7;
+
+      if (!$f7) {
+        self.$f7ready(() => {
+          self.setState({
+            _theme: self.$theme
+          });
+        });
+      }
+
+      return {
+        _theme: $f7 ? self.$theme : null
+      };
+    })();
+
+    return {
+      state
+    };
+  },
+
   render() {
     const _h = this.$createElement;
     const self = this;
@@ -56,12 +82,13 @@ export default {
       largeTransparent,
       titleLarge
     } = props;
+    const theme = self.state.theme;
     let leftEl;
     let titleEl;
     let rightEl;
     let titleLargeEl;
-    const addLeftTitleClass = self.$theme && self.$theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
-    const addCenterTitleClass = self.$theme && self.$theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || self.$theme && self.$theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
+    const addLeftTitleClass = theme && theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
+    const addCenterTitleClass = theme && theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || theme && theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
     const slots = self.$slots;
     const classes = Utils.classNames(className, 'navbar', {
       'navbar-hidden': hidden,
@@ -215,6 +242,10 @@ export default {
 
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
+    },
+
+    setState(updater, callback) {
+      __vueComponentSetState(this, updater, callback);
     }
 
   },

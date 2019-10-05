@@ -6,7 +6,7 @@ export namespace Navbar {
       /** Hide navbar */
       hide(navbarEl : HTMLElement | CSSSelector, animate?: boolean, hideStatusbar?: boolean) : void
       /** Show navbar */
-      show(navbarEl : HTMLElement | CSSSelector, isAnimated?: boolean) : void
+      show(navbarEl : HTMLElement | CSSSelector, animate?: boolean) : void
       /** Recalculate positional styles for Navbar elements. It could be useful after you change some of Navbar elements dynamically. This will have effect only in iOS theme */
       size(navbarEl : HTMLElement | CSSSelector) : void
       /** Get navbar HTML element by specified page element. Useful only when dynamic navbar is enabled. In this case it is out of the page container. This will have effect only in iOS theme */

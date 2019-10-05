@@ -1,5 +1,6 @@
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
+import __vueComponentSetState from '../runtime-helpers/vue-component-set-state.js';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
 export default {
   name: 'f7-toolbar',
@@ -54,6 +55,31 @@ export default {
     }
   }, Mixins.colorProps),
 
+  data() {
+    const props = __vueComponentProps(this);
+
+    const state = (() => {
+      const self = this;
+      const $f7 = self.$f7;
+
+      if (!$f7) {
+        self.$f7ready(() => {
+          self.setState({
+            _theme: self.$theme
+          });
+        });
+      }
+
+      return {
+        _theme: $f7 ? self.$theme : null
+      };
+    })();
+
+    return {
+      state
+    };
+  },
+
   render() {
     const _h = this.$createElement;
     const self = this;
@@ -80,10 +106,11 @@ export default {
       bottom,
       position
     } = props;
+    const theme = self.state._theme;
     const classes = Utils.classNames(className, 'toolbar', {
       tabbar,
-      'toolbar-bottom': self.$theme.md && bottomMd || self.$theme.ios && bottomIos || self.$theme.aurora && bottomAurora || bottom || position === 'bottom',
-      'toolbar-top': self.$theme.md && topMd || self.$theme.ios && topIos || self.$theme.aurora && topAurora || top || position === 'top',
+      'toolbar-bottom': theme && theme.md && bottomMd || theme && theme.ios && bottomIos || theme && theme.aurora && bottomAurora || bottom || position === 'bottom',
+      'toolbar-top': theme && theme.md && topMd || theme && theme.ios && topIos || theme && theme.aurora && topAurora || top || position === 'top',
       'tabbar-labels': labels,
       'tabbar-scrollable': scrollable,
       'toolbar-hidden': hidden,
@@ -128,6 +155,10 @@ export default {
       const self = this;
       if (!self.$f7) return;
       self.$f7.toolbar.show(this.$refs.el, animate);
+    },
+
+    setState(updater, callback) {
+      __vueComponentSetState(this, updater, callback);
     }
 
   },

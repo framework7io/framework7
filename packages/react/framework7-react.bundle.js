@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.0.0-beta.19
+ * Framework7 React 5.0.0-beta.20
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 30, 2019
+ * Released on: October 5, 2019
  */
 
 (function (global, factory) {
@@ -1824,8 +1824,27 @@
 
   var F7Icon = /*@__PURE__*/(function (superclass) {
     function F7Icon(props, context) {
+      var this$1 = this;
+
       superclass.call(this, props, context);
       this.__reactRefs = {};
+
+      this.state = (function () {
+        var self = this$1;
+        var $f7 = self.$f7;
+
+        if (!$f7) {
+          self.$f7ready(function () {
+            self.setState({
+              _theme: self.$theme
+            });
+          });
+        }
+
+        return {
+          _theme: $f7 ? self.$theme : null
+        };
+      })();
     }
 
     if ( superclass ) F7Icon.__proto__ = superclass;
@@ -1842,13 +1861,14 @@
       var md = ref.md;
       var ios = ref.ios;
       var aurora = ref.aurora;
+      var theme = self.state._theme;
       var text = material || f7;
 
-      if (md && self.$theme.md && (md.indexOf('material:') >= 0 || md.indexOf('f7:') >= 0)) {
+      if (md && theme && theme.md && (md.indexOf('material:') >= 0 || md.indexOf('f7:') >= 0)) {
         text = md.split(':')[1];
-      } else if (ios && self.$theme.ios && (ios.indexOf('material:') >= 0 || ios.indexOf('f7:') >= 0)) {
+      } else if (ios && theme && theme.ios && (ios.indexOf('material:') >= 0 || ios.indexOf('f7:') >= 0)) {
         text = ios.split(':')[1];
-      } else if (aurora && self.$theme.aurora && (aurora.indexOf('material:') >= 0 || aurora.indexOf('f7:') >= 0)) {
+      } else if (aurora && theme && theme.aurora && (aurora.indexOf('material:') >= 0 || aurora.indexOf('f7:') >= 0)) {
         text = aurora.split(':')[1];
       }
 
@@ -1861,6 +1881,7 @@
       };
       var self = this;
       var props = self.props;
+      var theme = self.state._theme;
       var material = props.material;
       var f7 = props.f7;
       var icon = props.icon;
@@ -1869,7 +1890,7 @@
       var aurora = props.aurora;
       var className = props.className;
       var themeIcon;
-      if (self.$theme.ios) { themeIcon = ios; }else if (self.$theme.md) { themeIcon = md; }else if (self.$theme.aurora) { themeIcon = aurora; }
+      if (theme && theme.ios) { themeIcon = ios; }else if (theme && theme.md) { themeIcon = md; }else if (theme && theme.aurora) { themeIcon = aurora; }
 
       if (themeIcon) {
         var parts = themeIcon.split(':');
@@ -2288,7 +2309,7 @@
     active: Boolean,
     disabled: Boolean,
     tooltip: String
-  }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
+  }, Mixins.colorProps, {}, Mixins.linkIconProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps));
 
   F7Button.displayName = 'f7-button';
 
@@ -4971,7 +4992,7 @@
     tooltip: String,
     smartSelect: Boolean,
     smartSelectParams: Object
-  }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
+  }, Mixins.colorProps, {}, Mixins.linkIconProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps));
 
   F7Link.displayName = 'f7-link';
 
@@ -5150,7 +5171,7 @@
     href: [Boolean, String],
     target: String,
     tooltip: String
-  }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
+  }, Mixins.colorProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps));
 
   F7ListButton.displayName = 'f7-list-button';
 
@@ -6547,7 +6568,7 @@
           var linkAttrs = Object.assign({
             href: link === true ? '' : link || href,
             target: target
-          }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
+          }, Mixins.linkRouterAttrs(props), {}, Mixins.linkActionsAttrs(props));
           var linkClasses = Utils.classNames({
             'item-link': true,
             'smart-select': smartSelect
@@ -6890,7 +6911,7 @@
     required: Boolean,
     disabled: Boolean,
     virtualListIndex: Number
-  }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
+  }, Mixins.colorProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps));
 
   F7ListItem.displayName = 'f7-list-item';
 
@@ -7503,7 +7524,7 @@
     href: String,
     target: String,
     divider: Boolean
-  }, Mixins.colorProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
+  }, Mixins.colorProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps));
 
   F7MenuDropdownItem.displayName = 'f7-menu-dropdown-item';
 
@@ -7746,7 +7767,7 @@
     link: Boolean,
     target: String,
     dropdown: Boolean
-  }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps));
+  }, Mixins.colorProps, {}, Mixins.linkIconProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps));
 
   F7MenuItem.displayName = 'f7-menu-item';
 
@@ -9314,6 +9335,23 @@
       superclass.call(this, props, context);
       this.__reactRefs = {};
 
+      this.state = (function () {
+        var self = this$1;
+        var $f7 = self.$f7;
+
+        if (!$f7) {
+          self.$f7ready(function () {
+            self.setState({
+              _theme: self.$theme
+            });
+          });
+        }
+
+        return {
+          _theme: $f7 ? self.$theme : null
+        };
+      })();
+
       (function () {
         Utils.bindMethods(this$1, ['onBackClick', 'onHide', 'onShow', 'onExpand', 'onCollapse']);
       })();
@@ -9390,12 +9428,13 @@
       var large = props.large;
       var largeTransparent = props.largeTransparent;
       var titleLarge = props.titleLarge;
+      var theme = self.state.theme;
       var leftEl;
       var titleEl;
       var rightEl;
       var titleLargeEl;
-      var addLeftTitleClass = self.$theme && self.$theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
-      var addCenterTitleClass = self.$theme && self.$theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || self.$theme && self.$theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
+      var addLeftTitleClass = theme && theme.ios && self.$f7 && !self.$f7.params.navbar.iosCenterTitle;
+      var addCenterTitleClass = theme && theme.md && self.$f7 && self.$f7.params.navbar.mdCenterTitle || theme && theme.aurora && self.$f7 && self.$f7.params.navbar.auroraCenterTitle;
       var slots = self.slots;
       var classes = Utils.classNames(className, 'navbar', {
         'navbar-hidden': hidden,
@@ -9544,7 +9583,26 @@
 
   var F7Preloader = /*@__PURE__*/(function (superclass) {
     function F7Preloader(props, context) {
+      var this$1 = this;
+
       superclass.call(this, props, context);
+
+      this.state = (function () {
+        var self = this$1;
+        var $f7 = self.$f7;
+
+        if (!$f7) {
+          self.$f7ready(function () {
+            self.setState({
+              _theme: self.$theme
+            });
+          });
+        }
+
+        return {
+          _theme: $f7 ? self.$theme : null
+        };
+      })();
     }
 
     if ( superclass ) F7Preloader.__proto__ = superclass;
@@ -9570,6 +9628,7 @@
       var id = props.id;
       var style = props.style;
       var className = props.className;
+      var theme = self.state._theme;
       var preloaderStyle = {};
 
       if (sizeComputed) {
@@ -9581,7 +9640,7 @@
       if (style) { Utils.extend(preloaderStyle, style || {}); }
       var innerEl;
 
-      if (self.$theme.md) {
+      if (theme && theme.md) {
         innerEl = React.createElement('span', {
           className: 'preloader-inner'
         }, React.createElement('span', {
@@ -9595,7 +9654,7 @@
         }, React.createElement('span', {
           className: 'preloader-inner-half-circle'
         })));
-      } else if (self.$theme.ios) {
+      } else if (theme && theme.ios) {
         innerEl = React.createElement('span', {
           className: 'preloader-inner'
         }, React.createElement('span', {
@@ -9623,7 +9682,7 @@
         }), React.createElement('span', {
           className: 'preloader-inner-line'
         }));
-      } else if (self.$theme.aurora) {
+      } else if (theme && theme.aurora) {
         innerEl = React.createElement('span', {
           className: 'preloader-inner'
         }, React.createElement('span', {
@@ -13343,8 +13402,27 @@
 
   var F7Toolbar = /*@__PURE__*/(function (superclass) {
     function F7Toolbar(props, context) {
+      var this$1 = this;
+
       superclass.call(this, props, context);
       this.__reactRefs = {};
+
+      this.state = (function () {
+        var self = this$1;
+        var $f7 = self.$f7;
+
+        if (!$f7) {
+          self.$f7ready(function () {
+            self.setState({
+              _theme: self.$theme
+            });
+          });
+        }
+
+        return {
+          _theme: $f7 ? self.$theme : null
+        };
+      })();
     }
 
     if ( superclass ) F7Toolbar.__proto__ = superclass;
@@ -13390,10 +13468,11 @@
       var bottomAurora = props.bottomAurora;
       var bottom = props.bottom;
       var position = props.position;
+      var theme = self.state._theme;
       var classes = Utils.classNames(className, 'toolbar', {
         tabbar: tabbar,
-        'toolbar-bottom': self.$theme.md && bottomMd || self.$theme.ios && bottomIos || self.$theme.aurora && bottomAurora || bottom || position === 'bottom',
-        'toolbar-top': self.$theme.md && topMd || self.$theme.ios && topIos || self.$theme.aurora && topAurora || top || position === 'top',
+        'toolbar-bottom': theme && theme.md && bottomMd || theme && theme.ios && bottomIos || theme && theme.aurora && bottomAurora || bottom || position === 'bottom',
+        'toolbar-top': theme && theme.md && topMd || theme && theme.ios && topIos || theme && theme.aurora && topAurora || top || position === 'top',
         'tabbar-labels': labels,
         'tabbar-scrollable': scrollable,
         'toolbar-hidden': hidden,
@@ -13700,7 +13779,7 @@
       type: [Boolean, String],
       default: undefined
     }
-  }, Mixins.colorProps, Mixins.linkActionsProps, Mixins.linkRouterProps, Mixins.linkIconProps));
+  }, Mixins.colorProps, {}, Mixins.linkActionsProps, {}, Mixins.linkRouterProps, {}, Mixins.linkIconProps));
 
   F7TreeviewItem.displayName = 'f7-treeview-item';
 
@@ -14273,7 +14352,7 @@
   };
 
   /**
-   * Framework7 React 5.0.0-beta.19
+   * Framework7 React 5.0.0-beta.20
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -14281,7 +14360,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: September 30, 2019
+   * Released on: October 5, 2019
    */
 
   function f7ready(callback) {
