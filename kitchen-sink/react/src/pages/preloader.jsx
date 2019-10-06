@@ -10,7 +10,7 @@ export default class extends React.Component {
       <Page>
         <Navbar title="Preloader" backLink="Back"></Navbar>
         <Block>
-          <p>How about an activity indicator? Framework 7 has a nice one. The F7 Preloader is made with SVG and animated with CSS so it can be easily resized.</p>
+          <p>How about an activity indicator? Framework7 has a nice one. The F7 Preloader is made with SVG and animated with CSS so it can be easily resized.</p>
         </Block>
 
         <BlockTitle>Default</BlockTitle>
