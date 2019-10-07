@@ -1,20 +1,47 @@
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 import React from 'react';
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __reactComponentSlots from '../runtime-helpers/react-component-slots.js';
 import __reactComponentSetProps from '../runtime-helpers/react-component-set-props.js';
 
-class F7Toolbar extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-    this.__reactRefs = {};
+var F7Toolbar =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(F7Toolbar, _React$Component);
 
-    this.state = (() => {
-      const self = this;
-      const $f7 = self.$f7;
+  function F7Toolbar(props, context) {
+    var _this;
+
+    _classCallCheck(this, F7Toolbar);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(F7Toolbar).call(this, props, context));
+    _this.__reactRefs = {};
+
+    _this.state = function () {
+      var self = _assertThisInitialized(_this);
+
+      var $f7 = self.$f7;
 
       if (!$f7) {
-        self.$f7ready(() => {
+        self.$f7ready(function () {
           self.setState({
             _theme: self.$theme
           });
@@ -24,95 +51,106 @@ class F7Toolbar extends React.Component {
       return {
         _theme: $f7 ? self.$theme : null
       };
-    })();
+    }();
+
+    return _this;
   }
 
-  hide(animate) {
-    const self = this;
-    if (!self.$f7) return;
-    self.$f7.toolbar.hide(this.refs.el, animate);
-  }
-
-  show(animate) {
-    const self = this;
-    if (!self.$f7) return;
-    self.$f7.toolbar.show(this.refs.el, animate);
-  }
-
-  render() {
-    const self = this;
-    const props = self.props;
-    const {
-      id,
-      style,
-      className,
-      inner,
-      tabbar,
-      labels,
-      scrollable,
-      hidden,
-      noShadow,
-      noHairline,
-      noBorder,
-      topMd,
-      topIos,
-      topAurora,
-      top,
-      bottomMd,
-      bottomIos,
-      bottomAurora,
-      bottom,
-      position
-    } = props;
-    const theme = self.state._theme;
-    const classes = Utils.classNames(className, 'toolbar', {
-      tabbar,
-      'toolbar-bottom': theme && theme.md && bottomMd || theme && theme.ios && bottomIos || theme && theme.aurora && bottomAurora || bottom || position === 'bottom',
-      'toolbar-top': theme && theme.md && topMd || theme && theme.ios && topIos || theme && theme.aurora && topAurora || top || position === 'top',
-      'tabbar-labels': labels,
-      'tabbar-scrollable': scrollable,
-      'toolbar-hidden': hidden,
-      'no-shadow': noShadow,
-      'no-hairline': noHairline || noBorder
-    }, Mixins.colorClasses(props));
-    return React.createElement('div', {
-      id: id,
-      style: style,
-      ref: __reactNode => {
-        this.__reactRefs['el'] = __reactNode;
-      },
-      className: classes
-    }, this.slots['before-inner'], inner ? React.createElement('div', {
-      className: 'toolbar-inner'
-    }, this.slots['default']) : this.slots['default'], this.slots['after-inner']);
-  }
-
-  componentDidMount() {
-    const self = this;
-    self.$f7ready(f7 => {
-      if (self.props.tabbar) f7.toolbar.setHighlight(self.refs.el);
-    });
-  }
-
-  componentDidUpdate() {
-    const self = this;
-
-    if (self.props.tabbar && self.$f7) {
-      self.$f7.toolbar.setHighlight(self.refs.el);
+  _createClass(F7Toolbar, [{
+    key: "hide",
+    value: function hide(animate) {
+      var self = this;
+      if (!self.$f7) return;
+      self.$f7.toolbar.hide(this.refs.el, animate);
     }
-  }
+  }, {
+    key: "show",
+    value: function show(animate) {
+      var self = this;
+      if (!self.$f7) return;
+      self.$f7.toolbar.show(this.refs.el, animate);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
 
-  get slots() {
-    return __reactComponentSlots(this.props);
-  }
+      var self = this;
+      var props = self.props;
+      var id = props.id,
+          style = props.style,
+          className = props.className,
+          inner = props.inner,
+          tabbar = props.tabbar,
+          labels = props.labels,
+          scrollable = props.scrollable,
+          hidden = props.hidden,
+          noShadow = props.noShadow,
+          noHairline = props.noHairline,
+          noBorder = props.noBorder,
+          topMd = props.topMd,
+          topIos = props.topIos,
+          topAurora = props.topAurora,
+          top = props.top,
+          bottomMd = props.bottomMd,
+          bottomIos = props.bottomIos,
+          bottomAurora = props.bottomAurora,
+          bottom = props.bottom,
+          position = props.position;
+      var theme = self.state._theme;
+      var classes = Utils.classNames(className, 'toolbar', {
+        tabbar: tabbar,
+        'toolbar-bottom': theme && theme.md && bottomMd || theme && theme.ios && bottomIos || theme && theme.aurora && bottomAurora || bottom || position === 'bottom',
+        'toolbar-top': theme && theme.md && topMd || theme && theme.ios && topIos || theme && theme.aurora && topAurora || top || position === 'top',
+        'tabbar-labels': labels,
+        'tabbar-scrollable': scrollable,
+        'toolbar-hidden': hidden,
+        'no-shadow': noShadow,
+        'no-hairline': noHairline || noBorder
+      }, Mixins.colorClasses(props));
+      return React.createElement('div', {
+        id: id,
+        style: style,
+        ref: function ref(__reactNode) {
+          _this2.__reactRefs['el'] = __reactNode;
+        },
+        className: classes
+      }, this.slots['before-inner'], inner ? React.createElement('div', {
+        className: 'toolbar-inner'
+      }, this.slots['default']) : this.slots['default'], this.slots['after-inner']);
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var self = this;
+      self.$f7ready(function (f7) {
+        if (self.props.tabbar) f7.toolbar.setHighlight(self.refs.el);
+      });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      var self = this;
 
-  get refs() {
-    return this.__reactRefs;
-  }
+      if (self.props.tabbar && self.$f7) {
+        self.$f7.toolbar.setHighlight(self.refs.el);
+      }
+    }
+  }, {
+    key: "slots",
+    get: function get() {
+      return __reactComponentSlots(this.props);
+    }
+  }, {
+    key: "refs",
+    get: function get() {
+      return this.__reactRefs;
+    },
+    set: function set(refs) {}
+  }]);
 
-  set refs(refs) {}
-
-}
+  return F7Toolbar;
+}(React.Component);
 
 __reactComponentSetProps(F7Toolbar, Object.assign({
   id: [String, Number],

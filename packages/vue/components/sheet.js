@@ -20,38 +20,35 @@ export default {
     swipeToStep: Boolean,
     swipeHandler: [String, Object, window.HTMLElement]
   }, Mixins.colorProps),
-
-  render() {
-    const _h = this.$createElement;
-    const self = this;
-    const fixedList = [];
-    const staticList = [];
-    const props = self.props;
-    const {
-      id,
-      style,
-      className,
-      top,
-      bottom,
-      position,
-      push
-    } = props;
-    let fixedTags;
+  render: function render() {
+    var _h = this.$createElement;
+    var self = this;
+    var fixedList = [];
+    var staticList = [];
+    var props = self.props;
+    var id = props.id,
+        style = props.style,
+        className = props.className,
+        top = props.top,
+        bottom = props.bottom,
+        position = props.position,
+        push = props.push;
+    var fixedTags;
     fixedTags = 'navbar toolbar tabbar subnavbar searchbar messagebar fab list-index'.split(' ');
-    const slotsDefault = self.$slots.default;
+    var slotsDefault = self.$slots.default;
 
     if (slotsDefault && slotsDefault.length) {
-      slotsDefault.forEach(child => {
+      slotsDefault.forEach(function (child) {
         if (typeof child === 'undefined') return;
-        let isFixedTag = false;
+        var isFixedTag = false;
         {
-          const tag = child.tag;
+          var tag = child.tag;
 
           if (!tag) {
             return;
           }
 
-          for (let j = 0; j < fixedTags.length; j += 1) {
+          for (var j = 0; j < fixedTags.length; j += 1) {
             if (tag.indexOf(fixedTags[j]) >= 0) {
               isFixedTag = true;
             }
@@ -61,13 +58,13 @@ export default {
       });
     }
 
-    const innerEl = _h('div', {
+    var innerEl = _h('div', {
       class: 'sheet-modal-inner'
     }, [staticList]);
 
-    let positionComputed = 'bottom';
+    var positionComputed = 'bottom';
     if (position) positionComputed = position;else if (top) positionComputed = 'top';else if (bottom) positionComputed = 'bottom';
-    const classes = Utils.classNames(className, 'sheet-modal', `sheet-modal-${positionComputed}`, {
+    var classes = Utils.classNames(className, 'sheet-modal', "sheet-modal-".concat(positionComputed), {
       'sheet-modal-push': push
     }, Mixins.colorClasses(props));
     return _h('div', {
@@ -79,10 +76,9 @@ export default {
       }
     }, [fixedList, innerEl]);
   },
-
   watch: {
     'props.opened': function watchOpened(opened) {
-      const self = this;
+      var self = this;
       if (!self.f7Sheet) return;
 
       if (opened) {
@@ -92,28 +88,24 @@ export default {
       }
     }
   },
-
-  created() {
+  created: function created() {
     Utils.bindMethods(this, ['onOpen', 'onOpened', 'onClose', 'onClosed', 'onStepOpen', 'onStepClose', 'onStepProgress']);
   },
-
-  mounted() {
-    const self = this;
-    const el = self.$refs.el;
+  mounted: function mounted() {
+    var self = this;
+    var el = self.$refs.el;
     if (!el) return;
-    const props = self.props;
-    const {
-      opened,
-      backdrop,
-      backdropEl,
-      closeByBackdropClick,
-      closeByOutsideClick,
-      closeOnEscape,
-      swipeToClose,
-      swipeToStep,
-      swipeHandler
-    } = props;
-    const sheetParams = {
+    var props = self.props;
+    var opened = props.opened,
+        backdrop = props.backdrop,
+        backdropEl = props.backdropEl,
+        closeByBackdropClick = props.closeByBackdropClick,
+        closeByOutsideClick = props.closeByOutsideClick,
+        closeOnEscape = props.closeOnEscape,
+        swipeToClose = props.swipeToClose,
+        swipeToStep = props.swipeToStep,
+        swipeHandler = props.swipeHandler;
+    var sheetParams = {
       el: self.$refs.el,
       on: {
         open: self.onOpen,
@@ -126,7 +118,7 @@ export default {
       }
     };
     {
-      const propsData = self.$options.propsData;
+      var propsData = self.$options.propsData;
       if (typeof propsData.backdrop !== 'undefined') sheetParams.backdrop = backdrop;
       if (typeof propsData.backdropEl !== 'undefined') sheetParams.backdropEl = backdropEl;
       if (typeof propsData.closeByBackdropClick !== 'undefined') sheetParams.closeByBackdropClick = closeByBackdropClick;
@@ -136,7 +128,7 @@ export default {
       if (typeof propsData.swipeToStep !== 'undefined') sheetParams.swipeToStep = swipeToStep;
       if (typeof propsData.swipeHandler !== 'undefined') sheetParams.swipeHandler = swipeHandler;
     }
-    self.$f7ready(() => {
+    self.$f7ready(function () {
       self.f7Sheet = self.$f7.sheet.create(sheetParams);
 
       if (opened) {
@@ -144,62 +136,53 @@ export default {
       }
     });
   },
-
-  beforeDestroy() {
-    const self = this;
+  beforeDestroy: function beforeDestroy() {
+    var self = this;
     if (self.f7Sheet) self.f7Sheet.destroy();
   },
-
   methods: {
-    onStepProgress(instance, progress) {
+    onStepProgress: function onStepProgress(instance, progress) {
       this.dispatchEvent('sheet:stepprogress sheetStepProgress', instance, progress);
     },
-
-    onStepOpen(instance) {
+    onStepOpen: function onStepOpen(instance) {
       this.dispatchEvent('sheet:stepopen sheetStepOpen', instance);
     },
-
-    onStepClose(instance) {
+    onStepClose: function onStepClose(instance) {
       this.dispatchEvent('sheet:stepclose sheetStepClose', instance);
     },
-
-    onOpen(instance) {
+    onOpen: function onOpen(instance) {
       this.dispatchEvent('sheet:open sheetOpen', instance);
     },
-
-    onOpened(instance) {
+    onOpened: function onOpened(instance) {
       this.dispatchEvent('sheet:opened sheetOpened', instance);
     },
-
-    onClose(instance) {
+    onClose: function onClose(instance) {
       this.dispatchEvent('sheet:close sheetClose', instance);
     },
-
-    onClosed(instance) {
+    onClosed: function onClosed(instance) {
       this.dispatchEvent('sheet:closed sheetClosed', instance);
     },
-
-    open(animate) {
-      const self = this;
+    open: function open(animate) {
+      var self = this;
       if (!self.f7Sheet) return undefined;
       return self.f7Sheet.open(animate);
     },
-
-    close(animate) {
-      const self = this;
+    close: function close(animate) {
+      var self = this;
       if (!self.f7Sheet) return undefined;
       return self.f7Sheet.close(animate);
     },
+    dispatchEvent: function dispatchEvent(events) {
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
 
-    dispatchEvent(events, ...args) {
-      __vueComponentDispatchEvent(this, events, ...args);
+      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     }
-
   },
   computed: {
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   }
 };

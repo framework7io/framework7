@@ -1,3 +1,11 @@
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import F7Badge from './badge';
@@ -29,78 +37,75 @@ export default {
     required: Boolean,
     disabled: Boolean
   }, Mixins.colorProps),
-
-  render() {
-    const _h = this.$createElement;
-    const self = this;
-    const props = self.props;
-    const {
-      id,
-      className,
-      style,
-      radio,
-      checkbox,
-      value,
-      name,
-      checked,
-      defaultChecked,
-      readonly,
-      disabled,
-      required,
-      media,
-      header,
-      footer,
-      title,
-      subtitle,
-      text,
-      after,
-      badge,
-      mediaList,
-      mediaItem,
-      badgeColor
-    } = props;
-    const slotsContentStart = [];
-    const slotsContent = [];
-    const slotsContentEnd = [];
-    const slotsInnerStart = [];
-    const slotsInner = [];
-    const slotsInnerEnd = [];
-    const slotsAfterStart = [];
-    const slotsAfter = [];
-    const slotsAfterEnd = [];
-    const slotsMedia = [];
-    const slotsBeforeTitle = [];
-    const slotsTitle = [];
-    const slotsAfterTitle = [];
-    const slotsSubtitle = [];
-    const slotsText = [];
-    const slotsHeader = [];
-    const slotsFooter = [];
-    let titleEl;
-    let afterWrapEl;
-    let afterEl;
-    let badgeEl;
-    let innerEl;
-    let titleRowEl;
-    let subtitleEl;
-    let textEl;
-    let mediaEl;
-    let inputEl;
-    let inputIconEl;
-    let headerEl;
-    let footerEl;
-    const slots = self.$slots.default;
-    const flattenSlots = [];
+  render: function render() {
+    var _h = this.$createElement;
+    var self = this;
+    var props = self.props;
+    var id = props.id,
+        className = props.className,
+        style = props.style,
+        radio = props.radio,
+        checkbox = props.checkbox,
+        value = props.value,
+        name = props.name,
+        checked = props.checked,
+        defaultChecked = props.defaultChecked,
+        readonly = props.readonly,
+        disabled = props.disabled,
+        required = props.required,
+        media = props.media,
+        header = props.header,
+        footer = props.footer,
+        title = props.title,
+        subtitle = props.subtitle,
+        text = props.text,
+        after = props.after,
+        badge = props.badge,
+        mediaList = props.mediaList,
+        mediaItem = props.mediaItem,
+        badgeColor = props.badgeColor;
+    var slotsContentStart = [];
+    var slotsContent = [];
+    var slotsContentEnd = [];
+    var slotsInnerStart = [];
+    var slotsInner = [];
+    var slotsInnerEnd = [];
+    var slotsAfterStart = [];
+    var slotsAfter = [];
+    var slotsAfterEnd = [];
+    var slotsMedia = [];
+    var slotsBeforeTitle = [];
+    var slotsTitle = [];
+    var slotsAfterTitle = [];
+    var slotsSubtitle = [];
+    var slotsText = [];
+    var slotsHeader = [];
+    var slotsFooter = [];
+    var titleEl;
+    var afterWrapEl;
+    var afterEl;
+    var badgeEl;
+    var innerEl;
+    var titleRowEl;
+    var subtitleEl;
+    var textEl;
+    var mediaEl;
+    var inputEl;
+    var inputIconEl;
+    var headerEl;
+    var footerEl;
+    var slots = self.$slots.default;
+    var flattenSlots = [];
 
     if (slots && slots.length) {
-      slots.forEach(slot => {
-        if (Array.isArray(slot)) flattenSlots.push(...slot);else flattenSlots.push(slot);
+      slots.forEach(function (slot) {
+        if (Array.isArray(slot)) flattenSlots.push.apply(flattenSlots, _toConsumableArray(slot));else flattenSlots.push(slot);
       });
     }
 
-    flattenSlots.forEach(child => {
+    flattenSlots.forEach(function (child) {
       if (typeof child === 'undefined') return;
-      let slotName;
+      var slotName;
       slotName = child.data ? child.data.slot : undefined;
       if (!slotName || slotName === 'inner') slotsInner.push(child);
       if (slotName === 'content-start') slotsContentStart.push(child);
@@ -126,11 +131,11 @@ export default {
         inputEl = _h('input', {
           ref: 'inputEl',
           domProps: {
-            checked,
-            readonly,
-            disabled,
-            required,
-            value
+            checked: checked,
+            readonly: readonly,
+            disabled: disabled,
+            required: required,
+            value: value
           },
           on: {
             change: this.onChange
@@ -142,12 +147,12 @@ export default {
         });
       }
       inputIconEl = _h('i', {
-        class: `icon icon-${radio ? 'radio' : 'checkbox'}`
+        class: "icon icon-".concat(radio ? 'radio' : 'checkbox')
       });
     }
 
     if (media || slotsMedia.length) {
-      let mediaImgEl;
+      var mediaImgEl;
 
       if (media) {
         mediaImgEl = _h('img', {
@@ -162,7 +167,7 @@ export default {
       }, [mediaImgEl, slotsMedia]);
     }
 
-    const isMedia = mediaItem || mediaList;
+    var isMedia = mediaItem || mediaList;
 
     if (header || slotsHeader.length) {
       headerEl = _h('div', {
@@ -227,8 +232,8 @@ export default {
       }, [slotsInnerStart, slotsBeforeTitle, titleEl, slotsAfterTitle, afterWrapEl, slotsInner, slotsInnerEnd]);
     }
 
-    const ItemContentTag = checkbox || radio ? 'label' : 'div';
-    const classes = Utils.classNames(className, 'item-content', {
+    var ItemContentTag = checkbox || radio ? 'label' : 'div';
+    var classes = Utils.classNames(className, 'item-content', {
       'item-checkbox': checkbox,
       'item-radio': radio
     }, Mixins.colorClasses(props));
@@ -241,20 +246,15 @@ export default {
       }
     }, [slotsContentStart, inputEl, inputIconEl, mediaEl, innerEl, slotsContent, slotsContentEnd]);
   },
-
-  created() {
+  created: function created() {
     Utils.bindMethods(this, 'onClick onChange'.split(' '));
   },
-
-  mounted() {
-    const self = this;
-    const {
-      el,
-      inputEl
-    } = self.$refs;
-    const {
-      indeterminate
-    } = self.props;
+  mounted: function mounted() {
+    var self = this;
+    var _self$$refs = self.$refs,
+        el = _self$$refs.el,
+        inputEl = _self$$refs.inputEl;
+    var indeterminate = self.props.indeterminate;
 
     if (indeterminate && inputEl) {
       inputEl.indeterminate = true;
@@ -262,47 +262,38 @@ export default {
 
     el.addEventListener('click', self.onClick);
   },
-
-  updated() {
-    const self = this;
-    const {
-      inputEl
-    } = self.$refs;
-    const {
-      indeterminate
-    } = self.props;
+  updated: function updated() {
+    var self = this;
+    var inputEl = self.$refs.inputEl;
+    var indeterminate = self.props.indeterminate;
 
     if (inputEl) {
       inputEl.indeterminate = indeterminate;
     }
   },
-
-  beforeDestroy() {
-    const self = this;
-    const {
-      el
-    } = self.$refs;
+  beforeDestroy: function beforeDestroy() {
+    var self = this;
+    var el = self.$refs.el;
     el.removeEventListener('click', self.onClick);
   },
-
   methods: {
-    onClick(event) {
+    onClick: function onClick(event) {
       this.dispatchEvent('click', event);
     },
-
-    onChange(event) {
+    onChange: function onChange(event) {
       this.dispatchEvent('change', event);
     },
+    dispatchEvent: function dispatchEvent(events) {
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
 
-    dispatchEvent(events, ...args) {
-      __vueComponentDispatchEvent(this, events, ...args);
+      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     }
-
   },
   computed: {
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   }
 };

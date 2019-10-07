@@ -16,37 +16,33 @@ export default {
     },
     tooltip: String
   }, Mixins.colorProps),
-
-  render() {
-    const _h = this.$createElement;
-    const self = this;
-    const props = self.props;
-    const {
-      className,
-      id,
-      style,
-      morphTo,
-      href: initialHref,
-      position,
-      text,
-      target
-    } = props;
-    let href = initialHref;
+  render: function render() {
+    var _h = this.$createElement;
+    var self = this;
+    var props = self.props;
+    var className = props.className,
+        id = props.id,
+        style = props.style,
+        morphTo = props.morphTo,
+        initialHref = props.href,
+        position = props.position,
+        text = props.text,
+        target = props.target;
+    var href = initialHref;
     if (href === true) href = '#';
     if (href === false) href = undefined;
-    const linkChildren = [];
-    const rootChildren = [];
-    const {
-      link: linkSlots,
-      default: defaultSlots,
-      root: rootSlots,
-      text: textSlots
-    } = self.$slots;
+    var linkChildren = [];
+    var rootChildren = [];
+    var _self$$slots = self.$slots,
+        linkSlots = _self$$slots.link,
+        defaultSlots = _self$$slots.default,
+        rootSlots = _self$$slots.root,
+        textSlots = _self$$slots.text;
 
     if (defaultSlots) {
-      for (let i = 0; i < defaultSlots.length; i += 1) {
-        const child = defaultSlots[i];
-        let isRoot;
+      for (var i = 0; i < defaultSlots.length; i += 1) {
+        var child = defaultSlots[i];
+        var isRoot = void 0;
         {
           if (child.tag && child.tag.indexOf('fab-buttons') >= 0) isRoot = true;
         }
@@ -54,7 +50,7 @@ export default {
       }
     }
 
-    let textEl;
+    var textEl;
 
     if (text || textSlots && textSlots.length) {
       textEl = _h('div', {
@@ -62,7 +58,7 @@ export default {
       }, [text || textSlots]);
     }
 
-    let linkEl;
+    var linkEl;
 
     if (linkChildren.length || linkSlots && linkSlots.length) {
       linkEl = _h('a', {
@@ -75,7 +71,7 @@ export default {
       }, [linkChildren, textEl, linkSlots]);
     }
 
-    const classes = Utils.classNames(className, 'fab', `fab-${position}`, {
+    var classes = Utils.classNames(className, 'fab', "fab-".concat(position), {
       'fab-morph': morphTo,
       'fab-extended': typeof textEl !== 'undefined'
     }, Mixins.colorClasses(props));
@@ -88,10 +84,9 @@ export default {
       }
     }, [linkEl, rootChildren, rootSlots]);
   },
-
   watch: {
     'props.tooltip': function watchTooltip(newText) {
-      const self = this;
+      var self = this;
 
       if (!newText && self.f7Tooltip) {
         self.f7Tooltip.destroy();
@@ -112,32 +107,27 @@ export default {
       self.f7Tooltip.setText(newText);
     }
   },
-
-  created() {
+  created: function created() {
     Utils.bindMethods(this, ['onClick']);
   },
-
-  mounted() {
-    const self = this;
+  mounted: function mounted() {
+    var self = this;
 
     if (self.$refs.linkEl) {
       self.$refs.linkEl.addEventListener('click', self.onClick);
     }
 
-    const {
-      tooltip
-    } = self.props;
+    var tooltip = self.props.tooltip;
     if (!tooltip) return;
-    self.$f7ready(f7 => {
+    self.$f7ready(function (f7) {
       self.f7Tooltip = f7.tooltip.create({
         targetEl: self.$refs.el,
         text: tooltip
       });
     });
   },
-
-  beforeDestroy() {
-    const self = this;
+  beforeDestroy: function beforeDestroy() {
+    var self = this;
 
     if (self.$refs.linkEl) {
       self.$refs.linkEl.removeEventListener('click', self.onClick);
@@ -149,22 +139,22 @@ export default {
       delete self.f7Tooltip;
     }
   },
-
   methods: {
-    onClick(event) {
-      const self = this;
+    onClick: function onClick(event) {
+      var self = this;
       self.dispatchEvent('click', event);
     },
+    dispatchEvent: function dispatchEvent(events) {
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
 
-    dispatchEvent(events, ...args) {
-      __vueComponentDispatchEvent(this, events, ...args);
+      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     }
-
   },
   computed: {
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   }
 };

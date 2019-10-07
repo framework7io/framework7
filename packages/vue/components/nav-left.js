@@ -1,3 +1,11 @@
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import F7Link from './link';
@@ -16,26 +24,23 @@ export default {
     },
     sliding: Boolean
   }, Mixins.colorProps),
-
-  render() {
-    const _h = this.$createElement;
-    const props = this.props;
-    const {
-      backLink,
-      backLinkUrl,
-      backLinkForce,
-      backLinkShowText,
-      sliding,
-      className,
-      style,
-      id
-    } = props;
-    let linkEl;
-    let needBackLinkText = backLinkShowText;
+  render: function render() {
+    var _h = this.$createElement;
+    var props = this.props;
+    var backLink = props.backLink,
+        backLinkUrl = props.backLinkUrl,
+        backLinkForce = props.backLinkForce,
+        backLinkShowText = props.backLinkShowText,
+        sliding = props.sliding,
+        className = props.className,
+        style = props.style,
+        id = props.id;
+    var linkEl;
+    var needBackLinkText = backLinkShowText;
     if (typeof needBackLinkText === 'undefined') needBackLinkText = !this.$theme.md;
 
     if (backLink) {
-      const text = backLink !== true && needBackLinkText ? backLink : undefined;
+      var text = backLink !== true && needBackLinkText ? backLink : undefined;
       linkEl = _h(F7Link, {
         class: !text ? 'icon-only' : undefined,
         on: {
@@ -51,15 +56,15 @@ export default {
       });
     }
 
-    const classes = Utils.classNames(className, 'left', {
-      sliding
+    var classes = Utils.classNames(className, 'left', {
+      sliding: sliding
     }, Mixins.colorClasses(props));
-    const children = [];
-    const slots = this.$slots;
+    var children = [];
+    var slots = this.$slots;
 
     if (slots && Object.keys(slots).length) {
-      Object.keys(slots).forEach(key => {
-        children.push(...slots[key]);
+      Object.keys(slots).forEach(function (key) {
+        children.push.apply(children, _toConsumableArray(slots[key]));
       });
     }
 
@@ -71,25 +76,24 @@ export default {
       }
     }, [linkEl, children]);
   },
-
-  created() {
+  created: function created() {
     Utils.bindMethods(this, ['onBackClick']);
   },
-
   methods: {
-    onBackClick(event) {
+    onBackClick: function onBackClick(event) {
       this.dispatchEvent('back-click backClick click:back clickBack', event);
     },
+    dispatchEvent: function dispatchEvent(events) {
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
 
-    dispatchEvent(events, ...args) {
-      __vueComponentDispatchEvent(this, events, ...args);
+      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     }
-
   },
   computed: {
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   }
 };

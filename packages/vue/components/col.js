@@ -1,3 +1,5 @@
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispatch-event.js';
@@ -30,33 +32,26 @@ export default {
       type: [Number, String]
     }
   }, Mixins.colorProps),
+  render: function render() {
+    var _Utils$classNames;
 
-  render() {
-    const _h = this.$createElement;
-    const self = this;
-    const props = self.props;
-    const {
-      className,
-      id,
-      style,
-      tag,
-      width,
-      xsmall,
-      small,
-      medium,
-      large,
-      xlarge
-    } = props;
-    const ColTag = tag;
-    const classes = Utils.classNames(className, {
-      col: width === 'auto',
-      [`col-${width}`]: width !== 'auto',
-      [`xsmall-${xsmall}`]: xsmall,
-      [`small-${small}`]: small,
-      [`medium-${medium}`]: medium,
-      [`large-${large}`]: large,
-      [`xlarge-${xlarge}`]: xlarge
-    }, Mixins.colorClasses(props));
+    var _h = this.$createElement;
+    var self = this;
+    var props = self.props;
+    var className = props.className,
+        id = props.id,
+        style = props.style,
+        tag = props.tag,
+        width = props.width,
+        xsmall = props.xsmall,
+        small = props.small,
+        medium = props.medium,
+        large = props.large,
+        xlarge = props.xlarge;
+    var ColTag = tag;
+    var classes = Utils.classNames(className, (_Utils$classNames = {
+      col: width === 'auto'
+    }, _defineProperty(_Utils$classNames, "col-".concat(width), width !== 'auto'), _defineProperty(_Utils$classNames, "xsmall-".concat(xsmall), xsmall), _defineProperty(_Utils$classNames, "small-".concat(small), small), _defineProperty(_Utils$classNames, "medium-".concat(medium), medium), _defineProperty(_Utils$classNames, "large-".concat(large), large), _defineProperty(_Utils$classNames, "xlarge-".concat(xlarge), xlarge), _Utils$classNames), Mixins.colorClasses(props));
     return _h(ColTag, {
       style: style,
       class: classes,
@@ -66,33 +61,30 @@ export default {
       }
     }, [this.$slots['default']]);
   },
-
-  created() {
+  created: function created() {
     Utils.bindMethods(this, ['onClick']);
   },
-
-  mounted() {
+  mounted: function mounted() {
     this.$refs.el.addEventListener('click', this.onClick);
   },
-
-  beforeDestroy() {
+  beforeDestroy: function beforeDestroy() {
     this.$refs.el.removeEventListener('click', this.onClick);
   },
-
   methods: {
-    onClick(event) {
+    onClick: function onClick(event) {
       this.dispatchEvent('click', event);
     },
+    dispatchEvent: function dispatchEvent(events) {
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
 
-    dispatchEvent(events, ...args) {
-      __vueComponentDispatchEvent(this, events, ...args);
+      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     }
-
   },
   computed: {
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   }
 };

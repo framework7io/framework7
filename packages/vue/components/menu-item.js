@@ -15,32 +15,29 @@ export default {
     target: String,
     dropdown: Boolean
   }, Mixins.colorProps, {}, Mixins.linkIconProps, {}, Mixins.linkRouterProps, {}, Mixins.linkActionsProps),
-
-  render() {
-    const _h = this.$createElement;
-    const self = this;
-    const props = self.props;
-    const {
-      id,
-      className,
-      style,
-      link,
-      href,
-      text,
-      dropdown,
-      iconOnly,
-      icon,
-      iconColor,
-      iconSize,
-      iconMaterial,
-      iconF7,
-      iconMd,
-      iconIos,
-      iconAurora
-    } = props;
-    const slots = self.$slots;
-    let iconEl;
-    let iconOnlyComputed;
+  render: function render() {
+    var _h = this.$createElement;
+    var self = this;
+    var props = self.props;
+    var id = props.id,
+        className = props.className,
+        style = props.style,
+        link = props.link,
+        href = props.href,
+        text = props.text,
+        dropdown = props.dropdown,
+        iconOnly = props.iconOnly,
+        icon = props.icon,
+        iconColor = props.iconColor,
+        iconSize = props.iconSize,
+        iconMaterial = props.iconMaterial,
+        iconF7 = props.iconF7,
+        iconMd = props.iconMd,
+        iconIos = props.iconIos,
+        iconAurora = props.iconAurora;
+    var slots = self.$slots;
+    var iconEl;
+    var iconOnlyComputed;
 
     if (icon || iconMaterial || iconF7 || iconMd || iconIos || iconAurora) {
       iconEl = _h(F7Icon, {
@@ -63,10 +60,10 @@ export default {
       iconOnlyComputed = false;
     }
 
-    const isLink = link || href || href === '';
-    const Tag = isLink ? 'a' : 'div';
-    const isDropdown = dropdown || dropdown === '';
-    const classes = Utils.classNames({
+    var isLink = link || href || href === '';
+    var Tag = isLink ? 'a' : 'div';
+    var isDropdown = dropdown || dropdown === '';
+    var classes = Utils.classNames({
       'menu-item': true,
       'menu-item-dropdown': isDropdown,
       'icon-only': iconOnlyComputed
@@ -83,40 +80,32 @@ export default {
       class: 'menu-item-content'
     }, [text, iconEl, this.$slots['text']]), this.$slots['default']]);
   },
-
-  created() {
+  created: function created() {
     Utils.bindMethods(this, ['onClick', 'onOpened', 'onClosed']);
   },
-
-  mounted() {
-    const self = this;
-    const el = self.$refs.el;
+  mounted: function mounted() {
+    var self = this;
+    var el = self.$refs.el;
     if (!el) return;
     self.eventTargetEl = el;
     el.addEventListener('click', self.onClick);
-    const {
-      routeProps
-    } = self.props;
+    var routeProps = self.props.routeProps;
     if (routeProps) el.f7RouteProps = routeProps;
-    self.$f7ready(f7 => {
+    self.$f7ready(function (f7) {
       f7.on('menuOpened', self.onOpened);
       f7.on('menuClosed', self.onClosed);
     });
   },
-
-  updated() {
-    const self = this;
-    const el = self.$refs.el;
+  updated: function updated() {
+    var self = this;
+    var el = self.$refs.el;
     if (!el) return;
-    const {
-      routeProps
-    } = self.props;
+    var routeProps = self.props.routeProps;
     if (routeProps) el.f7RouteProps = routeProps;
   },
-
-  beforeDestroy() {
-    const self = this;
-    const el = self.$refs.el;
+  beforeDestroy: function beforeDestroy() {
+    var self = this;
+    var el = self.$refs.el;
     if (!el || !self.$f7) return;
     el.removeEventListener('click', self.onClick);
     self.$f7.off('menuOpened', self.onOpened);
@@ -125,47 +114,42 @@ export default {
     delete el.f7RouteProps;
     delete self.eventTargetEl;
   },
-
   computed: {
-    attrs() {
-      const self = this;
-      const props = self.props;
-      const {
-        href,
-        link,
-        target
-      } = props;
-      let hrefComputed = href;
+    attrs: function attrs() {
+      var self = this;
+      var props = self.props;
+      var href = props.href,
+          link = props.link,
+          target = props.target;
+      var hrefComputed = href;
       if (typeof hrefComputed === 'undefined' && link) hrefComputed = '#';
       return Utils.extend({
         href: hrefComputed,
-        target
+        target: target
       }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
     },
-
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   },
   methods: {
-    onClick(e) {
+    onClick: function onClick(e) {
       this.dispatchEvent('click', e);
     },
-
-    onOpened(el) {
+    onOpened: function onOpened(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('menuOpened menu:opened', el);
     },
-
-    onClosed(el) {
+    onClosed: function onClosed(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('menuClosed menu:closed', el);
     },
+    dispatchEvent: function dispatchEvent(events) {
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
 
-    dispatchEvent(events, ...args) {
-      __vueComponentDispatchEvent(this, events, ...args);
+      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     }
-
   }
 };

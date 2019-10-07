@@ -84,16 +84,14 @@ export default {
     renderPopup: Function,
     renderStandalone: Function
   },
-
-  render() {
-    const _h = this.$createElement;
+  render: function render() {
+    var _h = this.$createElement;
     return null;
   },
-
   watch: {
     'props.photos': function watchPhotos(newValue) {
-      const self = this;
-      const pb = self.f7PhotoBrowser;
+      var self = this;
+      var pb = self.f7PhotoBrowser;
       if (!pb) return;
       self.f7PhotoBrowser.params.photos = newValue;
 
@@ -102,79 +100,68 @@ export default {
       }
     }
   },
-
-  beforeDestroy() {
-    const self = this;
+  beforeDestroy: function beforeDestroy() {
+    var self = this;
     if (self.f7PhotoBrowser && self.f7PhotoBrowser.destroy) self.f7PhotoBrowser.destroy();
   },
-
-  mounted() {
-    const self = this;
+  mounted: function mounted() {
+    var self = this;
     if (!self.props.init) return;
-    self.$f7ready(f7 => {
-      let params;
+    self.$f7ready(function (f7) {
+      var params;
       if (typeof self.props.params !== 'undefined') params = self.props.params;else params = Object.assign({}, self.props);
-      Object.keys(params).forEach(param => {
+      Object.keys(params).forEach(function (param) {
         if (typeof params[param] === 'undefined' || params[param] === '') delete params[param];
       });
       params = Utils.extend({}, params, {
         on: {
-          open() {
+          open: function open() {
             self.dispatchEvent('photobrowser:open photoBrowserOpen');
           },
-
-          close() {
+          close: function close() {
             self.dispatchEvent('photobrowser:close photoBrowserClose');
           },
-
-          opened() {
+          opened: function opened() {
             self.dispatchEvent('photobrowser:opened photoBrowserOpened');
           },
-
-          closed() {
+          closed: function closed() {
             self.dispatchEvent('photobrowser:closed photoBrowserClosed');
           },
-
-          swipeToClose() {
+          swipeToClose: function swipeToClose() {
             self.dispatchEvent('photobrowser:swipetoclose photoBrowserSwipeToClose');
           }
-
         }
       });
       self.f7PhotoBrowser = f7.photoBrowser.create(params);
     });
   },
-
   methods: {
-    open(index) {
+    open: function open(index) {
       return this.f7PhotoBrowser.open(index);
     },
-
-    close() {
+    close: function close() {
       return this.f7PhotoBrowser.close();
     },
-
-    expositionToggle() {
+    expositionToggle: function expositionToggle() {
       return this.f7PhotoBrowser.expositionToggle();
     },
-
-    expositionEnable() {
+    expositionEnable: function expositionEnable() {
       return this.f7PhotoBrowser.expositionEnable();
     },
-
-    expositionDisable() {
+    expositionDisable: function expositionDisable() {
       return this.f7PhotoBrowser.expositionDisable();
     },
+    dispatchEvent: function dispatchEvent(events) {
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
 
-    dispatchEvent(events, ...args) {
-      __vueComponentDispatchEvent(this, events, ...args);
+      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     }
-
   },
   computed: {
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   }
 };

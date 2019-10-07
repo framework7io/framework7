@@ -12,18 +12,15 @@ export default {
       default: true
     }
   }, Mixins.colorProps),
-
-  render() {
-    const _h = this.$createElement;
-    const self = this;
-    const props = self.props;
-    const {
-      id,
-      className,
-      style,
-      bold
-    } = props;
-    let mediaEl;
+  render: function render() {
+    var _h = this.$createElement;
+    var self = this;
+    var props = self.props;
+    var id = props.id,
+        className = props.className,
+        style = props.style,
+        bold = props.bold;
+    var mediaEl;
 
     if (self.$slots.media && self.$slots.media.length) {
       mediaEl = _h('div', {
@@ -31,7 +28,7 @@ export default {
       }, [this.$slots['media']]);
     }
 
-    const classes = Utils.classNames(className, {
+    var classes = Utils.classNames(className, {
       'actions-button': true,
       'actions-button-bold': bold
     }, Mixins.colorClasses(props));
@@ -46,24 +43,20 @@ export default {
       class: 'actions-button-text'
     }, [this.$slots['default']])]);
   },
-
-  created() {
+  created: function created() {
     Utils.bindMethods(this, ['onClick']);
   },
-
-  mounted() {
+  mounted: function mounted() {
     this.$refs.el.addEventListener('click', this.onClick);
   },
-
-  beforeDestroy() {
+  beforeDestroy: function beforeDestroy() {
     this.$refs.el.removeEventListener('click', this.onClick);
   },
-
   methods: {
-    onClick(event) {
-      const self = this;
-      const $$ = self.$$;
-      const el = self.$refs.el;
+    onClick: function onClick(event) {
+      var self = this;
+      var $$ = self.$$;
+      var el = self.$refs.el;
 
       if (self.props.close && self.$f7 && el) {
         self.$f7.actions.close($$(el).parents('.actions-modal'));
@@ -71,16 +64,17 @@ export default {
 
       self.dispatchEvent('click', event);
     },
+    dispatchEvent: function dispatchEvent(events) {
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
 
-    dispatchEvent(events, ...args) {
-      __vueComponentDispatchEvent(this, events, ...args);
+      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     }
-
   },
   computed: {
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   }
 };

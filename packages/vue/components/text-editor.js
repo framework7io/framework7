@@ -42,37 +42,35 @@ export default {
       default: false
     }
   }),
-
-  created() {
+  created: function created() {
     Utils.bindMethods(this, 'onChange onInput onFocus onBlur onButtonClick onKeyboardOpen onKeyboardClose onPopoverOpen onPopoverClose'.split(' '));
   },
+  mounted: function mounted() {
+    var _this = this;
 
-  mounted() {
-    const props = this.props;
-    const {
-      mode,
-      value,
-      palceholder,
-      buttons,
-      customButtons,
-      dividers,
-      imageUrlText,
-      linkUrlText,
-      placeholder,
-      clearFormattingOnPaste
-    } = props;
-    const params = Utils.noUndefinedProps({
+    var props = this.props;
+    var mode = props.mode,
+        value = props.value,
+        palceholder = props.palceholder,
+        buttons = props.buttons,
+        customButtons = props.customButtons,
+        dividers = props.dividers,
+        imageUrlText = props.imageUrlText,
+        linkUrlText = props.linkUrlText,
+        placeholder = props.placeholder,
+        clearFormattingOnPaste = props.clearFormattingOnPaste;
+    var params = Utils.noUndefinedProps({
       el: this.$refs.el,
-      mode,
-      value,
-      palceholder,
-      buttons,
-      customButtons,
-      dividers,
-      imageUrlText,
-      linkUrlText,
-      placeholder,
-      clearFormattingOnPaste,
+      mode: mode,
+      value: value,
+      palceholder: palceholder,
+      buttons: buttons,
+      customButtons: customButtons,
+      dividers: dividers,
+      imageUrlText: imageUrlText,
+      linkUrlText: linkUrlText,
+      placeholder: placeholder,
+      clearFormattingOnPaste: clearFormattingOnPaste,
       on: {
         onChange: this.onChange,
         onInput: this.onInput,
@@ -85,17 +83,15 @@ export default {
         onPopoverClose: this.onPopoverClose
       }
     });
-    this.$f7ready(f7 => {
-      this.f7TextEditor = f7.textEditor.create(params);
+    this.$f7ready(function (f7) {
+      _this.f7TextEditor = f7.textEditor.create(params);
     });
   },
-
-  beforeDestroy() {
+  beforeDestroy: function beforeDestroy() {
     if (this.f7TextEditor && this.f7TextEditor.destroy) {
       this.f7TextEditor.destroy();
     }
   },
-
   watch: {
     'props.value': function watchValue() {
       if (this.f7TextEditor) {
@@ -103,17 +99,14 @@ export default {
       }
     }
   },
-
-  render() {
-    const _h = this.$createElement;
-    const props = this.props;
-    const {
-      className,
-      id,
-      style,
-      resizable
-    } = props;
-    const classes = Utils.classNames(className, 'text-editor', resizable && 'text-editor-resizable', Mixins.colorClasses(props));
+  render: function render() {
+    var _h = this.$createElement;
+    var props = this.props;
+    var className = props.className,
+        id = props.id,
+        style = props.style,
+        resizable = props.resizable;
+    var classes = Utils.classNames(className, 'text-editor', resizable && 'text-editor-resizable', Mixins.colorClasses(props));
     return _h('div', {
       ref: 'el',
       style: style,
@@ -128,53 +121,45 @@ export default {
       }
     }, [this.$slots['default']]), this.$slots['root-end'], this.$slots['root']]);
   },
-
   methods: {
-    onChange(editor, value) {
+    onChange: function onChange(editor, value) {
       this.dispatchEvent('texteditor:change textEditorChange', value);
     },
-
-    onInput() {
+    onInput: function onInput() {
       this.dispatchEvent('texteditor:change textEditorChange');
     },
-
-    onFocus() {
+    onFocus: function onFocus() {
       this.dispatchEvent('texteditor:focus textEditorFocus');
     },
-
-    onBlur() {
+    onBlur: function onBlur() {
       this.dispatchEvent('texteditor:blur textEditorBlur');
     },
-
-    onButtonClick(editor, button) {
+    onButtonClick: function onButtonClick(editor, button) {
       this.dispatchEvent('texteditor:buttonclick textEditorButtonClick', button);
     },
-
-    onKeyboardOpen() {
+    onKeyboardOpen: function onKeyboardOpen() {
       this.dispatchEvent('texteditor:keyboardopen textEditorKeyboardOpen');
     },
-
-    onKeyboardClose() {
+    onKeyboardClose: function onKeyboardClose() {
       this.dispatchEvent('texteditor:keyboardclose textEditorKeyboardClose');
     },
-
-    onPopoverOpen() {
+    onPopoverOpen: function onPopoverOpen() {
       this.dispatchEvent('texteditor:popoveropen textEditorPopoverOpen');
     },
-
-    onPopoverClose() {
+    onPopoverClose: function onPopoverClose() {
       this.dispatchEvent('texteditor:popoverclose textEditorPopoverClose');
     },
+    dispatchEvent: function dispatchEvent(events) {
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
 
-    dispatchEvent(events, ...args) {
-      __vueComponentDispatchEvent(this, events, ...args);
+      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     }
-
   },
   computed: {
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   }
 };

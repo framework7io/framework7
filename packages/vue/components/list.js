@@ -42,29 +42,25 @@ export default {
     virtualList: Boolean,
     virtualListParams: Object
   }, Mixins.colorProps),
-
-  render() {
-    const _h = this.$createElement;
-    const self = this;
-    const props = self.props;
-    const {
-      id,
-      style,
-      form,
-      sortableMoveElements
-    } = props;
-    const {
-      list: slotsList,
-      default: slotsDefault
-    } = self.$slots;
-    const rootChildrenBeforeList = [];
-    const rootChildrenAfterList = [];
-    const ulChildren = slotsList || [];
-    const flattenSlots = Utils.flattenArray(slotsDefault);
-    let wasUlChild = false;
-    flattenSlots.forEach(child => {
+  render: function render() {
+    var _h = this.$createElement;
+    var self = this;
+    var props = self.props;
+    var id = props.id,
+        style = props.style,
+        form = props.form,
+        sortableMoveElements = props.sortableMoveElements;
+    var _self$$slots = self.$slots,
+        slotsList = _self$$slots.list,
+        slotsDefault = _self$$slots.default;
+    var rootChildrenBeforeList = [];
+    var rootChildrenAfterList = [];
+    var ulChildren = slotsList || [];
+    var flattenSlots = Utils.flattenArray(slotsDefault);
+    var wasUlChild = false;
+    flattenSlots.forEach(function (child) {
       if (typeof child === 'undefined') return;
-      let tag;
+      var tag;
       {
         tag = child.tag;
       }
@@ -76,7 +72,7 @@ export default {
         ulChildren.push(child);
       }
     });
-    const ListTag = form ? 'form' : 'div';
+    var ListTag = form ? 'form' : 'div';
 
     if (ulChildren.length > 0) {
       return _h(ListTag, {
@@ -100,45 +96,42 @@ export default {
       }, [self.$slots['before-list'], rootChildrenBeforeList, self.$slots['after-list'], rootChildrenAfterList]);
     }
   },
-
   computed: {
-    classes() {
-      const self = this;
-      const props = self.props;
-      const {
-        inset,
-        xsmallInset,
-        smallInset,
-        mediumInset,
-        largeInset,
-        xlargeInset,
-        mediaList,
-        simpleList,
-        linksList,
-        sortable,
-        sortableTapHold,
-        sortableEnabled,
-        accordionList,
-        contactsList,
-        virtualList,
-        tab,
-        tabActive,
-        noHairlines,
-        noHairlinesIos,
-        noHairlinesMd,
-        noHairlinesAurora,
-        noHairlinesBetween,
-        noHairlinesBetweenIos,
-        noHairlinesBetweenMd,
-        noHairlinesBetweenAurora,
-        formStoreData,
-        inlineLabels,
-        className,
-        noChevron,
-        chevronCenter
-      } = props;
+    classes: function classes() {
+      var self = this;
+      var props = self.props;
+      var inset = props.inset,
+          xsmallInset = props.xsmallInset,
+          smallInset = props.smallInset,
+          mediumInset = props.mediumInset,
+          largeInset = props.largeInset,
+          xlargeInset = props.xlargeInset,
+          mediaList = props.mediaList,
+          simpleList = props.simpleList,
+          linksList = props.linksList,
+          sortable = props.sortable,
+          sortableTapHold = props.sortableTapHold,
+          sortableEnabled = props.sortableEnabled,
+          accordionList = props.accordionList,
+          contactsList = props.contactsList,
+          virtualList = props.virtualList,
+          tab = props.tab,
+          tabActive = props.tabActive,
+          noHairlines = props.noHairlines,
+          noHairlinesIos = props.noHairlinesIos,
+          noHairlinesMd = props.noHairlinesMd,
+          noHairlinesAurora = props.noHairlinesAurora,
+          noHairlinesBetween = props.noHairlinesBetween,
+          noHairlinesBetweenIos = props.noHairlinesBetweenIos,
+          noHairlinesBetweenMd = props.noHairlinesBetweenMd,
+          noHairlinesBetweenAurora = props.noHairlinesBetweenAurora,
+          formStoreData = props.formStoreData,
+          inlineLabels = props.inlineLabels,
+          className = props.className,
+          noChevron = props.noChevron,
+          chevronCenter = props.chevronCenter;
       return Utils.classNames(className, 'list', {
-        inset,
+        inset: inset,
         'xsmall-inset': xsmallInset,
         'small-inset': smallInset,
         'medium-inset': mediumInset,
@@ -147,13 +140,13 @@ export default {
         'media-list': mediaList,
         'simple-list': simpleList,
         'links-list': linksList,
-        sortable,
+        sortable: sortable,
         'sortable-tap-hold': sortableTapHold,
         'sortable-enabled': sortableEnabled,
         'accordion-list': accordionList,
         'contacts-list': contactsList,
         'virtual-list': virtualList,
-        tab,
+        tab: tab,
         'tab-active': tabActive,
         'no-hairlines': noHairlines,
         'no-hairlines-md': noHairlinesMd,
@@ -169,26 +162,21 @@ export default {
         'chevron-center': chevronCenter
       }, Mixins.colorClasses(props));
     },
-
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   },
-
-  created() {
+  created: function created() {
     Utils.bindMethods(this, ['onSortableEnable', 'onSortableDisable', 'onSortableSort', 'onTabShow', 'onTabHide', 'onSubmit']);
   },
-
-  mounted() {
-    const self = this;
-    const el = self.$refs.el;
-    const {
-      virtualList,
-      virtualListParams,
-      form
-    } = self.props;
-    self.$f7ready(f7 => {
+  mounted: function mounted() {
+    var self = this;
+    var el = self.$refs.el;
+    var _self$props = self.props,
+        virtualList = _self$props.virtualList,
+        virtualListParams = _self$props.virtualListParams,
+        form = _self$props.form;
+    self.$f7ready(function (f7) {
       self.eventTargetEl = el;
       f7.on('sortableEnable', self.onSortableEnable);
       f7.on('sortableDisable', self.onSortableDisable);
@@ -201,40 +189,35 @@ export default {
       }
 
       if (!virtualList) return;
-      const vlParams = virtualListParams || {};
+      var vlParams = virtualListParams || {};
       if (!vlParams.renderItem && !vlParams.itemTemplate && !vlParams.renderExternal) return;
       self.f7VirtualList = f7.virtualList.create(Utils.extend({
-        el,
+        el: el,
         on: {
-          itemBeforeInsert(itemEl, item) {
-            const vl = this;
+          itemBeforeInsert: function itemBeforeInsert(itemEl, item) {
+            var vl = this;
             self.dispatchEvent('virtual:itembeforeinsert virtualItemBeforeInsert', vl, itemEl, item);
           },
-
-          beforeClear(fragment) {
-            const vl = this;
+          beforeClear: function beforeClear(fragment) {
+            var vl = this;
             self.dispatchEvent('virtual:beforeclear virtualBeforeClear', vl, fragment);
           },
-
-          itemsBeforeInsert(fragment) {
-            const vl = this;
+          itemsBeforeInsert: function itemsBeforeInsert(fragment) {
+            var vl = this;
             self.dispatchEvent('virtual:itemsbeforeinsert virtualItemsBeforeInsert', vl, fragment);
           },
-
-          itemsAfterInsert(fragment) {
-            const vl = this;
+          itemsAfterInsert: function itemsAfterInsert(fragment) {
+            var vl = this;
             self.dispatchEvent('virtual:itemsafterinsert virtualItemsAfterInsert', vl, fragment);
           }
-
         }
       }, vlParams));
     });
   },
-
-  beforeDestroy() {
-    const self = this;
-    const el = self.$refs.el;
-    const f7 = self.$f7;
+  beforeDestroy: function beforeDestroy() {
+    var self = this;
+    var el = self.$refs.el;
+    var f7 = self.$f7;
     if (!el || !f7) return;
     f7.off('sortableEnable', self.onSortableEnable);
     f7.off('sortableDisable', self.onSortableDisable);
@@ -247,40 +230,36 @@ export default {
     if (!(self.virtualList && self.f7VirtualList)) return;
     if (self.f7VirtualList.destroy) self.f7VirtualList.destroy();
   },
-
   methods: {
-    onSubmit(event) {
+    onSubmit: function onSubmit(event) {
       this.dispatchEvent('submit', event);
     },
-
-    onSortableEnable(el) {
+    onSortableEnable: function onSortableEnable(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('sortable:enable sortableEnable');
     },
-
-    onSortableDisable(el) {
+    onSortableDisable: function onSortableDisable(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('sortable:disable sortableDisable');
     },
-
-    onSortableSort(el, sortData, listEl) {
+    onSortableSort: function onSortableSort(el, sortData, listEl) {
       if (this.eventTargetEl !== listEl) return;
       this.dispatchEvent('sortable:sort sortableSort', sortData);
     },
-
-    onTabShow(el) {
+    onTabShow: function onTabShow(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('tab:show tabShow');
     },
-
-    onTabHide(el) {
+    onTabHide: function onTabHide(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('tab:hide tabHide');
     },
+    dispatchEvent: function dispatchEvent(events) {
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
 
-    dispatchEvent(events, ...args) {
-      __vueComponentDispatchEvent(this, events, ...args);
+      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     }
-
   }
 };

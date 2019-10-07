@@ -30,26 +30,23 @@ export default {
     messagesContent: Boolean,
     loginScreen: Boolean
   }, Mixins.colorProps),
-
-  render() {
-    const _h = this.$createElement;
-    const self = this;
-    const props = self.props;
-    const {
-      ptr,
-      ptrPreloader,
-      ptrDistance,
-      ptrBottom,
-      ptrMousewheel,
-      infinite,
-      infinitePreloader,
-      id,
-      style,
-      infiniteDistance,
-      infiniteTop
-    } = props;
-    let ptrEl;
-    let infiniteEl;
+  render: function render() {
+    var _h = this.$createElement;
+    var self = this;
+    var props = self.props;
+    var ptr = props.ptr,
+        ptrPreloader = props.ptrPreloader,
+        ptrDistance = props.ptrDistance,
+        ptrBottom = props.ptrBottom,
+        ptrMousewheel = props.ptrMousewheel,
+        infinite = props.infinite,
+        infinitePreloader = props.infinitePreloader,
+        id = props.id,
+        style = props.style,
+        infiniteDistance = props.infiniteDistance,
+        infiniteTop = props.infiniteTop;
+    var ptrEl;
+    var infiniteEl;
 
     if (ptr && ptrPreloader) {
       ptrEl = _h('div', {
@@ -77,27 +74,24 @@ export default {
       }
     }, [ptrBottom ? null : ptrEl, infiniteTop ? infiniteEl : null, self.$slots.default, infiniteTop ? null : infiniteEl, ptrBottom ? ptrEl : null]);
   },
-
   computed: {
-    classes() {
-      const self = this;
-      const props = self.props;
-      const {
-        className,
-        tab,
-        tabActive,
-        ptr,
-        ptrBottom,
-        infinite,
-        infiniteTop,
-        hideBarsOnScroll,
-        hideNavbarOnScroll,
-        hideToolbarOnScroll,
-        messagesContent,
-        loginScreen
-      } = props;
+    classes: function classes() {
+      var self = this;
+      var props = self.props;
+      var className = props.className,
+          tab = props.tab,
+          tabActive = props.tabActive,
+          ptr = props.ptr,
+          ptrBottom = props.ptrBottom,
+          infinite = props.infinite,
+          infiniteTop = props.infiniteTop,
+          hideBarsOnScroll = props.hideBarsOnScroll,
+          hideNavbarOnScroll = props.hideNavbarOnScroll,
+          hideToolbarOnScroll = props.hideToolbarOnScroll,
+          messagesContent = props.messagesContent,
+          loginScreen = props.loginScreen;
       return Utils.classNames(className, 'page-content', {
-        tab,
+        tab: tab,
         'tab-active': tabActive,
         'ptr-content': ptr,
         'ptr-bottom': ptrBottom,
@@ -110,26 +104,21 @@ export default {
         'login-screen-content': loginScreen
       }, Mixins.colorClasses(props));
     },
-
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   },
-
-  created() {
+  created: function created() {
     Utils.bindMethods(this, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onTabShow', 'onTabHide']);
   },
-
-  mounted() {
-    const self = this;
-    const el = self.$refs.el;
-    const {
-      ptr,
-      infinite,
-      tab
-    } = self.props;
-    self.$f7ready(f7 => {
+  mounted: function mounted() {
+    var self = this;
+    var el = self.$refs.el;
+    var _self$props = self.props,
+        ptr = _self$props.ptr,
+        infinite = _self$props.infinite,
+        tab = _self$props.tab;
+    self.$f7ready(function (f7) {
       self.eventTargetEl = el;
 
       if (ptr) {
@@ -150,9 +139,8 @@ export default {
       }
     });
   },
-
-  beforeDestroy() {
-    const self = this;
+  beforeDestroy: function beforeDestroy() {
+    var self = this;
     if (!self.$f7) return;
     self.$f7.off('ptrPullStart', self.onPtrPullStart);
     self.$f7.off('ptrPullMove', self.onPtrPullMove);
@@ -165,51 +153,45 @@ export default {
     self.eventTargetEl = null;
     delete self.eventTargetEl;
   },
-
   methods: {
-    onPtrPullStart(el) {
+    onPtrPullStart: function onPtrPullStart(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('ptr:pullstart ptrPullStart');
     },
-
-    onPtrPullMove(el) {
+    onPtrPullMove: function onPtrPullMove(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('ptr:pullmove ptrPullMove');
     },
-
-    onPtrPullEnd(el) {
+    onPtrPullEnd: function onPtrPullEnd(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('ptr:pullend ptrPullEnd');
     },
-
-    onPtrRefresh(el, done) {
+    onPtrRefresh: function onPtrRefresh(el, done) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('ptr:refresh ptrRefresh', done);
     },
-
-    onPtrDone(el) {
+    onPtrDone: function onPtrDone(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('ptr:done ptrDone');
     },
-
-    onInfinite(el) {
+    onInfinite: function onInfinite(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('infinite');
     },
-
-    onTabShow(el) {
+    onTabShow: function onTabShow(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('tab:show tabShow');
     },
-
-    onTabHide(el) {
+    onTabHide: function onTabHide(el) {
       if (this.eventTargetEl !== el) return;
       this.dispatchEvent('tab:hide tabHide');
     },
+    dispatchEvent: function dispatchEvent(events) {
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
 
-    dispatchEvent(events, ...args) {
-      __vueComponentDispatchEvent(this, events, ...args);
+      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     }
-
   }
 };

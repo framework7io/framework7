@@ -59,35 +59,32 @@ export default {
     }
   },
   name: 'f7-gauge',
-
-  render() {
-    const _h = this.$createElement;
-    const props = this.props;
-    const {
-      className,
-      id,
-      style,
-      type,
-      value,
-      size,
-      bgColor,
-      borderBgColor,
-      borderColor,
-      borderWidth,
-      valueText,
-      valueTextColor,
-      valueFontSize,
-      valueFontWeight,
-      labelText,
-      labelTextColor,
-      labelFontSize,
-      labelFontWeight
-    } = props;
-    const classes = Utils.classNames(className, 'gauge');
-    const semiCircle = type === 'semicircle';
-    const radius = size / 2 - borderWidth / 2;
-    const length = 2 * Math.PI * radius;
-    const progress = Math.max(Math.min(value, 1), 0);
+  render: function render() {
+    var _h = this.$createElement;
+    var props = this.props;
+    var className = props.className,
+        id = props.id,
+        style = props.style,
+        type = props.type,
+        value = props.value,
+        size = props.size,
+        bgColor = props.bgColor,
+        borderBgColor = props.borderBgColor,
+        borderColor = props.borderColor,
+        borderWidth = props.borderWidth,
+        valueText = props.valueText,
+        valueTextColor = props.valueTextColor,
+        valueFontSize = props.valueFontSize,
+        valueFontWeight = props.valueFontWeight,
+        labelText = props.labelText,
+        labelTextColor = props.labelTextColor,
+        labelFontSize = props.labelFontSize,
+        labelFontWeight = props.labelFontWeight;
+    var classes = Utils.classNames(className, 'gauge');
+    var semiCircle = type === 'semicircle';
+    var radius = size / 2 - borderWidth / 2;
+    var length = 2 * Math.PI * radius;
+    var progress = Math.max(Math.min(value, 1), 0);
     return _h('div', {
       style: style,
       class: classes,
@@ -97,14 +94,14 @@ export default {
     }, [_h('svg', {
       class: 'gauge-svg',
       attrs: {
-        width: `${size}px`,
-        height: `${semiCircle ? size / 2 : size}px`,
-        viewBox: `0 0 ${size} ${semiCircle ? size / 2 : size}`
+        width: "".concat(size, "px"),
+        height: "".concat(semiCircle ? size / 2 : size, "px"),
+        viewBox: "0 0 ".concat(size, " ").concat(semiCircle ? size / 2 : size)
       }
     }, [semiCircle && _h('path', {
       class: 'gauge-back-semi',
       attrs: {
-        d: `M${size - borderWidth / 2},${size / 2} a1,1 0 0,0 -${size - borderWidth},0`,
+        d: "M".concat(size - borderWidth / 2, ",").concat(size / 2, " a1,1 0 0,0 -").concat(size - borderWidth, ",0"),
         stroke: borderBgColor,
         'stroke-width': borderWidth,
         fill: bgColor || 'none'
@@ -112,7 +109,7 @@ export default {
     }), semiCircle && _h('path', {
       class: 'gauge-front-semi',
       attrs: {
-        d: `M${size - borderWidth / 2},${size / 2} a1,1 0 0,0 -${size - borderWidth},0`,
+        d: "M".concat(size - borderWidth / 2, ",").concat(size / 2, " a1,1 0 0,0 -").concat(size - borderWidth, ",0"),
         stroke: borderColor,
         'stroke-width': borderWidth,
         'stroke-dasharray': length / 2,
@@ -132,7 +129,7 @@ export default {
     }), !semiCircle && _h('circle', {
       class: 'gauge-front-circle',
       attrs: {
-        transform: `rotate(-90 ${size / 2} ${size / 2})`,
+        transform: "rotate(-90 ".concat(size / 2, " ").concat(size / 2, ")"),
         stroke: borderColor,
         'stroke-width': borderWidth,
         'stroke-dasharray': length,
@@ -168,11 +165,9 @@ export default {
       }
     }, [labelText])])]);
   },
-
   computed: {
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   }
 };

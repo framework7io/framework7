@@ -27,41 +27,37 @@ export default {
     sameAvatar: Boolean,
     typing: Boolean
   }, Mixins.colorProps),
-
-  render() {
-    const _h = this.$createElement;
-    const self = this;
-    const props = self.props;
-    const {
-      text,
-      name,
-      avatar,
-      image,
-      header,
-      footer,
-      textHeader,
-      textFooter,
-      typing,
-      id,
-      style
-    } = props;
-    const {
-      start: slotsStart,
-      end: slotsEnd,
-      default: slotsDefault,
-      'content-start': slotsContentStart,
-      'content-end': slotsContentEnd,
-      avatar: slotsAvatar,
-      name: slotsName,
-      header: slotsHeader,
-      footer: slotsFooter,
-      image: slotsImage,
-      text: slotsText,
-      'text-header': slotsTextHeader,
-      'text-footer': slotsTextFooter,
-      'bubble-start': slotsBubbleStart,
-      'bubble-end': slotsBubbleEnd
-    } = self.$slots;
+  render: function render() {
+    var _h = this.$createElement;
+    var self = this;
+    var props = self.props;
+    var text = props.text,
+        name = props.name,
+        avatar = props.avatar,
+        image = props.image,
+        header = props.header,
+        footer = props.footer,
+        textHeader = props.textHeader,
+        textFooter = props.textFooter,
+        typing = props.typing,
+        id = props.id,
+        style = props.style;
+    var _self$$slots = self.$slots,
+        slotsStart = _self$$slots.start,
+        slotsEnd = _self$$slots.end,
+        slotsDefault = _self$$slots.default,
+        slotsContentStart = _self$$slots['content-start'],
+        slotsContentEnd = _self$$slots['content-end'],
+        slotsAvatar = _self$$slots.avatar,
+        slotsName = _self$$slots.name,
+        slotsHeader = _self$$slots.header,
+        slotsFooter = _self$$slots.footer,
+        slotsImage = _self$$slots.image,
+        slotsText = _self$$slots.text,
+        slotsTextHeader = _self$$slots['text-header'],
+        slotsTextFooter = _self$$slots['text-footer'],
+        slotsBubbleStart = _self$$slots['bubble-start'],
+        slotsBubbleEnd = _self$$slots['bubble-end'];
     return _h('div', {
       ref: 'el',
       style: style,
@@ -73,7 +69,7 @@ export default {
       ref: 'avatarEl',
       class: 'message-avatar',
       style: {
-        backgroundImage: avatar && `url(${avatar})`
+        backgroundImage: avatar && "url(".concat(avatar, ")")
       }
     }, [slotsAvatar]), _h('div', {
       class: 'message-content'
@@ -106,23 +102,20 @@ export default {
       class: 'message-footer'
     }, [slotsFooter || footer]), slotsContentEnd]), slotsEnd]);
   },
-
   computed: {
-    classes() {
-      const self = this;
-      const props = self.props;
-      const {
-        type,
-        typing,
-        first,
-        last,
-        tail,
-        sameName,
-        sameHeader,
-        sameFooter,
-        sameAvatar,
-        className
-      } = props;
+    classes: function classes() {
+      var self = this;
+      var props = self.props;
+      var type = props.type,
+          typing = props.typing,
+          first = props.first,
+          last = props.last,
+          tail = props.tail,
+          sameName = props.sameName,
+          sameHeader = props.sameHeader,
+          sameFooter = props.sameFooter,
+          sameAvatar = props.sameAvatar,
+          className = props.className;
       return Utils.classNames(className, 'message', {
         'message-sent': type === 'sent',
         'message-received': type === 'received',
@@ -136,27 +129,22 @@ export default {
         'message-same-avatar': sameAvatar
       }, Mixins.colorClasses(props));
     },
-
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   },
-
-  created() {
+  created: function created() {
     Utils.bindMethods(this, ['onClick', 'onNameClick', 'onTextClick', 'onAvatarClick', 'onHeaderClick', 'onFooterClick', 'onBubbleClick']);
   },
-
-  mounted() {
-    const {
-      el,
-      nameEl,
-      textEl,
-      avatarEl,
-      headerEl,
-      footerEl,
-      bubbleEl
-    } = this.$refs;
+  mounted: function mounted() {
+    var _this$$refs = this.$refs,
+        el = _this$$refs.el,
+        nameEl = _this$$refs.nameEl,
+        textEl = _this$$refs.textEl,
+        avatarEl = _this$$refs.avatarEl,
+        headerEl = _this$$refs.headerEl,
+        footerEl = _this$$refs.footerEl,
+        bubbleEl = _this$$refs.bubbleEl;
     el.addEventListener('click', this.onClick);
     if (nameEl) nameEl.addEventListener('click', this.onNameClick);
     if (textEl) textEl.addEventListener('click', this.onTextClick);
@@ -165,17 +153,15 @@ export default {
     if (footerEl) footerEl.addEventListener('click', this.onFooterClick);
     if (bubbleEl) bubbleEl.addEventListener('click', this.onBubbleClick);
   },
-
-  beforeDestroy() {
-    const {
-      el,
-      nameEl,
-      textEl,
-      avatarEl,
-      headerEl,
-      footerEl,
-      bubbleEl
-    } = this.$refs;
+  beforeDestroy: function beforeDestroy() {
+    var _this$$refs2 = this.$refs,
+        el = _this$$refs2.el,
+        nameEl = _this$$refs2.nameEl,
+        textEl = _this$$refs2.textEl,
+        avatarEl = _this$$refs2.avatarEl,
+        headerEl = _this$$refs2.headerEl,
+        footerEl = _this$$refs2.footerEl,
+        bubbleEl = _this$$refs2.bubbleEl;
     el.removeEventListener('click', this.onClick);
     if (nameEl) nameEl.removeEventListener('click', this.onNameClick);
     if (textEl) textEl.removeEventListener('click', this.onTextClick);
@@ -184,39 +170,34 @@ export default {
     if (footerEl) footerEl.removeEventListener('click', this.onFooterClick);
     if (bubbleEl) bubbleEl.removeEventListener('click', this.onBubbleClick);
   },
-
   methods: {
-    onClick(event) {
+    onClick: function onClick(event) {
       this.dispatchEvent('click', event);
     },
-
-    onNameClick(event) {
+    onNameClick: function onNameClick(event) {
       this.dispatchEvent('click:name clickName', event);
     },
-
-    onTextClick(event) {
+    onTextClick: function onTextClick(event) {
       this.dispatchEvent('click:text clickText', event);
     },
-
-    onAvatarClick(event) {
+    onAvatarClick: function onAvatarClick(event) {
       this.dispatchEvent('click:avatar clickAvatar', event);
     },
-
-    onHeaderClick(event) {
+    onHeaderClick: function onHeaderClick(event) {
       this.dispatchEvent('click:header clickHeader', event);
     },
-
-    onFooterClick(event) {
+    onFooterClick: function onFooterClick(event) {
       this.dispatchEvent('click:footer clickFooter', event);
     },
-
-    onBubbleClick(event) {
+    onBubbleClick: function onBubbleClick(event) {
       this.dispatchEvent('click:bubble clickBubble', event);
     },
+    dispatchEvent: function dispatchEvent(events) {
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
 
-    dispatchEvent(events, ...args) {
-      __vueComponentDispatchEvent(this, events, ...args);
+      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     }
-
   }
 };

@@ -6,16 +6,13 @@ export default {
     id: [String, Number]
   }, Mixins.colorProps),
   name: 'f7-accordion',
-
-  render() {
-    const _h = this.$createElement;
-    const props = this.props;
-    const {
-      className,
-      id,
-      style
-    } = props;
-    const classes = Utils.classNames(className, 'accordion-list', Mixins.colorClasses(props));
+  render: function render() {
+    var _h = this.$createElement;
+    var props = this.props;
+    var className = props.className,
+        id = props.id,
+        style = props.style;
+    var classes = Utils.classNames(className, 'accordion-list', Mixins.colorClasses(props));
     return _h('div', {
       style: style,
       class: classes,
@@ -24,11 +21,9 @@ export default {
       }
     }, [this.$slots['default']]);
   },
-
   computed: {
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   }
 };

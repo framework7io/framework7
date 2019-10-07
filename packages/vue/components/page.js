@@ -55,11 +55,10 @@ export default {
     messagesContent: Boolean,
     loginScreen: Boolean
   }, Mixins.colorProps),
+  data: function data() {
+    var props = __vueComponentProps(this);
 
-  data() {
-    const props = __vueComponentProps(this);
-
-    const state = (() => {
+    var state = function () {
       return {
         hasSubnavbar: false,
         hasNavbarLarge: false,
@@ -71,67 +70,63 @@ export default {
         routerPageRoleDetailRoot: false,
         routerPageMasterStack: false
       };
-    })();
+    }();
 
     return {
-      state
+      state: state
     };
   },
-
-  render() {
-    const _h = this.$createElement;
-    const self = this;
-    const props = self.props;
-    const {
-      id,
-      style,
-      name,
-      pageContent,
-      messagesContent,
-      ptr,
-      ptrDistance,
-      ptrPreloader,
-      ptrBottom,
-      ptrMousewheel,
-      infinite,
-      infiniteDistance,
-      infinitePreloader,
-      infiniteTop,
-      hideBarsOnScroll,
-      hideNavbarOnScroll,
-      hideToolbarOnScroll,
-      loginScreen,
-      className,
-      stacked,
-      tabs,
-      subnavbar,
-      withSubnavbar,
-      navbarLarge,
-      withNavbarLarge,
-      noNavbar,
-      noToolbar,
-      noSwipeback
-    } = props;
-    const fixedList = [];
-    const staticList = [];
-    const {
-      static: slotsStatic,
-      fixed: slotsFixed,
-      default: slotsDefault
-    } = self.$slots;
-    let fixedTags;
+  render: function render() {
+    var _h = this.$createElement;
+    var self = this;
+    var props = self.props;
+    var id = props.id,
+        style = props.style,
+        name = props.name,
+        pageContent = props.pageContent,
+        messagesContent = props.messagesContent,
+        ptr = props.ptr,
+        ptrDistance = props.ptrDistance,
+        ptrPreloader = props.ptrPreloader,
+        ptrBottom = props.ptrBottom,
+        ptrMousewheel = props.ptrMousewheel,
+        infinite = props.infinite,
+        infiniteDistance = props.infiniteDistance,
+        infinitePreloader = props.infinitePreloader,
+        infiniteTop = props.infiniteTop,
+        hideBarsOnScroll = props.hideBarsOnScroll,
+        hideNavbarOnScroll = props.hideNavbarOnScroll,
+        hideToolbarOnScroll = props.hideToolbarOnScroll,
+        loginScreen = props.loginScreen,
+        className = props.className,
+        stacked = props.stacked,
+        tabs = props.tabs,
+        subnavbar = props.subnavbar,
+        withSubnavbar = props.withSubnavbar,
+        navbarLarge = props.navbarLarge,
+        withNavbarLarge = props.withNavbarLarge,
+        noNavbar = props.noNavbar,
+        noToolbar = props.noToolbar,
+        noSwipeback = props.noSwipeback;
+    var fixedList = [];
+    var staticList = [];
+    var _self$$slots = self.$slots,
+        slotsStatic = _self$$slots.static,
+        slotsFixed = _self$$slots.fixed,
+        slotsDefault = _self$$slots.default;
+    var fixedTags;
     fixedTags = 'navbar toolbar tabbar subnavbar searchbar messagebar fab list-index'.split(' ');
-    let hasSubnavbar;
-    let hasMessages;
-    let hasNavbarLarge;
+    var hasSubnavbar;
+    var hasMessages;
+    var hasNavbarLarge;
     hasMessages = self.$options.propsData.messagesContent;
 
     if (slotsDefault) {
-      slotsDefault.forEach(child => {
+      slotsDefault.forEach(function (child) {
         if (typeof child === 'undefined') return;
-        let isFixedTag = false;
+        var isFixedTag = false;
         {
-          const tag = child.tag;
+          var tag = child.tag;
 
           if (!tag) {
             if (pageContent) staticList.push(child);
@@ -148,7 +143,7 @@ export default {
 
           if (typeof hasMessages === 'undefined' && tag.indexOf('messages') >= 0) hasMessages = true;
 
-          for (let j = 0; j < fixedTags.length; j += 1) {
+          for (var j = 0; j < fixedTags.length; j += 1) {
             if (tag.indexOf(fixedTags[j]) >= 0) {
               isFixedTag = true;
             }
@@ -161,11 +156,11 @@ export default {
       });
     }
 
-    const forceSubnavbar = typeof subnavbar === 'undefined' && typeof withSubnavbar === 'undefined' ? hasSubnavbar || this.state.hasSubnavbar : false;
-    const forceNavbarLarge = typeof navbarLarge === 'undefined' && typeof withNavbarLarge === 'undefined' ? hasNavbarLarge || this.state.hasNavbarLarge : false;
-    const classes = Utils.classNames(className, 'page', this.state.routerPositionClass, {
+    var forceSubnavbar = typeof subnavbar === 'undefined' && typeof withSubnavbar === 'undefined' ? hasSubnavbar || this.state.hasSubnavbar : false;
+    var forceNavbarLarge = typeof navbarLarge === 'undefined' && typeof withNavbarLarge === 'undefined' ? hasNavbarLarge || this.state.hasNavbarLarge : false;
+    var classes = Utils.classNames(className, 'page', this.state.routerPositionClass, {
       stacked: stacked && !this.state.routerForceUnstack,
-      tabs,
+      tabs: tabs,
       'page-with-subnavbar': subnavbar || withSubnavbar || forceSubnavbar,
       'page-with-navbar-large': navbarLarge || withNavbarLarge || forceNavbarLarge,
       'no-navbar': noNavbar,
@@ -192,7 +187,7 @@ export default {
       }, [slotsFixed, slotsStatic, slotsDefault]);
     }
 
-    const pageContentEl = _h(F7PageContent, {
+    var pageContentEl = _h(F7PageContent, {
       on: {
         ptrPullStart: self.onPtrPullStart,
         ptrPullMove: self.onPtrPullMove,
@@ -229,15 +224,13 @@ export default {
       }
     }, [fixedList, slotsFixed, pageContentEl]);
   },
-
-  created() {
+  created: function created() {
     Utils.bindMethods(this, ['onPtrPullStart', 'onPtrPullMove', 'onPtrPullEnd', 'onPtrRefresh', 'onPtrDone', 'onInfinite', 'onPageMounted', 'onPageInit', 'onPageReinit', 'onPageBeforeIn', 'onPageBeforeOut', 'onPageAfterOut', 'onPageAfterIn', 'onPageBeforeRemove', 'onPageStack', 'onPageUnstack', 'onPagePosition', 'onPageRole', 'onPageMasterStack', 'onPageMasterUnstack', 'onPageNavbarLargeCollapsed', 'onPageNavbarLargeExpanded', 'onCardOpened', 'onCardClose']);
   },
-
-  mounted() {
-    const self = this;
-    const el = self.$refs.el;
-    self.$f7ready(f7 => {
+  mounted: function mounted() {
+    var self = this;
+    var el = self.$refs.el;
+    self.$f7ready(function (f7) {
       self.eventTargetEl = el;
       f7.on('pageMounted', self.onPageMounted);
       f7.on('pageInit', self.onPageInit);
@@ -259,11 +252,10 @@ export default {
       f7.on('cardClose', self.onCardClose);
     });
   },
-
-  beforeDestroy() {
-    const self = this;
+  beforeDestroy: function beforeDestroy() {
+    var self = this;
     if (!self.$f7) return;
-    const f7 = self.$f7;
+    var f7 = self.$f7;
     f7.off('pageMounted', self.onPageMounted);
     f7.off('pageInit', self.onPageInit);
     f7.off('pageReinit', self.onPageReinit);
@@ -285,45 +277,60 @@ export default {
     self.eventTargetEl = null;
     delete self.eventTargetEl;
   },
-
   methods: {
-    onPtrPullStart(...args) {
-      this.dispatchEvent('ptr:pullstart ptrPullStart', ...args);
-    },
+    onPtrPullStart: function onPtrPullStart() {
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
 
-    onPtrPullMove(...args) {
-      this.dispatchEvent('ptr:pullmove ptrPullMove', ...args);
+      this.dispatchEvent.apply(this, ['ptr:pullstart ptrPullStart'].concat(args));
     },
+    onPtrPullMove: function onPtrPullMove() {
+      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
+      }
 
-    onPtrPullEnd(...args) {
-      this.dispatchEvent('ptr:pullend ptrPullEnd', ...args);
+      this.dispatchEvent.apply(this, ['ptr:pullmove ptrPullMove'].concat(args));
     },
+    onPtrPullEnd: function onPtrPullEnd() {
+      for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+        args[_key3] = arguments[_key3];
+      }
 
-    onPtrRefresh(...args) {
-      this.dispatchEvent('ptr:refresh ptrRefresh', ...args);
+      this.dispatchEvent.apply(this, ['ptr:pullend ptrPullEnd'].concat(args));
     },
+    onPtrRefresh: function onPtrRefresh() {
+      for (var _len4 = arguments.length, args = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+        args[_key4] = arguments[_key4];
+      }
 
-    onPtrDone(...args) {
-      this.dispatchEvent('ptr:done ptrDone', ...args);
+      this.dispatchEvent.apply(this, ['ptr:refresh ptrRefresh'].concat(args));
     },
+    onPtrDone: function onPtrDone() {
+      for (var _len5 = arguments.length, args = new Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
+        args[_key5] = arguments[_key5];
+      }
 
-    onInfinite(...args) {
-      this.dispatchEvent('infinite', ...args);
+      this.dispatchEvent.apply(this, ['ptr:done ptrDone'].concat(args));
     },
+    onInfinite: function onInfinite() {
+      for (var _len6 = arguments.length, args = new Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
+        args[_key6] = arguments[_key6];
+      }
 
-    onPageMounted(page) {
+      this.dispatchEvent.apply(this, ['infinite'].concat(args));
+    },
+    onPageMounted: function onPageMounted(page) {
       if (this.eventTargetEl !== page.el) return;
       this.dispatchEvent('page:mounted pageMounted', page);
     },
-
-    onPageInit(page) {
+    onPageInit: function onPageInit(page) {
       if (this.eventTargetEl !== page.el) return;
-      const {
-        withSubnavbar,
-        subnavbar,
-        withNavbarLarge,
-        navbarLarge
-      } = this.props;
+      var _this$props = this.props,
+          withSubnavbar = _this$props.withSubnavbar,
+          subnavbar = _this$props.subnavbar,
+          withNavbarLarge = _this$props.withNavbarLarge,
+          navbarLarge = _this$props.navbarLarge;
 
       if (typeof withSubnavbar === 'undefined' && typeof subnavbar === 'undefined') {
         if (page.$navbarEl && page.$navbarEl.length && page.$navbarEl.find('.subnavbar').length || page.$el.children('.navbar').find('.subnavbar').length) {
@@ -343,13 +350,11 @@ export default {
 
       this.dispatchEvent('page:init pageInit', page);
     },
-
-    onPageReinit(page) {
+    onPageReinit: function onPageReinit(page) {
       if (this.eventTargetEl !== page.el) return;
       this.dispatchEvent('page:reinit pageReinit', page);
     },
-
-    onPageBeforeIn(page) {
+    onPageBeforeIn: function onPageBeforeIn(page) {
       if (this.eventTargetEl !== page.el) return;
 
       if (page.from === 'next') {
@@ -366,13 +371,11 @@ export default {
 
       this.dispatchEvent('page:beforein pageBeforeIn', page);
     },
-
-    onPageBeforeOut(page) {
+    onPageBeforeOut: function onPageBeforeOut(page) {
       if (this.eventTargetEl !== page.el) return;
       this.dispatchEvent('page:beforeout pageBeforeOut', page);
     },
-
-    onPageAfterOut(page) {
+    onPageAfterOut: function onPageAfterOut(page) {
       if (this.eventTargetEl !== page.el) return;
 
       if (page.to === 'next') {
@@ -389,104 +392,92 @@ export default {
 
       this.dispatchEvent('page:afterout pageAfterOut', page);
     },
-
-    onPageAfterIn(page) {
+    onPageAfterIn: function onPageAfterIn(page) {
       if (this.eventTargetEl !== page.el) return;
       this.setState({
         routerPositionClass: 'page-current'
       });
       this.dispatchEvent('page:afterin pageAfterIn', page);
     },
-
-    onPageBeforeRemove(page) {
+    onPageBeforeRemove: function onPageBeforeRemove(page) {
       if (this.eventTargetEl !== page.el) return;
       this.dispatchEvent('page:beforeremove pageBeforeRemove', page);
     },
-
-    onPageStack(pageEl) {
+    onPageStack: function onPageStack(pageEl) {
       if (this.eventTargetEl !== pageEl) return;
       this.setState({
         routerForceUnstack: false
       });
     },
-
-    onPageUnstack(pageEl) {
+    onPageUnstack: function onPageUnstack(pageEl) {
       if (this.eventTargetEl !== pageEl) return;
       this.setState({
         routerForceUnstack: true
       });
     },
-
-    onPagePosition(pageEl, position) {
+    onPagePosition: function onPagePosition(pageEl, position) {
       if (this.eventTargetEl !== pageEl) return;
       this.setState({
-        routerPositionClass: `page-${position}`
+        routerPositionClass: "page-".concat(position)
       });
     },
-
-    onPageRole(pageEl, rolesData) {
+    onPageRole: function onPageRole(pageEl, rolesData) {
       if (this.eventTargetEl !== pageEl) return;
       this.setState({
         routerPageRole: rolesData.role,
         routerPageRoleDetailRoot: rolesData.detailRoot
       });
     },
-
-    onPageMasterStack(pageEl) {
+    onPageMasterStack: function onPageMasterStack(pageEl) {
       if (this.eventTargetEl !== pageEl) return;
       this.setState({
         routerPageMasterStack: true
       });
     },
-
-    onPageMasterUnstack(pageEl) {
+    onPageMasterUnstack: function onPageMasterUnstack(pageEl) {
       if (this.eventTargetEl !== pageEl) return;
       this.setState({
         routerPageMasterStack: false
       });
     },
-
-    onPageNavbarLargeCollapsed(pageEl) {
+    onPageNavbarLargeCollapsed: function onPageNavbarLargeCollapsed(pageEl) {
       if (this.eventTargetEl !== pageEl) return;
       this.setState({
         hasNavbarLargeCollapsed: true
       });
     },
-
-    onPageNavbarLargeExpanded(pageEl) {
+    onPageNavbarLargeExpanded: function onPageNavbarLargeExpanded(pageEl) {
       if (this.eventTargetEl !== pageEl) return;
       this.setState({
         hasNavbarLargeCollapsed: false
       });
     },
-
-    onCardOpened(cardEl, pageEl) {
+    onCardOpened: function onCardOpened(cardEl, pageEl) {
       if (this.eventTargetEl !== pageEl) return;
       this.setState({
         hasCardExpandableOpened: true
       });
     },
-
-    onCardClose(cardEl, pageEl) {
+    onCardClose: function onCardClose(cardEl, pageEl) {
       if (this.eventTargetEl !== pageEl) return;
       this.setState({
         hasCardExpandableOpened: false
       });
     },
+    dispatchEvent: function dispatchEvent(events) {
+      for (var _len7 = arguments.length, args = new Array(_len7 > 1 ? _len7 - 1 : 0), _key7 = 1; _key7 < _len7; _key7++) {
+        args[_key7 - 1] = arguments[_key7];
+      }
 
-    dispatchEvent(events, ...args) {
-      __vueComponentDispatchEvent(this, events, ...args);
+      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     },
-
-    setState(updater, callback) {
+    setState: function setState(updater, callback) {
       __vueComponentSetState(this, updater, callback);
     }
-
   },
   computed: {
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   }
 };

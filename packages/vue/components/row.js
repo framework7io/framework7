@@ -12,20 +12,17 @@ export default {
       default: 'div'
     }
   }, Mixins.colorProps),
-
-  render() {
-    const _h = this.$createElement;
-    const self = this;
-    const props = self.props;
-    const {
-      className,
-      id,
-      style,
-      tag,
-      noGap
-    } = props;
-    const RowTag = tag;
-    const classes = Utils.classNames(className, 'row', {
+  render: function render() {
+    var _h = this.$createElement;
+    var self = this;
+    var props = self.props;
+    var className = props.className,
+        id = props.id,
+        style = props.style,
+        tag = props.tag,
+        noGap = props.noGap;
+    var RowTag = tag;
+    var classes = Utils.classNames(className, 'row', {
       'no-gap': noGap
     }, Mixins.colorClasses(props));
     return _h(RowTag, {
@@ -37,33 +34,30 @@ export default {
       }
     }, [this.$slots['default']]);
   },
-
-  created() {
+  created: function created() {
     Utils.bindMethods(this, ['onClick']);
   },
-
-  mounted() {
+  mounted: function mounted() {
     this.$refs.el.addEventListener('click', this.onClick);
   },
-
-  beforeDestroy() {
+  beforeDestroy: function beforeDestroy() {
     this.$refs.el.removeEventListener('click', this.onClick);
   },
-
   methods: {
-    onClick(event) {
+    onClick: function onClick(event) {
       this.dispatchEvent('click', event);
     },
+    dispatchEvent: function dispatchEvent(events) {
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
 
-    dispatchEvent(events, ...args) {
-      __vueComponentDispatchEvent(this, events, ...args);
+      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     }
-
   },
   computed: {
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   }
 };

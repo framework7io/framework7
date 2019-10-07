@@ -6,16 +6,13 @@ export default {
   props: Object.assign({
     id: [String, Number]
   }, Mixins.colorProps),
-
-  render() {
-    const _h = this.$createElement;
-    const self = this;
-    const props = self.props;
-    const {
-      id,
-      className,
-      style
-    } = props;
+  render: function render() {
+    var _h = this.$createElement;
+    var self = this;
+    var props = self.props;
+    var id = props.id,
+        className = props.className,
+        style = props.style;
     return _h('div', {
       class: Utils.classNames('menu', Mixins.colorClasses(props), className),
       style: style,
@@ -26,11 +23,9 @@ export default {
       class: 'menu-inner'
     }, [this.$slots['default']])]);
   },
-
   computed: {
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   }
 };

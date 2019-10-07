@@ -1,3 +1,11 @@
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 import Utils from '../utils/utils';
 import Mixins from '../utils/mixins';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
@@ -6,23 +14,20 @@ export default {
   props: Object.assign({
     id: [String, Number]
   }, Mixins.colorProps),
-
-  render() {
-    const _h = this.$createElement;
-    const self = this;
-    const props = self.props;
-    const {
-      id,
-      style,
-      className
-    } = props;
-    const classes = Utils.classNames(className, 'title-large', Mixins.colorClasses(props));
-    const children = [];
-    const slots = self.$slots;
+  render: function render() {
+    var _h = this.$createElement;
+    var self = this;
+    var props = self.props;
+    var id = props.id,
+        style = props.style,
+        className = props.className;
+    var classes = Utils.classNames(className, 'title-large', Mixins.colorClasses(props));
+    var children = [];
+    var slots = self.$slots;
 
     if (slots && Object.keys(slots).length) {
-      Object.keys(slots).forEach(key => {
-        children.push(...slots[key]);
+      Object.keys(slots).forEach(function (key) {
+        children.push.apply(children, _toConsumableArray(slots[key]));
       });
     }
 
@@ -36,11 +41,9 @@ export default {
       class: 'title-large-text'
     }, [children])]);
   },
-
   computed: {
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   }
 };

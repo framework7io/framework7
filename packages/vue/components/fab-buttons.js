@@ -10,17 +10,14 @@ export default {
       default: 'top'
     }
   }, Mixins.colorProps),
-
-  render() {
-    const _h = this.$createElement;
-    const props = this.props;
-    const {
-      className,
-      id,
-      style,
-      position
-    } = props;
-    const classes = Utils.classNames(className, 'fab-buttons', `fab-buttons-${position}`, Mixins.colorClasses(props));
+  render: function render() {
+    var _h = this.$createElement;
+    var props = this.props;
+    var className = props.className,
+        id = props.id,
+        style = props.style,
+        position = props.position;
+    var classes = Utils.classNames(className, 'fab-buttons', "fab-buttons-".concat(position), Mixins.colorClasses(props));
     return _h('div', {
       style: style,
       class: classes,
@@ -29,11 +26,9 @@ export default {
       }
     }, [this.$slots['default']]);
   },
-
   computed: {
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   }
 };

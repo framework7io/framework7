@@ -12,19 +12,16 @@ export default {
       default: true
     }
   }, Mixins.colorProps),
-
-  render() {
-    const _h = this.$createElement;
-    const self = this;
-    const props = self.props;
-    const {
-      deletable,
-      image,
-      className,
-      id,
-      style
-    } = props;
-    const classes = Utils.classNames(className, 'messagebar-attachment', Mixins.colorClasses(props));
+  render: function render() {
+    var _h = this.$createElement;
+    var self = this;
+    var props = self.props;
+    var deletable = props.deletable,
+        image = props.image,
+        className = props.className,
+        id = props.id,
+        style = props.style;
+    var classes = Utils.classNames(className, 'messagebar-attachment', Mixins.colorClasses(props));
     return _h('div', {
       ref: 'el',
       style: style,
@@ -41,45 +38,41 @@ export default {
       class: 'messagebar-attachment-delete'
     }), this.$slots['default']]);
   },
-
-  created() {
+  created: function created() {
     Utils.bindMethods(this, ['onClick', 'onDeleteClick']);
   },
-
-  mounted() {
+  mounted: function mounted() {
     this.$refs.el.addEventListener('click', this.onClick);
 
     if (this.$refs.deleteEl) {
       this.$refs.deleteEl.addEventListener('click', this.onDeleteClick);
     }
   },
-
-  beforeDestroy() {
+  beforeDestroy: function beforeDestroy() {
     this.$refs.el.removeEventListener('click', this.onClick);
 
     if (this.$refs.deleteEl) {
       this.$refs.deleteEl.removeEventListener('click', this.onDeleteClick);
     }
   },
-
   methods: {
-    onClick(event) {
+    onClick: function onClick(event) {
       this.dispatchEvent('attachment:click attachmentClick', event);
     },
-
-    onDeleteClick(event) {
+    onDeleteClick: function onDeleteClick(event) {
       this.dispatchEvent('attachment:delete attachmentDelete', event);
     },
+    dispatchEvent: function dispatchEvent(events) {
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
 
-    dispatchEvent(events, ...args) {
-      __vueComponentDispatchEvent(this, events, ...args);
+      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     }
-
   },
   computed: {
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   }
 };

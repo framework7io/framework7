@@ -13,28 +13,25 @@ export default {
     mediaTextColor: String,
     outline: Boolean
   }, Mixins.colorProps),
-
-  render() {
-    const _h = this.$createElement;
-    const self = this;
-    const props = self.props;
-    const {
-      media,
-      text,
-      deleteable,
-      className,
-      id,
-      style,
-      mediaTextColor,
-      mediaBgColor,
-      outline
-    } = props;
-    let mediaEl;
-    let labelEl;
-    let deleteEl;
+  render: function render() {
+    var _h = this.$createElement;
+    var self = this;
+    var props = self.props;
+    var media = props.media,
+        text = props.text,
+        deleteable = props.deleteable,
+        className = props.className,
+        id = props.id,
+        style = props.style,
+        mediaTextColor = props.mediaTextColor,
+        mediaBgColor = props.mediaBgColor,
+        outline = props.outline;
+    var mediaEl;
+    var labelEl;
+    var deleteEl;
 
     if (media || self.$slots && self.$slots.media) {
-      const mediaClasses = Utils.classNames('chip-media', mediaTextColor && `text-color-${mediaTextColor}`, mediaBgColor && `bg-color-${mediaBgColor}`);
+      var mediaClasses = Utils.classNames('chip-media', mediaTextColor && "text-color-".concat(mediaTextColor), mediaBgColor && "bg-color-".concat(mediaBgColor));
       mediaEl = _h('div', {
         class: mediaClasses
       }, [media || this.$slots['media']]);
@@ -53,7 +50,7 @@ export default {
       });
     }
 
-    const classes = Utils.classNames(className, 'chip', {
+    var classes = Utils.classNames(className, 'chip', {
       'chip-outline': outline
     }, Mixins.colorClasses(props));
     return _h('div', {
@@ -65,45 +62,41 @@ export default {
       }
     }, [mediaEl, labelEl, deleteEl]);
   },
-
-  created() {
+  created: function created() {
     Utils.bindMethods(this, ['onClick', 'onDeleteClick']);
   },
-
-  mounted() {
+  mounted: function mounted() {
     this.$refs.el.addEventListener('click', this.onClick);
 
     if (this.$refs.deleteEl) {
       this.$refs.deleteEl.addEventListener('click', this.onDeleteClick);
     }
   },
-
-  beforeDestroy() {
+  beforeDestroy: function beforeDestroy() {
     this.$refs.el.removeEventListener('click', this.onClick);
 
     if (this.$refs.deleteEl) {
       this.$refs.deleteEl.removeEventListener('click', this.onDeleteClick);
     }
   },
-
   methods: {
-    onClick(event) {
+    onClick: function onClick(event) {
       this.dispatchEvent('click', event);
     },
-
-    onDeleteClick(event) {
+    onDeleteClick: function onDeleteClick(event) {
       this.dispatchEvent('delete', event);
     },
+    dispatchEvent: function dispatchEvent(events) {
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
 
-    dispatchEvent(events, ...args) {
-      __vueComponentDispatchEvent(this, events, ...args);
+      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     }
-
   },
   computed: {
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   }
 };

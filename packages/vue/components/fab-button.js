@@ -11,23 +11,20 @@ export default {
     target: String,
     tooltip: String
   }, Mixins.colorProps),
-
-  render() {
-    const _h = this.$createElement;
-    const props = this.props;
-    const {
-      className,
-      id,
-      style,
-      fabClose,
-      label,
-      target
-    } = props;
-    const classes = Utils.classNames(className, {
+  render: function render() {
+    var _h = this.$createElement;
+    var props = this.props;
+    var className = props.className,
+        id = props.id,
+        style = props.style,
+        fabClose = props.fabClose,
+        label = props.label,
+        target = props.target;
+    var classes = Utils.classNames(className, {
       'fab-close': fabClose,
       'fab-label-button': label
     }, Mixins.colorClasses(props));
-    let labelEl;
+    var labelEl;
 
     if (label) {
       labelEl = _h('span', {
@@ -45,28 +42,23 @@ export default {
       }
     }, [this.$slots['default'], labelEl]);
   },
-
-  created() {
+  created: function created() {
     Utils.bindMethods(this, ['onClick']);
   },
-
-  mounted() {
-    const self = this;
+  mounted: function mounted() {
+    var self = this;
     self.$refs.el.addEventListener('click', self.onClick);
-    const {
-      tooltip
-    } = self.props;
+    var tooltip = self.props.tooltip;
     if (!tooltip) return;
-    self.$f7ready(f7 => {
+    self.$f7ready(function (f7) {
       self.f7Tooltip = f7.tooltip.create({
         targetEl: self.$refs.el,
         text: tooltip
       });
     });
   },
-
-  beforeDestroy() {
-    const self = this;
+  beforeDestroy: function beforeDestroy() {
+    var self = this;
     self.$refs.el.removeEventListener('click', self.onClick);
 
     if (self.f7Tooltip && self.f7Tooltip.destroy) {
@@ -75,20 +67,21 @@ export default {
       delete self.f7Tooltip;
     }
   },
-
   methods: {
-    onClick(event) {
+    onClick: function onClick(event) {
       this.dispatchEvent('click', event);
     },
+    dispatchEvent: function dispatchEvent(events) {
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
 
-    dispatchEvent(events, ...args) {
-      __vueComponentDispatchEvent(this, events, ...args);
+      __vueComponentDispatchEvent.apply(void 0, [this, events].concat(args));
     }
-
   },
   watch: {
     'props.tooltip': function watchTooltip(newText) {
-      const self = this;
+      var self = this;
 
       if (!newText && self.f7Tooltip) {
         self.f7Tooltip.destroy();
@@ -110,9 +103,8 @@ export default {
     }
   },
   computed: {
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   }
 };

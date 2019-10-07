@@ -54,16 +54,17 @@ export default {
       default: true
     }
   }, Mixins.colorProps),
+  data: function data() {
+    var _this = this;
 
-  data() {
-    const props = __vueComponentProps(this);
+    var props = __vueComponentProps(this);
 
-    const state = (() => {
-      const self = this;
-      const $f7 = self.$f7;
+    var state = function () {
+      var self = _this;
+      var $f7 = self.$f7;
 
       if (!$f7) {
-        self.$f7ready(() => {
+        self.$f7ready(function () {
           self.setState({
             _theme: self.$theme
           });
@@ -73,42 +74,39 @@ export default {
       return {
         _theme: $f7 ? self.$theme : null
       };
-    })();
+    }();
 
     return {
-      state
+      state: state
     };
   },
-
-  render() {
-    const _h = this.$createElement;
-    const self = this;
-    const props = self.props;
-    const {
-      id,
-      style,
-      className,
-      inner,
-      tabbar,
-      labels,
-      scrollable,
-      hidden,
-      noShadow,
-      noHairline,
-      noBorder,
-      topMd,
-      topIos,
-      topAurora,
-      top,
-      bottomMd,
-      bottomIos,
-      bottomAurora,
-      bottom,
-      position
-    } = props;
-    const theme = self.state._theme;
-    const classes = Utils.classNames(className, 'toolbar', {
-      tabbar,
+  render: function render() {
+    var _h = this.$createElement;
+    var self = this;
+    var props = self.props;
+    var id = props.id,
+        style = props.style,
+        className = props.className,
+        inner = props.inner,
+        tabbar = props.tabbar,
+        labels = props.labels,
+        scrollable = props.scrollable,
+        hidden = props.hidden,
+        noShadow = props.noShadow,
+        noHairline = props.noHairline,
+        noBorder = props.noBorder,
+        topMd = props.topMd,
+        topIos = props.topIos,
+        topAurora = props.topAurora,
+        top = props.top,
+        bottomMd = props.bottomMd,
+        bottomIos = props.bottomIos,
+        bottomAurora = props.bottomAurora,
+        bottom = props.bottom,
+        position = props.position;
+    var theme = self.state._theme;
+    var classes = Utils.classNames(className, 'toolbar', {
+      tabbar: tabbar,
       'toolbar-bottom': theme && theme.md && bottomMd || theme && theme.ios && bottomIos || theme && theme.aurora && bottomAurora || bottom || position === 'bottom',
       'toolbar-top': theme && theme.md && topMd || theme && theme.ios && topIos || theme && theme.aurora && topAurora || top || position === 'top',
       'tabbar-labels': labels,
@@ -128,44 +126,37 @@ export default {
       class: 'toolbar-inner'
     }, [this.$slots['default']]) : this.$slots['default'], this.$slots['after-inner']]);
   },
-
-  updated() {
-    const self = this;
+  updated: function updated() {
+    var self = this;
 
     if (self.props.tabbar && self.$f7) {
       self.$f7.toolbar.setHighlight(self.$refs.el);
     }
   },
-
-  mounted() {
-    const self = this;
-    self.$f7ready(f7 => {
+  mounted: function mounted() {
+    var self = this;
+    self.$f7ready(function (f7) {
       if (self.props.tabbar) f7.toolbar.setHighlight(self.$refs.el);
     });
   },
-
   methods: {
-    hide(animate) {
-      const self = this;
+    hide: function hide(animate) {
+      var self = this;
       if (!self.$f7) return;
       self.$f7.toolbar.hide(this.$refs.el, animate);
     },
-
-    show(animate) {
-      const self = this;
+    show: function show(animate) {
+      var self = this;
       if (!self.$f7) return;
       self.$f7.toolbar.show(this.$refs.el, animate);
     },
-
-    setState(updater, callback) {
+    setState: function setState(updater, callback) {
       __vueComponentSetState(this, updater, callback);
     }
-
   },
   computed: {
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   }
 };

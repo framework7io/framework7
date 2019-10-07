@@ -14,20 +14,17 @@ export default {
       default: true
     }
   }, Mixins.colorProps),
-
-  render() {
-    const _h = this.$createElement;
-    const self = this;
-    const props = self.props;
-    const {
-      id,
-      style,
-      className
-    } = props;
-    let paginationEl;
-    let scrollbarEl;
-    let buttonNextEl;
-    let buttonPrevEl;
+  render: function render() {
+    var _h = this.$createElement;
+    var self = this;
+    var props = self.props;
+    var id = props.id,
+        style = props.style,
+        className = props.className;
+    var paginationEl;
+    var scrollbarEl;
+    var buttonNextEl;
+    var buttonPrevEl;
 
     if (self.paginationComputed) {
       paginationEl = _h('div', {
@@ -54,7 +51,7 @@ export default {
       });
     }
 
-    const classes = Utils.classNames(className, 'swiper-container', Mixins.colorClasses(props));
+    var classes = Utils.classNames(className, 'swiper-container', Mixins.colorClasses(props));
     return _h('div', {
       style: style,
       ref: 'el',
@@ -66,14 +63,12 @@ export default {
       class: 'swiper-wrapper'
     }, [this.$slots['default']]), paginationEl, scrollbarEl, buttonPrevEl, buttonNextEl, this.$slots['after-wrapper']]);
   },
-
   computed: {
-    paginationComputed() {
-      const self = this;
-      const {
-        pagination,
-        params
-      } = self.props;
+    paginationComputed: function paginationComputed() {
+      var self = this;
+      var _self$props = self.props,
+          pagination = _self$props.pagination,
+          params = _self$props.params;
 
       if (pagination === true || params && params.pagination && !params.pagination.el) {
         return true;
@@ -81,13 +76,11 @@ export default {
 
       return false;
     },
-
-    scrollbarComputed() {
-      const self = this;
-      const {
-        scrollbar,
-        params
-      } = self.props;
+    scrollbarComputed: function scrollbarComputed() {
+      var self = this;
+      var _self$props2 = self.props,
+          scrollbar = _self$props2.scrollbar,
+          params = _self$props2.params;
 
       if (scrollbar === true || params && params.scrollbar && !params.scrollbar.el) {
         return true;
@@ -95,13 +88,11 @@ export default {
 
       return false;
     },
-
-    navigationComputed() {
-      const self = this;
-      const {
-        navigation,
-        params
-      } = self.props;
+    navigationComputed: function navigationComputed() {
+      var self = this;
+      var _self$props3 = self.props,
+          navigation = _self$props3.navigation,
+          params = _self$props3.params;
 
       if (navigation === true || params && params.navigation && !params.navigation.nextEl && !params.navigation.prevEl) {
         return true;
@@ -109,15 +100,12 @@ export default {
 
       return false;
     },
-
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   },
-
-  updated() {
-    const self = this;
+  updated: function updated() {
+    var self = this;
 
     if (!self.initialUpdate) {
       self.initialUpdate = true;
@@ -126,22 +114,20 @@ export default {
 
     if (self.swiper && self.swiper.update) self.swiper.update();
   },
-
-  mounted() {
-    const self = this;
+  mounted: function mounted() {
+    var self = this;
     if (!self.props.init) return;
-    self.$f7ready(f7 => {
-      const newParams = {
+    self.$f7ready(function (f7) {
+      var newParams = {
         pagination: {},
         navigation: {},
         scrollbar: {}
       };
-      const {
-        params,
-        pagination,
-        navigation,
-        scrollbar
-      } = self.props;
+      var _self$props4 = self.props,
+          params = _self$props4.params,
+          pagination = _self$props4.pagination,
+          navigation = _self$props4.navigation,
+          scrollbar = _self$props4.scrollbar;
       if (params) Utils.extend(newParams, params);
       if (pagination && !newParams.pagination.el) newParams.pagination.el = self.$refs.paginationEl;
 
@@ -154,11 +140,9 @@ export default {
       self.swiper = f7.swiper.create(self.$refs.el, newParams);
     });
   },
-
-  beforeDestroy() {
-    const self = this;
+  beforeDestroy: function beforeDestroy() {
+    var self = this;
     if (!self.props.init) return;
     if (self.swiper && self.swiper.destroy) self.swiper.destroy();
   }
-
 };

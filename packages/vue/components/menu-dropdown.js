@@ -11,26 +11,23 @@ export default {
     center: Boolean,
     right: Boolean
   }, Mixins.colorProps),
-
-  render() {
-    const _h = this.$createElement;
-    const self = this;
-    const props = self.props;
-    const {
-      id,
-      className,
-      style,
-      contentHeight,
-      position,
-      left,
-      center,
-      right
-    } = props;
-    let positionComputed = position || 'left';
+  render: function render() {
+    var _h = this.$createElement;
+    var self = this;
+    var props = self.props;
+    var id = props.id,
+        className = props.className,
+        style = props.style,
+        contentHeight = props.contentHeight,
+        position = props.position,
+        left = props.left,
+        center = props.center,
+        right = props.right;
+    var positionComputed = position || 'left';
     if (left) positionComputed = 'left';
     if (center) positionComputed = 'center';
     if (right) positionComputed = 'right';
-    const classes = Utils.classNames('menu-dropdown', `menu-dropdown-${positionComputed}`, Mixins.colorClasses(props), className);
+    var classes = Utils.classNames('menu-dropdown', "menu-dropdown-".concat(positionComputed), Mixins.colorClasses(props), className);
     return _h('div', {
       class: classes,
       style: style,
@@ -44,11 +41,9 @@ export default {
       }
     }, [this.$slots['default']])]);
   },
-
   computed: {
-    props() {
+    props: function props() {
       return __vueComponentProps(this);
     }
-
   }
 };
