@@ -2,7 +2,7 @@
 /* eslint no-console: ["error", { allow: ["log"] }] */
 const path = require('path');
 const rollup = require('rollup');
-const buble = require('rollup-plugin-buble');
+const babel = require('rollup-plugin-babel');
 const replace = require('rollup-plugin-replace');
 const commonjs = require('rollup-plugin-commonjs');
 const resolve = require('rollup-plugin-node-resolve');
@@ -45,13 +45,7 @@ function buildKs(cb) {
       }),
       resolve({ mainFields: ['module', 'main', 'jsnext'] }),
       commonjs(),
-      buble({
-        objectAssign: 'Object.assign',
-        exclude: [
-          'node_modules/react/cjs/react.development.js',
-          'node_modules/react-dom/cjs/react-dom.development.js',
-        ],
-      }),
+      babel(),
     ],
     onwarn(warning, warn) {
       const ignore = ['EVAL'];

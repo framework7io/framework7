@@ -61,6 +61,8 @@
   "devDependencies": {
     "@babel/core": "^7.6.2",
     "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
+    "@babel/plugin-transform-react-jsx": "^7.3.0",
+    "@babel/preset-env": "^7.6.2",
     "acorn": "^7.1.0",
     "acorn-jsx": "^5.0.2",
     "autoprefixer": "^9.6.1",
@@ -82,6 +84,7 @@
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
     "rollup": "^1.22.0",
+    "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-buble": "^0.19.8",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
