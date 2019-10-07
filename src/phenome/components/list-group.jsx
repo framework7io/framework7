@@ -25,6 +25,7 @@ export default {
       style,
       mediaList,
       sortable,
+      sortableTapHold,
       sortableMoveElements,
     } = props;
 
