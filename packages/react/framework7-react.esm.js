@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.0.1
+ * Framework7 React 5.0.2
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *

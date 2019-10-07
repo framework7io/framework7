@@ -2,6 +2,11 @@
 
 # Change Log
 
+# [v5.0.2](https://github.com/framework7io/framework7/compare/v5.0.1...v5.0.2) - October 7, 2019
+  * Phenome
+    * ListGroup
+      * Fixed issue breaking this component
+
 # [v5.0.1](https://github.com/framework7io/framework7/compare/v5.0.0...v5.0.1) - October 7, 2019
   * Core
     * Tooltip

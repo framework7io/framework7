@@ -43,6 +43,7 @@ function (_React$Component) {
           style = props.style,
           mediaList = props.mediaList,
           sortable = props.sortable,
+          sortableTapHold = props.sortableTapHold,
           sortableMoveElements = props.sortableMoveElements;
       var classes = Utils.classNames(className, 'list-group', {
         'media-list': mediaList,
