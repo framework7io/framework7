@@ -151,6 +151,7 @@ Bart DJ
 ---
 
 ### $10+ Supporter
+Ruslan Trifonov<br>
 Michael Powers<br>
 shastox<br>
 iOS Haven<br>
