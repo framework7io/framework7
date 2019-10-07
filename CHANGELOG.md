@@ -2,6 +2,11 @@
 
 # Change Log
 
+# [v5.0.1](https://github.com/framework7io/framework7/compare/v5.0.0...v5.0.1) - October 7, 2019
+  * Core
+    * Tooltip
+      * Fixed issue when Tooltip stays hidden on desktop
+
 # [v5.0.0](https://github.com/framework7io/framework7/compare/v4.5.2...v5.0.0) - October 7, 2019
 
 ## CSS & Theming

@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.0
+ * Framework7 5.0.1
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -37056,7 +37056,7 @@
           app.on('touchmove', handleTouchMove);
           app.on('touchend:passive', handleTouchEnd);
         } else {
-          $targetEl.on((Support.pointerEvents ? 'pointerenter' : 'mousenter'), handleMouseEnter);
+          $targetEl.on((Support.pointerEvents ? 'pointerenter' : 'mouseenter'), handleMouseEnter);
           $targetEl.on((Support.pointerEvents ? 'pointerleave' : 'mouseleave'), handleMouseLeave);
         }
       };
@@ -37068,7 +37068,7 @@
           app.off('touchmove', handleTouchMove);
           app.off('touchend:passive', handleTouchEnd);
         } else {
-          $targetEl.off((Support.pointerEvents ? 'pointerenter' : 'mousenter'), handleMouseEnter);
+          $targetEl.off((Support.pointerEvents ? 'pointerenter' : 'mouseenter'), handleMouseEnter);
           $targetEl.off((Support.pointerEvents ? 'pointerleave' : 'mouseleave'), handleMouseLeave);
         }
       };
