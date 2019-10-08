@@ -300,6 +300,9 @@ class TextEditor extends Framework7Class {
     const selectionIsInContent = $(selection.anchorNode).parents(self.contentEl).length || selection.anchorNode === self.contentEl;
     if (!selectionIsInContent) return;
     const $buttonEl = $(e.target).closest('button');
+    if ($buttonEl.parents('form').length) {
+      e.preventDefault();
+    }
     const button = $buttonEl.attr('data-button');
     const buttonData = self.params.customButtons && self.params.customButtons[button];
     if (!button || !(textEditorButtonsMap[button] || buttonData)) return;

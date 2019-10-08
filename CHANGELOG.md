@@ -2,6 +2,16 @@
 
 # Change Log
 
+# [v5.0.3](https://github.com/framework7io/framework7/compare/v5.0.2...v5.0.3) - October 8, 2019
+  * Core
+    * Input
+      * `scrollIntoViewOnFocus` functionality now considers the case when input is inside of expandable card
+    * TextEditor
+      * Prevent parent form submission on editor button click
+  * Phenome
+    * Page
+      * Fixed issue when page after can stay "blocked" after expandable card close
+
 # [v5.0.2](https://github.com/framework7io/framework7/compare/v5.0.1...v5.0.2) - October 7, 2019
   * Phenome
     * ListGroup

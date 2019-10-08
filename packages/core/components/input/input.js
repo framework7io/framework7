@@ -140,7 +140,7 @@ const Input = {
   },
   scrollIntoView(inputEl, duration = 0, centered, force) {
     const $inputEl = $(inputEl);
-    const $scrollableEl = $inputEl.parents('.page-content, .panel').eq(0);
+    const $scrollableEl = $inputEl.parents('.page-content, .panel, .card-expandable .card-content').eq(0);
     if (!$scrollableEl.length) {
       return false;
     }

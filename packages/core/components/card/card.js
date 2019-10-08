@@ -380,7 +380,7 @@ const CardExpandable = {
     }
     $cardEl.transform('');
     $cardEl.trigger('card:close');
-    app.emit('cardClose', $cardEl[0]);
+    app.emit('cardClose', $cardEl[0], $pageEl[0]);
 
     const animateWidth = $cardEl.hasClass('card-expandable-animate-width');
 

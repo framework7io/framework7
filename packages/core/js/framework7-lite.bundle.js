@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.2
+ * Framework7 5.0.3
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 7, 2019
+ * Released on: October 8, 2019
  */
 
 (function (global, factory) {
@@ -17546,7 +17546,7 @@
       }
       $cardEl.transform('');
       $cardEl.trigger('card:close');
-      app.emit('cardClose', $cardEl[0]);
+      app.emit('cardClose', $cardEl[0], $pageEl[0]);
 
       var animateWidth = $cardEl.hasClass('card-expandable-animate-width');
 
@@ -18125,7 +18125,7 @@
       if ( duration === void 0 ) duration = 0;
 
       var $inputEl = $(inputEl);
-      var $scrollableEl = $inputEl.parents('.page-content, .panel').eq(0);
+      var $scrollableEl = $inputEl.parents('.page-content, .panel, .card-expandable .card-content').eq(0);
       if (!$scrollableEl.length) {
         return false;
       }
@@ -38344,6 +38344,9 @@
       var selectionIsInContent = $(selection.anchorNode).parents(self.contentEl).length || selection.anchorNode === self.contentEl;
       if (!selectionIsInContent) { return; }
       var $buttonEl = $(e.target).closest('button');
+      if ($buttonEl.parents('form').length) {
+        e.preventDefault();
+      }
       var button = $buttonEl.attr('data-button');
       var buttonData = self.params.customButtons && self.params.customButtons[button];
       if (!button || !(textEditorButtonsMap[button] || buttonData)) { return; }
@@ -38877,7 +38880,7 @@
   };
 
   /**
-   * Framework7 5.0.2
+   * Framework7 5.0.3
    * Full featured mobile HTML framework for building iOS & Android apps
    * http://framework7.io/
    *
@@ -38885,7 +38888,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: October 7, 2019
+   * Released on: October 8, 2019
    */
 
   // Install Core Modules & Components
