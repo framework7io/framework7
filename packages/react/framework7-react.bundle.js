@@ -1,5 +1,5 @@
 /**
- * Framework7 React 5.0.3
+ * Framework7 React 5.0.4
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 8, 2019
+ * Released on: October 9, 2019
  */
 
 (function (global, factory) {
@@ -16915,7 +16915,7 @@
   };
 
   /**
-   * Framework7 React 5.0.3
+   * Framework7 React 5.0.4
    * Build full featured iOS & Android apps using Framework7 & React
    * http://framework7.io/react/
    *
@@ -16923,7 +16923,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: October 8, 2019
+   * Released on: October 9, 2019
    */
 
   function f7ready(callback) {

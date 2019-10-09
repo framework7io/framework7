@@ -37,6 +37,7 @@
               <div class="item-title item-label">Fruit</div>
               <div class="item-input-wrap">
                 <input type="text" placeholder="Fruit" id="autocomplete-dropdown"/>
+                <span class="input-clear-button"></span>
               </div>
             </div>
           </li>
@@ -217,6 +218,7 @@
           inputEl: '#autocomplete-dropdown',
           openIn: 'dropdown',
           source: function (query, render) {
+            console.log(query);
             var results = [];
             if (query.length === 0) {
               render(results);

@@ -2,6 +2,13 @@
 
 # Change Log
 
+# [v5.0.4](https://github.com/framework7io/framework7/compare/v5.0.3...v5.0.4) - October 9, 2019
+  * Core
+    * Messages
+      * Fixed iOS dark theme Messages colors
+    * Text Editor
+      * Fixed TypeScript definitions error
+
 # [v5.0.3](https://github.com/framework7io/framework7/compare/v5.0.2...v5.0.3) - October 8, 2019
   * Core
     * Input

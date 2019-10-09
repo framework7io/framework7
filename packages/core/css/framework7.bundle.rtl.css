@@ -1,5 +1,5 @@
 /**
- * Framework7 5.0.3
+ * Framework7 5.0.4
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: October 8, 2019
+ * Released on: October 9, 2019
  */
 
 /*====================
@@ -16781,8 +16781,12 @@ table.data-table {
 }
 :root .theme-dark,
 :root.theme-dark {
+  --f7-messages-title-text-color: rgba(255, 255, 255, 0.54);
+  --f7-message-header-text-color: rgba(255, 255, 255, 0.54);
+  --f7-message-name-text-color: rgba(255, 255, 255, 0.54);
+  --f7-message-footer-text-color: rgba(255, 255, 255, 0.54);
   --f7-messages-content-bg-color: transparent;
-  --f7-message-received-bg-color: #333;
+  --f7-message-received-bg-color: #252525;
   --f7-message-received-text-color: #fff;
   --f7-message-typing-indicator-bg-color: #fff;
 }
@@ -16816,13 +16820,6 @@ table.data-table {
   --f7-message-footer-text-color: rgba(0, 0, 0, 0.51);
   --f7-message-name-text-color: rgba(0, 0, 0, 0.51);
 }
-.md .theme-dark,
-.md.theme-dark {
-  --f7-messages-title-text-color: rgba(255, 255, 255, 0.54);
-  --f7-message-header-text-color: rgba(255, 255, 255, 0.54);
-  --f7-message-name-text-color: rgba(255, 255, 255, 0.54);
-  --f7-message-footer-text-color: rgba(255, 255, 255, 0.54);
-}
 .aurora {
   --f7-messages-title-font-size: 12px;
   --f7-message-avatar-size: 24px;
@@ -16838,13 +16835,6 @@ table.data-table {
   --f7-message-header-text-color: rgba(0, 0, 0, 0.51);
   --f7-message-footer-text-color: rgba(0, 0, 0, 0.51);
   --f7-message-name-text-color: rgba(0, 0, 0, 0.51);
-}
-.aurora .theme-dark,
-.aurora.theme-dark {
-  --f7-messages-title-text-color: rgba(255, 255, 255, 0.54);
-  --f7-message-header-text-color: rgba(255, 255, 255, 0.54);
-  --f7-message-name-text-color: rgba(255, 255, 255, 0.54);
-  --f7-message-footer-text-color: rgba(255, 255, 255, 0.54);
 }
 .messages-content,
 .messages {
