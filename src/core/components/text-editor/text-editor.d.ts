@@ -12,7 +12,7 @@ export namespace TextEditor {
     /** Placeholder (default null) */
     palceholder?: string
     /** Set of editor toolbar buttons */
-    buttons?: string[] | Array[]
+    buttons?: string[] | Array<string>[]
     /** Define custom buttons */
     customButtons?: object
     /** Adds visual divider between buttons group (default true) */
